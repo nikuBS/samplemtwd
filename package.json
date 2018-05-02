@@ -17,7 +17,7 @@
   "dependencies": {
     "ejs": "^2.5.9",
     "express": "^4.16.3",
-    "jquery": "^1.5.1",
+    "jquery": "^1.12.1",
     "underscore": "^1.9.0"
   },
   "devDependencies": {
