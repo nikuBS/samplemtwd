@@ -4,8 +4,41 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "npm run client-dev | npm run server-dev",
+    "client-dev": "gulp",
+    "client-deploy": "gulp build",
+    "server-dev": "nodemon -e ts -w ./src/server -x npm run server-watch:dev",
+    "server-watch:dev": "ts-node ./src/server/bin/www.ts",
+    "server-deploy:start": "pm2 start -f src/server/bin/www.ts --watch",
+    "server-lint": "tslint -p"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^2.5.9",
+    "express": "^4.16.3",
+    "jquery": "^1.5.1",
+    "underscore": "^1.9.0"
+  },
+  "devDependencies": {
+    "@types/ejs": "^2.5.1",
+    "@types/express": "^4.11.1",
+    "@types/node": "^9.6.6",
+    "connect-redis": "^3.3.3",
+    "express-session": "^1.15.6",
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-css": "^0.1.0",
+    "gulp-livereload": "^3.8.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-uglify": "^3.0.0",
+    "gulp-util": "^3.0.8",
+    "gulp-webserver": "^0.9.1",
+    "nodemon": "^1.17.3",
+    "pm2": "^2.10.2",
+    "ts-node": "^6.0.0",
+    "tslint": "^5.9.1",
+    "tslint-config-standard": "^7.0.0",
+    "typescript": "^2.8.3"
+  }
 }
