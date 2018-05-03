@@ -1,19 +1,9 @@
-import { IRouterMap } from '../../common/app.router';
+import TxRouter from '../../common/route/tx.router';
 
-class EtcRouter {
-  private static _instance: EtcRouter;
-  private _controllers: Array<IRouterMap> = [];
-
+class EtcRouter extends TxRouter {
   constructor() {
+    super();
     // this._controllers.push({ url: '/', controller: new HomeMainController() });
-  }
-
-  static get instance(): any {
-    return this._instance || (this._instance = new this());
-  }
-
-  get controllers(): Array<IRouterMap> {
-    return this._controllers;
   }
 }
 

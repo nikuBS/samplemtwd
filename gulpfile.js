@@ -57,17 +57,17 @@ gulp.task('js-common', function () {
         .pipe(gulp.dest('dist/js'));
 });
 
-gulp.task('js-personal', function () {
+gulp.task('js-home', function () {
     return gulp.src([
-        'src/client/app/personal/js/models/**/*.js',
-        'src/client/app/personal/js/views/**/*.js'])
-        .pipe(concat('personal.js'))
+        'src/client/app/home/js/models/**/*.js',
+        'src/client/app/home/js/views/**/*.js'])
+        .pipe(concat('home.js'))
         .pipe(gulp.dest('dist/js'))
         .pipe(uglify())
         .on('error', function (err) {
             gutil.log(gutil.colors.red('[Error]'), err.toString());
         })
-        .pipe(rename('personal.min.js'))
+        .pipe(rename('home.min.js'))
         .pipe(gulp.dest('dist/js'));
 });
 

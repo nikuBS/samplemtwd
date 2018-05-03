@@ -1,19 +1,9 @@
-import { IRouterMap } from '../../common/app.router';
+import TxRouter from '../../common/route/tx.router';
 
-class EventRouter {
-  private static _instance: EventRouter;
-  private _controllers: Array<IRouterMap> = [];
-
+class EventRouter extends TxRouter {
   constructor() {
+    super();
     // this._controllers.push({ url: '/', controller: new HomeMainController() });
-  }
-
-  static get instance(): any {
-    return this._instance || (this._instance = new this());
-  }
-
-  get controllers(): Array<IRouterMap> {
-    return this._controllers;
   }
 }
 
