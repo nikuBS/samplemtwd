@@ -120,6 +120,6 @@ gulp.task('watch', function () {
     gulp.watch('dist/**').on('change', livereload.changed);
 });
 
-gulp.task('js', ['js-util', 'js-common', 'js-personal', 'js-my', 'js-product', 'js-user']);
+gulp.task('js', ['js-util', 'js-common', 'js-home', 'js-my', 'js-product', 'js-user']);
 gulp.task('default', ['server', 'vendor', 'js', 'watch']);
 gulp.task('build', ['vendor', 'js']);
