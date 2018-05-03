@@ -1,12 +1,12 @@
 import Controller from '../../common/controllers/controller';
 
-class UserDetailController extends Controller{
+class ProductMobileDetailController extends Controller{
   constructor() {
     super();
   }
 
   render(req: any, res: any, next: any) {
-    res.render('user-detail.html', {
+    res.render('product.mobile-detail.html', {
       user: req.params.id
     });
   }
@@ -14,4 +14,4 @@ class UserDetailController extends Controller{
 
 }
 
-export default UserDetailController;
+export default ProductMobileDetailController;

@@ -1,4 +1,4 @@
-class HomeModel {
+class ProductMobileModel {
   private _test1: string = 'home test';
 
   get test1(): string {
@@ -10,4 +10,4 @@ class HomeModel {
   }
 }
 
-export default HomeModel;
+export default ProductMobileModel;
