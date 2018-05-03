@@ -10,7 +10,7 @@
     "server-dev": "nodemon -e ts -w ./src/server -x npm run server-watch:dev",
     "server-watch:dev": "ts-node ./src/server/bin/www.ts",
     "server-deploy:start": "pm2 start -f src/server/bin/www.ts --watch",
-    "server-lint": "tslint -p"
+    "server-lint": "tslint -p tslint.json"
   },
   "author": "",
   "license": "ISC",

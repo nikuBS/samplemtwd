@@ -1,6 +1,6 @@
-import Controller from '../../common/controllers/controller';
+import TwViewController from '../../../common/controllers/tw.view.controller';
 
-class ProductInternelController extends Controller{
+class ProductInternelController extends TwViewController {
   constructor() {
     super();
   }
