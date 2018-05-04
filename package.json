@@ -9,7 +9,9 @@
     "client-deploy": "gulp build",
     "server-dev": "nodemon -e ts -w ./src/server -x npm run server-watch:dev",
     "server-watch:dev": "ts-node ./src/server/bin/www.ts",
-    "server-deploy:start": "pm2 start -f src/server/bin/www.ts --watch",
+    "server-dev:pm2": "pm2 start pm2.config.js",
+    "server-qa:pm2": "pm2 start pm2.config.js --env=qa",
+    "server-prod:pm2": "pm2 start pm2.config.js --env=production",
     "server-lint": "tslint -p tslint.json"
   },
   "author": "",
