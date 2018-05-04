@@ -20,10 +20,11 @@ gulp.task('server', function () {
     }));
 });
 
-gulp.task('vendor', function () {
+gulp.task('js-vendor', function () {
   return gulp.src([
     'node_modules/jquery/dist/jquery.min.js',
-    'node_modules/underscore/underscore-min.js'])
+    'node_modules/underscore/underscore-min.js',
+    'node_modules/slick-carousel/slick/slick.min.js'])
     .on('error', function (err) {
       gutil.log(gutil.colors.red('[Error]'), err.toString());
     })
@@ -58,6 +59,13 @@ gulp.task('js-common', function () {
     })
     .pipe(rename('common.min.js'))
     .pipe(gulp.dest('dist/js'));
+});
+
+gulp.task('css-vendor', function () {
+  return gulp.src([
+    'node_modules/slick-carousel/slick/slick.css'])
+    .pipe(concat('vendor.css'))
+    .pipe(gulp.dest('dist/css'));
 });
 
 gulp.task('css-common', function () {
@@ -105,5 +113,6 @@ gulp.task('js-app', appNames.map((app) => 'js-' + app));
 gulp.task('js', ['js-util', 'js-common', 'js-app']);
 gulp.task('css-app', appNames.map((app) => 'css-' + app));
 gulp.task('css', ['css-common', 'css-app']);
+gulp.task('vendor', ['js-vendor', 'css-vendor']);
 gulp.task('default', ['server', 'vendor', 'js', 'css', 'watch']);
-gulp.task('build', ['vendor', 'js-app', 'css']);
+gulp.task('build', ['vendor', 'js', 'css']);

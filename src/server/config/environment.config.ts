@@ -3,7 +3,7 @@ const environment = {
     CDN: 'http://localhost:3001'
   },
   qa: {
-    CDN: '',
+    CDN: ''
   },
   production: {
     CDN: ''
