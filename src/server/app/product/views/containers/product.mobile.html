@@ -1,0 +1,14 @@
+<% include ../components/header.component.html %>
+<div class="container">
+    <h1>Home</h1>
+    <h2><%=test1%></h2>
+    <button type="button" class="btn-test">Button</button>
+    <div class="div-test"></div>
+</div>
+<% include ../components/javascript.component.html %>
+<script>
+    $(document).ready(function () {
+        var comp = new Tw.ProductMobileView($('.container'));
+    });
+</script>
+<% include ../components/footer.component.html %>
