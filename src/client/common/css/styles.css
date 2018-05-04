@@ -1,0 +1,22 @@
+html,body,form,div,p,dl,dt,dd,ul,ol,li,fieldset,th,td,button,blockquote{margin:0;padding:0;border:0;font-size:100%;font:inherit;}
+h1,h2,h3,h4,h5,h6{margin:0;padding:0;}
+body{-webkit-text-size-adjust:none;}
+input,textarea,select,button{font:inherit;vertical-align:middle;padding:0;}
+input[type='button'],input[type='text'],input[type='image'],input[type='submit'],input[type='password'],textarea{-webkit-appearance:none;border-radius:0;}
+input[type='checkbox']{-webkit-appearance:checkbox;}
+input[type='radio']{-webkit-appearance:radio;}
+textarea{resize:none;}
+table{border-collapse:collapse;border-spacing:0;}
+ol,ul{list-style:none;}
+img,fieldset,iframe{border:none;}
+address,cite,code,dfn,em,var,th,i{font-style:normal;font-weight:normal;}
+a{text-decoration:none;}
+article,aside,dialog,figure,footer,header,hgroup,nav,section{display:block;}
+a, button{cursor:pointer;background:transparent;}
+hr{display:none;}
+
+body{font-family:'PT Sans',sans-serif;}
+
+h3{text-align:center;height:50px;line-height:50px;margin:0 0 20px;font-size:1.4rem;}
+.content-wrapper{padding:0 0 60px;}
+.section-wrapper{padding:0 25px;}
