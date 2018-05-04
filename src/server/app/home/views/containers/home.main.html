@@ -1,6 +1,10 @@
 <% include ../components/header.component.html %>
 <div class="container">
-    <div class="content-wrapper">
+    <div class="swiper-container">
+        <div class="swiper-slide">Main</div>
+        <div class="swiper-slide">MY T</div>
+        <div class="swiper-slide">T channel</div>
+        <div class="swiper-slide">Menu</div>
     </div>
     <div class="wrapper_bottom">
         <div class="wrapper_btn">
@@ -19,8 +23,8 @@
 </div>
 <% include ../components/javascript.component.html %>
 <script>
-    $(document).ready(function () {
-        var comp = new Tw.HomeMainView($('.container'));
-    });
+  $(document).ready(function () {
+    var comp = new Tw.HomeMainView($('.container'));
+  });
 </script>
 <% include ../components/footer.component.html %>
