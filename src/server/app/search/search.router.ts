@@ -1,6 +1,6 @@
-import TxRouter from '../../common/route/tw.router';
+import TwRouter from '../../common/route/tw.router';
 
-class SearchRouter extends TxRouter {
+class SearchRouter extends TwRouter {
   constructor() {
     super();
     // this._controllers.push({ url: '/', controller: new HomeMainController() });
