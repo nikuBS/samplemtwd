@@ -1,7 +1,7 @@
 import HomeMainController from './controllers/home.main.controller';
-import TxRouter from '../../common/route/tw.router';
+import TwRouter from '../../common/route/tw.router';
 
-class HomeRouter extends TxRouter {
+class HomeRouter extends TwRouter {
   constructor() {
     super();
     this._controllers.push({ url: '/', controller: new HomeMainController() });
