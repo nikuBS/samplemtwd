@@ -1,9 +1,9 @@
 import ProductMobileController from './controllers/product.mobile.controller';
 import ProductInternelController from './controllers/product.internel.controller';
 import ProductMobileDetailController from './controllers/product.mobile-detail.controller';
-import TxRouter from '../../common/route/tw.router';
+import TwRouter from '../../common/route/tw.router';
 
-class ProductRouter extends TxRouter {
+class ProductRouter extends TwRouter {
   constructor() {
     super();
     this._controllers.push({ url: '/mobile/:id', controller: new ProductMobileDetailController() });

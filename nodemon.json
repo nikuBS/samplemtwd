@@ -1,0 +1,15 @@
+{
+  "verbose": true,
+  "ignore": [
+    ".git",
+    "node_modules",
+    "src/client"
+  ],
+  "watch": [
+    "src/server/**/*"
+  ],
+  "env": {
+    "PORT": 3000,
+    "NODE_ENV": "development"
+  }
+}

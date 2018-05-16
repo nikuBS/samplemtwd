@@ -9,7 +9,9 @@
     "client-deploy": "gulp build",
     "server-dev": "nodemon -e ts -w ./src/server -x npm run server-watch:dev",
     "server-watch:dev": "ts-node ./src/server/bin/www.ts",
-    "server-deploy:start": "pm2 start -f src/server/bin/www.ts --watch",
+    "server-dev:pm2": "pm2 start pm2.config.js",
+    "server-qa:pm2": "pm2 start pm2.config.js --env=qa",
+    "server-prod:pm2": "pm2 start pm2.config.js --env=production",
     "server-lint": "tslint -p tslint.json"
   },
   "author": "",
@@ -18,6 +20,8 @@
     "ejs": "^2.5.9",
     "express": "^4.16.3",
     "jquery": "^1.12.1",
+    "path": "^0.12.7",
+    "slick-carousel": "^1.8.1",
     "underscore": "^1.9.0"
   },
   "devDependencies": {
@@ -34,7 +38,7 @@
     "gulp-uglify": "^3.0.0",
     "gulp-util": "^3.0.8",
     "gulp-webserver": "^0.9.1",
-    "nodemon": "^1.17.3",
+    "nodemon": "^1.17.4",
     "pm2": "^2.10.2",
     "ts-node": "^6.0.0",
     "tslint": "^5.9.1",
