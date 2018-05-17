@@ -53,7 +53,7 @@ class App {
   }
 
   private setGlobalVariables() {
-    let env = environment[process.env.NODE_ENV+''];
+    const env = environment[process.env.NODE_ENV + ''];
     Object.keys(env).map((key) => {
       this.app.locals[key] = env[key];
     });
