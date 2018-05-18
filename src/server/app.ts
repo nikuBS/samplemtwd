@@ -3,7 +3,7 @@ import * as path from 'path';
 
 // Express Modules
 import express, { Application } from 'express';
-import ejs, { Data } from 'ejs';
+import ejs from 'ejs';
 
 import environment from './config/environment.config';
 
@@ -25,7 +25,6 @@ import UserRouter from './app/user/user.router';
 
 // Application Modules
 import RedisService from './services/redis.service';
-
 
 class App {
   public app: Application = express();
@@ -53,7 +52,8 @@ class App {
   }
 
   private setGlobalVariables() {
-    const env = environment[process.env.NODE_ENV + ''];
+    const env = environment[String(process.env.NODE_ENV)];
+
     Object.keys(env).map((key) => {
       this.app.locals[key] = env[key];
     });
