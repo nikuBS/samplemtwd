@@ -1,8 +1,7 @@
 {
-  "name": "tworld_example",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "mobile_",
+  "version": "0.0.1",
+  "description": "sktechx",
   "scripts": {
     "start": "npm run client-dev | npm run server-dev",
     "client-dev": "gulp",
