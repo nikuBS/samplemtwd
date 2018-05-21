@@ -1,5 +1,5 @@
 {
-  "name": "mobile_",
+  "name": "mobile_tworld",
   "version": "0.0.1",
   "description": "sktechx",
   "scripts": {
@@ -13,8 +13,8 @@
     "server-prod:pm2": "pm2 start pm2.config.js --env=production",
     "server-lint": "tslint -p tslint.json"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "SKTechx@2018",
+  "license": "MIT",
   "dependencies": {
     "ejs": "^2.5.9",
     "express": "^4.16.3",
