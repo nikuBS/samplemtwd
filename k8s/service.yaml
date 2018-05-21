@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: core-bill-service
+spec:
+  ports:
+    - name: http
+      port: 80
+      targetPort: 8080
+  selector:
+    app: core-bill-service
+type: NodePort

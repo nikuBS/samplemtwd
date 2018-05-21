@@ -25,6 +25,7 @@ import UserRouter from './app/user/user.router';
 
 // Application Modules
 import RedisService from './services/redis.service';
+import ApiRouter from './common/api.router';
 
 class App {
   public app: Application = express();
@@ -48,7 +49,12 @@ class App {
 
     this.setViewPath();
     this.setRoutes();
+    this.setApis();
     this.setGlobalVariables();
+  }
+
+  private setApis() {
+    this.app.use('/api', new ApiRouter().router);
   }
 
   private setGlobalVariables() {

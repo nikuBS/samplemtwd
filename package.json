@@ -19,8 +19,10 @@
   "dependencies": {
     "ejs": "^2.5.9",
     "express": "^4.16.3",
+    "https": "^1.0.0",
     "jquery": "^1.12.1",
     "path": "^0.12.7",
+    "rxjs": "^5.5.10",
     "slick-carousel": "^1.8.1",
     "underscore": "^1.9.0"
   },
