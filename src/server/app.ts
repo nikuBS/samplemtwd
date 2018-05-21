@@ -3,6 +3,7 @@ import * as path from 'path';
 
 // Express Modules
 import express, { Application } from 'express';
+import UA from 'express-useragent';
 import ejs from 'ejs';
 
 import environment from './config/environment.config';
@@ -45,6 +46,7 @@ class App {
     this.app.use(express.json());       // to support JSON-encoded bodies
     this.app.use(express.urlencoded({ extended: true })); // to support URL-encoded bodies
     this.app.use(this.redisService.middleware);
+    this.app.use(UA.express()); // req.useragent
     // this.app.use(express.static('public'));
 
     this.setViewPath();
