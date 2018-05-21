@@ -16,7 +16,7 @@ export enum API_SERVER {
 }
 
 export const API_CMD = {
-  SAMPLE: { path: '/books/v1/volumes', method: API_METHOD.GET, server: API_SERVER.BFF },
-  FAKE_GET: { path: '/comments', method: API_METHOD.GET, server: API_SERVER.FAKE },
-  FAKE_POST: { path: '/posts', method: API_METHOD.POST, server: API_SERVER.FAKE }
+  SAMPLE: { path: '/books/v1/volumes', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  FAKE_GET: { path: '/comments', method: API_METHOD.GET, server: API_SERVER.FAKE, bypass: true },
+  FAKE_POST: { path: '/posts', method: API_METHOD.POST, server: API_SERVER.FAKE, bypass: false }
 };

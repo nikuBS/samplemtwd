@@ -14,19 +14,21 @@ class ApiRouter {
 
     Object.keys(API_CMD).map((key) => {
       const cmd = API_CMD[key];
-      switch ( cmd.method ) {
-        case API_METHOD.GET:
-          this.setGetApi(cmd);
-          break;
-        case API_METHOD.POST:
-          this.setPostApi(cmd);
-          break;
-        case API_METHOD.PUT:
-          this.setPutApi(cmd);
-          break;
-        case API_METHOD.DELETE:
-          this.setDeleteApi(cmd);
-          break;
+      if ( cmd.bypass ) {
+        switch ( cmd.method ) {
+          case API_METHOD.GET:
+            this.setGetApi(cmd);
+            break;
+          case API_METHOD.POST:
+            this.setPostApi(cmd);
+            break;
+          case API_METHOD.PUT:
+            this.setPutApi(cmd);
+            break;
+          case API_METHOD.DELETE:
+            this.setDeleteApi(cmd);
+            break;
+        }
       }
     });
   }
