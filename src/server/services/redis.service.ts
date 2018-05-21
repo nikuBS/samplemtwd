@@ -1,15 +1,14 @@
 import session from 'express-session';
 import connect from 'connect-redis';
+import environment from '../config/environment.config';
 
-// redis server info
-// temporary repo : https://www.redislabs.com
+const env = environment[String(process.env.NODE_ENV)];
+
+// redis dev server info
 const RedisStore = connect(session);
-const redisOption = {
-  host: 'redis-10428.c1.asia-northeast1-1.gce.cloud.redislabs.com',
-  port: 10428,
-  prefix: 'session:',
-  pass: 'sH7JUTF7AKwRiNOs9rPxD6rS53HvW9GC'
-};
+const redisOption = Object.assign(env.REDIS, {
+  prefix: 'session:'
+});
 
 class RedisService {
   public middleware = session({
@@ -17,7 +16,7 @@ class RedisService {
     cookie: { maxAge: 5 * 60 * 1000 }, // 5min
     secret: 'sktechx',
     saveUninitialized: true, // don't create session until something stored,
-    resave: true // don't save session if unmodified
+    resave: true, // don't save session if unmodified
   });
 }
 
