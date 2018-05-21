@@ -1,8 +1,7 @@
 {
-  "name": "tworld_example",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "mobile_tworld",
+  "version": "0.0.1",
+  "description": "sktechx",
   "scripts": {
     "start": "npm run client-dev | npm run server-dev",
     "client-dev": "gulp",
@@ -14,8 +13,8 @@
     "server-prod:pm2": "pm2 start pm2.config.js --env=production",
     "server-lint": "tslint -p tslint.json"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "SKTechx@2018",
+  "license": "MIT",
   "dependencies": {
     "ejs": "^2.5.9",
     "express": "^4.16.3",
@@ -32,6 +31,7 @@
     "@types/node": "^9.6.6",
     "connect-redis": "^3.3.3",
     "express-session": "^1.15.6",
+    "express-useragent": "^1.0.12",
     "gulp": "^3.9.1",
     "gulp-concat": "^2.6.1",
     "gulp-css": "^0.1.0",

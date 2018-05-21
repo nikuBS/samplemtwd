@@ -3,7 +3,8 @@ module.exports = {
     {
       name: 'tworld',
       script: './src/server/bin/www.ts',
-      watch: true,
+      exec_mode: 'cluster',
+      instances: 'max',
       env: {
         'PORT': 3000,
         'NODE_ENV': 'development'

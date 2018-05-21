@@ -16,7 +16,7 @@ class RedisService {
     cookie: { maxAge: 5 * 60 * 1000 }, // 5min
     secret: 'sktechx',
     saveUninitialized: true, // don't create session until something stored,
-    resave: true, // don't save session if unmodified
+    resave: false, // don't save session if unmodified
   });
 }
 
