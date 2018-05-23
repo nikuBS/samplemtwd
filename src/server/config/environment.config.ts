@@ -24,7 +24,7 @@ const environment = {
       protocaol: '',
       port: 80
     },
-    CDN: '',
+    CDN: '/cdn',
     FAKE_SERVER: {
       url: 'jsonplaceholder.typicode.com',
       protocol: 'http',

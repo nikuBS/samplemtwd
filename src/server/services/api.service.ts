@@ -28,7 +28,7 @@ class ApiService {
       } else if ( apiServer.protocol === API_PROTOCOL.HTTP ) {
         req = http.request(options, this.apiCallback.bind(this, observer));
       } else {
-        console.log('Wrong server info');
+        console.warn('Wrong server info');
       }
 
       req.on('error', this.handleError.bind(this, observer));
@@ -62,7 +62,7 @@ class ApiService {
       try {
         respData = JSON.parse(data);
       } catch ( err ) {
-        console.log('JSON parse error');
+        console.warn('JSON parse error');
         respData = data;
       }
       observer.next(respData);
@@ -73,7 +73,7 @@ class ApiService {
   }
 
   private handleError(observer, err) {
-    console.log('[API_ERR]', err);
+    console.error('[API_ERR]', err);
     observer.error(err);
 
   }

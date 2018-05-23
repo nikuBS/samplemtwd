@@ -50,7 +50,8 @@ class ApiRouter {
   }
 
   private sendRequest(cmd: any, req: Request, res: Response, next: NextFunction) {
-    this.apiService.request(cmd, req.query)
+    const params = cmd.method === API_METHOD.GET ? req.query : req.body;
+    this.apiService.request(cmd, params)
       .subscribe(data => {
         return res.json(data);
       });

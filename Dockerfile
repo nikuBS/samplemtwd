@@ -14,11 +14,14 @@ VOLUME ["/tworld"]
 
 ADD . /tworld
 RUN cd /tworld && npm install
+RUN npm install -g pm2
+RUN pm2 install typescript
 
 ENV NODE_ENV k8s
+
 # open Application port
 EXPOSE 3000
 
 WORKDIR /tworld
 
-CMD ["npm", "run", "server-dev"]
+CMD ["npm", "run", "server-docker:qa"]
