@@ -16,10 +16,10 @@ class ApiService {
     ApiService.instance = this;
   }
 
-  public request(command: any, params: any): Observable<any> {
+  public request(command: any, params: any, ...args: any[]): Observable<any> {
     console.log('[API_REQ]', command, params);
     const apiServer = environment[String(process.env.NODE_ENV)][command.server];
-    const options = this.getOption(command, params, apiServer);
+    const options = this.getOption(command, apiServer, params, args);
 
     return Observable.create((observer) => {
       let req;
@@ -37,18 +37,26 @@ class ApiService {
     });
   }
 
-  private getOption(command: any, params: any, apiServer: any): any {
-    const path = command.method === API_METHOD.GET ?
-      command.path + ParamsHelper.setQueryParams(params) : command.path;
+  private getOption(command: any, apiServer: any, params: any, args: any[]): any {
     return {
       hostname: apiServer.url,
       port: apiServer.port,
-      path: path,
+      path: this.makePath(command.path, command.method, params, args),
       method: command.method,
       headers: {
         'Content-type': 'application/json; charset=UTF-8'
       }
     };
+  }
+
+  private makePath(path: string, method: API_METHOD, params: any, args: any[]): string {
+    if ( args.length > 0 ) {
+      args.map((argument, index) => {
+        path = path.replace(`{args[${index}]}`, argument);
+      });
+    }
+    path = method === API_METHOD.GET ? path + ParamsHelper.setQueryParams(params) : path;
+    return path;
   }
 
   private apiCallback(observer, resp) {
@@ -67,15 +75,12 @@ class ApiService {
       }
       observer.next(respData);
       observer.complete();
-
-
     });
   }
 
   private handleError(observer, err) {
     console.error('[API_ERR]', err);
     observer.error(err);
-
   }
 }
 

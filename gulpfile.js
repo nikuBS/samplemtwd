@@ -11,7 +11,6 @@ var gulp       = require('gulp'),
 var appNames = ['bill', 'customer', 'data', 'direct', 'etc', 'event', 'home', 'membership', 'myt', 'product', 'roaming', 'search', 'user'];
 // for docker (dev env)
 var dist = 'src/server/public/cdn/';
-// for development
 // var dist     = 'dist/';
 
 gulp.task('server', function () {

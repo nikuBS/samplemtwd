@@ -21,7 +21,7 @@ const environment = {
   qa: {
     BFF_SERVER: {
       url: '',
-      protocaol: '',
+      protocol: '',
       port: 80
     },
     CDN: '/cdn',
@@ -35,7 +35,7 @@ const environment = {
   production: {
     BFF_SERVER: {
       url: '',
-      protocaol: '',
+      protocol: '',
       port: 80
     },
     CDN: '',
