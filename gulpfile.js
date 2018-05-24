@@ -9,9 +9,12 @@ var gulp       = require('gulp'),
 
 
 var appNames = ['bill', 'customer', 'data', 'direct', 'etc', 'event', 'home', 'membership', 'myt', 'product', 'roaming', 'search', 'user'];
+// for docker (dev env)
+var dist = 'src/server/public/cdn/';
+// var dist     = 'dist/';
 
 gulp.task('server', function () {
-  return gulp.src('dist/')
+  return gulp.src(dist)
     .pipe(webserver({
       host: '0.0.0.0',
       port: 3001,
@@ -29,7 +32,7 @@ gulp.task('js-vendor', function () {
       gutil.log(gutil.colors.red('[Error]'), err.toString());
     })
     .pipe(concat('vendor.js'))
-    .pipe(gulp.dest('dist/js'));
+    .pipe(gulp.dest(dist + 'js'));
 
 });
 
@@ -40,41 +43,41 @@ gulp.task('js-util', function () {
     'src/client/services/**/*.js',
     'src/client/types/**/*.js'])
     .pipe(concat('util.js'))
-    .pipe(gulp.dest('dist/js'))
+    .pipe(gulp.dest(dist + 'js'))
     .pipe(uglify())
     .on('error', function (err) {
       gutil.log(gutil.colors.red('[Error]'), err.toString());
     })
     .pipe(rename('util.min.js'))
-    .pipe(gulp.dest('dist/js'));
+    .pipe(gulp.dest(dist + 'js'));
 });
 
 gulp.task('js-common', function () {
   return gulp.src('src/client/common/**/*.js')
     .pipe(concat('common.js'))
-    .pipe(gulp.dest('dist/js'))
+    .pipe(gulp.dest(dist + 'js'))
     .pipe(uglify())
     .on('error', function (err) {
       gutil.log(gutil.colors.red('[Error]'), err.toString());
     })
     .pipe(rename('common.min.js'))
-    .pipe(gulp.dest('dist/js'));
+    .pipe(gulp.dest(dist + 'js'));
 });
 
 gulp.task('css-vendor', function () {
   return gulp.src([
     'node_modules/slick-carousel/slick/slick.css'])
     .pipe(concat('vendor.css'))
-    .pipe(gulp.dest('dist/css'));
+    .pipe(gulp.dest(dist + 'css'));
 });
 
 gulp.task('css-common', function () {
   return gulp.src('src/client/common/css/**/*.css')
     .pipe(concat('common.css'))
-    .pipe(gulp.dest('dist/css'))
+    .pipe(gulp.dest(dist + 'css'))
     .pipe(cssmin())
     .pipe(rename('common.min.css'))
-    .pipe(gulp.dest('dist/css'));
+    .pipe(gulp.dest(dist + 'css'));
 });
 
 appNames.map((app) => {
@@ -83,22 +86,22 @@ appNames.map((app) => {
       'src/client/app/' + app + '/js/models/**/*.js',
       'src/client/app/' + app + '/js/views/**/*.js'])
       .pipe(concat(app + '.js'))
-      .pipe(gulp.dest('dist/js'))
+      .pipe(gulp.dest(dist + 'js'))
       .pipe(uglify())
       .on('error', function (err) {
         gutil.log(gutil.colors.red('[Error]'), err.toString());
       })
       .pipe(rename(app + '.min.js'))
-      .pipe(gulp.dest('dist/js'));
+      .pipe(gulp.dest(dist + 'js'));
   });
 
   gulp.task('css-' + app, function () {
     return gulp.src('src/client/app/home/css/**/*.css')
       .pipe(concat(app + '.css'))
-      .pipe(gulp.dest('dist/css'))
+      .pipe(gulp.dest(dist + 'css'))
       .pipe(cssmin())
       .pipe(rename(app + '.min.css'))
-      .pipe(gulp.dest('dist/css'));
+      .pipe(gulp.dest(dist + 'css'));
   });
 });
 

@@ -21,10 +21,10 @@ const environment = {
   qa: {
     BFF_SERVER: {
       url: '',
-      protocaol: '',
+      protocol: '',
       port: 80
     },
-    CDN: '',
+    CDN: '/cdn',
     FAKE_SERVER: {
       url: 'jsonplaceholder.typicode.com',
       protocol: 'http',
@@ -35,7 +35,7 @@ const environment = {
   production: {
     BFF_SERVER: {
       url: '',
-      protocaol: '',
+      protocol: '',
       port: 80
     },
     CDN: '',
