@@ -1,9 +1,9 @@
 const environment = {
   development: {
     BFF_SERVER: {
-      url: 'www.googleapis.com',
-      protocol: 'https',
-      port: 443
+      url: '211.188.180.73',
+      protocol: 'http',
+      port: 31010
     },
     CDN: 'http://localhost:3001',
     FAKE_SERVER: {
