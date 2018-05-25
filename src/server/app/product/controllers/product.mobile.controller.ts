@@ -5,23 +5,20 @@ import ApiService from '../../../services/api.service';
 import { API_CMD } from '../../../types/api-command.type';
 
 class ProductMobileController extends TwViewController {
-  private apiService;
-
-  constructor() {
+  constructor(private apiService = ApiService) {
     super();
-    this.apiService = ApiService;
   }
 
-  render(req: Request, res: Response, next: NextFunction) {
+  render(req: { useragent }, res: Response, next: NextFunction) {
+    console.log(req.useragent);
     this.apiService.request(API_CMD.FAKE_POST, {
       title: 'foo',
       body: 'bar',
       userId: 1
     }).subscribe((resp) => {
-        console.log('subscribe', resp);
-      });
+      console.log('subscribe', resp);
+    });
     res.render('product.mobile.html', new ProductMobileModel());
-    // res.render(__dirname + '../views/containers/product.mobile.html');
   }
 }
 
