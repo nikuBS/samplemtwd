@@ -6,6 +6,7 @@ const environment = {
       port: 443
     },
     CDN: 'http://localhost:3001',
+    TEMP_CDN: 'tstore.rbipt.com/skt',
     FAKE_SERVER: {
       url: 'jsonplaceholder.typicode.com',
       protocol: 'http',
