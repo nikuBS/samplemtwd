@@ -1,9 +1,9 @@
-Tw.MytExampleView = function (rootEl) {
+Tw.MytMainView = function (rootEl) {
   this.$container = rootEl;
   this._bindEvent();
 };
 
-Tw.MytExampleView.prototype = {
+Tw.MytMainView.prototype = {
   _bindEvent: function () {
   }
 };
