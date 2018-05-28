@@ -3,7 +3,7 @@ import { Request, Response, NextFunction } from 'express';
 import ApiService from '../../../services/api.service';
 import { API_CMD } from '../../../types/api-command.type';
 
-class MyTMainController extends TwViewController {
+class MyTUsageController extends TwViewController {
   private apiService;
 
   constructor() {
@@ -30,4 +30,4 @@ class MyTMainController extends TwViewController {
   }
 }
 
-export default MyTMainController;
+export default MyTUsageController;
