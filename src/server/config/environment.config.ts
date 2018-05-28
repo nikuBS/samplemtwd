@@ -21,9 +21,9 @@ const environment = {
   },
   qa: {
     BFF_SERVER: {
-      url: '',
-      protocol: '',
-      port: 80
+      url: '211.188.180.73',
+      protocol: 'http',
+      port: 31010
     },
     CDN: '/cdn',
     FAKE_SERVER: {
