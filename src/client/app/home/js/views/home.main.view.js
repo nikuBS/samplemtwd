@@ -3,8 +3,8 @@ Tw.HomeMainView = function (rootEl) {
   this._apiService    = new Tw.ApiService();
   this._nativeService = new Tw.NativeService();
 
+  this._uiFunction();
   this._bindEvent();
-  this._bindSwiper();
 };
 
 Tw.HomeMainView.prototype = {
@@ -13,10 +13,12 @@ Tw.HomeMainView.prototype = {
     this.$container.on('click', '.btn_test', $.proxy(this._onClickAjaxButton, this));
   },
 
-  _bindSwiper: function () {
-    $('.swiper-container').slick({
-      arrows: false,
-      lazyLoad: 'ondemand'
+  _uiFunction: function() {
+    $('.slick-type01 .belt').slick({
+      dots : false,
+      arrows : false,
+      infinite : false,
+      touchThreshold : 100
     });
   },
 
