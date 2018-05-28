@@ -26,7 +26,7 @@ class MyTMainController extends TwViewController {
     //     console.log(resp);
     //     res.render('myt.main.html', { data: resp });
     //   });
-    res.render('myt.main.html', { data: {} });
+    res.render('myt.usage.html', { data: {} });
   }
 }
 
