@@ -1,4 +1,4 @@
-<% include ../components/header.component.html %>
+<% include ../components/start.component.html %>
 <!-- skip -->
 <div class="skip"><a href="#content">본문 바로가기</a></div>
 <!-- // skip -->
@@ -131,10 +131,7 @@
         <!-- // container -->
     </div>
     <!-- // content -->
-    <!-- footer -->
-    <footer>
-    </footer>
-    <!-- // footer -->
+    <% include ../components/footer.component.html %>
 </div>
 <!-- // wrap -->
 <% include ../components/javascript.component.html %>
@@ -143,4 +140,4 @@
     var comp = new Tw.HomeMenuView($('.wrap'));
   });
 </script>
-<% include ../components/footer.component.html %>
+<% include ../components/end.component.html %>
