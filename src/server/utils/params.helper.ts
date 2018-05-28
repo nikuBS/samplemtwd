@@ -1,10 +1,4 @@
-export default class ParamsHelper {
-  /**
-   *
-   * @param params
-   * @returns {string}
-   * @private
-   */
+class ParamsHelper {
   static setQueryParams(params: any) {
     let result = '?';
     Object.keys(params).forEach(key => {
@@ -28,3 +22,5 @@ export default class ParamsHelper {
     return obj;
   }
 }
+
+export default ParamsHelper;

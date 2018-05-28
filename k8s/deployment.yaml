@@ -1,21 +1,21 @@
 apiVersion: apps/v1beta2
 kind: Deployment
 metadata:
-  name: core-bill-deployment
+  name: bff-nodejs-deployment
   labels:
-    app: core-bill-service
+    app: bff-nodejs-service
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: core-bill-service
+      app: bff-nodejs-service
   template:
     metadata:
       labels:
-        app: core-bill-service
+        app: bff-nodejs-service
     spec:
       containers:
-      - name: core-bill
+      - name: bff-nodejs
         env:
         - name: SPRING_PROFILES_ACTIVE
           value: stg
