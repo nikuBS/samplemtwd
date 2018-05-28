@@ -40,6 +40,7 @@
     "gulp-uglify": "^3.0.0",
     "gulp-util": "^3.0.8",
     "gulp-webserver": "^0.9.1",
+    "http-proxy-middleware": "^0.18.0",
     "nodemon": "^1.17.4",
     "pm2": "^2.10.2",
     "ts-node": "^6.0.0",

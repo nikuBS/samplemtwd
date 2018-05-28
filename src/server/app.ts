@@ -4,6 +4,7 @@ import * as path from 'path';
 // Express Modules
 import express, { Application } from 'express';
 import UA from 'express-useragent';
+import proxy from 'http-proxy-middleware';
 import ejs from 'ejs';
 
 import environment from './config/environment.config';
@@ -53,6 +54,7 @@ class App {
     this.setRoutes();
     this.setApis();
     this.setGlobalVariables();
+    this.setDevProxy();
   }
 
   private setApis() {
@@ -99,6 +101,19 @@ class App {
       path.join(__dirname, 'app/search/views/containers'),
       path.join(__dirname, 'app/user/views/containers'),
     ]);
+  }
+
+  private setDevProxy() {
+    /**
+     * ImageProxy
+     */
+    if ( process.env.NODE_ENV === 'development' ) {
+      const imageProxy = proxy('/img', {
+        target: 'http://tstore.rbipt.com/skt',
+        changeOrigin: true   // for vhosted sites
+      });
+      this.app.use(imageProxy);
+    }
   }
 }
 
