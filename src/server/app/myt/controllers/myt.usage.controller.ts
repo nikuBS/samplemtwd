@@ -1,6 +1,7 @@
 import TwViewController from '../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
 import ApiService from '../../../services/api.service';
+import myTUsageData from '../../../mock/myt.usage';
 import { API_CMD } from '../../../types/api-command.type';
 
 class MyTUsageController extends TwViewController {
@@ -26,7 +27,7 @@ class MyTUsageController extends TwViewController {
     //     console.log(resp);
     //     res.render('myt.main.html', { data: resp });
     //   });
-    res.render('myt.usage.html', { data: {} });
+    res.render('myt.usage.html', { data: myTUsageData });
   }
 }
 

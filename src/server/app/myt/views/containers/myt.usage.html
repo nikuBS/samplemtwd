@@ -24,9 +24,9 @@
             <div class="prd-list">
                 <ul>
                     <li>
-                        <div class="case"><span class="name">휴대폰</span><span class="tag-type01">대표</span></div>
-                        <div class="mask moebius-bold">010-12**-24**</div>
-                        <div class="nick">귀여운첫째아들</div>
+                        <div class="case"><span class="name"><%=data.header.svcType%></span><span class="tag-type01">대표</span></div>
+                        <div class="mask moebius-bold"><%=data.header.svcNum%></div>
+                        <div class="nick"><%=data.header.svcNickName%></div>
                         <div class="btn-change"><a href="#" class="btn-type01">변경</a></div>
                     </li>
                 </ul>
@@ -36,7 +36,7 @@
             <div class="prd-summary">
                 <div class="inner">
                     <div class="icon"><img src="../../img/ico_band.png" alt="" /></div>
-                    <div class="prd-name"><a href="#">Band 데이터 6.5G</a></div>
+                    <div id="<%=data.result.prodId%>" class="prd-name"><a href="#"><%=data.result.prodName%></a></div>
                     <div class="remaining-date">남은일수 <strong class="moebius-bold">18</strong>일</div>
                 </div>
             </div>
