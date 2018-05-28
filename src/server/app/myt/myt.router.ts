@@ -1,5 +1,5 @@
 import TwRouter from '../../common/route/tw.router';
-import MyTMainController from './controllers/myt.main.controller';
+import MyTMainController from './controllers/myt.usage.controller';
 
 class MytRouter extends TwRouter {
   constructor() {
