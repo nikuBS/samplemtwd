@@ -2,6 +2,7 @@ Tw.MytUsageView = function (rootEl) {
   this.$container = rootEl;
   this._preUiFunction(); // html source
   this._bindEvent();
+  this._bindData();
 };
 
 Tw.MytUsageView.prototype = {
@@ -9,6 +10,11 @@ Tw.MytUsageView.prototype = {
     this.guideBtnClickEvent();
   },
   _bindEvent: function () {
+  },
+  _bindData: function () {
+    var exampleUtil = new Tw.ExampleUtil();
+    var remainDate = exampleUtil.getRemainDate();
+    $('#myt-usage .remaining-date .moebius-bold').text(remainDate);
   },
   guideBtnClickEvent: function () {
     $('.guide .btn-toggle').bind('click', function(){
