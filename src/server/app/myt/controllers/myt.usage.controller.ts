@@ -28,7 +28,11 @@ class MyTUsage extends TwViewController {
     //     console.log(resp);
     //     res.render('myt.main.html', { data: resp });
     //   });
-    res.render('myt.usage.html', { response: myTUsageData, remainDate: DateHelper.getRemainDate() });
+      const data = {
+        response: myTUsageData,
+        remainDate: DateHelper.getRemainDate()
+      };
+      res.render('myt.usage.html', data);
   }
 }
 
