@@ -14,7 +14,6 @@ class DateHelper {
         const current = DateHelper.getDate();
         const next = DateHelper.getNextMonth();
         const remain = (next.getTime() - current.getTime()) / 1000 / 60 / 60 / 24;
-        console.log(remain);
         return remain;
     }
   }
