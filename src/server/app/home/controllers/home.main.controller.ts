@@ -2,8 +2,9 @@ import TwViewController from '../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
 import ApiService from '../../../services/api.service';
 import { API_CMD } from '../../../types/api-command.type';
+import myTUsageData from '../../../mock/myt.usage';
 
-class MainController extends TwViewController {
+class HomeMain extends TwViewController {
   private apiService;
 
   constructor() {
@@ -23,12 +24,11 @@ class MainController extends TwViewController {
 
     this.apiService.request(API_CMD.FAKE_GET_1, {}, 1, 'comments')
       .subscribe((resp) => {
-        console.log(resp);
-        res.render('home.main.html', { data: resp });
+        console.log(myTUsageData);
+        res.render('home.main.html', myTUsageData);
       });
-
     // res.render(__dirname + '../views/containers/home.html');
   }
 }
 
-export default MainController;
+export default HomeMain;

@@ -3,7 +3,7 @@ import { Request, Response, NextFunction } from 'express';
 import ApiService from '../../../services/api.service';
 import { API_CMD } from '../../../types/api-command.type';
 
-class MainController extends TwViewController {
+class HomeMenu extends TwViewController {
   private apiService;
 
   constructor() {
@@ -12,12 +12,8 @@ class MainController extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction) {
-    this.apiService.request(API_CMD.FAKE_GET_1, {}, 1, 'comments')
-      .subscribe((resp) => {
-        console.log(resp);
-        res.render('home.menu.html', { data: resp });
-      });
+    res.render('home.menu.html');
   }
 }
 
-export default MainController;
+export default HomeMenu;
