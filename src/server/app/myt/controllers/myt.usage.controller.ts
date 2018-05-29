@@ -4,7 +4,7 @@ import ApiService from '../../../services/api.service';
 import myTUsageData from '../../../mock/myt.usage';
 import { API_CMD } from '../../../types/api-command.type';
 
-class MyTUsageController extends TwViewController {
+class MyTUsage extends TwViewController {
   private apiService;
 
   constructor() {
@@ -31,4 +31,4 @@ class MyTUsageController extends TwViewController {
   }
 }
 
-export default MyTUsageController;
+export default MyTUsage;
