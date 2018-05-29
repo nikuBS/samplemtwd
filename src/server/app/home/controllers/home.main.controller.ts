@@ -3,6 +3,7 @@ import { Request, Response, NextFunction } from 'express';
 import ApiService from '../../../services/api.service';
 import { API_CMD } from '../../../types/api-command.type';
 import myTUsageData from '../../../mock/myt.usage';
+import DateHelper from '../../../utils/date.helper';
 
 class HomeMain extends TwViewController {
   private apiService;
@@ -21,10 +22,11 @@ class HomeMain extends TwViewController {
     //   }, () => {
     //     console.log('complete');
     //   });
+    DateHelper.getRemainDate();
 
     this.apiService.request(API_CMD.FAKE_GET_1, {}, 1, 'comments')
       .subscribe((resp) => {
-        console.log(myTUsageData);
+        // console.log(myTUsageData);
         res.render('home.main.html', myTUsageData);
       });
     // res.render(__dirname + '../views/containers/home.html');
