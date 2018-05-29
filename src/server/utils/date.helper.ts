@@ -18,6 +18,5 @@ class DateHelper {
         return remain;
     }
   }
-  
-  export default DateHelper;
-  
+
+export default DateHelper;
