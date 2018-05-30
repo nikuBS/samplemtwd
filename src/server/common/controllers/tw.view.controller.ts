@@ -8,6 +8,8 @@ abstract class TwViewController {
     this._apiService = ApiService;
   }
 
+  abstract render(req: any, res: any, next: any): void;
+
   get apiService(): any {
     return this._apiService;
   }
@@ -19,8 +21,6 @@ abstract class TwViewController {
       });
     this.render(req, res, next);
   }
-
-  abstract render(req: any, res: any, next: any): void;
 }
 
 export default TwViewController;

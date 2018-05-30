@@ -4,7 +4,7 @@ import CheckCurrentBillController from './controllers/check/check.current.bill.c
 class BillRouter extends TwRouter {
   constructor() {
     super();
-    this._controllers.push({ url: '/check/current', controller: new CheckCurrentBillController() });
+    this.controllers.push({ url: '/check/current', controller: new CheckCurrentBillController() });
   }
 }
 
