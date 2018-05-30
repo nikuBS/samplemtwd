@@ -2,6 +2,7 @@ Tw.HomeMainView = function (rootEl) {
   this.$container     = rootEl;
   this._apiService    = new Tw.ApiService();
   this._nativeService = new Tw.NativeService();
+  console.log(this.$container);
 
   this._uiFunction();
   this._bindEvent();
@@ -9,8 +10,12 @@ Tw.HomeMainView = function (rootEl) {
 
 Tw.HomeMainView.prototype = {
   _bindEvent: function () {
-    this.$container.on('click', '.wrapper_btn', $.proxy(this._onClickGnbButton, this));
-    this.$container.on('click', '.btn_test', $.proxy(this._onClickAjaxButton, this));
+    console.log('bind event');
+    // this.$container.on('click', '.wrapper_btn', $.proxy(this._onClickGnbButton, this));
+    this.$container.on('click', '.btn-search', $.proxy(this._onClickAjaxButton, this));
+    this._apiService.request(Tw.API_CMD.FAKE_POST, { postId: 1 })
+      .done($.proxy(this._success, this))
+      .fail($.proxy(this._fail, this));
   },
 
   _uiFunction: function() {
@@ -24,16 +29,12 @@ Tw.HomeMainView.prototype = {
 
   _onClickGnbButton: function ($event) {
     // $event.preventDefault();
-    var $target = $($event.currentTarget);
-    $('.swiper-container').slick('slickGoTo', $target.index());
-
-    this._nativeService.send('cmd', 'pr', this.nativeCallback)
-      .success(function () {
-        console.log();
-      })
+    // var $target = $($event.currentTarget);
+    // $('.swiper-container').slick('slickGoTo', $target.index());
   },
 
   _onClickAjaxButton: function ($event) {
+    console.log('button click');
     this._apiService.request(Tw.API_CMD.FAKE_POST, { postId: 1 })
       .done($.proxy(this._success, this))
       .fail($.proxy(this._fail, this));

@@ -14,7 +14,7 @@ class AppRouter {
     this.router = express.Router();
 
     routerMaps.map((routerMap: IRouterMap) => {
-      this.router.get(routerMap.url, routerMap.controller.render.bind(routerMap.controller));
+      this.router.get(routerMap.url, routerMap.controller.checkLogin.bind(routerMap.controller));
     });
   }
 }

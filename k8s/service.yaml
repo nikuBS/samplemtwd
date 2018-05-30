@@ -6,7 +6,7 @@ spec:
   ports:
     - name: http
       port: 80
-      nodePort: 30015
+      nodePort: 31011
       targetPort: 8080
   selector:
     app: bff-nodejs-service

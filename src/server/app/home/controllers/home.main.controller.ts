@@ -22,10 +22,10 @@ class HomeMain extends TwViewController {
     //   }, () => {
     //     console.log('complete');
     //   });
-    DateHelper.getRemainDate();
 
-    this.apiService.request(API_CMD.FAKE_GET_1, {}, 1, 'comments')
+    this.apiService.request(API_CMD.TEST_LOGIN, { userId: 'test' })
       .subscribe((resp) => {
+        console.log(resp);
         // console.log(myTUsageData);
         res.render('home.main.html', myTUsageData);
       });

@@ -6,7 +6,6 @@ const environment = {
       port: 31010
     },
     CDN: 'http://localhost:3001',
-    TEMP_CDN: 'http://tstore.rbipt.com/skt',
     FAKE_SERVER: {
       url: 'jsonplaceholder.typicode.com',
       protocol: 'http',
@@ -17,13 +16,14 @@ const environment = {
       port: 6379,
       pass: 'redis-twd',
       db: 15
-    }
+    },
+    TEMP_CDN: 'http://tstore.rbipt.com/skt'
   },
   qa: {
     BFF_SERVER: {
-      url: '211.188.180.73',
+      url: 'bff-spring-mtw-dev-bff',
       protocol: 'http',
-      port: 31010
+      port: 80
     },
     CDN: '/cdn',
     FAKE_SERVER: {
@@ -31,7 +31,8 @@ const environment = {
       protocol: 'http',
       port: 80
     },
-    REDIS: {}
+    REDIS: {},
+    TEMP_CDN: 'http://tstore.rbipt.com/skt'
   },
   production: {
     BFF_SERVER: {
@@ -45,7 +46,8 @@ const environment = {
       protocol: 'http',
       port: 80
     },
-    REDIS: {}
+    REDIS: {},
+    TEMP_CDN: 'http://tstore.rbipt.com/skt'
   }
 };
 
