@@ -1,8 +1,8 @@
 import { IRouterMap } from '../app.router';
 
 class TwRouter {
-  protected static _instance: TwRouter;
-  protected _controllers: Array<IRouterMap> = [];
+  private static _instance: TwRouter;
+  private _controllers: Array<IRouterMap> = [];
 
   constructor() {
   }

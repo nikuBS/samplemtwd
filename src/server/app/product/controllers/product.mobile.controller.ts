@@ -1,11 +1,10 @@
 import TwViewController from '../../../common/controllers/tw.view.controller';
 import ProductMobileModel from '../models/product.mobile.model';
 import { Request, Response, NextFunction } from 'express';
-import ApiService from '../../../services/api.service';
 import { API_CMD } from '../../../types/api-command.type';
 
 class ProductMobileController extends TwViewController {
-  constructor(private apiService = ApiService) {
+  constructor() {
     super();
   }
 

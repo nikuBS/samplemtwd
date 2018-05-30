@@ -1,16 +1,12 @@
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
-import ApiService from '../../../../services/api.service';
 import myTUsageData from '../../../../mock/myt.usage';
 import DateHelper from '../../../../utils/date.helper';
 import { API_CMD } from '../../../../types/api-command.type';
 
 class MyTUsage extends TwViewController {
-  private apiService;
-
   constructor() {
     super();
-    this.apiService = ApiService;
   }
 
   render(req: Request, res: Response, next: NextFunction) {
