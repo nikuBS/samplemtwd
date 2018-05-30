@@ -12,8 +12,8 @@ const environment = {
       port: 80
     },
     REDIS: {
-      host: '150.28.79.190',
-      port: 6379,
+      host: '211.188.180.73',
+      port: 31200,
       pass: 'redis-twd',
       db: 15
     },
@@ -31,7 +31,12 @@ const environment = {
       protocol: 'http',
       port: 80
     },
-    REDIS: {},
+    REDIS: {
+      host: 'dev-backing-redis-mobile-ibm-redis-ha-dev-sentinel.mtw-dev-cch.svc.cluster.local',
+      port: 26379,
+      pass: 'redis-twd',
+      db: 15
+    },
     TEMP_CDN: 'http://tstore.rbipt.com/skt'
   },
   production: {

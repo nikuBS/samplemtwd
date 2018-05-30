@@ -27,7 +27,7 @@ import SearchRouter from './app/search/search.router';
 import UserRouter from './app/user/user.router';
 
 // Application Modules
-// import RedisService from './services/redis.service';
+import RedisService from './services/redis.service';
 import ApiRouter from './common/api.router';
 
 class App {

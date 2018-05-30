@@ -23,7 +23,7 @@ class HomeMain extends TwViewController {
     //     console.log('complete');
     //   });
 
-    this.apiService.request(API_CMD.TEST_LOGIN, { userId: 'test' })
+    this.apiService.request(API_CMD.TEST_LOGIN, { userId: 'thanatosv' })
       .subscribe((resp) => {
         console.log(resp);
         // console.log(myTUsageData);

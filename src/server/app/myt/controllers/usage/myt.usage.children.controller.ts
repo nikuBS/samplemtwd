@@ -1,6 +1,6 @@
-import TwViewController from '../../../common/controllers/tw.view.controller';
+import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
-import ApiService from '../../../services/api.service';
+import ApiService from '../../../../services/api.service';
 
 class MyTUsageChildren extends TwViewController {
   private apiService;
@@ -13,7 +13,7 @@ class MyTUsageChildren extends TwViewController {
   render(req: Request, res: Response, next: NextFunction) {
     const data = {};
 
-    res.render('myt.usage.children.html', data);
+    res.render('usage/myt.usage.children.html', data);
   }
 }
 
