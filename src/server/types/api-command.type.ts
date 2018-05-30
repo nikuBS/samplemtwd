@@ -3,20 +3,20 @@ export enum API_METHOD {
   GET = 'GET',
   PUT = 'PUT',
   DELETE = 'DELETE'
-};
+}
 
 export enum API_PROTOCOL {
   HTTP = 'http',
   HTTPS = 'https'
-};
+}
 
 export enum API_SERVER {
   BFF = 'BFF_SERVER',
   FAKE = 'FAKE_SERVER'
-};
+}
 
 export const API_CMD = {
-  TEST_LOGIN: { path: '/test-login', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: false },
+  TEST_LOGIN: { path: '/testLogin', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: false },
   GET_USAGE: {
     path: '/core-balance/vi/services/balance/details',
     method: API_METHOD.GET,
