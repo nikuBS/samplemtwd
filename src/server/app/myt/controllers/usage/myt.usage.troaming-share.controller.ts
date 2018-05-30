@@ -2,7 +2,7 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import { Request, Response, NextFunction } from 'express';
 import ApiService from '../../../../services/api.service';
 
-class MyTUsageTDataShareInfo extends TwViewController {
+class MyTUsageTRoamingShare extends TwViewController {
     private apiService;
 
     constructor() {
@@ -13,8 +13,8 @@ class MyTUsageTDataShareInfo extends TwViewController {
     render(req: Request, res: Response, next: NextFunction) {
         const data = {};
 
-        res.render('usage/myt.usage.tdata.share.info.html', data);
+        res.render('usage/myt.usage.troaming-share.html', data);
     }
 }
 
-export default MyTUsageTDataShareInfo;
+export default MyTUsageTRoamingShare;

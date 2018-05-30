@@ -13,7 +13,7 @@ class MyTUsageTDataShare extends TwViewController {
     render(req: Request, res: Response, next: NextFunction) {
         const data = {};
 
-        res.render('usage/myt.usage.tdata.share.html', data);
+        res.render('usage/myt.usage.tdata-share.html', data);
     }
 }
 
