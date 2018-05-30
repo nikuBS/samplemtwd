@@ -5,8 +5,8 @@ import HomeMenu from './controllers/home.menu.controller';
 class HomeRouter extends TwRouter {
   constructor() {
     super();
-    this._controllers.push({ url: '/', controller: new HomeMain() });
-    this._controllers.push({ url: '/menu', controller: new HomeMenu() });
+    this.controllers.push({ url: '/', controller: new HomeMain() });
+    this.controllers.push({ url: '/menu', controller: new HomeMenu() });
   }
 }
 

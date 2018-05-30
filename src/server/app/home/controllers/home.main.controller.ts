@@ -1,16 +1,12 @@
 import TwViewController from '../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
-import ApiService from '../../../services/api.service';
 import { API_CMD } from '../../../types/api-command.type';
 import myTUsageData from '../../../mock/myt.usage';
 import DateHelper from '../../../utils/date.helper';
 
 class HomeMain extends TwViewController {
-  private apiService;
-
   constructor() {
     super();
-    this.apiService = ApiService;
   }
 
   render(req: Request, res: Response, next: NextFunction) {
@@ -23,7 +19,7 @@ class HomeMain extends TwViewController {
     //     console.log('complete');
     //   });
 
-    this.apiService.request(API_CMD.TEST_LOGIN, { userId: 'thanatosv' })
+    this.apiService.request(API_CMD.GET_USAGE, {})
       .subscribe((resp) => {
         console.log(resp);
         // console.log(myTUsageData);

@@ -4,7 +4,6 @@ Tw.HomeMainView = function (rootEl) {
   this._nativeService = new Tw.NativeService();
   console.log(this.$container);
 
-  this._uiFunction();
   this._bindEvent();
 };
 
@@ -16,15 +15,6 @@ Tw.HomeMainView.prototype = {
     this._apiService.request(Tw.API_CMD.FAKE_POST, { postId: 1 })
       .done($.proxy(this._success, this))
       .fail($.proxy(this._fail, this));
-  },
-
-  _uiFunction: function() {
-    $('.slick-type01 .belt').slick({
-      dots : false,
-      arrows : false,
-      infinite : false,
-      touchThreshold : 100
-    });
   },
 
   _onClickGnbButton: function ($event) {
