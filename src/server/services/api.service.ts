@@ -2,7 +2,7 @@ import http from 'http';
 import https from 'https';
 import { Observable } from 'rxjs/Observable';
 import environment from '../config/environment.config';
-import { API_METHOD, API_PROTOCOL } from '../types/api-command.type';
+import { API_CODE, API_METHOD, API_PROTOCOL } from '../types/api-command.type';
 import ParamsHelper from '../utils/params.helper';
 
 class ApiService {
@@ -16,10 +16,10 @@ class ApiService {
     ApiService.instance = this;
   }
 
-  public request(command: any, params: any, ...args: any[]): Observable<any> {
-    console.log('[API_REQ]', command, params);
+  public request(command: any, params: any, header: any, ...args: any[]): Observable<any> {
     const apiServer = environment[String(process.env.NODE_ENV)][command.server];
-    const options = this.getOption(command, apiServer, params, args);
+    const options = this.getOption(command, apiServer, params, header, args);
+    console.log('[API_REQ]', options);
 
     return Observable.create((observer) => {
       let req;
@@ -37,15 +37,18 @@ class ApiService {
     });
   }
 
-  private getOption(command: any, apiServer: any, params: any, args: any[]): any {
+  private getOption(command: any, apiServer: any, params: any, header: any, args: any[]): any {
+    if ( !header ) {
+      header = {};
+    }
     return {
       hostname: apiServer.url,
       port: apiServer.port,
       path: this.makePath(command.path, command.method, params, args),
       method: command.method,
-      headers: {
+      headers: Object.assign(header, {
         'Content-type': 'application/json; charset=UTF-8'
-      }
+      })
     };
   }
 
@@ -80,7 +83,9 @@ class ApiService {
 
   private handleError(observer, err) {
     console.error('[API_ERR]', err);
-    observer.error(err);
+    // observer.error(err);
+    observer.next({ code: API_CODE.CODE_400, msg: err.message });
+    observer.complete();
   }
 }
 
