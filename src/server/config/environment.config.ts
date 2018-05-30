@@ -3,7 +3,7 @@ const environment = {
     BFF_SERVER: {
       url: '211.188.180.73',
       protocol: 'http',
-      port: 31011
+      port: 31010
     },
     CDN: 'http://localhost:3001',
     FAKE_SERVER: {
