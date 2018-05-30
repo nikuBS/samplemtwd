@@ -16,7 +16,7 @@ class ApiService {
     ApiService.instance = this;
   }
 
-  public request(command: any, params: any, header: any, ...args: any[]): Observable<any> {
+  public request(command: any, params: any, header?: any, ...args: any[]): Observable<any> {
     const apiServer = environment[String(process.env.NODE_ENV)][command.server];
     const options = this.getOption(command, apiServer, params, header, args);
     console.log('[API_REQ]', options);
