@@ -19,6 +19,8 @@ class HomeMain extends TwViewController {
     //     console.log('complete');
     //   });
 
+    // console.log(DateHelper.getRemainDate());
+
     this.apiService.request(API_CMD.GET_USAGE, {})
       .subscribe((resp) => {
         console.log(resp);

@@ -7,6 +7,7 @@ import ParamsHelper from '../utils/params.helper';
 
 class ApiService {
   static instance;
+  private cookie = '';
 
   constructor() {
     if ( ApiService.instance ) {
@@ -47,7 +48,8 @@ class ApiService {
       path: this.makePath(command.path, command.method, params, args),
       method: command.method,
       headers: Object.assign(header, {
-        'Content-type': 'application/json; charset=UTF-8'
+        'Content-type': 'application/json; charset=UTF-8',
+        'Set-Cookie': this.cookie
       })
     };
   }
@@ -64,6 +66,15 @@ class ApiService {
 
   private apiCallback(observer, resp) {
     let data = '';
+
+    console.log('Headers: ', JSON.stringify(resp.headers));
+    try {
+      this.cookie = resp.headers['set-cookie'][0];
+      console.log('Cookie: ', this.cookie);
+    } catch (err) {
+      this.cookie = '';
+    }
+    // this.cookie = resp.headers['set-cookie'][0];
     resp.on('data', (chunk) => {
       data += chunk;
     });
