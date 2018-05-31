@@ -1,3 +1,4 @@
+import { Request, Response, NextFunction } from 'express';
 import { API_CMD } from '../../types/api-command.type';
 import ApiService from '../../services/api.service';
 
@@ -8,7 +9,7 @@ abstract class TwViewController {
     this._apiService = ApiService;
   }
 
-  abstract render(req: any, res: any, next: any, header?: any): void;
+  abstract render(req: Request, res: Response, next: NextFunction, svcInfo?: any): void;
 
   get apiService(): any {
     return this._apiService;

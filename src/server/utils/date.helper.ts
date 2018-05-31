@@ -13,7 +13,7 @@ class DateHelper {
   static getRemainDate(): number {
     const current = DateHelper.getDate();
     const next = DateHelper.getNextMonth();
-    const remain = (next.getTime() - current.getTime()) / 1000 / 60 / 60 / 24;
+    const remain = Math.floor((next.getTime() - current.getTime()) / 1000 / 60 / 60 / 24);
     return remain;
   }
 }

@@ -8,7 +8,7 @@
     <header class="header">
         <h1 class="title"><a href="#">T world</a></h1>
         <div class="user-numbers">
-            <a href="#link" class="moebius">010-46**-10**</a>
+            <a href="#link" class="moebius"><%= svcInfo.svcNum %></a>
         </div>
         <button class="btn-search"><span class="blind">검색</span></button>
     </header>
@@ -18,51 +18,42 @@
         <!-- container -->
         <section class="container">
             <div class="info-userdata">
-                <p><strong>김호*</strong>님의 이번달</p>
+                <p><strong><%= svcInfo.svcNickName %></strong>님의 이번달</p>
                 <p class="coment">데이터가 부족해요</p>
             </div>
             <div class="slider-area">
                 <div class="ttl-area">
-                    <p class="ttl">Band 데이터 6.5G</p>
-                    <p class="days">잔여일수<b class="moebius-bold">18</b>일</p>
+                    <p class="ttl"><%= usageData.prodName %></p>
+                    <p class="days">잔여일수<b class="moebius-bold"><%= remainDate %></b>일</p>
                 </div>
                 <div class="slick-type01">
                     <div class="belt">
                         <!-- class명 자유 해당 depth div가 1개 unit-->
+                        <% if( usageData.data ) { %>
+                        <% for(var i = 0; i < usageData.data.length; i++) { %>
                         <div class="card type-data">
                             <div class="head">
                                 <strong>데이터</strong>
-                                <span>선물 받은 데이터</span>
+                                <span><%= usageData.data[i].skipName %></span>
                             </div>
                             <div class="bar-area">
                                 <div class="chart">
-                                    <p><span class="moebius-bold">2.4</span><em>GB</em></p>
-                                    <strong class="total"><span class="moebius-bold">10</span><em>GB</em></strong>
+                                    <p><span class="moebius-bold"><%= usageData.data[i].used %></span><em><%= usageData.data[i].unit %></em></p>
+                                    <strong class="total"><span class="moebius-bold"><%= usageData.data[i].total %></span><em><%= usageData.data[i].unit %></em></strong>
                                 </div>
                                 <div class="bar">
-                                    <span style="width:24%;"></span><!-- width:퍼센테이지 필요, 0%의 경우 display:none; // -->
+                                    <span style="width:<%= 10*2 %>%;"></span><!-- width:퍼센테이지 필요, 0%의 경우 display:none; // -->
                                 </div>
                             </div>
                         </div>
-                        <div class="card type-data">
-                            <div class="head">
-                                <strong>데이터</strong>
-                                <span>데이터 통화 11GB 무료</span>
-                            </div>
-                            <div class="bar-area">
-                                <div class="chart">
-                                    <p><span class="moebius-bold">1.9</span><em>GB</em></p>
-                                    <strong class="total"><span class="moebius-bold">11</span><em>GB</em></strong>
-                                </div>
-                                <div class="bar">
-                                    <span style="width:17%;"></span><!-- width:퍼센테이지 필요, 0%의 경우 display:none; // -->
-                                </div>
-                            </div>
-                        </div>
+                        <% } %>
+                        <% } %>
+                        <% if( usageData.voice ) { %>
+                        <% for(var i = 0; i < usageData.voice.length; i++) { %>
                         <div class="card type-voice">
                             <div class="head">
                                 <strong>음성</strong>
-                                <span>영상,부가전화 300분</span>
+                                <span><%= usageData.voice[i].skipName %></span>
                             </div>
                             <div class="bar-area">
                                 <div class="chart">
@@ -75,10 +66,14 @@
                                 </div>
                             </div>
                         </div>
+                        <% } %>
+                        <% } %>
+                        <% if( usageData.sms ) { %>
+                        <% for(var i = 0; i < usageData.sms.length; i++) { %>
                         <div class="card type-message">
                             <div class="head">
                                 <strong>문자</strong>
-                                <span>SMS/MMS/ⓜ메신저</span>
+                                <span><%= usageData.sms[i].skipName %></span>
                             </div>
                             <div class="bar-area">
                                 <div class="chart">
@@ -90,6 +85,8 @@
                                 </div>
                             </div>
                         </div>
+                        <% } %>
+                        <% } %>
                     </div>
                 </div>
             </div>
