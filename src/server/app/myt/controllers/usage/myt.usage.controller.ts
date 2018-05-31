@@ -3,32 +3,35 @@ import { Request, Response, NextFunction } from 'express';
 import myTUsageData from '../../../../mock/myt.usage';
 import DateHelper from '../../../../utils/date.helper';
 import { API_CMD } from '../../../../types/api-command.type';
+import { SVC_CD } from '../../../../types/bff-common.type';
 
 class MyTUsage extends TwViewController {
   constructor() {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction) {
-    // this.apiService.request(API_CMD.FAKE_GET, { postId: 1 })
-    //   .subscribe((data) => {
-    //     console.log('subscribe', data);
-    //   }, (err) => {
-    //     console.log('error', err);
-    //   }, () => {
-    //     console.log('complete');
-    //   });
+  private changeSvcCdToTxt(svcCd: string) {
+    const svcCdObj = { 'svcCd': SVC_CD[svcCd] };
+    return svcCdObj;
+  }
 
-    // this.apiService.request(API_CMD.FAKE_GET_1, {}, 1, 'comments')
-    //   .subscribe((resp) => {
-    //     console.log(resp);
-    //     res.render('myt.main.html', { data: resp });
-    //   });
-    const data = {
-      response: myTUsageData,
-      remainDate: DateHelper.getRemainDate()
-    };
-    res.render('usage/myt.usage.html', data);
+  private assignHeaderObj(header: any) {
+    const changedObj = this.changeSvcCdToTxt(header.svcCd);
+    return Object.assign({}, header, changedObj);
+  }
+
+  render(req: Request, res: Response, next: NextFunction, header: any) {
+    const copyHeader = this.assignHeaderObj(header);
+    this.apiService.request(API_CMD.BFF_05_0001, {}) // 사용량 조회
+      .subscribe((resp) => {
+        console.log(resp);
+        const data = {
+          header: copyHeader,
+          response: myTUsageData, // mock data
+          remainDate: DateHelper.getRemainDate()
+        };
+        res.render('usage/myt.usage.html', data);
+      });
   }
 }
 

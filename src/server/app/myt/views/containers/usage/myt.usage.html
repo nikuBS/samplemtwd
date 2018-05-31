@@ -24,9 +24,9 @@
             <div class="prd-list">
                 <ul>
                     <li>
-                        <div class="case"><span class="name"><%=response.header.svcType%></span><span class="tag-type01">대표</span></div>
-                        <div class="mask moebius-bold"><%=response.header.svcNum%></div>
-                        <div class="nick"><%=response.header.svcNickName%></div>
+                        <div class="case"><span class="name"><%=header.svcCd%></span><span class="tag-type01">대표</span></div>
+                        <div class="mask moebius-bold"><%=header.svcNum%></div>
+                        <div class="nick"><%=header.svcNickName%></div>
                         <div class="btn-change"><a href="#" class="btn-type01">변경</a></div>
                     </li>
                 </ul>
@@ -132,7 +132,7 @@
                                     <a href="#" class="btn-type02">T끼리 데이터선물 / 조르기</a>
                                 </div>
                                 <div class="col1">
-                                    <a href="#" class="btn-type02">T데이터셰어링 사용량</a>
+                                    <a href="/myt/usage/tdatashare" class="btn-type02">T데이터셰어링 사용량</a>
                                 </div>
                             </div>
                         </div>
@@ -229,7 +229,7 @@
                                     <a href="#" class="btn-type02">T끼리 데이터선물 / 조르기</a>
                                 </div>
                                 <div class="col1">
-                                    <a href="#" class="btn-type02">T데이터셰어링 사용량</a>
+                                    <a href="/myt/usage/tdatashare" class="btn-type02">T데이터셰어링 사용량</a>
                                 </div>
                             </div>
                         </div>
@@ -238,7 +238,7 @@
                         <div class="tip">
                             <h3>데이터 <strong>Tip</strong></h3>
                             <div class="txt">하나의 데이터로 <strong>여러개의 기기를 이용한다고??</strong></div>
-                            <div class="link"><a href="#">T데이터셰어링 알아보기</a></div>
+                            <div class="link"><a href="/myt/usage/tdatashare/info">T데이터셰어링 알아보기</a></div>
                         </div>
                         <!-- // tip -->
                     </div>
@@ -299,7 +299,7 @@
                                     <a href="#" class="btn-type02">T끼리 데이터선물 / 조르기</a>
                                 </div>
                                 <div class="col1">
-                                    <a href="#" class="btn-type02">T데이터셰어링 사용량</a>
+                                    <a href="/myt/usage/tdatashare" class="btn-type02">T데이터셰어링 사용량</a>
                                 </div>
                             </div>
                         </div>
@@ -308,7 +308,7 @@
                         <div class="tip">
                             <h3>데이터 <strong>Tip</strong></h3>
                             <div class="txt">하나의 데이터로 <strong>여러개의 기기를 이용한다고??</strong></div>
-                            <div class="link"><a href="#">T데이터셰어링 알아보기</a></div>
+                            <div class="link"><a href="/myt/usage/tdatashare/info">T데이터셰어링 알아보기</a></div>
                         </div>
                         <!-- // tip -->
                         <!-- tip -->
@@ -376,7 +376,7 @@
                                     <a href="#" class="btn-type02">T끼리 데이터선물 / 조르기</a>
                                 </div>
                                 <div class="col1">
-                                    <a href="#" class="btn-type02">T데이터셰어링 사용량</a>
+                                    <a href="/myt/usage/tdatashare" class="btn-type02">T데이터셰어링 사용량</a>
                                 </div>
                             </div>
                         </div>
@@ -437,7 +437,7 @@
                                     <a href="#" class="btn-type02">T끼리 데이터선물 / 조르기</a>
                                 </div>
                                 <div class="col1">
-                                    <a href="#" class="btn-type02">T데이터셰어링 사용량</a>
+                                    <a href="/myt/usage/tdatashare" class="btn-type02">T데이터셰어링 사용량</a>
                                 </div>
                             </div>
                         </div>
@@ -499,7 +499,7 @@
                                     <a href="#" class="btn-type02">T끼리 데이터선물 / 조르기</a>
                                 </div>
                                 <div class="col1">
-                                    <a href="#" class="btn-type02">T데이터셰어링 사용량</a>
+                                    <a href="/myt/usage/tdatashare" class="btn-type02">T데이터셰어링 사용량</a>
                                 </div>
                             </div>
                         </div>
@@ -911,19 +911,6 @@
                     </li>
                 </ol>
             </article>
-            <!--
-            <script>
-                $('.guide .btn-toggle').bind('click', function(){
-                    if(!$(this).parent().hasClass('on')){
-                        $(this).parent().addClass('on').siblings().removeClass('on');
-                    }else{
-                        $(this).parent().removeClass('on');
-                    }
-                    return false;
-                })
-            </script>
-            -->
-            <!-- // guide -->
         </section>
         <!-- // container -->
     </div>
