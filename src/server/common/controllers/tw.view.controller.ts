@@ -8,7 +8,7 @@ abstract class TwViewController {
     this._apiService = ApiService;
   }
 
-  abstract render(req: any, res: any, next: any): void;
+  abstract render(req: any, res: any, next: any, header?: any): void;
 
   get apiService(): any {
     return this._apiService;
@@ -16,11 +16,9 @@ abstract class TwViewController {
 
   public checkLogin(req: any, res: any, next: any) {
     const userId = req.query.userId;
-    this.apiService.request(API_CMD.TEST_LOGIN, { userId: userId })
-      .subscribe((resp) => {
-        console.log(resp);
-        this.render(req, res, next);
-      });
+    this.apiService.request(API_CMD.BFF_03_0001, { userId: userId }).subscribe((resp) => {
+      this.render(req, res, next, resp.header);
+    });
   }
 }
 

@@ -19,14 +19,19 @@ class HomeMain extends TwViewController {
     //     console.log('complete');
     //   });
 
-    // console.log(DateHelper.getRemainDate());
-
-    this.apiService.request(API_CMD.GET_USAGE, {})
+    console.log(arguments[arguments.length - 1]);
+    console.log(DateHelper.getRemainDate());
+    this.apiService.request(API_CMD.SESSION_CHECK, {})
       .subscribe((resp) => {
         console.log(resp);
-        // console.log(myTUsageData);
-        res.render('home.main.html', myTUsageData);
       });
+    res.render('home.main.html', myTUsageData);
+    // this.apiService.request(API_CMD.BFF_05_0001, {})
+    //   .subscribe((resp) => {
+    //     console.log(resp);
+    //     // console.log(myTUsageData);
+    //     res.render('home.main.html', myTUsageData);
+    //   });
     // res.render(__dirname + '../views/containers/home.html');
   }
 }
