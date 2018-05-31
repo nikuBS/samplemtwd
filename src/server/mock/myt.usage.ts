@@ -1,75 +1,54 @@
 const myTUsageData = {
-  'header': {
-    'svcType': '서비스구분',
-    'svcNum': '서비스번호',
-    'svcNickName': '회선닉네임'
-  },
-
+  'code': '00',
+  'msg': '',
   'result': {
-    'prodId': '기본요금제ID',
-    'prodName': '기본요금제명',
-    'dataTopUp': '데이터한도요금제 가입여부',
-    'ting': 'Ting요금상품 가입여부',
-    'dataDiscount': '24시간데이터50%할인 가입여부',
-    'child': [
-      {
-        'svcNum': '자녀 서비스번호',
-        'mdlName': '자녀 단말기 기종명'
-      }
-    ],
-
+    'prodId': 'NA00005482',
+    'prodName': '뉴 T끼리 맞춤형(100분+3GB)',
+    'dataTopUp ': 'Y',
+    'ting': 'N',
+    'dataDiscount': 'Y',
     'data': [
       {
-        'skipId': '공제항목ID1',
-        'skipName': '공제항목명',
-        'total': '기본제공량',
-        'used': '사용량',
-        'remained': '잔여량',
-        'unit': '단위코드',
-        'couponDate': '쿠폰등록일'
-      },
-      {
-        'skipId': '공제항목ID2',
-        'skipName': '공제항목명',
-        'total': '기본제공량',
-        'used': '사용량',
-        'remained': '잔여량',
-        'unit': '단위코드',
-        'couponDate': '쿠폰등록일'
+        'skipId': 'DD2N8',
+        'skipName': '데이터통화 3GB 무료(LTE)',
+        'total': '3145728',
+        'used': '3145728',
+        'remained': '0',
+        'unit': '140',
+        'couponDate': ''
       }
     ],
     'voice': [
       {
-        'skipId': '공제항목ID',
-        'skipName': '공제항목명',
-        'total': '기본제공량',
-        'used': '사용량',
-        'remained': '잔여량',
-        'unit': '단위코드',
-        'couponDate': '쿠폰등록일'
+        'skipId': 'DD2N6',
+        'skipName': '망외 음성 및 영상 통화 100분',
+        'total': '6000',
+        'used': '1839',
+        'remained': '4161',
+        'unit': '240',
+        'couponDate': ''
       }
     ],
     'sms': [
       {
-        'skipId': '공제항목ID',
-        'skipName': '공제항목명',
+        'skipId': 'DD2N4',
+        'skipName': 'SMS\/MMS\/ⓜ메신저 기본제공',
         'total': '기본제공량',
-        'used': '사용량',
-        'remained': '잔여량',
-        'unit': '단위코드',
-        'couponDate': '쿠폰등록일'
+        'used': '0',
+        'remained': '0',
+        'unit': '310',
+        'couponDate': ''
       }
     ],
-    'etc': [
-      {
-        'skipId': '공제항목ID',
-        'skipName': '공제항목명',
-        'total': '기본제공량',
-        'used': '사용량',
-        'remained': '잔여량',
-        'unit': '단위코드',
-        'couponDate': '쿠폰등록일'
-      }
+    'etc': [{
+      'skipId': 'DDC63',
+      'skipName': '착신전환 무료 제공',
+      'total': '16200',
+      'used': '0',
+      'remained': '16200',
+      'unit': '240',
+      'couponDate': ''
+    }
     ]
   }
 };
