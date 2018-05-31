@@ -15,11 +15,12 @@ abstract class TwViewController {
   }
 
   public checkLogin(req: any, res: any, next: any) {
-    this.apiService.request(API_CMD.TEST_LOGIN, { userId: 'thanatosv' })
+    const userId = req.query.userId;
+    this.apiService.request(API_CMD.TEST_LOGIN, { userId: userId })
       .subscribe((resp) => {
         console.log(resp);
+        this.render(req, res, next);
       });
-    this.render(req, res, next);
   }
 }
 
