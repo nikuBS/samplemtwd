@@ -9,7 +9,7 @@ class HomeMain extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     // this.apiService.request(API_CMD.FAKE_GET, { postId: 1 })
     //   .subscribe((data) => {
     //     console.log('subscribe', data);
@@ -19,13 +19,18 @@ class HomeMain extends TwViewController {
     //     console.log('complete');
     //   });
 
-    console.log(arguments[arguments.length - 1]);
-    console.log(DateHelper.getRemainDate());
+    console.log(svcInfo);
+
+    const remainDate = DateHelper.getRemainDate()
     this.apiService.request(API_CMD.SESSION_CHECK, {})
       .subscribe((resp) => {
         console.log(resp);
       });
-    res.render('home.main.html', myTUsageData);
+    res.render('home.main.html', {
+      usageData: myTUsageData.result,
+      svcInfo,
+      remainDate
+    });
     // this.apiService.request(API_CMD.BFF_05_0001, {})
     //   .subscribe((resp) => {
     //     console.log(resp);

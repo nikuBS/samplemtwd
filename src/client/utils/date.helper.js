@@ -14,7 +14,7 @@ Tw.DateHelper = (function() {
   var getRemainDate = function () {
     var current = getDate();
     var next = getNextMonth();
-    var remain = (next.getTime() - current.getTime()) / 1000 / 60 / 60 / 24;
+    var remain = Math.floor((next.getTime() - current.getTime()) / 1000 / 60 / 60 / 24);
     return remain;
   };
 
