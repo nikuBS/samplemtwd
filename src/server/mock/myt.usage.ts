@@ -20,7 +20,16 @@ const myTUsageData = {
 
     'data': [
       {
-        'skipId': '공제항목ID',
+        'skipId': '공제항목ID1',
+        'skipName': '공제항목명',
+        'total': '기본제공량',
+        'used': '사용량',
+        'remained': '잔여량',
+        'unit': '단위코드',
+        'couponDate': '쿠폰등록일'
+      },
+      {
+        'skipId': '공제항목ID2',
         'skipName': '공제항목명',
         'total': '기본제공량',
         'used': '사용량',

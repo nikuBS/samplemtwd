@@ -44,8 +44,9 @@
             <!-- prd-state -->
             <div class="prd-state">
                 <!-- section : 데이터 무제한 1 -->
+                <% for (var i = 0; i < response.result.data.length; i++) { %>
                 <section>
-                    <h2>데이터</h2>
+                    <h2>데이터***</h2>
                     <div class="btn-change">
                         <input class="checkbox" id="checkbox1" type="checkbox"/>
                         <label for="checkbox1" class="checkbox-label">
@@ -67,7 +68,7 @@
                                     </div>
                                 </div>
                                 <div class="tail">
-                                    <div class="base">잔여 <strong class="moebius-bold">828.19</strong><span clsss="unit">MB</span></div>
+                                    <div class="base">잔여 <strong class="moebius-bold">828.19</strong><span class="unit">MB</span></div>
                                     <div class="rt">사용 <strong class="moebius-bold">828.19</strong><span class="unit">MB</span></div>
                                 </div>
                             </div>
@@ -81,8 +82,8 @@
                                     </div>
                                 </div>
                                 <div class="tail">
-                                    <div class="base">잔여 <strong class="moebius-bold">828.19</strong><span clsss="unit">MB</span></div>
-                                    <div class="rt">사용 <strong class="moebius-bold">828.19</strong><span clsss="unit">MB</span></div>
+                                    <div class="base">잔여 <strong class="moebius-bold">828.19</strong><span class="unit">MB</span></div>
+                                    <div class="rt">사용 <strong class="moebius-bold">828.19</strong><span class="unit">MB</span></div>
                                     <div class="coupon">쿠폰등록일 <span class="moebius">2018.01.01</span></div>
                                 </div>
                             </div>
@@ -97,7 +98,7 @@
                                 </div>
                                 <div class="tail">
                                     <div class="base2">무제한</div>
-                                    <div class="rt">오늘사용 <strong class="moebius-bold">828.19</strong><span clsss="unit">MB</span></div>
+                                    <div class="rt">오늘사용 <strong class="moebius-bold">828.19</strong><span class="unit">MB</span></div>
                                 </div>
                             </div>
                             <div class="sec mb20">
@@ -111,7 +112,7 @@
                                 </div>
                                 <div class="tail">
                                     <div class="base2">무제한</div>
-                                    <div class="rt">오늘사용 <strong class="moebius-bold">828.19</strong><span clsss="unit">MB</span></div>
+                                    <div class="rt">오늘사용 <strong class="moebius-bold">828.19</strong><span class="unit">MB</span></div>
                                 </div>
                             </div>
                             <div class="btn-group">
@@ -138,6 +139,7 @@
                         <!-- // ad -->
                     </div>
                 </section>
+                <% } %>
                 <!-- // section : 데이터 무제한 1 -->
                 <!-- section : 데이터 무제한 2 -->
                 <section>
@@ -168,7 +170,7 @@
                                     </div>
                                 </div>
                                 <div class="tail">
-                                    <div class="base">잔여 <strong class="moebius-bold">0</strong><span clsss="unit">MB</span></div>
+                                    <div class="base">잔여 <strong class="moebius-bold">0</strong><span class="unit">MB</span></div>
                                     <div class="rt">사용 <strong class="moebius-bold">828.19</strong><span class="unit">MB</span></div>
                                 </div>
                             </div>
@@ -182,8 +184,8 @@
                                     </div>
                                 </div>
                                 <div class="tail">
-                                    <div class="base">잔여 <strong class="moebius-bold">0</strong><span clsss="unit">MB</span></div>
-                                    <div class="rt">사용 <strong class="moebius-bold">828.19</strong><span clsss="unit">MB</span></div>
+                                    <div class="base">잔여 <strong class="moebius-bold">0</strong><span class="unit">MB</span></div>
+                                    <div class="rt">사용 <strong class="moebius-bold">828.19</strong><span class="unit">MB</span></div>
                                     <div class="coupon">쿠폰등록일 <span class="moebius">2018.01.01</span></div>
                                 </div>
                             </div>
@@ -198,7 +200,7 @@
                                 </div>
                                 <div class="tail">
                                     <div class="base2">무제한</div>
-                                    <div class="rt">오늘사용 <strong class="moebius-bold">828.19</strong><span clsss="unit">MB</span></div>
+                                    <div class="rt">오늘사용 <strong class="moebius-bold">828.19</strong><span class="unit">MB</span></div>
                                 </div>
                             </div>
                             <div class="sec mb20">
@@ -212,7 +214,7 @@
                                 </div>
                                 <div class="tail">
                                     <div class="base2">무제한</div>
-                                    <div class="rt">오늘사용 <strong class="moebius-bold">828.19</strong><span clsss="unit">MB</span></div>
+                                    <div class="rt">오늘사용 <strong class="moebius-bold">828.19</strong><span class="unit">MB</span></div>
                                 </div>
                             </div>
                         </div>
@@ -266,7 +268,7 @@
                                     </div>
                                 </div>
                                 <div class="tail">
-                                    <div class="base">잔여 <strong class="moebius-bold">12.19</strong><span clsss="unit">MB</span></div>
+                                    <div class="base">잔여 <strong class="moebius-bold">12.19</strong><span class="unit">MB</span></div>
                                     <div class="rt">사용 <strong class="moebius-bold">828.19</strong><span class="unit">MB</span></div>
                                 </div>
                             </div>
@@ -280,8 +282,8 @@
                                     </div>
                                 </div>
                                 <div class="tail">
-                                    <div class="base">잔여 <strong class="moebius-bold">0</strong><span clsss="unit">MB</span></div>
-                                    <div class="rt">사용 <strong class="moebius-bold">1828.19</strong><span clsss="unit">MB</span></div>
+                                    <div class="base">잔여 <strong class="moebius-bold">0</strong><span class="unit">MB</span></div>
+                                    <div class="rt">사용 <strong class="moebius-bold">1828.19</strong><span class="unit">MB</span></div>
                                     <div class="coupon">쿠폰등록일 <span class="moebius">2018.01.01</span></div>
                                 </div>
                             </div>
@@ -343,7 +345,7 @@
                                     </div>
                                 </div>
                                 <div class="tail">
-                                    <div class="base">잔여 <strong class="moebius-bold">0</strong><span clsss="unit">MB</span></div>
+                                    <div class="base">잔여 <strong class="moebius-bold">0</strong><span class="unit">MB</span></div>
                                     <div class="rt">사용 <strong class="moebius-bold">828.19</strong><span class="unit">MB</span></div>
                                 </div>
                             </div>
@@ -357,8 +359,8 @@
                                     </div>
                                 </div>
                                 <div class="tail">
-                                    <div class="base">잔여 <strong class="moebius-bold">0</strong><span clsss="unit">MB</span></div>
-                                    <div class="rt">사용 <strong class="moebius-bold">1828.19</strong><span clsss="unit">MB</span></div>
+                                    <div class="base">잔여 <strong class="moebius-bold">0</strong><span class="unit">MB</span></div>
+                                    <div class="rt">사용 <strong class="moebius-bold">1828.19</strong><span class="unit">MB</span></div>
                                     <div class="coupon">쿠폰등록일 <span class="moebius">2018.01.01</span></div>
                                 </div>
                             </div>
@@ -419,7 +421,7 @@
                                     </div>
                                 </div>
                                 <div class="tail">
-                                    <div class="base">잔여 <strong class="moebius-bold">0</strong><span clsss="unit">MB</span></div>
+                                    <div class="base">잔여 <strong class="moebius-bold">0</strong><span class="unit">MB</span></div>
                                     <div class="rt">사용 <strong class="moebius-bold">2000</strong><span class="unit">MB</span></div>
                                 </div>
                             </div>
@@ -467,7 +469,7 @@
                                     </div>
                                 </div>
                                 <div class="tail">
-                                    <div class="base">잔여 <strong class="moebius-bold">0</strong><span clsss="unit">MB</span></div>
+                                    <div class="base">잔여 <strong class="moebius-bold">0</strong><span class="unit">MB</span></div>
                                     <div class="rt">사용 <strong class="moebius-bold">1000</strong><span class="unit">MB</span></div>
                                 </div>
                             </div>
@@ -481,8 +483,8 @@
                                     </div>
                                 </div>
                                 <div class="tail">
-                                    <div class="base">잔여 <strong class="moebius-bold">828.19</strong><span clsss="unit">MB</span></div>
-                                    <div class="rt">사용 <strong class="moebius-bold">18.19</strong><span clsss="unit">MB</span></div>
+                                    <div class="base">잔여 <strong class="moebius-bold">828.19</strong><span class="unit">MB</span></div>
+                                    <div class="rt">사용 <strong class="moebius-bold">18.19</strong><span class="unit">MB</span></div>
                                 </div>
                             </div>
                         </div>
