@@ -6,8 +6,8 @@ Tw.DateHelper = (function() {
 
   var getNextMonth = function () {
     var next = new Date();
-    next.setMonth(next.getMonth() +1);
     next.setDate(1);
+    next.setMonth(next.getMonth() +1);
     return next;
   };
 
