@@ -21,7 +21,7 @@ class HomeMain extends TwViewController {
 
     // console.log(DateHelper.getRemainDate());
 
-    this.apiService.request(API_CMD.GET_USAGE, {})
+    this.apiService.request(API_CMD.BFF_05_0001, {})
       .subscribe((resp) => {
         console.log(resp);
         // console.log(myTUsageData);

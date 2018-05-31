@@ -16,7 +16,7 @@ abstract class TwViewController {
 
   public checkLogin(req: any, res: any, next: any) {
     const userId = req.query.userId;
-    this.apiService.request(API_CMD.TEST_LOGIN, { userId: userId })
+    this.apiService.request(API_CMD.BFF_03_0001, { userId: userId })
       .subscribe((resp) => {
         console.log(resp);
         this.render(req, res, next);
