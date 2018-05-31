@@ -5,3 +5,9 @@ export const SVC_CD = {
   T: 'IPTV',
   I: '인터넷'
 };
+
+export const UNIT = {
+  '140': 'KB',
+  '210': '초',
+  '310': '원'
+};
