@@ -10,23 +10,23 @@ class MyTUsage extends TwViewController {
     super();
   }
 
-  private changeSvcCdToTxt(svcCd: string) {
+  private makeSvcCdObj(svcCd: string) {
     const svcCdObj = { 'svcCd': SVC_CD[svcCd] };
     return svcCdObj;
   }
 
   private assignHeaderObj(svcInfo: any) {
-    const changedObj = this.changeSvcCdToTxt(svcInfo.svcCd);
+    const changedObj = this.makeSvcCdObj(svcInfo.svcCd);
     return Object.assign({}, svcInfo, changedObj);
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    const copyHeader = this.assignHeaderObj(svcInfo);
+    const copySvcInfo = this.assignHeaderObj(svcInfo);
     this.apiService.request(API_CMD.BFF_05_0001, {}) // 사용량 조회
       .subscribe((resp) => {
         console.log(resp);
         const data = {
-          svcInfo: copyHeader,
+          svcInfo: copySvcInfo,
           response: myTUsageData, // mock data
           remainDate: DateHelper.getRemainDate()
         };
