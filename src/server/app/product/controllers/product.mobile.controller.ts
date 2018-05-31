@@ -8,8 +8,7 @@ class ProductMobileController extends TwViewController {
     super();
   }
 
-  render(req: { useragent }, res: Response, next: NextFunction) {
-    console.log(req.useragent);
+  render(req, res: Response, next: NextFunction) {
     this.apiService.request(API_CMD.FAKE_POST, {
       title: 'foo',
       body: 'bar',
