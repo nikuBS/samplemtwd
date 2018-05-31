@@ -38,11 +38,11 @@
                             </div>
                             <div class="bar-area">
                                 <div class="chart">
-                                    <p><span class="moebius-bold"><%= usageData.data[i].used %></span><em><%= usageData.data[i].unit %></em></p>
-                                    <strong class="total"><span class="moebius-bold"><%= usageData.data[i].total %></span><em><%= usageData.data[i].unit %></em></strong>
+                                    <p><span class="moebius-bold"><%= usageData.data[i].showUsed %></span><em>GB</em></p>
+                                    <strong class="total"><span class="moebius-bold"><%= usageData.data[i].showTotal %></span><em>GB</em></strong>
                                 </div>
                                 <div class="bar">
-                                    <span style="width:<%= 10*2 %>%;"></span><!-- width:퍼센테이지 필요, 0%의 경우 display:none; // -->
+                                    <span style="width:<%= usageData.data[i].usedRatio %>%;"></span><!-- width:퍼센테이지 필요, 0%의 경우 display:none; // -->
                                 </div>
                             </div>
                         </div>
