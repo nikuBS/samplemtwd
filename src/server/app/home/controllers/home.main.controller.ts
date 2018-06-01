@@ -24,7 +24,7 @@ class HomeMain extends TwViewController {
     const remainDate = DateHelper.getRemainDate();
     this.apiService.request(API_CMD.SESSION_CHECK, {})
       .subscribe((resp) => {
-        console.log(resp);
+        console.log('Session', resp);
       });
 
     const usageData = this.parseData(myTUsageData.result);
