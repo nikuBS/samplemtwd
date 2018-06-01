@@ -27,8 +27,6 @@ class HomeMain extends TwViewController {
         console.log(resp);
       });
 
-    console.log(FormatHelper.convVoiceFormat(3601));
-
     const usageData = this.parseData(myTUsageData.result);
     res.render('home.main.html', {
       usageData,
@@ -46,18 +44,25 @@ class HomeMain extends TwViewController {
 
   private parseData(usageData: any): any {
     usageData.data.map((data) => {
-      data.showTotal = FormatHelper.convDataFormat(data.total, UNIT[data.unit]);
-      data.showUsed = FormatHelper.convDataFormat(data.used, UNIT[data.unit]);
-      data.showRemained = FormatHelper.convDataFormat(data.remained, UNIT[data.unit]);
-      data.usedRatio = data.used / data.total * 100;
+      data.isUnlimit = !isFinite(data.total);
+      data.usedRatio = 100;
+      if ( !data.isUnlimit ) {
+        data.showTotal = FormatHelper.convDataFormat(data.total, UNIT[data.unit]);
+        data.showUsed = FormatHelper.convDataFormat(data.used, UNIT[data.unit]);
+        data.showRemained = FormatHelper.convDataFormat(data.remained, UNIT[data.unit]);
+        data.usedRatio = data.used / data.total * 100;
+      }
     });
 
     usageData.voice.map((voice) => {
-      voice.showTotal = FormatHelper.convVoiceFormat(voice.total);
-      voice.showUsed = FormatHelper.convVoiceFormat(voice.used);
-      voice.showRemained = FormatHelper.convVoiceFormat(voice.remained);
-      voice.usedRatio = voice.used / voice.total * 100;
-      console.log(voice);
+      voice.isUnlimit = !isFinite(voice.total);
+      voice.usedRatio = 100;
+      if ( !voice.isUnlimit ) {
+        voice.showTotal = FormatHelper.convVoiceFormat(voice.total);
+        voice.showUsed = FormatHelper.convVoiceFormat(voice.used);
+        voice.showRemained = FormatHelper.convVoiceFormat(voice.remained);
+        voice.usedRatio = voice.used / voice.total * 100;
+      }
     });
 
     return usageData;

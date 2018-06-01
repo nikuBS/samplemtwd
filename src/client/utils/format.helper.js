@@ -13,11 +13,11 @@ Tw.FormatHelper = (function () {
   };
 
   var isObject = function (value) {
-    return (!!value) && (value.constructor === Object);
+    return (!!value) && (value.varructor === Object);
   };
 
   var isArra = function (value) {
-    return (!!value) && (value.constructor === Array);
+    return (!!value) && (value.varructor === Array);
   };
 
   var isString = function (value) {
@@ -25,29 +25,17 @@ Tw.FormatHelper = (function () {
   };
 
 
-  var convUnit = function (data, curUnit, targetUnit, precision) {
-    if ( !targetUnit ) {
-      targetUnit = 'GB';
-    }
-    if ( !precision ) {
-      precision = 1;
-    }
-    var units         = [
-      'bytes',
-      'KB',
-      'MB',
-      'GB',
-      'TB',
-      'PB'
-    ];
-    var curUnitIdx    = units.findIndex(function (value) {
+  var customDataFormat = function (data, curUnit, targetUnit) {
+    var units = [DATA_UNIT.KB, DATA_UNIT.MB, DATA_UNIT.GB];
+    var curUnitIdx = units.findIndex(function(value) {
       return value === curUnit;
     });
-    var targetUnitIdx = units.findIndex(function (value) {
+    var targetUnitIdx = units.findIndex(function(value) {
       return value === targetUnit;
     });
-    var sub           = targetUnitIdx - curUnitIdx;
-    data              = +data;
+    var sub = targetUnitIdx - curUnitIdx;
+
+    data = +data;
     if ( sub > 0 ) {
       for ( var i = 0; i < sub; i++ ) {
         data = data / 1024;
@@ -58,11 +46,77 @@ Tw.FormatHelper = (function () {
       }
     }
 
-    return data.toFixed(precision);
+    return {
+      data: convNumFormat(data),
+      unit: targetUnit
+    };
+  };
+
+  var convDataFormat = function (data, curUnit) {
+    var units = [Tw.DATA_UNIT.KB, Tw.DATA_UNIT.MB, Tw.DATA_UNIT.GB];
+    var unitIdx = units.findIndex(function(value) {
+      return value === curUnit;
+    });
+
+    data = +data;
+    if ( !isFinite(data) ) {
+      return {
+        data: data,
+        unit: curUnit
+      };
+    }
+
+    while ( data >= 1024 ) {
+      data /= 1024;
+      unitIdx++;
+    }
+
+    return {
+      data: convNumFormat(data),
+      unit: units[unitIdx]
+    };
+  };
+
+  var convNumFormat = function (number) {
+    if ( number > 0 && number < 100 && number % 1 !== 0 ) {
+      return removeZero(number.toFixed(2));
+    }
+    if ( number >= 100 && number < 1000 && number % 1 !== 0 ) {
+      return removeZero(number.toFixed(1));
+    }
+    if ( number > 1000 ) {
+      return addComma(number.toFixed(0));
+    }
+
+    return number.toString();
+  };
+
+  var removeZero = function (value) {
+    if ( value.indexOf('.') !== -1 ) {
+      return value.replace(/(0+$)/, '');
+    }
+
+    return value;
+  };
+
+  var addComma = function (value) {
+    var regexp = /\B(?=(\d{3})+(?!\d))/g;
+    return value.replace(regexp, ',');
+  };
+
+  var convVoiceFormat = function (data) {
+    data = +data;
+    var hours = Math.floor(data / 3600);
+    var min = Math.floor((data - (hours * 3600)) / 60);
+    var sec = data - (hours * 3600) - (min * 60);
+
+    return { hours: hours, min: min, sec: sec };
   };
 
   return {
     leadingZeros: leadingZeros,
-    convUnit: convUnit
+    customDataFormat: customDataFormat,
+    convDataFormat: convDataFormat,
+    convVoiceFormat: convVoiceFormat
   }
 })();
