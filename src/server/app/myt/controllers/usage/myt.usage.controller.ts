@@ -33,7 +33,13 @@ class MyTUsage extends TwViewController {
   }
 
   private isVisibleDayBtn(skipId: any): boolean {
-    return (skipId in DAY_BTN_STANDARD_SKIP_ID);
+    let isVisible = false;
+    for (const item of DAY_BTN_STANDARD_SKIP_ID) {
+      if (item === skipId) {
+        isVisible = true;
+      }
+    }
+    return isVisible;
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
