@@ -19,14 +19,14 @@
             <div class="breadcrumb">
                 나의 사용량/사용내역 &#62; 사용량 조회
             </div>
-            <!-- // breadcrumb -->
+            <!-- // breadcruGB -->
             <!-- prd-list -->
             <div class="prd-list">
                 <ul>
                     <li>
-                        <div class="case"><span class="name"><%=svcInfo.svcCd%></span><% if (svcInfo.repSvcYn === 'Y') { %><span class="tag-type01">대표</span><% } %></div>
-                        <div class="mask moebius-bold"><%=svcInfo.svcNum%></div>
-                        <div class="nick"><%=svcInfo.svcNickName%></div>
+                        <div class="case"><span class="name"><%= svcInfo.svcName %></span><% if (svcInfo.repSvcYn === 'Y') { %><span class="tag-type01">대표</span><% } %></div>
+                        <div class="mask moebius-bold"><%= svcInfo.svcNum %></div>
+                        <div class="nick"><%= svcInfo.svcNickName %></div>
                         <div class="btn-change"><a href="#" class="btn-type01">변경</a></div>
                     </li>
                 </ul>
@@ -36,40 +36,41 @@
             <div class="prd-summary">
                 <div class="inner">
                     <div class="icon"><img src="../../img/ico_band.png" alt="" /></div>
-                    <div id="<%=response.result.prodId%>" class="prd-name"><a href="#"><%=response.result.prodName%></a></div>
-                    <div class="remaining-date">남은일수 <strong class="moebius-bold"><%=remainDate%></strong>일</div>
+                    <div id="<%= usageData.prodId %>" class="prd-name"><a href="#"><%= usageData.prodName %></a></div>
+                    <div class="remaining-date">남은일수 <strong class="moebius-bold"><%= remainDate %></strong>일</div>
                 </div>
             </div>
             <!-- // prd-summary -->
             <!-- prd-state -->
             <div class="prd-state">
                 <!-- section : 데이터 무제한 1 -->
-                <% for (var i = 0; i < response.result.data.length; i++) { %>
+                <% if( usageData.data ) { %>
+                <% for (var i = 0; i < usageData.data.length; i++) { %>
                 <section>
-                    <h2>데이터***</h2>
+                    <h2>데이터</h2>
                     <div class="btn-change">
                         <input class="checkbox" id="checkbox1" type="checkbox"/>
                         <label for="checkbox1" class="checkbox-label">
                             <span class="off">GB</span>
                             <span class="look"></span>
-                            <span class="on">MB</span>
+                            <span class="on">GB</span>
                         </label>
                     </div>
                     <div class="box-white">
                         <!-- data -->
                         <div class="data">
-                            <div class="sec">
-                                <h3>기본 제공 데이터 16GB</h3>
+                            <div id="<%= usageData.data[i].skipId %>" class="sec">
+                                <h3><%= usageData.data[i].skipName %></h3>
                                 <div class="progressbar-type01"><!-- 유제한 타입 //-->
                                     <span class="base"></span>
-                                    <div class="val" style="width:50%;"><!-- width:퍼센테이지 필요, 0%의 경우 display:none; // -->
+                                    <div class="val" style="width:<%= usageData.data[i].showUsedRatio %>%;"><!-- width:퍼센테이지 필요, 0%의 경우 display:none; // -->
                                         <span class="fill"></span>
                                         <span class="fill2"></span>
                                     </div>
                                 </div>
                                 <div class="tail">
-                                    <div class="base">잔여 <strong class="moebius-bold">828.19</strong><span class="unit">MB</span></div>
-                                    <div class="rt">사용 <strong class="moebius-bold">828.19</strong><span class="unit">MB</span></div>
+                                    <div class="base">잔여 <strong class="moebius-bold"><%= usageData.data[i].showRemained %></strong><span class="unit">GB</span></div>
+                                    <div class="rt">사용 <strong class="moebius-bold"><%= usageData.data[i].showUsed %></strong><span class="unit">GB</span></div>
                                 </div>
                             </div>
                             <div class="sec">
@@ -82,8 +83,8 @@
                                     </div>
                                 </div>
                                 <div class="tail">
-                                    <div class="base">잔여 <strong class="moebius-bold">828.19</strong><span class="unit">MB</span></div>
-                                    <div class="rt">사용 <strong class="moebius-bold">828.19</strong><span class="unit">MB</span></div>
+                                    <div class="base">잔여 <strong class="moebius-bold">828.19</strong><span class="unit">GB</span></div>
+                                    <div class="rt">사용 <strong class="moebius-bold">828.19</strong><span class="unit">GB</span></div>
                                     <div class="coupon">쿠폰등록일 <span class="moebius">2018.01.01</span></div>
                                 </div>
                             </div>
@@ -98,10 +99,10 @@
                                 </div>
                                 <div class="tail">
                                     <div class="base2">무제한</div>
-                                    <div class="rt">오늘사용 <strong class="moebius-bold">828.19</strong><span class="unit">MB</span></div>
+                                    <div class="rt">오늘사용 <strong class="moebius-bold">828.19</strong><span class="unit">GB</span></div>
                                 </div>
                             </div>
-                            <div class="sec mb20">
+                            <div class="sec GB20">
                                 <h3>B tv 모바일 pack</h3>
                                 <div class="progressbar-type02"><!-- 무제한 타입 //-->
                                     <span class="base"></span>
@@ -112,7 +113,7 @@
                                 </div>
                                 <div class="tail">
                                     <div class="base2">무제한</div>
-                                    <div class="rt">오늘사용 <strong class="moebius-bold">828.19</strong><span class="unit">MB</span></div>
+                                    <div class="rt">오늘사용 <strong class="moebius-bold">828.19</strong><span class="unit">GB</span></div>
                                 </div>
                             </div>
                             <div class="btn-group">
@@ -140,6 +141,7 @@
                     </div>
                 </section>
                 <% } %>
+                <% } %>
                 <!-- // section : 데이터 무제한 1 -->
                 <!-- section : 데이터 무제한 2 -->
                 <section>
@@ -149,7 +151,7 @@
                         <label for="checkbox2" class="checkbox-label">
                             <span class="off">GB</span>
                             <span class="look"></span>
-                            <span class="on">MB</span>
+                            <span class="on">GB</span>
                         </label>
                     </div>
                     <div class="box-white">
@@ -170,8 +172,8 @@
                                     </div>
                                 </div>
                                 <div class="tail">
-                                    <div class="base">잔여 <strong class="moebius-bold">0</strong><span class="unit">MB</span></div>
-                                    <div class="rt">사용 <strong class="moebius-bold">828.19</strong><span class="unit">MB</span></div>
+                                    <div class="base">잔여 <strong class="moebius-bold">0</strong><span class="unit">GB</span></div>
+                                    <div class="rt">사용 <strong class="moebius-bold">828.19</strong><span class="unit">GB</span></div>
                                 </div>
                             </div>
                             <div class="sec">
@@ -184,8 +186,8 @@
                                     </div>
                                 </div>
                                 <div class="tail">
-                                    <div class="base">잔여 <strong class="moebius-bold">0</strong><span class="unit">MB</span></div>
-                                    <div class="rt">사용 <strong class="moebius-bold">828.19</strong><span class="unit">MB</span></div>
+                                    <div class="base">잔여 <strong class="moebius-bold">0</strong><span class="unit">GB</span></div>
+                                    <div class="rt">사용 <strong class="moebius-bold">828.19</strong><span class="unit">GB</span></div>
                                     <div class="coupon">쿠폰등록일 <span class="moebius">2018.01.01</span></div>
                                 </div>
                             </div>
@@ -200,10 +202,10 @@
                                 </div>
                                 <div class="tail">
                                     <div class="base2">무제한</div>
-                                    <div class="rt">오늘사용 <strong class="moebius-bold">828.19</strong><span class="unit">MB</span></div>
+                                    <div class="rt">오늘사용 <strong class="moebius-bold">828.19</strong><span class="unit">GB</span></div>
                                 </div>
                             </div>
-                            <div class="sec mb20">
+                            <div class="sec GB20">
                                 <h3>B tv 모바일 pack</h3>
                                 <div class="progressbar-type02"><!-- 무제한 타입 //-->
                                     <span class="base"></span>
@@ -214,7 +216,7 @@
                                 </div>
                                 <div class="tail">
                                     <div class="base2">무제한</div>
-                                    <div class="rt">오늘사용 <strong class="moebius-bold">828.19</strong><span class="unit">MB</span></div>
+                                    <div class="rt">오늘사용 <strong class="moebius-bold">828.19</strong><span class="unit">GB</span></div>
                                 </div>
                             </div>
                         </div>
@@ -252,7 +254,7 @@
                         <label for="checkbox3" class="checkbox-label">
                             <span class="off">GB</span>
                             <span class="look"></span>
-                            <span class="on">MB</span>
+                            <span class="on">GB</span>
                         </label>
                     </div>
                     <div class="box-white">
@@ -268,8 +270,8 @@
                                     </div>
                                 </div>
                                 <div class="tail">
-                                    <div class="base">잔여 <strong class="moebius-bold">12.19</strong><span class="unit">MB</span></div>
-                                    <div class="rt">사용 <strong class="moebius-bold">828.19</strong><span class="unit">MB</span></div>
+                                    <div class="base">잔여 <strong class="moebius-bold">12.19</strong><span class="unit">GB</span></div>
+                                    <div class="rt">사용 <strong class="moebius-bold">828.19</strong><span class="unit">GB</span></div>
                                 </div>
                             </div>
                             <div class="sec">
@@ -282,8 +284,8 @@
                                     </div>
                                 </div>
                                 <div class="tail">
-                                    <div class="base">잔여 <strong class="moebius-bold">0</strong><span class="unit">MB</span></div>
-                                    <div class="rt">사용 <strong class="moebius-bold">1828.19</strong><span class="unit">MB</span></div>
+                                    <div class="base">잔여 <strong class="moebius-bold">0</strong><span class="unit">GB</span></div>
+                                    <div class="rt">사용 <strong class="moebius-bold">1828.19</strong><span class="unit">GB</span></div>
                                     <div class="coupon">쿠폰등록일 <span class="moebius">2018.01.01</span></div>
                                 </div>
                             </div>
@@ -329,7 +331,7 @@
                         <label for="checkbox4" class="checkbox-label">
                             <span class="off">GB</span>
                             <span class="look"></span>
-                            <span class="on">MB</span>
+                            <span class="on">GB</span>
                         </label>
                     </div>
                     <div class="box-white">
@@ -345,8 +347,8 @@
                                     </div>
                                 </div>
                                 <div class="tail">
-                                    <div class="base">잔여 <strong class="moebius-bold">0</strong><span class="unit">MB</span></div>
-                                    <div class="rt">사용 <strong class="moebius-bold">828.19</strong><span class="unit">MB</span></div>
+                                    <div class="base">잔여 <strong class="moebius-bold">0</strong><span class="unit">GB</span></div>
+                                    <div class="rt">사용 <strong class="moebius-bold">828.19</strong><span class="unit">GB</span></div>
                                 </div>
                             </div>
                             <div class="sec">
@@ -359,8 +361,8 @@
                                     </div>
                                 </div>
                                 <div class="tail">
-                                    <div class="base">잔여 <strong class="moebius-bold">0</strong><span class="unit">MB</span></div>
-                                    <div class="rt">사용 <strong class="moebius-bold">1828.19</strong><span class="unit">MB</span></div>
+                                    <div class="base">잔여 <strong class="moebius-bold">0</strong><span class="unit">GB</span></div>
+                                    <div class="rt">사용 <strong class="moebius-bold">1828.19</strong><span class="unit">GB</span></div>
                                     <div class="coupon">쿠폰등록일 <span class="moebius">2018.01.01</span></div>
                                 </div>
                             </div>
@@ -399,7 +401,7 @@
                         <label for="checkbox4" class="checkbox-label">
                             <span class="off">GB</span>
                             <span class="look"></span>
-                            <span class="on">MB</span>
+                            <span class="on">GB</span>
                         </label>
                     </div>
                     <div class="box-white">
@@ -421,8 +423,8 @@
                                     </div>
                                 </div>
                                 <div class="tail">
-                                    <div class="base">잔여 <strong class="moebius-bold">0</strong><span class="unit">MB</span></div>
-                                    <div class="rt">사용 <strong class="moebius-bold">2000</strong><span class="unit">MB</span></div>
+                                    <div class="base">잔여 <strong class="moebius-bold">0</strong><span class="unit">GB</span></div>
+                                    <div class="rt">사용 <strong class="moebius-bold">2000</strong><span class="unit">GB</span></div>
                                 </div>
                             </div>
                         </div>
@@ -453,7 +455,7 @@
                         <label for="checkbox5" class="checkbox-label">
                             <span class="off">GB</span>
                             <span class="look"></span>
-                            <span class="on">MB</span>
+                            <span class="on">GB</span>
                         </label>
                     </div>
                     <div class="box-white">
@@ -469,8 +471,8 @@
                                     </div>
                                 </div>
                                 <div class="tail">
-                                    <div class="base">잔여 <strong class="moebius-bold">0</strong><span class="unit">MB</span></div>
-                                    <div class="rt">사용 <strong class="moebius-bold">1000</strong><span class="unit">MB</span></div>
+                                    <div class="base">잔여 <strong class="moebius-bold">0</strong><span class="unit">GB</span></div>
+                                    <div class="rt">사용 <strong class="moebius-bold">1000</strong><span class="unit">GB</span></div>
                                 </div>
                             </div>
                             <div class="sec">
@@ -483,8 +485,8 @@
                                     </div>
                                 </div>
                                 <div class="tail">
-                                    <div class="base">잔여 <strong class="moebius-bold">828.19</strong><span class="unit">MB</span></div>
-                                    <div class="rt">사용 <strong class="moebius-bold">18.19</strong><span class="unit">MB</span></div>
+                                    <div class="base">잔여 <strong class="moebius-bold">828.19</strong><span class="unit">GB</span></div>
+                                    <div class="rt">사용 <strong class="moebius-bold">18.19</strong><span class="unit">GB</span></div>
                                 </div>
                             </div>
                         </div>
@@ -508,6 +510,8 @@
                 </section>
                 <!-- // section : 데이터 초과 후 리필 -->
                 <!-- section : 음성/영상 무제한 -->
+                <% if( usageData.voice ) { %>
+                <% for (var i = 0; i < usageData.voice.length; i++) { %>
                 <section>
                     <h2>음성/영상</h2>
                     <div class="box-white">
@@ -542,7 +546,7 @@
                                     <div class="rt">사용 <strong class="moebius-bold">4</strong>시간 <strong class="moebius-bold">50</strong>분</div>
                                 </div>
                             </div>
-                            <div class="sec mb0">
+                            <div class="sec GB0">
                                 <h3>집전화·이동전화 음성 무제한</h3>
                                 <div class="progressbar-type02">
                                     <span class="base"></span>
@@ -569,6 +573,8 @@
                         <!-- // ad -->
                     </div>
                 </section>
+                <% } %>
+                <% } %>
                 <!-- // section : 음성/영상 무제한 -->
                 <!-- section : 음성/영상 제한 -->
                 <section>
@@ -605,7 +611,7 @@
                                     <div class="rt">사용 <strong class="moebius-bold">4</strong>시간 <strong class="moebius-bold">50</strong>분</div>
                                 </div>
                             </div>
-                            <div class="sec mb0">
+                            <div class="sec GB0">
                                 <h3>망외 휴대폰 음성, 유선 잔여</h3>
                                 <div class="progressbar-type01">
                                     <span class="base"></span>
@@ -668,7 +674,7 @@
                                     <div class="rt">사용 <strong class="moebius-bold">4</strong>시간 <strong class="moebius-bold">50</strong>분</div>
                                 </div>
                             </div>
-                            <div class="sec mb0">
+                            <div class="sec GB0">
                                 <h3>망외 휴대폰 음성, 유선 잔여</h3>
                                 <div class="progressbar-type01">
                                     <span class="base"></span>
@@ -714,7 +720,7 @@
                                 <div class="rt">사용 <strong class="moebius-bold">12</strong>건</div>
                             </div>
                         </div>
-                        <div class="sec mb0">
+                        <div class="sec GB0">
                             <h3>SMS/MMS/ⓜ메신저 기본제공</h3>
                             <div class="progressbar-type02">
                                 <span class="base"></span>
@@ -749,7 +755,7 @@
                                 <div class="rt">사용 <strong class="moebius-bold">1,300</strong>원 (<strong class="moebius">12</strong>건)</div>
                             </div>
                         </div>
-                        <div class="sec mb0">
+                        <div class="sec GB0">
                             <h3>joyn.T 채팅</h3>
                             <div class="progressbar-type01">
                                 <span class="base"></span>
@@ -784,7 +790,7 @@
                                 <div class="rt">사용 <strong class="moebius-bold">1,300</strong>원 (<strong class="moebius">12</strong>건)</div>
                             </div>
                         </div>
-                        <div class="sec mb0">
+                        <div class="sec GB0">
                             <h3>joyn.T 채팅</h3>
                             <div class="progressbar-type02">
                                 <span class="base"></span>
@@ -805,7 +811,7 @@
                 <section>
                     <h2>기타</h2>
                     <div class="box-white">
-                        <div class="sec mb0">
+                        <div class="sec GB0">
                             <h3>T쿠폰 10000 프로모션</h3>
                             <div class="progressbar-type01">
                                 <span class="base"></span>
@@ -826,7 +832,7 @@
                 <section>
                     <h2>기타</h2>
                     <div class="box-white">
-                        <div class="sec mb0">
+                        <div class="sec GB0">
                             <h3>T쿠폰 10000 프로모션</h3>
                             <div class="progressbar-type01">
                                 <span class="base"></span>
