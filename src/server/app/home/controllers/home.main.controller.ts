@@ -24,7 +24,7 @@ class HomeMain extends TwViewController {
     const remainDate = DateHelper.getRemainDate();
     this.apiService.request(API_CMD.SESSION_CHECK, {})
       .subscribe((resp) => {
-        console.log(resp);
+        console.log('Session', resp);
       });
 
     const usageData = this.parseData(myTUsageData.result);
@@ -50,7 +50,7 @@ class HomeMain extends TwViewController {
         data.showTotal = FormatHelper.convDataFormat(data.total, UNIT[data.unit]);
         data.showUsed = FormatHelper.convDataFormat(data.used, UNIT[data.unit]);
         data.showRemained = FormatHelper.convDataFormat(data.remained, UNIT[data.unit]);
-        data.usedRatio = data.used / data.total * 100;
+        data.usedRatio = data.remained / data.total * 100;
       }
     });
 
@@ -61,7 +61,7 @@ class HomeMain extends TwViewController {
         voice.showTotal = FormatHelper.convVoiceFormat(voice.total);
         voice.showUsed = FormatHelper.convVoiceFormat(voice.used);
         voice.showRemained = FormatHelper.convVoiceFormat(voice.remained);
-        voice.usedRatio = voice.used / voice.total * 100;
+        voice.usedRatio = voice.remained / voice.total * 100;
       }
     });
 
