@@ -20,7 +20,7 @@ const myTUsageData = {
       {
         'skipId': 'DDZ23',
         'skipName': '데이터통화 1GB 무료(LTE)',
-        'total': '1048576',
+        'total': '무제한',
         'used': '500576',
         'remained': '500000',
         'unit': '140',

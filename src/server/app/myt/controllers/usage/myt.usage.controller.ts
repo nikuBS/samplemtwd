@@ -22,11 +22,16 @@ class MyTUsage extends TwViewController {
 
   private parseData(usageData: any): any {
     usageData.data.map((data) => {
-      data.showTotal = FormatHelper.convDataFormat(data.total, UNIT[data.unit]);
-      data.showUsed = FormatHelper.convDataFormat(data.used, UNIT[data.unit]);
-      data.showRemained = FormatHelper.convDataFormat(data.remained, UNIT[data.unit]);
-      data.usedRatio = data.used / data.total * 100;
-      data.showUsedRatio = 100 - data.usedRatio;
+      const isTotalUnlimited = data.total === '무제한';
+      const isUsedUnlimited = data.used === '무제한';
+      const isRemainUnlimited = data.remained === '무제한';
+
+      data.isUnlimited = isTotalUnlimited;
+      data.showTotal = isTotalUnlimited ? data.total : FormatHelper.convDataFormat(data.total, UNIT[data.unit]);
+      data.showUsed = isUsedUnlimited ? data.used : FormatHelper.convDataFormat(data.used, UNIT[data.unit]);
+      data.showRemained = isRemainUnlimited ? data.remained : FormatHelper.convDataFormat(data.remained, UNIT[data.unit]);
+      data.usedRatio = (!isTotalUnlimited && !isUsedUnlimited) && (data.used / data.total * 100);
+      data.showUsedRatio = isTotalUnlimited ? 100 : 100 - data.usedRatio;
       data.isVisibleDayBtn = this.isVisibleDayBtn(data.skipId);
     });
     return usageData;
