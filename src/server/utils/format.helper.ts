@@ -94,7 +94,13 @@ class FormatHelper {
     return value.replace(regexp, ',');
   }
 
-  static convVoiceFormat(data: any, curUnit: string) {
+  static convVoiceFormat(data: any): any {
+    data = +data;
+    const hours = Math.floor(data / 3600);
+    const min = Math.floor((data - (hours * 3600)) / 60);
+    const sec = data - (hours * 3600) - (min * 60);
+
+    return { hours, min, sec };
   }
 }
 

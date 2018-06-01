@@ -27,6 +27,8 @@ class HomeMain extends TwViewController {
         console.log(resp);
       });
 
+    console.log(FormatHelper.convVoiceFormat(3601));
+
     const usageData = this.parseData(myTUsageData.result);
     res.render('home.main.html', {
       usageData,
@@ -49,6 +51,15 @@ class HomeMain extends TwViewController {
       data.showRemained = FormatHelper.convDataFormat(data.remained, UNIT[data.unit]);
       data.usedRatio = data.used / data.total * 100;
     });
+
+    usageData.voice.map((voice) => {
+      voice.showTotal = FormatHelper.convVoiceFormat(voice.total);
+      voice.showUsed = FormatHelper.convVoiceFormat(voice.used);
+      voice.showRemained = FormatHelper.convVoiceFormat(voice.remained);
+      voice.usedRatio = voice.used / voice.total * 100;
+      console.log(voice);
+    });
+
     return usageData;
   }
 
