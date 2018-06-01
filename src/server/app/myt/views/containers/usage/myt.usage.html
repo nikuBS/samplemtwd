@@ -116,11 +116,13 @@
                                     <div class="rt">오늘사용 <strong class="moebius-bold">828.19</strong><span class="unit">GB</span></div>
                                 </div>
                             </div>
+                            <% if (usageData.data[i].isVisibleDayBtn) { %>
                             <div class="btn-group">
                                 <div class="col1">
                                     <a href="#" class="btn-type01">당일 사용량 조회</a>
                                 </div>
                             </div>
+                            <% } %>
                         </div>
                         <!-- // data -->
                         <!-- ad -->
