@@ -1,4 +1,25 @@
-$(window).load(function () {
+function footer(){
+  var prev = 0;
+  var $window = $(window);
+  var nav = $('footer');
+
+  $window.on('scroll', function(){
+    var scrollTop = $window.scrollTop();
+    // if(scrollTop > prev && !(scrollTop + $window.height() == $('#wrap').height() && !(scrollTop == 0))){
+    if(scrollTop > prev && !(scrollTop + $window.height() == $('#wrap').height())){ /* ios를 위해서 -값도 추가 처리 */
+      nav.addClass('hidden')
+    }else{
+      nav.removeClass('hidden')
+    }
+    prev = scrollTop;
+  });
+}
+
+$(window).load(function (){
+  /* common */
+  if ($('footer').length){
+    footer();
+  }
   /* /home/home.html */
   if ($('.slick-type01').length) {
     $('.slick-type01 .belt').slick({
