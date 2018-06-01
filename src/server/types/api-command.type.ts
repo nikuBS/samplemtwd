@@ -21,6 +21,7 @@ export const API_CMD = {
   BFF_03_0002: { path: '/svc-catalog', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_03_0003: { path: '/svc-catalog/detail', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_03_0004: { path: '/change-svc', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: false },
+  BFF_03_0005: { path: '/selected-svc', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0001: { path: '/core-balance/vi/services/balance/details', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0002: { path: '', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0003: { path: '/core-balance/v1/services/troaming-togethers', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },

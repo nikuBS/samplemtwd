@@ -38,11 +38,15 @@
                             </div>
                             <div class="bar-area">
                                 <div class="chart">
-                                    <p><span class="moebius-bold"><%= usageData.data[i].showUsed %></span><em>GB</em></p>
-                                    <strong class="total"><span class="moebius-bold"><%= usageData.data[i].showTotal %></span><em>GB</em></strong>
+                                    <p><span class="moebius-bold"><%= usageData.data[i].showUsed.data %></span>
+                                        <em><%= usageData.data[i].showUsed.unit %></em></p>
+                                    <strong class="total"><span class="moebius-bold"><%= usageData.data[i].showTotal.data %></span>
+                                        <em><%= usageData.data[i].showTotal.unit %></em></strong>
+
                                 </div>
                                 <div class="bar">
-                                    <span style="width:<%= usageData.data[i].usedRatio %>%;"></span><!-- width:퍼센테이지 필요, 0%의 경우 display:none; // -->
+                                    <span style="width:<%= usageData.data[i].usedRatio %>%;"></span>
+                                    <!-- width:퍼센테이지 필요, 0%의 경우 display:none; // -->
                                 </div>
                             </div>
                         </div>
@@ -57,12 +61,30 @@
                             </div>
                             <div class="bar-area">
                                 <div class="chart">
-                                    <p><span class="moebius-bold">4</span><em>시간</em><span
-                                        class="moebius-bold">51</span><em>분</em></p>
-                                    <strong class="total"><span class="moebius-bold">5</span><em>시간</em></strong>
+                                    <p>
+                                        <% if ( usageData.voice[i].showRemained.hours !== 0) { %>
+                                        <span class="moebius-bold"><%= usageData.voice[i].showRemained.hours %></span><em>시간</em>
+                                        <% } %>
+                                        <% if ( usageData.voice[i].showRemained.min !== 0) { %>
+                                        <span class="moebius-bold"><%= usageData.voice[i].showRemained.min %></span><em>분</em>
+                                        <% } %>
+                                        <% if ( usageData.voice[i].showRemained.sec !== 0) { %>
+                                        <span class="moebius-bold"><%= usageData.voice[i].showRemained.sec %></span><em>초</em>
+                                        <% } %>
+                                    </p>
+                                    <% if ( usageData.voice[i].showTotal.hours !== 0) { %>
+                                    <strong class="total"><span class="moebius-bold"><%= usageData.voice[i].showTotal.hours %></span><em>시간</em></strong>
+                                    <% } %>
+                                    <% if ( usageData.voice[i].showTotal.min !== 0) { %>
+                                    <strong class="total"><span class="moebius-bold"><%= usageData.voice[i].showTotal.min %></span><em>분</em></strong>
+                                    <% } %>
+                                    <% if ( usageData.voice[i].showTotal.sec !== 0) { %>
+                                    <strong class="total"><span class="moebius-bold"><%= usageData.voice[i].showTotal.sec %></span><em>초</em></strong>
+                                    <% } %>
+
                                 </div>
                                 <div class="bar">
-                                    <span style="width:80%;"></span><!-- width:퍼센테이지 필요, 0%의 경우 display:none; // -->
+                                    <span style="width:<%= usageData.voice[i].usedRatio %>%;"></span><!-- width:퍼센테이지 필요, 0%의 경우 display:none; // -->
                                 </div>
                             </div>
                         </div>
