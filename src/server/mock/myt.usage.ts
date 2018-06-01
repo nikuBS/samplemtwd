@@ -18,7 +18,7 @@ const myTUsageData = {
         'couponDate': ''
       },
       {
-        'skipId': 'DD2N9',
+        'skipId': 'DDZ23',
         'skipName': '데이터통화 1GB 무료(LTE)',
         'total': '1048576',
         'used': '500576',
