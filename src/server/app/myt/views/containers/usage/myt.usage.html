@@ -69,10 +69,12 @@
                                 <h3><% if (usageData.data[i].isExceed) { %><span class="tag-type03">초과</span><% } %> <%= usageData.data[i].skipName %></h3>
                                 <div class="<%= usageData.data[i].barClassName %>"><!-- 유제한 타입 //-->
                                     <span class="base"></span>
-                                    <div class="val" style="width:<%= usageData.data[i].showUsedRatio %>%; <% if (usageData.data[i].showUsedRatio === 0) { %> display:none; <% } %>"><!-- width:퍼센테이지 필요, 0%의 경우 display:none; // -->
+                                    <% if (usageData.data[i].showUsedRatio > 0) { %>
+                                    <div class="val" style="width:<%= usageData.data[i].showUsedRatio %>%;"><!-- width:퍼센테이지 필요, 0%의 경우 display:none; // -->
                                         <span class="fill"></span>
                                         <span class="fill2"></span>
                                     </div>
+                                    <% } %>
                                 </div>
                                 <div class="tail">
                                     <% if (usageData.data[i].isUnlimited) { %>
@@ -87,10 +89,12 @@
                                 <h3>데이터 리필</h3>
                                 <div class="progressbar-type01"><!-- 유제한 타입 //-->
                                     <span class="base"></span>
-                                    <div class="val" style="width:<%= usageData.data[i].showUsedRatio %>%; <% if (usageData.data[i].showUsedRatio === 0) { %> display:none; <% } %>"><!-- width:퍼센테이지 필요, 0%의 경우 display:none; // -->
+                                    <% if (usageData.data[i].showUsedRatio > 0) { %>
+                                    <div class="val" style="width:<%= usageData.data[i].showUsedRatio %>%;"><!-- width:퍼센테이지 필요, 0%의 경우 display:none; // -->
                                         <span class="fill"></span>
                                         <span class="fill2"></span>
                                     </div>
+                                    <% } %>
                                 </div>
                                 <div class="tail">
                                     <div class="base">잔여 <strong class="moebius-bold">828.19</strong><span class="unit">GB</span></div>
@@ -181,10 +185,12 @@
                                 <h3 id="<%= usageData.voice[i].skipId %>"><%= usageData.voice[i].skipName %></h3>
                                 <div class="<%= usageData.voice[i].barClassName %>">
                                     <span class="base"></span>
+                                    <% if (usageData.voice[i].showUsedRatio > 0) { %>
                                     <div class="val" style="width:<%= usageData.voice[i].showUsedRatio %>%;"><!-- width:퍼센테이지 필요 // -->
                                         <span class="fill"></span>
                                         <span class="fill2"></span>
                                     </div>
+                                    <% } %>
                                 </div>
                                 <div class="tail">
                                     <div class="base">잔여
