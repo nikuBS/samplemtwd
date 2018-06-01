@@ -1,4 +1,4 @@
-import { DATA_UNIT, VOICE_UNIT } from '../types/string.type';
+import { DATA_UNIT } from '../types/string.type';
 
 class FormatHelper {
   static isEmpty(value: any): boolean {

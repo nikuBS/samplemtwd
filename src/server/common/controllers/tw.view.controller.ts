@@ -20,9 +20,9 @@ abstract class TwViewController {
     this.apiService.request(API_CMD.BFF_03_0001, { userId: userId }).subscribe((resp) => {
       this.render(req, res, next, resp.header);
     });
-    this.apiService.request(API_CMD.BFF_03_0005, {}).subscribe((resp) => {
-      console.log(resp);
-    });
+    // this.apiService.request(API_CMD.BFF_03_0005, {}).subscribe((resp) => {
+    //   console.log(resp);
+    // });
   }
 }
 
