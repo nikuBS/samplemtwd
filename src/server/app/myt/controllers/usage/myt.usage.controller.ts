@@ -22,9 +22,9 @@ class MyTUsage extends TwViewController {
 
   private parseData(usageData: any): any {
     usageData.data.map((data) => {
-      data.showTotal = FormatHelper.convUnit(data.total, UNIT[data.unit]);
-      data.showUsed = FormatHelper.convUnit(data.used, UNIT[data.unit]);
-      data.showRemained = FormatHelper.convUnit(data.remained, UNIT[data.unit]);
+      data.showTotal = FormatHelper.convDataFormat(data.total, UNIT[data.unit]);
+      data.showUsed = FormatHelper.convDataFormat(data.used, UNIT[data.unit]);
+      data.showRemained = FormatHelper.convDataFormat(data.remained, UNIT[data.unit]);
       data.usedRatio = data.used / data.total * 100;
       data.showUsedRatio = 100 - data.usedRatio;
       data.isVisibleDayBtn = this.isVisibleDayBtn(data.skipId);

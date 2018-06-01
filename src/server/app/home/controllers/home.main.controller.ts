@@ -21,17 +21,15 @@ class HomeMain extends TwViewController {
     //     console.log('complete');
     //   });
 
-    console.log(svcInfo);
-    console.log(FormatHelper.convUnit(3.2, 'GB', 'KB'));
-
     const remainDate = DateHelper.getRemainDate();
     this.apiService.request(API_CMD.SESSION_CHECK, {})
       .subscribe((resp) => {
         console.log(resp);
       });
 
+    console.log(FormatHelper.convVoiceFormat(3601));
+
     const usageData = this.parseData(myTUsageData.result);
-    console.log(usageData);
     res.render('home.main.html', {
       usageData,
       svcInfo,
@@ -48,11 +46,20 @@ class HomeMain extends TwViewController {
 
   private parseData(usageData: any): any {
     usageData.data.map((data) => {
-      data.showTotal = FormatHelper.convUnit(data.total, UNIT[data.unit]);
-      data.showUsed = FormatHelper.convUnit(data.used, UNIT[data.unit]);
-      data.showRemained = FormatHelper.convUnit(data.remained, UNIT[data.unit]);
+      data.showTotal = FormatHelper.convDataFormat(data.total, UNIT[data.unit]);
+      data.showUsed = FormatHelper.convDataFormat(data.used, UNIT[data.unit]);
+      data.showRemained = FormatHelper.convDataFormat(data.remained, UNIT[data.unit]);
       data.usedRatio = data.used / data.total * 100;
     });
+
+    usageData.voice.map((voice) => {
+      voice.showTotal = FormatHelper.convVoiceFormat(voice.total);
+      voice.showUsed = FormatHelper.convVoiceFormat(voice.used);
+      voice.showRemained = FormatHelper.convVoiceFormat(voice.remained);
+      voice.usedRatio = voice.used / voice.total * 100;
+      console.log(voice);
+    });
+
     return usageData;
   }
 
