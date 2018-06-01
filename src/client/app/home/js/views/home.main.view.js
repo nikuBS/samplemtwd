@@ -1,6 +1,6 @@
 Tw.HomeMainView = function (rootEl) {
-  this.$container     = rootEl;
-  this._apiService    = new Tw.ApiService();
+  this.$container = rootEl;
+  this._apiService = new Tw.ApiService();
   this._nativeService = new Tw.NativeService();
   console.log(this.$container);
 
@@ -25,11 +25,11 @@ Tw.HomeMainView.prototype = {
 
   _onClickAjaxButton: function ($event) {
     console.log('button click');
-    this._apiService.request(Tw.API_CMD.FAKE_POST, { postId: 1 })
-      .done($.proxy(this._success, this))
-      .fail($.proxy(this._fail, this));
+    this._apiService.request(Tw.API_CMD.FAKE_POST, {postId: 1})
+        .done($.proxy(this._success, this))
+        .fail($.proxy(this._fail, this));
 
-    this._nativeService.send(Tw.NTV_CMD.TOAST, { message: 'test' }, this.nativeCallback);
+    this._nativeService.send(Tw.NTV_CMD.TOAST, {message: 'test'}, this.nativeCallback);
   },
 
   _success: function (resp) {

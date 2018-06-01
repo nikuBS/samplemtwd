@@ -7,7 +7,12 @@ class MyTUsageTDataShareClose extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction) {
-    const data = {};
+    const data = {
+      url : {
+        onLineQnA : '#',
+        customerCenter : '#'
+      }
+    };
 
     res.render('usage/myt.usage.tdata-share-close.html', data);
   }
