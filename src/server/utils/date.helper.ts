@@ -1,5 +1,9 @@
+import moment from 'moment';
+
+moment.locale('ko'); // set 'ko' timezone
+
 class DateHelper {
-  static getDate(): any {
+  static getCurrentDate(): any {
     return new Date();
   }
 
@@ -11,11 +15,32 @@ class DateHelper {
   }
 
   static getRemainDate(): number {
-    const current = DateHelper.getDate();
+    const current = DateHelper.getCurrentDate();
     const next = DateHelper.getNextMonth();
     const remain = Math.floor((next.getTime() - current.getTime()) / 1000 / 60 / 60 / 24);
     return remain;
   }
+
+  /**
+   * @param date
+   * @returns {string} : 2018.06.01.
+   */
+  static getShortDate(date) {
+    return moment(date).format('l');
+  }
+
+  /**
+   * @param date
+   * @returns {string} : 2018.06.01
+   */
+  static getShortDateNoDot(date) {
+    return moment(date).format('YYYY.MM.DD');
+  }
+
+  static getDateFormat(data) {
+    return moment(data);
+  }
+
 }
 
 export default DateHelper;

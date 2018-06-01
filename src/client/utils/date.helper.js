@@ -18,7 +18,30 @@ Tw.DateHelper = (function() {
     return remain;
   };
 
+  /**
+   * @param date
+   * @returns {string} : 2018.06.01.
+   */
+  var getShortDate = function (date) {
+    return moment(date).format('l');
+  }
+
+  /**
+   * @param date
+   * @returns {string} : 2018.06.01
+   */
+  var getShortDateNoDot = function (date) {
+    return moment(date).format('YYYY.MM.DD');
+  }
+
+  var getDateFormat = function(data) {
+    return moment(data);
+  }
+
   return {
-    getRemainDate: getRemainDate
+    getRemainDate: getRemainDate,
+    getShortDate: getShortDate,
+    getShortDateNoDot: getShortDateNoDot,
+    getDateFormat: getDateFormat
   }
 })();

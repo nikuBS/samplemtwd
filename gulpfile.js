@@ -10,7 +10,7 @@ var gulp       = require('gulp'),
 
 var appNames = ['bill', 'customer', 'data', 'direct', 'etc', 'event', 'home', 'membership', 'myt', 'product', 'roaming', 'search', 'user'];
 // for docker (dev env)
-var dist = 'src/server/public/cdn/';
+var dist     = 'src/server/public/cdn/';
 // var dist     = 'dist/';
 
 gulp.task('server', function () {
@@ -27,7 +27,8 @@ gulp.task('js-vendor', function () {
   return gulp.src([
     'node_modules/jquery/dist/jquery.min.js',
     'node_modules/underscore/underscore-min.js',
-    'node_modules/slick-carousel/slick/slick.min.js'])
+    'node_modules/slick-carousel/slick/slick.min.js',
+    'node_modules/moment/min/moment.min.js'])
     .on('error', function (err) {
       gutil.log(gutil.colors.red('[Error]'), err.toString());
     })
