@@ -8,6 +8,7 @@ import { UNIT } from '../../../../types/bff-common.type';
 
 import { API_CMD } from '../../../../types/api-command.type';
 import { SVC_CD } from '../../../../types/bff-common.type';
+import { DAY_BTN_STANDARD_SKIP_ID } from '../../../../types/bff-common.type';
 
 class MyTUsage extends TwViewController {
   constructor() {
@@ -26,8 +27,13 @@ class MyTUsage extends TwViewController {
       data.showRemained = FormatHelper.convUnit(data.remained, UNIT[data.unit]);
       data.usedRatio = data.used / data.total * 100;
       data.showUsedRatio = 100 - data.usedRatio;
+      data.isVisibleDayBtn = this.isVisibleDayBtn(data.skipId);
     });
     return usageData;
+  }
+
+  private isVisibleDayBtn(skipId: any): boolean {
+    return (skipId in DAY_BTN_STANDARD_SKIP_ID);
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
