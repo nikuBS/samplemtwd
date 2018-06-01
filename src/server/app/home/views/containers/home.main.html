@@ -43,8 +43,8 @@
                                     <strong class="total"><em>무제한</em></strong>
                                     <% } else { %>
                                     <p>
-                                        <span class="moebius-bold"><%= usageData.data[i].showUsed.data %></span>
-                                        <em><%= usageData.data[i].showUsed.unit %></em>
+                                        <span class="moebius-bold"><%= usageData.data[i].showRemained.data %></span>
+                                        <em><%= usageData.data[i].showRemained.unit %></em>
                                     </p>
                                     <strong class="total">
                                         <span class="moebius-bold"><%= usageData.data[i].showTotal.data %></span>
@@ -68,7 +68,7 @@
                                 <span><%= usageData.voice[i].skipName %></span>
                             </div>
                             <div class="bar-area">
-                                <div class="chart">
+                                <div class="chart m">
                                     <% if(usageData.data[i].isUnlimit) { %>
                                     <p><span class="moebius-bold mugen">무제한</span></p>
                                     <strong class="total"><em>무제한</em></strong>
@@ -84,15 +84,17 @@
                                         <span class="moebius-bold"><%= usageData.voice[i].showRemained.sec %></span><em>초</em>
                                         <% } %>
                                     </p>
+                                    <strong class="total">
                                     <% if ( usageData.voice[i].showTotal.hours !== 0) { %>
-                                    <strong class="total"><span class="moebius-bold"><%= usageData.voice[i].showTotal.hours %></span><em>시간</em></strong>
+                                    <span class="moebius-bold"><%= usageData.voice[i].showTotal.hours %></span><em>시간</em>
                                     <% } %>
                                     <% if ( usageData.voice[i].showTotal.min !== 0) { %>
-                                    <strong class="total"><span class="moebius-bold"><%= usageData.voice[i].showTotal.min %></span><em>분</em></strong>
+                                    <span class="moebius-bold"><%= usageData.voice[i].showTotal.min %></span><em>분</em>
                                     <% } %>
                                     <% if ( usageData.voice[i].showTotal.sec !== 0) { %>
-                                    <strong class="total"><span class="moebius-bold"><%= usageData.voice[i].showTotal.sec %></span><em>초</em></strong>
+                                    <span class="moebius-bold"><%= usageData.voice[i].showTotal.sec %></span><em>초</em>
                                     <% } %>
+                                    </strong>
                                     <% } %>
                                 </div>
                                 <div class="bar">

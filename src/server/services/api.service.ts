@@ -49,7 +49,7 @@ class ApiService {
       method: command.method,
       headers: Object.assign(header, {
         'Content-type': 'application/json; charset=UTF-8',
-        'Set-Cookie': this.cookie
+        'cookie': this.cookie
       })
     };
   }
@@ -69,7 +69,7 @@ class ApiService {
 
     console.log('Headers: ', JSON.stringify(resp.headers));
     try {
-      this.cookie = resp.headers['set-cookie'][0];
+      this.cookie = resp.headers['set-cookie'][0].split(';')[0];
       console.log('Cookie: ', this.cookie);
     } catch (err) {
       this.cookie = '';
