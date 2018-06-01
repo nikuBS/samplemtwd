@@ -43,7 +43,7 @@
             <!-- // prd-summary -->
             <!-- prd-state -->
             <div class="prd-state">
-                <!-- section : 데이터 무제한 1 -->
+                <!-- section : 데이터 -->
                 <% if( usageData.data ) { %>
                 <% for (var i = 0; i < usageData.data.length; i++) { %>
                 <section>
@@ -53,17 +53,23 @@
                         <label for="checkbox1" class="checkbox-label">
                             <span class="off">GB</span>
                             <span class="look"></span>
-                            <span class="on">GB</span>
+                            <span class="on">MB</span>
                         </label>
                     </div>
                     <div class="box-white">
+                        <% if (usageData.data[i].isExceed) { %>
+                        <div class="suggestion2">
+                            <div><strong>초과 사용중</strong>이세요!</div>
+                            <a href="#">리필 어떠세요? </a>
+                        </div>
+                        <% } %>
                         <!-- data -->
                         <div class="data">
                             <div id="<%= usageData.data[i].skipId %>" class="sec">
-                                <h3><%= usageData.data[i].skipName %></h3>
-                                <div class="progressbar-type01"><!-- 유제한 타입 //-->
+                                <h3><% if (usageData.data[i].isExceed) { %><span class="tag-type03">초과</span><% } %> <%= usageData.data[i].skipName %></h3>
+                                <div class="<%= usageData.data[i].barClassName %>"><!-- 유제한 타입 //-->
                                     <span class="base"></span>
-                                    <div class="val" style="width:<%= usageData.data[i].showUsedRatio %>%;"><!-- width:퍼센테이지 필요, 0%의 경우 display:none; // -->
+                                    <div class="val" style="width:<%= usageData.data[i].showUsedRatio %>%; <% if (usageData.data[i].showUsedRatio === 0) { %> display:none; <% } %>"><!-- width:퍼센테이지 필요, 0%의 경우 display:none; // -->
                                         <span class="fill"></span>
                                         <span class="fill2"></span>
                                     </div>
@@ -81,7 +87,7 @@
                                 <h3>데이터 리필</h3>
                                 <div class="progressbar-type01"><!-- 유제한 타입 //-->
                                     <span class="base"></span>
-                                    <div class="val" style="width:62%;"><!-- width:퍼센테이지 필요, 0%의 경우 display:none; // -->
+                                    <div class="val" style="width:<%= usageData.data[i].showUsedRatio %>%; <% if (usageData.data[i].showUsedRatio === 0) { %> display:none; <% } %>"><!-- width:퍼센테이지 필요, 0%의 경우 display:none; // -->
                                         <span class="fill"></span>
                                         <span class="fill2"></span>
                                     </div>
@@ -89,7 +95,7 @@
                                 <div class="tail">
                                     <div class="base">잔여 <strong class="moebius-bold">828.19</strong><span class="unit">GB</span></div>
                                     <div class="rt">사용 <strong class="moebius-bold">828.19</strong><span class="unit">GB</span></div>
-                                    <div class="coupon">쿠폰등록일 <span class="moebius">2018.01.01</span></div>
+                                    <% if (usageData.data[i].couponDate !== '') { %><div class="coupon">쿠폰등록일 <span class="moebius"><%= usageData.data[i].couponDate %></span></div><% } %>
                                 </div>
                             </div>
                             <div class="sec">
@@ -151,7 +157,7 @@
                             <div class="link"><a href="/myt/usage/tdatashare/info">T데이터셰어링 알아보기</a></div>
                         </div>
                         <!-- // tip -->
-                        <!-- tip 무제한 아닐 때 광고 -->
+                        <!-- tip -->
                         <div class="tip">
                             <h3>요금제 <strong>Tip</strong></h3>
                             <div class="txt">통화는 자주 안 하지만<strong>데이터가 부족하다면??</strong></div>
@@ -162,124 +168,8 @@
                 </section>
                 <% } %>
                 <% } %>
-                <!-- // section : 데이터 무제한 1 -->
-                <!-- section : 데이터 초과 -->
-                <section>
-                    <h2>데이터</h2>
-                    <div class="btn-change">
-                        <input class="checkbox" id="checkbox4" type="checkbox"/>
-                        <label for="checkbox4" class="checkbox-label">
-                            <span class="off">GB</span>
-                            <span class="look"></span>
-                            <span class="on">GB</span>
-                        </label>
-                    </div>
-                    <div class="box-white">
-                        <!-- suggestion2 -->
-                        <div class="suggestion2">
-                            <div><strong>초과 사용중</strong>이세요!</div>
-                            <a href="#">리필 어떠세요? </a>
-                        </div>
-                        <!-- // suggestion2 -->
-                        <!-- data -->
-                        <div class="data">
-                            <div class="sec">
-                                <h3><span class="tag-type03">초과</span> 데이터통화 1GB</h3>
-                                <div class="progressbar-type01"><!-- 유제한 타입 //-->
-                                    <span class="base"></span>
-                                    <div class="val" style="display:none;"><!-- width:퍼센테이지 필요, 0%의 경우 display:none; // -->
-                                        <span class="fill"></span>
-                                        <span class="fill2"></span>
-                                    </div>
-                                </div>
-                                <div class="tail">
-                                    <div class="base">잔여 <strong class="moebius-bold">0</strong><span class="unit">GB</span></div>
-                                    <div class="rt">사용 <strong class="moebius-bold">2000</strong><span class="unit">GB</span></div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- // data -->
-                        <!-- ad -->
-                        <div class="ad">
-                            <div class="btn-group">
-                                <div class="col1">
-                                    <a href="#" class="btn-type02">리필하기(5)</a>
-                                </div>
-                                <div class="col1">
-                                    <a href="#" class="btn-type02">T끼리 데이터선물 / 조르기</a>
-                                </div>
-                                <div class="col1">
-                                    <a href="/myt/usage/tdatashare" class="btn-type02">T데이터셰어링 사용량</a>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- // ad -->
-                    </div>
-                </section>
-                <!-- // section : 데이터 초과 -->
-                <!-- section : 데이터 초과 후 리필 -->
-                <section>
-                    <h2>데이터</h2>
-                    <div class="btn-change">
-                        <input class="checkbox" id="checkbox5" type="checkbox"/>
-                        <label for="checkbox5" class="checkbox-label">
-                            <span class="off">GB</span>
-                            <span class="look"></span>
-                            <span class="on">GB</span>
-                        </label>
-                    </div>
-                    <div class="box-white">
-                        <!-- data -->
-                        <div class="data">
-                            <div class="sec">
-                                <h3><span class="tag-type03">초과</span> 데이터통화 1GB</h3>
-                                <div class="progressbar-type01"><!-- 유제한 타입 //-->
-                                    <span class="base"></span>
-                                    <div class="val" style="display:none;"><!-- width:퍼센테이지 필요, 0%의 경우 display:none; // -->
-                                        <span class="fill"></span>
-                                        <span class="fill2"></span>
-                                    </div>
-                                </div>
-                                <div class="tail">
-                                    <div class="base">잔여 <strong class="moebius-bold">0</strong><span class="unit">GB</span></div>
-                                    <div class="rt">사용 <strong class="moebius-bold">1000</strong><span class="unit">GB</span></div>
-                                </div>
-                            </div>
-                            <div class="sec">
-                                <h3>데이터 리필</h3>
-                                <div class="progressbar-type01"><!-- 유제한 타입 //-->
-                                    <span class="base"></span>
-                                    <div class="val" style="width:60%"><!-- width:퍼센테이지 필요, 0%의 경우 display:none; // -->
-                                        <span class="fill"></span>
-                                        <span class="fill2"></span>
-                                    </div>
-                                </div>
-                                <div class="tail">
-                                    <div class="base">잔여 <strong class="moebius-bold">828.19</strong><span class="unit">GB</span></div>
-                                    <div class="rt">사용 <strong class="moebius-bold">18.19</strong><span class="unit">GB</span></div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- // data -->
-                        <!-- ad -->
-                        <div class="ad">
-                            <div class="btn-group">
-                                <div class="col1">
-                                    <a href="#" class="btn-type02">리필하기(5)</a>
-                                </div>
-                                <div class="col1">
-                                    <a href="#" class="btn-type02">T끼리 데이터선물 / 조르기</a>
-                                </div>
-                                <div class="col1">
-                                    <a href="/myt/usage/tdatashare" class="btn-type02">T데이터셰어링 사용량</a>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- // ad -->
-                    </div>
-                </section>
-                <!-- // section : 데이터 초과 후 리필 -->
-                <!-- section : 음성/영상 무제한 -->
+                <!-- // section : 데이터 -->
+                <!-- section : 음성/영상 -->
                 <% if( usageData.voice ) { %>
                 <% for (var i = 0; i < usageData.voice.length; i++) { %>
                 <section>
@@ -288,18 +178,38 @@
                         <!-- data -->
                         <div class="data">
                             <div class="sec">
-                                <h3>영상, 부가전화 300분</h3>
-                                <div class="progressbar-type01">
+                                <h3 id="<%= usageData.voice[i].skipId %>"><%= usageData.voice[i].skipName %></h3>
+                                <div class="<%= usageData.voice[i].barClassName %>">
                                     <span class="base"></span>
-                                    <div class="val" style="width:62%;"><!-- width:퍼센테이지 필요 // -->
+                                    <div class="val" style="width:<%= usageData.voice[i].showUsedRatio %>%;"><!-- width:퍼센테이지 필요 // -->
                                         <span class="fill"></span>
                                         <span class="fill2"></span>
                                     </div>
                                 </div>
                                 <div class="tail">
-                                    <div class="base">잔여 <strong class="moebius-bold">4</strong>시간 <strong class="moebius-bold">50</strong>분</div>
-                                    <div class="rt">사용 <strong class="moebius-bold">50</strong>분 <strong class="moebius-bold">30</strong>초</div>
-                                    <div class="coupon">쿠폰등록일 <span class="moebius">2018.01.01</span></div>
+                                    <div class="base">잔여
+                                        <% if ( usageData.voice[i].showRemained.hours !== 0) { %>
+                                        <strong class="moebius-bold"><%= usageData.voice[i].showRemained.hours %></strong>시간
+                                        <% } %>
+                                        <% if ( usageData.voice[i].showRemained.min !== 0) { %>
+                                        <strong class="moebius-bold"><%= usageData.voice[i].showRemained.min %></strong>분
+                                        <% } %>
+                                        <% if ( usageData.voice[i].showRemained.sec !== 0) { %>
+                                        <strong class="moebius-bold"><%= usageData.voice[i].showRemained.sec %></strong>초
+                                        <% } %>
+                                    </div>
+                                    <div class="rt">사용
+                                        <% if ( usageData.voice[i].showUsed.hours !== 0) { %>
+                                        <strong class="moebius-bold"><%= usageData.voice[i].showUsed.hours %></strong>시간
+                                        <% } %>
+                                        <% if ( usageData.voice[i].showUsed.min !== 0) { %>
+                                        <strong class="moebius-bold"><%= usageData.voice[i].showUsed.min %></strong>분
+                                        <% } %>
+                                        <% if ( usageData.voice[i].showUsed.sec !== 0) { %>
+                                        <strong class="moebius-bold"><%= usageData.voice[i].showUsed.sec %></strong>초
+                                        <% } %>
+                                    </div>
+                                    <% if (usageData.voice[i].couponDate !== '') { %><div class="coupon">쿠폰등록일 <span class="moebius">2018.01.01</span></div><% } %>
                                 </div>
                             </div>
                             <div class="sec">
@@ -345,133 +255,7 @@
                 </section>
                 <% } %>
                 <% } %>
-                <!-- // section : 음성/영상 무제한 -->
-                <!-- section : 음성/영상 제한 -->
-                <section>
-                    <h2>음성/영상</h2>
-                    <div class="box-white">
-                        <!-- data -->
-                        <div class="data">
-                            <div class="sec">
-                                <h3>영상, 부가전화 300분</h3>
-                                <div class="progressbar-type01">
-                                    <span class="base"></span>
-                                    <div class="val" style="width:62%;"><!-- width:퍼센테이지 필요 // -->
-                                        <span class="fill"></span>
-                                        <span class="fill2"></span>
-                                    </div>
-                                </div>
-                                <div class="tail">
-                                    <div class="base">잔여 <strong class="moebius-bold">4</strong>시간 <strong class="moebius-bold">50</strong>분</div>
-                                    <div class="rt">사용 <strong class="moebius-bold">50</strong>분 <strong class="moebius-bold">30</strong>초</div>
-                                    <div class="coupon">쿠폰등록일 <span class="moebius">2018.01.01</span></div>
-                                </div>
-                            </div>
-                            <div class="sec">
-                                <h3>망내 음성 잔여</h3>
-                                <div class="progressbar-type01">
-                                    <span class="base"></span>
-                                    <div class="val" style="width:15%;"><!-- width:퍼센테이지 필요 // -->
-                                        <span class="fill"></span>
-                                        <span class="fill2"></span>
-                                    </div>
-                                </div>
-                                <div class="tail">
-                                    <div class="base">잔여 <strong class="moebius-bold">50</strong>분 <strong class="moebius-bold">30</strong>초</div>
-                                    <div class="rt">사용 <strong class="moebius-bold">4</strong>시간 <strong class="moebius-bold">50</strong>분</div>
-                                </div>
-                            </div>
-                            <div class="sec mb0">
-                                <h3>망외 휴대폰 음성, 유선 잔여</h3>
-                                <div class="progressbar-type01">
-                                    <span class="base"></span>
-                                    <div class="val" style="width:15%;"><!-- width:퍼센테이지 필요 // -->
-                                        <span class="fill"></span>
-                                        <span class="fill2"></span>
-                                    </div>
-                                </div>
-                                <div class="tail">
-                                    <div class="base">잔여 <strong class="moebius-bold">30</strong>초</div>
-                                    <div class="rt">사용 <strong class="moebius-bold">29</strong>초</div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- // data -->
-                        <!-- ad -->
-                        <div class="ad">
-                            <div class="btn-group">
-                                <div class="col1">
-                                    <a href="#" class="btn-type02">리필하기(5)</a>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- // ad -->
-                    </div>
-                </section>
-                <!-- // section : 음성/영상 제한 -->
-                <!-- section : 음성/영상 모두 소진 -->
-                <section>
-                    <h2>음성/영상</h2>
-                    <div class="box-white">
-                        <!-- data -->
-                        <div class="data">
-                            <div class="sec">
-                                <h3>영상, 부가전화 300분</h3>
-                                <div class="progressbar-type01">
-                                    <span class="base"></span>
-                                    <div class="val" style="display:none"><!-- width:퍼센테이지 필요 // -->
-                                        <span class="fill"></span>
-                                        <span class="fill2"></span>
-                                    </div>
-                                </div>
-                                <div class="tail">
-                                    <div class="base">잔여 <strong class="moebius-bold">0</strong>분</div>
-                                    <div class="rt">사용 <strong class="moebius-bold">50</strong>분 <strong class="moebius-bold">30</strong>초</div>
-                                    <div class="coupon">쿠폰등록일 <span class="moebius">2018.01.01</span></div>
-                                </div>
-                            </div>
-                            <div class="sec">
-                                <h3>망내 음성 잔여</h3>
-                                <div class="progressbar-type01">
-                                    <span class="base"></span>
-                                    <div class="val" style="display:none"><!-- width:퍼센테이지 필요 // -->
-                                        <span class="fill"></span>
-                                        <span class="fill2"></span>
-                                    </div>
-                                </div>
-                                <div class="tail">
-                                    <div class="base">잔여 <strong class="moebius-bold">0</strong>분</div>
-                                    <div class="rt">사용 <strong class="moebius-bold">4</strong>시간 <strong class="moebius-bold">50</strong>분</div>
-                                </div>
-                            </div>
-                            <div class="sec mb0">
-                                <h3>망외 휴대폰 음성, 유선 잔여</h3>
-                                <div class="progressbar-type01">
-                                    <span class="base"></span>
-                                    <div class="val" style="display:none"><!-- width:퍼센테이지 필요 // -->
-                                        <span class="fill"></span>
-                                        <span class="fill2"></span>
-                                    </div>
-                                </div>
-                                <div class="tail">
-                                    <div class="base">잔여 <strong class="moebius-bold">0</strong>분</div>
-                                    <div class="rt">사용 <strong class="moebius-bold">29</strong>초</div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- // data -->
-                        <!-- ad -->
-                        <div class="ad">
-                            <div class="btn-group">
-                                <div class="col1">
-                                    <a href="#" class="btn-type02">리필하기(5)</a>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- // ad -->
-                    </div>
-                </section>
-                <!-- // section : 음성/영상 모두 소진 -->
+                <!-- // section : 음성/영상 -->
                 <!-- section : 문자 무제한 -->
                 <section>
                     <h2>문자</h2>
