@@ -39,9 +39,10 @@ gulp.task('js-vendor', function () {
 gulp.task('js-util', function () {
   return gulp.src([
     'src/client/configs/**/*.js',
+    'src/client/types/**/*.js',
+    'src/client/polyfill/**/*.js',
     'src/client/plugins/**/*.js',
     'src/client/services/**/*.js',
-    'src/client/types/**/*.js',
     'src/client/utils/**/*.js'])
     .pipe(concat('util.js'))
     .pipe(gulp.dest(dist + 'js'))

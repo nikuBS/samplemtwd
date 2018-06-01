@@ -1,6 +1,11 @@
 import { DATA_UNIT } from '../types/string.type';
 
 class FormatHelper {
+  static leadingZeros(number: number, length: number): string {
+    const result = number + '';
+    return result.length > length ? result : new Array(length - result.length + 1).join('0') + result;
+  };
+
   static isEmpty(value: any): boolean {
     if ( value === '' || value == null || value === undefined ||
       (value != null && typeof value === 'object' && !Object.keys(value).length) ) {
