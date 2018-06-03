@@ -69,8 +69,8 @@
                                 <h3><% if (usageData.data[i].isExceed) { %><span class="tag-type03">초과</span><% } %> <%= usageData.data[i].skipName %></h3>
                                 <div class="<%= usageData.data[i].barClassName %>"><!-- 유제한 타입 //-->
                                     <span class="base"></span>
-                                    <% if (usageData.data[i].showUsedRatio > 0) { %>
-                                    <div class="val" style="width:<%= usageData.data[i].showUsedRatio %>%;"><!-- width:퍼센테이지 필요, 0%의 경우 display:none; // -->
+                                    <% if (usageData.data[i].showRemainedRatio > 0) { %>
+                                    <div class="val" style="width:<%= usageData.data[i].showRemainedRatio %>%;"><!-- width:퍼센테이지 필요, 0%의 경우 display:none; // -->
                                         <span class="fill"></span>
                                         <span class="fill2"></span>
                                     </div>
@@ -89,8 +89,8 @@
                                 <h3>데이터 리필</h3>
                                 <div class="progressbar-type01"><!-- 유제한 타입 //-->
                                     <span class="base"></span>
-                                    <% if (usageData.data[i].showUsedRatio > 0) { %>
-                                    <div class="val" style="width:<%= usageData.data[i].showUsedRatio %>%;"><!-- width:퍼센테이지 필요, 0%의 경우 display:none; // -->
+                                    <% if (usageData.data[i].showRemainedRatio > 0) { %>
+                                    <div class="val" style="width:<%= usageData.data[i].showRemainedRatio %>%;"><!-- width:퍼센테이지 필요, 0%의 경우 display:none; // -->
                                         <span class="fill"></span>
                                         <span class="fill2"></span>
                                     </div>
@@ -185,8 +185,8 @@
                                 <h3 id="<%= usageData.voice[i].skipId %>"><%= usageData.voice[i].skipName %></h3>
                                 <div class="<%= usageData.voice[i].barClassName %>">
                                     <span class="base"></span>
-                                    <% if (usageData.voice[i].showUsedRatio > 0) { %>
-                                    <div class="val" style="width:<%= usageData.voice[i].showUsedRatio %>%;"><!-- width:퍼센테이지 필요 // -->
+                                    <% if (usageData.voice[i].showRemainedRatio > 0) { %>
+                                    <div class="val" style="width:<%= usageData.voice[i].showRemainedRatio %>%;"><!-- width:퍼센테이지 필요 // -->
                                         <span class="fill"></span>
                                         <span class="fill2"></span>
                                     </div>
@@ -263,11 +263,13 @@
                 <% } %>
                 <!-- // section : 음성/영상 -->
                 <!-- section : 문자 무제한 -->
+                <% if( usageData.sms ) { %>
+                <% for (var i = 0; i < usageData.sms.length; i++) { %>
                 <section>
                     <h2>문자</h2>
                     <div class="box-white">
                         <div class="sec">
-                            <h3>SMS/MMS/ⓜ메신저</h3>
+                            <h3 id="<%= usageData.sms[i].skipId %>"><%= usageData.sms[i].skipName %></h3>
                             <div class="progressbar-type02">
                                 <span class="base"></span>
                                 <div class="val">
@@ -276,26 +278,14 @@
                                 </div>
                             </div>
                             <div class="tail">
-                                <div class="base2">무제한</div>
-                                <div class="rt">사용 <strong class="moebius-bold">12</strong>건</div>
-                            </div>
-                        </div>
-                        <div class="sec mb0">
-                            <h3>SMS/MMS/ⓜ메신저 기본제공</h3>
-                            <div class="progressbar-type02">
-                                <span class="base"></span>
-                                <div class="val">
-                                    <span class="fill"></span>
-                                    <span class="fill2"></span>
-                                </div>
-                            </div>
-                            <div class="tail">
-                                <div class="base2">무제한</div>
-                                <div class="rt">사용 <strong class="moebius-bold">12</strong>건</div>
+                                <div class="base2"><%= usageData.sms[i].total %></div>
+                                <!-- <div class="rt">사용 <strong class="moebius-bold">12</strong>건</div> -->
                             </div>
                         </div>
                     </div>
                 </section>
+                <% } %>
+                <% } %>
                 <!-- // section : 문자 무제한 -->
                 <!-- section : 문자 제한 -->
                 <section>

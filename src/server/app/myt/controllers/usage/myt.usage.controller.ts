@@ -32,7 +32,8 @@ class MyTUsage extends TwViewController {
       data.showUsed = isUsedUnlimited ? data.used : FormatHelper.convDataFormat(data.used, UNIT[data.unit]);
       data.showRemained = isRemainUnlimited ? data.remained : FormatHelper.convDataFormat(data.remained, UNIT[data.unit]);
       data.usedRatio = (!isTotalUnlimited && !isUsedUnlimited) && (data.used / data.total * 100);
-      data.showUsedRatio = isTotalUnlimited ? 100 : 100 - data.usedRatio;
+      data.showRemainedRatio = isTotalUnlimited ? 100 : 100 - data.usedRatio;
+      data.couponDate = data.couponDate === '' ? data.couponDate : DateHelper.getShortDateNoDot(data.couponDate);
       data.isVisibleDayBtn = this.isVisibleDayBtn(data.skipId);
       data.isExceed = isExceed;
       data.barClassName = isTotalUnlimited ? 'progressbar-type02' : 'progressbar-type01';
@@ -49,10 +50,12 @@ class MyTUsage extends TwViewController {
       voice.showUsed = isUsedUnlimited ? voice.used : FormatHelper.convVoiceFormat(voice.used);
       voice.showRemained = isRemainUnlimited ? voice.remained : FormatHelper.convVoiceFormat(voice.remained);
       voice.usedRatio = (!isTotalUnlimited && !isUsedUnlimited) && (voice.used / voice.total * 100);
-      voice.showUsedRatio = isTotalUnlimited ? 100 : 100 - voice.usedRatio;
+      voice.showRemainedRatio = isTotalUnlimited ? 100 : 100 - voice.usedRatio;
+      voice.couponDate = voice.couponDate === '' ? voice.couponDate : DateHelper.getShortDateNoDot(voice.couponDate);
       voice.isExceed = isExceed;
       voice.barClassName = isTotalUnlimited ? 'progressbar-type02' : 'progressbar-type01';
     });
+
     return usageData;
   }
 
