@@ -51,15 +51,16 @@ const myTUsageData = {
         'couponDate': ''
       }
     ],
-    'etc': [{
-      'skipId': 'DDC63',
-      'skipName': '착신전환 무료 제공',
-      'total': '16200',
-      'used': '0',
-      'remained': '16200',
-      'unit': '240',
-      'couponDate': ''
-    }
+    'etc': [
+      {
+        'skipId': 'DDC63',
+        'skipName': '착신전환 무료 제공',
+        'total': '16200',
+        'used': '0',
+        'remained': '16200',
+        'unit': '240',
+        'couponDate': ''
+      }
     ]
   }
 };

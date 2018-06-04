@@ -196,26 +196,28 @@
                                 </div>
                                 <div class="tail">
                                     <div class="base">잔여
-                                        <% if ( usageData.voice[i].showRemained.hours !== 0) { %>
+                                        <% if (usageData.voice[i].showRemained.hours !== 0) { %>
                                         <strong class="moebius-bold"><%= usageData.voice[i].showRemained.hours %></strong>시간
                                         <% } %>
-                                        <% if ( usageData.voice[i].showRemained.min !== 0) { %>
+                                        <% if (usageData.voice[i].showRemained.min !== 0) { %>
                                         <strong class="moebius-bold"><%= usageData.voice[i].showRemained.min %></strong>분
                                         <% } %>
-                                        <% if ( usageData.voice[i].showRemained.sec !== 0) { %>
+                                        <% if (usageData.voice[i].showRemained.sec !== 0) { %>
                                         <strong class="moebius-bold"><%= usageData.voice[i].showRemained.sec %></strong>초
                                         <% } %>
+                                        <% if (usageData.voice[i].remained === '0') { %><strong class="moebius-bold">0</strong>분<% } %>
                                     </div>
                                     <div class="rt">사용
-                                        <% if ( usageData.voice[i].showUsed.hours !== 0) { %>
+                                        <% if (usageData.voice[i].showUsed.hours !== 0) { %>
                                         <strong class="moebius-bold"><%= usageData.voice[i].showUsed.hours %></strong>시간
                                         <% } %>
-                                        <% if ( usageData.voice[i].showUsed.min !== 0) { %>
+                                        <% if (usageData.voice[i].showUsed.min !== 0) { %>
                                         <strong class="moebius-bold"><%= usageData.voice[i].showUsed.min %></strong>분
                                         <% } %>
-                                        <% if ( usageData.voice[i].showUsed.sec !== 0) { %>
+                                        <% if (usageData.voice[i].showUsed.sec !== 0) { %>
                                         <strong class="moebius-bold"><%= usageData.voice[i].showUsed.sec %></strong>초
                                         <% } %>
+                                        <% if (usageData.voice[i].used === '0') { %><strong class="moebius-bold">0</strong>분<% } %>
                                     </div>
                                     <% if (usageData.voice[i].couponDate !== '') { %><div class="coupon">쿠폰등록일 <span class="moebius">2018.01.01</span></div><% } %>
                                 </div>
@@ -264,7 +266,7 @@
                 <% } %>
                 <% } %>
                 <!-- // section : 음성/영상 -->
-                <!-- section : 문자 무제한 -->
+                <!-- section : 문자 -->
                 <% if( usageData.sms ) { %>
                 <% for (var i = 0; i < usageData.sms.length; i++) { %>
                 <section>
@@ -272,135 +274,78 @@
                     <div class="box-white">
                         <div class="sec">
                             <h3 id="<%= usageData.sms[i].skipId %>"><%= usageData.sms[i].skipName %></h3>
-                            <div class="progressbar-type02">
+                            <div class="<%= usageData.sms[i].barClassName %>">
                                 <span class="base"></span>
-                                <div class="val">
+                                <% if (usageData.sms[i].showRemainedRatio > 0) { %>
+                                <div class="val" style="width:<%= usageData.sms[i].showRemainedRatio %>%;">
                                     <span class="fill"></span>
                                     <span class="fill2"></span>
                                 </div>
+                                <% } %>
                             </div>
                             <div class="tail">
+                                <% if (usageData.sms[i].isUnlimited) { %>
                                 <div class="base2"><%= usageData.sms[i].total %></div>
-                                <!-- <div class="rt">사용 <strong class="moebius-bold">12</strong>건</div> -->
+                                <% } else { %>
+                                <div class="base">잔여 <strong class="moebius-bold"><%= usageData.sms[i].showRemained %></strong>원</div><!-- (<strong class="moebius-bold gray">26</strong>건) -->
+                                <% } %>
+                                <% if (usageData.sms[i].used > 0) { %><div class="rt">사용 <strong class="moebius-bold"><%= usageData.sms[i].showUsed %></strong>원</div><% } %><!-- (<strong class="moebius">12</strong>건) -->
                             </div>
                         </div>
                     </div>
                 </section>
                 <% } %>
                 <% } %>
-                <!-- // section : 문자 무제한 -->
-                <!-- section : 문자 제한 -->
-                <section>
-                    <h2>문자</h2>
-                    <div class="box-white">
-                        <div class="sec">
-                            <h3>SMS/MMS/ⓜ메신저</h3>
-                            <div class="progressbar-type01">
-                                <span class="base"></span>
-                                <div class="val" style="width:62%;"><!-- width:퍼센테이지 필요 // -->
-                                    <span class="fill"></span>
-                                    <span class="fill2"></span>
-                                </div>
-                            </div>
-                            <div class="tail">
-                                <div class="base">잔여 <strong class="moebius-bold">2,600</strong>원(<strong class="moebius-bold gray">26</strong>건)</div>
-                                <div class="rt">사용 <strong class="moebius-bold">1,300</strong>원 (<strong class="moebius">12</strong>건)</div>
-                            </div>
-                        </div>
-                        <div class="sec mb0">
-                            <h3>joyn.T 채팅</h3>
-                            <div class="progressbar-type01">
-                                <span class="base"></span>
-                                <div class="val" style="width:62%;"><!-- width:퍼센테이지 필요 // -->
-                                    <span class="fill"></span>
-                                    <span class="fill2"></span>
-                                </div>
-                            </div>
-                            <div class="tail">
-                                <div class="base">잔여 <strong class="moebius-bold">2,600</strong>원(<strong class="moebius-bold gray">26</strong>건)</div>
-                                <div class="rt">사용 <strong class="moebius-bold">1,300</strong>원 (<strong class="moebius">12</strong>건)</div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-                <!-- // section : 문자 제한 -->
-                <!-- section : 문자 모두 소진 -->
-                <section>
-                    <h2>문자</h2>
-                    <div class="box-white">
-                        <div class="sec">
-                            <h3>SMS/MMS/ⓜ메신저</h3>
-                            <div class="progressbar-type01">
-                                <span class="base"></span>
-                                <div class="val" style="display:none;"><!-- width:퍼센테이지 필요 // -->
-                                    <span class="fill"></span>
-                                    <span class="fill2"></span>
-                                </div>
-                            </div>
-                            <div class="tail">
-                                <div class="base">잔여 <strong class="moebius-bold">0</strong>원(<strong class="moebius-bold gray">0</strong>건)</div>
-                                <div class="rt">사용 <strong class="moebius-bold">1,300</strong>원 (<strong class="moebius">12</strong>건)</div>
-                            </div>
-                        </div>
-                        <div class="sec mb0">
-                            <h3>joyn.T 채팅</h3>
-                            <div class="progressbar-type02">
-                                <span class="base"></span>
-                                <div class="val" style="display:none;"><!-- width:퍼센테이지 필요 // -->
-                                    <span class="fill"></span>
-                                    <span class="fill2"></span>
-                                </div>
-                            </div>
-                            <div class="tail">
-                                <div class="base">잔여 <strong class="moebius-bold">0</strong>원(<strong class="moebius-bold gray">0</strong>건)</div>
-                                <div class="rt">사용 <strong class="moebius-bold">1,300</strong>원 (<strong class="moebius">12</strong>건)</div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-                <!-- // section : 문자 모두 소진 -->
-                <!-- section : 기타 제한 -->
+                <!-- // section : 문자 -->
+                <!-- section : 기타 -->
+                <% if( usageData.etc ) { %>
+                <% for (var i = 0; i < usageData.etc.length; i++) { %>
                 <section>
                     <h2>기타</h2>
                     <div class="box-white">
                         <div class="sec mb0">
-                            <h3>T쿠폰 10000 프로모션</h3>
-                            <div class="progressbar-type01">
+                            <h3 id="<%= usageData.etc[i].skipId %>"><%= usageData.etc[i].skipName %></h3>
+                            <div class="<%= usageData.etc[i].barClassName %>">
                                 <span class="base"></span>
-                                <div class="val" style="width:62%;"><!-- width:퍼센테이지 필요 // -->
+                                <% if (usageData.etc[i].showRemainedRatio > 0) { %>
+                                <div class="val" style="width:<%= usageData.etc[i].showRemainedRatio %>%;"><!-- width:퍼센테이지 필요 // -->
                                     <span class="fill"></span>
                                     <span class="fill2"></span>
                                 </div>
+                                <% } %>
                             </div>
                             <div class="tail">
-                                <div class="base">잔여 <strong class="moebius-bold">8,600</strong><span class="unit">원</span></div>
-                                <div class="rt"><strong class="moebius-bold">10,000</strong><span class="unit">원</span></div>
+                                <div class="base">잔여
+                                    <% if (usageData.etc[i].showRemained.hours !== 0) { %>
+                                    <strong class="moebius-bold"><%= usageData.etc[i].showRemained.hours %></strong>시간
+                                    <% } %>
+                                    <% if (usageData.etc[i].showRemained.min !== 0) { %>
+                                    <strong class="moebius-bold"><%= usageData.etc[i].showRemained.min %></strong>분
+                                    <% } %>
+                                    <% if (usageData.etc[i].showRemained.sec !== 0) { %>
+                                    <strong class="moebius-bold"><%= usageData.etc[i].showRemained.sec %></strong>초
+                                    <% } %>
+                                    <% if (usageData.etc[i].remained === '0') { %><strong class="moebius-bold">0</strong>분<% } %>
+                                </div>
+                                <div class="rt">사용
+                                    <% if (usageData.etc[i].showUsed.hours !== 0) { %>
+                                    <strong class="moebius-bold"><%= usageData.etc[i].showUsed.hours %></strong>시간
+                                    <% } %>
+                                    <% if (usageData.etc[i].showUsed.min !== 0) { %>
+                                    <strong class="moebius-bold"><%= usageData.etc[i].showUsed.min %></strong>분
+                                    <% } %>
+                                    <% if (usageData.etc[i].showUsed.sec !== 0) { %>
+                                    <strong class="moebius-bold"><%= usageData.etc[i].showUsed.sec %></strong>초
+                                    <% } %>
+                                    <% if (usageData.etc[i].used === '0') { %><strong class="moebius-bold">0</strong>분<% } %>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </section>
-                <!-- // section : 기타 제한 -->
-                <!-- section : 기타 모두 소진 -->
-                <section>
-                    <h2>기타</h2>
-                    <div class="box-white">
-                        <div class="sec mb0">
-                            <h3>T쿠폰 10000 프로모션</h3>
-                            <div class="progressbar-type01">
-                                <span class="base"></span>
-                                <div class="val" style="display:none"><!-- width:퍼센테이지 필요 // -->
-                                    <span class="fill"></span>
-                                    <span class="fill2"></span>
-                                </div>
-                            </div>
-                            <div class="tail">
-                                <div class="base">잔여 <strong class="moebius-bold">0</strong><span class="unit">원</span></div>
-                                <div class="rt">사용 <strong class="moebius-bold">10,000</strong><span class="unit">원</span></div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-                <!-- // section : 기타 모두 소진 -->
+                <% } %>
+                <% } %>
+                <!-- // section : 기타 -->
                 <!-- section -->
                 <section class="mt50">
                     <div class="box-white pt0 pb0">

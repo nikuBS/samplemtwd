@@ -45,7 +45,6 @@ class MyTUsage extends TwViewController {
       const isTotalUnlimited = voice.total === '무제한';
       const isUsedUnlimited = voice.used === '무제한';
       const isRemainUnlimited = voice.remained === '무제한';
-      const isExceed = voice.skipId === 'LT';
 
       voice.isUnlimited = isTotalUnlimited;
       voice.showTotal = isTotalUnlimited ? voice.total : FormatHelper.convVoiceFormat(voice.total);
@@ -54,8 +53,35 @@ class MyTUsage extends TwViewController {
       voice.usedRatio = (!isTotalUnlimited && !isUsedUnlimited) && (voice.used / voice.total * 100);
       voice.showRemainedRatio = isTotalUnlimited ? 100 : 100 - voice.usedRatio;
       voice.couponDate = voice.couponDate === '' ? voice.couponDate : DateHelper.getShortDateNoDot(voice.couponDate);
-      voice.isExceed = isExceed;
       voice.barClassName = isTotalUnlimited ? 'progressbar-type02' : 'progressbar-type01';
+    });
+
+    usageData.sms.map((sms) => {
+      const isTotalUnlimited = sms.total === '기본제공량';
+      const isUsedUnlimited = sms.used === '무제한';
+      const isRemainUnlimited = sms.remained === '무제한';
+
+      sms.isUnlimited = isTotalUnlimited;
+      sms.showTotal = isTotalUnlimited ? sms.total : FormatHelper.convNumFormat(sms.total);
+      sms.showUsed = isUsedUnlimited ? sms.used : FormatHelper.convNumFormat(sms.used);
+      sms.showRemained = isRemainUnlimited ? sms.remained : FormatHelper.convNumFormat(sms.remained);
+      sms.usedRatio = (!isTotalUnlimited && !isUsedUnlimited) && (sms.used / sms.total * 100);
+      sms.showRemainedRatio = isTotalUnlimited ? 100 : 100 - sms.usedRatio;
+      sms.couponDate = sms.couponDate === '' ? sms.couponDate : DateHelper.getShortDateNoDot(sms.couponDate);
+      sms.barClassName = isTotalUnlimited ? 'progressbar-type02' : 'progressbar-type01';
+    });
+
+    usageData.etc.map((etc) => {
+      const isTotalUnlimited = etc.total === '무제한';
+
+      etc.isUnlimited = isTotalUnlimited;
+      etc.showTotal = isTotalUnlimited ? etc.total : FormatHelper.convVoiceFormat(etc.total);
+      etc.showUsed = FormatHelper.convVoiceFormat(etc.used);
+      etc.showRemained = FormatHelper.convVoiceFormat(etc.remained);
+      etc.usedRatio = (!isTotalUnlimited) && (etc.used / etc.total * 100);
+      etc.showRemainedRatio = isTotalUnlimited ? 100 : 100 - etc.usedRatio;
+      etc.couponDate = etc.couponDate === '' ? etc.couponDate : DateHelper.getShortDateNoDot(etc.couponDate);
+      etc.barClassName = isTotalUnlimited ? 'progressbar-type02' : 'progressbar-type01';
     });
 
     return usageData;
