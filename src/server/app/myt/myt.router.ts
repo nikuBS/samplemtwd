@@ -8,7 +8,7 @@ import MyTUsageTDataShareInfo from './controllers/usage/myt.usage.tdata-share-in
 import MyTUsageTDataShareClose from './controllers/usage/myt.usage.tdata-share-close.controller';
 import MyTUsageTRoamingShare from './controllers/usage/myt.usage.troaming-share.controller';
 import MyTUsageTing from './controllers/usage/myt.usage.ting.controller';
-import MyTUsage24hour50discount from './controllers/usage/myt.usage.24hour-50discount.controller';
+import MyTUsage24hours50discount from './controllers/usage/myt.usage.24hours-50discount.controller';
 import MyTUsageDataLimit from './controllers/usage/myt.usage.data-limit.controller';
 
 class MytRouter extends TwRouter {
@@ -24,7 +24,7 @@ class MytRouter extends TwRouter {
     this.controllers.push({ url: '/usage/tdatashare/close', controller: new MyTUsageTDataShareClose() });
     this.controllers.push({ url: '/usage/troaming', controller: new MyTUsageTRoamingShare() });
     this.controllers.push({ url: '/usage/ting', controller: new MyTUsageTing() });
-    this.controllers.push({ url: '/usage/24hourdiscount', controller: new MyTUsage24hour50discount() });
+    this.controllers.push({ url: '/usage/24hourdiscount', controller: new MyTUsage24hours50discount() });
   }
 }
 

@@ -1,10 +1,151 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <title>사용량_휴대폰_팅요금상품 사용량 조회</title>
-</head>
-<body>
-MY T / 사용량 / 휴대폰 / 팅요금상품 사용량 조회
-</body>
-</html>
+<%- include('../../components/start.component.html') %>
+
+<!-- skip -->
+<div class="skip"><a href="#content">본문 바로가기</a></div>
+<!-- // skip -->
+<!-- wrap -->
+<div id="wrap">
+    <!-- header -->
+    <header class="header-sub">
+        <button class="btn-back"><span class="blind">뒤로가기</span></button>
+        <h1 class="title-txt">팅 요금상품 사용량 조회</h1>
+        <button class="btn-search"><span class="blind">검색</span></button>
+    </header>
+    <!-- // header -->
+    <!-- content -->
+    <div id="content">
+        <!-- container -->
+        <section class="container">
+            <!-- yprod -->
+            <div class="yprod pb30">
+                <strong class="line-bt">010-12**-56**</strong>번호로<br /><strong>팅 요금상품</strong>사용 현황입니다.
+            </div>
+            <!-- // yprod -->
+            <!-- prd-state -->
+            <div class="prd-state">
+                <!-- section : 통화가능금액 -->
+                <section>
+                    <h2>통화가능금액 <a href="#" class="btn-detail" data-popup-type="1"><span class="blind">자세히보기</span></a></h2>
+                    <div class="box-white">
+                        <!-- data -->
+                        <div class="data">
+                            <div class="sec mb0">
+                                <h3>제공<span class="thin">(충전)</span> 충전금액 5,000원</h3>
+                                <div class="progressbar-type01"><!-- 유제한 타입 //-->
+                                    <span class="base"></span>
+                                    <div class="val" style="width:50%;"><!-- width:퍼센테이지 필요, 0%의 경우 display:none; // -->
+                                        <span class="fill"></span>
+                                        <span class="fill2"></span>
+                                    </div>
+                                </div>
+                                <div class="tail">
+                                    <div class="base">잔여 <strong class="moebius-bold">1,800</strong><span clsss="unit">원</span></div>
+                                    <div class="rt">사용 <strong class="moebius-bold">3,200</strong><span class="unit">원</span></div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- // data -->
+                    </div>
+                </section>
+                <!-- // section : 통화가능금액 -->
+                <!-- section : 충전금액 -->
+                <section>
+                    <h2>충전금액</h2>
+                    <div class="box-white">
+                        <!-- data -->
+                        <div class="data">
+                            <div class="sec mb0">
+                                <h3>제공<span class="thin">(충전)</span> 충전금액 5,000원</h3>
+                                <div class="progressbar-type01"><!-- 유제한 타입 //-->
+                                    <span class="base"></span>
+                                    <div class="val" style="width:50%;"><!-- width:퍼센테이지 필요, 0%의 경우 display:none; // -->
+                                        <span class="fill"></span>
+                                        <span class="fill2"></span>
+                                    </div>
+                                </div>
+                                <div class="tail">
+                                    <div class="base">잔여 <strong class="moebius-bold">1,800</strong><span clsss="unit">원</span></div>
+                                    <div class="rt">사용 <strong class="moebius-bold">3,200</strong><span class="unit">원</span></div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- // data -->
+                    </div>
+                </section>
+                <!-- // section : 충전금액 -->
+                <!-- section : 선물 충전금액 -->
+                <section>
+                    <h2>선물 충전금액</h2>
+                    <div class="box-white">
+                        <!-- data -->
+                        <div class="data">
+                            <div class="sec none">
+                                <h3>제공<span class="thin">(충전)</span> 충전금액 5,000원</h3>
+                                <div class="progressbar-type01"><!-- 유제한 타입 //-->
+                                    <span class="base"></span>
+                                    <div class="val" style="width:50%;"><!-- width:퍼센테이지 필요, 0%의 경우 display:none; // -->
+                                        <span class="fill"></span>
+                                        <span class="fill2"></span>
+                                    </div>
+                                </div>
+                                <div class="tail">
+                                    <div class="base">잔여 <strong class="moebius-bold">1,800</strong><span clsss="unit">원</span></div>
+                                    <div class="rt">사용 <strong class="moebius-bold">3,200</strong><span class="unit">원</span></div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- // data -->
+                        <!-- btn-more -->
+                        <div class="shared-info">
+                            <p>'당월 통화 가능 금액'은 현재 사용 가능한 잔여
+                                금액을 의미합니다.(기본제공 통화는 별도)</p>
+                        </div>
+                        <!-- // btn-more -->
+                    </div>
+                </section>
+                <!-- // section : 선물 충전금액 -->
+            </div>
+            <!-- // prd-state -->
+        </section>
+        <!-- // container -->
+    </div>
+    <!-- // content -->
+    <!-- footer -->
+    <footer>
+    </footer>
+    <!-- // footer -->
+</div>
+<!-- // wrap -->
+
+<!-- popup-container -->
+<div class="pop-container" id="miniPopupWrapper">
+    <!-- popup-base -->
+    <div class="popup-base">
+        <div class="container" id="miniPopup01">
+            <div class="head">
+                <h1>안내</h1>
+                <a href="#" class="btn-close"><span class="blind">닫기</span></a>
+            </div>
+            <div class="body">
+                <div class="pop-message">
+                    <div class="txt01">통화가능 금액이란?</div>
+                    <div class="txt02">팅요금상품 가입 시 선택하신 상한금액에서 기본료를 제외한 나머지 금액입니다.<br />예) 팅 100요금상품의 경우, 상한 2만원 선택 시 통화 가능 금액은 7,500원입니다.<br />상한(20,000원) – 기본료(12,500원) = 7,500원</div>
+                </div>
+                <div class="btn-group">
+                    <div class="col1"><a href="#" class="btn-type07">확인</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- // popup-base -->
+</div>
+<!-- // popup-container -->
+
+
+<% include ../../components/javascript.component.html %>
+<script>
+    $(document).ready(function () {
+        var comp = new Tw.MytUsageTingView($('.container'));
+    });
+</script>
+<% include ../../components/end.component.html %>

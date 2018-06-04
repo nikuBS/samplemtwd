@@ -9,7 +9,7 @@ class MyTUsage24hour50discount extends TwViewController {
   render(req: Request, res: Response, next: NextFunction) {
     const data = {};
 
-    res.render('usage/myt.usage.24hour-50discount.html', data);
+    res.render('usage/myt.usage.24hours-50discount.html', data);
   }
 }
 
