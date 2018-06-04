@@ -1,36 +1,29 @@
 import TwViewController from '../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
-import { API_CMD } from '../../../types/api-command.type';
+import { API_CMD, API_CODE } from '../../../types/api-command.type';
 import myTUsageData from '../../../mock/server/myt.usage';
 import DateHelper from '../../../utils/date.helper';
 import FormatHelper from '../../../utils/format.helper';
 import { UNIT } from '../../../types/bff-common.type';
-import LoginService from '../../../services/login.service';
 
 class HomeMain extends TwViewController {
-  private loginService;
   constructor() {
     super();
-    this.loginService = new LoginService();
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     const remainDate = DateHelper.getRemainDate();
-    // this.apiService.request(API_CMD.BFF_05_0001, {})
-    //   .subscribe((resp) => {
-    //     console.log(resp);
-    //     // console.log(myTUsageData);
-    //     res.render('home.main.html', myTUsageData);
-    //   });
-    this.apiService.request(API_CMD.BFF_03_0003, {}).subscribe((resp) => {
+    let usageData = this.parseData(myTUsageData.result);
+    this.apiService.request(API_CMD.BFF_05_0001, {}).subscribe((resp) => {
       console.log(resp);
-    });
-
-    const usageData = this.parseData(myTUsageData.result);
-    res.render('home.main.html', {
-      usageData,
-      svcInfo,
-      remainDate
+      if ( resp.code === API_CODE.CODE_00 ) {
+        usageData = resp.result;
+      }
+      res.render('home.main.html', {
+        usageData,
+        svcInfo,
+        remainDate
+      });
     });
   }
 
@@ -57,9 +50,15 @@ class HomeMain extends TwViewController {
       }
     });
 
+    usageData.sms.map((sms) => {
+      sms.isUnlimit = !isFinite(sms.total);
+      sms.usedRatio = 100;
+      if ( !sms.isUnlimit ) {
+        sms.usedRatio = sms.remained / sms.total * 100;
+      }
+    });
     return usageData;
   }
-
 }
 
 export default HomeMain;
