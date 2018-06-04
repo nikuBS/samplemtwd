@@ -5,7 +5,7 @@ const environment = {
       protocol: 'http',
       port: 31010
     },
-    CDN: 'http://localhost:3001',
+    CDN: 'http://150.28.69.25:3001',
     FAKE_SERVER: {
       url: 'jsonplaceholder.typicode.com',
       protocol: 'http',
