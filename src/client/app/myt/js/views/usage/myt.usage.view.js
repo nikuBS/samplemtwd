@@ -39,14 +39,22 @@ Tw.MytUsageView.prototype = {
     return unit;
   },
   _getUsageBtn: function () {
-    this._apiService.request(Tw.API_CMD.TEST_GET_USAGE_BTN, {})
+    $.ajax('/mock/myt.usage-btn.json')
       .done($.proxy(this._success, this))
       .fail($.proxy(this._fail, this));
   },
-  _success: function (resp) {
-    console.log('api success', resp.result);
-    //var $box = this.$container.find('.notice');
-    //$box.append(JSON.stringify(resp));
+  _setBtnVisibility: function (result) {
+    var dataSharingBtn = this.$container.find('.data-sharing-btn');
+    var tDataSharingBtn = this.$container.find('.t-data-sharing-btn');
+    var tRoamingSharingBtn = this.$container.find('.t-roaming-sharing-btn');
+
+    if (result.dataSharing === 'Y') dataSharingBtn.show();
+    if (result.tdataSharing === 'Y') tDataSharingBtn.show();
+    if (result.troamingSharing === 'Y') tRoamingSharingBtn.show();
+  },
+  _success: function (res) {
+    var result = res.result;
+    this._setBtnVisibility(result);
   },
   _fail: function (err) {
     console.log('api fail', err);

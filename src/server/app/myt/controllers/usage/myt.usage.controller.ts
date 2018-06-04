@@ -5,14 +5,17 @@ import myTUsageData from '../../../../mock/server/myt.usage';
 import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
 import { UNIT } from '../../../../types/bff-common.type';
-
-import { API_CMD } from '../../../../types/api-command.type';
 import { SVC_CD } from '../../../../types/bff-common.type';
+import { API_CMD } from '../../../../types/api-command.type';
 import { DAY_BTN_STANDARD_SKIP_ID } from '../../../../types/bff-common.type';
 
+import LoginService from '../../../../services/login.service';
+
 class MyTUsage extends TwViewController {
+  private loginService;
   constructor() {
     super();
+    this.loginService = new LoginService();
   }
 
   private parseSvcInfo(svcInfo: any): any {
