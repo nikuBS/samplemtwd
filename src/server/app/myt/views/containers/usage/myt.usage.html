@@ -27,7 +27,7 @@
                     <li>
                         <div class="case"><span class="name"><%= svcInfo.svcName %></span><% if (svcInfo.repSvcYn === 'Y') { %><span class="tag-type01">대표</span><% } %></div>
                         <div class="mask moebius-bold"><%= svcInfo.svcNum %></div>
-                        <div class="nick"><%= svcInfo.svcNickName %></div>
+                        <div class="nick"><%= svcInfo.custNm %></div>
                         <div class="btn-change"><a href="/myt/usage/change" class="btn-type01">변경</a></div>
                     </li>
                 </ul>
@@ -357,8 +357,8 @@
                     <div class="box-white pt0 pb0">
                         <div class="add-on">
                             <ul>
-                                <li class="t-roaming-btn" style="display:none;"><a href="#">T 로밍 함께쓰기</a></li>
-                                <li class="t-share-btn" style="display:none;"><a href="#">데이터 함께쓰기</a></li>
+                                <li class="t-roaming-sharing-btn" style="display:none;"><a href="#">T 로밍 함께쓰기</a></li>
+                                <li class="data-sharing-btn" style="display:none;"><a href="#">데이터 함께쓰기</a></li>
                                 <% if (usageData.dataTopUp === 'Y') { %><li><a href="#">데이터 한도요금제</a></li><% } %>
                                 <% if (usageData.ting === 'Y') { %><li><a href="#">팅 요금상품</a></li><% } %>
                                 <% if (usageData.dataDiscount === 'Y') { %><li><a href="#">24시간 데이터 50% 할인</a></li><% } %>
