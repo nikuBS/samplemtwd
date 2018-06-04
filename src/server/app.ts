@@ -32,7 +32,7 @@ import ApiRouter from './common/api.router';
 
 class App {
   public app: Application = express();
-  // public redisService = new RedisService();
+  public redisService = new RedisService();
 
   constructor() {
     this.config();
@@ -47,10 +47,12 @@ class App {
     this.app.engine('html', ejs.renderFile);
     this.app.use(express.json());       // to support JSON-encoded bodies
     this.app.use(express.urlencoded({ extended: true })); // to support URL-encoded bodies
-    // this.app.use(this.redisService.middleware);
+    this.app.use(this.redisService.middleware);
     this.app.use(UA.express()); // req.useragent
     this.app.use(cookie());
+    // development env
     this.app.use(express.static(path.join(__dirname, '/public')));
+    this.app.use('/mock', express.static(path.join(__dirname, '/mock/client')));
 
     this.setViewPath();
     this.setRoutes();

@@ -12,12 +12,11 @@ export enum API_PROTOCOL {
 
 export enum API_SERVER {
   BFF = 'BFF_SERVER',
-  FAKE = 'FAKE_SERVER',
   TEST = 'TEST_SERVER'
 }
 
 export const API_CMD = {
-  SESSION_CHECK: { path: '/mock/session', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  SESSION_CHECK: { path: '/mock/session', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_03_0001: { path: '/test-login', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: false },
   BFF_03_0002: { path: '/svc-catalog', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_03_0003: { path: '/svc-catalog/detail', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
@@ -34,11 +33,6 @@ export const API_CMD = {
   BFF_05_0009: { path: '/core-balance/v1/services/data-sharings/child', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0010: { path: '/core-balance/v1/services/children', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0011: { path: '/core-balance/v1/services/data-sharings', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: false },
-
-
-  FAKE_GET: { path: '/comments', method: API_METHOD.GET, server: API_SERVER.FAKE, bypass: true },
-  FAKE_POST: { path: '/posts', method: API_METHOD.POST, server: API_SERVER.FAKE, bypass: true },
-  FAKE_GET_1: { path: '/posts/{args[0]}/{args[1]}', method: API_METHOD.GET, server: API_SERVER.FAKE, bypass: false },
 
   TEST_GET_USAGE_BTN: { path: '/usageBtn', method: API_METHOD.GET, server: API_SERVER.TEST, bypass: true }
 };

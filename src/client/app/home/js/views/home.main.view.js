@@ -9,12 +9,15 @@ Tw.HomeMainView = function (rootEl) {
 
 Tw.HomeMainView.prototype = {
   _bindEvent: function () {
-    console.log('bind event');
-    // this.$container.on('click', '.wrapper_btn', $.proxy(this._onClickGnbButton, this));
     this.$container.on('click', '.btn-search', $.proxy(this._onClickAjaxButton, this));
-    // this._apiService.request(Tw.API_CMD.FAKE_POST, { postId: 1 })
+
+    // this._apiService.mockJson(Tw.API_CMD.SESSION_CHECK, {})
     //   .done($.proxy(this._success, this))
     //   .fail($.proxy(this._fail, this));
+    $.ajax('/mock/client-test.json')
+      .done((function(resp){
+        console.log(resp);
+      }));
   },
 
   _onClickGnbButton: function ($event) {
@@ -25,11 +28,11 @@ Tw.HomeMainView.prototype = {
 
   _onClickAjaxButton: function ($event) {
     console.log('button click');
-    this._apiService.request(Tw.API_CMD.FAKE_POST, {postId: 1})
-        .done($.proxy(this._success, this))
-        .fail($.proxy(this._fail, this));
+    this._apiService.request(Tw.API_CMD.FAKE_POST, { postId: 1 })
+      .done($.proxy(this._success, this))
+      .fail($.proxy(this._fail, this));
 
-    this._nativeService.send(Tw.NTV_CMD.TOAST, {message: 'test'}, this.nativeCallback);
+    this._nativeService.send(Tw.NTV_CMD.TOAST, { message: 'test' }, this.nativeCallback);
   },
 
   _success: function (resp) {

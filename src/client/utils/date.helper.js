@@ -24,7 +24,7 @@ Tw.DateHelper = (function() {
    */
   var getShortDate = function (date) {
     return moment(date).format('l');
-  }
+  };
 
   /**
    * @param date
@@ -32,11 +32,11 @@ Tw.DateHelper = (function() {
    */
   var getShortDateNoDot = function (date) {
     return moment(date).format('YYYY.MM.DD');
-  }
+  };
 
   var getDateFormat = function(data) {
     return moment(data);
-  }
+  };
 
   return {
     getRemainDate: getRemainDate,

@@ -1,31 +1,30 @@
 import TwViewController from '../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
 import { API_CMD } from '../../../types/api-command.type';
-import myTUsageData from '../../../mock/myt.usage';
+import myTUsageData from '../../../mock/server/myt.usage';
 import DateHelper from '../../../utils/date.helper';
 import FormatHelper from '../../../utils/format.helper';
 import { UNIT } from '../../../types/bff-common.type';
+import LoginService from '../../../services/login.service';
 
 class HomeMain extends TwViewController {
+  private loginService;
   constructor() {
     super();
+    this.loginService = new LoginService();
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    // this.apiService.request(API_CMD.FAKE_GET, { postId: 1 })
-    //   .subscribe((data) => {
-    //     console.log('subscribe', data);
-    //   }, (err) => {
-    //     console.log('error', err);
-    //   }, () => {
-    //     console.log('complete');
-    //   });
-
     const remainDate = DateHelper.getRemainDate();
-    this.apiService.request(API_CMD.SESSION_CHECK, {})
-      .subscribe((resp) => {
-        console.log('Session', resp);
-      });
+    // this.apiService.request(API_CMD.BFF_05_0001, {})
+    //   .subscribe((resp) => {
+    //     console.log(resp);
+    //     // console.log(myTUsageData);
+    //     res.render('home.main.html', myTUsageData);
+    //   });
+    this.apiService.request(API_CMD.BFF_03_0003, {}).subscribe((resp) => {
+      console.log(resp);
+    });
 
     const usageData = this.parseData(myTUsageData.result);
     res.render('home.main.html', {
@@ -33,13 +32,6 @@ class HomeMain extends TwViewController {
       svcInfo,
       remainDate
     });
-    // this.apiService.request(API_CMD.BFF_05_0001, {})
-    //   .subscribe((resp) => {
-    //     console.log(resp);
-    //     // console.log(myTUsageData);
-    //     res.render('home.main.html', myTUsageData);
-    //   });
-    // res.render(__dirname + '../views/containers/home.html');
   }
 
   private parseData(usageData: any): any {

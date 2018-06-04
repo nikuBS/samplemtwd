@@ -13,7 +13,7 @@ class MyTUsageDataShare extends TwViewController {
       remainDate : DateHelper.getRemainDate()
     };
 
-    res.render('myt.usage.tdata-share.html', data);
+    res.render('usage/myt.usage.data-share.html', data);
   }
 }
 

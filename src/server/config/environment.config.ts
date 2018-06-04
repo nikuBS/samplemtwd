@@ -6,11 +6,6 @@ const environment = {
       port: 31010
     },
     CDN: 'http://localhost:3001',
-    FAKE_SERVER: {
-      url: 'jsonplaceholder.typicode.com',
-      protocol: 'http',
-      port: 80
-    },
     TEST_SERVER: {
       url: '150.28.69.26',
       protocol: 'http',
@@ -31,11 +26,6 @@ const environment = {
       port: 80
     },
     CDN: '/cdn',
-    FAKE_SERVER: {
-      url: 'jsonplaceholder.typicode.com',
-      protocol: 'http',
-      port: 80
-    },
     REDIS: {
       host: 'dev-backing-redis-mobile-ibm-redis-ha-dev-sentinel.mtw-dev-cch.svc.cluster.local',
       port: 26379,
@@ -51,11 +41,6 @@ const environment = {
       port: 80
     },
     CDN: '',
-    FAKE_SERVER: {
-      url: 'jsonplaceholder.typicode.com',
-      protocol: 'http',
-      port: 80
-    },
     REDIS: {},
     TEMP_CDN: 'http://tstore.rbipt.com/skt'
   }
