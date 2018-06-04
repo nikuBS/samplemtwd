@@ -10,7 +10,7 @@ FROM mycluster.icp:8500/default/nodejs8-centos:0.1
 #RUN bash nodesource_setup.sh
 #RUN apt-get install -y nodejs
 
-VOLUME ["/tworld"]
+WORKDIR /tworld
 
 ADD . /tworld
 RUN cd /tworld && npm install
@@ -21,7 +21,5 @@ ENV NODE_ENV k8s
 
 # open Application port
 EXPOSE 3000
-
-WORKDIR /tworld
 
 CMD ["npm", "run", "server-docker:qa"]

@@ -6,7 +6,6 @@ Tw.API_METHOD = {
 };
 
 Tw.API_CMD = {
-  FAKE_GET: { path: '/comments', method: Tw.API_METHOD.GET },
-  FAKE_POST: { path: '/posts', method: Tw.API_METHOD.POST },
-  TEST_GET_USAGE_BTN: { path: '/usageBtn', method: Tw.API_METHOD.GET }
+  TEST_GET_USAGE_BTN: { path: '/usageBtn', method: Tw.API_METHOD.GET },
+  SESSION_CHECK: { path: '/mock/session', method: Tw.API_METHOD.GET},
 };

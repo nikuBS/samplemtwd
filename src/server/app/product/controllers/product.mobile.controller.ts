@@ -9,13 +9,6 @@ class ProductMobileController extends TwViewController {
   }
 
   render(req, res: Response, next: NextFunction) {
-    this.apiService.request(API_CMD.FAKE_POST, {
-      title: 'foo',
-      body: 'bar',
-      userId: 1
-    }).subscribe((resp) => {
-      console.log('subscribe', resp);
-    });
     res.render('product.mobile.html', new ProductMobileModel());
   }
 }

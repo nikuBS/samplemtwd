@@ -2,12 +2,13 @@ import http from 'http';
 import https from 'https';
 import { Observable } from 'rxjs/Observable';
 import environment from '../config/environment.config';
-import { API_CODE, API_METHOD, API_PROTOCOL } from '../types/api-command.type';
+import { API_CMD, API_CODE, API_METHOD, API_PROTOCOL } from '../types/api-command.type';
 import ParamsHelper from '../utils/params.helper';
+import { SvcInfoModel } from '../models/svc-info.model';
 
 class ApiService {
   static instance;
-  private cookie = '';
+  private svcModel: SvcInfoModel = new SvcInfoModel({});
 
   constructor() {
     if ( ApiService.instance ) {
@@ -18,19 +19,13 @@ class ApiService {
   }
 
   public request(command: any, params: any, header?: any, ...args: any[]): Observable<any> {
-    const apiServer = environment[String(process.env.NODE_ENV)][command.server];
+    const apiServer = environment[String(process.env.NODE_ENV)].BFF_SERVER;
     const options = this.getOption(command, apiServer, params, header, args);
     console.log('[API_REQ]', options, params);
 
     return Observable.create((observer) => {
-      let req;
-      if ( apiServer.protocol === API_PROTOCOL.HTTPS ) {
-        req = https.request(options, this.apiCallback.bind(this, observer));
-      } else if ( apiServer.protocol === API_PROTOCOL.HTTP ) {
-        req = http.request(options, this.apiCallback.bind(this, observer));
-      } else {
-        console.warn('Wrong server info');
-      }
+      const req = apiServer.protocol === API_PROTOCOL.HTTPS ?
+        https.request(options, this.apiCallback.bind(this, observer)) : http.request(options, this.apiCallback.bind(this, observer));
 
       req.on('error', this.handleError.bind(this, observer));
       req.write(JSON.stringify(params));
@@ -49,9 +44,16 @@ class ApiService {
       method: command.method,
       headers: Object.assign(header, {
         'Content-type': 'application/json; charset=UTF-8',
-        'cookie': this.cookie
+        cookie: this.svcModel.serverSession
       })
     };
+  }
+
+  private isSessionCallback(command: any): boolean {
+    if ( command === API_CMD.BFF_03_0001 || command === API_CMD.BFF_03_0005 ) {
+      return true;
+    }
+    return false;
   }
 
   private makePath(path: string, method: API_METHOD, params: any, args: any[]): string {
@@ -64,17 +66,18 @@ class ApiService {
     return path;
   }
 
+  private setServerSession(resp) {
+    console.log('Headers: ', JSON.stringify(resp.headers));
+    if ( resp.headers['set-cookie'] ) {
+      console.log('Set Session Cookie');
+      this.svcModel.serverSession = resp.headers['set-cookie'][0];
+    }
+  }
+
   private apiCallback(observer, resp) {
     let data = '';
+    this.setServerSession(resp);
 
-    console.log('Headers: ', JSON.stringify(resp.headers));
-    try {
-      this.cookie = resp.headers['set-cookie'][0].split(';')[0];
-      console.log('Cookie: ', this.cookie);
-    } catch (err) {
-      this.cookie = '';
-    }
-    // this.cookie = resp.headers['set-cookie'][0];
     resp.on('data', (chunk) => {
       data += chunk;
     });
