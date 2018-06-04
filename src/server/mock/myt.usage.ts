@@ -12,11 +12,12 @@ const myTUsageData = {
         'skipId': 'DD2N8', // DD2N8
         'skipName': '데이터통화 3GB 무료(LTE)',
         'total': '3145728',
-        'used': '1145728',
-        'remained': '2000000',
+        'used': '2245728',
+        'remained': '900000',
         'unit': '140',
         'couponDate': '20180601'
       },
+      /*
       {
         'skipId': 'LT', // DDZ23
         'skipName': '데이터통화 1GB 무료(LTE)',
@@ -26,6 +27,7 @@ const myTUsageData = {
         'unit': '140',
         'couponDate': ''
       }
+      */
     ],
     'voice': [
       {

@@ -16,7 +16,9 @@ class MyTUsage extends TwViewController {
   }
 
   private parseSvcInfo(svcInfo: any): any {
-    svcInfo.svcName = SVC_CD[svcInfo.svcCd];
+    if (svcInfo) {
+      svcInfo.svcName = SVC_CD[svcInfo.svcCd];
+    }
     return svcInfo;
   }
 
