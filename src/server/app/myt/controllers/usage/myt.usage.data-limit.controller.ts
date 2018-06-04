@@ -1,7 +1,7 @@
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
 import { API_CMD } from '../../../../types/api-command.type';
-import dataLimit from '../../../../mock/myt.data-limit';
+import dataLimit from '../../../../mock/server/myt.data-limit';
 
 class MyTUsageDataLimit extends TwViewController {
   constructor() {

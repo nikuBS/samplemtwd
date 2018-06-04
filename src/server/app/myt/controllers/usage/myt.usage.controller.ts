@@ -1,6 +1,6 @@
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
-import myTUsageData from '../../../../mock/myt.usage';
+import myTUsageData from '../../../../mock/server/myt.usage';
 
 import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';

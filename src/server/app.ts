@@ -50,7 +50,9 @@ class App {
     this.app.use(this.redisService.middleware);
     this.app.use(UA.express()); // req.useragent
     this.app.use(cookie());
+    // development env
     this.app.use(express.static(path.join(__dirname, '/public')));
+    this.app.use('/mock', express.static(path.join(__dirname, '/mock/client')));
 
     this.setViewPath();
     this.setRoutes();

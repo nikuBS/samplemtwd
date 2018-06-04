@@ -11,9 +11,13 @@ Tw.HomeMainView.prototype = {
   _bindEvent: function () {
     this.$container.on('click', '.btn-search', $.proxy(this._onClickAjaxButton, this));
 
-    // this._apiService.request(Tw.API_CMD.SESSION_CHECK, {})
+    // this._apiService.mockJson(Tw.API_CMD.SESSION_CHECK, {})
     //   .done($.proxy(this._success, this))
     //   .fail($.proxy(this._fail, this));
+    $.ajax('/mock/client-test.json')
+      .done((function(resp){
+        console.log(resp);
+      }));
   },
 
   _onClickGnbButton: function ($event) {

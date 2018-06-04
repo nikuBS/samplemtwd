@@ -1,7 +1,7 @@
 import TwViewController from '../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
 import { API_CMD } from '../../../types/api-command.type';
-import myTUsageData from '../../../mock/myt.usage';
+import myTUsageData from '../../../mock/server/myt.usage';
 import DateHelper from '../../../utils/date.helper';
 import FormatHelper from '../../../utils/format.helper';
 import { UNIT } from '../../../types/bff-common.type';
