@@ -18,7 +18,7 @@ class MyTUsageTDataShare extends TwViewController {
     super();
   }
 
-  private parseData(req: any) : any {
+  private parseData(req: any): any {
       req.childUSimCount = req.dataSharingSvc.childList.length;
       // 기획쪽 기본 제공 데이터 멀티 노출 여부 확인 중으로 기본 데이터 첫번째만 노출
       req.parentPlan = req.freePlan[0];

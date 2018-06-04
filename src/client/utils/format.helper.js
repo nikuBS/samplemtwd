@@ -27,12 +27,13 @@ Tw.FormatHelper = (function () {
 
   var customDataFormat = function (data, curUnit, targetUnit) {
     var units = [Tw.DATA_UNIT.KB, Tw.DATA_UNIT.MB, Tw.DATA_UNIT.GB];
-    var curUnitIdx = units.findIndex(function(value) {
-      return value === curUnit;
+    var curUnitIdx = _.findIndex(units, function(value) {
+      return value === curUnitIdx;
     });
-    var targetUnitIdx = units.findIndex(function(value) {
-      return value === targetUnit;
+    var targetUnitIdx = _.findIndex(units, function(value) {
+      return value === targetUnitIdx;
     });
+
     var sub = targetUnitIdx - curUnitIdx;
 
     data = +data;
@@ -54,7 +55,7 @@ Tw.FormatHelper = (function () {
 
   var convDataFormat = function (data, curUnit) {
     var units = [Tw.DATA_UNIT.KB, Tw.DATA_UNIT.MB, Tw.DATA_UNIT.GB];
-    var unitIdx = units.findIndex(function(value) {
+    var unitIdx = _.findIndex(units, function(value) {
       return value === curUnit;
     });
 

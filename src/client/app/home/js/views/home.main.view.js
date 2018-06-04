@@ -1,6 +1,6 @@
 Tw.HomeMainView = function (rootEl) {
-  this.$container     = rootEl;
-  this._apiService    = new Tw.ApiService();
+  this.$container = rootEl;
+  this._apiService = new Tw.ApiService();
   this._nativeService = new Tw.NativeService();
   console.log(this.$container);
 
