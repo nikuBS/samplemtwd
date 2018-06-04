@@ -21,7 +21,7 @@ RUN pm2 install typescript
 
 COPY . .
 
-#ENV NODE_ENV k8s
+ENV NODE_ENV k8s
 
 # open Application port
 EXPOSE 3000
