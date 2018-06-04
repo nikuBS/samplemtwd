@@ -7,15 +7,15 @@ class MyTUsageTDataShareInfo extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     const data = {
-      userName: 'temp',
+      userName: svcInfo.custNm,
       url: {
         checkTDataShareInfo: '#',
         onLineQnA: '#',
         customerCenter: '#'
       },
-    }
+    };
 
     res.render('usage/myt.usage.tdata-share-info.html', data);
   }
