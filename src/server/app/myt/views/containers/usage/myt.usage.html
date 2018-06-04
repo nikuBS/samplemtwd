@@ -59,12 +59,6 @@
                         </label>
                     </div>
                     <div class="box-white">
-                        <% if (usageData.data[i].isExceed) { %>
-                        <div class="suggestion2">
-                            <div><strong>초과 사용중</strong>이세요!</div>
-                            <a href="#">리필 어떠세요? </a>
-                        </div>
-                        <% } %>
                         <!-- data -->
                         <div class="data">
                             <div id="<%= usageData.data[i].skipId %>" class="sec">
@@ -82,9 +76,15 @@
                                     <% if (usageData.data[i].isUnlimited) { %>
                                     <div class="base2">무제한</div>
                                     <% } else { %>
-                                    <div class="base">잔여 <strong class="moebius-bold"><%= usageData.data[i].showRemained.data %></strong><span class="unit"><%= usageData.data[i].showRemained.unit %></span></div>
+                                    <div class="base">잔여
+                                        <strong class="moebius-bold data-value" data-value="<%= usageData.data[i].remained %>"><%= usageData.data[i].showRemained.data %></strong>
+                                        <span class="unit"><%= usageData.data[i].showRemained.unit %></span>
+                                    </div>
                                     <% } %>
-                                    <div class="rt">사용 <strong class="moebius-bold"><%= usageData.data[i].showUsed.data %></strong><span class="unit"><%= usageData.data[i].showUsed.unit %></span></div>
+                                    <div class="rt">사용
+                                        <strong class="moebius-bold data-value" data-value="<%= usageData.data[i].used %>"><%= usageData.data[i].showUsed.data %></strong>
+                                        <span class="unit"><%= usageData.data[i].showUsed.unit %></span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="sec">
@@ -99,8 +99,14 @@
                                     <% } %>
                                 </div>
                                 <div class="tail">
-                                    <div class="base">잔여 <strong class="moebius-bold">828.19</strong><span class="unit">MB</span></div>
-                                    <div class="rt">사용 <strong class="moebius-bold">828.19</strong><span class="unit">MB</span></div>
+                                    <div class="base">잔여
+                                        <strong class="moebius-bold data-value" data-value="848066">828.19</strong>
+                                        <span class="unit">MB</span>
+                                    </div>
+                                    <div class="rt">사용
+                                        <strong class="moebius-bold data-value" data-value="848066">828.19</strong>
+                                        <span class="unit">MB</span>
+                                    </div>
                                     <% if (usageData.data[i].couponDate !== '') { %><div class="coupon">쿠폰등록일 <span class="moebius"><%= usageData.data[i].couponDate %></span></div><% } %>
                                 </div>
                             </div>
@@ -426,7 +432,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    var comp = new Tw.MytUsageView($('.container'));
+    var comp = new Tw.MytUsageView($('#myt-usage'));
   });
 </script>
 <% include ../../components/end.component.html %>

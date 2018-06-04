@@ -26,7 +26,7 @@ Tw.FormatHelper = (function () {
 
 
   var customDataFormat = function (data, curUnit, targetUnit) {
-    var units = [DATA_UNIT.KB, DATA_UNIT.MB, DATA_UNIT.GB];
+    var units = [Tw.DATA_UNIT.KB, Tw.DATA_UNIT.MB, Tw.DATA_UNIT.GB];
     var curUnitIdx = units.findIndex(function(value) {
       return value === curUnit;
     });

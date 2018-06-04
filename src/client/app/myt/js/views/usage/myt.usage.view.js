@@ -11,6 +11,32 @@ Tw.MytUsageView.prototype = {
     this._getUsageBtn();
   },
   _bindEvent: function () {
+    this._changeDataUnit();
+  },
+  _changeDataUnit: function () {
+    var changeBtn = $('.btn-change');
+    this.$container.find(changeBtn).on('change', $.proxy(this._setDataByUnit, this));
+  },
+  _setDataByUnit: function ($event) {
+    var defaultUnit = 'KB';
+    var unit = this._getUnit($event.target.checked);
+
+    var targetSelector = $('.data-value');
+    this.$container.find(targetSelector).each(function () {
+      var $this = $(this);
+      var dataValue = $this.attr('data-value');
+      var data = Tw.FormatHelper.customDataFormat(dataValue, defaultUnit, unit);
+
+      $this.text(data.data);
+      $this.siblings('span').text(data.unit);
+    })
+  },
+  _getUnit: function (isMb) {
+    var unit = 'GB';
+    if (isMb) {
+      unit = 'MB';
+    }
+    return unit;
   },
   _getUsageBtn: function () {
     this._apiService.request(Tw.API_CMD.TEST_GET_USAGE_BTN, {})
