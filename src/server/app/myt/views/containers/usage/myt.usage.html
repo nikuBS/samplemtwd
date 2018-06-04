@@ -19,9 +19,10 @@
             <div class="breadcrumb">
                 나의 사용량/사용내역 &#62; 사용량 조회
             </div>
-            <!-- // breadcruGB -->
+            <!-- // breadcrumb -->
             <!-- prd-list -->
             <div class="prd-list">
+                <% if (svcInfo) { %>
                 <ul>
                     <li>
                         <div class="case"><span class="name"><%= svcInfo.svcName %></span><% if (svcInfo.repSvcYn === 'Y') { %><span class="tag-type01">대표</span><% } %></div>
@@ -30,6 +31,7 @@
                         <div class="btn-change"><a href="/myt/usage/change" class="btn-type01">변경</a></div>
                     </li>
                 </ul>
+                <% } %>
             </div>
             <!-- // prd-list -->
             <!-- prd-summary -->
@@ -97,8 +99,8 @@
                                     <% } %>
                                 </div>
                                 <div class="tail">
-                                    <div class="base">잔여 <strong class="moebius-bold">828.19</strong><span class="unit">GB</span></div>
-                                    <div class="rt">사용 <strong class="moebius-bold">828.19</strong><span class="unit">GB</span></div>
+                                    <div class="base">잔여 <strong class="moebius-bold">828.19</strong><span class="unit">MB</span></div>
+                                    <div class="rt">사용 <strong class="moebius-bold">828.19</strong><span class="unit">MB</span></div>
                                     <% if (usageData.data[i].couponDate !== '') { %><div class="coupon">쿠폰등록일 <span class="moebius"><%= usageData.data[i].couponDate %></span></div><% } %>
                                 </div>
                             </div>
@@ -113,7 +115,7 @@
                                 </div>
                                 <div class="tail">
                                     <div class="base2">무제한</div>
-                                    <div class="rt">오늘사용 <strong class="moebius-bold">828.19</strong><span class="unit">GB</span></div>
+                                    <div class="rt">오늘사용 <strong class="moebius-bold">828.19</strong><span class="unit">MB</span></div>
                                 </div>
                             </div>
                             <div class="sec mb20">
@@ -127,7 +129,7 @@
                                 </div>
                                 <div class="tail">
                                     <div class="base2">무제한</div>
-                                    <div class="rt">오늘사용 <strong class="moebius-bold">828.19</strong><span class="unit">GB</span></div>
+                                    <div class="rt">오늘사용 <strong class="moebius-bold">828.19</strong><span class="unit">MB</span></div>
                                 </div>
                             </div>
                             <% if (usageData.data[i].isVisibleDayBtn) { %>
@@ -148,7 +150,7 @@
                                 <div class="col1">
                                     <a href="#" class="btn-type02">T끼리 데이터선물 / 조르기</a>
                                 </div>
-                                <div class="col1">
+                                <div class="col1 t-data-sharing-btn" style="display:none;">
                                     <a href="/myt/usage/tdatashare" class="btn-type02">T데이터셰어링 사용량</a>
                                 </div>
                             </div>
@@ -404,11 +406,11 @@
                     <div class="box-white pt0 pb0">
                         <div class="add-on">
                             <ul>
-                                <li><a href="#">T 로밍 함께쓰기</a></li>
-                                <li><a href="#">데이터 함께쓰기</a></li>
-                                <li><a href="#">데이터 한도요금제</a></li>
-                                <li><a href="#">팅 요금상품</a></li>
-                                <li><a href="#">24시간 데이터 50% 할인</a></li>
+                                <li class="t-roaming-btn" style="display:none;"><a href="#">T 로밍 함께쓰기</a></li>
+                                <li class="t-share-btn" style="display:none;"><a href="#">데이터 함께쓰기</a></li>
+                                <% if (usageData.dataTopUp === 'Y') { %><li><a href="#">데이터 한도요금제</a></li><% } %>
+                                <% if (usageData.ting === 'Y') { %><li><a href="#">팅 요금상품</a></li><% } %>
+                                <% if (usageData.dataDiscount === 'Y') { %><li><a href="#">24시간 데이터 50% 할인</a></li><% } %>
                                 <li><a href="#" class="hastag">자녀폰 사용량 (5명)<span class="tag-type02">자녀</span></a></li><!-- .hastag : 태그 존재시 여백 재설정 // -->
                             </ul>
                         </div>

@@ -5,11 +5,16 @@ const environment = {
       protocol: 'http',
       port: 31010
     },
-    CDN: 'http://150.28.69.25:3001',
+    CDN: 'http://localhost:3001',
     FAKE_SERVER: {
       url: 'jsonplaceholder.typicode.com',
       protocol: 'http',
       port: 80
+    },
+    TEST_SERVER: {
+      url: '150.28.69.26',
+      protocol: 'http',
+      port: 3002
     },
     REDIS: {
       host: '211.188.180.73',

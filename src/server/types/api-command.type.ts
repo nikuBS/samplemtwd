@@ -12,7 +12,8 @@ export enum API_PROTOCOL {
 
 export enum API_SERVER {
   BFF = 'BFF_SERVER',
-  FAKE = 'FAKE_SERVER'
+  FAKE = 'FAKE_SERVER',
+  TEST = 'TEST_SERVER'
 }
 
 export const API_CMD = {
@@ -37,7 +38,9 @@ export const API_CMD = {
 
   FAKE_GET: { path: '/comments', method: API_METHOD.GET, server: API_SERVER.FAKE, bypass: true },
   FAKE_POST: { path: '/posts', method: API_METHOD.POST, server: API_SERVER.FAKE, bypass: true },
-  FAKE_GET_1: { path: '/posts/{args[0]}/{args[1]}', method: API_METHOD.GET, server: API_SERVER.FAKE, bypass: false }
+  FAKE_GET_1: { path: '/posts/{args[0]}/{args[1]}', method: API_METHOD.GET, server: API_SERVER.FAKE, bypass: false },
+
+  TEST_GET_USAGE_BTN: { path: '/usageBtn', method: API_METHOD.GET, server: API_SERVER.TEST, bypass: true }
 };
 
 export const API_CODE = {
