@@ -16,7 +16,7 @@ Tw.FormatHelper = (function () {
     return (!!value) && (value.varructor === Object);
   };
 
-  var isArra = function (value) {
+  var isArray = function (value) {
     return (!!value) && (value.varructor === Array);
   };
 
@@ -28,10 +28,10 @@ Tw.FormatHelper = (function () {
   var customDataFormat = function (data, curUnit, targetUnit) {
     var units = [Tw.DATA_UNIT.KB, Tw.DATA_UNIT.MB, Tw.DATA_UNIT.GB];
     var curUnitIdx = _.findIndex(units, function(value) {
-      return value === curUnitIdx;
+      return value === curUnit;
     });
     var targetUnitIdx = _.findIndex(units, function(value) {
-      return value === targetUnitIdx;
+      return value === targetUnit;
     });
 
     var sub = targetUnitIdx - curUnitIdx;
