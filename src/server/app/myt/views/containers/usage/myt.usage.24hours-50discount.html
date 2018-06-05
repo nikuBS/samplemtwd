@@ -7,7 +7,7 @@
     <!-- header -->
     <header class="header-sub">
         <button class="btn-back"><span class="blind">뒤로가기</span></button>
-        <h1 class="title-txt">24시간 데이터 50% 할일</h1>
+        <h1 class="title-txt">24시간 데이터 50% 할인</h1>
         <button class="btn-search"><span class="blind">검색</span></button>
     </header>
     <!-- // header -->
@@ -17,7 +17,7 @@
         <section class="container">
             <!-- yprod -->
             <div class="yprod pb30">
-                <strong class="line-bt">010-12**-56**</strong><br /><strong>24시간 데이터 50% 할인</strong><br />사용 현황입니다.
+                <strong class="line-bt"><%= svcInfo.svcNum %></strong><br /><strong>24시간 데이터 50% 할인</strong><br />사용 현황입니다.
             </div>
             <!-- // yprod -->
             <!-- prd-state -->
@@ -90,9 +90,4 @@
 <!-- // popup-container -->
 
 <% include ../../components/javascript.component.html %>
-<script>
-    $(document).ready(function () {
-        var comp = new Tw.MytUsageTdatashareView($('.container'));
-    });
-</script>
 <% include ../../components/end.component.html %>
