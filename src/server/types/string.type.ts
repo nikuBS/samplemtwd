@@ -14,7 +14,8 @@ export enum VOICE_UNIT {
 
 export enum SKIP_NAME {
   UNLIMIT = '무제한',
-  DEFAULT = '기본제공량'
+  DEFAULT = '기본제공량',
+  EXCEED = 'LT' // 초과
 }
 
 export enum MSG_STR {

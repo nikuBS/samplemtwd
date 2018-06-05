@@ -9,22 +9,13 @@ class MyTUsage24hour50discount extends TwViewController {
     super();
   }
 
-  private parseSvcInfo(svcInfo: any): any {
-    if (svcInfo) {
-      svcInfo.svcName = SVC_CD[svcInfo.svcCd];
-    }
-    return svcInfo;
-  }
-
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    const newSvcInfo = this.parseSvcInfo(svcInfo);
-
     this.apiService.request(API_CMD.BFF_05_0008, {}) // 24시간 데이터 50% 할인 조회
       .subscribe((resp) => {
         console.log(resp);
         const usageData = resp.result;
         const data = {
-          svcInfo: newSvcInfo,
+          svcInfo: svcInfo,
           usageData: usageData,
           remainDate: DateHelper.getRemainDate()
         };

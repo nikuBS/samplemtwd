@@ -3,7 +3,7 @@ Tw.MytUsageTingView = function (rootEl) {
   this._ui = {};
 
   this._uiFunction();
-}
+};
 
 Tw.MytUsageTingView.prototype = {
   _setUI: function () {
@@ -62,5 +62,5 @@ Tw.MytUsageTingView.prototype = {
         this.miniPopupToggle();
       }, this));
     }
-  },
-}
+  }
+};
