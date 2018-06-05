@@ -1,5 +1,8 @@
 export const SVC_CD = {
   C: '휴대폰',
+  S: 'PPS',
+  F: 'TPocket-FI',
+  L: 'Tlogin',
   W: 'WiBro',
   P: '집전화',
   T: 'IPTV',
