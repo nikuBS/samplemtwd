@@ -31,7 +31,7 @@ export const API_CMD = {
   BFF_05_0007: { path: '/core-balance/v1/ting', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0008: { path: '/core-balance/v1/data-discount', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0009: { path: '/core-balance/v1/data-sharings/balances', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
-  BFF_05_0010: { path: '/core-balance/v1/children', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_05_0010: { path: '/core-balance/v1/children', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0011: { path: '/core-balance/v1/data-sharings', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: false },
 
   TEST_GET_USAGE_BTN: { path: '/usageBtn', method: API_METHOD.GET, server: API_SERVER.TEST, bypass: true }
@@ -49,4 +49,11 @@ export const API_CODE = {
   CODE_99: '99',    // Circuit Open
   CODE_200: '200',
   CODE_400: '400'
+};
+
+export const API_ERROR_CODE = {
+  BLN0001: 'BLN0001', // 잔여기본통화 조회횟수 초과
+  BLN0002: 'BLN0002', // 정지이력
+  BLN0003: 'BLN0003', // 조회불가대상
+  BLN0004: 'BLN0004' // 조회불가대상
 };

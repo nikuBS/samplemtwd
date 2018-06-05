@@ -7,6 +7,7 @@ import DateHelper from '../../../../utils/date.helper';
 import { UNIT } from '../../../../types/bff-common.type';
 import { SVC_CD } from '../../../../types/bff-common.type';
 import { API_CMD } from '../../../../types/api-command.type';
+import { API_ERROR_CODE } from '../../../../types/api-command.type';
 import { DAY_BTN_STANDARD_SKIP_ID } from '../../../../types/bff-common.type';
 
 class MyTUsage extends TwViewController {
