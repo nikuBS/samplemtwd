@@ -4,11 +4,11 @@ import { Observable } from 'rxjs/Observable';
 import environment from '../config/environment.config';
 import { API_CMD, API_CODE, API_METHOD, API_PROTOCOL } from '../types/api-command.type';
 import ParamsHelper from '../utils/params.helper';
-import { SvcInfoModel } from '../models/svc-info.model';
+import LoginService from './login.service';
 
 class ApiService {
   static instance;
-  private svcModel: SvcInfoModel = new SvcInfoModel({});
+  private loginService: LoginService = new LoginService();
 
   constructor() {
     if ( ApiService.instance ) {
@@ -25,7 +25,8 @@ class ApiService {
 
     return Observable.create((observer) => {
       const req = apiServer.protocol === API_PROTOCOL.HTTPS ?
-        https.request(options, this.apiCallback.bind(this, observer)) : http.request(options, this.apiCallback.bind(this, observer));
+        https.request(options, this.apiCallback.bind(this, observer, command)) :
+        http.request(options, this.apiCallback.bind(this, observer, command));
 
       req.on('error', this.handleError.bind(this, observer));
       req.write(JSON.stringify(params));
@@ -44,16 +45,9 @@ class ApiService {
       method: command.method,
       headers: Object.assign(header, {
         'Content-type': 'application/json; charset=UTF-8',
-        cookie: this.svcModel.serverSession
+        cookie: this.loginService.getServerSession()
       })
     };
-  }
-
-  private isSessionCallback(command: any): boolean {
-    if ( command === API_CMD.BFF_03_0001 || command === API_CMD.BFF_03_0005 ) {
-      return true;
-    }
-    return false;
   }
 
   private makePath(path: string, method: API_METHOD, params: any, args: any[]): string {
@@ -66,15 +60,7 @@ class ApiService {
     return path;
   }
 
-  private setServerSession(resp) {
-    console.log('Headers: ', JSON.stringify(resp.headers));
-    if ( resp.headers['set-cookie'] ) {
-      console.log('Set Session Cookie');
-      this.svcModel.serverSession = resp.headers['set-cookie'][0];
-    }
-  }
-
-  private apiCallback(observer, resp) {
+  private apiCallback(observer, command, resp) {
     let data = '';
     this.setServerSession(resp);
 
@@ -86,10 +72,14 @@ class ApiService {
       let respData;
       try {
         respData = JSON.parse(data);
+        if ( this.isSessionCallback(command) ) {
+          this.setSvcInfo(respData.result);
+        }
       } catch ( err ) {
         console.warn('JSON parse error');
         respData = data;
       }
+
       observer.next(respData);
       observer.complete();
     });
@@ -100,6 +90,26 @@ class ApiService {
     // observer.error(err);
     observer.next({ code: API_CODE.CODE_400, msg: err.message });
     observer.complete();
+  }
+
+  private isSessionCallback(command: any): boolean {
+    if ( command === API_CMD.BFF_03_0001 || command === API_CMD.BFF_03_0004 || command === API_CMD.BFF_03_0005 ) {
+      return true;
+    }
+    return false;
+  }
+
+  private setServerSession(resp) {
+    console.log('Headers: ', JSON.stringify(resp.headers));
+    if ( resp.headers['set-cookie'] ) {
+      console.log('Set Session Cookie');
+      this.loginService.setServerSession(resp.headers['set-cookie'][0]);
+    }
+  }
+
+  private setSvcInfo(result) {
+    this.loginService.setSvcInfo(result);
+
   }
 }
 
