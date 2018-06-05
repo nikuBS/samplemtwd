@@ -23,87 +23,47 @@
             <!-- // yprod -->
             <!-- prd-state -->
             <div class="prd-state">
-                <!-- section : 통화가능금액 -->
+                <% if( usageData ) { %>
+                <% for (var i = 0; i < usageData.length; i++) { %>
                 <section>
-                    <h2>통화가능금액 <a href="#" class="btn-detail" data-popup-type="1"><span class="blind">자세히보기</span></a></h2>
+                    <h2><%= usageData[i].title %> <% if (usageData[i].skipId === 'HA') { %><a href="#" class="btn-detail" data-popup-type="1"><span class="blind">자세히보기</span></a><% } %></h2>
                     <div class="box-white">
                         <!-- data -->
                         <div class="data">
                             <div class="sec mb0">
-                                <h3>제공<span class="thin">(충전)</span> 충전금액 5,000원</h3>
-                                <div class="progressbar-type01"><!-- 유제한 타입 //-->
+                                <h3 id="<%= usageData[i].skipId %>"><%= usageData[i].skipName %></h3>
+                                <div class="<%= usageData[i].barClassName %>"><!-- 유제한 타입 //-->
                                     <span class="base"></span>
-                                    <div class="val" style="width:50%;"><!-- width:퍼센테이지 필요, 0%의 경우 display:none; // -->
+                                    <% if (usageData[i].showRemainedRatio > 0) { %>
+                                    <div class="val" style="width:<%= usageData[i].showRemainedRatio %>%;"><!-- width:퍼센테이지 필요, 0%의 경우 display:none; // -->
                                         <span class="fill"></span>
                                         <span class="fill2"></span>
                                     </div>
+                                    <% } %>
                                 </div>
                                 <div class="tail">
-                                    <div class="base">잔여 <strong class="moebius-bold">1,800</strong><span clsss="unit">원</span></div>
-                                    <div class="rt">사용 <strong class="moebius-bold">3,200</strong><span class="unit">원</span></div>
+                                    <div class="base">잔여
+                                        <strong class="moebius-bold"><%= usageData[i].showRemained %></strong><span clsss="unit">원</span>
+                                    </div>
+                                    <div class="rt">사용
+                                        <strong class="moebius-bold"><%= usageData[i].showUsed %></strong><span class="unit">원</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <!-- // data -->
-                    </div>
-                </section>
-                <!-- // section : 통화가능금액 -->
-                <!-- section : 충전금액 -->
-                <section>
-                    <h2>충전금액</h2>
-                    <div class="box-white">
-                        <!-- data -->
-                        <div class="data">
-                            <div class="sec mb0">
-                                <h3>제공<span class="thin">(충전)</span> 충전금액 5,000원</h3>
-                                <div class="progressbar-type01"><!-- 유제한 타입 //-->
-                                    <span class="base"></span>
-                                    <div class="val" style="width:50%;"><!-- width:퍼센테이지 필요, 0%의 경우 display:none; // -->
-                                        <span class="fill"></span>
-                                        <span class="fill2"></span>
-                                    </div>
-                                </div>
-                                <div class="tail">
-                                    <div class="base">잔여 <strong class="moebius-bold">1,800</strong><span clsss="unit">원</span></div>
-                                    <div class="rt">사용 <strong class="moebius-bold">3,200</strong><span class="unit">원</span></div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- // data -->
-                    </div>
-                </section>
-                <!-- // section : 충전금액 -->
-                <!-- section : 선물 충전금액 -->
-                <section>
-                    <h2>선물 충전금액</h2>
-                    <div class="box-white">
-                        <!-- data -->
-                        <div class="data">
-                            <div class="sec none">
-                                <h3>제공<span class="thin">(충전)</span> 충전금액 5,000원</h3>
-                                <div class="progressbar-type01"><!-- 유제한 타입 //-->
-                                    <span class="base"></span>
-                                    <div class="val" style="width:50%;"><!-- width:퍼센테이지 필요, 0%의 경우 display:none; // -->
-                                        <span class="fill"></span>
-                                        <span class="fill2"></span>
-                                    </div>
-                                </div>
-                                <div class="tail">
-                                    <div class="base">잔여 <strong class="moebius-bold">1,800</strong><span clsss="unit">원</span></div>
-                                    <div class="rt">사용 <strong class="moebius-bold">3,200</strong><span class="unit">원</span></div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- // data -->
+                        <% if (i === usageData.length) { %>
                         <!-- btn-more -->
                         <div class="shared-info">
                             <p>'당월 통화 가능 금액'은 현재 사용 가능한 잔여
                                 금액을 의미합니다.(기본제공 통화는 별도)</p>
                         </div>
                         <!-- // btn-more -->
+                        <% } %>
                     </div>
                 </section>
-                <!-- // section : 선물 충전금액 -->
+                <% } %>
+                <% } %>
             </div>
             <!-- // prd-state -->
         </section>
