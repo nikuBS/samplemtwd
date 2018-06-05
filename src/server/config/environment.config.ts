@@ -27,9 +27,8 @@ const environment = {
     },
     CDN: '/cdn',
     REDIS: {
-      host: 'dev-backing-redis-mobile-ibm-redis-ha-dev-sentinel.mtw-dev-cch.svc.cluster.local',
-      port: 26379,
-      pass: 'redis-twd',
+      host: 'dev-backing-redis-mobile-ibm-redis-ha-dev-master-svc',
+      port: 6379,    
       db: 15
     },
     TEMP_CDN: 'http://tstore.rbipt.com/skt'
