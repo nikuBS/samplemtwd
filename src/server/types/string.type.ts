@@ -11,3 +11,12 @@ export enum VOICE_UNIT {
   MIN = '분',
   SEC = '초'
 }
+
+export enum SKIP_NAME {
+  UNLIMIT = '무제한',
+  DEFAULT = '기본제공량'
+}
+
+export enum MSG_STR {
+  TEST = '안녕하세요'
+}
