@@ -22,25 +22,32 @@ class DateHelper {
   }
 
   /**
-   * @param date
+   * @param date {Date} or {string} : YYYYMMDDhhmmss
    * @returns {string} : 2018.06.01.
    */
-  static getShortDate(date) {
-    return moment(date).format('l');
+  static getShortDate(date: any): string {
+    return moment(this.convDateFormat(date)).format('l');
   }
 
   /**
-   * @param date
+   * @param date {Date} or {string} : YYYYMMDDhhmmss
    * @returns {string} : 2018.06.01
    */
-  static getShortDateNoDot(date) {
-    return moment(date).format('YYYY.MM.DD');
+  static getShortDateNoDot(date: any): string {
+    return moment(this.convDateFormat(date)).format('YYYY.MM.DD');
   }
 
-  static getDateFormat(data) {
-    return moment(data);
+  /**
+   * Convert Date Format (BFF string to Date)
+   * @param {string} date
+   * @returns {Date}
+   */
+  static convDateFormat(date: any): Date {
+    if ( !(date instanceof Date) ) {
+      return moment(date, 'YYYYMMDDhhmmss').toDate();
+    }
+    return date;
   }
-
 }
 
 export default DateHelper;
