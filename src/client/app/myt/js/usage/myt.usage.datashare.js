@@ -1,9 +1,9 @@
-Tw.MytUsageDataShareView = function (rootEl) {
+Tw.MytUsageDataShare = function (rootEl) {
   this.$container = rootEl;
   this._bindEvent();
 };
 
-Tw.MytUsageDataShareView.prototype = {
+Tw.MytUsageDataShare.prototype = {
   _bindEvent: function () {
     this.$container.find('.get-usage-data').on('click', $.proxy(this._showUsageData, this));
   },
