@@ -19,29 +19,37 @@ Tw.DateHelper = (function() {
   };
 
   /**
-   * @param date
+   * @param date {Date} or {string} : YYYYMMDDhhmmss
    * @returns {string} : 2018.06.01.
    */
   var getShortDate = function (date) {
-    return moment(date).format('l');
+    return moment(convDateFormat(date)).format('l');
   };
 
   /**
-   * @param date
+   * @param date {Date} or {string} : YYYYMMDDhhmmss
    * @returns {string} : 2018.06.01
    */
   var getShortDateNoDot = function (date) {
-    return moment(date).format('YYYY.MM.DD');
+    return moment(convDateFormat(date)).format('YYYY.MM.DD');
   };
 
-  var getDateFormat = function(data) {
-    return moment(data);
+  /**
+   * Convert Date Format (BFF string to Date)
+   * @param {string} date
+   * @returns {Date}
+   */
+  var convDateFormat = function(date) {
+    if ( !(date instanceof Date) ) {
+      return moment(date, 'YYYYMMDDhhmmss').toDate();
+    }
+    return date;
   };
 
   return {
     getRemainDate: getRemainDate,
     getShortDate: getShortDate,
     getShortDateNoDot: getShortDateNoDot,
-    getDateFormat: getDateFormat
+    convDateFormat: convDateFormat
   }
 })();

@@ -1,10 +1,10 @@
-Tw.HomeMenuView = function(rootEl) {
+Tw.HomeMenu = function(rootEl) {
   this.$container = rootEl;
 
   this._bindEvent();
 };
 
-Tw.HomeMenuView.prototype = {
+Tw.HomeMenu.prototype = {
   _bindEvent: function() {
   }
 };

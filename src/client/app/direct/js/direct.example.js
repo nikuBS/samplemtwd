@@ -1,9 +1,9 @@
-Tw.DataExampleView = function (rootEl) {
+Tw.DirectExample = function (rootEl) {
   this.$container = rootEl;
   this._bindEvent();
 };
 
-Tw.DataExampleView.prototype = {
+Tw.DirectExample.prototype = {
   _bindEvent: function () {
   }
 };

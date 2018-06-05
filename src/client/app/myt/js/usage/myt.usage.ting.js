@@ -1,11 +1,11 @@
-Tw.MytUsageTingView = function (rootEl) {
+Tw.MytUsageTing = function (rootEl) {
   this.$container = rootEl;
   this._ui = {};
 
   this._uiFunction();
 };
 
-Tw.MytUsageTingView.prototype = {
+Tw.MytUsageTing.prototype = {
   _setUI: function () {
     this._ui.$contentWrap = $('body');
     this._ui.$miniPopupTriggers = $('.btn-detail');

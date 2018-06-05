@@ -1,4 +1,4 @@
-Tw.MytUsageChangeSubView = function () {
+Tw.MytUsageChangeSub = function () {
   this.originList = sampleList.result;
   this.selectList = [];
   this.sortType   = 'register';
@@ -8,7 +8,7 @@ Tw.MytUsageChangeSubView = function () {
   this._bindEvent();
 }
 
-Tw.MytUsageChangeSubView.prototype = {
+Tw.MytUsageChangeSub.prototype = {
   _cachedElement: function () {
     this.$popupContainer   = $('.pop-container');
     this.$container        = $('#usage_change_sub');
