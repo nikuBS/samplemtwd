@@ -20,3 +20,9 @@ export const DAY_BTN_STANDARD_SKIP_ID = [
   'DDZ23', // T스포츠팩
   'DD0PB' // band 타임 프리
 ];
+
+export const TING_TITLE = {
+  'HA': '통화가능금액',
+  'CH': '충전금액',
+  'PR': '선물충전금액'
+};
