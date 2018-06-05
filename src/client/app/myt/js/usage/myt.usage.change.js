@@ -1,9 +1,9 @@
-Tw.MytUsageChangeView = function () {
+Tw.MytUsageChange = function () {
   this._cachedElement();
   this._bindEvent();
 }
 
-Tw.MytUsageChangeView.prototype = {
+Tw.MytUsageChange.prototype = {
   _cachedElement: function () {
     this.$popupContainer = $('.pop-container');
     this.$container      = $('#usage_change');

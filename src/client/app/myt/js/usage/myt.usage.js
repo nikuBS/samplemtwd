@@ -1,4 +1,4 @@
-Tw.MytUsageView = function (rootEl) {
+Tw.MytUsage = function (rootEl) {
   this.$container = rootEl;
   this._apiService = new Tw.ApiService();
 
@@ -6,7 +6,7 @@ Tw.MytUsageView = function (rootEl) {
   this._bindEvent();
 };
 
-Tw.MytUsageView.prototype = {
+Tw.MytUsage.prototype = {
   _showAndHide: function () {
     this.$container.find('.child-btn').hide();
 

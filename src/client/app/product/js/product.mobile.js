@@ -1,9 +1,9 @@
-Tw.ProductMobileView = function (rootEl) {
+Tw.ProductMobile = function (rootEl) {
   this.$container = rootEl;
   this._bindEvent();
 };
 
-Tw.ProductMobileView.prototype = {
+Tw.ProductMobile.prototype = {
   _bindEvent: function () {
     this.$container.on('click', '.btn-test', $.proxy(this._onClickAddButton, this));
   },

@@ -1,9 +1,9 @@
-Tw.EtcExampleView = function (rootEl) {
+Tw.SearchExample = function (rootEl) {
   this.$container = rootEl;
   this._bindEvent();
 };
 
-Tw.EtcExampleView.prototype = {
+Tw.SearchExample.prototype = {
   _bindEvent: function () {
   }
 };

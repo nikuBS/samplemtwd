@@ -1,9 +1,9 @@
-Tw.EventExampleView = function (rootEl) {
+Tw.BillExample = function (rootEl) {
   this.$container = rootEl;
   this._bindEvent();
 };
 
-Tw.BillExampleView.prototype = {
+Tw.BillExample.prototype = {
   _bindEvent: function () {
   }
 };

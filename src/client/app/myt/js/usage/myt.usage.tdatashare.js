@@ -1,11 +1,11 @@
-Tw.MytUsageTingView = function (rootEl) {
-  this.$container = rootEl;
+Tw.MytUsageTdatashare = function () {
   this._ui = {};
 
   this._uiFunction();
 };
 
-Tw.MytUsageTingView.prototype = {
+Tw.MytUsageTdatashare.prototype = {
+  currentUShimListLastIndex: null,
   _setUI: function () {
     this._ui.$contentWrap = $('body');
     this._ui.$miniPopupTriggers = $('.btn-detail');
@@ -13,11 +13,15 @@ Tw.MytUsageTingView.prototype = {
     this._ui.$miniPopupSubWrap = this._ui.$miniPopupWrap.find('.popup-base');
     this._ui.$miniPopup = this._ui.$miniPopupWrap.find('.container');
     this._ui.$miniPopupCloser = $('.popup-base .container a');
+    this._ui.$childUSimList = $('.d-table.type02');
+    this._ui.$childUSimListShowMore = $('.btn-more-list');
+    this._ui.$GBtoMB_Switcher = $('#data-size-changer.btn-change');
   },
   _uiFunction: function () {
     this._setUI();
 
     this.descriptionLayerBtnClickHandler();
+    this.uShimListInit();
   },
   contentOverflowToggle: function () {
     var currentState = this._ui.$contentWrap,
@@ -51,7 +55,7 @@ Tw.MytUsageTingView.prototype = {
     if (miniPopupTriggers.length) {
       miniPopupTriggers.on('click', $.proxy(function (e) {
         e.preventDefault();
-        if(e.target.nodeName.toLowerCase() === 'span') e.target = e.target.parentNode;
+        // if(e.target.nodeName.toLowerCase() === 'span') e.target = e.target.parentNode;
 
         this.miniPopupToggle('miniPopup0' + $(e.target).data("popup-type"));
       }, this));
@@ -61,6 +65,24 @@ Tw.MytUsageTingView.prototype = {
         e.preventDefault();
         this.miniPopupToggle();
       }, this));
+    }
+  },
+  uShimListInit: function () {
+    if (this._ui.$childUSimListShowMore) {
+      this._ui.$childUSimList.map(function (i, o) {
+        if (i > 4) {
+          $(o).hide();
+        }
+      });
+      this.currentUShimListLastIndex = 4;
+      this._ui.$childUSimListShowMore.on('click', 'a', this.uShimListShowMore.bind(this));
+    }
+  },
+  uShimListShowMore: function (e) {
+    e.preventDefault();
+    this._ui.$childUSimList.slice(this.currentUShimListLastIndex + 1, this.currentUShimListLastIndex + 6).show();
+    if (this.currentUShimListLastIndex + 6 >= this._ui.$childUSimList.length) {
+      this._ui.$childUSimListShowMore.hide();
     }
   }
 };

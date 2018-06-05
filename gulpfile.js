@@ -97,9 +97,7 @@ gulp.task('css-common', function () {
 
 appNames.map((app) => {
   gulp.task('js-' + app, function () {
-    return gulp.src([
-      'src/client/app/' + app + '/js/models/**/*.js',
-      'src/client/app/' + app + '/js/views/**/*.js'])
+    return gulp.src('src/client/app/' + app + '/js/**/*.js')
       .pipe(concat(app + '.js'))
       .pipe(gulp.dest(dist + 'js'))
       .pipe(uglify())

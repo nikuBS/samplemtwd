@@ -48,12 +48,10 @@ export const API_CODE = {
   CODE_07: '07',    // 고객 비밀번호 재설정 필요
   CODE_99: '99',    // Circuit Open
   CODE_200: '200',
-  CODE_400: '400'
-};
-
-export const API_ERROR_CODE = {
+  CODE_400: '400',
   BLN0001: 'BLN0001', // 잔여기본통화 조회횟수 초과
   BLN0002: 'BLN0002', // 정지이력
   BLN0003: 'BLN0003', // 조회불가대상
   BLN0004: 'BLN0004' // 조회불가대상
 };
+

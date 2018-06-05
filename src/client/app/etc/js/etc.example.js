@@ -1,9 +1,9 @@
-Tw.UserExampleView = function (rootEl) {
+Tw.EtcExample = function (rootEl) {
   this.$container = rootEl;
   this._bindEvent();
 };
 
-Tw.UserExampleView.prototype = {
+Tw.EtcExample.prototype = {
   _bindEvent: function () {
   }
 };

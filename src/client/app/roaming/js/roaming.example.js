@@ -1,9 +1,9 @@
-Tw.MembershipExampleView = function (rootEl) {
+Tw.RoamingExample = function (rootEl) {
   this.$container = rootEl;
   this._bindEvent();
 };
 
-Tw.MembershipExampleView.prototype = {
+Tw.RoamingExample.prototype = {
   _bindEvent: function () {
   }
 };

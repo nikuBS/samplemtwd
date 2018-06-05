@@ -1,9 +1,9 @@
-Tw.SearchExampleView = function (rootEl) {
+Tw.UserExample = function (rootEl) {
   this.$container = rootEl;
   this._bindEvent();
 };
 
-Tw.SearchExampleView.prototype = {
+Tw.UserExample.prototype = {
   _bindEvent: function () {
   }
 };
