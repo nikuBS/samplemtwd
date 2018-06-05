@@ -24,12 +24,20 @@ abstract class TwViewController {
 
   public checkLogin(req: any, res: any, next: any): void {
     const userId = req.query.userId;
+    const defaultSvc = {
+      custNm: '',
+      svcCd: '',
+      svcNum: '',
+      svcNickNm: '',
+      repSvcYn: '',
+      svcCnt: '',
+    };
 
     if ( this._loginService.isLogin(userId) ) {
       this.render(req, res, next, this._loginService.getSvcInfo());
     } else {
       this._apiService.request(API_CMD.BFF_03_0001, { userId }).subscribe((resp) => {
-        this.render(req, res, next, resp.result);
+        this.render(req, res, next, resp.result || defaultSvc);
       });
     }
   }
