@@ -14,7 +14,6 @@ const environment = {
     REDIS: {
       host: '211.188.180.73',
       port: 31200,
-      pass: 'redis-twd',
       db: 15
     },
     TEMP_CDN: 'http://tstore.rbipt.com/skt'
