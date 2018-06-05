@@ -2,9 +2,9 @@
   "code": "00",
   "msg": "",
   "result": {
-    "troamingSharing":"N",
+    "troamingSharing":"Y",
     "dataSharing":"Y",
-    "tdataSharing":"N",
+    "tdataSharing":"Y",
     "refillCoupon": "5"
   }
 }
