@@ -4,7 +4,7 @@ const myTUsageData = {
   'result': {
     'prodId': 'NA00005482',
     'prodName': '뉴 T끼리 맞춤형(100분+3GB)',
-    'dataTopUp ': 'Y',
+    'dataTopUp': 'Y',
     'ting': 'N',
     'dataDiscount': 'Y',
     'data': [
