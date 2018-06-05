@@ -16,25 +16,28 @@
         <!-- container -->
         <section class="container">
             <!-- yprod -->
+            <% if (svcInfo) { %>
             <div class="yprod pb30">
                 <strong class="line-bt"><%= svcInfo.svcNum %></strong><br /><strong>24시간 데이터 50% 할인</strong><br />사용 현황입니다.
             </div>
+            <% } %>
             <!-- // yprod -->
             <!-- prd-state -->
             <div class="prd-state pt30 pb30">
                 <!-- section -->
+                <% if (usageData) { %>
                 <section>
                     <div class="box-white">
                         <!-- period -->
                         <div class="period">
                             <div class="txt01">데이터 사용량 50% 할인 적용 기간 <a href="#" class="btn-detail"><span class="blind">자세히 보기</span></a></div>
-                            <div class="txt02">2014.04.01 14:10 ~ <br />2014.04.02 14:09</div>
+                            <div class="txt02"><%= startDate %> ~ <br /><%= endDate %></div>
                         </div>
                         <!-- // period -->
                         <!-- used-data -->
                         <div class="used-data">
                             <div class="txt01">할인된 데이터사용량 </div>
-                            <div class="txt02"><strong>900</strong>MB</div>
+                            <div class="txt02"><strong><%= usageData.showUsed.data %></strong><%= usageData.showUsed.unit %></div>
                         </div>
                         <!-- // used-data -->
                         <!-- shared-info -->
@@ -44,6 +47,7 @@
                         <!-- // shared-info -->
                     </div>
                 </section>
+                <% } %>
                 <!-- // section -->
             </div>
             <!-- // prd-state -->
