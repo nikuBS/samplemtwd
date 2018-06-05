@@ -9,6 +9,7 @@ Tw.MytUsage = function (rootEl) {
 Tw.MytUsage.prototype = {
   _showAndHide: function () {
     this.$container.find('.child-btn').hide();
+    this._makeBorderStyle(false);
 
     this._getUsageBtn();
     this._getChildren();
@@ -71,10 +72,23 @@ Tw.MytUsage.prototype = {
 
     if (res.result.length > 0) {
       childCntField.text(res.result.length);
+
+      this._makeBorderStyle(true);
       childBtn.show();
     }
   },
   _childFail: function (err) {
     console.log('child api fail', err);
+  },
+  _makeBorderStyle: function (isVisible) {
+    if (isVisible) {
+      this.$container.find('temp-last')
+        .css('border-bottom', '1px solid #ccc');
+    }
+    else {
+      this.$container.find('.add-on li:visible:last')
+        .addClass('temp-last')
+        .css('border-bottom', 0);
+    }
   }
 };
