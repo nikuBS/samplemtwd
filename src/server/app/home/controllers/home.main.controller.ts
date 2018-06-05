@@ -14,6 +14,7 @@ class HomeMain extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     const remainDate = DateHelper.getRemainDate();
     let usageData = this.parseData(myTUsageData.result);
+
     this.apiService.request(API_CMD.BFF_05_0001, {}).subscribe((resp) => {
       console.log(resp);
       if ( resp.code === API_CODE.CODE_00 ) {
