@@ -17,15 +17,13 @@ Tw.MytUsage.prototype = {
     this._changeDataUnit();
   },
   _changeDataUnit: function () {
-    var changeBtn = $('.btn-change');
-    this.$container.find(changeBtn).on('change', $.proxy(this._setDataByUnit, this));
+    this.$container.find('.btn-change').on('change', $.proxy(this._setDataByUnit, this));
   },
   _setDataByUnit: function ($event) {
     var defaultUnit = 'KB';
     var unit = this._getUnit($event.target.checked);
 
-    var targetSelector = $('.data-value');
-    this.$container.find(targetSelector).each(function () {
+    this.$container.find('.data-value').each(function () {
       var $this = $(this);
       var dataValue = $this.attr('data-value');
       var data = Tw.FormatHelper.customDataFormat(dataValue, defaultUnit, unit);
@@ -69,7 +67,8 @@ Tw.MytUsage.prototype = {
   },
   _childSuccess: function (res) {
     var childBtn = this.$container.find('child-btn');
-    var childCntField = this.$container.find('child-cnt')
+    var childCntField = this.$container.find('child-cnt');
+
     if (res.result.length > 0) {
       childCntField.text(res.result.length);
       childBtn.show();
