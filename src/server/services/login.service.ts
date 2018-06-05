@@ -53,10 +53,6 @@ class LoginService {
       this.svcModel.svcInfo = resp.result;
     });
   }
-
-  public setUserId(userId: string) {
-    this.userId = userId;
-  }
 }
 
 export default LoginService;

@@ -1,7 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { API_CMD } from '../../types/api-command.type';
 import ApiService from '../../services/api.service';
-import { SvcInfoModel } from '../../models/svc-info.model';
 import LoginService from '../../services/login.service';
 
 abstract class TwViewController {
@@ -15,11 +13,15 @@ abstract class TwViewController {
 
   abstract render(req: Request, res: Response, next: NextFunction, svcInfo?: any): void;
 
-  get apiService(): any {
+  protected get apiService(): any {
     return this._apiService;
   }
 
-  public checkLogin(req: any, res: any, next: any) {
+  protected get loginService(): any {
+    return this._loginService;
+  }
+
+  public checkLogin(req: any, res: any, next: any): void {
     const userId = req.query.userId;
 
     if ( this._loginService.isLogin(userId) ) {
