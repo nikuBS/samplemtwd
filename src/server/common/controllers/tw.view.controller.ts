@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import ApiService from '../../services/api.service';
 import LoginService from '../../services/login.service';
+import { API_CMD } from '../../types/api-command.type';
 
 abstract class TwViewController {
   private _apiService;
@@ -27,8 +28,8 @@ abstract class TwViewController {
     if ( this._loginService.isLogin(userId) ) {
       this.render(req, res, next, this._loginService.getSvcInfo());
     } else {
-      this._loginService.testLogin(userId).subscribe((resp) => {
-        this.render(req, res, next, resp);
+      this._apiService.request(API_CMD.BFF_03_0001, { userId }).subscribe((resp) => {
+        this.render(req, res, next, resp.result);
       });
     }
   }

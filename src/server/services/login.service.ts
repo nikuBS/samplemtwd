@@ -1,13 +1,7 @@
 import { SvcInfoModel } from '../models/svc-info.model';
 import FormatHelper from '../utils/format.helper';
-import { API_CMD, API_CODE } from '../types/api-command.type';
-import ApiService from './api.service';
-import 'rxjs/add/operator/map';
-import { Observable } from 'rxjs/Observable';
 
 class LoginService {
-  private apiService = ApiService;
-
   // TODO: replace redis
   private svcModel: SvcInfoModel = new SvcInfoModel({});
   private userId: string = '';
@@ -22,36 +16,20 @@ class LoginService {
     return !FormatHelper.isEmpty(this.svcModel.serverSession);
   }
 
-
-  public changeSvc(svcMgmtNum: string): Observable<any> {
-    return this.apiService.request(API_CMD.BFF_03_0004, {}, { svcMgmtNum: svcMgmtNum })
-      .map((resp) => {
-        console.log('[changeSvc]', resp);
-        if ( resp.code === API_CODE.CODE_00 ) {
-          this.svcModel.svcInfo = resp.result || {};
-        }
-        return resp;
-      });
-  }
-
-  public testLogin(userId: string): Observable<any> {
-    return this.apiService.request(API_CMD.BFF_03_0001, { userId }).map((resp) => {
-      if ( resp.code === API_CODE.CODE_00 ) {
-        this.svcModel.svcInfo = resp.result || {};
-        this.userId = userId;
-      }
-      return resp;
-    });
-  }
-
-  public getSvcInfo() {
+  public getSvcInfo(): any {
     return this.svcModel.svcInfo;
   }
 
-  public setSvcInfo() {
-    this.apiService.request(API_CMD.BFF_03_0005, {}).subscribe((resp) => {
-      this.svcModel.svcInfo = resp.result;
-    });
+  public setSvcInfo(svcInfo: any) {
+    this.svcModel.svcInfo = svcInfo;
+  }
+
+  public getServerSession(): string {
+    return this.svcModel.serverSession;
+  }
+
+  public setServerSession(serverSession: string) {
+    this.svcModel.serverSession = serverSession;
   }
 }
 
