@@ -91,4 +91,8 @@ $(window).load(function (){
       return false;
     })
   }
-})
+  /* 뒤로가기 추가 */
+  $('.btn-back').on('click', function () {
+    window.history.back();
+  });
+});
