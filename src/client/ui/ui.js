@@ -92,7 +92,7 @@ $(window).load(function (){
     })
   }
   /* 뒤로가기 추가 */
-  $('.btn-back').on('click', function () {
+  $('.common-back').on('click', function () {
     window.history.back();
   });
 });
