@@ -7,7 +7,7 @@ import DateHelper from '../../../../utils/date.helper';
 import { UNIT } from '../../../../types/bff-common.type';
 import { SVC_CD } from '../../../../types/bff-common.type';
 import { API_CMD } from '../../../../types/api-command.type';
-import { API_ERROR_CODE } from '../../../../types/api-command.type';
+import { SKIP_NAME } from '../../../../types/string.type';
 import { DAY_BTN_STANDARD_SKIP_ID } from '../../../../types/bff-common.type';
 
 class MyTUsage extends TwViewController {
@@ -24,10 +24,10 @@ class MyTUsage extends TwViewController {
 
   private parseData(usageData: any): any {
     usageData.data.map((data) => {
-      const isTotalUnlimited = data.total === '무제한';
-      const isUsedUnlimited = data.used === '무제한';
-      const isRemainUnlimited = data.remained === '무제한';
-      const isExceed = data.skipId === 'LT';
+      const isTotalUnlimited = data.total === SKIP_NAME.UNLIMIT;
+      const isUsedUnlimited = data.used === SKIP_NAME.UNLIMIT;
+      const isRemainUnlimited = data.remained === SKIP_NAME.UNLIMIT;
+      const isExceed = data.skipId === SKIP_NAME.EXCEED;
 
       data.isUnlimited = isTotalUnlimited;
       data.showTotal = isTotalUnlimited ? data.total : FormatHelper.convDataFormat(data.total, UNIT[data.unit]);
@@ -42,9 +42,9 @@ class MyTUsage extends TwViewController {
     });
 
     usageData.voice.map((voice) => {
-      const isTotalUnlimited = voice.total === '무제한';
-      const isUsedUnlimited = voice.used === '무제한';
-      const isRemainUnlimited = voice.remained === '무제한';
+      const isTotalUnlimited = voice.total === SKIP_NAME.UNLIMIT;
+      const isUsedUnlimited = voice.used === SKIP_NAME.UNLIMIT;
+      const isRemainUnlimited = voice.remained === SKIP_NAME.UNLIMIT;
 
       voice.isUnlimited = isTotalUnlimited;
       voice.showTotal = isTotalUnlimited ? voice.total : FormatHelper.convVoiceFormat(voice.total);
@@ -57,9 +57,9 @@ class MyTUsage extends TwViewController {
     });
 
     usageData.sms.map((sms) => {
-      const isTotalUnlimited = sms.total === '기본제공량';
-      const isUsedUnlimited = sms.used === '무제한';
-      const isRemainUnlimited = sms.remained === '무제한';
+      const isTotalUnlimited = sms.total === SKIP_NAME.DEFAULT;
+      const isUsedUnlimited = sms.used === SKIP_NAME.UNLIMIT;
+      const isRemainUnlimited = sms.remained === SKIP_NAME.UNLIMIT;
 
       sms.isUnlimited = isTotalUnlimited;
       sms.showTotal = isTotalUnlimited ? sms.total : FormatHelper.convNumFormat(sms.total);
@@ -72,7 +72,7 @@ class MyTUsage extends TwViewController {
     });
 
     usageData.etc.map((etc) => {
-      const isTotalUnlimited = etc.total === '무제한';
+      const isTotalUnlimited = etc.total === SKIP_NAME.UNLIMIT;
 
       etc.isUnlimited = isTotalUnlimited;
       etc.showTotal = isTotalUnlimited ? etc.total : FormatHelper.convVoiceFormat(etc.total);
