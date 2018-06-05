@@ -16,10 +16,7 @@ spec:
     spec:
       containers:
       - name: bff-nodejs
-        env:
-        - name: SPRING_PROFILES_ACTIVE
-          value: stg
         image: mycluster.icp:8500/mtw-dev-nod/bff-nodejs-mobile:1.0
         ports:
-        - containerPort: 8080
+        - containerPort: 3000
         imagePullPolicy: Always

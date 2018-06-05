@@ -4,7 +4,7 @@ module.exports = {
       name: 'tworld',
       script: './src/server/bin/www.ts',
       exec_mode: 'cluster',
-      instances: 'max',
+      instances: '4',
       env: {
         'PORT': 3000,
         'NODE_ENV': 'development'
