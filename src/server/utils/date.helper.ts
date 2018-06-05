@@ -38,6 +38,25 @@ class DateHelper {
   }
 
   /**
+   * @param date {Date} or {string} : YYYYMMDDhhmmss
+   * @returns {string} : 2018.06.01 12:00
+   */
+  static getShortDateAndTime(date) {
+    return moment(this.convDateFormat(date)).format('YYYY.MM.DD hh:mm');
+  }
+
+  /**
+   * @param date {Date} or {string} : YYYYMMDDhhmmss
+   * @returns {string} : 2018-06-02 11:59
+   */
+  static getAddDay(date) {
+    return moment(this.convDateFormat(date))
+      .add(1, 'days')
+      .subtract(1, 'minutes')
+      .format('YYYY.MM.DD hh:mm');
+  }
+
+  /**
    * Convert Date Format (BFF string to Date)
    * @param {string} date
    * @returns {Date}
