@@ -1,4 +1,4 @@
-const dataLimit = {
+const DataLimit = {
   'code': '결과코드',
   'msg': '결과메세지',
   'result': {
@@ -13,4 +13,4 @@ const dataLimit = {
   }
 };
 
-export default dataLimit;
+export default DataLimit;

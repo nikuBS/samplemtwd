@@ -18,6 +18,8 @@ export enum SKIP_NAME {
   EXCEED = 'LT' // 초과
 }
 
+export const USER_CNT = ['한 분', '두 분', '세 분', '네 분', '다섯 분'];
+
 export enum MSG_STR {
   TEST = '안녕하세요'
 }

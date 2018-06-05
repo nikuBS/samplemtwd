@@ -18,14 +18,14 @@
         <section class="container">
             <!-- yprod -->
             <div class="yprod single">
-                <strong class="line-bt">010-12**-56**</strong>번호로<br /><strong>두 분</strong>과 <strong>T로밍</strong>을 이용중이시네요!
+                <strong class="line-bt"><%= svcInfo.svcNum %></strong>번호로<br /><strong><%= result.dataSharing.userCnt %></strong>과 <strong>T로밍</strong>을 이용중이시네요!
             </div>
             <!-- // yprod -->
             <!-- prd-summary -->
             <div class="prd-summary">
                 <div class="inner">
                     <div class="icon"><img src="http://tstore.rbipt.com/skt/img/ico_band.png" alt="" /></div>
-                    <div class="prd-name"><a href="#">T로밍 함께쓰기 3GB</a></div>
+                    <div class="prd-name"><a href="#"><%= result.roamProdNm %></a></div>
                     <div class="remaining-date">남은일수 <strong class="moebius-bold">4</strong>일<strong class="moebius-bold">18</strong>시간</div>
                 </div>
             </div>
@@ -47,17 +47,19 @@
                         <!-- data -->
                         <div class="data">
                             <div class="sec mb0">
-                                <h3>기본 제공량 3GB</h3>
+                                <h3><%= result.roamProdNm %></h3>
                                 <div class="progressbar-type02"><!-- 무제한 타입 //-->
                                     <span class="base"></span>
-                                    <div class="val"><!-- width:퍼센테이지 필요, 0%의 경우 display:none; // -->
+                                    <% if (result.dataSharing.data.usedRatio !== 0) { %>
+                                    <div class="val" style="width:<%= result.dataSharing.data.usedRatio %>%;"><!-- width:퍼센테이지 필요, 0%의 경우 display:none; // -->
                                         <span class="fill"></span>
                                         <span class="fill2"></span>
                                     </div>
+                                    <% } %>
                                 </div>
                                 <div class="tail">
-                                    <div class="base">잔여 <strong class="moebius-bold">828.19</strong><span clsss="unit">MB</span></div>
-                                    <div class="rt">사용 <strong class="moebius-bold">828.19</strong><span class="unit">MB</span></div>
+                                    <div class="base">잔여 <strong class="moebius-bold"><%= result.dataSharing.data.showRemained.data %></strong><span clsss="unit"><%= result.dataSharing.data.showRemained.unit %></span></div>
+                                    <div class="rt">사용 <strong class="moebius-bold"><%= result.dataSharing.data.showUsed.data %></strong><span class="unit"><%= result.dataSharing.data.showUsed.unit %></span></div>
                                 </div>
                             </div>
                         </div>
@@ -72,7 +74,7 @@
                         <!-- total-shared -->
                         <div class="total-shared">
                             <div class="txt01">총 사용량</div>
-                            <div class="txt02 moebius-bold"><strong>10,254</strong>MB</div>
+                            <div class="txt02 moebius-bold"><strong><%= result.dataSharing.data.showUsed.data %></strong><%= result.dataSharing.data.showUsed.unit %></div>
                         </div>
                         <!-- // total-shared -->
                     </div>
@@ -80,64 +82,31 @@
                         <!-- usim-list -->
                         <div class="usim-list">
                             <!-- d-table -->
+                            <% for (var i = 0; i < result.dataSharing.childList.length; i++) { %>
                             <div class="d-table type02">
                                 <div class="caption">
                                     <div class="txt01">관계</div>
+                                    <% if (result.dataSharing.childList[i].role === 'Y') { %>
                                     <div class="txt02">대표회선</div>
-                                </div>
-                                <div class="row">
-                                    <div class="cell">회선번호</div>
-                                    <div class="cell"><strong class="moebius-bold">010-45**-12**</strong></div>
-                                </div>
-                                <div class="row">
-                                    <div class="cell">고객명</div>
-                                    <div class="cell"><span class="txt01">홍길동</span></div>
-                                </div>
-                                <div class="row">
-                                    <div class="cell">사용량</div>
-                                    <div class="cell"><strong class="moebius-bold">300MB</strong></div>
-                                </div>
-                            </div>
-                            <!-- //	d-table -->
-                            <!-- d-table -->
-                            <div class="d-table type02">
-                                <div class="caption">
-                                    <div class="txt01">관계</div>
+                                    <% } else { %>
                                     <div class="txt02">결합번호1 <span class="type">(자회선)</span></div>
+                                    <% } %>
                                 </div>
                                 <div class="row">
                                     <div class="cell">회선번호</div>
-                                    <div class="cell"><strong class="moebius-bold">010-45**-12**</strong></div>
+                                    <div class="cell"><strong class="moebius-bold"><%= result.dataSharing.childList[i].svcNum %></strong></div>
                                 </div>
                                 <div class="row">
                                     <div class="cell">고객명</div>
-                                    <div class="cell"><span class="txt01">홍길동</span></div>
+                                    <div class="cell"><span class="txt01"><%= result.dataSharing.childList[i].custNm %></span></div>
                                 </div>
                                 <div class="row">
                                     <div class="cell">사용량</div>
-                                    <div class="cell"><strong class="moebius-bold">300MB</strong></div>
+                                    <div class="cell"><strong class="moebius-bold"><%= result.dataSharing.childList[i].showUsed.data %><%= result.dataSharing.childList[i].showUsed.unit %></strong></div>
                                 </div>
+
                             </div>
-                            <!-- //	d-table -->
-                            <!-- d-table -->
-                            <div class="d-table type02">
-                                <div class="caption">
-                                    <div class="txt01">관계</div>
-                                    <div class="txt02">결합번호2 <span class="type">(자회선)</span></div>
-                                </div>
-                                <div class="row">
-                                    <div class="cell">회선번호</div>
-                                    <div class="cell"><strong class="moebius-bold">010-45**-12**</strong></div>
-                                </div>
-                                <div class="row">
-                                    <div class="cell">고객명</div>
-                                    <div class="cell"><span class="txt01">홍길동</span></div>
-                                </div>
-                                <div class="row">
-                                    <div class="cell">서비스해지</div>
-                                    <div class="cell"><strong class="moebius-bold">300MB</strong></div>
-                                </div>
-                            </div>
+                            <% } %>
                             <!-- //	d-table -->
                         </div>
                         <!-- // usim-list -->
@@ -168,7 +137,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    var comp = new Tw.MytUsageTroamingshareView($('.container'));
+    var comp = new Tw.MytUsageTroamingShareView($('.container'));
   });
 </script>
 <% include ../../components/end.component.html %>
