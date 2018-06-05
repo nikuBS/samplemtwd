@@ -3,6 +3,7 @@
 <div class="skip"><a href="#content">본문 바로가기</a></div>
 <!-- // skip -->
 <!-- wrap -->
+<%=JSON.stringify(result.child)%>
 <div id="wrap">
   <!-- header -->
   <header class="header-sub">
@@ -15,27 +16,29 @@
   <div id="content">
     <!-- container -->
     <section class="container">
-      <!-- descendants -->
-      <div class="descendants">
-        <div class="txt01"><strong>자녀</strong> 휴대폰 사용량 현황입니다.</div>
-        <div class="txt02">010-56**-43**</div>
-        <div class="txt03"><strong>아이폰S6</strong> 귀여운첫째아들</div>
-      </div>
-      <!-- // descendants -->
+      <% if( result.child.length > 1 ) { %>
       <!-- descendants -->
       <div class="descendants">
         <div class="txt01"><strong>자녀</strong> 휴대폰 사용량 현황입니다.</div>
         <div class="txt02">
-          <select class="underline" style="width:130px;">
-            <option value="">010-56**-43**</option>
-            <option value="">010-56**-43**</option>
-            <option value="">010-56**-43**</option>
+          <select id="line_list" class="underline" style="width:130px;">
+            <% result.child.map((item)=>{ %>
+            <option data-mdl="<%=item.mdlName%>" data-nickname="귀여운첫째아들"><%=item.svcNum%></option>
+            <% }) %>
           </select>
-
         </div>
-        <div class="txt03"><strong>아이폰S6</strong> 귀여운첫째아들</div>
+        <div class="txt03"><strong id="mdl_name">아이폰S6</strong> <span id="nick_name">귀여운첫째아들</span></div>
       </div>
       <!-- // descendants -->
+      <% } else { %>
+      <!-- descendants -->
+      <div class="descendants">
+        <div class="txt01"><strong>자녀</strong> 휴대폰 사용량 현황입니다.</div>
+        <div class="txt02"><%=result.child[0].svcNum%></div>
+        <div class="txt03"><strong><%=result.child[0].mdlName%></strong> 귀여운첫째아들</div>
+      </div>
+      <!-- // descendants -->
+      <% } %>
       <!-- prd-summary -->
       <div class="prd-summary">
         <div class="inner">
@@ -175,7 +178,7 @@
 
 <script>
   $(document).ready(function () {
-    // entry point
+    var oMytUsageChildren = new Tw.MytUsageChildren();
   });
 </script>
 <% include ../../components/end.component.html %>

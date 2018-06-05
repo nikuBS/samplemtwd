@@ -1,21 +1,24 @@
 Tw.MytUsageChangeSub = function () {
-  this.originList = sampleList.result;
-  this.selectList = [];
-  this.sortType   = 'register';
-  this.category   = 'all';
-
+  this._init();
   this._cachedElement();
   this._bindEvent();
 }
 
 Tw.MytUsageChangeSub.prototype = {
+  _init: function () {
+    this.originList = sampleList.result;
+    this.selectList = [];
+    this.sortType   = 'register';
+    this.category   = 'all';
+  },
+
   _cachedElement: function () {
     this.$popupContainer   = $('.pop-container');
     this.$container        = $('#usage_change_sub');
-    this.$wrap_list        = $('#sorted_list');
+    this.$wrap_list        = this.$container.find('#sorted_list');
+    this.$select_sort      = this.$container.find('#sort_type');
     this.$wrap_category    = this.$container.find('.toggle-case');
     this.$btn_previous     = this.$container.find('.btn_previous');
-    this.$select_sort      = this.$container.find('#sort_type');
     this.tpl_line_items    = _.template($('#tpl_line_items').html());
     this.tpl_line_category = _.template($('#tpl_line_category').html());
   },

@@ -6,10 +6,32 @@ class MyTUsageChildren extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction) {
-    const data = {};
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+    const response = {
+      'code': '00',
+      'msg': '',
+      'result': {
+        'child': [
+          {
+            'svcNum': '010-12**-34**',
+            'svcMgmtNum': '123456789',
+            'mdlName': '아이폰6S(블랙)'
+          },
+          {
+            'svcNum': '010-12**-34**',
+            'svcMgmtNum': '123456789',
+            'mdlName': '갤럭시S7'
+          },
+          {
+            'svcNum': '010-12**-34**',
+            'svcMgmtNum': '123456789',
+            'mdlName': '아이폰7'
+          }
+        ]
+      }
+    };
 
-    res.render('usage/myt.usage.children.html', data);
+    res.render('usage/myt.usage.children.html', { result: response.result, svcInfo: svcInfo });
   }
 }
 
