@@ -82,11 +82,11 @@
                         <!-- usim-list -->
                         <div class="usim-list">
                             <!-- d-table -->
-                            <% for (var i = 0; i < result.dataSharing.childList.length; i++) { %>
+                            <% result.dataSharing.childList.map(function(child, i) { %>
                             <div class="d-table type02">
                                 <div class="caption">
                                     <div class="txt01">관계</div>
-                                    <% if (result.dataSharing.childList[i].role === 'Y') { %>
+                                    <% if (child.role === 'Y') { %>
                                     <div class="txt02">대표회선</div>
                                     <% } else { %>
                                     <div class="txt02">결합번호1 <span class="type">(자회선)</span></div>
@@ -94,19 +94,19 @@
                                 </div>
                                 <div class="row">
                                     <div class="cell">회선번호</div>
-                                    <div class="cell"><strong class="moebius-bold"><%= result.dataSharing.childList[i].svcNum %></strong></div>
+                                    <div class="cell"><strong class="moebius-bold"><%= child.svcNum %></strong></div>
                                 </div>
                                 <div class="row">
                                     <div class="cell">고객명</div>
-                                    <div class="cell"><span class="txt01"><%= result.dataSharing.childList[i].custNm %></span></div>
+                                    <div class="cell"><span class="txt01"><%= child.custNm %></span></div>
                                 </div>
                                 <div class="row">
                                     <div class="cell">사용량</div>
-                                    <div class="cell"><strong class="moebius-bold"><%= result.dataSharing.childList[i].showUsed.data %><%= result.dataSharing.childList[i].showUsed.unit %></strong></div>
+                                    <div class="cell"><strong class="moebius-bold"><%= child.showUsed.data %><%= child.showUsed.unit %></strong></div>
                                 </div>
 
                             </div>
-                            <% } %>
+                            <% }) %>
                             <!-- //	d-table -->
                         </div>
                         <!-- // usim-list -->

@@ -30,25 +30,25 @@
                     <div class="belt">
                         <!-- class명 자유 해당 depth div가 1개 unit-->
                         <% if( usageData.data ) { %>
-                        <% for(var i = 0; i < usageData.data.length; i++) { %>
+                        <% usageData.data.map(function(data, i) { %>
                         <div class="card type-data">
                             <div class="head">
                                 <strong>데이터</strong>
-                                <span><%= usageData.data[i].skipName %></span>
+                                <span><%= data.skipName %></span>
                             </div>
                             <div class="bar-area">
                                 <div class="chart">
-                                    <% if(usageData.data[i].isUnlimit) { %>
+                                    <% if(data.isUnlimit) { %>
                                     <p><span class="moebius-bold mugen">무제한</span></p>
                                     <strong class="total"><em>무제한</em></strong>
                                     <% } else { %>
                                     <p>
-                                        <span class="moebius-bold"><%= usageData.data[i].showRemained.data %></span>
-                                        <em><%= usageData.data[i].showRemained.unit %></em>
+                                        <span class="moebius-bold"><%= data.showRemained.data %></span>
+                                        <em><%= data.showRemained.unit %></em>
                                     </p>
                                     <strong class="total">
-                                        <span class="moebius-bold"><%= usageData.data[i].showTotal.data %></span>
-                                        <em><%= usageData.data[i].showTotal.unit %></em>
+                                        <span class="moebius-bold"><%= data.showTotal.data %></span>
+                                        <em><%= data.showTotal.unit %></em>
                                     </strong>
                                     <% } %>
                                 </div>
@@ -58,14 +58,14 @@
                                 </div>
                             </div>
                         </div>
-                        <% } %>
+                        <% }) %>
                         <% } %>
                         <% if( usageData.voice ) { %>
-                        <% for(var i = 0; i < usageData.voice.length; i++) { %>
+                        <% usageData.voice.map(function(voice, i) { %>
                         <div class="card type-voice">
                             <div class="head">
                                 <strong>음성</strong>
-                                <span><%= usageData.voice[i].skipName %></span>
+                                <span><%= voice.skipName %></span>
                             </div>
                             <div class="bar-area">
                                 <div class="chart m">
@@ -74,42 +74,42 @@
                                     <strong class="total"><em>무제한</em></strong>
                                     <% } else { %>
                                     <p>
-                                        <% if ( usageData.voice[i].showRemained.hours !== 0) { %>
-                                        <span class="moebius-bold"><%= usageData.voice[i].showRemained.hours %></span><em>시간</em>
+                                        <% if ( voice.showRemained.hours !== 0) { %>
+                                        <span class="moebius-bold"><%= voice.showRemained.hours %></span><em>시간</em>
                                         <% } %>
-                                        <% if ( usageData.voice[i].showRemained.min !== 0) { %>
-                                        <span class="moebius-bold"><%= usageData.voice[i].showRemained.min %></span><em>분</em>
+                                        <% if ( voice.showRemained.min !== 0) { %>
+                                        <span class="moebius-bold"><%= voice.showRemained.min %></span><em>분</em>
                                         <% } %>
-                                        <% if ( usageData.voice[i].showRemained.sec !== 0) { %>
-                                        <span class="moebius-bold"><%= usageData.voice[i].showRemained.sec %></span><em>초</em>
+                                        <% if ( voice.showRemained.sec !== 0) { %>
+                                        <span class="moebius-bold"><%= voice.showRemained.sec %></span><em>초</em>
                                         <% } %>
                                     </p>
                                     <strong class="total">
-                                    <% if ( usageData.voice[i].showTotal.hours !== 0) { %>
-                                    <span class="moebius-bold"><%= usageData.voice[i].showTotal.hours %></span><em>시간</em>
+                                    <% if ( voice.showTotal.hours !== 0) { %>
+                                    <span class="moebius-bold"><%= voice.showTotal.hours %></span><em>시간</em>
                                     <% } %>
-                                    <% if ( usageData.voice[i].showTotal.min !== 0) { %>
-                                    <span class="moebius-bold"><%= usageData.voice[i].showTotal.min %></span><em>분</em>
+                                    <% if ( voice.showTotal.min !== 0) { %>
+                                    <span class="moebius-bold"><%= voice.showTotal.min %></span><em>분</em>
                                     <% } %>
-                                    <% if ( usageData.voice[i].showTotal.sec !== 0) { %>
-                                    <span class="moebius-bold"><%= usageData.voice[i].showTotal.sec %></span><em>초</em>
+                                    <% if ( voice.showTotal.sec !== 0) { %>
+                                    <span class="moebius-bold"><%= voice.showTotal.sec %></span><em>초</em>
                                     <% } %>
                                     </strong>
                                     <% } %>
                                 </div>
                                 <div class="bar">
-                                    <span style="width:<%= usageData.voice[i].usedRatio %>%;"></span><!-- width:퍼센테이지 필요, 0%의 경우 display:none; // -->
+                                    <span style="width:<%= voice.usedRatio %>%;"></span><!-- width:퍼센테이지 필요, 0%의 경우 display:none; // -->
                                 </div>
                             </div>
                         </div>
-                        <% } %>
+                        <% }) %>
                         <% } %>
                         <% if( usageData.sms ) { %>
-                        <% for(var i = 0; i < usageData.sms.length; i++) { %>
+                        <% usageData.sms.map(function(sms, i) { %>
                         <div class="card type-message">
                             <div class="head">
                                 <strong>문자</strong>
-                                <span><%= usageData.sms[i].skipName %></span>
+                                <span><%= sms.skipName %></span>
                             </div>
                             <div class="bar-area">
                                 <div class="chart">
@@ -121,7 +121,7 @@
                                 </div>
                             </div>
                         </div>
-                        <% } %>
+                        <% }) %>
                         <% } %>
                     </div>
                 </div>
