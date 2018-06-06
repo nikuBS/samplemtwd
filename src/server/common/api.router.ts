@@ -39,6 +39,7 @@ class ApiRouter {
   }
 
   private setPostApi(cmd) {
+    console.log(cmd);
     this.router.post(cmd.path, this.sendRequest.bind(this, cmd));
   }
 

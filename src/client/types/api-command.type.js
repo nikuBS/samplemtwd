@@ -12,4 +12,5 @@ Tw.API_CMD = {
   BFF_03_0003: { path: '/svc-catalog/detail', method: Tw.API_METHOD.GET },
   BFF_03_0004: { path: '/change-svc', method: Tw.API_METHOD.POST },
   BFF_05_0010: { path: '/core-balance/v1/children', method: Tw.API_METHOD.GET },
+  BFF_05_0011: { path: '/core-balance/v1/data-sharings/args-0', method: Tw.API_METHOD.POST },
 };
