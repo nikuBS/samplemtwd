@@ -11,7 +11,7 @@ class ApiRouter {
 
   constructor() {
     this.router = express.Router();
-    this.apiService = ApiService;
+    this.apiService = new ApiService();
 
     Object.keys(API_CMD).map((key) => {
       const cmd = API_CMD[key];

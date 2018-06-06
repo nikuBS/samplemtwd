@@ -2,14 +2,17 @@ import { Request, Response, NextFunction } from 'express';
 import ApiService from '../../services/api.service';
 import LoginService from '../../services/login.service';
 import { API_CMD } from '../../types/api-command.type';
+import LoggerService from '../../services/logger.service';
 
 abstract class TwViewController {
   private _apiService;
   private _loginService;
+  private _logger;
 
   constructor() {
-    this._apiService = ApiService;
+    this._apiService = new ApiService();
     this._loginService = new LoginService();
+    this._logger = new LoggerService();
   }
 
   abstract render(req: Request, res: Response, next: NextFunction, svcInfo?: any): void;
@@ -18,8 +21,12 @@ abstract class TwViewController {
     return this._apiService;
   }
 
-  protected get loginService(): any {
+  protected get loginService(): LoginService {
     return this._loginService;
+  }
+
+  protected get logger(): LoggerService {
+    return this._logger;
   }
 
   public checkLogin(req: any, res: any, next: any): void {
