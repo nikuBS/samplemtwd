@@ -20,7 +20,7 @@ const environment = {
   },
   qa: {
     BFF_SERVER: {
-      url: 'bff-spring-mtw-dev-bff',
+      url: 'bff-spring.mtw-dev-bff',
       protocol: 'http',
       port: 80
     },
