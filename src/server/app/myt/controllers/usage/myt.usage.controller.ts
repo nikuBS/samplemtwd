@@ -4,7 +4,7 @@ import myTUsageData from '../../../../mock/server/myt.usage';
 
 import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
-import { UNIT, UNIT_VALUE } from '../../../../types/bff-common.type';
+import { UNIT, UNIT_E } from '../../../../types/bff-common.type';
 import { SVC_CD } from '../../../../types/bff-common.type';
 import { API_CMD, API_MYT_ERROR_CODE} from '../../../../types/api-command.type';
 import { SKIP_NAME } from '../../../../types/string.type';
@@ -72,7 +72,7 @@ class MyTUsage extends TwViewController {
         etc.isUnlimited = !isFinite(etc.total);
         etc.isUsedUnlimited = !isFinite(etc.used);
         etc.isRemainUnlimited = !isFinite(etc.remained);
-        etc.isMoney = etc.unit === UNIT_VALUE.MONEY;
+        etc.isMoney = etc.unit === UNIT_E.FEE;
         etc.showUsed = !etc.isUsedUnlimited &&
           (etc.isMoney ? FormatHelper.addComma(etc.used) : FormatHelper.convVoiceFormat(etc.used));
         etc.showRemained = !etc.isRemainUnlimited &&
