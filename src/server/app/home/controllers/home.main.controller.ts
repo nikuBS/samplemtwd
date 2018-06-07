@@ -3,10 +3,11 @@ import { Request, Response, NextFunction } from 'express';
 import { API_CMD, API_CODE } from '../../../types/api-command.type';
 import DateHelper from '../../../utils/date.helper';
 import FormatHelper from '../../../utils/format.helper';
-import { UNIT } from '../../../types/bff-common.type';
+import { UNIT, UNIT_E } from '../../../types/bff-common.type';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/combineLatest';
 import 'rxjs/add/operator/map';
+import myTUsageData from '../../../mock/server/myt.usage';
 
 class HomeMain extends TwViewController {
   constructor() {
@@ -43,43 +44,40 @@ class HomeMain extends TwViewController {
 
 
   private parseUsageData(usageData: any): any {
-    if ( !FormatHelper.isEmpty(usageData.data) ) {
-      usageData.data.map((data) => {
-        data.isUnlimit = !isFinite(data.total);
-        data.remainedRatio = 100;
-        data.showUsed = FormatHelper.convDataFormat(data.used, UNIT[data.unit]);
-        if ( !data.isUnlimit ) {
-          data.showTotal = FormatHelper.convDataFormat(data.total, UNIT[data.unit]);
-          data.showRemained = FormatHelper.convDataFormat(data.remained, UNIT[data.unit]);
-          data.remainedRatio = data.remained / data.total * 100;
-        }
-      });
-    }
+    const kinds = ['data', 'voice', 'sms'];
 
-    if ( !FormatHelper.isEmpty(usageData.voice) ) {
-      usageData.voice.map((voice) => {
-        voice.isUnlimit = !isFinite(voice.total);
-        voice.remainedRatio = 100;
-        voice.showUsed = FormatHelper.convVoiceFormat(voice.used);
-        if ( !voice.isUnlimit ) {
-          voice.showTotal = FormatHelper.convVoiceFormat(voice.total);
-          voice.showRemained = FormatHelper.convVoiceFormat(voice.remained);
-          voice.remainedRatio = voice.remained / voice.total * 100;
-        }
-      });
-    }
-
-    if ( !FormatHelper.isEmpty(usageData.sms) ) {
-      usageData.sms.map((sms) => {
-        sms.isUnlimit = !isFinite(sms.total);
-        sms.remainedRatio = 100;
-        if ( !sms.isUnlimit ) {
-          sms.remainedRatio = sms.remained / sms.total * 100;
-        }
-      });
-    }
-
+    kinds.map((kind) => {
+      if ( !FormatHelper.isEmpty(usageData[kind]) ) {
+        usageData[kind].map((data) => {
+          this.convShowData(data);
+        });
+      }
+    });
     return usageData;
+  }
+
+  private convShowData(data: any) {
+    data.isUnlimit = !isFinite(data.total);
+    data.remainedRatio = 100;
+    data.showUsed = this.convFormat(data.used, data.unit);
+    if ( !data.isUnlimit ) {
+      data.showTotal = this.convFormat(data.total, data.unit);
+      data.showRemained = this.convFormat(data.remained, data.unit);
+      data.remainedRatio = data.remained / data.total * 100;
+    }
+  }
+
+  private convFormat(data: string, unit: string): string {
+    switch ( unit ) {
+      case UNIT_E.DATA:
+        return FormatHelper.convDataFormat(data, UNIT[unit]);
+      case UNIT_E.VOICE:
+        return FormatHelper.convVoiceFormat(data);
+      case UNIT_E.SMS:
+        return FormatHelper.addComma(data);
+      default:
+    }
+    return '';
   }
 }
 
