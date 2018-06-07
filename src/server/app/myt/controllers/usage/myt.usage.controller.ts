@@ -6,7 +6,7 @@ import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
 import { UNIT } from '../../../../types/bff-common.type';
 import { SVC_CD } from '../../../../types/bff-common.type';
-import { API_CMD } from '../../../../types/api-command.type';
+import {API_CMD, API_MYT_ERROR_CODE} from '../../../../types/api-command.type';
 import { SKIP_NAME } from '../../../../types/string.type';
 import { DAY_BTN_STANDARD_SKIP_ID } from '../../../../types/bff-common.type';
 
@@ -97,6 +97,16 @@ class MyTUsage extends TwViewController {
     return isVisible;
   }
 
+  private isError(code: string): boolean {
+    let isError = false;
+    for (const cd of API_MYT_ERROR_CODE) {
+      if (cd === code) {
+        isError = true;
+      }
+    }
+    return isError;
+  }
+
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     const newSvcInfo = this.parseSvcInfo(svcInfo);
 
@@ -109,6 +119,15 @@ class MyTUsage extends TwViewController {
           usageData: usageData, // mock data
           remainDate: DateHelper.getRemainDate()
         };
+
+        const isError = this.isError(resp.code);
+        if (isError) {
+          const errorData = {
+            svcInfo: newSvcInfo,
+            err: resp
+          };
+          res.render('error/myt.usage.error.html', errorData);
+        }
         res.render('usage/myt.usage.html', data);
       });
   }
