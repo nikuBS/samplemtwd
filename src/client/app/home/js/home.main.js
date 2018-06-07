@@ -9,6 +9,7 @@ Tw.HomeMain = function (rootEl) {
 
 Tw.HomeMain.prototype = {
   _bindEvent: function () {
+    Tw.Logger.log('test');
     this.$container.on('click', '.btn-search', $.proxy(this._onClickAjaxButton, this));
   },
 

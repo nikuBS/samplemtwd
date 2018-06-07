@@ -25,7 +25,8 @@
     "path": "^0.12.7",
     "rxjs": "^5.5.11",
     "slick-carousel": "^1.8.1",
-    "underscore": "^1.9.1"
+    "underscore": "^1.9.1",
+    "winston": "^2.4.2"
   },
   "devDependencies": {
     "@types/ejs": "^2.5.1",

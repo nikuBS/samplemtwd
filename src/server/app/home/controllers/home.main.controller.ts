@@ -16,7 +16,7 @@ class HomeMain extends TwViewController {
     let usageData = this.parseData(myTUsageData.result);
 
     this.apiService.request(API_CMD.BFF_05_0001, {}).subscribe((resp) => {
-      console.log(resp);
+      this.logger.debug(this, resp);
       if ( resp.code === API_CODE.CODE_00 ) {
         usageData = resp.result;
       }

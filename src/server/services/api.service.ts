@@ -113,4 +113,4 @@ class ApiService {
   }
 }
 
-export default new ApiService();
+export default ApiService;
