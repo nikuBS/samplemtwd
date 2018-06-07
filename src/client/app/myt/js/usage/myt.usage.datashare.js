@@ -5,7 +5,7 @@ Tw.MytUsageDataShare = function (rootEl) {
 
 Tw.MytUsageDataShare.prototype = {
   _bindEvent: function () {
-    this.$container.find('.get-usage-data').on('click', $.proxy(this._showUsageData, this));
+    this.$container.on('click', '.get-usage-data', $.proxy(this._showUsageData, this));
   },
   _showUsageData: function ($event) {
     $event.preventDefault();

@@ -18,7 +18,7 @@ Tw.MytUsage.prototype = {
     this._changeDataUnit();
   },
   _changeDataUnit: function () {
-    this.$container.find('.btn-change').on('change', $.proxy(this._setDataByUnit, this));
+    this.$container.on('change', '.btn-change', $.proxy(this._setDataByUnit, this));
   },
   _setDataByUnit: function ($event) {
     var defaultUnit = 'KB';

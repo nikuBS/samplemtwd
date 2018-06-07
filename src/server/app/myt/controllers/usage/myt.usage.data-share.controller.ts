@@ -17,7 +17,7 @@ class MyTUsageDataShare extends TwViewController {
     usageData.userCnt = USER_CNT[usageData.childList.length - 1];
     usageData.showTotal = FormatHelper.convDataFormat(usageData.data.used, UNIT[usageData.data.unit]);
     usageData.childList.map((data) => {
-      data.setDate = DateHelper.getShortDate(data.auditDtm);
+      data.setDate = DateHelper.getShortDateNoDot(data.auditDtm);
       data.showUsed = FormatHelper.convDataFormat(data.used, UNIT[data.unit]);
     });
     return usageData;
