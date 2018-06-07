@@ -95,7 +95,10 @@ class ApiService {
   }
 
   private isSessionCallback(command: any): boolean {
-    if ( command === API_CMD.BFF_03_0001 || command === API_CMD.BFF_03_0004 || command === API_CMD.BFF_03_0005 ) {
+    if ( command === API_CMD.BFF_03_0001
+      || command === API_CMD.BFF_03_0001_mock
+      || command === API_CMD.BFF_03_0004
+      || command === API_CMD.BFF_03_0005 ) {
       return true;
     }
     return false;

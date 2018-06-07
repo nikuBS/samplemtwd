@@ -40,10 +40,15 @@ abstract class TwViewController {
       svcCnt: '',
     };
 
+    let loginCmd = API_CMD.BFF_03_0001;
+    if ( userId === 'mock' ) {
+      loginCmd = API_CMD.BFF_03_0001_mock;
+    }
+
     if ( this._loginService.isLogin(userId) ) {
       this.render(req, res, next, this._loginService.getSvcInfo());
     } else {
-      this._apiService.request(API_CMD.BFF_03_0001, { userId }).subscribe((resp) => {
+      this._apiService.request(loginCmd, { userId }).subscribe((resp) => {
         this.render(req, res, next, resp.result || defaultSvc);
       });
     }
