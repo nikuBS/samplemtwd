@@ -56,7 +56,7 @@
                   <div class="cell">사용량</div>
                   <!-- 조회하기 버튼 클릭시 데이터 노출 -->
                   <div class="cell">
-                    <a href="#" class="btn-type03 get-usage-data">조회하기</a>
+                    <a href="#" class="btn-type03 get-usage-data" data-value="<%= usageData.childList[i].svcMgmtNum %>">조회하기</a>
                     <em class="moebius-bold" style="display:none;"><%= usageData.childList[i].showUsed.data %><%= usageData.childList[i].showUsed.unit %></em>
                   </div>
                   <!-- // 조회하기 버튼 클릭시 데이터 노출 -->

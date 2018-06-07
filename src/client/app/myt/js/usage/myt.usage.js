@@ -8,9 +8,6 @@ Tw.MytUsage = function (rootEl) {
 
 Tw.MytUsage.prototype = {
   _showAndHide: function () {
-    this.$container.find('.child-btn').hide();
-    this._makeBorderStyle(false);
-
     this._getUsageBtn();
     this._getChildren();
   },
@@ -58,6 +55,8 @@ Tw.MytUsage.prototype = {
     if (result.dataSharing === 'Y') dataSharingBtn.show();
     if (result.tdataSharing === 'Y') tDataSharingBtn.show();
     if (result.troamingSharing === 'Y') tRoamingSharingBtn.show();
+
+    this._makeBorderStyle(false);
   },
   _btnSuccess: function (res) {
     var result = res.result;
@@ -75,6 +74,9 @@ Tw.MytUsage.prototype = {
 
       this._makeBorderStyle(true);
       childBtn.show();
+    }
+    else {
+      this._makeBorderStyle(false);
     }
   },
   _childFail: function (err) {
