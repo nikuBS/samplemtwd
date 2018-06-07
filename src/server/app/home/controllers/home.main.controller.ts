@@ -1,10 +1,12 @@
 import TwViewController from '../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
-import { API_CMD, API_CODE, API_MYT_ERROR_CODE } from '../../../types/api-command.type';
-import myTUsageData from '../../../mock/server/myt.usage';
+import { API_CMD, API_CODE } from '../../../types/api-command.type';
 import DateHelper from '../../../utils/date.helper';
 import FormatHelper from '../../../utils/format.helper';
 import { UNIT } from '../../../types/bff-common.type';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/combineLatest';
+import 'rxjs/add/operator/map';
 
 class HomeMain extends TwViewController {
   constructor() {
@@ -13,36 +15,43 @@ class HomeMain extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     const remainDate = DateHelper.getRemainDate();
-    // TODO deleted
-    let usageData = this.parseData(myTUsageData.result);
 
-    this.apiService.request(API_CMD.BFF_05_0001, {}).subscribe((resp) => {
-      this.logger.debug(this, resp);
-      if ( resp.code === API_CODE.CODE_00 ) {
-        usageData = this.parseData(resp.result);
-      } else {
-        // error 처리 필요
-      }
-
+    Observable.combineLatest([
+      this.getUsageData()
+    ]).subscribe((usageData) => {
       console.log(usageData);
-      res.render('home.main.html', {
-        usageData,
+      const data = {
         svcInfo,
-        remainDate
-      });
+        remainDate,
+        usageData
+      };
+      res.render('home.main.html', data);
     });
   }
 
-  private parseData(usageData: any): any {
+  private getUsageData(): Observable<any> {
+    let usageData = {
+      prodName: null
+    };
+    return this.apiService.request(API_CMD.BFF_05_0001, {}).map((resp) => {
+      if ( resp.code === API_CODE.CODE_00 ) {
+        usageData = this.parseUsageData(resp.result);
+      }
+      return usageData;
+    });
+  }
+
+
+  private parseUsageData(usageData: any): any {
     if ( !FormatHelper.isEmpty(usageData.data) ) {
       usageData.data.map((data) => {
         data.isUnlimit = !isFinite(data.total);
-        data.usedRatio = 100;
+        data.remainedRatio = 100;
+        data.showUsed = FormatHelper.convDataFormat(data.used, UNIT[data.unit]);
         if ( !data.isUnlimit ) {
           data.showTotal = FormatHelper.convDataFormat(data.total, UNIT[data.unit]);
-          data.showUsed = FormatHelper.convDataFormat(data.used, UNIT[data.unit]);
           data.showRemained = FormatHelper.convDataFormat(data.remained, UNIT[data.unit]);
-          data.usedRatio = data.remained / data.total * 100;
+          data.remainedRatio = data.remained / data.total * 100;
         }
       });
     }
@@ -50,12 +59,12 @@ class HomeMain extends TwViewController {
     if ( !FormatHelper.isEmpty(usageData.voice) ) {
       usageData.voice.map((voice) => {
         voice.isUnlimit = !isFinite(voice.total);
-        voice.usedRatio = 100;
+        voice.remainedRatio = 100;
+        voice.showUsed = FormatHelper.convVoiceFormat(voice.used);
         if ( !voice.isUnlimit ) {
           voice.showTotal = FormatHelper.convVoiceFormat(voice.total);
-          voice.showUsed = FormatHelper.convVoiceFormat(voice.used);
           voice.showRemained = FormatHelper.convVoiceFormat(voice.remained);
-          voice.usedRatio = voice.remained / voice.total * 100;
+          voice.remainedRatio = voice.remained / voice.total * 100;
         }
       });
     }
@@ -63,9 +72,9 @@ class HomeMain extends TwViewController {
     if ( !FormatHelper.isEmpty(usageData.sms) ) {
       usageData.sms.map((sms) => {
         sms.isUnlimit = !isFinite(sms.total);
-        sms.usedRatio = 100;
+        sms.remainedRatio = 100;
         if ( !sms.isUnlimit ) {
-          sms.usedRatio = sms.remained / sms.total * 100;
+          sms.remainedRatio = sms.remained / sms.total * 100;
         }
       });
     }

@@ -17,7 +17,6 @@ const myTUsageData = {
         'unit': '140',
         'couponDate': '20180601'
       },
-      /*
       {
         'skipId': 'LT', // DDZ23
         'skipName': '데이터통화 1GB 무료(LTE)',
@@ -27,7 +26,6 @@ const myTUsageData = {
         'unit': '140',
         'couponDate': ''
       }
-      */
     ],
     'voice': [
       {

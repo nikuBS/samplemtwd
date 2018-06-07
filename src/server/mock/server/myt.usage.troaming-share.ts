@@ -4,7 +4,7 @@ const MyTRoamingShare = {
 
   'result': {
 
-    'dispRemainDay': 'T로밍투게더 잔여일시',
+    'dispRemainDay': '38561',
     'roamProdNm': 'T로밍투게더 상품명',
     'dataSharing': {
       'data': {

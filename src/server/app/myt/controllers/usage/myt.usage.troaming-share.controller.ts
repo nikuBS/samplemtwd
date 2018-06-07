@@ -28,19 +28,21 @@ class MyTUsageTRoamingShare extends TwViewController {
 
   private parseData(result: any): any {
     result.dataSharing.data.isUnlimit = !isFinite(result.dataSharing.data.total);
-    result.dataSharing.data.usedRatio = 100;
+    result.dataSharing.data.remainedRatio = 100;
+    result.dataSharing.data.showUsed = FormatHelper.convDataFormat(result.dataSharing.data.used, DATA_UNIT.KB);
     if ( !result.dataSharing.data.isUnlimit ) {
       result.dataSharing.data.showTotal = FormatHelper.convDataFormat(result.dataSharing.data.total, DATA_UNIT.KB);
       result.dataSharing.data.showRemained = FormatHelper.convDataFormat(result.dataSharing.data.remained, DATA_UNIT.KB);
-      result.dataSharing.data.showUsed = FormatHelper.convDataFormat(result.dataSharing.data.used, DATA_UNIT.KB);
-      result.dataSharing.data.usedRatio = result.dataSharing.data.remained / result.dataSharing.data.total * 100;
+      result.dataSharing.data.remainedRatio = result.dataSharing.data.remained / result.dataSharing.data.total * 100;
     }
     result.dataSharing.userCnt = USER_CNT[result.dataSharing.childList.length - 1];
 
     result.dataSharing.childList.map((child) => {
       child.showUsed = FormatHelper.convDataFormat(child.used, DATA_UNIT.KB);
     });
-    console.log(result.dataSharing.childList);
+
+    result.showRemainDay = FormatHelper.convMinToDay(result.dispRemainDay);
+    console.log(result);
     return result;
   }
 }
