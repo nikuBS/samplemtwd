@@ -11,9 +11,15 @@ export const SVC_CD = {
 
 export const UNIT = {
   '140': 'KB',
-  '210': '초',
+  '240': '초',
   '310': '원'
 };
+
+export enum UNIT_E {
+  DATA = '140',
+  VOICE = '240',
+  SMS = '310'
+}
 
 export const DAY_BTN_STANDARD_SKIP_ID = [
   'DDZ25', // BTV 모바일팩
