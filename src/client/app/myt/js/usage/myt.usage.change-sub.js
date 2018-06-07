@@ -63,10 +63,8 @@ Tw.MytUsageChangeSub.prototype = {
   choiceLine: function (e) {
     var $elLine    = $(e.currentTarget);
     var svcMgmtNum = $elLine.data('svcmgmtnum');
-debugger;
     this._apiService.request(Tw.API_CMD.BFF_03_0004, {}, { headers: { "svcMgmtNum": svcMgmtNum } })
       .done(function () {
-        debugger;
         location.href = '/myt';
       });
   },
@@ -141,7 +139,7 @@ debugger;
       this.selectList = this.selectList.sort(function (prevItem, nextItem) {
         var prevDate = Number(prevItem.svcScrbDtm);
         var nextDate = Number(nextItem.svcScrbDtm);
-        return prevDate - nextDate;
+        return nextDate - prevDate;
       });
     }
   }
