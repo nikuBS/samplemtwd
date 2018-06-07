@@ -7,6 +7,9 @@ Tw.API_METHOD = {
 
 Tw.API_CMD = {
   TEST_GET_USAGE_BTN: { path: '/usageBtn', method: Tw.API_METHOD.GET },
-  SESSION_CHECK: { path: '/mock/session', method: Tw.API_METHOD.GET},
+  SESSION_CHECK: { path: '/mock/session', method: Tw.API_METHOD.GET },
+  BFF_03_0002: { path: '/svc-catalog', method: Tw.API_METHOD.GET },
+  BFF_03_0003: { path: '/svc-catalog/detail', method: Tw.API_METHOD.GET },
+  BFF_03_0004: { path: '/change-svc', method: Tw.API_METHOD.POST },
   BFF_05_0010: { path: '/core-balance/v1/children', method: Tw.API_METHOD.GET },
 };
