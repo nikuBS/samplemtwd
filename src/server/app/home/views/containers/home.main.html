@@ -26,110 +26,105 @@
                     <p class="ttl"><%= usageData.prodName %></p>
                     <p class="days">잔여일수<b class="moebius-bold"><%= remainDate %></b>일</p>
                 </div>
+                <% if( usageData.main ) { %>
                 <div class="slick-type01">
                     <div class="belt">
                         <!-- class명 자유 해당 depth div가 1개 unit-->
-                        <% if( usageData.data ) { %>
-                        <% usageData.data.map(function(data, i) { %>
+                        <% if( usageData.main.data ) { %>
                         <div class="card type-data">
                             <div class="head">
                                 <strong>데이터</strong>
-                                <span><%= data.skipName %></span>
+                                <span><%= usageData.main.data.skipName %></span>
                             </div>
                             <div class="bar-area">
                                 <div class="chart">
-                                    <% if(data.isUnlimit) { %>
-                                    <p><span class="moebius-bold mugen"><%= data.total %></span></p>
+                                    <% if(usageData.main.data.isUnlimit) { %>
+                                    <p><span class="moebius-bold mugen"><%= usageData.main.data.total %></span></p>
                                     <% } else { %>
                                     <p>
-                                        <span class="moebius-bold"><%= data.showRemained.data %></span>
-                                        <em><%= data.showRemained.unit %></em>
+                                        <span class="moebius-bold"><%= usageData.main.data.showRemained.data %></span>
+                                        <em><%= usageData.main.data.showRemained.unit %></em>
                                     </p>
                                     <strong class="total">
-                                        <span class="moebius-bold"><%= data.showTotal.data %></span>
-                                        <em><%= data.showTotal.unit %></em>
+                                        <span class="moebius-bold"><%= usageData.main.data.showTotal.data %></span>
+                                        <em><%= usageData.main.data.showTotal.unit %></em>
                                     </strong>
                                     <% } %>
                                 </div>
                                 <div class="bar">
-                                    <% if(data.remainedRatio !== 0) { %>
-                                    <span style="width:<%= data.remainedRatio %>%;"></span>
+                                    <% if(usageData.main.data.remainedRatio !== 0) { %>
+                                    <span style="width:<%= usageData.main.data.remainedRatio %>%;"></span>
                                     <% } %>
                                     <!-- width:퍼센테이지 필요, 0%의 경우 display:none; // -->
                                 </div>
                             </div>
                         </div>
-                        <% }) %>
                         <% } %>
-                        <% if( usageData.voice ) { %>
-                        <% usageData.voice.map(function(voice, i) { %>
+                        <% if( usageData.main.voice ) { %>
                         <div class="card type-voice">
                             <div class="head">
                                 <strong>음성</strong>
-                                <span><%= voice.skipName %></span>
+                                <span><%= usageData.main.voice.skipName %></span>
                             </div>
                             <div class="bar-area">
                                 <div class="chart m">
-                                    <% if(voice.isUnlimit) { %>
-                                    <p><span class="moebius-bold mugen"><%= voice.total %></span></p>
+                                    <% if(usageData.main.voice.isUnlimit) { %>
+                                    <p><span class="moebius-bold mugen"><%= usageData.main.voice.total %></span></p>
                                     <% } else { %>
                                     <p>
-                                        <% if ( voice.showRemained.hours !== 0) { %>
-                                        <span class="moebius-bold"><%= voice.showRemained.hours %></span><em>시간</em>
+                                        <% if ( usageData.main.voice.showRemained.hours !== 0) { %>
+                                        <span class="moebius-bold"><%= usageData.main.voice.showRemained.hours %></span><em>시간</em>
                                         <% } %>
-                                        <% if ( voice.showRemained.min !== 0) { %>
-                                        <span class="moebius-bold"><%= voice.showRemained.min %></span><em>분</em>
+                                        <% if ( usageData.main.voice.showRemained.min !== 0) { %>
+                                        <span class="moebius-bold"><%= usageData.main.voice.showRemained.min %></span><em>분</em>
                                         <% } %>
-                                        <% if ( voice.showRemained.sec !== 0) { %>
-                                        <span class="moebius-bold"><%= voice.showRemained.sec %></span><em>초</em>
+                                        <% if ( usageData.main.voice.showRemained.sec !== 0) { %>
+                                        <span class="moebius-bold"><%= usageData.main.voice.showRemained.sec %></span><em>초</em>
                                         <% } %>
                                     </p>
                                     <strong class="total">
-                                        <% if ( voice.showTotal.hours !== 0) { %>
-                                        <span class="moebius-bold"><%= voice.showTotal.hours %></span><em>시간</em>
+                                        <% if ( usageData.main.voice.showTotal.hours !== 0) { %>
+                                        <span class="moebius-bold"><%= usageData.main.voice.showTotal.hours %></span><em>시간</em>
                                         <% } %>
-                                        <% if ( voice.showTotal.min !== 0) { %>
-                                        <span class="moebius-bold"><%= voice.showTotal.min %></span><em>분</em>
+                                        <% if ( usageData.main.voice.showTotal.min !== 0) { %>
+                                        <span class="moebius-bold"><%= usageData.main.voice.showTotal.min %></span><em>분</em>
                                         <% } %>
-                                        <% if ( voice.showTotal.sec !== 0) { %>
-                                        <span class="moebius-bold"><%= voice.showTotal.sec %></span><em>초</em>
+                                        <% if ( usageData.main.voice.showTotal.sec !== 0) { %>
+                                        <span class="moebius-bold"><%= usageData.main.voice.showTotal.sec %></span><em>초</em>
                                         <% } %>
                                     </strong>
                                     <% } %>
                                 </div>
                                 <div class="bar">
-                                    <% if(voice.remainedRatio !== 0) { %>
-                                    <span style="width:<%= voice.remainedRatio %>%;"></span><!-- width:퍼센테이지 필요, 0%의 경우 display:none; // -->
+                                    <% if(usageData.main.voice.remainedRatio !== 0) { %>
+                                    <span style="width:<%= usageData.main.voice.remainedRatio %>%;"></span><!-- width:퍼센테이지 필요, 0%의 경우 display:none; // -->
                                     <% } %>
                                 </div>
                             </div>
                         </div>
-                        <% }) %>
                         <% } %>
-                        <% if( usageData.sms ) { %>
-                        <% usageData.sms.map(function(sms, i) { %>
+                        <% if( usageData.main.sms ) { %>
                         <div class="card type-message">
                             <div class="head">
                                 <strong>문자</strong>
-                                <span><%= sms.skipName %></span>
+                                <span><%= usageData.main.sms.skipName %></span>
                             </div>
                             <div class="bar-area">
                                 <div class="chart">
-                                    <% if(sms.isUnlimit) { %>
-                                    <p><span class="moebius-bold mugen"><%= sms.total %></span></p>
+                                    <% if(usageData.main.sms.isUnlimit) { %>
+                                    <p><span class="moebius-bold mugen"><%= usageData.main.sms.total %></span></p>
                                     <% } else { %>
-                                    <p><span class="moebius-bold"><%= sms.remained %></span><em>건</em></p>
-                                    <strong class="total"><span class="moebius-bold"><%= sms.total %></span><em>건</em></strong>
+                                    <p><span class="moebius-bold"><%= usageData.main.sms.remained %></span><em>건</em></p>
+                                    <strong class="total"><span class="moebius-bold"><%= usageData.main.sms.total %></span><em>건</em></strong>
                                     <% } %>
                                 </div>
                                 <div class="bar">
-                                    <% if(sms.remainedRatio !== 0) { %>
-                                    <span style="width:<%= sms.remainedRatio %>%;"></span><!-- width:퍼센테이지 필요, 0%의 경우 display:none; // -->
+                                    <% if(usageData.main.sms.remainedRatio !== 0) { %>
+                                    <span style="width:<%= usageData.main.sms.remainedRatio %>%;"></span><!-- width:퍼센테이지 필요, 0%의 경우 display:none; // -->
                                     <% } %>
                                 </div>
                             </div>
                         </div>
-                        <% }) %>
                         <% } %>
                         <% if (!usageData.prodName) { %>
                         <div class="card type-infom infom">
@@ -140,7 +135,7 @@
                                 <span class="txt">잠시 후<br />다시 조회해 주세요</span>
                             </div>
                         </div>
-                        <% } else if (!usageData.data && !usageData.voice && !usageData.sms) { %>
+                        <% } else if (!usageData.main.data && !usageData.main.voice && !main.usageData.sms) { %>
                         <div class="card type-infom infom">
                             <div class="head">
                                 <strong>안내</strong>
@@ -152,6 +147,7 @@
                         <% } %>
                     </div>
                 </div>
+                <% } %>
             </div>
             <!-- //slider-area -->
             <div class="user-level">
