@@ -17,28 +17,29 @@ Tw.MytUsageChange.prototype = {
   },
 
   choiceLine: function (e) {
-    var $elLine = $(e.currentTarget);
     // TODO: change-svc
+    var $elLine = $(e.currentTarget);
 
-    history.back();
+    //history.back();
   },
 
   onClickUsageShowAll: function (e) {
     var sCategoryType = $(e.currentTarget).data('type');
+    var sCategoryName = $(e.currentTarget).data('type-name');
 
-    if ( sCategoryType === 'C' ) {
+    if ( sCategoryType === 'M' ) {
       // Mobile
-      this.$popupContainer.trigger('openSubView', { type: 'C' });
+      this.$popupContainer.trigger('openSubView', { type: 'M', name: sCategoryName });
     }
 
     if ( sCategoryType === 'W' ) {
       // Internet / Phone / WIBRO
-      this.$popupContainer.trigger('openSubView', { type: 'W' });
+      this.$popupContainer.trigger('openSubView', { type: 'W', name: sCategoryName });
     }
 
     if ( sCategoryType === 'S' ) {
       // Solution
-      this.$popupContainer.trigger('openSubView', { type: 'S' });
+      this.$popupContainer.trigger('openSubView', { type: 'S', name: sCategoryName });
     }
   },
 

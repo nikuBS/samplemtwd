@@ -46,13 +46,27 @@
             <span class="count">(<%=result.M.length%>)</span>
           </h2>
           <div class="btn-fn">
-            <a class="btn-type04 btn_show_all" data-type="C" data-type-name="모바일">전체보기</a>
+            <a class="btn-type04 btn_show_all" data-type="M" data-type-name="모바일">전체보기</a>
           </div>
           <ul class="list">
             <% for( let item of result.M ) { %>
             <li class="rep"><!-- .rep 대표 // -->
               <div class="row">
+                <% if( item.svcCd == 'C' ) { %>
                 <div class="type">휴대폰</div>
+                <% } %>
+                <% if( item.svcCd == 'S' ) { %>
+                <div class="type">PPS</div>
+                <% } %>
+                <% if( item.svcCd == 'F' ) { %>
+                <div class="type">T Pocket-Fi</div>
+                <% } %>
+                <% if( item.svcCd == 'L' ) { %>
+                <div class="type">Tlogin</div>
+                <% } %>
+                <% if( item.svcCd == 'W' ) { %>
+                <div class="type">WiBro</div>
+                <% } %>
                 <div class="info">
                   <div class="txt01">
                     <span class="moebius-bold"><%=item.svcNum%></span>
@@ -60,7 +74,7 @@
                     <span class="tag-type01">대표</span>
                     <% } %>
                   </div>
-                  <div class="txt02"><%=item.svcNickName%></div>
+                  <div class="txt02"><%=item.svcNickNm%></div>
                 </div>
               </div>
             </li>
@@ -79,7 +93,15 @@
             <% for( let item of result.W ) { %>
             <li class="rep"><!-- .rep 대표 // -->
               <div class="row">
-                <div class="type">휴대폰</div>
+                <% if( item.svcCd == 'P' ) { %>
+                <div class="type">집전화</div>
+                <% } %>
+                <% if( item.svcCd == 'T' ) { %>
+                <div class="type">IPTV</div>
+                <% } %>
+                <% if( item.svcCd == 'I' ) { %>
+                <div class="type">인터넷</div>
+                <% } %>
                 <div class="info">
                   <div class="txt01">
                     <span class="moebius-bold"><%=item.svcNum%></span>
@@ -87,7 +109,7 @@
                     <span class="tag-type01">대표</span>
                     <% } %>
                   </div>
-                  <div class="txt02"><%=item.svcNickName%></div>
+                  <div class="txt02"><%=item.svcNickNm%></div>
                 </div>
               </div>
             </li>
@@ -106,7 +128,7 @@
             <% for( let item of result.S ) { %>
             <li class="rep"><!-- .rep 대표 // -->
               <div class="row">
-                <div class="type">휴대폰</div>
+                <div class="type">보안솔루션</div>
                 <div class="info">
                   <div class="txt01">
                     <span class="moebius-bold"><%=item.svcNum%></span>
@@ -114,7 +136,7 @@
                     <span class="tag-type01">대표</span>
                     <% } %>
                   </div>
-                  <div class="txt02"><%=item.svcNickName%></div>
+                  <div class="txt02"><%=item.svcNickNm%></div>
                 </div>
               </div>
             </li>
@@ -140,27 +162,10 @@
       </div>
       <div class="prd-line">
         <section>
-          <h2>모바일<span class="count">(1,000)</span></h2>
+          <h2 id="groupName">모바일<span class="count">(0)</span></h2>
           <div class="btn-fn"><a class="btn-type05 btn_previous">이전</a></div>
-          <ul class="toggle-case">
-            <li>
-              <button type="button" class="filter on" data-type="all">전체</button>
-            </li><!-- .on 활성화 // -->
-            <li>
-              <button type="button" class="filter" data-type="C">휴대폰</button>
-            </li>
-            <li>
-              <button type="button" class="filter" data-type="S">PPS</button>
-            </li>
-            <li>
-              <button type="button" class="filter" data-type="F">T Pocket-Fi</button>
-            </li>
-            <li>
-              <button type="button" class="filter" data-type="L">T Login</button>
-            </li>
-            <li>
-              <button type="button" class="filter" data-type="W">T WiBro</button>
-            </li>
+          <ul class="toggle-case" id="wrap_category">
+            <!-- insert category template data -->
           </ul>
           <div class="sort">
             <select id="sort_type" name="">
@@ -183,11 +188,52 @@
 
 <!-- Template :: category -->
 <script type="text/template" id="tpl_line_category">
-  {{ _.each(list, function(item) { }}
   <li>
-    <button type="button" class="filter">T WiBro</button>
-    <!-- .on 활성화 // -->
+    <button type="button" class="filter on" data-type="all">전체</button>
+  </li><!-- .on 활성화 // -->
+  {{ _.each(list, function(item) { }}
+  {{ if( item == 'C') { }}
+  <li>
+    <button type="button" class="filter" data-type="C">휴대폰</button>
   </li>
+  {{ } }}
+
+  {{ if( item == 'L') { }}
+  <li>
+    <button type="button" class="filter" data-type="L">T Pocket-Fi</button>
+  </li>
+  {{ } }}
+
+  {{ if( item == 'W') { }}
+  <li>
+    <button type="button" class="filter" data-type="W">Tlogin</button>
+  </li>
+  {{ } }}
+
+  {{ if( item == 'P') { }}
+  <li>
+    <button type="button" class="filter" data-type="P">집전화</button>
+  </li>
+  {{ } }}
+
+  {{ if( item == 'T') { }}
+  <li>
+    <button type="button" class="filter" data-type="T">IPTV</button>
+  </li>
+  {{ } }}
+
+  {{ if( item == 'I') { }}
+  <li>
+    <button type="button" class="filter" data-type="I">인터넷</button>
+  </li>
+  {{ } }}
+
+  {{ if( item == 'O') { }}
+  <li>
+    <button type="button" class="filter" data-type="O">보안솔루션</button>
+  </li>
+  {{ } }}
+
   {{ }); }}
 </script>
 <!-- // Template :: category -->
@@ -195,9 +241,37 @@
 <!-- Template :: line list -->
 <script type="text/template" id="tpl_line_items">
   {{ _.each(list, function(item) { }}
-  <li>
+  <li data-register={{=item.svcScrbDtm}} data-modified={{=item.lastUpdDtm}}>
     <div class="row">
-      <div class="type">{{=item.svcCd}}</div>
+
+      {{ if( item.svcCd == 'C') { }}
+      <div class="type">휴대폰</div>
+      {{ } }}
+
+      {{ if( item.svcCd == 'L') { }}
+      <div class="type">T Pocket-Fi</div>
+      {{ } }}
+
+      {{ if( item.svcCd == 'W') { }}
+      <div class="type">Tlogin</div>
+      {{ } }}
+
+      {{ if( item.svcCd == 'P') { }}
+      <div class="type">집전화</div>
+      {{ } }}
+
+      {{ if( item.svcCd == 'T') { }}
+      <div class="type">IPTV</div>
+      {{ } }}
+
+      {{ if( item.svcCd == 'I') { }}
+      <div class="type">인터넷</div>
+      {{ } }}
+
+      {{ if( item.svcCd == 'O') { }}
+      <div class="type">보안솔루션</div>
+      {{ } }}
+
       <div class="info">
         <div class="txt01">
           <span class="moebius-bold">{{=item.svcNum}}</span>
