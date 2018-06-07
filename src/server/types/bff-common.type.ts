@@ -10,15 +10,19 @@ export const SVC_CD = {
 };
 
 export const UNIT = {
+  '110': '원',
   '140': 'KB',
   '240': '초',
-  '310': '원'
+  '310': '건',
+  '320': '건'
 };
 
 export enum UNIT_E {
+  FEE = '110',
   DATA = '140',
   VOICE = '240',
-  SMS = '310'
+  SMS = '310',
+  SMS_2 = '320'
 }
 
 export const DAY_BTN_STANDARD_SKIP_ID = [

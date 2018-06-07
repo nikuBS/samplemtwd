@@ -7,7 +7,6 @@ import { UNIT, UNIT_E } from '../../../types/bff-common.type';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/combineLatest';
 import 'rxjs/add/operator/map';
-import myTUsageData from '../../../mock/server/myt.usage';
 
 class HomeMain extends TwViewController {
   constructor() {
@@ -17,10 +16,9 @@ class HomeMain extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     const remainDate = DateHelper.getRemainDate();
 
-    Observable.combineLatest([
+    Observable.combineLatest(
       this.getUsageData()
-    ]).subscribe((usageData) => {
-      console.log(usageData);
+    ).subscribe(([usageData]) => {
       const data = {
         svcInfo,
         remainDate,
@@ -47,10 +45,8 @@ class HomeMain extends TwViewController {
     const kinds = ['data', 'voice', 'sms'];
 
     kinds.map((kind) => {
-      if ( !FormatHelper.isEmpty(usageData[kind]) ) {
-        usageData[kind].map((data) => {
-          this.convShowData(data);
-        });
+      if ( !FormatHelper.isEmpty(usageData.main[kind]) ) {
+        this.convShowData(usageData.main[kind]);
       }
     });
     return usageData;
@@ -74,6 +70,7 @@ class HomeMain extends TwViewController {
       case UNIT_E.VOICE:
         return FormatHelper.convVoiceFormat(data);
       case UNIT_E.SMS:
+      case UNIT_E.SMS_2:
         return FormatHelper.addComma(data);
       default:
     }
