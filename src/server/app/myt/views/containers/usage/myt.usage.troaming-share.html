@@ -26,7 +26,14 @@
                 <div class="inner">
                     <div class="icon"><img src="http://tstore.rbipt.com/skt/img/ico_band.png" alt="" /></div>
                     <div class="prd-name"><a href="#"><%= result.roamProdNm %></a></div>
-                    <div class="remaining-date">남은일수 <strong class="moebius-bold">4</strong>일<strong class="moebius-bold">18</strong>시간</div>
+                    <div class="remaining-date">남은일수
+                        <% if(result.showRemainDay.day !== 0) { %>
+                        <strong class="moebius-bold"><%= result.showRemainDay.day %></strong>일
+                        <% } %>
+                        <% if(result.showRemainDay.hours !== 0) { %>
+                        <strong class="moebius-bold"><%= result.showRemainDay.hours %></strong>시간
+                        <% } %>
+                    </div>
                 </div>
             </div>
             <!-- // prd-summary -->
@@ -50,15 +57,19 @@
                                 <h3><%= result.roamProdNm %></h3>
                                 <div class="progressbar-type02"><!-- 무제한 타입 //-->
                                     <span class="base"></span>
-                                    <% if (result.dataSharing.data.usedRatio !== 0) { %>
-                                    <div class="val" style="width:<%= result.dataSharing.data.usedRatio %>%;"><!-- width:퍼센테이지 필요, 0%의 경우 display:none; // -->
+                                    <% if (result.dataSharing.data.remainedRatio !== 0) { %>
+                                    <div class="val" style="width:<%= result.dataSharing.data.remainedRatio %>%;"><!-- width:퍼센테이지 필요, 0%의 경우 display:none; // -->
                                         <span class="fill"></span>
                                         <span class="fill2"></span>
                                     </div>
                                     <% } %>
                                 </div>
                                 <div class="tail">
+                                    <% if (result.dataSharing.data.isUnlimit ) { %>
+                                    <div class="base"><strong class="moebius-bold"><%= result.dataSharing.data.total %></strong></div>
+                                    <% } else { %>
                                     <div class="base">잔여 <strong class="moebius-bold"><%= result.dataSharing.data.showRemained.data %></strong><span clsss="unit"><%= result.dataSharing.data.showRemained.unit %></span></div>
+                                    <% } %>
                                     <div class="rt">사용 <strong class="moebius-bold"><%= result.dataSharing.data.showUsed.data %></strong><span class="unit"><%= result.dataSharing.data.showUsed.unit %></span></div>
                                 </div>
                             </div>

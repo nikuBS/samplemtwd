@@ -29,7 +29,7 @@
                         <!-- data -->
                         <div class="data">
                             <div class="sec mb0">
-                                <h3>데이터 충전금액 <%= dataLimit.total %>원</h3>
+                                <h3>데이터 충전금액 <%= dataLimit.showTotal %>원</h3>
                                 <div class="progressbar-type01"><!-- 유제한 타입 //-->
                                     <span class="base"></span>
                                     <div class="val" style="width:<%= dataLimit.usedRatio %>%;"><!-- width:퍼센테이지 필요, 0%의 경우 display:none; // -->
@@ -38,8 +38,8 @@
                                     </div>
                                 </div>
                                 <div class="tail">
-                                    <div class="base">잔여 <strong class="moebius-bold"><%= dataLimit.remained %></strong><span clsss="unit">원</span></div>
-                                    <div class="rt">사용 <strong class="moebius-bold"><%= dataLimit.used %></strong><span class="unit">원</span></div>
+                                    <div class="base">잔여 <strong class="moebius-bold"><%= dataLimit.showRemained %></strong><span clsss="unit">원</span></div>
+                                    <div class="rt">사용 <strong class="moebius-bold"><%= dataLimit.showUsed %></strong><span class="unit">원</span></div>
                                 </div>
                             </div>
                         </div>

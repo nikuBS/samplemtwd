@@ -6,9 +6,9 @@ const DataLimit = {
     'prodName': '기본요금제명',
     'skipId': '공제항목ID',
     'skipName': '공제항목명',
-    'total': '기본제공량',
-    'used': '사용량',
-    'remained': '잔여량',
+    'total': '35000',
+    'used': '12000',
+    'remained': '23000',
     'unit': '단위코드',
   }
 };
