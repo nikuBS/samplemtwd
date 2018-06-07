@@ -4,9 +4,9 @@ import myTUsageData from '../../../../mock/server/myt.usage';
 
 import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
-import { UNIT } from '../../../../types/bff-common.type';
+import { UNIT, UNIT_VALUE } from '../../../../types/bff-common.type';
 import { SVC_CD } from '../../../../types/bff-common.type';
-import {API_CMD, API_MYT_ERROR_CODE} from '../../../../types/api-command.type';
+import { API_CMD, API_MYT_ERROR_CODE} from '../../../../types/api-command.type';
 import { SKIP_NAME } from '../../../../types/string.type';
 import { DAY_BTN_STANDARD_SKIP_ID } from '../../../../types/bff-common.type';
 
@@ -23,66 +23,66 @@ class MyTUsage extends TwViewController {
   }
 
   private parseData(usageData: any): any {
-    usageData.data.map((data) => {
-      const isTotalUnlimited = data.total === SKIP_NAME.UNLIMIT;
-      const isUsedUnlimited = data.used === SKIP_NAME.UNLIMIT;
-      const isRemainUnlimited = data.remained === SKIP_NAME.UNLIMIT;
-      const isExceed = data.skipId === SKIP_NAME.EXCEED;
+    if (!FormatHelper.isEmpty(usageData.data)) {
+      usageData.data.map((data) => {
+        data.isUnlimited = !isFinite(data.total);
+        data.isUsedUnlimited = !isFinite(data.used);
+        data.isRemainUnlimited = !isFinite(data.remained);
+        data.showUsed = !data.isUsedUnlimited && FormatHelper.convDataFormat(data.used, UNIT[data.unit]);
+        data.showRemained = !data.isRemainUnlimited && FormatHelper.convDataFormat(data.remained, UNIT[data.unit]);
+        data.usedRatio = (!data.isUnlimited && !data.isUsedUnlimited) && (data.used / data.total * 100);
+        data.showRemainedRatio = data.isUnlimited ? 100 : 100 - data.usedRatio;
+        data.couponDate = data.couponDate === '' ? data.couponDate : DateHelper.getShortDateNoDot(data.couponDate);
+        data.isVisibleDayBtn = this.isVisibleDayBtn(data.skipId);
+        data.isExceed = data.skipId === SKIP_NAME.EXCEED;
+        data.barClassName = data.isUnlimited ? 'progressbar-type02' : 'progressbar-type01';
+      });
+    }
 
-      data.isUnlimited = isTotalUnlimited;
-      data.showTotal = isTotalUnlimited ? data.total : FormatHelper.convDataFormat(data.total, UNIT[data.unit]);
-      data.showUsed = isUsedUnlimited ? data.used : FormatHelper.convDataFormat(data.used, UNIT[data.unit]);
-      data.showRemained = isRemainUnlimited ? data.remained : FormatHelper.convDataFormat(data.remained, UNIT[data.unit]);
-      data.usedRatio = (!isTotalUnlimited && !isUsedUnlimited) && (data.used / data.total * 100);
-      data.showRemainedRatio = isTotalUnlimited ? 100 : 100 - data.usedRatio;
-      data.couponDate = data.couponDate === '' ? data.couponDate : DateHelper.getShortDateNoDot(data.couponDate);
-      data.isVisibleDayBtn = this.isVisibleDayBtn(data.skipId);
-      data.isExceed = isExceed;
-      data.barClassName = isTotalUnlimited ? 'progressbar-type02' : 'progressbar-type01';
-    });
+    if (!FormatHelper.isEmpty(usageData.voice)) {
+      usageData.voice.map((voice) => {
+        voice.isUnlimited = !isFinite(voice.total);
+        voice.isUsedUnlimited = !isFinite(voice.used);
+        voice.isRemainUnlimited = !isFinite(voice.remained);
+        voice.showUsed = !voice.isUsedUnlimited && FormatHelper.convVoiceFormat(voice.used);
+        voice.showRemained = !voice.isRemainUnlimited && FormatHelper.convVoiceFormat(voice.remained);
+        voice.usedRatio = (!voice.isUnlimited && !voice.isUsedUnlimited) && (voice.used / voice.total * 100);
+        voice.showRemainedRatio = voice.isUnlimited ? 100 : 100 - voice.usedRatio;
+        voice.couponDate = voice.couponDate === '' ? voice.couponDate : DateHelper.getShortDateNoDot(voice.couponDate);
+        voice.barClassName = voice.isUnlimited ? 'progressbar-type02' : 'progressbar-type01';
+      });
+    }
 
-    usageData.voice.map((voice) => {
-      const isTotalUnlimited = voice.total === SKIP_NAME.UNLIMIT;
-      const isUsedUnlimited = voice.used === SKIP_NAME.UNLIMIT;
-      const isRemainUnlimited = voice.remained === SKIP_NAME.UNLIMIT;
+    if (!FormatHelper.isEmpty(usageData.sms)) {
+      usageData.sms.map((sms) => {
+        sms.isUnlimited = !isFinite(sms.total);
+        sms.isUsedUnlimited = !isFinite(sms.used);
+        sms.isRemainUnlimited = !isFinite(sms.remained);
+        sms.showUsed = !sms.isUsedUnlimited && FormatHelper.addComma(sms.used);
+        sms.showRemained = !sms.isRemainUnlimited && FormatHelper.addComma(sms.remained);
+        sms.usedRatio = (!sms.isUnlimited && !sms.isUsedUnlimited) && (sms.used / sms.total * 100);
+        sms.showRemainedRatio = sms.isUnlimited ? 100 : 100 - sms.usedRatio;
+        sms.couponDate = sms.couponDate === '' ? sms.couponDate : DateHelper.getShortDateNoDot(sms.couponDate);
+        sms.barClassName = sms.isUnlimited ? 'progressbar-type02' : 'progressbar-type01';
+      });
+    }
 
-      voice.isUnlimited = isTotalUnlimited;
-      voice.showTotal = isTotalUnlimited ? voice.total : FormatHelper.convVoiceFormat(voice.total);
-      voice.showUsed = isUsedUnlimited ? voice.used : FormatHelper.convVoiceFormat(voice.used);
-      voice.showRemained = isRemainUnlimited ? voice.remained : FormatHelper.convVoiceFormat(voice.remained);
-      voice.usedRatio = (!isTotalUnlimited && !isUsedUnlimited) && (voice.used / voice.total * 100);
-      voice.showRemainedRatio = isTotalUnlimited ? 100 : 100 - voice.usedRatio;
-      voice.couponDate = voice.couponDate === '' ? voice.couponDate : DateHelper.getShortDateNoDot(voice.couponDate);
-      voice.barClassName = isTotalUnlimited ? 'progressbar-type02' : 'progressbar-type01';
-    });
-
-    usageData.sms.map((sms) => {
-      const isTotalUnlimited = sms.total === SKIP_NAME.DEFAULT;
-      const isUsedUnlimited = sms.used === SKIP_NAME.UNLIMIT;
-      const isRemainUnlimited = sms.remained === SKIP_NAME.UNLIMIT;
-
-      sms.isUnlimited = isTotalUnlimited;
-      sms.showTotal = isTotalUnlimited ? sms.total : FormatHelper.convNumFormat(sms.total);
-      sms.showUsed = isUsedUnlimited ? sms.used : FormatHelper.convNumFormat(sms.used);
-      sms.showRemained = isRemainUnlimited ? sms.remained : FormatHelper.convNumFormat(sms.remained);
-      sms.usedRatio = (!isTotalUnlimited && !isUsedUnlimited) && (sms.used / sms.total * 100);
-      sms.showRemainedRatio = isTotalUnlimited ? 100 : 100 - sms.usedRatio;
-      sms.couponDate = sms.couponDate === '' ? sms.couponDate : DateHelper.getShortDateNoDot(sms.couponDate);
-      sms.barClassName = isTotalUnlimited ? 'progressbar-type02' : 'progressbar-type01';
-    });
-
-    usageData.etc.map((etc) => {
-      const isTotalUnlimited = etc.total === SKIP_NAME.UNLIMIT;
-
-      etc.isUnlimited = isTotalUnlimited;
-      etc.showTotal = isTotalUnlimited ? etc.total : FormatHelper.convVoiceFormat(etc.total);
-      etc.showUsed = FormatHelper.convVoiceFormat(etc.used);
-      etc.showRemained = FormatHelper.convVoiceFormat(etc.remained);
-      etc.usedRatio = (!isTotalUnlimited) && (etc.used / etc.total * 100);
-      etc.showRemainedRatio = isTotalUnlimited ? 100 : 100 - etc.usedRatio;
-      etc.couponDate = etc.couponDate === '' ? etc.couponDate : DateHelper.getShortDateNoDot(etc.couponDate);
-      etc.barClassName = isTotalUnlimited ? 'progressbar-type02' : 'progressbar-type01';
-    });
+    if (!FormatHelper.isEmpty(usageData.etc)) {
+      usageData.etc.map((etc) => {
+        etc.isUnlimited = !isFinite(etc.total);
+        etc.isUsedUnlimited = !isFinite(etc.used);
+        etc.isRemainUnlimited = !isFinite(etc.remained);
+        etc.isMoney = etc.unit === UNIT_VALUE.MONEY;
+        etc.showUsed = !etc.isUsedUnlimited &&
+          (etc.isMoney ? FormatHelper.addComma(etc.used) : FormatHelper.convVoiceFormat(etc.used));
+        etc.showRemained = !etc.isRemainUnlimited &&
+          (etc.isMoney ? FormatHelper.addComma(etc.remained) : FormatHelper.convVoiceFormat(etc.remained));
+        etc.usedRatio = (!etc.isUnlimited && !etc.isUsedUnlimited) && (etc.used / etc.total * 100);
+        etc.showRemainedRatio = etc.isUnlimited ? 100 : 100 - etc.usedRatio;
+        etc.couponDate = etc.couponDate === '' ? etc.couponDate : DateHelper.getShortDateNoDot(etc.couponDate);
+        etc.barClassName = etc.isUnlimited ? 'progressbar-type02' : 'progressbar-type01';
+      });
+    }
 
     return usageData;
   }
@@ -110,15 +110,8 @@ class MyTUsage extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     const newSvcInfo = this.parseSvcInfo(svcInfo);
 
-    this.apiService.request(API_CMD.BFF_05_0001, {}) // 사용량 조회
-      .subscribe((resp) => {
+    this.apiService.request(API_CMD.BFF_05_0001, {}).subscribe((resp) => { // 사용량 조회
         console.log(resp);
-        const usageData = this.parseData(myTUsageData.result);
-        const data = {
-          svcInfo: newSvcInfo,
-          usageData: usageData, // mock data
-          remainDate: DateHelper.getRemainDate()
-        };
 
         const isError = this.isError(resp.code);
         if (isError) {
@@ -127,8 +120,15 @@ class MyTUsage extends TwViewController {
             err: resp
           };
           res.render('error/myt.usage.error.html', errorData);
+        } else {
+          const usageData = this.parseData(myTUsageData.result);
+          const data = {
+            svcInfo: newSvcInfo,
+            usageData: usageData, // mock data
+            remainDate: DateHelper.getRemainDate()
+          };
+          res.render('usage/myt.usage.html', data);
         }
-        res.render('usage/myt.usage.html', data);
       });
   }
 }

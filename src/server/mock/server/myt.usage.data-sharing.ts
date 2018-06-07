@@ -9,6 +9,7 @@ const MyTDataSharingdata = {
     childList : [
       {
         svcNum : '010-1212-1212',
+        svcMgmtNum: '01012121212',
         feeProdId : 'Test01',
         feeProdNm : '테스트01',
         auditDtm : '20180601',
@@ -16,6 +17,7 @@ const MyTDataSharingdata = {
       },
       {
         svcNum : '010-1212-2323',
+        svcMgmtNum: '01012122323',
         feeProdId : 'Test02',
         feeProdNm : '테스트02',
         auditDtm : '20180601',
@@ -23,6 +25,7 @@ const MyTDataSharingdata = {
       },
       {
         svcNum : '010-1212-3434',
+        svcMgmtNum: '01012123434',
         feeProdId : 'Test03',
         feeProdNm : '테스트03',
         auditDtm : '20180601',
