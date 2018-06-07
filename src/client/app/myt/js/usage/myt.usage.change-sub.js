@@ -61,10 +61,14 @@ Tw.MytUsageChangeSub.prototype = {
   },
 
   choiceLine: function (e) {
-    // TODO: change-svc
-    var $elLine = $(e.currentTarget);
-
-    //history.back();
+    var $elLine    = $(e.currentTarget);
+    var svcMgmtNum = $elLine.data('svcmgmtnum');
+debugger;
+    this._apiService.request(Tw.API_CMD.BFF_03_0004, {}, { headers: { "svcMgmtNum": svcMgmtNum } })
+      .done(function () {
+        debugger;
+        location.href = '/myt';
+      });
   },
 
   changeSort: function (e) {

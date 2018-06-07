@@ -1,4 +1,6 @@
 Tw.MytUsageChange = function () {
+  this._apiService = new Tw.ApiService();
+
   this._cachedElement();
   this._bindEvent();
 }
@@ -17,10 +19,13 @@ Tw.MytUsageChange.prototype = {
   },
 
   choiceLine: function (e) {
-    // TODO: change-svc
-    var $elLine = $(e.currentTarget);
+    var $elLine    = $(e.currentTarget);
+    var svcMgmtNum = $elLine.data('svcmgmtnum');
 
-    //history.back();
+    this._apiService.request(Tw.API_CMD.BFF_03_0004, {}, { headers: { "svcMgmtNum": svcMgmtNum } })
+      .done(function () {
+        location.href = '/myt';
+      });
   },
 
   onClickUsageShowAll: function (e) {

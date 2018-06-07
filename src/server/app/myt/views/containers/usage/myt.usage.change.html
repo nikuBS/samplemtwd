@@ -51,7 +51,7 @@
           <ul class="list">
             <% for( let item of result.M ) { %>
             <li class="rep"><!-- .rep 대표 // -->
-              <div class="row">
+              <div class="row" data-svcMgmtNum="<%=item.svcMgmtNum%>">
                 <% if( item.svcCd == 'C' ) { %>
                 <div class="type">휴대폰</div>
                 <% } %>
@@ -92,7 +92,7 @@
           <ul class="list">
             <% for( let item of result.W ) { %>
             <li class="rep"><!-- .rep 대표 // -->
-              <div class="row">
+              <div class="row" data-svcMgmtNum="<%=item.svcMgmtNum%>">
                 <% if( item.svcCd == 'P' ) { %>
                 <div class="type">집전화</div>
                 <% } %>
@@ -127,7 +127,7 @@
           <ul class="list">
             <% for( let item of result.S ) { %>
             <li class="rep"><!-- .rep 대표 // -->
-              <div class="row">
+              <div class="row" data-svcMgmtNum="<%=item.svcMgmtNum%>">
                 <div class="type">보안솔루션</div>
                 <div class="info">
                   <div class="txt01">
@@ -242,7 +242,7 @@
 <script type="text/template" id="tpl_line_items">
   {{ _.each(list, function(item) { }}
   <li data-register={{=item.svcScrbDtm}} data-modified={{=item.lastUpdDtm}}>
-    <div class="row">
+    <div class="row" data-svcMgmtNum="{{=item.svcMgmtNum}}">
 
       {{ if( item.svcCd == 'C') { }}
       <div class="type">휴대폰</div>
