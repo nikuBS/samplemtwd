@@ -5,10 +5,12 @@ import environment from '../config/environment.config';
 import { API_CMD, API_CODE, API_METHOD, API_PROTOCOL } from '../types/api-command.type';
 import ParamsHelper from '../utils/params.helper';
 import LoginService from './login.service';
+import LoggerService from './logger.service';
 
 class ApiService {
   static instance;
   private loginService: LoginService = new LoginService();
+  private logger: LoggerService = new LoggerService();
 
   constructor() {
     if ( ApiService.instance ) {
@@ -21,7 +23,7 @@ class ApiService {
   public request(command: any, params: any, header?: any, ...args: any[]): Observable<any> {
     const apiServer = environment[String(process.env.NODE_ENV)].BFF_SERVER;
     const options = this.getOption(command, apiServer, params, header, args);
-    console.log('[API_REQ]', options, params);
+    this.logger.info(this, '[API_REQ]', options, params);
 
     return Observable.create((observer) => {
       const req = apiServer.protocol === API_PROTOCOL.HTTPS ?
@@ -53,7 +55,7 @@ class ApiService {
   private makePath(path: string, method: API_METHOD, params: any, args: any[]): string {
     if ( args.length > 0 ) {
       args.map((argument, index) => {
-        path = path.replace(`{args[${index}]}`, argument);
+        path = path.replace(`args-${index}`, argument);
       });
     }
     path = method === API_METHOD.GET ? path + ParamsHelper.setQueryParams(params) : path;
@@ -68,7 +70,7 @@ class ApiService {
       data += chunk;
     });
     resp.on('end', () => {
-      console.log('[API_RESP]', data);
+      this.logger.info(this, '[API_RESP]', data);
       let respData;
       try {
         respData = JSON.parse(data);
@@ -76,7 +78,7 @@ class ApiService {
           this.setSvcInfo(respData.result);
         }
       } catch ( err ) {
-        console.warn('JSON parse error');
+        this.logger.warn(this, 'JSON parse error');
         respData = data;
       }
 
@@ -86,23 +88,26 @@ class ApiService {
   }
 
   private handleError(observer, err) {
-    console.error('[API_ERR]', err);
+    this.logger.error(this, '[API_ERR]', err);
     // observer.error(err);
     observer.next({ code: API_CODE.CODE_400, msg: err.message });
     observer.complete();
   }
 
   private isSessionCallback(command: any): boolean {
-    if ( command === API_CMD.BFF_03_0001 || command === API_CMD.BFF_03_0004 || command === API_CMD.BFF_03_0005 ) {
+    if ( command === API_CMD.BFF_03_0001
+      || command === API_CMD.BFF_03_0001_mock
+      || command === API_CMD.BFF_03_0004
+      || command === API_CMD.BFF_03_0005 ) {
       return true;
     }
     return false;
   }
 
   private setServerSession(resp) {
-    console.log('Headers: ', JSON.stringify(resp.headers));
+    this.logger.debug(this, 'Headers: ', JSON.stringify(resp.headers));
     if ( resp.headers['set-cookie'] ) {
-      console.log('Set Session Cookie');
+      this.logger.info(this, 'Set Session Cookie');
       this.loginService.setServerSession(resp.headers['set-cookie'][0]);
     }
   }

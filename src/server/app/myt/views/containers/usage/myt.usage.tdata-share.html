@@ -14,7 +14,7 @@
     <!-- content -->
     <div id="content">
         <!-- container -->
-        <section class="container">
+        <section id="myt-usage-tdatashare" class="container">
             <!-- yprod -->
             <div class="yprod">
                 고객님은 <strong><%= result.childUSimCount %>개 USIM</strong>으로 <strong>T 데이터 셰어링</strong>을 이용중이시네요!
@@ -52,22 +52,29 @@
                             <span class="on">MB</span>
                         </label>
                     </div>
+                    <% if (result.freePlan) { %>
+                    <% result.freePlan.map((free) => { %>
                     <div class="box-white">
                         <!-- data -->
                         <div class="data">
                             <div class="sec mb0">
-                                <h3><%= result.parentPlan.prodNm %></h3>
+                                <h3><%= free.skipName %></h3>
                                 <div class="progressbar-type02"><!-- 무제한 타입 //-->
                                     <span class="base"></span>
-                                    <div class="val"><!-- width:퍼센테이지 필요, 0%의 경우 display:none; // -->
+                                    <% if(free.usedRatio !== 0) { %>
+                                    <div class="val" style="width:<%= free.remainRatio %>%;"><!-- width:퍼센테이지 필요, 0%의 경우 display:none; // -->
                                         <span class="fill"></span>
                                         <span class="fill2"></span>
                                     </div>
+                                    <% } %>
                                 </div>
                                 <div class="tail">
-                                    <div class="base2">무제한</div>
-                                    <div class="rt">사용 <strong class="moebius-bold">828.19</strong><span
-                                            class="unit">MB</span></div>
+                                    <% if(free.isUnlimit) { %>
+                                    <div class="base2"><%= free.total %></div>
+                                    <% } else { %>
+                                    <div class="base2 data-value" data-value="<%= free.total %>"><%= free.showTotal.data + free.showTotal.unit %></div>
+                                    <% } %>
+                                    <div class="rt">사용 <strong class="moebius-bold data-value" data-value="<%= free.total %>"></strong><span class="unit"><%= free.showUsed.data + free.showUsed.unit %></span></div>
                                 </div>
                                 <div class="d-table type01">
                                     <div class="row">
@@ -80,18 +87,24 @@
                                     </div>
                                     <div class="row">
                                         <div class="cell">총 사용 데이터</div>
-                                        <div class="cell"><span class="txt02">5,739.7MB</span><span class="txt03">(5739.7KB)</span>
+                                        <div class="cell"><span class="txt02 data-value" data-value="<%= free.used %>"><%= free.showUsed.data + free.showUsed.unit %></span><span class="txt03">(<%= free.used %>KB)</span>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="cell">사용 가능한 데이터</div>
+                                        <% if(free.isUnlimit) { %>
                                         <div class="cell">무제한</div>
+                                        <% } else { %>
+                                        <div class="cell"><span class="txt02 data-value" data-value="<%= free.remained %>"><%= free.showRemained.data + free.showRemained.unit %></span><span class="txt03">(<%= free.remained %>KB)</span></div>
+                                        <% } %>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <!-- // data -->
                     </div>
+                    <% }) %>
+                    <% } %>
                 </section>
                 <!-- // section -->
                 <!-- section -->
@@ -144,7 +157,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="cell">서비스해지</div>
-                                    <div class="cell"><a href="<%=url.tDataShareClose%>" class="btn-type03">해지하기</a>
+                                    <div class="cell"><a href="<%= url.tDataShareClose + '/?child=' + i%>" class="btn-type03">해지하기</a>
                                     </div>
                                 </div>
                             </div>
@@ -243,8 +256,7 @@
     </div>
     <!-- // content -->
     <!-- footer -->
-    <footer>
-    </footer>
+    <% include ../../../../../common/views/components/footer.component.html %>
     <!-- // footer -->
 </div>
 <!-- // wrap -->
@@ -294,7 +306,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    var comp = new Tw.MytUsageTdatashare();
+    var comp = new Tw.MytUsageTdatashare($('#myt-usage-tdatashare'));
   });
 </script>
 <% include ../../components/end.component.html %>

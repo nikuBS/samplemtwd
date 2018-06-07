@@ -1,7 +1,9 @@
-Tw.MytUsageTdatashare = function () {
+Tw.MytUsageTdatashare = function (rootEl) {
+  this.$container = rootEl;
   this._ui = {};
 
   this._uiFunction();
+  this._changeDataUnit();
 };
 
 Tw.MytUsageTdatashare.prototype = {
@@ -23,17 +25,44 @@ Tw.MytUsageTdatashare.prototype = {
     this.descriptionLayerBtnClickHandler();
     this.uShimListInit();
   },
+  _changeDataUnit: function () {
+    this.$container.on('change', '.btn-change', $.proxy(this._setDataByUnit, this));
+  },
+  _setDataByUnit: function ($event) {
+    var defaultUnit = 'KB';
+    var unit = this._getUnit($event.target.checked);
+
+    this.$container.find('[data-value]').each(function () {
+      var $this = $(this);
+      var dataValue = $this.data('value');
+      var data = Tw.FormatHelper.customDataFormat(dataValue, defaultUnit, unit);
+
+      if ( $this.siblings('.unit').length ) {
+        $this.text(data.data);
+        $this.siblings('span').text(data.unit);
+      } else {
+        $this.text(data.data + data.unit);
+      }
+    })
+  },
+  _getUnit: function (isMb) {
+    var unit = 'GB';
+    if ( isMb ) {
+      unit = 'MB';
+    }
+    return unit;
+  },
   contentOverflowToggle: function () {
-    var currentState = this._ui.$contentWrap,
-        miniPopUpWrap = this._ui.$miniPopupWrap,
+    var currentState     = this._ui.$contentWrap,
+        miniPopUpWrap    = this._ui.$miniPopupWrap,
         miniPopUpSubWrap = this._ui.$miniPopupSubWrap;
 
-    if (currentState.css('overflow-y') === 'visible') {
-      currentState.css({'overflow-y': 'hidden'});
+    if ( currentState.css('overflow-y') === 'visible' ) {
+      currentState.css({ 'overflow-y': 'hidden' });
       miniPopUpWrap.show();
       miniPopUpSubWrap.show();
     } else {
-      currentState.css({'overflow-y': 'visible'});
+      currentState.css({ 'overflow-y': 'visible' });
       miniPopUpWrap.hide();
       miniPopUpSubWrap.hide();
     }
@@ -41,7 +70,7 @@ Tw.MytUsageTdatashare.prototype = {
   },
   miniPopupToggle: function (targetTag) {
     this.contentOverflowToggle();
-    if (targetTag) {
+    if ( targetTag ) {
       $('#' + targetTag).show();
     } else {
       this._ui.$miniPopup.hide();
@@ -52,7 +81,7 @@ Tw.MytUsageTdatashare.prototype = {
     this._ui.$miniPopup.hide();
 
 
-    if (miniPopupTriggers.length) {
+    if ( miniPopupTriggers.length ) {
       miniPopupTriggers.on('click', $.proxy(function (e) {
         e.preventDefault();
         // if(e.target.nodeName.toLowerCase() === 'span') e.target = e.target.parentNode;
@@ -60,7 +89,7 @@ Tw.MytUsageTdatashare.prototype = {
         this.miniPopupToggle('miniPopup0' + $(e.target).data("popup-type"));
       }, this));
     }
-    if (this._ui.$miniPopupCloser.length) {
+    if ( this._ui.$miniPopupCloser.length ) {
       this._ui.$miniPopupCloser.on('click', $.proxy(function (e) {
         e.preventDefault();
         this.miniPopupToggle();
@@ -68,9 +97,9 @@ Tw.MytUsageTdatashare.prototype = {
     }
   },
   uShimListInit: function () {
-    if (this._ui.$childUSimListShowMore) {
+    if ( this._ui.$childUSimListShowMore ) {
       this._ui.$childUSimList.map(function (i, o) {
-        if (i > 4) {
+        if ( i > 4 ) {
           $(o).hide();
         }
       });
@@ -81,7 +110,7 @@ Tw.MytUsageTdatashare.prototype = {
   uShimListShowMore: function (e) {
     e.preventDefault();
     this._ui.$childUSimList.slice(this.currentUShimListLastIndex + 1, this.currentUShimListLastIndex + 6).show();
-    if (this.currentUShimListLastIndex + 6 >= this._ui.$childUSimList.length) {
+    if ( this.currentUShimListLastIndex + 6 >= this._ui.$childUSimList.length ) {
       this._ui.$childUSimListShowMore.hide();
     }
   }

@@ -49,6 +49,15 @@ const myTUsageData = {
         'remained': '0',
         'unit': '310',
         'couponDate': ''
+      },
+      {
+        'skipId': 'DD2N4',
+        'skipName': 'SMS\/MMS\/ⓜ메신저 기본제공',
+        'total': '300',
+        'used': '120',
+        'remained': '180',
+        'unit': '310',
+        'couponDate': ''
       }
     ],
     'etc': [

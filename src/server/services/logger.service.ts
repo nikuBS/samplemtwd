@@ -2,28 +2,34 @@ import winston from 'winston';
 import fs from 'fs';
 
 class LoggerService {
+  static instance;
   private logger;
   private logDir = 'log';
 
   constructor() {
+    if ( LoggerService.instance ) {
+      return LoggerService.instance;
+    }
+
     // this.initDir();
     this.initLogger();
+    LoggerService.instance = this;
   }
 
   public debug(target, ...args) {
-    this.logger.debug(`[${target.constructor.name}] %j`, ...args);
+    this.logger.debug(`[${target.constructor.name}]`, ...args);
   }
 
   public info(target, ...args) {
-    this.logger.info(`[${target.constructor.name}] %j`, ...args);
+    this.logger.info(`[${target.constructor.name}]`, ...args);
   }
 
   public warn(target, ...args) {
-    this.logger.warn(`[${target.constructor.name}] %j`, ...args);
+    this.logger.warn(`[${target.constructor.name}]`, ...args);
   }
 
   public error(target, ...args) {
-    this.logger.error(`[${target.constructor.name}] %j`, ...args);
+    this.logger.error(`[${target.constructor.name}]`, ...args);
   }
 
   private log(...args) {
