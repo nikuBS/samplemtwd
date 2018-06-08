@@ -129,9 +129,8 @@
                     <div class="box-white">
                         <!-- usim-list -->
                         <div class="usim-list">
-                            <%
-                            result.dataSharingSvc.childList.map(function(child, i) {
-                            %>
+                            <% if (result.dataSharingSvc.childList) { %>
+                            <% result.dataSharingSvc.childList.map(function(child, i) { %>
                             <!-- d-table -->
                             <div class="d-table type02">
                                 <div class="caption">
@@ -163,6 +162,7 @@
                             </div>
                             <!-- //	d-table -->
                             <% }); %>
+                            <% } %>
                         </div>
                         <!-- // usim-list -->
                         <% if(result.childUSimCount > 5) { %>
