@@ -3,176 +3,211 @@
 <div class="skip"><a href="#content">본문 바로가기</a></div>
 <!-- // skip -->
 <!-- wrap -->
-<%=JSON.stringify(result.child)%>
+
 <div id="wrap">
-  <!-- header -->
-  <header class="header-sub">
-    <button class="btn-back common-back"><span class="blind">뒤로가기</span></button>
-    <h1 class="title-txt">자녀 휴대폰 사용량 조회</h1>
-    <button class="btn-search"><span class="blind">검색</span></button>
-  </header>
-  <!-- // header -->
-  <!-- content -->
-  <div id="content">
-    <!-- container -->
-    <section class="container">
-      <% if( result.child.length > 1 ) { %>
-      <!-- descendants -->
-      <div class="descendants">
-        <div class="txt01"><strong>자녀</strong> 휴대폰 사용량 현황입니다.</div>
-        <div class="txt02">
-          <select id="line_list" class="underline" style="width:130px;">
-            <% result.child.map((item)=>{ %>
-            <option data-mdl="<%=item.mdlName%>" data-nickname="귀여운첫째아들"><%=item.svcNum%></option>
-            <% }) %>
-          </select>
-        </div>
-        <div class="txt03"><strong id="mdl_name">아이폰S6</strong> <span id="nick_name">귀여운첫째아들</span></div>
-      </div>
-      <!-- // descendants -->
-      <% } else { %>
-      <!-- descendants -->
-      <div class="descendants">
-        <div class="txt01"><strong>자녀</strong> 휴대폰 사용량 현황입니다.</div>
-        <div class="txt02"><%=result.child[0].svcNum%></div>
-        <div class="txt03"><strong><%=result.child[0].mdlName%></strong> 귀여운첫째아들</div>
-      </div>
-      <!-- // descendants -->
-      <% } %>
-      <!-- prd-summary -->
-      <div class="prd-summary">
-        <div class="inner">
-          <div class="icon"><img src="/skt/img/ico_band.png" alt=""></div>
-          <div class="prd-name"><a href="#">Band데이터 6.5GB</a></div>
-          <div class="remaining-date">남은일수 <strong class="moebius-bold">16</strong>일</div>
-        </div>
-      </div>
-      <!-- // prd-summary -->
-      <!-- prd-state -->
-      <div class="prd-state">
-        <!-- section : 음성/영상 무제한 -->
-        <section>
-          <h2>음성/영상</h2>
-          <div class="box-white">
-            <!-- data -->
-            <div class="data">
-              <div class="sec">
-                <h3>영상, 부가전화 300분</h3>
-                <div class="progressbar-type01">
-                  <span class="base"></span>
-                  <div class="val" style="width:62%;"><!-- width:퍼센테이지 필요 // -->
-                    <span class="fill"></span>
-                    <span class="fill2"></span>
-                  </div>
+    <!-- header -->
+    <header class="header-sub">
+        <button class="btn-back common-back"><span class="blind">뒤로가기</span></button>
+        <h1 class="title-txt">자녀 휴대폰 사용량 조회</h1>
+        <button class="btn-search"><span class="blind">검색</span></button>
+    </header>
+    <!-- // header -->
+    <!-- content -->
+    <div id="content">
+        <!-- container -->
+        <section class="container" data-svcMgmtNum="">
+            <% if( result.length > 1 ) { %>
+            <!-- descendants -->
+            <div class="descendants" data-svcMgmtNum="<%=result[0].svcMgmtNum%>">
+                <div class="txt01"><strong>자녀</strong> 휴대폰 사용량 현황입니다.</div>
+                <div class="txt02">
+                    <select id="line_list" class="underline" style="width:130px;">
+                        <% result.map((item)=>{ %>
+                        <option data-mdl="<%=item.mdlName%>" value="<%=item.svcMgmtNum%>"><%=item.svcNum%></option>
+                        <% }) %>
+                    </select>
                 </div>
-                <div class="tail">
-                  <div class="base">잔여 <strong class="moebius-bold">4</strong>시간 <strong class="moebius-bold">50</strong>분</div>
-                  <div class="rt">사용 <strong class="moebius-bold">50</strong>분 <strong class="moebius-bold">30</strong>초</div>
-                  <div class="coupon">쿠폰등록일 <span class="moebius">2018.01.01</span></div>
-                </div>
-              </div>
-              <div class="sec">
-                <h3>SKT 고객간 음성 무제한</h3>
-                <div class="progressbar-type02">
-                  <span class="base"></span>
-                  <div class="val">
-                    <span class="fill"></span>
-                    <span class="fill2"></span>
-                  </div>
-                </div>
-                <div class="tail">
-                  <div class="base2">무제한</div>
-                  <div class="rt">사용 <strong class="moebius-bold">4</strong>시간 <strong class="moebius-bold">50</strong>분</div>
-                </div>
-              </div>
-              <div class="sec mb0">
-                <h3>집전화·이동전화 음성 무제한</h3>
-                <div class="progressbar-type02">
-                  <span class="base"></span>
-                  <div class="val">
-                    <span class="fill"></span>
-                    <span class="fill2"></span>
-                  </div>
-                </div>
-                <div class="tail">
-                  <div class="base2">무제한</div>
-                  <div class="rt">사용 <strong class="moebius-bold">29</strong>초</div>
-                </div>
-              </div>
+                <div class="txt03"><strong id="mdl_name">아이폰S6</strong></div>
             </div>
-            <!-- // data -->
-          </div>
-        </section>
-        <!-- // section : 음성/영상 무제한 -->
+            <!-- // descendants -->
+            <% } else { %>
+            <!-- descendants -->
+            <div class="descendants" data-svcMgmtNum="<%=result[0].svcMgmtNum%>">
+                <div class="txt01"><strong>자녀</strong> 휴대폰 사용량 현황입니다.</div>
+                <div class="txt02"><%=result[0].svcNum%></div>
+                <div class="txt03"><strong><%=result[0].mdlName%></strong></div>
+            </div>
+            <!-- // descendants -->
+            <% } %>
 
-        <!-- section : 문자 제한/무제한 혼합 -->
-        <section>
-          <h2>문자</h2>
-          <div class="box-white">
-            <div class="sec">
-              <h3>SMS/MMS/ⓜ메신저</h3>
-              <div class="progressbar-type01">
-                <span class="base"></span>
-                <div class="val" style="width:62%;"><!-- width:퍼센테이지 필요 // -->
-                  <span class="fill"></span>
-                  <span class="fill2"></span>
-                </div>
-              </div>
-              <div class="tail">
-                <div class="base">잔여 <strong class="moebius-bold">2,600</strong>원(<strong class="moebius-bold gray">26</strong>건)</div>
-                <div class="rt">사용 <strong class="moebius-bold">1,300</strong>원 (<strong class="moebius">12</strong>건)</div>
-              </div>
-            </div>
-            <div class="sec mb0">
-              <h3>SMS/MMS/ⓜ메신저 기본제공</h3>
-              <div class="progressbar-type02">
-                <span class="base"></span>
-                <div class="val">
-                  <span class="fill"></span>
-                  <span class="fill2"></span>
-                </div>
-              </div>
-              <div class="tail">
-                <div class="base2">무제한</div>
-                <div class="rt">사용 <strong class="moebius-bold">12</strong>건</div>
-              </div>
-            </div>
-          </div>
-        </section>
-        <!-- // section : 문자 제한/무제한 혼합 -->
 
-        <!-- section : 기타 제한 -->
-        <section>
-          <h2>기타</h2>
-          <div class="box-white">
-            <div class="sec mb0">
-              <h3>T쿠폰 10000 프로모션</h3>
-              <div class="progressbar-type01">
-                <span class="base"></span>
-                <div class="val" style="width:86%;"><!-- width:퍼센테이지 필요 // -->
-                  <span class="fill"></span>
-                  <span class="fill2"></span>
-                </div>
-              </div>
-              <div class="tail">
-                <div class="base">잔여 <strong class="moebius-bold">8,600</strong><span class="unit">원</span></div>
-                <div class="rt">사용 <strong class="moebius-bold">1,400</strong><span class="unit">원</span></div>
-              </div>
+            <!-- prd-summary -->
+            <div class="prd-summary" id="wrap_tpl_product_detail">
+                <!--inserted #tpl_product_detail-->
             </div>
-          </div>
+            <!-- // prd-summary -->
+            <!-- prd-state -->
+            <div class="prd-state">
+                <!-- section : 음성/영상 무제한 -->
+                <section id="wrap_tpl_usage_voice">
+                    <!-- inserted #tpl_usage_voice -->
+                </section>
+                <!-- // section : 음성/영상 무제한 -->
+
+                <!-- section : 문자 제한/무제한 혼합 -->
+                <section id="wrap_tpl_usage_sms">
+                    <!-- inserted #tpl_usage_sms -->
+                </section>
+                <!-- // section : 문자 제한/무제한 혼합 -->
+
+                <!-- section : 기타 제한 -->
+                <section id="wrap_tpl_usage_etc">
+                    <!-- inserted #tpl_usage_etc -->
+                </section>
+                <!-- // section : 기타 제한 -->
+            </div>
+            <!-- // prd-state -->
         </section>
         <!-- // section : 기타 제한 -->
-      </div>
-      <!-- // prd-state -->
+    </div>
+    <!-- // prd-state -->
     </section>
     <!-- // container -->
-  </div>
-  <!-- // content -->
-  <!-- footer -->
-  <% include ../../../../../common/views/components/footer.component.html %>
-  <!-- // footer -->
+    <!-- // content -->
+    <!-- footer -->
+    <% include ../../../../../common/views/components/footer.component.html %>
+    <!-- // footer -->
 </div>
 <!-- // wrap -->
+<script type="text/template" id="tpl_product_detail">
+    <div class="inner">
+        <div class="icon"><img src="/img/ico_band.png" alt=""></div>
+        <div class="prd-name"><a href={{=prodId}}>{{=prodName}}</a></div>
+        <div class="remaining-date">남은일수 <strong class="moebius-bold">{{=remainDate}}</strong>일</div>
+    </div>
+</script>
+
+<script type="text/template" id="tpl_usage_voice">
+    <h2>음성/영상</h2>
+    <div class="box-white">
+        <!-- voice -->
+        <div class="data">
+            {{ _.map(voiceDetail, function(voice){ }}
+            <div class="sec">
+                <h3>{{=voice.skipName}}</h3>
+                <div class="progressbar-type01">
+                    <span class="base"></span>
+                    <div class="val" style="width:{{=voice.userRatio}}%;"><!-- width:퍼센테이지 필요 // -->
+                        <span class="fill"></span>
+                        <span class="fill2"></span>
+                    </div>
+                </div>
+                <div class="tail">
+                    {{ if(isNaN('voice.showRemained')){ }}
+
+                    <div class="base2">무제한</div>
+
+                    {{ } else { }}
+
+                    <div class="base">잔여
+                        {{ if( voice.showRemained.hours != '0'){ }}
+                        <strong class="moebius-bold">{{=voice.showRemained.hours}}</strong>시간
+                        {{ } }}
+
+                        {{ if( voice.showRemained.min != '0'){ }}
+                        <strong class="moebius-bold">{{=voice.showRemained.min}}</strong>분
+                        {{ } }}
+                    </div>
+
+                    {{ } }}
+
+                    <div class="rt">사용
+                        {{ if( voice.showUsed.min != '0'){ }}
+                        <strong class="moebius-bold">{{=voice.showUsed.min}}</strong>분
+                        {{ } }}
+
+                        {{ if( voice.showUsed.sec != '0'){ }}
+                        <strong class="moebius-bold">{{=voice.showUsed.sec}}</strong>초
+                        {{ } }}
+                    </div>
+                    <!--<div class="coupon">쿠폰등록일 <span class="moebius">2018.01.01</span></div>-->
+                </div>
+            </div>
+            {{ }) }}
+        </div>
+        <!-- // data -->
+    </div>
+</script>
+
+<script type="text/template" id="tpl_usage_sms">
+    <h2>문자</h2>
+    <div class="box-white">
+        {{ _.map(smsDetail, function(sms){ }}
+        <div class="sec">
+            <h3>{{=sms.skipName}}</h3>
+            <div class="progressbar-type01">
+                <span class="base"></span>
+                <div class="val" style="width:{{=sms.userRatio}}%;"><!-- width:퍼센테이지 필요 // -->
+                    <span class="fill"></span>
+                    <span class="fill2"></span>
+                </div>
+            </div>
+            <div class="tail">
+                {{ if(isNaN('sms.showRemained')){ }}
+
+                <div class="base2">무제한</div>
+
+                {{ } else { }}
+
+                <div class="base">잔여 <strong class="moebius-bold">{{=sms.remainedPrice}}</strong>원 (<strong
+                    class="moebius-bold gray">{{=sms.showRemained}}</strong>건)
+                </div>
+                <div class="rt">사용 <strong class="moebius-bold">{{=sms.usedPrice}}</strong>원 (<strong
+                    class="moebius">{{=sms.showUsed}}</strong>건)
+                </div>
+
+                {{ } }}
+            </div>
+        </div>
+        {{ }) }}
+
+        <!--<div class="sec mb0">-->
+        <!--<h3>SMS/MMS/ⓜ메신저 기본제공</h3>-->
+        <!--<div class="progressbar-type02">-->
+        <!--<span class="base"></span>-->
+        <!--<div class="val">-->
+        <!--<span class="fill"></span>-->
+        <!--<span class="fill2"></span>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--<div class="tail">-->
+        <!--<div class="base2">무제한</div>-->
+        <!--<div class="rt">사용 <strong class="moebius-bold">12</strong>건</div>-->
+        <!--</div>-->
+        <!--</div>-->
+    </div>
+</script>
+
+<script type="text/template" id="tpl_usage_etc">
+    <h2>기타</h2>
+    <div class="box-white">
+        <div class="sec mb0">
+            <h3>T쿠폰 10000 프로모션</h3>
+            <div class="progressbar-type01">
+                <span class="base"></span>
+                <div class="val" style="width:86%;"><!-- width:퍼센테이지 필요 // -->
+                    <span class="fill"></span>
+                    <span class="fill2"></span>
+                </div>
+            </div>
+            <div class="tail">
+                <div class="base">잔여 <strong class="moebius-bold">8,600</strong><span class="unit">원</span></div>
+                <div class="rt">사용 <strong class="moebius-bold">1,400</strong><span class="unit">원</span></div>
+            </div>
+        </div>
+    </div>
+</script>
+
 <% include ../../components/javascript.component.html %>
 
 <script>

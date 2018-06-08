@@ -26,11 +26,11 @@ Tw.FormatHelper = (function () {
 
 
   var customDataFormat = function (data, curUnit, targetUnit) {
-    var units = [Tw.DATA_UNIT.KB, Tw.DATA_UNIT.MB, Tw.DATA_UNIT.GB];
-    var curUnitIdx = _.findIndex(units, function(value) {
+    var units         = [Tw.DATA_UNIT.KB, Tw.DATA_UNIT.MB, Tw.DATA_UNIT.GB];
+    var curUnitIdx    = _.findIndex(units, function (value) {
       return value === curUnit;
     });
-    var targetUnitIdx = _.findIndex(units, function(value) {
+    var targetUnitIdx = _.findIndex(units, function (value) {
       return value === targetUnit;
     });
 
@@ -54,8 +54,8 @@ Tw.FormatHelper = (function () {
   };
 
   var convDataFormat = function (data, curUnit) {
-    var units = [Tw.DATA_UNIT.KB, Tw.DATA_UNIT.MB, Tw.DATA_UNIT.GB];
-    var unitIdx = _.findIndex(units, function(value) {
+    var units   = [Tw.DATA_UNIT.KB, Tw.DATA_UNIT.MB, Tw.DATA_UNIT.GB];
+    var unitIdx = _.findIndex(units, function (value) {
       return value === curUnit;
     });
 
@@ -106,18 +106,23 @@ Tw.FormatHelper = (function () {
   };
 
   var convVoiceFormat = function (data) {
-    data = +data;
+    data      = +data;
     var hours = Math.floor(data / 3600);
-    var min = Math.floor((data - (hours * 3600)) / 60);
-    var sec = data - (hours * 3600) - (min * 60);
+    var min   = Math.floor((data - (hours * 3600)) / 60);
+    var sec   = data - (hours * 3600) - (min * 60);
 
     return { hours: hours, min: min, sec: sec };
   };
+
+  var convSmsPrice = function (smsCount) {
+    return smsCount * 310;
+  }
 
   return {
     leadingZeros: leadingZeros,
     customDataFormat: customDataFormat,
     convDataFormat: convDataFormat,
-    convVoiceFormat: convVoiceFormat
+    convVoiceFormat: convVoiceFormat,
+    convSmsPrice: convSmsPrice
   }
 })();
