@@ -66,8 +66,8 @@ Tw.MytUsage.prototype = {
     console.log('btn api fail', err);
   },
   _childSuccess: function (res) {
-    var childBtn = this.$container.find('child-btn');
-    var childCntField = this.$container.find('child-cnt');
+    var childBtn = this.$container.find('.child-btn');
+    var childCntField = this.$container.find('.child-cnt');
 
     if (res.result.length > 0) {
       childCntField.text(res.result.length);
