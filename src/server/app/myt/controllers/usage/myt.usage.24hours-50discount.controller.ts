@@ -25,8 +25,8 @@ class MyTUsage24hour50discount extends TwViewController {
         const data = {
           svcInfo: svcInfo,
           usageData: usageData,
-          startDate: DateHelper.getShortDateAndTime('20180601113030'),
-          endDate: DateHelper.getAddDay('20180601113030')
+          startDate: DateHelper.getShortDateAndTime(usageData.couponDate),
+          endDate: DateHelper.getAddDay(usageData.couponDate)
         };
         res.render('usage/myt.usage.24hours-50discount.html', data);
       });
