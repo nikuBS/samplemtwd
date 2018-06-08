@@ -58,9 +58,22 @@ Tw.MytUsage.prototype = {
 
     this._makeBorderStyle(false);
   },
+  _setRefillCoupon: function (result) {
+    var refillCouponLength = result.length;
+    var refillBtn = this.$container.find('.refill');
+
+    if (refillCouponLength > 0) {
+      var refillCnt = this.$container.find('.refill-cnt');
+      refillCnt.text(refillCouponLength);
+      refillBtn.show();
+    }
+  },
   _btnSuccess: function (res) {
-    var result = res.result;
-    this._setBtnVisibility(result);
+    var sharingService = res.result.sharingService;
+    var refillCoupon = res.result.refillCoupon;
+
+    this._setBtnVisibility(sharingService);
+    this._setRefillCoupon(refillCoupon);
   },
   _btnFail: function (err) {
     console.log('btn api fail', err);
