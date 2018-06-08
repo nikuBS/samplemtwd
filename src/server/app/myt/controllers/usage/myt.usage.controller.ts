@@ -121,7 +121,7 @@ class MyTUsage extends TwViewController {
           };
           res.render('error/myt.usage.error.html', errorData);
         } else {
-          const usageData = this.parseData(myTUsageData.result);
+          const usageData = this.parseData(resp.result);
           const data = {
             svcInfo: newSvcInfo,
             usageData: usageData, // mock data

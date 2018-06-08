@@ -29,9 +29,9 @@
     "winston": "^2.4.2"
   },
   "devDependencies": {
-    "@types/ejs": "^2.5.1",
-    "@types/express": "^4.11.1",
-    "@types/node": "^9.6.20",
+    "@types/ejs": "^2.6.0",
+    "@types/express": "^4.16.0",
+    "@types/node": "^9.6.21",
     "connect-redis": "^3.3.3",
     "express-session": "^1.15.6",
     "express-useragent": "^1.0.12",
