@@ -42,12 +42,18 @@
                                     <% } %>
                                 </div>
                                 <div class="tail">
+                                    <% if (usageData[i].isRemainUnlimited) { %>
+                                    <div class="base2"><%= usageData[i].remained %></div>
+                                    <% } else { %>
                                     <div class="base">잔여
                                         <strong class="moebius-bold"><%= usageData[i].showRemained %></strong><span clsss="unit">원</span>
                                     </div>
+                                    <% } %>
+                                    <% if (!usageData[i].isUsedUnlimited) { %>
                                     <div class="rt">사용
                                         <strong class="moebius-bold"><%= usageData[i].showUsed %></strong><span class="unit">원</span>
                                     </div>
+                                    <% } %>
                                 </div>
                             </div>
                         </div>
