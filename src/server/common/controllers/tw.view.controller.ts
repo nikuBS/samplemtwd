@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import ApiService from '../../services/api.service';
 import LoginService from '../../services/login.service';
-import { API_CMD } from '../../types/api-command.type';
+import { API_CMD, API_CODE } from '../../types/api-command.type';
 import LoggerService from '../../services/logger.service';
 
 abstract class TwViewController {
@@ -49,9 +49,17 @@ abstract class TwViewController {
       this.render(req, res, next, this._loginService.getSvcInfo());
     } else {
       this._apiService.request(loginCmd, { userId }).subscribe((resp) => {
-        this.render(req, res, next, resp.result || defaultSvc);
+        if ( resp.code === API_CODE.CODE_00 ) {
+          this.render(req, res, next, resp.result || defaultSvc);
+        } else {
+          this.renderError(req, res, next, resp);
+        }
       });
     }
+  }
+
+  private renderError(req: Request, res: Response, next: NextFunction, message: any) {
+    res.send(message);
   }
 
 }
