@@ -10,6 +10,7 @@ Tw.MytUsage.prototype = {
   _showAndHide: function () {
     this._getUsageBtn();
     this._getChildren();
+    this._checkExceed();
   },
   _bindEvent: function () {
     this._changeDataUnit();
@@ -37,6 +38,11 @@ Tw.MytUsage.prototype = {
     }
     return unit;
   },
+  _checkExceed: function () {
+    if (this.$container.find('.exceed').is('visible')) {
+      this.$container.find('.ad2').show();
+    }
+  },
   _getUsageBtn: function () {
     this._apiService.request(Tw.API_CMD.BFF_05_0002, {})
       .done($.proxy(this._btnSuccess, this))
@@ -48,13 +54,18 @@ Tw.MytUsage.prototype = {
       .fail($.proxy(this._childFail, this));
   },
   _setBtnVisibility: function (result) {
-    var dataSharingBtn = this.$container.find('.data-sharing-btn');
-    var tDataSharingBtn = this.$container.find('.t-data-sharing-btn');
-    var tRoamingSharingBtn = this.$container.find('.t-roaming-sharing-btn');
-
-    if (result.dataSharing === 'Y') dataSharingBtn.show();
-    if (result.tdataSharing === 'Y') tDataSharingBtn.show();
-    if (result.troamingSharing === 'Y') tRoamingSharingBtn.show();
+    if (result.dataSharing === 'Y') {
+      this.$container.find('.data-sharing-btn').show();
+    }
+    if (result.tdataSharing === 'Y') {
+      this.$container.find('.t-data-sharing-btn').show();
+    }
+    if (result.troamingSharing === 'Y') {
+      this.$container.find('.t-roaming-sharing-btn').show();
+    }
+    else {
+      this.$container.find('.ad1').show();
+    }
 
     this._makeBorderStyle(false);
   },

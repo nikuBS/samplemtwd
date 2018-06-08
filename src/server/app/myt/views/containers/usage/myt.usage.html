@@ -63,7 +63,7 @@
                         <% for (var i = 0; i < usageData.data.length; i++) { %>
                         <div class="data">
                             <div id="<%= usageData.data[i].skipId %>" class="sec">
-                                <h3><% if (usageData.data[i].isExceed) { %><span class="tag-type03">초과</span><% } %> <%= usageData.data[i].skipName %></h3>
+                                <h3><% if (usageData.data[i].isExceed) { %><span class="tag-type03 exceed">초과</span><% } %> <%= usageData.data[i].skipName %></h3>
                                 <div class="<%= usageData.data[i].barClassName %>"><!-- 유제한 타입 //-->
                                     <span class="base"></span>
                                     <% if (usageData.data[i].showRemainedRatio > 0) { %>
@@ -116,14 +116,14 @@
                         </div>
                         <!-- // ad -->
                         <!-- tip -->
-                        <div class="tip">
+                        <div class="tip ad1" style="display:none;">
                             <h3>데이터 <strong>Tip</strong></h3>
                             <div class="txt">하나의 데이터로 <strong>여러개의 기기를 이용한다고??</strong></div>
                             <div class="link"><a href="/myt/usage/tdatashare/info">T데이터셰어링 알아보기</a></div>
                         </div>
                         <!-- // tip -->
                         <!-- tip -->
-                        <div class="tip">
+                        <div class="tip ad2" style="display:none;">
                             <h3>요금제 <strong>Tip</strong></h3>
                             <div class="txt">통화는 자주 안 하지만<strong>데이터가 부족하다면??</strong></div>
                             <div class="link"><a href="#">데이터 무제한 요금제 알아보기</a></div>
