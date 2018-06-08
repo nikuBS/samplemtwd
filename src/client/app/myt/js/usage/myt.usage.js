@@ -38,7 +38,7 @@ Tw.MytUsage.prototype = {
     return unit;
   },
   _getUsageBtn: function () {
-    $.ajax('/mock/myt.usage-btn.json')
+    this._apiService.request(Tw.API_CMD.BFF_05_0002, {})
       .done($.proxy(this._btnSuccess, this))
       .fail($.proxy(this._btnFail, this));
   },
