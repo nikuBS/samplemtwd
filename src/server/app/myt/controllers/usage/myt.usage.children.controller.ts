@@ -18,13 +18,13 @@ class MyTUsageChildren extends TwViewController {
           'mdlName': '아이폰6S(블랙)'
         },
         {
-          'svcNum': '010-12**-34**',
-          'svcMgmtNum': '123456789',
+          'svcNum': '010-23**-45**',
+          'svcMgmtNum': '23456789',
           'mdlName': '갤럭시S7'
         },
         {
-          'svcNum': '010-12**-34**',
-          'svcMgmtNum': '123456789',
+          'svcNum': '010-71**-42**',
+          'svcMgmtNum': '71203842',
           'mdlName': '아이폰7'
         }
       ]
@@ -32,7 +32,7 @@ class MyTUsageChildren extends TwViewController {
 
     this.apiService.request(API_CMD.BFF_05_0010, {})
       .subscribe((response) => {
-        res.render('usage/myt.usage.children.html', { result: response.result, svcInfo: svcInfo });
+        res.render('usage/myt.usage.children.html', { result: sample_data.result, svcInfo: svcInfo });
       });
   }
 }

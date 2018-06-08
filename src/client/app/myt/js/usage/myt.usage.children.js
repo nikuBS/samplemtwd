@@ -15,7 +15,6 @@ Tw.MytUsageChildren.prototype = {
     this.$container   = $('#wrap');
     this.$select_line = this.$container.find('#line_list');
     this.$mdl_name    = this.$container.find('#mdl_name');
-    this.$nick_name   = this.$container.find('#nick_name');
     this.$descendats  = this.$container.find('.descendants');
 
     this.$wrap_tpl_product_detail = this.$container.find('#wrap_tpl_product_detail');
@@ -33,12 +32,15 @@ Tw.MytUsageChildren.prototype = {
   },
 
   _changeLine: function () {
-    var $option  = this.$select_line.find(":selected");
-    var mdl      = $option.data('mdl');
-    var nickname = $option.data('nickname');
+    var $option         = this.$select_line.find(":selected");
+    var mdl             = $option.data('mdl');
+    var childSvcMgmtNum = this.$select_line.val();
 
     this.$mdl_name.text(mdl);
-    this.$nick_name.text(nickname);
+    this.$descendats.data('svcmgmtnum', childSvcMgmtNum);
+
+    // TODO: get Fetch Data
+    // this._getData();
   },
 
   _getData: function () {
@@ -66,7 +68,8 @@ Tw.MytUsageChildren.prototype = {
         showTotal: Tw.FormatHelper.convVoiceFormat(item.total),
         showUsed: Tw.FormatHelper.convVoiceFormat(item.used),
         showRemained: Tw.FormatHelper.convVoiceFormat(item.remained),
-        userRatio: (item.remained / item.total) * 100
+        userRatio: (item.remained / item.total) * 100,
+        isUnlimited: isNaN(item.remained)
       }
     });
 
@@ -78,7 +81,8 @@ Tw.MytUsageChildren.prototype = {
         showRemained: item.remained,
         usedPrice: Tw.FormatHelper.convSmsPrice(item.used),
         remainedPrice: Tw.FormatHelper.convSmsPrice(item.remained),
-        userRatio: (item.remained / item.total) * 100
+        userRatio: (item.remained / item.total) * 100,
+        isUnlimited: isNaN(item.remained)
       }
     });
 
