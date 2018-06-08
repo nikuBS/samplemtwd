@@ -1,6 +1,6 @@
 {
   "name": "mobile_tworld",
-  "version": "0.0.1",
+  "version": "v.3.0_sprint",
   "description": "sktechx",
   "scripts": {
     "start": "npm run client-dev | npm run server-dev",
