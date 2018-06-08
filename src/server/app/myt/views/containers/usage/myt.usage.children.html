@@ -95,48 +95,55 @@
             {{ _.map(voiceDetail, function(voice){ }}
             <div class="sec">
                 <h3>{{=voice.skipName}}</h3>
+                {{ if( voice.isUnlimited ){ }}
+                <div class="progressbar-type02">
+                    <span class="base"></span>
+                    <div class="val"><!-- width:퍼센테이지 필요 // -->
+                        <span class="fill"></span>
+                        <span class="fill2"></span>
+                    </div>
+                {{ } else { }}
                 <div class="progressbar-type01">
                     <span class="base"></span>
                     <div class="val" style="width:{{=voice.userRatio}}%;"><!-- width:퍼센테이지 필요 // -->
                         <span class="fill"></span>
                         <span class="fill2"></span>
                     </div>
+                {{ } }}
                 </div>
-                <div class="tail">
-                    {{ if(isNaN('voice.showRemained')){ }}
+                    <div class="tail">
+                        {{ if( voice.isUnlimited ){ }}
 
-                    <div class="base2">무제한</div>
+                        <div class="base2">무제한</div>
 
-                    {{ } else { }}
+                        {{ } else { }}
 
-                    <div class="base">잔여
-                        {{ if( voice.showRemained.hours != '0'){ }}
-                        <strong class="moebius-bold">{{=voice.showRemained.hours}}</strong>시간
+                        <div class="base">잔여
+                            {{ if( voice.showRemained.hours != '0'){ }}
+                            <strong class="moebius-bold">{{=voice.showRemained.hours}}</strong>시간
+                            {{ } }}
+
+                            {{ if( voice.showRemained.min != '0'){ }}
+                            <strong class="moebius-bold">{{=voice.showRemained.min}}</strong>분
+                            {{ } }}
+                        </div>
+
                         {{ } }}
 
-                        {{ if( voice.showRemained.min != '0'){ }}
-                        <strong class="moebius-bold">{{=voice.showRemained.min}}</strong>분
-                        {{ } }}
+                        <div class="rt">사용
+                            <strong class="moebius-bold">{{=voice.showUsed.min}}</strong>분
+
+                            {{ if( voice.showUsed.sec != '0'){ }}
+                            <strong class="moebius-bold">{{=voice.showUsed.sec}}</strong>초
+                            {{ } }}
+                        </div>
+                        <!--<div class="coupon">쿠폰등록일 <span class="moebius">2018.01.01</span></div>-->
                     </div>
-
-                    {{ } }}
-
-                    <div class="rt">사용
-                        {{ if( voice.showUsed.min != '0'){ }}
-                        <strong class="moebius-bold">{{=voice.showUsed.min}}</strong>분
-                        {{ } }}
-
-                        {{ if( voice.showUsed.sec != '0'){ }}
-                        <strong class="moebius-bold">{{=voice.showUsed.sec}}</strong>초
-                        {{ } }}
-                    </div>
-                    <!--<div class="coupon">쿠폰등록일 <span class="moebius">2018.01.01</span></div>-->
                 </div>
+                {{ }) }}
             </div>
-            {{ }) }}
+            <!-- // data -->
         </div>
-        <!-- // data -->
-    </div>
 </script>
 
 <script type="text/template" id="tpl_usage_sms">
@@ -145,18 +152,25 @@
         {{ _.map(smsDetail, function(sms){ }}
         <div class="sec">
             <h3>{{=sms.skipName}}</h3>
+                {{ if( sms.isUnlimited ){ }}
+            <div class="progressbar-type02">
+                <span class="base"></span>
+                <div class="val"><!-- width:퍼센테이지 필요 // -->
+                    <span class="fill"></span>
+                    <span class="fill2"></span>
+                </div>
+                {{ } else { }}
             <div class="progressbar-type01">
                 <span class="base"></span>
                 <div class="val" style="width:{{=sms.userRatio}}%;"><!-- width:퍼센테이지 필요 // -->
                     <span class="fill"></span>
                     <span class="fill2"></span>
                 </div>
+                {{ } }}
             </div>
             <div class="tail">
-                {{ if(isNaN('sms.showRemained')){ }}
-
+                {{ if( sms.isUnlimited ){ }}
                 <div class="base2">무제한</div>
-
                 {{ } else { }}
 
                 <div class="base">잔여 <strong class="moebius-bold">{{=sms.remainedPrice}}</strong>원 (<strong
