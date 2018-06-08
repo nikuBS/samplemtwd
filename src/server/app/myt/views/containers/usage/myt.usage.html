@@ -46,7 +46,8 @@
             <!-- prd-state -->
             <div class="prd-state">
                 <!-- section : 데이터 -->
-                <% if( usageData.data ) { %>
+                <% if (usageData.data) { %>
+                <% if (usageData.data.length > 0) { %>
                 <section>
                     <h2>데이터</h2>
                     <div class="btn-change">
@@ -131,9 +132,11 @@
                     </div>
                 </section>
                 <% } %>
+                <% } %>
                 <!-- // section : 데이터 -->
                 <!-- section : 음성/영상 -->
-                <% if( usageData.voice ) { %>
+                <% if (usageData.voice) { %>
+                <% if (usageData.voice.length > 0) { %>
                 <section>
                     <h2>음성/영상</h2>
                     <div class="box-white">
@@ -200,9 +203,10 @@
                     </div>
                 </section>
                 <% } %>
+                <% } %>
                 <!-- // section : 음성/영상 -->
                 <!-- section : 문자 -->
-                <% if( usageData.sms ) { %>
+                <% if (usageData.sms) { %>
                 <% for (var i = 0; i < usageData.sms.length; i++) { %>
                 <section>
                     <h2>문자</h2>
@@ -235,7 +239,7 @@
                 <% } %>
                 <!-- // section : 문자 -->
                 <!-- section : 기타 -->
-                <% if( usageData.etc ) { %>
+                <% if (usageData.etc) { %>
                 <% for (var i = 0; i < usageData.etc.length; i++) { %>
                 <section>
                     <h2>기타</h2>
