@@ -4,100 +4,100 @@
 <!-- // skip -->
 <!-- wrap -->
 <div id="wrap">
-  <!-- header -->
-  <header class="header-sub">
-    <button class="btn-back common-back"><span class="blind">뒤로가기</span></button>
-    <h1 class="title-txt">데이터 함께쓰기 사용량 조회</h1>
-    <button class="btn-search"><span class="blind">검색</span></button>
-  </header>
-  <!-- // header -->
-  <!-- content -->
-  <div id="content">
-    <!-- container -->
-    <section id="data-share" class="container">
-      <!-- yprod -->
-      <div class="yprod pb30">
-        <% if (svcInfo && usageData) { %><strong class="line-bt"><%= svcInfo.svcNum %></strong>번호로<strong> <%= usageData.userCnt %></strong>과<br><strong>데이터 함께쓰기</strong>를 이용중이시네요!<% } %>
-      </div>
-      <!-- // yprod -->
-      <!-- prd-state -->
-      <div class="prd-state">
-        <!-- section -->
-        <section>
-          <h2 class="normal">데이터 함께쓰기 사용량 정보</h2>
-          <div class="box-white add mb10">
-            <!-- total-shared -->
-            <div class="total-shared">
-              <div class="txt01">총 사용량</div>
-              <% if (usageData) { %><div class="txt02 moebius-bold"><strong><%= usageData.showTotal.data %></strong><%= usageData.showTotal.unit %></div><% } %>
+    <!-- header -->
+    <header class="header-sub">
+        <button class="btn-back common-back"><span class="blind">뒤로가기</span></button>
+        <h1 class="title-txt">데이터 함께쓰기 사용량 조회</h1>
+        <button class="btn-search"><span class="blind">검색</span></button>
+    </header>
+    <!-- // header -->
+    <!-- content -->
+    <div id="content">
+        <!-- container -->
+        <section id="data-share" class="container">
+            <!-- yprod -->
+            <div class="yprod pb30">
+                <% if (svcInfo && usageData) { %><strong class="line-bt"><%= svcInfo.svcNum %></strong>번호로<strong> <%= usageData.userCnt %></strong>과<br><strong>데이터 함께쓰기</strong>를 이용중이시네요!<% } %>
             </div>
-            <!-- // total-shared -->
-          </div>
-          <div class="box-white">
-            <!-- usim-list -->
-            <div class="usim-list">
-              <% if( usageData.childList ) { %>
-              <% for (var i = 0; i < usageData.childList.length; i++) { %>
-              <!-- d-table -->
-              <div class="d-table type03">
-                <div class="caption">
-                  <div class="txt01">회선번호</div>
-                  <div class="txt02"><%= usageData.childList[i].svcNum %></div>
-                </div>
-                <div class="row">
-                  <div class="cell">요금제</div>
-                  <div id="<%= usageData.childList[i].feeProdId %>" class="cell"><em class="moebius-bold"><%= usageData.childList[i].feeProdNm %></em><br><span class="thin">(스마트폰)</span></div>
-                </div>
-                <div class="row">
-                  <div class="cell">번호설정일자</div>
-                  <div class="cell"><em class="moebius-bold"><%= usageData.childList[i].setDate %></em></div>
-                </div>
-                <div class="row">
-                  <div class="cell">사용량</div>
-                  <!-- 조회하기 버튼 클릭시 데이터 노출 -->
-                  <div class="cell">
-                    <a href="#" class="btn-type03 get-usage-data" data-value="<%= usageData.childList[i].svcMgmtNum %>">조회하기</a>
-                    <em class="moebius-bold" style="display:none;"><%= usageData.childList[i].showUsed.data %><%= usageData.childList[i].showUsed.unit %></em>
-                  </div>
-                  <!-- // 조회하기 버튼 클릭시 데이터 노출 -->
-                  <!--
-                  <div class="cell"><em class="moebius-bold">300MB</em></div>
-                  -->
-                </div>
-              </div>
-              <!-- //	d-table -->
-              <% } %>
-              <% } %>
+            <!-- // yprod -->
+            <!-- prd-state -->
+            <div class="prd-state">
+                <!-- section -->
+                <section>
+                    <h2 class="normal">데이터 함께쓰기 사용량 정보</h2>
+                    <div class="box-white add mb10">
+                        <!-- total-shared -->
+                        <div class="total-shared">
+                            <div class="txt01">총 사용량</div>
+                            <% if (usageData) { %><div class="txt02 moebius-bold"><strong><%= usageData.showTotal.data %></strong><%= usageData.showTotal.unit %></div><% } %>
+                        </div>
+                        <!-- // total-shared -->
+                    </div>
+                    <% if( usageData.childList.length > 0 ) { %>
+                    <div class="box-white">
+                        <!-- usim-list -->
+                        <div class="usim-list">
+                            <% for (var i = 0; i < usageData.childList.length; i++) { %>
+                            <!-- d-table -->
+                            <div class="d-table type03">
+                                <div class="caption">
+                                    <div class="txt01">회선번호</div>
+                                    <div class="txt02"><%= usageData.childList[i].svcNum %></div>
+                                </div>
+                                <div class="row">
+                                    <div class="cell">요금제</div>
+                                    <div id="<%= usageData.childList[i].feeProdId %>" class="cell"><em class="moebius-bold"><%= usageData.childList[i].feeProdNm %></em><br><span class="thin">(스마트폰)</span></div>
+                                </div>
+                                <div class="row">
+                                    <div class="cell">번호설정일자</div>
+                                    <div class="cell"><em class="moebius-bold"><%= usageData.childList[i].setDate %></em></div>
+                                </div>
+                                <div class="row">
+                                    <div class="cell">사용량</div>
+                                    <!-- 조회하기 버튼 클릭시 데이터 노출 -->
+                                    <div class="cell">
+                                        <a href="#" class="btn-type03 get-usage-data" data-value="<%= usageData.childList[i].svcMgmtNum %>">조회하기</a>
+                                        <em class="moebius-bold" style="display:none;"><%= usageData.childList[i].showUsed.data %><%= usageData.childList[i].showUsed.unit %></em>
+                                    </div>
+                                    <!-- // 조회하기 버튼 클릭시 데이터 노출 -->
+                                    <!--
+                                    <div class="cell"><em class="moebius-bold">300MB</em></div>
+                                    -->
+                                </div>
+                            </div>
+                            <!-- //	d-table -->
+                            <% } %>
+                        </div>
+                        <!-- // usim-list -->
+                        <% if (i === usageData.childList.length) { %>
+                        <!-- btn-more -->
+                        <div class="shared-info">
+                            <p>데이터 함께쓰기가 설정된 회선의 명의변경
+                                /해지/일시정지 등의 변경 처리가 발생할 경우
+                                사용량을 조회할 수 없으며, 이에 따라 데이터
+                                함께쓰기 총 사용량과는 차이가 있을 수 있습니다.</p>
+                        </div>
+                        <!-- // btn-more -->
+                        <% } %>
+                    </div>
+                    <% } %>
+                </section>
+                <!-- // section -->
             </div>
-            <!-- // usim-list -->
-            <% if (i === usageData.childList.length) { %>
-            <!-- btn-more -->
-            <div class="shared-info">
-              <p>데이터 함께쓰기가 설정된 회선의 명의변경
-                /해지/일시정지 등의 변경 처리가 발생할 경우
-                사용량을 조회할 수 없으며, 이에 따라 데이터
-                함께쓰기 총 사용량과는 차이가 있을 수 있습니다.</p>
-            </div>
-            <!-- // btn-more -->
-            <% } %>
-          </div>
+            <!-- // prd-state -->
         </section>
-        <!-- // section -->
-      </div>
-      <!-- // prd-state -->
-    </section>
-    <!-- // container -->
-  </div>
-  <!-- // content -->
-  <!-- footer -->
-  <% include ../../../../../common/views/components/footer.component.html %>
-  <!-- // footer -->
+        <!-- // container -->
+    </div>
+    <!-- // content -->
+    <!-- footer -->
+    <% include ../../../../../common/views/components/footer.component.html %>
+    <!-- // footer -->
 </div>
 <!-- // wrap -->
 <% include ../../components/javascript.component.html %>
 <script>
-  $(document).ready(function () {
-    var comp = new Tw.MytUsageDataShare($('#data-share'));
-  });
+    $(document).ready(function () {
+        var comp = new Tw.MytUsageDataShare($('#data-share'));
+    });
 </script>
 <% include ../../components/end.component.html %>

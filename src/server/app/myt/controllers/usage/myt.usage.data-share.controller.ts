@@ -5,7 +5,6 @@ import { API_CMD } from '../../../../types/api-command.type';
 import { USER_CNT } from '../../../../types/string.type';
 import FormatHelper from '../../../../utils/format.helper';
 import { UNIT } from '../../../../types/bff-common.type';
-import MyTDataSharingdata from '../../../../mock/server/myt.usage.data-sharing';
 
 class MyTUsageDataShare extends TwViewController {
 
@@ -27,7 +26,7 @@ class MyTUsageDataShare extends TwViewController {
     this.apiService.request(API_CMD.BFF_05_0004, {}) // 데이터 함께쓰기 사용량 조회
       .subscribe((resp) => {
         console.log(resp);
-        const usageData = this.parseData(MyTDataSharingdata.result);
+        const usageData = this.parseData(resp.result);
         const data = {
           svcInfo: svcInfo,
           usageData: usageData
