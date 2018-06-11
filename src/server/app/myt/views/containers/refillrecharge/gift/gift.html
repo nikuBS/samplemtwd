@@ -1,10 +1,73 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<% include ../../../components/start.component.html %>
+<!-- skip -->
+<div class="skip"><a href="#content">본문 바로가기</a></div>
+<!-- // skip -->
+<!-- wrap -->
+<div id="wrap">
+    <!-- header -->
+    <header class="header-sub">
 
-</body>
-</html>
+    </header>
+    <!-- // header -->
+    <!-- content -->
+    <%=svcInfo.svcNum%>
+    <div id="content">
+        <!-- container -->
+        <section class="container">
+            <select id="sel_line">
+                <%
+                lineList.map((item)=>{
+                if(item.svcNum == svcInfo.svcNum){
+                %>
+
+                <option value="<%=item.svcMgmtNum%>" selected><%=item.svcNum%></option>
+
+                <%
+                } else {
+                %>
+
+                <option value="<%=item.svcMgmtNum%>"><%=item.svcNum%></option>
+
+                <%
+                }
+                }) %>
+            </select>
+        </section>
+        <!-- // container -->
+    </div>
+    <!-- // content -->
+    <!-- footer -->
+    <footer>
+    </footer>
+    <!-- // footer -->
+</div>
+<!-- // wrap -->
+
+<!--<div class="pop-container" style="display:block;">-->
+<!--&lt;!&ndash; popup-base &ndash;&gt;-->
+<!--<div class="popup-base" style="display:block;">-->
+<!--<div class="container">-->
+<!--<div class="head">-->
+<!--<h1>안내</h1>-->
+<!--<a href="#" class="btn-close"><span class="blind">닫기</span></a>-->
+<!--</div>-->
+<!--<div class="body">-->
+<!--<div class="pop-message">-->
+<!--<div class="txt01">T데이터셰어링 기본제공 데이터 사용량</div>-->
+<!--<div class="txt02">올인원 요금제 등 기본으로 데이터를 제공하는 요금제를 이용하는 고객님 중 제한된 USIM(한도형)의 데이터 정보만 노출합니다.</div>-->
+<!--</div>-->
+<!--<div class="btn-group">-->
+<!--<div class="col1"><a href="#" class="btn-type07">확인</a></div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--&lt;!&ndash; // popup-base &ndash;&gt;-->
+<!--</div>-->
+<% include ../../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    var comp = new Tw.MytGift();
+  });
+</script>
+<% include ../../../components/end.component.html %>
