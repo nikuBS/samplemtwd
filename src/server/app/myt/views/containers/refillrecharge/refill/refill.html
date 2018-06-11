@@ -1,7 +1,7 @@
 <% include ../../../components/start.component.html %>
 <div id="wrap">
     <div id="myt-refill">
-        <% if (couponData === null) { %>
+        <% if (couponData.length === 0) { %>
         <div>
             <h2>고객님께서는 사용 가능한 리필쿠폰이 없습니다.</h2>
         </div>

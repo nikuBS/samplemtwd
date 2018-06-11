@@ -37,8 +37,6 @@ class MyTRefill extends TwViewController {
         data.startDate = DateHelper.getShortDateNoDot(data.usePsblStaDt);
         data.endDate = DateHelper.getShortDateNoDot(data.usePsblEndDt);
       });
-    } else {
-      couponData = null;
     }
     return couponData;
   }
