@@ -1,12 +1,34 @@
 import TwViewController from '../../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
-import {API_CMD} from '../../../../../types/api-command.type';
+import {API_CMD, API_CODE} from '../../../../../types/api-command.type';
 import DateHelper from '../../../../../utils/date.helper';
 import FormatHelper from '../../../../../utils/format.helper';
+import {Observable} from 'rxjs/Observable';
 
 class MyTRefill extends TwViewController {
   constructor() {
     super();
+  }
+
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+    Observable.combineLatest(
+      this.getCouponData()
+    ).subscribe(([couponData]) => {
+      const data = {
+        couponData
+      };
+      res.render('refillrecharge/refill/refill.html', data);
+    });
+  }
+
+  private getCouponData(): Observable<any> {
+    let couponData = {};
+    return this.apiService.request(API_CMD.BFF_05_0002, {}).map((resp) => {
+      if (resp.code === API_CODE.CODE_00) {
+        couponData = this.parseData(resp.result.refillCoupon);
+      }
+      return couponData;
+    });
   }
 
   private parseData(couponData: any): any {
@@ -17,16 +39,6 @@ class MyTRefill extends TwViewController {
       });
     }
     return couponData;
-  }
-
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    this.apiService.request(API_CMD.BFF_05_0002, {}).subscribe((resp) => { // refill coupon 조회
-      const couponData = this.parseData(resp.result.refillCoupon);
-      const data = {
-        couponData: couponData
-      };
-      res.render('refillrecharge/refill/refill.html', data);
-    });
   }
 }
 
