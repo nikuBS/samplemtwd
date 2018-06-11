@@ -66,8 +66,8 @@
                                 <h3><% if (usageData.data[i].isExceed) { %><span class="tag-type03 exceed">초과</span><% } %> <%= usageData.data[i].skipName %></h3>
                                 <div class="<%= usageData.data[i].barClassName %>"><!-- 유제한 타입 //-->
                                     <span class="base"></span>
-                                    <% if (usageData.data[i].showRemainedRatio > 0) { %>
-                                    <div class="val" style="width:<%= usageData.data[i].showRemainedRatio %>%;"><!-- width:퍼센테이지 필요, 0%의 경우 display:none; // -->
+                                    <% if (usageData.data[i].remainedRatio > 0) { %>
+                                    <div class="val" style="width:<%= usageData.data[i].remainedRatio %>%;"><!-- width:퍼센테이지 필요, 0%의 경우 display:none; // -->
                                         <span class="fill"></span>
                                         <span class="fill2"></span>
                                     </div>
@@ -104,7 +104,7 @@
                         <div class="ad">
                             <div class="btn-group">
                                 <div class="col1 refill" style="display:none;">
-                                    <a href="#" class="btn-type02">리필하기<span class="refill-cnt"></span></a>
+                                    <a href="/myt/refill" class="btn-type02">리필하기<span class="refill-cnt"></span></a>
                                 </div>
                                 <div class="col1">
                                     <a href="#" class="btn-type02">T끼리 데이터선물 / 조르기</a>
@@ -147,8 +147,8 @@
                                 <h3 id="<%= usageData.voice[i].skipId %>"><%= usageData.voice[i].skipName %></h3>
                                 <div class="<%= usageData.voice[i].barClassName %>">
                                     <span class="base"></span>
-                                    <% if (usageData.voice[i].showRemainedRatio > 0) { %>
-                                    <div class="val" style="width:<%= usageData.voice[i].showRemainedRatio %>%;"><!-- width:퍼센테이지 필요 // -->
+                                    <% if (usageData.voice[i].remainedRatio > 0) { %>
+                                    <div class="val" style="width:<%= usageData.voice[i].remainedRatio %>%;"><!-- width:퍼센테이지 필요 // -->
                                         <span class="fill"></span>
                                         <span class="fill2"></span>
                                     </div>
@@ -195,7 +195,7 @@
                         <div class="ad">
                             <div class="btn-group">
                                 <div class="col1 refill" style="display:none;">
-                                    <a href="#" class="btn-type02">리필하기<span class="refill-cnt"></span></a>
+                                    <a href="/myt/refill" class="btn-type02">리필하기<span class="refill-cnt"></span></a>
                                 </div>
                             </div>
                         </div>
@@ -215,8 +215,8 @@
                             <h3 id="<%= usageData.sms[i].skipId %>"><%= usageData.sms[i].skipName %></h3>
                             <div class="<%= usageData.sms[i].barClassName %>">
                                 <span class="base"></span>
-                                <% if (usageData.sms[i].showRemainedRatio > 0) { %>
-                                <div class="val" style="width:<%= usageData.sms[i].showRemainedRatio %>%;">
+                                <% if (usageData.sms[i].remainedRatio > 0) { %>
+                                <div class="val" style="width:<%= usageData.sms[i].remainedRatio %>%;">
                                     <span class="fill"></span>
                                     <span class="fill2"></span>
                                 </div>
@@ -248,8 +248,8 @@
                             <h3 id="<%= usageData.etc[i].skipId %>"><%= usageData.etc[i].skipName %></h3>
                             <div class="<%= usageData.etc[i].barClassName %>">
                                 <span class="base"></span>
-                                <% if (usageData.etc[i].showRemainedRatio > 0) { %>
-                                <div class="val" style="width:<%= usageData.etc[i].showRemainedRatio %>%;"><!-- width:퍼센테이지 필요 // -->
+                                <% if (usageData.etc[i].remainedRatio > 0) { %>
+                                <div class="val" style="width:<%= usageData.etc[i].remainedRatio %>%;"><!-- width:퍼센테이지 필요 // -->
                                     <span class="fill"></span>
                                     <span class="fill2"></span>
                                 </div>

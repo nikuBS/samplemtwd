@@ -1,10 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
+<% include ../../../components/start.component.html %>
+<div id="wrap">
+    <div id="myt-refill">
+        <% for (var i = 0; i < couponData.length; i++) { %>
+        <div>
+            <h1><%= couponData[i].copnNm %></h1>
+            <span><%= couponData[i].copnIsueNum %></span>
+            <p>유효기간 : <%= couponData[i].startDate %> ~ <%= couponData[i].endDate %></p>
+        </div>
+        <% } %>
+    </div>
+    <!-- footer -->
+    <% include ../../../../../../common/views/components/footer.component.html %>
+    <!-- // footer -->
+</div>
+<% include ../../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    var comp = new Tw.MytRefill($('#myt-refill'));
+  });
+</script>
+<% include ../../../components/end.component.html %>
