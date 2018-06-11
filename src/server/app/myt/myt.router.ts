@@ -10,6 +10,9 @@ import MyTUsageTRoamingShare from './controllers/usage/myt.usage.troaming-share.
 import MyTUsageTing from './controllers/usage/myt.usage.ting.controller';
 import MyTUsage24hours50discount from './controllers/usage/myt.usage.24hours-50discount.controller';
 import MyTUsageDataLimit from './controllers/usage/myt.usage.data-limit.controller';
+import MyTRefill from './controllers/refillrecharge/refill/refill.controller';
+import MyTRefillHistory from './controllers/refillrecharge/refill/refill.history.controller';
+import MyTGift from './controllers/refillrecharge/gift/gift.controller';
 
 class MytRouter extends TwRouter {
   constructor() {
@@ -25,6 +28,11 @@ class MytRouter extends TwRouter {
     this.controllers.push({ url: '/usage/troaming', controller: new MyTUsageTRoamingShare() });
     this.controllers.push({ url: '/usage/ting', controller: new MyTUsageTing() });
     this.controllers.push({ url: '/usage/24hourdiscount', controller: new MyTUsage24hours50discount() });
+
+    this.controllers.push({ url: '/refill', controller: new MyTRefill() });
+    this.controllers.push({ url: '/refill/history', controller: new MyTRefillHistory() });
+    this.controllers.push({ url: '/gift', controller: new MyTGift() });
+    this.controllers.push({ url: '/gift/history', controller: new MyTGift() });
   }
 }
 
