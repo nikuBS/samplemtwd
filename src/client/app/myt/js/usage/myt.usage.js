@@ -76,8 +76,8 @@ Tw.MytUsage.prototype = {
     if (refillCouponLength > 0) {
       var refillCnt = this.$container.find('.refill-cnt');
       refillCnt.text('(' + refillCouponLength + ')');
-      refillBtn.show();
     }
+    refillBtn.show();
   },
   _btnSuccess: function (res) {
     var sharingService = res.result.sharingService;
