@@ -5,85 +5,111 @@ import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
 import { UNIT, UNIT_E } from '../../../../types/bff-common.type';
 import { SVC_CD } from '../../../../types/bff-common.type';
-import { API_CMD, API_MYT_ERROR_CODE} from '../../../../types/api-command.type';
+import {API_CMD, API_CODE, API_MYT_ERROR_CODE} from '../../../../types/api-command.type';
 import { SKIP_NAME } from '../../../../types/string.type';
 import { DAY_BTN_STANDARD_SKIP_ID } from '../../../../types/bff-common.type';
+import {Observable} from 'rxjs/Observable';
 
 class MyTUsage extends TwViewController {
   constructor() {
     super();
   }
 
-  private parseSvcInfo(svcInfo: any): any {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+    const newSvcInfo = this.getSvcInfo(svcInfo);
+    const remainDate = DateHelper.getRemainDate();
+
+    Observable.combineLatest(
+      this.getUsageData()
+    ).subscribe(([usageData]) => {
+      const data = {
+        svcInfo: newSvcInfo,
+        remainDate,
+        usageData
+      };
+      res.render('usage/myt.usage.html', data);
+      // res.render('error/myt.usage.error.html', errorData);
+    });
+  }
+
+  private getSvcInfo(svcInfo: any): any {
     if (svcInfo) {
       svcInfo.svcName = SVC_CD[svcInfo.svcCd];
     }
     return svcInfo;
   }
 
-  private parseData(usageData: any): any {
-    if (!FormatHelper.isEmpty(usageData.data)) {
-      usageData.data.map((data) => {
-        data.isUnlimited = !isFinite(data.total);
-        data.isUsedUnlimited = !isFinite(data.used);
-        data.isRemainUnlimited = !isFinite(data.remained);
-        data.showUsed = !data.isUsedUnlimited && FormatHelper.convDataFormat(data.used, UNIT[data.unit]);
-        data.showRemained = !data.isRemainUnlimited && FormatHelper.convDataFormat(data.remained, UNIT[data.unit]);
-        data.usedRatio = (!data.isUnlimited && !data.isUsedUnlimited) && (data.used / data.total * 100);
-        data.showRemainedRatio = data.isUnlimited ? 100 : 100 - data.usedRatio;
-        data.couponDate = data.couponDate === '' ? data.couponDate : DateHelper.getShortDateNoDot(data.couponDate);
-        data.isVisibleDayBtn = this.isVisibleDayBtn(data.skipId);
-        data.isExceed = data.skipId === SKIP_NAME.EXCEED;
-        data.barClassName = data.isUnlimited ? 'progressbar-type02' : 'progressbar-type01';
-      });
-    }
+  private getUsageData(): Observable<any> {
+    let usageData = {};
+    return this.apiService.request(API_CMD.BFF_05_0001, {}).map((resp) => {
+      if (resp.code === API_CODE.CODE_00) {
+        usageData = this.parseUsageData(resp.result);
+      } else {
+        usageData = resp;
+      }
+      return usageData;
+    });
+  }
 
-    if (!FormatHelper.isEmpty(usageData.voice)) {
-      usageData.voice.map((voice) => {
-        voice.isUnlimited = !isFinite(voice.total);
-        voice.isUsedUnlimited = !isFinite(voice.used);
-        voice.isRemainUnlimited = !isFinite(voice.remained);
-        voice.showUsed = !voice.isUsedUnlimited && FormatHelper.convVoiceFormat(voice.used);
-        voice.showRemained = !voice.isRemainUnlimited && FormatHelper.convVoiceFormat(voice.remained);
-        voice.usedRatio = (!voice.isUnlimited && !voice.isUsedUnlimited) && (voice.used / voice.total * 100);
-        voice.showRemainedRatio = voice.isUnlimited ? 100 : 100 - voice.usedRatio;
-        voice.couponDate = voice.couponDate === '' ? voice.couponDate : DateHelper.getShortDateNoDot(voice.couponDate);
-        voice.barClassName = voice.isUnlimited ? 'progressbar-type02' : 'progressbar-type01';
-      });
-    }
+  private parseUsageData(usageData: any): any {
+    const kinds = ['data', 'voice', 'sms', 'etc'];
 
-    if (!FormatHelper.isEmpty(usageData.sms)) {
-      usageData.sms.map((sms) => {
-        sms.isUnlimited = !isFinite(sms.total);
-        sms.isUsedUnlimited = !isFinite(sms.used);
-        sms.isRemainUnlimited = !isFinite(sms.remained);
-        sms.showUsed = !sms.isUsedUnlimited && FormatHelper.addComma(sms.used);
-        sms.showRemained = !sms.isRemainUnlimited && FormatHelper.addComma(sms.remained);
-        sms.usedRatio = (!sms.isUnlimited && !sms.isUsedUnlimited) && (sms.used / sms.total * 100);
-        sms.showRemainedRatio = sms.isUnlimited ? 100 : 100 - sms.usedRatio;
-        sms.couponDate = sms.couponDate === '' ? sms.couponDate : DateHelper.getShortDateNoDot(sms.couponDate);
-        sms.barClassName = sms.isUnlimited ? 'progressbar-type02' : 'progressbar-type01';
-      });
-    }
-
-    if (!FormatHelper.isEmpty(usageData.etc)) {
-      usageData.etc.map((etc) => {
-        etc.isUnlimited = !isFinite(etc.total);
-        etc.isUsedUnlimited = !isFinite(etc.used);
-        etc.isRemainUnlimited = !isFinite(etc.remained);
-        etc.isMoney = etc.unit === UNIT_E.FEE;
-        etc.showUsed = !etc.isUsedUnlimited &&
-          (etc.isMoney ? FormatHelper.addComma(etc.used) : FormatHelper.convVoiceFormat(etc.used));
-        etc.showRemained = !etc.isRemainUnlimited &&
-          (etc.isMoney ? FormatHelper.addComma(etc.remained) : FormatHelper.convVoiceFormat(etc.remained));
-        etc.usedRatio = (!etc.isUnlimited && !etc.isUsedUnlimited) && (etc.used / etc.total * 100);
-        etc.showRemainedRatio = etc.isUnlimited ? 100 : 100 - etc.usedRatio;
-        etc.couponDate = etc.couponDate === '' ? etc.couponDate : DateHelper.getShortDateNoDot(etc.couponDate);
-        etc.barClassName = etc.isUnlimited ? 'progressbar-type02' : 'progressbar-type01';
-      });
-    }
-
+    kinds.map((kind) => {
+        if (!FormatHelper.isEmpty(usageData[kind])) {
+          usageData[kind].map((data) => {
+            this.convShowData(data);
+          });
+        }
+    });
     return usageData;
+  }
+
+  private convShowData(data: any) {
+    data.isUnlimited = !isFinite(data.total);
+    data.isUsedUnlimited = !isFinite(data.used);
+    data.isRemainUnlimited = !isFinite(data.remained);
+    data.remainedRatio = 100;
+    data.showUsed = this.convFormat(data.used, data.unit);
+
+    if ( !data.isUnlimited ) {
+      data.showUsed = this.convFormat(data.used, data.unit);
+      data.showRemained = this.convFormat(data.remained, data.unit);
+      data.remainedRatio = data.remained / data.total * 100;
+    }
+
+    data.couponDate = this.getCouponDate(data.couponDate);
+    data.isExceed = data.skipId === SKIP_NAME.EXCEED;
+    data.barClassName = this.getBarStayle(data.isUnlimited);
+    data.isVisibleDayBtn = this.isVisibleDayBtn(data.skipId);
+  }
+
+  private convFormat(data: string, unit: string): string {
+    switch ( unit ) {
+      case UNIT_E.DATA:
+        return FormatHelper.convDataFormat(data, UNIT[unit]);
+      case UNIT_E.VOICE:
+        return FormatHelper.convVoiceFormat(data);
+      case UNIT_E.SMS:
+        return FormatHelper.addComma(data);
+      default:
+    }
+    return '';
+  }
+
+  private getCouponDate(date: string): string {
+    let couponDate = '';
+    if (couponDate !== '' && couponDate !== null) {
+      couponDate = DateHelper.getShortDateNoDot(date);
+    }
+    return couponDate;
+  }
+
+  private getBarStayle(isUnlimited: boolean): string {
+    let className = 'progressbar-type01';
+    if (isUnlimited) {
+      className = 'progressbar-type02';
+    }
+    return className;
   }
 
   private isVisibleDayBtn(skipId: any): boolean {
@@ -104,31 +130,6 @@ class MyTUsage extends TwViewController {
       }
     }
     return isError;
-  }
-
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    const newSvcInfo = this.parseSvcInfo(svcInfo);
-
-    this.apiService.request(API_CMD.BFF_05_0001, {}).subscribe((resp) => { // 사용량 조회
-        console.log(resp);
-
-        const isError = this.isError(resp.code);
-        if (isError) {
-          const errorData = {
-            svcInfo: newSvcInfo,
-            err: resp
-          };
-          res.render('error/myt.usage.error.html', errorData);
-        } else {
-          const usageData = this.parseData(resp.result);
-          const data = {
-            svcInfo: newSvcInfo,
-            usageData: usageData, // mock data
-            remainDate: DateHelper.getRemainDate()
-          };
-          res.render('usage/myt.usage.html', data);
-        }
-      });
   }
 }
 
