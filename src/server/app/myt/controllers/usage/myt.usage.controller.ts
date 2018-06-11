@@ -27,8 +27,12 @@ class MyTUsage extends TwViewController {
         remainDate,
         usageData
       };
-      res.render('usage/myt.usage.html', data);
-      // res.render('error/myt.usage.error.html', errorData);
+
+      if (usageData.code === API_CODE.CODE_00) {
+        res.render('usage/myt.usage.html', data);
+      } else {
+        res.render('error/myt.usage.error.html', data);
+      }
     });
   }
 
