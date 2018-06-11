@@ -29,6 +29,8 @@ import UserRouter from './app/user/user.router';
 // Application Modules
 import RedisService from './services/redis.service';
 import ApiRouter from './common/api.router';
+import RefillRouter from './app/refillrecharge/refill/refill.router';
+import GiftRouter from './app/refillrecharge/gift/gift.router';
 
 class App {
   public app: Application = express();
@@ -87,6 +89,8 @@ class App {
     this.app.use('/roaming', new AppRouter(RoamingRouter.instance.controllers).router);
     this.app.use('/search', new AppRouter(SearchRouter.instance.controllers).router);
     this.app.use('/user', new AppRouter(UserRouter.instance.controllers).router);
+    this.app.use('/refill', new AppRouter(RefillRouter.instance.controllers).router);
+    this.app.use('/gift', new AppRouter(GiftRouter.instance.controllers).router);
   }
 
   private setViewPath() {
