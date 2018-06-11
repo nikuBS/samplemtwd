@@ -1,20 +1,25 @@
 import TwViewController from '../../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
-import {API_CMD, API_CODE} from '../../../../../types/api-command.type';
+import { API_CMD, API_CODE } from '../../../../../types/api-command.type';
 import DateHelper from '../../../../../utils/date.helper';
 import FormatHelper from '../../../../../utils/format.helper';
-import {Observable} from 'rxjs/Observable';
+import { Observable } from 'rxjs/Observable';
+import LineService from '../../../../../services/line.service';
 
 class MyTRefill extends TwViewController {
+  public lineService = new LineService();
+
   constructor() {
     super();
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     Observable.combineLatest(
+      this.lineService.getMobileLineList(),
       this.getCouponData()
-    ).subscribe(([couponData]) => {
+    ).subscribe(([lineList, couponData]) => {
       const data = {
+        lineList: lineList.result,
         couponData
       };
       res.render('refillrecharge/refill/refill.html', data);

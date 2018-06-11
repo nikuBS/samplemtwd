@@ -1,5 +1,20 @@
 <% include ../../../components/start.component.html %>
 <div id="wrap">
+    <!-- prd-list -->
+    <div class="prd-list">
+        <% if (lineList) { %>
+            <% if (lineList.length === 1) { %>
+            <h3><%= lineList[0].svcNum %></h3>
+            <% } else { %>
+            <select>
+                <% for (var i = 0; i < lineList.length; i++) { %>
+                <option><%= lineList[i].svcNum %></option>
+                <% } %>
+            </select>
+            <% } %>
+        <% } %>
+    </div>
+    <!-- // prd-list -->
     <div id="myt-refill">
         <% if (couponData.length === 0) { %>
         <div>
