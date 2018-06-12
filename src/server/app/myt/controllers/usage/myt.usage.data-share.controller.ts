@@ -1,15 +1,41 @@
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
 import DateHelper from '../../../../utils/date.helper';
-import { API_CMD } from '../../../../types/api-command.type';
+import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { USER_CNT } from '../../../../types/string.type';
 import FormatHelper from '../../../../utils/format.helper';
 import { UNIT } from '../../../../types/bff-common.type';
+import MyTUsage from './myt.usage.controller';
+import { Observable } from 'rxjs/Observable';
 
 class MyTUsageDataShare extends TwViewController {
+  public myTUsage = new MyTUsage();
 
   constructor() {
     super();
+  }
+
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+    Observable.combineLatest(
+      this.getUsageData()
+    ).subscribe(([usageData]) => {
+      this.myTUsage.renderView(res, 'usage/myt.usage.data-share.html', this.getData(usageData, svcInfo));
+    });
+  }
+
+  private getUsageData(): Observable<any> {
+    return this.apiService.request(API_CMD.BFF_05_0004, {}).map((resp) => {
+      return this.getResult(resp, {});
+    });
+  }
+
+  private getResult(resp: any, usageData: any): any {
+    if (resp.code === API_CODE.CODE_00) {
+      usageData = this.parseData(resp.result);
+    } else {
+      usageData = resp;
+    }
+    return usageData;
   }
 
   private parseData(usageData: any): any {
@@ -22,17 +48,11 @@ class MyTUsageDataShare extends TwViewController {
     return usageData;
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    this.apiService.request(API_CMD.BFF_05_0004, {}) // 데이터 함께쓰기 사용량 조회
-      .subscribe((resp) => {
-        console.log(resp);
-        const usageData = this.parseData(resp.result);
-        const data = {
-          svcInfo: svcInfo,
-          usageData: usageData
-        };
-        res.render('usage/myt.usage.data-share.html', data);
-      });
+  private getData(usageData: any, svcInfo: any): any {
+    return {
+      svcInfo,
+      usageData
+    };
   }
 }
 

@@ -34,8 +34,8 @@
                                 <h3 id="<%= usageData[i].skipId %>"><%= usageData[i].skipName %></h3>
                                 <div class="<%= usageData[i].barClassName %>"><!-- 유제한 타입 //-->
                                     <span class="base"></span>
-                                    <% if (usageData[i].showRemainedRatio > 0) { %>
-                                    <div class="val" style="width:<%= usageData[i].showRemainedRatio %>%;"><!-- width:퍼센테이지 필요, 0%의 경우 display:none; // -->
+                                    <% if (usageData[i].remainedRatio > 0) { %>
+                                    <div class="val" style="width:<%= usageData[i].remainedRatio %>%;"><!-- width:퍼센테이지 필요, 0%의 경우 display:none; // -->
                                         <span class="fill"></span>
                                         <span class="fill2"></span>
                                     </div>

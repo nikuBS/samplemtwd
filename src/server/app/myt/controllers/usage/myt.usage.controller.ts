@@ -31,12 +31,10 @@ class MyTUsage extends TwViewController {
     }
   }
 
-  private getData(usageData: any, svcInfo: any): any {
-    return {
-      svcInfo: this.getSvcInfo(svcInfo),
-      remainDate: DateHelper.getRemainDate(),
-      usageData
-    };
+  private getUsageData(): Observable<any> {
+    return this.apiService.request(API_CMD.BFF_05_0001, {}).map((resp) => {
+      return this.getResult(resp, {});
+    });
   }
 
   private getSvcInfo(svcInfo: any): any {
@@ -46,14 +44,7 @@ class MyTUsage extends TwViewController {
     return svcInfo;
   }
 
-  private getUsageData(): Observable<any> {
-    return this.apiService.request(API_CMD.BFF_05_0001, {}).map((resp) => {
-      return this.getResult(resp);
-    });
-  }
-
-  private getResult(resp: any): any {
-    let usageData = {};
+  private getResult(resp: any, usageData: any): any {
     if (resp.code === API_CODE.CODE_00) {
       usageData = this.parseUsageData(resp.result);
     } else {
@@ -73,6 +64,14 @@ class MyTUsage extends TwViewController {
         }
     });
     return usageData;
+  }
+
+  private getData(usageData: any, svcInfo: any): any {
+    return {
+      svcInfo: this.getSvcInfo(svcInfo),
+      remainDate: DateHelper.getRemainDate(),
+      usageData
+    };
   }
 
   private convShowData(data: any) {
