@@ -37,17 +37,7 @@
             <!-- guide-message -->
             <div class="guide-message">
                 <div class="icon"><img src="/skt/img/temp/icon_tbd.png" alt="" /></div>
-                <% if (err.code === 'BNL0001') { %>
-                    <div class="txt1">안정적인 실시간 조회를 위해<br /><strong>조회 횟수를 제한</strong>하고 있습니다.</div>
-                    <div class="txt2">잠시 후 다시 이용해주시기 바랍니다.</div>
-                    <div class="txt3">(2시간 동안 최대 12회 조회 가능)</div>
-                <% } else if (err.code === 'BNL0002') { %>
-                    <div class="txt1"><strong>정지 이력이 있어</strong> 사용량조회<br />서비스가 제공되지 않습니다.</div>
-                    <div class="txt3">자세한 문의는 고객센터를<br />이용해주시기 바랍니다.</div>
-                <% } else { %>
-                    <div class="txt1">해당 회선은 <br /><strong>사용량 조회 대상</strong>이 아닙니다.</div>
-                    <div class="txt3">자세한 문의는 고객센터를 이용해주시기 바랍니다.</div>
-                <% } %>
+                <div id="<%= data.code %>"><%= data.message %></div>
             </div>
             <!-- // guide-message -->
             <!-- help-desk -->

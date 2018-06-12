@@ -5,10 +5,10 @@ import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
 import { UNIT, UNIT_E } from '../../../../types/bff-common.type';
 import { SVC_CD } from '../../../../types/bff-common.type';
-import {API_CMD, API_CODE, API_MYT_ERROR_CODE} from '../../../../types/api-command.type';
-import { SKIP_NAME } from '../../../../types/string.type';
+import { API_CMD, API_CODE} from '../../../../types/api-command.type';
+import { SKIP_NAME, MYT_VIEW } from '../../../../types/string.type';
 import { DAY_BTN_STANDARD_SKIP_ID } from '../../../../types/bff-common.type';
-import {Observable} from 'rxjs/Observable';
+import { Observable } from 'rxjs/Observable';
 
 class MyTUsage extends TwViewController {
   constructor() {
@@ -16,24 +16,27 @@ class MyTUsage extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    const newSvcInfo = this.getSvcInfo(svcInfo);
-    const remainDate = DateHelper.getRemainDate();
-
     Observable.combineLatest(
       this.getUsageData()
     ).subscribe(([usageData]) => {
-      const data = {
-        svcInfo: newSvcInfo,
-        remainDate,
-        usageData
-      };
-
-      if (usageData.code === API_CODE.CODE_00) {
-        res.render('usage/myt.usage.html', data);
-      } else {
-        res.render('error/myt.usage.error.html', data);
-      }
+      this.renderView(res, 'usage/myt.usage.html', this.getData(usageData, svcInfo));
     });
+  }
+
+  public renderView(res: Response, view: string, data: any): any {
+    if (data.code === undefined) {
+      res.render(view, data);
+    } else {
+      res.render(MYT_VIEW.ERROR, data);
+    }
+  }
+
+  private getData(usageData: any, svcInfo: any): any {
+    return {
+      svcInfo: this.getSvcInfo(svcInfo),
+      remainDate: DateHelper.getRemainDate(),
+      usageData
+    };
   }
 
   private getSvcInfo(svcInfo: any): any {
@@ -44,15 +47,19 @@ class MyTUsage extends TwViewController {
   }
 
   private getUsageData(): Observable<any> {
-    let usageData = {};
     return this.apiService.request(API_CMD.BFF_05_0001, {}).map((resp) => {
-      if (resp.code === API_CODE.CODE_00) {
-        usageData = this.parseUsageData(resp.result);
-      } else {
-        usageData = resp;
-      }
-      return usageData;
+      return this.getResult(resp);
     });
+  }
+
+  private getResult(resp: any): any {
+    let usageData = {};
+    if (resp.code === API_CODE.CODE_00) {
+      usageData = this.parseUsageData(resp.result);
+    } else {
+      usageData = resp;
+    }
+    return usageData;
   }
 
   private parseUsageData(usageData: any): any {
@@ -81,8 +88,8 @@ class MyTUsage extends TwViewController {
       data.remainedRatio = data.remained / data.total * 100;
     }
 
-    data.couponDate = this.getCouponDate(data.couponDate);
     data.isExceed = data.skipId === SKIP_NAME.EXCEED;
+    data.couponDate = this.getCouponDate(data.couponDate);
     data.barClassName = this.getBarStayle(data.isUnlimited);
     data.isVisibleDayBtn = this.isVisibleDayBtn(data.skipId);
   }
@@ -94,6 +101,8 @@ class MyTUsage extends TwViewController {
       case UNIT_E.VOICE:
         return FormatHelper.convVoiceFormat(data);
       case UNIT_E.SMS:
+        return FormatHelper.addComma(data);
+      case UNIT_E.FEE:
         return FormatHelper.addComma(data);
       default:
     }
@@ -124,16 +133,6 @@ class MyTUsage extends TwViewController {
       }
     }
     return isVisible;
-  }
-
-  private isError(code: string): boolean {
-    let isError = false;
-    for (const cd of API_MYT_ERROR_CODE) {
-      if (cd === code) {
-        isError = true;
-      }
-    }
-    return isError;
   }
 }
 

@@ -64,7 +64,7 @@
                         <div class="data">
                             <div id="<%= usageData.data[i].skipId %>" class="sec">
                                 <h3><% if (usageData.data[i].isExceed) { %><span class="tag-type03 exceed">초과</span><% } %> <%= usageData.data[i].skipName %></h3>
-                                <div class="<%= usageData.data[i].barClassName %>"><!-- 유제한 타입 //-->
+                                <div class="<%= usageData.data[i].barClassName %>">
                                     <span class="base"></span>
                                     <% if (usageData.data[i].remainedRatio > 0) { %>
                                     <div class="val" style="width:<%= usageData.data[i].remainedRatio %>%;"><!-- width:퍼센테이지 필요, 0%의 경우 display:none; // -->
@@ -156,7 +156,7 @@
                                 </div>
                                 <div class="tail">
                                     <% if (usageData.voice[i].isRemainUnlimited) { %>
-                                    <div class="base"><%= usageData.voice[i].remained %></div>
+                                    <div class="base2"><%= usageData.voice[i].remained %></div>
                                     <% } else { %>
                                     <div class="base">잔여
                                         <% if (usageData.voice[i].showRemained.hours !== 0) { %>
@@ -207,10 +207,10 @@
                 <!-- // section : 음성/영상 -->
                 <!-- section : 문자 -->
                 <% if (usageData.sms) { %>
-                <% for (var i = 0; i < usageData.sms.length; i++) { %>
-                <section>
+                <section class="sms">
                     <h2>문자</h2>
                     <div class="box-white">
+                        <% for (var i = 0; i < usageData.sms.length; i++) { %>
                         <div class="sec">
                             <h3 id="<%= usageData.sms[i].skipId %>"><%= usageData.sms[i].skipName %></h3>
                             <div class="<%= usageData.sms[i].barClassName %>">
@@ -224,7 +224,7 @@
                             </div>
                             <div class="tail">
                                 <% if (usageData.sms[i].isRemainUnlimited) { %>
-                                <div class="base"><%= usageData.sms[i].remained %></div>
+                                <div class="base2"><%= usageData.sms[i].remained %></div>
                                 <% } else { %>
                                 <div class="base">잔여 <strong class="moebius-bold"><%= usageData.sms[i].showRemained %></strong>원</div><!-- (<strong class="moebius-bold gray">26</strong>건) -->
                                 <% } %>
@@ -233,9 +233,9 @@
                                 <% } %>
                             </div>
                         </div>
+                        <% } %>
                     </div>
                 </section>
-                <% } %>
                 <% } %>
                 <!-- // section : 문자 -->
                 <!-- section : 기타 -->
@@ -259,7 +259,7 @@
                                 <% if (usageData.etc[i].isRemainUnlimited) { %>
                                 <div class="base"><%= usageData.etc[i].remained %></div>
                                 <% } else { %>
-                                    <% if (usageData.etc[i].isMoney) { %>
+                                    <% if (usageData.etc[i].unit === '110') { %>
                                     <div class="base">잔여 <strong class="moebius-bold"><%= usageData.etc[i].showRemained %></strong>원</div>
                                     <% } else { %>
                                     <div class="base">잔여
@@ -277,7 +277,7 @@
                                     <% } %>
                                 <% } %>
                                 <% if (!usageData.etc[i].isUsedUnlimited) { %>
-                                    <% if (usageData.etc[i].isMoney) { %>
+                                    <% if (usageData.etc[i].unit === '110') { %>
                                     <div class="rt">사용 <strong class="moebius-bold"><%= usageData.etc[i].showUsed %></strong>원</div>
                                     <% } else { %>
                                     <div class="rt">사용
