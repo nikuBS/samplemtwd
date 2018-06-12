@@ -11,6 +11,7 @@ Tw.MytUsage.prototype = {
     this._getUsageBtn();
     this._getChildren();
     this._checkExceed();
+    this._setSmsStyle();
   },
   _bindEvent: function () {
     this._changeDataUnit();
@@ -62,8 +63,7 @@ Tw.MytUsage.prototype = {
     }
     if (result.troamingSharing === 'Y') {
       this.$container.find('.t-roaming-sharing-btn').show();
-    }
-    else {
+    } else {
       this.$container.find('.ad1').show();
     }
 
@@ -116,5 +116,8 @@ Tw.MytUsage.prototype = {
         .addClass('temp-last')
         .css('border-bottom', 0);
     }
+  },
+  _setSmsStyle: function () {
+    this.$container.find('.sms .sec:last').addClass('mb0');
   }
 };
