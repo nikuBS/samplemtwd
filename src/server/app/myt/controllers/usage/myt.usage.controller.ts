@@ -24,24 +24,24 @@ class MyTUsage extends TwViewController {
   }
 
   public renderView(res: Response, view: string, data: any): any {
-    if (data.code === undefined) {
+    if (data.usageData.code === undefined) {
       res.render(view, data);
     } else {
       res.render(MYT_VIEW.ERROR, data);
     }
   }
 
-  private getUsageData(): Observable<any> {
-    return this.apiService.request(API_CMD.BFF_05_0001, {}).map((resp) => {
-      return this.getResult(resp, {});
-    });
-  }
-
-  private getSvcInfo(svcInfo: any): any {
+  public getSvcInfo(svcInfo: any): any {
     if (svcInfo) {
       svcInfo.svcName = SVC_CD[svcInfo.svcCd];
     }
     return svcInfo;
+  }
+
+  private getUsageData(): Observable<any> {
+    return this.apiService.request(API_CMD.BFF_05_0001, {}).map((resp) => {
+      return this.getResult(resp, {});
+    });
   }
 
   private getResult(resp: any, usageData: any): any {
