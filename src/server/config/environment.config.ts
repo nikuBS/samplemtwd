@@ -16,7 +16,8 @@ const environment = {
       port: 31200,
       db: 15
     },
-    TEMP_CDN: 'http://tstore.rbipt.com/skt'
+    TEMP_CDN: 'http://tstore.rbipt.com/skt',
+    TEMP_NEW_CDN: 'http://ipt.rbipt.com'
   },
   qa: {
     BFF_SERVER: {

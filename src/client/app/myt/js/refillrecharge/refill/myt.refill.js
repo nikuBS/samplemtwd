@@ -7,5 +7,9 @@ Tw.MytRefill = function (rootEl) {
 
 Tw.MytRefill.prototype = {
   _bindEvent: function () {
+    this.$container.on('click', '.refill-history', $.proxy(this._goHistoryPage, this));
+  },
+  _goHistoryPage: function () {
+    window.location.href = '/myt/refill/history';
   }
 };

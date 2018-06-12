@@ -1,0 +1,59 @@
+<div class="cont-box">
+    <h3 class="cont-ti">리필쿠폰을 선택하세요.</h3>
+    <!-- .coupon-slide -->
+    <div class="coupon-slide">
+        <!-- .widget -->
+        <div class="widget">
+            <div class="widget-box slider5">
+                <h5 class="tit-a blind">위젯 슬라이드</h5>
+                <div class="type2">
+                    <div class="slider-box">
+                        <!-- type1: 카드형 -->
+                        <ul class="swiper-wrapper">
+                            <% for (var i = 0; i < usageData.length; i++) { %>
+                            <li class="swiper-slide">
+                                <div class="coupon-cont">
+                                    <dl class="coupon-box">
+                                        <dt><span class="coupon-name"><%= usageData[i].copnNm %></span><span class="coupon-code"><%= usageData[i].copnIsueNum %></span></dt>
+                                        <dd>
+                                            <ul class="coupon-list">
+                                                <li><span class="list-ti">유효기간</span><span class="list-tx"><%= usageData[i].startDate %> ~ <%= usageData[i].endDate %></span></li>
+                                                <li><span class="list-ti">발급일</span><span class="list-tx"><%= usageData[i].startDate %></span></li>
+                                            </ul>
+                                        </dd>
+                                    </dl>
+                                    <div class="coupon-bottom"><span class="coupon-validity"><span class="validity">225</span>일 남은</span>
+                                    </div>
+                                    <a class="bt-select-arrow" href="#none" title="선택하기"><span class="ico"></span></a>
+                                </div>
+                            </li>
+                            <% } %>
+                        </ul>
+                        <div class="swiper-pagination"></div>
+                    </div>
+                    <div class="page-total">
+                        <span class="current">1</span>/<span class="total"><%= usageData.length %></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--// .widget -->
+        <ul class="bt-slice ver">
+            <li class="bt-blue1">
+                <button>내 휴대폰에 리필하기</button>
+            </li>
+            <li class="bt-blue1">
+                <button>가족에게 선물하기</button>
+            </li>
+        </ul>
+    </div>
+    <!--// .coupon-slide -->
+    <div class="box-suggest">
+        <div class="suggest-info">
+            <div class="suggest-left">
+                <p class="suggest-tx">SKT 결합가족상품을 이용중이신가요?<br /><em class="tx-bold">가족분과 결합상품을 묶으시면 선물이 가능합니다.</em></p>
+                <a class="bt-link-tx underline" href="#none">결합상품 보러 가기</a>
+            </div>
+        </div>
+    </div>
+</div>
