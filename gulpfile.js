@@ -29,6 +29,7 @@ gulp.task('js-vendor', function () {
     'node_modules/underscore/underscore-min.js',
     'node_modules/handlebars/dist/handlebars.min.js',
     'node_modules/slick-carousel/slick/slick.min.js',
+    'node_modules/swiper/dist/js/swiper.min.js',
     'node_modules/moment/min/moment.min.js'])
     .on('error', function (err) {
       gutil.log(gutil.colors.red('[Error]'), err.toString());
