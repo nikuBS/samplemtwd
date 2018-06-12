@@ -95,4 +95,9 @@ $(window).load(function (){
   $('.common-back').on('click', function () {
     window.history.back();
   });
+
+  /* 리필하기 / 꼭 확인해주세요! toggle 기능 추가 */
+  $('.accordion .acco-tit button').on('click', function () {
+    $(this).closest('.acco-box').toggleClass('on');
+  });
 });
