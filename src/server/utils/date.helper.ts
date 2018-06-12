@@ -23,6 +23,14 @@ class DateHelper {
 
   /**
    * @param date {Date} or {string} : YYYYMMDDhhmmss
+   * @returns {number} : 30
+   */
+  static getNewRemainDate(date: any): number {
+    return moment(this.convDateFormat(date)).diff(new Date(), 'day') + 2;
+  }
+
+  /**
+   * @param date {Date} or {string} : YYYYMMDDhhmmss
    * @returns {string} : 2018.06.01.
    */
   static getShortDate(date: any): string {
