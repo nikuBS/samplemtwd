@@ -226,10 +226,10 @@
                                 <% if (usageData.sms[i].isRemainUnlimited) { %>
                                 <div class="base2"><%= usageData.sms[i].remained %></div>
                                 <% } else { %>
-                                <div class="base">잔여 <strong class="moebius-bold"><%= usageData.sms[i].showRemained %></strong>원</div><!-- (<strong class="moebius-bold gray">26</strong>건) -->
+                                <div class="base">잔여 <strong class="moebius-bold"><%= usageData.sms[i].showRemained %></strong>건</div>
                                 <% } %>
                                 <% if (!usageData.sms[i].isUsedUnlimited) { %>
-                                <div class="rt">사용 <strong class="moebius-bold"><%= usageData.sms[i].showUsed %></strong>원</div><!-- (<strong class="moebius">12</strong>건) -->
+                                <div class="rt">사용 <strong class="moebius-bold"><%= usageData.sms[i].showUsed %></strong>건</div>
                                 <% } %>
                             </div>
                         </div>
