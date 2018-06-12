@@ -21,6 +21,10 @@ class DateHelper {
     return remain;
   }
 
+  static getNewRemainDate(date: any): any {
+    return moment(date).diff(new Date(), 'day') + 2;
+  }
+
   /**
    * @param date {Date} or {string} : YYYYMMDDhhmmss
    * @returns {string} : 2018.06.01.

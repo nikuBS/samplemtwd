@@ -48,6 +48,7 @@ class MyTRefill extends TwViewController {
       usageData.map((data) => {
         data.startDate = DateHelper.getShortDateNoDot(data.usePsblStaDt);
         data.endDate = DateHelper.getShortDateNoDot(data.usePsblEndDt);
+        data.remainDate = DateHelper.getNewRemainDate(data.usePsblEndDt);
       });
     }
     return usageData;
