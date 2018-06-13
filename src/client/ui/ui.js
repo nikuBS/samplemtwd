@@ -96,8 +96,20 @@ $(window).load(function (){
     window.history.back();
   });
 
-  /* 리필하기 / 꼭 확인해주세요! toggle 기능 추가 */
-  $('.accordion .acco-tit button').on('click', function () {
-    $(this).closest('.acco-box').toggleClass('on');
+  /* 리필하기 / swiper 추가 */
+  $('.slider5').each(function (idx) {
+    var swiper,
+      tagClass = 'slide-number' + idx,
+      _this = $(this).find('.slider-box').addClass(tagClass);
+    _this.next().find('.total').text(_this.find('.swiper-slide').length);
+    swiper = new Swiper('.slider5 .' + tagClass, {
+      onInit: function (params) {
+        _this.next().find('.current').text(params.activeIndex + 1);
+        skt_landing.action.toggleon($('.bt-select-arrow'));
+      },
+      onSlideChangeStart: function (params) {
+        _this.next().find('.current').text(params.activeIndex + 1);
+      }
+    });
   });
 });
