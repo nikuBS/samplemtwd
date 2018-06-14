@@ -3,6 +3,7 @@ import ApiService from '../../services/api.service';
 import LoginService from '../../services/login.service';
 import { API_CMD, API_CODE } from '../../types/api-command.type';
 import LoggerService from '../../services/logger.service';
+import { SvcInfoModel } from '../../models/svc-info.model';
 
 abstract class TwViewController {
   private _apiService;
@@ -29,28 +30,22 @@ abstract class TwViewController {
     return this._logger;
   }
 
-  public checkLogin(req: any, res: any, next: any): void {
+  public initPage(req: any, res: any, next: any): void {
     const userId = req.query.userId;
-    const defaultSvc = {
-      custNm: '',
-      svcCd: '',
-      svcNum: '',
-      svcNickNm: '',
-      repSvcYn: '',
-      svcCnt: '',
-    };
 
+    // Mock Test
     let loginCmd = API_CMD.BFF_03_0001;
     if ( userId === 'mock' ) {
       loginCmd = API_CMD.BFF_03_0001_mock;
     }
 
-    if ( this._loginService.isLogin(userId) ) {
+    if ( this.checkLogin(req.session, userId) ) {
       this.render(req, res, next, this._loginService.getSvcInfo());
     } else {
       this._apiService.request(loginCmd, { userId }).subscribe((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
-          this.render(req, res, next, resp.result || defaultSvc);
+          this.loginService.setUserId(userId);
+          this.render(req, res, next, new SvcInfoModel(resp.result));
         } else {
           this.renderError(req, res, next, resp);
         }
@@ -58,10 +53,14 @@ abstract class TwViewController {
     }
   }
 
+  private checkLogin(session: any, userId: string): boolean {
+    this.loginService.setClientSession(session);
+    return this.loginService.isLogin(userId);
+  }
+
   private renderError(req: Request, res: Response, next: NextFunction, message: any) {
     res.send(message);
   }
-
 }
 
 export default TwViewController;

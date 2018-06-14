@@ -7,3 +7,5 @@ Tw.NTV_CMD = {
 Tw.NTV_CODE = {
   CODE_00: 0    // success
 };
+
+Tw.IOS_URL = "tworldapp://"

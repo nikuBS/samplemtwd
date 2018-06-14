@@ -1,35 +1,54 @@
-import { SvcInfoModel } from '../models/svc-info.model';
 import FormatHelper from '../utils/format.helper';
 
 class LoginService {
-  // TODO: replace redis
-  private svcModel: SvcInfoModel = new SvcInfoModel({});
-  private userId: string = '';
+  static instance;
+  private session;
 
   constructor() {
+    if ( LoginService.instance ) {
+      return LoginService.instance;
+    }
+
+    LoginService.instance = this;
   }
 
   public isLogin(userId: string): boolean {
-    if ( userId ) {
-      return !FormatHelper.isEmpty(this.svcModel.serverSession) && this.userId === userId;
+    if ( !FormatHelper.isEmpty(userId) ) {
+      return !FormatHelper.isEmpty(this.session.serverSession) && this.session.userId === userId;
     }
-    return !FormatHelper.isEmpty(this.svcModel.serverSession);
+    return !FormatHelper.isEmpty(this.session.serverSession);
   }
 
+  public setClientSession(session) {
+    this.session = session;
+  }
+
+  public setUserId(userId: string) {
+    this.session.userId = userId;
+  }
+
+  public getUserId(): string {
+    return this.session.userId;
+  }
+
+
   public getSvcInfo(): any {
-    return this.svcModel.svcInfo;
+    return this.session.svcInfo;
   }
 
   public setSvcInfo(svcInfo: any) {
-    this.svcModel.svcInfo = svcInfo;
+    this.session.svcInfo = svcInfo;
   }
 
   public getServerSession(): string {
-    return this.svcModel.serverSession;
+    if ( FormatHelper.isEmpty(this.session.serverSession) ) {
+      return '';
+    }
+    return this.session.serverSession;
   }
 
   public setServerSession(serverSession: string) {
-    this.svcModel.serverSession = serverSession;
+    this.session.serverSession = serverSession;
   }
 }
 

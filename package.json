@@ -48,6 +48,7 @@
     "http-proxy-middleware": "^0.18.0",
     "nodemon": "^1.17.5",
     "pm2": "^2.10.4",
+    "redis": "^2.8.0",
     "ts-node": "^6.0.5",
     "tslint": "^5.9.1",
     "tslint-config-standard": "^7.0.0",

@@ -8,15 +8,19 @@ Tw.NativeService = function () {
 
 Tw.NativeService.prototype = {
   send: function (command, params, callback) {
-    Tw.Logger.info('[Native send]', command, params);
+    Tw.Logger.info('[Native send]', command, params, this._bridge);
     if ( this._bridge ) {
-      this._bridge(this._setParameter(command, params, callback));
+      var parameter = this._setParameter(command, params, callback);
+      this._bridge.postMessage(parameter);
+      if ( Tw.BrowserHelper.isIos() ) {
+        this._callByIframe(Tw.IOS_URL + command + '?p=' + encodeURIComponent(JSON.stringify(parameter)));
+      }
     }
   },
 
   _init: function () {
     this._bridge = Tw.BrowserHelper.isAndroid() ? window.tworld : Tw.BrowserHelper.isIos() ? window.webkit.messageHandlers.tworld : null;
-    window.onNativeCallBack = $.proxy(this._onNativeCallBack, this);
+    window.onNativeCallback = $.proxy(this._onNativeCallback, this);
     window.onBack = $.proxy(this._onBack, this);
   },
 
@@ -37,6 +41,16 @@ Tw.NativeService.prototype = {
     return parameter;
   },
 
+  _callByIframe: function (url) {
+    var iframe = document.createElement('iframe');
+    iframe.src = url;
+    iframe.style.display = 'none';
+    document.body.appendChild(iframe);
+    setTimeout(function () {
+      document.body.removeChild(iframe);
+    }, 100);
+  },
+
   _getRandomCode: function () {
     this._randomCode++;
     return Tw.FormatHelper.leadingZeros(this._randomCode, 6);
@@ -46,7 +60,7 @@ Tw.NativeService.prototype = {
     Tw.Logger.info('onBack', resp);
   },
 
-  _onNativeCallBack: function (resp) {
+  _onNativeCallback: function (resp) {
     Tw.Logger.info('[onNativeCallBack]', resp);
     if ( resp.resultCode === Tw.NTV_CODE.CODE_00 && !!resp.randomCode ) {
       var fn = _.find(this._callbackList, function (data) {
