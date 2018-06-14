@@ -2,30 +2,17 @@ Tw.HomeMain = function (rootEl) {
   this.$container = rootEl;
   this._apiService = new Tw.ApiService();
   this._nativeService = new Tw.NativeService();
-  console.log(this.$container);
 
   this._bindEvent();
 };
 
 Tw.HomeMain.prototype = {
   _bindEvent: function () {
-    Tw.Logger.log('test');
-    this.$container.on('click', '.btn-search', $.proxy(this._onClickAjaxButton, this));
+    this.$container.on('click', '.btn-search', $.proxy(this._onClickSearchButton, this));
   },
 
-  _onClickGnbButton: function ($event) {
-    // $event.preventDefault();
-    // var $target = $($event.currentTarget);
-    // $('.swiper-container').slick('slickGoTo', $target.index());
-  },
-
-  _onClickAjaxButton: function ($event) {
-    console.log('button click');
-    this._apiService.request(Tw.API_CMD.FAKE_POST, { postId: 1 })
-      .done($.proxy(this._success, this))
-      .fail($.proxy(this._fail, this));
-
-    this._nativeService.send(Tw.NTV_CMD.TOAST, { message: 'test' }, this.nativeCallback);
+  _onClickSearchButton: function ($event) {
+    this._nativeService.send(Tw.NTV_CMD.GET_CONTACT, {}, this._onContact);
   },
 
   _success: function (resp) {
@@ -38,8 +25,8 @@ Tw.HomeMain.prototype = {
     console.log('api fail', err);
   },
 
-  nativeCallback: function (resp) {
-    console.log('native callback' + resp);
+  _onContact: function (resp) {
+    console.log('native callback', resp);
   }
 
 };

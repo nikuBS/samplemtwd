@@ -120,6 +120,10 @@ Tw.FormatHelper = (function () {
 
   return {
     leadingZeros: leadingZeros,
+    isEmpty: isEmpty,
+    isObject: isObject,
+    isArray: isArray,
+    isString: isString,
     customDataFormat: customDataFormat,
     convDataFormat: convDataFormat,
     convVoiceFormat: convVoiceFormat,
