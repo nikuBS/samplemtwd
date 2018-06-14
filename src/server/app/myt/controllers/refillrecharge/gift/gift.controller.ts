@@ -1,16 +1,16 @@
 import TwViewController from '../../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
-import LineService from '../../../../../services/line.service';
+import { API_CMD } from '../../../../../types/api-command.type';
 
 class MyTGift extends TwViewController {
-  public lineService = new LineService();
 
   constructor() {
     super();
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    this.lineService.getMobileLineList()
+
+    return this.apiService.request(API_CMD.BFF_03_0003, { svcCtg: 'M' })
       .subscribe((response) => {
         res.render('refillrecharge/gift/gift.html', { lineList: response.result, svcInfo: svcInfo });
       });
