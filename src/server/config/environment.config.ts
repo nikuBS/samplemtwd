@@ -1,5 +1,5 @@
 const environment = {
-  development: {
+  local: {
     BFF_SERVER: {
       url: '211.188.180.73',
       protocol: 'http',
@@ -19,15 +19,29 @@ const environment = {
     TEMP_CDN: 'http://tstore.rbipt.com/skt',
     TEMP_NEW_CDN: 'http://ipt.rbipt.com'
   },
-  qa: {
+  development: {
     BFF_SERVER: {
-      url: 'bff-spring.mtw-dev-bff',
+      url: 'bff-spring.mtw-dev-bff.svc.cluster.local',
       protocol: 'http',
       port: 80
     },
     CDN: '/cdn',
     REDIS: {
-      host: 'dev-backing-redis-mobile-ibm-redis-ha-dev-master-svc',
+      host: 'dev-backing-redis-mobile-ibm-redis-ha-dev-master-svc.mtw-dev-cch.svc.cluster.local',
+      port: 6379,
+      db: 15
+    },
+    TEMP_CDN: 'http://tstore.rbipt.com/skt'
+  },
+  qa: {
+    BFF_SERVER: {
+      url: 'bff-spring.mtw-stg-bff.svc.cluster.local',
+      protocol: 'http',
+      port: 80
+    },
+    CDN: '/cdn',
+    REDIS: {
+      host: 'stg-backing-redis-mobile-ibm-redis-ha-dev-master-svc.mtw-stg-cch.svc.cluster.local',
       port: 6379,
       db: 15
     },
