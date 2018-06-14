@@ -4,12 +4,10 @@ import { API_CMD, API_CODE } from '../../../../../types/api-command.type';
 import DateHelper from '../../../../../utils/date.helper';
 import FormatHelper from '../../../../../utils/format.helper';
 import { Observable } from 'rxjs/Observable';
-import LineService from '../../../../../services/line.service';
 import MyTUsage from '../../usage/myt.usage.controller';
 
 class MyTRefill extends TwViewController {
   public myTUsage = new MyTUsage();
-  public lineService = new LineService();
 
   constructor() {
     super();
@@ -25,7 +23,7 @@ class MyTRefill extends TwViewController {
   }
 
   private getLineList(): any {
-    return this.lineService.getMobileLineList();
+    return this.apiService.request(API_CMD.BFF_03_0003, { svcCtg: 'M' });
   }
 
   private getusageData(): Observable<any> {
