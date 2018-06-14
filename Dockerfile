@@ -26,4 +26,4 @@ ENV NODE_ENV k8s
 # open Application port
 EXPOSE 3000
 
-CMD ["npm", "run", "server-docker:qa"]
+CMD ["npm", "run", "server-docker:dev"]
