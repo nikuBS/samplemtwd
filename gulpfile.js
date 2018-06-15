@@ -69,49 +69,6 @@ gulp.task('js-common', function () {
     .pipe(gulp.dest(dist + 'js'));
 });
 
-gulp.task('js-ui', function () {
-  return gulp.src('src/client/ui/**/*.js')
-    .pipe(concat('ui.js'))
-    .pipe(gulp.dest(dist + 'js'))
-    .pipe(uglify())
-    .on('error', function (err) {
-      gutil.log(gutil.colors.red('[Error]'), err.toString());
-    })
-    .pipe(rename('ui.min.js'))
-    .pipe(gulp.dest(dist + 'js'));
-});
-
-// for sprint3
-gulp.task('js-ui-sprint3', function () {
-  return gulp.src('src/client/ui-sprint3/**/*.js')
-    .pipe(concat('ui-sprint3.js'))
-    .pipe(gulp.dest(dist + 'js'))
-    .pipe(uglify())
-    .on('error', function (err) {
-      gutil.log(gutil.colors.red('[Error]'), err.toString());
-    })
-    .pipe(rename('ui-sprint3.min.js'))
-    .pipe(gulp.dest(dist + 'js'));
-});
-
-gulp.task('css-vendor', function () {
-  return gulp.src([
-    'node_modules/slick-carousel/slick/slick.css',
-    'node_modules/swiper/dist/css/swiper.min.css'])
-    .pipe(concat('vendor.css'))
-    .pipe(gulp.dest(dist + 'css'));
-});
-
-gulp.task('css-ui', function () {
-  return gulp.src('src/client/css/**/*.css')
-    .pipe(gulp.dest(dist + 'css'));
-});
-
-gulp.task('img', function () {
-  return gulp.src('src/client/img/**/*')
-    .pipe(gulp.dest(dist + 'img'));
-});
-
 appNames.map((app) => {
   gulp.task('js-' + app, function () {
     return gulp.src('src/client/app/' + app + '/**/*.js')
@@ -126,6 +83,56 @@ appNames.map((app) => {
   });
 });
 
+gulp.task('css-vendor', function () {
+  return gulp.src([
+    'node_modules/slick-carousel/slick/slick.css',
+    'node_modules/swiper/dist/css/swiper.min.css'])
+    .pipe(concat('vendor.css'))
+    .pipe(gulp.dest(dist + 'css'));
+});
+
+gulp.task('js-rb', function () {
+  return gulp.src('src/client/right-brain/js/**/*.js')
+    .pipe(concat('ui.js'))
+    .pipe(gulp.dest(dist + 'js'))
+    .pipe(uglify())
+    .on('error', function (err) {
+      gutil.log(gutil.colors.red('[Error]'), err.toString());
+    })
+    .pipe(rename('ui.min.js'))
+    .pipe(gulp.dest(dist + 'js'));
+});
+
+// for sprint3
+gulp.task('js-rb-sprint3', function () {
+  return gulp.src('src/client/right-brain/js-sprint3/**/*.js')
+    .pipe(concat('ui-sprint3.js'))
+    .pipe(gulp.dest(dist + 'js'))
+    .pipe(uglify())
+    .on('error', function (err) {
+      gutil.log(gutil.colors.red('[Error]'), err.toString());
+    })
+    .pipe(rename('ui-sprint3.min.js'))
+    .pipe(gulp.dest(dist + 'js'));
+});
+
+
+gulp.task('css-rb', function () {
+  return gulp.src('src/client/right-brain/css/**/*.css')
+    .pipe(gulp.dest(dist + 'css'));
+});
+
+gulp.task('img', function () {
+  return gulp.src('src/client/right-brain/img/**/*')
+    .pipe(gulp.dest(dist + 'img'));
+});
+
+gulp.task('hbs', function () {
+  return gulp.src('src/client/right-brain/hbs/**/*')
+    .pipe(gulp.dest(dist + 'hbs'));
+});
+
+
 gulp.task('watch', function () {
   livereload.listen();
   gulp.watch('src/client/**/*.js', ['js']);
@@ -134,8 +141,8 @@ gulp.task('watch', function () {
 });
 
 gulp.task('js-app', appNames.map((app) => 'js-' + app));
-gulp.task('js', ['js-util', 'js-common', 'js-ui', 'js-ui-sprint3', 'js-app']);
-gulp.task('css', ['css-ui']);
+gulp.task('js', ['js-util', 'js-common', 'js-app']);
 gulp.task('vendor', ['js-vendor', 'css-vendor']);
-gulp.task('default', ['server', 'vendor', 'js', 'css', 'img', 'watch']);
-gulp.task('build', ['vendor', 'js', 'css', 'img']);
+gulp.task('rb', ['js-rb', 'js-rb-sprint3', 'css-rb', 'img', 'hbs']);
+gulp.task('default', ['server', 'vendor', 'js', 'rb', 'watch']);
+gulp.task('build', ['vendor', 'js', 'rb']);
