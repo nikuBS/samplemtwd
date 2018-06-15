@@ -19,7 +19,7 @@ const environment = {
       protocol: 'http',
       port: 80
     },
-    CDN: '/cdn',
+    CDN: '',
     REDIS: {
       host: 'dev-backing-redis-mobile-ibm-redis-ha-dev-master-svc.mtw-dev-cch.svc.cluster.local',
       port: 6379,
@@ -33,7 +33,7 @@ const environment = {
       protocol: 'http',
       port: 80
     },
-    CDN: '/cdn',
+    CDN: '',
     REDIS: {
       host: 'stg-backing-redis-mobile-ibm-redis-ha-dev-master-svc.mtw-stg-cch.svc.cluster.local',
       port: 6379,

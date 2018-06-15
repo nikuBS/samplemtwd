@@ -1,0 +1,30 @@
+<!-- .popup select -->
+<div class="popup">
+	<div class="popup-info">
+		<div class="popup-header">
+            {{#if title}}
+			<h5 class="popup-title">{{title}}</h5>
+            {{/if}}
+            <a href="#close_pop" class="popup-closeBtn">팝업닫기<span class="ico"></span></a>
+		</div>
+		<div class="popup-contents">
+            {{#if txt}}
+		    <p>{{{txt}}}</p>
+		    {{/if}}
+			<ul class="select-list">
+			    {{#each value}}
+                <li><label class="radiobox type01"><input type="radio" value="{{this}}" name="radio"/><span>{{this}}</span></label></li>
+                {{/each}}
+            </ul>
+        </div>
+        <div class="btn-box">
+            <ul class="bt-slice ver">
+                <li class="bt-red1">
+                  <button class="select-submit">확인</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="popup-blind"></div>
+</div>
+<!--// .popup select -->
