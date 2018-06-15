@@ -5,7 +5,10 @@ Tw.MytUsageTdatashareClose = function (rootEl) {
   this._bindEvent();
 };
 
-Tw.MytUsageTdatashareClose.prototype = {
+Tw.MytUsageTdatashareClose.prototype = Object.create(Tw.View.prototype);
+Tw.MytUsageTdatashareClose.prototype.constructor = Tw.MytUsageTdatashareClose;
+
+Tw.MytUsageTdatashareClose.prototype = Object.assign(Tw.MytUsageTdatashareClose.prototype, {
   _bindEvent: function () {
     this.$container.on('click', '.termChild', $.proxy(this._termChild, this));
     console.log(this.$container.find('#tdatashare-fail'));
@@ -33,5 +36,5 @@ Tw.MytUsageTdatashareClose.prototype = {
   _showFail: function() {
     this.$container.find('#tdatashare-fail').css('display', 'block');
   }
+});
 
-};

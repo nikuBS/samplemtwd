@@ -6,7 +6,10 @@ Tw.HomeMainSprint3 = function (rootEl) {
   this._bindEvent();
 };
 
-Tw.HomeMainSprint3.prototype = {
+Tw.HomeMainSprint3.prototype = Object.create(Tw.View.prototype);
+Tw.HomeMainSprint3.prototype.constructor = Tw.HomeMainSprint3;
+
+Tw.HomeMainSprint3.prototype = Object.assign(Tw.HomeMainSprint3.prototype, {
   _bindEvent: function () {
     this.$container.on('click', '.btn-search', $.proxy(this._onClickSearchButton, this));
   },
@@ -28,5 +31,4 @@ Tw.HomeMainSprint3.prototype = {
   _onContact: function (resp) {
     console.log('native callback', resp);
   }
-
-};
+});

@@ -3,9 +3,12 @@ Tw.MytGift = function () {
 
   this._cachedElement();
   this._bindEvent();
-}
+};
 
-Tw.MytGift.prototype = {
+Tw.MytGift.prototype = Object.create(Tw.View.prototype);
+Tw.MytGift.prototype.constructor = Tw.MytGift;
+
+Tw.MytGift.prototype = Object.assign(Tw.MytGift.prototype, {
   _cachedElement: function () {
     this.$container   = $('#wrap');
     this.$select_line = this.$container.find('#sel_line');
@@ -23,4 +26,4 @@ Tw.MytGift.prototype = {
         window.location = window.location.href.split("?")[0];
       });
   }
-}
+});
