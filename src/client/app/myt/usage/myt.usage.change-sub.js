@@ -4,9 +4,12 @@ Tw.MytUsageChangeSub = function () {
   this._init();
   this._cachedElement();
   this._bindEvent();
-}
+};
 
-Tw.MytUsageChangeSub.prototype = {
+Tw.MytUsageChangeSub.prototype = Object.create(Tw.View.prototype);
+Tw.MytUsageChangeSub.prototype.constructor = Tw.MytUsageChangeSub;
+
+Tw.MytUsageChangeSub.prototype = Object.assign(Tw.MytUsageChangeSub.prototype, {
   _init: function () {
     this.originList   = [];
     this.selectList   = [];
@@ -143,4 +146,4 @@ Tw.MytUsageChangeSub.prototype = {
       });
     }
   }
-}
+});

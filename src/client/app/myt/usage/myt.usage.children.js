@@ -4,9 +4,12 @@ Tw.MytUsageChildren = function () {
   this._cachedElement();
   this._bindEvent();
   this._init();
-}
+};
 
-Tw.MytUsageChildren.prototype = {
+Tw.MytUsageChildren.prototype = Object.create(Tw.View.prototype);
+Tw.MytUsageChildren.prototype.constructor = Tw.MytUsageChildren;
+
+Tw.MytUsageChildren.prototype = Object.assign(Tw.MytUsageChildren.prototype, {
   _init: function () {
     this._getData();
   },
@@ -92,4 +95,4 @@ Tw.MytUsageChildren.prototype = {
     this.$wrap_tpl_usage_sms.html(this.tpl_usage_sms({ smsDetail: smsDetail }));
     // this.$wrap_tpl_usage_etc.html(this.tpl_usage_etc({}));
   }
-}
+});

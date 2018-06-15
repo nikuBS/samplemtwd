@@ -8,4 +8,4 @@ Tw.NTV_CODE = {
   CODE_00: 0    // success
 };
 
-Tw.IOS_URL = "tworldapp://"
+Tw.IOS_URL = "tworld://"

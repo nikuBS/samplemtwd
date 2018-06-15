@@ -6,7 +6,10 @@ Tw.MytUsage = function (rootEl) {
   this._bindEvent();
 };
 
-Tw.MytUsage.prototype = {
+Tw.MytUsage.prototype = Object.create(Tw.View.prototype);
+Tw.MytUsage.prototype.constructor = Tw.MytUsage;
+
+Tw.MytUsage.prototype = Object.assign(Tw.MytUsage.prototype, {
   _showAndHide: function () {
     this._getUsageBtn();
     this._getChildren();
@@ -120,4 +123,4 @@ Tw.MytUsage.prototype = {
   _setSmsStyle: function () {
     this.$container.find('.sms .sec:last').addClass('mb0');
   }
-};
+});
