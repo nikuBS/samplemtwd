@@ -6,18 +6,12 @@ const environment = {
       port: 31010
     },
     CDN: 'http://localhost:3001',
-    TEST_SERVER: {
-      url: '150.28.69.26',
-      protocol: 'http',
-      port: 3002
-    },
     REDIS: {
       host: '211.188.180.73',
       port: 31200,
       db: 15
     },
     TEMP_CDN: 'http://tstore.rbipt.com/skt',
-    TEMP_NEW_CDN: 'http://ipt.rbipt.com'
   },
   development: {
     BFF_SERVER: {
