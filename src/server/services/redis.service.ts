@@ -12,7 +12,7 @@ class RedisService {
   private client;
 
   constructor() {
-    this.client = redis.createClient(this.env.REDIS);
+    // this.client = redis.createClient(this.env.REDIS);
   }
 
   public middleware = session({
