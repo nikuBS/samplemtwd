@@ -119,6 +119,7 @@ gulp.task('js-rb-sprint3', function () {
 
 gulp.task('css-rb', function () {
   return gulp.src('src/client/right-brain/css/**/*.css')
+    .pipe(cssmin())
     .pipe(gulp.dest(dist + 'css'));
 });
 
