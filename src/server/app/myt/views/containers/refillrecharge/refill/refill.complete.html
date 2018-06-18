@@ -25,35 +25,41 @@
     <div id="contents" class="container-wrap">
         <h2 class="blind">내용</h2>
         <div class="container">
-            <!-- .cont-box -->
-            <div class="cont-box">
-                <!-- .widget -->
-                <div class="widget">
-                    <div class="widget-box select">
-                        <!--<button class="bt-sel" data-select="100MB,500MB,2TB" data-title="" data-txt="" title="데이터 용량">셀렉트<span class="ico"></span></button>-->
-                        <% if (lineList) { %>
-                        <button class="bt-dropdown big" data-select="010-12**-56**,010-22**-56**,010-32**-56**" data-title="회선선택" data-txt="" title="데이터 용량">010-12**-56**<span class="ico"></span></button>
-                        <% } %>
+            <div class="cont-box nogaps-hoz">
+                <div class="msg-present-box">
+                    <div class="msg-present-comp">
+                        <span class="ico"></span>
+                        <p class="txt"><span class="tx-bold">리필</span>이<br>완료되었습니다.</p>
                     </div>
-                </div>
-                <% if (usageData.length === 0) { %>
-                    <div class="box-suggest">
-                        <div class="suggest-info">
-                            <p class="suggest-tx"><em class="tx-bold">고객님께서는</em><br />사용 가능한 리필쿠폰이 없습니다.</p>
-                            <a class="bt-link-tx" href="#none">사용한 리필내역보기<span class="ico"></span></a>
+                    <div class="gift-data-cont">
+                        <ul class="t-gift-data">
+                            <li>
+                                <dl>
+                                    <dt class="ti-data">나의 잔여 쿠폰</dt>
+                                    <dd class="tx-data"><span class="num"><%= usageData %></span> 장</dd>
+                                </dl>
+                            </li>
+                        </ul>
+                        <div class="bt-gap">
+                            <ul class="bt-slice hoz">
+                                <li class="bt-blue1">
+                                    <button>리필내역 보기</button>
+                                </li>
+                            </ul>
+                            <div class="bt-link-box">
+                                <a class="bt-link-tx" href="#link">실시간 사용량 조회</a>
+                            </div>
                         </div>
                     </div>
-                <% } %>
+                </div>
             </div>
-            <!--// .cont-box -->
             <hr class="cont-sp type1" />
-            <% if (usageData.length === 0) { %>
-                <% include ../../../components/refill/refill.no.coupon.component.html %>
-            <% } else { %>
-                <% include ../../../components/refill/refill.coupon.component.html %>
-            <% } %>
+            <div class="cont-box nogaps">
+                <div class="bt-link-box">
+                    <a class="bt-link-tx" href="/home">홈으로 가기</a>
+                </div>
+            </div>
             <hr class="cont-sp type1" />
-            <% include ../../../components/refill/refill.info.component.html %>
         </div>
     </div>
     <!--// #contents -->
@@ -66,7 +72,6 @@
 <% include ../../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    var comp = new Tw.MytRefill($('#myt-refill'));
   });
 </script>
 <% include ../../../components/end.component.html %>

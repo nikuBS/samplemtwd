@@ -11,7 +11,7 @@
                         <!-- type1: 카드형 -->
                         <div class="slider">
                             <% for (var i = 0; i < usageData.length; i++) { %>
-                            <div class="swiper-slide">
+                            <div id="<%= usageData[i].copnIsueNum %>" class="swiper-slide" data-end="<%= usageData[i].endDateFormat %>">
                                 <div class="coupon-cont bg-color1">
                                     <dl class="coupon-box">
                                         <dt><span class="coupon-name"><%= usageData[i].copnNm %></span><span class="coupon-code"><%= usageData[i].copnIsueNum %></span></dt>
@@ -38,7 +38,7 @@
             </div>
         </div>
         <!--// .widget -->
-        <div class="link-long">
+        <div class="link-long refill-to-my-phone">
             <a href="#link" title="내 휴대폰에 리필하기로 이동">내 휴대폰에 리필하기<span class="ico"></span></a>
         </div>
         <div class="link-long">

@@ -19,6 +19,7 @@ Tw.API_CMD = {
   BFF_06_0004: {path: '/core-recharge/v1/regular-data-gifts', method: Tw.API_METHOD.POST},
   BFF_06_0005: {path: '/core-recharge/v1/regular-data-gifts', method: Tw.API_METHOD.DELETE},
   BFF_06_0006: {path: '/core-recharge/v1/regular-data-gifts', method: Tw.API_METHOD.GET},
+  BFF_06_0007: {path: '/core-recharge/v1/refill-coupons', method: Tw.API_METHOD.PUT},
   BFF_06_0014: {path: '/core-recharge/v1/data-gift-balances', method: Tw.API_METHOD.GET},
   BFF_06_0015: {path: '/core-recharge/v1/data-gift-senders', method: Tw.API_METHOD.GET},
   BFF_06_0016: {path: '/core-recharge/v1/data-gifts', method: Tw.API_METHOD.POST},

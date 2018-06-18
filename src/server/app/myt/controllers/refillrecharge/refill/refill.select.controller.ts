@@ -1,13 +1,12 @@
 import TwViewController from '../../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
-import { API_CMD, API_CODE } from '../../../../../types/api-command.type';
-import DateHelper from '../../../../../utils/date.helper';
-import FormatHelper from '../../../../../utils/format.helper';
 import { Observable } from 'rxjs/Observable';
+import { API_CMD, API_CODE } from '../../../../../types/api-command.type';
 import MyTUsage from '../../usage/myt.usage.controller';
-import {LINE_NAME} from '../../../../../types/bff-common.type';
+import {LINE_NAME, REFILL_CLASS_NAME, REFILL_CODE, REFILL_TXT} from '../../../../../types/bff-common.type';
+import FormatHelper from '../../../../../utils/format.helper';
 
-class MyTRefill extends TwViewController {
+class MyTRefillSelect extends TwViewController {
   public myTUsage = new MyTUsage();
 
   constructor() {
@@ -19,7 +18,7 @@ class MyTRefill extends TwViewController {
       this.getLineList(),
       this.getusageData()
     ).subscribe(([lineList, usageData]) => {
-      this.myTUsage.renderView(res, 'refillrecharge/refill/refill.html', this.getData(lineList, usageData));
+      this.myTUsage.renderView(res, 'refillrecharge/refill/refill.select.html', this.getData(lineList, usageData));
     });
   }
 
@@ -28,14 +27,14 @@ class MyTRefill extends TwViewController {
   }
 
   private getusageData(): Observable<any> {
-    return this.apiService.request(API_CMD.BFF_06_0001, {}).map((resp) => {
+    return this.apiService.request(API_CMD.BFF_06_0009, {}).map((resp) => {
       return this.getResult(resp, {});
     });
   }
 
   private getResult(resp: any, usageData: any): any {
     if (resp.code === API_CODE.CODE_00) {
-      usageData = this.parseData(resp.result);
+      usageData = this.parseData(resp.result.usageOption);
     } else {
       usageData = resp;
     }
@@ -45,11 +44,8 @@ class MyTRefill extends TwViewController {
   private parseData(usageData: any): any {
     if (!FormatHelper.isEmpty(usageData)) {
       usageData.map((data) => {
-        data.startDate = DateHelper.getShortDateNoDot(data.usePsblStaDt);
-        data.endDate = DateHelper.getShortDateNoDot(data.usePsblEndDt);
-        data.endDateFormat = DateHelper.getShortKoreanDate(data.usePsblEndDt);
-        data.isueDate = DateHelper.getShortDateNoDot(data.copnIsueDt);
-        data.remainDate = DateHelper.getNewRemainDate(data.usePsblEndDt);
+        data.text = REFILL_TXT[data.dataVoiceClCd];
+        data.className = 'ico ico-' + REFILL_CLASS_NAME[data.dataVoiceClCd];
       });
     }
     return usageData;
@@ -63,4 +59,4 @@ class MyTRefill extends TwViewController {
   }
 }
 
-export default MyTRefill;
+export default MyTRefillSelect;
