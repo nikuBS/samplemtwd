@@ -1,3 +1,4 @@
+<% include ../../../components/start.component.html %>
 <div id="skipNav" class="skip_navi">
     <ul>
         <li><a href="#gnb_area">메뉴 바로가기</a></li>
@@ -6,7 +7,7 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div class="wrap fixed-wrap"><!-- .fixed-wrap : 페이지 100% 고정 -->
+<div id="myt-refill-select" class="wrap fixed-wrap"><!-- .fixed-wrap : 페이지 100% 고정 -->
     <!-- #header -->
     <div id="header" class="header-wrap">
         <div class="header">
@@ -14,7 +15,7 @@
                 <h1>리필하기</h1>
                 <a href="#allmenu" class="all-menu"><span class="blind">전체메뉴보기</span></a>
             </div>
-            <a href="#pstep" class="prev-step"><span class="blind">이전으로</span></a>
+            <a href="#pstep" class="prev-step common-back"><span class="blind">이전으로</span></a>
             <a href="#search" class="search-content"><span class="blind">검색하기</span></a>
         </div>
     </div>
@@ -31,8 +32,13 @@
                     <div class="widget">
                         <div class="widget-box tube">
                             <ul class="tube-list two type1">
-                                <li><label><input type="radio" name="senddata1" checked><span class="ico ico-data"></span>데이터 100%</label></li>
-                                <li><label><input type="radio" name="senddata1"><span class="ico ico-ngt"></span>음성 20%</label></li>
+                                <% for (var i = 0; i < usageData.length; i++) { %>
+                                <li>
+                                    <label data-value="<%= usageData[i].text %>" data-ofrRt="<%= usageData[i].ofrRt %>" data-copnDtlClCd="<%= usageData[i].copnDtlClCd %>">
+                                        <input type="radio" name="senddata1" checked><span class="<%= usageData[i].className %>"></span><%= usageData[i].copnDtlClNm %>
+                                    </label>
+                                </li>
+                                <% } %>
                             </ul>
                         </div>
                     </div>
@@ -41,10 +47,10 @@
             </div>
             <!--// .cont-box -->
             <!-- .cont-box -->
+            <!--
             <div class="cont-box noborder">
                 <div class="refil-tube">
                     <p class="ti-desc">무엇을 <strong>리필</strong>하시나요?</p>
-                    <!-- .widget -->
                     <div class="widget">
                         <div class="widget-box tube">
                             <ul class="tube-list two type2">
@@ -53,23 +59,25 @@
                             </ul>
                         </div>
                     </div>
-                    <!--// .widget -->
                 </div>
             </div>
+            -->
             <!--// .cont-box -->
             <div class="fixed-wrap-btn">
                 <ul class="bt-slice">
                     <li class="bt-blue1">
-                        <button>다음</button>
+                        <button class="refill-select-btn">다음</button>
                     </li>
                 </ul>
             </div>
         </div>
     </div>
     <!--// #contents -->
-    <!-- #footer -->
-    <div id="footer" class="footer-wrap">
-        <h2 class="blind">하단</h2>
-    </div>
-    <!--// #footer -->
 </div>
+<% include ../../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    var comp = new Tw.MytRefillSelect($('#myt-refill-select'));
+  });
+</script>
+<% include ../../../components/end.component.html %>
