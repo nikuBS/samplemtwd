@@ -92,14 +92,7 @@ gulp.task('css-vendor', function () {
 });
 
 gulp.task('js-rb', function () {
-  return gulp.src('src/client/right-brain/js/**/*.js')
-    .pipe(concat('ui.js'))
-    .pipe(gulp.dest(dist + 'js'))
-    .pipe(uglify())
-    .on('error', function (err) {
-      gutil.log(gutil.colors.red('[Error]'), err.toString());
-    })
-    .pipe(rename('ui.min.js'))
+  return gulp.src('src/client/right-brain/js/script.min.js')
     .pipe(gulp.dest(dist + 'js'));
 });
 
@@ -118,8 +111,7 @@ gulp.task('js-rb-sprint3', function () {
 
 
 gulp.task('css-rb', function () {
-  return gulp.src('src/client/right-brain/css/**/*.css')
-    .pipe(cssmin())
+  return gulp.src('src/client/right-brain/css/style.min.css')
     .pipe(gulp.dest(dist + 'css'));
 });
 

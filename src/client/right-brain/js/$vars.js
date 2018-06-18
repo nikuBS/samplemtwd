@@ -26,7 +26,7 @@ $(document).on('ready', function () {
     default:
   }
   $('head title').text(head_title + head_common);
-  $.get(hbsURL+'footer.hbs', function (text) {
+  $.get(hbsURL+'gnb.hbs', function (text) {
     var tmpl = Handlebars.compile(text);
     var html = tmpl();
     $('.wrap').append(html);
@@ -39,6 +39,7 @@ $(document).on('ready', function () {
             $(this).addClass('on');
           }
       });
-    })
+    });
+    scroll_fn['gnb'] = 'skt_landing.action.gnb_action()';
   });
 });

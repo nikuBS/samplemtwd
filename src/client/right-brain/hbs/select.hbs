@@ -1,30 +1,71 @@
-<!-- .popup select -->
 <div class="popup">
-	<div class="popup-info">
-		<div class="popup-header">
+    <div class="popup-info">
+        <span class="blind">셀렉트 팝업</span>
+        <div class="popup-header">
             {{#if title}}
-			<h5 class="popup-title">{{title}}</h5>
+            <h5 class="popup-title">{{title}}</h5>
             {{/if}}
-            <a href="#close_pop" class="popup-closeBtn">팝업닫기<span class="ico"></span></a>
-		</div>
-		<div class="popup-contents">
-            {{#if txt}}
-		    <p>{{{txt}}}</p>
-		    {{/if}}
-			<ul class="select-list">
-			    {{#each value}}
-                <li><label class="radiobox type01"><input type="radio" value="{{this}}" name="radio"/><span>{{this}}</span></label></li>
-                {{/each}}
-            </ul>
+        </div>
+        <div class="popup-contents">
+            {{#if text}}
+            <p>{{{text}}}</p>
+            {{/if}}
+            {{#if selectCount}}
+            <div class="widget">
+               <div class="widget-box radio">
+                    <ul class="select-list">
+                        {{#each select}}
+                        {{#each options}}
+                        <li>
+                            <label class="radiobox type01">
+                                <input type="radio" value="{{value}}" name="radio" {{#if checked}}checked{{/if}}/><span>{{value}}</span>
+                            </label>
+                        </li>
+                        {{/each}}
+                        {{/each}}
+                    </ul>
+                </div>
+            </div>
+            {{else}}
+               {{#each select}}
+                <dl class="tube-list-ti">
+		        <dt>{{title}}</dt>
+		        <dd>
+                    <!-- .widget -->
+                    <div class="widget">
+                        <div class="widget-box tube">
+                            <ul class="tube-list {{class}}">
+                               {{#each options}}
+                                <li><label><input type="radio" name="radio{{@../index}}"  {{#if checked}}checked{{/if}} value="{{value}}">{{value}}</label></li>
+                                {{/each}}
+                            </ul>
+                        </div>
+                    </div>
+                    <!--// .widget -->
+                    {{#if checkbox}}
+                    {{#each checkbox}}
+                    <div class="select-option">
+                        <div class="widget">
+                            <div class="widget-box check">
+                                <label class="checkbox type01"><input type="checkbox" {{#if checked}}checked{{/if}}/><span>{{text}}</span></label>
+                            </div>
+                        </div>
+                    </div>
+                    {{/each}}
+                    {{/if}}
+                </dd>
+		    </dl>
+           {{/each}}
+            {{/if}}
         </div>
         <div class="btn-box">
             <ul class="bt-slice ver">
                 <li class="bt-red1">
-                  <button class="select-submit">확인</button>
+                    <button class="select-submit">확인</button>
                 </li>
             </ul>
         </div>
+        <a href="#close_pop" class="popup-closeBtn">팝업닫기<span class="ico"></span></a>
     </div>
     <div class="popup-blind"></div>
 </div>
-<!--// .popup select -->

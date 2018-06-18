@@ -247,14 +247,17 @@
   padding: 0.375rem 0 1.4375rem;
 }
 
-.accordion .list-dot > li {
+.accordion .list-dot > .list {
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
   position: relative;
   padding: 0.4375rem 0 0.4375rem 0.75rem;
   font-size: 0.8125rem;
   color: #000;
 }
 
-.accordion .list-dot > li:before {
+.accordion .list-dot > .list:before {
   content: "";
   position: absolute;
   top: 0.8125rem;
@@ -264,20 +267,20 @@
   border-radius: 100%;
 }
 
-.accordion .list-dot > li:first-child {
+.accordion .list-dot > .list:first-child {
   padding-top: 0;
 }
 
-.accordion .list-dot > li:first-child:before {
+.accordion .list-dot > .list:first-child:before {
   top: 0.375rem;
 }
 
-.accordion .list-dot > li em {
+.accordion .list-dot > .list em {
   /*color:map_get($point, skred);*/
   font-weight: 700;
 }
 
-.accordion .list-dot .ex-txt li {
+.accordion .list-dot .ex-txt .list {
   margin: 0.625rem 0 0;
   font-size: 0.75rem;
   color: #757575;
@@ -566,7 +569,95 @@ input[type=checkbox], input[type=radio] {
   width: 50%;
 }
 
+.widget-box.tube .tube-list.refil-tube {
+  margin: 0;
+  /* color #ffdfe5 */
+  /* color #dbe8ff */
+}
+
+.widget-box.tube .tube-list.refil-tube li {
+  float: none;
+  width: 100%;
+  padding: 0.375rem 0 0;
+}
+
+.widget-box.tube .tube-list.refil-tube li label {
+  padding: 0.5625rem 1.5625rem;
+  text-align: left;
+  font-size: 0.875rem;
+  color: #2572ff;
+}
+
+.widget-box.tube .tube-list.refil-tube li label .ico {
+  display: inline-block;
+  margin-right: 0.625rem;
+  width: 3.125rem;
+  height: 3.125rem;
+  background: url(/img/ico/ico-group-100.png) no-repeat 0 0;
+  background-size: 6.25rem;
+}
+
+.widget-box.tube .tube-list.refil-tube li label .ico.ico-data {
+  background-position: 0 0;
+}
+
+.widget-box.tube .tube-list.refil-tube li label .ico.ico-ngt {
+  background-position: 0 -3.125rem;
+}
+
+.widget-box.tube .tube-list.refil-tube li label.checked {
+  border-color: #ea002c;
+  background: #ea002c;
+  color: #fff;
+}
+
+.widget-box.tube .tube-list.refil-tube li label.checked .ico-data {
+  background-position: -3.125rem 0;
+}
+
+.widget-box.tube .tube-list.refil-tube li label.checked .ico-ngt {
+  background-position: -3.125rem -3.125rem;
+}
+
+.widget-box.tube .tube-list.refil-tube li label em {
+  font-weight: 700;
+}
+
+.widget-box.tube .tube-list.refil-tube li:first-of-type {
+  padding-top: 0;
+}
+
+.widget-box.tube .tube-list.refil-tube.type1 li label {
+  border-color: #2572ff;
+}
+
+.widget-box.tube .tube-list.refil-tube.type1 li label.checked {
+  border-color: #ea002c;
+  box-shadow: 0.25rem 0.4375rem 0.875rem 0.125rem #ffdfe5;
+  background: #ea002c;
+}
+
+.widget-box.tube .tube-list.refil-tube.type2 li label {
+  border-color: #2572ff;
+}
+
+.widget-box.tube .tube-list.refil-tube.type2 li label.checked {
+  border-color: #2572ff;
+  box-shadow: 0.25rem 0.4375rem 0.875rem 0.125rem #dbe8ff;
+  background: #2572ff;
+}
+
 .widget-box.iscroll {
   height: 100%;
   overflow: hidden;
+}
+
+.widget-box.select .select-info {
+  overflow: hidden;
+  height: 0;
+  visibility: hidden;
+}
+
+.widget-box.select .select-info select {
+  display: none;
 }
