@@ -2,7 +2,7 @@ import TwViewController from '../../../../../common/controllers/tw.view.controll
 import { Request, Response, NextFunction } from 'express';
 import { API_CMD } from '../../../../../types/api-command.type';
 
-class MyTGift extends TwViewController {
+class MyTGiftComplete extends TwViewController {
 
   constructor() {
     super();
@@ -11,9 +11,9 @@ class MyTGift extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     return this.apiService.request(API_CMD.BFF_03_0003, { svcCtg: 'M' })
       .subscribe((response) => {
-        res.render('refillrecharge/gift/gift.html', { lineList: response.result, svcInfo: svcInfo });
+        res.render('refillrecharge/gift/gift.complete.html', { lineList: response.result, svcInfo: svcInfo });
       });
   }
 }
 
-export default MyTGift;
+export default MyTGiftComplete;
