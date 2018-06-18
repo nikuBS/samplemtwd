@@ -17,6 +17,7 @@ import MyTGiftMembersProcess from './controllers/refillrecharge/gift/gift.member
 import MyTGiftFamilyProcess from './controllers/refillrecharge/gift/gift.family.controller';
 import MyTGiftComplete from './controllers/refillrecharge/gift/gift.complete.controller';
 import MyTGiftHistory from './controllers/refillrecharge/gift/gift.history.controller';
+import MyTGiftRequestProcess from './controllers/refillrecharge/gift/gift.request.controller';
 
 class MytRouter extends TwRouter {
   constructor() {
@@ -38,6 +39,7 @@ class MytRouter extends TwRouter {
     this.controllers.push({ url: '/gift', controller: new MyTGift() });
     this.controllers.push({ url: '/gift/process/family', controller: new MyTGiftFamilyProcess() });
     this.controllers.push({ url: '/gift/process/members', controller: new MyTGiftMembersProcess() });
+    this.controllers.push({ url: '/gift/process/request', controller: new MyTGiftRequestProcess() });
     this.controllers.push({ url: '/gift/complete', controller: new MyTGiftComplete() });
     this.controllers.push({ url: '/gift/history', controller: new MyTGiftHistory() });
   }

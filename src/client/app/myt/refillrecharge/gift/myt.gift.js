@@ -26,14 +26,16 @@ Tw.MytGift.prototype = Object.assign(Tw.MytGift.prototype, {
     this.$container.on('click', '.bt-link-tx', $.proxy(this.openPriceList, this));
     this.$container.on('click', '#showRemainData', $.proxy(this.showRemainData, this));
     this.$popupPage.on('click', $.proxy(this.closePriceList, this));
-    // $(document).on('updateLineInfo', $.proxy(this.updateLineInfo, this));
+    $(document).on('updateLineInfo', $.proxy(this.updateLineInfo, this));
   },
 
-  // updateLineInfo: function (e, lineInfo) {
-  //   this._apiService
-  //     .request(Tw.API_CMD.BFF_03_0003, { svcCtg: 'M' })
-  //     .done($.proxy(this._setLineList, this));
-  // },
+  updateLineInfo: function (e, lineInfo) {
+    //TODO fetch data && data binding
+
+    // this._apiService
+    //   .request(Tw.API_CMD.BFF_03_0003, { svcCtg: 'M' })
+    //   .done($.proxy(this._setLineList, this));
+  },
 
   goToProcess: function (e) {
     this.lineList = this.$btn_change.data('select').split(',');
@@ -52,21 +54,30 @@ Tw.MytGift.prototype = Object.assign(Tw.MytGift.prototype, {
     if ( processType === 'family' ) {
       location.href = '/myt/gift/process/family?' + $.param(params);
     }
+
+    if ( processType === 'family' ) {
+      location.href = '/myt/gift/process/request?' + $.param(params);
+    }
   },
 
   showRemainData: function (e) {
     $(e.currentTarget).hide();
     var $wrap = $('#wrap_remainData');
 
-    // TODO : data binding
+    // TODO : fetch data && binding
     $wrap.append('<span class="gift-box-tx"><strong>990MB</strong></span>');
   },
 
   openPriceList: function () {
     $('#popup_price_list').show();
+    $(document.body).css('height', 'auto');
+    $(document.body).css('overflow-y', 'hidden');
+    $(window).scrollTop(0);
   },
 
   closePriceList: function () {
     $('#popup_price_list').hide();
+    $(document.body).css('height', 'auto');
+    $(document.body).css('overflow-y', 'auto');
   },
 });

@@ -1,9 +1,9 @@
-Tw.MytGiftLine = function () {
-  this.$container = $(document);
+Tw.MytGiftLine = function (rootEl) {
+  this.$container = rootEl;
   this._apiService = new Tw.ApiService();
 
   this._cachedElement();
-  // this._bindEvent();
+  this._bindEvent();
   this.$init();
 };
 
@@ -22,12 +22,25 @@ Tw.MytGiftLine.prototype = Object.assign(Tw.MytGiftLine.prototype, {
 
     $(document).on('click', '.select-submit', function () {
       this.setCurrentLine();
-      $(document).trigger('updateLineInfo', this.lineInfo);
     }.bind(this));
   },
 
   _cachedElement: function () {
     this.$btn_line = $('#btn_change_line');
+  },
+
+  _bindEvent: function () {
+    this.$btn_line.on('click', function (e) {
+      var sCurrentNumber = $(e.currentTarget).text().trim();
+
+      setTimeout(function () {
+        $('.radiobox').each(function (idx, item) {
+          if ( $(item).text() == sCurrentNumber ) {
+            $(item).addClass('checked');
+          }
+        });
+      }, 50);
+    });
   },
 
   getCurrentLine: function () {
@@ -42,9 +55,9 @@ Tw.MytGiftLine.prototype = Object.assign(Tw.MytGiftLine.prototype, {
     if ( queryParams.lineIndex != null ) {
       this.lineIndex = Number(queryParams.lineIndex);
       this.lineInfo = this.lineList[this.lineIndex];
-    } else {
-      this.setCurrentLine();
     }
+
+    this.setCurrentLine();
   },
 
   setCurrentLine: function () {
