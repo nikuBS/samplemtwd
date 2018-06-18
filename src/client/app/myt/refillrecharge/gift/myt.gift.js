@@ -12,24 +12,29 @@ Tw.MytGift.prototype.constructor = Tw.MytGift;
 
 Tw.MytGift.prototype = Object.assign(Tw.MytGift.prototype, {
   $init: function () {
-    this._apiService.request(Tw.API_CMD.BFF_03_0003, { svcCtg: 'M' }).done($.proxy(this._setLineList, this));
-    // this._nativeService.send(Tw.NTV_CMD.GET_CONTACT, {}, this._onContact);
   },
 
   _cachedElement: function () {
     this.$btn_change = $('#btn_change_line');
+    this.$popupPage = $('.popup-page');
   },
 
   _bindEvent: function () {
-    this.$container.on('click', '.radiobox', $.proxy(this.selectLine, this));
-    this.$container.on('click', '.select-submit', $.proxy(this.selectLine, this));
-    this.$container.on('click', '.popup-closeBtn', $.proxy(this.closePopup, this));
-    this.$container.on('click', '.popup-blind', $.proxy(this.closePopup, this));
+    // this.$container.on('click', '.radiobox', $.proxy(this.selectLine, this));
+    // this.$container.on('click', '.popup-blind', $.proxy(this.closePopup, this));
     this.$container.on('click', '.btn_process', $.proxy(this.goToProcess, this));
+    this.$container.on('click', '.bt-link-tx', $.proxy(this.openPriceList, this));
+    this.$container.on('click', '#showRemainData', $.proxy(this.showRemainData, this));
+    this.$popupPage.on('click', $.proxy(this.closePriceList, this));
+    $(document).on('updateLineInfo', $.proxy(this.updateLineInfo, this));
   },
 
-  _setLineList: function (res) {
-    this.lineList = res.result;
+  updateLineInfo: function (e, lineInfo) {
+    //TODO fetch data && data binding
+
+    // this._apiService
+    //   .request(Tw.API_CMD.BFF_03_0003, { svcCtg: 'M' })
+    //   .done($.proxy(this._setLineList, this));
   },
 
   goToProcess: function (e) {
@@ -37,21 +42,42 @@ Tw.MytGift.prototype = Object.assign(Tw.MytGift.prototype, {
     this.lineIndex = this.lineList.indexOf(this.$btn_change.text().trim());
 
     var processType = $(e.currentTarget).data('type');
+    var params = {
+      lineIndex: this.lineIndex,
+      processType: processType
+    }
 
     if ( processType === 'members' ) {
-      location.href = '/myt/gift/process/members?lineIndex=' + this.lineIndex;
+      location.href = '/myt/gift/process/members?' + $.param(params);
     }
 
     if ( processType === 'family' ) {
-      location.href = '/myt/gift/process/family?lineIndex=' + this.lineIndex;
+      location.href = '/myt/gift/process/family?' + $.param(params);
+    }
+
+    if ( processType === 'family' ) {
+      location.href = '/myt/gift/process/request?' + $.param(params);
     }
   },
 
+  showRemainData: function (e) {
+    $(e.currentTarget).hide();
+    var $wrap = $('#wrap_remainData');
 
-  selectLine: function (e) {
-    var selectedLine = $(e.currentTarget);
+    // TODO : fetch data && binding
+    $wrap.append('<span class="gift-box-tx"><strong>990MB</strong></span>');
+  },
 
-    $('.popup .checked').removeClass('checked');
-    selectedLine.toggleClass('checked');
-  }
+  openPriceList: function () {
+    $('#popup_price_list').show();
+    $(document.body).css('height', 'auto');
+    $(document.body).css('overflow-y', 'hidden');
+    $(window).scrollTop(0);
+  },
+
+  closePriceList: function () {
+    $('#popup_price_list').hide();
+    $(document.body).css('height', 'auto');
+    $(document.body).css('overflow-y', 'auto');
+  },
 });
