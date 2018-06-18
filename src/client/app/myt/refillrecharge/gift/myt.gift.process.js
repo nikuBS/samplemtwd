@@ -10,6 +10,8 @@ Tw.MytGiftProcess = function (rootEl) {
 
 Tw.MytGiftProcess.prototype = {
   $init: function () {
+    var queryParams = Tw.UrlHelper.getQueryParams();
+    this.processType = queryParams.processType;
   },
 
   _cachedElement: function () {
@@ -28,6 +30,7 @@ Tw.MytGiftProcess.prototype = {
   },
 
   nextProcess: function () {
-
+    $('.step_1').hide();
+    $('.step_2').show();
   }
 }

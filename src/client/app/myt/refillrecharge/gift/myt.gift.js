@@ -40,17 +40,21 @@ Tw.MytGift.prototype = Object.assign(Tw.MytGift.prototype, {
     this.lineIndex = this.lineList.indexOf(this.$btn_change.text().trim());
 
     var processType = $(e.currentTarget).data('type');
+    var params = {
+      lineIndex: this.lineIndex,
+      processType: processType
+    }
 
     if ( processType === 'members' ) {
-      location.href = '/myt/gift/process/members?lineIndex=' + this.lineIndex;
+      location.href = '/myt/gift/process/members?' + $.param(params);
     }
 
     if ( processType === 'family' ) {
-      location.href = '/myt/gift/process/family?lineIndex=' + this.lineIndex;
+      location.href = '/myt/gift/process/family?' + $.param(params);
     }
   },
 
-  showRemainData: function(e){
+  showRemainData: function (e) {
     $(e.currentTarget).hide();
     var $wrap = $('#wrap_remainData');
 
