@@ -10,6 +10,6 @@
   ],
   "env": {
     "PORT": 3000,
-    "NODE_ENV": "stg"
+    "NODE_ENV": "local"
   }
 }

@@ -3,7 +3,7 @@ const environment = {
     BFF_SERVER: {
       url: '211.188.180.73',
       protocol: 'http',
-      port: 31010
+      port: 32224
     },
     CDN: 'http://localhost:3001',
     REDIS: {
@@ -26,20 +26,6 @@ const environment = {
       db: 15
     },
     TEMP_CDN: 'http://tstore.rbipt.com/skt'
-  },
-  stg: {
-    BFF_SERVER: {
-      url: '211.188.180.73',
-      protocol: 'http',
-      port: 32224
-    },
-    CDN: 'http://localhost:3001',
-    REDIS: {
-      host: '211.188.180.73',
-      port: 31200,
-      db: 15
-    },
-    TEMP_CDN: 'http://tstore.rbipt.com/skt',
   },
   qa: {
     BFF_SERVER: {

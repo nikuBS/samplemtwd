@@ -11,14 +11,14 @@ Tw.MytRefill.prototype.constructor = Tw.MytRefill;
 
 Tw.MytRefill.prototype = Object.assign(Tw.MytRefill.prototype, {
   _bindEvent: function () {
-    this.$container.on('click', '.bt-select-arrow', $.proxy(this._selectCoupon, this));
+    this.$container.on('click', '.coupon-cont', $.proxy(this._selectCoupon, this));
     this.$container.on('click', '.refill-to-my-phone', $.proxy(this._goRefill, this));
     this.$container.on('click', '.refill-history', $.proxy(this._goHistory, this));
   },
   _selectCoupon: function ($event) {
-    var $target = $($event.target);
-    if ($target.hasClass('on')) {
-      $target.parents().siblings().find('.bt-select-arrow').removeClass('on');
+    var $target = $($event.target).parents('.swiper-slide');
+    if ($target.find('.bt-select-arrow').hasClass('on')) {
+      $target.siblings().find('.bt-select-arrow').removeClass('on');
     }
   },
   _goRefill: function ($event) {
