@@ -11,40 +11,34 @@ Tw.MytGiftLine.prototype = Object.create(Tw.View.prototype);
 Tw.MytGiftLine.prototype.constructor = Tw.MytGiftLine;
 
 Tw.MytGiftLine.prototype = Object.assign(Tw.MytGiftLine.prototype, {
-  lineIndex: 0,
   lineInfo: {},
-  lineList: [],
-
   $init: function () {
     this._apiService
       .request(Tw.API_CMD.BFF_03_0003, { svcCtg: 'M' })
       .done($.proxy(this.setDefaultLine, this));
-
-    $(document).on('click', '.select-submit', function () {
-      this.setCurrentLine();
-    }.bind(this));
   },
 
   _cachedElement: function () {
-    this.$btn_line = $('#btn_change_line');
+    this.$btn_line = $('#line-set');
   },
 
   _bindEvent: function () {
-    this.$btn_line.on('click', function (e) {
-      var sCurrentNumber = $(e.currentTarget).text().trim();
-
-      setTimeout(function () {
-        $('.radiobox').each(function (idx, item) {
-          if ( $(item).text() == sCurrentNumber ) {
-            $(item).addClass('checked');
-          }
-        });
-      }, 50);
-    });
+    this.$container.on('click', '.select-submit', $.proxy(this.setCurrentLine, this));
+    this.$container.on('click', '#line-set', $.proxy(this.renderCurrentLine, this));
   },
 
-  getCurrentLine: function () {
-    return this.lineInfo;
+  renderCurrentLine: function (e) {
+    var sCurrentNumber = $(e.currentTarget).text().trim();
+
+    setTimeout(function () {
+      $('.radiobox').each(function (idx, item) {
+        var itemNumber = $(item).text().trim();
+
+        if ( itemNumber == sCurrentNumber ) {
+          $(item).addClass('checked');
+        }
+      });
+    }, 50);
   },
 
   setDefaultLine: function (res) {
@@ -69,6 +63,9 @@ Tw.MytGiftLine.prototype = Object.assign(Tw.MytGiftLine.prototype, {
       });
     }
 
-    $(document).trigger('updateLineInfo', this.lineInfo);
+    this._apiService.request(Tw.API_CMD.BFF_03_0004, {}, { svcMgmtNum: this.lineInfo.svcMgmtNum })
+      .done(function (res) {
+        this.$container.trigger('updateLineInfo', { lineInfo: this.lineInfo, lineList: this.lineList });
+      }.bind(this));
   }
 });
