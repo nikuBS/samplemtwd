@@ -15,9 +15,9 @@ Tw.MytUsageTdatashareClose.prototype = Object.assign(Tw.MytUsageTdatashareClose.
   },
   _termChild: function () {
     var cSvcMgmtNum = this.$container.find('[data-cSvcMgmtNum]').attr('data-cSvcMgmtNum');
-    this._apiService.request(Tw.API_CMD.BFF_05_0011, {}, {}, cSvcMgmtNum)
-      .done($.proxy(this._termSuccess, this))
-      .fail($.proxy(this._termFail, this));
+    // this._apiService.request(Tw.API_CMD.BFF_05_0011, {}, {}, cSvcMgmtNum)
+    //   .done($.proxy(this._termSuccess, this))
+    //   .fail($.proxy(this._termFail, this));
   },
   _termSuccess: function (resp) {
     if ( resp.code === '00' ) {

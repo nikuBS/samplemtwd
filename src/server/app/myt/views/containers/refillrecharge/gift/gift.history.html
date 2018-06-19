@@ -34,9 +34,16 @@
                 <% if(lineList) { %>
                 <div class="widget">
                     <div class="widget-box select">
-                        <button class="bt-dropdown big" data-select="<%=lineList.map((line)=>{return line.svcNum;})%>"
-                                data-title="회선선택" data-txt="" title="데이터 용량"><%=lineList[0].svcNum%><span class="ico"></span>
-                        </button>
+                        <button id="line-set" class="bt-dropdown big" title="데이터 용량"><%=lineList[0].svcNum%><span class="ico"></span></button>
+                        <div class="select-info">
+                            <span class="title">회선 목록</span>
+                            <span class="text"></span>
+                            <select title="회선 목록">
+                                <%lineList.map((line)=>{%>
+                                <option><%=line.svcNum%></option>
+                                <%})%>
+                            </select>
+                        </div>
                     </div>
                 </div>
                 <% } %>
@@ -84,9 +91,25 @@
                                                     <!-- .widget -->
                                                     <div class="widget">
                                                         <div class="widget-box select">
-                                                            <button class="bt-dropdown small" data-select="전체,받음,보냄"
+                                                            <button id="term-set" class="bt-dropdown small" data-select="전체,받음,보냄"
                                                                     data-title="검색 조건 변경" title="검색 조건 변경">전체 · 3개월
                                                             </button>
+                                                            <div class="select-info">
+                                                                <span class="title">검색 조건 변경</span>
+                                                                <span class="text"><!-- 내용 없을 경우 빈 영역 --></span>
+                                                                <select title="Type" class="three">
+                                                                    <option selected>전체</option>
+                                                                    <option>보냄</option>
+                                                                    <option>받은</option>
+                                                                </select>
+                                                                <select title="기간" class="two">
+                                                                    <option>1개월</option>
+                                                                    <option selected>3개월</option>
+                                                                    <option>6개월</option>
+                                                                    <option>1년</option>
+                                                                </select>
+                                                            </div>
+                                                            <span class="blind" id="dateSpectrum"><%=dateList.map((date)=>{return date;})%></span>
                                                         </div>
                                                     </div>
                                                     <!--// .widget -->
