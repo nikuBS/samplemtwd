@@ -15,7 +15,7 @@ class MyTRefillComplete extends TwViewController {
     Observable.combineLatest(
       this.getusageData()
     ).subscribe(([usageData]) => {
-      this.myTUsage.renderView(res, 'refillrecharge/refill/refill.complete.html', usageData);
+      this.myTUsage.renderView(res, 'refillrecharge/refill/refill.complete.html', { usageData });
     });
   }
 

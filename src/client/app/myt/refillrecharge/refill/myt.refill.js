@@ -14,6 +14,7 @@ Tw.MytRefill.prototype = Object.assign(Tw.MytRefill.prototype, {
     this.$container.on('click', '.coupon-cont', $.proxy(this._selectCoupon, this));
     this.$container.on('click', '.refill-to-my-phone', $.proxy(this._goRefill, this));
     this.$container.on('click', '.refill-history', $.proxy(this._goHistory, this));
+    this.$container.on('click', '.bt-link-tx', $.proxy(this._showProduct, this));
   },
   _selectCoupon: function ($event) {
     var $target = $($event.target).parents('.swiper-slide');
@@ -32,6 +33,12 @@ Tw.MytRefill.prototype = Object.assign(Tw.MytRefill.prototype, {
   },
   _goHistory: function () {
     this._goLoad('/myt/refill/history');
+  },
+  _showProduct: function ($event) {
+    $event.preventDefault();
+    skt_landing.action.popup.open({
+      hbs:'DA_01_01_01_L01'// hbs의 파일명
+    });
   },
   _setLocalStorage: function (dataMap) {
     for (var key in dataMap) {

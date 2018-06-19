@@ -1,4 +1,4 @@
-<div class="cont-box nogaps-btm">
+<div class="cont-box <% if (usageOptions.length > 0) { %>nogaps-btm<% } %>">
     <h3 class="cont-ti">내가 가진 리필쿠폰</h3>
     <!-- .coupon-slide -->
     <div class="coupon-slide">
@@ -37,15 +37,18 @@
             </div>
         </div>
         <!--// .widget -->
+        <% if (usageOptions.length > 0) { %>
         <div class="link-long refill-to-my-phone">
             <a href="#link" class="disabled" title="내 휴대폰에 리필하기로 이동">내 휴대폰에 리필하기<span class="ico"></span></a>
         </div>
         <div class="link-long">
             <a href="#link" class="disabled" title="가족에게 선물하기로 이동">가족에게 선물하기<span class="ico"></span></a>
         </div>
+        <% } %>
     </div>
 </div>
 <!--// .coupon-slide -->
+<% if (usageOptions.length > 0) { %>
 <div class="cont-box nogaps noborder">
     <div class="box-plan">
         <div class="plan-info">
@@ -55,3 +58,4 @@
         </div>
     </div>
 </div>
+<% } %>
