@@ -16,21 +16,20 @@ Tw.MytGift.prototype = Object.assign(Tw.MytGift.prototype, {
 
   _cachedElement: function () {
     this.$btn_change = $('#btn_change_line');
-    this.$popupPage = $('.popup-page');
   },
 
   _bindEvent: function () {
     // this.$container.on('click', '.radiobox', $.proxy(this.selectLine, this));
-    // this.$container.on('click', '.popup-blind', $.proxy(this.closePopup, this));
     this.$container.on('click', '.btn_process', $.proxy(this.goToProcess, this));
     this.$container.on('click', '.bt-link-tx', $.proxy(this.openPriceList, this));
     this.$container.on('click', '#showRemainData', $.proxy(this.showRemainData, this));
-    this.$popupPage.on('click', $.proxy(this.closePriceList, this));
+    this.$container.on('click', '.popup-blind', $.proxy(this.closePopup, this));
+    this.$container.on('click', $.proxy(this.closePriceList, this));
     $(document).on('updateLineInfo', $.proxy(this.updateLineInfo, this));
   },
 
   updateLineInfo: function (e, lineInfo) {
-    //TODO fetch data && data binding
+    // TODO: fetch data && data binding
 
     // this._apiService
     //   .request(Tw.API_CMD.BFF_03_0003, { svcCtg: 'M' })
@@ -55,7 +54,7 @@ Tw.MytGift.prototype = Object.assign(Tw.MytGift.prototype, {
       location.href = '/myt/gift/process/family?' + $.param(params);
     }
 
-    if ( processType === 'family' ) {
+    if ( processType === 'request' ) {
       location.href = '/myt/gift/process/request?' + $.param(params);
     }
   },
@@ -80,4 +79,8 @@ Tw.MytGift.prototype = Object.assign(Tw.MytGift.prototype, {
     $(document.body).css('height', 'auto');
     $(document.body).css('overflow-y', 'auto');
   },
+
+  closePopup: function () {
+    $('.popup-closeBtn').click();
+  }
 });
