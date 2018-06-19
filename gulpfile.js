@@ -25,6 +25,7 @@ gulp.task('server', function () {
 
 gulp.task('js-vendor', function () {
   return gulp.src([
+    'src/client/vendor/**/*.js',
     'node_modules/jquery/dist/jquery.min.js',
     'node_modules/underscore/underscore-min.js',
     'node_modules/handlebars/dist/handlebars.min.js',
