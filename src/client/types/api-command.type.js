@@ -15,5 +15,6 @@ Tw.API_CMD = {
   BFF_05_0002: {path: '/my-t/balance-add-ons', method: Tw.API_METHOD.GET},
   BFF_05_0009: {path: '/core-balance/v1/data-sharings/balances', method: Tw.API_METHOD.GET},
   BFF_05_0010: {path: '/core-balance/v1/children', method: Tw.API_METHOD.GET},
-  BFF_05_0011: {path: '/core-balance/v1/data-sharings/args-0', method: Tw.API_METHOD.POST}
+  BFF_05_0011: {path: '/core-balance/v1/data-sharings/args-0', method: Tw.API_METHOD.POST},
+  BFF_03_0023: {path: '/core-recharge/v1/refill-gifts', method: Tw.API_METHOD.POST}
 };

@@ -12,6 +12,9 @@ import MyTUsage24hours50discount from './controllers/usage/myt.usage.24hours-50d
 import MyTUsageDataLimit from './controllers/usage/myt.usage.data-limit.controller';
 import MyTRefill from './controllers/refillrecharge/refill/refill.controller';
 import MyTRefillHistory from './controllers/refillrecharge/refill/refill.history.controller';
+import MyTRefillGift from './controllers/refillrecharge/refill/refill.gift.controller';
+import MyTRefillGiftComplete from './controllers/refillrecharge/refill/refill.gift-complete.controller';
+import MyTRefillGiftProducts from './controllers/refillrecharge/refill/refill.gift-products.controller';
 import MyTGift from './controllers/refillrecharge/gift/gift.controller';
 import MyTGiftMembersProcess from './controllers/refillrecharge/gift/gift.members.controller';
 import MyTGiftFamilyProcess from './controllers/refillrecharge/gift/gift.family.controller';
@@ -34,6 +37,9 @@ class MytRouter extends TwRouter {
 
     this.controllers.push({ url: '/refill', controller: new MyTRefill() });
     this.controllers.push({ url: '/refill/history', controller: new MyTRefillHistory() });
+    this.controllers.push({ url: '/refill/gift', controller: new MyTRefillGift() });
+    this.controllers.push({ url: '/refill/gift-complete', controller: new MyTRefillGiftComplete() });
+    this.controllers.push({ url: '/refill/gift-products', controller: new MyTRefillGiftProducts() });
     this.controllers.push({ url: '/gift', controller: new MyTGift() });
     this.controllers.push({ url: '/gift/process/family', controller: new MyTGiftFamilyProcess() });
     this.controllers.push({ url: '/gift/process/members', controller: new MyTGiftMembersProcess() });
