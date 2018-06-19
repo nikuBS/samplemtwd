@@ -172,9 +172,20 @@ input, button, select, a + button, .selectBox, .calendar {
   *margin-right: 4px;
 }
 
-input, textarea {
+input[type='radio'], input[type='text'], input[type='password'], input[type='checkbox'], textarea, button, select {
   -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-color: transparent;
+  -webkit-background-color: transparent;
+  -moz-background-color: transparent;
+  border: 0;
+  -webkit-border: 0;
+  -moz-border: 0;
   -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  -o-border-radius: 0;
+  border-radius: 0;
 }
 
 input::-webkit-scrollbar, textarea::-webkit-scrollbar {
@@ -343,11 +354,12 @@ a, a:link, a:visited, a:active, a:hover {
 
 .link-long {
   position: relative;
-  padding: 0.9375rem 0 1.125rem;
   border-bottom: 1px solid #cfcfcf;
 }
 
 .link-long a {
+  display: block;
+  padding: 0.9375rem 0 1.125rem;
   font-size: 0.8125rem;
   color: #000;
   line-height: 1.5625rem;
@@ -361,8 +373,18 @@ a, a:link, a:visited, a:active, a:hover {
   top: 0.9375rem;
   width: 1.5625rem;
   height: 1.5625rem;
-  background: url(/img/ico/ico-group.png) no-repeat 0 -17.1875rem;
+  background-image: url(/img/ico/ico-group.png);
+  background-repeat: no-repeat;
+  background-position: 0 -17.1875rem;
   background-size: 3.125rem;
+}
+
+.link-long a.disabled {
+  color: #757575;
+}
+
+.link-long a.disabled .ico {
+  background-position: -1.5625rem -17.1875rem;
 }
 
 button {

@@ -4,28 +4,37 @@
   padding-bottom: 4.0625rem;
 }
 
-.gnb-list {
+#gnb {
   position: fixed;
-  bottom: 0;
+  height: 4.0625rem;
+  bottom: -4.0625rem;
   left: 0;
   width: 100%;
-  overflow: hidden;
+  transition: all .5s;
   box-shadow: 0rem -0.25rem 0.375rem 0.0625rem rgba(0, 0, 0, 0.03);
   background: #fff;
 }
 
-.gnb-list li {
+#gnb.on {
+  bottom: 0;
+}
+
+#gnb .gnb-list {
+  overflow: hidden;
+}
+
+#gnb .gnb-list li {
   float: left;
   width: 25%;
 }
 
-.gnb-list li .bt-gnb {
+#gnb .gnb-list li .bt-gnb {
   display: block;
   padding: 0.625rem 0 0.6875rem;
   text-align: center;
 }
 
-.gnb-list li .bt-gnb .ico {
+#gnb .gnb-list li .bt-gnb .ico {
   display: inline-block;
   width: 1.875rem;
   height: 1.875rem;
@@ -34,23 +43,23 @@
   background-size: 5.625rem;
 }
 
-.gnb-list li .bt-gnb .ico.home {
+#gnb .gnb-list li .bt-gnb .ico.home {
   background-position: -0.4375rem -0.4375rem;
 }
 
-.gnb-list li .bt-gnb .ico.myt {
+#gnb .gnb-list li .bt-gnb .ico.myt {
   background-position: -0.4375rem -3.125rem;
 }
 
-.gnb-list li .bt-gnb .ico.tchannel {
+#gnb .gnb-list li .bt-gnb .ico.tchannel {
   background-position: -0.4375rem -6.0625rem;
 }
 
-.gnb-list li .bt-gnb .ico.all {
+#gnb .gnb-list li .bt-gnb .ico.all {
   background-position: -0.625rem -8.875rem;
 }
 
-.gnb-list li .bt-gnb .gnb-tx {
+#gnb .gnb-list li .bt-gnb .gnb-tx {
   display: block;
   color: #555;
   text-align: center;
@@ -58,29 +67,29 @@
   font-weight: 700;
 }
 
-.gnb-list li .bt-gnb .gnb-tx .eng {
+#gnb .gnb-list li .bt-gnb .gnb-tx .eng {
   font-family: Helvetica Neue, Roboto, sans-serif;
   letter-spacing: 0;
   vertical-align: top;
 }
 
-.gnb-list li .bt-gnb.on .ico.home {
+#gnb .gnb-list li .bt-gnb.on .ico.home {
   background-position: -3.25rem -0.4375rem;
 }
 
-.gnb-list li .bt-gnb.on .ico.myt {
+#gnb .gnb-list li .bt-gnb.on .ico.myt {
   background-position: -3.25rem -3.125rem;
 }
 
-.gnb-list li .bt-gnb.on .ico.tchannel {
+#gnb .gnb-list li .bt-gnb.on .ico.tchannel {
   background-position: -3.25rem -6.0625rem;
 }
 
-.gnb-list li .bt-gnb.on .ico.all {
+#gnb .gnb-list li .bt-gnb.on .ico.all {
   background-position: -3.4375rem -8.75rem;
 }
 
-.gnb-list li .bt-gnb.on .gnb-tx {
+#gnb .gnb-list li .bt-gnb.on .gnb-tx {
   color: #e01f2a;
 }
 
@@ -149,7 +158,6 @@
   background-position: -1.5625rem -15.625rem;
 }
 
-/** footer **/
 /** 공통 박스 구조 **/
 .cont-box {
   padding: 1.75rem 1.625rem;
@@ -242,7 +250,7 @@
   vertical-align: middle;
 }
 
-.popup-page .footer-wrap .page-footer {
+.popup-page .gnb-wrap .page-gnb {
   position: fixed;
   bottom: 0;
   left: 0;

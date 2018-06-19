@@ -89,37 +89,39 @@ skt_landing.util = {
   }
 }
 skt_landing.action = {
+  scroll_top:0,
+  scroll_current:0,
   scroll_gap: 0,
   fix_scroll: function () {
-    this.scroll_gap = $('body').scrollTop();
-    $('#container').css({
+    this.scroll_gap = $(window).scrollTop();
+    $('#contents').css({
+      'position':'fixed',
       'transform': 'translate(0 ,-' + this.scroll_gap + 'px)'
     });
     $('#header').css({
       'transform': 'translate(0 ,' + this.scroll_gap + 'px)'
     });
-    $('#gnb').css({
-      'transform': 'translate(0 ,' + this.scroll_gap + 'px)'
-    });
-    $('body').css({
-      'height': skt_landing.util.win_info.get_winH(),
-      'overflow-y': 'hidden'
-    });
+  },
+  gnb_action : function(){
+    skt_landing.action.scroll_top = skt_landing.util.win_info.get_scrollT();
+    if(skt_landing.action.scroll_top > skt_landing.action.scroll_current && !(skt_landing.action.scroll_top + skt_landing.util.win_info.get_winH() >= $('body').height()-5) && (skt_landing.action.scroll_top > 0)){
+      //$('.footer-wrap').hide();
+      $('.gnb-wrap').removeClass('on');
+    }else{
+      //$('.footer-wrap').show();
+      $('.gnb-wrap').addClass('on');
+    }
+    skt_landing.action.scroll_current = skt_landing.util.win_info.get_scrollT();
   },
   auto_scroll: function () {
-    $('#container').css({
+    $('#contents').css({
+      'position': 'relative',
       'transform': 'inherit'
     });
     $('#header').css({
       'transform': 'inherit'
     });
-    $('#gnb').css({
-      'transform': 'inherit'
-    });
-    $('body').css({
-      'height': 'auto',
-      'overflow-y': 'auto'
-    }).scrollTop(this.scroll_gap)
+    $(window).scrollTop(this.scroll_gap);
   },
   anchor: function () {
     $('.anchor').each(function (idx) {

@@ -3,6 +3,7 @@ $(document).on('ready', function () {
 });
 skt_landing.widgets = {
   widget_init: function(ta){ // string : selector
+    widget_list = {};
     ta = ta ? $(ta+' .widget') : $('.widget');
     ta.each(function (idx) {
       var com = $(this).find('.widget-box').attr('class').replace(/widget-box /, '');
@@ -64,17 +65,42 @@ skt_landing.widgets = {
   widget_step: function () {
   },
   widget_select: function () {
-    $('.bt-dropdown').on('click', function () {
+    $('.bt-dropdown').off('click').on('click', function () {
       var _this = $(this),
-        data_title;
-      _this.data('title') ? data_title = true : data_title = false;
-
-      var popupInfo = {
-        'title_chk': data_title,
-        'title': _this.data('title'),
-        'value': _this.data('select').split(','),
-        'txt': _this.data('txt')
-      };
+          infoBox = _this.siblings('.select-info'),
+          select = infoBox.find('select');
+          popupInfo = {
+            'title': infoBox.find('.title').text(),
+            'text': infoBox.find('.text').text(),
+            'select':[/*{'title':'','options':[]}*/],
+            'selectCount':select.length > 1 ? false : true
+          };
+      for(var i=0, leng=select.length; i<leng; ++i){
+        var options = select.eq(i).find('option'),
+            _options = [];
+        for(var j=0, leng2=options.length; j<leng2; ++j){
+          _options.push({
+            'value' : options.eq(j).text(),
+            'checked' : options.eq(j).attr('selected')
+          })
+        }
+        var selectValue = {
+          'title' : select.eq(i).attr('title'),
+          'class' : select.eq(i).attr('class'),
+          'options':_options,
+          'checkbox':[]
+        }
+        if(select.eq(i).next('.select-option').length > 0){
+          var label = select.eq(i).next('.select-option').find('label');
+          for(var k=0, leng3=label.length; k<leng3; ++k){
+            selectValue.checkbox.push({
+              'checked': label.eq(k).find('input').attr('checked'),
+              'text': label.eq(k).text()
+            });
+          }
+        }
+        popupInfo.select.push(selectValue);
+      }
       if($('.popup').length > 0){
         $('.popup').empty().remove();
       }
@@ -83,17 +109,41 @@ skt_landing.widgets = {
         var html = tmpl(popupInfo);
         $('body').append(html);
       }).done(function () {
-        $('.popup-info').attr('tabindex',-1).focus(); //포커스
+        skt_landing.action.fix_scroll();
+        skt_landing.action.popup.scroll_chk();
+        $('.popup-info .blind').eq(0).attr('tabindex',-1).focus(); //포커스
         $('.popup-info')[0].scrollIntoView();
+        skt_landing.widgets.widget_init('.popup');
         $('.popup-closeBtn').off('click').on('click', function () {
           skt_landing.action.popup.close();
           _this.attr('tabindex',0).focus().attr('tabindex',''); //포커스
         });
-        skt_landing.widgets.widget_radio();
-        $('.select-submit').off('click').on('click', function () {
-          _this.text($('.select-list li label.checked input').val());
+        $('.select-submit').off('click').on('click', function () { //submit 버튼 이벤트
+          var tubeList = $(this).closest('.popup').find('.tube-list-ti');
+          if(tubeList.length > 0){
+            var list='',
+                spCode = ' · ';
+            tubeList.each(function(idx){
+              var text = $(this).find('input:checked');
+              if(text.length > 0){
+                list += !idx ? text.val() : spCode + text.val();
+              }else{
+                list += !idx ? '선택안함' : spCode + '선택안함';
+              }
+              if(text.closest('li').index() > -1){
+                _this.siblings().find('select').eq(idx).find('option').attr('selected',null).eq(text.closest('li').index()).attr('selected','selected');
+              }
+            });
+            _this.text(list);
+          }else{
+            if($('.popup .checked').closest('li').index() > -1){
+              _this.text($('.popup .checked input').val());
+              _this.siblings().find('select').find('option').attr('selected',null).eq($('.popup .checked').closest('li').index()).attr('selected','selected');
+            }
+          }
           skt_landing.action.popup.close();
           _this.attr('tabindex',0).focus().attr('tabindex',''); //포커스
+          skt_landing.action.auto_scroll();
         });
       });
     });
@@ -207,7 +257,7 @@ skt_landing.widgets = {
         totalBox.find('.total').text(slick.slideCount);
       });
     });
-    
+
 
 
       /*onAfterChange: function(){
@@ -253,7 +303,6 @@ skt_landing.widgets = {
         totalBox.find('.current').text(slick.currentSlide+1);
         totalBox.find('.total').text(slick.slideCount);
         skt_landing.action.toggleon($('.bt-select-arrow'));
-        console.log($(this));
         //var  slickCont = $(this).find('.slick-slide');
         //slickCont.each(function(){
         //  $(this).replaceWith($('<li>').append($(this).contents()));
