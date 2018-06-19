@@ -49,7 +49,7 @@ Tw.MytUsageChildren.prototype = Object.assign(Tw.MytUsageChildren.prototype, {
   _getData: function () {
     var childSvcMgmtNum = this.$descendats.data('svcmgmtnum');
 
-    this._apiService.request(Tw.API_CMD.BFF_05_0001, {}, { headers: { "childSvcMgmtNum": childSvcMgmtNum } })
+    this._apiService.request(Tw.API_CMD.BFF_05_0001, {}, { "childSvcMgmtNum": childSvcMgmtNum } )
       .done($.proxy(this.onSuccessLoadData, this));
   },
 

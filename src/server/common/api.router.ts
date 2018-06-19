@@ -53,7 +53,6 @@ class ApiRouter {
   private sendRequest(cmd: any, req: Request, res: Response, next: NextFunction) {
     const params = cmd.method === API_METHOD.GET ? req.query : req.body;
     const headers = req.headers;
-    res.cookie('cookie', '1');
 
     this.apiService.request(cmd, params, headers)
       .subscribe(data => {
