@@ -4,7 +4,6 @@ Tw.MytRefillSelect = function (rootEl) {
   this.window = window;
   this._apiService = new Tw.ApiService();
 
-  this._init();
   this._bindEvent();
 };
 
@@ -12,9 +11,6 @@ Tw.MytRefillSelect.prototype = Object.create(Tw.View.prototype);
 Tw.MytRefillSelect.prototype.constructor = Tw.MytRefillSelect;
 
 Tw.MytRefillSelect.prototype = Object.assign(Tw.MytRefillSelect.prototype, {
-  _init: function () {
-    var couponNumber = this._getLocalStorage('refillCouponNumber');
-  },
   _bindEvent: function () {
     this.$container.on('click', '.refill-select-btn', $.proxy(this._confirmRefill, this));
     this.$document.on('click', '.refill-cancel', $.proxy(this._closePopup, this));
@@ -52,10 +48,12 @@ Tw.MytRefillSelect.prototype = Object.assign(Tw.MytRefillSelect.prototype, {
   },
   _makeRequestData: function (reqData) {
     var $target = this.$container.find('label.checked');
-    reqData.copnIsueNum = this._getLocalStorage('refillCouponNumber');
-    reqData.ofrRt = $target.data('ofrrt');
-    reqData.copnDtlClCd = $target.data('copndtlclcd');
-    return JSON.stringify(reqData);
+    reqData = {
+      copnIsueNum: this._getLocalStorage('refillCouponNumber'),
+      ofrRt: $target.data('ofrrt'),
+      copnDtlClCd: $target.data('copndtlclcd')
+    };
+    return reqData;
   },
   _success: function (res) {
     this._closePopup();
