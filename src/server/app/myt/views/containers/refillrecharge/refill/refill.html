@@ -30,16 +30,15 @@
                 <!-- .widget -->
                 <div class="widget">
                     <div class="widget-box select">
-                        <!--<button class="bt-sel" data-select="100MB,500MB,2TB" data-title="" data-txt="" title="데이터 용량">셀렉트<span class="ico"></span></button>-->
                         <% if (lineList) { %>
-                        <button class="bt-dropdown big" title="셀렉트 선택">010-12**-56**<span class="ico"></span></button>
+                        <button class="bt-dropdown big" title="셀렉트 선택"><%= lineList[0].svcNum %><span class="ico"></span></button>
                         <div class="select-info">
                             <span class="title">데이터 용량</span>
                             <span class="text"></span>
                             <select title="데이터 용량">
-                                <option selected>010-12**-56**</option>
-                                <option>010-22**-56**</option>
-                                <option>010-32**-56**</option>
+                                <% for (var i = 0; i < lineList.length; i++) { %>
+                                <option><%= lineList[i].svcNum %></option>
+                                <% } %>
                             </select>
                         </div>
                         <% } %>

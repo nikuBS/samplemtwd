@@ -41,14 +41,14 @@ Tw.MytRefillSelect.prototype = Object.assign(Tw.MytRefillSelect.prototype, {
     skt_landing.action.popup.close();
   },
   _refill: function () {
-    var reqData = this._makeRequestData({});
+    var reqData = this._makeRequestData();
     this._apiService.request(Tw.API_CMD.BFF_06_0007, reqData)
       .done($.proxy(this._success, this))
       .fail($.proxy(this._fail, this));
   },
-  _makeRequestData: function (reqData) {
+  _makeRequestData: function () {
     var $target = this.$container.find('label.checked');
-    reqData = {
+    var reqData = {
       copnIsueNum: this._getLocalStorage('refillCouponNumber'),
       ofrRt: $target.data('ofrrt'),
       copnDtlClCd: $target.data('copndtlclcd')
