@@ -299,7 +299,9 @@ a, a:link, a:visited, a:active, a:hover {
 }
 
 .bt-link-tx {
+  position: relative;
   display: inline-block;
+  padding-right: 0.9375rem;
   font-size: 0.6875rem;
   color: #325ec1;
   font-weight: 400;
@@ -342,11 +344,13 @@ a, a:link, a:visited, a:active, a:hover {
 }
 
 .bt-link-tx .ico {
+  position: absolute;
   display: inline-block;
+  top: 50%;
+  right: 0;
   width: 0.6875rem;
   height: 0.6875rem;
-  margin-top: 0.1875rem;
-  margin-left: 0.3125rem;
+  margin-top: -0.375rem;
   vertical-align: top;
   background: url(/img/ico/ico-group.png) no-repeat -0.4375rem -11.875rem;
   background-size: 2.875rem;
@@ -749,6 +753,55 @@ strong {
 
 .ti-desc .num {
   font-family: Helvetica Neue, Roboto, sans-serif;
+}
+
+.loading {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.loading .loading_ico {
+  position: absolute;
+  width: 2.5rem;
+  height: 2.5rem;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+}
+
+.loading em {
+  display: block;
+  text-align: center;
+  font-size: 0.75rem;
+  color: #325ec1;
+}
+
+.loading em.white {
+  color: white;
+}
+
+.loading em.blue {
+  color: #325ec1;
+}
+
+.loading em.grey {
+  color: #757575;
+}
+
+.loading.full {
+  z-index: 15;
+}
+
+.loading.full .loading_ico {
+  top: -0.75rem;
+  width: 5rem;
+  height: 5rem;
 }
 
 /* slick.css */

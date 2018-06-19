@@ -817,6 +817,7 @@
   padding: 0 1.875rem 0 0;
   position: relative;
   display: inline-block;
+  line-height: 1.3125rem;
 }
 
 .tab-area .tab-contents ul li .gift-box-info .gift-box-info-list .my-data:after {
@@ -824,7 +825,7 @@
   display: inline-block;
   position: absolute;
   right: 0.9375rem;
-  top: 0.375rem;
+  top: 0.1875rem;
   width: 0.5rem;
   height: 1rem;
   background: url(/img/ico/ico-group2.png) no-repeat -0.5625rem -1.875rem;
@@ -919,6 +920,10 @@
   background: #646464;
 }
 
+.coupon-slide .coupon-cont .coupon-bottom .coupon-validity {
+  color: #fff;
+}
+
 .coupon-slide .slick-current .coupon-cont .coupon-box {
   background-color: #ff7956;
   background-image: -webkit-gradient(linear, left top, left bottom, from(#ff7956), to(#ff3c3c 40%));
@@ -932,6 +937,10 @@
 
 .coupon-slide .slick-current .coupon-cont .coupon-bottom {
   background: #f21e1e;
+}
+
+.coupon-slide .slick-current .coupon-cont .coupon-bottom .coupon-validity {
+  color: #feed58;
 }
 
 /* 원지예 */
@@ -1715,21 +1724,24 @@
 
 .flcarddefault .flcard-cont .flcard-tmember {
   font-size: 0;
-  display: table;
 }
 
 .flcarddefault .flcard-cont .flcard-tmember .ti-tmember a {
-  display: table-cell;
+  position: relative;
+  display: inline-block;
+  padding-right: 0.9375rem;
   font-size: 0.6875rem;
   color: #000;
 }
 
 .flcarddefault .flcard-cont .flcard-tmember .ti-tmember a .ico {
+  position: absolute;
   display: inline-block;
-  width: 0.75rem;
-  height: 0.75rem;
-  margin-top: 0.125rem;
-  margin-left: 0.3125rem;
+  top: 50%;
+  right: 0;
+  width: 0.6875rem;
+  height: 0.6875rem;
+  margin-top: -0.375rem;
   vertical-align: top;
   background: url(/img/ico/ico-group.png) no-repeat -0.375rem -11.875rem;
   background-size: 2.875rem;
@@ -1962,21 +1974,24 @@
 
 .flcardcta .flcard-cont .flcard-tmember {
   font-size: 0;
-  display: table;
 }
 
 .flcardcta .flcard-cont .flcard-tmember .ti-tmember a {
-  display: table-cell;
+  position: relative;
+  display: inline-block;
+  padding-right: 0.9375rem;
   font-size: 0.6875rem;
   color: #000;
 }
 
 .flcardcta .flcard-cont .flcard-tmember .ti-tmember a .ico {
+  position: absolute;
   display: inline-block;
-  width: 0.75rem;
-  height: 0.75rem;
-  margin-top: 0.125rem;
-  margin-left: 0.3125rem;
+  top: 50%;
+  right: 0;
+  width: 0.6875rem;
+  height: 0.6875rem;
+  margin-top: -0.375rem;
   vertical-align: top;
   background: url(/img/ico/ico-group.png) no-repeat -0.375rem -11.875rem;
   background-size: 2.875rem;
@@ -2102,7 +2117,7 @@
 }
 
 .flcardbarcode .flcard-cont .flcard-area .flcard-total {
-  display: table;
+  display: block;
   width: 100%;
   box-sizing: border-box;
   font-size: 0;
@@ -2127,14 +2142,12 @@
 }
 
 .flcardbarcode .flcard-cont .flcard-area .flcard-total .flcard-info {
-  display: table-row;
   position: relative;
-  margin-top: 0.4375rem;
+  margin-top: 1rem;
 }
 
 .flcardbarcode .flcard-cont .flcard-area .flcard-total .flcard-info .info-total {
-  display: table-cell;
-  padding-top: 0.9375rem;
+  display: inline-block;
 }
 
 .flcardbarcode .flcard-cont .flcard-area .flcard-total .flcard-info .info-total .tx-total {
@@ -2163,9 +2176,8 @@
   height: 1.5rem;
   background-color: rgba(0, 0, 0, 0.1);
   position: absolute;
-  bottom: 0.5rem;
+  bottom: 0.3125rem;
   right: 0;
-  margin-left: 0.625rem;
 }
 
 .flcardbarcode .flcard-cont .flcard-area .flcard-total .flcard-info .bt-link-arrow .ico {
@@ -2183,6 +2195,8 @@
 }
 
 .flcardbarcode .flcard-cont .flcard-area .flcard-total .tx-noti {
+  display: inline-block;
+  margin-top: 0.375rem;
   font-size: 0.6875rem;
   color: #fff;
 }
