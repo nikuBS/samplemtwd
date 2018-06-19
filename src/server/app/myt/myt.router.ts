@@ -20,7 +20,6 @@ import MyTGiftHistory from './controllers/refillrecharge/gift/gift.history.contr
 import MyTRefillSelect from './controllers/refillrecharge/refill/refill.select.controller';
 import MyTRefillComplete from './controllers/refillrecharge/refill/refill.complete.controller';
 import MyTGiftRequestProcess from './controllers/refillrecharge/gift/gift.request.controller';
-import MyTRefillProduct from './controllers/refillrecharge/refill/refill.product.controller';
 
 class MytRouter extends TwRouter {
   constructor() {
