@@ -1,0 +1,20 @@
+<% include ../../../components/start.component.html %>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb_area">메뉴 바로가기</a></li>
+        <li><a href="#content">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap"></div>
+<% include ../../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    skt_landing.action.popup.open({
+      hbs:'DA_01_01_01_L01'// hbs의 파일명
+    });
+  });
+</script>
+<% include ../../../components/end.component.html %>
