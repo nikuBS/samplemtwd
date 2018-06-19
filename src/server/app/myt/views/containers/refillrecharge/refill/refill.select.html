@@ -26,42 +26,22 @@
         <div class="container">
             <!-- .cont-box -->
             <div class="cont-box noborder">
-                <div class="refil-tube">
-                    <p class="ti-desc">무엇을 <strong>리필</strong>하시나요?</p>
-                    <!-- .widget -->
-                    <div class="widget">
-                        <div class="widget-box tube">
-                            <ul class="tube-list two type1">
-                                <% for (var i = 0; i < usageData.length; i++) { %>
-                                <li>
-                                    <label data-value="<%= usageData[i].text %>" data-ofrRt="<%= usageData[i].ofrRt %>" data-copnDtlClCd="<%= usageData[i].copnDtlClCd %>">
-                                        <input type="radio" name="senddata1" checked><span class="<%= usageData[i].className %>"></span><%= usageData[i].copnDtlClNm %>
-                                    </label>
-                                </li>
-                                <% } %>
-                            </ul>
-                        </div>
-                    </div>
-                    <!--// .widget -->
-                </div>
-            </div>
-            <!--// .cont-box -->
-            <!-- .cont-box -->
-            <!--
-            <div class="cont-box noborder">
-                <div class="refil-tube">
-                    <p class="ti-desc">무엇을 <strong>리필</strong>하시나요?</p>
-                    <div class="widget">
-                        <div class="widget-box tube">
-                            <ul class="tube-list two type2">
-                                <li><label><input type="radio" name="senddata2" checked><span class="ico ico-data"></span>망내 음성 20%</label></li>
-                                <li><label><input type="radio" name="senddata2"><span class="ico ico-ngt"></span>망외 음성 20%</label></li>
-                            </ul>
-                        </div>
+                <p class="ti-desc">무엇을 <strong>리필</strong>하시나요?</p>
+                <!-- .widget -->
+                <div class="widget">
+                    <div class="widget-box tube">
+                        <ul class="tube-list refil-tube type1">
+                            <% for (var i = 0; i < usageData.length; i++) { %>
+                            <li>
+                                <label data-value="<%= usageData[i].text %>" data-ofrRt="<%= usageData[i].ofrRt %>" data-copnDtlClCd="<%= usageData[i].copnDtlClCd %>">
+                                    <input type="radio" name="senddata1" checked><span class="<%= usageData[i].className %>"></span><%= usageData[i].copnDtlClNm %>
+                                </label>
+                            </li>
+                            <% } %>
+                        </ul>
                     </div>
                 </div>
             </div>
-            -->
             <!--// .cont-box -->
             <div class="fixed-wrap-btn">
                 <ul class="bt-slice">

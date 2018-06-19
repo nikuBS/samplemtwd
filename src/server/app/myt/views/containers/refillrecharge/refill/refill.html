@@ -32,7 +32,16 @@
                     <div class="widget-box select">
                         <!--<button class="bt-sel" data-select="100MB,500MB,2TB" data-title="" data-txt="" title="데이터 용량">셀렉트<span class="ico"></span></button>-->
                         <% if (lineList) { %>
-                        <button class="bt-dropdown big" data-select="010-12**-56**,010-22**-56**,010-32**-56**" data-title="회선선택" data-txt="" title="데이터 용량">010-12**-56**<span class="ico"></span></button>
+                        <button class="bt-dropdown big" title="셀렉트 선택">010-12**-56**<span class="ico"></span></button>
+                        <div class="select-info">
+                            <span class="title">데이터 용량</span>
+                            <span class="text"></span>
+                            <select title="데이터 용량">
+                                <option selected>010-12**-56**</option>
+                                <option>010-22**-56**</option>
+                                <option>010-32**-56**</option>
+                            </select>
+                        </div>
                         <% } %>
                     </div>
                 </div>
@@ -43,6 +52,19 @@
                             <a class="bt-link-tx" href="#none">사용한 리필내역보기<span class="ico"></span></a>
                         </div>
                     </div>
+                <% } else { %>
+                    <% if (usageOptions.length === 0) { %>
+                    <div class="box-suggest">
+                        <div class="suggest-info">
+                            <p class="suggest-tx"><em class="tx-bold">고객님, 요금제를 변경하시면</em><br />리필쿠폰을 사용하실 수 있습니다.</p>
+                            <ul class="suggest-list">
+                                <li>데이터100%, 음성20% 리필가능</li>
+                                <li>결합 가족간 쿠폰선물가능</li>
+                            </ul>
+                            <a class="bt-link-tx" href="#none">어떤 요금제가 가능한가요?<span class="ico"></span></a>
+                        </div>
+                    </div>
+                    <% } %>
                 <% } %>
             </div>
             <!--// .cont-box -->
@@ -57,11 +79,6 @@
         </div>
     </div>
     <!--// #contents -->
-    <!-- #footer -->
-    <div id="footer" class="footer-wrap">
-        <h2 class="blind">하단</h2>
-    </div>
-    <!--// #footer -->
 </div>
 <% include ../../../components/javascript.component.html %>
 <script>

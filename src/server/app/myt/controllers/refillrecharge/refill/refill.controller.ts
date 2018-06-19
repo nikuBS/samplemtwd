@@ -17,14 +17,21 @@ class MyTRefill extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     Observable.combineLatest(
       this.getLineList(),
+      this.getUsageOptions(),
       this.getusageData()
-    ).subscribe(([lineList, usageData]) => {
-      this.myTUsage.renderView(res, 'refillrecharge/refill/refill.html', this.getData(lineList, usageData));
+    ).subscribe(([lineList, usageOptions, usageData]) => {
+      this.myTUsage.renderView(res, 'refillrecharge/refill/refill.html', this.getData(lineList, usageOptions, usageData));
     });
   }
 
   private getLineList(): any {
     return this.apiService.request(API_CMD.BFF_03_0003, { svcCtg: LINE_NAME.MOBILE });
+  }
+
+  private getUsageOptions(): any {
+    return this.apiService.request(API_CMD.BFF_06_0009, {}).map((resp) => {
+      return this.getResult(resp, {}, 'option');
+    });
   }
 
   private getusageData(): Observable<any> {
@@ -33,13 +40,17 @@ class MyTRefill extends TwViewController {
     });
   }
 
-  private getResult(resp: any, usageData: any): any {
+  private getResult(resp: any, data: any, option?: string): any {
     if (resp.code === API_CODE.CODE_00) {
-      usageData = this.parseData(resp.result);
+      if (option === undefined) {
+        data = this.parseData(resp.result);
+      } else {
+        data = resp.result.usageOption;
+      }
     } else {
-      usageData = resp;
+      data = resp;
     }
-    return usageData;
+    return data;
   }
 
   private parseData(usageData: any): any {
@@ -55,9 +66,10 @@ class MyTRefill extends TwViewController {
     return usageData;
   }
 
-  private getData(lineList: any, usageData: any): any {
+  private getData(lineList: any, usageOptions: any, usageData: any): any {
     return {
       lineList: lineList.result,
+      usageOptions,
       usageData
     };
   }

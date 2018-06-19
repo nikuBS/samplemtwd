@@ -1,4 +1,4 @@
-<div class="cont-box">
+<div class="cont-box nogaps-btm">
     <h3 class="cont-ti">내가 가진 리필쿠폰</h3>
     <!-- .coupon-slide -->
     <div class="coupon-slide">
@@ -12,7 +12,7 @@
                         <div class="slider">
                             <% for (var i = 0; i < usageData.length; i++) { %>
                             <div id="<%= usageData[i].copnIsueNum %>" class="swiper-slide" data-end="<%= usageData[i].endDateFormat %>">
-                                <div class="coupon-cont bg-color1">
+                                <div class="coupon-cont">
                                     <dl class="coupon-box">
                                         <dt><span class="coupon-name"><%= usageData[i].copnNm %></span><span class="coupon-code"><%= usageData[i].copnIsueNum %></span></dt>
                                         <dd>
@@ -39,10 +39,10 @@
         </div>
         <!--// .widget -->
         <div class="link-long refill-to-my-phone">
-            <a href="#link" title="내 휴대폰에 리필하기로 이동">내 휴대폰에 리필하기<span class="ico"></span></a>
+            <a href="#link" class="disabled" title="내 휴대폰에 리필하기로 이동">내 휴대폰에 리필하기<span class="ico"></span></a>
         </div>
         <div class="link-long">
-            <a href="#link" title="가족에게 선물하기로 이동">가족에게 선물하기<span class="ico"></span></a>
+            <a href="#link" class="disabled" title="가족에게 선물하기로 이동">가족에게 선물하기<span class="ico"></span></a>
         </div>
     </div>
 </div>

@@ -3,7 +3,6 @@ Tw.MytRefill = function (rootEl) {
   this.window = window;
   this._apiService = new Tw.ApiService();
 
-  this._init();
   this._bindEvent();
 };
 
@@ -11,9 +10,6 @@ Tw.MytRefill.prototype = Object.create(Tw.View.prototype);
 Tw.MytRefill.prototype.constructor = Tw.MytRefill;
 
 Tw.MytRefill.prototype = Object.assign(Tw.MytRefill.prototype, {
-  _init: function () {
-    this.$container.find('.bg-color1:first').removeClass('bg-color1');
-  },
   _bindEvent: function () {
     this.$container.on('click', '.bt-select-arrow', $.proxy(this._selectCoupon, this));
     this.$container.on('click', '.refill-to-my-phone', $.proxy(this._goRefill, this));
