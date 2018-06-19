@@ -22,7 +22,7 @@ export const API_CMD = {
   BFF_03_0002: { path: '/svc-catalog', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_03_0003: { path: '/svc-catalog/detail', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_03_0004: { path: '/change-svc', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
-  BFF_03_0005: { path: '/selected-svc', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_03_0005: { path: '/selected-svc', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_03_0023: { path: '/core-recharge/v1/refill-gifts', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_05_0001: { path: '/my-t/balances', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0002: { path: '/my-t/balance-add-ons', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
