@@ -23,6 +23,14 @@ class DateHelper {
 
   /**
    * @param date {Date} or {string} : YYYYMMDDhhmmss
+   * @returns {string} : 18년 12월 31일
+   */
+  static getShortKoreanDate(date: any): string {
+    return moment(this.convDateFormat(date)).format('YY년 MM월 DD일');
+  }
+
+  /**
+   * @param date {Date} or {string} : YYYYMMDDhhmmss
    * @returns {number} : 30
    */
   static getNewRemainDate(date: any): number {

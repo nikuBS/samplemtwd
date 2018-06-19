@@ -1,4 +1,3 @@
-'use strict';
 var skt_landing = {},
   page_list = {},
   component_list = [],
@@ -6,8 +5,9 @@ var skt_landing = {},
   section_list = [],
   resize_fn = [], //resize시 사용
   scroll_fn = [], //scroll시 사용
-  wheel_fn = []; //wheel시 사용
-$(document).on('DOMContentLoaded', function () {
+  wheel_fn = [], //wheel시 사용
+  hbsURL = '/hbs/'; //hbs URL
+$(document).on('ready', function () {
   /*** 페이지 구분 ***/
   var page_url = location.href.split('/'),
     head_title = '',
@@ -26,4 +26,20 @@ $(document).on('DOMContentLoaded', function () {
     default:
   }
   $('head title').text(head_title + head_common);
+  $.get(hbsURL+'gnb.hbs', function (text) {
+    var tmpl = Handlebars.compile(text);
+    var html = tmpl();
+    $('.wrap').append(html);
+  }).done(function () {
+    //gnb on동작
+    $('.gnb-list li').each(function(num){
+      $(this).find('a').on('click',function(){
+          if(!$(this).hasClass('on')){
+            $('.gnb-list li a').removeClass('on');
+            $(this).addClass('on');
+          }
+      });
+    });
+    scroll_fn['gnb'] = 'skt_landing.action.gnb_action()';
+  });
 });

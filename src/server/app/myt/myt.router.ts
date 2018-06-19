@@ -19,6 +19,10 @@ import MyTGift from './controllers/refillrecharge/gift/gift.controller';
 import MyTGiftMembersProcess from './controllers/refillrecharge/gift/gift.members.controller';
 import MyTGiftFamilyProcess from './controllers/refillrecharge/gift/gift.family.controller';
 import MyTGiftComplete from './controllers/refillrecharge/gift/gift.complete.controller';
+import MyTGiftHistory from './controllers/refillrecharge/gift/gift.history.controller';
+import MyTRefillSelect from './controllers/refillrecharge/refill/refill.select.controller';
+import MyTRefillComplete from './controllers/refillrecharge/refill/refill.complete.controller';
+import MyTGiftRequestProcess from './controllers/refillrecharge/gift/gift.request.controller';
 
 class MytRouter extends TwRouter {
   constructor() {
@@ -37,14 +41,17 @@ class MytRouter extends TwRouter {
 
     this.controllers.push({ url: '/refill', controller: new MyTRefill() });
     this.controllers.push({ url: '/refill/history', controller: new MyTRefillHistory() });
+    this.controllers.push({ url: '/refill/select', controller: new MyTRefillSelect() });
+    this.controllers.push({ url: '/refill/complete', controller: new MyTRefillComplete() });
     this.controllers.push({ url: '/refill/gift', controller: new MyTRefillGift() });
     this.controllers.push({ url: '/refill/gift-complete', controller: new MyTRefillGiftComplete() });
     this.controllers.push({ url: '/refill/gift-products', controller: new MyTRefillGiftProducts() });
     this.controllers.push({ url: '/gift', controller: new MyTGift() });
     this.controllers.push({ url: '/gift/process/family', controller: new MyTGiftFamilyProcess() });
     this.controllers.push({ url: '/gift/process/members', controller: new MyTGiftMembersProcess() });
+    this.controllers.push({ url: '/gift/process/request', controller: new MyTGiftRequestProcess() });
     this.controllers.push({ url: '/gift/complete', controller: new MyTGiftComplete() });
-    this.controllers.push({ url: '/gift/history', controller: new MyTGift() });
+    this.controllers.push({ url: '/gift/history', controller: new MyTGiftHistory() });
   }
 }
 

@@ -9,13 +9,13 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div class="wrap gift_members_process_1" style="display: block">
+<div class="wrap step_1" style="display: block">
     <!-- #header -->
     <div class="header-wrap">
         <div class="header">
             <div class="header-ti">
                 <h1>데이터 선물하기</h1>
-                <a href="#allmenu" class="all-menu"><span class="blind">전체메뉴보기</span></a>
+                <a href="/home/menu" class="all-menu"><span class="blind">전체메뉴보기</span></a>
             </div>
             <a href="javascript:history.back()" class="prev-step"><span class="blind">이전으로</span></a>
             <a href="#search" class="search-content"><span class="blind">검색하기</span></a>
@@ -41,13 +41,13 @@
             </div>
             <hr class="cont-sp type1">
             <div class="cont-box">
-                <p class="page-desc">자동 선물 받으실 분의 휴대폰 번호를 입력해주세요.</p>
+                <p class="page-desc">선물 받으실 분의 휴대폰 번호를 입력해주세요.</p>
                 <div class="inner">
-                    <h3 class="contents-tit">휴대폰 번호 입력</h3>
+                    <h3 class="contents-tit">휴대폰 번호</h3>
                     <div class="contents-formbox">
                             <span class="inputbox bt-add">
                                 <span class="input">
-                                    <input type="text" placeholder="‘-’ 없이 숫자만 입력해주세요." title="휴대폰 번호 입력">
+                                    <input type="text" id="inp_phone" placeholder="‘-’ 없이 숫자만 입력해주세요." title="휴대폰 번호 입력">
                                     <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
                                 </span>
                                 <span class="bt-box">
@@ -61,41 +61,36 @@
                 </div>
 
                 <div class="inner">
-                    <h3 class="contents-tit">자동선물 신청된 결합가족</h3>
+                    <h3 class="contents-tit">최근 선물 보낸 사람</h3>
                     <div class="contents-info-list">
-                        <ul class="result-view modify">
-                            <li>
+                        <ul class="result-view">
+                            <li class="recent_item" data-phone="01046121012">
                                 <div class="info-user">
-                                    <span class="info-title">김*림</span>
+                                    <span class="info-title">김한림</span>
                                     <span class="info-sub">010-46**-10**</span>
                                 </div>
                                 <div class="info-data">
                                     <!-- 1기가 미만인 경우 -->
                                     <span class="info-title">500MB</span>
                                 </div>
-                                <div class="info-btn"><a href="#none" class="btn-cancel">해지</a></div>
                             </li>
-                            <li>
+                            <li class="recent_item" data-phone="01012233456">
                                 <div class="info-user">
-                                    <span class="info-title">김*수한림</span>
-                                    <span class="info-sub">010-46**-10**</span>
+                                    <span class="info-title">김종준</span>
+                                    <span class="info-sub">010-12**-34**</span>
                                 </div>
                                 <div class="info-data">
                                     <!-- 1기가 이상인 경우 -->
                                     <span class="info-title">34GB</span>
                                     <span class="info-sub">34,0000MB</span>
                                 </div>
-                                <div class="info-btn"><a href="#none" class="btn-cancel">해지</a></div>
                             </li>
                         </ul>
-                        <div class="contents-notice">
-                            <span class="noti-type1">자동 선물 제공량 부족 시 결합된 회선의 1번부터 순차적으로 선물이 제공됩니다.</span>
-                        </div>
                     </div>
                     <div class="contents-btn">
                         <ul class="bt-slice ver">
                             <li class="bt-blue1">
-                                <button>다음</button>
+                                <button id="next_process">다음</button>
                             </li>
                         </ul>
                     </div>
@@ -104,17 +99,9 @@
         </div>
     </div>
     <!--// #contents -->
-    <!-- #footer -->
-    <div class="footer-wrap">
-        <h2 class="blind">하단</h2>
-    </div>
-    <!--// #footer -->
-    <!-- footer -->
-    <% include ../../../../../../common/views/components/footer.component.html %>
-    <!-- // footer -->
 </div>
 
-<div class="wrap gift_members_process_2" style="display: none">
+<div class="wrap step_2" style="display: none">
     <!-- #header -->
     <div class="header-wrap">
         <div class="header">
@@ -177,16 +164,18 @@
                             <div class="widget">
                                 <div class="widget-box tube">
                                     <ul class="tube-list">
-                                        <li><label><input type="radio" name="senddata">100 MB</label></li>
-                                        <li><label><input type="radio" name="senddata">200 MB</label></li>
-                                        <li><label class="checked"><input type="radio" name="senddata" checked="">300 MB</label></li>
-                                        <li><label><input type="radio" name="senddata">400 MB</label></li>
-                                        <li><label><input type="radio" name="senddata">500 MB</label></li>
-                                        <li><label><input type="radio" name="senddata">600 MB</label></li>
-                                        <li><label><input type="radio" name="senddata">700 MB</label></li>
-                                        <li><label><input type="radio" name="senddata">800 MB</label></li>
-                                        <li><label><input type="radio" name="senddata">900 MB</label></li>
-                                        <li><label class="disabled"><input type="radio" name="senddata" disabled="">1GB</label></li>
+                                        <li><label data-value="100"><input type="radio" name="senddata">100 MB</label></li>
+                                        <li><label data-value="200"><input type="radio" name="senddata">200 MB</label></li>
+                                        <li><label data-value="300" class="checked"><input type="radio" name="senddata" checked="">300
+                                            MB</label></li>
+                                        <li><label data-value="400"><input type="radio" name="senddata">400 MB</label></li>
+                                        <li><label data-value="500"><input type="radio" name="senddata">500 MB</label></li>
+                                        <li><label data-value="600"><input type="radio" name="senddata">600 MB</label></li>
+                                        <li><label data-value="700"><input type="radio" name="senddata">700 MB</label></li>
+                                        <li><label data-value="800"><input type="radio" name="senddata">800 MB</label></li>
+                                        <li><label data-value="900"><input type="radio" name="senddata">900 MB</label></li>
+                                        <li><label data-value="1000" class="disabled"><input type="radio" name="senddata"
+                                                                                             disabled="">1GB</label></li>
                                     </ul>
                                 </div>
                             </div>
@@ -200,23 +189,19 @@
 
                 <ul class="bt-slice ver">
                     <li class="bt-red1">
-                        <button>데이터 선물 보내기</button>
+                        <button id="btn_send_gift">데이터 선물 보내기</button>
                     </li>
                 </ul>
             </div>
         </div>
     </div>
     <!--// #contents -->
-    <!-- #footer -->
-    <div class="footer-wrap">
-        <h2 class="blind">하단</h2>
-    </div>
-    <!--// #footer -->
 </div>
 <% include ../../../components/javascript.component.html %>
 
 <script>
   $(document).ready(function () {
+    var oMytGiftLine = new Tw.MytGiftLine($(document));
     var component = new Tw.MytGiftProcess($('.wrap'));
   });
 </script>

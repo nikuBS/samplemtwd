@@ -1,4 +1,4 @@
-$(window).on('load', function () {
+$(document).on('ready', function () {
   $('.component').each(function (idx) {
     var com = $(this).find('.component-box').attr('class').replace(/component-box /, '');
     component_list['component_' + com] = skt_landing.components['component_' + com];
@@ -9,7 +9,6 @@ $(window).on('load', function () {
 });
 skt_landing.components = {
   component_test: function () {
-    console.log('ready test!');
   },
   component_tabs: function () {
     var tabArr = $('.tabs .tab-area');
@@ -33,7 +32,6 @@ skt_landing.components = {
         
       }
     });
-    console.log('ready tabs!');
   },
   component_accordion: function () {
     var accoArr = $('.accordion');
@@ -53,29 +51,22 @@ skt_landing.components = {
         }
       });
     });
-    console.log('ready accordion!');
   },
   component_flcarddefault: function () {
     skt_landing.action.toggleon($('.flcarddefault .bt-like')); //좋아요 스위치
-    console.log('ready flcarddefault!');
   },
   component_flcardcta: function () {
     skt_landing.action.toggleon($('.flcardcta .bt-like')); //좋아요 스위치
-    console.log('ready flcardcta!');
   },
   component_flcardbarcode: function () {
-    console.log('ready flcardbarcode!');
   },
   component_flcardbanner1: function () {
-    skt_landing.action.toggleon($('.flcardbanner1 .bt-like')); //좋아요 스위치
-    console.log('ready flcardbanner1!');
+    skt_landing.action.toggleon($('.flcardbanner1 .bt-like')); //좋아요 스위치    
   },
   component_flcardbanner2: function () {
-    skt_landing.action.toggleon($('.flcardbanner2 .bt-scrap')); //스크랩 스위치
-    console.log('ready flcardbanner2!');
+    skt_landing.action.toggleon($('.flcardbanner2 .bt-scrap')); //스크랩 스위치    
   },
   component_flcardsns: function () {
     skt_landing.action.toggleon($('.flcardsns .bt-scrap')); //스크랩 스위치
-    console.log('ready flcardsns!');
   }
 }
