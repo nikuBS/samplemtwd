@@ -34,7 +34,7 @@ Tw.MytRefillGift.prototype = Object.assign(Tw.MytRefillGift.prototype, {
       copnIsueNum: copnIsueNum,
       befrSvcNum: befrSvcNum
     });
-    this._apiService.request(Tw.API_CMD.BFF_03_0023, data, { headers: { "Content-Type": "application/json" } })
+    this._apiService.request(Tw.API_CMD.BFF_03_0023, data, { "Content-Type": "application/json" })
       .done($.proxy(this._sendSuccess, this))
       .fail($.proxy(this._sendFail, this));
   },
