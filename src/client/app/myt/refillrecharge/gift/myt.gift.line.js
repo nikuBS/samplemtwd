@@ -15,7 +15,7 @@ Tw.MytGiftLine.prototype = Object.assign(Tw.MytGiftLine.prototype, {
   $init: function () {
     this._apiService
       .request(Tw.API_CMD.BFF_03_0003, { svcCtg: 'M' })
-      .done($.proxy(this.setDefaultLine, this));
+      .done($.proxy(this.onSuccessLineList, this));
   },
 
   _cachedElement: function () {
@@ -23,11 +23,41 @@ Tw.MytGiftLine.prototype = Object.assign(Tw.MytGiftLine.prototype, {
   },
 
   _bindEvent: function () {
-    this.$container.on('click', '.select-submit', $.proxy(this.setCurrentLine, this));
-    this.$container.on('click', '#line-set', $.proxy(this.renderCurrentLine, this));
+    this.$container.on('click', '.select-submit', $.proxy(this.changeCurrentLine, this));
+    this.$container.on('click', '#line-set', $.proxy(this.renderPopupCurrentLine, this));
   },
 
-  renderCurrentLine: function (e) {
+  onSuccessLineList: function (res) {
+    this.lineList = res.result;
+
+    this._apiService.request(Tw.API_CMD.BFF_03_0005, {})
+      .done($.proxy(this.updateLineInfo, this));
+  },
+
+  updateLineInfo: function (res) {
+    this.lineInfo = _.find(this.lineList, function (line) {
+      return line.svcNum == res.result.svcNum;
+    });
+
+    this.$container.trigger('updateLineInfo', { lineInfo: this.lineInfo, lineList: this.lineList });
+  },
+
+  changeCurrentLine: function () {
+    var sCurrentNumber = this.$btn_line.text().trim();
+
+    if ( sCurrentNumber !== "" ) {
+      this.lineInfo = _.find(this.lineList, function (line) {
+        return line.svcNum == sCurrentNumber;
+      });
+
+      this._apiService.request(Tw.API_CMD.BFF_03_0004, {}, { svcMgmtNum: this.lineInfo.svcMgmtNum })
+        .done(function () {
+          this.$container.trigger('updateLineInfo', { lineInfo: this.lineInfo, lineList: this.lineList });
+        }.bind(this));
+    }
+  },
+
+  renderPopupCurrentLine: function (e) {
     var sCurrentNumber = $(e.currentTarget).text().trim();
 
     setTimeout(function () {
@@ -40,32 +70,4 @@ Tw.MytGiftLine.prototype = Object.assign(Tw.MytGiftLine.prototype, {
       });
     }, 50);
   },
-
-  setDefaultLine: function (res) {
-    this.lineList = res.result;
-
-    var queryParams = Tw.UrlHelper.getQueryParams();
-
-    if ( queryParams.lineIndex != null ) {
-      this.lineIndex = Number(queryParams.lineIndex);
-      this.lineInfo = this.lineList[this.lineIndex];
-    }
-
-    this.setCurrentLine();
-  },
-
-  setCurrentLine: function () {
-    var sCurrentNumber = this.$btn_line.text().trim();
-
-    if ( sCurrentNumber !== "" ) {
-      this.lineInfo = _.find(this.lineList, function (line) {
-        return line.svcNum == sCurrentNumber;
-      });
-    }
-
-    this._apiService.request(Tw.API_CMD.BFF_03_0004, {}, { svcMgmtNum: this.lineInfo.svcMgmtNum })
-      .done(function (res) {
-        this.$container.trigger('updateLineInfo', { lineInfo: this.lineInfo, lineList: this.lineList });
-      }.bind(this));
-  }
 });
