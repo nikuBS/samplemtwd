@@ -47,7 +47,7 @@ Tw.MyTRefillHistory.prototype = {
         if ( typeof this._myRefills === 'undefined' ) {
           this._apiService
             .request(Tw.API_CMD.BFF_06_0002, {})
-            .done($.proxy(this._initTabContent, this, this.TYPE.MY))
+            .done($.proxy(this._onResetHistoryData, this, this.TYPE.MY))
             .fail(error);
         }
         break;
@@ -55,7 +55,7 @@ Tw.MyTRefillHistory.prototype = {
         if ( typeof this._sentRefills === 'undefined' ) {
           this._apiService
             .request(Tw.API_CMD.BFF_06_0003, { giftType: 1 })
-            .done($.proxy(this._initTabContent, this, this.TYPE.SENT))
+            .done($.proxy(this._onResetHistoryData, this, this.TYPE.SENT))
             .fail(error);
         }
         break;
@@ -63,11 +63,16 @@ Tw.MyTRefillHistory.prototype = {
         if ( typeof this._receivedRefills === 'undefined' ) {
           this._apiService
             .request(Tw.API_CMD.BFF_06_0003, { giftType: 2 })
-            .done($.proxy(this._initTabContent, this, this.TYPE.RECEIVED))
-            .fail(error)
+            .done($.proxy(this._onResetHistoryData, this, this.TYPE.RECEIVED))
+            .fail(error);
         }
         break;
     }
+  },
+
+  _setTransferable: function (type, resp) {
+    var transferable = (resp.result.condition.transferableCopnCnt > 0 ) && resp.result.option && (resp.result.option.length > 0);
+    this._initTabContent(type, this._sentRefills, this.$tabContentSent, { transferable: transferable });
   },
 
   _onClickMore: function (e) {
@@ -83,14 +88,14 @@ Tw.MyTRefillHistory.prototype = {
         template = Handlebars.compile('{{>myItems}}');
         break;
       case this.TYPE.SENT:
-        items = this._myRefills;
+        items = this._sentRefills;
         $targetTab = this.$tabContentSent;
-        template = Handlebars.compile('{{>myItems}}');
+        template = Handlebars.compile('{{>sentItems}}');
         break;
       case this.TYPE.RECEIVED:
-        Handlebars.registerPartial('receivedItems', $('#tmplReceivedItems').html());
         items = this._receivedRefills;
         $targetTab = this.$tabContentReceived;
+        template = Handlebars.compile('{{>receivedItems}}');
         break;
       default:
         return null;
@@ -108,36 +113,35 @@ Tw.MyTRefillHistory.prototype = {
     }
   },
 
-  _initTabContent: function (type, resp) {
-    var source = null, items = null, $targetTab = null;
-    //TODO parsing data
+  _onResetHistoryData: function (type, resp) {
     switch ( type ) {
       case this.TYPE.MY:
-        Handlebars.registerPartial('myItems', $('#tmplMyItems').html());
         this._myRefills = resp.result;
         this._myRefills.map(
           function (data) {
             data.copnUseDt = Tw.DateHelper.getShortDateNoDot(data.copnUseDt);
           });
-        items = this._myRefills;
-        source = $('#tmplMy').html();
-        $targetTab = this.$tabContentMy;
+        this._initTabContent(type, this._myRefills, this.$tabContentMy);
         break;
       case this.TYPE.SENT:
-        Handlebars.registerPartial('sentItems', $('#tmplSentItems').html());
         this._sentRefills = resp.result;
-        this._sentRefills.map(
-          function (data) {
-            data.usePsblStaDt = Tw.DateHelper.getShortDateNoDot(data.usePsblStaDt);
-            data.usePsblEndDt = Tw.DateHelper.getShortDateNoDot(data.usePsblEndDt);
-            data.copnOpDt = Tw.DateHelper.getShortDateNoDot(data.copnOpDt);
-          });
-        items = this._sentRefills;
-        source = $('#tmplSent').html();
-        $targetTab = this.$tabContentSent;
+
+        if ( this._sentRefills.length < 1 ) {
+          this._apiService
+            .request(Tw.API_CMD.BFF_06_0009)
+            .done($.proxy(this._setTransferable, this, this.TYPE.SENT))
+            .fail(function(){console.log('[ERROR] An error occurred while requesting API')});
+        } else {
+          this._sentRefills.map(
+            function (data) {
+              data.usePsblStaDt = Tw.DateHelper.getShortDateNoDot(data.usePsblStaDt);
+              data.usePsblEndDt = Tw.DateHelper.getShortDateNoDot(data.usePsblEndDt);
+              data.copnOpDt = Tw.DateHelper.getShortDateNoDot(data.copnOpDt);
+            });
+          this._initTabContent(type, this._sentRefills, this.$tabContentSent);
+        }
         break;
       case this.TYPE.RECEIVED:
-        Handlebars.registerPartial('receivedItems', $('#tmplReceivedItems').html());
         this._receivedRefills = resp.result;
         this._receivedRefills.map(
           function (data) {
@@ -145,22 +149,45 @@ Tw.MyTRefillHistory.prototype = {
             data.usePsblEndDt = Tw.DateHelper.getShortDateNoDot(data.usePsblEndDt);
             data.copnOpDt = Tw.DateHelper.getShortDateNoDot(data.copnOpDt);
           });
-        items = this._receivedRefills;
-        source = $('#tmplReceived').html();
-        $targetTab = this.$tabContentReceived;
+        this._initTabContent(type, this._receivedRefills, this.$tabContentReceived);
         break;
       default:
         console.error('[ERROR] Can not find type\'' + type + '\' in tabs');
         return null;
     }
+  },
 
+  _initTabContent: function (type, items, $targetTab, options) {
+    var source = null;
+    switch ( type ) {
+      case this.TYPE.MY:
+        Handlebars.registerPartial('myItems', $('#tmplMyItems').html());
+        source = $('#tmplMy').html();
+        break;
+      case this.TYPE.SENT:
+        Handlebars.registerPartial('sentItems', $('#tmplSentItems').html());
+        source = $('#tmplSent').html();
+        break;
+      case this.TYPE.RECEIVED:
+        Handlebars.registerPartial('receivedItems', $('#tmplReceivedItems').html());
+        source = $('#tmplReceived').html();
+        break;
+      default:
+        console.error('[ERROR] Can not find type\'' + type + '\' in tabs');
+        return null;
+    }
     var template = Handlebars.compile(source);
     var leftItems = items.length - this.NUM_OF_ITEMS;
-    var output = template({
+    var data = {
       total: items.length,
       items: items.slice(0, this.NUM_OF_ITEMS),
       leftItems: leftItems > 0 ? leftItems : null
-    });
+    };
+
+    if ( options ) {
+      data = $.extend(options, data);
+    }
+    var output = template(data);
     $targetTab.append(output);
     if ( leftItems ) {
       $targetTab.on('click', 'a.bt-more', $.proxy(this._onClickMore, this))

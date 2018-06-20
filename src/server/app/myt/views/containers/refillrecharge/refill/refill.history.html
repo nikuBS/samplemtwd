@@ -43,7 +43,11 @@
            data-type="sent">더보기<span>({{leftItems}})</span></a>
         {{/if}}
         {{else}}
-        <% include ../../../components/refill/refill.history.sent.empty.html %>
+            {{#if transferable}}
+            <% include ../../../components/refill/refill.history.sent.transferable.html %>
+            {{else}}
+            <% include ../../../components/refill/refill.history.sent.empty.html %>
+            {{/if}}
         {{/if}}
     </div>
 </script>
