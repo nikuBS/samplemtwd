@@ -1,7 +1,7 @@
 @charset "UTF-8";
 /** gnb **/
 .wrap {
-  padding-bottom: 4.0625rem;
+  padding-bottom: 5.9375rem;
 }
 
 #gnb {
@@ -285,7 +285,7 @@
 
 .fixed-wrap .fixed-wrap-btn {
   position: fixed;
-  bottom: 0;
+  bottom: 4.0625rem;
   left: 0;
   right: 0;
   box-sizing: border-box;

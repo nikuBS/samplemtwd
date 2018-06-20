@@ -10,9 +10,9 @@
 </div>
 <!--// #skip_navigation -->
 
-<div class="wrap step_1" style="display: block">
+<div class="wrap step1" style="display: block">
     <!-- #header -->
-    <div id="header" class="header-wrap">
+    <div class="header-wrap">
         <div class="header">
             <div class="header-ti">
                 <h1>데이터 조르기</h1>
@@ -24,14 +24,14 @@
     </div>
     <!--// #header -->
     <!-- #contents -->
-    <div id="contents" class="container-wrap">
+    <div class="container-wrap">
         <h2 class="blind">내용</h2>
         <div class="container">
             <div class="cont-box">
                 <!-- .widget -->
                 <div class="widget">
                     <div class="widget-box step">
-                        <h2><em>STEP 01</em>휴대폰 번호 입력</h2>
+                        <h3 class="step-ti"><em>STEP 01</em>휴대폰 번호 입력</h3>
                         <ul class="step-list">
                             <li class="on">1<span class="blind">휴대폰 번호 입력</span></li>
                             <li>2<span class="blind">데이터 선택</span></li>
@@ -82,7 +82,7 @@
     <!--// #contents -->
 </div>
 
-<div class="wrap step_2" style="display: none">
+<div class="wrap step2" style="display: none">
     <!-- #header -->
     <div class="header-wrap">
         <div class="header">
@@ -103,7 +103,7 @@
                 <!-- .widget -->
                 <div class="widget">
                     <div class="widget-box step">
-                        <h2><em>STEP 02</em>데이터 선택</h2>
+                        <h3 class="step-ti"><em>STEP 02</em>데이터 선택</h3>
                         <ul class="step-list">
                             <li>1<span class="blind">연락처 이름</span></li>
                             <li class="on">2<span class="blind">연락처 이름</span></li>
@@ -166,7 +166,7 @@
 
                 <ul class="bt-slice ver">
                     <li class="bt-red1">
-                        <button>데이터 조르기</button>
+                        <button id="btn_send_gift">데이터 조르기</button>
                     </li>
                 </ul>
             </div>
@@ -175,12 +175,112 @@
     <!--// #contents -->
 </div>
 
+<div class="wrap step3" style="display: none">
+    <!-- #header -->
+    <div class="header-wrap">
+        <div class="header">
+            <div class="header-ti">
+                <h1>데이터 선물하기</h1>
+                <a href="#allmenu" class="all-menu"><span class="blind">전체메뉴보기</span></a>
+            </div>
+            <a href="#pstep" class="prev-step"><span class="blind">이전으로</span></a>
+            <a href="#search" class="search-content"><span class="blind">검색하기</span></a>
+        </div>
+    </div>
+    <!--// #header -->
+    <!-- #contents -->
+    <div class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <div class="cont-box nogaps-hoz">
+                <div class="msg-present-box">
+                    <div class="msg-present-comp">
+                        <span class="ico"></span>
+                        <p class="txt"><span class="tx-bold">데이터 조르기</span>가<br>완료되었습니다.</p>
+                    </div>
+                    <div class="gift-data-cont">
+                        <ul class="t-gift-data">
+                            <li>
+                                <dl>
+                                    <dt class="ti-data">조르기 받은 분</dt>
+                                    <dd class="tx-data">
+                                        <span class="blind">이름</span>정영진<br>
+                                        <span class="blind">전화번호</span><span class="num">010-12**-34**</span>
+                                    </dd>
+                                </dl>
+                            </li>
+                            <li>
+                                <dl>
+                                    <dt class="ti-data">요청한 데이터량</dt>
+                                    <dd class="tx-data"><span class="num">500</span> MB</dd>
+                                </dl>
+                            </li>
+                            <li>
+                                <dl>
+                                    <dt class="ti-data">조르기 남은 횟수</dt>
+                                    <dd class="tx-data"><span class="num">29</span>회</dd>
+                                </dl>
+                            </li>
+                        </ul>
+                        <div class="bt-gap only"><!-- .only: .bt-slice 하나만 노출되는 경우 -->
+                            <ul class="bt-slice hoz">
+                                <li class="bt-white1">
+                                    <button>데이터 조르기 한번 더하기</button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr class="cont-sp type1">
+            <div class="cont-box nogaps">
+                <div class="bt-link-box">
+                    <a id="btn_go_home" class="bt-link-tx">홈으로 가기</a>
+                </div>
+            </div>
+            <hr class="cont-sp type1">
+        </div>
+    </div>
+    <!--// #contents -->
+    <!-- #gnb -->
+    <div id="gnb" class="gnb-wrap on">
+        <h2 class="blind">GNB 영역</h2>
+        <ul class="gnb-list">
+            <li>
+                <a class="bt-gnb on" href="/home" title="HOME으로 이동"><!-- .on : 메뉴 활성화 시 -->
+                    <span class="ico home"></span>
+                    <span class="gnb-tx"><span class="eng">HOME</span></span>
+                </a>
+            </li>
+            <li>
+                <a class="bt-gnb" href="/myt" title="MY T로 이동">
+                    <span class="ico myt"></span>
+                    <span class="gnb-tx"><span class="eng">MY T</span></span>
+                </a>
+            </li>
+            <li>
+                <a class="bt-gnb" href="#none" title="T 채널로 이동">
+                    <span class="ico tchannel"></span>
+                    <span class="gnb-tx"><span class="eng">T</span> 채널</span>
+                </a>
+            </li>
+            <li>
+                <a class="bt-gnb" href="/home/menu" title="전체 메뉴로 이동">
+                    <span class="ico all"></span>
+                    <span class="gnb-tx">전체 메뉴</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <!--// #gnb -->
+</div>
+
 <% include ../../../components/javascript.component.html %>
 
 <script>
   $(document).ready(function () {
     var oMytGiftLine = new Tw.MytGiftLine($(document));
-    var component = new Tw.MytGiftProcess($('.wrap'));
+    var component = new Tw.MytGiftRequestProcess($('.wrap'));
   });
 </script>
 

@@ -238,6 +238,8 @@ skt_landing.widgets = {
         slidesToShow: 1,
         centerMode: false,
         variableWidth: false,
+        focusOnSelect: true,
+        focusOnChange: true,
         responsive: [{
           settings:{
             centerPadding:0
@@ -291,6 +293,8 @@ skt_landing.widgets = {
         slidesToShow: 1,
         centerMode: false,
         variableWidth: false,
+        focusOnSelect: true,
+        focusOnChange: true,
         responsive: [{
           settings:{
             centerPadding:0

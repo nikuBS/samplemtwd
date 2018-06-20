@@ -32,12 +32,18 @@
                 <!-- .widget -->
                 <div class="widget">
                     <div class="widget-box select">
-                        <% if (lineList) { %>
-                        <button id="btn_change_line" class="bt-dropdown big" data-select="<%=lineList.map((line)=>line.svcNum)%>"
-                                data-title="회선선택" title="데이터 용량">
-                            <%=svcInfo.svcNum%>
+
+                        <button id="line-set" class="bt-dropdown big" title="데이터 용량"><%=svcInfo.svcNum%><span class="ico"></span>
                         </button>
-                        <% } %>
+                        <div class="select-info">
+                            <span class="title">회선 목록</span>
+                            <span class="text"></span>
+                            <select title="회선 목록">
+                                <%lineList.map((line)=>{%>
+                                <option><%=line.svcNum%></option>
+                                <%})%>
+                            </select>
+                        </div>
                     </div>
                 </div>
                 <!--// .widget -->
@@ -67,13 +73,13 @@
                                             <div class="gift-box-wrap">
                                                 <p class="gift-box-btit">가족·친구·연인에게<br><strong>데이터를 선물하세요.</strong></p>
                                                 <ul class="gift-box-info">
-                                                    <li class="gift-box-info-list">
+                                                    <li id="wrap_gift_count" class="gift-box-info-list">
                                                         <span class="gift-box-tit">선물 가능 횟수</span>
                                                         <span class="gift-box-tx">T끼리 <strong>1회</strong> <span
                                                             class="bar">/</span> 가족 <strong>2회</strong></span>
                                                         <span class="ico-gift"></span>
                                                     </li>
-                                                    <li id="wrap_remainData" class="gift-box-info-list">
+                                                    <li class="gift-box-info-list">
                                                         <span class="gift-box-tit">잔여데이터</span>
                                                         <a id="showRemainData" class="my-data">나의 데이터 확인</a>
                                                         <span class="ico-gift2"></span>
@@ -469,62 +475,36 @@
             <!--// content 영역 -->
         </div>
     </div>
-    <!--// .container-wrap -->
-    <!--//T끼리 선물하기 화면에서 삭제.
-    <div class="footer-wrap">
-        <div class="page-footer">
-            <div class="bt-popup">
-                <ul class="bt-slice full">
-                    <li class="bt-blue1">
-                        <button>요금제 변경하러 가기</button>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    -->
+    <a class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></a>
 </div>
 
 <% include ../../../components/javascript.component.html %>
 
 <!-- select.hbs -->
-<script type="text/x-handlebars-template" id="tpl_select_line">
-    <!-- .popup select -->
-    <div class="popup">
-        <div class="popup-info">
-            <div class="popup-header">
-                {{#if title}}
-                <h5 class="popup-title">{{title}}</h5>
-                {{/if}}
-                <a href="#close_pop" class="popup-closeBtn">팝업닫기<span class="ico"></span></a>
-            </div>
-            <div class="popup-contents">
-                {{#if txt}}
-                <p>{{{txt}}}</p>
-                {{/if}}
-                <ul class="select-list">
-                    {{#each value}}
-                    <li><label class="radiobox type01"><input type="radio" value="{{this}}" name="radio"/><span>{{this}}</span></label></li>
-                    {{/each}}
-                </ul>
-            </div>
-            <div class="btn-box">
-                <ul class="bt-slice ver">
-                    <li class="bt-red1">
-                        <button class="select-submit">확인</button>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div class="popup-blind"></div>
-    </div>
-    <!--// .popup select -->
+<script type="text/x-handlebars-template" id="tpl_gift_count">
+    <span class="gift-box-tit">선물 가능 횟수</span>
+    <span class="gift-box-tx">T끼리 <strong>{{dataGiftCnt}}회</strong> <span
+        class="bar">
+        {{#if familyMemberYn}}
+            {{#if goodFamilyMemberYn}}
+                /</span> 가족 무제한 </span>
+            {{else}}
+                /</span> 가족 <strong>{{familyDataGiftCnt}}회</strong></span>
+            {{/if}}
+        {{/if}}
+    <span class="ico-gift"></span>
+</script>
+
+<script type="text/x-handlebars-template" id="tpl_remain_data">
+    <span class="gift-box-tit">잔여데이터</span>
+    <span class="gift-box-tx"><strong>{{dataRemQty}}MB</strong></span>
+    <span class="ico-gift2"></span>
 </script>
 
 <script>
   $(document).ready(function () {
     var oMytGiftLine = new Tw.MytGiftLine($(document));
-    var oMytGift = new Tw.MytGift($(document.body));
+    var oMytGift = new Tw.MytGift($(document));
   });
 </script>
 
