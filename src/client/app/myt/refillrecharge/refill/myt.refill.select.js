@@ -62,7 +62,6 @@ Tw.MytRefillSelect.prototype = Object.assign(Tw.MytRefillSelect.prototype, {
       this._goLoad('/myt/refill/complete');
     } else {
       this._goLoad('/myt/refill/error');
-      $('#error-message').text(res.orgDebugMessage);
     }
   },
   _fail: function (err) {
