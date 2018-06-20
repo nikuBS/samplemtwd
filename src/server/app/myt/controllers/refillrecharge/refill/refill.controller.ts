@@ -45,7 +45,7 @@ class MyTRefill extends TwViewController {
       if (option === undefined) {
         data = this.parseData(resp.result);
       } else {
-        data = resp.result.usageOption;
+        data = resp.result.option;
       }
     } else {
       data = resp;

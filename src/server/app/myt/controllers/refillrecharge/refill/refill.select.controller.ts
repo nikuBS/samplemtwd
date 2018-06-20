@@ -34,7 +34,7 @@ class MyTRefillSelect extends TwViewController {
 
   private getResult(resp: any, usageData: any): any {
     if (resp.code === API_CODE.CODE_00) {
-      usageData = this.parseData(resp.result.usageOption);
+      usageData = this.parseData(resp.result.option);
     } else {
       usageData = resp;
     }
