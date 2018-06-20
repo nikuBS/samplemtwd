@@ -113,6 +113,7 @@ class ApiService {
   }
 
   private setSvcInfo(result) {
+    this.logger.debug(this, 'Change SvcInfo');
     this.loginService.setSvcInfo(result);
 
   }

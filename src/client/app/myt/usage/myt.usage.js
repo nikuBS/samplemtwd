@@ -22,9 +22,9 @@ Tw.MytUsage.prototype = Object.assign(Tw.MytUsage.prototype, {
   _changeDataUnit: function () {
     this.$container.on('change', '.btn-change', $.proxy(this._setDataByUnit, this));
   },
-  _setDataByUnit: function ($event) {
+  _setDataByUnit: function (event) {
     var defaultUnit = 'KB';
-    var unit = this._getUnit($event.target.checked);
+    var unit = this._getUnit(event.currentTarget.checked);
 
     this.$container.find('.data-value').each(function () {
       var $this = $(this);

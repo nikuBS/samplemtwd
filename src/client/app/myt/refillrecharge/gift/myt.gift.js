@@ -16,10 +16,10 @@ Tw.MytGift.prototype = Object.assign(Tw.MytGift.prototype, {
 
   _logHash: function (hash) {
     switch ( hash.base ) {
-      case 'tab1':
+      case 'gift':
         // TODO: tab1
         break;
-      case 'tab2' :
+      case 'request' :
         // TODO: tab2
         break;
       default:
@@ -42,16 +42,28 @@ Tw.MytGift.prototype = Object.assign(Tw.MytGift.prototype, {
     this.$container.on('click', '.popup-blind', $.proxy(this.closeLineSelectPopup, this));
     this.$container.on('click', '.popup-closeBtn', $.proxy(this.closePriceList, this));
     this.$container.on('updateLineInfo', $.proxy(this.updateLineInfo, this));
+    this.$container.on('click', '.tab-linker a', function (e) {
+      var elTab = $(e.currentTarget);
+      var elWrappperTab = $('.tab-linker a');
+
+      if ( elWrappperTab.index(elTab) == 0 ) {
+        location.hash = 'gift';
+      }
+
+      if ( elWrappperTab.index(elTab) == 1 ) {
+        location.hash = 'request';
+      }
+    })
   },
 
   changeTabMenu: function () {
     // TODO: Change tab menu
   },
 
-  updateLineInfo: function (e, { lineInfo, lineList }) {
+  updateLineInfo: function (e, params) {
     // TODO: fetch data && data binding
-    this.lineList = lineList;
-    this.lineInfo = lineInfo;
+    this.lineList = params.lineList;
+    this.lineInfo = params.lineInfo;
 
     this._apiService.request(Tw.API_CMD.BFF_06_0015, {})
       .done(function (res) {

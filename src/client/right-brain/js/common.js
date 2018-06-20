@@ -314,10 +314,12 @@ skt_landing.action = {
         }else{
           skt_landing.widgets.widget_init('.popup-page');
         }
+        frontend_fn.popup_open();
       });
       //skt_landing.action.popup.open({'title':'타이틀','contents':'팝업입니다.','type':[{class:'btn-submit',href:'#submit',txt:'확인'},{class:'btn-modify',href:'#modify',txt:'수정'},{class:'btn-cancel',href:'#cancel',txt:'취소'}]});
     },
-    searchChange: function (popup_info) {
+    /* 2018-06-19 삭제 */
+    /*searchChange: function (popup_info) {
       skt_landing.action.fix_scroll();
       var _this = this;
       $.get(hbsURL+'popup-searchChange.hbs', function (text) {
@@ -334,7 +336,7 @@ skt_landing.action = {
         _this.cancel();
         skt_landing.widgets.widget_init('.popup');
       });
-    },
+    },*/
     share: function (popup_info) {
       var _this = this;
       skt_landing.action.fix_scroll();

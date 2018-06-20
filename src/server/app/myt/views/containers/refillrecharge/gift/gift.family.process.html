@@ -17,7 +17,7 @@
                 <h1>데이터 선물하기</h1>
                 <a href="/home/menu" class="all-menu"><span class="blind">전체메뉴보기</span></a>
             </div>
-            <a href="#pstep" class="prev-step"><span class="blind">이전으로</span></a>
+            <a href="javascript:history.back()" class="prev-step"><span class="blind">이전으로</span></a>
             <a href="#search" class="search-content"><span class="blind">검색하기</span></a>
         </div>
     </div>
@@ -98,7 +98,7 @@
                 <h1>데이터 선물하기</h1>
                 <a href="#allmenu" class="all-menu"><span class="blind">전체메뉴보기</span></a>
             </div>
-            <a href="#pstep" class="prev-step"><span class="blind">이전으로</span></a>
+            <a href="javascript:history.back()" class="prev-step"><span class="blind">이전으로</span></a>
             <a href="#search" class="search-content"><span class="blind">검색하기</span></a>
         </div>
     </div>
@@ -129,8 +129,8 @@
                             <dl>
                                 <dt class="ti-data">선물 받은 분</dt>
                                 <dd class="tx-data">
-                                    <div class="txt"><span class="blind">이름</span>김*진</div>
-                                    <div class="num"><span class="blind">전화번호</span>010-12**-34**</div>
+                                    <div class="txt"><span class="blind">이름</span><%=svcInfo.custNm%></div>
+                                    <div class="num"><span class="blind">전화번호</span><%=svcInfo.svcNum%></div>
                                 </dd>
                             </dl>
                         </li>
@@ -200,7 +200,7 @@
                 <h1>데이터 선물하기</h1>
                 <a href="#allmenu" class="all-menu"><span class="blind">전체메뉴보기</span></a>
             </div>
-            <a href="#pstep" class="prev-step"><span class="blind">이전으로</span></a>
+            <a href="javascript:history.back()" class="prev-step"><span class="blind">이전으로</span></a>
             <a href="#search" class="search-content"><span class="blind">검색하기</span></a>
         </div>
     </div>
@@ -221,8 +221,8 @@
                                 <dl>
                                     <dt class="ti-data">선물 받은 분</dt>
                                     <dd class="tx-data">
-                                        <span class="blind">이름</span>정영진<br>
-                                        <span class="blind">전화번호</span><span class="num">010-12**-34**</span>
+                                        <span class="blind">이름</span><%=svcInfo.custNm%><br>
+                                        <span class="blind">전화번호</span><span class="num"><%=svcInfo.svcNum%></span>
                                     </dd>
                                 </dl>
                             </li>

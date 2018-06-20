@@ -1,6 +1,7 @@
 Tw.MytGiftMemberProcess = function (rootEl) {
   this.$container = rootEl;
   this._apiService = new Tw.ApiService();
+  this._nativeService = new Tw.NativeService();
 
   this._cachedElement();
   this._bindEvent();
@@ -49,12 +50,23 @@ Tw.MytGiftMemberProcess.prototype = {
     this.$btn_send_gift.on('click', $.proxy(this.sendGift, this));
     this.$btn_next_process.on('click', $.proxy(this.nextProcess, this));
     this.$container.on('updateLineInfo', $.proxy(this.updateLineInfo, this));
-    this.$container.on('click', '.recent_item', $.proxy(this.insertPhoneNumber, this));
+    // this.$container.on('click', '.recent_item', $.proxy(this.insertPhoneNumber, this));
   },
 
   updateLineInfo: function (e, params) {
     this.currentLine = params.lineInfo;
     this.requestRemainData();
+    this.requestRecentPresentList();
+  },
+
+  requestRecentPresentList: function () {
+    // this._apiService.request(Tw.API_CMD.BFF_06_0018, {
+    //   fromDt: '20180101',
+    //   toDt: '20180601',
+    //   giftType: '0'
+    // }).done(function (res) {
+    //   debugger;
+    // });
   },
 
   requestRemainData: function () {
@@ -102,6 +114,14 @@ Tw.MytGiftMemberProcess.prototype = {
     var nCurrentIndex = this.step.indexOf(sCurrentStep.replace('#', ''));
     var sNextStep = this.step[nCurrentIndex + 1];
     var sNextUrl = location.href.replace(sCurrentStep, '#' + sNextStep);
+
+    this._apiService.request(Tw.API_CMD.BFF_06_0019, { befrSvcNum: '01029230720' })
+      .done(function () {
+        debugger;
+      })
+      .fail(function () {
+        history.back();
+      });
 
     location.replace(sNextUrl);
   },

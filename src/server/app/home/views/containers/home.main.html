@@ -282,6 +282,9 @@
             </div>
             <!--// MA_01_CA13_06 -->
         </div>
+        <% if(refillData.refillCoupon && refillData.refillOptions && refillData.refillUsages) { %>
+        <% if(refillData.refillCoupon.length === 0) { %>
+        <!-- MA_01_CA14_03 -->
         <div class="component">
             <div class="component-box flcarddefault">
                 <h3 class="blind">리필 쿠폰 추천</h3>
@@ -296,7 +299,7 @@
                         <!-- .widget -->
                         <div class="widget">
                             <div class="widget-box slider4">
-                                <h5 class="tit-a blind">위젯 슬라이드</h5>
+                                <!--<h5 class="tit-a blind">위젯 슬라이드</h5>--><!-- 2018-06-19 : h태그 수정/삭제 -->
                                 <div class="type1">
                                     <div class="slider-box">
                                         <!-- type1: 카드형 -->
@@ -352,8 +355,9 @@
                 </div>
             </div>
         </div>
-        <!--// MA_01_CA14_01 -->
-        <!-- MA_01_CA14_02 -->
+        <!--// MA_01_CA14_03 -->
+        <% } else if (refillData.refillOptions.option.length === 0) { %>
+        <!-- MA_01_CA14_04 -->
         <div class="component">
             <div class="component-box flcardcta">
                 <h3 class="blind">리필 쿠폰 요금제 안내</h3>
@@ -365,65 +369,25 @@
                                 리필쿠폰을 사용할 수 있는<br /><em class="tx-bold">요금제</em>가 아닙니다.
                             </dd>
                             <dd>
-                                <span class="tx-noti"><em class="tx-customer">윤*연</em>님께 데이터 충전이 가능한<br /><em class="tx-pt">리필 쿠폰이 1장</em> 있습니다.</span>
+                                <span class="tx-noti"><em class="tx-customer"><%= svcInfo.custNm %></em>님께 데이터 충전이 가능한<br /><em class="tx-pt">리필 쿠폰이 <%= refillData.refillCoupon.length %>장</em> 있습니다.</span>
                             </dd>
                         </dl>
                         <button class="bt-like type1"><span class="blind">좋아요</span></button>
                         <div class="flcard-bottom">
                             <ul class="bt-slice ver">
                                 <li class="bt-blue1">
-                                    <button>어떤 요금제가 가능한가요?</button>
+                                    <a id="refill-price" title="리필 쿠폰 요금제 안내로 이동">어떤 요금제가 가능한가요?</a>
                                 </li>
                             </ul>
-                            <a class="bt-link-tx" href="#link">내 쿠폰 보기</a>
+                            <a class="bt-link-tx" href="/myt/refill">내 쿠폰 보기</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!--// MA_01_CA14_02 -->
-        <!-- MA_01_CA14_03 -->
-        <div class="component">
-            <div class="component-box flcardcta">
-                <h3 class="blind">리필 쿠폰 요금제 안내</h3>
-                <div class="flcard-cont">
-                    <div class="flcard-area">
-                        <dl class="flcard-tmember">
-                            <dt class="ti-tmember"><a href="">리필하기<span class="ico"></span></a></dt>
-                            <dd class="flcard-accent">
-                                리필쿠폰을<br /><em class="tx-bold">가족에게 선물</em>해보세요.
-                            </dd>
-                        </dl>
-                        <div class="coupon-cont">
-                            <dl class="coupon-box">
-                                <dt><span class="coupon-name">장기가입 리필쿠폰</span><span class="coupon-code">AAA000000502151993</span></dt>
-                                <dd>
-                                    <ul class="coupon-list">
-                                        <li><span class="list-ti">유효기간</span><span class="list-tx">2018.01.01 ~ 01.30</span></li>
-                                        <li><span class="list-ti">발급일</span><span class="list-tx">2018.04.01</span></li>
-                                    </ul>
-                                </dd>
-                            </dl>
-                            <div class="coupon-bottom"><span class="coupon-validity"><span class="validity">225</span>일 남음</span>
-                            </div>
-                        </div>
-                        <button class="bt-like type1"><span class="blind">좋아요</span></button>
-                        <div class="flcard-bottom">
-                            <ul class="bt-slice ver">
-                                <li class="bt-blue1">
-                                    <button>가족에게 선물하기</button>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="link-long">
-                    <a href="#link" title="xx로 이동">챗봇으로 리필쿠폰을 사용해보세요!<span class="ico"></span></a>
-                </div>
-            </div>
-        </div>
-        <!--// MA_01_CA14_03 -->
-        <!-- MA_01_CA14_04 -->
+        <!--// MA_01_CA14_04 -->
+        <% } else if (refillData.refillOptions.condition.usedCopnCntTmth === 0) {%>
+        <!-- MA_01_CA14_01 -->
         <div class="component">
             <div class="component-box flcardcta">
                 <h3 class="blind">리필 쿠폰 요금제 안내</h3>
@@ -437,22 +401,22 @@
                         </dl>
                         <div class="coupon-cont">
                             <dl class="coupon-box">
-                                <dt><span class="coupon-name">장기가입 리필쿠폰</span><span class="coupon-code">AAA000000502151993</span></dt>
+                                <dt><span class="coupon-name"><%= refillData.refillCoupon[0].copnNm %></span><span class="coupon-code"><%= refillData.refillCoupon[0].copnIsueNum %></span></dt>
                                 <dd>
                                     <ul class="coupon-list">
-                                        <li><span class="list-ti">유효기간</span><span class="list-tx">2018.01.01 ~ 01.30</span></li>
-                                        <li><span class="list-ti">발급일</span><span class="list-tx">2018.04.01</span></li>
+                                        <li><span class="list-ti">유효기간</span><span class="list-tx"><%= refillData.refillCoupon[0].showUsePsblStaDt %> ~ <%= refillData.refillCoupon[0].showUsePsblEndDt %></span></li>
+                                        <li><span class="list-ti">발급일</span><span class="list-tx"><%= refillData.refillCoupon[0].showCopnIsueDt %></span></li>
                                     </ul>
                                 </dd>
                             </dl>
-                            <div class="coupon-bottom"><span class="coupon-validity"><span class="validity">225</span>일 남음</span>
+                            <div class="coupon-bottom"><span class="coupon-validity"><span class="validity"><%= refillData.refillCoupon[0].showRemainDate %></span>일 남음</span>
                             </div>
                         </div>
                         <button class="bt-like type1"><span class="blind">좋아요</span></button>
                         <div class="flcard-bottom">
                             <ul class="bt-slice ver">
                                 <li class="bt-blue1">
-                                    <button>내 휴대폰에 리필하기</button>
+                                    <a href="/myt/refill" title="내 휴대폰에 리필하기로 이동">내 휴대폰에 리필하기</a>
                                 </li>
                             </ul>
                         </div>
@@ -463,7 +427,50 @@
                 </div>
             </div>
         </div>
-        <!--// MA_01_CA14_04 -->
+        <!--// MA_01_CA14_01 -->
+        <% } else if (refillData.refillOptions.condition.transferableCopnCntTmth > 0) { %>
+        <!-- MA_01_CA14_02 -->
+        <div class="component">
+            <div class="component-box flcardcta">
+                <h3 class="blind">리필 쿠폰 요금제 안내</h3>
+                <div class="flcard-cont">
+                    <div class="flcard-area">
+                        <dl class="flcard-tmember">
+                            <dt class="ti-tmember"><a href="">리필하기<span class="ico"></span></a></dt>
+                            <dd class="flcard-accent">
+                                리필쿠폰을<br /><em class="tx-bold">가족에게 선물</em>해보세요.
+                            </dd>
+                        </dl>
+                        <div class="coupon-cont">
+                            <dl class="coupon-box">
+                                <dt><span class="coupon-name"><%= refillData.refillCoupon[0].copnNm %></span><span class="coupon-code"><%= refillData.refillCoupon[0].copnIsueNum %></span></dt>
+                                <dd>
+                                    <ul class="coupon-list">
+                                        <li><span class="list-ti">유효기간</span><span class="list-tx"><%= refillData.refillCoupon[0].showUsePsblStaDt %> ~ <%= refillData.refillCoupon[0].showUsePsblEndDt %></span></li>
+                                        <li><span class="list-ti">발급일</span><span class="list-tx"><%= refillData.refillCoupon[0].showCopnIsueDt %></span></li>
+                                    </ul>
+                                </dd>
+                            </dl>
+                            <div class="coupon-bottom"><span class="coupon-validity"><span class="validity"><%= refillData.refillCoupon[0].showRemainDate %></span>일 남음</span>
+                            </div>
+                        </div>
+                        <button class="bt-like type1"><span class="blind">좋아요</span></button>
+                        <div class="flcard-bottom">
+                            <ul class="bt-slice ver">
+                                <li class="bt-blue1">
+                                    <a href="#none" title="가족에게 선물하기로 이동">가족에게 선물하기</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="link-long">
+                    <a href="#link" title="xx로 이동">챗봇으로 리필쿠폰을 사용해보세요!<span class="ico"></span></a>
+                </div>
+            </div>
+        </div>
+        <!--// MA_01_CA14_02 -->
+        <% } else { %>
         <!-- MA_01_CA14_05 -->
         <div class="component">
             <div class="component-box flcardcta">
@@ -484,11 +491,11 @@
                         <ul class="flcard-list">
                             <li>
                                 <span class="ti-fee">리필한 횟수</span>
-                                <span class="tx-fee">1회</span>
+                                <span class="tx-fee"><%= refillData.refillOptions.condition.usedCopnCntTmth %>회</span>
                             </li>
                             <li>
                                 <span class="ti-fee">리필쿠폰 선물한 횟수</span>
-                                <span class="tx-fee">1회</span>
+                                <span class="tx-fee"><%= refillData.refillOptions.condition.transferedCopnCntTmth %>회</span>
                             </li>
                         </ul>
                         <button class="bt-like type1">
@@ -497,7 +504,7 @@
                         <div class="flcard-bottom">
                             <ul class="bt-slice ver">
                                 <li class="bt-blue1">
-                                    <button>리필 내역 보기</button>
+                                    <a href="/myt/refill/history" title="리필 내역 보기로 이동">리필 내역 보기</a>
                                 </li>
                             </ul>
                         </div>
@@ -506,6 +513,8 @@
             </div>
         </div>
         <!--// MA_01_CA14_05 -->
+        <% } %>
+        <% } %>
     </div>
     <!--// #contents -->
 </div>
