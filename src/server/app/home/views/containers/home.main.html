@@ -356,7 +356,7 @@
             </div>
         </div>
         <!--// MA_01_CA14_03 -->
-        <% } else if (refillData.refillOptions.usageOption.lenght === 0) { %>
+        <% } else if (refillData.refillOptions.option.length === 0) { %>
         <!-- MA_01_CA14_04 -->
         <div class="component">
             <div class="component-box flcardcta">
@@ -386,7 +386,7 @@
             </div>
         </div>
         <!--// MA_01_CA14_04 -->
-        <% } else if (!refillData.refillHistory) {%>
+        <% } else if (refillData.refillOptions.condition.usedCopnCntTmth === 0) {%>
         <!-- MA_01_CA14_01 -->
         <div class="component">
             <div class="component-box flcardcta">
@@ -428,7 +428,7 @@
             </div>
         </div>
         <!--// MA_01_CA14_01 -->
-        <% } else if (refillData.refillOptions.giftOption.giftSndPsblYn === 'Y') { %>
+        <% } else if (refillData.refillOptions.condition.transferableCopnCntTmth > 0) { %>
         <!-- MA_01_CA14_02 -->
         <div class="component">
             <div class="component-box flcardcta">
@@ -491,11 +491,11 @@
                         <ul class="flcard-list">
                             <li>
                                 <span class="ti-fee">리필한 횟수</span>
-                                <span class="tx-fee">1회</span>
+                                <span class="tx-fee"><%= refillData.refillOptions.condition.usedCopnCntTmth %>회</span>
                             </li>
                             <li>
                                 <span class="ti-fee">리필쿠폰 선물한 횟수</span>
-                                <span class="tx-fee">1회</span>
+                                <span class="tx-fee"><%= refillData.refillOptions.condition.transferedCopnCntTmth %>회</span>
                             </li>
                         </ul>
                         <button class="bt-like type1">
