@@ -70,8 +70,8 @@ Tw.MyTRefillHistory.prototype = {
     }
   },
 
-  _setTransferable: function (type, resp) {
-    var transferable = (resp.result.condition.transferableCopnCnt > 0 ) && resp.result.option && (resp.result.option.length > 0);
+  _setTransferable: function (type, coupon, svctype) {
+    var transferable = (coupon[0].result.length > 0 ) && (svctype[0].result.option.length > 0);
     this._initTabContent(type, this._sentRefills, this.$tabContentSent, { transferable: transferable });
   },
 
@@ -120,7 +120,7 @@ Tw.MyTRefillHistory.prototype = {
         this._myRefills.map(
           function (data) {
             data.copnUseDt = Tw.DateHelper.getShortDateNoDot(data.copnUseDt);
-            data.copnDtlClCd = ['AAA10', 'AAA30'].indexOf(data.copnDtlClCd) > -1 ? 'tx-data': 'tx-voice'
+            data.copnDtlClCd = ['AAA10', 'AAA30'].indexOf(data.copnDtlClCd) > -1 ? 'tx-data' : 'tx-voice'
           });
         this._initTabContent(type, this._myRefills, this.$tabContentMy);
         break;
@@ -128,10 +128,9 @@ Tw.MyTRefillHistory.prototype = {
         this._sentRefills = resp.result;
 
         if ( this._sentRefills.length < 1 ) {
-          this._apiService
-            .request(Tw.API_CMD.BFF_06_0009)
-            .done($.proxy(this._setTransferable, this, this.TYPE.SENT))
-            .fail(function(){console.log('[ERROR] An error occurred while requesting API')});
+          $.when(this._apiService.request(Tw.API_CMD.BFF_06_0001),
+                 this._apiService.request(Tw.API_CMD.BFF_06_0009))
+            .done($.proxy(this._setTransferable, this, this.TYPE.SENT));
         } else {
           this._sentRefills.map(
             function (data) {
