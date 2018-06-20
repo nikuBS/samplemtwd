@@ -8,7 +8,8 @@ class MyTRefillGift extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     res.render('refillrecharge/refill/refill.gift.html', {
-      copnNm: req.query.copnNm
+      copnNm: req.query.copnNm,
+      svcInfo
     });
   }
 }

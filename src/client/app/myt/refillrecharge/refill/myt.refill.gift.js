@@ -28,13 +28,19 @@ Tw.MytRefillGift.prototype = Object.assign(Tw.MytRefillGift.prototype, {
 
   _onClickBtnNext: function (event) {
     var befrSvcNum = this._$inputPhone.val();
-    if (!Tw.ValidationHelper.isCellPhone(befrSvcNum)) {
+    var copnNm = this._$btnNext.attr('copn-nm');
+    var svcNum = this._$btnNext.attr('svc-num');
+    var fomattedBefrSvcNum = this._getFormattedPhoneNumber(befrSvcNum);
+    var msg = svcNum + '님' + fomattedBefrSvcNum + '님으로 리필쿠폰을 선물하시겠습니까? \n신청 후 취소가 불가능합니다.';
+    if ( !Tw.ValidationHelper.isCellPhone(befrSvcNum) ) {
       alert('유효한 휴대폰번호가 아닙니다.');
       return;
     }
-    var copnNm = this._$btnNext.attr('copn-nm');
     if ( !copnNm ) {
       alert('선택된 쿠폰이 없습니다.');
+      return;
+    }
+    if ( !confirm(msg) ) {
       return;
     }
     var data = JSON.stringify({
@@ -46,7 +52,7 @@ Tw.MytRefillGift.prototype = Object.assign(Tw.MytRefillGift.prototype, {
       .fail($.proxy(this._sendFail, this));
   },
 
-  _onClickBtnAddr: function() {
+  _onClickBtnAddr: function () {
     this._nativeService.send(Tw.NTV_CMD.GET_CONTACT, {}, $.proxy(this._onContact, this));
   },
 
@@ -97,7 +103,7 @@ Tw.MytRefillGift.prototype = Object.assign(Tw.MytRefillGift.prototype, {
     }
   },
 
-  _setDisableStatus: function() {
+  _setDisableStatus: function () {
     var disabled = !(10 <= this._$inputPhone.val().length);
     this._$btnNext.attr('disabled', disabled);
   },
