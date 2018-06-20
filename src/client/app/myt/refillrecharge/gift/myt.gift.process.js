@@ -1,4 +1,4 @@
-Tw.MytGiftMemberProcess = function (rootEl) {
+Tw.MytGiftProcess = function (rootEl) {
   this.$container = rootEl;
   this._apiService = new Tw.ApiService();
   this._nativeService = new Tw.NativeService();
@@ -8,11 +8,17 @@ Tw.MytGiftMemberProcess = function (rootEl) {
   this.$init();
 }
 
-Tw.MytGiftMemberProcess.prototype = {
+Tw.MytGiftProcess.prototype = {
   step: ['step1', 'step2', 'step3'],
+  provider: {
+    name: '',
+    phone: '',
+    dataQty: ''
+  },
 
   $init: function () {
     initHashNav(this._logHash);
+    this.processType = location.href.substr(location.href.lastIndexOf('/') + 1).split('#')[0];
   },
 
   _logHash: function (hash) {
@@ -45,25 +51,26 @@ Tw.MytGiftMemberProcess.prototype = {
     this.$btn_next_process = this.$container.find('#next_process');
     this.$btn_one_more = this.$container.find('#btn_one_more');
     this.$btn_go_history = this.$container.find('#btn_go_history');
-    this.$input_phone = this.$container.find('#inp_phone');
+    this.$btn_addr = this.$container.find('#btn-addr');
+    this.$wrap_data_select = this.$container.find('#wrap_data_select');
   },
 
   _bindEvent: function () {
     this.$input_phone.on('keyup', $.proxy(this.validateNumber, this));
     this.$btn_go_home.on('click', $.proxy(this.goHome, this));
-    this.$btn_send_gift.on('click', $.proxy(this.sendGift, this));
+    this.$btn_send_gift.on('click', $.proxy(this.nextProcess, this));
     this.$btn_next_process.on('click', $.proxy(this.nextProcess, this));
     this.$btn_one_more.on('click', $.proxy(this.goBasicStep, this));
     this.$container.on('updateLineInfo', $.proxy(this.updateLineInfo, this));
     this.$container.on('click', '.recent_item', $.proxy(this.insertPhoneNumber, this));
     this.$btn_go_history.on('click', $.proxy(this.goHistory, this));
+    this.$btn_addr.on('click', $.proxy(this._onClickBtnAddr, this));
   },
 
 
   updateLineInfo: function (e, params) {
     this.lineInfo = params.lineInfo;
     this.requestRemainData();
-    this.requestRecentPresentList();
   },
 
   requestRemainData: function () {
@@ -89,6 +96,7 @@ Tw.MytGiftMemberProcess.prototype = {
   },
 
   setAvailableData: function () {
+
     this.$wrap_data_select.find('label').each(function (idx, item) {
       var $item = $(item);
       var itemValue = Number($item.data('value'));
@@ -98,6 +106,16 @@ Tw.MytGiftMemberProcess.prototype = {
         $item.find('input').prop('disabled', true);
       }
     }.bind(this));
+  },
+
+  _onClickBtnAddr: function () {
+    this._nativeService.send(Tw.NTV_CMD.GET_CONTACT, {}, $.proxy(this._onContact, this));
+  },
+
+  _onContact: function (resp) {
+    var params = JSON.parse(resp.params);
+    var phoneNumber = params.phoneNumber.replace(/-/gi, "");
+    this.$input_phone.val(phoneNumber);
   },
 
   validateNumber: function (e) {
@@ -111,38 +129,60 @@ Tw.MytGiftMemberProcess.prototype = {
   },
 
   nextProcess: function () {
-    var sCurrentStep = location.hash;
-    var nCurrentIndex = this.step.indexOf(sCurrentStep.replace('#', ''));
-    var sNextStep = this.step[nCurrentIndex + 1];
-    var sNextUrl = location.href.replace(sCurrentStep, '#' + sNextStep);
+    if ( location.hash == '#step1' ) {
+      this.validateStep1();
+    }
 
-    this._apiService.request(Tw.API_CMD.BFF_06_0019, { befrSvcNum: '01029230720' })
-      .done(function () {
-        debugger;
-      })
-      .fail(function () {
-        history.back();
-      });
-
-    location.replace(sNextUrl);
+    if ( location.hash == '#step2' ) {
+      this.validateStep2()
+    }
   },
 
-  sendGift: function () {
-    // var sample_params = {
-    //   befrSvcNum: '01029482912',
-    //   dataQty: String(this.$wrap_data_select.find('.checked').data('value')),
-    //   svcMgmtNum: this.currentLine.svcMgmtNum
-    // }
+  validateStep1: function () {
+    if ( this.processType == 'request' ) {
+      this._apiService.request(Tw.API_CMD.BFF_06_0012, { charSvcNum: this.$input_phone.val() })
+        .done($.proxy(this.renderProvider, this));
 
-    // if success,
-    this.nextProcess();
+    } else if ( this.processType == 'member' || this.processType == 'family' ) {
+      this._apiService.request(Tw.API_CMD.BFF_06_0008, { befrSvcNum: this.$input_phone.val() })
+        .done($.proxy(this.renderProvider, this));
 
-    // this._apiService.request(Tw.API_CMD.BFF_06_0016, sample_params)
-    //   .done(function () {
-    //     alert('successs');
-    //     // TODO : send Data
-    //     // location.replace('/myt/gift/complete');
-    //   });
+    }
+  },
+
+  validateStep2: function () {
+    var nCurrentIndex = this.step.indexOf(location.hash.replace('#', ''));
+    var sNextStep = this.step[nCurrentIndex + 1];
+    var sNextUrl = location.href.replace(location.hash, '#' + sNextStep);
+
+    var dataQty = $('#wrap_data_select').find('label.checked').data('value');
+
+    if ( this.processType == 'request' ) {
+      if ( dataQty ) {
+        this._apiService.request(Tw.API_CMD.BFF_06_0013, { dataQty: dataQty, svcNum: this.provider.phone })
+          .done(function (res) {
+            this.provider.dataQty = dataQty;
+            $('.wrap_data .num').text(dataQty);
+            location.replace(sNextUrl);
+          }.bind(this));
+      }
+    } else {
+      location.replace(sNextUrl);
+    }
+  },
+
+  renderProvider: function (res) {
+    this.provider.name = res.result.custName;
+    this.provider.phone = this.$input_phone.val();
+
+    var tpl = Handlebars.compile($('#tpl_targetInfo').text());
+    $('.wrap_provider').html(tpl(this.provider));
+
+    var nCurrentIndex = this.step.indexOf(location.hash.replace('#', ''));
+    var sNextStep = this.step[nCurrentIndex + 1];
+    var sNextUrl = location.href.replace(location.hash, '#' + sNextStep);
+
+    location.replace(sNextUrl);
   },
 
   goHistory: function () {
@@ -157,15 +197,5 @@ Tw.MytGiftMemberProcess.prototype = {
 
   goHome: function () {
     location.replace('/home');
-  },
-
-  requestRecentPresentList: function () {
-    // this._apiService.request(Tw.API_CMD.BFF_06_0018, {
-    //   fromDt: '20180101',
-    //   toDt: '20180601',
-    //   giftType: '0'
-    // }).done(function (res) {
-    //   debugger;
-    // });
-  },
+  }
 }

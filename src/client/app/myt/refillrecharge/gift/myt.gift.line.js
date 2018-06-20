@@ -11,7 +11,6 @@ Tw.MytGiftLine.prototype = Object.create(Tw.View.prototype);
 Tw.MytGiftLine.prototype.constructor = Tw.MytGiftLine;
 
 Tw.MytGiftLine.prototype = Object.assign(Tw.MytGiftLine.prototype, {
-  lineInfo: {},
   $init: function () {
     this._apiService
       .request(Tw.API_CMD.BFF_03_0003, { svcCtg: 'M' })
