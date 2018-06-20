@@ -43,30 +43,27 @@ Tw.MytGiftMemberProcess.prototype = {
     this.$wrap_data_select = this.$container.find('.tube-list');
     this.$btn_send_gift = this.$container.find('#btn_send_gift');
     this.$btn_next_process = this.$container.find('#next_process');
+    this.$btn_one_more = this.$container.find('#btn_one_more');
+    this.$btn_go_history = this.$container.find('#btn_go_history');
+    this.$input_phone = this.$container.find('#inp_phone');
   },
 
   _bindEvent: function () {
+    this.$input_phone.on('keyup', $.proxy(this.validateNumber, this));
     this.$btn_go_home.on('click', $.proxy(this.goHome, this));
     this.$btn_send_gift.on('click', $.proxy(this.sendGift, this));
     this.$btn_next_process.on('click', $.proxy(this.nextProcess, this));
+    this.$btn_one_more.on('click', $.proxy(this.goBasicStep, this));
     this.$container.on('updateLineInfo', $.proxy(this.updateLineInfo, this));
-    // this.$container.on('click', '.recent_item', $.proxy(this.insertPhoneNumber, this));
+    this.$container.on('click', '.recent_item', $.proxy(this.insertPhoneNumber, this));
+    this.$btn_go_history.on('click', $.proxy(this.goHistory, this));
   },
+
 
   updateLineInfo: function (e, params) {
-    this.currentLine = params.lineInfo;
+    this.lineInfo = params.lineInfo;
     this.requestRemainData();
     this.requestRecentPresentList();
-  },
-
-  requestRecentPresentList: function () {
-    // this._apiService.request(Tw.API_CMD.BFF_06_0018, {
-    //   fromDt: '20180101',
-    //   toDt: '20180601',
-    //   giftType: '0'
-    // }).done(function (res) {
-    //   debugger;
-    // });
   },
 
   requestRemainData: function () {
@@ -101,6 +98,10 @@ Tw.MytGiftMemberProcess.prototype = {
         $item.find('input').prop('disabled', true);
       }
     }.bind(this));
+  },
+
+  validateNumber: function (e) {
+    Tw.InputHelper.inputNumberOnly(e.currentTarget);
   },
 
   insertPhoneNumber: function (e) {
@@ -144,7 +145,27 @@ Tw.MytGiftMemberProcess.prototype = {
     //   });
   },
 
+  goHistory: function () {
+    location.replace('/myt/gift/history');
+  },
+
+  goBasicStep: function () {
+    var sBasicStepUrl = location.href.replace('step3', 'step1');
+
+    location.replace(sBasicStepUrl);
+  },
+
   goHome: function () {
     location.replace('/home');
-  }
+  },
+
+  requestRecentPresentList: function () {
+    // this._apiService.request(Tw.API_CMD.BFF_06_0018, {
+    //   fromDt: '20180101',
+    //   toDt: '20180601',
+    //   giftType: '0'
+    // }).done(function (res) {
+    //   debugger;
+    // });
+  },
 }
