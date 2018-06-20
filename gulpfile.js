@@ -85,8 +85,7 @@ appNames.map((app) => {
 
 gulp.task('css-vendor', function () {
   return gulp.src([
-    'node_modules/slick-carousel/slick/slick.css',
-    'node_modules/swiper/dist/css/swiper.min.css'])
+    'node_modules/slick-carousel/slick/slick.css'])
     .pipe(concat('vendor.css'))
     .pipe(gulp.dest(dist + 'css'));
 });
