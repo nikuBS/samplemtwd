@@ -8,7 +8,7 @@ Tw.MyTRefillHistory = function (rootEl) {
     SENT: 'sent',
     RECEIVED: 'received'
   }
-  this.NUM_OF_ITEMS = 20;
+  this.NUM_OF_ITEMS = 1;
 };
 
 Tw.MyTRefillHistory.prototype = {
@@ -70,8 +70,8 @@ Tw.MyTRefillHistory.prototype = {
     }
   },
 
-  _onClickMore: function (e){
-   e.preventDefault();
+  _onClickMore: function (e) {
+    e.preventDefault();
     var elTarget = e.target;
     var type = elTarget.getAttribute('data-type');
     var leftItems = elTarget.getAttribute('data-left-items');
@@ -96,15 +96,15 @@ Tw.MyTRefillHistory.prototype = {
         return null;
     }
 
-    var idxFrom = items.length-leftItems;
-    output = template({items: items.slice(idxFrom, idxFrom + this.NUM_OF_ITEMS)});
+    var idxFrom = items.length - leftItems;
+    output = template({ items: items.slice(idxFrom, idxFrom + this.NUM_OF_ITEMS) });
     $targetTab.find('ul').append(output);
     leftItems = leftItems - this.NUM_OF_ITEMS;
-    if(leftItems > 0){
-      elTarget.setAttribute('data-left-items', leftItems );
-      elTarget.innerText = elTarget.innerText.replace(/\((.+?)\)/, "("+leftItems+")");
-    }else{
-      elTarget.style.display='none';
+    if ( leftItems > 0 ) {
+      elTarget.setAttribute('data-left-items', leftItems);
+      elTarget.innerText = elTarget.innerText.replace(/\((.+?)\)/, "(" + leftItems + ")");
+    } else {
+      elTarget.style.display = 'none';
     }
   },
 
@@ -115,6 +115,10 @@ Tw.MyTRefillHistory.prototype = {
       case this.TYPE.MY:
         Handlebars.registerPartial('myItems', $('#tmplMyItems').html());
         this._myRefills = resp.result;
+        this._myRefills.map(
+          function (data) {
+            data.copnUseDt = Tw.DateHelper.getShortDateNoDot(data.copnUseDt);
+          });
         items = this._myRefills;
         source = $('#tmplMy').html();
         $targetTab = this.$tabContentMy;
@@ -122,6 +126,12 @@ Tw.MyTRefillHistory.prototype = {
       case this.TYPE.SENT:
         Handlebars.registerPartial('sentItems', $('#tmplSentItems').html());
         this._sentRefills = resp.result;
+        this._sentRefills.map(
+          function (data) {
+            data.usePsblStaDt = Tw.DateHelper.getShortDateNoDot(data.usePsblStaDt);
+            data.usePsblEndDt = Tw.DateHelper.getShortDateNoDot(data.usePsblEndDt);
+            data.copnOpDt = Tw.DateHelper.getShortDateNoDot(data.copnOpDt);
+          });
         items = this._sentRefills;
         source = $('#tmplSent').html();
         $targetTab = this.$tabContentSent;
@@ -129,23 +139,30 @@ Tw.MyTRefillHistory.prototype = {
       case this.TYPE.RECEIVED:
         Handlebars.registerPartial('receivedItems', $('#tmplReceivedItems').html());
         this._receivedRefills = resp.result;
+        this._receivedRefills.map(
+          function (data) {
+            data.usePsblStaDt = Tw.DateHelper.getShortDateNoDot(data.usePsblStaDt);
+            data.usePsblEndDt = Tw.DateHelper.getShortDateNoDot(data.usePsblEndDt);
+            data.copnOpDt = Tw.DateHelper.getShortDateNoDot(data.copnOpDt);
+          });
         items = this._receivedRefills;
         source = $('#tmplReceived').html();
         $targetTab = this.$tabContentReceived;
         break;
       default:
-        console.error('[ERROR] Can not find type\'' + type +'\' in tabs');
+        console.error('[ERROR] Can not find type\'' + type + '\' in tabs');
         return null;
     }
 
     var template = Handlebars.compile(source);
-    var leftItems =  items.length - this.NUM_OF_ITEMS;
+    var leftItems = items.length - this.NUM_OF_ITEMS;
     var output = template({
+      total: items.length,
       items: items.slice(0, this.NUM_OF_ITEMS),
       leftItems: leftItems > 0 ? leftItems : null
     });
     $targetTab.append(output);
-    if(leftItems){
+    if ( leftItems ) {
       $targetTab.on('click', 'a.bt-more', $.proxy(this._onClickMore, this))
     }
   }

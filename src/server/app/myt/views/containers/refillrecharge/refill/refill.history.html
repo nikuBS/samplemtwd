@@ -2,7 +2,7 @@
 <script id="tmplMy" type="text/x-handlebars-template">
     <div class="contents-info-list">
         {{#if items}}
-        <p class="ti-desc"><strong><em class="num">{{items.length}}</em>개</strong> 쿠폰으로 리필하셨네요!</p>
+        <p class="ti-desc"><strong><em class="num">{{total}}</em>개</strong> 쿠폰으로 리필하셨네요!</p>
         <ul class="result-coupon">
             {{> myItems items=items}}
         </ul>
@@ -21,7 +21,7 @@
         <div class="info-coupon">
             <span class="info-code">{{copnIsueNum}}</span>
             <span class="info-title"><span class="tx-data">{{copnDtlClNm}}</span></span>
-            <span class="info-sub">{{copnNm}}></span>
+            <span class="info-sub">{{copnNm}}</span>
         </div>
         <div class="info-date">
             <span class="info-title">사용일자</span>
@@ -34,7 +34,7 @@
 <script id="tmplSent" type="text/x-handlebars-template">
     <div class="contents-info-list">
         {{#if items}}
-        <p class="ti-desc">가족에게 <strong><em class="num">{{items.length}}</em>개</strong> 쿠폰을 선물하셨네요!</p>
+        <p class="ti-desc">가족에게 <strong><em class="num">{{total}}</em>개</strong> 쿠폰을 선물하셨네요!</p>
         <ul class="result-coupon">
             {{> sentItems items=items}}
         </ul>
@@ -78,7 +78,7 @@
 <script id="tmplReceived" type="text/x-handlebars-template">
     <div class="contents-info-list">
         {{#if items}}
-        <p class="ti-desc">가족분들이 <strong><em class="num">{{item.length}}</em>개</strong> 쿠폰을<br/>선물해주셨네요!</p>
+        <p class="ti-desc">가족분들이 <strong><em class="num">{{total}}</em>개</strong> 쿠폰을<br/>선물해주셨네요!</p>
         <ul class="result-coupon">
             {{> receivedItems items=items}}
         </ul>
