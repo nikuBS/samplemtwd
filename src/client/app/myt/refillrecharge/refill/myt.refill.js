@@ -14,7 +14,7 @@ Tw.MytRefill.prototype = Object.assign(Tw.MytRefill.prototype, {
     this.$container.on('click', '.coupon-cont', $.proxy(this._selectCoupon, this));
     this.$container.on('click', '.link-long > a', $.proxy(this._goRefill, this));
     this.$container.on('click', '.refill-history', $.proxy(this._goHistory, this));
-    this.$container.on('click', '.bt-link-tx', $.proxy(this._showProduct, this));
+    this.$container.on('click', '.show-product', $.proxy(this._showProduct, this));
   },
   _selectCoupon: function (event) {
     var $target = $(event.currentTarget).parents('.swiper-slide');
