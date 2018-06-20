@@ -35,7 +35,7 @@ export const API_CMD = {
   BFF_05_0009: { path: '/core-balance/v1/data-sharings/balances', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0010: { path: '/core-balance/v1/children', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0011: { path: '/core-balance/v1/data-sharings/args-0', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
-  BFF_06_0001: { path: '/core-recharge/v1/refill-coupons', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_06_0001: { path: '/core-recharge/v1/refill-coupons', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_06_0002: { path: '/core-recharge/v1/refill-usages', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_06_0003: { path: '/core-recharge/v1/refill-gifts', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_06_0004: { path: '/core-recharge/v1/regular-data-gifts', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
@@ -74,5 +74,19 @@ export const API_MYT_ERROR_CODE = [
   'BLN0002', // 정지이력
   'BLN0003', // 조회불가대상
   'BLN0004' // 조회불가대상
+];
+
+export const API_GIFT_ERROR = [
+  'RCG0001',   // 제공자 선물하기 불가 상태
+  'RCG0002',   // 제공자 선물하기 불가 요금제
+  'RCG0003',   // 제공자 당월 선물가능 횟수 초과 (월2회)
+  'RCG0004',   // 제공자 당월 선물가능 용량 미달
+  'RCG0005',   // 제공자가 미성년자이면 선물하기 불가
+  'RCG0006',   // 수혜자 선물수신 불가상태
+  'RCG0007',   // 수혜자 선물수신 불가 요금제
+  'RCG0008',   // 수혜자 당월 선물수신 횟수 초과 (월2회)
+  'RCG0011',   // 제공자 회선과 수혜자 회선이 동일한 경우
+  'RCG0013',   // 그 외 기타에러
+  'RCG0015',   // 기타 불가
 ];
 

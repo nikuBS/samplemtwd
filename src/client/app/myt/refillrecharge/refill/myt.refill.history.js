@@ -47,7 +47,7 @@ Tw.MyTRefillHistory.prototype = {
         if ( typeof this._myRefills === 'undefined' ) {
           this._apiService
             .request(Tw.API_CMD.BFF_06_0002, {})
-            .done($.proxy(this._initTabContent, this, this.TYPE.MY))
+            .done($.proxy(this._onResetHistoryData, this, this.TYPE.MY))
             .fail(error);
         }
         break;
@@ -55,7 +55,7 @@ Tw.MyTRefillHistory.prototype = {
         if ( typeof this._sentRefills === 'undefined' ) {
           this._apiService
             .request(Tw.API_CMD.BFF_06_0003, { giftType: 1 })
-            .done($.proxy(this._initTabContent, this, this.TYPE.SENT))
+            .done($.proxy(this._onResetHistoryData, this, this.TYPE.SENT))
             .fail(error);
         }
         break;
@@ -63,15 +63,20 @@ Tw.MyTRefillHistory.prototype = {
         if ( typeof this._receivedRefills === 'undefined' ) {
           this._apiService
             .request(Tw.API_CMD.BFF_06_0003, { giftType: 2 })
-            .done($.proxy(this._initTabContent, this, this.TYPE.RECEIVED))
-            .fail(error)
+            .done($.proxy(this._onResetHistoryData, this, this.TYPE.RECEIVED))
+            .fail(error);
         }
         break;
     }
   },
 
-  _onClickMore: function (e){
-   e.preventDefault();
+  _setTransferable: function (type, coupon, svctype) {
+    var transferable = (coupon[0].result.length > 0 ) && (svctype[0].result.option.length > 0);
+    this._initTabContent(type, this._sentRefills, this.$tabContentSent, { transferable: transferable });
+  },
+
+  _onClickMore: function (e) {
+    e.preventDefault();
     var elTarget = e.target;
     var type = elTarget.getAttribute('data-type');
     var leftItems = elTarget.getAttribute('data-left-items');
@@ -83,69 +88,108 @@ Tw.MyTRefillHistory.prototype = {
         template = Handlebars.compile('{{>myItems}}');
         break;
       case this.TYPE.SENT:
-        items = this._myRefills;
+        items = this._sentRefills;
         $targetTab = this.$tabContentSent;
-        template = Handlebars.compile('{{>myItems}}');
+        template = Handlebars.compile('{{>sentItems}}');
         break;
       case this.TYPE.RECEIVED:
-        Handlebars.registerPartial('receivedItems', $('#tmplReceivedItems').html());
         items = this._receivedRefills;
         $targetTab = this.$tabContentReceived;
+        template = Handlebars.compile('{{>receivedItems}}');
         break;
       default:
         return null;
     }
 
-    var idxFrom = items.length-leftItems;
-    output = template({items: items.slice(idxFrom, idxFrom + this.NUM_OF_ITEMS)});
+    var idxFrom = items.length - leftItems;
+    output = template({ items: items.slice(idxFrom, idxFrom + this.NUM_OF_ITEMS) });
     $targetTab.find('ul').append(output);
     leftItems = leftItems - this.NUM_OF_ITEMS;
-    if(leftItems > 0){
-      elTarget.setAttribute('data-left-items', leftItems );
-      elTarget.innerText = elTarget.innerText.replace(/\((.+?)\)/, "("+leftItems+")");
-    }else{
-      elTarget.style.display='none';
+    if ( leftItems > 0 ) {
+      elTarget.setAttribute('data-left-items', leftItems);
+      elTarget.innerText = elTarget.innerText.replace(/\((.+?)\)/, "(" + leftItems + ")");
+    } else {
+      elTarget.style.display = 'none';
     }
   },
 
-  _initTabContent: function (type, resp) {
-    var source = null, items = null, $targetTab = null;
-    //TODO parsing data
+  _onResetHistoryData: function (type, resp) {
+    switch ( type ) {
+      case this.TYPE.MY:
+        this._myRefills = resp.result;
+        this._myRefills.map(
+          function (data) {
+            data.copnUseDt = Tw.DateHelper.getShortDateNoDot(data.copnUseDt);
+            data.copnDtlClCd = ['AAA10', 'AAA30'].indexOf(data.copnDtlClCd) > -1 ? 'tx-data' : 'tx-voice'
+          });
+        this._initTabContent(type, this._myRefills, this.$tabContentMy);
+        break;
+      case this.TYPE.SENT:
+        this._sentRefills = resp.result;
+
+        if ( this._sentRefills.length < 1 ) {
+          $.when(this._apiService.request(Tw.API_CMD.BFF_06_0001),
+                 this._apiService.request(Tw.API_CMD.BFF_06_0009))
+            .done($.proxy(this._setTransferable, this, this.TYPE.SENT));
+        } else {
+          this._sentRefills.map(
+            function (data) {
+              data.usePsblStaDt = Tw.DateHelper.getShortDateNoDot(data.usePsblStaDt);
+              data.usePsblEndDt = Tw.DateHelper.getShortDateNoDot(data.usePsblEndDt);
+              data.copnOpDt = Tw.DateHelper.getShortDateNoDot(data.copnOpDt);
+            });
+          this._initTabContent(type, this._sentRefills, this.$tabContentSent);
+        }
+        break;
+      case this.TYPE.RECEIVED:
+        this._receivedRefills = resp.result;
+        this._receivedRefills.map(
+          function (data) {
+            data.usePsblStaDt = Tw.DateHelper.getShortDateNoDot(data.usePsblStaDt);
+            data.usePsblEndDt = Tw.DateHelper.getShortDateNoDot(data.usePsblEndDt);
+            data.copnOpDt = Tw.DateHelper.getShortDateNoDot(data.copnOpDt);
+          });
+        this._initTabContent(type, this._receivedRefills, this.$tabContentReceived);
+        break;
+      default:
+        console.error('[ERROR] Can not find type\'' + type + '\' in tabs');
+        return null;
+    }
+  },
+
+  _initTabContent: function (type, items, $targetTab, options) {
+    var source = null;
     switch ( type ) {
       case this.TYPE.MY:
         Handlebars.registerPartial('myItems', $('#tmplMyItems').html());
-        this._myRefills = resp.result;
-        items = this._myRefills;
         source = $('#tmplMy').html();
-        $targetTab = this.$tabContentMy;
         break;
       case this.TYPE.SENT:
         Handlebars.registerPartial('sentItems', $('#tmplSentItems').html());
-        this._sentRefills = resp.result;
-        items = this._sentRefills;
         source = $('#tmplSent').html();
-        $targetTab = this.$tabContentSent;
         break;
       case this.TYPE.RECEIVED:
         Handlebars.registerPartial('receivedItems', $('#tmplReceivedItems').html());
-        this._receivedRefills = resp.result;
-        items = this._receivedRefills;
         source = $('#tmplReceived').html();
-        $targetTab = this.$tabContentReceived;
         break;
       default:
-        console.error('[ERROR] Can not find type\'' + type +'\' in tabs');
+        console.error('[ERROR] Can not find type\'' + type + '\' in tabs');
         return null;
     }
-
     var template = Handlebars.compile(source);
-    var leftItems =  items.length - this.NUM_OF_ITEMS;
-    var output = template({
+    var leftItems = items.length - this.NUM_OF_ITEMS;
+    var data = {
+      total: items.length,
       items: items.slice(0, this.NUM_OF_ITEMS),
       leftItems: leftItems > 0 ? leftItems : null
-    });
+    };
+
+    if ( options ) {
+      data = $.extend(options, data);
+    }
+    var output = template(data);
     $targetTab.append(output);
-    if(leftItems){
+    if ( leftItems ) {
       $targetTab.on('click', 'a.bt-more', $.proxy(this._onClickMore, this))
     }
   }

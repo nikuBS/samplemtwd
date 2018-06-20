@@ -1,6 +1,6 @@
 import TwViewController from '../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
-import { API_CMD, API_CODE } from '../../../types/api-command.type';
+import { API_CMD, API_CODE, API_GIFT_ERROR } from '../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 import FormatHelper from '../../../utils/format.helper';
 import { UNIT, UNIT_E } from '../../../types/bff-common.type';
@@ -19,13 +19,15 @@ class HomeMain extends TwViewController {
 
     Observable.combineLatest(
       this.getUsageData(),
-      this.getRefillData()
-    ).subscribe(([usageData, refillData]) => {
+      this.getRefillData(),
+      this.getGiftData()
+    ).subscribe(([usageData, refillData, giftData]) => {
       const data = {
         svcInfo,
         remainDate,
         usageData,
-        refillData
+        refillData,
+        giftData
       };
       console.log(data);
       res.render('home.main.html', data);
@@ -120,10 +122,21 @@ class HomeMain extends TwViewController {
     // 리필 가능 항목 (요금제 가족선물)
     return this.apiService.request(API_CMD.BFF_06_0009, {}).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
-        return resp.result;
+        return this.parseRefillOption(resp.result);
       }
       return null;
     });
+  }
+
+  private parseRefillOption(option): any {
+    option.condition.usedCopnCntTmth = +option.condition.usedCopnCntTmth;
+    option.condition.usableCopnCntTmth = +option.condition.usableCopnCntTmth;
+    option.condition.transferedCopnCnt = +option.condition.transferedCopnCnt;
+    option.condition.transferableCopnCnt = +option.condition.transferableCopnCnt;
+    option.condition.transferedCopnCntTmth = +option.condition.transferedCopnCntTmth;
+    option.condition.transferableCopnCntTmth = +option.condition.transferableCopnCntTmth;
+
+    return option;
   }
 
   private getRefillUsages(): Observable<any> {
@@ -134,6 +147,65 @@ class HomeMain extends TwViewController {
       }
       return null;
 
+    });
+  }
+
+
+  // 선물
+  private getGiftData(): Observable<any> {
+    return Observable.combineLatest(
+      this.getGiftBalance(),
+      this.getGiftSender(),
+      (giftBalance, giftSender) => {
+        return { giftBalance, giftSender };
+      });
+
+  }
+
+  private getGiftBalance(): Observable<any> {
+    return this.apiService.request(API_CMD.BFF_06_0014, {}).map((resp) => {
+      resp = {
+        code: '00',
+        msg: 'success',
+        result: {
+          reqCnt: '1',
+          giftRequestAgainYn: 'Y',
+          dataRemQty: '3500'
+        }
+      };
+      if ( resp.code === API_CODE.CODE_00 ) {
+        return this.parseGiftBalance(resp.result);
+      }
+      return null;
+    });
+  }
+
+  private parseGiftBalance(balance): any {
+    balance.showDataMb = FormatHelper.addComma(balance.dataRemQty);
+    balance.showDataGb = FormatHelper.customDataFormat(balance.dataRemQty, 'MB', 'GB').data;
+
+    return balance;
+  }
+
+  private getGiftSender(): Observable<any> {
+    return this.apiService.request(API_CMD.BFF_06_0015, {}).map(resp => {
+      resp = {
+        code: 'RCG0002',
+        msg: 'success',
+        result: {
+          dataGiftCnt: '2',
+          familyMemberYn: 'Y',
+          familyDataGiftCnt: '0',
+          goodFamilyMemberYn: 'Y'
+        }
+      };
+      if ( resp.code === API_CODE.CODE_00 ) {
+        resp.result.code = resp.code;
+        return resp.result;
+      } else if ( API_GIFT_ERROR.indexOf(resp.code) !== -1 ) {
+        return { code: resp.code };
+      }
+      return null;
     });
   }
 }
