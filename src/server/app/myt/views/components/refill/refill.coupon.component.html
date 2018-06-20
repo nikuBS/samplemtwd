@@ -1,4 +1,4 @@
-<div class="cont-box <% if (usageOptions.length > 0) { %>nogaps-btm<% } %>">
+<div class="cont-box <% if (usageOptions.option.length > 0) { %>nogaps-btm<% } %>">
     <h3 class="cont-ti">내가 가진 리필쿠폰</h3>
     <!-- .coupon-slide -->
     <div class="coupon-slide">
@@ -37,18 +37,21 @@
             </div>
         </div>
         <!--// .widget -->
-        <% if (usageOptions.length > 0) { %>
+        <% if (usageOptions.option.length > 0) { %>
         <div class="link-long">
             <a class="disabled refill-to-my-phone" title="내 휴대폰에 리필하기로 이동">내 휴대폰에 리필하기<span class="ico"></span></a>
         </div>
         <div class="link-long">
             <a class="disabled" title="가족에게 선물하기로 이동">가족에게 선물하기<span class="ico"></span></a>
         </div>
+        <% if (usageOptions.condition.usedCopnCntTmth > 0) { %>
+        <p class="no-use-message" style="display:none;">이번 달 쿠폰 사용 가능횟수를 초과하였습니다. (월 1회 사용 가능)</p>
+        <% } %>
         <% } %>
     </div>
 </div>
 <!--// .coupon-slide -->
-<% if (usageOptions.length > 0) { %>
+<% if (usageOptions.option.length > 0) { %>
 <div class="cont-box nogaps noborder">
     <div class="box-plan">
         <div class="plan-info">

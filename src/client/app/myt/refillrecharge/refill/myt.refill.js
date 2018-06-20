@@ -39,12 +39,17 @@ Tw.MytRefill.prototype = Object.assign(Tw.MytRefill.prototype, {
     if ($target.hasClass('disabled')) {
       alert('리필하실 쿠폰을 선택해주세요.');
     } else {
-      if (this._checkIsFirst()) {
-        isValid = true;
+      var $msgNode = this.$container.find('.no-use-message');
+      if ($msgNode) {
+        alert($msgNode.text());
       } else {
-        var message = '사용하시겠습니까?';
-        if (confirm(message)) {
+        if (this._checkIsFirst()) {
           isValid = true;
+        } else {
+          var message = '사용하시겠습니까?';
+          if (confirm(message)) {
+            isValid = true;
+          }
         }
       }
     }

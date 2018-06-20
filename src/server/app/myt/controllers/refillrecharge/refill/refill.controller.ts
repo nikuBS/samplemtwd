@@ -5,7 +5,7 @@ import DateHelper from '../../../../../utils/date.helper';
 import FormatHelper from '../../../../../utils/format.helper';
 import { Observable } from 'rxjs/Observable';
 import MyTUsage from '../../usage/myt.usage.controller';
-import {LINE_NAME} from '../../../../../types/bff-common.type';
+import { LINE_NAME } from '../../../../../types/bff-common.type';
 
 class MyTRefill extends TwViewController {
   public myTUsage = new MyTUsage();
@@ -45,7 +45,10 @@ class MyTRefill extends TwViewController {
       if (option === undefined) {
         data = this.parseData(resp.result);
       } else {
-        data = resp.result.option;
+        data = {
+          option: resp.result.option,
+          condition: resp.result.condition
+        };
       }
     } else {
       data = resp;
