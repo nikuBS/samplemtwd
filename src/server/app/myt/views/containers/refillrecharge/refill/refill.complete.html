@@ -43,7 +43,7 @@
                         <div class="bt-gap">
                             <ul class="bt-slice hoz">
                                 <li class="bt-blue1">
-                                    <button>리필내역 보기</button>
+                                    <button class="refill-history">리필내역 보기</button>
                                 </li>
                             </ul>
                             <div class="bt-link-box">
@@ -67,6 +67,9 @@
 <% include ../../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
+    $('.refill-history').on('click', function () {
+      window.location.href = '/myt/refill/history';
+    })
   });
 </script>
 <% include ../../../components/end.component.html %>

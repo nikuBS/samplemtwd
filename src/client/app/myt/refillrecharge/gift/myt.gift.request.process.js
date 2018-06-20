@@ -1,6 +1,7 @@
 Tw.MytGiftRequestProcess = function (rootEl) {
   this.$container = rootEl;
   this._apiService = new Tw.ApiService();
+  this._nativeService = new Tw.NativeService();
 
   this._cachedElement();
   this._bindEvent();

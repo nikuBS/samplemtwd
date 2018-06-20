@@ -62,7 +62,8 @@ Tw.NativeService.prototype = {
 
   _onNativeCallback: function (resp) {
     Tw.Logger.info('[onNativeCallBack]', resp);
-    if ( resp.resultCode === Tw.NTV_CODE.CODE_00 && !!resp.randomCode ) {
+    var resp = JSON.parse(resp);
+    if ( resp.result === Tw.NTV_CODE.CODE_00 && !!resp.randomCode ) {
       var fn = _.find(this._callbackList, function (data) {
         return data.randomCode === resp.randomCode;
       }).callback;

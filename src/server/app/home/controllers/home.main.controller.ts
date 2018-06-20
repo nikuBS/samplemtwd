@@ -89,7 +89,7 @@ class HomeMain extends TwViewController {
       this.getRefillOptions(),
       this.getRefillUsages(),
       (refillCoupon, refillOptions, refillUsages) => {
-        return { refillCoupon, refillOptions, refillUsages, refillHistory: true };
+        return { refillCoupon, refillOptions, refillUsages };
       });
   }
 
@@ -136,8 +136,6 @@ class HomeMain extends TwViewController {
 
     });
   }
-
-  // 선물
 }
 
 export default HomeMain;
