@@ -48,10 +48,10 @@ Tw.MytGift.prototype = Object.assign(Tw.MytGift.prototype, {
     // TODO: Change tab menu
   },
 
-  updateLineInfo: function (e, { lineInfo, lineList }) {
+  updateLineInfo: function (e, params) {
     // TODO: fetch data && data binding
-    this.lineList = lineList;
-    this.lineInfo = lineInfo;
+    this.lineList = params.lineList;
+    this.lineInfo = params.lineInfo;
 
     this._apiService.request(Tw.API_CMD.BFF_06_0015, {})
       .done(function (res) {
