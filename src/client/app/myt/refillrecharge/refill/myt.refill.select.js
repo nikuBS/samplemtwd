@@ -2,6 +2,7 @@ Tw.MytRefillSelect = function (rootEl) {
   this.$container = rootEl;
   this.$document = $(document);
   this.window = window;
+
   this._apiService = new Tw.ApiService();
 
   this._bindEvent();
@@ -18,7 +19,7 @@ Tw.MytRefillSelect.prototype = Object.assign(Tw.MytRefillSelect.prototype, {
   },
   _confirmRefill: function () {
     var couponType = this.$container.find('label.checked').data('value');
-    var endDate = this._getLocalStorage('refillCouponEndDate');
+    var endDate = this._getParams('endDt');
     this._openPopup(couponType, endDate);
   },
   _openPopup: function (couponType, endDate) {
@@ -49,7 +50,7 @@ Tw.MytRefillSelect.prototype = Object.assign(Tw.MytRefillSelect.prototype, {
   _makeRequestData: function () {
     var $target = this.$container.find('label.checked');
     var reqData = JSON.stringify({
-      copnIsueNum: this._getLocalStorage('refillCouponNumber'),
+      copnIsueNum: this._getParams('copnNm'),
       ofrRt: $target.data('ofrrt'),
       copnDtlClCd: $target.data('copndtlclcd')
     });
@@ -59,13 +60,16 @@ Tw.MytRefillSelect.prototype = Object.assign(Tw.MytRefillSelect.prototype, {
     this._closePopup();
     if (res.code === '00') {
       this._goLoad('/myt/refill/complete');
+    } else {
+      this._goLoad('/myt/refill/error');
+      $('#error-message').text(res.orgDebugMessage);
     }
   },
   _fail: function (err) {
     console.log('refill fail', err);
   },
-  _getLocalStorage: function (key) {
-    return localStorage.getItem(key);
+  _getParams: function (key) {
+    return Tw.UrlHelper.getQueryParams()[key];
   },
   _goLoad: function (url) {
     this.window.location.href = url;
