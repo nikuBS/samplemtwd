@@ -2,7 +2,7 @@
 <script id="tmplMy" type="text/x-handlebars-template">
     <div class="contents-info-list">
         {{#if items}}
-        <p class="ti-desc"><strong><em class="num">{{items.length}}</em>개</strong> 쿠폰으로 리필하셨네요!</p>
+        <p class="ti-desc"><strong><em class="num">{{total}}</em>개</strong> 쿠폰으로 리필하셨네요!</p>
         <ul class="result-coupon">
             {{> myItems items=items}}
         </ul>
@@ -20,8 +20,8 @@
     <li>
         <div class="info-coupon">
             <span class="info-code">{{copnIsueNum}}</span>
-            <span class="info-title"><span class="tx-data">{{copnDtlClNm}}</span></span>
-            <span class="info-sub">{{copnNm}}></span>
+            <span class="info-title"><span class={{copnDtlClCd}}>{{copnDtlClNm}}</span></span>
+            <span class="info-sub">{{copnNm}}</span>
         </div>
         <div class="info-date">
             <span class="info-title">사용일자</span>
@@ -34,7 +34,7 @@
 <script id="tmplSent" type="text/x-handlebars-template">
     <div class="contents-info-list">
         {{#if items}}
-        <p class="ti-desc">가족에게 <strong><em class="num">{{items.length}}</em>개</strong> 쿠폰을 선물하셨네요!</p>
+        <p class="ti-desc">가족에게 <strong><em class="num">{{total}}</em>개</strong> 쿠폰을 선물하셨네요!</p>
         <ul class="result-coupon">
             {{> sentItems items=items}}
         </ul>
@@ -43,7 +43,11 @@
            data-type="sent">더보기<span>({{leftItems}})</span></a>
         {{/if}}
         {{else}}
-        <% include ../../../components/refill/refill.history.sent.empty.html %>
+            {{#if transferable}}
+            <% include ../../../components/refill/refill.history.sent.transferable.html %>
+            {{else}}
+            <% include ../../../components/refill/refill.history.sent.empty.html %>
+            {{/if}}
         {{/if}}
     </div>
 </script>
@@ -78,7 +82,7 @@
 <script id="tmplReceived" type="text/x-handlebars-template">
     <div class="contents-info-list">
         {{#if items}}
-        <p class="ti-desc">가족분들이 <strong><em class="num">{{item.length}}</em>개</strong> 쿠폰을<br/>선물해주셨네요!</p>
+        <p class="ti-desc">가족분들이 <strong><em class="num">{{total}}</em>개</strong> 쿠폰을<br/>선물해주셨네요!</p>
         <ul class="result-coupon">
             {{> receivedItems items=items}}
         </ul>
@@ -150,11 +154,17 @@
                 <!-- .widget -->
                 <div class="widget">
                     <div class="widget-box select">
-                        <!--<button class="bt-sel" data-select="100MB,500MB,2TB" data-title="" data-txt="" title="데이터 용량">셀렉트<span class="ico"></span></button>-->
                         <% if (lineList) { %>
-                        <button class="bt-dropdown big" data-select="010-12**-56**,010-22**-56**,010-32**-56**"
-                                data-title="회선선택" data-txt="" title="데이터 용량">010-12**-56**<span class="ico"></span>
-                        </button>
+                        <button class="bt-dropdown big" title="셀렉트 선택"><%= lineList[0].svcNum %><span class="ico"></span></button>
+                        <div class="select-info">
+                            <span class="title">데이터 용량</span>
+                            <span class="text"></span>
+                            <select title="데이터 용량">
+                                <% for (var i = 0; i < lineList.length; i++) { %>
+                                <option><%= lineList[i].svcNum %></option>
+                                <% } %>
+                            </select>
+                        </div>
                         <% } %>
                     </div>
                 </div>
@@ -167,10 +177,9 @@
                 <!-- .component -->
                 <div class="component">
                     <div class="component-box tabs"><!-- h태m그 정렬 필수! -->
-                        <h1 class="blind">탭 컴포넌트</h1>
                         <div class="tab-area type1"><!-- 타입별 탭형태 변환 -->
                             <div class="tab-linker">
-                                <h2 class="blind">탭 목록</h2>
+                                <h3 class="blind">탭 목록</h3>
                                 <ul><!-- .tab-contents로 이동 -->
                                     <li><a href="#my">나에게 리필</a></li>
                                     <li><a href="#sent">선물 보낸</a></li>
@@ -178,17 +187,19 @@
                                 </ul>
                             </div>
                             <div class="tab-contents">
-                                <h2 class="blind">탭 내용</h2>
                                 <ul>
                                     <li id="my">
+                                        <h3 class="blind">나에게 리필 탭 내용</h3>
                                         <div class="inner">
                                         </div>
                                     </li>
                                     <li id="sent">
+                                        <h3 class="blind">선물 보낸 탭 내용</h3>
                                         <div class="inner">
                                         </div>
                                     </li>
                                     <li id="received">
+                                        <h3 class="blind">선물 받은 탭 내용</h3>
                                         <div class="inner">
                                         </div>
                                     </li>
