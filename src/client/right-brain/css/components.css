@@ -865,7 +865,7 @@
 }
 
 .tab-area .tab-contents ul li .gift-box-info2 .contents-info-list .result-view.modify li:last-of-type {
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #e1e1e1;
 }
 
 .tab-area .tab-contents ul li .gift-box-info2 .contents-info-list [class^="result-"] li {
@@ -1382,7 +1382,7 @@
   margin: 0 -1.625rem;
   text-align: center;
   background: #fafafa;
-  border-top: 1px solid #eee;
+  border-top: 1px solid #e1e1e1;
   display: block;
   padding: 0.8125rem 0;
   color: #757575;
@@ -1395,7 +1395,7 @@
 }
 
 .contents-info-list .contents-notice {
-  border-top: 1px solid #eee;
+  border-top: 1px solid #e1e1e1;
 }
 
 .contents-none {
@@ -1490,7 +1490,7 @@
 }
 
 .gift-data-cont .t-gift-data li {
-  border-top: 1px solid #eee;
+  border-top: 1px solid #e1e1e1;
 }
 
 .gift-data-cont .t-gift-data li:first-of-type {
@@ -1660,11 +1660,11 @@
 }
 
 .flcarddefault .flcard-cont .flcard-area .flcard-list.border li .ti-fee {
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #e1e1e1;
 }
 
 .flcarddefault .flcard-cont .flcard-area .flcard-list.border li .tx-fee {
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #e1e1e1;
 }
 
 .flcarddefault .flcard-cont .flcard-area .flcard-list li {
@@ -2043,11 +2043,11 @@
 }
 
 .flcardcta .flcard-cont .flcard-list.border li .ti-fee {
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #e1e1e1;
 }
 
 .flcardcta .flcard-cont .flcard-list.border li .tx-fee {
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #e1e1e1;
 }
 
 .flcardcta .flcard-cont .flcard-list li {
@@ -2230,7 +2230,7 @@
 }
 
 .flcardbarcode .flcard-cont .flcard-area .flcard-bottom {
-  border-top: 1px solid #eee;
+  border-top: 1px solid #e1e1e1;
   border-radius: 0 0 0.625rem 0.625rem;
   overflow: hidden;
 }
@@ -2244,11 +2244,11 @@
 }
 
 .flcardbarcode .flcard-cont .flcard-list.border li .ti-fee {
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #e1e1e1;
 }
 
 .flcardbarcode .flcard-cont .flcard-list.border li .tx-fee {
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #e1e1e1;
 }
 
 .flcardbarcode .flcard-cont .flcard-list li {
@@ -2592,42 +2592,42 @@
   position: relative;
 }
 
-.box-couponcard li {
+.box-couponcard > ul > li {
   margin-bottom: 1.25rem;
 }
 
-.box-couponcard li .couponcard-box {
+.box-couponcard > ul > li .couponcard-box {
   position: relative;
   border-radius: 0.625rem;
   overflow: hidden;
   box-sizing: border-box;
 }
 
-.box-couponcard li .couponcard-box .couponcard-info {
+.box-couponcard > ul > li .couponcard-box .couponcard-info {
   position: relative;
   width: 100%;
   padding: 1.25rem 1.0625rem;
   box-sizing: border-box;
 }
 
-.box-couponcard li .couponcard-box .couponcard-info .couponcard-ti {
+.box-couponcard > ul > li .couponcard-box .couponcard-info .couponcard-ti {
   width: 80%;
   font-size: 1.25rem;
   letter-spacing: -0.125rem;
   color: #fff;
 }
 
-.box-couponcard li .couponcard-box .couponcard-info .couponcard-sub {
+.box-couponcard > ul > li .couponcard-box .couponcard-info .couponcard-sub {
   margin-bottom: 0.3125rem;
   font-size: 0.8125rem;
   font-weight: 400;
 }
 
-.box-couponcard li .couponcard-box .couponcard-info .couponcard-list {
+.box-couponcard > ul > li .couponcard-box .couponcard-info .couponcard-list {
   margin-top: 2.5rem;
 }
 
-.box-couponcard li .couponcard-box .couponcard-info .couponcard-list li {
+.box-couponcard > ul > li .couponcard-box .couponcard-info .couponcard-list li {
   position: relative;
   padding-left: 0.8125rem;
   margin-bottom: 0.25rem;
@@ -2636,7 +2636,7 @@
   font-weight: 400;
 }
 
-.box-couponcard li .couponcard-box .couponcard-info .couponcard-list li:before {
+.box-couponcard > ul > li .couponcard-box .couponcard-info .couponcard-list li:before {
   content: "";
   display: inline-block;
   position: absolute;
@@ -2648,11 +2648,11 @@
   background: #fff;
 }
 
-.box-couponcard li .couponcard-box .couponcard-info .couponcard-list li:last-of-type {
+.box-couponcard > ul > li .couponcard-box .couponcard-info .couponcard-list li:last-of-type {
   margin: 0;
 }
 
-.box-couponcard li .couponcard-box .couponcard-info .ico {
+.box-couponcard > ul > li .couponcard-box .couponcard-info .ico {
   position: absolute;
   top: 0.625rem;
   right: 0.625rem;
@@ -2664,24 +2664,24 @@
   background-size: 60rem;
 }
 
-.box-couponcard li .couponcard-box .couponcard-info .ico.type1 {
+.box-couponcard > ul > li .couponcard-box .couponcard-info .ico.type1 {
   background-position: -4.125rem -28.25rem;
 }
 
-.box-couponcard li .couponcard-box .couponcard-info .ico.type2 {
+.box-couponcard > ul > li .couponcard-box .couponcard-info .ico.type2 {
   background-position: -4.125rem -28.25rem;
 }
 
-.box-couponcard li .couponcard-box .couponcard-info .ico.type3 {
+.box-couponcard > ul > li .couponcard-box .couponcard-info .ico.type3 {
   background-position: -4.125rem -28.25rem;
 }
 
-.box-couponcard li .couponcard-box .bt-slice > li button {
+.box-couponcard > ul > li .couponcard-box .bt-slice > li button {
   background: rgba(0, 0, 0, 0.1);
   border-radius: 0;
 }
 
-.box-couponcard li .couponcard-box.bg-color1 {
+.box-couponcard > ul > li .couponcard-box.bg-color1 {
   box-shadow: 0.25rem 0.375rem 0.625rem 0.125rem #fdf1de;
   background-color: #ffba22;
   background-image: -webkit-gradient(linear, left top, left bottom, from(#ffba22), to(#ff9c00 15%));
@@ -2693,7 +2693,7 @@
   filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#ffba22', endColorStr='#ff9c00 15%');
 }
 
-.box-couponcard li .couponcard-box.bg-color2 {
+.box-couponcard > ul > li .couponcard-box.bg-color2 {
   box-shadow: 0.25rem 0.375rem 0.625rem 0.125rem #dce9ff;
   background-color: #93aaff;
   background-image: -webkit-gradient(linear, left top, left bottom, from(#93aaff), to(#3d83ff 15%));
@@ -2705,7 +2705,7 @@
   filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#93aaff', endColorStr='#3d83ff 15%');
 }
 
-.box-couponcard li .couponcard-box.bg-color3 {
+.box-couponcard > ul > li .couponcard-box.bg-color3 {
   box-shadow: 0.25rem 0.375rem 0.625rem 0.125rem #ddffc9;
   background-color: #99d830;
   background-image: -webkit-gradient(linear, left top, left bottom, from(#99d830), to(#58c914 15%));

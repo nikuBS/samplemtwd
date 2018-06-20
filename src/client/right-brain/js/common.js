@@ -314,7 +314,7 @@ skt_landing.action = {
         }else{
           skt_landing.widgets.widget_init('.popup-page');
         }
-        frontend_fn.popup_open();
+        frontend_fn.popup_open(popup_info.front);
       });
       //skt_landing.action.popup.open({'title':'타이틀','contents':'팝업입니다.','type':[{class:'btn-submit',href:'#submit',txt:'확인'},{class:'btn-modify',href:'#modify',txt:'수정'},{class:'btn-cancel',href:'#cancel',txt:'취소'}]});
     },

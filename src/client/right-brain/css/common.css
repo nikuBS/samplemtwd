@@ -530,6 +530,7 @@ strong {
 /* button */
 .bt-slice {
   width: 100%;
+  font-size: 0;
 }
 
 .bt-slice.full li {
@@ -548,58 +549,107 @@ strong {
   text-align: center;
 }
 
-.bt-slice.hoz li {
-  margin-top: 0.4375rem;
-}
-
-.bt-slice.hoz li:first-of-type {
-  margin: 0;
-}
-
-.bt-slice.ver {
-  display: table;
-}
-
-.bt-slice.ver li {
-  display: table-cell;
-  padding-left: 0.375rem;
-}
-
-.bt-slice.ver li:first-of-type {
-  padding: 0;
-}
-
-.bt-slice.ver.item-one li {
-  width: 100%;
-}
-
-.bt-slice.ver.item-two li {
+.bt-slice.item-two li {
+  padding-left: 0.1875rem;
+  padding-right: 0.1875rem;
+  margin-top: 0;
   width: 50%;
 }
 
-.bt-slice.ver.item-three li {
-  width: 33.333%;
+.bt-slice.item-two li:first-of-type {
+  padding-left: 0;
 }
 
-.bt-slice.ver.item-four li {
+.bt-slice.item-two li:last-of-type {
+  padding-right: 0;
+}
+
+.bt-slice.item-three li {
+  padding-left: 0.1875rem;
+  padding-right: 0.1875rem;
+  margin-top: 0;
+  width: 33.333333%;
+}
+
+.bt-slice.item-three li:first-of-type {
+  padding-left: 0;
+}
+
+.bt-slice.item-three li:last-of-type {
+  padding-right: 0;
+}
+
+.bt-slice.item-four li {
+  padding-left: 0.1875rem;
+  padding-right: 0.1875rem;
+  margin-top: 0;
   width: 25%;
 }
 
-.bt-slice.ver.item-five li {
+.bt-slice.item-four li:first-of-type {
+  padding-left: 0;
+}
+
+.bt-slice.item-four li:last-of-type {
+  padding-right: 0;
+}
+
+.bt-slice.item-five li {
+  padding-left: 0.1875rem;
+  padding-right: 0.1875rem;
+  margin-top: 0;
   width: 20%;
 }
 
-.bt-slice.ver.item-six li {
+.bt-slice.item-five li:first-of-type {
+  padding-left: 0;
+}
+
+.bt-slice.item-five li:last-of-type {
+  padding-right: 0;
+}
+
+.bt-slice.item-six li {
+  padding-left: 0.1875rem;
+  padding-right: 0.1875rem;
+  margin-top: 0;
   width: 16.666%;
 }
 
-.bt-slice.ver.item-seven li {
+.bt-slice.item-six li:first-of-type {
+  padding-left: 0;
+}
+
+.bt-slice.item-six li:last-of-type {
+  padding-right: 0;
+}
+
+.bt-slice.item-seven li {
+  padding-left: 0.1875rem;
+  padding-right: 0.1875rem;
+  margin-top: 0;
   width: 14.285%;
+}
+
+.bt-slice.item-seven li:first-of-type {
+  padding-left: 0;
+}
+
+.bt-slice.item-seven li:last-of-type {
+  padding-right: 0;
 }
 
 .bt-slice > li {
   height: 2.5rem;
   vertical-align: middle;
+  display: inline-block;
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 0.375rem;
+}
+
+.bt-slice > li:first-of-type {
+  margin-top: 0;
 }
 
 .bt-slice > li button {
