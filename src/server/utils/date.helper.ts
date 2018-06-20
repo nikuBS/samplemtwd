@@ -55,6 +55,14 @@ class DateHelper {
 
   /**
    * @param date {Date} or {string} : YYYYMMDDhhmmss
+   * @returns {string} : 06.01
+   */
+  static getShortDateNoYear(date: any): string {
+    return moment(this.convDateFormat(date)).format('MM.DD');
+  }
+
+  /**
+   * @param date {Date} or {string} : YYYYMMDDhhmmss
    * @returns {string} : 2018.06.01 12:00
    */
   static getShortDateAndTime(date) {
