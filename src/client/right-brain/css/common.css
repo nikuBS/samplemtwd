@@ -541,6 +541,13 @@ strong {
   font-size: 0.875rem;
 }
 
+.bt-slice.full li a {
+  display: block;
+  border-radius: 0;
+  font-size: 0.875rem;
+  text-align: center;
+}
+
 .bt-slice.hoz li {
   margin-top: 0.4375rem;
 }
@@ -603,6 +610,17 @@ strong {
   border-radius: 0.3125rem;
 }
 
+.bt-slice > li a {
+  display: block;
+  width: 100%;
+  height: 100%;
+  font-size: 0.8125rem;
+  text-align: center;
+  line-height: 2.5rem;
+  border-radius: 0.3125rem;
+  letter-spacing: 0;
+}
+
 .bt-slice > li.bt-red1 button {
   color: #fff;
   background: #df3636;
@@ -617,6 +635,24 @@ strong {
 }
 
 .bt-slice > li.bt-red1 button:disabled {
+  color: #808698;
+  background: #e5e8ee;
+}
+
+.bt-slice > li.bt-red1 a {
+  color: #fff;
+  background: #df3636;
+}
+
+.bt-slice > li.bt-red1 a.selected {
+  background: #c52424;
+}
+
+.bt-slice > li.bt-red1 a:hover {
+  background: #c52424;
+}
+
+.bt-slice > li.bt-red1 a:disabled {
   color: #808698;
   background: #e5e8ee;
 }
@@ -639,6 +675,24 @@ strong {
   background: #e5e8ee;
 }
 
+.bt-slice > li.bt-blue1 a {
+  color: #fff;
+  background: #496093;
+}
+
+.bt-slice > li.bt-blue1 a.selected {
+  background: #425684;
+}
+
+.bt-slice > li.bt-blue1 a:hover {
+  background: #425684;
+}
+
+.bt-slice > li.bt-blue1 a:disabled {
+  color: #808698;
+  background: #e5e8ee;
+}
+
 .bt-slice > li.bt-white1 button {
   border: 1px solid #325ec1;
   color: #325ec1;
@@ -654,6 +708,26 @@ strong {
 }
 
 .bt-slice > li.bt-white1 button:disabled {
+  border: 1px solid #808698;
+  color: #808698;
+  background: #fff;
+}
+
+.bt-slice > li.bt-white1 a {
+  border: 1px solid #325ec1;
+  color: #325ec1;
+  background: #fff;
+}
+
+.bt-slice > li.bt-white1 a.selected {
+  background: #e1e6f0;
+}
+
+.bt-slice > li.bt-white1 a:hover {
+  background: #e1e6f0;
+}
+
+.bt-slice > li.bt-white1 a:disabled {
   border: 1px solid #808698;
   color: #808698;
   background: #fff;
@@ -679,7 +753,32 @@ strong {
   background: #fff;
 }
 
+.bt-slice > li.bt-white2 a {
+  border: 1px solid #cfcfcf;
+  color: #757575;
+  background: #fff;
+}
+
+.bt-slice > li.bt-white2 a.selected {
+  background: #e1e6f0;
+}
+
+.bt-slice > li.bt-white2 a:hover {
+  background: #e1e6f0;
+}
+
+.bt-slice > li.bt-white2 a:disabled {
+  border: 1px solid #808698;
+  color: #808698;
+  background: #fff;
+}
+
 .bt-slice > li.bt-gray1 button {
+  color: #757575;
+  background: #f5f5f5;
+}
+
+.bt-slice > li.bt-gray1 a {
   color: #757575;
   background: #f5f5f5;
 }
@@ -880,6 +979,10 @@ strong {
 
 [dir='rtl'] .slick-slide {
   float: right;
+}
+
+.slick-slide > div {
+  font-size: 0;
 }
 
 .slick-slide img {

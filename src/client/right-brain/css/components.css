@@ -1007,6 +1007,10 @@
   padding: 0 1.625rem;
 }
 
+.footer-wrap.btn-area-msg {
+  padding: 0 1.625rem;
+}
+
 /* 김예리 */
 /*DA_02_01_02*/
 .inner + .inner {
