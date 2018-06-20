@@ -190,7 +190,7 @@ class HomeMain extends TwViewController {
   private getGiftSender(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_06_0015, {}).map(resp => {
       resp = {
-        code: '00',
+        code: 'RCG0002',
         msg: 'success',
         result: {
           dataGiftCnt: '2',

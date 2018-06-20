@@ -29,8 +29,8 @@
             {{else}}
                {{#each select}}
                 <dl class="tube-list-ti">
-		        <dt>{{title}}</dt>
-		        <dd>
+                <dt>{{title}}</dt>
+                <dd>
                     <!-- .widget -->
                     <div class="widget">
                         <div class="widget-box tube">
@@ -54,18 +54,18 @@
                     {{/each}}
                     {{/if}}
                 </dd>
-		    </dl>
+            </dl>
            {{/each}}
             {{/if}}
         </div>
         <div class="btn-box">
-            <ul class="bt-slice ver">
+            <ul class="bt-slice"><!-- 2018-06-20 버튼 클래스 변경 -->
                 <li class="bt-red1">
                     <button class="select-submit">확인</button>
                 </li>
             </ul>
         </div>
-        <a href="#close_pop" class="popup-closeBtn">팝업닫기<span class="ico"></span></a>
+        <button class="popup-closeBtn">팝업닫기<span class="ico"></span></button>
     </div>
     <div class="popup-blind"></div>
 </div>
