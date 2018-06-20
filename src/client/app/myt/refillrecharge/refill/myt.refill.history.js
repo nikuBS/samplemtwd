@@ -120,6 +120,7 @@ Tw.MyTRefillHistory.prototype = {
         this._myRefills.map(
           function (data) {
             data.copnUseDt = Tw.DateHelper.getShortDateNoDot(data.copnUseDt);
+            data.copnDtlClCd = ['AAA10', 'AAA30'].indexOf(data.copnDtlClCd) > -1 ? 'tx-data': 'tx-voice'
           });
         this._initTabContent(type, this._myRefills, this.$tabContentMy);
         break;
