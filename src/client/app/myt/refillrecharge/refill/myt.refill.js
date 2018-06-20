@@ -97,7 +97,6 @@ Tw.MytRefill.prototype = Object.assign(Tw.MytRefill.prototype, {
     return url;
   },
   _isRefillBtn: function ($target) {
-    console.log($target);
     return $target.hasClass('refill-to-my-phone');
   },
   _showProduct: function (event) {
