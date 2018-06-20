@@ -1,7 +1,7 @@
 var gulp       = require('gulp'),
     gutil      = require('gulp-util'),
     uglify     = require('gulp-uglify'),
-    cssmin     = require('gulp-css'),
+    // cssmin     = require('gulp-css'),
     concat     = require('gulp-concat'),
     webserver  = require('gulp-webserver'),
     livereload = require('gulp-livereload'),
@@ -69,7 +69,7 @@ gulp.task('js-common', function () {
     .pipe(gulp.dest(dist + 'js'));
 });
 
-appNames.map((app) => {
+appNames.map(function (app) {
   gulp.task('js-' + app, function () {
     return gulp.src('src/client/app/' + app + '/**/*.js')
       .pipe(concat(app + '.js'))
