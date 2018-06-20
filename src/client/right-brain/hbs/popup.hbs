@@ -1,32 +1,32 @@
 <div class="popup">
-	<div class="popup-info">
+    <div class="popup-info">
         {{#if title}}
-		<div class="popup-header">
-			<h5 class="popup-title">{{title}}</h5>
-		</div>
+        <div class="popup-header">
+            <h5 class="popup-title">{{title}}</h5>
+        </div>
         {{/if}}
-		<div class="popup-contents">
+        <div class="popup-contents">
             {{#if title2}}
-		    <dl>
-		        <dt>{{{title2}}}</dt>
-		        <dd>{{{contents}}}</dd>
-		    </dl>
-		    {{else}}
-		        <p>{{{contents}}}</p>
-		    {{/if}}
-		</div>
-		<div class="btn-box">
-            <ul class="bt-slice ver item-{{bt_num}}">
-		    {{#type}}
-		    <li class="{{class}}">
+            <dl>
+                <dt>{{{title2}}}</dt>
+                <dd>{{{contents}}}</dd>
+            </dl>
+            {{else}}
+                <p>{{{contents}}}</p>
+            {{/if}}
+        </div>
+        <div class="btn-box">
+            <ul class="bt-slice item-{{bt_num}}">
+            {{#type}}
+            <li class="{{class}}">
               <button onclick="{{href}}">{{txt}}</button>
             </li>
-		    {{/type}}
-		    </ul>
-		</div>
+            {{/type}}
+            </ul>
+        </div>
         {{#if close_bt}}
-            <a href="#close_pop" class="popup-closeBtn">팝업닫기<span class="ico"></span></a>
+            <button class="popup-closeBtn">팝업닫기<span class="ico"></span></button>
         {{/if}}
-	</div>
-	<div class="popup-blind"></div>
+    </div>
+    <div class="popup-blind"></div>
 </div>
