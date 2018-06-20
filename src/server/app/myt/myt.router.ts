@@ -23,6 +23,7 @@ import MyTGiftHistory from './controllers/refillrecharge/gift/gift.history.contr
 import MyTRefillSelect from './controllers/refillrecharge/refill/refill.select.controller';
 import MyTRefillComplete from './controllers/refillrecharge/refill/refill.complete.controller';
 import MyTGiftRequestProcess from './controllers/refillrecharge/gift/gift.request.controller';
+import MyTRefillError from './controllers/refillrecharge/refill/refill.error.controller';
 
 class MytRouter extends TwRouter {
   constructor() {
@@ -43,6 +44,7 @@ class MytRouter extends TwRouter {
     this.controllers.push({ url: '/refill/history', controller: new MyTRefillHistory() });
     this.controllers.push({ url: '/refill/select', controller: new MyTRefillSelect() });
     this.controllers.push({ url: '/refill/complete', controller: new MyTRefillComplete() });
+    this.controllers.push({ url: '/refill/error', controller: new MyTRefillError() });
     this.controllers.push({ url: '/refill/gift', controller: new MyTRefillGift() });
     this.controllers.push({ url: '/refill/gift-complete', controller: new MyTRefillGiftComplete() });
     this.controllers.push({ url: '/refill/gift-products', controller: new MyTRefillGiftProducts() });
