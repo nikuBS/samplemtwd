@@ -35,8 +35,10 @@ Tw.MytGift.prototype = Object.assign(Tw.MytGift.prototype, {
   _cachedElement: function () {
     this.$btn_change = this.$container.find('#line-set');
     this.$wrap_gift_count = this.$container.find('#wrap_gift_count');
+    this.$wrap_request_count = this.$container.find('#wrap_request_count');
     this.tpl_gift_count = Handlebars.compile(this.$container.find('#tpl_gift_count').text());
     this.tpl_remain_data = Handlebars.compile(this.$container.find('#tpl_remain_data').text());
+    this.tpl_request_count = Handlebars.compile(this.$container.find('#tpl_request_count').text());
   },
 
   _bindEvent: function () {
@@ -64,12 +66,19 @@ Tw.MytGift.prototype = Object.assign(Tw.MytGift.prototype, {
   },
 
   updateLineInfo: function (e, params) {
-    // TODO: fetch data && data binding
     this.lineList = params.lineList;
     this.lineInfo = params.lineInfo;
+    this.$btn_change.text(this.lineInfo.svcNum);
 
-    this._apiService.request(Tw.API_CMD.BFF_06_0015, { svcMgmtNum: this.lineInfo.svcMgmtNum })
+    this._apiService.request(Tw.API_CMD.BFF_06_0015, {}, { svcMgmtNum: this.lineInfo.svcMgmtNum })
       .done($.proxy(this.onSuccessProvider, this));
+
+    this._apiService.request(Tw.API_CMD.BFF_06_0010, {
+      svcMgmtNum: this.lineInfo.svcMgmtNum,
+      requestType: 0,
+      fromDt: Tw.DateHelper.getCurrentShortDate(),
+      toDt: Tw.DateHelper.getCurrentShortDate()
+    }).done($.proxy(this.onSuccessRequest, this));
 
     // $.when()
     //   .then(function () {
@@ -77,13 +86,27 @@ Tw.MytGift.prototype = Object.assign(Tw.MytGift.prototype, {
   },
 
   onSuccessProvider: function (res) {
-    if ( res.code == '00' ) {
-      var result = res.result;
-      result.familyMemberYn = result.familyMemberYn == 'Y' ? true : false;
-      result.goodFamilyMemberYn = result.goodFamilyMemberYn == 'Y' ? true : false;
+    // var result = res.result;
 
-      this.$wrap_gift_count.html(this.tpl_gift_count(result));
+    var result = {
+      "dataGiftCnt": "1",
+      "familyMemberYn": "Y",
+      "familyDataGiftCnt": "2",
+      "goodFamilyMemberYn": "Y"
     }
+
+    result.familyMemberYn = result.familyMemberYn == 'Y' ? true : false;
+    result.goodFamilyMemberYn = result.goodFamilyMemberYn == 'Y' ? true : false;
+
+    this.$wrap_gift_count.html(this.tpl_gift_count(result));
+  },
+
+  onSuccessRequest: function (res) {
+    var maxRequestCount = 30;
+    var requestCount = res.result;
+    var remainCount = maxRequestCount - requestCount;
+
+    this.$wrap_request_count.html(this.tpl_request_count({ remainCount: remainCount }));
   },
 
   goToProcess: function (e) {
@@ -104,9 +127,9 @@ Tw.MytGift.prototype = Object.assign(Tw.MytGift.prototype, {
 
   showRemainData: function (e) {
     var $wrap_remain_data = $(e.currentTarget).closest('.gift-box-info-list');
-    // TODO : fetch data && binding
 
-    // this._apiService.request(Tw.API_CMD.BFF_06_0014, { reqCnt: '5' })
+    // TODO : fetch data && binding
+    // this._apiService.request(Tw.API_CMD.BFF_06_0014, { reqCnt: 1 })
     //   .done(function (res) {
     //     // var result = res.result;
     //     // result.familyMemberYn = result.familyMemberYn == 'Y' ? true : false;

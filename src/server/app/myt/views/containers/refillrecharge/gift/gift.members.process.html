@@ -51,7 +51,7 @@
                                     <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
                                 </span>
                                 <span class="bt-box">
-                                    <button type="button">주소록</button>
+                                    <button id="btn-addr" type="button">주소록</button>
                                 </span>
                             </span>
                         <span class="contents-notice">
@@ -63,29 +63,9 @@
                 <div class="inner">
                     <h3 class="contents-tit">최근 선물 보낸 사람</h3>
                     <div class="contents-info-list">
-                        <ul class="result-view">
-                            <li class="recent_item" data-phone="01046121012">
-                                <div class="info-user">
-                                    <span class="info-title">김한림</span>
-                                    <span class="info-sub">010-46**-10**</span>
-                                </div>
-                                <div class="info-data">
-                                    <!-- 1기가 미만인 경우 -->
-                                    <span class="info-title">500MB</span>
-                                </div>
-                            </li>
-                            <li class="recent_item" data-phone="01012233456">
-                                <div class="info-user">
-                                    <span class="info-title">김종준</span>
-                                    <span class="info-sub">010-12**-34**</span>
-                                </div>
-                                <div class="info-data">
-                                    <!-- 1기가 이상인 경우 -->
-                                    <span class="info-title">34GB</span>
-                                    <span class="info-sub">34,0000MB</span>
-                                </div>
-                            </li>
-                        </ul>
+                        <div class="contents-none">
+                            <span class="none-ico1">최근 선물을 보낸 이력이 없습니다.</span>
+                        </div>
                     </div>
                     <div class="contents-btn">
                         <ul class="bt-slice ver">
@@ -139,7 +119,7 @@
                         <li>
                             <dl>
                                 <dt class="ti-data">선물 받은 분</dt>
-                                <dd class="tx-data">
+                                <dd class="tx-data wrap_provider">
                                     <div class="txt"><span class="blind">이름</span>김*진</div>
                                     <div class="num"><span class="blind">전화번호</span>010-12**-34**</div>
                                 </dd>
@@ -163,19 +143,17 @@
                             <!-- .widget -->
                             <div class="widget">
                                 <div class="widget-box tube">
-                                    <ul class="tube-list">
+                                    <ul id="wrap_data_select" class="tube-list">
                                         <li><label data-value="100"><input type="radio" name="senddata">100 MB</label></li>
                                         <li><label data-value="200"><input type="radio" name="senddata">200 MB</label></li>
-                                        <li><label data-value="300" class="checked"><input type="radio" name="senddata" checked="">300
-                                            MB</label></li>
+                                        <li><label data-value="300"><input type="radio" name="senddata">300 MB</label></li>
                                         <li><label data-value="400"><input type="radio" name="senddata">400 MB</label></li>
                                         <li><label data-value="500"><input type="radio" name="senddata">500 MB</label></li>
                                         <li><label data-value="600"><input type="radio" name="senddata">600 MB</label></li>
                                         <li><label data-value="700"><input type="radio" name="senddata">700 MB</label></li>
                                         <li><label data-value="800"><input type="radio" name="senddata">800 MB</label></li>
                                         <li><label data-value="900"><input type="radio" name="senddata">900 MB</label></li>
-                                        <li><label data-value="1000" class="disabled"><input type="radio" name="senddata"
-                                                                                             disabled="">1GB</label></li>
+                                        <li><label data-value="1000"><input type="radio" name="senddata">1GB</label></li>
                                     </ul>
                                 </div>
                             </div>
@@ -260,7 +238,7 @@
                             <li>
                                 <dl>
                                     <dt class="ti-data">선물 받은 분</dt>
-                                    <dd class="tx-data">
+                                    <dd class="tx-data wrap_provider">
                                         <span class="blind">이름</span>정영진<br>
                                         <span class="blind">전화번호</span><span class="num">010-12**-34**</span>
                                     </dd>
@@ -301,10 +279,33 @@
 </div>
 <% include ../../../components/javascript.component.html %>
 
+<script type="text/x-handlebars-template" id="tpl_gift_recent">
+    <ul class="result-view">
+        {{#each list}}
+        <li class="recent_item" data-phone="">
+            <div class="info-user">
+                <span class="info-title">김한림</span>
+                <span class="info-sub">{{svcNum}}</span>
+            </div>
+            <div class="info-data">
+                <!-- 1기가 미만인 경우 -->
+                <span class="info-title">{{dataQty}}MB</span>
+            </div>
+        </li>
+        {{/each}}
+    </ul>
+</script>
+
+<script type="text/x-handlebars-template" id="tpl_targetInfo">
+    <span class="blind">이름</span>{{name}}<br>
+    <span class="blind">전화번호</span><span class="num">{{phone}}</span>
+</script>
+
+
 <script>
   $(document).ready(function () {
     var oMytGiftLine = new Tw.MytGiftLine($(document));
-    var component = new Tw.MytGiftMemberProcess($(document));
+    var component = new Tw.MytGiftProcess($(document));
   });
 </script>
 

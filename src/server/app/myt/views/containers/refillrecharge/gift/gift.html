@@ -32,8 +32,9 @@
                 <!-- .widget -->
                 <div class="widget">
                     <div class="widget-box select">
-
-                        <button id="line-set" class="bt-dropdown big" title="데이터 용량"><%=svcInfo.svcNum%><span class="ico"></span>
+                        <button id="line-set" class="bt-dropdown big" title="데이터 용량">
+                            <%=svcInfo.svcNum%>
+                            <span class="ico"></span>
                         </button>
                         <div class="select-info">
                             <span class="title">회선 목록</span>
@@ -80,7 +81,7 @@
                                                     </li>
                                                     <li class="gift-box-info-list">
                                                         <span class="gift-box-tit">잔여데이터</span>
-                                                        <a id="showRemainData" class="my-data">나의 데이터 확인</a>
+                                                        <a class="my-data">나의 데이터 확인</a>
                                                         <span class="ico-gift2"></span>
                                                     </li>
                                                 </ul>
@@ -294,7 +295,7 @@
                                             <div class="gift-box-wrap">
                                                 <p class="gift-box-btit">데이터가 부족하다면<br><strong>데이터 조르기 해보세요!</strong></p>
                                                 <ul class="gift-box-info">
-                                                    <li class="gift-box-info-list">
+                                                    <li id="wrap_request_count" class="gift-box-info-list">
                                                         <span class="gift-box-tit">조르기 가능 횟수</span>
                                                         <span class="gift-box-tx"><strong>30회</strong></span>
                                                         <span class="ico-gift"></span>
@@ -482,15 +483,21 @@
 <!-- select.hbs -->
 <script type="text/x-handlebars-template" id="tpl_gift_count">
     <span class="gift-box-tit">선물 가능 횟수</span>
-    <span class="gift-box-tx">T끼리 <strong>{{dataGiftCnt}}회</strong> <span
-        class="bar">
+    <span class="gift-box-tx">T끼리 <strong>{{dataGiftCnt}}회</strong>
+        <span class="bar">
         {{#if familyMemberYn}}
             {{#if goodFamilyMemberYn}}
                 /</span> 가족 무제한 </span>
-            {{else}}
-                /</span> 가족 <strong>{{familyDataGiftCnt}}회</strong></span>
-            {{/if}}
-        {{/if}}
+    {{else}}
+    /</span> 가족 <strong>{{familyDataGiftCnt}}회</strong></span>
+    {{/if}}
+    {{/if}}
+    <span class="ico-gift"></span>
+</script>
+
+<script type="text/x-handlebars-template" id="tpl_request_count">
+    <span class="gift-box-tit">조르기 가능 횟수</span>
+    <span class="gift-box-tx"><strong>{{remainCount}}회</strong></span>
     <span class="ico-gift"></span>
 </script>
 
