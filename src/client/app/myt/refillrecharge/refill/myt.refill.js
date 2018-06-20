@@ -36,8 +36,10 @@ Tw.MytRefill.prototype = Object.assign(Tw.MytRefill.prototype, {
   },
   _checkValidation: function ($target) {
     var isValid = false;
+    var message = '';
+
     if ($target.hasClass('disabled')) {
-      var message = Tw.MESSAGE.REFILL_A01;
+      message = Tw.MESSAGE.REFILL_A01;
       alert(message);
 
       return isValid;
@@ -51,7 +53,7 @@ Tw.MytRefill.prototype = Object.assign(Tw.MytRefill.prototype, {
       isValid = true;
       return isValid;
     }
-    var message = Tw.MESSAGE.REFILL_A02;
+    message = Tw.MESSAGE.REFILL_A02;
     if (confirm(message)) {
       isValid = true;
       return isValid;
