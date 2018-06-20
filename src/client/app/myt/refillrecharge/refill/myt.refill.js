@@ -35,32 +35,35 @@ Tw.MytRefill.prototype = Object.assign(Tw.MytRefill.prototype, {
     }
   },
   _checkValidation: function ($target) {
-    var isValid = false;
-    var message = '';
-
+    return (this._checkIsVisible($target)
+      && this._checkIsUsable()
+      && this._checkConfirm());
+  },
+  _checkIsVisible: function ($target) {
     if ($target.hasClass('disabled')) {
-      message = Tw.MESSAGE.REFILL_A01;
-      alert(message);
-
-      return isValid;
+      alert(Tw.MESSAGE.REFILL_A01);
+      return false;
     }
+    return true;
+  },
+  _checkIsUsable: function () {
     var $msgNode = this.$container.find('.no-use-message');
     if ($msgNode.length > 0) {
       alert($msgNode.text());
-      return isValid;
+      return false;
     }
-    if (this._checkIsFirst()) {
-      isValid = true;
-      return isValid;
-    }
-    message = Tw.MESSAGE.REFILL_A02;
-    if (confirm(message)) {
-      isValid = true;
-      return isValid;
-    }
+    return true;
   },
   _checkIsFirst: function () {
     return this.$container.find('.swiper-slide:first a').hasClass('on');
+  },
+  _checkConfirm: function () {
+    if (!this._checkIsFirst()) {
+      if (!confirm(Tw.MESSAGE.REFILL_A02)) {
+        return false;
+      }
+    }
+    return true;
   },
   _goHistory: function () {
     this._goLoad('/myt/refill/history');
