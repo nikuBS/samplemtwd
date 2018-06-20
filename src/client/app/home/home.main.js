@@ -12,7 +12,15 @@ Tw.HomeMain.prototype.constructor = Tw.HomeMain;
 
 Tw.HomeMain.prototype = Object.assign(Tw.HomeMain.prototype, {
   _bindEvent: function () {
-  }
+    this.$container.on('click', '#refill-price', $.proxy(this._openRefillPrice, this));
+  },
+
+  _openRefillPrice: function ($event) {
+    $event.preventDefault();
+    skt_landing.action.popup.open({
+      hbs:'DA_01_01_01_L01'// hbs의 파일명
+    });
+  },
 });
 
 
