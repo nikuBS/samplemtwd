@@ -1,4 +1,7 @@
 var skt_landing = {},
+  frontend_fn = {
+    popup_open: function(){}
+  },
   page_list = {},
   component_list = [],
   widget_list = [],

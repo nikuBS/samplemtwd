@@ -42,7 +42,7 @@ Tw.MytRefillSelect.prototype = Object.assign(Tw.MytRefillSelect.prototype, {
   },
   _refill: function () {
     var reqData = this._makeRequestData();
-    this._apiService.request(Tw.API_CMD.BFF_06_0007, reqData, { "Content-Type": "application/json" })
+    this._apiService.request(Tw.API_CMD.BFF_06_0007, reqData)
       .done($.proxy(this._success, this))
       .fail($.proxy(this._fail, this));
   },
