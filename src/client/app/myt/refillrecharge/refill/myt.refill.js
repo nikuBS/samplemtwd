@@ -30,9 +30,28 @@ Tw.MytRefill.prototype = Object.assign(Tw.MytRefill.prototype, {
     event.preventDefault();
 
     var $target = $(event.currentTarget);
-    if (!$target.hasClass('disabled')) {
+    if (this._checkValidation($target)) {
       this._goLoad(this._makeUrl($target));
     }
+  },
+  _checkValidation: function ($target) {
+    var isValid = false;
+    if ($target.hasClass('disabled')) {
+      alert('리필하실 쿠폰을 선택해주세요.');
+    } else {
+      if (this._checkIsFirst()) {
+        isValid = true;
+      } else {
+        var message = '사용하시겠습니까?';
+        if (confirm(message)) {
+          isValid = true;
+        }
+      }
+    }
+    return isValid;
+  },
+  _checkIsFirst: function () {
+    return this.$container.find('.swiper-slide:first a').hasClass('on');
   },
   _goHistory: function () {
     this._goLoad('/myt/refill/history');

@@ -34,7 +34,7 @@
                             <% for (var i = 0; i < usageData.length; i++) { %>
                             <li>
                                 <label data-value="<%= usageData[i].text %>" data-ofrRt="<%= usageData[i].ofrRt %>" data-copnDtlClCd="<%= usageData[i].copnDtlClCd %>">
-                                    <input type="radio" name="senddata1" checked><span class="<%= usageData[i].className %>"></span><%= usageData[i].copnDtlClNm %>
+                                    <input type="radio" name="senddata1" <% if (i === 0) { %> checked<% } %>><span class="<%= usageData[i].className %>"></span><%= usageData[i].copnDtlClNm %>
                                 </label>
                             </li>
                             <% } %>
@@ -43,7 +43,7 @@
                 </div>
             </div>
             <!--// .cont-box -->
-            <div>
+            <div class="fixed-wrap-btn">
                 <ul class="bt-slice">
                     <li class="bt-blue1">
                         <button class="refill-select-btn">다음</button>
