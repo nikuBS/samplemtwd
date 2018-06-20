@@ -1,6 +1,7 @@
 Tw.MytRefillGift = function (rootEl) {
   this.$container = rootEl;
   this._apiService = new Tw.ApiService();
+  this._nativeService = new Tw.NativeService();
 
   this._assign();
   this._bindEvent();
@@ -12,11 +13,13 @@ Tw.MytRefillGift.prototype = Object.assign(Tw.MytRefillGift.prototype, {
   _assign: function () {
     this._$inputPhone = this.$container.find('.input-phone');
     this._$btnNext = this.$container.find('.btn-next');
+    this._$btnAddr = this.$container.find('.btn-addr');
   },
 
   _bindEvent: function () {
-    this._$inputPhone.on('keyup', $.proxy(this._onKeyupInputPhone, this));
+    this._$inputPhone.on('keyup', $.proxy(this._setDisableStatus, this));
     this._$btnNext.on('click', $.proxy(this._onClickBtnNext, this));
+    this._$btnAddr.on('click', $.proxy(this._onClickBtnAddr, this));
   },
 
   _init: function () {
@@ -24,19 +27,34 @@ Tw.MytRefillGift.prototype = Object.assign(Tw.MytRefillGift.prototype, {
   },
 
   _onClickBtnNext: function (event) {
-    var copnIsueNum = this._$btnNext.attr('copn-isue-num');
-    if ( !copnIsueNum ) {
+    var befrSvcNum = this._$inputPhone.val();
+    if (!Tw.ValidationHelper.isCellPhone(befrSvcNum)) {
+      alert('유효한 휴대폰번호가 아닙니다.');
+      return;
+    }
+    var copnNm = this._$btnNext.attr('copn-nm');
+    if ( !copnNm ) {
       alert('선택된 쿠폰이 없습니다.');
       return;
     }
-    var befrSvcNum = this._$inputPhone.val();
     var data = JSON.stringify({
-      copnIsueNum: copnIsueNum,
+      copnIsueNum: copnNm,
       befrSvcNum: befrSvcNum
     });
     this._apiService.request(Tw.API_CMD.BFF_03_0023, data, { "Content-Type": "application/json" })
       .done($.proxy(this._sendSuccess, this))
       .fail($.proxy(this._sendFail, this));
+  },
+
+  _onClickBtnAddr: function() {
+    this._nativeService.send(Tw.NTV_CMD.GET_CONTACT, {}, $.proxy(this._onContact, this));
+  },
+
+  _onContact: function (resp) {
+    var params = JSON.parse(resp.params);
+    var phoneNumber = params.phoneNumber.replace(/-/gi, "");
+    this._$inputPhone.val(phoneNumber);
+    this._setDisableStatus();
   },
 
   _sendSuccess: function (resp) {
@@ -79,9 +97,8 @@ Tw.MytRefillGift.prototype = Object.assign(Tw.MytRefillGift.prototype, {
     }
   },
 
-  _onKeyupInputPhone: function (event) {
-    var $elem = $(event.currentTarget);
-    var disabled = !(10 <= $elem.val().length);
+  _setDisableStatus: function() {
+    var disabled = !(10 <= this._$inputPhone.val().length);
     this._$btnNext.attr('disabled', disabled);
   },
 

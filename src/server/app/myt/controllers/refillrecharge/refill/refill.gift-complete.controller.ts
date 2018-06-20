@@ -14,7 +14,7 @@ class MyTRefillGiftComplete extends TwViewController {
     ).subscribe((refillCouponLength) => {
       res.render('refillrecharge/refill/refill.gift-complete.html', {
         befrSvcNum: req.query.befrSvcNum,
-        refillCouponLength: refillCouponLength
+        refillCouponLength: refillCouponLength[0] || 0
       });
     });
   }
