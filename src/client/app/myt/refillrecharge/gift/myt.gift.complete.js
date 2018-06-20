@@ -42,16 +42,19 @@ Tw.MytGiftComplete.prototype = {
     },
     _sendTextEvt: function () {
         console.info('문자 보내기');
+        var befrSvcNum = '01012345678';
+        var textarea_text = $('body').find('[data-target="textSendbox"]').val();
+
         this._apiService
-        .request(Tw.API_CMD.BFF_06_0017, {
-            svcMgmtNum: '',
-            befrSvcNum: '01022221111',
-            msg: '가나다라마바사'
-        })
+        .request(Tw.API_CMD.BFF_06_0017, JSON.stringify({
+            befrSvcNum: befrSvcNum,
+            msg: textarea_text
+        }))
         .done($.proxy(this._apiComplete, this));
     },
     _apiComplete: function (res) {
         console.info('res : ', res);
+        location.hash = '';
     },
     _sendTextCancelEvt: function() {
         console.info('취소');
