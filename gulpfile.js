@@ -132,7 +132,7 @@ gulp.task('watch', function () {
   gulp.watch('dist/**').on('change', livereload.changed);
 });
 
-gulp.task('js-app', appNames.map(function(app) {'js-' + app}));
+gulp.task('js-app', appNames.map((app) => 'js-' + app));
 gulp.task('js', ['js-util', 'js-common', 'js-app']);
 gulp.task('vendor', ['js-vendor', 'css-vendor']);
 gulp.task('rb', ['js-rb', 'js-rb-sprint3', 'css-rb', 'img', 'hbs']);
