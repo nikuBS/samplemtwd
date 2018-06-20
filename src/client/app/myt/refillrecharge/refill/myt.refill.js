@@ -13,7 +13,6 @@ Tw.MytRefill.prototype.constructor = Tw.MytRefill;
 Tw.MytRefill.prototype = Object.assign(Tw.MytRefill.prototype, {
   _init: function () {
     this.$refillBtn = this.$container.find('.link-long > a');
-    this.$selectedCoupon = this.$container.find('.bt-select-arrow.on');
   },
   _bindEvent: function () {
     this.$container.on('click', '.coupon-cont', $.proxy(this._selectCoupon, this));
@@ -84,8 +83,9 @@ Tw.MytRefill.prototype = Object.assign(Tw.MytRefill.prototype, {
     this.window.location.href = url;
   },
   _makeUrl: function ($target) {
-    var couponNumber = this.$selectedCoupon.parents('.swiper-slide').attr('id');
-    var endDate = this.$selectedCoupon.parents('.swiper-slide').data('end');
+    var $selectedCoupon = this.$container.find('.bt-select-arrow.on');
+    var couponNumber = $selectedCoupon.parents('.swiper-slide').attr('id');
+    var endDate = $selectedCoupon.parents('.swiper-slide').data('end');
 
     var url = '/myt/refill';
     if (this._isRefillBtn($target)) {
