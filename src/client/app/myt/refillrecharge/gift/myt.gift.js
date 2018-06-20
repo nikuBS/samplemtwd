@@ -4,6 +4,7 @@ Tw.MytGift = function (rootEl) {
 
   this._cachedElement();
   this._bindEvent();
+  this.$init();
 };
 
 Tw.MytGift.prototype = Object.create(Tw.View.prototype);
@@ -15,16 +16,20 @@ Tw.MytGift.prototype = Object.assign(Tw.MytGift.prototype, {
   },
 
   _logHash: function (hash) {
-    switch ( hash.base ) {
-      case 'gift':
-        // TODO: tab1
-        break;
-      case 'request' :
-        // TODO: tab2
-        break;
-      default:
-        console.info('default hash.base : ', hash.base);
-    }
+    setTimeout(function () {
+      var elWrapper = $('.tab-linker li');
+
+      switch ( hash.base ) {
+        case 'gift':
+          elWrapper.eq(0).find('a').click();
+          break;
+        case 'request' :
+          elWrapper.eq(1).find('a').click();
+          break;
+        default:
+          elWrapper.eq(0).find('a').click();
+      }
+    }.bind(this), 0);
   },
 
   _cachedElement: function () {
@@ -35,29 +40,27 @@ Tw.MytGift.prototype = Object.assign(Tw.MytGift.prototype, {
   },
 
   _bindEvent: function () {
-    // this.$container.on('click', '#line-set', $.proxy(this.openLineSelectPopup, this));
+    this.$container.on('click', '#line-set', $.proxy(this.openLineSelectPopup, this));
     this.$container.on('click', '.btn_process', $.proxy(this.goToProcess, this));
     this.$container.on('click', '.bt-link-tx', $.proxy(this.openPriceList, this));
     this.$container.on('click', '.my-data', $.proxy(this.showRemainData, this));
     this.$container.on('click', '.popup-blind', $.proxy(this.closeLineSelectPopup, this));
     this.$container.on('click', '.popup-closeBtn', $.proxy(this.closePriceList, this));
     this.$container.on('updateLineInfo', $.proxy(this.updateLineInfo, this));
-    this.$container.on('click', '.tab-linker a', function (e) {
-      var elTab = $(e.currentTarget);
-      var elWrappperTab = $('.tab-linker a');
-
-      if ( elWrappperTab.index(elTab) == 0 ) {
-        location.hash = 'gift';
-      }
-
-      if ( elWrappperTab.index(elTab) == 1 ) {
-        location.hash = 'request';
-      }
-    })
+    this.$container.on('click', '.tab-linker a', $.proxy(this.changeTabMenu, this));
   },
 
-  changeTabMenu: function () {
-    // TODO: Change tab menu
+  changeTabMenu: function (e) {
+    var elTab = $(e.currentTarget);
+    var elWrapperTab = $('.tab-linker a');
+
+    if ( elWrapperTab.index(elTab) == 0 ) {
+      location.hash = 'gift';
+    }
+
+    if ( elWrapperTab.index(elTab) == 1 ) {
+      location.hash = 'request';
+    }
   },
 
   updateLineInfo: function (e, params) {
@@ -65,46 +68,37 @@ Tw.MytGift.prototype = Object.assign(Tw.MytGift.prototype, {
     this.lineList = params.lineList;
     this.lineInfo = params.lineInfo;
 
-    this._apiService.request(Tw.API_CMD.BFF_06_0015, {})
-      .done(function (res) {
-        var result = res.result;
-        result.familyMemberYn = result.familyMemberYn == 'Y' ? true : false;
-        result.goodFamilyMemberYn = result.goodFamilyMemberYn == 'Y' ? true : false;
-
-        this.$wrap_gift_count.html(this.tpl_gift_count(result));
-      }.bind(this));
+    this._apiService.request(Tw.API_CMD.BFF_06_0015, { svcMgmtNum: this.lineInfo.svcMgmtNum })
+      .done($.proxy(this.onSuccessProvider, this));
 
     // $.when()
     //   .then(function () {
-    //
     // })
+  },
 
-    // this._apiService
-    //   .request(Tw.API_CMD.BFF_03_0003, { svcCtg: 'M' })
-    //   .done($.proxy(this._setLineList, this));
+  onSuccessProvider: function (res) {
+    if ( res.code == '00' ) {
+      var result = res.result;
+      result.familyMemberYn = result.familyMemberYn == 'Y' ? true : false;
+      result.goodFamilyMemberYn = result.goodFamilyMemberYn == 'Y' ? true : false;
+
+      this.$wrap_gift_count.html(this.tpl_gift_count(result));
+    }
   },
 
   goToProcess: function (e) {
-    this.lineIndex = _.findIndex(this.lineList, function (line) {
-      return line.svcNum == this.$btn_change.text().trim()
-    }.bind(this));
-
     var processType = $(e.currentTarget).data('type');
-    var params = {
-      lineIndex: this.lineIndex,
-      processType: processType
-    }
 
     if ( processType === 'members' ) {
-      location.href = '/myt/gift/process/members?' + $.param(params) + '#step1';
+      location.href = '/myt/gift/process/members#step1';
     }
 
     if ( processType === 'family' ) {
-      location.href = '/myt/gift/process/family?' + $.param(params) + '#step1';
+      location.href = '/myt/gift/process/family#step1';
     }
 
     if ( processType === 'request' ) {
-      location.href = '/myt/gift/process/request?' + $.param(params) + '#step1';
+      location.href = '/myt/gift/process/request#step1';
     }
   },
 
@@ -147,12 +141,9 @@ Tw.MytGift.prototype = Object.assign(Tw.MytGift.prototype, {
     $(document.body).css('overflow-y', 'auto');
   },
 
-  // openLineSelectPopup: function () {
-  //   location.hash = 'open_pop';
-  // },
+  openLineSelectPopup: function () {
+  },
 
   closeLineSelectPopup: function () {
-    location.hash = 'close_pop';
-    $('.popup-closeBtn').click();
   }
 });
