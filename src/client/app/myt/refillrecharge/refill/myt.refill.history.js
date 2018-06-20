@@ -8,7 +8,7 @@ Tw.MyTRefillHistory = function (rootEl) {
     SENT: 'sent',
     RECEIVED: 'received'
   }
-  this.NUM_OF_ITEMS = 1;
+  this.NUM_OF_ITEMS = 20;
 };
 
 Tw.MyTRefillHistory.prototype = {
