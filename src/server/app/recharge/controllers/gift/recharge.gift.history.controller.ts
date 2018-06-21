@@ -2,23 +2,12 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import {Request, Response, NextFunction} from 'express';
 import {API_CMD} from '../../../../types/api-command.type';
 
-// import moment from 'moment';
+// import MyTGiftHistoryData from '../../../../../mock/server/myt.gift.history-present';
+
+import moment from 'moment';
 
 class RechargeGiftHistory extends TwViewController {
-  private dummyData = {
-    'code': '00',
-    'msg': 'success',
-    'result': [
-      {
-        'opDtm': '20170701',
-        'dataQty': '1024',
-        'custName': '김*진',
-        'svcNum': '01062**50**',
-        'giftType': '1',
-        'regularGiftType': 'G1'
-      }
-    ]
-  };
+  data: any;
 
   constructor() {
     super();
@@ -27,10 +16,6 @@ class RechargeGiftHistory extends TwViewController {
   public getMobileLineList() {
     return this.apiService.request(API_CMD.BFF_03_0003, {svcCtg: 'M'});
   }
-
-  // private getMonthRangeFormat() {
-  //   return
-  // }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
 
@@ -41,19 +26,33 @@ class RechargeGiftHistory extends TwViewController {
 
 
     // this.apiService.request(API_CMD.BFF_06_0018, {
-    //   'fromDt': '20180414',
-    //   'toDt': '20180614',
+    //   'fromDt': moment().format('YYYYMMDD'),
+    //   'toDt': moment().add(-3, 'months').format('YYYYMMDD'),
     //   'giftType': 0
     // }).subscribe((response) => {
-    //
-    //
+    //   // this.data = response.result;
+    //   this.data = response.result.length ? response.result : MyTGiftHistoryData.result;
+
+    const dateSpectrum = [
+      moment().format('YYYYMMDD'),
+      moment().add(-1, 'months').format('YYYYMMDD'),
+      moment().add(-3, 'months').format('YYYYMMDD'),
+      moment().add(-6, 'months').format('YYYYMMDD'),
+      moment().add(-12, 'months').format('YYYYMMDD')
+    ];
+
     // });
-
-
     this.getMobileLineList()
         .subscribe((response) => {
-          res.render('gift/gift.history.html', {lineList: response.result, svcInfo: svcInfo, dummy : this.dummyData.result});
+
+          // console.log(this.data);
+          res.render('recharge/gift/gift.history.html', {
+            lineList: response.result,
+            svcInfo: svcInfo,
+            dateList: dateSpectrum
+          });
         });
+
   }
 }
 
