@@ -12,7 +12,7 @@ Tw.MytGiftProcess = function (rootEl) {
   this._cachedElement();
   this._bindEvent();
   this.$init();
-}
+};
 
 Tw.MytGiftProcess.prototype = {
   step: ['step1', 'step2', 'step3'],
@@ -28,6 +28,10 @@ Tw.MytGiftProcess.prototype = {
   $init: function () {
     this.processType = location.href.substr(location.href.lastIndexOf('/') + 1).split('#')[0];
     initHashNav(this._logHash);
+
+    //레이어팝업 오픈 함수 재정의
+    frontend_fn.popup_open = $.proxy(this._popupOpen, this);
+
   },
 
   _logHash: function (hash) {
@@ -85,13 +89,22 @@ Tw.MytGiftProcess.prototype = {
     this.$container.on('click', '[data-target="sendText"]', $.proxy(this._sendTextPopEvt, this));
     $('body').on('click', '[data-target="sendTextBtn"]', $.proxy(this._sendTextEvt, this));
     $('body').on('click', '[data-target="sendTextCancelBtn"]', $.proxy(this._sendTextCancelEvt, this));
+
   },
 
   //-----------------------------------------------------[문자로 알리기]
+  _popupOpen: function(str) {
+    // console.info('frontend_fn.popup_open 재정의 22: ', str);
+    // console.info('Tw.MytGiftProcess.prototype.provider 객체 : ', Tw.MytGiftProcess.prototype.provider);
+    $('body').find('[data-target="msgName"]').prepend( Tw.MytGiftProcess.prototype.provider.name );
+    $('body').find('[data-target="txTel"]').html( Tw.MytGiftProcess.prototype.provider.phone );
+  },
+
   _sendTextPopEvt: function () {
     location.hash = 'DA_02_01_04_L01';
     skt_landing.action.popup.open({
-      hbs: 'DA_02_01_04_L01'// hbs의 파일명
+      hbs: 'DA_02_01_04_L01',
+      front: 'test'
     });
   },
   _sendTextEvt: function () {
