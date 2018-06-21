@@ -5,7 +5,7 @@ const environment = {
       protocol: 'http',
       port: 32224
     },
-    CDN: 'http://localhost:3001',
+    CDN: '',
     REDIS: {
       host: '211.188.180.73',
       port: 31200,
