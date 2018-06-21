@@ -306,12 +306,12 @@ skt_landing.widgets = {
             slick = _this.prop('slick');
         totalBox.find('.current').text(slick.currentSlide+1);
         totalBox.find('.total').text(slick.slideCount);
-        if($(this).find('.bt-select-arrow')){
+        /*if($(this).find('.bt-select-arrow')){
           skt_landing.action.toggleon($('.bt-select-arrow'));
           $(this).find('.coupon-cont').on('click',function(){
             $(this).find('.bt-select-arrow').click();
           });
-        }
+        }*/
         //var  slickCont = $(this).find('.slick-slide');
         //slickCont.each(function(){
         //  $(this).replaceWith($('<li>').append($(this).contents()));
