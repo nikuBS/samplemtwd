@@ -1,3 +1,9 @@
+ /**
+ * FileName: recharge.gift.js
+ * Author: 박지만 (jiman.park@sk.com)
+ * Date: 2018.06.22
+ */
+
 Tw.MytGift = function (rootEl) {
   this.$container = rootEl;
   this._apiService = new Tw.ApiService();
