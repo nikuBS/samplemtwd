@@ -113,33 +113,33 @@ input[type=text], input[type=file], input[type=password] {
 }
 
 .inputbox.bt-add {
-  display: block;
+  display: table;
   position: relative;
+  width: 100%;
   padding: 0 4.125rem 0 0;
 }
 
 .inputbox.bt-add .input {
-  display: block;
+  display: table-cell;
+  width: 84%;
 }
 
 .inputbox.bt-add .input input {
-  width: 100%;
+  width: 98%;
 }
 
 .inputbox.bt-add .bt-box {
-  display: block;
-  position: absolute;
-  top: 0;
-  right: 0;
-  height: 100%;
-}
-
-.inputbox.bt-add .bt-box button {
+  display: table-cell;
+  width: 16%;
   height: 100%;
   padding: 0 0.5rem;
   border: 1px solid #cfcfcf;
   border-radius: 0.3125rem;
   background: #fff;
+  text-align: center;
+}
+
+.inputbox.bt-add .bt-box button {
   font-size: 0.875rem;
   font-weight: 400;
   color: #757575;
@@ -473,12 +473,13 @@ strong {
 
 /* common */
 .blind {
+  display: inline-block;
   position: absolute !important;
-  height: 0;
-  width: 0;
-  line-height: 0;
-  overflow: hidden;
-  text-indent: -10000px;
+  color: transparent;
+}
+
+h1.blind, h2.blind, h3.blind, h4.blind, h5.blind, h6.blind {
+  visibility: hidden;
 }
 
 .clearfix:after {
@@ -902,6 +903,7 @@ strong {
 
 .ti-desc .num {
   font-family: Helvetica Neue, Roboto, sans-serif;
+  vertical-align: baseline;
 }
 
 .loading {
