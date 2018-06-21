@@ -151,46 +151,18 @@ class HomeMain extends TwViewController {
     });
   }
 
-
   // 선물
   private getGiftData(): Observable<any> {
     return Observable.combineLatest(
-      this.getGiftBalance(),
       this.getGiftSender(),
-      (giftBalance, giftSender) => {
-        return { giftBalance, giftSender };
+      (giftSender) => {
+        return { giftSender };
       });
 
   }
 
-  private getGiftBalance(): Observable<any> {
-    return this.apiService.request(API_CMD.BFF_06_0014, {}).map((resp) => {
-      if ( resp.code === API_CODE.CODE_00 ) {
-        return this.parseGiftBalance(resp.result);
-      }
-      return null;
-    });
-  }
-
-  private parseGiftBalance(balance): any {
-    balance.showDataMb = FormatHelper.addComma(balance.dataRemQty);
-    balance.showDataGb = FormatHelper.customDataFormat(balance.dataRemQty, 'MB', 'GB').data;
-
-    return balance;
-  }
-
   private getGiftSender(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_06_0015, {}).map(resp => {
-      resp = {
-        code: '00',
-        msg: 'success',
-        result: {
-          dataGiftCnt: '2',
-          familyMemberYn: 'Y',
-          familyDataGiftCnt: '0',
-          goodFamilyMemberYn: 'Y'
-        }
-      };
       if ( resp.code === API_CODE.CODE_00 ) {
         resp.result.code = resp.code;
         return resp.result;
