@@ -27,7 +27,7 @@ Tw.MytRefillSelect.prototype = Object.assign(Tw.MytRefillSelect.prototype, {
       'title': '알림',
       'close_bt': true,
       'title2': couponType + ' 리필을 선택하셨습니다.',
-      'contents': '쿠폰 사용 가능 기간은 ' + endDate + '까지이며, 리필 이후 요금제 변경 시에는 사용할 수 없습니다.<br/>자세한 사항은 쿠폰 사용 내역에서 확인 가능합니다.<br/><br/>정말로 쿠폰으로 리필하시겠습니까?<br/>신청 후 취소가 불가합니다.',
+      'contents': '쿠폰 사용 가능 기간은 ' + endDate + '까지이며, 리필 이후 요금제 변경 시에는 사용할 수 없습니다.<br />자세한 사항은 쿠폰 사용 내역에서 확인 가능합니다.<br/><br />정말로 쿠폰으로 리필하시겠습니까?<br />신청 후 취소가 불가합니다.',
       'bt_num': 'two',
       'type': [{
         class: 'bt-white1 refill-cancel',
