@@ -62,15 +62,14 @@
 
                 <div class="inner">
                     <h3 class="contents-tit">자동선물 신청된 결합가족</h3>
-                    <div class="contents-info-list">
+                    <div id="wrap_family_history" class="contents-info-list">
                         <div class="contents-none">
                             <span class="none-ico1">자동선물 신청된 이력이 없습니다.</span>
                         </div>
-                        <div class="contents-notice">
-                            <span class="noti-type1">자동 선물 제공량 부족 시 결합된 회선의 1번부터 순차적으로 선물이 제공됩니다.</span>
-                        </div>
                     </div>
-
+                    <div class="contents-notice">
+                        <span class="noti-type1">자동 선물 제공량 부족 시 결합된 회선의 1번부터 순차적으로 선물이 제공됩니다.</span>
+                    </div>
                     <div class="contents-btn">
                         <ul class="bt-slice ver">
                             <li class="bt-blue1">
@@ -162,7 +161,8 @@
                                         <li><label data-value="700"><input type="radio" name="senddata">700 MB</label></li>
                                         <li><label data-value="800"><input type="radio" name="senddata">800 MB</label></li>
                                         <li><label data-value="900"><input type="radio" name="senddata">900 MB</label></li>
-                                        <li><label data-value="1000" class="disabled"><input type="radio" name="senddata" disabled="">1GB</label></li>
+                                        <li><label data-value="1000" class="disabled"><input type="radio" name="senddata"
+                                                                                             disabled="">1GB</label></li>
                                     </ul>
                                 </div>
                             </div>
@@ -253,7 +253,7 @@
                                 <dl>
                                     <dt class="ti-data">선물 받은 분</dt>
                                     <dd class="tx-data">
-                                        <span class="blind">이름</span>정영진<br />
+                                        <span class="blind">이름</span>정영진<br/>
                                         <span class="blind">전화번호</span><span class="num">010-12**-34**</span>
                                     </dd>
                                 </dl>
@@ -288,6 +288,24 @@
     <!--// #contents -->
     <% include ../../../../../common/views/components/footer.component.html %>
 </div>
+
+<script type="text/x-handlebars-template" id="tpl_family_history">
+    <ul class="result-view modify">
+        {{#each list}}
+        <li class="history_item" data-phone="{{svcNum}}" data-serNum="{{serNum}}">
+            <div class="info-user">
+                <span class="info-title">{{custName}}</span>
+                <span class="info-sub">{{svcNum}}</span>
+            </div>
+            <div class="info-data">
+                <!-- 1기가 미만인 경우 -->
+                <span class="info-title">{{dataQty}} MB</span>
+            </div>
+            <div class="info-btn"><a class="btn-cancel">해지</a></div>
+        </li>
+        {{/each}}
+    </ul>
+</script>
 
 <script type="text/x-handlebars-template" id="tpl_targetInfo">
     <span class="blind">이름</span>{{name}}<br>

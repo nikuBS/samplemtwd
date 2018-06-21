@@ -1,3 +1,9 @@
+/**
+ * FileName: recharge.gift.process.js
+ * Author: 박지만 (jiman.park@sk.com)
+ * Date: 2018.06.22
+ */
+
 Tw.MytGiftProcess = function (rootEl) {
   this.$container = rootEl;
   this._apiService = new Tw.ApiService();
@@ -73,6 +79,8 @@ Tw.MytGiftProcess.prototype = {
     this.$btn_addr.on('click', $.proxy(this._onClickBtnAddr, this));
     this.$container.on('click', '#wrap_request_history .history_item', $.proxy(this._onClickRequestHistoryItem, this));
     this.$container.on('click', '#wrap_family_history .history_item', $.proxy(this._onClickFamilyHistoryItem, this));
+    this.$container.on('click', '.family-history-cancel', $.proxy(this._closePopup, this));
+    this.$container.on('click', '.family-history-remove', $.proxy(this._removeFamilyHistoryItem, this));
 
     this.$container.on('click', '[data-target="sendText"]', $.proxy(this._sendTextPopEvt, this));
     $('body').on('click', '[data-target="sendTextBtn"]', $.proxy(this._sendTextEvt, this));
@@ -214,30 +222,30 @@ Tw.MytGiftProcess.prototype = {
   },
 
   _onClickFamilyHistoryItem: function (e) {
-    // this._apiService.request(Tw.API_CMD.BFF_06_0005 + '?' + $.param({ serNum: $(e.currentTarget).data('sernum') }), {})
-    //   .done(function (res) {
-    //     debugger;
-    //   });
-    var params = { serNum: $(e.currentTarget).data('sernum') };
-
-    var htOptions = {
-      type: 'DELETE',
-      url: Tw.API_CMD.BFF_06_0005.path + '?' + $.param(params),
-      dataType: 'json',
-      timeout: 10000,
-      headers: Object.assign({ "Content-Type": "application/json" }),
-      data: JSON.stringify(params)
-    };
-
-    $.ajax(htOptions).done(function (res) {
-      debugger;
+    skt_landing.action.popup.open({
+      'title': '데이터 자동 선물 안내',
+      'close_bt': true,
+      'title2': '선택하신 자동 선물 내역을 삭제하시겠습니까?',
+      'bt_num': 'two',
+      'type': [{
+        class: 'bt-white1 family-history-cancel',
+        txt: '취소'
+      }, {
+        class: 'bt-red1 family-history-remove',
+        txt: '확인'
+      }]
     });
+  },
 
-    // var $target = $(e.currentTarget);
-    // this._isRequestByOpdtm = true;
-    // this._opDtm = $target.data('opdtm');
-    //
-    // this.$input_phone.val($target.data('phone'));
+  _removeFamilyHistoryItem: function (e) {
+    this._apiService.request(Tw.API_CMD.BFF_06_0005, JSON.stringify({ serNum: $(e.currentTarget).data('sernum') }))
+      .done(function (res) {
+        location.reload(true);
+      });
+  },
+
+  _closePopup: function (e) {
+    skt_landing.action.popup.close();
   },
 
   validateNumber: function (e) {
@@ -304,6 +312,17 @@ Tw.MytGiftProcess.prototype = {
             this.provider.dataQty = dataQty;
             $('.wrap_data .num').text(this.receiver.dataRemQty - dataQty);
             location.replace(sNextUrl);
+          } else {
+            skt_landing.action.popup.open({
+              'title': '알림',
+              'close_bt': true,
+              'title2': res.orgDebugMessage,
+              'bt_num': 'one',
+              'type': [ {
+                class: 'bt-red1 family-history-cancel',
+                txt: '확인'
+              }]
+            });
           }
         }.bind(this));
     } else if ( this.processType == 'members' ) {
