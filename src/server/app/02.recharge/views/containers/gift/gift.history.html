@@ -1,5 +1,9 @@
 <%- include('../../components/start.component.html') %>
-
+<%#
+* FileName: gift.history.html
+* Author: 이상형 (silion@sk.com)
+* Date: 2018.06.19
+%>
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
     <ul>
@@ -115,7 +119,7 @@
                                     <li id="tab2">
                                         <div class="inner">
                                             <div class="contents-info-list">
-                                                <p class="ti-desc"><strong><em class="num">136</em>개</strong> 조르기 내역이
+                                                <p class="ti-desc"><strong><em class="num"></em>개</strong> 조르기 내역이
                                                     있습니다.</p>
                                                 <div class="list-top">
                                                     <!-- .widget -->
@@ -164,9 +168,11 @@
                                                     </div>
                                                 </div>
                                                 <!--// .widget -->
+                                                <!--// 템플릿 노출 -->
+                                                <ul class="result-history modify">
+                                                </ul>
+                                                <a class="bt-more" href="#none">더보기<span>(20)</span></a>
                                             </div>
-                                            <!--// 템플릿 노출 -->
-                                            <a class="bt-more" href="#none">더보기<span>(20)</span></a>
                                         </div>
                                     </li>
                                 </ul>
@@ -182,126 +188,67 @@
     <% include ../../../../../common/views/components/footer.component.html %>
 </div>
 
-<% include ../../components/javascript.component.html %>
-<script>
-  $(document).ready(function () {
-    var comp = new Tw.MytGiftHistory($('.container'));
-  });
-</script>
-<script id="present-template" type="text/x-handlebars-template">
-
-
-    {{#presents}}
-    <li>
-        <div class="info-change">
-            <span class="{{conditionClass giftType}}"><span class="blind">받음</span></span>
+    <% include ../../components/javascript.component.html %>
+    <script>
+      $(document).ready(function () {
+        var comp = new Tw.MytGiftHistory($('.container'));
+      });
+    </script>
+    <script id="list-template" type="text/x-handlebars-template">
+            {{#list}}
+            <li>
+                <div class="info-change">
+                    <span class="{{conditionClass giftType}}"><span class="blind">받음</span></span>
+                </div>
+                <div class="info-user">
+                    <span class="info-title">{{custName}}{{#isAuto}}<span class="mark-auto">자동</span>{{else}}{{/isAuto}}</span>
+                    <span class="info-sub">{{conditionTel svcNum}}</span>
+                </div>
+                <div class="info-data">
+                    {{#isBig1G}}
+                    <!-- 1기가 미만인 경우 -->
+                    <span class="info-title">{{dataQty}}</span>
+                    {{else}}
+                    <!-- 1기가 이상인 경우 -->
+                    <span class="info-title">{{dataQty}}</span>
+                    <span class="info-sub">{{dataQtyConvert}}</span>
+                    {{/isBig1G}}
+                </div>
+                {{#isRequest}}
+                <div class="info-btn"><a href="#none" data-opDtm="{{opDtm}}" class="btn-cancel">삭제</a></div>
+                {{else}}
+                {{/isRequest}}
+            </li>
+            {{/list}}
+    </script>
+    <script id="present-empty-template" type="text/x-handlebars-template">
+        <div class="noresult">
+            <h3 class="blind">선물내역</h3>
+            <!-- .cont-box -->
+            <div class="cont-box nogaps-hoz">
+                <!-- .contents-empty -->
+                <div class="contents-empty">
+                    <span class="ico"></span>
+                    <p class="desc">받은 혹은 보낸 선물 내역이 없습니다.</p>
+                </div>
+                <!--// .contents-empty -->
+            </div>
+            <!--// .cont-box -->
         </div>
-        <div class="info-user">
-            <span class="info-title">{{custName}}{{#isAuto}}<span class="mark-auto">자동</span>{{else}}{{/isAuto}}</span>
-            <span class="info-sub">{{conditionTel svcNum}}</span>
+    </script>
+    <script id="request-empty-template" type="text/x-handlebars-template">
+        <div class="noresult">
+            <h3 class="blind">조르기내역</h3>
+            <!-- .cont-box -->
+            <div class="cont-box nogaps-hoz">
+                <!-- .contents-empty -->
+                <div class="contents-empty">
+                    <span class="ico"></span>
+                    <p class="desc">조르기 내역이 없습니다.</p>
+                </div>
+                <!--// .contents-empty -->
+            </div>
+            <!--// .cont-box -->
         </div>
-        <div class="info-data">
-            {{#isBig1G}}
-            <!-- 1기가 미만인 경우 -->
-            <span class="info-title">{{dataQty}}</span>
-            {{else}}
-            <!-- 1기가 이상인 경우 -->
-            <span class="info-title">{{dataQty}}</span>
-            <span class="info-sub">{{dataQtyConvert}}</span>
-            {{/isBig1G}}
-        </div>
-    </li>
-    {{/presents}}
-</script>
-<script id="request-template" type="text/x-handlebars-template">
-    <ul class="result-history modify">
-        <li>
-            <div class="info-change">
-                <span class="arrow-receive"><span class="blind">받음</span></span>
-            </div>
-            <div class="info-user">
-                <span class="info-title">김한림</span>
-                <span class="info-sub">010-46**-10**</span>
-            </div>
-            <div class="info-data">
-                <!-- 1기가 미만인 경우 -->
-                <span class="info-title">500MB</span>
-            </div>
-            <div class="info-btn">&nbsp;</div>
-        </li>
-        <li>
-            <div class="info-change">
-                <span class="arrow-send"><span class="blind">보냄</span></span>
-            </div>
-            <div class="info-user">
-                <span class="info-title">김종준</span>
-                <span class="info-sub">010-46**-10**</span>
-            </div>
-            <div class="info-data">
-                <!-- 1기가 이상인 경우 -->
-                <span class="info-title">4GB</span>
-                <span class="info-sub">4,240MB</span>
-            </div>
-            <div class="info-btn"><a href="#none" class="btn-cancel">삭제</a></div>
-        </li>
-        <li>
-            <div class="info-change">
-                <span class="arrow-send"><span class="blind">보냄</span></span>
-            </div>
-            <div class="info-user">
-                <span class="info-title">김종준</span>
-                <span class="info-sub">010-46**-10**</span>
-            </div>
-            <div class="info-data">
-                <span class="info-title">4GB</span>
-                <span class="info-sub">4,240MB</span>
-            </div>
-            <div class="info-btn"><a href="#none" class="btn-cancel">삭제</a></div>
-        </li>
-        <li>
-            <div class="info-change">
-                <span class="arrow-receive"><span class="blind">받음</span></span>
-            </div>
-            <div class="info-user">
-                <span class="info-title">김종준<span class="mark-auto">자동</span></span>
-                <span class="info-sub">010-46**-10**</span>
-            </div>
-            <div class="info-data">
-                <span class="info-title">4GB</span>
-                <span class="info-sub">4,240MB</span>
-            </div>
-            <div class="info-btn">&nbsp;</div>
-        </li>
-    </ul>
-</script>
-<script id="present-empty-template" type="text/x-handlebars-template">
-    <div class="noresult">
-        <h3 class="blind">선물내역</h3>
-        <!-- .cont-box -->
-        <div class="cont-box nogaps-hoz">
-            <!-- .contents-empty -->
-            <div class="contents-empty">
-                <span class="ico"></span>
-                <p class="desc">받은 혹은 보낸 선물 내역이 없습니다.</p>
-            </div>
-            <!--// .contents-empty -->
-        </div>
-        <!--// .cont-box -->
-    </div>
-</script>
-<script id="request-empty-template" type="text/x-handlebars-template">
-    <div class="noresult">
-        <h3 class="blind">조르기내역</h3>
-        <!-- .cont-box -->
-        <div class="cont-box nogaps-hoz">
-            <!-- .contents-empty -->
-            <div class="contents-empty">
-                <span class="ico"></span>
-                <p class="desc">조르기 내역이 없습니다.</p>
-            </div>
-            <!--// .contents-empty -->
-        </div>
-        <!--// .cont-box -->
-    </div>
-</script>
+    </script>
 <% include ../../components/end.component.html %>
