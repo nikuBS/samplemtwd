@@ -58,7 +58,7 @@ Tw.NativeService.prototype = {
 
   _onBack: function (resp) {
     Tw.Logger.info('onBack', resp);
-    window.history.back();
+    history.back();
   },
 
   _onNativeCallback: function (_resp) {
