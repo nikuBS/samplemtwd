@@ -1,4 +1,8 @@
-// Author Ara Jo (araara.jo@sk.com)
+/**
+ * FileName: home.main.controller.ts
+ * Author: Ara Jo (araara.jo@sk.com)
+ * Date: 2018.06.22
+ */
 
 import TwViewController from '../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';

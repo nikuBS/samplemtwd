@@ -1,4 +1,8 @@
-// Author Ara Jo (araara.jo@sk.com)
+/**
+ * FileName: home.main.js
+ * Author: Ara Jo (araara.jo@sk.com)
+ * Date: 2018.06.22
+ */
 
 Tw.HomeMain = function (rootEl) {
   Tw.View.apply(this, arguments);
