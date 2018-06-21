@@ -2,42 +2,153 @@ Tw.MytGiftHistory = function (rootEl) {
   this.$container = rootEl;
   this._apiService = new Tw.ApiService();
 
-  this.lineList = {};
-  this.currentTabMethod = 'present';    // pester : 조르기
-  this.currentPopupMethod = null;
-  this.searchCondition = {
-    type: 'total',
-    isSent: false,
-    selectedTermIndex: 2,
-    terms: $('#dateSpectrum').text().split(',')
-  };
-
   this._cachedElement();
   this._bindEvent();
-  this._initLineInfo();
+  this._$init();
 };
 
 Tw.MytGiftHistory.prototype = {
+  _$init: function() {
+    this.currentTabMethod = 'present';    // request : 조르기
+    this.searchCondition = {
+      now : null,
+      old : {},
+      type: 0,
+      isAutoSent: false,
+      selectedTermIndex: 1,
+      terms: []
+    };
+    this.presentContentWrapper.hide();
+    this.requestContentWrapper.hide();
+
+    this.$termOptions.map((function(i, o){
+      this.searchCondition.terms.push(o.value);
+    }).bind(this));
+    this.searchCondition.now = this.getCurrentDate();
+
+    this.getPresentList(this.searchCondition.terms[this.searchCondition.selectedTermIndex], this.searchCondition.now, this.searchCondition.type, this.initedPresent);
+  },
   _cachedElement: function () {
     this.$document = $(document);
-    this.$window = $(window);
-    this.$lineChanger = $('.bt-dropdown.big');
-    this.$termChanger = $('.bt-dropdown.small');
+
+    this.$widgetWrapper = $('.widget-box.select');
+    this.$tabLinker = $('.tab-linker');
     this.$tabChanger = $('.tab-linker a');
+    this.$termOptions = $('#tab1 .inner .contents-info-list .widget select:nth-of-type(2) option');
 
+    this.presentContainer = $('#tab1');
+    this.presentContentWrapper = this.presentContainer.find('.inner');
+    this.presentCounter = this.presentContentWrapper.find('.ti-desc em');
+    // this.present
+    this.requestContainer = $('#tab2');
+    this.requestContentWrapper = this.requestContainer.find('.inner');
 
-    // this.$lineTrigger = $('#sort_type');
-    // this.$loading = $('.loader');
-    // this.$tabNaviTrigger = $('.tab-navi a');
-    // this.$searchOptionTrigger = $('.searchOption');
+    this.presentTemplete = Handlebars.compile($('#present-template').html());
+    this.requestTempelete = Handlebars.compile($('#request-template').html());
+    this.presentEmptyTemplete = Handlebars.compile($('#present-empty-template').html());
+    this.requestEmptyTempelete = Handlebars.compile($('#request-empty-template').html());
   },
 
   _bindEvent: function () {
-    this.$lineChanger.on('click', $.proxy(this.opnePopupProcess, this));
-    this.$termChanger.on('click', $.proxy(this.opnePopupProcess, this));
-    this.$tabChanger.off('click').on('click', $.proxy(this.changeTab, this));
-    // this.$searchOptionTrigger.on('click', $.proxy(this.changeSearchOption, this));
-    // this.$tabNaviTrigger.on('click', $.proxy(this.changeTab, this));
+    this.$widgetWrapper.on('click', 'button', $.proxy(this.openSelectPopupProcess, this));
+    this.$tabLinker.on('click', 'a', $.proxy(this.changeTab, this));
+
+  },
+
+  getCurrentDate: function() {
+    var dateNow = new Date($.now());
+    return dateNow.getFullYear() + ('0' + (dateNow.getMonth() + 1)).slice(-2) + ('0' + (dateNow.getDate())).slice(-2);
+  },
+
+  initedPresent: function(res) {
+
+    console.log(res, this.mockHistory);
+    res = res.result.length ? res : this.mockHistory;
+    if(res.code !== '00' && res.msg !== 'success') {
+      console.log('error', res);
+      return false;
+    }
+    if(res.result.length) {
+      var data = {
+        presents : res.result
+      };
+      this.presentCounter.text(data.presents.length);
+      this.presentContentWrapper.show();
+
+      Handlebars.registerHelper('conditionClass', function (giftType) {
+        if(giftType === '1') {
+          return 'arrow-receive';
+        } else {
+          return 'arrow-send';
+        }
+      });
+
+      Handlebars.registerHelper('conditionTel', function (svcNum) {
+        console.log(svcNum);
+      });
+
+      Handlebars.registerHelper('isBig1G', function(val) {
+        // console.log(this, val);
+        // if(this.dataQty < 1024) {
+        //
+        // }
+      });
+
+      this.presentContentWrapper.find('.contents-info-list').append(this.presentTemplete(data));
+    } else {
+      this.presentContainer.append(this.presentEmptyTemplete());
+    }
+  },
+
+  openSelectPopupProcess: function (e) {
+
+    if ($(e.target).attr('id') === 'term-set') {
+      var tempTimer = window.setTimeout((function () {
+        this.setPrevSearchCondition();
+        this.$optionViewAutoSent = $('.popup .select-option input');
+        this.popupViewAutoSentToggle(this.searchCondition.type);
+
+        this.$optionViewAutoSent.attr('checked', this.searchCondition.isAutoSent);
+        if(this.searchCondition.isAutoSent) {
+          $(this.$optionViewAutoSent.parent()).addClass('checked');
+        }
+
+        this.$optionViewAutoSent.on('change', (function(e) {
+          this.searchCondition.isAutoSent = this.$optionViewAutoSent.is(':checked');
+        }).bind(this));
+
+        $('.tube-list-ti .tube-list').map((function(index, options) {
+          $(options).on('click', 'label', (function(e) {
+            this.updateSearchOption(index, $(options).find('label').index(e.target.parentNode));
+          }).bind(this));
+        }).bind(this));
+
+        window.clearTimeout(tempTimer);
+      }).bind(this), 50);
+    }
+
+    this.$document.one('click', '.popup .popup-blind', $.proxy(this.hidePopup, this));
+
+    this.addClosePopupHandler();
+  },
+
+  setPrevSearchCondition: function() {
+    this.searchCondition.old.type = this.searchCondition.type;
+    this.searchCondition.old.term = this.searchCondition.selectedTermIndex;
+    this.searchCondition.old.isAutoSent = this.searchCondition.isAutoSent;
+  },
+
+  resetPrevSearchCondition: function() {
+    this.searchCondition.type = this.searchCondition.old.type;
+    this.searchCondition.selectedTermIndex = this.searchCondition.old.term;
+    this.searchCondition.isAutoSent = this.searchCondition.old.isAutoSent;
+  },
+
+  popupViewAutoSentToggle: function(type) {
+    if(type !== 1)
+      this.$optionViewAutoSent.parent().hide();
+    else
+      this.$optionViewAutoSent.parent().show();
   },
 
   _initLineInfo: function () {
@@ -52,49 +163,18 @@ Tw.MytGiftHistory.prototype = {
     this.lineList.lines = lines.result;
     this.lineList.current = lines.result[0];
     this.lineList.selectedIndex = $(this.lineList.lines).index(this.lineList.current);
-    this.getPresentList();
+    // this.getPresentList();
   },
 
-  getPresentList: function () {
-    if (this.lineList.current) {
-      this._apiService.request(Tw.API_CMD.BFF_06_0018, {
-        fromDt: this.searchCondition.terms[0],
-        toDt: this.searchCondition.terms[this.searchCondition.selectedTermIndex],
-        giftType: '0'
-      }).done($.proxy(function (res) {
-        console.log('request present list :', res.result);
-        var dummy = [
-          {"opDtm": "20170701", "dataQty": "1024", "custName": "김*진", "svcNum": "01040**08**", "giftType": "1", "regularGiftType": "G1"},
-          {"opDtm": "20170621", "dataQty": "1024", "custName": "김*진", "svcNum": "01040**08**", "giftType": "1", "regularGiftType": "G1"},
-          {"opDtm": "20170601", "dataQty": "1024", "custName": "김*진", "svcNum": "01040**08**", "giftType": "1", "regularGiftType": "G1"},
-          {"opDtm": "20170520", "dataQty": "1024", "custName": "유*진", "svcNum": "01040**08**", "giftType": "1", "regularGiftType": "G1"},
-          {"opDtm": "20170415", "dataQty": "1024", "custName": "김*나", "svcNum": "01062**50**", "giftType": "1", "regularGiftType": "G1"},
-          {"opDtm": "20170701", "dataQty": "1024", "custName": "김*진", "svcNum": "01040**08**", "giftType": "1", "regularGiftType": "G1"},
-          {"opDtm": "20170621", "dataQty": "1024", "custName": "김*진", "svcNum": "01040**08**", "giftType": "1", "regularGiftType": "G1"},
-          {"opDtm": "20170601", "dataQty": "1024", "custName": "김*진", "svcNum": "01040**08**", "giftType": "1", "regularGiftType": "G1"},
-          {"opDtm": "20170520", "dataQty": "1024", "custName": "유*진", "svcNum": "01040**08**", "giftType": "1", "regularGiftType": "G1"},
-          {"opDtm": "20170415", "dataQty": "1024", "custName": "김*나", "svcNum": "01062**50**", "giftType": "1", "regularGiftType": "G1"},
-          {"opDtm": "20170701", "dataQty": "1024", "custName": "김*진", "svcNum": "01040**08**", "giftType": "1", "regularGiftType": "G1"},
-          {"opDtm": "20170621", "dataQty": "1024", "custName": "김*진", "svcNum": "01040**08**", "giftType": "1", "regularGiftType": "G1"},
-          {"opDtm": "20170601", "dataQty": "1024", "custName": "김*진", "svcNum": "01040**08**", "giftType": "1", "regularGiftType": "G1"},
-          {"opDtm": "20170520", "dataQty": "1024", "custName": "유*진", "svcNum": "01040**08**", "giftType": "1", "regularGiftType": "G1"},
-          {"opDtm": "20170415", "dataQty": "1024", "custName": "김*나", "svcNum": "01062**50**", "giftType": "1", "regularGiftType": "G1"},
-          {"opDtm": "20170701", "dataQty": "1024", "custName": "김*진", "svcNum": "01040**08**", "giftType": "1", "regularGiftType": "G1"},
-          {"opDtm": "20170621", "dataQty": "1024", "custName": "김*진", "svcNum": "01040**08**", "giftType": "1", "regularGiftType": "G1"},
-          {"opDtm": "20170601", "dataQty": "1024", "custName": "김*진", "svcNum": "01040**08**", "giftType": "1", "regularGiftType": "G1"},
-          {"opDtm": "20170520", "dataQty": "1024", "custName": "유*진", "svcNum": "01040**08**", "giftType": "1", "regularGiftType": "G1"},
-          {"opDtm": "20170415", "dataQty": "1024", "custName": "김*나", "svcNum": "01062**50**", "giftType": "1", "regularGiftType": "G1"},
-          {"opDtm": "20170701", "dataQty": "1024", "custName": "김*진", "svcNum": "01040**08**", "giftType": "1", "regularGiftType": "G1"},
-          {"opDtm": "20170621", "dataQty": "1024", "custName": "김*진", "svcNum": "01040**08**", "giftType": "1", "regularGiftType": "G1"},
-          {"opDtm": "20170601", "dataQty": "1024", "custName": "김*진", "svcNum": "01040**08**", "giftType": "1", "regularGiftType": "G1"},
-          {"opDtm": "20170520", "dataQty": "1024", "custName": "유*진", "svcNum": "01040**08**", "giftType": "1", "regularGiftType": "G1"},
-          {"opDtm": "20170415", "dataQty": "1024", "custName": "김*나", "svcNum": "01062**50**", "giftType": "1", "regularGiftType": "G1"}
-          ];
-      }, this));
-    }
+  getPresentList: function (fromDt, toDt, giftType, callback) {
+    this._apiService.request(Tw.API_CMD.BFF_06_0018, {
+      fromDt: fromDt,
+      toDt: toDt,
+      giftType: giftType
+    }).done($.proxy(callback, this));
   },
 
-  getPesterList: function () {
+  getrequestList: function () {
     if (this.lineList.current) {
 
     }
@@ -107,28 +187,6 @@ Tw.MytGiftHistory.prototype = {
 
   },
 
-  opnePopupProcess: function (e) {
-    this.currentPopupMethod = $(e.target);
-    var popupTriggerId = this.currentPopupMethod.attr('id');
-
-    if (popupTriggerId === 'line-set') {
-      var tempTimer = window.setTimeout((function () {
-        this.popupLineList = $('.popup .select-list label');
-        this.setPopupCurrentLine();
-        this.popupLineList.on('click', $.proxy(this.updateSelectedLine, this));
-        window.clearTimeout(tempTimer);
-      }).bind(this), 50);
-      this.updatePopupSelectedLine();
-    } else if (popupTriggerId === 'term-set') {
-      this.updatePopupSelectedSearch();
-    }
-
-    this.$document.off('click').one('click', '.popup .popup-blind', $.proxy(this.hidePopup, this));
-
-
-    this.addClosePopupHandler();
-  },
-
   updateSelectedLine: function (e) {
     this.lineList.tempSelectedLineIndex = this.popupLineList.index(e.target.parentNode);
   },
@@ -138,8 +196,13 @@ Tw.MytGiftHistory.prototype = {
   },
 
   addClosePopupHandler: function () {
+
     this.$document.one('click', '.popup-closeBtn', $.proxy(this.cancelUpdateCurrentLine, this));
-    this.$document.one('click', '.select-submit', $.proxy(this.updateCurrentLine, this));
+    this.$document.one('click', '.select-submit', $.proxy(this.popupCommandOk, this));
+  },
+
+  popupCommandOk: function() {
+
   },
 
   updateCurrentLine: function () {
@@ -147,14 +210,27 @@ Tw.MytGiftHistory.prototype = {
   },
 
   cancelUpdateCurrentLine: function () {
-    console.log('cancel');
+    this.resetPrevSearchCondition();
   },
 
   hidePopup: function () {
+    this.resetPrevSearchCondition();
     skt_landing.action.popup.close();
   },
 
-  changeSearchOption: function () {
+  updateSearchOption: function (type, option) {
+    if(type===0) {
+      this.popupViewAutoSentToggle(option);
+      if(option!==1) {
+        this.$optionViewAutoSent.parent().hide();
+        this.$optionViewAutoSent.attr('checked', false);
+        $(this.$optionViewAutoSent.parent()).removeClass('checked');
+        this.searchCondition.isAutoSent = false;
+      }
+      this.searchCondition.type = option;
+    } else {
+      this.searchCondition.selectedTermIndex = option;
+    }
   },
 
   changeTab: function (e) {
@@ -172,15 +248,406 @@ Tw.MytGiftHistory.prototype = {
       console.log("조르기 내역보기");
 
     }
-    ;
   },
 
-  $showLoading: function () {
-    this._ui.$loading.show();
-  },
-
-  $hideLoading: function () {
-    this._ui.$loading.hide();
+  mockHistory: {
+    'code': '00',
+    'msg': 'success',
+    'result':
+        [
+          {
+            'opDtm': '20170701',
+            'dataQty': '500',
+            'custName': '김*진',
+            'svcNum': '01040**08**',
+            'giftType': '2',
+            'regularGiftType': 'G1'
+          },
+          {
+            'opDtm': '20170621',
+            'dataQty': '1024',
+            'custName': '김*진',
+            'svcNum': '01040**08**',
+            'giftType': '1',
+            'regularGiftType': 'GC'
+          },
+          {
+            'opDtm': '20170601',
+            'dataQty': '500',
+            'custName': '김*진',
+            'svcNum': '01040**08**',
+            'giftType': '2',
+            'regularGiftType': 'GD'
+          },
+          {
+            'opDtm': '20170520',
+            'dataQty': '1024',
+            'custName': '유*진',
+            'svcNum': '01040**08**',
+            'giftType': '1',
+            'regularGiftType': 'G1'
+          },
+          {
+            'opDtm': '20170415',
+            'dataQty': '1024',
+            'custName': '김*나',
+            'svcNum': '01062**50**',
+            'giftType': '2',
+            'regularGiftType': 'G1'
+          },
+          {
+            'opDtm': '20170701',
+            'dataQty': '1024',
+            'custName': '김*진',
+            'svcNum': '01040**08**',
+            'giftType': '1',
+            'regularGiftType': 'GC'
+          },
+          {
+            'opDtm': '20170621',
+            'dataQty': '1024',
+            'custName': '김*진',
+            'svcNum': '01040**08**',
+            'giftType': '2',
+            'regularGiftType': 'GD'
+          },
+          {
+            'opDtm': '20170601',
+            'dataQty': '1024',
+            'custName': '김*진',
+            'svcNum': '01040**08**',
+            'giftType': '1',
+            'regularGiftType': 'G1'
+          },
+          {
+            'opDtm': '20170520',
+            'dataQty': '1024',
+            'custName': '유*진',
+            'svcNum': '01040**08**',
+            'giftType': '1',
+            'regularGiftType': 'G1'
+          },
+          {
+            'opDtm': '20170415',
+            'dataQty': '1024',
+            'custName': '김*나',
+            'svcNum': '01062**50**',
+            'giftType': '1',
+            'regularGiftType': 'G1'
+          },
+          {
+            'opDtm': '20170701',
+            'dataQty': '1024',
+            'custName': '김*진',
+            'svcNum': '01040**08**',
+            'giftType': '1',
+            'regularGiftType': 'G1'
+          },
+          {
+            'opDtm': '20170621',
+            'dataQty': '1024',
+            'custName': '김*진',
+            'svcNum': '01040**08**',
+            'giftType': '1',
+            'regularGiftType': 'G1'
+          },
+          {
+            'opDtm': '20170601',
+            'dataQty': '1024',
+            'custName': '김*진',
+            'svcNum': '01040**08**',
+            'giftType': '1',
+            'regularGiftType': 'G1'
+          },
+          {
+            'opDtm': '20170520',
+            'dataQty': '1024',
+            'custName': '유*진',
+            'svcNum': '01040**08**',
+            'giftType': '1',
+            'regularGiftType': 'G1'
+          },
+          {
+            'opDtm': '20170415',
+            'dataQty': '1024',
+            'custName': '김*나',
+            'svcNum': '01062**50**',
+            'giftType': '1',
+            'regularGiftType': 'G1'
+          },
+          {
+            'opDtm': '20170701',
+            'dataQty': '1024',
+            'custName': '김*진',
+            'svcNum': '01040**08**',
+            'giftType': '1',
+            'regularGiftType': 'G1'
+          },
+          {
+            'opDtm': '20170621',
+            'dataQty': '1024',
+            'custName': '김*진',
+            'svcNum': '01040**08**',
+            'giftType': '1',
+            'regularGiftType': 'G1'
+          },
+          {
+            'opDtm': '20170601',
+            'dataQty': '1024',
+            'custName': '김*진',
+            'svcNum': '01040**08**',
+            'giftType': '1',
+            'regularGiftType': 'G1'
+          },
+          {
+            'opDtm': '20170520',
+            'dataQty': '1024',
+            'custName': '유*진',
+            'svcNum': '01040**08**',
+            'giftType': '1',
+            'regularGiftType': 'G1'
+          },
+          {
+            'opDtm': '20170415',
+            'dataQty': '1024',
+            'custName': '김*나',
+            'svcNum': '01062**50**',
+            'giftType': '1',
+            'regularGiftType': 'G1'
+          },
+          {
+            'opDtm': '20170701',
+            'dataQty': '1024',
+            'custName': '김*진',
+            'svcNum': '01040**08**',
+            'giftType': '1',
+            'regularGiftType': 'G1'
+          },
+          {
+            'opDtm': '20170621',
+            'dataQty': '1024',
+            'custName': '김*진',
+            'svcNum': '01040**08**',
+            'giftType': '1',
+            'regularGiftType': 'G1'
+          },
+          {
+            'opDtm': '20170601',
+            'dataQty': '1024',
+            'custName': '김*진',
+            'svcNum': '01040**08**',
+            'giftType': '1',
+            'regularGiftType': 'G1'
+          },
+          {
+            'opDtm': '20170520',
+            'dataQty': '1024',
+            'custName': '유*진',
+            'svcNum': '01040**08**',
+            'giftType': '1',
+            'regularGiftType': 'G1'
+          },
+          {
+            'opDtm': '20170701',
+            'dataQty': '1024',
+            'custName': '김*진',
+            'svcNum': '01040**08**',
+            'giftType': '1',
+            'regularGiftType': 'G1'
+          },
+          {
+            'opDtm': '20170621',
+            'dataQty': '1024',
+            'custName': '김*진',
+            'svcNum': '01040**08**',
+            'giftType': '1',
+            'regularGiftType': 'G1'
+          },
+          {
+            'opDtm': '20170601',
+            'dataQty': '1024',
+            'custName': '김*진',
+            'svcNum': '01040**08**',
+            'giftType': '1',
+            'regularGiftType': 'G1'
+          },
+          {
+            'opDtm': '20170520',
+            'dataQty': '1024',
+            'custName': '유*진',
+            'svcNum': '01040**08**',
+            'giftType': '1',
+            'regularGiftType': 'G1'
+          },
+          {
+            'opDtm': '20170415',
+            'dataQty': '1024',
+            'custName': '김*나',
+            'svcNum': '01062**50**',
+            'giftType': '1',
+            'regularGiftType': 'G1'
+          },
+          {
+            'opDtm': '20170701',
+            'dataQty': '1024',
+            'custName': '김*진',
+            'svcNum': '01040**08**',
+            'giftType': '1',
+            'regularGiftType': 'G1'
+          },
+          {
+            'opDtm': '20170621',
+            'dataQty': '1024',
+            'custName': '김*진',
+            'svcNum': '01040**08**',
+            'giftType': '1',
+            'regularGiftType': 'G1'
+          },
+          {
+            'opDtm': '20170601',
+            'dataQty': '1024',
+            'custName': '김*진',
+            'svcNum': '01040**08**',
+            'giftType': '1',
+            'regularGiftType': 'G1'
+          },
+          {
+            'opDtm': '20170520',
+            'dataQty': '1024',
+            'custName': '유*진',
+            'svcNum': '01040**08**',
+            'giftType': '1',
+            'regularGiftType': 'G1'
+          },
+          {
+            'opDtm': '20170415',
+            'dataQty': '1024',
+            'custName': '김*나',
+            'svcNum': '01062**50**',
+            'giftType': '1',
+            'regularGiftType': 'G1'
+          },
+          {
+            'opDtm': '20170701',
+            'dataQty': '1024',
+            'custName': '김*진',
+            'svcNum': '01040**08**',
+            'giftType': '1',
+            'regularGiftType': 'G1'
+          },
+          {
+            'opDtm': '20170621',
+            'dataQty': '1024',
+            'custName': '김*진',
+            'svcNum': '01040**08**',
+            'giftType': '1',
+            'regularGiftType': 'G1'
+          },
+          {
+            'opDtm': '20170601',
+            'dataQty': '1024',
+            'custName': '김*진',
+            'svcNum': '01040**08**',
+            'giftType': '1',
+            'regularGiftType': 'G1'
+          },
+          {
+            'opDtm': '20170520',
+            'dataQty': '1024',
+            'custName': '유*진',
+            'svcNum': '01040**08**',
+            'giftType': '1',
+            'regularGiftType': 'G1'
+          },
+          {
+            'opDtm': '20170415',
+            'dataQty': '1024',
+            'custName': '김*나',
+            'svcNum': '01062**50**',
+            'giftType': '1',
+            'regularGiftType': 'G1'
+          },
+          {
+            'opDtm': '20170701',
+            'dataQty': '1024',
+            'custName': '김*진',
+            'svcNum': '01040**08**',
+            'giftType': '1',
+            'regularGiftType': 'G1'
+          },
+          {
+            'opDtm': '20170621',
+            'dataQty': '1024',
+            'custName': '김*진',
+            'svcNum': '01040**08**',
+            'giftType': '1',
+            'regularGiftType': 'G1'
+          },
+          {
+            'opDtm': '20170601',
+            'dataQty': '1024',
+            'custName': '김*진',
+            'svcNum': '01040**08**',
+            'giftType': '1',
+            'regularGiftType': 'G1'
+          },
+          {
+            'opDtm': '20170520',
+            'dataQty': '1024',
+            'custName': '유*진',
+            'svcNum': '01040**08**',
+            'giftType': '1',
+            'regularGiftType': 'G1'
+          },
+          {
+            'opDtm': '20170415',
+            'dataQty': '1024',
+            'custName': '김*나',
+            'svcNum': '01062**50**',
+            'giftType': '1',
+            'regularGiftType': 'G1'
+          },
+          {
+            'opDtm': '20170701',
+            'dataQty': '1024',
+            'custName': '김*진',
+            'svcNum': '01040**08**',
+            'giftType': '1',
+            'regularGiftType': 'G1'
+          },
+          {
+            'opDtm': '20170621',
+            'dataQty': '1024',
+            'custName': '김*진',
+            'svcNum': '01040**08**',
+            'giftType': '1',
+            'regularGiftType': 'G1'
+          },
+          {
+            'opDtm': '20170601',
+            'dataQty': '1024',
+            'custName': '김*진',
+            'svcNum': '01040**08**',
+            'giftType': '1',
+            'regularGiftType': 'G1'
+          },
+          {
+            'opDtm': '20170520',
+            'dataQty': '1024',
+            'custName': '유*진',
+            'svcNum': '01040**08**',
+            'giftType': '1',
+            'regularGiftType': 'G1'
+          },
+          {
+            'opDtm': '20170415',
+            'dataQty': '1024',
+            'custName': '김*나',
+            'svcNum': '01062**50**',
+            'giftType': '1',
+            'regularGiftType': 'G1'
+          }
+        ]
   }
 
 };

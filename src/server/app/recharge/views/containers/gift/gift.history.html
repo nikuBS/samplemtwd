@@ -34,13 +34,15 @@
                 <% if(lineList) { %>
                 <div class="widget">
                     <div class="widget-box select">
-                        <button id="line-set" class="bt-dropdown big" title="데이터 용량"><%=lineList[0].svcNum%><span class="ico"></span></button>
+                        <button id="line-set" class="bt-dropdown big" title="데이터 용량"><%=svcInfo.svcNum%><span
+                                class="ico"></span></button>
                         <div class="select-info">
                             <span class="title">회선 목록</span>
                             <span class="text"></span>
                             <select title="회선 목록">
                                 <%lineList.map((line)=>{%>
-                                <option><%=line.svcNum%></option>
+                                <option
+                                <%=line.svcNum===svcInfo.svcNum?'selected':''%>><%=line.svcNum%></option>
                                 <%})%>
                             </select>
                         </div>
@@ -69,29 +71,74 @@
                                 <h2 class="blind">탭 내용</h2>
                                 <ul>
                                     <li id="tab1">
-                                        <%# 없는 경우
-                                        <h3 class="blind">선물내역</h3>
-                                        <!-- .cont-box -->
-                                        <div class="cont-box nogaps-hoz">
-                                            <!-- .contents-empty -->
-                                            <div class="contents-empty">
-                                                <span class="ico"></span>
-                                                <p class="desc">받은 혹은 보낸 선물 내역이 없습니다.</p>
-                                            </div>
-                                            <!--// .contents-empty -->
-                                        </div>
-                                        <!--// .cont-box -->
-                                        %>
-
                                         <div class="inner">
                                             <div class="contents-info-list">
-                                                <p class="ti-desc"><strong><em class="num">23</em>개</strong> 선물 내역이
+                                                <p class="ti-desc"><strong><em class="num"></em>개</strong> 선물 내역이
                                                     있습니다.</p>
                                                 <div class="list-top">
                                                     <!-- .widget -->
                                                     <div class="widget">
                                                         <div class="widget-box select">
-                                                            <button id="term-set" class="bt-dropdown small" data-select="전체,받음,보냄"
+                                                            <button id="term-set" class="bt-dropdown small"
+                                                                    data-select="전체,받음,보냄"
+                                                                    data-title="검색 조건 변경" title="검색 조건 변경">전체 · 3개월
+                                                            </button>
+                                                            <div class="select-info">
+                                                                <span class="title">검색 조건 변경</span>
+                                                                <span class="text"><!-- 내용 없을 경우 빈 영역 --></span>
+                                                                <select title="Type" class="three">
+                                                                    <option selected>전체</option>
+                                                                    <option>보냄</option>
+                                                                    <option>받은</option>
+                                                                </select>
+                                                                <div class="select-option">
+                                                                    <label><input type="checkbox">자동 보낸 선물만 모아보기</label>
+                                                                </div>
+                                                                <select title="기간" class="two">
+                                                                    <%
+                                                                    var title = '';
+                                                                    dateList.map((date, i)=>{
+                                                                    if(i===0) return;
+                                                                    switch(i) {
+                                                                    case 1 :
+                                                                    title = '1개월';
+                                                                    break;
+                                                                    case 2 :
+                                                                    title = '3개월';
+                                                                    break;
+                                                                    case 3 :
+                                                                    title = '6개월';
+                                                                    break;
+                                                                    case 4 :
+                                                                    title = '1년';
+                                                                    break;
+                                                                    }
+                                                                    %>
+                                                                    <option value="<%=date%>"
+                                                                    <%=i===2?'selected':''%>><%=title%></option>
+                                                                    <%})%>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!--// .widget -->
+                                                </div>
+                                                <!--// 템플릿 노출 -->
+                                                <a class="bt-more" href="#none">더보기<span>(20)</span></a>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <li id="tab2">
+                                        <div class="inner">
+                                            <div class="contents-info-list">
+                                                <p class="ti-desc"><strong><em class="num">136</em>개</strong> 조르기 내역이
+                                                    있습니다.</p>
+                                                <div class="list-top">
+                                                    <!-- .widget -->
+                                                    <div class="widget inline">
+                                                        <div class="widget-box select">
+                                                            <button class="bt-dropdown small" data-select="전체,받음,보냄"
                                                                     data-title="검색 조건 변경" title="검색 조건 변경">전체 · 3개월
                                                             </button>
                                                             <div class="select-info">
@@ -103,46 +150,30 @@
                                                                     <option>받은</option>
                                                                 </select>
                                                                 <select title="기간" class="two">
-                                                                    <option>1개월</option>
-                                                                    <option selected>3개월</option>
-                                                                    <option>6개월</option>
-                                                                    <option>1년</option>
+                                                                    <%
+                                                                    var title = '';
+                                                                    dateList.map((date, i)=>{
+                                                                    if(i===0) return;
+                                                                    switch(i) {
+                                                                    case 1 :
+                                                                    title = '1개월';
+                                                                    break;
+                                                                    case 2 :
+                                                                    title = '3개월';
+                                                                    break;
+                                                                    case 3 :
+                                                                    title = '6개월';
+                                                                    break;
+                                                                    case 4 :
+                                                                    title = '1년';
+                                                                    break;
+                                                                    }
+                                                                    %>
+                                                                    <option value="<%=date%>"
+                                                                    <%=i===2?'selected':''%>><%=title%></option>
+                                                                    <%})%>
                                                                 </select>
                                                             </div>
-                                                            <span class="blind" id="dateSpectrum"><%=dateList.map((date)=>{return date;})%></span>
-                                                        </div>
-                                                    </div>
-                                                    <!--// .widget -->
-                                                </div>
-                                                <!--// 템플릿 노출 -->
-
-                                            </div>
-                                        </div>
-                                    </li>
-
-                                    <li id="tab2">
-                                        <%# 없는 경우
-                                        <h3 class="blind">조르기내역</h3>
-                                        <!-- .cont-box -->
-                                        <div class="cont-box nogaps-hoz">
-                                            <!-- .contents-empty -->
-                                            <div class="contents-empty">
-                                                <span class="ico"></span>
-                                                <p class="desc">조르기 내역이 없습니다.</p>
-                                            </div>
-                                            <!--// .contents-empty -->
-                                        </div>
-                                        <!--// .cont-box -->
-                                        %>
-
-                                        <div class="inner">
-                                            <div class="contents-info-list">
-                                                <p class="ti-desc"><strong><em class="num">136</em>개</strong> 조르기 내역이 있습니다.</p>
-                                                <div class="list-top">
-                                                    <!-- .widget -->
-                                                    <div class="widget inline">
-                                                        <div class="widget-box select">
-                                                            <button class="bt-dropdown small" data-select="전체,받음,보냄" data-title="검색 조건 변경" title="검색 조건 변경">전체 · 3개월</button>
                                                         </div>
                                                     </div>
                                                     <div class="btn-wrap">
@@ -151,8 +182,9 @@
                                                 </div>
                                                 <!--// .widget -->
                                             </div>
+                                            <!--// 템플릿 노출 -->
+                                            <a class="bt-more" href="#none">더보기<span>(20)</span></a>
                                         </div>
-
                                     </li>
                                 </ul>
                             </div>
@@ -172,20 +204,29 @@
       });
     </script>
     <script id="present-template" type="text/x-handlebars-template">
+
         <ul class="result-history">
+            {{#presents}}
             <li>
                 <div class="info-change">
-                    <span class="arrow-receive"><span class="blind">받음</span></span>
+                    <span class="{{conditionClass giftType}}"><span class="blind">받음</span></span>
                 </div>
                 <div class="info-user">
-                    <span class="info-title">김한림</span>
-                    <span class="info-sub">010-46**-10**</span>
+                    <span class="info-title">{{custName}}</span>
+                    <span class="info-sub">{{svcNum}}</span>
                 </div>
                 <div class="info-data">
+                    {{#isBig1G}}
                     <!-- 1기가 미만인 경우 -->
                     <span class="info-title">500MB</span>
+                    {{else}}
+                    <!-- 1기가 이상인 경우 -->
+                    <span class="info-title">4GB</span>
+                    <span class="info-sub">4,240MB</span>
+                    {{/isBig1G}}
                 </div>
             </li>
+            {{/presents}}
             <li>
                 <div class="info-change">
                     <span class="arrow-send"><span class="blind">보냄</span></span>
@@ -240,9 +281,8 @@
                 </div>
             </li>
         </ul>
-        <a class="bt-more" href="#none">더보기<span>(20)</span></a>
     </script>
-    <script id="pester-template" type="text/x-handlebars-template">
+    <script id="request-template" type="text/x-handlebars-template">
         <ul class="result-history modify">
             <li>
                 <div class="info-change">
@@ -302,7 +342,36 @@
                 <div class="info-btn">&nbsp;</div>
             </li>
         </ul>
-        <a class="bt-more" href="#none">더보기<span>(20)</span></a>
+    </script>
+    <script id="present-empty-template" type="text/x-handlebars-template">
+        <div class="noresult">
+            <h3 class="blind">선물내역</h3>
+            <!-- .cont-box -->
+            <div class="cont-box nogaps-hoz">
+                <!-- .contents-empty -->
+                <div class="contents-empty">
+                    <span class="ico"></span>
+                    <p class="desc">받은 혹은 보낸 선물 내역이 없습니다.</p>
+                </div>
+                <!--// .contents-empty -->
+            </div>
+            <!--// .cont-box -->
+        </div>
+    </script>
+    <script id="request-empty-template" type="text/x-handlebars-template">
+        <div class="noresult">
+            <h3 class="blind">조르기내역</h3>
+            <!-- .cont-box -->
+            <div class="cont-box nogaps-hoz">
+                <!-- .contents-empty -->
+                <div class="contents-empty">
+                    <span class="ico"></span>
+                    <p class="desc">조르기 내역이 없습니다.</p>
+                </div>
+                <!--// .contents-empty -->
+            </div>
+            <!--// .cont-box -->
+        </div>
     </script>
     <style>
         .loader {
