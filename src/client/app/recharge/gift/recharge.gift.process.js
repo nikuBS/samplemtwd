@@ -70,9 +70,9 @@ Tw.MytGiftProcess.prototype = {
     this.$btn_next_process.on('click', $.proxy(this.nextProcess, this));
     this.$btn_one_more.on('click', $.proxy(this.goBasicStep, this));
     this.$container.on('updateLineInfo', $.proxy(this.updateLineInfo, this));
-    this.$container.on('click', '.recent_item', $.proxy(this.insertPhoneNumber, this));
     this.$btn_go_history.on('click', $.proxy(this.goHistory, this));
     this.$btn_addr.on('click', $.proxy(this._onClickBtnAddr, this));
+    this.$container.on('click', '.history_item', $.proxy(this._onClickRequestHistoryItem, this));
 
     this.$container.on('click', '[data-target="sendText"]', $.proxy(this._sendTextPopEvt, this));
     $('body').on('click', '[data-target="sendTextBtn"]', $.proxy(this._sendTextEvt, this));
@@ -83,7 +83,7 @@ Tw.MytGiftProcess.prototype = {
   _sendTextPopEvt: function () {
     location.hash = 'DA_02_01_04_L01';
     skt_landing.action.popup.open({
-      hbs:'DA_02_01_04_L01'// hbs의 파일명
+      hbs: 'DA_02_01_04_L01'// hbs의 파일명
     });
   },
   _sendTextEvt: function () {
@@ -101,7 +101,7 @@ Tw.MytGiftProcess.prototype = {
     console.info('res : ', res);
     location.hash = 'step3';
   },
-  _sendTextCancelEvt: function() {
+  _sendTextCancelEvt: function () {
     console.info('취소');
     location.hash = 'step3';
   },
@@ -110,6 +110,36 @@ Tw.MytGiftProcess.prototype = {
   updateLineInfo: function (e, params) {
     this.lineInfo = params.lineInfo;
     this.requestRemainData();
+
+    if ( this.processType == 'request' ) {
+      this._apiService.request(Tw.API_CMD.BFF_06_0010, {})
+        .done($.proxy(this.onSuccessRequestHistory, this));
+    }
+
+    if ( this.processType == 'members' ) {
+      this._apiService.request(Tw.API_CMD.BFF_06_0018, {})
+        .done($.proxy(this.onSuccessMembersHistory, this));
+    }
+
+    if ( this.processType == 'family' ) {
+      this._apiService.request(Tw.API_CMD.BFF_06_0006, {})
+        .done($.proxy(this.onSuccessFamilyHistory, this));
+    }
+  },
+
+  onSuccessRequestHistory(res) {
+    var result = res.result.slice(0, 3);
+
+    var tpl_request_history = Handlebars.compile($('#tpl_request_history').text());
+    $('#wrap_request_history').html(tpl_request_history({ list: result }));
+  },
+
+  onSuccessMembersHistory(res) {
+    var result = res.result.slice(0, 3);
+  },
+
+  onSuccessFamilyHistory(res) {
+    var result = res.result.slice(0, 3);
   },
 
   requestRemainData: function () {
@@ -133,7 +163,7 @@ Tw.MytGiftProcess.prototype = {
 
     this.receiver.dataRemQty = this.remainData.result.dataRemQty;
     var tpl = Handlebars.compile($('#tpl_remain_data').text());
-    $('.wrap_remain_data').html(tpl({dataRemQty: this.receiver.dataRemQty}) );
+    $('.wrap_remain_data').html(tpl({ dataRemQty: this.receiver.dataRemQty }));
 
     this.setAvailableData();
   },
@@ -160,13 +190,20 @@ Tw.MytGiftProcess.prototype = {
     this.$input_phone.val(phoneNumber);
   },
 
+  _onClickRequestHistoryItem: function (e) {
+    var $target = $(e.currentTarget);
+    this._isRequestByOpdtm = true;
+    this._opDtm = $target.data('opdtm');
+
+    this.$input_phone.val($target.data('phone'));
+  },
+
   validateNumber: function (e) {
     Tw.InputHelper.inputNumberOnly(e.currentTarget);
   },
 
   insertPhoneNumber: function (e) {
     var phoneNumber = $(e.currentTarget).data('phone');
-
     this.$input_phone.val(phoneNumber);
   },
 
@@ -182,14 +219,18 @@ Tw.MytGiftProcess.prototype = {
 
   validateStep1: function () {
     if ( this.processType == 'request' ) {
-      this._apiService.request(Tw.API_CMD.BFF_06_0012, { charSvcNum: this.$input_phone.val() })
-        .done($.proxy(this.renderProvider, this));
+      if ( this._isRequestByOpdtm ) {
+        this._apiService.request(Tw.API_CMD.BFF_06_0012, { opDtm: this._opDtm })
+          .done($.proxy(this.renderProvider, this));
+      } else {
+        this._apiService.request(Tw.API_CMD.BFF_06_0012, { charSvcNum: this.$input_phone.val() })
+          .done($.proxy(this.renderProvider, this));
+      }
 
     } else if ( this.processType == 'members' || this.processType == 'family' ) {
       this._apiService.request(Tw.API_CMD.BFF_06_0008, { befrSvcNum: this.$input_phone.val() })
         .done($.proxy(this.renderProvider, this));
     }
-
   },
 
   validateStep2: function () {
@@ -199,11 +240,18 @@ Tw.MytGiftProcess.prototype = {
     var dataQty = $('#wrap_data_select').find('label.checked').data('value');
 
     if ( this.processType == 'request' ) {
-      if ( dataQty ) {
+      if ( this._isRequestByOpdtm ) {
+        this._apiService.request(Tw.API_CMD.BFF_06_0013, { dataQty: dataQty, opDtm: this._opDtm })
+          .done(function (res) {
+            this.provider.dataQty = dataQty;
+            $('.wrap_data .num').text(dataQty);
+            location.replace(sNextUrl);
+          }.bind(this));
+      } else {
         this._apiService.request(Tw.API_CMD.BFF_06_0013, { dataQty: dataQty, svcNum: this.provider.phone })
           .done(function (res) {
             this.provider.dataQty = dataQty;
-            $('.wrap_data .num').text(this.receiver.remainData - dataQty);
+            $('.wrap_data .num').text(dataQty);
             location.replace(sNextUrl);
           }.bind(this));
       }
@@ -212,7 +260,7 @@ Tw.MytGiftProcess.prototype = {
         .done(function (res) {
           if ( res.code == '00' ) {
             this.provider.dataQty = dataQty;
-            $('.wrap_data .num').text(this.receiver.remainData - dataQty);
+            $('.wrap_data .num').text(this.receiver.dataRemQty - dataQty);
             location.replace(sNextUrl);
           }
         }.bind(this));
@@ -226,18 +274,20 @@ Tw.MytGiftProcess.prototype = {
   },
 
   renderProvider: function (res) {
-    this.provider.name = res.result.custName;
-    this.provider.phone = this.$input_phone.val();
+    if ( res.code == "00" ) {
+      this.provider.name = res.result.custName;
+      this.provider.phone = this.$input_phone.val();
 
-    var tpl = Handlebars.compile($('#tpl_targetInfo').text());
-    $('.wrap_provider').html(tpl(this.provider));
-    $('.tx-data em').text(this.receiver.dataRemQty);
+      var tpl = Handlebars.compile($('#tpl_targetInfo').text());
+      $('.wrap_provider').html(tpl(this.provider));
+      $('.tx-data em').text(this.receiver.dataRemQty + 'MB');
 
-    var nCurrentIndex = this.step.indexOf(location.hash.replace('#', ''));
-    var sNextStep = this.step[nCurrentIndex + 1];
-    var sNextUrl = location.href.replace(location.hash, '#' + sNextStep);
+      var nCurrentIndex = this.step.indexOf(location.hash.replace('#', ''));
+      var sNextStep = this.step[nCurrentIndex + 1];
+      var sNextUrl = location.href.replace(location.hash, '#' + sNextStep);
 
-    location.replace(sNextUrl);
+      location.replace(sNextUrl);
+    }
   },
 
   goHistory: function () {
