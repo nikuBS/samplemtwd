@@ -8,7 +8,7 @@ var gulp       = require('gulp'),
     rename     = require('gulp-rename');
 
 
-var appNames = ['customer', 'direct', 'etc', 'event', 'fare', 'home', 'membership', 'myt', 'product', 'roaming', 'recharge', 'search', 'user'];
+var appNames = ['home', 'myt', 'recharge', 'payment', 'management', 'membership', 'product', 'direct', 'customer']; // search
 // for docker (dev env)
 var dist = 'src/server/public/cdn/';
 // var dist     = 'dist/';
@@ -69,9 +69,9 @@ gulp.task('js-common', function () {
     .pipe(gulp.dest(dist + 'js'));
 });
 
-appNames.map(function (app) {
+appNames.map(function (app, index) {
   gulp.task('js-' + app, function () {
-    return gulp.src('src/client/app/' + app + '/**/*.js')
+    return gulp.src('src/client/app/0'+ index +'.' + app + '/**/*.js')
       .pipe(concat(app + '.js'))
       .pipe(gulp.dest(dist + 'js'))
       .pipe(uglify())

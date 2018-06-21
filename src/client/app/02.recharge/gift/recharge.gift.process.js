@@ -126,18 +126,18 @@ Tw.MytGiftProcess.prototype = {
     }
   },
 
-  onSuccessRequestHistory(res) {
+  onSuccessRequestHistory: function(res) {
     var result = res.result.slice(0, 3);
 
     var tpl_request_history = Handlebars.compile($('#tpl_request_history').text());
     $('#wrap_request_history').html(tpl_request_history({ list: result }));
   },
 
-  onSuccessMembersHistory(res) {
+  onSuccessMembersHistory: function(res) {
     var result = res.result.slice(0, 3);
   },
 
-  onSuccessFamilyHistory(res) {
+  onSuccessFamilyHistory: function(res) {
     var result = res.result.slice(0, 3);
   },
 
