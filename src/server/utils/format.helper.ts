@@ -117,6 +117,10 @@ class FormatHelper {
     const hours = Math.floor((min - (day * 1440)) / 60);
     return { day, hours };
   }
+
+  static removeNumber(value: any): any {
+    return value.replace(/[0-9]/g, '');
+  }
 }
 
 export default FormatHelper;

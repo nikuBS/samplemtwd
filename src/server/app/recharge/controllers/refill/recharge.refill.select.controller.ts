@@ -2,8 +2,8 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import { Request, Response, NextFunction } from 'express';
 import { Observable } from 'rxjs/Observable';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
+import { LINE_NAME, REFILL_CLASS_NAME } from '../../../../types/bff-common.type';
 import MyTUsage from '../../../myt/controllers/usage/myt.usage.controller';
-import {LINE_NAME, REFILL_CLASS_NAME, REFILL_CODE, REFILL_TXT} from '../../../../types/bff-common.type';
 import FormatHelper from '../../../../utils/format.helper';
 
 class RechargeRefillSelect extends TwViewController {
@@ -44,7 +44,7 @@ class RechargeRefillSelect extends TwViewController {
   private parseData(usageData: any): any {
     if (!FormatHelper.isEmpty(usageData)) {
       usageData.map((data) => {
-        data.text = REFILL_TXT[data.dataVoiceClCd];
+        data.text = this.getText(FormatHelper.removeNumber(data.copnDtlClNm));
         data.className = 'ico ico-' + REFILL_CLASS_NAME[data.dataVoiceClCd];
       });
     }
@@ -56,6 +56,10 @@ class RechargeRefillSelect extends TwViewController {
       lineList: lineList.result,
       usageData
     };
+  }
+
+  private getText(value: string): string {
+    return value.substr(0, value.length - 2);
   }
 }
 
