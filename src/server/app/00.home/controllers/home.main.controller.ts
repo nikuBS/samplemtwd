@@ -1,3 +1,5 @@
+// Author Ara Jo (araara.jo@sk.com)
+
 import TwViewController from '../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
 import { API_CMD, API_CODE, API_GIFT_ERROR } from '../../../types/api-command.type';

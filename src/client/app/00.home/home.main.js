@@ -1,3 +1,5 @@
+// Author Ara Jo (araara.jo@sk.com)
+
 Tw.HomeMain = function (rootEl) {
   Tw.View.apply(this, arguments);
   this.$container = rootEl;

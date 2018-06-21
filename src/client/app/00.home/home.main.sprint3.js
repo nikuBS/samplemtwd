@@ -1,3 +1,5 @@
+// Author Ara Jo (araara.jo@sk.com)
+
 Tw.HomeMainSprint3 = function (rootEl) {
   this.$container = rootEl;
   this._apiService = new Tw.ApiService();
