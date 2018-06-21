@@ -1,0 +1,227 @@
+<!-- 나에게 리필 탭 컨텐츠 hbs -->
+<script id="tmplMy" type="text/x-handlebars-template">
+    <div class="contents-info-list">
+        {{#if items}}
+        <p class="ti-desc"><strong><em class="num">{{total}}</em>개</strong> 쿠폰으로 리필하셨네요!</p>
+        <ul class="result-coupon">
+            {{> myItems items=items}}
+        </ul>
+        {{#if leftItems}}
+        <a class="bt-more" href="#none" data-left-items={{leftItems}} data-type="my">더보기<span>({{leftItems}})</span></a>
+        {{/if}}
+        {{else}}
+        <% include ../../components/refill/refill.history.my.empty.html %>
+        {{/if}}
+    </div>
+</script>
+<!-- 나에게 리필 아이템 hbs -->
+<script id="tmplMyItems" type="text/x-handlebars-template">
+    {{#each items}}
+    <li>
+        <div class="info-coupon">
+            <span class="info-code">{{copnIsueNum}}</span>
+            <span class="info-title"><span class={{copnDtlClCd}}>{{copnDtlClNm}}</span></span>
+            <span class="info-sub">{{copnNm}}</span>
+        </div>
+        <div class="info-date">
+            <span class="info-title">사용일자</span>
+            <span class="info-sub">{{copnUseDt}}</span>
+        </div>
+    </li>
+    {{/each}}
+</script>
+<!-- 선물 보낸 탭 컨텐츠 hbs -->
+<script id="tmplSent" type="text/x-handlebars-template">
+    <div class="contents-info-list">
+        {{#if items}}
+        <p class="ti-desc">가족에게 <strong><em class="num">{{total}}</em>개</strong> 쿠폰을 선물하셨네요!</p>
+        <ul class="result-coupon">
+            {{> sentItems items=items}}
+        </ul>
+        {{#if leftItems}}
+        <a class="bt-more" href="#none" data-left-items={{leftItems}}
+           data-type="sent">더보기<span>({{leftItems}})</span></a>
+        {{/if}}
+        {{else}}
+            {{#if transferable}}
+            <% include ../../components/refill/refill.history.sent.transferable.html %>
+            {{else}}
+            <% include ../../components/refill/refill.history.sent.empty.html %>
+            {{/if}}
+        {{/if}}
+    </div>
+</script>
+<!-- 선물 보낸 아이템 hbs -->
+<script id="tmplSentItems" type="text/x-handlebars-template">
+    {{#each items}}
+    <li>
+        <div class="result-cell">
+            <div class="info-coupon">
+                <span class="info-to">받는분</span>
+                <span class="info-ph">{{svcNum}}</span>
+            </div>
+            <div class="info-date">
+                <span class="info-title">보낸일자</span>
+                <span class="info-sub">{{copnOpDt}}</span>
+            </div>
+        </div>
+        <div class="result-cell">
+            <div class="info-validity">
+                <span class="info-sub">쿠폰유효기간</span>
+                <span class="info-term">{{usePsblStaDt}} ~ {{usePsblEndDt}}</span>
+            </div>
+            <div class="info-signup">
+                <span class="info-sub">{{copnNm}}</span>
+                <span class="info-code">{{copnIsueNum}}</span>
+            </div>
+        </div>
+    </li>
+    {{/each}}
+</script>
+<!-- 선물 받은 탭 컨텐츠 hbs -->
+<script id="tmplReceived" type="text/x-handlebars-template">
+    <div class="contents-info-list">
+        {{#if items}}
+        <p class="ti-desc">가족분들이 <strong><em class="num">{{total}}</em>개</strong> 쿠폰을<br/>선물해주셨네요!</p>
+        <ul class="result-coupon">
+            {{> receivedItems items=items}}
+        </ul>
+        {{#if leftItems}}
+        <a class="bt-more" href="#none" data-left-items={{leftItems}}
+           data-type="received">더보기<span>({{leftItems}})</span></a>
+        {{/if}}
+        {{else}}
+        <% include ../../components/refill/refill.history.received.empty.html %>
+        {{/if}}
+    </div>
+</script>
+
+<script id="tmplReceivedItems" type="text/x-handlebars-template">
+    {{#each items}}
+    <li>
+        <div class="result-cell">
+            <div class="info-coupon">
+                <span class="info-to">보내신 분</span>
+                <span class="info-ph">{{svcNum}}</span>
+            </div>
+            <div class="info-date">
+                <span class="info-title">받은일자</span>
+                <span class="info-sub">{{copnOpDt}}</span>
+            </div>
+        </div>
+        <div class="result-cell">
+            <div class="info-validity">
+                <span class="info-sub">쿠폰유효기간</span>
+                <span class="info-term">{{usePsblStaDt}} ~ {{usePsblEndDt}}</span>
+            </div>
+            <div class="info-signup">
+                <span class="info-sub">{{copnNm}}</span>
+                <span class="info-code">{{copnIsueNum}}</span>
+            </div>
+        </div>
+    </li>
+    {{/each}}
+</script>
+<% include ../../components/start.component.html %>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb_area">메뉴 바로가기</a></li>
+        <li><a href="#content">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div id="myt-refill-history" class="wrap">
+    <!-- #header -->
+    <div id="header" class="header-wrap">
+        <div class="header">
+            <div class="header-ti">
+                <h1>리필내역</h1>
+                <a href="#allmenu" class="all-menu"><span class="blind">전체메뉴보기</span></a>
+            </div>
+            <a href="#pstep" class="prev-step"><span class="blind">이전으로</span></a>
+            <a href="#search" class="search-content"><span class="blind">검색하기</span></a>
+        </div>
+    </div>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <!-- .cont-box -->
+            <div class="cont-box">
+                <!-- .widget -->
+                <div class="widget">
+                    <div class="widget-box select">
+                        <% if (lineList) { %>
+                        <button class="bt-dropdown big" title="셀렉트 선택"><%= lineList[0].svcNum %><span class="ico"></span></button>
+                        <div class="select-info">
+                            <span class="title">데이터 용량</span>
+                            <span class="text"></span>
+                            <select title="데이터 용량">
+                                <% for (var i = 0; i < lineList.length; i++) { %>
+                                <option><%= lineList[i].svcNum %></option>
+                                <% } %>
+                            </select>
+                        </div>
+                        <% } %>
+                    </div>
+                </div>
+                <!--// .widget -->
+            </div>
+            <!--// .cont-box -->
+            <hr class="cont-sp type1"/>
+            <!-- .cont-box -->
+            <div class="cont-box nogaps">
+                <!-- .component -->
+                <div class="component">
+                    <div class="component-box tabs"><!-- h태m그 정렬 필수! -->
+                        <div class="tab-area type1"><!-- 타입별 탭형태 변환 -->
+                            <div class="tab-linker">
+                                <h3 class="blind">탭 목록</h3>
+                                <ul><!-- .tab-contents로 이동 -->
+                                    <li><a href="#my">나에게 리필</a></li>
+                                    <li><a href="#sent">선물 보낸</a></li>
+                                    <li><a href="#received">선물 받은</a></li>
+                                </ul>
+                            </div>
+                            <div class="tab-contents">
+                                <ul>
+                                    <li id="my">
+                                        <h3 class="blind">나에게 리필 탭 내용</h3>
+                                        <div class="inner">
+                                        </div>
+                                    </li>
+                                    <li id="sent">
+                                        <h3 class="blind">선물 보낸 탭 내용</h3>
+                                        <div class="inner">
+                                        </div>
+                                    </li>
+                                    <li id="received">
+                                        <h3 class="blind">선물 받은 탭 내용</h3>
+                                        <div class="inner">
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--// .cont-box -->
+            <hr class="cont-sp type1"/>
+            <!-- .cont-box -->
+            <% include ../../components/refill/refill.info.component.html %>
+            <!--// .cont-box -->
+        </div>
+    </div>
+    <!--// #contents -->
+</div>
+<% include ../../components/javascript.component.html %>
+<script>
+    $(document).ready(function () {
+        var comp = new Tw.MyTRefillHistory($('#myt-refill-history'));
+    });
+</script>
+<% include ../../components/end.component.html %>
