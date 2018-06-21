@@ -94,9 +94,9 @@
                                     잔여 데이터가 <em class="tx-bold">500MB</em> 이상<br/>있을 때 선물이 가능합니다.<br/>쿠폰을 선물해보는 건 어떨까요?
                                 </dd>
                             </dl>
-                            <ul class="flcard-list">
-                                <li><span class="ti-fee">잔여 데이터</span><span class="tx-fee"><%= giftData %>MB</span></li>
-                            </ul>
+                            <!--<ul class="flcard-list">-->
+                                <!--<li><span class="ti-fee">잔여 데이터</span><span class="tx-fee"><%= giftData %>MB</span></li>-->
+                            <!--</ul>-->
                             <button class="bt-like type1"><span class="blind">좋아요</span></button>
                             <div class="flcard-bottom">
                                 <ul class="bt-slice ver">
@@ -118,20 +118,18 @@
                     <div class="flcard-cont">
                         <div class="flcard-area">
                             <dl class="flcard-tmember">
-                                <dt class="ti-tmember"><a href="/recharge/gift">T끼리 데이터 선물<span class="ico"></span></a>
-                                </dt>
+                                <dt class="ti-tmember"><a href="">T끼리 데이터 선물<span class="ico"></span></a></dt>
                                 <dd class="flcard-accent">
-                                    데이터 선물하기는<br/><em class="tx-bold">월 2회</em>까지만 제공됩니다.
-                                </dd>
+                                    이번 달 선물가능 횟수를<br /> 모두 사용하셨습니다.<br />
+                                    선물하기는<em class="tx-bold">월 2회</em>까지만<br />
+                                    제공됩니다.
+                                </dd><!-- 2018-06-21 텍스트 수정 및 선물 횟수 삭제 -->
                             </dl>
-                            <ul class="flcard-list">
-                                <li><span class="ti-fee">선물한 횟수</span><span class="tx-fee">2회</span></li>
-                            </ul>
                             <button class="bt-like type1"><span class="blind">좋아요</span></button>
                             <div class="flcard-bottom">
-                                <ul class="bt-slice ver">
+                                <ul class="bt-slice"><!-- 2018-06-20 버튼 클래스 변경 -->
                                     <li class="bt-blue1">
-                                        <a href="/recharge/gift/history" title="선물 내역 보기로 이동">선물 내역 보기</a>
+                                        <a href="#none" title="선물 내역 보기로 이동">선물 내역 보기</a>
                                     </li>
                                 </ul>
                             </div>
@@ -363,7 +361,7 @@
                             <div class="flcard-bottom">
                                 <ul class="bt-slice ver">
                                     <li class="bt-blue1">
-                                        <a href="/recharge/refill/gift" title="가족에게 선물하기로 이동">가족에게 선물하기</a>
+                                        <a href="/recharge/refill/gift?<%= refillData.refillCoupon[0].query %>" title="가족에게 선물하기로 이동">가족에게 선물하기</a>
                                     </li>
                                 </ul>
                             </div>

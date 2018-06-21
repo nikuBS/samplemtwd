@@ -58,11 +58,13 @@ Tw.HomeMain.prototype = Object.assign(Tw.HomeMain.prototype, {
     //   .fail($.proxy(this._failGiftBalance, this));
   },
 
-  _successGiftBalance: function () {
-
+  _successGiftBalance: function (resp) {
+    resp.result.showDataMb = Tw.FormatHelper.addComma(resp.result.dataRemQty);
+    resp.result.showDataGb = Tw.FormatHelper.customDataFormat(resp.result.dataRemQty, 'MB', 'GB').data;
+    this.$giftCard.html(this.tplGiftCard(resp.result));
   },
 
-  _failGiftBalance: function () {
+  _failGiftBalance: function (error) {
 
   }
 });
