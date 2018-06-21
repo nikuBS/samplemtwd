@@ -1,3 +1,3 @@
 var environment = {
-  resource: '39'    // svn commit version
+  resource: '40'    // svn commit version
 };
