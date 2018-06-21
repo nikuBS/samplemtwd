@@ -25,7 +25,7 @@ class RechargeRefill extends TwViewController {
       this.getUsageOptions(),
       this.getusageData()
     ).subscribe(([lineList, usageOptions, usageData]) => {
-      this.myTUsage.renderView(res, 'refill/refill.html', this.getData(lineList, usageOptions, usageData));
+      this.myTUsage.renderView(res, 'refill/recharge.refill.html', this.getData(lineList, usageOptions, usageData));
     });
   }
 

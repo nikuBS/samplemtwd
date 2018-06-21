@@ -19,7 +19,7 @@ class PaymentPointController extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     this.apiService.request(API_CMD.BFF_06_0001, {}).subscribe((resp) => {
-      this.myTUsage.renderView(res, 'payment/payment.point.html', {
+      this.myTUsage.renderView(res, 'payment.point.html', {
         myProducts: this.getResult(resp, {}),
         svcInfo
       });

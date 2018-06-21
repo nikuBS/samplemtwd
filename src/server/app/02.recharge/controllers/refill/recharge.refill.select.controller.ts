@@ -23,7 +23,7 @@ class RechargeRefillSelect extends TwViewController {
       this.getLineList(),
       this.getusageData()
     ).subscribe(([lineList, usageData]) => {
-      this.myTUsage.renderView(res, 'refill/refill.select.html', this.getData(lineList, usageData));
+      this.myTUsage.renderView(res, 'refill/recharge.refill.select.html', this.getData(lineList, usageData));
     });
   }
 

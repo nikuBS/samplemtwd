@@ -2,7 +2,6 @@ import express from 'express';
 import { Router, Request, Response, NextFunction } from 'express';
 import { API_CMD, API_METHOD } from '../types/api-command.type';
 import ApiService from '../services/api.service';
-import cookie from 'cookie-parser';
 
 
 class ApiRouter {

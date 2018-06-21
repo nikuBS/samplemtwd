@@ -17,7 +17,7 @@ class RechargeRefillComplete extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     this.apiService.request(API_CMD.BFF_06_0001, {}).subscribe((resp) => {
-      this.myTUsage.renderView(res, 'refill/refill.complete.html', { usageData: this.getResult(resp, {}) });
+      this.myTUsage.renderView(res, 'refill/recharge.refill.complete.html', { usageData: this.getResult(resp, {}) });
     });
   }
 

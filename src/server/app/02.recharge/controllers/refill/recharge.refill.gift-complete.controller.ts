@@ -12,7 +12,7 @@ class RechargeRefillGiftComplete extends TwViewController {
     Observable.combineLatest(
       this.getRefillCouponLength()
     ).subscribe((refillCouponLength) => {
-      res.render('refill/refill.gift-complete.html', {
+      res.render('refill/recharge.refill.gift-complete.html', {
         befrSvcNum: req.query.befrSvcNum,
         refillCouponLength: refillCouponLength[0] || 0
       });

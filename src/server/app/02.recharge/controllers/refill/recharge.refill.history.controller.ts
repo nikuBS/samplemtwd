@@ -15,16 +15,16 @@ class RechargeRefillHistory extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    var type = req.query.type || REFILL_HISTORY_HASH.MY;
+    const type = req.query.type || REFILL_HISTORY_HASH.MY;
     Observable.combineLatest(
       this._getLineList()
     ).subscribe(([lineList]) => {
-      this.renderView(res, 'refill/refill.history.html', this._getData(lineList, type));
+      this.renderView(res, 'refill/recharge.refill.history.html', this._getData(lineList, type));
     });
   }
 
   public renderView(res: Response, view: string, data: any): any {
-    //TODO error check
+    // TODO error check
     res.render(view, data);
   }
 
@@ -33,9 +33,9 @@ class RechargeRefillHistory extends TwViewController {
   }
 
   private _getData(lineList: any, type: any): any {
-    let result = {
+    const result = {
       lineList: lineList.result
-    };
+    }
     return result;
   }
 }

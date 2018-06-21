@@ -19,7 +19,7 @@ class PaymentRealtimeController extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     this.apiService.request(API_CMD.BFF_06_0001, {}).subscribe((resp) => {
-      this.myTUsage.renderView(res, 'payment/payment.realtime.html', {
+      this.myTUsage.renderView(res, 'payment.realtime.html', {
         myProducts: this.getResult(resp, {}),
         svcInfo
       });

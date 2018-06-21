@@ -7,7 +7,7 @@ class RechargeGiftMembersProcess extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    res.render('gift/gift.members.process.html', { svcInfo: svcInfo });
+    res.render('gift/recharge.gift.members.process.html', { svcInfo: svcInfo });
   }
 }
 

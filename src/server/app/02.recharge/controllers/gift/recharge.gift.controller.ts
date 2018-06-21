@@ -11,7 +11,7 @@ class RechargeGift extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     return this.apiService.request(API_CMD.BFF_03_0003, { svcCtg: 'M' })
       .subscribe((response) => {
-        res.render('gift/gift.html', { lineList: response.result, svcInfo: svcInfo });
+        res.render('gift/recharge.gift.html', { lineList: response.result, svcInfo: svcInfo });
       });
   }
 }
