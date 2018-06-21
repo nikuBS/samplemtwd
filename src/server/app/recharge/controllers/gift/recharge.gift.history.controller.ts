@@ -45,8 +45,8 @@ class RechargeGiftHistory extends TwViewController {
     this.getMobileLineList()
         .subscribe((response) => {
 
-          // console.log(this.data);
-          res.render('recharge/gift/gift.history.html', {
+          // console.log('svcInfo' , svcInfo);
+          res.render('gift/gift.history.html', {
             lineList: response.result,
             svcInfo: svcInfo,
             dateList: dateSpectrum
