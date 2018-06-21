@@ -126,6 +126,7 @@ Tw.FormatHelper = (function () {
     isString: isString,
     customDataFormat: customDataFormat,
     convDataFormat: convDataFormat,
+    addComma: addComma,
     convVoiceFormat: convVoiceFormat,
     convSmsPrice: convSmsPrice
   }
