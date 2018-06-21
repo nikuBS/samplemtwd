@@ -61,24 +61,24 @@ Tw.MytGiftProcess.prototype = {
   },
 
   _cachedElement: function () {
+    this.$btn_addr = this.$container.find('#btn-addr');
     this.$input_phone = this.$container.find('#inp_phone');
     this.$btn_go_home = this.$container.find('#btn_go_home');
+    this.$btn_one_more = this.$container.find('#btn_one_more');
     this.$wrap_data_select = this.$container.find('.tube-list');
     this.$btn_send_gift = this.$container.find('#btn_send_gift');
     this.$btn_next_process = this.$container.find('#next_process');
-    this.$btn_one_more = this.$container.find('#btn_one_more');
     this.$btn_go_history = this.$container.find('#btn_go_history');
-    this.$btn_addr = this.$container.find('#btn-addr');
     this.$wrap_data_select = this.$container.find('#wrap_data_select');
   },
 
   _bindEvent: function () {
+    this.$container.on('updateLineInfo', $.proxy(this.updateLineInfo, this));
     this.$input_phone.on('keyup', $.proxy(this.validateNumber, this));
     this.$btn_go_home.on('click', $.proxy(this.goHome, this));
     this.$btn_send_gift.on('click', $.proxy(this.nextProcess, this));
     this.$btn_next_process.on('click', $.proxy(this.nextProcess, this));
     this.$btn_one_more.on('click', $.proxy(this.goBasicStep, this));
-    this.$container.on('updateLineInfo', $.proxy(this.updateLineInfo, this));
     this.$btn_go_history.on('click', $.proxy(this.goHistory, this));
     this.$btn_addr.on('click', $.proxy(this._onClickBtnAddr, this));
     this.$container.on('click', '#wrap_request_history .history_item', $.proxy(this._onClickRequestHistoryItem, this));
@@ -235,6 +235,7 @@ Tw.MytGiftProcess.prototype = {
   },
 
   _onClickFamilyHistoryItem: function (e) {
+    this.removeHistoryItemEvent = $(e.currentTarget);
     skt_landing.action.popup.open({
       'title': '데이터 자동 선물 안내',
       'close_bt': true,
@@ -251,10 +252,10 @@ Tw.MytGiftProcess.prototype = {
   },
 
   _removeFamilyHistoryItem: function (e) {
-    this._apiService.request(Tw.API_CMD.BFF_06_0005, JSON.stringify({ serNum: $(e.currentTarget).data('sernum') }))
+    this._apiService.request(Tw.API_CMD.BFF_06_0005, JSON.stringify({ serNum: this.removeHistoryItemEvent.data('sernum') }))
       .done(function (res) {
         location.reload(true);
-      });
+      }.bind(this));
   },
 
   _closePopup: function (e) {
@@ -268,6 +269,10 @@ Tw.MytGiftProcess.prototype = {
   insertPhoneNumber: function (e) {
     var phoneNumber = $(e.currentTarget).data('phone');
     this.$input_phone.val(phoneNumber);
+  },
+
+  resetInputPhone: function(){
+    this.$input_phone.val('');
   },
 
   nextProcess: function () {
@@ -302,10 +307,18 @@ Tw.MytGiftProcess.prototype = {
     var sNextUrl = location.href.replace(location.hash, '#' + sNextStep);
     var dataQty = $('#wrap_data_select').find('label.checked').data('value');
 
+    if(!dataQty){
+      // TODO : data select alert
+      return;
+    }
+
     if ( this.processType == 'request' ) {
       if ( this._isRequestByOpdtm ) {
         this._apiService.request(Tw.API_CMD.BFF_06_0013, { dataQty: dataQty, opDtm: this._opDtm })
           .done(function (res) {
+            debugger;
+            this._isRequestByOpdtm = false;
+            this.resetInputPhone();
             this.provider.dataQty = dataQty;
             $('.wrap_data .num').text(dataQty);
             location.replace(sNextUrl);
@@ -331,7 +344,7 @@ Tw.MytGiftProcess.prototype = {
               'close_bt': true,
               'title2': res.orgDebugMessage,
               'bt_num': 'one',
-              'type': [ {
+              'type': [{
                 class: 'bt-red1 family-history-cancel',
                 txt: '확인'
               }]
