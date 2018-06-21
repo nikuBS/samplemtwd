@@ -1,3 +1,9 @@
+/**
+ * FileName: recharge.gift.history.controller.ts
+ * Author: 이상형 (silion@sk.com)
+ * Date: 2018.06.19
+ */
+
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import {Request, Response, NextFunction} from 'express';
 import {API_CMD} from '../../../../types/api-command.type';

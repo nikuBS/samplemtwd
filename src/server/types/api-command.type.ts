@@ -45,6 +45,7 @@ export const API_CMD = {
   BFF_06_0008: { path: '/core-recharge/v1/data-gift-receivers', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_06_0009: { path: '/core-recharge/v1/refill-options', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_06_0010: { path: '/core-recharge/v1/data-gift-requests', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_06_0011: { path: '/core-recharge/v1/data-gift-requests', method: API_METHOD.DELETE, server: API_SERVER.BFF, bypass: true },
   BFF_06_0012: { path: '/core-recharge/v1/data-gift-request-receivers', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_06_0013: { path: '/core-recharge/v1/data-gift-requests', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_06_0014: { path: '/core-recharge/v1/data-gift-balance', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },

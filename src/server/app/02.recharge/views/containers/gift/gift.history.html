@@ -111,7 +111,7 @@
                                                 <ul class="result-history">
                                                 </ul>
                                                 <!--// 템플릿 노출 -->
-                                                <a class="bt-more" href="#none">더보기<span>(20)</span></a>
+                                                <a class="bt-more">더보기<span>(20)</span></a>
                                             </div>
                                         </div>
                                     </li>
@@ -171,7 +171,7 @@
                                                 <!--// 템플릿 노출 -->
                                                 <ul class="result-history modify">
                                                 </ul>
-                                                <a class="bt-more" href="#none">더보기<span>(20)</span></a>
+                                                <a class="bt-more">더보기<span>(20)</span></a>
                                             </div>
                                         </div>
                                     </li>
@@ -195,8 +195,9 @@
       });
     </script>
     <script id="list-template" type="text/x-handlebars-template">
-            {{#list}}
-            <li>
+            {{#renderList}}
+            {{#setIndex}}
+            <li data-list-index="{{listIndex}}">
                 <div class="info-change">
                     <span class="{{conditionClass giftType}}"><span class="blind">받음</span></span>
                 </div>
@@ -207,19 +208,20 @@
                 <div class="info-data">
                     {{#isBig1G}}
                     <!-- 1기가 미만인 경우 -->
-                    <span class="info-title">{{dataQty}}</span>
+                    <span class="info-title">{{dataQtyTrans}}</span>
                     {{else}}
                     <!-- 1기가 이상인 경우 -->
-                    <span class="info-title">{{dataQty}}</span>
+                    <span class="info-title">{{dataQtyTrans}}</span>
                     <span class="info-sub">{{dataQtyConvert}}</span>
                     {{/isBig1G}}
                 </div>
                 {{#isRequest}}
-                <div class="info-btn"><a href="#none" data-opDtm="{{opDtm}}" class="btn-cancel">삭제</a></div>
+                <div class="info-btn"><a data-opDtm="{{opDtm}}" class="btn-cancel">삭제</a></div>
                 {{else}}
                 {{/isRequest}}
             </li>
-            {{/list}}
+            {{/setIndex}}
+            {{/renderList}}
     </script>
     <script id="present-empty-template" type="text/x-handlebars-template">
         <div class="noresult">
