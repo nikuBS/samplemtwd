@@ -57,13 +57,15 @@
                     <div class="flcard-cont">
                         <div class="flcard-area">
                             <dl class="flcard-tmember">
-                                <dt class="ti-tmember"><a href="/recharge/gift">T끼리 데이터 선물<span class="ico"></span></a></dt>
+                                <dt class="ti-tmember"><a href="/recharge/gift">T끼리 데이터 선물<span class="ico"></span></a>
+                                </dt>
                                 <dd class="flcard-accent">
                                     고객님이 사용중인 요금제는<br/><em class="tx-bold">데이터 선물이 불가능 합니다.</em>
                                 </dd>
                             </dl>
                             <ul class="flcard-list">
-                                <li><span class="ti-fee">사용중인 요금제</span><span class="tx-fee"><%= usageData.prodName %></span></li>
+                                <li><span class="ti-fee">사용중인 요금제</span><span
+                                    class="tx-fee"><%= usageData.prodName %></span></li>
                             </ul>
                             <button class="bt-like type1"><span class="blind">좋아요</span></button>
                             <div class="flcard-bottom">
@@ -86,16 +88,15 @@
                     <div class="flcard-cont">
                         <div class="flcard-area">
                             <dl class="flcard-tmember">
-                                <dt class="ti-tmember"><a href="/recharge/gift">T끼리 데이터 선물<span class="ico"></span></a></dt>
+                                <dt class="ti-tmember"><a href="/recharge/gift">T끼리 데이터 선물<span class="ico"></span></a>
+                                </dt>
                                 <dd class="flcard-accent">
                                     잔여 데이터가 <em class="tx-bold">500MB</em> 이상<br/>있을 때 선물이 가능합니다.<br/>쿠폰을 선물해보는 건 어떨까요?
                                 </dd>
                             </dl>
-                            <% if(giftData.giftBalance) { %>
                             <ul class="flcard-list">
-                                <li><span class="ti-fee">잔여 데이터</span><span class="tx-fee"><%= giftData.giftBalance.dataRemQty %>MB</span></li>
+                                <li><span class="ti-fee">잔여 데이터</span><span class="tx-fee"><%= giftData %>MB</span></li>
                             </ul>
-                            <% } %>
                             <button class="bt-like type1"><span class="blind">좋아요</span></button>
                             <div class="flcard-bottom">
                                 <ul class="bt-slice ver">
@@ -117,7 +118,8 @@
                     <div class="flcard-cont">
                         <div class="flcard-area">
                             <dl class="flcard-tmember">
-                                <dt class="ti-tmember"><a href="/recharge/gift">T끼리 데이터 선물<span class="ico"></span></a></dt>
+                                <dt class="ti-tmember"><a href="/recharge/gift">T끼리 데이터 선물<span class="ico"></span></a>
+                                </dt>
                                 <dd class="flcard-accent">
                                     데이터 선물하기는<br/><em class="tx-bold">월 2회</em>까지만 제공됩니다.
                                 </dd>
@@ -138,145 +140,15 @@
                 </div>
             </div>
             <!--// MA_01_CA13_04 -->
-            <% } else if (giftData.giftSender.code === 'RCG0013') { %>
-            <!-- MA_01_CA13_05 -->
-            <div class="component">
-                <div class="component-box flcardcta">
-                    <h3 class="blind">선물 내역 보기</h3>
-                    <div class="flcard-cont">
-                        <div class="flcard-area">
-                            <dl class="flcard-tmember">
-                                <dt class="ti-tmember"><a href="/recharge/gift">T끼리 데이터 선물<span class="ico"></span></a></dt>
-                                <dd class="flcard-accent">가족에게 선물하기는 월 4회<br/>또는 <em class="tx-bold">최대 4GB</em>까지 제공
-                                    됩니다.
-                                </dd>
-                            </dl>
-                            <ul class="flcard-list">
-                                <li><span class="ti-fee">선물한 횟수</span><span class="tx-fee">2회</span></li>
-                            </ul>
-                            <button class="bt-like type1"><span class="blind">좋아요</span></button>
-                            <div class="flcard-bottom">
-                                <ul class="bt-slice ver">
-                                    <li class="bt-blue1">
-                                        <a href="/recharge/gift/history" title="선물 내역 보기로 이동">선물 내역 보기</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--// MA_01_CA13_05 -->
             <% } else if (giftData.giftSender.code === '00') { %>
-            <% if (giftData.giftBalance) { %>
-            <% if (giftData.giftSender.familyMemberYn === 'N') { %>
-            <!-- MA_01_CA13_01 1. 선물하기 가능 상태일 경우 -->
-            <div class="component">
-                <div class="component-box flcardcta">
-                    <h3 class="blind">데이터 선물하기</h3>
-                    <div class="flcard-cont">
-                        <div class="flcard-area">
-                            <dl class="flcard-tmember">
-                                <dt class="ti-tmember"><a href="/recharge/gift">T끼리 데이터 선물<span class="ico"></span></a></dt>
-                                <dd class="flcard-accent">
-                                    잔여 데이터로<br/><em class="tx-bold">선물을 해보세요!</em>
-                                </dd>
-                            </dl>
-                            <ul class="flcard-list">
-                                <li><span class="ti-fee">잔여 데이터</span><span class="tx-fee"><%= giftData.giftBalance.showDataGb %>GB<em class="tx-sub">(<%= giftData.giftBalance.showDataMb %>MB)</em></span>
-                                </li>
-                                <li><span class="ti-fee">선물 가능 횟수</span><span class="tx-fee"><span
-                                    class="tx-sub">T끼리</span> <%= giftData.giftSender.dataGiftCnt %>회</span></li>
-                            </ul>
-                            <button class="bt-like type1"><span class="blind">좋아요</span></button>
-                            <div class="flcard-bottom">
-                                <ul class="bt-slice ver">
-                                    <li class="bt-blue1">
-                                        <a href="/recharge/gift" title="데이터 선물하기로 이동">데이터 선물하기</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <span class="ico-ill-gift"></span>
-                    </div>
-                </div>
-            </div>
-            <!--// MA_01_CA13_01 1. 선물하기 가능 상태일 경우 -->
-            <% } else if (giftData.giftSender.goodFamilyMemberYn === 'N') { %>
-            <!-- MA_01_CA13_01 2. 가족 결합 상품 사용 시 -->
-            <div class="component">
-                <div class="component-box flcardcta">
-                    <h3 class="blind">데이터 선물하기</h3>
-                    <div class="flcard-cont">
-                        <div class="flcard-area">
-                            <dl class="flcard-tmember">
-                                <dt class="ti-tmember"><a href="/recharge/gift">T끼리 데이터 선물<span class="ico"></span></a></dt>
-                                <dd class="flcard-accent">
-                                    잔여 데이터로<br/><em class="tx-bold">선물을 해보세요!</em>
-                                </dd>
-                            </dl>
-                            <ul class="flcard-list">
-                                <li><span class="ti-fee">잔여 데이터</span><span class="tx-fee"><%= giftData.giftBalance.showDataGb %>GB<em class="tx-sub">(<%= giftData.giftBalance.showDataMb %>MB)</em></span>
-                                </li>
-                                <li><span class="ti-fee">선물 가능 횟수</span><span class="tx-fee"><span
-                                    class="tx-sub">T끼리</span> <%= giftData.giftSender.dataGiftCnt %>회 <span class="tx-sub">/ 가족끼리</span> <%= giftData.giftSender.familyDataGiftCnt %>회</span></li>
-                            </ul>
-                            <button class="bt-like type1"><span class="blind">좋아요</span></button>
-                            <div class="flcard-bottom">
-                                <ul class="bt-slice ver">
-                                    <li class="bt-blue1">
-                                        <a href="/recharge/gift" title="데이터 선물하기로 이동">데이터 선물하기</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <span class="ico-ill-gift"></span>
-                    </div>
-                </div>
-            </div>
-            <!--// MA_01_CA13_01 2. 가족 결합 상품 사용 시 -->
-            <% } else { %>
-            <!-- MA_01_CA13_01 3. 가족 결합 중 착한 가족 상품 사용 시 -->
-            <div class="component">
-                <div class="component-box flcardcta">
-                    <h3 class="blind">데이터 선물하기</h3>
-                    <div class="flcard-cont">
-                        <div class="flcard-area">
-                            <dl class="flcard-tmember">
-                                <dt class="ti-tmember"><a href="/recharge/gift">T끼리 데이터 선물<span class="ico"></span></a></dt>
-                                <dd class="flcard-accent">
-                                    잔여 데이터로<br/><em class="tx-bold">선물을 해보세요!</em>
-                                </dd>
-                            </dl>
-                            <ul class="flcard-list">
-                                <li><span class="ti-fee">잔여 데이터</span><span class="tx-fee"><%= giftData.giftBalance.showDataGb%>GB<em class="tx-sub">(<%= giftData.giftBalance.showDataMb %>MB)</em></span>
-                                </li>
-                                <li><span class="ti-fee">선물 가능 횟수</span><span class="tx-fee"><span
-                                    class="tx-sub">T끼리</span> <%= giftData.giftSender.dataGiftCnt %>회 <span class="tx-sub">/ 가족끼리</span> 무제한</span></li>
-                            </ul>
-                            <button class="bt-like type1"><span class="blind">좋아요</span></button>
-                            <div class="flcard-bottom">
-                                <ul class="bt-slice ver">
-                                    <li class="bt-blue1">
-                                        <a href="/recharge/gift" title="데이터 선물하기로 이동">데이터 선물하기</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <span class="ico-ill-gift"></span>
-                    </div>
-                </div>
-            </div>
-            <!--// MA_01_CA13_01 3. 가족 결합 중 착한 가족 상품 사용 시 -->
-            <% } %>
-            <% } else { %>
-            <div class="component">
+            <div id="gift-card" class="component">
                 <div class="component-box flcardcta">
                     <h3 class="blind">잔여 데이터 조회하기</h3>
                     <div class="flcard-cont">
                         <div class="flcard-area">
                             <dl class="flcard-tmember">
-                                <dt class="ti-tmember"><a href="/recharge/gift">T끼리 데이터 선물<span class="ico"></span></a></dt>
+                                <dt class="ti-tmember"><a href="/recharge/gift">T끼리 데이터 선물<span class="ico"></span></a>
+                                </dt>
                                 <dd class="flcard-accent">
                                     잔여 데이터로<br/><em class="tx-bold">선물을 해보세요!</em>
                                 </dd>
@@ -289,7 +161,7 @@
                             <div class="flcard-bottom">
                                 <ul class="bt-slice ver">
                                     <li class="bt-blue1">
-                                        <a href="#none" title="잔여 데이터 조회하기로 이동">잔여 데이터 조회하기</a>
+                                        <a id="gift-balance" title="잔여 데이터 조회하기로 이동">잔여 데이터 조회하기</a>
                                     </li>
                                 </ul>
                             </div>
@@ -302,7 +174,6 @@
                 </div>
             </div>
             <!--// 데이터 조회하기 적용 불가 Case -->
-            <% } %>
             <% } %>
             <% } %>
             <% if(refillData.refillCoupon && refillData.refillOptions && refillData.refillUsages) { %>
@@ -551,10 +422,120 @@
         </div>
         <!--// #contents -->
     </div>
-    <% include ../components/javascript.component.html %>
-    <script>
-      $(document).ready(function () {
-        var comp = new Tw.HomeMain($('.wrap'));
-      });
-    </script>
-    <% include ../components/end.component.html %>
+</div>
+<% if (giftData.giftSender.familyMemberYn === 'N') { %>
+<script class="gift-template" type="text/x-handlebars-template">
+    <!-- MA_01_CA13_01 1. 선물하기 가능 상태일 경우 -->
+    <div class="component-box flcardcta">
+        <h3 class="blind">데이터 선물하기</h3>
+        <div class="flcard-cont">
+            <div class="flcard-area">
+                <dl class="flcard-tmember">
+                    <dt class="ti-tmember"><a href="/recharge/gift">T끼리 데이터 선물<span class="ico"></span></a>
+                    </dt>
+                    <dd class="flcard-accent">
+                        잔여 데이터로<br/><em class="tx-bold">선물을 해보세요!</em>
+                    </dd>
+                </dl>
+                <ul class="flcard-list">
+                    <li><span class="ti-fee">잔여 데이터</span><span class="tx-fee">{{showDataGb}}GB<em
+                        class="tx-sub">({{showDataGb}}MB)</em></span>
+                    </li>
+                    <li><span class="ti-fee">선물 가능 횟수</span><span class="tx-fee"><span
+                        class="tx-sub">T끼리</span> <%= giftData.giftSender.dataGiftCnt %>회</span></li>
+                </ul>
+                <button class="bt-like type1"><span class="blind">좋아요</span></button>
+                <div class="flcard-bottom">
+                    <ul class="bt-slice ver">
+                        <li class="bt-blue1">
+                            <a href="/recharge/gift" title="데이터 선물하기로 이동">데이터 선물하기</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <span class="ico-ill-gift"></span>
+        </div>
+    </div>
+    <!--// MA_01_CA13_01 1. 선물하기 가능 상태일 경우 -->
+</script>
+<% } else if (giftData.giftSender.goodFamilyMemberYn === 'N') { %>
+<script class="gift-template" type="text/x-handlebars-template">
+    <!-- MA_01_CA13_01 2. 가족 결합 상품 사용 시 -->
+    <div class="component-box flcardcta">
+        <h3 class="blind">데이터 선물하기</h3>
+        <div class="flcard-cont">
+            <div class="flcard-area">
+                <dl class="flcard-tmember">
+                    <dt class="ti-tmember"><a href="/recharge/gift">T끼리 데이터 선물<span class="ico"></span></a>
+                    </dt>
+                    <dd class="flcard-accent">
+                        잔여 데이터로<br/><em class="tx-bold">선물을 해보세요!</em>
+                    </dd>
+                </dl>
+                <ul class="flcard-list">
+                    <li><span class="ti-fee">잔여 데이터</span><span class="tx-fee">{{showDataGb}}GB<em
+                        class="tx-sub">({{showDataMb}}MB)</em></span>
+                    </li>
+                    <li><span class="ti-fee">선물 가능 횟수</span><span class="tx-fee"><span
+                        class="tx-sub">T끼리</span> <%= giftData.giftSender.dataGiftCnt %>회 <span
+                        class="tx-sub">/ 가족끼리</span> <%= giftData.giftSender.familyDataGiftCnt %>회</span>
+                    </li>
+                </ul>
+                <button class="bt-like type1"><span class="blind">좋아요</span></button>
+                <div class="flcard-bottom">
+                    <ul class="bt-slice ver">
+                        <li class="bt-blue1">
+                            <a href="/recharge/gift" title="데이터 선물하기로 이동">데이터 선물하기</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <span class="ico-ill-gift"></span>
+        </div>
+    </div>
+    <!--// MA_01_CA13_01 2. 가족 결합 상품 사용 시 -->
+</script>
+<% } else { %>
+<script class="gift-template" type="text/x-handlebars-template">
+    <!-- MA_01_CA13_01 3. 가족 결합 중 착한 가족 상품 사용 시 -->
+    <div class="component-box flcardcta">
+        <h3 class="blind">데이터 선물하기</h3>
+        <div class="flcard-cont">
+            <div class="flcard-area">
+                <dl class="flcard-tmember">
+                    <dt class="ti-tmember"><a href="/recharge/gift">T끼리 데이터 선물<span class="ico"></span></a>
+                    </dt>
+                    <dd class="flcard-accent">
+                        잔여 데이터로<br/><em class="tx-bold">선물을 해보세요!</em>
+                    </dd>
+                </dl>
+                <ul class="flcard-list">
+                    <li><span class="ti-fee">잔여 데이터</span><span class="tx-fee">{{showDataGb}}GB<em
+                        class="tx-sub">({{showDataMb}}MB)</em></span>
+                    </li>
+                    <li><span class="ti-fee">선물 가능 횟수</span><span class="tx-fee"><span
+                        class="tx-sub">T끼리</span> <%= giftData.giftSender.dataGiftCnt %>회 <span
+                        class="tx-sub">/ 가족끼리</span> 무제한</span></li>
+                </ul>
+                <button class="bt-like type1"><span class="blind">좋아요</span></button>
+                <div class="flcard-bottom">
+                    <ul class="bt-slice ver">
+                        <li class="bt-blue1">
+                            <a href="/recharge/gift" title="데이터 선물하기로 이동">데이터 선물하기</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <span class="ico-ill-gift"></span>
+        </div>
+    </div>
+    <!--// MA_01_CA13_01 3. 가족 결합 중 착한 가족 상품 사용 시 -->
+</script>
+<% } %>
+<% include ../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    var comp = new Tw.HomeMain($('.wrap'));
+  });
+</script>
+<% include ../components/end.component.html %>

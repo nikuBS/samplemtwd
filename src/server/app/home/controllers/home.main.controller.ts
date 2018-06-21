@@ -164,15 +164,6 @@ class HomeMain extends TwViewController {
 
   private getGiftBalance(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_06_0014, {}).map((resp) => {
-      resp = {
-        code: '00',
-        msg: 'success',
-        result: {
-          reqCnt: '1',
-          giftRequestAgainYn: 'Y',
-          dataRemQty: '3500'
-        }
-      };
       if ( resp.code === API_CODE.CODE_00 ) {
         return this.parseGiftBalance(resp.result);
       }
@@ -190,7 +181,7 @@ class HomeMain extends TwViewController {
   private getGiftSender(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_06_0015, {}).map(resp => {
       resp = {
-        code: 'RCG0002',
+        code: '00',
         msg: 'success',
         result: {
           dataGiftCnt: '2',
