@@ -10,7 +10,7 @@
         <a class="bt-more" href="#none" data-left-items={{leftItems}} data-type="my">더보기<span>({{leftItems}})</span></a>
         {{/if}}
         {{else}}
-        <% include ../../components/refill/refill.history.my.empty.html %>
+        <% include ../../components/refill/recharge.refill.history.my.empty.html %>
         {{/if}}
     </div>
 </script>
@@ -44,9 +44,9 @@
         {{/if}}
         {{else}}
             {{#if transferable}}
-            <% include ../../components/refill/refill.history.sent.transferable.html %>
+            <% include ../../components/refill/recharge.refill.history.sent.transferable.html %>
             {{else}}
-            <% include ../../components/refill/refill.history.sent.empty.html %>
+            <% include ../../components/refill/recharge.refill.history.sent.empty.html %>
             {{/if}}
         {{/if}}
     </div>
@@ -91,7 +91,7 @@
            data-type="received">더보기<span>({{leftItems}})</span></a>
         {{/if}}
         {{else}}
-        <% include ../../components/refill/refill.history.received.empty.html %>
+        <% include ../../components/refill/recharge.refill.history.received.empty.html %>
         {{/if}}
     </div>
 </script>
@@ -195,7 +195,7 @@
             <!--// .cont-box -->
             <hr class="cont-sp type1"/>
             <!-- .cont-box -->
-            <% include ../../components/refill/refill.info.component.html %>
+            <% include ../../components/refill/recharge.refill.info.component.html %>
             <!--// .cont-box -->
         </div>
     </div>

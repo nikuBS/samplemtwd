@@ -1,3 +1,8 @@
+/**
+* FileName: recharge.refill.controller
+* Author: 공자윤
+* Date: 2018.06.18
+**/
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
 import { Observable } from 'rxjs/Observable';
@@ -20,7 +25,7 @@ class RechargeRefill extends TwViewController {
       this.getUsageOptions(),
       this.getusageData()
     ).subscribe(([lineList, usageOptions, usageData]) => {
-      this.myTUsage.renderView(res, 'refill/refill.html', this.getData(lineList, usageOptions, usageData));
+      this.myTUsage.renderView(res, 'refill/recharge.refill.html', this.getData(lineList, usageOptions, usageData));
     });
   }
 

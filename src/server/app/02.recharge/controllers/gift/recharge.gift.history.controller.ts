@@ -1,9 +1,6 @@
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import {Request, Response, NextFunction} from 'express';
 import {API_CMD} from '../../../../types/api-command.type';
-
-// import MyTGiftHistoryData from '../../../../../mock/server/myt.gift.history-present';
-
 import moment from 'moment';
 
 class RechargeGiftHistory extends TwViewController {
@@ -46,7 +43,7 @@ class RechargeGiftHistory extends TwViewController {
         .subscribe((response) => {
 
           // console.log('svcInfo' , svcInfo);
-          res.render('gift/gift.history.html', {
+          res.render('gift/recharge.gift.history.html', {
             lineList: response.result,
             svcInfo: svcInfo,
             dateList: dateSpectrum

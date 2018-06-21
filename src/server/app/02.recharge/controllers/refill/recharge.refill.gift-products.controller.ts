@@ -13,7 +13,7 @@ class RechargeRefillGiftProducts extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    res.render('refill/refill.gift-products.html', {});
+    res.render('refill/recharge.refill.gift-products.html', {});
   }
 }
 
