@@ -29,25 +29,7 @@
         <div class="container">
             <!-- .cont-box -->
             <div class="cont-box">
-                <!-- .widget -->
-                <div class="widget">
-                    <div class="widget-box select">
-                        <button id="line-set" class="bt-dropdown big" title="데이터 용량">
-                            <%=svcInfo.svcNum%>
-                            <span class="ico"></span>
-                        </button>
-                        <div class="select-info">
-                            <span class="title">회선 목록</span>
-                            <span class="text"></span>
-                            <select title="회선 목록">
-                                <%lineList.map((line)=>{%>
-                                <option><%=line.svcNum%></option>
-                                <%})%>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <!--// .widget -->
+                <% if (lineList) { %><% include ../../components/line.list.component.html %><% } %>
             </div>
             <!--// .cont-box -->
             <hr class="cont-sp type1">
