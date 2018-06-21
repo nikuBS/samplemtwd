@@ -12,9 +12,9 @@ import environment from './config/environment.config';
 
 // Route Modules
 import AppRouter from './common/app.router';
-import BillRouter from './app/bill/bill.router';
+import FareRouter from './app/fare/fare.router';
 import CustomerRouter from './app/customer/customer.router';
-import DataRouter from './app/data/data.router';
+import RechargeRouter from './app/recharge/recharge.router';
 import DirectRouter from './app/direct/direct.router';
 import EtcRouter from './app/etc/etc.router';
 import EventRouter from './app/event/event.router';
@@ -73,16 +73,16 @@ class App {
   }
 
   private setRoutes() {
-    this.app.use('/bill', new AppRouter(BillRouter.instance.controllers).router);
     this.app.use('/customer', new AppRouter(CustomerRouter.instance.controllers).router);
-    this.app.use('/data', new AppRouter(DataRouter.instance.controllers).router);
     this.app.use('/direct', new AppRouter(DirectRouter.instance.controllers).router);
     this.app.use('/etc', new AppRouter(EtcRouter.instance.controllers).router);
     this.app.use('/event', new AppRouter(EventRouter.instance.controllers).router);
+    this.app.use('/fare', new AppRouter(FareRouter.instance.controllers).router);
     this.app.use('/home', new AppRouter(HomeRouter.instance.controllers).router);
     this.app.use('/membership', new AppRouter(MembershipRouter.instance.controllers).router);
     this.app.use('/myt', new AppRouter(MytRouter.instance.controllers).router);
     this.app.use('/product', new AppRouter(ProductRouter.instance.controllers).router);
+    this.app.use('/recharge', new AppRouter(RechargeRouter.instance.controllers).router);
     this.app.use('/roaming', new AppRouter(RoamingRouter.instance.controllers).router);
     this.app.use('/search', new AppRouter(SearchRouter.instance.controllers).router);
     this.app.use('/user', new AppRouter(UserRouter.instance.controllers).router);
@@ -90,16 +90,16 @@ class App {
 
   private setViewPath() {
     this.app.set('views', [
-      path.join(__dirname, 'app/bill/views/containers'),
       path.join(__dirname, 'app/customer/views/containers'),
-      path.join(__dirname, 'app/data/views/containers'),
       path.join(__dirname, 'app/direct/views/containers'),
       path.join(__dirname, 'app/etc/views/containers'),
       path.join(__dirname, 'app/event/views/containers'),
+      path.join(__dirname, 'app/fare/views/containers'),
       path.join(__dirname, 'app/home/views/containers'),
       path.join(__dirname, 'app/membership/views/containers'),
       path.join(__dirname, 'app/myt/views/containers'),
       path.join(__dirname, 'app/product/views/containers'),
+      path.join(__dirname, 'app/recharge/views/containers'),
       path.join(__dirname, 'app/roaming/views/containers'),
       path.join(__dirname, 'app/search/views/containers'),
       path.join(__dirname, 'app/user/views/containers'),
