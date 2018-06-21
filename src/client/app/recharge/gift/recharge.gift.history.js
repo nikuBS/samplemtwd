@@ -37,11 +37,11 @@ Tw.MytGiftHistory.prototype = {
     this.$termOptions = $('#tab1 .inner .contents-info-list .widget select:nth-of-type(2) option');
 
     this.presentContainer = $('#tab1');
-    this.presentContentWrapper = this.presentContainer.find('.inner');
-    this.presentCounter = this.presentContentWrapper.find('.ti-desc em');
+    this.presentContentWrapper = this.presentContainer.find('.inner .result-history');
+    this.presentCounter = this.presentContainer.find('.ti-desc em');
     // this.present
     this.requestContainer = $('#tab2');
-    this.requestContentWrapper = this.requestContainer.find('.inner');
+    this.requestContentWrapper = this.requestContainer.find('.inner .result-history');
 
     this.presentTemplete = Handlebars.compile($('#present-template').html());
     this.requestTempelete = Handlebars.compile($('#request-template').html());
@@ -61,18 +61,22 @@ Tw.MytGiftHistory.prototype = {
   },
 
   initedPresent: function(res) {
+    var _this = this;
 
     console.log(res, this.mockHistory);
     res = res.result.length ? res : this.mockHistory;
+
     if(res.code !== '00' && res.msg !== 'success') {
       console.log('error', res);
       return false;
     }
     if(res.result.length) {
-      var data = {
-        presents : res.result
+      this.data = {
+        presents : res.result,
+        length : res.result.length,
+        pages : res.result / 4
       };
-      this.presentCounter.text(data.presents.length);
+      this.presentCounter.text(this.data.presents.length);
       this.presentContentWrapper.show();
 
       Handlebars.registerHelper('conditionClass', function (giftType) {
@@ -84,20 +88,44 @@ Tw.MytGiftHistory.prototype = {
       });
 
       Handlebars.registerHelper('conditionTel', function (svcNum) {
-        console.log(svcNum);
+        return _this.convertTelFormat(svcNum);
       });
 
       Handlebars.registerHelper('isBig1G', function(val) {
-        // console.log(this, val);
-        // if(this.dataQty < 1024) {
-        //
-        // }
+        var convertDataFormat = Tw.FormatHelper.convDataFormat(this.dataQty, 'MB');
+        if(this.dataQty < 1024) {
+          this.dataQty = convertDataFormat['data']+convertDataFormat['unit'];
+          return val.fn(this);
+        } else {
+          this.dataQtyConvert = _this.addComma(this.dataQty) + 'MB';
+          this.dataQty = convertDataFormat['data'].split('.')[0]+convertDataFormat['unit'];
+          return val.inverse(this);
+        }
       });
 
-      this.presentContentWrapper.find('.contents-info-list').append(this.presentTemplete(data));
+      Handlebars.registerHelper('isAuto', function(option) {
+        if(this.regularGiftType === 'GC') {
+          return option.fn(this);
+        } else {
+          return option.inverse(this);
+        }
+      });
+
+      
+
+      this.presentContentWrapper.append(this.presentTemplete(this.data));
     } else {
       this.presentContainer.append(this.presentEmptyTemplete());
     }
+  },
+
+  addComma: function(v) {
+    return v.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  },
+
+  convertTelFormat: function(v) {
+    var ret = v.trim();
+    return ret.substring(0, 3) + '-' + ret.substring(3, ret.length - 4) + '-' + ret.substring(ret.length - 4);
   },
 
   openSelectPopupProcess: function (e) {
@@ -265,7 +293,7 @@ Tw.MytGiftHistory.prototype = {
           },
           {
             'opDtm': '20170621',
-            'dataQty': '1024',
+            'dataQty': '4248',
             'custName': '김*진',
             'svcNum': '01040**08**',
             'giftType': '1',
