@@ -1,11 +1,11 @@
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
+import { Observable } from 'rxjs/Observable';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
+import { COUPON_STATUS_CODE, LINE_NAME } from '../../../../types/bff-common.type';
 import DateHelper from '../../../../utils/date.helper';
 import FormatHelper from '../../../../utils/format.helper';
-import { Observable } from 'rxjs/Observable';
 import MyTUsage from '../../../myt/controllers/usage/myt.usage.controller';
-import { LINE_NAME } from '../../../../types/bff-common.type';
 
 class RechargeRefill extends TwViewController {
   public myTUsage = new MyTUsage();
@@ -64,6 +64,7 @@ class RechargeRefill extends TwViewController {
         data.endDateFormat = DateHelper.getShortKoreanDate(data.usePsblEndDt);
         data.isueDate = DateHelper.getShortDateNoDot(data.copnIsueDt);
         data.remainDate = DateHelper.getNewRemainDate(data.usePsblEndDt);
+        data.isReceived = data.copnOperStCd === COUPON_STATUS_CODE.RECEIVED;
       });
     }
     return usageData;

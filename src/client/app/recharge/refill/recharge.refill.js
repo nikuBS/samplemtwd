@@ -39,6 +39,7 @@ Tw.MytRefill.prototype = Object.assign(Tw.MytRefill.prototype, {
   },
   _checkValidation: function ($target) {
     return (this._checkIsVisible($target)
+      && this._checkIsReceived()
       && this._checkIsUsable($target)
       && this._checkConfirm());
   },
@@ -46,9 +47,17 @@ Tw.MytRefill.prototype = Object.assign(Tw.MytRefill.prototype, {
     if ($target.hasClass('disabled')) {
       var message = Tw.MESSAGE.REFILL_A10;
       if (this._isRefillBtn($target)) {
-        message = Tw.MESSAGE.REFILL_A01;
+        message = Tw.MESSAGE.REFILL_A09;
       }
       alert(message);
+      return false;
+    }
+    return true;
+  },
+  _checkIsReceived: function () {
+    var $selectedCoupon = this.$container.find('.bt-select-arrow.on');
+    if ($selectedCoupon.parents('.swiper-slide').hasClass('received')) {
+      alert(Tw.MESSAGE.REFILL_A04);
       return false;
     }
     return true;

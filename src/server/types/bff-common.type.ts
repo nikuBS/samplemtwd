@@ -31,6 +31,12 @@ export enum LINE_NAME {
   SECURITY = 'S'
 }
 
+export enum COUPON_STATUS_CODE {
+  LONG = 'A10',
+  DECADE = 'A14',
+  RECEIVED = 'A20'
+}
+
 export enum REFILL_CODE {
   DATA = 'D',
   VOICE = 'V'

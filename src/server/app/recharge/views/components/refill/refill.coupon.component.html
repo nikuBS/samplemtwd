@@ -1,4 +1,4 @@
-<div class="cont-box <% if (usageOptions.option.length > 0) { %>nogaps-btm<% } %>">
+<div class="cont-box<% if (usageOptions.option.length > 0) { %> nogaps-btm<% } %>">
     <h3 class="cont-ti">내가 가진 리필쿠폰</h3>
     <!-- .coupon-slide -->
     <div class="coupon-slide">
@@ -10,7 +10,7 @@
                         <!-- type1: 카드형 -->
                         <div class="slider">
                             <% for (var i = 0; i < usageData.length; i++) { %>
-                            <div id="<%= usageData[i].copnIsueNum %>" class="swiper-slide" data-end="<%= usageData[i].endDateFormat %>">
+                            <div id="<%= usageData[i].copnIsueNum %>" class="swiper-slide<% if (usageData[i].isReceived) { %> received<% } %>" data-end="<%= usageData[i].endDateFormat %>">
                                 <div class="coupon-cont">
                                     <dl class="coupon-box">
                                         <dt><span class="coupon-name"><%= usageData[i].copnNm %></span><span class="coupon-code"><%= usageData[i].copnIsueNum %></span></dt>
