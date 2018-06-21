@@ -13,7 +13,10 @@ Tw.MytGiftProcess.prototype = {
   provider: {
     name: '',
     phone: '',
-    dataQty: ''
+    dataQty: 0
+  },
+  receiver: {
+    dataRemQty: 0
   },
 
   $init: function () {
@@ -103,7 +106,6 @@ Tw.MytGiftProcess.prototype = {
   },
   //-----------------------------------------------------[문자로 알리기 end]
 
-
   updateLineInfo: function (e, params) {
     this.lineInfo = params.lineInfo;
     this.requestRemainData();
@@ -128,11 +130,14 @@ Tw.MytGiftProcess.prototype = {
       }
     }
 
+    this.receiver.dataRemQty = this.remainData.result.dataRemQty;
+    var tpl = Handlebars.compile($('#tpl_remain_data').text());
+    $('.wrap_remain_data').html(tpl({dataRemQty: this.receiver.dataRemQty}) );
+
     this.setAvailableData();
   },
 
   setAvailableData: function () {
-
     this.$wrap_data_select.find('label').each(function (idx, item) {
       var $item = $(item);
       var itemValue = Number($item.data('value'));
@@ -179,18 +184,17 @@ Tw.MytGiftProcess.prototype = {
       this._apiService.request(Tw.API_CMD.BFF_06_0012, { charSvcNum: this.$input_phone.val() })
         .done($.proxy(this.renderProvider, this));
 
-    } else if ( this.processType == 'member' || this.processType == 'family' ) {
+    } else if ( this.processType == 'members' || this.processType == 'family' ) {
       this._apiService.request(Tw.API_CMD.BFF_06_0008, { befrSvcNum: this.$input_phone.val() })
         .done($.proxy(this.renderProvider, this));
-
     }
+
   },
 
   validateStep2: function () {
     var nCurrentIndex = this.step.indexOf(location.hash.replace('#', ''));
     var sNextStep = this.step[nCurrentIndex + 1];
     var sNextUrl = location.href.replace(location.hash, '#' + sNextStep);
-
     var dataQty = $('#wrap_data_select').find('label.checked').data('value');
 
     if ( this.processType == 'request' ) {
@@ -198,11 +202,24 @@ Tw.MytGiftProcess.prototype = {
         this._apiService.request(Tw.API_CMD.BFF_06_0013, { dataQty: dataQty, svcNum: this.provider.phone })
           .done(function (res) {
             this.provider.dataQty = dataQty;
-            $('.wrap_data .num').text(dataQty);
+            $('.wrap_data .num').text(this.receiver.remainData - dataQty);
             location.replace(sNextUrl);
           }.bind(this));
       }
-    } else {
+    } else if ( this.processType == 'family' ) {
+      this._apiService.request(Tw.API_CMD.BFF_06_0004, JSON.stringify({ dataQty: dataQty, befrSvcNum: this.provider.phone }))
+        .done(function (res) {
+          if ( res.code == '00' ) {
+            this.provider.dataQty = dataQty;
+            $('.wrap_data .num').text(this.receiver.remainData - dataQty);
+            location.replace(sNextUrl);
+          }
+        }.bind(this));
+    } else if ( this.processType == 'members' ) {
+      this.provider.dataQty = dataQty;
+
+      $('.wrap_remain_data .num').text(Number(this.receiver.dataRemQty) - Number(this.provider.dataQty));
+      $('.wrap_gift_data .num').text(this.provider.dataQty);
       location.replace(sNextUrl);
     }
   },
@@ -213,6 +230,7 @@ Tw.MytGiftProcess.prototype = {
 
     var tpl = Handlebars.compile($('#tpl_targetInfo').text());
     $('.wrap_provider').html(tpl(this.provider));
+    $('.tx-data em').text(this.receiver.dataRemQty);
 
     var nCurrentIndex = this.step.indexOf(location.hash.replace('#', ''));
     var sNextStep = this.step[nCurrentIndex + 1];

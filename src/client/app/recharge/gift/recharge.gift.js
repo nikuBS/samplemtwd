@@ -70,7 +70,7 @@ Tw.MytGift.prototype = Object.assign(Tw.MytGift.prototype, {
     this.lineInfo = params.lineInfo;
     this.$btn_change.text(this.lineInfo.svcNum);
 
-    this._apiService.request(Tw.API_CMD.BFF_06_0015, {}, { svcMgmtNum: this.lineInfo.svcMgmtNum })
+    this._apiService.request(Tw.API_CMD.BFF_06_0015, {})
       .done($.proxy(this.onSuccessProvider, this));
 
     this._apiService.request(Tw.API_CMD.BFF_06_0010, {
@@ -86,15 +86,7 @@ Tw.MytGift.prototype = Object.assign(Tw.MytGift.prototype, {
   },
 
   onSuccessProvider: function (res) {
-    // var result = res.result;
-
-    var result = {
-      "dataGiftCnt": "1",
-      "familyMemberYn": "Y",
-      "familyDataGiftCnt": "2",
-      "goodFamilyMemberYn": "Y"
-    }
-
+    var result = res.result;
     result.familyMemberYn = result.familyMemberYn == 'Y' ? true : false;
     result.goodFamilyMemberYn = result.goodFamilyMemberYn == 'Y' ? true : false;
 
@@ -129,14 +121,14 @@ Tw.MytGift.prototype = Object.assign(Tw.MytGift.prototype, {
     var $wrap_remain_data = $(e.currentTarget).closest('.gift-box-info-list');
 
     // TODO : fetch data && binding
-    // this._apiService.request(Tw.API_CMD.BFF_06_0014, { reqCnt: 1 })
-    //   .done(function (res) {
-    //     // var result = res.result;
-    //     // result.familyMemberYn = result.familyMemberYn == 'Y' ? true : false;
-    //     // result.goodFamilyMemberYn = result.goodFamilyMemberYn == 'Y' ? true : false;
-    //     //
-    //     // this.$wrap_gift_count.html(this.tpl_gift_count(result));
-    //   }.bind(this));
+    this._apiService.request(Tw.API_CMD.BFF_06_0014, { reqCnt: 3 })
+      .done(function (res) {
+        // var result = res.result;
+        // result.familyMemberYn = result.familyMemberYn == 'Y' ? true : false;
+        // result.goodFamilyMemberYn = result.goodFamilyMemberYn == 'Y' ? true : false;
+        //
+        // this.$wrap_gift_count.html(this.tpl_gift_count(result));
+      }.bind(this));
 
     var response = {
       "code": "00",
@@ -144,7 +136,7 @@ Tw.MytGift.prototype = Object.assign(Tw.MytGift.prototype, {
       "result": {
         "reqCnt": "1",
         "giftRequestAgainYn": "Y",
-        "dataRemQty": "500"
+        "dataRemQty": "700"
       }
     }
 

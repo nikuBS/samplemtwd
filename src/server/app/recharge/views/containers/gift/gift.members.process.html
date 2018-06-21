@@ -126,11 +126,10 @@
                             </dl>
                         </li>
                         <li class="rest">
-                            <dl>
+                            <dl class="wrap_remain_data">
                                 <dt class="ti-data">잔여 데이터</dt>
                                 <dd class="tx-data">
-                                    <span class="tx-bold">24 GB</span>
-                                    <span>(24,890 MB)</span>
+                                    <span class="tx-bold">100 MB</span>
                                 </dd>
                             </dl>
                         </li>
@@ -202,7 +201,7 @@
                     <div class="gift-data-cont">
                         <ul class="t-gift-data">
                             <li>
-                                <dl>
+                                <dl class="wrap_remain_data">
                                     <dt class="ti-data">잔여 데이터</dt>
                                     <dd class="tx-data">
                                         <span class="tx-bold"><span class="num">10</span> GB</span>
@@ -245,7 +244,7 @@
                                 </dl>
                             </li>
                             <li>
-                                <dl>
+                                <dl class="wrap_gift_data">
                                     <dt class="ti-data">선물한 데이터</dt>
                                     <dd class="tx-data"><span class="num">500</span> MB</dd>
                                 </dl>
@@ -301,6 +300,12 @@
     <span class="blind">전화번호</span><span class="num">{{phone}}</span>
 </script>
 
+<script type="text/x-handlebars-template" id="tpl_remain_data">
+    <dt class="ti-data">잔여 데이터</dt>
+    <dd class="tx-data">
+        <span class="tx-bold"><span class="num">{{dataRemQty}}</span> MB</span>
+    </dd>
+</script>
 
 <script>
   $(document).ready(function () {
