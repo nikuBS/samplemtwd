@@ -31,8 +31,7 @@ Tw.MytGift.prototype = Object.assign(Tw.MytGift.prototype, {
       case 'request':
         elWrapper.eq(1).find('a').click();
         break;
-      default:
-        elWrapper.eq(0).find('a').click();
+
     }
   },
 
@@ -47,11 +46,9 @@ Tw.MytGift.prototype = Object.assign(Tw.MytGift.prototype, {
 
   _bindEvent: function () {
     this.$container.on('updateLineInfo', $.proxy(this.updateLineInfo, this));
-    this.$container.on('click', '#line-set', $.proxy(this.openLineSelectPopup, this));
     this.$container.on('click', '.btn_process', $.proxy(this.goToProcess, this));
     this.$container.on('click', '.bt-link-tx', $.proxy(this.openPriceList, this));
     this.$container.on('click', '.my-data', $.proxy(this.showRemainData, this));
-    this.$container.on('click', '.popup-blind', $.proxy(this.closeLineSelectPopup, this));
     this.$container.on('click', '.popup-closeBtn', $.proxy(this.closePriceList, this));
     this.$container.on('click', '.tab-linker a', $.proxy(this.changeTabMenu, this));
   },
@@ -154,11 +151,5 @@ Tw.MytGift.prototype = Object.assign(Tw.MytGift.prototype, {
     $('#popup_price_list').hide();
     $(document.body).css('height', 'auto');
     $(document.body).css('overflow-y', 'auto');
-  },
-
-  openLineSelectPopup: function () {
-  },
-
-  closeLineSelectPopup: function () {
   }
 });

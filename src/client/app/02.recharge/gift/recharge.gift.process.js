@@ -93,11 +93,11 @@ Tw.MytGiftProcess.prototype = {
   },
 
   //-----------------------------------------------------[문자로 알리기]
-  _popupOpen: function(str) {
+  _popupOpen: function (str) {
     // console.info('frontend_fn.popup_open 재정의 22: ', str);
     // console.info('Tw.MytGiftProcess.prototype.provider 객체 : ', Tw.MytGiftProcess.prototype.provider);
-    $('body').find('[data-target="msgName"]').prepend( Tw.MytGiftProcess.prototype.provider.name );
-    $('body').find('[data-target="txTel"]').html( Tw.MytGiftProcess.prototype.provider.phone );
+    $('body').find('[data-target="msgName"]').prepend(Tw.MytGiftProcess.prototype.provider.name);
+    $('body').find('[data-target="txTel"]').html(Tw.MytGiftProcess.prototype.provider.phone);
   },
 
   _sendTextPopEvt: function () {
@@ -271,7 +271,7 @@ Tw.MytGiftProcess.prototype = {
     this.$input_phone.val(phoneNumber);
   },
 
-  resetInputPhone: function(){
+  resetInputPhone: function () {
     this.$input_phone.val('');
   },
 
@@ -307,8 +307,17 @@ Tw.MytGiftProcess.prototype = {
     var sNextUrl = location.href.replace(location.hash, '#' + sNextStep);
     var dataQty = $('#wrap_data_select').find('label.checked').data('value');
 
-    if(!dataQty){
-      // TODO : data select alert
+    if ( !dataQty ) {
+      skt_landing.action.popup.open({
+        'title': '알림',
+        'close_bt': true,
+        'title2': '데이터를 입력해주세요.',
+        'bt_num': 'one',
+        'type': [{
+          class: 'bt-red1 family-history-cancel',
+          txt: '확인'
+        }]
+      });
       return;
     }
 
@@ -316,19 +325,26 @@ Tw.MytGiftProcess.prototype = {
       if ( this._isRequestByOpdtm ) {
         this._apiService.request(Tw.API_CMD.BFF_06_0013, { dataQty: dataQty, opDtm: this._opDtm })
           .done(function (res) {
-            debugger;
-            this._isRequestByOpdtm = false;
-            this.resetInputPhone();
-            this.provider.dataQty = dataQty;
-            $('.wrap_data .num').text(dataQty);
-            location.replace(sNextUrl);
+            if ( res.code == "00" ) {
+              this._isRequestByOpdtm = false;
+              this.resetInputPhone();
+              this.provider.dataQty = dataQty;
+              $('.wrap_data .num').text(dataQty);
+              location.replace(sNextUrl);
+            } else {
+              this.onFailStep(res);
+            }
           }.bind(this));
       } else {
         this._apiService.request(Tw.API_CMD.BFF_06_0013, { dataQty: dataQty, svcNum: this.provider.phone })
           .done(function (res) {
-            this.provider.dataQty = dataQty;
-            $('.wrap_data .num').text(dataQty);
-            location.replace(sNextUrl);
+            if ( res.code == '00' ) {
+              this.provider.dataQty = dataQty;
+              $('.wrap_data .num').text(dataQty);
+              location.replace(sNextUrl);
+            } else {
+              this.onFailStep(res);
+            }
           }.bind(this));
       }
     } else if ( this.processType == 'family' ) {
@@ -339,16 +355,7 @@ Tw.MytGiftProcess.prototype = {
             $('.wrap_data .num').text(this.receiver.dataRemQty - dataQty);
             location.replace(sNextUrl);
           } else {
-            skt_landing.action.popup.open({
-              'title': '알림',
-              'close_bt': true,
-              'title2': res.orgDebugMessage,
-              'bt_num': 'one',
-              'type': [{
-                class: 'bt-red1 family-history-cancel',
-                txt: '확인'
-              }]
-            });
+            this.onFailStep(res);
           }
         }.bind(this));
     } else if ( this.processType == 'members' ) {
@@ -374,7 +381,22 @@ Tw.MytGiftProcess.prototype = {
       var sNextUrl = location.href.replace(location.hash, '#' + sNextStep);
 
       location.replace(sNextUrl);
+    } else {
+      this.onFailStep(res)
     }
+  },
+
+  onFailStep: function (res) {
+    skt_landing.action.popup.open({
+      'title': '알림',
+      'close_bt': true,
+      'title2': res.orgDebugMessage,
+      'bt_num': 'one',
+      'type': [{
+        class: 'bt-red1 family-history-cancel',
+        txt: '확인'
+      }]
+    });
   },
 
   goHistory: function () {
@@ -384,6 +406,7 @@ Tw.MytGiftProcess.prototype = {
   goBasicStep: function () {
     var sBasicStepUrl = location.href.replace('step3', 'step1');
     location.replace(sBasicStepUrl);
+    location.reload(true);
   },
 
   goHome: function () {
