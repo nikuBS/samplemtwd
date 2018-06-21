@@ -1,3 +1,9 @@
+/**
+ * FileName: recharge.refill.gift.js
+ * Author: 이정민 (skt.p130713@partner.sk.com)
+ * Date: 2018.06.21
+ */
+
 Tw.MytRefillGift = function (rootEl) {
   this.$container = rootEl;
   this._apiService = new Tw.ApiService();
@@ -80,11 +86,13 @@ Tw.MytRefillGift.prototype = Object.assign(Tw.MytRefillGift.prototype, {
   _showFailAlert: function (resp) {
     var RESP_CODE = {
       RCG3003: 'RCG3003',
-      ZORDE4011: 'ZORDE4011',
+      RCG3004: 'RCG3004',
       RCG3005: 'RCG3005',
-      RCG3006: 'RCG3006'
+      RCG3006: 'RCG3006',
+      ZORDE4011: 'ZORDE4011' //레거시 에러 코드 임시 적용
     };
     switch ( resp.code ) {
+      case RESP_CODE.RCG3004:
       case RESP_CODE.ZORDE4011:
         window.location.href = '/recharge/refill/gift-products';
         break;
