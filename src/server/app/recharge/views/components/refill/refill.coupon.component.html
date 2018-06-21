@@ -49,7 +49,7 @@
         <% if (usageOptions.condition.usedCopnCntTmth > 0) { %>
         <p class="no-refill-use-message" style="display:none;">이번 달 쿠폰 사용 가능횟수를 초과하였습니다. (월 1회 사용 가능)</p>
         <% } %>
-        <% if (usageOptions.condition.transferableCopnCntTmth === 0) { %>
+        <% if (usageOptions.condition.transferableCopnCntTmth === '0') { %>
         <p class="no-gift-use-message" style="display:none;">이번 달 선물 사용 가능횟수를 초과하였습니다. (월 1회 사용 가능)</p>
         <% } %>
         <% } %>

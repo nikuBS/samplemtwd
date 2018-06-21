@@ -15,18 +15,20 @@ Tw.MytRefill.prototype = Object.assign(Tw.MytRefill.prototype, {
     this.$refillBtn = this.$container.find('.link-long > a');
   },
   _bindEvent: function () {
-    this.$container.on('click', '.coupon-cont', $.proxy(this._selectCoupon, this));
+    this.$container.on('click', '.slick-slide', $.proxy(this._selectCoupon, this));
     this.$container.on('click', '.link-long > a', $.proxy(this._goRefill, this));
     this.$container.on('click', '.refill-history', $.proxy(this._goHistory, this));
     this.$container.on('click', '.show-product', $.proxy(this._showProduct, this));
   },
   _selectCoupon: function (event) {
-    var $target = $(event.currentTarget).parents('.swiper-slide');
+    var $target = $(event.currentTarget);
     if ($target.find('.bt-select-arrow').hasClass('on')) {
+      $target.find('.bt-select-arrow').removeClass('on');
+      this.$refillBtn.addClass('disabled');
+    } else {
+      $target.find('.bt-select-arrow').addClass('on');
       $target.siblings().find('.bt-select-arrow').removeClass('on');
       this.$refillBtn.removeClass('disabled');
-    } else {
-      this.$refillBtn.addClass('disabled');
     }
   },
   _goRefill: function (event) {
@@ -56,7 +58,7 @@ Tw.MytRefill.prototype = Object.assign(Tw.MytRefill.prototype, {
   },
   _checkIsReceived: function () {
     var $selectedCoupon = this.$container.find('.bt-select-arrow.on');
-    if ($selectedCoupon.parents('.swiper-slide').hasClass('received')) {
+    if ($selectedCoupon.parents('.slick-slide').hasClass('received')) {
       alert(Tw.MESSAGE.REFILL_A04);
       return false;
     }
@@ -75,7 +77,7 @@ Tw.MytRefill.prototype = Object.assign(Tw.MytRefill.prototype, {
     return true;
   },
   _checkIsFirst: function () {
-    return this.$container.find('.swiper-slide:first a').hasClass('on');
+    return this.$container.find('.slick-slide:first a').hasClass('on');
   },
   _checkConfirm: function () {
     if (!this._checkIsFirst()) {
@@ -93,8 +95,8 @@ Tw.MytRefill.prototype = Object.assign(Tw.MytRefill.prototype, {
   },
   _makeUrl: function ($target) {
     var $selectedCoupon = this.$container.find('.bt-select-arrow.on');
-    var couponNumber = $selectedCoupon.parents('.swiper-slide').attr('id');
-    var endDate = $selectedCoupon.parents('.swiper-slide').data('end');
+    var couponNumber = $selectedCoupon.parents('.slick-slide').attr('id');
+    var endDate = $selectedCoupon.parents('.slick-slide').data('end');
 
     var url = '/recharge/refill';
     if (this._isRefillBtn($target)) {
