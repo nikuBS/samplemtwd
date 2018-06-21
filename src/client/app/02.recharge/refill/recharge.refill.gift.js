@@ -57,7 +57,7 @@ Tw.MytRefillGift.prototype = Object.assign(Tw.MytRefillGift.prototype, {
   },
 
   _onContact: function (resp) {
-    var params = JSON.parse(resp.params);
+    var params = resp.params;
     var phoneNumber = params.phoneNumber.replace(/-/gi, "");
     this._$inputPhone.val(phoneNumber);
     this._setDisableStatus();
