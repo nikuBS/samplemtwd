@@ -18,7 +18,7 @@
                 <h1>데이터 조르기</h1>
                 <a href="#allmenu" class="all-menu"><span class="blind">전체메뉴보기</span></a>
             </div>
-            <a href="javascript:history.back()" class="prev-step"><span class="blind">이전으로</span></a>
+            <a class="prev-step common-back"><span class="blind">이전으로</span></a>
             <a href="#search" class="search-content"><span class="blind">검색하기</span></a>
         </div>
     </div>
@@ -63,7 +63,7 @@
 
                 <div class="inner">
                     <h3 class="contents-tit">최근 조르기 요청한 사람</h3>
-                    <div class="contents-info-list">
+                    <div id="wrap_request_history" class="contents-info-list">
                         <div class="contents-none">
                             <span class="none-ico1">최근 조르기를 요청한 이력이 없습니다.</span>
                         </div>
@@ -90,7 +90,7 @@
                 <h1>데이터 조르기</h1>
                 <a href="/home/menu" class="all-menu"><span class="blind">전체메뉴보기</span></a>
             </div>
-            <a href="javascript:history.back()" class="prev-step"><span class="blind">이전으로</span></a>
+            <a class="prev-step common-back"><span class="blind">이전으로</span></a>
             <a href="#search" class="search-content"><span class="blind">검색하기</span></a>
         </div>
     </div>
@@ -181,7 +181,7 @@
                 <h1>데이터 선물하기</h1>
                 <a href="#allmenu" class="all-menu"><span class="blind">전체메뉴보기</span></a>
             </div>
-            <a href="javascript:history.back()" class="prev-step"><span class="blind">이전으로</span></a>
+            <a class="prev-step common-back"><span class="blind">이전으로</span></a>
             <a href="#search" class="search-content"><span class="blind">검색하기</span></a>
         </div>
     </div>
@@ -275,19 +275,19 @@
 
 <% include ../../components/javascript.component.html %>
 
-<script type="text/x-handlebars-template" id="tpl_request_recent">
+<script type="text/x-handlebars-template" id="tpl_request_history">
     <ul class="result-view">
         {{#each list}}
-        <li class="recent_item" data-phone="">
+        <li class="history_item" data-phone="{{svcNum}}" data-opdtm="{{opDtm}}">
             <div class="info-user">
-                <span class="info-title">김한림</span>
+                <!--<span class="info-title">김한림</span>-->
                 <span class="info-sub">{{svcNum}}</span>
             </div>
             <div class="info-data">
                 <!-- 1기가 미만인 경우 -->
                 <span class="info-title">{{dataQty}}MB</span>
             </div>
-            <div class="info-btn"><a href="#none" class="btn-choice">선택</a></div>
+            <div class="info-btn"><a class="btn-choice">선택</a></div>
         </li>
         {{/each}}
     </ul>
