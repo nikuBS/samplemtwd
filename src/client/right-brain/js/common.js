@@ -152,7 +152,7 @@ skt_landing.action = {
   },
   toggleon: function (ta) {
     ta.on('click', function (e) {
-      e.stopPropagation();
+      //e.stopPropagation();
       if (ta.find('a').length > 0) {
         if (!$(this).find('a').hasClass('on')) {
           $(this).find('a').addClass('on');
@@ -216,7 +216,7 @@ skt_landing.action = {
       loading_ico.appendTo(loading_box);
       loading_ico.append(svg);
       if(!ta || ta == '.wrap'){
-        skt_landing.action.fix_scroll(); 
+        skt_landing.action.fix_scroll();
       }
       if(size){
         loading_box.addClass('full');

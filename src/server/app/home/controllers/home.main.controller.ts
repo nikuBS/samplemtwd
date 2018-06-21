@@ -113,6 +113,7 @@ class HomeMain extends TwViewController {
         coupon.showUsePsblStaDt = DateHelper.getShortDateNoDot(coupon.usePsblStaDt);
         coupon.showUsePsblEndDt = DateHelper.getShortDateNoYear(coupon.usePsblEndDt);
         coupon.showRemainDate = DateHelper.getNewRemainDate(coupon.usePsblEndDt);
+        coupon.query = `copnNm=${coupon.copnIsueNum}&endDt=${coupon.usePsblEndDt}`;
       });
     }
     return refillCoupon;
