@@ -20,9 +20,8 @@ Tw.MytGiftProcess.prototype = {
   },
 
   $init: function () {
-    initHashNav(this._logHash);
     this.processType = location.href.substr(location.href.lastIndexOf('/') + 1).split('#')[0];
-    //$('body').css('position', 'relative');
+    initHashNav(this._logHash);
   },
 
   _logHash: function (hash) {
@@ -72,7 +71,8 @@ Tw.MytGiftProcess.prototype = {
     this.$container.on('updateLineInfo', $.proxy(this.updateLineInfo, this));
     this.$btn_go_history.on('click', $.proxy(this.goHistory, this));
     this.$btn_addr.on('click', $.proxy(this._onClickBtnAddr, this));
-    this.$container.on('click', '.history_item', $.proxy(this._onClickRequestHistoryItem, this));
+    this.$container.on('click', '#wrap_request_history .history_item', $.proxy(this._onClickRequestHistoryItem, this));
+    this.$container.on('click', '#wrap_family_history .history_item', $.proxy(this._onClickFamilyHistoryItem, this));
 
     this.$container.on('click', '[data-target="sendText"]', $.proxy(this._sendTextPopEvt, this));
     $('body').on('click', '[data-target="sendTextBtn"]', $.proxy(this._sendTextEvt, this));
@@ -117,8 +117,11 @@ Tw.MytGiftProcess.prototype = {
     }
 
     if ( this.processType == 'members' ) {
-      this._apiService.request(Tw.API_CMD.BFF_06_0018, {})
-        .done($.proxy(this.onSuccessMembersHistory, this));
+      this._apiService.request(Tw.API_CMD.BFF_06_0018, {
+        fromDt: Tw.DateHelper.getPastYearShortDate,
+        toDt: Tw.DateHelper.getCurrentShortDate,
+        giftType: 1
+      }).done($.proxy(this.onSuccessMembersHistory, this));
     }
 
     if ( this.processType == 'family' ) {
@@ -127,19 +130,31 @@ Tw.MytGiftProcess.prototype = {
     }
   },
 
-  onSuccessRequestHistory: function(res) {
+  onSuccessRequestHistory: function (res) {
     var result = res.result.slice(0, 3);
 
-    var tpl_request_history = Handlebars.compile($('#tpl_request_history').text());
-    $('#wrap_request_history').html(tpl_request_history({ list: result }));
+    if ( result.length != 0 ) {
+      var tpl_request_history = Handlebars.compile($('#tpl_request_history').text());
+      $('#wrap_request_history').html(tpl_request_history({ list: result }));
+    }
   },
 
-  onSuccessMembersHistory: function(res) {
+  onSuccessMembersHistory: function (res) {
     var result = res.result.slice(0, 3);
+
+    if ( result.length != 0 ) {
+      var tpl_members_history = Handlebars.compile($('#tpl_members_history').text());
+      $('#wrap_members_history').html(tpl_members_history({ list: result }));
+    }
   },
 
-  onSuccessFamilyHistory: function(res) {
+  onSuccessFamilyHistory: function (res) {
     var result = res.result.slice(0, 3);
+
+    if ( result.length != 0 ) {
+      var tpl_family_history = Handlebars.compile($('#tpl_family_history').text());
+      $('#wrap_family_history').html(tpl_family_history({ list: result }));
+    }
   },
 
   requestRemainData: function () {
@@ -185,7 +200,7 @@ Tw.MytGiftProcess.prototype = {
   },
 
   _onContact: function (resp) {
-    var params = JSON.parse(resp.params);
+    var params = resp.params;
     var phoneNumber = params.phoneNumber.replace(/-/gi, "");
     this.$input_phone.val(phoneNumber);
   },
@@ -196,6 +211,33 @@ Tw.MytGiftProcess.prototype = {
     this._opDtm = $target.data('opdtm');
 
     this.$input_phone.val($target.data('phone'));
+  },
+
+  _onClickFamilyHistoryItem: function (e) {
+    // this._apiService.request(Tw.API_CMD.BFF_06_0005 + '?' + $.param({ serNum: $(e.currentTarget).data('sernum') }), {})
+    //   .done(function (res) {
+    //     debugger;
+    //   });
+    var params = { serNum: $(e.currentTarget).data('sernum') };
+
+    var htOptions = {
+      type: 'DELETE',
+      url: Tw.API_CMD.BFF_06_0005.path + '?' + $.param(params),
+      dataType: 'json',
+      timeout: 10000,
+      headers: Object.assign({ "Content-Type": "application/json" }),
+      data: JSON.stringify(params)
+    };
+
+    $.ajax(htOptions).done(function (res) {
+      debugger;
+    });
+
+    // var $target = $(e.currentTarget);
+    // this._isRequestByOpdtm = true;
+    // this._opDtm = $target.data('opdtm');
+    //
+    // this.$input_phone.val($target.data('phone'));
   },
 
   validateNumber: function (e) {
@@ -296,13 +338,10 @@ Tw.MytGiftProcess.prototype = {
 
   goBasicStep: function () {
     var sBasicStepUrl = location.href.replace('step3', 'step1');
-
     location.replace(sBasicStepUrl);
   },
 
   goHome: function () {
     location.replace('/home');
-  },
-
-
+  }
 }
