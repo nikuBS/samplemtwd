@@ -1,9 +1,9 @@
-Tw.EtcExample = function (rootEl) {
+Tw.ManagementExample = function (rootEl) {
   this.$container = rootEl;
   this._bindEvent();
 };
 
-Tw.EtcExample.prototype = {
+Tw.ManagementExample.prototype = {
   _bindEvent: function () {
   }
 };

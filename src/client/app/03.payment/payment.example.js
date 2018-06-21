@@ -1,9 +1,9 @@
-Tw.BillExample = function (rootEl) {
+Tw.PaymentExample = function (rootEl) {
   this.$container = rootEl;
   this._bindEvent();
 };
 
-Tw.BillExample.prototype = {
+Tw.PaymentExample.prototype = {
   _bindEvent: function () {
   }
 };

@@ -5,7 +5,7 @@ import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { COUPON_STATUS_CODE, LINE_NAME } from '../../../../types/bff-common.type';
 import DateHelper from '../../../../utils/date.helper';
 import FormatHelper from '../../../../utils/format.helper';
-import MyTUsage from '../../../myt/controllers/usage/myt.usage.controller';
+import MyTUsage from '../../../01.myt/controllers/usage/myt.usage.controller';
 
 class RechargeRefill extends TwViewController {
   public myTUsage = new MyTUsage();
