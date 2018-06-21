@@ -37,6 +37,10 @@ Tw.MytGiftProcess.prototype = {
         $('.step1').hide();
         $('.step2').hide();
         $('.step3').show();
+
+        $('.popup-page').empty().remove();
+        skt_landing.action.auto_scroll();
+
         break;
       default:
         console.info('default hash.base : ', hash.base);
@@ -65,7 +69,39 @@ Tw.MytGiftProcess.prototype = {
     this.$container.on('click', '.recent_item', $.proxy(this.insertPhoneNumber, this));
     this.$btn_go_history.on('click', $.proxy(this.goHistory, this));
     this.$btn_addr.on('click', $.proxy(this._onClickBtnAddr, this));
+
+    this.$container.on('click', '[data-target="sendText"]', $.proxy(this._sendTextPopEvt, this));
+    $('body').on('click', '[data-target="sendTextBtn"]', $.proxy(this._sendTextEvt, this));
+    $('body').on('click', '[data-target="sendTextCancelBtn"]', $.proxy(this._sendTextCancelEvt, this));
   },
+
+  //-----------------------------------------------------[문자로 알리기]
+  _sendTextPopEvt: function () {
+    location.hash = 'DA_02_01_04_L01';
+    skt_landing.action.popup.open({
+      hbs:'DA_02_01_04_L01'// hbs의 파일명
+    });
+  },
+  _sendTextEvt: function () {
+    var befrSvcNum = '01012345678';
+    var textarea_text = $('body').find('[data-target="textSendbox"]').val();
+
+    this._apiService
+      .request(Tw.API_CMD.BFF_06_0017, JSON.stringify({
+        befrSvcNum: befrSvcNum,
+        msg: textarea_text
+      }))
+      .done($.proxy(this._apiComplete, this));
+  },
+  _apiComplete: function (res) {
+    console.info('res : ', res);
+    location.hash = 'step3';
+  },
+  _sendTextCancelEvt: function() {
+    console.info('취소');
+    location.hash = 'step3';
+  },
+  //-----------------------------------------------------[문자로 알리기 end]
 
 
   updateLineInfo: function (e, params) {
@@ -197,5 +233,7 @@ Tw.MytGiftProcess.prototype = {
 
   goHome: function () {
     location.replace('/home');
-  }
+  },
+
+
 }
