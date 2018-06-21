@@ -1,4 +1,4 @@
- /**
+/**
  * FileName: recharge.gift.js
  * Author: 박지만 (jiman.park@sk.com)
  * Date: 2018.06.22
@@ -22,20 +22,18 @@ Tw.MytGift.prototype = Object.assign(Tw.MytGift.prototype, {
   },
 
   _logHash: function (hash) {
-    setTimeout(function () {
-      var elWrapper = $('.tab-linker li');
+    var elWrapper = $('.tab-linker li');
 
-      switch ( hash.base ) {
-        case 'gift':
-          elWrapper.eq(0).find('a').click();
-          break;
-        case 'request' :
-          elWrapper.eq(1).find('a').click();
-          break;
-        default:
-          elWrapper.eq(0).find('a').click();
-      }
-    }.bind(this), 0);
+    switch ( hash.base ) {
+      case 'gift':
+        elWrapper.eq(0).find('a').click();
+        break;
+      case 'request':
+        elWrapper.eq(1).find('a').click();
+        break;
+      default:
+        elWrapper.eq(0).find('a').click();
+    }
   },
 
   _cachedElement: function () {
@@ -48,13 +46,13 @@ Tw.MytGift.prototype = Object.assign(Tw.MytGift.prototype, {
   },
 
   _bindEvent: function () {
+    this.$container.on('updateLineInfo', $.proxy(this.updateLineInfo, this));
     this.$container.on('click', '#line-set', $.proxy(this.openLineSelectPopup, this));
     this.$container.on('click', '.btn_process', $.proxy(this.goToProcess, this));
     this.$container.on('click', '.bt-link-tx', $.proxy(this.openPriceList, this));
     this.$container.on('click', '.my-data', $.proxy(this.showRemainData, this));
     this.$container.on('click', '.popup-blind', $.proxy(this.closeLineSelectPopup, this));
     this.$container.on('click', '.popup-closeBtn', $.proxy(this.closePriceList, this));
-    this.$container.on('updateLineInfo', $.proxy(this.updateLineInfo, this));
     this.$container.on('click', '.tab-linker a', $.proxy(this.changeTabMenu, this));
   },
 
@@ -85,10 +83,6 @@ Tw.MytGift.prototype = Object.assign(Tw.MytGift.prototype, {
       fromDt: Tw.DateHelper.getCurrentShortDate(),
       toDt: Tw.DateHelper.getCurrentShortDate()
     }).done($.proxy(this.onSuccessRequest, this));
-
-    // $.when()
-    //   .then(function () {
-    // })
   },
 
   onSuccessProvider: function (res) {
