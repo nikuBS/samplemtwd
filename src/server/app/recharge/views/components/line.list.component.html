@@ -1,15 +1,17 @@
 <div class="widget">
     <div class="widget-box select">
         <button id="line-set" class="bt-dropdown big" title="셀렉트 선택">
-            <%= lineList[0].svcNum %>
+            <% lineList.map((line) => { %>
+            <% if (line.repSvcYn === 'Y') { %><%= lineList[0].svcNum %><% } %>
+            <% }) %>
             <span class="ico"></span>
         </button>
         <div class="select-info">
             <span class="title">회선 목록</span>
             <span class="text"></span>
             <select title="회선 목록">
-                <% lineList.map((line, idx) => { %>
-                <option <% if (idx === 0) { %>selected<% } %>><%= line.svcNum %></option>
+                <% lineList.map((line) => { %>
+                <option <% if (line.repSvcYn === 'Y') { %>selected<% } %>><%= line.svcNum %></option>
                 <% }) %>
             </select>
         </div>
