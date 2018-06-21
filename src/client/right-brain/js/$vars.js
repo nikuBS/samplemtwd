@@ -29,12 +29,7 @@ $(document).on('ready', function () {
     default:
   }
   $('head title').text(head_title + head_common);
-  $.get(hbsURL+'gnb.hbs', function (text) {
-    var tmpl = Handlebars.compile(text);
-    var html = tmpl();
-    $('.wrap').append(html);
-  }).done(function () {
-    //gnb on동작
+  if(('.gnb')){
     $('.gnb-list li').each(function(num){
       $(this).find('a').on('click',function(){
           if(!$(this).hasClass('on')){
@@ -44,5 +39,5 @@ $(document).on('ready', function () {
       });
     });
     scroll_fn['gnb'] = 'skt_landing.action.gnb_action()';
-  });
+  }
 });

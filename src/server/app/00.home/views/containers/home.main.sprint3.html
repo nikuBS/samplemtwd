@@ -1,0 +1,185 @@
+<!-- Author Ara Jo (araara.jo@sk.com) -->
+<% include ../components/start.sprint3.component.html %>
+<!-- skip -->
+<div class="skip"><a href="/home">본문 바로가기</a></div>
+<!-- // skip -->
+<!-- wrap -->
+<div id="wrap">
+    <!-- header -->
+    <header class="header">
+        <h1 class="title"><a href="#">T world</a></h1>
+        <div class="user-numbers">
+            <a href="#link" class="moebius"><%= svcInfo.svcNum %></a>
+        </div>
+        <button class="btn-search"><span class="blind">검색</span></button>
+    </header>
+    <!-- // header -->
+    <!-- content -->
+    <div id="content">
+        <!-- container -->
+        <section class="container">
+            <div class="info-userdata">
+                <p><strong><%= svcInfo.custNm %></strong>님의 이번달</p>
+                <p class="coment">데이터가 부족해요</p>
+            </div>
+            <div class="slider-area">
+                <div class="ttl-area">
+                    <p class="ttl"><%= usageData.prodName %></p>
+                    <p class="days">잔여일수<b class="moebius-bold"><%= remainDate %></b>일</p>
+                </div>
+                <% if( usageData.main ) { %>
+                <div class="slick-type01">
+                    <div class="belt">
+                        <!-- class명 자유 해당 depth div가 1개 unit-->
+                        <% if( usageData.main.data ) { %>
+                        <div class="card type-data">
+                            <div class="head">
+                                <strong>데이터</strong>
+                                <span><%= usageData.main.data.skipName %></span>
+                            </div>
+                            <div class="bar-area">
+                                <div class="chart">
+                                    <% if(usageData.main.data.isUnlimit) { %>
+                                    <p><span class="moebius-bold mugen"><%= usageData.main.data.total %></span></p>
+                                    <% } else { %>
+                                    <p>
+                                        <span class="moebius-bold"><%= usageData.main.data.showRemained.data %></span>
+                                        <em><%= usageData.main.data.showRemained.unit %></em>
+                                    </p>
+                                    <strong class="total">
+                                        <span class="moebius-bold"><%= usageData.main.data.showTotal.data %></span>
+                                        <em><%= usageData.main.data.showTotal.unit %></em>
+                                    </strong>
+                                    <% } %>
+                                </div>
+                                <div class="bar">
+                                    <% if(usageData.main.data.remainedRatio !== 0) { %>
+                                    <span style="width:<%= usageData.main.data.remainedRatio %>%;"></span>
+                                    <% } %>
+                                    <!-- width:퍼센테이지 필요, 0%의 경우 display:none; // -->
+                                </div>
+                            </div>
+                        </div>
+                        <% } %>
+                        <% if( usageData.main.voice ) { %>
+                        <div class="card type-voice">
+                            <div class="head">
+                                <strong>음성</strong>
+                                <span><%= usageData.main.voice.skipName %></span>
+                            </div>
+                            <div class="bar-area">
+                                <div class="chart m">
+                                    <% if(usageData.main.voice.isUnlimit) { %>
+                                    <p><span class="moebius-bold mugen"><%= usageData.main.voice.total %></span></p>
+                                    <% } else { %>
+                                    <p>
+                                        <% if ( usageData.main.voice.showRemained.hours !== 0) { %>
+                                        <span class="moebius-bold"><%= usageData.main.voice.showRemained.hours %></span><em>시간</em>
+                                        <% } %>
+                                        <% if ( usageData.main.voice.showRemained.min !== 0) { %>
+                                        <span class="moebius-bold"><%= usageData.main.voice.showRemained.min %></span><em>분</em>
+                                        <% } %>
+                                        <% if ( usageData.main.voice.showRemained.sec !== 0) { %>
+                                        <span class="moebius-bold"><%= usageData.main.voice.showRemained.sec %></span><em>초</em>
+                                        <% } %>
+                                    </p>
+                                    <strong class="total">
+                                        <% if ( usageData.main.voice.showTotal.hours !== 0) { %>
+                                        <span class="moebius-bold"><%= usageData.main.voice.showTotal.hours %></span><em>시간</em>
+                                        <% } %>
+                                        <% if ( usageData.main.voice.showTotal.min !== 0) { %>
+                                        <span class="moebius-bold"><%= usageData.main.voice.showTotal.min %></span><em>분</em>
+                                        <% } %>
+                                        <% if ( usageData.main.voice.showTotal.sec !== 0) { %>
+                                        <span class="moebius-bold"><%= usageData.main.voice.showTotal.sec %></span><em>초</em>
+                                        <% } %>
+                                    </strong>
+                                    <% } %>
+                                </div>
+                                <div class="bar">
+                                    <% if(usageData.main.voice.remainedRatio !== 0) { %>
+                                    <span style="width:<%= usageData.main.voice.remainedRatio %>%;"></span><!-- width:퍼센테이지 필요, 0%의 경우 display:none; // -->
+                                    <% } %>
+                                </div>
+                            </div>
+                        </div>
+                        <% } %>
+                        <% if( usageData.main.sms ) { %>
+                        <div class="card type-message">
+                            <div class="head">
+                                <strong>문자</strong>
+                                <span><%= usageData.main.sms.skipName %></span>
+                            </div>
+                            <div class="bar-area">
+                                <div class="chart">
+                                    <% if(usageData.main.sms.isUnlimit) { %>
+                                    <p><span class="moebius-bold mugen"><%= usageData.main.sms.total %></span></p>
+                                    <% } else { %>
+                                    <p><span class="moebius-bold"><%= usageData.main.sms.remained %></span><em>건</em></p>
+                                    <strong class="total"><span class="moebius-bold"><%= usageData.main.sms.total %></span><em>건</em></strong>
+                                    <% } %>
+                                </div>
+                                <div class="bar">
+                                    <% if(usageData.main.sms.remainedRatio !== 0) { %>
+                                    <span style="width:<%= usageData.main.sms.remainedRatio %>%;"></span><!-- width:퍼센테이지 필요, 0%의 경우 display:none; // -->
+                                    <% } %>
+                                </div>
+                            </div>
+                        </div>
+                        <% } %>
+                        <% if (!usageData.prodName) { %>
+                        <div class="card type-infom infom">
+                            <div class="head">
+                                <strong>안내</strong>
+                            </div>
+                            <div class="bar-area">
+                                <span class="txt">잠시 후<br />다시 조회해 주세요</span>
+                            </div>
+                        </div>
+                        <% } else if (!usageData.main.data && !usageData.main.voice && !main.usageData.sms) { %>
+                        <div class="card type-infom infom">
+                            <div class="head">
+                                <strong>안내</strong>
+                            </div>
+                            <div class="bar-area">
+                                <span class="txt">데이터 / 음성통화 / 문자 <br />잔여기본통화 정보가 <br />없습니다. </span>
+                            </div>
+                        </div>
+                        <% } %>
+                    </div>
+                </div>
+                <% } %>
+            </div>
+            <!-- //slider-area -->
+            <div class="user-level">
+                <div class="level type0">T멤버십 Leaders club</div>
+                <div class="cost">
+                    <span>연간 누적 혜택</span><strong class="moebius-bold">95,200</strong><em>원</em>
+                </div>
+                <div class="codes">
+                    <img src="/skt/img/temp/img_barcode.png" alt=""/>
+                </div>
+            </div>
+            <!-- //user-level -->
+            <div class="favorite-tag">
+                <p class="ttl">즐겨찾는 메뉴</p>
+                <a href="#link" class="tag"><span>요금조회/납부</span></a>
+                <a href="#link" class="tag"><span>충전/선물/리필</span></a>
+                <a href="#link" class="tag"><span>T멤버십</span></a>
+                <a href="#link" class="tag"><span>인터넷/전화/TV</span></a>
+                <a href="#link" class="tag"><span>T로밍</span></a>
+            </div>
+        </section>
+        <!-- // container -->
+    </div>
+    <!-- // content -->
+    <!-- // wrap -->
+    <% include ../../../../common/views/components/footer.component.html %>
+</div>
+<% include ../components/javascript.sprint3.component.html %>
+<script>
+  $(document).ready(function () {
+    var comp = new Tw.HomeMainSprint3($('#wrap'));
+  });
+</script>
+<% include ../components/end.component.html %>
