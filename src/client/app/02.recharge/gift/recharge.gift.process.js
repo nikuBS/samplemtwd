@@ -22,6 +22,7 @@ Tw.MytGiftProcess.prototype = {
   $init: function () {
     initHashNav(this._logHash);
     this.processType = location.href.substr(location.href.lastIndexOf('/') + 1).split('#')[0];
+    //$('body').css('position', 'relative');
   },
 
   _logHash: function (hash) {
