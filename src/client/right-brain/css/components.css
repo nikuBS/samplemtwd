@@ -86,11 +86,13 @@
   width: 100%;
   height: 0;
   overflow: hidden;
+  visibility: hidden;
 }
 
 .tab-area .tab-contents > ul > li.on {
   height: auto;
   overflow: auto;
+  visibility: visible;
 }
 
 /* popup */
@@ -680,12 +682,7 @@
 
 .coupon-cont .coupon-box .coupon-list li {
   display: block;
-}
-
-.coupon-cont .coupon-box .coupon-list li:after {
-  content: "";
-  display: block;
-  clear: both;
+  overflow: hidden;
 }
 
 .coupon-cont .coupon-box .coupon-list li .list-ti {

@@ -288,7 +288,7 @@
 
 /* checkbox , radio */
 input[type=checkbox], input[type=radio] {
-  position: absolute;
+  display: inline;
   left: 0;
   top: 0;
   width: 100%;
@@ -358,13 +358,14 @@ input[type=checkbox], input[type=radio] {
 
 .radiobox.type01:before {
   content: "";
-  position: absolute;
+  display: inline-block;
   left: 0;
   top: 0;
   width: 1.25rem;
   height: 1.25rem;
   background: url(/img/form/ico-radio-style01.png) no-repeat 0 0;
   background-size: 2.5rem;
+  vertical-align: middle;
 }
 
 .radiobox.type01.checked:before {
@@ -396,8 +397,7 @@ input[type=checkbox], input[type=radio] {
 }
 
 .radiobox.type01 > span {
-  display: block;
-  margin: 0 0 0 1.75rem;
+  display: inline-block;
   font-size: 0.8125rem;
   line-height: 1.25rem;
   color: #000;
