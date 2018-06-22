@@ -1,6 +1,6 @@
 /**
  * FileName: recharge.refill.select.controller.ts
- * Author: 공자윤(jayoon.kong@sk.com)
+ * Author: 공자윤 (jayoon.kong@sk.com)
  * Date: 2018.06.18
  **/
 import TwViewController from '../../../../common/controllers/tw.view.controller';
