@@ -75,9 +75,9 @@ class DateHelper {
    */
   static getAddDay(date) {
     return moment(this.convDateFormat(date))
-      .add(1, 'days')
-      .subtract(1, 'minutes')
-      .format('YYYY.MM.DD hh:mm');
+        .add(1, 'days')
+        .subtract(1, 'minutes')
+        .format('YYYY.MM.DD hh:mm');
   }
 
   /**
@@ -86,11 +86,30 @@ class DateHelper {
    * @returns {Date}
    */
   static convDateFormat(date: any): Date {
-    if ( !(date instanceof Date) ) {
+    if (!(date instanceof Date)) {
       return moment(date, 'YYYYMMDDhhmmss').toDate();
     }
     return date;
   }
+
+  /**
+   * Return Date width Format parameter
+   * @param {date} date || {string} date, {string} format
+   * @returns {Date} : YYMMDD, YYYYMMDD, YY.MM.DD
+   */
+  static getShortDateWithFormat(date: any, format: string): any {
+    return moment(date, format).format(format);
+  }
+
+  /**
+   * Convert Date Format (BFF string to Date)
+   * @param {date} date || {string} date, {number} amount, {string} unit, {string} format
+   * @returns {Date} : YYMMDD, YYYYMMDD, YY.MM.DD
+   */
+  static getShortDateWithFormatAddByUnit(date: any, amount: any, unit: any, format: string) : string {
+    return moment(date, format).add(amount, unit).format(format);
+  }
+
 }
 
 export default DateHelper;
