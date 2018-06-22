@@ -1,3 +1,9 @@
+/**
+ * FileName: recharge.refill.select.js
+ * Author: 공자윤 (jayoon.kong@sk.com)
+ * Date: 2018.06.18
+ */
+
 Tw.MytRefillSelect = function (rootEl) {
   this.$container = rootEl;
   this.$document = $(document);

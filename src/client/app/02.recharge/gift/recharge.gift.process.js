@@ -98,7 +98,7 @@ Tw.MytGiftProcess.prototype = {
     // console.info('frontend_fn.popup_open 재정의 22: ', str);
     // console.info('Tw.MytGiftProcess.prototype.provider 객체 : ', Tw.MytGiftProcess.prototype.provider);
     $('body').find('[data-target="msgName"]').prepend(Tw.MytGiftProcess.prototype.provider.name);
-    $('body').find('[data-target="txTel"]').html(Tw.MytGiftProcess.prototype.provider.phone);
+    $('body').find('[data-target="txTel"]').html(Tw.FormatHelper.convertTelFormat(Tw.MytGiftProcess.prototype.provider.phone));
   },
 
   _sendTextPopEvt: function () {
@@ -109,7 +109,7 @@ Tw.MytGiftProcess.prototype = {
     });
   },
   _sendTextEvt: function () {
-    var befrSvcNum = '01012345678';
+    var befrSvcNum = Tw.MytGiftProcess.prototype.provider.phone;
     var textarea_text = $('body').find('[data-target="textSendbox"]').val();
 
     this._apiService
