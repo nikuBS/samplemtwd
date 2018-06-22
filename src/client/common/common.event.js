@@ -14,6 +14,15 @@ Tw.Common.prototype = {
       Tw.Logger.info('[Common Back]');
       history.back();
     });
+  },
+
+  toggle: function (selector) {
+    if (selector.hasClass('on')) {
+      selector.removeClass('on');
+    }
+    else {
+      selector.addClass('on');
+    }
   }
 };
 

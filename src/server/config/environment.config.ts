@@ -5,10 +5,10 @@ const environment = {
       protocol: 'http',
       port: 32224
     },
-    CDN: '',
+    CDN: 'http://localhost:3001',
     REDIS: {
       host: '211.188.180.73',
-      port: 31200,
+      port: 32200,
       db: 15
     },
     TEMP_CDN: 'http://tstore.rbipt.com/skt',

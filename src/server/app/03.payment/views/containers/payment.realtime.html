@@ -1,13 +1,14 @@
 <!--
 * FileName: payment.realtime.html
-* Author: 공자윤
+* Author: 공자윤 (jayoon.kong@sk.com)
 * Date: 2018.06.22
 -->
 <% include ../components/start.component.html %>
-<div>즉시납부</div>
+<div id="payment-realtime">즉시납부 <span class="btn">click!!</span></div>
 <% include ../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
+    var comp = new Tw.PaymentRealtime($('#payment-realtime'));
   });
 </script>
 <% include ../components/end.component.html %>
