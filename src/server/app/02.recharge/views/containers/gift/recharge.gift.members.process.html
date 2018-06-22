@@ -62,7 +62,7 @@
 
                 <div class="inner">
                     <h3 class="contents-tit">최근 선물 보낸 사람</h3>
-                    <div class="contents-info-list">
+                    <div id="wrap_members_history" class="contents-info-list">
                         <div class="contents-none">
                             <span class="none-ico1">최근 선물을 보낸 이력이 없습니다.</span>
                         </div>
@@ -301,6 +301,22 @@
     <dd class="tx-data">
         <span class="tx-bold"><span class="num">{{dataRemQty}}</span> MB</span>
     </dd>
+</script>
+
+<script type="text/x-handlebars-template" id="tpl_members_history">
+    <ul class="result-view">
+        {{#each list}}
+        <li class="history_item" data-name="{{custName}}" data-phone="{{svcNum}}" data-opdtm="{{opDtm}}">
+            <div class="info-user">
+                <span class="info-title">{{custName}}</span>
+                <span class="info-sub">{{svcNum}}</span>
+            </div>
+            <div class="info-data">
+                <span class="info-title">{{dataQty}} MB</span>
+            </div>
+        </li>
+        {{/each}}
+    </ul>
 </script>
 
 <% include ../../components/javascript.component.html %>
