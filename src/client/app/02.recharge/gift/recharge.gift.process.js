@@ -31,7 +31,6 @@ Tw.MytGiftProcess.prototype = {
 
     //레이어팝업 오픈 함수 재정의
     frontend_fn.popup_open = $.proxy(this._popupOpen, this);
-
   },
 
   _logHash: function (hash) {
@@ -53,7 +52,6 @@ Tw.MytGiftProcess.prototype = {
 
         $('.popup-page').empty().remove();
         skt_landing.action.auto_scroll();
-
         break;
       default:
         console.info('default hash.base : ', hash.base);
@@ -90,9 +88,7 @@ Tw.MytGiftProcess.prototype = {
     this.$container.on('click', '[data-target="sendText"]', $.proxy(this._sendTextPopEvt, this));
     $('body').on('click', '[data-target="sendTextBtn"]', $.proxy(this._sendTextEvt, this));
     $('body').on('click', '[data-target="sendTextCancelBtn"]', $.proxy(this._sendTextCancelEvt, this));
-
   },
-
   //-----------------------------------------------------[문자로 알리기]
   _popupOpen: function (str) {
     // console.info('frontend_fn.popup_open 재정의 22: ', str);
@@ -154,7 +150,6 @@ Tw.MytGiftProcess.prototype = {
 
   onSuccessRequestHistory: function (res) {
     var result = res.result.slice(0, 3);
-
     if ( result.length != 0 ) {
       var tpl_request_history = Handlebars.compile($('#tpl_request_history').text());
       $('#wrap_request_history').html(tpl_request_history({ list: result }));
@@ -171,7 +166,6 @@ Tw.MytGiftProcess.prototype = {
 
   onSuccessFamilyHistory: function (res) {
     var result = res.result.slice(0, 3);
-
     if ( result.length != 0 ) {
       var tpl_family_history = Handlebars.compile($('#tpl_family_history').text());
       $('#wrap_family_history').html(tpl_family_history({ list: result }));
@@ -290,9 +284,6 @@ Tw.MytGiftProcess.prototype = {
   },
 
   nextProcess: function (e) {
-    e.stopPropagation();
-    e.preventDefault();
-
     if ( location.hash == '#step1' ) {
       setTimeout(function () {
         this.validateStep1();
@@ -332,14 +323,11 @@ Tw.MytGiftProcess.prototype = {
   },
 
   validateStep2: function () {
-    var nCurrentIndex = this.step.indexOf(location.hash.replace('#', ''));
-    var sNextStep = this.step[nCurrentIndex + 1];
-    var sNextUrl = location.href.replace(location.hash, '#' + sNextStep);
     var dataQty = $('#wrap_data_select').find('label.checked').data('value');
 
     if ( !dataQty ) {
       skt_landing.action.popup.open({
-        'title': '알림',
+        'title': '오류',
         'close_bt': true,
         'title2': '데이터를 입력해주세요.',
         'bt_num': 'one',
@@ -360,7 +348,7 @@ Tw.MytGiftProcess.prototype = {
               this.resetInputPhone();
               this.provider.dataQty = dataQty;
               $('.wrap_data .num').text(dataQty);
-              location.replace(sNextUrl);
+              location.replace(this.getNextStepUrl());
             } else {
               this.onFailStep(res);
             }
@@ -371,7 +359,7 @@ Tw.MytGiftProcess.prototype = {
             if ( res.code == '00' ) {
               this.provider.dataQty = dataQty;
               $('.wrap_data .num').text(dataQty);
-              location.replace(sNextUrl);
+              location.replace(this.getNextStepUrl());
             } else {
               this.onFailStep(res);
             }
@@ -382,8 +370,8 @@ Tw.MytGiftProcess.prototype = {
         .done(function (res) {
           if ( res.code == '00' ) {
             this.provider.dataQty = dataQty;
-            $('.wrap_data .num').text(this.receiver.dataRemQty - dataQty);
-            location.replace(sNextUrl);
+            $('.wrap_data .num').text(dataQty);
+            location.replace(this.getNextStepUrl());
           } else {
             this.onFailStep(res);
           }
@@ -393,7 +381,7 @@ Tw.MytGiftProcess.prototype = {
 
       $('.wrap_remain_data .num').text(Number(this.receiver.dataRemQty) - Number(this.provider.dataQty));
       $('.wrap_gift_data .num').text(this.provider.dataQty);
-      location.replace(sNextUrl);
+      location.replace(this.getNextStepUrl());
     }
   },
 
@@ -406,19 +394,27 @@ Tw.MytGiftProcess.prototype = {
       $('.wrap_provider').html(tpl(this.provider));
       $('.tx-data em').text(this.receiver.dataRemQty + 'MB');
 
-      var nCurrentIndex = this.step.indexOf(location.hash.replace('#', ''));
-      var sNextStep = this.step[nCurrentIndex + 1];
-      var sNextUrl = location.href.replace(location.hash, '#' + sNextStep);
-
-      location.replace(sNextUrl);
+      location.replace(this.getNextStepUrl());
     } else {
       this.onFailStep(res)
     }
   },
 
+  renderSelectDataQty: function (dataQty) {
+
+  },
+
+  getNextStepUrl: function () {
+    var nCurrentIndex = this.step.indexOf(location.hash.replace('#', ''));
+    var sNextStep = this.step[nCurrentIndex + 1];
+    var sNextUrl = location.href.replace(location.hash, '#' + sNextStep);
+
+    return sNextUrl;
+  },
+
   onFailStep: function (res) {
     skt_landing.action.popup.open({
-      'title': '알림',
+      'title': '오류',
       'close_bt': true,
       'title2': res.orgDebugMessage,
       'bt_num': 'one',
