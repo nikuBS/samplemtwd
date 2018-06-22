@@ -8,12 +8,18 @@ const MyTUsageTDataShareData = {
 
     'freePlan': [
       { // 기본제공 데이터 현황
-        'prodId': '19283747aejufei(요금제 ID)',
-        'prodNm': '올인원 54(요금제명/상품명)',
-        'freePlanNm': '무료혜택명 처리(다다익선 요금제만 이월 표시:기본제공데이터혜택)',
-        'setAmt': '기본 공제량',
-        'useAmt': '사용량',
-        'remAmt': '잔여량(사용가능한데이터)'
+        'skipName': '무룧택명 처리',
+        'total': '32475123',
+        'used': '12475123',
+        'remained': '20000000',
+        'unit': '140'
+      },
+      { // 기본제공 데이터 현황
+        'skipName': '무룧택명 처리',
+        'total': '기본공제량',
+        'used': '120000',
+        'remained': '잔여량,',
+        'unit': '140'
       }
     ],
 

@@ -16,7 +16,7 @@ Tw.FormatHelper = (function () {
     return (!!value) && (value.varructor === Object);
   };
 
-  var isArra = function (value) {
+  var isArray = function (value) {
     return (!!value) && (value.varructor === Array);
   };
 
@@ -27,11 +27,11 @@ Tw.FormatHelper = (function () {
 
   var customDataFormat = function (data, curUnit, targetUnit) {
     var units = [Tw.DATA_UNIT.KB, Tw.DATA_UNIT.MB, Tw.DATA_UNIT.GB];
-    var curUnitIdx = _.findIndex(units, function(value) {
-      return value === curUnitIdx;
+    var curUnitIdx = _.findIndex(units, function (value) {
+      return value === curUnit;
     });
-    var targetUnitIdx = _.findIndex(units, function(value) {
-      return value === targetUnitIdx;
+    var targetUnitIdx = _.findIndex(units, function (value) {
+      return value === targetUnit;
     });
 
     var sub = targetUnitIdx - curUnitIdx;
@@ -55,7 +55,7 @@ Tw.FormatHelper = (function () {
 
   var convDataFormat = function (data, curUnit) {
     var units = [Tw.DATA_UNIT.KB, Tw.DATA_UNIT.MB, Tw.DATA_UNIT.GB];
-    var unitIdx = _.findIndex(units, function(value) {
+    var unitIdx = _.findIndex(units, function (value) {
       return value === curUnit;
     });
 
@@ -114,10 +114,26 @@ Tw.FormatHelper = (function () {
     return { hours: hours, min: min, sec: sec };
   };
 
+  var convSmsPrice = function (smsCount) {
+    return smsCount * 310;
+  }
+
+  var convertTelFormat = function (v) {
+    var ret = v.trim();
+    return ret.substring(0, 3) + '-' + ret.substring(3, ret.length - 4) + '-' + ret.substring(ret.length - 4);
+  }
+
   return {
     leadingZeros: leadingZeros,
+    isEmpty: isEmpty,
+    isObject: isObject,
+    isArray: isArray,
+    isString: isString,
     customDataFormat: customDataFormat,
     convDataFormat: convDataFormat,
-    convVoiceFormat: convVoiceFormat
+    addComma: addComma,
+    convVoiceFormat: convVoiceFormat,
+    convSmsPrice: convSmsPrice,
+    convertTelFormat: convertTelFormat
   }
 })();

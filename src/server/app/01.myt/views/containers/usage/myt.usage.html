@@ -1,0 +1,386 @@
+<% include ../../components/start.sprint3.component.html %>
+<!-- skip -->
+<div class="skip"><a href="#content">본문 바로가기</a></div>
+<!-- // skip -->
+<!-- wrap -->
+<div id="wrap">
+    <!-- header -->
+    <header class="header-sub common-back">
+        <button class="btn-back"><span class="blind">뒤로가기</span></button>
+        <h1 class="title"><a href="#">MY T</a></h1>
+        <button class="btn-search"><span class="blind">검색</span></button>
+    </header>
+    <!-- // header -->
+    <!-- content -->
+    <div id="content">
+        <!-- container -->
+        <section id="myt-usage" class="container">
+            <!-- breadcrumb -->
+            <div class="breadcrumb">
+                나의 사용량/사용내역 &#62; 사용량 조회
+            </div>
+            <!-- // breadcrumb -->
+            <!-- prd-list -->
+            <div class="prd-list">
+                <% if (svcInfo) { %>
+                <ul>
+                    <li>
+                        <div class="case"><span class="name"><%= svcInfo.svcName %></span><% if (svcInfo.repSvcYn === 'Y') { %><span class="tag-type01">대표</span><% } %></div>
+                        <div class="mask moebius-bold"><%= svcInfo.svcNum %></div>
+                        <div class="nick"><%= svcInfo.custNm %></div>
+                        <div class="btn-change"><a href="/myt/usage/change" class="btn-type01">변경</a></div>
+                    </li>
+                </ul>
+                <% } %>
+            </div>
+            <!-- // prd-list -->
+            <!-- prd-summary -->
+            <div class="prd-summary">
+                <div class="inner">
+                    <div class="icon"><img src="../../img/ico_band.png" alt="" /></div>
+                    <div id="<%= usageData.prodId %>" class="prd-name"><a href="#"><%= usageData.prodName %></a></div>
+                    <div class="remaining-date">남은일수 <strong class="moebius-bold"><%= remainDate %></strong>일</div>
+                </div>
+            </div>
+            <!-- // prd-summary -->
+            <!-- prd-state -->
+            <div class="prd-state">
+                <!-- section : 데이터 -->
+                <% if (usageData.data) { %>
+                <% if (usageData.data.length > 0) { %>
+                <section>
+                    <h2>데이터</h2>
+                    <div class="btn-change">
+                        <input class="checkbox" id="checkbox1" type="checkbox"/>
+                        <label for="checkbox1" class="checkbox-label">
+                            <span class="off">GB</span>
+                            <span class="look"></span>
+                            <span class="on">MB</span>
+                        </label>
+                    </div>
+                    <div class="box-white">
+                        <!-- data -->
+                        <% for (var i = 0; i < usageData.data.length; i++) { %>
+                        <div class="data">
+                            <div id="<%= usageData.data[i].skipId %>" class="sec">
+                                <h3><% if (usageData.data[i].isExceed) { %><span class="tag-type03 exceed">초과</span><% } %> <%= usageData.data[i].skipName %></h3>
+                                <div class="<%= usageData.data[i].barClassName %>">
+                                    <span class="base"></span>
+                                    <% if (usageData.data[i].remainedRatio > 0) { %>
+                                    <div class="val" style="width:<%= usageData.data[i].remainedRatio %>%;"><!-- width:퍼센테이지 필요, 0%의 경우 display:none; // -->
+                                        <span class="fill"></span>
+                                        <span class="fill2"></span>
+                                    </div>
+                                    <% } %>
+                                </div>
+                                <div class="tail">
+                                    <% if (usageData.data[i].isRemainUnlimited) { %>
+                                    <div class="base2"><%= usageData.data[i].remained %></div>
+                                    <% } else { %>
+                                    <div class="base">잔여
+                                        <strong class="moebius-bold data-value" data-value="<%= usageData.data[i].remained %>"><%= usageData.data[i].showRemained.data %></strong>
+                                        <span class="unit"><%= usageData.data[i].showRemained.unit %></span>
+                                    </div>
+                                    <% } %>
+                                    <% if (!usageData.data[i].isUsedUnlimited) { %>
+                                    <div class="rt">사용
+                                        <strong class="moebius-bold data-value" data-value="<%= usageData.data[i].used %>"><%= usageData.data[i].showUsed.data %></strong>
+                                        <span class="unit"><%= usageData.data[i].showUsed.unit %></span>
+                                    </div>
+                                    <% } %>
+                                </div>
+                            </div>
+                            <% if (usageData.data[i].isVisibleDayBtn) { %>
+                            <div class="btn-group">
+                                <div class="col1">
+                                    <a href="#" class="btn-type01">당일 사용량 조회</a>
+                                </div>
+                            </div>
+                            <% } %>
+                        </div>
+                        <% } %>
+                        <!-- // data -->
+                        <!-- ad -->
+                        <div class="ad">
+                            <div class="btn-group">
+                                <div class="col1 refill">
+                                    <a href="/recharge/refill" class="btn-type02">리필하기<span class="refill-cnt"></span></a>
+                                </div>
+                                <div class="col1">
+                                    <a href="/recharge/gift" class="btn-type02">T끼리 데이터선물 / 조르기</a>
+                                </div>
+                                <div class="col1 t-data-sharing-btn" style="display:none;">
+                                    <a href="/myt/usage/tdatashare" class="btn-type02">T데이터셰어링 사용량</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- // ad -->
+                        <!-- tip -->
+                        <div class="tip ad1" style="display:none;">
+                            <h3>데이터 <strong>Tip</strong></h3>
+                            <div class="txt">하나의 데이터로 <strong>여러개의 기기를 이용한다고??</strong></div>
+                            <div class="link"><a href="/myt/usage/tdatashare/info">T데이터셰어링 알아보기</a></div>
+                        </div>
+                        <!-- // tip -->
+                        <!-- tip -->
+                        <div class="tip ad2" style="display:none;">
+                            <h3>요금제 <strong>Tip</strong></h3>
+                            <div class="txt">통화는 자주 안 하지만<strong>데이터가 부족하다면??</strong></div>
+                            <div class="link"><a href="#">데이터 무제한 요금제 알아보기</a></div>
+                        </div>
+                        <!-- // tip -->
+                    </div>
+                </section>
+                <% } %>
+                <% } %>
+                <!-- // section : 데이터 -->
+                <!-- section : 음성/영상 -->
+                <% if (usageData.voice) { %>
+                <% if (usageData.voice.length > 0) { %>
+                <section>
+                    <h2>음성/영상</h2>
+                    <div class="box-white">
+                        <!-- data -->
+                        <div class="data">
+                            <% for (var i = 0; i < usageData.voice.length; i++) { %>
+                            <div class="sec">
+                                <h3 id="<%= usageData.voice[i].skipId %>"><%= usageData.voice[i].skipName %></h3>
+                                <div class="<%= usageData.voice[i].barClassName %>">
+                                    <span class="base"></span>
+                                    <% if (usageData.voice[i].remainedRatio > 0) { %>
+                                    <div class="val" style="width:<%= usageData.voice[i].remainedRatio %>%;"><!-- width:퍼센테이지 필요 // -->
+                                        <span class="fill"></span>
+                                        <span class="fill2"></span>
+                                    </div>
+                                    <% } %>
+                                </div>
+                                <div class="tail">
+                                    <% if (usageData.voice[i].isRemainUnlimited) { %>
+                                    <div class="base2"><%= usageData.voice[i].remained %></div>
+                                    <% } else { %>
+                                    <div class="base">잔여
+                                        <% if (usageData.voice[i].showRemained.hours !== 0) { %>
+                                        <strong class="moebius-bold"><%= usageData.voice[i].showRemained.hours %></strong>시간
+                                        <% } %>
+                                        <% if (usageData.voice[i].showRemained.min !== 0) { %>
+                                        <strong class="moebius-bold"><%= usageData.voice[i].showRemained.min %></strong>분
+                                        <% } %>
+                                        <% if (usageData.voice[i].showRemained.sec !== 0) { %>
+                                        <strong class="moebius-bold"><%= usageData.voice[i].showRemained.sec %></strong>초
+                                        <% } %>
+                                        <% if (usageData.voice[i].remained === '0') { %><strong class="moebius-bold">0</strong>분<% } %>
+                                    </div>
+                                    <% } %>
+                                    <% if (!usageData.voice[i].isUsedUnlimited) { %>
+                                    <div class="rt">사용
+                                        <% if (usageData.voice[i].showUsed.hours !== 0) { %>
+                                        <strong class="moebius-bold"><%= usageData.voice[i].showUsed.hours %></strong>시간
+                                        <% } %>
+                                        <% if (usageData.voice[i].showUsed.min !== 0) { %>
+                                        <strong class="moebius-bold"><%= usageData.voice[i].showUsed.min %></strong>분
+                                        <% } %>
+                                        <% if (usageData.voice[i].showUsed.sec !== 0) { %>
+                                        <strong class="moebius-bold"><%= usageData.voice[i].showUsed.sec %></strong>초
+                                        <% } %>
+                                        <% if (usageData.voice[i].used === '0') { %><strong class="moebius-bold">0</strong>분<% } %>
+                                    </div>
+                                    <% } %>
+                                    <% if (usageData.voice[i].couponDate !== '') { %><div class="coupon">쿠폰등록일 <span class="moebius">2018.01.01</span></div><% } %>
+                                </div>
+                            </div>
+                            <% } %>
+                        </div>
+                        <!-- // data -->
+                        <!-- ad -->
+                        <div class="ad">
+                            <div class="btn-group">
+                                <div class="col1 refill">
+                                    <a href="/recharge/refill" class="btn-type02">리필하기<span class="refill-cnt"></span></a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- // ad -->
+                    </div>
+                </section>
+                <% } %>
+                <% } %>
+                <!-- // section : 음성/영상 -->
+                <!-- section : 문자 -->
+                <% if (usageData.sms) { %>
+                <section class="sms">
+                    <h2>문자</h2>
+                    <div class="box-white">
+                        <% for (var i = 0; i < usageData.sms.length; i++) { %>
+                        <div class="sec">
+                            <h3 id="<%= usageData.sms[i].skipId %>"><%= usageData.sms[i].skipName %></h3>
+                            <div class="<%= usageData.sms[i].barClassName %>">
+                                <span class="base"></span>
+                                <% if (usageData.sms[i].remainedRatio > 0) { %>
+                                <div class="val" style="width:<%= usageData.sms[i].remainedRatio %>%;">
+                                    <span class="fill"></span>
+                                    <span class="fill2"></span>
+                                </div>
+                                <% } %>
+                            </div>
+                            <div class="tail">
+                                <% if (usageData.sms[i].isRemainUnlimited) { %>
+                                <div class="base2"><%= usageData.sms[i].remained %></div>
+                                <% } else { %>
+                                <div class="base">잔여 <strong class="moebius-bold"><%= usageData.sms[i].showRemained %></strong>건</div>
+                                <% } %>
+                                <% if (!usageData.sms[i].isUsedUnlimited) { %>
+                                <div class="rt">사용 <strong class="moebius-bold"><%= usageData.sms[i].showUsed %></strong>건</div>
+                                <% } %>
+                            </div>
+                        </div>
+                        <% } %>
+                    </div>
+                </section>
+                <% } %>
+                <!-- // section : 문자 -->
+                <!-- section : 기타 -->
+                <% if (usageData.etc) { %>
+                <% for (var i = 0; i < usageData.etc.length; i++) { %>
+                <section>
+                    <h2>기타</h2>
+                    <div class="box-white">
+                        <div class="sec mb0">
+                            <h3 id="<%= usageData.etc[i].skipId %>"><%= usageData.etc[i].skipName %></h3>
+                            <div class="<%= usageData.etc[i].barClassName %>">
+                                <span class="base"></span>
+                                <% if (usageData.etc[i].remainedRatio > 0) { %>
+                                <div class="val" style="width:<%= usageData.etc[i].remainedRatio %>%;"><!-- width:퍼센테이지 필요 // -->
+                                    <span class="fill"></span>
+                                    <span class="fill2"></span>
+                                </div>
+                                <% } %>
+                            </div>
+                            <div class="tail">
+                                <% if (usageData.etc[i].isRemainUnlimited) { %>
+                                <div class="base"><%= usageData.etc[i].remained %></div>
+                                <% } else { %>
+                                    <% if (usageData.etc[i].unit === '110') { %>
+                                    <div class="base">잔여 <strong class="moebius-bold"><%= usageData.etc[i].showRemained %></strong>원</div>
+                                    <% } else { %>
+                                    <div class="base">잔여
+                                        <% if (usageData.etc[i].showRemained.hours !== 0) { %>
+                                        <strong class="moebius-bold"><%= usageData.etc[i].showRemained.hours %></strong>시간
+                                        <% } %>
+                                        <% if (usageData.etc[i].showRemained.min !== 0) { %>
+                                        <strong class="moebius-bold"><%= usageData.etc[i].showRemained.min %></strong>분
+                                        <% } %>
+                                        <% if (usageData.etc[i].showRemained.sec !== 0) { %>
+                                        <strong class="moebius-bold"><%= usageData.etc[i].showRemained.sec %></strong>초
+                                        <% } %>
+                                        <% if (usageData.etc[i].remained === '0') { %><strong class="moebius-bold">0</strong>분<% } %>
+                                    </div>
+                                    <% } %>
+                                <% } %>
+                                <% if (!usageData.etc[i].isUsedUnlimited) { %>
+                                    <% if (usageData.etc[i].unit === '110') { %>
+                                    <div class="rt">사용 <strong class="moebius-bold"><%= usageData.etc[i].showUsed %></strong>원</div>
+                                    <% } else { %>
+                                    <div class="rt">사용
+                                        <% if (usageData.etc[i].showUsed.hours !== 0) { %>
+                                        <strong class="moebius-bold"><%= usageData.etc[i].showUsed.hours %></strong>시간
+                                        <% } %>
+                                        <% if (usageData.etc[i].showUsed.min !== 0) { %>
+                                        <strong class="moebius-bold"><%= usageData.etc[i].showUsed.min %></strong>분
+                                        <% } %>
+                                        <% if (usageData.etc[i].showUsed.sec !== 0) { %>
+                                        <strong class="moebius-bold"><%= usageData.etc[i].showUsed.sec %></strong>초
+                                        <% } %>
+                                        <% if (usageData.etc[i].used === '0') { %><strong class="moebius-bold">0</strong>분<% } %>
+                                    </div>
+                                    <% } %>
+                                <% } %>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <% } %>
+                <% } %>
+                <!-- // section : 기타 -->
+                <!-- section -->
+                <section class="mt50">
+                    <div class="box-white pt0 pb0">
+                        <div class="add-on">
+                            <ul>
+                                <li class="t-roaming-sharing-btn" style="display:none;"><a href="/myt/usage/troaming">T 로밍 함께쓰기</a></li>
+                                <li class="data-sharing-btn" style="display:none;"><a href="/myt/usage/datashare">데이터 함께쓰기</a></li>
+                                <% if (usageData.dataTopUp === 'Y') { %><li><a href="/myt/usage/datalimit">데이터 한도요금제</a></li><% } %>
+                                <% if (usageData.ting === 'Y') { %><li><a href="/myt/usage/ting">팅 요금상품</a></li><% } %>
+                                <% if (usageData.dataDiscount === 'Y') { %><li><a href="/myt/usage/24hourdiscount">24시간 데이터 50% 할인</a></li><% } %>
+                                <li class="child-btn" style="display:none;"><a href="/myt/usage/children" class="hastag">자녀폰 사용량 (<em class="child-cnt"></em>명)<span class="tag-type02">자녀</span></a></li><!-- .hastag : 태그 존재시 여백 재설정 // -->
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+                <!-- // section -->
+            </div>
+            <!-- // prd-state -->
+            <!-- more-menu -->
+            <article class="more-menu">
+                <h2 class="star">이 <strong>메뉴</strong>도 보실래요?</h2>
+                <div class="btn-group">
+                    <div class="col1">
+                        <a href="#" class="btn-type02">실시간 요금조회</a>
+                    </div>
+                    <div class="col1">
+                        <a href="#" class="btn-type02">나의 사용패턴</a>
+                    </div>
+                </div>
+            </article>
+            <!-- // more-menu -->
+            <!-- guide -->
+            <article class="guide">
+                <h2 class="star">꼭 <strong>확인</strong>해 주세요!</h2>
+                <ol>
+                    <li>
+                        <button type="button" class="btn-toggle">1. 사용량 조회 안내</button>
+                        <ul>
+                            <li>T world에서는 안정적인 서비스를 위해 사용량 <strong>조회 조회 횟수를 120분당 12회로 제한</strong>하고 있습니다.</li>
+                            <li>실제 <strong>청구금액과 다소 차이가 있을 수 있으니</strong> 단순 참고용으로 활용하시기 바랍니다.</li>
+                            <li>사용량 조회는 <strong>이월되지 않으며</strong>, 일부 이월 가능한 요금제의 이월된 사용량 조회는 다음달 5일부터 사용 및 조회가 가능합니다.</li>
+                            <li>기본제공 혜택(음성,영상,데이터,SMS 등)이 제공되는 음성기본 요금제/음성옵션/데이터 옵션의 경우 사용량 조회가 가능합니다.<br />단, 신규 출시되는 일부 요금제는 적용시점이 지연될 수 있습니다.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <button type="button" class="btn-toggle">2. 사용량 조회가 불가능한 경우</button>
+                        <ul>
+                            <li>사용 내역이 없는 경우에는 사용량 조회가 불가합니다.</li>
+                            <li>아이핀(I-PIN)으로 가입한 법인 실사용자 회원의 경우, 자녀의 사용량 조회가 불가합니다.</li>
+                            <li>요금제 변경 후 같은 달에 기존 요금제로 재변경한 경우에는 해당월 말일까지 사용량 조회 서비스가 제공되지 않습니다. (이월 가능한 요금제의 경우에는 다음달 4일까지 제공되지 않습니다.)</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <button type="button" class="btn-toggle">3. 월 중 요금제 변경, 일시정지 시 안내</button>
+                        <ul>
+                            <li>월중 변경(요금제 변경, 정지)시 기본제공 음성/문자/데이터 혜택은 일할 계산되며, 초과하여 이용 시에는 추가요금이 청구됩니다. (요금제에 따라 일할 계산된 기본제공 통화혜택은 반영되어 있지 않을 수 있으니 주의하시기 바랍니다.)<div><a href="#" class="btn-type01">데이터요금 기준 안내</a></div></li>
+                            <li>일시정지 중이거나 일시정지 해제를 한 경우에는 해당월 말일까지 실제 사용량과 다소 차이가 있을 수 있습니다. (이월 가능한 요금제의 경우에는 다음달 4일까지 차이가 있을 수 있습니다.)</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <button type="button" class="btn-toggle">4. 마이벨 서비스 및 다다익선 요금제 이용고객</button>
+                        <ul>
+                            <li>마이벨 서비스는 SK텔레콤에 가입되어 있는 휴대폰으로 지역번호 없이 700-5857로 전화하는 경우에만 무료입니다.</li>
+                            <li>다다익선 요금제 이용고객의 경우 전월 일시정지 또는 요금제 변경 시에는 5일 이전까지는 당월 기본제공 통화분에서 우선적으로 차감됩니다.</li>
+                        </ul>
+                    </li>
+                </ol>
+            </article>
+        </section>
+        <!-- // container -->
+    </div>
+    <!-- // content -->
+    <!-- footer -->
+    <% include ../../../../../common/views/components/footer.component.html %>
+    <!-- // footer -->
+</div>
+<% include ../../components/javascript.sprint3.component.html %>
+<script>
+  $(document).ready(function () {
+    var comp = new Tw.MytUsage($('#myt-usage'));
+  });
+</script>
+<% include ../../components/end.component.html %>

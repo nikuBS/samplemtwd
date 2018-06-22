@@ -1,16 +1,16 @@
 var gulp       = require('gulp'),
     gutil      = require('gulp-util'),
     uglify     = require('gulp-uglify'),
-    cssmin     = require('gulp-css'),
+    // cssmin     = require('gulp-css'),
     concat     = require('gulp-concat'),
     webserver  = require('gulp-webserver'),
     livereload = require('gulp-livereload'),
     rename     = require('gulp-rename');
 
 
-var appNames = ['bill', 'customer', 'data', 'direct', 'etc', 'event', 'home', 'membership', 'myt', 'product', 'roaming', 'search', 'user'];
+var appNames = ['home', 'myt', 'recharge', 'payment', 'management', 'membership', 'product', 'direct', 'customer']; // search
 // for docker (dev env)
-var dist     = 'src/server/public/cdn/';
+var dist = 'src/server/public/cdn/';
 // var dist     = 'dist/';
 
 gulp.task('server', function () {
@@ -25,8 +25,10 @@ gulp.task('server', function () {
 
 gulp.task('js-vendor', function () {
   return gulp.src([
+    'src/client/vendor/**/*.js',
     'node_modules/jquery/dist/jquery.min.js',
     'node_modules/underscore/underscore-min.js',
+    'node_modules/handlebars/dist/handlebars.min.js',
     'node_modules/slick-carousel/slick/slick.min.js',
     'node_modules/moment/min/moment.min.js'])
     .on('error', function (err) {
@@ -67,39 +69,9 @@ gulp.task('js-common', function () {
     .pipe(gulp.dest(dist + 'js'));
 });
 
-gulp.task('js-ui', function () {
-  return gulp.src('src/client/ui/**/*.js')
-    .pipe(concat('ui.js'))
-    .pipe(gulp.dest(dist + 'js'))
-    .pipe(uglify())
-    .on('error', function (err) {
-      gutil.log(gutil.colors.red('[Error]'), err.toString());
-    })
-    .pipe(rename('ui.min.js'))
-    .pipe(gulp.dest(dist + 'js'));
-});
-
-gulp.task('css-vendor', function () {
-  return gulp.src([
-    'node_modules/slick-carousel/slick/slick.css'])
-    .pipe(concat('vendor.css'))
-    .pipe(gulp.dest(dist + 'css'));
-});
-
-gulp.task('css-common', function () {
-  return gulp.src('src/client/common/css/**/*.css')
-    .pipe(concat('common.css'))
-    .pipe(gulp.dest(dist + 'css'))
-    .pipe(cssmin())
-    .pipe(rename('common.min.css'))
-    .pipe(gulp.dest(dist + 'css'));
-});
-
-appNames.map((app) => {
+appNames.map(function (app, index) {
   gulp.task('js-' + app, function () {
-    return gulp.src([
-      'src/client/app/' + app + '/js/models/**/*.js',
-      'src/client/app/' + app + '/js/views/**/*.js'])
+    return gulp.src('src/client/app/0'+ index +'.' + app + '/**/*.js')
       .pipe(concat(app + '.js'))
       .pipe(gulp.dest(dist + 'js'))
       .pipe(uglify())
@@ -109,28 +81,60 @@ appNames.map((app) => {
       .pipe(rename(app + '.min.js'))
       .pipe(gulp.dest(dist + 'js'));
   });
-
-  gulp.task('css-' + app, function () {
-    return gulp.src('src/client/app/home/css/**/*.css')
-      .pipe(concat(app + '.css'))
-      .pipe(gulp.dest(dist + 'css'))
-      .pipe(cssmin())
-      .pipe(rename(app + '.min.css'))
-      .pipe(gulp.dest(dist + 'css'));
-  });
 });
+
+gulp.task('css-vendor', function () {
+  return gulp.src([
+    'node_modules/slick-carousel/slick/slick.css'])
+    .pipe(concat('vendor.css'))
+    .pipe(gulp.dest(dist + 'css'));
+});
+
+gulp.task('js-rb', function () {
+  return gulp.src('src/client/right-brain/js/script.min.js')
+    .pipe(gulp.dest(dist + 'js'));
+});
+
+// for sprint3
+gulp.task('js-rb-sprint3', function () {
+  return gulp.src('src/client/right-brain/js-sprint3/**/*.js')
+    .pipe(concat('ui-sprint3.js'))
+    .pipe(gulp.dest(dist + 'js'))
+    .pipe(uglify())
+    .on('error', function (err) {
+      gutil.log(gutil.colors.red('[Error]'), err.toString());
+    })
+    .pipe(rename('ui-sprint3.min.js'))
+    .pipe(gulp.dest(dist + 'js'));
+});
+
+
+gulp.task('css-rb', function () {
+  return gulp.src('src/client/right-brain/css/style.min.css')
+    .pipe(gulp.dest(dist + 'css'));
+});
+
+gulp.task('img', function () {
+  return gulp.src('src/client/right-brain/img/**/*')
+    .pipe(gulp.dest(dist + 'img'));
+});
+
+gulp.task('hbs', function () {
+  return gulp.src('src/client/right-brain/hbs/**/*')
+    .pipe(gulp.dest(dist + 'hbs'));
+});
+
 
 gulp.task('watch', function () {
   livereload.listen();
-  gulp.watch('src/client/**/*.js', ['js']);
-  gulp.watch('src/client/**/*.css', ['css']);
+  gulp.watch('src/client/**/*.js', ['js', 'js-rb']);
+  gulp.watch('src/client/**/*.css', ['css-vendor', 'css-rb']);
   gulp.watch('dist/**').on('change', livereload.changed);
 });
 
 gulp.task('js-app', appNames.map((app) => 'js-' + app));
-gulp.task('js', ['js-util', 'js-common', 'js-ui', 'js-app']);
-gulp.task('css-app', appNames.map((app) => 'css-' + app));
-gulp.task('css', ['css-common', 'css-app']);
+gulp.task('js', ['js-util', 'js-common', 'js-app']);
 gulp.task('vendor', ['js-vendor', 'css-vendor']);
-gulp.task('default', ['server', 'vendor', 'js', 'css', 'watch']);
-gulp.task('build', ['vendor', 'js', 'css']);
+gulp.task('rb', ['js-rb', 'js-rb-sprint3', 'css-rb', 'img', 'hbs']);
+gulp.task('default', ['server', 'vendor', 'js', 'rb', 'watch']);
+gulp.task('build', ['vendor', 'js', 'rb']);

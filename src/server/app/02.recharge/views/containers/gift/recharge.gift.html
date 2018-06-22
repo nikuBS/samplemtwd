@@ -1,0 +1,495 @@
+<% include ../../components/start.component.html %>
+
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb_area">메뉴 바로가기</a></li>
+        <li><a href="#content">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+
+<div class="wrap">
+    <!-- #header -->
+    <div id="header" class="header-wrap">
+        <div class="header">
+            <div class="header-ti">
+                <h1>데이터 선물하기</h1>
+                <a href="/home/menu" class="all-menu"><span class="blind">전체메뉴보기</span></a>
+            </div>
+            <a class="prev-step common-back"><span class="blind">이전으로</span></a>
+            <a href="#search" class="search-content"><span class="blind">검색하기</span></a>
+        </div>
+    </div>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <!-- .cont-box -->
+            <div class="cont-box">
+                <% if (lineList) { %><% include ../../components/line.list.component.html %><% } %>
+            </div>
+            <!--// .cont-box -->
+            <hr class="cont-sp type1">
+            <!-- .cont-box -->
+            <div class="cont-box nogaps">
+                <!-- .component -->
+                <div class="component">
+                    <div class="component-box tabs"><!-- h태m그 정렬 필수! -->
+                        <h1 class="blind">탭 컴포넌트</h1>
+                        <div class="tab-area type1"><!-- 타입별 탭형태 변환 -->
+                            <div class="tab-linker">
+                                <h2 class="blind">탭 목록</h2>
+                                <ul><!-- .tab-contents로 이동 -->
+                                    <li class="on"><a>선물하기</a></li>
+                                    <li><a>조르기</a></li>
+                                </ul>
+                            </div>
+                            <div class="tab-contents">
+                                <h2 class="blind">탭 내용</h2>
+                                <ul>
+                                    <li id="tab1" class="on">
+                                        <h3 class="blind">선물하기</h3>
+                                        <div class="cont-box nogaps">
+                                            <div class="gift-box-wrap">
+                                                <p class="gift-box-btit">가족·친구·연인에게<br><strong>데이터를 선물하세요.</strong></p>
+                                                <ul class="gift-box-info">
+                                                    <li id="wrap_gift_count" class="gift-box-info-list">
+                                                        <span class="gift-box-tit">선물 가능 횟수</span>
+                                                        <span class="gift-box-tx">T끼리 <strong>0회</strong></span>
+                                                        <span class="ico-gift"></span>
+                                                    </li>
+                                                    <li class="gift-box-info-list">
+                                                        <span class="gift-box-tit">잔여데이터</span>
+                                                        <a class="my-data">나의 데이터 확인</a>
+                                                        <span class="ico-gift2"></span>
+                                                    </li>
+                                                </ul>
+
+                                                <div class="gift-box-info2">
+                                                    <h3 class="contents-tit">T끼리 데이터 선물</h3>
+                                                    <p class="gift-box-btit2">LTE요금상품 가입 고객에게 월 2회 데이터를 선물 할 수 있습니다.</p>
+                                                    <a class="bt-link-tx">대상 요금제 확인하기 <span class="ico"></span></a>
+                                                </div>
+                                                <div class="contents-btn">
+                                                    <ul class="bt-slice hor">
+                                                        <li class="bt-blue1">
+                                                            <button class="btn_process" data-type="members">T끼리 데이터 선물하기</button>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+
+                                                <div class="gift-box-info2">
+                                                    <h3 class="contents-tit">데이터 자동선물 신청</h3>
+                                                    <p class="gift-box-btit2">매월 1일 최대 2회선 결합가족에게 자동으로 데이터를 선물할 수 있습니다.</p>
+                                                    <a class="bt-link-tx">대상 요금제 확인하기 <span class="ico"></span></a>
+                                                </div>
+                                                <div class="contents-btn">
+                                                    <ul class="bt-slice hor">
+                                                        <li class="bt-white1">
+                                                            <button class="btn_process" data-type="family">가족에게 자동선물 신청하기</button>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+
+                                            <hr class="cont-sp type1">
+                                            <!-- .cont-box -->
+                                            <div class="cont-box nogaps-hoz">
+                                                <div class="box-confirm">
+                                                    <!-- .widget -->
+                                                    <div class="widget">
+                                                        <div class="widget-box accordion">
+                                                            <h5 class="tit-a">꼭 확인해주세요!</h5>
+                                                            <div class="acco-cover toggle">
+                                                                <div class="bt-whole">
+                                                                    <button><span class="blind">내용 열기</span></button>
+                                                                </div>
+                                                                <div class="acco-style">
+                                                                    <ul class="acco-list">
+                                                                        <li class="acco-box on">
+                                                                            <!-- .on: 열기 -->
+                                                                            <div class="acco-tit">
+                                                                                <button>1. 선물 가능조건</button>
+                                                                            </div>
+                                                                            <div class="acco-cont">
+                                                                                <ul class="list-dot">
+                                                                                    <li>선물 후 기본 잔여 데이터가 500 MB 이상인 경우에만 선물하기가 가능합니다.
+                                                                                        <ul class="ex-txt">
+                                                                                            <li>예) 선물하기 전 잔여 데이터가 700MB인 경우<br>
+                                                                                                200 MB 선물하기 → 가능 (선물 후 잔여 데이터 500 MB)<br>
+                                                                                                300 MB 선물하기 → 불가 (선물 후 잔여 데이터 400 MB)
+                                                                                            </li>
+                                                                                            <li>LTE 안심옵션의 무료 데이터는 선물하기 불가</li>
+                                                                                        </ul>
+                                                                                    </li>
+                                                                                    <li>선물하는 고객이 가입한 요금상품에 따라 해당 월 제공되는 데이터 기본 제공량의 최대 50%까지
+                                                                                        선물하기 가능합니다. <br>(월 중 가입/변경 시, 일할 기본 제공량 적용)
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </div>
+                                                                        </li>
+                                                                        <li class="acco-box">
+                                                                            <div class="acco-tit">
+                                                                                <button>2. 데이터 선물 안내</button>
+                                                                            </div>
+                                                                            <div class="acco-cont">
+                                                                                <ul class="list-dot">
+                                                                                    <li>SK텔레콤 고객 간에만 선물 가능합니다.</li>
+                                                                                    <li>회당 100 MB~ 1 GB까지 선택하여 월 2회/최대 2GB까지 선물할 수 있습니다.
+                                                                                    </li>
+                                                                                    <li>T끼리 온가족할인/TB끼리 온가족무료/TB끼리 온가족프리/온가족플랜/온가족행복플랜 가입 고객의
+                                                                                        경우 결합되어 있는 가족에게 최대 4회/4 GB까지 선물 가능합니다.
+                                                                                    </li>
+                                                                                    <li>T가족결합(착한가족) 가입 고객의 경우 결합되어 있는 가족에게 횟수와 용량 제한없이 선물
+                                                                                        가능합니다.
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </div>
+                                                                        </li>
+                                                                        <li class="acco-box">
+                                                                            <div class="acco-tit">
+                                                                                <button>3. 요금상품 변경</button>
+                                                                            </div>
+                                                                            <div class="acco-cont">
+                                                                                <ul class="list-dot">
+                                                                                    <li>선물 받기 대상 요금상품에서 대상 외 요금상품으로 변경 시, 선물 받은 데이터는 사용할 수
+                                                                                        없습니다. <br>
+                                                                                        (단, 선물 받은 당월 내 대상 요금상품 원복 시, 선물 받은 데이터는 다시 사용
+                                                                                        가능합니다.)
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </div>
+                                                                        </li>
+                                                                        <li class="acco-box">
+                                                                            <div class="acco-tit">
+                                                                                <button>4. 받은 데이터 이용안내</button>
+                                                                            </div>
+                                                                            <div class="acco-cont">
+                                                                                <ul class="list-dot">
+                                                                                    <li>해당 월말까지 사용가능하며 이월되지 않습니다.</li>
+                                                                                    <li>선물 받은 데이터는 타인에게 다시 선물하거나 타 회선과 공유할 수 없습니다. <br>
+                                                                                        따라서, 기본제공 데이터 잔여량 = 가입요금상품의 기본제공 데이터 잔여량 만 표시됩니다.
+                                                                                    </li>
+                                                                                    <li>선물 받은 데이터는 실시간으로 적용되며, 이미 발생한 데이터 초과량을 소급하여 적용되지
+                                                                                        않습니다.
+                                                                                    </li>
+                                                                                    <li>선물한 데이터와 받은 데이터는 데이터 선물 내역 및 요금안내서를 통해 확인 가능합니다.
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </div>
+                                                                        </li>
+                                                                        <li class="acco-box">
+                                                                            <div class="acco-tit">
+                                                                                <button>5. 서비스 제한 안내</button>
+                                                                            </div>
+                                                                            <div class="acco-cont">
+                                                                                <ul class="list-dot">
+                                                                                    <li>데이터 선물하기는 만 19세가 되는 생일의 해당 월까지 이용할 수 없으며, 만 19세가 되는
+                                                                                        생일이 지난 다음달부터 이용이 가능합니다.
+                                                                                    </li>
+                                                                                    <li>선물하기 완료 후 연속하여 선물하기 시도 시, 이전 선물한 데이터 정보반영으로 약간의 시간이
+                                                                                        소요되어 선물하기 이용이 일시적으로 제한되니 이용에 참고 바랍니다.
+                                                                                    </li>
+                                                                                    <li>T끼리 데이터 선물하기 서비스는 상업적인 목적으로 이용할 수 없습니다.</li>
+                                                                                    <li>데이터 판매 등 금전적 이익을 얻을 목적으로 해당 서비스를 이용할 경우, 서비스 이용이 제한
+                                                                                        될 수 있습니다.<br>
+                                                                                        이는 인터넷 카페 등을 통한 거래 시 고객 정보 유출로 인한 범죄 악용, 일방적인 거래 취소
+                                                                                        등의 금전적 피해 및 고객 간 분쟁이 발생할 수 있어 서비스 이용에 따른 선의의 고객 피해를
+                                                                                        사전에 예방하지 위한 목적입니다.
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </div>
+                                                                        </li>
+                                                                        <li class="acco-box">
+                                                                            <div class="acco-tit">
+                                                                                <button>6. 자동선물 신청 안내</button>
+                                                                            </div>
+                                                                            <div class="acco-cont">
+                                                                                <ul class="list-dot">
+                                                                                    <li>데이터 선물 후 월 기본제공 데이터 잔여량이 500 MB 이상인 요금상품 가용 고객만
+                                                                                        가능합니다.
+                                                                                    </li>
+                                                                                    <li>데이터 자동선물 신청하기/받기는 대상 요금상품에 가입되어 있는 고객만 이용 가능합니다.
+                                                                                        <br>
+                                                                                        (단, 비대상 요금상품 가입 고객의 경우 대상요금상품으로 변경 시 이용 가능합니다.)
+                                                                                    </li>
+                                                                                    <li>자동선물 신청한 데이터는 매월 1일 발송되며, 발송된 데이터는 취소가 불가합니다.</li>
+                                                                                    <li>데이터 자동선물 신청은 회당 100 MB ~ 1 GB까지 가능합니다.</li>
+                                                                                </ul>
+                                                                            </div>
+                                                                        </li>
+                                                                        <li class="acco-box">
+                                                                            <div class="acco-tit">
+                                                                                <button>7. 자동선물 신청 SMS 인증</button>
+                                                                            </div>
+                                                                            <div class="acco-cont">
+                                                                                <ul class="list-dot">
+                                                                                    <li>데이터 자동선물 신청은 SMS인증이 정상적으로 이루어져야 자동선물이 가능합니다.</li>
+                                                                                    <li>데이터 자동선물 신청 할 때와 데이터 발송(매월 1일)할 때 선물한 고객과 받은 고객에게
+                                                                                        SMS가 발송됩니다.
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </div>
+                                                                        </li>
+                                                                        <li class="acco-box">
+                                                                            <div class="acco-tit">
+                                                                                <button>8. 자동선물 요금 상품 하향 변경 시 우선 순위</button>
+                                                                            </div>
+                                                                            <div class="acco-cont">
+                                                                                <ul class="list-dot">
+                                                                                    <li>요금상품 하향 변경 시 우선순위(자동선물 설정한 순서)에 따라 선물됩니다.</li>
+                                                                                </ul>
+                                                                            </div>
+                                                                        </li>
+                                                                        <li class="acco-box">
+                                                                            <div class="acco-tit">
+                                                                                <button>9. 자동선물 신청 서비스 제한 안내</button>
+                                                                            </div>
+                                                                            <div class="acco-cont">
+                                                                                <ul class="list-dot">
+                                                                                    <li>T끼리 데이터 선물하기 서비스는 상업적인 목적으로 이용할 수 없으며, 금전 거래 등 이익을
+                                                                                        목적으로 해당 서비스를 이용하는 경우 서비스 이용이 제한될 수 있습니다.
+                                                                                    </li>
+                                                                                    <li>선물하기/선물받기 회선 중 하나 이상이 일시정지/명의변경/요금제변경/해지 시 자동 선물하기도
+                                                                                        해지될 수 있으며, 변경 철회 시에도 자동선물기능은 원복이 불가하니 필요 시 재 설정하여야
+                                                                                        합니다.
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </div>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!--// .widget -->
+                                                </div>
+                                            </div>
+                                            <!--// .cont-box -->
+                                        </div>
+                                    </li>
+                                    <li id="tab2">
+                                        <h3 class="blind">조르기</h3>
+                                        <div class="cont-box nogaps">
+                                            <div class="gift-box-wrap">
+                                                <p class="gift-box-btit">데이터가 부족하다면<br><strong>데이터 조르기 해보세요!</strong></p>
+                                                <ul class="gift-box-info">
+                                                    <li id="wrap_request_count" class="gift-box-info-list">
+                                                        <span class="gift-box-tit">조르기 가능 횟수</span>
+                                                        <span class="gift-box-tx"><strong>30회</strong></span>
+                                                        <span class="ico-gift"></span>
+                                                    </li>
+                                                    <li class="gift-box-info-list">
+                                                        <span class="gift-box-tit">잔여데이터</span>
+                                                        <a class="my-data">나의 데이터 확인</a>
+                                                        <span class="ico-gift2"></span>
+                                                    </li>
+                                                </ul>
+
+                                                <div class="gift-box-info2">
+                                                    <h3 class="contents-tit">데이터 조르기</h3>
+                                                    <p class="gift-box-btit2">데이터 선물하기가 가능한 요금상품 가입고객에게만 조르기가 가능합니다.</p>
+                                                    <a class="bt-link-tx">대상 요금제 확인하기 <span class="ico"></span></a>
+                                                </div>
+
+                                                <div class="contents-btn">
+                                                    <ul class="bt-slice hor">
+                                                        <li class="bt-blue1">
+                                                            <button class="btn_process" data-type="request">데이터 조르기</button>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+
+                                            <hr class="cont-sp type1">
+                                            <!-- .cont-box -->
+                                            <div class="cont-box nogaps-hoz">
+                                                <div class="box-confirm">
+                                                    <!-- .widget -->
+                                                    <div class="widget">
+                                                        <div class="widget-box accordion">
+                                                            <h5 class="tit-a">꼭 확인해주세요!</h5>
+                                                            <div class="acco-cover toggle">
+                                                                <div class="bt-whole">
+                                                                    <button><span class="blind">내용 열기</span></button>
+                                                                </div>
+                                                                <div class="acco-style">
+                                                                    <ul class="acco-list">
+                                                                        <li class="acco-box">
+                                                                            <!-- .on: 열기 -->
+                                                                            <div class="acco-tit">
+                                                                                <button>1. 조르기 가능조건</button>
+                                                                            </div>
+                                                                            <div class="acco-cont">
+                                                                                <ul class="list-dot">
+                                                                                    <li>SK텔레콤 휴대폰 고객에게만 선물조르기가 가능합니다.<br>데이터 선물하기 대상 요금상품에
+                                                                                        가입되어 있는 고객에게만 조르기가 가능합니다.
+                                                                                    </li>
+                                                                                    <li>잔여데이터 500 MB 이상이며, 당월 데이터 선물하기 횟수가 초과되지 않은 고객에게만
+                                                                                        선물조르기가 가능합니다.
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </div>
+                                                                        </li>
+                                                                        <li class="acco-box">
+                                                                            <div class="acco-tit">
+                                                                                <button>2. 신청 불가</button>
+                                                                            </div>
+                                                                            <div class="acco-cont">
+                                                                                <ul class="list-dot">
+                                                                                    <li>당월 데이터 선물 받은 횟수가 초과 된 고객의 경우 조르기 신청이 불가합니다.</li>
+                                                                                    <li>선물조르기 신청 후 신청취소는 불가합니다.</li>
+                                                                                </ul>
+                                                                            </div>
+                                                                        </li>
+                                                                        <li class="acco-box">
+                                                                            <div class="acco-tit">
+                                                                                <button>3. SMS 발송</button>
+                                                                            </div>
+                                                                            <div class="acco-cont">
+                                                                                <ul class="list-dot">
+                                                                                    <li>조르기 신청을 누르시면 조르기 할 대상자에게 SMS가 발신되며, SMS 전송료는
+                                                                                        무료입니다.
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </div>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!--// .widget -->
+                                                </div>
+                                            </div>
+                                            <!--// .cont-box -->
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--// .cont-box -->
+        </div>
+    </div>
+    <!--// #contents -->
+    <% include ../../../../../common/views/components/footer.component.html %>
+</div>
+
+<div id="popup_price_list" class="popup-page" style="display: none"><!-- .no-btn 하단에 버튼이 없을 경우 -->
+    <!-- #header -->
+    <div class="header-wrap">
+        <div class="page-header">
+            <div class="header-ti">
+                <h1>대상 요금상품 보기</h1>
+            </div>
+            <a href="#closepage" class="close-page"><span class="blind">팝업 페이지 닫기</span></a>
+        </div>
+    </div>
+    <!--// #header -->
+    <!-- .container-wrap -->
+    <div class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <!-- content 영역 -->
+            <!-- .widget -->
+            <div class="widget show-price-plan">
+                <div class="widget-box accordion">
+                    <!--<h5 class="tit-a"></h5>-->
+                    <div class="acco-cover toggle on">
+                        <!--<div class="bt-whole"><button><span class="blind">내용 열기</span></button></div>-->
+                        <div class="acco-style">
+                            <ul class="acco-list">
+                                <li class="acco-box">
+                                    <!-- .on: 열기 -->
+                                    <div class="acco-tit">
+                                        <button>데이터 선물하는 고객</button>
+                                    </div>
+                                    <div class="acco-cont">
+                                        <ul class="list-dot txt-spacing">
+                                            <li>LTE 42/52/62/72/85/100(커플, 특수 포함), T끼리 45/55 /65, LTE 맞춤형, 전국민 무한, 손사랑 34/42/52, 소리사랑
+                                                34/42/52, 골든에이지 34/42/52, 온가족행복플랜 48/58/68/72/78/85/100, 골든에이지 온가족 6/44/54, 소리사랑 온가족, 손사랑
+                                                온가족, band 데이터 36/42/47/51/59/80/100, band 데이터 어르신 34/40 가입고객
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="acco-box">
+                                    <div class="acco-tit">
+                                        <button>데이터 선물 받는 고객</button>
+                                    </div>
+                                    <div class="acco-cont">
+                                        <ul class="list-dot">
+                                            <li>올인원 34/44, 올인원커플 44, 올인원특수 34/44, 올인원 팅 34/44, 팅스마트 19/24/29, 맞춤형, 실버스마트 15, LTE 팅, T끼리 맞춤형,
+                                                LTE 34/42/52/62/72/85/100(커플, 특수 포함),골든에이지, T끼리 35/45/55/65, 전국민 무한, LTE 맞춤형, 손사랑 34/42/52,
+                                                소리사랑 34/42/52, 온가족행복플랜 팅, 온가족플랜, 온가족행복플랜, 골든에이지 온가족, 소리사랑 온가족, 손사랑 온가족, band 데이터, band 팅,
+                                                band 어르신, T끼리 어르신, 쿠키즈18 가입고객
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="acco-box">
+                                    <div class="acco-tit">
+                                        <button>데이터 자동 선물 받는 고객</button>
+                                    </div>
+                                    <div class="acco-cont">
+                                        <ul class="list-dot">
+                                            <li>T끼리 온가족할인, T가족결합(착한가족), TB끼리온가족무료, TB끼리 온가족프리, 온가족플랜, 온가족행복플랜 가입고객
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--// .widget -->
+            <!--// content 영역 -->
+        </div>
+    </div>
+    <a class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></a>
+</div>
+
+<% include ../../components/javascript.component.html %>
+
+<!-- select.hbs -->
+<script type="text/x-handlebars-template" id="tpl_gift_count">
+    <span class="gift-box-tit">선물 가능 횟수</span>
+    <span class="gift-box-tx">T끼리 <strong>{{dataGiftCnt}}회</strong>
+        <span class="bar">
+        {{#if familyMemberYn}}
+            {{#if goodFamilyMemberYn}}
+                /</span> 가족 무제한 </span>
+    {{else}}
+    /</span> 가족 <strong>{{familyDataGiftCnt}}회</strong></span>
+    {{/if}}
+    {{/if}}
+    <span class="ico-gift"></span>
+</script>
+
+<script type="text/x-handlebars-template" id="tpl_request_count">
+    <span class="gift-box-tit">조르기 가능 횟수</span>
+    <span class="gift-box-tx"><strong>{{remainCount}}회</strong></span>
+    <span class="ico-gift"></span>
+</script>
+
+<script type="text/x-handlebars-template" id="tpl_remain_data">
+    <span class="gift-box-tit">잔여데이터</span>
+    <span class="gift-box-tx"><strong>{{dataRemQty}}MB</strong></span>
+    <span class="ico-gift2"></span>
+</script>
+
+<script>
+  $(document).ready(function () {
+    var oMytGiftLine = new Tw.MytGiftLine($(document));
+    var oMytGift = new Tw.MytGift($(document));
+  });
+</script>
+
+<% include ../../components/end.component.html %>

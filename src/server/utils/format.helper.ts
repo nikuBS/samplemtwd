@@ -95,6 +95,9 @@ class FormatHelper {
   }
 
   static addComma(value: string): string {
+    if ( FormatHelper.isEmpty(value) ) {
+      return '';
+    }
     const regexp = /\B(?=(\d{3})+(?!\d))/g;
     return value.replace(regexp, ',');
   }
@@ -106,6 +109,17 @@ class FormatHelper {
     const sec = data - (hours * 3600) - (min * 60);
 
     return { hours, min, sec };
+  }
+
+  static convMinToDay(min: any): any {
+    min = +min;
+    const day = Math.floor(min / 1440);
+    const hours = Math.floor((min - (day * 1440)) / 60);
+    return { day, hours };
+  }
+
+  static removeNumber(value: any): any {
+    return value.replace(/[0-9]/g, '');
   }
 }
 

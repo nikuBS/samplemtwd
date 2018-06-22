@@ -4,8 +4,8 @@ const myTUsageData = {
   'result': {
     'prodId': 'NA00005482',
     'prodName': '뉴 T끼리 맞춤형(100분+3GB)',
-    'dataTopUp ': 'Y',
-    'ting': 'N',
+    'dataTopUp': 'Y',
+    'ting': 'Y',
     'dataDiscount': 'Y',
     'data': [
       {
@@ -17,7 +17,6 @@ const myTUsageData = {
         'unit': '140',
         'couponDate': '20180601'
       },
-      /*
       {
         'skipId': 'LT', // DDZ23
         'skipName': '데이터통화 1GB 무료(LTE)',
@@ -27,7 +26,6 @@ const myTUsageData = {
         'unit': '140',
         'couponDate': ''
       }
-      */
     ],
     'voice': [
       {
@@ -47,6 +45,15 @@ const myTUsageData = {
         'total': '기본제공량',
         'used': '0',
         'remained': '0',
+        'unit': '310',
+        'couponDate': ''
+      },
+      {
+        'skipId': 'DD2N4',
+        'skipName': 'SMS\/MMS\/ⓜ메신저 기본제공',
+        'total': '300',
+        'used': '120',
+        'remained': '180',
         'unit': '310',
         'couponDate': ''
       }

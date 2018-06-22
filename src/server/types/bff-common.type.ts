@@ -10,9 +10,46 @@ export const SVC_CD = {
 };
 
 export const UNIT = {
+  '110': '원',
   '140': 'KB',
-  '210': '초',
-  '310': '원'
+  '240': '초',
+  '310': '건',
+  '320': '건'
+};
+
+export enum UNIT_E {
+  FEE = '110',
+  DATA = '140',
+  VOICE = '240',
+  SMS = '310',
+  SMS_2 = '320'
+}
+
+export enum LINE_NAME {
+  MOBILE = 'M',
+  INTERNET_PHONE_IPTV = 'W',
+  SECURITY = 'S'
+}
+
+export enum COUPON_STATUS_CODE {
+  LONG = 'A10',
+  DECADE = 'A14',
+  RECEIVED = 'A20'
+}
+
+export enum REFILL_CODE {
+  DATA = 'D',
+  VOICE = 'V'
+}
+
+export const REFILL_TXT = {
+  'D': '데이터',
+  'V': '음성'
+};
+
+export const REFILL_CLASS_NAME = {
+  'D': 'data',
+  'V': 'ngt'
 };
 
 export const DAY_BTN_STANDARD_SKIP_ID = [
@@ -20,3 +57,9 @@ export const DAY_BTN_STANDARD_SKIP_ID = [
   'DDZ23', // T스포츠팩
   'DD0PB' // band 타임 프리
 ];
+
+export const TING_TITLE = {
+  'HA': '통화가능금액',
+  'CH': '충전금액',
+  'PR': '선물충전금액'
+};

@@ -1,0 +1,74 @@
+<% include ../../components/start.component.html %>
+<!-- skip -->
+<div class="skip"><a href="#content">본문 바로가기</a></div>
+<!-- // skip -->
+<!-- wrap -->
+<div id="wrap">
+    <!-- header -->
+    <header class="header-sub">
+        <button class="btn-back"><span class="blind">뒤로가기</span></button>
+        <h1 class="title"><a href="#">MY T</a></h1>
+        <button class="btn-search"><span class="blind">검색</span></button>
+    </header>
+    <!-- // header -->
+    <!-- content -->
+    <div id="content">
+        <!-- container -->
+        <section class="container">
+            <!-- breadcrumb -->
+            <div class="breadcrumb">
+                나의 사용량/사용내역 &#62; 사용량 조회
+            </div>
+            <!-- // breadcrumb -->
+            <!-- prd-list -->
+            <div class="prd-list">
+                <% if (svcInfo) { %>
+                <ul>
+                    <li>
+                        <div class="case"><span class="name"><%= svcInfo.svcName %></span><% if (svcInfo.repSvcYn === 'Y') { %><span class="tag-type01">대표</span><% } %></div>
+                        <div class="mask moebius-bold"><%= svcInfo.svcNum %></div>
+                        <div class="nick"><%= svcInfo.custNm %></div>
+                        <div class="btn-change"><a href="/myt/usage/change" class="btn-type01">변경</a></div>
+                    </li>
+                </ul>
+                <% } %>
+            </div>
+            <!-- // prd-list -->
+            <!-- guide-message -->
+            <div class="guide-message">
+                <div class="icon"><img src="/skt/img/temp/icon_tbd.png" alt="" /></div>
+                <% if (usageData.code === 'BLN0001') { %>
+                    <div class="txt1">안정적인 실시간 조회를 위해<br /><strong>조회 횟수를 제한</strong>하고 있습니다.</div>
+                    <div class="txt2">잠시 후 다시 이용해주시기 바랍니다.</div>
+                    <div class="txt3">(2시간 동안 최대 12회 조회 가능)</div>
+                <% } else if (usageData.code === 'BLN0002') { %>
+                    <div class="txt1"><strong>정지 이력이 있어</strong> 사용량조회<br />서비스가 제공되지 않습니다.</div>
+                    <div class="txt3">자세한 문의는 고객센터를<br />이용해주시기 바랍니다.</div>
+                <% } else if (usageData.code === 'BLN0003' || usageData.code === 'BLN0004') { %>
+                    <div class="txt1">해당 회선은 <br /><strong>사용량 조회 대상</strong>이 아닙니다.</div>
+                    <div class="txt3">자세한 문의는 고객센터를 이용해주시기 바랍니다.</div>
+                <% } else { %>
+                    <div><%= usageData.msg %></div>
+                <% } %>
+            </div>
+            <!-- // guide-message -->
+            <!-- help-desk -->
+            <article class="help-desk">
+                <h1>도와드릴까요?</h1>
+                <ul class="list">
+                    <li><a href="#">온라인 상담/문의 문의하기</a></li>
+                    <li><a href="#">T world 고객센터 바로가기</a></li>
+                </ul>
+            </article>
+            <!-- // help-desk -->
+        </section>
+        <!-- // container -->
+    </div>
+    <!-- // content -->
+    <!-- footer -->
+    <footer>
+    </footer>
+    <!-- // footer -->
+</div>
+<% include ../../components/javascript.component.html %>
+<% include ../../components/end.component.html %>

@@ -1,6 +1,0 @@
-.wrapper_bottom { position: fixed; display: block; bottom: 0; width: 100%; height: 50px; background: #4c4c4c; box-sizing: border-box; text-align: center; -webkit-box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.2); -moz-box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.2); box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.2); }
-.wrapper_bottom .wrapper_btn { float: left; position: relative; display: inline-block; width: 25%; height: 50px; box-sizing: border-box; line-height: 50px; }
-.wrapper_bottom .btn_link { display: block; width: 100%; height: 100%; cursor: pointer; position: relative; color: #FFF; }
-.wrapper_bottom .btn_link i { position: absolute; left: 50%; top: 50%; -webkit-transform: translate(-50%, -50%); -moz-transform: translate(-50%, -50%); -ms-transform: translate(-50%, -50%); transform: translate(-50%, -50%); }
-.wrapper_bottom .btn_link em { display: block; margin: 2px 0 0; font-size: 12px; font-family: 'PT Sans', sans-serif; }
-.swiper-slide { height: 600px; background: #eee; }

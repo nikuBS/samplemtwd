@@ -2,6 +2,7 @@
 
 # Linux dependencies
 FROM mycluster.icp:8500/default/nodejs8-centos:0.1
+#FROM node:carbon
 
 WORKDIR /tworld
 
@@ -21,9 +22,12 @@ RUN pm2 install typescript
 
 COPY . .
 
-ENV NODE_ENV k8s
+ARG NODE=development
+ENV NODE_ENV ${NODE}
 
 # open Application port
 EXPOSE 3000
 
-CMD ["npm", "run", "server-docker:qa"]
+RUN echo "${NODE_ENV}"
+
+CMD ["npm", "run", "server-docker"]

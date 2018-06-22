@@ -23,6 +23,22 @@ class DateHelper {
 
   /**
    * @param date {Date} or {string} : YYYYMMDDhhmmss
+   * @returns {string} : 18년 12월 31일
+   */
+  static getShortKoreanDate(date: any): string {
+    return moment(this.convDateFormat(date)).format('YY년 MM월 DD일');
+  }
+
+  /**
+   * @param date {Date} or {string} : YYYYMMDDhhmmss
+   * @returns {number} : 30
+   */
+  static getNewRemainDate(date: any): number {
+    return moment(this.convDateFormat(date)).diff(new Date(), 'day') + 2;
+  }
+
+  /**
+   * @param date {Date} or {string} : YYYYMMDDhhmmss
    * @returns {string} : 2018.06.01.
    */
   static getShortDate(date: any): string {
@@ -35,6 +51,14 @@ class DateHelper {
    */
   static getShortDateNoDot(date: any): string {
     return moment(this.convDateFormat(date)).format('YYYY.MM.DD');
+  }
+
+  /**
+   * @param date {Date} or {string} : YYYYMMDDhhmmss
+   * @returns {string} : 06.01
+   */
+  static getShortDateNoYear(date: any): string {
+    return moment(this.convDateFormat(date)).format('MM.DD');
   }
 
   /**

@@ -1,0 +1,293 @@
+<% include ../../components/start.component.html %>
+
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb_area">메뉴 바로가기</a></li>
+        <li><a href="#content">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap step1" style="display:block">
+    <!-- #header -->
+    <div class="header-wrap">
+        <div class="header">
+            <div class="header-ti">
+                <h1>데이터 선물하기</h1>
+                <a href="/home/menu" class="all-menu"><span class="blind">전체메뉴보기</span></a>
+            </div>
+            <a class="prev-step common-back"><span class="blind">이전으로</span></a>
+            <a href="#search" class="search-content"><span class="blind">검색하기</span></a>
+        </div>
+    </div>
+    <!--// #header -->
+    <!-- #contents -->
+    <div class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <div class="cont-box">
+                <!-- .widget -->
+                <div class="widget">
+                    <div class="widget-box step">
+                        <h3 class="step-ti"><em>STEP 01</em>연락처 입력</h3>
+                        <ul class="step-list">
+                            <li class="on">1<span class="blind">연락처 입력</span></li>
+                            <li>2<span class="blind">데이터 선택</span></li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- //.widget -->
+            </div>
+            <hr class="cont-sp type1">
+            <div class="cont-box">
+                <p class="page-desc">자동 선물 받으실 분의 휴대폰 번호를 입력해주세요.</p>
+                <div class="inner">
+                    <h3 class="contents-tit">휴대폰 번호 입력</h3>
+                    <div class="contents-formbox">
+                            <span class="inputbox bt-add">
+                                <span class="input">
+                                    <input id="inp_phone" type="text" placeholder="‘-’ 없이 숫자만 입력해주세요." title="휴대폰 번호 입력">
+                                    <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
+                                </span>
+                                <span class="bt-box">
+                                    <button id="btn-addr" type="button">주소록</button>
+                                </span>
+                            </span>
+                        <span class="contents-notice">
+                                <em class="noti-type1">SK텔레콤을 사용하고 계신 분에게만 선물을 보내실 수 있습니다.</em>
+                            </span>
+                    </div>
+                </div>
+
+                <div class="inner">
+                    <h3 class="contents-tit">자동선물 신청된 결합가족</h3>
+                    <div id="wrap_family_history" class="contents-info-list">
+                        <div class="contents-none">
+                            <span class="none-ico1">자동선물 신청된 이력이 없습니다.</span>
+                        </div>
+                    </div>
+                    <div class="contents-notice">
+                        <span class="noti-type1">자동 선물 제공량 부족 시 결합된 회선의 1번부터 순차적으로 선물이 제공됩니다.</span>
+                    </div>
+                    <div class="contents-btn">
+                        <ul class="bt-slice ver">
+                            <li class="bt-blue1">
+                                <button id="next_process">다음</button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--// #contents -->
+    <!-- #footer -->
+    <div id="footer" class="footer-wrap">
+        <h2 class="blind">하단</h2>
+    </div>
+    <!--// #footer -->
+</div>
+
+<div class="wrap step2" style="display:none">
+    <!-- #header -->
+    <div class="header-wrap">
+        <div class="header">
+            <div class="header-ti">
+                <h1>데이터 선물하기</h1>
+                <a href="#allmenu" class="all-menu"><span class="blind">전체메뉴보기</span></a>
+            </div>
+            <a class="prev-step common-back"><span class="blind">이전으로</span></a>
+            <a href="#search" class="search-content"><span class="blind">검색하기</span></a>
+        </div>
+    </div>
+    <!--// #header -->
+    <!-- #contents -->
+    <div class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <div class="cont-box">
+                <!-- .widget -->
+                <div class="widget">
+                    <div class="widget-box step">
+                        <h3 class="step-ti"><em>STEP 02</em>데이터 입력</h3>
+                        <ul class="step-list">
+                            <li>1<span class="blind">연락처 이름</span></li>
+                            <li class="on">2<span class="blind">연락처 이름</span></li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- //.widget -->
+            </div>
+            <hr class="cont-sp type1">
+            <h3 class="blind">잔여 데이터</h3>
+            <div class="cont-box">
+                <div class="gift-data-cont">
+                    <ul class="t-gift-data">
+                        <li>
+                            <dl>
+                                <dt class="ti-data">선물 받은 분</dt>
+                                <dd class="tx-data wrap_provider">
+                                    <div class="txt"><span class="blind">이름</span><%=svcInfo.custNm%></div>
+                                    <div class="num"><span class="blind">전화번호</span><%=svcInfo.svcNum%></div>
+                                </dd>
+                            </dl>
+                        </li>
+                        <li class="rest">
+                            <dl>
+                                <dt class="ti-data">잔여 데이터</dt>
+                                <dd class="tx-data">
+                                    <span class="tx-bold"><span class="num">700</span> MB</span>
+                                </dd>
+                            </dl>
+                        </li>
+                    </ul>
+                </div>
+                <div class="data-wrap border-bottom-none">
+                    <div class="data-box-inner">
+                        <span class="data-selection">선물 받으실 분에게 보내실 데이터량을 선택해주세요.</span>
+                        <div class="data-size">
+                            <!-- .widget -->
+                            <div class="widget">
+                                <div class="widget-box tube">
+                                    <ul id="wrap_data_select" class="tube-list">
+                                        <li><label data-value="100"><input type="radio" name="senddata">100 MB</label></li>
+                                        <li><label data-value="200"><input type="radio" name="senddata">200 MB</label></li>
+                                        <li><label data-value="300"><input type="radio" name="senddata">300 MB</label></li>
+                                        <li><label data-value="400"><input type="radio" name="senddata">400 MB</label></li>
+                                        <li><label data-value="500"><input type="radio" name="senddata">500 MB</label></li>
+                                        <li><label data-value="600"><input type="radio" name="senddata">600 MB</label></li>
+                                        <li><label data-value="700"><input type="radio" name="senddata">700 MB</label></li>
+                                        <li><label data-value="800"><input type="radio" name="senddata">800 MB</label></li>
+                                        <li><label data-value="900"><input type="radio" name="senddata">900 MB</label></li>
+                                        <li><label data-value="1000" class="disabled"><input type="radio" name="senddata"
+                                                                                             disabled="">1GB</label></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- //.widget -->
+                        </div>
+                    </div>
+                    <p class="data-comment">데이터량은 1GB에서 100MB까지 보내실 수 있습니다.<br>
+                        잔여데이터 보다 많은 데이터는 보내실 수 없으며, 선물하기 후에는 취소하실 수 없습니다.
+                    </p>
+                </div>
+
+                <ul class="bt-slice ver">
+                    <li class="bt-red1">
+                        <button id="btn_send_gift">데이터 선물 보내기</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--// #contents -->
+    <!-- #footer -->
+    <div class="footer-wrap">
+        <h2 class="blind">하단</h2>
+    </div>
+    <!--// #footer -->
+</div>
+
+<div class="wrap step3" style="display: none">
+    <!-- #header -->
+    <div id="header" class="header-wrap">
+        <div class="header">
+            <div class="header-ti">
+                <h1>데이터 선물하기</h1>
+                <a href="#allmenu" class="all-menu"><span class="blind">전체메뉴보기</span></a>
+            </div>
+            <a class="prev-step common-back"><span class="blind">이전으로</span></a>
+            <a href="#search" class="search-content"><span class="blind">검색하기</span></a>
+        </div>
+    </div>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <div class="cont-box nogaps-hoz">
+                <div class="msg-present-box">
+                    <div class="msg-present-comp">
+                        <span class="ico"></span>
+                        <p class="txt">T끼리 데이터<br><span class="tx-bold">자동선물 신청</span>이<br>완료되었습니다.</p>
+                    </div>
+                    <div class="gift-data-cont">
+                        <ul class="t-gift-data">
+                            <li>
+                                <dl>
+                                    <dt class="ti-data">선물 받은 분</dt>
+                                    <dd class="tx-data wrap_provider">
+                                        <span class="blind">이름</span><%=svcInfo.custNm%><br>
+                                        <span class="blind">전화번호</span><span class="num"><%=svcInfo.svcNum%></span>
+                                    </dd>
+                                </dl>
+                            </li>
+                            <li>
+                                <dl>
+                                    <dt class="ti-data">선물한 데이터</dt>
+                                    <dd class="tx-data"><span class="num">500</span> MB</dd>
+                                </dl>
+                            </li>
+                        </ul>
+                        <div class="bt-gap">
+                            <ul class="bt-slice hoz">
+                                <li class="bt-blue1">
+                                    <button id="btn_go_history">선물내역보기</button>
+                                </li>
+                            </ul>
+                            <div class="bt-link-box">
+                                <a id="btn_one_more" class="bt-link-tx">데이터 선물 한번 더하기</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr class="cont-sp type1">
+            <div class="cont-box nogaps">
+                <div class="bt-link-box">
+                    <a id="btn_go_home" class="bt-link-tx">홈으로 가기</a>
+                </div>
+            </div>
+
+            <hr class="cont-sp type1">
+        </div>
+    </div>
+    <!--// #contents -->
+    <% include ../../../../../common/views/components/footer.component.html %>
+</div>
+
+<script type="text/x-handlebars-template" id="tpl_family_history">
+    <ul class="result-view modify">
+        {{#each list}}
+        <li class="history_item" data-phone="{{svcNum}}" data-serNum="{{serNum}}">
+            <div class="info-user">
+                <span class="info-title">{{custName}}</span>
+                <span class="info-sub">{{svcNum}}</span>
+            </div>
+            <div class="info-data">
+                <!-- 1기가 미만인 경우 -->
+                <span class="info-title">{{dataQty}} MB</span>
+            </div>
+            <div class="info-btn"><a class="btn-cancel">해지</a></div>
+        </li>
+        {{/each}}
+    </ul>
+</script>
+
+<script type="text/x-handlebars-template" id="tpl_targetInfo">
+    <span class="blind">이름</span>{{name}}<br>
+    <span class="blind">전화번호</span><span class="num">{{phone}}</span>
+</script>
+
+
+<% include ../../components/javascript.component.html %>
+
+<script>
+  $(document).ready(function () {
+    var oMytGiftLine = new Tw.MytGiftLine($(document));
+    var component = new Tw.MytGiftProcess($(document));
+  });
+</script>
+
+<% include ../../components/end.component.html %>
