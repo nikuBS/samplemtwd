@@ -428,6 +428,7 @@
     </div>
     <% include ../../../../common/views/components/footer.component.html %>
 </div>
+<% if(giftData.giftSender) { %>
 <% if (giftData.giftSender.familyMemberYn === 'N') { %>
 <script class="gift-template" type="text/x-handlebars-template">
     <!-- MA_01_CA13_01 1. 선물하기 가능 상태일 경우 -->
@@ -536,6 +537,7 @@
     </div>
     <!--// MA_01_CA13_01 3. 가족 결합 중 착한 가족 상품 사용 시 -->
 </script>
+<% } %>
 <% } %>
 <% include ../components/javascript.component.html %>
 <script>
