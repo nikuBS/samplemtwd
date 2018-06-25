@@ -63,7 +63,6 @@ Tw.MytGiftProcess.prototype = {
     this.$input_phone = this.$container.find('#inp_phone');
     this.$btn_go_home = this.$container.find('#btn_go_home');
     this.$btn_one_more = this.$container.find('#btn_one_more');
-    this.$wrap_data_select = this.$container.find('.tube-list');
     this.$btn_send_gift = this.$container.find('#btn_send_gift');
     this.$btn_next_process = this.$container.find('#next_process');
     this.$btn_go_history = this.$container.find('#btn_go_history');
@@ -89,10 +88,8 @@ Tw.MytGiftProcess.prototype = {
     $('body').on('click', '[data-target="sendTextBtn"]', $.proxy(this._sendTextEvt, this));
     $('body').on('click', '[data-target="sendTextCancelBtn"]', $.proxy(this._sendTextCancelEvt, this));
   },
-  //-----------------------------------------------------[문자로 알리기]
+
   _popupOpen: function (str) {
-    // console.info('frontend_fn.popup_open 재정의 22: ', str);
-    // console.info('Tw.MytGiftProcess.prototype.provider 객체 : ', Tw.MytGiftProcess.prototype.provider);
     $('body').find('[data-target="msgName"]').prepend(Tw.MytGiftProcess.prototype.provider.name);
     $('body').find('[data-target="txTel"]').html(Tw.FormatHelper.convertTelFormat(Tw.MytGiftProcess.prototype.provider.phone));
   },
@@ -123,7 +120,6 @@ Tw.MytGiftProcess.prototype = {
     console.info('취소');
     location.hash = 'step3';
   },
-  //-----------------------------------------------------[문자로 알리기 end]
 
   updateLineInfo: function (e, params) {
     this.lineInfo = params.lineInfo;
@@ -326,16 +322,7 @@ Tw.MytGiftProcess.prototype = {
     var dataQty = $('#wrap_data_select').find('label.checked').data('value');
 
     if ( !dataQty ) {
-      skt_landing.action.popup.open({
-        'title': '오류',
-        'close_bt': true,
-        'title2': '데이터를 입력해주세요.',
-        'bt_num': 'one',
-        'type': [{
-          class: 'bt-red1 family-history-cancel',
-          txt: '확인'
-        }]
-      });
+      this.onFailStep({ orgDebugMessage: '데이터를 선택해주세요.' });
       return;
     }
 
@@ -400,10 +387,6 @@ Tw.MytGiftProcess.prototype = {
     }
   },
 
-  renderSelectDataQty: function (dataQty) {
-
-  },
-
   getNextStepUrl: function () {
     var nCurrentIndex = this.step.indexOf(location.hash.replace('#', ''));
     var sNextStep = this.step[nCurrentIndex + 1];
@@ -414,7 +397,7 @@ Tw.MytGiftProcess.prototype = {
 
   onFailStep: function (res) {
     skt_landing.action.popup.open({
-      'title': '오류',
+      'title': '알림',
       'close_bt': true,
       'title2': res.orgDebugMessage,
       'bt_num': 'one',
