@@ -19,6 +19,22 @@ Tw.DateHelper = (function() {
   };
 
   /**
+   * @param date {Date} or {string} : YYYYMMDD
+   * @returns {string} : 20180601
+   */
+  var getCurrentShortDate = function(){
+    return moment().format('YYYYMMDD');
+  }
+
+  /**
+   * @param date {Date} or {string} : YYYYMMDD
+   * @returns {string} : 20180601 - 1 year
+   */
+  var getPastYearShortDate = function(){
+    return moment().subtract(1, 'years').format('YYYYMMDD');
+  }
+
+  /**
    * @param date {Date} or {string} : YYYYMMDDhhmmss
    * @returns {string} : 2018.06.01.
    */
@@ -50,6 +66,8 @@ Tw.DateHelper = (function() {
     getRemainDate: getRemainDate,
     getShortDate: getShortDate,
     getShortDateNoDot: getShortDateNoDot,
-    convDateFormat: convDateFormat
+    convDateFormat: convDateFormat,
+    getCurrentShortDate: getCurrentShortDate,
+    getPastYearShortDate: getPastYearShortDate
   }
 })();

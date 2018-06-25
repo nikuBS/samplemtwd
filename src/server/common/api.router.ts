@@ -2,7 +2,6 @@ import express from 'express';
 import { Router, Request, Response, NextFunction } from 'express';
 import { API_CMD, API_METHOD } from '../types/api-command.type';
 import ApiService from '../services/api.service';
-import cookie from 'cookie-parser';
 
 
 class ApiRouter {
@@ -53,7 +52,6 @@ class ApiRouter {
   private sendRequest(cmd: any, req: Request, res: Response, next: NextFunction) {
     const params = cmd.method === API_METHOD.GET ? req.query : req.body;
     const headers = req.headers;
-    res.cookie('cookie', '1');
 
     this.apiService.request(cmd, params, headers)
       .subscribe(data => {

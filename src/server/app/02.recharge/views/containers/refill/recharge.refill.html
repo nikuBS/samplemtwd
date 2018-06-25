@@ -1,0 +1,78 @@
+<!--
+* FileName: recharge.refill.html
+* Author: 공자윤 (jayoon.kong@sk.com)
+* Date: 2018.06.18
+-->
+<% include ../../components/start.component.html %>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb_area">메뉴 바로가기</a></li>
+        <li><a href="#content">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div id="myt-refill" class="wrap">
+    <!-- #header -->
+    <div id="header" class="header-wrap">
+        <div class="header">
+            <div class="header-ti">
+                <h1>리필하기</h1>
+                <a href="#allmenu" class="all-menu"><span class="blind">전체메뉴보기</span></a>
+            </div>
+            <a href="#pstep" class="prev-step common-back"><span class="blind">이전으로</span></a>
+            <a href="#search" class="search-content"><span class="blind">검색하기</span></a>
+        </div>
+    </div>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <!-- .cont-box -->
+            <div class="cont-box">
+                <% if (lineList) { %><% include ../../components/line.list.component.html %><% } %>
+                <% if (usageData.length === 0) { %>
+                    <div class="box-suggest">
+                        <div class="suggest-info">
+                            <p class="suggest-tx"><em class="tx-bold">고객님께서는</em><br />사용 가능한 리필쿠폰이 없습니다.</p>
+                            <a class="bt-link-tx" href="/recharge/refill/history">사용한 리필내역보기<span class="ico"></span></a>
+                        </div>
+                    </div>
+                <% } else { %>
+                    <% if (usageOptions.option.length === 0) { %>
+                    <div class="box-suggest">
+                        <div class="suggest-info">
+                            <p class="suggest-tx"><em class="tx-bold">고객님, 요금제를 변경하시면</em><br />리필쿠폰을 사용하실 수 있습니다.</p>
+                            <ul class="suggest-list">
+                                <li>데이터100%, 음성20% 리필가능</li>
+                                <li>결합 가족간 쿠폰선물가능</li>
+                            </ul>
+                            <a class="bt-link-tx show-product">어떤 요금제가 가능한가요?<span class="ico"></span></a>
+                        </div>
+                    </div>
+                    <% } %>
+                <% } %>
+            </div>
+            <!--// .cont-box -->
+            <hr class="cont-sp type1" />
+            <% if (usageData.length === 0) { %>
+                <% include ../../components/refill/recharge.refill.no.coupon.component.html %>
+            <% } else { %>
+                <% include ../../components/refill/recharge.refill.coupon.component.html %>
+            <% } %>
+            <hr class="cont-sp type1" />
+            <% include ../../components/refill/recharge.refill.info.component.html %>
+        </div>
+    </div>
+    <!--// #contents -->
+    <% include ../../../../../common/views/components/footer.component.html %>
+</div>
+<% include ../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    var comp = new Tw.MytRefill($('#myt-refill'));
+  });
+</script>
+<% include ../../components/end.component.html %>

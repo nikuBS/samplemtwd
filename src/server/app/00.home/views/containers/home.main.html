@@ -1,0 +1,548 @@
+<!--
+* FileName: home.main.html
+* Author: Ara Jo (araara.jo@sk.com)
+* Date: 2018.06.22
+-->
+
+<% include ../components/start.component.html %>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb_area">메뉴 바로가기</a></li>
+        <li><a href="#content">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap">
+    <h1 class="blind">SKT</h1>
+    <!-- #header
+    <div id="header" class="header-wrap">
+        <h2 class="blind">상단</h2>
+        <div class="header">
+            <a class="header-logo" href="#home"><img src="" alt="" /></a>
+            <span class="header-user">홍*동</span>
+        </div>
+    </div>
+     -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <!-- 데이터 조회하기 적용 불가 Case -->
+            <img style="width:100%;" src="/img/dummy/home.jpg" alt=""/>
+            <% if (giftData.giftSender) { %>
+            <% if (giftData.giftSender.code === 'RCG0005') { %>
+            <!-- MA_01_CA13_06 -->
+            <div class="component">
+                <div class="component-box flcardcta">
+                    <h3 class="blind">선물 내역 보기</h3>
+                    <div class="flcard-cont no-btn-bottom">
+                        <div class="flcard-area">
+                            <dl class="flcard-tmember">
+                                <dt class="ti-tmember">
+                                    <a href="/recharge/gift">T끼리 데이터 선물<span class="ico"></span></a>
+                                </dt>
+                                <dd class="flcard-accent">
+                                    19세 이상일 경우에만 데이터 선물이 가능합니다.
+                                </dd>
+                            </dl>
+                            <button class="bt-like type1">
+                                <span class="blind">좋아요</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--// MA_01_CA13_06 -->
+            <% } else if (giftData.giftSender.code === 'RCG0002') { %>
+            <!-- MA_01_CA13_02 -->
+            <div class="component">
+                <div class="component-box flcardcta">
+                    <h3 class="blind">어떤 요금제가 가능한가요?</h3>
+                    <div class="flcard-cont">
+                        <div class="flcard-area">
+                            <dl class="flcard-tmember">
+                                <dt class="ti-tmember"><a href="/recharge/gift">T끼리 데이터 선물<span class="ico"></span></a>
+                                </dt>
+                                <dd class="flcard-accent">
+                                    고객님이 사용중인 요금제는<br/><em class="tx-bold">데이터 선물이 불가능 합니다.</em>
+                                </dd>
+                            </dl>
+                            <ul class="flcard-list">
+                                <li><span class="ti-fee">사용중인 요금제</span><span
+                                    class="tx-fee"><%= usageData.prodName %></span></li>
+                            </ul>
+                            <button class="bt-like type1"><span class="blind">좋아요</span></button>
+                            <div class="flcard-bottom">
+                                <ul class="bt-slice ver">
+                                    <li class="bt-blue1">
+                                        <a id="gift-product" title="리필 쿠폰 요금제 안내로 이동">어떤 요금제가 가능한가요?</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--// MA_01_CA13_02 -->
+            <% } else if (giftData.giftSender.code === 'RCG0004') { %>
+            <!-- MA_01_CA13_03 -->
+            <div class="component">
+                <div class="component-box flcardcta">
+                    <h3 class="blind">쿠폰 선물하기</h3>
+                    <div class="flcard-cont">
+                        <div class="flcard-area">
+                            <dl class="flcard-tmember">
+                                <dt class="ti-tmember"><a href="/recharge/gift">T끼리 데이터 선물<span class="ico"></span></a>
+                                </dt>
+                                <dd class="flcard-accent">
+                                    잔여 데이터가 <em class="tx-bold">500MB</em> 이상<br/>있을 때 선물이 가능합니다.<br/>쿠폰을 선물해보는 건 어떨까요?
+                                </dd>
+                            </dl>
+                            <!--<ul class="flcard-list">-->
+                                <!--<li><span class="ti-fee">잔여 데이터</span><span class="tx-fee"><%= giftData %>MB</span></li>-->
+                            <!--</ul>-->
+                            <button class="bt-like type1"><span class="blind">좋아요</span></button>
+                            <div class="flcard-bottom">
+                                <ul class="bt-slice ver">
+                                    <li class="bt-blue1">
+                                        <a href="#none" title="쿠폰 선물하기로 이동">쿠폰 선물하기</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--// MA_01_CA13_03 -->
+            <% } else if (giftData.giftSender.code === 'RCG0003') { %>
+            <!-- MA_01_CA13_04 -->
+            <div class="component">
+                <div class="component-box flcardcta">
+                    <h3 class="blind">선물 내역 보기</h3>
+                    <div class="flcard-cont">
+                        <div class="flcard-area">
+                            <dl class="flcard-tmember">
+                                <dt class="ti-tmember"><a href="">T끼리 데이터 선물<span class="ico"></span></a></dt>
+                                <dd class="flcard-accent">
+                                    이번 달 선물가능 횟수를<br /> 모두 사용하셨습니다.<br />
+                                    선물하기는<em class="tx-bold">월 2회</em>까지만<br />
+                                    제공됩니다.
+                                </dd><!-- 2018-06-21 텍스트 수정 및 선물 횟수 삭제 -->
+                            </dl>
+                            <button class="bt-like type1"><span class="blind">좋아요</span></button>
+                            <div class="flcard-bottom">
+                                <ul class="bt-slice"><!-- 2018-06-20 버튼 클래스 변경 -->
+                                    <li class="bt-blue1">
+                                        <a href="#none" title="선물 내역 보기로 이동">선물 내역 보기</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--// MA_01_CA13_04 -->
+            <% } else if (giftData.giftSender.code === '00') { %>
+            <div id="gift-card" class="component">
+                <div class="component-box flcardcta">
+                    <h3 class="blind">잔여 데이터 조회하기</h3>
+                    <div class="flcard-cont">
+                        <div class="flcard-area">
+                            <dl class="flcard-tmember">
+                                <dt class="ti-tmember"><a href="/recharge/gift">T끼리 데이터 선물<span class="ico"></span></a>
+                                </dt>
+                                <dd class="flcard-accent">
+                                    잔여 데이터로<br/><em class="tx-bold">선물을 해보세요!</em>
+                                </dd>
+                                <dd>
+                                    <span class="tx-noti">T끼리 <em class="tx-pt">월 2회</em>까지 선물이 가능하고,<br/>선물 후 기본 제공 데이터가 <em
+                                        class="tx-pt">500MB</em> 이상<br/>남아 있어야 합니다.</span>
+                                </dd>
+                            </dl>
+                            <button class="bt-like type1"><span class="blind">좋아요</span></button>
+                            <div class="flcard-bottom">
+                                <ul class="bt-slice ver">
+                                    <li class="bt-blue1">
+                                        <a id="gift-balance" title="잔여 데이터 조회하기로 이동">잔여 데이터 조회하기</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <span class="ico-ill-gift"></span>
+                    </div>
+                    <div class="link-long">
+                        <a href="#link" title="xx로 이동">챗봇으로 리필쿠폰을 사용해보세요!<span class="ico"></span></a>
+                    </div>
+                </div>
+            </div>
+            <!--// 데이터 조회하기 적용 불가 Case -->
+            <% } %>
+            <% } %>
+            <% if(refillData.refillCoupon && refillData.refillOptions && refillData.refillUsages) { %>
+            <% if(refillData.refillCoupon.length === 0) { %>
+            <!-- MA_01_CA14_03 -->
+            <div class="component">
+                <div class="component-box flcarddefault">
+                    <h3 class="blind">리필 쿠폰 추천</h3>
+                    <div class="flcard-cont">
+                        <div class="flcard-area">
+                            <dl class="flcard-tmember">
+                                <dt class="ti-tmember"><a href="/recharge/refill">리필하기<span class="ico"></span></a></dt>
+                                <dd class="flcard-accent">
+                                    리필 쿠폰이 없으시네요.<br/><em class="tx-bold">쿠폰을 구매해보세요.</em>
+                                </dd>
+                            </dl>
+                            <!-- .widget -->
+                            <div class="widget">
+                                <div class="widget-box slider4">
+                                    <!--<h5 class="tit-a blind">위젯 슬라이드</h5>--><!-- 2018-06-19 : h태그 수정/삭제 -->
+                                    <div class="type1">
+                                        <div class="slider-box">
+                                            <!-- type1: 카드형 -->
+                                            <ul class="slider">
+                                                <li class="swiper-slide">
+                                                    <div class="swiper-cont bg-color1">
+                                                        <dl>
+                                                            <dt>편하고 합리적인 <em>T데이터 쿠폰</em></dt>
+                                                            <dd>요금상품 변경 없이 데이터 추가!<br/> 데이터가 남으면 다음에 쓰세요!</dd>
+                                                        </dl>
+                                                        <a class="bt-link-arrow" href="" title="상품 상세보기"><span
+                                                            class="ico"></span></a>
+                                                    </div>
+                                                </li>
+                                                <li class="swiper-slide">
+                                                    <div class="swiper-cont bg-color2">
+                                                        <dl>
+                                                            <dt>편하고 합리적인 <em>T데이터 쿠폰</em></dt>
+                                                            <dd>요금상품 변경 없이 데이터 추가!<br/> 데이터가 남으면 다음에 쓰세요!</dd>
+                                                        </dl>
+                                                        <a class="bt-link-arrow" href="" title="상품 상세보기"><span
+                                                            class="ico"></span></a>
+                                                    </div>
+                                                </li>
+                                                <li class="swiper-slide">
+                                                    <div class="swiper-cont bg-color1">
+                                                        <dl>
+                                                            <dt>편하고 합리적인 <em>T데이터 쿠폰</em></dt>
+                                                            <dd>요금상품 변경 없이 데이터 추가!<br/> 데이터가 남으면 다음에 쓰세요!</dd>
+                                                        </dl>
+                                                        <a class="bt-link-arrow" href="" title="상품 상세보기"><span
+                                                            class="ico"></span></a>
+                                                    </div>
+                                                </li>
+                                                <li class="swiper-slide">
+                                                    <div class="swiper-cont bg-color2">
+                                                        <dl>
+                                                            <dt>편하고 합리적인 <em>T데이터 쿠폰</em></dt>
+                                                            <dd>요금상품 변경 없이 데이터 추가!<br/> 데이터가 남으면 다음에 쓰세요!</dd>
+                                                        </dl>
+                                                        <a class="bt-link-arrow" href="" title="상품 상세보기"><span
+                                                            class="ico"></span></a>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                            <div class="swiper-pagination"></div>
+                                        </div>
+                                        <div class="page-total">
+                                            <span class="current">1</span>/<span class="total">4</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- //.widget -->
+                            <button class="bt-like type1"><span class="blind">좋아요</span></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--// MA_01_CA14_03 -->
+            <% } else if (refillData.refillOptions.option.length === 0) { %>
+            <!-- MA_01_CA14_04 -->
+            <div class="component">
+                <div class="component-box flcardcta">
+                    <h3 class="blind">리필 쿠폰 요금제 안내</h3>
+                    <div class="flcard-cont">
+                        <div class="flcard-area">
+                            <dl class="flcard-tmember">
+                                <dt class="ti-tmember"><a href="/recharge/refill">리필하기<span class="ico"></span></a></dt>
+                                <dd class="flcard-accent">
+                                    리필쿠폰을 사용할 수 있는<br/><em class="tx-bold">요금제</em>가 아닙니다.
+                                </dd>
+                                <dd>
+                                    <span class="tx-noti"><em class="tx-customer"><%= svcInfo.custNm %></em>님께 데이터 충전이 가능한<br/><em
+                                        class="tx-pt">리필 쿠폰이 <%= refillData.refillCoupon.length %>장</em> 있습니다.</span>
+                                </dd>
+                            </dl>
+                            <button class="bt-like type1"><span class="blind">좋아요</span></button>
+                            <div class="flcard-bottom">
+                                <ul class="bt-slice ver">
+                                    <li class="bt-blue1">
+                                        <a id="refill-product" title="리필 쿠폰 요금제 안내로 이동">어떤 요금제가 가능한가요?</a>
+                                    </li>
+                                </ul>
+                                <a class="bt-link-tx" href="/recharge/refill">내 쿠폰 보기</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--// MA_01_CA14_04 -->
+            <% } else if (refillData.refillOptions.condition.usedCopnCntTmth === 0) {%>
+            <!-- MA_01_CA14_01 -->
+            <div class="component">
+                <div class="component-box flcardcta">
+                    <h3 class="blind">리필 쿠폰 요금제 안내</h3>
+                    <div class="flcard-cont">
+                        <div class="flcard-area">
+                            <dl class="flcard-tmember">
+                                <dt class="ti-tmember"><a href="/recharge/refill">리필하기<span class="ico"></span></a></dt>
+                                <dd class="flcard-accent">
+                                    리필쿠폰으로<br/><em class="tx-bold">데이터를 충전</em>해보세요.
+                                </dd>
+                            </dl>
+                            <div class="coupon-cont">
+                                <dl class="coupon-box">
+                                    <dt><span class="coupon-name"><%= refillData.refillCoupon[0].copnNm %></span><span
+                                        class="coupon-code"><%= refillData.refillCoupon[0].copnIsueNum %></span></dt>
+                                    <dd>
+                                        <ul class="coupon-list">
+                                            <li><span class="list-ti">유효기간</span><span class="list-tx"><%= refillData.refillCoupon[0].showUsePsblStaDt %> ~ <%= refillData.refillCoupon[0].showUsePsblEndDt %></span>
+                                            </li>
+                                            <li><span class="list-ti">발급일</span><span class="list-tx"><%= refillData.refillCoupon[0].showCopnIsueDt %></span>
+                                            </li>
+                                        </ul>
+                                    </dd>
+                                </dl>
+                                <div class="coupon-bottom"><span class="coupon-validity"><span class="validity"><%= refillData.refillCoupon[0].showRemainDate %></span>일 남음</span>
+                                </div>
+                            </div>
+                            <button class="bt-like type1"><span class="blind">좋아요</span></button>
+                            <div class="flcard-bottom">
+                                <ul class="bt-slice ver">
+                                    <li class="bt-blue1">
+                                        <a href="/recharge/refill" title="내 휴대폰에 리필하기로 이동">내 휴대폰에 리필하기</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="link-long">
+                        <a href="#link" title="xx로 이동">챗봇으로 리필쿠폰을 사용해보세요!<span class="ico"></span></a>
+                    </div>
+                </div>
+            </div>
+            <!--// MA_01_CA14_01 -->
+            <% } else if (refillData.refillOptions.condition.transferableCopnCntTmth > 0) { %>
+            <!-- MA_01_CA14_02 -->
+            <div class="component">
+                <div class="component-box flcardcta">
+                    <h3 class="blind">리필 쿠폰 요금제 안내</h3>
+                    <div class="flcard-cont">
+                        <div class="flcard-area">
+                            <dl class="flcard-tmember">
+                                <dt class="ti-tmember"><a href="/recharge/refill">리필하기<span class="ico"></span></a></dt>
+                                <dd class="flcard-accent">
+                                    리필쿠폰을<br/><em class="tx-bold">가족에게 선물</em>해보세요.
+                                </dd>
+                            </dl>
+                            <div class="coupon-cont">
+                                <dl class="coupon-box">
+                                    <dt><span class="coupon-name"><%= refillData.refillCoupon[0].copnNm %></span><span
+                                        class="coupon-code"><%= refillData.refillCoupon[0].copnIsueNum %></span></dt>
+                                    <dd>
+                                        <ul class="coupon-list">
+                                            <li><span class="list-ti">유효기간</span><span class="list-tx"><%= refillData.refillCoupon[0].showUsePsblStaDt %> ~ <%= refillData.refillCoupon[0].showUsePsblEndDt %></span>
+                                            </li>
+                                            <li><span class="list-ti">발급일</span><span class="list-tx"><%= refillData.refillCoupon[0].showCopnIsueDt %></span>
+                                            </li>
+                                        </ul>
+                                    </dd>
+                                </dl>
+                                <div class="coupon-bottom"><span class="coupon-validity"><span class="validity"><%= refillData.refillCoupon[0].showRemainDate %></span>일 남음</span>
+                                </div>
+                            </div>
+                            <button class="bt-like type1"><span class="blind">좋아요</span></button>
+                            <div class="flcard-bottom">
+                                <ul class="bt-slice ver">
+                                    <li class="bt-blue1">
+                                        <a href="/recharge/refill/gift?<%= refillData.refillCoupon[0].query %>" title="가족에게 선물하기로 이동">가족에게 선물하기</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="link-long">
+                        <a href="#link" title="xx로 이동">챗봇으로 리필쿠폰을 사용해보세요!<span class="ico"></span></a>
+                    </div>
+                </div>
+            </div>
+            <!--// MA_01_CA14_02 -->
+            <% } else { %>
+            <!-- MA_01_CA14_05 -->
+            <div class="component">
+                <div class="component-box flcardcta">
+                    <h3 class="blind">리필 쿠폰 요금제 안내</h3>
+                    <div class="flcard-cont">
+                        <div class="flcard-area">
+                            <dl class="flcard-tmember">
+                                <dt class="ti-tmember">
+                                    <a href="/recharge/refill">리필하기<span class="ico"></span></a>
+                                </dt>
+                                <dd class="flcard-accent">
+                                    이번 달 리필하기/선물하기를<br/>
+                                    <em class="tx-bold">모두 사용</em>하셨습니다.
+                                </dd>
+                            </dl>
+                            <ul class="flcard-list">
+                                <li>
+                                    <span class="ti-fee">리필한 횟수</span>
+                                    <span
+                                        class="tx-fee"><%= refillData.refillOptions.condition.usedCopnCntTmth %>회</span>
+                                </li>
+                                <li>
+                                    <span class="ti-fee">리필쿠폰 선물한 횟수</span>
+                                    <span class="tx-fee"><%= refillData.refillOptions.condition.transferedCopnCntTmth %>회</span>
+                                </li>
+                            </ul>
+                            <button class="bt-like type1">
+                                <span class="blind">좋아요</span>
+                            </button>
+                            <div class="flcard-bottom">
+                                <ul class="bt-slice ver">
+                                    <li class="bt-blue1">
+                                        <a href="/recharge/refill/history" title="리필 내역 보기로 이동">리필 내역 보기</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--// MA_01_CA14_05 -->
+            <% } %>
+            <% } %>
+        </div>
+        <!--// #contents -->
+    </div>
+    <% include ../../../../common/views/components/footer.component.html %>
+</div>
+<% if(giftData.giftSender) { %>
+<% if (giftData.giftSender.familyMemberYn === 'N') { %>
+<script class="gift-template" type="text/x-handlebars-template">
+    <!-- MA_01_CA13_01 1. 선물하기 가능 상태일 경우 -->
+    <div class="component-box flcardcta">
+        <h3 class="blind">데이터 선물하기</h3>
+        <div class="flcard-cont">
+            <div class="flcard-area">
+                <dl class="flcard-tmember">
+                    <dt class="ti-tmember"><a href="/recharge/gift">T끼리 데이터 선물<span class="ico"></span></a>
+                    </dt>
+                    <dd class="flcard-accent">
+                        잔여 데이터로<br/><em class="tx-bold">선물을 해보세요!</em>
+                    </dd>
+                </dl>
+                <ul class="flcard-list">
+                    <li><span class="ti-fee">잔여 데이터</span><span class="tx-fee">{{showDataGb}}GB<em
+                        class="tx-sub">({{showDataGb}}MB)</em></span>
+                    </li>
+                    <li><span class="ti-fee">선물 가능 횟수</span><span class="tx-fee"><span
+                        class="tx-sub">T끼리</span> <%= giftData.giftSender.dataGiftCnt %>회</span></li>
+                </ul>
+                <button class="bt-like type1"><span class="blind">좋아요</span></button>
+                <div class="flcard-bottom">
+                    <ul class="bt-slice ver">
+                        <li class="bt-blue1">
+                            <a href="/recharge/gift" title="데이터 선물하기로 이동">데이터 선물하기</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <span class="ico-ill-gift"></span>
+        </div>
+    </div>
+    <!--// MA_01_CA13_01 1. 선물하기 가능 상태일 경우 -->
+</script>
+<% } else if (giftData.giftSender.goodFamilyMemberYn === 'N') { %>
+<script class="gift-template" type="text/x-handlebars-template">
+    <!-- MA_01_CA13_01 2. 가족 결합 상품 사용 시 -->
+    <div class="component-box flcardcta">
+        <h3 class="blind">데이터 선물하기</h3>
+        <div class="flcard-cont">
+            <div class="flcard-area">
+                <dl class="flcard-tmember">
+                    <dt class="ti-tmember"><a href="/recharge/gift">T끼리 데이터 선물<span class="ico"></span></a>
+                    </dt>
+                    <dd class="flcard-accent">
+                        잔여 데이터로<br/><em class="tx-bold">선물을 해보세요!</em>
+                    </dd>
+                </dl>
+                <ul class="flcard-list">
+                    <li><span class="ti-fee">잔여 데이터</span><span class="tx-fee">{{showDataGb}}GB<em
+                        class="tx-sub">({{showDataMb}}MB)</em></span>
+                    </li>
+                    <li><span class="ti-fee">선물 가능 횟수</span><span class="tx-fee"><span
+                        class="tx-sub">T끼리</span> <%= giftData.giftSender.dataGiftCnt %>회 <span
+                        class="tx-sub">/ 가족끼리</span> <%= giftData.giftSender.familyDataGiftCnt %>회</span>
+                    </li>
+                </ul>
+                <button class="bt-like type1"><span class="blind">좋아요</span></button>
+                <div class="flcard-bottom">
+                    <ul class="bt-slice ver">
+                        <li class="bt-blue1">
+                            <a href="/recharge/gift" title="데이터 선물하기로 이동">데이터 선물하기</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <span class="ico-ill-gift"></span>
+        </div>
+    </div>
+    <!--// MA_01_CA13_01 2. 가족 결합 상품 사용 시 -->
+</script>
+<% } else { %>
+<script class="gift-template" type="text/x-handlebars-template">
+    <!-- MA_01_CA13_01 3. 가족 결합 중 착한 가족 상품 사용 시 -->
+    <div class="component-box flcardcta">
+        <h3 class="blind">데이터 선물하기</h3>
+        <div class="flcard-cont">
+            <div class="flcard-area">
+                <dl class="flcard-tmember">
+                    <dt class="ti-tmember"><a href="/recharge/gift">T끼리 데이터 선물<span class="ico"></span></a>
+                    </dt>
+                    <dd class="flcard-accent">
+                        잔여 데이터로<br/><em class="tx-bold">선물을 해보세요!</em>
+                    </dd>
+                </dl>
+                <ul class="flcard-list">
+                    <li><span class="ti-fee">잔여 데이터</span><span class="tx-fee">{{showDataGb}}GB<em
+                        class="tx-sub">({{showDataMb}}MB)</em></span>
+                    </li>
+                    <li><span class="ti-fee">선물 가능 횟수</span><span class="tx-fee"><span
+                        class="tx-sub">T끼리</span> <%= giftData.giftSender.dataGiftCnt %>회 <span
+                        class="tx-sub">/ 가족끼리</span> 무제한</span></li>
+                </ul>
+                <button class="bt-like type1"><span class="blind">좋아요</span></button>
+                <div class="flcard-bottom">
+                    <ul class="bt-slice ver">
+                        <li class="bt-blue1">
+                            <a href="/recharge/gift" title="데이터 선물하기로 이동">데이터 선물하기</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <span class="ico-ill-gift"></span>
+        </div>
+    </div>
+    <!--// MA_01_CA13_01 3. 가족 결합 중 착한 가족 상품 사용 시 -->
+</script>
+<% } %>
+<% } %>
+<% include ../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    var comp = new Tw.HomeMain($('.wrap'));
+  });
+</script>
+<% include ../components/end.component.html %>

@@ -1,0 +1,56 @@
+<% include ../../components/start.sprint3.component.html %>
+<!-- skip -->
+<div class="skip"><a href="#content">본문 바로가기</a></div>
+<!-- // skip -->
+<!-- wrap -->
+<div id="wrap">
+    <!-- header -->
+    <header class="header-sub common-back">
+        <button class="btn-back"><span class="blind">뒤로가기</span></button>
+        <h1 class="title-txt">T데이터셰어링 서비스 안내</h1>
+        <button class="btn-search"><span class="blind">검색</span></button>
+    </header>
+    <!-- // header -->
+    <!-- content -->
+    <div id="content">
+        <!-- container -->
+        <section class="container">
+
+            <div class="outarea">
+                <!-- info-area// -->
+                <div class="info-area">
+                    <p class="txt-type01"><%=userName %> 고객님,<br/><strong>T데이터셰어링</strong>을 이용해보세요!</p>
+                    <img src="http://tstore.rbipt.com/skt/img/img_sharing00.png" alt=""/>
+                    <p class="txt-type02"><strong>하나의 데이터</strong> 요금으로<br/><strong>여러 디지털기기</strong> 이용하기</p>
+                    <span class="txt">이동전화 데이터요금제의 데이터를 공유하여 <br/>T 데이터셰어링 USIM을 장착한 디지털기기에서 <br/>무선 인터넷을 즐길 수 있는 서비스입니다. <br/>월 3,300원(부가세 포함)</span>
+                    <a href="<%=url.checkTDataShareInfo%>" class="more-service">이용방법 알아보기</a>
+                </div>
+                <!-- //info-area -->
+            </div>
+            <!-- //outarea -->
+            <!-- help-desk -->
+            <article class="help-desk">
+                <h1>도와드릴까요?</h1>
+                <ul class="list">
+                    <li><a href="<%=url.onLineQnA%>">온라인 상담/문의 문의하기</a></li>
+                    <li><a href="<%=url.customerCenter%>">T world 고객센터 바로가기</a></li>
+                </ul>
+            </article>
+            <!-- // help-desk -->
+
+        </section>
+        <!-- // container -->
+    </div>
+    <!-- // content -->
+    <!-- footer -->
+    <% include ../../../../../common/views/components/footer.component.html %>
+    <!-- // footer -->
+</div>
+<!-- // wrap -->
+<% include ../../components/javascript.sprint3.component.html %>
+<script>
+  $(document).ready(function () {
+    // var comp = new Tw.MytUsageView($('.container'));
+  });
+</script>
+<% include ../../components/end.component.html %>

@@ -25,6 +25,33 @@ export enum UNIT_E {
   SMS_2 = '320'
 }
 
+export enum LINE_NAME {
+  MOBILE = 'M',
+  INTERNET_PHONE_IPTV = 'W',
+  SECURITY = 'S'
+}
+
+export enum COUPON_STATUS_CODE {
+  LONG = 'A10',
+  DECADE = 'A14',
+  RECEIVED = 'A20'
+}
+
+export enum REFILL_CODE {
+  DATA = 'D',
+  VOICE = 'V'
+}
+
+export const REFILL_TXT = {
+  'D': '데이터',
+  'V': '음성'
+};
+
+export const REFILL_CLASS_NAME = {
+  'D': 'data',
+  'V': 'ngt'
+};
+
 export const DAY_BTN_STANDARD_SKIP_ID = [
   'DDZ25', // BTV 모바일팩
   'DDZ23', // T스포츠팩
