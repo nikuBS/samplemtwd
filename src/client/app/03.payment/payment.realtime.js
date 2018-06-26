@@ -24,6 +24,8 @@ Tw.PaymentRealtime.prototype = {
   _bindEvent: function () {
     this.$container.on('click', '.btn', $.proxy(this._toggleEvent, this));
     this.$container.on('click', '.complete', $.proxy(this._setHistory, this));
+
+    // history reset event
     this.$window.on('hashchange', $.proxy(this._hashChangeEvent, this));
   },
   _setHistory: function (event) {
