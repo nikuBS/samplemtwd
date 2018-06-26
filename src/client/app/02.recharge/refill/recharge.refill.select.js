@@ -4,7 +4,7 @@
  * Date: 2018.06.18
  */
 
-Tw.MytRefillSelect = function (rootEl) {
+Tw.RechargeRefillSelect = function (rootEl) {
   this.$container = rootEl;
   this.$document = $(document);
   this.window = window;
@@ -14,10 +14,10 @@ Tw.MytRefillSelect = function (rootEl) {
   this._bindEvent();
 };
 
-Tw.MytRefillSelect.prototype = Object.create(Tw.View.prototype);
-Tw.MytRefillSelect.prototype.constructor = Tw.MytRefillSelect;
+Tw.RechargeRefillSelect.prototype = Object.create(Tw.View.prototype);
+Tw.RechargeRefillSelect.prototype.constructor = Tw.RechargeRefillSelect;
 
-Tw.MytRefillSelect.prototype = Object.assign(Tw.MytRefillSelect.prototype, {
+Tw.RechargeRefillSelect.prototype = Object.assign(Tw.RechargeRefillSelect.prototype, {
   _bindEvent: function () {
     this.$container.on('click', '.refill-select-btn', $.proxy(this._confirmRefill, this));
     this.$document.on('click', '.refill-cancel', $.proxy(this._closePopup, this));

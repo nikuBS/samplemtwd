@@ -4,7 +4,7 @@
  * Date: 2018.06.22
  */
 
-Tw.MytGift = function (rootEl) {
+Tw.RechargeGift = function (rootEl) {
   this.$container = rootEl;
   this._apiService = new Tw.ApiService();
 
@@ -13,10 +13,10 @@ Tw.MytGift = function (rootEl) {
   this.$init();
 };
 
-Tw.MytGift.prototype = Object.create(Tw.View.prototype);
-Tw.MytGift.prototype.constructor = Tw.MytGift;
+Tw.RechargeGift.prototype = Object.create(Tw.View.prototype);
+Tw.RechargeGift.prototype.constructor = Tw.RechargeGift;
 
-Tw.MytGift.prototype = Object.assign(Tw.MytGift.prototype, {
+Tw.RechargeGift.prototype = Object.assign(Tw.RechargeGift.prototype, {
   $init: function () {
     initHashNav(this._logHash);
   },

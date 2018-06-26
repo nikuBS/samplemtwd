@@ -4,7 +4,7 @@
  * Date: 2018.06.22
  */
 
-Tw.MytGiftProcess = function (rootEl) {
+Tw.RechargeGiftProcess = function (rootEl) {
   this.$container = rootEl;
   this._apiService = new Tw.ApiService();
   this._nativeService = new Tw.NativeService();
@@ -14,7 +14,7 @@ Tw.MytGiftProcess = function (rootEl) {
   this.$init();
 };
 
-Tw.MytGiftProcess.prototype = {
+Tw.RechargeGiftProcess.prototype = {
   step: ['step1', 'step2', 'step3'],
   provider: {
     name: '',
@@ -90,8 +90,8 @@ Tw.MytGiftProcess.prototype = {
   },
 
   _popupOpen: function (str) {
-    $('body').find('[data-target="msgName"]').prepend(Tw.MytGiftProcess.prototype.provider.name);
-    $('body').find('[data-target="txTel"]').html(Tw.FormatHelper.convertTelFormat(Tw.MytGiftProcess.prototype.provider.phone));
+    $('body').find('[data-target="msgName"]').prepend(Tw.RechargeGiftProcess.prototype.provider.name);
+    $('body').find('[data-target="txTel"]').html(Tw.FormatHelper.convertTelFormat(Tw.RechargeGiftProcess.prototype.provider.phone));
   },
 
   _sendTextPopEvt: function () {
@@ -102,7 +102,7 @@ Tw.MytGiftProcess.prototype = {
     });
   },
   _sendTextEvt: function () {
-    var befrSvcNum = Tw.MytGiftProcess.prototype.provider.phone;
+    var befrSvcNum = Tw.RechargeGiftProcess.prototype.provider.phone;
     var textarea_text = $('body').find('[data-target="textSendbox"]').val();
 
     this._apiService

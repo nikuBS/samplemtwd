@@ -1,4 +1,4 @@
-Tw.MyTRefillHistory = function (rootEl) {
+Tw.RechargeRefillHistory = function (rootEl) {
   this.$container = rootEl;
   this._apiService = new Tw.ApiService();
   this._cachedElement();
@@ -11,7 +11,7 @@ Tw.MyTRefillHistory = function (rootEl) {
   this.NUM_OF_ITEMS = 20;
 };
 
-Tw.MyTRefillHistory.prototype = {
+Tw.RechargeRefillHistory.prototype = {
   _cachedElement: function () {
     this.$tabLinker = this.$container.find('.tab-linker a');
     this.$tabContentMy = this.$container.find('.tab-contents #my .inner');
