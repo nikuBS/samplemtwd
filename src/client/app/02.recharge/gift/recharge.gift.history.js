@@ -3,7 +3,7 @@
  * Author: 이상형 (silion@sk.com)
  * Date: 2018.06.19
  */
-Tw.MytGiftHistory = function (rootEl) {
+Tw.RechargeGiftHistory = function (rootEl) {
   this.$container = rootEl;
   this._apiService = new Tw.ApiService();
 
@@ -12,7 +12,7 @@ Tw.MytGiftHistory = function (rootEl) {
   this._$init();
 };
 
-Tw.MytGiftHistory.prototype = {
+Tw.RechargeGiftHistory.prototype = {
   _$init: function () {
     this.currentTabMethod = 'present';    // request : 조르기
     this.data = {};

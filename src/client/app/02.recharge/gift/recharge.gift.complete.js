@@ -1,4 +1,4 @@
-Tw.MytGiftComplete = function (rootEl) {
+Tw.RechargeGiftComplete = function (rootEl) {
   this.$container = rootEl;
   //-----------------------------------------------------------[서비스 설정]
   this._apiService = new Tw.ApiService();
@@ -6,8 +6,7 @@ Tw.MytGiftComplete = function (rootEl) {
   this.$init();
 };
 
-Tw.MytGiftComplete.prototype = {
-
+Tw.RechargeGiftComplete.prototype = {
     $init: function () {
         initHashNav(this._logHash); //해시네비 설정
         this._bindEvent();//이벤트 셋팅

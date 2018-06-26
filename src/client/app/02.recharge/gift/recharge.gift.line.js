@@ -4,7 +4,7 @@
  * Date: 2018.06.22
  */
 
-Tw.MytGiftLine = function (rootEl) {
+Tw.RechargeGiftLine = function (rootEl) {
   this.$container = rootEl;
   this._apiService = new Tw.ApiService();
 
@@ -13,10 +13,10 @@ Tw.MytGiftLine = function (rootEl) {
   this.$init();
 };
 
-Tw.MytGiftLine.prototype = Object.create(Tw.View.prototype);
-Tw.MytGiftLine.prototype.constructor = Tw.MytGiftLine;
+Tw.RechargeGiftLine.prototype = Object.create(Tw.View.prototype);
+Tw.RechargeGiftLine.prototype.constructor = Tw.RechargeGiftLine;
 
-Tw.MytGiftLine.prototype = Object.assign(Tw.MytGiftLine.prototype, {
+Tw.RechargeGiftLine.prototype = Object.assign(Tw.RechargeGiftLine.prototype, {
   $init: function () {
     this._apiService
       .request(Tw.API_CMD.BFF_03_0003, { svcCtg: 'M' })
