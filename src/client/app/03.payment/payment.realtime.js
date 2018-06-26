@@ -26,7 +26,7 @@ Tw.PaymentRealtime.prototype = {
     this.$container.on('click', '.complete', $.proxy(this._setHistory, this));
 
     // history reset event
-    this.$window.on('hashchange', $.proxy(this._resetHistory, this));
+    this.$window.on('hashchange', $.proxy(this._hashChangeEvent, this));
   },
   _setHistory: function (event) {
     if ($(event.target).hasClass('complete')) {
@@ -35,6 +35,18 @@ Tw.PaymentRealtime.prototype = {
       // 마지막 페이지 진입했을 경우 history replace call
       Tw.History.replace(this.historyObj, this.historyName);
     }
+  },
+  _hashChangeEvent: function () {
+    this._showAndHide();
+    this._resetHistory(); // history reset event
+  },
+  _showAndHide: function () {
+    var id = window.location.hash;
+    if (Tw.FormatHelper.isEmpty(id)) id = '#main';
+
+    var $selector = this.$container.find(id);
+    $selector.siblings().hide();
+    $selector.show();
   },
   _resetHistory: function () {
     if (this._isReturedMain() && this._isCompleted()) {

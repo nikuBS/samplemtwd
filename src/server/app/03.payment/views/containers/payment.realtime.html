@@ -5,18 +5,20 @@
 -->
 <% include ../components/start.component.html %>
 <div id="payment-realtime">
-    <h1>즉시납부</h1>
-    <a href="#step1" class="step1">페이지 이동 1</a>
-    <div id="step1">
+    <div id="main">
+        <h1>즉시납부</h1>
+        <a href="#step1" class="step1">페이지 이동 1</a>
+    </div>
+    <div id="step1" style="display:none;">
         <h1>step1</h1>
         <a href="#step2" class="step2">페이지 이동 2</a>
     </div>
-    <div id="step2">
+    <div id="step2" style="display:none;">
         <h1>step2</h1>
         <a href="#step3" class="step2 complete">페이지 이동 3</a>
     </div>
-    <div id="step3">
-        <h1>step3</h1>
+    <div id="step3" style="display:none;">
+        <h1>완료</h1>
     </div>
 </div>
 <% include ../components/javascript.component.html %>
