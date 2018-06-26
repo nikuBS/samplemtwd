@@ -12,10 +12,10 @@ Tw.RechargeGiftHistory = function (rootEl) {
   this._$init();
 };
 
-Tw.MytGiftHistory.prototype = Object.create(Tw.View.prototype);
-Tw.MytGiftHistory.prototype.constructor = Tw.MytGiftHistory;
+Tw.RechargeGiftHistory.prototype = Object.create(Tw.View.prototype);
+Tw.RechargeGiftHistory.prototype.constructor = Tw.RechargeGiftHistory;
 
-Tw.MytGiftHistory.prototype = Object.assign(Tw.MytGiftHistory.prototype, {
+Tw.RechargeGiftHistory.prototype = Object.assign(Tw.RechargeGiftHistory.prototype, {
 
   // TODO : 삭제 확인
   // TODO : 회선변경

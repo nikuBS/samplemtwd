@@ -66,6 +66,7 @@ Tw.RechargeGiftLine.prototype = Object.assign(Tw.RechargeGiftLine.prototype, {
     var sCurrentNumber = $(e.currentTarget).text().trim();
 
     setTimeout(function () {
+      $('.radiobox').removeClass('checked');
       $('.radiobox').each(function (idx, item) {
         var itemNumber = $(item).text().trim();
 

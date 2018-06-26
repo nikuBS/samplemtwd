@@ -10,7 +10,6 @@ Tw.RechargeGift = function (rootEl) {
 
   this._cachedElement();
   this._bindEvent();
-  this.$init();
 };
 
 Tw.RechargeGift.prototype = Object.create(Tw.View.prototype);
@@ -18,22 +17,6 @@ Tw.RechargeGift.prototype.constructor = Tw.RechargeGift;
 
 Tw.RechargeGift.prototype = Object.assign(Tw.RechargeGift.prototype, {
   $init: function () {
-    initHashNav(this._logHash);
-  },
-
-  _logHash: function (hash) {
-    var elWrapper = $('.tab-linker li');
-
-    switch ( hash.base ) {
-      case 'gift':
-        elWrapper.eq(0).find('a').click();
-        break;
-      case 'request':
-        elWrapper.eq(1).find('a').click();
-        break;
-      default:
-        location.hash = '#gift';
-    }
   },
 
   _cachedElement: function () {
@@ -59,13 +42,11 @@ Tw.RechargeGift.prototype = Object.assign(Tw.RechargeGift.prototype, {
     var elWrapperTab = $('.tab-linker a');
 
     if ( elWrapperTab.index(elTab) == 0 ) {
-      location.hash = 'gift';
       $('.notify.tab1').show();
       $('.notify.tab2').hide();
     }
 
     if ( elWrapperTab.index(elTab) == 1 ) {
-      location.hash = 'request';
       $('.notify.tab1').hide();
       $('.notify.tab2').show();
     }
