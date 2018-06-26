@@ -62,12 +62,32 @@ Tw.DateHelper = (function() {
     return date;
   };
 
+  /**
+   * Return Date width Format parameter
+   * @param {date} date || {string} date, {string} format
+   * @returns {Date} : YYMMDD, YYYYMMDD, YY.MM.DD
+   */
+  var getShortDateWithFormat = function(date, format) {
+    return moment(date, format).format(format);
+  }
+
+  /**
+   * Convert Date Format (BFF string to Date)
+   * @param {date} date || {string} date, {number} amount, {string} unit, {string} format
+   * @returns {Date} : YYMMDD, YYYYMMDD, YY.MM.DD
+   */
+  var getShortDateWithFormatAddByUnit = function(date, amount, unit, format) {
+    return moment(date, format).add(amount, unit).format(format);
+  }
+
   return {
     getRemainDate: getRemainDate,
     getShortDate: getShortDate,
     getShortDateNoDot: getShortDateNoDot,
     convDateFormat: convDateFormat,
     getCurrentShortDate: getCurrentShortDate,
-    getPastYearShortDate: getPastYearShortDate
+    getPastYearShortDate: getPastYearShortDate,
+    getShortDateWithFormat: getShortDateWithFormat,
+    getShortDateWithFormatAddByUnit: getShortDateWithFormatAddByUnit
   }
 })();
