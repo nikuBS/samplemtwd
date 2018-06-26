@@ -4,7 +4,7 @@
  * Date: 2018.06.22
  */
 
-Tw.MytGiftProcess = function (rootEl) {
+Tw.RechargeGiftProcess = function (rootEl) {
   this.$container = rootEl;
   this._apiService = new Tw.ApiService();
   this._nativeService = new Tw.NativeService();
@@ -14,7 +14,7 @@ Tw.MytGiftProcess = function (rootEl) {
   this.$init();
 };
 
-Tw.MytGiftProcess.prototype = {
+Tw.RechargeGiftProcess.prototype = {
   step: ['step1', 'step2', 'step3'],
   provider: {
     name: '',
@@ -31,7 +31,6 @@ Tw.MytGiftProcess.prototype = {
 
     //레이어팝업 오픈 함수 재정의
     frontend_fn.popup_open = $.proxy(this._popupOpen, this);
-
   },
 
   _logHash: function (hash) {
@@ -53,7 +52,6 @@ Tw.MytGiftProcess.prototype = {
 
         $('.popup-page').empty().remove();
         skt_landing.action.auto_scroll();
-
         break;
       default:
         console.info('default hash.base : ', hash.base);
@@ -65,7 +63,6 @@ Tw.MytGiftProcess.prototype = {
     this.$input_phone = this.$container.find('#inp_phone');
     this.$btn_go_home = this.$container.find('#btn_go_home');
     this.$btn_one_more = this.$container.find('#btn_one_more');
-    this.$wrap_data_select = this.$container.find('.tube-list');
     this.$btn_send_gift = this.$container.find('#btn_send_gift');
     this.$btn_next_process = this.$container.find('#next_process');
     this.$btn_go_history = this.$container.find('#btn_go_history');
@@ -90,15 +87,11 @@ Tw.MytGiftProcess.prototype = {
     this.$container.on('click', '[data-target="sendText"]', $.proxy(this._sendTextPopEvt, this));
     $('body').on('click', '[data-target="sendTextBtn"]', $.proxy(this._sendTextEvt, this));
     $('body').on('click', '[data-target="sendTextCancelBtn"]', $.proxy(this._sendTextCancelEvt, this));
-
   },
 
-  //-----------------------------------------------------[문자로 알리기]
   _popupOpen: function (str) {
-    // console.info('frontend_fn.popup_open 재정의 22: ', str);
-    // console.info('Tw.MytGiftProcess.prototype.provider 객체 : ', Tw.MytGiftProcess.prototype.provider);
-    $('body').find('[data-target="msgName"]').prepend(Tw.MytGiftProcess.prototype.provider.name);
-    $('body').find('[data-target="txTel"]').html(Tw.FormatHelper.convertTelFormat(Tw.MytGiftProcess.prototype.provider.phone));
+    $('body').find('[data-target="msgName"]').prepend(Tw.RechargeGiftProcess.prototype.provider.name);
+    $('body').find('[data-target="txTel"]').html(Tw.FormatHelper.convertTelFormat(Tw.RechargeGiftProcess.prototype.provider.phone));
   },
 
   _sendTextPopEvt: function () {
@@ -109,7 +102,7 @@ Tw.MytGiftProcess.prototype = {
     });
   },
   _sendTextEvt: function () {
-    var befrSvcNum = Tw.MytGiftProcess.prototype.provider.phone;
+    var befrSvcNum = Tw.RechargeGiftProcess.prototype.provider.phone;
     var textarea_text = $('body').find('[data-target="textSendbox"]').val();
 
     this._apiService
@@ -127,7 +120,6 @@ Tw.MytGiftProcess.prototype = {
     console.info('취소');
     location.hash = 'step3';
   },
-  //-----------------------------------------------------[문자로 알리기 end]
 
   updateLineInfo: function (e, params) {
     this.lineInfo = params.lineInfo;
@@ -154,7 +146,6 @@ Tw.MytGiftProcess.prototype = {
 
   onSuccessRequestHistory: function (res) {
     var result = res.result.slice(0, 3);
-
     if ( result.length != 0 ) {
       var tpl_request_history = Handlebars.compile($('#tpl_request_history').text());
       $('#wrap_request_history').html(tpl_request_history({ list: result }));
@@ -171,7 +162,6 @@ Tw.MytGiftProcess.prototype = {
 
   onSuccessFamilyHistory: function (res) {
     var result = res.result.slice(0, 3);
-
     if ( result.length != 0 ) {
       var tpl_family_history = Handlebars.compile($('#tpl_family_history').text());
       $('#wrap_family_history').html(tpl_family_history({ list: result }));
@@ -290,9 +280,6 @@ Tw.MytGiftProcess.prototype = {
   },
 
   nextProcess: function (e) {
-    e.stopPropagation();
-    e.preventDefault();
-
     if ( location.hash == '#step1' ) {
       setTimeout(function () {
         this.validateStep1();
@@ -332,22 +319,10 @@ Tw.MytGiftProcess.prototype = {
   },
 
   validateStep2: function () {
-    var nCurrentIndex = this.step.indexOf(location.hash.replace('#', ''));
-    var sNextStep = this.step[nCurrentIndex + 1];
-    var sNextUrl = location.href.replace(location.hash, '#' + sNextStep);
     var dataQty = $('#wrap_data_select').find('label.checked').data('value');
 
     if ( !dataQty ) {
-      skt_landing.action.popup.open({
-        'title': '알림',
-        'close_bt': true,
-        'title2': '데이터를 입력해주세요.',
-        'bt_num': 'one',
-        'type': [{
-          class: 'bt-red1 family-history-cancel',
-          txt: '확인'
-        }]
-      });
+      this.onFailStep({ orgDebugMessage: '데이터를 선택해주세요.' });
       return;
     }
 
@@ -360,7 +335,7 @@ Tw.MytGiftProcess.prototype = {
               this.resetInputPhone();
               this.provider.dataQty = dataQty;
               $('.wrap_data .num').text(dataQty);
-              location.replace(sNextUrl);
+              location.replace(this.getNextStepUrl());
             } else {
               this.onFailStep(res);
             }
@@ -371,7 +346,7 @@ Tw.MytGiftProcess.prototype = {
             if ( res.code == '00' ) {
               this.provider.dataQty = dataQty;
               $('.wrap_data .num').text(dataQty);
-              location.replace(sNextUrl);
+              location.replace(this.getNextStepUrl());
             } else {
               this.onFailStep(res);
             }
@@ -382,8 +357,8 @@ Tw.MytGiftProcess.prototype = {
         .done(function (res) {
           if ( res.code == '00' ) {
             this.provider.dataQty = dataQty;
-            $('.wrap_data .num').text(this.receiver.dataRemQty - dataQty);
-            location.replace(sNextUrl);
+            $('.wrap_data .num').text(dataQty);
+            location.replace(this.getNextStepUrl());
           } else {
             this.onFailStep(res);
           }
@@ -393,7 +368,7 @@ Tw.MytGiftProcess.prototype = {
 
       $('.wrap_remain_data .num').text(Number(this.receiver.dataRemQty) - Number(this.provider.dataQty));
       $('.wrap_gift_data .num').text(this.provider.dataQty);
-      location.replace(sNextUrl);
+      location.replace(this.getNextStepUrl());
     }
   },
 
@@ -406,14 +381,18 @@ Tw.MytGiftProcess.prototype = {
       $('.wrap_provider').html(tpl(this.provider));
       $('.tx-data em').text(this.receiver.dataRemQty + 'MB');
 
-      var nCurrentIndex = this.step.indexOf(location.hash.replace('#', ''));
-      var sNextStep = this.step[nCurrentIndex + 1];
-      var sNextUrl = location.href.replace(location.hash, '#' + sNextStep);
-
-      location.replace(sNextUrl);
+      location.replace(this.getNextStepUrl());
     } else {
       this.onFailStep(res)
     }
+  },
+
+  getNextStepUrl: function () {
+    var nCurrentIndex = this.step.indexOf(location.hash.replace('#', ''));
+    var sNextStep = this.step[nCurrentIndex + 1];
+    var sNextUrl = location.href.replace(location.hash, '#' + sNextStep);
+
+    return sNextUrl;
   },
 
   onFailStep: function (res) {

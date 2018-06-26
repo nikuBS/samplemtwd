@@ -14,6 +14,7 @@ import DateHelper from '../../../utils/date.helper';
 import 'rxjs/add/observable/combineLatest';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/of';
+import BrowserHelper from '../../../utils/browser.helper';
 
 class HomeMain extends TwViewController {
   constructor() {

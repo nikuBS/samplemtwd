@@ -1,31 +1,26 @@
-Tw.BrowserHelper = (function() {
+Tw.BrowserHelper = (function () {
   var userAgent = window.navigator.userAgent;
-  var isAndroid = function() {
-    if ( /Android/i.test(userAgent) ) {
-      return true;
-    }
-    return false;
+  var isAndroid = function () {
+    return /Android/i.test(userAgent);
   };
 
-  var isIos = function() {
-    if ( /iPhone|iPad|iPod/i.test(userAgent) ) {
-      return true;
-    }
-    return false;
+  var isIos = function () {
+    return /iPhone|iPad|iPod/i.test(userAgent);
   };
 
-  var isMobile = function() {
-    if ( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent) ) {
-      return true;
-    }
-    return false;
+  var isMobile = function () {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
   };
 
-  var isOnline = function() {
+  var isApp = function () {
+    return /TWM_APP/i.test(userAgent);
+  };
+
+  var isOnline = function () {
     return window.navigator.onLine;
   };
 
-  var getUserAgent = function() {
+  var getUserAgent = function () {
     return userAgent;
   };
 

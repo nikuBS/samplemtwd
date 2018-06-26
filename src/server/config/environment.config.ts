@@ -3,7 +3,7 @@ const environment = {
     BFF_SERVER: {
       url: '211.188.180.73',
       protocol: 'http',
-      port: 32224
+      port: 31020
     },
     CDN: 'http://localhost:3001',
     REDIS: {

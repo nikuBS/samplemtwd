@@ -4,7 +4,7 @@
  * Date: 2018.06.22
  */
 
-Tw.MytGift = function (rootEl) {
+Tw.RechargeGift = function (rootEl) {
   this.$container = rootEl;
   this._apiService = new Tw.ApiService();
 
@@ -13,10 +13,10 @@ Tw.MytGift = function (rootEl) {
   this.$init();
 };
 
-Tw.MytGift.prototype = Object.create(Tw.View.prototype);
-Tw.MytGift.prototype.constructor = Tw.MytGift;
+Tw.RechargeGift.prototype = Object.create(Tw.View.prototype);
+Tw.RechargeGift.prototype.constructor = Tw.RechargeGift;
 
-Tw.MytGift.prototype = Object.assign(Tw.MytGift.prototype, {
+Tw.RechargeGift.prototype = Object.assign(Tw.RechargeGift.prototype, {
   $init: function () {
     initHashNav(this._logHash);
   },
@@ -31,7 +31,8 @@ Tw.MytGift.prototype = Object.assign(Tw.MytGift.prototype, {
       case 'request':
         elWrapper.eq(1).find('a').click();
         break;
-
+      default:
+        location.hash = '#gift';
     }
   },
 
@@ -46,11 +47,11 @@ Tw.MytGift.prototype = Object.assign(Tw.MytGift.prototype, {
 
   _bindEvent: function () {
     this.$container.on('updateLineInfo', $.proxy(this.updateLineInfo, this));
+    this.$container.on('click', '.my-data', $.proxy(this.showRemainData, this));
     this.$container.on('click', '.btn_process', $.proxy(this.goToProcess, this));
     this.$container.on('click', '.bt-link-tx', $.proxy(this.openPriceList, this));
-    this.$container.on('click', '.my-data', $.proxy(this.showRemainData, this));
-    this.$container.on('click', '.popup-closeBtn', $.proxy(this.closePriceList, this));
     this.$container.on('click', '.tab-linker a', $.proxy(this.changeTabMenu, this));
+    this.$container.on('click', '.popup-closeBtn', $.proxy(this.closePriceList, this));
   },
 
   changeTabMenu: function (e) {
@@ -59,10 +60,14 @@ Tw.MytGift.prototype = Object.assign(Tw.MytGift.prototype, {
 
     if ( elWrapperTab.index(elTab) == 0 ) {
       location.hash = 'gift';
+      $('.notify.tab1').show();
+      $('.notify.tab2').hide();
     }
 
     if ( elWrapperTab.index(elTab) == 1 ) {
       location.hash = 'request';
+      $('.notify.tab1').hide();
+      $('.notify.tab2').show();
     }
   },
 
@@ -118,14 +123,9 @@ Tw.MytGift.prototype = Object.assign(Tw.MytGift.prototype, {
     var $wrap_remain_data = $(e.currentTarget).closest('.gift-box-info-list');
 
     // TODO : fetch data && binding
-    this._apiService.request(Tw.API_CMD.BFF_06_0014, { reqCnt: 3 })
-      .done(function (res) {
-        // var result = res.result;
-        // result.familyMemberYn = result.familyMemberYn == 'Y' ? true : false;
-        // result.goodFamilyMemberYn = result.goodFamilyMemberYn == 'Y' ? true : false;
-        //
-        // this.$wrap_gift_count.html(this.tpl_gift_count(result));
-      }.bind(this));
+    // this._apiService.request(Tw.API_CMD.BFF_06_0014, { reqCnt: 3 })
+    //   .done(function (res) {
+    //   }.bind(this));
 
     var response = {
       "code": "00",

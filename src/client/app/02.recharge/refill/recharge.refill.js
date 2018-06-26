@@ -4,7 +4,7 @@
  * Date: 2018.06.18
  */
 
-Tw.MytRefill = function (rootEl) {
+Tw.RechargeRefill = function (rootEl) {
   this.$container = rootEl;
   this.$window = window;
   this.$document = $(document);
@@ -15,10 +15,10 @@ Tw.MytRefill = function (rootEl) {
   this._bindEvent();
 };
 
-Tw.MytRefill.prototype = Object.create(Tw.View.prototype);
-Tw.MytRefill.prototype.constructor = Tw.MytRefill;
+Tw.RechargeRefill.prototype = Object.create(Tw.View.prototype);
+Tw.RechargeRefill.prototype.constructor = Tw.RechargeRefill;
 
-Tw.MytRefill.prototype = Object.assign(Tw.MytRefill.prototype, {
+Tw.RechargeRefill.prototype = Object.assign(Tw.RechargeRefill.prototype, {
   _init: function () {
     this.$refillBtn = this.$container.find('.link-long > a');
   },
