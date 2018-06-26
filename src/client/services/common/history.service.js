@@ -41,7 +41,7 @@ Tw.HistoryService.prototype = {
     }
   },
   resetHistory: function () {
-    if (this.isReturedMain() && this.isCompleted()) {
+    if (this.isReturendMain() && this.isCompleted()) {
       this.go([this.getHistoryLength()]);
     }
   },
@@ -50,7 +50,7 @@ Tw.HistoryService.prototype = {
     historyLength = historyLength - 3;
     return -historyLength;
   },
-  isReturedMain: function () {
+  isReturendMain: function () {
     return Tw.FormatHelper.isEmpty(window.location.hash);
   },
   isCompleted: function () {
