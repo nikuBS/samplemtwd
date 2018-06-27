@@ -20,7 +20,7 @@ Tw.HomeMain.prototype = {
   },
   _bindEvent: function () {
     this.$container.on('click', '#refill-product', $.proxy(this._openRefillProduct, this));
-    this.$container.on('click', '#gift-product', $.proxy(this._openRefillProduct, this));
+    this.$container.on('click', '#gift-product', $.proxy(this._openGiftProduct, this));
     this.$container.on('click', '#gift-balance', $.proxy(this._getGiftBalance, this));
   },
 
