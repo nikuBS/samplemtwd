@@ -10,6 +10,7 @@ Tw.RechargeRefillSelect = function (rootEl) {
   this.window = window;
 
   this._apiService = new Tw.ApiService();
+  this._history = new Tw.HistoryService();
 
   this._bindEvent();
 };
@@ -60,7 +61,9 @@ Tw.RechargeRefillSelect.prototype = {
     return reqData;
   },
   _success: function (res) {
+    this._replaceHistory();
     this._closePopup();
+
     if (res.code === '00') {
       this._goLoad('/recharge/refill/complete');
     } else {
@@ -75,5 +78,8 @@ Tw.RechargeRefillSelect.prototype = {
   },
   _goLoad: function (url) {
     this.window.location.href = url;
+  },
+  _replaceHistory: function () {
+    this._history.replaceUrl(window.location.pathname + window.location.search, '/recharge/refill');
   }
 };
