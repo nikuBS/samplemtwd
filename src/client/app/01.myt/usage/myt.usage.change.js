@@ -5,10 +5,7 @@ Tw.MytUsageChange = function () {
   this._bindEvent();
 };
 
-Tw.MytUsageChange.prototype = Object.create(Tw.View.prototype);
-Tw.MytUsageChange.prototype.constructor = Tw.MytUsageChange;
-
-Tw.MytUsageChange.prototype = Object.assign(Tw.MytUsageChange.prototype, {
+Tw.MytUsageChange.prototype = {
   _cachedElement: function () {
     this.$popupContainer = $('.pop-container');
     this.$container      = $('#usage_change');
@@ -58,4 +55,4 @@ Tw.MytUsageChange.prototype = Object.assign(Tw.MytUsageChange.prototype, {
   hideSubView: function () {
     this.$container.show();
   }
-});
+};

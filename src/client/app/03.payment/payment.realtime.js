@@ -13,10 +13,7 @@ Tw.PaymentRealtime = function (rootEl) {
   this._bindEvent();
 };
 
-Tw.PaymentRealtime.prototype = Object.create(Tw.View.prototype);
-Tw.PaymentRealtime.prototype.constructor = Tw.PaymentRealtime;
-
-Tw.PaymentRealtime.prototype = Object.assign(Tw.PaymentRealtime.prototype, {
+Tw.PaymentRealtime.prototype = {
   _bindEvent: function () {
     this.$container.on('click', '.btn', $.proxy(this._toggleEvent, this));
     this.$container.on('click', '.complete', $.proxy(this._setHistory, this));
@@ -25,6 +22,6 @@ Tw.PaymentRealtime.prototype = Object.assign(Tw.PaymentRealtime.prototype, {
     this.history.setHistory(event);
   },
   _toggleEvent: function (event) {
-    Tw.Common.toggle($(event.currentTarget));
+    Tw.CommonEvent.toggle($(event.currentTarget));
   }
-});
+};

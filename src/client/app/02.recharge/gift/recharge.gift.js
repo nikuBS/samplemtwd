@@ -12,10 +12,7 @@ Tw.RechargeGift = function (rootEl) {
   this._bindEvent();
 };
 
-Tw.RechargeGift.prototype = Object.create(Tw.View.prototype);
-Tw.RechargeGift.prototype.constructor = Tw.RechargeGift;
-
-Tw.RechargeGift.prototype = Object.assign(Tw.RechargeGift.prototype, {
+Tw.RechargeGift.prototype = {
   $init: function () {
   },
 
@@ -133,4 +130,4 @@ Tw.RechargeGift.prototype = Object.assign(Tw.RechargeGift.prototype, {
     $(document.body).css('height', 'auto');
     $(document.body).css('overflow-y', 'auto');
   }
-});
+};

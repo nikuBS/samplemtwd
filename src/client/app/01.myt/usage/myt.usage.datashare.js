@@ -5,10 +5,7 @@ Tw.MytUsageDataShare = function (rootEl) {
   this._bindEvent();
 };
 
-Tw.MytUsageDataShare.prototype = Object.create(Tw.View.prototype);
-Tw.MytUsageDataShare.prototype.constructor = Tw.MytUsageDataShare;
-
-Tw.MytUsageDataShare.prototype = Object.assign(Tw.MytUsageDataShare.prototype, {
+Tw.MytUsageDataShare.prototype = {
   _bindEvent: function () {
     this.$container.on('click', '.get-usage-data', $.proxy(this._getUsageData, this));
   },
@@ -29,4 +26,4 @@ Tw.MytUsageDataShare.prototype = Object.assign(Tw.MytUsageDataShare.prototype, {
   _fail: function (err) {
     console.log('data-sharing child api error', err);
   }
-});
+};

@@ -1,14 +1,10 @@
-Tw.Common = function () {
-  this.initService();
+Tw.CommonEvent = function () {
   this.setBack();
   this.setReplace();
+  this.setBackRefresh();
 };
 
-Tw.Common.prototype = {
-  initService: function () {
-    var native = new Tw.NativeService();
-  },
-
+Tw.CommonEvent.prototype = {
   setBack: function () {
     /* 뒤로가기 추가 */
     $('.common-back').on('click', function () {
@@ -23,10 +19,22 @@ Tw.Common.prototype = {
       location.replace($event.currentTarget.href);
       return false;
     })
+  },
+
+  setBackRefresh: function () {
+    $(window).bind("pageshow", function($event) {
+      if ($event.originalEvent.persisted || window.performance && window.performance.navigation.type == 2) {
+        Tw.Logger.info('[Back Loaded]');
+        if($('.back-reload').length > 0) {
+          Tw.Logger.info('[Prev]', document.referrer);
+          document.location.reload();
+        }
+      }
+    });
   }
 };
 
-Tw.Common.toggle = function (selector) {
+Tw.CommonEvent.toggle = function (selector) {
   if ( selector.hasClass('on') ) {
     selector.removeClass('on');
   }
@@ -36,5 +44,5 @@ Tw.Common.toggle = function (selector) {
 };
 
 $(document).ready(function () {
-  var commonEvent = new Tw.Common();
+  var commonEvent = new Tw.CommonEvent();
 });
