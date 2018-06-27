@@ -7,11 +7,14 @@ Tw.HistoryService = function (selector) {
   this.historyObj = {};
 };
 Tw.HistoryService.prototype = {
-  init: function () {
+  init: function (hash) {
     this.push(this.historyObj, this.historyName);
 
-    // history reset event
-    this.$window.on('hashchange', $.proxy(this.hashChangeEvent, this));
+    if (hash === undefined) {
+      this.$window.on('pageshow', $.proxy(this.checkIsBack, this));
+    } else {
+      this.$window.on('hashchange', $.proxy(this.hashChangeEvent, this));
+    }
   },
   push: function () {
     this.history.pushState(this.historyObj, this.historyName, this.pathname);
@@ -19,8 +22,16 @@ Tw.HistoryService.prototype = {
   replace: function () {
     this.history.replaceState(this.historyObj, this.historyName, this.pathname);
   },
+  replaceUrl: function (url, targetUrl) {
+    this.history.pushState(this.historyObj, url, targetUrl);
+  },
   go: function (len) {
-    this.history.go(len);
+    this.history.go([len]);
+  },
+  checkIsBack: function (event) {
+    if (event.originalEvent.persisted || window.performance && window.performance.navigation.type === 2) {
+      this.resetBrowserHistory();
+    }
   },
   hashChangeEvent: function () {
     this.showAndHide();
@@ -42,12 +53,20 @@ Tw.HistoryService.prototype = {
   },
   resetHistory: function () {
     if (this.isReturendMain() && this.isCompleted()) {
-      this.go([this.getHistoryLength()]);
+      this.go(this.getHistoryLength());
     }
+  },
+  resetBrowserHistory: function () {
+    this.go(this.getBrowserHistoryLength());
+  },
+  getBrowserHistoryLength: function () {
+    var historyLength = history.length;
+    historyLength = historyLength - 4;
+    return -historyLength;
   },
   getHistoryLength: function () {
     var historyLength = history.length;
-    historyLength = historyLength - 3;
+    historyLength = historyLength - 5;
     return -historyLength;
   },
   isReturendMain: function () {

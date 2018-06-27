@@ -13,7 +13,7 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div id="myt-refill" class="wrap">
+<div id="myt-refill-complete" class="wrap">
     <!-- #header -->
     <div id="header" class="header-wrap">
         <div class="header">
@@ -73,9 +73,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    $('.refill-history').on('click', function () {
-      window.location.href = '/recharge/refill/history';
-    })
+    new Tw.RechargeRefillComplete($('#myt-refill-complete'));
   });
 </script>
 <% include ../../components/end.component.html %>

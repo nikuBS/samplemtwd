@@ -8,8 +8,11 @@ Tw.RechargeRefill = function (rootEl) {
   this.$container = rootEl;
   this.$window = window;
   this.$document = $(document);
+  this.$btnTarget = null;
+
   this._apiService = new Tw.ApiService();
-  this._btnTarget = null;
+  this._history = new Tw.HistoryService();
+  this._history.init();
 
   this._init();
   this._bindEvent();
@@ -42,9 +45,9 @@ Tw.RechargeRefill.prototype = {
   _goRefill: function (event) {
     event.preventDefault();
 
-    this._btnTarget = $(event.currentTarget);
-    if (this._checkValidation(this._btnTarget)) {
-      this._goLoad(this._makeUrl(this._btnTarget));
+    this.$btnTarget = $(event.currentTarget);
+    if (this._checkValidation(this.$btnTarget)) {
+      this._goLoad(this._makeUrl(this.$btnTarget));
     }
   },
   _checkValidation: function ($target) {
@@ -154,6 +157,6 @@ Tw.RechargeRefill.prototype = {
   },
   _submit: function () {
     this._closePopup();
-    this._goLoad(this._makeUrl(this._btnTarget));
+    this._goLoad(this._makeUrl(this.$btnTarget));
   }
 };
