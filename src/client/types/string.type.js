@@ -14,14 +14,18 @@ Tw.VOICE_UNIT = {
 
 Tw.POPUP_TITLE = {
   REQUEST_DELETE: '조르기 삭제안내'
-}
+};
 
 Tw.BUTTON_LABEL = {
   CONFIRM: '확인',
-  CANCEL: '취소'
-}
+  CANCEL: '취소',
+  NOTIFY: '알림'
+};
 
 Tw.MESSAGE = {
+  REFILL_INFO_01: ' 리필을 선택하셨습니다.',
+  REFILL_INFO_02: '쿠폰 사용 가능 기간은 ',
+  REFILL_INFO_03: '까지이며, 리필 이후 요금제 변경 시에는 사용할 수 없습니다.<br />자세한 사항은 쿠폰 사용 내역에서 확인 가능합니다.<br />정말로 쿠폰으로 리필하시겠습니까?<br />신청 후 취소가 불가합니다.',
   REFILL_A02: '선택하신 리필쿠폰보다 유효기간이 더 짧은 쿠폰이 있습니다.\n그래도 사용하시겠습니까?',
   REFILL_A04: '선물받은 리필쿠폰은 다시 선물할 수 없습니다.\n다른 리필쿠폰을 선택해 주세요.',
   REFILL_A09: '리필하실 쿠폰을 선택해주세요.',
