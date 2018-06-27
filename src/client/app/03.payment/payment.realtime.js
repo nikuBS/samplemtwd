@@ -8,7 +8,6 @@ Tw.PaymentRealtime = function (rootEl) {
   this.$container = rootEl;
   this.$window = $(window);
 
-  this.common = new Tw.Common();
   this.history = new Tw.HistoryService(rootEl);
   this.history.init();
   this._bindEvent();
@@ -26,6 +25,6 @@ Tw.PaymentRealtime.prototype = Object.assign(Tw.PaymentRealtime.prototype, {
     this.history.setHistory(event);
   },
   _toggleEvent: function (event) {
-    this.common.toggle($(event.currentTarget));
+    Tw.Common.toggle($(event.currentTarget));
   }
 });

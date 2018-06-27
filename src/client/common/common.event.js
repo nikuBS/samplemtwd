@@ -1,10 +1,11 @@
 Tw.Common = function () {
   this.initService();
   this.setBack();
+  this.setReplace();
 };
 
 Tw.Common.prototype = {
-  initService: function() {
+  initService: function () {
     var native = new Tw.NativeService();
   },
 
@@ -16,13 +17,21 @@ Tw.Common.prototype = {
     });
   },
 
-  toggle: function (selector) {
-    if (selector.hasClass('on')) {
-      selector.removeClass('on');
-    }
-    else {
-      selector.addClass('on');
-    }
+  setReplace: function () {
+    $('.replace-history').on('click', function ($event) {
+      Tw.Logger.info('[Replace History]');
+      location.replace($event.currentTarget.href);
+      return false;
+    })
+  }
+};
+
+Tw.Common.toggle = function (selector) {
+  if ( selector.hasClass('on') ) {
+    selector.removeClass('on');
+  }
+  else {
+    selector.addClass('on');
   }
 };
 
