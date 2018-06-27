@@ -14,10 +14,7 @@ Tw.RechargeRefillSelect = function (rootEl) {
   this._bindEvent();
 };
 
-Tw.RechargeRefillSelect.prototype = Object.create(Tw.View.prototype);
-Tw.RechargeRefillSelect.prototype.constructor = Tw.RechargeRefillSelect;
-
-Tw.RechargeRefillSelect.prototype = Object.assign(Tw.RechargeRefillSelect.prototype, {
+Tw.RechargeRefillSelect.prototype = {
   _bindEvent: function () {
     this.$container.on('click', '.refill-select-btn', $.proxy(this._confirmRefill, this));
     this.$document.on('click', '.refill-cancel', $.proxy(this._closePopup, this));
@@ -79,4 +76,4 @@ Tw.RechargeRefillSelect.prototype = Object.assign(Tw.RechargeRefillSelect.protot
   _goLoad: function (url) {
     this.window.location.href = url;
   }
-});
+};

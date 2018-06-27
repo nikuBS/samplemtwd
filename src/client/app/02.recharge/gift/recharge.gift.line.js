@@ -13,10 +13,7 @@ Tw.RechargeGiftLine = function (rootEl) {
   this.$init();
 };
 
-Tw.RechargeGiftLine.prototype = Object.create(Tw.View.prototype);
-Tw.RechargeGiftLine.prototype.constructor = Tw.RechargeGiftLine;
-
-Tw.RechargeGiftLine.prototype = Object.assign(Tw.RechargeGiftLine.prototype, {
+Tw.RechargeGiftLine.prototype = {
   $init: function () {
     this._apiService
       .request(Tw.API_CMD.BFF_03_0003, { svcCtg: 'M' })
@@ -76,4 +73,4 @@ Tw.RechargeGiftLine.prototype = Object.assign(Tw.RechargeGiftLine.prototype, {
       });
     }, 50);
   },
-});
+};

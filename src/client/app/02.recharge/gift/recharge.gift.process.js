@@ -7,7 +7,6 @@
 Tw.RechargeGiftProcess = function (rootEl) {
   this.$container = rootEl;
   this._apiService = new Tw.ApiService();
-  this._nativeService = new Tw.NativeService();
 
   this._cachedElement();
   this._bindEvent();
@@ -207,7 +206,7 @@ Tw.RechargeGiftProcess.prototype = {
   },
 
   _onClickBtnAddr: function () {
-    this._nativeService.send(Tw.NTV_CMD.GET_CONTACT, {}, $.proxy(this._onContact, this));
+    Tw.Native.send(Tw.NTV_CMD.GET_CONTACT, {}, $.proxy(this._onContact, this));
   },
 
   _onContact: function (resp) {

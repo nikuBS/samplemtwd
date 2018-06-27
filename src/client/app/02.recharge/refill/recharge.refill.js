@@ -15,10 +15,7 @@ Tw.RechargeRefill = function (rootEl) {
   this._bindEvent();
 };
 
-Tw.RechargeRefill.prototype = Object.create(Tw.View.prototype);
-Tw.RechargeRefill.prototype.constructor = Tw.RechargeRefill;
-
-Tw.RechargeRefill.prototype = Object.assign(Tw.RechargeRefill.prototype, {
+Tw.RechargeRefill.prototype = {
   _init: function () {
     this.$refillBtn = this.$container.find('.link-long > a');
   },
@@ -159,4 +156,4 @@ Tw.RechargeRefill.prototype = Object.assign(Tw.RechargeRefill.prototype, {
     this._closePopup();
     this._goLoad(this._makeUrl(this._btnTarget));
   }
-});
+};
