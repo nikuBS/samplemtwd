@@ -13,9 +13,6 @@ Tw.RechargeGift = function (rootEl) {
 };
 
 Tw.RechargeGift.prototype = {
-  $init: function () {
-  },
-
   _cachedElement: function () {
     this.$btn_change = this.$container.find('#line-set');
     this.$wrap_gift_count = this.$container.find('#wrap_gift_count');
@@ -81,6 +78,27 @@ Tw.RechargeGift.prototype = {
     this.$wrap_request_count.html(this.tpl_request_count({ remainCount: remainCount }));
   },
 
+  showRemainData: function (e) {
+    var $wrap_remain_data = $(e.currentTarget).closest('.gift-box-info-list');
+
+    // this._apiService.request(Tw.API_CMD.BFF_06_0014, { reqCnt: 3 })
+    //   .done(function (res) {
+    //   }.bind(this));
+
+    // TODO : fetch data && binding
+    var response = {
+      "code": "00",
+      "msg": "success",
+      "result": {
+        "reqCnt": "1",
+        "giftRequestAgainYn": "Y",
+        "dataRemQty": "700"
+      }
+    }
+
+    $wrap_remain_data.html(this.tpl_remain_data(response.result));
+  },
+
   goToProcess: function (e) {
     var processType = $(e.currentTarget).data('type');
 
@@ -97,36 +115,17 @@ Tw.RechargeGift.prototype = {
     }
   },
 
-  showRemainData: function (e) {
-    var $wrap_remain_data = $(e.currentTarget).closest('.gift-box-info-list');
-
-    // TODO : fetch data && binding
-    // this._apiService.request(Tw.API_CMD.BFF_06_0014, { reqCnt: 3 })
-    //   .done(function (res) {
-    //   }.bind(this));
-
-    var response = {
-      "code": "00",
-      "msg": "success",
-      "result": {
-        "reqCnt": "1",
-        "giftRequestAgainYn": "Y",
-        "dataRemQty": "700"
-      }
-    }
-
-    $wrap_remain_data.html(this.tpl_remain_data(response.result));
-  },
-
   openPriceList: function () {
-    $('#popup_price_list').show();
+    skt_landing.action.popup.open({
+      hbs:'DA_02_01_L01'
+    });
+
     $(document.body).css('height', 'auto');
     $(document.body).css('overflow-y', 'hidden');
     $(window).scrollTop(0);
   },
 
   closePriceList: function () {
-    $('#popup_price_list').hide();
     $(document.body).css('height', 'auto');
     $(document.body).css('overflow-y', 'auto');
   }

@@ -36,6 +36,14 @@ Tw.RechargeGiftLine.prototype = {
       .done($.proxy(this.updateLineInfo, this));
   },
 
+  getCurrentLineInfo: function (svcNum) {
+    this.lineInfo = _.find(this.lineList, function (line) {
+      return line.svcNum == svcNum;
+    });
+
+    return this.lineInfo;
+  },
+
   updateLineInfo: function (res) {
     this.lineInfo = _.find(this.lineList, function (line) {
       return line.svcNum == res.result.svcNum;

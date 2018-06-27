@@ -82,24 +82,23 @@ Tw.RechargeGiftProcess.prototype = {
     this.$container.on('click', '#wrap_members_history .history_item', $.proxy(this._onClickMembersHistoryItem, this));
     this.$container.on('click', '.family-history-cancel', $.proxy(this._closePopup, this));
     this.$container.on('click', '.family-history-remove', $.proxy(this._removeFamilyHistoryItem, this));
-
     this.$container.on('click', '[data-target="sendText"]', $.proxy(this._sendTextPopEvt, this));
-    $('body').on('click', '[data-target="sendTextBtn"]', $.proxy(this._sendTextEvt, this));
-    $('body').on('click', '[data-target="sendTextCancelBtn"]', $.proxy(this._sendTextCancelEvt, this));
+    this.$container.on('click', '[data-target="sendTextBtn"]', $.proxy(this._sendTextEvt, this));
+    this.$container.on('click', '[data-target="sendTextCancelBtn"]', $.proxy(this._sendTextCancelEvt, this));
   },
 
-  _popupOpen: function (str) {
-    $('body').find('[data-target="msgName"]').prepend(Tw.RechargeGiftProcess.prototype.provider.name);
-    $('body').find('[data-target="txTel"]').html(Tw.FormatHelper.convertTelFormat(Tw.RechargeGiftProcess.prototype.provider.phone));
+  _popupOpen: function () {
+    this.$container.find('[data-target="msgName"]').prepend(this.provider.name);
+    this.$container.find('[data-target="txTel"]').html(Tw.FormatHelper.convertTelFormat(this.provider.phone));
   },
 
   _sendTextPopEvt: function () {
-    location.hash = 'DA_02_01_04_L01';
     skt_landing.action.popup.open({
       hbs: 'DA_02_01_04_L01',
       front: 'test'
     });
   },
+
   _sendTextEvt: function () {
     var befrSvcNum = Tw.RechargeGiftProcess.prototype.provider.phone;
     var textarea_text = $('body').find('[data-target="textSendbox"]').val();
@@ -111,12 +110,12 @@ Tw.RechargeGiftProcess.prototype = {
       }))
       .done($.proxy(this._apiComplete, this));
   },
+
   _apiComplete: function (res) {
-    console.info('res : ', res);
     location.hash = 'step3';
   },
+
   _sendTextCancelEvt: function () {
-    console.info('취소');
     location.hash = 'step3';
   },
 
