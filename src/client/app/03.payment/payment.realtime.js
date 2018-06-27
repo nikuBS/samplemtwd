@@ -8,7 +8,7 @@ Tw.PaymentRealtime = function (rootEl) {
   this.$container = rootEl;
   this.$window = $(window);
 
-  this.history = new Tw.HistoryService(rootEl);
+  this.history = new Tw.HistoryService(this.$container);
   this.history.init('hash');
   this._bindEvent();
 };

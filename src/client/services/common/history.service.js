@@ -8,8 +8,6 @@ Tw.HistoryService = function (selector) {
 };
 Tw.HistoryService.prototype = {
   init: function (hash) {
-    this.push(this.historyObj, this.historyName);
-
     if (hash === undefined) {
       this.$window.on('pageshow', $.proxy(this.checkIsBack, this));
     } else {
@@ -22,7 +20,7 @@ Tw.HistoryService.prototype = {
   replace: function () {
     this.history.replaceState(this.historyObj, this.historyName, this.pathname);
   },
-  replaceUrl: function (url, targetUrl) {
+  pushUrl: function (url, targetUrl) {
     this.history.pushState(this.historyObj, url, targetUrl);
   },
   go: function (len) {
@@ -30,12 +28,13 @@ Tw.HistoryService.prototype = {
   },
   checkIsBack: function (event) {
     if (event.originalEvent.persisted || window.performance && window.performance.navigation.type === 2) {
-      this.resetBrowserHistory();
+      this.resetHistory();
+      this.reload();
     }
   },
   hashChangeEvent: function () {
     this.showAndHide();
-    this.resetHistory(); // history reset event
+    this.resetHashHistory();
   },
   showAndHide: function () {
     var id = window.location.hash;
@@ -45,29 +44,34 @@ Tw.HistoryService.prototype = {
     $selector.siblings().hide();
     $selector.show();
   },
+  reload: function () {
+    window.location.reload();
+  },
   setHistory: function (event) {
     if ($(event.target).hasClass('complete')) {
       this.$container.addClass('complete');
       this.replace();
     }
   },
-  resetHistory: function () {
+  resetHashHistory: function () {
     if (this.isReturendMain() && this.isCompleted()) {
       this.go(this.getHistoryLength());
+      this.reload();
     }
   },
-  resetBrowserHistory: function () {
+  resetHistory: function () {
     this.go(this.getBrowserHistoryLength());
   },
   getBrowserHistoryLength: function () {
-    var historyLength = history.length;
-    historyLength = historyLength - 4;
-    return -historyLength;
+    return -1;
   },
   getHistoryLength: function () {
-    var historyLength = history.length;
-    historyLength = historyLength - 5;
-    return -historyLength;
+    var historyLength = this.getHashElementLength();
+    historyLength = -historyLength;
+    return historyLength;
+  },
+  getHashElementLength: function () {
+    return this.$container.find('div[id^="step"]').length;
   },
   isReturendMain: function () {
     return Tw.FormatHelper.isEmpty(window.location.hash);

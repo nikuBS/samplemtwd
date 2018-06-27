@@ -61,7 +61,7 @@ Tw.RechargeRefillSelect.prototype = {
     return reqData;
   },
   _success: function (res) {
-    this._replaceHistory();
+    this._setHistory();
     this._closePopup();
 
     if (res.code === '00') {
@@ -79,7 +79,7 @@ Tw.RechargeRefillSelect.prototype = {
   _goLoad: function (url) {
     this.window.location.href = url;
   },
-  _replaceHistory: function () {
-    this._history.replaceUrl(window.location.pathname + window.location.search, '/recharge/refill');
+  _setHistory: function () {
+    this._history.pushUrl(window.location.pathname + window.location.search, '/recharge/refill');
   }
 };
