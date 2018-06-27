@@ -28,17 +28,17 @@ Tw.RechargeRefillSelect.prototype = {
   },
   _openPopup: function (couponType, endDate) {
     skt_landing.action.popup.open({
-      'title': '알림',
+      'title': Tw.BUTTON_LABEL.NOTIFY,
       'close_bt': true,
-      'title2': couponType + ' 리필을 선택하셨습니다.',
-      'contents': '쿠폰 사용 가능 기간은 ' + endDate + '까지이며, 리필 이후 요금제 변경 시에는 사용할 수 없습니다.<br />자세한 사항은 쿠폰 사용 내역에서 확인 가능합니다.<br/><br />정말로 쿠폰으로 리필하시겠습니까?<br />신청 후 취소가 불가합니다.',
+      'title2': couponType + Tw.MESSAGE.REFILL_INFO_01,
+      'contents': Tw.MESSAGE.REFILL_INFO_02 + endDate + Tw.MESSAGE.REFILL_INFO_03,
       'bt_num': 'two',
       'type': [{
         class: 'bt-white1 refill-cancel',
-        txt: '취소'
+        txt: Tw.BUTTON_LABEL.CANCEL
       }, {
         class: 'bt-red1 refill-submit',
-        txt: '확인'
+        txt: Tw.BUTTON_LABEL.CONFIRM
       }]
     });
   },
@@ -71,7 +71,7 @@ Tw.RechargeRefillSelect.prototype = {
     }
   },
   _fail: function (err) {
-    console.log('refill fail', err);
+    Tw.Logger.log('refill fail', err);
   },
   _getParams: function (key) {
     return Tw.UrlHelper.getQueryParams()[key];

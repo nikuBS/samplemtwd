@@ -127,28 +127,28 @@ Tw.RechargeRefill.prototype = {
   },
   _openAlert: function (message) {
     skt_landing.action.popup.open({
-      'title': '알림',
+      'title': Tw.BUTTON_LABEL.NOTIFY,
       'close_bt': true,
       'title2': message,
       'bt_num': 'one',
       'type': [{
         class: 'bt-red1 select-cancel',
-        txt: '확인'
+        txt: Tw.BUTTON_LABEL.CONFIRM
       }]
     });
   },
   _openConfirm: function (message) {
     skt_landing.action.popup.open({
-      'title': '알림',
+      'title': Tw.BUTTON_LABEL.NOTIFY,
       'close_bt': true,
       'title2': message,
       'bt_num': 'two',
       'type': [{
         class: 'bt-white1 select-cancel',
-        txt: '취소'
+        txt: Tw.BUTTON_LABEL.CANCEL
       }, {
         class: 'bt-red1 select-submit',
-        txt: '확인'
+        txt: Tw.BUTTON_LABEL.CONFIRM
       }]
     });
   },
