@@ -121,6 +121,12 @@ class FormatHelper {
   static removeNumber(value: any): any {
     return value.replace(/[0-9]/g, '');
   }
+
+  static conTelFormatWithDash(tel: any): any {
+    const ret = tel.trim();
+    return `${ret.substring(0, 3)}-${ret.substring(3, ret.length - 4)}-${ret.substring(ret.length - 4)}`;
+  }
+
 }
 
 export default FormatHelper;
