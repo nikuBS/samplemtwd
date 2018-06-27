@@ -46,11 +46,11 @@ Tw.RechargeGiftHistory.prototype = Object.assign(Tw.RechargeGiftHistory.prototyp
     this[this.currentTab + 'TermSelect'].find('option').map((function (i, o) {
       this.searchCondition.terms.push(o.value);
     }).bind(this));
-    this.searchCondition.now = this.getCurrentDate();
+    this.searchCondition.now = Tw.DateHelper.getShortDateWithFormat(new Date(), 'YYYYMMDD');
+
     this.presentViewMore.hide();
     this.requestViewMore.hide();
 
-    // this.getDataList('', '', '0', this.initData);
     this.getDataList(this.searchCondition.terms[this.searchCondition.selectedTermIndex], this.searchCondition.now, this.searchCondition.type, this.initData);
   },
   _cachedElement: function () {
@@ -114,7 +114,7 @@ Tw.RechargeGiftHistory.prototype = Object.assign(Tw.RechargeGiftHistory.prototyp
   },
 
   updateLineInfo: function(e, params) {
-    console.log('updateLineInfo', e, params, this.$lineSelect);
+    Tw.Logger.log('updateLineInfo', e, params, this.$lineSelect);
   },
 
   setSearchBtn: function(type, term) {
@@ -252,7 +252,7 @@ Tw.RechargeGiftHistory.prototype = Object.assign(Tw.RechargeGiftHistory.prototyp
     });
 
     Handlebars.registerHelper('conditionTel', function (svcNum) {
-      return _this.convertTelFormat(svcNum);
+      return Tw.FormatHelper.conTelFormatWithDash(svcNum);
     });
 
     Handlebars.registerHelper('isBig1G', function (val) {
@@ -285,17 +285,7 @@ Tw.RechargeGiftHistory.prototype = Object.assign(Tw.RechargeGiftHistory.prototyp
 
     return t(d);
   },
-
-  getCurrentDate: function () {
-    var dateNow = new Date($.now());
-    return dateNow.getFullYear() + ('0' + (dateNow.getMonth() + 1)).slice(-2) + ('0' + (dateNow.getDate())).slice(-2);
-  },
-
-  convertTelFormat: function (v) {
-    var ret = v.trim();
-    return ret.substring(0, 3) + '-' + ret.substring(3, ret.length - 4) + '-' + ret.substring(ret.length - 4);
-  },
-
+  
   openSelectPopupProcess: function (e) {
 
     if ($(e.target).attr('id') === 'term-set') {
@@ -337,14 +327,6 @@ Tw.RechargeGiftHistory.prototype = Object.assign(Tw.RechargeGiftHistory.prototyp
       }).done($.proxy(callback, this));
     }
   },
-
-  // updateSelectedLine: function (e) {
-  //   this.lineList.tempSelectedLineIndex = this.popupLineList.index(e.target.parentNode);
-  // },
-
-  // setPopupCurrentLine: function () {
-  //   $(this.popupLineList[this.lineList.selectedIndex]).addClass('focus checked');
-  // },
 
   addClosePopupHandler: function () {
     this.$document.one('click', '.popup-closeBtn', $.proxy(this.cancelUpdateCurrentLine, this));
