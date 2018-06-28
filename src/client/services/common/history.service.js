@@ -14,7 +14,7 @@ Tw.HistoryService.prototype = {
     if (hash === undefined) {
       this.$window.on('pageshow', $.proxy(this.checkIsBack, this));
     } else {
-      this.$window.on('hashchange', $.proxy(this.hashChangeEvent, this));
+      initHashNav($.proxy(this.onHashChange, this));
     }
   },
   push: function () {
@@ -29,16 +29,20 @@ Tw.HistoryService.prototype = {
   go: function (len) {
     this.history.go([len]);
   },
+  reload: function () {
+    window.location.reload();
+  },
   checkIsBack: function (event) {
     if (event.originalEvent.persisted || window.performance && window.performance.navigation.type === 2) {
       if (this.isDone()) {
-        this.resetHistory();
         Tw.UIService.setLocalStorage(this.storageName, '');
+
+        this.resetHistory();
         this.reload();
       }
     }
   },
-  hashChangeEvent: function () {
+  onHashChange: function () {
     this.showAndHide();
     this.resetHashHistory();
   },
@@ -50,18 +54,15 @@ Tw.HistoryService.prototype = {
     $selector.siblings().hide();
     $selector.show();
   },
-  reload: function () {
-    window.location.reload();
-  },
-  setHistory: function () {
-    this.$container.addClass('process-complete');
-    this.replace();
-  },
   resetHashHistory: function () {
     if (this.isReturendMain() && this.isCompleted()) {
       this.go(this.getHistoryLength());
       this.reload();
     }
+  },
+  setHistory: function () {
+    this.$container.addClass('process-complete');
+    this.replace();
   },
   resetHistory: function () {
     this.go(this.getBrowserHistoryLength());

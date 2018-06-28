@@ -24,7 +24,6 @@ Tw.RechargeRefill.prototype = {
     this.$refillBtn = this.$container.find('.link-long > a');
   },
   _bindEvent: function () {
-    this.$document.on('click', '.refill-select-submit', $.proxy(this._submit, this));
     this.$container.on('click', '.slick-slide', $.proxy(this._selectCoupon, this));
     this.$container.on('click', '.link-long > a', $.proxy(this._goRefill, this));
     this.$container.on('click', '.refill-history', $.proxy(this._goHistory, this));
@@ -118,37 +117,14 @@ Tw.RechargeRefill.prototype = {
   _isRefillBtn: function ($target) {
     return $target.hasClass('refill-to-my-phone');
   },
-  _showProduct: function (event) {
+  _showProduct: function () {
     this._popupService.openRefillProduct();
   },
   _openAlert: function (message) {
-    // this._popupService.open({
-    //   'title': Tw.BUTTON_LABEL.NOTIFY,
-    //   'close_bt': true,
-    //   'title2': message,
-    //   'bt_num': 'one',
-    //   'type': [{
-    //     class: 'bt-red1',
-    //     txt: Tw.BUTTON_LABEL.CONFIRM
-    //   }]
-    // });
     this._popupService.openAlert(Tw.BUTTON_LABEL.NOTIFY, message);
   },
   _openConfirm: function (message) {
-    // this._popupService.open({
-    //   'title': Tw.BUTTON_LABEL.NOTIFY,
-    //   'close_bt': true,
-    //   'title2': message,
-    //   'bt_num': 'two',
-    //   'type': [{
-    //     class: 'bt-white1 close-popup',
-    //     txt: Tw.BUTTON_LABEL.CANCEL
-    //   }, {
-    //     class: 'bt-red1 select-submit',
-    //     txt: Tw.BUTTON_LABEL.CONFIRM
-    //   }]
-    // });
-    this._popupService.openConfirm(Tw.BUTTON_LABEL.NOTIFY, message, $.proxy(this._submit, this));
+    this._popupService.openConfirm(Tw.BUTTON_LABEL.NOTIFY, message, '', $.proxy(this._submit, this));
   },
   _submit: function () {
     this._goLoad(this._makeUrl(this.$btnTarget));
