@@ -3,6 +3,8 @@ Tw.HistoryService = function (selector) {
   this.$window = $(window);
   this.$container = selector;
   this.pathname = window.location.pathname;
+  this.search = window.location.search;
+  this.fullPathName = this.pathname + this.search;
   this.historyName = this.pathname.split('/')[1];
   this.historyObj = {};
 };
@@ -20,8 +22,8 @@ Tw.HistoryService.prototype = {
   replace: function () {
     this.history.replaceState(this.historyObj, this.historyName, this.pathname);
   },
-  pushUrl: function (url, targetUrl) {
-    this.history.pushState(this.historyObj, url, targetUrl);
+  pushUrl: function (targetUrl) {
+    this.history.pushState(this.historyObj, this.fullPathName, targetUrl);
   },
   go: function (len) {
     this.history.go([len]);

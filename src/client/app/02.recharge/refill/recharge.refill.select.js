@@ -80,6 +80,6 @@ Tw.RechargeRefillSelect.prototype = {
     this.window.location.href = url;
   },
   _setHistory: function () {
-    this._history.pushUrl(window.location.pathname + window.location.search, '/recharge/refill');
+    this._history.pushUrl('/recharge/refill');
   }
 };
