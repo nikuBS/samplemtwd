@@ -10,6 +10,7 @@ Tw.RechargeRefill = function (rootEl) {
   this.$document = $(document);
   this.$btnTarget = null;
 
+  this._popupService = new Tw.PopupService();
   this._apiService = new Tw.ApiService();
   this._history = new Tw.HistoryService();
   this._history.init();
@@ -121,12 +122,12 @@ Tw.RechargeRefill.prototype = {
   },
   _showProduct: function (event) {
     event.preventDefault();
-    skt_landing.action.popup.open({
+    this._popupService.open({
       hbs:'DA_01_01_01_L01'
     });
   },
   _openAlert: function (message) {
-    skt_landing.action.popup.open({
+    this._popupService.open({
       'title': Tw.BUTTON_LABEL.NOTIFY,
       'close_bt': true,
       'title2': message,
@@ -138,7 +139,7 @@ Tw.RechargeRefill.prototype = {
     });
   },
   _openConfirm: function (message) {
-    skt_landing.action.popup.open({
+    this._popupService.open({
       'title': Tw.BUTTON_LABEL.NOTIFY,
       'close_bt': true,
       'title2': message,
@@ -153,7 +154,7 @@ Tw.RechargeRefill.prototype = {
     });
   },
   _closePopup: function () {
-    skt_landing.action.popup.close();
+    this._popupService.close();
   },
   _submit: function () {
     this._closePopup();

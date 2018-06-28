@@ -10,6 +10,7 @@ Tw.RechargeRefillSelect = function (rootEl) {
   this.window = window;
 
   this._apiService = new Tw.ApiService();
+  this._popupService = new Tw.PopupService();
   this._history = new Tw.HistoryService();
 
   this._bindEvent();
@@ -27,7 +28,7 @@ Tw.RechargeRefillSelect.prototype = {
     this._openPopup(couponType, endDate);
   },
   _openPopup: function (couponType, endDate) {
-    skt_landing.action.popup.open({
+    this._popupService.open({
       'title': Tw.BUTTON_LABEL.NOTIFY,
       'close_bt': true,
       'title2': couponType + Tw.MESSAGE.REFILL_INFO_01,
@@ -43,7 +44,7 @@ Tw.RechargeRefillSelect.prototype = {
     });
   },
   _closePopup: function () {
-    skt_landing.action.popup.close();
+    this._popupService.close();
   },
   _refill: function () {
     var reqData = this._makeRequestData();
