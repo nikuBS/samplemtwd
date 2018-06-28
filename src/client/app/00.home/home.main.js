@@ -7,6 +7,7 @@
 Tw.HomeMain = function (rootEl) {
   this.$container = rootEl;
   this._apiService = new Tw.ApiService();
+  this._popupService = new Tw.PopupService();
 
   this._init();
   this._bindEvent();
@@ -16,7 +17,7 @@ Tw.HomeMain = function (rootEl) {
 Tw.HomeMain.prototype = {
   _init: function() {
     this.tplGiftCard = Handlebars.compile($('.gift-template').html());
-    this.$giftCard = this.$container.find('#gift-card')
+    this.$giftCard = this.$container.find('#gift-card');
   },
   _bindEvent: function () {
     this.$container.on('click', '#refill-product', $.proxy(this._openRefillProduct, this));
@@ -26,16 +27,14 @@ Tw.HomeMain.prototype = {
 
   // 리필하기
   _openRefillProduct: function ($event) {
-    $event.preventDefault();
-    skt_landing.action.popup.open({
+    this._popupService.open({
       hbs: 'DA_01_01_01_L01'// hbs의 파일명
     });
   },
 
   // 선물하기
   _openGiftProduct: function ($event) {
-    $event.preventDefault();
-    skt_landing.action.popup.open({
+    this._popupService.open({
       hbs: 'DA_02_01_L01'// hbs의 파일명
     });
   },

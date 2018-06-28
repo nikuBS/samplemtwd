@@ -1,10 +1,10 @@
-Tw.CommonEvent = function () {
+Tw.UIService = function () {
   this.setBack();
   this.setReplace();
   this.setBackRefresh();
 };
 
-Tw.CommonEvent.prototype = {
+Tw.UIService.prototype = {
   setBack: function () {
     /* 뒤로가기 추가 */
     $('.common-back').on('click', function () {
@@ -22,7 +22,7 @@ Tw.CommonEvent.prototype = {
   },
 
   setBackRefresh: function () {
-    $(window).bind("pageshow", function($event) {
+    $(window).bind('pageshow', function($event) {
       if ($event.originalEvent.persisted || window.performance && window.performance.navigation.type == 2) {
         Tw.Logger.info('[Back Loaded]');
         if($('.back-reload').length > 0) {
@@ -34,7 +34,7 @@ Tw.CommonEvent.prototype = {
   }
 };
 
-Tw.CommonEvent.toggle = function (selector) {
+Tw.UIService.toggle = function (selector) {
   if ( selector.hasClass('on') ) {
     selector.removeClass('on');
   }
@@ -44,5 +44,5 @@ Tw.CommonEvent.toggle = function (selector) {
 };
 
 $(document).ready(function () {
-  var commonEvent = new Tw.CommonEvent();
+  var commonEvent = new Tw.UIService();
 });
