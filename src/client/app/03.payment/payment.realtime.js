@@ -35,7 +35,7 @@ Tw.PaymentRealtime.prototype = {
     this._history.setHistory();
   },
   _toggleEvent: function (event) {
-    Tw.CommonEvent.toggle($(event.currentTarget));
+    Tw.UIService.toggle($(event.currentTarget));
   },
   _go: function (hash) {
     window.location.hash = hash;
