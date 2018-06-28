@@ -67,7 +67,7 @@ Tw.HistoryService.prototype = {
     this.go(this.getBrowserHistoryLength());
   },
   getBrowserHistoryLength: function () {
-    return -1;
+    return -3;
   },
   getHistoryLength: function () {
     var historyLength = this.getHashElementLength();
