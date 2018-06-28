@@ -121,10 +121,10 @@ Tw.RechargeRefill.prototype = {
     this._popupService.openRefillProduct();
   },
   _openAlert: function (message) {
-    this._popupService.openAlert(Tw.BUTTON_LABEL.NOTIFY, message);
+    this._popupService.openAlert(Tw.POPUP_TITLE.NOTIFY, message);
   },
   _openConfirm: function (message) {
-    this._popupService.openConfirm(Tw.BUTTON_LABEL.NOTIFY, message, '', $.proxy(this._submit, this));
+    this._popupService.openConfirm(Tw.POPUP_TITLE.NOTIFY, message, '', $.proxy(this._submit, this));
   },
   _submit: function () {
     this._goLoad(this._makeUrl(this.$btnTarget));

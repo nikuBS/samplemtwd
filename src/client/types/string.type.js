@@ -13,14 +13,14 @@ Tw.VOICE_UNIT = {
 };
 
 Tw.POPUP_TITLE = {
+  NOTIFY: '알림',
   REQUEST_DELETE: '조르기 삭제안내',
   GIFT_FAMILY_INFO: '데이터 자동 선물 안내'
 };
 
 Tw.BUTTON_LABEL = {
   CONFIRM: '확인',
-  CANCEL: '취소',
-  NOTIFY: '알림'
+  CANCEL: '취소'
 };
 
 Tw.MESSAGE = {
