@@ -49,11 +49,9 @@ Tw.HistoryService.prototype = {
   reload: function () {
     window.location.reload();
   },
-  setHistory: function (event) {
-    if ($(event.target).hasClass('complete')) {
-      this.$container.addClass('complete');
-      this.replace();
-    }
+  setHistory: function () {
+    this.$container.addClass('process-complete');
+    this.replace();
   },
   resetHashHistory: function () {
     if (this.isReturendMain() && this.isCompleted()) {
@@ -79,7 +77,7 @@ Tw.HistoryService.prototype = {
     return Tw.FormatHelper.isEmpty(window.location.hash);
   },
   isCompleted: function () {
-    return this.$container.hasClass('complete');
+    return this.$container.hasClass('process-complete');
   }
 };
 
