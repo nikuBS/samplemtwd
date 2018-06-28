@@ -24,7 +24,7 @@ Tw.RechargeRefill.prototype = {
     this.$refillBtn = this.$container.find('.link-long > a');
   },
   _bindEvent: function () {
-    this.$document.on('click', '.select-submit', $.proxy(this._submit, this));
+    this.$document.on('click', '.refill-select-submit', $.proxy(this._submit, this));
 
     this.$container.on('click', '.slick-slide', $.proxy(this._selectCoupon, this));
     this.$container.on('click', '.link-long > a', $.proxy(this._goRefill, this));
@@ -147,7 +147,7 @@ Tw.RechargeRefill.prototype = {
         class: 'bt-white1 close-popup',
         txt: Tw.BUTTON_LABEL.CANCEL
       }, {
-        class: 'bt-red1 select-submit',
+        class: 'bt-red1 refill-select-submit',
         txt: Tw.BUTTON_LABEL.CONFIRM
       }]
     });

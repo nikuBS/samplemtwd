@@ -30,8 +30,8 @@ Tw.HistoryService.prototype = {
   },
   checkIsBack: function (event) {
     if (event.originalEvent.persisted || window.performance && window.performance.navigation.type === 2) {
-      this.resetHistory();
-      this.reload();
+      // this.resetHistory();
+      // this.reload();
     }
   },
   hashChangeEvent: function () {
