@@ -3,6 +3,8 @@ Tw.HistoryService = function (selector) {
   this.$window = $(window);
   this.$container = selector;
   this.pathname = window.location.pathname;
+  this.search = window.location.search;
+  this.fullPathName = this.pathname + this.search;
   this.historyName = this.pathname.split('/')[1];
   this.historyObj = {};
 };
@@ -20,8 +22,8 @@ Tw.HistoryService.prototype = {
   replace: function () {
     this.history.replaceState(this.historyObj, this.historyName, this.pathname);
   },
-  pushUrl: function (url, targetUrl) {
-    this.history.pushState(this.historyObj, url, targetUrl);
+  pushUrl: function (targetUrl) {
+    this.history.pushState(this.historyObj, this.fullPathName, targetUrl);
   },
   go: function (len) {
     this.history.go([len]);
@@ -47,11 +49,9 @@ Tw.HistoryService.prototype = {
   reload: function () {
     window.location.reload();
   },
-  setHistory: function (event) {
-    if ($(event.target).hasClass('complete')) {
-      this.$container.addClass('complete');
-      this.replace();
-    }
+  setHistory: function () {
+    this.$container.addClass('process-complete');
+    this.replace();
   },
   resetHashHistory: function () {
     if (this.isReturendMain() && this.isCompleted()) {
@@ -77,7 +77,7 @@ Tw.HistoryService.prototype = {
     return Tw.FormatHelper.isEmpty(window.location.hash);
   },
   isCompleted: function () {
-    return this.$container.hasClass('complete');
+    return this.$container.hasClass('process-complete');
   }
 };
 
