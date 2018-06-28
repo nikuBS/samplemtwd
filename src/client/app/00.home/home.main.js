@@ -15,7 +15,7 @@ Tw.HomeMain = function (rootEl) {
 
 
 Tw.HomeMain.prototype = {
-  _init: function() {
+  _init: function () {
     this.tplGiftCard = Handlebars.compile($('.gift-template').html());
     this.$giftCard = this.$container.find('#gift-card');
   },
@@ -24,6 +24,7 @@ Tw.HomeMain.prototype = {
     this.$container.on('click', '#gift-product', $.proxy(this._openGiftProduct, this));
     this.$container.on('click', '#gift-balance', $.proxy(this._getGiftBalance, this));
   },
+
 
   // 리필하기
   _openRefillProduct: function ($event) {
