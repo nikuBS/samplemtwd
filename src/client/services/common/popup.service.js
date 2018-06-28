@@ -6,32 +6,30 @@ Tw.PopupService = function () {
 Tw.PopupService.prototype = {
   _init: function () {
     initHashNav($.proxy(this._onHashChange, this));
+
+    $(document).on('click', '.popup-closeBtn', $.proxy(this.close, this));
   },
   _onHashChange: function (hash) {
     if ( hash.base === this._prevHash ) {
       Tw.Logger.info('[Popup Close]');
-      this.close();
+      this._popupClose();
+      this._prevHash = undefined;
     }
   },
-  open: function (option) {
-    this.openPopup(option).closePopup();
-  },
-  close: function() {
+  _popupClose: function() {
     // TODO
     // skt_landing.action.popup.close();
     $('.popup-page').empty().remove();
     $('.popup').empty().remove();
     skt_landing.action.auto_scroll();
   },
-  openPopup: function (option) {
+  open: function (option) {
     Tw.Logger.info('[Popup Open]');
     this._prevHash = location.hash;
     location.hash = 'popup';
     skt_landing.action.popup.open(option);
-    return this;
   },
-  closePopup: function () {
-    $(document).on('click', '.close-popup', $.proxy(this.close, this));
-    return this;
+  close: function() {
+    history.back();
   }
 };

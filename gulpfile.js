@@ -25,7 +25,7 @@ gulp.task('server', function () {
 
 gulp.task('js-vendor', function () {
   return gulp.src([
-    'src/client/vendor/**/*.min.js',
+    'src/client/vendor/**/*.js',
     'node_modules/jquery/dist/jquery.min.js',
     'node_modules/underscore/underscore-min.js',
     'node_modules/handlebars/dist/handlebars.min.js',
@@ -57,9 +57,21 @@ gulp.task('js-util', function () {
     .pipe(gulp.dest(dist + 'js'));
 });
 
+gulp.task('js-common', function () {
+  return gulp.src('src/client/common/**/*.js')
+    .pipe(concat('common.js'))
+    .pipe(gulp.dest(dist + 'js'))
+    .pipe(uglify())
+    .on('error', function (err) {
+      gutil.log(gutil.colors.red('[Error]'), err.toString());
+    })
+    .pipe(rename('common.min.js'))
+    .pipe(gulp.dest(dist + 'js'));
+});
+
 appNames.map(function (app, index) {
   gulp.task('js-' + app, function () {
-    return gulp.src('src/client/app/0'+ index +'.' + app + '/**/*.js')
+    return gulp.src('src/client/app/0' + index + '.' + app + '/**/*.js')
       .pipe(concat(app + '.js'))
       .pipe(gulp.dest(dist + 'js'))
       .pipe(uglify())
@@ -121,7 +133,7 @@ gulp.task('watch', function () {
 });
 
 gulp.task('js-app', appNames.map((app) => 'js-' + app));
-gulp.task('js', ['js-util', 'js-app']);
+gulp.task('js', ['js-util', 'js-common', 'js-app']);
 gulp.task('vendor', ['js-vendor', 'css-vendor']);
 gulp.task('rb', ['js-rb', 'js-rb-sprint3', 'css-rb', 'img', 'hbs']);
 gulp.task('default', ['server', 'vendor', 'js', 'rb', 'watch']);
