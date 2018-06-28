@@ -13,7 +13,8 @@ Tw.VOICE_UNIT = {
 };
 
 Tw.POPUP_TITLE = {
-  REQUEST_DELETE: '조르기 삭제안내'
+  REQUEST_DELETE: '조르기 삭제안내',
+  GIFT_FAMILY_INFO: '데이터 자동 선물 안내'
 };
 
 Tw.BUTTON_LABEL = {
@@ -40,5 +41,6 @@ Tw.MESSAGE = {
   PAYMENT_A07: '비밀번호를 입력해주세요.',
   PAYMENT_A08: 'OK캐쉬백 제3자 정보 제공동의(필수)를 해주세요.',
   PAYMENT_A09: '납부하실 포인트를 1,000 이상 입력해주세요.',
-  REQUEST_DELETE: '선택하신 조르기 내역을 삭제하시겠습니까? 삭제할 경우 해당 정보는 복구하실 수 없습니다.'
+  REQUEST_DELETE: '선택하신 조르기 내역을 삭제하시겠습니까? 삭제할 경우 해당 정보는 복구하실 수 없습니다.',
+  GIFT_FAMILY_L07: '선택하신 자동 선물 내역을 삭제하시겠습니까?'
 };
