@@ -9,7 +9,7 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div class="wrap step1" style="display:block">
+<div id="step1" class="wrap step1" style="display:block">
     <!-- #header -->
     <div class="header-wrap">
         <div class="header">
@@ -89,7 +89,7 @@
     <!--// #footer -->
 </div>
 
-<div class="wrap step2" style="display:none">
+<div id="step2" class="wrap step2" style="display:none">
     <!-- #header -->
     <div class="header-wrap">
         <div class="header">
@@ -189,7 +189,7 @@
     <!--// #footer -->
 </div>
 
-<div class="wrap step3" style="display: none">
+<div id="step3" class="wrap step3" style="display: none">
     <!-- #header -->
     <div id="header" class="header-wrap">
         <div class="header">
@@ -280,13 +280,12 @@
     <span class="blind">전화번호</span><span class="num">{{phone}}</span>
 </script>
 
-
 <% include ../../components/javascript.component.html %>
 
 <script>
   $(document).ready(function () {
     var oRechargeGiftLine = new Tw.RechargeGiftLine($(document));
-    var component = new Tw.RechargeGiftProcess($(document));
+    var oRechargeGiftProcess = new Tw.RechargeGiftProcess($(document));
   });
 </script>
 
