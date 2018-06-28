@@ -33,7 +33,7 @@ Tw.HistoryService.prototype = {
     if (event.originalEvent.persisted || window.performance && window.performance.navigation.type === 2) {
       if (this.isDone()) {
         this.resetHistory();
-        Tw.setLocalStorage(this.storageName, '');
+        Tw.UIService.setLocalStorage(this.storageName, '');
         this.reload();
       }
     }
