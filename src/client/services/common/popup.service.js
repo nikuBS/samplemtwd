@@ -57,13 +57,14 @@ Tw.PopupService.prototype = {
     };
     skt_landing.action.popup.open(option);
   },
-  openConfirm: function (title, message, callback) {
+  openConfirm: function (title, message, contents, callback) {
     this._callback = callback;
     this._addHash();
     var option = {
       title: title,
       close_bt: true,
       title2: message,
+      contents: contents || '',
       bt_num: 'two',
       type: [{
         class: 'bt-white1 tw-popup-closeBtn',
