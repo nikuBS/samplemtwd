@@ -117,9 +117,7 @@ Tw.RechargeGift.prototype = {
   },
 
   openPriceList: function () {
-    this._popupService.open({
-      hbs:'DA_02_01_L01'
-    });
+    this._popupService.openGiftProduct();
 
     $(document.body).css('height', 'auto');
     $(document.body).css('overflow-y', 'hidden');
