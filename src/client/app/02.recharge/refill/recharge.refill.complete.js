@@ -8,7 +8,7 @@ Tw.RechargeRefillComplete = function (rootEl) {
   this.$container = rootEl;
   this.$document = $(document);
   this.$window = window;
-  this.$storageName = window.location.pathname('/')[2];
+  this.$storageName = window.location.pathname.split('/')[2];
 
   this._bindEvent();
   this._setLocalStorage();
