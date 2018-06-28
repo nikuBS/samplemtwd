@@ -7,6 +7,8 @@
 Tw.RechargeGiftProcess = function (rootEl) {
   this.$container = rootEl;
   this._apiService = new Tw.ApiService();
+  // this.history = new Tw.HistoryService(rootEl);
+  // this.history.init('hash');
 
   this._cachedElement();
   this._bindEvent();
@@ -14,48 +16,41 @@ Tw.RechargeGiftProcess = function (rootEl) {
 };
 
 Tw.RechargeGiftProcess.prototype = {
-  step: ['step1', 'step2', 'step3'],
-  provider: {
-    name: '',
-    phone: '',
-    dataQty: 0
-  },
-  receiver: {
-    dataRemQty: 0
-  },
-
+  step: ['#step1', '#step2', '#step3'],
+  provider: {},
+  receiver: {},
   $init: function () {
-    this.processType = location.href.substr(location.href.lastIndexOf('/') + 1).split('#')[0];
-    initHashNav(this._logHash);
+    this.processType = window.location.pathname.split('/').reverse()[0];
+    // initHashNav(this._logHash);
 
     //레이어팝업 오픈 함수 재정의
     frontend_fn.popup_open = $.proxy(this._popupOpen, this);
   },
 
-  _logHash: function (hash) {
-    switch ( hash.base ) {
-      case 'step1':
-        $('.step1').show();
-        $('.step2').hide();
-        $('.step3').hide();
-        break;
-      case 'step2' :
-        $('.step1').hide();
-        $('.step2').show();
-        $('.step3').hide();
-        break;
-      case 'step3' :
-        $('.step1').hide();
-        $('.step2').hide();
-        $('.step3').show();
-
-        $('.popup-page').empty().remove();
-        skt_landing.action.auto_scroll();
-        break;
-      default:
-        console.info('default hash.base : ', hash.base);
-    }
-  },
+  // _logHash: function (hash) {
+  //   switch ( hash.base ) {
+  //     case 'step1':
+  //       $('.step1').show();
+  //       $('.step2').hide();
+  //       $('.step3').hide();
+  //       break;
+  //     case 'step2' :
+  //       $('.step1').hide();
+  //       $('.step2').show();
+  //       $('.step3').hide();
+  //       break;
+  //     case 'step3' :
+  //       $('.step1').hide();
+  //       $('.step2').hide();
+  //       $('.step3').show();
+  //
+  //       $('.popup-page').empty().remove();
+  //       skt_landing.action.auto_scroll();
+  //       break;
+  //     default:
+  //       console.info('default hash.base : ', hash.base);
+  //   }
+  // },
 
   _cachedElement: function () {
     this.$btn_addr = this.$container.find('#btn-addr');
@@ -63,20 +58,30 @@ Tw.RechargeGiftProcess.prototype = {
     this.$btn_go_home = this.$container.find('#btn_go_home');
     this.$btn_one_more = this.$container.find('#btn_one_more');
     this.$btn_send_gift = this.$container.find('#btn_send_gift');
-    this.$btn_next_process = this.$container.find('#next_process');
     this.$btn_go_history = this.$container.find('#btn_go_history');
+    this.$btn_next_process = this.$container.find('#next_process');
     this.$wrap_data_select = this.$container.find('#wrap_data_select');
   },
 
   _bindEvent: function () {
-    this.$container.on('updateLineInfo', $.proxy(this.updateLineInfo, this));
-    this.$input_phone.on('keyup', $.proxy(this.validateNumber, this));
+    // this will be removed when history service working correctly.
+    $(window).on('hashchange', function () {
+      var id = window.location.hash;
+      if ( Tw.FormatHelper.isEmpty(id) ) id = '#main';
+
+      var $selector = this.$container.find(id);
+      $selector.siblings().hide();
+      $selector.show();
+    }.bind(this));
+
     this.$btn_go_home.on('click', $.proxy(this.goHome, this));
-    this.$btn_send_gift.on('click', $.proxy(this.nextProcess, this));
-    this.$btn_next_process.on('click', $.proxy(this.nextProcess, this));
-    this.$btn_one_more.on('click', $.proxy(this.goBasicStep, this));
     this.$btn_go_history.on('click', $.proxy(this.goHistory, this));
+    this.$btn_one_more.on('click', $.proxy(this.goBasicStep, this));
     this.$btn_addr.on('click', $.proxy(this._onClickBtnAddr, this));
+    this.$btn_send_gift.on('click', $.proxy(this.nextProcess, this));
+    this.$input_phone.on('keyup', $.proxy(this.validateNumber, this));
+    this.$btn_next_process.on('click', $.proxy(this.nextProcess, this));
+    this.$container.on('updateLineInfo', $.proxy(this.updateLineInfo, this));
     this.$container.on('click', '#wrap_request_history .history_item', $.proxy(this._onClickRequestHistoryItem, this));
     this.$container.on('click', '#wrap_family_history .history_item', $.proxy(this._onClickFamilyHistoryItem, this));
     this.$container.on('click', '#wrap_members_history .history_item', $.proxy(this._onClickMembersHistoryItem, this));
@@ -84,12 +89,21 @@ Tw.RechargeGiftProcess.prototype = {
     this.$container.on('click', '.family-history-remove', $.proxy(this._removeFamilyHistoryItem, this));
     this.$container.on('click', '[data-target="sendText"]', $.proxy(this._sendTextPopEvt, this));
     this.$container.on('click', '[data-target="sendTextBtn"]', $.proxy(this._sendTextEvt, this));
-    this.$container.on('click', '[data-target="sendTextCancelBtn"]', $.proxy(this._sendTextCancelEvt, this));
+  },
+
+  _onClickBtnAddr: function () {
+    Tw.Native.send(Tw.NTV_CMD.GET_CONTACT, {}, $.proxy(this._onContact, this));
+  },
+
+  _onContact: function (resp) {
+    var params = resp.params;
+    var phoneNumber = params.phoneNumber.replace(/-/gi, "");
+    this.$input_phone.val(phoneNumber);
   },
 
   _popupOpen: function () {
     this.$container.find('[data-target="msgName"]').prepend(this.provider.name);
-    this.$container.find('[data-target="txTel"]').html(Tw.FormatHelper.convertTelFormat(this.provider.phone));
+    this.$container.find('[data-target="txTel"]').html(Tw.FormatHelper.conTelFormatWithDash(this.provider.phone));
   },
 
   _sendTextPopEvt: function () {
@@ -100,7 +114,7 @@ Tw.RechargeGiftProcess.prototype = {
   },
 
   _sendTextEvt: function () {
-    var befrSvcNum = Tw.RechargeGiftProcess.prototype.provider.phone;
+    var befrSvcNum = this.provider.phone;
     var textarea_text = $('body').find('[data-target="textSendbox"]').val();
 
     this._apiService
@@ -108,15 +122,9 @@ Tw.RechargeGiftProcess.prototype = {
         befrSvcNum: befrSvcNum,
         msg: textarea_text
       }))
-      .done($.proxy(this._apiComplete, this));
-  },
-
-  _apiComplete: function (res) {
-    location.hash = 'step3';
-  },
-
-  _sendTextCancelEvt: function () {
-    location.hash = 'step3';
+      .done(function () {
+        // location.hash = 'step3';
+      });
   },
 
   updateLineInfo: function (e, params) {
@@ -167,25 +175,18 @@ Tw.RechargeGiftProcess.prototype = {
   },
 
   requestRemainData: function () {
-    // this._apiService.request(Tw.API_CMD.BFF_06_0014, sample_params)
-    //   .done(function () {
-    //     alert('successs');
-    //     // TODO : send Data
-    //     // location.replace('/recharge/gift/complete');
-    //   });
-
-    // fetch data
-    this.remainData = {
+    // TODO: get remain data
+    var response = {
       code: '00',
       msg: 'success',
       result: {
-        'reqCnt': '1',
-        'giftRequestAgainYn': 'Y',
-        'dataRemQty': '700'
+        reqCnt: '1',
+        giftRequestAgainYn: 'Y',
+        dataRemQty: '700'
       }
     }
 
-    this.receiver.dataRemQty = this.remainData.result.dataRemQty;
+    this.receiver.dataRemQty = response.result.dataRemQty;
     var tpl = Handlebars.compile($('#tpl_remain_data').text());
     $('.wrap_remain_data').html(tpl({ dataRemQty: this.receiver.dataRemQty }));
 
@@ -196,22 +197,12 @@ Tw.RechargeGiftProcess.prototype = {
     this.$wrap_data_select.find('label').each(function (idx, item) {
       var $item = $(item);
       var itemValue = Number($item.data('value'));
-      var remainValue = this.remainData.result.dataRemQty;
+      var remainValue = this.receiver.dataRemQty;
       if ( remainValue < itemValue ) {
         $item.addClass('disabled');
         $item.find('input').prop('disabled', true);
       }
     }.bind(this));
-  },
-
-  _onClickBtnAddr: function () {
-    Tw.Native.send(Tw.NTV_CMD.GET_CONTACT, {}, $.proxy(this._onContact, this));
-  },
-
-  _onContact: function (resp) {
-    var params = resp.params;
-    var phoneNumber = params.phoneNumber.replace(/-/gi, "");
-    this.$input_phone.val(phoneNumber);
   },
 
   _onClickRequestHistoryItem: function (e) {
@@ -225,16 +216,16 @@ Tw.RechargeGiftProcess.prototype = {
   _onClickFamilyHistoryItem: function (e) {
     this.removeHistoryItemEvent = $(e.currentTarget);
     skt_landing.action.popup.open({
-      'title': '데이터 자동 선물 안내',
-      'close_bt': true,
-      'title2': '선택하신 자동 선물 내역을 삭제하시겠습니까?',
-      'bt_num': 'two',
-      'type': [{
+      title: Tw.POPUP_TITLE.GIFT_FAMILY_INFO,
+      close_bt: true,
+      title2: Tw.MESSAGE.GIFT_FAMILY_L07,
+      bt_num: 'two',
+      type: [{
         class: 'bt-white1 family-history-cancel',
-        txt: '취소'
+        txt: Tw.BUTTON_LABEL.CANCEL
       }, {
         class: 'bt-red1 family-history-remove',
-        txt: '확인'
+        txt: Tw.BUTTON_LABEL.CONFIRM
       }]
     });
   },
@@ -253,15 +244,11 @@ Tw.RechargeGiftProcess.prototype = {
     this.$input_phone.val($target.data('phone'));
   },
 
-  _removeFamilyHistoryItem: function (e) {
+  _removeFamilyHistoryItem: function () {
     this._apiService.request(Tw.API_CMD.BFF_06_0005, JSON.stringify({ serNum: this.removeHistoryItemEvent.data('sernum') }))
-      .done(function (res) {
+      .done(function () {
         location.reload(true);
       }.bind(this));
-  },
-
-  _closePopup: function (e) {
-    skt_landing.action.popup.close();
   },
 
   validateNumber: function (e) {
@@ -279,94 +266,98 @@ Tw.RechargeGiftProcess.prototype = {
 
   nextProcess: function (e) {
     if ( location.hash == '#step1' ) {
-      setTimeout(function () {
-        this.validateStep1();
-      }.bind(this), 0);
-    }
-
-    if ( location.hash == '#step2' ) {
-      setTimeout(function () {
-        this.validateStep2();
-      }.bind(this), 0);
+      this.validateStep1();
+    } else if ( location.hash == '#step2' ) {
+      this.validateStep2();
     }
   },
 
   validateStep1: function () {
-    if ( this.processType == 'request' ) {
-      if ( this._isRequestByOpdtm ) {
-        this._apiService.request(Tw.API_CMD.BFF_06_0012, { opDtm: this._opDtm })
-          .done($.proxy(this.renderProvider, this));
-      } else {
-        this._apiService.request(Tw.API_CMD.BFF_06_0012, { charSvcNum: this.$input_phone.val() })
-          .done($.proxy(this.renderProvider, this));
-      }
-
-    } else if ( this.processType == 'members' || this.processType == 'family' ) {
-      if ( this._isRequestByOpdtm ) {
-        var nCurrentIndex = this.step.indexOf(location.hash.replace('#', ''));
-        var sNextStep = this.step[nCurrentIndex + 1];
-        var sNextUrl = location.href.replace(location.hash, '#' + sNextStep);
-
-        location.replace(sNextUrl);
-        return;
-      } else {
-        this._apiService.request(Tw.API_CMD.BFF_06_0008, { befrSvcNum: this.$input_phone.val() })
-          .done($.proxy(this.renderProvider, this));
-      }
+    switch ( this.processType ) {
+      case 'members':
+        if ( this._isRequestByOpdtm ) {
+          location.replace(this.getNextStepUrl());
+        } else {
+          this._apiService.request(Tw.API_CMD.BFF_06_0008, { befrSvcNum: this.$input_phone.val() })
+            .done($.proxy(this.renderProvider, this));
+        }
+        break;
+      case 'family':
+        if ( this._isRequestByOpdtm ) {
+          location.replace(this.getNextStepUrl());
+        } else {
+          this._apiService.request(Tw.API_CMD.BFF_06_0008, { befrSvcNum: this.$input_phone.val() })
+            .done($.proxy(this.renderProvider, this));
+        }
+        break;
+      case 'request':
+        if ( this._isRequestByOpdtm ) {
+          this._apiService.request(Tw.API_CMD.BFF_06_0012, { opDtm: this._opDtm })
+            .done($.proxy(this.renderProvider, this));
+        } else {
+          this._apiService.request(Tw.API_CMD.BFF_06_0012, { charSvcNum: this.$input_phone.val() })
+            .done($.proxy(this.renderProvider, this));
+        }
+        break;
     }
   },
 
   validateStep2: function () {
     var dataQty = $('#wrap_data_select').find('label.checked').data('value');
+    this.provider.dataQty = dataQty;
 
     if ( !dataQty ) {
       this.onFailStep({ orgDebugMessage: '데이터를 선택해주세요.' });
       return;
     }
 
-    if ( this.processType == 'request' ) {
-      if ( this._isRequestByOpdtm ) {
-        this._apiService.request(Tw.API_CMD.BFF_06_0013, { dataQty: dataQty, opDtm: this._opDtm })
-          .done(function (res) {
-            if ( res.code == "00" ) {
-              this._isRequestByOpdtm = false;
-              this.resetInputPhone();
-              this.provider.dataQty = dataQty;
-              $('.wrap_data .num').text(dataQty);
-              location.replace(this.getNextStepUrl());
-            } else {
-              this.onFailStep(res);
-            }
-          }.bind(this));
-      } else {
-        this._apiService.request(Tw.API_CMD.BFF_06_0013, { dataQty: dataQty, svcNum: this.provider.phone })
+    switch ( this.processType ) {
+      case 'members':
+        // TODO : not implemented server process
+        var $remainData = $('.wrap_remain_data .num');
+        var $giftData = $('.wrap_gift_data .num');
+        var $selectData = $('.wrap_data .num');
+
+        $remainData.text(Number(this.receiver.dataRemQty) - Number(this.provider.dataQty));
+        $giftData.text(this.provider.dataQty);
+        $selectData.text(dataQty);
+
+        location.replace(this.getNextStepUrl());
+        break;
+      case 'family':
+        this._apiService.request(Tw.API_CMD.BFF_06_0004, JSON.stringify({ dataQty: dataQty, befrSvcNum: this.provider.phone }))
           .done(function (res) {
             if ( res.code == '00' ) {
-              this.provider.dataQty = dataQty;
-              $('.wrap_data .num').text(dataQty);
+              this.resetData();
               location.replace(this.getNextStepUrl());
             } else {
               this.onFailStep(res);
             }
           }.bind(this));
-      }
-    } else if ( this.processType == 'family' ) {
-      this._apiService.request(Tw.API_CMD.BFF_06_0004, JSON.stringify({ dataQty: dataQty, befrSvcNum: this.provider.phone }))
-        .done(function (res) {
-          if ( res.code == '00' ) {
-            this.provider.dataQty = dataQty;
-            $('.wrap_data .num').text(dataQty);
-            location.replace(this.getNextStepUrl());
-          } else {
-            this.onFailStep(res);
-          }
-        }.bind(this));
-    } else if ( this.processType == 'members' ) {
-      this.provider.dataQty = dataQty;
-
-      $('.wrap_remain_data .num').text(Number(this.receiver.dataRemQty) - Number(this.provider.dataQty));
-      $('.wrap_gift_data .num').text(this.provider.dataQty);
-      location.replace(this.getNextStepUrl());
+        break;
+      case 'request':
+        if ( this._isRequestByOpdtm ) {
+          this._apiService.request(Tw.API_CMD.BFF_06_0013, { dataQty: dataQty, opDtm: this._opDtm })
+            .done(function (res) {
+              if ( res.code == "00" ) {
+                this.resetData();
+                location.replace(this.getNextStepUrl());
+              } else {
+                this.onFailStep(res);
+              }
+            }.bind(this));
+        } else {
+          this._apiService.request(Tw.API_CMD.BFF_06_0013, { dataQty: dataQty, svcNum: this.provider.phone })
+            .done(function (res) {
+              if ( res.code == '00' ) {
+                this.resetData();
+                location.replace(this.getNextStepUrl());
+              } else {
+                this.onFailStep(res);
+              }
+            }.bind(this));
+        }
+        break;
     }
   },
 
@@ -385,29 +376,45 @@ Tw.RechargeGiftProcess.prototype = {
     }
   },
 
+  resetData: function () {
+    this.provider = {};
+    this.receiver = {};
+    this._opDtm = '';
+    this._isRequestByOpdtm = false;
+    this.resetInputPhone();
+  },
+
   getNextStepUrl: function () {
-    var nCurrentIndex = this.step.indexOf(location.hash.replace('#', ''));
+    var nCurrentIndex = this.step.indexOf(location.hash);
     var sNextStep = this.step[nCurrentIndex + 1];
-    var sNextUrl = location.href.replace(location.hash, '#' + sNextStep);
+    var sNextUrl = location.href.replace(location.hash, sNextStep);
 
     return sNextUrl;
   },
 
+  _closePopup: function () {
+    skt_landing.action.popup.close();
+  },
+
   onFailStep: function (res) {
     skt_landing.action.popup.open({
-      'title': '알림',
+      'title': Tw.BUTTON_LABEL.NOTIFY,
       'close_bt': true,
       'title2': res.orgDebugMessage,
       'bt_num': 'one',
       'type': [{
         class: 'bt-red1 family-history-cancel',
-        txt: '확인'
+        txt: Tw.BUTTON_LABEL.CONFIRM
       }]
     });
   },
 
   goHistory: function () {
-    location.replace('/recharge/gift/history');
+    if ( this.processType == 'request' ) {
+      location.replace('/recharge/gift/history#request');
+    } else {
+      location.replace('/recharge/gift/history#present');
+    }
   },
 
   goBasicStep: function () {
