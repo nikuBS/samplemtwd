@@ -14,7 +14,7 @@ Tw.HistoryService.prototype = {
     if (hash === undefined) {
       this.$window.on('pageshow', $.proxy(this.checkIsBack, this));
     } else {
-      this.$window.on('hashchange', $.proxy(this.hashChangeEvent, this));
+      initHashNav($.proxy(this.onHashChange, this));
     }
   },
   push: function () {
@@ -29,6 +29,9 @@ Tw.HistoryService.prototype = {
   go: function (len) {
     this.history.go([len]);
   },
+  reload: function () {
+    window.location.reload();
+  },
   checkIsBack: function (event) {
     if (event.originalEvent.persisted || window.performance && window.performance.navigation.type === 2) {
       if (this.isDone()) {
@@ -38,7 +41,7 @@ Tw.HistoryService.prototype = {
       }
     }
   },
-  hashChangeEvent: function () {
+  onHashChange: function () {
     this.showAndHide();
     this.resetHashHistory();
   },
@@ -49,9 +52,6 @@ Tw.HistoryService.prototype = {
     var $selector = this.$container.find(id);
     $selector.siblings().hide();
     $selector.show();
-  },
-  reload: function () {
-    window.location.reload();
   },
   setHistory: function () {
     this.$container.addClass('process-complete');
