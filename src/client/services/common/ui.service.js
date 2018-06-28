@@ -43,6 +43,14 @@ Tw.UIService.toggle = function (selector) {
   }
 };
 
+Tw.UIService.setLocalStorage = function (key, value) {
+  localStorage.setItem(key, value);
+};
+
+Tw.UIService.getLocalStorage = function (key) {
+  return localStorage.getItem(key);
+};
+
 $(document).ready(function () {
   var commonEvent = new Tw.UIService();
 });

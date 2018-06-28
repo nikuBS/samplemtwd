@@ -6,6 +6,7 @@ Tw.HistoryService = function (selector) {
   this.search = window.location.search;
   this.fullPathName = this.pathname + this.search;
   this.historyName = this.pathname.split('/')[1];
+  this.storageName = this.pathname.split('/')[2];
   this.historyObj = {};
 };
 Tw.HistoryService.prototype = {
@@ -30,8 +31,11 @@ Tw.HistoryService.prototype = {
   },
   checkIsBack: function (event) {
     if (event.originalEvent.persisted || window.performance && window.performance.navigation.type === 2) {
-      // this.resetHistory();
-      // this.reload();
+      if (this.isDone()) {
+        this.resetHistory();
+        Tw.UIService.setLocalStorage(this.storageName, '');
+        this.reload();
+      }
     }
   },
   hashChangeEvent: function () {
@@ -63,7 +67,7 @@ Tw.HistoryService.prototype = {
     this.go(this.getBrowserHistoryLength());
   },
   getBrowserHistoryLength: function () {
-    return -1;
+    return -3;
   },
   getHistoryLength: function () {
     var historyLength = this.getHashElementLength();
@@ -78,6 +82,9 @@ Tw.HistoryService.prototype = {
   },
   isCompleted: function () {
     return this.$container.hasClass('process-complete');
+  },
+  isDone: function () {
+    return Tw.UIService.getLocalStorage(this.storageName) === 'done';
   }
 };
 
