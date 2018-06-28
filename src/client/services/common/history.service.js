@@ -35,8 +35,9 @@ Tw.HistoryService.prototype = {
   checkIsBack: function (event) {
     if (event.originalEvent.persisted || window.performance && window.performance.navigation.type === 2) {
       if (this.isDone()) {
-        this.resetHistory();
         Tw.UIService.setLocalStorage(this.storageName, '');
+
+        this.resetHistory();
         this.reload();
       }
     }
@@ -53,15 +54,15 @@ Tw.HistoryService.prototype = {
     $selector.siblings().hide();
     $selector.show();
   },
-  setHistory: function () {
-    this.$container.addClass('process-complete');
-    this.replace();
-  },
   resetHashHistory: function () {
     if (this.isReturendMain() && this.isCompleted()) {
       this.go(this.getHistoryLength());
       this.reload();
     }
+  },
+  setHistory: function () {
+    this.$container.addClass('process-complete');
+    this.replace();
   },
   resetHistory: function () {
     this.go(this.getBrowserHistoryLength());
