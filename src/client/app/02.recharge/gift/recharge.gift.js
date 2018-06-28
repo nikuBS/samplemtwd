@@ -7,6 +7,7 @@
 Tw.RechargeGift = function (rootEl) {
   this.$container = rootEl;
   this._apiService = new Tw.ApiService();
+  this._popupService = new Tw.PopupService();
 
   this._cachedElement();
   this._bindEvent();
@@ -116,7 +117,7 @@ Tw.RechargeGift.prototype = {
   },
 
   openPriceList: function () {
-    skt_landing.action.popup.open({
+    this._popupService.open({
       hbs:'DA_02_01_L01'
     });
 

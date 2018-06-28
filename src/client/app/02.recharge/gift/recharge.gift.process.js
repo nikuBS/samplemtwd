@@ -7,8 +7,9 @@
 Tw.RechargeGiftProcess = function (rootEl) {
   this.$container = rootEl;
   this._apiService = new Tw.ApiService();
-  // this.history = new Tw.HistoryService(rootEl);
-  // this.history.init('hash');
+  this._popupService = new Tw.PopupService();
+  this.history = new Tw.HistoryService(rootEl);
+  this.history.init('hash');
 
   this._cachedElement();
   this._bindEvent();
@@ -21,36 +22,7 @@ Tw.RechargeGiftProcess.prototype = {
   receiver: {},
   $init: function () {
     this.processType = window.location.pathname.split('/').reverse()[0];
-    // initHashNav(this._logHash);
-
-    //레이어팝업 오픈 함수 재정의
-    frontend_fn.popup_open = $.proxy(this._popupOpen, this);
   },
-
-  // _logHash: function (hash) {
-  //   switch ( hash.base ) {
-  //     case 'step1':
-  //       $('.step1').show();
-  //       $('.step2').hide();
-  //       $('.step3').hide();
-  //       break;
-  //     case 'step2' :
-  //       $('.step1').hide();
-  //       $('.step2').show();
-  //       $('.step3').hide();
-  //       break;
-  //     case 'step3' :
-  //       $('.step1').hide();
-  //       $('.step2').hide();
-  //       $('.step3').show();
-  //
-  //       $('.popup-page').empty().remove();
-  //       skt_landing.action.auto_scroll();
-  //       break;
-  //     default:
-  //       console.info('default hash.base : ', hash.base);
-  //   }
-  // },
 
   _cachedElement: function () {
     this.$btn_addr = this.$container.find('#btn-addr');
@@ -64,31 +36,19 @@ Tw.RechargeGiftProcess.prototype = {
   },
 
   _bindEvent: function () {
-    // this will be removed when history service working correctly.
-    $(window).on('hashchange', function () {
-      var id = window.location.hash;
-      if ( Tw.FormatHelper.isEmpty(id) ) id = '#main';
-
-      var $selector = this.$container.find(id);
-      $selector.siblings().hide();
-      $selector.show();
-    }.bind(this));
-
     this.$btn_go_home.on('click', $.proxy(this.goHome, this));
-    this.$btn_go_history.on('click', $.proxy(this.goHistory, this));
-    this.$btn_one_more.on('click', $.proxy(this.goBasicStep, this));
     this.$btn_addr.on('click', $.proxy(this._onClickBtnAddr, this));
+    this.$btn_one_more.on('click', $.proxy(this.goBasicStep, this));
+    this.$btn_go_history.on('click', $.proxy(this.goHistory, this));
     this.$btn_send_gift.on('click', $.proxy(this.nextProcess, this));
     this.$input_phone.on('keyup', $.proxy(this.validateNumber, this));
     this.$btn_next_process.on('click', $.proxy(this.nextProcess, this));
     this.$container.on('updateLineInfo', $.proxy(this.updateLineInfo, this));
+    this.$container.on('click', '[data-target="sendText"]', $.proxy(this._sendTextPopEvt, this));
+    this.$container.on('click', '[data-target="sendTextBtn"]', $.proxy(this._sendTextEvt, this));
     this.$container.on('click', '#wrap_request_history .history_item', $.proxy(this._onClickRequestHistoryItem, this));
     this.$container.on('click', '#wrap_family_history .history_item', $.proxy(this._onClickFamilyHistoryItem, this));
     this.$container.on('click', '#wrap_members_history .history_item', $.proxy(this._onClickMembersHistoryItem, this));
-    this.$container.on('click', '.family-history-cancel', $.proxy(this._closePopup, this));
-    this.$container.on('click', '.family-history-remove', $.proxy(this._removeFamilyHistoryItem, this));
-    this.$container.on('click', '[data-target="sendText"]', $.proxy(this._sendTextPopEvt, this));
-    this.$container.on('click', '[data-target="sendTextBtn"]', $.proxy(this._sendTextEvt, this));
   },
 
   _onClickBtnAddr: function () {
@@ -101,16 +61,14 @@ Tw.RechargeGiftProcess.prototype = {
     this.$input_phone.val(phoneNumber);
   },
 
-  _popupOpen: function () {
-    this.$container.find('[data-target="msgName"]').prepend(this.provider.name);
-    this.$container.find('[data-target="txTel"]').html(Tw.FormatHelper.conTelFormatWithDash(this.provider.phone));
-  },
-
   _sendTextPopEvt: function () {
-    skt_landing.action.popup.open({
-      hbs: 'DA_02_01_04_L01',
-      front: 'test'
-    });
+    this._popupService.openSms();
+
+    setTimeout(function () {
+      var $txTel = $('em.tx-tel').text(Tw.FormatHelper.conTelFormatWithDash(this.provider.phone));
+      this.$container.find('.popup-page .msg-name').html(this.provider.name);
+      this.$container.find('.popup-page .msg-name').append($txTel);
+    }.bind(this), 50);
   },
 
   _sendTextEvt: function () {
@@ -215,19 +173,7 @@ Tw.RechargeGiftProcess.prototype = {
 
   _onClickFamilyHistoryItem: function (e) {
     this.removeHistoryItemEvent = $(e.currentTarget);
-    skt_landing.action.popup.open({
-      title: Tw.POPUP_TITLE.GIFT_FAMILY_INFO,
-      close_bt: true,
-      title2: Tw.MESSAGE.GIFT_FAMILY_L07,
-      bt_num: 'two',
-      type: [{
-        class: 'bt-white1 family-history-cancel',
-        txt: Tw.BUTTON_LABEL.CANCEL
-      }, {
-        class: 'bt-red1 family-history-remove',
-        txt: Tw.BUTTON_LABEL.CONFIRM
-      }]
-    });
+    this._popupService.openConfirm(Tw.POPUP_TITLE.GIFT_FAMILY_INFO, Tw.MESSAGE.GIFT_FAMILY_L07, $.proxy(this._removeFamilyHistoryItem, this));
   },
 
   _onClickMembersHistoryItem: function (e) {
@@ -392,21 +338,8 @@ Tw.RechargeGiftProcess.prototype = {
     return sNextUrl;
   },
 
-  _closePopup: function () {
-    skt_landing.action.popup.close();
-  },
-
   onFailStep: function (res) {
-    skt_landing.action.popup.open({
-      'title': Tw.BUTTON_LABEL.NOTIFY,
-      'close_bt': true,
-      'title2': res.orgDebugMessage,
-      'bt_num': 'one',
-      'type': [{
-        class: 'bt-red1 family-history-cancel',
-        txt: Tw.BUTTON_LABEL.CONFIRM
-      }]
-    });
+    this._popupService.openAlert(Tw.BUTTON_LABEL.NOTIFY, res.orgDebugMessage);
   },
 
   goHistory: function () {
@@ -418,8 +351,7 @@ Tw.RechargeGiftProcess.prototype = {
   },
 
   goBasicStep: function () {
-    var sBasicStepUrl = location.href.replace('step3', 'step1');
-    location.replace(sBasicStepUrl);
+    location.replace(location.href.replace('step3', 'step1'));
     location.reload(true);
   },
 
