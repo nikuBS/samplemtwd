@@ -3,15 +3,18 @@ Tw.HistoryService = function (selector) {
   this.$window = $(window);
   this.$container = selector;
   this.pathname = window.location.pathname;
+  this.search = window.location.search;
+  this.fullPathName = this.pathname + this.search;
   this.historyName = this.pathname.split('/')[1];
   this.historyObj = {};
 };
 Tw.HistoryService.prototype = {
-  init: function () {
-    this.push(this.historyObj, this.historyName);
-
-    // history reset event
-    this.$window.on('hashchange', $.proxy(this.hashChangeEvent, this));
+  init: function (hash) {
+    if (hash === undefined) {
+      this.$window.on('pageshow', $.proxy(this.checkIsBack, this));
+    } else {
+      this.$window.on('hashchange', $.proxy(this.hashChangeEvent, this));
+    }
   },
   push: function () {
     this.history.pushState(this.historyObj, this.historyName, this.pathname);
@@ -19,12 +22,21 @@ Tw.HistoryService.prototype = {
   replace: function () {
     this.history.replaceState(this.historyObj, this.historyName, this.pathname);
   },
+  pushUrl: function (targetUrl) {
+    this.history.pushState(this.historyObj, this.fullPathName, targetUrl);
+  },
   go: function (len) {
-    this.history.go(len);
+    this.history.go([len]);
+  },
+  checkIsBack: function (event) {
+    if (event.originalEvent.persisted || window.performance && window.performance.navigation.type === 2) {
+      this.resetHistory();
+      this.reload();
+    }
   },
   hashChangeEvent: function () {
     this.showAndHide();
-    this.resetHistory(); // history reset event
+    this.resetHashHistory();
   },
   showAndHide: function () {
     var id = window.location.hash;
@@ -34,27 +46,38 @@ Tw.HistoryService.prototype = {
     $selector.siblings().hide();
     $selector.show();
   },
-  setHistory: function (event) {
-    if ($(event.target).hasClass('complete')) {
-      this.$container.addClass('complete');
-      this.replace();
+  reload: function () {
+    window.location.reload();
+  },
+  setHistory: function () {
+    this.$container.addClass('process-complete');
+    this.replace();
+  },
+  resetHashHistory: function () {
+    if (this.isReturendMain() && this.isCompleted()) {
+      this.go(this.getHistoryLength());
+      this.reload();
     }
   },
   resetHistory: function () {
-    if (this.isReturendMain() && this.isCompleted()) {
-      this.go([this.getHistoryLength()]);
-    }
+    this.go(this.getBrowserHistoryLength());
+  },
+  getBrowserHistoryLength: function () {
+    return -1;
   },
   getHistoryLength: function () {
-    var historyLength = history.length;
-    historyLength = historyLength - 3;
-    return -historyLength;
+    var historyLength = this.getHashElementLength();
+    historyLength = -historyLength;
+    return historyLength;
+  },
+  getHashElementLength: function () {
+    return this.$container.find('div[id^="step"]').length;
   },
   isReturendMain: function () {
     return Tw.FormatHelper.isEmpty(window.location.hash);
   },
   isCompleted: function () {
-    return this.$container.hasClass('complete');
+    return this.$container.hasClass('process-complete');
   }
 };
 

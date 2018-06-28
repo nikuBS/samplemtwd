@@ -13,10 +13,7 @@ Tw.RechargeGiftLine = function (rootEl) {
   this.$init();
 };
 
-Tw.RechargeGiftLine.prototype = Object.create(Tw.View.prototype);
-Tw.RechargeGiftLine.prototype.constructor = Tw.RechargeGiftLine;
-
-Tw.RechargeGiftLine.prototype = Object.assign(Tw.RechargeGiftLine.prototype, {
+Tw.RechargeGiftLine.prototype = {
   $init: function () {
     this._apiService
       .request(Tw.API_CMD.BFF_03_0003, { svcCtg: 'M' })
@@ -37,6 +34,14 @@ Tw.RechargeGiftLine.prototype = Object.assign(Tw.RechargeGiftLine.prototype, {
 
     this._apiService.request(Tw.API_CMD.BFF_03_0005, {})
       .done($.proxy(this.updateLineInfo, this));
+  },
+
+  getCurrentLineInfo: function (svcNum) {
+    this.lineInfo = _.find(this.lineList, function (line) {
+      return line.svcNum == svcNum;
+    });
+
+    return this.lineInfo;
   },
 
   updateLineInfo: function (res) {
@@ -66,6 +71,7 @@ Tw.RechargeGiftLine.prototype = Object.assign(Tw.RechargeGiftLine.prototype, {
     var sCurrentNumber = $(e.currentTarget).text().trim();
 
     setTimeout(function () {
+      $('.radiobox').removeClass('checked');
       $('.radiobox').each(function (idx, item) {
         var itemNumber = $(item).text().trim();
 
@@ -75,4 +81,4 @@ Tw.RechargeGiftLine.prototype = Object.assign(Tw.RechargeGiftLine.prototype, {
       });
     }, 50);
   },
-});
+};

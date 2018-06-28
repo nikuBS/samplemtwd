@@ -12,10 +12,7 @@ Tw.RechargeGiftHistory = function (rootEl) {
   this._$init();
 };
 
-Tw.MytGiftHistory.prototype = Object.create(Tw.View.prototype);
-Tw.MytGiftHistory.prototype.constructor = Tw.MytGiftHistory;
-
-Tw.MytGiftHistory.prototype = Object.assign(Tw.MytGiftHistory.prototype, {
+Tw.RechargeGiftHistory.prototype = {
 
   // TODO : 삭제 확인
   // TODO : 회선변경
@@ -46,11 +43,11 @@ Tw.MytGiftHistory.prototype = Object.assign(Tw.MytGiftHistory.prototype, {
     this[this.currentTab + 'TermSelect'].find('option').map((function (i, o) {
       this.searchCondition.terms.push(o.value);
     }).bind(this));
-    this.searchCondition.now = this.getCurrentDate();
+    this.searchCondition.now = Tw.DateHelper.getShortDateWithFormat(new Date(), 'YYYYMMDD');
+
     this.presentViewMore.hide();
     this.requestViewMore.hide();
 
-    // this.getDataList('', '', '0', this.initData);
     this.getDataList(this.searchCondition.terms[this.searchCondition.selectedTermIndex], this.searchCondition.now, this.searchCondition.type, this.initData);
   },
   _cachedElement: function () {
@@ -114,7 +111,7 @@ Tw.MytGiftHistory.prototype = Object.assign(Tw.MytGiftHistory.prototype, {
   },
 
   updateLineInfo: function(e, params) {
-    console.log('updateLineInfo', e, params, this.$lineSelect);
+    Tw.Logger.log('updateLineInfo', e, params, this.$lineSelect);
   },
 
   setSearchBtn: function(type, term) {
@@ -252,7 +249,7 @@ Tw.MytGiftHistory.prototype = Object.assign(Tw.MytGiftHistory.prototype, {
     });
 
     Handlebars.registerHelper('conditionTel', function (svcNum) {
-      return _this.convertTelFormat(svcNum);
+      return Tw.FormatHelper.conTelFormatWithDash(svcNum);
     });
 
     Handlebars.registerHelper('isBig1G', function (val) {
@@ -285,17 +282,7 @@ Tw.MytGiftHistory.prototype = Object.assign(Tw.MytGiftHistory.prototype, {
 
     return t(d);
   },
-
-  getCurrentDate: function () {
-    var dateNow = new Date($.now());
-    return dateNow.getFullYear() + ('0' + (dateNow.getMonth() + 1)).slice(-2) + ('0' + (dateNow.getDate())).slice(-2);
-  },
-
-  convertTelFormat: function (v) {
-    var ret = v.trim();
-    return ret.substring(0, 3) + '-' + ret.substring(3, ret.length - 4) + '-' + ret.substring(ret.length - 4);
-  },
-
+  
   openSelectPopupProcess: function (e) {
 
     if ($(e.target).attr('id') === 'term-set') {
@@ -337,14 +324,6 @@ Tw.MytGiftHistory.prototype = Object.assign(Tw.MytGiftHistory.prototype, {
       }).done($.proxy(callback, this));
     }
   },
-
-  // updateSelectedLine: function (e) {
-  //   this.lineList.tempSelectedLineIndex = this.popupLineList.index(e.target.parentNode);
-  // },
-
-  // setPopupCurrentLine: function () {
-  //   $(this.popupLineList[this.lineList.selectedIndex]).addClass('focus checked');
-  // },
 
   addClosePopupHandler: function () {
     this.$document.one('click', '.popup-closeBtn', $.proxy(this.cancelUpdateCurrentLine, this));
@@ -459,4 +438,4 @@ Tw.MytGiftHistory.prototype = Object.assign(Tw.MytGiftHistory.prototype, {
     this[this.currentTab + 'ContentWrapper'].empty();
   }
 
-});
+};

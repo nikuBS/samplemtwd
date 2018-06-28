@@ -118,7 +118,7 @@ Tw.FormatHelper = (function () {
     return smsCount * 310;
   }
 
-  var convertTelFormat = function (v) {
+  var conTelFormatWithDash = function (v) {
     var ret = v.trim();
     return ret.substring(0, 3) + '-' + ret.substring(3, ret.length - 4) + '-' + ret.substring(ret.length - 4);
   }
@@ -134,6 +134,6 @@ Tw.FormatHelper = (function () {
     addComma: addComma,
     convVoiceFormat: convVoiceFormat,
     convSmsPrice: convSmsPrice,
-    convertTelFormat: convertTelFormat
+    conTelFormatWithDash: conTelFormatWithDash
   }
 })();

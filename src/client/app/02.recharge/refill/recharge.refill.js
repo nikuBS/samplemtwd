@@ -8,17 +8,17 @@ Tw.RechargeRefill = function (rootEl) {
   this.$container = rootEl;
   this.$window = window;
   this.$document = $(document);
+  this.$btnTarget = null;
+
   this._apiService = new Tw.ApiService();
-  this._btnTarget = null;
+  this._history = new Tw.HistoryService();
+  this._history.init();
 
   this._init();
   this._bindEvent();
 };
 
-Tw.RechargeRefill.prototype = Object.create(Tw.View.prototype);
-Tw.RechargeRefill.prototype.constructor = Tw.RechargeRefill;
-
-Tw.RechargeRefill.prototype = Object.assign(Tw.RechargeRefill.prototype, {
+Tw.RechargeRefill.prototype = {
   _init: function () {
     this.$refillBtn = this.$container.find('.link-long > a');
   },
@@ -45,9 +45,9 @@ Tw.RechargeRefill.prototype = Object.assign(Tw.RechargeRefill.prototype, {
   _goRefill: function (event) {
     event.preventDefault();
 
-    this._btnTarget = $(event.currentTarget);
-    if (this._checkValidation(this._btnTarget)) {
-      this._goLoad(this._makeUrl(this._btnTarget));
+    this.$btnTarget = $(event.currentTarget);
+    if (this._checkValidation(this.$btnTarget)) {
+      this._goLoad(this._makeUrl(this.$btnTarget));
     }
   },
   _checkValidation: function ($target) {
@@ -127,28 +127,28 @@ Tw.RechargeRefill.prototype = Object.assign(Tw.RechargeRefill.prototype, {
   },
   _openAlert: function (message) {
     skt_landing.action.popup.open({
-      'title': '알림',
+      'title': Tw.BUTTON_LABEL.NOTIFY,
       'close_bt': true,
       'title2': message,
       'bt_num': 'one',
       'type': [{
         class: 'bt-red1 select-cancel',
-        txt: '확인'
+        txt: Tw.BUTTON_LABEL.CONFIRM
       }]
     });
   },
   _openConfirm: function (message) {
     skt_landing.action.popup.open({
-      'title': '알림',
+      'title': Tw.BUTTON_LABEL.NOTIFY,
       'close_bt': true,
       'title2': message,
       'bt_num': 'two',
       'type': [{
         class: 'bt-white1 select-cancel',
-        txt: '취소'
+        txt: Tw.BUTTON_LABEL.CANCEL
       }, {
         class: 'bt-red1 select-submit',
-        txt: '확인'
+        txt: Tw.BUTTON_LABEL.CONFIRM
       }]
     });
   },
@@ -157,6 +157,6 @@ Tw.RechargeRefill.prototype = Object.assign(Tw.RechargeRefill.prototype, {
   },
   _submit: function () {
     this._closePopup();
-    this._goLoad(this._makeUrl(this._btnTarget));
+    this._goLoad(this._makeUrl(this.$btnTarget));
   }
-});
+};

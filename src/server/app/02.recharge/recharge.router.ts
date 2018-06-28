@@ -7,7 +7,6 @@ import RechargeRefillGiftProducts from './controllers/refill/recharge.refill.gif
 import RechargeGift from './controllers/gift/recharge.gift.controller';
 import RechargeGiftMembersProcess from './controllers/gift/recharge.gift.members.controller';
 import RechargeGiftFamilyProcess from './controllers/gift/recharge.gift.family.controller';
-import RechargeGiftComplete from './controllers/gift/recharge.gift.complete.controller';
 import RechargeGiftHistory from './controllers/gift/recharge.gift.history.controller';
 import RechargeRefillSelect from './controllers/refill/recharge.refill.select.controller';
 import RechargeRefillComplete from './controllers/refill/recharge.refill.complete.controller';
@@ -29,7 +28,6 @@ class RechargeRouter extends TwRouter {
     this.controllers.push({ url: '/gift/process/family', controller: new RechargeGiftFamilyProcess() });
     this.controllers.push({ url: '/gift/process/members', controller: new RechargeGiftMembersProcess() });
     this.controllers.push({ url: '/gift/process/request', controller: new RechargeGiftRequestProcess() });
-    this.controllers.push({ url: '/gift/complete', controller: new RechargeGiftComplete() });
     this.controllers.push({ url: '/gift/history', controller: new RechargeGiftHistory() });
   }
 }

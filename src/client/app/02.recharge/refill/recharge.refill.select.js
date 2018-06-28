@@ -10,14 +10,12 @@ Tw.RechargeRefillSelect = function (rootEl) {
   this.window = window;
 
   this._apiService = new Tw.ApiService();
+  this._history = new Tw.HistoryService();
 
   this._bindEvent();
 };
 
-Tw.RechargeRefillSelect.prototype = Object.create(Tw.View.prototype);
-Tw.RechargeRefillSelect.prototype.constructor = Tw.RechargeRefillSelect;
-
-Tw.RechargeRefillSelect.prototype = Object.assign(Tw.RechargeRefillSelect.prototype, {
+Tw.RechargeRefillSelect.prototype = {
   _bindEvent: function () {
     this.$container.on('click', '.refill-select-btn', $.proxy(this._confirmRefill, this));
     this.$document.on('click', '.refill-cancel', $.proxy(this._closePopup, this));
@@ -30,17 +28,17 @@ Tw.RechargeRefillSelect.prototype = Object.assign(Tw.RechargeRefillSelect.protot
   },
   _openPopup: function (couponType, endDate) {
     skt_landing.action.popup.open({
-      'title': '알림',
+      'title': Tw.BUTTON_LABEL.NOTIFY,
       'close_bt': true,
-      'title2': couponType + ' 리필을 선택하셨습니다.',
-      'contents': '쿠폰 사용 가능 기간은 ' + endDate + '까지이며, 리필 이후 요금제 변경 시에는 사용할 수 없습니다.<br />자세한 사항은 쿠폰 사용 내역에서 확인 가능합니다.<br/><br />정말로 쿠폰으로 리필하시겠습니까?<br />신청 후 취소가 불가합니다.',
+      'title2': couponType + Tw.MESSAGE.REFILL_INFO_01,
+      'contents': Tw.MESSAGE.REFILL_INFO_02 + endDate + Tw.MESSAGE.REFILL_INFO_03,
       'bt_num': 'two',
       'type': [{
         class: 'bt-white1 refill-cancel',
-        txt: '취소'
+        txt: Tw.BUTTON_LABEL.CANCEL
       }, {
         class: 'bt-red1 refill-submit',
-        txt: '확인'
+        txt: Tw.BUTTON_LABEL.CONFIRM
       }]
     });
   },
@@ -63,7 +61,9 @@ Tw.RechargeRefillSelect.prototype = Object.assign(Tw.RechargeRefillSelect.protot
     return reqData;
   },
   _success: function (res) {
+    this._setHistory();
     this._closePopup();
+
     if (res.code === '00') {
       this._goLoad('/recharge/refill/complete');
     } else {
@@ -71,12 +71,15 @@ Tw.RechargeRefillSelect.prototype = Object.assign(Tw.RechargeRefillSelect.protot
     }
   },
   _fail: function (err) {
-    console.log('refill fail', err);
+    Tw.Logger.log('refill fail', err);
   },
   _getParams: function (key) {
     return Tw.UrlHelper.getQueryParams()[key];
   },
   _goLoad: function (url) {
     this.window.location.href = url;
+  },
+  _setHistory: function () {
+    this._history.pushUrl('/recharge/refill');
   }
-});
+};
