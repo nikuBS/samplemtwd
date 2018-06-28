@@ -45,8 +45,8 @@ gulp.task('js-util', function () {
     'src/client/types/**/*.js',
     'src/client/polyfill/**/*.js',
     'src/client/plugins/**/*.js',
-    'src/client/services/**/*.js',
-    'src/client/utils/**/*.js'])
+    'src/client/utils/**/*.js',
+    'src/client/services/**/*.js'])
     .pipe(concat('util.js'))
     .pipe(gulp.dest(dist + 'js'))
     .pipe(uglify())
