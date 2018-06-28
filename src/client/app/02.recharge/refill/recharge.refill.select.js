@@ -19,7 +19,6 @@ Tw.RechargeRefillSelect = function (rootEl) {
 Tw.RechargeRefillSelect.prototype = {
   _bindEvent: function () {
     this.$container.on('click', '.refill-select-btn', $.proxy(this._confirmRefill, this));
-    this.$document.on('click', '.refill-cancel', $.proxy(this._closePopup, this));
     this.$document.on('click', '.refill-submit', $.proxy(this._refill, this));
   },
   _confirmRefill: function () {
@@ -35,16 +34,13 @@ Tw.RechargeRefillSelect.prototype = {
       'contents': Tw.MESSAGE.REFILL_INFO_02 + endDate + Tw.MESSAGE.REFILL_INFO_03,
       'bt_num': 'two',
       'type': [{
-        class: 'bt-white1 refill-cancel',
+        class: 'bt-white1 close-popup',
         txt: Tw.BUTTON_LABEL.CANCEL
       }, {
         class: 'bt-red1 refill-submit',
         txt: Tw.BUTTON_LABEL.CONFIRM
       }]
     });
-  },
-  _closePopup: function () {
-    this._popupService.close();
   },
   _refill: function () {
     var reqData = this._makeRequestData();
@@ -63,7 +59,6 @@ Tw.RechargeRefillSelect.prototype = {
   },
   _success: function (res) {
     this._setHistory();
-    this._closePopup();
 
     if (res.code === '00') {
       this._goLoad('/recharge/refill/complete');

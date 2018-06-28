@@ -24,7 +24,6 @@ Tw.RechargeRefill.prototype = {
     this.$refillBtn = this.$container.find('.link-long > a');
   },
   _bindEvent: function () {
-    this.$document.on('click', '.select-cancel', $.proxy(this._closePopup, this));
     this.$document.on('click', '.select-submit', $.proxy(this._submit, this));
 
     this.$container.on('click', '.slick-slide', $.proxy(this._selectCoupon, this));
@@ -133,7 +132,7 @@ Tw.RechargeRefill.prototype = {
       'title2': message,
       'bt_num': 'one',
       'type': [{
-        class: 'bt-red1 select-cancel',
+        class: 'bt-red1 close-popup',
         txt: Tw.BUTTON_LABEL.CONFIRM
       }]
     });
@@ -145,7 +144,7 @@ Tw.RechargeRefill.prototype = {
       'title2': message,
       'bt_num': 'two',
       'type': [{
-        class: 'bt-white1 select-cancel',
+        class: 'bt-white1 close-popup',
         txt: Tw.BUTTON_LABEL.CANCEL
       }, {
         class: 'bt-red1 select-submit',
@@ -153,11 +152,7 @@ Tw.RechargeRefill.prototype = {
       }]
     });
   },
-  _closePopup: function () {
-    this._popupService.close();
-  },
   _submit: function () {
-    this._closePopup();
     this._goLoad(this._makeUrl(this.$btnTarget));
   }
 };
