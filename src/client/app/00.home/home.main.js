@@ -28,16 +28,12 @@ Tw.HomeMain.prototype = {
 
   // 리필하기
   _openRefillProduct: function ($event) {
-    this._popupService.open({
-      hbs: 'DA_01_01_01_L01'// hbs의 파일명
-    });
+    this._popupService.openRefillProduct();
   },
 
   // 선물하기
   _openGiftProduct: function ($event) {
-    this._popupService.open({
-      hbs: 'DA_02_01_L01'// hbs의 파일명
-    });
+    this._popupService.openGiftProduct();
   },
 
   _getGiftBalance: function () {
