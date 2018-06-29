@@ -1,7 +1,6 @@
 var gulp       = require('gulp'),
     gutil      = require('gulp-util'),
     uglify     = require('gulp-uglify'),
-    // cssmin     = require('gulp-css'),
     concat     = require('gulp-concat'),
     webserver  = require('gulp-webserver'),
     livereload = require('gulp-livereload'),
@@ -45,8 +44,8 @@ gulp.task('js-util', function () {
     'src/client/types/**/*.js',
     'src/client/polyfill/**/*.js',
     'src/client/plugins/**/*.js',
-    'src/client/services/**/*.js',
-    'src/client/utils/**/*.js'])
+    'src/client/utils/**/*.js',
+    'src/client/services/**/*.js'])
     .pipe(concat('util.js'))
     .pipe(gulp.dest(dist + 'js'))
     .pipe(uglify())
@@ -71,7 +70,7 @@ gulp.task('js-common', function () {
 
 appNames.map(function (app, index) {
   gulp.task('js-' + app, function () {
-    return gulp.src('src/client/app/0'+ index +'.' + app + '/**/*.js')
+    return gulp.src('src/client/app/0' + index + '.' + app + '/**/*.js')
       .pipe(concat(app + '.js'))
       .pipe(gulp.dest(dist + 'js'))
       .pipe(uglify())
@@ -132,7 +131,7 @@ gulp.task('watch', function () {
   gulp.watch('dist/**').on('change', livereload.changed);
 });
 
-gulp.task('js-app', appNames.map((app) => 'js-' + app));
+gulp.task('js-app', appNames.map(function(app) { return 'js-' + app; }));
 gulp.task('js', ['js-util', 'js-common', 'js-app']);
 gulp.task('vendor', ['js-vendor', 'css-vendor']);
 gulp.task('rb', ['js-rb', 'js-rb-sprint3', 'css-rb', 'img', 'hbs']);

@@ -1,3 +1,3 @@
-var environment = {
-  resource: '41'    // svn commit version
+Tw.environment = {
+  version: '0.5.0'
 };

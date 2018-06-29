@@ -4,7 +4,7 @@
  * Date: 2018.06.22
  */
 
-Tw.MytGiftLine = function (rootEl) {
+Tw.RechargeGiftLine = function (rootEl) {
   this.$container = rootEl;
   this._apiService = new Tw.ApiService();
 
@@ -13,10 +13,7 @@ Tw.MytGiftLine = function (rootEl) {
   this.$init();
 };
 
-Tw.MytGiftLine.prototype = Object.create(Tw.View.prototype);
-Tw.MytGiftLine.prototype.constructor = Tw.MytGiftLine;
-
-Tw.MytGiftLine.prototype = Object.assign(Tw.MytGiftLine.prototype, {
+Tw.RechargeGiftLine.prototype = {
   $init: function () {
     this._apiService
       .request(Tw.API_CMD.BFF_03_0003, { svcCtg: 'M' })
@@ -37,6 +34,14 @@ Tw.MytGiftLine.prototype = Object.assign(Tw.MytGiftLine.prototype, {
 
     this._apiService.request(Tw.API_CMD.BFF_03_0005, {})
       .done($.proxy(this.updateLineInfo, this));
+  },
+
+  getCurrentLineInfo: function (svcNum) {
+    this.lineInfo = _.find(this.lineList, function (line) {
+      return line.svcNum == svcNum;
+    });
+
+    return this.lineInfo;
   },
 
   updateLineInfo: function (res) {
@@ -66,6 +71,7 @@ Tw.MytGiftLine.prototype = Object.assign(Tw.MytGiftLine.prototype, {
     var sCurrentNumber = $(e.currentTarget).text().trim();
 
     setTimeout(function () {
+      $('.radiobox').removeClass('checked');
       $('.radiobox').each(function (idx, item) {
         var itemNumber = $(item).text().trim();
 
@@ -75,4 +81,4 @@ Tw.MytGiftLine.prototype = Object.assign(Tw.MytGiftLine.prototype, {
       });
     }, 50);
   },
-});
+};

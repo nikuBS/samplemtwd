@@ -4,38 +4,16 @@
  * Date: 2018.06.22
  */
 
-Tw.MytGift = function (rootEl) {
+Tw.RechargeGift = function (rootEl) {
   this.$container = rootEl;
   this._apiService = new Tw.ApiService();
+  this._popupService = new Tw.PopupService();
 
   this._cachedElement();
   this._bindEvent();
-  this.$init();
 };
 
-Tw.MytGift.prototype = Object.create(Tw.View.prototype);
-Tw.MytGift.prototype.constructor = Tw.MytGift;
-
-Tw.MytGift.prototype = Object.assign(Tw.MytGift.prototype, {
-  $init: function () {
-    initHashNav(this._logHash);
-  },
-
-  _logHash: function (hash) {
-    var elWrapper = $('.tab-linker li');
-
-    switch ( hash.base ) {
-      case 'gift':
-        elWrapper.eq(0).find('a').click();
-        break;
-      case 'request':
-        elWrapper.eq(1).find('a').click();
-        break;
-      default:
-        location.hash = '#gift';
-    }
-  },
-
+Tw.RechargeGift.prototype = {
   _cachedElement: function () {
     this.$btn_change = this.$container.find('#line-set');
     this.$wrap_gift_count = this.$container.find('#wrap_gift_count');
@@ -59,13 +37,11 @@ Tw.MytGift.prototype = Object.assign(Tw.MytGift.prototype, {
     var elWrapperTab = $('.tab-linker a');
 
     if ( elWrapperTab.index(elTab) == 0 ) {
-      location.hash = 'gift';
       $('.notify.tab1').show();
       $('.notify.tab2').hide();
     }
 
     if ( elWrapperTab.index(elTab) == 1 ) {
-      location.hash = 'request';
       $('.notify.tab1').hide();
       $('.notify.tab2').show();
     }
@@ -103,6 +79,27 @@ Tw.MytGift.prototype = Object.assign(Tw.MytGift.prototype, {
     this.$wrap_request_count.html(this.tpl_request_count({ remainCount: remainCount }));
   },
 
+  showRemainData: function (e) {
+    var $wrap_remain_data = $(e.currentTarget).closest('.gift-box-info-list');
+
+    // this._apiService.request(Tw.API_CMD.BFF_06_0014, { reqCnt: 3 })
+    //   .done(function (res) {
+    //   }.bind(this));
+
+    // TODO : fetch data && binding
+    var response = {
+      "code": "00",
+      "msg": "success",
+      "result": {
+        "reqCnt": "1",
+        "giftRequestAgainYn": "Y",
+        "dataRemQty": "700"
+      }
+    }
+
+    $wrap_remain_data.html(this.tpl_remain_data(response.result));
+  },
+
   goToProcess: function (e) {
     var processType = $(e.currentTarget).data('type');
 
@@ -119,37 +116,16 @@ Tw.MytGift.prototype = Object.assign(Tw.MytGift.prototype, {
     }
   },
 
-  showRemainData: function (e) {
-    var $wrap_remain_data = $(e.currentTarget).closest('.gift-box-info-list');
-
-    // TODO : fetch data && binding
-    // this._apiService.request(Tw.API_CMD.BFF_06_0014, { reqCnt: 3 })
-    //   .done(function (res) {
-    //   }.bind(this));
-
-    var response = {
-      "code": "00",
-      "msg": "success",
-      "result": {
-        "reqCnt": "1",
-        "giftRequestAgainYn": "Y",
-        "dataRemQty": "700"
-      }
-    }
-
-    $wrap_remain_data.html(this.tpl_remain_data(response.result));
-  },
-
   openPriceList: function () {
-    $('#popup_price_list').show();
+    this._popupService.openGiftProduct();
+
     $(document.body).css('height', 'auto');
     $(document.body).css('overflow-y', 'hidden');
     $(window).scrollTop(0);
   },
 
   closePriceList: function () {
-    $('#popup_price_list').hide();
     $(document.body).css('height', 'auto');
     $(document.body).css('overflow-y', 'auto');
   }
-});
+};

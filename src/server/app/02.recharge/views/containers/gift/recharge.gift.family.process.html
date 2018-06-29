@@ -9,13 +9,13 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div class="wrap step1" style="display:block">
+<div id="step1" class="wrap step1" style="display:block">
     <!-- #header -->
     <div class="header-wrap">
         <div class="header">
             <div class="header-ti">
                 <h1>데이터 선물하기</h1>
-                <a href="/home/menu" class="all-menu"><span class="blind">전체메뉴보기</span></a>
+                <!--<a href="/home/menu" class="all-menu"><span class="blind">전체메뉴보기</span></a>-->
             </div>
             <a class="prev-step common-back"><span class="blind">이전으로</span></a>
             <a href="#search" class="search-content"><span class="blind">검색하기</span></a>
@@ -89,13 +89,13 @@
     <!--// #footer -->
 </div>
 
-<div class="wrap step2" style="display:none">
+<div id="step2" class="wrap step2" style="display:none">
     <!-- #header -->
     <div class="header-wrap">
         <div class="header">
             <div class="header-ti">
                 <h1>데이터 선물하기</h1>
-                <a href="#allmenu" class="all-menu"><span class="blind">전체메뉴보기</span></a>
+                <!--<a href="#allmenu" class="all-menu"><span class="blind">전체메뉴보기</span></a>-->
             </div>
             <a class="prev-step common-back"><span class="blind">이전으로</span></a>
             <a href="#search" class="search-content"><span class="blind">검색하기</span></a>
@@ -189,13 +189,13 @@
     <!--// #footer -->
 </div>
 
-<div class="wrap step3" style="display: none">
+<div id="step3" class="wrap step3" style="display: none">
     <!-- #header -->
     <div id="header" class="header-wrap">
         <div class="header">
             <div class="header-ti">
                 <h1>데이터 선물하기</h1>
-                <a href="#allmenu" class="all-menu"><span class="blind">전체메뉴보기</span></a>
+                <!--<a href="#allmenu" class="all-menu"><span class="blind">전체메뉴보기</span></a>-->
             </div>
             <a class="prev-step common-back"><span class="blind">이전으로</span></a>
             <a href="#search" class="search-content"><span class="blind">검색하기</span></a>
@@ -280,13 +280,12 @@
     <span class="blind">전화번호</span><span class="num">{{phone}}</span>
 </script>
 
-
 <% include ../../components/javascript.component.html %>
 
 <script>
   $(document).ready(function () {
-    var oMytGiftLine = new Tw.MytGiftLine($(document));
-    var component = new Tw.MytGiftProcess($(document));
+    var oRechargeGiftLine = new Tw.RechargeGiftLine($(document));
+    var oRechargeGiftProcess = new Tw.RechargeGiftProcess($(document));
   });
 </script>
 

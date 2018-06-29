@@ -72,3 +72,5 @@ Tw.NativeService.prototype = {
     }
   }
 };
+
+Tw.Native = new Tw.NativeService();

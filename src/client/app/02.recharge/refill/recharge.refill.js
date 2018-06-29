@@ -4,28 +4,26 @@
  * Date: 2018.06.18
  */
 
-Tw.MytRefill = function (rootEl) {
+Tw.RechargeRefill = function (rootEl) {
   this.$container = rootEl;
   this.$window = window;
   this.$document = $(document);
+  this.$btnTarget = null;
+
+  this._popupService = new Tw.PopupService();
   this._apiService = new Tw.ApiService();
-  this._btnTarget = null;
+  this._history = new Tw.HistoryService();
+  this._history.init();
 
   this._init();
   this._bindEvent();
 };
 
-Tw.MytRefill.prototype = Object.create(Tw.View.prototype);
-Tw.MytRefill.prototype.constructor = Tw.MytRefill;
-
-Tw.MytRefill.prototype = Object.assign(Tw.MytRefill.prototype, {
+Tw.RechargeRefill.prototype = {
   _init: function () {
     this.$refillBtn = this.$container.find('.link-long > a');
   },
   _bindEvent: function () {
-    this.$document.on('click', '.select-cancel', $.proxy(this._closePopup, this));
-    this.$document.on('click', '.select-submit', $.proxy(this._submit, this));
-
     this.$container.on('click', '.slick-slide', $.proxy(this._selectCoupon, this));
     this.$container.on('click', '.link-long > a', $.proxy(this._goRefill, this));
     this.$container.on('click', '.refill-history', $.proxy(this._goHistory, this));
@@ -45,9 +43,9 @@ Tw.MytRefill.prototype = Object.assign(Tw.MytRefill.prototype, {
   _goRefill: function (event) {
     event.preventDefault();
 
-    this._btnTarget = $(event.currentTarget);
-    if (this._checkValidation(this._btnTarget)) {
-      this._goLoad(this._makeUrl(this._btnTarget));
+    this.$btnTarget = $(event.currentTarget);
+    if (this._checkValidation(this.$btnTarget)) {
+      this._goLoad(this._makeUrl(this.$btnTarget));
     }
   },
   _checkValidation: function ($target) {
@@ -119,44 +117,16 @@ Tw.MytRefill.prototype = Object.assign(Tw.MytRefill.prototype, {
   _isRefillBtn: function ($target) {
     return $target.hasClass('refill-to-my-phone');
   },
-  _showProduct: function (event) {
-    event.preventDefault();
-    skt_landing.action.popup.open({
-      hbs:'DA_01_01_01_L01'
-    });
+  _showProduct: function () {
+    this._popupService.openRefillProduct();
   },
   _openAlert: function (message) {
-    skt_landing.action.popup.open({
-      'title': '알림',
-      'close_bt': true,
-      'title2': message,
-      'bt_num': 'one',
-      'type': [{
-        class: 'bt-red1 select-cancel',
-        txt: '확인'
-      }]
-    });
+    this._popupService.openAlert(Tw.POPUP_TITLE.NOTIFY, message);
   },
   _openConfirm: function (message) {
-    skt_landing.action.popup.open({
-      'title': '알림',
-      'close_bt': true,
-      'title2': message,
-      'bt_num': 'two',
-      'type': [{
-        class: 'bt-white1 select-cancel',
-        txt: '취소'
-      }, {
-        class: 'bt-red1 select-submit',
-        txt: '확인'
-      }]
-    });
-  },
-  _closePopup: function () {
-    skt_landing.action.popup.close();
+    this._popupService.openConfirm(Tw.POPUP_TITLE.NOTIFY, message, '', $.proxy(this._submit, this));
   },
   _submit: function () {
-    this._closePopup();
-    this._goLoad(this._makeUrl(this._btnTarget));
+    this._goLoad(this._makeUrl(this.$btnTarget));
   }
-});
+};

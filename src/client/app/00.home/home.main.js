@@ -5,43 +5,35 @@
  */
 
 Tw.HomeMain = function (rootEl) {
-  Tw.View.apply(this, arguments);
   this.$container = rootEl;
   this._apiService = new Tw.ApiService();
-  this._nativeService = new Tw.NativeService();
+  this._popupService = new Tw.PopupService();
 
   this._init();
   this._bindEvent();
 };
 
-Tw.HomeMain.prototype = Object.create(Tw.View.prototype);
-Tw.HomeMain.prototype.constructor = Tw.HomeMain;
 
-Tw.HomeMain.prototype = Object.assign(Tw.HomeMain.prototype, {
-  _init: function() {
+Tw.HomeMain.prototype = {
+  _init: function () {
     this.tplGiftCard = Handlebars.compile($('.gift-template').html());
-    this.$giftCard = this.$container.find('#gift-card')
+    this.$giftCard = this.$container.find('#gift-card');
   },
   _bindEvent: function () {
     this.$container.on('click', '#refill-product', $.proxy(this._openRefillProduct, this));
-    this.$container.on('click', '#gift-product', $.proxy(this._openRefillProduct, this));
+    this.$container.on('click', '#gift-product', $.proxy(this._openGiftProduct, this));
     this.$container.on('click', '#gift-balance', $.proxy(this._getGiftBalance, this));
   },
 
+
   // 리필하기
   _openRefillProduct: function ($event) {
-    $event.preventDefault();
-    skt_landing.action.popup.open({
-      hbs: 'DA_01_01_01_L01'// hbs의 파일명
-    });
+    this._popupService.openRefillProduct();
   },
 
   // 선물하기
   _openGiftProduct: function ($event) {
-    $event.preventDefault();
-    skt_landing.action.popup.open({
-      hbs: 'DA_02_01_L01'// hbs의 파일명
-    });
+    this._popupService.openGiftProduct();
   },
 
   _getGiftBalance: function () {
@@ -73,6 +65,4 @@ Tw.HomeMain.prototype = Object.assign(Tw.HomeMain.prototype, {
   _failGiftBalance: function (error) {
 
   }
-});
-
-
+};
