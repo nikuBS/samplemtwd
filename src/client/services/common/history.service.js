@@ -36,9 +36,7 @@ Tw.HistoryService.prototype = {
     if (event.originalEvent.persisted || window.performance && window.performance.navigation.type === 2) {
       if (this.isDone()) {
         Tw.UIService.setLocalStorage(this.storageName, '');
-
-        this.resetHistory();
-        this.reload();
+        this.resetHistory(-1);
       }
     }
   },
@@ -56,19 +54,16 @@ Tw.HistoryService.prototype = {
   },
   resetHashHistory: function () {
     if (this.isReturendMain() && this.isCompleted()) {
-      this.go(this.getHistoryLength());
-      this.reload();
+      this.resetHistory(this.getHistoryLength());
     }
   },
   setHistory: function () {
     this.$container.addClass('process-complete');
     this.replace();
   },
-  resetHistory: function () {
-    this.go(this.getBrowserHistoryLength());
-  },
-  getBrowserHistoryLength: function () {
-    return -3;
+  resetHistory: function (historyLength) {
+    this.go(historyLength);
+    this.reload();
   },
   getHistoryLength: function () {
     var historyLength = this.getHashElementLength();
