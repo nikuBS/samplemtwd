@@ -50,8 +50,3 @@ Tw.UIService.setLocalStorage = function (key, value) {
 Tw.UIService.getLocalStorage = function (key) {
   return localStorage.getItem(key);
 };
-
-$(document).ready(function () {
-  var commonEvent = new Tw.UIService();
-  Tw.Logger.info('[Version]', Tw.environment.version);
-});

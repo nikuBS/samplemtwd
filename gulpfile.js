@@ -45,7 +45,8 @@ gulp.task('js-util', function () {
     'src/client/polyfill/**/*.js',
     'src/client/plugins/**/*.js',
     'src/client/utils/**/*.js',
-    'src/client/services/**/*.js'])
+    'src/client/services/**/*.js',
+    'src/client/common/**/*.js'])
     .pipe(concat('util.js'))
     .pipe(gulp.dest(dist + 'js'))
     .pipe(uglify())
@@ -53,18 +54,6 @@ gulp.task('js-util', function () {
       gutil.log(gutil.colors.red('[Error]'), err.toString());
     })
     .pipe(rename('util.min.js'))
-    .pipe(gulp.dest(dist + 'js'));
-});
-
-gulp.task('js-common', function () {
-  return gulp.src('src/client/common/**/*.js')
-    .pipe(concat('common.js'))
-    .pipe(gulp.dest(dist + 'js'))
-    .pipe(uglify())
-    .on('error', function (err) {
-      gutil.log(gutil.colors.red('[Error]'), err.toString());
-    })
-    .pipe(rename('common.min.js'))
     .pipe(gulp.dest(dist + 'js'));
 });
 
@@ -131,8 +120,10 @@ gulp.task('watch', function () {
   gulp.watch('dist/**').on('change', livereload.changed);
 });
 
-gulp.task('js-app', appNames.map(function(app) { return 'js-' + app; }));
-gulp.task('js', ['js-util', 'js-common', 'js-app']);
+gulp.task('js-app', appNames.map(function (app) {
+  return 'js-' + app;
+}));
+gulp.task('js', ['js-util', 'js-app']);
 gulp.task('vendor', ['js-vendor', 'css-vendor']);
 gulp.task('rb', ['js-rb', 'js-rb-sprint3', 'css-rb', 'img', 'hbs']);
 gulp.task('default', ['server', 'vendor', 'js', 'rb', 'watch']);

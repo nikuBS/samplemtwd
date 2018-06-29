@@ -13,7 +13,6 @@ Tw.HomeMainSprint3.prototype = {
   },
 
   _onClickSearchButton: function ($event) {
-    Tw.Native.send(Tw.NTV_CMD.GET_CONTACT, {}, this._onContact);
   },
 
   _success: function (resp) {
