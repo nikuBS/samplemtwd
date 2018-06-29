@@ -5,10 +5,7 @@ Tw.MytUsageTing = function (rootEl) {
   this._uiFunction();
 };
 
-Tw.MytUsageTing.prototype = Object.create(Tw.View.prototype);
-Tw.MytUsageTing.prototype.constructor = Tw.MytUsageTing;
-
-Tw.MytUsageTing.prototype = Object.assign(Tw.MytUsageTing.prototype, {
+Tw.MytUsageTing.prototype = {
   _setUI: function () {
     this._ui.$contentWrap = $('body');
     this._ui.$miniPopupTriggers = $('.btn-detail');
@@ -66,4 +63,4 @@ Tw.MytUsageTing.prototype = Object.assign(Tw.MytUsageTing.prototype, {
       }, this));
     }
   }
-});
+};

@@ -6,10 +6,7 @@ Tw.MytUsageTdatashare = function (rootEl) {
   this._changeDataUnit();
 };
 
-Tw.MytUsageTdatashare.prototype = Object.create(Tw.View.prototype);
-Tw.MytUsageTdatashare.prototype.constructor = Tw.MytUsageTdatashare;
-
-Tw.MytUsageTdatashare.prototype = Object.assign(Tw.MytUsageTdatashare.prototype, {
+Tw.MytUsageTdatashare.prototype = {
   currentUShimListLastIndex: null,
   _setUI: function () {
     this._ui.$contentWrap = $('body');
@@ -117,5 +114,5 @@ Tw.MytUsageTdatashare.prototype = Object.assign(Tw.MytUsageTdatashare.prototype,
       this._ui.$childUSimListShowMore.hide();
     }
   }
-});
+};
 

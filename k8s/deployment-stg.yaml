@@ -1,0 +1,27 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: bff-nodejs-deployment
+  labels:
+    app: bff-nodejs-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bff-nodejs-service
+  template:
+    metadata:
+      labels:
+        app: bff-nodejs-service
+    spec:
+      containers:
+      - name: bff-nodejs
+        image: mycluster.icp:8500/mtw-stg-nod/bff-nodejs-mobile:1.0
+        ports:
+        - containerPort: 3000
+        imagePullPolicy: Always
+        resources:
+          requests:
+            memory: "768Mi"
+          limits:
+            memory: "1024Mi"

@@ -1,16 +1,25 @@
-Tw.MytRefill = function (rootEl) {
+/**
+ * FileName: recharge.refill.js
+ * Author: 공자윤 (jayoon.kong@sk.com)
+ * Date: 2018.06.18
+ */
+
+Tw.RechargeRefill = function (rootEl) {
   this.$container = rootEl;
-  this.window = window;
+  this.$window = window;
+  this.$document = $(document);
+  this.$btnTarget = null;
+
+  this._popupService = new Tw.PopupService();
   this._apiService = new Tw.ApiService();
+  this._history = new Tw.HistoryService();
+  this._history.init();
 
   this._init();
   this._bindEvent();
 };
 
-Tw.MytRefill.prototype = Object.create(Tw.View.prototype);
-Tw.MytRefill.prototype.constructor = Tw.MytRefill;
-
-Tw.MytRefill.prototype = Object.assign(Tw.MytRefill.prototype, {
+Tw.RechargeRefill.prototype = {
   _init: function () {
     this.$refillBtn = this.$container.find('.link-long > a');
   },
@@ -34,9 +43,9 @@ Tw.MytRefill.prototype = Object.assign(Tw.MytRefill.prototype, {
   _goRefill: function (event) {
     event.preventDefault();
 
-    var $target = $(event.currentTarget);
-    if (this._checkValidation($target)) {
-      this._goLoad(this._makeUrl($target));
+    this.$btnTarget = $(event.currentTarget);
+    if (this._checkValidation(this.$btnTarget)) {
+      this._goLoad(this._makeUrl(this.$btnTarget));
     }
   },
   _checkValidation: function ($target) {
@@ -51,7 +60,7 @@ Tw.MytRefill.prototype = Object.assign(Tw.MytRefill.prototype, {
       if (this._isRefillBtn($target)) {
         message = Tw.MESSAGE.REFILL_A09;
       }
-      alert(message);
+      this._openAlert(message);
       return false;
     }
     return true;
@@ -59,7 +68,7 @@ Tw.MytRefill.prototype = Object.assign(Tw.MytRefill.prototype, {
   _checkIsReceived: function () {
     var $selectedCoupon = this.$container.find('.bt-select-arrow.on');
     if ($selectedCoupon.parents('.slick-slide').hasClass('received')) {
-      alert(Tw.MESSAGE.REFILL_A04);
+      this._openAlert(Tw.MESSAGE.REFILL_A04);
       return false;
     }
     return true;
@@ -71,7 +80,7 @@ Tw.MytRefill.prototype = Object.assign(Tw.MytRefill.prototype, {
     }
     var $msgNode = this.$container.find(className);
     if ($msgNode.length > 0) {
-      alert($msgNode.text());
+      this._openAlert($msgNode.text());
       return false;
     }
     return true;
@@ -81,9 +90,7 @@ Tw.MytRefill.prototype = Object.assign(Tw.MytRefill.prototype, {
   },
   _checkConfirm: function () {
     if (!this._checkIsFirst()) {
-      if (!confirm(Tw.MESSAGE.REFILL_A02)) {
-        return false;
-      }
+      return this._openConfirm(Tw.MESSAGE.REFILL_A02);
     }
     return true;
   },
@@ -91,7 +98,7 @@ Tw.MytRefill.prototype = Object.assign(Tw.MytRefill.prototype, {
     this._goLoad('/recharge/refill/history');
   },
   _goLoad: function (url) {
-    this.window.location.href = url;
+    this.$window.location.href = url;
   },
   _makeUrl: function ($target) {
     var $selectedCoupon = this.$container.find('.bt-select-arrow.on');
@@ -110,10 +117,16 @@ Tw.MytRefill.prototype = Object.assign(Tw.MytRefill.prototype, {
   _isRefillBtn: function ($target) {
     return $target.hasClass('refill-to-my-phone');
   },
-  _showProduct: function (event) {
-    event.preventDefault();
-    skt_landing.action.popup.open({
-      hbs:'DA_01_01_01_L01'
-    });
+  _showProduct: function () {
+    this._popupService.openRefillProduct();
+  },
+  _openAlert: function (message) {
+    this._popupService.openAlert(Tw.POPUP_TITLE.NOTIFY, message);
+  },
+  _openConfirm: function (message) {
+    this._popupService.openConfirm(Tw.POPUP_TITLE.NOTIFY, message, '', $.proxy(this._submit, this));
+  },
+  _submit: function () {
+    this._goLoad(this._makeUrl(this.$btnTarget));
   }
-});
+};

@@ -4,18 +4,15 @@
  * Date: 2018.06.21
  */
 
-Tw.MytRefillGift = function (rootEl) {
+Tw.RechargeRefillGift = function (rootEl) {
   this.$container = rootEl;
   this._apiService = new Tw.ApiService();
-  this._nativeService = new Tw.NativeService();
 
   this._assign();
   this._bindEvent();
   this._init();
 };
-Tw.MytRefillGift.prototype = Object.create(Tw.View.prototype);
-Tw.MytRefillGift.prototype.constructor = Tw.MytRefillGift;
-Tw.MytRefillGift.prototype = Object.assign(Tw.MytRefillGift.prototype, {
+Tw.RechargeRefillGift.prototype = {
   _assign: function () {
     this._$inputPhone = this.$container.find('.input-phone');
     this._$btnNext = this.$container.find('.btn-next');
@@ -59,7 +56,7 @@ Tw.MytRefillGift.prototype = Object.assign(Tw.MytRefillGift.prototype, {
   },
 
   _onClickBtnAddr: function () {
-    this._nativeService.send(Tw.NTV_CMD.GET_CONTACT, {}, $.proxy(this._onContact, this));
+    Tw.Native.send(Tw.NTV_CMD.GET_CONTACT, {}, $.proxy(this._onContact, this));
   },
 
   _onContact: function (resp) {
@@ -143,4 +140,4 @@ Tw.MytRefillGift.prototype = Object.assign(Tw.MytRefillGift.prototype, {
     };
     return getMaskingPhoneNumber(getDashedNumber(phoneNumber));
   }
-});
+};

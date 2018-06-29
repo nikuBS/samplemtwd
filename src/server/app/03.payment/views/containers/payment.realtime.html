@@ -1,13 +1,30 @@
 <!--
 * FileName: payment.realtime.html
-* Author: 공자윤
+* Author: 공자윤 (jayoon.kong@sk.com)
 * Date: 2018.06.22
 -->
 <% include ../components/start.component.html %>
-<div>즉시납부</div>
+<div id="payment-realtime">
+    <div id="main">
+        <h1>즉시납부</h1>
+        <a href="#step1" class="step1">페이지 이동 1</a>
+    </div>
+    <div id="step1" style="display:none;">
+        <h1>step1</h1>
+        <a href="#step2" class="step2">페이지 이동 2</a>
+    </div>
+    <div id="step2" style="display:none;">
+        <h1>step2</h1>
+        <a class="step2 pay">페이지 이동 3</a>
+    </div>
+    <div id="process-complete" style="display:none;">
+        <h1>완료</h1>
+    </div>
+</div>
 <% include ../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
+    new Tw.PaymentRealtime($('#payment-realtime'));
   });
 </script>
 <% include ../components/end.component.html %>
