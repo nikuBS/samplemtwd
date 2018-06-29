@@ -12,6 +12,7 @@ Tw.RechargeRefillSelect = function (rootEl) {
   this._apiService = new Tw.ApiService();
   this._popupService = new Tw.PopupService();
   this._history = new Tw.HistoryService();
+  this._history.init();
 
   this._bindEvent();
 };
@@ -31,6 +32,10 @@ Tw.RechargeRefillSelect.prototype = {
     this._popupService.openConfirm(Tw.POPUP_TITLE.NOTIFY, title, contents, $.proxy(this._submit, this));
   },
   _submit: function () {
+    this._popupService.close();
+    this._refill();
+  },
+  _refill: function () {
     var reqData = this._makeRequestData();
     this._apiService.request(Tw.API_CMD.BFF_06_0007, reqData)
       .done($.proxy(this._success, this))
