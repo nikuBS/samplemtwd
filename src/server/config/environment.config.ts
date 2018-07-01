@@ -21,7 +21,7 @@ const environment = {
     },
     CDN: '',
     REDIS: {
-      host: 'dev-backing-redis-mobile-ibm-redis-ha-dev-master-svc.mtw-dev-cch.svc.cluster.local',
+      host: 'dev-backing-redis-mobile-ibm-redis-ha-dev-master-svc.mtw-dev-rdf.svc.cluster.local',
       port: 6379,
       db: 15
     },
@@ -35,7 +35,7 @@ const environment = {
     },
     CDN: '',
     REDIS: {
-      host: 'stg-backing-redis-mobile-ibm-redis-ha-dev-master-svc.mtw-stg-cch.svc.cluster.local',
+      host: 'stg-backing-redis-mobile-ibm-redis-ha-dev-master-svc.mtw-stg-rdf.svc.cluster.local',
       port: 6379,
       db: 15
     },

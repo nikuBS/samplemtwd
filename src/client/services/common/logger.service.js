@@ -40,5 +40,3 @@ Tw.LoggerService.prototype = {
     }
   }
 };
-
-Tw.Logger = new Tw.LoggerService();
