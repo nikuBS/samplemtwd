@@ -20,12 +20,12 @@ import MembershipRouter from './app/05.membership/membership.router';
 import ProductRouter from './app/06.product/product.router';
 import DirectRouter from './app/07.direct/direct.router';
 import CustomerRouter from './app/08.customer/customer.router';
+import AuthRouter from './app/09.auth/auth.router';
 import SearchRouter from './app/search/search.router';
-
+import ApiRouter from './common/api.router';
 
 // Application Modules
 import RedisService from './services/redis.service';
-import ApiRouter from './common/api.router';
 
 class App {
   public app: Application = express();
@@ -79,6 +79,7 @@ class App {
     this.app.use('/product', new AppRouter(ProductRouter.instance.controllers).router);
     this.app.use('/direct', new AppRouter(DirectRouter.instance.controllers).router);
     this.app.use('/customer', new AppRouter(CustomerRouter.instance.controllers).router);
+    this.app.use('/auth', new AppRouter(AuthRouter.instance.controllers).router);
     this.app.use('/search', new AppRouter(SearchRouter.instance.controllers).router);
   }
 
@@ -93,6 +94,7 @@ class App {
       path.join(__dirname, 'app/06.product/views/containers'),
       path.join(__dirname, 'app/07.direct/views/containers'),
       path.join(__dirname, 'app/08.customer/views/containers'),
+      path.join(__dirname, 'app/09.auth/views/containers'),
       path.join(__dirname, 'app/search/views/containers'),
 
     ]);
