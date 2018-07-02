@@ -56,9 +56,9 @@ Tw.RechargeRefill.prototype = {
   },
   _checkIsVisible: function ($target) {
     if ($target.hasClass('disabled')) {
-      var message = Tw.MESSAGE.REFILL_A10;
+      var message = Tw.MSG_RECHARGE.REFILL_A10;
       if (this._isRefillBtn($target)) {
-        message = Tw.MESSAGE.REFILL_A09;
+        message = Tw.MSG_RECHARGE.REFILL_A09;
       }
       this._openAlert(message);
       return false;
@@ -68,7 +68,7 @@ Tw.RechargeRefill.prototype = {
   _checkIsReceived: function () {
     var $selectedCoupon = this.$container.find('.bt-select-arrow.on');
     if ($selectedCoupon.parents('.slick-slide').hasClass('received')) {
-      this._openAlert(Tw.MESSAGE.REFILL_A04);
+      this._openAlert(Tw.MSG_RECHARGE.REFILL_A04);
       return false;
     }
     return true;
@@ -90,7 +90,7 @@ Tw.RechargeRefill.prototype = {
   },
   _checkConfirm: function () {
     if (!this._checkIsFirst()) {
-      return this._openConfirm(Tw.MESSAGE.REFILL_A02);
+      return this._openConfirm(Tw.MSG_RECHARGE.REFILL_A02);
     }
     return true;
   },
