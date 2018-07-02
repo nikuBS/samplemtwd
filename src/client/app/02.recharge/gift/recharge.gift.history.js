@@ -32,7 +32,7 @@ Tw.RechargeGiftHistory.prototype = {
     this.requestDeletePopup = {
       'title': Tw.POPUP_TITLE.REQUEST_DELETE,
       'close_bt': true,
-      'contents': Tw.MESSAGE.REQUEST_DELETE,
+      'contents': Tw.MSG_RECHARGE.REQUEST_DELETE,
       'bt_num': 'two',
       'type': [{class: 'bt-white2', txt: Tw.BUTTON_LABEL.CANCEL},
         {class: 'bt-red1', txt: Tw.BUTTON_LABEL.CONFIRM}]
