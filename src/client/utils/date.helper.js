@@ -68,7 +68,7 @@ Tw.DateHelper = (function() {
    * @returns {Date} : YYMMDD, YYYYMMDD, YY.MM.DD
    */
   var getShortDateWithFormat = function(date, format) {
-    return moment(date, format).format(format);
+    return moment(date).format(format);
   }
 
   /**
@@ -77,7 +77,7 @@ Tw.DateHelper = (function() {
    * @returns {Date} : YYMMDD, YYYYMMDD, YY.MM.DD
    */
   var getShortDateWithFormatAddByUnit = function(date, amount, unit, format) {
-    return moment(date, format).add(amount, unit).format(format);
+    return moment(date).add(amount, unit).format(format);
   }
 
   return {
