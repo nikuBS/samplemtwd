@@ -30,38 +30,6 @@ class DateHelper {
   }
 
   /**
-   * @param date {Date} or {string} : YYYYMMDD
-   * @returns {string} : currentDateTime - 1 year
-   */
-  static getPastYearShortDate(date: any): string {
-    return moment(this.convDateFormat(date)).subtract(1, 'years').format('YYYYMMDD');
-  }
-
-  /**
-   * @param date {Date} or {string} : YYYYMMDD
-   * @returns {string} : currentDateTime - 1 month
-   */
-  static getPast1MonthShortDate(date: any): string {
-    return moment(this.convDateFormat(date)).subtract(1, 'month').format('YYYYMMDD');
-  }
-
-  /**
-   * @param date {Date} or {string} : YYYYMMDD
-   * @returns {string} : currentDateTime - 3 month
-   */
-  static getPast3MonthShortDate(date: any): string {
-    return moment(this.convDateFormat(date)).subtract(3, 'month').format('YYYYMMDD');
-  }
-
-  /**
-   * @param date {Date} or {string} : YYYYMMDD
-   * @returns {string} : currentDateTime - 6 month
-   */
-  static getPast6MonthShortDate(date: any): string {
-    return moment(this.convDateFormat(date)).subtract(6, 'month').format('YYYYMMDD');
-  }
-
-  /**
    * @param date {Date} or {string} : YYYYMMDDhhmmss
    * @returns {string} : 18년 12월 31일
    */
