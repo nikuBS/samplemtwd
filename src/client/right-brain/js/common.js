@@ -1,5 +1,6 @@
 $(document).on('ready', function () {
-
+  $('html').addClass('device_'+skt_landing.util.win_info.get_device());
+  skt_landing.action.all_menu();
 });
 $(window).on('resize', function () {
 
@@ -95,12 +96,35 @@ skt_landing.action = {
   scroll_gnb_timer: null,
   fix_scroll: function () {
     this.scroll_gap = $(window).scrollTop();
-    $('#contents').css({
+    $('.container-wrap').css({
       'position':'fixed',
-      'transform': 'translate(0 ,-' + this.scroll_gap + 'px)'
+      'transform': 'translate(0 ,-' + this.scroll_gap + 'px)',
+      'z-index': -1
     });
+    $('body,html').css('height','100%');
+    /*
     $('#header').css({
       'transform': 'translate(0 ,' + this.scroll_gap + 'px)'
+    });*/
+  },
+  all_menu : function(){
+    var all_btn = $('.depth-view');
+    if(all_btn.length < 1) return;
+    all_btn.on('click', function(){
+      if(!$('.depth-view-box').hasClass('open')){
+        console.log('a');
+        $(this).addClass('on');
+        $('.depth-view-box').addClass('open');
+        $('.header-wrap').addClass('fixed');
+        $('body').append('<div class="popup-blind"></div>');
+        skt_landing.action.fix_scroll();
+      }else{
+        $(this).removeClass('on');
+        $('.depth-view-box').removeClass('open');
+        $('.header-wrap').removeClass('fixed');
+        $('.popup-blind').remove();
+        skt_landing.action.auto_scroll();
+      }
     });
   },
   gnb_action : function(){
@@ -117,13 +141,19 @@ skt_landing.action = {
     skt_landing.action.scroll_current = skt_landing.util.win_info.get_scrollT();
   },
   auto_scroll: function () {
-    $('#contents').css({
+    $('.container-wrap').css({
+      'position':'',
+      'transform': '',
+      'z-index':''
+    });
+    $('body,html').css('height','');
+    /*$('#contents').css({
       'position': 'relative',
       'transform': 'inherit'
     });
     $('#header').css({
       'transform': 'inherit'
-    });
+    });*/
     $(window).scrollTop(this.scroll_gap);
   },
   anchor: function () {
@@ -168,6 +198,11 @@ skt_landing.action = {
       }
     });
   },
+  setFocus: function(target, idx){  // target : selector(string) | jquery selector
+    var target = $(target),
+        idx = idx ? idx : 0;
+    target.eq(idx).attr('tabindex',0).focus(); //포커스
+  },
   top_btn: function () {
     if (skt_landing.util.win_info.get_scrollT() > 0) {
       $('.btn-top').show().on('click', function () {
@@ -194,9 +229,10 @@ skt_landing.action = {
       var ta = obj.ta,
           co = obj.co,
           size = obj.size,
-          loading_box = $('<div class="loading"></div>'),
+          tit_id = skt_landing.action.ran_id_create(),
+          loading_box = $('<div class="loading" role="region" aria-labelledby="'+tit_id+'"></div>'),
           loading_ico = $('<div class="loading_ico"></div>'),
-          loading_txt = $('<em>로딩중입니다.</em>'),
+          loading_txt = $('<em id="'+tit_id+'">로딩중입니다.</em>'),
           svg_id = '',
           svg_color = '',
           svg = '';
@@ -299,14 +335,17 @@ skt_landing.action = {
       $.get(hbsURL+popup_info.hbs+'.hbs', function (text) {
         var tmpl = Handlebars.compile(text);
         var html = tmpl(popup_info);
-        if ($('.popup').length > 0) {
+        /*if ($('.popup').length > 0) {
           _this.close();
-        }
-        $('body').append(html);
+        }*/
+        $('.wrap').append(html);
       }).done(function () {
-        $('.popup-closeBtn').off('click').on('click', function () {
-          _this.close(this);
+        $('.popup').find('.popup-blind').on('click',function(e){
+          e.stopPropagation();
         });
+        /*$('.popup-closeBtn').off('click').on('click', function () {
+          _this.close(this);
+        });*/
         _this.cancel();
         _this.scroll_chk();
          if(popup_info.hbs == 'popup'){
@@ -366,7 +405,8 @@ skt_landing.action = {
       if(target){
         $(target).closest('.popup,.popup-page').empty().remove();
       }else{
-        $('.popup').empty().remove();
+        var popups = $('.popup,.popup-page');
+        popups.eq(popups.length-1).empty().remove();
       }
       skt_landing.action.auto_scroll();
     },
