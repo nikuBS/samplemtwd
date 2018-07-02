@@ -1,18 +1,20 @@
 <div class="popup">
-    <div class="popup-info">
+    <div class="popup-info" role="alertdialog" {{#if title}}aria-labelledby="alertHeading"{{/if}} aria-describedby="alertText">
         {{#if title}}
         <div class="popup-header">
-            <h5 class="popup-title">{{title}}</h5>
+            <h5 class="popup-title" id="alertHeading">{{title}}</h5>
         </div>
         {{/if}}
-        <div class="popup-contents">
+        <div class="popup-contents" id="alertText">
             {{#if title2}}
             <dl>
                 <dt>{{{title2}}}</dt>
-                <dd>{{{contents}}}</dd>
+                <dd>
+                    {{{contents}}}
+                </dd>
             </dl>
             {{else}}
-                <p>{{{contents}}}</p>
+                <div class="inner-contents">{{{contents}}}</div>
             {{/if}}
         </div>
         <div class="btn-box">
@@ -24,9 +26,9 @@
             {{/type}}
             </ul>
         </div>
-        {{#if close_bt}}
+        <!--{{#if close_bt}}
             <button class="popup-closeBtn">팝업닫기<span class="ico"></span></button>
-        {{/if}}
+        {{/if}}-->
     </div>
     <div class="popup-blind"></div>
 </div>
