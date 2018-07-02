@@ -98,7 +98,7 @@ class DateHelper {
    * @returns {Date} : YYMMDD, YYYYMMDD, YY.MM.DD
    */
   static getShortDateWithFormat(date: any, format: string): any {
-    return moment(date, format).format(format);
+    return moment(date).format(format);
   }
 
   /**
@@ -107,7 +107,7 @@ class DateHelper {
    * @returns {Date} : YYMMDD, YYYYMMDD, YY.MM.DD
    */
   static getShortDateWithFormatAddByUnit(date: any, amount: any, unit: any, format: string) : string {
-    return moment(date, format).add(amount, unit).format(format);
+    return moment(date).add(amount, unit).format(format);
   }
 
 }
