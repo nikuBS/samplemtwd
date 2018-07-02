@@ -17,19 +17,18 @@ skt_landing.components = {
           tabList = _this.find('.tab-linker'),
           tabCont = _this.find('.tab-contents');
       tabListOnChk();
-      tabList.find('a').on('click',function(e){
+      tabList.find('button').on('click',function(e){
         e.preventDefault();
-        $(this).closest('li').addClass('on').siblings().removeClass('on');
+        $(this).closest('li').attr('aria-selected', 'true').siblings().attr('aria-selected', 'false');
         tabListOnChk();
       });
-      
+
       function tabListOnChk(){
-        var tabListIdx = tabList.find('li.on').index();
+        var tabListIdx = tabList.find('li[aria-selected="true"]').index();
         if(tabListIdx == -1){
-          tabListIdx = tabList.find('li').eq(0).addClass('on').index();
+          tabListIdx = tabList.find('li').eq(0).attr('aria-selected', 'true').index();
         }
-        tabCont.children('ul').children('li').eq(tabListIdx).addClass('on').siblings().removeClass('on');
-        
+        tabCont.children('ul').children('li').eq(tabListIdx).attr('aria-selected', 'true').siblings().attr('aria-selected', 'false');
       }
     });
   },
@@ -61,10 +60,10 @@ skt_landing.components = {
   component_flcardbarcode: function () {
   },
   component_flcardbanner1: function () {
-    skt_landing.action.toggleon($('.flcardbanner1 .bt-like')); //좋아요 스위치    
+    skt_landing.action.toggleon($('.flcardbanner1 .bt-like')); //좋아요 스위치
   },
   component_flcardbanner2: function () {
-    skt_landing.action.toggleon($('.flcardbanner2 .bt-scrap')); //스크랩 스위치    
+    skt_landing.action.toggleon($('.flcardbanner2 .bt-scrap')); //스크랩 스위치
   },
   component_flcardsns: function () {
     skt_landing.action.toggleon($('.flcardsns .bt-scrap')); //스크랩 스위치

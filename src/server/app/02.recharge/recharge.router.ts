@@ -12,6 +12,9 @@ import RechargeRefillSelect from './controllers/refill/recharge.refill.select.co
 import RechargeRefillComplete from './controllers/refill/recharge.refill.complete.controller';
 import RechargeGiftRequestProcess from './controllers/gift/recharge.gift.request.controller';
 import RechargeRefillError from './controllers/refill/recharge.refill.error.controller';
+import RechargeTing from './controllers/ting/recharge.ting.controller';
+import RechargeLimit from './controllers/limit/recharge.limit.controller';
+import RechargeCookiz from './controllers/cookiz/recharge.cookiz.controller';
 
 class RechargeRouter extends TwRouter {
   constructor() {
@@ -29,6 +32,9 @@ class RechargeRouter extends TwRouter {
     this.controllers.push({ url: '/gift/process/members', controller: new RechargeGiftMembersProcess() });
     this.controllers.push({ url: '/gift/process/request', controller: new RechargeGiftRequestProcess() });
     this.controllers.push({ url: '/gift/history', controller: new RechargeGiftHistory() });
+    this.controllers.push({ url: '/cookiz', controller: new RechargeCookiz() });
+    this.controllers.push({ url: '/limit', controller: new RechargeLimit() });
+    this.controllers.push({ url: '/ting', controller: new RechargeTing() });
   }
 }
 

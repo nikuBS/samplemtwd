@@ -27,7 +27,7 @@ Tw.UIService.prototype = {
         Tw.Logger.info('[Back Loaded]');
         if($('.back-reload').length > 0) {
           Tw.Logger.info('[Prev]', document.referrer);
-          document.location.reload();
+          // document.location.reload();
         }
       }
     });
@@ -43,6 +43,10 @@ Tw.UIService.toggle = function (selector) {
   }
 };
 
-$(document).ready(function () {
-  var commonEvent = new Tw.UIService();
-});
+Tw.UIService.setLocalStorage = function (key, value) {
+  localStorage.setItem(key, value);
+};
+
+Tw.UIService.getLocalStorage = function (key) {
+  return localStorage.getItem(key);
+};

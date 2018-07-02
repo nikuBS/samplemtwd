@@ -10,6 +10,7 @@ Tw.RechargeRefill = function (rootEl) {
   this.$document = $(document);
   this.$btnTarget = null;
 
+  this._popupService = new Tw.PopupService();
   this._apiService = new Tw.ApiService();
   this._history = new Tw.HistoryService();
   this._history.init();
@@ -23,9 +24,6 @@ Tw.RechargeRefill.prototype = {
     this.$refillBtn = this.$container.find('.link-long > a');
   },
   _bindEvent: function () {
-    this.$document.on('click', '.select-cancel', $.proxy(this._closePopup, this));
-    this.$document.on('click', '.select-submit', $.proxy(this._submit, this));
-
     this.$container.on('click', '.slick-slide', $.proxy(this._selectCoupon, this));
     this.$container.on('click', '.link-long > a', $.proxy(this._goRefill, this));
     this.$container.on('click', '.refill-history', $.proxy(this._goHistory, this));
@@ -119,44 +117,16 @@ Tw.RechargeRefill.prototype = {
   _isRefillBtn: function ($target) {
     return $target.hasClass('refill-to-my-phone');
   },
-  _showProduct: function (event) {
-    event.preventDefault();
-    skt_landing.action.popup.open({
-      hbs:'DA_01_01_01_L01'
-    });
+  _showProduct: function () {
+    this._popupService.openRefillProduct();
   },
   _openAlert: function (message) {
-    skt_landing.action.popup.open({
-      'title': Tw.BUTTON_LABEL.NOTIFY,
-      'close_bt': true,
-      'title2': message,
-      'bt_num': 'one',
-      'type': [{
-        class: 'bt-red1 select-cancel',
-        txt: Tw.BUTTON_LABEL.CONFIRM
-      }]
-    });
+    this._popupService.openAlert(Tw.POPUP_TITLE.NOTIFY, message);
   },
   _openConfirm: function (message) {
-    skt_landing.action.popup.open({
-      'title': Tw.BUTTON_LABEL.NOTIFY,
-      'close_bt': true,
-      'title2': message,
-      'bt_num': 'two',
-      'type': [{
-        class: 'bt-white1 select-cancel',
-        txt: Tw.BUTTON_LABEL.CANCEL
-      }, {
-        class: 'bt-red1 select-submit',
-        txt: Tw.BUTTON_LABEL.CONFIRM
-      }]
-    });
-  },
-  _closePopup: function () {
-    skt_landing.action.popup.close();
+    this._popupService.openConfirm(Tw.POPUP_TITLE.NOTIFY, message, '', $.proxy(this._submit, this));
   },
   _submit: function () {
-    this._closePopup();
     this._goLoad(this._makeUrl(this.$btnTarget));
   }
 };

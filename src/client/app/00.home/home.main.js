@@ -15,7 +15,7 @@ Tw.HomeMain = function (rootEl) {
 
 
 Tw.HomeMain.prototype = {
-  _init: function() {
+  _init: function () {
     this.tplGiftCard = Handlebars.compile($('.gift-template').html());
     this.$giftCard = this.$container.find('#gift-card');
   },
@@ -25,18 +25,15 @@ Tw.HomeMain.prototype = {
     this.$container.on('click', '#gift-balance', $.proxy(this._getGiftBalance, this));
   },
 
+
   // 리필하기
   _openRefillProduct: function ($event) {
-    this._popupService.open({
-      hbs: 'DA_01_01_01_L01'// hbs의 파일명
-    });
+    this._popupService.openRefillProduct();
   },
 
   // 선물하기
   _openGiftProduct: function ($event) {
-    this._popupService.open({
-      hbs: 'DA_02_01_L01'// hbs의 파일명
-    });
+    this._popupService.openGiftProduct();
   },
 
   _getGiftBalance: function () {

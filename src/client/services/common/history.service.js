@@ -6,6 +6,7 @@ Tw.HistoryService = function (selector) {
   this.search = window.location.search;
   this.fullPathName = this.pathname + this.search;
   this.historyName = this.pathname.split('/')[1];
+  this.storageName = this.pathname.split('/')[2];
   this.historyObj = {};
 };
 Tw.HistoryService.prototype = {
@@ -13,7 +14,7 @@ Tw.HistoryService.prototype = {
     if (hash === undefined) {
       this.$window.on('pageshow', $.proxy(this.checkIsBack, this));
     } else {
-      this.$window.on('hashchange', $.proxy(this.hashChangeEvent, this));
+      initHashNav($.proxy(this.onHashChange, this));
     }
   },
   push: function () {
@@ -28,13 +29,18 @@ Tw.HistoryService.prototype = {
   go: function (len) {
     this.history.go([len]);
   },
+  reload: function () {
+    window.location.reload();
+  },
   checkIsBack: function (event) {
     if (event.originalEvent.persisted || window.performance && window.performance.navigation.type === 2) {
-      this.resetHistory();
-      this.reload();
+      if (this.isDone()) {
+        Tw.UIService.setLocalStorage(this.storageName, '');
+        this.resetHistory(-1);
+      }
     }
   },
-  hashChangeEvent: function () {
+  onHashChange: function () {
     this.showAndHide();
     this.resetHashHistory();
   },
@@ -46,24 +52,18 @@ Tw.HistoryService.prototype = {
     $selector.siblings().hide();
     $selector.show();
   },
-  reload: function () {
-    window.location.reload();
+  resetHashHistory: function () {
+    if (this.isReturendMain() && this.isCompleted()) {
+      this.resetHistory(this.getHistoryLength());
+    }
   },
   setHistory: function () {
     this.$container.addClass('process-complete');
     this.replace();
   },
-  resetHashHistory: function () {
-    if (this.isReturendMain() && this.isCompleted()) {
-      this.go(this.getHistoryLength());
-      this.reload();
-    }
-  },
-  resetHistory: function () {
-    this.go(this.getBrowserHistoryLength());
-  },
-  getBrowserHistoryLength: function () {
-    return -1;
+  resetHistory: function (historyLength) {
+    this.go(historyLength);
+    this.reload();
   },
   getHistoryLength: function () {
     var historyLength = this.getHashElementLength();
@@ -78,6 +78,9 @@ Tw.HistoryService.prototype = {
   },
   isCompleted: function () {
     return this.$container.hasClass('process-complete');
+  },
+  isDone: function () {
+    return Tw.UIService.getLocalStorage(this.storageName) === 'done';
   }
 };
 

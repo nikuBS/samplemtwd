@@ -10,7 +10,9 @@ Tw.RechargeRefillSelect = function (rootEl) {
   this.window = window;
 
   this._apiService = new Tw.ApiService();
+  this._popupService = new Tw.PopupService();
   this._history = new Tw.HistoryService();
+  this._history.init();
 
   this._bindEvent();
 };
@@ -18,8 +20,6 @@ Tw.RechargeRefillSelect = function (rootEl) {
 Tw.RechargeRefillSelect.prototype = {
   _bindEvent: function () {
     this.$container.on('click', '.refill-select-btn', $.proxy(this._confirmRefill, this));
-    this.$document.on('click', '.refill-cancel', $.proxy(this._closePopup, this));
-    this.$document.on('click', '.refill-submit', $.proxy(this._refill, this));
   },
   _confirmRefill: function () {
     var couponType = this.$container.find('label.checked').data('value');
@@ -27,23 +27,13 @@ Tw.RechargeRefillSelect.prototype = {
     this._openPopup(couponType, endDate);
   },
   _openPopup: function (couponType, endDate) {
-    skt_landing.action.popup.open({
-      'title': Tw.BUTTON_LABEL.NOTIFY,
-      'close_bt': true,
-      'title2': couponType + Tw.MESSAGE.REFILL_INFO_01,
-      'contents': Tw.MESSAGE.REFILL_INFO_02 + endDate + Tw.MESSAGE.REFILL_INFO_03,
-      'bt_num': 'two',
-      'type': [{
-        class: 'bt-white1 refill-cancel',
-        txt: Tw.BUTTON_LABEL.CANCEL
-      }, {
-        class: 'bt-red1 refill-submit',
-        txt: Tw.BUTTON_LABEL.CONFIRM
-      }]
-    });
+    var title = couponType + Tw.MESSAGE.REFILL_INFO_01;
+    var contents = Tw.MESSAGE.REFILL_INFO_02 + endDate + Tw.MESSAGE.REFILL_INFO_03;
+    this._popupService.openConfirm(Tw.POPUP_TITLE.NOTIFY, title, contents, $.proxy(this._submit, this));
   },
-  _closePopup: function () {
-    skt_landing.action.popup.close();
+  _submit: function () {
+    this._popupService.close();
+    this._refill();
   },
   _refill: function () {
     var reqData = this._makeRequestData();
@@ -62,7 +52,6 @@ Tw.RechargeRefillSelect.prototype = {
   },
   _success: function (res) {
     this._setHistory();
-    this._closePopup();
 
     if (res.code === '00') {
       this._goLoad('/recharge/refill/complete');
