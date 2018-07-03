@@ -16,6 +16,7 @@ class AuthLogin extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     this.apiService.request(API_CMD.GUIDE, { client_id: 'c58d51a8-1184-4d95-9837-a03a883efe7b', Service_type: '16' })
       .subscribe((resp) => {
+        // res.send(resp);
       });
 
     res.redirect('https://auth-stg.skt-id.co.kr/auth/type/view/guide.do');
