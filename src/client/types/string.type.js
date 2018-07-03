@@ -12,28 +12,38 @@ Tw.VOICE_UNIT = {
   SEC: '초'
 };
 
+Tw.DATE_UNIT = {
+  ONE_YEAR: '1년',
+  ONE_MONTH: '1개월',
+  THREE_MONTH: '3개월',
+  SIX_MONTH: '6개월',
+};
+
 Tw.POPUP_TITLE = {
   NOTIFY: '알림',
   REQUEST_DELETE: '조르기 삭제안내',
-  GIFT_FAMILY_INFO: '데이터 자동 선물 안내'
+  GIFT_FAMILY_INFO: '데이터 자동 선물 안내',
+  CHANGE_SEARCH_CONDITION: '검색 조건 변경'
+};
+
+Tw.POPUP_PROPERTY = {
+  ALL: '전체',
+  SEND: '보냄',
+  RECEIVE: '받음',
+  PERIOD: '기간'
 };
 
 Tw.BUTTON_LABEL = {
+  SELECT: '선택',
   CONFIRM: '확인',
   CANCEL: '취소'
 };
 
-Tw.MSG_COMMON = {
+Tw.MSG_COMMON = {};
 
-};
+Tw.MSG_HOME = {};
 
-Tw.MSG_HOME = {
-
-};
-
-Tw.MSG_MYT = {
-
-};
+Tw.MSG_MYT = {};
 
 Tw.MSG_RECHARGE = {
   REFILL_INFO_01: ' 리필을 선택하셨습니다.',
@@ -107,7 +117,5 @@ Tw.MSG_GIFT = {
   TING_A13: '조르기를 종료하시겠습니까?'
 };
 
-Tw.MSG_AUTH = {
-
-};
+Tw.MSG_AUTH = {};
 
