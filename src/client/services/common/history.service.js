@@ -43,12 +43,11 @@ Tw.HistoryService.prototype = {
     }
   },
   onHashChange: function (hash) {
-    var isStep = hash.base.match('step');
-    var isCompleted = hash.base.match('process-complete');
+    var isStep = this.isStep(hash);
     if (isStep) {
       this.addHashList(hash.base.split('-')[0]);
     }
-    if (isStep || isCompleted) {
+    if (isStep || this.isCompleted()) {
       this.scrollInit();
     }
     this.showAndHide();
@@ -89,6 +88,9 @@ Tw.HistoryService.prototype = {
     var historyLength = this._hashList.length;
     historyLength = -historyLength;
     return historyLength;
+  },
+  isStep: function (hash) {
+    return hash.base.match('step');
   },
   isReturendMain: function () {
     return Tw.FormatHelper.isEmpty(window.location.hash);
