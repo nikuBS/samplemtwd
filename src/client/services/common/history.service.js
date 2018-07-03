@@ -8,13 +8,14 @@ Tw.HistoryService = function (selector) {
   this.historyName = this.pathname.split('/')[1];
   this.storageName = this.pathname.split('/')[2];
   this.historyObj = {};
+  this._hashService = Tw.Hash;
 };
 Tw.HistoryService.prototype = {
   init: function (hash) {
     if (hash === undefined) {
       this.$window.on('pageshow', $.proxy(this.checkIsBack, this));
     } else {
-      initHashNav($.proxy(this.onHashChange, this));
+      this._hashService.initHashNav($.proxy(this.onHashChange, this));
     }
   },
   push: function () {
