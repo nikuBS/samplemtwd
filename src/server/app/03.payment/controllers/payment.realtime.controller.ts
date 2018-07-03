@@ -28,7 +28,6 @@ class PaymentRealtimeController extends TwViewController {
 
   public renderView(res: Response, view: string, data: any): any {
     if (data.code === undefined) {
-      console.log(data);
       res.render(view, data);
     } else {
       res.render(PAYMENT_VIEW.ERROR, data);
