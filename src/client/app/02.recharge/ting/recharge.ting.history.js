@@ -29,6 +29,6 @@ Tw.RechargeTingHistory.prototype = {
   _onSuccessGetProvider: function () {
   },
 
-  _sendFail() {
+  _sendFail: function () {
   }
 };
