@@ -106,7 +106,6 @@ Tw.HistoryService.prototype = {
   },
   checkIsCompleted: function () {
     if (this.isReturendMain() && this.isCompleted()) {
-      this.scrollInit();
       this.resetHashHistory();
     }
   }
