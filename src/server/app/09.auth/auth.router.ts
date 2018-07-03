@@ -1,8 +1,9 @@
 import TwRouter from '../../common/route/tw.router';
 import AuthTidLogin from './controllers/tid/auth.tid.login.controller';
 import AuthSignupGuide from './controllers/signup/auth.signup.guide.controller';
-import AuthWithdrawalGuide from './controllers/withdrawal/auth.withdrawal.guide.controller';
 import AuthMemberManagement from './controllers/member/auth.member.management.controller';
+import AuthWithdrawalGuide from './controllers/withdrawal/auth.withdrawal.guide.controller';
+import AuthWithdrawalSurvey from './controllers/withdrawal/auth.withdrawal.survey.controller';
 import AuthLine from './controllers/line/auth.line.controller';
 import AuthTidAccountInfo from './controllers/tid/auth.tid.account-info.controller';
 import AuthTidGuide from './controllers/tid/auth.tid.guide.controller';
@@ -47,6 +48,7 @@ class AuthRouter extends TwRouter {
     this.controllers.push({ url: '/tid/guide', controller: new AuthTidGuide() });
     // withdrawal
     this.controllers.push({ url: '/withdrawal/guide', controller: new AuthWithdrawalGuide() });
+    this.controllers.push({ url: '/withdrawal/survey', controller: new AuthWithdrawalSurvey() });
   }
 }
 

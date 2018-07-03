@@ -13,6 +13,10 @@ Tw.API_CMD = {
   BFF_03_0004_C: { path: '/change-svc', method: Tw.API_METHOD.POST },
   BFF_03_0005_C: { path: '/selected-svc', method: Tw.API_METHOD.GET },
   BFF_03_0023_C: { path: '/core-recharge/v1/refill-gifts', method: Tw.API_METHOD.POST },
+
+  // AUTH
+  BFF_03_0003: { path: '/core-auth/v1/members', method: Tw.API_METHOD.DELETE },
+
   // MYT
   BFF_05_0001: { path: '/my-t/balances', method: Tw.API_METHOD.GET },
   BFF_05_0002: { path: '/my-t/balance-add-ons', method: Tw.API_METHOD.GET },
