@@ -4,11 +4,11 @@
  * Date: 2018.07.02
  */
 
-import TwViewController from '../../../common/controllers/tw.view.controller';
+import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
-import { API_CMD } from '../../../types/api-command.type';
+import { API_CMD } from '../../../../types/api-command.type';
 
-class AuthLogin extends TwViewController {
+class AuthTidLogin extends TwViewController {
   constructor() {
     super();
   }
@@ -23,4 +23,4 @@ class AuthLogin extends TwViewController {
   }
 }
 
-export default AuthLogin;
+export default AuthTidLogin;
