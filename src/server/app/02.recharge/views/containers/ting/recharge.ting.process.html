@@ -1,0 +1,92 @@
+<% include ../../components/start.component.html %>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb_area">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap">
+    <!-- #header -->
+    <div id="header" class="header-wrap">
+        <div class="header step-page">
+            <div class="header-ti">
+                <h1>팅요금 선물</h1>
+            </div>
+            <button class="close-step"><span class="blind">닫기</span></button>
+        </div>
+    </div>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <div class="cont-box">
+                <!-- .widget -->
+                <div class="widget">
+                    <div class="widget-box step">
+                        <h3 class="step-ti"><em>STEP 01</em>연락처 입력</h3><!-- 2018-06-19 : h태그 수정/삭제 -->
+                        <ul class="step-list">
+                            <li class="on">1<span class="blind">연락처 입력</span></li>
+                            <li>2<span class="blind">데이터 선택</span></li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- //.widget -->
+            </div>
+            <hr class="cont-sp type1" aria-hidden="true"/>
+            <div class="cont-box">
+                <p class="page-desc">선물 받으실 분의 휴대폰 번호를 입력해주세요.</p>
+                <div class="inner">
+                    <h3 class="contents-tit">휴대폰 번호</h3>
+                    <div class="contents-formbox">
+                            <span class="inputbox bt-add">
+                                <span class="input">
+                                    <input type="text" placeholder="‘-’ 없이 숫자만 입력해주세요." title="휴대폰 번호 입력">
+                                    <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
+                                </span>
+                                <span class="bt-box">
+                                    <button type="button">주소록</button>
+                                </span>
+                            </span>
+
+                        <!-- 2018-06-21 주소록이 없는 경우 추가 -->
+                        <span class="inputbox">
+								<span class="input">
+									<input type="text" placeholder="‘-’ 없이 숫자만 입력해주세요." title="휴대폰 번호 입력">
+									<a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
+								</span>
+							</span>
+                        <!--// 2018-06-21 주소록이 없는 경우 추가 -->
+
+                        <span class="contents-notice">
+                                <em class="noti-type1">SK텔레콤을 사용하고 계신 분에게만 선물을 보내실 수 있습니다.</em>
+                            </span>
+                    </div>
+                </div>
+
+                <div class="inner">
+                    <div class="contents-btn">
+                        <ul class="bt-slice"><!-- 2018-06-20 버튼 클래스 변경 -->
+                            <li class="bt-blue1">
+                                <button>다음</button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--// #contents -->
+</div>
+<% include ../../components/javascript.component.html %>
+
+<script>
+  $(document).ready(function () {
+    var oRechargeTingComponent = new Tw.RechargeTing($(document));
+  });
+</script>
+
+<% include ../../components/end.component.html %>

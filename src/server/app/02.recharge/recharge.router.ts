@@ -16,6 +16,7 @@ import RechargeTing from './controllers/ting/recharge.ting.controller';
 import RechargeLimit from './controllers/limit/recharge.limit.controller';
 import RechargeCookiz from './controllers/cookiz/recharge.cookiz.controller';
 import RechargeTingHistory from './controllers/ting/recharge.ting.history.controller';
+import RechargeTingProcess from './controllers/ting/recharge.ting.process.controller';
 
 class RechargeRouter extends TwRouter {
   constructor() {
@@ -36,6 +37,7 @@ class RechargeRouter extends TwRouter {
     this.controllers.push({ url: '/cookiz', controller: new RechargeCookiz() });
     this.controllers.push({ url: '/limit', controller: new RechargeLimit() });
     this.controllers.push({ url: '/ting', controller: new RechargeTing() });
+    this.controllers.push({ url: '/ting/process', controller: new RechargeTingProcess() });
     this.controllers.push({ url: '/ting/history', controller: new RechargeTingHistory() });
   }
 }
