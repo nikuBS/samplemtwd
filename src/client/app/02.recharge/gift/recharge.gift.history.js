@@ -5,53 +5,58 @@
  */
 Tw.RechargeGiftHistory = function (rootEl) {
   this.$container = rootEl;
-  this._apiService = Tw.ApiService();
-  this._popupService = Tw.PopupService();
+  this._apiService = Tw.Api;
+  this._popupService = Tw.Popup;
+  this._dateHelper = Tw.DateHelper;
 
-  this._cachedElement();
-  this._bindEvent();
+  // this._cachedElement();
+  // this._bindEvent();
   this._init();
 };
 
 Tw.RechargeGiftHistory.prototype = {
 
-  // TODO : 회선변경
-
   _init: function () {
-    this.currentTab = 'present';    // request : 조르기
-    this.data = {};
-    this.searchCondition = {
-      now: null,
-      old: {},
-      type: 0,
-      isAutoSent: false,
-      selectedTermIndex: 1,
-      terms: []
-    };
-    this.requestDeletePopup = {
-      'title': Tw.POPUP_TITLE.REQUEST_DELETE,
-      'close_bt': true,
-      'contents': Tw.MSG_RECHARGE.REQUEST_DELETE,
-      'bt_num': 'two',
-      'type': [{class: 'bt-white2', txt: Tw.BUTTON_LABEL.CANCEL},
-        {class: 'bt-red1', txt: Tw.BUTTON_LABEL.CONFIRM}]
-    };
-    this.presentContentWrapper.hide();
-    this.requestContentWrapper.hide();
+    this.dateNow = this._dateHelper.getShortDateWithFormat(new Date(), 'YYYYMMDD');
+    console.log(this._dateHelper.getShortDateWithFormatAddByUnit(this.dateNow, -1, 'months', 'YYYYMMDD'));
 
-    this[this.currentTab + 'TermSelect'].find('option').map((function (i, o) {
-      this.searchCondition.terms.push(o.value);
-    }).bind(this));
-    this.searchCondition.now = Tw.DateHelper.getShortDateWithFormat(new Date(), 'YYYYMMDD');
+    console.log(this.getListData(this.dateNow, this._dateHelper.getShortDateWithFormatAddByUnit(this.dateNow, -1, 'years', 'YYYYMMDD'), 0, function(res) {
+      console.log(res);
+    }));
+    // this.currentTab = 'present';    // request : 조르기
+    // this.data = {};
+    // this.searchCondition = {
+    //   now: null,
+    //   old: {},
+    //   type: 0,
+    //   isAutoSent: false,
+    //   selectedTermIndex: 1,
+    //   terms: []
+    // };
+    // this.requestDeletePopup = {
+    //   'title': Tw.POPUP_TITLE.REQUEST_DELETE,
+    //   'close_bt': true,
+    //   'contents': Tw.MSG_RECHARGE.REQUEST_DELETE,
+    //   'bt_num': 'two',
+    //   'type': [{class: 'bt-white2', txt: Tw.BUTTON_LABEL.CANCEL},
+    //     {class: 'bt-red1', txt: Tw.BUTTON_LABEL.CONFIRM}]
+    // };
+    // this.presentContentWrapper.hide();
+    // this.requestContentWrapper.hide();
+    //
+    // this[this.currentTab + 'TermSelect'].find('option').map((function (i, o) {
+    //   this.searchCondition.terms.push(o.value);
+    // }).bind(this));
 
-    this.presentViewMore.hide();
-    this.requestViewMore.hide();
-
-    if(!window.location.hash.replace(/^#/i, "")) {
-      this.$tabChanger.eq(0).click();
-    };
-
-    initHashNav($.proxy(this._hashInit, this));
+    //
+    // this.presentViewMore.hide();
+    // this.requestViewMore.hide();
+    //
+    // if(!window.location.hash.replace(/^#/i, "")) {
+    //   this.$tabChanger.eq(0).click();
+    // };
+    //
+    // initHashNav($.proxy(this._hashInit, this));
   },
 
   _hashInit: function (hash) {
@@ -91,7 +96,10 @@ Tw.RechargeGiftHistory.prototype = {
     this.requestRestCounter = this.requestViewMore.find('span');
     this.requestTermSelect = $('#tab2 .inner .contents-info-list .widget select:nth-of-type(2)');
 
+    this._setTemplateWithDOM();
+  },
 
+  _setTemplateWithDOM: function() {
     this.listTemplete = Handlebars.compile($('#list-template').html());
     this.presentEmptyTemplete = Handlebars.compile($('#present-empty-template').html());
     this.requestEmptyTemplete = Handlebars.compile($('#request-empty-template').html());
@@ -103,8 +111,24 @@ Tw.RechargeGiftHistory.prototype = {
 
     this.$document.on('updateLineInfo', $.proxy(this.updateLineInfo, this));
 
-    this.presentViewMore.off('click').on('click', $.proxy(this.appendNextPagesToList, this));
-    this.requestViewMore.off('click').on('click', $.proxy(this.appendNextPagesToList, this));
+    // this.presentViewMore.off('click').on('click', $.proxy(this.appendNextPagesToList, this));
+    // this.requestViewMore.off('click').on('click', $.proxy(this.appendNextPagesToList, this));
+  },
+
+  getListData: function (fromDt, toDt, giftType, callback) {
+    if (this.currentTab === 'present') {
+      this._apiService.request(Tw.API_CMD.BFF_06_0018, {
+        fromDt: fromDt,
+        toDt: toDt,
+        giftType: giftType
+      }).done($.proxy(callback, this));
+    } else if (this.currentTab === 'request') {
+      this._apiService.request(Tw.API_CMD.BFF_06_0010, {
+        fromDt: fromDt,
+        toDt: toDt,
+        requestType: giftType
+      }).done($.proxy(callback, this));
+    }
   },
 
   setData: function (res) {
@@ -310,22 +334,6 @@ Tw.RechargeGiftHistory.prototype = {
     this.$document.one('click', '.popup .popup-blind', $.proxy(this.hidePopup, this));
 
     this.addClosePopupHandler();
-  },
-
-  getListData: function (fromDt, toDt, giftType, callback) {
-    if (this.currentTab === 'present') {
-      this._apiService.request(Tw.API_CMD.BFF_06_0018, {
-        fromDt: fromDt,
-        toDt: toDt,
-        giftType: giftType
-      }).done($.proxy(callback, this));
-    } else if (this.currentTab === 'request') {
-      this._apiService.request(Tw.API_CMD.BFF_06_0010, {
-        fromDt: fromDt,
-        toDt: toDt,
-        requestType: giftType
-      }).done($.proxy(callback, this));
-    }
   },
 
   addClosePopupHandler: function () {
