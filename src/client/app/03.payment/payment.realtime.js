@@ -8,7 +8,8 @@ Tw.PaymentRealtime = function (rootEl) {
   this.$container = rootEl;
   this.$window = $(window);
 
-  this._apiService = new Tw.ApiService();
+  this._apiService = Tw.Api;
+  this._uiService = Tw.Ui;
   this._history = new Tw.HistoryService(this.$container);
   this._history.init('hash');
   this._bindEvent();
@@ -35,7 +36,7 @@ Tw.PaymentRealtime.prototype = {
     this._history.setHistory();
   },
   _toggleEvent: function (event) {
-    Tw.UIService.toggle($(event.currentTarget));
+    this._uiService.toggle($(event.currentTarget));
   },
   _go: function (hash) {
     window.location.hash = hash;
