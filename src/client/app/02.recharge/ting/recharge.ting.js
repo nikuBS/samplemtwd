@@ -52,9 +52,9 @@ Tw.RechargeTing.prototype = {
 
   _activateBlock: function () {
     this._apiService.request(Tw.API_CMD.BFF_06_0021, {})
-      .done($.proxy(function () {
+      .done(function () {
         location.reload(true);
-      }, this))
+      })
       .fail($.proxy(this._sendFail, this));
   },
 
