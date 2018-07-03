@@ -5,17 +5,14 @@ export enum API_METHOD {
   DELETE = 'DELETE'
 }
 
-export enum API_PROTOCOL {
-  HTTP = 'http',
-  HTTPS = 'https'
-}
-
 export enum API_SERVER {
   BFF = 'BFF_SERVER',
+  TID = 'TID_SERVER',
   TEST = 'TEST_SERVER'
 }
 
 export const API_CMD = {
+  // SPRINT #3
   SESSION_CHECK: { path: '/mock/session', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_03_0001_mock: { path: '/mock/login', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: false },
   BFF_03_0001: { path: '/test-login', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: false },
@@ -24,6 +21,11 @@ export const API_CMD = {
   BFF_03_0004: { path: '/change-svc', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_03_0005: { path: '/selected-svc', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_03_0023: { path: '/core-recharge/v1/refill-gifts', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  // COMMON
+
+  // AUTH
+
+  // MYT
   BFF_05_0001: { path: '/my-t/balances', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0002: { path: '/my-t/balance-add-ons', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0003: { path: '/core-balance/v1/troaming-sharings', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
@@ -35,6 +37,7 @@ export const API_CMD = {
   BFF_05_0009: { path: '/core-balance/v1/data-sharings/balances', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0010: { path: '/core-balance/v1/children', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0011: { path: '/core-balance/v1/data-sharings/args-0', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  // RECHARGE
   BFF_06_0001: { path: '/core-recharge/v1/refill-coupons', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_06_0002: { path: '/core-recharge/v1/refill-usages', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_06_0003: { path: '/core-recharge/v1/refill-gifts', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
@@ -48,7 +51,7 @@ export const API_CMD = {
   BFF_06_0011: { path: '/core-recharge/v1/data-gift-requests', method: API_METHOD.DELETE, server: API_SERVER.BFF, bypass: true },
   BFF_06_0012: { path: '/core-recharge/v1/data-gift-request-receivers', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_06_0013: { path: '/core-recharge/v1/data-gift-requests', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
-  BFF_06_0014: { path: '/core-recharge/v1/data-gift-balance', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_06_0014: { path: '/core-recharge/v1/data-gift-balances', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_06_0015: { path: '/core-recharge/v1/data-gift-senders', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_06_0016: { path: '/core-recharge/v1/data-gifts', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_06_0017: { path: '/core-recharge/v1/data-gift-messages', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
@@ -77,6 +80,9 @@ export const API_CMD = {
   BFF_06_0040: { path: '/services/recharge/auto-cut', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_06_0041: { path: '/services/recharge/auto-cut-cancel', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_06_0042: { path: '/services/recharge/search', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+
+  // TID
+  GUIDE: { path: '/auth/type/view/guide.do', method: API_METHOD.POST, server: API_SERVER.TID, bypass: false },
 
   TEST_GET_USAGE_BTN: { path: '/usageBtn', method: API_METHOD.GET, server: API_SERVER.TEST, bypass: true }
 };

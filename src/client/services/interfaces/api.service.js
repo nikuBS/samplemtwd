@@ -11,6 +11,7 @@ Tw.ApiService.prototype = {
       headers: Object.assign({ "Content-Type": "application/json" }, headers),
       data: params
     };
+    Tw.Logger.info('[API REQ]', htOptions);
 
     return $.ajax(htOptions);
   }

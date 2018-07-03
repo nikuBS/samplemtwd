@@ -1,0 +1,256 @@
+<% include ../../components/start.component.html %>
+
+<body>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb_area">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+
+<div class="wrap">
+    <!-- #header -->
+    <div id="header" class="header-wrap">
+        <div class="header">
+            <div class="header-ti">
+                <h1>팅요금 선물 내역</h1>
+                <button class="depth-view" role="button" aria-pressed="false"><span class="blind">메뉴구조보기</span></button>
+            </div>
+            <button class="prev-step"><span class="blind">이전으로</span></button>
+            <button class="search-content"><span class="blind">검색하기</span></button>
+        </div>
+    </div>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <!-- .cont-box -->
+            <div class="cont-box">
+                <!-- .widget -->
+                <div class="widget">
+                    <div class="widget-box select">
+                        <button class="bt-dropdown big" title="회선 선택" aria-haspopup="true">010-12**-56**<span class="ico"></span></button>
+                        <div class="select-info">
+                            <span class="title">회선 용량</span>
+                            <span class="text"></span>
+                            <select title="데이터 용량">
+                                <option selected>010-12**-56**</option>
+                                <option>010-22**-56**</option>
+                                <option>010-32**-56**</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <!-- //.widget -->
+            </div>
+            <!--// .cont-box -->
+            <hr class="cont-sp type1" />
+            <!-- .cont-box -->
+            <div class="cont-box nogaps">
+                <!-- .component -->
+                <div class="component">
+                    <div class="component-box tabs">
+                        <div class="tab-area type1"><!-- 타입별 탭형태 변환 -->
+                            <div class="tab-linker">
+                                <ul role="tablist">
+                                    <li role="tab" aria-selected="true" aria-controls="tab1-tab" id="tab1"><button>선물내역</button></li><!-- true 열림 -->
+                                    <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2"><button>선물 차단 내역</button></li>
+                                </ul>
+                            </div>
+                            <div class="tab-contents">
+                                <ul>
+                                    <li role="tabpanel" id="tab1-tab" aria-labelledby="tab1">
+                                        <div class="inner">
+                                            <div class="contents-info-list">
+                                                <p class="ti-desc"><strong><span class="num">42</span>개</strong> 선물 내역이 있습니다.</p>
+                                                <div class="list-top">
+                                                    <!-- .widget -->
+                                                    <div class="widget inline">
+                                                        <div class="widget-box select">
+                                                            <button class="bt-dropdown small" title="셀렉트 선택">전체 · 3개월<span class="ico"></span></button>
+                                                            <div class="select-info">
+                                                                <span class="title">검색 조건 변경</span>
+                                                                <span class="text"><!-- 내용 없을 경우 빈 영역 --></span>
+                                                                <select title="Type" class="three">
+                                                                    <option selected>전체</option>
+                                                                    <option>보냄</option>
+                                                                    <option>받은</option>
+                                                                </select>
+                                                                <select title="기간" class="two">
+                                                                    <option>1개월</option>
+                                                                    <option selected>3개월</option>
+                                                                    <option>6개월</option>
+                                                                    <option>1년</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- //.widget -->
+                                                </div>
+                                                <!--// .widget -->
+                                                <ul class="gift-history">
+                                                    <li>
+                                                        <div class="info-change">
+                                                            <span class="arrow-receive" role="img" aria-label="받음"><span class="blind">받음</span></span>
+                                                        </div>
+                                                        <div class="info-user">
+                                                            <span class="info-title">김*림</span>
+                                                            <span class="info-sub">010-46**-10**</span>
+                                                            <span class="info-date">2018.06.14</span>
+                                                        </div>
+                                                        <div class="info-data">
+                                                            <span class="info-title">10,000 원</span>
+                                                            <span class="info-sub">후불선물충전</span>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="info-change">
+                                                            <span class="arrow-send" role="img" aria-label="보냄"><span class="blind">보냄</span></span>
+                                                        </div>
+                                                        <div class="info-user">
+                                                            <span class="info-title">김*준</span>
+                                                            <span class="info-sub">010-46**-10**</span>
+                                                            <span class="info-date">2018.06.14</span>
+                                                        </div>
+                                                        <div class="info-data">
+                                                            <span class="info-title">10,000 원</span>
+                                                            <span class="info-sub">후불선물충전</span>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="info-change">
+                                                            <span class="arrow-send" role="img" aria-label="보냄"><span class="blind">보냄</span></span>
+                                                        </div>
+                                                        <div class="info-user">
+                                                            <span class="info-title">김*준</span>
+                                                            <span class="info-sub">010-46**-10**</span>
+                                                            <span class="info-date">2018.06.14</span>
+                                                        </div>
+                                                        <div class="info-data">
+                                                            <span class="info-title">10,000 원</span>
+                                                            <span class="info-sub">후불선물충전</span>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="info-change">
+                                                            <span class="arrow-receive" role="img" aria-label="받음"><span class="blind">받음</span></span>
+                                                        </div>
+                                                        <div class="info-user">
+                                                            <span class="info-title">김*준</span>
+                                                            <span class="info-sub">010-46**-10**</span>
+                                                            <span class="info-date">2018.06.14</span>
+                                                        </div>
+                                                        <div class="info-data">
+                                                            <span class="info-title">10,000 원</span>
+                                                            <span class="info-sub">후불선물충전</span>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <button class="gift-bt-more" >더보기(20)</button>
+                                    </li>
+                                    <li role="tabpanel" id="tab2-tab" aria-labelledby="tab2">
+                                        <div class="inner">
+                                            <div class="contents-info-list">
+                                                <p class="ti-desc"><strong><span class="num">32</span>개</strong> 선물 차단 내역이 있습니다.</p>
+                                                <div class="list-top">
+                                                    <!-- .widget -->
+                                                    <div class="widget inline">
+                                                        <div class="widget-box select">
+                                                            <button class="bt-dropdown small" title="셀렉트 선택">전체 · 3개월<span class="ico"></span></button>
+                                                            <div class="select-info">
+                                                                <span class="title">검색 조건 변경</span>
+                                                                <span class="text"><!-- 내용 없을 경우 빈 영역 --></span>
+                                                                <select title="Type" class="three">
+                                                                    <option selected>전체</option>
+                                                                    <option>보냄</option>
+                                                                    <option>받은</option>
+                                                                </select>
+                                                                <select title="기간" class="two">
+                                                                    <option>1개월</option>
+                                                                    <option selected>3개월</option>
+                                                                    <option>6개월</option>
+                                                                    <option>1년</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- //.widget -->
+                                                </div>
+                                                <!--// .widget -->
+                                                <ul class="gift-history">
+                                                    <li>
+                                                        <div class="info-user">
+                                                            <span class="info-title">김*림</span>
+                                                            <span class="info-sub">010-46**-10**</span>
+                                                            <span class="info-date">2018.06.14</span>
+                                                        </div>
+                                                        <div class="info-data">
+                                                            <span class="info-title">선물 충전 차단 신청</span>
+                                                            <span class="info-sub">T world(내부)</span>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="info-user">
+                                                            <span class="info-title">김*준</span>
+                                                            <span class="info-sub">010-46**-10**</span>
+                                                            <span class="info-date">2018.06.14</span>
+                                                        </div>
+                                                        <div class="info-data">
+                                                            <span class="info-title">선물 충전 차단 신청</span>
+                                                            <span class="info-sub">T world(내부)</span>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="info-user">
+                                                            <span class="info-title">김*준</span>
+                                                            <span class="info-sub">010-46**-10**</span>
+                                                            <span class="info-date">2018.06.14</span>
+                                                        </div>
+                                                        <div class="info-data">
+                                                            <span class="info-title">선물 충전 차단 신청</span>
+                                                            <span class="info-sub">T world(내부)</span>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="info-user">
+                                                            <span class="info-title">김*준</span>
+                                                            <span class="info-sub">010-46**-10**</span>
+                                                            <span class="info-date">2018.06.14</span>
+                                                        </div>
+                                                        <div class="info-data">
+                                                            <span class="info-title">선물 충전 차단 신청</span>
+                                                            <span class="info-sub">T world(내부)</span>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <button class="gift-bt-more" >더보기(20)</button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--// .cont-box -->
+        </div>
+    </div>
+    <!--// #contents -->
+</div>
+
+<% include ../../components/javascript.component.html %>
+
+<script>
+  $(document).ready(function () {
+    var oRechargeTingHistoryComponent = new Tw.RechargeTingHistory($(document));
+  });
+</script>
+
+<% include ../../components/end.component.html %>

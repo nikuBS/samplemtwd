@@ -81,7 +81,8 @@ Tw.HistoryService.prototype = {
   },
   isDone: function () {
     return Tw.UIService.getLocalStorage(this.storageName) === 'done';
+  },
+  complete: function () {
+    Tw.UIService.setLocalStorage(this.storageName, 'done');
   }
 };
-
-Tw.History = new Tw.HistoryService();

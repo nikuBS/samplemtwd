@@ -1,11 +1,11 @@
-import http from 'http';
-import https from 'https';
+import axios from 'axios';
 import { Observable } from 'rxjs/Observable';
 import environment from '../config/environment.config';
-import { API_CMD, API_CODE, API_METHOD, API_PROTOCOL } from '../types/api-command.type';
+import { API_CMD, API_CODE, API_METHOD, API_SERVER } from '../types/api-command.type';
 import ParamsHelper from '../utils/params.helper';
 import LoginService from './login.service';
 import LoggerService from './logger.service';
+import FormatHelper from '../utils/format.helper';
 
 class ApiService {
   static instance;
@@ -21,35 +21,49 @@ class ApiService {
   }
 
   public request(command: any, params: any, header?: any, ...args: any[]): Observable<any> {
-    const apiServer = environment[String(process.env.NODE_ENV)].BFF_SERVER;
-    const options = this.getOption(command, apiServer, params, header, args);
-    this.logger.info(this, '[API_REQ]', options, params);
+    const apiUrl = environment[String(process.env.NODE_ENV)][command.server];
+    const options = this.getOption(command, apiUrl, params, header, args);
+    this.logger.info(this, '[API_REQ]', options);
 
     return Observable.create((observer) => {
-      const req = apiServer.protocol === API_PROTOCOL.HTTPS ?
-        https.request(options, this.apiCallback.bind(this, observer, command)) :
-        http.request(options, this.apiCallback.bind(this, observer, command));
-
-      req.on('error', this.handleError.bind(this, observer));
-      req.write(JSON.stringify(params));
-      req.end();
+      axios(options)
+        .then(this.apiCallback.bind(this, observer, command))
+        .catch(this.handleError.bind(this));
     });
   }
 
-  private getOption(command: any, apiServer: any, params: any, header: any, args: any[]): any {
+  private getOption(command: any, apiUrl: any, params: any, header: any, args: any[]): any {
+    const option = {
+      url: apiUrl + this.makePath(command.path, command.method, params, args),
+      method: command.method,
+      headers: this.makeHeader(command, header, params),
+      data: params
+    };
+
+    return option;
+  }
+
+  private makeHeader(command: any, header: any, params): any {
     if ( !header ) {
       header = {};
     }
-    return {
-      hostname: apiServer.url,
-      port: apiServer.port,
-      path: this.makePath(command.path, command.method, params, args),
-      method: command.method,
-      headers: Object.assign(header, {
-        'Content-type': 'application/json; charset=UTF-8',
-        cookie: this.loginService.getServerSession()
-      })
-    };
+
+    switch ( command.server ) {
+      case API_SERVER.BFF:
+        return Object.assign(header, {
+          'Content-type': 'application/json; charset=UTF-8',
+          cookie: this.loginService.getServerSession()
+        });
+      case API_SERVER.TID:
+        return Object.assign(header, {
+          'Content-type': 'application/x-www-form-urlencoded; charset-UTF-8',
+          'Content-Length': JSON.stringify(params).length
+        });
+      default:
+        return Object.assign(header, {
+          'Content-type': 'application/json; charset=UTF-8'
+        });
+    }
   }
 
   private makePath(path: string, method: API_METHOD, params: any, args: any[]): string {
@@ -58,39 +72,33 @@ class ApiService {
         path = path.replace(`args-${index}`, argument);
       });
     }
-    path = method === API_METHOD.GET ? path + ParamsHelper.setQueryParams(params) : path;
+    // path = method === API_METHOD.GET ? path + ParamsHelper.setQueryParams(params) : path;
     return path;
   }
 
   private apiCallback(observer, command, resp) {
-    let data = '';
-    this.setServerSession(resp);
+    this.logger.info(this, '[API RESP]', resp.data);
 
-    resp.on('data', (chunk) => {
-      data += chunk;
-    });
-    resp.on('end', () => {
-      this.logger.info(this, '[API_RESP]', data);
-      let respData;
-      try {
-        respData = JSON.parse(data);
-        if ( this.isSessionCallback(command) ) {
-          this.setSvcInfo(respData.result);
-        }
-      } catch ( err ) {
-        this.logger.warn(this, 'JSON parse error');
-        respData = data;
-      }
+    if ( command.server === API_SERVER.BFF ) {
+      this.setServerSession(resp);
+    }
 
-      observer.next(respData);
-      observer.complete();
-    });
+    if ( FormatHelper.isObject(resp.data) && this.isSessionCallback(command) && resp.data.code === API_CODE.CODE_00 ) {
+      this.setSvcInfo(resp.data.result);
+    }
+
+    observer.next(resp.data);
+    observer.complete();
   }
 
   private handleError(observer, err) {
     this.logger.error(this, '[API_ERR]', err);
     // observer.error(err);
-    observer.next({ code: API_CODE.CODE_400, msg: err.message });
+    let message = 'unknown error';
+    if ( FormatHelper.isObject(err) && !FormatHelper.isEmpty(err.message) ) {
+      message = err.message;
+    }
+    observer.next({ code: API_CODE.CODE_400, msg: message });
     observer.complete();
   }
 
@@ -115,7 +123,6 @@ class ApiService {
   private setSvcInfo(result) {
     this.logger.debug(this, 'Change SvcInfo');
     this.loginService.setSvcInfo(result);
-
   }
 }
 
