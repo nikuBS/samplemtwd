@@ -1,18 +1,20 @@
 Tw.PopupService = function () {
   this._prevHash = undefined;
   this._callback = null;
+  this._hashService = Tw.Hash;
   this._init();
 };
 
 Tw.PopupService.prototype = {
   _init: function () {
-    initHashNav($.proxy(this._onHashChange, this));
+    this._hashService.initHashNav($.proxy(this._onHashChange, this));
 
     $(document).on('click', '.popup-closeBtn', $.proxy(this.close, this));
     $(document).on('click', '.tw-popup-closeBtn', $.proxy(this.close, this));
     $(document).on('click', '.tw-popup-confirm', $.proxy(this._confirm, this));
   },
   _onHashChange: function (hash) {
+    console.log(hash, this._prevHash);
     if ( hash.base === this._prevHash ) {
       Tw.Logger.info('[Popup Close]');
       this._popupClose();
@@ -20,11 +22,7 @@ Tw.PopupService.prototype = {
     }
   },
   _popupClose: function () {
-    // TODO
-    // skt_landing.action.popup.close();
-    $('.popup-page').empty().remove();
-    $('.popup').empty().remove();
-    skt_landing.action.auto_scroll();
+    skt_landing.action.popup.close();
   },
   _addHash: function () {
     Tw.Logger.info('[Popup Open]');
