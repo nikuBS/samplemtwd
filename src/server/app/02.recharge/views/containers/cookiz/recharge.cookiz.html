@@ -1,10 +1,226 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <title>Cookiz</title>
-</head>
-<body>
-    <span>Cookiz</span>
-</body>
-</html>
+<% include ../../components/start.component.html %>
+
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb_area">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap">
+    <!-- #header -->
+    <div id="header" class="header-wrap">
+        <div class="header">
+            <div class="header-ti">
+                <h1>팅/쿠키즈/안심음성 요금 충전</h1>
+                <button class="depth-view" role="button" aria-pressed="false"><span class="blind">메뉴구조보기</span></button>
+            </div>
+            <button class="prev-step"><span class="blind">이전으로</span></button>
+            <button class="search-content"><span class="blind">검색하기</span></button>
+        </div>
+    </div>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <!-- .cont-box -->
+            <div class="cont-box">
+                <button class="bt-dropdown big" title="회선 선택" aria-haspopup="true">010-12**-56**<span class="ico"></span></button>
+            </div>
+            <hr class="cont-sp type1" aria-hidden="true"/>
+            <div class="cont-box nogaps">
+                <!-- .component -->
+                <div class="component">
+                    <div class="component-box tabs">
+                        <div class="tab-area type1"><!-- 타입별 탭형태 변환 -->
+                            <div class="tab-linker">
+                                <ul role="tablist">
+                                    <li role="tab" aria-selected="true" aria-controls="tab1-tab" id="tab1"><button>충전하기</button></li>
+                                    <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2"><button>조르기</button></li><!-- true 열림 -->
+                                </ul>
+                            </div>
+                            <div class="tab-contents">
+                                <ul>
+                                    <li role="tabpanel" id="tab1-tab" aria-labelledby="tab1">
+                                        <div class="inner2">
+                                            <div class="contents-info-list">
+                                                <p class="ti-desc">요금 걱정 없이 상한 금액 내에서 <br/><em class="tx-bold">충전하여 사용해보세요!</em></p>
+                                            </div>
+                                            <div class="box-state-info">
+                                                <ul class="state-info-group">
+                                                    <li class="state-info-list">
+                                                        <dl>
+                                                            <dt>나의 요금제</dt>
+                                                            <dd>LTE팅24</dd>
+                                                        </dl>
+                                                    </li>
+                                                    <li class="state-info-list">
+                                                        <dl>
+                                                            <dt>충전 서비스 차단 여부</dt>
+                                                            <dd>충전 허용</dd>
+                                                        </dl>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="box-block">
+                                                <dl>
+                                                    <dt>데이터 요금 충전</dt>
+                                                    <dd class="box-block-list1">
+                                                        <ul>
+                                                            <li><span class="title">충전 가능 금액</span><span class="price">15,000 원</span></li>
+                                                            <li><span class="title">매월 자동 충전</span><span class="price">5,000 원</span></li>
+                                                        </ul>
+                                                        <a href="">자동 충전 취소</a>
+                                                    </dd>
+                                                </dl>
+                                            </div>
+                                            <div class="box-suggest">
+                                                <div class="suggest-info">
+                                                    <ul class="suggest-list">
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <ul class="bt-slice">
+                                                <li class="bt-blue1">
+                                                    <!-- Dimmed Case는 button에 disabled속성 추가 -->
+                                                    <button>&lsquo;팅/쿠키즈/안심음성 충전하기&rsquo;</button>
+                                                </li>
+                                                <li class="bt-white1">
+                                                    <button>팅/쿠키즈/안심음성 충전 내역</button>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <hr class="cont-sp type1" aria-hidden="true"/>
+                                        <div class="inner2">
+                                            <div class="coupon-box">
+                                                <p class="coupon-box-tit">음성/데이터를 무료로 충전<br/>가능한 리필 쿠폰이 있습니다.</p>
+                                                <span class="coupon-ico"></span>
+                                                <a class="bt-link-tx" href="">쿠폰 사용하기 <span class="ico"></span></a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li role="tabpane2" id="tab2-tab" aria-labelledby="tab2">
+                                        <div class="inner2">
+                                            <div class="contents-info-list">
+                                                <p class="ti-desc">팅요금 선물을 받고 싶다면,  <br/><em class="tx-bold">조르기</em>를 해보세요!</p>
+                                            </div>
+                                            <div class="box-block">
+                                                <dl>
+                                                    <dt>조르기 메세지</dt>
+                                                    <dd class="box-block-list">
+                                                        <div class="box-block-ti2">
+                                                            <span class="txt1">김유진님이 <em>&lsquo;팅요금 선물 조르기&rsquo;</em>를 <br/>요청하셨습니다. <br/>T World에서 선물을 해보세요.</span>
+                                                        </div>
+                                                        <ul>
+                                                            <li>만 19세 이상 개인고객(SK텔레콤 가입자)에게 선물 조르기를 할 수 있습니다.</li>
+                                                            <li>조르기 할 대상 고객의 휴대폰이 USIM 단독 상태이거나 휴대폰과 USIM 카드가 분리된 상태에서는 조르기 신청 SMS를 받아 볼 수 없습니다.</li>
+                                                            <li>조르기 신청을 누르면 조르기 할 대상자에게 SMS가 전송되고 전송료는 무료입니다.</li>
+                                                        </ul>
+                                                    </dd>
+                                                </dl>
+                                            </div>
+                                            <div class="box-suggest">
+                                                <div class="suggest-info">
+                                                    <ul class="suggest-list">
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <ul class="bt-slice"><!-- 2018-06-20 버튼 클래스 변경 -->
+                                                <li class="bt-blue1">
+                                                    <button>조르기 신청하기</button>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--// .cont-box -->
+            <hr class="cont-sp type1" aria-hidden="true"/>
+            <div class="cont-box nogaps-hoz">
+                <div class="box-confirm">
+                    <!-- .widget -->
+                    <div class="widget">
+                        <div class="widget-box accordion">
+                            <h3 class="tit-a">꼭 확인해주세요!</h3><!-- 2018-06-19 : h태그 수정/삭제 -->
+                            <div class="acco-cover toggle">
+                                <div class="acco-style">
+                                    <ul class="acco-list">
+                                        <li class="acco-box on">
+                                            <!-- .on: 열기 -->
+                                            <div class="acco-tit"><button role="button" aria-pressed="true">1. 충전 금액</button></div>
+                                            <div class="acco-cont">
+                                                <ul class="list-dot">
+                                                    <li class="list">충전 금액 내에서만 <em>당월 사용</em>이 가능하며, <em>사용한 금액에 대해서는 익월 청구서에 청구</em>됩니다.</li>
+                                                    <li class="list">충전 금액을 사용하지 않았을 경우 <em>당일에 한해서만 취소 가능</em>합니다. 이후에는 충전 금액을 사용하지 않은 경우라도 취소가 불가합니다.</li>
+                                                    <li class="list">충전 선물한 금액은 <em>부가세를 포함하지 않은 금액</em>이며, 부가세는 <em>선물 받으신 분의 요금에 포함</em>되어 청구됩니다.</li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li class="acco-box">
+                                            <div class="acco-tit"><button role="button" aria-pressed="false">2. 상한 금액</button></div>
+                                            <div class="acco-cont">
+                                                <ul class="list-dot">
+                                                    <li class="list">상한금액은 <em>음성통화, 폰메일</em>(무료제공건수 초과 이용금액 해당), <em>데이터 통화료에 적용</em>되며 정보료 등 <em>일부 서비스는 적용되지 않습니다.</em></li>
+                                                    <li class="list"><em>충전신청 이후</em>부터 바로 <em>음성통화 및 폰메일 이용이</em> 모두 가능합니다.</li>
+                                                    <li class="list">해당월 내 사용 가능한 <em>상한금액이 초과되면 발신이 정지되고 수신</em>만 가능하며, 발신정지 후 <em>마이벨 기본제공 서비스 이용이 불가</em>합니다.</li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li class="acco-box">
+                                            <div class="acco-tit"><button role="button" aria-pressed="false">3. 요금 상품</button></div>
+                                            <div class="acco-cont">
+                                                <ul class="list-dot">
+                                                    <li class="list">온가족행복플랜 팅 계열은 <em>온가족행복플랜 결합 여부</em>에 따라 사용중인 요금상품이 <em>정상 조회되지 않을 수 있습니다.</em></li>
+                                                    <li class="list"><em>온가족행복플랜 결합을 가입하지 않으신 경우, 추가 혜택이 제공되지 않으며</em> T world, 고객센터, 지점/대리점을 통해 일반 <em>팅요금상품으로 변경</em>하시기 바랍니다.</li>
+                                                    <li class="list">월 중 <em>요금상품 변경 또는 일시정지</em> 시 요금상품 기본제공 혜택은 <em>일할 계산</em>되며 기본제공 혜택 <em>초과 이용</em> 시 상한 초과 <em>별도 요금이 청구</em>됩니다.</li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li class="acco-box">
+                                            <div class="acco-tit"><button role="button" aria-pressed="false">4. 매월 자동 충전</button></div>
+                                            <div class="acco-cont" id="acco-cont4" role="region" aria-labelledby="acco-btn4">
+                                                <ul class="list-dot">
+                                                    <li class="list"><em>&lsquo;매월 자동충전&rsquo;</em>은 <em>신청 다음 달</em>부터 신청한 충전금액에 대해 <em>매월 자동으로 충전</em>되어 사용 가능하며 <em>&lsquo;당월 충전&rsquo;은 신청 당월만 사용</em> 가능합니다.</li>
+                                                    <li class="list"><em>&lsquo;매월 자동충전&rsquo;</em>은 최종 신청한 금액을 기준으로 <em>매월 자동충전</em> 됩니다.</li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li class="acco-box">
+                                            <div class="acco-tit"><button role="button" aria-pressed="false">5. 법정대리인</button></div>
+                                            <div class="acco-cont" id="acco-cont5" role="region" aria-labelledby="acco-btn5">
+                                                <ul class="list-dot">
+                                                    <li class="list">2009년 09월 28일부터는 법정대리인이 충전허용금액을 사전 설정 시, <em>충전허용금액 내 충전은 법정대리인 동의 없이 신청 가능</em>합니다.</li>
+                                                    <li class="list">충전 허용금액 변경은 <em>법정대리인 동의 시 가능</em>하며, 충전 허용금액은 <em>월 최대 2만원</em> 내 설정 가능합니다.</li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--// .widget -->
+                </div>
+            </div>
+            <!--// .cont-box -->
+        </div>
+    </div>
+    <!--// #contents -->
+</div>
+
+<% include ../../components/javascript.component.html %>
+
+<script>
+  $(document).ready(function () {
+    var oRechargeCookizComponent = new Tw.RechargeCookiz($(document));
+  });
+</script>
+
+<% include ../../components/end.component.html %>
