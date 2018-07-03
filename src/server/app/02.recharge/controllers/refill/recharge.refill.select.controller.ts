@@ -28,7 +28,7 @@ class RechargeRefillSelect extends TwViewController {
   }
 
   private getLineList(): any {
-    return this.apiService.request(API_CMD.BFF_03_0003, { svcCtg: LINE_NAME.MOBILE });
+    return this.apiService.request(API_CMD.BFF_03_0003_C, { svcCtg: LINE_NAME.MOBILE });
   }
 
   private getusageData(): Observable<any> {

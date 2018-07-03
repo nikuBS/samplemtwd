@@ -10,7 +10,7 @@ class RechargeCookiz extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     res.render('cookiz/recharge.cookiz.html', { svcInfo: svcInfo });
-    // return this.apiService.request(API_CMD.BFF_03_0003, { svcCtg: 'M' })
+    // return this.apiService.request(API_CMD.BFF_03_0003_C, { svcCtg: 'M' })
     //   .subscribe((response) => {
     //     res.render('gift/recharge.gift.html', { lineList: response.result, svcInfo: svcInfo });
     //   });

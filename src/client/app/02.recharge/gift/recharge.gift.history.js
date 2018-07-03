@@ -336,6 +336,34 @@ Tw.RechargeGiftHistory.prototype = {
     this.addClosePopupHandler();
   },
 
+  // _getLineInfo: function (callback) {
+  //   this._apiService.request(Tw.API_CMD.BFF_03_0003_C, {svcCtg: 'M'}).done($.proxy(callback, this));
+  // },
+
+  // _setLineList: function (res) {
+  //   console.log(res);
+    // this.lineList.lines = lines.result;
+    // this.lineList.current = lines.result[0];
+    // this.lineList.selectedIndex = $(this.lineList.lines).index(this.lineList.current);
+    // this.getPresentList();
+  // },
+
+  getDataList: function (fromDt, toDt, giftType, callback) {
+    if (this.currentTab === 'present') {
+      this._apiService.request(Tw.API_CMD.BFF_06_0018, {
+        fromDt: fromDt,
+        toDt: toDt,
+        giftType: giftType
+      }).done($.proxy(callback, this));
+    } else if (this.currentTab === 'request') {
+      this._apiService.request(Tw.API_CMD.BFF_06_0010, {
+        fromDt: fromDt,
+        toDt: toDt,
+        requestType: giftType
+      }).done($.proxy(callback, this));
+    }
+  },
+
   addClosePopupHandler: function () {
     this.$document.one('click', '.popup-closeBtn', $.proxy(this.cancelUpdateCurrentLine, this));
     this.$document.one('click', '.select-submit', $.proxy(this.popupCommandOk, this));

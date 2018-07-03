@@ -1,0 +1,56 @@
+<div id="step1" class="container">
+    <div class="cont-box">
+        <!-- .widget -->
+        <div class="widget">
+            <div class="widget-box step">
+                <h3 class="step-ti"><em>STEP 01</em>결제방법선택</h3>
+                <ul class="step-list">
+                    <li class="on">1<span class="blind">결제방법선택</span></li>
+                    <li>2<span class="blind">정보입력</span></li>
+                </ul>
+            </div>
+        </div>
+        <!-- //.widget -->
+    </div>
+    <hr class="cont-sp type1" />
+    <div class="cont-box">
+        <h3 class="contents-tit">납부하실 요금</h3>
+        <div class="payment-all">
+            <span>총 <em class="total-amount"></em> 원</span>
+        </div>
+    </div>
+    <hr class="cont-sp type1" />
+    <div class="cont-box">
+        <div class="payment-select">
+            <h3>결제방법 선택</h3>
+            <div class="pay-means">
+                <ul>
+                    <li>
+                        <a href="">
+                            <span class="ico-wrap" aria-hidden="true"><span class="ico"></span></span>
+                            <span class="in-cont">계좌이체</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <span class="ico-wrap" aria-hidden="true"><span class="ico"></span></span>
+                            <span class="in-cont">체크/신용카드</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <span class="ico-wrap" aria-hidden="true"><span class="ico"></span></span>
+                            <span class="in-cont">OK캐쉬백/T포인트</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="pay-bottom">
+                <p class="title-small">입금전용계좌 정보를 SMS로 전송합니다.<br />자동납부 인출 중이 아닌 경우에만 이용 가능합니다</p>
+                <a href="" class="bt-link-tx">입금전용계좌 SMS신청 <span class="ico"></span></a>
+            </div>
+        </div>
+    </div>
+    <hr class="cont-sp type1" />
+    <% include ../components/realtime/payment.realtime.select.info.component.html %>
+</div>

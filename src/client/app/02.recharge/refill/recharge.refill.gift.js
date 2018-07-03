@@ -50,7 +50,7 @@ Tw.RechargeRefillGift.prototype = {
       copnIsueNum: copnNm,
       befrSvcNum: befrSvcNum
     });
-    this._apiService.request(Tw.API_CMD.BFF_03_0023, data, { "Content-Type": "application/json" })
+    this._apiService.request(Tw.API_CMD.BFF_03_0023_C, data, { "Content-Type": "application/json" })
       .done($.proxy(this._sendSuccess, this))
       .fail($.proxy(this._sendFail, this));
   },

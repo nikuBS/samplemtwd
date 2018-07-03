@@ -1,5 +1,5 @@
 /**
- * FileName: auth.member.management.controller.ts
+ * FileName: auth.tid.change-pw.controller.ts
  * Author: Ara Jo (araara.jo@sk.com)
  * Date: 2018.07.03
  */
@@ -7,14 +7,14 @@
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
 
-class AuthMemberManagement extends TwViewController {
+class AuthTidChangePw extends TwViewController {
   constructor() {
     super();
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    res.render('member/auth.member.management.html');
+    // res.render('logout/auth.logout.complete.html');
   }
 }
 
-export default AuthMemberManagement;
+export default AuthTidChangePw;

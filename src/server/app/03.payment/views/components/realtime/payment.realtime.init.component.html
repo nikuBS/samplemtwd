@@ -16,7 +16,7 @@
                         <ul class="select-list" role="group">
                             <% for (var i = 0; i < list.length; i++) { %>
                             <li class="checkbox type01" role="checkbox" aria-checked="false">
-                                <input type="checkbox" name="checkbox" value="휴대폰 010-12**-45**" title="체크박스"/>
+                                <input type="checkbox" name="checkbox" value="휴대폰 010-12**-45**" title="체크박스" data-value="<%= list[i].invAmt %>" />
                                 <div class="pay-maininfo">
                                     <span class="service-sort"><span class="blind">서비스 구분</span><%= list[i].svcName %></span>
                                     <span class="line-info"><span class="blind">회선 정보</span><%= list[i].svcNum %></span>
@@ -40,12 +40,12 @@
     <div class="cont-box">
         <h3 class="contents-tit">납부하실 요금</h3>
         <div class="payment-all">
-            <span>총 <em>201,020</em> 원</span>
+            <span>총 <em class="total-amount">0</em> 원</span>
         </div>
         <div class="contents-btn">
             <ul class="bt-slice">
                 <li class="bt-blue1">
-                    <button><a href="#step1">납부하기</a></button>
+                    <button class="select-payment-option"><a href="#step1">납부하기</a></button>
                 </li>
             </ul>
         </div>
@@ -54,5 +54,5 @@
         </div>
     </div>
     <hr class="cont-sp type1" />
-    <% include ../components/realtime/payment.realtime.info.component.html %>
+    <% include ../components/realtime/payment.realtime.init.info.component.html %>
 </div>
