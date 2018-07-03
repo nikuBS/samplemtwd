@@ -1,0 +1,473 @@
+<!--
+* FileName: myt.bill.hotbill.html
+* Author: Hyeryoun Lee (skt.P130712@partner.sk.com)
+* Date: 2018.07.02
+-->
+<% include ../../components/start.component.html %>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb_area">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap">
+    <!-- #header -->
+    <div id="header" class="header-wrap">
+        <div class="header">
+            <div class="header-ti">
+                <h1>실시간 사용요금</h1>
+                <button class="depth-view" role="button" aria-pressed="false"><span class="blind">메뉴구조보기</span></button>
+            </div>
+            <button class="prev-step"><span class="blind">이전으로</span></button>
+            <button class="search-content"><span class="blind">검색하기</span></button>
+        </div>
+    </div>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div id="myt-bill-hotbill" class="container">
+
+            <div class="cont-box">
+                <div class="payment-info">
+                    <h3 class="blind">대표청구</h3>
+                    <ul>
+                        <li>
+                            <span class="info-num">010-46**-10**</span>
+                        </li>
+                        <li>
+                            <span class="badge badge-main"><span class="blind">대표청구</span></span>
+                            <span class="info-type">휴대폰</span>
+                            <span class="info-name"><span class="blind">별명</span>귀여운첫째아들</span>
+                        </li>
+                    </ul>
+                    <span class="info-btn"><a href="" class="btn-choice" role="button">변경</a></span>
+                </div>
+            </div>
+
+            <div class="cont-box nogaps-hoz">
+                <div class="use-family">
+                    <h3 class="blind">자녀폰 실시간 요금 보기</h3>
+                    <div class="link-long">
+                        <a href="" title="">자녀폰 실시간 요금 (<strong>5</strong>명)
+                            <span class="badge badge-fam"><span class="blind">자녀회선</span></span>
+                            <span class="ico"></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="cont-sp type1" aria-hidden="true"/>
+            <div class="cont-box">
+                <div class="payment-all">
+                    <h3 class="blind">실시간 요금</h3>
+                    <span><em>201,020</em> 원</span>
+                    <p class="term">2018.06.01~ 2018.06.06</p>
+                </div>
+            </div>
+
+            <hr class="cont-sp type1" aria-hidden="true"/>
+            <div class="cont-box nogaps noborder">
+                <!-- .accordion -->
+                <div class="widget">
+                    <div class="widget-box accordion2">
+                        <div class="acco-style payment-list">
+                            <ul class="acco-box">
+                                <!-- 아코디언 한줄 -->
+                                <li class="acco-list"><!-- on , off -->
+                                    <!-- 아코디언 타이틀 -->
+                                    <div class="acco-title">
+                                        <button role="button" aria-pressed="false">
+												<span class="pt-tit-wrap">
+													<span class="pt-tit">통신서비스요금</span>
+													<span class="pt-price"><span class="num">12,550</span>원</span>
+												</span>
+                                        </button>
+                                    </div>
+                                    <!--// 아코디언 타이틀 -->
+                                    <!-- 아코디언 내용 -->
+                                    <div class="acco-content">
+                                        <ul class="payment-detail-depth1">
+                                            <!-- depth-1 -->
+                                            <li>
+                                                <dl class="pdt-wrap">
+                                                    <dt class="pdt-tit">월정액</dt>
+                                                    <dd class="pdt-price"><span class="num">24,480</span>원</dd>
+                                                </dl>
+                                            </li>
+                                            <!--// depth-1 -->
+                                            <!-- depth-2 -->
+                                            <li>
+                                                <dl class="pdt-wrap">
+                                                    <dt class="pdt-tit">국내통화료</dt>
+                                                    <dd class="pdt-price"><span class="num">20</span>원</dd>
+                                                </dl>
+                                                <ul class="payment-detail-depth2">
+                                                    <li>
+                                                        <dl class="pdt-wrap">
+                                                            <dt class="pdt-tit">음성통화료</dt>
+                                                            <dd class="pdt-price"><span class="num">0</span>원</dd>
+                                                        </dl>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <!--// depth-2 -->
+                                            <li>
+                                                <dl class="pdt-wrap">
+                                                    <dt class="pdt-tit">데이터통화료</dt>
+                                                    <dd class="pdt-price"><span class="num">24,480</span>원</dd>
+                                                </dl>
+                                            </li>
+                                            <li>
+                                                <dl class="pdt-wrap">
+                                                    <dt class="pdt-tit">요금할인</dt>
+                                                    <dd class="pdt-price discount"><span class="num">-13,760</span>원
+                                                    </dd><!-- 할인 항목 숫자에 discount 클래스 추가 -->
+                                                </dl>
+                                                <ul class="payment-detail-depth2">
+                                                    <li>
+                                                        <dl class="pdt-wrap">
+                                                            <dt class="pdt-tit">온가족+B인터넷할인</dt>
+                                                            <dd class="pdt-price discount"><span
+                                                                class="num">-13,760</span>원
+                                                            </dd>
+                                                        </dl>
+                                                        <dl class="pdt-wrap">
+                                                            <dt class="pdt-tit">oksusu_쿠폰할인</dt>
+                                                            <dd class="pdt-price discount"><span
+                                                                class="num">-13,760</span>원
+                                                            </dd>
+                                                        </dl>
+                                                        <dl class="pdt-wrap">
+                                                            <dt class="pdt-tit">oksusu_요금할인</dt>
+                                                            <dd class="pdt-price discount"><span
+                                                                class="num">-13,760</span>원
+                                                            </dd>
+                                                        </dl>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <dl class="pdt-wrap">
+                                                    <dt class="pdt-tit" role="note" aria-labelledby="footnote-01">
+                                                        부가가치세(세금)<span class="ico-foot-1"></span></dt>
+                                                    <!-- 주석 달린 텍스트 aria-labelledby, role 속성 추가 -->
+                                                    <dd class="pdt-price"><span class="num">1,760</span>원</dd>
+                                                </dl>
+                                                <ul class="payment-detail-depth2">
+                                                    <li>
+                                                        <dl class="pdt-wrap">
+                                                            <dt class="pdt-tit" role="note"
+                                                                aria-labelledby="footnote-02">부가세총액<span
+                                                                class="ico-foot-2"></span></dt>
+                                                            <dd class="pdt-price"><span class="num">3,760</span>원</dd>
+                                                        </dl>
+                                                        <dl class="pdt-wrap">
+                                                            <dt class="pdt-tit" role="note"
+                                                                aria-labelledby="footnote-02">할인부가세<span
+                                                                class="ico-foot-2"></span></dt>
+                                                            <dd class="pdt-price discount"><span
+                                                                class="num">-13,760</span>원
+                                                            </dd>
+                                                        </dl>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                        <div class="footnote-txt">
+                                            <ul>
+                                                <li id="footnote-01"><span class="ico-foot-1"></span>부가가치세 제외 대상 표시</li>
+                                                <!-- 상단 텍스트 aria-labelledby 와 id 속성값을 동일하게 처리해야 함 -->
+                                                <li id="footnote-02"><span class="ico-foot-2"></span>당사에서 청구 대행하는 타사 요금
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <!--// 아코디언 내용 -->
+                                </li>
+                                <!--// 아코디언 한줄 -->
+                                <li class="acco-list">
+                                    <div class="acco-title">
+                                        <button role="button" aria-pressed="false">
+												<span class="pt-tit-wrap">
+													<span class="pt-tit">부가사용금액</span>
+													<span class="pt-price"><span class="num">11,399</span>원</span>
+												</span>
+                                        </button>
+                                    </div>
+                                    <div class="acco-content">
+                                        <ul class="payment-detail-depth1">
+                                            <li>
+                                                <dl class="pdt-wrap">
+                                                    <dt class="pdt-tit">부가서비스이용료</dt>
+                                                    <dd class="pdt-price"><span class="num">1,499</span>원</dd>
+                                                </dl>
+                                                <ul class="payment-detail-depth2">
+                                                    <li>
+                                                        <dl class="pdt-wrap">
+                                                            <dt class="pdt-tit">착신전환서비스</dt>
+                                                            <dd class="pdt-price"><span class="num">532</span>원</dd>
+                                                        </dl>
+                                                        <dl class="pdt-wrap">
+                                                            <dt class="pdt-tit">oksusu_기본월정액</dt>
+                                                            <dd class="pdt-price"><span class="num">532</span>원</dd>
+                                                        </dl>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <dl class="pdt-wrap">
+                                                    <dt class="pdt-tit" role="note" aria-labelledby="footnote-03">콘텐츠이용료<span
+                                                        class="ico-foot-1"></span></dt>
+                                                    <dd class="pdt-price"><span class="num">1,760</span>원</dd>
+                                                </dl>
+                                                <ul class="payment-detail-depth2">
+                                                    <li>
+                                                        <dl class="pdt-wrap">
+                                                            <dt class="pdt-tit" role="note"
+                                                                aria-labelledby="footnote-04">티스토어콘텐츠<span
+                                                                class="ico-foot-2"></span></dt>
+                                                            <dd class="pdt-price"><span class="num">9,900</span>원</dd>
+                                                        </dl>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                        <div class="footnote-txt">
+                                            <ul>
+                                                <li id="footnote-03"><span class="ico-foot-1"></span>부가가치세 제외 대상 표시</li>
+                                                <li id="footnote-04"><span class="ico-foot-2"></span>당사에서 청구 대행하는 타사 요금
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="acco-list">
+                                    <div class="acco-title">
+                                        <button role="button" aria-pressed="false">
+												<span class="pt-tit-wrap">
+													<span class="pt-tit">단말기할부금</span>
+													<span class="pt-price"><span class="num">14,610</span>원</span>
+												</span>
+                                        </button>
+                                    </div>
+                                    <div class="acco-content">
+                                        <ul class="payment-detail-depth1">
+                                            <li>
+                                                <dl class="pdt-wrap">
+                                                    <dt class="pdt-tit">단말기할부금</dt>
+                                                    <dd class="pdt-price"><span class="num">14,610</span>원</dd>
+                                                </dl>
+                                                <ul class="payment-detail-depth2">
+                                                    <li>
+                                                        <dl class="pdt-wrap">
+                                                            <dt class="pdt-tit" role="note"
+                                                                aria-labelledby="footnote-05">단말기할부원금<span
+                                                                class="ico-foot-1"></span></dt>
+                                                            <dd class="pdt-price"><span class="num">14,050</span>원</dd>
+                                                        </dl>
+                                                        <dl class="pdt-wrap">
+                                                            <dt class="pdt-tit" role="note"
+                                                                aria-labelledby="footnote-06">단말기할부이자<span
+                                                                class="ico-foot-2"></span></dt>
+                                                            <dd class="pdt-price"><span class="num">532</span>원</dd>
+                                                        </dl>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                        <div class="footnote-txt">
+                                            <ul>
+                                                <li id="footnote-05"><span class="ico-foot-1"></span>부가가치세 제외 대상 표시</li>
+                                                <li id="footnote-06"><span class="ico-foot-2"></span>당사에서 청구 대행하는 타사 요금
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="acco-list">
+                                    <div class="acco-title">
+                                        <button role="button" aria-pressed="false">
+												<span class="pt-tit-wrap">
+													<span class="pt-tit">미납요금</span>
+													<span class="pt-price"><span class="num">80,550</span>원</span>
+												</span>
+                                        </button>
+                                    </div>
+                                    <div class="acco-content">
+                                        <ul class="payment-detail-depth1">
+                                            <li>
+                                                <dl class="pdt-wrap">
+                                                    <dt class="pdt-tit">2018년 4월</dt>
+                                                    <dd class="pdt-price"><span class="num">40,000</span>원</dd>
+                                                </dl>
+                                            </li>
+                                            <li>
+                                                <dl class="pdt-wrap">
+                                                    <dt class="pdt-tit">2018년 5월</dt>
+                                                    <dd class="pdt-price"><span class="num">40,000</span>원</dd>
+                                                </dl>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!--// .accordion -->
+            </div>
+
+            <hr class="cont-sp type1" aria-hidden="true"/>
+            <!-- .cont-box -->
+            <div class="cont-box nogaps-hoz">
+                <div class="helpbox-link">
+                    <div class="link-long">
+                        <a href="" class="disabled">전월요금보기<span class="ico"></span></a>
+                    </div>
+                    <div class="link-long">
+                        <a href="" class="disabled">사용량 조회<span class="ico"></span></a>
+                    </div>
+                </div>
+            </div>
+            <!-- .cont-box -->
+
+            <hr class="cont-sp type1" aria-hidden="true"/>
+            <!-- .cont-box -->
+            <div class="cont-box">
+                <!-- .widget -->
+                <div class="widget">
+                    <div class="widget-box accordion">
+                        <h5 class="tit-a">꼭 확인해 주세요</h5>
+                        <div class="acco-cover on"><!-- toggle : 한개만 열기 -->
+                            <div class="acco-style btn-hold">
+                                <ul class="acco-list">
+                                    <li class="acco-box">
+                                        <div class="acco-tit"><span class="bullet">1.</span> 당월 1일 부터 현재까지의 이동전화 요금 확인
+                                            가능 <!--<button role="button" aria-pressed="false">상세보기</button>--></div>
+                                        <div class="acco-cont">
+                                            <ul class="list-dot">
+                                                <li class="list">
+                                                    <strong>요금제 변경 및 일시정지 하신 경우</strong>
+                                                    <ul class="inner-group type4">
+                                                        <li class="inner-list"><span class="bullet">-</span><strong>기본제공
+                                                            음성/문자/데이터 혜택은 일할 계산되며, 초과 이용 시 초과 사용 내역에 대해 별도 요금
+                                                            청구</strong></li>
+                                                    </ul>
+                                                </li>
+
+                                            </ul>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="acco-cover toggle"><!-- toggle : 한개만 열기 -->
+                            <div class="acco-style btn-hold">
+                                <ul class="acco-list">
+                                    <li class="acco-box">
+                                        <!-- .on: 열기 -->
+                                        <div class="acco-tit"><span class="bullet">2.</span> 실제 요금안내서와 다를 수 있으므로 단순
+                                            참고용으로 활용 부탁드립니다.
+                                            <button role="button" aria-pressed="false">상세보기</button>
+                                        </div>
+                                        <div class="acco-cont">
+                                            <ul class="inner-group type1">
+                                                <li class="inner-list"><span class="bullet">예)</span>리필쿠폰을 보유 했더라도
+                                                    데이터/음성 기본 제공량 소진 시 자동으로 사용되지 않으며, 반드시 직접 ‘리필하기’ 를 신청한 경우에만 사용이
+                                                    가능합니다.
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li class="acco-box">
+                                        <div class="acco-tit"><span class="bullet">3.</span> 시스템 점검 작업 시 서비스 이용 불가
+                                            <button role="button" aria-pressed="false"></button>
+                                        </div>
+                                        <div class="acco-cont">
+                                            <ul class="list-dot">
+                                                <li class="list">매월 5일에는 당월 사용요금 점검작업으로 서비스 이용 불가 (21시-익일 08시 까지)
+                                                </li>
+                                                <li class="list">전월 요금은 매월 7일까지 ‘전월요금 조회’에서 확인 가능
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li class="acco-box">
+                                        <div class="acco-tit"><span class="bullet">4.</span> 가입비 등 일회성 납부 항목의 경우
+                                            <button role="button" aria-pressed="false"></button>
+                                        </div>
+                                        <div class="acco-cont">
+                                            <ul class="list-dot">
+                                                <li class="list">일회성 납부 항목의 경우 매월 7일까지 전월과 당월에 중복 조회되나 실제 중복 청구 되지
+                                                    않음<br/>예) 가입비, 단말기 할부, USIM, 가산금, 자동납부 할인, 미납요금 등
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li class="acco-box">
+                                        <div class="acco-tit"><span class="bullet">5.</span> 분리납부 요금 사용 내역
+                                            <button role="button" aria-pressed="false"></button>
+                                        </div>
+                                        <div class="acco-cont">
+                                            <ul class="list-dot">
+                                                <li class="list">고객이 분리납부 요청한 금액과 분리납부 대상이 추가적으로 납부할 금액을 합산 후 제공하여 0원으로
+                                                    표기
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li class="acco-box">
+                                        <div class="acco-tit"><span class="bullet">6.</span> 신규가입 및 명의변경 하신 경우
+                                            <button role="button" aria-pressed="false"></button>
+                                        </div>
+                                        <div class="acco-cont">
+                                            <ul class="list-dot">
+                                                <li class="list">가입일(변경일) 히우부터 실시간 요금 확인 가능</li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li class="acco-box">
+                                        <div class="acco-tit"><span class="bullet">7.</span> 타 유/무선 통신사 제공서비스 경우
+                                            <button role="button" aria-pressed="false"></button>
+                                        </div>
+                                        <div class="acco-cont">
+                                            <ul class="list-dot">
+                                                <li class="list">과금 방식 변경으로 금액에 다소 차이가 있을 수 있음<br/>예) KT 114
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li class="acco-box">
+                                        <div class="acco-tit"><span class="bullet">8.</span> 해외로밍 시 사용한 요금 조회
+                                            <button role="button" aria-pressed="false"></button>
+                                        </div>
+                                        <div class="acco-cont">
+                                            <ul class="list-dot">
+                                                <li class="list">실시간 확인 불가하며, 다음달 8일 부터 ‘사용요금’에서 확인 가능
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--// .widget -->
+            </div>
+            <!--// .cont-box -->
+        </div>
+    </div>
+    <!--// #contents -->
+</div>
+<% include ../../components/javascript.component.html %>
+<script>
+    $(document).ready(function () {
+        var comp = new Tw.MyTBillHotBill($('#myt-bill-hotbill'));
+    });
+</script>
+<% include ../../components/end.component.html %>
