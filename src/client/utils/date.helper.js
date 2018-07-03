@@ -28,7 +28,7 @@ Tw.DateHelper = (function() {
 
   /**
    * @param date {Date} or {string} : YYYYMMDD
-   * @returns {string} : 20180601 - 1 year
+   * @returns {string} : currentDateTime - 1 year
    */
   var getPastYearShortDate = function(){
     return moment().subtract(1, 'years').format('YYYYMMDD');
