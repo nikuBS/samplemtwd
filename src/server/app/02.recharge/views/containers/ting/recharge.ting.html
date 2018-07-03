@@ -1,6 +1,4 @@
 <% include ../../components/start.component.html %>
-
-<body>
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
     <ul>
@@ -73,8 +71,11 @@
                                                 <dl>
                                                     <dt>충전 선물 차단여부</dt>
                                                     <dd class="box-block-list">
+                                                        <!--<div class="box-block-ti2">-->
+                                                            <!--<span class="txt">충전 선물이 <em>가능한 상태</em>입니다.</span><a id="btn_activate_block">차단 신청</a>-->
+                                                        <!--</div>-->
                                                         <div class="box-block-ti2">
-                                                            <span class="txt">충전 선물이 <em>가능한 상태</em>입니다.</span><a>차단 신청</a>
+                                                            <span class="txt">충전 선물이 <em>불가능한 상태</em>입니다.</span><a id="btn_deactivate_block">차단 해제</a>
                                                         </div>
                                                         <ul>
                                                             <li>충전 선물을 차단할 수 있고, 차단 상태에서는 선물을 할 수 없습니다.</li>
@@ -91,10 +92,10 @@
                                             </div>
                                             <ul class="bt-slice"><!-- 2018-06-20 버튼 클래스 변경 -->
                                                 <li class="bt-blue1">
-                                                    <button>팅요금 선물하기</button>
+                                                    <button id="btn_process_ting">팅요금 선물하기</button>
                                                 </li>
                                                 <li class="bt-white1">
-                                                    <button>팅요금 선물 내역</button>
+                                                    <button id="btn_go_history">팅요금 선물 내역</button>
                                                 </li>
                                             </ul>
                                         </div>
@@ -250,7 +251,6 @@
     </div>
     <!--// #contents -->
 </div>
-
 <% include ../../components/javascript.component.html %>
 
 <script>

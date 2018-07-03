@@ -1,0 +1,58 @@
+<!--
+* FileName: payment.realtime.init.component.html
+* Author: 공자윤 (jayoon.kong@sk.com)
+* Date: 2018.07.03
+-->
+<div id="main" class="container">
+    <% include ../components/line.info.component.html %>
+    <hr class="cont-sp type1" />
+    <div class="cont-box">
+        <div class="payment-select">
+            <h3>납부선택</h3>
+            <div class="pay-breakdown">
+                <h4 class="blind">개별 회선 납부 내역 제공</h4>
+                <div class="widget">
+                    <div class="widget-box check">
+                        <ul class="select-list" role="group">
+                            <% for (var i = 0; i < list.length; i++) { %>
+                            <li class="checkbox type01" role="checkbox" aria-checked="false">
+                                <input type="checkbox" name="checkbox" value="휴대폰 010-12**-45**" title="체크박스"/>
+                                <div class="pay-maininfo">
+                                    <span class="service-sort"><span class="blind">서비스 구분</span><%= list[i].svcName %></span>
+                                    <span class="line-info"><span class="blind">회선 정보</span><%= list[i].svcNum %></span>
+                                </div>
+                                <dl class="pay-detail">
+                                    <dt>청구년월</dt>
+                                    <dd><%= list[i].invYearMonth %></dd>
+                                </dl>
+                                <dl class="pay-detail">
+                                    <dt>사용요금</dt>
+                                    <dd><strong><%= list[i].invMoney %></strong><span class="unit">원</span></dd>
+                                </dl>
+                            </li>
+                            <% } %>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="cont-box">
+        <h3 class="contents-tit">납부하실 요금</h3>
+        <div class="payment-all">
+            <span>총 <em>201,020</em> 원</span>
+        </div>
+        <div class="contents-btn">
+            <ul class="bt-slice">
+                <li class="bt-blue1">
+                    <button><a href="#step1">납부하기</a></button>
+                </li>
+            </ul>
+        </div>
+        <div class="contents-notice type1">
+            <span class="noti-type1">2대 이상의 회선을 통합청구신청 하신 고객님은 합산된 청구요금이 보여집니다.</span>
+        </div>
+    </div>
+    <hr class="cont-sp type1" />
+    <% include ../components/realtime/payment.realtime.info.component.html %>
+</div>

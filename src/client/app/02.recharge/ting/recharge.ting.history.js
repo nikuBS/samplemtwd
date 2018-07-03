@@ -6,7 +6,8 @@
 
 Tw.RechargeTingHistory = function (rootEl) {
   this.$container = rootEl;
-  this._apiService = new Tw.ApiService();
+  this._apiService = Tw.Api;
+  this._popupService = Tw.Popup;
 
   this._cachedElement();
   this._bindEvent();
@@ -15,8 +16,19 @@ Tw.RechargeTingHistory = function (rootEl) {
 
 Tw.RechargeTingHistory.prototype = {
   _init: function () {
-    this._apiService.request(Tw.API_CMD.BFF_06_0020, {})
-      .done($.proxy(this._onSuccessGetProvider, this))
+    /**
+     * @param type : {A:all, R:receive, S:send}
+     * @param fromDt : YYYYMMDD
+     * @param endDt : YYYYMMDD
+     */
+    this._apiService.request(Tw.API_CMD.BFF_06_0026, {
+      type: 'all',
+      fromDt: Tw.DateHelper.getCurrentShortDate,
+      endDt: Tw.DateHelper.getPastYearShortDate
+    }).done($.proxy(function () {
+      // TODO: Activate Block
+
+    }, this))
       .fail($.proxy(this._sendFail, this));
   },
 
@@ -24,6 +36,10 @@ Tw.RechargeTingHistory.prototype = {
   },
 
   _bindEvent: function () {
+    this.$container.on('click', '.select-submit', $.proxy(this.onConfirm, this))
+  },
+
+  onConfirm: function () {
   },
 
   _onSuccessGetProvider: function () {
