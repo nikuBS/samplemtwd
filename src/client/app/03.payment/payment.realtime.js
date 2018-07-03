@@ -20,7 +20,7 @@ Tw.PaymentRealtime = function (rootEl) {
 Tw.PaymentRealtime.prototype = {
   _bindEvent: function () {
     this.$container.on('change', '.checkbox', $.proxy(this._sumCheckedAmount, this));
-    this.$container.on('click', '.select-pay-with', $.proxy(this._isCheckedAmount, this));
+    this.$container.on('click', '.select-payment-option', $.proxy(this._isCheckedAmount, this));
     this.$container.on('click', '.btn', $.proxy(this._toggleEvent, this));
     this.$container.on('click', '.pay', $.proxy(this._pay, this));
   },
@@ -33,7 +33,7 @@ Tw.PaymentRealtime.prototype = {
     else {
       this.$amount -= $amount;
     }
-    this.$container.find('#total-amount').text(Tw.FormatHelper.addComma(this.$amount.toString()));
+    this.$container.find('.total-amount').text(Tw.FormatHelper.addComma(this.$amount.toString()));
   },
   _isCheckedAmount: function (event) {
     event.preventDefault();
