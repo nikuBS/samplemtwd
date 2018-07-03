@@ -18,19 +18,23 @@
     </div>
     <!--// #header -->
     <!-- #contents -->
-    <div class="container-wrap">
-        <h2 class="blind">내용</h2>
-        <!-- 첫화면 -->
+    <div id="main" class="container-wrap">
         <% include ../components/realtime/payment.realtime.init.component.html %>
-        <!-- 결제방법 선택화면 -->
+    </div>
+    <div id="step1" class="container-wrap" style="display:none;">
         <% include ../components/realtime/payment.realtime.select.payment.option.component.html %>
-        <div id="step2" style="display:none;">
-            <h1>step2</h1>
-            <a class="step2 pay">페이지 이동 3</a>
-        </div>
-        <div id="process-complete" style="display:none;">
-            <h1>완료</h1>
-        </div>
+    </div>
+    <div id="step2-account" class="container-wrap" style="display:none;">
+        <% include ../components/realtime/payment.realtime.account.component.html %>
+    </div>
+    <div id="step2-card" class="container-wrap" style="display:none;">
+        <% include ../components/realtime/payment.realtime.card.component.html %>
+    </div>
+    <div id="step2-point" class="container-wrap" style="display:none;">
+        <% include ../components/realtime/payment.realtime.point.component.html %>
+    </div>
+    <div id="process-complete" class="container-wrap" style="display:none;">
+        <% include ../components/realtime/payment.realtime.complete.component.html %>
     </div>
     <!--// #contents -->
 </div>

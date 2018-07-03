@@ -3,7 +3,7 @@
 * Author: 공자윤 (jayoon.kong@sk.com)
 * Date: 2018.07.03
 -->
-<div id="main" class="container">
+<div class="container">
     <% include ../components/line.info.component.html %>
     <hr class="cont-sp type1" />
     <div class="cont-box">
@@ -15,7 +15,7 @@
                     <div class="widget-box check">
                         <ul class="select-list" role="group">
                             <% for (var i = 0; i < list.length; i++) { %>
-                            <li class="checkbox type01" role="checkbox" aria-checked="false">
+                            <li class="checkbox type01 checkbox-main" role="checkbox" aria-checked="false">
                                 <input type="checkbox" name="checkbox" value="휴대폰 010-12**-45**" title="체크박스" data-value="<%= list[i].invAmt %>" />
                                 <div class="pay-maininfo">
                                     <span class="service-sort"><span class="blind">서비스 구분</span><%= list[i].svcName %></span>
