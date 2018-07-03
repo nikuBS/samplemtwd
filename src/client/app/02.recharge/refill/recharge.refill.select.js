@@ -12,7 +12,6 @@ Tw.RechargeRefillSelect = function (rootEl) {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._history = Tw.History;
-  this._history.init();
 
   this._bindEvent();
 };
@@ -22,7 +21,7 @@ Tw.RechargeRefillSelect.prototype = {
     this.$container.on('click', '.refill-select-btn', $.proxy(this._confirmRefill, this));
   },
   _confirmRefill: function () {
-    var couponType = this.$container.find('label.checked').data('value');
+    var couponType = this.$container.find('.checked > label').data('value');
     var endDate = this._getParams('endDt');
     this._openPopup(couponType, endDate);
   },
@@ -32,17 +31,13 @@ Tw.RechargeRefillSelect.prototype = {
     this._popupService.openConfirm(Tw.POPUP_TITLE.NOTIFY, title, contents, $.proxy(this._submit, this));
   },
   _submit: function () {
-    this._popupService.close();
-    this._refill();
-  },
-  _refill: function () {
     var reqData = this._makeRequestData();
     this._apiService.request(Tw.API_CMD.BFF_06_0007, reqData)
       .done($.proxy(this._success, this))
       .fail($.proxy(this._fail, this));
   },
   _makeRequestData: function () {
-    var $target = this.$container.find('label.checked');
+    var $target = this.$container.find('.checked > label');
     var reqData = JSON.stringify({
       copnIsueNum: this._getParams('copnNm'),
       ofrRt: $target.data('ofrrt'),
