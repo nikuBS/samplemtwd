@@ -1,10 +1,262 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <title>Ting</title>
-</head>
+<% include ../../components/start.component.html %>
+
 <body>
-    <span>Ting</span>
-</body>
-</html>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb_area">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap">
+    <!-- #header -->
+    <div id="header" class="header-wrap">
+        <div class="header">
+            <div class="header-ti">
+                <h1>팅요금 선물</h1>
+                <button class="depth-view" role="button" aria-pressed="false"><span class="blind">메뉴구조보기</span></button>
+            </div>
+            <button class="prev-step"><span class="blind">이전으로</span></button>
+            <button class="search-content"><span class="blind">검색하기</span></button>
+        </div>
+    </div>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <!-- .cont-box -->
+            <div class="cont-box">
+                <!-- .widget -->
+                <div class="widget">
+                    <div class="widget-box select">
+                        <button class="bt-dropdown big" title="회선 선택" aria-haspopup="true">010-12**-56**<span class="ico"></span></button>
+                        <div class="select-info">
+                            <span class="title">데이터 용량</span>
+                            <span class="text"></span>
+                            <select title="데이터 용량">
+                                <option selected>010-12**-56**</option>
+                                <option>010-22**-56**</option>
+                                <option>010-32**-56**</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr class="cont-sp type1" aria-hidden="true"/>
+            <div class="cont-box nogaps">
+                <!-- .component -->
+                <div class="component">
+                    <div class="component-box tabs">
+                        <div class="tab-area type1"><!-- 타입별 탭형태 변환 -->
+                            <div class="tab-linker">
+                                <ul role="tablist">
+                                    <li role="tab" aria-selected="true" aria-controls="tab1-tab" id="tab1">
+                                        <button>선물하기</button>
+                                    </li>
+                                    <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2">
+                                        <button>조르기</button>
+                                    </li><!-- true 열림 -->
+                                </ul>
+                            </div>
+                            <div class="tab-contents">
+                                <ul>
+                                    <li role="tabpanel" id="tab1-tab" aria-labelledby="tab1">
+                                        <div class="inner2">
+                                            <div class="contents-info-list">
+                                                <p class="ti-desc">팅요금제를 이용하는 고객님에게 <br/><em class="tx-bold">통신 요금을 충전할 수 있는 선물</em>을 <br/>보내보세요!
+                                                </p>
+                                            </div>
+                                            <div class="box-block">
+                                                <dl>
+                                                    <dt>충전 선물 차단여부</dt>
+                                                    <dd class="box-block-list">
+                                                        <div class="box-block-ti2">
+                                                            <span class="txt">충전 선물이 <em>가능한 상태</em>입니다.</span><a>차단 신청</a>
+                                                        </div>
+                                                        <ul>
+                                                            <li>충전 선물을 차단할 수 있고, 차단 상태에서는 선물을 할 수 없습니다.</li>
+                                                            <li>충전 선물 차단 해제는 지점/대리점/고객센터(국번없이 1599-0011(유료), 휴대폰 114)에서만 가능합니다.</li>
+                                                        </ul>
+                                                    </dd>
+                                                </dl>
+                                            </div>
+                                            <div class="box-suggest">
+                                                <div class="suggest-info">
+                                                    <ul class="suggest-list">
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <ul class="bt-slice"><!-- 2018-06-20 버튼 클래스 변경 -->
+                                                <li class="bt-blue1">
+                                                    <button>팅요금 선물하기</button>
+                                                </li>
+                                                <li class="bt-white1">
+                                                    <button>팅요금 선물 내역</button>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li role="tabpane2" id="tab2-tab" aria-labelledby="tab2">
+                                        <div class="inner2">
+                                            <div class="contents-info-list">
+                                                <p class="ti-desc">팅요금 선물을 받고 싶다면, <br/><em class="tx-bold">조르기</em>를 해보세요!</p>
+                                            </div>
+                                            <div class="box-block">
+                                                <dl>
+                                                    <dt>조르기 메세지</dt>
+                                                    <dd class="box-block-list">
+                                                        <div class="box-block-ti2">
+                                                            <span class="txt1">김유진님이 <em>&lsquo;팅요금 선물 조르기&rsquo;</em>를 <br/>요청하셨습니다. <br/>T World에서 선물을 해보세요.</span>
+                                                        </div>
+                                                        <ul>
+                                                            <li>만 19세 이상 개인고객(SK텔레콤 가입자)에게 선물 조르기를 할 수 있습니다.</li>
+                                                            <li>조르기 할 대상 고객의 휴대폰이 USIM 단독 상태이거나 휴대폰과 USIM 카드가 분리된 상태에서는 조르기 신청 SMS를 받아 볼 수
+                                                                없습니다.
+                                                            </li>
+                                                            <li>조르기 신청을 누르면 조르기 할 대상자에게 SMS가 전송되고 전송료는 무료입니다.</li>
+                                                        </ul>
+                                                    </dd>
+                                                </dl>
+                                            </div>
+                                            <div class="box-suggest">
+                                                <div class="suggest-info">
+                                                    <ul class="suggest-list">
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <ul class="bt-slice"><!-- 2018-06-20 버튼 클래스 변경 -->
+                                                <li class="bt-blue1">
+                                                    <button>조르기 신청하기</button>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--// .cont-box -->
+            <hr class="cont-sp type1" aria-hidden="true"/>
+            <div class="cont-box nogaps-hoz">
+                <div class="box-confirm">
+                    <!-- .widget -->
+                    <div class="widget">
+                        <div class="widget-box accordion">
+                            <h3 class="tit-a">꼭 확인해주세요!</h3><!-- 2018-06-19 : h태그 수정/삭제 -->
+                            <div class="acco-cover toggle">
+                                <div class="bt-whole">
+                                    <button role="button" aria-pressed="false"><span class="blind">내용 열기</span></button>
+                                </div>
+                                <div class="acco-style">
+                                    <ul class="acco-list">
+                                        <li class="acco-box on">
+                                            <!-- .on: 열기 -->
+                                            <div class="acco-tit">
+                                                <button role="button" aria-pressed="true">1. 충전 선물 금액</button>
+                                            </div>
+                                            <div class="acco-cont">
+                                                <ul class="list-dot">
+                                                    <li class="list">팅요금 충전 선물하신 금액은 <em>다음 달 요금 청구서에서 확인</em>할 수 있습니다.
+                                                    </li>
+                                                    <li class="list">충전 선물한 금액은 <em>부가세를 포함하지 않은 금액</em>이며, 부가세는 <em>선물 받으신 분의 요금에 포함되어
+                                                        청구</em>됩니다.
+                                                    </li>
+                                                    <li class="list">선물 금액의 잔여 금액은 <em>당월까지 사용</em>가능하며 <em>미 사용시 이월되지 않습니다.</em></li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li class="acco-box">
+                                            <div class="acco-tit">
+                                                <button role="button" aria-pressed="false">2. 선물 취소/환불/승계</button>
+                                            </div>
+                                            <div class="acco-cont">
+                                                <ul class="list-dot">
+                                                    <li class="list">선물 취소는 <em>선물 받으신 분이 미 사용</em>한 경우에만 <em>당일에 한해</em> 고객센터&lt;국번없이
+                                                        1599-0011(유료)/휴대폰114&gt;에서 <em>취소 가능</em>합니다.
+                                                    </li>
+                                                    <li class="list">선물 수신된 것은 취소 불가합니다.</li>
+                                                    <li class="list">정상 명의변경 및 서비스 해지 시, 잔여 선물 금액은 현금 환불됩니다.</li>
+                                                    <li class="list">일반 명의변경 시 , 잔여 선물 금액은 양수인에게 승계됩니다. (양수인이 팅 상한 요금상품 사용 시)</li>
+                                                    <li class="list">요금상품 변경 시, 잔여 선물 금액은 변경 후 요금상품으로 승계됩니다. (팅 상한 요금상품으로 변경 시)</li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li class="acco-box">
+                                            <div class="acco-tit">
+                                                <button role="button" aria-pressed="false">3. 결제 방법</button>
+                                            </div>
+                                            <div class="acco-cont">
+                                                <ul class="list-dot">
+                                                    <li class="list">익월 요금 청구: ARS 1513, T world, 대리점, 지점 및 고객센터</li>
+                                                    <li class="list">현금 결제: 대리점 및 지점</li>
+                                                    <li class="list">선물 받는 사람의 실제 사용 금액에 관계없이 선물 금액만큼 청구됩니다.</li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li class="acco-box">
+                                            <div class="acco-tit">
+                                                <button role="button" aria-pressed="false">4. 선물 보내는 사람</button>
+                                            </div>
+                                            <div class="acco-cont" id="acco-cont4" role="region" aria-labelledby="acco-btn4">
+                                                <ul class="list-dot">
+                                                    <li class="list">선물 보내는 사람은 <em>천원 단위로 최대 2만원</em>까지, <em>선물 회선 수/횟수에 제한 없이 선물</em>할 수
+                                                        있습니다.
+                                                    </li>
+                                                    <li class="list">충전 <em>선물 차단 상태</em>일 경우에는 <em>선물할 수 없습니다.</em></li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li class="acco-box">
+                                            <div class="acco-tit">
+                                                <button role="button" aria-pressed="false">5. 선물 받는 사람</button>
+                                            </div>
+                                            <div class="acco-cont" id="acco-cont5" role="region" aria-labelledby="acco-btn5">
+                                                <ul class="list-dot">
+                                                    <li class="list">선물 받는 사람은 최대 2만원까지 선물 수신이 가능하고, 기존 본인의 충전한도(2만원)와는 별도입니다.</li>
+                                                    <li class="list">선물 받는 사람은 선물 수신 후 충전 금액을 바로 이용할 수 있습니다.</li>
+                                                    <li class="list">데이터 한도 정지인 상태에서도 선물 수신이 가능합니다. 이 경우 팅 데이터 한도 정지가 해제되며 데이터 사용이 가능하게
+                                                        됩니다.
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li class="acco-box">
+                                            <div class="acco-tit">
+                                                <button role="button" aria-pressed="false">6. SMS 인증</button>
+                                            </div>
+                                            <div class="acco-cont" id="acco-cont6" role="region" aria-labelledby="acco-btn6">
+                                                <ul class="list-dot">
+                                                    <li class="list">해당 서비스는 SMS 인증 및 공인인증서를 통해 이용 가능합니다.</li>
+                                                    <li class="list">T world SMS 인증번호가 발송되지 않으세요? <br/><a href="https://www.tworld.co.kr/poc/html/util/common/UT10.7P.html">SMS 안내 자세히 보기</a></li>
+                                                    <li class="list">현재 사용중인 휴대폰이 USIM 단독이거나 휴대폰과 USIM 카드가 분리된 상태에서는 SMS 인증을 받을 수 없습니다.</li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--// .widget -->
+                </div>
+            </div>
+            <!--// .cont-box -->
+        </div>
+    </div>
+    <!--// #contents -->
+</div>
+
+<% include ../../components/javascript.component.html %>
+
+<script>
+  $(document).ready(function () {
+    var oRechargeTingComponent = new Tw.RechargeTing($(document));
+  });
+</script>
+
+<% include ../../components/end.component.html %>

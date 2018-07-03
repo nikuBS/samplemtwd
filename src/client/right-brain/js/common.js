@@ -102,6 +102,10 @@ skt_landing.action = {
       'z-index': -1
     });
     $('body,html').css('height','100%');
+     $('.wrap').css({
+      'height':'100%',
+      'padding':0
+    })
     /*
     $('#header').css({
       'transform': 'translate(0 ,' + this.scroll_gap + 'px)'
@@ -147,6 +151,10 @@ skt_landing.action = {
       'z-index':''
     });
     $('body,html').css('height','');
+    $('.wrap').css({
+      'height':'',
+      'padding':''
+    });
     /*$('#contents').css({
       'position': 'relative',
       'transform': 'inherit'
@@ -348,7 +356,7 @@ skt_landing.action = {
         });*/
         _this.cancel();
         _this.scroll_chk();
-         if(popup_info.hbs == 'popup'){
+         if(popup_info.hbs == 'popup' || popup_info.hbs == 'select'){
           skt_landing.widgets.widget_init('.popup');
         }else{
           skt_landing.widgets.widget_init('.popup-page');

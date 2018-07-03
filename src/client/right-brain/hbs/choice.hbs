@@ -18,6 +18,17 @@
                 </ul>
             </div>
         </div>
+		{{#if choice_bt}}
+		<div class="btn-box">
+            <ul class="bt-slice item-{{bt_num}}">
+            {{#type}}
+            <li class="{{class}}">
+              <button onclick="{{href}}">{{txt}}</button>
+            </li>
+            {{/type}}
+            </ul>
+        </div>
+		{{/if}}
         <!--{{#if close_bt}}
             <button class="popup-closeBtn">팝업닫기<span class="ico"></span></button>
         {{/if}}-->

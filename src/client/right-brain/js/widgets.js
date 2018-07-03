@@ -34,8 +34,6 @@ skt_landing.widgets = {
       });
     });
   },
-  widget_switch: function () {
-  },
   widget_tube: function () {
     $('.widget .tube').each(function(){
       var tube_list = $(this).find('.tube-list');
@@ -47,14 +45,16 @@ skt_landing.widgets = {
         tube_li.first().addClass('first');
         tube_li.last().addClass('last');
       }
-      
+
       var _this = $(this);
-      setRadioState(_this.find('input').eq(0));
+      if(_this.find('li.checked').length < 1){
+        setRadioState(_this.find('input').eq(0));
+      }
       _this.find('input').on('change',function(){
         setRadioState($(this));
       });
       _this.find('li').on('click',function(e){
-        if(e.target != e.currentTarget) return ;
+        if(e.target.tagName.toLowerCase() == 'input' && e.target != e.currentTarget) return ;
         $(this).find('input').trigger('change');
       });
     });
@@ -67,7 +67,7 @@ skt_landing.widgets = {
       label.siblings().find('input').attr('checked',false).prop('checked',false);
       label.addClass('checked').attr('aria-checked',true);
       target.attr('checked',true).prop('checked',true);
-      
+
       /*label.siblings().removeClass('checked');
       label.siblings().filter('[role=radio]').attr('aria-checked',false);
       label.siblings().find('input').attr('checked',false).prop('checked',false);
@@ -78,92 +78,7 @@ skt_landing.widgets = {
   widget_step: function () {
   },
   widget_select: function () {
-    $('.bt-dropdown').off('click').on('click', function () {
-      var _this = $(this),
-          infoBox = _this.siblings('.select-info'),
-          select = infoBox.find('select');
-          popupInfo = {
-            'title': infoBox.find('.title').text(),
-            'text': infoBox.find('.text').text(),
-            'select':[/*{'title':'','options':[]}*/],
-            'selectCount':select.length > 1 ? false : true
-          };
-      for(var i=0, leng=select.length; i<leng; ++i){
-        var options = select.eq(i).find('option'),
-            _options = [];
-        for(var j=0, leng2=options.length; j<leng2; ++j){
-          _options.push({
-            'value' : options.eq(j).text(),
-            'checked' : options.eq(j).attr('selected')
-          })
-        }
-        var selectValue = {
-          'title' : select.eq(i).attr('title'),
-          'class' : select.eq(i).attr('class'),
-          'options':_options,
-          'checkbox':[]
-        }
-        if(select.eq(i).next('.select-option').length > 0){
-          var label = select.eq(i).next('.select-option').find('label');
-          for(var k=0, leng3=label.length; k<leng3; ++k){
-            selectValue.checkbox.push({
-              'checked': label.eq(k).find('input').attr('checked'),
-              'text': label.eq(k).text()
-            });
-          }
-        }
-        popupInfo.select.push(selectValue);
-      }
-      if($('.popup').length > 0){
-        $('.popup').empty().remove();
-      }
-      $.get(hbsURL+'select.hbs', function (text) {
-        var tmpl = Handlebars.compile(text);
-        var html = tmpl(popupInfo);
-        $('.wrap').append(html);
-      }).done(function () {
-        skt_landing.action.fix_scroll();
-        skt_landing.action.popup.scroll_chk();
-        /*alert($('.popup-focus').eq(0).attr('class'));*/
-        skt_landing.action.setFocus('.popup .popup-focus');
-        $('#contents,#header,.skip_navi').attr('aria-hidden',true);
-        $('.popup-info')[0].scrollIntoView();
-        skt_landing.widgets.widget_init('.popup');
-/*        $('.popup-closeBtn').off('click').on('click', function () {
-          $('.wrap,.skip_navi').attr('aria-hidden','');
-          skt_landing.action.popup.close(this);
-          skt_landing.action.setFocus(_this);
-        });*/
-        $('.select-submit').off('click').on('click', function () { //submit 버튼 이벤트
-          var tubeList = $(this).closest('.popup').find('.tube-list-ti');
-          if(tubeList.length > 0){
-            var list='',
-                spCode = ' · ';
-            tubeList.each(function(idx){
-              var text = $(this).find('input:checked');
-              if(text.length > 0){
-                list += !idx ? text.val() : spCode + text.val();
-              }else{
-                list += !idx ? '선택안함' : spCode + '선택안함';
-              }
-              if(text.closest('li').index() > -1){
-                _this.siblings().find('select').eq(idx).find('option').attr('selected',null).eq(text.closest('li').index()).attr('selected','selected');
-              }
-            });
-            _this.text(list);
-          }else{
-            if($('.popup .checked').closest('li').index() > -1){
-              _this.text($('.popup .checked input').val());
-              _this.siblings().find('select').find('option').attr('selected',null).eq($('.popup .checked').closest('li').index()).attr('selected','selected');
-            }
-          }
-          $('#header,#contents,.skip_navi').attr('aria-hidden','');
-          skt_landing.action.popup.close(this);
-          skt_landing.action.auto_scroll();
-          skt_landing.action.setFocus(_this); //포커스
-        });
-      });
-    });
+    console.log('select 태그 정리 필요');
   },
   widget_radio: function () {
     var input = $('.radiobox :radio');
@@ -185,7 +100,7 @@ skt_landing.widgets = {
       });
 
       box.on('click',function(e){
-        if(e.target != e.currentTarget) return ;
+        if(e.target.tagName.toLowerCase() == 'input' && e.target != e.currentTarget) return ;
         $(this).find('input').trigger('change');
       });
     });
@@ -197,7 +112,6 @@ skt_landing.widgets = {
       $(this).is(':checked') ? box.addClass('checked').attr('aria-checked',true) : box.removeClass('checked').attr('aria-checked',false);
       $(this).is(':disabled') ? box.addClass('disabled').attr('aria-disabled',true) : box.removeClass('disabled').attr('aria-checked',false);
       $(this).on('click', function () {
-        console.log($(this).prop('checked'));
         if ($(this).prop('checked')) {
           box.addClass('checked').attr('aria-checked',true);
           $(this).attr('checked', true);
@@ -211,7 +125,7 @@ skt_landing.widgets = {
         box.removeClass('focus');
       });
       box.on('click',function(e){
-        if(e.target != e.currentTarget) return ;
+        if(e.target.tagName.toLowerCase() == 'input' && e.target != e.currentTarget) return ;
         $(this).find('input').trigger('click');
       });
     });
@@ -242,17 +156,16 @@ skt_landing.widgets = {
     });*/
   },
   widget_slider3: function () {
-    /*$('.slider3').each(function (idx) {
-      var swiper,
-        tagClass = 'slide-number' + idx,
-        _this = $(this).find('.slider-box').addClass(tagClass);
-      _this.find('.page-total .total').text(_this.find('.swiper-slide').length);
-      swiper = new Swiper('.slider3 .' + tagClass, {
-        simulateTouch: false,
-        nextButton: '.swiper-button-next',
-        prevButton: '.swiper-button-prev'
-      });
-    });*/
+    var widget = '.slider3';
+    $(widget).each(function(){
+      var _this = $(this).find('.slider');
+      _this.slick({
+        arrows: true,
+        infinite: true,
+        slidesToShow: 4,
+		slidesToScroll: 1,
+      })     
+    });
   },
   widget_slider4: function () {
     var widget = '.slider4';
@@ -379,6 +292,11 @@ skt_landing.widgets = {
           $(this).closest('.acco-box').siblings().find('> .acco-tit button').attr('aria-pressed',false);
         }
         $(this).closest('.acco-box').toggleClass('on');
+        if($(this).attr('aria-pressed', 'false')){
+          $(this).attr('aria-pressed', 'true')
+        }else{
+          $(this).attr('aria-pressed', 'false')
+        };
       });
     })
   },
@@ -402,8 +320,8 @@ skt_landing.widgets = {
           button.closest('.acco-list').removeClass('on');
         }
         if(box.hasClass('toggle') && state){
-          button.closest('.acco-list').siblings().find('> .acco-title button').attr('aria-pressed', false);  
-          button.closest('.acco-list').siblings().removeClass('on');  
+          button.closest('.acco-list').siblings().find('> .acco-title button').attr('aria-pressed', false);
+          button.closest('.acco-list').siblings().removeClass('on');
         }
         button.attr('aria-pressed', state);
       }
@@ -411,19 +329,26 @@ skt_landing.widgets = {
   },
   widget_switch: function () {
     $('.btn-switch input').each(function () {
-      if ($(this).prop('checked')) {
-        $(this).closest('.btn-switch').addClass('on');
-      } else {
-        $(this).closest('.btn-switch').removeClass('on');
-      }
+      checkSwitch(this, !$(this).closest('.btn-switch').hasClass('on'));
+      $(this).on('change', function () {
+        checkSwitch(this);
+      });
+      $(this).closest('.switch-style').on('click',function(e){
+        if(e.target.tagName.toLowerCase() == 'input' && e.target != e.currentTarget) return ;
+        $(this).find('input').trigger('change');
+      });
     });
-    $('.btn-switch input').on('change', function () {
-      if ($(this).prop('checked')) {
-        $(this).closest('.btn-switch').addClass('on');
+    function checkSwitch(target, state){
+      target = $(target);
+      state = state == true || state == false ? state : target.closest('.btn-switch').hasClass('on');
+      if (state) {
+        target.closest('.btn-switch').removeClass('on').attr('aria-checked',false);
+        target.attr('checked',false);
       } else {
-        $(this).closest('.btn-switch').removeClass('on');
+        target.closest('.btn-switch').addClass('on').attr('aria-checked',true);
+        target.attr('checked',true);
       }
-    });
+    }
   },
   widget_draglist : function(){
     $('.draglist').each(function(){

@@ -7,7 +7,7 @@ var gulp       = require('gulp'),
     rename     = require('gulp-rename');
 
 
-var appNames = ['home', 'myt', 'recharge', 'payment', 'management', 'membership', 'product', 'direct', 'customer']; // search
+var appNames = ['home', 'myt', 'recharge', 'payment', 'management', 'membership', 'product', 'direct', 'customer', 'auth']; // search
 // for docker (dev env)
 var dist = 'src/server/public/cdn/';
 // var dist     = 'dist/';

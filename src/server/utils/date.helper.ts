@@ -22,6 +22,14 @@ class DateHelper {
   }
 
   /**
+   * @param date {Date} or {string} : YYYYMMDD
+   * @returns {string} : 20180601
+   */
+  static getCurrentShortDate(date: any): string {
+    return moment(this.convDateFormat(date)).format('YYYYMMDD');
+  }
+
+  /**
    * @param date {Date} or {string} : YYYYMMDDhhmmss
    * @returns {string} : 18년 12월 31일
    */
@@ -75,9 +83,9 @@ class DateHelper {
    */
   static getAddDay(date) {
     return moment(this.convDateFormat(date))
-        .add(1, 'days')
-        .subtract(1, 'minutes')
-        .format('YYYY.MM.DD hh:mm');
+      .add(1, 'days')
+      .subtract(1, 'minutes')
+      .format('YYYY.MM.DD hh:mm');
   }
 
   /**
@@ -86,7 +94,7 @@ class DateHelper {
    * @returns {Date}
    */
   static convDateFormat(date: any): Date {
-    if (!(date instanceof Date)) {
+    if ( !(date instanceof Date) ) {
       return moment(date, 'YYYYMMDDhhmmss').toDate();
     }
     return date;
@@ -98,7 +106,7 @@ class DateHelper {
    * @returns {Date} : YYMMDD, YYYYMMDD, YY.MM.DD
    */
   static getShortDateWithFormat(date: any, format: string): any {
-    return moment(date, format).format(format);
+    return moment(date).format(format);
   }
 
   /**
@@ -106,8 +114,8 @@ class DateHelper {
    * @param {date} date || {string} date, {number} amount, {string} unit, {string} format
    * @returns {Date} : YYMMDD, YYYYMMDD, YY.MM.DD
    */
-  static getShortDateWithFormatAddByUnit(date: any, amount: any, unit: any, format: string) : string {
-    return moment(date, format).add(amount, unit).format(format);
+  static getShortDateWithFormatAddByUnit(date: any, amount: any, unit: any, format: string): string {
+    return moment(date).add(amount, unit).format(format);
   }
 
 }
