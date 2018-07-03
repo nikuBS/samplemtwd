@@ -298,7 +298,7 @@ Tw.RechargeGiftHistory.prototype = {
   },
 
   // _getLineInfo: function (callback) {
-  //   this._apiService.request(Tw.API_CMD.BFF_03_0003, {svcCtg: 'M'}).done($.proxy(callback, this));
+  //   this._apiService.request(Tw.API_CMD.BFF_03_0003_C, {svcCtg: 'M'}).done($.proxy(callback, this));
   // },
 
   // _setLineList: function (res) {

@@ -16,7 +16,7 @@ Tw.RechargeGiftLine = function (rootEl) {
 Tw.RechargeGiftLine.prototype = {
   $init: function () {
     this._apiService
-      .request(Tw.API_CMD.BFF_03_0003, { svcCtg: 'M' })
+      .request(Tw.API_CMD.BFF_03_0003_C, { svcCtg: 'M' })
       .done($.proxy(this.onSuccessLineList, this));
   },
 
@@ -32,7 +32,7 @@ Tw.RechargeGiftLine.prototype = {
   onSuccessLineList: function (res) {
     this.lineList = res.result;
 
-    this._apiService.request(Tw.API_CMD.BFF_03_0005, {})
+    this._apiService.request(Tw.API_CMD.BFF_03_0005_C, {})
       .done($.proxy(this.updateLineInfo, this));
   },
 
@@ -60,7 +60,7 @@ Tw.RechargeGiftLine.prototype = {
         return line.svcNum == sCurrentNumber;
       });
 
-      this._apiService.request(Tw.API_CMD.BFF_03_0004, {}, { svcMgmtNum: this.lineInfo.svcMgmtNum })
+      this._apiService.request(Tw.API_CMD.BFF_03_0004_C, {}, { svcMgmtNum: this.lineInfo.svcMgmtNum })
         .done(function () {
           this.$container.trigger('updateLineInfo', { lineInfo: this.lineInfo, lineList: this.lineList });
         }.bind(this));

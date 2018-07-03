@@ -5,6 +5,7 @@ import AuthWithdrawalGuide from './controllers/withdrawal/auth.withdrawal.guide.
 import AuthManagement from './controllers/member/auth.member.management.controller';
 import AuthLine from './controllers/line/auth.line.controller';
 import AuthTidAccountInfo from './controllers/tid/auth.tid.account-info.controller';
+import AuthTidGuide from './controllers/tid/auth.tid.guide.controller';
 
 class AuthRouter extends TwRouter {
   constructor() {
@@ -14,6 +15,7 @@ class AuthRouter extends TwRouter {
     this.controllers.push({ url: '/signup/guide', controller: new AuthSignupGuide() });
     this.controllers.push({ url: '/tid/login', controller: new AuthTidLogin() });
     this.controllers.push({ url: '/tid/account', controller: new AuthTidAccountInfo() });
+    this.controllers.push({ url: '/tid/guide', controller: new AuthTidGuide() });
     this.controllers.push({ url: '/withdrawal/guide', controller: new AuthWithdrawalGuide() });
   }
 }

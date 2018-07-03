@@ -15,16 +15,29 @@ export const API_CMD = {
   // SPRINT #3
   SESSION_CHECK: { path: '/mock/session', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_03_0001_mock: { path: '/mock/login', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: false },
-  BFF_03_0001: { path: '/test-login', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: false },
-  BFF_03_0002: { path: '/svc-catalog', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
-  BFF_03_0003: { path: '/svc-catalog/detail', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
-  BFF_03_0004: { path: '/change-svc', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
-  BFF_03_0005: { path: '/selected-svc', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
-  BFF_03_0023: { path: '/core-recharge/v1/refill-gifts', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_03_0002_C: { path: '/svc-catalog', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_03_0003_C: { path: '/svc-catalog/detail', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_03_0004_C: { path: '/change-svc', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_03_0005_C: { path: '/selected-svc', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_03_0023_C: { path: '/core-recharge/v1/refill-gifts', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   // COMMON
-
+  BFF_01_0002: { path: '/common/services', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_01_0003: { path: '/svc-catalog/detail', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_01_0004: { path: '/common/selected-services', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: false },
+  BFF_01_0005: { path: '/common/selected-services', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   // AUTH
-
+  BFF_03_0001: { path: '/test-login', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: false },
+  BFF_03_0002: { path: '/core-auth/v1/members', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_03_0003: { path: '/core-auth/v1/members', method: API_METHOD.DELETE, server: API_SERVER.BFF, bypass: false },
+  BFF_03_0004: { path: '/core-auth/v1/line-info', method: API_METHOD.DELETE, server: API_SERVER.BFF, bypass: false },
+  BFF_03_0005: { path: '/core-auth/v1/multi-svc', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: false },
+  BFF_03_0006: { path: '/user/nick-names/args-0', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: false },
+  BFF_03_0007: { path: '/user/tid-keys', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_03_0008: { path: '/user/sessions', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: false },
+  BFF_03_0009: { path: '/user/service-password-sessions', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: false },
+  BFF_03_0010: { path: '/user/locks', method: API_METHOD.DELETE, server: API_SERVER.BFF, bypass: false },
+  BFF_03_0011: { path: '/core-auth/v1/members-foreinger', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_03_0012: { path: '/core-auth/v1/', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: false },
   // MYT
   BFF_05_0001: { path: '/my-t/balances', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0002: { path: '/my-t/balance-add-ons', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
@@ -84,10 +97,24 @@ export const API_CMD = {
   BFF_07_0021: { path: '/core-bill/v1/bill-pay/settle-unpaid-list', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
 
   // TID
-  GUIDE: { path: '/auth/type/view/guide.do', method: API_METHOD.POST, server: API_SERVER.TID, bypass: false },
-  ACCOUNT_INFO: { path: '/auth/type/member/callbackAccountInfo.do', method: API_METHOD.POST, server: API_SERVER.TID, bypass: false },
+  OIDC: { path: '/auth/authorize.do', method: API_METHOD.GET, server: API_SERVER.TID, bypass: false },
 
   TEST_GET_USAGE_BTN: { path: '/usageBtn', method: API_METHOD.GET, server: API_SERVER.TEST, bypass: true }
+};
+
+export const TID_SVC_TYPE = {
+  SSO_LOGIN: 9,
+  LOGIN: 14,
+  ID_LOGIN: 16,
+  SSO_LOGOUT: 19,
+  SIGN_UP: 20,
+  GET_ACCOUNT: 21,
+  FIND_ID: 22,
+  FIND_PW: 23,
+  CHANGE_PW: 24,
+  TERM: 25,
+  SECURITY: 26,
+  GUIDE: 50
 };
 
 export const API_CODE = {
