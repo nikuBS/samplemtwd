@@ -19,7 +19,7 @@ Tw.PaymentRealtime = function (rootEl) {
 
 Tw.PaymentRealtime.prototype = {
   _bindEvent: function () {
-    this.$container.on('change', '.checkbox', $.proxy(this._sumCheckedAmount, this));
+    this.$container.on('change', '.checkbox-main', $.proxy(this._sumCheckedAmount, this));
     this.$container.on('click', '.select-payment-option', $.proxy(this._isCheckedAmount, this));
     this.$container.on('click', '.btn', $.proxy(this._toggleEvent, this));
     this.$container.on('click', '.pay', $.proxy(this._pay, this));
@@ -46,7 +46,9 @@ Tw.PaymentRealtime.prototype = {
       this._go('#step1');
     }
   },
-  _pay: function () {
+  _pay: function (event) {
+    event.preventDefault();
+
     this._apiService.request(Tw.API_CMD.BFF_06_0001, {})
       .done($.proxy(this._success, this))
       .fail($.proxy(this._fail, this));

@@ -42,17 +42,21 @@ Tw.HistoryService.prototype = {
     }
   },
   onHashChange: function (hash) {
-    if (hash.base.match('step')) {
-      this.showAndHide();
+    this.showAndHide();
+    if (hash.base.match('step') || hash.base.match('process-complete')) {
+      this.scrollInit();
     }
     if (this.isReturendMain() && this.isCompleted()) {
       this.resetHashHistory();
     }
   },
-  showAndHide: function (id) {
-    var _id = id;
-    if (_id === undefined) {
-      _id = window.location.hash;
+  scrollInit: function () {
+    window.scrollTo(0,0);
+  },
+  showAndHide: function () {
+    var _id = window.location.hash;
+    if (Tw.FormatHelper.isEmpty(_id)) {
+      _id = '#main';
     }
 
     var $selector = this.$container.find(_id);
@@ -60,7 +64,6 @@ Tw.HistoryService.prototype = {
     $selector.show();
   },
   resetHashHistory: function () {
-    this.showAndHide('#main');
     this.resetHistory(this.getHistoryLength());
   },
   setHistory: function () {
@@ -72,9 +75,12 @@ Tw.HistoryService.prototype = {
     this.reload();
   },
   getHistoryLength: function () {
+    /*
     var historyLength = this.getHashElementLength();
     historyLength = -historyLength;
     return historyLength;
+    */
+    return -1;
   },
   getHashElementLength: function () {
     return this.$container.find('div[id^="step"]').length;
