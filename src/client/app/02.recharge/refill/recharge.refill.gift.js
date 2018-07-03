@@ -34,13 +34,13 @@ Tw.RechargeRefillGift.prototype = {
     var copnNm = this._$btnNext.attr('copn-nm');
     var svcNum = this._$btnNext.attr('svc-num');
     var fomattedBefrSvcNum = this._getFormattedPhoneNumber(befrSvcNum);
-    var msg = svcNum + '님' + fomattedBefrSvcNum + '님으로 리필쿠폰을 선물하시겠습니까? \n신청 후 취소가 불가능합니다.';
+    var msg = svcNum + Tw.MESSAGE.REFILL_GIFT_01 + fomattedBefrSvcNum + Tw.MESSAGE.REFILL_GIFT_02;
     if ( !Tw.ValidationHelper.isCellPhone(befrSvcNum) ) {
-      alert('유효한 휴대폰번호가 아닙니다.');
+      alert(Tw.MESSAGE.REFILL_GIFT_03);
       return;
     }
     if ( !copnNm ) {
-      alert('선택된 쿠폰이 없습니다.');
+      alert(Tw.MESSAGE.REFILL_GIFT_04);
       return;
     }
     if ( !confirm(msg) ) {
@@ -94,13 +94,13 @@ Tw.RechargeRefillGift.prototype = {
         window.location.href = '/recharge/refill/gift-products';
         break;
       case RESP_CODE.RCG3003:
-        alert('리필쿠폰은 가족 구성원에게 쿠폰유효기간 내 최대 2회까지 선물하실 수 있습니다.');
+        alert(Tw.MESSAGE.REFILL_GIFT_05);
         break;
       case RESP_CODE.RCG3005:
-        alert('선물 받으시는 분께서 선물 받을 수 있는 횟수가 초과되셨습니다. \n 리필쿠폰은 가족구성원에게 연간 최대 2회까지만 선물 받으실 수 있습니다.');
+        alert(Tw.MESSAGE.REFILL_GIFT_06);
         break;
       case RESP_CODE.RCG3006:
-        alert('팅요금제 이용 고객님은 가족간 리필쿠폰 선물이 불가합니다.');
+        alert(Tw.MESSAGE.REFILL_GIFT_07);
         break;
       default:
         alert(resp.orgDebugMessage);
