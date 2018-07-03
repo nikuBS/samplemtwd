@@ -4,9 +4,9 @@
  * Date: 2018.07.02
  */
 
-import TwViewController from '../../../common/controllers/tw.view.controller';
+import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
-import { API_CMD } from '../../../types/api-command.type';
+import { API_CMD } from '../../../../types/api-command.type';
 
 class AuthTidAccountInfo extends TwViewController {
   constructor() {
