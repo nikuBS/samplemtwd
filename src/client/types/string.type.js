@@ -13,10 +13,13 @@ Tw.VOICE_UNIT = {
 };
 
 Tw.DATE_UNIT = {
+  MONTH: '개월',
+  MONTH_S: '월',
+  YEAR: '년',
   ONE_YEAR: '1년',
   ONE_MONTH: '1개월',
   THREE_MONTH: '3개월',
-  SIX_MONTH: '6개월',
+  SIX_MONTH: '6개월'
 };
 
 Tw.POPUP_TITLE = {
@@ -30,7 +33,8 @@ Tw.POPUP_PROPERTY = {
   ALL: '전체',
   SEND: '보냄',
   RECEIVE: '받음',
-  PERIOD: '기간'
+  PERIOD: '기간',
+  SET_VIEW_AUTO: '자동 보낸 선물만 모아보기'
 };
 
 Tw.BUTTON_LABEL = {

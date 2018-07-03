@@ -64,45 +64,7 @@
                                                     <!-- .widget -->
                                                     <div class="widget">
                                                         <div class="widget-box select">
-                                                            <button id="term-set" class="bt-dropdown small"
-                                                                    data-select="전체,받음,보냄"
-                                                                    data-title="검색 조건 변경" title="검색 조건 변경">전체 · 3개월
-                                                            </button>
-                                                            <div class="select-info">
-                                                                <span class="title">검색 조건 변경</span>
-                                                                <span class="text"><!-- 내용 없을 경우 빈 영역 --></span>
-                                                                <select title="Type" class="three">
-                                                                    <option selected>전체</option>
-                                                                    <option>보냄</option>
-                                                                    <option>받은</option>
-                                                                </select>
-                                                                <div class="select-option">
-                                                                    <label><input type="checkbox">자동 보낸 선물만 모아보기</label>
-                                                                </div>
-                                                                <select title="기간" class="two">
-                                                                    <%
-                                                                    var title = '';
-                                                                    dateList.map((date, i)=>{
-                                                                    switch(i) {
-                                                                    case 0 :
-                                                                    title = '1개월';
-                                                                    break;
-                                                                    case 1 :
-                                                                    title = '3개월';
-                                                                    break;
-                                                                    case 2 :
-                                                                    title = '6개월';
-                                                                    break;
-                                                                    case 3 :
-                                                                    title = '1년';
-                                                                    break;
-                                                                    }
-                                                                    %>
-                                                                    <option value="<%=date%>"
-                                                                    <%=i===1?'selected':''%>><%=title%></option>
-                                                                    <%})%>
-                                                                </select>
-                                                            </div>
+                                                            <button id="term-set" class="bt-dropdown small" aria-haspopup="true" title="검색 조건 변경">전체 · 3개월</button>
                                                         </div>
                                                     </div>
                                                     <!--// .widget -->
@@ -127,38 +89,6 @@
                                                             <button class="bt-dropdown small" data-select="전체,받음,보냄"
                                                                     data-title="검색 조건 변경" title="검색 조건 변경">전체 · 3개월
                                                             </button>
-                                                            <div class="select-info">
-                                                                <span class="title">검색 조건 변경</span>
-                                                                <span class="text"><!-- 내용 없을 경우 빈 영역 --></span>
-                                                                <select title="Type" class="three">
-                                                                    <option selected>전체</option>
-                                                                    <option>보냄</option>
-                                                                    <option>받은</option>
-                                                                </select>
-                                                                <select title="기간" class="two">
-                                                                    <%
-                                                                    var title = '';
-                                                                    dateList.map((date, i)=>{
-                                                                    switch(i) {
-                                                                    case 0 :
-                                                                    title = '1개월';
-                                                                    break;
-                                                                    case 1 :
-                                                                    title = '3개월';
-                                                                    break;
-                                                                    case 2 :
-                                                                    title = '6개월';
-                                                                    break;
-                                                                    case 3 :
-                                                                    title = '1년';
-                                                                    break;
-                                                                    }
-                                                                    %>
-                                                                    <option value="<%=date%>"
-                                                                    <%=i===1?'selected':''%>><%=title%></option>
-                                                                    <%})%>
-                                                                </select>
-                                                            </div>
                                                         </div>
                                                     </div>
                                                     <div class="btn-wrap">

@@ -6,24 +6,86 @@
 Tw.RechargeGiftHistory = function (rootEl) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
+
+  this._hash = Tw.Hash;
   this._popupService = Tw.Popup;
   this._dateHelper = Tw.DateHelper;
 
+  this._init();
   // this._cachedElement();
   // this._bindEvent();
-  this._init();
 };
 
 Tw.RechargeGiftHistory.prototype = {
 
   _init: function () {
-    this.dateNow = this._dateHelper.getShortDateWithFormat(new Date(), 'YYYYMMDD');
-    console.log(this._dateHelper.getShortDateWithFormatAddByUnit(this.dateNow, -1, 'months', 'YYYYMMDD'));
 
-    console.log(this.getListData(this.dateNow, this._dateHelper.getShortDateWithFormatAddByUnit(this.dateNow, -1, 'years', 'YYYYMMDD'), 0, function(res) {
+    this.current = this._hash._currentHashNav || 'gift';
+    this.dateNow = this._dateHelper.getShortDateWithFormat(new Date(), 'YYYYMMDD');
+
+    this._getListData(this._dateHelper.getShortDateWithFormatAddByUnit(this.dateNow, -1, 'years', 'YYYYMMDD'), this.dateNow, 1, function (res) {
       console.log(res);
-    }));
-    // this.currentTab = 'present';    // request : 조르기
+    });
+
+    var _search = (function () {
+      var terms = [
+        this._dateHelper.getShortDateWithFormatAddByUnit(this.dateNow, -1, 'months', 'YYYYMMDD'),
+        this._dateHelper.getShortDateWithFormatAddByUnit(this.dateNow, -3, 'months', 'YYYYMMDD'),
+        this._dateHelper.getShortDateWithFormatAddByUnit(this.dateNow, -6, 'months', 'YYYYMMDD'),
+        this._dateHelper.getShortDateWithFormatAddByUnit(this.dateNow, -1, 'years', 'YYYYMMDD')
+      ];
+      var setDefault = function () {
+
+      }
+      var setOption = function () {
+
+      }
+
+      var resetOption = function () {
+
+      }
+      return {
+        defaultLabel: null,
+        terms: terms,
+        setOption: setOption,
+        resetOption: resetOption
+      };
+    }.bind(this))();
+
+    this.ListGeneratorWithHandlebar = function (dataSet, perPage, template, handlebarHelper, wrapperDOM, viewMoreDom) {
+      if ((!_.isObject(dataSet) || arguments.length < 6) || !_.isFunction(handlebarHelper)) {
+        Tw.Logger.error('[ListGenerator ERROR]');
+        return false;
+      }
+      this.data = dataSet;
+      this.perPage = perPage;
+      this.template = template;
+      this.wrapper = wrapperDOM;
+      this.helper = handlebarHelper;
+      this.viewTrigger = viewMoreDom;
+
+      this._init();
+    };
+
+    this.ListGeneratorWithHandlebar.prototype = {
+      _init: function () {
+
+      },
+
+      getNextPage: function () {
+
+      },
+
+      appendPage: function () {
+        this.getNextPage();
+        this.wrapper.append();
+      }
+    }
+
+    new this.ListGeneratorWithHandlebar({}, 20, 11, function () {
+    }, 2, 35);
+    // _search.setOption();
+
     // this.data = {};
     // this.searchCondition = {
     //   now: null,
@@ -52,9 +114,7 @@ Tw.RechargeGiftHistory.prototype = {
     // this.presentViewMore.hide();
     // this.requestViewMore.hide();
     //
-    // if(!window.location.hash.replace(/^#/i, "")) {
-    //   this.$tabChanger.eq(0).click();
-    // };
+
     //
     // initHashNav($.proxy(this._hashInit, this));
   },
@@ -64,7 +124,7 @@ Tw.RechargeGiftHistory.prototype = {
       case 'request' :
         this.$tabChanger.eq(1).click();
         break;
-      case 'present' :
+      case 'gift' :
         this.$tabChanger.eq(0).click();
         break;
       default :
@@ -99,7 +159,7 @@ Tw.RechargeGiftHistory.prototype = {
     this._setTemplateWithDOM();
   },
 
-  _setTemplateWithDOM: function() {
+  _setTemplateWithDOM: function () {
     this.listTemplete = Handlebars.compile($('#list-template').html());
     this.presentEmptyTemplete = Handlebars.compile($('#present-empty-template').html());
     this.requestEmptyTemplete = Handlebars.compile($('#request-empty-template').html());
@@ -115,18 +175,18 @@ Tw.RechargeGiftHistory.prototype = {
     // this.requestViewMore.off('click').on('click', $.proxy(this.appendNextPagesToList, this));
   },
 
-  getListData: function (fromDt, toDt, giftType, callback) {
-    if (this.currentTab === 'present') {
+  _getListData: function (fromDt, toDt, type, callback) {
+    if (this.current === 'gift') {
       this._apiService.request(Tw.API_CMD.BFF_06_0018, {
         fromDt: fromDt,
         toDt: toDt,
-        giftType: giftType
+        giftType: type
       }).done($.proxy(callback, this));
-    } else if (this.currentTab === 'request') {
+    } else if (this.current === 'request') {
       this._apiService.request(Tw.API_CMD.BFF_06_0010, {
         fromDt: fromDt,
         toDt: toDt,
-        requestType: giftType
+        requestType: type
       }).done($.proxy(callback, this));
     }
   },
@@ -167,7 +227,7 @@ Tw.RechargeGiftHistory.prototype = {
   },
 
   searchData: function (res) {
-    if (this.searchCondition.isAutoSent && this.currentTab === 'present') {
+    if (this.searchCondition.isAutoSent && this.currentTab === 'gift') {
       var filtered = [];
       res.result.map(function (arr) {
         if (arr.regularGiftType === 'GC') {
@@ -222,7 +282,7 @@ Tw.RechargeGiftHistory.prototype = {
     } else {
       this[this.currentTab + 'Container'].find('.ti-desc').hide();
       this[this.currentTab + 'ContentWrapper'].hide();
-      if (this.currentTab === 'present') {
+      if (this.currentTab === 'gift') {
         this[this.currentTab + 'Container'].find('.contents-info-list').append(this.presentEmptyTemplete());
       } else {
         this[this.currentTab + 'Container'].find('.contents-info-list').append(this.requestEmptyTemplete());
@@ -273,10 +333,9 @@ Tw.RechargeGiftHistory.prototype = {
   },
 
   getTemplate: function (t, d) {
-    var _this = this;
 
     Handlebars.registerHelper('setIndex', function (option) {
-      this.listIndex = option.data.key + _this.data[_this.currentTab].currentPage * 20;
+      // this.listIndex = option.data.key + _this.data[_this.currentTab].currentPage * 20;
       return option.fn(this);
     });
 
@@ -293,13 +352,13 @@ Tw.RechargeGiftHistory.prototype = {
     });
 
     Handlebars.registerHelper('isBig1G', function (val) {
-      var convertDataFormat = Tw.FormatHelper.customDataFormat(this.dataQty, 'MB', 'GB');
+      var convertDataFormat = Tw.FormatHelper.customDataFormat(this.dataQty, Tw.DATA_UNIT.MB, Tw.DATA_UNIT.GB);
       if (this.dataQty < 1024) {
-        this.dataQtyTrans = Tw.FormatHelper.addComma(this.dataQty) + 'MB';
+        this.dataQtyTrans = Tw.FormatHelper.addComma(this.dataQty) + Tw.DATA_UNIT.MB;
         return val.fn(this);
       } else {
         this.dataQtyTrans = convertDataFormat.data + convertDataFormat.unit;
-        this.dataQtyConvert = Tw.FormatHelper.addComma(this.dataQty) + 'MB';
+        this.dataQtyConvert = Tw.FormatHelper.addComma(this.dataQty) + Tw.DATA_UNIT.MB;
         return val.inverse(this);
       }
     });
@@ -313,7 +372,7 @@ Tw.RechargeGiftHistory.prototype = {
     });
 
     Handlebars.registerHelper('isRequest', function (option) {
-      if (_this.currentTab !== 'present' && this.giftType === '2') {
+      if (_this.currentTab !== 'gift' && this.giftType === '2') {
         return option.fn(this);
       } else {
         return option.inverse(this);
@@ -342,27 +401,11 @@ Tw.RechargeGiftHistory.prototype = {
 
   // _setLineList: function (res) {
   //   console.log(res);
-    // this.lineList.lines = lines.result;
-    // this.lineList.current = lines.result[0];
-    // this.lineList.selectedIndex = $(this.lineList.lines).index(this.lineList.current);
-    // this.getPresentList();
+  // this.lineList.lines = lines.result;
+  // this.lineList.current = lines.result[0];
+  // this.lineList.selectedIndex = $(this.lineList.lines).index(this.lineList.current);
+  // this.getPresentList();
   // },
-
-  getDataList: function (fromDt, toDt, giftType, callback) {
-    if (this.currentTab === 'present') {
-      this._apiService.request(Tw.API_CMD.BFF_06_0018, {
-        fromDt: fromDt,
-        toDt: toDt,
-        giftType: giftType
-      }).done($.proxy(callback, this));
-    } else if (this.currentTab === 'request') {
-      this._apiService.request(Tw.API_CMD.BFF_06_0010, {
-        fromDt: fromDt,
-        toDt: toDt,
-        requestType: giftType
-      }).done($.proxy(callback, this));
-    }
-  },
 
   addClosePopupHandler: function () {
     this.$document.one('click', '.popup-closeBtn', $.proxy(this.cancelUpdateCurrentLine, this));
@@ -460,8 +503,8 @@ Tw.RechargeGiftHistory.prototype = {
     e.preventDefault();
     this.resetSearchCondition();
     if (this.$tabChanger.index(e.target) === 0) {
-      // if (this.currentTab === 'present') return false;
-      this.currentTab = 'present';
+      // if (this.currentTab === 'gift') return false;
+      this.currentTab = 'gift';
     } else {
       // if (this.currentTab === 'request') return false;
       this.currentTab = 'request';
