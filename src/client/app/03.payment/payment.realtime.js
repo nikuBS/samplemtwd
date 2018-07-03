@@ -7,6 +7,7 @@
 Tw.PaymentRealtime = function (rootEl) {
   this.$container = rootEl;
   this.$window = $(window);
+  this.$amount = 0;
 
   this._apiService = Tw.Api;
   this._uiService = Tw.Ui;
@@ -19,6 +20,18 @@ Tw.PaymentRealtime.prototype = {
   _bindEvent: function () {
     this.$container.on('click', '.btn', $.proxy(this._toggleEvent, this));
     this.$container.on('click', '.pay', $.proxy(this._pay, this));
+    this.$container.on('change', '.checkbox', $.proxy(this._sumCheckedAmount, this));
+  },
+  _sumCheckedAmount: function (event) {
+    var $target = $(event.target);
+    var $amount = $target.data('value');
+    if ($target.is(':checked')) {
+      this.$amount += $amount;
+    }
+    else {
+      this.$amount -= $amount;
+    }
+    this.$container.find('#total-amount').text(Tw.FormatHelper.addComma(this.$amount.toString()));
   },
   _pay: function () {
     this._apiService.request(Tw.API_CMD.BFF_06_0001, {})
