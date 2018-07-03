@@ -35,30 +35,6 @@ Tw.DateHelper = (function() {
   }
 
   /**
-   * @param date {Date} or {string} : YYYYMMDD
-   * @returns {string} : currentDateTime - 1 month
-   */
-  var getPast1MonthShortDate = function(){
-    return moment().subtract(1, 'month').format('YYYYMMDD');
-  }
-
-  /**
-   * @param date {Date} or {string} : YYYYMMDD
-   * @returns {string} : currentDateTime - 3 month
-   */
-  var getPast3MonthShortDate = function(){
-    return moment().subtract(3, 'month').format('YYYYMMDD');
-  }
-
-  /**
-   * @param date {Date} or {string} : YYYYMMDD
-   * @returns {string} : currentDateTime - 6 month
-   */
-  var getPast6MonthShortDate = function(){
-    return moment().subtract(6, 'month').format('YYYYMMDD');
-  }
-
-  /**
    * @param date {Date} or {string} : YYYYMMDDhhmmss
    * @returns {string} : 2018.06.01.
    */
