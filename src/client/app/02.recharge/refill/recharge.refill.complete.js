@@ -9,7 +9,7 @@ Tw.RechargeRefillComplete = function (rootEl) {
   this.$document = $(document);
   this.$window = window;
 
-  this._history = Tw.History;
+  this._history = new Tw.HistoryService();
 
   this._bindEvent();
   this._complete();

@@ -11,7 +11,7 @@ Tw.RechargeRefillSelect = function (rootEl) {
 
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
-  this._history = Tw.History;
+  this._history = new Tw.HistoryService();
 
   this._bindEvent();
 };
