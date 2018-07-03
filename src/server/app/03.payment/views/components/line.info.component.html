@@ -1,6 +1,21 @@
 <!--
-* FileName: line.info.html
-* Author: 공자윤
-* Date: 2018.06.22
+* FileName: line.info.component.html
+* Author: 공자윤 (jayoon.kong@sk.com)
+* Date: 2018.07.03
 -->
-<div></div>
+<div class="cont-box">
+    <div class="payment-info">
+        <h3 class="blind">나의 대표청구 회선</h3>
+        <ul>
+            <li>
+                <span class="info-num"><%= svcInfo.svcNum %></span>
+            </li>
+            <li>
+                <% if (svcInfo.repSvcYn === 'Y') { %><span class="badge badge-main"><span class="blind">대표청구</span></span><% } %>
+                <span class="info-type"><span class="blind">회선정보</span><%= svcInfo.svcName %></span>
+                <span class="info-name"><span class="blind">별명</span><%= svcInfo.custNm %></span>
+            </li>
+        </ul>
+        <span class="info-btn"><a href="" class="btn-choice" role="button">변경</a></span>
+    </div>
+</div>
