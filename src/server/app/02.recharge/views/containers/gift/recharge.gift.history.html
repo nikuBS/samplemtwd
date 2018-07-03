@@ -21,7 +21,7 @@
         <div class="header">
             <div class="header-ti">
                 <h1>데이터 선물하기</h1>
-                <a href="#allmenu" class="all-menu"><span class="blind">전체메뉴보기</span></a>
+                <a href="/home/menu" class="all-menu"><span class="blind">전체메뉴보기</span></a>
             </div>
             <a href="#pstep" class="prev-step common-back"><span class="blind">이전으로</span></a>
             <a href="#search" class="search-content"><span class="blind">검색하기</span></a>
@@ -48,8 +48,8 @@
                             <div class="tab-linker">
                                 <h2 class="blind">탭 목록</h2>
                                 <ul><!-- .tab-contents로 이동 -->
-                                    <li><a href="#tab1">선물내역</a></li>
-                                    <li><a href="#tab2">조르기내역</a></li>
+                                    <li aria-selected="true" area-controls="tab1-tab"><button>선물내역</button></li>
+                                    <li aria-selected="false" area-controls="tab2-tab"><button>조르기내역</button></li>
                                 </ul>
                             </div>
                             <div class="tab-contents">
@@ -83,24 +83,23 @@
                                                                     <%
                                                                     var title = '';
                                                                     dateList.map((date, i)=>{
-                                                                    if(i===0) return;
                                                                     switch(i) {
-                                                                    case 1 :
+                                                                    case 0 :
                                                                     title = '1개월';
                                                                     break;
-                                                                    case 2 :
+                                                                    case 1 :
                                                                     title = '3개월';
                                                                     break;
-                                                                    case 3 :
+                                                                    case 2 :
                                                                     title = '6개월';
                                                                     break;
-                                                                    case 4 :
+                                                                    case 3 :
                                                                     title = '1년';
                                                                     break;
                                                                     }
                                                                     %>
                                                                     <option value="<%=date%>"
-                                                                    <%=i===2?'selected':''%>><%=title%></option>
+                                                                    <%=i===1?'selected':''%>><%=title%></option>
                                                                     <%})%>
                                                                 </select>
                                                             </div>
@@ -140,24 +139,23 @@
                                                                     <%
                                                                     var title = '';
                                                                     dateList.map((date, i)=>{
-                                                                    if(i===0) return;
                                                                     switch(i) {
-                                                                    case 1 :
+                                                                    case 0 :
                                                                     title = '1개월';
                                                                     break;
-                                                                    case 2 :
+                                                                    case 1 :
                                                                     title = '3개월';
                                                                     break;
-                                                                    case 3 :
+                                                                    case 2 :
                                                                     title = '6개월';
                                                                     break;
-                                                                    case 4 :
+                                                                    case 3 :
                                                                     title = '1년';
                                                                     break;
                                                                     }
                                                                     %>
                                                                     <option value="<%=date%>"
-                                                                    <%=i===2?'selected':''%>><%=title%></option>
+                                                                    <%=i===1?'selected':''%>><%=title%></option>
                                                                     <%})%>
                                                                 </select>
                                                             </div>

@@ -5,20 +5,19 @@
  */
 Tw.RechargeGiftHistory = function (rootEl) {
   this.$container = rootEl;
-  this._apiService = new Tw.ApiService();
+  this._apiService = Tw.ApiService();
+  this._popupService = Tw.PopupService();
 
   this._cachedElement();
   this._bindEvent();
-  this._$init();
+  this._init();
 };
 
 Tw.RechargeGiftHistory.prototype = {
 
-  // TODO : 삭제 확인
   // TODO : 회선변경
-  // TODO : hash처리
 
-  _$init: function () {
+  _init: function () {
     this.currentTab = 'present';    // request : 조르기
     this.data = {};
     this.searchCondition = {
@@ -48,8 +47,26 @@ Tw.RechargeGiftHistory.prototype = {
     this.presentViewMore.hide();
     this.requestViewMore.hide();
 
-    this.getDataList(this.searchCondition.terms[this.searchCondition.selectedTermIndex], this.searchCondition.now, this.searchCondition.type, this.initData);
+    if(!window.location.hash.replace(/^#/i, "")) {
+      this.$tabChanger.eq(0).click();
+    };
+
+    initHashNav($.proxy(this._hashInit, this));
   },
+
+  _hashInit: function (hash) {
+    switch (hash.base) {
+      case 'request' :
+        this.$tabChanger.eq(1).click();
+        break;
+      case 'present' :
+        this.$tabChanger.eq(0).click();
+        break;
+      default :
+        this.$tabChanger.eq(0).click();
+    }
+  },
+
   _cachedElement: function () {
     this.$document = $(document);
 
@@ -57,7 +74,7 @@ Tw.RechargeGiftHistory.prototype = {
 
     this.$widgetWrapper = $('.widget-box.select');
     this.$tabLinker = $('.tab-linker');
-    this.$tabChanger = $('.tab-linker a');
+    this.$tabChanger = $('.tab-linker button');
 
     this.presentContainer = $('#tab1');
     this.presentContentWrapper = this.presentContainer.find('.inner .result-history');
@@ -72,7 +89,7 @@ Tw.RechargeGiftHistory.prototype = {
     this.requestCounter = this.requestContainer.find('.ti-desc em');
     this.requestViewMore = this.requestContainer.find('.bt-more');
     this.requestRestCounter = this.requestViewMore.find('span');
-    this.requestTermSelect = $('#tab1 .inner .contents-info-list .widget select:nth-of-type(2)');
+    this.requestTermSelect = $('#tab2 .inner .contents-info-list .widget select:nth-of-type(2)');
 
 
     this.listTemplete = Handlebars.compile($('#list-template').html());
@@ -82,7 +99,7 @@ Tw.RechargeGiftHistory.prototype = {
 
   _bindEvent: function () {
     this.$widgetWrapper.on('click', 'button', $.proxy(this.openSelectPopupProcess, this));
-    this.$tabLinker.on('click', 'a', $.proxy(this.changeTab, this));
+    this.$tabLinker.on('click', 'button', $.proxy(this.changeTab, this));
 
     this.$document.on('updateLineInfo', $.proxy(this.updateLineInfo, this));
 
@@ -90,9 +107,8 @@ Tw.RechargeGiftHistory.prototype = {
     this.requestViewMore.off('click').on('click', $.proxy(this.appendNextPagesToList, this));
   },
 
-  initData: function (res) {
+  setData: function (res) {
     if (res.code !== '00' && res.msg !== 'success') {
-      console.log('error', res);
       return false;
     }
     if (res.result) {
@@ -110,36 +126,36 @@ Tw.RechargeGiftHistory.prototype = {
     this.initUiFromData();
   },
 
-  updateLineInfo: function(e, params) {
-    Tw.Logger.log('updateLineInfo', e, params, this.$lineSelect);
+  updateLineInfo: function (e, params) {
   },
 
-  setSearchBtn: function(type, term) {
+  setSearchBtn: function (type, term) {
     var targetBtn = this[this.currentTab + 'Container'].find('.bt-dropdown.small'),
         subSelect = targetBtn.siblings().find("select"),
-        text = '',
-        spCode = ' · ';
+        text      = '',
+        spCode    = ' · ';
 
-    subSelect.each(function(t) {
-      $(this).find('option').attr('selected', null).eq(t?term:type).attr('selected', 'selected');
+    subSelect.each(function (t) {
+      $(this).find('option').attr('selected', null).eq(t ? term : type).attr('selected', 'selected');
       text += !t ? $(this).find('option').eq(type).text() + spCode : $(this).find('option').eq(term).text();
     });
     targetBtn.text(text);
   },
 
-  searchData: function(res) {
-    if(this.searchCondition.isAutoSent && this.currentTab === 'present') {
+  searchData: function (res) {
+    if (this.searchCondition.isAutoSent && this.currentTab === 'present') {
       var filtered = [];
-      res.result.map(function(arr) {
-        if(arr.regularGiftType === 'GC') {
+      res.result.map(function (arr) {
+        if (arr.regularGiftType === 'GC') {
           filtered.push(arr);
         }
       });
       res.filteredData = filtered;
-    };
+    }
+
     this.data[this.currentTab] = undefined;
     this[this.currentTab + 'Container'].find('.noresult').remove();
-    this.initData(res);
+    this.setData(res);
   },
 
   updateListData: function () {
@@ -282,13 +298,12 @@ Tw.RechargeGiftHistory.prototype = {
 
     return t(d);
   },
-  
-  openSelectPopupProcess: function (e) {
 
+  openSelectPopupProcess: function (e) {
     if ($(e.target).attr('id') === 'term-set') {
       this.currentPopupKeyWord = 'term';
       this.searchPopupHandler();
-    } else if($(e.target).attr('id') === 'line-set') {
+    } else if ($(e.target).attr('id') === 'line-set') {
       this.currentPopupKeyWord = 'line';
     }
 
@@ -297,19 +312,7 @@ Tw.RechargeGiftHistory.prototype = {
     this.addClosePopupHandler();
   },
 
-  // _getLineInfo: function (callback) {
-  //   this._apiService.request(Tw.API_CMD.BFF_03_0003, {svcCtg: 'M'}).done($.proxy(callback, this));
-  // },
-
-  // _setLineList: function (res) {
-  //   console.log(res);
-    // this.lineList.lines = lines.result;
-    // this.lineList.current = lines.result[0];
-    // this.lineList.selectedIndex = $(this.lineList.lines).index(this.lineList.current);
-    // this.getPresentList();
-  // },
-
-  getDataList: function (fromDt, toDt, giftType, callback) {
+  getListData: function (fromDt, toDt, giftType, callback) {
     if (this.currentTab === 'present') {
       this._apiService.request(Tw.API_CMD.BFF_06_0018, {
         fromDt: fromDt,
@@ -331,11 +334,11 @@ Tw.RechargeGiftHistory.prototype = {
   },
 
   popupCommandOk: function () {
-    if(this.currentPopupKeyWord !== 'line') {
+    if (this.currentPopupKeyWord !== 'line') {
       this.resetCurrentContents();
     }
     // 회선 변경시, 검색 실행시 내역 조회 재실행
-    this.getDataList(this.searchCondition.terms[this.searchCondition.selectedTermIndex], this.searchCondition.now, this.searchCondition.type, this.searchData);
+    this.getListData(this.searchCondition.terms[this.searchCondition.selectedTermIndex], this.searchCondition.now, this.searchCondition.type, this.searchData);
     this.currentPopupKeyWord = '';
   },
 
@@ -350,7 +353,7 @@ Tw.RechargeGiftHistory.prototype = {
     skt_landing.action.popup.close();
   },
 
-  searchPopupHandler: function() {
+  searchPopupHandler: function () {
     var tempTimer = window.setTimeout((function () {
 
       this.setPrevSearchCondition();
@@ -411,7 +414,7 @@ Tw.RechargeGiftHistory.prototype = {
     this.searchCondition.isAutoSent = this.searchCondition.old.isAutoSent;
   },
 
-  resetSearchCondition: function(){
+  resetSearchCondition: function () {
     this.searchCondition.type = 0;
     this.searchCondition.selectedTermIndex = 1;
     this.searchCondition.isAutoSent = false;
@@ -421,19 +424,19 @@ Tw.RechargeGiftHistory.prototype = {
     e.preventDefault();
     this.resetSearchCondition();
     if (this.$tabChanger.index(e.target) === 0) {
-      if (this.currentTab === 'present') return false;
+      // if (this.currentTab === 'present') return false;
       this.currentTab = 'present';
     } else {
-      if (this.currentTab === 'request') return false;
+      // if (this.currentTab === 'request') return false;
       this.currentTab = 'request';
     }
     this.setSearchBtn(0, 1);
     this.resetCurrentContents();
-    this.getDataList(this.searchCondition.now, this.searchCondition.terms[this.searchCondition.selectedTermIndex], '0', this.initData);
+    this.getListData(this.searchCondition.now, this.searchCondition.terms[this.searchCondition.selectedTermIndex], '0', this.setData);
     this[this.currentTab + 'Container'].find('.noresult').remove();
   },
 
-  resetCurrentContents: function() {
+  resetCurrentContents: function () {
     this[this.currentTab + 'ViewMore'].hide();
     this[this.currentTab + 'ContentWrapper'].empty();
   }
