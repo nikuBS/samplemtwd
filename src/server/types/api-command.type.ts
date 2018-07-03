@@ -83,6 +83,7 @@ export const API_CMD = {
 
   // TID
   GUIDE: { path: '/auth/type/view/guide.do', method: API_METHOD.POST, server: API_SERVER.TID, bypass: false },
+  ACCOUNT_INFO: { path: '/auth/type/member/callbackAccountInfo.do', method: API_METHOD.POST, server: API_SERVER.TID, bypass: false },
 
   TEST_GET_USAGE_BTN: { path: '/usageBtn', method: API_METHOD.GET, server: API_SERVER.TEST, bypass: true }
 };

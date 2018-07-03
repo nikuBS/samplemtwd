@@ -8,7 +8,7 @@ import TwViewController from '../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
 import { API_CMD } from '../../../types/api-command.type';
 
-class AuthLogin extends TwViewController {
+class AuthTidLogin extends TwViewController {
   constructor() {
     super();
   }
@@ -23,4 +23,4 @@ class AuthLogin extends TwViewController {
   }
 }
 
-export default AuthLogin;
+export default AuthTidLogin;
