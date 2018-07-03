@@ -40,22 +40,27 @@ Tw.HistoryService.prototype = {
       }
     }
   },
-  onHashChange: function () {
-    this.showAndHide();
-    this.resetHashHistory();
+  onHashChange: function (hash) {
+    if (hash.base.match('step')) {
+      this.showAndHide();
+    }
+    if (this.isReturendMain() && this.isCompleted()) {
+      this.resetHashHistory();
+    }
   },
-  showAndHide: function () {
-    var id = window.location.hash;
-    if (Tw.FormatHelper.isEmpty(id)) id = '#main';
+  showAndHide: function (id) {
+    var _id = id;
+    if (_id === undefined) {
+      _id = window.location.hash;
+    }
 
-    var $selector = this.$container.find(id);
-    $selector.siblings().hide();
+    var $selector = this.$container.find(_id);
+    $selector.siblings().not($('#header')).hide();
     $selector.show();
   },
   resetHashHistory: function () {
-    if (this.isReturendMain() && this.isCompleted()) {
-      this.resetHistory(this.getHistoryLength());
-    }
+    this.showAndHide('#main');
+    this.resetHistory(this.getHistoryLength());
   },
   setHistory: function () {
     this.$container.addClass('process-complete');
