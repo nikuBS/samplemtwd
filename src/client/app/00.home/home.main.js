@@ -6,8 +6,8 @@
 
 Tw.HomeMain = function (rootEl) {
   this.$container = rootEl;
-  this._apiService = new Tw.ApiService();
-  this._popupService = new Tw.PopupService();
+  this._apiService = Tw.Api;
+  this._popupService = Tw.Popup;
 
   this._init();
   this._bindEvent();
