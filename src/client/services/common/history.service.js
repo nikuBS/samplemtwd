@@ -9,6 +9,7 @@ Tw.HistoryService = function (selector) {
   this.storageName = this.pathname.split('/')[2];
   this.historyObj = {};
   this._hashService = Tw.Hash;
+  this._hashList = [];
 };
 Tw.HistoryService.prototype = {
   init: function (hash) {
@@ -42,12 +43,21 @@ Tw.HistoryService.prototype = {
     }
   },
   onHashChange: function (hash) {
-    this.showAndHide();
-    if (hash.base.match('step') || hash.base.match('process-complete')) {
+    var isStep = hash.base.match('step');
+    var isCompleted = hash.base.match('process-complete');
+    if (isStep) {
+      this.addHashList(hash.base.split('-')[0]);
+    }
+    if (isStep || isCompleted) {
       this.scrollInit();
     }
-    if (this.isReturendMain() && this.isCompleted()) {
-      this.resetHashHistory();
+    this.showAndHide();
+    this.checkIsCompleted();
+  },
+  addHashList: function (hash) {
+    var hashList = this._hashList;
+    if (!hashList.includes(hash)) {
+      hashList.push(hash);
     }
   },
   scrollInit: function () {
@@ -65,6 +75,7 @@ Tw.HistoryService.prototype = {
   },
   resetHashHistory: function () {
     this.resetHistory(this.getHistoryLength());
+    this._hashList = [];
   },
   setHistory: function () {
     this.$container.addClass('process-complete');
@@ -75,15 +86,9 @@ Tw.HistoryService.prototype = {
     this.reload();
   },
   getHistoryLength: function () {
-    /*
-    var historyLength = this.getHashElementLength();
+    var historyLength = this._hashList.length;
     historyLength = -historyLength;
     return historyLength;
-    */
-    return -1;
-  },
-  getHashElementLength: function () {
-    return this.$container.find('div[id^="step"]').length;
   },
   isReturendMain: function () {
     return Tw.FormatHelper.isEmpty(window.location.hash);
@@ -96,5 +101,11 @@ Tw.HistoryService.prototype = {
   },
   complete: function () {
     Tw.UIService.setLocalStorage(this.storageName, 'done');
+  },
+  checkIsCompleted: function () {
+    if (this.isReturendMain() && this.isCompleted()) {
+      this.scrollInit();
+      this.resetHashHistory();
+    }
   }
 };
