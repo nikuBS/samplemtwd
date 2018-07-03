@@ -10,9 +10,9 @@ Tw.RechargeRefill = function (rootEl) {
   this.$document = $(document);
   this.$btnTarget = null;
 
-  this._popupService = new Tw.PopupService();
-  this._apiService = new Tw.ApiService();
-  this._history = new Tw.HistoryService();
+  this._popupService = Tw.Popup;
+  this._apiService = Tw.Api;
+  this._history = Tw.History;
   this._history.init();
 
   this._init();

@@ -8,10 +8,11 @@ Tw.RechargeRefillComplete = function (rootEl) {
   this.$container = rootEl;
   this.$document = $(document);
   this.$window = window;
-  this.$storageName = window.location.pathname.split('/')[2];
+
+  this._history = Tw.History;
 
   this._bindEvent();
-  this._setLocalStorage();
+  this._complete();
 };
 
 Tw.RechargeRefillComplete.prototype = {
@@ -24,7 +25,7 @@ Tw.RechargeRefillComplete.prototype = {
   _goLoad: function (url) {
     this.$window.location.href = url;
   },
-  _setLocalStorage: function () {
-    Tw.UIService.setLocalStorage(this.$storageName, 'done');
+  _complete: function () {
+    this._history.complete();
   }
 };

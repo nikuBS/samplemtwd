@@ -9,6 +9,9 @@ Tw.Init.prototype = {
     Tw.Ui = new Tw.UIService();
     Tw.Logger = new Tw.LoggerService();
     Tw.Native = new Tw.NativeService();
+    Tw.History = new Tw.HistoryService();
+    Tw.Popup = new Tw.PopupService();
+    Tw.Api = new Tw.ApiService();
   },
 
   _logVersion: function () {
