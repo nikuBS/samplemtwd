@@ -5,6 +5,7 @@ import { API_CMD, API_CODE, API_METHOD, API_SERVER } from '../types/api-command.
 import ParamsHelper from '../utils/params.helper';
 import LoginService from './login.service';
 import LoggerService from './logger.service';
+import FormatHelper from '../utils/format.helper';
 
 class ApiService {
   static instance;
@@ -76,28 +77,28 @@ class ApiService {
   }
 
   private apiCallback(observer, command, resp) {
-    let respData;
+    this.logger.info(this, '[API RESP]', resp.data);
+
     if ( command.server === API_SERVER.BFF ) {
       this.setServerSession(resp);
     }
 
-    try {
-      respData = JSON.parse(resp.data);
-      if ( this.isSessionCallback(command) ) {
-        this.setSvcInfo(respData.result);
-      }
-    } catch ( err ) {
-      this.logger.warn(this, 'JSON parse error');
-      respData = resp.data;
+    if ( FormatHelper.isObject(resp.data) && this.isSessionCallback(command) && resp.data.code === API_CODE.CODE_00 ) {
+      this.setSvcInfo(resp.data.result);
     }
-    observer.next(respData);
+
+    observer.next(resp.data);
     observer.complete();
   }
 
   private handleError(observer, err) {
     this.logger.error(this, '[API_ERR]', err);
     // observer.error(err);
-    observer.next({ code: API_CODE.CODE_400, msg: err.message });
+    let message = 'unknown error';
+    if ( FormatHelper.isObject(err) && !FormatHelper.isEmpty(err.message) ) {
+      message = err.message;
+    }
+    observer.next({ code: API_CODE.CODE_400, msg: message });
     observer.complete();
   }
 

@@ -37,32 +37,21 @@ Tw.HomeMain.prototype = {
   },
 
   _getGiftBalance: function () {
-    var resp = {
-      code: '00',
-      msg: 'success',
-      result: {
-        reqCnt: '1',
-        giftRequestAgainYn: 'Y',
-        dataRemQty: '3500'
-      }
-    };
-
-    resp.result.showDataMb = Tw.FormatHelper.addComma(resp.result.dataRemQty);
-    resp.result.showDataGb = Tw.FormatHelper.customDataFormat(resp.result.dataRemQty, 'MB', 'GB').data;
-    this.$giftCard.html(this.tplGiftCard(resp.result));
-
-    // this._apiService.request(Tw.API_CMD.BFF_06_0014, {})
-    //   .done($.proxy(this._successGiftBalance, this))
-    //   .fail($.proxy(this._failGiftBalance, this));
+    this._apiService.request(Tw.API_CMD.BFF_06_0014, {})
+      .done($.proxy(this._successGiftBalance, this))
+      .fail($.proxy(this._failGiftBalance, this));
   },
 
   _successGiftBalance: function (resp) {
-    resp.result.showDataMb = Tw.FormatHelper.addComma(resp.result.dataRemQty);
-    resp.result.showDataGb = Tw.FormatHelper.customDataFormat(resp.result.dataRemQty, 'MB', 'GB').data;
-    this.$giftCard.html(this.tplGiftCard(resp.result));
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      resp.result.showDataMb = Tw.FormatHelper.addComma(resp.result.dataRemQty);
+      resp.result.showDataGb = Tw.FormatHelper.customDataFormat(resp.result.dataRemQty, 'MB', 'GB').data;
+      this.$giftCard.html(this.tplGiftCard(resp.result));
+    }
+
   },
 
   _failGiftBalance: function (error) {
-
+    console.log(resp);
   }
 };
