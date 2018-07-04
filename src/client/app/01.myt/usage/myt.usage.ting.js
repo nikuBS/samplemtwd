@@ -53,7 +53,7 @@ Tw.MytUsageTing.prototype = {
         e.preventDefault();
         if(e.target.nodeName.toLowerCase() === 'span') e.target = e.target.parentNode;
 
-        this.miniPopupToggle('miniPopup0' + $(e.target).data("popup-type"));
+        this.miniPopupToggle('miniPopup0' + $(e.target).data('popup-type'));
       }, this));
     }
     if (this._ui.$miniPopupCloser.length) {

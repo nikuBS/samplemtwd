@@ -27,12 +27,12 @@ Tw.HomeMain.prototype = {
 
 
   // 리필하기
-  _openRefillProduct: function ($event) {
+  _openRefillProduct: function () {
     this._popupService.openRefillProduct();
   },
 
   // 선물하기
-  _openGiftProduct: function ($event) {
+  _openGiftProduct: function () {
     this._popupService.openGiftProduct();
   },
 
@@ -52,6 +52,6 @@ Tw.HomeMain.prototype = {
   },
 
   _failGiftBalance: function (error) {
-    console.log(resp);
+    console.log(error);
   }
 };

@@ -27,5 +27,5 @@ Tw.Init.prototype = {
 };
 
 $(document).ready(function () {
-  var init = new Tw.Init();
+  new Tw.Init();
 });

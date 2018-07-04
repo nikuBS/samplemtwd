@@ -17,4 +17,5 @@ Tw.RechargeLimit = function (rootEl) {
 Tw.RechargeLimit.prototype = {
   _init: function () {
   }
-}
+};
+

@@ -10,8 +10,6 @@ Tw.HashService.prototype = {
 
     if ( typeof callback !== 'function' ) {
       throw 'hashnav.js requires a callback function that does something with the hash.';
-      return false;
-
     }
 
     if ( 'onhashchange' in window ) {
@@ -37,7 +35,7 @@ Tw.HashService.prototype = {
 
   _chopHash: function (hash) {
     // Do something with the new hash
-    var hash = {
+    hash = {
       raw: hash,
       base: decodeURIComponent(hash),
       parameters: null
@@ -45,7 +43,7 @@ Tw.HashService.prototype = {
 
     if ( hash.raw.match(/[?]/) ) {
       // It's a query string with a base
-      var chunks = hash.raw.split('?');
+      // var chunks = hash.raw.split('?');
 
       hash.base = decodeURIComponent(hash.raw.replace(/[?].*/, ''));
       hash.parameters = this._parametersFromString(hash.raw.replace(/.*[?]/, ''));

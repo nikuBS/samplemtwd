@@ -6,8 +6,8 @@
 
 Tw.RechargeGiftProcess = function (rootEl) {
   this.$container = rootEl;
-  this._apiService = new Tw.ApiService();
-  this._popupService = new Tw.PopupService();
+  this._apiService = Tw.Api;
+  this._popupService = Tw.Popup;
   this.history = new Tw.HistoryService(rootEl);
   this.history.init('hash');
 
@@ -57,7 +57,7 @@ Tw.RechargeGiftProcess.prototype = {
 
   _onContact: function (resp) {
     var params = resp.params;
-    var phoneNumber = params.phoneNumber.replace(/-/gi, "");
+    var phoneNumber = params.phoneNumber.replace(/-/gi, '');
     this.$input_phone.val(phoneNumber);
   },
 
@@ -89,12 +89,12 @@ Tw.RechargeGiftProcess.prototype = {
     this.lineInfo = params.lineInfo;
     this.requestRemainData();
 
-    if ( this.processType == 'request' ) {
+    if ( this.processType === 'request' ) {
       this._apiService.request(Tw.API_CMD.BFF_06_0010, {})
         .done($.proxy(this.onSuccessRequestHistory, this));
     }
 
-    if ( this.processType == 'members' ) {
+    if ( this.processType === 'members' ) {
       this._apiService.request(Tw.API_CMD.BFF_06_0018, {
         fromDt: Tw.DateHelper.getPastYearShortDate,
         toDt: Tw.DateHelper.getCurrentShortDate,
@@ -102,7 +102,7 @@ Tw.RechargeGiftProcess.prototype = {
       }).done($.proxy(this.onSuccessMembersHistory, this));
     }
 
-    if ( this.processType == 'family' ) {
+    if ( this.processType === 'family' ) {
       this._apiService.request(Tw.API_CMD.BFF_06_0006, {})
         .done($.proxy(this.onSuccessFamilyHistory, this));
     }
@@ -110,7 +110,7 @@ Tw.RechargeGiftProcess.prototype = {
 
   onSuccessRequestHistory: function (res) {
     var result = res.result.slice(0, 3);
-    if ( result.length != 0 ) {
+    if ( result.length !== 0 ) {
       var tpl_request_history = Handlebars.compile($('#tpl_request_history').text());
       $('#wrap_request_history').html(tpl_request_history({ list: result }));
     }
@@ -118,7 +118,7 @@ Tw.RechargeGiftProcess.prototype = {
 
   onSuccessMembersHistory: function (res) {
     var result = res.result.slice(0, 3);
-    if ( result.length != 0 ) {
+    if ( result.length !== 0 ) {
       var tpl_members_history = Handlebars.compile($('#tpl_members_history').text());
       $('#wrap_members_history').html(tpl_members_history({ list: result }));
     }
@@ -126,7 +126,7 @@ Tw.RechargeGiftProcess.prototype = {
 
   onSuccessFamilyHistory: function (res) {
     var result = res.result.slice(0, 3);
-    if ( result.length != 0 ) {
+    if ( result.length !== 0 ) {
       var tpl_family_history = Handlebars.compile($('#tpl_family_history').text());
       $('#wrap_family_history').html(tpl_family_history({ list: result }));
     }
@@ -142,7 +142,7 @@ Tw.RechargeGiftProcess.prototype = {
         giftRequestAgainYn: 'Y',
         dataRemQty: '700'
       }
-    }
+    };
 
     this.receiver.dataRemQty = response.result.dataRemQty;
     var tpl = Handlebars.compile($('#tpl_remain_data').text());
@@ -211,9 +211,9 @@ Tw.RechargeGiftProcess.prototype = {
   },
 
   nextProcess: function (e) {
-    if ( location.hash == '#step1' ) {
+    if ( location.hash === '#step1' ) {
       this.validateStep1();
-    } else if ( location.hash == '#step2' ) {
+    } else if ( location.hash === '#step2' ) {
       this.validateStep2();
     }
   },
@@ -273,7 +273,7 @@ Tw.RechargeGiftProcess.prototype = {
       case 'family':
         this._apiService.request(Tw.API_CMD.BFF_06_0004, JSON.stringify({ dataQty: dataQty, befrSvcNum: this.provider.phone }))
           .done(function (res) {
-            if ( res.code == '00' ) {
+            if ( res.code === Tw.API_CODE.CODE_00 ) {
               this.resetData();
               location.replace(this.getNextStepUrl());
             } else {
@@ -285,7 +285,7 @@ Tw.RechargeGiftProcess.prototype = {
         if ( this._isRequestByOpdtm ) {
           this._apiService.request(Tw.API_CMD.BFF_06_0013, { dataQty: dataQty, opDtm: this._opDtm })
             .done(function (res) {
-              if ( res.code == "00" ) {
+              if ( res.code === Tw.API_CODE.CODE_00 ) {
                 this.resetData();
                 location.replace(this.getNextStepUrl());
               } else {
@@ -295,7 +295,7 @@ Tw.RechargeGiftProcess.prototype = {
         } else {
           this._apiService.request(Tw.API_CMD.BFF_06_0013, { dataQty: dataQty, svcNum: this.provider.phone })
             .done(function (res) {
-              if ( res.code == '00' ) {
+              if ( res.code === Tw.API_CODE.CODE_00 ) {
                 this.resetData();
                 location.replace(this.getNextStepUrl());
               } else {
@@ -308,7 +308,7 @@ Tw.RechargeGiftProcess.prototype = {
   },
 
   renderProvider: function (res) {
-    if ( res.code == "00" ) {
+    if ( res.code === Tw.API_CODE.CODE_00 ) {
       this.provider.name = res.result.custName;
       this.provider.phone = this.$input_phone.val();
 
@@ -318,7 +318,7 @@ Tw.RechargeGiftProcess.prototype = {
 
       location.replace(this.getNextStepUrl());
     } else {
-      this.onFailStep(res)
+      this.onFailStep(res);
     }
   },
 
@@ -343,7 +343,7 @@ Tw.RechargeGiftProcess.prototype = {
   },
 
   goHistory: function () {
-    if ( this.processType == 'request' ) {
+    if ( this.processType === 'request' ) {
       location.replace('/recharge/gift/history#request');
     } else {
       location.replace('/recharge/gift/history#present');
@@ -358,4 +358,4 @@ Tw.RechargeGiftProcess.prototype = {
   goHome: function () {
     location.replace('/home');
   }
-}
+};

@@ -8,7 +8,7 @@ Tw.ApiService.prototype = {
       url: '/api' + command.path,
       dataType: 'json',
       timeout: 10000,
-      headers: Object.assign({ "Content-Type": "application/json" }, headers),
+      headers: Object.assign({ 'Content-Type': 'application/json' }, headers),
       data: params
     };
     Tw.Logger.info('[API REQ]', htOptions);

@@ -50,10 +50,10 @@ Tw.RechargeRefill.prototype = {
     }
   },
   _checkValidation: function ($target) {
-    return (this._checkIsVisible($target)
-      && this._checkIsReceived()
-      && this._checkIsUsable($target)
-      && this._checkConfirm());
+    return (this._checkIsVisible($target) &&
+      this._checkIsReceived() &&
+      this._checkIsUsable($target) &&
+      this._checkConfirm());
   },
   _checkIsVisible: function ($target) {
     if ($target.hasClass('disabled')) {
