@@ -25,6 +25,8 @@ gulp.task('server', function () {
 gulp.task('js-vendor', function () {
   return gulp.src([
     'node_modules/jquery/dist/jquery.min.js',
+    'node_modules/jquery-ui-dist/jquery-ui.min.js',
+    'node_modules/jquery-ui-touch-punch/jquery-ui-touch-punch.min.js',
     'node_modules/underscore/underscore-min.js',
     'node_modules/handlebars/dist/handlebars.min.js',
     'node_modules/slick-carousel/slick/slick.min.js',
