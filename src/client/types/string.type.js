@@ -26,7 +26,7 @@ Tw.POPUP_TITLE = {
   NOTIFY: '알림',
   REQUEST_DELETE: '조르기 삭제안내',
   GIFT_FAMILY_INFO: '데이터 자동 선물 안내',
-  CHANGE_SEARCH_CONDITION: '검색 조건 변경'
+  CHANGE_SEARCH_CONDITION: '검색 조건 변경',
 };
 
 Tw.POPUP_PROPERTY = {

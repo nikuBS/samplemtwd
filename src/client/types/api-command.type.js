@@ -72,6 +72,10 @@ Tw.API_CMD = {
   BFF_07_0022: { path: '/core-bill/v1/bill-pay/autopay-banks', method: Tw.API_METHOD.GET }
 };
 
+Tw.NODE_CMD = {
+  GET_ENVIRONMENT: { path: '/environment', method: Tw.API_METHOD.GET }
+};
+
 Tw.API_CODE = {
   CODE_00: '00'
 };
