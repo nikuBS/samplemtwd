@@ -18,7 +18,7 @@ Tw.Init.prototype = {
   },
 
   _getDeviceInfo: function () {
-    Tw.Native.send(Tw.NTV_CMD.GET_DEVICE_INFO, {}, $.proxy(this._setDeviceInfo, this));
+    Tw.Native.send(Tw.NTV_CMD.GET_DEVICE, {}, $.proxy(this._setDeviceInfo, this));
   },
 
   _setDeviceInfo: function (resp) {
