@@ -99,13 +99,18 @@ skt_landing.action = {
     $('.container-wrap').css({
       'position':'fixed',
       'transform': 'translate(0 ,-' + this.scroll_gap + 'px)',
+      'width':'100%',
       'z-index': -1
     });
     $('body,html').css('height','100%');
      $('.wrap').css({
       'height':'100%',
       'padding':0
-    })
+    });
+    $('.skip_navi, .container-wrap, .header-wrap, .gnb-wrap').attr({
+      'aria-hidden':true,
+      'tabindex':-1
+    });
     /*
     $('#header').css({
       'transform': 'translate(0 ,' + this.scroll_gap + 'px)'
@@ -154,6 +159,10 @@ skt_landing.action = {
     $('.wrap').css({
       'height':'',
       'padding':''
+    });
+    $('.skip_navi, .container-wrap, .header-wrap, .gnb-wrap').attr({
+      'aria-hidden':false,
+      'tabindex':0
     });
     /*$('#contents').css({
       'position': 'relative',
@@ -209,7 +218,7 @@ skt_landing.action = {
   setFocus: function(target, idx){  // target : selector(string) | jquery selector
     var target = $(target),
         idx = idx ? idx : 0;
-    target.eq(idx).attr('tabindex',0).focus(); //포커스
+    target.eq(idx).attr('tabindex',0).focus(); //포커스 
   },
   top_btn: function () {
     if (skt_landing.util.win_info.get_scrollT() > 0) {
