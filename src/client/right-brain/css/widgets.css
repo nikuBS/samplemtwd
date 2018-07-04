@@ -140,6 +140,86 @@
   color: #000;
 }
 
+.slider .type3, .slider2 .type3, .slider3 .type3, .slider4 .type3, .slider5 .type3 {
+  position: relative;
+}
+
+.slider .type3 .slider-box .slick-list, .slider2 .type3 .slider-box .slick-list, .slider3 .type3 .slider-box .slick-list, .slider4 .type3 .slider-box .slick-list, .slider5 .type3 .slider-box .slick-list {
+  overflow: visible;
+}
+
+.slider .type3 .swiper-slide, .slider2 .type3 .swiper-slide, .slider3 .type3 .swiper-slide, .slider4 .type3 .swiper-slide, .slider5 .type3 .swiper-slide {
+  position: relative;
+}
+
+.slider .type3 .swiper-slide .swiper-cont, .slider2 .type3 .swiper-slide .swiper-cont, .slider3 .type3 .swiper-slide .swiper-cont, .slider4 .type3 .swiper-slide .swiper-cont, .slider5 .type3 .swiper-slide .swiper-cont {
+  border-radius: 0.625rem;
+  overflow: hidden;
+}
+
+.slider .type3 .swiper-slide .swiper-cont .bt-link-arrow, .slider2 .type3 .swiper-slide .swiper-cont .bt-link-arrow, .slider3 .type3 .swiper-slide .swiper-cont .bt-link-arrow, .slider4 .type3 .swiper-slide .swiper-cont .bt-link-arrow, .slider5 .type3 .swiper-slide .swiper-cont .bt-link-arrow {
+  position: relative;
+  display: inline-block;
+  border-radius: 100%;
+  border: 1px solid #ef4565;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  width: 1.5rem;
+  height: 1.5rem;
+  background-color: rgba(0, 0, 0, 0.1);
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  border: none;
+}
+
+.slider .type3 .swiper-slide .swiper-cont .bt-link-arrow .ico, .slider2 .type3 .swiper-slide .swiper-cont .bt-link-arrow .ico, .slider3 .type3 .swiper-slide .swiper-cont .bt-link-arrow .ico, .slider4 .type3 .swiper-slide .swiper-cont .bt-link-arrow .ico, .slider5 .type3 .swiper-slide .swiper-cont .bt-link-arrow .ico {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: inline-block;
+  width: 0.375rem;
+  height: 0.625rem;
+  margin: auto;
+  background: url(/img/ico/ico-group.png) no-repeat -2.375rem -2.125rem;
+  background-size: 3.25rem;
+}
+
+.slider .type3 .swiper-slide .swiper-cont .t-commend-info .ico-commend, .slider2 .type3 .swiper-slide .swiper-cont .t-commend-info .ico-commend, .slider3 .type3 .swiper-slide .swiper-cont .t-commend-info .ico-commend, .slider4 .type3 .swiper-slide .swiper-cont .t-commend-info .ico-commend, .slider5 .type3 .swiper-slide .swiper-cont .t-commend-info .ico-commend {
+  position: absolute;
+  top: 0.625rem;
+  left: 0.75rem;
+  width: 1.8125rem;
+  height: 1.125rem;
+  background: url(/img/ico/badge-group.png) no-repeat 0 -3.5625rem;
+  background-size: 4.5625rem;
+}
+
+.slider .type3 .swiper-slide .swiper-cont .t-commend-info .commend-info-txt, .slider2 .type3 .swiper-slide .swiper-cont .t-commend-info .commend-info-txt, .slider3 .type3 .swiper-slide .swiper-cont .t-commend-info .commend-info-txt, .slider4 .type3 .swiper-slide .swiper-cont .t-commend-info .commend-info-txt, .slider5 .type3 .swiper-slide .swiper-cont .t-commend-info .commend-info-txt {
+  position: absolute;
+  bottom: 0.5rem;
+  left: 0.75rem;
+  font-weight: 700;
+  font-size: 0.8125rem;
+  color: #808698;
+}
+
+.slider .type3 .swiper-slide .swiper-cont .t-commend-info .info-txt-w, .slider2 .type3 .swiper-slide .swiper-cont .t-commend-info .info-txt-w, .slider3 .type3 .swiper-slide .swiper-cont .t-commend-info .info-txt-w, .slider4 .type3 .swiper-slide .swiper-cont .t-commend-info .info-txt-w, .slider5 .type3 .swiper-slide .swiper-cont .t-commend-info .info-txt-w {
+  color: white;
+}
+
+.slider .type3 .swiper-slide .swiper-cont.bg-color3, .slider2 .type3 .swiper-slide .swiper-cont.bg-color3, .slider3 .type3 .swiper-slide .swiper-cont.bg-color3, .slider4 .type3 .swiper-slide .swiper-cont.bg-color3, .slider5 .type3 .swiper-slide .swiper-cont.bg-color3 {
+  background: #e5e8ee;
+  height: 5rem;
+}
+
+.slider .type3 .swiper-slide .swiper-cont.bg-color4, .slider2 .type3 .swiper-slide .swiper-cont.bg-color4, .slider3 .type3 .swiper-slide .swiper-cont.bg-color4, .slider4 .type3 .swiper-slide .swiper-cont.bg-color4, .slider5 .type3 .swiper-slide .swiper-cont.bg-color4 {
+  background: #3c3a69;
+  height: 5rem;
+}
+
 .slider .bt-select-arrow, .slider2 .bt-select-arrow, .slider3 .bt-select-arrow, .slider4 .bt-select-arrow, .slider5 .bt-select-arrow {
   display: block;
   position: absolute;
@@ -156,6 +236,10 @@
 }
 
 /* accordion */
+.box-confirm {
+  padding: 1.6875rem 0;
+}
+
 .accordion {
   position: relative;
 }

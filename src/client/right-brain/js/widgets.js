@@ -47,9 +47,9 @@ skt_landing.widgets = {
       }
 
       var _this = $(this);
-      if(_this.find('li.checked').length < 1){
+      /*if(_this.find('li.checked').length < 1){
         setRadioState(_this.find('input').eq(0));
-      }
+      }*/
       _this.find('input').on('change',function(){
         setRadioState($(this));
       });
@@ -67,18 +67,9 @@ skt_landing.widgets = {
       label.siblings().find('input').attr('checked',false).prop('checked',false);
       label.addClass('checked').attr('aria-checked',true);
       target.attr('checked',true).prop('checked',true);
-
-      /*label.siblings().removeClass('checked');
-      label.siblings().filter('[role=radio]').attr('aria-checked',false);
-      label.siblings().find('input').attr('checked',false).prop('checked',false);
-      label.addClass('checked').filter('[role=radio]').attr('aria-checked',true);
-      target.filter('[role=radio]').attr('checked',true).prop('checked',true);*/
     }
   },
   widget_step: function () {
-  },
-  widget_select: function () {
-    console.log('select 태그 정리 필요');
   },
   widget_radio: function () {
     var input = $('.radiobox :radio');
@@ -161,10 +152,10 @@ skt_landing.widgets = {
       var _this = $(this).find('.slider');
       _this.slick({
         arrows: true,
-        infinite: true,
+        infinite: false,
         slidesToShow: 4,
 		slidesToScroll: 1,
-      })     
+      });
     });
   },
   widget_slider4: function () {
@@ -274,7 +265,7 @@ skt_landing.widgets = {
       }
       var setOnList = _this.find('> .acco-cover > .acco-style > .acco-list > .acco-box');
       for(var i=0, leng=setOnList.length; i<leng; ++i){
-        if(setOnList.eq(i).find('> .acco-tit button').length < 1){
+        if(setOnList.eq(i).find('> .acco-tit button').length < 1 && _this.find('.acco-cover.disabled').length < 1){
           setOnList.eq(i).addClass('on');
         }
       }
@@ -340,7 +331,7 @@ skt_landing.widgets = {
     });
     function checkSwitch(target, state){
       target = $(target);
-      state = state == true || state == false ? state : target.closest('.btn-switch').hasClass('on');
+      state = typeof state == 'boolean' ? state : target.closest('.btn-switch').hasClass('on');
       if (state) {
         target.closest('.btn-switch').removeClass('on').attr('aria-checked',false);
         target.attr('checked',false);
@@ -478,5 +469,30 @@ skt_landing.widgets = {
       });
       return arr;
     }
+  },
+  widget_sortlist : function(){
+    $( "#sortable-enabled" ).sortable({
+      connectWith: "#sortable-enabled"
+    }).disableSelection();
+    $('.ui-state-default .bt-active').on('touchstart touchend touchmove',function(e){
+      e.stopPropagation();
+    });
+    $(document).on('click', '.connectedSortable .bt-active', function(){
+      if($(this).closest('.connectedSortable').hasClass('enabled')){
+        $(this).parent().appendTo('#sortable-disabled');
+        $(this).find('.blind').text('회선 활성화 하기');
+      }else{
+        $(this).parent().prependTo('#sortable-enabled');
+        $(this).find('.blind').text('회선 삭제 하기');
+      }
+    });
+    $(document).on('click', '.connectedSortable .bt-sort', function(){
+      var parent_cont = $(this).closest('.ui-state-default');
+      if($(this).hasClass('up')){
+        parent_cont.insertBefore(parent_cont.prev());
+      }else{
+        parent_cont.insertAfter(parent_cont.next());
+      }
+    });
   }
 }
