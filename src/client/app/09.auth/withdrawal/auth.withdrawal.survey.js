@@ -54,7 +54,7 @@ Tw.AuthWithdrawalSurvey.prototype = {
         if (res.code === '00') {
           var href = '';
           if (res.result.tidYn === 'Y') {
-            href = '/auth/withdrawal/complete-tid'; // Still usable with TID
+            href = '/auth/withdrawal/complete?tid=Y'; // Still usable with TID
           } else {
             href = '/auth/withdrawal/complete'; // Need to sign-up with TID
           }
