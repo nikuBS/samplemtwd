@@ -13,10 +13,13 @@ Tw.VOICE_UNIT = {
 };
 
 Tw.DATE_UNIT = {
+  MONTH: '개월',
+  MONTH_S: '월',
+  YEAR: '년',
   ONE_YEAR: '1년',
   ONE_MONTH: '1개월',
   THREE_MONTH: '3개월',
-  SIX_MONTH: '6개월',
+  SIX_MONTH: '6개월'
 };
 
 Tw.POPUP_TITLE = {
@@ -30,7 +33,8 @@ Tw.POPUP_PROPERTY = {
   ALL: '전체',
   SEND: '보냄',
   RECEIVE: '받음',
-  PERIOD: '기간'
+  PERIOD: '기간',
+  SET_VIEW_AUTO: '자동 보낸 선물만 모아보기'
 };
 
 Tw.BUTTON_LABEL = {
@@ -86,7 +90,19 @@ Tw.MSG_PAYMENT = {
   PAYMENT_A12: '자동납부 해지가 완료되었습니다.',
   PAYMENT_A13: '보유하신 포인트보다 초과 입력하셨습니다.',
   PAYMENT_A14: '1,000 포인트 이상 입력해 주세요.',
-  PAYMENT_A15: '은행 자동납부 해지 시 자동납부 할인 기준 변경으로 다시 은행 자동납부를 신청하더라도 1% 할인은 제공되지 않습니다.\n해지하시겠습니까?'
+  PAYMENT_A15: '은행 자동납부 해지 시 자동납부 할인 기준 변경으로 다시 은행 자동납부를 신청하더라도 1% 할인은 제공되지 않습니다.\n해지하시겠습니까?',
+  HISTORY_A01: '환불신청 계좌가 등록되었습니다.',
+  HISTORY_A02: '자동납부 통합인출 서비스가 해지되었습니다.',
+  HISTORY_A03: 'OK캐쉬백 포인트 납부 예약 취소 하시겠습니까?',
+  HISTORY_A03_01: 'OK캐쉬백 포인트 납부 예약이 취소되었습니다.',
+  HISTORY_A04: 'T포인트 납부 예약 취소 하시겠습니까? ',
+  HISTORY_A04_01: 'T포인트 납부 예약이 취소되었습니다.',
+  HISTORY_A05: '레인보우 포인트 납부 예약 취소 하시겠습니까?',
+  HISTORY_A05_01: '레인보우 포인트 납부 예약이 취소되었습니다.',
+  HISTORY_A06: '세금계산서 이메일 전송이 완료되었습니다.\n이메일 주소 : ',
+  HISTORY_A07: '세금계산서 팩스 전송이 완료되었습니다.\n팩스번호 : ',
+  HISTORY_A08: '이메일 형식과 맞지 않습니다.\n이메일 주소를 다시 입력하여 주세요.\n예) asc@sktelecom.com',
+  HISTORY_A09: '과납내역을 선택해 주세요.'
 };
 
 Tw.MSG_GIFT = {

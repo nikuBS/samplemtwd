@@ -1,0 +1,279 @@
+<% include ../components/start.component.html %>
+<%#
+* FileName: payment.point.html
+* Author: 이상형 (silion@sk.com)
+* Date: 2018.07.02
+%>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb_area">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap">
+    <!-- #header -->
+    <div id="header" class="header-wrap">
+        <div class="header">
+            <div class="header-ti">
+                <h1>납부내역조회</h1>
+                <button class="depth-view" role="button" aria-pressed="false"><span class="blind">메뉴구조보기</span></button>
+            </div>
+            <button class="prev-step"><span class="blind">이전으로</span></button>
+            <button class="search-content"><span class="blind">검색하기</span></button>
+        </div>
+    </div>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <div class="cont-box">
+                <div class="payment-info">
+                    <h3 class="blind">대표청구</h3>
+                    <ul>
+                        <li><span class="info-num">010-46**-10**</span></li>
+                        <li>
+                            <span class="badge badge-allpay"><span class="blind">통합대표</span></span>
+                            <span class="info-type"><span class="blind">회선정보</span>휴대폰</span>
+                            <span class="info-name"><span class="blind">별명</span>귀여운첫째아들</span>
+                        </li>
+                    </ul>
+                    <span class="info-btn"><a href="" class="btn-choice" role="button">변경</a></span>
+                </div>
+            </div>
+            <hr class="cont-sp type1" aria-hidden="true"/>
+            <div class="cont-box nogaps-btm">
+                <button class="bt-dropdown big" data-select="" data-title="전체납부내역 선택하기" data-txt="" title="전체납부내역">전체납부내역<span class="ico"></span></button>
+                <!-- payment-detail-wrap -->
+                <div class="payment-detail-wrap">
+                    <p class="info-txt">6개월간의 요금납부 내역만 확인 가능합니다.</p>
+                    <div class="payment-detail-box">
+                        <div class="detail-inner">
+                            <div class="detail-list">
+                                <ul>
+                                    <li>
+                                        <span class="title">납부일자</span>
+                                        <span class="tx-cont">2018.05.23</span>
+                                    </li>
+                                    <li>
+                                        <div class="inner-top">
+                                            <span class="title">납부금액</span>
+                                            <span class="tx-cont">
+												<!-- '과납' 뱃지 -->
+												<span class="badge badge-over"><span class="blind">과납</span></span><strong>27,000</strong> 원</span>
+                                        </div>
+                                        <div class="inner-row">
+                                            <ul>
+                                                <li>
+                                                    <span class="title">청구금액</span>
+                                                    <span class="tx-cont">27,000 원</span>
+                                                </li>
+                                                <li>
+                                                    <span class="title">청구년월 <br /> (사용기간)</span>
+                                                    <span class="tx-cont">2018.04 <br /> (2018.03.01 ~ 2018.03.31)</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <span class="title">납부방법</span>
+                                        <span class="tx-cont">은행자동납부</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="payment-detail-box">
+                        <div class="detail-inner">
+                            <div class="detail-list">
+                                <ul>
+                                    <li>
+                                        <span class="title">납부일자</span>
+                                        <span class="tx-cont">2018.05.23</span>
+                                    </li>
+                                    <li>
+                                        <div class="inner-top">
+                                            <span class="title">납부금액</span>
+                                            <span class="tx-cont"><strong>27,000</strong> 원</span>
+                                        </div>
+                                        <div class="inner-row">
+                                            <ul>
+                                                <li>
+                                                    <span class="title">청구금액</span>
+                                                    <span class="tx-cont">27,000 원</span>
+                                                </li>
+                                                <li>
+                                                    <span class="title">청구년월 <br /> (사용기간)</span>
+                                                    <span class="tx-cont">2018.04 <br /> (2018.03.01 ~ 2018.03.31)</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <span class="title">납부방법</span>
+                                        <span class="tx-cont">은행자동납부</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="contents-info-list">
+                        <a href="" class="bt-more" title="">더보기<span>(20)</span></a>
+                    </div>
+                </div>
+                <!--// payment-detail-wrap -->
+            </div>
+
+            <hr class="cont-sp type1" aria-hidden="true"/>
+
+            <div class="cont-box nogaps">
+                <div class="acco-payment-wrap">
+                    <!-- .accordion -->
+                    <div class="widget">
+                        <div class="widget-box accordion2">
+                            <div class="acco-style"><!-- 스타일별 클래스 추가 -->
+                                <ul class="acco-box"><!-- toggle : 1개만 열림 -->
+                                    <li class="acco-list"><!-- on , off -->
+                                        <div class="acco-title"><button role="button" aria-pressed="">환불신청 처리 내역</button></div>
+
+                                        <div class="acco-content">
+                                            <div class="payment-detail-wrap">
+                                                <div class="payment-detail-box">
+                                                    <div class="detail-inner">
+                                                        <div class="pay-state">
+                                                            <span class="cancel-com">처리 중</span>
+                                                        </div>
+                                                        <div class="detail-list">
+                                                            <ul>
+                                                                <li>
+                                                                    <span class="title">신청일자</span>
+                                                                    <span class="tx-cont">2018.05.23</span>
+                                                                </li>
+                                                                <li>
+                                                                    <span class="title">신청금액</span>
+                                                                    <span class="tx-cont"><strong>27,000</strong> 원</span>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <div class="detail-btn">
+                                                        <button type="button">상세내역보기</button>
+                                                    </div>
+                                                </div>
+
+                                                <div class="payment-detail-box">
+                                                    <div class="detail-inner">
+                                                        <div class="pay-state">
+                                                            <span class="payment-com">송금완료</span>
+                                                        </div>
+                                                        <div class="detail-list">
+                                                            <ul>
+                                                                <li>
+                                                                    <span class="title">신청일자</span>
+                                                                    <span class="tx-cont">2018.05.23</span>
+                                                                </li>
+                                                                <li>
+                                                                    <span class="title">신청금액</span>
+                                                                    <span class="tx-cont"><strong>27,000</strong> 원</span>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <div class="detail-btn">
+                                                        <button type="button">상세내역보기</button>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="acco-inner-btn-more">
+                                                <a href="" class="bt-more" title="">더보기<span>(20)</span></a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--// .accordion -->
+                </div>
+                <!--// acco-payment-wrap-->
+            </div>
+
+
+            <hr class="cont-sp type1" aria-hidden="true"/>
+
+            <!-- .cont-box -->
+            <div class="cont-box">
+                <!-- .widget -->
+                <div class="widget">
+                    <div class="widget-box accordion">
+                        <h5 class="tit-a">꼭 확인해 주세요</h5>
+                        <div class="acco-cover toggle"><!-- toggle : 한개만 열기 -->
+                            <div class="acco-style btn-hold">
+                                <ul class="acco-list">
+                                    <li class="acco-box">
+                                        <!-- .on: 열기 -->
+                                        <div class="acco-tit"><span class="bullet">1.</span> 다회선 통합납부 고객 <button role="button" aria-pressed="false">상세보기</button></div>
+                                        <div class="acco-cont">
+                                            <ul class="list-dot">
+                                                <li class="list">2개 이상의 회선을 통합된 요금으로 납부하시는 고객의 경우 납부 내역이 합산된 금액으로 확인되시며, 회선 별 납부 내역 출력을 원하실 경우 고객센터[국번 없이 1599-0011(유료)/휴대폰114]로 문의하시기 바랍니다.</li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li class="acco-box">
+                                        <!-- .on: 열기 -->
+                                        <div class="acco-tit"><span class="bullet">2.</span> 납부 내역 조회기간 안내 <button role="button" aria-pressed="false">상세보기</button></div>
+                                        <div class="acco-cont">
+                                            <ul class="list-dot">
+                                                <li class="list">요금 납부 내역은 최근 6개월 이내, 환불 처리내역은 최근 10일 이내, OK캐쉬백/T포인트 납부취소는 요금납부 후 20일 이내 처리내역만 조회 가능합니다. </li>
+                                                <li class="list">해당 기간 이외의 내역에 대해서는 고객센터[국번 없이 1599-0011(유료)/휴대폰114]로 문의하시기 바랍니다 </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li class="acco-box">
+                                        <!-- .on: 열기 -->
+                                        <div class="acco-tit"><span class="bullet">3.</span> 자동납부, 지로납부 확인 <button role="button" aria-pressed="false">상세보기</button></div>
+                                        <div class="acco-cont">
+                                            <ul class="list-dot">
+                                                <li class="list">요금자동납부 이용 고객의 경우 인출일로부터 3~4일 이후, 지로납부 이용 고객의 경우 납부 후 3~5일 이후 확인하실 수 있습니다.</li>
+                                                <li class="list">자동납부, 지로납부로 즉시납부 하신 경우는 시스템 처리시간으로 인해 실시간 확인이 불가능하며 3일정도 이후에 확인하실 수 있습니다</li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li class="acco-box">
+                                        <!-- .on: 열기 -->
+                                        <div class="acco-tit"><span class="bullet">4.</span> 온라인 요금납부 안내 <button role="button" aria-pressed="false">상세보기</button></div>
+                                        <div class="acco-cont">
+                                            <ul class="list-dot">
+                                                <li class="list">상세내역은 청구요금에서 확인하실 수 있습니다.
+                                                    <!-- 링크 버튼 -->
+                                                </li>
+                                                <li class="list">이용정지 고객의 경우 납부기한이 경과한 미납금액을 모두 납부하시면 이용정지가 즉시 해제됩니다.</li>
+                                            </ul>
+                                        </div>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--// .widget -->
+            </div>
+            <!--// .cont-box -->
+        </div>
+    </div>
+    <!--// #contents -->
+</div>
+
+<% include ../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    var oPaymentHistory = new Tw.PaymentHistory($(document));
+  });
+</script>
+<% include ../components/end.component.html %>
