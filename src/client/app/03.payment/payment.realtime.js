@@ -21,6 +21,7 @@ Tw.PaymentRealtime.prototype = {
   _bindEvent: function () {
     this.$container.on('change', '.checkbox-main', $.proxy(this._sumCheckedAmount, this));
     this.$container.on('click', '.select-payment-option', $.proxy(this._isCheckedAmount, this));
+    this.$container.on('click', '.select-bank', $.proxy(this._openBank, this));
     this.$container.on('click', '.btn', $.proxy(this._toggleEvent, this));
     this.$container.on('click', '.pay', $.proxy(this._pay, this));
   },
@@ -46,6 +47,9 @@ Tw.PaymentRealtime.prototype = {
       this._go('#step1');
     }
   },
+  _openBank: function () {
+    // this._popupService.openBank();
+  },
   _pay: function (event) {
     event.preventDefault();
 
@@ -55,7 +59,7 @@ Tw.PaymentRealtime.prototype = {
   },
   _success: function () {
     this._setHistory();
-    this._go('#process-complete');
+    this._go('#complete');
   },
   _fail: function () {
     Tw.Logger.info('pay request fail');
