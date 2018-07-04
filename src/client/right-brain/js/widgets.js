@@ -15,25 +15,6 @@ skt_landing.widgets = {
   },
   widget_test: function () {
   },
-  widget_iscroll: function () {
-    var widgetIscroll = $('.widget-box.iscroll'),
-        iscroll = {};
-    widgetIscroll.each(function(idx){
-      var className = 'iscroll'+idx;
-      var pastHeight = $(this).children('.iscroll-box').outerHeight();
-      $(this).addClass(className);
-      $(this).closest('.widget').css('height','100%');
-      iscroll[className] = new IScroll(this);
-      this.addEventListener('touchmove', function (e) { e.preventDefault(); }, {passive: false});
-      $(this).on('click',function(){
-        var presentHeight = $(this).children('.iscroll-box').outerHeight();
-        if(pastHeight != presentHeight){
-          pastHeight = presentHeight;
-          iscroll[className].refresh();
-        }
-      });
-    });
-  },
   widget_tube: function () {
     $('.widget .tube').each(function(){
       var tube_list = $(this).find('.tube-list');
@@ -154,7 +135,23 @@ skt_landing.widgets = {
         arrows: true,
         infinite: false,
         slidesToShow: 4,
-		slidesToScroll: 1,
+    slidesToScroll: 1,
+        centerMode: false,
+        variableWidth: false,
+        focusOnSelect: true,
+        focusOnChange: true
+      });
+        _this.on('init',function(){
+        var totalBox = $(this).closest(widget).find('.page-total'),
+            slick = _this.prop('slick');
+        totalBox.find('.current').text(slick.currentSlide+1);
+        totalBox.find('.total').text(slick.slideCount);
+      })
+        .trigger('init')
+        .on('beforeChange',function(event, slick, currentSlide, nextSlide){
+        var totalBox = $(this).closest(widget).find('.page-total');
+        totalBox.find('.current').text(nextSlide+1);
+        totalBox.find('.total').text(slick.slideCount);
       });
     });
   },
@@ -472,7 +469,8 @@ skt_landing.widgets = {
   },
   widget_sortlist : function(){
     $( "#sortable-enabled" ).sortable({
-      connectWith: "#sortable-enabled"
+      connectWith: "#sortable-enabled",
+      axis: 'y'
     }).disableSelection();
     $('.ui-state-default .bt-active').on('touchstart touchend touchmove',function(e){
       e.stopPropagation();
@@ -485,6 +483,9 @@ skt_landing.widgets = {
         $(this).parent().prependTo('#sortable-enabled');
         $(this).find('.blind').text('회선 삭제 하기');
       }
+    });
+    $('.bt-sort').on('touchstart touchend touchmove',function(e){
+      e.stopPropagation();
     });
     $(document).on('click', '.connectedSortable .bt-sort', function(){
       var parent_cont = $(this).closest('.ui-state-default');

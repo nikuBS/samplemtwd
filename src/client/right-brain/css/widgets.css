@@ -949,6 +949,11 @@ li.radiobox.type01 {
   z-index: -1;
 }
 
+.widget-box.tube .tube-list li.checked .date {
+  color: #98a6d6;
+  font-family: "Helvetica Neue", Roboto, sans-serif;
+}
+
 .widget-box.tube .tube-list li.tube-select {
   padding: 0.75rem;
   font-size: 0.875rem;
