@@ -5,8 +5,8 @@
  */
 Tw.RechargeGiftHistory = function (rootEl) {
   this.$container = rootEl;
-  this._apiService = Tw.Api;
 
+  this._apiService = Tw.Api;
   this._hash = Tw.Hash;
   this._popupService = Tw.Popup;
   this._dateHelper = Tw.DateHelper;
@@ -23,9 +23,14 @@ Tw.RechargeGiftHistory.prototype = {
     this.current = this._hash._currentHashNav || 'gift';
     this.dateNow = this._dateHelper.getShortDateWithFormat(new Date(), 'YYYYMMDD');
 
-    this._getListData(this._dateHelper.getShortDateWithFormatAddByUnit(this.dateNow, -1, 'years', 'YYYYMMDD'), this.dateNow, 1, function (res) {
+    this._getListData(this._dateHelper.getShortDateWithFormatAddByUnit(this.dateNow, -1, 'years', 'YYYYMMDD'), this.dateNow, 0, function (res) {
       console.log(res);
     });
+
+    // TODO : 검색은 확인 버튼 바인딩을 통해 checked input 값을 가져와서 사용.
+    // TODO : 이전 검색 선택 값 어떻게? => 필요한가?
+    // TODO : 탭 변경시 검색값 default?
+    // TODO : 검색 Trigger button innerText 변경
 
     var _search = (function () {
       var terms = [
@@ -47,10 +52,19 @@ Tw.RechargeGiftHistory.prototype = {
       return {
         defaultLabel: null,
         terms: terms,
+        setDefault: setDefault,
         setOption: setOption,
         resetOption: resetOption
       };
     }.bind(this))();
+
+    Tw.Logger.log(_search);
+
+    // TODO : 데이터 있는 경우 템플릿 렌더링, 없는 경우 Empty 템플릿
+    // TODO : 데이터 페이지 수로 분할(by current)
+    //    this.listTemplete = Handlebars.compile($('#list-template').html());
+    //     this.presentEmptyTemplete = Handlebars.compile($('#present-empty-template').html());
+    //     this.requestEmptyTemplete = Handlebars.compile($('#request-empty-template').html());
 
     this.ListGeneratorWithHandlebar = function (dataSet, perPage, template, handlebarHelper, wrapperDOM, viewMoreDom) {
       if ( (!_.isObject(dataSet) || arguments.length < 6) || !_.isFunction(handlebarHelper) ) {
@@ -176,7 +190,9 @@ Tw.RechargeGiftHistory.prototype = {
   },
 
   _getListData: function (fromDt, toDt, type, callback) {
-    if ( this.current === 'gift' ) {
+
+    console.log(this.current, fromDt, toDt, type, callback);
+    if (this.current === 'gift') {
       this._apiService.request(Tw.API_CMD.BFF_06_0018, {
         fromDt: fromDt,
         toDt: toDt,
@@ -212,6 +228,7 @@ Tw.RechargeGiftHistory.prototype = {
   },
 
   updateLineInfo: function (e, params) {
+    console.log(e, params);
   },
 
   setSearchBtn: function (type, term) {
@@ -334,9 +351,10 @@ Tw.RechargeGiftHistory.prototype = {
   },
 
   getTemplate: function (t, d) {
+    var _this = this;
 
     Handlebars.registerHelper('setIndex', function (option) {
-      // this.listIndex = option.data.key + _this.data[_this.currentTab].currentPage * 20;
+      this.listIndex = option.data.key + _this.data[_this.currentTab].currentPage * 20;
       return option.fn(this);
     });
 
@@ -442,7 +460,7 @@ Tw.RechargeGiftHistory.prototype = {
       this.$optionViewAutoSent = $('.popup .select-option input');
       this.popupViewAutoSentToggle(this.searchCondition.type);
 
-      this.$optionViewAutoSent.on('change', (function (e) {
+      this.$optionViewAutoSent.on('change', (function () {
         this.searchCondition.isAutoSent = this.$optionViewAutoSent.is(':checked');
       }).bind(this));
 
