@@ -79,6 +79,10 @@ Tw.API_CMD = {
   BFF_07_0029: { path: '/core-bill/v1/bill-pay/pay-ocb-tpoint-proc', method: Tw.API_METHOD.POST }
 };
 
+Tw.NODE_CMD = {
+  GET_ENVIRONMENT: { path: '/environment', method: Tw.API_METHOD.GET }
+};
+
 Tw.API_CODE = {
   CODE_00: '00'
 };

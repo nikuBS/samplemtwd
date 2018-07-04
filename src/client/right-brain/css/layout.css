@@ -363,13 +363,20 @@
 }
 
 .all-menu .all-menu-box .user-menu {
-  margin: 0 1.25rem;
   padding: 0.625rem 0;
-  border-bottom: 1px solid #efefef;
 }
 
-.all-menu .all-menu-box .user-menu li {
-  padding: 0.625rem 0;
+.all-menu .all-menu-box .user-menu li button {
+  display: block;
+  width: 100%;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 0.625rem 1.25rem;
+  text-align: left;
+}
+
+.all-menu .all-menu-box .user-menu li button:hover {
+  background: #f8f8f8;
 }
 
 .all-menu .all-menu-box .user-menu li a {
@@ -378,8 +385,7 @@
 }
 
 .all-menu .all-menu-box .user-menu.use-icon {
-  margin: 0 1.25rem 0 0.9375rem;
-  padding: 0.625rem 0;
+  padding: 0;
 }
 
 .all-menu .all-menu-box .user-menu.use-icon .ico1 .ico, .all-menu .all-menu-box .user-menu.use-icon .ico2 .ico, .all-menu .all-menu-box .user-menu.use-icon .ico3 .ico {
@@ -405,9 +411,10 @@
 }
 
 .all-menu .all-menu-box .user-activity {
-  margin: 0 1.25rem;
+  margin: 0 1.25rem 1.125rem;
   padding: 1.5625rem 0;
   overflow: hidden;
+  border-top: 1px solid #efefef;
   border-bottom: 1px solid #efefef;
 }
 
@@ -426,6 +433,7 @@
 }
 
 .all-menu .all-menu-box .tit-menu {
+  border-top: 1px solid #efefef;
   background: #f5f5f5;
 }
 
@@ -790,4 +798,86 @@
 
 .footer-wrap.btn-area-msg {
   padding: 0 1.625rem;
+}
+
+.paging {
+  position: relative;
+  margin: 1.25rem 0 1.875rem;
+  text-align: center;
+  font-size: 0;
+}
+
+.paging a {
+  display: inline-block;
+  padding: 0 0.9375rem;
+  font-size: 0.9375rem;
+  font-family: "Helvetica Neue", Roboto, sans-serif;
+  font-weight: 400;
+  color: #000;
+  line-height: 1.625rem;
+}
+
+.paging a.active {
+  font-weight: 700;
+}
+
+.paging .prev, .paging .next {
+  overflow: hidden;
+  position: absolute;
+  display: inline-block;
+  content: "";
+  width: 1.5rem;
+  height: 1.5rem;
+  padding: 0;
+  border: 1px solid #cfcfcf;
+  border-radius: 0.25rem;
+  text-indent: 100%;
+  white-space: nowrap;
+}
+
+.paging .prev:after, .paging .next:after {
+  position: absolute;
+  left: 0.4375rem;
+  top: 0.3125rem;
+  width: 0.4375rem;
+  height: 0.75rem;
+  content: "";
+  background-image: url(/img/ico/ico-group2.png);
+  background-size: 3.125rem;
+}
+
+.paging .prev:focus:not(.disabled), .paging .prev:hover:not(.disabled), .paging .next:focus:not(.disabled), .paging .next:hover:not(.disabled) {
+  background-color: #cfcfcf;
+  border-color: #cfcfcf;
+}
+
+.paging .prev.disabled, .paging .next.disabled {
+  background-color: #e5e8ee;
+  border-color: #e5e8ee;
+}
+
+.paging .prev {
+  left: 0;
+  top: 0;
+}
+
+.paging .prev:after {
+  background-position: -0.125rem -7.5rem;
+}
+
+.paging .prev.disabled:after {
+  background-position: -1.25rem -7.5rem;
+}
+
+.paging .next {
+  right: 0;
+  top: 0;
+}
+
+.paging .next:after {
+  background-position: -0.6875rem -7.5rem;
+}
+
+.paging .next.disabled:after {
+  background-position: -1.875rem -7.5rem;
 }
