@@ -50,7 +50,7 @@ Tw.MytUsageChangeSub.prototype = {
 
   renderCategoryArea: function () {
     _.filter(this.originList, function (item) {
-      if ( this.categoryList.indexOf(item.svcCd) == -1 ) {
+      if ( this.categoryList.indexOf(item.svcCd) === -1 ) {
         this.categoryList.push(item.svcCd);
       }
     }, this);
@@ -63,7 +63,7 @@ Tw.MytUsageChangeSub.prototype = {
   choiceLine: function (e) {
     var $elLine    = $(e.currentTarget);
     var svcMgmtNum = $elLine.data('svcmgmtnum');
-    this._apiService.request(Tw.API_CMD.BFF_03_0004_C, {}, { "svcMgmtNum": svcMgmtNum } )
+    this._apiService.request(Tw.API_CMD.BFF_03_0004_C, {}, { 'svcMgmtNum': svcMgmtNum } )
       .done(function () {
         location.href = '/myt';
       });
@@ -115,19 +115,19 @@ Tw.MytUsageChangeSub.prototype = {
   },
 
   sortByCategory: function () {
-    if ( this.category == 'all' ) {
+    if ( this.category === 'all' ) {
       this.selectList = this.originList;
     }
 
-    if ( this.category != 'all' ) {
+    if ( this.category !== 'all' ) {
       this.selectList = _.filter(this.originList, function (item) {
-        return item.svcCd == this.category;
+        return item.svcCd === this.category;
       }, this);
     }
   },
 
   sortByDate: function () {
-    if ( this.sortType == 'register' ) {
+    if ( this.sortType === 'register' ) {
       this.selectList = this.selectList.sort(function (prevItem, nextItem) {
         var prevDate = Number(prevItem.lastUpdDtm);
         var nextDate = Number(nextItem.lastUpdDtm);
@@ -135,7 +135,7 @@ Tw.MytUsageChangeSub.prototype = {
       });
     }
 
-    if ( this.sortType == 'modified' ) {
+    if ( this.sortType === 'modified' ) {
       this.selectList = this.selectList.sort(function (prevItem, nextItem) {
         var prevDate = Number(prevItem.svcScrbDtm);
         var nextDate = Number(nextItem.svcScrbDtm);

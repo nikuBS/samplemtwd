@@ -36,16 +36,16 @@ Tw.RechargeTing.prototype = {
   },
 
   _onSuccessGetProvider: function (res) {
-    if ( res.code == 'RCG0101' ) {
+    if ( res.code === 'RCG0101' ) {
       this._isNotAdult = true;
     }
-    if ( res.code == 'RCG0109' ) {
+    if ( res.code === 'RCG0109' ) {
       this._isBlockedTing = true;
     }
-    if ( res.code == 'RCG0110' ) {
+    if ( res.code === 'RCG0110' ) {
       this._isNotSkt = true;
     }
-    if ( res.code == 'RCG0112' ) {
+    if ( res.code === 'RCG0112' ) {
       this._isNotAvailableAmount = true;
     }
   },

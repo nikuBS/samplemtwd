@@ -12,7 +12,7 @@ Tw.RechargeRefillHistory = function (rootEl) {
     MY: 'my',
     SENT: 'sent',
     RECEIVED: 'received'
-  }
+  };
   this.NUM_OF_ITEMS = 20;
 };
 
@@ -112,7 +112,7 @@ Tw.RechargeRefillHistory.prototype = {
     leftItems = leftItems - this.NUM_OF_ITEMS;
     if ( leftItems > 0 ) {
       elTarget.setAttribute('data-left-items', leftItems);
-      elTarget.innerText = elTarget.innerText.replace(/\((.+?)\)/, "(" + leftItems + ")");
+      elTarget.innerText = elTarget.innerText.replace(/\((.+?)\)/, '(' + leftItems + ')');
     } else {
       elTarget.style.display = 'none';
     }
@@ -125,7 +125,7 @@ Tw.RechargeRefillHistory.prototype = {
         this._myRefills.map(
           function (data) {
             data.copnUseDt = Tw.DateHelper.getShortDateNoDot(data.copnUseDt);
-            data.copnDtlClCd = ['AAA10', 'AAA30'].indexOf(data.copnDtlClCd) > -1 ? 'tx-data' : 'tx-voice'
+            data.copnDtlClCd = ['AAA10', 'AAA30'].indexOf(data.copnDtlClCd) > -1 ? 'tx-data' : 'tx-voice';
           });
         this._initTabContent(type, this._myRefills, this.$tabContentMy);
         break;
@@ -195,7 +195,7 @@ Tw.RechargeRefillHistory.prototype = {
     var output = template(data);
     $targetTab.append(output);
     if ( leftItems ) {
-      $targetTab.on('click', 'a.bt-more', $.proxy(this._onClickMore, this))
+      $targetTab.on('click', 'a.bt-more', $.proxy(this._onClickMore, this));
     }
   }
 };

@@ -24,6 +24,32 @@ Tw.FormatHelper = (function () {
     return typeof(value) === 'string';
   };
 
+  var addComma = function (value) {
+    var regexp = /\B(?=(\d{3})+(?!\d))/g;
+    return value.replace(regexp, ',');
+  };
+
+  var removeZero = function (value) {
+    if ( value.indexOf('.') !== -1 ) {
+      return value.replace(/(0+$)/, '');
+    }
+
+    return value;
+  };
+
+  var convNumFormat = function (number) {
+    if ( number > 0 && number < 100 && number % 1 !== 0 ) {
+      return removeZero(number.toFixed(2));
+    }
+    if ( number >= 100 && number < 1000 && number % 1 !== 0 ) {
+      return removeZero(number.toFixed(1));
+    }
+    if ( number > 1000 ) {
+      return addComma(number.toFixed(0));
+    }
+
+    return number.toString();
+  };
 
   var customDataFormat = function (data, curUnit, targetUnit) {
     var units = [Tw.DATA_UNIT.KB, Tw.DATA_UNIT.MB, Tw.DATA_UNIT.GB];
@@ -36,13 +62,14 @@ Tw.FormatHelper = (function () {
 
     var sub = targetUnitIdx - curUnitIdx;
 
+    var i = 0;
     data = +data;
     if ( sub > 0 ) {
-      for ( var i = 0; i < sub; i++ ) {
+      for ( i = 0; i < sub; i++ ) {
         data = data / 1024;
       }
     } else {
-      for ( var i = 0; i < sub * -1; i++ ) {
+      for ( i = 0; i < sub * -1; i++ ) {
         data = data * 1024;
       }
     }
@@ -78,33 +105,6 @@ Tw.FormatHelper = (function () {
     };
   };
 
-  var convNumFormat = function (number) {
-    if ( number > 0 && number < 100 && number % 1 !== 0 ) {
-      return removeZero(number.toFixed(2));
-    }
-    if ( number >= 100 && number < 1000 && number % 1 !== 0 ) {
-      return removeZero(number.toFixed(1));
-    }
-    if ( number > 1000 ) {
-      return addComma(number.toFixed(0));
-    }
-
-    return number.toString();
-  };
-
-  var removeZero = function (value) {
-    if ( value.indexOf('.') !== -1 ) {
-      return value.replace(/(0+$)/, '');
-    }
-
-    return value;
-  };
-
-  var addComma = function (value) {
-    var regexp = /\B(?=(\d{3})+(?!\d))/g;
-    return value.replace(regexp, ',');
-  };
-
   var convVoiceFormat = function (data) {
     data = +data;
     var hours = Math.floor(data / 3600);
@@ -116,12 +116,12 @@ Tw.FormatHelper = (function () {
 
   var convSmsPrice = function (smsCount) {
     return smsCount * 310;
-  }
+  };
 
   var conTelFormatWithDash = function (v) {
     var ret = v.trim();
     return ret.substring(0, 3) + '-' + ret.substring(3, ret.length - 4) + '-' + ret.substring(ret.length - 4);
-  }
+  };
 
   return {
     leadingZeros: leadingZeros,
@@ -135,5 +135,5 @@ Tw.FormatHelper = (function () {
     convVoiceFormat: convVoiceFormat,
     convSmsPrice: convSmsPrice,
     conTelFormatWithDash: conTelFormatWithDash
-  }
+  };
 })();

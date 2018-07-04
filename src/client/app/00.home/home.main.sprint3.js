@@ -12,7 +12,7 @@ Tw.HomeMainSprint3.prototype = {
     this.$container.on('click', '.btn-search', $.proxy(this._onClickSearchButton, this));
   },
 
-  _onClickSearchButton: function ($event) {
+  _onClickSearchButton: function () {
   },
 
   _success: function (resp) {

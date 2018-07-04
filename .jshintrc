@@ -1,0 +1,26 @@
+{
+  "browser": true,
+  "jquery": true,
+  "node": true,
+  "esversion": 3,
+  "camelcase": false,
+  "eqeqeq": true,
+  "indent": 2,
+  "latedef": true,
+  "maxlen": 150,
+  "newcap": true,
+  "quotmark": "single",
+  "strict": false,
+  "undef": true,
+  "unused": true,
+  "eqnull": true,
+  "globals": {
+    "$": true,
+    "Tw": true,
+    "_": true,
+    "moment": true,
+    "Handlebars": true,
+    "JSON": true,
+    "skt_landing": true
+  }
+}

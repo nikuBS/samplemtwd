@@ -18,4 +18,4 @@ Tw.RechargeCookiz.prototype = {
   _init: function () {
 
   }
-}
+};

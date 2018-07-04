@@ -50,7 +50,7 @@ Tw.RechargeRefillGift.prototype = {
       copnIsueNum: copnNm,
       befrSvcNum: befrSvcNum
     });
-    this._apiService.request(Tw.API_CMD.BFF_03_0023_C, data, { "Content-Type": "application/json" })
+    this._apiService.request(Tw.API_CMD.BFF_03_0023_C, data)
       .done($.proxy(this._sendSuccess, this))
       .fail($.proxy(this._sendFail, this));
   },
@@ -61,7 +61,7 @@ Tw.RechargeRefillGift.prototype = {
 
   _onContact: function (resp) {
     var params = resp.params;
-    var phoneNumber = params.phoneNumber.replace(/-/gi, "");
+    var phoneNumber = params.phoneNumber.replace(/-/gi, '');
     this._$inputPhone.val(phoneNumber);
     this._setDisableStatus();
   },

@@ -62,7 +62,7 @@ Tw.API_CMD = {
   BFF_06_0039: { path: '/services/recharge/now-cut-cancel', method: Tw.API_METHOD.POST },
   BFF_06_0040: { path: '/services/recharge/auto-cut', method: Tw.API_METHOD.POST },
   BFF_06_0041: { path: '/services/recharge/auto-cut-cancel', method: Tw.API_METHOD.POST },
-  BFF_06_0042: { path: '/services/recharge/search', method: Tw.API_METHOD.GET },
+  BFF_06_0042: { path: '/services/recharge/search', method: Tw.API_METHOD.GET }
 };
 
 Tw.API_CODE = {

@@ -13,5 +13,5 @@ Tw.StringHelper = (function () {
   return {
     replaceAt: replaceAt,
     masking: masking
-  }
+  };
 })();

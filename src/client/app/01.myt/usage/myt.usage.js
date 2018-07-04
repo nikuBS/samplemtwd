@@ -30,7 +30,7 @@ Tw.MytUsage.prototype = {
 
       $this.text(data.data);
       $this.siblings('span').text(data.unit);
-    })
+    });
   },
   _getUnit: function (isMb) {
     var unit = 'GB';
