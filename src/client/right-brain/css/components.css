@@ -1865,6 +1865,15 @@
   margin-right: 0;
 }
 
+.msg-account-info.pad-t0 {
+  padding-top: 0;
+}
+
+/*납부내역조회*/
+.payment-detail-wrap .pay-detail:first-of-type {
+  padding-top: 1.875rem;
+}
+
 /*요금안내변경재발행안내서*/
 .t-charge-guide h4 {
   font-size: 0.875rem;
@@ -2117,19 +2126,6 @@
   margin-bottom: 2.9375rem;
 }
 
-.errorbox-info {
-  padding: 2.3125rem 0 0 0;
-  font-size: 0.875rem;
-  color: #000;
-}
-
-.errorbox-info .stxt {
-  display: block;
-  margin-top: 0.6875rem;
-  font-size: 0.8125rem;
-  color: #757575;
-}
-
 .helpbox-link h3 {
   margin-bottom: 1.125rem;
 }
@@ -2148,9 +2144,9 @@
 
 .txt-underline {
   display: inline-block;
-  padding-bottom: 0.25rem;
   border-bottom: 1px solid;
   vertical-align: baseline;
+  color: #000;
 }
 
 .suggest-info-type2 {
@@ -2209,6 +2205,18 @@
 
 .popup-choice.type2 li:nth-child(2n) {
   padding-left: 0.625rem;
+}
+
+/* 팝업 하단 영역 */
+.pop-btm-area {
+  margin-top: 0.625rem;
+  padding: 0 0.625rem 1.125rem 0.625rem;
+  font-size: 0.875rem;
+}
+
+.pop-btm-area > div {
+  padding-top: 1.125rem;
+  border-top: 1px solid #e1e1e1;
 }
 
 /* 쿠폰 slick 수정 */
@@ -2719,6 +2727,11 @@
 
 .contents-notice.type3 {
   padding-top: 0;
+}
+
+.contents-notice.type4 .noti-type1, .contents-notice.type4 .noti-type2 {
+  font-size: 0.8125rem;
+  margin-top: 0.3125rem;
 }
 
 .contents-notice.line-top {
@@ -3407,7 +3420,7 @@
   font-weight: 700;
   color: #e80a0a;
   font-family: Helvetica Neue, Roboto, sans-serif;
-  vertical-align: -3px;
+  vertical-align: -0.1875rem;
 }
 
 .title-h3 {
@@ -3531,6 +3544,11 @@
 .popup-contents .tube-list-ti .tube-list.point-select li {
   padding: 0.75rem 0;
   font-size: 0.875rem;
+}
+
+.change-plan .bt-dropdown.no-arrow {
+  font-size: 0.9375rem;
+  font-weight: 400;
 }
 
 /* 임지선 */
@@ -3865,8 +3883,6 @@ li.payment-detail-box:last-child {
 }
 
 .change-plan .widget-box.tube .tube-list li .date {
-  font-family: "Helvetica Neue", Roboto, sans-serif;
-  color: #969696;
   display: block;
 }
 
@@ -3885,10 +3901,6 @@ li.payment-detail-box:last-child {
 }
 
 /* MY_03_02_02 */
-.payment-all-mt {
-  margin-top: 1.875rem;
-}
-
 .link-long-group .link-group-tit {
   font-size: 1.25rem;
   font-weight: 300;
@@ -3901,25 +3913,24 @@ li.payment-detail-box:last-child {
 
 .link-long-group .link-long a {
   overflow: hidden;
+  font-size: 0.875rem;
 }
 
 .link-long-group .link-long a .link-info {
   display: inline-block;
   font-size: 0.875rem;
   float: left;
+  width: 50%;
 }
 
-.link-long-group .link-long a .link-info-1 {
-  width: 25%;
+.link-long-group .link-long a .link-info .num {
+  color: #325ec1;
+  font-family: "Helvetica Neue", Roboto, sans-serif;
+  margin-left: 0.3125rem;
+  font-size: 1rem;
 }
 
 .link-long-group .link-long a .link-info-2 {
-  width: 30%;
-  color: #757575;
-}
-
-.link-long-group .link-long a .link-info-3 {
-  width: 45%;
   font-size: 0.9375rem;
   text-align: right;
   padding-right: 14%;
@@ -4470,72 +4481,6 @@ span[class^="ico-foot"].ico-foot-2 {
   vertical-align: -0.8125rem;
 }
 
-.paging {
-  padding: 0.3125rem 0 0.9375rem;
-  text-align: center;
-  font-size: 0;
-}
-
-.paging .prev {
-  position: relative;
-  display: inline-block;
-  padding: 15px;
-  content: "";
-  width: 8px;
-  height: 13px;
-}
-
-.paging .prev:after {
-  position: absolute;
-  left: 15px;
-  top: 15px;
-  width: 8px;
-  height: 13px;
-  content: "";
-  background-image: url(/img/ico/ico-group2.png);
-  background-position: -0.125rem -7.5rem;
-  background-size: 3.125rem;
-}
-
-.paging .next {
-  position: relative;
-  display: inline-block;
-  padding: 15px;
-  content: "";
-  width: 8px;
-  height: 13px;
-}
-
-.paging .next:after {
-  position: absolute;
-  right: 15px;
-  top: 15px;
-  width: 8px;
-  height: 13px;
-  content: "";
-  background-image: url(/img/ico/ico-group2.png);
-  background-position: -0.6875rem -7.5rem;
-  background-size: 3.125rem;
-}
-
-.paging .hyp {
-  font-size: 0.875rem;
-  font-weight: 400;
-  color: #757575;
-}
-
-.paging .num {
-  font-size: 0.875rem;
-  font-family: "Helvetica Neue", Roboto, sans-serif;
-  font-weight: 400;
-  color: #757575;
-  line-height: 43px;
-}
-
-.paging .num.active {
-  color: #000;
-}
-
 /* 김정기 */
 /*즉시납부*/
 .pay-data-cont {
@@ -4665,6 +4610,119 @@ span[class^="ico-foot"].ico-foot-2 {
 
 .pay-data-cont .bt-gap {
   padding: 2.5rem 0 1.25rem;
+}
+
+/**MY_03_02_03.html*/
+/*.link-long-group.noborder-bt .link-long:last-child{
+    border: 0px solid red;
+}*/
+.link-long-group.noborder-bt .link-long .link-info {
+  display: table-cell;
+}
+
+.link-long-group.noborder-bt .link-long:last-child {
+  border: 0px;
+}
+
+.link-long-group.noborder-bt .link-long .link-info-1 {
+  font-size: 0.875rem;
+}
+
+.link-long-group.noborder-bt .link-long .link-info-2 strong {
+  font-size: 1rem;
+  color: #325ec1;
+  font-weight: 400;
+  padding-left: 0.4375rem;
+  font-family: "Helvetica Neue", Roboto, sans-serif;
+  vertical-align: top;
+}
+
+.link-long-group.noborder-bt .link-long .link-info-3 {
+  padding-right: 1.8125rem;
+  width: 100%;
+  text-align: right;
+  font-size: 0.9375rem;
+}
+
+.used-box-list {
+  /**MY_03_02_04.html*/
+}
+
+.used-box-list .t-pay-data {
+  border-top: 1px solid #000;
+}
+
+.used-box-list .pay-data-cont {
+  padding: 0;
+}
+
+.used-box-list .tx-data strong {
+  color: #e80a0a;
+  font-family: "Helvetica Neue", Roboto, sans-serif;
+  font-weight: 300;
+}
+
+.used-count.payment-all {
+  /**MY_03_02_04.html*/
+}
+
+.used-count.payment-all .account-tit {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  margin-bottom: 1.28125rem;
+  padding-top: 2.5rem;
+}
+
+.used-box {
+  /**MY_03_02_04.html*/
+}
+
+.used-box .msg-account-info {
+  border: 0px;
+}
+
+.used-box .account-detail .line {
+  border: 1px solid #000;
+  width: 0.5rem;
+  position: relative;
+  top: -4px;
+  left: -1px;
+}
+
+.used-box .account-wrap {
+  margin: 0;
+}
+
+.used-box .pay-detail.empty dt {
+  text-align: center;
+  font-size: 0.9375rem;
+  font-weight: 400;
+  display: inline-block;
+  width: 100%;
+  color: #000;
+}
+
+.used-box .pay-detail.empty dd {
+  text-align: center;
+  width: 100%;
+  display: inline-block;
+  font-size: 0.75rem;
+  color: #757575;
+  font-weight: 400;
+}
+
+.used-box .no-data {
+  text-align: center;
+  font-size: 0.9375rem;
+  font-weight: 400;
+}
+
+.accordion2 .acco-style.payment-list .acco-list .pt-tit-wrap .pt-price.blue {
+  color: #325ec1;
+}
+
+.accordion2 .acco-style.payment-list .acco-list .acco-content .payment-detail-depth1 .pdt-wrap .pdt-price.blue {
+  color: #325ec1;
 }
 
 /* 전동엽 */
@@ -5731,7 +5789,7 @@ span[class*=char-star][class*=red] {
 
 .sortlist .ui-state-default .state-box {
   display: table-cell;
-  padding: 1.25rem 2.5rem 1.25rem 4.0625rem;
+  padding: 1.25rem 2.75rem 1.25rem 4.0625rem;
   vertical-align: middle;
 }
 
@@ -5762,15 +5820,15 @@ span[class*=char-star][class*=red] {
   display: block;
   position: absolute;
   top: 0;
-  right: 0.875rem;
-  width: 1.25rem;
+  right: 0;
+  width: 2.75rem;
   height: 100%;
 }
 
 .sortlist .ui-state-default .state-bt .bt-sort {
   position: absolute;
   display: block;
-  left: 0;
+  left: 0.625rem;
   overflow: hidden;
   width: 1.25rem;
   height: 1.25rem;
@@ -5779,9 +5837,22 @@ span[class*=char-star][class*=red] {
   background-size: 3.125rem;
 }
 
+.sortlist .ui-state-default .state-bt .bt-sort:before {
+  content: "";
+  display: inline-block;
+  position: absolute;
+  width: 2.75rem;
+  height: 1.875rem;
+}
+
 .sortlist .ui-state-default .state-bt .bt-sort.up {
   top: 0.625rem;
   background-position: -0.125rem -37.6875rem;
+}
+
+.sortlist .ui-state-default .state-bt .bt-sort.up:before {
+  top: -0.625rem;
+  left: -0.625rem;
 }
 
 .sortlist .ui-state-default .state-bt .bt-sort.down {
@@ -5789,7 +5860,13 @@ span[class*=char-star][class*=red] {
   background-position: -1.6875rem -37.6875rem;
 }
 
+.sortlist .ui-state-default .state-bt .bt-sort.down:before {
+  top: 0;
+  left: -0.625rem;
+}
+
 .sortlist #sortable-enabled {
+  position: relative;
   padding-bottom: 1.25rem;
 }
 
