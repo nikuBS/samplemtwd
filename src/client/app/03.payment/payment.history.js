@@ -15,4 +15,4 @@ Tw.PaymentHistory = function (rootEl) {
 };
 
 Tw.PaymentHistory.prototype = {
-}
+};

@@ -38,7 +38,7 @@ Tw.RechargeGiftLine.prototype = {
 
   getCurrentLineInfo: function (svcNum) {
     this.lineInfo = _.find(this.lineList, function (line) {
-      return line.svcNum == svcNum;
+      return line.svcNum === svcNum;
     });
 
     return this.lineInfo;
@@ -46,7 +46,7 @@ Tw.RechargeGiftLine.prototype = {
 
   updateLineInfo: function (res) {
     this.lineInfo = _.find(this.lineList, function (line) {
-      return line.svcNum == res.result.svcNum;
+      return line.svcNum === res.result.svcNum;
     });
 
     this.$container.trigger('updateLineInfo', { lineInfo: this.lineInfo, lineList: this.lineList });
@@ -55,9 +55,9 @@ Tw.RechargeGiftLine.prototype = {
   changeCurrentLine: function () {
     var sCurrentNumber = this.$btn_line.text().trim();
 
-    if ( sCurrentNumber !== "" ) {
+    if ( sCurrentNumber !== '' ) {
       this.lineInfo = _.find(this.lineList, function (line) {
-        return line.svcNum == sCurrentNumber;
+        return line.svcNum === sCurrentNumber;
       });
 
       this._apiService.request(Tw.API_CMD.BFF_03_0004_C, {}, { svcMgmtNum: this.lineInfo.svcMgmtNum })
@@ -75,10 +75,10 @@ Tw.RechargeGiftLine.prototype = {
       $('.radiobox').each(function (idx, item) {
         var itemNumber = $(item).text().trim();
 
-        if ( itemNumber == sCurrentNumber ) {
+        if ( itemNumber === sCurrentNumber ) {
           $(item).addClass('checked');
         }
       });
     }, 50);
-  },
+  }
 };

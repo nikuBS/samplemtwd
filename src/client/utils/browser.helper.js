@@ -28,7 +28,8 @@ Tw.BrowserHelper = (function () {
     isAndroid: isAndroid,
     isIos: isIos,
     isMobile: isMobile,
+    isApp: isApp,
     isOnline: isOnline,
     getUserAgent: getUserAgent
-  }
+  };
 })();

@@ -32,7 +32,7 @@ Tw.MytUsageChildren.prototype = {
   },
 
   _changeLine: function () {
-    var $option         = this.$select_line.find(":selected");
+    var $option         = this.$select_line.find(':selected');
     var mdl             = $option.data('mdl');
     var childSvcMgmtNum = this.$select_line.val();
 
@@ -46,7 +46,7 @@ Tw.MytUsageChildren.prototype = {
   _getData: function () {
     var childSvcMgmtNum = this.$descendats.data('svcmgmtnum');
 
-    this._apiService.request(Tw.API_CMD.BFF_05_0001, {}, { "childSvcMgmtNum": childSvcMgmtNum } )
+    this._apiService.request(Tw.API_CMD.BFF_05_0001, {}, { 'childSvcMgmtNum': childSvcMgmtNum } )
       .done($.proxy(this.onSuccessLoadData, this));
   },
 
@@ -70,7 +70,7 @@ Tw.MytUsageChildren.prototype = {
         showRemained: Tw.FormatHelper.convVoiceFormat(item.remained),
         userRatio: (item.remained / item.total) * 100,
         isUnlimited: isNaN(item.remained)
-      }
+      };
     });
 
     var smsDetail = _.map(this.data.sms, function (item) {
@@ -83,7 +83,7 @@ Tw.MytUsageChildren.prototype = {
         remainedPrice: Tw.FormatHelper.convSmsPrice(item.remained),
         userRatio: (item.remained / item.total) * 100,
         isUnlimited: isNaN(item.remained)
-      }
+      };
     });
 
     // template data binding
