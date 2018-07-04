@@ -67,22 +67,22 @@
                                                 <p class="ti-desc">팅요금제를 이용하는 고객님에게 <br/><em class="tx-bold">통신 요금을 충전할 수 있는 선물</em>을 <br/>보내보세요!
                                                 </p>
                                             </div>
-                                            <div class="box-block">
-                                                <dl>
-                                                    <dt>충전 선물 차단여부</dt>
-                                                    <dd class="box-block-list">
-                                                        <!--<div class="box-block-ti2">-->
-                                                            <!--<span class="txt">충전 선물이 <em>가능한 상태</em>입니다.</span><a id="btn_activate_block">차단 신청</a>-->
-                                                        <!--</div>-->
-                                                        <div class="box-block-ti2">
-                                                            <span class="txt">충전 선물이 <em>불가능한 상태</em>입니다.</span><a id="btn_deactivate_block">차단 해제</a>
-                                                        </div>
-                                                        <ul>
-                                                            <li>충전 선물을 차단할 수 있고, 차단 상태에서는 선물을 할 수 없습니다.</li>
-                                                            <li>충전 선물 차단 해제는 지점/대리점/고객센터(국번없이 1599-0011(유료), 휴대폰 114)에서만 가능합니다.</li>
-                                                        </ul>
-                                                    </dd>
-                                                </dl>
+                                            <div id="wrap_tpl_block" class="box-block">
+                                                <!--<dl>-->
+                                                <!--<dt>충전 선물 차단여부</dt>-->
+                                                <!--<dd class="box-block-list">-->
+                                                <!--<div class="box-block-ti2">-->
+                                                <!--<span class="txt">충전 선물이 <em>가능한 상태</em>입니다.</span><a id="btn_activate_block">차단 신청</a>-->
+                                                <!--</div>-->
+                                                <!--<div class="box-block-ti2">-->
+                                                <!--<span class="txt">충전 선물이 <em>불가능한 상태</em>입니다.</span><a id="btn_deactivate_block">차단 해제</a>-->
+                                                <!--</div>-->
+                                                <!--<ul>-->
+                                                <!--<li>충전 선물을 차단할 수 있고, 차단 상태에서는 선물을 할 수 없습니다.</li>-->
+                                                <!--<li>충전 선물 차단 해제는 지점/대리점/고객센터(국번없이 1599-0011(유료), 휴대폰 114)에서만 가능합니다.</li>-->
+                                                <!--</ul>-->
+                                                <!--</dd>-->
+                                                <!--</dl>-->
                                             </div>
                                             <div class="box-suggest">
                                                 <div class="suggest-info">
@@ -233,7 +233,9 @@
                                             <div class="acco-cont" id="acco-cont6" role="region" aria-labelledby="acco-btn6">
                                                 <ul class="list-dot">
                                                     <li class="list">해당 서비스는 SMS 인증 및 공인인증서를 통해 이용 가능합니다.</li>
-                                                    <li class="list">T world SMS 인증번호가 발송되지 않으세요? <br/><a href="https://www.tworld.co.kr/poc/html/util/common/UT10.7P.html">SMS 안내 자세히 보기</a></li>
+                                                    <li class="list">T world SMS 인증번호가 발송되지 않으세요? <br/><a
+                                                        href="https://www.tworld.co.kr/poc/html/util/common/UT10.7P.html">SMS 안내 자세히 보기</a>
+                                                    </li>
                                                     <li class="list">현재 사용중인 휴대폰이 USIM 단독이거나 휴대폰과 USIM 카드가 분리된 상태에서는 SMS 인증을 받을 수 없습니다.</li>
                                                 </ul>
                                             </div>
@@ -252,6 +254,27 @@
     <!--// #contents -->
 </div>
 <% include ../../components/javascript.component.html %>
+
+<script id="tpl_ting_blocked" type="text/x-handlebars-template">
+    <dl>
+        <dt>충전 선물 차단여부</dt>
+        <dd class="box-block-list">
+            {{#if isBlocked}}
+            <div class="box-block-ti2">
+                <span class="txt">충전 선물이 <em>가능한 상태</em>입니다.</span><a id="btn_activate_block">차단 신청</a>
+            </div>
+            {{else}}
+            <div class="box-block-ti2">
+                <span class="txt">충전 선물이 <em>불가능한 상태</em>입니다.</span><a id="btn_deactivate_block">차단 해제</a>
+            </div>
+            {{/if}}
+            <ul>
+                <li>충전 선물을 차단할 수 있고, 차단 상태에서는 선물을 할 수 없습니다.</li>
+                <li>충전 선물 차단 해제는 지점/대리점/고객센터(국번없이 1599-0011(유료), 휴대폰 114)에서만 가능합니다.</li>
+            </ul>
+        </dd>
+    </dl>
+</script>
 
 <script>
   $(document).ready(function () {

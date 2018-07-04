@@ -210,7 +210,7 @@ Tw.RechargeGiftProcess.prototype = {
     this.$input_phone.val('');
   },
 
-  nextProcess: function (e) {
+  nextProcess: function () {
     if ( location.hash === '#step1' ) {
       this.validateStep1();
     } else if ( location.hash === '#step2' ) {
