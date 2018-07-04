@@ -55,7 +55,7 @@ Tw.RechargeTingHistory.prototype = {
       close_bt: true,
       select: [{
         title: 'Type',
-        class: 'three wrap_search_type',
+        'class': 'three wrap_search_type',
         options: [
           {
             checked: true,
@@ -75,7 +75,7 @@ Tw.RechargeTingHistory.prototype = {
         ]
       }, {
         title: Tw.POPUP_PROPERTY.PERIOD,
-        class: 'two wrap_search_period',
+        'class': 'two wrap_search_period',
         options: [
           {
             checked: true,
@@ -98,7 +98,7 @@ Tw.RechargeTingHistory.prototype = {
       }],
       bt_num: 'one',
       type: [{
-        class: 'bt-red1 search_condition',
+        'class': 'bt-red1 search_condition',
         href: '',
         txt: Tw.BUTTON_LABEL.SELECT
       }]
