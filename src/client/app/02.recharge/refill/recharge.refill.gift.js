@@ -6,7 +6,8 @@
 
 Tw.RechargeRefillGift = function (rootEl) {
   this.$container = rootEl;
-  this._apiService = new Tw.ApiService();
+  this._apiService = Tw.Api;
+  this._popupService = Tw.Popup;
 
   this._assign();
   this._bindEvent();
@@ -29,23 +30,26 @@ Tw.RechargeRefillGift.prototype = {
     this._$inputPhone.trigger('focus');
   },
 
-  _onClickBtnNext: function (event) {
+  _onClickBtnNext: function () {
     var befrSvcNum = this._$inputPhone.val();
     var copnNm = this._$btnNext.attr('copn-nm');
     var svcNum = this._$btnNext.attr('svc-num');
     var fomattedBefrSvcNum = this._getFormattedPhoneNumber(befrSvcNum);
-    var msg = svcNum + Tw.MESSAGE.REFILL_GIFT_01 + fomattedBefrSvcNum + Tw.MESSAGE.REFILL_GIFT_02;
+    var confirmContents = svcNum + Tw.MSG_RECHARGE.REFILL_GIFT_01 + fomattedBefrSvcNum + Tw.MSG_RECHARGE.REFILL_GIFT_02;
     if ( !Tw.ValidationHelper.isCellPhone(befrSvcNum) ) {
-      alert(Tw.MESSAGE.REFILL_GIFT_03);
+      this._popupService.openAlert(Tw.POPUP_TITLE.NOTIFY, Tw.MSG_RECHARGE.REFILL_GIFT_03);
       return;
     }
     if ( !copnNm ) {
-      alert(Tw.MESSAGE.REFILL_GIFT_04);
+      this._popupService.openAlert(Tw.POPUP_TITLE.NOTIFY, Tw.MSG_RECHARGE.REFILL_GIFT_04);
       return;
     }
-    if ( !confirm(msg) ) {
-      return;
-    }
+    this._popupService.openConfirm(Tw.POPUP_TITLE.NOTIFY, confirmContents, '', $.proxy(this._submit, this));
+  },
+
+  _submit: function() {
+    var copnNm = this._$btnNext.attr('copn-nm');
+    var befrSvcNum = this._$inputPhone.val();
     var data = JSON.stringify({
       copnIsueNum: copnNm,
       befrSvcNum: befrSvcNum
@@ -94,22 +98,22 @@ Tw.RechargeRefillGift.prototype = {
         window.location.href = '/recharge/refill/gift-products';
         break;
       case RESP_CODE.RCG3003:
-        alert(Tw.MESSAGE.REFILL_GIFT_05);
+        this._popupService.openAlert(Tw.POPUP_TITLE.NOTIFY, Tw.MSG_RECHARGE.REFILL_GIFT_05);
         break;
       case RESP_CODE.RCG3005:
-        alert(Tw.MESSAGE.REFILL_GIFT_06);
+        this._popupService.openAlert(Tw.POPUP_TITLE.NOTIFY, Tw.MSG_RECHARGE.REFILL_GIFT_06);
         break;
       case RESP_CODE.RCG3006:
-        alert(Tw.MESSAGE.REFILL_GIFT_07);
+        this._popupService.openAlert(Tw.POPUP_TITLE.NOTIFY, Tw.MSG_RECHARGE.REFILL_GIFT_07);
         break;
       default:
-        alert(resp.orgDebugMessage);
+        this._popupService.openAlert(Tw.POPUP_TITLE.NOTIFY, resp.data.orgDebugMessage);
         break;
     }
   },
 
   _setDisableStatus: function () {
-    var disabled = !(10 <= this._$inputPhone.val().length);
+    var disabled = (10 <= this._$inputPhone.val().length) ? false : true;
     this._$btnNext.attr('disabled', disabled);
   },
 
