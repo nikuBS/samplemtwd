@@ -8,16 +8,19 @@ Tw.API_METHOD = {
 Tw.API_CMD = {
   TEST_GET_USAGE_BTN: { path: '/usageBtn', method: Tw.API_METHOD.GET },
   SESSION_CHECK: { path: '/mock/session', method: Tw.API_METHOD.GET },
-  BFF_03_0002: { path: '/svc-catalog', method: Tw.API_METHOD.GET },
-  BFF_03_0003: { path: '/svc-catalog/detail', method: Tw.API_METHOD.GET },
-  BFF_03_0004: { path: '/change-svc', method: Tw.API_METHOD.POST },
-  BFF_03_0005: { path: '/selected-svc', method: Tw.API_METHOD.GET },
-  BFF_03_0023: { path: '/core-recharge/v1/refill-gifts', method: Tw.API_METHOD.POST },
+  BFF_03_0002_C: { path: '/svc-catalog', method: Tw.API_METHOD.GET },
+  BFF_03_0003_C: { path: '/svc-catalog/detail', method: Tw.API_METHOD.GET },
+  BFF_03_0004_C: { path: '/change-svc', method: Tw.API_METHOD.POST },
+  BFF_03_0005_C: { path: '/selected-svc', method: Tw.API_METHOD.GET },
+  BFF_03_0023_C: { path: '/core-recharge/v1/refill-gifts', method: Tw.API_METHOD.POST },
+  // MYT
   BFF_05_0001: { path: '/my-t/balances', method: Tw.API_METHOD.GET },
   BFF_05_0002: { path: '/my-t/balance-add-ons', method: Tw.API_METHOD.GET },
   BFF_05_0009: { path: '/core-balance/v1/data-sharings/balances', method: Tw.API_METHOD.GET },
   BFF_05_0010: { path: '/core-balance/v1/children', method: Tw.API_METHOD.GET },
   BFF_05_0011: { path: '/core-balance/v1/data-sharings/args-0', method: Tw.API_METHOD.POST },
+
+  // RECHARGE
   BFF_06_0001: { path: '/core-recharge/v1/refill-coupons', method: Tw.API_METHOD.GET },
   BFF_06_0002: { path: '/core-recharge/v1/refill-usages', method: Tw.API_METHOD.GET },
   BFF_06_0003: { path: '/core-recharge/v1/refill-gifts', method: Tw.API_METHOD.GET },
@@ -60,4 +63,8 @@ Tw.API_CMD = {
   BFF_06_0040: { path: '/services/recharge/auto-cut', method: Tw.API_METHOD.POST },
   BFF_06_0041: { path: '/services/recharge/auto-cut-cancel', method: Tw.API_METHOD.POST },
   BFF_06_0042: { path: '/services/recharge/search', method: Tw.API_METHOD.GET },
+};
+
+Tw.API_CODE = {
+  CODE_00: '00'
 };

@@ -8,13 +8,15 @@ Tw.HistoryService = function (selector) {
   this.historyName = this.pathname.split('/')[1];
   this.storageName = this.pathname.split('/')[2];
   this.historyObj = {};
+  this._hashService = Tw.Hash;
+  this._hashList = [];
 };
 Tw.HistoryService.prototype = {
   init: function (hash) {
     if (hash === undefined) {
       this.$window.on('pageshow', $.proxy(this.checkIsBack, this));
     } else {
-      initHashNav($.proxy(this.onHashChange, this));
+      this._hashService.initHashNav($.proxy(this.onHashChange, this));
     }
   },
   push: function () {
@@ -40,22 +42,39 @@ Tw.HistoryService.prototype = {
       }
     }
   },
-  onHashChange: function () {
+  onHashChange: function (hash) {
+    var isStep = this.isStep(hash);
+    if (isStep) {
+      this.addHashList(hash.base.split('-')[0]);
+    }
+    if (isStep || this.isCompleted()) {
+      this.scrollInit();
+    }
     this.showAndHide();
-    this.resetHashHistory();
+    this.checkIsCompleted();
+  },
+  addHashList: function (hash) {
+    var hashList = this._hashList;
+    if (!hashList.includes(hash)) {
+      hashList.push(hash);
+    }
+  },
+  scrollInit: function () {
+    window.scrollTo(0,0);
   },
   showAndHide: function () {
-    var id = window.location.hash;
-    if (Tw.FormatHelper.isEmpty(id)) id = '#main';
+    var _id = window.location.hash;
+    if (Tw.FormatHelper.isEmpty(_id)) {
+      _id = '#main';
+    }
 
-    var $selector = this.$container.find(id);
-    $selector.siblings().hide();
+    var $selector = this.$container.find(_id);
+    $selector.siblings().not($('#header')).hide();
     $selector.show();
   },
   resetHashHistory: function () {
-    if (this.isReturendMain() && this.isCompleted()) {
-      this.resetHistory(this.getHistoryLength());
-    }
+    this.resetHistory(this.getHistoryLength());
+    this._hashList = [];
   },
   setHistory: function () {
     this.$container.addClass('process-complete');
@@ -66,12 +85,12 @@ Tw.HistoryService.prototype = {
     this.reload();
   },
   getHistoryLength: function () {
-    var historyLength = this.getHashElementLength();
+    var historyLength = this._hashList.length;
     historyLength = -historyLength;
     return historyLength;
   },
-  getHashElementLength: function () {
-    return this.$container.find('div[id^="step"]').length;
+  isStep: function (hash) {
+    return hash.base.match('step');
   },
   isReturendMain: function () {
     return Tw.FormatHelper.isEmpty(window.location.hash);
@@ -81,7 +100,13 @@ Tw.HistoryService.prototype = {
   },
   isDone: function () {
     return Tw.UIService.getLocalStorage(this.storageName) === 'done';
+  },
+  complete: function () {
+    Tw.UIService.setLocalStorage(this.storageName, 'done');
+  },
+  checkIsCompleted: function () {
+    if (this.isReturendMain() && this.isCompleted()) {
+      this.resetHashHistory();
+    }
   }
 };
-
-Tw.History = new Tw.HistoryService();

@@ -4,22 +4,39 @@
 * Date: 2018.06.22
 -->
 <% include ../components/start.component.html %>
-<div id="payment-realtime">
-    <div id="main">
-        <h1>즉시납부</h1>
-        <a href="#step1" class="step1">페이지 이동 1</a>
+<div id="payment-realtime" class="wrap">
+    <!-- #header -->
+    <div id="header" class="header-wrap">
+        <div class="header">
+            <div class="header-ti">
+                <h1>즉시납부</h1>
+                <button class="depth-view" role="button" aria-pressed="false"><span class="blind">메뉴구조보기</span></button>
+            </div>
+            <button class="prev-step common-back"><span class="blind">이전으로</span></button>
+            <button class="search-content"><span class="blind">검색하기</span></button>
+        </div>
     </div>
-    <div id="step1" style="display:none;">
-        <h1>step1</h1>
-        <a href="#step2" class="step2">페이지 이동 2</a>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="main" class="container-wrap">
+        <% include ../components/realtime/payment.realtime.init.component.html %>
     </div>
-    <div id="step2" style="display:none;">
-        <h1>step2</h1>
-        <a class="step2 pay">페이지 이동 3</a>
+    <div id="step1" class="container-wrap" style="display:none;">
+        <% include ../components/realtime/payment.realtime.select.payment.option.component.html %>
     </div>
-    <div id="process-complete" style="display:none;">
-        <h1>완료</h1>
+    <div id="step2-account" class="container-wrap" style="display:none;">
+        <% include ../components/realtime/payment.realtime.account.component.html %>
     </div>
+    <div id="step2-card" class="container-wrap" style="display:none;">
+        <% include ../components/realtime/payment.realtime.card.component.html %>
+    </div>
+    <div id="step2-point" class="container-wrap" style="display:none;">
+        <% include ../components/realtime/payment.realtime.point.component.html %>
+    </div>
+    <div id="process-complete" class="container-wrap" style="display:none;">
+        <% include ../components/realtime/payment.realtime.complete.component.html %>
+    </div>
+    <!--// #contents -->
 </div>
 <% include ../components/javascript.component.html %>
 <script>

@@ -17,13 +17,12 @@ class RechargeGiftHistory extends TwViewController {
   }
 
   public getMobileLineList() {
-    return this.apiService.request(API_CMD.BFF_03_0003, {svcCtg: 'M'});
+    return this.apiService.request(API_CMD.BFF_03_0003_C, {svcCtg: 'M'});
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
 
     const dateSpectrum = [
-      DateHelper.getShortDateWithFormat(new Date(), 'YYYYMMDD'),
       DateHelper.getShortDateWithFormatAddByUnit(new Date(), -1, 'months', 'YYYYMMDD'),
       DateHelper.getShortDateWithFormatAddByUnit(new Date(), -3, 'months', 'YYYYMMDD'),
       DateHelper.getShortDateWithFormatAddByUnit(new Date(), -6, 'months', 'YYYYMMDD'),

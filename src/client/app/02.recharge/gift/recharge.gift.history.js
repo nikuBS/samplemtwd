@@ -5,51 +5,133 @@
  */
 Tw.RechargeGiftHistory = function (rootEl) {
   this.$container = rootEl;
-  this._apiService = new Tw.ApiService();
+  this._apiService = Tw.Api;
 
-  this._cachedElement();
-  this._bindEvent();
-  this._$init();
+  this._hash = Tw.Hash;
+  this._popupService = Tw.Popup;
+  this._dateHelper = Tw.DateHelper;
+
+  this._init();
+  // this._cachedElement();
+  // this._bindEvent();
 };
 
 Tw.RechargeGiftHistory.prototype = {
 
-  // TODO : 삭제 확인
-  // TODO : 회선변경
-  // TODO : hash처리
+  _init: function () {
 
-  _$init: function () {
-    this.currentTab = 'present';    // request : 조르기
-    this.data = {};
-    this.searchCondition = {
-      now: null,
-      old: {},
-      type: 0,
-      isAutoSent: false,
-      selectedTermIndex: 1,
-      terms: []
+    this.current = this._hash._currentHashNav || 'gift';
+    this.dateNow = this._dateHelper.getShortDateWithFormat(new Date(), 'YYYYMMDD');
+
+    this._getListData(this._dateHelper.getShortDateWithFormatAddByUnit(this.dateNow, -1, 'years', 'YYYYMMDD'), this.dateNow, 1, function (res) {
+      console.log(res);
+    });
+
+    var _search = (function () {
+      var terms = [
+        this._dateHelper.getShortDateWithFormatAddByUnit(this.dateNow, -1, 'months', 'YYYYMMDD'),
+        this._dateHelper.getShortDateWithFormatAddByUnit(this.dateNow, -3, 'months', 'YYYYMMDD'),
+        this._dateHelper.getShortDateWithFormatAddByUnit(this.dateNow, -6, 'months', 'YYYYMMDD'),
+        this._dateHelper.getShortDateWithFormatAddByUnit(this.dateNow, -1, 'years', 'YYYYMMDD')
+      ];
+      var setDefault = function () {
+
+      }
+      var setOption = function () {
+
+      }
+
+      var resetOption = function () {
+
+      }
+      return {
+        defaultLabel: null,
+        terms: terms,
+        setOption: setOption,
+        resetOption: resetOption
+      };
+    }.bind(this))();
+
+    this.ListGeneratorWithHandlebar = function (dataSet, perPage, template, handlebarHelper, wrapperDOM, viewMoreDom) {
+      if ((!_.isObject(dataSet) || arguments.length < 6) || !_.isFunction(handlebarHelper)) {
+        Tw.Logger.error('[ListGenerator ERROR]');
+        return false;
+      }
+      this.data = dataSet;
+      this.perPage = perPage;
+      this.template = template;
+      this.wrapper = wrapperDOM;
+      this.helper = handlebarHelper;
+      this.viewTrigger = viewMoreDom;
+
+      this._init();
     };
-    this.requestDeletePopup = {
-      'title': Tw.POPUP_TITLE.REQUEST_DELETE,
-      'close_bt': true,
-      'contents': Tw.MSG_RECHARGE.REQUEST_DELETE,
-      'bt_num': 'two',
-      'type': [{class: 'bt-white2', txt: Tw.BUTTON_LABEL.CANCEL},
-        {class: 'bt-red1', txt: Tw.BUTTON_LABEL.CONFIRM}]
-    };
-    this.presentContentWrapper.hide();
-    this.requestContentWrapper.hide();
 
-    this[this.currentTab + 'TermSelect'].find('option').map((function (i, o) {
-      this.searchCondition.terms.push(o.value);
-    }).bind(this));
-    this.searchCondition.now = Tw.DateHelper.getShortDateWithFormat(new Date(), 'YYYYMMDD');
+    this.ListGeneratorWithHandlebar.prototype = {
+      _init: function () {
 
-    this.presentViewMore.hide();
-    this.requestViewMore.hide();
+      },
 
-    this.getDataList(this.searchCondition.terms[this.searchCondition.selectedTermIndex], this.searchCondition.now, this.searchCondition.type, this.initData);
+      getNextPage: function () {
+
+      },
+
+      appendPage: function () {
+        this.getNextPage();
+        this.wrapper.append();
+      }
+    }
+
+    new this.ListGeneratorWithHandlebar({}, 20, 11, function () {
+    }, 2, 35);
+    // _search.setOption();
+
+    // this.data = {};
+    // this.searchCondition = {
+    //   now: null,
+    //   old: {},
+    //   type: 0,
+    //   isAutoSent: false,
+    //   selectedTermIndex: 1,
+    //   terms: []
+    // };
+    // this.requestDeletePopup = {
+    //   'title': Tw.POPUP_TITLE.REQUEST_DELETE,
+    //   'close_bt': true,
+    //   'contents': Tw.MSG_RECHARGE.REQUEST_DELETE,
+    //   'bt_num': 'two',
+    //   'type': [{class: 'bt-white2', txt: Tw.BUTTON_LABEL.CANCEL},
+    //     {class: 'bt-red1', txt: Tw.BUTTON_LABEL.CONFIRM}]
+    // };
+    // this.presentContentWrapper.hide();
+    // this.requestContentWrapper.hide();
+    //
+    // this[this.currentTab + 'TermSelect'].find('option').map((function (i, o) {
+    //   this.searchCondition.terms.push(o.value);
+    // }).bind(this));
+
+    //
+    // this.presentViewMore.hide();
+    // this.requestViewMore.hide();
+    //
+
+    //
+    // initHashNav($.proxy(this._hashInit, this));
   },
+
+  _hashInit: function (hash) {
+    switch (hash.base) {
+      case 'request' :
+        this.$tabChanger.eq(1).click();
+        break;
+      case 'gift' :
+        this.$tabChanger.eq(0).click();
+        break;
+      default :
+        this.$tabChanger.eq(0).click();
+    }
+  },
+
   _cachedElement: function () {
     this.$document = $(document);
 
@@ -57,7 +139,7 @@ Tw.RechargeGiftHistory.prototype = {
 
     this.$widgetWrapper = $('.widget-box.select');
     this.$tabLinker = $('.tab-linker');
-    this.$tabChanger = $('.tab-linker a');
+    this.$tabChanger = $('.tab-linker button');
 
     this.presentContainer = $('#tab1');
     this.presentContentWrapper = this.presentContainer.find('.inner .result-history');
@@ -72,9 +154,12 @@ Tw.RechargeGiftHistory.prototype = {
     this.requestCounter = this.requestContainer.find('.ti-desc em');
     this.requestViewMore = this.requestContainer.find('.bt-more');
     this.requestRestCounter = this.requestViewMore.find('span');
-    this.requestTermSelect = $('#tab1 .inner .contents-info-list .widget select:nth-of-type(2)');
+    this.requestTermSelect = $('#tab2 .inner .contents-info-list .widget select:nth-of-type(2)');
 
+    this._setTemplateWithDOM();
+  },
 
+  _setTemplateWithDOM: function () {
     this.listTemplete = Handlebars.compile($('#list-template').html());
     this.presentEmptyTemplete = Handlebars.compile($('#present-empty-template').html());
     this.requestEmptyTemplete = Handlebars.compile($('#request-empty-template').html());
@@ -82,17 +167,32 @@ Tw.RechargeGiftHistory.prototype = {
 
   _bindEvent: function () {
     this.$widgetWrapper.on('click', 'button', $.proxy(this.openSelectPopupProcess, this));
-    this.$tabLinker.on('click', 'a', $.proxy(this.changeTab, this));
+    this.$tabLinker.on('click', 'button', $.proxy(this.changeTab, this));
 
     this.$document.on('updateLineInfo', $.proxy(this.updateLineInfo, this));
 
-    this.presentViewMore.off('click').on('click', $.proxy(this.appendNextPagesToList, this));
-    this.requestViewMore.off('click').on('click', $.proxy(this.appendNextPagesToList, this));
+    // this.presentViewMore.off('click').on('click', $.proxy(this.appendNextPagesToList, this));
+    // this.requestViewMore.off('click').on('click', $.proxy(this.appendNextPagesToList, this));
   },
 
-  initData: function (res) {
+  _getListData: function (fromDt, toDt, type, callback) {
+    if (this.current === 'gift') {
+      this._apiService.request(Tw.API_CMD.BFF_06_0018, {
+        fromDt: fromDt,
+        toDt: toDt,
+        giftType: type
+      }).done($.proxy(callback, this));
+    } else if (this.current === 'request') {
+      this._apiService.request(Tw.API_CMD.BFF_06_0010, {
+        fromDt: fromDt,
+        toDt: toDt,
+        requestType: type
+      }).done($.proxy(callback, this));
+    }
+  },
+
+  setData: function (res) {
     if (res.code !== '00' && res.msg !== 'success') {
-      console.log('error', res);
       return false;
     }
     if (res.result) {
@@ -110,36 +210,36 @@ Tw.RechargeGiftHistory.prototype = {
     this.initUiFromData();
   },
 
-  updateLineInfo: function(e, params) {
-    Tw.Logger.log('updateLineInfo', e, params, this.$lineSelect);
+  updateLineInfo: function (e, params) {
   },
 
-  setSearchBtn: function(type, term) {
+  setSearchBtn: function (type, term) {
     var targetBtn = this[this.currentTab + 'Container'].find('.bt-dropdown.small'),
         subSelect = targetBtn.siblings().find("select"),
-        text = '',
-        spCode = ' · ';
+        text      = '',
+        spCode    = ' · ';
 
-    subSelect.each(function(t) {
-      $(this).find('option').attr('selected', null).eq(t?term:type).attr('selected', 'selected');
+    subSelect.each(function (t) {
+      $(this).find('option').attr('selected', null).eq(t ? term : type).attr('selected', 'selected');
       text += !t ? $(this).find('option').eq(type).text() + spCode : $(this).find('option').eq(term).text();
     });
     targetBtn.text(text);
   },
 
-  searchData: function(res) {
-    if(this.searchCondition.isAutoSent && this.currentTab === 'present') {
+  searchData: function (res) {
+    if (this.searchCondition.isAutoSent && this.currentTab === 'gift') {
       var filtered = [];
-      res.result.map(function(arr) {
-        if(arr.regularGiftType === 'GC') {
+      res.result.map(function (arr) {
+        if (arr.regularGiftType === 'GC') {
           filtered.push(arr);
         }
       });
       res.filteredData = filtered;
-    };
+    }
+
     this.data[this.currentTab] = undefined;
     this[this.currentTab + 'Container'].find('.noresult').remove();
-    this.initData(res);
+    this.setData(res);
   },
 
   updateListData: function () {
@@ -182,7 +282,7 @@ Tw.RechargeGiftHistory.prototype = {
     } else {
       this[this.currentTab + 'Container'].find('.ti-desc').hide();
       this[this.currentTab + 'ContentWrapper'].hide();
-      if (this.currentTab === 'present') {
+      if (this.currentTab === 'gift') {
         this[this.currentTab + 'Container'].find('.contents-info-list').append(this.presentEmptyTemplete());
       } else {
         this[this.currentTab + 'Container'].find('.contents-info-list').append(this.requestEmptyTemplete());
@@ -233,10 +333,9 @@ Tw.RechargeGiftHistory.prototype = {
   },
 
   getTemplate: function (t, d) {
-    var _this = this;
 
     Handlebars.registerHelper('setIndex', function (option) {
-      this.listIndex = option.data.key + _this.data[_this.currentTab].currentPage * 20;
+      // this.listIndex = option.data.key + _this.data[_this.currentTab].currentPage * 20;
       return option.fn(this);
     });
 
@@ -253,13 +352,13 @@ Tw.RechargeGiftHistory.prototype = {
     });
 
     Handlebars.registerHelper('isBig1G', function (val) {
-      var convertDataFormat = Tw.FormatHelper.customDataFormat(this.dataQty, 'MB', 'GB');
+      var convertDataFormat = Tw.FormatHelper.customDataFormat(this.dataQty, Tw.DATA_UNIT.MB, Tw.DATA_UNIT.GB);
       if (this.dataQty < 1024) {
-        this.dataQtyTrans = Tw.FormatHelper.addComma(this.dataQty) + 'MB';
+        this.dataQtyTrans = Tw.FormatHelper.addComma(this.dataQty) + Tw.DATA_UNIT.MB;
         return val.fn(this);
       } else {
         this.dataQtyTrans = convertDataFormat.data + convertDataFormat.unit;
-        this.dataQtyConvert = Tw.FormatHelper.addComma(this.dataQty) + 'MB';
+        this.dataQtyConvert = Tw.FormatHelper.addComma(this.dataQty) + Tw.DATA_UNIT.MB;
         return val.inverse(this);
       }
     });
@@ -273,7 +372,7 @@ Tw.RechargeGiftHistory.prototype = {
     });
 
     Handlebars.registerHelper('isRequest', function (option) {
-      if (_this.currentTab !== 'present' && this.giftType === '2') {
+      if (_this.currentTab !== 'gift' && this.giftType === '2') {
         return option.fn(this);
       } else {
         return option.inverse(this);
@@ -282,13 +381,12 @@ Tw.RechargeGiftHistory.prototype = {
 
     return t(d);
   },
-  
-  openSelectPopupProcess: function (e) {
 
+  openSelectPopupProcess: function (e) {
     if ($(e.target).attr('id') === 'term-set') {
       this.currentPopupKeyWord = 'term';
       this.searchPopupHandler();
-    } else if($(e.target).attr('id') === 'line-set') {
+    } else if ($(e.target).attr('id') === 'line-set') {
       this.currentPopupKeyWord = 'line';
     }
 
@@ -298,32 +396,16 @@ Tw.RechargeGiftHistory.prototype = {
   },
 
   // _getLineInfo: function (callback) {
-  //   this._apiService.request(Tw.API_CMD.BFF_03_0003, {svcCtg: 'M'}).done($.proxy(callback, this));
+  //   this._apiService.request(Tw.API_CMD.BFF_03_0003_C, {svcCtg: 'M'}).done($.proxy(callback, this));
   // },
 
   // _setLineList: function (res) {
   //   console.log(res);
-    // this.lineList.lines = lines.result;
-    // this.lineList.current = lines.result[0];
-    // this.lineList.selectedIndex = $(this.lineList.lines).index(this.lineList.current);
-    // this.getPresentList();
+  // this.lineList.lines = lines.result;
+  // this.lineList.current = lines.result[0];
+  // this.lineList.selectedIndex = $(this.lineList.lines).index(this.lineList.current);
+  // this.getPresentList();
   // },
-
-  getDataList: function (fromDt, toDt, giftType, callback) {
-    if (this.currentTab === 'present') {
-      this._apiService.request(Tw.API_CMD.BFF_06_0018, {
-        fromDt: fromDt,
-        toDt: toDt,
-        giftType: giftType
-      }).done($.proxy(callback, this));
-    } else if (this.currentTab === 'request') {
-      this._apiService.request(Tw.API_CMD.BFF_06_0010, {
-        fromDt: fromDt,
-        toDt: toDt,
-        requestType: giftType
-      }).done($.proxy(callback, this));
-    }
-  },
 
   addClosePopupHandler: function () {
     this.$document.one('click', '.popup-closeBtn', $.proxy(this.cancelUpdateCurrentLine, this));
@@ -331,11 +413,11 @@ Tw.RechargeGiftHistory.prototype = {
   },
 
   popupCommandOk: function () {
-    if(this.currentPopupKeyWord !== 'line') {
+    if (this.currentPopupKeyWord !== 'line') {
       this.resetCurrentContents();
     }
     // 회선 변경시, 검색 실행시 내역 조회 재실행
-    this.getDataList(this.searchCondition.terms[this.searchCondition.selectedTermIndex], this.searchCondition.now, this.searchCondition.type, this.searchData);
+    this.getListData(this.searchCondition.terms[this.searchCondition.selectedTermIndex], this.searchCondition.now, this.searchCondition.type, this.searchData);
     this.currentPopupKeyWord = '';
   },
 
@@ -350,7 +432,7 @@ Tw.RechargeGiftHistory.prototype = {
     skt_landing.action.popup.close();
   },
 
-  searchPopupHandler: function() {
+  searchPopupHandler: function () {
     var tempTimer = window.setTimeout((function () {
 
       this.setPrevSearchCondition();
@@ -411,7 +493,7 @@ Tw.RechargeGiftHistory.prototype = {
     this.searchCondition.isAutoSent = this.searchCondition.old.isAutoSent;
   },
 
-  resetSearchCondition: function(){
+  resetSearchCondition: function () {
     this.searchCondition.type = 0;
     this.searchCondition.selectedTermIndex = 1;
     this.searchCondition.isAutoSent = false;
@@ -421,19 +503,19 @@ Tw.RechargeGiftHistory.prototype = {
     e.preventDefault();
     this.resetSearchCondition();
     if (this.$tabChanger.index(e.target) === 0) {
-      if (this.currentTab === 'present') return false;
-      this.currentTab = 'present';
+      // if (this.currentTab === 'gift') return false;
+      this.currentTab = 'gift';
     } else {
-      if (this.currentTab === 'request') return false;
+      // if (this.currentTab === 'request') return false;
       this.currentTab = 'request';
     }
     this.setSearchBtn(0, 1);
     this.resetCurrentContents();
-    this.getDataList(this.searchCondition.now, this.searchCondition.terms[this.searchCondition.selectedTermIndex], '0', this.initData);
+    this.getListData(this.searchCondition.now, this.searchCondition.terms[this.searchCondition.selectedTermIndex], '0', this.setData);
     this[this.currentTab + 'Container'].find('.noresult').remove();
   },
 
-  resetCurrentContents: function() {
+  resetCurrentContents: function () {
     this[this.currentTab + 'ViewMore'].hide();
     this[this.currentTab + 'ContentWrapper'].empty();
   }

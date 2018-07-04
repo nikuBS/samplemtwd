@@ -130,7 +130,7 @@
   height: 1.25rem;
   background-position: -0.125rem -14.1875rem;
   line-height: 1.25rem;
-  vertical-align: middle;
+  vertical-align: top;
 }
 
 .header-wrap .header .header-ti .depth-view.on {
@@ -231,15 +231,16 @@
   bottom: 0;
   z-index: 15;
   width: 18.75rem;
-  overflow-x: auto;
-  overflow-y: scroll;
+  overflow-x: hidden;
+  overflow-y: auto;
   background: #fff;
-  -webkit-transition: all 1s ease;
-  transition: all 1s ease;
-}
-
-.all-menu.on {
-  right: 0;
+  /*transition:all 1s ease;
+    &.on{
+        right:0;
+    }*/
+  /*&.depth2 .all-menu-box-depth2{
+        right:0;
+    }*/
 }
 
 .all-menu .all-menu-box {
@@ -464,15 +465,13 @@
 
 .all-menu .all-menu-box-depth2 {
   position: absolute;
-  left: -100%;
+  right: -100%;
   top: 0;
   bottom: 0;
   width: 100%;
   overflow-y: auto;
   overflow-x: hidden;
   background: #fff;
-  -webkit-transition: all 1s ease;
-  transition: all 1s ease;
 }
 
 .all-menu .all-menu-box-depth2 .menu-depth2-box {
@@ -542,10 +541,6 @@
   height: 1.5625rem;
   background: url(/img/ico/ico-group.png) no-repeat 0 -15.625rem;
   background-size: 3.125rem;
-}
-
-.all-menu.depth2 .all-menu-box-depth2 {
-  left: 0;
 }
 
 .all-menu-setting {
@@ -698,6 +693,10 @@
   z-index: 5;
 }
 
+.popup-page .gnb-wrap .page-gnb .btn-wrap {
+  padding: 0 1.625rem;
+}
+
 .popup-page .popup-closeBtn {
   display: block;
   position: fixed;
@@ -779,4 +778,16 @@
   position: absolute;
   top: 0;
   left: 0;
+}
+
+/* footer */
+.footer-wrap.fixed {
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+}
+
+.footer-wrap.btn-area-msg {
+  padding: 0 1.625rem;
 }

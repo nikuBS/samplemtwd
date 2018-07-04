@@ -36,7 +36,7 @@ Tw.MytUsageChangeSub.prototype = {
   },
 
   onLoadData: function () {
-    this._apiService.request(Tw.API_CMD.BFF_03_0003, { svcCtg: this.groupType })
+    this._apiService.request(Tw.API_CMD.BFF_03_0003_C, { svcCtg: this.groupType })
       .done($.proxy(this.onSuccessLoadData, this));
   },
 
@@ -63,7 +63,7 @@ Tw.MytUsageChangeSub.prototype = {
   choiceLine: function (e) {
     var $elLine    = $(e.currentTarget);
     var svcMgmtNum = $elLine.data('svcmgmtnum');
-    this._apiService.request(Tw.API_CMD.BFF_03_0004, {}, { "svcMgmtNum": svcMgmtNum } )
+    this._apiService.request(Tw.API_CMD.BFF_03_0004_C, {}, { "svcMgmtNum": svcMgmtNum } )
       .done(function () {
         location.href = '/myt';
       });

@@ -3,7 +3,6 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import { API_CMD } from '../../../../types/api-command.type';
 
 class RechargeTing extends TwViewController {
-
   constructor() {
     super();
   }

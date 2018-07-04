@@ -4,7 +4,7 @@
  * Date: 2018.07.02
  */
 
-import TwViewController from '../../../common/controllers/tw.view.controller';
+import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
 
 class AuthWithdrawlGuide extends TwViewController {
@@ -13,7 +13,7 @@ class AuthWithdrawlGuide extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    res.render('auth.withdrawal.guide.html');
+    res.render('withdrawal/auth.withdrawal.guide.html');
   }
 }
 

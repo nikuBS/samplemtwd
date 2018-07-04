@@ -5,43 +5,51 @@
  */
 import TwViewController from '../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
-import { API_CMD, API_CODE } from '../../../types/api-command.type';
+import { API_CODE } from '../../../types/api-command.type';
+import { SVC_CD } from '../../../types/bff-common.type';
+import { PAYMENT_VIEW } from '../../../types/string.type';
 import DateHelper from '../../../utils/date.helper';
 import FormatHelper from '../../../utils/format.helper';
-import MyTUsage from '../../01.myt/controllers/usage/myt.usage.controller';
+import UnpaidList from '../../../mock/server/payment/payment.realtime.unpaid.list';
 
 class PaymentRealtimeController extends TwViewController {
-  public myTUsage = new MyTUsage();
-
   constructor() {
     super();
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    this.apiService.request(API_CMD.BFF_06_0001, {}).subscribe((resp) => {
-      this.myTUsage.renderView(res, 'payment.realtime.html', {
-        usageData: this.getResult(resp, {}),
+    // this.apiService.request(API_CMD.BFF_06_0001, {}).subscribe((resp) => {
+      this.renderView(res, 'payment.realtime.html', {
+        list: this.getResult(UnpaidList),
         svcInfo
       });
-    });
+    // });
   }
 
-  private getResult(resp: any, data: any): any {
-    if (resp.code === API_CODE.CODE_00) {
-      data = this.parseData(resp.result);
+  public renderView(res: Response, view: string, data: any): any {
+    if (data.code === undefined) {
+      res.render(view, data);
     } else {
-      data = resp;
+      res.render(PAYMENT_VIEW.ERROR, data);
     }
-    return data;
   }
 
-  private parseData(product: any): any {
-    if (!FormatHelper.isEmpty(product)) {
-      product.map((data) => {
-        // product.chargeDate = DateHelper.getShortDateNoDot(data.chargeDate);
+  private getResult(resp: any): any {
+    if (resp.code === API_CODE.CODE_00) {
+      return this.parseData(resp.result.settleUnPaidList);
+    }
+    return resp;
+  }
+
+  private parseData(list: any): any {
+    if (!FormatHelper.isEmpty(list)) {
+      list.map((data) => {
+        data.invYearMonth = DateHelper.getShortDateWithFormat(data.invDt, 'YYYY.MM');
+        data.invMoney = FormatHelper.addComma(data.invAmt);
+        data.svcName = SVC_CD[data.svcCd];
       });
     }
-    return product;
+    return list;
   }
 }
 

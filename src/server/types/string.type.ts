@@ -27,3 +27,7 @@ export enum MSG_STR {
 export enum MYT_VIEW {
   ERROR = 'error/myt.usage.error.html'
 }
+
+export enum PAYMENT_VIEW {
+  ERROR = 'error/payment.realtime.error.html'
+}

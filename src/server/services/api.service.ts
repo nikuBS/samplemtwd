@@ -5,6 +5,7 @@ import { API_CMD, API_CODE, API_METHOD, API_SERVER } from '../types/api-command.
 import ParamsHelper from '../utils/params.helper';
 import LoginService from './login.service';
 import LoggerService from './logger.service';
+import FormatHelper from '../utils/format.helper';
 
 class ApiService {
   static instance;
@@ -20,15 +21,19 @@ class ApiService {
   }
 
   public request(command: any, params: any, header?: any, ...args: any[]): Observable<any> {
-    const apiUrl = environment[String(process.env.NODE_ENV)][command.server];
+    const apiUrl = this.getServerUri(command);
     const options = this.getOption(command, apiUrl, params, header, args);
     this.logger.info(this, '[API_REQ]', options);
 
     return Observable.create((observer) => {
       axios(options)
         .then(this.apiCallback.bind(this, observer, command))
-        .catch(this.handleError.bind(this));
+        .catch(this.handleError.bind(this, observer));
     });
+  }
+
+  public getServerUri(command: any): string {
+    return environment[String(process.env.NODE_ENV)][command.server];
   }
 
   private getOption(command: any, apiUrl: any, params: any, header: any, args: any[]): any {
@@ -76,36 +81,37 @@ class ApiService {
   }
 
   private apiCallback(observer, command, resp) {
-    let respData;
+    this.logger.info(this, '[API RESP]', resp.data);
+
     if ( command.server === API_SERVER.BFF ) {
       this.setServerSession(resp);
     }
 
-    try {
-      respData = JSON.parse(resp.data);
-      if ( this.isSessionCallback(command) ) {
-        this.setSvcInfo(respData.result);
-      }
-    } catch ( err ) {
-      this.logger.warn(this, 'JSON parse error');
-      respData = resp.data;
+    if ( FormatHelper.isObject(resp.data) && this.isSessionCallback(command) && resp.data.code === API_CODE.CODE_00 ) {
+      this.setSvcInfo(resp.data.result);
     }
-    observer.next(respData);
+
+    observer.next(resp.data);
     observer.complete();
   }
 
   private handleError(observer, err) {
-    this.logger.error(this, '[API_ERR]', err);
+    const error = err.response.data;
+    this.logger.error(this, '[API_ERR]', error);
+    let message = 'unknown error';
+    if ( FormatHelper.isObject(error) && !FormatHelper.isEmpty(error.msg) ) {
+      message = error.msg;
+    }
     // observer.error(err);
-    observer.next({ code: API_CODE.CODE_400, msg: err.message });
+    observer.next({ code: API_CODE.CODE_400, msg: message, data: error });
     observer.complete();
   }
 
   private isSessionCallback(command: any): boolean {
     if ( command === API_CMD.BFF_03_0001
       || command === API_CMD.BFF_03_0001_mock
-      || command === API_CMD.BFF_03_0004
-      || command === API_CMD.BFF_03_0005 ) {
+      || command === API_CMD.BFF_03_0004_C
+      || command === API_CMD.BFF_03_0005_C ) {
       return true;
     }
     return false;

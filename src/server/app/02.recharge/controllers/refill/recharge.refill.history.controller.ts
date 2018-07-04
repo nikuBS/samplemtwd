@@ -29,7 +29,7 @@ class RechargeRefillHistory extends TwViewController {
   }
 
   private _getLineList(): any {
-    return this.apiService.request(API_CMD.BFF_03_0003, { svcCtg: 'M' });
+    return this.apiService.request(API_CMD.BFF_03_0003_C, { svcCtg: 'M' });
   }
 
   private _getData(lineList: any, type: any): any {
