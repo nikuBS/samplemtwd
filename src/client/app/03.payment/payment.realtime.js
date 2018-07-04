@@ -101,9 +101,10 @@ Tw.PaymentRealtime.prototype = {
   _setBankList: function (res) {
     var bankList = res.result.bnkcrdlist1;
     for (var i = 0; i < bankList.length; i++) {
-      var bankObj = {};
-      bankObj.key = bankList[i].commCdVal;
-      bankObj.value = bankList[i].commCdValNm;
+      var bankObj = {
+        key: bankList[i].commCdVal,
+        value: bankList[i].commCdValNm
+      };
       this.$bankList.push(bankObj);
     }
     this._openBank();
