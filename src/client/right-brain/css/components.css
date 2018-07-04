@@ -1920,7 +1920,7 @@
 }
 
 .flcard-s-default .commend-detail-info .txt {
-  padding: 1.5rem 0 2.1875rem 0;
+  padding: 1.5rem 0 0 0;
   font-size: 0.875rem;
   color: #757575;
 }
@@ -2250,6 +2250,21 @@
   color: #feed58;
 }
 
+/* 안내서 slick 수정 */
+.flcard-s-cont .swiper-cont {
+  background: #e5e8ee;
+  color: #808698;
+}
+
+.flcard-s-cont .slick-current.slick-active .swiper-cont {
+  background: #3c3a69;
+  color: #fff;
+}
+
+.hidden-x {
+  overflow-x: hidden;
+}
+
 /* 원지예 */
 /* DA_02_01_03.html, DA_02_01_04.html */
 .data-wrap {
@@ -2355,10 +2370,6 @@
   margin-top: 1.875rem;
 }
 
-.account-wrap .inputbox.mg-btm {
-  margin-bottom: 1.875rem;
-}
-
 .account-wrap .due-date {
   font-size: 0.875rem;
   margin-bottom: 1rem;
@@ -2377,22 +2388,14 @@
   color: #000;
 }
 
-.account-wrap:first-of-type {
+.account-wrap:first-child {
   margin-top: 2.5rem;
-}
-
-.account-wrap.mg-top {
-  margin-top: 1.25rem;
 }
 
 .account-wrap .account-tit {
   margin-bottom: 0.75rem;
   font-size: 0.8125rem;
   font-weight: 700;
-}
-
-.account-wrap.mg-top {
-  margin-top: 1.25rem;
 }
 
 .account-wrap .point-box {
@@ -2630,11 +2633,17 @@
   border-top: 1px solid #e1e1e1;
 }
 
-.contents-notice.type1.mg-btm {
-  margin-bottom: 1.25rem;
+.pop-agree-2 {
+  margin-top: 1.875rem;
+  padding-top: 1.125rem;
+  border-top: 1px solid #e1e1e1;
 }
 
-.agree-list.type-02 .agree-cont .agree-cont-defined {
+.agree-list.type-03 {
+  margin-top: 0.625rem;
+}
+
+.agree-list.type-03 .agree-cont .agree-cont-defined {
   font-size: 0.875rem;
   line-height: 1.375rem;
 }
