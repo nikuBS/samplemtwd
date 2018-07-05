@@ -13,7 +13,7 @@ class MyTBillReissueComplete extends TwViewController {
 
     render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
 
-        this.renderView(res, 'bill/myt.bill.reissue-complete.html', {});
+        this.renderView(res, 'bill/myt.bill.guidechange.reissue-complete.html', {});
     }
 
     public renderView(res: Response, view: string, data: any): any {

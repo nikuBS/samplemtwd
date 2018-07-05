@@ -13,7 +13,7 @@ class MyTBillReturnHistory extends TwViewController {
 
     render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
 
-        this.renderView(res, 'bill/myt.bill.returnhistory.html', {});
+        this.renderView(res, 'bill/myt.bill.guidechange.returnhistory.html', {});
     }
 
     public renderView(res: Response, view: string, data: any): any {
