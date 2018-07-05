@@ -5,7 +5,7 @@
  */
 import TwViewController from '../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
-import { API_CODE } from '../../../types/api-command.type';
+import { API_CODE, API_CMD } from '../../../types/api-command.type';
 import { SVC_CD } from '../../../types/bff-common.type';
 import { PAYMENT_VIEW } from '../../../types/string.type';
 import DateHelper from '../../../utils/date.helper';
@@ -18,12 +18,12 @@ class PaymentRealtimeController extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    // this.apiService.request(API_CMD.BFF_06_0001, {}).subscribe((resp) => {
+    this.apiService.request(API_CMD.BFF_07_0021, {}).subscribe((resp) => {
       this.renderView(res, 'payment.realtime.html', {
         list: this.getResult(UnpaidList),
         svcInfo
       });
-    // });
+    });
   }
 
   public renderView(res: Response, view: string, data: any): any {
