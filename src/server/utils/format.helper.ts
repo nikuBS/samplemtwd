@@ -127,6 +127,14 @@ class FormatHelper {
     return `${ret.substring(0, 3)}-${ret.substring(3, ret.length - 4)}-${ret.substring(ret.length - 4)}`;
   }
 
+  static sortObjArrDesc(array: any, key: string): any {
+    return array.sort((a, b) => parseInt(b[key], 10) - parseInt(a[key], 10));
+  }
+
+  static sortObjArrAsc(array: any, key: string): any {
+    return array.sort((a, b) => parseInt(a[key], 10) - parseInt(b[key], 10));
+  }
+
 }
 
 export default FormatHelper;

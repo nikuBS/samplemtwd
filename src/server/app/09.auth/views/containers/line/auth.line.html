@@ -30,6 +30,7 @@
     <div id="contents" class="container-wrap">
         <h2 class="blind">내용</h2>
         <div class="container">
+            <% if (lineList.M) { %>
             <hr class="cont-sp type1" aria-hidden="true"/>
 
             <!-- 모바일 -->
@@ -46,7 +47,7 @@
                                         <button role="button" aria-pressed="false">
                                                 <span class="mline-tit-wrap">
                                                     <span class="mline-tit">모바일</span>
-                                                    <span class="mline-num"><span class="num">6</span></span>
+                                                    <span class="mline-num"><span class="num"><%= lineList.M.length %></span></span>
                                                 </span>
                                         </button>
                                     </div>
@@ -54,6 +55,7 @@
                                     <!-- 아코디언 내용 -->
                                     <div class="acco-content">
                                         <div class="mline-btzone"><button class="bt-mline edit">편집</button><!-- <button class="bt-mline complete">완료</button> --></div>
+                                        <% lineList.M.map((line) => { %>
                                         <!-- .widget -->
                                         <div class="widget">
                                             <div class="widget-box accordion">
@@ -64,8 +66,8 @@
                                                             <li class="acco-box">
                                                                 <div class="acco-tit">
                                                                     <div class="mline-acc-top">
-                                                                        <p class="ti">휴대폰<span class="ico-like" role="img" aria-labelledby="기준회선"><span class="blind">기준회선</span></span></p>
-                                                                        <span class="ph">010-12**-45**</span>
+                                                                        <p class="ti"><%= line.showName %><% if (line.repSvcYn) { %><span class="ico-like" role="img" aria-labelledby="기준회선"><span class="blind">기준회선</span></span> <% } %></p>
+                                                                        <span class="ph"><%= line.svcNum %></span>
                                                                     </div>
                                                                     <button role="button" aria-pressed="false"></button>
                                                                 </div>
@@ -73,10 +75,10 @@
                                                                     <div class="mline-info">
                                                                         <a class="bt-link-tx rect" href="">닉네임 변경</a>
                                                                         <dl class="mline-detail">
-                                                                            <dt>휴대폰</dt>
+                                                                            <dt><%= line.showSvcAttrCd %></dt>
                                                                             <dd class="device">갤럭*****</dd>
                                                                             <dt>가입일자</dt>
-                                                                            <dd class="date">2018.05.05</dd>
+                                                                            <dd class="date"><%= line.showSvcScrbDtm %></dd>
                                                                         </dl>
                                                                     </div>
                                                                     <div class="mline-up">
@@ -90,150 +92,7 @@
                                             </div>
                                         </div>
                                         <!--// .widget -->
-                                        <!-- .widget -->
-                                        <div class="widget">
-                                            <div class="widget-box accordion">
-                                                <div class="acco-cover"><!-- toggle : 한개만 열기 -->
-                                                    <div class="acco-style btn-hold">
-                                                        <ul class="acco-list">
-                                                            <!-- .on: 열기 -->
-                                                            <li class="acco-box">
-                                                                <div class="acco-tit">
-                                                                    <div class="mline-acc-top">
-                                                                        <p class="ti">선불폰</p>
-                                                                        <span class="ph">010-12**-45**</span>
-                                                                    </div>
-                                                                    <button role="button" aria-pressed="false"></button>
-                                                                </div>
-                                                                <div class="acco-cont">
-                                                                    <div class="mline-info">
-                                                                        <a class="bt-link-tx rect" href="">닉네임 변경</a>
-                                                                        <dl class="mline-detail">
-                                                                            <dt>휴대폰</dt>
-                                                                            <dd class="device">갤럭*****</dd>
-                                                                            <dt>가입일자</dt>
-                                                                            <dd class="date">2018.05.05</dd>
-                                                                        </dl>
-                                                                    </div>
-                                                                    <div class="mline-up">
-                                                                        <button class="bt-up">맨 위로 보내기</button>
-                                                                    </div>
-                                                                </div>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!--// .widget -->
-                                        <!-- .widget -->
-                                        <div class="widget">
-                                            <div class="widget-box accordion">
-                                                <div class="acco-cover"><!-- toggle : 한개만 열기 -->
-                                                    <div class="acco-style btn-hold">
-                                                        <ul class="acco-list">
-                                                            <!-- .on: 열기 -->
-                                                            <li class="acco-box">
-                                                                <div class="acco-tit">
-                                                                    <div class="mline-acc-top">
-                                                                        <p class="ti">T Pocket-Fi</p>
-                                                                        <span class="ph">010-12**-45**</span>
-                                                                    </div>
-                                                                    <button role="button" aria-pressed="false"></button>
-                                                                </div>
-                                                                <div class="acco-cont">
-                                                                    <div class="mline-info">
-                                                                        <a class="bt-link-tx rect" href="">닉네임 변경</a>
-                                                                        <dl class="mline-detail">
-                                                                            <dt>휴대폰</dt>
-                                                                            <dd class="device">갤럭*****</dd>
-                                                                            <dt>가입일자</dt>
-                                                                            <dd class="date">2018.05.05</dd>
-                                                                        </dl>
-                                                                    </div>
-                                                                    <div class="mline-up">
-                                                                        <button class="bt-up">맨 위로 보내기</button>
-                                                                    </div>
-                                                                </div>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!--// .widget -->
-                                        <!-- .widget -->
-                                        <div class="widget">
-                                            <div class="widget-box accordion">
-                                                <div class="acco-cover"><!-- toggle : 한개만 열기 -->
-                                                    <div class="acco-style btn-hold">
-                                                        <ul class="acco-list">
-                                                            <!-- .on: 열기 -->
-                                                            <li class="acco-box">
-                                                                <div class="acco-tit">
-                                                                    <div class="mline-acc-top">
-                                                                        <p class="ti">T login</p>
-                                                                        <span class="ph">010-12**-45**</span>
-                                                                    </div>
-                                                                    <button role="button" aria-pressed="false"></button>
-                                                                </div>
-                                                                <div class="acco-cont">
-                                                                    <div class="mline-info">
-                                                                        <a class="bt-link-tx rect" href="">닉네임 변경</a>
-                                                                        <dl class="mline-detail">
-                                                                            <dt>휴대폰</dt>
-                                                                            <dd class="device">갤럭*****</dd>
-                                                                            <dt>가입일자</dt>
-                                                                            <dd class="date">2018.05.05</dd>
-                                                                        </dl>
-                                                                    </div>
-                                                                    <div class="mline-up">
-                                                                        <button class="bt-up">맨 위로 보내기</button>
-                                                                    </div>
-                                                                </div>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!--// .widget -->
-                                        <!-- .widget -->
-                                        <div class="widget">
-                                            <div class="widget-box accordion">
-                                                <div class="acco-cover"><!-- toggle : 한개만 열기 -->
-                                                    <div class="acco-style btn-hold">
-                                                        <ul class="acco-list">
-                                                            <!-- .on: 열기 -->
-                                                            <li class="acco-box">
-                                                                <div class="acco-tit">
-                                                                    <div class="mline-acc-top">
-                                                                        <p class="ti">T WiBro</p>
-                                                                        <span class="ph">010-12**-45**</span>
-                                                                    </div>
-                                                                    <button role="button" aria-pressed="false"></button>
-                                                                </div>
-                                                                <div class="acco-cont">
-                                                                    <div class="mline-info">
-                                                                        <a class="bt-link-tx rect" href="">닉네임 변경</a>
-                                                                        <dl class="mline-detail">
-                                                                            <dt>휴대폰</dt>
-                                                                            <dd class="device">갤럭*****</dd>
-                                                                            <dt>가입일자</dt>
-                                                                            <dd class="date">2018.05.05</dd>
-                                                                        </dl>
-                                                                    </div>
-                                                                    <div class="mline-up">
-                                                                        <button class="bt-up">맨 위로 보내기</button>
-                                                                    </div>
-                                                                </div>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!--// .widget -->
+                                        <% }) %>
                                         <a class="bt-more" href="">더보기<span>(20)</span></a>
                                     </div>
                                     <!--// 아코디언 내용 -->
@@ -246,6 +105,8 @@
                 <!--// .accordion -->
             </div>
             <!--// 모바일 -->
+            <% } %>
+            <% if (lineList.S) { %>
             <hr class="cont-sp type1" aria-hidden="true"/>
 
             <!-- 인터넷/IPTV/집전화 -->
@@ -262,7 +123,7 @@
                                         <button role="button" aria-pressed="false">
                                                 <span class="mline-tit-wrap">
                                                     <span class="mline-tit">인터넷/IPTV/집전화</span>
-                                                    <span class="mline-num"><span class="num">7</span></span>
+                                                    <span class="mline-num"><span class="num"><%= lineList.S.length %></span></span>
                                                 </span>
                                         </button>
                                     </div>
@@ -270,6 +131,7 @@
                                     <!-- 아코디언 내용 -->
                                     <div class="acco-content">
                                         <div class="mline-btzone"><button class="bt-mline edit">편집</button><!-- <button class="bt-mline complete">완료</button> --></div>
+                                        <% lineList.S.map((line) => { %>
                                         <!-- .widget -->
                                         <div class="widget">
                                             <div class="widget-box accordion">
@@ -280,8 +142,8 @@
                                                             <li class="acco-box">
                                                                 <div class="acco-tit">
                                                                     <div class="mline-acc-top">
-                                                                        <p class="ti">인터넷</p>
-                                                                        <span class="ph">010-12**-45**</span>
+                                                                        <p class="ti"><%= line.showName %><% if (line.repSvcYn) { %><span class="ico-like" role="img" aria-labelledby="기준회선"><span class="blind">기준회선</span></span> <% } %></p>
+                                                                        <span class="ph"><%= line.svcNum %></span>
                                                                     </div>
                                                                     <button role="button" aria-pressed="false"></button>
                                                                 </div>
@@ -289,10 +151,10 @@
                                                                     <div class="mline-info">
                                                                         <a class="bt-link-tx rect" href="">닉네임 변경</a>
                                                                         <dl class="mline-detail">
-                                                                            <dt>휴대폰</dt>
+                                                                            <dt><%= line.showSvcAttrCd %></dt>
                                                                             <dd class="device">갤럭*****</dd>
                                                                             <dt>가입일자</dt>
-                                                                            <dd class="date">2018.05.05</dd>
+                                                                            <dd class="date"><%= line.showSvcScrbDtm %></dd>
                                                                         </dl>
                                                                     </div>
                                                                     <div class="mline-up">
@@ -306,78 +168,7 @@
                                             </div>
                                         </div>
                                         <!--// .widget -->
-                                        <!-- .widget -->
-                                        <div class="widget">
-                                            <div class="widget-box accordion">
-                                                <div class="acco-cover"><!-- toggle : 한개만 열기 -->
-                                                    <div class="acco-style btn-hold">
-                                                        <ul class="acco-list">
-                                                            <!-- .on: 열기 -->
-                                                            <li class="acco-box">
-                                                                <div class="acco-tit">
-                                                                    <div class="mline-acc-top">
-                                                                        <p class="ti">IPTV</p>
-                                                                        <span class="ph">010-12**-45**</span>
-                                                                    </div>
-                                                                    <button role="button" aria-pressed="false"></button>
-                                                                </div>
-                                                                <div class="acco-cont">
-                                                                    <div class="mline-info">
-                                                                        <a class="bt-link-tx rect" href="">닉네임 변경</a>
-                                                                        <dl class="mline-detail">
-                                                                            <dt>휴대폰</dt>
-                                                                            <dd class="device">갤럭*****</dd>
-                                                                            <dt>가입일자</dt>
-                                                                            <dd class="date">2018.05.05</dd>
-                                                                        </dl>
-                                                                    </div>
-                                                                    <div class="mline-up">
-                                                                        <button class="bt-up">맨 위로 보내기</button>
-                                                                    </div>
-                                                                </div>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!--// .widget -->
-                                        <!-- .widget -->
-                                        <div class="widget">
-                                            <div class="widget-box accordion">
-                                                <div class="acco-cover"><!-- toggle : 한개만 열기 -->
-                                                    <div class="acco-style btn-hold">
-                                                        <ul class="acco-list">
-                                                            <!-- .on: 열기 -->
-                                                            <li class="acco-box">
-                                                                <div class="acco-tit">
-                                                                    <div class="mline-acc-top">
-                                                                        <p class="ti">집전화</p>
-                                                                        <span class="ph">010-12**-45**</span>
-                                                                    </div>
-                                                                    <button role="button" aria-pressed="false"></button>
-                                                                </div>
-                                                                <div class="acco-cont">
-                                                                    <div class="mline-info">
-                                                                        <a class="bt-link-tx rect" href="">닉네임 변경</a>
-                                                                        <dl class="mline-detail">
-                                                                            <dt>휴대폰</dt>
-                                                                            <dd class="device">갤럭*****</dd>
-                                                                            <dt>가입일자</dt>
-                                                                            <dd class="date">2018.05.05</dd>
-                                                                        </dl>
-                                                                    </div>
-                                                                    <div class="mline-up">
-                                                                        <button class="bt-up">맨 위로 보내기</button>
-                                                                    </div>
-                                                                </div>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!--// .widget -->
+                                        <% }) %>
                                         <a class="bt-more" href="">더보기<span>(20)</span></a>
                                     </div>
                                     <!--// 아코디언 내용 -->
@@ -390,7 +181,8 @@
                 <!--// .accordion -->
             </div>
             <!--// 인터넷/IPTV/집전화 -->
-
+            <% } %>
+            <% if (lineList.O) { %>
             <hr class="cont-sp type1" aria-hidden="true"/>
 
             <!-- 보안솔루션 -->
@@ -407,7 +199,7 @@
                                         <button role="button" aria-pressed="false">
                                                 <span class="mline-tit-wrap">
                                                     <span class="mline-tit">보안솔루션</span>
-                                                    <span class="mline-num"><span class="num">1</span></span>
+                                                    <span class="mline-num"><span class="num"><%= lineList.O.length %></span></span>
                                                 </span>
                                         </button>
                                     </div>
@@ -415,6 +207,7 @@
                                     <!-- 아코디언 내용 -->
                                     <div class="acco-content">
                                         <div class="mline-btzone"><button class="bt-mline edit">편집</button></div>
+                                        <% lineList.S.map((line) => { %>
                                         <!-- .widget -->
                                         <div class="widget">
                                             <div class="widget-box accordion">
@@ -425,8 +218,8 @@
                                                             <li class="acco-box">
                                                                 <div class="acco-tit">
                                                                     <div class="mline-acc-top">
-                                                                        <p class="ti">포인트캠</p>
-                                                                        <span class="ph">010-12**-45**</span>
+                                                                        <p class="ti"><%= line.showName %><% if (line.repSvcYn) { %><span class="ico-like" role="img" aria-labelledby="기준회선"><span class="blind">기준회선</span></span> <% } %></p>
+                                                                        <span class="ph"><%= line.svcNum %></span>
                                                                     </div>
                                                                     <button role="button" aria-pressed="false"></button>
                                                                 </div>
@@ -434,10 +227,10 @@
                                                                     <div class="mline-info">
                                                                         <a class="bt-link-tx rect" href="">닉네임 변경</a>
                                                                         <dl class="mline-detail">
-                                                                            <dt>휴대폰</dt>
+                                                                            <dt><%= line.showSvcAttrCd %></dt>
                                                                             <dd class="device">갤럭*****</dd>
                                                                             <dt>가입일자</dt>
-                                                                            <dd class="date">2018.05.05</dd>
+                                                                            <dd class="date"><%= line.showSvcScrbDtm %></dd>
                                                                         </dl>
                                                                     </div>
                                                                     <div class="mline-up">
@@ -451,6 +244,7 @@
                                             </div>
                                         </div>
                                         <!--// .widget -->
+                                        <% }) %>
                                         <a class="bt-more" href="">더보기<span>(20)</span></a>
                                     </div>
                                     <!--// 아코디언 내용 -->
@@ -463,6 +257,7 @@
                 <!--// .accordion -->
             </div>
             <!--// 보안솔루션 -->
+            <% } %>
 
             <hr class="cont-sp type1" aria-hidden="true"/>
 
