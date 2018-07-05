@@ -25,6 +25,12 @@ export enum UNIT_E {
   SMS_2 = '320'
 }
 
+export const LINE_CATEGORY = {
+  M: '모바일',
+  S: '인터넷/집전화/IPTV',
+  O: '보안솔루션'
+};
+
 export enum LINE_NAME {
   MOBILE = 'M',
   INTERNET_PHONE_IPTV = 'W',
