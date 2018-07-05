@@ -62,7 +62,7 @@ export const URL = {
   '/auth/tid/logout': { login: true },
   '/auth/tid/signup': { login: false },
   '/auth/tid/guide': { login: false },
-  '/withdrawal/guide': { login: true },
-  '/withdrawal/survey': { login: true },
-  '/withdrawal/complete': { login: true }
+  '/auth/withdrawal/guide': { login: true },
+  '/auth/withdrawal/survey': { login: true },
+  '/autu/withdrawal/complete': { login: true }
 };
