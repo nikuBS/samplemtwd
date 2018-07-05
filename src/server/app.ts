@@ -32,7 +32,6 @@ import RedisService from './services/redis.service';
 class App {
   public app: Application = express();
   public redisService = new RedisService();
-  public appRouter = new AppRouter();
 
   constructor() {
     this.config();
@@ -78,17 +77,17 @@ class App {
   }
 
   private setRoutes() {
-    this.app.use('/home', this.appRouter.getRouter(HomeRouter.instance.controllers));
-    this.app.use('/myt', this.appRouter.getRouter(MytRouter.instance.controllers));
-    this.app.use('/recharge', this.appRouter.getRouter(RechargeRouter.instance.controllers));
-    this.app.use('/payment', this.appRouter.getRouter(PaymentRouter.instance.controllers));
-    this.app.use('/management', this.appRouter.getRouter(ManagementRouter.instance.controllers));
-    this.app.use('/membership', this.appRouter.getRouter(MembershipRouter.instance.controllers));
-    this.app.use('/product', this.appRouter.getRouter(ProductRouter.instance.controllers));
-    this.app.use('/direct', this.appRouter.getRouter(DirectRouter.instance.controllers));
-    this.app.use('/customer', this.appRouter.getRouter(CustomerRouter.instance.controllers));
-    this.app.use('/auth', this.appRouter.getRouter(AuthRouter.instance.controllers));
-    this.app.use('/search', this.appRouter.getRouter(SearchRouter.instance.controllers));
+    this.app.use('/home', new AppRouter(HomeRouter.instance.controllers).router);
+    this.app.use('/myt', new AppRouter(MytRouter.instance.controllers).router);
+    this.app.use('/recharge', new AppRouter(RechargeRouter.instance.controllers).router);
+    this.app.use('/payment', new AppRouter(PaymentRouter.instance.controllers).router);
+    this.app.use('/management', new AppRouter(ManagementRouter.instance.controllers).router);
+    this.app.use('/membership', new AppRouter(MembershipRouter.instance.controllers).router);
+    this.app.use('/product', new AppRouter(ProductRouter.instance.controllers).router);
+    this.app.use('/direct', new AppRouter(DirectRouter.instance.controllers).router);
+    this.app.use('/customer', new AppRouter(CustomerRouter.instance.controllers).router);
+    this.app.use('/auth', new AppRouter(AuthRouter.instance.controllers).router);
+    this.app.use('/search', new AppRouter(SearchRouter.instance.controllers).router);
   }
 
   private setViewPath() {
