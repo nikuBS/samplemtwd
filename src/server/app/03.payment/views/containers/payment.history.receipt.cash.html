@@ -1,0 +1,184 @@
+<% include ../components/start.component.html %>
+<%#
+* FileName: payment.history.receipt.cash.html
+* Author: 이상형 (silion@sk.com)
+* Date: 2018.07.05
+%>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb_area">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+
+<div class="wrap">
+    <!-- #header -->
+    <div id="header" class="header-wrap">
+        <div class="header">
+            <div class="header-ti">
+                <h1>현금영수증 발급내역</h1>
+                <button class="all-menu"><span class="blind">전체메뉴보기</span></button>
+            </div>
+            <button class="prev-step"><span class="blind">이전으로</span></button>
+            <button class="search-content"><span class="blind">검색하기</span></button>
+        </div>
+    </div>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <div class="cont-box">
+                <div class="payment-info">
+                    <span class="blind">대표청구</span>
+                    <ul>
+                        <li>
+                            <span class="info-num">010-46**-10**</span>
+                        </li>
+                        <li>
+                            <span class="badge badge-allpay"><span class="blind">대표청구</span></span>
+                            <span class="info-type">휴대폰</span>
+                            <span class="info-name"><span class="blind">별명</span>귀여운첫째아들</span>
+                        </li>
+                    </ul>
+                    <span class="info-btn"><a href="" class="btn-choice" role="button">변경</a></span>
+                </div>
+            </div>
+            <hr class="cont-sp type1">
+            <div class="cont-box nogaps-btm"><%# 내역 없음시 nogaps-btm 클래스 삭제 %>
+                <div class="pay-info">
+                    <h4 class="pay-tit">현금영수증 발급내역</h4>
+                </div>
+                <!-- payment-detail-wrap -->
+                <div class="payment-detail-wrap">
+                    <p class="info-txt">6개월간의 요금납부 내역만 확인 가능합니다.</p>
+                    <div class="payment-detail-box">
+                        <div class="detail-inner">
+                            <div class="detail-list">
+                                <ul>
+                                    <li>
+                                        <span class="title">거래일자</span>
+                                        <span class="tx-cont">2018.05.23</span>
+                                    </li>
+                                    <li>
+                                        <div class="inner-top">
+                                            <span class="title">상품/회선번호</span>
+                                            <span class="tx-cont">010-12**-34**</span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <span class="title">발급금액</span>
+                                        <span class="tx-cont"><strong>22,000</strong>원</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="payment-detail-box">
+                        <div class="detail-inner">
+                            <div class="detail-list">
+                                <ul>
+                                    <li>
+                                        <span class="title">거래일자</span>
+                                        <span class="tx-cont">2018.05.23</span>
+                                    </li>
+                                    <li>
+                                        <div class="inner-top">
+                                            <span class="title">상품/회선번호</span>
+                                            <span class="tx-cont">010-12**-34**</span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <span class="title">발급금액</span>
+                                        <span class="tx-cont"><strong>22,000</strong>원</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="payment-detail-box">
+                        <div class="detail-inner">
+                            <div class="detail-list">
+                                <ul>
+                                    <li>
+                                        <span class="title">거래일자</span>
+                                        <span class="tx-cont">2018.05.23</span>
+                                    </li>
+                                    <li>
+                                        <div class="inner-top">
+                                            <span class="title">상품/회선번호</span>
+                                            <span class="tx-cont">010-12**-34**</span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <span class="title">발급금액</span>
+                                        <span class="tx-cont"><strong>22,000</strong>원</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="contents-info-list">
+                        <a href="" class="bt-more bdt-none" title="">더보기<span>(20)</span></a>
+                    </div>
+                </div>
+                <!--// payment-detail-wrap -->
+
+                <%#
+                <div class="payment-select">
+                    <div class="contents-empty">
+                        <span class="ico"></span>
+                        <p class="desc">현금영수증 발급내역이 없습니다.</p>
+                    </div>
+                </div>
+                %>
+
+            </div>
+
+            <hr class="cont-sp type1">
+            <!-- .cont-box -->
+            <div class="cont-box">
+                <!-- .widget -->
+                <div class="widget">
+                    <div class="widget-box accordion">
+                        <h5 class="tit-a">꼭 확인해 주세요</h5>
+                        <div class="acco-cover toggle"><!-- toggle : 한개만 열기 -->
+                            <div class="acco-style btn-hold">
+                                <ul class="acco-list">
+                                    <li class="acco-box">
+                                        <!-- .on: 열기 -->
+                                        <div class="acco-tit"><span class="bullet">1.</span> 현금영수증 발급내역 확인 <button role="button" aria-pressed="false">상세보기</button></div>
+                                        <div class="acco-cont">
+                                            <ul class="list-dot">
+                                                <li class="list">T world에서는 요금자동납부 시 계좌이체 또는 지로 납부한 금액에 대해서만 조회 가능합니다.</li>
+                                                <li class="list">현금영수증은 휴대폰할부금, 휴대폰 액세서리, USIM 카드, 소액결제가 해당됩니다.</li>
+                                                <li class="list">현금영수증보기는 국세청에 결제완료 된 이력만 조회됩니다.</li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--// .widget -->
+            </div>
+            <!--// .cont-box -->
+        </div>
+    </div>
+    <!--// #contents -->
+</div>
+
+
+<% include ../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    var oPaymentHistoryReceiptCash = new Tw.PaymentHistoryReceiptCash($(document));
+  });
+</script>
+<% include ../components/end.component.html %>

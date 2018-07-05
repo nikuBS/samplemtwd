@@ -1,0 +1,611 @@
+<% include ../components/start.component.html %>
+<%#
+* FileName: payment.history.point.auto.html
+* Author: 이상형 (silion@sk.com)
+* Date: 2018.07.05
+%>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb_area">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+
+<div class="wrap">
+    <!-- #header -->
+    <div id="header" class="header-wrap">
+        <div class="header">
+            <div class="header-ti">
+                <h1>납부내역조회</h1>
+                <button class="depth-view" role="button" aria-pressed="false"><span class="blind">메뉴구조보기</span></button>
+            </div>
+            <button class="prev-step"><span class="blind">이전으로</span></button>
+            <button class="search-content"><span class="blind">검색하기</span></button>
+        </div>
+    </div>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <div class="cont-box">
+                <div class="payment-info">
+                    <span class="blind">나의 통합청구 회선</span>
+                    <ul>
+                        <li>
+                            <span class="info-num">010-46**-10**</span>
+                        </li>
+                        <li>
+                            <span class="badge badge-allpay"><span class="blind">통합대표</span></span>
+                            <span class="info-type"><span class="blind">회선정보</span>휴대폰</span>
+                            <span class="info-name"><span class="blind">별명</span>귀여운첫째아들</span>
+                        </li>
+                    </ul>
+                    <span class="info-btn"><a href="" class="btn-choice" role="button">변경</a></span>
+                </div>
+            </div>
+            <hr class="cont-sp type1">
+            <div class="cont-box">
+                <button class="bt-dropdown big" title="전체납부내역">포인트 자동납부<span class="ico"></span></button>
+            </div>
+            <hr class="cont-sp type1">
+            <!-- .cont-box -->
+            <div class="cont-box nogaps">
+                <!-- .component -->
+                <div class="component">
+                    <div class="component-box tabs">
+                        <div class="tab-area type1"><!-- 타입별 탭형태 변환 -->
+                            <div class="tab-linker">
+                                <ul role="tablist">
+                                    <li role="tab" aria-selected="true" aria-controls="tab1-tab" id="tab1"><button>OK캐쉬백</button></li><!-- true 열림 -->
+                                    <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2"><button>T포인트</button></li>
+                                    <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2"><button>레인보우포인트</button></li>
+                                </ul>
+                            </div>
+                            <div class="tab-contents">
+                                <ul>
+                                    <li role="tabpanel" id="tab1-tab" aria-labelledby="tab1">
+                                        <div class="inner">
+                                            <div class="payment-detail-wrap">
+                                                <div class="payment-detail-box">
+                                                    <div class="detail-inner">
+                                                        <div class="pay-state">
+                                                            <span class="cancel-com">납부신청</span>
+                                                        </div>
+                                                        <div class="detail-list">
+                                                            <ul>
+                                                                <li>
+                                                                    <span class="title">신청일자</span>
+                                                                    <span class="tx-cont">2018.05.23</span>
+                                                                </li>
+                                                                <li>
+                                                                    <span class="title">자동납부 종료일</span>
+                                                                    <span class="tx-cont">2018.05.23</span>
+                                                                </li>
+                                                                <li>
+                                                                    <div class="inner-top">
+                                                                        <span class="title">신청포인트</span>
+                                                                        <span class="tx-cont"><strong>1,000</strong> 점</span>
+                                                                    </div>
+                                                                    <div class="inner-row">
+                                                                        <ul>
+                                                                            <li>
+                                                                                <span class="title">카드번호</span>
+                                                                                <span class="tx-cont">123**********</span>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </li>
+                                                                <li>
+                                                                    <span class="title">처리영업장</span>
+                                                                    <span class="tx-cont">T월드 모바일 웹</span>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="payment-detail-box">
+                                                    <div class="detail-inner">
+                                                        <div class="pay-state">
+                                                            <span class="gray-com">납부해지</span>
+                                                        </div>
+                                                        <div class="detail-list">
+                                                            <ul>
+                                                                <li>
+                                                                    <span class="title">신청일자</span>
+                                                                    <span class="tx-cont">2018.05.23</span>
+                                                                </li>
+                                                                <li>
+                                                                    <span class="title">자동납부 종료일</span>
+                                                                    <span class="tx-cont">2018.05.23</span>
+                                                                </li>
+                                                                <li>
+                                                                    <div class="inner-top">
+                                                                        <span class="title">신청포인트</span>
+                                                                        <span class="tx-cont"><strong>1,000</strong> 점</span>
+                                                                    </div>
+                                                                    <div class="inner-row">
+                                                                        <ul>
+                                                                            <li>
+                                                                                <span class="title">카드번호</span>
+                                                                                <span class="tx-cont">123**********</span>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </li>
+                                                                <li>
+                                                                    <span class="title">처리영업장</span>
+                                                                    <span class="tx-cont">T월드 모바일 웹</span>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="payment-detail-box">
+                                                    <div class="detail-inner">
+                                                        <div class="pay-state">
+                                                            <span class="payment-com">납부완료</span>
+                                                        </div>
+                                                        <div class="detail-list">
+                                                            <ul>
+                                                                <li>
+                                                                    <span class="title">처리일자</span>
+                                                                    <span class="tx-cont">2018.05.23</span>
+                                                                </li>
+                                                                <li>
+                                                                    <span class="title">자동납부 종료일</span>
+                                                                    <span class="tx-cont">2018.05.23</span>
+                                                                </li>
+                                                                <li>
+                                                                    <div class="inner-top">
+                                                                        <span class="title">포인트</span>
+                                                                        <span class="tx-cont"></span>
+                                                                    </div>
+                                                                    <div class="inner-row">
+                                                                        <ul>
+                                                                            <li>
+                                                                                <span class="title">신청포인트</span>
+                                                                                <span class="tx-cont">1,000점<br />(1,000점 차감완료) </span>
+                                                                            </li>
+                                                                            <li>
+                                                                                <span class="title">남은포인트</span>
+                                                                                <span class="tx-cont">6,000점</span>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </li>
+                                                                <li>
+                                                                    <span class="title">처리영업장</span>
+                                                                    <span class="tx-cont">T월드 모바일 웹</span>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="payment-detail-box">
+                                                    <div class="detail-inner">
+                                                        <div class="pay-state">
+                                                            <span class="payment-com">납부완료</span>
+                                                        </div>
+                                                        <div class="detail-list">
+                                                            <ul>
+                                                                <li>
+                                                                    <span class="title">처리일자</span>
+                                                                    <span class="tx-cont">2018.05.23</span>
+                                                                </li>
+                                                                <li>
+                                                                    <span class="title">자동납부 종료일</span>
+                                                                    <span class="tx-cont">2018.05.23</span>
+                                                                </li>
+                                                                <li>
+                                                                    <div class="inner-top">
+                                                                        <span class="title">포인트</span>
+                                                                        <span class="tx-cont"></span>
+                                                                    </div>
+                                                                    <div class="inner-row">
+                                                                        <ul>
+                                                                            <li>
+                                                                                <span class="title">신청포인트</span>
+                                                                                <span class="tx-cont">1,000점<br />(1,000점 차감완료) </span>
+                                                                            </li>
+                                                                            <li>
+                                                                                <span class="title">남은포인트</span>
+                                                                                <span class="tx-cont">6,000점</span>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </li>
+                                                                <li>
+                                                                    <span class="title">처리영업장</span>
+                                                                    <span class="tx-cont">T월드 모바일 웹</span>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--// payment-detail-wrap -->
+                                                <div class="contents-info-list">
+                                                    <a href="" class="bt-more" title="">더보기<span>(20)</span></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <%#
+                                        <div class="cont-box">
+                                            <div class="payment-select">
+                                                <div class="contents-empty">
+                                                    <span class="ico"></span>
+                                                    <p class="desc">OK캐쉬백 자동납부 내역이 없습니다.</p>
+                                                </div>
+                                                <div class="pay-bottom type1">
+                                                    <p class="title">다음달 청구요금을<br />포인트로 미리 납부하세요</p>
+                                                    <a href="" class="bt-link-tx">OK캐쉬백 자동납부 하기 <span class="ico"></span></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        %>
+                                    </li>
+                                    <li role="tabpanel" id="tab2-tab" aria-labelledby="tab2">
+                                        <div class="inner">
+                                            <div class="payment-detail-wrap">
+                                                <div class="payment-detail-box">
+                                                    <div class="detail-inner">
+                                                        <div class="pay-state">
+                                                            <span class="cancel-com">납부신청</span>
+                                                        </div>
+                                                        <div class="detail-list">
+                                                            <ul>
+                                                                <li>
+                                                                    <span class="title">신청일자</span>
+                                                                    <span class="tx-cont">2018.05.23</span>
+                                                                </li>
+                                                                <li>
+                                                                    <span class="title">자동납부 종료일</span>
+                                                                    <span class="tx-cont">2018.05.23</span>
+                                                                </li>
+                                                                <li>
+                                                                    <div class="inner-top">
+                                                                        <span class="title">신청포인트</span>
+                                                                        <span class="tx-cont"><strong>1,000</strong> 점</span>
+                                                                    </div>
+                                                                    <div class="inner-row">
+                                                                        <ul>
+                                                                            <li>
+                                                                                <span class="title">카드번호</span>
+                                                                                <span class="tx-cont">123**********</span>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </li>
+                                                                <li>
+                                                                    <span class="title">처리영업장</span>
+                                                                    <span class="tx-cont">T월드 모바일 웹</span>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="payment-detail-box">
+                                                    <div class="detail-inner">
+                                                        <div class="pay-state">
+                                                            <span class="gray-com">납부해지</span>
+                                                        </div>
+                                                        <div class="detail-list">
+                                                            <ul>
+                                                                <li>
+                                                                    <span class="title">신청일자</span>
+                                                                    <span class="tx-cont">2018.05.23</span>
+                                                                </li>
+                                                                <li>
+                                                                    <span class="title">자동납부 종료일</span>
+                                                                    <span class="tx-cont">2018.05.23</span>
+                                                                </li>
+                                                                <li>
+                                                                    <div class="inner-top">
+                                                                        <span class="title">신청포인트</span>
+                                                                        <span class="tx-cont"><strong>1,000</strong> 점</span>
+                                                                    </div>
+                                                                    <div class="inner-row">
+                                                                        <ul>
+                                                                            <li>
+                                                                                <span class="title">카드번호</span>
+                                                                                <span class="tx-cont">123**********</span>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </li>
+                                                                <li>
+                                                                    <span class="title">처리영업장</span>
+                                                                    <span class="tx-cont">T월드 모바일 웹</span>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="payment-detail-box">
+                                                    <div class="detail-inner">
+                                                        <div class="pay-state">
+                                                            <span class="payment-com">납부완료</span>
+                                                        </div>
+                                                        <div class="detail-list">
+                                                            <ul>
+                                                                <li>
+                                                                    <span class="title">처리일자</span>
+                                                                    <span class="tx-cont">2018.05.23</span>
+                                                                </li>
+                                                                <li>
+                                                                    <span class="title">자동납부 종료일</span>
+                                                                    <span class="tx-cont">2018.05.23</span>
+                                                                </li>
+                                                                <li>
+                                                                    <div class="inner-top">
+                                                                        <span class="title">포인트</span>
+                                                                        <span class="tx-cont"></span>
+                                                                    </div>
+                                                                    <div class="inner-row">
+                                                                        <ul>
+                                                                            <li>
+                                                                                <span class="title">신청포인트</span>
+                                                                                <span class="tx-cont">1,000점<br />(1,000점 차감완료) </span>
+                                                                            </li>
+                                                                            <li>
+                                                                                <span class="title">남은포인트</span>
+                                                                                <span class="tx-cont">6,000점</span>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </li>
+                                                                <li>
+                                                                    <span class="title">처리영업장</span>
+                                                                    <span class="tx-cont">T월드 모바일 웹</span>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="payment-detail-box">
+                                                    <div class="detail-inner">
+                                                        <div class="pay-state">
+                                                            <span class="payment-com">납부완료</span>
+                                                        </div>
+                                                        <div class="detail-list">
+                                                            <ul>
+                                                                <li>
+                                                                    <span class="title">처리일자</span>
+                                                                    <span class="tx-cont">2018.05.23</span>
+                                                                </li>
+                                                                <li>
+                                                                    <span class="title">자동납부 종료일</span>
+                                                                    <span class="tx-cont">2018.05.23</span>
+                                                                </li>
+                                                                <li>
+                                                                    <div class="inner-top">
+                                                                        <span class="title">포인트</span>
+                                                                        <span class="tx-cont"></span>
+                                                                    </div>
+                                                                    <div class="inner-row">
+                                                                        <ul>
+                                                                            <li>
+                                                                                <span class="title">신청포인트</span>
+                                                                                <span class="tx-cont">1,000점<br />(1,000점 차감완료) </span>
+                                                                            </li>
+                                                                            <li>
+                                                                                <span class="title">남은포인트</span>
+                                                                                <span class="tx-cont">6,000점</span>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </li>
+                                                                <li>
+                                                                    <span class="title">처리영업장</span>
+                                                                    <span class="tx-cont">T월드 모바일 웹</span>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--// payment-detail-wrap -->
+                                                <div class="contents-info-list">
+                                                    <a href="" class="bt-more" title="">더보기<span>(20)</span></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <%#
+                                        <div class="cont-box">
+                                            <div class="payment-select">
+                                                <div class="contents-empty">
+                                                    <span class="ico"></span>
+                                                    <p class="desc">T포인트 자동납부 내역이 없습니다.</p>
+                                                </div>
+                                                <div class="pay-bottom type1">
+                                                    <p class="title">다음달 청구요금을<br />포인트로 미리 납부하세요</p>
+                                                    <a href="" class="bt-link-tx">T포인트 자동납부 하기 <span class="ico"></span></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        %>
+                                    </li>
+                                    <li role="tabpanel" id="tab3-tab" aria-labelledby="tab3">
+                                        <div class="inner">
+                                            <div class="payment-detail-wrap">
+                                                <div class="payment-detail-box">
+                                                    <div class="detail-inner">
+                                                        <div class="pay-state">
+                                                            <span class="cancel-com">납부신청</span>
+                                                        </div>
+                                                        <div class="detail-list">
+                                                            <ul>
+                                                                <li>
+                                                                    <span class="title">처리일자</span>
+                                                                    <span class="tx-cont">2018.05.23</span>
+                                                                </li>
+                                                                <li>
+                                                                    <span class="title">신청항목</span>
+                                                                    <span class="tx-cont">음성통화료</span>
+                                                                </li>
+                                                                <li>
+                                                                    <span class="title">처리영업장</span>
+                                                                    <span class="tx-cont">T월드 모바일 웹</span>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="payment-detail-box">
+                                                    <div class="detail-inner">
+                                                        <div class="pay-state">
+                                                            <span class="gray-com">납부해지</span>
+                                                        </div>
+                                                        <div class="detail-list">
+                                                            <ul>
+                                                                <li>
+                                                                    <span class="title">처리일자</span>
+                                                                    <span class="tx-cont">2018.05.23</span>
+                                                                </li>
+                                                                <li>
+                                                                    <span class="title">신청항목</span>
+                                                                    <span class="tx-cont">음성통화료</span>
+                                                                </li>
+                                                                <li>
+                                                                    <span class="title">처리영업장</span>
+                                                                    <span class="tx-cont">T월드 모바일 웹</span>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="payment-detail-box">
+                                                    <div class="detail-inner">
+                                                        <div class="pay-state">
+                                                            <span class="payment-com">납부완료</span>
+                                                        </div>
+                                                        <div class="detail-list">
+                                                            <ul>
+                                                                <li>
+                                                                    <span class="title">처리일자</span>
+                                                                    <span class="tx-cont">2018.05.23</span>
+                                                                </li>
+                                                                <li>
+                                                                    <div class="inner-top">
+                                                                        <span class="title">포인트</span>
+                                                                        <span class="tx-cont"></span>
+                                                                    </div>
+                                                                    <div class="inner-row">
+                                                                        <ul>
+                                                                            <li>
+                                                                                <span class="title">신청 포인트</span>
+                                                                                <span class="tx-cont">1,000점<br />(1,000점 차감완료) </span>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </li>
+                                                                <li>
+                                                                    <span class="title">처리영업장</span>
+                                                                    <span class="tx-cont">T월드 모바일 웹</span>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="payment-detail-box">
+                                                    <div class="detail-inner">
+                                                        <div class="pay-state">
+                                                            <span class="payment-com">납부완료</span>
+                                                        </div>
+                                                        <div class="detail-list">
+                                                            <ul>
+                                                                <li>
+                                                                    <span class="title">처리일자</span>
+                                                                    <span class="tx-cont">2018.05.23</span>
+                                                                </li>
+                                                                <li>
+                                                                    <div class="inner-top">
+                                                                        <span class="title">포인트</span>
+                                                                        <span class="tx-cont"></span>
+                                                                    </div>
+                                                                    <div class="inner-row">
+                                                                        <ul>
+                                                                            <li>
+                                                                                <span class="title">신청 포인트</span>
+                                                                                <span class="tx-cont">1,000점<br />(1,000점 차감완료) </span>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </li>
+                                                                <li>
+                                                                    <span class="title">처리영업장</span>
+                                                                    <span class="tx-cont">T월드 모바일 웹</span>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--// payment-detail-wrap -->
+                                                <div class="contents-info-list">
+                                                    <a href="" class="bt-more" title="">더보기<span>(20)</span></a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <%#
+                                        <div class="cont-box">
+                                            <div class="payment-select">
+                                                <div class="contents-empty">
+                                                    <span class="ico"></span>
+                                                    <p class="desc">레인보우 포인트 자동납부 내역이 없습니다.</p>
+                                                </div>
+                                                <div class="pay-bottom type1">
+                                                    <p class="title">다음달 청구요금을<br />포인트로 미리 납부하세요</p>
+                                                    <a href="" class="bt-link-tx">레인보우 포인트 자동납부 하기 <span class="ico"></span></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        %>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--// .cont-box -->
+            <hr class="cont-sp type1" />
+            <div class="cont-box">
+                <!-- .widget -->
+                <div class="widget">
+                    <div class="widget-box accordion">
+                        <h5 class="tit-a">이용안내</h5>
+                        <div class="acco-cover toggle"><!-- toggle : 한개만 열기 -->
+                            <div class="acco-style">
+                                <ul class="acco-list">
+                                    <li class="acco-box">
+                                        <!-- .on: 열기 -->
+                                        <div class="acco-tit"><button role="button" aria-pressed="false">1. 자동납부 인출내역 확인 가능일 안내</button></div>
+                                        <div class="acco-cont">
+                                            <ul class="list-dot">
+                                                <li class="list">계좌이체 취소는 영업점 또는 고객센터[국번 없이 1599-0011(유료)/휴대폰114]를 통해 환불 신청하실 수 있습니다.</li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--// .widget -->
+            </div>
+        </div>
+    </div>
+    <!--// #contents -->
+</div>
+
+
+<% include ../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    var oPaymentHistoryPointAuto = new Tw.PaymentHistoryPointAuto($(document));
+  });
+</script>
+<% include ../components/end.component.html %>
