@@ -33,7 +33,7 @@ abstract class TwViewController {
 
   public initPage(req: any, res: any, next: any): void {
     const userId = req.query.userId;
-    const path = req.baseUrl + req.path;
+    const path = req.baseUrl + (req.path !== '/' ? req.path : '');
 
     if ( URL[path].login ) {
       this.login(req, res, next, userId);

@@ -8,18 +8,14 @@ export interface IRouterMap {
 }
 
 class AppRouter {
-  private router: Router;
+  public router: Router;
 
-  constructor() {
+  constructor(routerMaps: Array<IRouterMap>) {
     this.router = express.Router();
-  }
 
-  public getRouter(routerMaps: Array<IRouterMap>) {
     routerMaps.map((routerMap: IRouterMap) => {
       this.router.get(routerMap.url, routerMap.controller.initPage.bind(routerMap.controller));
     });
-
-    return this.router;
   }
 }
 
