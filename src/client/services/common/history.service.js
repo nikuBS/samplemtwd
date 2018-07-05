@@ -17,6 +17,7 @@ Tw.HistoryService.prototype = {
       this.$window.on('pageshow', $.proxy(this.checkIsBack, this));
     } else {
       this._hashService.initHashNav($.proxy(this.onHashChange, this));
+      this._hashService.detectIsReload();
     }
   },
   push: function () {

@@ -1,0 +1,20 @@
+<!--
+* FileName: payment.auto.home.component.html
+* Author: 공자윤 (jayoon.kong@sk.com)
+* Date: 2018.07.05
+-->
+<div class="container">
+    <% include ../components/line.info.component.html %>
+    <hr class="cont-sp type1" aria-hidden="true"/>
+    <div class="cont-box">
+        <% if (payment.option === 'card') { %>
+            <% include ../components/auto/payment.auto.home-card.component.html %>
+        <% } else if (payment.option === 'account') { %>
+            <% include ../components/auto/payment.auto.home-account.component.html %>
+        <% } else { %>
+            <% include ../components/auto/payment.auto.home-etc.component.html %>
+        <% } %>
+    </div>
+    <hr class="cont-sp type1" aria-hidden="true"/>
+    <% include ../components/info/payment.home.info.component.html %>
+</div>
