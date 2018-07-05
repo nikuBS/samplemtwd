@@ -27,9 +27,9 @@ export const API_CMD = {
   BFF_01_0005: { path: '/common/selected-services', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   // AUTH
   BFF_03_0001: { path: '/test-login', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: false },
-  BFF_03_0002: { path: '/core-auth/v1/members', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_03_0002: { path: '/core-auth/v1/member-auth', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: false },
   BFF_03_0003: { path: '/core-auth/v1/members', method: API_METHOD.DELETE, server: API_SERVER.BFF, bypass: true },
-  BFF_03_0004: { path: '/core-auth/v1/line-info', method: API_METHOD.DELETE, server: API_SERVER.BFF, bypass: false },
+  BFF_03_0004: { path: '/core-auth/v1/services', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_03_0005: { path: '/core-auth/v1/multi-svc', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: false },
   BFF_03_0006: { path: '/user/nick-names/args-0', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: false },
   BFF_03_0007: { path: '/user/tid-keys', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
@@ -37,7 +37,8 @@ export const API_CMD = {
   BFF_03_0009: { path: '/user/service-password-sessions', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: false },
   BFF_03_0010: { path: '/user/locks', method: API_METHOD.DELETE, server: API_SERVER.BFF, bypass: true },
   BFF_03_0011: { path: '/core-auth/v1/members-foreinger', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
-  BFF_03_0012: { path: '/core-auth/v1/', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: false },
+  BFF_03_0012: { path: '/user/biz-real-users-auth/args-0', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: false },
+  BFF_03_0013: { path: '/user/biz-real-users/args-0', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: false },
   // MYT
   BFF_05_0001: { path: '/my-t/balances', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0002: { path: '/my-t/balance-add-ons', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
