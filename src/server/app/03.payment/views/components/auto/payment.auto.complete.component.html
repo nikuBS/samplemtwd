@@ -1,0 +1,49 @@
+<!--
+* FileName: payment.auto.complete.component.html
+* Author: 공자윤 (jayoon.kong@sk.com)
+* Date: 2018.07.05
+-->
+<div class="container">
+    <div class="cont-box nogaps-top">
+        <div class="msg-present-box">
+            <div class="msg-present-comp">
+                <span class="ico"></span>
+                <p class="txt"><span class="tx-bold">자동납부 신청</span> 및 <span class="tx-bold">변경</span>이<br />완료되었습니다.</p>
+            </div>
+            <% include ../components/auto/payment.auto.complete-card.component.html %>
+            <!-- include ../components/auto/payment.auto.complete-account.component.html -->
+        </div>
+    </div>
+    <hr class="cont-sp type1" aria-hidden="true"/>
+    <div class="cont-box nogaps">
+        <div class="bt-link-box">
+            <a class="bt-link-tx" href="/home">홈으로</a>
+        </div>
+    </div>
+    <hr class="cont-sp type1" aria-hidden="true"/>
+    <div class="cont-box">
+        <!-- .widget -->
+        <div class="widget">
+            <div class="widget-box accordion">
+                <h5 class="tit-a">이용안내</h5>
+                <div class="acco-cover toggle on"><!-- toggle : 한개만 열기 -->
+                    <div class="acco-style btn-hold">
+                        <ul class="acco-list">
+                            <li class="acco-box">
+                                <!-- .on: 열기 -->
+                                <div class="acco-tit"><span class="bullet">1.</span> 이용안내<button role="button" aria-pressed="false">상세보기</button></div>
+                                <div class="acco-cont">
+                                    <ul class="list-dot">
+                                        <li class="list">요금납부일 변경은 지점/대리점/고객센터 포함 월 1회 가능</li>
+                                        <li class="list">정기 청구작업으로 인해 매월 5일 21시부터 6일 04시까지 자동납부 신청/변경/해지가 불가합니다.</li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--// .widget -->
+    </div>
+</div>
