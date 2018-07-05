@@ -11,23 +11,27 @@ import MyTUsageTing from './controllers/usage/myt.usage.ting.controller';
 import MyTUsage24hours50discount from './controllers/usage/myt.usage.24hours-50discount.controller';
 import MyTUsageDataLimit from './controllers/usage/myt.usage.data-limit.controller';
 import MyTHotBill from './controllers/bill/myt.bill.hotbill.controller';
+import MyTReissue from './controllers/bill/myt.bill.reissue.controller';
+import MyTReissueComplete from './controllers/bill/myt.bill.reissue-complete.controller';
 
 class MytRouter extends TwRouter {
-  constructor() {
-    super();
-    this.controllers.push({ url: '/', controller: new MyTUsage() });
-    this.controllers.push({ url: '/usage/change', controller: new MyTUsageChange() });
-    this.controllers.push({ url: '/usage/children', controller: new MyTUsageChildren() });
-    this.controllers.push({ url: '/usage/datalimit', controller: new MyTUsageDataLimit() });
-    this.controllers.push({ url: '/usage/datashare', controller: new MyTUsageDataShare() });
-    this.controllers.push({ url: '/usage/tdatashare', controller: new MyTUsageTDataShare() });
-    this.controllers.push({ url: '/usage/tdatashare/info', controller: new MyTUsageTDataShareInfo() });
-    this.controllers.push({ url: '/usage/tdatashare/close', controller: new MyTUsageTDataShareClose() });
-    this.controllers.push({ url: '/usage/troaming', controller: new MyTUsageTRoamingShare() });
-    this.controllers.push({ url: '/usage/ting', controller: new MyTUsageTing() });
-    this.controllers.push({ url: '/usage/24hourdiscount', controller: new MyTUsage24hours50discount() });
-    this.controllers.push({ url: '/bill/hotbill', controller: new MyTHotBill() });
-  }
+    constructor() {
+        super();
+        this.controllers.push({url: '/', controller: new MyTUsage()});
+        this.controllers.push({url: '/usage/change', controller: new MyTUsageChange()});
+        this.controllers.push({url: '/usage/children', controller: new MyTUsageChildren()});
+        this.controllers.push({url: '/usage/datalimit', controller: new MyTUsageDataLimit()});
+        this.controllers.push({url: '/usage/datashare', controller: new MyTUsageDataShare()});
+        this.controllers.push({url: '/usage/tdatashare', controller: new MyTUsageTDataShare()});
+        this.controllers.push({url: '/usage/tdatashare/info', controller: new MyTUsageTDataShareInfo()});
+        this.controllers.push({url: '/usage/tdatashare/close', controller: new MyTUsageTDataShareClose()});
+        this.controllers.push({url: '/usage/troaming', controller: new MyTUsageTRoamingShare()});
+        this.controllers.push({url: '/usage/ting', controller: new MyTUsageTing()});
+        this.controllers.push({url: '/usage/24hourdiscount', controller: new MyTUsage24hours50discount()});
+        this.controllers.push({url: '/bill/hotbill', controller: new MyTHotBill()});
+        this.controllers.push({url: '/bill/reissue', controller: new MyTReissue()});
+        this.controllers.push({url: '/bill/reissue/complete', controller: new MyTReissueComplete()});
+    }
 }
 
 export default MytRouter;
