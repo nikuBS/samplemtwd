@@ -1,5 +1,5 @@
 <!--
-* FileName: payment.auto.home-account.component.html
+* FileName: payment.auto.home-card.component.html
 * Author: 공자윤 (jayoon.kong@sk.com)
 * Date: 2018.07.05
 -->
@@ -7,7 +7,7 @@
     <h4 class="pay-tit">현재 납부방법</h4>
     <div class="account-wrap">
         <div class="payment-wrap">
-            <h5 class="payment-tit">은행계좌이체</h5>
+            <h5 class="payment-tit">체크/신용카드</h5>
             <div class="point-wrap">
                 <div class="point-box">
                     <ul>
@@ -19,27 +19,28 @@
                         </li>
                         <li>
                             <dl>
-                                <dt>요금납부일</dt>
-                                <dd>매월 <em class="number">21</em> 일
+                                <dt>인출(승인)일</dt>
+                                <dd>영업일 기준 및<br>
+                                    카드사에 따라 달라짐
                                 </dd>
                             </dl>
                         </li>
                         <li>
                             <dl>
-                                <dt>계좌번호</dt>
+                                <dt>카드번호</dt>
                                 <dd>110304******</dd>
                             </dl>
                         </li>
                         <li>
                             <dl>
-                                <dt>은행명</dt>
-                                <dd>국민은행</dd>
+                                <dt>카드사</dt>
+                                <dd>국민카드</dd>
                             </dl>
                         </li>
                         <li>
                             <dl>
-                                <dt>예금주</dt>
-                                <dd>홍*동</dd>
+                                <dt>카드 유효기간</dt>
+                                <dd>2020/09</dd>
                             </dl>
                         </li>
                         <li>
@@ -50,21 +51,21 @@
                         </li>
                     </ul>
                 </div>
-                <div class="contents-notice type1">
-                                        <span class="noti-type3">자동납부 신청/변경/해지업무는 <strong>금융거래용 본인인증</strong> 후 이용이
-                                                가능하오니 참고하시기 바랍니다.
-                                        </span>
-                </div>
+                <ul class="contents-notice type1">
+                    <li class="noti-type3">자동납부 신청/변경/해지업무는 <strong>금융거래용 본인인증</strong> 후 이용이
+                        가능하오니 참고하시기 바랍니다.
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
     <div class="contents-btn">
         <ul class="bt-slice item-two">
             <li class="bt-white2">
-                <button>자동납부 해지</button>
+                <button><a href="#step1-cancel">자동납부 해지</a></button>
             </li>
             <li class="bt-blue1">
-                <button><a href="#step1">자동납부 변경</a></button>
+                <button><a href="#step1-change">자동납부 변경</a></button>
             </li>
         </ul>
     </div>

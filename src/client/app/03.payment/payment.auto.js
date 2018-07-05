@@ -20,21 +20,36 @@ Tw.PaymentAuto = function (rootEl) {
 
 Tw.PaymentAuto.prototype = {
   _bindEvent: function () {
-    this.$container.on('click', '.pay', $.proxy(this._pay, this));
+    this.$container.on('click', '.change', $.proxy(this._change, this));
+    this.$container.on('click', '.cancel', $.proxy(this._cancel, this));
   },
-  _pay: function (event) {
+  _change: function (event) {
     event.preventDefault();
 
     this._apiService.request(Tw.API_CMD.BFF_06_0001, {})
-      .done($.proxy(this._paySuccess, this))
-      .fail($.proxy(this._payFail, this));
+      .done($.proxy(this._changeSuccess, this))
+      .fail($.proxy(this._changeFail, this));
   },
-  _paySuccess: function () {
+  _cancel: function (event) {
+    event.preventDefault();
+
+    this._apiService.request(Tw.API_CMD.BFF_06_0001, {})
+      .done($.proxy(this._cancelSuccess, this))
+      .fail($.proxy(this._cancelFail, this));
+  },
+  _changeSuccess: function () {
     this._setHistory();
-    this._go('#complete');
+    this._go('#complete-change');
   },
-  _payFail: function () {
-    Tw.Logger.info('pay request fail');
+  _changeFail: function () {
+    Tw.Logger.info('change request fail');
+  },
+  _cancelSuccess: function () {
+    this._setHistory();
+    this._go('#complete-cancel');
+  },
+  _cancelFail: function () {
+    Tw.Logger.info('cancel request fail');
   },
   _setHistory: function () {
     this._history.setHistory();
