@@ -1,5 +1,7 @@
 import TwRouter from '../../common/route/tw.router';
 import AuthTidLogin from './controllers/tid/auth.tid.login.controller';
+import AuthLoginFail from './controllers/login/auth.login.fail.controller';
+import AuthLoginDormancy from './controllers/login/auth.login.dormancy.controller';
 import AuthSignupGuide from './controllers/signup/auth.signup.guide.controller';
 import AuthMemberManagement from './controllers/member/auth.member.management.controller';
 import AuthWithdrawalGuide from './controllers/withdrawal/auth.withdrawal.guide.controller';
@@ -30,7 +32,8 @@ class AuthRouter extends TwRouter {
     this.controllers.push({ url: '/line/register/corporation', controller: new AuthLineCopRegister() });
     this.controllers.push({ url: '/line/register/empty', controller: new AuthLineEmptyRegister() });
     // login
-    this.controllers.push({ url: '/login/fail', controller: new AuthLineEmptyRegister() });
+    this.controllers.push({ url: '/login/fail', controller: new AuthLoginFail() });
+    this.controllers.push({ url: '/login/dormancy', controller: new AuthLoginDormancy() });
     // logout
     this.controllers.push({ url: '/logout/complete', controller: new AuthLogoutComplete() });
     this.controllers.push({ url: '/logout/expire', controller: new AuthLogoutExpire() });
