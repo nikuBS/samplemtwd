@@ -133,26 +133,13 @@ skt_landing.widgets = {
       var _this = $(this).find('.slider');
       _this.slick({
         arrows: true,
-        infinite: false,
+        infinite: true,
         slidesToShow: 4,
-    slidesToScroll: 1,
+        slidesToScroll: 1,
         centerMode: false,
-        variableWidth: false,
         focusOnSelect: true,
         focusOnChange: true
-      });
-        _this.on('init',function(){
-        var totalBox = $(this).closest(widget).find('.page-total'),
-            slick = _this.prop('slick');
-        totalBox.find('.current').text(slick.currentSlide+1);
-        totalBox.find('.total').text(slick.slideCount);
       })
-        .trigger('init')
-        .on('beforeChange',function(event, slick, currentSlide, nextSlide){
-        var totalBox = $(this).closest(widget).find('.page-total');
-        totalBox.find('.current').text(nextSlide+1);
-        totalBox.find('.total').text(slick.slideCount);
-      });
     });
   },
   widget_slider4: function () {
