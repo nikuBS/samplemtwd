@@ -22,10 +22,12 @@ import DirectRouter from './app/07.direct/direct.router';
 import CustomerRouter from './app/08.customer/customer.router';
 import AuthRouter from './app/09.auth/auth.router';
 import SearchRouter from './app/search/search.router';
+import BypassRouter from './common/bypass.router';
 import ApiRouter from './common/api.router';
 
 // Application Modules
 import RedisService from './services/redis.service';
+
 
 class App {
   public app: Application = express();
@@ -54,11 +56,16 @@ class App {
     this.setViewPath();
     this.setRoutes();
     this.setApis();
+    this.setBypass();
     this.setGlobalVariables();
   }
 
   private setApis() {
     this.app.use('/api', new ApiRouter().router);
+  }
+
+  private setBypass() {
+    this.app.use('/bypass', new BypassRouter().router);
   }
 
   private setGlobalVariables() {

@@ -15,25 +15,6 @@ skt_landing.widgets = {
   },
   widget_test: function () {
   },
-  widget_iscroll: function () {
-    var widgetIscroll = $('.widget-box.iscroll'),
-        iscroll = {};
-    widgetIscroll.each(function(idx){
-      var className = 'iscroll'+idx;
-      var pastHeight = $(this).children('.iscroll-box').outerHeight();
-      $(this).addClass(className);
-      $(this).closest('.widget').css('height','100%');
-      iscroll[className] = new IScroll(this);
-      this.addEventListener('touchmove', function (e) { e.preventDefault(); }, {passive: false});
-      $(this).on('click',function(){
-        var presentHeight = $(this).children('.iscroll-box').outerHeight();
-        if(pastHeight != presentHeight){
-          pastHeight = presentHeight;
-          iscroll[className].refresh();
-        }
-      });
-    });
-  },
   widget_tube: function () {
     $('.widget .tube').each(function(){
       var tube_list = $(this).find('.tube-list');
@@ -152,10 +133,13 @@ skt_landing.widgets = {
       var _this = $(this).find('.slider');
       _this.slick({
         arrows: true,
-        infinite: false,
+        infinite: true,
         slidesToShow: 4,
-		slidesToScroll: 1,
-      });
+        slidesToScroll: 1,
+        centerMode: false,
+        focusOnSelect: true,
+        focusOnChange: true
+      })
     });
   },
   widget_slider4: function () {
@@ -472,7 +456,8 @@ skt_landing.widgets = {
   },
   widget_sortlist : function(){
     $( "#sortable-enabled" ).sortable({
-      connectWith: "#sortable-enabled"
+      connectWith: "#sortable-enabled",
+      axis: 'y'
     }).disableSelection();
     $('.ui-state-default .bt-active').on('touchstart touchend touchmove',function(e){
       e.stopPropagation();
@@ -485,6 +470,9 @@ skt_landing.widgets = {
         $(this).parent().prependTo('#sortable-enabled');
         $(this).find('.blind').text('회선 삭제 하기');
       }
+    });
+    $('.bt-sort').on('touchstart touchend touchmove',function(e){
+      e.stopPropagation();
     });
     $(document).on('click', '.connectedSortable .bt-sort', function(){
       var parent_cont = $(this).closest('.ui-state-default');

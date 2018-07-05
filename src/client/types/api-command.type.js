@@ -13,6 +13,10 @@ Tw.API_CMD = {
   BFF_03_0004_C: { path: '/change-svc', method: Tw.API_METHOD.POST },
   BFF_03_0005_C: { path: '/selected-svc', method: Tw.API_METHOD.GET },
   BFF_03_0023_C: { path: '/core-recharge/v1/refill-gifts', method: Tw.API_METHOD.POST },
+
+  // AUTH
+  BFF_03_0003: { path: '/core-auth/v1/members', method: Tw.API_METHOD.DELETE },
+
   // MYT
   BFF_05_0001: { path: '/my-t/balances', method: Tw.API_METHOD.GET },
   BFF_05_0002: { path: '/my-t/balance-add-ons', method: Tw.API_METHOD.GET },
@@ -63,6 +67,20 @@ Tw.API_CMD = {
   BFF_06_0040: { path: '/services/recharge/auto-cut', method: Tw.API_METHOD.POST },
   BFF_06_0041: { path: '/services/recharge/auto-cut-cancel', method: Tw.API_METHOD.POST },
   BFF_06_0042: { path: '/services/recharge/search', method: Tw.API_METHOD.GET },
+
+  // PAYMENT
+  BFF_07_0022: { path: '/core-bill/v1/bill-pay/autopay-banks', method: Tw.API_METHOD.GET },
+  BFF_07_0023: { path: '/core-bill/v1/bill-pay/settle-pay-bank', method: Tw.API_METHOD.POST },
+  BFF_07_0024: { path: '/core-bill/v1/bill-pay/cardnum-validation', method: Tw.API_METHOD.GET },
+  BFF_07_0025: { path: '/core-bill/v1/bill-pay/settle-pay-card', method: Tw.API_METHOD.POST },
+  BFF_07_0026: { path: '/core-bill/v1/bill-pay/settle-vbs', method: Tw.API_METHOD.GET },
+  BFF_07_0027: { path: '/core-bill/v1/bill-pay/settle-vb-sms', method: Tw.API_METHOD.GET },
+  BFF_07_0028: { path: '/core-bill/v1/bill-pay/avail-point-search', method: Tw.API_METHOD.GET },
+  BFF_07_0029: { path: '/core-bill/v1/bill-pay/pay-ocb-tpoint-proc', method: Tw.API_METHOD.POST }
+};
+
+Tw.NODE_CMD = {
+  GET_ENVIRONMENT: { path: '/environment', method: Tw.API_METHOD.GET }
 };
 
 Tw.API_CODE = {

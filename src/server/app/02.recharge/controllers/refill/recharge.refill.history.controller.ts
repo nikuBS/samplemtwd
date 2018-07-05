@@ -35,7 +35,7 @@ class RechargeRefillHistory extends TwViewController {
   private _getData(lineList: any, type: any): any {
     const result = {
       lineList: lineList.result
-    }
+    };
     return result;
   }
 }

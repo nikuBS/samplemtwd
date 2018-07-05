@@ -1,5 +1,5 @@
-Tw.DateHelper = (function() {
-  var getDate = function() {
+Tw.DateHelper = (function () {
+  var getDate = function () {
     var date = new Date();
     return date;
   };
@@ -7,7 +7,7 @@ Tw.DateHelper = (function() {
   var getNextMonth = function () {
     var next = new Date();
     next.setDate(1);
-    next.setMonth(next.getMonth() +1);
+    next.setMonth(next.getMonth() + 1);
     return next;
   };
 
@@ -19,20 +19,32 @@ Tw.DateHelper = (function() {
   };
 
   /**
+   * Convert Date Format (BFF string to Date)
+   * @param {string} date
+   * @returns {Date}
+   */
+  var convDateFormat = function (date) {
+    if ( !(date instanceof Date) ) {
+      return moment(date, 'YYYYMMDDhhmmss').toDate();
+    }
+    return date;
+  };
+
+  /**
    * @param date {Date} or {string} : YYYYMMDD
    * @returns {string} : 20180601
    */
-  var getCurrentShortDate = function(){
+  var getCurrentShortDate = function () {
     return moment().format('YYYYMMDD');
-  }
+  };
 
   /**
    * @param date {Date} or {string} : YYYYMMDD
    * @returns {string} : currentDateTime - 1 year
    */
-  var getPastYearShortDate = function(){
+  var getPastYearShortDate = function () {
     return moment().subtract(1, 'years').format('YYYYMMDD');
-  }
+  };
 
   /**
    * @param date {Date} or {string} : YYYYMMDDhhmmss
@@ -51,34 +63,22 @@ Tw.DateHelper = (function() {
   };
 
   /**
-   * Convert Date Format (BFF string to Date)
-   * @param {string} date
-   * @returns {Date}
-   */
-  var convDateFormat = function(date) {
-    if ( !(date instanceof Date) ) {
-      return moment(date, 'YYYYMMDDhhmmss').toDate();
-    }
-    return date;
-  };
-
-  /**
    * Return Date width Format parameter
    * @param {date} date || {string} date, {string} format
    * @returns {Date} : YYMMDD, YYYYMMDD, YY.MM.DD
    */
-  var getShortDateWithFormat = function(date, format) {
+  var getShortDateWithFormat = function (date, format) {
     return moment(date).format(format);
-  }
+  };
 
   /**
    * Convert Date Format (BFF string to Date)
    * @param {date} date || {string} date, {number} amount, {string} unit, {string} format
    * @returns {Date} : YYMMDD, YYYYMMDD, YY.MM.DD
    */
-  var getShortDateWithFormatAddByUnit = function(date, amount, unit, format) {
+  var getShortDateWithFormatAddByUnit = function (date, amount, unit, format) {
     return moment(date).add(amount, unit).format(format);
-  }
+  };
 
   return {
     getRemainDate: getRemainDate,
@@ -89,5 +89,5 @@ Tw.DateHelper = (function() {
     getPastYearShortDate: getPastYearShortDate,
     getShortDateWithFormat: getShortDateWithFormat,
     getShortDateWithFormatAddByUnit: getShortDateWithFormatAddByUnit
-  }
+  };
 })();

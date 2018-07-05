@@ -22,18 +22,21 @@
         <% include ../components/realtime/payment.realtime.init.component.html %>
     </div>
     <div id="step1" class="container-wrap" style="display:none;">
-        <% include ../components/realtime/payment.realtime.select.payment.option.component.html %>
+        <% include ../components/realtime/payment.realtime.select.option.component.html %>
     </div>
     <div id="step2-account" class="container-wrap" style="display:none;">
-        <% include ../components/realtime/payment.realtime.account.component.html %>
+        <% include ../components/realtime/payment.realtime.input.account.component.html %>
     </div>
     <div id="step2-card" class="container-wrap" style="display:none;">
-        <% include ../components/realtime/payment.realtime.card.component.html %>
+        <% include ../components/realtime/payment.realtime.input.card.component.html %>
     </div>
     <div id="step2-point" class="container-wrap" style="display:none;">
-        <% include ../components/realtime/payment.realtime.point.component.html %>
+        <% include ../components/realtime/payment.realtime.input.point.component.html %>
     </div>
-    <div id="process-complete" class="container-wrap" style="display:none;">
+    <div id="step2-sms" class="container-wrap" style="display:none;">
+        <% include ../components/realtime/payment.realtime.input.sms.component.html %>
+    </div>
+    <div id="complete" class="container-wrap" style="display:none;">
         <% include ../components/realtime/payment.realtime.complete.component.html %>
     </div>
     <!--// #contents -->

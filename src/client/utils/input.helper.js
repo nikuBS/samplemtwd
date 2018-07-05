@@ -6,5 +6,5 @@ Tw.InputHelper = (function () {
 
   return {
     inputNumberOnly: inputNumberOnly
-  }
+  };
 })();

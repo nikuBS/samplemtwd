@@ -28,7 +28,7 @@ export const API_CMD = {
   // AUTH
   BFF_03_0001: { path: '/test-login', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: false },
   BFF_03_0002: { path: '/core-auth/v1/members', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
-  BFF_03_0003: { path: '/core-auth/v1/members', method: API_METHOD.DELETE, server: API_SERVER.BFF, bypass: false },
+  BFF_03_0003: { path: '/core-auth/v1/members', method: API_METHOD.DELETE, server: API_SERVER.BFF, bypass: true },
   BFF_03_0004: { path: '/core-auth/v1/line-info', method: API_METHOD.DELETE, server: API_SERVER.BFF, bypass: false },
   BFF_03_0005: { path: '/core-auth/v1/multi-svc', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: false },
   BFF_03_0006: { path: '/user/nick-names/args-0', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: false },
@@ -95,6 +95,14 @@ export const API_CMD = {
   BFF_06_0042: { path: '/services/recharge/search', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   // PAYMENT
   BFF_07_0021: { path: '/core-bill/v1/bill-pay/settle-unpaid-list', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_07_0022: { path: '/core-bill/v1/bill-pay/autopay-banks', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_07_0023: { path: '/core-bill/v1/bill-pay/settle-pay-bank', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_07_0024: { path: '/core-bill/v1/bill-pay/cardnum-validation', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_07_0025: { path: '/core-bill/v1/bill-pay/settle-pay-card', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_07_0026: { path: '/core-bill/v1/bill-pay/settle-vbs', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_07_0027: { path: '/core-bill/v1/bill-pay/settle-vb-sms', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_07_0028: { path: '/core-bill/v1/bill-pay/avail-point-search', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_07_0029: { path: '/core-bill/v1/bill-pay/pay-ocb-tpoint-proc', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
 
   // TID
   OIDC: { path: '/auth/authorize.do', method: API_METHOD.GET, server: API_SERVER.TID, bypass: false },

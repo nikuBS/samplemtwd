@@ -6,8 +6,8 @@
 
 Tw.RechargeGift = function (rootEl) {
   this.$container = rootEl;
-  this._apiService = new Tw.ApiService();
-  this._popupService = new Tw.PopupService();
+  this._apiService = Tw.Api;
+  this._popupService = Tw.Popup;
 
   this._cachedElement();
   this._bindEvent();
@@ -36,12 +36,12 @@ Tw.RechargeGift.prototype = {
     var elTab = $(e.currentTarget);
     var elWrapperTab = $('.tab-linker a');
 
-    if ( elWrapperTab.index(elTab) == 0 ) {
+    if ( elWrapperTab.index(elTab) === 0 ) {
       $('.notify.tab1').show();
       $('.notify.tab2').hide();
     }
 
-    if ( elWrapperTab.index(elTab) == 1 ) {
+    if ( elWrapperTab.index(elTab) === 1 ) {
       $('.notify.tab1').hide();
       $('.notify.tab2').show();
     }
@@ -65,8 +65,8 @@ Tw.RechargeGift.prototype = {
 
   onSuccessProvider: function (res) {
     var result = res.result;
-    result.familyMemberYn = result.familyMemberYn == 'Y' ? true : false;
-    result.goodFamilyMemberYn = result.goodFamilyMemberYn == 'Y' ? true : false;
+    result.familyMemberYn = result.familyMemberYn === 'Y' ? true : false;
+    result.goodFamilyMemberYn = result.goodFamilyMemberYn === 'Y' ? true : false;
 
     this.$wrap_gift_count.html(this.tpl_gift_count(result));
   },
@@ -88,14 +88,14 @@ Tw.RechargeGift.prototype = {
 
     // TODO : fetch data && binding
     var response = {
-      "code": "00",
-      "msg": "success",
-      "result": {
-        "reqCnt": "1",
-        "giftRequestAgainYn": "Y",
-        "dataRemQty": "700"
+      'code': '00',
+      'msg': 'success',
+      'result': {
+        'reqCnt': '1',
+        'giftRequestAgainYn': 'Y',
+        'dataRemQty': '700'
       }
-    }
+    };
 
     $wrap_remain_data.html(this.tpl_remain_data(response.result));
   },

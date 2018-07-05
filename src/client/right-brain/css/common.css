@@ -2084,6 +2084,10 @@ a.ui-button:active,
   display: none;
 }
 
+.bt-dropdown.no-arrow {
+  color: #000;
+}
+
 .bt-txt {
   display: block;
   margin: 0.625rem 0 0 0;

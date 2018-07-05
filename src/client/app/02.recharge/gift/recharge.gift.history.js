@@ -5,8 +5,8 @@
  */
 Tw.RechargeGiftHistory = function (rootEl) {
   this.$container = rootEl;
-  this._apiService = Tw.Api;
 
+  this._apiService = Tw.Api;
   this._hash = Tw.Hash;
   this._popupService = Tw.Popup;
   this._dateHelper = Tw.DateHelper;
@@ -23,9 +23,14 @@ Tw.RechargeGiftHistory.prototype = {
     this.current = this._hash._currentHashNav || 'gift';
     this.dateNow = this._dateHelper.getShortDateWithFormat(new Date(), 'YYYYMMDD');
 
-    this._getListData(this._dateHelper.getShortDateWithFormatAddByUnit(this.dateNow, -1, 'years', 'YYYYMMDD'), this.dateNow, 1, function (res) {
+    this._getListData(this._dateHelper.getShortDateWithFormatAddByUnit(this.dateNow, -1, 'years', 'YYYYMMDD'), this.dateNow, 0, function (res) {
       console.log(res);
     });
+
+    // TODO : 검색은 확인 버튼 바인딩을 통해 checked input 값을 가져와서 사용.
+    // TODO : 이전 검색 선택 값 어떻게? => 필요한가?
+    // TODO : 탭 변경시 검색값 default?
+    // TODO : 검색 Trigger button innerText 변경
 
     var _search = (function () {
       var terms = [
@@ -36,24 +41,33 @@ Tw.RechargeGiftHistory.prototype = {
       ];
       var setDefault = function () {
 
-      }
+      };
       var setOption = function () {
 
-      }
+      };
 
       var resetOption = function () {
 
-      }
+      };
       return {
         defaultLabel: null,
         terms: terms,
+        setDefault: setDefault,
         setOption: setOption,
         resetOption: resetOption
       };
     }.bind(this))();
 
+    Tw.Logger.log(_search);
+
+    // TODO : 데이터 있는 경우 템플릿 렌더링, 없는 경우 Empty 템플릿
+    // TODO : 데이터 페이지 수로 분할(by current)
+    //    this.listTemplete = Handlebars.compile($('#list-template').html());
+    //     this.presentEmptyTemplete = Handlebars.compile($('#present-empty-template').html());
+    //     this.requestEmptyTemplete = Handlebars.compile($('#request-empty-template').html());
+
     this.ListGeneratorWithHandlebar = function (dataSet, perPage, template, handlebarHelper, wrapperDOM, viewMoreDom) {
-      if ((!_.isObject(dataSet) || arguments.length < 6) || !_.isFunction(handlebarHelper)) {
+      if ( (!_.isObject(dataSet) || arguments.length < 6) || !_.isFunction(handlebarHelper) ) {
         Tw.Logger.error('[ListGenerator ERROR]');
         return false;
       }
@@ -80,7 +94,7 @@ Tw.RechargeGiftHistory.prototype = {
         this.getNextPage();
         this.wrapper.append();
       }
-    }
+    };
 
     new this.ListGeneratorWithHandlebar({}, 20, 11, function () {
     }, 2, 35);
@@ -120,7 +134,7 @@ Tw.RechargeGiftHistory.prototype = {
   },
 
   _hashInit: function (hash) {
-    switch (hash.base) {
+    switch ( hash.base ) {
       case 'request' :
         this.$tabChanger.eq(1).click();
         break;
@@ -176,13 +190,15 @@ Tw.RechargeGiftHistory.prototype = {
   },
 
   _getListData: function (fromDt, toDt, type, callback) {
+
+    console.log(this.current, fromDt, toDt, type, callback);
     if (this.current === 'gift') {
       this._apiService.request(Tw.API_CMD.BFF_06_0018, {
         fromDt: fromDt,
         toDt: toDt,
         giftType: type
       }).done($.proxy(callback, this));
-    } else if (this.current === 'request') {
+    } else if ( this.current === 'request' ) {
       this._apiService.request(Tw.API_CMD.BFF_06_0010, {
         fromDt: fromDt,
         toDt: toDt,
@@ -192,16 +208,17 @@ Tw.RechargeGiftHistory.prototype = {
   },
 
   setData: function (res) {
-    if (res.code !== '00' && res.msg !== 'success') {
+    if ( res.code !== '00' && res.msg !== 'success' ) {
       return false;
     }
-    if (res.result) {
+    if ( res.result ) {
       var currentRes = this.searchCondition.isAutoSent ? res.filteredData : res.result;
       this.data[this.currentTab] = {
         list: currentRes,
         renderList: currentRes.slice().splice(0, 20),
         length: currentRes.length,
-        maxPage: currentRes.length ? (currentRes.length % 20 > 0) ? parseInt(currentRes.length / 20, 10) + 1 : parseInt(currentRes.length / 20, 10) : 0,
+        maxPage: currentRes.length ? (currentRes.length % 20 > 0) ?
+          parseInt(currentRes.length / 20, 10) + 1 : parseInt(currentRes.length / 20, 10) : 0,
         restDataCount: currentRes.length ? currentRes.length - 20 : 0,
         currentPage: 0,
         removeCount: 0
@@ -211,11 +228,12 @@ Tw.RechargeGiftHistory.prototype = {
   },
 
   updateLineInfo: function (e, params) {
+    console.log(e, params);
   },
 
   setSearchBtn: function (type, term) {
     var targetBtn = this[this.currentTab + 'Container'].find('.bt-dropdown.small'),
-        subSelect = targetBtn.siblings().find("select"),
+        subSelect = targetBtn.siblings().find('select'),
         text      = '',
         spCode    = ' · ';
 
@@ -227,10 +245,10 @@ Tw.RechargeGiftHistory.prototype = {
   },
 
   searchData: function (res) {
-    if (this.searchCondition.isAutoSent && this.currentTab === 'gift') {
+    if ( this.searchCondition.isAutoSent && this.currentTab === 'gift' ) {
       var filtered = [];
       res.result.map(function (arr) {
-        if (arr.regularGiftType === 'GC') {
+        if ( arr.regularGiftType === 'GC' ) {
           filtered.push(arr);
         }
       });
@@ -258,13 +276,13 @@ Tw.RechargeGiftHistory.prototype = {
     this[this.currentTab + 'ContentWrapper'].append(this.getTemplate(this.listTemplete, this.data[this.currentTab]));
     this[this.currentTab + 'RestCounter'].text('(' + this.data[this.currentTab].restDataCount + ')');
 
-    if (currentData.currentPage === currentData.maxPage - 1) {
+    if ( currentData.currentPage === currentData.maxPage - 1 ) {
       this[this.currentTab + 'ViewMore'].hide();
     }
   },
 
   initUiFromData: function () {
-    if (this.data[this.currentTab] !== undefined && this.data[this.currentTab].length) {
+    if ( this.data[this.currentTab] !== undefined && this.data[this.currentTab].length ) {
       this[this.currentTab + 'Container'].find('.inner').show();
       this[this.currentTab + 'Container'].find('.ti-desc').show();
       this[this.currentTab + 'Counter'].text(this.data[this.currentTab].length);
@@ -272,17 +290,17 @@ Tw.RechargeGiftHistory.prototype = {
 
       this[this.currentTab + 'ContentWrapper'].append(this.getTemplate(this.listTemplete, this.data[this.currentTab]));
 
-      if (this.data[this.currentTab].restDataCount > 0) {
+      if ( this.data[this.currentTab].restDataCount > 0 ) {
         this[this.currentTab + 'RestCounter'].text('(' + this.data[this.currentTab].restDataCount + ')');
-        this[this.currentTab + 'ViewMore'].show()
+        this[this.currentTab + 'ViewMore'].show();
       }
-      if (this.currentTab === 'request') {
+      if ( this.currentTab === 'request' ) {
         this.addRequstListDeleteHandler();
       }
     } else {
       this[this.currentTab + 'Container'].find('.ti-desc').hide();
       this[this.currentTab + 'ContentWrapper'].hide();
-      if (this.currentTab === 'gift') {
+      if ( this.currentTab === 'gift' ) {
         this[this.currentTab + 'Container'].find('.contents-info-list').append(this.presentEmptyTemplete());
       } else {
         this[this.currentTab + 'Container'].find('.contents-info-list').append(this.requestEmptyTemplete());
@@ -317,12 +335,12 @@ Tw.RechargeGiftHistory.prototype = {
   },
 
   removeSelectedRequest: function (val, domElement) {
-    this._apiService.request(Tw.API_CMD.BFF_06_0011, JSON.stringify({opDtm: val})).done($.proxy(this.removeRequestHandler, this, domElement));
+    this._apiService.request(Tw.API_CMD.BFF_06_0011, JSON.stringify({ opDtm: val })).done($.proxy(this.removeRequestHandler, this, domElement));
   },
 
   removeRequestHandler: function (target, res) {
     var currentData = this.data[this.currentTab];
-    if (res.code === '00') {
+    if ( res.code === '00' ) {
       $(target).remove();
       currentData.removeCount++;
       currentData.list.splice($(target).data('listIndex'), 1);
@@ -333,14 +351,15 @@ Tw.RechargeGiftHistory.prototype = {
   },
 
   getTemplate: function (t, d) {
+    var _this = this;
 
     Handlebars.registerHelper('setIndex', function (option) {
-      // this.listIndex = option.data.key + _this.data[_this.currentTab].currentPage * 20;
+      this.listIndex = option.data.key + _this.data[_this.currentTab].currentPage * 20;
       return option.fn(this);
     });
 
     Handlebars.registerHelper('conditionClass', function (giftType) {
-      if (giftType === '1') {
+      if ( giftType === '1' ) {
         return 'arrow-receive';
       } else {
         return 'arrow-send';
@@ -353,7 +372,7 @@ Tw.RechargeGiftHistory.prototype = {
 
     Handlebars.registerHelper('isBig1G', function (val) {
       var convertDataFormat = Tw.FormatHelper.customDataFormat(this.dataQty, Tw.DATA_UNIT.MB, Tw.DATA_UNIT.GB);
-      if (this.dataQty < 1024) {
+      if ( this.dataQty < 1024 ) {
         this.dataQtyTrans = Tw.FormatHelper.addComma(this.dataQty) + Tw.DATA_UNIT.MB;
         return val.fn(this);
       } else {
@@ -364,7 +383,7 @@ Tw.RechargeGiftHistory.prototype = {
     });
 
     Handlebars.registerHelper('isAuto', function (option) {
-      if (this.regularGiftType === 'GC') {
+      if ( this.regularGiftType === 'GC' ) {
         return option.fn(this);
       } else {
         return option.inverse(this);
@@ -372,7 +391,7 @@ Tw.RechargeGiftHistory.prototype = {
     });
 
     Handlebars.registerHelper('isRequest', function (option) {
-      if (_this.currentTab !== 'gift' && this.giftType === '2') {
+      if ( _this.currentTab !== 'gift' && this.giftType === '2' ) {
         return option.fn(this);
       } else {
         return option.inverse(this);
@@ -383,10 +402,10 @@ Tw.RechargeGiftHistory.prototype = {
   },
 
   openSelectPopupProcess: function (e) {
-    if ($(e.target).attr('id') === 'term-set') {
+    if ( $(e.target).attr('id') === 'term-set' ) {
       this.currentPopupKeyWord = 'term';
       this.searchPopupHandler();
-    } else if ($(e.target).attr('id') === 'line-set') {
+    } else if ( $(e.target).attr('id') === 'line-set' ) {
       this.currentPopupKeyWord = 'line';
     }
 
@@ -413,11 +432,12 @@ Tw.RechargeGiftHistory.prototype = {
   },
 
   popupCommandOk: function () {
-    if (this.currentPopupKeyWord !== 'line') {
+    if ( this.currentPopupKeyWord !== 'line' ) {
       this.resetCurrentContents();
     }
     // 회선 변경시, 검색 실행시 내역 조회 재실행
-    this.getListData(this.searchCondition.terms[this.searchCondition.selectedTermIndex], this.searchCondition.now, this.searchCondition.type, this.searchData);
+    this.getListData(this.searchCondition.terms[this.searchCondition.selectedTermIndex],
+      this.searchCondition.now, this.searchCondition.type, this.searchData);
     this.currentPopupKeyWord = '';
   },
 
@@ -440,7 +460,7 @@ Tw.RechargeGiftHistory.prototype = {
       this.$optionViewAutoSent = $('.popup .select-option input');
       this.popupViewAutoSentToggle(this.searchCondition.type);
 
-      this.$optionViewAutoSent.on('change', (function (e) {
+      this.$optionViewAutoSent.on('change', (function () {
         this.searchCondition.isAutoSent = this.$optionViewAutoSent.is(':checked');
       }).bind(this));
 
@@ -455,9 +475,9 @@ Tw.RechargeGiftHistory.prototype = {
   },
 
   updateSearchOption: function (type, option) {
-    if (type === 0) {
+    if ( type === 0 ) {
       this.popupViewAutoSentToggle(option);
-      if (option !== 1) {
+      if ( option !== 1 ) {
         this.$optionViewAutoSent.parent().hide();
         this.$optionViewAutoSent.attr('checked', false);
         $(this.$optionViewAutoSent.parent()).removeClass('checked');
@@ -470,11 +490,11 @@ Tw.RechargeGiftHistory.prototype = {
   },
 
   popupViewAutoSentToggle: function (type) {
-    if (type !== 1) {
+    if ( type !== 1 ) {
       this.$optionViewAutoSent.parent().hide();
     } else {
       this.$optionViewAutoSent.attr('checked', this.searchCondition.isAutoSent);
-      if (this.searchCondition.isAutoSent) {
+      if ( this.searchCondition.isAutoSent ) {
         $(this.$optionViewAutoSent.parent()).addClass('checked');
       }
       this.$optionViewAutoSent.parent().show();
@@ -502,7 +522,7 @@ Tw.RechargeGiftHistory.prototype = {
   changeTab: function (e) {
     e.preventDefault();
     this.resetSearchCondition();
-    if (this.$tabChanger.index(e.target) === 0) {
+    if ( this.$tabChanger.index(e.target) === 0 ) {
       // if (this.currentTab === 'gift') return false;
       this.currentTab = 'gift';
     } else {

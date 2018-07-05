@@ -8,9 +8,9 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div class="wrap">
+<div id="step1" class="wrap">
     <!-- #header -->
-    <div id="header" class="header-wrap">
+    <div class="header-wrap">
         <div class="header step-page">
             <div class="header-ti">
                 <h1>팅요금 선물</h1>
@@ -20,7 +20,7 @@
     </div>
     <!--// #header -->
     <!-- #contents -->
-    <div id="contents" class="container-wrap">
+    <div class="container-wrap">
         <h2 class="blind">내용</h2>
         <div class="container">
             <div class="cont-box">
@@ -41,29 +41,8 @@
                 <p class="page-desc">선물 받으실 분의 휴대폰 번호를 입력해주세요.</p>
                 <div class="inner">
                     <h3 class="contents-tit">휴대폰 번호</h3>
-                    <div class="contents-formbox">
-                            <span class="inputbox bt-add">
-                                <span class="input">
-                                    <input type="text" placeholder="‘-’ 없이 숫자만 입력해주세요." title="휴대폰 번호 입력">
-                                    <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
-                                </span>
-                                <span class="bt-box">
-                                    <button type="button">주소록</button>
-                                </span>
-                            </span>
+                    <div id="wrap_tpl_contact" class="contents-formbox">
 
-                        <!-- 2018-06-21 주소록이 없는 경우 추가 -->
-                        <span class="inputbox">
-								<span class="input">
-									<input type="text" placeholder="‘-’ 없이 숫자만 입력해주세요." title="휴대폰 번호 입력">
-									<a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
-								</span>
-							</span>
-                        <!--// 2018-06-21 주소록이 없는 경우 추가 -->
-
-                        <span class="contents-notice">
-                                <em class="noti-type1">SK텔레콤을 사용하고 계신 분에게만 선물을 보내실 수 있습니다.</em>
-                            </span>
                     </div>
                 </div>
 
@@ -71,7 +50,7 @@
                     <div class="contents-btn">
                         <ul class="bt-slice"><!-- 2018-06-20 버튼 클래스 변경 -->
                             <li class="bt-blue1">
-                                <button>다음</button>
+                                <button class="btn_validateStep1">다음</button>
                             </li>
                         </ul>
                     </div>
@@ -81,11 +60,196 @@
     </div>
     <!--// #contents -->
 </div>
+
+<div id="step2" class="wrap" style="display: none">
+    <!-- #header -->
+    <div class="header-wrap">
+        <div class="header step-page">
+            <div class="header-ti">
+                <h1>팅요금 선물</h1>
+            </div>
+            <button class="close-step"><span class="blind">닫기</span></button>
+        </div>
+    </div>
+    <!--// #header -->
+    <!-- #contents -->
+    <div class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <div class="cont-box">
+                <!-- .widget -->
+                <div class="widget">
+                    <div class="widget-box step">
+                        <h3 class="step-ti"><em>STEP 02</em>선물 금액 선택</h3>
+                        <ul class="step-list">
+                            <li>1<span class="blind">연락처 이름</span></li>
+                            <li class="on">2<span class="blind">연락처 이름</span></li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- //.widget -->
+            </div>
+            <hr class="cont-sp type1">
+            <h3 class="blind">잔여 데이터</h3>
+            <div class="cont-box">
+                <div class="gift-money-cont">
+                    <ul class="t-gift-data">
+                        <li>
+                            <dl>
+                                <dt class="ti-data">선물 받는 분</dt>
+                                <dd class="tx-data">
+                                    <div class="txt"><span class="blind">이름</span>김*진</div>
+                                    <div class="num"><span class="blind">전화번호</span>010-12**-34**</div>
+                                </dd>
+                            </dl>
+                        </li>
+                        <li>
+                            <dl>
+                                <dt class="ti-data">선물 금액</dt>
+                                <dd class="tx-data money">
+                                    <span class="tx-bold">5,000</span>
+                                    <span>원</span>
+                                </dd>
+                            </dl>
+                        </li>
+                    </ul>
+                </div>
+                <div class="money-select-wrap">
+                    <div class="money-select-box-inner">
+                        <span class="money-select-selection">선물할 금액을 선택해 주세요.</span>
+                        <div class="money-select-size">
+                            <!-- .widget -->
+                            <div class="widget">
+                                <div class="widget-box tube">
+                                    <ul class="tube-list two" role="radiogroup">
+                                        <li role="radio" aria-checked="false"><input type="radio" name="senddata" title="1000">1,000 원</li>
+                                        <li class="checked" role="radio" aria-checked="true"><input type="radio" name="senddata" checked="" title="5000">5,000 원</li>
+                                        <li role="radio" aria-checked="false"><input type="radio" name="senddata" title="10000">10,000 원</li>
+                                        <li role="radio" aria-checked="false"><input type="radio" name="senddata" title="15000">15,000 원 </li>
+                                        <li class="disabled" role="radio" aria-checked="false"><input type="radio" name="senddata" title="20000">20,000 원</li>
+                                        <li aria-checked="false" class="tube-select">
+                                            직접 선택 <span class="ico-select-arrow"></span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- //.widget -->
+                        </div>
+                    </div>
+                    <p class="money-select-comment">선물 가능 금액 <em>15,000원</em>
+                    </p>
+                </div>
+                <ul class="bt-slice item-two">
+                    <li class="bt-white2">
+                        <button>이전</button>
+                    </li>
+                    <li class="bt-red1">
+                        <button class="selected">선물하기</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--// #contents -->
+</div>
+
+<div id="process-complete" class="wrap">
+    <!-- #header -->
+    <div class="header-wrap">
+        <div class="header step-page">
+            <div class="header-ti">
+                <h1>팅요금 선물</h1>
+            </div>
+            <button class="close-step"><span class="blind">닫기</span></button>
+        </div>
+    </div>
+    <!--// #header -->
+    <!-- #contents -->
+    <div class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <div class="cont-box nogaps-hoz">
+                <div class="msg-present-box">
+                    <div class="msg-present-comp">
+                        <span class="ico"></span>
+                        <p class="txt"><span class="tx-bold">팅요금 선물</span>이<br />완료되었습니다.</p>
+                    </div>
+                    <div class="gift-data-cont">
+                        <ul class="t-gift-data">
+                            <li>
+                                <dl>
+                                    <dt class="ti-data">선물 받는 분</dt>
+                                    <dd class="tx-data">
+                                        <span class="blind">이름</span>김*진<br />
+                                        <span class="blind">전화번호</span><span class="num">010-12**-34**</span>
+                                    </dd>
+                                </dl>
+                            </li>
+                            <li>
+                                <dl>
+                                    <dt class="ti-data">선물 한 금액</dt>
+                                    <dd class="tx-data"><span class="num">5,000</span> 원</dd>
+                                </dl>
+                            </li>
+                        </ul>
+
+                        <!-- 2018-06-22 버튼 추가, 수정 -->
+                        <div class="bt-gap">
+                            <ul class="bt-slice last">
+                                <li class="bt-white1">
+                                    <button>선물 내역보기</button>
+                                </li>
+                                <li class="bt-blue1">
+                                    <button>확인</button>
+                                </li>
+                            </ul>
+                        </div>
+                        <!--// 2018-06-22 버튼 추가, 수정 -->
+                    </div>
+                </div>
+            </div>
+            <hr class="cont-sp type1" />
+            <div class="cont-box nogaps">
+                <div class="bt-link-box">
+                    <a class="bt-link-tx" href="">홈으로 가기</a>
+                </div>
+            </div>
+            <hr class="cont-sp type1" />
+        </div>
+    </div>
+    <!--// #contents -->
+</div>
+
+<script id="tpl_contact" type="text/x-handlebars-template">
+    {{#if isMobile}}
+    <span class="inputbox bt-add">
+        <span class="input">
+            <input type="text" placeholder="‘-’ 없이 숫자만 입력해주세요." title="휴대폰 번호 입력">
+        </span>
+        <span class="bt-box">
+            <button type="button">주소록</button>
+        </span>
+    </span>
+    {{else}}
+    <!-- 2018-06-21 주소록이 없는 경우 추가 -->
+    <span class="inputbox">
+        <span class="input">
+            <input type="text" placeholder="‘-’ 없이 숫자만 입력해주세요." title="휴대폰 번호 입력">
+        </span>
+    </span>
+    {{/if}}
+
+    <!--// 2018-06-21 주소록이 없는 경우 추가 -->
+    <span class="contents-notice">
+        <em class="noti-type1">SK텔레콤을 사용하고 계신 분에게만 선물을 보내실 수 있습니다.</em>
+    </span>
+</script>
+
 <% include ../../components/javascript.component.html %>
 
 <script>
   $(document).ready(function () {
-    var oRechargeTingComponent = new Tw.RechargeTing($(document));
+    var oRechargeTingProcessComponent = new Tw.RechargeTingProcess($(document));
   });
 </script>
 

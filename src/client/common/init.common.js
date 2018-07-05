@@ -1,7 +1,7 @@
 Tw.Init = function () {
   this._initService();
-  this._logVersion();
   this._getDeviceInfo();
+  this._getEnvironment();
 };
 
 Tw.Init.prototype = {
@@ -13,12 +13,20 @@ Tw.Init.prototype = {
     Tw.Api = new Tw.ApiService();
   },
 
-  _logVersion: function () {
+  _logVersion: function (resp) {
+    if ( resp.environment === 'development' || resp.environment === 'qa' ) {
+      Tw.Popup.openAlert(Tw.POPUP_TITLE.NOTIFY, Tw.environment.version);
+    }
     Tw.Logger.info('[Version]', Tw.environment.version);
   },
 
+  _getEnvironment: function () {
+    Tw.Api.request(Tw.NODE_CMD.GET_ENVIRONMENT, {})
+      .done($.proxy(this._logVersion, this));
+  },
+
   _getDeviceInfo: function () {
-    Tw.Native.send(Tw.NTV_CMD.GET_DEVICE_INFO, {}, $.proxy(this._setDeviceInfo, this));
+    Tw.Native.send(Tw.NTV_CMD.GET_DEVICE, {}, $.proxy(this._setDeviceInfo, this));
   },
 
   _setDeviceInfo: function (resp) {
@@ -27,5 +35,5 @@ Tw.Init.prototype = {
 };
 
 $(document).ready(function () {
-  var init = new Tw.Init();
+  new Tw.Init();
 });

@@ -89,6 +89,15 @@ Tw.PopupService.prototype = {
       hbs: 'DA_02_01_04_L01'// hbs의 파일명
     });
   },
+  openBank: function (list) {
+    this.open({
+      'hbs': 'choice',
+      'title': '은행선택',
+      'close_bt': true,
+      'list_type' : '',
+      'list': list
+    });
+  },
   close: function () {
     history.back();
   }

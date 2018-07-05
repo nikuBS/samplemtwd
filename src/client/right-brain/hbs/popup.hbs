@@ -26,9 +26,12 @@
             {{/type}}
             </ul>
         </div>
-        <!--{{#if close_bt}}
+        {{#if close_bt}}
             <button class="popup-closeBtn">팝업닫기<span class="ico"></span></button>
-        {{/if}}-->
+        {{/if}}
+        {{#if contents_b}}
+            {{{contents_b}}}
+        {{/if}}
     </div>
     <div class="popup-blind"></div>
 </div>

@@ -18,12 +18,12 @@ Tw.UIService.prototype = {
       Tw.Logger.info('[Replace History]');
       location.replace($event.currentTarget.href);
       return false;
-    })
+    });
   },
 
   setBackRefresh: function () {
     $(window).bind('pageshow', function($event) {
-      if ($event.originalEvent.persisted || window.performance && window.performance.navigation.type == 2) {
+      if ($event.originalEvent.persisted || window.performance && window.performance.navigation.type === 2) {
         Tw.Logger.info('[Back Loaded]');
         if($('.back-reload').length > 0) {
           Tw.Logger.info('[Prev]', document.referrer);
