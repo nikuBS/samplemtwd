@@ -9,12 +9,7 @@ Tw.PopupService = function () {
 Tw.PopupService.prototype = {
   _init: function () {
     this._hashService.initHashNav($.proxy(this._onHashChange, this));
-
-    this.$document.on('click', '.popup-closeBtn', $.proxy(this.close, this));
-    this.$document.on('click', '.tw-popup-closeBtn', $.proxy(this.close, this));
-    this.$document.on('click', '.tw-popup-confirm', $.proxy(this._confirm, this));
-    this.$document.on('click', '.tw-popup-close', $.proxy(this._closeNoHash, this));
-    this.$document.on('click', '.tw-popup-callback', $.proxy(this._sendCallback, this));
+    this._bindEvent();
   },
   _onHashChange: function (hash) {
     if ( hash.base === this._prevHash ) {
@@ -23,14 +18,23 @@ Tw.PopupService.prototype = {
       this._prevHash = undefined;
     }
   },
+  _onOpenPopup: function() {
+    Tw.Logger.info('[Popup Open]');
+  },
   _popupClose: function () {
     this._callback = null;
     skt_landing.action.popup.close();
   },
   _addHash: function () {
-    Tw.Logger.info('[Popup Open]');
     this._prevHash = location.hash;
     location.hash = 'popup';
+  },
+  _bindEvent: function() {
+    this.$document.on('click', '.popup-closeBtn', $.proxy(this.close, this));
+    this.$document.on('click', '.tw-popup-closeBtn', $.proxy(this.close, this));
+    this.$document.on('click', '.tw-popup-confirm', $.proxy(this._confirm, this));
+    this.$document.on('click', '.tw-popup-close', $.proxy(this._closeNoHash, this));
+    this.$document.on('click', '.tw-popup-callback', $.proxy(this._sendCallback, this));
   },
   _confirm: function () {
     this.close();
@@ -48,9 +52,12 @@ Tw.PopupService.prototype = {
   _sendCallback: function() {
     this._callback();
   },
+  _openPopup: function(option) {
+    skt_landing.action.popup.open(option, $.proxy(this._onOpenPopup, this));
+  },
   open: function (option) {
     this._addHash();
-    skt_landing.action.popup.open(option);
+    skt_landing.action.popup.open(option, $.proxy(this._onOpenPopup, this));
   },
   openAlert: function (title, message, callback) {
     var confirmClass = 'bt-red1 ' + (this._setCallback(callback) ? 'tw-popup-callback' : 'tw-popup-confirm');
@@ -65,7 +72,7 @@ Tw.PopupService.prototype = {
         txt: Tw.BUTTON_LABEL.CONFIRM
       }]
     };
-    skt_landing.action.popup.open(option);
+    this._openPopup(option);
   },
   openAlertNoHash: function (title, message) {
     var option = {
@@ -78,7 +85,7 @@ Tw.PopupService.prototype = {
         txt: Tw.BUTTON_LABEL.CONFIRM
       }]
     };
-    skt_landing.action.popup.open(option);
+    this._openPopup(option);
   },
   openConfirm: function (title, message, contents, callback) {
     var confirmClass = 'bt-red1 ' + (this._setCallback(callback) ? 'tw-popup-callback' : 'tw-popup-confirm');
@@ -97,7 +104,7 @@ Tw.PopupService.prototype = {
         txt: Tw.BUTTON_LABEL.CONFIRM
       }]
     };
-    skt_landing.action.popup.open(option);
+    this._openPopup(option);
   },
   openRefillProduct: function () {
     this.open({

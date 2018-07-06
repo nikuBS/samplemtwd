@@ -482,5 +482,14 @@ skt_landing.widgets = {
         parent_cont.insertAfter(parent_cont.next());
       }
     });
+  },
+  widget_toggle: function(){
+    $('.btn-toggle').on('click', function(){
+        var _this = $(this);
+        $(this).closest('.toggle').find('.toggler').toggle('fast', function(){
+            var isVisible = $(this).is(':visible');
+            _this.attr('aria-pressed', (isVisible? 'true': 'false'));
+        });
+    });
   }
 }
