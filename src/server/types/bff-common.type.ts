@@ -25,10 +25,28 @@ export enum UNIT_E {
   SMS_2 = '320'
 }
 
+export const SVC_ATTR = {
+  M1: '휴대폰',
+  M2: '선불폰',
+  M3: 'T pocket Fi',
+  M4: 'T Login',
+  M5: 'T Wibro',
+  S1: '인터넷',
+  S2: 'IPTV',
+  S3: '집전화',
+  O1: '포인트캠'
+};
+
+export const SVC_CATEGORY = {
+  M: '모바일',
+  S: '인터넷/집전화/IPTV',
+  O: '보안솔루션'
+};
+
 export enum LINE_NAME {
   MOBILE = 'M',
-  INTERNET_PHONE_IPTV = 'W',
-  SECURITY = 'S'
+  INTERNET_PHONE_IPTV = 'S',
+  SECURITY = 'O'
 }
 
 export enum COUPON_STATUS_CODE {

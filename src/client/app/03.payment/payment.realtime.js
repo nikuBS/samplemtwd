@@ -7,7 +7,9 @@
 Tw.PaymentRealtime = function (rootEl) {
   this.$container = rootEl;
   this.$bankList = [];
+  this.$selectedBank = {};
   this.$window = $(window);
+  this.$document = $(document);
   this.$amount = 0;
 
   this._apiService = Tw.Api;
@@ -15,19 +17,16 @@ Tw.PaymentRealtime = function (rootEl) {
   this._history = new Tw.HistoryService(this.$container);
   this._history.init('hash');
 
-  this._getInitInfo();
   this._bindEvent();
 };
 
 Tw.PaymentRealtime.prototype = {
-  _getInitInfo: function() {
-
-  },
   _bindEvent: function () {
     this.$container.on('change', '.checkbox-main', $.proxy(this._sumCheckedAmount, this));
     this.$container.on('click', '.select-payment-option', $.proxy(this._isCheckedAmount, this));
     this.$container.on('click', '.select-bank', $.proxy(this._selectBank, this));
     this.$container.on('click', '.pay', $.proxy(this._pay, this));
+    this.$document.on('click', '.hbs-bank-list', $.proxy(this._getSelectedBank, this));
   },
   _sumCheckedAmount: function (event) {
     var $target = $(event.target);
@@ -55,10 +54,13 @@ Tw.PaymentRealtime.prototype = {
     if (this._isNotExistBankList()) {
       this._getBankList();
     }
-    this._openBank();
+    else {
+      this._openBank();
+    }
   },
   _getBankList: function () {
-    this._apiService.request(Tw.API_CMD.BFF_07_0022, {})
+    $.ajax('/mock/payment.bank-list.json')
+//    this._apiService.request(Tw.API_CMD.BFF_07_0022, {})
       .done($.proxy(this._getBankListSuccess, this))
       .fail($.proxy(this._getBankListFail, this));
   },
@@ -66,7 +68,12 @@ Tw.PaymentRealtime.prototype = {
     return Tw.FormatHelper.isEmpty(this.$bankList);
   },
   _openBank: function () {
-    this._popupService.openBank();
+    this._popupService.openBank(this.$bankList);
+  },
+  _getSelectedBank: function (event) {
+    var $target = $(event.currentTarget);
+    this.$selectedBank[$target.data('value')] = $target.text();
+    this._popupService.close();
   },
   _pay: function (event) {
     event.preventDefault();
@@ -84,12 +91,15 @@ Tw.PaymentRealtime.prototype = {
     Tw.Logger.info('pay request fail');
   },
   _setBankList: function (res) {
-    var bankList = res.result.bnkcrdlist1;
+    var bankList = res.result.bnkcrdlist2;
     for (var i = 0; i < bankList.length; i++) {
-      var bankObj = {};
-      bankObj[bankList[i].commCdVal] = bankList[i].commCdValNm;
+      var bankObj = {
+        key: bankList[i].commCdVal,
+        value: bankList[i].commCdValNm
+      };
       this.$bankList.push(bankObj);
     }
+    this._openBank();
   },
   _paySuccess: function () {
     this._setHistory();

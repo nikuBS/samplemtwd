@@ -22,6 +22,8 @@
     "handlebars": "^4.0.11",
     "https": "^1.0.0",
     "jquery": "1.12.4",
+    "jquery-ui-dist": "^1.12.1",
+    "jquery-ui-touch-punch": "^0.2.3",
     "moment": "^2.22.2",
     "path": "^0.12.7",
     "rxjs": "^5.5.11",

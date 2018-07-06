@@ -88,14 +88,6 @@
   filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#93aaff', endColorStr='#3d83ff 15%');
 }
 
-.slider .type1 .slider-box .slick-initialized .slick-list .slick-slide .swiper-cont.bg-color3, .slider2 .type1 .slider-box .slick-initialized .slick-list .slick-slide .swiper-cont.bg-color3, .slider3 .type1 .slider-box .slick-initialized .slick-list .slick-slide .swiper-cont.bg-color3, .slider4 .type1 .slider-box .slick-initialized .slick-list .slick-slide .swiper-cont.bg-color3, .slider5 .type1 .slider-box .slick-initialized .slick-list .slick-slide .swiper-cont.bg-color3 {
-  background: #e5e8ee;
-}
-
-.slider .type1 .slider-box .slick-initialized .slick-list .slick-slide .swiper-cont.bg-color4, .slider2 .type1 .slider-box .slick-initialized .slick-list .slick-slide .swiper-cont.bg-color4, .slider3 .type1 .slider-box .slick-initialized .slick-list .slick-slide .swiper-cont.bg-color4, .slider4 .type1 .slider-box .slick-initialized .slick-list .slick-slide .swiper-cont.bg-color4, .slider5 .type1 .slider-box .slick-initialized .slick-list .slick-slide .swiper-cont.bg-color4 {
-  background: #3c3a69;
-}
-
 .slider .type1 .page-total, .slider2 .type1 .page-total, .slider3 .type1 .page-total, .slider4 .type1 .page-total, .slider5 .type1 .page-total {
   position: absolute;
   top: -2.8125rem;
@@ -203,20 +195,13 @@
   left: 0.75rem;
   font-weight: 700;
   font-size: 0.8125rem;
-  color: #808698;
-}
-
-.slider .type3 .swiper-slide .swiper-cont .t-commend-info .info-txt-w, .slider2 .type3 .swiper-slide .swiper-cont .t-commend-info .info-txt-w, .slider3 .type3 .swiper-slide .swiper-cont .t-commend-info .info-txt-w, .slider4 .type3 .swiper-slide .swiper-cont .t-commend-info .info-txt-w, .slider5 .type3 .swiper-slide .swiper-cont .t-commend-info .info-txt-w {
-  color: white;
 }
 
 .slider .type3 .swiper-slide .swiper-cont.bg-color3, .slider2 .type3 .swiper-slide .swiper-cont.bg-color3, .slider3 .type3 .swiper-slide .swiper-cont.bg-color3, .slider4 .type3 .swiper-slide .swiper-cont.bg-color3, .slider5 .type3 .swiper-slide .swiper-cont.bg-color3 {
-  background: #e5e8ee;
   height: 5rem;
 }
 
 .slider .type3 .swiper-slide .swiper-cont.bg-color4, .slider2 .type3 .swiper-slide .swiper-cont.bg-color4, .slider3 .type3 .swiper-slide .swiper-cont.bg-color4, .slider4 .type3 .swiper-slide .swiper-cont.bg-color4, .slider5 .type3 .swiper-slide .swiper-cont.bg-color4 {
-  background: #3c3a69;
   height: 5rem;
 }
 
@@ -947,6 +932,11 @@ li.radiobox.type01 {
   bottom: -1px;
   background: #325ec1;
   z-index: -1;
+}
+
+.widget-box.tube .tube-list li.checked .date {
+  color: #98a6d6;
+  font-family: "Helvetica Neue", Roboto, sans-serif;
 }
 
 .widget-box.tube .tube-list li.tube-select {
