@@ -20,8 +20,12 @@ Tw.PaymentAuto = function (rootEl) {
 
 Tw.PaymentAuto.prototype = {
   _bindEvent: function () {
+    this.$container.on('keyup', '.only-number', $.proxy(this._onlyNumber, this));
     this.$container.on('click', '.change', $.proxy(this._change, this));
     this.$container.on('click', '.cancel', $.proxy(this._cancel, this));
+  },
+  _onlyNumber: function (event) {
+    Tw.InputHelper.inputNumberOnly(event.currentTarget);
   },
   _change: function (event) {
     event.preventDefault();
@@ -38,21 +42,18 @@ Tw.PaymentAuto.prototype = {
       .fail($.proxy(this._cancelFail, this));
   },
   _changeSuccess: function () {
-    this._setHistory();
+    this._history.setHistory();
     this._go('#complete-change');
   },
   _changeFail: function () {
     Tw.Logger.info('change request fail');
   },
   _cancelSuccess: function () {
-    this._setHistory();
+    this._history.setHistory();
     this._go('#complete-cancel');
   },
   _cancelFail: function () {
     Tw.Logger.info('cancel request fail');
-  },
-  _setHistory: function () {
-    this._history.setHistory();
   },
   _go: function (hash) {
     window.location.hash = hash;

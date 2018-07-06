@@ -1,0 +1,66 @@
+<%#
+* FileName: payment.point.ok.auto.component.html
+* Author: 공자윤 (jayoon.kong@sk.com)
+* Date: 2018.07.06
+%>
+<div class="container">
+    <div class="cont-box">
+        <h3 class="blind">OK캐쉬백 포인트</h3>
+        <div class="point-payment">
+            <span class="p-company">OK캐쉬백</span>
+            <span class="p-result"><em class="num">7,520</em> 점</span>
+        </div>
+        <div class="inner">
+            <div class="pay-info">
+                <h4 class="pay-tit">카드번호 입력 및 제3자 <br />
+                    정보 제공동의</h4>
+                <div class="account-wrap">
+                    <h5 class="account-tit">카드번호</h5>
+                    <div class="inputbox">
+                        <span class="input">
+                            <input type="text" class="only-number" placeholder="카드번호 (숫자만 입력)" title="카드번호">
+                            <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
+                        </span>
+                    </div>
+                </div>
+                <div class="widget pop-agree-2 add-arrow">
+                    <div class="widget-box check">
+                        <span class="checkbox type01 p-click" role="checkbox" aria-checked="false">
+                            <input type="checkbox" name="checkbox" value="OK캐쉬백 제3자 정보 제공동의" title="OK캐쉬백 제3자 정보 제공동의">
+                            OK캐쉬백 제3자 정보 제공동의(필수)
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr class="cont-sp type1" aria-hidden="true"/>
+    <div class="cont-box">
+        <div class="pay-info">
+            <h4 class="pay-tit">납부하실 포인트 선택</h4>
+            <div class="account-wrap">
+                <div class="due-date">자동 납부 종료예정일
+                    <em class="date">2018.5.20</em>
+                </div>
+                <div class="account-detail">
+                    <div class="select-name" aria-describedby="pointsel-desc1">
+                        <button class="bt-dropdown" title="포인트 선택하기">포인트 선택<span class="ico"></span></button>
+                    </div>
+                </div>
+                <div class="contents-notice type1" id="pointsel-desc1">
+                    <span class="noti-type3">본인명의로 이동전화를 등록한 회원에 한해 포인트로 이동전화요금 납부가 가능합니다.</span>
+                </div>
+            </div>
+        </div>
+        <div class="contents-btn">
+            <ul class="bt-slice item-two">
+                <li class="bt-white2">
+                    <button class="common-back">이전</button>
+                </li>
+                <li class="bt-red1">
+                    <button class="pay"><a href="#complete">납부하기</a></button>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
