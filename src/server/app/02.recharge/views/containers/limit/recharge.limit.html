@@ -1,10 +1,257 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <title>Limit</title>
-</head>
-<body>
-    <span>Limit</span>
-</body>
-</html>
+<% include ../../components/start.component.html %>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li>
+            <a href="#gnb_area">메뉴 바로가기</a>
+        </li>
+        <li>
+            <a href="#contents">본문 바로가기</a>
+        </li>
+        <li>
+            <a href="#footer">푸터 바로가기</a>
+        </li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div id="recharge-limit" class="wrap">
+    <!-- #header -->
+    <div id="header" class="header-wrap">
+        <div class="header">
+            <div class="header-ti">
+                <h1>데이터 한도 요금 충전</h1>
+                <button class="depth-view" role="button" aria-pressed="false">
+                    <span class="blind">메뉴구조보기</span>
+                </button>
+            </div>
+            <button class="prev-step">
+                <span class="blind">이전으로</span>
+            </button>
+            <button class="search-content">
+                <span class="blind">검색하기</span>
+            </button>
+        </div>
+    </div>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <!-- .cont-box -->
+            <div class="cont-box">
+                <button class="bt-dropdown big" title="회선 선택" aria-haspopup="true"><%= svcInfo.svcNum %>
+                    <span class="ico"></span>
+                </button>
+            </div>
+            <hr class="cont-sp type1" aria-hidden="true" />
+            <div class="cont-box">
+                <div class="contents-info-list">
+                    <p class="ti-desc">
+                        <em class="tx-bold">요금 한도보다 데이터가 더 필요하다면</em> 충전하여 사용해보세요!
+                    </p>
+                </div>
+                <div class="box-state-info">
+                    <ul class="state-info-group">
+                        <li class="state-info-list">
+                            <dl>
+                                <dt>나의 요금제</dt>
+                                <dd><%= limitData.prodNm %></dd>
+                            </dl>
+                        </li>
+                        <li class="state-info-list">
+                            <dl>
+                                <dt>충전 서비스 차단 여부</dt>
+                                <dd><%= limitData.blockYn === "Y" ? "충전 허용" : "충전 불가" %></dd>
+                            </dl>
+                        </li>
+                    </ul>
+                </div>
+                <div class="box-block">
+                    <dl>
+                        <dt>데이터 요금 충전</dt>
+                        <dd class="box-block-list1">
+                            <ul>
+                                <li>
+                                    <span class="title">충전 가능 금액</span>
+                                    <span class="price">
+                                        <%= limitData.currentTopUpLimit %>
+                                    </span>
+                                </li>
+                            </ul>
+                        </dd>
+                    </dl>
+                </div>
+                <div class="box-block">
+                    <dl>
+                        <dt>데이터 차단 설정</dt>
+                        <dd class="box-block-list1 btm-border">
+                            <ul>
+                                <li>
+                                    <span class="title">이번 달</span>
+                                    <span class="toggles">
+                                        <span class="widget">
+                                            <span class="widget-box switch">
+                                                <% var dataLimitedTmth = limitData.dataLimitedTmthYn === 'Y'; %>
+                                                <span class="btn-switch type1 <%= dataLimitedTmth ? '': 'on' %>">
+                                                    <span>해제</span>
+                                                    <span class="switch-style" role="checkbox" aria-checked="false">
+                                                        <input type="checkbox" <% if (!dataLimitedTmth) { %> checked<% } %>>
+                                                        <span class="blind">ON/OFF스위치</span>
+                                                    </span>
+                                                    <span>차단</span>
+                                                </span>
+                                            </span>
+                                        </span>
+                                    </span>
+                                </li>
+                                <li>
+                                    <span class="title">다음 달부터</span>
+                                    <span class="toggles">
+                                        <span class="widget">
+                                            <span class="widget-box switch">
+                                                <% var dataLimited = limitData.dataLimitedYn === 'Y'; %>
+                                                <span class="btn-switch type1 <%= dataLimited ? '': 'on' %>">
+                                                    <span>해제</span>
+                                                    <span class="switch-style" role="checkbox" aria-checked="false">
+                                                        <input type="checkbox" <% if (!dataLimited) { %> checked<% } %>>
+                                                        <span class="blind">ON/OFF스위치</span>
+                                                    </span>
+                                                    <span>차단</span>
+                                                </span>
+                                            </span>
+                                        </span>
+                                    </span>
+                                </li>
+                            </ul>
+                        </dd>
+                    </dl>
+                </div>
+                <div class="box-block">
+                    <div class="box-block-list">
+                        <ul>
+                            <li>충전 금액은 0.5KB 당 0.025원을 적용하여 실제 사용한 부분에 대해서만 후불 청구됩니다.</li>
+                            <li>충전은 매월 5,000원 단위로 최대 20,000원까지 가능합니다.</li>
+                            <li>충전 서비스 차단 시 요금 충전이 불가능 합니다.</li>
+                        </ul>
+                    </div>
+                </div>
+                <ul class="bt-slice">
+                    <li class="bt-blue1">
+                        <!-- Dimmed Case는 button에 disabled속성 추가 -->
+                        <button>팅/쿠키즈/안심음성 충전하기</button>
+                    </li>
+                    <li class="bt-white1">
+                        <button>팅/쿠키즈/안심음성 충전 내역</button>
+                    </li>
+                </ul>
+            </div>
+            <!--// .cont-box -->
+            <hr class="cont-sp type1" aria-hidden="true" />
+            <div class="cont-box nogaps-hoz">
+                <div class="box-confirm">
+                    <!-- .widget -->
+                    <div class="widget">
+                        <div class="widget-box accordion">
+                            <h3 class="tit-a">꼭 확인해주세요!</h3>
+                            <!-- 2018-06-19 : h태그 수정/삭제 -->
+                            <div class="acco-cover toggle on">
+                                <div class="acco-style btn-hold">
+                                    <ul class="acco-list">
+                                        <li class="acco-box on">
+                                            <!-- .on: 열기 -->
+                                            <div class="acco-tit">
+                                                <span class="bullet">1.</span> 충전 금액
+                                                <button role="button" aria-pressed="true"></button>
+                                            </div>
+                                            <div class="acco-cont">
+                                                <ul class="list-dot">
+                                                    <li class="list">
+                                                        <em>0.5KB</em> 당
+                                                        <em>0.025원을 적용</em>하여 실제 사용한 부분에 대해서만 후불 청구됩니다.</li>
+                                                    <li class="list">충전 후 데이터를
+                                                        <em>1패킷 (0.5KB) 이상 사용</em>하실 경우 충전 금액이 적용됩니다.</li>
+                                                    <li class="list">충전은 매월 5천원 단위로 최대 2만원까지 가능합니다.</li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li class="acco-box">
+                                            <div class="acco-tit">
+                                                <span class="bullet">2.</span> 충전 데이터
+                                                <button role="button" aria-pressed="false"></button>
+                                            </div>
+                                            <div class="acco-cont">
+                                                <ul class="list-dot">
+                                                    <li class="list">충전한 데이터는
+                                                        <em>충전 당월</em>에 한하여 사용이 가능합니다.</li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li class="acco-box">
+                                            <div class="acco-tit">
+                                                <span class="bullet">3.</span> 매월 자동 충전
+                                                <button role="button" aria-pressed="false"></button>
+                                            </div>
+                                            <div class="acco-cont">
+                                                <ul class="list-dot">
+                                                    <li class="list">
+                                                        <em>'매월 자동충전'</em>은
+                                                        <em>신청 다음 달</em>부터 신청한 충전금액에 대해
+                                                        <em>매월 자동으로 충전</em>되어 사용 가능하며
+                                                        <em>'당월 충전'은 신청 당월만 사용</em> 가능합니다.</li>
+                                                    <li class="list">
+                                                        <em>‘매월 자동충전’</em>은 최종 신청한 금액을 기준으로
+                                                        <em>매월 자동충전</em> 됩니다.</li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li class="acco-box">
+                                            <div class="acco-tit">
+                                                <span class="bullet">4.</span> 차단 해제
+                                                <button role="button" aria-pressed="false"></button>
+                                            </div>
+                                            <div class="acco-cont">
+                                                <ul class="list-dot">
+                                                    <li class="list">차단 해제는 무선인터넷 차단을 해제하여
+                                                        <em>데이터 이용이 계속 가능하도록 하는 기능</em>입니다.</li>
+                                                    <li class="list">데이터 차단 해제 신청은
+                                                        <em>월 3회</em>까지 신청 가능하며,
+                                                        <em>신청 취소는 당월</em> 중 가능합니다.</li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li class="acco-box">
+                                            <div class="acco-tit">
+                                                <span class="bullet">5.</span> 요금 상품
+                                                <button role="button" aria-pressed="false"></button>
+                                            </div>
+                                            <div class="acco-cont">
+                                                <ul class="list-dot">
+                                                    <li class="list">팅요금상품은
+                                                        <em>팅요금상품 충전 한도내에서만 충전 가능</em>하며, 별도
+                                                        <em>데이터한도 충전이 불가</em>합니다.</li>
+                                                    <li class="list">기본제공 통화는
+                                                        <em>국내 데이터 통화</em>에 한하며, 콘텐츠이용료, 영상통화, 컬러메일 건당 요금 등은
+                                                        <em>별도 과금</em> 됩니다.</li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--// .widget -->
+                </div>
+            </div>
+            <!--// .cont-box -->
+        </div>
+    </div>
+    <!--// #contents -->
+</div>
+<% include ../../components/javascript.component.html %>
+<script>
+    $(document).ready(function () {
+        new Tw.RechargeLimit($('#recharge-limit'));
+    });
+</script>
+ <% include ../../components/end.component.html %>

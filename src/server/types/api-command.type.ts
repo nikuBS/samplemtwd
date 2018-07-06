@@ -85,7 +85,7 @@ export const API_CMD = {
   BFF_06_0031: { path: '/core-recharge/v1/ting-cookies/recharge-cancel', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_06_0032: { path: '/core-recharge/v1/ting-cookies/recharge/histories', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_06_0033: { path: '/core-recharge/v1/ting-cookies/recharge-histories-change', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
-  BFF_06_0034: { path: '/services/recharge/info', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_06_0034: { path: '/core-recharge/v1/data-limitation-services', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_06_0035: { path: '/services/recharge/auto-save', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_06_0036: { path: '/services/recharge/now-save', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_06_0037: { path: '/services/recharge/auto-save-cancel', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
