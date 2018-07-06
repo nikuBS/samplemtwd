@@ -1,0 +1,81 @@
+<!--
+* FileName: myt.bill.guidechange.change.html
+* Author: 이정민 (skt.p130713@partner.sk.com)
+* Date: 2018.07.05
+-->
+<% include ../../components/start.component.html %>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb_area">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div id="wrap" class="wrap" data-component="<%=curBillType.component%>">
+    <!-- #header -->
+    <div id="header" class="header-wrap">
+        <div class="header step-page">
+            <div class="header-ti">
+                <h1>요금안내서 정보변경</h1>
+            </div>
+            <button class="close-step"><span class="blind">닫기</span></button>
+        </div>
+    </div>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+
+            <div class="cont-box nogaps-top">
+                <div class="change-plan">
+                    <h3 class="tit-type">변경할 요금안내서</h3>
+                    <button class="bt-dropdown big" title="변경할 요금안내서 선택" aria-haspopup="true"><%= curBillType.label %><span class="ico"></span></button>
+                </div>
+            </div>
+
+            <hr class="cont-sp type1" aria-hidden="true"/>
+            <div class="cont-box">
+                <%- include('../../components/bill/'+ curBillType.component +'.component.html') %>
+            </div>
+
+            <hr class="cont-sp type1" aria-hidden="true"/>
+            <div class="cont-box">
+                <!-- .widget -->
+                <div class="widget">
+                    <div class="widget-box accordion">
+                        <h5 class="tit-a">유의사항</h5>
+                        <div class="acco-cover"><!-- toggle : 한개만 열기 -->
+                            <div class="acco-style btn-hold">
+                                <ul class="acco-list">
+                                    <li class="acco-box">
+                                        <div class="acco-cont">
+                                            <ul class="list-dot">
+                                                <li class="list">청구금액이 확정되면 T world에서 확인하실 수 있도록 문자로 안내해드리며, 별도로 요금안내서는 발송되지 않습니다.</li>
+                                                <li class="list">매월 5일까지 신청 시 당월부터 변경된 요금안내서가 발송되며 6일이후 신청시에는 다음 달 부터 변경된 요금안내서를 발송합니다.</li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--// .widget -->
+            </div>
+
+        </div>
+    </div>
+    <!--// #contents -->
+</div>
+<% include ../../components/javascript.component.html %>
+<script>
+    $(document).ready(function () {
+      var componentName = $(wrap).data('component');
+      var className = componentName.replace(/-([a-z])/g, function (g) { return g[1].toUpperCase(); });
+      new Tw.MyTBillBillGuideChangeClasses[className]($('#wrap'));
+    });
+</script>
+<% include ../../components/end.component.html %>
