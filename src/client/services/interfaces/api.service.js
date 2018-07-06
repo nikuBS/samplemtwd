@@ -3,13 +3,14 @@ Tw.ApiService = function () {
 
 Tw.ApiService.prototype = {
   request: function (command, params, headers) {
-    var htOptions = this._makeOptions(command, params, headers);
+    var pathVariables = this._getPathVariables(arguments);
+    var htOptions = this._makeOptions(command, params, headers, pathVariables);
     Tw.Logger.info('[API REQ]', htOptions);
 
     return $.ajax(htOptions);
   },
 
-  _makeOptions: function (command, params, headers) {
+  _makeOptions: function (command, params, headers, pathVariables) {
     var prefix = this._setPrefix(command);
     return {
       type: command.method,
@@ -17,7 +18,7 @@ Tw.ApiService.prototype = {
       dataType: 'json',
       timeout: 10000,
       headers: Object.assign({ 'Content-Type': 'application/json' }, headers),
-      data: params
+      data: JSON.stringify({ parameter: params, pathVariables: pathVariables })
     };
   },
 
@@ -29,5 +30,14 @@ Tw.ApiService.prototype = {
     } else {
       return '';
     }
+  },
+
+  _getPathVariables: function (args) {
+    var arrArgs = Array.prototype.slice.call(args);
+    var argsLen = arrArgs.length;
+    if ( argsLen > 3 ) {
+      return arrArgs.slice(3, argsLen);
+    }
+    return [];
   }
 };
