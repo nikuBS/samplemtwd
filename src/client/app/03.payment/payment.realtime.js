@@ -72,7 +72,7 @@ Tw.PaymentRealtime.prototype = {
     return Tw.FormatHelper.isEmpty(this.$bankList);
   },
   _openBank: function () {
-    this._popupService.openBank(this.$bankList);
+    this._popupService.openList(Tw.POPUP_TITLE.SELECT_BANK, this.$bankList);
   },
   _getSelectedBank: function (event) {
     var $target = $(event.currentTarget);
