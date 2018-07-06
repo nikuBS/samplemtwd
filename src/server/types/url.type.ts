@@ -1,6 +1,6 @@
 export const URL = {
   // home
-  '/home': { login: false },
+  '/home': { login: true },
   // myt
   '/myt': { login: true },
   '/myt/usage/change': { login: true },
