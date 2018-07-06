@@ -22,11 +22,15 @@ Tw.PaymentRealtime = function (rootEl) {
 
 Tw.PaymentRealtime.prototype = {
   _bindEvent: function () {
+    this.$container.on('keyup', '.only-number', $.proxy(this._onlyNumber, this));
     this.$container.on('change', '.checkbox-main', $.proxy(this._sumCheckedAmount, this));
     this.$container.on('click', '.select-payment-option', $.proxy(this._isCheckedAmount, this));
     this.$container.on('click', '.select-bank', $.proxy(this._selectBank, this));
     this.$container.on('click', '.pay', $.proxy(this._pay, this));
     this.$document.on('click', '.hbs-bank-list', $.proxy(this._getSelectedBank, this));
+  },
+  _onlyNumber: function (event) {
+    Tw.InputHelper.inputNumberOnly(event.currentTarget);
   },
   _sumCheckedAmount: function (event) {
     var $target = $(event.target);

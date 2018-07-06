@@ -20,8 +20,12 @@ Tw.PaymentPoint = function (rootEl) {
 
 Tw.PaymentPoint.prototype = {
   _bindEvent: function () {
+    this.$container.on('keyup', '.only-number', $.proxy(this._onlyNumber, this));
     this.$container.on('click', '.select-payment-point', $.proxy(this._changeStep, this));
     this.$container.on('click', '.pay', $.proxy(this._pay, this));
+  },
+  _onlyNumber: function (event) {
+    Tw.InputHelper.inputNumberOnly(event.currentTarget);
   },
   _changeStep: function (event) {
     event.preventDefault();

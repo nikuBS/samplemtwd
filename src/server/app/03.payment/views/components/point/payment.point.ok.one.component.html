@@ -17,7 +17,7 @@
                     <h5 class="account-tit">카드번호</h5>
                     <div class="inputbox">
                         <span class="input">
-                            <input type="text" placeholder="카드번호 (숫자만 입력)" title="카드번호">
+                            <input type="text" class="only-number" placeholder="카드번호 (숫자만 입력)" title="카드번호">
                             <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
                         </span>
                     </div>
@@ -26,7 +26,7 @@
                     <h5 class="account-tit">비밀번호</h5>
                     <div class="inputbox">
                         <span class="input">
-                            <input type="text" placeholder="비밀번호를 입력해주세요" title="비밀번호" aria-describedby="password-desc1">
+                            <input type="text" class="only-number" minlength="2" maxlength="2" placeholder="비밀번호를 입력해주세요" title="비밀번호" aria-describedby="password-desc1">
                             <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
                         </span>
                     </div>
@@ -57,7 +57,7 @@
             <h5 class="account-tit">납부하실 포인트</h5>
             <div class="inputbox">
                 <span class="input">
-                    <input type="text" placeholder="최소 1,000포인트 이상" title="포인트 입력" aria-describedby="point-desc1">
+                    <input type="text" class="only-number" minlength="4" placeholder="최소 1,000포인트 이상" title="포인트 입력" aria-describedby="point-desc1">
                     <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
                 </span>
             </div>
@@ -71,7 +71,7 @@
                     <button class="common-back">이전</button>
                 </li>
                 <li class="bt-red1">
-                    <button class="pay">납부하기</button>
+                    <button class="pay"><a href="#complete">납부하기</a></button>
                 </li>
             </ul>
         </div>

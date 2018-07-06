@@ -20,8 +20,12 @@ Tw.PaymentAuto = function (rootEl) {
 
 Tw.PaymentAuto.prototype = {
   _bindEvent: function () {
+    this.$container.on('keyup', '.only-number', $.proxy(this._onlyNumber, this));
     this.$container.on('click', '.change', $.proxy(this._change, this));
     this.$container.on('click', '.cancel', $.proxy(this._cancel, this));
+  },
+  _onlyNumber: function (event) {
+    Tw.InputHelper.inputNumberOnly(event.currentTarget);
   },
   _change: function (event) {
     event.preventDefault();
