@@ -4,14 +4,14 @@
  * Date: 2018.07.06
  */
 
-Tw.RechargeLimitProcess = function(rootEl) {
+Tw.RechargeLimitProcess = function (rootEl) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
-  this._history = new Tw.HistoryService("#type");
+  this._history = new Tw.HistoryService(rootEl);
 };
 
 Tw.RechargeLimitProcess.prototype = {
-  _go: function(hash) {
+  _go: function (hash) {
     window.location.hash = hash;
   }
 };
