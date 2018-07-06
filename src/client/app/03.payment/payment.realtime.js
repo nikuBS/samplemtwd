@@ -22,16 +22,16 @@ Tw.PaymentRealtime = function (rootEl) {
 
 Tw.PaymentRealtime.prototype = {
   _bindEvent: function () {
-    this.$container.on('keyup', '.only-number', $.proxy(this._onlyNumber, this));
+      this.$container.on('keyup', '.only-number', $.proxy(this._onlyNumber, this));
     this.$container.on('change', '.checkbox-main', $.proxy(this._sumCheckedAmount, this));
     this.$container.on('click', '.select-payment-option', $.proxy(this._isCheckedAmount, this));
     this.$container.on('click', '.select-bank', $.proxy(this._selectBank, this));
     this.$container.on('click', '.pay', $.proxy(this._pay, this));
     this.$document.on('click', '.hbs-bank-list', $.proxy(this._getSelectedBank, this));
   },
-  _onlyNumber: function (event) {
-    Tw.InputHelper.inputNumberOnly(event.currentTarget);
-  },
+    _onlyNumber: function (event) {
+        Tw.InputHelper.inputNumberOnly(event.currentTarget);
+    },
   _sumCheckedAmount: function (event) {
     var $target = $(event.target);
     var $amount = $target.data('value');
@@ -72,7 +72,7 @@ Tw.PaymentRealtime.prototype = {
     return Tw.FormatHelper.isEmpty(this.$bankList);
   },
   _openBank: function () {
-    this._popupService.openList(Tw.POPUP_TITLE.SELECT_BANK, this.$bankList);
+      this._popupService.openList(Tw.POPUP_TITLE.SELECT_BANK, this.$bankList);
   },
   _getSelectedBank: function (event) {
     var $target = $(event.currentTarget);
@@ -106,7 +106,7 @@ Tw.PaymentRealtime.prototype = {
     this._openBank();
   },
   _paySuccess: function () {
-    this._history.setHistory();
+      this._history.setHistory();
     this._go('#complete');
   },
   _payFail: function () {

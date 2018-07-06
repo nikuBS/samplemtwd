@@ -9,34 +9,34 @@ Tw.ValidationHelper = (function () {
     return regPhone.test(_phone);
   }
 
-  function isSeriesNum(string, maxSeries) {
-    var checkSeriesNum = '0123456789';
-    for ( var i = 0; i <= checkSeriesNum.length - maxSeries; i++ ) {
-      if ( string.indexOf(checkSeriesNum.substr(i, maxSeries)) !== -1 ) {
-        return true;
-      }
+    function isSeriesNum(string, maxSeries) {
+        var checkSeriesNum = '0123456789';
+        for (var i = 0; i <= checkSeriesNum.length - maxSeries; i++) {
+            if (string.indexOf(checkSeriesNum.substr(i, maxSeries)) !== -1) {
+                return true;
+            }
+        }
+        return false;
     }
-    return false;
-  }
 
-  function containSpecial(string, length) {
-    var reqSpecial = /["'~`!@#$%^&*()\-_+={}\[\]:;<>./?\\|]/g;
-    var findSpecial = string.match(reqSpecial) || [];
-    return findSpecial.length >= length;
-  }
+    function containSpecial(string, length) {
+        var reqSpecial = /["'~`!@#$%^&*()\-_+={}\[\]:;<>./?\\|]/g;
+        var findSpecial = string.match(reqSpecial) || [];
+        return findSpecial.length >= length;
+    }
 
-  function containNumber(string, length) {
-    var reqNumber = /[0-9]/g;
-    var findNumber = string.match(reqNumber) || [];
-    return findNumber.length >= length;
+    function containNumber(string, length) {
+        var reqNumber = /[0-9]/g;
+        var findNumber = string.match(reqNumber) || [];
+        return findNumber.length >= length;
 
-  }
+    }
 
   return {
-    isCellPhone: isCellPhone,
-    isSeriesNum: isSeriesNum,
-    containSpecial: containSpecial,
-    containNumber: containNumber
+      isCellPhone: isCellPhone,
+      isSeriesNum: isSeriesNum,
+      containSpecial: containSpecial,
+      containNumber: containNumber
   };
 })();
 

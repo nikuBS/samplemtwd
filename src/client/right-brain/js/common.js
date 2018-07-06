@@ -360,10 +360,10 @@ skt_landing.action = {
         $('.popup').find('.popup-blind').on('click',function(e){
           e.stopPropagation();
         });
-        $('.popup-closeBtn').off('click').on('click', function () {
-          frontend_fn.popup_close(popup_info.front_close);
+          $('.popup-closeBtn').off('click').on('click', function () {
+              frontend_fn.popup_close(popup_info.front_close);
           _this.close(this);
-        });
+          });
         _this.cancel();
         _this.scroll_chk();
          if(popup_info.hbs == 'popup' || popup_info.hbs == 'select'){
@@ -371,9 +371,9 @@ skt_landing.action = {
         }else{
           skt_landing.widgets.widget_init('.popup-page');
         }
-        frontend_fn.popup_open(popup_info.front_open);
+          frontend_fn.popup_open(popup_info.front_open);
       });
-      //skt_landing.action.popup.open({'title':'타이틀','contents':'팝업입니다.','type':[{style_class:'btn-submit',href:'#submit',txt:'확인'},{style_class:'btn-modify',href:'#modify',txt:'수정'},{style_class:'btn-cancel',href:'#cancel',txt:'취소'}]});
+        //skt_landing.action.popup.open({'title':'타이틀','contents':'팝업입니다.','type':[{style_class:'btn-submit',href:'#submit',txt:'확인'},{style_class:'btn-modify',href:'#modify',txt:'수정'},{style_class:'btn-cancel',href:'#cancel',txt:'취소'}]});
     },
     /* 2018-06-19 삭제 */
     /*searchChange: function (popup_info) {

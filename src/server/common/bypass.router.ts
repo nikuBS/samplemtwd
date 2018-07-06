@@ -1,6 +1,5 @@
-import express from 'express';
-import { Router, Request, Response, NextFunction } from 'express';
-import { API_CMD, API_METHOD } from '../types/api-command.type';
+import express, {NextFunction, Request, Response, Router} from 'express';
+import {API_CMD, API_METHOD} from '../types/api-command.type';
 import ApiService from '../services/api.service';
 
 
@@ -53,7 +52,7 @@ class BypassRouter {
     const params = cmd.method === API_METHOD.GET ? req.query : req.body;
     const headers = req.headers;
 
-    this.apiService.request(cmd, params.parameter, headers, ...(params.pathVariables))
+      this.apiService.request(cmd, params.parameter, headers, ...(params.pathVariables))
       .subscribe(data => {
         return res.json(data);
       });

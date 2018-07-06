@@ -4,10 +4,8 @@
  * Date: 2018.07.06
  */
 
-Tw.AuthLineEdit = function(rootEl) {
-  this.$container = rootEl;
+Tw.AuthLineEdit = function (rootEl) {
+    this.$container = rootEl;
 };
 
-Tw.AuthLineEdit.prototype = {
-
-};
+Tw.AuthLineEdit.prototype = {};

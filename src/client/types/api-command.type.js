@@ -16,7 +16,7 @@ Tw.API_CMD = {
 
   // AUTH
   BFF_03_0003: { path: '/core-auth/v1/members', method: Tw.API_METHOD.DELETE },
-  BFF_03_0006: { path: '/user/nick-names/args-0', method: Tw.API_METHOD.PUT },
+    BFF_03_0006: {path: '/user/nick-names/args-0', method: Tw.API_METHOD.PUT},
   BFF_03_0010: { path: '/user/locks', method: Tw.API_METHOD.DELETE },
   BFF_03_0011: { path: '/core-auth/v1/members-foreinger', method: Tw.API_METHOD.GET },
 
