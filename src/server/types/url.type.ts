@@ -66,5 +66,5 @@ export const URL = {
   '/auth/tid/guide': { login: false },
   '/auth/withdrawal/guide': { login: true },
   '/auth/withdrawal/survey': { login: true },
-  '/autu/withdrawal/complete': { login: true }
+  '/auth/withdrawal/complete': { login: false }
 };
