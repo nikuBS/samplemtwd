@@ -49,7 +49,10 @@ Tw.MSG_COMMON = {};
 
 Tw.MSG_HOME = {};
 
-Tw.MSG_MYT = {};
+Tw.MSG_MYT = {
+    BILL_GUIDE_00: ' 요금안내서 재발행',
+    BILL_GUIDE_01: ' 요금안내서 재발행을 신청하시겠습니까?',
+};
 
 Tw.MSG_RECHARGE = {
   REFILL_INFO_01: ' 리필을 선택하셨습니다.',

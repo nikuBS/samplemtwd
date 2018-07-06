@@ -29,7 +29,7 @@
     <!-- #contents -->
     <div id="contents" class="container-wrap">
         <h2 class="blind">내용</h2>
-        <div id="myt-bill-reissue" class="container">
+        <div id="myt-bill-gc-reissue" class="container">
             <div class="cont-box nogaps-top">
                 <div class="change-plan">
                     <h3 class="tit-type">사용중인 요금안내서</h3>
@@ -45,13 +45,20 @@
                     <dl>
                         <!-- 무선서비스가 아닌 유선서비스인 경우 if문 처리-->
                         <!--<dt>재발행 사유를 선택해주세요</dt> -->
-
+                        <!--<div class="widget">
+                            <div class="widget-box tube" data-id="reason">
+                                <ul class="tube-list two" role="radiogroup">
+                                    <li role="radio" aria-checked="true"><input type="radio" name="senddata" title="Bill Letter">Bill Letter</li>
+                                    <li role="radio" aria-checked="false"><input type="radio" name="senddata" title="이메일">이메일</li>
+                                </ul>
+                            </div>
+                        </div>-->
                         <!-- 요금서가 두개인 경우 사용 if문 처리 -->
                         <!--<dt>어떤 요금안내서를 재발행 하시겠어요?</dt>
                         <dd>
                             &lt;!&ndash; .widget &ndash;&gt;
                             <div class="widget">
-                                <div class="widget-box tube">
+                                <div class="widget-box tube" data-id="type">
                                     <ul class="tube-list two" role="radiogroup">
                                         <li role="radio" aria-checked="true"><input type="radio" name="senddata" title="Bill Letter">Bill Letter</li>
                                         <li role="radio" aria-checked="false"><input type="radio" name="senddata" title="이메일">이메일</li>
@@ -64,7 +71,7 @@
                         <dd>
                             <!-- .widget -->
                             <div class="widget">
-                                <div class="widget-box tube">
+                                <div class="widget-box tube" data-id="time">
                                     <ul class="tube-list two" role="radiogroup">
                                         <li role="radio" aria-checked="true"><input type="radio" name="senddata"
                                                                                     title="청구시점">청구시점
@@ -81,7 +88,7 @@
                         <dd>
                             <!-- .widget -->
                             <div class="widget">
-                                <div class="widget-box tube">
+                                <div class="widget-box tube" data-id="month">
                                     <ul class="tube-list two" role="radiogroup">
                                         <li role="radio" aria-checked="false"><input type="radio" name=""
                                                                                      title="2018년 6월">2018년 6월<span
