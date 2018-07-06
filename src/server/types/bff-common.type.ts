@@ -81,3 +81,8 @@ export const TING_TITLE = {
   'CH': '충전금액',
   'PR': '선물충전금액'
 };
+
+export enum REQUEST_VALUE {
+  Y = '신청',
+  N = '미신청'
+}
