@@ -1,5 +1,6 @@
 Tw.BankList = function (rootEl) {
   this.$bankList = [];
+  this.$currentTarget = null;
   this.$container = rootEl;
   this.$document = $(document);
 
@@ -8,7 +9,8 @@ Tw.BankList = function (rootEl) {
 };
 
 Tw.BankList.prototype = {
-  init: function () {
+  init: function (event) {
+    this.$currentTarget = $(event.currentTarget);
     this._bindEvent();
 
     if (this._isNotExistBankList()) {
@@ -22,7 +24,7 @@ Tw.BankList.prototype = {
     this.$document.on('click', '.hbs-bank-name', $.proxy(this._getSelectedBank, this));
   },
   _getSelectedBank: function (event) {
-    var $selectedBank = this.$container.find('.select-bank');
+    var $selectedBank = this.$currentTarget;
     var $target = $(event.currentTarget);
     $selectedBank.attr('id', $target.attr('id'));
     $selectedBank.text($target.text());

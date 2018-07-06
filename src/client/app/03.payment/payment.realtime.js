@@ -53,8 +53,8 @@ Tw.PaymentRealtime.prototype = {
       this._go('#step1');
     }
   },
-  _selectBank: function () {
-    this._bankList.init();
+  _selectBank: function (event) {
+    this._bankList.init(event);
   },
   _pay: function (event) {
     event.preventDefault();
