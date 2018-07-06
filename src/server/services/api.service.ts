@@ -76,7 +76,7 @@ class ApiService {
         path = path.replace(`args-${index}`, argument);
       });
     }
-    // path = method === API_METHOD.GET ? path + ParamsHelper.setQueryParams(params) : path;
+    path = method === API_METHOD.GET ? path + ParamsHelper.setQueryParams(params) : path;
     return path;
   }
 
