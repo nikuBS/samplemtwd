@@ -1,8 +1,8 @@
-<!--
+<%#
 * FileName: payment.auto.input.component.html
 * Author: 공자윤 (jayoon.kong@sk.com)
 * Date: 2018.07.05
--->
+%>
 <div class="container">
     <div class="cont-box">
         <!-- .widget -->
@@ -45,7 +45,7 @@
                     </div>
                     <div class="inputbox input-context">
                         <span class="input">
-                            <input type="text" placeholder="계좌번호 (숫자만 입력)" title="계좌번호">
+                            <input type="text" class="only-number" placeholder="계좌번호 (숫자만 입력)" title="계좌번호">
                             <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
                         </span>
                     </div>
@@ -56,7 +56,7 @@
                 <div class="account-detail">
                     <div class="inputbox">
                         <span class="input">
-                            <input type="text" placeholder="숫자만 입력" title="카드번호">
+                            <input type="text" class="only-number" minlength="10" maxlength="11" placeholder="숫자만 입력" title="카드번호">
                             <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
                         </span>
                     </div>

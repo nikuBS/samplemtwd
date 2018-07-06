@@ -33,6 +33,7 @@
 #gnb .gnb-list li .bt-gnb {
   display: block;
   padding: 0.625rem 0 0.6875rem;
+  width: 100%;
   text-align: center;
 }
 

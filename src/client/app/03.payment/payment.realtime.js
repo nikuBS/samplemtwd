@@ -22,11 +22,15 @@ Tw.PaymentRealtime = function (rootEl) {
 
 Tw.PaymentRealtime.prototype = {
   _bindEvent: function () {
+    this.$container.on('keyup', '.only-number', $.proxy(this._onlyNumber, this));
     this.$container.on('change', '.checkbox-main', $.proxy(this._sumCheckedAmount, this));
     this.$container.on('click', '.select-payment-option', $.proxy(this._isCheckedAmount, this));
     this.$container.on('click', '.select-bank', $.proxy(this._selectBank, this));
     this.$container.on('click', '.pay', $.proxy(this._pay, this));
     this.$document.on('click', '.hbs-bank-list', $.proxy(this._getSelectedBank, this));
+  },
+  _onlyNumber: function (event) {
+    Tw.InputHelper.inputNumberOnly(event.currentTarget);
   },
   _sumCheckedAmount: function (event) {
     var $target = $(event.target);
@@ -68,7 +72,7 @@ Tw.PaymentRealtime.prototype = {
     return Tw.FormatHelper.isEmpty(this.$bankList);
   },
   _openBank: function () {
-    this._popupService.openBank(this.$bankList);
+    this._popupService.openList(Tw.POPUP_TITLE.SELECT_BANK, this.$bankList);
   },
   _getSelectedBank: function (event) {
     var $target = $(event.currentTarget);
@@ -102,14 +106,11 @@ Tw.PaymentRealtime.prototype = {
     this._openBank();
   },
   _paySuccess: function () {
-    this._setHistory();
+    this._history.setHistory();
     this._go('#complete');
   },
   _payFail: function () {
     Tw.Logger.info('pay request fail');
-  },
-  _setHistory: function () {
-    this._history.setHistory();
   },
   _go: function (hash) {
     window.location.hash = hash;
