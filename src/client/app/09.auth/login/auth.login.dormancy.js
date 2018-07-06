@@ -26,5 +26,5 @@ Tw.AuthLoginDormancy.prototype = {
           Tw.Logger.error('BFF_03_0010 Fail', err);
         });
     });
-  },
+  }
 };
