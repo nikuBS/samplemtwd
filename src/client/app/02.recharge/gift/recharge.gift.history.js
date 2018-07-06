@@ -58,7 +58,7 @@ Tw.RechargeGiftHistory.prototype = {
       };
     }.bind(this))();
 
-    Tw.Logger.log(_search);
+    Tw.Logger.log('[search]', _search);
 
     // TODO : 데이터 있는 경우 템플릿 렌더링, 없는 경우 Empty 템플릿
     // TODO : 데이터 페이지 수로 분할(by current)

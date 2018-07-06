@@ -4,11 +4,12 @@ import LoginService from '../../services/login.service';
 import { API_CMD, API_CODE } from '../../types/api-command.type';
 import LoggerService from '../../services/logger.service';
 import { SvcInfoModel } from '../../models/svc-info.model';
+import { URL } from '../../types/url.type';
 
 abstract class TwViewController {
-  private _apiService;
-  private _loginService;
-  private _logger;
+  private _apiService: ApiService;
+  private _loginService: LoginService;
+  private _logger: LoggerService;
 
   constructor() {
     this._apiService = new ApiService();
@@ -32,13 +33,21 @@ abstract class TwViewController {
 
   public initPage(req: any, res: any, next: any): void {
     const userId = req.query.userId;
+    const path = req.baseUrl + (req.path !== '/' ? req.path : '');
 
+    if ( URL[path].login ) {
+      this.login(req, res, next, userId);
+    } else {
+      this.render(req, res, next);
+    }
+  }
+
+  private login(req, res, next, userId) {
     // Mock Test
     let loginCmd = API_CMD.BFF_03_0001;
     if ( userId === 'mock' ) {
       loginCmd = API_CMD.BFF_03_0001_mock;
     }
-
     if ( this.checkLogin(req.session, userId) ) {
       this.render(req, res, next, this._loginService.getSvcInfo());
     } else {

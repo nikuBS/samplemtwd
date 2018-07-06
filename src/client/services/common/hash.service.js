@@ -72,6 +72,14 @@ Tw.HashService.prototype = {
       return results;
     }
     return null;
+  },
+
+  detectIsReload: function () {
+    if (window.performance) {
+      if (performance.navigation.type === 1) {
+        location.hash = '';
+      }
+    }
   }
 
 };

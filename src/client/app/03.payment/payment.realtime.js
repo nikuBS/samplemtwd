@@ -17,18 +17,10 @@ Tw.PaymentRealtime = function (rootEl) {
   this._history = new Tw.HistoryService(this.$container);
   this._history.init('hash');
 
-  this._detectIsReload();
   this._bindEvent();
 };
 
 Tw.PaymentRealtime.prototype = {
-  _detectIsReload: function () {
-    if (window.performance) {
-      if (performance.navigation.type === 1) {
-        location.hash = '';
-      }
-    }
-  },
   _bindEvent: function () {
     this.$container.on('change', '.checkbox-main', $.proxy(this._sumCheckedAmount, this));
     this.$container.on('click', '.select-payment-option', $.proxy(this._isCheckedAmount, this));
@@ -99,7 +91,7 @@ Tw.PaymentRealtime.prototype = {
     Tw.Logger.info('pay request fail');
   },
   _setBankList: function (res) {
-    var bankList = res.result.bnkcrdlist1;
+    var bankList = res.result.bnkcrdlist2;
     for (var i = 0; i < bankList.length; i++) {
       var bankObj = {
         key: bankList[i].commCdVal,
