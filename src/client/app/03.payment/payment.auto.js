@@ -38,21 +38,18 @@ Tw.PaymentAuto.prototype = {
       .fail($.proxy(this._cancelFail, this));
   },
   _changeSuccess: function () {
-    this._setHistory();
+    this._history.setHistory();
     this._go('#complete-change');
   },
   _changeFail: function () {
     Tw.Logger.info('change request fail');
   },
   _cancelSuccess: function () {
-    this._setHistory();
+    this._history.setHistory();
     this._go('#complete-cancel');
   },
   _cancelFail: function () {
     Tw.Logger.info('cancel request fail');
-  },
-  _setHistory: function () {
-    this._history.setHistory();
   },
   _go: function (hash) {
     window.location.hash = hash;

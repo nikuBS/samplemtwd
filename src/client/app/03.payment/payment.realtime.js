@@ -102,14 +102,11 @@ Tw.PaymentRealtime.prototype = {
     this._openBank();
   },
   _paySuccess: function () {
-    this._setHistory();
+    this._history.setHistory();
     this._go('#complete');
   },
   _payFail: function () {
     Tw.Logger.info('pay request fail');
-  },
-  _setHistory: function () {
-    this._history.setHistory();
   },
   _go: function (hash) {
     window.location.hash = hash;

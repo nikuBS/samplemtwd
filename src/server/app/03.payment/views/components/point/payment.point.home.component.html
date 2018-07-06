@@ -1,0 +1,80 @@
+<!--
+* FileName: payment.point.home.component.html
+* Author: 공자윤 (jayoon.kong@sk.com)
+* Date: 2018.07.06
+-->
+<div class="container">
+    <% include ../components/line.info.component.html %>
+    <hr class="cont-sp type1" aria-hidden="true"/>
+    <div class="cont-box">
+        <h3 class="title-h3">보유 포인트</h3>
+
+        <h4 class="title-h4 first-type">OK캐쉬백 <span class="score-text"><em>7,520</em> 점</span></h4>
+        <ul class="contents-notice type3">
+            <li class="noti-type2">OK캐쉬백 카드가 없으신 고객은 납부가 불가능합니다.</li>
+            <li class="noti-type2">1회 납부는 최소 1,000점 이상 입력 가능합니다.</li>
+            <li class="noti-type2">자동 납부는 500점 단위로 신청 가능합니다.</li>
+        </ul>
+        <div class="contents-btn">
+            <ul class="bt-slice">
+                <li class="bt-gray2">
+                    <button class="select-payment-point" data-value="#step1-ok-one"><a href="#step1-ok-one">1회 납부(예약)</a></button>
+                </li>
+                <li class="bt-white1">
+                    <button class="select-payment-point" data-value="#step1-ok-auto"><a href="step1-ok-auto">자동납부 신청</a></button>
+                </li>
+            </ul>
+        </div>
+
+        <h4 class="title-h4">T포인트 <span class="score-text"><em>1,623</em> 점</span></h4>
+        <ul class="contents-notice type3">
+            <li class="noti-type2">OK캐쉬백 카드가 없으신 고객은 납부가 불가능합니다.</li>
+            <li class="noti-type2">1회 납부는 최소 1,000점 이상 입력 가능합니다.</li>
+            <li class="noti-type2">자동 납부는 500점 단위로 신청 가능합니다.</li>
+        </ul>
+        <div class="contents-btn">
+            <ul class="bt-slice">
+                <li class="bt-gray2">
+                    <button class="select-payment-point" data-value="#step1-t-one"><a href="#step1-t-one">1회 납부(예약)</a></button>
+                </li>
+                <li class="bt-white1">
+                    <button class="select-payment-point" data-value="#step1-t-auto"><a href="#step1-t-auto">자동납부 신청</a></button>
+                </li>
+            </ul>
+        </div>
+
+        <h4 class="title-h4">레인보우 포인트 <span class="score-text"><em>980</em> 점</span></h4>
+        <ul class="contents-notice type3">
+            <li class="noti-type2">1회 납부(예약)은 1포인트 이상 부터 사용 가능합니다.</li>
+            <li class="noti-type2">1,000점 이상 보유 시 자동납부 신청이 가능합니다.</li>
+        </ul>
+        <div class="contents-btn">
+            <ul class="bt-slice">
+                <li class="bt-gray2">
+                    <button class="select-payment-point" data-value="#step1-rainbow-one"><a href="#step1-rainbow-one">1회 납부(예약)</a></button>
+                </li>
+                <li class="bt-white1">
+                    <button class="select-payment-point" data-value="#step1-rainbow-auto"><a href="#step1-rainbow-auto">자동납부 신청</a></button>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <hr class="cont-sp type1" aria-hidden="true"/>
+    <div class="cont-box">
+        <div class="contents-notice type3">
+            <span class="noti-type3">포인트로 자동납부 신청한 내역은 6개월간 내역 확인이 가능합니다.</span>
+        </div>
+        <div class="contents-btn">
+            <ul class="bt-slice">
+                <li class="bt-gray2">
+                    <button>자동납부 신청내역 보기</button>
+                </li>
+                <li class="bt-gray2">
+                    <button>1회 납부(예약) 내역 보기</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <hr class="cont-sp type1" aria-hidden="true"/>
+    <% include ../components/info/payment.point.home.info.component.html %>
+</div>
