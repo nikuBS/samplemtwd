@@ -4,6 +4,15 @@
 * Date: 2018.06.22
 -->
 <% include ../components/start.component.html %>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb_area">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
 <div id="payment-realtime" class="wrap">
     <!-- #header -->
     <div id="header" class="header-wrap">
@@ -19,7 +28,7 @@
     <!--// #header -->
     <!-- #contents -->
     <div id="main" class="container-wrap">
-        <% include ../components/realtime/payment.realtime.init.component.html %>
+        <% include ../components/realtime/payment.realtime.home.component.html %>
     </div>
     <div id="step1" class="container-wrap" style="display:none;">
         <% include ../components/realtime/payment.realtime.select.option.component.html %>

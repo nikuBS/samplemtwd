@@ -1,0 +1,17 @@
+/**
+ * FileName: payment.history.excess-pay.account.js
+ * Author: 이상형 (silion@sk.com)
+ * Date: 2018.07.05
+ */
+Tw.PaymentHistoryExcessPayAccount = function (rootEl) {
+  this.$container = rootEl;
+
+  this._apiService = Tw.Api;
+  this._hash = Tw.Hash;
+  this._popupService = Tw.Popup;
+  this._dateHelper = Tw.DateHelper;
+};
+
+Tw.PaymentHistoryExcessPayAccount.prototype = {
+
+};

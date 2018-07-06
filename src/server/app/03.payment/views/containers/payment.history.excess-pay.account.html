@@ -1,0 +1,81 @@
+<% include ../components/start.component.html %>
+<%#
+* FileName: payment.history.excess-pay.account.html
+* Author: 이상형 (silion@sk.com)
+* Date: 2018.07.05
+%>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb_area">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+
+<div class="wrap">
+    <!-- #header -->
+    <div id="header" class="header-wrap step-page">
+        <div class="header step-page">
+            <div class="header-ti">
+                <h1>환불 계좌 입력 </h1>
+            </div>
+            <button class="close-step"><span class="blind">닫기</span></button>
+        </div>
+    </div>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <div class="cont-box">
+                <div class="box-inquiry-info">
+                    <span class="inquiry-info-stxt">선택하신<strong>2건</strong>에 대한</span>
+                    <span class="inquiry-info-txt"><strong>환불 금액은 40,000원</strong> 입니다.</span>
+                </div>
+                <div class="account-wrap-type1">
+                    <p class="info-txt">환불 받으실 계좌번호를 입력하세요</p>
+                    <div class="account-detail">
+                        <!-- .widget -->
+                        <div class="widget select-name">
+                            <div class="widget-box">
+                                <button class="bt-dropdown" data-select="우리은행, 기업은행, SC제일, 경남은행, NH농협, 신한은행, 우체국, KEB하나(구하나), 국민은행, 대구은행, 부산은행, KEB하나(구외환), 새마을금고, 산업은행" data-title="은행 선택하기">은행명<span class="ico"></span></button>
+                            </div>
+                        </div>
+                        <!-- //.widget -->
+                        <div class="inputbox input-context">
+                                <span class="input">
+                                    <input type="text" placeholder="계좌번호를 입력해주세요 (숫자만 입력)" title="계솨번호">
+                                    <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
+                                </span>
+                        </div>
+                    </div>
+                    <div class="contents-btn">
+                        <ul class="bt-slice item-two">
+                            <li class="bt-white2">
+                                <button>이전</button>
+                            </li>
+                            <li class="bt-red1">
+                                <button>납부하기</button>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="contents-notice type2">
+                        <span class="noti-type1">환불 신청 후 송금처리결과가 송금오류인 경우에는 T world에서 처리하실 수 없사오니 당사 고객센터 &lt;국번없이 1599-0011(유료)/휴대폰 114&gt;로 연락주시기 바랍니다.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--// #contents -->
+</div>
+
+
+<% include ../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    var oPaymentHistoryExcessPayAccount = new Tw.PaymentHistoryExcessPayAccount($(document));
+  });
+</script>
+<% include ../components/end.component.html %>
