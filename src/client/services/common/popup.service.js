@@ -30,10 +30,11 @@ Tw.PopupService.prototype = {
     location.hash = 'popup';
   },
   _confirm: function () {
-    this.close();
     if ( !Tw.FormatHelper.isEmpty(this._callback) ) {
       this._callback();
       this._callback = null;
+    } else {
+      this.close();
     }
   },
   open: function (option) {
@@ -106,7 +107,7 @@ Tw.PopupService.prototype = {
   openBank: function (list) {
     this.open({
       'hbs': 'choice',
-      'title': '은행선택',
+      'title': Tw.POPUP_TITLE.SELECT_BANK,
       'close_bt': true,
       'list_type' : '',
       'list': list
