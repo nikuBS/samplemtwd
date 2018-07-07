@@ -1,0 +1,65 @@
+<!--
+* FileName: myt.bill.feeguide.html
+* Author: 김명환 (skt.P130714@partner.sk.com)
+* Date: 2018.07.05
+-->
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+
+        table {width: 100%}
+        table th {
+            background: gainsboro;
+        }
+        table, th, td {
+            font-size: 12px;
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+        table th, td {
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>요금안내서</h1>
+    <!-- -------------------------------------------------------------------------[로그인 정보]-->
+    <div>
+        <table>
+            <colgroup>
+                <col style="width: 30%;">
+                <col style="width: 30%;">
+                <col style="width: 40%;">
+            </colgroup>
+            <tr>
+                <th>KEY</th>
+                <th>VALUE</th>
+                <th>설명</th>
+            </tr>
+
+<%
+var userInfoDisArr = ['카테고리', '서비스 구분', '서비스 속성', '노출명칭', '대표회선 여부', '다회선수'];
+var userInfoArr = Object.entries(userInfo)
+var arrayLen = userInfoArr.length;
+for(var i=0,len=arrayLen; i < len; i++) {
+%>
+                <tr>
+                    <td><%=userInfoArr[i][0] %></td>
+                    <td><%=userInfoArr[i][1] %></td>
+                    <td><%=userInfoDisArr[i] %></td>
+                </tr>
+            
+<%
+}
+%>
+        </table>
+    </div>
+    <!-- -------------------------------------------------------------------------[로그인 정보 end]-->
+</body>
+</html>
