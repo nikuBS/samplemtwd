@@ -22,6 +22,14 @@ class MyTBillBillguide extends TwViewController {
     repSvcYn:null, //대표회선 여부
     svcCnt:null //다회선수
   };
+  private _urlTplInfo:any = {
+    combineRepresentPage:  'myt.bill.billguide.combineRepresentPage.html',//통합청구(대표)
+    combineCommonPage:     'myt.bill.billguide.combineCommonPage.html',//통합청구(일반)
+    individualPage:        'myt.bill.billguide.individualPage.html',//개별청구
+    prepaidPage:           'myt.bill.billguide.prepaidPage.html',//PPS(선불폰)
+    companyPage:           'myt.bill.billguide.companyPage.html',//기업솔루션(포인트캠)
+    skbroadbandPage:       'myt.bill.billguide.skbroadbandPage.html'//sk브로드밴드(인터넷/IPTV/집전화)
+  };
   private _bffDataObj:any = null;//bff통해 전달받은 데이터
   private _resData:any = null;//전달할 데이터
 
@@ -62,40 +70,28 @@ class MyTBillBillguide extends TwViewController {
       case 'S2' :
       case 'S3' :
         this.logger.info(this, '[_userInfo.svcAttrCd] sk브로드 밴드(인터넷/IPTV/집전화) : ', this._userInfo.svcAttrCd);
-        this.renderView(res, 'bill/myt.bill.billguide.html', {
-          userInfo: this._userInfo
-        } );
+        this.skbroadbandCircuit(res);
         break;
       case 'O1' :
         this.logger.info(this, '[_userInfo.svcAttrCd] 기업솔루션(포인트캠) : ', this._userInfo.svcAttrCd);
-        this.renderView(res, 'bill/myt.bill.billguide.html', {
-          userInfo: this._userInfo
-        } );
+        this.companyCircuit(res);
         break;
       case 'M2' :
         this.logger.info(this, '[_userInfo.svcAttrCd] PPS(선불폰) : ', this._userInfo.svcAttrCd);
-        this.renderView(res, 'bill/myt.bill.billguide.html', {
-          userInfo: this._userInfo
-        } );
+        this.prepaidCircuit(res);
         break;
       default :
         if (this._userInfo.svcCnt === 0) {//개별 회선
           this.logger.info(this, '[_userInfo.svcCnt] 회선수 0 : ', this._userInfo.svcCnt);
-          this.renderView(res, 'bill/myt.bill.billguide.html', {
-            userInfo: this._userInfo
-          } );
+          this.individualCircuit(res);
         }
         else if (this._userInfo.svcCnt > 0 && this._userInfo.repSvcYn === 'Y') {//통합회선 : 대표
           this.logger.info(this, '[_userInfo.svcCnt] 회선수 1 이상 | 통합회선 | 대표 : ', this._userInfo.svcCnt);
-          this.renderView(res, 'bill/myt.bill.billguide.html', {
-            userInfo: this._userInfo
-          } );
+          this.combineRepresentCircuit(res);
         }
         else if (this._userInfo.svcCnt > 0 && this._userInfo.repSvcYn === 'N') {//통합회선 : 일반
           this.logger.info(this, '[_userInfo.svcCnt] 회선수 1 이상 | 통합회선 | 일반 : ', this._userInfo.svcCnt);
-          this.renderView(res, 'bill/myt.bill.billguide.html', {
-            userInfo: this._userInfo
-          } );
+          this.combineCommonCircuit(res);
         }
     }
 
@@ -109,30 +105,41 @@ class MyTBillBillguide extends TwViewController {
     this._userInfo.svcCnt = this._svcInfo.svcCnt;
   }
   //통합청구(대표)
-  private combineRepresentCircuit() {
-
+  private combineRepresentCircuit(res) {
+    this.renderView(res, this._urlTplInfo.combineRepresentPage, {
+      userInfo: this._userInfo
+    } );
   }
   //통합청구(일반)
-  private combineCommonCircuit() {
-
+  private combineCommonCircuit(res) {
+    this.renderView(res, this._urlTplInfo.combineCommonPage, {
+      userInfo: this._userInfo
+    } );
   }
   //개별청구
-  private individualCircuit() {
-
+  private individualCircuit(res) {
+    this.renderView(res, this._urlTplInfo.individualPage, {
+      userInfo: this._userInfo
+    } );
   }
   //PPS(선불폰)
-  private prepaidCircuit() {
-
+  private prepaidCircuit(res) {
+    this.renderView(res, this._urlTplInfo.prepaidPage, {
+      userInfo: this._userInfo
+    } );
   }
   //기업솔루션(포인트캠)
-  private companyCircuit() {
-
+  private companyCircuit(res) {
+    this.renderView(res, this._urlTplInfo.companyPage, {
+      userInfo: this._userInfo
+    } );
   }
   //sk브로드밴드(인터넷/IPTV/집전화)
-  private skbroadbandCircuit() {
-
+  private skbroadbandCircuit(res) {
+    this.renderView(res, this._urlTplInfo.skbroadbandPage, {
+      userInfo: this._userInfo
+    } );
   }
-
 
   //-------------------------------------------------------------[BFF 요청 모음]
   private getApiList(): any {
@@ -144,9 +151,6 @@ class MyTBillBillguide extends TwViewController {
 
   //-------------------------------------------------------------[클리이어튼로 전송]
   public renderView(res: Response, view: string, data: any): any {
-    // res.render(view, {
-    //   userInfo: this._userInfo,
-    // });
     res.render(view, data);
   }
 
