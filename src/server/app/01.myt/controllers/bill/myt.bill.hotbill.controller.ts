@@ -12,7 +12,7 @@ class MyTBillHotBill extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    this.renderView(res, 'bill/myt.bill.hotbill.html', {});
+    this.renderView(res, 'bill/myt.bill.hotbill.html', { svcInfo: svcInfo });
   }
 
   public renderView(res: Response, view: string, data: any): any {
