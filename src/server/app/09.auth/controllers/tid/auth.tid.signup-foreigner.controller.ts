@@ -1,7 +1,7 @@
 /**
- * FileName: auth.tid.signup.controller.ts
- * Author: Ara Jo (araara.jo@sk.com)
- * Date: 2018.07.03
+ * FileName: auth.tid.signup-foreigner.controller.ts
+ * Author: Hakjoon Sim (hakjoon.sim@sk.com)
+ * Date: 2018.07.09
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -9,7 +9,7 @@ import { Request, Response, NextFunction } from 'express';
 import { API_CMD, API_CODE, TID_SVC_TYPE } from '../../../../types/api-command.type';
 import ParamsHelper from '../../../../utils/params.helper';
 
-class AuthTidSignUp extends TwViewController {
+class AuthTidSignUpForeigner extends TwViewController {
   constructor() {
     super();
   }
@@ -25,6 +25,7 @@ class AuthTidSignUp extends TwViewController {
       client_type: 'MWEB',
       scope: 'openid',
       response_type: 'id_token%20token',
+      frgnr_yn: 'Y'
     };
     this.apiService.request(API_CMD.BFF_03_0007, {}).subscribe((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
@@ -39,4 +40,4 @@ class AuthTidSignUp extends TwViewController {
   }
 }
 
-export default AuthTidSignUp;
+export default AuthTidSignUpForeigner;
