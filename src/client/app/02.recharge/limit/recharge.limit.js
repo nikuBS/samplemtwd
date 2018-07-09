@@ -7,6 +7,8 @@
 Tw.RechargeLimit = function (rootEl) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
+  this._history = new Tw.HistoryService(rootEl);
+  this._history.init('hash');
 
   // this._cachedElement();
   // this._bindEvent();
