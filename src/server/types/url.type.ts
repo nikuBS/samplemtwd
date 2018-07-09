@@ -29,10 +29,10 @@ export const URL = {
   '/recharge/gift/process/request': { login: true },
   '/recharge/gift/history': { login: true },
   '/recharge/cookiz': { login: true },
+  '/recharge/cookiz/history': { login: true },
   '/recharge/limit': { login: true },
   '/recharge/limit/process': { login: true },
   '/recharge/ting': { login: true },
-  '/recharge/ting/process': { login: true },
   '/recharge/ting/history': { login: true },
   // payment
   '/payment/realtime': { login: true },

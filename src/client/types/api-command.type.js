@@ -14,6 +14,10 @@ Tw.API_CMD = {
   BFF_03_0005_C: { path: '/selected-svc', method: Tw.API_METHOD.GET },
   BFF_03_0023_C: { path: '/core-recharge/v1/refill-gifts', method: Tw.API_METHOD.POST },
 
+  // COMMON
+  BFF_01_0004: { path: '/common/selected-sessions', method: Tw.API_METHOD.PUT },
+  BFF_01_0005: { path: '/common/selected-sessions', method: Tw.API_METHOD.GET },
+
   // AUTH
   BFF_03_0003: { path: '/core-auth/v1/members', method: Tw.API_METHOD.DELETE },
   BFF_03_0006: { path: '/user/nick-names/args-0', method: Tw.API_METHOD.PUT },
@@ -47,8 +51,8 @@ Tw.API_CMD = {
   BFF_06_0017: { path: '/core-recharge/v1/data-gift-messages', method: Tw.API_METHOD.POST },
   BFF_06_0018: { path: '/core-recharge/v1/data-gifts', method: Tw.API_METHOD.GET },
   BFF_06_0019: { path: '/core-recharge/v1/data-gift-receivers', method: Tw.API_METHOD.GET },
-  BFF_06_0020: { path: '/core-recharge/v1/ting-gift-providers', method: Tw.API_METHOD.GET },
-  BFF_06_0021: { path: '/core-recharge/v1/ting-gift-blocks', method: Tw.API_METHOD.PUT },
+  BFF_06_0020: { path: '/core-recharge/v1/ting-gift-senders', method: Tw.API_METHOD.GET },
+  BFF_06_0021: { path: '/core-recharge/v1/ting-gift-blocks', method: Tw.API_METHOD.POST },
   BFF_06_0022: { path: '/core-recharge/v1/ting-gift-benefiters', method: Tw.API_METHOD.GET },
   BFF_06_0023: { path: '/core-recharge/v1/ting-gifts', method: Tw.API_METHOD.POST },
   BFF_06_0024: { path: '/core-recharge/v1/ting-press-benefiters', method: Tw.API_METHOD.POST },
