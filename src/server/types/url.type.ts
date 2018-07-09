@@ -30,6 +30,7 @@ export const URL = {
   '/recharge/gift/history': { login: true },
   '/recharge/cookiz': { login: true },
   '/recharge/limit': { login: true },
+  '/recharge/limit/process': { login: true },
   '/recharge/ting': { login: true },
   '/recharge/ting/process': { login: true },
   '/recharge/ting/history': { login: true },
