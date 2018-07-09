@@ -1,7 +1,7 @@
 import axios from 'axios';
-import { Observable } from 'rxjs/Observable';
+import {Observable} from 'rxjs/Observable';
 import environment from '../config/environment.config';
-import { API_CMD, API_CODE, API_METHOD, API_SERVER } from '../types/api-command.type';
+import {API_CMD, API_CODE, API_METHOD, API_SERVER} from '../types/api-command.type';
 import ParamsHelper from '../utils/params.helper';
 import LoginService from './login.service';
 import LoggerService from './logger.service';
@@ -76,7 +76,7 @@ class ApiService {
         path = path.replace(`args-${index}`, argument);
       });
     }
-    path = method === API_METHOD.GET ? path + ParamsHelper.setQueryParams(params) : path;
+      path = method === API_METHOD.GET ? path + ParamsHelper.setQueryParams(params) : path;
     return path;
   }
 

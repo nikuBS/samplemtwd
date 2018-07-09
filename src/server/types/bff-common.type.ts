@@ -83,6 +83,6 @@ export const TING_TITLE = {
 };
 
 export enum REQUEST_VALUE {
-  Y = '신청',
-  N = '미신청'
+    Y = '신청',
+    N = '미신청'
 }
