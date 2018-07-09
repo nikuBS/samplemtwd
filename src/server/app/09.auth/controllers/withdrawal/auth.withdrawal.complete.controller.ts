@@ -6,6 +6,7 @@
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
+import BrowserHelper from '../../../../utils/browser.helper';
 
 class AuthWithdrawlComplete extends TwViewController {
   constructor() {
@@ -14,7 +15,10 @@ class AuthWithdrawlComplete extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     const isTid = req.query.tid === 'Y' ? true : false;
-    res.render('withdrawal/auth.withdrawal.complete.html', { tid: isTid });
+    res.render('withdrawal/auth.withdrawal.complete.html', {
+      tid: isTid,
+      isApp: BrowserHelper.isApp(req)
+    });
   }
 }
 

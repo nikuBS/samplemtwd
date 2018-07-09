@@ -30,6 +30,7 @@ export const URL = {
   '/recharge/gift/history': { login: true },
   '/recharge/cookiz': { login: true },
   '/recharge/limit': { login: true },
+  '/recharge/limit/process': { login: true },
   '/recharge/ting': { login: true },
   '/recharge/ting/process': { login: true },
   '/recharge/ting/history': { login: true },
@@ -66,5 +67,5 @@ export const URL = {
   '/auth/tid/guide': { login: false },
   '/auth/withdrawal/guide': { login: true },
   '/auth/withdrawal/survey': { login: true },
-  '/autu/withdrawal/complete': { login: true }
+  '/auth/withdrawal/complete': { login: false }
 };
