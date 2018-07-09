@@ -52,8 +52,7 @@ export const API_CMD = {
   BFF_05_0010: { path: '/core-balance/v1/children', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0011: { path: '/core-balance/v1/data-sharings/args-0', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
     BFF_05_0028: {
-        path: '/core-bill/v1/bill-types-reissue-list
-        method: API_METHOD.GET,
+        path: '/core-bill/v1/bill-types-reissue-list/', method: API_METHOD.GET,
         server: API_SERVER.BFF,
         bypass: false
     },
