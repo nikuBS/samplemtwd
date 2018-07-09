@@ -124,6 +124,8 @@ Tw.PopupService.prototype = {
     this.open(option, openCallback);
   },
   close: function () {
-    history.back();
+    if(location.hash === '#popup') {
+      history.back();
+    }
   }
 };
