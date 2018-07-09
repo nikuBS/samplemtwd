@@ -18,7 +18,7 @@ Tw.PopupService.prototype = {
       this._prevHash = undefined;
     }
   },
-  _onOpenPopup: function() {
+  _onOpenPopup: function () {
     Tw.Logger.info('[Popup Open]');
   },
   _popupClose: function () {
@@ -29,7 +29,7 @@ Tw.PopupService.prototype = {
     this._prevHash = location.hash;
     location.hash = 'popup';
   },
-  _bindEvent: function() {
+  _bindEvent: function () {
     this.$document.on('click', '.popup-closeBtn', $.proxy(this.close, this));
     this.$document.on('click', '.tw-popup-closeBtn', $.proxy(this.close, this));
     this.$document.on('click', '.tw-popup-confirm', $.proxy(this._confirm, this));
@@ -43,16 +43,16 @@ Tw.PopupService.prototype = {
     skt_landing.action.popup.close();
   },
   _setCallback: function (callback) {
-    if ( !Tw.FormatHelper.isEmpty(callback)) {
+    if ( !Tw.FormatHelper.isEmpty(callback) ) {
       this._callback = callback;
       return true;
     }
     return false;
   },
-  _sendCallback: function() {
+  _sendCallback: function () {
     this._callback();
   },
-  _openPopup: function(option) {
+  _openPopup: function (option) {
     skt_landing.action.popup.open(option, $.proxy(this._onOpenPopup, this));
   },
   open: function (option) {
@@ -68,7 +68,7 @@ Tw.PopupService.prototype = {
       title2: message,
       bt_num: 'one',
       type: [{
-        class: confirmClass,
+        style_class: confirmClass,
         txt: Tw.BUTTON_LABEL.CONFIRM
       }]
     };
@@ -81,7 +81,7 @@ Tw.PopupService.prototype = {
       title2: message,
       bt_num: 'one',
       type: [{
-        class: 'bt-red1 tw-popup-close',
+        style_class: 'bt-red1 tw-popup-close',
         txt: Tw.BUTTON_LABEL.CONFIRM
       }]
     };
@@ -97,40 +97,31 @@ Tw.PopupService.prototype = {
       contents: contents || '',
       bt_num: 'two',
       type: [{
-        class: 'bt-white1 tw-popup-closeBtn',
+        style_class: 'bt-white1 tw-popup-closeBtn',
         txt: Tw.BUTTON_LABEL.CANCEL
       }, {
-        class: confirmClass,
+        style_class: confirmClass,
         txt: Tw.BUTTON_LABEL.CONFIRM
       }]
     };
     this._openPopup(option);
   },
-  openRefillProduct: function () {
-    this.open({
-      hbs: 'DA_01_01_01_L01'// hbs의 파일명
-    });
-  },
-  openGiftProduct: function () {
-    this.open({
-      hbs: 'DA_02_01_L01'// hbs의 파일명
-    });
-  },
-  openSms: function () {
-    this.open({
-      hbs: 'DA_02_01_04_L01'// hbs의 파일명
-    });
-  },
-  openList: function (title, list, type, callback) {
+  openChoice: function (title, list, type, callback) {
     this._setCallback(callback);
     this._addHash();
     this.open({
-      'hbs': 'choice',
-      'title': title,
-      'close_bt': true,
-      'list_type': type || 'type1',
-      'list': list
+      hbs: 'choice',
+      title: title,
+      close_bt: true,
+      list_type: type || 'type1',
+      list: list
     });
+  },
+  openSelect: function () {
+
+  },
+  openLayer: function (option, openCallback) {
+    this.open(option, openCallback);
   },
   close: function () {
     history.back();
