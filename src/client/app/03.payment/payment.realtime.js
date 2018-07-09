@@ -7,13 +7,13 @@
 Tw.PaymentRealtime = function (rootEl) {
   this.$container = rootEl;
   this.$bankList = [];
-  this.$selectedBank = {};
   this.$window = $(window);
   this.$document = $(document);
   this.$amount = 0;
 
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
+  this._bankList = new Tw.BankList(this.$container);
   this._history = new Tw.HistoryService(this.$container);
   this._history.init('hash');
 
@@ -22,11 +22,16 @@ Tw.PaymentRealtime = function (rootEl) {
 
 Tw.PaymentRealtime.prototype = {
   _bindEvent: function () {
+    this.$container.on('keyup', '.only-number', $.proxy(this._onlyNumber, this));
     this.$container.on('change', '.checkbox-main', $.proxy(this._sumCheckedAmount, this));
     this.$container.on('click', '.select-payment-option', $.proxy(this._isCheckedAmount, this));
     this.$container.on('click', '.select-bank', $.proxy(this._selectBank, this));
+    this.$container.on('click', '.get-point', $.proxy(this._getPoint, this));
+    this.$container.on('click', '.get-cashbag-point', $.proxy(this._getCashbagPoint, this));
     this.$container.on('click', '.pay', $.proxy(this._pay, this));
-    this.$document.on('click', '.hbs-bank-list', $.proxy(this._getSelectedBank, this));
+  },
+  _onlyNumber: function (event) {
+    Tw.InputHelper.inputNumberOnly(event.currentTarget);
   },
   _sumCheckedAmount: function (event) {
     var $target = $(event.target);
@@ -50,30 +55,28 @@ Tw.PaymentRealtime.prototype = {
       this._go('#step1');
     }
   },
-  _selectBank: function () {
-    if (this._isNotExistBankList()) {
-      this._getBankList();
-    }
-    else {
-      this._openBank();
-    }
+  _selectBank: function (event) {
+    this._bankList.init(event);
   },
-  _getBankList: function () {
-    $.ajax('/mock/payment.bank-list.json')
-//    this._apiService.request(Tw.API_CMD.BFF_07_0022, {})
-      .done($.proxy(this._getBankListSuccess, this))
-      .fail($.proxy(this._getBankListFail, this));
+  _getPoint: function () {
+    /*
+    this._popupService.open({
+      hbs: 'PA_05_04_L01'// hbs의 파일명
+    });
+    */
+    this._go('#get-point');
   },
-  _isNotExistBankList: function () {
-    return Tw.FormatHelper.isEmpty(this.$bankList);
+  _getCashbagPoint: function () {
+    this._apiService.request(Tw.API_CMD.BFF_07_0028, JSON.stringify({ ocbCardNum: '4119057002786952' }))
+      .done($.proxy(this._pointSuccess, this))
+      .fail($.proxy(this._pointFail, this));
   },
-  _openBank: function () {
-    this._popupService.openBank(this.$bankList);
+  _pointSuccess: function (res) {
+    this._popupService._popupClose();
+    console.log(res.result.availPt, res.result.availTPt);
   },
-  _getSelectedBank: function (event) {
-    var $target = $(event.currentTarget);
-    this.$selectedBank[$target.data('value')] = $target.text();
-    this._popupService.close();
+  _pointFail: function () {
+    Tw.Logger.info('point request fail');
   },
   _pay: function (event) {
     event.preventDefault();
@@ -82,34 +85,12 @@ Tw.PaymentRealtime.prototype = {
       .done($.proxy(this._paySuccess, this))
       .fail($.proxy(this._payFail, this));
   },
-  _getBankListSuccess: function (res) {
-    if (res.code === '00') {
-      this._setBankList(res);
-    }
-  },
-  _getBankListFail: function () {
-    Tw.Logger.info('pay request fail');
-  },
-  _setBankList: function (res) {
-    var bankList = res.result.bnkcrdlist2;
-    for (var i = 0; i < bankList.length; i++) {
-      var bankObj = {
-        key: bankList[i].commCdVal,
-        value: bankList[i].commCdValNm
-      };
-      this.$bankList.push(bankObj);
-    }
-    this._openBank();
-  },
   _paySuccess: function () {
-    this._setHistory();
+    this._history.setHistory();
     this._go('#complete');
   },
   _payFail: function () {
     Tw.Logger.info('pay request fail');
-  },
-  _setHistory: function () {
-    this._history.setHistory();
   },
   _go: function (hash) {
     window.location.hash = hash;

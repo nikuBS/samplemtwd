@@ -1,6 +1,6 @@
 export const URL = {
   // home
-  '/home': { login: false },
+  '/home': { login: true },
   // myt
   '/myt': { login: true },
   '/myt/usage/change': { login: true },
@@ -50,6 +50,8 @@ export const URL = {
   '/auth/line/register/corporation': { login: true },
   '/auth/line/register/empty': { login: true },
   '/auth/login/fail': { login: false },
+  '/auth/login/dormancy': { login: false },
+  '/auth/login/find-id-pwd': { login: false },
   '/auth/logout/complete': { login: true },
   '/auth/logout/expire': { login: true },
   '/auth/member/management': { login: true },

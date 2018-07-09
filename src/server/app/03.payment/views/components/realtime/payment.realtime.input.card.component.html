@@ -1,8 +1,8 @@
-<!--
+<%#
 * FileName: payment.realtime.input.card.component.html
 * Author: 공자윤 (jayoon.kong@sk.com)
 * Date: 2018.07.05
--->
+%>
 <div class="container">
     <div class="cont-box">
         <!-- .widget -->
@@ -35,7 +35,7 @@
                     <h5 class="account-tit">카드번호</h5>
                     <div class="inputbox">
                         <span class="input">
-                            <input type="text" placeholder="숫자만 입력" title="카드번호">
+                            <input type="text" class="only-number" placeholder="숫자만 입력" title="카드번호">
                             <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
                         </span>
                     </div>
@@ -48,7 +48,7 @@
                     <h5 class="account-tit">유효기간</h5>
                     <div class="inputbox">
                         <span class="input">
-                            <input type="text" placeholder="YYYY     /     MM" title="카드유효기간">
+                            <input type="text" class="only-number" placeholder="YYYY     /     MM" title="카드유효기간">
                             <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
                         </span>
                     </div>
@@ -57,7 +57,7 @@
                     <h5 class="account-tit">카드비밀번호</h5>
                     <div class="inputbox">
                         <span class="input">
-                            <input type="text" placeholder="앞2자리 **" title="카드비밀번호 앞2자리">
+                            <input type="text" class="only-number" minlength="2" maxlength="2" placeholder="앞2자리 **" title="카드비밀번호 앞2자리">
                             <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
                         </span>
                     </div>
@@ -95,7 +95,7 @@
                         </div>
                         <div class="inputbox input-context">
                     <span class="input">
-                        <input type="text" placeholder="계좌번호 (숫자만 입력)" title="계좌번호">
+                        <input type="text" class="only-number" placeholder="계좌번호 (숫자만 입력)" title="계좌번호">
                         <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
                     </span>
                         </div>

@@ -14,7 +14,7 @@
                     <ul class="select-list" role="radiogroup">
                         {{#each select}} {{#each options}}
                         <li class="radiobox type01 {{#unless @index}}{{#unless title}}{{#unless text}}popup-focus{{/unless}}{{/unless}}{{/unless}} {{#if checked}}checked{{/if}}" role="radio" aria-checked="{{#if checked}}true{{else}}false{{/if}}">
-                            <input type="radio" name="radio" value="{{value}}" title="{{value}}" {{#if checked}}checked="checked" {{/if}} />{{#if text}}{{{text}}}{{else}}{{{value}}}{{/if}}
+                            <input type="radio" name="radio" value="{{value}}" title="{{#if text}}{{text}}{{else}}{{{value}}}{{/if}}" {{#if checked}}checked="checked" {{/if}} />{{#if text}}{{{text}}}{{else}}{{{value}}}{{/if}}
                         </li>
                         {{/each}} {{/each}}
                     </ul>
@@ -31,7 +31,7 @@
                         <!-- .widget -->
                         <div class="widget">
                             <div class="widget-box tube">
-                                <ul class="tube-list {{class}}" role="radiogroup">
+                                <ul class="tube-list {{style_class}} {{style_num}}" role="radiogroup">
                                     {{#each options}}
                                     <li role="radio" aria-checked="{{#if checked}}true{{else}}false{{/if}}" class="{{#if checked}}checked{{/if}}">
                                         <input type="radio" name="radio{{@../index}}" title="{{value}}" value="{{value}}" {{#if checked}}checked{{/if}}>{{#if text}}{{{text}}}{{else}}{{{value}}}{{/if}}
@@ -67,7 +67,7 @@
         <div class="btn-box">
             <ul class="bt-slice item-{{bt_num}}">
                 {{#type}}
-                <li class="{{class}}">
+                <li class="{{style_class}}">
                     <button onclick="{{href}}">{{txt}}</button>
                 </li>
                 {{/type}}

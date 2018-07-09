@@ -53,7 +53,7 @@ class BypassRouter {
     const params = cmd.method === API_METHOD.GET ? req.query : req.body;
     const headers = req.headers;
 
-    this.apiService.request(cmd, params, headers)
+    this.apiService.request(cmd, params.parameter, headers, ...(params.pathVariables))
       .subscribe(data => {
         return res.json(data);
       });
