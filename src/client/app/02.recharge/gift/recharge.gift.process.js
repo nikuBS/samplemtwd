@@ -62,7 +62,9 @@ Tw.RechargeGiftProcess.prototype = {
   },
 
   _sendTextPopEvt: function () {
-    this._popupService.openSms();
+    this._popupService.openLayer({
+      hbs: 'DA_02_01_04_L01'// hbs의 파일명
+    });
 
     setTimeout(function () {
       var $txTel = $('em.tx-tel').text(Tw.FormatHelper.conTelFormatWithDash(this.provider.phone));

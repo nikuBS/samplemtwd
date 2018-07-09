@@ -59,6 +59,6 @@ Tw.BankList.prototype = {
     this._openBank();
   },
   _openBank: function () {
-    this._popupService.openList(Tw.POPUP_TITLE.SELECT_BANK, this.$bankList);
+    this._popupService.openChoice(Tw.POPUP_TITLE.SELECT_BANK, this.$bankList);
   }
 };
