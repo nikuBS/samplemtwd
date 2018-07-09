@@ -5,7 +5,7 @@
  */
 Tw.RechargeRefillHistory = function (rootEl) {
   this.$container = rootEl;
-  this._apiService = new Tw.ApiService();
+  this._apiService = Tw.ApiService();
   this._cachedElement();
   this._bindEvent();
   this.TYPE = {
@@ -134,7 +134,7 @@ Tw.RechargeRefillHistory.prototype = {
 
         if ( this._sentRefills.length < 1 ) {
           $.when(this._apiService.request(Tw.API_CMD.BFF_06_0001),
-                 this._apiService.request(Tw.API_CMD.BFF_06_0009))
+            this._apiService.request(Tw.API_CMD.BFF_06_0009))
             .done($.proxy(this._setTransferable, this, this.TYPE.SENT));
         } else {
           this._sentRefills.map(
