@@ -119,7 +119,9 @@ Tw.RechargeRefill.prototype = {
     return $target.hasClass('refill-to-my-phone');
   },
   _showProduct: function () {
-    this._popupService.openRefillProduct();
+    this._popupService.openLayer({
+      hbs: 'DA_01_01_01_L01'// hbs의 파일명
+    });
   },
   _openAlert: function (message) {
     this._popupService.openAlert(Tw.POPUP_TITLE.NOTIFY, message);
