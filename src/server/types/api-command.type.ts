@@ -51,17 +51,18 @@ export const API_CMD = {
   BFF_05_0009: { path: '/core-balance/v1/data-sharings/balances', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0010: { path: '/core-balance/v1/children', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0011: { path: '/core-balance/v1/data-sharings/args-0', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
-    BFF_05_0028: {
-        path: '/core-bill/v1/bill-types-reissue-list/', method: API_METHOD.GET,
-        server: API_SERVER.BFF,
-        bypass: false
-    },
-    BFF_05_0048: {
-        path: '/core-bill/v1/bill-types-reissue-request/',
-        method: API_METHOD.GET,
-        server: API_SERVER.BFF,
-        bypass: true
-    },
+  BFF_05_0028: {
+    path: '/core-bill/v1/bill-types-reissue-list/',
+    method: API_METHOD.GET,
+    server: API_SERVER.BFF,
+    bypass: false
+  },
+  BFF_05_0048: {
+    path: '/core-bill/v1/bill-types-reissue-request/',
+    method: API_METHOD.GET,
+    server: API_SERVER.BFF,
+    bypass: true
+  },
   // RECHARGE
   BFF_06_0001: { path: '/core-recharge/v1/refill-coupons', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_06_0002: { path: '/core-recharge/v1/refill-usages', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
@@ -115,91 +116,91 @@ export const API_CMD = {
   BFF_07_0027: { path: '/core-bill/v1/bill-pay/settle-vb-sms', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_07_0028: { path: '/core-bill/v1/bill-pay/avail-point-search', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_07_0029: { path: '/core-bill/v1/bill-pay/pay-ocb-tpoint-proc', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
-    BFF_07_0041: {
-        path: '/core-bill/v1/ocbcard-info-check-show',
-        method: API_METHOD.GET,
-        server: API_SERVER.BFF,
-        bypass: false
-    },
-    BFF_07_0042: {
-        path: '/core-bill/v1/rainbow-point-check-show',
-        method: API_METHOD.GET,
-        server: API_SERVER.BFF,
-        bypass: false
-    },
-    BFF_07_0043: {path: '/core-bill/v1/ocbcard-no-info', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true},
-    BFF_07_0045: {
-        path: '/core-bill/v1/ocb-point-onetime-reserve',
-        method: API_METHOD.POST,
-        server: API_SERVER.BFF,
-        bypass: true
-    },
-    BFF_07_0046: {
-        path: '/core-bill/v1/ocb-point-onetime-result',
-        method: API_METHOD.POST,
-        server: API_SERVER.BFF,
-        bypass: true
-    },
-    BFF_07_0047: {
-        path: '/core-bill/v1/ocb-point-onetime-cancel',
-        method: API_METHOD.POST,
-        server: API_SERVER.BFF,
-        bypass: true
-    },
-    BFF_07_0048: {
-        path: '/core-bill/v1/rainbow-point-onetime-reserve',
-        method: API_METHOD.POST,
-        server: API_SERVER.BFF,
-        bypass: true
-    },
-    BFF_07_0050: {
-        path: '/core-bill/v1/rainbow-point-onetime-cancel',
-        method: API_METHOD.POST,
-        server: API_SERVER.BFF,
-        bypass: true
-    },
-    BFF_07_0051: {
-        path: '/core-bill/v1/ocb-point-autopay-main',
-        method: API_METHOD.GET,
-        server: API_SERVER.BFF,
-        bypass: false
-    },
-    BFF_07_0052: {
-        path: '/core-bill/v1/rainbow-point-autopay-main',
-        method: API_METHOD.GET,
-        server: API_SERVER.BFF,
-        bypass: false
-    },
-    BFF_07_0054: {
-        path: '/core-bill/v1/ocb-point-autopay-modify',
-        method: API_METHOD.POST,
-        server: API_SERVER.BFF,
-        bypass: true
-    },
-    BFF_07_0055: {
-        path: '/core-bill/v1/ocb-point-autopay-result',
-        method: API_METHOD.POST,
-        server: API_SERVER.BFF,
-        bypass: true
-    },
-    BFF_07_0056: {
-        path: '/core-bill/v1/rainbow-point-autopay-change',
-        method: API_METHOD.POST,
-        server: API_SERVER.BFF,
-        bypass: true
-    },
-    BFF_07_0058: {
-        path: '/core-bill/v1/ocb-point-onetime-history',
-        method: API_METHOD.GET,
-        server: API_SERVER.BFF,
-        bypass: false
-    },
-    BFF_07_0059: {
-        path: '/core-bill/v1/rainbow-point-onetime-history',
-        method: API_METHOD.GET,
-        server: API_SERVER.BFF,
-        bypass: false
-    },
+  BFF_07_0041: {
+    path: '/core-bill/v1/ocbcard-info-check-show',
+    method: API_METHOD.GET,
+    server: API_SERVER.BFF,
+    bypass: false
+  },
+  BFF_07_0042: {
+    path: '/core-bill/v1/rainbow-point-check-show',
+    method: API_METHOD.GET,
+    server: API_SERVER.BFF,
+    bypass: false
+  },
+  BFF_07_0043: { path: '/core-bill/v1/ocbcard-no-info', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_07_0045: {
+    path: '/core-bill/v1/ocb-point-onetime-reserve',
+    method: API_METHOD.POST,
+    server: API_SERVER.BFF,
+    bypass: true
+  },
+  BFF_07_0046: {
+    path: '/core-bill/v1/ocb-point-onetime-result',
+    method: API_METHOD.POST,
+    server: API_SERVER.BFF,
+    bypass: true
+  },
+  BFF_07_0047: {
+    path: '/core-bill/v1/ocb-point-onetime-cancel',
+    method: API_METHOD.POST,
+    server: API_SERVER.BFF,
+    bypass: true
+  },
+  BFF_07_0048: {
+    path: '/core-bill/v1/rainbow-point-onetime-reserve',
+    method: API_METHOD.POST,
+    server: API_SERVER.BFF,
+    bypass: true
+  },
+  BFF_07_0050: {
+    path: '/core-bill/v1/rainbow-point-onetime-cancel',
+    method: API_METHOD.POST,
+    server: API_SERVER.BFF,
+    bypass: true
+  },
+  BFF_07_0051: {
+    path: '/core-bill/v1/ocb-point-autopay-main',
+    method: API_METHOD.GET,
+    server: API_SERVER.BFF,
+    bypass: false
+  },
+  BFF_07_0052: {
+    path: '/core-bill/v1/rainbow-point-autopay-main',
+    method: API_METHOD.GET,
+    server: API_SERVER.BFF,
+    bypass: false
+  },
+  BFF_07_0054: {
+    path: '/core-bill/v1/ocb-point-autopay-modify',
+    method: API_METHOD.POST,
+    server: API_SERVER.BFF,
+    bypass: true
+  },
+  BFF_07_0055: {
+    path: '/core-bill/v1/ocb-point-autopay-result',
+    method: API_METHOD.POST,
+    server: API_SERVER.BFF,
+    bypass: true
+  },
+  BFF_07_0056: {
+    path: '/core-bill/v1/rainbow-point-autopay-change',
+    method: API_METHOD.POST,
+    server: API_SERVER.BFF,
+    bypass: true
+  },
+  BFF_07_0058: {
+    path: '/core-bill/v1/ocb-point-onetime-history',
+    method: API_METHOD.GET,
+    server: API_SERVER.BFF,
+    bypass: false
+  },
+  BFF_07_0059: {
+    path: '/core-bill/v1/rainbow-point-onetime-history',
+    method: API_METHOD.GET,
+    server: API_SERVER.BFF,
+    bypass: false
+  },
   BFF_07_0060: { path: '/core-bill/v1/auto-payments', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_07_0061: { path: '/core-bill/v1/auto-payments', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_07_0062: { path: '/core-bill/v1/auto-payments', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
