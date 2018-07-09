@@ -13,7 +13,14 @@ import DataLimit from '../../../../mock/server/myt.data-limit';
 
 class MyTBillBillguide extends TwViewController {
 
-  private _svcInfo:any = null;
+  private _svcInfo:any = {
+    custNm: '',//고객명
+    svcCd: '',//서비스구분코드
+    svcNum: '',//서비스번
+    svcNickNm: '',//회선닉네임
+    repSvcYn: '',//대표회선여부
+    svcCnt: '',//다회선수
+  };
   private _userInfo:any = {
     svcCtg:null,//카테고리
     svcCd:'C',//서비스 구분
@@ -23,12 +30,12 @@ class MyTBillBillguide extends TwViewController {
     svcCnt:null //다회선수
   };
   private _urlTplInfo:any = {
-    combineRepresentPage:  'myt.bill.billguide.combineRepresentPage.html',//통합청구(대표)
-    combineCommonPage:     'myt.bill.billguide.combineCommonPage.html',//통합청구(일반)
-    individualPage:        'myt.bill.billguide.individualPage.html',//개별청구
-    prepaidPage:           'myt.bill.billguide.prepaidPage.html',//PPS(선불폰)
-    companyPage:           'myt.bill.billguide.companyPage.html',//기업솔루션(포인트캠)
-    skbroadbandPage:       'myt.bill.billguide.skbroadbandPage.html'//sk브로드밴드(인터넷/IPTV/집전화)
+    combineRepresentPage:  'bill/myt.bill.billguide.combineRepresentPage.html',//통합청구(대표)
+    combineCommonPage:     'bill/myt.bill.billguide.combineCommonPage.html',//통합청구(일반)
+    individualPage:        'bill/myt.bill.billguide.individualPage.html',//개별청구
+    prepaidPage:           'bill/myt.bill.billguide.prepaidPage.html',//PPS(선불폰)
+    companyPage:           'bill/myt.bill.billguide.companyPage.html',//기업솔루션(포인트캠)
+    skbroadbandPage:       'bill/myt.bill.billguide.skbroadbandPage.html'//sk브로드밴드(인터넷/IPTV/집전화)
   };
   private _bffDataObj:any = null;//bff통해 전달받은 데이터
   private _resData:any = null;//전달할 데이터
@@ -40,7 +47,7 @@ class MyTBillBillguide extends TwViewController {
   //실행 : 데이터 가져오기
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     this._svcInfo = svcInfo;
-
+    this.logger.info(this, '[_svcInfo]', this._svcInfo);
     //mock 데이터 테스트
     Observable.of([myTUsageData, DataLimit]).subscribe((bffRestDataObj) => {
       this.logger.info(this, '[subscribe_mock_test]', bffRestDataObj);
@@ -100,7 +107,7 @@ class MyTBillBillguide extends TwViewController {
   private userInfoSetSvc() {//_userInfo 설정
     this._userInfo.svcCtg = null;
     this._userInfo.svcCd = this._svcInfo.svcCd;
-    this._userInfo.svcAttrCd = 'S2';//BFF_01_0005 완료되면 사용함. 현재 bff 작업중
+    this._userInfo.svcAttrCd = 'M2';//BFF_01_0005 완료되면 사용함. 현재 bff 작업중
     this._userInfo.repSvcYn = this._svcInfo.repSvcYn;
     this._userInfo.svcCnt = this._svcInfo.svcCnt;
   }
