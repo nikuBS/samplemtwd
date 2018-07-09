@@ -27,7 +27,7 @@
     <!-- #contents -->
     <div id="contents" class="container-wrap">
         <h2 class="blind">내용</h2>
-        <div class="container">
+        <div id="auth-withdrawal-complete" class="container">
             <div class="cont-box nogaps-hoz">
                 <div class="msg-member-box">
                     <div class="msg-member-comp">
@@ -53,7 +53,7 @@
                         <div class="bt-gap">
                             <ul class="bt-slice">
                                 <li class="bt-red1">
-                                    <a href="https://www.skt-id.co.kr/login/requestLoginFloor.do">T아이디 탈퇴</a>
+                                    <a href="https://www.skt-id.co.kr/login/requestLoginFloor.do" target="_blank" id="tid-withdrawal">T아이디 탈퇴</a>
                                 </li>
                             </ul>
                         </div>
@@ -78,4 +78,11 @@
     <% include ../../../../common/views/components/footer.component.html %>
 </div>
 <% include ../../components/javascript.component.html %>
+<% if (tid && isApp) { %>
+    <script>
+      $(document).ready(function () {
+        new Tw.AuthWithdrawalComplete($('#auth-withdrawal-complete'));
+      });
+    </script>
+<% } %>
 <% include ../../components/end.component.html %>

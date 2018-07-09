@@ -1,7 +1,8 @@
 Tw.NTV_CMD = {
   TOAST: 'toast',
   GET_CONTACT: 'getContact',
-  GET_DEVICE: 'getDevice'
+  GET_DEVICE: 'getDevice',
+  OPEN_URL: 'openUrl'
 };
 
 Tw.NTV_CODE = {
