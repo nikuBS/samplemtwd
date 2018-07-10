@@ -6,15 +6,6 @@
 <% include ../../components/start.component.html %>
 
 <body>
-<!-- #skip_navigation -->
-<div id="skipNav" class="skip_navi">
-    <ul>
-        <li><a href="#gnb_area">메뉴 바로가기</a></li>
-        <li><a href="#contents">본문 바로가기</a></li>
-        <li><a href="#footer">푸터 바로가기</a></li>
-    </ul>
-</div>
-<!--// #skip_navigation -->
 <div class="wrap">
     <!-- #header -->
     <div id="header" class="header-wrap">
@@ -41,16 +32,17 @@
                             <ul class="t-pay-data">
                                 <li>
                                     <dl>
+                                        <% console.log(data) %>
                                         <dt class="ti-data">재발행 신청하신<br/>요금안내서 유형</dt>
-                                        <!--요금안내서 유형 설정 코드-->
-                                        <dd class="tx-data">Bill Letter</dd>
+                                        <!--요금안내서 유형 설정 코드 String 값 그대로 전달-->
+                                        <dd class="tx-data"><%= data.type %></dd>
                                     </dl>
                                 </li>
                                 <li>
                                     <dl>
                                         <dt class="ti-data">재발행 신청하신 월</dt>
-                                        <!--요금안내서 재발행 설정 값 -->
-                                        <dd class="tx-data">2018년 5월<br/><span class="num">(2018.04.03)</span></dd>
+                                        <!--요금안내서 재발행 날자 설정 값 (20180709 형태의 문자열로 전달) -->
+                                        <dd class="tx-data"><%= data.month1 %><br/><span class="num">(<%= data.month2 %>)</span></dd>
                                     </dl>
                                 </li>
                             </ul>
@@ -126,7 +118,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
     $(document).ready(function () {
-        var comp = new Tw.MyTBillReissue($('#myt-bill-reissue'));
+        var comp = new Tw.MyTBillReissueComplete($('#myt-bill-gc-reissue-compl'));
     });
 </script>
 <% include ../../components/end.component.html %>
