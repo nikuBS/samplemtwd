@@ -1,7 +1,8 @@
 Tw.PopupService = function () {
   this.$document = $(document);
   this._prevHash = undefined;
-  this._callback = null;
+  this._confirmCallback = null;
+  this._openCallback = null;
   this._hashService = Tw.Hash;
   this._init();
 };
@@ -9,10 +10,10 @@ Tw.PopupService = function () {
 Tw.PopupService.prototype = {
   _init: function () {
     this._hashService.initHashNav($.proxy(this._onHashChange, this));
-    this._bindEvent();
+
   },
   _onHashChange: function (hash) {
-    if ( hash.base === this._prevHash ) {
+    if ( ('#' + hash.base) === this._prevHash ) {
       Tw.Logger.info('[Popup Close]');
       this._popupClose();
       this._prevHash = undefined;
@@ -20,76 +21,90 @@ Tw.PopupService.prototype = {
   },
   _onOpenPopup: function () {
     Tw.Logger.info('[Popup Open]');
+    var $popups = $('.popup, .popup-page');
+    var $currentPopup = $($popups[$popups.length - 1]);
+    this._bindEvent($currentPopup);
+    if ( !Tw.FormatHelper.isEmpty(this._openCallback) ) {
+      this._sendOpenCallback($currentPopup);
+    }
   },
   _popupClose: function () {
-    this._callback = null;
+    this._confirmCallback = null;
+    this._openCallback = null;
     skt_landing.action.popup.close();
   },
   _addHash: function () {
     this._prevHash = location.hash;
     location.hash = 'popup';
   },
-  _bindEvent: function () {
-    this.$document.on('click', '.popup-closeBtn', $.proxy(this.close, this));
-    this.$document.on('click', '.tw-popup-closeBtn', $.proxy(this.close, this));
-    this.$document.on('click', '.tw-popup-confirm', $.proxy(this._confirm, this));
-    this.$document.on('click', '.tw-popup-close', $.proxy(this._closeNoHash, this));
-    this.$document.on('click', '.tw-popup-callback', $.proxy(this._sendCallback, this));
+  _bindEvent: function ($container) {
+    $container.on('click', '.popup-closeBtn', $.proxy(this.close, this));
+    $container.on('click', '.tw-popup-closeBtn', $.proxy(this.close, this));
+    $container.on('click', '.tw-popup-confirm', $.proxy(this._confirm, this));
+    $container.on('click', '.tw-popup-closeNoHash', $.proxy(this._closeNoHash, this));
   },
   _confirm: function () {
-    this.close();
+    if ( !Tw.FormatHelper.isEmpty(this._confirmCallback) ) {
+      this._sendConfirmCallback();
+    } else {
+      this.close();
+    }
   },
   _closeNoHash: function () {
     skt_landing.action.popup.close();
   },
-  _setCallback: function (callback) {
+  _setConfirmCallback: function (callback) {
     if ( !Tw.FormatHelper.isEmpty(callback) ) {
-      this._callback = callback;
-      return true;
+      this._confirmCallback = callback;
     }
-    return false;
   },
-  _sendCallback: function () {
-    this._callback();
+  _setOpenCallback: function (callback) {
+    if ( !Tw.FormatHelper.isEmpty(callback) ) {
+      this._openCallback = callback;
+    }
   },
-  _openPopup: function (option) {
+  _sendConfirmCallback: function () {
+    this._confirmCallback();
+  },
+  _sendOpenCallback: function ($container) {
+    this._openCallback($container);
+  },
+  _open: function (option) {
     skt_landing.action.popup.open(option, $.proxy(this._onOpenPopup, this));
   },
-  open: function (option) {
+  open: function (option, openCallback) {
+    this._setOpenCallback(openCallback);
     this._addHash();
-    skt_landing.action.popup.open(option, $.proxy(this._onOpenPopup, this));
+    this._open(option);
   },
-  openAlert: function (title, message, callback) {
-    var confirmClass = 'bt-red1 ' + (this._setCallback(callback) ? 'tw-popup-callback' : 'tw-popup-confirm');
-    this._addHash();
+  openAlert: function (message, title) {
     var option = {
-      title: title,
+      title: title || Tw.POPUP_TITLE.NOTIFY,
       close_bt: true,
       title2: message,
       bt_num: 'one',
       type: [{
-        style_class: confirmClass,
+        style_class: 'bt-red1 tw-popup-closeBtn',
         txt: Tw.BUTTON_LABEL.CONFIRM
       }]
     };
-    this._openPopup(option);
+    this._addHash();
+    this._open(option);
   },
-  openAlertNoHash: function (title, message) {
+  openAlertNoHash: function (message, title) {
     var option = {
-      title: title,
+      title: title || Tw.POPUP_TITLE.NOTIFY,
       close_bt: true,
       title2: message,
       bt_num: 'one',
       type: [{
-        style_class: 'bt-red1 tw-popup-close',
+        style_class: 'bt-red1 tw-popup-closeNoHash',
         txt: Tw.BUTTON_LABEL.CONFIRM
       }]
     };
-    this._openPopup(option);
+    this._open(option);
   },
-  openConfirm: function (title, message, contents, callback) {
-    var confirmClass = 'bt-red1 ' + (this._setCallback(callback) ? 'tw-popup-callback' : 'tw-popup-confirm');
-    this._addHash();
+  openConfirm: function (title, message, contents, openCallback, confirmCallback) {
     var option = {
       title: title,
       close_bt: true,
@@ -100,31 +115,32 @@ Tw.PopupService.prototype = {
         style_class: 'bt-white1 tw-popup-closeBtn',
         txt: Tw.BUTTON_LABEL.CANCEL
       }, {
-        style_class: confirmClass,
+        style_class: 'bt-red1 tw-popup-confirm',
         txt: Tw.BUTTON_LABEL.CONFIRM
       }]
     };
-    this._openPopup(option);
-  },
-  openChoice: function (title, list, type, callback) {
-    this._setCallback(callback);
+    this._setOpenCallback(openCallback);
+    this._setConfirmCallback(confirmCallback);
     this._addHash();
-    this.open({
+    this._open(option);
+  },
+  openChoice: function (title, list, type, openCallback) {
+    var option = {
       hbs: 'choice',
       title: title,
       close_bt: true,
       list_type: type || 'type1',
       list: list
-    });
+    };
+    this._setOpenCallback(openCallback);
+    this._addHash();
+    this._open(option);
   },
   openSelect: function () {
 
   },
-  openLayer: function (option, openCallback) {
-    this.open(option, openCallback);
-  },
   close: function () {
-    if(location.hash === '#popup') {
+    if ( location.hash === '#popup' ) {
       history.back();
     }
   }

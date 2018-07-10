@@ -28,7 +28,7 @@ Tw.RechargeRefillSelect.prototype = {
   _openPopup: function (couponType, endDate) {
     var title = couponType + Tw.MSG_RECHARGE.REFILL_INFO_01;
     var contents = Tw.MSG_RECHARGE.REFILL_INFO_02 + endDate + Tw.MSG_RECHARGE.REFILL_INFO_03;
-    this._popupService.openConfirm(Tw.POPUP_TITLE.NOTIFY, title, contents, $.proxy(this._submit, this));
+    this._popupService.openConfirm(Tw.POPUP_TITLE.NOTIFY, title, contents, null, $.proxy(this._submit, this));
   },
   _submit: function () {
     var reqData = this._makeRequestData();

@@ -28,7 +28,8 @@ Tw.POPUP_TITLE = {
   GIFT_FAMILY_INFO: '데이터 자동 선물 안내',
   CHANGE_SEARCH_CONDITION: '검색 조건 변경',
   CHANGE_NICKNAME: '닉네임 설정',
-  SELECT_BANK: '은행선택'
+  SELECT_BANK: '은행선택',
+  SELECT_GIFT_AMOUNT: '선물할 금액 선택'
 };
 
 Tw.POPUP_PROPERTY = {
@@ -43,6 +44,10 @@ Tw.BUTTON_LABEL = {
   SELECT: '선택',
   CONFIRM: '확인',
   CANCEL: '취소'
+};
+
+Tw.CURRENCY_UNIT = {
+  WON: '원'
 };
 
 Tw.MSG_COMMON = {};
@@ -95,6 +100,8 @@ Tw.MSG_PAYMENT = {
   POINT_A05: '카드번호를 다시 입력해 주세요.',
   PAYMENT_A13: '보유하신 포인트보다 초과 입력하셨습니다.',
   PAYMENT_A14: '1,000 포인트 이상 입력해 주세요.',
+  HISTORY_MENU_TITLE: '납부방식 선택',
+  HISTORY_MENU: '전체납부내역,즉시납부내역,자동납부내역,자동납부 통합인출,포인트 납부예약,포인트 자동납부',
   HISTORY_A01: '환불신청 계좌가 등록되었습니다.',
   HISTORY_A02: '자동납부 통합인출 서비스가 해지되었습니다.',
   HISTORY_A03: 'OK캐쉬백 포인트 납부 예약을 취소하시겠습니까?',
@@ -126,6 +133,9 @@ Tw.MSG_GIFT = {
 };
 
 Tw.MSG_AUTH = {
-  WITHDRAW_A6: '회원해지를 하는 경우 SK텔레콤에서 제공하는 서비스를 사용할 수 없습니다. 해지하시겠습니까?'
+  WITHDRAW_A02_01: '이름을 입력해 주세요.',
+  WITHDRAW_A02_02: '법정 생년월일을 입력해 주세요.',
+  WITHDRAW_A03: '입력한 정보가 확인되지 않습니다. 다시 입력해 주세요.',
+  WITHDRAW_A06: '회원해지를 하는 경우 SK텔레콤에서 제공하는 서비스를 사용할 수 없습니다. 해지하시겠습니까?'
 };
 

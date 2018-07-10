@@ -49,7 +49,7 @@ Tw.PaymentRealtime.prototype = {
 
     var checkedLength = this.$container.find('.checked').length;
     if (checkedLength === 0) {
-      this._popupService.openAlert(Tw.POPUP_TITLE.NOTIFY, Tw.MSG_PAYMENT.REALTIME_A01);
+      this._popupService.openAlert(Tw.MSG_PAYMENT.REALTIME_A01);
     }
     else {
       this._go('#step1');
@@ -67,7 +67,7 @@ Tw.PaymentRealtime.prototype = {
     this._go('#get-point');
   },
   _getCashbagPoint: function () {
-    this._apiService.request(Tw.API_CMD.BFF_07_0028, JSON.stringify({ ocbCardNum: '4119057002786952' }))
+    this._apiService.request(Tw.API_CMD.BFF_07_0028, {})
       .done($.proxy(this._pointSuccess, this))
       .fail($.proxy(this._pointFail, this));
   },

@@ -15,14 +15,14 @@ Tw.PaymentHistoryAutoUnitedWithdrawal = function (rootEl) {
 Tw.PaymentHistoryAutoUnitedWithdrawal.prototype = {
   /*  자동납부 통합인출 서비스 해지 신청 팝업
 
-  skt_landing.action.popup.open({
+  popup.open({
     hbs:'PA_06_04_L01'// hbs의 파일명
   });
   */
 
 
   /*    납부방식 선택 레이어 팝업
-skt_landing.action.popup.open({
+popup.open({
                 'hbs' : 'choice',
                 'title': '납부방식 선택',
                 'close_bt': true,

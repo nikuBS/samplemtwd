@@ -119,15 +119,15 @@ Tw.RechargeRefill.prototype = {
     return $target.hasClass('refill-to-my-phone');
   },
   _showProduct: function () {
-    this._popupService.openLayer({
+    this._popupService.open({
       hbs: 'DA_01_01_01_L01'// hbs의 파일명
     });
   },
   _openAlert: function (message) {
-    this._popupService.openAlert(Tw.POPUP_TITLE.NOTIFY, message);
+    this._popupService.openAlert(message);
   },
   _openConfirm: function (message) {
-    this._popupService.openConfirm(Tw.POPUP_TITLE.NOTIFY, message, '', $.proxy(this._submit, this));
+    this._popupService.openConfirm(Tw.POPUP_TITLE.NOTIFY, message, '', null, $.proxy(this._submit, this));
   },
   _submit: function () {
     this._goLoad(this._makeUrl(this.$btnTarget));
