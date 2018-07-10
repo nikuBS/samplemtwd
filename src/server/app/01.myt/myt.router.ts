@@ -12,6 +12,7 @@ import MyTUsage24hours50discount from './controllers/usage/myt.usage.24hours-50d
 import MyTUsageDataLimit from './controllers/usage/myt.usage.data-limit.controller';
 import MyTHotBill from './controllers/bill/myt.bill.hotbill.controller';
 import MyTBillBillguide from './controllers/bill/myt.bill.billguide.controller';
+import MytBillGuidechange from './controllers/bill/myt.bill.guidechange.controller';
 
 
 class MytRouter extends TwRouter {
@@ -30,6 +31,7 @@ class MytRouter extends TwRouter {
     this.controllers.push({ url: '/usage/24hourdiscount', controller: new MyTUsage24hours50discount() });
     this.controllers.push({ url: '/bill/hotbill', controller: new MyTHotBill() });
     this.controllers.push({ url: '/bill/billguide', controller: new MyTBillBillguide() });
+    this.controllers.push({ url: '/bill/guidechange', controller: new MytBillGuidechange() });
   }
 }
 

@@ -15,6 +15,7 @@ export const URL = {
   '/usage/24hourdiscount': { login: true },
   '/myt/bill/hotbill': { login: true },
   '/myt/bill/billguide': { login: true },
+  '/myt/bill/guidechange': { login: true },
   // recharge
   '/recharge/refill': { login: true },
   '/recharge/refill/history': { login: true },
