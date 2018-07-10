@@ -10,6 +10,8 @@ import { API_CMD } from '../../../../types/api-command.type';
 import { LINE_NAME, SVC_ATTR } from '../../../../types/bff-common.type';
 import myTUsageData from '../../../../mock/server/myt.usage';
 import DataLimit from '../../../../mock/server/myt.data-limit';
+import billguide_BFF_01_0005 from '../../../../mock/server/myt.bill.billguide.BFF_01_0005';
+import billguide_BFF_01_00036 from '../../../../mock/server/myt.bill.billguide.BFF_01_00036';
 
 class MyTBillBillguide extends TwViewController {
 
@@ -21,14 +23,18 @@ class MyTBillBillguide extends TwViewController {
     repSvcYn: '',//대표회선여부
     svcCnt: '',//다회선수
   };
-  private _userInfo:any = {
-    svcCtg:null,//카테고리
-    svcCd:'C',//서비스 구분
+  //회선정보조회
+  private _circuitInfo:any = {
+    svcMgmtNum:'',//서비스관리번호
+    svcGr:'',//서비스등급
     svcAttrCd:'M1',//서비스 속성
-    svcViewName:SVC_ATTR.M1,//노출명칭
-    repSvcYn:null, //대표회선 여부
-    svcCnt:null //다회선수
+    repSvcYn:'',//기준회선여부
+    svcNum:'',//서비스번호(마스킹)
+    nickNm:'',//닉네임
+    addr:''//주소
   };
+  //청구요금조회
+  private _billpayInfo: any = {};
   private _urlTplInfo:any = {
     combineRepresentPage:  'bill/myt.bill.billguide.combineRepresentPage.html',//통합청구(대표)
     combineCommonPage:     'bill/myt.bill.billguide.combineCommonPage.html',//통합청구(일반)
@@ -37,7 +43,7 @@ class MyTBillBillguide extends TwViewController {
     companyPage:           'bill/myt.bill.billguide.companyPage.html',//기업솔루션(포인트캠)
     skbroadbandPage:       'bill/myt.bill.billguide.skbroadbandPage.html'//sk브로드밴드(인터넷/IPTV/집전화)
   };
-  private _bffDataObj:any = null;//bff통해 전달받은 데이터
+
   private _resData:any = null;//전달할 데이터
 
   constructor() {
@@ -47,11 +53,12 @@ class MyTBillBillguide extends TwViewController {
   //실행 : 데이터 가져오기
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     this._svcInfo = svcInfo;
-    this.logger.info(this, '[_svcInfo]', this._svcInfo);
+
     //mock 데이터 테스트
-    Observable.of([myTUsageData, DataLimit]).subscribe((bffRestDataObj) => {
+    Observable.of([billguide_BFF_01_0005, billguide_BFF_01_00036]).subscribe((bffRestDataObj) => {
       this.logger.info(this, '[subscribe_mock_test]', bffRestDataObj);
-      this._bffDataObj = bffRestDataObj;
+      this._circuitInfo = bffRestDataObj[0].result;
+      this._billpayInfo = bffRestDataObj[1].result;
       this.controllerInit(res);
     });
 
@@ -66,85 +73,96 @@ class MyTBillBillguide extends TwViewController {
 
   //컨트롤러 초기화 : 가져온 데이터를 활용해서 개발진행
   private controllerInit(res) {
-    //_userInfo 설정 : api 완성됐을때 진행
-    this.userInfoSetSvc();
 
     /*
     * 페이지 집입시 특정 조건에 따라 화면을 보여준다.
      */
-    switch ( this._userInfo.svcAttrCd ) {
+    this.logger.info(this, '[_circuitInfo.svcAttrCd] : ', this._circuitInfo.svcAttrCd);
+    this.logger.info(this, '[_billpayInfo.paidAmtMonthSvcCnt] : ', this._billpayInfo.paidAmtMonthSvcCnt);
+    this.logger.info(this, '[_billpayInfo.repSvcYn] : ', this._billpayInfo.repSvcYn);
+    switch ( this._circuitInfo.svcAttrCd ) {
       case 'S1' :
       case 'S2' :
       case 'S3' :
-        this.logger.info(this, '[_userInfo.svcAttrCd] sk브로드 밴드(인터넷/IPTV/집전화) : ', this._userInfo.svcAttrCd);
+        this.logger.info(this, '[_circuitInfo.svcAttrCd] sk브로드 밴드(인터넷/IPTV/집전화) : ', this._circuitInfo.svcAttrCd);
         this.skbroadbandCircuit(res);
         break;
       case 'O1' :
-        this.logger.info(this, '[_userInfo.svcAttrCd] 기업솔루션(포인트캠) : ', this._userInfo.svcAttrCd);
+        this.logger.info(this, '[_circuitInfo.svcAttrCd] 기업솔루션(포인트캠) : ', this._circuitInfo.svcAttrCd);
         this.companyCircuit(res);
         break;
       case 'M2' :
-        this.logger.info(this, '[_userInfo.svcAttrCd] PPS(선불폰) : ', this._userInfo.svcAttrCd);
+        this.logger.info(this, '[_circuitInfo.svcAttrCd] PPS(선불폰) : ', this._circuitInfo.svcAttrCd);
         this.prepaidCircuit(res);
         break;
       default :
-        if (this._userInfo.svcCnt === 0) {//개별 회선
-          this.logger.info(this, '[_userInfo.svcCnt] 회선수 0 : ', this._userInfo.svcCnt);
+
+        if( this._billpayInfo.paidAmtMonthSvcCnt === 1 ) {
+          this.logger.info(this, '[_billpayInfo.paidAmtMonthSvcCnt] 개별청구 : ', this._billpayInfo.paidAmtMonthSvcCnt);
           this.individualCircuit(res);
         }
-        else if (this._userInfo.svcCnt > 0 && this._userInfo.repSvcYn === 'Y') {//통합회선 : 대표
-          this.logger.info(this, '[_userInfo.svcCnt] 회선수 1 이상 | 통합회선 | 대표 : ', this._userInfo.svcCnt);
-          this.combineRepresentCircuit(res);
-        }
-        else if (this._userInfo.svcCnt > 0 && this._userInfo.repSvcYn === 'N') {//통합회선 : 일반
-          this.logger.info(this, '[_userInfo.svcCnt] 회선수 1 이상 | 통합회선 | 일반 : ', this._userInfo.svcCnt);
-          this.combineCommonCircuit(res);
+        else if( this._billpayInfo.paidAmtMonthSvcCnt > 1 ) {
+          this.logger.info(this, '[_billpayInfo.paidAmtMonthSvcCnt] 통합청구 : ', this._billpayInfo.paidAmtMonthSvcCnt);
+
+          if( this._billpayInfo.repSvcYn === 'Y' ) {
+            this.logger.info(this, '[_billpayInfo.repSvcYn] 통합청구 | 대표 : ', this._billpayInfo.repSvcYn);
+            this.combineRepresentCircuit(res);
+          }
+          else if( this._billpayInfo.repSvcYn === 'N' ) {
+            this.logger.info(this, '[_billpayInfo.repSvcYn] 통합청구 | 대표아님 : ', this._billpayInfo.repSvcYn);
+            this.combineCommonCircuit(res);
+          }
         }
     }
 
   }
   //-------------------------------------------------------------[서비스]
-  private userInfoSetSvc() {//_userInfo 설정
-    this._userInfo.svcCtg = null;
-    this._userInfo.svcCd = this._svcInfo.svcCd;
-    this._userInfo.svcAttrCd = 'M2';//BFF_01_0005 완료되면 사용함. 현재 bff 작업중
-    this._userInfo.repSvcYn = this._svcInfo.repSvcYn;
-    this._userInfo.svcCnt = this._svcInfo.svcCnt;
-  }
   //통합청구(대표)
   private combineRepresentCircuit(res) {
+    this.logger.info(this, '[_urlTplInfo.combineRepresentPage] : ', this._urlTplInfo.combineRepresentPage);
     this.renderView(res, this._urlTplInfo.combineRepresentPage, {
-      userInfo: this._userInfo
+      userInfo: this._circuitInfo,
+      billpayInfo : this._billpayInfo
     } );
   }
   //통합청구(일반)
   private combineCommonCircuit(res) {
+    this.logger.info(this, '[_urlTplInfo.combineCommonPage] : ', this._urlTplInfo.combineCommonPage);
     this.renderView(res, this._urlTplInfo.combineCommonPage, {
-      userInfo: this._userInfo
+      userInfo: this._circuitInfo,
+      billpayInfo : this._billpayInfo
     } );
   }
   //개별청구
   private individualCircuit(res) {
+    this.logger.info(this, '[_urlTplInfo.individualPage] : ', this._urlTplInfo.individualPage);
     this.renderView(res, this._urlTplInfo.individualPage, {
-      userInfo: this._userInfo
+      userInfo: this._circuitInfo,
+      billpayInfo : this._billpayInfo
     } );
   }
   //PPS(선불폰)
   private prepaidCircuit(res) {
+    this.logger.info(this, '[_urlTplInfo.prepaidPage] : ', this._urlTplInfo.prepaidPage);
     this.renderView(res, this._urlTplInfo.prepaidPage, {
-      userInfo: this._userInfo
+      userInfo: this._circuitInfo,
+      billpayInfo : this._billpayInfo
     } );
   }
   //기업솔루션(포인트캠)
   private companyCircuit(res) {
+    this.logger.info(this, '[_urlTplInfo.companyPage] : ', this._urlTplInfo.companyPage);
     this.renderView(res, this._urlTplInfo.companyPage, {
-      userInfo: this._userInfo
+      userInfo: this._circuitInfo,
+      billpayInfo : this._billpayInfo
     } );
   }
   //sk브로드밴드(인터넷/IPTV/집전화)
   private skbroadbandCircuit(res) {
+    this.logger.info(this, '[_urlTplInfo.skbroadbandPage] : ', this._urlTplInfo.skbroadbandPage);
     this.renderView(res, this._urlTplInfo.skbroadbandPage, {
-      userInfo: this._userInfo
+      userInfo: this._circuitInfo,
+      billpayInfo : this._billpayInfo
     } );
   }
 

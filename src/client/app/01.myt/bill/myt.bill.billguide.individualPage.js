@@ -2,6 +2,7 @@
  * FileName: myt.bill.billguide.individualPage.js
  * Author: 김명환 (skt.P130714@partner.sk.com)
  * Date: 2018.07.08
+ * Info: 개별청구
  */
 
 Tw.mytBillBillguideIndividualPage = function (rootEl) {

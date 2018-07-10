@@ -2,6 +2,7 @@
  * FileName: myt.bill.billguide.combineCommonPage.js
  * Author: 김명환 (skt.P130714@partner.sk.com)
  * Date: 2018.07.08
+ * Info: 통합청구(일반)
  */
 
 Tw.mytBillBillguideCombineCommonPage = function (rootEl) {

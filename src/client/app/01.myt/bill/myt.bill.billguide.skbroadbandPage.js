@@ -2,6 +2,7 @@
  * FileName: myt.bill.billguide.skbroadbandPage.js
  * Author: 김명환 (skt.P130714@partner.sk.com)
  * Date: 2018.07.08
+ * Info: sk브로드밴드(인터넷/IPTV/집전화)
  */
 
 Tw.mytBillBillguideSkbroadbandPage = function (rootEl) {

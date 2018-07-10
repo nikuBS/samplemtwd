@@ -2,6 +2,7 @@
  * FileName: myt.bill.billguide.companyPage.js
  * Author: 김명환 (skt.P130714@partner.sk.com)
  * Date: 2018.07.08
+ * Info: 기업솔루션(포인트캠)
  */
 
 Tw.mytBillBillguideCompanyPage = function (rootEl) {

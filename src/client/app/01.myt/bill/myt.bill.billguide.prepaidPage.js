@@ -2,6 +2,7 @@
  * FileName: myt.bill.billguide.prepaidPage.js
  * Author: 김명환 (skt.P130714@partner.sk.com)
  * Date: 2018.07.08
+ * Info: PPS(선불폰)
  */
 
 Tw.mytBillBillguidePrepaidPage = function (rootEl) {
