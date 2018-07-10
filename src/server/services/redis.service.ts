@@ -1,12 +1,12 @@
 import session from 'express-session';
 import connect from 'connect-redis';
 import redis from 'redis';
-import environment from '../config/environment.config';
+import EnvHelper from '../utils/env.helper';
 
 class RedisService {
-  private env = environment[String(process.env.NODE_ENV)];
+  private envRedis = EnvHelper.getEnvironment('REDIS');
   private RedisStore = connect(session);
-  private redisOption = Object.assign(this.env.REDIS, {
+  private redisOption = Object.assign(this.envRedis, {
     prefix: 'session:'
   });
   private client;

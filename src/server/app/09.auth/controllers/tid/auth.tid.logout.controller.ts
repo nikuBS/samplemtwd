@@ -8,6 +8,7 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import { Request, Response, NextFunction } from 'express';
 import { API_CMD, API_CODE, TID_SVC_TYPE } from '../../../../types/api-command.type';
 import ParamsHelper from '../../../../utils/params.helper';
+import EnvHelper from '../../../../utils/env.helper';
 
 class AuthTidLogout extends TwViewController {
   constructor() {
@@ -21,7 +22,7 @@ class AuthTidLogout extends TwViewController {
       state: '3646bae6eff00',
       nonce: 'df597de4c079',
       service_type: TID_SVC_TYPE.SSO_LOGOUT,
-      redirect_uri: 'http://localhost:3000/home',
+      redirect_uri: EnvHelper.getEnvironment('TID_REDIRECT') + '/home',
       client_type: 'MWEB',
       scope: 'openid',
       response_type: 'id_token%20token',
@@ -34,6 +35,7 @@ class AuthTidLogout extends TwViewController {
         params.state = resp.result.state;
       }
       const url = this.apiService.getServerUri(API_CMD.OIDC) + API_CMD.OIDC.path + ParamsHelper.setQueryParams(params);
+      this.logger.info(this, '[redirect]', url);
       res.redirect(url);
     });
   }
