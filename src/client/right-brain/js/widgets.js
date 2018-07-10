@@ -269,6 +269,20 @@ skt_landing.widgets = {
       if(_this.find('> .acco-cover > .bt-whole').length < 1){
         _this.find('.acco-cover').addClass('on');
       }
+      
+      var accoList = _this.find('> .acco-cover > .acco-style > .acco-list > .acco-box');
+      var accoList_leng = accoList.length;
+      for(var i=0; i<accoList_leng; ++i){
+        var forTarget = accoList.eq(i).find('> .acco-cont').children();
+        forTarget = forTarget.children().length > 0 ? forTarget.children() : forTarget;
+        var targetLineHeight = parseInt(forTarget.css('line-height')) ? parseInt(forTarget.css('line-height')) : 0,
+            targetHeight = forTarget.height() ? forTarget.height() : 0;
+        if(targetHeight > targetLineHeight || forTarget.length > 1){
+          accoList.eq(i).find('> .acco-tit button').addClass('show-button');
+        }else{
+          accoList.eq(i).addClass('on').find('> .acco-tit button').addClass('hide-button');
+        }
+      }
       if($(this).find('> .acco-cover > .acco-style').hasClass('none-event')) return ;
       
       var setOnList = _this.find('> .acco-cover > .acco-style > .acco-list > .acco-box');
