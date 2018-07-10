@@ -88,36 +88,12 @@ export enum REQUEST_VALUE {
 }
 
 export const BILL_GUIDE_TYPE = {
-  'TWORLD': {
-    'CODE': 'P',
-    'COMPONENT': 'tworld'
-  },
-  'BILL_LETTER': {
-    'CODE': 'H',
-    'COMPONENT': 'bill-letter'
-  },
-  'SMS': {
-    'CODE': 'B',
-    'COMPONENT': 'sms'
-  },
-  'EMAIL': {
-    'CODE': '2',
-    'COMPONENT': 'email'
-  },
-  'BILL_LETTER_EMAIL': {
-    'CODE': 'I',
-    'COMPONENT': 'bill-letter-email'
-  },
-  'SMS_EMAIL': {
-    'CODE': 'A',
-    'COMPONENT': 'sms-email'
-  },
-  'BILL_LETTER_SMS': {
-    'CODE': 'Q',
-    'COMPONENT': 'bill-letter-sms'
-  },
-  'ETC': {
-    'CODE': '1',
-    'COMPONENT': 'etc'
-  }
+  'TWORLD': 'P',
+  'BILL_LETTER': 'H',
+  'SMS': 'B',
+  'EMAIL': '2',
+  'BILL_LETTER_EMAIL': 'I',
+  'SMS_EMAIL': 'A',
+  'BILL_LETTER_SMS': 'Q',
+  'ETC': '1'
 };
