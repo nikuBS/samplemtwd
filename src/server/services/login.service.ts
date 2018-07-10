@@ -50,10 +50,10 @@ class LoginService {
   }
 
   public getServerSession(): string {
-    if ( FormatHelper.isEmpty(this.session.serverSession) ) {
-      return '';
+    if ( !FormatHelper.isEmpty(this.session) && !FormatHelper.isEmpty(this.session.serverSession) ) {
+      return this.session.serverSession;
     }
-    return this.session.serverSession;
+    return '';
   }
 
   public setServerSession(serverSession: string) {

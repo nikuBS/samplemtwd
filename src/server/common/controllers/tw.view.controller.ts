@@ -35,6 +35,7 @@ abstract class TwViewController {
     const userId = req.query.userId;
     const path = req.baseUrl + (req.path !== '/' ? req.path : '');
 
+    this.loginService.setClientSession(req.session);
     if ( URL[path].login ) {
       this.login(req, res, next, userId);
     } else {
@@ -48,7 +49,7 @@ abstract class TwViewController {
     if ( userId === 'mock' ) {
       loginCmd = API_CMD.BFF_03_0001_mock;
     }
-    if ( this.checkLogin(req.session, userId) ) {
+    if ( this.checkLogin(userId) ) {
       this.render(req, res, next, this._loginService.getSvcInfo());
     } else {
       this._apiService.request(loginCmd, { userId }).subscribe((resp) => {
@@ -62,8 +63,7 @@ abstract class TwViewController {
     }
   }
 
-  private checkLogin(session: any, userId: string): boolean {
-    this.loginService.setClientSession(session);
+  private checkLogin(userId: string): boolean {
     return this.loginService.isLogin(userId);
   }
 
