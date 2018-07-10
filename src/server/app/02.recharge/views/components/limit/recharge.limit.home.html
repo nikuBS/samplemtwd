@@ -1,3 +1,9 @@
+<%# 
+* FileName: recharge.limit.home.html
+* Author: Jiyoung Jo (jiyoungjo@sk.com)
+* Date: 2018.07.10
+%>
+
 <div id="contents">
     <h2 class="blind">내용</h2>
     <div class="container">
@@ -29,7 +35,7 @@
                         <dl>
                             <dt>충전 서비스 차단 여부</dt>
                             <dd>
-                                <%= limitData.blockYn === "Y" ? "충전 허용" : "충전 불가" %>
+                                <%= limitData.blockYn === "N" ? "충전 허용" : "충전 불가" %>
                             </dd>
                         </dl>
                     </li>
@@ -43,7 +49,7 @@
                             <li>
                                 <span class="title">충전 가능 금액</span>
                                 <span class="price">
-                                    <%= limitData.currentTopUpLimit %>
+                                    <%= limitData.currentTopUpLimit %> 원
                                 </span>
                             </li>
                         </ul>
@@ -60,11 +66,11 @@
                                 <span class="toggles">
                                     <span class="widget">
                                         <span class="widget-box switch">
-                                            <% var dataLimitedTmth = limitData.dataLimitedTmthYn === 'Y'; %>
-                                                <span class="btn-switch type1 <%= dataLimitedTmth ? '': 'on' %>">
+                                            <% const dataLimitedTmth = limitData.dataLimitedTmthYn === 'Y'; %>
+                                                <span class="btn-switch type1 <%= dataLimitedTmth ? 'on' : '' %>">
                                                     <span>해제</span>
                                                     <span class="switch-style" role="checkbox" aria-checked="false">
-                                                        <input type="checkbox" <% if (!dataLimitedTmth) { %> checked<% } %>>
+                                                        <input type="checkbox" <%= dataLimitedTmth ? 'checked' : '' %>>
                                                         <span class="blind">ON/OFF스위치</span>
                                                     </span>
                                                     <span>차단</span>
@@ -78,11 +84,11 @@
                                     <span class="toggles">
                                         <span class="widget">
                                             <span class="widget-box switch">
-                                                <% var dataLimited = limitData.dataLimitedYn === 'Y'; %>
-                                                <span class="btn-switch type1 <%= dataLimited ? '': 'on' %>">
+                                                <% const dataLimited = limitData.dataLimitedYn === 'Y'; %>
+                                                <span class="btn-switch type1 <%= dataLimited ? 'on' : '' %>">
                                                     <span>해제</span>
                                                     <span class="switch-style" role="checkbox" aria-checked="false">
-                                                        <input type="checkbox" <% if (!dataLimited) { %> checked<% } %>>
+                                                        <input type="checkbox" <%= dataLimited ? 'checked' : '' %>>
                                                         <span class="blind">ON/OFF스위치</span>
                                                     </span>
                                                     <span>차단</span>
@@ -107,7 +113,7 @@
                 <ul class="bt-slice">
                     <li class="bt-blue1">
                         <!-- Dimmed Case는 button에 disabled속성 추가 -->
-                        <a href="#step-type"><button>데이터 한도 요금 충전하기</button></a>
+                        <a href="#step-type"><button <%= limitData.blockYn === 'Y' ? 'disabled' : '' %>>데이터 한도 요금 충전하기</button></a>
                     </li>
                     <li class="bt-white1">
                         <button>데이터 한도 요금 충전 내역</button>
