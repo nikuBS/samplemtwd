@@ -317,11 +317,11 @@ Tw.RechargeGiftHistory.prototype = {
       var selectedRequestLi = ($(e.currentTarget).parents('li'))[0],
           selectedEvent     = e;
 
-      skt_landing.action.popup.open(this.requestDeletePopup);
+      // skt_landing.action.popup.open(this.requestDeletePopup);
       var tempTimer = window.setTimeout((function () {
         $('.popup .btn-box .bt-white2').on('click', 'button', function () {
           event.preventDefault();
-          skt_landing.action.popup.close();
+          // skt_landing.action.popup.close();
         });
         $('.popup .btn-box .bt-red1').on('click', 'button', (function () {
           event.preventDefault();
@@ -347,7 +347,7 @@ Tw.RechargeGiftHistory.prototype = {
       currentData.length = currentData.length - 1;
       this[this.currentTab + 'Counter'].text(currentData.length);
     }
-    skt_landing.action.popup.close();
+    // skt_landing.action.popup.close();
   },
 
   getTemplate: function (t, d) {
@@ -449,7 +449,7 @@ Tw.RechargeGiftHistory.prototype = {
   hidePopup: function () {
     this.currentPopupKeyWord = '';
     this.resetPrevSearchCondition();
-    skt_landing.action.popup.close();
+    // skt_landing.action.popup.close();
   },
 
   searchPopupHandler: function () {
