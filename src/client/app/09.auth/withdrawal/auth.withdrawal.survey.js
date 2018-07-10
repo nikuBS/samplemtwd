@@ -46,7 +46,7 @@ Tw.AuthWithdrawalSurvey.prototype = {
     this.$byteCurrent.html(current.length);
   },
   _showWithdrawConfirm: function () {
-    Tw.Popup.openConfirm(Tw.POPUP_TITLE.NOTIFY, Tw.MSG_AUTH.WITHDRAW_A6, '',
+    Tw.Popup.openConfirm(Tw.POPUP_TITLE.NOTIFY, Tw.MSG_AUTH.WITHDRAW_A06, '',
       null, $.proxy(this._sendWithdrawRequest, this));
   },
   _sendWithdrawRequest: function () {
