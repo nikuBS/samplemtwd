@@ -5,16 +5,16 @@
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
-import {NextFunction, Request, Response} from 'express';
+import { NextFunction, Request, Response } from 'express';
 
 class AuthLoginFindIdPwd extends TwViewController {
-    constructor() {
-        super();
-    }
+  constructor() {
+    super();
+  }
 
-    render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-        res.render('login/auth.login.find-id-pwd.html');
-    }
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+    res.render('login/auth.login.find-id-pwd.html');
+  }
 }
 
 export default AuthLoginFindIdPwd;

@@ -2,7 +2,6 @@ import express, { NextFunction, Request, Response, Router } from 'express';
 
 class ApiRouter {
   public router: Router;
-
   constructor() {
     this.router = express.Router();
     this.setApi();
