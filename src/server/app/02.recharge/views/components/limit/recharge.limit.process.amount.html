@@ -1,1 +1,91 @@
-<div>limit.amount</div>
+<%# 
+* FileName: recharge.limit.process.amount.html
+* Author: Jiyoung Jo (jiyoungjo@sk.com)
+* Date: 2018.07.10
+%>
+
+<div id="contents" class="container-wrap">
+    <h2 class="blind">내용</h2>
+    <div class="container">
+        <div class="cont-box">
+            <!-- .widget -->
+            <div class="widget">
+                <div class="widget-box step">
+                    <h3 class="step-ti">
+                        <em>STEP 02</em>충전 금액 선택</h3>
+                    <ul class="step-list">
+                        <li>1
+                            <span class="blind">충정 방법 선택</span>
+                        </li>
+                        <li class="on">2
+                            <span class="blind">충전 금액 선택</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- //.widget -->
+        </div>
+        <hr class="cont-sp type1" />
+        <h3 class="blind">잔여 데이터</h3>
+        <div class="cont-box">
+            <div class="gift-money-cont">
+                <ul class="t-gift-data">
+                    <li>
+                        <dl>
+                            <dt class="ti-data">충전 방법</dt>
+                            <dd class="tx-data">
+                                <div class="txt rechargeType">
+                                    <span class="blind">이름</span>당월 충전</div>
+                            </dd>
+                        </dl>
+                    </li>
+                    <li>
+                        <dl>
+                            <dt class="ti-data">충전 금액</dt>
+                            <dd class="tx-data money">
+                                <span class="tx-bold rechargeAmount">5,000</span>
+                                <span>원</span>
+                            </dd>
+                        </dl>
+                    </li>
+                </ul>
+            </div>
+            <div class="money-select-wrap">
+                <div class="money-select-box-inner">
+                    <span class="money-select-selection">충전할 금액을 선택해 주세요.</span>
+                    <div class="money-select-size">
+                        <!-- .widget -->
+                        <div class="widget">
+                            <div class="widget-box tube">
+                                <ul class="tube-list two" role="radiogroup">
+                                    <li class="checked" role="radio" aria-checked="true" data-value="5000">
+                                        <input type="radio" name="senddata" checked title="5000">5,000 원</li>
+                                    <li role="radio" aria-checked="false" data-value="10000">
+                                        <input type="radio" name="senddata" title="10000">10,000 원</li>
+                                    <li role="radio" aria-checked="false" data-value="15000">
+                                        <input type="radio" name="senddata" title="15000">15,000 원</li>
+                                    <li role="radio" aria-checked="false" data-value="20000">
+                                        <input type="radio" name="senddata" title="20000">20,000 원 </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- //.widget -->
+                    </div>
+                </div>
+                <p class="money-select-comment">충전 가능 금액
+                    <em>
+                        <%= limitData.currentTopUpLimit %>
+                    </em>
+                </p>
+            </div>
+            <ul class="bt-slice item-two">
+                <li class="bt-white2">
+                    <button id="btn-go-back">이전</button>
+                </li>
+                <li class="bt-red1">
+                    <button id="btn-submit" class="selected" data-chargeClCd=<%= limitData.chargeClCd %>>충전하기</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
