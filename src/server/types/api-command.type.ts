@@ -128,7 +128,17 @@ export const API_CMD = {
   // TID
   OIDC: { path: '/auth/authorize.do', method: API_METHOD.GET, server: API_SERVER.TID, bypass: false },
 
-  TEST_GET_USAGE_BTN: { path: '/usageBtn', method: API_METHOD.GET, server: API_SERVER.TEST, bypass: true }
+  // TEST
+  GET: { path: '/posts', method: API_METHOD.GET, server: API_SERVER.TEST, bypass: true },
+  GET_PARAM: { path: '/comments', method: API_METHOD.GET, server: API_SERVER.TEST, bypass: true },
+  GET_PATH_PARAM: { path: '/posts/args-0', method: API_METHOD.GET, server: API_SERVER.TEST, bypass: true },
+  POST: { path: '/posts', method: API_METHOD.POST, server: API_SERVER.TEST, bypass: true },
+  POST_PARAM: { path: '/posts', method: API_METHOD.POST, server: API_SERVER.TEST, bypass: true },
+  PUT: { path: '/posts/1', method: API_METHOD.PUT, server: API_SERVER.TEST, bypass: true },
+  PUT_PARAM: { path: '/posts/1', method: API_METHOD.PUT, server: API_SERVER.TEST, bypass: true },
+  DELETE: { path: '/posts/1', method: API_METHOD.DELETE, server: API_SERVER.TEST, bypass: true },
+  DELETE_PARAM: {}
+
 };
 
 export const TID_SVC_TYPE = {
