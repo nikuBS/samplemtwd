@@ -1,6 +1,8 @@
-import express, {NextFunction, Request, Response, Router} from 'express';
-import {API_CMD, API_METHOD} from '../types/api-command.type';
+import express from 'express';
+import { Router, Request, Response, NextFunction } from 'express';
+import { API_CMD, API_METHOD } from '../types/api-command.type';
 import ApiService from '../services/api.service';
+import FormatHelper from '../utils/format.helper';
 
 
 class BypassRouter {
@@ -50,10 +52,15 @@ class BypassRouter {
 
   private sendRequest(cmd: any, req: Request, res: Response, next: NextFunction) {
     const params = cmd.method === API_METHOD.GET ? req.query : req.body;
-    const headers = req.headers;
+    const headers = {
+      cookie: req.headers.cookie,
+      'user-agent': req.headers['user-agent']
+    };
 
-      this.apiService.request(cmd, params.parameter, headers, ...(params.pathVariables))
-      .subscribe(data => {
+    const parameter = FormatHelper.isEmpty(params.parameter) ? {} : params.parameter;
+    const pathVariables = FormatHelper.isEmpty(params.pathVariables) ? [] : params.pathVariables;
+    this.apiService.request(cmd, parameter, headers, ...(pathVariables))
+      .subscribe((data) => {
         return res.json(data);
       });
   }

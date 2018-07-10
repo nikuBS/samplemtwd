@@ -46,9 +46,14 @@
                 </li>
                 <li class="account-wrap">
                     <h5 class="account-tit">유효기간</h5>
-                    <div class="inputbox">
-                        <span class="input">
-                            <input type="text" class="only-number" placeholder="YYYY     /     MM" title="카드유효기간">
+                    <div class="inputbox card-tbl">
+                        <span class="input card-cell">
+                            <input type="text" class="only-number" placeholder="YYYY" maxlength="4" title="카드유효기간 년">
+                            <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
+                        </span>
+                        <span class="input card-cell">/</span>
+                        <span class="input card-cell">
+                            <input type="text" class="c-month only-number" placeholder="MM" maxlength="2" title="카드유효기간 월">
                             <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
                         </span>
                     </div>

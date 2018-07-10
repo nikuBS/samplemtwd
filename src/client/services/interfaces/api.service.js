@@ -3,22 +3,23 @@ Tw.ApiService = function () {
 
 Tw.ApiService.prototype = {
   request: function (command, params, headers) {
-      var pathVariables = this._getPathVariables(arguments);
-      var htOptions = this._makeOptions(command, params, headers, pathVariables);
+    var pathVariables = this._getPathVariables(arguments);
+    var htOptions = this._makeOptions(command, params, headers, pathVariables);
     Tw.Logger.info('[API REQ]', htOptions);
 
     return $.ajax(htOptions);
   },
 
-    _makeOptions: function (command, params, headers, pathVariables) {
+  _makeOptions: function (command, params, headers, pathVariables) {
     var prefix = this._setPrefix(command);
+    var data = prefix === '/bypass' ? { parameter: params, pathVariables: pathVariables } : params;
     return {
       type: command.method,
       url: prefix + command.path,
       dataType: 'json',
       timeout: 10000,
-      headers: Object.assign({ 'Content-Type': 'application/json' }, headers),
-        data: JSON.stringify({parameter: params, pathVariables: pathVariables})
+      headers: Object.assign({ 'content-type': 'application/json; charset=UTF-8' }, headers),
+      data: command.method === Tw.API_METHOD.GET ? data : JSON.stringify(data)
     };
   },
 
@@ -32,12 +33,12 @@ Tw.ApiService.prototype = {
     }
   },
 
-    _getPathVariables: function (args) {
-        var arrArgs = Array.prototype.slice.call(args);
-        var argsLen = arrArgs.length;
-        if (argsLen > 3) {
-            return arrArgs.slice(3, argsLen);
-        }
-        return [];
+  _getPathVariables: function (args) {
+    var arrArgs = Array.prototype.slice.call(args);
+    var argsLen = arrArgs.length;
+    if ( argsLen > 3 ) {
+      return arrArgs.slice(3, argsLen);
     }
+    return [];
+  }
 };

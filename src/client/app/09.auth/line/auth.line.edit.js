@@ -5,7 +5,9 @@
  */
 
 Tw.AuthLineEdit = function (rootEl) {
-    this.$container = rootEl;
+  this.$container = rootEl;
+  this._apiService = Tw.Api;
 };
 
-Tw.AuthLineEdit.prototype = {};
+Tw.AuthLineEdit.prototype = {
+};

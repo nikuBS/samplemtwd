@@ -11,6 +11,9 @@ Tw.HomeMain = function (rootEl) {
 
   this._init();
   this._bindEvent();
+
+  // For dev (Determine if api service issue or bff issue)
+  this._testApi();
 };
 
 
@@ -28,14 +31,14 @@ Tw.HomeMain.prototype = {
 
   // 리필하기
   _openRefillProduct: function () {
-    this._popupService.openLayer({
+    this._popupService.open({
       hbs: 'DA_01_01_01_L01'// hbs의 파일명
     });
   },
 
   // 선물하기
   _openGiftProduct: function () {
-    this._popupService.openLayer({
+    this._popupService.open({
       hbs: 'DA_02_01_L01'// hbs의 파일명
     });
   },
@@ -54,8 +57,47 @@ Tw.HomeMain.prototype = {
     }
 
   },
-
   _failGiftBalance: function (error) {
     console.log(error);
+  },
+  _testApi: function () {
+    this._apiService.request(Tw.API_CMD.GET, {})
+      .done(function (resp) {
+        console.log('[Api test] get success', resp);
+      });
+    this._apiService.request(Tw.API_CMD.GET_PARAM, { postId: 1 })
+      .done(function (resp) {
+        console.log('[Api test] get param success', resp);
+      });
+    this._apiService.request(Tw.API_CMD.GET_PATH_PARAM, {}, {}, 1)
+      .done(function (resp) {
+        console.log('[Api test] get path param success', resp);
+      });
+    this._apiService.request(Tw.API_CMD.POST, {})
+      .done(function (resp) {
+        console.log('[Api test] post success', resp);
+      });
+    this._apiService.request(Tw.API_CMD.POST_PARAM, {
+      title: 'foo',
+      body: 'bar',
+      userId: 1
+    })
+      .done(function (resp) {
+        console.log('[Api test] post param success', resp);
+      });
+    this._apiService.request(Tw.API_CMD.PUT_PARAM, {
+      id: 1,
+      title: 'foo',
+      body: 'bar',
+      userId: 1
+    })
+      .done(function (resp) {
+        console.log('[Api test] put param success', resp);
+      });
+    this._apiService.request(Tw.API_CMD.DELETE, {})
+      .done(function (resp) {
+        console.log('[Api test] delete success', resp);
+      });
+
   }
 };

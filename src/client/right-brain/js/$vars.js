@@ -1,9 +1,5 @@
 var skt_landing = {},
   frontend_fn = {
-      popup_open: function (type) {
-      },
-      popup_close: function (type) {
-      }
   },
   page_list = {},
   component_list = [],

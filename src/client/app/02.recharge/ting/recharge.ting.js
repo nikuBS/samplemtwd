@@ -15,15 +15,15 @@ Tw.RechargeTing = function (rootEl) {
 };
 
 Tw.RechargeTing.prototype = {
+  _isNotSkt: false,
   _isNotAdult: false,
   _isBlockedTing: false,
-  _isNotSkt: false,
   _isNotAvailableAmount: false,
 
   _init: function () {
-    this._apiService.request(Tw.API_CMD.BFF_06_0020, {})
-      .done($.proxy(this._onSuccessGetProvider, this))
-      .fail($.proxy(this._sendFail, this));
+    // this._apiService.request(Tw.API_CMD.BFF_06_0020, {})
+    //   .done($.proxy(this._onSuccessGetProvider, this))
+    //   .fail($.proxy(this._sendFail, this));
 
     // var res = {
     //   "code": "RCG0101",
@@ -39,11 +39,20 @@ Tw.RechargeTing.prototype = {
     //   "orgAppName": "core-balance",
     //   "orgDebugMessage": "BLN0002"
     // };
-    // this._onSuccessGetProvider(res)
+
+    // this._onSuccessGetProvider(res);
+
+    // this._apiService.request(Tw.API_CMD.BFF_03_0005_C, {})
+    //   .done($.proxy(this._onSuccessProvider, this))
+    //   .fail($.proxy(this._sendFail, this));
+    this._onSuccessGetProvider();
   },
 
   _cachedElement: function () {
-    this.tpl_ting_blocked = Handlebars.compile(this.$container.find('#tpl_ting_blocked').text());
+    this.$wrap_tpl_block = $('#wrap_tpl_block');
+    this.$wrap_tpl_ting_request_info = $('.wrap_tpl_ting_request_info');
+    this.tpl_ting_blocked = Handlebars.compile($('#tpl_ting_blocked').text());
+    this.tpl_ting_request_info = Handlebars.compile($('#tpl_ting_request_info').text());
   },
 
   _bindEvent: function () {
@@ -51,26 +60,39 @@ Tw.RechargeTing.prototype = {
     this.$container.on('click', '#btn_activate_block', $.proxy(this._activateBlock, this));
     this.$container.on('click', '#btn_process_ting', $.proxy(this._goTingGiftProcess, this));
     this.$container.on('click', '#btn_deactivate_block', $.proxy(this._deactivateBlock, this));
+    this.$container.on('click', '#btn_ting_request', $.proxy(this._goTingRequestProcess, this));
+  },
+
+  _onSuccessProvider: function (res) {
+    var result = res.result;
+    this.$wrap_tpl_ting_request_info.html(this.tpl_ting_request_info({ name: result.custNm }));
   },
 
   _onSuccessGetProvider: function (res) {
-    if ( res.code === 'RCG0101' ) {
-      this._isNotAdult = true;
-    }
-    if ( res.code === 'RCG0109' ) {
-      this._isBlockedTing = true;
-    }
-    if ( res.code === 'RCG0110' ) {
-      this._isNotSkt = true;
-    }
-    if ( res.code === 'RCG0112' ) {
-      this._isNotAvailableAmount = true;
-    }
+    // if ( res.code === 'RCG0101' ) {
+    //   this._isBlockedTing = true;
+    // }
+    // if ( res.code === 'RCG0102' ) {
+    //   this._isNotAvailableAmount = true;
+    // }
+    // if ( res.code === 'RCG0109' ) {
+    //   this._isBlockedTing = true;
+    // }
+    // if ( res.code === 'RCG0110' ) {
+    //   this._isNotSkt = true;
+    // }
+    // if ( res.code === 'RCG0112' ) {
+    //   this._isNotAvailableAmount = true;
+    // }
 
-    $('#wrap_tpl_block').html(this.tpl_ting_blocked({isBlocked : true}));
+    this.$wrap_tpl_block.html(this.tpl_ting_blocked({ isBlocked: true }));
   },
 
   _activateBlock: function () {
+    this._popupService.openConfirm(Tw.POPUP_TITLE.NOTIFY, Tw.MSG_GIFT.TING_A01, '', null, $.proxy(this._requestActivateBlock, this));
+  },
+
+  _requestActivateBlock: function () {
     this._apiService.request(Tw.API_CMD.BFF_06_0021, {})
       .done(function () {
         location.reload(true);
@@ -101,11 +123,11 @@ Tw.RechargeTing.prototype = {
       return false;
     }
 
-    this._goLoad('/recharge/ting/process');
+    this._go('step1');
   },
 
-  _goTingRequestProcess: function () {
-
+  _goTingRequestProcess: function(){
+    this._go('request-step1');
   },
 
   _goHistory: function () {
@@ -114,5 +136,9 @@ Tw.RechargeTing.prototype = {
 
   _goLoad: function (url) {
     location.href = url;
+  },
+
+  _go: function (hash) {
+    window.location.hash = hash;
   }
 };

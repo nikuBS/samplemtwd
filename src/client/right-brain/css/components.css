@@ -1928,26 +1928,66 @@
     position: relative;
 }
 
-.flcard-s-default .flcard-s-cont .type3 .slider-box .slick-prev {
-  position: absolute;
-  bottom: -1.625rem;
-  left: 0.0625rem;
-  width: 1.25rem;
-  height: 1.25rem;
-  background: url(/img/ico/ico-group.png) no-repeat -0.1875rem -31.375rem;
-  background-size: 2.875rem;
-  text-indent: -9999999em;
-}
-
 .flcard-s-default .flcard-s-cont .type3 .slider-box .slick-next {
   position: absolute;
   bottom: -1.625rem;
   right: 0.0625rem;
   width: 1.25rem;
   height: 1.25rem;
-  background: url(/img/ico/ico-group.png) no-repeat -1.4375rem -31.375rem;
+  background: url(/img/ico/ico-group.png) no-repeat -1.375rem -37rem;
   background-size: 2.875rem;
   text-indent: -9999999em;
+  z-index: 10;
+}
+
+.flcard-s-default .flcard-s-cont .type3 .slider-box .slick-next.slick-disabled {
+  position: absolute;
+  bottom: -1.625rem;
+  right: 0.0625rem;
+  width: 1.25rem;
+  height: 1.25rem;
+  background: url(/img/ico/ico-group.png) no-repeat -1.375rem -31.375rem;
+  background-size: 2.875rem;
+  text-indent: -9999999em;
+  z-index: 10;
+}
+
+.flcard-s-default .flcard-s-cont .type3 .slider-box .slick-prev.slick-arrow {
+  position: absolute;
+  bottom: -1.625rem;
+  right: 0.9375rem;
+  width: 1.25rem;
+  height: 1.25rem;
+  background: url(/img/ico/ico-group.png) no-repeat -0.0625rem -37rem;
+  background-size: 2.875rem;
+  text-indent: -9999999em;
+}
+
+.flcard-s-default .flcard-s-cont .type3 .slider-box .slick-prev.slick-disabled {
+  position: absolute;
+  bottom: -1.625rem;
+  right: 0.9375rem;
+  width: 1.25rem;
+  height: 1.25rem;
+  background: url(/img/ico/ico-group.png) no-repeat -0.0625rem -31.375rem;
+  background-size: 2.875rem;
+  text-indent: -9999999em;
+  z-index: 10;
+}
+
+.flcard-s-default .flcard-s-cont .type3 .slider-box .slick-dots {
+  text-align: left;
+  width: 50%;
+}
+
+.flcard-s-default .flcard-s-cont .type3 .slider-box .slick-dots li {
+  width: 0.9375rem;
+  height: 0.9375rem;
+  margin: 0;
+}
+
+.flcard-s-default .flcard-s-cont .type3 .slider-box .slick-dots li button:before {
+  font-size: 1rem;
 }
 
 .flcard-s-default .flcard-s-cont .type3 .slider-box .slick-list {
@@ -2016,6 +2056,91 @@
   padding: 1.5rem 0 0 0;
   font-size: 0.875rem;
   color: #757575;
+}
+
+.commend-bill-info .bill-tit {
+  font-size: 1.5rem;
+  padding-bottom: 2.75rem;
+}
+
+.commend-bill-info .bill-tit .bill-tel {
+  display: block;
+  font-size: 1rem;
+}
+
+.commend-bill-info .contents-info-list .bill-num {
+  display: inline-block;
+  width: 100%;
+  font-size: 0.8125rem;
+  padding-bottom: 1.125rem;
+  text-align: right;
+}
+
+.commend-bill-info .contents-info-list .bill-num em {
+  color: #e80a0a;
+}
+
+.commend-bill-info .contents-info-list .bill-history li {
+  display: table;
+  position: relative;
+  width: 100%;
+  border-bottom: 1px solid #cfcfcf;
+}
+
+.commend-bill-info .contents-info-list .bill-history li div {
+  display: table-cell;
+  padding: 1.0625rem 0;
+  vertical-align: top;
+}
+
+.commend-bill-info .contents-info-list .bill-history li div:first-of-type {
+  padding-left: 0.625rem;
+}
+
+.commend-bill-info .contents-info-list .bill-history li div:last-of-type {
+  padding-right: 0.625rem;
+}
+
+.commend-bill-info .contents-info-list .bill-history li div span {
+  display: block;
+}
+
+.commend-bill-info .contents-info-list .bill-history li .info-user {
+  text-align: left;
+}
+
+.commend-bill-info .contents-info-list .bill-history li .info-user .info-title {
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: #757575;
+}
+
+.commend-bill-info .contents-info-list .bill-history li .info-data {
+  text-align: right;
+}
+
+.commend-bill-info .contents-info-list .bill-history li .info-data .info-title,
+.commend-bill-info .contents-info-list .bill-history li .info-data .info-sub {
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.commend-bill-info .contents-info-list .bill-history li .info-data .info-sub-type1 {
+  font-size: 0.8125rem;
+  color: #757575;
+  letter-spacing: 0;
+}
+
+.commend-bill-info .contents-info-list .bill-history li .info-data .num {
+  font-family: Helvetica Neue, Roboto, sans-serif;
+}
+
+.commend-bill-info .contents-info-list .bill-history li .info-data .badge {
+  display: inline-block;
+}
+
+.commend-bill-info .contents-info-list .bill-history li:first-of-type {
+  border-top: 1px solid #000;
 }
 
 /* 최민규 */
@@ -2364,6 +2489,10 @@
     position: relative;
 }
 
+.load-area .loading {
+  background: white;
+}
+
 /* 원지예 */
 /* DA_02_01_03.html, DA_02_01_04.html */
 .data-wrap {
@@ -2481,10 +2610,38 @@
   letter-spacing: 0;
 }
 
-.account-wrap .input input.no-bg-color:disabled {
+.account-wrap .card-tbl {
+  display: table;
+  width: 100%;
+}
+
+.account-wrap .card-tbl .input input.no-bg-color:disabled {
   background: #fff;
   border-color: #d6dde5;
   color: #000;
+}
+
+.account-wrap .card-tbl .input.card-cell {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.account-wrap .card-tbl .input.card-cell:first-child {
+  position: relative;
+  width: 25%;
+}
+
+.account-wrap .card-tbl .input.card-cell:nth-of-type(2) {
+  padding-right: 0.625rem;
+  padding-left: 0.625rem;
+}
+
+.account-wrap .card-tbl .input.card-cell:last-child {
+  width: 100%;
+}
+
+.account-wrap .card-tbl .input.card-cell .c-month {
+  width: 25%;
 }
 
 .account-wrap:first-child {
@@ -6057,18 +6214,22 @@ span[class*=char-star][class*=red] {
 
 .mline-list .mline-tit-wrap .mline-tit {
   font-size: 0.9375rem;
+  line-height: 1.25rem;
   font-weight: 700;
+  vertical-align: baseline;
 }
 
 .mline-list .mline-tit-wrap .mline-num {
   display: inline-block;
-  margin-left: 0.1875rem;
+  margin-left: 0.125rem;
   font-size: 1rem;
+  line-height: 1.25rem;
+  color: #2572ff;
+  font-weight: 700;
+  vertical-align: baseline;
 }
 
 .mline-list .mline-tit-wrap .mline-num .num {
-  color: #2572ff;
-  font-weight: 400;
   font-family: "Helvetica Neue", Roboto, sans-serif;
 }
 
@@ -6097,7 +6258,12 @@ span[class*=char-star][class*=red] {
   font-weight: 300;
 }
 
-.mline-list .mline-manage-sort .mline-manage-ti .num {
+.mline-list .mline-manage-sort .mline-manage-ti .mline-num {
+  color: #325ec1;
+  vertical-align: top;
+}
+
+.mline-list .mline-manage-sort .mline-manage-ti .mline-num .num {
   display: inline-block;
   vertical-align: top;
 }
@@ -6180,7 +6346,7 @@ span[class*=char-star][class*=red] {
 }
 
 .mline-list .acco-list .acco-content .acco-cover .acco-list .acco-box .acco-cont .mline-info {
-  margin: 0 0 0.75rem;
+  margin: 0 0 1.25rem;
   padding: 0 1.25rem;
   font-size: 0;
 }
@@ -6210,15 +6376,27 @@ span[class*=char-star][class*=red] {
   color: #757575;
 }
 
-.mline-list .acco-list .acco-content .acco-cover .acco-list .acco-box .acco-cont .mline-up button {
-  display: block;
-  width: 100%;
-  padding: 0.9375rem 1.625rem;
+.mline-list .acco-list .acco-content .acco-cover .acco-list .acco-box .acco-cont .mline-info .mline-nickname {
+  margin-top: 1.5625rem;
+}
+
+.mline-list .acco-list .acco-content .acco-cover .acco-list .acco-box .acco-cont .mline-info .mline-nickname .inputbox .input {
+  width: 65%;
+}
+
+.mline-list .acco-list .acco-content .acco-cover .acco-list .acco-box .acco-cont .mline-info .mline-nickname .inputbox .bt-box {
+  width: 35%;
+}
+
+.mline-list .acco-list .acco-content .acco-cover .acco-list .acco-box .acco-cont .mline-chk {
+  padding: 0.625rem 1.25rem;
   border-top: 1px solid #efefef;
-  text-align: center;
+  background: #fafafa;
+}
+
+.mline-list .acco-list .acco-content .acco-cover .acco-list .acco-box .acco-cont .mline-chk .checkbox.type01 {
   font-size: 0.875rem;
   font-weight: 400;
-  background: #fafafa;
 }
 
 .mline-list .acco-list .acco-content .acco-cover .acco-list .acco-box.on .acco-tit {

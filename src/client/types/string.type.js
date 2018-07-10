@@ -28,7 +28,8 @@ Tw.POPUP_TITLE = {
   GIFT_FAMILY_INFO: '데이터 자동 선물 안내',
   CHANGE_SEARCH_CONDITION: '검색 조건 변경',
   CHANGE_NICKNAME: '닉네임 설정',
-  SELECT_BANK: '은행선택'
+  SELECT_BANK: '은행선택',
+  SELECT_GIFT_AMOUNT: '선물할 금액 선택'
 };
 
 Tw.POPUP_PROPERTY = {
@@ -43,6 +44,10 @@ Tw.BUTTON_LABEL = {
   SELECT: '선택',
   CONFIRM: '확인',
   CANCEL: '취소'
+};
+
+Tw.CURRENCY_UNIT = {
+  WON: '원'
 };
 
 Tw.MSG_COMMON = {};
