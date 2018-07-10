@@ -128,7 +128,7 @@ Tw.MyTBillHotBill = function (rootEl) {
   ];
   /*jshint quotmark: single */
   Handlebars.registerHelper('isBill', function (val, options) {
-    return (val !== 'total' && val !== 'noTax') ? options.fn(this) : options.inverse(this);
+    return (val !== 'total' && val !== 'noVAT'&& val !== 'is3rdParty') ? options.fn(this) : options.inverse(this);
   });
   this._makeBillGroup();
   this._renderBillGroup();
