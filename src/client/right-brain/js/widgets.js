@@ -33,6 +33,10 @@ skt_landing.widgets = {
       }*/
       _this.find('input').on('change',function(){
         setRadioState($(this));
+      }).on('focusin',function(){
+        $(this).closest('li').addClass('focus');
+      }).on('focusout',function(){
+        $(this).closest('li').removeClass('focus');
       });
       _this.find('li').on('click',function(e){
         if(e.target.tagName.toLowerCase() == 'input' && e.target != e.currentTarget) return ;
@@ -132,14 +136,32 @@ skt_landing.widgets = {
     $(widget).each(function(){
       var _this = $(this).find('.slider');
       _this.slick({
+        dots: true,
         arrows: true,
-        infinite: true,
-        slidesToShow: 4,
-        slidesToScroll: 1,
+        infinite: false,
+        speed : 300,
+        slidesToShow: 3,
+        slidesToScroll: 3,
         centerMode: false,
-        focusOnSelect: true,
-        focusOnChange: true
-      })
+        focusOnSelect: false,         
+      });
+      var $slick = _this.slick('getSlick');
+      var $slides = $slick.$slides;
+      var slideIndex = $slick.slickCurrentSlide();
+      
+      //슬라이더의 요소를 클릭시 요소에 대한 색상변환
+      $slides.on('click', function () {
+        var $this = $(this);
+        slideIndex = $slides.index($this);
+        $slides.removeClass('slick-current slick-active');
+        $this.addClass('slick-current slick-active');
+      });
+      _this.on('beforeChange', function (e) {
+        setTimeout(function () {
+          $slides.eq(slideIndex).triggerHandler('click');
+        }, 0);
+      });
+      //@180709: 수정 - 끝
     });
   },
   widget_slider4: function () {
@@ -247,6 +269,8 @@ skt_landing.widgets = {
       if(_this.find('> .acco-cover > .bt-whole').length < 1){
         _this.find('.acco-cover').addClass('on');
       }
+      if($(this).find('> .acco-cover > .acco-style').hasClass('none-event')) return ;
+      
       var setOnList = _this.find('> .acco-cover > .acco-style > .acco-list > .acco-box');
       for(var i=0, leng=setOnList.length; i<leng; ++i){
         if(setOnList.eq(i).find('> .acco-tit button').length < 1 && _this.find('.acco-cover.disabled').length < 1){
@@ -267,10 +291,10 @@ skt_landing.widgets = {
           $(this).closest('.acco-box').siblings().find('> .acco-tit button').attr('aria-pressed',false);
         }
         $(this).closest('.acco-box').toggleClass('on');
-        if($(this).attr('aria-pressed', 'false')){
-          $(this).attr('aria-pressed', 'true')
+        if($(this).closest('.acco-box').hasClass('on')){
+          $(this).attr('aria-pressed', 'true');
         }else{
-          $(this).attr('aria-pressed', 'false')
+          $(this).attr('aria-pressed', 'false');
         };
       });
     })
@@ -284,6 +308,7 @@ skt_landing.widgets = {
       for(var i=0,leng=list.length; i<leng;++i){
         setState(btn.eq(i), list.eq(i).hasClass('on'));
       }
+      if($(this).find('> .acco-style').hasClass('none-event')) return;
       btn.on('click',function(){
         setState($(this), !$(this).closest('.acco-list').hasClass('on'));
       });
@@ -453,35 +478,6 @@ skt_landing.widgets = {
       });
       return arr;
     }
-  },
-  widget_sortlist : function(){
-    $( "#sortable-enabled" ).sortable({
-      connectWith: "#sortable-enabled",
-      axis: 'y'
-    }).disableSelection();
-    $('.ui-state-default .bt-active').on('touchstart touchend touchmove',function(e){
-      e.stopPropagation();
-    });
-    $(document).on('click', '.connectedSortable .bt-active', function(){
-      if($(this).closest('.connectedSortable').hasClass('enabled')){
-        $(this).parent().appendTo('#sortable-disabled');
-        $(this).find('.blind').text('회선 활성화 하기');
-      }else{
-        $(this).parent().prependTo('#sortable-enabled');
-        $(this).find('.blind').text('회선 삭제 하기');
-      }
-    });
-    $('.bt-sort').on('touchstart touchend touchmove',function(e){
-      e.stopPropagation();
-    });
-    $(document).on('click', '.connectedSortable .bt-sort', function(){
-      var parent_cont = $(this).closest('.ui-state-default');
-      if($(this).hasClass('up')){
-        parent_cont.insertBefore(parent_cont.prev());
-      }else{
-        parent_cont.insertAfter(parent_cont.next());
-      }
-    });
   },
   widget_toggle: function(){
     $('.btn-toggle').on('click', function(){

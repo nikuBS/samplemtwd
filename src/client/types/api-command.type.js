@@ -83,7 +83,18 @@ Tw.API_CMD = {
   BFF_07_0026: { path: '/core-bill/v1/bill-pay/settle-vbs', method: Tw.API_METHOD.GET },
   BFF_07_0027: { path: '/core-bill/v1/bill-pay/settle-vb-sms', method: Tw.API_METHOD.GET },
   BFF_07_0028: { path: '/core-bill/v1/bill-pay/avail-point-search', method: Tw.API_METHOD.GET },
-  BFF_07_0029: { path: '/core-bill/v1/bill-pay/pay-ocb-tpoint-proc', method: Tw.API_METHOD.POST }
+  BFF_07_0029: { path: '/core-bill/v1/bill-pay/pay-ocb-tpoint-proc', method: Tw.API_METHOD.POST },
+
+  // TEST
+  GET: { path: '/posts', method: Tw.API_METHOD.GET },
+  GET_PARAM: { path: '/comments', method: Tw.API_METHOD.GET },
+  GET_PATH_PARAM: { path: '/posts/args-0', method: Tw.API_METHOD.GET },
+  POST: { path: '/posts', method: Tw.API_METHOD.POST },
+  POST_PARAM: { path: '/posts', method: Tw.API_METHOD.POST },
+  PUT: { path: '/posts/1', method: Tw.API_METHOD.PUT },
+  PUT_PARAM: { path: '/posts/1', method: Tw.API_METHOD.PUT },
+  DELETE: { path: '/posts/1', method: Tw.API_METHOD.DELETE },
+  DELETE_PARAM: {}
 };
 
 Tw.NODE_CMD = {
