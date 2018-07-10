@@ -31,22 +31,7 @@
     <div id="contents" class="container-wrap">
         <h2 class="blind">내용</h2>
         <div class="container">
-            <div class="cont-box">
-                <div class="payment-info">
-                    <span class="blind">나의 통합청구 회선</span>
-                    <ul>
-                        <li>
-                            <span class="info-num">010-46**-10**</span>
-                        </li>
-                        <li>
-                            <span class="badge badge-allpay"><span class="blind">통합대표</span></span>
-                            <span class="info-type"><span class="blind">회선정보</span>휴대폰</span>
-                            <span class="info-name"><span class="blind">별명</span>귀여운첫째아들</span>
-                        </li>
-                    </ul>
-                    <span class="info-btn"><a href="" class="btn-choice" role="button">변경</a></span>
-                </div>
-            </div>
+            <%- include('../components/line.info.component.html', { svcInfo: svcInfo }); %>
             <hr class="cont-sp type1">
             <div class="cont-box">
                 <button class="bt-dropdown big" title="전체납부내역">포인트 자동납부<span class="ico"></span></button>
@@ -62,7 +47,7 @@
                                 <ul role="tablist">
                                     <li role="tab" aria-selected="true" aria-controls="tab1-tab" id="tab1"><button>OK캐쉬백</button></li><!-- true 열림 -->
                                     <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2"><button>T포인트</button></li>
-                                    <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2"><button>레인보우포인트</button></li>
+                                    <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab3"><button>레인보우포인트</button></li>
                                 </ul>
                             </div>
                             <div class="tab-contents">
@@ -605,7 +590,7 @@
 <% include ../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    var oPaymentHistoryPointAuto = new Tw.PaymentHistoryPointAuto($(document));
+    new Tw.PaymentHistoryPointAuto($(document));
   });
 </script>
 <% include ../components/end.component.html %>

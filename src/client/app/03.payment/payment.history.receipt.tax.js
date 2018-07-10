@@ -14,12 +14,12 @@ Tw.PaymentHistoryReceiptTax = function (rootEl) {
 
 Tw.PaymentHistoryReceiptTax.prototype = {
   /* 팩스 재발행 하기 레이어
-    skt_landing.action.popup.open({
+    popup.open({
         hbs:'PA_06_09_L01'// hbs의 파일명
     });
    */
   /* 이메일 재발행 하기 레이어
-    skt_landing.action.popup.open({
+    popup.open({
         hbs:'PA_06_09_L02'// hbs의 파일명
     });
    */

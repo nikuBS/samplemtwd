@@ -15,7 +15,7 @@ Tw.PaymentHistoryImmediate = function (rootEl) {
 Tw.PaymentHistoryImmediate.prototype = {
 
   /*    납부방식 선택 레이어 팝업
-skt_landing.action.popup.open({
+popup.open({
                 'hbs' : 'choice',
                 'title': '납부방식 선택',
                 'close_bt': true,
@@ -33,23 +33,23 @@ skt_landing.action.popup.open({
 
    */
   /*  OK캐쉬백 즉시 납부 내역 상세
-      skt_landing.action.popup.open({
+      popup.open({
           hbs:'PA_06_02_L01'// hbs의 파일명
       });
 
    */
   /*  T포인트 납부 내역 상세
-      skt_landing.action.popup.open({
+      popup.open({
           hbs:'PA_06_02_L02'// hbs의 파일명
       });
    */
   /*  계좌이체 납부 상세
-      skt_landing.action.popup.open({
+      popup.open({
           hbs:'PA_06_02_L03'// hbs의 파일명
       });
    */
   /*  신용카드 납부 상세내역
-      skt_landing.action.popup.open({
+      popup.open({
           hbs:'PA_06_02_L04'// hbs의 파일명
       });
    */
