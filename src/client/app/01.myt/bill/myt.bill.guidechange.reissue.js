@@ -6,7 +6,8 @@
 Tw.MyTBillReissue = function ($element) {
   var self = this;
   this.$container = $element;
-  this._apiService = new Tw.ApiService();
+  this._apiService = Tw.Api;
+  this._popupService = Tw.Popup;
   this._rendered();
   this._bindEvent();
 

@@ -5,7 +5,7 @@
  */
 Tw.MyTBillReissueComplete = function (rootEl) {
   this.$container = rootEl;
-  this._apiService = new Tw.ApiService();
+  this._apiService = Tw.Api;
   this._rendered();
   this._bindEvent();
 };
