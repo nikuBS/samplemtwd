@@ -121,7 +121,8 @@ class MyTBillBillguide extends TwViewController {
   private combineRepresentCircuit(res) {
     this.logger.info(this, '[_urlTplInfo.combineRepresentPage] : ', this._urlTplInfo.combineRepresentPage);
     this.renderView(res, this._urlTplInfo.combineRepresentPage, {
-      userInfo: this._circuitInfo,
+      svcInfo: this._svcInfo,
+      _circuitInfo: this._circuitInfo,
       billpayInfo : this._billpayInfo
     } );
   }
@@ -129,7 +130,8 @@ class MyTBillBillguide extends TwViewController {
   private combineCommonCircuit(res) {
     this.logger.info(this, '[_urlTplInfo.combineCommonPage] : ', this._urlTplInfo.combineCommonPage);
     this.renderView(res, this._urlTplInfo.combineCommonPage, {
-      userInfo: this._circuitInfo,
+      svcInfo: this._svcInfo,
+      _circuitInfo: this._circuitInfo,
       billpayInfo : this._billpayInfo
     } );
   }
@@ -137,7 +139,8 @@ class MyTBillBillguide extends TwViewController {
   private individualCircuit(res) {
     this.logger.info(this, '[_urlTplInfo.individualPage] : ', this._urlTplInfo.individualPage);
     this.renderView(res, this._urlTplInfo.individualPage, {
-      userInfo: this._circuitInfo,
+      svcInfo: this._svcInfo,
+      _circuitInfo: this._circuitInfo,
       billpayInfo : this._billpayInfo
     } );
   }
@@ -145,7 +148,8 @@ class MyTBillBillguide extends TwViewController {
   private prepaidCircuit(res) {
     this.logger.info(this, '[_urlTplInfo.prepaidPage] : ', this._urlTplInfo.prepaidPage);
     this.renderView(res, this._urlTplInfo.prepaidPage, {
-      userInfo: this._circuitInfo,
+      svcInfo: this._svcInfo,
+      _circuitInfo: this._circuitInfo,
       billpayInfo : this._billpayInfo
     } );
   }
@@ -153,7 +157,8 @@ class MyTBillBillguide extends TwViewController {
   private companyCircuit(res) {
     this.logger.info(this, '[_urlTplInfo.companyPage] : ', this._urlTplInfo.companyPage);
     this.renderView(res, this._urlTplInfo.companyPage, {
-      userInfo: this._circuitInfo,
+      svcInfo: this._svcInfo,
+      _circuitInfo: this._circuitInfo,
       billpayInfo : this._billpayInfo
     } );
   }
@@ -161,15 +166,34 @@ class MyTBillBillguide extends TwViewController {
   private skbroadbandCircuit(res) {
     this.logger.info(this, '[_urlTplInfo.skbroadbandPage] : ', this._urlTplInfo.skbroadbandPage);
     this.renderView(res, this._urlTplInfo.skbroadbandPage, {
-      userInfo: this._circuitInfo,
+      svcInfo: this._svcInfo,
+      _circuitInfo: this._circuitInfo,
       billpayInfo : this._billpayInfo
     } );
   }
 
   //-------------------------------------------------------------[BFF 요청 모음]
-  private getApiList(): any {
-    return this.apiService.request(API_CMD.BFF_03_0004, {} );
-  }
+  private BFF_05_0036(): any { return this.apiService.request(API_CMD.BFF_05_0036, {} ); } //청구요금조회
+  private BFF_05_0041(): any { return this.apiService.request(API_CMD.BFF_05_0041, {} ); } //나의요금제
+  private BFF_05_0030(): any { return this.apiService.request(API_CMD.BFF_05_0030, {} ); } //미납내역조회
+
+  private BFF_05_0040(): any { return this.apiService.request(API_CMD.BFF_05_0040, {} ); } //무선 부가상품 가입여부
+  private BFF_05_0024(): any { return this.apiService.request(API_CMD.BFF_05_0024, {} ); } //자녀회선조회
+  private BFF_01_0005(): any { return this.apiService.request(API_CMD.BFF_01_0005, {} ); } //선택회선조회
+  private BFF_05_0047(): any { return this.apiService.request(API_CMD.BFF_05_0047, {} ); } //사용요금조회(본인/자녀)
+
+  private BFF_05_0044(): any { return this.apiService.request(API_CMD.BFF_05_0044, {} ); } //로밍 사용요금 상세조회
+  private BFF_05_0045(): any { return this.apiService.request(API_CMD.BFF_05_0045, {} ); } //콜기프트 요금 상세조회
+  private BFF_05_0038(): any { return this.apiService.request(API_CMD.BFF_05_0038, {} ); } //기부금/후원금 상세조회
+
+  private BFF_05_0031(): any { return this.apiService.request(API_CMD.BFF_05_0031, {} ); } //미납요금 납부가능일 조회
+  private BFF_05_0032(): any { return this.apiService.request(API_CMD.BFF_05_0032, {} ); } //미납요금 납부가능일 입력
+  private BFF_05_0033(): any { return this.apiService.request(API_CMD.BFF_05_0033, {} ); } //미납요금 납부가능일 청구일정 조회
+  private BFF_05_0034(): any { return this.apiService.request(API_CMD.BFF_05_0034, {} ); } //미납요금 이용정지해제
+  private BFF_05_0037(): any { return this.apiService.request(API_CMD.BFF_05_0037, {} ); } //미납요금 이용정지해제 정보 조회
+
+  private BFF_05_0013(): any { return this.apiService.request(API_CMD.BFF_05_0013, {} ); } //PPS 정보조회
+  private BFF_05_0014(): any { return this.apiService.request(API_CMD.BFF_05_0014, {} ); } //PPS 사용내역 확인
 
   //-------------------------------------------------------------[필터: 해당 데이터 필터링]
 

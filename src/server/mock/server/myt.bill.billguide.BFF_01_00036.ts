@@ -21,7 +21,7 @@ const billguide_BFF_01_00036 = {
     'detailYn': '',
     'autopayYn': 'Y',
     'paidAmtMonthSvcCnt': 2,//청구월회선수( 1 : 개별회선, 그외(1이상) : 통합청구 )
-    'repSvcYn': 'N',//대표청구회선여부 (Y : 대표청구회선, N: 대표청구회선아님)
+    'repSvcYn': 'Y',//대표청구회선여부 (Y : 대표청구회선, N: 대표청구회선아님)
     'coClCd': 'B',
     'paidAmtMonthCnt': '6',
     'paidAmtMonthSvcNum':

@@ -15,7 +15,7 @@ const billguide_BFF_01_0005 = {//휴대폰
       "svcGr": "A",
       "svcAttrCd": "M1",//서비스 속성
       "repSvcYn": "Y",
-      "svcNum": "01012**56**",
+      "svcNum": "010-12**-56**",
       "nickNm": "내휴대폰",
       "addr": ""
     }
