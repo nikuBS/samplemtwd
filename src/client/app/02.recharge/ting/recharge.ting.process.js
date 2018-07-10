@@ -64,7 +64,7 @@ Tw.RechargeTingProcess.prototype = {
   },
 
   _onClosePopup: function () {
-    this._popupService.openConfirm(Tw.POPUP_TITLE.NOTIFY, Tw.MSG_GIFT.TING_A12, '', $.proxy(this._onCloseProcess, this));
+    this._popupService.openConfirm(Tw.POPUP_TITLE.NOTIFY, Tw.MSG_GIFT.TING_A12, '', null, $.proxy(this._onCloseProcess, this));
   },
 
   _onCloseProcess: function () {

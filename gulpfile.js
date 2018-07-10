@@ -79,21 +79,21 @@ gulp.task('css-vendor', function () {
     .pipe(gulp.dest(dist + 'css'));
 });
 
-gulp.task('js-rb', function () {
-  return gulp.src('src/client/right-brain/js/script.min.js')
-    .pipe(gulp.dest(dist + 'js'));
-});
-
 // gulp.task('js-rb', function () {
-//   return gulp.src([
-//     'src/client/right-brain/js/$vars.js',
-//     'src/client/right-brain/js/common/js',
-//     'src/client/right-brain/js/components.js',
-//     'src/client/right-brain/js/widgets.js'
-//   ])
-//     .pipe(concat('script.min.js'))
+//   return gulp.src('src/client/right-brain/js/script.min.js')
 //     .pipe(gulp.dest(dist + 'js'));
 // });
+
+gulp.task('js-rb', function () {
+  return gulp.src([
+    'src/client/right-brain/js/$vars.js',
+    'src/client/right-brain/js/common.js',
+    'src/client/right-brain/js/components.js',
+    'src/client/right-brain/js/widgets.js'
+  ])
+    .pipe(concat('script.min.js'))
+    .pipe(gulp.dest(dist + 'js'));
+});
 
 // for sprint3
 gulp.task('js-rb-sprint3', function () {

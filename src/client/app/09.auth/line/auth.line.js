@@ -6,7 +6,6 @@
 
 Tw.AuthLine = function (rootEl) {
   this.$container = rootEl;
-  this.$document = $(document);
   this._popupService = Tw.Popup;
   this._apiService = Tw.Api;
 
@@ -19,8 +18,12 @@ Tw.AuthLine.prototype = {
     this.$container.on('click', '#cop-password', $.proxy(this._openCopPassword, this));
   },
   _openNickname: function () {
-    this._popupService.openConfirm(Tw.POPUP_TITLE.CHANGE_NICKNAME, '', Tw.POPUP_TPL.CHANGE_NICKNAME, $.proxy(this._confirmNickname, this));
-    this.$document.on('keyup', '#nickname', $.proxy(this._onKeyupNickname, this));
+    this._popupService.openConfirm(Tw.POPUP_TITLE.CHANGE_NICKNAME, '', Tw.POPUP_TPL.CHANGE_NICKNAME,
+      $.proxy(this._onOpenNickname, this), $.proxy(this._confirmNickname, this));
+
+  },
+  _onOpenNickname: function($popup) {
+    $popup.on('keyup', '#nickname', $.proxy(this._onKeyupNickname, this));
   },
   _confirmNickname: function () {
     var inputValue = $('#nickname').val();
@@ -52,9 +55,14 @@ Tw.AuthLine.prototype = {
   },
   _openCopPassword: function () {
     this._popupService.open({
-      hbs: 'CO_01_05_02_P01'// hbs의 파일명
-    });
-
+      hbs: 'CO_01_05_02_P01'
+    }, $.proxy(this._onOpenCopPassword, this));
+  },
+  _onOpenCopPassword: function($layer) {
+    $layer.on('click', '.authority-bt', $.proxy(this._confirmCopPassword, this));
+  },
+  _confirmCopPassword: function() {
+    this._popupService.close();
   }
 
 };
