@@ -1,7 +1,7 @@
 /**
- * FileName: auth.login.controller.ts
+ * FileName: auth.tid.signup-local.controller.ts
  * Author: Ara Jo (araara.jo@sk.com)
- * Date: 2018.07.02
+ * Date: 2018.07.03
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -9,7 +9,7 @@ import { Request, Response, NextFunction } from 'express';
 import { API_CMD, API_CODE, TID_SVC_TYPE } from '../../../../types/api-command.type';
 import ParamsHelper from '../../../../utils/params.helper';
 
-class AuthTidLogin extends TwViewController {
+class AuthTidSignUpLocal extends TwViewController {
   constructor() {
     super();
   }
@@ -20,13 +20,13 @@ class AuthTidLogin extends TwViewController {
       client_secret: 'eac44fbe-b96b-4f9d-9da7-0e58dfc13b90',
       state: '3646bae6eff00',
       nonce: 'df597de4c079',
-      service_type: TID_SVC_TYPE.ID_LOGIN,
-      redirect_uri: 'http://localhost:3000',
+      service_type: TID_SVC_TYPE.SIGN_UP,
+      redirect_uri: 'http://localhost:3000/home',
       client_type: 'MWEB',
       scope: 'openid',
       response_type: 'id_token%20token',
     };
-    this.apiService.request(API_CMD.BFF_03_0007, { chnl: 'mo-web' }).subscribe((resp) => {
+    this.apiService.request(API_CMD.BFF_03_0007, {}).subscribe((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
         params.client_id = resp.result.clientId;
         params.client_secret = resp.result.clientSecret;
@@ -39,4 +39,4 @@ class AuthTidLogin extends TwViewController {
   }
 }
 
-export default AuthTidLogin;
+export default AuthTidSignUpLocal;

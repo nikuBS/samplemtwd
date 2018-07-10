@@ -117,7 +117,7 @@ Tw.RechargeGift.prototype = {
   },
 
   openPriceList: function () {
-    this._popupService.openLayer({
+    this._popupService.open({
       hbs: 'DA_02_01_L01'// hbs의 파일명
     });
 

@@ -67,7 +67,7 @@ Tw.PaymentRealtime.prototype = {
     this._go('#get-point');
   },
   _getCashbagPoint: function () {
-    this._apiService.request(Tw.API_CMD.BFF_07_0028, JSON.stringify({ ocbCardNum: '4119057002786952' }))
+    this._apiService.request(Tw.API_CMD.BFF_07_0028, {})
       .done($.proxy(this._pointSuccess, this))
       .fail($.proxy(this._pointFail, this));
   },

@@ -55,17 +55,17 @@ class ApiService {
     switch ( command.server ) {
       case API_SERVER.BFF:
         return Object.assign(header, {
-          'Content-type': 'application/json; charset=UTF-8',
+          'content-type': 'application/json; charset=UTF-8',
           cookie: this.loginService.getServerSession()
         });
       case API_SERVER.TID:
         return Object.assign(header, {
-          'Content-type': 'application/x-www-form-urlencoded; charset-UTF-8',
+          'content-type': 'application/x-www-form-urlencoded; charset-UTF-8',
           'Content-Length': JSON.stringify(params).length
         });
       default:
         return Object.assign(header, {
-          'Content-type': 'application/json; charset=UTF-8'
+          'content-type': 'application/json; charset=UTF-8'
         });
     }
   }
@@ -76,22 +76,24 @@ class ApiService {
         path = path.replace(`args-${index}`, argument);
       });
     }
-    path = method === API_METHOD.GET ? path + ParamsHelper.setQueryParams(params) : path;
+    if ( !FormatHelper.isEmpty(params) ) {
+      path = method === API_METHOD.GET ? path + ParamsHelper.setQueryParams(params) : path;
+    }
     return path;
   }
 
   private apiCallback(observer, command, resp) {
-    this.logger.info(this, '[API RESP]', resp.data);
+    const respData = resp.data;
+    this.logger.info(this, '[API RESP]', respData);
 
     if ( command.server === API_SERVER.BFF ) {
-      this.setServerSession(resp);
+      this.setServerSession(resp.headers);
     }
 
-    if ( FormatHelper.isObject(resp.data) && this.isSessionCallback(command) && resp.data.code === API_CODE.CODE_00 ) {
-      this.setSvcInfo(resp.data.result);
+    if ( FormatHelper.isObject(respData) && this.isSessionCallback(command) && respData.code === API_CODE.CODE_00 ) {
+      this.setSvcInfo(respData.result);
     }
-
-    observer.next(resp.data);
+    observer.next(respData);
     observer.complete();
   }
 
@@ -117,11 +119,11 @@ class ApiService {
     return false;
   }
 
-  private setServerSession(resp) {
-    this.logger.debug(this, 'Headers: ', JSON.stringify(resp.headers));
-    if ( resp.headers['set-cookie'] ) {
+  private setServerSession(headers) {
+    this.logger.debug(this, 'Headers: ', JSON.stringify(headers));
+    if ( headers['set-cookie'] ) {
       this.logger.info(this, 'Set Session Cookie');
-      this.loginService.setServerSession(resp.headers['set-cookie'][0]);
+      this.loginService.setServerSession(headers['set-cookie'][0]);
     }
   }
 

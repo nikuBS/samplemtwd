@@ -1,0 +1,249 @@
+<% include ../../components/start.component.html %>
+
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb_area">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+
+<div class="wrap">
+    <!-- #header -->
+    <div id="header" class="header-wrap">
+        <div class="header">
+            <div class="header-ti">
+                <h1>팅/쿠키즈/안심음성 요금 충전 내역</h1>
+                <button class="depth-view" role="button" aria-pressed="false"><span class="blind">메뉴구조보기</span></button>
+            </div>
+            <button class="prev-step"><span class="blind">이전으로</span></button>
+            <button class="search-content"><span class="blind">검색하기</span></button>
+        </div>
+    </div>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <!-- .cont-box -->
+            <div class="cont-box">
+                <button class="bt-dropdown big" title="회선 선택" aria-haspopup="true">010-12**-56**<span class="ico"></span></button>
+            </div>
+            <!--// .cont-box -->
+            <hr class="cont-sp type1">
+            <!-- .cont-box -->
+            <div class="cont-box nogaps">
+                <!-- .component -->
+                <div class="component">
+                    <div class="component-box tabs">
+                        <div class="tab-area type1"><!-- 타입별 탭형태 변환 -->
+                            <div class="tab-linker">
+                                <ul role="tablist">
+                                    <li role="tab" aria-selected="true" aria-controls="aria-tab1-tab" id="aria-tab1"><a href="">충전내역</a></li><!-- true 열림 -->
+                                    <li role="tab" aria-selected="false" aria-controls="aria-tab2-tab" id="aria-tab2"><a href="">권한변경내역</a></li>
+                                </ul>
+                            </div>
+                            <div class="tab-contents">
+                                <ul>
+                                    <li role="tabpanel" id="aria-tab1-tab" aria-labelledby="aria-tab1" aria-selected="true">
+                                        <div class="inner">
+                                            <div class="contents-info-list">
+                                                <p class="ti-desc"><strong><span class="num">42</span>개</strong> 충전 내역이 있습니다.</p>
+                                                <div class="list-top">
+                                                    <div class="inline">
+                                                        <button class="bt-dropdown small" title="셀렉트 선택">전체 · 3개월<span class="ico"></span></button>
+                                                    </div>
+                                                </div>
+                                                <!--// .widget -->
+                                                <ul class="recharge-history">
+                                                    <li>
+                                                        <div class="info-charge">
+                                                            <span class="recharge-complete" role="img" aria-label="충전"><span class="blind">충전</span></span>
+                                                        </div>
+                                                        <div class="info-user">
+                                                            <span class="info-title">SK 텔레콤대리점 a</span>
+                                                            <span class="info-date">2018.06.14</span>
+                                                        </div>
+                                                        <div class="info-data">
+                                                            <span class="info-title">10,000 원</span>
+                                                            <span class="info-sub">당월충전</span>
+                                                        </div>
+                                                        <div class="info-cancel">
+                                                            <button>취소</button>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="info-charge">
+                                                            <span class="recharge-cancel" role="img" aria-label="취소"><span class="blind">취소</span></span>
+                                                        </div>
+                                                        <div class="info-user">
+                                                            <span class="info-title">SK 텔레콤대리점 b</span>
+                                                            <span class="info-date">2018.06.14</span>
+                                                        </div>
+                                                        <div class="info-data">
+                                                            <span class="info-title">10,000 원</span>
+                                                            <span class="info-sub">매월충전</span>
+                                                        </div>
+                                                        <div class="info-cancel">
+                                                            <span>취소 완료</span>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="info-charge">
+                                                            <span class="recharge-auto" role="img" aria-label="자동"><span class="blind">취소</span></span>
+                                                        </div>
+                                                        <div class="info-user">
+                                                            <span class="info-title">SK 텔레콤대리점 c</span>
+                                                            <span class="info-date">2018.06.14</span>
+                                                        </div>
+                                                        <div class="info-data">
+                                                            <span class="info-title">10,000 원</span>
+                                                            <span class="info-sub">매월충전</span>
+                                                        </div>
+                                                        <div class="info-cancel">
+                                                            <!--<span>취소 완료</span>-->
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="info-charge">
+                                                            <span class="recharge-cancel" role="img" aria-label="취소"><span class="blind">취소</span></span>
+                                                        </div>
+                                                        <div class="info-user">
+                                                            <span class="info-title">SK 텔레콤대리점 d</span>
+                                                            <span class="info-date">2018.06.14</span>
+                                                        </div>
+                                                        <div class="info-data">
+                                                            <span class="info-title">10,000 원</span>
+                                                            <span class="info-sub">당월충전</span>
+                                                        </div>
+                                                        <div class="info-cancel">
+                                                            <span>취소 완료</span>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <button class="gift-bt-more">더보기(20)</button>
+                                        <hr class="cont-sp type1">
+                                        <!-- .cont-box -->
+                                        <div class="cont-box">
+                                            <div class="box-block">
+                                                <div class="box-block-list3 first">
+                                                    <ul>
+                                                        <li>처리일 기준으로 내역이 관리됩니다.</li>
+                                                        <li>부가세는 별도 청구됩니다.</li>
+                                                        <li>당월 충전 취소는 데이터 미사용 시, 당일에 한하여 전화로 가능합니다.</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--// .cont-box -->
+                                    </li>
+                                    <li role="tabpanel" id="aria-tab2-tab" aria-labelledby="aria-tab2" aria-selected="false">
+                                        <div class="inner">
+                                            <div class="contents-info-list">
+                                                <p class="ti-desc"><strong><span class="num">32</span>개</strong> 권한 변경 내역이 있습니다.</p>
+                                                <div class="list-top">
+                                                    <div class="inline">
+                                                        <button class="bt-dropdown small" title="셀렉트 선택">전체 · 3개월<span class="ico"></span></button>
+                                                    </div>
+                                                </div>
+                                                <!--// .widget -->
+                                                <ul class="recharge-history type2">
+                                                    <li>
+                                                        <div class="info-charge">
+                                                            <span class="recharge-change" role="img" aria-label="변경"><span class="blind">변경</span></span>
+                                                        </div>
+                                                        <div class="info-user">
+                                                            <span class="info-title">SK 텔레콤</span>
+                                                            <span class="info-date">2018.06.14</span>
+                                                        </div>
+                                                        <div class="info-data">
+                                                            <span class="info-title">10,000 원</span>
+                                                            <span class="info-sub">충전 허용 금액</span>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="info-charge">
+                                                            <span class="recharge-block" role="img" aria-label="차단"><span class="blind">차단</span></span>
+                                                        </div>
+                                                        <div class="info-user">
+                                                            <span class="info-title">SK 텔레콤대리점 b</span>
+                                                            <span class="info-date">2018.06.14</span>
+                                                        </div>
+                                                        <div class="info-data">
+                                                            <span class="info-title">0 원</span>
+                                                            <span class="info-sub">충전 허용 금액</span>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="info-charge">
+                                                            <span class="recharge-block" role="img" aria-label="차단"><span class="blind">차단</span></span>
+                                                        </div>
+                                                        <div class="info-user">
+                                                            <span class="info-title">SK 텔레콤대리점 b</span>
+                                                            <span class="info-date">2018.06.14</span>
+                                                        </div>
+                                                        <div class="info-data">
+                                                            <span class="info-title">0 원</span>
+                                                            <span class="info-sub">충전 허용 금액</span>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="info-charge">
+                                                            <span class="recharge-change" role="img" aria-label="변경"><span class="blind">변경</span></span>
+                                                        </div>
+                                                        <div class="info-user">
+                                                            <span class="info-title">SK 텔레콤</span>
+                                                            <span class="info-date">2018.06.14</span>
+                                                        </div>
+                                                        <div class="info-data">
+                                                            <span class="info-title">10,000 원</span>
+                                                            <span class="info-sub">충전 허용 금액</span>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="info-charge">
+                                                            <span class="recharge-change" role="img" aria-label="변경"><span class="blind">변경</span></span>
+                                                        </div>
+                                                        <div class="info-user">
+                                                            <span class="info-title">SK 텔레콤</span>
+                                                            <span class="info-date">2018.06.14</span>
+                                                        </div>
+                                                        <div class="info-data">
+                                                            <span class="info-title">10,000 원</span>
+                                                            <span class="info-sub">충전 허용 금액</span>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <button class="gift-bt-more">더보기(20)</button>
+                                        <hr class="cont-sp type1">
+                                        <!-- .cont-box -->
+                                        <div class="cont-box">
+                                            <p class="recharge-sub-txt">법정대리인이 충전허용금액을 사전 설정 시, <br>충전허용금액 내 충전은 법정대리인 동의 없이 신청 가능합니다.</p>
+                                        </div>
+                                        <!--// .cont-box -->
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--// .cont-box -->
+        </div>
+    </div>
+    <!--// #contents -->
+</div>
+
+<% include ../../components/javascript.component.html %>
+
+<script>
+  $(document).ready(function () {
+    var oRechargeCookizHistoryComponent = new Tw.RechargeCookizHistory($(document));
+  });
+</script>
+
+<% include ../../components/end.component.html %>

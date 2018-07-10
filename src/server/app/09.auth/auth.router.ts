@@ -19,7 +19,8 @@ import AuthTidChangePw from './controllers/tid/auth.tid.change-pw.controller';
 import AuthTidFindId from './controllers/tid/auth.tid.find-id.controller';
 import AuthTidFindPw from './controllers/tid/auth.tid.find-pw.controller';
 import AuthTidLogout from './controllers/tid/auth.tid.logout.controller';
-import AuthTidSignUp from './controllers/tid/auth.tid.signup.controller';
+import AuthTidSignUpLocal from './controllers/tid/auth.tid.signup-local.controller';
+import AuthTidSignUpForeigner from './controllers/tid/auth.tid.signup-foreigner.controller';
 import AuthLogoutComplete from './controllers/logout/auth.logout.complete.controller';
 import AuthLogoutExpire from './controllers/logout/auth.logout.expire.controller';
 
@@ -50,7 +51,8 @@ class AuthRouter extends TwRouter {
     this.controllers.push({ url: '/tid/find/id', controller: new AuthTidFindId() });
     this.controllers.push({ url: '/tid/find/pw', controller: new AuthTidFindPw() });
     this.controllers.push({ url: '/tid/logout', controller: new AuthTidLogout() });
-    this.controllers.push({ url: '/tid/signup', controller: new AuthTidSignUp() });
+    this.controllers.push({ url: '/tid/signup-local', controller: new AuthTidSignUpLocal() });
+    this.controllers.push({ url: '/tid/signup-foreigner', controller: new AuthTidSignUpForeigner() });
     this.controllers.push({ url: '/tid/guide', controller: new AuthTidGuide() });
     // withdrawal
     this.controllers.push({ url: '/withdrawal/guide', controller: new AuthWithdrawalGuide() });

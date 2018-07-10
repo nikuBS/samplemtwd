@@ -345,7 +345,7 @@ skt_landing.action = {
         'width': parseInt(btn_width) + '%'
       });
     },
-    open: function (popup_info) {
+    open: function (popup_info,callback_open) {
       skt_landing.action.fix_scroll();
       var _this = this;
       popup_info.hbs = popup_info.hbs ? popup_info.hbs : 'popup';
@@ -357,12 +357,11 @@ skt_landing.action = {
         }*/
         $('.wrap').append(html);
       }).done(function () {
+        if(callback_open){
+          callback_open();
+        }
         $('.popup').find('.popup-blind').on('click',function(e){
           e.stopPropagation();
-        });
-        $('.popup-closeBtn').off('click').on('click', function () {
-          frontend_fn.popup_close(popup_info.front_close);
-          _this.close(this);
         });
         _this.cancel();
         _this.scroll_chk();
@@ -371,7 +370,6 @@ skt_landing.action = {
         }else{
           skt_landing.widgets.widget_init('.popup-page');
         }
-        frontend_fn.popup_open(popup_info.front_open);
       });
       //skt_landing.action.popup.open({'title':'타이틀','contents':'팝업입니다.','type':[{style_class:'btn-submit',href:'#submit',txt:'확인'},{style_class:'btn-modify',href:'#modify',txt:'수정'},{style_class:'btn-cancel',href:'#cancel',txt:'취소'}]});
     },
