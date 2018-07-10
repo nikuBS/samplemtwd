@@ -23,7 +23,7 @@ Tw.PopupService.prototype = {
     var $popups = $('.popup, .popup-page');
     var $currentPopup = $($popups[$popups.length - 1]);
     this._bindEvent($currentPopup);
-    if(!Tw.FormatHelper.isEmpty(this._openCallback)) {
+    if ( !Tw.FormatHelper.isEmpty(this._openCallback) ) {
       this._sendOpenCallback($currentPopup);
     }
   },
@@ -43,7 +43,7 @@ Tw.PopupService.prototype = {
     $container.on('click', '.tw-popup-closeNoHash', $.proxy(this._closeNoHash, this));
   },
   _confirm: function () {
-    if(!Tw.FormatHelper.isEmpty(this._confirmCallback)) {
+    if ( !Tw.FormatHelper.isEmpty(this._confirmCallback) ) {
       this._sendConfirmCallback();
     } else {
       this.close();
@@ -65,7 +65,7 @@ Tw.PopupService.prototype = {
   _sendConfirmCallback: function () {
     this._confirmCallback();
   },
-  _sendOpenCallback: function($container) {
+  _sendOpenCallback: function ($container) {
     this._openCallback($container);
   },
   _open: function (option) {
@@ -114,7 +114,7 @@ Tw.PopupService.prototype = {
         style_class: 'bt-white1 tw-popup-closeBtn',
         txt: Tw.BUTTON_LABEL.CANCEL
       }, {
-        style_class: 'bt-red1, tw-popup-confirm',
+        style_class: 'bt-red1 tw-popup-confirm',
         txt: Tw.BUTTON_LABEL.CONFIRM
       }]
     };
