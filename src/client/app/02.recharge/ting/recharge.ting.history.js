@@ -16,15 +16,15 @@ Tw.RechargeTingHistory = function (rootEl) {
 
 Tw.RechargeTingHistory.prototype = {
   _init: function () {
-    this._apiService.request(Tw.API_CMD.BFF_06_0026, {
-      type: this.searchType,
-      fromDt: Tw.DateHelper.getCurrentShortDate,
-      endDt: Tw.DateHelper.getShortDateWithFormatAddByUnit(new Date(), this.searchPeriod, 'month', 'YYYYMMDD')
-    })
-      .done(function () {
-        // TODO: Activate Block
-      })
-      .fail($.proxy(this._sendFail, this));
+    // this._apiService.request(Tw.API_CMD.BFF_06_0026, {
+    //   type: this.searchType,
+    //   fromDt: Tw.DateHelper.getCurrentShortDate,
+    //   endDt: Tw.DateHelper.getShortDateWithFormatAddByUnit(new Date(), this.searchPeriod, 'month', 'YYYYMMDD')
+    // })
+    //   .done(function () {
+    //     // TODO: Activate Block
+    //   })
+    //   .fail($.proxy(this._sendFail, this));
   },
 
   _cachedElement: function () {
@@ -37,18 +37,15 @@ Tw.RechargeTingHistory.prototype = {
   },
 
   onConfirm: function () {
-
   },
 
   _onSelectCondition: function () {
     this.searchType = $('.wrap_search_type').find('input:checked').val();
     this.searchPeriod = $('.wrap_search_period').find('input:checked').val();
-
-
   },
 
   openWidget: function () {
-    skt_landing.action.popup.open({
+    this._popupService.open({
       hbs: 'select',
       title: Tw.POPUP_TITLE.CHANGE_SEARCH_CONDITION,
       multiplex: true,
