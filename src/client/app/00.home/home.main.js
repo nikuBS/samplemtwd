@@ -11,6 +11,8 @@ Tw.HomeMain = function (rootEl) {
 
   this._init();
   this._bindEvent();
+
+  this._testApi();
 };
 
 
@@ -54,8 +56,47 @@ Tw.HomeMain.prototype = {
     }
 
   },
-
   _failGiftBalance: function (error) {
     console.log(error);
+  },
+  _testApi: function () {
+    this._apiService.request(Tw.API_CMD.GET, {})
+      .done(function (resp) {
+        console.log('[Api test] get success', resp);
+      });
+    this._apiService.request(Tw.API_CMD.GET_PARAM, { postId: 1 })
+      .done(function (resp) {
+        console.log('[Api test] get param success', resp);
+      });
+    this._apiService.request(Tw.API_CMD.GET_PATH_PARAM, {}, {}, 1)
+      .done(function (resp) {
+        console.log('[Api test] get path param success', resp);
+      });
+    this._apiService.request(Tw.API_CMD.POST, {})
+      .done(function (resp) {
+        console.log('[Api test] post success', resp);
+      });
+    this._apiService.request(Tw.API_CMD.POST_PARAM, {
+      title: 'foo',
+      body: 'bar',
+      userId: 1
+    })
+      .done(function (resp) {
+        console.log('[Api test] post param success', resp);
+      });
+    this._apiService.request(Tw.API_CMD.PUT_PARAM, {
+      id: 1,
+      title: 'foo',
+      body: 'bar',
+      userId: 1
+    })
+      .done(function (resp) {
+        console.log('[Api test] put param success', resp);
+      });
+    this._apiService.request(Tw.API_CMD.DELETE, {})
+      .done(function (resp) {
+        console.log('[Api test] delete success', resp);
+      });
+
   }
 };

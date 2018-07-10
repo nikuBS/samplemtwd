@@ -12,13 +12,14 @@ Tw.ApiService.prototype = {
 
   _makeOptions: function (command, params, headers, pathVariables) {
     var prefix = this._setPrefix(command);
+    var data = prefix === '/bypass' ? { parameter: params, pathVariables: pathVariables } : params;
     return {
       type: command.method,
       url: prefix + command.path,
       dataType: 'json',
       timeout: 10000,
-      headers: Object.assign({ 'Content-Type': 'application/json' }, headers),
-      data: JSON.stringify({ parameter: params, pathVariables: pathVariables })
+      headers: Object.assign({ 'content-type': 'application/json; charset=UTF-8' }, headers),
+      data: command.method === Tw.API_METHOD.GET ? data : JSON.stringify(data)
     };
   },
 

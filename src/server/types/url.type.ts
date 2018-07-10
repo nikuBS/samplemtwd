@@ -29,9 +29,10 @@ export const URL = {
   '/recharge/gift/process/request': { login: true },
   '/recharge/gift/history': { login: true },
   '/recharge/cookiz': { login: true },
+  '/recharge/cookiz/history': { login: true },
   '/recharge/limit': { login: true },
+  '/recharge/limit/process': { login: true },
   '/recharge/ting': { login: true },
-  '/recharge/ting/process': { login: true },
   '/recharge/ting/history': { login: true },
   // payment
   '/payment/realtime': { login: true },
@@ -62,9 +63,10 @@ export const URL = {
   '/auth/tid/find/id': { login: false },
   '/auth/tid/find/pw': { login: false },
   '/auth/tid/logout': { login: true },
-  '/auth/tid/signup': { login: false },
+  '/auth/tid/signup-local': { login: false },
+  '/auth/tid/signup-foreigner': { login: false },
   '/auth/tid/guide': { login: false },
   '/auth/withdrawal/guide': { login: true },
   '/auth/withdrawal/survey': { login: true },
-  '/autu/withdrawal/complete': { login: true }
+  '/auth/withdrawal/complete': { login: false }
 };

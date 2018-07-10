@@ -55,17 +55,17 @@ class ApiService {
     switch ( command.server ) {
       case API_SERVER.BFF:
         return Object.assign(header, {
-          'Content-type': 'application/json; charset=UTF-8',
+          'content-type': 'application/json; charset=UTF-8',
           cookie: this.loginService.getServerSession()
         });
       case API_SERVER.TID:
         return Object.assign(header, {
-          'Content-type': 'application/x-www-form-urlencoded; charset-UTF-8',
+          'content-type': 'application/x-www-form-urlencoded; charset-UTF-8',
           'Content-Length': JSON.stringify(params).length
         });
       default:
         return Object.assign(header, {
-          'Content-type': 'application/json; charset=UTF-8'
+          'content-type': 'application/json; charset=UTF-8'
         });
     }
   }
@@ -76,12 +76,14 @@ class ApiService {
         path = path.replace(`args-${index}`, argument);
       });
     }
-    path = method === API_METHOD.GET ? path + ParamsHelper.setQueryParams(params) : path;
+    if ( !FormatHelper.isEmpty(params) ) {
+      path = method === API_METHOD.GET ? path + ParamsHelper.setQueryParams(params) : path;
+    }
     return path;
   }
 
   private apiCallback(observer, command, resp) {
-    this.logger.info(this, '[API RESP]', resp.data);
+    // this.logger.info(this, '[API RESP]', resp.data);
 
     if ( command.server === API_SERVER.BFF ) {
       this.setServerSession(resp);

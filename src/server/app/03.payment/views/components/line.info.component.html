@@ -1,12 +1,12 @@
 <div class="cont-box">
     <div class="payment-info">
-        <span class="blind">나의 대표청구 회선</span>
+        <span class="blind">나의 통합대표 회선</span>
         <ul>
             <li>
                 <span class="info-num"><%= svcInfo.svcNum %></span>
             </li>
             <li>
-                <% if (svcInfo.repSvcYn === 'Y') { %><span class="badge badge-main"><span class="blind">대표청구</span></span><% } %>
+                <% if (svcInfo.repSvcYn === 'Y') { %><span class="badge badge-allpay"><span class="blind">통합대표</span></span><% } %>
                 <span class="info-type"><span class="blind">회선정보</span><%= svcInfo.svcName %></span>
                 <span class="info-name"><span class="blind">별명</span><%= svcInfo.custNm %></span>
             </li>
