@@ -6,7 +6,6 @@
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
-import { API_CMD } from '../../../../types/api-command.type';
 
 class AuthLoginFindIdPwd extends TwViewController {
   constructor() {
