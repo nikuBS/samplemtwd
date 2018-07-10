@@ -1,7 +1,7 @@
 /**
  * FileName: myt.bill.hotbill.controller.ts
- * Author: Hyeryoun Lee (skt.P130712@partner.sk.com)
- * Date: 2018.07.02
+ * Author: Kim InHwan (skt.P132150@partner.sk.com)
+ * Date: 2018.07.04
  */
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { NextFunction, Request, Response } from 'express';
