@@ -19,11 +19,12 @@ Tw.API_CMD = {
   BFF_01_0005: { path: '/common/selected-sessions', method: Tw.API_METHOD.GET },
 
   // AUTH
+  BFF_03_0002: { path: '/user/account-auth-sessions', method: Tw.API_METHOD.POST },
   BFF_03_0003: { path: '/core-auth/v1/members', method: Tw.API_METHOD.DELETE },
   BFF_03_0006: { path: '/user/nick-names/args-0', method: Tw.API_METHOD.PUT },
   BFF_03_0007: { path: '/user/tid-keys', method: Tw.API_METHOD.GET },
   BFF_03_0010: { path: '/user/locks', method: Tw.API_METHOD.DELETE },
-  BFF_03_0011: { path: '/core-auth/v1/members-foreinger', method: Tw.API_METHOD.GET },
+  BFF_03_0011: { path: '/core-auth/v1/nationalities', method: Tw.API_METHOD.GET },
 
   // MYT
   BFF_05_0001: { path: '/my-t/balances', method: Tw.API_METHOD.GET },

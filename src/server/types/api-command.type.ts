@@ -27,7 +27,7 @@ export const API_CMD = {
   BFF_01_0005: { path: '/common/selected-sessions', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   // AUTH
   BFF_03_0001: { path: '/test-login', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: false },
-  BFF_03_0002: { path: '/core-auth/v1/member-auth', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: false },
+  BFF_03_0002: { path: '/user/account-auth-sessions', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_03_0003: { path: '/core-auth/v1/members', method: API_METHOD.DELETE, server: API_SERVER.BFF, bypass: true },
   BFF_03_0004: { path: '/core-auth/v1/services', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_03_0005: { path: '/core-auth/v1/multi-svc', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: false },
@@ -36,7 +36,7 @@ export const API_CMD = {
   BFF_03_0008: { path: '/user/sessions', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: false },
   BFF_03_0009: { path: '/user/service-password-sessions', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: false },
   BFF_03_0010: { path: '/user/locks', method: API_METHOD.DELETE, server: API_SERVER.BFF, bypass: true },
-  BFF_03_0011: { path: '/core-auth/v1/members-foreinger', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_03_0011: { path: '/core-auth/v1/nationalities', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_03_0012: { path: '/user/biz-real-users-auth/args-0', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: false },
   BFF_03_0013: { path: '/user/biz-real-users/args-0', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: false },
   // MYT
