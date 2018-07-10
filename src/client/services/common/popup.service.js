@@ -20,9 +20,9 @@ Tw.PopupService.prototype = {
     }
   },
   _onOpenPopup: function () {
-    Tw.Logger.info('[Popup Open]');
     var $popups = $('.popup, .popup-page');
     var $currentPopup = $($popups[$popups.length - 1]);
+    Tw.Logger.info('[Popup Open]', $currentPopup);
     this._bindEvent($currentPopup);
     if ( !Tw.FormatHelper.isEmpty(this._openCallback) ) {
       this._sendOpenCallback($currentPopup);
@@ -77,17 +77,18 @@ Tw.PopupService.prototype = {
     this._addHash();
     this._open(option);
   },
-  openAlert: function (message, title) {
+  openAlert: function (message, title, confirmCallback) {
     var option = {
       title: title || Tw.POPUP_TITLE.NOTIFY,
       close_bt: true,
       title2: message,
       bt_num: 'one',
       type: [{
-        style_class: 'bt-red1 tw-popup-closeBtn',
+        style_class: 'bt-red1 tw-popup-confirm',
         txt: Tw.BUTTON_LABEL.CONFIRM
       }]
     };
+    this._setConfirmCallback(confirmCallback);
     this._addHash();
     this._open(option);
   },
