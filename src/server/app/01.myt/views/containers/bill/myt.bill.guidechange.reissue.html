@@ -1,0 +1,142 @@
+<!--
+* FileName: myt.bill.reissue.html
+* Author: Kim InHwan (skt.P132150@partner.sk.com)
+* Date: 2018.07.04
+-->
+<% include ../../components/start.component.html %>
+
+<body>
+<div class="wrap">
+    <!-- #header -->
+    <div id="header" class="header-wrap">
+        <div class="header step-page">
+            <div class="header-ti">
+                <h1>요금안내서 재발행</h1>
+            </div>
+            <button class="close-step"><span class="blind">닫기</span></button>
+        </div>
+    </div>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div id="myt-bill-gc-reissue" class="container">
+            <div class="cont-box nogaps-top">
+                <div class="change-plan">
+                    <h3 class="tit-type">사용중인 요금안내서</h3>
+                    <!-- 여기서 요금안내서 타입 출력 (문자로 전달받음) -->
+                    <p class="txt-type"><%= (data.type) || '' %></p>
+                </div>
+            </div>
+
+            <hr class="cont-sp type1" aria-hidden="true"/>
+
+            <div class="cont-box nogaps-top">
+                <div class="change-plan">
+                    <dl>
+                        <!-- 무선서비스가 아닌 유선서비스인 경우 if문 처리-->
+                        <!--<dt>재발행 사유를 선택해주세요</dt> -->
+                        <!--<div class="widget">
+                            <div class="widget-box tube" data-id="reason">
+                                <ul class="tube-list two" role="radiogroup">
+                                    <li role="radio" aria-checked="true"><input type="radio" name="senddata" title="Bill Letter">Bill Letter</li>
+                                    <li role="radio" aria-checked="false"><input type="radio" name="senddata" title="이메일">이메일</li>
+                                </ul>
+                            </div>
+                        </div>-->
+                        <!-- 요금서가 두개인 경우 사용 if문 처리 -->
+                        <!--<dt>어떤 요금안내서를 재발행 하시겠어요?</dt>
+                        <dd>
+                            &lt;!&ndash; .widget &ndash;&gt;
+                            <div class="widget">
+                                <div class="widget-box tube" data-id="type">
+                                    <ul class="tube-list two" role="radiogroup">
+                                        <li role="radio" aria-checked="true"><input type="radio" name="senddata" title="Bill Letter">Bill Letter</li>
+                                        <li role="radio" aria-checked="false"><input type="radio" name="senddata" title="이메일">이메일</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            &lt;!&ndash; //.widget &ndash;&gt;
+                        </dd>-->
+                        <dt>재발행 시점을 선택해주세요</dt>
+                        <dd>
+                            <!-- .widget -->
+                            <div class="widget">
+                                <div class="widget-box tube" data-id="time">
+                                    <ul class="tube-list two" role="radiogroup">
+                                        <li role="radio" aria-checked="true"><input type="radio" name="senddata"
+                                                                                    title="청구시점">청구시점
+                                        </li>
+                                        <li role="radio" aria-checked="false"><input type="radio" name="senddata"
+                                                                                     title="현재시점">현재시점
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- //.widget -->
+                        </dd>
+                        <dt>재발행할 월을 선택해주세요</dt>
+                        <dd>
+                            <!-- .widget -->
+                            <div class="widget">
+                                <div class="widget-box tube" data-id="month">
+                                    <ul class="tube-list two" role="radiogroup">
+                                        <li role="radio" aria-checked="false">
+                                            <input type="radio" name="" title="2018년 6월">
+                                            <%= data.halfYear[0].type1 %>
+                                            <span class="date"><%= data.halfYear[0].type2 %></span>
+                                        </li>
+                                        <li role="radio" aria-checked="false">
+                                            <input type="radio" name="" title="2018년 5월">
+                                            <%= data.halfYear[1].type1 %>
+                                            <span class="date"><%= data.halfYear[1].type2 %></span>
+                                        </li>
+                                        <li role="radio" aria-checked="false">
+                                            <input type="radio" name="" title="2018년 4월">
+                                            <%= data.halfYear[2].type1 %>
+                                            <span class="date"><%= data.halfYear[2].type2 %></span>
+                                        </li>
+                                        <li role="radio" aria-checked="false">
+                                            <input type="radio" name="" title="2018년 3월">
+                                            <%= data.halfYear[3].type1 %>
+                                            <span class="date"><%= data.halfYear[3].type2 %></span>
+                                        </li>
+                                        <li role="radio" aria-checked="false">
+                                            <input type="radio" name="" title="2018년 2월">
+                                            <%= data.halfYear[4].type1 %>
+                                            <span class="date"><%= data.halfYear[4].type2 %></span>
+                                        </li>
+                                        <li role="radio" aria-checked="false">
+                                            <input type="radio" name="" title="2018년 1월">
+                                            <%= data.halfYear[5].type1 %>
+                                            <span class="date"><%= data.halfYear[5].type2 %></span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- //.widget -->
+                            <div class="contents-notice type1">
+                                <span class="noti-type3">재발행은 이번 달~최근 6개월까지 가능합니다.</span>
+                            </div>
+                        </dd>
+                    </dl>
+                    <ul class="bt-slice">
+                        <li class="bt-red1">
+                            <button>재발행 신청하기</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!--// #contents -->
+</div>
+
+<% include ../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    var comp = new Tw.MyTBillReissue($('#myt-bill-gc-reissue'));
+  });
+</script>
+<% include ../../components/end.component.html %>

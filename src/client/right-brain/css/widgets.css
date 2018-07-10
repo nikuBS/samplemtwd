@@ -473,7 +473,7 @@ input[type=checkbox], input[type=radio] {
   -webkit-border-radius: 0;
 }
 
-\ li.checkbox.type01 {
+li.checkbox.type01 {
   display: block;
 }
 
