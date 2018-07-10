@@ -19,7 +19,7 @@ Tw.AuthLoginDormancy.prototype = {
             window.location = '/home';
           } else {
             Tw.Logger.error(res);
-            Tw.Popup.openAlert(Tw.POPUP_TITLE.NOTIFY, res.msg);
+            Tw.Popup.openAlert(res.msg);
           }
         })
         .fail(function (err) {

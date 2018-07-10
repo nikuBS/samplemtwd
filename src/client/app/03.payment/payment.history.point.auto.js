@@ -10,11 +10,23 @@ Tw.PaymentHistoryPointAuto = function (rootEl) {
   this._hash = Tw.Hash;
   this._popupService = Tw.Popup;
   this._dateHelper = Tw.DateHelper;
+
+  this.common = new Tw.PaymentHistoryCommon(rootEl);
+
+  this._bindDOM();
+  this._init();
 };
 
 Tw.PaymentHistoryPointAuto.prototype = {
+  _init: function () {
+    this.common.setMenuChanger(this.$menuChanger, 'click');
+
+  },
+  _bindDOM: function () {
+    this.$menuChanger = this.$container.find('.cont-box .bt-dropdown.big');
+  }
   /*    납부방식 선택 레이어 팝업
-skt_landing.action.popup.open({
+popup.open({
                 'hbs' : 'choice',
                 'title': '납부방식 선택',
                 'close_bt': true,

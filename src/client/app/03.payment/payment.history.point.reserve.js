@@ -14,7 +14,7 @@ Tw.PaymentHistoryPointReserve = function (rootEl) {
 
 Tw.PaymentHistoryPointReserve.prototype = {
   /*    납부방식 선택 레이어 팝업
-skt_landing.action.popup.open({
+popup.open({
                 'hbs' : 'choice',
                 'title': '납부방식 선택',
                 'close_bt': true,
@@ -33,17 +33,17 @@ skt_landing.action.popup.open({
    */
 
   /* OK캐쉬백 납부예약 내역 상세 레이어
-    skt_landing.action.popup.open({
+    popup.open({
       hbs:'PA_06_05_L01'// hbs의 파일명
     });
    */
   /* T포인트 납부예약 내역 상세 레이어
-    skt_landing.action.popup.open({
+    popup.open({
         hbs:'PA_06_05_L02'// hbs의 파일명
     });
    */
   /* 레인보우포인트 납부예약 내역 상세 레이어
-    skt_landing.action.popup.open({
+    popup.open({
         hbs:'PA_06_05_L03'// hbs의 파일명
     });
    */

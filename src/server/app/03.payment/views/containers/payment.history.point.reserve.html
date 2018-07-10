@@ -32,20 +32,7 @@
         <h2 class="blind">내용</h2>
         <div class="container">
 
-            <div class="cont-box">
-                <div class="payment-info">
-                    <span class="blind">대표청구</span>
-                    <ul>
-                        <li><span class="info-num">010-46**-10**</span></li>
-                        <li>
-                            <span class="badge badge-allpay"><span class="blind">통합대표</span></span>
-                            <span class="info-type">휴대폰</span>
-                            <span class="info-name"><span class="blind">별명</span>귀여운첫째아들</span>
-                        </li>
-                    </ul>
-                    <span class="info-btn"><a href="" class="btn-choice" role="button">변경</a></span>
-                </div>
-            </div>
+            <%- include('../components/line.info.component.html', { svcInfo: svcInfo }); %>
 
             <hr class="cont-sp type1" aria-hidden="true"/>
             <div class="cont-box">
@@ -276,7 +263,7 @@
 <% include ../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    var oPaymentHistoryPointReserve = new Tw.PaymentHistoryPointReserve($(document));
+    new Tw.PaymentHistoryPointReserve($(document));
   });
 </script>
 <% include ../components/end.component.html %>

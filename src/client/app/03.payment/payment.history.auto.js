@@ -14,7 +14,7 @@ Tw.PaymentHistoryAuto = function (rootEl) {
 
 Tw.PaymentHistoryAuto.prototype = {
   /*    납부방식 선택 레이어 팝업
-skt_landing.action.popup.open({
+popup.open({
               'hbs' : 'choice',
               'title': '납부방식 선택',
               'close_bt': true,
@@ -31,12 +31,12 @@ skt_landing.action.popup.open({
           });
  */
   /*  계좌이체 자동납부 상세
-      skt_landing.action.popup.open({
+      popup.open({
           hbs:'PA_06_03_L01'// hbs의 파일명
       });
    */
   /*  신용카드 자동납부 상세
-      skt_landing.action.popup.open({
+      popup.open({
           hbs:'PA_06_03_L02'// hbs의 파일명
       });
    */
