@@ -124,7 +124,7 @@ Tw.RechargeRefill.prototype = {
     });
   },
   _openAlert: function (message) {
-    this._popupService.openAlert(Tw.POPUP_TITLE.NOTIFY, message);
+    this._popupService.openAlert(message);
   },
   _openConfirm: function (message) {
     this._popupService.openConfirm(Tw.POPUP_TITLE.NOTIFY, message, '', null, $.proxy(this._submit, this));

@@ -10,9 +10,10 @@ Tw.PopupService = function () {
 Tw.PopupService.prototype = {
   _init: function () {
     this._hashService.initHashNav($.proxy(this._onHashChange, this));
+
   },
   _onHashChange: function (hash) {
-    if ( hash.base === this._prevHash ) {
+    if ( ('#' + hash.base) === this._prevHash ) {
       Tw.Logger.info('[Popup Close]');
       this._popupClose();
       this._prevHash = undefined;
@@ -76,9 +77,9 @@ Tw.PopupService.prototype = {
     this._addHash();
     this._open(option);
   },
-  openAlert: function (title, message) {
+  openAlert: function (message, title) {
     var option = {
-      title: title,
+      title: title || Tw.POPUP_TITLE.NOTIFY,
       close_bt: true,
       title2: message,
       bt_num: 'one',
@@ -90,9 +91,9 @@ Tw.PopupService.prototype = {
     this._addHash();
     this._open(option);
   },
-  openAlertNoHash: function (title, message) {
+  openAlertNoHash: function (message, title) {
     var option = {
-      title: title,
+      title: title || Tw.POPUP_TITLE.NOTIFY,
       close_bt: true,
       title2: message,
       bt_num: 'one',
