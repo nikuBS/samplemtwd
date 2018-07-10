@@ -70,7 +70,7 @@
        this._closePopup();
        window.location = '/auth/withdrawal/survey';
      } else {
-       this._popupService.openAlert(res.msg);
+       this._popupService.openAlert(Tw.MSG_AUTH.WITHDRAW_A03);
      }
    },
    _closePopup: function () {
