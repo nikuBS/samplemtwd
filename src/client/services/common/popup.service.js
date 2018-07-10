@@ -1,6 +1,6 @@
 Tw.PopupService = function () {
   this.$document = $(document);
-  this._prevHash = undefined;
+  this._prevHashList = [];
   this._confirmCallback = null;
   this._openCallback = null;
   this._hashService = Tw.Hash;
@@ -13,16 +13,17 @@ Tw.PopupService.prototype = {
 
   },
   _onHashChange: function (hash) {
-    if ( ('#' + hash.base) === this._prevHash ) {
+    if ( ('#' + hash.base) === this._prevHashList[this._prevHashList.length - 1] ) {
+      this._prevHashList.pop();
       Tw.Logger.info('[Popup Close]');
       this._popupClose();
       this._prevHash = undefined;
     }
   },
   _onOpenPopup: function () {
-    Tw.Logger.info('[Popup Open]');
     var $popups = $('.popup, .popup-page');
     var $currentPopup = $($popups[$popups.length - 1]);
+    Tw.Logger.info('[Popup Open]');
     this._bindEvent($currentPopup);
     if ( !Tw.FormatHelper.isEmpty(this._openCallback) ) {
       this._sendOpenCallback($currentPopup);
@@ -34,8 +35,9 @@ Tw.PopupService.prototype = {
     skt_landing.action.popup.close();
   },
   _addHash: function () {
-    this._prevHash = location.hash;
-    location.hash = 'popup';
+    var curHash = location.hash || '#';
+    this._prevHashList.push(curHash);
+    location.hash = 'popup' + this._prevHashList.length;
   },
   _bindEvent: function ($container) {
     $container.on('click', '.popup-closeBtn', $.proxy(this.close, this));
@@ -77,17 +79,18 @@ Tw.PopupService.prototype = {
     this._addHash();
     this._open(option);
   },
-  openAlert: function (message, title) {
+  openAlert: function (message, title, confirmCallback) {
     var option = {
       title: title || Tw.POPUP_TITLE.NOTIFY,
       close_bt: true,
       title2: message,
       bt_num: 'one',
       type: [{
-        style_class: 'bt-red1 tw-popup-closeBtn',
+        style_class: 'bt-red1 tw-popup-confirm',
         txt: Tw.BUTTON_LABEL.CONFIRM
       }]
     };
+    this._setConfirmCallback(confirmCallback);
     this._addHash();
     this._open(option);
   },
@@ -140,7 +143,7 @@ Tw.PopupService.prototype = {
 
   },
   close: function () {
-    if ( location.hash === '#popup' ) {
+    if ( /popup/.test(location.hash) ) {
       history.back();
     }
   }
