@@ -53,7 +53,7 @@ Tw.PaymentPoint.prototype = {
   },
   _setType: function ($target) {
     this.$pointType = $target.data('type');
-    this.$autoCode = $target.data('code').toString();
+    this.$autoCode = $target.data('code');
     this.$container.find('.point-title').hide();
     this.$container.find('.point-pay-info').hide();
     this.$container.find('.' + this.$pointType + '-title').show();
@@ -106,14 +106,35 @@ Tw.PaymentPoint.prototype = {
       ocbCcno: ccno
     };
   },
-  _payRainbowOne: function () {
+  _payRainbowOne: function (event) {
+    event.preventDefault();
 
+    if (this._isValidForRainbow()) {
+      var reqData = this._makeRequestDataForRainbow();
+      this._apiService.request(Tw.API_CMD.BFF_07_0048, reqData)
+        .done($.proxy(this._paySuccess, this))
+        .fail($.proxy(this._payFail, this));
+    }
   },
-  _payRainbowAuto: function () {
+  _makeRequestDataForRainbow: function () {
+    return {
+      reqRbpPt: '1000',
+      prodId: 'CCBBAE0'
+    };
+  },
+  _payRainbowAuto: function (event) {
+    event.preventDefault();
 
+    if (this._isValidForRainbow()) {
+      this._apiService.request(Tw.API_CMD.BFF_07_0056, { rbpChgRsnCd: 'A1' })
+        .done($.proxy(this._paySuccess, this))
+        .fail($.proxy(this._payFail, this));
+    }
   },
   _paySuccess: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
+      this._setData(res);
+      console.log(res.result);
       this._history.setHistory();
       this._go('#complete');
     } else {
@@ -124,6 +145,14 @@ Tw.PaymentPoint.prototype = {
   },
   _payFail: function () {
     Tw.Logger.info('pay request fail');
+  },
+  _setData: function (res) {
+    var $target = this.$container.find('.complete-target');
+    var $result = res.result;
+    for (var key in $result) {
+      $target.find('.' + key).text(res[key]);
+    }
+
   },
   _isValidForCashbagOne: function () {
     return (this._checkIsEmpty(this.$cardNumber.val(), Tw.MSG_PAYMENT.AUTO_A05) &&
@@ -138,6 +167,9 @@ Tw.PaymentPoint.prototype = {
       this._checkLength($.trim(this.$cardNumber.val()), 16, Tw.MSG_PAYMENT.REALTIME_A06) &&
       this._checkIsAgree(this.$agreement, Tw.MSG_PAYMENT.POINT_A03));
 //      this._checkPoint(this.$point.val()));
+  },
+  _isValidForRainbow: function () {
+    return true;
   },
   _checkIsEmpty: function ($value, message) {
     if (Tw.FormatHelper.isEmpty($value)) {
