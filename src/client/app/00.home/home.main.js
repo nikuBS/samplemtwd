@@ -12,6 +12,7 @@ Tw.HomeMain = function (rootEl) {
   this._init();
   this._bindEvent();
 
+  // For dev (Determine if api service issue or bff issue)
   this._testApi();
 };
 
@@ -30,14 +31,14 @@ Tw.HomeMain.prototype = {
 
   // 리필하기
   _openRefillProduct: function () {
-    this._popupService.openLayer({
+    this._popupService.open({
       hbs: 'DA_01_01_01_L01'// hbs의 파일명
     });
   },
 
   // 선물하기
   _openGiftProduct: function () {
-    this._popupService.openLayer({
+    this._popupService.open({
       hbs: 'DA_02_01_L01'// hbs의 파일명
     });
   },
