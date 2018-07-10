@@ -1,6 +1,5 @@
 var skt_landing = {},
   frontend_fn = {
-    popup_open: function(type){}
   },
   page_list = {},
   component_list = [],
@@ -30,14 +29,6 @@ $(document).on('ready', function () {
   }
   $('head title').text(head_title + head_common);
   if($('.gnb')){
-    $('.gnb-list li').each(function(num){
-      $(this).find('a').on('click',function(){
-          if(!$(this).hasClass('on')){
-            $('.gnb-list li a').removeClass('on');
-            $(this).addClass('on');
-          }
-      });
-    });
     scroll_fn['gnb'] = 'skt_landing.action.gnb_action()';
   }
   if($('.all-menu')){

@@ -15,7 +15,7 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div class="wrap">
+<div id="authLineEdit" class="wrap">
     <!-- #header -->
     <div id="header" class="header-wrap">
         <div class="header">
@@ -140,11 +140,14 @@
         </div>
     </div>
     <!--// #contents -->
+    <!-- footer -->
+    <% include ../../../../common/views/components/footer.component.html %>
+    <!-- // footer -->
 </div>
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-
+    new Tw.AuthLineEdit($('#authLineEdit'));
   });
 </script>
 <% include ../../components/end.component.html %>

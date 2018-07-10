@@ -1,0 +1,2 @@
+// Auth
+Tw.MAX_NICKNAME_LEN = 7;

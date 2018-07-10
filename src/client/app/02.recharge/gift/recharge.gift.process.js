@@ -62,7 +62,9 @@ Tw.RechargeGiftProcess.prototype = {
   },
 
   _sendTextPopEvt: function () {
-    this._popupService.openSms();
+    this._popupService.open({
+      hbs: 'DA_02_01_04_L01'// hbs의 파일명
+    });
 
     setTimeout(function () {
       var $txTel = $('em.tx-tel').text(Tw.FormatHelper.conTelFormatWithDash(this.provider.phone));
@@ -173,7 +175,7 @@ Tw.RechargeGiftProcess.prototype = {
 
   _onClickFamilyHistoryItem: function (e) {
     this.removeHistoryItemEvent = $(e.currentTarget);
-    this._popupService.openConfirm(Tw.POPUP_TITLE.GIFT_FAMILY_INFO, Tw.MSG_RECHARGE.GIFT_FAMILY_L07, $.proxy(this._removeFamilyHistoryItem, this));
+    this._popupService.openConfirm(Tw.POPUP_TITLE.GIFT_FAMILY_INFO, Tw.MSG_RECHARGE.GIFT_FAMILY_L07, '', null, $.proxy(this._removeFamilyHistoryItem, this));
   },
 
   _onClickMembersHistoryItem: function (e) {

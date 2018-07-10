@@ -1,8 +1,8 @@
-<!--
+<%#
 * FileName: payment.realtime.input.point.component.html
 * Author: 공자윤 (jayoon.kong@sk.com)
 * Date: 2018.07.05
--->
+%>
 <div class="container">
     <div class="cont-box">
         <!-- .widget -->
@@ -25,7 +25,7 @@
                 <div class="contents-btn">
                     <ul class="bt-slice">
                         <li class="bt-white1">
-                            <button>포인트 조회하기</button>
+                            <a href="#get-point" class="get-point">포인트 조회하기</a>
                         </li>
                     </ul>
                 </div>
@@ -60,7 +60,7 @@
                         <h5 class="account-tit">비밀번호</h5>
                         <div class="inputbox">
                             <span class="input">
-                                <input type="text" placeholder="비밀번호를 입력해주세요." title="비밀번호 입력하기">
+                                <input type="text" class="only-number" minlength="4" maxlength="4" placeholder="비밀번호를 입력해주세요." title="비밀번호 입력하기">
                                 <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
                             </span>
                         </div>

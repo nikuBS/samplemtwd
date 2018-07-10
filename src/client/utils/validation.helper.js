@@ -20,9 +20,35 @@ Tw.ValidationHelper = (function () {
     return Tw.ValidationHelper.regExpTest(/^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i, str);
   }
 
+  function isSeriesNum(string, maxSeries) {
+    var checkSeriesNum = '0123456789';
+    for ( var i = 0; i <= checkSeriesNum.length - maxSeries; i++ ) {
+      if ( string.indexOf(checkSeriesNum.substr(i, maxSeries)) !== -1 ) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  function containSpecial(string, length) {
+    var reqSpecial = /["'~`!@#$%^&*()\-_+={}\[\]:;<>./?\\|]/g;
+    var findSpecial = string.match(reqSpecial) || [];
+    return findSpecial.length >= length;
+  }
+
+  function containNumber(string, length) {
+    var reqNumber = /[0-9]/g;
+    var findNumber = string.match(reqNumber) || [];
+    return findNumber.length >= length;
+
+  }
+
   return {
     regExpTest: regExpTest,
     isCellPhone: isCellPhone,
-    isEmail: isEmail
+    isSeriesNum: isSeriesNum,
+    isEmail: isEmail,
+    containSpecial: containSpecial,
+    containNumber: containNumber
   };
 })();

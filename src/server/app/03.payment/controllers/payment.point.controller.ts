@@ -1,47 +1,133 @@
 /**
  * FileName: payment.point.controller.ts
  * Author: 공자윤 (jayoon.kong@sk.com)
- * Date: 2018.06.22
+ * Date: 2018.07.06
  */
 import TwViewController from '../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
 import { API_CMD, API_CODE } from '../../../types/api-command.type';
-import DateHelper from '../../../utils/date.helper';
 import FormatHelper from '../../../utils/format.helper';
-import MyTUsage from '../../01.myt/controllers/usage/myt.usage.controller';
+import { Observable } from 'rxjs/Observable';
+import { PAYMENT_VIEW } from '../../../types/string.type';
+import { REQUEST_VALUE } from '../../../types/bff-common.type';
 
 class PaymentPointController extends TwViewController {
-  public myTUsage = new MyTUsage();
-
   constructor() {
     super();
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    this.apiService.request(API_CMD.BFF_06_0001, {}).subscribe((resp) => {
-      this.myTUsage.renderView(res, 'payment.point.html', {
-        usageData: this.getResult(resp, {}),
-        svcInfo
-      });
+    Observable.combineLatest(
+      this.getAllCashbagAndTpoint(),
+      this.getAllRainbowPoint()
+    ).subscribe(([cashbagAndT, rainbowPoint]) => {
+      this.renderView(res, 'payment.point.html', this.getData(svcInfo, cashbagAndT, rainbowPoint));
     });
   }
 
-  private getResult(resp: any, data: any): any {
-    if (resp.code === API_CODE.CODE_00) {
-      data = this.parseData(resp.result);
+  public renderView(res: Response, view: string, data: any): any {
+    if (data.isError) {
+      res.render(PAYMENT_VIEW.ERROR, data);
     } else {
-      data = resp;
+      res.render(view, data);
+    }
+  }
+
+  private getAllCashbagAndTpoint(): Observable<any> {
+    return Observable.combineLatest(
+      this.getCashbagAndTpoint(),
+      this.getAutoCashbag(),
+      this.getAutoTpoint(),
+      (cashbagAndTpoint, autoCashbag, autoTpoint) => {
+        cashbagAndTpoint.isAutoCashbag = this.getAutoValue(autoCashbag);
+        cashbagAndTpoint.isAutoTpoint = this.getAutoValue(autoTpoint);
+        return cashbagAndTpoint;
+      });
+  }
+
+  private getAllRainbowPoint(): Observable<any> {
+    return Observable.combineLatest(
+      this.getRainbowPoint(),
+      this.getAutoRainbowPoint(),
+      (rainbowPoint, autoRainbowPoint) => {
+        rainbowPoint.isAutoRainbow = this.getAutoValue(autoRainbowPoint);
+        return rainbowPoint;
+      });
+  }
+
+  private getCashbagAndTpoint(): Observable<any> {
+    return this.apiService.request(API_CMD.BFF_07_0041, {}).map((response) => {
+      return this.parseData(response);
+    });
+  }
+
+  private getAutoCashbag(): Observable<any> {
+    return this.apiService.request(API_CMD.BFF_07_0051, { ptClCd: 'CPT' }).map((response) => {
+      if (response.code === API_CODE.CODE_00) {
+        return response.result.strRbpStatTxt;
+      }
+      return null;
+    });
+  }
+
+  private getAutoTpoint(): Observable<any> {
+    return this.apiService.request(API_CMD.BFF_07_0051, { ptClCd: 'TPT' }).map((response) => {
+      if (response.code === API_CODE.CODE_00) {
+        return response.result.strRbpStatTxt;
+      }
+      return null;
+    });
+  }
+
+  private getRainbowPoint(): Observable<any> {
+    return this.apiService.request(API_CMD.BFF_07_0042, {}).map((response) => {
+      return this.parseData(response, 'rainbow');
+    });
+  }
+
+  private getAutoRainbowPoint(): Observable<any> {
+    return this.apiService.request(API_CMD.BFF_07_0052, {}).map((response) => {
+      if (response.code === API_CODE.CODE_00) {
+        return response.result.reqStateNm;
+      }
+      return null;
+    });
+  }
+
+  private getAutoValue(data: any): any {
+    if (data === REQUEST_VALUE.Y) {
+      data = true;
+    } else if (data === REQUEST_VALUE.N) {
+      data = false;
     }
     return data;
   }
 
-  private parseData(product: any): any {
-    if (!FormatHelper.isEmpty(product)) {
-      product.map((data) => {
-        // product.chargeDate = DateHelper.getShortDateNoDot(data.chargeDate);
-      });
+  private parseData(data: any, type?: string): any {
+    if (data.code === API_CODE.CODE_00) {
+      data = data.result;
+
+      if (type === 'rainbow') {
+        data.rainbowPt = FormatHelper.addComma(data.usableRbpPt);
+      } else {
+        data.cashbagPt = FormatHelper.addComma(data.availPt);
+        data.tPt = FormatHelper.addComma(data.availTPt);
+      }
     }
-    return product;
+    return data;
+  }
+
+  private getData(svcInfo: any, cashbagAndT: any, rainbowPoint: any): any {
+    return {
+      svcInfo,
+      cashbagAndT,
+      rainbowPoint,
+      isError: this.isError(cashbagAndT) || this.isError(rainbowPoint)
+    };
+  }
+
+  private isError(data: any): boolean {
+    return data.code !== undefined || data.isAutoCashbag === null || data.isAutoTpoint === null || data.isAutoRainbow === null;
   }
 }
 

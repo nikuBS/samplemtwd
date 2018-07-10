@@ -9,11 +9,26 @@ class RechargeCookiz extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    res.render('cookiz/recharge.cookiz.html', { svcInfo: svcInfo });
-    // return this.apiService.request(API_CMD.BFF_03_0003_C, { svcCtg: 'M' })
-    //   .subscribe((response) => {
-    //     res.render('gift/recharge.gift.html', { lineList: response.result, svcInfo: svcInfo });
-    //   });
+    this.apiService.request(API_CMD.BFF_06_0028, {}).subscribe((resp) => {
+      const result = {
+        code: '00',
+        msg: 'success',
+        result: {
+          blockYn: 'Y',
+          currentTopUpLimit: '15000',
+          regularTopUpYn: 'Y',
+          regularTopUpAmt: '5000'
+        }
+      };
+
+      const isBlocked = false;
+
+      if ( isBlocked ) {
+        res.render('cookiz/recharge.cookiz.blocked.html', { svcInfo: svcInfo });
+      } else {
+        res.render('cookiz/recharge.cookiz.html', { svcInfo: svcInfo });
+      }
+    });
   }
 }
 

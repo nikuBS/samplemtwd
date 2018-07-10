@@ -1,8 +1,8 @@
-<!--
+<%#
 * FileName: payment.auto.input.component.html
 * Author: 공자윤 (jayoon.kong@sk.com)
 * Date: 2018.07.05
--->
+%>
 <div class="container">
     <div class="cont-box">
         <!-- .widget -->
@@ -22,61 +22,61 @@
         <div class="pay-info">
             <h4 class="pay-tit">납부 방법 선택 및 정보입력</h4>
             <div class="widget select-way">
-                <div class="widget-box radio">
-                    <ul class="select-list" role="radiogroup">
-                        <li class="radiobox type01 checked" role="radio" aria-checked="true">
-                            <input type="radio" name="radio1" value="은행계좌이체" title="은행계좌이체 선택" checked="checked" />
-                            은행계좌이체
-                        </li>
-                        <li class="radiobox type01" role="radio" aria-checked="false">
-                            <input type="radio" name="radio1" value="체크/신용카드 납부" title="체크/신용카드 선택"/>
-                            체크/신용카드 납부
-                        </li>
-                    </ul>
+                <div class="widget select-way">
+                    <div class="widget-box radio">
+                        <ul class="select-list" role="radiogroup">
+                            <li class="radiobox type01 checked" role="radio" aria-checked="true">
+                                <input type="radio" name="radio1" value="은행계좌이체" title="은행계좌이체 선택" checked="checked" />
+                                은행계좌이체
+                            </li>
+                            <li class="radiobox type01" role="radio" aria-checked="false">
+                                <input type="radio" name="radio1" value="체크/신용카드 납부" title="체크/신용카드 선택"/>
+                                체크/신용카드 납부
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="inner">
-            <div class="account-wrap">
-                <h5 class="account-tit">은행명 / 계좌번호</h5>
-                <div class="account-detail">
-                    <div class="select-name">
-                        <button class="bt-dropdown" title="은행 선택하기">은행명<span class="ico"></span></button>
-                    </div>
-                    <div class="inputbox input-context">
-                        <span class="input">
-                            <input type="text" placeholder="계좌번호 (숫자만 입력)" title="계좌번호">
-                            <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
-                        </span>
-                    </div>
+        <div class="account-wrap">
+            <h5 class="account-tit">은행명 / 계좌번호</h5>
+            <div class="account-detail">
+                <div class="select-name">
+                    <button class="bt-dropdown" title="은행 선택하기">은행명<span class="ico"></span></button>
+                </div>
+                <div class="inputbox input-context">
+                    <span class="input">
+                        <input type="text" class="only-number" placeholder="계좌번호 (숫자만 입력)" title="계좌번호">
+                        <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
+                    </span>
                 </div>
             </div>
-            <div class="account-wrap">
-                <h5 class="account-tit">휴대폰 번호</h5>
-                <div class="account-detail">
-                    <div class="inputbox">
-                        <span class="input">
-                            <input type="text" placeholder="숫자만 입력" title="카드번호">
-                            <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
-                        </span>
-                    </div>
+        </div>
+        <div class="account-wrap">
+            <h5 class="account-tit">휴대폰 번호</h5>
+            <div class="account-detail">
+                <div class="inputbox">
+                    <span class="input">
+                        <input type="text" class="only-number" minlength="10" maxlength="11" placeholder="숫자만 입력" title="카드번호">
+                        <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
+                    </span>
                 </div>
-                <div class="contents-btn">
-                    <ul class="bt-slice item-two">
-                        <li class="bt-white2">
-                            <button class="common-back">이전</button>
-                        </li>
-                        <li class="bt-blue1">
-                            <button class="change"><a href="#complete-change">다음</a></button>
-                        </li>
-                    </ul>
-                </div>
-                <ul class="contents-notice type1">
-                    <li class="noti-type3">최초 인출(승인)예정일은 자동납부 신청 후<br />
-                        확인 하실 수 있습니다.
+            </div>
+            <div class="contents-btn">
+                <ul class="bt-slice item-two">
+                    <li class="bt-white2">
+                        <button class="common-back">이전</button>
+                    </li>
+                    <li class="bt-blue1">
+                        <button class="change"><a href="#complete-change">다음</a></button>
                     </li>
                 </ul>
             </div>
+            <ul class="contents-notice type1">
+                <li class="noti-type3">최초 인출(승인)예정일은 자동납부 신청 후<br />
+                    확인 하실 수 있습니다.
+                </li>
+            </ul>
         </div>
     </div>
     <hr class="cont-sp type1" aria-hidden="true"/>

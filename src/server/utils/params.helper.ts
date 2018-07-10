@@ -1,5 +1,10 @@
+import FormatHelper from './format.helper';
+
 class ParamsHelper {
   static setQueryParams(params: any) {
+    if ( FormatHelper.isEmpty(params) ) {
+      return '';
+    }
     let result = '?';
     Object.keys(params).forEach(key => {
       result = result + key + '=' + params[key] + '&';

@@ -22,6 +22,7 @@ class HomeMain extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+    // this.testApi();
     const remainDate = DateHelper.getRemainDate();
 
     Observable.combineLatest(
@@ -36,9 +37,49 @@ class HomeMain extends TwViewController {
         refillData,
         giftData
       };
-      console.log(data);
       res.render('home.main.html', data);
     });
+  }
+
+  private testApi() {
+    // this.apiService.request(API_CMD.GET, {})
+    //   .subscribe((resp) => {
+    //     console.log('[Api test] get success', resp);
+    //   });
+    // this.apiService.request(API_CMD.GET_PARAM, { postId: 1 })
+    //   .subscribe((resp) => {
+    //     console.log('[Api test] get param success', resp);
+    //   });
+    // this.apiService.request(API_CMD.GET_PATH_PARAM, {}, {}, 1)
+    //   .subscribe((resp) => {
+    //     console.log('[Api test] get path param success', resp);
+    //   });
+    // this.apiService.request(API_CMD.POST, {})
+    //   .subscribe((resp) => {
+    //     console.log('[Api test] post success', resp);
+    //   });
+    // this.apiService.request(API_CMD.POST_PARAM, {
+    //   title: 'foo',
+    //   body: 'bar',
+    //   userId: 1
+    // })
+    //   .subscribe((resp) => {
+    //     console.log('[Api test] post param success', resp);
+    //   });
+    // this.apiService.request(API_CMD.PUT_PARAM, {
+    //   id: 1,
+    //   title: 'foo',
+    //   body: 'bar',
+    //   userId: 1
+    // })
+    //   .subscribe((resp) => {
+    //     console.log('[Api test] put param success', resp);
+    //   });
+    // this.apiService.request(API_CMD.DELETE, {})
+    //   .subscribe((resp) => {
+    //     console.log('[Api test] delete success', resp);
+    //   });
+
   }
 
   // 사용량 조회

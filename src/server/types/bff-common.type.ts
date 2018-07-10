@@ -82,6 +82,11 @@ export const TING_TITLE = {
   'PR': '선물충전금액'
 };
 
+export enum REQUEST_VALUE {
+  Y = '신청',
+  N = '미신청'
+}
+
 export const BILL_GUIDE_TYPE = {
   'TWORLD': {
     'CODE': 'P',
