@@ -28,18 +28,22 @@
     </div>
     <!--// #header -->
     <!-- #contents -->
-    <div id="main" class="container-wrap">
-        <% include ../../components/limit/recharge.limit.home.html %>
-    </div>
-    <div id="step-type" class="container-wrap" style="display: none">
-        <% include ../../components/limit/recharge.limit.process.type.html %>
-    </div>
-    <div id="step-amount" class="container-wrap" style="display: none">
-        <% include ../../components/limit/recharge.limit.process.amount.html %>
-    </div>
-    <div id="step-complete" class="container-wrap" style="display: none">
-        <% include ../../components/limit/recharge.limit.process.complete.html %>
-    </div>
+    <% if (limitData) { %>
+        <div id="main" class="container-wrap">
+            <% include ../../components/limit/recharge.limit.home.html %>
+        </div>
+        <div id="step-type" class="container-wrap" style="display: none">
+            <% include ../../components/limit/recharge.limit.process.type.html %>
+        </div>
+        <div id="step-amount" class="container-wrap" style="display: none">
+            <% include ../../components/limit/recharge.limit.process.amount.html %>
+        </div>
+        <div id="step-complete" class="container-wrap" style="display: none">
+            <% include ../../components/limit/recharge.limit.process.complete.html %>
+        </div>
+    <% } else { %> 
+        <% include ../../components/limit/recharge.limit.deny.html %>
+    <% } %>
     <!--// #contents -->
 </div>
 <% include ../../components/javascript.component.html %>
@@ -48,4 +52,4 @@
         new Tw.RechargeLimit($('#recharge-limit'));
     });
 </script>
- <% include ../../components/end.component.html %>
+<% include ../../components/end.component.html %>
