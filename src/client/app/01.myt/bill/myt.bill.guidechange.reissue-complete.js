@@ -30,15 +30,15 @@ Tw.MyTBillReissueComplete.prototype = {
     this.$closeButton = this.$container.find('.close-step');
   },
 
-  _onOkClicked: function() {
+  _onOkClicked: function () {
 
   },
 
-  _onHomeClicked: function() {
+  _onHomeClicked: function () {
 
   },
 
-  _onCloseClicked: function() {
+  _onCloseClicked: function () {
 
   }
 };

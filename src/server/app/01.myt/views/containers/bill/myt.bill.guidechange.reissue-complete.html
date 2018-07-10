@@ -42,7 +42,8 @@
                                     <dl>
                                         <dt class="ti-data">재발행 신청하신 월</dt>
                                         <!--요금안내서 재발행 날자 설정 값 (20180709 형태의 문자열로 전달) -->
-                                        <dd class="tx-data"><%= data.month1 %><br/><span class="num">(<%= data.month2 %>)</span></dd>
+                                        <dd class="tx-data"><%= data.month1 %><br/><span class="num">(<%= data.month2 %>)</span>
+                                        </dd>
                                     </dl>
                                 </li>
                             </ul>
@@ -117,8 +118,8 @@
 
 <% include ../../components/javascript.component.html %>
 <script>
-    $(document).ready(function () {
-        var comp = new Tw.MyTBillReissueComplete($('#myt-bill-gc-reissue-compl'));
-    });
+  $(document).ready(function () {
+    var comp = new Tw.MyTBillReissueComplete($('#myt-bill-gc-reissue-compl'));
+  });
 </script>
 <% include ../../components/end.component.html %>

@@ -1,8 +1,8 @@
-import express from 'express';
-import { Router, Request, Response, NextFunction } from 'express';
+import express, { NextFunction, Request, Response, Router } from 'express';
 
 class ApiRouter {
   public router: Router;
+
   constructor() {
     this.router = express.Router();
     this.setApi();

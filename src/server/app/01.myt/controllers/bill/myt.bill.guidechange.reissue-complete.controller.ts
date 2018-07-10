@@ -23,7 +23,7 @@ class MyTBillReissueComplete extends TwViewController {
       data['month1'] = this.regMonth('YM', req.query.month);
       data['month2'] = this.regMonth('YMD', req.query.month);
     }
-    this.renderView(res, 'bill/myt.bill.guidechange.reissue-complete.html', {data});
+    this.renderView(res, 'bill/myt.bill.guidechange.reissue-complete.html', { data });
   }
 
   public renderView(res: Response, view: string, data: any): any {

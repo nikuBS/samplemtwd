@@ -11,7 +11,7 @@ Tw.MyTBillReissue = function ($element) {
   this._rendered();
   this._bindEvent();
 
-  setTimeout(function() {
+  setTimeout(function () {
     self._init();
   }, 100);
 };
@@ -105,7 +105,7 @@ Tw.MyTBillReissue.prototype = {
     // sReIssueType	재발행코드종류
     // sRegalRepveIncldYn	법정대리인동시통보
     // sInvDt	재발행청구일자
-    var data =  {
+    var data = {
       sReIssueType: '',
       sRegalRepveIncldYn: 'Y',
       sInvDt: ''
