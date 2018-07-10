@@ -73,7 +73,7 @@ Tw.AuthWithdrawalSurvey.prototype = {
       }
       window.location = href;
     } else {
-      Tw.Popup.openAlert(Tw.POPUP_TITLE.NOTIFY, res.msg);
+      Tw.Popup.openAlert(res.msg);
     }
   },
   _onRequestFail: function (err) {

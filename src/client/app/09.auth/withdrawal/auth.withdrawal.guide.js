@@ -28,7 +28,7 @@
        var isForeigner = res.result.frgnrClCd === '9' ? true : false;
        this._showKYC(isForeigner);
      } else {
-       this._popupService.openAlert(Tw.POPUP_TITLE.NOTIFY, res.msg);
+       this._popupService.openAlert(res.msg);
      }
    },
    _showKYC: function (isForeigner) {
