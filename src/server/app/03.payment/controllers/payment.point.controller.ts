@@ -4,7 +4,7 @@
  * Date: 2018.07.06
  */
 import TwViewController from '../../../common/controllers/tw.view.controller';
-import { NextFunction, Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import { API_CMD, API_CODE } from '../../../types/api-command.type';
 import FormatHelper from '../../../utils/format.helper';
 import { Observable } from 'rxjs/Observable';

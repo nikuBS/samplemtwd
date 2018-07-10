@@ -36,7 +36,7 @@ class AuthRouter extends TwRouter {
     // login
     this.controllers.push({ url: '/login/fail', controller: new AuthLoginFail() });
     this.controllers.push({ url: '/login/dormancy', controller: new AuthLoginDormancy() });
-      this.controllers.push({url: '/login/find-id-pwd', controller: new AuthLoginFindIdPwd()});
+    this.controllers.push({ url: '/login/find-id-pwd', controller: new AuthLoginFindIdPwd() });
     // logout
     this.controllers.push({ url: '/logout/complete', controller: new AuthLogoutComplete() });
     this.controllers.push({ url: '/logout/expire', controller: new AuthLogoutExpire() });

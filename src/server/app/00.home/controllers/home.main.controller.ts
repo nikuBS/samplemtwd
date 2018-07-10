@@ -5,7 +5,7 @@
  */
 
 import TwViewController from '../../../common/controllers/tw.view.controller';
-import { NextFunction, Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import { API_CMD, API_CODE, API_GIFT_ERROR } from '../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 import FormatHelper from '../../../utils/format.helper';
@@ -14,6 +14,7 @@ import DateHelper from '../../../utils/date.helper';
 import 'rxjs/add/observable/combineLatest';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/of';
+import BrowserHelper from '../../../utils/browser.helper';
 
 class HomeMain extends TwViewController {
   constructor() {

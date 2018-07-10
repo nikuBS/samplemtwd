@@ -5,7 +5,7 @@
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
-import { NextFunction, Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import BrowserHelper from '../../../../utils/browser.helper';
 
 class AuthWithdrawlComplete extends TwViewController {

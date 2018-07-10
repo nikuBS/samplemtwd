@@ -235,12 +235,12 @@
   overflow-x: hidden;
   overflow-y: auto;
   background: #fff;
-    /*transition:all 1s ease;
-      &.on{
-          right:0;
+  /*transition:all 1s ease;
+    &.on{
+        right:0;
     }*/
-    /*&.depth2 .all-menu-box-depth2{
-          right:0;
+  /*&.depth2 .all-menu-box-depth2{
+        right:0;
     }*/
 }
 

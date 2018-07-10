@@ -1,4 +1,5 @@
-import express, { NextFunction, Request, Response, Router } from 'express';
+import express from 'express';
+import { Router, Request, Response, NextFunction } from 'express';
 
 class ApiRouter {
   public router: Router;

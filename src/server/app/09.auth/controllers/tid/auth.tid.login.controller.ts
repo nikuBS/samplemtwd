@@ -5,7 +5,7 @@
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
-import { NextFunction, Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import { API_CMD, API_CODE, TID_SVC_TYPE } from '../../../../types/api-command.type';
 import ParamsHelper from '../../../../utils/params.helper';
 

@@ -1,4 +1,5 @@
-import express, { NextFunction, Request, Response, Router } from 'express';
+import express from 'express';
+import { Router, Request, Response, NextFunction } from 'express';
 import { API_CMD, API_METHOD } from '../types/api-command.type';
 import ApiService from '../services/api.service';
 import FormatHelper from '../utils/format.helper';

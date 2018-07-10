@@ -2010,7 +2010,7 @@
   border-radius: 100%;
   border: 1px solid #ef4565;
   -webkit-box-sizing: border-box;
-  box-sizing: border-box;
+          box-sizing: border-box;
   width: 1.5rem;
   height: 1.5rem;
   background-color: rgba(0, 0, 0, 0.1);
@@ -2478,7 +2478,7 @@
   background: #3c3a69;
   color: #fff;
   -webkit-box-shadow: 0rem 0rem 0.0625rem 0.0625rem rgba(0, 0, 0, 0.2);
-  box-shadow: 0rem 0rem 0.0625rem 0.0625rem rgba(0, 0, 0, 0.2);
+          box-shadow: 0rem 0rem 0.0625rem 0.0625rem rgba(0, 0, 0, 0.2);
 }
 
 .hidden-x {
@@ -3840,7 +3840,7 @@
   left: 50%;
   top: 7.5rem;
   -webkit-transform: translateX(-50%);
-  transform: translateX(-50%);
+          transform: translateX(-50%);
   background-image: url(/img/ico/ico-illustration.png);
   background-position: -3.0625rem -47.75rem;
   background-size: 55.8125rem;
@@ -6677,7 +6677,7 @@ span[class*=char-star][class*=red] {
 }
 
 .box-block .box-block-list1 > a {
-    margin: -0.75rem 0.625rem 2.5rem 0;
+  margin: -0.75rem 0.625rem 2.5rem 0;
 }
 
 .box-block .box-block-list1.btm-border {
@@ -7450,11 +7450,11 @@ span[class*=char-star][class*=red] {
 .agree-list .accordion .checkbox {
   display: table;
   /*span{
-              font-size:$fs-14;
-              &.tit-a{
-                  display:table-cell;
-                  padding:rem(3px 0 0 0);
-              }
+                font-size:$fs-14;
+                &.tit-a{
+                    display:table-cell;
+                    padding:rem(3px 0 0 0);
+                }
             }*/
 }
 
