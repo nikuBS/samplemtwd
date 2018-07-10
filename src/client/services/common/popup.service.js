@@ -1,6 +1,6 @@
 Tw.PopupService = function () {
   this.$document = $(document);
-  this._prevHash = undefined;
+  this._prevHashList = [];
   this._confirmCallback = null;
   this._openCallback = null;
   this._hashService = Tw.Hash;
@@ -13,7 +13,8 @@ Tw.PopupService.prototype = {
 
   },
   _onHashChange: function (hash) {
-    if ( ('#' + hash.base) === this._prevHash ) {
+    if ( ('#' + hash.base) === this._prevHashList[this._prevHashList.length - 1] ) {
+      this._prevHashList.pop();
       Tw.Logger.info('[Popup Close]');
       this._popupClose();
       this._prevHash = undefined;
@@ -22,7 +23,7 @@ Tw.PopupService.prototype = {
   _onOpenPopup: function () {
     var $popups = $('.popup, .popup-page');
     var $currentPopup = $($popups[$popups.length - 1]);
-    Tw.Logger.info('[Popup Open]', $currentPopup);
+    Tw.Logger.info('[Popup Open]');
     this._bindEvent($currentPopup);
     if ( !Tw.FormatHelper.isEmpty(this._openCallback) ) {
       this._sendOpenCallback($currentPopup);
@@ -34,8 +35,9 @@ Tw.PopupService.prototype = {
     skt_landing.action.popup.close();
   },
   _addHash: function () {
-    this._prevHash = location.hash;
-    location.hash = 'popup';
+    var curHash = location.hash || '#';
+    this._prevHashList.push(curHash);
+    location.hash = 'popup' + this._prevHashList.length;
   },
   _bindEvent: function ($container) {
     $container.on('click', '.popup-closeBtn', $.proxy(this.close, this));
@@ -141,7 +143,7 @@ Tw.PopupService.prototype = {
 
   },
   close: function () {
-    if ( location.hash === '#popup' ) {
+    if ( /popup/.test(location.hash) ) {
       history.back();
     }
   }
