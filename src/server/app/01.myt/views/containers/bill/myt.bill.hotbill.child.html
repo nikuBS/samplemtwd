@@ -1,7 +1,7 @@
 <!--
-* FileName: myt.bill.hotbill.html
+* FileName: myt.bill.hotbill.child.html
 * Author: Hyeryoun Lee (skt.P130712@partner.sk.com)
-* Date: 2018.07.02
+* Date: 2018. 7. 9.
 -->
 <% include ../../components/bill/myt.bill.hotbill.billgroup.html %>
 <% include ../../components/start.component.html %>
@@ -19,44 +19,32 @@
     <div id="header" class="header-wrap">
         <div class="header">
             <div class="header-ti">
-                <h1>실시간 사용요금</h1>
-                <button class="depth-view" role="button" aria-pressed="false"><span class="blind">메뉴구조보기</span></button>
+                <h1>자녀폰 실시간 사용요금</h1>
+                <!--<button class="depth-view" role="button" aria-pressed="false"><span class="blind">메뉴구조보기</span></button>-->
             </div>
             <button class="prev-step"><span class="blind">이전으로</span></button>
-            <button class="search-content"><span class="blind">검색하기</span></button>
+            <!--<button class="search-content"><span class="blind">검색하기</span></button>-->
         </div>
     </div>
     <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap">
         <h2 class="blind">내용</h2>
-        <div id="myt-bill-hotbill" class="container">
+        <div id="myt-bill-hotbill-child" class="container" >
 
             <div class="cont-box">
-                <div class="payment-info">
-                    <h3 class="blind">통합대표</h3>
-                    <ul>
-                        <li>
-                            <span class="info-num"><%= svcInfo.svcNum %></span>
-                        </li>
-                        <li>
-                            <span class="badge badge-allpay"><span class="blind">통합대표</span></span>
-                            <span class="info-type">휴대폰</span>
-                            <span class="info-name"><span class="blind">별명</span><%= svcInfo.svcNickNm %></span>
-                        </li>
-                    </ul>
-                    <span class="info-btn"><a href="/myt/usage/change" class="btn-choice" role="button">변경</a></span>
-                </div>
-            </div>
+                <div class="payment-info family">
+                    <p class="tit"><strong>자녀 휴대폰</strong><br />실시간 요금 현황입니다.</p>
+                    <div class="payment-info-phone">
+                        <!-- 자녀 회선이 1개인 경우 -->
+                        <span class="child-phonenum">010-46**-10*</span>
+                        <!--// 자녀 회선이 1개인 경우 -->
 
-            <div class="cont-box nogaps-hoz">
-                <div class="use-family">
-                    <h3 class="blind">자녀폰 실시간 요금 보기</h3>
-                    <div class="link-long">
-                        <a href="" title="">자녀폰 실시간 요금 (<strong>5</strong>명)
-                            <span class="badge badge-fam"><span class="blind">자녀회선</span></span>
-                            <span class="ico"></span>
-                        </a>
+                        <!-- 자녀 회선이 2개 이상인 경우 -->
+                        <!-- <button class="bt-dropdown small" title="전화번호 선택" aria-haspopup="true">010-46**-10**</button> -->
+                        <!--// 자녀 회선이 2개 이상인 경우 -->
+
+                        <span class="device-info">GALAXY S7 32G</span>
                     </div>
                 </div>
             </div>
@@ -71,7 +59,7 @@
             </div>
 
             <hr class="cont-sp type1" aria-hidden="true"/>
-            <div class="cont-box nogaps noborder" id="billAccordion">
+            <div class="cont-box nogaps" id="childBillAccordion">
                 <!-- billItems -->
             </div>
 
@@ -79,15 +67,13 @@
             <!-- .cont-box -->
             <div class="cont-box nogaps-hoz">
                 <div class="helpbox-link">
-                    <div class="link-long" id="previousBill">
-                        <a href="" class="disabled">전월요금보기<span class="ico"></span></a>
-                    </div>
                     <div class="link-long">
-                        <a href="" class="disabled">나의 사용량 조회하기<span class="ico"></span></a>
+                        <a href="" class="disabled">전월요금보기<span class="ico"></span></a>
                     </div>
                 </div>
             </div>
             <!-- .cont-box -->
+
             <hr class="cont-sp type1" aria-hidden="true"/>
             <!-- .cont-box -->
             <% include ../../components/bill/myt.bill.hotbill.info.component.html %>
@@ -99,8 +85,8 @@
 <% include ../../components/javascript.component.html %>
 <script>
     $(document).ready(function () {
-        var comp = new Tw.MyTBillHotBill($('#myt-bill-hotbill'));
-//        skt_landing.action.loading.on({ta:'.load-area',co:'grey',size:true});
+        var comp = new Tw.MyTBillHotBillChild($('#myt-bill-hotbill-child'));
+        //        skt_landing.action.loading.on({ta:'.load-area',co:'grey',size:true});
     });
 </script>
 <% include ../../components/end.component.html %>

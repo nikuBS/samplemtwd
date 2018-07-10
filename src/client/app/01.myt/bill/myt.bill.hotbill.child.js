@@ -1,9 +1,9 @@
 /**
- * FileName: myt.bill.hotbill.js
+ * FileName: myt.bill.hotbill.child.js.js
  * Author: Hyeryoun Lee (skt.P130712@partner.sk.com)
- * Date: 2018.07.02
+ * Date: 2018. 7. 9.
  */
-Tw.MyTBillHotBill = function (rootEl) {
+Tw.MyTBillHotBillChild = function (rootEl) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -134,14 +134,13 @@ Tw.MyTBillHotBill = function (rootEl) {
   this._renderBillGroup();
 };
 
-Tw.MyTBillHotBill.prototype = {
+Tw.MyTBillHotBillChild.prototype = {
   _cachedElement: function () {
-    this.$billMenu = this.$container.find('#billAccordion');
+    this.$billMenu = this.$container.find('#childBillAccordion');
   },
 
   _bindEvent: function () {
     this.$container.on('click', '.use-family', $.proxy(this._openFamilyMemberSelect, this));
-    this.$container.on('click', '#previousBill', $.proxy(this._showPreviousBill, this));
   },
 
   _makeBillGroup: function () {
@@ -207,22 +206,6 @@ Tw.MyTBillHotBill.prototype = {
     var output = template({ billItems: this._group });
     this.$billMenu.append(output);
     // skt_landing.action.loading.off({ta:'.load-area'});
-  },
-
-  _openFamilyMemberSelect: function () {
-    event.preventDefault();
-    //TODO popup open 시 list-tag 설정 가능하도록
-    var members = [
-      { 'attr': 'href="/myt/bill/hotbill/child"', text: '010-12**-81**(GALAXY S7 32G) 1' },
-      { 'attr': 'href="/bill/hotbill/child"', text: '010-12**-81**(GALAXY S7 32G) 234' },
-      { 'attr': 'href="/bill/hotbill/child"', text: '010-12**-81**(GALAXY S7 32G) 5' },
-      { 'attr': 'href="/bill/hotbill/child"', text: '010-12**-81**(GALAXY S7 32G) 67' },
-      { 'attr': 'href="/bill/hotbill/child"', text: '010-12**-81**(GALAXY S7 32G) 89010' }
-    ];
-    this._popupService.openChoice('자녀 선택', members, 'type1');
-  },
-
-  _showPreviousBill: function(){
-    event.preventDefault();
   }
+
 };
