@@ -14,6 +14,7 @@ export const URL = {
   '/myt/usage/ting': { login: true },
   '/usage/24hourdiscount': { login: true },
   '/myt/bill/hotbill': { login: true },
+  '/myt/bill/billguide': { login: true },
   '/myt/bill/hotbill/child': { login: true },
   // recharge
   '/recharge/refill': { login: true },

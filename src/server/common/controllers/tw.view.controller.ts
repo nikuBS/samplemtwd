@@ -5,6 +5,7 @@ import { API_CMD, API_CODE } from '../../types/api-command.type';
 import LoggerService from '../../services/logger.service';
 import { SvcInfoModel } from '../../models/svc-info.model';
 import { URL } from '../../types/url.type';
+import FormatHelper from '../../utils/format.helper';
 
 abstract class TwViewController {
   private _apiService: ApiService;
@@ -33,9 +34,17 @@ abstract class TwViewController {
 
   public initPage(req: any, res: any, next: any): void {
     const userId = req.query.userId;
+    const error = req.query.error;
+    const errorMessage = req.query.error_description;
     const path = req.baseUrl + (req.path !== '/' ? req.path : '');
 
+    if ( this.checkError(error, errorMessage) ) {
+      res.send(errorMessage);
+      return;
+    }
+
     this.loginService.setClientSession(req.session);
+
     if ( URL[path].login ) {
       this.login(req, res, next, userId);
     } else {
@@ -65,6 +74,11 @@ abstract class TwViewController {
 
   private checkLogin(userId: string): boolean {
     return this.loginService.isLogin(userId);
+  }
+
+  private checkError(error: string, errorMessage: string) {
+    return !FormatHelper.isEmpty(error);
+
   }
 
   private renderError(req: Request, res: Response, next: NextFunction, message: any) {
