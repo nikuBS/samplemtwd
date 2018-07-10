@@ -51,11 +51,11 @@
      var name = $layer.find('[aria-labelledby="aria-citation-name"]').val();
      var birth = $layer.find('[aria-labelledby="aria-citation-birth"]').val();
      if (Tw.FormatHelper.isEmpty(name)) {
-       this._popupService.openAlert(Tw.POPUP_TITLE.NOTIFY, Tw.MSG_AUTH.WITHDRAW_A02_01);
+       this._popupService.openAlert(Tw.MSG_AUTH.WITHDRAW_A02_01);
        return;
      }
      if (Tw.FormatHelper.isEmpty(birth)) {
-       this._popupService.openAlert(Tw.POPUP_TITLE.NOTIFY, Tw.MSG_AUTH.WITHDRAW_A02_02);
+       this._popupService.openAlert(Tw.MSG_AUTH.WITHDRAW_A02_02);
        return;
      }
 
@@ -70,7 +70,7 @@
        this._closePopup();
        window.location = '/auth/withdrawal/survey';
      } else {
-       this._popupService.openAlert(Tw.POPUP_TITLE.NOTIFY, res.msg);
+       this._popupService.openAlert(res.msg);
      }
    },
    _closePopup: function () {
