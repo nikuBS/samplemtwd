@@ -21,12 +21,12 @@ class AuthTidLogin extends TwViewController {
       state: '3646bae6eff00',
       nonce: 'df597de4c079',
       service_type: TID_SVC_TYPE.ID_LOGIN,
-      redirect_uri: 'http://localhost:3000/home',
+      redirect_uri: 'http://localhost:3000',
       client_type: 'MWEB',
       scope: 'openid',
       response_type: 'id_token%20token',
     };
-    this.apiService.request(API_CMD.BFF_03_0007, {}).subscribe((resp) => {
+    this.apiService.request(API_CMD.BFF_03_0007, { chnl: 'mo-web' }).subscribe((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
         params.client_id = resp.result.clientId;
         params.client_secret = resp.result.clientSecret;

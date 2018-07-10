@@ -89,7 +89,7 @@ Tw.RechargeTing.prototype = {
   },
 
   _activateBlock: function () {
-    this._popupService.openConfirm(Tw.POPUP_TITLE.NOTIFY, Tw.MSG_GIFT.TING_A01, '', $.proxy(this._requestActivateBlock, this));
+    this._popupService.openConfirm(Tw.POPUP_TITLE.NOTIFY, Tw.MSG_GIFT.TING_A01, '', null, $.proxy(this._requestActivateBlock, this));
   },
 
   _requestActivateBlock: function () {

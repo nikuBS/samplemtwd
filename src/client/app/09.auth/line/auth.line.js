@@ -6,9 +6,11 @@
 
 Tw.AuthLine = function (rootEl) {
   this.$container = rootEl;
-  this.$document = $(document);
   this._popupService = Tw.Popup;
   this._apiService = Tw.Api;
+  this.$nickNameInput = null;
+  this.$nickNameGuide = null;
+  this.$nickNameConfirm = null;
 
   this._bindEvent();
 };
@@ -19,8 +21,17 @@ Tw.AuthLine.prototype = {
     this.$container.on('click', '#cop-password', $.proxy(this._openCopPassword, this));
   },
   _openNickname: function () {
-    this._popupService.openConfirm(Tw.POPUP_TITLE.CHANGE_NICKNAME, '', Tw.POPUP_TPL.CHANGE_NICKNAME, $.proxy(this._confirmNickname, this));
-    this.$document.on('keyup', '#nickname', $.proxy(this._onKeyupNickname, this));
+    this._popupService.openConfirm(Tw.POPUP_TITLE.CHANGE_NICKNAME, '', Tw.POPUP_TPL.CHANGE_NICKNAME,
+      $.proxy(this._onOpenNickname, this), $.proxy(this._confirmNickname, this));
+
+  },
+  _onOpenNickname: function ($popup) {
+    $popup.on('keyup', '#nickname', $.proxy(this._onKeyupNickname, this));
+    this.$nickNameInput = $popup.find('.inputbox');
+    this.$nickNameGuide = $popup.find('.guide-txt');
+    this.$nickNameConfirm = $popup.find('.tw-popup-confirm button');
+    this.$nickNameConfirm.attr('disabled', true);
+
   },
   _confirmNickname: function () {
     var inputValue = $('#nickname').val();
@@ -28,7 +39,8 @@ Tw.AuthLine.prototype = {
       return;
     }
     if ( Tw.ValidationHelper.containSpecial(inputValue, 1) || Tw.ValidationHelper.containNumber(inputValue, 2) ) {
-      // show guide text
+      this.$nickNameInput.addClass('error');
+      this.$nickNameGuide.addClass('error-txt');
     } else {
       this._changeNickname(inputValue);
       this._popupService.close();
@@ -37,7 +49,16 @@ Tw.AuthLine.prototype = {
   _onKeyupNickname: function () {
     var $nickname = $('#nickname');
     var $length = $('.byte-current');
-    $length.html($nickname.val().length);
+    var textLength = $nickname.val().length;
+    $length.html(textLength);
+    this._checkEnableConfirm(textLength);
+  },
+  _checkEnableConfirm: function (textLength) {
+    if ( textLength > 0 ) {
+      this.$nickNameConfirm.attr('disabled', false);
+    } else {
+      this.$nickNameConfirm.attr('disabled', true);
+    }
   },
   _changeNickname: function (nickname) {
     this._apiService.request(Tw.API_CMD.BFF_03_0006, {}, {}, nickname)
@@ -52,9 +73,14 @@ Tw.AuthLine.prototype = {
   },
   _openCopPassword: function () {
     this._popupService.open({
-      hbs: 'CO_01_05_02_P01'// hbs의 파일명
-    });
-
+      hbs: 'CO_01_05_02_P01'
+    }, $.proxy(this._onOpenCopPassword, this));
+  },
+  _onOpenCopPassword: function ($layer) {
+    $layer.on('click', '.authority-bt', $.proxy(this._confirmCopPassword, this));
+  },
+  _confirmCopPassword: function () {
+    this._popupService.close();
   }
 
 };
