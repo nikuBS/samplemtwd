@@ -5,6 +5,7 @@ import { API_CMD, API_CODE } from '../../types/api-command.type';
 import LoggerService from '../../services/logger.service';
 import { SvcInfoModel } from '../../models/svc-info.model';
 import { URL } from '../../types/url.type';
+import FormatHelper from '../../utils/format.helper';
 
 abstract class TwViewController {
   private _apiService: ApiService;
@@ -33,7 +34,16 @@ abstract class TwViewController {
 
   public initPage(req: any, res: any, next: any): void {
     const userId = req.query.userId;
+    const error = req.query.error;
+    const errorMessage = req.query.error_description;
     const path = req.baseUrl + (req.path !== '/' ? req.path : '');
+
+    if ( this.checkError(error, errorMessage) ) {
+      res.send(errorMessage);
+      return;
+    }
+
+    this.loginService.setClientSession(req.session);
 
     if ( URL[path].login ) {
       this.login(req, res, next, userId);
@@ -48,7 +58,7 @@ abstract class TwViewController {
     if ( userId === 'mock' ) {
       loginCmd = API_CMD.BFF_03_0001_mock;
     }
-    if ( this.checkLogin(req.session, userId) ) {
+    if ( this.checkLogin(userId) ) {
       this.render(req, res, next, this._loginService.getSvcInfo());
     } else {
       this._apiService.request(loginCmd, { userId }).subscribe((resp) => {
@@ -62,9 +72,13 @@ abstract class TwViewController {
     }
   }
 
-  private checkLogin(session: any, userId: string): boolean {
-    this.loginService.setClientSession(session);
+  private checkLogin(userId: string): boolean {
     return this.loginService.isLogin(userId);
+  }
+
+  private checkError(error: string, errorMessage: string) {
+    return !FormatHelper.isEmpty(error);
+
   }
 
   private renderError(req: Request, res: Response, next: NextFunction, message: any) {

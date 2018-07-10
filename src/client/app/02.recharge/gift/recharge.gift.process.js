@@ -341,7 +341,7 @@ Tw.RechargeGiftProcess.prototype = {
   },
 
   onFailStep: function (res) {
-    this._popupService.openAlert(Tw.POPUP_TITLE.NOTIFY, res.orgDebugMessage);
+    this._popupService.openAlert(res.orgDebugMessage);
   },
 
   goHistory: function () {

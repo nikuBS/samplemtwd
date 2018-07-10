@@ -1,0 +1,237 @@
+<%#
+* FileName: myt.bill.billguide.prepaidPage.html
+* Author: 김명환 (skt.P130714@partner.sk.com)
+* Date: 2018.07.08
+* Info: PPS(선불폰)
+%>
+<% include ../../components/start.component.html %>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb_area">메뉴 바로가기</a></li>
+        <li><a href="#content">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div id="wrapFdev" class="wrap">
+    <!-- #header -->
+    <div id="header" class="header-wrap">
+        <div class="header">
+            <div class="header-ti">
+                <h1>요금안내서</h1>
+                <a href="#allmenu" class="all-menu"><span class="blind">전체메뉴보기</span></a>
+            </div>
+            <a href="#pstep" class="prev-step common-back"><span class="blind">이전으로</span></a>
+            <a href="#search" class="search-content"><span class="blind">검색하기</span></a>
+        </div>
+    </div>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+
+            <div class="cont-box">
+                <div class="payment-info">
+                    <h3 class="blind">대표청구</h3>
+                    <ul>
+                        <li>
+                            <span class="info-num">010-46**-10**</span>
+                        </li>
+                        <li>
+                            <span class="info-type">선불폰</span>
+                            <span class="info-name"><span class="blind">별명</span>귀여운첫째아들</span>
+                        </li>
+                    </ul>
+                    <span class="info-btn"><a href="" class="btn-choice" role="button">변경</a></span>
+                </div>
+            </div>
+
+            <hr class="cont-sp type1" aria-hidden="true"/>
+            <div class="cont-box noborder">
+                <div class="payment-inquiry">
+                    <a class="bt-link-tx" href="">선불요금제 Lite<span class="ico"></span></a>
+                </div>
+                <div class="payment-all payment-all-mt used-count">
+                    <h5 class="account-tit">카드잔액</h5>
+                    <span><em>210,000</em> 원</span>
+                    <p class="term">2018.05.01 15:05</p>
+                </div>
+            </div>
+
+            <div class="cont-box nogaps-top">
+                <div class="used-box-list">
+                    <div class="pay-data-cont">
+                        <ul class="t-pay-data">
+                            <li>
+                                <dl>
+                                    <dt class="ti-data">발신/사용기간</dt>
+                                    <dd class="tx-data">
+                                        <span class="blind">날짜</span>2018.07.12 까지<br />
+                                        <span class="blind">발신가능여부</span>발신가능
+                                    </dd>
+                                </dl>
+                            </li>
+                            <li>
+                                <dl>
+                                    <dt class="ti-data">수신/데이터유지기간</dt>
+                                    <dd class="tx-data">
+                                        <span class="blind">날짜</span>2018.07.12 까지<br />
+                                        <span class="blind">수신가능여부</span>수신가능
+                                    </dd>
+                                </dl>
+                            </li>
+                            <li>
+                                <dl>
+                                    <dt class="ti-data">번호유지기간</dt>
+                                    <dd class="tx-data">
+                                        <span class="blind">날짜</span>2018.07.12 까지<br />
+                                        <span class="blind">번호유지여부</span>번호유지
+                                    </dd>
+                                </dl>
+                            </li>
+                            <li>
+                                <dl>
+                                    <dt class="ti-data">잔여데이터</dt>
+                                    <dd class="tx-data"><strong>100MB</strong></dd>
+                                </dl>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="cont-sp type1" aria-hidden="true"/>
+            <div class="cont-box">
+                <div class="used-box">
+                    <div class="inner">
+                        <div class="account-wrap">
+                            <h3 class="account-tit">사용내역 확인</h3>
+                            <!-- 라디오 영역 -->
+                            <div class="widget msg-account-info pad-t0">
+                                <div class="widget-box radio">
+                                    <ul class="select-list select-way" role="radiogroup">
+                                        <li class="radiobox type01 checked" role="radio" aria-checked="true">
+                                            <input type="radio" name="radio1" value="음성" title="음성 선택" checked="checked" />
+                                            음성
+                                        </li>
+                                        <li class="radiobox type01" role="radio" aria-checked="false">
+                                            <input type="radio" name="radio1" value="데이터" title="데이터 선택"/>
+                                            데이터
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!--// 라디오 영역 -->
+                            <div class="account-detail">
+                                <div class="select-name-table">
+                                    <button class="bt-dropdown wd-shrink" title="날짜선택" aria-haspopup="true">2018.04<span class="ico"></span></button>
+                                </div>
+                                <div class="line"></div>
+                                <div class="select-name-table">
+                                    <button class="bt-dropdown wd-shrink" title="날짜선택" aria-haspopup="true">2018.05<span class="ico"></span></button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="contents-btn">
+                        <ul class="bt-slice">
+                            <li class="bt-blue1">
+                                <button>조회</button>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="payment-select">
+                        <ul class="select-list">
+                            <li>
+                                <dl class="pay-detail empty">
+                                    <dt>원하시는 기간을 선택 후<br/> 조회버튼을 눌러주세요</dt>
+                                    <dd>2개월씩만 가능합니다.</dd>
+                                </dl>
+                            </li>
+                        </ul>
+                    </div>
+                    <ul class="contents-notice type1">
+                        <li class="noti-type2">월 단위로만 조회가 가능하며, 최근 6개월 내역까지  확인 가능 합니다. 단, 조회기간 설정은 최대 2개월까지만 가능하오니 조회 시 참고바랍니다. <br/>예) 기준표시 : 조회 월이 7월일 경우 1월~6월까지 조회가 가능 하며, 한번에 2개월의 내역만 조회가능</li>
+                        <li class="noti-type2">전월 사용내역은 매월 6일 이후부터 조회 가능합니다.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <hr class="cont-sp type1" aria-hidden="true"/>
+            <!-- .cont-box -->
+            <div class="cont-box">
+                <!-- .widget -->
+                <div class="widget">
+                    <div class="widget-box accordion">
+                        <h5 class="tit-a">이용안내</h5>
+                        <div class="acco-cover toggle"><!-- toggle : 한개만 열기 -->
+                            <div class="acco-style btn-hold">
+                                <ul class="acco-list">
+                                    <li class="acco-box">
+                                        <!-- .on: 열기 -->
+                                        <div class="acco-tit"><span class="bullet">1.</span> 사용 금액 안내 <button role="button" aria-pressed="false">상세보기</button></div>
+                                        <div class="acco-cont">
+                                            <ul class="list-dot">
+                                                <li class="list">월 중 번호 이동하신 경우, 시스템 사정으로 인해 사용기간이 1일부터 말일까지 표시됨을 양해해 주시기 바랍니다.</li>
+                                                <li class="list">사용금액은 번호 이동 후부터 말일까지 사용요금입니다.</li>
+                                                <li class="list">X월 청구금액에 대한 미납금액은 다음달 초에 확인하실 수 있습니다.</li>
+                                                <li class="list">상기 사용요금 외 한국통신(KT) 국제전화 이용시 사업자에서 별도 청구됩니다.</li>
+                                                <li class="list">자동납부로 납부하는 경우에는 인출일로부터 3~4일 이후 확인 가능합니다.</li>
+                                                <li class="list">고객님이 사용하신 요금제에 따른 옥수수(oksusu) 월정액(3천원) 무료혜택을 받고 있으신 경우에는 이용 상세내역에 할인으로 별도 표기되지 않습니다.</li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li class="acco-box">
+                                        <!-- .on: 열기 -->
+                                        <div class="acco-tit"><span class="bullet">2.</span> 로밍 청구 요금 안내<button role="button" aria-pressed="false">상세보기</button></div>
+                                        <div class="acco-cont">
+                                            <ul class="list-dot">
+                                                <li class="list">로밍 국제 수신(SK텔링크 외 4개 국제전화 사업자) : 로밍 음성 수신 시 사용된 국제사업자 연결 요금 (로밍 중 수신호는 한국을 거쳐 다시 현지로 나가게되므로 현지수신+국제수신 두 구간이 모두 요금이 부과됩니다.)</li>
+                                                <li class="list">로밍 현지 수신 통화료 : 로밍 음성 수신 시 사용된 현지망 수신 연결 요금 (로밍 현지 수신 요금이 없는 국가는 요금이 부과되지 않습니다.)</li>
+                                                <li class="list">로밍 현지 발신 통화료 : 로밍 중 현지번호로 발신한 요금 (T 로밍 고객간 통화는 한국 발신요금인 로밍 국제 발신 통화료로 요금이 부과됩니다.)</li>
+                                                <li class="list">로밍 국제 발신 통화료 : 로밍 중 한국이나 제 3국으로 발신한 요금</li>
+                                                <li class="list">로밍 문자 발신요금 : 로밍 중 한국으로 sms &amp; mms 발신요금</li>
+                                                <li class="list">로밍 데이터 통화료 : 로밍 중 사용된 데이터 통화료 (카카오톡 등의 스마트폰 어플리케이션, 인터넷, 네이트, JUNE, 2G-MMS)</li>
+                                                <li class="list">로밍 영상 국제발신 통화료 : 로밍 중 영상통화 발신</li>
+                                                <li class="list">국제화상로밍 수신 : 로밍 중 영상통화 수신</li>
+                                                <li class="list">로밍 임대료 : 로밍 임대폰 일일 임대료 (자동 임대)</li>
+                                                <li class="list">출국 전 T로밍쿠폰 구매/등록하신 후 해외에서 로밍서비스 이용 시 익월 청구요금 차감 및 쿠폰이 적용 됩니다. 쿠폰등록 후 180일 내 혜택이용가능하며, 로밍요금제 사용 이후 쿠폰을 등록하셨더라도 해당월을 넘기지 않으면 쿠폰 적용이 가능합니다.</li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li class="acco-box">
+                                        <!-- .on: 열기 -->
+                                        <div class="acco-tit"><span class="bullet">3.</span> 콜기프트 안내<button role="button" aria-pressed="false">상세보기</button></div>
+                                        <div class="acco-cont">
+                                            <ul class="list-dot">
+                                                <li class="list">콜기프트는 기업의 사은품, 판촉품으로 제공되는 음성 무료통화로 텔코인(주)에서 제공하는 서비스입니다.</li>
+                                                <li class="list">콜기프트 사용내역 조회는 전월부터 최근 6개월까지 사용하신 월별 콜기프트 총 통화 시간을 조회합니다.</li>
+                                                <li class="list">콜기프트는 SK텔레콤과 텔코인㈜의 제휴를 통해 텔코인㈜에서 제공, 운영하고 있습니다.</li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--// .widget -->
+            </div>
+            <!--// .cont-box -->
+
+        </div>
+    </div>
+    <!--// #contents -->
+    <% include ../../../../../common/views/components/footer.component.html %>
+</div>
+<% include ../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    new Tw.mytBillBillguidePrepaidPage($('#wrapFdev'));
+  });
+</script>
+<% include ../../components/end.component.html %>

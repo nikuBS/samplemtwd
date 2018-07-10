@@ -101,7 +101,7 @@ Tw.RechargeTing.prototype = {
   },
 
   _deactivateBlock: function () {
-    this._popupService.openAlert(Tw.POPUP_TITLE.NOTIFY, Tw.MSG_GIFT.TING_A02);
+    this._popupService.openAlert(Tw.MSG_GIFT.TING_A02);
   },
 
   _sendFail: function () {
@@ -109,17 +109,17 @@ Tw.RechargeTing.prototype = {
 
   _goTingGiftProcess: function () {
     if ( this._isNotAdult ) {
-      this._popupService.openAlert(Tw.POPUP_TITLE.NOTIFY, Tw.MSG_GIFT.TING_A03);
+      this._popupService.openAlert(Tw.MSG_GIFT.TING_A03);
       return false;
     }
 
     if ( this._isBlockedTing ) {
-      this._popupService.openAlert(Tw.POPUP_TITLE.NOTIFY, Tw.MSG_GIFT.TING_A04);
+      this._popupService.openAlert(Tw.MSG_GIFT.TING_A04);
       return false;
     }
 
     if ( this._isNotSkt ) {
-      this._popupService.openAlert(Tw.POPUP_TITLE.NOTIFY, Tw.MSG_GIFT.TING_A05);
+      this._popupService.openAlert(Tw.MSG_GIFT.TING_A05);
       return false;
     }
 
