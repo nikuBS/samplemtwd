@@ -4,9 +4,9 @@
  * Date: 2018.07.02
  */
 import TwViewController from '../../../../common/controllers/tw.view.controller';
-import {NextFunction, Request, Response} from 'express';
-import {API_CMD} from '../../../../types/api-command.type';
-import {Observable} from 'rxjs/Observable';
+import { NextFunction, Request, Response } from 'express';
+import { API_CMD } from '../../../../types/api-command.type';
+import { Observable } from 'rxjs/Observable';
 
 class MyTBillReissue extends TwViewController {
     constructor() {
@@ -14,7 +14,7 @@ class MyTBillReissue extends TwViewController {
     }
 
     render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-        //home.main.sprint3 참조
+        // home.main.sprint3 참조
         Observable.combineLatest(
             this.getReissueData()
         ).subscribe(([reissueData]) => {
