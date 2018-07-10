@@ -5,51 +5,51 @@
  */
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
-import { BILL_TYPE } from '../../../../types/bff-common.type';
+import { BILL_GUIDE_TYPE } from '../../../../types/bff-common.type';
 
-const defaultBillTypes = [{
-  code: BILL_TYPE.TWORLD,
-  component: 'tworld',
-  label: 'T world 확인',
+const defaultBillGuideTypes = [{
+  curBillType: BILL_GUIDE_TYPE.TWORLD.CODE,
+  curBillTypeNm: 'T world 확인',
+  component: BILL_GUIDE_TYPE.TWORLD.COMPONENT,
   selectorLabel: 'T world 확인 추천!'
 }, {
-  code: BILL_TYPE.EMAIL,
-  component: 'email',
-  label: '이메일',
+  curBillType: BILL_GUIDE_TYPE.EMAIL.CODE,
+  curBillTypeNm: '이메일',
+  component: BILL_GUIDE_TYPE.EMAIL.COMPONENT,
   selectorLabel: '이메일 요금안내서'
 }, {
-  code: BILL_TYPE.ETC,
-  component: 'etc',
-  label: '기타(우편)',
+  curBillType: BILL_GUIDE_TYPE.ETC.CODE,
+  curBillTypeNm: '기타(우편)',
+  component: BILL_GUIDE_TYPE.ETC.COMPONENT,
   selectorLabel: '기타(우편) 요금안내서'
 }];
 
-const mixedBilltype = defaultBillTypes.concat([{
-  code: BILL_TYPE.BILL_LETTER,
-  component: 'bill-letter',
-  label: 'Bill Letter',
+const mixedBillGuidetypes = defaultBillGuideTypes.concat([{
+  curBillType: BILL_GUIDE_TYPE.BILL_LETTER.CODE,
+  curBillTypeNm: 'Bill Letter',
+  component: BILL_GUIDE_TYPE.BILL_LETTER.COMPONENT,
   selectorLabel: 'Bill Letter'
 }, {
-  code: BILL_TYPE.SMS,
-  component: 'sms',
-  label: '문자',
+  curBillType: BILL_GUIDE_TYPE.SMS.CODE,
+  curBillTypeNm: '문자',
+  component: BILL_GUIDE_TYPE.SMS.COMPONENT,
   selectorLabel: '문자 요금안내서'
 }, {
-  code: BILL_TYPE.BILL_LETTER_EMAIL,
-  component: 'bill-letter-email',
-  label: 'Bill letter + 이메일',
+  curBillType: BILL_GUIDE_TYPE.BILL_LETTER_EMAIL.CODE,
+  curBillTypeNm: 'Bill letter + 이메일',
+  component: BILL_GUIDE_TYPE.BILL_LETTER_EMAIL.COMPONENT,
   selectorLabel: 'Bill Letter + 이메일 요금안내서'
 }, {
-  code: BILL_TYPE.SMS_EMAIL,
-  component: 'sms-email',
-  label: '문자 + 이메일',
+  curBillType: BILL_GUIDE_TYPE.SMS_EMAIL.CODE,
+  curBillTypeNm: '문자 + 이메일',
+  component: BILL_GUIDE_TYPE.SMS_EMAIL.COMPONENT,
   selectorLabel: '문자 + 이메일 요금안내서'
 }]);
 
-const cellPhoneBillTypes = mixedBilltype.concat([{
-  code: BILL_TYPE.BILL_LETTER_SMS,
-  component: 'bill-letter-sms',
-  label: 'Bill letter + 문자',
+const cellPhoneBillGuideTypes = mixedBillGuidetypes.concat([{
+  curBillType: BILL_GUIDE_TYPE.BILL_LETTER_SMS.CODE,
+  curBillTypeNm: 'Bill letter + 문자',
+  component: BILL_GUIDE_TYPE.BILL_LETTER_SMS.COMPONENT,
   selectorLabel: 'Bill Letter + 문자 요금안내서'
 }]);
 
@@ -61,16 +61,17 @@ class MyTBillChange extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     // 임시 - 휴대폰, T-WiBro, 인터넷 등등에 따라 값이 달라져야함
-    const billTypes = defaultBillTypes;
-    let curBillType = billTypes.find((_billType) => {
-      return _billType.code === req.query.curBillTypeCd;
+    const BillGuideTypes = cellPhoneBillGuideTypes;
+    let curBillType = BillGuideTypes.find((_billType) => {
+      return _billType.curBillType === req.query.curBillTypeCd;
     });
     if ( !curBillType ) {
-      curBillType = billTypes[0];
+      curBillType = BillGuideTypes[0];
     }
     this.renderView(res, 'bill/myt.bill.guidechange.change.html', {
       curBillType: curBillType,
-      billTypes: billTypes
+      curBillTypeData: JSON.stringify(curBillType),
+      billGuideTypesData: JSON.stringify(BillGuideTypes)
     });
   }
 

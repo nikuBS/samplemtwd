@@ -3,7 +3,7 @@
 * Author: 이정민 (skt.p130713@partner.sk.com)
 * Date: 2018.07.05
 -->
-<div id="step1">
+<div class="step" step="1">
     <div class="change-plan">
         <h4 class="tit-type2">요금안내서 정보설정(1/2)</h4>
         <dl>
@@ -12,7 +12,7 @@
                 <div class="address-form">
                                     <span class="inputbox bt-add">
                                         <span class="input">
-                                            <input type="text" class="no-bg-color" title="우편번호" value="03485">
+                                            <input type="text" class="no-bg-color" title="우편번호" disabled="disabled" class="input-addr1">
                                             <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
                                         </span>
                                         <span class="bt-box">
@@ -21,13 +21,13 @@
                                     </span>
                     <span class="inputbox">
                                         <span class="input">
-                                          <input type="text" class="no-bg-color" title="주소" value="서울특별시 은평구 응암로 41-22">
+                                          <input type="text" class="no-bg-color" title="주소" disabled="disabled" class="input-addr2">
                                           <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
                                         </span>
                                     </span>
                     <span class="inputbox">
                                         <span class="input">
-                                          <input type="text" title="상세주소" value="e편한세상 1165-405">
+                                          <input type="text" title="상세주소"  class="input-addr3">
                                           <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
                                         </span>
                                     </span>
@@ -60,13 +60,13 @@
         <div class="contents-btn">
             <ul class="bt-slice">
                 <li class="bt-blue1">
-                    <button>다음</button>
+                    <button class="btn-next">다음</button>
                 </li>
             </ul>
         </div>
     </div>
 </div>
-<div id="step2" style="display: none;">
+<div class="step" step="2" style="display: none;">
     <div class="change-plan">
         <h4 class="tit-type2">요금안내서 정보설정(2/2)</h4>
         <dl>
@@ -102,7 +102,7 @@
         <div class="contents-btn">
             <ul class="bt-slice">
                 <li class="bt-blue1">
-                    <button>&quot;기타(우편)&quot;으로 변경하기</button>
+                    <button class="btn-submit">&quot;기타(우편)&quot;으로 변경하기</button>
                 </li>
             </ul>
         </div>

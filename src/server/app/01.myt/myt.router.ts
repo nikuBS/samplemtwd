@@ -12,7 +12,8 @@ import MyTUsage24hours50discount from './controllers/usage/myt.usage.24hours-50d
 import MyTUsageDataLimit from './controllers/usage/myt.usage.data-limit.controller';
 import MyTHotBill from './controllers/bill/myt.bill.hotbill.controller';
 import MyTBillGuideChange from './controllers/bill/myt.bill.guidechange.change.controller';
-import MyTBillBillUpdate from './controllers/bill/myt.bill.guidechange.bill-update.controller';
+import MyTBillGuideChangeComplete from './controllers/bill/myt.bill.guidechange.change-complete.controller';
+import MyTBillGuideUpdate from './controllers/bill/myt.bill.guidechange.update.controller';
 
 class MytRouter extends TwRouter {
   constructor() {
@@ -29,8 +30,9 @@ class MytRouter extends TwRouter {
     this.controllers.push({ url: '/usage/ting', controller: new MyTUsageTing() });
     this.controllers.push({ url: '/usage/24hourdiscount', controller: new MyTUsage24hours50discount() });
     this.controllers.push({ url: '/bill/hotbill', controller: new MyTHotBill() });
-    this.controllers.push({ url: '/bill/change', controller: new MyTBillGuideChange() });
-    this.controllers.push({ url: '/bill/update', controller: new MyTBillBillUpdate() });
+    this.controllers.push({ url: '/bill/guidechange/change', controller: new MyTBillGuideChange() });
+    this.controllers.push({ url: '/bill/guidechange/change-complete', controller: new MyTBillGuideChangeComplete() });
+    this.controllers.push({ url: '/bill/guidechange/update', controller: new MyTBillGuideUpdate() });
   }
 }
 
