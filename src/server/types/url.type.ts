@@ -16,7 +16,7 @@ export const URL = {
   '/myt/bill/hotbill': { login: true },
   '/myt/bill/guidechange/reissue': { login: true },
   '/myt/bill/guidechange/reissue/complete': { login: true },
-  '/myt/bill/guidechange/returnhistory': { login: true },
+  '/myt/bill/billguide/returnhistory': { login: true },
   '/myt/bill/billguide': { login: true },
   // recharge
   '/recharge/refill': { login: true },
