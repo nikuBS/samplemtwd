@@ -1,7 +1,7 @@
 <%#
- * FileName: auth.login.find-id-pwd.html
+ * FileName: auth.login.service-pwd-fail.html
  * Author: Hakjoon Sim (hakjoon.sim@sk.com)
- * Date: 2018.07.06
+ * Date: 2018.07.11
 %>
 
 <% include ../../components/start.component.html %>
@@ -19,42 +19,57 @@
     <div id="header" class="header-wrap">
         <div class="header">
             <div class="header-ti">
-                <h1>아이디 찾기/비밀번호 재설정</h1>
+                <h1>로그인 실패</h1>
             </div>
-            <button class="prev-step common-back"><span class="blind">이전으로</span></button>
         </div>
     </div>
     <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap">
         <h2 class="blind">내용</h2>
-        <div class="container">
+        <div id="auth-login-service-pwd-fail" class="container">
             <!-- .cont-box -->
             <div class="cont-box">
                 <div class="box-suggest">
                     <div class="suggest-info">
-                        <p class="suggest-ti"><em class="tx-bold">기본정보 입력 후<br />본인확인 절차를 거치시면 </em><br />아이디 찾기, 비밀번호 재설정을 <br />하실 수 있습니다.</p>
+                        <p class="suggest-ti">고객보호 비밀번호를<br /><em class="tx-bold">5회 이상 잘못 입력</em>하셨습니다.</p>
+                        <ul class="suggest-list nodot">
+                            <li>SK텔레콤 지점에 직접 방문하시어 초기화 후 이용해주시기 바랍니다.</li>
+                        </ul>
                     </div>
                 </div>
             </div>
             <!--// .cont-box -->
+
             <hr class="cont-sp type1" />
+
+            <div class="cont-box nogaps">
+                <div class="bt-link-box">
+                    <a class="bt-link-tx" href="/auth/tid/logout">홈으로</a>
+                </div>
+            </div>
+
+            <hr class="cont-sp type1" />
+
             <!-- .cont-box -->
             <div class="cont-box nogaps-hoz">
                 <div class="link-long">
-                    <a href="/auth/tid/find/id" title="아이디 찾기로 이동">아이디 찾기<span class="ico"></span></a>
+                    <a href="" title="온라인 상담/문의 알아보기로 이동">온라인 상담/문의 알아보기<span class="ico"></span></a>
                 </div>
                 <div class="link-long last">
-                    <a href="/auth/tid/find/pw" title="비밀번호 재설정로 이동">비밀번호 재설정<span class="ico"></span></a>
+                    <a href="" title="지점/대리점 찾기 바로가기로 이동">지점/대리점 찾기 바로가기 <span class="ico"></span></a>
                 </div>
             </div>
             <!--// .cont-box -->
         </div>
     </div>
     <!--// #contents -->
-    <!-- footer -->
     <% include ../../../../common/views/components/footer.component.html %>
-    <!-- // footer -->
 </div>
 <% include ../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    new Tw.AuthLoginServicePwdFail($('#auth-login-service-pwd-fail'), false);
+  });
+</script>
 <% include ../../components/end.component.html %>

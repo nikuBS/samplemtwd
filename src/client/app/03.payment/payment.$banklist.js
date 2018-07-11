@@ -28,14 +28,13 @@ Tw.BankList.prototype = {
     var $target = $(event.currentTarget);
     $selectedBank.attr('id', $target.attr('id'));
     $selectedBank.text($target.text());
-    this._popupService._popupClose();
+    this._popupService.close();
   },
   _isNotExistBankList: function () {
     return Tw.FormatHelper.isEmpty(this.$bankList);
   },
   _getBankList: function () {
-    $.ajax('/mock/payment.bank-list.json')
-    //    this._apiService.request(Tw.API_CMD.BFF_07_0022, {})
+    this._apiService.request(Tw.API_CMD.BFF_07_0022, {})
       .done($.proxy(this._getBankListSuccess, this))
       .fail($.proxy(this._getBankListFail, this));
   },

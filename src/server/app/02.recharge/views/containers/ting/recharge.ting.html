@@ -102,7 +102,7 @@
                                                         <dd class="box-block-list">
                                                             <div class="box-block-ti2 wrap_tpl_ting_request_info">
                                                                 <span
-                                                                    class="txt1">김유진님이 <em>&lsquo;팅요금 선물 조르기&rsquo;</em>를 <br/>요청하셨습니다. <br/>T World에서 선물을 해보세요.</span>
+                                                                    class="txt1"><%=svcInfo.custNm%>님이 <em>&lsquo;팅요금 선물 조르기&rsquo;</em>를 <br/>요청하셨습니다. <br/>T World에서 선물을 해보세요.</span>
                                                             </div>
                                                             <ul>
                                                                 <li>만 19세 이상 개인고객(SK텔레콤 가입자)에게 선물 조르기를 할 수 있습니다.</li>
@@ -142,7 +142,7 @@
                         <div class="widget">
                             <div class="widget-box accordion">
                                 <h3 class="tit-a">꼭 확인해주세요!</h3><!-- 2018-06-19 : h태그 수정/삭제 -->
-                                <div class="acco-cover toggle">
+                                <div class="acco-cover toggle on">
                                     <div class="bt-whole">
                                         <button role="button" aria-pressed="false"><span class="blind">내용 열기</span></button>
                                     </div>
@@ -293,7 +293,7 @@
                         <div class="contents-btn">
                             <ul class="bt-slice"><!-- 2018-06-20 버튼 클래스 변경 -->
                                 <li class="bt-blue1">
-                                    <button class="btn_validateStep1">다음</button>
+                                    <button class="btn_validateStep1" disabled>다음</button>
                                 </li>
                             </ul>
                         </div>
@@ -603,7 +603,7 @@
     {{#if isMobile}}
     <span class="inputbox bt-add">
         <span class="input">
-            <input class='inp_phone' type="text" placeholder="‘-’ 없이 숫자만 입력해주세요." title="휴대폰 번호 입력">
+            <input class='inp_phone' type="text" placeholder="‘-’ 없이 숫자만 입력해주세요." title="휴대폰 번호 입력" maxlength="11">
         </span>
         <span class="bt-box">
             <button id="btn_addr" type="button">주소록</button>
@@ -613,7 +613,7 @@
     <!-- 2018-06-21 주소록이 없는 경우 추가 -->
     <span class="inputbox">
         <span class="input">
-            <input class='inp_phone' type="text" placeholder="‘-’ 없이 숫자만 입력해주세요." title="휴대폰 번호 입력">
+            <input class='inp_phone' type="text" placeholder="‘-’ 없이 숫자만 입력해주세요." title="휴대폰 번호 입력" maxlength="11">
         </span>
     </span>
     {{/if}}
