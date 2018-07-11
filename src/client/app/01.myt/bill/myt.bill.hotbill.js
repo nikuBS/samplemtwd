@@ -14,6 +14,7 @@ Tw.MyTBillHotBill = function (rootEl) {
   this._bindEvent();
   this._resTimerID = setTimeout(this._getBillResponse(), 500);
   this.NO_BILL_FIELDS = ['total', 'noVAT', 'is3rdParty', 'showDesc', 'discount'];
+  this.SVC_TYPE = { MOBILE: 'M1', TPOCKET: 'M3' };
   this._children = null;
   Handlebars.registerHelper('isBill', function (val, options) {
     return (self.NO_BILL_FIELDS.indexOf(val) < 0 ) ? options.fn(this) : options.inverse(this);
@@ -46,6 +47,7 @@ Tw.MyTBillHotBill.prototype = {
     if ( resp.result.isSuccess === 'Y' ) {
       clearTimeout(this._resTimerID);
 
+      this._svcAttrCd = this.$container.find('.info-type').attr('data-type');
       var billData = resp.result.hotBillInfo;
       //자녀 회선 메뉴는 매월 1일과 자녀회선 없을 시 비노출
       //TODO 오늘 날짜 가져오는 방법 공통 로직 여부 논의 필요
@@ -54,26 +56,38 @@ Tw.MyTBillHotBill.prototype = {
       }
 
       var day = parseInt(resp.result.stdDateHan.match(/(\d+)\uC77C/i)[1], 10);
-      if ( day > 1 && this._children ) {
+      if ( day > 1 && this._children && this._svcAttrCd === this.SVC_TYPE.MOBILE ) {
         this.$memberInfo.show();
         //TODO 자녀수
         this.$numOfMembers.text(this._children.length);
       }
 
-      //9일부터 전월요금보기 보이기
-      if ( day >= 9 ) {
-        this.$btPreviousBill.show();
+      if ( this._svcAttrCd === this.SVC_TYPE.MOBILE ) {
+        //핸드폰: 9일부터 전월요금보기 보이기
+        if ( day >= 9 ) {
+          this.$btPreviousBill.show();
+        }
+      } else {
+        //PocketFi: 7일까지 전월요금보기 보이기
+        if ( day <= 7 ) {
+          this.$btPreviousBill.show();
+        }
       }
 
-      this.$amount.text(billData.tot_open_bal2);
-      //yyyy년mm월dd일 -> yyyy.mm.dd
-      var strPeriod = resp.result.termOfHotBill
-        .replace(/[\uB144\uC6D4]/gi, '.')
-        .replace(/[\uC77C:&nbsp;:]/gi, '')
-        .replace('~', ' ~ ');
-      this.$period.text(strPeriod);
-      var group = this._makeBillGroup(billData.record1, 'inv_amt2');
-      this._renderBillGroup(group);
+      if(this.$amount.length){
+        this.$amount.text(billData.tot_open_bal2);
+        //yyyy년mm월dd일 -> yyyy.mm.dd
+        var strPeriod = resp.result.termOfHotBill
+          .replace(/[\uB144\uC6D4]/gi, '.')
+          .replace(/[\uC77C:&nbsp;:]/gi, '')
+          .replace('~', ' ~ ');
+        this.$period.text(strPeriod);
+        var group = this._makeBillGroup(billData.record1, 'inv_amt2');
+        this._renderBillGroup(group);
+      }else{
+        this.$amount.text('매월 2일부터');
+      }
+
       skt_landing.action.loading.off({ ta: '.container' });
     } else {
       clearTimeout(this._resTimerID);
