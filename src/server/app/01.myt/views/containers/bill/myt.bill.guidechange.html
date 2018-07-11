@@ -122,7 +122,7 @@
                                     <button class="_sel-nm"><%= billType.billTypeList[0].chgBtnNm %></button>
                                 </li>
                                 <li class="bt-link-box">
-                                    <a class="bt-link-tx" href="">미리 보기</a>
+                                    <a class="bt-link-tx _sel-preview" href="#" onclick="return false;">미리 보기</a>
                                 </li>
                             </ul>
                         </div>
@@ -160,6 +160,9 @@
         </div>
     </div>
     <!--// #contents -->
+    <!-- footer -->
+    <% include ../../../../../common/views/components/footer.component.html %>
+    <!-- // footer -->
 </div>
 <% include ../../components/javascript.component.html %>
 <script>
