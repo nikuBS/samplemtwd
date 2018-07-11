@@ -21,10 +21,8 @@ class MyTBillHotBill extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    //TODO svcAttrCd 완성 되면 삭제
-    svcInfo.svcAttrCd = req.query.code || 'M1';
     var type = '';
-    switch( svcInfo.svcAttrCd){
+    switch(svcInfo.svcAttrCd){
       case 'M3':
         type = 'T pocket Fi';
         break;
