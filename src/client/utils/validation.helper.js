@@ -31,6 +31,9 @@ Tw.ValidationHelper = (function () {
     return findNumber.length >= length;
   }
 
+  /** 아래 check 및 alert 띄우는 validation은 client 한정이므로 따로 .ts에 구현하지 않겠습니다.
+   *  by Jayoon KONG (jayoon.kong@sk.com)
+   */
   /* input 값을 입력하지 않았을 경우 alert 띄우는 function */
   function checkEmpty(value, message) {
     if (Tw.FormatHelper.isEmpty(value)) {
