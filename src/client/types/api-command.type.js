@@ -97,6 +97,8 @@ Tw.API_CMD = {
   BFF_07_0048: { path: '/core-bill/v1/rainbow-point-onetime-reserve', method: Tw.API_METHOD.POST },
   BFF_07_0054: { path: '/core-bill/v1/ocb-point-autopay-modify', method: Tw.API_METHOD.POST },
   BFF_07_0056: { path: '/core-bill/v1/rainbow-point-autopay-change', method: Tw.API_METHOD.POST },
+  BFF_07_0061: { path: '/core-bill/v1/auto-payments', method: Tw.API_METHOD.POST },
+  BFF_07_0065: { path: '/core-bill/v1/autopay/pay-cycl-chg', method: Tw.API_METHOD.PUT },
 
   // TEST
   GET: { path: '/posts', method: Tw.API_METHOD.GET },
