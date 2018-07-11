@@ -135,6 +135,10 @@ Tw.FormatHelper = (function () {
     });
   };
 
+  var makeCardYymm = function(cardYm) {
+    return cardYm.substr(0, 4) + '/' + cardYm.substr(4, 2);
+  };
+
   return {
     leadingZeros: leadingZeros,
     isEmpty: isEmpty,
@@ -148,6 +152,7 @@ Tw.FormatHelper = (function () {
     convSmsPrice: convSmsPrice,
     conTelFormatWithDash: conTelFormatWithDash,
     sortObjArrDesc: sortObjArrDesc,
-    sortObjArrAsc: sortObjArrAsc
+    sortObjArrAsc: sortObjArrAsc,
+    makeCardYymm: makeCardYymm
   };
 })();
