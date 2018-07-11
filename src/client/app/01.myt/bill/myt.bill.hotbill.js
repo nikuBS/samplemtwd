@@ -178,14 +178,19 @@ Tw.MyTBillHotBill.prototype = {
     }
     var members = [];
     var item = null;
-    this._children.forEach(function (member) {
-      item = {
-        attr: 'id=' + member.svcMgmtNum,
-        text: member.svcNum
-      };
-      members.push(item);
-    });
-    this._popupService.openChoice('자녀 선택', members, 'type1', $.proxy(this._onOpenChildrenChoice, this));
+    //자녀가 없을 경유 메뉴 접근 불가
+    if(this._children.length === 1){
+      location.href = '/myt/bill/hotbill/child?svcMgmtNum=' + this._children[0].svcMgmtNum;
+    }else {
+      this._children.forEach(function (member) {
+        item = {
+          attr: 'id=' + member.svcMgmtNum,
+          text: member.svcNum
+        };
+        members.push(item);
+      });
+      this._popupService.openChoice('자녀 선택', members, 'type1', $.proxy(this._onOpenChildrenChoice, this));
+    }
   },
 
   _onOpenChildrenChoice: function ($popup) {
