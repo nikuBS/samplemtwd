@@ -22,7 +22,7 @@ Tw.MyTBillGuideChangePrototype = {
     this._selectedBillGuide = this.$container.data('selected-bill-guide-data');
     this._$btnChange = this.$container.find('.btn-change');
     this._$btnUpdate = this.$container.find('.btn-update');
-    this._$btDopdown = this.$container.find('.bt-dropdown');
+    this._$btnDopdown = this.$container.find('.bt-dropdown');
     this._$btnNext = this.$container.find('.btn-next');
     this._$steps = this.$container.find('.step');
   },
@@ -30,7 +30,7 @@ Tw.MyTBillGuideChangePrototype = {
   _bindEvent: function () {
     this._$btnChange.on('click', $.proxy(this._checkToChange, this));
     this._$btnUpdate.on('click', $.proxy(this._checkToUpdate, this));
-    this._$btDopdown.on('click', $.proxy(this._openTypeSelectPopup, this));
+    this._$btnDopdown.on('click', $.proxy(this._openTypeSelectPopup, this));
     this._$btnNext.on('click', $.proxy(this._setNext, this));
   },
 
@@ -55,22 +55,22 @@ Tw.MyTBillGuideChangePrototype = {
     this._popupService.openConfirm(Tw.POPUP_TITLE.NOTIFY, Tw.MSG_MYT.BILL_GUIDECHANGE_A01, '', null, $.proxy(this._changeBillGuideType, this));
   },
 
-  _checkToUpdate: function() {
+  _checkToUpdate: function () {
     // window.alert('~~~~~~~수정');
   },
 
   _changeBillGuideType: function () {
     this._popupService.close();
-    window.setTimeout($.proxy(function() {
+    window.setTimeout($.proxy(function () {
       var alertMsg = Tw.MSG_MYT.BILL_GUIDECHANGE_A02.replace(/\[T\]/gi, this._selectedBillGuide.curBillTypeNm);
       this._popupService.openAlert(alertMsg, Tw.POPUP_TITLE.NOTIFY, $.proxy(this.onClickBtnChangeConfirm, this));
     }, this), 1000);
   },
 
-  onClickBtnChangeConfirm: function() {
+  onClickBtnChangeConfirm: function () {
     var beforeBillType = this._selectedBillGuide.beforeBillType;
     var selectedBillType = this._selectedBillGuide.curBillType;
-    window.location.href='/myt/bill/guidechange/change-complete?beforeBillTypeCd='+beforeBillType+'&afterBillTypeCd='+selectedBillType;
+    window.location.href = '/myt/bill/guidechange/change-complete?beforeBillTypeCd=' + beforeBillType + '&afterBillTypeCd=' + selectedBillType;
   },
 
   _setBillGuideTypes: function () {
@@ -110,6 +110,17 @@ Tw.MyTBillGuideChangePrototype = {
     this._popupService.close();
     var selectedBillGuideType = $(event.currentTarget).find('button').attr('id');
     location.href = '/myt/bill/guidechange/change?selectedBillTypeCd=' + selectedBillGuideType;
+  },
+
+  _phoneNumValidation: function (target) {
+    var phoneNum = target.value;
+    if ( target &&
+      !Tw.FormatHelper.isEmpty(phoneNum) &&
+      !Tw.ValidationHelper.isCellPhone(phoneNum) ) {
+      this._popupService.openAlert(Tw.MSG_MYT.BILL_GUIDECHANGE_A06);
+      return false;
+    }
+    return true;
   }
 
 };
@@ -174,7 +185,7 @@ Tw.MyTBillGuideChangeClasses.etc.prototype = $.extend({}, Tw.MyTBillGuideChangeP
     this._$inputAddr3 = this.$container.find('.input-addr3');
   },
   _checkValidation: function () {
-    return false;
+    return true;
   },
   _getRequestParams: function () {
     return {};
@@ -187,16 +198,24 @@ Tw.MyTBillGuideChangeClasses.etc.prototype = $.extend({}, Tw.MyTBillGuideChangeP
   }
 });
 Tw.MyTBillGuideChangeClasses.billLetter.prototype = $.extend({}, Tw.MyTBillGuideChangePrototype, {
+  _assign: function () {
+    Tw.MyTBillGuideChangePrototype._assign.apply(this, arguments);
+    this._$inputCcurNotiSvcNum = this.$container.find('.input-ccur-noti-svc-num');
+  },
   _checkValidation: function () {
-    return true;
+    return this._phoneNumValidation.apply(this, this._$inputCcurNotiSvcNum);
   },
   _getRequestParams: function () {
     return {};
   }
 });
 Tw.MyTBillGuideChangeClasses.sms.prototype = $.extend({}, Tw.MyTBillGuideChangePrototype, {
+  _assign: function () {
+    Tw.MyTBillGuideChangePrototype._assign.apply(this, arguments);
+    this._$inputCcurNotiSvcNum = this.$container.find('.input-ccur-noti-svc-num');
+  },
   _checkValidation: function () {
-    return true;
+    return this._phoneNumValidation.apply(this, this._$inputCcurNotiSvcNum);
   },
   _getRequestParams: function () {
     return {};
@@ -206,9 +225,10 @@ Tw.MyTBillGuideChangeClasses.billLetterEmail.prototype = $.extend({}, Tw.MyTBill
   _assign: function () {
     Tw.MyTBillGuideChangePrototype._assign.apply(this, arguments);
     this._$inputEmail = this.$container.find('.input-email');
+    this._$inputCcurNotiSvcNum = this.$container.find('.input-ccur-noti-svc-num');
   },
   _checkValidation: function () {
-    return true;
+    return this._phoneNumValidation.apply(this, this._$inputCcurNotiSvcNum);
   },
   _getRequestParams: function () {
     return {};
@@ -224,9 +244,10 @@ Tw.MyTBillGuideChangeClasses.smsEmail.prototype = $.extend({}, Tw.MyTBillGuideCh
   _assign: function () {
     Tw.MyTBillGuideChangePrototype._assign.apply(this, arguments);
     this._$inputEmail = this.$container.find('.input-email');
+    this._$inputCcurNotiSvcNum = this.$container.find('.input-ccur-noti-svc-num');
   },
   _checkValidation: function () {
-    return true;
+    return this._phoneNumValidation.apply(this, this._$inputCcurNotiSvcNum);
   },
   _getRequestParams: function () {
     return {};

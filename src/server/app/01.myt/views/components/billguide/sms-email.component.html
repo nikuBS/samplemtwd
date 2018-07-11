@@ -90,7 +90,7 @@
             <dd>
             <span class="inputbox">
                 <span class="input">
-                    <input type="text" placeholder="휴대폰번호입력 (숫자만 입력)" title="휴대폰번호 입력 (숫자만 입력)" aria-describedby="rw-desc1" value="<%= selectedBillGuide.ccurNotiSvcNum%>">
+                    <input type="text" placeholder="휴대폰번호입력 (숫자만 입력)" title="휴대폰번호 입력 (숫자만 입력)" aria-describedby="rw-desc1" class="input-phone input-ccur-noti-svc-num" maxlength="11" onInput="return Tw.InputHelper.inputNumberOnly(this);" value="<%= selectedBillGuide.ccurNotiSvcNum%>">
                     <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
                 </span>
                 <span id="rw-desc1" class="guide-txt">미성년고객의 요금안내서는 법정대리인 휴대폰번호로 동시 안내됩니다.</span>
