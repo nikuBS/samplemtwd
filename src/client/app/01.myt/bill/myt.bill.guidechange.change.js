@@ -20,14 +20,16 @@ Tw.MyTBillGuideChangePrototype = {
 
   _assign: function () {
     this._selectedBillGuide = this.$container.data('selected-bill-guide-data');
-    this._$btnSubmit = this.$container.find('.btn-submit');
+    this._$btnChange = this.$container.find('.btn-change');
+    this._$btnUpdate = this.$container.find('.btn-update');
     this._$btDopdown = this.$container.find('.bt-dropdown');
     this._$btnNext = this.$container.find('.btn-next');
     this._$steps = this.$container.find('.step');
   },
 
   _bindEvent: function () {
-    this._$btnSubmit.on('click', $.proxy(this._checkToSubmit, this));
+    this._$btnChange.on('click', $.proxy(this._checkToChange, this));
+    this._$btnUpdate.on('click', $.proxy(this._checkToUpdate, this));
     this._$btDopdown.on('click', $.proxy(this._openTypeSelectPopup, this));
     this._$btnNext.on('click', $.proxy(this._setNext, this));
   },
@@ -43,22 +45,32 @@ Tw.MyTBillGuideChangePrototype = {
     this._popupService.openChoice(Tw.POPUP_TITLE.CHANGE_BILL_GUIDE_TYPE, this._billGuideTypesData, 'type3', $.proxy(this._onOpenChoicePopup, this, $target));
   },
 
-  _checkToSubmit: function () {
+  _checkToChange: function () {
     var isValid = this._checkValidation();
     if ( !isValid ) {
-      window.alert('~~~~~~~not valid!');
+      // window.alert('~~~~~~~not valid!');
       return;
     }
     // var requestParams = this._getRequestParams();
-    this._popupService.openConfirm(Tw.POPUP_TITLE.NOTIFY, Tw.MSG_MYT.BILL_GUIDECHANGE_A01, '', $.proxy(this._submit, this));
+    this._popupService.openConfirm(Tw.POPUP_TITLE.NOTIFY, Tw.MSG_MYT.BILL_GUIDECHANGE_A01, '', null, $.proxy(this._changeBillGuideType, this));
   },
 
-  _submit: function () {
-    var alertMsg = Tw.MSG_MYT.BILL_GUIDECHANGE_A02.replace(/\[T\]/gi, this._selectedBillGuide.curBillTypeNm);
-    this._popupService.openAlert(alertMsg);
-    return;
-    // var tmpAfterBillTypeCode = 'Q';
-    // window.location.href='/myt/bill/guidechange/change-complete?beforeBillTypeCd='+this._selectedBillGuide.curBillType+'&afterBillTypeCd='+tmpAfterBillTypeCode;
+  _checkToUpdate: function() {
+    // window.alert('~~~~~~~수정');
+  },
+
+  _changeBillGuideType: function () {
+    this._popupService.close();
+    window.setTimeout($.proxy(function() {
+      var alertMsg = Tw.MSG_MYT.BILL_GUIDECHANGE_A02.replace(/\[T\]/gi, this._selectedBillGuide.curBillTypeNm);
+      this._popupService.openAlert(alertMsg, Tw.POPUP_TITLE.NOTIFY, $.proxy(this.onClickBtnChangeConfirm, this));
+    }, this), 1000);
+  },
+
+  onClickBtnChangeConfirm: function() {
+    var beforeBillType = this._selectedBillGuide.beforeBillType;
+    var selectedBillType = this._selectedBillGuide.curBillType;
+    window.location.href='/myt/bill/guidechange/change-complete?beforeBillTypeCd='+beforeBillType+'&afterBillTypeCd='+selectedBillType;
   },
 
   _setBillGuideTypes: function () {
@@ -95,8 +107,9 @@ Tw.MyTBillGuideChangePrototype = {
   },
 
   _onClickBillGuideType: function ($target, event) {
+    this._popupService.close();
     var selectedBillGuideType = $(event.currentTarget).find('button').attr('id');
-    location.href = '/myt/bill/guidechange/change?curBillTypeCd=' + selectedBillGuideType;
+    location.href = '/myt/bill/guidechange/change?selectedBillTypeCd=' + selectedBillGuideType;
   }
 
 };

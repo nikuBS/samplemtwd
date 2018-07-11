@@ -77,12 +77,13 @@ class MyTBillChange extends TwViewController {
     const BillGuideTypes = cellPhoneBillGuideTypes;
     const _curBillGuide = this.getResult(curBillGuide);
     let selectedBillGuide = BillGuideTypes.find((_billType) => {
-      return _billType.curBillType === req.query.curBillTypeCd;
+      return _billType.curBillType === req.query.selectedBillTypeCd;
     });
     if ( !selectedBillGuide ) {
       selectedBillGuide = BillGuideTypes[0];
     }
     selectedBillGuide['kidsYn'] = _curBillGuide['kidsYn'];
+    selectedBillGuide['beforeBillType'] = _curBillGuide['curBillType'];
     this.renderView(res, 'bill/myt.bill.guidechange.change.html', {
       selectedBillGuide: selectedBillGuide,
       selectedBillGuideData: JSON.stringify(selectedBillGuide),

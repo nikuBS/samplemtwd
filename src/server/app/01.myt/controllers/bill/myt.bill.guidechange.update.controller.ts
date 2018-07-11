@@ -31,7 +31,7 @@ class MyTBillUpdate extends TwViewController {
     this.renderView(res, 'bill/myt.bill.guidechange.update.html', {
       selectedBillGuide: selectedBillGuide,
       selectedBillGuideData: JSON.stringify(selectedBillGuide),
-      isUpdate: false,
+      isUpdate: true,
       anotherBillGuideType: anotherBillGuideType
     });
   }
