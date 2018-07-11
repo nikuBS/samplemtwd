@@ -122,7 +122,7 @@
                                     <button class="_sel-nm"><%= billType.billTypeList[0].chgBtnNm %></button>
                                 </li>
                                 <li class="bt-link-box">
-                                    <a class="bt-link-tx _sel-preview" href="#" onclick="return false;">미리 보기</a>
+                                    <a class="bt-link-tx _sel-preview" href="#" onclick="return false;" data-bill-type-list="<%= JSON.stringify(billType.billTypeList)%>">미리 보기</a>
                                 </li>
                             </ul>
                         </div>
