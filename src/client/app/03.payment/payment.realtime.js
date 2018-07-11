@@ -49,7 +49,7 @@ Tw.PaymentRealtime.prototype = {
 
     var checkedLength = this.$container.find('.checked').length;
     if (checkedLength === 0) {
-      this._popupService.openAlert(Tw.POPUP_TITLE.NOTIFY, Tw.MSG_PAYMENT.REALTIME_A01);
+      this._popupService.openAlert(Tw.MSG_PAYMENT.REALTIME_A01);
     }
     else {
       this._go('#step1');

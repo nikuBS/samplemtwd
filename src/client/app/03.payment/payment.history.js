@@ -8,16 +8,20 @@ Tw.PaymentHistory = function (rootEl) {
   this.$container = rootEl;
   this.$window = $(window);
 
-  this._apiService = new Tw.ApiService();
-  this._history = new Tw.HistoryService(this.$container);
-  this._history.init('hash');
-  this._bindEvent();
+  this._apiService = Tw.Api;
+
+  this.common = new Tw.PaymentHistoryCommon(rootEl);
+
+  this.$container.find('.cont-box .bt-dropdown.big').on('click', $.proxy(this.common.openPaymentTypePopup, this.common));
+
+  // this._init();
 };
 
 Tw.PaymentHistory.prototype = {
+
   /*
     과납 안내 관련 팝업
-    skt_landing.action.popup.open({
+    popup.open({
       'title': '과납 안내 드립니다.',
       'close_bt': true,
       'title2': '홍길동님의<br />휴대폰 요금 3건이 과납되었습니다.',
@@ -35,26 +39,9 @@ Tw.PaymentHistory.prototype = {
       });
     */
 
-  /*    납부방식 선택 레이어 팝업
-skt_landing.action.popup.open({
-                'hbs' : 'choice',
-                'title': '납부방식 선택',
-                'close_bt': true,
-                'list_type' : false, //a태그로 생성을 원할경우 true, button태그로 생성되는 경우 false
-                'list':[
-                    '전체납부내역',
-                    '즉시납부내역',
-                    '자동납부내역',
-                    '자동납부 통합인출',
-                    '포인트 납부예약',
-					'포인트 자동납부'
-                ]
 
-            });
-
-   */
   /* 환불 처리 내역 상세 팝업
-      skt_landing.action.popup.open({
+      popup.open({
           hbs:'PA_06_07_L02'// hbs의 파일명
       });
 

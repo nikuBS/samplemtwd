@@ -14,6 +14,10 @@ export const URL = {
   '/myt/usage/ting': { login: true },
   '/usage/24hourdiscount': { login: true },
   '/myt/bill/hotbill': { login: true },
+  '/myt/bill/guidechange/reissue': { login: true },
+  '/myt/bill/guidechange/reissue/complete': { login: true },
+  '/myt/bill/guidechange/returnhistory': { login: true },
+  '/myt/bill/billguide': { login: true },
   // recharge
   '/recharge/refill': { login: true },
   '/recharge/refill/history': { login: true },
@@ -39,6 +43,15 @@ export const URL = {
   '/payment/auto': { login: true },
   '/payment/point': { login: true },
   '/payment/history': { login: true },
+  '/payment/history/immediate': { login: true },
+  '/payment/history/auto': { login: true },
+  '/payment/history/auto/unitedwithdrawal': { login: true },
+  '/payment/history/point/reserve': { login: true },
+  '/payment/history/point/auto': { login: true },
+  '/payment/history/receipt/tax': { login: true },
+  '/payment/history/receipt/cash': { login: true },
+  '/payment/history/excesspay': { login: true },
+  '/payment/history/excesspay/account': { login: true },
   // management
   // membership
   // product

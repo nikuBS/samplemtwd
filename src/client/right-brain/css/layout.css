@@ -157,7 +157,7 @@
   height: 100%;
 }
 
-.header-wrap .header button {
+.header-wrap .header button, .header-wrap .header a {
   display: block;
   overflow: hidden;
   position: absolute;
@@ -167,19 +167,19 @@
   height: 1.5625rem;
 }
 
-.header-wrap .header button.prev-step {
+.header-wrap .header button.prev-step, .header-wrap .header a.prev-step {
   left: 1.25rem;
   top: 1.125rem;
   background-position: 0 -15.625rem;
 }
 
-.header-wrap .header button.search-content {
+.header-wrap .header button.search-content, .header-wrap .header a.search-content {
   right: 1.25rem;
   top: 1.125rem;
   background-position: -1.5625rem -15.625rem;
 }
 
-.header-wrap .header button .blind {
+.header-wrap .header button .blind, .header-wrap .header a .blind {
   width: 100%;
   top: 0;
   left: 0;
@@ -651,7 +651,9 @@
 
 /* 공통 팝업페이지 구조 */
 .popup-page {
-  position: relative;
+  position: absolute;
+  top: 0;
+  left: 0;
   box-sizing: border-box;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -682,7 +684,7 @@
   right: 0;
   padding: 1.125rem 1.625rem;
   background: #fff;
-  z-index: 5;
+  z-index: 20;
 }
 
 .popup-page .header-wrap .page-header .header-ti h1 {
@@ -715,7 +717,7 @@
   height: 1.5625rem;
   background: url(/img/ico/ico-group.png) no-repeat 0 -9.375rem;
   background-size: 3.125rem;
-  z-index: 5;
+  z-index: 20;
 }
 
 /* 페이지 사이즈 100% */

@@ -1,7 +1,7 @@
 const environment = {
   local: {
     BFF_SERVER: 'http://211.188.180.73:31020',
-    CDN: 'http://localhost:3001',
+    CDN: '',
     REDIS: {
       host: '211.188.180.73',
       port: 32200,
@@ -9,7 +9,8 @@ const environment = {
     },
     TEMP_CDN: 'http://tstore.rbipt.com/skt',
     TID_SERVER: 'https://auth-stg.skt-id.co.kr',
-    TEST_SERVER: 'https://jsonplaceholder.typicode.com'
+    TEST_SERVER: 'https://jsonplaceholder.typicode.com',
+    TID_REDIRECT: 'http://m.tworld.co.kr:3000'
   },
   development: {
     BFF_SERVER: 'http://bff-spring.mtw-dev-bff.svc.cluster.local',
@@ -22,7 +23,8 @@ const environment = {
 
     TEMP_CDN: 'http://tstore.rbipt.com/skt',
     TID_SERVER: 'https://auth-stg.skt-id.co.kr',
-    TEST_SERVER: 'https://jsonplaceholder.typicode.com'
+    TEST_SERVER: 'https://jsonplaceholder.typicode.com',
+    TID_REDIRECT: 'http://icp-dev.tworld.co.kr'
   },
   qa: {
     BFF_SERVER: 'http://bff-spring.mtw-stg-bff.svc.cluster.local',
@@ -34,7 +36,8 @@ const environment = {
     },
     TEMP_CDN: 'http://tstore.rbipt.com/skt',
     TID_SERVER: 'https://auth-stg.skt-id.co.kr',
-    TEST_SERVER: 'https://jsonplaceholder.typicode.com'
+    TEST_SERVER: 'https://jsonplaceholder.typicode.com',
+    TID_REDIRECT: 'http://icp-stg.tworld.co.kr'
   },
   production: {
     BFF_SERVER: '',
@@ -42,7 +45,8 @@ const environment = {
     REDIS: {},
     TEMP_CDN: 'http://tstore.rbipt.com/skt',
     TID_SERVER: '',
-    TEST_SERVER: ''
+    TEST_SERVER: '',
+    TID_REDIRECT: ''
   }
 };
 
