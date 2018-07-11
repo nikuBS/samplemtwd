@@ -39,50 +39,57 @@
                     <!--// 2018-07-06 수정-->
                     <ul>
                         <li>
-                            <span class="info-num"><%=_circuitInfo.svcNum %></span>
+                            <span class="info-num"><%=circuitInfo.svcNum %></span>
                         </li>
                         <li>
                             <!-- 2018-07-06 수정-->
                             <span class="badge badge-allpay"><span class="blind">통합대표</span></span>
                             <!--// 2018-07-06 수정-->
                             <span class="info-type">휴대폰</span>
-                            <span class="info-name"><span class="blind">별명</span>귀여운첫째아들</span>
+                            <!--<span class="info-name"><span class="blind">별명</span>귀여운첫째아들</span>-->
                         </li>
                     </ul>
                     <span class="info-btn"><a href="" class="btn-choice" role="button">변경</a></span>
                 </div>
             </div>
 
+            <% if ( circuitChildInfo.length > 0) { %>
             <div class="cont-box nogaps-hoz">
                 <div class="use-family">
                     <h3 class="blind">자녀폰 실시간 요금 보기</h3>
                     <div class="link-long">
-                        <a href="" title="">자녀폰 사용요금 (<strong>5</strong>명) <!-- 2017-07-06 텍스트 수정 -->
+                        <a href="" title="">자녀폰 사용요금 (<strong><%=circuitChildInfo.length %> </strong>명) <!-- 2017-07-06 텍스트 수정 -->
                             <span class="badge badge-fam"><span class="blind">자녀회선</span></span>
                             <span class="ico"></span>
                         </a>
                     </div>
                 </div>
             </div>
+            <% } %>
 
             <hr class="cont-sp type1" aria-hidden="true"/>
 
             <div class="cont-box  nogaps-btm noborder">
-                <button class="bt-dropdown big"title="전체납부내역" aria-haspopup="true">2018년 6월<span class="ico"></span></button>
+                <button class="bt-dropdown big"title="전체납부내역" aria-haspopup="true"><%=commDataInfo.selClaimDtBtn %><span class="ico"></span></button>
                 <div class="payment-inquiry">
                     <div class="payment-all">
                         <h3 class="blind">전체납부내역</h3>
-                        <span><em>38,559</em> 원</span>
-                        <p class="term">2018.06.01~ 2018.06.06</p>
+                        <span><em><%=billpayInfo.useAmtTot %></em> 원</span>
+                        <p class="term"><%=commDataInfo.selStaDt %> ~ <%=commDataInfo.selEndDt %></p>
                     </div>
                     <div class="txt-discount">
+                        <% if( commDataInfo.discount === '0' ) {  %>
+                        <!-- 사용요금 + 요금할인내역 0원일때 -->
+                        <p><span class="num"><%=commDataInfo.selClaimDtNum %></span>월 사용 요금은 <span class="num"><%=billpayInfo.useAmtTot %></span>원입니다.</p>
+                        <% } else { %>
                         <!-- 사용요금 + 요금할인내역 -->
-                        <p><span class="num">5</span>월 사용 요금은 <span class="num">370,000</span>원이고<br /><span class="num">20,000</span>원을 할인 받으셨습니다.</p>
+                        <p><span class="num"><%=commDataInfo.selClaimDtNum %></span>월 사용 요금은 <span class="num"><%=billpayInfo.useAmtTot %></span>원이고<br /><span class="num"><%=commDataInfo.discount %></span>원을 할인 받으셨습니다.</p>
+                        <% } %>
                     </div>
                 </div>
             </div>
 <%# 노출조건 : 자동납부신청중이 아닐 경우  %>
-<% if( billpayInfo.autopayYn === 'N') { %>
+<% if( showConditionInfo.autopayYn === 'N') { %>
             <div class="cont-box">
                 <!-- 납부전&자동납부신청중이 아닐 경우 -->
                 <ul class="bt-slice item-two">
@@ -162,7 +169,7 @@
                                     <button role="button" aria-pressed="false">
 												<span class="pt-tit-wrap noborder">
 													<span class="pt-tit">미납요금</span>
-													<span class="pt-price"><span class="num">80,000</span>원</span>
+													<span class="pt-price"><span class="num"><%=defaultInfo.unPaidTotSum %></span>원</span>
 												</span>
                                     </button>
                                 </div>

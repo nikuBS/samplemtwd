@@ -6,12 +6,21 @@
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
 import { Observable } from 'rxjs/Observable';
+import Rx from 'rxjs/Rx';
+
 import { API_CMD } from '../../../../types/api-command.type';
 import { LINE_NAME, SVC_ATTR } from '../../../../types/bff-common.type';
 import myTUsageData from '../../../../mock/server/myt.usage';
 import DataLimit from '../../../../mock/server/myt.data-limit';
 import billguide_BFF_01_0005 from '../../../../mock/server/myt.bill.billguide.BFF_01_0005';
 import billguide_BFF_05_00036 from '../../../../mock/server/myt.bill.billguide.BFF_05_00036';
+import billguide_BFF_05_00024 from '../../../../mock/server/myt.bill.billguide.BFF_05_00024';
+import DateHelper from '../../../../utils/date.helper';
+import moment = require('moment');
+import { compile } from 'ejs';
+import StringHelper from '../../../../utils/string.helper';
+import FormatHelper from '../../../../utils/format.helper';
+import billguide_BFF_05_00030 from '../../../../mock/server/myt.bill.billguide.BFF_05_00030';
 
 class MyTBillBillguide extends TwViewController {
 
@@ -35,6 +44,29 @@ class MyTBillBillguide extends TwViewController {
   };
   //청구요금조회
   private _billpayInfo: any = {};
+  //자녀회선조회
+  private _circuitChildInfo: any = [];
+  //공통데이터
+  private _commDataInfo:any = {
+    discount:'',//할인액
+    selClaimDtNum:'',//선택 청구 월 | number
+    selClaimDtBtn:'',//선택 청구 월 | 2017년 10월
+    selStaDt:'',//선택시작
+    selEndDt:''//선택끝
+  };
+  //미납내역
+  private _defaultInfo: any;
+  //노출조건
+  private _showConditionInfo:any = {
+    autopayYn: null, //자동납부신청
+    childYn: null, //자녀회선
+    phoneYn: null, //선택회선이 휴대폰
+    roamingYn: null, //로밍
+    callGiftYn: null, //콜기프트
+    donationYn: null //기부금/후원금
+
+  };
+
   private _urlTplInfo:any = {
     combineRepresentPage:  'bill/myt.bill.billguide.combineRepresentPage.html',//통합청구(대표)
     combineCommonPage:     'bill/myt.bill.billguide.combineCommonPage.html',//통합청구(일반)
@@ -50,15 +82,44 @@ class MyTBillBillguide extends TwViewController {
 
   //실행 : 데이터 가져오기
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+    let thisMain = this;
     this._svcInfo = svcInfo;
 
     //mock 데이터 테스트
-    Observable.of([billguide_BFF_01_0005, billguide_BFF_05_00036]).subscribe((bffRestDataObj) => {
-      this.logger.info(this, '[subscribe_mock_test]', bffRestDataObj);
-      this._circuitInfo = bffRestDataObj[0].result;
-      this._billpayInfo = bffRestDataObj[1].result;
-      this.controllerInit(res);
-    });
+    Rx.Observable.of([
+      billguide_BFF_01_0005,
+      billguide_BFF_05_00036,
+      billguide_BFF_05_00024,
+      billguide_BFF_05_00030
+    ]).subscribe(
+      {
+        next(item) {
+          thisMain.logger.info(this, '[ next > item ] : ', item);
+          thisMain._circuitInfo = item[0].result;
+          thisMain._billpayInfo = item[1].result;
+          thisMain._circuitChildInfo = item[2].result;
+          thisMain._defaultInfo = item[3].result;
+        },
+        error(error) {
+          thisMain.logger.info(this, '[ error ] : ', error.stack || error);
+        },
+        complete() {
+          thisMain.logger.info(this, '[ complete ] : ');
+          thisMain._commDataInfo.selClaimDtNum = thisMain.getSelClaimDtNum( String(thisMain._billpayInfo.invDt) );
+          thisMain._commDataInfo.selClaimDtBtn = thisMain.getSelClaimDtBtn( String(thisMain._billpayInfo.invDt) );
+          thisMain._commDataInfo.selStaDt = thisMain.getSelStaDt( String(thisMain._billpayInfo.invDt) );
+          thisMain._commDataInfo.selEndDt = DateHelper.getShortDateNoDot( String(thisMain._billpayInfo.invDt) );
+          //thisMain._commDataInfo.discount = FormatHelper.addComma( String(Math.abs( Number(thisMain._billpayInfo.deduckTotInvAmt))) );
+          thisMain._commDataInfo.discount = FormatHelper.addComma( String(Math.abs( Number(0))) );
+
+          thisMain._defaultInfo.unPaidTotSum = FormatHelper.addComma( String(thisMain._defaultInfo.unPaidTotSum) );
+
+          thisMain.setShowCondition();//노출조건 셋팅
+
+          thisMain.controllerInit(res);
+        }
+      }
+    );
 
     //BFF 데이터 사용시
     // Observable.combineLatest(
@@ -71,7 +132,8 @@ class MyTBillBillguide extends TwViewController {
 
   //컨트롤러 초기화 : 가져온 데이터를 활용해서 개발진행
   private controllerInit(res) {
-
+    this.logger.info(this, '[할인금액] : ', this._commDataInfo.discount);
+    this.logger.info(this, '[노출조건] : ', this._showConditionInfo);
     /*
     * 페이지 집입시 특정 조건에 따라 화면을 보여준다.
      */
@@ -117,9 +179,6 @@ class MyTBillBillguide extends TwViewController {
       }
 
     }
-
-
-
   }
   //-------------------------------------------------------------[서비스]
   //통합청구(대표)
@@ -127,8 +186,12 @@ class MyTBillBillguide extends TwViewController {
     this.logger.info(this, '[_urlTplInfo.combineRepresentPage] : ', this._urlTplInfo.combineRepresentPage);
     this.renderView(res, this._urlTplInfo.combineRepresentPage, {
       svcInfo: this._svcInfo,
-      _circuitInfo: this._circuitInfo,
-      billpayInfo : this._billpayInfo
+      circuitInfo: this._circuitInfo,
+      billpayInfo : this._billpayInfo,
+      circuitChildInfo: this._circuitChildInfo,
+      commDataInfo: this._commDataInfo,
+      defaultInfo: this._defaultInfo,
+      showConditionInfo: this._showConditionInfo
     } );
   }
   //통합청구(일반)
@@ -136,8 +199,12 @@ class MyTBillBillguide extends TwViewController {
     this.logger.info(this, '[_urlTplInfo.combineCommonPage] : ', this._urlTplInfo.combineCommonPage);
     this.renderView(res, this._urlTplInfo.combineCommonPage, {
       svcInfo: this._svcInfo,
-      _circuitInfo: this._circuitInfo,
-      billpayInfo : this._billpayInfo
+      circuitInfo: this._circuitInfo,
+      billpayInfo : this._billpayInfo,
+      circuitChildInfo: this._circuitChildInfo,
+      commDataInfo: this._commDataInfo,
+      defaultInfo: this._defaultInfo,
+      showConditionInfo: this._showConditionInfo
     } );
   }
   //개별청구
@@ -145,8 +212,12 @@ class MyTBillBillguide extends TwViewController {
     this.logger.info(this, '[_urlTplInfo.individualPage] : ', this._urlTplInfo.individualPage);
     this.renderView(res, this._urlTplInfo.individualPage, {
       svcInfo: this._svcInfo,
-      _circuitInfo: this._circuitInfo,
-      billpayInfo : this._billpayInfo
+      circuitInfo: this._circuitInfo,
+      billpayInfo : this._billpayInfo,
+      circuitChildInfo: this._circuitChildInfo,
+      commDataInfo: this._commDataInfo,
+      defaultInfo: this._defaultInfo,
+      showConditionInfo: this._showConditionInfo
     } );
   }
   //PPS(선불폰)
@@ -154,8 +225,12 @@ class MyTBillBillguide extends TwViewController {
     this.logger.info(this, '[_urlTplInfo.prepaidPage] : ', this._urlTplInfo.prepaidPage);
     this.renderView(res, this._urlTplInfo.prepaidPage, {
       svcInfo: this._svcInfo,
-      _circuitInfo: this._circuitInfo,
-      billpayInfo : this._billpayInfo
+      circuitInfo: this._circuitInfo,
+      billpayInfo : this._billpayInfo,
+      circuitChildInfo: this._circuitChildInfo,
+      commDataInfo: this._commDataInfo,
+      defaultInfo: this._defaultInfo,
+      showConditionInfo: this._showConditionInfo
     } );
   }
   //기업솔루션(포인트캠)
@@ -163,8 +238,12 @@ class MyTBillBillguide extends TwViewController {
     this.logger.info(this, '[_urlTplInfo.companyPage] : ', this._urlTplInfo.companyPage);
     this.renderView(res, this._urlTplInfo.companyPage, {
       svcInfo: this._svcInfo,
-      _circuitInfo: this._circuitInfo,
-      billpayInfo : this._billpayInfo
+      circuitInfo: this._circuitInfo,
+      billpayInfo : this._billpayInfo,
+      circuitChildInfo: this._circuitChildInfo,
+      commDataInfo: this._commDataInfo,
+      defaultInfo: this._defaultInfo,
+      showConditionInfo: this._showConditionInfo
     } );
   }
   //sk브로드밴드(인터넷/IPTV/집전화)
@@ -172,12 +251,16 @@ class MyTBillBillguide extends TwViewController {
     this.logger.info(this, '[_urlTplInfo.skbroadbandPage] : ', this._urlTplInfo.skbroadbandPage);
     this.renderView(res, this._urlTplInfo.skbroadbandPage, {
       svcInfo: this._svcInfo,
-      _circuitInfo: this._circuitInfo,
-      billpayInfo : this._billpayInfo
+      circuitInfo: this._circuitInfo,
+      billpayInfo : this._billpayInfo,
+      circuitChildInfo: this._circuitChildInfo,
+      commDataInfo: this._commDataInfo,
+      defaultInfo: this._defaultInfo,
+      showConditionInfo: this._showConditionInfo
     } );
   }
 
-  //-------------------------------------------------------------[BFF 요청 모음]
+  //-------------------------------------------------------------[서비스 BFF 요청 모음]
   private BFF_05_0036(): any { return this.apiService.request(API_CMD.BFF_05_0036, {} ); } //청구요금조회
   private BFF_05_0041(): any { return this.apiService.request(API_CMD.BFF_05_0041, {} ); } //나의요금제
   private BFF_05_0030(): any { return this.apiService.request(API_CMD.BFF_05_0030, {} ); } //미납내역조회
@@ -200,7 +283,24 @@ class MyTBillBillguide extends TwViewController {
   private BFF_05_0013(): any { return this.apiService.request(API_CMD.BFF_05_0013, {} ); } //PPS 정보조회
   private BFF_05_0014(): any { return this.apiService.request(API_CMD.BFF_05_0014, {} ); } //PPS 사용내역 확인
 
-  //-------------------------------------------------------------[필터: 해당 데이터 필터링]
+  //-------------------------------------------------------------[서비스 필터: 해당 데이터 필터링]
+  public getSelStaDt(date: string):any {//월 시작일 구하기
+    return this._commDataInfo.selStaDt = moment(date).format('YYYY.MM') + '.01';
+  }
+  public getSelClaimDtBtn(date: string):any {//청구 년월 구하기
+    return this._commDataInfo.selClaimDt = moment(date).add(1, 'days').format('YYYY년 MM월');
+  }
+  public getSelClaimDtNum(date: string):any {//청구 년월 구하기
+    return this._commDataInfo.selClaimDt = moment(date).add(1, 'days').format('M');
+  }
+
+  public setShowCondition():void {//노출조건 정보 셋팅
+    this._showConditionInfo.autopayYn = this._billpayInfo.autopayYn;
+    this._showConditionInfo.childYn = (this._circuitChildInfo.length > 0) ? 'Y' : 'N';
+    this._showConditionInfo.phoneYn = (this._circuitInfo.svcAttrCd === 'M1') ? 'Y' : 'N';
+
+  }
+
 
 
   //-------------------------------------------------------------[클리이어튼로 전송]
