@@ -34,7 +34,7 @@ class MytRouter extends TwRouter {
     this.controllers.push({ url: '/bill/hotbill', controller: new MyTHotBill() });
     this.controllers.push({ url: '/bill/guidechange/reissue', controller: new MyTReissue() });
     this.controllers.push({ url: '/bill/guidechange/reissue/complete', controller: new MyTReissueComplete() });
-    this.controllers.push({ url: '/bill/guidechange/returnhistory', controller: new MyTReturnHistory() });
+    this.controllers.push({ url: '/bill/billguide/returnhistory', controller: new MyTReturnHistory() });
     this.controllers.push({ url: '/bill/billguide', controller: new MyTBillBillguide() });
   }
 }

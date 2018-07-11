@@ -13,7 +13,7 @@ Tw.MyTBillReissue = function ($element) {
 
   setTimeout(function () {
     self._init();
-  }, 100);
+  }, 0);
 };
 
 Tw.MyTBillReissue.prototype = {
