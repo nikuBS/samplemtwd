@@ -6,6 +6,7 @@
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
 import { BILL_GUIDE_TYPE } from '../../../../types/bff-common.type';
+import { BILL_GUIDE_TYPE_NAME, BILL_GUIDE_SELECTOR_LABEL } from '../../../../types/string.type';
 
 const BILL_GUIDE_TYPE_COMPONENT = {};
 BILL_GUIDE_TYPE_COMPONENT[BILL_GUIDE_TYPE.TWORLD] = 'tworld';
@@ -19,48 +20,48 @@ BILL_GUIDE_TYPE_COMPONENT[BILL_GUIDE_TYPE.ETC] = 'etc';
 
 const defaultBillGuideTypes = [{
   curBillType: BILL_GUIDE_TYPE.TWORLD,
-  curBillTypeNm: 'T world 확인',
+  curBillTypeNm: BILL_GUIDE_TYPE_NAME.TWORLD,
   component: BILL_GUIDE_TYPE_COMPONENT[BILL_GUIDE_TYPE.TWORLD],
-  selectorLabel: 'T world 확인 추천!'
+  selectorLabel: BILL_GUIDE_SELECTOR_LABEL.TWORLD
 }, {
   curBillType: BILL_GUIDE_TYPE.EMAIL,
-  curBillTypeNm: '이메일',
+  curBillTypeNm: BILL_GUIDE_TYPE_NAME.EMAIL,
   component: BILL_GUIDE_TYPE_COMPONENT[BILL_GUIDE_TYPE.EMAIL],
-  selectorLabel: '이메일 요금안내서'
+  selectorLabel: BILL_GUIDE_SELECTOR_LABEL.EMAIL
 }, {
   curBillType: BILL_GUIDE_TYPE.ETC,
-  curBillTypeNm: '기타(우편)',
+  curBillTypeNm: BILL_GUIDE_TYPE_NAME.ETC,
   component: BILL_GUIDE_TYPE_COMPONENT[BILL_GUIDE_TYPE.ETC],
-  selectorLabel: '기타(우편) 요금안내서'
+  selectorLabel: BILL_GUIDE_SELECTOR_LABEL.ETC
 }];
 
 const mixedBillGuidetypes = defaultBillGuideTypes.concat([{
   curBillType: BILL_GUIDE_TYPE.BILL_LETTER,
-  curBillTypeNm: 'Bill Letter',
+  curBillTypeNm: BILL_GUIDE_TYPE_NAME.BILL_LETTER,
   component: BILL_GUIDE_TYPE_COMPONENT[BILL_GUIDE_TYPE.BILL_LETTER],
-  selectorLabel: 'Bill Letter'
+  selectorLabel: BILL_GUIDE_SELECTOR_LABEL.BILL_LETTER
 }, {
   curBillType: BILL_GUIDE_TYPE.SMS,
-  curBillTypeNm: '문자',
+  curBillTypeNm: BILL_GUIDE_TYPE_NAME.SMS,
   component: BILL_GUIDE_TYPE_COMPONENT[BILL_GUIDE_TYPE.SMS],
-  selectorLabel: '문자 요금안내서'
+  selectorLabel: BILL_GUIDE_SELECTOR_LABEL.SMS
 }, {
   curBillType: BILL_GUIDE_TYPE.BILL_LETTER_EMAIL,
-  curBillTypeNm: 'Bill letter + 이메일',
+  curBillTypeNm: BILL_GUIDE_TYPE_NAME.BILL_LETTER_EMAIL,
   component: BILL_GUIDE_TYPE_COMPONENT[BILL_GUIDE_TYPE.BILL_LETTER_EMAIL],
-  selectorLabel: 'Bill Letter + 이메일 요금안내서'
+  selectorLabel: BILL_GUIDE_SELECTOR_LABEL.BILL_LETTER_EMAIL
 }, {
   curBillType: BILL_GUIDE_TYPE.SMS_EMAIL,
-  curBillTypeNm: '문자 + 이메일',
+  curBillTypeNm: BILL_GUIDE_TYPE_NAME.SMS_EMAIL,
   component: BILL_GUIDE_TYPE_COMPONENT[BILL_GUIDE_TYPE.SMS_EMAIL],
-  selectorLabel: '문자 + 이메일 요금안내서'
+  selectorLabel: BILL_GUIDE_SELECTOR_LABEL.SMS_EMAIL
 }]);
 
 const cellPhoneBillGuideTypes = mixedBillGuidetypes.concat([{
   curBillType: BILL_GUIDE_TYPE.BILL_LETTER_SMS,
-  curBillTypeNm: 'Bill letter + 문자',
+  curBillTypeNm: BILL_GUIDE_TYPE_NAME.BILL_LETTER_SMS,
   component: BILL_GUIDE_TYPE_COMPONENT[BILL_GUIDE_TYPE.BILL_LETTER_SMS],
-  selectorLabel: 'Bill Letter + 문자 요금안내서'
+  selectorLabel: BILL_GUIDE_SELECTOR_LABEL.BILL_LETTER_SMS
 }]);
 
 

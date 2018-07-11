@@ -37,11 +37,11 @@ Tw.RechargeRefillGift.prototype = {
     var fomattedBefrSvcNum = this._getFormattedPhoneNumber(befrSvcNum);
     var confirmContents = svcNum + Tw.MSG_RECHARGE.REFILL_GIFT_01 + fomattedBefrSvcNum + Tw.MSG_RECHARGE.REFILL_GIFT_02;
     if ( !Tw.ValidationHelper.isCellPhone(befrSvcNum) ) {
-      this._popupService.openAlert(Tw.POPUP_TITLE.NOTIFY, Tw.MSG_RECHARGE.REFILL_GIFT_03);
+      this._popupService.openAlert(Tw.MSG_RECHARGE.REFILL_GIFT_03);
       return;
     }
     if ( !copnNm ) {
-      this._popupService.openAlert(Tw.POPUP_TITLE.NOTIFY, Tw.MSG_RECHARGE.REFILL_GIFT_04);
+      this._popupService.openAlert(Tw.MSG_RECHARGE.REFILL_GIFT_04);
       return;
     }
     this._popupService.openConfirm(Tw.POPUP_TITLE.NOTIFY, confirmContents, '', $.proxy(this._submit, this));
@@ -98,16 +98,16 @@ Tw.RechargeRefillGift.prototype = {
         window.location.href = '/recharge/refill/gift-products';
         break;
       case RESP_CODE.RCG3003:
-        this._popupService.openAlert(Tw.POPUP_TITLE.NOTIFY, Tw.MSG_RECHARGE.REFILL_GIFT_05);
+        this._popupService.openAlert(Tw.MSG_RECHARGE.REFILL_GIFT_05);
         break;
       case RESP_CODE.RCG3005:
-        this._popupService.openAlert(Tw.POPUP_TITLE.NOTIFY, Tw.MSG_RECHARGE.REFILL_GIFT_06);
+        this._popupService.openAlert(Tw.MSG_RECHARGE.REFILL_GIFT_06);
         break;
       case RESP_CODE.RCG3006:
-        this._popupService.openAlert(Tw.POPUP_TITLE.NOTIFY, Tw.MSG_RECHARGE.REFILL_GIFT_07);
+        this._popupService.openAlert(Tw.MSG_RECHARGE.REFILL_GIFT_07);
         break;
       default:
-        this._popupService.openAlert(Tw.POPUP_TITLE.NOTIFY, resp.data.orgDebugMessage);
+        this._popupService.openAlert(resp.data.orgDebugMessage);
         break;
     }
   },

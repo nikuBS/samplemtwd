@@ -6,16 +6,17 @@
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
 import { BILL_GUIDE_TYPE } from '../../../../types/bff-common.type';
+import { BILL_GUIDE_TYPE_NAME } from '../../../../types/string.type';
 
 const BillGuideLabelDefines = {};
-BillGuideLabelDefines[BILL_GUIDE_TYPE.TWORLD] = 'T world 확인';
-BillGuideLabelDefines[BILL_GUIDE_TYPE.BILL_LETTER] = 'Bill Letter';
-BillGuideLabelDefines[BILL_GUIDE_TYPE.SMS] = '문자';
-BillGuideLabelDefines[BILL_GUIDE_TYPE.EMAIL] = '이메일';
-BillGuideLabelDefines[BILL_GUIDE_TYPE.BILL_LETTER_EMAIL] = 'Bill letter + 이메일';
-BillGuideLabelDefines[BILL_GUIDE_TYPE.SMS_EMAIL] = '문자 + 이메일';
-BillGuideLabelDefines[BILL_GUIDE_TYPE.BILL_LETTER_SMS] = 'Bill letter + 문자';
-BillGuideLabelDefines[BILL_GUIDE_TYPE.ETC] = '기타(우편)';
+BillGuideLabelDefines[BILL_GUIDE_TYPE.TWORLD] = BILL_GUIDE_TYPE_NAME.TWORLD;
+BillGuideLabelDefines[BILL_GUIDE_TYPE.BILL_LETTER] = BILL_GUIDE_TYPE_NAME.BILL_LETTER;
+BillGuideLabelDefines[BILL_GUIDE_TYPE.SMS] = BILL_GUIDE_TYPE_NAME.SMS;
+BillGuideLabelDefines[BILL_GUIDE_TYPE.EMAIL] = BILL_GUIDE_TYPE_NAME.EMAIL;
+BillGuideLabelDefines[BILL_GUIDE_TYPE.BILL_LETTER_EMAIL] = BILL_GUIDE_TYPE_NAME.BILL_LETTER_EMAIL;
+BillGuideLabelDefines[BILL_GUIDE_TYPE.SMS_EMAIL] = BILL_GUIDE_TYPE_NAME.SMS_EMAIL;
+BillGuideLabelDefines[BILL_GUIDE_TYPE.BILL_LETTER_SMS] = BILL_GUIDE_TYPE_NAME.BILL_LETTER_SMS;
+BillGuideLabelDefines[BILL_GUIDE_TYPE.ETC] = BILL_GUIDE_TYPE_NAME.ETC;
 
 class MyTBillChange extends TwViewController {
   constructor() {
