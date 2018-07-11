@@ -1,6 +1,6 @@
 /**
  * FileName: recharge.limit.js
- * Author: 박지만 (jiman.park@sk.com)
+ * Author: Jiyoung Jo (jiyoungjo@sk.com)
  * Date: 2018.07.02
  */
 
