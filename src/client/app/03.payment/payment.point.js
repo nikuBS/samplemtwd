@@ -8,10 +8,10 @@ Tw.PaymentPoint = function (rootEl) {
   this.$container = rootEl;
   this.$window = $(window);
   this.$document = $(document);
-  this.$amount = 0;
 
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
+  this._validation = Tw.ValidationHelper;
   this._history = new Tw.HistoryService(this.$container);
   this._history.init('hash');
 
@@ -24,8 +24,11 @@ Tw.PaymentPoint.prototype = {
     this.$cardNumber = this.$container.find('.card-number');
     this.$password = this.$container.find('.password');
     this.$agreement = this.$container.find('.cashbag-agree');
+    this.$pointList = this.$container.find('.cashbag-point-list');
     this.$point = this.$container.find('.pay-point');
+    this.$pointSelectBox = this.$container.find('.select-auto-cashbag-point');
     this.$errorContainer = this.$container.find('.error-data');
+    this.$selectedPoint = null;
     this.$pointType = null;
   },
   _bindEvent: function () {
@@ -49,7 +52,49 @@ Tw.PaymentPoint.prototype = {
     this._go($target.data('value'));
   },
   _selectAutoCashbagPoint: function () {
-
+    this._popupService.open({
+      'hbs': 'select',
+      'title': 'OK캐쉬백 포인트 선택',
+      'multiplex': true,
+      'close_bt': true,
+      'select': [
+        {
+          'style_num': 'three',
+          'style_class': 'point-select',
+          'options': [
+            {checked: false,value: '500P'},
+            {checked: true,value: '1,000P'},
+            {checked: false,value: '1,500P'},
+            {checked: false,value: '2,000P'},
+            {checked: false,value: '2,500P'},
+            {checked: false,value: '3,000P'},
+            {checked: false,value: '3,500P'},
+            {checked: false,value: '4,000P'},
+            {checked: false,value: '4,500P'},
+            {checked: false,value: '5,000P'},
+            {checked: false,value: '5,500P'},
+            {checked: false,value: '6,000P'},
+            {checked: false,value: '6,500P'},
+            {checked: false,value: '7,000P'},
+            {checked: false,value: '7,500P'},
+            {checked: false,value: '8,000P'},
+            {checked: false,value: '8,500P'},
+            {checked: false,value: '9,000P'},
+            {checked: false,value: '9,500P'},
+            {checked: false,value: '10,000P'}
+          ]
+        }
+      ]
+    }, $.proxy(this._onOpenSelect, this));
+  },
+  _onOpenSelect: function($layer) {
+    $layer.on('click', '.point-select', $.proxy(this._setPoint, this, $layer));
+  },
+  _setPoint: function ($layer) {
+    var point = $layer.find('input:checked').val();
+    this.$pointSelectBox.attr('id', point).text(point);
+    this.$selectedPoint = point.replace(',', '').replace('P', '');
+    this._popupService.close();
   },
   _setType: function ($target) {
     this.$pointType = $target.data('type');
@@ -95,16 +140,21 @@ Tw.PaymentPoint.prototype = {
     }
   },
   _makeRequestDataForCashbagAuto: function () {
-    var ccno = '';
-    if (this.$autoCode === '1') {
-      ccno = $.trim(this.$cardNumber.val());
+    var point = this.$selectedPoint;
+    if (this.$pointType === 'TPT') {
+      point = this.$pointList.find('input:checked').attr('title').replace(',', '');
     }
-    return {
-      reqClCd: this.$autoCode,
+
+    var code = this.$autoCode.toString();
+    var reqData = {
+      reqClCd: code,
       ptClCd: this.$pointType,
-      reqAmt: '1000',
-      ocbCcno: ccno
+      reqAmt: point
     };
+    if (code === Tw.PAYMENT_OPTION.NEW) {
+      reqData.ccno = $.trim(this.$cardNumber.val());
+    }
+    return reqData;
   },
   _payRainbowOne: function (event) {
     event.preventDefault();
@@ -134,91 +184,51 @@ Tw.PaymentPoint.prototype = {
   _paySuccess: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
       this._setData(res);
-      console.log(res.result);
       this._history.setHistory();
       this._go('#complete');
     } else {
-      this.$errorContainer.find('.code').text(res.code);
-      this.$errorContainer.find('.message').text(res.msg);
-      this._go('#error');
+      this._payFail(res);
     }
   },
-  _payFail: function () {
-    Tw.Logger.info('pay request fail');
+  _payFail: function (res) {
+    this.$errorContainer.find('.code').empty().text(res.code);
+    this.$errorContainer.find('.message').empty().text(res.orgDebugMessage);
+    this._go('#error');
   },
   _setData: function (res) {
     var $target = this.$container.find('.complete-target');
     var $result = res.result;
     for (var key in $result) {
-      $target.find('.' + key).text(res[key]);
+      $target.find('.' + key).text($result[key]);
     }
-
   },
   _isValidForCashbagOne: function () {
-    return (this._checkIsEmpty(this.$cardNumber.val(), Tw.MSG_PAYMENT.AUTO_A05) &&
-      this._checkLength($.trim(this.$cardNumber.val()), 16, Tw.MSG_PAYMENT.REALTIME_A06) &&
-      this._checkIsEmpty(this.$password.val(), Tw.MSG_PAYMENT.AUTO_A04) &&
-      this._checkLength($.trim(this.$password.val()), 4, Tw.MSG_PAYMENT.REALTIME_A07) &&
-      this._checkIsAgree(this.$agreement, Tw.MSG_PAYMENT.POINT_A03) &&
+    return (this._validation.checkEmpty(this.$cardNumber.val(), Tw.MSG_PAYMENT.AUTO_A05) &&
+      this._validation.checkLength(this.$cardNumber.val(), 16, Tw.MSG_PAYMENT.REALTIME_A06) &&
+      this._validation.checkEmpty(this.$password.val(), Tw.MSG_PAYMENT.AUTO_A04) &&
+      this._validation.checkLength(this.$password.val(), 4, Tw.MSG_PAYMENT.REALTIME_A07) &&
+      this._validation.checkIsAgree(this.$agreement, Tw.MSG_PAYMENT.POINT_A03) &&
       this._checkPoint(this.$point.val()));
   },
   _isValidForCashbagAuto: function () {
-    return (this._checkIsEmpty(this.$cardNumber.val(), Tw.MSG_PAYMENT.AUTO_A05) &&
-      this._checkLength($.trim(this.$cardNumber.val()), 16, Tw.MSG_PAYMENT.REALTIME_A06) &&
-      this._checkIsAgree(this.$agreement, Tw.MSG_PAYMENT.POINT_A03));
-//      this._checkPoint(this.$point.val()));
+    var isTPoint = null;
+    if (this.$pointType === 'TPT') {
+      isTPoint = true;
+    }
+    return (this._validation.checkEmpty(this.$cardNumber.val(), Tw.MSG_PAYMENT.AUTO_A05) &&
+      this._validation.checkLength(this.$cardNumber.val(), 16, Tw.MSG_PAYMENT.REALTIME_A06) &&
+      this._validation.checkIsAgree(this.$agreement, Tw.MSG_PAYMENT.POINT_A03)) &&
+      this._validation.checkIsSelected(this.$pointSelectBox, Tw.MSG_PAYMENT.POINT_A07, isTPoint);
   },
   _isValidForRainbow: function () {
     return true;
   },
-  _checkIsEmpty: function ($value, message) {
-    if (Tw.FormatHelper.isEmpty($value)) {
-      this._popupService.openAlert(message);
-      return false;
-    }
-    return true;
-  },
-  _checkLength: function ($value, length, message) {
-    if ($value.length !== length) {
-      this._popupService.openAlert(message);
-      return false;
-    }
-    return true;
-  },
-  _checkMinLength: function ($value, length, message) {
-    if ($value.length < length) {
-      this._popupService.openAlert(message);
-      return false;
-    }
-    return true;
-  },
-  _checkIsAgree: function ($target, message) {
-    if (!$target.is(':checked')) {
-      this._popupService.openAlert(message);
-      return false;
-    }
-    return true;
-  },
   _checkPoint: function ($value) {
-    return (this._checkIsEmpty($value, Tw.MSG_PAYMENT.POINT_A04) &&
-      this._checkIsAvailablePoint($.trim($value), Tw.MSG_PAYMENT.REALTIME_A12) &&
-      this._checkMinLength($.trim($value), 4, Tw.MSG_PAYMENT.REALTIME_A08) &&
-      this._checkMoreThousand($.trim($value), Tw.MSG_PAYMENT.POINT_A06));
-  },
-  _checkIsAvailablePoint: function ($value, message) {
-    var $availablePoint = this.$container.find('.point-title:visible .point-value');
-    if (parseInt($value, 10) > parseInt($availablePoint.text().replace(',', ''), 10)) {
-      this._popupService.openAlert(message);
-      return false;
-    }
-    return true;
-  },
-  _checkMoreThousand: function ($value, message) {
-    if ($value[$value.length - 1] !== '0') {
-      this._popupService.openAlert(message);
-      return false;
-    }
-    return true;
+    var point = this.$container.find('.point-title:visible .point-value').text().replace(',', '');
+    return (this._validation.checkEmpty($value, Tw.MSG_PAYMENT.POINT_A04) &&
+      this._validation.checkIsAvailablePoint($value, point, Tw.MSG_PAYMENT.REALTIME_A12) &&
+      this._validation.checkMinLength($value, 4, Tw.MSG_PAYMENT.REALTIME_A08) &&
+      this._validation.checkIsTenUnit($value, Tw.MSG_PAYMENT.POINT_A06));
   },
   _checkIsAvailableCard: function ($cardNum) {
     this._apiService.request(Tw.API_CMD.BFF_07_0024, { cardNum: $cardNum })

@@ -50,6 +50,13 @@ Tw.CURRENCY_UNIT = {
   WON: '원'
 };
 
+Tw.PAYMENT_OPTION = {
+  NEW: '1',
+  CHANGE: '2',
+  CANCEL: '3',
+  CLOSE: '4'
+};
+
 Tw.MSG_COMMON = {};
 
 Tw.MSG_HOME = {};
@@ -92,6 +99,8 @@ Tw.MSG_PAYMENT = {
   REALTIME_A10: '입금전용계좌 SMS 신청을 종료하시겠습니까?',
   REALTIME_A11: '포인트를 조회해 주세요.',
   REALTIME_A12: '보유하신 포인트보다 초과 입력하셨습니다.',
+  AUTO_A02: '휴대폰 번호를 입력해 주세요.',
+  AUTO_A03: '계좌번호를 입력해 주세요.',
   AUTO_A04: '비밀번호를 입력해 주세요.',
   AUTO_A05: '카드번호를 입력해 주세요.',
   AUTO_A06: '계좌/카드번호는 반드시 기입해야 합니다.',
@@ -107,6 +116,7 @@ Tw.MSG_PAYMENT = {
   POINT_A04: '포인트를 입력해 주세요',
   POINT_A05: '카드번호를 다시 입력해 주세요.',
   POINT_A06: '10포인트 단위로 입력해 주세요.',
+  POINT_A07: '포인트를 입력해 주세요',
   PAYMENT_A13: '보유하신 포인트보다 초과 입력하셨습니다.',
   PAYMENT_A14: '1,000 포인트 이상 입력해 주세요.',
   HISTORY_MENU_TITLE: '납부방식 선택',

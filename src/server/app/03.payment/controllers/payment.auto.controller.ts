@@ -8,10 +8,8 @@ import { Request, Response, NextFunction } from 'express';
 import { API_CMD, API_CODE } from '../../../types/api-command.type';
 import DateHelper from '../../../utils/date.helper';
 import FormatHelper from '../../../utils/format.helper';
-import MyTUsage from '../../01.myt/controllers/usage/myt.usage.controller';
-import {PAYMENT_VIEW} from '../../../types/string.type';
-import {SVC_CD} from '../../../types/bff-common.type';
-import UnpaidList from '../../../mock/server/payment/payment.realtime.unpaid.list';
+import { PAYMENT_VIEW } from '../../../types/string.type';
+import { PAYMENT_OPTION, PAYMENT_OPTION_TEXT } from '../../../types/bff-common.type';
 
 class PaymentAutoController extends TwViewController {
   constructor() {
@@ -20,15 +18,12 @@ class PaymentAutoController extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     this.apiService.request(API_CMD.BFF_07_0060, {}).subscribe((resp) => {
-      this.renderView(res, 'payment.auto.html', {
-        payment: { option: 'card' },
-        svcInfo
-      });
+      this.renderView(res, 'payment.auto.html', this.getData(svcInfo, resp));
     });
   }
 
   public renderView(res: Response, view: string, data: any): any {
-    if (data.code === undefined) {
+    if (data.payment.code === undefined) {
       res.render(view, data);
     } else {
       res.render(PAYMENT_VIEW.ERROR, data);
@@ -42,15 +37,34 @@ class PaymentAutoController extends TwViewController {
     return resp;
   }
 
-  private parseData(list: any): any {
-    if (!FormatHelper.isEmpty(list)) {
-      list.map((data) => {
-        data.invYearMonth = DateHelper.getShortDateWithFormat(data.invDt, 'YYYY.MM');
-        data.invMoney = FormatHelper.addComma(data.invAmt);
-        data.svcName = SVC_CD[data.svcCd];
-      });
+  private parseData(data: any): any {
+    if (data.payMthdCd === PAYMENT_OPTION.BANK) {
+      data.option = 'bank';
+      data.paymentTitle = PAYMENT_OPTION_TEXT.BANK;
+      data.name = PAYMENT_OPTION_TEXT.BANK_NAME;
+      data.numberTitle = PAYMENT_OPTION_TEXT.ACCOUNT;
+    } else if (data.payMthdCd === PAYMENT_OPTION.CARD) {
+      data.option = 'card';
+      data.paymentTitle = PAYMENT_OPTION_TEXT.CARD;
+      data.name = PAYMENT_OPTION_TEXT.CARD_NAME;
+      data.numberTitle = PAYMENT_OPTION_TEXT.CARD_NUM;
+      data.cardYm = FormatHelper.makeCardYymm(data.cardEffYm);
+    } else if (data.payMthdCd === PAYMENT_OPTION.GIRO) {
+      data.option = 'giro';
+      data.paymentTitle = PAYMENT_OPTION_TEXT.GIRO;
+    } else {
+      data.option = 'virtual';
+      data.paymentTitle = PAYMENT_OPTION_TEXT.VIRTUAL;
     }
-    return list;
+    data.firstOutDate = DateHelper.getShortDateNoDot(data.fstDrwSchdDt);
+    return data;
+  }
+
+  private getData(svcInfo: any, result: any): any {
+    return {
+      svcInfo,
+      payment: this.getResult(result)
+    };
   }
 }
 
