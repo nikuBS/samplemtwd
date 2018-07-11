@@ -13,7 +13,7 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div id="wrap" class="wrap" data-bill-type-data="<%= curBillTypeData %>" data-bill-guide-types-data="<%= billGuideTypesData %>">
+<div id="wrap" class="wrap" data-selected-bill-guide-data="<%= selectedBillGuideData %>" data-bill-guide-types-data="<%= billGuideTypesData %>">
     <!-- #header -->
     <div id="header" class="header-wrap">
         <div class="header step-page">
@@ -32,13 +32,13 @@
             <div class="cont-box nogaps-top">
                 <div class="change-plan">
                     <h3 class="tit-type">변경할 요금안내서</h3>
-                    <button class="bt-dropdown big" title="변경할 요금안내서 선택" aria-haspopup="true"><%= curBillType.curBillTypeNm %><span class="ico"></span></button>
+                    <button class="bt-dropdown big" title="변경할 요금안내서 선택" aria-haspopup="true"><%= selectedBillGuide.curBillTypeNm %><span class="ico"></span></button>
                 </div>
             </div>
 
             <hr class="cont-sp type1" aria-hidden="true"/>
             <div class="cont-box">
-                <%- include('../../components/bill/'+ curBillType.component +'.component.html') %>
+                <%- include('../../components/billguide/change/'+ selectedBillGuide.component +'.component.html') %>
             </div>
 
             <hr class="cont-sp type1" aria-hidden="true"/>
@@ -74,8 +74,8 @@
 <% include ../../components/javascript.component.html %>
 <script>
     $(document).ready(function () {
-      var curBillTypeData = $(wrap).data('bill-type-data');
-      var componentName = curBillTypeData.component;
+      var selectedBillGuideData = $(wrap).data('selected-bill-guide-data');
+      var componentName = selectedBillGuideData.component;
       var className = componentName.replace(/-([a-z])/g, function (g) { return g[1].toUpperCase(); });
       new Tw.MyTBillGuideChangeClasses[className]($('#wrap'));
     });

@@ -1,0 +1,38 @@
+<!--
+* FileName: sms.component.html
+* Author: 이정민 (skt.p130713@partner.sk.com)
+* Date: 2018.07.05
+-->
+<%if (selectedBillGuide.kidsYn === 'Y') { %>
+<div class="change-plan">
+    <h3 class="tit-type spc2">요금안내서 정보설정</h3>
+    <dl>
+        <dt>법정대리인에게 함께 알려드릴까요?(선택사항)</dt>
+        <dd>
+            <span class="inputbox">
+                <span class="input">
+                    <input type="text" placeholder="휴대폰번호입력 (숫자만 입력)" title="휴대폰번호 입력 (숫자만 입력)" aria-describedby="aria-rwdesc1">
+                    <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
+                </span>
+                <span id="aria-rwdesc1" class="guide-txt">미성년고객의 요금안내서는 법정대리인 휴대폰번호로 동시 안내됩니다.</span>
+            </span>
+        </dd>
+    </dl>
+</div>
+<% } else { %>
+<div class="payment-select">
+    <div class="contents-empty">
+        <span class="ico"></span>
+        <p class="desc">&quot;문자 요금안내서&quot;는<br />입력하실 정보가 없습니다.</p>
+    </div>
+</div>
+<% } %>
+<div class="inner">
+    <div class="contents-btn">
+        <ul class="bt-slice">
+            <li class="bt-blue1">
+                <button>&quot;문자&quot;로 변경하기</button>
+            </li>
+        </ul>
+    </div>
+</div>

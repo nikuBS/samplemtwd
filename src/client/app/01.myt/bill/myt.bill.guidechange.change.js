@@ -8,7 +8,7 @@ Tw.MyTBillGuideChangePrototype = {
     this.$container = rootEl;
     this._apiService = Tw.Api;
     this._popupService = Tw.Popup;
-    this._curBillTypeData = null;
+    this._selectedBillGuide = null;
     this._billGuideTypesData = null;
 
     this._setBillGuideTypes();
@@ -18,7 +18,7 @@ Tw.MyTBillGuideChangePrototype = {
   },
 
   _assign: function () {
-    this._curBillTypeData = this.$container.data('bill-type-data');
+    this._selectedBillGuide = this.$container.data('selected-bill-guide-data');
     this._$btnSubmit = this.$container.find('.btn-submit');
     this._$btDopdown = this.$container.find('.bt-dropdown');
     this._$btnNext = this.$container.find('.btn-next');
@@ -55,11 +55,11 @@ Tw.MyTBillGuideChangePrototype = {
   },
 
   _submit: function () {
-    var alertMsg = Tw.MSG_MYT.BILL_GUIDECHANGE_A02.replace(/\[T\]/gi, this._curBillTypeData.curBillTypeNm);
+    var alertMsg = Tw.MSG_MYT.BILL_GUIDECHANGE_A02.replace(/\[T\]/gi, this._selectedBillGuide.curBillTypeNm);
     this._popupService.openAlert(alertMsg);
     return;
     // var tmpAfterBillTypeCode = 'Q';
-    // window.location.href='/myt/bill/guidechange/change-complete?beforeBillTypeCd='+this._curBillTypeData.curBillType+'&afterBillTypeCd='+tmpAfterBillTypeCode;
+    // window.location.href='/myt/bill/guidechange/change-complete?beforeBillTypeCd='+this._selectedBillGuide.curBillType+'&afterBillTypeCd='+tmpAfterBillTypeCode;
   },
 
   _setBillGuideTypes: function () {
@@ -127,7 +127,7 @@ Tw.MyTBillGuideChangeClasses.tworld.prototype = $.extend({}, Tw.MyTBillGuideChan
   }
 });
 Tw.MyTBillGuideChangeClasses.email.prototype = $.extend({}, Tw.MyTBillGuideChangePrototype, {
-  _assign: function() {
+  _assign: function () {
     Tw.MyTBillGuideChangePrototype._assign.apply(this, arguments);
     this._$inputEmail = this.$container.find('.input-email');
   },
@@ -140,12 +140,12 @@ Tw.MyTBillGuideChangeClasses.email.prototype = $.extend({}, Tw.MyTBillGuideChang
   _checkHalfValidation: function () {
     return Tw.ValidationHelper.isEmail(this._$inputEmail.val());
   },
-  _failHalfValidation: function() {
+  _failHalfValidation: function () {
     this._popupService.openAlert(Tw.MSG_MYT.BILL_GUIDECHANGE_A08);
   }
 });
 Tw.MyTBillGuideChangeClasses.etc.prototype = $.extend({}, Tw.MyTBillGuideChangePrototype, {
-  _assign: function() {
+  _assign: function () {
     Tw.MyTBillGuideChangePrototype._assign.apply(this, arguments);
     this._$inputAddr1 = this.$container.find('.input-addr1');
     this._$inputAddr2 = this.$container.find('.input-addr2');
@@ -160,7 +160,7 @@ Tw.MyTBillGuideChangeClasses.etc.prototype = $.extend({}, Tw.MyTBillGuideChangeP
   _checkHalfValidation: function () {
     return !!this._$inputAddr1.val() && !!this._$inputAddr2.val() && !!this._$inputAddr3.val();
   },
-  _failHalfValidation: function() {
+  _failHalfValidation: function () {
     this._popupService.openAlert(Tw.MSG_MYT.BILL_GUIDECHANGE_A10);
   }
 });
@@ -181,7 +181,7 @@ Tw.MyTBillGuideChangeClasses.sms.prototype = $.extend({}, Tw.MyTBillGuideChangeP
   }
 });
 Tw.MyTBillGuideChangeClasses.billLetterEmail.prototype = $.extend({}, Tw.MyTBillGuideChangePrototype, {
-  _assign: function() {
+  _assign: function () {
     Tw.MyTBillGuideChangePrototype._assign.apply(this, arguments);
     this._$inputEmail = this.$container.find('.input-email');
   },
@@ -194,12 +194,12 @@ Tw.MyTBillGuideChangeClasses.billLetterEmail.prototype = $.extend({}, Tw.MyTBill
   _checkHalfValidation: function () {
     return Tw.ValidationHelper.isEmail(this._$inputEmail.val());
   },
-  _failHalfValidation: function() {
+  _failHalfValidation: function () {
     this._popupService.openAlert(Tw.MSG_MYT.BILL_GUIDECHANGE_A08);
   }
 });
 Tw.MyTBillGuideChangeClasses.smsEmail.prototype = $.extend({}, Tw.MyTBillGuideChangePrototype, {
-  _assign: function() {
+  _assign: function () {
     Tw.MyTBillGuideChangePrototype._assign.apply(this, arguments);
     this._$inputEmail = this.$container.find('.input-email');
   },
@@ -212,7 +212,7 @@ Tw.MyTBillGuideChangeClasses.smsEmail.prototype = $.extend({}, Tw.MyTBillGuideCh
   _checkHalfValidation: function () {
     return Tw.ValidationHelper.isEmail(this._$inputEmail.val());
   },
-  _failHalfValidation: function() {
+  _failHalfValidation: function () {
     this._popupService.openAlert(Tw.MSG_MYT.BILL_GUIDECHANGE_A08);
   }
 });

@@ -7,6 +7,8 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import { Request, Response, NextFunction } from 'express';
 import { BILL_GUIDE_TYPE } from '../../../../types/bff-common.type';
 import { BILL_GUIDE_TYPE_NAME, BILL_GUIDE_SELECTOR_LABEL } from '../../../../types/string.type';
+import { API_CODE } from '../../../../types/api-command.type';
+import curBillGuide from '../../../../mock/server/myt.bill.guidechange.bill-types-list';
 
 const BILL_GUIDE_TYPE_COMPONENT = {};
 BILL_GUIDE_TYPE_COMPONENT[BILL_GUIDE_TYPE.TWORLD] = 'tworld';
@@ -73,17 +75,19 @@ class MyTBillChange extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     // 임시 - 휴대폰, T-WiBro, 인터넷 등등에 따라 값이 달라져야함
     const BillGuideTypes = cellPhoneBillGuideTypes;
-    let curBillType = BillGuideTypes.find((_billType) => {
+    const _curBillGuide = this.getResult(curBillGuide);
+    let selectedBillGuide = BillGuideTypes.find((_billType) => {
       return _billType.curBillType === req.query.curBillTypeCd;
     });
-    if ( !curBillType ) {
-      curBillType = BillGuideTypes[0];
+    if ( !selectedBillGuide ) {
+      selectedBillGuide = BillGuideTypes[0];
     }
+    selectedBillGuide['kidsYn'] = _curBillGuide['kidsYn'];
     this.renderView(res, 'bill/myt.bill.guidechange.change.html', {
-      curBillType: curBillType,
-      curBillTypeData: JSON.stringify(curBillType),
-      billGuideTypesData: JSON.stringify(BillGuideTypes),
-      isGuideSelect: true
+      selectedBillGuide: selectedBillGuide,
+      selectedBillGuideData: JSON.stringify(selectedBillGuide),
+      billGuideTypesData: JSON.stringify(BillGuideTypes)
+      // isGuideSelect: true
     });
   }
 
@@ -92,6 +96,12 @@ class MyTBillChange extends TwViewController {
     res.render(view, data);
   }
 
+  private getResult(resp: any): any {
+    if ( resp.code === API_CODE.CODE_00 ) {
+      return resp.result;
+    }
+    return resp;
+  }
 }
 
 export default MyTBillChange;
