@@ -18,11 +18,21 @@ class MyTBillReissue extends TwViewController {
     Observable.combineLatest(
       this.getReissueData()
     ).subscribe(([reissueData]) => {
-      const data = {};
+      const data = {
+        halfYear: this.getHalfYearData(),
+        type: '01', // 01:무선, 02:유선, 03:etc
+        title: 'Bill Letter', // 청구서유형명
+        billCd: '05', // 02:이메일, 10:문자, 05:Bill Letter  기타 청구서유형코드
+        reasonCd: '01' // 01:무선 02:유선(요금조정), 06: 유선(요금안내서 부달) 99: 유선 (기타) '':반송처리(추가예정)
+
+      };
       if ( reissueData.result ) {
-        data['type'] = reissueData.result.billIsueTypCd;
+        data['title'] = reissueData.result.billIsueTypCd;
+        if ( data['title'].indexOf('+') !== -1 ) {
+          // 요금서 종류가 두개 이상인 경우
+          data['multi'] = data['title'].split('+');
+        }
       }
-      data['halfYear'] = this.getHalfYearData();
 
       res.render('bill/myt.bill.guidechange.reissue.html', { data });
     });
@@ -59,6 +69,7 @@ class MyTBillReissue extends TwViewController {
 
       data['type1'] = `${pre_date.getFullYear()}년 ${month_label}월`;
       data['type2'] = `${pre_date.getFullYear()}.${month_label}.${lastDay}`;
+      data['type3'] = pre_date.getFullYear() + month_label + '01';
 
       result.push(data);
     }

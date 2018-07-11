@@ -32,9 +32,9 @@ export enum PAYMENT_VIEW {
   ERROR = 'error/payment.realtime.error.html'
 }
 
-export enum MYT_REISSUE_TYPE {
-  '01' = 'Bill Letter',
-  '02' = '문자',
-  '03' = '이메일',
-  '04' = '기타'
-}
+export const MYT_REISSUE_TYPE = {
+  '05': 'Bill Letter',
+  '10': '문자',
+  '02': '이메일',
+  '04': '기타'
+};

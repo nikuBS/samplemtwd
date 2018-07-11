@@ -21,6 +21,8 @@ Tw.API_CMD = {
   // AUTH
   BFF_03_0002: { path: '/user/account-auth-sessions', method: Tw.API_METHOD.POST },
   BFF_03_0003: { path: '/core-auth/v1/members', method: Tw.API_METHOD.DELETE },
+  BFF_03_0004: { path: '/core-auth/v1/services', method: Tw.API_METHOD.GET },
+  BFF_03_0005: { path: '/core-auth/v1/multi-svc', method: Tw.API_METHOD.POST },
   BFF_03_0006: { path: '/user/nick-names/args-0', method: Tw.API_METHOD.PUT },
   BFF_03_0007: { path: '/user/tid-keys', method: Tw.API_METHOD.GET },
   BFF_03_0010: { path: '/user/locks', method: Tw.API_METHOD.DELETE },
@@ -32,6 +34,7 @@ Tw.API_CMD = {
   BFF_05_0009: { path: '/core-balance/v1/data-sharings/balances', method: Tw.API_METHOD.GET },
   BFF_05_0010: { path: '/core-balance/v1/children', method: Tw.API_METHOD.GET },
   BFF_05_0011: { path: '/core-balance/v1/data-sharings/args-0', method: Tw.API_METHOD.POST },
+  BFF_05_0048: { path: '/core-bill/v1/bill-types-reissue-request/', method: Tw.API_METHOD.GET },
 
   // RECHARGE
   BFF_06_0001: { path: '/core-recharge/v1/refill-coupons', method: Tw.API_METHOD.GET },
@@ -70,12 +73,13 @@ Tw.API_CMD = {
   BFF_06_0034: { path: '/core-recharge/v1/data-limitation-services', method: Tw.API_METHOD.GET },
   BFF_06_0035: { path: '/core-recharge/v1/regular-data-top-ups', method: Tw.API_METHOD.POST },
   BFF_06_0036: { path: '/core-recharge/v1/data-top-ups', method: Tw.API_METHOD.POST },
-  BFF_06_0037: { path: '/services/recharge/auto-save-cancel', method: Tw.API_METHOD.POST },
-  BFF_06_0038: { path: '/services/recharge/now-cut', method: Tw.API_METHOD.POST },
-  BFF_06_0039: { path: '/services/recharge/now-cut-cancel', method: Tw.API_METHOD.POST },
-  BFF_06_0040: { path: '/services/recharge/auto-cut', method: Tw.API_METHOD.POST },
-  BFF_06_0041: { path: '/services/recharge/auto-cut-cancel', method: Tw.API_METHOD.POST },
-  BFF_06_0042: { path: '/services/recharge/search', method: Tw.API_METHOD.GET },
+  BFF_06_0037: { path: '/core-recharge/v1/regular-data-top-ups', method: Tw.API_METHOD.DELETE },
+  BFF_06_0038: { path: '/core-recharge/v1/data-limitations', method: Tw.API_METHOD.DELETE },
+  BFF_06_0039: { path: '/core-recharge/v1/data-limitations', method: Tw.API_METHOD.POST },
+  BFF_06_0040: { path: '/core-recharge/v1/regular-data-limitations', method: Tw.API_METHOD.DELETE },
+  BFF_06_0041: { path: '/core-recharge/v1/regular-data-limitations', method: Tw.API_METHOD.POST },
+  BFF_06_0042: { path: '/core-recharge/v1/data-top-ups', method: Tw.API_METHOD.GET },
+  BFF_06_0043: { path: '/core-recharge/v1/data-limitations', method: Tw.API_METHOD.GET },
 
   // PAYMENT
   BFF_07_0005: { path: '/core-bill/v1/point-autopays-history/cashback', method: Tw.API_METHOD.GET },

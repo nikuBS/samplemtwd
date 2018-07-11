@@ -16,7 +16,7 @@
             <div class="cont-box">
                 <div class="box-suggest">
                     <div class="suggest-info">
-                        <p class="suggest-ti">T world의 회원이 되신 것을<br /><em class="tx-bold">환영합니다.</em></p>
+                        <p class="suggest-ti">T world의 회원이 되신 것을<br/><em class="tx-bold">환영합니다.</em></p>
                         <ul class="suggest-list">
                             <li>아래 고객님께서 가입하신 회선 중, T world에서 이용하실 회선을 선택해주세요.</li>
                             <li>회선을 선택하시면, T world에서 요금 조회 및 납부 등의 업무 처리 뿐만 아니라 고객님만을 위한 특별한 혜택도 보실 수 있습니다.</li>
@@ -36,8 +36,8 @@
                         <p class="ti">이용하실 회선 선택</p>
                         <div class="widget">
                             <div class="widget-box check">
-                                <div class="checkbox type02 checked all_chk" role="checkbox" aria-checked="true">
-                                    <input type="checkbox" name="checkbox" value="값1" title="체크박스" checked/>
+                                <div class="checkbox type02 all_chk" role="checkbox" aria-checked="false">
+                                    <input id="all-check" type="checkbox" name="checkbox" value="값1" title="체크박스"/>
                                     <span class="tit-a">전체</span>
                                     <i class="ico"></i>
                                 </div>
@@ -49,50 +49,40 @@
                             <div class="widget">
                                 <div class="widget-box check">
                                     <ul class="select-list" role="group">
-                                        <li class="checkbox type01 checked" role="checkbox" aria-checked="true">
-                                            <input type="checkbox" name="checkbox" value="값1" title="체크박스" checked/>
-                                            <dl class="mline-detail">
-                                                <dt>휴대폰</dt>
-                                                <dd class="device">갤럭*****</dd>
-                                                <dd class="ph">010-12**-45**</dd>
-                                            </dl>
-                                        </li>
-                                        <li class="checkbox type01 checked" role="checkbox" aria-checked="true">
-                                            <input type="checkbox" name="checkbox" value="값2" title="체크박스" checked/>
-                                            <dl class="mline-detail">
-                                                <dt>선불폰</dt>
-                                                <dd class="device">갤럭*****</dd>
-                                                <dd class="ph">010-12**-45**</dd>
-                                            </dl>
-                                        </li>
-                                        <li class="checkbox type01 checked" role="checkbox" aria-checked="true">
-                                            <input type="checkbox" name="checkbox" value="값3" title="체크박스" checked/>
-                                            <dl class="mline-detail">
-                                                <dt>T Pocket-Fi</dt>
-                                                <dd class="ph">010-12**-45**</dd>
-                                            </dl>
-                                        </li>
-                                        <li class="checkbox type01 checked" role="checkbox" aria-checked="true">
-                                            <input type="checkbox" name="checkbox" value="값4" title="체크박스" checked/>
-                                            <dl class="mline-detail">
-                                                <dt>T Login</dt>
-                                                <dd class="ph">010-12**-45**</dd>
-                                            </dl>
-                                        </li>
-                                        <li class="checkbox type01 checked" role="checkbox" aria-checked="true">
-                                            <input type="checkbox" name="checkbox" value="값4" title="체크박스" checked/>
-                                            <dl class="mline-detail">
-                                                <dt>T WiBro</dt>
-                                                <dd class="ph">P******</dd>
-                                            </dl>
-                                        </li>
-                                        <li class="checkbox type01 checked" role="checkbox" aria-checked="true">
-                                            <input type="checkbox" name="checkbox" value="값4" title="체크박스" checked/>
-                                            <dl class="mline-detail">
-                                                <dt>인터넷</dt>
-                                                <dd class="ph">인천 연**********</dd>
-                                            </dl>
-                                        </li>
+                                        {{#if data.M}}
+                                            {{#each data.M}}
+                                                <li class="checkbox type01" role="checkbox" aria-checked="false" data-svcMgmtNum="{{svcMgmtNum}}">
+                                                    <input class="child-check" type="checkbox" name="checkbox" value="값1" title="체크박스"/>
+                                                    <dl class="mline-detail">
+                                                        <dt>{{ showSvcAttrCd }}</dt>
+                                                        <dd class="device">갤럭*****</dd>
+                                                        <dd class="ph">{{ svcNum }}</dd>
+                                                    </dl>
+                                                </li>
+                                            {{/each}}
+                                        {{/if}}
+                                        {{#if data.S}}
+                                            {{#each data.S}}
+                                                <li class="checkbox type01" role="checkbox" aria-checked="false" data-svcMgmtNum="{{svcMgmtNum}}">
+                                                    <input class="child-check" type="checkbox" name="checkbox" value="값4" title="체크박스"/>
+                                                    <dl class="mline-detail">
+                                                        <dt>{{ showSvcAttrCd }}</dt>
+                                                        <dd class="ph">{{ addr }}</dd>
+                                                    </dl>
+                                                </li>
+                                            {{/each}}
+                                        {{/if}}
+                                        {{#if data.O}}
+                                            {{#each data.O}}
+                                                <li class="checkbox type01" role="checkbox" aria-checked="false" data-svcMgmtNum="{{svcMgmtNum}}">
+                                                    <input class="child-check" type="checkbox" name="checkbox" value="값4" title="체크박스"/>
+                                                    <dl class="mline-detail">
+                                                        <dt>{{ showSvcAttrCd }}</dt>
+                                                        <dd class="ph">{{ svcNum }}</dd>
+                                                    </dl>
+                                                </li>
+                                            {{/each}}
+                                        {{/if}}
                                     </ul>
                                 </div>
                             </div>
