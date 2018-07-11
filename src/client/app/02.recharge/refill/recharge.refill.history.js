@@ -5,7 +5,7 @@
  */
 Tw.RechargeRefillHistory = function (rootEl) {
   this.$container = rootEl;
-  this._apiService = Tw.ApiService();
+  this._apiService = Tw.Api();
   this._cachedElement();
   this._bindEvent();
   this.TYPE = {
