@@ -53,7 +53,9 @@ export const API_CMD = {
   BFF_05_0011: { path: '/core-balance/v1/data-sharings/args-0', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_05_0028: { path: '/core-bill/v1/bill-types-reissue-list/', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0039: { path: '/core-bill/v1/bill-types-return-list/', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_05_0041: { path: '/core-product/v1/services/base-fee-plans', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0048: { path: '/core-bill/v1/bill-types-reissue-request/', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+
   // RECHARGE
   BFF_06_0001: { path: '/core-recharge/v1/refill-coupons', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_06_0002: { path: '/core-recharge/v1/refill-usages', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
@@ -76,7 +78,7 @@ export const API_CMD = {
   BFF_06_0019: { path: '/core-recharge/v1/data-gift-receivers', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_06_0020: { path: '/core-recharge/v1/ting-gift-senders', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_06_0021: { path: '/core-recharge/v1/ting-gift-blocks', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
-  BFF_06_0022: { path: '/core-recharge/v1/ting-gift-benefiters', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_06_0022: { path: '/core-recharge/v1/ting-gift-receivers', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_06_0023: { path: '/core-recharge/v1/ting-gifts', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_06_0024: { path: '/core-recharge/v1/ting-press-benefiters', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_06_0025: { path: '/core-recharge/v1/ting-gift-requests', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
