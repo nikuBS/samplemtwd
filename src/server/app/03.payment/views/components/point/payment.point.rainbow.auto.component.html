@@ -6,15 +6,15 @@
 <div class="container">
     <div class="cont-box ">
         <h3 class="blind">레인보우 포인트</h3>
-        <div class="point-payment">
+        <div class="point-payment point-title">
             <span class="p-company">레인보우 포인트</span>
-            <span class="p-result"><em class="num">7,520</em> 점</span>
+            <span class="p-result"><em class="num point-value"><%= rainbowPoint.rainbowPt %></em> 점</span>
         </div>
         <div class="inner">
             <div class="pay-info">
                 <h4 class="pay-tit">신청항목</h4>
                 <div class="pay-select-wrap">
-                    <button class="bt-dropdown big" title="요금정보 선택" aria-haspopup="true">국내음성통화료<span class="ico"></span></button>
+                    <button class="bt-dropdown big select-product select-product-auto" title="요금정보 선택" id="CCBBAE0" aria-haspopup="true">국내음성통화료<span class="ico"></span></button>
                 </div>
             </div>
         </div>
@@ -27,7 +27,7 @@
                 <h5 class="account-tit">납부하실 포인트</h5>
                 <div class="inputbox">
                     <span class="input">
-                        <input type="text" class="only-number" minlength="4" placeholder="최소 1,000포인트 이상" title="포인트 입력" value="1,000 포인트" aria-describedby="pointpay-desc2">
+                        <input type="text" placeholder="최소 1,000포인트 이상" title="포인트 입력" value="1,000 포인트" aria-describedby="pointpay-desc2" disabled="disabled">
                         <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
                     </span>
                 </div>

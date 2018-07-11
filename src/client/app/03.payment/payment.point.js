@@ -25,8 +25,11 @@ Tw.PaymentPoint.prototype = {
     this.$password = this.$container.find('.password');
     this.$agreement = this.$container.find('.cashbag-agree');
     this.$pointList = this.$container.find('.cashbag-point-list');
-    this.$point = this.$container.find('.pay-point');
+    this.$cashbagPoint = this.$container.find('.cashbag-point');
+    this.$rainbowPoint = this.$container.find('.rainbow-point');
     this.$pointSelectBox = this.$container.find('.select-auto-cashbag-point');
+    this.$productSelectBox = this.$container.find('.select-product-one');
+    this.$productSelectBoxForAuto = this.$container.find('.select-product-auto');
     this.$errorContainer = this.$container.find('.error-data');
     this.$selectedPoint = null;
     this.$pointType = null;
@@ -35,6 +38,7 @@ Tw.PaymentPoint.prototype = {
     this.$container.on('keyup', '.only-number', $.proxy(this._onlyNumber, this));
     this.$container.on('click', '.select-payment-point', $.proxy(this._changeStep, this));
     this.$container.on('click', '.select-auto-cashbag-point', $.proxy(this._selectAutoCashbagPoint, this));
+    this.$container.on('click', '.select-product', $.proxy(this._selectProduct, this));
     this.$container.on('click', '.cashbag-agree', $.proxy(this._openCashbagAgree, this));
     this.$container.on('click', '.pay-cashbag-one', $.proxy(this._payCashbagOne, this));
     this.$container.on('click', '.pay-cashbag-auto', $.proxy(this._payCashbagAuto, this));
@@ -108,8 +112,24 @@ Tw.PaymentPoint.prototype = {
     if (this.$agreement.is(':checked')) {
       this._popupService.open({
         hbs:'PA_05_01_L01'
-      });
+      }, $.proxy(this._onOpenAgree, this));
     }
+  },
+  _onOpenAgree: function ($layer) {
+    $layer.on('click', 'button', this._popupService.close);
+  },
+  _selectProduct: function (event) {
+    var $target = $(event.currentTarget);
+    this._popupService.openChoice(Tw.MSG_PAYMENT.SELECT_PRODUCT, this._getProductList(), 'type3', $.proxy(this._onOpenProduct, this, $target));
+  },
+  _onOpenProduct: function ($target, $layer) {
+    $layer.on('click', '.popup-choice-list', $.proxy(this._setProduct, this, $target));
+  },
+  _setProduct: function ($target, event) {
+    var $selectedValue = $(event.currentTarget);
+    $target.attr('id', $selectedValue.find('button').attr('id'));
+    $target.text($selectedValue.text());
+    this._popupService.close();
   },
   _payCashbagOne: function (event) {
     event.preventDefault();
@@ -125,7 +145,7 @@ Tw.PaymentPoint.prototype = {
     return {
       ocbCcno: $.trim(this.$cardNumber.val()),
       ptClCd: this.$pointType,
-      reqAmt: $.trim(this.$point.val()),
+      reqAmt: $.trim(this.$cashbagPoint.val()),
       ocbPwd: $.trim(this.$password.val())
     };
   },
@@ -168,18 +188,16 @@ Tw.PaymentPoint.prototype = {
   },
   _makeRequestDataForRainbow: function () {
     return {
-      reqRbpPt: '1000',
-      prodId: 'CCBBAE0'
+      reqRbpPt: $.trim(this.$rainbowPoint.val()),
+      prodId: this.$productSelectBox.attr('id')
     };
   },
   _payRainbowAuto: function (event) {
     event.preventDefault();
 
-    if (this._isValidForRainbow()) {
-      this._apiService.request(Tw.API_CMD.BFF_07_0056, { rbpChgRsnCd: 'A1' })
-        .done($.proxy(this._paySuccess, this))
-        .fail($.proxy(this._payFail, this));
-    }
+    this._apiService.request(Tw.API_CMD.BFF_07_0056, { prodId: this.$productSelectBoxForAuto.attr('id'), rbpChgRsnCd: Tw.RAINBOW_CHANGE_CODE.REQUEST })
+      .done($.proxy(this._paySuccess, this))
+      .fail($.proxy(this._payFail, this));
   },
   _paySuccess: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
@@ -203,12 +221,13 @@ Tw.PaymentPoint.prototype = {
     }
   },
   _isValidForCashbagOne: function () {
+    var point = this.$container.find('.point-title:visible .point-value').text().replace(',', '');
     return (this._validation.checkEmpty(this.$cardNumber.val(), Tw.MSG_PAYMENT.AUTO_A05) &&
       this._validation.checkLength(this.$cardNumber.val(), 16, Tw.MSG_PAYMENT.REALTIME_A06) &&
       this._validation.checkEmpty(this.$password.val(), Tw.MSG_PAYMENT.AUTO_A04) &&
       this._validation.checkLength(this.$password.val(), 4, Tw.MSG_PAYMENT.REALTIME_A07) &&
       this._validation.checkIsAgree(this.$agreement, Tw.MSG_PAYMENT.POINT_A03) &&
-      this._checkPoint(this.$point.val()));
+      this._checkPoint(this.$cashbagPoint.val(), point));
   },
   _isValidForCashbagAuto: function () {
     var isTPoint = null;
@@ -221,13 +240,13 @@ Tw.PaymentPoint.prototype = {
       this._validation.checkIsSelected(this.$pointSelectBox, Tw.MSG_PAYMENT.POINT_A07, isTPoint);
   },
   _isValidForRainbow: function () {
-    return true;
+    var point = this.$container.find('.rainbow-point-value').text().replace(',', '');
+    return this._checkPoint(this.$rainbowPoint.val(), point);
   },
-  _checkPoint: function ($value) {
-    var point = this.$container.find('.point-title:visible .point-value').text().replace(',', '');
+  _checkPoint: function ($value, havePoint) {
     return (this._validation.checkEmpty($value, Tw.MSG_PAYMENT.POINT_A04) &&
-      this._validation.checkIsAvailablePoint($value, point, Tw.MSG_PAYMENT.REALTIME_A12) &&
-      this._validation.checkMinLength($value, 4, Tw.MSG_PAYMENT.REALTIME_A08) &&
+      this._validation.checkIsAvailablePoint($value, havePoint, Tw.MSG_PAYMENT.REALTIME_A12) &&
+      this._validation.checkIsMore($value, 1000, Tw.MSG_PAYMENT.REALTIME_A08) &&
       this._validation.checkIsTenUnit($value, Tw.MSG_PAYMENT.POINT_A06));
   },
   _checkIsAvailableCard: function ($cardNum) {
@@ -247,5 +266,16 @@ Tw.PaymentPoint.prototype = {
   },
   _go: function (hash) {
     window.location.hash = hash;
+  },
+  _getProductList: function () {
+    return [
+      { 'attr': 'id="CCBBAE0"', text: '국내 음성 통화료' },
+      { 'attr': 'id="CCRPDDC"', text: '국내 데이터 통화료' },
+      { 'attr': 'id="CCBCOE0"', text: '부가서비스(컬러링)' },
+      { 'attr': 'id="CCPCRBE"', text: '부가서비스(퍼팩트콜)' },
+      { 'attr': 'id="CCPLRBE"', text: '부가서비스(퍼팩트콜라이트)' },
+      { 'attr': 'id="CCRMRBE"', text: '로밍사용요금' },
+      { 'attr': 'id="CCRPGDC"', text: '기본료 및 월정액 이용요금' }
+    ];
   }
 };
