@@ -5,9 +5,9 @@
  */
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
-import curBillType from '../../../../mock/server/myt.bill.guidechange.bill-types-list';
 import { API_CODE } from '../../../../types/api-command.type';
 import { BILL_GUIDE_TYPE } from '../../../../types/bff-common.type';
+import curBillGuide from '../../../../mock/server/myt.bill.guidechange.bill-types-list';
 
 const BILL_GUIDE_TYPE_COMPONENT = {};
 BILL_GUIDE_TYPE_COMPONENT[BILL_GUIDE_TYPE.TWORLD] = 'tworld';
@@ -25,11 +25,14 @@ class MyTBillUpdate extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    const _curBillType = this.getResult(curBillType);
-    _curBillType['component'] = BILL_GUIDE_TYPE_COMPONENT[_curBillType['curBillType']];
+    const selectedBillGuide = this.getResult(curBillGuide);
+    const anotherBillGuideType = (selectedBillGuide.curBillType === BILL_GUIDE_TYPE.TWORLD) ? BILL_GUIDE_TYPE.BILL_LETTER : BILL_GUIDE_TYPE.TWORLD;
+    selectedBillGuide['component'] = BILL_GUIDE_TYPE_COMPONENT[selectedBillGuide['curBillType']];
     this.renderView(res, 'bill/myt.bill.guidechange.update.html', {
-      curBillType: _curBillType,
-      curBillTypeData: JSON.stringify(_curBillType)
+      selectedBillGuide: selectedBillGuide,
+      selectedBillGuideData: JSON.stringify(selectedBillGuide),
+      isUpdate: false,
+      anotherBillGuideType: anotherBillGuideType
     });
   }
 
@@ -39,7 +42,7 @@ class MyTBillUpdate extends TwViewController {
   }
 
   private getResult(resp: any): any {
-    if (resp.code === API_CODE.CODE_00) {
+    if ( resp.code === API_CODE.CODE_00 ) {
       return resp.result;
     }
     return resp;

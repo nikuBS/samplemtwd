@@ -23,11 +23,22 @@
         </dd>
     </dl>
 </div>
+<!--<div class="payment-select">-->
+    <!--<div class="contents-empty">-->
+        <!--<span class="ico"></span>-->
+        <!--<p class="desc">&quot;T world 확인&quot;은<br />입력하실 정보가 없습니다.</p>-->
+    <!--</div>-->
+<!--</div>-->
+
 <div class="inner">
     <div class="contents-btn">
         <ul class="bt-slice">
             <li class="bt-blue1 btn-submit">
+                <% if (isUpdate) { %>
+                <button class="btn-submit">요금안내서 정보변경하기</button>
+                <% } else { %>
                 <button class="btn-submit">&quot;T world 확인&quot;으로 변경하기</button>
+                <% } %>
             </li>
         </ul>
     </div>

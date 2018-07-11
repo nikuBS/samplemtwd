@@ -2,27 +2,26 @@ const curBillType = {
   'code': '00',
   'msg': 'success',
   'result': {
-    'curBillType': 'H',
-    'curBillTypeNm': '이메일',
+    'curBillType': 'P',
+    'curBillTypeNm': '티월드',
     'scurBillYn': 'Y',
     'invEmailAddr': 'give0602@naver.com',
     'intPhonDtlIsueYn': 'N',
-    'emailRcvAgreeYn': 'N',
     'scurMailYn': 'Y',
-    'phonNumPrtClCd': 'N',
+    'phonNumPrtClCd': 'Y',
     'zip': '15851',
     'basAddr': '경기 군포시 고산로185번길 6,',
     'dtlAddr': '501동 502호 (당정동,한솔솔파크아파트)',
     'cntcNum1': '001046772738',
-    'billSndCyclCd': '1',
+    'billSndCyclCd': '2',
     'acntNum': '6020110289',
     'repSvcNum': '01031782738',
     'domainVer': 'null',
     'to_bill_type1': 'null',
     'chgCd': 'null',
     'before_email': 'null',
-    'ccurNotiYn': '',
-    'ccurNotiSvcNum': '',
+    'ccurNotiYn': 'Y',
+    'ccurNotiSvcNum': '01042462437',
     'infoInvDispYn': 'N',
     'bankCardSerNum': '00000395562668',
     'invDtlsIncldYn': '',
@@ -49,7 +48,7 @@ const curBillType = {
     'wireSmtBillSvcNum': '',
     'emailInv': '7',
     'emailRvcAgree': 'Y',
-    'kidsYn' : 'Y'
+    'kidsYn': 'Y'
   }
 };
 

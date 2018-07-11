@@ -9,22 +9,37 @@
         <dl>
             <dt>이메일 주소를 입력해주세요.</dt>
             <dd>
-                                <span class="inputbox">
-                                    <span class="input">
-                                        <input type="text" placeholder="name@example.co.kr" title="이메일 주소 입력" value="" class="input-email">
-                                    </span>
-                                </span>
+                <span class="inputbox">
+                    <span class="input">
+                        <input type="text" placeholder="name@example.co.kr" title="이메일 주소 입력" value="<%= selectedBillGuide.invEmailAddr %>" class="input-email">
+                    </span>
+                </span>
                 <div class="widget">
                     <div class="widget-box check">
                         <ul class="select-list" role="group">
+                            <%if (selectedBillGuide.scurMailYn === 'N') { %>
+                            <li class="checkbox type01" role="checkbox" aria-checked="false">
+                                <input type="checkbox" name="checkbox" value="이메일 보안 설정" title="이메일 보안 설정 선택">
+                                이메일 보안 설정
+                            </li>
+                            <% } else { %>
                             <li class="checkbox type01 checked" role="checkbox" aria-checked="true">
                                 <input type="checkbox" name="checkbox" value="이메일 보안 설정" title="이메일 보안 설정 선택" checked="checked">
                                 이메일 보안 설정
                             </li>
+                            <% } %>
+
+                            <%if (selectedBillGuide.emailRcvAgreeYn === 'N') { %>
+                            <li class="checkbox type01" role="checkbox" aria-checked="false">
+                                <input type="checkbox" name="checkbox" value="입력한 이메일로 다양한 혜택 정보 받기" title="입력한 이메일로 다양한 혜택 정보 받기 선택" aria-labelledby="aria-guide01">
+                                입력한 이메일로 다양한 혜택 정보 받기
+                            </li>
+                            <% } else { %>
                             <li class="checkbox type01 checked" role="checkbox" aria-checked="true">
                                 <input type="checkbox" name="checkbox" value="입력한 이메일로 다양한 혜택 정보 받기" title="입력한 이메일로 다양한 혜택 정보 받기 선택" checked="checked" aria-labelledby="aria-guide01">
                                 입력한 이메일로 다양한 혜택 정보 받기
                             </li>
+                            <% } %>
                         </ul>
                     </div>
                 </div>
@@ -54,19 +69,13 @@
                 <div class="widget">
                     <div class="widget-box tube">
                         <ul class="tube-list two" role="radiogroup">
+                            <%if (selectedBillGuide.phonNumPrtClCd === 'N') { %>
+                            <li role="radio" aria-checked="true" class="checked"><input type="radio" name="selectset1" title="일부 별표 표시 선택">일부 별표 표시</li>
+                            <li role="radio" aria-checked="false"><input type="radio" name="selectset1" title="전체 표시 선택">전체 표시</li>
+                            <% } else {%>
                             <li role="radio" aria-checked="false"><input type="radio" name="selectset1" title="일부 별표 표시 선택">일부 별표 표시</li>
                             <li role="radio" aria-checked="true" class="checked"><input type="radio" name="selectset1" title="전체 표시 선택">전체 표시</li>
-                        </ul>
-                    </div>
-                </div>
-            </dd>
-            <dt>콘텐츠 이용 상세내역을 받으시겠어요?</dt>
-            <dd>
-                <div class="widget">
-                    <div class="widget-box tube">
-                        <ul class="tube-list two" role="radiogroup">
-                            <li role="radio" aria-checked="false"><input type="radio" name="selectset2" title="일부 내역만 보기 선택">일부 내역만 보기</li>
-                            <li role="radio" aria-checked="true" class="checked"><input type="radio" name="selectset2" title="상세내역 보기 선택">상세내역 보기</li>
+                            <% } %>
                         </ul>
                     </div>
                 </div>
@@ -77,7 +86,11 @@
         <div class="contents-btn">
             <ul class="bt-slice">
                 <li class="bt-blue1">
+                    <% if (isUpdate) { %>
+                    <button class="btn-submit">요금안내서 정보변경하기</button>
+                    <% } else { %>
                     <button class="btn-submit">&quot;이메일&quot;로 변경하기</button>
+                    <% } %>
                 </li>
             </ul>
         </div>

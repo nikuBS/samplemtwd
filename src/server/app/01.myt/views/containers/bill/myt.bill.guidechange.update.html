@@ -13,7 +13,7 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div id="wrap" class="wrap" data-bill-type-data="<%= curBillTypeData %>">
+<div id="wrap" class="wrap" data-selected-bill-guide-data="<%= selectedBillGuideData %>">
     <!-- #header -->
     <div id="header" class="header-wrap">
         <div class="header step-page">
@@ -32,14 +32,14 @@
             <div class="cont-box nogaps-top">
                 <div class="change-plan">
                     <h3 class="tit-type">사용중인 요금안내서</h3>
-                    <button class="bt-dropdown big no-arrow" title="T world 확인"><%= curBillType.curBillTypeNm %><span class="ico"></span></button>
-                    <a href="" class="bt-link-tx">다른 요금안내서로 바꾸시겠어요? <span class="ico"></span></a>
+                    <button class="bt-dropdown big no-arrow" title="T world 확인"><%= selectedBillGuide.curBillTypeNm %><span class="ico"></span></button>
+                    <a href="/myt/bill/guidechange/change?curBillTypeCd=<%= anotherBillGuideType %>" class="bt-link-tx">다른 요금안내서로 바꾸시겠어요? <span class="ico"></span></a>
                 </div>
             </div>
 
             <hr class="cont-sp type1" aria-hidden="true"/>
             <div class="cont-box">
-                <%- include('../../components/bill/'+ curBillType.component +'.component.html') %>
+                <%- include('../../components/billguide/'+ selectedBillGuide.component +'.component.html') %>
             </div>
 
             <hr class="cont-sp type1" aria-hidden="true"/>
@@ -75,10 +75,10 @@
 <% include ../../components/javascript.component.html %>
 <script>
     $(document).ready(function () {
-      var curBillTypeData = $(wrap).data('bill-type-data');
-      var componentName = curBillTypeData.component;
-      var className = componentName.replace(/-([a-z])/g, function (g) { return g[1].toUpperCase(); });
-      new Tw.MyTBillGuideChangeClasses[className]($('#wrap'));
+      var selectedBillGuideData = $(wrap).data('selected-bill-guide-data');
+      var componentName = selectedBillGuideData.component;
+      var componentClassName = componentName.replace(/-([a-z])/g, function (g) { return g[1].toUpperCase(); });
+      new Tw.MyTBillGuideChangeClasses[componentClassName]($('#wrap'), true);
     });
 </script>
 <% include ../../components/end.component.html %>

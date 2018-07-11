@@ -38,7 +38,7 @@
 
             <hr class="cont-sp type1" aria-hidden="true"/>
             <div class="cont-box">
-                <%- include('../../components/billguide/change/'+ selectedBillGuide.component +'.component.html') %>
+                <%- include('../../components/billguide/'+ selectedBillGuide.component +'.component.html') %>
             </div>
 
             <hr class="cont-sp type1" aria-hidden="true"/>
@@ -76,8 +76,8 @@
     $(document).ready(function () {
       var selectedBillGuideData = $(wrap).data('selected-bill-guide-data');
       var componentName = selectedBillGuideData.component;
-      var className = componentName.replace(/-([a-z])/g, function (g) { return g[1].toUpperCase(); });
-      new Tw.MyTBillGuideChangeClasses[className]($('#wrap'));
+      var componentClassName = componentName.replace(/-([a-z])/g, function (g) { return g[1].toUpperCase(); });
+      new Tw.MyTBillGuideChangeClasses[componentClassName]($('#wrap'));
     });
 </script>
 <% include ../../components/end.component.html %>

@@ -4,12 +4,13 @@
  * Date: 2018.07.05
  */
 Tw.MyTBillGuideChangePrototype = {
-  _construct: function (rootEl) {
+  _construct: function (rootEl, isUpdate) {
     this.$container = rootEl;
     this._apiService = Tw.Api;
     this._popupService = Tw.Popup;
     this._selectedBillGuide = null;
     this._billGuideTypesData = null;
+    this._isUpdate = isUpdate;
 
     this._setBillGuideTypes();
     this._assign();
@@ -35,6 +36,9 @@ Tw.MyTBillGuideChangePrototype = {
   },
 
   _openTypeSelectPopup: function () {
+    if ( this._isUpdate ) {
+      return;
+    }
     this._popupService.open({
       'hbs': 'choice',
       'title': Tw.POPUP_TITLE.CHANGE_BILL_GUIDE_TYPE,
@@ -90,31 +94,32 @@ Tw.MyTBillGuideChangePrototype = {
       $selectedStep.show();
     }
   }
+
 };
 Tw.MyTBillGuideChangeClasses = {
-  'tworld': function (rootEl) {
-    this._construct(rootEl);
+  'tworld': function () {
+    this._construct.apply(this, arguments);
   },
-  'email': function (rootEl) {
-    this._construct(rootEl);
+  'email': function () {
+    this._construct.apply(this, arguments);
   },
-  'etc': function (rootEl) {
-    this._construct(rootEl);
+  'etc': function () {
+    this._construct.apply(this, arguments);
   },
-  'billLetter': function (rootEl) {
-    this._construct(rootEl);
+  'billLetter': function () {
+    this._construct.apply(this, arguments);
   },
-  'sms': function (rootEl) {
-    this._construct(rootEl);
+  'sms': function () {
+    this._construct.apply(this, arguments);
   },
-  'billLetterEmail': function (rootEl) {
-    this._construct(rootEl);
+  'billLetterEmail': function () {
+    this._construct.apply(this, arguments);
   },
-  'smsEmail': function (rootEl) {
-    this._construct(rootEl);
+  'smsEmail': function () {
+    this._construct.apply(this, arguments);
   },
-  'billLetterSms': function (rootEl) {
-    this._construct(rootEl);
+  'billLetterSms': function () {
+    this._construct.apply(this, arguments);
   }
 };
 
