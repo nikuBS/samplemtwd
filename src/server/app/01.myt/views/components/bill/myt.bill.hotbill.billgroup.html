@@ -17,7 +17,11 @@
                             <button role="button" aria-pressed="false">
 												<span class="pt-tit-wrap">
 													<span class="pt-tit">{{@key}}</span>
-													<span class="pt-price"><span class="num">{{this.total}}</span>원</span>
+                                                     {{#if discount}}
+													<span class="pt-price discount"><span class="num">{{this.total}}</span>원</span>
+                                                    {{else}}
+                                                    <span class="pt-price"><span class="num">{{this.total}}</span>원</span>
+                                                    {{/if}}
 												</span>
                             </button>
                         </div>
@@ -40,7 +44,11 @@
                                             {{/if}}
                                             {{/if}}
                                         </dt>
+                                        {{#if discount}}
+                                        <dd class="pdt-price discount"><span class="num">{{this.total}}</span>원</dd>
+                                        {{else}}
                                         <dd class="pdt-price"><span class="num">{{this.total}}</span>원</dd>
+                                        {{/if}}
                                     </dl>
 
                                     <!-- depth-2 -->
@@ -58,7 +66,11 @@
                                                     {{/if}}
                                                     {{/if}}
                                                 </dt>
+                                                {{#if discount}}
+                                                <dd class="pdt-price discount"><span class="num">{{amount}}</span>원</dd>
+                                                {{else}}
                                                 <dd class="pdt-price"><span class="num">{{amount}}</span>원</dd>
+                                                {{/if}}
                                             </dl>
 
                                         </li>

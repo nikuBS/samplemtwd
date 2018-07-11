@@ -13,7 +13,7 @@ Tw.MyTBillHotBill = function (rootEl) {
   this._cachedElement();
   this._bindEvent();
   this._resTimerID = setTimeout(this._getBillResponse(), 500);
-  this.NO_BILL_FIELDS = ['total', 'noVAT', 'is3rdParty', 'showDesc'];
+  this.NO_BILL_FIELDS = ['total', 'noVAT', 'is3rdParty', 'showDesc', 'discount'];
   Handlebars.registerHelper('isBill', function (val, options) {
     return (self.NO_BILL_FIELDS.indexOf(val) < 0 ) ? options.fn(this) : options.inverse(this);
   });
@@ -124,9 +124,10 @@ Tw.MyTBillHotBill.prototype = {
 
       var bill_item = {
         name: item.bill_itm_nm.replace(/[*#]/g, ''),
-        amount: item[fieldAmount],
+        amount: item[fieldAmount].replace(/(\d)(?=(\d{3})+$)/gi, '$1,'),
         noVAT: item.bill_itm_nm.indexOf('*') > -1 ? true : false,
-        is3rdParty: item.bill_itm_nm.indexOf('#') > -1 ? true : false
+        is3rdParty: item.bill_itm_nm.indexOf('#') > -1 ? true : false,
+        discount: amount < 0 ? true : false
       };
       group[groupL][groupS].items.push($.extend({}, bill_item));
       bill_item.amount = item[fieldAmount];
@@ -139,7 +140,11 @@ Tw.MyTBillHotBill.prototype = {
           if ( itemS.items.length === 1 && itemS.items[0].name === key2 ) {
             delete itemS.items[0];
           }
+          itemS.discount = itemS.total < 0 ? true: false;
+          itemS.total = itemS.total.toString().replace(/(\d)(?=(\d{3})+$)/gi, '$1,');
         }
+        itemL.discount = itemL.total < 0 ? true: false;
+        itemL.total = itemL.total.toString().replace(/(\d)(?=(\d{3})+$)/gi, '$1,');
       });
     });
     return group;
