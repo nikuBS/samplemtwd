@@ -1210,6 +1210,10 @@
   font-size: 0.875rem;
 }
 
+.popup .popup-info .popup-contents .select-list li.radiobox.type01 {
+  display: block;
+}
+
 .popup .popup-info .popup-contents .tube-list-ti {
   padding: 1.875rem 1.125rem 0;
 }
@@ -1783,6 +1787,7 @@
   color: #e80a0a;
   font-family: Helvetica Neue, Roboto, sans-serif;
   font-size: 1.25rem;
+  vertical-align: -1px;
 }
 
 .point-box .info-btn {
@@ -1928,13 +1933,17 @@
   position: relative;
 }
 
+.flcard-s-default .flcard-s-cont .type3 .slider-box .slick-slider {
+  margin-bottom: 0rem;
+}
+
 .flcard-s-default .flcard-s-cont .type3 .slider-box .slick-next {
   position: absolute;
-  bottom: -1.625rem;
+  bottom: -1.125rem;
   right: 0.0625rem;
-  width: 1.25rem;
-  height: 1.25rem;
-  background: url(/img/ico/ico-group.png) no-repeat -1.375rem -37rem;
+  width: 0.9375rem;
+  height: 0.9375rem;
+  background: url(/img/ico/ico-group.png) no-repeat -1.8125rem -37.25rem;
   background-size: 2.875rem;
   text-indent: -9999999em;
   z-index: 10;
@@ -1942,11 +1951,11 @@
 
 .flcard-s-default .flcard-s-cont .type3 .slider-box .slick-next.slick-disabled {
   position: absolute;
-  bottom: -1.625rem;
+  bottom: -1.125rem;
   right: 0.0625rem;
-  width: 1.25rem;
-  height: 1.25rem;
-  background: url(/img/ico/ico-group.png) no-repeat -1.375rem -31.375rem;
+  width: 0.9375rem;
+  height: 0.9375rem;
+  background: url(/img/ico/ico-group.png) no-repeat -1.8125rem -31.625rem;
   background-size: 2.875rem;
   text-indent: -9999999em;
   z-index: 10;
@@ -1954,22 +1963,22 @@
 
 .flcard-s-default .flcard-s-cont .type3 .slider-box .slick-prev.slick-arrow {
   position: absolute;
-  bottom: -1.625rem;
+  bottom: -1.125rem;
   right: 0.9375rem;
-  width: 1.25rem;
-  height: 1.25rem;
-  background: url(/img/ico/ico-group.png) no-repeat -0.0625rem -37rem;
+  width: 0.9375rem;
+  height: 0.9375rem;
+  background: url(/img/ico/ico-group.png) no-repeat -0.125rem -37.25rem;
   background-size: 2.875rem;
   text-indent: -9999999em;
 }
 
 .flcard-s-default .flcard-s-cont .type3 .slider-box .slick-prev.slick-disabled {
   position: absolute;
-  bottom: -1.625rem;
+  bottom: -1.125rem;
   right: 0.9375rem;
-  width: 1.25rem;
-  height: 1.25rem;
-  background: url(/img/ico/ico-group.png) no-repeat -0.0625rem -31.375rem;
+  width: 0.9375rem;
+  height: 0.9375rem;
+  background: url(/img/ico/ico-group.png) no-repeat -0.125rem -31.625rem;
   background-size: 2.875rem;
   text-indent: -9999999em;
   z-index: 10;
@@ -1978,16 +1987,28 @@
 .flcard-s-default .flcard-s-cont .type3 .slider-box .slick-dots {
   text-align: left;
   width: 50%;
+  height: 0;
+  left: 0.1875rem;
+  bottom: 0.375rem;
 }
 
 .flcard-s-default .flcard-s-cont .type3 .slider-box .slick-dots li {
-  width: 0.9375rem;
-  height: 0.9375rem;
+  width: 0.625rem;
+  height: 0.625rem;
   margin: 0;
 }
 
+.flcard-s-default .flcard-s-cont .type3 .slider-box .slick-dots li button {
+  width: 0.625rem;
+  height: 0.625rem;
+  padding: 0rem;
+}
+
 .flcard-s-default .flcard-s-cont .type3 .slider-box .slick-dots li button:before {
-  font-size: 1rem;
+  width: 0.625rem;
+  height: 0.625rem;
+  font-size: 1.5625rem;
+  line-height: 0.375rem;
 }
 
 .flcard-s-default .flcard-s-cont .type3 .slider-box .slick-list {
@@ -2053,7 +2074,7 @@
 }
 
 .flcard-s-default .commend-detail-info .txt {
-  padding: 1.5rem 0 0 0;
+  padding: 0.625rem 0 0 0;
   font-size: 0.875rem;
   color: #757575;
 }
@@ -2394,6 +2415,28 @@
 
 .change-plan .tit-type.type02 {
   padding: 1.875rem 0 0 0;
+}
+
+.account-wrap .account-tit2 {
+  margin-bottom: 0.9375rem;
+  font-size: 1.25rem;
+}
+
+.bt-slice + .choice-paydate {
+  margin-top: 1.25rem;
+}
+
+.choice-paydate {
+  overflow: hidden;
+}
+
+.choice-paydate .tit, .choice-paydate .con {
+  float: left;
+  width: 50%;
+}
+
+.choice-paydate .con {
+  text-align: right;
 }
 
 .slider3 .slick-slide > div {
@@ -3463,15 +3506,6 @@
   position: absolute;
   top: 1.875rem;
   right: 1.125rem;
-  width: 20px;
-  height: 20px;
-  background: url(/img/ico/ico-group2.png) no-repeat -0.125rem -3.25rem;
-  background-size: 3.125rem auto;
-}
-
-.payment-select .select-list li.checkbox.type01.checked:before {
-  background: url(/img/ico/ico-group2.png) no-repeat -1.6875rem -3.25rem;
-  background-size: 3.125rem auto;
 }
 
 .payment-select .select-list li:first-of-type {
@@ -4912,10 +4946,9 @@ span[class^="ico-foot"].ico-foot-2 {
   padding: 0;
 }
 
-.used-box-list .tx-data strong {
+.used-box-list .tx-data .num-area {
   color: #e80a0a;
   font-family: "Helvetica Neue", Roboto, sans-serif;
-  font-weight: 300;
 }
 
 .used-count.payment-all {
@@ -6677,7 +6710,9 @@ span[class*=char-star][class*=red] {
 }
 
 .box-block .box-block-list1 > a {
+  position: relative;
   margin: -0.75rem 0.625rem 2.5rem 0;
+  z-index: 1;
 }
 
 .box-block .box-block-list1.btm-border {
