@@ -25,7 +25,6 @@ Tw.AuthLineRegister.prototype = {
   },
   _successGetLineInfo: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      // TODO: history 생성 안되는 이슈있음
       this._openExistRegisterLine(this._parseLineInfo(resp.result));
     }
   },
