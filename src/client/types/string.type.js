@@ -57,7 +57,8 @@ Tw.MSG_HOME = {};
 Tw.MSG_MYT = {
   BILL_GUIDE_00: ' 요금안내서 재발행',
   BILL_GUIDE_01: ' 요금안내서 재발행을 신청하시겠습니까?',
-  BILL_GUIDE_02: '요금안내서 재발행이 신청되었습니다.'
+  BILL_GUIDE_02: '요금안내서 재발행이 신청되었습니다.',
+  BILL_GUIDE_03: '선택하신 청구월에 대한 청구서가 이미 재발행 신청 되었습니다.'
 };
 
 Tw.MSG_RECHARGE = {
