@@ -17,7 +17,9 @@ class PaymentHistoryExcessPayAccountController extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
 
-    res.render('payment.history.excess-pay.account.html', {});
+    res.render('payment.history.excess-pay.account.html', {
+      svcInfo: svcInfo
+    });
   }
 
 }

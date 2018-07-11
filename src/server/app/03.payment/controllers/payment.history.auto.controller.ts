@@ -17,7 +17,9 @@ class PaymentHistoryAutoController extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
 
-    res.render('payment.history.auto.html', {});
+    res.render('payment.history.auto.html', {
+      svcInfo: svcInfo
+    });
   }
 
 }

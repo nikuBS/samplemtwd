@@ -10,6 +10,8 @@ Tw.PaymentHistoryExcessPayAccount = function (rootEl) {
   this._hash = Tw.Hash;
   this._popupService = Tw.Popup;
   this._dateHelper = Tw.DateHelper;
+
+  this.common = new Tw.PaymentHistoryCommon(rootEl);
 };
 
 Tw.PaymentHistoryExcessPayAccount.prototype = {
