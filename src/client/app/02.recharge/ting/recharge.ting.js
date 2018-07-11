@@ -21,38 +21,13 @@ Tw.RechargeTing.prototype = {
   _isNotAvailableAmount: false,
 
   _init: function () {
-    // this._apiService.request(Tw.API_CMD.BFF_06_0020, {})
-    //   .done($.proxy(this._onSuccessGetProvider, this))
-    //   .fail($.proxy(this._sendFail, this));
-
-    // var res = {
-    //   "code": "RCG0101",
-    //   "msg": "오류 입니다. {0},{1}",
-    //   "traceId": "a94a2b91d0094257",
-    //   "spanId": "a94a2b91d0094257",
-    //   "clientDebugMessage": "a94a2b91d0094257*",
-    //   "hostname": "TD3P026952",
-    //   "appName": "bff-spring-mobile",
-    //   "debugMessage": "200 ",
-    //   "orgSpanId": "c17d941695ecfea5",
-    //   "orgHostname": "TD3P026952",
-    //   "orgAppName": "core-balance",
-    //   "orgDebugMessage": "BLN0002"
-    // };
-
-    // this._onSuccessGetProvider(res);
-
-    // this._apiService.request(Tw.API_CMD.BFF_03_0005_C, {})
-    //   .done($.proxy(this._onSuccessProvider, this))
-    //   .fail($.proxy(this._sendFail, this));
-    this._onSuccessGetProvider();
+    this._apiService.request(Tw.API_CMD.BFF_06_0020, {})
+      .done($.proxy(this._onSuccessGetProvider, this));
   },
 
   _cachedElement: function () {
     this.$wrap_tpl_block = $('#wrap_tpl_block');
-    this.$wrap_tpl_ting_request_info = $('.wrap_tpl_ting_request_info');
     this.tpl_ting_blocked = Handlebars.compile($('#tpl_ting_blocked').text());
-    this.tpl_ting_request_info = Handlebars.compile($('#tpl_ting_request_info').text());
   },
 
   _bindEvent: function () {
@@ -63,29 +38,18 @@ Tw.RechargeTing.prototype = {
     this.$container.on('click', '#btn_ting_request', $.proxy(this._goTingRequestProcess, this));
   },
 
-  _onSuccessProvider: function (res) {
-    var result = res.result;
-    this.$wrap_tpl_ting_request_info.html(this.tpl_ting_request_info({ name: result.custNm }));
-  },
-
   _onSuccessGetProvider: function (res) {
-    // if ( res.code === 'RCG0101' ) {
-    //   this._isBlockedTing = true;
-    // }
-    // if ( res.code === 'RCG0102' ) {
-    //   this._isNotAvailableAmount = true;
-    // }
-    // if ( res.code === 'RCG0109' ) {
-    //   this._isBlockedTing = true;
-    // }
-    // if ( res.code === 'RCG0110' ) {
-    //   this._isNotSkt = true;
-    // }
-    // if ( res.code === 'RCG0112' ) {
-    //   this._isNotAvailableAmount = true;
-    // }
+    if ( res.code === 'RCG0101' ) {
+      this._isBlockedTing = true;
+    }
+    if ( res.code === 'RCG0102' ) {
+      this._isNotAvailableAmount = true;
+    }
+    if ( res.data && res.data.code === 'ZPAYE0077' ) {
+      this._isNotAdult = true;
+    }
 
-    this.$wrap_tpl_block.html(this.tpl_ting_blocked({ isBlocked: true }));
+    this.$wrap_tpl_block.html(this.tpl_ting_blocked({ isBlocked: this._isBlockedTing || this._isNotAdult || this._isNotAvailableAmount }));
   },
 
   _activateBlock: function () {
@@ -94,26 +58,28 @@ Tw.RechargeTing.prototype = {
 
   _requestActivateBlock: function () {
     this._apiService.request(Tw.API_CMD.BFF_06_0021, {})
-      .done(function () {
-        location.reload(true);
-      })
-      .fail($.proxy(this._sendFail, this));
+      .done(function (res) {
+        if ( res.code === '00' ) {
+          location.reload(true);
+        }
+      });
   },
 
   _deactivateBlock: function () {
     this._popupService.openAlert(Tw.MSG_GIFT.TING_A02);
   },
 
-  _sendFail: function () {
+  _sendFail: function (message) {
+    this._popupService.openAlert(message);
   },
 
   _goTingGiftProcess: function () {
-    if ( this._isNotAdult ) {
+    if ( this._isBlockedTing ) {
       this._popupService.openAlert(Tw.MSG_GIFT.TING_A03);
       return false;
     }
 
-    if ( this._isBlockedTing ) {
+    if ( this._isNotAdult ) {
       this._popupService.openAlert(Tw.MSG_GIFT.TING_A04);
       return false;
     }
@@ -123,11 +89,11 @@ Tw.RechargeTing.prototype = {
       return false;
     }
 
-    this._go('step1');
+    this._go('#step1');
   },
 
-  _goTingRequestProcess: function(){
-    this._go('request-step1');
+  _goTingRequestProcess: function () {
+    this._go('#request-step1');
   },
 
   _goHistory: function () {
