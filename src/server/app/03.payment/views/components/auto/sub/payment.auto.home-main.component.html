@@ -7,16 +7,17 @@
     <h4 class="pay-tit">현재 납부방법</h4>
     <div class="account-wrap">
         <div class="payment-wrap">
-            <h5 class="payment-tit">체크/신용카드</h5>
+            <h5 class="payment-tit"><%= payment.paymentTitle %></h5>
             <div class="point-wrap">
                 <div class="point-box">
                     <ul>
                         <li>
                             <dl>
                                 <dt>최초 승인 예정일</dt>
-                                <dd><em class="number">2013.05.23</em></dd>
+                                <dd><em class="number"><%= payment.firstOutDate %></em></dd>
                             </dl>
                         </li>
+                        <% if (payment.option === 'card') { %>
                         <li>
                             <dl>
                                 <dt>인출(승인)일</dt>
@@ -25,28 +26,47 @@
                                 </dd>
                             </dl>
                         </li>
+                        <% } else { %>
                         <li>
                             <dl>
-                                <dt>카드번호</dt>
-                                <dd>110304******</dd>
+                                <dt>요금납부일</dt>
+                                <dd>매월 <em class="number"><%= payment.payCyclNm %></em> 일
+                                    <% if (payment.chgYn === 'Y') { %><br /><span class="info-btn"><button class="btn-choice change-date" role="button">납부일 변경</button></span><% } %>
+                                </dd>
+                            </dl>
+                        </li>
+                        <% } %>
+                        <li>
+                            <dl>
+                                <dt><%= payment.numberTitle %></dt>
+                                <dd><%= payment.bankCardNum %></dd>
                             </dl>
                         </li>
                         <li>
                             <dl>
-                                <dt>카드사</dt>
-                                <dd>국민카드</dd>
+                                <dt><%= payment.name %></dt>
+                                <dd><%= payment.bankCardName %></dd>
                             </dl>
                         </li>
+                        <% if (payment.option === 'card') { %>
                         <li>
                             <dl>
                                 <dt>카드 유효기간</dt>
-                                <dd>2020/09</dd>
+                                <dd><%= payment.cardYm %></dd>
                             </dl>
                         </li>
+                        <% } else { %>
+                        <li>
+                            <dl>
+                                <dt>예금주</dt>
+                                <dd><%= payment.dpstCardOwnrNm %></dd>
+                            </dl>
+                        </li>
+                        <% } %>
                         <li>
                             <dl>
                                 <dt>휴대폰 번호</dt>
-                                <dd>010-12**-34**</dd>
+                                <dd><%= payment.cntcNum %></dd>
                             </dl>
                         </li>
                     </ul>
