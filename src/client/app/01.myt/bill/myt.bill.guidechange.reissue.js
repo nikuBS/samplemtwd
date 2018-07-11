@@ -50,7 +50,7 @@ Tw.MyTBillReissue.prototype = {
     //신청버튼
     this.$okButton = this.$container.find('.bt-red1');
     //닫기버튼
-    this.$closeButton = this.$container.find('.close-step');
+    this.$closeButton = this.$container.parent().siblings('#header').find('.close-step');
   },
 
   _init: function () {
