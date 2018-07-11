@@ -135,6 +135,10 @@ class FormatHelper {
     return array.sort((a, b) => parseInt(a[key], 10) - parseInt(b[key], 10));
   }
 
+  static makeCardYymm(cardYm: string): string {
+    return cardYm.substr(0, 4) + '/' + cardYm.substr(4, 2);
+  }
+
 }
 
 export default FormatHelper;

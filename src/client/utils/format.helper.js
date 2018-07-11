@@ -123,6 +123,22 @@ Tw.FormatHelper = (function () {
     return ret.substring(0, 3) + '-' + ret.substring(3, ret.length - 4) + '-' + ret.substring(ret.length - 4);
   };
 
+  var sortObjArrDesc = function (array, key) {
+    return array.sort(function (a, b) {
+      return (parseInt(b[key], 10) - parseInt(a[key], 10));
+    });
+  };
+
+  var sortObjArrAsc = function (array, key) {
+    return array.sort(function (a, b) {
+      return (parseInt(a[key], 10) - parseInt(b[key], 10));
+    });
+  };
+
+  var makeCardYymm = function(cardYm) {
+    return cardYm.substr(0, 4) + '/' + cardYm.substr(4, 2);
+  };
+
   return {
     leadingZeros: leadingZeros,
     isEmpty: isEmpty,
@@ -134,6 +150,9 @@ Tw.FormatHelper = (function () {
     addComma: addComma,
     convVoiceFormat: convVoiceFormat,
     convSmsPrice: convSmsPrice,
-    conTelFormatWithDash: conTelFormatWithDash
+    conTelFormatWithDash: conTelFormatWithDash,
+    sortObjArrDesc: sortObjArrDesc,
+    sortObjArrAsc: sortObjArrAsc,
+    makeCardYymm: makeCardYymm
   };
 })();

@@ -542,7 +542,8 @@
 <% include ../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    var comp = new Tw.HomeMain($('.wrap'));
+    var lineRegisterLayer = new Tw.AuthLineRegister();
+    new Tw.HomeMain($('.wrap'), lineRegisterLayer);
   });
 </script>
 <% include ../components/end.component.html %>

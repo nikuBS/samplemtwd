@@ -68,7 +68,11 @@
                                                         <li class="state-info-list">
                                                             <dl>
                                                                 <dt>충전 서비스 차단 여부</dt>
+                                                                <%if(cookizInfo.blockYn === 'Y'){%>
+                                                                <dd>충전 불가</dd>
+                                                                <%}else{%>
                                                                 <dd>충전 허용</dd>
+                                                                <%}%>
                                                             </dl>
                                                         </li>
                                                     </ul>
@@ -78,12 +82,16 @@
                                                         <dt>데이터 요금 충전</dt>
                                                         <dd class="box-block-list1">
                                                             <ul>
-                                                                <li><span class="title">충전 가능 금액</span><span class="price">15,000 원</span>
+                                                                <li><span class="title">충전 가능 금액</span><span class="price"><%=cookizInfo.currentTopUpLimit%> 원</span>
                                                                 </li>
-                                                                <li><span class="title">매월 자동 충전</span><span class="price">5,000 원</span>
+                                                                <%if(cookizInfo.regularTopUpYn === 'Y'){%>
+                                                                <li><span class="title">매월 자동 충전</span><span class="price"><%=cookizInfo.regularTopUpAmt%> 원</span>
                                                                 </li>
+                                                                <%}%>
                                                             </ul>
+                                                            <%if(cookizInfo.regularTopUpYn === 'Y'){%>
                                                             <a class="btn_cancel_autoRefill">자동 충전 취소</a>
+                                                            <%}%>
                                                         </dd>
                                                     </dl>
                                                 </div>
@@ -103,14 +111,16 @@
                                                     </li>
                                                 </ul>
                                             </div>
+                                            <% if(isRefillCoupon){ %>
                                             <hr class="cont-sp type1" aria-hidden="true"/>
                                             <div class="inner2">
                                                 <div class="coupon-box">
                                                     <p class="coupon-box-tit">음성/데이터를 무료로 충전<br/>가능한 리필 쿠폰이 있습니다.</p>
                                                     <span class="coupon-ico"></span>
-                                                    <a class="bt-link-tx" href="">쿠폰 사용하기 <span class="ico"></span></a>
+                                                    <a class="bt-link-tx" href="/recharge/refill">쿠폰 사용하기 <span class="ico"></span></a>
                                                 </div>
                                             </div>
+                                            <% } %>
                                         </li>
                                         <li role="tabpane2" id="tab2-tab" aria-labelledby="tab2">
                                             <div class="inner2">
@@ -123,7 +133,7 @@
                                                         <dd class="box-block-list">
                                                             <div class="box-block-ti2">
                                                                 <span
-                                                                    class="txt1">김유진님이 <em>&lsquo;팅요금 선물 조르기&rsquo;</em>를 <br/>요청하셨습니다. <br/>T World에서 선물을 해보세요.</span>
+                                                                    class="txt1"><%=svcInfo.custNm%>님이 <em>&lsquo;팅요금 선물 조르기&rsquo;</em>를 <br/>요청하셨습니다. <br/>T World에서 선물을 해보세요.</span>
                                                             </div>
                                                             <ul>
                                                                 <li>만 19세 이상 개인고객(SK텔레콤 가입자)에게 선물 조르기를 할 수 있습니다.</li>
@@ -261,7 +271,7 @@
 
     <div id="step1" style="display:none">
         <!-- #header -->
-        <div id="header" class="header-wrap">
+        <div class="header-wrap">
             <div class="header step-page">
                 <div class="header-ti">
                     <h1>팅/쿠키즈/안심음성 요금 충전하기</h1>
@@ -271,7 +281,7 @@
         </div>
         <!--// #header -->
         <!-- #contents -->
-        <div id="contents" class="container-wrap">
+        <div class="container-wrap">
             <h2 class="blind">내용</h2>
             <div class="container">
                 <div class="cont-box">
@@ -319,7 +329,7 @@
                         <div class="contents-btn">
                             <ul class="bt-slice">
                                 <li class="bt-blue1">
-                                    <button>다음</button>
+                                    <button class="btn_validateStep1">다음</button>
                                 </li>
                             </ul>
                         </div>
@@ -330,7 +340,108 @@
         <!--// #contents -->
     </div>
 
-    <div id="step2" style="display:none"></div>
+    <div id="step2" style="display:none">
+        <!-- #header -->
+        <div class="header-wrap">
+            <div class="header step-page">
+                <div class="header-ti">
+                    <h1>팅/쿠키즈/안심음성 요금 충전하기</h1>
+                </div>
+                <button class="close-step"><span class="blind">닫기</span></button>
+            </div>
+        </div>
+        <!--// #header -->
+        <!-- #contents -->
+        <div class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+                <div class="cont-box">
+                    <!-- .widget -->
+                    <div class="widget">
+                        <div class="widget-box step">
+                            <h3 class="step-ti"><em>STEP 02</em>충전 금액 선택</h3>
+                            <ul class="step-list">
+                                <li>1<span class="blind">연락처 이름</span></li>
+                                <li class="on">2<span class="blind">연락처 이름</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- //.widget -->
+                </div>
+                <hr class="cont-sp type1">
+                <h3 class="blind">잔여 데이터</h3>
+                <div class="cont-box">
+                    <div class="gift-money-cont">
+                        <ul class="t-gift-data">
+                            <li>
+                                <dl>
+                                    <dt class="ti-data">충전 방법</dt>
+                                    <dd class="tx-data">
+                                        <div class="txt"><span class="blind">이름</span>당월 충전</div>
+                                    </dd>
+                                </dl>
+                            </li>
+                            <li>
+                                <dl>
+                                    <dt class="ti-data">충전 금액</dt>
+                                    <dd class="tx-data money">
+                                        <span class="tx-bold">5,000</span>
+                                        <span>원</span>
+                                    </dd>
+                                </dl>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="money-select-wrap">
+                        <div class="money-select-box-inner">
+                            <span class="money-select-selection">충전할 금액을 선택해 주세요.</span>
+                            <div class="money-select-size">
+                                <!-- .widget -->
+                                <div class="widget">
+                                    <div class="widget-box tube">
+                                        <ul class="tube-list two" role="radiogroup">
+                                            <li role="radio" aria-checked="true" class="checked"><input type="radio" name="senddata"
+                                                                                                        title="1000" checked="checked">1,000
+                                                원
+                                            </li>
+                                            <li class="" role="radio" aria-checked="false"><input type="radio" name="senddata" title="5000">5,000
+                                                원
+                                            </li>
+                                            <li role="radio" aria-checked="false" class=""><input type="radio" name="senddata"
+                                                                                                  title="10000">10,000 원
+                                            </li>
+                                            <li role="radio" aria-checked="false"><input type="radio" name="senddata" title="15000">15,000 원
+                                            </li>
+                                            <li class="disabled" role="radio" aria-checked="false" aria-disabled="true"><input type="radio"
+                                                                                                                               name="senddata"
+                                                                                                                               title="20000">20,000
+                                                원
+                                            </li>
+                                            <li aria-checked="false" class="tube-select">
+                                                직접 선택 <span class="ico-select-arrow"></span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <!-- //.widget -->
+                            </div>
+                        </div>
+                        <p class="money-select-comment">충전 가능 금액 <em>15,000원</em>
+                        </p>
+                    </div>
+                    <ul class="bt-slice item-two">
+                        <li class="bt-white2">
+                            <button>이전</button>
+                        </li>
+                        <li class="bt-red1">
+                            <button class="selected">충전하기</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!--// #contents -->
+    </div>
     <% include ../../../../../common/views/components/footer.component.html %>
 </div>
 

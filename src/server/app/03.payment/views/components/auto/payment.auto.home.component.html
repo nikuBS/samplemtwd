@@ -7,10 +7,8 @@
     <% include ../components/line.info.component.html %>
     <hr class="cont-sp type1" aria-hidden="true"/>
     <div class="cont-box">
-        <% if (payment.option === 'card') { %>
-            <% include ../components/auto/sub/payment.auto.home-card.component.html %>
-        <% } else if (payment.option === 'account') { %>
-            <% include ../components/auto/sub/payment.auto.home-account.component.html %>
+        <% if (payment.option === 'card' || payment.option === 'bank') { %>
+            <% include ../components/auto/sub/payment.auto.home-main.component.html %>
         <% } else { %>
             <% include ../components/auto/sub/payment.auto.home-etc.component.html %>
         <% } %>

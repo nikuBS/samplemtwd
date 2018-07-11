@@ -1,6 +1,6 @@
 Tw.HashService = function () {
   this._callbackList = [];
-  this._currentHashNav = null;
+  this._currentHashNav = undefined;
 };
 
 Tw.HashService.prototype = {
@@ -21,8 +21,9 @@ Tw.HashService.prototype = {
     this._checkHash(callback);
   },
   _checkHash: function () {
-    if ( window.location.hash.replace(/^#/i, '') !== this._currentHashNav ) {
-      var newHash = window.location.hash.replace(/^#/i, '');
+    var hash = window.location.hash.replace(/^#/i, '');
+    if ( hash === '' || hash !== this._currentHashNav ) {
+      var newHash = hash;
 
       var chopped = this._chopHash(newHash);
       _.map(this._callbackList, function (callback) {
