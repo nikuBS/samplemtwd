@@ -15,7 +15,6 @@ Tw.MyTBillHotBill = function (rootEl) {
   this._resTimerID = setTimeout(this._getBillResponse(), 500);
   this.NO_BILL_FIELDS = ['total', 'noVAT', 'is3rdParty', 'showDesc'];
   Handlebars.registerHelper('isBill', function (val, options) {
-    // return (val !== 'total' && val !== 'noVAT' && val !== 'is3rdParty') ? options.fn(this) : options.inverse(this);
     return (self.NO_BILL_FIELDS.indexOf(val) < 0 ) ? options.fn(this) : options.inverse(this);
   });
 };
@@ -31,7 +30,7 @@ Tw.MyTBillHotBill.prototype = {
   },
 
   _bindEvent: function () {
-    this.$container.on('click', '.use-family', $.proxy(this._openFamilyMemberSelect, this));
+    this.$container.on('click', '.use-family', $.proxy(this._onClickShowChildrenChoice, this));
     this.$container.on('click', '#previousBill', $.proxy(this._showPreviousBill, this));
   },
 
@@ -143,7 +142,6 @@ Tw.MyTBillHotBill.prototype = {
         }
       });
     });
-
     return group;
   },
 
@@ -160,17 +158,49 @@ Tw.MyTBillHotBill.prototype = {
     skt_landing.widgets.widget_accordion2();
   },
 
-  _openFamilyMemberSelect: function () {
+  _onClickShowChildrenChoice: function () {
     event.preventDefault();
-    //TODO popup open 시 list-tag 설정 가능하도록
-    var members = [
-      { 'attr': 'href="/myt/bill/hotbill/child"', text: '010-12**-81**(GALAXY S7 32G) 1' },
-      { 'attr': 'href="/bill/hotbill/child"', text: '010-12**-81**(GALAXY S7 32G) 234' },
-      { 'attr': 'href="/bill/hotbill/child"', text: '010-12**-81**(GALAXY S7 32G) 5' },
-      { 'attr': 'href="/bill/hotbill/child"', text: '010-12**-81**(GALAXY S7 32G) 67' },
-      { 'attr': 'href="/bill/hotbill/child"', text: '010-12**-81**(GALAXY S7 32G) 89010' }
-    ];
-    this._popupService.openChoice('자녀 선택', members, 'type1');
+    if ( !this._children ) {
+      this._requestChildInfo();
+    }
+    else {
+      this._showChildrenChoice();
+    }
+    this._apiService
+      .request(Tw.API_CMD.BFF_05_0024, { gubun: 'G' })
+      .done($.proxy(this._onReceivedBillData, this))
+      .fail($.proxy(this._onErrorReceivedBillData, this));
+  },
+
+  _showChildrenChoice: function (data) {
+    if ( typeof data !== 'undefined' ) {
+      this._children = data.result;
+    }
+    var members = [];
+    var item = null;
+    this._children.forEach(function (member) {
+      item = {
+        attr: 'id=' + member.svcMgmtNum,
+        text: member.svcNum
+      };
+      members.push(item);
+    });
+    this._popupService.openChoice('자녀 선택', members, 'type1', $.proxy(this._onOpenChildrenChoice, this));
+  },
+
+  _onOpenChildrenChoice: function ($popup) {
+    $popup.on('click', 'button', $.proxy(this._onClickChildButton, this));
+  },
+
+  _onClickChildButton: function (e) {
+    location.href = '/myt/bill/hotbill/child?svcMgmtNum=' + e.target.id;
+  },
+
+  _requestChildInfo: function () {
+    this._apiService
+      .request(Tw.API_CMD.BFF_05_0024, { gubun: 'G' })
+      .done($.proxy(this._showChildrenChoice, this))
+      .fail($.proxy(this._onErrorReceivedBillData, this));
   },
 
   _showPreviousBill: function () {
