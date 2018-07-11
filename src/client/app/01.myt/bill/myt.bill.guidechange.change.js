@@ -35,17 +35,12 @@ Tw.MyTBillGuideChangePrototype = {
   _init: function () {
   },
 
-  _openTypeSelectPopup: function () {
+  _openTypeSelectPopup: function (event) {
     if ( this._isUpdate ) {
       return;
     }
-    this._popupService.open({
-      'hbs': 'choice',
-      'title': Tw.POPUP_TITLE.CHANGE_BILL_GUIDE_TYPE,
-      'close_bt': true,
-      'list_type': '',
-      'list': this._billGuideTypesData
-    });
+    var $target = $(event.currentTarget);
+    this._popupService.openChoice(Tw.POPUP_TITLE.CHANGE_BILL_GUIDE_TYPE, this._billGuideTypesData, 'type3', $.proxy(this._onOpenChoicePopup, this, $target));
   },
 
   _checkToSubmit: function () {
@@ -69,8 +64,8 @@ Tw.MyTBillGuideChangePrototype = {
   _setBillGuideTypes: function () {
     this._billGuideTypesData = _.map(this.$container.data('bill-guide-types-data'), function (billGuideType) {
       return {
-        key: billGuideType.code,
-        value: billGuideType.selectorLabel
+        attr: 'id="' + billGuideType.curBillType + '"',
+        text: billGuideType.selectorLabel
       };
     });
   },
@@ -93,6 +88,15 @@ Tw.MyTBillGuideChangePrototype = {
     if ( $selectedStep.length > 0 ) {
       $selectedStep.show();
     }
+  },
+
+  _onOpenChoicePopup: function ($target, $layer) {
+    $layer.on('click', '.popup-choice-list', $.proxy(this._onClickBillGuideType, this, $target));
+  },
+
+  _onClickBillGuideType: function ($target, event) {
+    var selectedBillGuideType = $(event.currentTarget).find('button').attr('id');
+    location.href = '/myt/bill/guidechange/change?curBillTypeCd=' + selectedBillGuideType;
   }
 
 };
