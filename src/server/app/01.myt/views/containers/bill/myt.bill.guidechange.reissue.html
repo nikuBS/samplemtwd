@@ -25,7 +25,7 @@
                 <div class="change-plan">
                     <h3 class="tit-type">사용중인 요금안내서</h3>
                     <!-- 여기서 요금안내서 타입 출력 (문자로 전달받음) -->
-                    <p class="txt-type"><%= (data.title) || '' %></p>
+                    <p class="txt-type" data-type="<%= data.billCd %>"><%= (data.title) || '' %></p>
                 </div>
             </div>
 
@@ -68,10 +68,8 @@
                             <div class="widget">
                                 <div class="widget-box tube" data-id="time">
                                     <ul class="tube-list two" role="radiogroup">
-                                        <li role="radio" aria-checked="true"><input type="radio" name="senddata" title="청구시점">청구시점
-                                        </li>
-                                        <li role="radio" aria-checked="false"><input type="radio" name="senddata"
-                                                                                     title="현재시점">현재시점
+                                        <li role="radio" aria-checked="true"><input type="radio" name="01" title="청구시점">청구시점</li>
+                                        <li role="radio" aria-checked="false"><input type="radio" name="02" title="현재시점">현재시점
                                         </li>
                                     </ul>
                                 </div>
