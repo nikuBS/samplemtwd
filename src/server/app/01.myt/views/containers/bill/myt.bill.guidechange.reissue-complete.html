@@ -1,0 +1,125 @@
+<!--
+* FileName: myt.bill.reissue.html
+* Author: Kim InHwan (skt.P132150@partner.sk.com)
+* Date: 2018.07.04
+-->
+<% include ../../components/start.component.html %>
+
+<body>
+<div class="wrap">
+    <!-- #header -->
+    <div id="header" class="header-wrap">
+        <div class="header step-page">
+            <div class="header-ti">
+                <h1>요금안내서 재발행</h1>
+            </div>
+            <button class="close-step"><span class="blind">닫기</span></button>
+        </div>
+    </div>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <div id="myt-bill-gc-reissue-compl" class="cont-box nogaps-top">
+                <div class="msg-present-box">
+                    <div class="msg-present-comp">
+                        <span class="ico"></span>
+                        <p class="txt"><span class="tx-bold">요금안내서 재발행이 완료</span>되었습니다.</p>
+                    </div>
+                    <div class="gift-data-cont">
+                        <div class="pay-data-cont">
+                            <ul class="t-pay-data">
+                                <li>
+                                    <dl>
+                                        <% console.log(data) %>
+                                        <dt class="ti-data">재발행 신청하신<br/>요금안내서 유형</dt>
+                                        <!--요금안내서 유형 설정 코드 String 값 그대로 전달-->
+                                        <dd class="tx-data"><%= data.type %></dd>
+                                    </dl>
+                                </li>
+                                <li>
+                                    <dl>
+                                        <dt class="ti-data">재발행 신청하신 월</dt>
+                                        <!--요금안내서 재발행 날자 설정 값 (20180709 형태의 문자열로 전달) -->
+                                        <dd class="tx-data"><%= data.month1 %><br/><span class="num">(<%= data.month2 %>)</span>
+                                        </dd>
+                                    </dl>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="bt-gap">
+                            <ul class="bt-slice">
+                                <li class="bt-blue1">
+                                    <button>확인</button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr class="cont-sp type1"/>
+            <div class="cont-box nogaps">
+                <div class="bt-link-box">
+                    <a class="bt-link-tx" href="">홈으로</a>
+                </div>
+            </div>
+            <!--// .cont-box -->
+            <hr class="cont-sp type1" aria-hidden="true"/>
+            <div class="cont-box">
+                <!-- .widget -->
+                <div class="widget title-long">
+                    <div class="widget-box accordion">
+                        <h3 class="tit-a">이용안내</h3>
+                        <div class="acco-cover toggle">
+                            <div class="acco-style btn-hold">
+                                <ul class="acco-list">
+                                    <li class="acco-box">
+                                        <div class="acco-tit"><span class="bullet">1.</span>요금안내서 발송
+                                            <button role="button" aria-pressed="false">상세보기</button>
+                                        </div>
+                                        <div class="acco-cont">
+                                            <ul class="list-dot">
+                                                <li class="list">이메일 요금안내서는 휴대폰 요금안내서를 <strong>고객님의 이메일로 받아 볼 수 있는 편리한
+                                                    서비스</strong> 입니다.
+                                                </li>
+                                                <li class="list">이메일 요금안내서는 <strong>납부방법에 상관없이 신청 가능</strong>하며,
+                                                    <strong>지로납부</strong>를 이용하시는 경우 <strong>이메일 요금안내서가 발송</strong>되오니,
+                                                    이메일 요금안내서에 기재된 지로번호와 전자납부번호를 이용하여 납부해 주시기 바랍니다.
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li class="acco-box">
+                                        <div class="acco-tit"><span class="bullet">2.</span>요금안내서 재발행 작업시간
+                                            <button role="button" aria-pressed="false">상세보기</button>
+                                        </div>
+                                        <div class="acco-cont">
+                                            <ul class="list-dot">
+                                                <li class="list"><strong>매월 5일까지</strong> 신청 시 <strong>당월부터 변경된 요금안내서가
+                                                    발송</strong> 되며, <strong>6일 이후</strong> 신청 <strong>시에는 다음달부터 변경된
+                                                    요금안내서를 발송</strong>해 드립니다.
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--// .widget -->
+            </div>
+            <!--// .cont-box -->
+        </div>
+    </div>
+    <!--// #contents -->
+</div>
+
+<% include ../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    var comp = new Tw.MyTBillReissueComplete($('#myt-bill-gc-reissue-compl'));
+  });
+</script>
+<% include ../../components/end.component.html %>

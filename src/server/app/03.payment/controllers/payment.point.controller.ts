@@ -118,6 +118,7 @@ class PaymentPointController extends TwViewController {
   }
 
   private getData(svcInfo: any, cashbagAndT: any, rainbowPoint: any): any {
+    console.log(cashbagAndT);
     return {
       svcInfo,
       cashbagAndT,
