@@ -50,7 +50,7 @@
             </div>
 
             <div class="cont-box nogaps-hoz">
-                <div class="use-family">
+                <div class="use-family" style="display:none;">
                     <h3 class="blind">자녀폰 실시간 요금 보기</h3>
                     <div class="link-long">
                         <a href="" title="">자녀폰 실시간 요금 (<strong>5</strong>명)
@@ -79,7 +79,7 @@
             <!-- .cont-box -->
             <div class="cont-box nogaps-hoz">
                 <div class="helpbox-link">
-                    <div class="link-long" id="previousBill">
+                    <div class="link-long" id="previousBill" style="display:none;">
                         <a href="" class="disabled">전월요금보기<span class="ico"></span></a>
                     </div>
                     <div class="link-long">
@@ -95,12 +95,13 @@
         </div>
     </div>
     <!--// #contents -->
+    <% include ../../../../../common/views/components/footer.component.html %>
 </div>
 <% include ../../components/javascript.component.html %>
 <script>
     $(document).ready(function () {
         var comp = new Tw.MyTBillHotBill($('#myt-bill-hotbill'));
-//        skt_landing.action.loading.on({ta:'.load-area',co:'grey',size:true});
+        skt_landing.action.loading.on({ta:'.container',co:'grey',size:true});
     });
 </script>
 <% include ../../components/end.component.html %>
