@@ -11,7 +11,6 @@ Tw.BankList = function (rootEl) {
 Tw.BankList.prototype = {
   init: function (event) {
     this.$currentTarget = $(event.currentTarget);
-    this._bindEvent();
 
     if (this._isNotExistBankList()) {
       this._getBankList();
@@ -20,22 +19,21 @@ Tw.BankList.prototype = {
       this._openBank();
     }
   },
-  _bindEvent: function () {
-    this.$document.on('click', '.hbs-bank-name', $.proxy(this._getSelectedBank, this));
+  _onOpenList: function ($layer) {
+    $layer.on('click', '.hbs-bank-name', $.proxy(this._getSelectedBank, this));
   },
   _getSelectedBank: function (event) {
     var $selectedBank = this.$currentTarget;
     var $target = $(event.currentTarget);
     $selectedBank.attr('id', $target.attr('id'));
     $selectedBank.text($target.text());
-    this._popupService._popupClose();
+    this._popupService.close();
   },
   _isNotExistBankList: function () {
     return Tw.FormatHelper.isEmpty(this.$bankList);
   },
   _getBankList: function () {
-    $.ajax('/mock/payment.bank-list.json')
-    //    this._apiService.request(Tw.API_CMD.BFF_07_0022, {})
+    this._apiService.request(Tw.API_CMD.BFF_07_0022, {})
       .done($.proxy(this._getBankListSuccess, this))
       .fail($.proxy(this._getBankListFail, this));
   },
@@ -59,6 +57,6 @@ Tw.BankList.prototype = {
     this._openBank();
   },
   _openBank: function () {
-    this._popupService.openChoice(Tw.POPUP_TITLE.SELECT_BANK, this.$bankList);
+    this._popupService.openChoice(Tw.POPUP_TITLE.SELECT_BANK, this.$bankList, '', $.proxy(this._onOpenList, this));
   }
 };

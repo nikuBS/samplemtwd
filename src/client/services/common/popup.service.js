@@ -4,6 +4,9 @@ Tw.PopupService = function () {
   this._confirmCallback = null;
   this._openCallback = null;
   this._hashService = Tw.Hash;
+
+  this._popupObj = {};
+
   this._init();
 };
 
@@ -37,7 +40,8 @@ Tw.PopupService.prototype = {
   _addHash: function () {
     var curHash = location.hash || '#';
     this._prevHashList.push(curHash);
-    location.hash = 'popup' + this._prevHashList.length;
+    // location.hash = 'popup' + this._prevHashList.length;
+    history.pushState(this._popupObj, 'popup', '#popup' + this._prevHashList.length);
   },
   _bindEvent: function ($container) {
     $container.on('click', '.popup-closeBtn', $.proxy(this.close, this));

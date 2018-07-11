@@ -69,6 +69,7 @@ export const URL = {
   '/auth/login/fail': { login: false },
   '/auth/login/dormancy': { login: false },
   '/auth/login/find-id-pwd': { login: false },
+  '/auth/login/service-pwd-fail': { login: true },
   '/auth/logout/complete': { login: true },
   '/auth/logout/expire': { login: true },
   '/auth/member/management': { login: true },

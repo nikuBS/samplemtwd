@@ -87,6 +87,24 @@ export enum REQUEST_VALUE {
   N = '미신청'
 }
 
+export enum PAYMENT_OPTION {
+  BANK = '01',
+  CARD = '02',
+  GIRO = '03',
+  VIRTUAL = '04'
+}
+
+export enum PAYMENT_OPTION_TEXT {
+  BANK = '은행계좌이체',
+  CARD = '체크/신용카드',
+  GIRO = '지로납부',
+  VIRTUAL = '입금전용계좌납부',
+  BANK_NAME = '은행명',
+  CARD_NAME = '카드사',
+  ACCOUNT = '계좌번호',
+  CARD_NUM = '카드번호'
+}
+
 export const BILL_GUIDE_TYPE = {
   'TWORLD': 'P',
   'BILL_LETTER': 'H',
