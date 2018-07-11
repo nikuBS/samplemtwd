@@ -202,7 +202,7 @@ Tw.MyTBillHotBill.prototype = {
   },
 
   _onOpenChildrenChoice: function ($popup) {
-    $popup.on('click', 'button', $.proxy(this._onClickChildButton, this));
+    $popup.one('click', '.popup-choice-list button', $.proxy(this._onClickChildButton, this));
   },
 
   _onClickChildButton: function (e) {
