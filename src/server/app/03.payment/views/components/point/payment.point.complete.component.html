@@ -10,19 +10,19 @@
                 <span class="ico"></span>
                 <p class="txt"><span class="tx-bold">포인트 납부 예약</span>이 <br/>완료되었습니다.</p>
             </div>
-            <div class="gift-data-cont">
+            <div class="gift-data-cont complete-target">
                 <div class="pay-data-cont">
                     <ul class="t-pay-data">
                         <li>
                             <dl>
                                 <dt class="ti-data">성명</dt>
-                                <dd class="tx-data">홍길동</dd>
+                                <dd class="tx-data custName">홍길동</dd>
                             </dl>
                         </li>
                         <li>
                             <dl>
                                 <dt class="ti-data">회선번호</dt>
-                                <dd class="tx-data"><span class="num">010-1234-5678</span></dd>
+                                <dd class="tx-data"><span class="num svcNum">010-1234-5678</span></dd>
                             </dl>
                         </li>
                         <li>
@@ -34,17 +34,17 @@
                                 </li>
                                 <li>
                                     <span class="ti-data">포인트종류</span>
-                                    <span class="tx-data">OK캐쉬백포인트</span>
+                                    <span class="tx-data pointName">OK캐쉬백포인트</span>
                                 </li>
                                 <li>
                                     <span class="ti-data">납부예약 포인트</span>
-                                    <span class="tx-data num">3,000</span><span class="won">점</span>
+                                    <span class="tx-data num" data-value="reqRbpPt">3,000</span><span class="won">점</span>
                                 </li>
                                 <li>
                                     <dl>
                                         <dt class="ti-data">요청내역</dt>
                                         <dd class="tx-data">
-                                            <span class="blind">요청내역</span><span class="bank">이동전화요금 (OK캐쉬백)</span><br />
+                                            <span class="blind">요청내역</span><span class="bank detailDisplayTxt">이동전화요금 (OK캐쉬백)</span><br />
                                             <span class="blind">상태</span><span class="bank">납부예약 신청완료</span>
                                         </dd>
                                     </dl>
@@ -63,7 +63,7 @@
                             <button>납부내역 보기</button>
                         </li>
                         <li class="bt-blue1">
-                            <button><a href="/payment/point">확인</a></button>
+                            <button><a href="/payment/point" class="replace-history">확인</a></button>
                         </li>
                     </ul>
                 </div>
