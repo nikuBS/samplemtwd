@@ -14,6 +14,7 @@ Tw.MyTBillHotBill = function (rootEl) {
   this._bindEvent();
   this._resTimerID = setTimeout(this._getBillResponse(), 500);
   this.NO_BILL_FIELDS = ['total', 'noVAT', 'is3rdParty', 'showDesc', 'discount'];
+  this._children = null;
   Handlebars.registerHelper('isBill', function (val, options) {
     return (self.NO_BILL_FIELDS.indexOf(val) < 0 ) ? options.fn(this) : options.inverse(this);
   });
@@ -30,7 +31,7 @@ Tw.MyTBillHotBill.prototype = {
   },
 
   _bindEvent: function () {
-    this.$container.on('click', '.use-family', $.proxy(this._onClickShowChildrenChoice, this));
+    this.$container.on('click', '.use-family', $.proxy(this._showChildrenChoice, this));
     this.$container.on('click', '#previousBill', $.proxy(this._showPreviousBill, this));
   },
 
@@ -48,11 +49,15 @@ Tw.MyTBillHotBill.prototype = {
       var billData = resp.result.hotBillInfo;
       //자녀 회선 메뉴는 매월 1일과 자녀회선 없을 시 비노출
       //TODO 오늘 날짜 가져오는 방법 공통 로직 여부 논의 필요
+      if ( resp.result.isChildAvailableYN === 'Y' ) {
+        this._children = resp.result.retChildList;
+      }
+
       var day = parseInt(resp.result.stdDateHan.match(/(\d+)\uC77C/i)[1], 10);
-      if ( day > 1 ) {
+      if ( day > 1 && this._children ) {
         this.$memberInfo.show();
         //TODO 자녀수
-        this.$numOfMembers.text('222');
+        this.$numOfMembers.text(this._children.length);
       }
 
       //9일부터 전월요금보기 보이기
@@ -140,10 +145,10 @@ Tw.MyTBillHotBill.prototype = {
           if ( itemS.items.length === 1 && itemS.items[0].name === key2 ) {
             delete itemS.items[0];
           }
-          itemS.discount = itemS.total < 0 ? true: false;
+          itemS.discount = itemS.total < 0 ? true : false;
           itemS.total = itemS.total.toString().replace(/(\d)(?=(\d{3})+$)/gi, '$1,');
         }
-        itemL.discount = itemL.total < 0 ? true: false;
+        itemL.discount = itemL.total < 0 ? true : false;
         itemL.total = itemL.total.toString().replace(/(\d)(?=(\d{3})+$)/gi, '$1,');
       });
     });
@@ -163,30 +168,14 @@ Tw.MyTBillHotBill.prototype = {
     skt_landing.widgets.widget_accordion2();
   },
 
-  _onClickShowChildrenChoice: function () {
-    event.preventDefault();
-    if ( !this._children ) {
-      this._requestChildInfo();
-    }
-    else {
-      this._showChildrenChoice();
-    }
-    this._apiService
-      .request(Tw.API_CMD.BFF_05_0024, { gubun: 'G' })
-      .done($.proxy(this._onReceivedBillData, this))
-      .fail($.proxy(this._onErrorReceivedBillData, this));
-  },
-
-  _showChildrenChoice: function (data) {
-    if ( typeof data !== 'undefined' ) {
-      this._children = data.result;
-    }
+  _showChildrenChoice: function (e) {
+    e.preventDefault();
     var members = [];
     var item = null;
     //자녀가 없을 경유 메뉴 접근 불가
-    if(this._children.length === 1){
+    if ( this._children.length === 1 ) {
       location.href = '/myt/bill/hotbill/child?svcMgmtNum=' + this._children[0].svcMgmtNum;
-    }else {
+    } else {
       this._children.forEach(function (member) {
         item = {
           attr: 'id=' + member.svcMgmtNum,
@@ -204,13 +193,6 @@ Tw.MyTBillHotBill.prototype = {
 
   _onClickChildButton: function (e) {
     location.href = '/myt/bill/hotbill/child?svcMgmtNum=' + e.target.id;
-  },
-
-  _requestChildInfo: function () {
-    this._apiService
-      .request(Tw.API_CMD.BFF_05_0024, { gubun: 'G' })
-      .done($.proxy(this._showChildrenChoice, this))
-      .fail($.proxy(this._onErrorReceivedBillData, this));
   },
 
   _showPreviousBill: function () {
