@@ -12,13 +12,19 @@ Tw.PaymentHistory = function (rootEl) {
 
   this.common = new Tw.PaymentHistoryCommon(rootEl);
 
-  this.$container.find('.cont-box .bt-dropdown.big').on('click', $.proxy(this.common.openPaymentTypePopup, this.common));
-
   // this._init();
+  this._cachedElement();
+  this._bindDOM();
 };
 
 Tw.PaymentHistory.prototype = {
+  _cachedElement: function () {
+    this.$menuChanger = this.$container.find('.cont-box .bt-dropdown.big');
+  },
 
+  _bindDOM: function () {
+    this.common.setMenuChanger(this.$menuChanger);
+  }
   /*
     과납 안내 관련 팝업
     popup.open({

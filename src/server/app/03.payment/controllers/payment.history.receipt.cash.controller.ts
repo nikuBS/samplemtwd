@@ -17,7 +17,9 @@ class PaymentHistoryReceiptCashController extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
 
-    res.render('payment.history.receipt.cash.html', {});
+    res.render('payment.history.receipt.cash.html', {
+      svcInfo: svcInfo
+    });
   }
 
 }
