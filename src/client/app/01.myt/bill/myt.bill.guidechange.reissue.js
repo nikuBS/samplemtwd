@@ -54,6 +54,8 @@ Tw.MyTBillReissue.prototype = {
   },
 
   _init: function () {
+    /*
+    //TODO: API 결과 값 확인 후 자바스크립트로 선택하도록 할 지 화면 로드 시 미리 처리 할 지 확인 필요!!
     //최초 진입시 설정 - 첫번째 아이템 선택
     this.$time.find(':radio').eq(0).trigger('click');
     this.$month.find(':radio').eq(0).trigger('click');
@@ -65,6 +67,7 @@ Tw.MyTBillReissue.prototype = {
     if ( this.$type.length > 0 ) {
       this.$type.find(':radio').eq(0).trigger('click');
     }
+    */
   },
 
   _onTimeChanged: function (/*event*/) {
@@ -95,7 +98,7 @@ Tw.MyTBillReissue.prototype = {
 
   _onOkPopupClicked: function () {
     if ( this.isIssue ) {
-      //기발행인경우 서버API 동작이 되어야 확인 가능함...
+      // TODO: 기발행인경우 서버API 동작이 되어야 확인 가능함...
     }
     else { //아닌경우
       var type = this.$guide.attr('data-type');
@@ -115,6 +118,7 @@ Tw.MyTBillReissue.prototype = {
     // sReIssueType	재발행코드종류
     // sRegalRepveIncldYn	법정대리인동시통보
     // sInvDt	재발행청구일자
+    // TODO: 서버 API 확인 필요!!
     var data = {
       sReIssueType: this.$guide.attr('data-type') || '',
       sRegalRepveIncldYn: 'Y',
