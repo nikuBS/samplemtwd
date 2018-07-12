@@ -49,7 +49,6 @@ Tw.PopupService.prototype = {
     $container.on('click', '.popup-closeBtn', $.proxy(this.close, this));
     $container.on('click', '.tw-popup-closeBtn', $.proxy(this.close, this));
     $container.on('click', '.tw-popup-confirm', $.proxy(this._confirm, this));
-    $container.on('click', '.tw-popup-closeNoHash', $.proxy(this._closeNoHash, this));
   },
   _confirm: function () {
     if ( !Tw.FormatHelper.isEmpty(this._confirmCallback) ) {
@@ -57,9 +56,6 @@ Tw.PopupService.prototype = {
     } else {
       this.close();
     }
-  },
-  _closeNoHash: function () {
-    skt_landing.action.popup.close();
   },
   _setConfirmCallback: function (callback) {
     if ( !Tw.FormatHelper.isEmpty(callback) ) {
@@ -98,19 +94,6 @@ Tw.PopupService.prototype = {
     };
     this._setConfirmCallback(confirmCallback);
     this._addHash();
-    this._open(option);
-  },
-  openAlertNoHash: function (message, title) {
-    var option = {
-      title: title || Tw.POPUP_TITLE.NOTIFY,
-      close_bt: true,
-      title2: message,
-      bt_num: 'one',
-      type: [{
-        style_class: 'bt-red1 tw-popup-closeNoHash',
-        txt: Tw.BUTTON_LABEL.CONFIRM
-      }]
-    };
     this._open(option);
   },
   openConfirm: function (title, message, contents, openCallback, confirmCallback) {
