@@ -71,7 +71,7 @@ Tw.RechargeTingProcess.prototype = {
   },
 
   _onCloseProcess: function () {
-    this._popupService.openConfirm(Tw.POPUP_TITLE.NOTIFY, Tw.MSG_GIFT.TING_A12, '', null, $.proxy(this._goToMain, this));
+    this._popupService.openConfirm(Tw.POPUP_TITLE.NOTIFY, Tw.MSG_GIFT.TING_A12, null, null, $.proxy(this._goToMain, this));
   },
 
   _setPhoneNumber: function (e) {
@@ -192,7 +192,6 @@ Tw.RechargeTingProcess.prototype = {
   },
 
   _validComplete: function () {
-    this._history.setHistory();
     this._go('complete');
 
     // if ( response.code === '00' ) {
@@ -228,7 +227,6 @@ Tw.RechargeTingProcess.prototype = {
   },
 
   _goToMain: function () {
-    this._history.resetHashHistory();
     this._go('main');
   },
 
@@ -249,6 +247,7 @@ Tw.RechargeTingProcess.prototype = {
   },
 
   _go: function (hash) {
+    this._history.setHistory();
     window.location.hash = hash;
   }
 };
