@@ -33,35 +33,46 @@ abstract class TwViewController {
   }
 
   public initPage(req: any, res: any, next: any): void {
-    const userId = req.query.userId;
-    const error = req.query.error;
-    const errorMessage = req.query.error_description;
     const path = req.baseUrl + (req.path !== '/' ? req.path : '');
-
-    if ( this.checkError(error, errorMessage) ) {
-      res.send(errorMessage);
-      return;
-    }
+    const tokenId = req.query.id_token;
+    const userId = req.query.userId;
 
     this.loginService.setClientSession(req.session);
 
-    if ( URL[path].login ) {
-      this.login(req, res, next, userId);
+    if ( !this.existId(tokenId, userId) ) {
+      if ( URL[path].login ) {
+        this.goSessionLogin(req, res, next);
+      } else {
+        this.render(req, res, next);
+      }
     } else {
-      this.render(req, res, next);
+      this.login(req, res, next, tokenId, userId);
     }
   }
 
-  private login(req, res, next, userId) {
-    // Mock Test
-    let loginCmd = API_CMD.BFF_03_0001;
-    if ( userId === 'mock' ) {
-      loginCmd = API_CMD.BFF_03_0001_mock;
+  private login(req, res, next, tokenId, userId) {
+    if ( !FormatHelper.isEmpty(tokenId) ) {
+      // TID login
+      this.tidLogin(req, res, next, tokenId);
+    } else {
+      // TEST login
+      this.testLogin(req, res, next, userId);
     }
+  }
+
+  private existId(tokenId: string, userId: string) {
+    return !(FormatHelper.isEmpty(tokenId) && FormatHelper.isEmpty(userId));
+  }
+
+  private checkLogin(userId: string): boolean {
+    return this.loginService.isLogin(userId);
+  }
+
+  private testLogin(req, res, next, userId) {
     if ( this.checkLogin(userId) ) {
       this.render(req, res, next, this._loginService.getSvcInfo());
     } else {
-      this._apiService.request(loginCmd, { userId }).subscribe((resp) => {
+      this._apiService.request(API_CMD.BFF_03_0001, { userId }).subscribe((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
           this.loginService.setUserId(userId);
           this.render(req, res, next, new SvcInfoModel(resp.result));
@@ -72,8 +83,23 @@ abstract class TwViewController {
     }
   }
 
-  private checkLogin(userId: string): boolean {
-    return this.loginService.isLogin(userId);
+  private tidLogin(req, res, next, tokenId) {
+    const params = {
+      token: tokenId,
+      state: ''
+    };
+    this._apiService.request(API_CMD.BFF_03_0008, params).subscribe((resp) => {
+      res.send(resp);
+    });
+  }
+
+  private goSessionLogin(req, res, next) {
+    if ( this.checkLogin('') ) {
+      this.render(req, res, next, this._loginService.getSvcInfo());
+    } else {
+      // 세션 만료
+      res.send('session expiration');
+    }
   }
 
   private checkError(error: string, errorMessage: string) {

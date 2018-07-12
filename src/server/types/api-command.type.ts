@@ -153,21 +153,6 @@ export const API_CMD = {
 
 };
 
-export const TID_SVC_TYPE = {
-  SSO_LOGIN: 9,
-  LOGIN: 14,
-  ID_LOGIN: 16,
-  SSO_LOGOUT: 19,
-  SIGN_UP: 20,
-  GET_ACCOUNT: 21,
-  FIND_ID: 22,
-  FIND_PW: 23,
-  CHANGE_PW: 24,
-  TERM: 25,
-  SECURITY: 26,
-  GUIDE: 50
-};
-
 export const API_CODE = {
   CODE_00: '00',    // success
   CODE_01: '01',    // 화면 차단
