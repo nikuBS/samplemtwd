@@ -13,7 +13,7 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div id="wrap" class="wrap" data-selected-bill-guide-data="<%= selectedBillGuideData %>">
+<div id="wrap" class="wrap">
     <!-- #header -->
     <div id="header" class="header-wrap">
         <div class="header step-page">
@@ -32,39 +32,13 @@
             <div class="cont-box nogaps-top">
                 <div class="change-plan">
                     <h3 class="tit-type">사용중인 요금안내서</h3>
-                    <button class="bt-dropdown big no-arrow" title="T world 확인"><%= selectedBillGuide.curBillTypeNm %><span class="ico"></span></button>
-                    <a href="/myt/bill/guidechange/change?selectedBillTypeCd=<%= anotherBillGuideType %>" class="bt-link-tx">다른 요금안내서로 바꾸시겠어요? <span class="ico"></span></a>
+                    <button class="bt-dropdown big no-arrow" title="T world 확인"><%= curBillGuide.curBillTypeNm %><span class="ico"></span></button>
+                    <a href="/myt/bill/guidechange/change?selectedBillGuideType=<%= anotherBillGuideType %>" class="bt-link-tx">다른 요금안내서로 바꾸시겠어요? <span class="ico"></span></a>
                 </div>
             </div>
 
-            <hr class="cont-sp type1" aria-hidden="true"/>
-            <div class="cont-box">
-                <%- include('../../components/billguide/'+ selectedBillGuide.component +'.component.html') %>
-            </div>
-
-            <hr class="cont-sp type1" aria-hidden="true"/>
-            <div class="cont-box">
-                <!-- .widget -->
-                <div class="widget">
-                    <div class="widget-box accordion">
-                        <h5 class="tit-a">유의사항</h5>
-                        <div class="acco-cover"><!-- toggle : 한개만 열기 -->
-                            <div class="acco-style btn-hold">
-                                <ul class="acco-list">
-                                    <li class="acco-box">
-                                        <div class="acco-cont">
-                                            <ul class="list-dot">
-                                                <li class="list">청구금액이 확정되면 T world에서 확인하실 수 있도록 문자로 안내해드리며, 별도로 요금안내서는 발송되지 않습니다.</li>
-                                                <li class="list">매월 5일까지 신청 시 당월부터 변경된 요금안내서가 발송되며 6일이후 신청시에는 다음 달 부터 변경된 요금안내서를 발송합니다.</li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!--// .widget -->
+            <div class="component-wrap">
+                <%- include('../../components/billguide/'+ curBillGuide.component +'.component.html', {curBillGuide: curBillGuide}) %>
             </div>
 
         </div>
@@ -75,10 +49,10 @@
 <% include ../../components/javascript.component.html %>
 <script>
     $(document).ready(function () {
-      var selectedBillGuideData = $(wrap).data('selected-bill-guide-data');
-      var componentName = selectedBillGuideData.component;
+      var $component = $('.bill-guide-component');
+      var componentName = $component.attr('cur-bill-type-component');
       var componentClassName = componentName.replace(/-([a-z])/g, function (g) { return g[1].toUpperCase(); });
-      new Tw.MyTBillGuideChangeClasses[componentClassName]($('#wrap'), true);
+      new Tw.MyTBillGuideUpdateClasses[componentClassName]($component);
     });
 </script>
 <% include ../../components/end.component.html %>

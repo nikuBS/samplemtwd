@@ -2,8 +2,8 @@ const curBillType = {
   'code': '00',
   'msg': 'success',
   'result': {
-    'curBillType': '2',
-    'curBillTypeNm': '이메일',
+    'curBillType': '1',
+    'curBillTypeNm': '기타(우편)',
     'scurBillYn': 'Y',
     'invEmailAddr': 'give0602@naver.com',
     'intPhonDtlIsueYn': 'N',

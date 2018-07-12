@@ -3,96 +3,127 @@
 * Author: 이정민 (skt.p130713@partner.sk.com)
 * Date: 2018.07.05
 -->
-<div class="step" step="1">
-    <div class="change-plan">
-        <h4 class="tit-type2">요금안내서 정보설정(1/2)</h4>
-        <dl>
-            <dt>이메일 주소를 입력해주세요.</dt>
-            <dd>
-                <span class="inputbox">
-                    <span class="input">
-                        <input type="text" placeholder="name@example.co.kr" title="이메일 주소 입력" value="<%= selectedBillGuide.invEmailAddr %>" class="input-email">
-                    </span>
-                </span>
-                <div class="widget">
-                    <div class="widget-box check">
-                        <ul class="select-list" role="group">
-                            <%if (selectedBillGuide.scurMailYn === 'N') { %>
-                            <li class="checkbox type01" role="checkbox" aria-checked="false">
-                                <input type="checkbox" name="checkbox" value="이메일 보안 설정" title="이메일 보안 설정 선택">
-                                이메일 보안 설정
-                            </li>
-                            <% } else { %>
-                            <li class="checkbox type01 checked" role="checkbox" aria-checked="true">
-                                <input type="checkbox" name="checkbox" value="이메일 보안 설정" title="이메일 보안 설정 선택" checked="checked">
-                                이메일 보안 설정
-                            </li>
-                            <% } %>
+<div class="bill-guide-component" cur-bill-type="<%= curBillGuide.curBillType %>" cur-bill-type-nm="<%= curBillGuide.curBillTypeNm %>" cur-bill-type-component="<%= curBillGuide.component %>">
+    <hr class="cont-sp type1" aria-hidden="true"/>
+    <div class="cont-box">
+        <div class="step" step="1">
+            <div class="change-plan">
+                <h4 class="tit-type2">요금안내서 정보설정(1/2)</h4>
+                <dl>
+                    <dt>이메일 주소를 입력해주세요.</dt>
+                    <dd>
+                        <span class="inputbox">
+                            <span class="input">
+                                <input type="text" placeholder="name@example.co.kr" title="이메일 주소 입력" value="<%= curBillGuide.invEmailAddr %>" class="input-email">
+                            </span>
+                        </span>
+                        <div class="widget">
+                            <div class="widget-box check">
+                                <ul class="select-list" role="group">
+                                    <%if (curBillGuide.scurMailYn === 'N') { %>
+                                    <li class="checkbox type01" role="checkbox" aria-checked="false">
+                                        <input type="checkbox" name="checkbox" value="이메일 보안 설정" title="이메일 보안 설정 선택">
+                                        이메일 보안 설정
+                                    </li>
+                                    <% } else { %>
+                                    <li class="checkbox type01 checked" role="checkbox" aria-checked="true">
+                                        <input type="checkbox" name="checkbox" value="이메일 보안 설정" title="이메일 보안 설정 선택" checked="checked">
+                                        이메일 보안 설정
+                                    </li>
+                                    <% } %>
 
-                            <%if (selectedBillGuide.emailRcvAgreeYn === 'N') { %>
-                            <li class="checkbox type01" role="checkbox" aria-checked="false">
-                                <input type="checkbox" name="checkbox" value="입력한 이메일로 다양한 혜택 정보 받기" title="입력한 이메일로 다양한 혜택 정보 받기 선택" aria-labelledby="aria-guide01">
-                                입력한 이메일로 다양한 혜택 정보 받기
-                            </li>
+                                    <%if (curBillGuide.emailRcvAgreeYn === 'N') { %>
+                                    <li class="checkbox type01" role="checkbox" aria-checked="false">
+                                        <input type="checkbox" name="checkbox" value="입력한 이메일로 다양한 혜택 정보 받기" title="입력한 이메일로 다양한 혜택 정보 받기 선택" aria-labelledby="aria-guide01">
+                                        입력한 이메일로 다양한 혜택 정보 받기
+                                    </li>
+                                    <% } else { %>
+                                    <li class="checkbox type01 checked" role="checkbox" aria-checked="true">
+                                        <input type="checkbox" name="checkbox" value="입력한 이메일로 다양한 혜택 정보 받기" title="입력한 이메일로 다양한 혜택 정보 받기 선택" checked="checked" aria-labelledby="aria-guide01">
+                                        입력한 이메일로 다양한 혜택 정보 받기
+                                    </li>
+                                    <% } %>
+                                </ul>
+                            </div>
+                        </div>
+                        <p id="aria-guide01" class="guide-txt-chk">체크하시면 요금안내서와 혜택정보를 함께 드립니다.</p>
+                    </dd>
+                </dl>
+            </div>
+
+            <div class="inner">
+                <div class="contents-btn">
+                    <ul class="bt-slice">
+                        <li class="bt-blue1">
+                            <button class="btn-next">다음</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="step" step="2" style="display: none;">
+            <div class="change-plan">
+                <h4 class="tit-type2">요금안내서 정보설정 (2/2)</h4>
+                <dl>
+                    <!-- 2018-07-06 수정 -->
+                    <dt>휴대폰번호 전체 표시할까요?</dt>
+                    <!--// 2018-07-06 수정 -->
+                    <dd>
+                        <div class="widget">
+                            <div class="widget-box tube">
+                                <ul class="tube-list two" role="radiogroup">
+                                    <%if (curBillGuide.phonNumPrtClCd === 'N') { %>
+                                    <li role="radio" aria-checked="true" class="checked"><input type="radio" name="selectset1" title="일부 별표 표시 선택">일부 별표 표시</li>
+                                    <li role="radio" aria-checked="false"><input type="radio" name="selectset1" title="전체 표시 선택">전체 표시</li>
+                                    <% } else {%>
+                                    <li role="radio" aria-checked="false"><input type="radio" name="selectset1" title="일부 별표 표시 선택">일부 별표 표시</li>
+                                    <li role="radio" aria-checked="true" class="checked"><input type="radio" name="selectset1" title="전체 표시 선택">전체 표시</li>
+                                    <% } %>
+                                </ul>
+                            </div>
+                        </div>
+                    </dd>
+                </dl>
+            </div>
+            <div class="inner">
+                <div class="contents-btn">
+                    <ul class="bt-slice">
+                        <li class="bt-blue1">
+                            <% if (isUpdate) { %>
+                            <button class="btn-submit">요금안내서 정보변경하기</button>
                             <% } else { %>
-                            <li class="checkbox type01 checked" role="checkbox" aria-checked="true">
-                                <input type="checkbox" name="checkbox" value="입력한 이메일로 다양한 혜택 정보 받기" title="입력한 이메일로 다양한 혜택 정보 받기 선택" checked="checked" aria-labelledby="aria-guide01">
-                                입력한 이메일로 다양한 혜택 정보 받기
-                            </li>
+                            <button class="btn-submit">&quot;이메일&quot;로 변경하기</button>
                             <% } %>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <hr class="cont-sp type1" aria-hidden="true"/>
+    <div class="cont-box">
+        <!-- .widget -->
+        <div class="widget">
+            <div class="widget-box accordion">
+                <h5 class="tit-a">유의사항</h5>
+                <div class="acco-cover on"><!-- toggle : 한개만 열기 -->
+                    <div class="acco-style btn-hold">
+                        <ul class="acco-list">
+                            <li class="acco-box on">
+                                <div class="acco-cont">
+                                    <ul class="list-dot">
+                                        <li class="list">여러 개의 회선에 대해 통합요금안내서를 받으시는 경우 통합청구 대표회선으로만 신청이 가능하며 전체 요금이 합산되어 발송됩니다.</li>
+                                        <li class="list">매월 5일까지 신청 시 당월부터 변경된 요금안내서가 발송되며 6일 이후 신청시에는 다음 달 부터 변경된 요금안내서를 발송합니다.</li>
+                                    </ul>
+                                </div>
+                            </li>
                         </ul>
                     </div>
                 </div>
-                <p id="aria-guide01" class="guide-txt-chk">체크하시면 요금안내서와 혜택정보를 함께 드립니다.</p>
-            </dd>
-        </dl>
-    </div>
-
-    <div class="inner">
-        <div class="contents-btn">
-            <ul class="bt-slice">
-                <li class="bt-blue1">
-                    <button class="btn-next">다음</button>
-                </li>
-            </ul>
+            </div>
         </div>
-    </div>
-</div>
-<div class="step" step="2" style="display: none;">
-    <div class="change-plan">
-        <h4 class="tit-type2">요금안내서 정보설정 (2/2)</h4>
-        <dl>
-            <!-- 2018-07-06 수정 -->
-            <dt>휴대폰번호 전체 표시할까요?</dt>
-            <!--// 2018-07-06 수정 -->
-            <dd>
-                <div class="widget">
-                    <div class="widget-box tube">
-                        <ul class="tube-list two" role="radiogroup">
-                            <%if (selectedBillGuide.phonNumPrtClCd === 'N') { %>
-                            <li role="radio" aria-checked="true" class="checked"><input type="radio" name="selectset1" title="일부 별표 표시 선택">일부 별표 표시</li>
-                            <li role="radio" aria-checked="false"><input type="radio" name="selectset1" title="전체 표시 선택">전체 표시</li>
-                            <% } else {%>
-                            <li role="radio" aria-checked="false"><input type="radio" name="selectset1" title="일부 별표 표시 선택">일부 별표 표시</li>
-                            <li role="radio" aria-checked="true" class="checked"><input type="radio" name="selectset1" title="전체 표시 선택">전체 표시</li>
-                            <% } %>
-                        </ul>
-                    </div>
-                </div>
-            </dd>
-        </dl>
-    </div>
-    <div class="inner">
-        <div class="contents-btn">
-            <ul class="bt-slice">
-                <li class="bt-blue1">
-                    <% if (isUpdate) { %>
-                    <button class="btn-update">요금안내서 정보변경하기</button>
-                    <% } else { %>
-                    <button class="btn-change">&quot;이메일&quot;로 변경하기</button>
-                    <% } %>
-                </li>
-            </ul>
-        </div>
+        <!--// .widget -->
     </div>
 </div>

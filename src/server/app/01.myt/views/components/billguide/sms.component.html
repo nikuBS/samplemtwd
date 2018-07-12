@@ -3,40 +3,73 @@
 * Author: 이정민 (skt.p130713@partner.sk.com)
 * Date: 2018.07.05
 -->
-<%if (selectedBillGuide.kidsYn === 'Y') { %>
-<div class="change-plan">
-    <h3 class="tit-type spc2">요금안내서 정보설정</h3>
-    <dl>
-        <dt>법정대리인에게 함께 알려드릴까요?(선택사항)</dt>
-        <dd>
-            <span class="inputbox">
-                <span class="input">
-                    <input type="text" placeholder="휴대폰번호입력 (숫자만 입력)" title="휴대폰번호 입력 (숫자만 입력)" aria-describedby="aria-rwdesc1" class="input-phone input-ccur-noti-svc-num" maxlength="11" onInput="return Tw.InputHelper.inputNumberOnly(this);" value="<%= selectedBillGuide.ccurNotiSvcNum%>">
-                    <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
-                </span>
-                <span id="aria-rwdesc1" class="guide-txt">미성년고객의 요금안내서는 법정대리인 휴대폰번호로 동시 안내됩니다.</span>
-            </span>
-        </dd>
-    </dl>
-</div>
-<% } else { %>
-<div class="payment-select">
-    <div class="contents-empty">
-        <span class="ico"></span>
-        <p class="desc">&quot;문자 요금안내서&quot;는<br />입력하실 정보가 없습니다.</p>
+<div class="bill-guide-component" cur-bill-type="<%= curBillGuide.curBillType %>" cur-bill-type-nm="<%= curBillGuide.curBillTypeNm %>" cur-bill-type-component="<%= curBillGuide.component %>">
+    <hr class="cont-sp type1" aria-hidden="true"/>
+    <div class="cont-box">
+        <%if (curBillGuide.kidsYn === 'Y') { %>
+        <div class="change-plan">
+            <h3 class="tit-type spc2">요금안내서 정보설정</h3>
+            <dl>
+                <dt>법정대리인에게 함께 알려드릴까요?(선택사항)</dt>
+                <dd>
+                    <span class="inputbox">
+                        <span class="input">
+                            <input type="text" placeholder="휴대폰번호입력 (숫자만 입력)" title="휴대폰번호 입력 (숫자만 입력)" aria-describedby="aria-rwdesc1" class="input-phone input-ccur-noti-svc-num" maxlength="11" onInput="return Tw.InputHelper.inputNumberOnly(this);" value="<%= curBillGuide.ccurNotiSvcNum%>">
+                            <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
+                        </span>
+                        <span id="aria-rwdesc1" class="guide-txt">미성년고객의 요금안내서는 법정대리인 휴대폰번호로 동시 안내됩니다.</span>
+                    </span>
+                </dd>
+            </dl>
+        </div>
+        <% } else { %>
+        <div class="payment-select">
+            <div class="contents-empty">
+                <span class="ico"></span>
+                <p class="desc">&quot;문자 요금안내서&quot;는<br />입력하실 정보가 없습니다.</p>
+            </div>
+        </div>
+        <% } %>
+        <div class="inner">
+            <div class="contents-btn">
+                <ul class="bt-slice">
+                    <li class="bt-blue1">
+                        <% if (isUpdate) { %>
+                        <button class="btn-submit">요금안내서 정보변경하기</button>
+                        <% } else { %>
+                        <button class="btn-submit">&quot;문자&quot;로 변경하기</button>
+                        <% } %>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
-</div>
-<% } %>
-<div class="inner">
-    <div class="contents-btn">
-        <ul class="bt-slice">
-            <li class="bt-blue1">
-                <% if (isUpdate) { %>
-                <button class="btn-update">요금안내서 정보변경하기</button>
-                <% } else { %>
-                <button class="btn-change">&quot;문자&quot;로 변경하기</button>
-                <% } %>
-            </li>
-        </ul>
+
+    <hr class="cont-sp type1" aria-hidden="true"/>
+    <div class="cont-box">
+        <!-- .widget -->
+        <div class="widget">
+            <div class="widget-box accordion">
+                <h5 class="tit-a">유의사항</h5>
+                <div class="acco-cover on"><!-- toggle : 한개만 열기 -->
+                    <div class="acco-style btn-hold">
+                        <ul class="acco-list">
+                            <li class="acco-box on">
+                                <div class="acco-cont">
+                                    <ul class="list-dot">
+                                        <li class="list">휴대폰의 기종 및 이용지역, 이용상태에 따라 일부신청이 제한될 수 있습니다. </li>
+                                        <li class="list">현재 사용중인 휴대폰이 <em>UISM 단독 상태</em>인 경우 Bill Letter를 신청하실 수 없습니다. </li>
+                                        <li class="list">USIM 개통 후 휴대폰에 USIM이 장착되지 않은 상태에서는 문자 요금안내서를 신청하실 수 없습니다.  </li>
+                                        <li class="list">T world에서는 미성년고객은 법정대리인이 SKT 고객일 경우에만 모바일 관련 요금안내서 신청이 가능하며, 신청 시 법정대리인 휴대폰번호로 매월 요금안내서가 동시 통보됩니다. 자세한 사항은 고객센터(국번없이 <em>1599-0011</em>(유료)/휴대폰 114)로 문의하시기바랍니다.</li>
+                                        <li class="list">매월 5일까지 신청 시 당월부터 변경된 요금안내서가 발송되며 6일이후 신청시에는 다음 달 부터 변경된 요금안내서를 발송합니다.</li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--// .widget -->
     </div>
 </div>

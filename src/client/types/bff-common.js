@@ -28,3 +28,14 @@ Tw.RAINBOW_CHANGE_CODE = {
   REQUEST: 'A1',
   CANCEL: 'T1'
 };
+
+Tw.BILL_GUIDE_TYPE = {
+  TWORLD: 'P',
+  BILL_LETTER: 'H',
+  SMS: 'B',
+  EMAIL: '2',
+  BILL_LETTER_EMAIL: 'I',
+  SMS_EMAIL: 'A',
+  BILL_LETTER_SMS: 'Q',
+  ETC: '1'
+};

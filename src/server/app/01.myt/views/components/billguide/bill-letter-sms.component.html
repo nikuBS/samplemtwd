@@ -3,42 +3,76 @@
 * Author: 이정민 (skt.p130713@partner.sk.com)
 * Date: 2018.07.05
 -->
-<div class="change-plan">
-    <h3 class="tit-type spc2">요금안내서 정보설정</h3>
-    <dl>
-        <dt>Bill Letter 조회 시, 보안설정하시겠습니까?</dt>
-        <dd>
-            <!-- .widget -->
-            <div class="widget">
-                <div class="widget-box tube">
-                    <ul class="tube-list two" role="radiogroup">
-                        <% if (selectedBillGuide.scurBillYn === 'N') { %>
-                        <li role="radio" aria-checked="true" class="checked"><input type="radio" name="infoset" title="설정없이 조회 선택">설정없이 조회</li>
-                        <li role="radio" aria-checked="false"><input type="radio" name="infoset" title="생년월일 입력 후, 조회 선택">생년월일 입력 후, 조회</li>
-                        <% } else {%>
-                        <li role="radio" aria-checked="false"><input type="radio" name="infoset" title="설정없이 조회 선택">설정없이 조회</li>
-                        <li role="radio" aria-checked="true" class="checked"><input type="radio" name="infoset" title="생년월일 입력 후, 조회 선택">생년월일 입력 후, 조회</li>
+<div class="bill-guide-component" cur-bill-type="<%= curBillGuide.curBillType %>" cur-bill-type-nm="<%= curBillGuide.curBillTypeNm %>" cur-bill-type-component="<%= curBillGuide.component %>">
+    <hr class="cont-sp type1" aria-hidden="true"/>
+    <div class="cont-box">
+        <div class="change-plan">
+            <h3 class="tit-type spc2">요금안내서 정보설정</h3>
+            <dl>
+                <dt>Bill Letter 조회 시, 보안설정하시겠습니까?</dt>
+                <dd>
+                    <!-- .widget -->
+                    <div class="widget">
+                        <div class="widget-box tube">
+                            <ul class="tube-list two" role="radiogroup">
+                                <% if (curBillGuide.scurBillYn === 'N') { %>
+                                <li role="radio" aria-checked="true" class="checked"><input type="radio" name="infoset" title="설정없이 조회 선택">설정없이 조회</li>
+                                <li role="radio" aria-checked="false"><input type="radio" name="infoset" title="생년월일 입력 후, 조회 선택">생년월일 입력 후, 조회</li>
+                                <% } else {%>
+                                <li role="radio" aria-checked="false"><input type="radio" name="infoset" title="설정없이 조회 선택">설정없이 조회</li>
+                                <li role="radio" aria-checked="true" class="checked"><input type="radio" name="infoset" title="생년월일 입력 후, 조회 선택">생년월일 입력 후, 조회</li>
+                                <% } %>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- //.widget -->
+                    <div class="contents-notice type1">
+                        <span class="noti-type3">생년월일 입력 후 조회하시면 Bill Letter의 보안을 강화할 수 있습니다. </span>
+                    </div>
+                </dd>
+            </dl>
+        </div>
+        <div class="inner">
+            <div class="contents-btn">
+                <ul class="bt-slice">
+                    <li class="bt-blue1">
+                        <% if (isUpdate) { %>
+                        <button class="btn-submit">요금안내서 정보변경하기</button>
+                        <% } else { %>
+                        <button class="btn-submit">&quot;Bill Letter+문자&quot;로 변경하기</button>
                         <% } %>
-                    </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <hr class="cont-sp type1" aria-hidden="true"/>
+    <div class="cont-box">
+        <!-- .widget -->
+        <div class="widget">
+            <div class="widget-box accordion">
+                <h5 class="tit-a">유의사항</h5>
+                <div class="acco-cover on"><!-- toggle : 한개만 열기 -->
+                    <div class="acco-style btn-hold">
+                        <ul class="acco-list">
+                            <li class="acco-box on">
+                                <div class="acco-cont">
+                                    <ul class="list-dot">
+                                        <li class="list">Bill Letter의 상세한 이용 방법은 Bill Letter 가이드화면(<a href="">http://smartbill.sktelecom.com</a>)에서 확인하세요.</li>
+                                        <li class="list">Bill Letter는 Android 2.3 / iOS 5.1.1 이상의 OS에서 서비스가 가능합니다. (아이폰의 우 앱 설치 후 반드시 앱을 통해 본인 휴대폰 번호를 등록 해야만 요금안내서를 받으실 수 있습니다.)</li>
+                                        <li class="list">휴대폰의 기종 및 이용지역, 이용상태에 따라 일부 신청이 제한될 수 있습니다.</li>
+                                        <li class="list">현재 사용중인 휴대폰이 <em>USIM 단독 상태</em>인 경우 Bill Letter를 이용하실 수 없습니다.</li>
+                                        <li class="list">T world에서는 미성년고객은 법정대리인이 SKT 고 객일 경우에만 모바일 관련 요금안내서 신청이 가능하며, 신청 시 법정대리인 휴대폰 번호로 매월 요금안내서가 동시 통보됩니다. 자세한 사항은 고객센터(국번없이 <em>1599-0011</em>(유료)/휴대폰 114)로 문의하시기바랍니다.</li>
+                                        <li class="list">매월 5일까지 신청 시 당월부터 변경된 요금안내서가 발송되며 6일이후 신청시에는 다음 달 부터 변경된 요금안내서를 발송합니다.</li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-            <!-- //.widget -->
-            <div class="contents-notice type1">
-                <span class="noti-type3">생년월일 입력 후 조회하시면 Bill Letter의 보안을 강화할 수 있습니다. </span>
-            </div>
-        </dd>
-    </dl>
-</div>
-<div class="inner">
-    <div class="contents-btn">
-        <ul class="bt-slice">
-            <li class="bt-blue1">
-                <% if (isUpdate) { %>
-                <button class="btn-update">요금안내서 정보변경하기</button>
-                <% } else { %>
-                <button class="btn-change">&quot;Bill Letter+문자&quot;로 변경하기</button>
-                <% } %>
-            </li>
-        </ul>
+        </div>
+        <!--// .widget -->
     </div>
 </div>
