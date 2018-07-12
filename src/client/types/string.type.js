@@ -68,7 +68,7 @@ Tw.MSG_MYT = {
   BILL_GUIDE_03: '선택하신 청구월에 대한 청구서가 이미 재발행 신청 되었습니다.',
   HOTBILL_MEMBER_POPUP_TITLE: '자녀 선택',
   HOTBILL_FAIL_REQUEST_TITLE: '요청 실패.',
-  HOTBILL_FAIL_REQUEST: '요금 정보 가져오기 실패 했습니다.'
+  HOTBILL_FAIL_REQUEST: '요금 정보 가져오기 실패했습니다.'
 };
 
 Tw.MSG_RECHARGE = {
