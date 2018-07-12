@@ -1109,7 +1109,7 @@
   border-radius: 0.5625rem;
   background: #fff;
   overflow: hidden;
-  z-index: 11;
+  z-index: 30;
 }
 
 .popup .popup-info .popup-header {
@@ -1300,7 +1300,7 @@
   bottom: 0;
   background: #000;
   opacity: .8;
-  z-index: 10;
+  z-index: 25;
 }
 
 .sns-ico-fb .ico {
@@ -2080,25 +2080,8 @@
 }
 
 .commend-bill-info .bill-tit {
-  font-size: 1.5rem;
-  padding-bottom: 2.75rem;
-}
-
-.commend-bill-info .bill-tit .bill-tel {
-  display: block;
-  font-size: 1rem;
-}
-
-.commend-bill-info .contents-info-list .bill-num {
-  display: inline-block;
-  width: 100%;
-  font-size: 0.8125rem;
-  padding-bottom: 1.125rem;
-  text-align: right;
-}
-
-.commend-bill-info .contents-info-list .bill-num em {
-  color: #e80a0a;
+  font-size: 1.25rem;
+  padding-bottom: 2.1875rem;
 }
 
 .commend-bill-info .contents-info-list .bill-history li {
@@ -2140,13 +2123,12 @@
   text-align: right;
 }
 
-.commend-bill-info .contents-info-list .bill-history li .info-data .info-title,
-.commend-bill-info .contents-info-list .bill-history li .info-data .info-sub {
+.commend-bill-info .contents-info-list .bill-history li .info-data .info-title {
   font-size: 1rem;
   font-weight: 400;
 }
 
-.commend-bill-info .contents-info-list .bill-history li .info-data .info-sub-type1 {
+.commend-bill-info .contents-info-list .bill-history li .info-data .info-sub {
   font-size: 0.8125rem;
   color: #757575;
   letter-spacing: 0;
@@ -3723,12 +3705,14 @@
 }
 
 .title-h3 {
+  overflow: hidden;
   font-size: 1.25rem;
   padding-bottom: 1.1875rem;
   border-bottom: 1px solid #e1e1e1;
 }
 
 .title-h4 {
+  overflow: hidden;
   font-size: 0.9375rem;
   padding-top: 3.75rem;
   padding-bottom: 1.4375rem;
@@ -3756,6 +3740,23 @@
 
 .title-h4 .bt-link-tx {
   float: right;
+}
+
+.title-h4 .right-item {
+  float: right;
+  text-align: right;
+}
+
+.title-h4 .right-item .service-state {
+  float: none;
+  display: block;
+  line-height: 1;
+}
+
+.title-h4 .right-item .bt-link-tx {
+  float: none;
+  display: block;
+  margin-top: 0.625rem;
 }
 
 .text-link {
@@ -4595,23 +4596,20 @@ li.payment-detail-box:last-child {
   margin: 1px 0 -3px 0;
 }
 
-span[class^="ico-foot"] {
+.ico-foot-1 {
+  /*텍스트아이콘으로 변경되어삭제*/
+}
+
+.ico-foot-2 {
   display: inline-block;
-  width: 0.9375rem;
-  height: 0.9375rem;
-  margin: 0.125rem 0 0 0.5rem;
+  width: 0.5rem;
+  height: 0.4375rem;
+  margin: 0.125rem 0 0 0.25rem;
   vertical-align: top;
   content: "";
   background-image: url(/img/ico/ico-group.png);
   background-repeat: no-repeat;
   background-size: 3.125rem;
-}
-
-span[class^="ico-foot"].ico-foot-1 {
-  background-position: -1.875rem -24.8125rem;
-}
-
-span[class^="ico-foot"].ico-foot-2 {
   background-position: -1.875rem -23.625rem;
 }
 
@@ -4625,9 +4623,13 @@ span[class^="ico-foot"].ico-foot-2 {
   padding: 0.1875rem 0 0.125rem;
 }
 
-.footnote-txt span[class^="ico-foot"] {
-  margin-left: 0;
-  margin-right: 0.4375rem;
+.footnote-txt .ico-foot-2 {
+  margin: 0.1875rem 0.4375rem 0 0.125rem;
+}
+
+.footnote-txt .badge {
+  margin: 0.0625rem 0.5rem 0 0;
+  vertical-align: top;
 }
 
 .payment-inquiry .bt-dropdown {
@@ -7456,30 +7458,43 @@ span[class*=char-star][class*=red] {
   margin-bottom: 0;
 }
 
-.agree-list .accordion .acco-style.btn-hold .acco-list .acco-tit {
-  padding-left: 0;
-}
-
-.agree-list .accordion .acco-style.btn-hold .acco-list .acco-cont {
+.agree-list .accordion .acco-style.btn-hold .acco-list .acco-box.on .acco-cont {
   height: 8.125rem;
+  margin-bottom: 1.375rem;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
   overflow-y: auto;
 }
 
-.agree-list .accordion .acco-style.btn-hold .acco-list .acco-cont .agree-cont-defined {
-  padding: 0.9375rem 1.125rem;
+.agree-list .accordion .acco-style.btn-hold .acco-list .acco-box .acco-tit {
+  padding-left: 0;
+}
+
+.agree-list .accordion .acco-style.btn-hold .acco-list .acco-box .acco-cont {
+  padding-bottom: 0;
   border-radius: 0.3125rem;
+  overflow: hidden;
+}
+
+.agree-list .accordion .acco-style.btn-hold .acco-list .acco-box .acco-cont .agree-cont-defined {
+  border-radius: 0.3125rem;
+  padding: 0.9375rem 1.125rem;
   background: #f5f5f5;
 }
 
-.agree-list .accordion .acco-style.btn-hold .acco-list .acco-cont .agree-cont-defined dt {
+.agree-list .accordion .acco-style.btn-hold .acco-list .acco-box .acco-cont .agree-cont-defined dt {
   margin: 0 0 1.6875rem 0;
   font-weight: 700;
   font-size: 0.875rem;
 }
 
-.agree-list .accordion .acco-style.btn-hold .acco-list .acco-cont .agree-cont-defined dd {
+.agree-list .accordion .acco-style.btn-hold .acco-list .acco-box .acco-cont .agree-cont-defined dd {
   font-size: 0.875rem;
   line-height: 1.375rem;
+}
+
+.agree-list .accordion .acco-style.btn-hold .acco-list .acco-box:last-of-type.on .acco-cont {
+  margin-bottom: 0;
 }
 
 .agree-list .accordion .checkbox {
@@ -7499,7 +7514,7 @@ span[class*=char-star][class*=red] {
 }
 
 .agree-list > .bt-slice {
-  margin-top: 2.5rem;
+  margin-top: 2.1875rem;
 }
 
 /* 김재성 */
