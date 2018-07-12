@@ -25,6 +25,7 @@ import AuthTidSignUpLocal from './controllers/tid/auth.tid.signup-local.controll
 import AuthTidSignUpForeigner from './controllers/tid/auth.tid.signup-foreigner.controller';
 import AuthLogoutComplete from './controllers/logout/auth.logout.complete.controller';
 import AuthLogoutExpire from './controllers/logout/auth.logout.expire.controller';
+import AuthLoginRoute from './controllers/login/auth.login.route.controller';
 
 class AuthRouter extends TwRouter {
   constructor() {
@@ -41,6 +42,7 @@ class AuthRouter extends TwRouter {
     this.controllers.push({ url: '/login/find-id-pwd', controller: new AuthLoginFindIdPwd() });
     this.controllers.push({ url: '/login/service-pwd', controller: new AuthLoginServicePwd() });
     this.controllers.push({ url: '/login/service-pwd-fail', controller: new AuthLoginServicePwdFail() });
+    this.controllers.push({ url: '/login/route', controller: new AuthLoginRoute() });
     // logout
     this.controllers.push({ url: '/logout/complete', controller: new AuthLogoutComplete() });
     this.controllers.push({ url: '/logout/expire', controller: new AuthLogoutExpire() });

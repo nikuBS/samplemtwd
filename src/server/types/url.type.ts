@@ -1,6 +1,6 @@
 export const URL = {
   // home
-  '/home': { login: true },
+  '/home': { login: false },
   // myt
   '/myt': { login: true },
   '/myt/usage/change': { login: true },
@@ -19,6 +19,7 @@ export const URL = {
   '/myt/bill/billguide/returnhistory': { login: true },
   '/myt/bill/billguide': { login: true },
   '/myt/bill/hotbill/child': { login: true },
+  '/myt/bill/guidechange': { login: true },
   // recharge
   '/recharge/refill': { login: true },
   '/recharge/refill/history': { login: true },
@@ -69,6 +70,7 @@ export const URL = {
   '/auth/login/find-id-pwd': { login: false },
   '/auth/login/service-pwd': { login: true },
   '/auth/login/service-pwd-fail': { login: true },
+  '/auth/login/route': { login: false },
   '/auth/logout/complete': { login: true },
   '/auth/logout/expire': { login: true },
   '/auth/member/management': { login: true },
