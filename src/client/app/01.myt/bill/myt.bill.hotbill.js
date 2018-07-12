@@ -206,7 +206,7 @@ Tw.MyTBillHotBill.prototype = {
       this._children.forEach(function (member) {
         item = {
           attr: 'id=' + member.svcMgmtNum,
-          text: member.svcNum + member.mdlName ? ('(' + member.mdlName + ')') : ''
+          text: member.svcNum + (member.childEqpMdlCd ? '(' + member.childEqpMdlCd + ')' : '')
         };
         members.push(item);
       });
