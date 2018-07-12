@@ -37,7 +37,7 @@ export const URL = {
   '/recharge/cookiz': { login: true },
   '/recharge/cookiz/history': { login: true },
   '/recharge/limit': { login: true },
-  '/recharge/limit/process': { login: true },
+  '/recharge/limit/history': { login: true },
   '/recharge/ting': { login: true },
   '/recharge/ting/history': { login: true },
   // payment
