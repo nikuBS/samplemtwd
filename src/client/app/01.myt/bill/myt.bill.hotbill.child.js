@@ -11,122 +11,121 @@ Tw.MyTBillHotBillChild = function (rootEl) {
   this._history.init();
   this._cachedElement();
   this._bindEvent();
-  /*jshint quotmark: double */
   this.record = [
     {
-      "bill_itm_lcl_nm": "통신서비스요금",
-      "bill_itm_scl_nm": "월정액",
-      "bill_itm_nm": "월정액",
-      "bill_itm_cd": "AA1",
-      "inv_amt1": "0",
-      "inv_amt2": "31,495"
+      'bill_itm_lcl_nm': '통신서비스요금',
+      'bill_itm_scl_nm': '월정액',
+      'bill_itm_nm': '월정액',
+      'bill_itm_cd': 'AA1',
+      'inv_amt1': '0',
+      'inv_amt2': '31,495'
     },
     {
-      "bill_itm_lcl_nm": "통신서비스요금",
-      "bill_itm_scl_nm": "옵션요금제",
-      "bill_itm_nm": "안심옵션 프리미엄",
-      "bill_itm_cd": "DUV",
-      "inv_amt1": "0",
-      "inv_amt2": "7,200"
+      'bill_itm_lcl_nm': '통신서비스요금',
+      'bill_itm_scl_nm': '옵션요금제',
+      'bill_itm_nm': '안심옵션 프리미엄',
+      'bill_itm_cd': 'DUV',
+      'inv_amt1': '0',
+      'inv_amt2': '7,200'
     },
     {
-      "bill_itm_lcl_nm": "통신서비스요금",
-      "bill_itm_scl_nm": "옵션요금제",
-      "bill_itm_nm": "안심옵션 프리미엄2#",
-      "bill_itm_cd": "DUV",
-      "inv_amt1": "0",
-      "inv_amt2": "2,200"
+      'bill_itm_lcl_nm': '통신서비스요금',
+      'bill_itm_scl_nm': '옵션요금제',
+      'bill_itm_nm': '안심옵션 프리미엄2#',
+      'bill_itm_cd': 'DUV',
+      'inv_amt1': '0',
+      'inv_amt2': '2,200'
     },
     {
-      "bill_itm_lcl_nm": "통신서비스요금",
-      "bill_itm_scl_nm": "국내통화료",
-      "bill_itm_nm": "음성통화료",
-      "bill_itm_cd": "AA2",
-      "inv_amt1": "0",
-      "inv_amt2": "33,200"
+      'bill_itm_lcl_nm': '통신서비스요금',
+      'bill_itm_scl_nm': '국내통화료',
+      'bill_itm_nm': '음성통화료',
+      'bill_itm_cd': 'AA2',
+      'inv_amt1': '0',
+      'inv_amt2': '33,200'
     },
     {
-      "bill_itm_lcl_nm": "통신서비스요금",
-      "bill_itm_scl_nm": "문자이용료",
-      "bill_itm_nm": "안심문자",
-      "bill_itm_cd": "ASC",
-      "inv_amt1": "0",
-      "inv_amt2": "810"
+      'bill_itm_lcl_nm': '통신서비스요금',
+      'bill_itm_scl_nm': '문자이용료',
+      'bill_itm_nm': '안심문자',
+      'bill_itm_cd': 'ASC',
+      'inv_amt1': '0',
+      'inv_amt2': '810'
     },
     {
-      "bill_itm_lcl_nm": "통신서비스요금",
-      "bill_itm_scl_nm": "요금할인",
-      "bill_itm_nm": "무약정플랜 포인트할인",
-      "bill_itm_cd": "ED9",
-      "inv_amt1": "0",
-      "inv_amt2": "-1"
+      'bill_itm_lcl_nm': '통신서비스요금',
+      'bill_itm_scl_nm': '요금할인',
+      'bill_itm_nm': '무약정플랜 포인트할인',
+      'bill_itm_cd': 'ED9',
+      'inv_amt1': '0',
+      'inv_amt2': '-1'
     },
     {
-      "bill_itm_lcl_nm": "통신서비스요금",
-      "bill_itm_scl_nm": "요금할인",
-      "bill_itm_nm": "레인보우포인트결제",
-      "bill_itm_cd": "A5P",
-      "inv_amt1": "0",
-      "inv_amt2": "-53"
+      'bill_itm_lcl_nm': '통신서비스요금',
+      'bill_itm_scl_nm': '요금할인',
+      'bill_itm_nm': '레인보우포인트결제',
+      'bill_itm_cd': 'A5P',
+      'inv_amt1': '0',
+      'inv_amt2': '-53'
     },
     {
-      "bill_itm_lcl_nm": "통신서비스요금",
-      "bill_itm_scl_nm": "부가가치세(세금)*",
-      "bill_itm_nm": "부가세총액*",
-      "bill_itm_cd": "A15",
-      "inv_amt1": "0",
-      "inv_amt2": "7,720"
+      'bill_itm_lcl_nm': '통신서비스요금',
+      'bill_itm_scl_nm': '부가가치세(세금)*',
+      'bill_itm_nm': '부가세총액*',
+      'bill_itm_cd': 'A15',
+      'inv_amt1': '0',
+      'inv_amt2': '7,720'
     },
     {
-      "bill_itm_lcl_nm": "통신서비스요금",
-      "bill_itm_scl_nm": "부가가치세(세금)*",
-      "bill_itm_nm": "레인보우p 할인부가세*",
-      "bill_itm_cd": "EDA",
-      "inv_amt1": "0",
-      "inv_amt2": "-5"
+      'bill_itm_lcl_nm': '통신서비스요금',
+      'bill_itm_scl_nm': '부가가치세(세금)*',
+      'bill_itm_nm': '레인보우p 할인부가세*',
+      'bill_itm_cd': 'EDA',
+      'inv_amt1': '0',
+      'inv_amt2': '-5'
     },
     {
-      "bill_itm_lcl_nm": "통신서비스요금",
-      "bill_itm_scl_nm": "부가가치세(세금)*",
-      "bill_itm_nm": "T렌탈대여요금부가세*",
-      "bill_itm_cd": "DV9",
-      "inv_amt1": "0",
-      "inv_amt2": "3,290"
+      'bill_itm_lcl_nm': '통신서비스요금',
+      'bill_itm_scl_nm': '부가가치세(세금)*',
+      'bill_itm_nm': 'T렌탈대여요금부가세*',
+      'bill_itm_cd': 'DV9',
+      'inv_amt1': '0',
+      'inv_amt2': '3,290'
     },
     {
-      "bill_itm_lcl_nm": "부가사용금액",
-      "bill_itm_scl_nm": "부가서비스이용료",
-      "bill_itm_nm": "oksusu 프리",
-      "bill_itm_cd": "ECF",
-      "inv_amt1": "0",
-      "inv_amt2": "4,500"
+      'bill_itm_lcl_nm': '부가사용금액',
+      'bill_itm_scl_nm': '부가서비스이용료',
+      'bill_itm_nm': 'oksusu 프리',
+      'bill_itm_cd': 'ECF',
+      'inv_amt1': '0',
+      'inv_amt2': '4,500'
     },
     {
-      "bill_itm_lcl_nm": "부가사용금액",
-      "bill_itm_scl_nm": "T렌탈이용금액",
-      "bill_itm_nm": "T렌탈대여요금",
-      "bill_itm_cd": "DQS",
-      "inv_amt1": "0",
-      "inv_amt2": "32,900"
+      'bill_itm_lcl_nm': '부가사용금액',
+      'bill_itm_scl_nm': 'T렌탈이용금액',
+      'bill_itm_nm': 'T렌탈대여요금',
+      'bill_itm_cd': 'DQS',
+      'inv_amt1': '0',
+      'inv_amt2': '32,900'
     },
     {
-      "bill_itm_lcl_nm": "단말기할부금",
-      "bill_itm_scl_nm": "분할상환금",
-      "bill_itm_nm": "단말기분할상환금*",
-      "bill_itm_cd": "C44",
-      "inv_amt1": "0",
-      "inv_amt2": "9,700"
+      'bill_itm_lcl_nm': '단말기할부금',
+      'bill_itm_scl_nm': '분할상환금',
+      'bill_itm_nm': '단말기분할상환금*',
+      'bill_itm_cd': 'C44',
+      'inv_amt1': '0',
+      'inv_amt2': '9,700'
     },
     {
-      "bill_itm_lcl_nm": "단말기할부금",
-      "bill_itm_scl_nm": "분할상환금",
-      "bill_itm_nm": "단말분할상환수수료*",
-      "bill_itm_cd": "C46",
-      "inv_amt1": "0",
-      "inv_amt2": "940"
+      'bill_itm_lcl_nm': '단말기할부금',
+      'bill_itm_scl_nm': '분할상환금',
+      'bill_itm_nm': '단말분할상환수수료*',
+      'bill_itm_cd': 'C46',
+      'inv_amt1': '0',
+      'inv_amt2': '940'
     }
+
   ];
-  /*jshint quotmark: single */
   Handlebars.registerHelper('isBill', function (val, options) {
     return (val !== 'total' && val !== 'noVAT'&& val !== 'is3rdParty') ? options.fn(this) : options.inverse(this);
   });
