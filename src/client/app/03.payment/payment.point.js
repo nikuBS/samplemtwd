@@ -44,6 +44,8 @@ Tw.PaymentPoint.prototype = {
     this.$container.on('click', '.pay-cashbag-auto', $.proxy(this._payCashbagAuto, this));
     this.$container.on('click', '.pay-rainbow-one', $.proxy(this._payRainbowOne, this));
     this.$container.on('click', '.pay-rainbow-auto', $.proxy(this._payRainbowAuto, this));
+    this.$container.on('click', '.cancel-cashbag-autopay', $.proxy(this._cancelAutoPay, this));
+    this.$container.on('click', '.cancel-rainbow-autopay', $.proxy(this._cancelAutoPay, this));
   },
   _onlyNumber: function (event) {
     Tw.InputHelper.inputNumberOnly(event.currentTarget);
@@ -172,7 +174,11 @@ Tw.PaymentPoint.prototype = {
       reqAmt: point
     };
     if (code === Tw.PAYMENT_OPTION.NEW) {
-      reqData.ccno = $.trim(this.$cardNumber.val());
+      var cardNum = $.trim(this.$cardNumber.val());
+      if (cardNum.includes('*')) {
+        cardNum = this.$cardNumber.data('value').toString();
+      }
+      reqData.ocbCcno = cardNum;
     }
     return reqData;
   },
@@ -220,6 +226,47 @@ Tw.PaymentPoint.prototype = {
       $target.find('.' + key).text($result[key]);
     }
   },
+  _cancelAutoPay: function (event) {
+    this._popupService.openConfirm(null, Tw.MSG_PAYMENT.AUTO_A08, null, null, $.proxy(this._cancel, this, $(event.currentTarget)));
+  },
+  _cancel: function ($target) {
+    var apiName = Tw.API_CMD.BFF_07_0054;
+    var isRainbow = false;
+    if ($target.hasClass('cancel-rainbow-autopay')) {
+      apiName = Tw.API_CMD.BFF_07_0056;
+      isRainbow = true;
+    }
+    var reqData = this._makeRequestDataForCancel(isRainbow, $target);
+    this._apiService.request(apiName, reqData)
+      .done($.proxy(this._cancelSuccess, this))
+      .fail($.proxy(this._cancelFail, this));
+
+    this._popupService.close();
+  },
+  _makeRequestDataForCancel: function (isRainbow, $target) {
+    var reqData = {};
+    if (isRainbow) {
+      reqData.rbpChgRsnCd = Tw.RAINBOW_CHANGE_CODE.CANCEL;
+    } else {
+      reqData.reqClCd = Tw.PAYMENT_OPTION.CANCEL;
+      reqData.ptClCd = $target.data('type');
+    }
+    return reqData;
+  },
+  _cancelSuccess: function (res) {
+    if (res.code === Tw.API_CODE.CODE_00) {
+      this._popupService.openAlert(Tw.MSG_PAYMENT.POINT_A02, null, $.proxy(this._cancalSuccessCallback, this));
+    } else {
+      this._popupService.close();
+    }
+  },
+  _cancelFail: function () {
+    Tw.Logger.info('autopay cancel fail');
+  },
+  _cancalSuccessCallback: function () {
+    this._popupService.close();
+    window.location.reload();
+  },
   _isValidForCashbagOne: function () {
     var point = this.$container.find('.point-title:visible .point-value').text().replace(',', '');
     return (this._validation.checkEmpty(this.$cardNumber.val(), Tw.MSG_PAYMENT.AUTO_A05) &&
@@ -227,7 +274,7 @@ Tw.PaymentPoint.prototype = {
       this._validation.checkEmpty(this.$password.val(), Tw.MSG_PAYMENT.AUTO_A04) &&
       this._validation.checkLength(this.$password.val(), 4, Tw.MSG_PAYMENT.REALTIME_A07) &&
       this._validation.checkIsAgree(this.$agreement, Tw.MSG_PAYMENT.POINT_A03) &&
-      this._checkPoint(this.$cashbagPoint.val(), point));
+      this._checkPoint(this.$cashbagPoint.val(), 1000, point));
   },
   _isValidForCashbagAuto: function () {
     var isTPoint = null;
@@ -241,12 +288,12 @@ Tw.PaymentPoint.prototype = {
   },
   _isValidForRainbow: function () {
     var point = this.$container.find('.rainbow-point-value').text().replace(',', '');
-    return this._checkPoint(this.$rainbowPoint.val(), point);
+    return this._checkPoint(this.$rainbowPoint.val(), 1, point);
   },
-  _checkPoint: function ($value, havePoint) {
+  _checkPoint: function ($value, minPoint, havePoint) {
     return (this._validation.checkEmpty($value, Tw.MSG_PAYMENT.POINT_A04) &&
       this._validation.checkIsAvailablePoint($value, havePoint, Tw.MSG_PAYMENT.REALTIME_A12) &&
-      this._validation.checkIsMore($value, 1000, Tw.MSG_PAYMENT.REALTIME_A08) &&
+      this._validation.checkIsMore($value, minPoint, Tw.MSG_PAYMENT.REALTIME_A08) &&
       this._validation.checkIsTenUnit($value, Tw.MSG_PAYMENT.POINT_A06));
   },
   _checkIsAvailableCard: function ($cardNum) {
