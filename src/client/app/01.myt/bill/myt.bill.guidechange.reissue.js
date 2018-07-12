@@ -147,15 +147,24 @@ Tw.MyTBillReissue.prototype = {
     // API 호출 후 결과 값에 기 발행인 경우와 아닌 경우에 대한 처리
     // 기본적으로 설정된 값으로 표시
     var selectedItem = this.$guide.text();
+    var type = null;
     if ( this.$type ) {
       //유형이 설정이 된다면 선택된 아이템에서 가져와 표시
       selectedItem = this.$type.find('[aria-checked=true]').text();
     }
     Tw.Logger.warn(params);
-    var title = Tw.MSG_MYT.BILL_GUIDE_00;
-    var contents = selectedItem + Tw.MSG_MYT.BILL_GUIDE_01;
+    var title = Tw.MSG_MYT.BILL_GUIDE_REISSUE_00;
+    var contents = selectedItem + Tw.MSG_MYT.BILL_GUIDE_REISSUE_01;
+    if(!type && type === '02') {
+      // 이메일인 경우 문구 다름
+      contents = Tw.MSG_MYT.BILL_GUIDE_REISSUE_02;
+    }
+    else if(!type && type === '99') {
+      // 기타(우편)인 경우
+      contents = Tw.MSG_MYT.BILL_GUIDE_REISSUE_04;
+    }
     // if() { //기발행인 경우
-    // contents = Tw.MSG_MYT.BILL_GUIDE_03;
+    // contents = Tw.MSG_MYT.BILL_GUIDE_REISSUE_03;
     // this._popupService.openAlert(title, contents, $.proxy(this._onOkPopupClicked, this));
     // this.isIssue = true;
     // }

@@ -20,7 +20,7 @@ class MyTBillReissue extends TwViewController {
         halfYear: this.getHalfYearData(),
         type: '01', // 01:무선, 02:유선, 03:etc
         title: 'Bill Letter', // 청구서유형명
-        billCd: '05', // 02:이메일, 10:문자, 05:Bill Letter  기타 청구서유형코드
+        billCd: '05', // 02:이메일, 10:문자, 05:Bill Letter  99:기타 청구서유형코드(임시)
         reasonCd: '01' // 01:무선 02:유선(요금조정), 06: 유선(요금안내서 부달) 99: 유선 (기타) '':반송처리(추가예정)
 
       };
