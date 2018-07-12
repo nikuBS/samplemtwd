@@ -15,8 +15,8 @@ skt_landing.widgets = {
   },
   widget_test: function () {
   },
-  widget_tube: function () {
-    var widget = ta ? $(ta).find('widget-box.tube') : $('.widget-box.tube');
+  widget_tube: function (ta) {
+    var widget = ta ? $(ta).find('.widget-box.tube') : $('.widget-box.tube');
     $(widget).each(function(){
       var tube_list = $(this).find('.tube-list');
       if(!tube_list.attr('class').match(' ')){
@@ -87,7 +87,7 @@ skt_landing.widgets = {
     input.each(function () {
       var box = $(this).closest('.checkbox');
       $(this).is(':checked') ? box.addClass('checked').attr('aria-checked',true) : box.removeClass('checked').attr('aria-checked',false);
-      $(this).is(':disabled') ? box.addClass('disabled').attr('aria-disabled',true) : box.removeClass('disabled').attr('aria-checked',false);
+      $(this).is(':disabled') ? box.addClass('disabled').attr('aria-disabled',true) : box.removeClass('disabled');
       $(this).on('click', function () {
         if ($(this).prop('checked')) {
           box.addClass('checked').attr('aria-checked',true);
@@ -368,7 +368,7 @@ skt_landing.widgets = {
       }
     }
   },
-  widget_draglist : function(ta){
+  /*widget_draglist : function(ta){
     var widget = ta ? $(ta).find('.draglist') : $('.draglist');
     $(widget).each(function(){
       var _this = $(this);
@@ -497,7 +497,7 @@ skt_landing.widgets = {
       });
       return arr;
     }
-  },
+  },*/
   widget_toggle: function(ta){
     var widget = ta ? $(ta).find('.btn-toggle') : $('.btn-toggle');
     $(widget).on('click', function(){

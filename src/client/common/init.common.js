@@ -15,7 +15,9 @@ Tw.Init.prototype = {
 
   _logVersion: function (resp) {
     if ( resp.environment === 'development' || resp.environment === 'qa' ) {
-      Tw.Popup.openAlertNoHash(Tw.environment.version);
+      /* jshint undef: false */
+      alert(Tw.environment.version);
+      /* jshint undef: false */
     }
     Tw.Logger.info('[Version]', Tw.environment.version);
   },
