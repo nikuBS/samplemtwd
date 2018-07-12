@@ -91,14 +91,14 @@ class PaymentHistoryController extends TwViewController {
       }
     };
 
-    return this.apiService.request().subscribe((response) => {
+    // return this.apiService.request().subscribe((response) => {
 
       // if(response.code)
       res.render('payment.history.html', {
         svcInfo: svcInfo,
-        result: response.result || dummy
+        result: dummy
       });
-    });
+    // });
 
   }
 

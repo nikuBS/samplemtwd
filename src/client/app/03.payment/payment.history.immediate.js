@@ -10,10 +10,21 @@ Tw.PaymentHistoryImmediate = function (rootEl) {
   this._hash = Tw.Hash;
   this._popupService = Tw.Popup;
   this._dateHelper = Tw.DateHelper;
+
+  this.common = new Tw.PaymentHistoryCommon(rootEl);
+
+  this._cachedElement();
+  this._bindDOM();
 };
 
 Tw.PaymentHistoryImmediate.prototype = {
+  _cachedElement: function () {
+    this.$menuChanger = this.$container.find('.cont-box .bt-dropdown.big');
+  },
 
+  _bindDOM: function () {
+    this.common.setMenuChanger(this.$menuChanger);
+  }
   /*    납부방식 선택 레이어 팝업
 popup.open({
                 'hbs' : 'choice',
