@@ -17,7 +17,9 @@ class PaymentHistoryImmediateController extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
 
-    res.render('payment.history.immediate.html', {});
+    res.render('payment.history.immediate.html', {
+      svcInfo: svcInfo
+    });
   }
 
 }

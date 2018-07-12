@@ -1,11 +1,11 @@
 import axios from 'axios';
 import { Observable } from 'rxjs/Observable';
-import environment from '../config/environment.config';
 import { API_CMD, API_CODE, API_METHOD, API_SERVER } from '../types/api-command.type';
 import ParamsHelper from '../utils/params.helper';
 import LoginService from './login.service';
 import LoggerService from './logger.service';
 import FormatHelper from '../utils/format.helper';
+import EnvHelper from '../utils/env.helper';
 
 class ApiService {
   static instance;
@@ -33,7 +33,7 @@ class ApiService {
   }
 
   public getServerUri(command: any): string {
-    return environment[String(process.env.NODE_ENV)][command.server];
+    return EnvHelper.getEnvironment(command.server);
   }
 
   private getOption(command: any, apiUrl: any, params: any, header: any, args: any[]): any {

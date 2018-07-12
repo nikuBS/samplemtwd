@@ -24,12 +24,12 @@ Tw.RechargeTingProcess.prototype = {
     amount: 5000
   },
   provider: {
-    amount: 7000
+    amount: 10000
   },
 
   _init: function () {
+    this._apiService.request(Tw.API_CMD.BFF_06_0020, {}).done($.proxy(this._setProvider, this));
     this.$wrap_tpl_contact.html(this.tpl_contact({ isMobile: Tw.BrowserHelper.isMobile() }));
-    this._setAvailableAmount();
   },
 
   _cachedElement: function () {
@@ -42,15 +42,15 @@ Tw.RechargeTingProcess.prototype = {
     this.$container.on('click', '#btn_prev', $.proxy(this._goBack, this));
     this.$container.on('click', '.btn_confirm', $.proxy(this._goTingMain, this));
     this.$container.on('click', '#btn_addr', $.proxy(this._onClickBtnAddr, this));
-    this.$container.on('click', '.close-step', $.proxy(this._onClosePopup, this));
     this.$container.on('click', '.btn_go_history', $.proxy(this._goHistory, this));
+    this.$container.on('click', '.close-step', $.proxy(this._onCloseProcess, this));
     this.$container.on('input', '.input input', $.proxy(this._setPhoneNumber, this));
     this.$container.on('click', '#btn_go_complete', $.proxy(this._validateStep2, this));
     this.$container.on('click', '.tube-select', $.proxy(this._onClickSelectPopup, this));
     this.$container.on('click', '.btn_validateStep1', $.proxy(this._validateStep1, this));
-    this.$container.on('click', '.btn_validateRequestStep1', $.proxy(this._validateRequestStep1, this));
     this.$container.on('click', 'input[name=senddata]', $.proxy(this._onChangeAmount, this));
     this.$container.on('click', '.btn_select_amount', $.proxy(this._onClickSelectAmount, this));
+    this.$container.on('click', '.btn_validateRequestStep1', $.proxy(this._validateRequestStep1, this));
   },
 
   _onClickBtnAddr: function () {
@@ -63,19 +63,25 @@ Tw.RechargeTingProcess.prototype = {
     this.$container.find('.inp_phone').val(phoneNumber);
   },
 
-  _onClosePopup: function () {
-    this._popupService.openConfirm(Tw.POPUP_TITLE.NOTIFY, Tw.MSG_GIFT.TING_A12, '', null, $.proxy(this._onCloseProcess, this));
+  _setProvider: function (response) {
+    if ( response.code === '00' ) {
+      this.provider.amount = Number(response.result.transferableAmt);
+      this._setAvailableAmount();
+    }
   },
 
   _onCloseProcess: function () {
-    // this._popupService.close();
-    skt_landing.action.auto_scroll();
-    this._go('main');
+    this._popupService.openConfirm(Tw.POPUP_TITLE.NOTIFY, Tw.MSG_GIFT.TING_A12, null, null, $.proxy(this._goToMain, this));
   },
 
   _setPhoneNumber: function (e) {
     Tw.InputHelper.inputNumberOnly(e.currentTarget);
     this.target.phone = $(e.currentTarget).val();
+    if ( this.target.phone.length <= 0 ) {
+      $('.btn_validateStep1').prop('disabled', true);
+    } else {
+      $('.btn_validateStep1').prop('disabled', false);
+    }
   },
 
   _onChangeAmount: function (e) {
@@ -96,7 +102,7 @@ Tw.RechargeTingProcess.prototype = {
 
     for ( var amount = 1000; amount <= Number(this.provider.amount); amount = amount + 1000 ) {
       arrOption.push({
-        checked: amount === Number(this.target.amount),
+        checked: amount === Number(this.target.amount) ? true : false,
         value: amount.toString(),
         text: Tw.FormatHelper.addComma(amount.toString())
       });
@@ -112,11 +118,12 @@ Tw.RechargeTingProcess.prototype = {
         style_class: 'bt-red1 btn_select_amount',
         txt: Tw.BUTTON_LABEL.SELECT
       }]
-    });
+    }, $.proxy(this._onOpenSelectPopup, this));
+  },
 
-    setTimeout(function () {
-      $('.popup-info').addClass('scrolling');
-    }, 100);
+  _onOpenSelectPopup: function () {
+    $('.popup-info').find('input[value=' + this.target.amount + ']').click();
+    $('.popup-info').addClass('scrolling');
   },
 
   _onClickSelectAmount: function (e) {
@@ -132,7 +139,6 @@ Tw.RechargeTingProcess.prototype = {
     this._setAmount();
 
     this._popupService.close();
-    skt_landing.action.auto_scroll();
   },
 
   _setAmount: function () {
@@ -158,46 +164,70 @@ Tw.RechargeTingProcess.prototype = {
   },
 
   _validateStep1: function () {
-    this._apiService.request(Tw.API_CMD.BFF_06_0022, { befrSvcNum: this.target.phone })
-      .done(function () {
-      })
-      .fail($.proxy(this._sendFail, this));
+    this._apiService.request(Tw.API_CMD.BFF_06_0022, { chrgSvcNum: this.target.phone }).done($.proxy(this._validStep1, this));
+  },
 
-    var res = {
-      code: '00',
-      msg: 'success',
-      result: {
-        chargableAmt: '20000',
-        custName: '홍*동',
-        befrSvcNum: '01012**34**'
-      }
-    };
+  _validStep1: function (response) {
+    if ( response.code === '00' ) {
+      var result = response.result;
+      this.target.name = result.custName;
+      this.target.phone = result.befrSvcNum;
+      this.target.phone_no_mask = this.target.phone;
 
-    var result = res.result;
-    this.target.name = result.custName;
-    this.target.phone = result.befrSvcNum;
-    this.target.phone_no_mask = $('.inp_phone').val();
+      $('.money-select-comment em').text(Tw.FormatHelper.addComma(this.provider.amount.toString()) + Tw.CURRENCY_UNIT.WON);
+      $('.t-gift-data .txt').html(this.target.name);
+      $('.t-gift-data .tel').html(Tw.FormatHelper.conTelFormatWithDash(this.target.phone));
 
-    $('.money-select-comment em').text(Tw.FormatHelper.addComma(this.provider.amount.toString()) + Tw.CURRENCY_UNIT.WON);
-    $('.t-gift-data .txt').html(this.target.name);
-    $('.t-gift-data .tel').html(Tw.FormatHelper.conTelFormatWithDash(this.target.phone));
-    this._go('#step2');
+      this._go('step2');
+    } else {
+      this._sendFail(response);
+    }
   },
 
   _validateStep2: function () {
-    this._history.setHistory();
-    this._go('#complete');
+    this._apiService.request(Tw.API_CMD.BFF_06_0022, {
+      befrSvcNum: this.target.phone_no_mask,
+      amt: this.target.amount
+    }).done($.proxy(this._validComplete, this));
+  },
+
+  _validComplete: function () {
+    this._go('complete');
+
+    // if ( response.code === '00' ) {
+    //   this._history.setHistory();
+    //   this._go('#complete');
+    // } else {
+    //   this._sendFail(response);
+    // }
   },
 
   _validateRequestStep1: function () {
-    this.target.phone_no_mask = $('.inp_phone').val();
-    $('.tx-data .num').html(Tw.FormatHelper.conTelFormatWithDash(this.target.phone_no_mask));
+    var $wrap_request_step = $('#request-step1');
+    this.target.phone_no_mask = $wrap_request_step.find('.inp_phone').val();
+    $('#request-complete').find('.tx-data .num').html(Tw.FormatHelper.conTelFormatWithDash(this.target.phone_no_mask));
 
-    this._history.setHistory();
-    this._go('#request-complete');
+    this._apiService.request(Tw.API_CMD.BFF_06_0025, { senderSvcNum: this.target.phone_no_mask })
+      .done($.proxy(this._validRequestComplete, this));
   },
 
-  _sendFail: function () {
+  _validRequestComplete: function (response) {
+    if ( response.code === '00' ) {
+      this._history.setHistory();
+      this._go('request-complete');
+    } else {
+      this._sendFail(response);
+    }
+  },
+
+  _sendFail: function (res) {
+    if ( res.data ) {
+      this._popupService.openAlert(res.data.orgDebugMessage);
+    }
+  },
+
+  _goToMain: function () {
+    this._go('main');
   },
 
   _goTingMain: function () {
@@ -217,6 +247,7 @@ Tw.RechargeTingProcess.prototype = {
   },
 
   _go: function (hash) {
+    this._history.setHistory();
     window.location.hash = hash;
   }
 };

@@ -15,14 +15,14 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div class="wrap">
+<div id="line-cop-register" class="wrap">
     <!-- #header -->
     <div id="header" class="header-wrap">
         <div class="header">
             <div class="header-ti">
                 <h1>법인명의 회선 등록</h1>
             </div>
-            <button class="prev-step"><span class="blind">이전으로</span></button>
+            <button class="prev-step common-back"><span class="blind">이전으로</span></button>
         </div>
     </div>
     <!--// #header -->
@@ -39,7 +39,7 @@
                             <span id="from-label1-1" class="form-ti">휴대폰 번호 <span class="char-star-red">*</span></span>
                             <span class="inputbox">
                                     <span class="input">
-                                      <input type="text" placeholder="‘-’ 없이 숫자만 입력해주세요." title="input" aria-labelledby="from-label1-1" aria-describedby="from-label1-2">
+                                      <input id="input-mdn" type="text" placeholder="‘-’ 없이 숫자만 입력해주세요." title="input" aria-labelledby="from-label1-1" aria-describedby="from-label1-2">
                                     </span>
                                     <span id="from-label1-2" class="guide-txt">해당 휴대폰이 다른 아이디에 등록되어 있을 경우 삭제 후 등록 가능합니다.</span>
                                 </span>
@@ -48,7 +48,7 @@
                             <span id="from-label2-1" class="form-ti">법인명 <span class="char-star-red">*</span></span>
                             <span class="inputbox">
                                     <span class="input">
-                                      <input type="text" placeholder="" title="input" aria-labelledby="from-label2-1" aria-describedby="from-label2-2">
+                                      <input id="input-cop" type="text" placeholder="" title="input" aria-labelledby="from-label2-1" aria-describedby="from-label2-2">
                                     </span>
                                     <span id="from-label2-2" class="guide-txt">띄어쓰기 또는 특수문자까지 정확하게 일치해야 등록 가능합니다.</span>
                                 </span>
@@ -57,7 +57,7 @@
                             <span id="from-label3-1" class="form-ti">법인번호 <span class="char-star-red">*</span></span>
                             <span class="inputbox">
                                     <span class="input">
-                                      <input type="text" placeholder="‘-’ 없이 숫자만 입력해주세요." title="input" aria-labelledby="from-label3-1" aria-describedby="from-label3-2">
+                                      <input id="input-cop-number" type="text" placeholder="‘-’ 없이 숫자만 입력해주세요." title="input" aria-labelledby="from-label3-1" aria-describedby="from-label3-2">
                                     </span>
                                     <span id="from-label3-2" class="guide-txt">띄어쓰기 또는 특수문자까지 정확하게 일치해야 등록 가능합니다.</span>
                                 </span>
@@ -66,10 +66,10 @@
                             <span id="from-label4-1" class="form-ti">닉네임(선택)</span>
                             <span class="inputbox bt-add">
                                     <span class="input">
-                                        <input type="text" placeholder="" title="주소록" aria-labelledby="from-label4-1" aria-describedby="from-label4-2">
+                                        <input id="input-nickname" type="text" placeholder="" title="주소록" aria-labelledby="from-label4-1" aria-describedby="from-label4-2">
                                     </span>
                                     <span class="bt-box">
-                                        <button type="button">지정</button>
+                                        <button id="bt-nickname" type="button">지정</button>
                                     </span>
                                 </span>
                             <div class="box-block">
@@ -102,6 +102,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
+    new Tw.AuthLineCopRegister($('#line-cop-register'));
 
   });
 </script>

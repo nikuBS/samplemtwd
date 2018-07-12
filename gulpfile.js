@@ -126,6 +126,7 @@ gulp.task('hbs', function () {
 
 gulp.task('watch', function () {
   livereload.listen();
+  gulp.watch('src/client/**/*.hbs', ['hbs']);
   gulp.watch('src/client/**/*.js', ['js', 'js-rb']);
   gulp.watch('src/client/**/*.css', ['css-vendor', 'css-rb']);
   gulp.watch('dist/**').on('change', livereload.changed);

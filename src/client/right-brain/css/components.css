@@ -1109,7 +1109,7 @@
   border-radius: 0.5625rem;
   background: #fff;
   overflow: hidden;
-  z-index: 11;
+  z-index: 30;
 }
 
 .popup .popup-info .popup-header {
@@ -1210,6 +1210,10 @@
   font-size: 0.875rem;
 }
 
+.popup .popup-info .popup-contents .select-list li.radiobox.type01 {
+  display: block;
+}
+
 .popup .popup-info .popup-contents .tube-list-ti {
   padding: 1.875rem 1.125rem 0;
 }
@@ -1296,7 +1300,7 @@
   bottom: 0;
   background: #000;
   opacity: .8;
-  z-index: 10;
+  z-index: 25;
 }
 
 .sns-ico-fb .ico {
@@ -1783,6 +1787,7 @@
   color: #e80a0a;
   font-family: Helvetica Neue, Roboto, sans-serif;
   font-size: 1.25rem;
+  vertical-align: -1px;
 }
 
 .point-box .info-btn {
@@ -1928,13 +1933,17 @@
   position: relative;
 }
 
+.flcard-s-default .flcard-s-cont .type3 .slider-box .slick-slider {
+  margin-bottom: 0rem;
+}
+
 .flcard-s-default .flcard-s-cont .type3 .slider-box .slick-next {
   position: absolute;
-  bottom: -1.625rem;
+  bottom: -1.125rem;
   right: 0.0625rem;
-  width: 1.25rem;
-  height: 1.25rem;
-  background: url(/img/ico/ico-group.png) no-repeat -1.375rem -37rem;
+  width: 0.9375rem;
+  height: 0.9375rem;
+  background: url(/img/ico/ico-group.png) no-repeat -1.8125rem -37.25rem;
   background-size: 2.875rem;
   text-indent: -9999999em;
   z-index: 10;
@@ -1942,11 +1951,11 @@
 
 .flcard-s-default .flcard-s-cont .type3 .slider-box .slick-next.slick-disabled {
   position: absolute;
-  bottom: -1.625rem;
+  bottom: -1.125rem;
   right: 0.0625rem;
-  width: 1.25rem;
-  height: 1.25rem;
-  background: url(/img/ico/ico-group.png) no-repeat -1.375rem -31.375rem;
+  width: 0.9375rem;
+  height: 0.9375rem;
+  background: url(/img/ico/ico-group.png) no-repeat -1.8125rem -31.625rem;
   background-size: 2.875rem;
   text-indent: -9999999em;
   z-index: 10;
@@ -1954,22 +1963,22 @@
 
 .flcard-s-default .flcard-s-cont .type3 .slider-box .slick-prev.slick-arrow {
   position: absolute;
-  bottom: -1.625rem;
+  bottom: -1.125rem;
   right: 0.9375rem;
-  width: 1.25rem;
-  height: 1.25rem;
-  background: url(/img/ico/ico-group.png) no-repeat -0.0625rem -37rem;
+  width: 0.9375rem;
+  height: 0.9375rem;
+  background: url(/img/ico/ico-group.png) no-repeat -0.125rem -37.25rem;
   background-size: 2.875rem;
   text-indent: -9999999em;
 }
 
 .flcard-s-default .flcard-s-cont .type3 .slider-box .slick-prev.slick-disabled {
   position: absolute;
-  bottom: -1.625rem;
+  bottom: -1.125rem;
   right: 0.9375rem;
-  width: 1.25rem;
-  height: 1.25rem;
-  background: url(/img/ico/ico-group.png) no-repeat -0.0625rem -31.375rem;
+  width: 0.9375rem;
+  height: 0.9375rem;
+  background: url(/img/ico/ico-group.png) no-repeat -0.125rem -31.625rem;
   background-size: 2.875rem;
   text-indent: -9999999em;
   z-index: 10;
@@ -1978,16 +1987,28 @@
 .flcard-s-default .flcard-s-cont .type3 .slider-box .slick-dots {
   text-align: left;
   width: 50%;
+  height: 0;
+  left: 0.1875rem;
+  bottom: 0.375rem;
 }
 
 .flcard-s-default .flcard-s-cont .type3 .slider-box .slick-dots li {
-  width: 0.9375rem;
-  height: 0.9375rem;
+  width: 0.625rem;
+  height: 0.625rem;
   margin: 0;
 }
 
+.flcard-s-default .flcard-s-cont .type3 .slider-box .slick-dots li button {
+  width: 0.625rem;
+  height: 0.625rem;
+  padding: 0rem;
+}
+
 .flcard-s-default .flcard-s-cont .type3 .slider-box .slick-dots li button:before {
-  font-size: 1rem;
+  width: 0.625rem;
+  height: 0.625rem;
+  font-size: 1.5625rem;
+  line-height: 0.375rem;
 }
 
 .flcard-s-default .flcard-s-cont .type3 .slider-box .slick-list {
@@ -2053,31 +2074,14 @@
 }
 
 .flcard-s-default .commend-detail-info .txt {
-  padding: 1.5rem 0 0 0;
+  padding: 0.625rem 0 0 0;
   font-size: 0.875rem;
   color: #757575;
 }
 
 .commend-bill-info .bill-tit {
-  font-size: 1.5rem;
-  padding-bottom: 2.75rem;
-}
-
-.commend-bill-info .bill-tit .bill-tel {
-  display: block;
-  font-size: 1rem;
-}
-
-.commend-bill-info .contents-info-list .bill-num {
-  display: inline-block;
-  width: 100%;
-  font-size: 0.8125rem;
-  padding-bottom: 1.125rem;
-  text-align: right;
-}
-
-.commend-bill-info .contents-info-list .bill-num em {
-  color: #e80a0a;
+  font-size: 1.25rem;
+  padding-bottom: 2.1875rem;
 }
 
 .commend-bill-info .contents-info-list .bill-history li {
@@ -2119,13 +2123,12 @@
   text-align: right;
 }
 
-.commend-bill-info .contents-info-list .bill-history li .info-data .info-title,
-.commend-bill-info .contents-info-list .bill-history li .info-data .info-sub {
+.commend-bill-info .contents-info-list .bill-history li .info-data .info-title {
   font-size: 1rem;
   font-weight: 400;
 }
 
-.commend-bill-info .contents-info-list .bill-history li .info-data .info-sub-type1 {
+.commend-bill-info .contents-info-list .bill-history li .info-data .info-sub {
   font-size: 0.8125rem;
   color: #757575;
   letter-spacing: 0;
@@ -2394,6 +2397,28 @@
 
 .change-plan .tit-type.type02 {
   padding: 1.875rem 0 0 0;
+}
+
+.account-wrap .account-tit2 {
+  margin-bottom: 0.9375rem;
+  font-size: 1.25rem;
+}
+
+.bt-slice + .choice-paydate {
+  margin-top: 1.25rem;
+}
+
+.choice-paydate {
+  overflow: hidden;
+}
+
+.choice-paydate .tit, .choice-paydate .con {
+  float: left;
+  width: 50%;
+}
+
+.choice-paydate .con {
+  text-align: right;
 }
 
 .slider3 .slick-slide > div {
@@ -3463,15 +3488,6 @@
   position: absolute;
   top: 1.875rem;
   right: 1.125rem;
-  width: 20px;
-  height: 20px;
-  background: url(/img/ico/ico-group2.png) no-repeat -0.125rem -3.25rem;
-  background-size: 3.125rem auto;
-}
-
-.payment-select .select-list li.checkbox.type01.checked:before {
-  background: url(/img/ico/ico-group2.png) no-repeat -1.6875rem -3.25rem;
-  background-size: 3.125rem auto;
 }
 
 .payment-select .select-list li:first-of-type {
@@ -3689,12 +3705,14 @@
 }
 
 .title-h3 {
+  overflow: hidden;
   font-size: 1.25rem;
   padding-bottom: 1.1875rem;
   border-bottom: 1px solid #e1e1e1;
 }
 
 .title-h4 {
+  overflow: hidden;
   font-size: 0.9375rem;
   padding-top: 3.75rem;
   padding-bottom: 1.4375rem;
@@ -3722,6 +3740,23 @@
 
 .title-h4 .bt-link-tx {
   float: right;
+}
+
+.title-h4 .right-item {
+  float: right;
+  text-align: right;
+}
+
+.title-h4 .right-item .service-state {
+  float: none;
+  display: block;
+  line-height: 1;
+}
+
+.title-h4 .right-item .bt-link-tx {
+  float: none;
+  display: block;
+  margin-top: 0.625rem;
 }
 
 .text-link {
@@ -4561,23 +4596,20 @@ li.payment-detail-box:last-child {
   margin: 1px 0 -3px 0;
 }
 
-span[class^="ico-foot"] {
+.ico-foot-1 {
+  /*텍스트아이콘으로 변경되어삭제*/
+}
+
+.ico-foot-2 {
   display: inline-block;
-  width: 0.9375rem;
-  height: 0.9375rem;
-  margin: 0.125rem 0 0 0.5rem;
+  width: 0.5rem;
+  height: 0.4375rem;
+  margin: 0.125rem 0 0 0.25rem;
   vertical-align: top;
   content: "";
   background-image: url(/img/ico/ico-group.png);
   background-repeat: no-repeat;
   background-size: 3.125rem;
-}
-
-span[class^="ico-foot"].ico-foot-1 {
-  background-position: -1.875rem -24.8125rem;
-}
-
-span[class^="ico-foot"].ico-foot-2 {
   background-position: -1.875rem -23.625rem;
 }
 
@@ -4591,9 +4623,13 @@ span[class^="ico-foot"].ico-foot-2 {
   padding: 0.1875rem 0 0.125rem;
 }
 
-.footnote-txt span[class^="ico-foot"] {
-  margin-left: 0;
-  margin-right: 0.4375rem;
+.footnote-txt .ico-foot-2 {
+  margin: 0.1875rem 0.4375rem 0 0.125rem;
+}
+
+.footnote-txt .badge {
+  margin: 0.0625rem 0.5rem 0 0;
+  vertical-align: top;
 }
 
 .payment-inquiry .bt-dropdown {
@@ -4912,10 +4948,9 @@ span[class^="ico-foot"].ico-foot-2 {
   padding: 0;
 }
 
-.used-box-list .tx-data strong {
+.used-box-list .tx-data .num-area {
   color: #e80a0a;
   font-family: "Helvetica Neue", Roboto, sans-serif;
-  font-weight: 300;
 }
 
 .used-count.payment-all {
@@ -6677,7 +6712,9 @@ span[class*=char-star][class*=red] {
 }
 
 .box-block .box-block-list1 > a {
+  position: relative;
   margin: -0.75rem 0.625rem 2.5rem 0;
+  z-index: 1;
 }
 
 .box-block .box-block-list1.btm-border {
@@ -7421,30 +7458,43 @@ span[class*=char-star][class*=red] {
   margin-bottom: 0;
 }
 
-.agree-list .accordion .acco-style.btn-hold .acco-list .acco-tit {
-  padding-left: 0;
-}
-
-.agree-list .accordion .acco-style.btn-hold .acco-list .acco-cont {
+.agree-list .accordion .acco-style.btn-hold .acco-list .acco-box.on .acco-cont {
   height: 8.125rem;
+  margin-bottom: 1.375rem;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
   overflow-y: auto;
 }
 
-.agree-list .accordion .acco-style.btn-hold .acco-list .acco-cont .agree-cont-defined {
-  padding: 0.9375rem 1.125rem;
+.agree-list .accordion .acco-style.btn-hold .acco-list .acco-box .acco-tit {
+  padding-left: 0;
+}
+
+.agree-list .accordion .acco-style.btn-hold .acco-list .acco-box .acco-cont {
+  padding-bottom: 0;
   border-radius: 0.3125rem;
+  overflow: hidden;
+}
+
+.agree-list .accordion .acco-style.btn-hold .acco-list .acco-box .acco-cont .agree-cont-defined {
+  border-radius: 0.3125rem;
+  padding: 0.9375rem 1.125rem;
   background: #f5f5f5;
 }
 
-.agree-list .accordion .acco-style.btn-hold .acco-list .acco-cont .agree-cont-defined dt {
+.agree-list .accordion .acco-style.btn-hold .acco-list .acco-box .acco-cont .agree-cont-defined dt {
   margin: 0 0 1.6875rem 0;
   font-weight: 700;
   font-size: 0.875rem;
 }
 
-.agree-list .accordion .acco-style.btn-hold .acco-list .acco-cont .agree-cont-defined dd {
+.agree-list .accordion .acco-style.btn-hold .acco-list .acco-box .acco-cont .agree-cont-defined dd {
   font-size: 0.875rem;
   line-height: 1.375rem;
+}
+
+.agree-list .accordion .acco-style.btn-hold .acco-list .acco-box:last-of-type.on .acco-cont {
+  margin-bottom: 0;
 }
 
 .agree-list .accordion .checkbox {
@@ -7464,7 +7514,7 @@ span[class*=char-star][class*=red] {
 }
 
 .agree-list > .bt-slice {
-  margin-top: 2.5rem;
+  margin-top: 2.1875rem;
 }
 
 /* 김재성 */

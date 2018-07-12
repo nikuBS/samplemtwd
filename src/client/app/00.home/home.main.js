@@ -4,13 +4,15 @@
  * Date: 2018.06.22
  */
 
-Tw.HomeMain = function (rootEl) {
+Tw.HomeMain = function (rootEl, lineRegisterLayer) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
+  this._lineRegisterLayer = lineRegisterLayer;
 
   this._init();
   this._bindEvent();
+
 
   // For dev (Determine if api service issue or bff issue)
   this._testApi();
@@ -19,8 +21,13 @@ Tw.HomeMain = function (rootEl) {
 
 Tw.HomeMain.prototype = {
   _init: function () {
-    this.tplGiftCard = Handlebars.compile($('.gift-template').html());
+    var giftTemp = $('.gift-template').html();
+    if ( !Tw.FormatHelper.isEmpty(giftTemp) ) {
+      this.tplGiftCard = Handlebars.compile($('.gift-template').html());
+    }
     this.$giftCard = this.$container.find('#gift-card');
+
+    this._lineRegisterLayer.getLineInfo();
   },
   _bindEvent: function () {
     this.$container.on('click', '#refill-product', $.proxy(this._openRefillProduct, this));
@@ -55,11 +62,11 @@ Tw.HomeMain.prototype = {
       resp.result.showDataGb = Tw.FormatHelper.customDataFormat(resp.result.dataRemQty, 'MB', 'GB').data;
       this.$giftCard.html(this.tplGiftCard(resp.result));
     }
-
   },
   _failGiftBalance: function (error) {
     console.log(error);
   },
+
   _testApi: function () {
     this._apiService.request(Tw.API_CMD.GET, {})
       .done(function (resp) {

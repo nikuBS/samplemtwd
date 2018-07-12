@@ -1,1 +1,81 @@
-<div>limit.type</div>
+<%# 
+* FileName: recharge.limit.process.type.html
+* Author: Jiyoung Jo (jiyoungjo@sk.com)
+* Date: 2018.07.10
+%>
+
+<!-- #header -->
+<div id="header" class="header-wrap">
+    <div class="header step-page">
+        <div class="header-ti">
+            <h1>데이터 한도 요금 충전하기</h1>
+        </div>
+        <button class="close-step"><span class="blind">닫기</span></button>
+    </div>
+</div>
+<!--// #header -->
+<!-- #contents -->
+<div id="contents" class="container-wrap">
+    <h2 class="blind">내용</h2>
+    <div class="container">
+        <div class="cont-box">
+            <!-- .widget -->
+            <div class="widget">
+                <div class="widget-box step">
+                    <h3 class="step-ti">
+                        <em>STEP 01</em>충전 방법 선택</h3>
+                    <!-- 2018-06-19 : h태그 수정/삭제 -->
+                    <ul class="step-list">
+                        <li class="on">1
+                            <span class="blind">충전 방법 선택</span>
+                        </li>
+                        <li>2
+                            <span class="blind">충전 금액 선택</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- //.widget -->
+        </div>
+        <hr class="cont-sp type1" aria-hidden="true" />
+        <div class="cont-box">
+            <div class="box-block">
+                <dl>
+                    <dt>충전 방법을 선택해 주세요.</dt>
+                    <dd class="box-block-list2">
+                        <div class="widget">
+                            <div class="widget-box tube">
+                                <ul class="tube-list two" role="radiogroup">
+                                    <% const blockTmth = limitData.dataLimitedTmthYn === "N" || limitData.currentTopUpLimit === "0" %>
+                                    <% const blockAuto = limitData.dataLimitedYn === "N" %>
+                                    <li role="radio" aria-checked="true" <%= blockTmth? '': 'class=checked'%>>
+                                        <input type="radio" name="senddata" title="당월 충전" <%= blockTmth? 'disabled' : 'checked' %>>당월 충전</li>
+                                    <li role="radio" aria-checked="false" <%= blockTmth? 'class=checked': ''%>>
+                                        <input type="radio" name="senddata" title="매월 자동 충전" data-type="regular" <%= blockAuto ? 'disabled' : '' %> <%= blockTmth ? 'checked' : '' %>>매월 자동 충전</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- //.widget -->
+                        <ul>
+                            <li>당월 충전은 신청한 충전 금액에 대해 당월만 사용 가능합니다.</li>
+                            <li>매월 자동 충전은 다음 달부터 적용 됩니다.</li>
+                            <li>당월 충전 취소는 데이터 미 사용한 경우 고객센터 [국번 없이 1599-0011(유료) / 휴대폰 114]를 통해 당일에 한해 가능합니다.</li>
+                            <li>
+                                <em class="tx-bold">데이터 해제 상태인 달에는 충전이 불가합니다.</em>
+                            </li>
+                        </ul>
+                    </dd>
+                </dl>
+            </div>
+            <div class="inner">
+                <div class="contents-btn">
+                    <ul class="bt-slice">
+                        <li class="bt-blue1">
+                            <button id="btn-go-amount">다음</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

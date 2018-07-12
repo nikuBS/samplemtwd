@@ -216,6 +216,14 @@
   text-align: left;
 }
 
+.accordion .acco-list .acco-box .acco-tit button.show-button {
+  display: block;
+}
+
+.accordion .acco-list .acco-box .acco-tit button.hide-button {
+  display: none;
+}
+
 .accordion .acco-list .acco-box .acco-tit button:after {
   content: "";
   position: absolute;
@@ -229,10 +237,10 @@
 }
 
 .accordion .acco-list .acco-box .acco-cont {
-  display: none;
   height: 0;
   overflow: hidden;
   padding: 0;
+  visibility: hidden;
 }
 
 .accordion .acco-list .acco-box.on > .acco-tit button:after {
@@ -243,6 +251,7 @@
   display: block;
   height: auto;
   overflow: auto;
+  visibility: visible;
   padding: 1.125rem 0 2.375rem;
 }
 
@@ -554,10 +563,6 @@ input[type=checkbox], input[type=radio] {
 
 .checkbox.type02.disabled .ico:before {
   background-position: 0 -2.5rem;
-}
-
-li.radiobox.type01 {
-  display: block;
 }
 
 .radiobox.type01 {
@@ -938,6 +943,10 @@ li.radiobox.type01 {
   border-radius: 0 0 0 0.25rem;
 }
 
+.widget-box.tube .tube-list.five:nth-child(-n+5) {
+  border-width: 1px 1px 1px 0;
+}
+
 .widget-box.tube .tube-list.five li:first-child {
   border-radius: 0.25rem 0 0 0;
   border-width: 1px;
@@ -995,6 +1004,10 @@ li.radiobox.type01 {
   border-radius: 0 0 0 0.25rem;
 }
 
+.widget-box.tube .tube-list.four li:nth-child(-n+4) {
+  border-width: 1px 1px 1px 0;
+}
+
 .widget-box.tube .tube-list.four li:first-child {
   border-radius: 0.25rem 0 0 0;
   border-width: 1px;
@@ -1048,6 +1061,10 @@ li.radiobox.type01 {
   border-radius: 0 0 0 0.25rem;
 }
 
+.widget-box.tube .tube-list.three li:nth-child(-n+3) {
+  border-width: 1px 1px 1px 0;
+}
+
 .widget-box.tube .tube-list.three li:first-child {
   border-radius: 0.25rem 0 0 0;
   border-width: 1px;
@@ -1099,6 +1116,10 @@ li.radiobox.type01 {
 
 .widget-box.tube .tube-list.two li:nth-last-child(-2n+2) {
   border-radius: 0 0 0 0.25rem;
+}
+
+.widget-box.tube .tube-list.two li:nth-child(-n+2) {
+  border-width: 1px 1px 1px 0;
 }
 
 .widget-box.tube .tube-list.two li:first-child {

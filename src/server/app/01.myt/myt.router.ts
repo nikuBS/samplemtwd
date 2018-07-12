@@ -11,7 +11,12 @@ import MyTUsageTing from './controllers/usage/myt.usage.ting.controller';
 import MyTUsage24hours50discount from './controllers/usage/myt.usage.24hours-50discount.controller';
 import MyTUsageDataLimit from './controllers/usage/myt.usage.data-limit.controller';
 import MyTHotBill from './controllers/bill/myt.bill.hotbill.controller';
+import MyTReissue from './controllers/bill/myt.bill.guidechange.reissue.controller';
+import MyTReissueComplete from './controllers/bill/myt.bill.guidechange.reissue-complete.controller';
+import MyTReturnHistory from './controllers/bill/myt.bill.guidechange.returnhistory.controller';
 import MyTBillBillguide from './controllers/bill/myt.bill.billguide.controller';
+import MyTHotBillChild from './controllers/bill/myt.bill.hotbill.child.controller';
+import MytBillGuidechange from './controllers/bill/myt.bill.guidechange.controller';
 
 
 class MytRouter extends TwRouter {
@@ -29,7 +34,12 @@ class MytRouter extends TwRouter {
     this.controllers.push({ url: '/usage/ting', controller: new MyTUsageTing() });
     this.controllers.push({ url: '/usage/24hourdiscount', controller: new MyTUsage24hours50discount() });
     this.controllers.push({ url: '/bill/hotbill', controller: new MyTHotBill() });
+    this.controllers.push({ url: '/bill/guidechange/reissue', controller: new MyTReissue() });
+    this.controllers.push({ url: '/bill/guidechange/reissue/complete', controller: new MyTReissueComplete() });
+    this.controllers.push({ url: '/bill/billguide/returnhistory', controller: new MyTReturnHistory() });
     this.controllers.push({ url: '/bill/billguide', controller: new MyTBillBillguide() });
+    this.controllers.push({ url: '/bill/hotbill/child', controller: new MyTHotBillChild() });
+    this.controllers.push({ url: '/bill/guidechange', controller: new MytBillGuidechange() });
   }
 }
 

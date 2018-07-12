@@ -1,0 +1,123 @@
+<!--
+* FileName: myt.bill.reissue.html
+* Author: Kim InHwan (skt.P132150@partner.sk.com)
+* Date: 2018.07.04
+-->
+<% include ../../components/start.component.html %>
+
+<body>
+<div class="wrap">
+    <!-- #header -->
+    <div id="header" class="header-wrap">
+        <div class="header">
+            <div class="header-ti">
+                <h1>요금안내서 반송내역</h1>
+            </div>
+            <button class="prev-step"><span class="blind">이전으로</span></button>
+        </div>
+    </div>
+    <!--// #header -->
+
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <div id="myt-bill-return-history" class="container">
+            <!-- 반송내역이 없는 경우에 대한 처리 start -->
+            <% if( data.recCnt === 0) { %>
+            <div class="cont-box nogaps-hoz noborder">
+                <div class="contents-empty type2">
+                    <span class="ico"></span>
+                    <p class="desc">요금안내서 반송 내역이 없습니다.</p>
+                </div>
+                <div class="contents-btn">
+                    <ul class="bt-slice">
+                        <li class="bt-blue1">
+                            <button>확인</button>
+                        </li>
+                    </ul>
+                </div>
+                <div class="bt-link-box">
+                    <div class="bt-link-tx" data-type="blank">사용요금 및 요금안내서로 이동하기</div>
+                </div>
+            </div>
+            <% } else { %>
+            <!-- end -->
+            <div class="cont-box nogaps-btm">
+                <div class="payment-detail-wrap">
+                    <p class="search-number">최근 반송등록일 기준으로 20개 까지 조회하실 수 있습니다.</p>
+                    <p class="result-number">
+                        <span>총 <em class="p-color"><%= data.recCnt %></em> 개</span>
+                    </p>
+                    <% for(var i=0; i < data.recCnt; i++) { %>
+                        <div class="payment-detail-box">
+                        <div class="detail-inner">
+                            <div class="detail-list">
+                                <ul>
+                                    <li>
+                                        <div class="inner-top">
+                                            <span class="title">반송등록일</span>
+                                            <span class="tx-cont"><strong class="num">2013.01.16</strong></span>
+                                        </div>
+                                        <div class="inner-row">
+                                            <ul>
+                                                <li>
+                                                    <span class="title">안내서 유형</span>
+                                                    <span class="tx-cont num">E-Mail</span>
+                                                </li>
+                                                <li>
+                                                    <span class="title">반송사유</span>
+                                                    <span class="tx-cont">해당ID계정 없음(550)<br/>계정을 입력</span>
+                                                </li>
+                                                <li>
+                                                    <span class="title">청구인</span>
+                                                    <span class="tx-cont">김*진</span>
+                                                </li>
+                                                <li>
+                                                    <span class="title">안내서 청구일</span>
+                                                    <span class="tx-cont num">2012.12.31</span>
+                                                </li>
+                                                <li>
+                                                    <span class="title">안내서 청구일</span>
+                                                    <span class="tx-cont num">2012.12.31</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <% } %>
+                </div>
+            </div>
+            <hr class="cont-sp type1" aria-hidden="true"/>
+            <div class="cont-box">
+                <div class="bill-wrap">
+                    <p class="bill-box">
+                        <strong>Bill Letter</strong>를 사용하시면<br/>
+                        월별 청구 금액과 상세 내역 등을<br/>
+                        언제든지 편리하게 확인할 수 있습니다.
+                    </p>
+                    <div class="bt-link-tx" >요금안내서 변경하기<span class="ico"></span></div>
+                </div>
+                <div class="contents-btn">
+                    <ul class="bt-slice">
+                        <li class="bt-blue1">
+                            <button>확인</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <% } %>
+        </div>
+    </div>
+</div>
+<!--// #contents -->
+<% include ../../../../common/views/components/footer.component.html %>
+</body>
+<% include ../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    var comp = new Tw.MyTBillReturnHistory($('#myt-bill-return-history'));
+  });
+</script>
+<% include ../../components/end.component.html %>

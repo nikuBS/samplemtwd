@@ -8,10 +8,7 @@ class RechargeTing extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    this.apiService.request(API_CMD.BFF_06_0020, {}).subscribe((resp) => {
-      console.log(resp);
-      res.render('ting/recharge.ting.html', { svcInfo: svcInfo });
-    });
+    res.render('ting/recharge.ting.html', { svcInfo: svcInfo });
   }
 }
 

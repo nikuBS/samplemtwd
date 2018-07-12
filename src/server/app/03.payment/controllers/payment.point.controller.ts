@@ -10,6 +10,7 @@ import FormatHelper from '../../../utils/format.helper';
 import { Observable } from 'rxjs/Observable';
 import { PAYMENT_VIEW } from '../../../types/string.type';
 import { REQUEST_VALUE } from '../../../types/bff-common.type';
+import StringHelper from '../../../utils/string.helper';
 
 class PaymentPointController extends TwViewController {
   constructor() {
@@ -112,12 +113,14 @@ class PaymentPointController extends TwViewController {
       } else {
         data.cashbagPt = FormatHelper.addComma(data.availPt);
         data.tPt = FormatHelper.addComma(data.availTPt);
+        data.cardNum = StringHelper.masking(data.ocbCcno, '*', 10);
       }
     }
     return data;
   }
 
   private getData(svcInfo: any, cashbagAndT: any, rainbowPoint: any): any {
+    console.log(cashbagAndT);
     return {
       svcInfo,
       cashbagAndT,

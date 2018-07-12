@@ -1,6 +1,6 @@
 @charset "UTF-8";
 /*Default set*/
-html, body, form, div, p, h1, h2, h3, h4, h5, h6, dl, dt, dd, ul, ol, li, fieldset, table, th, td, figure, hr {
+html, body, form, div, p, h1, h2, h3, h4, h5, h6, dl, dt, dd, ul, ol, li, fieldset, a, button, input, table, th, td, figure, hr {
   margin: 0;
   padding: 0;
   font-weight: 300;
@@ -36,7 +36,7 @@ input, select {
   -moz-box-sizing: border-box;
 }
 
-input[type=text], input[type=file], input[type=password] {
+input[type=text], input[type=file], input[type=password], input[type=number] {
   border: 1px solid #d4d4d4;
   outline: none;
 }
@@ -51,7 +51,9 @@ input[type=text], input[type=file], input[type=password] {
 }
 
 .inputbox .input input[type=text],
-.inputbox .input input[type=password] {
+.inputbox .input input[type=file],
+.inputbox .input input[type=password],
+.inputbox .input input[type=number] {
   padding: 0 0.625rem;
   height: 2.375rem;
   border: 1px solid #f5f5f5;
@@ -64,37 +66,49 @@ input[type=text], input[type=file], input[type=password] {
 }
 
 .inputbox .input input[type=text]::-webkit-input-placeholder,
-.inputbox .input input[type=password]::-webkit-input-placeholder {
+.inputbox .input input[type=file]::-webkit-input-placeholder,
+.inputbox .input input[type=password]::-webkit-input-placeholder,
+.inputbox .input input[type=number]::-webkit-input-placeholder {
   color: #8f8f8f;
 }
 
 .inputbox .input input[type=text]:focus,
-.inputbox .input input[type=password]:focus {
+.inputbox .input input[type=file]:focus,
+.inputbox .input input[type=password]:focus,
+.inputbox .input input[type=number]:focus {
   border-color: #7b7b7b;
   background: none;
 }
 
 .inputbox .input input[type=text]:focus::-webkit-input-placeholder,
-.inputbox .input input[type=password]:focus::-webkit-input-placeholder {
+.inputbox .input input[type=file]:focus::-webkit-input-placeholder,
+.inputbox .input input[type=password]:focus::-webkit-input-placeholder,
+.inputbox .input input[type=number]:focus::-webkit-input-placeholder {
   color: transparent;
 }
 
 .inputbox .input input[type=text]:disabled,
-.inputbox .input input[type=password]:disabled {
+.inputbox .input input[type=file]:disabled,
+.inputbox .input input[type=password]:disabled,
+.inputbox .input input[type=number]:disabled {
   background-color: #e5e8ee;
   border-color: #e5e8ee;
   font-weight: 300;
 }
 
 .inputbox .input input[type=text]:disabled::-webkit-input-placeholder,
-.inputbox .input input[type=password]:disabled::-webkit-input-placeholder {
+.inputbox .input input[type=file]:disabled::-webkit-input-placeholder,
+.inputbox .input input[type=password]:disabled::-webkit-input-placeholder,
+.inputbox .input input[type=number]:disabled::-webkit-input-placeholder {
   color: #808698;
   font-weight: 300;
 }
 
 @media screen and (max-width: 321px) {
   .inputbox .input input[type=text]::-webkit-input-placeholder,
-  .inputbox .input input[type=password]::-webkit-input-placeholder {
+  .inputbox .input input[type=file]::-webkit-input-placeholder,
+  .inputbox .input input[type=password]::-webkit-input-placeholder,
+  .inputbox .input input[type=number]::-webkit-input-placeholder {
     font-size: 0.75rem;
   }
 }
@@ -119,7 +133,8 @@ input[type=text], input[type=file], input[type=password] {
 }
 
 .inputbox.validation .input input[type=text],
-.inputbox.validation .input input[type=password] {
+.inputbox.validation .input input[type=password],
+.inputbox.validation .input input[type=number] {
   border-color: #325ec1;
   background-color: #fff;
 }
@@ -136,7 +151,8 @@ input[type=text], input[type=file], input[type=password] {
 }
 
 .inputbox.error .input input[type=text],
-.inputbox.error .input input[type=password] {
+.inputbox.error .input input[type=password],
+.inputbox.error .input input[type=number] {
   border-color: #ea002c;
   background-color: #fff;
   color: #ea002c;
@@ -223,6 +239,10 @@ input[type=password]::-ms-clear {
   display: none;
 }
 
+input[type=number]::-ms-clear {
+  display: none;
+}
+
 /*border:1px solid #002a7b;*/
 input[type=button] {
   border: 0;
@@ -264,7 +284,14 @@ input + .hyphen {
   *margin-left: -4px;
 }
 
-input[type=text] + .btnS, input[type=password] + .btnS, input[type=text] + input[type=text], input[type=password] + input[type=text], input[type=text] + input[type=password] {
+input[type=text] + .btnS,
+input[type=password] + .btnS,
+input[type=number] + .btnS,
+input[type=text] + input[type=text],
+input[type=password] + input[type=text],
+input[type=number] + input[type=text],
+input[type=text] + input[type=password],
+input[type=text] + input[type=number] {
   margin-left: 10px;
 }
 
@@ -278,6 +305,14 @@ label + .typeRadio {
 }
 
 input[type=text] + .checkbox {
+  margin-left: 16px;
+}
+
+input[type=password] + .checkbox {
+  margin-left: 16px;
+}
+
+input[type=number] + .checkbox {
   margin-left: 16px;
 }
 
@@ -1714,6 +1749,7 @@ a.ui-button:active,
 .bt-slice.full li button {
   border-radius: 0;
   font-size: 0.875rem;
+  text-align: center;
 }
 
 .bt-slice.full li a {
@@ -2045,66 +2081,88 @@ a.ui-button:active,
 .bt-indiv {
   height: 3.375rem;
   overflow: hidden;
-  padding: 0 1.625rem;
+  padding: 0.5rem 0.5625rem;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
 
 .bt-indiv button {
-  margin-top: 1.0625rem;
-  color: #fff;
+  height: 100%;
+  overflow: hidden;
+  text-align: center;
+  background: #fff;
 }
 
 .bt-indiv button:first-of-type {
   float: left;
+  border-radius: 0.3125rem 0 0 0.3125rem;
 }
 
 .bt-indiv button:last-of-type {
   float: right;
+  border-radius: 0 0.3125rem 0.3125rem 0;
 }
 
 .bt-indiv button.indiv-small {
+  width: 25%;
   font-weight: 400;
   font-size: 0.9375rem;
 }
 
 .bt-indiv button.indiv-big {
+  width: 75%;
   font-weight: 700;
   font-size: 0.9375rem;
 }
 
 .bt-indiv.bt-red1 {
-  color: #fff;
   background: #df3636;
 }
 
-.bt-indiv.bt-red1.selected {
+.bt-indiv.bt-red1 button {
+  color: #df3636;
+}
+
+.bt-indiv.bt-red1 button.selected {
   background: #c52424;
 }
 
-.bt-indiv.bt-red1:hover {
-  background: #c52424;
+.bt-indiv.bt-red1 button:hover {
+  background: #f5c3c3;
 }
 
-.bt-indiv.bt-red1:disabled {
-  color: #808698;
-  background: #e5e8ee;
+.bt-indiv.bt-red1 button:disabled {
+  font-weight: 400;
+  background: #f5c3c3;
+}
+
+.bt-indiv.bt-red1 button:last-of-type {
+  border-left: 1px solid #df3636;
 }
 
 .bt-indiv.bt-blue1 {
-  color: #fff;
   background: #496093;
 }
 
-.bt-indiv.bt-blue1.selected {
+.bt-indiv.bt-blue1 button {
+  color: #496093;
+}
+
+.bt-indiv.bt-blue1 button.selected {
   background: #425684;
 }
 
-.bt-indiv.bt-blue1:hover {
-  background: #425684;
+.bt-indiv.bt-blue1 button:hover {
+  background: #c1d3f9;
 }
 
-.bt-indiv.bt-blue1:disabled {
-  color: #808698;
-  background: #e5e8ee;
+.bt-indiv.bt-blue1 button:disabled {
+  font-weight: 400;
+  background: #c1d3f9;
+}
+
+.bt-indiv.bt-blue1 button:last-of-type {
+  border-left: 1px solid #496093;
 }
 
 .bt-dropdown {
@@ -2477,4 +2535,13 @@ a.ui-button:active,
   width: 1.8125rem;
   height: 0.9375rem;
   margin-right: 0.5rem;
+}
+
+.badge.badge-other {
+  background-position: -2.1875rem -1.25rem;
+  background-size: 4.6875rem;
+  width: 1.8125rem;
+  height: 0.9375rem;
+  margin: 0.125rem 0.5rem 0 0.5rem;
+  vertical-align: top;
 }

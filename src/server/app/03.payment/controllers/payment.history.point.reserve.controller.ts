@@ -17,7 +17,9 @@ class PaymentHistoryPointReserveController extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
 
-    res.render('payment.history.point.reserve.html', {});
+    res.render('payment.history.point.reserve.html', {
+      svcInfo: svcInfo
+    });
   }
 
 }

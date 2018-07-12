@@ -17,7 +17,9 @@ class PaymentHistoryAutoUnitedWithdrawalController extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
 
-    res.render('payment.history.auto.united-withdrawal.html', {});
+    res.render('payment.history.auto.united-withdrawal.html', {
+      svcInfo: svcInfo
+    });
   }
 
 }
