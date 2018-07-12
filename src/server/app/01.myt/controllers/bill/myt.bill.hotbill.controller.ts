@@ -22,7 +22,7 @@ class MyTBillHotBill extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     var type = '';
-    var showPeriod = true;
+    var billAvailable = true;
     switch ( svcInfo.svcAttrCd ) {
       case 'M3':
         type = 'T pocket Fi';
@@ -31,16 +31,15 @@ class MyTBillHotBill extends TwViewController {
         type = '휴대폰';
         //pocketFi: 메월 1일 메세지 표시
         if ( new Date().getDay() === 1 ) {
-          showPeriod = false;
+          billAvailable = false;
         }
         break;
     }
     svcInfo.svcType = type;
-
     Observable.combineLatest(
       this.apiService.request(API_CMD.BFF_05_0035, { gubun: PARAM.TYPE.PREVIOUS })
     ).subscribe(([]) => {
-      this.renderView(res, 'bill/myt.bill.hotbill.html', { svcInfo: svcInfo, showPeriod: showPeriod });
+      this.renderView(res, 'bill/myt.bill.hotbill.html', { svcInfo: svcInfo, billAvailable: billAvailable });
     });
   }
 

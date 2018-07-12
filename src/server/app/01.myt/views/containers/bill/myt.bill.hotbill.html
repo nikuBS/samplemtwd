@@ -63,7 +63,7 @@
 
             <hr class="cont-sp type1" aria-hidden="true"/>
             <div class="cont-box">
-                <% if(showPeriod){ %>
+                <% if(billAvailable){ %>
                 <div class="payment-all">
                     <h3 class="blind">실시간 요금</h3>
                     <span><em>201,020</em> 원</span>
@@ -88,9 +88,11 @@
                     <div class="link-long" id="previousBill" style="display:none;">
                         <a href="" class="disabled">전월요금보기<span class="ico"></span></a>
                     </div>
+                    <% if(billAvailable){ %>
                     <div class="link-long">
                         <a href="/myt" class="disabled">나의 사용량 조회하기<span class="ico"></span></a>
                     </div>
+                    <% } %>
                 </div>
             </div>
             <!-- .cont-box -->
@@ -108,7 +110,6 @@
 <script>
     $(document).ready(function () {
         var comp = new Tw.MyTBillHotBill($('#myt-bill-hotbill'));
-        skt_landing.action.loading.on({ta:'.container',co:'grey',size:true});
     });
 </script>
 <% include ../../components/end.component.html %>
