@@ -16,8 +16,9 @@ export const URL = {
   '/myt/bill/hotbill': { login: true },
   '/myt/bill/guidechange/reissue': { login: true },
   '/myt/bill/guidechange/reissue/complete': { login: true },
-  '/myt/bill/guidechange/returnhistory': { login: true },
+  '/myt/bill/billguide/returnhistory': { login: true },
   '/myt/bill/billguide': { login: true },
+  '/myt/bill/hotbill/child': { login: true },
   // recharge
   '/recharge/refill': { login: true },
   '/recharge/refill/history': { login: true },
@@ -66,6 +67,7 @@ export const URL = {
   '/auth/login/fail': { login: false },
   '/auth/login/dormancy': { login: false },
   '/auth/login/find-id-pwd': { login: false },
+  '/auth/login/service-pwd-fail': { login: true },
   '/auth/logout/complete': { login: true },
   '/auth/logout/expire': { login: true },
   '/auth/member/management': { login: true },

@@ -25,7 +25,7 @@
                 <div class="change-plan">
                     <h3 class="tit-type">사용중인 요금안내서</h3>
                     <!-- 여기서 요금안내서 타입 출력 (문자로 전달받음) -->
-                    <p class="txt-type"><%= (data.type) || '' %></p>
+                    <p class="txt-type" data-type="<%= data.billCd %>"><%= (data.title) || '' %></p>
                 </div>
             </div>
 
@@ -34,41 +34,42 @@
             <div class="cont-box nogaps-top">
                 <div class="change-plan">
                     <dl>
-                        <!-- 무선서비스가 아닌 유선서비스인 경우 if문 처리-->
-                        <!--<dt>재발행 사유를 선택해주세요</dt> -->
-                        <!--<div class="widget">
-                            <div class="widget-box tube" data-id="reason">
-                                <ul class="tube-list two" role="radiogroup">
-                                    <li role="radio" aria-checked="true"><input type="radio" name="senddata" title="Bill Letter">Bill Letter</li>
-                                    <li role="radio" aria-checked="false"><input type="radio" name="senddata" title="이메일">이메일</li>
-                                </ul>
-                            </div>
-                        </div>-->
-                        <!-- 요금서가 두개인 경우 사용 if문 처리 -->
-                        <!--<dt>어떤 요금안내서를 재발행 하시겠어요?</dt>
-                        <dd>
-                            &lt;!&ndash; .widget &ndash;&gt;
+                        <% if (data.type === '02') { %>
+                            <!-- 무선서비스가 아닌 유선서비스인 경우 처리-->
+                            <dt>재발행 사유를 선택해주세요</dt>
                             <div class="widget">
-                                <div class="widget-box tube" data-id="type">
+                                <div class="widget-box tube" data-id="reason">
                                     <ul class="tube-list two" role="radiogroup">
-                                        <li role="radio" aria-checked="true"><input type="radio" name="senddata" title="Bill Letter">Bill Letter</li>
-                                        <li role="radio" aria-checked="false"><input type="radio" name="senddata" title="이메일">이메일</li>
+                                        <li role="radio" aria-checked="false"><input type="radio" name="02" title="Bill Letter">Bill Letter</li>
+                                        <li role="radio" aria-checked="true"><input type="radio" name="" title="이메일">이메일</li>
+                                        <li role="radio" aria-checked="false"><input type="radio" name="06" title="Bill Letter">Bill Letter</li>
+                                        <li role="radio" aria-checked="false"><input type="radio" name="99" title="이메일">이메일</li>
                                     </ul>
                                 </div>
                             </div>
-                            &lt;!&ndash; //.widget &ndash;&gt;
-                        </dd>-->
+                        <% } %>
+                        <% if (data.multi && data.multi.length > 0) { %>
+                             <!--요금서가 두개인 경우 처리-->
+                            <dt>어떤 요금안내서를 재발행 하시겠어요?</dt>
+                            <dd>
+                                <div class="widget">
+                                    <div class="widget-box tube" data-id="type">
+                                        <ul class="tube-list two" role="radiogroup">
+                                            <li role="radio" aria-checked="true"><input type="radio" name="05" title="Bill Letter">Bill Letter</li>
+                                            <li role="radio" aria-checked="false"><input type="radio" name="02" title="이메일">이메일</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </dd>
+                        <% } %>
                         <dt>재발행 시점을 선택해주세요</dt>
                         <dd>
                             <!-- .widget -->
                             <div class="widget">
                                 <div class="widget-box tube" data-id="time">
                                     <ul class="tube-list two" role="radiogroup">
-                                        <li role="radio" aria-checked="true"><input type="radio" name="senddata"
-                                                                                    title="청구시점">청구시점
-                                        </li>
-                                        <li role="radio" aria-checked="false"><input type="radio" name="senddata"
-                                                                                     title="현재시점">현재시점
+                                        <li role="radio" aria-checked="true"><input type="radio" name="01" title="청구시점">청구시점</li>
+                                        <li role="radio" aria-checked="false"><input type="radio" name="02" title="현재시점">현재시점
                                         </li>
                                     </ul>
                                 </div>
@@ -81,34 +82,28 @@
                             <div class="widget">
                                 <div class="widget-box tube" data-id="month">
                                     <ul class="tube-list two" role="radiogroup">
-                                        <li role="radio" aria-checked="false">
-                                            <input type="radio" name="" title="2018년 6월">
-                                            <%= data.halfYear[0].type1 %>
+                                        <li role="radio" aria-checked="true">
+                                            <input type="radio" name="<%= data.halfYear[0].type3 %>"><%= data.halfYear[0].type1 %>
                                             <span class="date"><%= data.halfYear[0].type2 %></span>
                                         </li>
                                         <li role="radio" aria-checked="false">
-                                            <input type="radio" name="" title="2018년 5월">
-                                            <%= data.halfYear[1].type1 %>
+                                            <input type="radio" name="<%= data.halfYear[1].type3 %>"><%= data.halfYear[1].type1 %>
                                             <span class="date"><%= data.halfYear[1].type2 %></span>
                                         </li>
                                         <li role="radio" aria-checked="false">
-                                            <input type="radio" name="" title="2018년 4월">
-                                            <%= data.halfYear[2].type1 %>
+                                            <input type="radio" name="<%= data.halfYear[2].type3 %>"><%= data.halfYear[2].type1 %>
                                             <span class="date"><%= data.halfYear[2].type2 %></span>
                                         </li>
                                         <li role="radio" aria-checked="false">
-                                            <input type="radio" name="" title="2018년 3월">
-                                            <%= data.halfYear[3].type1 %>
+                                            <input type="radio" name="<%= data.halfYear[3].type3 %>"><%= data.halfYear[3].type1 %>
                                             <span class="date"><%= data.halfYear[3].type2 %></span>
                                         </li>
                                         <li role="radio" aria-checked="false">
-                                            <input type="radio" name="" title="2018년 2월">
-                                            <%= data.halfYear[4].type1 %>
+                                            <input type="radio" name="<%= data.halfYear[4].type3 %>"><%= data.halfYear[4].type1 %>
                                             <span class="date"><%= data.halfYear[4].type2 %></span>
                                         </li>
                                         <li role="radio" aria-checked="false">
-                                            <input type="radio" name="" title="2018년 1월">
-                                            <%= data.halfYear[5].type1 %>
+                                            <input type="radio" name="<%= data.halfYear[5].type3 %>"><%= data.halfYear[5].type1 %>
                                             <span class="date"><%= data.halfYear[5].type2 %></span>
                                         </li>
                                     </ul>
@@ -131,6 +126,7 @@
 
     </div>
     <!--// #contents -->
+    <% include ../../../../common/views/components/footer.component.html %>
 </div>
 
 <% include ../../components/javascript.component.html %>

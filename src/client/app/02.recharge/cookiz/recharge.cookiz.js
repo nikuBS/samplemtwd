@@ -7,6 +7,7 @@
 Tw.RechargeCookiz = function (rootEl) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
+  this._popupService = Tw.Popup;
 
   this._cachedElement();
   this._bindEvent();
@@ -30,7 +31,10 @@ Tw.RechargeCookiz.prototype = {
   },
 
   _cancelAutoRefill: function () {
+    this._popupService.openConfirm(Tw.POPUP_TITLE.NOTIFY, Tw.MSG_GIFT.COOKIZ_A01, '', $.proxy(this._onCancelAutoRefill, this));
+  },
 
+  _onCancelAutoRefill: function () {
   },
 
   _goCookizProcess: function () {
