@@ -21,6 +21,12 @@ import { compile } from 'ejs';
 import StringHelper from '../../../../utils/string.helper';
 import FormatHelper from '../../../../utils/format.helper';
 import billguide_BFF_05_00030 from '../../../../mock/server/myt.bill.billguide.BFF_05_00030';
+import billguide_BFF_05_00038 from '../../../../mock/server/myt.bill.billguide.BFF_05_00038';
+import billguide_BFF_05_00045 from '../../../../mock/server/myt.bill.billguide.BFF_05_00045';
+import billguide_BFF_05_00044 from '../../../../mock/server/myt.bill.billguide.BFF_05_00044';
+import billguide_BFF_05_00041 from '../../../../mock/server/myt.bill.billguide.BFF_05_00041';
+import billguide_BFF_05_00031 from '../../../../mock/server/myt.bill.billguide.BFF_05_00031';
+import billguide_BFF_05_00037 from '../../../../mock/server/myt.bill.billguide.BFF_05_00037';
 
 class MyTBillBillguide extends TwViewController {
 
@@ -46,16 +52,35 @@ class MyTBillBillguide extends TwViewController {
   private _billpayInfo: any = {};
   //자녀회선조회
   private _circuitChildInfo: any = [];
+  //미납내역
+  private _defaultInfo: any;
+
+  //로밍 사용요금
+  private _roamingInfo: any;
+  //콜기프트 요금
+  private _callGiftInfo: any;
+  //기부금/후원금
+  private _donationInfo: any;
+
+  //나의요금제
+  private _baseFeePlansInfo: any;
+
+  //미납요금 납부가능일 조회 BFF_05_0031
+  private _paymentPossibleDayInfo: any;
+
+  //미납요금 이용정지해제 정보 조회 BFF_05_0037
+  private _suspensionInfo: any;
+
   //공통데이터
   private _commDataInfo:any = {
     discount:'',//할인액
     selClaimDtNum:'',//선택 청구 월 | number
     selClaimDtBtn:'',//선택 청구 월 | 2017년 10월
     selStaDt:'',//선택시작
-    selEndDt:''//선택끝
+    selEndDt:'',//선택끝
+    unPaidTotSum: '' //미납금액
   };
-  //미납내역
-  private _defaultInfo: any;
+
   //노출조건
   private _showConditionInfo:any = {
     autopayYn: null, //자동납부신청
@@ -63,8 +88,11 @@ class MyTBillBillguide extends TwViewController {
     phoneYn: null, //선택회선이 휴대폰
     roamingYn: null, //로밍
     callGiftYn: null, //콜기프트
-    donationYn: null //기부금/후원금
-
+    donationYn: null, //기부금/후원금
+    chargeTtYn: null, //요금제: "T끼리 T내는 요금" prodId : "NA00001901"
+    defaultYn: null, //미납여부
+    paymentBtnYn: null, //납부가능일 버튼
+    suspensionYn: null //이용정지해제 버튼
   };
 
   private _urlTplInfo:any = {
@@ -90,7 +118,14 @@ class MyTBillBillguide extends TwViewController {
       billguide_BFF_01_0005,
       billguide_BFF_05_00036,
       billguide_BFF_05_00024,
-      billguide_BFF_05_00030
+      billguide_BFF_05_00030,
+      billguide_BFF_05_00044,
+      billguide_BFF_05_00045,
+      billguide_BFF_05_00038,
+      billguide_BFF_05_00041,
+      billguide_BFF_05_00031,
+      billguide_BFF_05_00037
+
     ]).subscribe(
       {
         next(item) {
@@ -99,6 +134,13 @@ class MyTBillBillguide extends TwViewController {
           thisMain._billpayInfo = item[1].result;
           thisMain._circuitChildInfo = item[2].result;
           thisMain._defaultInfo = item[3].result;
+          thisMain._roamingInfo = item[4].result;
+          thisMain._callGiftInfo = item[5].result;
+          thisMain._donationInfo = item[6].result;
+          thisMain._baseFeePlansInfo = item[7].result;
+          thisMain._paymentPossibleDayInfo = item[8].result;
+          thisMain._suspensionInfo = item[9].result;
+
         },
         error(error) {
           thisMain.logger.info(this, '[ error ] : ', error.stack || error);
@@ -109,10 +151,9 @@ class MyTBillBillguide extends TwViewController {
           thisMain._commDataInfo.selClaimDtBtn = thisMain.getSelClaimDtBtn( String(thisMain._billpayInfo.invDt) );
           thisMain._commDataInfo.selStaDt = thisMain.getSelStaDt( String(thisMain._billpayInfo.invDt) );
           thisMain._commDataInfo.selEndDt = DateHelper.getShortDateNoDot( String(thisMain._billpayInfo.invDt) );
-          //thisMain._commDataInfo.discount = FormatHelper.addComma( String(Math.abs( Number(thisMain._billpayInfo.deduckTotInvAmt))) );
           thisMain._commDataInfo.discount = FormatHelper.addComma( String(Math.abs( Number(0))) );
+          thisMain._commDataInfo.unPaidTotSum = FormatHelper.addComma( String(thisMain._defaultInfo.unPaidTotSum) );
 
-          thisMain._defaultInfo.unPaidTotSum = FormatHelper.addComma( String(thisMain._defaultInfo.unPaidTotSum) );
 
           thisMain.setShowCondition();//노출조건 셋팅
 
@@ -298,6 +339,17 @@ class MyTBillBillguide extends TwViewController {
     this._showConditionInfo.autopayYn = this._billpayInfo.autopayYn;
     this._showConditionInfo.childYn = (this._circuitChildInfo.length > 0) ? 'Y' : 'N';
     this._showConditionInfo.phoneYn = (this._circuitInfo.svcAttrCd === 'M1') ? 'Y' : 'N';
+
+    this._showConditionInfo.roamingYn = (this._roamingInfo.roamingList.length !== 0 ) ? 'Y' : 'N';
+    this._showConditionInfo.callGiftYn = (this._callGiftInfo.callData !== '0분 0초') ? 'Y' : 'N';
+    this._showConditionInfo.donationYn = (this._donationInfo.donationList.length !== 0) ? 'Y' : 'N';
+    this._showConditionInfo.defaultYn = (this._defaultInfo.unPaidAmtMonthInfoList.length !== 0) ? 'Y' : 'N';
+    this._showConditionInfo.chargeTtYn = (this._baseFeePlansInfo.prodId === 'NA00001901') ? 'Y' : 'N';
+
+    this._showConditionInfo.paymentBtnYn = (this._paymentPossibleDayInfo.useObjYn === 'Y') ? 'Y' : 'N';
+    this._showConditionInfo.suspensionYn = (this._suspensionInfo.useObjYn === 'Y') ? 'Y' : 'N';
+
+
 
   }
 

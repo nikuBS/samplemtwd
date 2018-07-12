@@ -16,7 +16,7 @@ const billguide_BFF_05_00036 = {
         '20170531',
         '20170430'
       ],
-    'useAmtTot': '75,510',
+    'useAmtTot': '75,510',//75,510
     'deduckTotInvAmt': '-22055',
     'detailYn': '',
     'autopayYn': 'Y',
