@@ -15,7 +15,7 @@ import MyTReissue from './controllers/bill/myt.bill.guidechange.reissue.controll
 import MyTReissueComplete from './controllers/bill/myt.bill.guidechange.reissue-complete.controller';
 import MyTReturnHistory from './controllers/bill/myt.bill.guidechange.returnhistory.controller';
 import MyTBillBillguide from './controllers/bill/myt.bill.billguide.controller';
-
+import MyTHotBillChild from './controllers/bill/myt.bill.hotbill.child.controller';
 
 class MytRouter extends TwRouter {
   constructor() {
@@ -36,6 +36,7 @@ class MytRouter extends TwRouter {
     this.controllers.push({ url: '/bill/guidechange/reissue/complete', controller: new MyTReissueComplete() });
     this.controllers.push({ url: '/bill/billguide/returnhistory', controller: new MyTReturnHistory() });
     this.controllers.push({ url: '/bill/billguide', controller: new MyTBillBillguide() });
+    this.controllers.push({ url: '/bill/hotbill/child', controller: new MyTHotBillChild() });
   }
 }
 

@@ -5,6 +5,15 @@
  */
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
+import { API_CMD } from '../../../../types/api-command.type';
+import { Observable } from 'rxjs/Observable';
+
+export const PARAM = {
+  TYPE: {
+    CURRENT: 'Q',
+    PREVIOUS: 'G'
+  }
+};
 
 class MyTBillHotBill extends TwViewController {
   constructor() {
@@ -12,7 +21,26 @@ class MyTBillHotBill extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    this.renderView(res, 'bill/myt.bill.hotbill.html', {});
+    var type = '';
+    var billAvailable = true;
+    switch ( svcInfo.svcAttrCd ) {
+      case 'M3':
+        type = 'T pocket Fi';
+        break;
+      default:
+        type = '휴대폰';
+        //pocketFi: 메월 1일 메세지 표시
+        if ( new Date().getDay() === 1 ) {
+          billAvailable = false;
+        }
+        break;
+    }
+    svcInfo.svcType = type;
+    Observable.combineLatest(
+      this.apiService.request(API_CMD.BFF_05_0035, { gubun: PARAM.TYPE.PREVIOUS })
+    ).subscribe(([]) => {
+      this.renderView(res, 'bill/myt.bill.hotbill.html', { svcInfo: svcInfo, billAvailable: billAvailable });
+    });
   }
 
   public renderView(res: Response, view: string, data: any): any {
