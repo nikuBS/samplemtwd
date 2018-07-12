@@ -1,0 +1,115 @@
+<%#
+ * FileName: auth.login.service-pwd.html
+ * Author: Hakjoon Sim (hakjoon.sim@sk.com)
+ * Date: 2018.07.12
+%>
+
+<% include ../../components/start.component.html %>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb_area">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap">
+    <!-- #header -->
+    <div id="header" class="header-wrap">
+        <div class="header">
+            <div class="header-ti">
+                <h1>고객보호 비밀번호 서비스 로그인</h1>
+            </div>
+        </div>
+    </div>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div id="auth-login-service-pwd" class="container">
+            <!-- .cont-box -->
+            <div class="cont-box">
+                <div class="box-suggest">
+                    <div class="suggest-info">
+                        <p class="suggest-ti"><em class="tx-bold">고객보호 비밀번호 서비스</em>에<br />가입하신 회선입니다.</p>
+                        <!-- <dl class="suggest-circuit"> -->
+                            <!-- <dt class="circuit-ti">휴대폰</dt> -->
+                            <!-- <dd class="circuit-tx">010-23**-45**<span class="badge badge-fam" aria-hidden="true"><span class="blind">자녀회선</span></span></dd> -->
+                        <!-- </dl> -->
+                        <div class="sugget-form type1">
+                            <span id="aria-customer-pw" class="form-ti">고객보호 비밀번호</span>
+                            <!-- 입력창 기본 -->
+                            <span class="inputbox"><!-- 입력창 오류 경우 .inputbox에 .error 추가 -->
+                                <span class="input">
+                                    <input type="password" value="" title="고객보호 비밀번호" aria-labelledby="aria-customer-pw" aria-describedby="aria-customer-tx" />
+                                    <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
+                                    <!--<span class="ico"></span>--><!-- 입력창 오류 경우 노출 -->
+                                </span>
+                                <!--<span id="aria-customer-tx" class="error-txt">비밀번호 입력 오류 총 4회</span>--><!-- 입력창 오류 경우 노출 -->
+                            </span>
+                            <!--// 입력창 기본 -->
+                        </div>
+                        <div class="suggest-bt">
+                            <ul class="bt-slice">
+                                <li class="bt-red1">
+                                    <button>로그인</button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--// .cont-box -->
+
+            <hr class="cont-sp type1" />
+
+            <!-- .cont-box -->
+            <div class="cont-box nogaps-hoz">
+                <div class="box-confirm">
+                    <!-- .widget -->
+                    <div class="widget">
+                        <div class="widget-box accordion">
+                            <h5 class="tit-a">꼭 확인해 주세요!</h5>
+                            <div class="acco-cover toggle"><!-- toggle : 한개만 열기 -->
+                                <div class="acco-style btn-hold">
+                                    <ul class="acco-list">
+                                        <li class="acco-box">
+                                            <!-- .on: 열기 -->
+                                            <div class="acco-tit"><span class="bullet">1.</span> 고객보호 비밀번호 5회 모두 잘못 입력했어요. <button role="button" aria-pressed="false">상세보기</button></div>
+                                            <div class="acco-cont">
+                                                <ul class="list-dot">
+                                                    <li class="list">고객보호 비밀번호 서비스는 고객정보 보안을 위해 제공되는 서비스이므로 휴대폰 <em>명의자 본인 이외 대리인은 신청하실 수 없습니다.</em></li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li class="acco-box">
+                                            <div class="acco-tit"><span class="bullet">2.</span> 고객보호 비밀번호를 잊어버렸어요. <button role="button" aria-pressed="false"></button></div>
+                                            <div class="acco-cont">
+                                                <ul class="list-dot">
+                                                    <li class="list">고객보호 비밀번호를 5회 이상 잘못 입력하셨거나 분실하신 경우 <em>본인이 직접 가까운 SK텔레콤 지점에 방문</em>하셔서 초기화 하셔야만 서비스를 이용하실 수 있습니다.</li>
+                                                    <li class="list">SK텔레콤 지점 정보는 고객센터 &gt; 매장 및 AS센터에서 확인하실 수 있습니다.<div class="acco-link"><a class="bt-link-tx" href="">매장 및 AS센터 바로가기<span class="ico"></span></a></div></li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--// .widget -->
+                </div>
+            </div>
+            <!--// .cont-box -->
+        </div>
+    </div>
+    <!--// #contents -->
+    <% include ../../../../common/views/components/footer.component.html %>
+</div>
+<% include ../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    new Tw.AuthLoginServicePwd($('#auth-login-service-pwd'), false);
+  });
+</script>
+<% include ../../components/end.component.html %>
