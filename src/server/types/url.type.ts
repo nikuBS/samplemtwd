@@ -18,6 +18,7 @@ export const URL = {
   '/myt/bill/guidechange/reissue/complete': { login: true },
   '/myt/bill/billguide/returnhistory': { login: true },
   '/myt/bill/billguide': { login: true },
+  '/myt/bill/hotbill/child': { login: true },
   // recharge
   '/recharge/refill': { login: true },
   '/recharge/refill/history': { login: true },
@@ -35,7 +36,7 @@ export const URL = {
   '/recharge/cookiz': { login: true },
   '/recharge/cookiz/history': { login: true },
   '/recharge/limit': { login: true },
-  '/recharge/limit/process': { login: true },
+  '/recharge/limit/history': { login: true },
   '/recharge/ting': { login: true },
   '/recharge/ting/history': { login: true },
   // payment

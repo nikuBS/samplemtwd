@@ -10,9 +10,21 @@ Tw.PaymentHistoryAutoUnitedWithdrawal = function (rootEl) {
   this._hash = Tw.Hash;
   this._popupService = Tw.Popup;
   this._dateHelper = Tw.DateHelper;
+
+  this.common = new Tw.PaymentHistoryCommon(rootEl);
+
+  this._cachedElement();
+  this._bindDOM();
 };
 
 Tw.PaymentHistoryAutoUnitedWithdrawal.prototype = {
+  _cachedElement: function () {
+    this.$menuChanger = this.$container.find('.cont-box .bt-dropdown.big');
+  },
+
+  _bindDOM: function () {
+    this.common.setMenuChanger(this.$menuChanger);
+  }
   /*  자동납부 통합인출 서비스 해지 신청 팝업
 
   popup.open({

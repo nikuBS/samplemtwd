@@ -27,7 +27,7 @@
                     <div class="inputbox">
                         <span class="input">
                             <input type="text" class="only-number card-number" placeholder="카드번호 (숫자만 입력)" maxlength="16" title="카드번호"
-                                   <% if (cashbagAndT.ocbCcno !== '') { %> value=<%= cashbagAndT.ocbCcno %> disabled="true" <% } %>>
+                                   <% if (cashbagAndT.ocbCcno !== '') { %> value=<%= cashbagAndT.cardNum %> disabled="true" <% } %>>
                             <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
                         </span>
                     </div>
@@ -70,7 +70,7 @@
             <h5 class="account-tit">납부하실 포인트</h5>
             <div class="inputbox">
                 <span class="input">
-                    <input type="text" class="only-number pay-point" minlength="4" maxlength="8" placeholder="최소 1,000포인트 이상" title="포인트 입력" aria-describedby="area-point-desc1">
+                    <input type="text" class="only-number cashbag-point" minlength="4" maxlength="8" placeholder="최소 1,000포인트 이상" title="포인트 입력" aria-describedby="area-point-desc1">
                     <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
                 </span>
             </div>

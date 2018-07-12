@@ -34,17 +34,17 @@
                                 </li>
                                 <li>
                                     <span class="ti-data">포인트종류</span>
-                                    <span class="tx-data pointName"></span>
+                                    <span class="tx-data pointName pointTxt"></span>
                                 </li>
                                 <li>
                                     <span class="ti-data">납부예약 포인트</span>
-                                    <span class="tx-data num" data-value="reqRbpPt"></span><span class="won">점</span>
+                                    <span class="tx-data num reqRbpPt reqAmt"></span><span class="won">점</span>
                                 </li>
                                 <li>
                                     <dl>
                                         <dt class="ti-data">요청내역</dt>
                                         <dd class="tx-data">
-                                            <span class="blind">요청내역</span><span class="bank detailDisplayTxt"></span>
+                                            <span class="blind">요청내역</span><span class="bank detailDisplayTxt pointDetailTxt"></span>
                                         </dd>
                                     </dl>
                                 </li>
@@ -59,10 +59,10 @@
                 <div class="contents-btn">
                     <ul class="bt-slice">
                         <li class="bt-white1">
-                            <button>납부내역 보기</button>
+                            <a href="/payment/history" class="replace-history">납부내역 보기</a>
                         </li>
                         <li class="bt-blue1">
-                            <button><a href="/payment/point" class="replace-history">확인</a></button>
+                            <a href="/payment/point" class="replace-history">확인</a>
                         </li>
                     </ul>
                 </div>
