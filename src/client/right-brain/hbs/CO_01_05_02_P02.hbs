@@ -15,8 +15,8 @@
         <div class="container">
             <!-- .cont-box -->
             <div class="cont-box nogaps-hoz">
-                <div class="popup-sub-box">
-                    <p class="popup-page-param1">고객님의 가입정보/모바일 사용 패턴 등을 바탕으로 최적화된 광고/커머스(상거래)/정보 등 다양한 혜택을 추천 받으실 수 있는 서비스입니다.</p>
+                <div class="order-list-sub-box"><!-- 2018-07-12 class변경 -->
+                    <p class="order-list-param1">고객님의 가입정보/모바일 사용 패턴 등을 바탕으로 최적화된 광고/커머스(상거래)/정보 등 다양한 혜택을 추천 받으실 수 있는 서비스입니다.</p><!-- 2018-07-12 class변경 -->
                     <div class="define-list-cont">
                         <ul class="define-list-data">
                             <li>
@@ -40,9 +40,9 @@
                 </div>
             </div>
             <!--// .cont-box -->
-            <hr class="cont-sp type1" />
+            <hr class="cont-sp type1" aria-hidden="true"/>
             <!-- .cont-box -->
-            <div class="cont-box agree-list nogaps-btm">
+            <div class="cont-box nogaps-btm"><!-- 2018-07-12 class="cont-box agree-list nogaps-btm" 에서 .agree-list삭제 -->
                 <!-- .widget -->
                 <div class="agree-list">
                     <div class="widget">
@@ -61,7 +61,7 @@
                                 <div class="acco-style btn-hold">
                                     <ul class="acco-list">
                                         <!-- .on: 열기 -->
-                                        <li class="acco-box">
+                                        <li class="acco-box on"><!-- 2018-07-12 .on추가 -->
                                             <div class="acco-tit">
                                                 <div class="widget">
                                                     <div class="widget-box check">
@@ -71,7 +71,7 @@
                                                             <span>고객 혜택 제공을 위한 개인정보 수집·이용 동의(선택) </span>
                                                         </div>
                                                     </div>
-                                                </div><button role="button" aria-pressed="false"></button>
+                                                </div><!--<button role="button" aria-pressed="false"></button>--><!-- 2018-07-12 button삭제 -->
                                             </div>
                                             <div class="acco-cont">
                                                 <div class="agree-cont">
@@ -86,7 +86,7 @@
                                                 </div>
                                             </div>
                                         </li>
-                                        <li class="acco-box">
+                                        <li class="acco-box on"><!-- 2018-07-12 .on추가 -->
                                             <div class="acco-tit">
                                                 <div class="widget">
                                                     <div class="widget-box check">
@@ -96,7 +96,7 @@
                                                             <span>광고성 정보 수신 동의(선택) </span>
                                                         </div>
                                                     </div>
-                                                </div><button role="button" aria-pressed="false"></button>
+                                                </div><!--<button role="button" aria-pressed="false"></button>--><!-- 2018-07-12 button삭제 -->
                                             </div>
                                             <div class="acco-cont">
                                                 <div class="agree-cont">
@@ -117,13 +117,12 @@
                         </div>
                     </div>
                     <!--// .widget -->
-                    <ul class="bt-slice item-two last">
-                        <!-- li갯수 별로(가로 정렬 버튼이 2개 이상일 경우) .item-two, three, four, five, six, seven -->
-                        <li class="bt-white1">
-                            <button>미동의</button>
-                        </li>
+                    <ul class="bt-slice last"><!-- 2018-07-12 버튼 class, 순서 변경 (동의 사항을 모두 체크시 활성화) -->
                         <li class="bt-blue1">
-                            <button class="selected">동의</button>
+                            <button disabled>동의</button>
+                        </li>
+                        <li class="bt-white2">
+                            <button>미동의</button>
                         </li>
                     </ul>
                 </div>
