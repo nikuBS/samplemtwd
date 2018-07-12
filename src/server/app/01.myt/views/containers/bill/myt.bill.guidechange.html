@@ -1,0 +1,173 @@
+<!--
+* FileName: myt.bill.guidechange_back.html
+* Author: Jung kyu yang (skt.P130715@partner.sk.com)
+* Date: 2018.07.05
+-->
+<% include ../../components/start.component.html %>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb_area">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap">
+     <!-- #header -->
+    <div id="header" class="header-wrap">
+        <!-- 2018-07-06 수정-->
+        <div class="header step-page">
+            <div class="header-ti">
+                <h1>요금안내서 변경 및 재발행</h1>
+                <button class="depth-view" role="button" aria-pressed="false"><span class="blind">메뉴구조보기</span></button>
+            </div>
+            <button class="prev-step"><span class="blind">이전으로</span></button>
+        </div>
+        <!--// 2018-07-06 수정-->
+    </div>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div id="myt-bill-billguide" class="container">
+            <div class="cont-box">
+                <div class="payment-info">
+                    <!-- 2018-07-06 수정-->
+                    <span class="blind">나의 통합대표 회선</span>
+                    <!--// 2018-07-06 수정-->
+                    <ul>
+                        <li>
+                            <span class="info-num"><%= svcInfo.svcNum %></span>
+                        </li>
+                        <li>
+                            <!-- 2018-07-06 수정-->
+                            <span class="badge badge-allpay"><span class="blind">통합대표</span></span>
+                            <!--// 2018-07-06 수정-->
+                            <span class="info-type"><span class="blind">회선정보</span>휴대폰</span>
+                            <span class="info-name"><span class="blind">별명</span><%= svcInfo.svcNickNm %></span>
+                        </li>
+                    </ul>
+                    <span class="info-btn"><a href="" class="btn-choice" role="button">변경</a></span>
+                </div>
+            </div>
+            <hr class="cont-sp type1" aria-hidden="true"/>
+            <div class="cont-box">
+                <div class="t-charge-guide">
+                    <h4>현재 사용중인 요금안내서</h4>
+                    <p class="charge-t1t"><%= billType.curBillTypeNm%></p>
+                    <% if (svcInfo.svcCnt > 1) { %>
+                    <a class="bt-link-tx" href="">통합청구 6개<span class="ico"></span></a>
+                    <% } %>
+                    <span class="charge-txt"><%- billType.curBillTypeText %></span>
+                </div>
+                <div class="contents-btn">
+                    <ul class="bt-slice item-two">
+                        <!-- T world 확인의 경우는 재발행 하기 숨김 -->
+                        <% if(billType.curBillType !== 'P') { %>
+                        <li class="bt-white1">
+                            <button>재발행 하기</button>
+                        </li>
+                        <% }%>
+                        <!-- SMS 수신 불가 및 요금 안내서가 '문자'인 경우는 숨김(법정 대리인 동시통보 아닌경우) -->
+                        <% if( !(billType.smsRecieveYN === 'N' || ( billType.curBillType === 'B' && billType.ccurNotiYn === 'N' ) ) ) { %>
+                        <li class="bt-white1">
+                            <button>안내서 정보변경</button>
+                        </li>
+                        <% } %>
+                    </ul>
+                </div>
+            </div>
+            <hr class="cont-sp type1" aria-hidden="true"/>
+            <div class="cont-box"><!--2018-07-05 수정-->
+                <div class="component-box flcard-s-default">
+                    <p>다른 요금안내서로 변경하시겠어요?</p>
+                    <div class="flcard-s-cont">
+                        <div class="flcard-s-area">
+                            <!-- .widget -->
+                            <div class="widget">
+                                <div class="widget-box slider3">
+                                    <!--<h5 class="tit-a blind">위젯 슬라이드</h5>--><!-- 2018-06-19 : h태그 수정/삭제 -->
+                                    <div class="type3">
+                                        <div class="slider-box">
+                                            <!-- type1: 카드형 -->
+                                            <ul class="slider">
+                                                <% billType.billTypeList.map ( (line) =>  { %>
+                                                <li class="swiper-slide" data-bill-type="<%= JSON.stringify(line)%>" >
+                                                    <div class="swiper-cont bg-color3">
+                                                        <div class="t-commend-info">
+                                                            <!--추천 태크 표시대상 : P:T world, H:Bill Letter, 2:이메일-->
+                                                            <% if( ',P,H,2'.indexOf(line.billType) > 0 ) { %>
+                                                            <span class="ico-commend"><em class="blind">추천</em></span>
+                                                            <% } %>
+                                                            <p class="commend-info-txt info-txt-w"><%- line.value%></p>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <% }) %>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- //.widget -->
+                        </div>
+                    </div>
+                    <div class="commend-detail-info">
+                        <p class="txt _sel-desc"><%= billType.billTypeList[0].desc %></p>
+                        <div class="contents-btn">
+                            <ul class="bt-slice">
+                                <li class="bt-blue1">
+                                    <!-- Dimmed Case는 button에 disabled속성 추가 -->
+                                    <button class="_sel-nm"><%= billType.billTypeList[0].chgBtnNm %></button>
+                                </li>
+                                <li class="bt-link-box">
+                                    <a class="bt-link-tx _sel-preview" href="#" onclick="return false;" data-bill-type-list="<%= JSON.stringify(billType.billTypeList)%>">미리 보기</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr class="cont-sp type1" aria-hidden="true"/>
+            <div class="cont-box">
+                <div class="inner2">                                                                                                                                    <div class="contents-info-list">
+                        <p class="ti-desc">반송된 요금안내서와<br />반송사유를 확인할 수 있습니다.</p>
+                        <a class="bt-link-tx" href="">요금안내서 반송 내역 보기 <span class="ico"></span></a>
+                    </div>
+                </div>
+            </div>
+            <hr class="cont-sp type1" aria-hidden="true"/>
+            <div class="cont-box nogaps-hoz">
+                <div class="helpbox-link">
+                    <div class="link-long">
+                        <a href="" class="disabled">요금 즉시 납부<span class="ico"></span></a>
+                    </div>
+                    <div class="link-long">
+                        <a href="" class="disabled">자동납부 신청 및 변경<span class="ico"></span></a>
+                    </div>
+                    <div class="link-long">
+                        <a href="" class="disabled">사용요금 및 요금안내서<span class="ico"></span></a>
+                    </div>
+                    <div class="link-long">
+                        <a href="" class="disabled">입금계좌 SMS신청<span class="ico"></span></a>
+                    </div>
+                    <div class="link-long">
+                        <a href="" class="disabled">가입 상품/서비스<span class="ico"></span></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--// #contents -->
+    <!-- footer -->
+    <% include ../../../../../common/views/components/footer.component.html %>
+    <!-- // footer -->
+</div>
+<% include ../../components/javascript.component.html %>
+<script>
+    $(document).ready(function () {
+        var comp = new Tw.MyTBillGuidechange($('#myt-bill-billguide'));
+    });
+</script>
+<% include ../../components/end.component.html %>
