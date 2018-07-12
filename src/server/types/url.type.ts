@@ -1,6 +1,6 @@
 export const URL = {
   // home
-  '/home': { login: true },
+  '/home': { login: false },
   // myt
   '/myt': { login: true },
   '/myt/usage/change': { login: true },
@@ -69,6 +69,7 @@ export const URL = {
   '/auth/login/find-id-pwd': { login: false },
   '/auth/login/service-pwd': { login: true },
   '/auth/login/service-pwd-fail': { login: true },
+  '/auth/login/route': { login: false },
   '/auth/logout/complete': { login: true },
   '/auth/logout/expire': { login: true },
   '/auth/member/management': { login: true },
