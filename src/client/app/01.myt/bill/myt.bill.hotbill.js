@@ -17,13 +17,13 @@ Tw.MyTBillHotBill = function (rootEl) {
   this._cachedElement();
   this._bindEvent();
   this._billInfoAvailable = this.$amount.length > 0; //서버날짜로 일 별 노출조건 세팅해서 내려옴
-  if(this._billInfoAvailable){
-    skt_landing.action.loading.on({ta:'.container',co:'grey',size:true});
+  if ( this._billInfoAvailable ) {
+    skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
     this._resTimerID = setTimeout(this._getBillResponse(), 500);
     Handlebars.registerHelper('isBill', function (val, options) {
       return (self.NO_BILL_FIELDS.indexOf(val) < 0 ) ? options.fn(this) : options.inverse(this);
     });
-  }else{
+  } else {
     //PocketFi 1일에 요금조회 불가 & 7일까지만 전월요금 조회 가능
     //따라서 _billInfoAvailable 에선 무조건 show 조건 충족
     this.$btPreviousBill.show();
@@ -53,10 +53,11 @@ Tw.MyTBillHotBill.prototype = {
   },
 
   _onReceivedBillData: function (resp) {
-    if(this._resTimerID){
+    if ( this._resTimerID ) {
       clearTimeout(this._resTimerID);
     }
-    if ( resp.result.isSuccess === 'Y' ) {
+
+    if ( resp.result && resp.result.isSuccess === 'Y' ) {
       this._svcAttrCd = this.$container.find('.info-type').attr('data-type');
       var billData = resp.result.hotBillInfo;
       //자녀 회선 메뉴는 매월 1일과 자녀회선 없을 시 비노출
@@ -66,25 +67,28 @@ Tw.MyTBillHotBill.prototype = {
       }
 
       var day = parseInt(resp.result.stdDateHan.match(/(\d+)\uC77C/i)[1], 10);
-      if ( day > 1 && this._children && this._svcAttrCd === this.SVC_TYPE.MOBILE ) {
+      if ( day > 1 && this._children && this._svcAttrCd !== this.SVC_TYPE.TPOCKET ) {
         this.$memberInfo.show();
         //TODO 자녀수
         this.$numOfMembers.text(this._children.length);
       }
 
+      Tw.Logger.info('Day: ' + day + ' CODE:' + this._svcAttrCd);
       if ( this._svcAttrCd === this.SVC_TYPE.MOBILE ) {
         //핸드폰: 9일부터 전월요금보기 보이기
         if ( day >= 9 ) {
           this.$btPreviousBill.show();
         }
-      } else {
+      } else if ( this._svcAttrCd === this.SVC_TYPE.TPOCKET ) {
         //PocketFi: 7일까지 전월요금보기 보이기
         if ( day <= 7 ) {
           this.$btPreviousBill.show();
         }
+      } else {
+        this.$btPreviousBill.show();
       }
 
-      if(this._billInfoAvailable){
+      if ( this._billInfoAvailable ) {
         this.$amount.text(billData.tot_open_bal2);
         //yyyy년mm월dd일 -> yyyy.mm.dd
         var strPeriod = resp.result.termOfHotBill
@@ -96,13 +100,16 @@ Tw.MyTBillHotBill.prototype = {
         this._renderBillGroup(group);
       }
     } else {
-      //TODO error alert
+      this._onErrorReceivedBillData();
     }
     skt_landing.action.loading.off({ ta: '.container' });
   },
 
   _onErrorReceivedBillData: function () {
-    //TODO error alert
+    //TODO error alert 공통모듈
+    this._popupService.openAlert(Tw.MSG_MYT.HOTBILL_FAIL_REQUEST, Tw.MSG_MYT.HOTBILL_FAIL_REQUEST_TITLE, function () {
+      location.href = '/myt';
+    });
   },
 
   /**
@@ -199,11 +206,11 @@ Tw.MyTBillHotBill.prototype = {
       this._children.forEach(function (member) {
         item = {
           attr: 'id=' + member.svcMgmtNum,
-          text: member.svcNum
+          text: member.svcNum + (member.childEqpMdlCd ? '(' + member.childEqpMdlCd + ')' : '')
         };
         members.push(item);
       });
-      this._popupService.openChoice('자녀 선택', members, 'type1', $.proxy(this._onOpenChildrenChoice, this));
+      this._popupService.openChoice(Tw.MSG_MYT.HOTBILL_MEMBER_POPUP_TITLE, members, 'type1', $.proxy(this._onOpenChildrenChoice, this));
     }
   },
 

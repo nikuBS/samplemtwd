@@ -65,7 +65,10 @@ Tw.MSG_MYT = {
   BILL_GUIDE_00: ' 요금안내서 재발행',
   BILL_GUIDE_01: ' 요금안내서 재발행을 신청하시겠습니까?',
   BILL_GUIDE_02: '요금안내서 재발행이 신청되었습니다.',
-  BILL_GUIDE_03: '선택하신 청구월에 대한 청구서가 이미 재발행 신청 되었습니다.'
+  BILL_GUIDE_03: '선택하신 청구월에 대한 청구서가 이미 재발행 신청 되었습니다.',
+  HOTBILL_MEMBER_POPUP_TITLE: '자녀 선택',
+  HOTBILL_FAIL_REQUEST_TITLE: '요청 실패.',
+  HOTBILL_FAIL_REQUEST: '요금 정보 가져오기 실패했습니다.'
 };
 
 Tw.MSG_RECHARGE = {
@@ -173,6 +176,7 @@ Tw.MSG_GIFT = {
 };
 
 Tw.MSG_AUTH = {
+  LOGIN_A01: '비밀번호가 일치하지 않습니다.\n5회 실패 시 직접 SK 텔레콤 지점을 방문하여 비밀번호를 재 등록하셔야 합니다.\n주의하여 다시 한번 입력해 주세요.',
   WITHDRAW_A02_01: '이름을 입력해 주세요.',
   WITHDRAW_A02_02: '법정 생년월일을 입력해 주세요.',
   WITHDRAW_A03: '입력한 정보가 확인되지 않습니다. 다시 입력해 주세요.',
