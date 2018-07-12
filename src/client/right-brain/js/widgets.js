@@ -87,7 +87,7 @@ skt_landing.widgets = {
     input.each(function () {
       var box = $(this).closest('.checkbox');
       $(this).is(':checked') ? box.addClass('checked').attr('aria-checked',true) : box.removeClass('checked').attr('aria-checked',false);
-      $(this).is(':disabled') ? box.addClass('disabled').attr('aria-disabled',true) : box.removeClass('disabled').attr('aria-checked',false);
+      $(this).is(':disabled') ? box.addClass('disabled').attr('aria-disabled',true) : box.removeClass('disabled');
       $(this).on('click', function () {
         if ($(this).prop('checked')) {
           box.addClass('checked').attr('aria-checked',true);

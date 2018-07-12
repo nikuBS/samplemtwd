@@ -1109,7 +1109,7 @@
   border-radius: 0.5625rem;
   background: #fff;
   overflow: hidden;
-  z-index: 11;
+  z-index: 30;
 }
 
 .popup .popup-info .popup-header {
@@ -1300,7 +1300,7 @@
   bottom: 0;
   background: #000;
   opacity: .8;
-  z-index: 10;
+  z-index: 25;
 }
 
 .sns-ico-fb .ico {
@@ -7460,6 +7460,9 @@ span[class*=char-star][class*=red] {
 
 .agree-list .accordion .acco-style.btn-hold .acco-list .acco-box.on .acco-cont {
   height: 8.125rem;
+  margin-bottom: 1.375rem;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
   overflow-y: auto;
 }
 
@@ -7467,9 +7470,15 @@ span[class*=char-star][class*=red] {
   padding-left: 0;
 }
 
-.agree-list .accordion .acco-style.btn-hold .acco-list .acco-box .acco-cont .agree-cont-defined {
-  padding: 0.9375rem 1.125rem;
+.agree-list .accordion .acco-style.btn-hold .acco-list .acco-box .acco-cont {
+  padding-bottom: 0;
   border-radius: 0.3125rem;
+  overflow: hidden;
+}
+
+.agree-list .accordion .acco-style.btn-hold .acco-list .acco-box .acco-cont .agree-cont-defined {
+  border-radius: 0.3125rem;
+  padding: 0.9375rem 1.125rem;
   background: #f5f5f5;
 }
 
@@ -7482,6 +7491,10 @@ span[class*=char-star][class*=red] {
 .agree-list .accordion .acco-style.btn-hold .acco-list .acco-box .acco-cont .agree-cont-defined dd {
   font-size: 0.875rem;
   line-height: 1.375rem;
+}
+
+.agree-list .accordion .acco-style.btn-hold .acco-list .acco-box:last-of-type.on .acco-cont {
+  margin-bottom: 0;
 }
 
 .agree-list .accordion .checkbox {
@@ -7501,7 +7514,7 @@ span[class*=char-star][class*=red] {
 }
 
 .agree-list > .bt-slice {
-  margin-top: 2.5rem;
+  margin-top: 2.1875rem;
 }
 
 /* 김재성 */

@@ -15,6 +15,7 @@
   -webkit-box-shadow: 0rem -0.25rem 0.375rem 0.0625rem rgba(0, 0, 0, 0.03);
           box-shadow: 0rem -0.25rem 0.375rem 0.0625rem rgba(0, 0, 0, 0.03);
   background: #fff;
+  z-index: 25;
 }
 
 #gnb.on {
@@ -230,7 +231,7 @@
   right: -100%;
   top: 0;
   bottom: 0;
-  z-index: 15;
+  z-index: 26;
   width: 18.75rem;
   overflow-x: hidden;
   overflow-y: auto;
@@ -381,8 +382,18 @@
 }
 
 .all-menu .all-menu-box .user-menu li a {
+  display: block;
+  width: 100%;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 0.625rem 1.25rem;
+  text-align: left;
   font-size: 0.9375rem;
   color: #000;
+}
+
+.all-menu .all-menu-box .user-menu li a:hover {
+  background: #f8f8f8;
 }
 
 .all-menu .all-menu-box .user-menu.use-icon {
@@ -487,8 +498,13 @@
   padding: 5.3125rem 1.25rem 1.25rem;
 }
 
-.all-menu .all-menu-box-depth2 .menu-depth2-box h3 {
+.all-menu .all-menu-box-depth2 .menu-depth2-box h3 span {
+  display: none;
   font-size: 1.875rem;
+}
+
+.all-menu .all-menu-box-depth2 .menu-depth2-box h3 span.on {
+  display: inline;
 }
 
 .all-menu .all-menu-box-depth2 .menu-depth2-box .user-info {
@@ -516,8 +532,12 @@
 }
 
 .all-menu .all-menu-box-depth2 .menu-depth2-box .menu-depth2 {
-  display: block;
+  display: none;
   margin: 5.3125rem 0 0 0;
+}
+
+.all-menu .all-menu-box-depth2 .menu-depth2-box .menu-depth2.on {
+  display: block;
 }
 
 .all-menu .all-menu-box-depth2 .menu-depth2-box .menu-depth2 li {
@@ -661,7 +681,7 @@
   min-height: 100%;
   padding: 3.6875rem 0 3.375rem;
   background: #fff;
-  z-index: 9;
+  z-index: 100;
 }
 
 .popup-page.nobg {

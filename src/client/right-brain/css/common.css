@@ -2081,66 +2081,88 @@ a.ui-button:active,
 .bt-indiv {
   height: 3.375rem;
   overflow: hidden;
-  padding: 0 1.625rem;
+  padding: 0.5rem 0.5625rem;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
 
 .bt-indiv button {
-  margin-top: 1.0625rem;
-  color: #fff;
+  height: 100%;
+  overflow: hidden;
+  text-align: center;
+  background: #fff;
 }
 
 .bt-indiv button:first-of-type {
   float: left;
+  border-radius: 0.3125rem 0 0 0.3125rem;
 }
 
 .bt-indiv button:last-of-type {
   float: right;
+  border-radius: 0 0.3125rem 0.3125rem 0;
 }
 
 .bt-indiv button.indiv-small {
+  width: 25%;
   font-weight: 400;
   font-size: 0.9375rem;
 }
 
 .bt-indiv button.indiv-big {
+  width: 75%;
   font-weight: 700;
   font-size: 0.9375rem;
 }
 
 .bt-indiv.bt-red1 {
-  color: #fff;
   background: #df3636;
 }
 
-.bt-indiv.bt-red1.selected {
+.bt-indiv.bt-red1 button {
+  color: #df3636;
+}
+
+.bt-indiv.bt-red1 button.selected {
   background: #c52424;
 }
 
-.bt-indiv.bt-red1:hover {
-  background: #c52424;
+.bt-indiv.bt-red1 button:hover {
+  background: #f5c3c3;
 }
 
-.bt-indiv.bt-red1:disabled {
-  color: #808698;
-  background: #e5e8ee;
+.bt-indiv.bt-red1 button:disabled {
+  font-weight: 400;
+  background: #f5c3c3;
+}
+
+.bt-indiv.bt-red1 button:last-of-type {
+  border-left: 1px solid #df3636;
 }
 
 .bt-indiv.bt-blue1 {
-  color: #fff;
   background: #496093;
 }
 
-.bt-indiv.bt-blue1.selected {
+.bt-indiv.bt-blue1 button {
+  color: #496093;
+}
+
+.bt-indiv.bt-blue1 button.selected {
   background: #425684;
 }
 
-.bt-indiv.bt-blue1:hover {
-  background: #425684;
+.bt-indiv.bt-blue1 button:hover {
+  background: #c1d3f9;
 }
 
-.bt-indiv.bt-blue1:disabled {
-  color: #808698;
-  background: #e5e8ee;
+.bt-indiv.bt-blue1 button:disabled {
+  font-weight: 400;
+  background: #c1d3f9;
+}
+
+.bt-indiv.bt-blue1 button:last-of-type {
+  border-left: 1px solid #496093;
 }
 
 .bt-dropdown {
