@@ -104,3 +104,25 @@ export const MYT_GUIDE_CHANGE_INIT_INFO = {
         }
     ]
 };
+
+export enum BILL_GUIDE_TYPE_NAME {
+  TWORLD = 'T world 확인',
+  BILL_LETTER = 'Bill Letter',
+  SMS = '문자',
+  EMAIL = '이메일',
+  BILL_LETTER_EMAIL = 'Bill letter + 이메일',
+  SMS_EMAIL = '문자 + 이메일',
+  BILL_LETTER_SMS = 'Bill letter + 문자',
+  ETC = '기타(우편)'
+}
+
+export enum BILL_GUIDE_SELECTOR_LABEL {
+  TWORLD = 'T world 확인 추천!',
+  BILL_LETTER = 'Bill Letter',
+  SMS = '문자 요금안내서',
+  EMAIL = '이메일 요금안내서',
+  BILL_LETTER_EMAIL = 'Bill Letter + 이메일 요금안내서',
+  SMS_EMAIL = '문자 + 이메일 요금안내서',
+  BILL_LETTER_SMS = 'Bill Letter + 문자 요금안내서',
+  ETC = '기타(우편) 요금안내서'
+}
