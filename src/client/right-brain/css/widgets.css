@@ -943,6 +943,10 @@ input[type=checkbox], input[type=radio] {
   border-radius: 0 0 0 0.25rem;
 }
 
+.widget-box.tube .tube-list.five:nth-child(-n+5) {
+  border-width: 1px 1px 1px 0;
+}
+
 .widget-box.tube .tube-list.five li:first-child {
   border-radius: 0.25rem 0 0 0;
   border-width: 1px;
@@ -1000,6 +1004,10 @@ input[type=checkbox], input[type=radio] {
   border-radius: 0 0 0 0.25rem;
 }
 
+.widget-box.tube .tube-list.four li:nth-child(-n+4) {
+  border-width: 1px 1px 1px 0;
+}
+
 .widget-box.tube .tube-list.four li:first-child {
   border-radius: 0.25rem 0 0 0;
   border-width: 1px;
@@ -1053,6 +1061,10 @@ input[type=checkbox], input[type=radio] {
   border-radius: 0 0 0 0.25rem;
 }
 
+.widget-box.tube .tube-list.three li:nth-child(-n+3) {
+  border-width: 1px 1px 1px 0;
+}
+
 .widget-box.tube .tube-list.three li:first-child {
   border-radius: 0.25rem 0 0 0;
   border-width: 1px;
@@ -1104,6 +1116,10 @@ input[type=checkbox], input[type=radio] {
 
 .widget-box.tube .tube-list.two li:nth-last-child(-2n+2) {
   border-radius: 0 0 0 0.25rem;
+}
+
+.widget-box.tube .tube-list.two li:nth-child(-n+2) {
+  border-width: 1px 1px 1px 0;
 }
 
 .widget-box.tube .tube-list.two li:first-child {

@@ -157,7 +157,7 @@
   height: 100%;
 }
 
-.header-wrap .header button, .header-wrap .header a {
+.header-wrap .header > button, .header-wrap .header > a {
   display: block;
   overflow: hidden;
   position: absolute;
@@ -167,19 +167,19 @@
   height: 1.5625rem;
 }
 
-.header-wrap .header button.prev-step, .header-wrap .header a.prev-step {
+.header-wrap .header > button.prev-step, .header-wrap .header > a.prev-step {
   left: 1.25rem;
   top: 1.125rem;
   background-position: 0 -15.625rem;
 }
 
-.header-wrap .header button.search-content, .header-wrap .header a.search-content {
+.header-wrap .header > button.search-content, .header-wrap .header > a.search-content {
   right: 1.25rem;
   top: 1.125rem;
   background-position: -1.5625rem -15.625rem;
 }
 
-.header-wrap .header button .blind, .header-wrap .header a .blind {
+.header-wrap .header > button .blind, .header-wrap .header > a .blind {
   width: 100%;
   top: 0;
   left: 0;
@@ -665,7 +665,7 @@
 }
 
 .popup-page.nobg {
-  background: none;
+  background: #f5f5f5;
 }
 
 .popup-page .container-wrap {
