@@ -21,7 +21,10 @@ Tw.HomeMain = function (rootEl, lineRegisterLayer) {
 
 Tw.HomeMain.prototype = {
   _init: function () {
-    this.tplGiftCard = Handlebars.compile($('.gift-template').html());
+    var giftTemp = $('.gift-template').html();
+    if ( !Tw.FormatHelper.isEmpty(giftTemp) ) {
+      this.tplGiftCard = Handlebars.compile($('.gift-template').html());
+    }
     this.$giftCard = this.$container.find('#gift-card');
 
     this._lineRegisterLayer.getLineInfo();

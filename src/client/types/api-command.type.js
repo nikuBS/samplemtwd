@@ -25,6 +25,7 @@ Tw.API_CMD = {
   BFF_03_0005: { path: '/core-auth/v1/multi-svc', method: Tw.API_METHOD.POST },
   BFF_03_0006: { path: '/user/nick-names/args-0', method: Tw.API_METHOD.PUT },
   BFF_03_0007: { path: '/user/tid-keys', method: Tw.API_METHOD.GET },
+  BFF_03_0009: { path: '/user/service-password-sessions', method: Tw.API_METHOD.POST },
   BFF_03_0010: { path: '/user/locks', method: Tw.API_METHOD.DELETE },
   BFF_03_0011: { path: '/core-auth/v1/nationalities', method: Tw.API_METHOD.GET },
 
@@ -35,6 +36,9 @@ Tw.API_CMD = {
   BFF_05_0010: { path: '/core-balance/v1/children', method: Tw.API_METHOD.GET },
   BFF_05_0011: { path: '/core-balance/v1/data-sharings/args-0', method: Tw.API_METHOD.POST },
   BFF_05_0048: { path: '/core-bill/v1/bill-types-reissue-request/', method: Tw.API_METHOD.GET },
+  BFF_05_0022: { path: '/core-bill/v1/hotbill/fee/hotbill-response', method: Tw.API_METHOD.GET },
+  BFF_05_0024: { path: '/core-bill/v1/child/children', method: Tw.API_METHOD.GET },
+  BFF_05_0035: { path: '/core-bill/v1/hotbill/fee/hotbill-request', method: Tw.API_METHOD.GET },
 
   // RECHARGE
   BFF_06_0001: { path: '/core-recharge/v1/refill-coupons', method: Tw.API_METHOD.GET },

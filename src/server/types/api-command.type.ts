@@ -34,7 +34,7 @@ export const API_CMD = {
   BFF_03_0006: { path: '/user/nick-names/args-0', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
   BFF_03_0007: { path: '/user/tid-keys', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_03_0008: { path: '/user/sessions', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: false },
-  BFF_03_0009: { path: '/user/service-password-sessions', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: false },
+  BFF_03_0009: { path: '/user/service-password-sessions', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_03_0010: { path: '/user/locks', method: API_METHOD.DELETE, server: API_SERVER.BFF, bypass: true },
   BFF_03_0011: { path: '/core-auth/v1/nationalities', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_03_0012: { path: '/user/biz-real-users-auth/args-0', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: false },
@@ -55,7 +55,9 @@ export const API_CMD = {
   BFF_05_0039: { path: '/core-bill/v1/bill-types-return-list/', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0041: { path: '/core-product/v1/services/base-fee-plans', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0048: { path: '/core-bill/v1/bill-types-reissue-request/', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
-
+  BFF_05_0022: { path: '/core-bill/v1/hotbill/fee/hotbill-response', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0024: { path: '/core-bill/v1/child/children', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0035: { path: '/core-bill/v1/hotbill/fee/hotbill-request', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   // RECHARGE
   BFF_06_0001: { path: '/core-recharge/v1/refill-coupons', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_06_0002: { path: '/core-recharge/v1/refill-usages', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
@@ -149,21 +151,6 @@ export const API_CMD = {
   DELETE: { path: '/posts/1', method: API_METHOD.DELETE, server: API_SERVER.TEST, bypass: true },
   DELETE_PARAM: {}
 
-};
-
-export const TID_SVC_TYPE = {
-  SSO_LOGIN: 9,
-  LOGIN: 14,
-  ID_LOGIN: 16,
-  SSO_LOGOUT: 19,
-  SIGN_UP: 20,
-  GET_ACCOUNT: 21,
-  FIND_ID: 22,
-  FIND_PW: 23,
-  CHANGE_PW: 24,
-  TERM: 25,
-  SECURITY: 26,
-  GUIDE: 50
 };
 
 export const API_CODE = {

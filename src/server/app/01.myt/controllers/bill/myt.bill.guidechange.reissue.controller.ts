@@ -6,7 +6,6 @@
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { NextFunction, Request, Response } from 'express';
 import { API_CMD } from '../../../../types/api-command.type';
-import { Observable } from 'rxjs/Observable';
 
 class MyTBillReissue extends TwViewController {
   constructor() {
@@ -15,9 +14,8 @@ class MyTBillReissue extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     // home.main.sprint3 참조
-    Observable.combineLatest(
-      this.getReissueData()
-    ).subscribe(([reissueData]) => {
+    this.apiService.request(API_CMD.BFF_05_0028, {}).subscribe((reissueData) => {
+      //
       const data = {
         halfYear: this.getHalfYearData(),
         type: '01', // 01:무선, 02:유선, 03:etc
@@ -26,24 +24,18 @@ class MyTBillReissue extends TwViewController {
         reasonCd: '01' // 01:무선 02:유선(요금조정), 06: 유선(요금안내서 부달) 99: 유선 (기타) '':반송처리(추가예정)
 
       };
+      // 서버에서 받은 데이터 설정
       if ( reissueData.result ) {
         data['title'] = reissueData.result.billIsueTypCd;
-        if ( data['title'].indexOf('+') !== -1 ) {
-          // 요금서 종류가 두개 이상인 경우
-          data['multi'] = data['title'].split('+');
-        }
+      }
+
+      // 요금서 종류가 두개 이상인 경우 - 우선 임시로 문자열로 구분하여 처리
+      // TODO: 서버 API에 대한 명세가 되면 처리
+      if ( data['title'].indexOf('+') !== -1 ) {
+        data['multi'] = data['title'].split('+');
       }
 
       res.render('bill/myt.bill.guidechange.reissue.html', { data });
-    });
-  }
-
-  private getReissueData(): Observable<any> {
-    // const reissueData = {};
-    return this.apiService.request(API_CMD.BFF_05_0028, {}).map((resp) => {
-      // 바로 받은 response 값은 확인 후 사용하지 않고 필요한 내용 추출하여 사용 예정
-      // return reissueData;
-      return resp;
     });
   }
 

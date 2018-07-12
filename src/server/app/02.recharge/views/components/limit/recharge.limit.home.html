@@ -34,13 +34,13 @@
                     <em class="tx-bold">요금 한도보다 데이터가 더 필요하다면</em> 충전하여 사용해보세요!
                 </p>
             </div>
-            <div class="box-state-info" data-chargeClCd="<%= limitData.chargeClCd %>">
+            <div class="box-state-info">
                 <ul class="state-info-group">
                     <li class="state-info-list">
                         <dl>
                             <dt>나의 요금제</dt>
                             <dd>
-                                <%= limitData.prodNm %>
+                                <%= limitData.prodName %>
                             </dd>
                         </dl>
                     </li>
@@ -48,7 +48,7 @@
                         <dl>
                             <dt>충전 서비스 차단 여부</dt>
                             <dd>
-                                <%= limitData.blockYn === "N" ? "충전 허용" : "충전 불가" %>
+                                <%= limitData.blockYn === "Y" ? "충전 불가" : "충전 허용" %>
                             </dd>
                         </dl>
                     </li>
@@ -129,7 +129,7 @@
                     <a href="#step-type"><button <%= limitData.blockYn === 'Y' ? 'disabled' : '' %>>데이터 한도 요금 충전하기</button></a>
                 </li>
                 <li class="bt-white1">
-                    <button>데이터 한도 요금 충전 내역</button>
+                    <a href="/recharge/limit/history">데이터 한도 요금 충전 내역</a>
                 </li>
             </ul>
         </div>

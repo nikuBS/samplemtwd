@@ -15,7 +15,7 @@ class LoginService {
     LoginService.instance = this;
   }
 
-  public isLogin(userId: string): boolean {
+  public isLogin(userId?: string): boolean {
     if ( !FormatHelper.isEmpty(userId) ) {
       return !FormatHelper.isEmpty(this.session.serverSession) && this.session.userId === userId;
     }

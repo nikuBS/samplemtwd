@@ -70,7 +70,7 @@ Tw.HistoryService.prototype = {
     }
 
     var $selector = this.$container.find(_id);
-    $selector.siblings().not($('#header')).hide();
+    $selector.siblings('div').not($('#header')).hide();
     $selector.show();
   },
   resetHashHistory: function () {

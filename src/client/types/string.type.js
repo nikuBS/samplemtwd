@@ -67,6 +67,10 @@ Tw.MSG_MYT = {
   BILL_GUIDE_01: ' 요금안내서 재발행을 신청하시겠습니까?',
   BILL_GUIDE_02: '요금안내서 재발행이 신청되었습니다.',
   BILL_GUIDE_03: '선택하신 청구월에 대한 청구서가 이미 재발행 신청 되었습니다.',
+  HOTBILL_MEMBER_POPUP_TITLE: '자녀 선택',
+  HOTBILL_FAIL_REQUEST_TITLE: '요청 실패.',
+  HOTBILL_FAIL_REQUEST: '요금 정보 가져오기 실패했습니다.',
+  BILL_GUIDE_03: '선택하신 청구월에 대한 청구서가 이미 재발행 신청 되었습니다.',
   BILL_GUIDECHANGE_A01: '요금안내서 정보를 변경하시겠습니까?',
   BILL_GUIDECHANGE_A02: '[T] 요금안내서가 신청되었습니다.\n[T] 요금안내서 신청 시 기존에 신청하신 요금안내서는 자동 해지 됩니다.',
   BILL_GUIDECHANGE_A03: '휴대폰번호를 입력해주세요.',
@@ -82,7 +86,7 @@ Tw.MSG_MYT = {
   BILL_GUIDECHANGE_A14: '요금안내서 재발행이 신청되었습니다.',
   BILL_GUIDECHANGE_A15: '선택하신 청구월에 대한 청구서가 이미 재발행 신청 되었습니다.',
   BILL_GUIDECHANGE_A16: '청구지 주소가 정확한지 다시 한번 확인해 주시기 바랍니다.\n재발행 신청을 하시겠습니까?',
-  BILL_GUIDECHANGE_A17: '이메일 주소가 정확한지 다시 한번 확인해 주시기 바랍니다.\n재발행 신청을 하시겠습니까?',
+  BILL_GUIDECHANGE_A17: '이메일 주소가 정확한지 다시 한번 확인해 주시기 바랍니다.\n재발행 신청을 하시겠습니까?'
 };
 
 Tw.MSG_RECHARGE = {
@@ -190,6 +194,7 @@ Tw.MSG_GIFT = {
 };
 
 Tw.MSG_AUTH = {
+  LOGIN_A01: '비밀번호가 일치하지 않습니다.\n5회 실패 시 직접 SK 텔레콤 지점을 방문하여 비밀번호를 재 등록하셔야 합니다.\n주의하여 다시 한번 입력해 주세요.',
   WITHDRAW_A02_01: '이름을 입력해 주세요.',
   WITHDRAW_A02_02: '법정 생년월일을 입력해 주세요.',
   WITHDRAW_A03: '입력한 정보가 확인되지 않습니다. 다시 입력해 주세요.',

@@ -16,6 +16,7 @@ Tw.PopupService.prototype = {
 
   },
   _onHashChange: function (hash) {
+    // Tw.Logger.log('[Popup] Hash Change', '#' + hash.base, this._prevHashList[this._prevHashList.length - 1]);
     if ( ('#' + hash.base) === this._prevHashList[this._prevHashList.length - 1] ) {
       this._prevHashList.pop();
       Tw.Logger.info('[Popup Close]');
@@ -39,6 +40,7 @@ Tw.PopupService.prototype = {
   },
   _addHash: function () {
     var curHash = location.hash || '#';
+    // Tw.Logger.log('[Popup] Add Hash', curHash);
     this._prevHashList.push(curHash);
     // location.hash = 'popup' + this._prevHashList.length;
     history.pushState(this._popupObj, 'popup', '#popup' + this._prevHashList.length);
@@ -47,7 +49,6 @@ Tw.PopupService.prototype = {
     $container.on('click', '.popup-closeBtn', $.proxy(this.close, this));
     $container.on('click', '.tw-popup-closeBtn', $.proxy(this.close, this));
     $container.on('click', '.tw-popup-confirm', $.proxy(this._confirm, this));
-    $container.on('click', '.tw-popup-closeNoHash', $.proxy(this._closeNoHash, this));
   },
   _confirm: function () {
     if ( !Tw.FormatHelper.isEmpty(this._confirmCallback) ) {
@@ -55,9 +56,6 @@ Tw.PopupService.prototype = {
     } else {
       this.close();
     }
-  },
-  _closeNoHash: function () {
-    skt_landing.action.popup.close();
   },
   _setConfirmCallback: function (callback) {
     if ( !Tw.FormatHelper.isEmpty(callback) ) {
@@ -98,19 +96,6 @@ Tw.PopupService.prototype = {
     this._addHash();
     this._open(option);
   },
-  openAlertNoHash: function (message, title) {
-    var option = {
-      title: title || Tw.POPUP_TITLE.NOTIFY,
-      close_bt: true,
-      title2: message,
-      bt_num: 'one',
-      type: [{
-        style_class: 'bt-red1 tw-popup-closeNoHash',
-        txt: Tw.BUTTON_LABEL.CONFIRM
-      }]
-    };
-    this._open(option);
-  },
   openConfirm: function (title, message, contents, openCallback, confirmCallback) {
     var option = {
       title: title,
@@ -147,6 +132,7 @@ Tw.PopupService.prototype = {
 
   },
   close: function () {
+    // Tw.Logger.log('[Popup] Call Close', location.hash);
     if ( /popup/.test(location.hash) ) {
       history.back();
     }
