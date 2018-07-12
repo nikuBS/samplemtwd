@@ -16,6 +16,7 @@ Tw.PopupService.prototype = {
 
   },
   _onHashChange: function (hash) {
+    // Tw.Logger.log('[Popup] Hash Change', '#' + hash.base, this._prevHashList[this._prevHashList.length - 1]);
     if ( ('#' + hash.base) === this._prevHashList[this._prevHashList.length - 1] ) {
       this._prevHashList.pop();
       Tw.Logger.info('[Popup Close]');
@@ -39,6 +40,7 @@ Tw.PopupService.prototype = {
   },
   _addHash: function () {
     var curHash = location.hash || '#';
+    // Tw.Logger.log('[Popup] Add Hash', curHash);
     this._prevHashList.push(curHash);
     // location.hash = 'popup' + this._prevHashList.length;
     history.pushState(this._popupObj, 'popup', '#popup' + this._prevHashList.length);
@@ -147,6 +149,7 @@ Tw.PopupService.prototype = {
 
   },
   close: function () {
+    // Tw.Logger.log('[Popup] Call Close', location.hash);
     if ( /popup/.test(location.hash) ) {
       history.back();
     }

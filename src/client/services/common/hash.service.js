@@ -22,7 +22,7 @@ Tw.HashService.prototype = {
   },
   _checkHash: function () {
     var hash = window.location.hash.replace(/^#/i, '');
-    if ( hash === '' || hash !== this._currentHashNav ) {
+    // if ( hash === '' || hash !== this._currentHashNav ) {
       var newHash = hash;
 
       var chopped = this._chopHash(newHash);
@@ -31,7 +31,7 @@ Tw.HashService.prototype = {
       });
 
       this._currentHashNav = newHash;
-    }
+    // }
   },
 
   _chopHash: function (hash) {
