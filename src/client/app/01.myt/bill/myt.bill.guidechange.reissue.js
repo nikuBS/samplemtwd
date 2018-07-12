@@ -19,16 +19,6 @@ Tw.MyTBillReissue = function ($element) {
 Tw.MyTBillReissue.prototype = {
   //element event bind
   _bindEvent: function () {
-    //기본
-    this.$time.on('change', $.proxy(this._onTimeChanged, this));
-    this.$month.on('change', $.proxy(this._onMonthChanged, this));
-    //선택적으로 노출되는 아이템
-    if ( this.$reason.length > 0 ) {
-      this.$reason.on('change', $.proxy(this._onReasonChanged, this));
-    }
-    if ( this.$type.length > 0 ) {
-      this.$type.on('change', $.proxy(this._onTypeChanged, this));
-    }
     // 재발행 요청
     this.$okButton.on('click', $.proxy(this._onOkClicked, this));
     // 닫기 버튼
@@ -54,8 +44,6 @@ Tw.MyTBillReissue.prototype = {
   },
 
   _init: function () {
-    /*
-    //TODO: API 결과 값 확인 후 자바스크립트로 선택하도록 할 지 화면 로드 시 미리 처리 할 지 확인 필요!!
     //최초 진입시 설정 - 첫번째 아이템 선택
     this.$time.find(':radio').eq(0).trigger('click');
     this.$month.find(':radio').eq(0).trigger('click');
@@ -67,23 +55,6 @@ Tw.MyTBillReissue.prototype = {
     if ( this.$type.length > 0 ) {
       this.$type.find(':radio').eq(0).trigger('click');
     }
-    */
-  },
-
-  _onTimeChanged: function (/*event*/) {
-    Tw.Logger.info('time changed');
-  },
-
-  _onMonthChanged: function (/*event*/) {
-    Tw.Logger.info('month changed');
-  },
-
-  _onReasonChanged: function (/*event*/) {
-    Tw.Logger.info('reason changed');
-  },
-
-  _onTypeChanged: function (/*event*/) {
-    Tw.Logger.info('type changed');
   },
 
   _onOkClicked: function (/*event*/) {
@@ -92,8 +63,12 @@ Tw.MyTBillReissue.prototype = {
   },
 
   _onCloseClicked: function (/*event*/) {
-    // 이전화면으로 이동 - history back 하는게 맞을가?
-    history.back();
+    // 취소 방지 Alert
+    this._popupService.openConfirm(Tw.POPUP_TITLE.NOTIFY, Tw.MSG_MYT.BILL_GUIDE_REISSUE_EXIT, null, null, $.proxy(this._handleClose, this));
+  },
+
+  _handleClose: function () {
+    window.location.replace('/myt/bill/guidechange');
   },
 
   _onOkPopupClicked: function () {
@@ -136,6 +111,11 @@ Tw.MyTBillReissue.prototype = {
       data.sReisueRsnCd = this.$reason.find(':checked').attr('name');
     }
 
+    //이메일인 경우
+    if (data.sReIssueType === '02') {
+      data.sRegalRepveIncldYn = 'N';
+    }
+
     //재발행신청 API 호출
     this._apiService
       .request(Tw.API_CMD.BFF_05_0048, data)
@@ -151,15 +131,16 @@ Tw.MyTBillReissue.prototype = {
     if ( this.$type ) {
       //유형이 설정이 된다면 선택된 아이템에서 가져와 표시
       selectedItem = this.$type.find('[aria-checked=true]').text();
+      type = this.$type.find(':checked').attr('name');
     }
     Tw.Logger.warn(params);
     var title = Tw.MSG_MYT.BILL_GUIDE_REISSUE_00;
     var contents = selectedItem + Tw.MSG_MYT.BILL_GUIDE_REISSUE_01;
-    if(!type && type === '02') {
+    if ( type && type === '02' ) {
       // 이메일인 경우 문구 다름
       contents = Tw.MSG_MYT.BILL_GUIDE_REISSUE_02;
     }
-    else if(!type && type === '99') {
+    else if ( type && type === '99' ) {
       // 기타(우편)인 경우
       contents = Tw.MSG_MYT.BILL_GUIDE_REISSUE_04;
     }
