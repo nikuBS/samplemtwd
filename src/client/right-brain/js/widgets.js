@@ -10,19 +10,20 @@ skt_landing.widgets = {
       widget_list['widget_' + com] = skt_landing.widgets['widget_' + com];
     });
     for (var com_name in widget_list) {
-      widget_list[com_name]();
+      widget_list[com_name](ta);
     }
   },
   widget_test: function () {
   },
-  widget_tube: function () {
-    $('.widget .tube').each(function(){
+  widget_tube: function (ta) {
+    var widget = ta ? $(ta).find('.widget-box.tube') : $('.widget-box.tube');
+    $(widget).each(function(){
       var tube_list = $(this).find('.tube-list');
       if(!tube_list.attr('class').match(' ')){
         tube_list.addClass('five');
       }
       var tube_li = tube_list.find('li');
-      if(tube_li.outerWidth() * tube_li.length <= tube_list.outerWidth()){
+      if(tube_li.outerWidth() * tube_li.length <= tube_list.outerWidth() + tube_li.length){
         tube_li.first().addClass('first');
         tube_li.last().addClass('last');
       }
@@ -56,8 +57,8 @@ skt_landing.widgets = {
   },
   widget_step: function () {
   },
-  widget_radio: function () {
-    var input = $('.radiobox :radio');
+  widget_radio: function (ta) {
+    var input = ta ? $(ta).find('.radiobox :radio') : $('.radiobox :radio');
     input.each(function () {
       var box = $(this).closest('.radiobox');
       $(this).is(':checked') ? box.addClass('checked').attr('aria-checked',true) : box.removeClass('checked').attr('aria-checked',false);
@@ -81,8 +82,8 @@ skt_landing.widgets = {
       });
     });
   },
-  widget_check: function () {
-    var input = $('.checkbox :checkbox');
+  widget_check: function (ta) {
+    var input = ta ? $(ta).find('.checkbox :checkbox') : $('.checkbox :checkbox');
     input.each(function () {
       var box = $(this).closest('.checkbox');
       $(this).is(':checked') ? box.addClass('checked').attr('aria-checked',true) : box.removeClass('checked').attr('aria-checked',false);
@@ -131,8 +132,8 @@ skt_landing.widgets = {
       });
     });*/
   },
-  widget_slider3: function () {
-    var widget = '.slider3';
+  widget_slider3: function (ta) {
+    var widget = ta ? $(ta).find('.slider3') : $('.slider3');
     $(widget).each(function(){
       var _this = $(this).find('.slider');
       _this.slick({
@@ -164,8 +165,8 @@ skt_landing.widgets = {
       //@180709: 수정 - 끝
     });
   },
-  widget_slider4: function () {
-    var widget = '.slider4';
+  widget_slider4: function (ta) {
+    var widget = ta ? $(ta).find('.slider4') : $('.slider4');
     $(widget).each(function(){
       var _this = $(this).find('.slider');
       _this.slick({
@@ -219,8 +220,8 @@ skt_landing.widgets = {
       });
     });*/
   },
-  widget_slider5: function () {
-    var widget = '.slider5';
+  widget_slider5: function (ta) {
+    var widget = ta ? $(ta).find('.slider5') : $('.slider5');
     $(widget).each(function(){
       var _this = $(this).find('.slider');
       _this.slick({
@@ -263,8 +264,9 @@ skt_landing.widgets = {
       });
     });
   },
-  widget_accordion: function () {
-    $('.accordion').each(function(){
+  widget_accordion: function (ta) {
+    var widget = ta ? $(ta).find('.widget-box.accordion') : $('.widget-box.accordion');
+    $(widget).each(function(){
       var _this = $(this);
       if(_this.find('> .acco-cover > .bt-whole').length < 1){
         _this.find('.acco-cover').addClass('on');
@@ -313,8 +315,9 @@ skt_landing.widgets = {
       });
     })
   },
-  widget_accordion2: function(){
-    $('.accordion2').each(function(){
+  widget_accordion2: function(ta){
+    var widget = ta ? $(ta).find('.widget-box.accordion2') : $('.widget-box.accordion2');
+    $(widget).each(function(){
       var _this = $(this),
           box = _this.find('> .acco-style > .acco-box'),
           list = box.find('> .acco-list'),
@@ -341,8 +344,9 @@ skt_landing.widgets = {
       }
     });
   },
-  widget_switch: function () {
-    $('.btn-switch input').each(function () {
+  widget_switch: function (ta) {
+    var widget = ta ? $(ta).find('.btn-switch input') : $('.btn-switch input');
+    $(widget).each(function () {
       checkSwitch(this, !$(this).closest('.btn-switch').hasClass('on'));
       $(this).on('change', function () {
         checkSwitch(this);
@@ -364,8 +368,9 @@ skt_landing.widgets = {
       }
     }
   },
-  widget_draglist : function(){
-    $('.draglist').each(function(){
+  /*widget_draglist : function(ta){
+    var widget = ta ? $(ta).find('.draglist') : $('.draglist');
+    $(widget).each(function(){
       var _this = $(this);
       _this.find('.edit-bt').on('click',function(){
         init(_this);
@@ -492,9 +497,10 @@ skt_landing.widgets = {
       });
       return arr;
     }
-  },
-  widget_toggle: function(){
-    $('.btn-toggle').on('click', function(){
+  },*/
+  widget_toggle: function(ta){
+    var widget = ta ? $(ta).find('.btn-toggle') : $('.btn-toggle');
+    $(widget).on('click', function(){
         var _this = $(this);
         $(this).closest('.toggle').find('.toggler').toggle('fast', function(){
             var isVisible = $(this).is(':visible');
