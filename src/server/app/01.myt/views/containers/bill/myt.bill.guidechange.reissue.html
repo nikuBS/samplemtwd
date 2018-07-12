@@ -25,7 +25,7 @@
                 <div class="change-plan">
                     <h3 class="tit-type">사용중인 요금안내서</h3>
                     <!-- 여기서 요금안내서 타입 출력 (문자로 전달받음) -->
-                    <p class="txt-type" data-type="<%= data.billCd %>"><%= (data.title) || '' %></p>
+                    <p class="txt-type" data-type="<%= data.billCd[0] %>"><%= (data.title) || '' %></p>
                 </div>
             </div>
 
@@ -55,8 +55,12 @@
                                 <div class="widget">
                                     <div class="widget-box tube" data-id="type">
                                         <ul class="tube-list two" role="radiogroup">
-                                            <li role="radio" aria-checked="true" class="checked"><input type="radio" name="05" title="Bill Letter" checked="checked">Bill Letter</li>
-                                            <li role="radio" aria-checked="false"><input type="radio" name="02" title="이메일">이메일</li>
+                                            <li role="radio" aria-checked="true" class="checked">
+                                                <input type="radio" name="<%= data.billCd[0] %>" title="<%= data.multi[0].trim() %>" checked="checked"><%= data.multi[0].trim() %>
+                                            </li>
+                                            <li role="radio" aria-checked="false">
+                                                <input type="radio" name="<%= data.billCd[1] %>" title="<%= data.multi[1].trim() %>"><%= data.multi[1].trim() %>
+                                            </li>
                                         </ul>
                                     </div>
                                 </div>
