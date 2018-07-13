@@ -109,7 +109,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.AuthLoginServicePwd($('#auth-login-service-pwd'), false);
+    new Tw.AuthLoginServicePwd({ rootEl: $('#auth-login-service-pwd') });
   });
 </script>
 <% include ../../components/end.component.html %>
