@@ -36,7 +36,7 @@ Tw.PaymentAuto.prototype = {
   _bindEvent: function () {
     this.$container.on('click', '.go-change', $.proxy(this._goInput, this));
     this.$container.on('click', '.radiobox', $.proxy(this._changeField, this));
-    this.$container.on('click', '.change-date', $.proxy(this._changeDate, this));
+    this.$container.on('click', '.change-date', $.proxy(this._openChangeDate, this));
     this.$container.on('keyup', '.only-number', $.proxy(this._onlyNumber, this));
     this.$container.on('click', '.select-bank', $.proxy(this._selectBank, this));
     this.$container.on('click', '.change', $.proxy(this._change, this));
@@ -63,10 +63,34 @@ Tw.PaymentAuto.prototype = {
   _openChangeDate: function () {
     this._popupService.open({
       hbs:'PA_03_02_L01'
-    });
+    }, $.proxy(this._setChangeDateEvent, this));
   },
-  _changeDate: function () {
-    this._apiService.request(Tw.API_CMD.BFF_07_0065, { payCyclCd: 0 })
+  _setChangeDateEvent: function ($layer) {
+    $layer.on('click', 'button', $.proxy(this._changeDate, this, $layer));
+  },
+  _changeDate: function ($layer, event) {
+    var $target = $(event.currentTarget);
+    if ($target.text() === Tw.BUTTON_LABEL.CANCEL) {
+      this._popupService.close();
+    } else {
+      var $checkedTarget = $layer.find('.checked');
+      var $dateValue = this._getDateValue($checkedTarget);
+      this._changeDateRequest($dateValue);
+    }
+  },
+  _getDateValue: function ($target) {
+    var value =Tw.PAYMENT_DATE_VALUE.FIFTEEN;
+    if (!$target.hasClass('first')) {
+      if ($target.hasClass('last')) {
+        value = Tw.PAYMENT_DATE_VALUE.TWENTY_THREE;
+      } else {
+        value = Tw.PAYMENT_DATE_VALUE.TWENTY_ONE;
+      }
+    }
+    return value;
+  },
+  _changeDateRequest: function (value) {
+    this._apiService.request(Tw.API_CMD.BFF_07_0065, { payCyclCd: value })
       .done($.proxy(this._changeDateSuccess, this))
       .fail($.proxy(this._changeDateFail, this));
   },
@@ -159,7 +183,10 @@ Tw.PaymentAuto.prototype = {
       .fail($.proxy(this._cancelFail, this));
   },
   _changeDateSuccess: function (res) {
-    console.log(res);
+    if (res.code === Tw.API_CODE.CODE_00) {
+      this._popupService.close();
+      window.location.reload();
+    }
   },
   _changeDateFail: function () {
     Tw.Logger.info('change request fail');

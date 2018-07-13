@@ -1,8 +1,9 @@
-<!--
+<%#
 * FileName: auth.line.cop-register.html
 * Author: Ara Jo (araara.jo@sk.com)
 * Date: 2018.07.03
--->
+* CO_01_05_02_03
+%>
 
 <% include ../../components/start.component.html %>
 <!-- body -->
@@ -36,37 +37,37 @@
                     <p class="citation-tx"><span class="char-star-red">*</span> 표시는 필수 입력 항목입니다.</p>
                     <div class="citation-form">
                         <div class="form-cell">
-                            <span id="from-label1-1" class="form-ti">휴대폰 번호 <span class="char-star-red">*</span></span>
+                            <span id="aria-from-label1-1" class="form-ti">휴대폰 번호 <span class="char-star-red">*</span></span>
                             <span class="inputbox">
                                     <span class="input">
-                                      <input id="input-mdn" type="text" placeholder="‘-’ 없이 숫자만 입력해주세요." title="input" aria-labelledby="from-label1-1" aria-describedby="from-label1-2">
+                                      <input id="input-mdn" type="number" placeholder="‘-’ 없이 숫자만 입력해주세요." title="휴대폰 번호 ‘-’ 없이 숫자만 입력해주세요." aria-labelledby="aria-from-label1-1" aria-describedby="aria-from-label1-2"><!-- 접근성 수정 -->
                                     </span>
-                                    <span id="from-label1-2" class="guide-txt">해당 휴대폰이 다른 아이디에 등록되어 있을 경우 삭제 후 등록 가능합니다.</span>
+                                    <span id="aria-from-label1-2" class="guide-txt">해당 휴대폰이 다른 아이디에 등록되어 있을 경우 삭제 후 등록 가능합니다.</span>
                                 </span>
                         </div>
                         <div class="form-cell">
-                            <span id="from-label2-1" class="form-ti">법인명 <span class="char-star-red">*</span></span>
+                            <span id="aria-from-label2-1" class="form-ti">법인명 <span class="char-star-red">*</span></span>
                             <span class="inputbox">
                                     <span class="input">
-                                      <input id="input-cop" type="text" placeholder="" title="input" aria-labelledby="from-label2-1" aria-describedby="from-label2-2">
+                                      <input id=input-cop" type="text" placeholder="" title="법인명" aria-labelledby="aria-from-label2-1" aria-describedby="aria-from-label2-2"><!-- 접근성 수정 -->
                                     </span>
-                                    <span id="from-label2-2" class="guide-txt">띄어쓰기 또는 특수문자까지 정확하게 일치해야 등록 가능합니다.</span>
+                                    <span id="aria-from-label2-2" class="guide-txt">띄어쓰기 또는 특수문자까지 정확하게 일치해야 등록 가능합니다.</span>
                                 </span>
                         </div>
                         <div class="form-cell">
-                            <span id="from-label3-1" class="form-ti">법인번호 <span class="char-star-red">*</span></span>
+                            <span id="aria-from-label3-1" class="form-ti">법인번호 <span class="char-star-red">*</span></span>
                             <span class="inputbox">
                                     <span class="input">
-                                      <input id="input-cop-number" type="text" placeholder="‘-’ 없이 숫자만 입력해주세요." title="input" aria-labelledby="from-label3-1" aria-describedby="from-label3-2">
+                                      <input id="input-cop-number" type="number" placeholder="‘-’ 없이 숫자만 입력해주세요." title="법인번호 ‘-’ 없이 숫자만 입력해주세요." aria-labelledby="aria-from-label3-1" aria-describedby="aria-from-label3-2"><!-- 접근성 수정 -->
                                     </span>
-                                    <span id="from-label3-2" class="guide-txt">띄어쓰기 또는 특수문자까지 정확하게 일치해야 등록 가능합니다.</span>
+                                    <span id="aria-from-label3-2" class="guide-txt">띄어쓰기 또는 특수문자까지 정확하게 일치해야 등록 가능합니다.</span>
                                 </span>
                         </div>
                         <div class="form-cell">
-                            <span id="from-label4-1" class="form-ti">닉네임(선택)</span>
+                            <span id="aria-from-label4-1" class="form-ti">닉네임(선택)</span>
                             <span class="inputbox bt-add">
                                     <span class="input">
-                                        <input id="input-nickname" type="text" placeholder="" title="주소록" aria-labelledby="from-label4-1" aria-describedby="from-label4-2">
+                                        <input id="input-nickname" type="text" placeholder="" title="지정할 닉네임" aria-labelledby="aria-from-label4-1" aria-describedby="aria-from-label4-2" disabled><!-- 접근성 수정 -->
                                     </span>
                                     <span class="bt-box">
                                         <button id="bt-nickname" type="button">지정</button>
@@ -74,7 +75,7 @@
                                 </span>
                             <div class="box-block">
                                 <div class="box-block-list2 no-gap">
-                                    <ul id="from-label4-2">
+                                    <ul id="aria-from-label4-2">
                                         <li>닉네임은 다회선을 사용하시는 고객님의 경우 각 회선을 구분할 수 있도록 고객님께서 직접 만들 수 있는 회선명입니다.</li>
                                         <li>닉네임은 7자리까지 입력가능하며 특수문자 및 2자리 이상의 숫자는 입력할 수 없습니다.</li>
                                     </ul>
@@ -102,7 +103,8 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.AuthLineCopRegister($('#line-cop-register'));
+    var nicknamePopup = new Tw.AuthLineNickname();
+    new Tw.AuthLineCopRegister($('#line-cop-register'), nicknamePopup);
 
   });
 </script>

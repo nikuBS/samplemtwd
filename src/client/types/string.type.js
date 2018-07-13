@@ -58,6 +58,12 @@ Tw.PAYMENT_OPTION = {
   CLOSE: '4'
 };
 
+Tw.PAYMENT_DATE_VALUE = {
+  FIFTEEN: '0',
+  TWENTY_ONE: '3',
+  TWENTY_THREE: '1'
+};
+
 Tw.MSG_COMMON = {
   SERVER_ERROR: '통신 오류입니다. 잠시 후 다시 시도해 주세요.'
 };
