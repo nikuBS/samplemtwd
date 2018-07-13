@@ -7,6 +7,7 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import { Request, Response, NextFunction } from 'express';
 import { Observable } from 'rxjs/Observable';
 import Rx from 'rxjs/Rx';
+import * as _ from 'lodash';
 
 import { API_CMD } from '../../../../types/api-command.type';
 import { LINE_NAME, SVC_ATTR } from '../../../../types/bff-common.type';
@@ -78,7 +79,8 @@ class MyTBillBillguide extends TwViewController {
     selClaimDtBtn:'',//선택 청구 월 | 2017년 10월
     selStaDt:'',//선택시작
     selEndDt:'',//선택끝
-    unPaidTotSum: '' //미납금액
+    unPaidTotSum: '', //미납금액
+    joinSvcList: '' //가입 서비스 리스트
   };
 
   //노출조건
@@ -154,6 +156,12 @@ class MyTBillBillguide extends TwViewController {
           thisMain._commDataInfo.discount = FormatHelper.addComma( String(Math.abs( Number(0))) );
           thisMain._commDataInfo.unPaidTotSum = FormatHelper.addComma( String(thisMain._defaultInfo.unPaidTotSum) );
 
+          thisMain._commDataInfo.joinSvcList = _.cloneDeep( thisMain._billpayInfo.paidAmtSvcCdList );
+          thisMain._commDataInfo.joinSvcList.map(item => {
+              if ( item.svcNm === '이동전화' ) {
+                item.svcNm = '휴대폰';
+              }
+          });
 
           thisMain.setShowCondition();//노출조건 셋팅
 
