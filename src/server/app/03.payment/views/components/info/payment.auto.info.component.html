@@ -1,49 +1,42 @@
+<%#
+* FileName: payment.auto.info.component.html
+* Author: 공자윤 (jayoon.kong@sk.com)
+* Date: 2018.07.13
+%>
 <div class="cont-box">
     <!-- .widget -->
-    <div class="widget"><!--2018-07-05 수정-->
-        <div class="widget-box accordion">
+    <div class="widget">
+        <div class="widget-box accordion"><!--2018-07-05 수정-->
             <h5 class="tit-a">꼭 확인해 주세요!</h5>
-            <div class="acco-cover toggle"><!-- toggle : 한개만 열기 -->
+            <div class="acco-cover toggle on"><!-- toggle : 한개만 열기 -->
+                <!--<div class="bt-whole"><button role="button" aria-pressed="false"><span class="blind">내용 열기</span></button></div>-->
                 <div class="acco-style btn-hold">
                     <ul class="acco-list">
                         <li class="acco-box">
                             <!-- .on: 열기 -->
-                            <div class="acco-tit"><span class="bullet">1.</span> 자동납부 신청 안내<button role="button" aria-pressed="false">상세보기</button></div>
+                            <div class="acco-tit"><span class="bullet">1.</span> 자동납부 안내<button role="button" aria-pressed="false">상세보기</button></div>
                             <div class="acco-cont">
                                 <ul class="list-dot">
-                                    <li class="list">최초 인출(승인)예정일은 자동납부 신청 후 확인 하실 수 있습니다.</li>
-                                    <li class="list">이용정지 고객의 경우 납부기한이 경과한 미납액을 모두 납부하시면 이용정지가 즉시 해제됩니다</li>
-                                    <li class="list">자동납부 할인 적용 기준은 자동납부 인출일 기준으로 다음달에 반영됩니다.예) 2월 청구분을 2월 26일 자동납부로 납부한 경우 : 3월 청구분에서 자동납부 할인 적용2월 청구분을 3월 3일 자동납부로 납부한 경우 : 4월 청구분에서 자동납부 할인 적용</li>
+                                    <li class="list">은행계좌로 자동이체를 신청하시면 자동납부 신청결과가 금융기관으로부터 3일(은행 영업일 기준)후에 당사에 반영되오니, 정상적으로 신청되었는지 추후에 반드시 확인하시기 바랍니다.</li>
+                                    <li class="list">T world 확인/스마트청구서/문자청구서/이메일청구서를 이용하시면 매월 15일 자동납부 승인요청이 가능합니다.</li>
                                 </ul>
                             </div>
                         </li>
                         <li class="acco-box">
-                            <!-- .on: 열기 -->
-                            <div class="acco-tit"><span class="bullet">2.</span> 자동납부 해지 안내<button role="button" aria-pressed="false">상세보기</button></div>
+                            <div class="acco-tit"><span class="bullet">2.</span> 요금납부일 변경 안내<button role="button" aria-pressed="false">상세보기</button></div>
                             <div class="acco-cont">
                                 <ul class="list-dot">
-                                    <li class="list">은행 자동납부를 해지하시면 자동납부 할인 기준 변경으로 다시 은행자동납부를 신청하더라도 1%할인은 제공되지 않으니 은행 자동납부를 유지하시기를 권장합니다.</li>
-                                    <li class="list">매월 5일 이후 자동납부를 해지하시는 경우 다음달에 반영되므로 이번달에는 자동납부로 인출될 수 있으니 참고하시기 바랍니다.</li>
-                                    <li class="list">자동납부 해지 시점 및 고객님의 납부방법에 따라 일부 차이가 있을 수 있으니 추가 문의는 당사 고객센터&lt;국번없이 1599-0011(유료) / 휴대폰 114&gt;를 이용해 주시기 바랍니다.</li>
+                                    <li class="list">현재 이용하고 계신 은행계좌이체의 요금납부일을 변경 하실 수 있습니다.</li>
+                                    <li class="list">요금납부일은 언제든지 변경 가능하며 단, 매월 5일 이후 요금납부일을 변경 시에는 익월에 반영되며, 당월에는 요금납부일 변경 전 자동납부 정보로 인출됩니다.</li>
                                 </ul>
                             </div>
                         </li>
                         <li class="acco-box">
-                            <!-- .on: 열기 -->
                             <div class="acco-tit"><span class="bullet">3.</span> 이용안내<button role="button" aria-pressed="false">상세보기</button></div>
                             <div class="acco-cont">
                                 <ul class="list-dot">
-                                    <li class="list">모바일 T World에서는 고객님의 휴대폰 명의와 동일한 명의의 은행계좌나 카드로만 신청/변경 하실 수 있습니다.</li>
-                                    <li class="list">정기 청구작업으로 인해 매월 5일 21시부터 6일 04시까지 자동납부 신청/변경/해지가 불가합니다.</li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li class="acco-box">
-                            <!-- .on: 열기 -->
-                            <div class="acco-tit"><span class="bullet">4.</span> 금융기관의 비 영업일(토/일/공휴일)인 경우 인출(승인)일이 변경될 수 있습니다. <button role="button" aria-pressed="false">상세보기</button></div>
-                            <div class="acco-cont">
-                                <ul class="list-dot">
-                                    <li class="list">인출(승인)일이 금융기관의 비 영업일(토/일/공휴일)인 경우 다음 영업일로 날짜가 변경될 수 있습니다. 상세한 일정은 매월 요금안내서에 표기 해 드리는 납부일을 참고바랍니다.</li>
+                                    <li class="list">요금납부일 변경은 지점/대리점/고객센터 포함 월 1회 가능</li>
+                                    <li class="list">정기 청구작업으로 인해 매월 5일 21시부터 6일 04시까지 자동납부 신청/변경/해지가 불가합니다</li>
                                 </ul>
                             </div>
                         </li>
