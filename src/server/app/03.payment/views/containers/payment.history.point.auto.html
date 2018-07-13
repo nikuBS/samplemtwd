@@ -116,11 +116,18 @@
             <div class="payment-detail-box">
                 <div class="detail-inner">
                     <div class="pay-state">
+                        {{#if isRequest}}
                         <span class="cancel-com">납부신청</span>
-                        {{!--
+                        {{/if}}
+                        {{#if isQuit}}
                         <span class="gray-com">납부해지</span>
+                        {{/if}}
+                        {{#if isChange}}
+                        <span class="paychange-com">납부변경</span>
+                        {{/if}}
+                        {{#if isFinish}}
                         <span class="payment-com">납부완료</span>
-                        --}}
+                        {{/if}}
                     </div>
                     <div class="detail-list">
                         <ul>
@@ -187,11 +194,18 @@
             <div class="payment-detail-box">
                 <div class="detail-inner">
                     <div class="pay-state">
+                        {{#if isRequest}}
                         <span class="cancel-com">납부신청</span>
-                        {{!--
+                        {{/if}}
+                        {{#if isQuit}}
                         <span class="gray-com">납부해지</span>
+                        {{/if}}
+                        {{#if isChange}}
+                        <span class="paychange-com">납부변경</span>
+                        {{/if}}
+                        {{#if isFinish}}
                         <span class="payment-com">납부완료</span>
-                        --}}
+                        {{/if}}
                     </div>
                     <div class="detail-list">
                         <ul>

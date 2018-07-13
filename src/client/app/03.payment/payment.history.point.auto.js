@@ -86,16 +86,14 @@ Tw.PaymentHistoryPointAuto.prototype = {
 
     // TODO : dummy data -> API 연동 후 삭제
     res = (res.result.payHist.length || res.result.reqHist.length) ? res : this.apiName === 'rainbow' ? this.dummy.rainbow : this.dummy.defaultData;
-    // res = this.apiName === 'rainbow' ? this.dummy.rainbow : this.dummy.defaultData;
-
 
     if (res.result.payHist.length || res.result.reqHist.length) {
 
       // TODO : data 처리(포인트 포메팅, 날짜 포메팅)
 
       res.result = _.chain().union(res.result.reqHist, res.result.payHist).sortBy(function (obj) {
-            return (this.currentPoint !== 'rainbow') ? (obj.procDt || obj.opDt) : (obj.procDt || obj.out1InvDt);
-          }, this).value().reverse();
+        return (this.currentPoint !== 'rainbow') ? (obj.procDt || obj.opDt) : (obj.procDt || obj.out1InvDt);
+      }, this).value().reverse();
 
       res.result.map($.proxy(function (o) {
 
@@ -103,9 +101,19 @@ Tw.PaymentHistoryPointAuto.prototype = {
         o.storeName = o.opSaleOrgIdNm || o.opSaleOrgNm;
 
         if (o.reqClCdNm) {
+          switch (o.reqClCdNm) {
+            case Tw.MSG_PAYMENT.HISTORY_PROCESS_TYPE_APPLY :
+              break;
+            case Tw.MSG_PAYMENT.HISTORY_PROCESS_TYPE_CHANGE :
+              break;
+            case Tw.MSG_PAYMENT.HISTORY_PROCESS_TYPE_QUIT :
+            case Tw.MSG_PAYMENT.HISTORY_PROCESS_TYPE_CANCEL :
+              break;
+          }
           o.reqEndDate = this._dateHelper.getShortDateWithFormat(o.endDt, 'YYYY.MM.DD');
           o.reqAmt = Tw.FormatHelper.addComma(o.reqAmt);
         } else {
+          o.isFinish = true;
           o.ppayAmt = Tw.FormatHelper.addComma(o.ppayAmt);
           o.ppayBamt = Tw.FormatHelper.addComma(o.ppayBamt);
         }

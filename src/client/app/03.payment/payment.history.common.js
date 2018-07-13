@@ -59,10 +59,11 @@ Tw.PaymentHistoryCommon.prototype = {
   }
 };
 
-Tw.PaymentHistoryCommon.prototype.listWithTemplate = function () {};
+Tw.PaymentHistoryCommon.prototype.listWithTemplate = function () {
+};
 
 Tw.PaymentHistoryCommon.prototype.listWithTemplate.prototype = {
-  _init: function(data, wrapper, template, helper, keyword, perPage, viewMoreSelector, listWrapperSelector, callBack) {
+  _init: function (data, wrapper, template, helper, keyword, perPage, viewMoreSelector, listWrapperSelector, callBack) {
 
     this.compiler = Handlebars.compile;
 
@@ -127,7 +128,7 @@ Tw.PaymentHistoryCommon.prototype.listWithTemplate.prototype = {
     this.emptyTemplate = this.template.empty ? this.compiler(this.template.empty.html()) : null;
   },
 
-  _setHelper: function() {
+  _setHelper: function () {
     if (this.helper && _.isObject(this.helper)) {
       _.mapObject(this.helper, function (f, key) {
         Handlebars.registerHelper(key, f);
@@ -156,7 +157,7 @@ Tw.PaymentHistoryCommon.prototype.listWithTemplate.prototype = {
   //   if (this.callBack) this.callBack();
   // },
 
-  _buildListUI: function() {
+  _buildListUI: function () {
     this.updateNextPageData();
     Handlebars.registerPartial('list', this.listTemplate(this.data));
 
@@ -200,13 +201,13 @@ Tw.PaymentHistoryCommon.prototype.listWithTemplate.prototype = {
     this._appendNextListUI($(e.target));
   },
 
-  updateNextPageData: function() {
+  updateNextPageData: function () {
     this.data[this.listTemplateKeyword] = this.data.result.slice(
         this.perPage * this.currentPage,
         !this.currentPage ? this.perPage : (this.currentPage + 1) * this.perPage);
   },
 
-  getRestCounter: function() {
+  getRestCounter: function () {
     return this.data.result.length - (this.currentPage + 1) * this.perPage;
   },
 
