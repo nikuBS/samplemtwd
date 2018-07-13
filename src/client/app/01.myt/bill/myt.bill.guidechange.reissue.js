@@ -59,71 +59,6 @@ Tw.MyTBillReissue.prototype = {
 
   _onOkClicked: function (/*event*/) {
     // 재발행 신청
-    this._requestReissue();
-  },
-
-  _onCloseClicked: function (/*event*/) {
-    // 취소 방지 Alert
-    this._popupService.openConfirm(Tw.POPUP_TITLE.NOTIFY, Tw.MSG_MYT.BILL_GUIDE_REISSUE_EXIT, null, null, $.proxy(this._handleClose, this));
-  },
-
-  _handleClose: function () {
-    window.location.replace('/myt/bill/guidechange');
-  },
-
-  _onOkPopupClicked: function () {
-    if ( this.isIssue ) {
-      // TODO: 기발행인경우 서버API 동작이 되어야 확인 가능함...
-    }
-    else { //아닌경우
-      var type = this.$guide.attr('data-type');
-      var month = this.$month.find(':checked').attr('name') || '';
-      if ( this.$type.length > 0 ) {
-        type = this.$type.find(':checked').attr('name');
-      }
-      // 재발행 요청 완료 화면으로 이동
-      // 팝업닫고 이동
-      this._popupService.close();
-      window.location.href = 'reissue/complete?typeCd=' + type + '&month=' + month;
-    }
-  },
-
-  _requestReissue: function (/*event*/) {
-    // 재발행 데이터 설정
-    // sReIssueType	재발행코드종류
-    // sRegalRepveIncldYn	법정대리인동시통보
-    // sInvDt	재발행청구일자
-    // TODO: 서버 API 확인 필요!!
-    var data = {
-      sReIssueType: this.$guide.attr('data-type') || '',
-      sRegalRepveIncldYn: 'Y',
-      sInvDt: this.$month.find(':checked').attr('name') || '',
-      sReisueRsnCd: '01' //기본은 무선
-      //재발행청구시점 정보가 빠져있음 (this.$time.find(':checked').attr('name') || '')
-    };
-    // 청구서타입 유형이 2개인 경우
-    if ( this.$type.length > 0 ) {
-      data.sReIssueType = this.$type.find(':checked').attr('name');
-    }
-
-    // 유선인 경우 재발행 사유 추가
-    if ( this.$reason.length > 0 ) {
-      data.sReisueRsnCd = this.$reason.find(':checked').attr('name');
-    }
-
-    //이메일인 경우
-    if (data.sReIssueType === '02') {
-      data.sRegalRepveIncldYn = 'N';
-    }
-
-    //재발행신청 API 호출
-    this._apiService
-      .request(Tw.API_CMD.BFF_05_0048, data)
-      .done($.proxy(this._onApiSuccess, this))
-      .fail($.proxy(this._onApiError, this));
-  },
-
-  _onApiSuccess: function (params) {
     // API 호출 후 결과 값에 기 발행인 경우와 아닌 경우에 대한 처리
     // 기본적으로 설정된 값으로 표시
     var selectedItem = this.$guide.text();
@@ -133,7 +68,6 @@ Tw.MyTBillReissue.prototype = {
       selectedItem = this.$type.find('[aria-checked=true]').text();
       type = this.$type.find(':checked').attr('name');
     }
-    Tw.Logger.warn(params);
     var title = Tw.MSG_MYT.BILL_GUIDE_REISSUE_00;
     var contents = selectedItem + Tw.MSG_MYT.BILL_GUIDE_REISSUE_01;
     if ( type && type === '02' ) {
@@ -154,6 +88,64 @@ Tw.MyTBillReissue.prototype = {
     this._popupService.openConfirm(Tw.POPUP_TITLE.NOTIFY, title, contents,
       null, $.proxy(this._onOkPopupClicked, this));
     //}
+  },
+
+  _onCloseClicked: function (/*event*/) {
+    // 취소 방지 Alert
+    this._popupService.openConfirm(Tw.POPUP_TITLE.NOTIFY, Tw.MSG_MYT.BILL_GUIDE_REISSUE_EXIT, null, null, $.proxy(this._handleClose, this));
+  },
+
+  _handleClose: function () {
+    window.location.replace('/myt/bill/guidechange');
+  },
+
+  _onOkPopupClicked: function () {
+    this._requestReissue();
+  },
+
+  _requestReissue: function (/*event*/) {
+    // 재발행 데이터 설정
+    // sReIssueType	재발행코드종류
+    // sInvDt	재발행청구일자
+    // TODO: 서버 API 확인 필요!!
+    var data = {
+      sReIssueType: this.$guide.attr('data-type') || '', // 재발행코드종류
+      sInvDt: this.$month.find(':checked').attr('name') || '', // 재발행청구일자
+      sReisueRsnCd: '01' //기본은 무선
+    };
+    // 청구서타입 유형이 2개인 경우
+    if ( this.$type.length > 0 ) {
+      data.sReIssueType = this.$type.find(':checked').attr('name');
+    }
+
+    // 유선인 경우 재발행 사유 추가
+    if ( this.$reason.length > 0 ) {
+      data.sReisueRsnCd = this.$reason.find(':checked').attr('name');
+    }
+
+    //재발행신청 API 호출
+    this._apiService
+      .request(Tw.API_CMD.BFF_05_0048, data)
+      .done($.proxy(this._onApiSuccess, this))
+      .fail($.proxy(this._onApiError, this));
+  },
+
+  _onApiSuccess: function (params) {
+    Tw.Logger.info(params);
+    if ( this.isIssue ) {
+      // TODO: 서버 API 동작은 하나 현재 데이터 값이 Null 이라 요청( 18/07/13 )
+    }
+    else { //아닌경우
+      var type = this.$guide.attr('data-type');
+      var month = this.$month.find(':checked').attr('name') || '';
+      if ( this.$type.length > 0 ) {
+        type = this.$type.find(':checked').attr('name');
+      }
+      // 재발행 요청 완료 화면으로 이동
+      // 팝업닫고 이동
+      this._popupService.close();
+      window.location.href = 'reissue/complete?typeCd=' + type + '&month=' + month;
+    }
   },
 
   _onApiError: function (params) {
