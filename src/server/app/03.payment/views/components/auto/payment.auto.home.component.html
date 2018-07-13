@@ -6,6 +6,13 @@
 <div class="container">
     <% include ../components/line.info.component.html %>
     <hr class="cont-sp type1" aria-hidden="true"/>
+    <div id="data-set" style="display:none;">
+        <span id="acntNum"><%= payment.acntNum %></span>
+        <span id="payerNumClCd"><%= payment.payerNumClCd %></span>
+        <span id="serNum"><%= payment.serNum %></span>
+        <span id="authReqSerNum"><%= payment.authReqSerNum %></span>
+        <span id="rltmSerNum"><%= payment.rltmSerNum %></span>
+    </div>
     <div class="cont-box">
         <% if (payment.option === 'card' || payment.option === 'bank') { %>
             <% include ../components/auto/sub/payment.auto.home-main.component.html %>
@@ -14,5 +21,5 @@
         <% } %>
     </div>
     <hr class="cont-sp type1" aria-hidden="true"/>
-    <% include ../components/info/payment.home.info.component.html %>
+    <% include ../components/info/payment.auto.info.component.html %>
 </div>

@@ -6,6 +6,7 @@
 
 Tw.AuthWithdrawalComplete = function (rootEl) {
   this.$container = rootEl;
+  this._nativeService = Tw.Native;
 
   this._bindEvent();
 };
@@ -17,8 +18,8 @@ Tw.AuthWithdrawalComplete.prototype = {
   _withdrawTid: function () {
     var url = this.$container.find('#tid-withdrawal').attr('href');
     // Open external browser
-    Tw.Native.send(Tw.NTV_CMD.OPEN_URL, {
-      type: 1,  // 0: inApp, 1: external
+    this._nativeService.send(Tw.NTV_CMD.OPEN_URL, {
+      type: Tw.NTV_BROWSER.EXTERNAL,
       href: url
     });
     return false;

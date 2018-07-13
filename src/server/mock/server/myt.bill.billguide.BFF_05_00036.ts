@@ -1,5 +1,5 @@
 //청구요금조회
-const billguide_BFF_01_00036 = {
+const billguide_BFF_05_00036 = {
   'code': '00',
   'msg': 'success',
   'result': {
@@ -16,13 +16,13 @@ const billguide_BFF_01_00036 = {
         '20170531',
         '20170430'
       ],
-    'useAmtTot': '75,510',
+    'useAmtTot': '75,510',//75,510
     'deduckTotInvAmt': '-22055',
     'detailYn': '',
     'autopayYn': 'Y',
-    'paidAmtMonthSvcCnt': 2,//청구월회선수( 1 : 개별회선, 그외(1이상) : 통합청구 )
-    'repSvcYn': 'N',//대표청구회선여부 (Y : 대표청구회선, N: 대표청구회선아님)
-    'coClCd': 'B',
+    'paidAmtMonthSvcCnt': 3,//청구월회선수( 1 : 개별회선, 그외(1이상) : 통합청구 )
+    'repSvcYn': 'Y',//대표청구회선여부 (Y : 대표청구회선, N: 대표청구회선아님)
+    'coClCd': 'T',//브로드밴드 가입 여부
     'paidAmtMonthCnt': '6',
     'paidAmtMonthSvcNum':
       {
@@ -45,5 +45,5 @@ const billguide_BFF_01_00036 = {
 
 };
 
-export default billguide_BFF_01_00036;
+export default billguide_BFF_05_00036;
 

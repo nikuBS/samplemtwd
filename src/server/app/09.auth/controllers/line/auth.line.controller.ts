@@ -18,11 +18,11 @@ class AuthLine extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    let lineList = this.parseLineList(LineList.result);
+    const lineList = this.parseLineList(LineList.result);
     this.apiService.request(API_CMD.BFF_03_0004, {}).subscribe((resp) => {
-      if ( resp.code === API_CODE.CODE_00 ) {
-        lineList = this.parseLineList(resp.result);
-      }
+      // if ( resp.code === API_CODE.CODE_00 ) {
+      //   lineList = this.parseLineList(resp.result);
+      // }
       res.render('line/auth.line.html', { lineList });
     });
   }

@@ -14,27 +14,37 @@ Tw.RechargeCookiz = function (rootEl) {
   this._init();
 };
 
-
 Tw.RechargeCookiz.prototype = {
   _init: function () {
-
+    this._apiService.request(Tw.API_CMD.BFF_06_0028, {}).done(function (res) {
+      if ( res.code === '00' ) {
+        $('.prodName').text(res.result.prodName);
+      }
+    });
+    this.$wrap_tpl_contact.html(this.tpl_contact({ isMobile: Tw.BrowserHelper.isMobile() }));
   },
 
   _cachedElement: function () {
-    this.$container.on('click', '.btn_go_history', $.proxy(this._goHistory, this));
-    this.$container.on('click', '.btn_go_cookiz_process', $.proxy(this._goCookizProcess, this));
-    this.$container.on('click', '.btn_cancel_autoRefill', $.proxy(this._cancelAutoRefill, this));
+    this.$wrap_tpl_contact = $('.wrap_tpl_contact');
+    this.tpl_contact = Handlebars.compile($('#tpl_contact').text());
   },
 
   _bindEvent: function () {
-
+    this.$container.on('click', '.btn_go_history', $.proxy(this._goHistory, this));
+    this.$container.on('click', '.btn_go_cookiz_process', $.proxy(this._goCookizProcess, this));
+    this.$container.on('click', '.btn_cancel_autoRefill', $.proxy(this._cancelAutoRefill, this));
+    this.$container.on('click', '#btn_cookiz_request', $.proxy(this._goCookizRequestProcess, this));
   },
 
   _cancelAutoRefill: function () {
-    this._popupService.openConfirm(Tw.POPUP_TITLE.NOTIFY, Tw.MSG_GIFT.COOKIZ_A01, '', $.proxy(this._onCancelAutoRefill, this));
+    this._popupService.openConfirm(Tw.POPUP_TITLE.NOTIFY, Tw.MSG_GIFT.COOKIZ_A01, null, null, $.proxy(this._onCancelAutoRefill, this));
   },
 
   _onCancelAutoRefill: function () {
+  },
+
+  _goCookizRequestProcess: function () {
+    this._go('#request-step1');
   },
 
   _goCookizProcess: function () {
