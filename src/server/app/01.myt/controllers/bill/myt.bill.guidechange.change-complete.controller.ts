@@ -25,8 +25,8 @@ class MyTBillChange extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     this.renderView(res, 'bill/myt.bill.guidechange.change-complete.html', {
-      beforeBillGuideLabel: BillGuideLabelDefines[req.query.beforeBillTypeCd],
-      afterBillGuideLabel: BillGuideLabelDefines[req.query.afterBillTypeCd]
+      beforeBillGuideLabel: BillGuideLabelDefines[req.query.beforeBillGuideType],
+      afterBillGuideLabel: BillGuideLabelDefines[req.query.afterBillGuideType]
     });
   }
 

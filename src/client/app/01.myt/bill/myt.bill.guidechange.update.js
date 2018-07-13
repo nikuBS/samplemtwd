@@ -5,11 +5,11 @@
  */
 
 Tw.MyTBillGuideUpdatePrototype = {
-  _construct: function (rootEl, fromChange) {
+  _construct: function (rootEl, options) {
     this.$container = rootEl;
     this._apiService = Tw.Api;
     this._popupService = Tw.Popup;
-    this._fromChange = fromChange;
+    this._options = options;
 
     this._assign();
     this._bindEvent();
@@ -45,7 +45,6 @@ Tw.MyTBillGuideUpdatePrototype = {
   _checkToSubmit: function () {
     var isValid = this._checkValidation();
     if ( !isValid ) {
-      // window.alert('~~~~~~~not valid!');
       return;
     }
     // var requestParams = this._getRequestParams();
@@ -60,16 +59,20 @@ Tw.MyTBillGuideUpdatePrototype = {
   _changeBillGuideType: function () {
     this._popupService.close();
     window.setTimeout($.proxy(function () {
-      var tmpMsg = this._fromChange ? Tw.MSG_MYT.BILL_GUIDECHANGE_A02 : Tw.MSG_MYT.BILL_GUIDECHANGE_A12;
+      var tmpMsg = this._options.fromChange ? Tw.MSG_MYT.BILL_GUIDECHANGE_A02 : Tw.MSG_MYT.BILL_GUIDECHANGE_A12;
       var alertMsg = tmpMsg.replace(/\[T\]/gi, this._curBillGuideTypeNm);
       this._popupService.openAlert(alertMsg, Tw.POPUP_TITLE.NOTIFY, $.proxy(this.onClickBtnChangeConfirm, this));
     }, this), 1000);
   },
 
   onClickBtnChangeConfirm: function () {
-    var beforeBillType = this._curBillGuideType; //수정해야함
-    var selectedBillType = this._curBillGuideType;
-    window.location.href = '/myt/bill/guidechange/change-complete?beforeBillTypeCd=' + beforeBillType + '&afterBillTypeCd=' + selectedBillType;
+    if (this._options.fromChange) {
+      var beforeBillGuideType = this._options.beforeBillGuideType; //수정해야함
+      var selectedBillGuideType = this._curBillGuideType;
+      window.location.href = '/myt/bill/guidechange/change-complete?beforeBillGuideType=' + beforeBillGuideType + '&afterBillGuideType=' + selectedBillGuideType;
+    } else {
+
+    }
   },
 
   _setNext: function () {
@@ -116,7 +119,7 @@ Tw.MyTBillGuideUpdatePrototype = {
     this.$container = null;
     this._apiService = null;
     this._popupService = null;
-    this._fromChange = null;
+    this.options = null;
 
     this._$btnNext.off('click');
     this._$btnSubmit.off('click');

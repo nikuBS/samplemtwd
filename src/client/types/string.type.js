@@ -72,12 +72,12 @@ Tw.MSG_MYT = {
   HOTBILL_FAIL_REQUEST: '요금 정보 가져오기 실패했습니다.',
   BILL_GUIDE_03: '선택하신 청구월에 대한 청구서가 이미 재발행 신청 되었습니다.',
   BILL_GUIDECHANGE_A01: '요금안내서 정보를 변경하시겠습니까?',
-  BILL_GUIDECHANGE_A02: '[T] 요금안내서가 신청되었습니다.\n[T] 요금안내서 신청 시 기존에 신청하신 요금안내서는 자동 해지 됩니다.',
+  BILL_GUIDECHANGE_A02: '[T] 요금안내서가 신청되었습니다.<br />[T] 요금안내서 신청 시 기존에 신청하신 요금안내서는 자동 해지 됩니다.',
   BILL_GUIDECHANGE_A03: '휴대폰번호를 입력해주세요.',
   BILL_GUIDECHANGE_A04: '휴대폰 번호를 확인해주시기 바랍니다.',
   BILL_GUIDECHANGE_A05: '휴대폰번호를 입력하지 않으면 법정대리인에게 요금안내서를 발송하지 않습니다.',
   BILL_GUIDECHANGE_A06: '법정대리인의 휴대폰번호를 확인해주시기 바랍니다.',
-  BILL_GUIDECHANGE_A07: '입력하신 법정대리인 휴대폰번호로 요금안내서가 동시 통보됩니다.\n신청/변경하시겠습니까?',
+  BILL_GUIDECHANGE_A07: '입력하신 법정대리인 휴대폰번호로 요금안내서가 동시 통보됩니다.<br />신청/변경하시겠습니까?',
   BILL_GUIDECHANGE_A08: '이메일 주소를 확인해 주시기 바랍니다.',
   BILL_GUIDECHANGE_A09: '고객님의 이메일로 신청확인메일이 발송되오니 확인해 주시기 바랍니다.',
   BILL_GUIDECHANGE_A10: '주소를 확인해주시기 바랍니다.',
@@ -85,8 +85,8 @@ Tw.MSG_MYT = {
   BILL_GUIDECHANGE_A13: '[T] 요금안내서 재발행을 신청하시겠습니까?',
   BILL_GUIDECHANGE_A14: '요금안내서 재발행이 신청되었습니다.',
   BILL_GUIDECHANGE_A15: '선택하신 청구월에 대한 청구서가 이미 재발행 신청 되었습니다.',
-  BILL_GUIDECHANGE_A16: '청구지 주소가 정확한지 다시 한번 확인해 주시기 바랍니다.\n재발행 신청을 하시겠습니까?',
-  BILL_GUIDECHANGE_A17: '이메일 주소가 정확한지 다시 한번 확인해 주시기 바랍니다.\n재발행 신청을 하시겠습니까?'
+  BILL_GUIDECHANGE_A16: '청구지 주소가 정확한지 다시 한번 확인해 주시기 바랍니다.<br />재발행 신청을 하시겠습니까?',
+  BILL_GUIDECHANGE_A17: '이메일 주소가 정확한지 다시 한번 확인해 주시기 바랍니다.<br />재발행 신청을 하시겠습니까?'
 };
 
 Tw.MSG_RECHARGE = {
