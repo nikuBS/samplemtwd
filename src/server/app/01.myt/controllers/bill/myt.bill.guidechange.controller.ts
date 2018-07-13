@@ -32,23 +32,28 @@ class MytBillGuidechange extends TwViewController {
 
   /*
     요금안내서 플리킹 리스트
-    현재 사용중인 요금안내서는 추가하지 않는다.
+    회선(핸드폰,Twibro, 인터넷/집전화/IPTV) 에 맞는 요금 안내서 리스트를 만든다.
    */
-  private getFlickingList(curBillType: any, flickingList: any): any {
+  private getFlickingList(flickingList: any, svcInfo: any): any {
       const billTypeList = flickingList.filter( (line) => {
-          return line.billType !== curBillType;
+          if ( svcInfo.svcAttrCd === 'M5' ) {
+              // T wibro
+              return ',P,2,1'.indexOf(line.billType) > 0 ? true : false;
+          } else if ( ['S1', 'S2' , 'S3'].some( e => e === svcInfo.svcAttrCd ) ) {
+              // 인터넷/집전화/IPTV
+            return ['P', 'H', 'B', '2', 'I', 'A', '1'].some( e => e === line.billType );
+          }
+          return true;
       });
       return billTypeList;
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-      const billTypeInfo = MYT_GUIDE_CHANGE_INIT_INFO;
-      const billType = this.reqBillType().result;
+      const data = Object.assign(this.reqBillType(), MYT_GUIDE_CHANGE_INIT_INFO) ;
 
-      billType.curBillTypeText =  billTypeInfo.billTypeDesc[billType.curBillType];
-      billType.billTypeList = this.getFlickingList( billType.curBillType, billTypeInfo.billTypeList );
-
-      res.render('bill/myt.bill.guidechange.html', { svcInfo : svcInfo, billType : billType });
+      // billType.curBillTypeText =  billTypeInfo.billTypeDesc[billType.curBillType];
+      data.billTypeList = this.getFlickingList(  data.billTypeList, svcInfo );
+      res.render('bill/myt.bill.guidechange.html', { svcInfo : svcInfo, data : data });
   }
 
 }
