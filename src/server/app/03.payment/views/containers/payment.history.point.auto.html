@@ -22,7 +22,7 @@
                 <h1>납부내역조회</h1>
                 <button class="depth-view" role="button" aria-pressed="false"><span class="blind">메뉴구조보기</span></button>
             </div>
-            <button class="prev-step"><span class="blind">이전으로</span></button>
+            <button class="prev-step common-back"><span class="blind">이전으로</span></button>
             <button class="search-content"><span class="blind">검색하기</span></button>
         </div>
     </div>
@@ -103,15 +103,16 @@
     <div class="inner">
         <div class="payment-detail-wrap">
             {{> list}}
-            <!--// payment-detail-wrap -->
+            {{#if initialMoreData}}
             <div class="contents-info-list">
                 <a href="" class="bt-more" title="">더보기<span>(<em>{{restCount}}</em>)</span></a>
             </div>
+            {{/if}}
         </div>
     </div>
 </script>
 <script id="list-default" type="text/x-handlebars-template">
-            {{#each pages}}
+            {{#each listElement}}
             <div class="payment-detail-box">
                 <div class="detail-inner">
                     <div class="pay-state">
@@ -124,12 +125,14 @@
                     <div class="detail-list">
                         <ul>
                             <li>
+                                {{#if reqClCdNm}}
                                 <span class="title">신청일자</span>
-                                {{!--
+                                {{else}}
                                 <span class="title">처리일자</span>
-                                --}}
+                                {{/if}}
                                 <span class="tx-cont">{{reqDate}}</span>
                             </li>
+                            {{#if reqClCdNm}}
                             <li>
                                 <span class="title">자동납부 종료일</span>
                                 <span class="tx-cont">{{reqEndDate}}</span>
@@ -137,18 +140,18 @@
                             <li>
                                 <div class="inner-top">
                                     <span class="title">신청포인트</span>
-                                    <span class="tx-cont"><strong>{{point}}</strong> 점</span>
+                                    <span class="tx-cont"><strong>{{reqAmt}}</strong> 점</span>
                                 </div>
                                 <div class="inner-row">
                                     <ul>
                                         <li>
                                             <span class="title">카드번호</span>
-                                            <span class="tx-cont">{{cardNumber}}</span>
+                                            <span class="tx-cont">{{cardNum}}</span>
                                         </li>
                                     </ul>
                                 </div>
                             </li>
-                            {{!--
+                            {{else}}
                             <li>
                                 <div class="inner-top">
                                     <span class="title">포인트</span>
@@ -158,12 +161,17 @@
                                     <ul>
                                         <li>
                                             <span class="title">신청 포인트</span>
-                                            <span class="tx-cont">{{point}}점<br />({{point}}점 차감완료) </span>
+                                            <span class="tx-cont">{{ppayAmt}}점<br />({{ppayAmt}}점 차감완료) </span>
                                         </li>
+                                        <li>
+                                            <span class="title">남은포인트</span>
+                                            <span class="tx-cont">{{ppayBamt}}점</span>
+                                        </li>
+
                                     </ul>
                                 </div>
                             </li>
-                            --}}
+                            {{/if}}
                             <li>
                                 <span class="title">처리영업장</span>
                                 <span class="tx-cont">{{storeName}}</span>
@@ -175,9 +183,7 @@
             {{/each}}
 </script>
 <script id="list-rainbow" type="text/x-handlebars-template">
-    <div class="inner">
-        <div class="payment-detail-wrap">
-            {{#result}}
+            {{#each listElement}}
             <div class="payment-detail-box">
                 <div class="detail-inner">
                     <div class="pay-state">
@@ -193,11 +199,12 @@
                                 <span class="title">처리일자</span>
                                 <span class="tx-cont">{{reqDate}}</span>
                             </li>
+                            {{#if reqClCdNm}}
                             <li>
                                 <span class="title">신청항목</span>
-                                <span class="tx-cont">{{reqType}}</span>
+                                <span class="tx-cont">{{reqChgNm}}</span>
                             </li>
-                            {{!--
+                            {{else}}}
                             <li>
                                 <div class="inner-top">
                                     <span class="title">포인트</span>
@@ -207,12 +214,12 @@
                                     <ul>
                                         <li>
                                             <span class="title">신청 포인트</span>
-                                            <span class="tx-cont">{{point}}점<br />({{point}}점 차감완료) </span>
+                                            <span class="tx-cont">{{reqAmt}}점<br />({{reqAmt}}점 차감완료) </span>
                                         </li>
                                     </ul>
                                 </div>
                             </li>
-                            --}}
+                            {{/if}}
                             <li>
                                 <span class="title">처리영업장</span>
                                 <span class="tx-cont">{{storeName}}</span>
@@ -221,13 +228,7 @@
                     </div>
                 </div>
             </div>
-            {{/result}}
-            <!--// payment-detail-wrap -->
-            <div class="contents-info-list">
-                <a href="" class="bt-more" title="">더보기<span>({{restCount}})</span></a>
-            </div>
-        </div>
-    </div>
+            {{/each}}
 </script>
 <script id="list-empty" type="text/x-handlebars-template">
     <div class="cont-box">
