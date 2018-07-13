@@ -111,7 +111,6 @@ Tw.MyTBillReissue.prototype = {
     // TODO: 서버 API 확인 필요!!
     var data = {
       sReIssueType: this.$guide.attr('data-type') || '',
-      sRegalRepveIncldYn: 'Y',
       sInvDt: this.$month.find(':checked').attr('name') || '',
       sReisueRsnCd: '01' //기본은 무선
       //재발행청구시점 정보가 빠져있음 (this.$time.find(':checked').attr('name') || '')
@@ -124,11 +123,6 @@ Tw.MyTBillReissue.prototype = {
     // 유선인 경우 재발행 사유 추가
     if ( this.$reason.length > 0 ) {
       data.sReisueRsnCd = this.$reason.find(':checked').attr('name');
-    }
-
-    //이메일인 경우
-    if (data.sReIssueType === '02') {
-      data.sRegalRepveIncldYn = 'N';
     }
 
     //재발행신청 API 호출
