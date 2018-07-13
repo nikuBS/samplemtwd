@@ -18,97 +18,16 @@ Tw.PaymentHistoryCommon = function (rootEl) {
 Tw.PaymentHistoryCommon.prototype = {
   _init: function () {
     var titles = Tw.MSG_PAYMENT.HISTORY_MENU.split(',');
-    var menus = _.map(this.URLS, function (url, key) {
-      return {
-        attr: '',
-        text: titles[key]
-      };
-    });
 
     this.paymentTypePopupValues = {
       title: Tw.MSG_PAYMENT.HISTORY_MENU_TITLE,
-      menus: menus
+      menus: _.map(this.URLS, function (url, key) {
+        return {
+          attr: '',
+          text: titles[key]
+        };
+      })
     };
-  },
-
-  setListWithTempalte: function (wrapper, template, helper, perPage, viewMoreSelector, elementSelector, callBack) {
-    var compiler = Handlebars.compile,
-      data = this.currentData;
-    /*
-    template = {
-      wrapper :
-      list :
-      empty :
-    }
-    helper = {
-      wrapper :
-      list :
-      empty :
-    }
-    perPage : page 당 list 수
-    callBack : viewMore 내부처리, callBack 내부 버튼등 처리를 위한 이벤트 바인딩등
-    */
-
-    if(!data || !_.isObject(data)) {
-      Tw.Logger.error('[payment/point/common] template : data error');
-      return false;
-    }
-    if(!template || !_.isObject(template)) {
-      Tw.Logger.error('[payment/point/common] common/template : template error');
-      return false;
-    }
-
-    this.listWrapperTemplate = template.wrapper ? compiler(template.wrapper.html()) : null;
-    this.listTemplate = template.list ? compiler(template.list.html()) : null;
-    this.emptyTemplate = template.empty ? compiler(template.empty.html()) : null;
-
-    if(!data.result.length) {
-      return this.emptyTemplate(data);
-    }
-
-    if(helper && _.isObject(helper)) {
-      _.mapObject(helper, function(f, key) {
-        Handlebars.registerHelper(key, f);
-      });
-    }
-
-    data.perPage = perPage;
-    data.currentPage = 0;
-
-    if(data.result.length > perPage) {
-      data.pages = data.result.slice(perPage * data.currentPage, perPage);
-      data.restCount = data.result.length - perPage;
-      wrapper.on('click', viewMoreSelector, $.proxy(this.viewMoreHandler, this));
-    }
-
-    Handlebars.registerPartial('list', this.listTemplate(data));
-    wrapper.empty().append(this.listWrapperTemplate(data));
-
-    if(callBack) callBack();
-
-  },
-
-  viewMoreHandler: function (e) {
-    e.preventDefault();
-    this.appendNextPage($(e.target));
-  },
-
-  appendNextPage: function(target) {
-    var data = this.currentData;
-    data.currentPage++;
-    data.pages = data.result.slice(data.perPage * data.currentPage, ( data.currentPage + 1) * data.perPage);
-
-    $(this.listTemplate(data)).insertBefore(target.parent());
-    if(data.result.length <= data.perPage * (data.currentPage + 1)) {
-      target.hide();
-    }
-    this.updateRestCounter(target);
-  },
-
-  updateRestCounter: function(target) {
-    var data = this.currentData;
-
-    target.find('span em').text(data.result.length - (data.currentPage + 1) * data.perPage);
   },
 
   setMenuChanger: function (target) {
@@ -139,3 +58,161 @@ Tw.PaymentHistoryCommon.prototype = {
     Tw.Logger.error(err.code, err.msg);
   }
 };
+
+Tw.PaymentHistoryCommon.prototype.listWithTemplate = function () {
+};
+
+Tw.PaymentHistoryCommon.prototype.listWithTemplate.prototype = {
+  _init: function (data, wrapper, template, helper, keyword, perPage, viewMoreSelector, listWrapperSelector, callBack) {
+
+    this.compiler = Handlebars.compile;
+
+    this.data = data;
+    this.wrapper = wrapper;
+
+    this.template = template;
+    this.helper = helper;
+    this.listTemplateKeyword = keyword.list;
+    this.restButtonTemplateKeyword = keyword.restButton;
+    this.viewMoreSelector = viewMoreSelector;
+    this.listWrapperSelector = listWrapperSelector;
+
+    this.perPage = perPage;
+    this.currentPage = 0;
+    this.callBack = callBack;
+    /*
+    data
+    wrapper : 리스트 삽입 wrapper
+    template = {
+      wrapper :
+      list :
+      empty :
+    }
+    helper = {
+      wrapper :
+      list :
+      empty :
+    }
+    keyword = {
+      handlebar template 매칭된 키워드
+      ex) {{#each page}}
+      list : page
+      restCount : restCount
+    }
+    perPage : page 당 list 수
+    callBack
+    */
+
+    if (!data || !_.isObject(data)) {
+      Tw.Logger.error('[payment/point/common] template : data error');
+      return false;
+    }
+    if (!template || !_.isObject(template)) {
+      Tw.Logger.error('[payment/point/common] common/template : template error');
+      return false;
+    }
+
+    this._setTemplate();
+
+    if (!this._isEmptyList()) {
+      this._setHelper();
+      this._buildListUI();
+    } else {
+      this._buildEmptyUI();
+    }
+  },
+
+  _setTemplate: function () {
+    this.listWrapperTemplate = this.template.wrapper ? this.compiler(this.template.wrapper.html()) : null;
+    this.listTemplate = this.template.list ? this.compiler(this.template.list.html()) : null;
+    this.emptyTemplate = this.template.empty ? this.compiler(this.template.empty.html()) : null;
+  },
+
+  _setHelper: function () {
+    if (this.helper && _.isObject(this.helper)) {
+      _.mapObject(this.helper, function (f, key) {
+        Handlebars.registerHelper(key, f);
+      });
+    }
+  },
+
+  // _buildListUI: function() {
+  //   this.updateNextPageData();
+  //   if (this.data.result.length > this.perPage) {
+  //
+  //     this.data[this.restButtonTemplateKeyword] = this.getRestCounter();
+  //     this.wrapper.on('click', this.viewMoreSelector, $.proxy(this.viewMoreHandler, this));
+  //   } else {
+  //     this.data.initialMoreData = false;
+  //   }
+  //
+  //   Handlebars.registerPartial('list', this.listTemplate(this.data));
+  //   this.wrapper.append(this.listWrapperTemplate(this.data));
+  //   if(this.data.initialMoreData) {
+  //     $(this.listTemplate(this.data)).insertBefore(this.wrapper.find(this.viewMoreSelector).parent());
+  //   } else {
+  //     this.wrapper.find(this.listWrapperSelector).append(this.listTemplate(this.data));
+  //   }
+  //
+  //   if (this.callBack) this.callBack();
+  // },
+
+  _buildListUI: function () {
+    this.updateNextPageData();
+    Handlebars.registerPartial('list', this.listTemplate(this.data));
+
+    if (this.data.result.length > this.perPage) {
+      this.data.initialMoreData = true;
+      this.data[this.restButtonTemplateKeyword] = this.getRestCounter();
+      this.wrapper.on('click', this.viewMoreSelector, $.proxy(this.viewMoreHandler, this));
+    } else {
+      this.data.initialMoreData = false;
+    }
+    console.log('[payment/history/common]', this.data);
+
+    this.wrapper.empty().append(this.listWrapperTemplate(this.data));
+
+    if (this.callBack) this.callBack();
+  },
+
+  _appendNextListUI: function (target) {
+    this.currentPage++;
+    this.updateNextPageData();
+
+    $(this.listTemplate(this.data)).insertBefore(target.parent());
+    if (this.data.result.length <= this.perPage * (this.currentPage + 1)) {
+      target.hide();
+    }
+    if (this.callBack) this.callBack();
+
+    this.updateRestCounter(target);
+  },
+
+  _isEmptyList: function () {
+    return !this.data.result.length;
+  },
+
+  _buildEmptyUI: function () {
+    this.wrapper.empty().append(this.emptyTemplate(this.data));
+  },
+
+  viewMoreHandler: function (e) {
+    e.preventDefault();
+    this._appendNextListUI($(e.target));
+  },
+
+  updateNextPageData: function () {
+    this.data[this.listTemplateKeyword] = this.data.result.slice(
+        this.perPage * this.currentPage,
+        !this.currentPage ? this.perPage : (this.currentPage + 1) * this.perPage);
+  },
+
+  getRestCounter: function () {
+    return this.data.result.length - (this.currentPage + 1) * this.perPage;
+  },
+
+  updateRestCounter: function (target) {
+    target.find('span em').text(this.getRestCounter());
+  }
+};
+

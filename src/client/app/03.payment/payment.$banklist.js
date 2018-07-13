@@ -46,11 +46,11 @@ Tw.BankList.prototype = {
     Tw.Logger.info('get bank list fail');
   },
   _setBankList: function (res) {
-    var bankList = res.result.bnkcrdlist2;
+    var bankList = res.result.payovrBankList;
     for (var i = 0; i < bankList.length; i++) {
       var bankObj = {
-        attr: 'class="hbs-bank-name" id=' + bankList[i].commCdVal,
-        text: bankList[i].commCdValNm
+        attr: 'class="hbs-bank-name" id=' + bankList[i].bankCardCoCd,
+        text: bankList[i].bankCardCoNm
       };
       this.$bankList.push(bankObj);
     }
