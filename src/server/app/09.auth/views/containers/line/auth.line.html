@@ -355,7 +355,8 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.AuthLine($('#authLineWrap'));
+    var nicknamePopup = new Tw.AuthLineNickname();
+    new Tw.AuthLine($('#authLineWrap'), nicknamePopup);
   });
 </script>
 <% include ../../components/end.component.html %>

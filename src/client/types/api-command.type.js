@@ -28,6 +28,8 @@ Tw.API_CMD = {
   BFF_03_0009: { path: '/user/service-password-sessions', method: Tw.API_METHOD.POST },
   BFF_03_0010: { path: '/user/locks', method: Tw.API_METHOD.DELETE },
   BFF_03_0011: { path: '/core-auth/v1/nationalities', method: Tw.API_METHOD.GET },
+  BFF_03_0012: { path: '/user/biz-auth-sessions', method: Tw.API_METHOD.POST },
+  BFF_03_0013: { path: '/user/biz-services', method: Tw.API_METHOD.POST },
 
   // MYT
   BFF_05_0001: { path: '/my-t/balances', method: Tw.API_METHOD.GET },
