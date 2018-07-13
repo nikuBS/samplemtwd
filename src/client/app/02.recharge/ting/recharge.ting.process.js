@@ -8,6 +8,7 @@ Tw.RechargeTingProcess = function (rootEl) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
+  this._nativeService = Tw.Native;
   this._history = new Tw.HistoryService(this.$container);
   this._history.init('hash');
 
@@ -54,11 +55,11 @@ Tw.RechargeTingProcess.prototype = {
   },
 
   _onClickBtnAddr: function () {
-    Tw.Native.send(Tw.NTV_CMD.GET_CONTACT, {}, $.proxy(this._onContact, this));
+    this._nativeService.send(Tw.NTV_CMD.GET_CONTACT, {}, $.proxy(this._onContact, this));
   },
 
   _onContact: function (resp) {
-    var params = resp.params;
+    var params = resp;
     var phoneNumber = params.phoneNumber.replace(/-/gi, '');
     this.$container.find('.inp_phone').val(phoneNumber);
   },
@@ -205,7 +206,7 @@ Tw.RechargeTingProcess.prototype = {
   _validateRequestStep1: function () {
     var $wrap_request_step = $('#request-step1');
     this.target.phone_no_mask = $wrap_request_step.find('.inp_phone').val();
-    $('#request-complete').find('.tx-data .num').html(Tw.FormatHelper.conTelFormatWithDash(this.target.phone_no_mask));
+    $('#request-complete').find('.tx-data .num').html(Tw.FormatHelper.getFormattedPhoneNumber(this.target.phone_no_mask));
 
     this._apiService.request(Tw.API_CMD.BFF_06_0025, { senderSvcNum: this.target.phone_no_mask })
       .done($.proxy(this._validRequestComplete, this));
@@ -214,7 +215,7 @@ Tw.RechargeTingProcess.prototype = {
   _validRequestComplete: function (response) {
     if ( response.code === '00' ) {
       this._history.setHistory();
-      this._go('request-complete');
+      this._go('#request-complete');
     } else {
       this._sendFail(response);
     }

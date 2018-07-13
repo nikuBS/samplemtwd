@@ -28,6 +28,8 @@ Tw.API_CMD = {
   BFF_03_0009: { path: '/user/service-password-sessions', method: Tw.API_METHOD.POST },
   BFF_03_0010: { path: '/user/locks', method: Tw.API_METHOD.DELETE },
   BFF_03_0011: { path: '/core-auth/v1/nationalities', method: Tw.API_METHOD.GET },
+  BFF_03_0012: { path: '/user/biz-auth-sessions', method: Tw.API_METHOD.POST },
+  BFF_03_0013: { path: '/user/biz-services', method: Tw.API_METHOD.POST },
 
   // MYT
   BFF_05_0001: { path: '/my-t/balances', method: Tw.API_METHOD.GET },
@@ -39,6 +41,7 @@ Tw.API_CMD = {
   BFF_05_0022: { path: '/core-bill/v1/hotbill/fee/hotbill-response', method: Tw.API_METHOD.GET },
   BFF_05_0024: { path: '/core-bill/v1/child/children', method: Tw.API_METHOD.GET },
   BFF_05_0035: { path: '/core-bill/v1/hotbill/fee/hotbill-request', method: Tw.API_METHOD.GET },
+  BFF_05_0041: { path: '/core-product/v1/services/base-fee-plans', method: Tw.API_METHOD.GET },
 
   // RECHARGE
   BFF_06_0001: { path: '/core-recharge/v1/refill-coupons', method: Tw.API_METHOD.GET },
@@ -68,12 +71,12 @@ Tw.API_CMD = {
   BFF_06_0025: { path: '/core-recharge/v1/ting-gift-requests', method: Tw.API_METHOD.POST },
   BFF_06_0026: { path: '/core-recharge/v1/ting-gifts', method: Tw.API_METHOD.GET },
   BFF_06_0027: { path: '/core-recharge/v1/ting-gift-blocks', method: Tw.API_METHOD.GET },
-  BFF_06_0028: { path: '/core-recharge/v1/ting-cookies/recharge/base', method: Tw.API_METHOD.GET },
-  BFF_06_0029: { path: '/core-recharge/v1/ting-cookies/recharge-month', method: Tw.API_METHOD.POST },
-  BFF_06_0030: { path: '/core-recharge/v1/ting-cookies/recharge-auto', method: Tw.API_METHOD.POST },
-  BFF_06_0031: { path: '/core-recharge/v1/ting-cookies/recharge-cancel', method: Tw.API_METHOD.POST },
-  BFF_06_0032: { path: '/core-recharge/v1/ting-cookies/recharge/histories', method: Tw.API_METHOD.GET },
-  BFF_06_0033: { path: '/core-recharge/v1/ting-cookies/recharge-histories-change', method: Tw.API_METHOD.POST },
+  BFF_06_0028: { path: '/core-recharge/v1/ting-services', method: Tw.API_METHOD.GET },
+  BFF_06_0029: { path: '/core-recharge/v1/ting-top-ups', method: Tw.API_METHOD.POST },
+  BFF_06_0030: { path: '/core-recharge/v1/regular-ting-top-ups', method: Tw.API_METHOD.POST },
+  BFF_06_0031: { path: '/core-recharge/v1/regular-ting-top-ups', method: Tw.API_METHOD.DELETE },
+  BFF_06_0032: { path: '/core-recharge/v1/ting-top-ups', method: Tw.API_METHOD.GET },
+  BFF_06_0033: { path: '/core-recharge/v1/ting-permissions', method: Tw.API_METHOD.GET },
   BFF_06_0034: { path: '/core-recharge/v1/data-limitation-services', method: Tw.API_METHOD.GET },
   BFF_06_0035: { path: '/core-recharge/v1/regular-data-top-ups', method: Tw.API_METHOD.POST },
   BFF_06_0036: { path: '/core-recharge/v1/data-top-ups', method: Tw.API_METHOD.POST },
@@ -86,9 +89,13 @@ Tw.API_CMD = {
   BFF_06_0043: { path: '/core-recharge/v1/data-limitations', method: Tw.API_METHOD.GET },
 
   // PAYMENT
+  BFF_07_0004: { path: '/core-bill/v1/cash-receipts-issue-history', method: Tw.API_METHOD.GET },
   BFF_07_0005: { path: '/core-bill/v1/point-autopays-history/cashback', method: Tw.API_METHOD.GET },
   BFF_07_0006: { path: '/core-bill/v1/point-autopays-history/tpoint', method: Tw.API_METHOD.GET },
   BFF_07_0007: { path: '/core-bill/v1/point-autopays-history/tpoint', method: Tw.API_METHOD.GET },
+  BFF_07_0017: { path: '/core-bill/v1/bill-pay/tax-reprint',  method: Tw.API_METHOD.GET },
+  BFF_07_0018: { path: '/core-bill/v1/bill-pay/tax-reprint-email',  method: Tw.API_METHOD.GET },
+  BFF_07_0019: { path: '/core-bill/v1/bill-pay/tax-reprint-fax',  method: Tw.API_METHOD.GET },
   BFF_07_0022: { path: '/core-bill/v1/bill-pay/autopay-banks', method: Tw.API_METHOD.GET },
   BFF_07_0023: { path: '/core-bill/v1/bill-pay/settle-pay-bank', method: Tw.API_METHOD.POST },
   BFF_07_0024: { path: '/core-bill/v1/bill-pay/cardnum-validation', method: Tw.API_METHOD.GET },
@@ -97,12 +104,16 @@ Tw.API_CMD = {
   BFF_07_0027: { path: '/core-bill/v1/bill-pay/settle-vb-sms', method: Tw.API_METHOD.GET },
   BFF_07_0028: { path: '/core-bill/v1/bill-pay/avail-point-search', method: Tw.API_METHOD.GET },
   BFF_07_0029: { path: '/core-bill/v1/bill-pay/pay-ocb-tpoint-proc', method: Tw.API_METHOD.POST },
+  BFF_07_0039: { path: '/core-bill/v1/payment/auto-integrated-account-payment', method: Tw.API_METHOD.GET },
   BFF_07_0045: { path: '/core-bill/v1/ocb-point-onetime-reserve', method: Tw.API_METHOD.POST },
   BFF_07_0048: { path: '/core-bill/v1/rainbow-point-onetime-reserve', method: Tw.API_METHOD.POST },
   BFF_07_0054: { path: '/core-bill/v1/ocb-point-autopay-modify', method: Tw.API_METHOD.POST },
   BFF_07_0056: { path: '/core-bill/v1/rainbow-point-autopay-change', method: Tw.API_METHOD.POST },
   BFF_07_0061: { path: '/core-bill/v1/auto-payments', method: Tw.API_METHOD.POST },
+  BFF_07_0062: { path: '/core-bill/v1/auto-payments', method: Tw.API_METHOD.PUT },
+  BFF_07_0063: { path: '/core-bill/v1/auto-payments', method: Tw.API_METHOD.DELETE },
   BFF_07_0065: { path: '/core-bill/v1/autopay/pay-cycl-chg', method: Tw.API_METHOD.PUT },
+  BFF_07_0068: { path: '/core-bill/v1/autopay/card-info/args-0', method: Tw.API_METHOD.GET },
 
   // TEST
   GET: { path: '/posts', method: Tw.API_METHOD.GET },
@@ -117,7 +128,8 @@ Tw.API_CMD = {
 };
 
 Tw.NODE_CMD = {
-  GET_ENVIRONMENT: { path: '/environment', method: Tw.API_METHOD.GET }
+  GET_ENVIRONMENT: { path: '/environment', method: Tw.API_METHOD.GET },
+  SET_DEVICE: { path: '/device', method: Tw.API_METHOD.POST }
 };
 
 Tw.API_CODE = {

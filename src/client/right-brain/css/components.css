@@ -1224,7 +1224,7 @@
 
 .popup .popup-info .popup-contents .tube-list-ti ul {
   width: 100%;
-  padding: 0;
+  /*padding:0;*/
   overflow: hidden;
 }
 
@@ -2144,6 +2144,11 @@
 
 .commend-bill-info .contents-info-list .bill-history li:first-of-type {
   border-top: 1px solid #000;
+}
+
+/*추가 납부내역조회*/
+.pay-state .paychange-com {
+  color: #f65d00;
 }
 
 /* 최민규 */
@@ -6265,6 +6270,7 @@ span[class*=char-star][class*=red] {
 }
 
 .mline-list .mline-tit-wrap .mline-num .num {
+  vertical-align: top;
   font-family: "Helvetica Neue", Roboto, sans-serif;
 }
 

@@ -62,13 +62,13 @@ Tw.NativeService.prototype = {
   },
 
   _onNativeCallback: function (_resp) {
-    Tw.Logger.info('[onNativeCallBack]' + _resp);
+    Tw.Logger.info('[onNativeCallBack]', JSON.stringify(_resp));
     var resp = (typeof _resp === 'string') ? JSON.parse(_resp) : _resp;
-    if ( resp.result === Tw.NTV_CODE.CODE_00 && !!resp.randomCode ) {
+    if ( resp.resultCode === Tw.NTV_CODE.CODE_00 && !!resp.randomCode ) {
       var fn = _.find(this._callbackList, function (data) {
         return data.randomCode === resp.randomCode;
       }).callback;
-      fn(resp);
+      fn(resp.params);
     }
   }
 };
