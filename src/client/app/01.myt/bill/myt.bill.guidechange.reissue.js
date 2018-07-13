@@ -62,36 +62,25 @@ Tw.MyTBillReissue.prototype = {
     // API 호출 후 결과 값에 기 발행인 경우와 아닌 경우에 대한 처리
     // 기본적으로 설정된 값으로 표시
     var selectedItem = this.$guide.text();
-    var type = null;
+    var type = this.$guide.attr('data-type');
     if ( this.$type ) {
       //유형이 설정이 된다면 선택된 아이템에서 가져와 표시
       selectedItem = this.$type.find('[aria-checked=true]').text();
       type = this.$type.find(':checked').attr('name');
     }
-    else {
-      type = this.$guide.attr('data-type');
-    }
     var title = Tw.MSG_MYT.BILL_GUIDE_REISSUE_00;
     var contents = selectedItem + Tw.MSG_MYT.BILL_GUIDE_REISSUE_01;
-    if ( type && type === '02' ) {
+    if ( type && type === '2' ) {
       // 이메일인 경우 문구 다름
       contents = Tw.MSG_MYT.BILL_GUIDE_REISSUE_02;
     }
     //TODO: 04 값은 임의의 값으로 재발행 요청시 기타인 경우에 대한 값 확인 후 변경
-    else if ( type && type === '04' ) {
+    else if ( type && type === '1' ) {
       // 기타(우편)인 경우
       contents = Tw.MSG_MYT.BILL_GUIDE_REISSUE_04;
     }
-    // if() { //기발행인 경우
-    // contents = Tw.MSG_MYT.BILL_GUIDE_REISSUE_03;
-    // this._popupService.openAlert(title, contents, $.proxy(this._onOkPopupClicked, this));
-    // this.isIssue = true;
-    // }
-    // else { //  아닌경우
-    this.isIssue = false;
     this._popupService.openConfirm(Tw.POPUP_TITLE.NOTIFY, title, contents,
       null, $.proxy(this._onOkPopupClicked, this));
-    //}
   },
 
   _onCloseClicked: function (/*event*/) {
@@ -111,7 +100,6 @@ Tw.MyTBillReissue.prototype = {
     // 재발행 데이터 설정
     // sReIssueType	재발행코드종류
     // sInvDt	재발행청구일자
-    // TODO: 서버 API 확인 필요!!
     var data = {
       sReIssueType: this.$guide.attr('data-type') || '', // 재발행코드종류
       sInvDt: this.$month.find(':checked').attr('name') || '', // 재발행청구일자
@@ -136,13 +124,14 @@ Tw.MyTBillReissue.prototype = {
 
   _onApiSuccess: function (params) {
     Tw.Logger.info(params);
-    // 기 발행 건인 경우에 대한 처리
     // 팝업닫고 처리
     this._popupService.close();
     if (params.code && params.code === 'ZORDE1206') {
+      // 기 발행 건인 경우에 대한 처리
       this._popupService.openAlert(Tw.MSG_MYT.BILL_GUIDE_REISSUE_00, Tw.MSG_MYT.BILL_GUIDE_REISSUE_03);
     }
-    else { //아닌경우
+    else {
+      // 발행 된 건이 없는 경우
       var type = this.$guide.attr('data-type');
       var month = this.$month.find(':checked').attr('name') || '';
       if ( this.$type.length > 0 ) {
