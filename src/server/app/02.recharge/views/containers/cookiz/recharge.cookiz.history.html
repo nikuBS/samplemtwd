@@ -16,7 +16,7 @@
                 <h1>팅/쿠키즈/안심음성 요금 충전 내역</h1>
                 <button class="depth-view" role="button" aria-pressed="false"><span class="blind">메뉴구조보기</span></button>
             </div>
-            <button class="prev-step"><span class="blind">이전으로</span></button>
+            <button class="prev-step common-back"><span class="blind">이전으로</span></button>
             <button class="search-content"><span class="blind">검색하기</span></button>
         </div>
     </div>
@@ -39,8 +39,8 @@
                         <div class="tab-area type1"><!-- 타입별 탭형태 변환 -->
                             <div class="tab-linker">
                                 <ul role="tablist">
-                                    <li role="tab" aria-selected="true" aria-controls="aria-tab1-tab" id="aria-tab1"><a href="">충전내역</a></li><!-- true 열림 -->
-                                    <li role="tab" aria-selected="false" aria-controls="aria-tab2-tab" id="aria-tab2"><a href="">권한변경내역</a></li>
+                                    <li role="tab" aria-selected="true" aria-controls="aria-tab1-tab" id="aria-tab1"><button>충전내역</button></li><!-- true 열림 -->
+                                    <li role="tab" aria-selected="false" aria-controls="aria-tab2-tab" id="aria-tab2"><button>권한변경내역</button></li>
                                 </ul>
                             </div>
                             <div class="tab-contents">
@@ -236,6 +236,7 @@
         </div>
     </div>
     <!--// #contents -->
+    <% include ../../../../../common/views/components/footer.component.html %>
 </div>
 
 <% include ../../components/javascript.component.html %>

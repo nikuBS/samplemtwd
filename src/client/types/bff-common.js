@@ -29,6 +29,11 @@ Tw.RAINBOW_CHANGE_CODE = {
   CANCEL: 'T1'
 };
 
+Tw.PAYMENT_AUTO_CODE = {
+  BANK: '01',
+  CARD: '02'
+};
+
 Tw.BILL_GUIDE_TYPE = {
   TWORLD: 'P',
   BILL_LETTER: 'H',

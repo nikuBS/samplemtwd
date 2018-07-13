@@ -52,8 +52,8 @@
                                         {{#if data.M}}
                                             {{#each data.M}}
                                                 <li class="checkbox type01" role="checkbox" aria-checked="false" data-svcMgmtNum="{{svcMgmtNum}}">
-                                                    <input class="child-check" type="checkbox" name="checkbox" value="값1" title="체크박스"/>
-                                                    <dl class="mline-detail">
+                                                    <input class="child-check" type="checkbox" name="checkbox" value="값1" title="회선 선택" aria-labelledby="aria-mline1" /><!-- 접근성 수정 : aria속성을 위해 고유 id를 가져야 합니다. loop를 돌릴시 고정 id가 여러개 생성이 됩니다. index를 참조 하거나 변화될 수 있는 값이 들어가야 될 것 같습니다. -->
+                                                    <dl id="aria-mline1" class="mline-detail"><!-- aria-labelledby와 매칭 되어야 합니다. -->
                                                         <dt>{{ showSvcAttrCd }}</dt>
                                                         <dd class="device">갤럭*****</dd>
                                                         <dd class="ph">{{ svcNum }}</dd>
@@ -64,8 +64,8 @@
                                         {{#if data.S}}
                                             {{#each data.S}}
                                                 <li class="checkbox type01" role="checkbox" aria-checked="false" data-svcMgmtNum="{{svcMgmtNum}}">
-                                                    <input class="child-check" type="checkbox" name="checkbox" value="값4" title="체크박스"/>
-                                                    <dl class="mline-detail">
+                                                    <input class="child-check" type="checkbox" name="checkbox" value="값4" title="회선 선택" aria-labelledby="aria-mline1" /><!-- 접근성 수정 : aria속성을 위해 고유 id를 가져야 합니다. loop를 돌릴시 고정 id가 여러개 생성이 됩니다. index를 참조 하거나 변화될 수 있는 값이 들어가야 될 것 같습니다. -->
+                                                    <dl id="aria-mline1" class="mline-detail"><!-- aria-labelledby와 매칭 되어야 합니다. -->
                                                         <dt>{{ showSvcAttrCd }}</dt>
                                                         <dd class="ph">{{ addr }}</dd>
                                                     </dl>
@@ -75,8 +75,8 @@
                                         {{#if data.O}}
                                             {{#each data.O}}
                                                 <li class="checkbox type01" role="checkbox" aria-checked="false" data-svcMgmtNum="{{svcMgmtNum}}">
-                                                    <input class="child-check" type="checkbox" name="checkbox" value="값4" title="체크박스"/>
-                                                    <dl class="mline-detail">
+                                                    <input class="child-check" type="checkbox" name="checkbox" value="값4" title="회선 선택" aria-labelledby="aria-mline1" /><!-- 접근성 수정 : aria속성을 위해 고유 id를 가져야 합니다. loop를 돌릴시 고정 id가 여러개 생성이 됩니다. index를 참조 하거나 변화될 수 있는 값이 들어가야 될 것 같습니다. -->
+                                                    <dl id="aria-mline1" class="mline-detail"><!-- aria-labelledby와 매칭 되어야 합니다. -->
                                                         <dt>{{ showSvcAttrCd }}</dt>
                                                         <dd class="ph">{{ svcNum }}</dd>
                                                     </dl>

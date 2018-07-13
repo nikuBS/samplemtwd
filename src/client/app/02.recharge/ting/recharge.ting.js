@@ -70,7 +70,7 @@ Tw.RechargeTing.prototype = {
   },
 
   _sendFail: function (message) {
-    this._popupService.openAlert(message);
+    this._popupService.openAlert(Tw.POPUP_TITLE.NOTIFY, message);
   },
 
   _goTingGiftProcess: function () {

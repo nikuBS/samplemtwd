@@ -18,20 +18,41 @@ skt_landing.widgets = {
   widget_tube: function (ta) {
     var widget = ta ? $(ta).find('.widget-box.tube') : $('.widget-box.tube');
     $(widget).each(function(){
-      var tube_list = $(this).find('.tube-list');
-      if(!tube_list.attr('class').match(' ')){
-        tube_list.addClass('five');
+      var tube_box = $(this).find('.tube-list'),
+          tube_list = tube_box.find('> li');
+      var listClass = ['one','two','three','four','five'],
+          classValue = null,
+          classNum = 0;
+      for(var i=0, leng=listClass.length; i<leng; ++i){
+        if(tube_box.attr('class').indexOf(listClass[i]) > 0){
+          classValue = listClass[i];
+          classNum = i+1;
+          break;
+        }
       }
-      var tube_li = tube_list.find('li');
-      if(tube_li.outerWidth() * tube_li.length <= tube_list.outerWidth() + tube_li.length){
-        tube_li.first().addClass('first');
-        tube_li.last().addClass('last');
+      if(!tube_list.hasClass('refil-tube')){
+        if(typeof classValue != 'string'){
+          tube_box.addClass('five');
+          classValue = 'five';
+          classNum = 5;
+        }
+        tube_list.first().addClass('top-left');
+        tube_list.last().addClass('bottom-right');
+        tube_list.eq(tube_list.length < classNum ? tube_list.length-1 : classNum-1).addClass('top-right');
+        tube_list.filter(function(index){
+          var val = 0;
+          if(tube_list.length == classNum){val = 0;}
+          else if(tube_list.length > classNum && tube_list.length % classNum == 0){val = parseInt(tube_list.length / classNum) * classNum - classNum;}
+          else{val = parseInt(tube_list.length / classNum) * classNum;}
+          return index === val;
+        }).addClass('bottom-left');
+
       }
 
       var _this = $(this);
-      /*if(_this.find('li.checked').length < 1){
-        setRadioState(_this.find('input').eq(0));
-      }*/
+      if(_this.find('input:checked').length > 0){
+        setRadioState(_this.find('input:checked').last());
+      }
       _this.find('input').on('change',function(){
         setRadioState($(this));
       }).on('focusin',function(){
@@ -144,12 +165,12 @@ skt_landing.widgets = {
         slidesToShow: 3,
         slidesToScroll: 3,
         centerMode: false,
-        focusOnSelect: false,         
+        focusOnSelect: false,
       });
       var $slick = _this.slick('getSlick');
       var $slides = $slick.$slides;
       var slideIndex = $slick.slickCurrentSlide();
-      
+
       //슬라이더의 요소를 클릭시 요소에 대한 색상변환
       $slides.on('click', function () {
         var $this = $(this);
@@ -271,7 +292,7 @@ skt_landing.widgets = {
       if(_this.find('> .acco-cover > .bt-whole').length < 1){
         _this.find('.acco-cover').addClass('on');
       }
-      
+
       var accoList = _this.find('> .acco-cover > .acco-style > .acco-list > .acco-box');
       var accoList_leng = accoList.length;
       for(var i=0; i<accoList_leng; ++i){
@@ -286,7 +307,7 @@ skt_landing.widgets = {
         }
       }
       if($(this).find('> .acco-cover > .acco-style').hasClass('none-event')) return ;
-      
+
       var setOnList = _this.find('> .acco-cover > .acco-style > .acco-list > .acco-box');
       for(var i=0, leng=setOnList.length; i<leng; ++i){
         if(setOnList.eq(i).find('> .acco-tit button').length < 1 && _this.find('.acco-cover.disabled').length < 1){
@@ -350,6 +371,10 @@ skt_landing.widgets = {
       checkSwitch(this, !$(this).closest('.btn-switch').hasClass('on'));
       $(this).on('change', function () {
         checkSwitch(this);
+      }).on('focusin',function(){
+        $(this).closest('.btn-switch').addClass('focus');
+      }).on('focusout',function(){
+        $(this).closest('.btn-switch').removeClass('focus');
       });
       $(this).closest('.switch-style').on('click',function(e){
         if(e.target.tagName.toLowerCase() == 'input' && e.target != e.currentTarget) return ;
@@ -360,10 +385,12 @@ skt_landing.widgets = {
       target = $(target);
       state = typeof state == 'boolean' ? state : target.closest('.btn-switch').hasClass('on');
       if (state) {
-        target.closest('.btn-switch').removeClass('on').attr('aria-checked',false);
+        target.closest('.btn-switch').removeClass('on');
+        target.closest('.switch-style').attr('aria-checked',false);
         target.attr('checked',false);
       } else {
-        target.closest('.btn-switch').addClass('on').attr('aria-checked',true);
+        target.closest('.btn-switch').addClass('on');
+        target.closest('.switch-style').attr('aria-checked',true);
         target.attr('checked',true);
       }
     }
