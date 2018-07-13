@@ -1,0 +1,60 @@
+<!--
+* FileName: myt.bill.guidechange.change.html
+* Author: 이정민 (skt.p130713@partner.sk.com)
+* Date: 2018.07.05
+-->
+<% include ../../components/start.component.html %>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb_area">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div id="wrap" class="wrap">
+    <!-- #header -->
+    <div id="header" class="header-wrap">
+        <div class="header step-page">
+            <div class="header-ti">
+                <h1>요금안내서 정보변경</h1>
+            </div>
+            <button class="close-step"><span class="blind">닫기</span></button>
+        </div>
+    </div>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+
+            <div class="cont-box nogaps-top">
+                <div class="change-plan">
+                    <h3 class="tit-type">사용중인 요금안내서</h3>
+                    <button class="bt-dropdown big no-arrow" title="T world 확인"><%= curBillGuide.curBillTypeNm %><span class="ico"></span></button>
+                    <a href="/myt/bill/guidechange/change?selectedBillGuideType=<%= anotherBillGuideType %>" class="bt-link-tx">다른 요금안내서로 바꾸시겠어요? <span class="ico"></span></a>
+                </div>
+            </div>
+
+            <div class="component-wrap">
+                <%- include('../../components/billguide/'+ curBillGuide.component +'.component.html', {curBillGuide: curBillGuide}) %>
+            </div>
+
+        </div>
+    </div>
+    <!--// #contents -->
+    <% include ../../../../../common/views/components/footer.component.html %>
+</div>
+<% include ../../components/javascript.component.html %>
+<script>
+    $(document).ready(function () {
+      var $component = $('.bill-guide-component');
+      var componentName = $component.attr('cur-bill-type-component');
+      var componentClassName = componentName.replace(/-([a-z])/g, function (g) { return g[1].toUpperCase(); });
+      new Tw.MyTBillGuideUpdateClasses[componentClassName]($component);
+    });
+</script>
+<% include ../../components/end.component.html %>
+
+

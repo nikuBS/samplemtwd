@@ -31,7 +31,7 @@ Tw.MyTBillReissueComplete.prototype = {
   },
 
   _onOkClicked: function () {
-    // 요금안내서 재발행 최초화면으로 이동
+    // 요금안내서 재발행 최초화면으로 이동 (MY_03_03_01)
     // back 했을 경우 현재 페이지로 넘어오지 않아야 함으로 location.replace를 호출한다.
     window.location.replace('/myt/bill/guidechange');
   },
@@ -44,5 +44,5 @@ Tw.MyTBillReissueComplete.prototype = {
   _onCloseClicked: function (/*event*/) {
     // 이전화면으로 이동 - history back 하는게 맞을가?
     history.back();
-  },
+  }
 };

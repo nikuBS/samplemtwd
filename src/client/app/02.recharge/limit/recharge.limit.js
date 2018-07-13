@@ -19,7 +19,7 @@ Tw.RechargeLimit = function (rootEl) {
 
 Tw.RechargeLimit.prototype = {
   _init: function () {
-    this.chargeClCd = this.$container.find('.box-state-info').attr('data-chargeClCd');
+    this.rechargeAmount = "5000";
   },
 
   _cachedElement: function () {
@@ -68,20 +68,19 @@ Tw.RechargeLimit.prototype = {
   },
 
   _submit: function (e) {
-    // var reqData = {
-    //   amt: this.rechargeAmount,
-    //   chargeClCd: this.chargeClCd
-    // }
+    var reqData = {
+      amt: this.rechargeAmount,
+    }
 
-    // if (this.rechargeType) {
-    //   this._apiService.request(Tw.API_CMD.BFF_06_0037, reqData)
-    //     .done($.proxy(this._success, this))
-    //     .fail($.proxy(this._fail, this));
-    // } else {
-    //   this._apiService.request(Tw.API_CMD.BFF_06_0036, reqData)
-    //     .done($.proxy(this._success, this))
-    //     .fail($.proxy(this._fail, this));
-    // }
+    if (this.rechargeType) {
+      this._apiService.request(Tw.API_CMD.BFF_06_0037, reqData)
+        .done($.proxy(this._success, this))
+        .fail($.proxy(this._fail, this));
+    } else {
+      this._apiService.request(Tw.API_CMD.BFF_06_0036, reqData)
+        .done($.proxy(this._success, this))
+        .fail($.proxy(this._fail, this));
+    }
     this._go('step-complete');
   },
 
@@ -96,8 +95,8 @@ Tw.RechargeLimit.prototype = {
   },
 
   _setAmount: function (e) {
-    this.rechargeAmount = Number(e.target.title);
-    var current = this._getCurrent(e.target.title);
+    this.rechargeAmount = e.target.title;
+    var current = Tw.FormatHelper.addComma(e.target.title);
     this.$amountText.text(current);
   },
 
@@ -122,27 +121,21 @@ Tw.RechargeLimit.prototype = {
   _handleConfirmTmth: function ($switch) {
     // call api
     var state = $switch.hasClass('on');
-    // var reqData = {
-    //   chargeClCd: this.chargeClCd
-    // }
-    // if (state) {
-    //   this._apiService.request(Tw.API_CMD.BFF_06_0038, reqData);
-    // } else {
-    //   this._apiService.request(Tw.API_CMD.BFF_06_0039, reqData);
-    // }
+    if (state) {
+      this._apiService.request(Tw.API_CMD.BFF_06_0038);
+    } else {
+      this._apiService.request(Tw.API_CMD.BFF_06_0039);
+    }
 
     this._toggleSwitch($switch, state);
   },
 
   _handleConfirmRegular: function ($switch) {
     var state = $switch.hasClass('on');
-    // var reqData = {
-    //   chargeClCd: this.chargeClCd
-    // }
     // if (state) {
-    //   this._apiService.request(Tw.API_CMD.BFF_06_0040, reqData);
+    //   this._apiService.request(Tw.API_CMD.BFF_06_0040);
     // } else {
-    //   this._apiService.request(Tw.API_CMD.BFF_06_0041, reqData);
+    //   this._apiService.request(Tw.API_CMD.BFF_06_0041);
     // }
 
     this._toggleSwitch($switch, state);
@@ -157,10 +150,6 @@ Tw.RechargeLimit.prototype = {
   _go: function (hash) {
     this._history.setHistory();
     window.location.hash = hash;
-  },
-
-  _getCurrent: function (current) {
-    return current.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   },
 };
 
