@@ -18,24 +18,31 @@ class AuthLine extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    const lineList = this.parseLineList(LineList.result);
+    let lineInfo = this.parseLineList(LineList.result);
     this.apiService.request(API_CMD.BFF_03_0004, {}).subscribe((resp) => {
-      // if ( resp.code === API_CODE.CODE_00 ) {
-      //   lineList = this.parseLineList(resp.result);
-      // }
-      res.render('line/auth.line.html', { lineList });
+      if ( resp.code === API_CODE.CODE_00 ) {
+        const list = resp.result;
+        lineInfo = this.parseLineList(list);
+      }
+      res.render('line/auth.line.html', lineInfo);
     });
   }
 
   private parseLineList(lineList): any {
     const category = ['MOBILE', 'INTERNET_PHONE_IPTV', 'SECURITY'];
+    let totalCount = 0;
+    const list: string[] = [];
     category.map((line) => {
-      if ( !FormatHelper.isEmpty(lineList[LINE_NAME[line]])) {
-        this.convLineData(lineList[LINE_NAME[line]]);
+      const curLine = lineList[LINE_NAME[line].toLowerCase()];
+      if ( !FormatHelper.isEmpty(curLine) ) {
+        this.convLineData(curLine);
+        list.push(LINE_NAME[line].toLowerCase());
+        totalCount += curLine.length;
       }
     });
+    const showParam = this.setShowList(list, totalCount);
 
-    return lineList;
+    return { lineList, showParam };
   }
 
   private convLineData(lineData) {
@@ -45,6 +52,25 @@ class AuthLine extends TwViewController {
       line.showSvcScrbDtm = DateHelper.getShortDateNoDot(line.svcScrbDtm);
       line.showName = FormatHelper.isEmpty(line.nickNm) ? SVC_ATTR[line.svcAttrCd] : line.nickNm;
     });
+  }
+
+  private setShowList(list, totalCount): any {
+    const showParam = {
+      m: false,
+      s: false,
+      o: false
+    };
+
+    list.map((category, index) => {
+      if ( index === 0 ) {
+        showParam[category] = true;
+      } else {
+        if ( totalCount <= 20 ) {
+          showParam[category] = true;
+        }
+      }
+    });
+    return showParam;
   }
 }
 

@@ -17,7 +17,6 @@ class PaymentAutoController extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    console.log(svcInfo);
     this.apiService.request(API_CMD.BFF_07_0060, {}).subscribe((resp) => {
       this.renderView(res, 'payment.auto.html', this.getData(svcInfo, resp));
     });
