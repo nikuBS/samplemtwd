@@ -3,6 +3,16 @@
 * Author: 공자윤 (jayoon.kong@sk.com)
 * Date: 2018.07.05
 %>
+<!-- #header -->
+<div id="header" class="header-wrap step-page">
+    <div class="header step-page">
+        <div class="header-ti">
+            <h1>자동납부 해지</h1>
+        </div>
+        <button class="close-step common-back"><span class="blind">닫기</span></button>
+    </div>
+</div>
+<!--// #header -->
 <div class="container">
     <div class="cont-box">
         <div class="pay-info">
@@ -11,11 +21,11 @@
             <div class="widget select-way">
                 <div class="widget-box radio">
                     <ul class="select-list line-bottom" role="radiogroup">
-                        <li class="radiobox type01 checked" role="radio" aria-checked="true">
+                        <li class="radiobox cancel-radiobox type01 cancel-first-radio-box checked" role="radio" data-code="03" aria-checked="true">
                             <input type="radio" name="radio1" value="은행계좌이체" title="은행계좌이체 선택" checked="checked" />
                             지로 납부
                         </li>
-                        <li class="radiobox type01" role="radio" aria-checked="false">
+                        <li class="radiobox cancel-radiobox type01" role="radio" data-code="04" aria-checked="false">
                             <input type="radio" name="radio1" value="체크/신용카드 납부" title="체크/신용카드 선택"/>
                             입금전용계좌 납부
                         </li>
@@ -43,7 +53,7 @@
         <!-- .widget -->
         <div class="widget">
             <div class="widget-box accordion">
-                <h5 class="tit-a">이용안내</h5>
+                <h5 class="tit-a">꼭 확인해 주세요!</h5>
                 <div class="acco-cover toggle on"><!-- toggle : 한개만 열기 -->
                     <!--<div class="bt-whole"><button role="button" aria-pressed="false"><span class="blind">내용 열기</span></button></div>-->
                     <div class="acco-style btn-hold">
