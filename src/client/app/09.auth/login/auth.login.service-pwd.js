@@ -18,12 +18,19 @@ Tw.AuthLoginServicePwd = function (rootEl, isPopup) {
 Tw.AuthLoginServicePwd.prototype = {
   _cachedElement: function () {
     this.$inputBox = this.$container.find('.inputbox');
+    this.$deleteIcon = this.$container.find('.ico');
+    this.$errMsg = this.$container.find('.error-txt');
+    this.$pwd = this.$container.find('input');
   },
   _bindEvent: function () {
     this.$container.on('click', '.bt-red1 > button', $.proxy(this._requestLogin, this));
+    this.$deleteIcon.on('click', $.proxy(this._removePwd, this));
+  },
+  _removePwd: function () {
+    this.$pwd.val('');
   },
   _requestLogin: function () {
-    var pwd = this.$container.find('input').val();
+    var pwd = this.$pwd.val();
     this._apiService.request(Tw.API_CMD.BFF_03_0009, { svcPwd: pwd })
       .done($.proxy(this._onLoginReuestDone, this))
       .fail(function (err) {
@@ -40,8 +47,12 @@ Tw.AuthLoginServicePwd.prototype = {
       }
     } else {
       this.$inputBox.addClass('error');
-      // TODO: show X icon and err msg
+      this.$deleteIcon.removeClass('none');
+      this.$errMsg.removeClass('none');
       this._popupService.openAlert(Tw.MSG_AUTH.LOGIN_A01);
     }
+  },
+  _changeCount: function (msg, count) {
+    return msg.replace(/\d/, count);
   }
 };
