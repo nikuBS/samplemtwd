@@ -5,7 +5,7 @@
  */
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
-import { BILL_GUIDE_TYPE } from '../../../../types/bff-common.type';
+import { BILL_GUIDE_TYPE, SVC_ATTR } from '../../../../types/bff-common.type';
 import { BILL_GUIDE_TYPE_NAME, BILL_GUIDE_SELECTOR_LABEL } from '../../../../types/string.type';
 import { API_CODE } from '../../../../types/api-command.type';
 import curBillGuide from '../../../../mock/server/myt.bill.guidechange.bill-types-list';
@@ -74,8 +74,9 @@ class MyTBillChange extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     const _curBillGuide = this.getResult(curBillGuide);
-    console.log('~~~~~~~~~~~~svcInfo', svcInfo);
     let tmpBillGuideTypes;
+    svcInfo.svcAttrCd = 'M5';
+    console.log('~~~~~~~~~~~~svcInfo', svcInfo);
     switch ( svcInfo.svcAttrCd ) {
       case 'M1': //휴대폰
         tmpBillGuideTypes = cellPhoneBillGuideTypes;
@@ -85,7 +86,7 @@ class MyTBillChange extends TwViewController {
       case 'S3': //집전화
         tmpBillGuideTypes = mixedBillGuidetypes;
         break;
-      case 'W': //T Wibro
+      case 'M5': //T Wibro
         tmpBillGuideTypes = defaultBillGuideTypes;
         break;
       default: //없는 경우가 있음 기본은 휴대폰
@@ -95,6 +96,7 @@ class MyTBillChange extends TwViewController {
     const billGuideTypes = tmpBillGuideTypes.map((billGuideType) => {
       billGuideType['kidsYn'] = _curBillGuide['kidsYn'];
       billGuideType['beforeBillType'] = _curBillGuide['curBillType'];
+      billGuideType['svcInfo'] = svcInfo;
       return billGuideType;
     });
 

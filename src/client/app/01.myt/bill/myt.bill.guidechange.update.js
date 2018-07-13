@@ -49,7 +49,7 @@ Tw.MyTBillGuideUpdatePrototype = {
     }
     // var requestParams = this._getRequestParams();
     // 미성년인경우, 법정대리인 전화번호가 없을 시 얼럿 확인 후 진행
-    if (this._$inputCcurNotiSvcNum && Tw.FormatHelper.isEmpty(this._$inputCcurNotiSvcNum.val())) {
+    if (this._$inputCcurNotiSvcNum.length > 0 && Tw.FormatHelper.isEmpty(this._$inputCcurNotiSvcNum.val())) {
       this._popupService.openAlert(Tw.MSG_MYT.BILL_GUIDECHANGE_A05, null, $.proxy(this._openConfirm, this));
     } else {
       this._openConfirm();
@@ -217,10 +217,16 @@ Tw.MyTBillGuideUpdateClasses.etc.prototype = $.extend({}, Tw.MyTBillGuideUpdateP
 Tw.MyTBillGuideUpdateClasses.billLetter.prototype = $.extend({}, Tw.MyTBillGuideUpdatePrototype, {
   _assign: function () {
     Tw.MyTBillGuideUpdatePrototype._assign.apply(this, arguments);
+    this._$inputCntcNum1 = this.$container.find('.input-cntc-num1');
     this._$inputCcurNotiSvcNum = this.$container.find('.input-ccur-noti-svc-num');
   },
   _checkValidation: function () {
-    return this._representativePhoneNumValidation.apply(this, this._$inputCcurNotiSvcNum);
+    if (this._$inputCntcNum1.length > 0) {
+      return this._phoneNumValidation.apply(this, this._$inputCntcNum1);
+    }
+    if (this._$inputCcurNotiSvcNum.length > 0) {
+      return this._representativePhoneNumValidation.apply(this, this._$inputCcurNotiSvcNum);
+    }
   },
   _getRequestParams: function () {
     return {};
@@ -233,10 +239,16 @@ Tw.MyTBillGuideUpdateClasses.billLetter.prototype = $.extend({}, Tw.MyTBillGuide
 Tw.MyTBillGuideUpdateClasses.sms.prototype = $.extend({}, Tw.MyTBillGuideUpdatePrototype, {
   _assign: function () {
     Tw.MyTBillGuideUpdatePrototype._assign.apply(this, arguments);
+    this._$inputCntcNum1 = this.$container.find('.input-cntc-num1');
     this._$inputCcurNotiSvcNum = this.$container.find('.input-ccur-noti-svc-num');
   },
   _checkValidation: function () {
-    return this._representativePhoneNumValidation.apply(this, this._$inputCcurNotiSvcNum);
+    if (this._$inputCntcNum1.length > 0) {
+      return this._phoneNumValidation.apply(this, this._$inputCntcNum1);
+    }
+    if (this._$inputCcurNotiSvcNum.length > 0) {
+      return this._representativePhoneNumValidation.apply(this, this._$inputCcurNotiSvcNum);
+    }
   },
   _getRequestParams: function () {
     return {};
@@ -250,10 +262,16 @@ Tw.MyTBillGuideUpdateClasses.billLetterEmail.prototype = $.extend({}, Tw.MyTBill
   _assign: function () {
     Tw.MyTBillGuideUpdatePrototype._assign.apply(this, arguments);
     this._$inputEmail = this.$container.find('.input-email');
+    this._$inputCntcNum1 = this.$container.find('.input-cntc-num1');
     this._$inputCcurNotiSvcNum = this.$container.find('.input-ccur-noti-svc-num');
   },
   _checkValidation: function () {
-    return this._representativePhoneNumValidation.apply(this, this._$inputCcurNotiSvcNum);
+    if (this._$inputCntcNum1.length > 0) {
+      return this._phoneNumValidation.apply(this, this._$inputCntcNum1);
+    }
+    if (this._$inputCcurNotiSvcNum.length > 0) {
+      return this._representativePhoneNumValidation.apply(this, this._$inputCcurNotiSvcNum);
+    }
   },
   _getRequestParams: function () {
     return {};
@@ -274,10 +292,16 @@ Tw.MyTBillGuideUpdateClasses.smsEmail.prototype = $.extend({}, Tw.MyTBillGuideUp
   _assign: function () {
     Tw.MyTBillGuideUpdatePrototype._assign.apply(this, arguments);
     this._$inputEmail = this.$container.find('.input-email');
+    this._$inputCntcNum1 = this.$container.find('.input-cntc-num1');
     this._$inputCcurNotiSvcNum = this.$container.find('.input-ccur-noti-svc-num');
   },
   _checkValidation: function () {
-    return this._representativePhoneNumValidation.apply(this, this._$inputCcurNotiSvcNum);
+    if (this._$inputCntcNum1.length > 0) {
+      return this._phoneNumValidation.apply(this, this._$inputCntcNum1);
+    }
+    if (this._$inputCcurNotiSvcNum.length > 0) {
+      return this._representativePhoneNumValidation.apply(this, this._$inputCcurNotiSvcNum);
+    }
   },
   _getRequestParams: function () {
     return {};
