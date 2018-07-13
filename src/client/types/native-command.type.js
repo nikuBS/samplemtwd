@@ -10,3 +10,8 @@ Tw.NTV_CODE = {
 };
 
 Tw.IOS_URL = 'tworld://';
+
+Tw.NTV_BROWSER = {
+  INAPP: 0,
+  EXTERNAL: 1
+};

@@ -127,7 +127,8 @@ Tw.API_CMD = {
 };
 
 Tw.NODE_CMD = {
-  GET_ENVIRONMENT: { path: '/environment', method: Tw.API_METHOD.GET }
+  GET_ENVIRONMENT: { path: '/environment', method: Tw.API_METHOD.GET },
+  SET_DEVICE: { path: '/device', method: Tw.API_METHOD.POST }
 };
 
 Tw.API_CODE = {

@@ -8,6 +8,7 @@ Tw.RechargeTingProcess = function (rootEl) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
+  this._nativeService = Tw.Native;
   this._history = new Tw.HistoryService(this.$container);
   this._history.init('hash');
 
@@ -54,11 +55,11 @@ Tw.RechargeTingProcess.prototype = {
   },
 
   _onClickBtnAddr: function () {
-    Tw.Native.send(Tw.NTV_CMD.GET_CONTACT, {}, $.proxy(this._onContact, this));
+    this._nativeService.send(Tw.NTV_CMD.GET_CONTACT, {}, $.proxy(this._onContact, this));
   },
 
   _onContact: function (resp) {
-    var params = resp.params;
+    var params = resp;
     var phoneNumber = params.phoneNumber.replace(/-/gi, '');
     this.$container.find('.inp_phone').val(phoneNumber);
   },
