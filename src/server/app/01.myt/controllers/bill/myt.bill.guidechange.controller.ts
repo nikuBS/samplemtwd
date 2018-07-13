@@ -53,6 +53,7 @@ class MytBillGuidechange extends TwViewController {
 
       // billType.curBillTypeText =  billTypeInfo.billTypeDesc[billType.curBillType];
       data.billTypeList = this.getFlickingList(  data.billTypeList, svcInfo );
+      this.logger.info('[##]', '[ >>>>>> ]', JSON.stringify(data.billTypeList ))
       res.render('bill/myt.bill.guidechange.html', { svcInfo : svcInfo, data : data });
   }
 

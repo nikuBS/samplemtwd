@@ -13,19 +13,27 @@ Tw.MyTBillGuidechange = function (rootEl) {
 Tw.MyTBillGuidechange.prototype = {
 
     _bindEvent: function () {
-        this.$container.on('click','.swiper-slide', $.proxy(this._changeFlicking,this) );
+        this.$container.on('click','.swiper-slide', $.proxy(this._onClickFlicking,this) );
         this.$container.on('click','._sel-preview', $.proxy(this._openPreview, this) );
         // this.$container.on('click','._sel-preview', $.proxy(this._openPreview, this, {'test':'hello'}) );
     },
 
-    // 하단 안내서 플리킹 클릭 이벤트
-    _changeFlicking : function(e){
+    _onClickFlicking1 : function(e, $container){
         // Tw.Logger.log('[## TEST] ', '_changeFlicking call' );
-        this.billType = $(e.currentTarget).data('billType');
-        this.$container.find('._sel-desc').text(this.billType.desc);
-        this.$container.find('._sel-nm').text(this.billType.chgBtnNm);
+        var billType = $(e.currentTarget).data('billType');
+        $container.find('._sel-desc').text(billType.desc);
+        $container.find('._sel-nm').text(billType.chgBtnNm);
     },
-  
+
+    // 하단 안내서 플리킹 클릭 이벤트
+    _onClickFlicking : function(e){
+        this._onClickFlicking1(e, this.$container);
+        // Tw.Logger.log('[## TEST] ', '_changeFlicking call' );
+        /*this.billType = $(e.currentTarget).data('billType');
+        this.$container.find('._sel-desc').text(this.billType.desc);
+        this.$container.find('._sel-nm').text(this.billType.chgBtnNm);*/
+    },
+
     // 미리보기 클릭 이벤트
     _openPreview : function () {
 
@@ -55,7 +63,6 @@ Tw.MyTBillGuidechange.prototype = {
             }
         }
 
-        Tw.Logger.log('[TEST] : >> ddd');
         // 선택한 안내서가 제일 앞으로 가도록..
         var idx=0;
         for( idx; idx < imsiList.length; idx++ ){
@@ -72,6 +79,11 @@ Tw.MyTBillGuidechange.prototype = {
         this.previewBillInfo = $.extend(true,{}, imsiList[0]);
 
         data.billTypeList = imsiList;
+        // toJSON 펑션 생성
+        Handlebars.registerHelper('toJSON', function(object){
+            return JSON.stringify(object);
+        });
+        // 미리보기 공통 로드(나중에 별도 HBS 파일로 할지 확인필요. 일단 MY_03_03_01_L01 파일에다 만든다.)
         this._popupService.open({
           hbs:'MY_03_03_01_L01',
           data : data
@@ -83,19 +95,19 @@ Tw.MyTBillGuidechange.prototype = {
     _hbsLoadEvent : function ($layer) {
         $layer.find('._sel-desc').text(this.previewBillInfo.desc);
         $layer.find('._sel-nm').text(this.previewBillInfo.chgBtnNm);
-        $($layer).on('click','.swiper-slide', $.proxy(this._previewFlicking,this));
+
+        // 미리보기 안에 유형별 이미지 넣는 영역 append (유형에 따라 Tab 또는 일반으로 구성필요)
+        var source = $('#tmplPreviewTabContents').html();
+        var template = Handlebars.compile(source);
+        var output = template({ data: 'hello' });
+        $('#previewContents').append(output);
+
+        $($layer).on('click','.swiper-slide', $.proxy(this._previewOnClickFlicking,this,$layer));
     },
 
-    // 상단 플리킹 카드
-    _previewFlicking : function () {
-        var hbsPath = '/hbs/MY_03_03_01_L01.hbs';   // 이건 플리킹 카드 영영에 Data로 넣어서 확인하기
-        $.get(hbsPath, function (text) {
-            var tmpl = Handlebars.compile(text);
-            var html = tmpl();
-            Tw.Logger.log('[## TEST] html ', $(html).find('.nogaps').html() );
-        }).done(function (){
-            Tw.Logger.log('[## TEST] ', 'done..');
-        });
+    // 미리보기 > 상단 플리킹 클릭 이벤트
+    _previewOnClickFlicking : function ($layer,e) {
+        this._onClickFlicking1(e, $layer);
     },
 
     // tab 변경시

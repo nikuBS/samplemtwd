@@ -24,54 +24,18 @@
                                         <div class="slider-box">
                                             <!-- type1: 카드형 -->
                                             <ul class="slider">
-                                                <li class="swiper-slide">
+                                                {{#each data.billTypeList}}
+                                                <li class="swiper-slide" data-bill-type="{{toJSON this}}">
                                                     <div class="swiper-cont bg-color3">
                                                         <div class="t-commend-info">
+                                                            {{#if recommend}}
                                                             <span class="ico-commend"><em class="blind">추천</em></span>
-                                                            <p class="commend-info-txt">T World<br /> 확인</p>
+                                                            {{/if}}
+                                                            <p class="commend-info-txt">{{{value}}}</p>
                                                         </div>
                                                     </div>
                                                 </li>
-                                                <li class="swiper-slide">
-                                                    <div class="swiper-cont bg-color3">
-                                                        <div class="t-commend-info">
-                                                            <!--<span class="ico-commend"><em class="blind">추천</em></span>-->
-                                                            <p class="commend-info-txt">문자</p>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li class="swiper-slide">
-                                                    <div class="swiper-cont bg-color4">
-                                                        <div class="t-commend-info">
-                                                            <span class="ico-commend"><em class="blind">추천</em></span>
-                                                            <p class="commend-info-txt info-txt-w">Bill Letter</p>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li class="swiper-slide">
-                                                    <div class="swiper-cont bg-color3">
-                                                        <div class="t-commend-info">
-                                                            <!--<span class="ico-commend"><em class="blind">추천</em></span>-->
-                                                            <p class="commend-info-txt info-txt-w">Bill Letter</p>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li class="swiper-slide">
-                                                    <div class="swiper-cont bg-color3">
-                                                        <div class="t-commend-info">
-                                                            <span class="ico-commend"><em class="blind">추천</em></span>
-                                                            <p class="commend-info-txt info-txt-w">Bill Letter</p>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li class="swiper-slide">
-                                                    <div class="swiper-cont bg-color3">
-                                                        <div class="t-commend-info">
-                                                            <span class="ico-commend"><em class="blind">추천</em></span>
-                                                            <p class="commend-info-txt info-txt-w">Bill Letter</p>
-                                                        </div>
-                                                    </div>
-                                                </li>
+                                                {{/each}}
                                             </ul>
                                         </div>
                                     </div>
@@ -81,41 +45,43 @@
                         </div>
                     </div>
                     <div class="commend-detail-info">
-                        <p class="txt">T world 홈페이지 또는 모바일 T world 에서 요금안내서를 확인할 수 있습니다.</p>
+                        <p class="txt _sel-desc">언제 어디서나 PC와 모바일로 요금을 확인할 수 있는 요금안내서</p>
                     </div>
                 </div>
             </div>
             <hr class="cont-sp type1" aria-hidden="true"/>
-            <div class="cont-box nogaps">
-                <!-- .component -->
-                <div class="component">
-                    <div class="component-box tabs">
-                        <div class="tab-area type1"><!-- 타입별 탭형태 변환 -->
-                            <div class="tab-linker">
-                                <ul role="tablist">
-                                    <li role="tab" aria-selected="true" aria-controls="aria-tab1-tab" id="aria-tab1"><a href="">휴대폰</a></li><!-- true 열림 -->
-                                    <li role="tab" aria-selected="false" aria-controls="aria-tab2-tab" id="aria-tab2"><a href="">인터넷/집전화/IPTV</a></li>
-									<li role="tab" aria-selected="false" aria-controls="aria-tab3-tab" id="aria-tab3"><a href="">T-WiBro</a></li>
-                                </ul>
-                            </div>
-                            <div class="tab-contents" style="height:500px;">
-                                <p>이미지 수급 후 진행 예정</p>
-                                <div class="aria-tab1">
+            <div id="previewContents">
+                <!--<div class="cont-box nogaps">
+                    &lt;!&ndash; .component &ndash;&gt;
+                    <div class="component">
+                        <div class="component-box tabs">
+                            <div class="tab-area type1">&lt;!&ndash; 타입별 탭형태 변환 &ndash;&gt;
+                                <div class="tab-linker">
+                                    <ul role="tablist">
+                                        <li role="tab" aria-selected="true" aria-controls="aria-tab1-tab" id="aria-tab1"><a>휴대폰</a></li>&lt;!&ndash; true 열림 &ndash;&gt;
+                                        <li role="tab" aria-selected="false" aria-controls="aria-tab2-tab" id="aria-tab2"><a ahref="">인터넷/집전화/IPTV</a></li>
+                                        <li role="tab" aria-selected="false" aria-controls="aria-tab3-tab" id="aria-tab3"><a href="">T-WiBro</a></li>
+                                    </ul>
                                 </div>
-                                <div class="aria-tab2" style="display: none">
-                                </div>
-                                <div class="aria-tab3" style="display: none">
+                                <div class="tab-contents" style="height:500px;">
+                                    <p>이미지 수급 후 진행 예정</p>
+                                    <div class="aria-tab1">
+                                    </div>
+                                    <div class="aria-tab2" style="display: none">
+                                    </div>
+                                    <div class="aria-tab3" style="display: none">
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>-->
             </div>
             <hr class="cont-sp type1" aria-hidden="true"/>
             <div class="cont-box noborder">
                 <ul class="bt-slice">
                     <li class="bt-blue1">
-                        <button>"T world 확인"으로 변경하기</button>
+                        <button class="_sel-nm">"T world 확인"으로 변경하기</button>
                     </li>
                 </ul>
                 <div class="contents-notice type2">

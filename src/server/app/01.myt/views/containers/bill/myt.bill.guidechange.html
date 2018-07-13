@@ -4,6 +4,7 @@
 * Date: 2018.07.05
 -->
 <% include ../../components/start.component.html %>
+<% include ../../components/billguide/preview.contents.html %>
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
     <ul>
@@ -97,10 +98,7 @@
                                                         return false;
                                                     }
                                                     if( !this.flickingInfo ){
-                                                        this.flickingInfo = {
-                                                            desc : line.desc,
-                                                            btnText : line.chgBtnNm
-                                                        }
+                                                        this.flickingInfo = line;
                                                     }
                                                 %>
                                                 <li class="swiper-slide" data-bill-type="<%= JSON.stringify(line)%>" >
@@ -129,10 +127,11 @@
                             <ul class="bt-slice">
                                 <li class="bt-blue1">
                                     <!-- Dimmed Case는 button에 disabled속성 추가 -->
-                                    <button class="_sel-nm"><%= this.flickingInfo.btnText%></button>
+                                    <button class="_sel-nm"><%= this.flickingInfo.chgBtnNm%></button>
                                 </li>
                                 <li class="bt-link-box">
-                                    <a class="bt-link-tx _sel-preview" href="#" onclick="return false;">미리 보기</a>
+                                    <a class="bt-link-tx _sel-preview">미리 보기</a>
+                                    <!--<a class="bt-link-tx _sel-preview" onclick="return false;">미리 보기</a>-->
                                 </li>
                             </ul>
                         </div>
