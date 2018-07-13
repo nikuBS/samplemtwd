@@ -3,7 +3,6 @@
  * Author: Ara Jo (araara.jo@sk.com)
  * Date: 2018.07.12
  */
-
 Tw.AuthLineNickname = function () {
   this._popupService = Tw.Popup;
   this._apiService = Tw.Api;
@@ -16,6 +15,7 @@ Tw.AuthLineNickname = function () {
 
 Tw.AuthLineNickname.prototype = {
   openNickname: function (svcMgmtNum, closeCallback) {
+    console.log('svc', svcMgmtNum, closeCallback);
     this._closeCallback = closeCallback;
     this._popupService.openConfirm(Tw.POPUP_TITLE.CHANGE_NICKNAME, '', Tw.POPUP_TPL.CHANGE_NICKNAME,
       $.proxy(this._onOpenNickname, this), $.proxy(this._confirmNickname, this, svcMgmtNum));
@@ -38,7 +38,12 @@ Tw.AuthLineNickname.prototype = {
       this.$nickNameInput.addClass('error');
       this.$nickNameGuide.addClass('error-txt');
     } else {
-      this._changeNickname(inputValue, svcMgmtNum);
+      if(!Tw.FormatHelper.isEmpty(svcMgmtNum)) {
+        this._changeNickname(inputValue, svcMgmtNum);
+      } else {
+        this._closeCallback(inputValue);
+        this._closeCallback = null;
+      }
       this._popupService.close();
     }
   },
@@ -70,8 +75,6 @@ Tw.AuthLineNickname.prototype = {
     console.log('popup change success', resp);
   },
   _failChangeNickname: function (nickname, error) {
-    this._closeCallback(nickname);
-    this._closeCallback = null;
     console.log('popup change fail', error);
   }
 };

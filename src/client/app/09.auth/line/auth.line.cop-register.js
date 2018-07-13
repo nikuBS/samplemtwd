@@ -32,7 +32,7 @@ Tw.AuthLineCopRegister.prototype = {
     this.$container.on('click', '.bt-blue1', $.proxy(this._onClickRegister, this));
   },
   _onClickNickname: function () {
-    this._sendBizSession('nickname');
+    this._nicknamePopup.openNickname(null, $.proxy(this._onCloseNickname, this));
   },
   _onClickCancel: function () {
     history.back();
@@ -42,24 +42,20 @@ Tw.AuthLineCopRegister.prototype = {
     this._sendBizSession('register');
 
   },
-  _sendBizSession: function (type) {
+  _sendBizSession: function () {
     var params = {
       svcNum: this.$inputMdn.val(),
       ctzCorpNm: this.$inputCop.val(),
       ctzCorpNum: this.$inputCopNum.val()
     };
     this._apiService.request(Tw.API_CMD.BFF_03_0012, params)
-      .done($.proxy(this._successBizSession, this, type))
+      .done($.proxy(this._successBizSession, this))
       .fail($.proxy(this._failBizSession, this));
   },
   _successBizSession: function (type, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       var svcMgmtNum = resp.result.svcMgmtNum;
-      if ( type === 'nickname' ) {
-        this._nicknamePopup.openNickname(svcMgmtNum, $.proxy(this._onCloseNickname, this));
-      } else if ( type === 'reister' ) {
-        this._sendRegisterBiz(svcMgmtNum);
-      }
+      this._sendRegisterBiz(svcMgmtNum);
     }
   },
   _failBizSession: function (error) {
@@ -68,7 +64,7 @@ Tw.AuthLineCopRegister.prototype = {
   _sendRegisterBiz: function (svcMgmtNum) {
     var params = {
       svcMgmtNum: svcMgmtNum,
-      nickNm: ''
+      nickNm: this.$inputNickname.val()
     };
     this._apiService.request(Tw.API_CMD.BFF_03_0012, params)
       .done($.proxy(this._successRegisterBiz, this))

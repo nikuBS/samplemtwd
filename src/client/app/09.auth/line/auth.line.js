@@ -10,6 +10,8 @@ Tw.AuthLine = function (rootEl, nicknamePopup) {
   this._apiService = Tw.Api;
   this._nicknamePopup = nicknamePopup;
 
+  this.$inputNickname = null;
+
   this._bindEvent();
 };
 
@@ -19,8 +21,14 @@ Tw.AuthLine.prototype = {
     this.$container.on('click', '#cop-password', $.proxy(this._openCopPassword, this));
   },
 
-  _openNickname: function () {
-    this._nicknamePopup.openNickname();
+  _openNickname: function ($event) {
+    var $btNickname = $($event.currentTarget);
+    var svcMgntNum = $btNickname.data('svcmgmtnum');
+    this.$inputNickname = $btNickname.parent().parent().find('.input-nickname');
+    this._nicknamePopup.openNickname(svcMgntNum, $.proxy(this._onCloseNickname, this));
+  },
+  _onCloseNickname: function(nickname) {
+    this.$inputNickname.val(nickname);
   },
 
   _openCopPassword: function () {
