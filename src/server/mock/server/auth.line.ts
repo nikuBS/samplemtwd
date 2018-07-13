@@ -3,7 +3,7 @@ const LineList = {
   msg: '',
   result:
     {
-      M: [{
+      m: [{
         svcMgmtNum: '7100000001',
         svcGr: 'A',
         svcAttrCd: 'M1',
@@ -64,7 +64,7 @@ const LineList = {
         svcScrbDtm: '20171125102458',
         rmk: '갤럭시S'
       }],
-      'S': [{
+      s: [{
         svcMgmtNum: '7100000001',
         svcGr: 'A',
         svcAttrCd: 'S1',
@@ -89,7 +89,7 @@ const LineList = {
         svcScrbDtm: '20171125102458',
         rmk: '갤럭시S'
       }],
-      'O': [{
+      o: [{
         svcMgmtNum: '7100000001',
         svcGr: 'A',
         svcAttrCd: 'O1',
