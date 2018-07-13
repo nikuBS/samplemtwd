@@ -14,7 +14,6 @@ import AuthLine from './controllers/line/auth.line.controller';
 import AuthTidAccountInfo from './controllers/tid/auth.tid.account-info.controller';
 import AuthTidGuide from './controllers/tid/auth.tid.guide.controller';
 import AuthLineEdit from './controllers/line/auth.line.edit.controller';
-import AuthLineRegisterGuide from './controllers/line/auth.line.register-guide.controller';
 import AuthLineCopRegister from './controllers/line/auth.line.cop-register.controller';
 import AuthLineEmptyRegister from './controllers/line/auth.line.empty-register.controller';
 import AuthTidChangePw from './controllers/tid/auth.tid.change-pw.controller';
@@ -33,7 +32,6 @@ class AuthRouter extends TwRouter {
     // line
     this.controllers.push({ url: '/line', controller: new AuthLine() });
     this.controllers.push({ url: '/line/edit', controller: new AuthLineEdit() });
-    this.controllers.push({ url: '/line/register/guide', controller: new AuthLineRegisterGuide() });
     this.controllers.push({ url: '/line/register/corporation', controller: new AuthLineCopRegister() });
     this.controllers.push({ url: '/line/register/empty', controller: new AuthLineEmptyRegister() });
     // login

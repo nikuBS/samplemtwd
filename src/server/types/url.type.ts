@@ -66,7 +66,6 @@ export const URL = {
   // auth
   '/auth/line': { login: true },
   '/auth/line/edit': { login: true },
-  '/auth/line/register/guide': { login: true },
   '/auth/line/register/corporation': { login: true },
   '/auth/line/register/empty': { login: true },
   '/auth/login/fail': { login: false },
