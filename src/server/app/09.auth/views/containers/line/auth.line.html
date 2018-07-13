@@ -1,8 +1,9 @@
-<!--
+<%#
 * FileName: auth.line.html
 * Author: Ara Jo (araara.jo@sk.com)
 * Date: 2018.07.03
--->
+* CO_01_05_02
+%>
 
 <% include ../../components/start.component.html %>
 <!-- body -->
@@ -15,7 +16,7 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div id="authLineWrap" class="wrap">
+<div id="authLine" class="wrap">
     <!-- #header -->
     <div id="header" class="header-wrap">
         <div class="header">
@@ -30,7 +31,7 @@
     <div id="contents" class="container-wrap">
         <h2 class="blind">내용</h2>
         <div class="container">
-            <% if (lineList.M) { %>
+            <% if (lineList.m) { %>
             <hr class="cont-sp type1" aria-hidden="true"/>
 
             <!-- 모바일 -->
@@ -41,13 +42,17 @@
                         <div class="acco-style mline-list">
                             <ul class="acco-box">
                                 <!-- 아코디언 한줄 -->
-                                <li class="acco-list on"><!-- on , off -->
+                                <% if(showParam.m) { %>
+                                <li class="acco-list on">
+                                <% } else { %>
+                                <li class="acco-list"><!-- on , off -->
+                                <% } %>
                                     <!-- 아코디언 타이틀 -->
                                     <div class="acco-title">
                                         <button role="button" aria-pressed="false">
                                                 <span class="mline-tit-wrap">
                                                     <span class="mline-tit">모바일</span>
-                                                    <span class="mline-num"><span class="num"><%= lineList.M.length %></span></span>
+                                                    <span class="mline-num"><span class="num"><%= lineList.m.length %></span></span>
                                                 </span>
                                         </button>
                                     </div>
@@ -55,34 +60,47 @@
                                     <!-- 아코디언 내용 -->
                                     <div class="acco-content">
                                         <div class="mline-btzone"><button class="bt-mline edit">편집</button><!-- <button class="bt-mline complete">완료</button> --></div>
-                                        <% lineList.M.map((line) => { %>
+                                        <% lineList.m.map((line, index) => { %>
                                         <!-- .widget -->
                                         <div class="widget">
                                             <div class="widget-box accordion">
-                                                <div class="acco-cover"><!-- toggle : 한개만 열기 -->
+                                                <% if(line.expsYn === 'Y') { %>
+                                                <div class="acco-cover">
+                                                <% } else { %>
+                                                <div class="acco-cover disabled" aria-disabled="true"><!-- toggle : 한개만 열기 -->
+                                                <% } %>
                                                     <div class="acco-style btn-hold">
                                                         <ul class="acco-list">
                                                             <!-- .on: 열기 -->
                                                             <li class="acco-box">
                                                                 <div class="acco-tit">
                                                                     <div class="mline-acc-top">
-                                                                        <p class="ti"><%= line.showName %><% if (line.repSvcYn) { %><span class="ico-like" role="img" aria-labelledby="기준회선"><span class="blind">기준회선</span></span> <% } %></p>
+                                                                        <p class="ti"><%= line.showName %><% if (line.repSvcYn === 'Y') { %><span class="ico-like" role="img" aria-label="기준회선"><span class="blind">기준회선</span></span><% } %></p>
                                                                         <span class="ph"><%= line.svcNum %></span>
                                                                     </div>
+                                                                    <% if(line.expsYn === 'Y') { %>
                                                                     <button role="button" aria-pressed="false"></button>
+                                                                    <% } %>
                                                                 </div>
                                                                 <div class="acco-cont">
                                                                     <div class="mline-info">
-                                                                        <a class="bt-link-tx rect bt-nickname">닉네임 변경</a>
                                                                         <dl class="mline-detail">
                                                                             <dt><%= line.showSvcAttrCd %></dt>
-                                                                            <dd class="device">갤럭*****</dd>
+                                                                            <dd class="device"><%= line.rmk %></dd>
                                                                             <dt>가입일자</dt>
                                                                             <dd class="date"><%= line.showSvcScrbDtm %></dd>
                                                                         </dl>
-                                                                    </div>
-                                                                    <div class="mline-up">
-                                                                        <button class="bt-up">맨 위로 보내기</button>
+                                                                        <div class="mline-nickname">
+                                                                            <span class="inputbox bt-add">
+                                                                                <span class="input">
+                                                                                    <input class="input-nickname" type="text" placeholder="닉네임" title="닉네임" value="<%= line.nickNm %>" disabled />
+                                                                                    <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
+                                                                                </span>
+                                                                                <span class="bt-box">
+                                                                                    <button class="bt-nickname" type="button" data-svcMgmtNum="<%= line.svcMgmtNum%>">닉네임 변경</button>
+                                                                                </span>
+                                                                            </span>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </li>
@@ -93,7 +111,9 @@
                                         </div>
                                         <!--// .widget -->
                                         <% }) %>
+                                        <% if (lineList.m.length > 20) { %>
                                         <a class="bt-more" href="">더보기<span>(20)</span></a>
+                                        <% } %>
                                     </div>
                                     <!--// 아코디언 내용 -->
                                 </li>
@@ -106,7 +126,7 @@
             </div>
             <!--// 모바일 -->
             <% } %>
-            <% if (lineList.S) { %>
+            <% if (lineList.s) { %>
             <hr class="cont-sp type1" aria-hidden="true"/>
 
             <!-- 인터넷/IPTV/집전화 -->
@@ -117,13 +137,17 @@
                         <div class="acco-style mline-list">
                             <ul class="acco-box">
                                 <!-- 아코디언 한줄 -->
+                                <% if(showParam.s) { %>
+                                <li class="acco-list on">
+                                    <% } else { %>
                                 <li class="acco-list"><!-- on , off -->
+                                    <% } %>
                                     <!-- 아코디언 타이틀 -->
                                     <div class="acco-title">
                                         <button role="button" aria-pressed="false">
                                                 <span class="mline-tit-wrap">
                                                     <span class="mline-tit">인터넷/IPTV/집전화</span>
-                                                    <span class="mline-num"><span class="num"><%= lineList.S.length %></span></span>
+                                                    <span class="mline-num"><span class="num"><%= lineList.s.length %></span></span>
                                                 </span>
                                         </button>
                                     </div>
@@ -131,34 +155,47 @@
                                     <!-- 아코디언 내용 -->
                                     <div class="acco-content">
                                         <div class="mline-btzone"><button class="bt-mline edit">편집</button><!-- <button class="bt-mline complete">완료</button> --></div>
-                                        <% lineList.S.map((line) => { %>
+                                        <% lineList.s.map((line) => { %>
                                         <!-- .widget -->
                                         <div class="widget">
                                             <div class="widget-box accordion">
-                                                <div class="acco-cover"><!-- toggle : 한개만 열기 -->
+                                                <% if(line.expsYn === 'Y') { %>
+                                                <div class="acco-cover">
+                                                <% } else { %>
+                                                <div class="acco-cover disabled" aria-disabled="true"><!-- toggle : 한개만 열기 -->
+                                                <% } %>
                                                     <div class="acco-style btn-hold">
                                                         <ul class="acco-list">
                                                             <!-- .on: 열기 -->
                                                             <li class="acco-box">
                                                                 <div class="acco-tit">
                                                                     <div class="mline-acc-top">
-                                                                        <p class="ti"><%= line.showName %><% if (line.repSvcYn) { %><span class="ico-like" role="img" aria-labelledby="기준회선"><span class="blind">기준회선</span></span> <% } %></p>
-                                                                        <span class="ph"><%= line.svcNum %></span>
+                                                                        <p class="ti"><%= line.showName %><% if (line.repSvcYn === 'Y') { %><span class="ico-like" role="img" aria-label="기준회선"><span class="blind">기준회선</span></span> <% } %></p>
+                                                                        <span class="ph"><%= line.addr %></span>
                                                                     </div>
+                                                                    <% if(line.expsYn === 'Y') { %>
                                                                     <button role="button" aria-pressed="false"></button>
+                                                                    <% } %>
                                                                 </div>
                                                                 <div class="acco-cont">
                                                                     <div class="mline-info">
-                                                                        <a class="bt-link-tx rect bt-nickname">닉네임 변경</a>
                                                                         <dl class="mline-detail">
                                                                             <dt><%= line.showSvcAttrCd %></dt>
-                                                                            <dd class="device">갤럭*****</dd>
+                                                                            <dd class="device">&nbsp;</dd>
                                                                             <dt>가입일자</dt>
                                                                             <dd class="date"><%= line.showSvcScrbDtm %></dd>
                                                                         </dl>
-                                                                    </div>
-                                                                    <div class="mline-up">
-                                                                        <button class="bt-up">맨 위로 보내기</button>
+                                                                        <div class="mline-nickname">
+                                                                            <span class="inputbox bt-add">
+                                                                                <span class="input">
+                                                                                    <input class="input-nickname" type="text" placeholder="닉네임" title="닉네임" value="<%= line.nickNm %>" disabled />
+                                                                                    <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
+                                                                                </span>
+                                                                                <span class="bt-box">
+                                                                                    <button class="bt-nickname" type="button" data-svcMgmtNum="<%= line.svcMgmtNum%>">닉네임 변경</button>
+                                                                                </span>
+                                                                            </span>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </li>
@@ -169,7 +206,9 @@
                                         </div>
                                         <!--// .widget -->
                                         <% }) %>
+                                        <% if (lineList.s.length > 20) { %>
                                         <a class="bt-more" href="">더보기<span>(20)</span></a>
+                                        <% } %>
                                     </div>
                                     <!--// 아코디언 내용 -->
                                 </li>
@@ -182,7 +221,7 @@
             </div>
             <!--// 인터넷/IPTV/집전화 -->
             <% } %>
-            <% if (lineList.O) { %>
+            <% if (lineList.o) { %>
             <hr class="cont-sp type1" aria-hidden="true"/>
 
             <!-- 보안솔루션 -->
@@ -193,13 +232,17 @@
                         <div class="acco-style mline-list">
                             <ul class="acco-box">
                                 <!-- 아코디언 한줄 -->
+                                <% if(showParam.o) { %>
+                                <li class="acco-list on">
+                                    <% } else { %>
                                 <li class="acco-list"><!-- on , off -->
+                                    <% } %>
                                     <!-- 아코디언 타이틀 -->
                                     <div class="acco-title">
                                         <button role="button" aria-pressed="false">
                                                 <span class="mline-tit-wrap">
                                                     <span class="mline-tit">보안솔루션</span>
-                                                    <span class="mline-num"><span class="num"><%= lineList.O.length %></span></span>
+                                                    <span class="mline-num"><span class="num"><%= lineList.o.length %></span></span>
                                                 </span>
                                         </button>
                                     </div>
@@ -207,34 +250,47 @@
                                     <!-- 아코디언 내용 -->
                                     <div class="acco-content">
                                         <div class="mline-btzone"><button class="bt-mline edit">편집</button></div>
-                                        <% lineList.S.map((line) => { %>
+                                        <% lineList.o.map((line) => { %>
                                         <!-- .widget -->
                                         <div class="widget">
                                             <div class="widget-box accordion">
-                                                <div class="acco-cover"><!-- toggle : 한개만 열기 -->
+                                                <% if(line.expsYn === 'Y') { %>
+                                                <div class="acco-cover">
+                                                <% } else { %>
+                                                <div class="acco-cover disabled" aria-disabled="true"><!-- toggle : 한개만 열기 -->
+                                                <% } %>
                                                     <div class="acco-style btn-hold">
                                                         <ul class="acco-list">
                                                             <!-- .on: 열기 -->
                                                             <li class="acco-box">
                                                                 <div class="acco-tit">
                                                                     <div class="mline-acc-top">
-                                                                        <p class="ti"><%= line.showName %><% if (line.repSvcYn) { %><span class="ico-like" role="img" aria-labelledby="기준회선"><span class="blind">기준회선</span></span> <% } %></p>
+                                                                        <p class="ti"><%= line.showName %><% if (line.repSvcYn === 'Y') { %><span class="ico-like" role="img" aria-label="기준회선"><span class="blind">기준회선</span></span> <% } %></p>
                                                                         <span class="ph"><%= line.svcNum %></span>
                                                                     </div>
+                                                                    <% if(line.expsYn === 'Y') { %>
                                                                     <button role="button" aria-pressed="false"></button>
+                                                                    <% } %>
                                                                 </div>
                                                                 <div class="acco-cont">
                                                                     <div class="mline-info">
-                                                                        <a class="bt-link-tx rect bt-nickname">닉네임 변경</a>
                                                                         <dl class="mline-detail">
                                                                             <dt><%= line.showSvcAttrCd %></dt>
-                                                                            <dd class="device">갤럭*****</dd>
+                                                                            <dd class="device">&nbsp;</dd>
                                                                             <dt>가입일자</dt>
                                                                             <dd class="date"><%= line.showSvcScrbDtm %></dd>
                                                                         </dl>
-                                                                    </div>
-                                                                    <div class="mline-up">
-                                                                        <button class="bt-up">맨 위로 보내기</button>
+                                                                        <div class="mline-nickname">
+                                                                            <span class="inputbox bt-add">
+                                                                                <span class="input">
+                                                                                    <input class="input-nickname" type="text" placeholder="닉네임" title="닉네임" value="<%= line.nickNm %>" disabled />
+                                                                                    <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
+                                                                                </span>
+                                                                                <span class="bt-box">
+                                                                                    <button class="bt-nickname" type="button" data-svcMgmtNum="<%= line.svcMgmtNum%>">닉네임 변경</button>
+                                                                                </span>
+                                                                            </span>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </li>
@@ -245,7 +301,9 @@
                                         </div>
                                         <!--// .widget -->
                                         <% }) %>
+                                        <% if (lineList.o.length > 20) { %>
                                         <a class="bt-more" href="">더보기<span>(20)</span></a>
+                                        <% } %>
                                     </div>
                                     <!--// 아코디언 내용 -->
                                 </li>
@@ -356,7 +414,7 @@
 <script>
   $(document).ready(function () {
     var nicknamePopup = new Tw.AuthLineNickname();
-    new Tw.AuthLine($('#authLineWrap'), nicknamePopup);
+    new Tw.AuthLine($('#authLine'), nicknamePopup);
   });
 </script>
 <% include ../../components/end.component.html %>

@@ -22,7 +22,8 @@ export const USER_CNT = ['한 분', '두 분', '세 분', '네 분', '다섯 분
 
 export enum MSG_STR {
   TEST = '안녕하세요',
-  CUSTOMER_CENTER_TEL = '1599-0011'
+  CUSTOMER_CENTER_TEL = '1599-0011',
+  NICKNAME = '닉네임'
 }
 
 export enum MYT_VIEW {
