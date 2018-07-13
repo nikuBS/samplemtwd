@@ -3,6 +3,16 @@
 * Author: 공자윤 (jayoon.kong@sk.com)
 * Date: 2018.07.05
 %>
+<!-- #header -->
+<div id="header" class="header-wrap step-page">
+    <div class="header step-page">
+        <div class="header-ti">
+            <h1>자동납부 해지</h1>
+        </div>
+        <button class="close-step common-back"><span class="blind">닫기</span></button>
+    </div>
+</div>
+<!--// #header -->
 <div class="container">
     <div class="cont-box nogaps-top">
         <div class="msg-present-box">
@@ -19,7 +29,7 @@
                     <h3 class="account-tit">입금전용계좌 은행</h3>
                     <div class="account-detail">
                         <div class="select-name">
-                            <button class="bt-dropdown" title="은행 선택하기">은행명<span class="ico"></span></button>
+                            <button class="bt-dropdown select-bank" title="은행 선택하기">은행명<span class="ico"></span></button>
                         </div>
                     </div>
                     <div class="widget msg-account-info">
@@ -54,19 +64,20 @@
     <hr class="cont-sp type1" aria-hidden="true"/>
     <div class="cont-box">
         <!-- .widget -->
-        <div class="widget">
+        <div class="widget"><!--2018-07-05 수정-->
             <div class="widget-box accordion">
-                <h5 class="tit-a">이용안내</h5>
+                <h5 class="tit-a">꼭 확인해 주세요!</h5>
                 <div class="acco-cover toggle on"><!-- toggle : 한개만 열기 -->
                     <div class="acco-style btn-hold">
                         <ul class="acco-list">
                             <li class="acco-box">
                                 <!-- .on: 열기 -->
-                                <div class="acco-tit"><span class="bullet">1.</span> 이용안내<button role="button" aria-pressed="false">상세보기</button></div>
+                                <div class="acco-tit"><span class="bullet">1.</span> 지로/입금전용계좌 납부 시 문자안내서비스(무료)를 제공 해 드리고 있습니다.<button role="button" aria-pressed="false">상세보기</button></div>
                                 <div class="acco-cont">
                                     <ul class="list-dot">
-                                        <li class="list">요금납부일 변경은 지점/대리점/고객센터 포함 월 1회 가능</li>
-                                        <li class="list">정기 청구작업으로 인해 매월 5일 21시부터 6일 04시까지 자동납부 신청/변경/해지가 불가합니다.</li>
+                                        <li class="list">지로/입금전용계좌 납부를 신청하시는 경우 입금전용계좌 문자안내서비스(무료)를 제공 해 드리고 있습니다.</li>
+                                        <li class="list">은행명(주거래 은행명)을 선택하시면 입금전용계좌 문자 안내 시 해당은행의 입금전용계좌번호를 안내 해 드립니다. 등록을 원치 않으시면 ‘미선택’으로도 선택 하실 수 있습니다.</li>
+                                        <li class="list">은입금전용계좌 문자안내 신청 시 청구서와 별도로 매월 납기일 전에 선택하신 은행의 입금전용계좌를 문자메시지로 받아보실 수 있습니다. 별도의 문자 수신을 원치 않으시는 경우 문자발송 ‘아니오(미수신)’을 선택 해 주시면 됩니다.</li>
                                     </ul>
                                 </div>
                             </li>
