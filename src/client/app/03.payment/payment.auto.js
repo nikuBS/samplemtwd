@@ -31,6 +31,7 @@ Tw.PaymentAuto.prototype = {
     this.$accountPhoneNumber = this.$container.find('.account-phone-number');
     this.$cardPhoneNumber = this.$container.find('.card-phone-number');
     this.$cardDate = this.$container.find('.card-date');
+    this.$apiName = Tw.API_CMD.BFF_07_0062;
   },
   _bindEvent: function () {
     this.$container.on('click', '.go-change', $.proxy(this._goInput, this));
@@ -43,6 +44,9 @@ Tw.PaymentAuto.prototype = {
   },
   _goInput: function (event) {
     event.preventDefault();
+    if ($(event.currentTarget).hasClass('new')) {
+      this.$apiName = Tw.API_CMD.BFF_07_0061;
+    }
     this.$container.find('.first-radio-box').addClass('checked');
     this._go('#step1-change');
   },
@@ -122,7 +126,7 @@ Tw.PaymentAuto.prototype = {
     Tw.Logger.info('get card fail');
   },
   _changeRequest: function (reqData) {
-    this._apiService.request(Tw.API_CMD.BFF_07_0062, reqData)
+    this._apiService.request(this.$apiName, reqData)
       .done($.proxy(this._changeSuccess, this))
       .fail($.proxy(this._changeFail, this));
   },
