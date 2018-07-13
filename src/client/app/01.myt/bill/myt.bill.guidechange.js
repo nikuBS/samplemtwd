@@ -18,8 +18,7 @@ Tw.MyTBillGuidechange.prototype = {
         // this.$container.on('click','._sel-preview', $.proxy(this._openPreview, this, {'test':'hello'}) );
     },
 
-    _onClickFlicking1 : function(e, $container){
-        // Tw.Logger.log('[## TEST] ', '_changeFlicking call' );
+    _changePreview : function(e, $container){
         var billType = $(e.currentTarget).data('billType');
         $container.find('._sel-desc').text(billType.desc);
         $container.find('._sel-nm').text(billType.chgBtnNm);
@@ -27,11 +26,7 @@ Tw.MyTBillGuidechange.prototype = {
 
     // 하단 안내서 플리킹 클릭 이벤트
     _onClickFlicking : function(e){
-        this._onClickFlicking1(e, this.$container);
-        // Tw.Logger.log('[## TEST] ', '_changeFlicking call' );
-        /*this.billType = $(e.currentTarget).data('billType');
-        this.$container.find('._sel-desc').text(this.billType.desc);
-        this.$container.find('._sel-nm').text(this.billType.chgBtnNm);*/
+        this._changePreview(e, this.$container);
     },
 
     // 미리보기 클릭 이벤트
@@ -103,15 +98,16 @@ Tw.MyTBillGuidechange.prototype = {
         $('#previewContents').append(output);
 
         $($layer).on('click','.swiper-slide', $.proxy(this._previewOnClickFlicking,this,$layer));
+        $($layer).on('click','[role=tablist] li', $.proxy(this._previewOnClickTab,this,$layer));
     },
 
     // 미리보기 > 상단 플리킹 클릭 이벤트
     _previewOnClickFlicking : function ($layer,e) {
-        this._onClickFlicking1(e, $layer);
+        this._changePreview(e, $layer);
     },
 
-    // tab 변경시
-    _previewTabChange : function ($layer,e) {
+    // 미리보기 > tab 클릭
+    _previewOnClickTab : function ($layer,e) {
         e.preventDefault();
         var $_this = $(e.currentTarget);
         // Tw.Logger.log('[## TEST] ', $layer);
