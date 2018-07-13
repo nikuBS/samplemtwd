@@ -68,13 +68,17 @@ Tw.MyTBillReissue.prototype = {
       selectedItem = this.$type.find('[aria-checked=true]').text();
       type = this.$type.find(':checked').attr('name');
     }
+    else {
+      type = this.$guide.attr('data-type');
+    }
     var title = Tw.MSG_MYT.BILL_GUIDE_REISSUE_00;
     var contents = selectedItem + Tw.MSG_MYT.BILL_GUIDE_REISSUE_01;
     if ( type && type === '02' ) {
       // 이메일인 경우 문구 다름
       contents = Tw.MSG_MYT.BILL_GUIDE_REISSUE_02;
     }
-    else if ( type && type === '99' ) {
+    //TODO: 04 값은 임의의 값으로 재발행 요청시 기타인 경우에 대한 값 확인 후 변경
+    else if ( type && type === '04' ) {
       // 기타(우편)인 경우
       contents = Tw.MSG_MYT.BILL_GUIDE_REISSUE_04;
     }
@@ -132,8 +136,11 @@ Tw.MyTBillReissue.prototype = {
 
   _onApiSuccess: function (params) {
     Tw.Logger.info(params);
-    if ( this.isIssue ) {
-      // TODO: 서버 API 동작은 하나 현재 데이터 값이 Null 이라 요청( 18/07/13 )
+    // 기 발행 건인 경우에 대한 처리
+    // 팝업닫고 처리
+    this._popupService.close();
+    if (params.code && params.code === 'ZORDE1206') {
+      this._popupService.openAlert(Tw.MSG_MYT.BILL_GUIDE_REISSUE_00, Tw.MSG_MYT.BILL_GUIDE_REISSUE_03);
     }
     else { //아닌경우
       var type = this.$guide.attr('data-type');
@@ -142,8 +149,6 @@ Tw.MyTBillReissue.prototype = {
         type = this.$type.find(':checked').attr('name');
       }
       // 재발행 요청 완료 화면으로 이동
-      // 팝업닫고 이동
-      this._popupService.close();
       window.location.href = 'reissue/complete?typeCd=' + type + '&month=' + month;
     }
   },

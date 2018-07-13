@@ -21,7 +21,7 @@ class MyTBillReturnHistory extends TwViewController {
       };
       if ( returnData.result ) {
         data['recCnt'] = (returnData.result.recCnt > 20) ? 20 : returnData.result.recCnt;
-        // 20개 기준 반송 등록일로 sort 한 다음 화면에 출력해야하나?? API 조회가 된 후 확인 필요!!!
+        // TODO:20개 기준 반송 등록일로 sort 한 다음 화면에 출력해야하나?? API 조회가 된 후 확인 필요!!!
       }
       res.render('bill/myt.bill.guidechange.returnhistory.html', { data });
     });

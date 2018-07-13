@@ -25,7 +25,7 @@ class MyTBillReissue extends TwViewController {
     let value = '';
     const reissueType = Object.keys(MYT_REISSUE_TYPE);
     reissueType.forEach((val) => {
-      if ( MYT_REISSUE_TYPE[val].indexOf(key.trim()) !== -1) {
+      if ( (key.trim()).indexOf(MYT_REISSUE_TYPE[val]) !== -1) {
         value = val;
       }
     });
