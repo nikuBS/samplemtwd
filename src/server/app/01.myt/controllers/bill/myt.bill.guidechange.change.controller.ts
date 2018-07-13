@@ -74,14 +74,33 @@ class MyTBillChange extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     const _curBillGuide = this.getResult(curBillGuide);
-    // 임시 - 휴대폰, T-WiBro, 인터넷 등등에 따라 값이 달라져야함
-    const billGuideTypes = cellPhoneBillGuideTypes.map((billGuideType) => {
+    console.log('~~~~~~~~~~~~svcInfo', svcInfo);
+    let tmpBillGuideTypes;
+    switch ( svcInfo.svcAttrCd ) {
+      case 'M1': //휴대폰
+        tmpBillGuideTypes = cellPhoneBillGuideTypes;
+        break;
+      case 'S1': //인터넷
+      case 'S2': //IPTV
+      case 'S3': //집전화
+        tmpBillGuideTypes = mixedBillGuidetypes;
+        break;
+      case 'W': //T Wibro
+        tmpBillGuideTypes = defaultBillGuideTypes;
+        break;
+      default: //없는 경우가 있음 기본은 휴대폰
+        tmpBillGuideTypes = cellPhoneBillGuideTypes;
+        break;
+    }
+    const billGuideTypes = tmpBillGuideTypes.map((billGuideType) => {
       billGuideType['kidsYn'] = _curBillGuide['kidsYn'];
       billGuideType['beforeBillType'] = _curBillGuide['curBillType'];
       return billGuideType;
     });
 
     this.renderView(res, 'bill/myt.bill.guidechange.change.html', {
+      svcInfo: svcInfo,
+      curBillGuide: _curBillGuide,
       billGuideTypes: billGuideTypes,
       billGuideTypesData: JSON.stringify(billGuideTypes),
       isUpdate: false

@@ -29,6 +29,7 @@ class MyTBillUpdate extends TwViewController {
     const anotherBillGuideType = (_curBillGuide.curBillType === BILL_GUIDE_TYPE.TWORLD) ? BILL_GUIDE_TYPE.BILL_LETTER : BILL_GUIDE_TYPE.TWORLD;
     _curBillGuide['component'] = BILL_GUIDE_TYPE_COMPONENT[_curBillGuide['curBillType']];
     this.renderView(res, 'bill/myt.bill.guidechange.update.html', {
+      svcInfo: svcInfo,
       curBillGuide: _curBillGuide,
       curBillGuideData: JSON.stringify(_curBillGuide),
       isUpdate: true,
