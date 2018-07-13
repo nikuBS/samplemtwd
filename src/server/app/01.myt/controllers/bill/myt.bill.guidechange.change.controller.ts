@@ -78,18 +78,18 @@ class MyTBillChange extends TwViewController {
     svcInfo.svcAttrCd = 'M5';
     console.log('~~~~~~~~~~~~svcInfo', svcInfo);
     switch ( svcInfo.svcAttrCd ) {
-      case 'M1': //휴대폰
+      case 'M1': // 휴대폰
         tmpBillGuideTypes = cellPhoneBillGuideTypes;
         break;
-      case 'S1': //인터넷
-      case 'S2': //IPTV
-      case 'S3': //집전화
+      case 'S1': // 인터넷
+      case 'S2': // IPTV
+      case 'S3': // 집전화
         tmpBillGuideTypes = mixedBillGuidetypes;
         break;
-      case 'M5': //T Wibro
+      case 'M5': // T Wibro
         tmpBillGuideTypes = defaultBillGuideTypes;
         break;
-      default: //없는 경우가 있음 기본은 휴대폰
+      default: // 없는 경우가 있음 기본은 휴대폰
         tmpBillGuideTypes = cellPhoneBillGuideTypes;
         break;
     }
