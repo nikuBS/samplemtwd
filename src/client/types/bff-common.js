@@ -28,3 +28,8 @@ Tw.RAINBOW_CHANGE_CODE = {
   REQUEST: 'A1',
   CANCEL: 'T1'
 };
+
+Tw.PAYMENT_AUTO_CODE = {
+  BANK: '01',
+  CARD: '02'
+};

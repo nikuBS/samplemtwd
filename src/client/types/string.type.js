@@ -57,7 +57,9 @@ Tw.PAYMENT_OPTION = {
   CLOSE: '4'
 };
 
-Tw.MSG_COMMON = {};
+Tw.MSG_COMMON = {
+  SERVER_ERROR: '통신 오류입니다. 잠시 후 다시 시도해 주세요.'
+};
 
 Tw.MSG_HOME = {};
 
@@ -105,7 +107,7 @@ Tw.MSG_PAYMENT = {
   REALTIME_A02: '은행명을 선택해주세요.',
   REALTIME_A03: '계좌번호의 정합성이 맞지 않습니다.',
   REALTIME_A04: '카드 유효기간이 맞지 않습니다.',
-  REALTIME_A05: '카드 유효기간을 현재 월 이상으로 정확히 선택해주세요.',
+  REALTIME_A05: '카드 유효기간을 현재 월 이상으로 정확히 입력해 주세요.',
   REALTIME_A06: '카드번호의 정합성이 맞지 않습니다.',
   REALTIME_A07: '비밀번호의 정합성이 맞지 않습니다.',
   REALTIME_A08: '1,000 포인트 이상 입력해 주세요.',
@@ -113,6 +115,7 @@ Tw.MSG_PAYMENT = {
   REALTIME_A10: '입금전용계좌 SMS 신청을 종료하시겠습니까?',
   REALTIME_A11: '포인트를 조회해 주세요.',
   REALTIME_A12: '보유하신 포인트보다 초과 입력하셨습니다.',
+  AUTO_A01: '카드 유효기간을 입력해 주세요.',
   AUTO_A02: '휴대폰 번호를 입력해 주세요.',
   AUTO_A03: '계좌번호를 입력해 주세요.',
   AUTO_A04: '비밀번호를 입력해 주세요.',

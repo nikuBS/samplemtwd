@@ -100,6 +100,24 @@ Tw.ValidationHelper = (function () {
     return true;
   }
 
+  /* 카드 유효기간 체크하는 function */
+  function checkYear(value, message) {
+    if (parseInt($.trim(value), 10) < new Date().getFullYear()) {
+      Tw.Popup.openAlert(message);
+      return false;
+    }
+    return true;
+  }
+
+  function checkMonth(value, message) {
+    var months = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
+    if (!months.includes($.trim(value))) {
+      Tw.Popup.openAlert(message);
+      return false;
+    }
+    return true;
+  }
+
   return {
     isCellPhone: isCellPhone,
     isSeriesNum: isSeriesNum,
@@ -111,7 +129,9 @@ Tw.ValidationHelper = (function () {
     checkIsAgree: checkIsAgree,
     checkIsAvailablePoint: checkIsAvailablePoint,
     checkIsTenUnit: checkIsTenUnit,
-    checkIsSelected: checkIsSelected
+    checkIsSelected: checkIsSelected,
+    checkYear: checkYear,
+    checkMonth: checkMonth
   };
 })();
 

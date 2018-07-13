@@ -31,7 +31,7 @@
                             <dl>
                                 <dt>요금납부일</dt>
                                 <dd>매월 <em class="number"><%= payment.payCyclNm %></em> 일
-                                    <% if (payment.chgYn === 'Y') { %><br /><span class="info-btn"><button class="btn-choice change-date" role="button">납부일 변경</button></span><% } %>
+                                    <% if (payment.chgYn === 'Y') { %><br /><span class="info-btn"><a class="btn-choice change-date" role="button">납부일 변경</a></span><% } %>
                                 </dd>
                             </dl>
                         </li>
@@ -85,7 +85,7 @@
                 <a href="#step1-cancel">자동납부 해지</a>
             </li>
             <li class="bt-blue1">
-                <a href="#step1-change">자동납부 변경</a>
+                <a class="go-change" href="#step1-change">자동납부 변경</a>
             </li>
         </ul>
     </div>
