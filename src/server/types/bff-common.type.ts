@@ -104,3 +104,14 @@ export enum PAYMENT_OPTION_TEXT {
   ACCOUNT = '계좌번호',
   CARD_NUM = '카드번호'
 }
+
+export const BILL_GUIDE_TYPE = {
+  'TWORLD': 'P',
+  'BILL_LETTER': 'H',
+  'SMS': 'B',
+  'EMAIL': '2',
+  'BILL_LETTER_EMAIL': 'I',
+  'SMS_EMAIL': 'A',
+  'BILL_LETTER_SMS': 'Q',
+  'ETC': '1'
+};
