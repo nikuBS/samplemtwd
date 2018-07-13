@@ -59,7 +59,35 @@ Tw.MyTBillReissue.prototype = {
 
   _onOkClicked: function (/*event*/) {
     // 재발행 신청
-    this._requestReissue();
+    // API 호출 후 결과 값에 기 발행인 경우와 아닌 경우에 대한 처리
+    // 기본적으로 설정된 값으로 표시
+    var selectedItem = this.$guide.text();
+    var type = null;
+    if ( this.$type ) {
+      //유형이 설정이 된다면 선택된 아이템에서 가져와 표시
+      selectedItem = this.$type.find('[aria-checked=true]').text();
+      type = this.$type.find(':checked').attr('name');
+    }
+    var title = Tw.MSG_MYT.BILL_GUIDE_REISSUE_00;
+    var contents = selectedItem + Tw.MSG_MYT.BILL_GUIDE_REISSUE_01;
+    if ( type && type === '02' ) {
+      // 이메일인 경우 문구 다름
+      contents = Tw.MSG_MYT.BILL_GUIDE_REISSUE_02;
+    }
+    else if ( type && type === '99' ) {
+      // 기타(우편)인 경우
+      contents = Tw.MSG_MYT.BILL_GUIDE_REISSUE_04;
+    }
+    // if() { //기발행인 경우
+    // contents = Tw.MSG_MYT.BILL_GUIDE_REISSUE_03;
+    // this._popupService.openAlert(title, contents, $.proxy(this._onOkPopupClicked, this));
+    // this.isIssue = true;
+    // }
+    // else { //  아닌경우
+    this.isIssue = false;
+    this._popupService.openConfirm(Tw.POPUP_TITLE.NOTIFY, title, contents,
+      null, $.proxy(this._onOkPopupClicked, this));
+    //}
   },
 
   _onCloseClicked: function (/*event*/) {
@@ -72,20 +100,7 @@ Tw.MyTBillReissue.prototype = {
   },
 
   _onOkPopupClicked: function () {
-    if ( this.isIssue ) {
-      // TODO: 기발행인경우 서버API 동작이 되어야 확인 가능함...
-    }
-    else { //아닌경우
-      var type = this.$guide.attr('data-type');
-      var month = this.$month.find(':checked').attr('name') || '';
-      if ( this.$type.length > 0 ) {
-        type = this.$type.find(':checked').attr('name');
-      }
-      // 재발행 요청 완료 화면으로 이동
-      // 팝업닫고 이동
-      this._popupService.close();
-      window.location.href = 'reissue/complete?typeCd=' + type + '&month=' + month;
-    }
+    this._requestReissue();
   },
 
   _requestReissue: function (/*event*/) {
@@ -124,36 +139,21 @@ Tw.MyTBillReissue.prototype = {
   },
 
   _onApiSuccess: function (params) {
-    // API 호출 후 결과 값에 기 발행인 경우와 아닌 경우에 대한 처리
-    // 기본적으로 설정된 값으로 표시
-    var selectedItem = this.$guide.text();
-    var type = null;
-    if ( this.$type ) {
-      //유형이 설정이 된다면 선택된 아이템에서 가져와 표시
-      selectedItem = this.$type.find('[aria-checked=true]').text();
-      type = this.$type.find(':checked').attr('name');
+    Tw.Logger.info(params);
+    if ( this.isIssue ) {
+      // TODO: 서버 API 동작은 하나 현재 데이터 값이 Null 이라 요청( 18/07/13 )
     }
-    Tw.Logger.warn(params);
-    var title = Tw.MSG_MYT.BILL_GUIDE_REISSUE_00;
-    var contents = selectedItem + Tw.MSG_MYT.BILL_GUIDE_REISSUE_01;
-    if ( type && type === '02' ) {
-      // 이메일인 경우 문구 다름
-      contents = Tw.MSG_MYT.BILL_GUIDE_REISSUE_02;
+    else { //아닌경우
+      var type = this.$guide.attr('data-type');
+      var month = this.$month.find(':checked').attr('name') || '';
+      if ( this.$type.length > 0 ) {
+        type = this.$type.find(':checked').attr('name');
+      }
+      // 재발행 요청 완료 화면으로 이동
+      // 팝업닫고 이동
+      this._popupService.close();
+      window.location.href = 'reissue/complete?typeCd=' + type + '&month=' + month;
     }
-    else if ( type && type === '99' ) {
-      // 기타(우편)인 경우
-      contents = Tw.MSG_MYT.BILL_GUIDE_REISSUE_04;
-    }
-    // if() { //기발행인 경우
-    // contents = Tw.MSG_MYT.BILL_GUIDE_REISSUE_03;
-    // this._popupService.openAlert(title, contents, $.proxy(this._onOkPopupClicked, this));
-    // this.isIssue = true;
-    // }
-    // else { //  아닌경우
-    this.isIssue = false;
-    this._popupService.openConfirm(Tw.POPUP_TITLE.NOTIFY, title, contents,
-      null, $.proxy(this._onOkPopupClicked, this));
-    //}
   },
 
   _onApiError: function (params) {
