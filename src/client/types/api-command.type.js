@@ -112,7 +112,7 @@ Tw.API_CMD = {
   BFF_07_0061: { path: '/core-bill/v1/auto-payments', method: Tw.API_METHOD.POST },
   BFF_07_0062: { path: '/core-bill/v1/auto-payments', method: Tw.API_METHOD.PUT },
   BFF_07_0063: { path: '/core-bill/v1/auto-payments', method: Tw.API_METHOD.DELETE },
-  BFF_07_0065: { path: '/core-bill/v1/autopay/pay-cycl-chg', method: Tw.API_METHOD.PUT },
+  BFF_07_0065: { path: '/core-bill/v1/autopay/pay-cycl-chg/args-0', method: Tw.API_METHOD.PUT },
   BFF_07_0068: { path: '/core-bill/v1/autopay/card-info/args-0', method: Tw.API_METHOD.GET },
 
   // TEST
