@@ -1,4 +1,7 @@
 Tw.Init = function () {
+  this._apiService = null;
+  this._nativeService = null;
+
   this._initService();
   this._getDeviceInfo();
   this._getEnvironment();
@@ -11,28 +14,39 @@ Tw.Init.prototype = {
     Tw.Native = new Tw.NativeService();
     Tw.Popup = new Tw.PopupService();
     Tw.Api = new Tw.ApiService();
+
+    this._apiService = Tw.Api;
+    this._nativeService = Tw.Native;
   },
 
   _logVersion: function (resp) {
-    if ( resp.environment === 'development' || resp.environment === 'qa' ) {
-      /* jshint undef: false */
-      alert(Tw.environment.version);
-      /* jshint undef: false */
+    if(resp.code === Tw.API_CODE.CODE_00) {
+      var result = resp.result;
+      if ( result.environment === 'development' || result.environment === 'qa' ) {
+        /* jshint undef: false */
+        alert(Tw.environment.version);
+        /* jshint undef: false */
+      }
+      Tw.Logger.info('[Version]', Tw.environment.version);
     }
-    Tw.Logger.info('[Version]', Tw.environment.version);
   },
 
   _getEnvironment: function () {
-    Tw.Api.request(Tw.NODE_CMD.GET_ENVIRONMENT, {})
+    this._apiService.request(Tw.NODE_CMD.GET_ENVIRONMENT, {})
       .done($.proxy(this._logVersion, this));
   },
 
   _getDeviceInfo: function () {
-    Tw.Native.send(Tw.NTV_CMD.GET_DEVICE, {}, $.proxy(this._setDeviceInfo, this));
+    this._nativeService.send(Tw.NTV_CMD.GET_DEVICE, {}, $.proxy(this._setDeviceInfo, this));
   },
 
   _setDeviceInfo: function (resp) {
     Tw.Logger.info('[Device Info]', resp);
+    this._apiService.request(Tw.NODE_CMD.SET_DEVICE, resp)
+      .done($.proxy(this._successSetDivice, this));
+  },
+  _successSetDivice: function(resp) {
+    console.log(resp);
   }
 };
 
