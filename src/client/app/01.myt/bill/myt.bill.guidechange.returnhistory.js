@@ -6,6 +6,7 @@
 Tw.MyTBillReturnHistory = function (rootEl) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
+  this._popupService = Tw.Popup;
   this._rendered();
   this._bindEvent();
 };
@@ -31,12 +32,24 @@ Tw.MyTBillReturnHistory.prototype = {
   },
 
   _onOkClicked: function () {
-    //확인 -> 요금안내서 미리보기 팝업 연동
+    //확인 -> 요금안내서 메인화면으로 이동
+    window.location.replace('/myt/bill/guidechange');
   },
 
-  _onMoveClicked: function () {
+  _onMoveClicked: function (event) {
     // 요금안내서로 이동
     // window.location.replace(url)
+    var type = $(event.target).attr('data-type');
+    if ( type && type === 'blank' ) {
+      // 반송내역이 없는 경우 - 사용요금 및 요금안내서 화면으로 이동
+      window.location.replace('/myt/bill/billguide');
+    }
+    else {
+      // 반송내역이 있는 경우 - 요금안내서 미리보기 팝업으로 이동
+      this._popupService.open({
+        hbs: 'MY_03_03_01_L02'// hbs의 파일명
+      });
+    }
   },
 
   _onCloseClicked: function () {

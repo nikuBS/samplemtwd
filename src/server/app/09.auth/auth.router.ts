@@ -3,6 +3,7 @@ import AuthTidLogin from './controllers/tid/auth.tid.login.controller';
 import AuthLoginFail from './controllers/login/auth.login.fail.controller';
 import AuthLoginDormancy from './controllers/login/auth.login.dormancy.controller';
 import AuthLoginFindIdPwd from './controllers/login/auth.login.find-id-pwd.controller';
+import AuthLoginServicePwd from './controllers/login/auth.login.service-pwd.controller';
 import AuthLoginServicePwdFail from './controllers/login/auth.login.service-pwd-fail.controller';
 import AuthSignupGuide from './controllers/signup/auth.signup.guide.controller';
 import AuthMemberManagement from './controllers/member/auth.member.management.controller';
@@ -24,6 +25,7 @@ import AuthTidSignUpLocal from './controllers/tid/auth.tid.signup-local.controll
 import AuthTidSignUpForeigner from './controllers/tid/auth.tid.signup-foreigner.controller';
 import AuthLogoutComplete from './controllers/logout/auth.logout.complete.controller';
 import AuthLogoutExpire from './controllers/logout/auth.logout.expire.controller';
+import AuthLoginRoute from './controllers/login/auth.login.route.controller';
 
 class AuthRouter extends TwRouter {
   constructor() {
@@ -38,7 +40,9 @@ class AuthRouter extends TwRouter {
     this.controllers.push({ url: '/login/fail', controller: new AuthLoginFail() });
     this.controllers.push({ url: '/login/dormancy', controller: new AuthLoginDormancy() });
     this.controllers.push({ url: '/login/find-id-pwd', controller: new AuthLoginFindIdPwd() });
+    this.controllers.push({ url: '/login/service-pwd', controller: new AuthLoginServicePwd() });
     this.controllers.push({ url: '/login/service-pwd-fail', controller: new AuthLoginServicePwdFail() });
+    this.controllers.push({ url: '/login/route', controller: new AuthLoginRoute() });
     // logout
     this.controllers.push({ url: '/logout/complete', controller: new AuthLogoutComplete() });
     this.controllers.push({ url: '/logout/expire', controller: new AuthLogoutExpire() });

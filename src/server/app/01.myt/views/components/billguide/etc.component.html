@@ -1,0 +1,160 @@
+<!--
+* FileName: etc.component.html
+* Author: 이정민 (skt.p130713@partner.sk.com)
+* Date: 2018.07.05
+-->
+<div class="bill-guide-component" cur-bill-type="<%= curBillGuide.curBillType %>" cur-bill-type-nm="<%= curBillGuide.curBillTypeNm %>" cur-bill-type-component="<%= curBillGuide.component %>">
+    <hr class="cont-sp type1" aria-hidden="true"/>
+    <div class="cont-box">
+        <div class="step" step="1">
+            <div class="change-plan">
+                <h4 class="tit-type2">요금안내서 정보설정(1/2)</h4>
+                <dl>
+                    <dt>기타(우편)물 받을 주소를 입력해주세요</dt>
+                    <dd>
+                        <div class="address-form">
+                            <span class="inputbox bt-add">
+                                <span class="input">
+                                    <input type="text" class="no-bg-color input-addr1" title="우편번호" value="<%= curBillGuide.zip %>">
+                                    <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
+                                </span>
+                                <span class="bt-box">
+                                    <button type="button">우편번호</button>
+                                </span>
+                            </span>
+                            <span class="inputbox">
+                                <span class="input">
+                                  <input type="text" class="no-bg-color input-addr2" title="주소" value="<%= curBillGuide.basAddr %>">
+                                  <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
+                                </span>
+                            </span>
+                            <span class="inputbox">
+                                <span class="input">
+                                  <input type="text" title="상세주소"  class="input-addr3" value="<%= curBillGuide.dtlAddr %>">
+                                  <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
+                                </span>
+                            </span>
+                        </div>
+                    </dd>
+                    <dt>기타(우편)물의 발송 주기를 선택해주세요.</dt>
+                    <dd>
+                        <!-- .widget -->
+                        <div class="widget">
+                            <div class="widget-box tube">
+                                <ul class="tube-list four" role="radiogroup">
+                                    <% if (curBillGuide.billSndCyclCd) { %>
+                                    <li role="radio" aria-checked="<%= (curBillGuide.billSndCyclCd === '1') ? 'true' : 'false' %>" class="<%= (curBillGuide.billSndCyclCd === '1') ? 'checked first' : 'first' %>"><input type="radio" name="senddata" title="매월" <%= (curBillGuide.billSndCyclCd === '1') ? 'checked="checked"' : '' %> >매월</li>
+                                    <li role="radio" aria-checked="<%= (curBillGuide.billSndCyclCd === '2') ? 'true' : 'false' %>" class="<%= (curBillGuide.billSndCyclCd === '2') ? 'checked first' : 'first' %>"><input type="radio" name="senddata" title="격월" <%= (curBillGuide.billSndCyclCd === '2') ? 'checked="checked"' : '' %> >격월</li>
+                                    <li role="radio" aria-checked="<%= (curBillGuide.billSndCyclCd === '3') ? 'true' : 'false' %>" class="<%= (curBillGuide.billSndCyclCd === '3') ? 'checked first' : 'first' %>"><input type="radio" name="senddata" title="분기" <%= (curBillGuide.billSndCyclCd === '3') ? 'checked="checked"' : '' %> >분기</li>
+                                    <li role="radio" aria-checked="<%= (curBillGuide.billSndCyclCd === '4') ? 'true' : 'false' %>" class="<%= (curBillGuide.billSndCyclCd === '4') ? 'checked first' : 'first' %>"><input type="radio" name="senddata" title="반기" <%= (curBillGuide.billSndCyclCd === '4') ? 'checked="checked"' : '' %> >반기</li>
+                                    <% } else { %>
+                                    <li role="radio" aria-checked="true" class="checked"><input type="radio" name="senddata" title="매월">매월</li>
+                                    <li role="radio" aria-checked="false"><input type="radio" name="senddata" title="격월">격월</li>
+                                    <li role="radio" aria-checked="false"><input type="radio" name="senddata" title="분기">분기</li>
+                                    <li role="radio" aria-checked="false"><input type="radio" name="senddata" title="반기">반기</li>
+                                    <% } %>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- //.widget -->
+                        <ul class="contents-notice type1">
+                            <li class="noti-type2">월 요금안내서와 미발송분 청구내역이 함께 발송됩니다.</li>
+                            <li class="noti-type2">격월 : 2 / 4 / 6 / 8 / 10 / 12월</li>
+                            <li class="noti-type2">분기 : 3 / 6 / 9 / 12월</li>
+                            <li class="noti-type2">반기 : 6 / 12월</li>
+                        </ul>
+                    </dd>
+                </dl>
+            </div>
+            <div class="inner">
+                <div class="contents-btn">
+                    <ul class="bt-slice">
+                        <li class="bt-blue1">
+                            <button class="btn-next">다음</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="step" step="2" style="display: none;">
+            <div class="change-plan">
+                <h4 class="tit-type2">요금안내서 정보설정(2/2)</h4>
+                <dl>
+                    <dt>휴대폰번호를 입력해주세요</dt>
+                    <dd class="box-block-list2">
+                        <span class="inputbox">
+                            <span class="input">
+                              <input type="text" placeholder="휴대폰번호입력 (숫자만 입력)" title="휴대폰번호 입력 (숫자만 입력)" class="input-phone input-cntc-num1" maxlength="11" onInput="return Tw.InputHelper.inputNumberOnly(this);" value="<%= curBillGuide.cntcNum1 %>">
+                              <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
+                            </span>
+                        </span>
+                    </dd>
+                    <dt>휴대폰번호 모두 표시할까요?</dt>
+                    <dd class="box-block-list2">
+                        <!-- .widget -->
+                        <div class="widget">
+                            <div class="widget-box tube">
+                                <ul class="tube-list two" role="radiogroup">
+                                    <%if (curBillGuide.phonNumPrtClCd === 'N') { %>
+                                    <li role="radio" aria-checked="true" class="checked"><input type="radio" name="selectset1" title="일부 별표 표시 선택">일부 별표 표시</li>
+                                    <li role="radio" aria-checked="false"><input type="radio" name="selectset1" title="전체 표시 선택">전체 표시</li>
+                                    <% } else {%>
+                                    <li role="radio" aria-checked="false"><input type="radio" name="selectset1" title="일부 별표 표시 선택">일부 별표 표시</li>
+                                    <li role="radio" aria-checked="true" class="checked"><input type="radio" name="selectset1" title="전체 표시 선택">전체 표시</li>
+                                    <% } %>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- //.widget -->
+                        <!-- <div class="contents-notice type1">
+                            <span class="noti-type3">생년월일 입력 후 조회하시면 Bill Letter의 보안을 강화할 수 있습니다.
+                        </span></div> -->
+                    </dd>
+                </dl>
+            </div>
+
+            <div class="inner">
+                <div class="contents-btn">
+                    <ul class="bt-slice">
+                        <li class="bt-blue1">
+                            <% if (isUpdate) { %>
+                            <button class="btn-submit">요금안내서 정보변경하기</button>
+                            <% } else { %>
+                            <button class="btn-submit">&quot;기타(우편)&quot;으로 변경하기</button>
+                            <% } %>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr class="cont-sp type1" aria-hidden="true"/>
+    <div class="cont-box">
+        <!-- .widget -->
+        <div class="widget">
+            <div class="widget-box accordion">
+                <h5 class="tit-a">유의사항</h5>
+                <div class="acco-cover on"><!-- toggle : 한개만 열기 -->
+                    <div class="acco-style btn-hold">
+                        <ul class="acco-list">
+                            <li class="acco-box on">
+                                <div class="acco-cont">
+                                    <ul class="list-dot">
+                                        <li class="list">여러 개의 회선에 대해 통합요금안내서를 받으시는 경우 통합청구 대표번호로만 신청이 가능하며 전체 요금이 합산되어 발송됩니다.</li>
+                                        <li class="list">다회선 이용 고객 중 통합청구 고객은 대표회선만 정보변경이 가능합니다.</li>
+                                        <li class="list">개인정보보호를 위해서 변경 시 새로운 정보 입력만 가능합니다.</li>
+                                        <li class="list">주소 부정확 등의 사유로 기타(우편) 요금안내서가 발송되지 못하는 경우 전자요금안내서(이메일 요금안내서/문자 요금안내서)로 변경 될 수 있습니다. </li>
+                                        <li class="list">기타(우편) 요금안내서 변경 시 기타(우편) 발송 주기도 자동 해지되며, 기타(우편) 청구 유형을 재선택 하면 원복 됩니다. </li>
+                                        <li class="list">매월 5일까지 신청 시 당월부터 변경된 요금안내서가 발송되며 6일이후 신청시에는 다음 달 부터 변경된 요금안내서를 발송합니다.</li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--// .widget -->
+    </div>
+</div>

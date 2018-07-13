@@ -31,6 +31,7 @@
         <div class="container">
             <!-- 데이터 조회하기 적용 불가 Case -->
             <img style="width:100%;" src="/img/dummy/home.jpg" alt=""/>
+            <% if (giftData) { %>
             <% if (giftData.giftSender) { %>
             <% if (giftData.giftSender.code === 'RCG0005') { %>
             <!-- MA_01_CA13_06 -->
@@ -180,8 +181,10 @@
             <!--// 데이터 조회하기 적용 불가 Case -->
             <% } %>
             <% } %>
-            <% if(refillData.refillCoupon && refillData.refillOptions && refillData.refillUsages) { %>
-            <% if(refillData.refillCoupon.length === 0) { %>
+            <% } %>
+            <% if (refillData) { %>
+            <% if (refillData.refillCoupon && refillData.refillOptions && refillData.refillUsages) { %>
+            <% if (refillData.refillCoupon.length === 0) { %>
             <!-- MA_01_CA14_03 -->
             <div class="component">
                 <div class="component-box flcarddefault">
@@ -423,12 +426,14 @@
             <!--// MA_01_CA14_05 -->
             <% } %>
             <% } %>
+            <% } %>
         </div>
         <!--// #contents -->
     </div>
     <% include ../../../../common/views/components/footer.component.html %>
 </div>
-<% if(giftData.giftSender) { %>
+<% if (giftData) { %>
+<% if (giftData.giftSender) { %>
 <% if (giftData.giftSender.familyMemberYn === 'N') { %>
 <script class="gift-template" type="text/x-handlebars-template">
     <!-- MA_01_CA13_01 1. 선물하기 가능 상태일 경우 -->
@@ -537,6 +542,7 @@
     </div>
     <!--// MA_01_CA13_01 3. 가족 결합 중 착한 가족 상품 사용 시 -->
 </script>
+<% } %>
 <% } %>
 <% } %>
 <% include ../components/javascript.component.html %>
