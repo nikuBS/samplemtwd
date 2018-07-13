@@ -90,7 +90,7 @@ Tw.PaymentAuto.prototype = {
     return value;
   },
   _changeDateRequest: function (value) {
-    this._apiService.request(Tw.API_CMD.BFF_07_0065, { payCyclCd: value })
+    this._apiService.request(Tw.API_CMD.BFF_07_0065, {}, {}, value)
       .done($.proxy(this._changeDateSuccess, this))
       .fail($.proxy(this._changeDateFail, this));
   },
