@@ -106,14 +106,12 @@ Tw.MyTBillReissue.prototype = {
   _requestReissue: function (/*event*/) {
     // 재발행 데이터 설정
     // sReIssueType	재발행코드종류
-    // sRegalRepveIncldYn	법정대리인동시통보
     // sInvDt	재발행청구일자
     // TODO: 서버 API 확인 필요!!
     var data = {
-      sReIssueType: this.$guide.attr('data-type') || '',
-      sInvDt: this.$month.find(':checked').attr('name') || '',
+      sReIssueType: this.$guide.attr('data-type') || '', // 재발행코드종류
+      sInvDt: this.$month.find(':checked').attr('name') || '', // 재발행청구일자
       sReisueRsnCd: '01' //기본은 무선
-      //재발행청구시점 정보가 빠져있음 (this.$time.find(':checked').attr('name') || '')
     };
     // 청구서타입 유형이 2개인 경우
     if ( this.$type.length > 0 ) {
