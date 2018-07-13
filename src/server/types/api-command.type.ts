@@ -65,7 +65,7 @@ export const API_CMD = {
   BFF_05_0037: { path: '/core-bill/v1/bill-pay/suspension', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0038: { path: '/core-bill/v1/bill-pay/donation', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0039: { path: '/core-bill/v1/bill-types-return-list/', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
-  BFF_05_0040: { path: '', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false }, // PathVariable
+  BFF_05_0040: { path: '/core-product/v1/services/wireless/additions/args-0', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0041: { path: '/core-product/v1/services/base-fee-plans', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0044: { path: '/core-bill/v1/bill-pay/roaming', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0045: { path: '/core-bill/v1/bill-pay/call-gift', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
