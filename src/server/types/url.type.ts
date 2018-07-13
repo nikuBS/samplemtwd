@@ -23,6 +23,7 @@ export const URL = {
   '/myt/bill/guidechange/change': { login: true },
   '/myt/bill/guidechange/change-complete': { login: true },
   '/myt/bill/guidechange/update': { login: true },
+  '/myt/bill/guidechange/update-complete': { login: true },
   // recharge
   '/recharge/refill': { login: true },
   '/recharge/refill/history': { login: true },
