@@ -1,0 +1,84 @@
+/**
+ * FileName: auth.line.cop-register.js
+ * Author: Ara Jo (araara.jo@sk.com)
+ * Date: 2018.07.12
+ */
+
+Tw.AuthLineCopRegister = function (rootEl, nicknamePopup) {
+  this.$container = rootEl;
+  this._apiService = Tw.Api;
+  this._nicknamePopup = nicknamePopup;
+
+  this.$inputMdn = null;
+  this.$inputCop = null;
+  this.$inputCopNum = null;
+  this.$inputNickname = null;
+
+  this._cachedElement();
+  this._bindEvent();
+};
+
+Tw.AuthLineCopRegister.prototype = {
+  _cachedElement: function () {
+    this.$inputMdn = this.$container.find('#input-mdn');
+    this.$inputCop = this.$container.find('#input-cop');
+    this.$inputCopNum = this.$container.find('#input-cop-number');
+    this.$inputNickname = this.$container.find('#input-nickname');
+
+  },
+  _bindEvent: function () {
+    this.$container.on('click', '#bt-nickname', $.proxy(this._onClickNickname, this));
+    this.$container.on('click', '.bt-white1', $.proxy(this._onClickCancel, this));
+    this.$container.on('click', '.bt-blue1', $.proxy(this._onClickRegister, this));
+  },
+  _onClickNickname: function () {
+    this._sendBizSession('nickname');
+  },
+  _onClickCancel: function () {
+    history.back();
+
+  },
+  _onClickRegister: function () {
+    this._sendBizSession('register');
+
+  },
+  _sendBizSession: function (type) {
+    var params = {
+      svcNum: this.$inputMdn.val(),
+      ctzCorpNm: this.$inputCop.val(),
+      ctzCorpNum: this.$inputCopNum.val()
+    };
+    this._apiService.request(Tw.API_CMD.BFF_03_0012, params)
+      .done($.proxy(this._successBizSession, this, type))
+      .fail($.proxy(this._failBizSession, this));
+  },
+  _successBizSession: function (type, resp) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      var svcMgmtNum = resp.result.svcMgmtNum;
+      if ( type === 'nickname' ) {
+        this._nicknamePopup.openNickname(svcMgmtNum, $.proxy(this._onCloseNickname, this));
+      } else if ( type === 'reister' ) {
+        this._sendRegisterBiz(svcMgmtNum);
+      }
+    }
+  },
+  _failBizSession: function (error) {
+    console.log(error);
+  },
+  _sendRegisterBiz: function (svcMgmtNum) {
+    var params = {
+      svcMgmtNum: svcMgmtNum,
+      nickNm: ''
+    };
+    this._apiService.request(Tw.API_CMD.BFF_03_0012, params)
+      .done($.proxy(this._successRegisterBiz, this))
+      .fail($.proxy(this._failRegisterBiz, this));
+  },
+  _successRegisterBiz: function () {
+  },
+  _failRegisterBiz: function () {
+  },
+  _onCloseNickname: function(nickname) {
+    this.$inputNickname.val(nickname);
+  }
+};
