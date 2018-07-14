@@ -93,7 +93,7 @@ class MyTBillBillguide extends TwViewController {
     callGiftYn: null, //콜기프트
     donationYn: null, //기부금/후원금
     chargeTtYn: null, //요금제: "T끼리 T내는 요금" prodId : "NA00001901"
-    defaultYn: null, //미납여부
+    defaultYn: null, //납부전
     paymentBtnYn: null, //납부가능일 버튼
     suspensionYn: null //이용정지해제 버튼
   };

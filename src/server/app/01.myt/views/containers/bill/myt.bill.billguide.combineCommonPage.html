@@ -47,30 +47,21 @@
                     <span class="info-btn"><a href="" class="btn-choice" role="button">변경</a></span>
                 </div>
             </div>
-            <!--<div class="cont-box nogaps-hoz">-->
-                <!--<div class="use-family">-->
-                    <!--<h3 class="blind">자녀폰 실시간 요금 보기</h3>-->
-                    <!--<div class="link-long">-->
-                        <!--<a href="" title="">자녀폰 사용요금 (<strong>5</strong>명)&lt;!&ndash; 2017-07-06 텍스트 수정 &ndash;&gt;-->
-                            <!--<span class="badge badge-fam"><span class="blind">자녀회선</span></span>-->
-                            <!--<span class="ico"></span>-->
-                        <!--</a>-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</div>-->
+
             <%#자녀폰 사용요금 컴포넌트  %>
             <% if ( circuitChildInfo.length > 0) { %>
             <% include ../../components/bill/myt.bill.billguide.children.html %>
             <% } %>
 
             <hr class="cont-sp type1" aria-hidden="true"/>
+
             <div class="cont-box">
                 <div class="payment-inquiry">
                     <a class="bt-link-tx" href=""><%=baseFeePlansInfo.prodName %><span class="ico"></span></a>
-                    <button class="bt-dropdown big" title="조회기간 선택"><%=commDataInfo.selClaimDtBtn %><span class="ico"></span></button>
+                    <button class="bt-dropdown big" title="조회기간 선택" data-target="totPaySelectBtn"><%=commDataInfo.selClaimDtBtn %><span class="ico"></span></button>
                     <div class="payment-info family">
                         <p class="tit"><span class="num">010-0000-0000</span>에<br /><span class="num"><strong>통합청구</strong></span>되었습니다.</p>
-                        <p class="num term">2018.05.01~ 2018.05.31</p>
+                        <p class="num term"><%=commDataInfo.selStaDt %> ~ <%=commDataInfo.selEndDt %></p>
                     </div>
                     <div class="txt-discount">
                         <% if( commDataInfo.discount === '0' ) {  %>

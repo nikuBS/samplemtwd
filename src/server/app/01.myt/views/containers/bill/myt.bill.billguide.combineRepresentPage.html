@@ -63,17 +63,8 @@
                 <hr class="cont-sp type1" aria-hidden="true"/>
 
     <% if( billpayInfo.useAmtTot === '0' ) { %>
-                <div class="cont-box  nogaps-btm noborder">
-                    <button class="bt-dropdown big" title="전체납부내역" aria-haspopup="true" data-target="totPaySelectBtn" ><%=commDataInfo.selClaimDtBtn %><span class="ico"></span></button>
-                    <div class="payment-inquiry">
-                        <div class="payment-all">
-                            <h3 class="blind">전체납부내역</h3>
-                            <span><em>사용하신금액이 없습니다.</em></span>
-                        </div>
-                        <div class="txt-discount">
-                        </div>
-                    </div>
-                </div>
+                <%#사용료가 없을때  %>
+                <% include ../../components/bill/myt.bill.billguide.hireNone.html %>
     <% } else { %>
                 <div class="cont-box  nogaps-btm noborder">
                     <button class="bt-dropdown big" title="전체납부내역" aria-haspopup="true" data-target="totPaySelectBtn" ><%=commDataInfo.selClaimDtBtn %><span class="ico"></span></button>

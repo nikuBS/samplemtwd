@@ -28,6 +28,7 @@ Tw.mytBillBillguideCompanyPage = function (rootEl, resData) {
 Tw.mytBillBillguideCompanyPage.prototype = {
   _init: function () {
     //this.$refillBtn = this.$container.find('.link-long > a');
+    this.$container.on('click', '[data-target="totPaySelectBtn"]', $.proxy(this._totPaySelectFun, this));
   },
   _bindEvent: function () {
     //this.$container.on('click', '.slick-slide', $.proxy(this._selectCoupon, this));

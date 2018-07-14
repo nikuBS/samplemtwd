@@ -31,6 +31,7 @@ Tw.mytBillBillguideIndividualPage.prototype = {
   },
   _bindEvent: function () {
     //this.$container.on('click', '.slick-slide', $.proxy(this._selectCoupon, this));
+    this.$container.on('click', '[data-target="totPaySelectBtn"]', $.proxy(this._totPaySelectFun, this));
   },
   //--------------------------------------------------------------------------[이벤트 | 팝업]
   _totPaySelectFun : function(event) {//팝업 오픈
