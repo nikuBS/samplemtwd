@@ -68,13 +68,13 @@ abstract class TwViewController {
     return this.loginService.isLogin(userId);
   }
 
-  private testLogin(req, res, next, userId) {
-    if ( this.checkLogin(userId) ) {
+  private testLogin(req, res, next, id) {
+    if ( this.checkLogin(id) ) {
       this.render(req, res, next, this._loginService.getSvcInfo());
     } else {
-      this._apiService.request(API_CMD.BFF_03_0001, { userId }).subscribe((resp) => {
+      this._apiService.request(API_CMD.BFF_03_0001, { id }).subscribe((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
-          this.loginService.setUserId(userId);
+          this.loginService.setUserId(id);
           this.render(req, res, next, new SvcInfoModel(resp.result));
         } else {
           this.renderError(req, res, next, resp);
