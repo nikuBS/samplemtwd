@@ -1,12 +1,23 @@
 Tw.ValidationHelper = (function () {
+  function regExpTest(exp, str) {
+    return exp.test(str);
+  }
+
   /**
    * @param {String} : 010-0000-0000 or 0100000000
    * @returns {Boolean}
    */
-  function isCellPhone (phone) {
-    var _phone = phone.split('-').join('');
-    var regPhone = /^01([0|1|6|7|8|9]?)-?([0-9]{3,4})-?([0-9]{4})$/;
-    return regPhone.test(_phone);
+  function isCellPhone(str) {
+    var phone = str.split('-').join('');
+    return Tw.ValidationHelper.regExpTest(/^01([0|1|6|7|8|9]?)-?([0-9]{3,4})-?([0-9]{4})$/, phone);
+  }
+
+  /**
+   * @param {String} : hong-gil.dong@gmail.com
+   * @returns {Boolean}
+   */
+  function isEmail(str) {
+    return Tw.ValidationHelper.regExpTest(/^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i, str);
   }
 
   function isSeriesNum(string, maxSeries) {
@@ -100,9 +111,29 @@ Tw.ValidationHelper = (function () {
     return true;
   }
 
+  /* 카드 유효기간 체크하는 function */
+  function checkYear(value, message) {
+    if (parseInt($.trim(value), 10) < new Date().getFullYear()) {
+      Tw.Popup.openAlert(message);
+      return false;
+    }
+    return true;
+  }
+
+  function checkMonth(value, message) {
+    var months = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
+    if (!months.includes($.trim(value))) {
+      Tw.Popup.openAlert(message);
+      return false;
+    }
+    return true;
+  }
+
   return {
+    regExpTest: regExpTest,
     isCellPhone: isCellPhone,
     isSeriesNum: isSeriesNum,
+    isEmail: isEmail,
     containSpecial: containSpecial,
     containNumber: containNumber,
     checkEmpty: checkEmpty,
@@ -111,7 +142,8 @@ Tw.ValidationHelper = (function () {
     checkIsAgree: checkIsAgree,
     checkIsAvailablePoint: checkIsAvailablePoint,
     checkIsTenUnit: checkIsTenUnit,
-    checkIsSelected: checkIsSelected
+    checkIsSelected: checkIsSelected,
+    checkYear: checkYear,
+    checkMonth: checkMonth
   };
 })();
-

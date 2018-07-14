@@ -18,7 +18,7 @@
                     <h1>팅/쿠키즈/안심음성 요금 충전</h1>
                     <button class="depth-view" role="button" aria-pressed="false"><span class="blind">메뉴구조보기</span></button>
                 </div>
-                <button class="prev-step"><span class="blind">이전으로</span></button>
+                <button class="prev-step common-back"><span class="blind">이전으로</span></button>
                 <button class="search-content"><span class="blind">검색하기</span></button>
             </div>
         </div>
@@ -62,7 +62,7 @@
                                                         <li class="state-info-list">
                                                             <dl>
                                                                 <dt>나의 요금제</dt>
-                                                                <dd>LTE팅24</dd>
+                                                                <dd class="prodName"><%=myProductInfo.prodName%></dd>
                                                             </dl>
                                                         </li>
                                                         <li class="state-info-list">
@@ -104,7 +104,11 @@
                                                 <ul class="bt-slice">
                                                     <li class="bt-blue1">
                                                         <!-- Dimmed Case는 button에 disabled속성 추가 -->
+                                                        <%if(cookizInfo.currentTopUpLimit!='0'){%>
                                                         <button class="btn_go_cookiz_process">팅/쿠키즈/안심음성 충전하기</button>
+                                                        <%}else{%>
+                                                        <button class="btn_go_cookiz_process">팅/쿠키즈/안심음성 충전하기</button>
+                                                        <%}%>
                                                     </li>
                                                     <li class="bt-white1">
                                                         <button class="btn_go_history">팅/쿠키즈/안심음성 충전 내역</button>
@@ -153,7 +157,7 @@
                                                 </div>
                                                 <ul class="bt-slice"><!-- 2018-06-20 버튼 클래스 변경 -->
                                                     <li class="bt-blue1">
-                                                        <button>조르기 신청하기</button>
+                                                        <button id="btn_cookiz_request">조르기 신청하기</button>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -442,8 +446,128 @@
         </div>
         <!--// #contents -->
     </div>
+    <div id="request-step1" style="display: none">
+        <div class="header-wrap">
+            <div class="header step-page">
+                <div class="header-ti">
+                    <h1>팅/쿠키즈/안심음성 요금 조르기</h1>
+                </div>
+                <button class="close-step"><span class="blind">닫기</span></button>
+            </div>
+        </div>
+
+        <div class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+                <div class="cont-box">
+                    <p class="page-desc">조르기 할 휴대폰 번호를 입력해주세요.</p>
+                    <div class="inner">
+                        <h3 class="contents-tit">휴대폰 번호</h3>
+                        <div class="contents-formbox wrap_tpl_contact">
+
+                        </div>
+                    </div>
+
+                    <div class="inner">
+                        <div class="contents-btn">
+                            <ul class="bt-slice"><!-- 2018-06-20 버튼 클래스 변경 -->
+                                <li class="bt-blue1">
+                                    <button class="btn_validateRequestStep1">다음</button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="request-complete" style="display:none">
+        <div class="header-wrap">
+            <div class="header step-page">
+                <div class="header-ti">
+                    <h1>팅/쿠키즈/안심음성 요금 조르기</h1>
+                </div>
+                <button class="close-step"><span class="blind">닫기</span></button>
+            </div>
+        </div>
+
+        <div class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+                <div class="cont-box nogaps-hoz">
+                    <div class="msg-present-box">
+                        <div class="msg-present-comp">
+                            <span class="ico"></span>
+                            <p class="txt"><span class="tx-bold">팅요금 선물</span> <br> 조르기가 <br>완료되었습니다.</p>
+                        </div>
+                        <div class="gift-data-cont">
+                            <ul class="t-gift-data">
+                                <li>
+                                    <dl>
+                                        <dt class="ti-data">조르기 한 휴대폰 번호</dt>
+                                        <dd class="tx-data">
+                                            <span class="blind">전화번호</span><span class="num">010-12**-34**</span>
+                                        </dd>
+                                    </dl>
+                                </li>
+                            </ul>
+
+                            <!-- 2018-06-22 버튼 추가, 수정 -->
+                            <div class="bt-gap">
+                                <ul class="bt-slice last">
+                                    <li class="bt-blue1">
+                                        <button class="btn_confirm">확인</button>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!--// 2018-06-22 버튼 추가, 수정 -->
+                        </div>
+                    </div>
+                </div>
+                <hr class="cont-sp type1" aria-hidden="true">
+                <div class="cont-box nogaps">
+                    <div class="bt-link-box">
+                        <a class="bt-link-tx" href="/home">홈으로</a>
+                    </div>
+                </div>
+                <hr class="cont-sp type1" aria-hidden="true">
+            </div>
+        </div>
+    </div>
     <% include ../../../../../common/views/components/footer.component.html %>
 </div>
+
+<script id="tpl_contact" type="text/x-handlebars-template">
+    {{#if isMobile}}
+    <span class="inputbox bt-add">
+        <span class="input">
+            <input class='inp_phone' type="text" placeholder="‘-’ 없이 숫자만 입력해주세요." title="휴대폰 번호 입력" maxlength="11">
+        </span>
+        <span class="bt-box">
+            <button id="btn_addr" type="button">주소록</button>
+        </span>
+    </span>
+    {{else}}
+    <!-- 2018-06-21 주소록이 없는 경우 추가 -->
+    <span class="inputbox">
+        <span class="input">
+            <input class='inp_phone' type="text" placeholder="‘-’ 없이 숫자만 입력해주세요." title="휴대폰 번호 입력" maxlength="11">
+        </span>
+    </span>
+    {{/if}}
+
+    <!--// 2018-06-21 주소록이 없는 경우 추가 -->
+    <div class="box-block">
+        <div class="box-block-list">
+            <ul>
+                <li>만 19세 이상 개인고객(SK텔레콤 가입자)에게 선물 조르기를 할 수 있습니다.</li>
+                <li>조르기 할 대상 고객의 휴대폰이 USIM 단독 상태이거나 휴대폰과 USIM 카드가 분리된 상태에서는 조르기 신청 SMS를 받아 볼 수 없습니다.</li>
+                <li>조르기 신청을 누르면 조르기 할 대상자에게 SMS가 전송되고 전송료는 무료입니다.</li>
+            </ul>
+        </div>
+    </div>
+</script>
 
 <% include ../../components/javascript.component.html %>
 

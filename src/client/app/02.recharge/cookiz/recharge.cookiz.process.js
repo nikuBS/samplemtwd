@@ -32,9 +32,12 @@ Tw.RechargeCookizProcess.prototype = {
   },
 
   _cachedElement: function () {
+    this.$container.on('click', '.btn_confirm', $.proxy(this._goToMain, this));
+    this.$container.on('click', '.btn_validateRequestStep1', $.proxy(this._validateRequestStep1, this));
     this.$container.on('click', '.btn_validateStep1', $.proxy(this._validateCookizStep1, this));
     this.$container.on('click', 'input[name=senddata]', $.proxy(this._onChangeAmount, this));
     this.$container.on('click', '.tube-select', $.proxy(this._onClickSelectPopup, this));
+    this.$container.on('click', '.close-step', $.proxy(this._onCloseProcess, this));
   },
 
   _bindEvent: function () {
@@ -105,11 +108,32 @@ Tw.RechargeCookizProcess.prototype = {
   },
 
   _validateRequestStep1: function () {
+    var $wrap_request_step = $('#request-step1');
+    this.target.phone_no_mask = $wrap_request_step.find('.inp_phone').val();
+    $('#request-complete').find('.tx-data .num').html(Tw.FormatHelper.getFormattedPhoneNumber(this.target.phone_no_mask));
 
+    this._apiService.request(Tw.API_CMD.BFF_06_0025, { senderSvcNum: this.target.phone_no_mask })
+      .done($.proxy(this._validRequestComplete, this));
+  },
+
+  _validRequestComplete: function (response) {
+    if ( response.code === '00' ) {
+      this._go('#request-complete');
+    } else {
+      this._sendFail(response);
+    }
   },
 
   _validateCookizStep1: function () {
     this._go('#step2');
+  },
+
+  _onCloseProcess: function () {
+    this._popupService.openConfirm(Tw.POPUP_TITLE.NOTIFY, Tw.MSG_GIFT.TING_A12, null, null, $.proxy(this._goToMain, this));
+  },
+
+  _goToMain: function () {
+    this._go('#main');
   },
 
   _goHistory: function () {
@@ -125,6 +149,7 @@ Tw.RechargeCookizProcess.prototype = {
   },
 
   _go: function (hash) {
+    this._history.setHistory();
     window.location.hash = hash;
   }
 };

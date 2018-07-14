@@ -4,9 +4,10 @@
  * Date: 2018.07.12
  */
 
-Tw.AuthLineCopRegister = function (rootEl) {
+Tw.AuthLineCopRegister = function (rootEl, nicknamePopup) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
+  this._nicknamePopup = nicknamePopup;
 
   this.$inputMdn = null;
   this.$inputCop = null;
@@ -31,15 +32,49 @@ Tw.AuthLineCopRegister.prototype = {
     this.$container.on('click', '.bt-blue1', $.proxy(this._onClickRegister, this));
   },
   _onClickNickname: function () {
-    console.log('nickname');
-
+    this._nicknamePopup.openNickname(null, $.proxy(this._onCloseNickname, this));
   },
   _onClickCancel: function () {
-    console.log('cancel');
+    history.back();
 
   },
   _onClickRegister: function () {
-    console.log('register');
+    this._sendBizSession('register');
 
+  },
+  _sendBizSession: function () {
+    var params = {
+      svcNum: this.$inputMdn.val(),
+      ctzCorpNm: this.$inputCop.val(),
+      ctzCorpNum: this.$inputCopNum.val()
+    };
+    this._apiService.request(Tw.API_CMD.BFF_03_0012, params)
+      .done($.proxy(this._successBizSession, this))
+      .fail($.proxy(this._failBizSession, this));
+  },
+  _successBizSession: function (type, resp) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      var svcMgmtNum = resp.result.svcMgmtNum;
+      this._sendRegisterBiz(svcMgmtNum);
+    }
+  },
+  _failBizSession: function (error) {
+    console.log(error);
+  },
+  _sendRegisterBiz: function (svcMgmtNum) {
+    var params = {
+      svcMgmtNum: svcMgmtNum,
+      nickNm: this.$inputNickname.val()
+    };
+    this._apiService.request(Tw.API_CMD.BFF_03_0012, params)
+      .done($.proxy(this._successRegisterBiz, this))
+      .fail($.proxy(this._failRegisterBiz, this));
+  },
+  _successRegisterBiz: function () {
+  },
+  _failRegisterBiz: function () {
+  },
+  _onCloseNickname: function(nickname) {
+    this.$inputNickname.val(nickname);
   }
 };

@@ -15,7 +15,7 @@ Tw.HomeMain = function (rootEl, lineRegisterLayer) {
 
 
   // For dev (Determine if api service issue or bff issue)
-  this._testApi();
+  // this._testApi();
 };
 
 

@@ -29,7 +29,8 @@ Tw.POPUP_TITLE = {
   CHANGE_SEARCH_CONDITION: '검색 조건 변경',
   CHANGE_NICKNAME: '닉네임 설정',
   SELECT_BANK: '은행선택',
-  SELECT_GIFT_AMOUNT: '선물할 금액 선택'
+  SELECT_GIFT_AMOUNT: '선물할 금액 선택',
+  CHANGE_BILL_GUIDE_TYPE: '어떤 안내서를 보여 드릴까요?'
 };
 
 Tw.POPUP_PROPERTY = {
@@ -57,18 +58,45 @@ Tw.PAYMENT_OPTION = {
   CLOSE: '4'
 };
 
-Tw.MSG_COMMON = {};
+Tw.PAYMENT_DATE_VALUE = {
+  FIFTEEN: '0',
+  TWENTY_ONE: '3',
+  TWENTY_THREE: '1'
+};
+
+Tw.MSG_COMMON = {
+  SERVER_ERROR: '통신 오류입니다. 잠시 후 다시 시도해 주세요.'
+};
 
 Tw.MSG_HOME = {};
 
 Tw.MSG_MYT = {
-  BILL_GUIDE_00: ' 요금안내서 재발행',
-  BILL_GUIDE_01: ' 요금안내서 재발행을 신청하시겠습니까?',
-  BILL_GUIDE_02: '요금안내서 재발행이 신청되었습니다.',
-  BILL_GUIDE_03: '선택하신 청구월에 대한 청구서가 이미 재발행 신청 되었습니다.',
+  BILL_GUIDE_REISSUE_00: ' 요금안내서 재발행',
+  BILL_GUIDE_REISSUE_01: ' 요금안내서 재발행을 신청하시겠습니까?',
+  BILL_GUIDE_REISSUE_02: '이메일 주소가 정확한지 다시 한번 확인해주시기 바랍니다. 재발행을 신청하시겠습니까?',
+  BILL_GUIDE_REISSUE_03: '선택하신 청구월에 대한 청구서가 이미 재발행 신청 되었습니다.',
+  BILL_GUIDE_REISSUE_04: '청구지 주소가 정확한지 다시 한번 확인해 주시기 바랍니다. 재발행 신청을 하시겠습니까?',
+  BILL_GUIDE_REISSUE_EXIT: '요금안내서 재발행을 종료하시겠습니까?',
   HOTBILL_MEMBER_POPUP_TITLE: '자녀 선택',
   HOTBILL_FAIL_REQUEST_TITLE: '요청 실패.',
-  HOTBILL_FAIL_REQUEST: '요금 정보 가져오기 실패했습니다.'
+  HOTBILL_FAIL_REQUEST: '요금 정보 가져오기 실패했습니다.',
+  BILL_GUIDE_03: '선택하신 청구월에 대한 청구서가 이미 재발행 신청 되었습니다.',
+  BILL_GUIDECHANGE_A01: '요금안내서 정보를 변경하시겠습니까?',
+  BILL_GUIDECHANGE_A02: '[T] 요금안내서가 신청되었습니다.\n[T] 요금안내서 신청 시 기존에 신청하신 요금안내서는 자동 해지 됩니다.',
+  BILL_GUIDECHANGE_A03: '휴대폰번호를 입력해주세요.',
+  BILL_GUIDECHANGE_A04: '휴대폰 번호를 확인해주시기 바랍니다.',
+  BILL_GUIDECHANGE_A05: '휴대폰번호를 입력하지 않으면 법정대리인에게 요금안내서를 발송하지 않습니다.',
+  BILL_GUIDECHANGE_A06: '법정대리인의 휴대폰번호를 확인해주시기 바랍니다.',
+  BILL_GUIDECHANGE_A07: '입력하신 법정대리인 휴대폰번호로 요금안내서가 동시 통보됩니다.\n신청/변경하시겠습니까?',
+  BILL_GUIDECHANGE_A08: '이메일 주소를 확인해 주시기 바랍니다.',
+  BILL_GUIDECHANGE_A09: '고객님의 이메일로 신청확인메일이 발송되오니 확인해 주시기 바랍니다.',
+  BILL_GUIDECHANGE_A10: '주소를 확인해주시기 바랍니다.',
+  BILL_GUIDECHANGE_A12: '[T] 요금안내서의 정보가 변경되었습니다.',
+  BILL_GUIDECHANGE_A13: '[T] 요금안내서 재발행을 신청하시겠습니까?',
+  BILL_GUIDECHANGE_A14: '요금안내서 재발행이 신청되었습니다.',
+  BILL_GUIDECHANGE_A15: '선택하신 청구월에 대한 청구서가 이미 재발행 신청 되었습니다.',
+  BILL_GUIDECHANGE_A16: '청구지 주소가 정확한지 다시 한번 확인해 주시기 바랍니다.\n재발행 신청을 하시겠습니까?',
+  BILL_GUIDECHANGE_A17: '이메일 주소가 정확한지 다시 한번 확인해 주시기 바랍니다.\n재발행 신청을 하시겠습니까?'
 };
 
 Tw.MSG_RECHARGE = {
@@ -105,7 +133,7 @@ Tw.MSG_PAYMENT = {
   REALTIME_A02: '은행명을 선택해주세요.',
   REALTIME_A03: '계좌번호의 정합성이 맞지 않습니다.',
   REALTIME_A04: '카드 유효기간이 맞지 않습니다.',
-  REALTIME_A05: '카드 유효기간을 현재 월 이상으로 정확히 선택해주세요.',
+  REALTIME_A05: '카드 유효기간을 현재 월 이상으로 정확히 입력해 주세요.',
   REALTIME_A06: '카드번호의 정합성이 맞지 않습니다.',
   REALTIME_A07: '비밀번호의 정합성이 맞지 않습니다.',
   REALTIME_A08: '1,000 포인트 이상 입력해 주세요.',
@@ -113,6 +141,7 @@ Tw.MSG_PAYMENT = {
   REALTIME_A10: '입금전용계좌 SMS 신청을 종료하시겠습니까?',
   REALTIME_A11: '포인트를 조회해 주세요.',
   REALTIME_A12: '보유하신 포인트보다 초과 입력하셨습니다.',
+  AUTO_A01: '카드 유효기간을 입력해 주세요.',
   AUTO_A02: '휴대폰 번호를 입력해 주세요.',
   AUTO_A03: '계좌번호를 입력해 주세요.',
   AUTO_A04: '비밀번호를 입력해 주세요.',
@@ -134,9 +163,14 @@ Tw.MSG_PAYMENT = {
   PAYMENT_A13: '보유하신 포인트보다 초과 입력하셨습니다.',
   PAYMENT_A14: '1,000 포인트 이상 입력해 주세요.',
   HISTORY_PROCESS_TYPE_APPLY: '신청',
+  HISTORY_PROCESS_TYPE_DONE: '완료',
+  HISTORY_PROCESS_TYPE_RESERVE_DONE: '예약완료',
   HISTORY_PROCESS_TYPE_CHANGE: '변경',
   HISTORY_PROCESS_TYPE_QUIT: '해지',
   HISTORY_PROCESS_TYPE_CANCEL: '신청취소',
+  HISTORY_PROCESS_TYPE_WITHDRAWAL_BEFORE: '인출청구전',
+  HISTORY_PROCESS_TYPE_WITHDRAWAL_ING: '인출청구중',
+  HISTORY_PROCESS_TYPE_WITHDRAWAL_DONE: '정상납부',
   HISTORY_POINT_TITLE_OCB: 'OK캐쉬백',
   HISTORY_POINT_TITLE_TPOINT: 'T포인트',
   HISTORY_POINT_TITLE_RAINBOW: '레인보우 포인트',

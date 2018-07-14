@@ -20,6 +20,9 @@ export const URL = {
   '/myt/bill/billguide': { login: true },
   '/myt/bill/hotbill/child': { login: true },
   '/myt/bill/guidechange': { login: true },
+  '/myt/bill/guidechange/change': { login: true },
+  '/myt/bill/guidechange/change-complete': { login: true },
+  '/myt/bill/guidechange/update': { login: true },
   // recharge
   '/recharge/refill': { login: true },
   '/recharge/refill/history': { login: true },
@@ -62,7 +65,6 @@ export const URL = {
   // auth
   '/auth/line': { login: true },
   '/auth/line/edit': { login: true },
-  '/auth/line/register/guide': { login: true },
   '/auth/line/register/corporation': { login: true },
   '/auth/line/register/empty': { login: true },
   '/auth/login/fail': { login: false },

@@ -3,6 +3,16 @@
 * Author: 공자윤 (jayoon.kong@sk.com)
 * Date: 2018.07.05
 %>
+<!-- #header -->
+<div id="header" class="header-wrap step-page">
+    <div class="header step-page">
+        <div class="header-ti">
+            <h1>자동납부 신청 및 변경</h1>
+        </div>
+        <button class="close-step common-back"><span class="blind">닫기</span></button>
+    </div>
+</div>
+<!--// #header -->
 <div class="container">
     <div class="cont-box">
         <!-- .widget -->
@@ -24,11 +34,11 @@
             <div class="widget select-way">
                 <div class="widget-box radio">
                     <ul class="select-list" role="radiogroup">
-                        <li class="radiobox type01 focus checked" role="radio" aria-checked="true">
+                        <li class="radiobox change-radiobox type01 focus change-first-radio-box checked" role="radio" data-code="01" aria-checked="true">
                             <input type="radio" name="radio1" value="은행계좌이체" title="은행계좌이체 선택" checked="checked" />
                             은행계좌이체
                         </li>
-                        <li class="radiobox type01" role="radio" aria-checked="false">
+                        <li class="radiobox change-radiobox type01" role="radio" data-code="02" aria-checked="false">
                             <input type="radio" name="radio1" value="체크/신용카드 납부" title="체크/신용카드 선택"/>
                             체크/신용카드
                         </li>
@@ -55,7 +65,7 @@
                     <div class="account-detail">
                         <div class="inputbox">
                             <span class="input">
-                                <input type="text" class="only-number phone-number" minlength="10" maxlength="11" placeholder="숫자만 입력" title="휴대폰 번호">
+                                <input type="text" class="only-number account-phone-number" minlength="10" maxlength="11" placeholder="숫자만 입력" title="휴대폰 번호">
                                 <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
                             </span>
                         </div>
@@ -68,7 +78,7 @@
                     <div class="account-detail">
                         <div class="inputbox input-context">
                             <span class="input">
-                                <input type="text" class="only-number" maxlength="16" placeholder="숫자만 입력" title="카드번호">
+                                <input type="text" class="only-number card-number" maxlength="16" placeholder="숫자만 입력" title="카드번호">
                                 <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
                             </span>
                         </div>
@@ -79,12 +89,12 @@
                     <!-- 2018-07-09 수정-->
                     <div class="inputbox card-tbl">
                         <span class="input card-cell">
-                            <input type="text" class="only-number" maxlength="4" placeholder="YYYY" title="카드유효기간 년">
+                            <input type="text" class="only-number card-y" maxlength="4" placeholder="YYYY" title="카드유효기간 년">
                             <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
                         </span>
                         <span class="input card-cell">/</span>
                         <span class="input card-cell">
-                            <input type="text" class="c-month only-number" maxlength="2" placeholder="MM" title="카드유효기간 월">
+                            <input type="text" class="c-month only-number card-m" maxlength="2" placeholder="MM" title="카드유효기간 월">
                             <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
                         </span>
                     </div>
@@ -95,7 +105,7 @@
                     <div class="account-detail">
                         <div class="inputbox">
                             <span class="input">
-                                <input type="text" class="only-number" max-length="11" placeholder="숫자만 입력" title="휴대폰 번호">
+                                <input type="text" class="only-number card-phone-number" max-length="11" placeholder="숫자만 입력" title="휴대폰 번호">
                                 <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
                             </span>
                         </div>
@@ -106,10 +116,10 @@
                         <h5 class="account-tit">요금납부일</h5>
                         <div class="widget">
                             <div class="widget-box tube">
-                                <ul class="tube-list three" role="radiogroup">
-                                    <li class="checked" role="radio" aria-checked="true"><input type="radio" name="senddata" checked="" title="15 일">15 일</li>
-                                    <li role="radio" aria-checked="false"><input type="radio" name="senddata" title="21 일">21 일</li>
-                                    <li role="radio" aria-checked="false"><input type="radio" name="senddata" title="23 일">23 일</li>
+                                <ul class="tube-list three card-date" role="radiogroup">
+                                    <li class="checked" role="radio" data-code="1" aria-checked="true"><input type="radio" name="senddata" checked="" title="11일">11 일</li>
+                                    <li role="radio" data-code="2" aria-checked="false"><input type="radio" name="senddata" title="18일">18 일</li>
+                                    <li role="radio" data-code="3" aria-checked="false"><input type="radio" name="senddata" title="26일">26 일</li>
                                 </ul>
                             </div>
                         </div>
