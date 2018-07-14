@@ -321,9 +321,18 @@
     <% include ../../../../../common/views/components/footer.component.html %>
 </div>
 <% include ../../components/javascript.component.html %>
+
 <script>
   $(document).ready(function () {
-    new Tw.mytBillBillguideCompanyPage($('#wrapFdev'));
+    new Tw.mytBillBillguideCompanyPage($('#wrapFdev'), {
+      svcInfo: <%-JSON.stringify(svcInfo) %>,
+      circuitInfo: <%-JSON.stringify(circuitInfo) %>,
+      billpayInfo : <%-JSON.stringify(billpayInfo) %>,
+      circuitChildInfo: <%-JSON.stringify(circuitChildInfo) %>,
+      commDataInfo: <%-JSON.stringify(commDataInfo) %>,
+      defaultInfo: <%-JSON.stringify(defaultInfo) %>,
+      showConditionInfo: <%-JSON.stringify(showConditionInfo) %>
+  });
   });
 </script>
 <% include ../../components/end.component.html %>

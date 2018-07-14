@@ -47,29 +47,39 @@
                     <span class="info-btn"><a href="" class="btn-choice" role="button">변경</a></span>
                 </div>
             </div>
-            <div class="cont-box nogaps-hoz">
-                <div class="use-family">
-                    <h3 class="blind">자녀폰 실시간 요금 보기</h3>
-                    <div class="link-long">
-                        <a href="" title="">자녀폰 사용요금 (<strong>5</strong>명)<!-- 2017-07-06 텍스트 수정 -->
-                            <span class="badge badge-fam"><span class="blind">자녀회선</span></span>
-                            <span class="ico"></span>
-                        </a>
-                    </div>
-                </div>
-            </div>
+            <!--<div class="cont-box nogaps-hoz">-->
+                <!--<div class="use-family">-->
+                    <!--<h3 class="blind">자녀폰 실시간 요금 보기</h3>-->
+                    <!--<div class="link-long">-->
+                        <!--<a href="" title="">자녀폰 사용요금 (<strong>5</strong>명)&lt;!&ndash; 2017-07-06 텍스트 수정 &ndash;&gt;-->
+                            <!--<span class="badge badge-fam"><span class="blind">자녀회선</span></span>-->
+                            <!--<span class="ico"></span>-->
+                        <!--</a>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+            <%#자녀폰 사용요금 컴포넌트  %>
+            <% if ( circuitChildInfo.length > 0) { %>
+            <% include ../../components/bill/myt.bill.billguide.children.html %>
+            <% } %>
 
             <hr class="cont-sp type1" aria-hidden="true"/>
             <div class="cont-box">
                 <div class="payment-inquiry">
-                    <a class="bt-link-tx" href="">Band 데이터 6.5G<span class="ico"></span></a>
-                    <button class="bt-dropdown big" title="조회기간 선택">2018년 6월<span class="ico"></span></button>
+                    <a class="bt-link-tx" href=""><%=baseFeePlansInfo.prodName %><span class="ico"></span></a>
+                    <button class="bt-dropdown big" title="조회기간 선택"><%=commDataInfo.selClaimDtBtn %><span class="ico"></span></button>
                     <div class="payment-info family">
                         <p class="tit"><span class="num">010-0000-0000</span>에<br /><span class="num"><strong>통합청구</strong></span>되었습니다.</p>
                         <p class="num term">2018.05.01~ 2018.05.31</p>
                     </div>
                     <div class="txt-discount">
-                        <p><span class="num">5</span>월 사용 요금은 <span class="num">370,000</span>원이고<br /><span class="num">20,000</span>원을 할인 받으셨습니다.</p>
+                        <% if( commDataInfo.discount === '0' ) {  %>
+                        <!-- 사용요금 + 요금할인내역 0원일때 -->
+                        <p><span class="num"><%=commDataInfo.selClaimDtNum %></span>월 사용 요금은 <span class="num"><%=billpayInfo.useAmtTot %></span>원입니다.</p>
+                        <% } else { %>
+                        <!-- 사용요금 + 요금할인내역 -->
+                        <p><span class="num"><%=commDataInfo.selClaimDtNum %></span>월 사용 요금은 <span class="num"><%=billpayInfo.useAmtTot %></span>원이고<br /><span class="num"><%=commDataInfo.discount %></span>원을 할인 받으셨습니다.</p>
+                        <% } %>
                     </div>
                 </div>
             </div>
@@ -440,9 +450,18 @@
     <% include ../../../../../common/views/components/footer.component.html %>
 </div>
 <% include ../../components/javascript.component.html %>
+
 <script>
   $(document).ready(function () {
-    new Tw.mytBillBillguideCombineCommonPage($('#wrapFdev'));
+    new Tw.mytBillBillguideCombineCommonPage($('#wrapFdev'), {
+      svcInfo: <%-JSON.stringify(svcInfo) %>,
+      circuitInfo: <%-JSON.stringify(circuitInfo) %>,
+      billpayInfo : <%-JSON.stringify(billpayInfo) %>,
+      circuitChildInfo: <%-JSON.stringify(circuitChildInfo) %>,
+      commDataInfo: <%-JSON.stringify(commDataInfo) %>,
+      defaultInfo: <%-JSON.stringify(defaultInfo) %>,
+      showConditionInfo: <%-JSON.stringify(showConditionInfo) %>
+  });
   });
 </script>
 <% include ../../components/end.component.html %>
