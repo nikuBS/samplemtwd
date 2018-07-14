@@ -59,7 +59,7 @@ export const API_CMD = {
   BFF_05_0032: { path: '/core-bill/v1/bill-pay/payment-possible-day-input', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: false },
   BFF_05_0033: { path: '/core-bill/v1/bill-pay/autopay-schedule', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0034: { path: '/core-bill/v1/bill-pay/suspension-cancel', method: API_METHOD.DELETE, server: API_SERVER.BFF, bypass: false },
-  BFF_05_0036: { path: '/core-bill/v1/bill-pay/bills', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_05_0036: { path: '/core-bill/v1/bill-pay/bills', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0037: { path: '/core-bill/v1/bill-pay/suspension', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0038: { path: '/core-bill/v1/bill-pay/donation', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0039: { path: '/core-bill/v1/bill-types-return-list/', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },

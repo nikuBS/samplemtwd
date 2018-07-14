@@ -39,6 +39,7 @@ Tw.API_CMD = {
   BFF_05_0022: { path: '/core-bill/v1/hotbill/fee/hotbill-response', method: Tw.API_METHOD.GET },
   BFF_05_0024: { path: '/core-bill/v1/child/children', method: Tw.API_METHOD.GET },
   BFF_05_0035: { path: '/core-bill/v1/hotbill/fee/hotbill-request', method: Tw.API_METHOD.GET },
+  BFF_05_0036: { path: '/core-bill/v1/bill-pay/bills', method: Tw.API_METHOD.GET },
 
   // RECHARGE
   BFF_06_0001: { path: '/core-recharge/v1/refill-coupons', method: Tw.API_METHOD.GET },

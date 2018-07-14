@@ -73,7 +73,7 @@
 
     <% if( billpayInfo.useAmtTot === '0' ) { %>
                 <div class="cont-box  nogaps-btm noborder">
-                    <button class="bt-dropdown big"title="전체납부내역" aria-haspopup="true"><%=commDataInfo.selClaimDtBtn %><span class="ico"></span></button>
+                    <button class="bt-dropdown big" title="전체납부내역" aria-haspopup="true" data-target="totPaySelectBtn" ><%=commDataInfo.selClaimDtBtn %><span class="ico"></span></button>
                     <div class="payment-inquiry">
                         <div class="payment-all">
                             <h3 class="blind">전체납부내역</h3>
@@ -85,7 +85,7 @@
                 </div>
     <% } else { %>
                 <div class="cont-box  nogaps-btm noborder">
-                    <button class="bt-dropdown big"title="전체납부내역" aria-haspopup="true"><%=commDataInfo.selClaimDtBtn %><span class="ico"></span></button>
+                    <button class="bt-dropdown big" title="전체납부내역" aria-haspopup="true" data-target="totPaySelectBtn" ><%=commDataInfo.selClaimDtBtn %><span class="ico"></span></button>
                     <div class="payment-inquiry">
                         <div class="payment-all">
                             <h3 class="blind">전체납부내역</h3>
@@ -160,7 +160,7 @@
 
 <%#가입 서비스별 상세 요금 %>
                 <div class="cont-box nogaps-btm">
-                    <div class="link-long-group" data-target="testTg">
+                    <div class="link-long-group" data-target="detailedChargeBtn">
                         <h3 class="link-group-tit">가입 서비스별 상세 요금입니다.</h3>
 
                         <% for(var i=0; i < commDataInfo.joinSvcList.length; i++) { %>
@@ -280,19 +280,19 @@
             <div class="cont-box nogaps-hoz">
                 <div class="link-long-group">
                     <div class="link-long">
-                        <a href="" class="" title="약정할인/단말분할상환정보로 이동">약정할인/단말분할상환정보<span class="ico"></span></a>
+                        <a  class="" title="약정할인/단말분할상환정보로 이동">약정할인/단말분할상환정보<span class="ico"></span></a>
                     </div>
                     <div class="link-long">
-                        <a href="" class="" title="요금제/부가서비스 할인내역확인으로 이동">요금제/부가서비스 할인내역확인<span class="ico"></span></a>
+                        <a  class="" title="요금제/부가서비스 할인내역확인으로 이동">요금제/부가서비스 할인내역확인<span class="ico"></span></a>
                     </div>
                     <div class="link-long">
-                        <a href="" class="" title="콜기프트 요금으로 이동">콜기프트 요금<span class="ico"></span></a>
+                        <a  class="" title="콜기프트 요금으로 이동">콜기프트 요금<span class="ico"></span></a>
                     </div>
                     <div class="link-long">
-                        <a href="" class="" title="로밍 사용요금 상세조회로 이동">로밍 사용요금 상세조회<span class="ico"></span></a>
+                        <a  class="" title="로밍 사용요금 상세조회로 이동">로밍 사용요금 상세조회<span class="ico"></span></a>
                     </div>
                     <div class="link-long">
-                        <a href="" class="" title="기부금/후원금 상세조회로 이동">기부금/후원금 상세조회<span class="ico"></span></a>
+                        <a  class="" title="기부금/후원금 상세조회로 이동">기부금/후원금 상세조회<span class="ico"></span></a>
                     </div>
                 </div>
             </div>

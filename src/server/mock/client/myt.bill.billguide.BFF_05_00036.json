@@ -1,30 +1,8 @@
-//청구요금조회
-const billguide_BFF_05_00036 = {
-  'code': '00',
-  'msg': 'success',
-  'result': {
-    'selSvcMgmtNum': '',
-    'acntNum': '6017402179',
-    'custNum': '8005489015',
-    'invDt': 20170930,
-    'invDtArr':
-      [
-        '20170930',
-        '20170831',
-        '20170731',
-        '20170630',
-        '20170531',
-        '20170430'
-      ],
-    'useAmtTot': '75,510',//75,510
-    'deduckTotInvAmt': '-22055',
-    'detailYn': '',
-    'autopayYn': 'Y',
-    'paidAmtMonthSvcCnt': 3,//청구월회선수( 1 : 개별회선, 그외(1이상) : 통합청구 )
-    'repSvcYn': 'Y',//대표청구회선여부 (Y : 대표청구회선, N: 대표청구회선아님)
-    'coClCd': 'T',//브로드밴드 가입 여부
-    'paidAmtMonthCnt': '6',
-    'paidAmtMonthSvcNum': [
+{
+  "code": "00",
+  "msg": "success",
+  "result": {
+    "paidAmtMonthSvcNum": [
       {
         "svcMgmtNum": "1144012200",
         "name": "이동전화(010-90**-98**)"
@@ -45,21 +23,6 @@ const billguide_BFF_05_00036 = {
         "name": "유선전화(디지털전화, 003**61*****) 경기 부**********************************************"
       }
     ],
-    //청구목록 detailYn : 'N'
-    'paidAmtSvcCdList' : [
-      {
-        "svcNm": "이동전화",
-        "amt": "192200"
-      },
-      {
-        "svcNm": "인터넷",
-        "amt": "11000"
-      },    {
-        "svcNm": "유선전화",
-        "amt": "550"
-      }
-    ],
-    //상세 detailYn : 'Y'
     "paidAmtDetailInfo": [
       {
         "coClNm": "",
@@ -180,7 +143,8 @@ const billguide_BFF_05_00036 = {
         "billItmLclNm": "요금할인",
         "ibilItmCreMclAmt": "",
         "svcInfoNm": "이동전화(010-90**-98**)"
-      },    {
+      },
+      {
         "coClNm": "",
         "invAmt": "-13,000",
         "svcNm": "",
@@ -601,10 +565,5 @@ const billguide_BFF_05_00036 = {
         "svcInfoNm": "유선전화(003**61*****)"
       }
     ]
-
   }
-
-};
-
-export default billguide_BFF_05_00036;
-
+}
