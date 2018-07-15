@@ -5,11 +5,11 @@
  */
 
 Tw.MyTBillGuideUpdatePrototype = {
-  _construct: function (rootEl, fromChange) {
+  _construct: function (rootEl, options) {
     this.$container = rootEl;
     this._apiService = Tw.Api;
     this._popupService = Tw.Popup;
-    this._fromChange = fromChange;
+    this._options = options;
 
     this._assign();
     this._bindEvent();
@@ -45,12 +45,11 @@ Tw.MyTBillGuideUpdatePrototype = {
   _checkToSubmit: function () {
     var isValid = this._checkValidation();
     if ( !isValid ) {
-      // window.alert('~~~~~~~not valid!');
       return;
     }
     // var requestParams = this._getRequestParams();
     // 미성년인경우, 법정대리인 전화번호가 없을 시 얼럿 확인 후 진행
-    if (this._$inputCcurNotiSvcNum && Tw.FormatHelper.isEmpty(this._$inputCcurNotiSvcNum.val())) {
+    if (this._$inputCcurNotiSvcNum.length > 0 && Tw.FormatHelper.isEmpty(this._$inputCcurNotiSvcNum.val())) {
       this._popupService.openAlert(Tw.MSG_MYT.BILL_GUIDECHANGE_A05, null, $.proxy(this._openConfirm, this));
     } else {
       this._openConfirm();
@@ -60,16 +59,20 @@ Tw.MyTBillGuideUpdatePrototype = {
   _changeBillGuideType: function () {
     this._popupService.close();
     window.setTimeout($.proxy(function () {
-      var tmpMsg = this._fromChange ? Tw.MSG_MYT.BILL_GUIDECHANGE_A02 : Tw.MSG_MYT.BILL_GUIDECHANGE_A12;
+      var tmpMsg = this._options.fromChange ? Tw.MSG_MYT.BILL_GUIDECHANGE_A02 : Tw.MSG_MYT.BILL_GUIDECHANGE_A12;
       var alertMsg = tmpMsg.replace(/\[T\]/gi, this._curBillGuideTypeNm);
       this._popupService.openAlert(alertMsg, Tw.POPUP_TITLE.NOTIFY, $.proxy(this.onClickBtnChangeConfirm, this));
     }, this), 1000);
   },
 
   onClickBtnChangeConfirm: function () {
-    var beforeBillType = this._curBillGuideType; //수정해야함
-    var selectedBillType = this._curBillGuideType;
-    window.location.href = '/myt/bill/guidechange/change-complete?beforeBillTypeCd=' + beforeBillType + '&afterBillTypeCd=' + selectedBillType;
+    if (this._options.fromChange) {
+      var beforeBillGuideType = this._options.beforeBillGuideType; //수정해야함
+      var selectedBillGuideType = this._curBillGuideType;
+      window.location.href = '/myt/bill/guidechange/change-complete?beforeBillGuideType=' + beforeBillGuideType + '&afterBillGuideType=' + selectedBillGuideType;
+    } else {
+
+    }
   },
 
   _setNext: function () {
@@ -116,7 +119,7 @@ Tw.MyTBillGuideUpdatePrototype = {
     this.$container = null;
     this._apiService = null;
     this._popupService = null;
-    this._fromChange = null;
+    this.options = null;
 
     this._$btnNext.off('click');
     this._$btnSubmit.off('click');
@@ -214,10 +217,16 @@ Tw.MyTBillGuideUpdateClasses.etc.prototype = $.extend({}, Tw.MyTBillGuideUpdateP
 Tw.MyTBillGuideUpdateClasses.billLetter.prototype = $.extend({}, Tw.MyTBillGuideUpdatePrototype, {
   _assign: function () {
     Tw.MyTBillGuideUpdatePrototype._assign.apply(this, arguments);
+    this._$inputCntcNum1 = this.$container.find('.input-cntc-num1');
     this._$inputCcurNotiSvcNum = this.$container.find('.input-ccur-noti-svc-num');
   },
   _checkValidation: function () {
-    return this._representativePhoneNumValidation.apply(this, this._$inputCcurNotiSvcNum);
+    if (this._$inputCntcNum1.length > 0) {
+      return this._phoneNumValidation.apply(this, this._$inputCntcNum1);
+    }
+    if (this._$inputCcurNotiSvcNum.length > 0) {
+      return this._representativePhoneNumValidation.apply(this, this._$inputCcurNotiSvcNum);
+    }
   },
   _getRequestParams: function () {
     return {};
@@ -230,10 +239,16 @@ Tw.MyTBillGuideUpdateClasses.billLetter.prototype = $.extend({}, Tw.MyTBillGuide
 Tw.MyTBillGuideUpdateClasses.sms.prototype = $.extend({}, Tw.MyTBillGuideUpdatePrototype, {
   _assign: function () {
     Tw.MyTBillGuideUpdatePrototype._assign.apply(this, arguments);
+    this._$inputCntcNum1 = this.$container.find('.input-cntc-num1');
     this._$inputCcurNotiSvcNum = this.$container.find('.input-ccur-noti-svc-num');
   },
   _checkValidation: function () {
-    return this._representativePhoneNumValidation.apply(this, this._$inputCcurNotiSvcNum);
+    if (this._$inputCntcNum1.length > 0) {
+      return this._phoneNumValidation.apply(this, this._$inputCntcNum1);
+    }
+    if (this._$inputCcurNotiSvcNum.length > 0) {
+      return this._representativePhoneNumValidation.apply(this, this._$inputCcurNotiSvcNum);
+    }
   },
   _getRequestParams: function () {
     return {};
@@ -247,10 +262,16 @@ Tw.MyTBillGuideUpdateClasses.billLetterEmail.prototype = $.extend({}, Tw.MyTBill
   _assign: function () {
     Tw.MyTBillGuideUpdatePrototype._assign.apply(this, arguments);
     this._$inputEmail = this.$container.find('.input-email');
+    this._$inputCntcNum1 = this.$container.find('.input-cntc-num1');
     this._$inputCcurNotiSvcNum = this.$container.find('.input-ccur-noti-svc-num');
   },
   _checkValidation: function () {
-    return this._representativePhoneNumValidation.apply(this, this._$inputCcurNotiSvcNum);
+    if (this._$inputCntcNum1.length > 0) {
+      return this._phoneNumValidation.apply(this, this._$inputCntcNum1);
+    }
+    if (this._$inputCcurNotiSvcNum.length > 0) {
+      return this._representativePhoneNumValidation.apply(this, this._$inputCcurNotiSvcNum);
+    }
   },
   _getRequestParams: function () {
     return {};
@@ -271,10 +292,16 @@ Tw.MyTBillGuideUpdateClasses.smsEmail.prototype = $.extend({}, Tw.MyTBillGuideUp
   _assign: function () {
     Tw.MyTBillGuideUpdatePrototype._assign.apply(this, arguments);
     this._$inputEmail = this.$container.find('.input-email');
+    this._$inputCntcNum1 = this.$container.find('.input-cntc-num1');
     this._$inputCcurNotiSvcNum = this.$container.find('.input-ccur-noti-svc-num');
   },
   _checkValidation: function () {
-    return this._representativePhoneNumValidation.apply(this, this._$inputCcurNotiSvcNum);
+    if (this._$inputCntcNum1.length > 0) {
+      return this._phoneNumValidation.apply(this, this._$inputCntcNum1);
+    }
+    if (this._$inputCcurNotiSvcNum.length > 0) {
+      return this._representativePhoneNumValidation.apply(this, this._$inputCcurNotiSvcNum);
+    }
   },
   _getRequestParams: function () {
     return {};

@@ -6,6 +6,7 @@
 <div class="bill-guide-component" cur-bill-type="<%= curBillGuide.curBillType %>" cur-bill-type-nm="<%= curBillGuide.curBillTypeNm %>" cur-bill-type-component="<%= curBillGuide.component %>">
     <hr class="cont-sp type1" aria-hidden="true"/>
     <div class="cont-box">
+        <% if (curBillGuide.svcInfo.svcAttrCd === 'M1') { %>
         <div class="change-plan no-tit">
             <dl>
                 <dt>SMS를 받으시겠어요?</dt>
@@ -26,6 +27,14 @@
                 </dd>
             </dl>
         </div>
+        <% } else { %>
+        <div class="payment-select">
+            <div class="contents-empty">
+                <span class="ico"></span>
+                <p class="desc">&quot;T world 확인&quot;은<br />입력하실 정보가 없습니다.</p>
+            </div>
+        </div>
+        <% } %>
         <div class="inner">
             <div class="contents-btn">
                 <ul class="bt-slice">

@@ -39,6 +39,7 @@ Tw.MyTBillGuideChange = function (rootEl) {
 
 Tw.MyTBillGuideChange.prototype = {
   _assign: function () {
+    this._curBillGuideType = this.$container.data('cur-bill-guide-type');
     this._$btnDropdown = this.$container.find('.bt-dropdown');
     this._$componentWrap = this.$container.find('.component-wrap');
     this._$selectedBillGuideTypeName = this.$container.find('.selected-bill-guide-type-name');
@@ -89,8 +90,12 @@ Tw.MyTBillGuideChange.prototype = {
     if ( this._billGuideUpdateInstance ) {
       this._billGuideUpdateInstance.destroy();
     }
-    this._billGuideUpdateInstance = new Tw.MyTBillGuideUpdateClasses[componentClassName]($component, true);
+    this._billGuideUpdateInstance = new Tw.MyTBillGuideUpdateClasses[componentClassName]($component, {
+      fromChange: true,
+      beforeBillGuideType: this._curBillGuideType
+    });
     this._$selectedBillGuideTypeName.text(this.BILL_GUIDE_TYPE_NAME[selectedBillGuideType]);
+    skt_landing.widgets.widget_init();
   },
 
   _init: function () {

@@ -1,0 +1,46 @@
+<!--
+* FileName: etc-info.component.html
+* Author: 이정민 (skt.p130713@partner.sk.com)
+* Date: 2018.07.13
+-->
+<li>
+    <dl>
+        <dt class="ti-data">기타(우편) 받으실 주소</dt>
+        <dd class="tx-data">
+            <%= curBillGuide.basAddr %>
+            <%= curBillGuide.dtlAddr %>
+        </dd>
+    </dl>
+</li>
+<li>
+    <dl>
+        <dt class="ti-data">청구인 휴대폰번호</dt>
+        <dd class="tx-data">
+            <%= curBillGuide.cntcNum1 %>
+        </dd>
+    </dl>
+</li>
+<li>
+    <dl>
+        <dt class="ti-data">휴대폰 번호 전체 표시</dt>
+        <dd class="tx-data">
+            <%= (curBillGuide.phonNumPrtClCd === 'N' ? '일부 별표 표시' : '전체 표시') %>
+        </dd>
+    </dl>
+</li>
+<li>
+    <dl>
+        <dt class="ti-data">발송주기</dt>
+        <dd class="tx-data">
+            <% if (curBillGuide.billSndCyclCd === '1') { %>
+               매월
+            <% } else if (curBillGuide.billSndCyclCd === '2') { %>
+                격월
+            <% } else if (curBillGuide.billSndCyclCd === '3') { %>
+                분기
+            <% } else { %>
+                반기
+            <% } %>
+        </dd>
+    </dl>
+</li>

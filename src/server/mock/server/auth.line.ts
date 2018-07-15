@@ -3,7 +3,7 @@ const LineList = {
   msg: '',
   result:
     {
-      M: [{
+      m: [{
         svcMgmtNum: '7100000001',
         svcGr: 'A',
         svcAttrCd: 'M1',
@@ -11,9 +11,10 @@ const LineList = {
         expsYn: 'Y',
         expsSeq: '3',
         svcNum: '01012**56**',
-        nickNm: '내휴대폰',
-        addr: '',
-        svcScrbDtm: '20171125102458'
+        nickNm: '',
+        addr: '서울 광진구',
+        svcScrbDtm: '20171125102458',
+        rmk: '갤럭시S'
       }, {
         svcMgmtNum: '7100000001',
         svcGr: 'A',
@@ -23,8 +24,9 @@ const LineList = {
         expsSeq: '2',
         svcNum: '01012**56**',
         nickNm: '내휴대폰',
-        addr: '',
-        svcScrbDtm: '20171125102458'
+        addr: '서울 광진구',
+        svcScrbDtm: '20171125102458',
+        rmk: '갤럭시S'
       }, {
         svcMgmtNum: '7100000001',
         svcGr: 'A',
@@ -34,20 +36,22 @@ const LineList = {
         expsSeq: '4',
         svcNum: '01012**56**',
         nickNm: '내휴대폰',
-        addr: '',
-        svcScrbDtm: '20171125102458'
+        addr: '서울 광진구',
+        svcScrbDtm: '20171125102458',
+        rmk: '갤럭시S'
       }, {
-          svcMgmtNum: '7100000001',
-          svcGr: 'A',
-          svcAttrCd: 'M4',
-          repSvcYn: 'Y',
-          expsYn: 'N',
-          expsSeq: '1',
-          svcNum: '01012**56**',
-          nickNm: '내휴대폰',
-          addr: '',
-          svcScrbDtm: '20171125102458'
-        }, {
+        svcMgmtNum: '7100000001',
+        svcGr: 'A',
+        svcAttrCd: 'M4',
+        repSvcYn: 'Y',
+        expsYn: 'N',
+        expsSeq: '1',
+        svcNum: '01012**56**',
+        nickNm: '',
+        addr: '서울 광진구',
+        svcScrbDtm: '20171125102458',
+        rmk: '갤럭시S'
+      }, {
         svcMgmtNum: '7100000001',
         svcGr: 'A',
         svcAttrCd: 'M5',
@@ -56,10 +60,11 @@ const LineList = {
         expsSeq: '6',
         svcNum: '01012**56**',
         nickNm: '내휴대폰',
-        addr: '',
-        svcScrbDtm: '20171125102458'
+        addr: '서울 광진구',
+        svcScrbDtm: '20171125102458',
+        rmk: '갤럭시S'
       }],
-      'S': [{
+      s: [{
         svcMgmtNum: '7100000001',
         svcGr: 'A',
         svcAttrCd: 'S1',
@@ -68,8 +73,9 @@ const LineList = {
         expsSeq: '1',
         svcNum: '01012**56**',
         nickNm: '내휴대폰',
-        addr: '',
-        svcScrbDtm: '20171125102458'
+        addr: '서울 광진구',
+        svcScrbDtm: '20171125102458',
+        rmk: '갤럭시S'
       }, {
         svcMgmtNum: '7100000001',
         svcGr: 'A',
@@ -79,10 +85,11 @@ const LineList = {
         expsSeq: '1',
         svcNum: '01012**56**',
         nickNm: '내휴대폰',
-        addr: '',
-        svcScrbDtm: '20171125102458'
+        addr: '서울 광진구',
+        svcScrbDtm: '20171125102458',
+        rmk: '갤럭시S'
       }],
-      'O': [{
+      o: [{
         svcMgmtNum: '7100000001',
         svcGr: 'A',
         svcAttrCd: 'O1',
@@ -91,8 +98,9 @@ const LineList = {
         expsSeq: '1',
         svcNum: '01012**56**',
         nickNm: '내휴대폰',
-        addr: '',
-        svcScrbDtm: '20171125102458'
+        addr: '서울 광진구',
+        svcScrbDtm: '20171125102458',
+        rmk: '갤럭시S'
       }, {
         svcMgmtNum: '7100000001',
         svcGr: 'A',
@@ -102,8 +110,9 @@ const LineList = {
         expsSeq: '1',
         svcNum: '01012**56**',
         nickNm: '내휴대폰',
-        addr: '',
-        svcScrbDtm: '20171125102458'
+        addr: '서울 광진구',
+        svcScrbDtm: '20171125102458',
+        rmk: '갤럭시S'
       }]
     }
 };

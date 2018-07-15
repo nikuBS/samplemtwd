@@ -18,6 +18,16 @@ BillGuideLabelDefines[BILL_GUIDE_TYPE.SMS_EMAIL] = BILL_GUIDE_TYPE_NAME.SMS_EMAI
 BillGuideLabelDefines[BILL_GUIDE_TYPE.BILL_LETTER_SMS] = BILL_GUIDE_TYPE_NAME.BILL_LETTER_SMS;
 BillGuideLabelDefines[BILL_GUIDE_TYPE.ETC] = BILL_GUIDE_TYPE_NAME.ETC;
 
+const BILL_GUIDE_TYPE_COMPONENT = {};
+BILL_GUIDE_TYPE_COMPONENT[BILL_GUIDE_TYPE.TWORLD] = 'tworld';
+BILL_GUIDE_TYPE_COMPONENT[BILL_GUIDE_TYPE.BILL_LETTER] = 'bill-letter';
+BILL_GUIDE_TYPE_COMPONENT[BILL_GUIDE_TYPE.SMS] = 'sms';
+BILL_GUIDE_TYPE_COMPONENT[BILL_GUIDE_TYPE.EMAIL] = 'email';
+BILL_GUIDE_TYPE_COMPONENT[BILL_GUIDE_TYPE.BILL_LETTER_EMAIL] = 'bill-letter-email';
+BILL_GUIDE_TYPE_COMPONENT[BILL_GUIDE_TYPE.SMS_EMAIL] = 'sms-email';
+BILL_GUIDE_TYPE_COMPONENT[BILL_GUIDE_TYPE.BILL_LETTER_SMS] = 'bill-letter-sms';
+BILL_GUIDE_TYPE_COMPONENT[BILL_GUIDE_TYPE.ETC] = 'etc';
+
 class MyTBillChange extends TwViewController {
   constructor() {
     super();
@@ -25,8 +35,9 @@ class MyTBillChange extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     this.renderView(res, 'bill/myt.bill.guidechange.change-complete.html', {
-      beforeBillGuideLabel: BillGuideLabelDefines[req.query.beforeBillTypeCd],
-      afterBillGuideLabel: BillGuideLabelDefines[req.query.afterBillTypeCd]
+      beforeBillGuideLabel: BillGuideLabelDefines[req.query.beforeBillGuideType],
+      afterBillGuideLabel: BillGuideLabelDefines[req.query.afterBillGuideType],
+      component: BILL_GUIDE_TYPE_COMPONENT[req.query.afterBillGuideType]
     });
   }
 

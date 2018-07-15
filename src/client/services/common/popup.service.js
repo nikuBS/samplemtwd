@@ -3,6 +3,7 @@ Tw.PopupService = function () {
   this._prevHashList = [];
   this._confirmCallback = null;
   this._openCallback = null;
+  this._closeCallback = null;
   this._hashService = Tw.Hash;
 
   this._popupObj = {};
@@ -34,8 +35,13 @@ Tw.PopupService.prototype = {
     }
   },
   _popupClose: function () {
+    if ( !Tw.FormatHelper.isEmpty(this._closeCallback) ) {
+      this._closeCallback();
+      this._closeCallback = null;
+    }
     this._confirmCallback = null;
     this._openCallback = null;
+
     skt_landing.action.popup.close();
   },
   _addHash: function () {
@@ -65,6 +71,11 @@ Tw.PopupService.prototype = {
   _setOpenCallback: function (callback) {
     if ( !Tw.FormatHelper.isEmpty(callback) ) {
       this._openCallback = callback;
+    }
+  },
+  _setCloseCallback: function (callback) {
+    if ( !Tw.FormatHelper.isEmpty(callback) ) {
+      this._closeCallback = callback;
     }
   },
   _sendConfirmCallback: function () {
@@ -131,10 +142,11 @@ Tw.PopupService.prototype = {
   openSelect: function () {
 
   },
-  close: function () {
+  close: function (closeCallback) {
     // Tw.Logger.log('[Popup] Call Close', location.hash);
     if ( /popup/.test(location.hash) ) {
       history.back();
+      this._setCloseCallback(closeCallback);
     }
   }
 };

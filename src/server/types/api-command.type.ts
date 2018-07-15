@@ -37,8 +37,10 @@ export const API_CMD = {
   BFF_03_0009: { path: '/user/service-password-sessions', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_03_0010: { path: '/user/locks', method: API_METHOD.DELETE, server: API_SERVER.BFF, bypass: true },
   BFF_03_0011: { path: '/core-auth/v1/nationalities', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
-  BFF_03_0012: { path: '/user/biz-real-users-auth/args-0', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: false },
-  BFF_03_0013: { path: '/user/biz-real-users/args-0', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: false },
+  BFF_03_0012: { path: '/user/biz-auth-sessions', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_03_0013: { path: '/user/biz-services', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_03_0014: { path: '/core-auth/v1/marketing-offer-subscriptions/args-0', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_03_0015: { path: '/core-auth/v1/marketing-offer-subscriptions/args-0', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: false },
   // MYT
   BFF_05_0001: { path: '/my-t/balances', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0002: { path: '/my-t/balance-add-ons', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
@@ -63,15 +65,16 @@ export const API_CMD = {
   BFF_05_0037: { path: '/core-bill/v1/bill-pay/suspension', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0038: { path: '/core-bill/v1/bill-pay/donation', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0039: { path: '/core-bill/v1/bill-types-return-list/', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
-  BFF_05_0040: { path: '', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },//PathVariable
+  BFF_05_0040: { path: '/core-product/v1/services/wireless/additions/args-0', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0041: { path: '/core-product/v1/services/base-fee-plans', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0044: { path: '/core-bill/v1/bill-pay/roaming', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0045: { path: '/core-bill/v1/bill-pay/call-gift', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0047: { path: '/core-bill/v1/bill-pay/used-amounts', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
-  BFF_05_0048: { path: '/core-bill/v1/bill-types-reissue-request/', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0048: { path: '/core-bill/v1/bill-types-reissue-request/', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_05_0022: { path: '/core-bill/v1/hotbill/fee/hotbill-response', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0024: { path: '/core-bill/v1/child/children', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0035: { path: '/core-bill/v1/hotbill/fee/hotbill-request', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0025: { path: '/core-bill/v1/bill-types-list/', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   // RECHARGE
   BFF_06_0001: { path: '/core-recharge/v1/refill-coupons', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_06_0002: { path: '/core-recharge/v1/refill-usages', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
@@ -154,7 +157,7 @@ export const API_CMD = {
   BFF_07_0062: { path: '/core-bill/v1/auto-payments', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
   BFF_07_0063: { path: '/core-bill/v1/auto-payments', method: API_METHOD.DELETE, server: API_SERVER.BFF, bypass: true },
   BFF_07_0064: { path: '/core-bill/v1/autopay/db-req', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
-  BFF_07_0065: { path: '/core-bill/v1/autopay/pay-cycl-chg', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
+  BFF_07_0065: { path: '/core-bill/v1/autopay/pay-cycl-chg/args-0', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
   BFF_07_0068: { path: '/core-bill/v1/autopay/card-info/args-0', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
 
   // TID

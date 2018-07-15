@@ -37,7 +37,7 @@
                         <div class="widget">
                             <div class="widget-box check">
                                 <div class="checkbox type02 all_chk" role="checkbox" aria-checked="false">
-                                    <input id="all-check" type="checkbox" name="checkbox" value="값1" title="체크박스"/>
+                                    <input id="all-check" type="checkbox" name="checkbox" value="" title="체크박스"/>
                                     <span class="tit-a">전체</span>
                                     <i class="ico"></i>
                                 </div>
@@ -52,7 +52,7 @@
                                         {{#if data.M}}
                                             {{#each data.M}}
                                                 <li class="checkbox type01" role="checkbox" aria-checked="false" data-svcMgmtNum="{{svcMgmtNum}}">
-                                                    <input class="child-check" type="checkbox" name="checkbox" value="값1" title="회선 선택" aria-labelledby="aria-mline1" /><!-- 접근성 수정 : aria속성을 위해 고유 id를 가져야 합니다. loop를 돌릴시 고정 id가 여러개 생성이 됩니다. index를 참조 하거나 변화될 수 있는 값이 들어가야 될 것 같습니다. -->
+                                                    <input class="child-check" type="checkbox" name="checkbox" value="" title="회선 선택" aria-labelledby="aria-mline1" /><!-- 접근성 수정 : aria속성을 위해 고유 id를 가져야 합니다. loop를 돌릴시 고정 id가 여러개 생성이 됩니다. index를 참조 하거나 변화될 수 있는 값이 들어가야 될 것 같습니다. -->
                                                     <dl id="aria-mline1" class="mline-detail"><!-- aria-labelledby와 매칭 되어야 합니다. -->
                                                         <dt>{{ showSvcAttrCd }}</dt>
                                                         <dd class="device">갤럭*****</dd>
