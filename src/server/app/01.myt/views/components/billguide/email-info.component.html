@@ -1,0 +1,38 @@
+<!--
+* FileName: email-info.component.html
+* Author: 이정민 (skt.p130713@partner.sk.com)
+* Date: 2018.07.13
+-->
+
+<li>
+    <dl>
+        <dt class="ti-data">이메일 주소</dt>
+        <dd class="tx-data">
+            <%= curBillGuide.invEmailAddr %>
+        </dd>
+    </dl>
+</li>
+<li>
+    <dl>
+        <dt class="ti-data">이메일 보안 설정</dt>
+        <dd class="tx-data">
+            <%= (curBillGuide.scurMailYn === 'N' ? '아니오' : '예') %>
+        </dd>
+    </dl>
+</li>
+<li>
+    <dl>
+        <dt class="ti-data">휴대폰 번호 전체 표시</dt>
+        <dd class="tx-data">
+            <%= (curBillGuide.phonNumPrtClCd === 'N' ? '일부 별표 표시' : '전체 표시') %>
+        </dd>
+    </dl>
+</li>
+<li>
+    <dl>
+        <dt class="ti-data">광고정보 수신</dt>
+        <dd class="tx-data">
+            <%= (curBillGuide.emailRcvAgreeYn === 'N' ? '아니오' : '예') %>
+        </dd>
+    </dl>
+</li>

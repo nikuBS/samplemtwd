@@ -1,5 +1,5 @@
 <!--
-* FileName: myt.bill.guidechange-complete.change.html
+* FileName: myt.bill.guidechange.update-complete.html
 * Author: 이정민 (skt.p130713@partner.sk.com)
 * Date: 2018.07.13
 -->
@@ -18,9 +18,9 @@
     <div id="header" class="header-wrap">
         <div class="header step-page">
             <div class="header-ti">
-                <h1>요금안내서 변경</h1>
+                <h1>요금안내서 정보변경</h1>
             </div>
-            <a href="/myt/bill/guidechange" class="close-step"><span class="blind">닫기</span></a>
+            <button class="close-step"><span class="blind">닫기</span></button>
         </div>
     </div>
     <!--// #header -->
@@ -32,38 +32,40 @@
                 <div class="msg-present-box">
                     <div class="msg-present-comp">
                         <span class="ico"></span>
-                        <p class="txt"><span class="tx-bold">요금안내서 변경</span>이<br />완료되었습니다.</p>
+                        <p class="txt"><span class="tx-bold">요금안내서 정보변경이 완료</span>되었습니다.</p>
                     </div>
-                    <div class="modify-type-wrap">
-                        <div class="modify-type-box">
-                           		<span class="modify-before">
-                           			<span class="blind">변경 전 요금안내서 유형</span>
-                           			<%= beforeBillGuideLabel %>
-                           		</span>
-                            <span class="ico-arrow"></span>
-                            <span class="modify-after">
-                           			<span class="blind">변경 후 요금안내서 유형</span>
-                           			<%= afterBillGuideLabel %>
-                           		</span>
+                    <div class="gift-data-cont">
+                        <div class="pay-data-cont">
+                            <ul class="t-pay-data">
+                                <li>
+                                    <dl>
+                                        <dt class="ti-data">사용중인 요금안내서</dt>
+                                        <dd class="tx-data"><%= curBillGuide.curBillTypeNm %></dd>
+                                    </dl>
+                                </li>
+                                <%- include('../../components/billguide/'+ component +'-info.component.html') %>
+                            </ul>
+                        </div>
+                        <div class="bt-gap">
+                            <ul class="bt-slice">
+                                <li class="bt-blue1">
+                                    <button>확인</button>
+                                </li>
+                            </ul>
                         </div>
                     </div>
-                    <div class="bt-gap">
-                        <ul class="bt-slice"><!-- 2018-06-20 버튼 클래스 변경 -->
-                            <li class="bt-blue1">
-                                <a href="/myt/bill/guidechange">확인</a>
-                            </li>
-                        </ul>
-                    </div>
                 </div>
             </div>
-            <hr class="cont-sp type1" aria-hidden="true"/>
+            <hr class="cont-sp type1" aria-hidden="true" />
             <div class="cont-box nogaps">
                 <div class="bt-link-box">
-                    <a class="bt-link-tx" href="/home">홈으로</a>
+                    <a class="bt-link-tx" href="">홈으로</a>
                 </div>
             </div>
-            <hr class="cont-sp type1" aria-hidden="true"/>
-            <%- include('../../components/billguide/'+ component +'-change-complete.component.html') %>
+            <!--// .cont-box -->
+            <hr class="cont-sp type1" aria-hidden="true" />
+            <%- include('../../components/billguide/'+ component +'-guide.component.html') %>
+            <!--// .cont-box -->
         </div>
     </div>
     <!--// #contents -->
