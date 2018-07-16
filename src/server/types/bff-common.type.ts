@@ -118,7 +118,7 @@ export const BILL_GUIDE_TYPE = {
 
 export const LOGIN_NOTICE_TYPE = {
   NEW_CUSTOMER: '01',
-  OLD_CUSTOMER: '02',
+  EXIST_CUSTOMER: '02',
   NEW_LINE: '03',
   BIZ_DELETE: '04'
 };
