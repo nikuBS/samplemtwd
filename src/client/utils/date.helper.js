@@ -67,8 +67,8 @@ Tw.DateHelper = (function () {
    * @param {date} date || {string} date, {string} format
    * @returns {Date} : YYMMDD, YYYYMMDD, YY.MM.DD
    */
-  var getShortDateWithFormat = function (date, format) {
-    return moment(date).format(format);
+  var getShortDateWithFormat = function (date, format ,currentFormat) {
+    return moment(date, currentFormat).format(format);
   };
 
   /**
@@ -76,9 +76,14 @@ Tw.DateHelper = (function () {
    * @param {date} date || {string} date, {number} amount, {string} unit, {string} format
    * @returns {Date} : YYMMDD, YYYYMMDD, YY.MM.DD
    */
-  var getShortDateWithFormatAddByUnit = function (date, amount, unit, format) {
-    return moment(date).add(amount, unit).format(format);
+  var getShortDateWithFormatAddByUnit = function (date, amount, unit, format, currentFormat) {
+    return moment(date, currentFormat).add(amount, unit).format(format);
   };
+
+  var getEndOfMonth = function (date, currentFormat) {
+    var days = moment(date, currentFormat).daysInMonth();
+    return moment(date, currentFormat).add(days - 1, 'days').format('YYYY.MM.DD');
+  }
 
   return {
     getRemainDate: getRemainDate,
@@ -87,6 +92,7 @@ Tw.DateHelper = (function () {
     convDateFormat: convDateFormat,
     getCurrentShortDate: getCurrentShortDate,
     getPastYearShortDate: getPastYearShortDate,
+    getEndOfMonth: getEndOfMonth,
     getShortDateWithFormat: getShortDateWithFormat,
     getShortDateWithFormatAddByUnit: getShortDateWithFormatAddByUnit
   };

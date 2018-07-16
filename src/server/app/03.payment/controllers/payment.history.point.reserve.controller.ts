@@ -7,6 +7,7 @@
 import TwViewController from '../../../common/controllers/tw.view.controller';
 import {Request, Response, NextFunction} from 'express';
 import {API_CMD} from '../../../types/api-command.type';
+import {MSG_STR} from '../../../types/string.type';
 
 
 class PaymentHistoryPointReserveController extends TwViewController {
@@ -17,9 +18,14 @@ class PaymentHistoryPointReserveController extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
 
-    res.render('payment.history.point.reserve.html', {
-      svcInfo: svcInfo
+    this.renderView(res, 'payment.history.point.reserve.html', {
+      svcInfo: svcInfo,
+      customerCenterTel: MSG_STR.CUSTOMER_CENTER_TEL
     });
+  }
+
+  renderView(res: Response, view: string, data: any) {
+    res.render(view, data);
   }
 
 }
