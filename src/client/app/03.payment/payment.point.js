@@ -12,6 +12,7 @@ Tw.PaymentPoint = function (rootEl) {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._validation = Tw.ValidationHelper;
+  this._getPoint = new Tw.PaymentGetPoint(this.$container);
   this._history = new Tw.HistoryService(this.$container);
   this._history.init('hash');
 
@@ -36,6 +37,7 @@ Tw.PaymentPoint.prototype = {
   },
   _bindEvent: function () {
     this.$container.on('keyup', '.only-number', $.proxy(this._onlyNumber, this));
+    this.$container.on('click', '.get-point', $.proxy(this._openGetPoint, this));
     this.$container.on('click', '.select-payment-point', $.proxy(this._changeStep, this));
     this.$container.on('click', '.select-auto-cashbag-point', $.proxy(this._selectAutoCashbagPoint, this));
     this.$container.on('click', '.select-product', $.proxy(this._selectProduct, this));
@@ -49,6 +51,9 @@ Tw.PaymentPoint.prototype = {
   },
   _onlyNumber: function (event) {
     Tw.InputHelper.inputNumberOnly(event.currentTarget);
+  },
+  _openGetPoint: function () {
+    this._getPoint.open();
   },
   _changeStep: function (event) {
     event.preventDefault();
