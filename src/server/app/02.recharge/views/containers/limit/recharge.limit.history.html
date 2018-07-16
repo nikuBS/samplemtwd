@@ -52,19 +52,10 @@
                             </div>
                             <div class="tab-contents">
                                 <ul>
-                                    <li role="tabpanel" id="aria-tab1-tab" aria-labelledby="aria-tab1">
-                                        <% if (rechargeList.length === 0) { %>
-                                            <% include ../../components/limit/recharge.limit.history.recharge.no.data.html %>
-                                        <% } else { %>
-                                            <% include ../../components/limit/recharge.limit.history.recharge.list.html %>
-                                        <% } %>                                        
+                                    <li role="tabpanel" id="aria-tab1-tab" aria-labelledby="aria-tab1" class="tab-recharge">
                                     </li>
-                                    <li role="tabpanel" id="aria-tab2-tab" aria-labelledby="aria-tab2">
-                                        <% if (blockList.length === 0) { %>
-                                            <% include ../../components/limit/recharge.limit.history.block.no.data.html %>
-                                        <% } else { %>
-                                            <% include ../../components/limit/recharge.limit.history.block.list.html %>
-                                        <% } %>
+                                    <li role="tabpanel" id="aria-tab2-tab" aria-labelledby="aria-tab2" class="tab-limit">
+                                        <% include ../../components/limit/recharge.limit.history.block.no.data.html %>
                                     </li>
                                 </ul>
                             </div>
@@ -79,6 +70,7 @@
     <% include ../../../../common/views/components/footer.component.html %>
 </div>
 <% include ../../components/javascript.component.html %>
+<% include ../../components/limit/recharge.limit.history.recharge.list.html %>
 <script>
     $(document).ready(function () {
         new Tw.RechargeLimitHistory($('.wrap'));
