@@ -22,7 +22,7 @@
     <div id="contents" class="container-wrap">
         <div id="myt-bill-return-history" class="container">
             <!-- 반송내역이 없는 경우에 대한 처리 start -->
-            <% if( data.recCnt === 0) { %>
+            <% if( data.totCnt === 0) { %>
             <div class="cont-box nogaps-hoz noborder">
                 <div class="contents-empty type2">
                     <span class="ico"></span>
@@ -45,9 +45,9 @@
                 <div class="payment-detail-wrap">
                     <p class="search-number">최근 반송등록일 기준으로 20개 까지 조회하실 수 있습니다.</p>
                     <p class="result-number">
-                        <span>총 <em class="p-color"><%= data.recCnt %></em> 개</span>
+                        <span>총 <em class="p-color"><%= data.totCnt %></em> 개</span>
                     </p>
-                    <% for(var i=0; i < data.recCnt; i++) { %>
+                    <% for(var i=0; i < data.totCnt; i++) { %>
                         <div class="payment-detail-box">
                         <div class="detail-inner">
                             <div class="detail-list">
@@ -55,29 +55,29 @@
                                     <li>
                                         <div class="inner-top">
                                             <span class="title">반송등록일</span>
-                                            <span class="tx-cont"><strong class="num">2013.01.16</strong></span>
+                                            <span class="tx-cont"><strong class="num"><%= data.records[i].returnDt %></strong></span>
                                         </div>
                                         <div class="inner-row">
                                             <ul>
                                                 <li>
                                                     <span class="title">안내서 유형</span>
-                                                    <span class="tx-cont num">E-Mail</span>
+                                                    <span class="tx-cont num"><%= data.records[i].type %></span>
                                                 </li>
                                                 <li>
                                                     <span class="title">반송사유</span>
-                                                    <span class="tx-cont">해당ID계정 없음(550)<br/>계정을 입력</span>
+                                                    <span class="tx-cont"><%= data.records[i].reason %></span>
                                                 </li>
                                                 <li>
                                                     <span class="title">청구인</span>
-                                                    <span class="tx-cont">김*진</span>
+                                                    <span class="tx-cont"><%= data.records[i].name %></span>
                                                 </li>
                                                 <li>
                                                     <span class="title">안내서 청구일</span>
-                                                    <span class="tx-cont num">2012.12.31</span>
+                                                    <span class="tx-cont num"><%= data.records[i].invDt %></span>
                                                 </li>
                                                 <li>
-                                                    <span class="title">안내서 청구일</span>
-                                                    <span class="tx-cont num">2012.12.31</span>
+                                                    <span class="title">안내서 발송일</span>
+                                                    <span class="tx-cont num"><%= data.records[i].sendDt %></span>
                                                 </li>
                                             </ul>
                                         </div>

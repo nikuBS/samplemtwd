@@ -13,7 +13,7 @@ class AuthWithdrawlSurvey extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    res.render('withdrawal/auth.withdrawal.survey.html');
+    res.render('withdrawal/auth.withdrawal.survey.html', { svcInfo: svcInfo });
   }
 }
 

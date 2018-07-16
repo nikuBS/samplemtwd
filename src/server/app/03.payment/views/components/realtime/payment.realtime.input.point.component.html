@@ -32,10 +32,32 @@
         <div class="pay-info">
             <h4 class="pay-tit">포인트 내역</h4>
             <div class="account-wrap">
+                <div class="point-box none">
+                    <ul>
+                        <li>
+                            <dl>
+                                <dt>OK캐쉬백</dt>
+                                <dd><em class="number cashbag-point"></em> 점</dd>
+                            </dl>
+                        </li>
+                        <li>
+                            <dl>
+                                <dt>T포인트</dt>
+                                <dd><em class="number t-point"></em> 점</dd>
+                            </dl>
+                        </li>
+                        <li>
+                            <dl>
+                                <dt>카드번호</dt>
+                                <dd><em class="number point-card-number"></em></dd>
+                            </dl>
+                        </li>
+                    </ul>
+                </div>
                 <div class="contents-btn">
                     <ul class="bt-slice">
                         <li class="bt-white1">
-                            <a href="#get-point" class="get-point">포인트 조회하기</a>
+                            <button class="get-point">포인트 조회하기</button>
                         </li>
                     </ul>
                 </div>
@@ -56,7 +78,7 @@
                         <h5 class="account-tit">포인트 선택</h5>
                         <div class="account-detail">
                             <div class="select-name-table">
-                                <button class="bt-dropdown wd-shrink" title="OK캐쉬백 선택" aria-haspopup="true">OK캐쉬백<span class="ico"></span></button>
+                                <button class="bt-dropdown wd-shrink select-point" id="10" title="OK캐쉬백 선택" aria-haspopup="true">OK캐쉬백<span class="ico"></span></button>
                             </div>
                             <div class="inputbox input-context-cell">
                                 <span class="input">

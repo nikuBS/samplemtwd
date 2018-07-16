@@ -34,10 +34,10 @@ export enum PAYMENT_VIEW {
 }
 
 export const MYT_REISSUE_TYPE = {
-  '05': 'Bill Letter',
-  '10': '문자',
-  '02': '이메일',
-  '04': '기타'
+  'H': 'Bill Letter',
+  'B': '문자',
+  '2': '이메일',
+  '1': '기타 (우편)'
 };
 
 export const MYT_GUIDE_CHANGE_INIT_INFO = {
