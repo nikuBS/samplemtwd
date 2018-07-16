@@ -6,7 +6,7 @@
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { NextFunction, Request, Response } from 'express';
 import { API_CMD } from '../../../../types/api-command.type';
-import { MYT_REISSUE_TYPE } from '../../../../types/string.type';
+import { MYT_REISSUE_REQ_CODE, MYT_REISSUE_TYPE } from '../../../../types/string.type';
 
 class MyTBillReissue extends TwViewController {
   constructor() {
@@ -14,54 +14,70 @@ class MyTBillReissue extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    this.apiService.request(API_CMD.BFF_05_0028, {}).subscribe((reissueData) => {
-      // 화면 데이터 설정
-      const data = this.convertData(reissueData);
-      res.render('bill/myt.bill.guidechange.reissue.html', { data });
+    const self = this;
+    // TODO:사용회선조회 ( 이전화면에서 회선 변경에 따른 값이 설정된 다면 제거 )
+    this.apiService.request(API_CMD.BFF_01_0005, {}).subscribe((info) => {
+      if ( info.result || info.result.svcAttrCd ) {
+        let api = API_CMD.BFF_05_0028;
+        if ( info.result.svcAttrCd.indexOf('S') !== -1 ) {
+            api = API_CMD.BFF_05_0051;
+        }
+        self.apiService.request(api, {svcMgmtNum: info.result.svcMgmtNum})
+          .subscribe((reissueData) => {
+          // 화면 데이터 설정
+          const data = self.convertData(reissueData, svcInfo);
+          res.render('bill/myt.bill.guidechange.reissue.html', { data });
+        });
+      }
     });
+    // this.apiService.request(API_CMD.BFF_05_0028, {}).subscribe((reissueData) => {
+    //   // 화면 데이터 설정
+    //   const data = this.convertData(reissueData, svcInfo);
+    //   res.render('bill/myt.bill.guidechange.reissue.html', { data });
+    // });
   }
 
   private findMyReissueType(key): string {
     let value = '';
-    const reissueType = Object.keys(MYT_REISSUE_TYPE);
+    const reissueType = Object.keys(MYT_REISSUE_REQ_CODE);
     reissueType.forEach((val) => {
-      if ( (key.trim()).indexOf(MYT_REISSUE_TYPE[val]) !== -1) {
+      if ( (key.trim()).indexOf(MYT_REISSUE_REQ_CODE[val]) !== -1 ) {
         value = val;
       }
     });
     return value;
   }
 
-  private convertData(params): any {
+  private convertData(response, svc): any {
     const data: any = {
       halfYear: this.getHalfYearData(),
       type: '01', // 01:무선, 02:유선, 03:etc
-      // 우편(1)
-      // 이메일청구서(2)
-      // 문자+이메일청구서(A)
-      // 문자(B)
-      // Bill letter (H)
-      // Bill letter +이메일청구서(I)
-      // Twold확인(P)
-      // Bill letter +문자청구서(Q)
-      title: 'Bill letter+이메일', // 청구서유형명
-      reasonCd: '01', // 01:무선 02:유선(요금조정), 06: 유선(요금안내서 부달) 99: 유선 (기타) '':반송처리(추가예정)
-      // svcMgmtNum: '7100000001' // 회선정보
-
+      title: '미조회', // 청구서유형명,
+      svcInfo: svc
     };
     // 서버에서 받은 데이터 설정
-    if ( params.result ) {
-      // 청구서명
-      data['title'] = params.result.curBillTypeNm;
+    if ( response.result ) {
+      // if ( svc.svcAttrCd && svc.svcAttrCd.indexOf('S') !== -1 ) {
+      // 유선인 경우에 재발행 사유 정보가 있어 아래정보로 유,무선 구분한다.
+      if ( response.result.reissueReasons ) {
+        data['reasons'] = response.result.reissueReasons;
+        // TODO:서버 API 명세서에 J 가 있고 I 코드 값이 없어 문의 해둔 상태 (업데이트 필요!)
+        data['title'] = MYT_REISSUE_TYPE[response.result.billIsueTypCd];
+        data['type'] = '02';
+        // }
+      } else {
+        // 청구서명
+        data['title'] = response.result.curBillTypeNm;
+      }
     }
 
     // 요금서 종류가 두개 이상인 경우
-    // BillCd: 02:이메일, 10:문자, 05:Bill Letter  99:기타 청구서유형코드(임시)
-    if ( data['title'].indexOf('+') !== -1 ) {
+    // BillCd: 02:이메일, 03:문자, 05:Bill Letter  01:기타 청구서유형코드
+    if ( data['title'] && data['title'].indexOf('+') !== -1 ) {
       data['multi'] = data['title'].split('+');
-      data['billCd'] = [ this.findMyReissueType(data['multi'][0]), this.findMyReissueType(data['multi'][1]) ];
+      data['billCd'] = [this.findMyReissueType(data['multi'][0]), this.findMyReissueType(data['multi'][1])];
     } else {
-      data['billCd'] = [ this.findMyReissueType(data['title']) ];
+      data['billCd'] = [this.findMyReissueType(data['title'])];
     }
 
     return data;

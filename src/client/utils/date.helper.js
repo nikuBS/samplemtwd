@@ -24,7 +24,7 @@ Tw.DateHelper = (function () {
    * @returns {Date}
    */
   var convDateFormat = function (date) {
-    if ( !(date instanceof Date) ) {
+    if (!(date instanceof Date)) {
       return moment(date, 'YYYYMMDDhhmmss').toDate();
     }
     return date;
@@ -44,6 +44,30 @@ Tw.DateHelper = (function () {
    */
   var getPastYearShortDate = function () {
     return moment().subtract(1, 'years').format('YYYYMMDD');
+  };
+
+  /**
+   * @param period {period}
+   * @returns {string} : currentDateTime - {period}
+   */
+  var getPastShortDate = function (period) {
+    var matches = period.replace(/\s/g, '').match(/(\d*)(.*)/);
+
+    if (matches.length !== 3)
+      return null;
+
+    var unit = '';
+    switch (matches[2]) {
+      case Tw.DATE_UNIT.YEAR:
+        unit = 'years';
+        break;
+      case Tw.DATE_UNIT.MONTH:
+      default:
+        unit = 'months';
+        break;
+    }
+
+    return moment().subtract(matches[1], unit).format('YYYYMMDD');
   };
 
   /**
@@ -67,8 +91,8 @@ Tw.DateHelper = (function () {
    * @param {date} date || {string} date, {string} format
    * @returns {Date} : YYMMDD, YYYYMMDD, YY.MM.DD
    */
-  var getShortDateWithFormat = function (date, format) {
-    return moment(date).format(format);
+  var getShortDateWithFormat = function (date, format, currentFormat) {
+    return moment(date, currentFormat).format(format);
   };
 
   /**
@@ -76,9 +100,14 @@ Tw.DateHelper = (function () {
    * @param {date} date || {string} date, {number} amount, {string} unit, {string} format
    * @returns {Date} : YYMMDD, YYYYMMDD, YY.MM.DD
    */
-  var getShortDateWithFormatAddByUnit = function (date, amount, unit, format) {
-    return moment(date).add(amount, unit).format(format);
+  var getShortDateWithFormatAddByUnit = function (date, amount, unit, format, currentFormat) {
+    return moment(date, currentFormat).add(amount, unit).format(format);
   };
+
+  var getEndOfMonth = function (date, currentFormat) {
+    var days = moment(date, currentFormat).daysInMonth();
+    return moment(date, currentFormat).add(days - 1, 'days').format('YYYY.MM.DD');
+  }
 
   return {
     getRemainDate: getRemainDate,
@@ -87,6 +116,8 @@ Tw.DateHelper = (function () {
     convDateFormat: convDateFormat,
     getCurrentShortDate: getCurrentShortDate,
     getPastYearShortDate: getPastYearShortDate,
+    getEndOfMonth: getEndOfMonth,
+    getPastShortDate: getPastShortDate,
     getShortDateWithFormat: getShortDateWithFormat,
     getShortDateWithFormatAddByUnit: getShortDateWithFormatAddByUnit
   };

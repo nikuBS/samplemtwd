@@ -1,0 +1,43 @@
+<!--
+* FileName: preview.contents.html
+* Author: 양정규 (skt.P130715@partner.sk.com)
+* Date: 2018. 7. 13.
+-->
+<script id="tmplPreviewTabContents" type="text/x-handlebars-template">
+    <div class="cont-box nogaps">
+        <!-- .component -->
+        <div class="component">
+            <div class="component-box tabs">
+                <div class="tab-area type1"><!-- 타입별 탭형태 변환 -->
+                    <div class="tab-linker">
+                        <ul role="tablist">
+                            <li role="tab" aria-selected="true" aria-controls="aria-tab1-tab" id="aria-tab1"><a>휴대폰</a></li><!-- true 열림 -->
+                            <li role="tab" aria-selected="false" aria-controls="aria-tab2-tab" id="aria-tab2"><a>인터넷/집전화/IPTV</a></li>
+                            <li role="tab" aria-selected="false" aria-controls="aria-tab3-tab" id="aria-tab3"><a>T-WiBro</a></li>
+                        </ul>
+                    </div>
+                    <div class="tab-contents" style="height:500px;">
+                        <div class="aria-tab1">
+                            휴대폰 안내서 유형 {{data}}
+                        </div>
+                        <div class="aria-tab2" style="display: none">
+                            인터넷/집전화/IPTV 안내서 유형
+                        </div>
+                        <div class="aria-tab3" style="display: none">
+                            T wibro 안내서 유형
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+
+<script id="tmplPreviewContents" type="text/x-handlebars-template">
+    <div class="cont-box">
+        <div style="height:500px;">
+            <p>이미지 수급 후 진행 예정</p>
+            {{data}}
+        </div>
+    </div>
+</script>

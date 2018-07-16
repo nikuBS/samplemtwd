@@ -37,7 +37,18 @@ export const MYT_REISSUE_TYPE = {
   'H': 'Bill Letter',
   'B': '문자',
   '2': '이메일',
-  '1': '기타 (우편)'
+  '1': '기타 (우편)',
+  'K': 'Bill Letter+이메일', // 유선
+  'A': '문자+이메일', // 유선
+  'I': 'Bill Letter', // 유선
+  'J': 'Bill Letter' // 유선
+};
+
+export const MYT_REISSUE_REQ_CODE = {
+  '01': '기타 (우편)',
+  '02': '이메일',
+  '03': '문자',
+  '05': 'Bill Letter'
 };
 
 export const MYT_GUIDE_CHANGE_INIT_INFO = {

@@ -22,7 +22,7 @@
                 <h1>납부내역조회</h1>
                 <button class="depth-view" role="button" aria-pressed="false"><span class="blind">메뉴구조보기</span></button>
             </div>
-            <button class="prev-step"><span class="blind">이전으로</span></button>
+            <button class="prev-step common-back"><span class="blind">이전으로</span></button>
             <button class="search-content"><span class="blind">검색하기</span></button>
         </div>
     </div>
@@ -31,149 +31,13 @@
     <div id="contents" class="container-wrap">
         <h2 class="blind">내용</h2>
         <div class="container">
-            <div class="cont-box">
-                <div class="payment-info">
-                    <span class="blind">나의 통합청구 회선</span>
-                    <ul>
-                        <li>
-                            <span class="info-num">010-46**-10**</span>
-                        </li>
-                        <li>
-                            <span class="badge badge-allpay"><span class="blind">통합대표</span></span>
-                            <span class="info-type"><span class="blind">회선정보</span>휴대폰</span>
-                            <span class="info-name"><span class="blind">별명</span>귀여운첫째아들</span>
-                        </li>
-                    </ul>
-                    <span class="info-btn"><a href="" class="btn-choice" role="button">변경</a></span>
-                </div>
-            </div>
-            <hr class="cont-sp type1" aria-hidden="true"/>
-            <div class="cont-box nogaps-btm">
-                <button class="bt-dropdown big" title="납부방식 선택" aria-haspopup="true">자동납부내역<span class="ico"></span></button>
-                <div class="payment-detail-wrap">
-                    <p class="info-txt">6개월간의 요금납부 내역만 확인 가능합니다.</p>
-                    <div class="payment-detail-box">
-                        <div class="detail-inner">
-                            <div class="pay-state">
-                                <span class="cancel-com">인출청구전</span>
-                            </div>
-                            <div class="detail-list">
-                                <ul>
-                                    <li>
-                                        <span class="title">청구일자</span>
-                                        <span class="tx-cont">2018.05.23</span>
-                                    </li>
-                                    <li>
-                                        <span class="title">납부방법</span>
-                                        <span class="tx-cont">현대카드</span>
-                                    </li>
-                                    <li>
-                                        <span class="title">인출/승인금액</span>
-                                        <span class="tx-cont"><strong>27,000</strong> 원</span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="detail-btn">
-                            <button type="button">상세내역보기</button>
-                        </div>
-                    </div>
-                    <div class="payment-detail-box">
-                        <div class="detail-inner">
-                            <div class="pay-state">
-                                <span class="gray-com">인출청구중</span>
-                            </div>
-                            <div class="detail-list">
-                                <ul>
-                                    <li>
-                                        <span class="title">청구일자</span>
-                                        <span class="tx-cont">2018.05.23</span>
-                                    </li>
-                                    <li>
-                                        <span class="title">납부방법</span>
-                                        <span class="tx-cont">현대카드</span>
-                                    </li>
-                                    <li>
-                                        <span class="title">납부금액</span>
-                                        <span class="tx-cont"><strong>27,000</strong> 원</span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="detail-btn">
-                            <button type="button">상세내역보기</button>
-                        </div>
-                    </div>
-                    <div class="payment-detail-box">
-                        <div class="detail-inner">
-                            <div class="pay-state">
-                                <span class="payment-com">정상납부</span>
-                            </div>
-                            <div class="detail-list">
-                                <ul>
-                                    <li>
-                                        <span class="title">청구일자</span>
-                                        <span class="tx-cont">2018.05.23</span>
-                                    </li>
-                                    <li>
-                                        <span class="title">납부방법</span>
-                                        <span class="tx-cont">계좌이체 (우리은행)</span>
-                                    </li>
-                                    <li>
-                                        <span class="title">납부금액</span>
-                                        <span class="tx-cont"><strong>27,000</strong> 원</span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="detail-btn">
-                            <button type="button">상세내역보기</button>
-                        </div>
-                    </div>
-                    <div class="payment-detail-box">
-                        <div class="detail-inner">
-                            <div class="pay-state">
-                                <span class="payment-com">정상납부</span>
-                            </div>
-                            <div class="detail-list">
-                                <ul>
-                                    <li>
-                                        <span class="title">청구일자</span>
-                                        <span class="tx-cont">2018.05.23</span>
-                                    </li>
-                                    <li>
-                                        <span class="title">납부방법</span>
-                                        <span class="tx-cont">롯데카드</span>
-                                    </li>
-                                    <li>
-                                        <span class="title">납부금액</span>
-                                        <span class="tx-cont"><strong>27,000</strong> 원</span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="detail-btn">
-                            <button type="button">상세내역보기</button>
-                        </div>
-                    </div>
-                    <!--// payment-detail-wrap -->
-                    <div class="contents-info-list">
-                        <a href="" class="bt-more" title="">더보기<span>(20)</span></a>
-                    </div>
-                </div>
-<%#             자동납부 내역 없는 경우
-                <div class="payment-select">
-                    <div class="contents-empty">
-                        <span class="ico"></span>
-                        <p class="desc">자동납부하신 내역이 없습니다.</p>
-                    </div>
-                    <div class="pay-bottom type1">
-                        <p class="title">자동납부 신청을 통해 편하게<br/>이용 해보세요.</p>
-                        <a href="" class="bt-link-tx">자동납부 신청하기<span class="ico"></span></a>
-                    </div>
-                </div>
 
-%>
+            <%- include('../components/line.info.component.html', { svcInfo: svcInfo }); %>
+
+            <hr class="cont-sp type1" aria-hidden="true"/>
+            <div class="cont-box">
+                <button class="bt-dropdown big" title="납부방식 선택" aria-haspopup="true">자동납부내역<span class="ico"></span></button>
+                <div id="fe-list-wrapper"></div>
             </div>
             <hr class="cont-sp type1" aria-hidden="true"/>
             <div class="cont-box">
@@ -204,7 +68,7 @@
         </div>
     </div>
     <!--// #contents -->
-    <% include ../../../../common/views/components/footer.component.html %>
+    <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
 </div>
 
 <% include ../components/javascript.component.html %>
@@ -212,5 +76,66 @@
   $(document).ready(function () {
     new Tw.PaymentHistoryAuto($(document));
   });
+</script>
+<script id="list-wrapper" type="text/x-handlebars-template">
+    <div class="payment-detail-wrap">
+        <p class="info-txt">6개월간의 요금납부 내역만 확인 가능합니다.</p>
+        {{> list}}
+        {{#if initialMoreData}}
+        <div class="contents-info-list">
+            <a href="" class="bt-more" title="">더보기<span>(<em>{{restCount}}</em>)</span></a>
+        </div>
+        {{/if}}
+    </div>
+</script>
+<script id="list-default" type="text/x-handlebars-template">
+    {{#each listElement}}
+    <div class="payment-detail-box">
+        <div class="detail-inner">
+            <div class="pay-state">
+                {{#if isBefore }}
+                <span class="cancel-com">인출청구전</span>
+                {{ else if isIng }}
+                <span class="gray-com">인출청구중</span>
+                {{ else if isDone }}
+                <span class="payment-com">정상납부</span>
+                {{/if}}
+            </div>
+            <div class="detail-list">
+                <ul>
+                    <li>
+                        <span class="title">청구일자</span>
+                        <span class="tx-cont">{{reqDate}}</span>
+                    </li>
+                    <li>
+                        <span class="title">납부방법</span>
+                        <span class="tx-cont">{{bankCardCoCdNm}}</span>
+                    </li>
+                    <li>
+                        <span class="title">인출/승인금액</span>
+                        <span class="tx-cont"><strong>{{#if drwAmt}}{{drwAmt}}{{else}}{{drwReqAmt}}{{/if}}</strong> 원</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="detail-btn">
+            <button type="button" data-list-id="{{listId}}" class="fe-btn">상세내역보기</button>
+        </div>
+    </div>
+    {{/each}}
+</script>
+<script id="list-empty" type="text/x-handlebars-template">
+    <!-- 자동납부 내역 없는 경우 -->
+    <div class="payment-select">
+        <div class="contents-empty">
+            <span class="ico"></span>
+            <p class="desc">자동납부하신 내역이 없습니다.</p>
+        </div>
+        <div class="pay-bottom type1">
+            <p class="title">자동납부 신청을 통해 편하게<br/>이용 해보세요.</p>
+            <a href="{{autoPaymentApplyURL}}" class="bt-link-tx">자동납부 신청하기<span class="ico"></span></a>
+        </div>
+    </div>
+    <!-- // 자동납부 내역 없는 경우 -->
 </script>
 <% include ../components/end.component.html %>

@@ -5,6 +5,7 @@
  */
 
 Tw.AuthLineCopRegister = function (rootEl, nicknamePopup) {
+
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._nicknamePopup = nicknamePopup;

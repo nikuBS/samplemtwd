@@ -17,7 +17,9 @@ class MyTBillReissueComplete extends TwViewController {
     // 넘어온 parameter 정보를 확인하여 데이터 확인
     // typeCd -> 01, 02, 03, 04 (Bill Letter, 문자, 이메일, 기타)
     // month -> 20180707
-    const data = {};
+    const data = {
+      svcInfo: svcInfo
+    };
     if ( req && req.query ) {
       data['type'] = MYT_REISSUE_TYPE[req.query.typeCd];
       data['month1'] = this.regMonth('YM', req.query.month);

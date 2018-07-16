@@ -12,6 +12,7 @@ Tw.PaymentRealtime = function (rootEl) {
 
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
+  this._validation = Tw.ValidationHelper;
   this._bankList = new Tw.BankList(this.$container);
   this._getPoint = new Tw.PaymentGetPoint(this.$container);
   this._history = new Tw.HistoryService(this.$container);
@@ -28,7 +29,17 @@ Tw.PaymentRealtime.prototype = {
     this.$isAutoInfo = null;
     this.$autoWrap = this.$container.find('.pay-info.auto');
     this.$refundWrap = this.$container.find('.pay-info.refund');
+    this.$cardFirstWrap = this.$container.find('.pay-info.card-first');
+    this.$cardNumber = this.$cardFirstWrap.find('.card-number');
+    this.$cardY = this.$cardFirstWrap.find('.card-y');
+    this.$cardM = this.$cardFirstWrap.find('.card-m');
+    this.$cardPw = this.$cardFirstWrap.find('.card-pw');
     this.$cardWrap = this.$container.find('.pay-info.card');
+    this.$cardTypeSelector = this.$container.find('.select-card-type');
+    this.$pointSelector = this.$container.find('.select-point');
+    this.$point = this.$container.find('.point');
+    this.$pointPw = this.$container.find('.point-pw');
+    this.$pointBox = this.$container.find('.point-box');
   },
   _bindEvent: function () {
     this.$container.on('keyup', '.only-number', $.proxy(this._onlyNumber, this));
@@ -39,7 +50,6 @@ Tw.PaymentRealtime.prototype = {
     this.$container.on('click', '.pay-check-box', $.proxy(this._setAutoInfo, this));
     this.$container.on('click', '.select-card-type', $.proxy(this._selectCardType, this));
     this.$container.on('click', '.get-point', $.proxy(this._openGetPoint, this));
-    this.$container.on('click', '.get-cashbag-point', $.proxy(this._getCashbagPoint, this));
     this.$container.on('click', '.select-point', $.proxy(this._selectPoint, this));
     this.$container.on('click', '.pay', $.proxy(this._pay, this));
   },
@@ -56,6 +66,14 @@ Tw.PaymentRealtime.prototype = {
       this.$amount -= $amount;
     }
     this.$container.find('.total-amount').text(Tw.FormatHelper.addComma(this.$amount.toString()));
+    this._setCardTypeDisabled(this.$amount);
+  },
+  _setCardTypeDisabled: function ($amount) {
+    if (parseInt($amount, 10) <= 50000) {
+      this.$cardTypeSelector.attr('disabled', 'disabled');
+    } else {
+      this.$cardTypeSelector.removeAttr('disabled');
+    }
   },
   _isCheckedAmount: function (event) {
     event.preventDefault();
@@ -82,6 +100,8 @@ Tw.PaymentRealtime.prototype = {
   },
   _getAutoSuccess: function ($target, res) {
     if (res.code === Tw.API_CODE.CODE_00) {
+      this.$autoPayInfo.attr('acnt-num', res.result.acntNum);
+
       if (res.result.autoPayEnable === 'Y') {
         var $autoPayBank = res.result.autoPayBank;
         this.$autoPayInfo.attr('id', $autoPayBank.bankCardCoCd).attr('num', $autoPayBank.bankCardNum).text($autoPayBank.bankCardCoNm);
@@ -100,11 +120,12 @@ Tw.PaymentRealtime.prototype = {
   },
   _setAutoInfo: function (event) {
     var $target = $(event.currentTarget);
-    var bankId, bankName, bankNum, $wrapper = null;
+    var bankId, bankName, bankNum, $wrapper, isAuto = null;
     if ($target.hasClass('auto-info') || $target.hasClass('card-auto-info')) {
       bankId = this.$autoPayInfo.attr('id');
       bankName = this.$autoPayInfo.text();
       bankNum = this.$autoPayInfo.attr('num');
+      isAuto = true;
 
       if ($target.hasClass('auto-info')) {
         $wrapper = this.$autoWrap;
@@ -114,16 +135,26 @@ Tw.PaymentRealtime.prototype = {
     } else {
       bankId = this.$autoWrap.find('.select-bank').attr('id');
       bankName = this.$autoWrap.find('.select-bank').text();
-      bankNum = this.$autoWrap.find('.select-bank').attr('num');
+      bankNum = $.trim(this.$autoWrap.find('.account-number').val());
       $wrapper = this.$refundWrap;
     }
 
     if ($target.hasClass('checked')) {
       $wrapper.find('.select-bank').attr('id', bankId).text(bankName);
       $wrapper.find('.account-number').val(bankNum);
+
+      if (isAuto) {
+        $wrapper.find('.select-bank').attr('disabled', 'disabled');
+        $wrapper.find('.account-number').attr('disabled', 'disabled');
+      }
     } else {
       $wrapper.find('.select-bank').removeAttr('id').text(Tw.PAYMENT_STRING.BANK_NAME);
       $wrapper.find('.account-number').val('');
+
+      if (isAuto) {
+        $wrapper.find('.select-bank').removeAttr('disabled');
+        $wrapper.find('.account-number').removeAttr('disabled');
+      }
     }
   },
   _selectBank: function (event) {
@@ -145,35 +176,183 @@ Tw.PaymentRealtime.prototype = {
   _openGetPoint: function () {
     this._getPoint.open();
   },
-  _getCashbagPoint: function () {
-    this._apiService.request(Tw.API_CMD.BFF_07_0028, {})
-      .done($.proxy(this._pointSuccess, this))
-      .fail($.proxy(this._pointFail, this));
-  },
-  _pointSuccess: function (res) {
-    this._popupService._popupClose();
-    console.log(res.result.availPt, res.result.availTPt);
-  },
-  _pointFail: function () {
-    Tw.Logger.info('point request fail');
-  },
   _selectPoint: function (event) {
     var $target = $(event.currentTarget);
     this._popupService.openChoice(Tw.MSG_PAYMENT.SELECT_POINT, this._getPointList(), 'type3', $.proxy(this._selectPopupCallback, this, $target));
   },
   _pay: function (event) {
     event.preventDefault();
-
-    this._apiService.request(Tw.API_CMD.BFF_06_0001, {})
-      .done($.proxy(this._paySuccess, this))
-      .fail($.proxy(this._payFail, this));
+    var $target = $(event.currentTarget);
+    if ($target.hasClass('pay-account')) {
+      this._payAccount();
+    } else if ($target.hasClass('pay-card')) {
+      this._payCard();
+    } else if ($target.hasClass('pay-point')) {
+      this._payPoint();
+    } else {
+      this._paySms();
+    }
   },
-  _paySuccess: function () {
-    this._history.setHistory();
-    this._go('#complete');
+  _payAccount: function () {
+    if (this._isAccountValid()) {
+      var reqData = this._makeRequestDataForAccount();
+      this._apiService.request(Tw.API_CMD.BFF_07_0023, reqData)
+        .done($.proxy(this._paySuccess, this, reqData, 'account'))
+        .fail($.proxy(this._payFail, this));
+    }
+  },
+  _isAccountValid: function () {
+    return (this._validation.checkIsSelected(this.$autoWrap.find('.select-bank'), Tw.MSG_PAYMENT.REALTIME_A02) &&
+      this._validation.checkEmpty(this.$autoWrap.find('.account-number').val(), Tw.MSG_PAYMENT.AUTO_A03) &&
+      this._validation.checkIsSelected(this.$refundWrap.find('.select-bank'), Tw.MSG_PAYMENT.REALTIME_A02) &&
+      this._validation.checkEmpty(this.$refundWrap.find('.account-number').val(), Tw.MSG_PAYMENT.AUTO_A03));
+  },
+  _makeRequestDataForAccount: function () {
+    var reqData = {
+      payovrBankCd: this.$refundWrap.find('.select-bank').attr('id'),
+      payovrBankNum: $.trim(this.$refundWrap.find('.account-number').val()),
+      payovrCustNm: $.trim(this.$refundWrap.find('.name').data('value')),
+      drwagrPrfKeyVal: '',
+      acntNum: this.$autoPayInfo.attr('acnt-num').toString(),
+      payAmt: this.$amount.toString(),
+      bankOrCardCode: this.$autoWrap.find('.select-bank').attr('id'),
+      bankOrCardAccn: $.trim(this.$autoWrap.find('.account-number').val()),
+      unpaidBillList: this._getCheckedBillList(),
+      recCnt1: this._getCheckedBillList().length.toString()
+    };
+    return reqData;
+  },
+  _payCard: function () {
+    if (this._isCardValid()) {
+      var reqData = this._makeRequestDataForCard();
+      this._apiService.request(Tw.API_CMD.BFF_07_0025, reqData)
+        .done($.proxy(this._paySuccess, this, reqData, 'card'))
+        .fail($.proxy(this._payFail, this));
+    }
+  },
+  _isCardValid: function () {
+    return (this._validation.checkEmpty(this.$cardNumber.val(), Tw.MSG_PAYMENT.AUTO_A05) &&
+      this._validation.checkEmpty(this.$cardY.val(), Tw.MSG_PAYMENT.AUTO_A01) &&
+      this._validation.checkEmpty(this.$cardM.val(), Tw.MSG_PAYMENT.AUTO_A01) &&
+      this._validation.checkEmpty(this.$cardPw.val(), Tw.MSG_PAYMENT.AUTO_A04) &&
+      this._validation.checkYear(this.$cardY.val(), Tw.MSG_PAYMENT.REALTIME_A05) &&
+      this._validation.checkMonth(this.$cardM.val(), Tw.MSG_PAYMENT.REALTIME_A05) &&
+      this._validation.checkIsSelected(this.$cardWrap.find('.select-bank'), Tw.MSG_PAYMENT.REALTIME_A02) &&
+      this._validation.checkEmpty(this.$cardWrap.find('.account-number').val(), Tw.MSG_PAYMENT.AUTO_A03));
+  },
+  _makeRequestDataForCard: function () {
+    var reqData = {
+      payovrBankCd: this.$cardWrap.find('.select-bank').attr('id'),
+      payovrBankNum: $.trim(this.$cardWrap.find('.account-number').val()),
+      payovrCustNm: $.trim(this.$cardWrap.find('.name').data('value')),
+      bankOrCardCode: $.trim(this.$cardNumber.val()).substr(0,6),
+      bankOrCardAccn: $.trim(this.$cardNumber.val()),
+      cdexpy: this.$cardY.val().substr(2,2),
+      cdexpm: this.$cardM.val(),
+      ccPwd: this.$cardPw.val(),
+      unpaidBillList: this._getCheckedBillList()
+    };
+    return reqData;
+  },
+  _payPoint: function () {
+    if (this._isPointValid()) {
+      var reqData = this._makeRequestDataForPoint();
+      this._apiService.request(Tw.API_CMD.BFF_07_0029, reqData)
+        .done($.proxy(this._paySuccess, this, reqData, 'point'))
+        .fail($.proxy(this._payFail, this));
+    }
+  },
+  _isPointValid: function () {
+    return (this._isGetPoint() &&
+      this._validation.checkEmpty(this.$point.val(), Tw.MSG_PAYMENT.POINT_A07) &&
+      this._validation.checkIsAvailablePoint(this.$point.val(), this.$pointBox.find('.cashbag-point').text(), Tw.MSG_PAYMENT.REALTIME_A12) &&
+      this._validation.checkIsMore(this.$point.val(), 1000, Tw.MSG_PAYMENT.REALTIME_A08) &&
+      this._validation.checkIsTenUnit(this.$point.val(), Tw.MSG_PAYMENT.POINT_A06) &&
+      this._validation.checkEmpty(this.$pointPw.val(), Tw.MSG_PAYMENT.AUTO_A04));
+  },
+  _makeRequestDataForPoint: function () {
+    var reqData = {
+      settleWayCd: this.$pointSelector.attr('id'),
+      ocbPrePoint: $.trim(this.$point.val()),
+      ocbPwd: this.$pointPw.val(),
+      requestMon: this._getCheckedBillList(),
+      chkRept: this._getCheckedBillList().length,
+      ocbCardNum: $.trim(this.$cardNumber.val())
+    };
+    return reqData;
+  },
+  _paySms: function () {
+    if (this._isSmsValid()) {
+      this._apiService.request(Tw.API_CMD.BFF_07_0027, { msg: 'sms' })
+        .done($.proxy(this._paySuccess, this))
+        .fail($.proxy(this._payFail, this));
+    }
+  },
+  _isSmsValid: function () {
+    return this._validation.checkIsSelected(this.$container.find('.select-bank-sms'), Tw.MSG_PAYMENT.REALTIME_A02);
+  },
+  _paySuccess: function (reqData, type, res) {
+    if (res.code === Tw.API_CODE.CODE_00) {
+      this._history.setHistory();
+      this._setCompleteData(reqData, type);
+      this._go('#complete');
+    }
+  },
+  _setCompleteData: function (reqData, type) {
+    var $target = this.$container.find('.complete-payment');
+    $target.find('.' + type).removeClass('none');
+    for (var key in reqData) {
+      var value = reqData[key];
+      if (key === 'payAmt') {
+        value = Tw.FormatHelper.addComma(value);
+      }
+      if (key === 'bankOrCardAccn' || key === 'payovrBankNum') {
+        value = Tw.StringHelper.masking(value, '*', value.length - 6);
+      }
+      $target.find('.' + key).text(value);
+    }
+    $target.find('.bank-name').text(this.$autoWrap.find('.select-bank').text());
+    $target.find('.refund-bank-name').text(this.$refundWrap.find('.select-bank').text());
+    $target.find('.date').text(Tw.DateHelper.convDateFormat(new Date()));
+
+    var $detailTarget = this.$container.find('.detail-payment');
+    var $checkedBox = this.$container.find('.checkbox-main.checked');
+    $checkedBox.each(function () {
+      var $this = $(this);
+      var $newTarget = $detailTarget.clone().removeClass('none');
+      $newTarget.find('.svc-name').text($this.find('.svc-name').text());
+      $newTarget.find('.svc-number').text($this.find('.svc-number').text());
+      $newTarget.find('.invDt').text($this.find('.invDt').text());
+      $newTarget.find('.invAmt').text(Tw.FormatHelper.addComma($this.find('.invAmt strong').text()));
+      $('.detail-payment:last').after($newTarget);
+    });
   },
   _payFail: function () {
     Tw.Logger.info('pay request fail');
+  },
+  _getCheckedBillList: function () {
+    var $listBox = this.$container.find('.payment-select .select-list');
+    var list = [];
+    $listBox.find('li').each(function () {
+      var $this = $(this);
+      if ($this.hasClass('checked')) {
+        var obj = {
+          invDt: $this.find('.invDt').data('value').toString(),
+          biillSvcMgmtNum: $this.find('.svcMgmtNum').data('value').toString(),
+          billAcntNum: $this.find('.billAcntNum').data('value').toString(),
+          payAmt: $this.find('.invAmt').data('value').toString()
+        };
+        list.push(obj);
+      }
+    });
+    return list;
+  },
+  _isGetPoint: function () {
+    if (this.$pointBox.hasClass('none')) {
+      this._popupService.openAlert(Tw.MSG_PAYMENT.REALTIME_A11);
+      return false;
+    }
+    return true;
   },
   _go: function (hash) {
     window.location.hash = hash;

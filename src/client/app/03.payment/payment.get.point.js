@@ -40,7 +40,7 @@ Tw.PaymentGetPoint.prototype = {
   _getPoint: function ($layer) {
     if (this._isValid($layer)) {
       this._popupService.close();
-      this._apiService.request(Tw.API_CMD.BFF_07_0028, { 'ocbCardNum': $.trim($layer.find('.account-wrap input').val()) })
+      this._apiService.request(Tw.API_CMD.BFF_07_0043, { 'ocbCcno': $.trim($layer.find('.account-wrap input').val()) })
         .done($.proxy(this._success, this))
         .fail($.proxy(this._fail, this));
     }
@@ -49,7 +49,7 @@ Tw.PaymentGetPoint.prototype = {
     var $target = this.$container.find('.point-box');
     $target.find('.cashbag-point').text(res.result.availPt);
     $target.find('.t-point').text(res.result.availTPt);
-    $target.find('.point-card-number').text(res.result.ocbCardNum);
+    $target.find('.point-card-number').text(res.result.ocbCcno);
     $target.removeClass('none');
   },
   _fail: function () {

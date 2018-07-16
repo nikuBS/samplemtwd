@@ -45,7 +45,7 @@
                             <span class="badge badge-allpay"><span class="blind">통합대표</span></span>
                             <!--// 2018-07-06 수정-->
                             <span class="info-type"><span class="blind">회선정보</span>휴대폰</span>
-                            <span class="info-name"><span class="blind">별명</span><%= svcInfo.svcNickNm %></span>
+                            <span class="info-name"><span class="blind">별명</span><%= svcInfo.nickNm %></span>
                         </li>
                     </ul>
                     <span class="info-btn"><a href="" class="btn-choice" role="button">변경</a></span>
@@ -55,24 +55,24 @@
             <div class="cont-box">
                 <div class="t-charge-guide">
                     <h4>현재 사용중인 요금안내서</h4>
-                    <p class="charge-t1t"><%= billType.curBillTypeNm%></p>
-                    <% if (svcInfo.svcCnt > 1) { %>
-                    <a class="bt-link-tx" href="">통합청구 6개<span class="ico"></span></a>
+                    <p class="charge-t1t"><%= data.billTypeInfo.curBillTypeNm%></p>
+                    <% if(data.itgSvc.length > 0) { %>
+                    <a class="bt-link-tx _sel-join-bill">통합청구 <%=data.itgSvc.length%>개<span class="ico"></span></a>
                     <% } %>
-                    <span class="charge-txt"><%- billType.curBillTypeText %></span>
+                    <span class="charge-txt"><%- data.billTypeDesc[data.billTypeInfo.curBillType] %></span>
                 </div>
                 <div class="contents-btn">
                     <ul class="bt-slice item-two">
                         <!-- T world 확인의 경우는 재발행 하기 숨김 -->
-                        <% if(billType.curBillType !== 'P') { %>
+                        <% if(data.billTypeInfo.curBillType !== 'P') { %>
                         <li class="bt-white1">
-                            <button>재발행 하기</button>
+                            <button id="onReissue">재발행 하기</button>
                         </li>
                         <% }%>
-                        <!-- SMS 수신 불가 및 요금 안내서가 '문자'인 경우는 숨김(법정 대리인 동시통보 아닌경우) -->
-                        <% if( !(billType.smsRecieveYN === 'N' || ( billType.curBillType === 'B' && billType.ccurNotiYn === 'N' ) ) ) { %>
+                        <!-- 요금 안내서가 '문자'인 경우는 숨김(법정 대리인 동시통보 아닌경우) -->
+                        <% if( !(  data.billTypeInfo.curBillType === 'B' && data.billTypeInfo.ccurNotiYn !== 'Y' ) ) { %>
                         <li class="bt-white1">
-                            <button>안내서 정보변경</button>
+                            <button id="onModifyInfo">안내서 정보변경</button>
                         </li>
                         <% } %>
                     </ul>
@@ -92,7 +92,14 @@
                                         <div class="slider-box">
                                             <!-- type1: 카드형 -->
                                             <ul class="slider">
-                                                <% billType.billTypeList.map ( (line) =>  { %>
+                                                <% data.billTypeList.map ( (line) =>  {
+                                                    if ( line.billType === data.billTypeInfo.curBillType ) {
+                                                        return false;
+                                                    }
+                                                    if( !this.flickingInfo ){
+                                                        this.flickingInfo = line;
+                                                    }
+                                                %>
                                                 <li class="swiper-slide" data-bill-type="<%= JSON.stringify(line)%>" >
                                                     <div class="swiper-cont bg-color3">
                                                         <div class="t-commend-info">
@@ -114,15 +121,15 @@
                         </div>
                     </div>
                     <div class="commend-detail-info">
-                        <p class="txt _sel-desc"><%= billType.billTypeList[0].desc %></p>
+                        <p class="txt _sel-desc"><%= this.flickingInfo.desc %></p>
                         <div class="contents-btn">
                             <ul class="bt-slice">
                                 <li class="bt-blue1">
                                     <!-- Dimmed Case는 button에 disabled속성 추가 -->
-                                    <button class="_sel-nm"><%= billType.billTypeList[0].chgBtnNm %></button>
+                                    <button class="_sel-nm" data-bill-type="<%= this.flickingInfo.billType%>"><%= this.flickingInfo.chgBtnNm%></button>
                                 </li>
                                 <li class="bt-link-box">
-                                    <a class="bt-link-tx _sel-preview" href="#" onclick="return false;" data-bill-type-list="<%= JSON.stringify(billType.billTypeList)%>">미리 보기</a>
+                                    <a class="bt-link-tx _sel-preview" data-select-bill-type="<%= this.flickingInfo.billType %>">미리 보기</a>
                                 </li>
                             </ul>
                         </div>
@@ -133,7 +140,7 @@
             <div class="cont-box">
                 <div class="inner2">                                                                                                                                    <div class="contents-info-list">
                         <p class="ti-desc">반송된 요금안내서와<br />반송사유를 확인할 수 있습니다.</p>
-                        <a class="bt-link-tx" href="">요금안내서 반송 내역 보기 <span class="ico"></span></a>
+                        <a class="bt-link-tx" id="onReturnHistory">요금안내서 반송 내역 보기 <span class="ico"></span></a>
                     </div>
                 </div>
             </div>
@@ -160,14 +167,13 @@
         </div>
     </div>
     <!--// #contents -->
-    <!-- footer -->
-    <% include ../../../../../common/views/components/footer.component.html %>
-    <!-- // footer -->
+    <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
 </div>
 <% include ../../components/javascript.component.html %>
 <script>
     $(document).ready(function () {
-        var comp = new Tw.MyTBillGuidechange($('#myt-bill-billguide'));
+        var comp = new Tw.MyTBillGuidechange($('#myt-bill-billguide'), '<%- JSON.stringify(svcInfo) %>' );
+        comp._setJoinBill( '<%- JSON.stringify(data.itgSvc) %>' );
     });
 </script>
 <% include ../../components/end.component.html %>
