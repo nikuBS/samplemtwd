@@ -20,7 +20,7 @@ class PaymentRealtimeController extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     this.apiService.request(API_CMD.BFF_07_0021, {}).subscribe((resp) => {
       this.renderView(res, 'payment.realtime.html', {
-        list: this.getResult(UnpaidList),
+        list: this.getResult(resp),
         svcInfo: this.getSvcInfo(svcInfo)
       });
     });
@@ -45,11 +45,25 @@ class PaymentRealtimeController extends TwViewController {
     if (!FormatHelper.isEmpty(list)) {
       list.map((data) => {
         data.invYearMonth = DateHelper.getShortDateWithFormat(data.invDt, 'YYYY.MM');
-        data.invMoney = FormatHelper.addComma(data.invAmt);
+        data.intMoney = this.removeZero(data.invAmt);
+        data.invMoney = FormatHelper.addComma(data.intMoney.toString());
         data.svcName = SVC_ATTR[data.svcAttrCd];
       });
     }
     return list;
+  }
+
+  private removeZero(input: string): any {
+    let isNotZero = false;
+    for (let i = 0; i < input.length; i++) {
+      if (!isNotZero) {
+        if (input[i] !== '0') {
+          input = input.substr(i, input.length - i);
+          isNotZero = true;
+        }
+      }
+    }
+    return input;
   }
 
   private getSvcInfo(svcInfo: any): any {

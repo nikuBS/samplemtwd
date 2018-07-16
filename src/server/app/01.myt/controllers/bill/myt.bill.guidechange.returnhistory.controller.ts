@@ -17,8 +17,9 @@ class MyTBillReturnHistory extends TwViewController {
 
     this.apiService.request(API_CMD.BFF_05_0039, {}).subscribe((returnData) => {
       const data: any = {
-        recCnt: 0,
-        records: []
+        totCnt: 0,
+        records: [],
+        svcInfo: svcInfo
       };
       if ( returnData.code !== 'ZINVN8319' ) { // 요금반송내역이 없는 경우에 대한 코드 값 'ZINVN8319'
         if ( returnData.result && returnData.result.billReturnList ) {
