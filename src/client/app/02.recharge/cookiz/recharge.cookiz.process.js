@@ -21,27 +21,42 @@ Tw.RechargeCookizProcess.prototype = {
     name: '',
     phone: '',
     phone_no_mask: '',
-    amount: 5000
+    amount: 5000,
+    type: 0
   },
   provider: {
+    prodId: '',
+    prodName: '',
     amount: 7000
   },
 
   _init: function () {
+    var setProvider = function (res) {
+      if ( res.code === '00' ) {
+        var result = res.result;
+        this.provider.amount = Number(result.currentTopUpLimit);
+      }
+    };
 
+    this._apiService.request(Tw.API_CMD.BFF_06_0028, {}).done($.proxy(setProvider, this));
   },
 
   _cachedElement: function () {
-    this.$container.on('click', '.btn_confirm', $.proxy(this._goToMain, this));
-    this.$container.on('click', '.btn_validateRequestStep1', $.proxy(this._validateRequestStep1, this));
-    this.$container.on('click', '.btn_validateStep1', $.proxy(this._validateCookizStep1, this));
-    this.$container.on('click', 'input[name=senddata]', $.proxy(this._onChangeAmount, this));
-    this.$container.on('click', '.tube-select', $.proxy(this._onClickSelectPopup, this));
-    this.$container.on('click', '.close-step', $.proxy(this._onCloseProcess, this));
+    this.$tubeList = $('.tube-list.two.wrap_amount_change');
   },
 
   _bindEvent: function () {
-
+    this.$container.on('click', '#btn_prev', $.proxy(this._goBack, this));
+    this.$container.on('click', '.btn_confirm', $.proxy(this._goToMain, this));
+    this.$container.on('click', '.btn_go_history', $.proxy(this._goHistory, this));
+    this.$container.on('click', '.close-step', $.proxy(this._onCloseProcess, this));
+    this.$container.on('click', '.tube-select', $.proxy(this._onClickSelectPopup, this));
+    this.$container.on('click', '.btn_validateStep1', $.proxy(this._validateCookizStep1, this));
+    this.$container.on('click', '.btn_select_amount', $.proxy(this._onClickSelectAmount, this));
+    this.$container.on('click', '#btn_cookiz_complete', $.proxy(this._validateCookizComplete, this));
+    this.$container.on('click', '.btn_validateRequestStep1', $.proxy(this._validateRequestStep1, this));
+    this.$container.on('click', '.wrap_type_change input[name=senddata]', $.proxy(this._onChangeType, this));
+    this.$container.on('click', '.wrap_amount_change input[name=senddata]', $.proxy(this._onChangeAmount, this));
   },
 
   _setAvailableAmount: function () {
@@ -59,6 +74,13 @@ Tw.RechargeCookizProcess.prototype = {
     };
 
     this.$tubeList.find('li').each($.proxy(setAvailableUI, this));
+  },
+
+  _onChangeType: function (e) {
+    var elWrapInput = $(e.currentTarget);
+    this.target.type = $('.wrap_type_change').find('input').index(elWrapInput);
+    var sTypeName = elWrapInput.parent().text().trim();
+    $('.recharge_type').text(sTypeName);
   },
 
   _onChangeAmount: function (e) {
@@ -104,7 +126,22 @@ Tw.RechargeCookizProcess.prototype = {
   },
 
   _onOpenSelectPopup: function () {
+    $('.popup-info').find('input[value=' + this.target.amount + ']').click();
     $('.popup-info').addClass('scrolling');
+  },
+
+  _onClickSelectAmount: function (e) {
+    this.target.amount = $(e.currentTarget).closest('.popup').find('input:checked').prop('value');
+    var targetButton = this.$tubeList.find('input[title=' + this.target.amount + ']');
+
+    if ( targetButton.length !== 0 ) {
+      targetButton.click();
+    } else {
+      this.$tubeList.find('li.checked').removeClass('checked');
+    }
+
+    this._setAmount();
+    this._popupService.close();
   },
 
   _validateRequestStep1: function () {
@@ -128,8 +165,33 @@ Tw.RechargeCookizProcess.prototype = {
     this._go('#step2');
   },
 
+  _validateCookizComplete: function () {
+    if ( this.target.type === 0 ) {
+      this._apiService.request(Tw.API_CMD.BFF_06_0029, { amt: this.target.amount }).done($.proxy(this._onSuccessCookizComplete, this));
+    }
+
+    if ( this.target.type === 1 ) {
+      this._apiService.request(Tw.API_CMD.BFF_06_0030, { amt: this.target.amount }).done($.proxy(this._onSuccessCookizComplete, this));
+    }
+  },
+
+  _onSuccessCookizComplete: function (res) {
+    if ( res.code === '00' ) {
+      $('.recharge_amount').text(Tw.FormatHelper.addComma(this.target.amount));
+      this._go('#complete');
+    } else {
+      this._sendFail(res);
+    }
+  },
+
   _onCloseProcess: function () {
     this._popupService.openConfirm(Tw.POPUP_TITLE.NOTIFY, Tw.MSG_GIFT.TING_A12, null, null, $.proxy(this._goToMain, this));
+  },
+
+  _sendFail: function (res) {
+    if ( res.data ) {
+      this._popupService.openAlert(res.data.orgDebugMessage);
+    }
   },
 
   _goToMain: function () {
@@ -137,6 +199,7 @@ Tw.RechargeCookizProcess.prototype = {
   },
 
   _goHistory: function () {
+    this._history.setHistory();
     this._goLoad('/recharge/cookiz/history');
   },
 
