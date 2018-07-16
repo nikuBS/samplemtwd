@@ -5,12 +5,7 @@
  */
 Tw.MyTBillHotBill = function (rootEl) {
   this.SVC_TYPE = { MOBILE: 'M1', TPOCKET: 'M3' };
-  this.PARAM = {
-    TYPE: {
-      CURRENT: 'G',
-      PREVIOUS: 'Q'
-    }
-  };
+
   this._children = null;
   this.$container = rootEl;
   this._apiService = Tw.Api;
@@ -22,14 +17,10 @@ Tw.MyTBillHotBill = function (rootEl) {
   this._billInfoAvailable = this.$amount.length > 0; //서버날짜로 일 별 노출조건 세팅해서 내려옴
   if ( this._billInfoAvailable ) {
     skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
-    this._resTimerID = setTimeout(this._getBillResponse(this.PARAM.TYPE.CURRENT), 500);
+    this._resTimerID = setTimeout(this._getBillResponse(Tw.MyTBillHotBill.PARAM.TYPE.CURRENT), 500);
     Handlebars.registerHelper('isBill', function (val, options) {
       return (Tw.MyTBillHotBill.NO_BILL_FIELDS.indexOf(val) < 0 ) ? options.fn(this) : options.inverse(this);
     });
-  } else {
-    //PocketFi 1일에 요금조회 불가 & 7일까지만 전월요금 조회 가능
-    //따라서 _billInfoAvailable 에선 무조건 show 조건 충족
-    this.$btPreviousBill.show();
   }
 };
 
@@ -51,7 +42,7 @@ Tw.MyTBillHotBill.prototype = {
 
   _getBillResponse: function (gubun) {
     this._apiService
-      .request(Tw.API_CMD.BFF_05_0022, { gubun: gubun || this.PARAM.TYPE.CURRENT })
+      .request(Tw.API_CMD.BFF_05_0022, { gubun: gubun || Tw.MyTBillHotBill.PARAM.TYPE.CURRENT})
       .done($.proxy(this._onReceivedBillData, this))
       .fail($.proxy(this._onErrorReceivedBillData, this));
   },
@@ -63,7 +54,7 @@ Tw.MyTBillHotBill.prototype = {
     }
 
     if ( resp.result && resp.result.isSuccess === 'Y' ) {
-      if ( resp.result.gubun === this.PARAM.TYPE.PREVIOUS ) {
+      if ( resp.result.gubun === Tw.MyTBillHotBill.PARAM.TYPE.PREVIOUS ) {
         var type = this._svcAttrCd === this.SVC_TYPE.MOBILE ? '휴대폰' : 'T Pocket-Fi';
         Tw.MyTBillHotBill.openPrevBillPopup(resp, this._svcNum, type);
       } else {
@@ -108,11 +99,8 @@ Tw.MyTBillHotBill.prototype = {
 
         if ( this._billInfoAvailable ) {
           this.$amount.text(billData.tot_open_bal2);
-          //yyyy년mm월dd일 -> yyyy.mm.dd
-          var strPeriod = resp.result.termOfHotBill
-            .replace(/[\uB144\uC6D4]/gi, '.')
-            .replace(/[\uC77C:&nbsp;:]/gi, '')
-            .replace('~', ' ~ ');
+
+          var strPeriod = Tw.MyTBillHotBill.getFormattedPeriod(resp.result.termOfHotBill);
           this.$period.text(strPeriod);
           var group = Tw.MyTBillHotBill.arrayToGroup(billData.record1, 'inv_amt2', Tw.MyTBillHotBill.NO_BILL_FIELDS);
           this._renderBillGroup(group);
@@ -168,7 +156,7 @@ Tw.MyTBillHotBill.prototype = {
   },
 
   _onClickChildButton: function (e) {
-    location.href = '/myt/bill/hotbill/child?svcMgmtNum=' + e.target.id;
+    location.href = '/myt/bill/hotbill/child?childSvcMgmtNum=' + e.target.id;
   },
 
   _showPreviousBill: function () {
@@ -176,9 +164,9 @@ Tw.MyTBillHotBill.prototype = {
     var self = this;
     skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
     this._apiService
-      .request(Tw.API_CMD.BFF_05_0035, { gubun: this.PARAM.TYPE.PREVIOUS })
+      .request(Tw.API_CMD.BFF_05_0035, { gubun: Tw.MyTBillHotBill.PARAM.TYPE.PREVIOUS })
       .done(function () {
-        self._resTimerID = setTimeout(self._getBillResponse(self.PARAM.TYPE.PREVIOUS), 500);
+        self._resTimerID = setTimeout(self._getBillResponse(Tw.MyTBillHotBill.PARAM.TYPE.PREVIOUS), 500);
       })
       .fail($.proxy(this._onErrorReceivedBillData, this));
   }
@@ -186,6 +174,12 @@ Tw.MyTBillHotBill.prototype = {
 
 
 Tw.MyTBillHotBill.NO_BILL_FIELDS = ['total', 'noVAT', 'is3rdParty', 'showDesc', 'discount'];
+Tw.MyTBillHotBill.PARAM = {
+  TYPE: {
+    CURRENT: 'G',
+    PREVIOUS: 'Q'
+  }
+};
 /**
  * converts an array of objects to object grouped by multiple attributes
  * @param data :  object array
@@ -260,10 +254,7 @@ Tw.MyTBillHotBill.arrayToGroup = function (data, fieldAmount) {
 };
 
 Tw.MyTBillHotBill.openPrevBillPopup = function (resp, num, type) {
-  var strPeriod = resp.result.termOfHotBill
-    .replace(/[\uB144\uC6D4]/gi, '.')
-    .replace(/[\uC77C:&nbsp;:]/gi, '')
-    .replace('~', ' ~ ');
+  var strPeriod = Tw.MyTBillHotBill.getFormattedPeriod(resp.result.termOfHotBill);
   var billData = resp.result.hotBillInfo;
   var group = Tw.MyTBillHotBill.arrayToGroup(billData.record1, 'inv_amt1', Tw.MyTBillHotBill.NO_BILL_FIELDS);
 
@@ -280,4 +271,17 @@ Tw.MyTBillHotBill.openPrevBillPopup = function (resp, num, type) {
     billItems: group
   });
 
+};
+
+/**
+ * yyyy년mm월dd일 -> yyyy.mm.dd
+ * @param strPeriod ex)yyyy년mm월dd일~yyyy년mm월dd일
+ * @returns yyyy.mm.dd ~ yyyy.mm.dd
+ */
+Tw.MyTBillHotBill.getFormattedPeriod = function (strPeriod) {
+  var formatted = strPeriod
+    .replace(/[\uB144\uC6D4]/gi, '.')
+    .replace(/[\uC77C:&nbsp;:]/gi, '')
+    .replace('~', ' ~ ');
+  return formatted;
 };

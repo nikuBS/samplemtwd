@@ -30,11 +30,11 @@
     <!-- #contents -->
     <div id="contents" class="container-wrap">
         <h2 class="blind">내용</h2>
-        <div id="myt-bill-hotbill-child" class="container" >
+        <div id="myt-bill-hotbill-child" class="container">
 
             <div class="cont-box">
                 <div class="payment-info family">
-                    <p class="tit"><strong>자녀 휴대폰</strong><br />실시간 요금 현황입니다.</p>
+                    <p class="tit"><strong>자녀 휴대폰</strong><br/>실시간 요금 현황입니다.</p>
                     <div class="payment-info-phone">
                         <!-- 자녀 회선이 1개인 경우 -->
                         <span class="child-phonenum">010-46**-10*</span>
@@ -59,7 +59,7 @@
             </div>
 
             <hr class="cont-sp type1" aria-hidden="true"/>
-            <div class="cont-box nogaps" id="childBillAccordion">
+            <div class="cont-box nogaps noborder" id="childBillAccordion">
                 <!-- billItems -->
             </div>
 
@@ -67,9 +67,11 @@
             <!-- .cont-box -->
             <div class="cont-box nogaps-hoz">
                 <div class="helpbox-link">
-                    <div class="link-long">
+                    <% if(preBillAvailable){ %>
+                    <div class="link-long" id="previousBill" style="display:none;">
                         <a href="" class="disabled">전월요금보기<span class="ico"></span></a>
                     </div>
+                    <% } %>
                 </div>
             </div>
             <!-- .cont-box -->
@@ -81,12 +83,12 @@
         </div>
     </div>
     <!--// #contents -->
+    <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
 </div>
 <% include ../../components/javascript.component.html %>
 <script>
     $(document).ready(function () {
         var comp = new Tw.MyTBillHotBillChild($('#myt-bill-hotbill-child'));
-        //        skt_landing.action.loading.on({ta:'.load-area',co:'grey',size:true});
     });
 </script>
 <% include ../../components/end.component.html %>

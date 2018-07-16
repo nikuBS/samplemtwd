@@ -23,6 +23,7 @@ class MyTBillHotBill extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     var type = '';
     var billAvailable = true;
+    var preBillAvailable = (new Date().getDate() <= 7);
     switch ( svcInfo.svcAttrCd ) {
       case 'M3':
         type = 'T pocket Fi';
@@ -41,9 +42,17 @@ class MyTBillHotBill extends TwViewController {
     }
     svcInfo.svcType = type;
     Observable.combineLatest(
-      this.apiService.request(API_CMD.BFF_05_0035, { gubun: PARAM.TYPE.PREVIOUS })
-    ).subscribe(([]) => {
-      this.renderView(res, 'bill/myt.bill.hotbill.html', { svcInfo: svcInfo, billAvailable: billAvailable });
+      this.apiService.request(API_CMD.BFF_05_0035, { gubun: PARAM.TYPE.CURRENT })
+    ).subscribe(([billData]) => {
+      if ( billData['result'] && billData['result']['isSuccess'] === 'Y' ) {
+        this.renderView(res, 'bill/myt.bill.hotbill.html', {
+          svcInfo: svcInfo,
+          billAvailable: billAvailable,
+          preBillAvailable: preBillAvailable
+        });
+      } else {
+        //TODO error처리
+      }
     });
   }
 
