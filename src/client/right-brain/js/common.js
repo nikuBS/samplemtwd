@@ -641,7 +641,7 @@ skt_landing.dev = {
     }
     var $target = $(selector)[0] == $( "#sortable-enabled" )[0] ? $(selector) : $( "#sortable-enabled" );
     var defaults = {
-      //connectWith: $target.selector,
+      connectWith: $target.selector,
       axis: 'y'
     };
     options = $.extend(defaults, options);
