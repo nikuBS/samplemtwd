@@ -57,7 +57,7 @@
                     <h4>현재 사용중인 요금안내서</h4>
                     <p class="charge-t1t"><%= data.billTypeInfo.curBillTypeNm%></p>
                     <% if(data.itgSvc.length > 0) { %>
-                    <a class="bt-link-tx _sel-join-bill">통합청구 6개<span class="ico"></span></a>
+                    <a class="bt-link-tx _sel-join-bill">통합청구 <%=data.itgSvc.length%>개<span class="ico"></span></a>
                     <% } %>
                     <span class="charge-txt"><%- data.billTypeDesc[data.billTypeInfo.curBillType] %></span>
                 </div>
@@ -66,13 +66,13 @@
                         <!-- T world 확인의 경우는 재발행 하기 숨김 -->
                         <% if(data.billTypeInfo.curBillType !== 'P') { %>
                         <li class="bt-white1">
-                            <button>재발행 하기</button>
+                            <button id="onReissue">재발행 하기</button>
                         </li>
                         <% }%>
                         <!-- 요금 안내서가 '문자'인 경우는 숨김(법정 대리인 동시통보 아닌경우) -->
                         <% if( !(  data.billTypeInfo.curBillType === 'B' && data.billTypeInfo.ccurNotiYn !== 'Y' ) ) { %>
                         <li class="bt-white1">
-                            <button>안내서 정보변경</button>
+                            <button id="onModifyInfo">안내서 정보변경</button>
                         </li>
                         <% } %>
                     </ul>
@@ -126,11 +126,10 @@
                             <ul class="bt-slice">
                                 <li class="bt-blue1">
                                     <!-- Dimmed Case는 button에 disabled속성 추가 -->
-                                    <button class="_sel-nm"><%= this.flickingInfo.chgBtnNm%></button>
+                                    <button class="_sel-nm" data-bill-type="<%= this.flickingInfo.billType%>"><%= this.flickingInfo.chgBtnNm%></button>
                                 </li>
                                 <li class="bt-link-box">
                                     <a class="bt-link-tx _sel-preview" data-select-bill-type="<%= this.flickingInfo.billType %>">미리 보기</a>
-                                    <!--<a class="bt-link-tx _sel-preview" onclick="return false;">미리 보기</a>-->
                                 </li>
                             </ul>
                         </div>
@@ -141,7 +140,7 @@
             <div class="cont-box">
                 <div class="inner2">                                                                                                                                    <div class="contents-info-list">
                         <p class="ti-desc">반송된 요금안내서와<br />반송사유를 확인할 수 있습니다.</p>
-                        <a class="bt-link-tx" href="">요금안내서 반송 내역 보기 <span class="ico"></span></a>
+                        <a class="bt-link-tx" id="onReturnHistory">요금안내서 반송 내역 보기 <span class="ico"></span></a>
                     </div>
                 </div>
             </div>

@@ -17,13 +17,38 @@ Tw.MyTBillGuidechange.prototype = {
     this.$container.on('click', '.swiper-slide', $.proxy(this._onClickFlicking, this));
     this.$container.on('click', '._sel-preview', $.proxy(this._openPreview, this, ''));
     this.$container.on('click', '._sel-join-bill', $.proxy(this._openJoinBill, this));
-    // this.$container.on('click','._sel-preview', $.proxy(this._openPreview, this, {'test':'hello'}) );
+    this.$container.on('click', '#onModifyInfo', $.proxy(this._goModifyInfo,this) );
+    this.$container.on('click', '._sel-nm', $.proxy(this._goModify,this) );
+    this.$container.on('click', '#onReissue', $.proxy(this._goReissue,this) );
+    this.$container.on('click', '#onReturnHistory', $.proxy(this._goReturnHistory,this) );
+  },
+
+  // 안내서 정보변경 링크
+  _goModifyInfo : function() {
+    window.location.href='/myt/bill/guidechange/update';
+  },
+
+  // 안내서 변경 링크
+  _goModify : function(e) {
+    var billType = $(e.currentTarget).data('billType');
+    window.location.href='/myt/bill/guidechange/change?selectedBillGuideType='+billType;
+  },
+
+  // 재발행하기 링크
+  _goReissue : function() {
+    window.location.href='/myt/bill/guidechange/reissue';
+  },
+
+  // 반송내역 링크
+  _goReturnHistory : function() {
+    window.location.href='/myt/bill/billguide/returnhistory';
   },
 
   _changePreview: function (e, $container) {
     var billType = $(e.currentTarget).data('billType');
+    Tw.Logger.info('>> 11 ', billType);
     $container.find('._sel-desc').text(billType.desc);
-    $container.find('._sel-nm').text(billType.chgBtnNm);
+    $container.find('._sel-nm').data('billType', billType.billType).text(billType.chgBtnNm);
   },
 
   // 하단 안내서 플리킹 클릭 이벤트
@@ -31,7 +56,6 @@ Tw.MyTBillGuidechange.prototype = {
     var billType = $(e.currentTarget).data('billType');
     this._changePreview(e, this.$container);
     this.$container.find('._sel-preview').data('selectBillType', billType.billType);
-    Tw.Logger.info('## >> ', this.$container.find('._sel-preview').data('selectBillType'));
   },
 
   // 현재 접속 회선정보 리턴
@@ -45,7 +69,6 @@ Tw.MyTBillGuidechange.prototype = {
   },
 
   // 미리보기 클릭 이벤트
-  // _openPreview : function ( e) {
   _openPreview: function (currentBillType, e) {
     currentBillType = currentBillType || $(e.currentTarget).data('selectBillType');
     this.currentBillType = currentBillType; // 파라미터로 받을 안내서 유형
@@ -93,10 +116,9 @@ Tw.MyTBillGuidechange.prototype = {
       return JSON.stringify(object);
     });
 
-    // 미리보기 공통 로드(나중에 별도 HBS 파일로 할지 확인필요. 일단 MY_03_03_01_L01 파일에다 만든다.)
+    // 미리보기 공통 로드
     this._popupService.open({
       hbs: 'MY_03_03_01_L_COMMON',
-      // hbs: 'MY_03_03_01_L01',
       data: data
     }, $.proxy(this._hbsLoadEvent, this));
   },
@@ -106,18 +128,8 @@ Tw.MyTBillGuidechange.prototype = {
     this.joinBillInfo = JSON.parse(joinBillInfo);
   },
 
-  /*_setSvcInfo : function( svcInfo ) {
-    Tw.Logger.info('### ', JSON.parse(svcInfo) );
-    this.svcInfo = JSON.parse(svcInfo);
-  },*/
-
   // 통합청구 팝업
   _openJoinBill : function() {
-    /*var data = this.joinBillInfo.map( function( data ){
-      data.isCeo = data.svcNum === this.svcInfo.svcNum ? true:false;
-      data.haveAddr = data.svcType === 'IPTV' ? true:false;
-    });*/
-
     var _svcNum = this.svcInfo.svcNum;
     var data = {
       svcNum : _svcNum
@@ -172,14 +184,14 @@ Tw.MyTBillGuidechange.prototype = {
 
   // HBS Load 후 이벤트
   _hbsLoadEvent: function ($layer) {
-    $layer.find('._sel-desc').text(this.previewBillInfo.desc);
-    $layer.find('._sel-nm').text(this.previewBillInfo.chgBtnNm);
 
+    $layer.find('._sel-desc').text(this.previewBillInfo.desc);
+    $layer.find('._sel-nm').data('billType', this.previewBillInfo.billType).text(this.previewBillInfo.chgBtnNm);
     this._changeTabAndBottomText($layer, this.currentBillType);
 
-    // 미리보기 안에 유형별 이미지 넣는 영역 append (유형에 따라 Tab 또는 일반으로 구성필요)
     $($layer).on('click', '.swiper-slide', $.proxy(this._previewOnClickFlicking, this, $layer));
     $($layer).on('click', '[role=tablist] li', $.proxy(this._previewOnClickTab, this, $layer));
+    $($layer).on('click', '._sel-nm', $.proxy(this._goModify, this));
   },
 
   // 미리보기 > 상단 플리킹 클릭 이벤트
@@ -197,6 +209,5 @@ Tw.MyTBillGuidechange.prototype = {
     var currentId = '.' + $_this.attr('id');
     $layer.find(currentId, '.tab-contents').show().siblings().hide();
   }
-
 
 };

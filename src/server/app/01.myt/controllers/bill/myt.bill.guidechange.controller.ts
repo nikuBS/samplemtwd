@@ -51,20 +51,19 @@ class MytBillGuidechange extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-
-    // const selectedSession: Observable<any> = this.apiService.request(API_CMD.BFF_05_0041, {});
+    // 현재 사용중인 요금안내서 조회
     const billTypeReq: Observable<any> = this.apiService.request(API_CMD.BFF_05_0025, {});
+    // 통합청구회선 조회
     const itgSvcReq: Observable<any> =  this.apiService.request(API_CMD.BFF_05_0049, {});
+    // 선택회선 조회
     const selectedSessionReq: Observable<any> =  this.apiService.request(API_CMD.BFF_01_0005, {});
     Observable.combineLatest(
       billTypeReq,
       itgSvcReq,
       selectedSessionReq
     ).subscribe(([billTypeInfo, integraionService, selectedSession]) => {
-      this.logger.info('#', '>>>>>>>>00 ', JSON.stringify(integraionService));
       if ( integraionService.code !== '00' ) {
         integraionService = {result : {}};
-        this.logger.info('#', '>>>>>>>>01 ', JSON.stringify(integraionService));
       }
 
       svcInfo = Object.assign({}, selectedSession.result);
@@ -74,33 +73,10 @@ class MytBillGuidechange extends TwViewController {
         billTypeInfo : billTypeInfo.result,
         itgSvc : integraionService.result
       };
-      this.logger.info('#', '>>>>>>>>11 ', JSON.stringify(svcInfo));
-      this.logger.info('#', '>>>>>>>>22 ', JSON.stringify(data));
 
       res.render('bill/myt.bill.guidechange.html', { svcInfo: svcInfo, data: data });
     });
-
-    /*const data = Object.assign(this.reqBillType(), MYT_GUIDE_CHANGE_INIT_INFO);
-    data.billTypeList = this.getFlickingList(data.billTypeList, svcInfo);
-    this.logger.info('[##]', '[ >>>>>> ]', JSON.stringify(data.billTypeList));
-    res.render('bill/myt.bill.guidechange.html', {svcInfo: svcInfo, data: data});*/
   }
-
-  // 현재 사용중인 요금안내서 조회
-  private getBillTypeInfo(): Observable<any> {
-    return this.apiService.request(API_CMD.BFF_05_0025, {});
-  }
-
-  // 선택회선 조회
-  private getSelectedSession(): Observable<any> {
-    return this.apiService.request(API_CMD.BFF_01_0005, {});
-  }
-
-  // 통합청구회선 조회
-  private getIntegraionService(): Observable<any> {
-    return this.apiService.request(API_CMD.BFF_05_0049, {});
-  }
-
 }
 
 export default MytBillGuidechange;
