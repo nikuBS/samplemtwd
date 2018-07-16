@@ -17,7 +17,8 @@ class AuthWithdrawlComplete extends TwViewController {
     const isTid = req.query.tid === 'Y' ? true : false;
     res.render('withdrawal/auth.withdrawal.complete.html', {
       tid: isTid,
-      isApp: BrowserHelper.isApp(req)
+      isApp: BrowserHelper.isApp(req),
+      svcInfo: svcInfo
     });
   }
 }

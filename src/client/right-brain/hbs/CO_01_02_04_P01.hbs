@@ -49,8 +49,9 @@
                             <div class="widget">
                                 <div class="widget-box check">
                                     <ul class="select-list" role="group">
-                                        {{#if data.M}}
-                                            {{#each data.M}}
+                                        {{#if data.m}}
+                                            {{#each data.m}}
+                                                {{#if isShow}}
                                                 <li class="checkbox type01" role="checkbox" aria-checked="false" data-svcMgmtNum="{{svcMgmtNum}}">
                                                     <input class="child-check" type="checkbox" name="checkbox" value="" title="회선 선택" aria-labelledby="aria-mline1" /><!-- 접근성 수정 : aria속성을 위해 고유 id를 가져야 합니다. loop를 돌릴시 고정 id가 여러개 생성이 됩니다. index를 참조 하거나 변화될 수 있는 값이 들어가야 될 것 같습니다. -->
                                                     <dl id="aria-mline1" class="mline-detail"><!-- aria-labelledby와 매칭 되어야 합니다. -->
@@ -59,10 +60,12 @@
                                                         <dd class="ph">{{ svcNum }}</dd>
                                                     </dl>
                                                 </li>
+                                                {{/if}}
                                             {{/each}}
                                         {{/if}}
-                                        {{#if data.S}}
-                                            {{#each data.S}}
+                                        {{#if data.s}}
+                                            {{#each data.s}}
+                                                {{#if isShow}}
                                                 <li class="checkbox type01" role="checkbox" aria-checked="false" data-svcMgmtNum="{{svcMgmtNum}}">
                                                     <input class="child-check" type="checkbox" name="checkbox" value="값4" title="회선 선택" aria-labelledby="aria-mline1" /><!-- 접근성 수정 : aria속성을 위해 고유 id를 가져야 합니다. loop를 돌릴시 고정 id가 여러개 생성이 됩니다. index를 참조 하거나 변화될 수 있는 값이 들어가야 될 것 같습니다. -->
                                                     <dl id="aria-mline1" class="mline-detail"><!-- aria-labelledby와 매칭 되어야 합니다. -->
@@ -70,10 +73,12 @@
                                                         <dd class="ph">{{ addr }}</dd>
                                                     </dl>
                                                 </li>
+                                                {{/if}}
                                             {{/each}}
                                         {{/if}}
-                                        {{#if data.O}}
-                                            {{#each data.O}}
+                                        {{#if data.o}}
+                                            {{#each data.o}}
+                                                {{#if isShow}}
                                                 <li class="checkbox type01" role="checkbox" aria-checked="false" data-svcMgmtNum="{{svcMgmtNum}}">
                                                     <input class="child-check" type="checkbox" name="checkbox" value="값4" title="회선 선택" aria-labelledby="aria-mline1" /><!-- 접근성 수정 : aria속성을 위해 고유 id를 가져야 합니다. loop를 돌릴시 고정 id가 여러개 생성이 됩니다. index를 참조 하거나 변화될 수 있는 값이 들어가야 될 것 같습니다. -->
                                                     <dl id="aria-mline1" class="mline-detail"><!-- aria-labelledby와 매칭 되어야 합니다. -->
@@ -81,6 +86,7 @@
                                                         <dd class="ph">{{ svcNum }}</dd>
                                                     </dl>
                                                 </li>
+                                                {{/if}}
                                             {{/each}}
                                         {{/if}}
                                     </ul>
@@ -95,8 +101,8 @@
                 <div class="page-gnb">
                     <div class="bt-popup">
                         <div class="bt-indiv bt-red1">
-                            <button class="indiv-small">선택 취소</button>
-                            <button class="indiv-big">선택 회선 등록</button>
+                            <button class="indiv-small" disabled>선택 취소</button>
+                            <button class="indiv-big" disabled>선택 회선 등록</button>
                         </div>
                     </div>
                 </div>

@@ -88,7 +88,7 @@ skt_landing.util = {
       return browser_name;
     }
   }
-}
+};
 skt_landing.action = {
   scroll_top:0,
   scroll_current:0,
@@ -631,5 +631,43 @@ skt_landing.action = {
       height = '100%';
     }
     // 2018-06-15
+  }
+};
+skt_landing.dev = {
+  sortableInit: function(selector, options){
+    if(!options){
+      options = selector;
+      selector = null;
+    }
+    var $target = $(selector)[0] == $( "#sortable-enabled" )[0] ? $(selector) : $( "#sortable-enabled" );
+    var defaults = {
+      connectWith: $target.selector,
+      axis: 'y'
+    };
+    options = $.extend(defaults, options);
+    $target.sortable(options).disableSelection();
+   $target.on('touchstart touchend touchmove','.ui-state-default .bt-active',function(e){
+     e.stopPropagation();
+   });
+   $target.parent().on('click', '.connectedSortable .bt-active', function(){
+     if($(this).closest('.connectedSortable').hasClass('enabled')){
+       $(this).parent().appendTo('#sortable-disabled');
+       $(this).find('.blind').text('회선 활성화 하기');
+     }else{
+       $(this).parent().prependTo('#sortable-enabled');
+       $(this).find('.blind').text('회선 삭제 하기');
+     }
+   });
+   $target.parent().on('touchstart touchend touchmove','.bt-sort',function(e){
+     e.stopPropagation();
+   });
+   $target.parent().on('click', '.connectedSortable .bt-sort', function(){
+     var parent_cont = $(this).closest('.ui-state-default');
+     if($(this).hasClass('up')){
+       parent_cont.insertBefore(parent_cont.prev());
+     }else{
+       parent_cont.insertAfter(parent_cont.next());
+     }
+   });
   }
 }

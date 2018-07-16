@@ -107,7 +107,7 @@
                                                         <%if(cookizInfo.currentTopUpLimit!='0'){%>
                                                         <button class="btn_go_cookiz_process">팅/쿠키즈/안심음성 충전하기</button>
                                                         <%}else{%>
-                                                        <button class="btn_go_cookiz_process">팅/쿠키즈/안심음성 충전하기</button>
+                                                        <button class="btn_go_cookiz_process" disabled="true">팅/쿠키즈/안심음성 충전하기</button>
                                                         <%}%>
                                                     </li>
                                                     <li class="bt-white1">
@@ -137,7 +137,7 @@
                                                         <dd class="box-block-list">
                                                             <div class="box-block-ti2">
                                                                 <span
-                                                                    class="txt1"><%=svcInfo.custNm%>님이 <em>&lsquo;팅요금 선물 조르기&rsquo;</em>를 <br/>요청하셨습니다. <br/>T World에서 선물을 해보세요.</span>
+                                                                    class="txt1"><%=svcInfo.mbrNm%>님이 <em>&lsquo;팅요금 선물 조르기&rsquo;</em>를 <br/>요청하셨습니다. <br/>T World에서 선물을 해보세요.</span>
                                                             </div>
                                                             <ul>
                                                                 <li>만 19세 이상 개인고객(SK텔레콤 가입자)에게 선물 조르기를 할 수 있습니다.</li>
@@ -309,7 +309,7 @@
                             <dd class="box-block-list2">
                                 <div class="widget">
                                     <div class="widget-box tube">
-                                        <ul class="tube-list two" role="radiogroup">
+                                        <ul class="tube-list two wrap_type_change" role="radiogroup">
                                             <li role="radio" aria-checked="true" class="first checked"><input type="radio" name="senddata"
                                                                                                               title="당월 충전"
                                                                                                               checked="checked">당월 충전
@@ -381,7 +381,7 @@
                                 <dl>
                                     <dt class="ti-data">충전 방법</dt>
                                     <dd class="tx-data">
-                                        <div class="txt"><span class="blind">이름</span>당월 충전</div>
+                                        <div class="txt recharge_type"><span class="blind">이름</span>당월 충전</div>
                                     </dd>
                                 </dl>
                             </li>
@@ -403,12 +403,12 @@
                                 <!-- .widget -->
                                 <div class="widget">
                                     <div class="widget-box tube">
-                                        <ul class="tube-list two" role="radiogroup">
-                                            <li role="radio" aria-checked="true" class="checked"><input type="radio" name="senddata"
-                                                                                                        title="1000" checked="checked">1,000
+                                        <ul class="tube-list two wrap_amount_change" role="radiogroup">
+                                            <li role="radio" aria-checked="false" class="checked"><input type="radio" name="senddata"
+                                                                                                        title="1000">1,000
                                                 원
                                             </li>
-                                            <li class="" role="radio" aria-checked="false"><input type="radio" name="senddata" title="5000">5,000
+                                            <li class="" role="radio" aria-checked="true"><input type="radio" name="senddata" title="5000" checked="checked">5,000
                                                 원
                                             </li>
                                             <li role="radio" aria-checked="false" class=""><input type="radio" name="senddata"
@@ -435,10 +435,10 @@
                     </div>
                     <ul class="bt-slice item-two">
                         <li class="bt-white2">
-                            <button>이전</button>
+                            <button id="btn_prev">이전</button>
                         </li>
                         <li class="bt-red1">
-                            <button class="selected">충전하기</button>
+                            <button id="btn_cookiz_complete" class="selected">충전하기</button>
                         </li>
                     </ul>
                 </div>
@@ -446,6 +446,69 @@
         </div>
         <!--// #contents -->
     </div>
+
+    <div id="complete" style="display: none">
+        <div id="header" class="header-wrap">
+            <div class="header step-page">
+                <div class="header-ti">
+                    <h1>팅/쿠키즈/안심음성 요금 충전하기</h1>
+                </div>
+                <button class="close-step"><span class="blind">닫기</span></button>
+            </div>
+        </div>
+        <div id="contents" class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+                <div class="cont-box nogaps-hoz">
+                    <div class="msg-present-box">
+                        <div class="msg-present-comp">
+                            <span class="ico"></span>
+                            <p class="txt"><span class="tx-bold">요금 충전 신청</span>이<br>완료되었습니다.</p>
+                        </div>
+                        <div class="gift-data-cont">
+                            <ul class="t-gift-data">
+                                <li>
+                                    <dl>
+                                        <dt class="ti-data">충전 방법</dt>
+                                        <dd class="tx-data recharge_type">
+                                            <span class="blind">이름</span>당월 충전
+                                        </dd>
+                                    </dl>
+                                </li>
+                                <li>
+                                    <dl>
+                                        <dt class="ti-data">충전 금액</dt>
+                                        <dd class="tx-data"><span class="num recharge_amount">5,000</span> 원</dd>
+                                    </dl>
+                                </li>
+                            </ul>
+
+                            <!-- 2018-06-22 버튼 추가, 수정 -->
+                            <div class="bt-gap">
+                                <ul class="bt-slice last">
+                                    <li class="bt-white1">
+                                        <button class="btn_go_history">충전 내역보기</button>
+                                    </li>
+                                    <li class="bt-blue1">
+                                        <button class="btn_confirm">확인</button>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!--// 2018-06-22 버튼 추가, 수정 -->
+                        </div>
+                    </div>
+                </div>
+                <hr class="cont-sp type1" aria-hidden="true">
+                <div class="cont-box nogaps">
+                    <div class="bt-link-box">
+                        <a class="bt-link-tx" href="">홈으로</a>
+                    </div>
+                </div>
+                <hr class="cont-sp type1" aria-hidden="true">
+            </div>
+        </div>
+    </div>
+
     <div id="request-step1" style="display: none">
         <div class="header-wrap">
             <div class="header step-page">

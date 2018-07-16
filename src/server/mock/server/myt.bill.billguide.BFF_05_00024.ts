@@ -1,4 +1,11 @@
 //청구요금조회
+// const billguide_BFF_05_00024 = {
+//   'code': '00',
+//   'msg': 'success',
+//   'result': [
+//   ]
+// };
+
 const billguide_BFF_05_00024 = {
   'code': '00',
   'msg': 'success',
@@ -8,8 +15,8 @@ const billguide_BFF_05_00024 = {
       'svcMgmtNum': '7041111237'
     },
     {
-    'svcNum': '01093791727',
-    'svcMgmtNum': '7041110071'
+      'svcNum': '01093791727',
+      'svcMgmtNum': '7041110071'
     },
     {
       'svcNum': '01040431727',

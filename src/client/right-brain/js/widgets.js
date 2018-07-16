@@ -311,7 +311,7 @@ skt_landing.widgets = {
         if(targetHeight > targetLineHeight || forTarget.length > 1){
           accoList.eq(i).find('> .acco-tit button').addClass('show-button');
         }else{
-          accoList.eq(i).addClass('on').find('> .acco-tit button').addClass('hide-button');
+          accoList.eq(i).addClass('imp-view').find('> .acco-tit button').addClass('hide-button');
         }
       }
       if($(this).find('> .acco-cover > .acco-style').hasClass('none-event')) return ;

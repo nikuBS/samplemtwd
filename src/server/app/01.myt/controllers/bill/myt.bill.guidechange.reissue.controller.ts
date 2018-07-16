@@ -25,7 +25,7 @@ class MyTBillReissue extends TwViewController {
     let value = '';
     const reissueType = Object.keys(MYT_REISSUE_TYPE);
     reissueType.forEach((val) => {
-      if ( MYT_REISSUE_TYPE[val].indexOf(key.trim()) !== -1) {
+      if ( (key.trim()).indexOf(MYT_REISSUE_TYPE[val]) !== -1) {
         value = val;
       }
     });
@@ -45,7 +45,8 @@ class MyTBillReissue extends TwViewController {
       // Twold확인(P)
       // Bill letter +문자청구서(Q)
       title: 'Bill letter+이메일', // 청구서유형명
-      reasonCd: '01' // 01:무선 02:유선(요금조정), 06: 유선(요금안내서 부달) 99: 유선 (기타) '':반송처리(추가예정)
+      reasonCd: '01', // 01:무선 02:유선(요금조정), 06: 유선(요금안내서 부달) 99: 유선 (기타) '':반송처리(추가예정)
+      // svcMgmtNum: '7100000001' // 회선정보
 
     };
     // 서버에서 받은 데이터 설정
