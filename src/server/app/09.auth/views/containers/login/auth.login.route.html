@@ -9,7 +9,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.AuthLoginRoute('<%= target %>');
+    new Tw.AuthLoginRoute('<%= target %>', '<%= state %>');
   });
 </script>
 <% include ../../components/end.component.html %>
