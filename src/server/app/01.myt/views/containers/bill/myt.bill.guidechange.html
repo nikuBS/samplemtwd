@@ -168,9 +168,7 @@
         </div>
     </div>
     <!--// #contents -->
-    <!-- footer -->
-    <% include ../../../../../common/views/components/footer.component.html %>
-    <!-- // footer -->
+    <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
 </div>
 <% include ../../components/javascript.component.html %>
 <script>
