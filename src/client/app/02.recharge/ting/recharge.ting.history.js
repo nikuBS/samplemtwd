@@ -18,11 +18,11 @@ Tw.RechargeTingHistory.prototype = {
   DEFAULT_LIST_COUNT: 20,
   tab1_searchType: '0',
   tab1_searchPeriod: '-3',
-  tab1_listIndex: 0,
+  tab1_listIndex: 20,
   tab1_list: [],
   tab2_searchType: '0',
   tab2_searchPeriod: '-3',
-  tab2_listIndex: 0,
+  tab2_listIndex: 20,
   tab2_list: [],
 
   _init: function () {
@@ -31,13 +31,63 @@ Tw.RechargeTingHistory.prototype = {
 
   _cachedElement: function () {
     this.$wrap_gift_history = $('#wrap_gift_history');
+    this.$wrap_gift_block_history = $('#wrap_gift_block_history');
     this.tpl_ting_item_history = Handlebars.compile($('#tpl_ting_item_history').text());
     this.tpl_ting_item_no_history = Handlebars.compile($('#tpl_ting_item_no_history').text());
+    this.tpl_ting_item_block_history = Handlebars.compile($('#tpl_ting_item_block_history').text());
   },
 
   _bindEvent: function () {
     this.$container.on('click', '.bt-dropdown.small', $.proxy(this.openWidget, this));
+    this.$container.on('click', '.tab-linker button', $.proxy(this._onChangeTab, this));
+    this.$container.on('click', '.gift-bt-more', $.proxy(this._onClickMoreButton, this));
     this.$container.on('click', '.search_condition button', $.proxy(this._onSelectCondition, this));
+  },
+
+  _onClickMoreButton: function () {
+    if ( this._getCurrentTabIndex() === 0 ) {
+      this.tab1_listIndex = this.tab1_listIndex + this.DEFAULT_LIST_COUNT;
+      this._renderList(this.tab1_list.slice(0, this.tab1_listIndex));
+    }
+
+    if ( this._getCurrentTabIndex() === 1 ) {
+      this.tab2_listIndex = this.tab2_listIndex + this.DEFAULT_LIST_COUNT;
+      this._renderList(this.tab2_list.slice(0, this.tab2_listIndex));
+    }
+  },
+
+  _renderMoreButton: function () {
+    var nCurrentTabIndex = this._getCurrentTabIndex();
+    var elBtnMore = $('.gift-bt-more')[nCurrentTabIndex];
+
+    if ( nCurrentTabIndex === 0 ) {
+
+      if ( this.tab1_list.length <= this.DEFAULT_LIST_COUNT ) {
+        $(elBtnMore).hide();
+      } else {
+        this._drawRemainCounter(elBtnMore, this.tab1_listIndex, this.tab1_list.length);
+      }
+    }
+
+    if ( nCurrentTabIndex === 1 ) {
+      if ( this.tab2_list.length <= this.DEFAULT_LIST_COUNT ) {
+        $(elBtnMore).hide();
+      } else {
+        this._drawRemainCounter(elBtnMore, this.tab2_listIndex, this.tab2_list.length);
+      }
+    }
+  },
+
+  _drawRemainCounter: function (elBtnMore, listIndex, length) {
+    if ( listIndex > length ) {
+      $(elBtnMore).hide();
+    } else {
+      $(elBtnMore).find('.num').text(length - listIndex);
+    }
+  },
+
+  _onChangeTab: function () {
+    this._fetchData();
   },
 
   _fetchData: function () {
@@ -53,34 +103,17 @@ Tw.RechargeTingHistory.prototype = {
 
     if ( nCurrentTabIndex === 1 ) {
       this._apiService.request(Tw.API_CMD.BFF_06_0027, {
-        type: this.tab2_searchType,
         fromDt: Tw.DateHelper.getCurrentShortDate(),
         endDt: Tw.DateHelper.getShortDateWithFormatAddByUnit(new Date(), this.tab2_searchPeriod, 'month', 'YYYYMMDD')
       }).done($.proxy(this._onSuccessFetchData, this));
     }
   },
 
-  _onSuccessFetchData: function (response) {
+  _onSuccessFetchData: function (res) {
     var nCurrentTabIndex = this._getCurrentTabIndex();
-    var res = {
-      code: '00',
-      msg: 'success',
-      result: [{
-        opDt: '20180508',
-        amt: '1000',
-        svcNum: '01062**50**',
-        custNm: '홍*동',
-        opClCd: '2',
-        opClNm: '후불선물충전'
-      }, {
-        opDt: '20180507',
-        amt: '5000',
-        svcNum: '01062**50**',
-        custNm: '홍*동',
-        opClCd: '1',
-        opClNm: '후불선물충전'
-      }]
-    };
+
+    // TEST MOCKUP DATA
+    var res = $.extend(true, [], sample_response);
 
     if ( res.code === Tw.API_CODE.CODE_00 ) {
 
@@ -90,32 +123,43 @@ Tw.RechargeTingHistory.prototype = {
       }
 
       if ( nCurrentTabIndex === 0 ) {
-        this.tab1_list = response.result;
-        this._renderList(this._parseHistoryData(res.result));
-        return false;
+        this.tab1_list = res.result;
+        this._renderList(this._parseHistoryData(this.tab1_list.slice(0, this.tab1_listIndex)));
       }
 
       if ( nCurrentTabIndex === 1 ) {
-        this.tab2_list = response.result;
-        this._renderList(this._parseHistoryData(res.result));
-        return false;
+        this.tab2_list = res.result;
+        this._renderList(this._parseHistoryData(this.tab2_list.slice(0, this.tab2_listIndex)));
       }
 
+      var $wrap_count = $($('.contents-info-list .num')[nCurrentTabIndex]);
+      $wrap_count.text(res.result.length);
     }
   },
 
   _renderNoList: function () {
+    var nCurrentTabIndex = this._getCurrentTabIndex();
+
     var wrapHistoryResult = $('li[aria-selected="true"]').find('.inner');
-    wrapHistoryResult.html(this.tpl_ting_item_no_history());
     wrapHistoryResult.siblings('.gift-bt-more').hide();
+
+    if ( nCurrentTabIndex === 0 ) {
+      wrapHistoryResult.html(this.tpl_ting_item_no_history({ content: Tw.MSG_GIFT.TING_NO_HISTORY }));
+    }
+
+    if ( nCurrentTabIndex === 1 ) {
+      wrapHistoryResult.html(this.tpl_ting_item_no_history({ content: Tw.MSG_GIFT.TING_NO_BLOCK_HISTORY }));
+    }
   },
 
   _parseHistoryData: function (list) {
     return $.each(list, function (index, item) {
-      item.isSender = item.opClCd === '1' ? true : false;
+      if ( item.opClCd ) {
+        item.isSender = item.opClCd === '1' ? true : false;
+      }
+      item.amt = item.amt ? Tw.FormatHelper.addComma(item.amt) : '';
       item.opDt = Tw.DateHelper.getShortDateWithFormat(item.opDt, 'YYYY.MM.DD');
       item.svcNum = Tw.FormatHelper.conTelFormatWithDash(item.svcNum);
-      item.amt = Tw.FormatHelper.addComma(item.amt);
     });
   },
 
@@ -144,9 +188,18 @@ Tw.RechargeTingHistory.prototype = {
     this._fetchData();
   },
 
-  _renderList: function (list) {
-    var html = this.tpl_ting_item_history({ list: list });
-    this.$wrap_gift_history.html(html);
+  _renderList: function (parsedList) {
+    var nCurrentTabIndex = this._getCurrentTabIndex();
+
+    if ( nCurrentTabIndex === 0 ) {
+      this.$wrap_gift_history.html(this.tpl_ting_item_history({ list: parsedList }));
+    }
+
+    if ( nCurrentTabIndex === 1 ) {
+      this.$wrap_gift_block_history.html(this.tpl_ting_item_block_history({ list: parsedList }));
+    }
+
+    this._renderMoreButton();
   },
 
   openWidget: function () {
@@ -235,4 +288,348 @@ Tw.RechargeTingHistory.prototype = {
     var $currentTab = $('[aria-selected="true"]').first();
     return $('[role=tablist]').children().index($currentTab);
   }
+};
+
+
+var sample_response = {
+  code: '00',
+  msg: 'success',
+  result: [
+    {
+      "opDt": "20180508",
+      "amt": "1000",
+      "svcNum": "01062**50**",
+      "custNm": "홍*동",
+      "opClCd": "2",
+      "opClNm": "후불선물충전",
+    },
+    {
+      "opDt": "20180508",
+      "amt": "1000",
+      "svcNum": "01062**50**",
+      "custNm": "홍*동",
+      "opClCd": "1",
+      "opClNm": "후불선물충전",
+    },
+    {
+      "opDt": "20180508",
+      "amt": "1000",
+      "svcNum": "01062**50**",
+      "custNm": "홍*동",
+      "opClCd": "1",
+      "opClNm": "후불선물충전",
+    },
+    {
+      "opDt": "20180508",
+      "amt": "1000",
+      "svcNum": "01062**50**",
+      "custNm": "홍*동",
+      "opClCd": "2",
+      "opClNm": "후불선물충전",
+    },
+    {
+      "opDt": "20180508",
+      "amt": "1000",
+      "svcNum": "01062**50**",
+      "custNm": "홍*동",
+      "opClCd": "2",
+      "opClNm": "후불선물충전",
+    },
+    {
+      "opDt": "20180508",
+      "amt": "1000",
+      "svcNum": "01062**50**",
+      "custNm": "홍*동",
+      "opClCd": "1",
+      "opClNm": "후불선물충전",
+    },
+    {
+      "opDt": "20180508",
+      "amt": "1000",
+      "svcNum": "01062**50**",
+      "custNm": "홍*동",
+      "opClCd": "2",
+      "opClNm": "후불선물충전",
+    },
+    {
+      "opDt": "20180508",
+      "amt": "1000",
+      "svcNum": "01062**50**",
+      "custNm": "홍*동",
+      "opClCd": "2",
+      "opClNm": "후불선물충전",
+    },
+    {
+      "opDt": "20180508",
+      "amt": "1000",
+      "svcNum": "01062**50**",
+      "custNm": "홍*동",
+      "opClCd": "2",
+      "opClNm": "후불선물충전",
+    },
+    {
+      "opDt": "20180508",
+      "amt": "1000",
+      "svcNum": "01062**50**",
+      "custNm": "홍*동",
+      "opClCd": "2",
+      "opClNm": "후불선물충전",
+    },
+    {
+      "opDt": "20180508",
+      "amt": "1000",
+      "svcNum": "01062**50**",
+      "custNm": "홍*동",
+      "opClCd": "2",
+      "opClNm": "후불선물충전",
+    },
+    {
+      "opDt": "20180508",
+      "amt": "1000",
+      "svcNum": "01062**50**",
+      "custNm": "홍*동",
+      "opClCd": "2",
+      "opClNm": "후불선물충전",
+    },
+    {
+      "opDt": "20180508",
+      "amt": "1000",
+      "svcNum": "01062**50**",
+      "custNm": "홍*동",
+      "opClCd": "2",
+      "opClNm": "후불선물충전",
+    },
+    {
+      "opDt": "20180508",
+      "amt": "1000",
+      "svcNum": "01062**50**",
+      "custNm": "홍*동",
+      "opClCd": "2",
+      "opClNm": "후불선물충전",
+    },
+    {
+      "opDt": "20180508",
+      "amt": "1000",
+      "svcNum": "01062**50**",
+      "custNm": "홍*동",
+      "opClCd": "2",
+      "opClNm": "후불선물충전",
+    },
+    {
+      "opDt": "20180508",
+      "amt": "1000",
+      "svcNum": "01062**50**",
+      "custNm": "홍*동",
+      "opClCd": "2",
+      "opClNm": "후불선물충전",
+    },
+    {
+      "opDt": "20180508",
+      "amt": "1000",
+      "svcNum": "01062**50**",
+      "custNm": "홍*동",
+      "opClCd": "2",
+      "opClNm": "후불선물충전",
+    },
+    {
+      "opDt": "20180508",
+      "amt": "1000",
+      "svcNum": "01062**50**",
+      "custNm": "홍*동",
+      "opClCd": "2",
+      "opClNm": "후불선물충전",
+    },
+    {
+      "opDt": "20180508",
+      "amt": "1000",
+      "svcNum": "01062**50**",
+      "custNm": "홍*동",
+      "opClCd": "2",
+      "opClNm": "후불선물충전",
+    },
+    {
+      "opDt": "20180508",
+      "amt": "1000",
+      "svcNum": "01062**50**",
+      "custNm": "홍*동",
+      "opClCd": "2",
+      "opClNm": "후불선물충전",
+    },
+    {
+      "opDt": "20180508",
+      "amt": "1000",
+      "svcNum": "01062**50**",
+      "custNm": "홍*동",
+      "opClCd": "2",
+      "opClNm": "후불선물충전",
+    },
+    {
+      "opDt": "20180508",
+      "amt": "1000",
+      "svcNum": "01062**50**",
+      "custNm": "홍*동",
+      "opClCd": "2",
+      "opClNm": "후불선물충전",
+    },
+    {
+      "opDt": "20180508",
+      "amt": "1000",
+      "svcNum": "01062**50**",
+      "custNm": "홍*동",
+      "opClCd": "2",
+      "opClNm": "후불선물충전",
+    },
+    {
+      "opDt": "20180508",
+      "amt": "1000",
+      "svcNum": "01062**50**",
+      "custNm": "홍*동",
+      "opClCd": "2",
+      "opClNm": "후불선물충전",
+    },
+    {
+      "opDt": "20180508",
+      "amt": "1000",
+      "svcNum": "01062**50**",
+      "custNm": "홍*동",
+      "opClCd": "2",
+      "opClNm": "후불선물충전",
+    },
+    {
+      "opDt": "20180508",
+      "amt": "1000",
+      "svcNum": "01062**50**",
+      "custNm": "홍*동",
+      "opClCd": "2",
+      "opClNm": "후불선물충전",
+    },
+    {
+      "opDt": "20180508",
+      "amt": "1000",
+      "svcNum": "01062**50**",
+      "custNm": "홍*동",
+      "opClCd": "2",
+      "opClNm": "후불선물충전",
+    },
+    {
+      "opDt": "20180508",
+      "amt": "1000",
+      "svcNum": "01062**50**",
+      "custNm": "홍*동",
+      "opClCd": "2",
+      "opClNm": "후불선물충전",
+    },
+    {
+      "opDt": "20180508",
+      "amt": "1000",
+      "svcNum": "01062**50**",
+      "custNm": "홍*동",
+      "opClCd": "2",
+      "opClNm": "후불선물충전",
+    },
+    {
+      "opDt": "20180508",
+      "amt": "1000",
+      "svcNum": "01062**50**",
+      "custNm": "홍*동",
+      "opClCd": "2",
+      "opClNm": "후불선물충전",
+    },
+    {
+      "opDt": "20180508",
+      "amt": "1000",
+      "svcNum": "01062**50**",
+      "custNm": "홍*동",
+      "opClCd": "2",
+      "opClNm": "후불선물충전",
+    },
+    {
+      "opDt": "20180508",
+      "amt": "1000",
+      "svcNum": "01062**50**",
+      "custNm": "홍*동",
+      "opClCd": "2",
+      "opClNm": "후불선물충전",
+    },
+    {
+      "opDt": "20180508",
+      "amt": "1000",
+      "svcNum": "01062**50**",
+      "custNm": "홍*동",
+      "opClCd": "2",
+      "opClNm": "후불선물충전",
+    },
+    {
+      "opDt": "20180508",
+      "amt": "1000",
+      "svcNum": "01062**50**",
+      "custNm": "홍*동",
+      "opClCd": "2",
+      "opClNm": "후불선물충전",
+    },
+    {
+      "opDt": "20180508",
+      "amt": "1000",
+      "svcNum": "01062**50**",
+      "custNm": "홍*동",
+      "opClCd": "2",
+      "opClNm": "후불선물충전",
+    },
+    {
+      "opDt": "20180508",
+      "amt": "1000",
+      "svcNum": "01062**50**",
+      "custNm": "홍*동",
+      "opClCd": "2",
+      "opClNm": "후불선물충전",
+    },
+    {
+      "opDt": "20180508",
+      "amt": "1000",
+      "svcNum": "01062**50**",
+      "custNm": "홍*동",
+      "opClCd": "2",
+      "opClNm": "후불선물충전",
+    },
+    {
+      "opDt": "20180508",
+      "amt": "1000",
+      "svcNum": "01062**50**",
+      "custNm": "홍*동",
+      "opClCd": "2",
+      "opClNm": "후불선물충전",
+    },
+    {
+      "opDt": "20180508",
+      "amt": "1000",
+      "svcNum": "01062**50**",
+      "custNm": "홍*동",
+      "opClCd": "2",
+      "opClNm": "후불선물충전",
+    },
+    {
+      "opDt": "20180508",
+      "amt": "1000",
+      "svcNum": "01062**50**",
+      "custNm": "홍*동",
+      "opClCd": "2",
+      "opClNm": "후불선물충전",
+    },
+    {
+      "opDt": "20180508",
+      "amt": "1000",
+      "svcNum": "01062**50**",
+      "custNm": "홍*동",
+      "opClCd": "2",
+      "opClNm": "후불선물충전",
+    },
+    {
+      "opDt": "20180508",
+      "amt": "1000",
+      "svcNum": "01062**50**",
+      "custNm": "홍*동",
+      "opClCd": "2",
+      "opClNm": "후불선물충전",
+    }
+  ]
 };

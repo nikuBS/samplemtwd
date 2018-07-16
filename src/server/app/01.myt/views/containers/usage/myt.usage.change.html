@@ -26,11 +26,12 @@
 <!-- // wrap -->
 
 <div class="pop-container" style="display: block">
+    <%=JSON.stringify(result)%>
     <!-- popup-full -->
     <div id="usage_change" class="popup-full" style="display: block">
         <div class="head">
             <% if (svcInfo) { %>
-            <h1><span><%=svcInfo.custNm%></span>님이 가입하신 서비스</h1>
+            <h1><span><%=svcInfo.mbrNm%></span>님이 가입하신 서비스</h1>
             <% } %>
             <a class="btn-close common-back"><span class="blind">닫기</span></a>
         </div>
@@ -39,7 +40,7 @@
                 <a href="#">다회선 관리</a>
             </div>
             <div class="prd-line">
-                <% if( result.M ){ %>
+                <% if( result.M && result.M.length !== 0 ){ %>
                 <section>
                     <h2>
                         모바일
@@ -52,20 +53,20 @@
                         <% for( let item of result.M ) { %>
                         <li class="rep"><!-- .rep 대표 // -->
                             <div class="row" data-svcMgmtNum="<%=item.svcMgmtNum%>">
-                                <% if( item.svcCd == 'C' ) { %>
+                                <% if( item.svcAttrCd == 'M1' ) { %>
                                 <div class="type">휴대폰</div>
                                 <% } %>
-                                <% if( item.svcCd == 'S' ) { %>
-                                <div class="type">PPS</div>
+                                <% if( item.svcAttrCd == 'M2' ) { %>
+                                <div class="type">선불폰</div>
                                 <% } %>
-                                <% if( item.svcCd == 'F' ) { %>
+                                <% if( item.svcAttrCd == 'M3' ) { %>
                                 <div class="type">T Pocket-Fi</div>
                                 <% } %>
-                                <% if( item.svcCd == 'L' ) { %>
-                                <div class="type">Tlogin</div>
+                                <% if( item.svcAttrCd == 'M4' ) { %>
+                                <div class="type">T Login</div>
                                 <% } %>
-                                <% if( item.svcCd == 'W' ) { %>
-                                <div class="type">WiBro</div>
+                                <% if( item.svcAttrCd == 'M5' ) { %>
+                                <div class="type">T Wibro</div>
                                 <% } %>
                                 <div class="info">
                                     <div class="txt01">
@@ -74,7 +75,7 @@
                                         <span class="tag-type01">대표</span>
                                         <% } %>
                                     </div>
-                                    <div class="txt02"><%=item.svcNickNm%></div>
+                                    <div class="txt02"><%=item.nickNm%></div>
                                 </div>
                             </div>
                         </li>
@@ -83,7 +84,7 @@
                 </section>
                 <% } %>
                 <section>
-                    <% if( result.W ){ %>
+                    <% if( result.W && result.W.length !== 0 ){ %>
                     <h2>
                         인터넷/집전화/IPTV
                         <span class="count">(<%=result.W.length%>)</span>
@@ -118,7 +119,7 @@
                 </section>
                 <% } %>
                 <section>
-                    <% if( result.S ){ %>
+                    <% if( result.S && result.S.length !== 0 ){ %>
                     <h2>
                         보안솔루션
                         <span class="count">(<%=result.S.length%>)</span>

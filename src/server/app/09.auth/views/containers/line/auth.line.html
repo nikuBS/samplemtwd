@@ -31,7 +31,7 @@
     <div id="contents" class="container-wrap">
         <h2 class="blind">내용</h2>
         <div class="container">
-            <% if (lineList.m) { %>
+            <% if (lineList.m.length > 0) { %>
             <hr class="cont-sp type1" aria-hidden="true"/>
 
             <!-- 모바일 -->
@@ -126,7 +126,7 @@
             </div>
             <!--// 모바일 -->
             <% } %>
-            <% if (lineList.s) { %>
+            <% if (lineList.s.length > 0) { %>
             <hr class="cont-sp type1" aria-hidden="true"/>
 
             <!-- 인터넷/IPTV/집전화 -->
@@ -221,7 +221,7 @@
             </div>
             <!--// 인터넷/IPTV/집전화 -->
             <% } %>
-            <% if (lineList.o) { %>
+            <% if (lineList.o.length > 0) { %>
             <hr class="cont-sp type1" aria-hidden="true"/>
 
             <!-- 보안솔루션 -->
@@ -407,7 +407,7 @@
     </div>
     <!--// #contents -->
     <!-- footer -->
-    <% include ../../../../common/views/components/footer.component.html %>
+    <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
     <!-- // footer -->
 </div>
 <% include ../../components/javascript.component.html %>

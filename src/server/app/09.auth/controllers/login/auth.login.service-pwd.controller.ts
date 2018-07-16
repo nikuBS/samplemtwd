@@ -13,7 +13,7 @@ class AuthLoginServicePwd extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    res.render('login/auth.login.service-pwd.html');
+    res.render('login/auth.login.service-pwd.html', { svcInfo: svcInfo });
   }
 }
 

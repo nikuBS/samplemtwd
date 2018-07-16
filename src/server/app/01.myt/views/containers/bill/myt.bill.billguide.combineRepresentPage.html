@@ -15,387 +15,379 @@
 </div>
 <!--// #skip_navigation -->
 <div id="wrapFdev" class="wrap">
-    <!-- #header -->
-    <div id="header" class="header-wrap">
-        <div class="header">
-            <div class="header-ti">
-                <h1>요금안내서</h1>
-                <a href="#allmenu" class="all-menu"><span class="blind">전체메뉴보기</span></a>
-            </div>
-            <a href="#pstep" class="prev-step common-back"><span class="blind">이전으로</span></a>
-            <a href="#search" class="search-content"><span class="blind">검색하기</span></a>
-        </div>
-    </div>
-    <!--// #header -->
-    <!-- #contents -->
-    <div id="contents" class="container-wrap">
-        <h2 class="blind">내용</h2>
-        <div class="container">
-
-            <div class="cont-box">
-                <div class="payment-info">
-                    <!-- 2018-07-06 수정-->
-                    <span class="blind">통합대표</span>
-                    <!--// 2018-07-06 수정-->
-                    <ul>
-                        <li>
-                            <span class="info-num"><%=circuitInfo.svcNum %></span>
-                        </li>
-                        <li>
-                            <!-- 2018-07-06 수정-->
-                            <span class="badge badge-allpay"><span class="blind">통합대표</span></span>
-                            <!--// 2018-07-06 수정-->
-                            <span class="info-type">휴대폰</span>
-                            <!--<span class="info-name"><span class="blind">별명</span>귀여운첫째아들</span>-->
-                        </li>
-                    </ul>
-                    <span class="info-btn"><a href="" class="btn-choice" role="button">변경</a></span>
+<%# * ----------------[메인]  %>
+    <div id="main">
+        <!-- #header -->
+        <div class="header-wrap">
+            <div class="header">
+                <div class="header-ti">
+                    <h1>요금안내서</h1>
+                    <a href="#allmenu" class="all-menu"><span class="blind">전체메뉴보기</span></a>
                 </div>
-            </div>
-
-            <% if ( circuitChildInfo.length > 0) { %>
-            <div class="cont-box nogaps-hoz">
-                <div class="use-family">
-                    <h3 class="blind">자녀폰 실시간 요금 보기</h3>
-                    <div class="link-long">
-                        <a href="" title="">자녀폰 사용요금 (<strong><%=circuitChildInfo.length %> </strong>명) <!-- 2017-07-06 텍스트 수정 -->
-                            <span class="badge badge-fam"><span class="blind">자녀회선</span></span>
-                            <span class="ico"></span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <% } %>
-
-            <hr class="cont-sp type1" aria-hidden="true"/>
-
-<% if( billpayInfo.useAmtTot === '0' ) { %>
-            <div class="cont-box  nogaps-btm noborder">
-                <button class="bt-dropdown big"title="전체납부내역" aria-haspopup="true"><%=commDataInfo.selClaimDtBtn %><span class="ico"></span></button>
-                <div class="payment-inquiry">
-                    <div class="payment-all">
-                        <h3 class="blind">전체납부내역</h3>
-                        <span><em>사용하신금액이 없습니다.</em></span>
-                    </div>
-                    <div class="txt-discount">
-                    </div>
-                </div>
-            </div>
-<% } else { %>
-            <div class="cont-box  nogaps-btm noborder">
-                <button class="bt-dropdown big"title="전체납부내역" aria-haspopup="true"><%=commDataInfo.selClaimDtBtn %><span class="ico"></span></button>
-                <div class="payment-inquiry">
-                    <div class="payment-all">
-                        <h3 class="blind">전체납부내역</h3>
-                        <span><em><%=billpayInfo.useAmtTot %></em> 원</span>
-                        <p class="term"><%=commDataInfo.selStaDt %> ~ <%=commDataInfo.selEndDt %></p>
-                    </div>
-                    <div class="txt-discount">
-                        <% if( commDataInfo.discount === '0' ) {  %>
-                        <!-- 사용요금 + 요금할인내역 0원일때 -->
-                        <p><span class="num"><%=commDataInfo.selClaimDtNum %></span>월 사용 요금은 <span class="num"><%=billpayInfo.useAmtTot %></span>원입니다.</p>
-                        <% } else { %>
-                        <!-- 사용요금 + 요금할인내역 -->
-                        <p><span class="num"><%=commDataInfo.selClaimDtNum %></span>월 사용 요금은 <span class="num"><%=billpayInfo.useAmtTot %></span>원이고<br /><span class="num"><%=commDataInfo.discount %></span>원을 할인 받으셨습니다.</p>
-                        <% } %>
-                    </div>
-                </div>
-            </div>
-
-            <% if( showConditionInfo.defaultYn === 'Y' && showConditionInfo.autopayYn === 'N') { %> <%# 노출조건 : 납부전(미납) 'Y' | 자동납부신청중 'N' |  %>
-            <div class="cont-box">
-                <!-- 납부전&자동납부신청중이 아닐 경우 -->
-                <ul class="bt-slice item-two">
-                    <li class="bt-blue1">
-                        <button>지금납부하기</button>
-                    </li>
-                    <li class="bt-white1">
-                        <button class="">자동납부신청</button>
-                    </li>
-                </ul>
-            </div>
-
-            <% } else if( showConditionInfo.defaultYn === 'Y' && showConditionInfo.autopayYn === 'Y') { %> <%# 노출조건 : 납부전(미납) 'Y' | 자동납부신청중 'Y' |  %>
-            <div class="cont-box">
-                <!-- 납부전&자동납부신청중이 아닐 경우 -->
-                <ul class="bt-slice item-one">
-                    <li class="bt-blue1">
-                        <button>지금납부하기</button>
-                    </li>
-                    <!--<li class="bt-white1">-->
-                    <!--<button class="">자동납부신청</button>-->
-                    <!--</li>-->
-                </ul>
-            </div>
-
-            <% } else if( showConditionInfo.defaultYn === 'N' && showConditionInfo.autopayYn === 'Y') { %> <%# 노출조건 : 납부전(미납) 'N' | 자동납부신청중 'Y' |  %>
-            <div class="cont-box">
-                <!-- 납부전&자동납부신청중이 아닐 경우 -->
-                <ul class="bt-slice item-two">
-                    <!--<li class="bt-blue1">-->
-                    <!--<button>지금납부하기</button>-->
-                    <!--</li>-->
-                    <!--<li class="bt-white1">-->
-                    <!--<button class="">자동납부신청</button>-->
-                    <!--</li>-->
-                </ul>
-            </div>
-
-            <% } else if( showConditionInfo.defaultYn === 'N' && showConditionInfo.autopayYn === 'N') { %> <%# 노출조건 : 납부전(미납) 'N' | 자동납부신청중 'N' |  %>
-            <div class="cont-box">
-                <!-- 납부전&자동납부신청중이 아닐 경우 -->
-                <ul class="bt-slice item-one">
-                    <!--<li class="bt-blue1">-->
-                    <!--<button>지금납부하기</button>-->
-                    <!--</li>-->
-                    <li class="bt-white1">
-                        <button class="">자동납부신청</button>
-                    </li>
-                </ul>
-            </div>
-            <% } %>
-<% } %>
-
-            <div class="cont-box nogaps-btm">
-                <div class="link-long-group">
-                    <h3 class="link-group-tit">가입 서비스별 상세 요금입니다.</h3>
-                    <div class="link-long">
-                        <a href="" class="">
-								<span class="link-info link-info-1">
-									<span class="blind">서비스명</span>
-									휴대폰
-									<span class="blind">해당 서비스유형의 개수</span>
-									<strong class="num">6</strong>
-								</span>
-                            <span class="link-info link-info-2">
-									<span class="blind">해당 서비스 유형에 청구된 요금의 합계</span>
-									<strong>24,480</strong>원
-								</span>
-                            <span class="ico"></span>
-                        </a>
-                    </div>
-                    <div class="link-long">
-                        <a href="" class="">
-								<span class="link-info link-info-1">
-									<span class="blind">서비스명</span>
-									인터넷
-									<span class="blind">해당 서비스유형의 개수</span>
-									<strong class="num">3</strong>
-								</span>
-                            <span class="link-info link-info-2">
-									<span class="blind">해당 서비스 유형에 청구된 요금의 합계</span>
-									<strong>20,000</strong>원
-								</span>
-                            <span class="ico"></span>
-                        </a>
-                    </div>
-                    <div class="link-long">
-                        <a href="" class="">
-								<span class="link-info link-info-1">
-									<span class="blind">서비스명</span>
-									집전화
-									<span class="blind">해당 서비스유형의 개수</span>
-									<strong class="num">1</strong>
-								</span>
-                            <span class="link-info link-info-2">
-									<span class="blind">해당 서비스 유형에 청구된 요금의 합계</span>
-									<strong>150,000</strong>원
-								</span>
-                            <span class="ico"></span>
-                        </a>
-                    </div>
-
-                </div>
+                <a href="#pstep" class="prev-step common-back"><span class="blind">이전으로</span></a>
+                <a href="#search" class="search-content"><span class="blind">검색하기</span></a>
             </div>
         </div>
+        <!--// #header -->
+        <!-- #contents -->
+        <div class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
 
-        <hr class="cont-sp type1" aria-hidden="true"/>
-        <div class="cont-box nogaps noborder">
-            <!-- .accordion -->
-            <div class="widget">
-                <div class="widget-box accordion2">
-                    <div class="acco-style payment-list">
-                        <ul class="acco-box">
-                            <!-- 아코디언 한줄 -->
-                            <li class="acco-list"><!-- on , off -->
-                                <!-- 아코디언 타이틀 -->
-                                <div class="acco-title">
-                                    <button role="button" aria-pressed="false">
-												<span class="pt-tit-wrap noborder">
-													<span class="pt-tit">미납요금</span>
-													<span class="pt-price"><span class="num"><%=commDataInfo.unPaidTotSum %></span>원</span>
-												</span>
-                                    </button>
-                                </div>
-                                <!--// 아코디언 타이틀 -->
-                                <!-- 아코디언 내용 -->
-                                <div class="acco-content">
-                                    <ul class="payment-detail-depth1">
-                                        <!-- depth-1 -->
-                                        <li>
-                                            <dl class="pdt-wrap">
-                                                <dt class="pdt-tit">2018년 4월</dt>
-                                                <dd class="pdt-price"><span class="num">40,000</span>원</dd>
-                                            </dl>
-                                        </li>
-                                        <!--// depth-1 -->
-                                        <!-- depth-2 -->
-                                        <li>
-                                            <dl class="pdt-wrap">
-                                                <dt class="pdt-tit">2018년 5월</dt>
-                                                <dd class="pdt-price"><span class="num">40,000</span>원</dd>
-                                            </dl>
-                                        </li>
-
-                                    </ul>
-                                    <div class="footnote-txt">
-                                        <div class="list-dot-wrap">
-                                            <ul class="list-dot">
-                                                <li class="list">2대이상의 회선을 통합청구신청 하신 고객님은 합산된 청구요금이 보여집니다.</li>
-                                                <li class="list">고객님은 현재 미납된 요금이 있습니다. 이용에 불편이 없도록 납부바랍니다.</li>
-
-                                                <!-- 3번째, 4번째 안내문구는 “납부가능일 선택” 버튼이 노출될 경우 문구출력 -->
-                                                <li class="list">즉시요금 납부가 어려우시면 ‘납부 가능일 입력＇을 선택하여 주세요.</li>
-                                                <li class="list">고객님의 이용정지 예정일은 2018년 01월 16일 입니다.</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!--// 아코디언 내용 -->
+                <div class="cont-box">
+                    <div class="payment-info">
+                        <!-- 2018-07-06 수정-->
+                        <span class="blind">통합대표</span>
+                        <!--// 2018-07-06 수정-->
+                        <ul>
+                            <li>
+                                <span class="info-num"><%=circuitInfo.svcNum %></span>
+                            </li>
+                            <li>
+                                <!-- 2018-07-06 수정-->
+                                <span class="badge badge-allpay"><span class="blind">통합대표</span></span>
+                                <!--// 2018-07-06 수정-->
+                                <span class="info-type">휴대폰</span>
+                                <!--<span class="info-name"><span class="blind">별명</span>귀여운첫째아들</span>-->
                             </li>
                         </ul>
+                        <span class="info-btn"><a href="" class="btn-choice" role="button">변경</a></span>
+                    </div>
+                </div>
+
+<%#자녀폰 사용요금 컴포넌트  %>
+<% if ( circuitChildInfo.length > 0) { %>
+<% include ../../components/bill/myt.bill.billguide.children.html %>
+<% } %>
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+    <% if( billpayInfo.useAmtTot === '0' ) { %>
+                <%#사용료가 없을때  %>
+                <% include ../../components/bill/myt.bill.billguide.hireNone.html %>
+    <% } else { %>
+                <div class="cont-box  nogaps-btm noborder">
+                    <button class="bt-dropdown big" title="전체납부내역" aria-haspopup="true" data-target="totPaySelectBtn" ><%=commDataInfo.selClaimDtBtn %><span class="ico"></span></button>
+                    <div class="payment-inquiry">
+                        <div class="payment-all">
+                            <h3 class="blind">전체납부내역</h3>
+                            <span><em><%=billpayInfo.useAmtTot %></em> 원</span>
+                            <p class="term"><%=commDataInfo.selStaDt %> ~ <%=commDataInfo.selEndDt %></p>
+                        </div>
+                        <div class="txt-discount">
+                            <% if( commDataInfo.discount === '0' ) {  %>
+                            <!-- 사용요금 + 요금할인내역 0원일때 -->
+                            <p><span class="num"><%=commDataInfo.selClaimDtNum %></span>월 사용 요금은 <span class="num"><%=billpayInfo.useAmtTot %></span>원입니다.</p>
+                            <% } else { %>
+                            <!-- 사용요금 + 요금할인내역 -->
+                            <p><span class="num"><%=commDataInfo.selClaimDtNum %></span>월 사용 요금은 <span class="num"><%=billpayInfo.useAmtTot %></span>원이고<br /><span class="num"><%=commDataInfo.discount %></span>원을 할인 받으셨습니다.</p>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+
+                <% if( showConditionInfo.defaultYn === 'Y' && showConditionInfo.autopayYn === 'N') { %> <%# 노출조건 : 납부전(미납) 'Y' | 자동납부신청중 'N' |  %>
+                <div class="cont-box">
+                    <!-- 납부전&자동납부신청중이 아닐 경우 -->
+                    <ul class="bt-slice item-two">
+                        <li class="bt-blue1">
+                            <button>지금납부하기</button>
+                        </li>
+                        <li class="bt-white1">
+                            <button class="">자동납부신청</button>
+                        </li>
+                    </ul>
+                </div>
+
+                <% } else if( showConditionInfo.defaultYn === 'Y' && showConditionInfo.autopayYn === 'Y') { %> <%# 노출조건 : 납부전(미납) 'Y' | 자동납부신청중 'Y' |  %>
+                <div class="cont-box">
+                    <!-- 납부전&자동납부신청중이 아닐 경우 -->
+                    <ul class="bt-slice item-one">
+                        <li class="bt-blue1">
+                            <button>지금납부하기</button>
+                        </li>
+                        <!--<li class="bt-white1">-->
+                        <!--<button class="">자동납부신청</button>-->
+                        <!--</li>-->
+                    </ul>
+                </div>
+
+                <% } else if( showConditionInfo.defaultYn === 'N' && showConditionInfo.autopayYn === 'Y') { %> <%# 노출조건 : 납부전(미납) 'N' | 자동납부신청중 'Y' |  %>
+                <div class="cont-box">
+                    <!-- 납부전&자동납부신청중이 아닐 경우 -->
+                    <ul class="bt-slice item-two">
+                        <!--<li class="bt-blue1">-->
+                        <!--<button>지금납부하기</button>-->
+                        <!--</li>-->
+                        <!--<li class="bt-white1">-->
+                        <!--<button class="">자동납부신청</button>-->
+                        <!--</li>-->
+                    </ul>
+                </div>
+
+                <% } else if( showConditionInfo.defaultYn === 'N' && showConditionInfo.autopayYn === 'N') { %> <%# 노출조건 : 납부전(미납) 'N' | 자동납부신청중 'N' |  %>
+                <div class="cont-box">
+                    <!-- 납부전&자동납부신청중이 아닐 경우 -->
+                    <ul class="bt-slice item-one">
+                        <!--<li class="bt-blue1">-->
+                        <!--<button>지금납부하기</button>-->
+                        <!--</li>-->
+                        <li class="bt-white1">
+                            <button class="">자동납부신청</button>
+                        </li>
+                    </ul>
+                </div>
+                <% } %>
+    <% } %>
+
+<%#가입 서비스별 상세 요금 %>
+                <div class="cont-box nogaps-btm">
+                    <div class="link-long-group" data-target="detailedChargeBtn">
+                        <h3 class="link-group-tit">가입 서비스별 상세 요금입니다.</h3>
+
+                        <% for(var i=0; i < commDataInfo.joinSvcList.length; i++) { %>
+                        <div class="link-long">
+                            <a class="" >
+                                    <span class="link-info link-info-1">
+                                        <span class="blind">서비스명</span>
+                                        <%=commDataInfo.joinSvcList[i].svcNm %>
+                                        <!--<span class="blind">해당 서비스유형의 개수</span>-->
+                                        <!--<strong class="num">6</strong>-->
+                                    </span>
+                                <span class="link-info link-info-2">
+                                        <span class="blind">해당 서비스 유형에 청구된 요금의 합계</span>
+                                        <strong><%=commDataInfo.joinSvcList[i].amt %></strong>원
+                                    </span>
+                                <span class="ico"></span>
+                            </a>
+                        </div>
+                        <% } %>
+
                     </div>
                 </div>
             </div>
-            <!--// .accordion -->
-        </div>
-        <div class="cont-box">
-            <% if( showConditionInfo.paymentBtnYn === 'Y' && showConditionInfo.suspensionYn === 'Y') { %>
-            <ul class="bt-slice item-two">
-                <li class="bt-white1">
-                    <button>납부가능일 선택</button>
-                </li>
-                <li class="bt-white1">
-                    <button class="">이용정지 해제</button>
-                </li>
-            </ul>
-            <% } else if( showConditionInfo.paymentBtnYn === 'N' && showConditionInfo.suspensionYn === 'Y') { %>
-            <ul class="bt-slice item-one">
-                <!--<li class="bt-white1">-->
-                    <!--<button>납부가능일 선택</button>-->
-                <!--</li>-->
-                <li class="bt-white1">
-                    <button class="">이용정지 해제</button>
-                </li>
-            </ul>
-            <% } else if( showConditionInfo.paymentBtnYn === 'Y' && showConditionInfo.suspensionYn === 'N') { %>
-            <ul class="bt-slice item-one">
-                <li class="bt-white1">
-                    <button>납부가능일 선택</button>
-                </li>
-                <!--<li class="bt-white1">-->
-                    <!--<button class="">이용정지 해제</button>-->
-                <!--</li>-->
-            </ul>
-            <% } %>
-        </div>
-        <hr class="cont-sp type1" aria-hidden="true"/>
 
-        <div class="cont-box nogaps-hoz">
-            <div class="link-long-group">
-                <div class="link-long">
-                    <a href="" class="" title="약정할인/단말분할상환정보로 이동">약정할인/단말분할상환정보<span class="ico"></span></a>
-                </div>
-                <div class="link-long">
-                    <a href="" class="" title="요금제/부가서비스 할인내역확인으로 이동">요금제/부가서비스 할인내역확인<span class="ico"></span></a>
-                </div>
-                <div class="link-long">
-                    <a href="" class="" title="콜기프트 요금으로 이동">콜기프트 요금<span class="ico"></span></a>
-                </div>
-                <div class="link-long">
-                    <a href="" class="" title="로밍 사용요금 상세조회로 이동">로밍 사용요금 상세조회<span class="ico"></span></a>
-                </div>
-                <div class="link-long">
-                    <a href="" class="" title="기부금/후원금 상세조회로 이동">기부금/후원금 상세조회<span class="ico"></span></a>
-                </div>
-            </div>
-        </div>
-
-        <!-- .cont-box -->
-        <div class="cont-box nogaps-hoz">
-
-        </div>
-        <!-- .cont-box -->
-
-        <hr class="cont-sp type1" aria-hidden="true"/>
-        <!-- .cont-box -->
-        <div class="cont-box">
-            <!-- .widget -->
-            <div class="widget">
-                <div class="widget-box accordion">
-                    <h5 class="tit-a">꼭 확인해 주세요</h5>
-                    <div class="acco-cover toggle"><!-- toggle : 한개만 열기 -->
-                        <div class="acco-style btn-hold">
-                            <ul class="acco-list">
-                                <li class="acco-box">
-                                    <!-- .on: 열기 -->
-                                    <div class="acco-tit"><span class="bullet">1.</span> 사용 금액 안내 <button role="button" aria-pressed="false">상세보기</button></div>
-                                    <div class="acco-cont">
-                                        <ul class="list-dot">
-                                            <li class="list">월 중 번호 이동하신 경우, 시스템 사정으로 인해 사용기간이 1일부터 말일까지 표시됨을 양해해 주시기 바랍니다.</li>
-                                            <li class="list">사용금액은 번호 이동 후부터 말일까지 사용요금입니다.</li>
-                                            <li class="list">X월 청구금액에 대한 미납금액은 다음달 초에 확인하실 수 있습니다.</li>
-                                            <li class="list">상기 사용요금 외 한국통신(KT) 국제전화 이용시 사업자에서 별도 청구됩니다.</li>
-                                            <li class="list">자동납부로 납부하는 경우에는 인출일로부터 3~4일 이후 확인 가능합니다.</li>
-                                            <li class="list">고객님이 사용하신 요금제에 따른 옥수수(oksusu) 월정액(3천원) 무료혜택을 받고 있으신 경우에는 이용 상세내역에 할인으로 별도 표기되지 않습니다.</li>
-                                        </ul>
+            <hr class="cont-sp type1" aria-hidden="true"/>
+            <div class="cont-box nogaps noborder">
+                <!-- .accordion -->
+                <div class="widget">
+                    <div class="widget-box accordion2">
+                        <div class="acco-style payment-list">
+                            <ul class="acco-box">
+                                <!-- 아코디언 한줄 -->
+                                <li class="acco-list"><!-- on , off -->
+                                    <!-- 아코디언 타이틀 -->
+                                    <div class="acco-title">
+                                        <button role="button" aria-pressed="false">
+                                                    <span class="pt-tit-wrap noborder">
+                                                        <span class="pt-tit">미납요금</span>
+                                                        <span class="pt-price"><span class="num"><%=commDataInfo.unPaidTotSum %></span>원</span>
+                                                    </span>
+                                        </button>
                                     </div>
-                                </li>
-                                <li class="acco-box">
-                                    <!-- .on: 열기 -->
-                                    <div class="acco-tit"><span class="bullet">2.</span> 로밍 청구 요금 안내<button role="button" aria-pressed="false">상세보기</button></div>
-                                    <div class="acco-cont">
-                                        <ul class="list-dot">
-                                            <li class="list">로밍 국제 수신(SK텔링크 외 4개 국제전화 사업자) : 로밍 음성 수신 시 사용된 국제사업자 연결 요금 (로밍 중 수신호는 한국을 거쳐 다시 현지로 나가게되므로 현지수신+국제수신 두 구간이 모두 요금이 부과됩니다.)</li>
-                                            <li class="list">로밍 현지 수신 통화료 : 로밍 음성 수신 시 사용된 현지망 수신 연결 요금 (로밍 현지 수신 요금이 없는 국가는 요금이 부과되지 않습니다.)</li>
-                                            <li class="list">로밍 현지 발신 통화료 : 로밍 중 현지번호로 발신한 요금 (T 로밍 고객간 통화는 한국 발신요금인 로밍 국제 발신 통화료로 요금이 부과됩니다.)</li>
-                                            <li class="list">로밍 국제 발신 통화료 : 로밍 중 한국이나 제 3국으로 발신한 요금</li>
-                                            <li class="list">로밍 문자 발신요금 : 로밍 중 한국으로 sms &amp; mms 발신요금</li>
-                                            <li class="list">로밍 데이터 통화료 : 로밍 중 사용된 데이터 통화료 (카카오톡 등의 스마트폰 어플리케이션, 인터넷, 네이트, JUNE, 2G-MMS)</li>
-                                            <li class="list">로밍 영상 국제발신 통화료 : 로밍 중 영상통화 발신</li>
-                                            <li class="list">국제화상로밍 수신 : 로밍 중 영상통화 수신</li>
-                                            <li class="list">로밍 임대료 : 로밍 임대폰 일일 임대료 (자동 임대)</li>
-                                            <li class="list">출국 전 T로밍쿠폰 구매/등록하신 후 해외에서 로밍서비스 이용 시 익월 청구요금 차감 및 쿠폰이 적용 됩니다. 쿠폰등록 후 180일 내 혜택이용가능하며, 로밍요금제 사용 이후 쿠폰을 등록하셨더라도 해당월을 넘기지 않으면 쿠폰 적용이 가능합니다.</li>
+                                    <!--// 아코디언 타이틀 -->
+                                    <!-- 아코디언 내용 -->
+                                    <div class="acco-content">
+                                        <ul class="payment-detail-depth1">
+                                            <!-- depth-1 -->
+                                            <li>
+                                                <dl class="pdt-wrap">
+                                                    <dt class="pdt-tit">2018년 4월</dt>
+                                                    <dd class="pdt-price"><span class="num">40,000</span>원</dd>
+                                                </dl>
+                                            </li>
+                                            <!--// depth-1 -->
+                                            <!-- depth-2 -->
+                                            <li>
+                                                <dl class="pdt-wrap">
+                                                    <dt class="pdt-tit">2018년 5월</dt>
+                                                    <dd class="pdt-price"><span class="num">40,000</span>원</dd>
+                                                </dl>
+                                            </li>
+
                                         </ul>
+                                        <div class="footnote-txt">
+                                            <div class="list-dot-wrap">
+                                                <ul class="list-dot">
+                                                    <li class="list">2대이상의 회선을 통합청구신청 하신 고객님은 합산된 청구요금이 보여집니다.</li>
+                                                    <li class="list">고객님은 현재 미납된 요금이 있습니다. 이용에 불편이 없도록 납부바랍니다.</li>
+
+                                                    <!-- 3번째, 4번째 안내문구는 “납부가능일 선택” 버튼이 노출될 경우 문구출력 -->
+                                                    <li class="list">즉시요금 납부가 어려우시면 ‘납부 가능일 입력＇을 선택하여 주세요.</li>
+                                                    <li class="list">고객님의 이용정지 예정일은 2018년 01월 16일 입니다.</li>
+                                                </ul>
+                                            </div>
+                                        </div>
                                     </div>
-                                </li>
-                                <li class="acco-box">
-                                    <!-- .on: 열기 -->
-                                    <div class="acco-tit"><span class="bullet">3.</span> 콜기프트 안내<button role="button" aria-pressed="false">상세보기</button></div>
-                                    <div class="acco-cont">
-                                        <ul class="list-dot">
-                                            <li class="list">콜기프트는 기업의 사은품, 판촉품으로 제공되는 음성 무료통화로 텔코인(주)에서 제공하는 서비스입니다.</li>
-                                            <li class="list">콜기프트 사용내역 조회는 전월부터 최근 6개월까지 사용하신 월별 콜기프트 총 통화 시간을 조회합니다.</li>
-                                            <li class="list">콜기프트는 SK텔레콤과 텔코인㈜의 제휴를 통해 텔코인㈜에서 제공, 운영하고 있습니다.</li>
-                                        </ul>
-                                    </div>
+                                    <!--// 아코디언 내용 -->
                                 </li>
                             </ul>
                         </div>
                     </div>
                 </div>
+                <!--// .accordion -->
             </div>
-            <!--// .widget -->
+            <div class="cont-box">
+                <% if( showConditionInfo.paymentBtnYn === 'Y' && showConditionInfo.suspensionYn === 'Y') { %>
+                <ul class="bt-slice item-two">
+                    <li class="bt-white1">
+                        <button class="" data-target="selPaymentBtn">납부가능일 선택</button>
+                    </li>
+                    <li class="bt-white1">
+                        <button class="" data-target="susReleaseBtn">이용정지 해제</button>
+                    </li>
+                </ul>
+                <% } else if( showConditionInfo.paymentBtnYn === 'N' && showConditionInfo.suspensionYn === 'Y') { %>
+                <ul class="bt-slice item-one">
+                    <!--<li class="bt-white1">-->
+                        <!--<button data-target="selPaymentBtn">납부가능일 선택</button>-->
+                    <!--</li>-->
+                    <li class="bt-white1">
+                        <button class="" data-target="susReleaseBtn">이용정지 해제</button>
+                    </li>
+                </ul>
+                <% } else if( showConditionInfo.paymentBtnYn === 'Y' && showConditionInfo.suspensionYn === 'N') { %>
+                <ul class="bt-slice item-one">
+                    <li class="bt-white1">
+                        <button data-target="selPaymentBtn">납부가능일 선택</button>
+                    </li>
+                    <!--<li class="bt-white1">-->
+                        <!--<button class="" data-target="susReleaseBtn">이용정지 해제</button>-->
+                    <!--</li>-->
+                </ul>
+                <% } %>
+            </div>
+            <hr class="cont-sp type1" aria-hidden="true"/>
+
+            <div class="cont-box nogaps-hoz">
+                <div class="link-long-group">
+                    <div class="link-long" data-target="partialRedemptionBtn">
+                        <a  class="" title="약정할인/단말분할상환정보로 이동">약정할인/단말분할상환정보<span class="ico"></span></a>
+                    </div>
+                    <div class="link-long" data-target="extraSvcBtn">
+                        <a  class="" title="요금제/부가서비스 할인내역확인으로 이동">요금제/부가서비스 할인내역확인<span class="ico"></span></a>
+                    </div>
+                    <div class="link-long" data-target="callBillBtn">
+                        <a  class="" title="콜기프트 요금으로 이동">콜기프트 요금<span class="ico"></span></a>
+                    </div>
+                    <div class="link-long" data-target="roamingBillBtn">
+                        <a  class="" title="로밍 사용요금 상세조회로 이동">로밍 사용요금 상세조회<span class="ico"></span></a>
+                    </div>
+                    <div class="link-long" data-target="donationBillBtn">
+                        <a  class="" title="기부금/후원금 상세조회로 이동">기부금/후원금 상세조회<span class="ico"></span></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- .cont-box -->
+            <div class="cont-box nogaps-hoz">
+
+            </div>
+            <!-- .cont-box -->
+
+            <hr class="cont-sp type1" aria-hidden="true"/>
+            <!-- .cont-box -->
+            <div class="cont-box">
+                <!-- .widget -->
+                <div class="widget">
+                    <div class="widget-box accordion">
+                        <h5 class="tit-a">꼭 확인해 주세요</h5>
+                        <div class="acco-cover toggle"><!-- toggle : 한개만 열기 -->
+                            <div class="acco-style btn-hold">
+                                <ul class="acco-list">
+                                    <li class="acco-box">
+                                        <!-- .on: 열기 -->
+                                        <div class="acco-tit"><span class="bullet">1.</span> 사용 금액 안내 <button role="button" aria-pressed="false">상세보기</button></div>
+                                        <div class="acco-cont">
+                                            <ul class="list-dot">
+                                                <li class="list">월 중 번호 이동하신 경우, 시스템 사정으로 인해 사용기간이 1일부터 말일까지 표시됨을 양해해 주시기 바랍니다.</li>
+                                                <li class="list">사용금액은 번호 이동 후부터 말일까지 사용요금입니다.</li>
+                                                <li class="list">X월 청구금액에 대한 미납금액은 다음달 초에 확인하실 수 있습니다.</li>
+                                                <li class="list">상기 사용요금 외 한국통신(KT) 국제전화 이용시 사업자에서 별도 청구됩니다.</li>
+                                                <li class="list">자동납부로 납부하는 경우에는 인출일로부터 3~4일 이후 확인 가능합니다.</li>
+                                                <li class="list">고객님이 사용하신 요금제에 따른 옥수수(oksusu) 월정액(3천원) 무료혜택을 받고 있으신 경우에는 이용 상세내역에 할인으로 별도 표기되지 않습니다.</li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li class="acco-box">
+                                        <!-- .on: 열기 -->
+                                        <div class="acco-tit"><span class="bullet">2.</span> 로밍 청구 요금 안내<button role="button" aria-pressed="false">상세보기</button></div>
+                                        <div class="acco-cont">
+                                            <ul class="list-dot">
+                                                <li class="list">로밍 국제 수신(SK텔링크 외 4개 국제전화 사업자) : 로밍 음성 수신 시 사용된 국제사업자 연결 요금 (로밍 중 수신호는 한국을 거쳐 다시 현지로 나가게되므로 현지수신+국제수신 두 구간이 모두 요금이 부과됩니다.)</li>
+                                                <li class="list">로밍 현지 수신 통화료 : 로밍 음성 수신 시 사용된 현지망 수신 연결 요금 (로밍 현지 수신 요금이 없는 국가는 요금이 부과되지 않습니다.)</li>
+                                                <li class="list">로밍 현지 발신 통화료 : 로밍 중 현지번호로 발신한 요금 (T 로밍 고객간 통화는 한국 발신요금인 로밍 국제 발신 통화료로 요금이 부과됩니다.)</li>
+                                                <li class="list">로밍 국제 발신 통화료 : 로밍 중 한국이나 제 3국으로 발신한 요금</li>
+                                                <li class="list">로밍 문자 발신요금 : 로밍 중 한국으로 sms &amp; mms 발신요금</li>
+                                                <li class="list">로밍 데이터 통화료 : 로밍 중 사용된 데이터 통화료 (카카오톡 등의 스마트폰 어플리케이션, 인터넷, 네이트, JUNE, 2G-MMS)</li>
+                                                <li class="list">로밍 영상 국제발신 통화료 : 로밍 중 영상통화 발신</li>
+                                                <li class="list">국제화상로밍 수신 : 로밍 중 영상통화 수신</li>
+                                                <li class="list">로밍 임대료 : 로밍 임대폰 일일 임대료 (자동 임대)</li>
+                                                <li class="list">출국 전 T로밍쿠폰 구매/등록하신 후 해외에서 로밍서비스 이용 시 익월 청구요금 차감 및 쿠폰이 적용 됩니다. 쿠폰등록 후 180일 내 혜택이용가능하며, 로밍요금제 사용 이후 쿠폰을 등록하셨더라도 해당월을 넘기지 않으면 쿠폰 적용이 가능합니다.</li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li class="acco-box">
+                                        <!-- .on: 열기 -->
+                                        <div class="acco-tit"><span class="bullet">3.</span> 콜기프트 안내<button role="button" aria-pressed="false">상세보기</button></div>
+                                        <div class="acco-cont">
+                                            <ul class="list-dot">
+                                                <li class="list">콜기프트는 기업의 사은품, 판촉품으로 제공되는 음성 무료통화로 텔코인(주)에서 제공하는 서비스입니다.</li>
+                                                <li class="list">콜기프트 사용내역 조회는 전월부터 최근 6개월까지 사용하신 월별 콜기프트 총 통화 시간을 조회합니다.</li>
+                                                <li class="list">콜기프트는 SK텔레콤과 텔코인㈜의 제휴를 통해 텔코인㈜에서 제공, 운영하고 있습니다.</li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--// .widget -->
+            </div>
+            <!--// .cont-box -->
         </div>
-        <!--// .cont-box -->
+        <!--// #contents -->
     </div>
-    <!--// #contents -->
+
+    <%# * ----------------[상세요금 내역]  %>
+    <% include ../../components/bill/myt.bill.billguide.subDetailSpecification.html %>
+
+    <%# * ----------------[납부가능일 선택]  %>
+    <% include ../../components/bill/myt.bill.billguide.subSelPayment.html %>
+
+    <%# * ----------------[이용정지 해제]  %>
+    <% include ../../components/bill/myt.bill.billguide.subSusRelease.html %>
+
+    <%# * ----------------[자녀폰 사용요금]  %>
+    <% include ../../components/bill/myt.bill.billguide.subChildBill.html %>
+
+    <%# * ----------------[콜기프트 요금]  %>
+    <% include ../../components/bill/myt.bill.billguide.subCallBill.html %>
+
+    <%# * ----------------[로밍사용 요금]  %>
+    <% include ../../components/bill/myt.bill.billguide.subRoamingBill.html %>
+
+    <%# * ----------------[기부금/후원금]  %>
+    <% include ../../components/bill/myt.bill.billguide.subDonationBill.html %>
+
     <% include ../../../../../common/views/components/footer.component.html %>
 </div>
 <% include ../../components/javascript.component.html %>
+
 <script>
   $(document).ready(function () {
-    new Tw.mytBillBillguideCombineRepresentPage($('#wrapFdev'));
+    new Tw.mytBillBillguideCombineRepresentPage($('#wrapFdev'), {
+      svcInfo: <%-JSON.stringify(svcInfo) %>,
+      circuitInfo: <%-JSON.stringify(circuitInfo) %>,
+      billpayInfo : <%-JSON.stringify(billpayInfo) %>,
+      circuitChildInfo: <%-JSON.stringify(circuitChildInfo) %>,
+      commDataInfo: <%-JSON.stringify(commDataInfo) %>,
+      defaultInfo: <%-JSON.stringify(defaultInfo) %>,
+      showConditionInfo: <%-JSON.stringify(showConditionInfo) %>
+    });
+
   });
 </script>
+
 <% include ../../components/end.component.html %>

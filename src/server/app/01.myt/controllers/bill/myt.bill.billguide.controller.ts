@@ -7,6 +7,7 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import { Request, Response, NextFunction } from 'express';
 import { Observable } from 'rxjs/Observable';
 import Rx from 'rxjs/Rx';
+import * as _ from 'lodash';
 
 import { API_CMD } from '../../../../types/api-command.type';
 import { LINE_NAME, SVC_ATTR } from '../../../../types/bff-common.type';
@@ -30,6 +31,7 @@ import billguide_BFF_05_00037 from '../../../../mock/server/myt.bill.billguide.B
 
 class MyTBillBillguide extends TwViewController {
 
+  private reqQuery:any;
   private _svcInfo:any = {
     custNm: '',//고객명
     svcCd: '',//서비스구분코드
@@ -48,11 +50,11 @@ class MyTBillBillguide extends TwViewController {
     nickNm:'',//닉네임
     addr:''//주소
   };
-  //청구요금조회
+  //청구요금조회 BFF_05_0036
   private _billpayInfo: any = {};
-  //자녀회선조회
+  //자녀회선조회 BFF_05_00024
   private _circuitChildInfo: any = [];
-  //미납내역
+  //미납내역 BFF_05_0030
   private _defaultInfo: any;
 
   //로밍 사용요금
@@ -62,7 +64,7 @@ class MyTBillBillguide extends TwViewController {
   //기부금/후원금
   private _donationInfo: any;
 
-  //나의요금제
+  //나의요금제 BFF_05_0041
   private _baseFeePlansInfo: any;
 
   //미납요금 납부가능일 조회 BFF_05_0031
@@ -78,7 +80,9 @@ class MyTBillBillguide extends TwViewController {
     selClaimDtBtn:'',//선택 청구 월 | 2017년 10월
     selStaDt:'',//선택시작
     selEndDt:'',//선택끝
-    unPaidTotSum: '' //미납금액
+    unPaidTotSum: '', //미납금액
+    joinSvcList: '' //가입 서비스 리스트
+
   };
 
   //노출조건
@@ -90,7 +94,7 @@ class MyTBillBillguide extends TwViewController {
     callGiftYn: null, //콜기프트
     donationYn: null, //기부금/후원금
     chargeTtYn: null, //요금제: "T끼리 T내는 요금" prodId : "NA00001901"
-    defaultYn: null, //미납여부
+    defaultYn: null, //납부전
     paymentBtnYn: null, //납부가능일 버튼
     suspensionYn: null //이용정지해제 버튼
   };
@@ -110,6 +114,13 @@ class MyTBillBillguide extends TwViewController {
 
   //실행 : 데이터 가져오기
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+    this.reqQuery = req.query;
+    this.logger.info(this, '[ reqQuery ] : ', this.reqQuery);
+
+    if (this.reqQuery.invDt) {//조회 값이 존재할때는 청구요금 조회할때 값을 전달한다. | BFF_05_0036
+      this.logger.info(this, '[ 청구요금조회 invDt ] : ', this.reqQuery.invDt);
+    }
+
     let thisMain = this;
     this._svcInfo = svcInfo;
 
@@ -140,7 +151,6 @@ class MyTBillBillguide extends TwViewController {
           thisMain._baseFeePlansInfo = item[7].result;
           thisMain._paymentPossibleDayInfo = item[8].result;
           thisMain._suspensionInfo = item[9].result;
-
         },
         error(error) {
           thisMain.logger.info(this, '[ error ] : ', error.stack || error);
@@ -154,6 +164,12 @@ class MyTBillBillguide extends TwViewController {
           thisMain._commDataInfo.discount = FormatHelper.addComma( String(Math.abs( Number(0))) );
           thisMain._commDataInfo.unPaidTotSum = FormatHelper.addComma( String(thisMain._defaultInfo.unPaidTotSum) );
 
+          thisMain._commDataInfo.joinSvcList = _.cloneDeep( thisMain._billpayInfo.paidAmtSvcCdList );
+          thisMain._commDataInfo.joinSvcList.map(item => {
+              if ( item.svcNm === '이동전화' ) {
+                item.svcNm = '휴대폰';
+              }
+          });
 
           thisMain.setShowCondition();//노출조건 셋팅
 
@@ -171,8 +187,11 @@ class MyTBillBillguide extends TwViewController {
     // });
   }
 
+
   //컨트롤러 초기화 : 가져온 데이터를 활용해서 개발진행
   private controllerInit(res) {
+    this.testQuerySet();//------------------------------------------[페이지 진입시 강제 셋팅]
+
     this.logger.info(this, '[할인금액] : ', this._commDataInfo.discount);
     this.logger.info(this, '[노출조건] : ', this._showConditionInfo);
     /*
@@ -213,7 +232,7 @@ class MyTBillBillguide extends TwViewController {
           this.logger.info(this, '[_billpayInfo.repSvcYn] 통합청구 | 대표 화면출력 : ', this._billpayInfo.repSvcYn);
           this.combineRepresentCircuit(res);
         }
-        else if( this._billpayInfo.repSvcYn === 'N' ) {
+        else {
           this.logger.info(this, '[_billpayInfo.repSvcYn] 통합청구 | 대표아님 화면출력 : ', this._billpayInfo.repSvcYn);
           this.combineCommonCircuit(res);
         }
@@ -221,6 +240,34 @@ class MyTBillBillguide extends TwViewController {
 
     }
   }
+  //-------------------------------------------------------------[서비스 필터: 해당 데이터 필터링]
+  public setShowCondition():void {//노출조건 정보 셋팅
+    this._showConditionInfo.autopayYn = this._billpayInfo.autopayYn;
+    this._showConditionInfo.childYn = (this._circuitChildInfo.length > 0) ? 'Y' : 'N';
+    this._showConditionInfo.phoneYn = (this._circuitInfo.svcAttrCd === 'M1') ? 'Y' : 'N';
+
+    this._showConditionInfo.roamingYn = (this._roamingInfo.roamingList.length !== 0 ) ? 'Y' : 'N';
+    this._showConditionInfo.callGiftYn = (this._callGiftInfo.callData !== '0분 0초') ? 'Y' : 'N';
+    this._showConditionInfo.donationYn = (this._donationInfo.donationList.length !== 0) ? 'Y' : 'N';
+    this._showConditionInfo.defaultYn = (this._defaultInfo.unPaidAmtMonthInfoList.length !== 0) ? 'Y' : 'N';
+    this._showConditionInfo.chargeTtYn = (this._baseFeePlansInfo.prodId === 'NA00001901') ? 'Y' : 'N';
+
+    this._showConditionInfo.paymentBtnYn = (this._paymentPossibleDayInfo.useObjYn === 'Y') ? 'Y' : 'N';
+    this._showConditionInfo.suspensionYn = (this._suspensionInfo.useObjYn === 'Y') ? 'Y' : 'N';
+
+  }
+
+  public getSelStaDt(date: string):any {//월 시작일 구하기
+    return this._commDataInfo.selStaDt = moment(date).format('YYYY.MM') + '.01';
+  }
+  public getSelClaimDtBtn(date: string):any {//청구 년월 구하기
+    return this._commDataInfo.selClaimDt = moment(date).add(1, 'days').format('YYYY년 MM월');
+  }
+  public getSelClaimDtNum(date: string):any {//청구 년월 구하기
+    return this._commDataInfo.selClaimDt = moment(date).add(1, 'days').format('M');
+  }
+
+
   //-------------------------------------------------------------[서비스]
   //통합청구(대표)
   private combineRepresentCircuit(res) {
@@ -232,7 +279,8 @@ class MyTBillBillguide extends TwViewController {
       circuitChildInfo: this._circuitChildInfo,
       commDataInfo: this._commDataInfo,
       defaultInfo: this._defaultInfo,
-      showConditionInfo: this._showConditionInfo
+      showConditionInfo: this._showConditionInfo,
+      baseFeePlansInfo: this._baseFeePlansInfo
     } );
   }
   //통합청구(일반)
@@ -245,7 +293,8 @@ class MyTBillBillguide extends TwViewController {
       circuitChildInfo: this._circuitChildInfo,
       commDataInfo: this._commDataInfo,
       defaultInfo: this._defaultInfo,
-      showConditionInfo: this._showConditionInfo
+      showConditionInfo: this._showConditionInfo,
+      baseFeePlansInfo: this._baseFeePlansInfo
     } );
   }
   //개별청구
@@ -258,7 +307,8 @@ class MyTBillBillguide extends TwViewController {
       circuitChildInfo: this._circuitChildInfo,
       commDataInfo: this._commDataInfo,
       defaultInfo: this._defaultInfo,
-      showConditionInfo: this._showConditionInfo
+      showConditionInfo: this._showConditionInfo,
+      baseFeePlansInfo: this._baseFeePlansInfo
     } );
   }
   //PPS(선불폰)
@@ -271,7 +321,8 @@ class MyTBillBillguide extends TwViewController {
       circuitChildInfo: this._circuitChildInfo,
       commDataInfo: this._commDataInfo,
       defaultInfo: this._defaultInfo,
-      showConditionInfo: this._showConditionInfo
+      showConditionInfo: this._showConditionInfo,
+      baseFeePlansInfo: this._baseFeePlansInfo
     } );
   }
   //기업솔루션(포인트캠)
@@ -284,7 +335,8 @@ class MyTBillBillguide extends TwViewController {
       circuitChildInfo: this._circuitChildInfo,
       commDataInfo: this._commDataInfo,
       defaultInfo: this._defaultInfo,
-      showConditionInfo: this._showConditionInfo
+      showConditionInfo: this._showConditionInfo,
+      baseFeePlansInfo: this._baseFeePlansInfo
     } );
   }
   //sk브로드밴드(인터넷/IPTV/집전화)
@@ -297,9 +349,13 @@ class MyTBillBillguide extends TwViewController {
       circuitChildInfo: this._circuitChildInfo,
       commDataInfo: this._commDataInfo,
       defaultInfo: this._defaultInfo,
-      showConditionInfo: this._showConditionInfo
+      showConditionInfo: this._showConditionInfo,
+      baseFeePlansInfo: this._baseFeePlansInfo
     } );
   }
+
+
+
 
   //-------------------------------------------------------------[서비스 BFF 요청 모음]
   private BFF_05_0036(): any { return this.apiService.request(API_CMD.BFF_05_0036, {} ); } //청구요금조회
@@ -324,40 +380,61 @@ class MyTBillBillguide extends TwViewController {
   private BFF_05_0013(): any { return this.apiService.request(API_CMD.BFF_05_0013, {} ); } //PPS 정보조회
   private BFF_05_0014(): any { return this.apiService.request(API_CMD.BFF_05_0014, {} ); } //PPS 사용내역 확인
 
-  //-------------------------------------------------------------[서비스 필터: 해당 데이터 필터링]
-  public getSelStaDt(date: string):any {//월 시작일 구하기
-    return this._commDataInfo.selStaDt = moment(date).format('YYYY.MM') + '.01';
-  }
-  public getSelClaimDtBtn(date: string):any {//청구 년월 구하기
-    return this._commDataInfo.selClaimDt = moment(date).add(1, 'days').format('YYYY년 MM월');
-  }
-  public getSelClaimDtNum(date: string):any {//청구 년월 구하기
-    return this._commDataInfo.selClaimDt = moment(date).add(1, 'days').format('M');
-  }
-
-  public setShowCondition():void {//노출조건 정보 셋팅
-    this._showConditionInfo.autopayYn = this._billpayInfo.autopayYn;
-    this._showConditionInfo.childYn = (this._circuitChildInfo.length > 0) ? 'Y' : 'N';
-    this._showConditionInfo.phoneYn = (this._circuitInfo.svcAttrCd === 'M1') ? 'Y' : 'N';
-
-    this._showConditionInfo.roamingYn = (this._roamingInfo.roamingList.length !== 0 ) ? 'Y' : 'N';
-    this._showConditionInfo.callGiftYn = (this._callGiftInfo.callData !== '0분 0초') ? 'Y' : 'N';
-    this._showConditionInfo.donationYn = (this._donationInfo.donationList.length !== 0) ? 'Y' : 'N';
-    this._showConditionInfo.defaultYn = (this._defaultInfo.unPaidAmtMonthInfoList.length !== 0) ? 'Y' : 'N';
-    this._showConditionInfo.chargeTtYn = (this._baseFeePlansInfo.prodId === 'NA00001901') ? 'Y' : 'N';
-
-    this._showConditionInfo.paymentBtnYn = (this._paymentPossibleDayInfo.useObjYn === 'Y') ? 'Y' : 'N';
-    this._showConditionInfo.suspensionYn = (this._suspensionInfo.useObjYn === 'Y') ? 'Y' : 'N';
-
-
-
-  }
-
 
 
   //-------------------------------------------------------------[클리이어튼로 전송]
   public renderView(res: Response, view: string, data: any): any {
     res.render(view, data);
+  }
+
+  private testQuerySet() {
+    if (this.reqQuery.type) {
+      this.logger.info(this, '[reqQuery.type true] : ', this.reqQuery.type);
+      switch ( this.reqQuery.type ) {
+        case 'a0' :
+          this.logger.info(this, '[대표청구회선-대표] : ');
+          this._billpayInfo.coClCd = 'T';
+          this._billpayInfo.paidAmtMonthSvcCnt = 3;
+          this._billpayInfo.repSvcYn = 'Y';
+          break;
+        case 'a1' :
+          this.logger.info(this, '[대표청구회선-일반회선] : ');
+          this._billpayInfo.coClCd = 'T';
+          this._billpayInfo.paidAmtMonthSvcCnt = 3;
+          this._billpayInfo.repSvcYn = 'N';
+          break;
+        case 'b0' :
+          this.logger.info(this, '[개별청구-휴대폰] : ');
+          this._billpayInfo.coClCd = 'T';
+          this._billpayInfo.paidAmtMonthSvcCnt = 1;
+          this._billpayInfo.repSvcYn = 'Y';
+          this._circuitInfo.svcAttrCd = 'M1';
+          break;
+        case 'b1' :
+          this.logger.info(this, '[개별청구-PPS] : ');
+          this._billpayInfo.coClCd = 'T';
+          this._billpayInfo.paidAmtMonthSvcCnt = 1;
+          this._billpayInfo.repSvcYn = 'Y';
+          this._circuitInfo.svcAttrCd = 'M2';
+          break;
+        case 'b2' :
+          this.logger.info(this, '[개별청구-기업솔루션] : ');
+          this._billpayInfo.coClCd = 'T';
+          this._billpayInfo.paidAmtMonthSvcCnt = 1;
+          this._billpayInfo.repSvcYn = 'Y';
+          this._circuitInfo.svcAttrCd = 'O1';
+          break;
+        case 'c0' :
+          this.logger.info(this, '[sk브로드밴드 가입회선] : ');
+          this._billpayInfo.coClCd = 'B';
+          this._billpayInfo.paidAmtMonthSvcCnt = 1;
+          this._billpayInfo.repSvcYn = 'Y';
+          break;
+      }
+    }
+    else {
+      this.logger.info(this, '[reqQuery.type false] : ', this.reqQuery.type);
+    }
   }
 
 
