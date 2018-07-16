@@ -17,38 +17,20 @@ skt_landing.components = {
           tabList = _this.find('.tab-linker'),
           tabCont = _this.find('.tab-contents');
       tabListOnChk();
-      tabList.find('button').on('click',function(e){
-        e.preventDefault();
+      tabList.find('button, a').on('click',function(){
         $(this).closest('li').attr('aria-selected', 'true').siblings().attr('aria-selected', 'false');
         tabListOnChk();
       });
 
       function tabListOnChk(){
         var tabListIdx = tabList.find('li[aria-selected="true"]').index();
-        if(tabListIdx == -1){
+        /*if(tabListIdx == -1){
           tabListIdx = tabList.find('li').eq(0).attr('aria-selected', 'true').index();
+        }*/
+        if(tabListIdx != -1){
+          tabCont.children('ul').children('li').eq(tabListIdx).attr('aria-selected', 'true').siblings().attr('aria-selected', 'false');
         }
-        tabCont.children('ul').children('li').eq(tabListIdx).attr('aria-selected', 'true').siblings().attr('aria-selected', 'false');
       }
-    });
-  },
-  component_accordion: function () {
-    var accoArr = $('.accordion');
-    accoArr.each(function () {
-      var ta = $(this);
-      ta.on('click', '.acco-btn button', function () {
-        var area = $(this).closest('.acco-area'),
-          onTag = $(this).closest('li');
-        if (area.hasClass('toggle')) {
-          onTag.toggleClass('on');
-        } else {
-          if (onTag.hasClass('on')) {
-            onTag.removeClass('on');
-          } else {
-            onTag.addClass('on').siblings('li').removeClass('on');
-          }
-        }
-      });
     });
   },
   component_flcarddefault: function () {

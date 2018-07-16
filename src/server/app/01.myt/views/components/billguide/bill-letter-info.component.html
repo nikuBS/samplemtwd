@@ -1,0 +1,37 @@
+<!--
+* FileName: bill-letter-info.component.html
+* Author: 이정민 (skt.p130713@partner.sk.com)
+* Date: 2018.07.13
+-->
+<% if (svcInfo.svcAttrCd === 'M1') { %>
+    <% if (curBillGuide.ccurNotiYn === 'Y') { %>
+    <li>
+        <dl>
+            <dt class="ti-data">법정대리인 휴대폰번호</dt>
+            <dd class="tx-data">
+                <%= curBillGuide.ccurNotiSvcNum %>
+            </dd>
+        </dl>
+    </li>
+    <% } %>
+<% } else { %>
+    <% if (curBillGuide.cntcNum1) { %>
+    <li>
+        <dl>
+            <dt class="ti-data">청구인 휴대폰번호</dt>
+            <dd class="tx-data">
+                <%= curBillGuide.cntcNum1 %>
+            </dd>
+        </dl>
+    </li>
+    <% } %>
+<% } %>
+
+<li>
+    <dl>
+        <dt class="ti-data">보안사용</dt>
+        <dd class="tx-data">
+            <%= (curBillGuide.scurBillYn === 'N' ? '설정없이 조회' : '생년월일 입력 후, 조회') %>
+        </dd>
+    </dl>
+</li>
