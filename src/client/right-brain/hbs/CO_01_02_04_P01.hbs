@@ -16,7 +16,7 @@
             <div class="cont-box">
                 <div class="box-suggest">
                     <div class="suggest-info">
-                        <p class="suggest-ti">T world의 회원이 되신 것을<br /><em class="tx-bold">환영합니다.</em></p>
+                        <p class="suggest-ti">T world의 회원이 되신 것을<br/><em class="tx-bold">환영합니다.</em></p>
                         <ul class="suggest-list">
                             <li>아래 고객님께서 가입하신 회선 중, T world에서 이용하실 회선을 선택해주세요.</li>
                             <li>회선을 선택하시면, T world에서 요금 조회 및 납부 등의 업무 처리 뿐만 아니라 고객님만을 위한 특별한 혜택도 보실 수 있습니다.</li>
@@ -36,8 +36,8 @@
                         <p class="ti">이용하실 회선 선택</p>
                         <div class="widget">
                             <div class="widget-box check">
-                                <div class="checkbox type02 checked all_chk" role="checkbox" aria-checked="true">
-                                    <input type="checkbox" name="checkbox" value="" title="전체" checked/><!-- 접근성 수정 -->
+                                <div class="checkbox type02 all_chk" role="checkbox" aria-checked="false">
+                                    <input id="all-check" type="checkbox" name="checkbox" value="" title="체크박스"/>
                                     <span class="tit-a">전체</span>
                                     <i class="ico"></i>
                                 </div>
@@ -49,50 +49,46 @@
                             <div class="widget">
                                 <div class="widget-box check">
                                     <ul class="select-list" role="group">
-                                        <li class="checkbox type01 checked" role="checkbox" aria-checked="true">
-                                            <input type="checkbox" name="checkbox" value="" title="회선 선택" aria-labelledby="aria-mline1" checked/><!-- 접근성 수정 -->
-                                            <dl id="aria-mline1" class="mline-detail" aria-hidden="true"><!-- 접근성 수정 -->
-                                                <dt>휴대폰</dt>
-                                                <dd class="device">갤럭*****</dd>
-                                                <dd class="ph">010-12**-45**</dd>
-                                            </dl>
-                                        </li>
-                                        <li class="checkbox type01 checked" role="checkbox" aria-checked="true">
-                                            <input type="checkbox" name="checkbox" value="" title="회선 선택" aria-labelledby="aria-mline2" checked/><!-- 접근성 수정 -->
-                                            <dl id="aria-mline2" class="mline-detail" aria-hidden="true"><!-- 접근성 수정 -->
-                                                <dt>선불폰</dt>
-                                                <dd class="device">갤럭*****</dd>
-                                                <dd class="ph">010-12**-45**</dd>
-                                            </dl>
-                                        </li>
-                                        <li class="checkbox type01 checked" role="checkbox" aria-checked="true">
-                                            <input type="checkbox" name="checkbox" value="" title="회선 선택" aria-labelledby="aria-mline3" checked/><!-- 접근성 수정 -->
-                                            <dl id="aria-mline3" class="mline-detail" aria-hidden="true"><!-- 접근성 수정 -->
-                                                <dt>T Pocket-Fi</dt>
-                                                <dd class="ph">010-12**-45**</dd>
-                                            </dl>
-                                        </li>
-                                        <li class="checkbox type01 checked" role="checkbox" aria-checked="true">
-                                            <input type="checkbox" name="checkbox" value="" title="회선 선택" aria-labelledby="aria-mline4" checked/><!-- 접근성 수정 -->
-                                            <dl id="aria-mline4" class="mline-detail" aria-hidden="true"><!-- 접근성 수정 -->
-                                                <dt>T Login</dt>
-                                                <dd class="ph">010-12**-45**</dd>
-                                            </dl>
-                                        </li>
-                                        <li class="checkbox type01 checked" role="checkbox" aria-checked="true">
-                                            <input type="checkbox" name="checkbox" value="" title="회선 선택" aria-labelledby="aria-mline5" checked/><!-- 접근성 수정 -->
-                                            <dl id="aria-mline5" class="mline-detail" aria-hidden="true"><!-- 접근성 수정 -->
-                                                <dt>T WiBro</dt>
-                                                <dd class="ph">P******</dd>
-                                            </dl>
-                                        </li>
-                                        <li class="checkbox type01 checked" role="checkbox" aria-checked="true">
-                                            <input type="checkbox" name="checkbox" value="" title="회선 선택" aria-labelledby="aria-mline6" checked/><!-- 접근성 수정 -->
-                                            <dl id="aria-mline6" class="mline-detail" aria-hidden="true"><!-- 접근성 수정 -->
-                                                <dt>인터넷</dt>
-                                                <dd class="ph">인천 연**********</dd>
-                                            </dl>
-                                        </li>
+                                        {{#if data.m}}
+                                            {{#each data.m}}
+                                                {{#if isShow}}
+                                                <li class="checkbox type01" role="checkbox" aria-checked="false" data-svcMgmtNum="{{svcMgmtNum}}">
+                                                    <input class="child-check" type="checkbox" name="checkbox" value="" title="회선 선택" aria-labelledby="aria-mline1" /><!-- 접근성 수정 : aria속성을 위해 고유 id를 가져야 합니다. loop를 돌릴시 고정 id가 여러개 생성이 됩니다. index를 참조 하거나 변화될 수 있는 값이 들어가야 될 것 같습니다. -->
+                                                    <dl id="aria-mline1" class="mline-detail"><!-- aria-labelledby와 매칭 되어야 합니다. -->
+                                                        <dt>{{ showSvcAttrCd }}</dt>
+                                                        <dd class="device">갤럭*****</dd>
+                                                        <dd class="ph">{{ svcNum }}</dd>
+                                                    </dl>
+                                                </li>
+                                                {{/if}}
+                                            {{/each}}
+                                        {{/if}}
+                                        {{#if data.s}}
+                                            {{#each data.s}}
+                                                {{#if isShow}}
+                                                <li class="checkbox type01" role="checkbox" aria-checked="false" data-svcMgmtNum="{{svcMgmtNum}}">
+                                                    <input class="child-check" type="checkbox" name="checkbox" value="값4" title="회선 선택" aria-labelledby="aria-mline1" /><!-- 접근성 수정 : aria속성을 위해 고유 id를 가져야 합니다. loop를 돌릴시 고정 id가 여러개 생성이 됩니다. index를 참조 하거나 변화될 수 있는 값이 들어가야 될 것 같습니다. -->
+                                                    <dl id="aria-mline1" class="mline-detail"><!-- aria-labelledby와 매칭 되어야 합니다. -->
+                                                        <dt>{{ showSvcAttrCd }}</dt>
+                                                        <dd class="ph">{{ addr }}</dd>
+                                                    </dl>
+                                                </li>
+                                                {{/if}}
+                                            {{/each}}
+                                        {{/if}}
+                                        {{#if data.o}}
+                                            {{#each data.o}}
+                                                {{#if isShow}}
+                                                <li class="checkbox type01" role="checkbox" aria-checked="false" data-svcMgmtNum="{{svcMgmtNum}}">
+                                                    <input class="child-check" type="checkbox" name="checkbox" value="값4" title="회선 선택" aria-labelledby="aria-mline1" /><!-- 접근성 수정 : aria속성을 위해 고유 id를 가져야 합니다. loop를 돌릴시 고정 id가 여러개 생성이 됩니다. index를 참조 하거나 변화될 수 있는 값이 들어가야 될 것 같습니다. -->
+                                                    <dl id="aria-mline1" class="mline-detail"><!-- aria-labelledby와 매칭 되어야 합니다. -->
+                                                        <dt>{{ showSvcAttrCd }}</dt>
+                                                        <dd class="ph">{{ svcNum }}</dd>
+                                                    </dl>
+                                                </li>
+                                                {{/if}}
+                                            {{/each}}
+                                        {{/if}}
                                     </ul>
                                 </div>
                             </div>
@@ -105,8 +101,8 @@
                 <div class="page-gnb">
                     <div class="bt-popup">
                         <div class="bt-indiv bt-red1">
-                            <button class="indiv-small">선택 취소</button>
-                            <button class="indiv-big">선택 회선 등록</button>
+                            <button class="indiv-small" disabled>선택 취소</button>
+                            <button class="indiv-big" disabled>선택 회선 등록</button>
                         </div>
                     </div>
                 </div>
