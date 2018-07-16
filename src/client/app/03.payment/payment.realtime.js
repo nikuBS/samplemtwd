@@ -13,6 +13,7 @@ Tw.PaymentRealtime = function (rootEl) {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._bankList = new Tw.BankList(this.$container);
+  this._getPoint = new Tw.PaymentGetPoint(this.$container);
   this._history = new Tw.HistoryService(this.$container);
   this._history.init('hash');
 
@@ -37,7 +38,7 @@ Tw.PaymentRealtime.prototype = {
     this.$container.on('click', '.select-bank', $.proxy(this._selectBank, this));
     this.$container.on('click', '.pay-check-box', $.proxy(this._setAutoInfo, this));
     this.$container.on('click', '.select-card-type', $.proxy(this._selectCardType, this));
-    this.$container.on('click', '.get-point', $.proxy(this._getPoint, this));
+    this.$container.on('click', '.get-point', $.proxy(this._openGetPoint, this));
     this.$container.on('click', '.get-cashbag-point', $.proxy(this._getCashbagPoint, this));
     this.$container.on('click', '.select-point', $.proxy(this._selectPoint, this));
     this.$container.on('click', '.pay', $.proxy(this._pay, this));
@@ -141,10 +142,8 @@ Tw.PaymentRealtime.prototype = {
     $target.text($selectedValue.text());
     this._popupService.close();
   },
-  _getPoint: function () {
-    this._popupService.open({
-      hbs: 'PA_05_04_L01'
-    });
+  _openGetPoint: function () {
+    this._getPoint.open();
   },
   _getCashbagPoint: function () {
     this._apiService.request(Tw.API_CMD.BFF_07_0028, {})

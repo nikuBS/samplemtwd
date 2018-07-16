@@ -13,7 +13,7 @@ class AuthLoginFail extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    res.render('login/auth.login.fail.html');
+    res.render('login/auth.login.fail.html', { svcInfo });
   }
 }
 

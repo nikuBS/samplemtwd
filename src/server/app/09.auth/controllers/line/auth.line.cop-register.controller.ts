@@ -13,7 +13,7 @@ class AuthLineCopRegister extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    res.render('line/auth.line.cop-register.html');
+    res.render('line/auth.line.cop-register.html', { svcInfo });
   }
 }
 

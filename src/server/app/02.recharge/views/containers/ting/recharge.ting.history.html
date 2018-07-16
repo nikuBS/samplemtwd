@@ -54,7 +54,7 @@
                                     <li role="tabpanel" id="aria-tab1-tab" aria-labelledby="aria-tab1" aria-selected="true">
                                         <div class="inner">
                                             <div class="contents-info-list">
-                                                <p class="ti-desc"><strong><span class="num">42</span>개</strong> 선물 내역이 있습니다.</p>
+                                                <p class="ti-desc"><strong><span class="num">0</span>개</strong> 선물 내역이 있습니다.</p>
                                                 <div class="list-top">
                                                     <!-- .widget -->
                                                     <div class="inline">
@@ -64,16 +64,15 @@
                                                 </div>
                                                 <!--// .widget -->
                                                 <ul id="wrap_gift_history" class="gift-history">
-
                                                 </ul>
                                             </div>
                                         </div>
-                                        <button class="gift-bt-more">더보기(20)</button>
+                                        <button class="gift-bt-more">더보기(<span class="num">20</span>)</button>
                                     </li>
                                     <li role="tabpanel" id="aria-tab2-tab" aria-labelledby="aria-tab2" aria-selected="false">
                                         <div class="inner">
                                             <div class="contents-info-list">
-                                                <p class="ti-desc"><strong><span class="num">32</span>개</strong> 선물 차단 내역이 있습니다.</p>
+                                                <p class="ti-desc"><strong><span class="num">0</span>개</strong> 선물 차단 내역이 있습니다.</p>
                                                 <div class="list-top">
                                                     <div class="inline">
                                                         <button class="bt-dropdown small" title="셀렉트 선택">전체 · 3개월<span class="ico"></span>
@@ -81,55 +80,11 @@
                                                     </div>
                                                 </div>
                                                 <!--// .widget -->
-                                                <ul class="gift-history">
-                                                    <li>
-                                                        <div class="info-user">
-                                                            <span class="info-title">김*림</span>
-                                                            <span class="info-sub">010-46**-10**</span>
-                                                            <span class="info-date">2018.06.14</span>
-                                                        </div>
-                                                        <div class="info-data">
-                                                            <span class="info-title">선물 충전 차단 신청</span>
-                                                            <span class="info-sub">T world(내부)</span>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="info-user">
-                                                            <span class="info-title">김*준</span>
-                                                            <span class="info-sub">010-46**-10**</span>
-                                                            <span class="info-date">2018.06.14</span>
-                                                        </div>
-                                                        <div class="info-data">
-                                                            <span class="info-title">선물 충전 차단 신청</span>
-                                                            <span class="info-sub">T world(내부)</span>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="info-user">
-                                                            <span class="info-title">김*준</span>
-                                                            <span class="info-sub">010-46**-10**</span>
-                                                            <span class="info-date">2018.06.14</span>
-                                                        </div>
-                                                        <div class="info-data">
-                                                            <span class="info-title">선물 충전 차단 신청</span>
-                                                            <span class="info-sub">T world(내부)</span>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="info-user">
-                                                            <span class="info-title">김*준</span>
-                                                            <span class="info-sub">010-46**-10**</span>
-                                                            <span class="info-date">2018.06.14</span>
-                                                        </div>
-                                                        <div class="info-data">
-                                                            <span class="info-title">선물 충전 차단 신청</span>
-                                                            <span class="info-sub">T world(내부)</span>
-                                                        </div>
-                                                    </li>
+                                                <ul id="wrap_gift_block_history" class="gift-history">
                                                 </ul>
                                             </div>
                                         </div>
-                                        <button class="gift-bt-more">더보기(20)</button>
+                                        <button class="gift-bt-more">더보기(<span class="num">20</span>)</button>
                                     </li>
                                 </ul>
                             </div>
@@ -169,12 +124,28 @@
     {{/list}}
 </script>
 
+<script id="tpl_ting_item_block_history" type="text/x-handlebars-template">
+    {{#list}}
+    <li>
+        <div class="info-user">
+            <span class="info-title">{{custNm}}</span>
+            <span class="info-sub">{{svcNum}}</span>
+            <span class="info-date">{{opDt}}</span>
+        </div>
+        <div class="info-data">
+            <span class="info-title">{{opClNm}}</span>
+            <span class="info-sub">{{opOrgNm}}</span>
+        </div>
+    </li>
+    {{/list}}
+</script>
+
 <script id="tpl_ting_item_no_history" type="text/x-handlebars-template">
     <div class="cont-box nogaps-hoz">
         <!-- .contents-empty -->
         <div class="contents-empty">
             <span class="ico"></span>
-            <p class="desc">받은 선물 또는 <br> 보낸 선물 내역이 없습니다.</p>
+            <p class="desc">{{content}}</p>
         </div>
         <!--// .contents-empty -->
     </div>

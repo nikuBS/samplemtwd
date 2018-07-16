@@ -10,8 +10,8 @@ import { Observable } from 'rxjs/Observable';
 
 export const PARAM = {
   TYPE: {
-    CURRENT: 'Q',
-    PREVIOUS: 'G'
+    CURRENT: 'G',
+    PREVIOUS: 'Q'
   }
 };
 
@@ -27,12 +27,16 @@ class MyTBillHotBill extends TwViewController {
       case 'M3':
         type = 'T pocket Fi';
         break;
-      default:
+      case 'M1':
         type = '휴대폰';
         //pocketFi: 메월 1일 메세지 표시
-        if ( new Date().getDay() === 1 ) {
+        if ( new Date().getDate() === 1 ) {
           billAvailable = false;
         }
+        break;
+      default:
+        //TODO 메뉴에서 거르지 못하고 진입 시 처리
+        this.logger.error(this, '[API_ERR]', `Unsupported type '${type}' in the hotbill service.`);
         break;
     }
     svcInfo.svcType = type;
@@ -47,7 +51,5 @@ class MyTBillHotBill extends TwViewController {
     // TODO error check
     res.render(view, data);
   }
-
 }
-
 export default MyTBillHotBill;

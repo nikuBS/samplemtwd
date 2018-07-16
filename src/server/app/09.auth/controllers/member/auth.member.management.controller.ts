@@ -13,7 +13,7 @@ class AuthMemberManagement extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    res.render('member/auth.member.management.html');
+    res.render('member/auth.member.management.html', { svcInfo });
   }
 }
 

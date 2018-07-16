@@ -9,7 +9,7 @@ import { API_CMD, API_CODE } from '../../../types/api-command.type';
 import DateHelper from '../../../utils/date.helper';
 import FormatHelper from '../../../utils/format.helper';
 import { PAYMENT_VIEW } from '../../../types/string.type';
-import { PAYMENT_OPTION, PAYMENT_OPTION_TEXT } from '../../../types/bff-common.type';
+import {PAYMENT_OPTION, PAYMENT_OPTION_TEXT, SVC_ATTR} from '../../../types/bff-common.type';
 
 class PaymentAutoController extends TwViewController {
   constructor() {
@@ -62,9 +62,14 @@ class PaymentAutoController extends TwViewController {
 
   private getData(svcInfo: any, result: any): any {
     return {
-      svcInfo,
+      svcInfo: this.getSvcInfo(svcInfo),
       payment: this.getResult(result)
     };
+  }
+
+  private getSvcInfo(svcInfo: any): any {
+    svcInfo.svcName = SVC_ATTR[svcInfo.svcAttrCd];
+    return svcInfo;
   }
 }
 
