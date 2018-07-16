@@ -22,7 +22,7 @@
                 <h1>납부내역조회</h1>
                 <button class="depth-view" role="button" aria-pressed="false"><span class="blind">메뉴구조보기</span></button>
             </div>
-            <button class="prev-step"><span class="blind">이전으로</span></button>
+            <button class="prev-step common-back"><span class="blind">이전으로</span></button>
             <button class="search-content"><span class="blind">검색하기</span></button>
         </div>
     </div>
@@ -47,181 +47,16 @@
                         <div class="tab-area type1"><!-- 타입별 탭형태 변환 -->
                             <div class="tab-linker">
                                 <ul role="tablist">
-                                    <li role="tab" aria-selected="true" aria-controls="tab1-tab" id="tab1"><button>OK캐쉬백</button></li>
-                                    <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2"><button>T포인트</button></li>
-                                    <li role="tab" aria-selected="false" aria-controls="tab3-tab" id="tab3"><button>레인보우포인트</button></li><!-- true 열림 -->
+                                    <li role="tab" aria-selected="false" aria-controls="tab1-tab" id="tab1"><a href="#ocb" class="replace-history">OK캐쉬백</a></li><!-- true 열림 -->
+                                    <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2"><a href="#tpoint" class="replace-history">T포인트</a></li>
+                                    <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab3"><a href="#rainbow" class="replace-history">레인보우포인트</a></li>
                                 </ul>
                             </div>
                             <div class="tab-contents">
                                 <ul>
-                                    <li role="tabpanel" id="tab1-tab" aria-labelledby="tab1">
-                                        <div class="cont-box nogaps-btm">
-                                            <div class="payment-detail-wrap">
-                                                <div class="payment-detail-box">
-                                                    <div class="detail-inner">
-                                                        <div class="pay-state">
-                                                            <span class="cancel-com">예약완료</span>
-                                                        </div>
-                                                        <div class="detail-list">
-                                                            <ul>
-                                                                <li>
-                                                                    <span class="title">신청일자</span>
-                                                                    <span class="tx-cont">2018.05.23</span>
-                                                                </li>
-                                                                <li>
-                                                                    <span class="title">납부방법</span>
-                                                                    <span class="tx-cont">휴대폰요금</span>
-                                                                </li>
-                                                                <li>
-                                                                    <span class="title">납부금액</span>
-                                                                    <span class="tx-cont"><strong>1,000</strong> 점</span>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                    <div class="detail-btn item-two">
-                                                        <button type="button">상세내역보기</button>
-                                                        <button type="button" class="point-color">예약취소하기</button>
-                                                    </div>
-                                                </div>
-                                                <div class="payment-detail-box">
-                                                    <div class="detail-inner">
-                                                        <div class="pay-state">
-                                                            <span class="payment-com">납부완료</span>
-                                                        </div>
-                                                        <div class="detail-list">
-                                                            <ul>
-                                                                <li>
-                                                                    <span class="title">신청일자</span>
-                                                                    <span class="tx-cont">2018.05.23</span>
-                                                                </li>
-                                                                <li>
-                                                                    <span class="title">납부방법</span>
-                                                                    <span class="tx-cont">휴대폰요금</span>
-                                                                </li>
-                                                                <li>
-                                                                    <span class="title">납부금액</span>
-                                                                    <span class="tx-cont"><strong>27,000</strong> 원</span>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                    <div class="detail-btn item-two">
-                                                        <button type="button">상세내역보기</button>
-                                                        <button type="button" class="point-color">예약취소하기</button>
-                                                    </div>
-                                                </div>
-                                                <div class="payment-detail-box">
-                                                    <div class="detail-inner">
-                                                        <div class="pay-state">
-                                                            <span class="payment-com">납부완료</span>
-                                                        </div>
-                                                        <div class="detail-list">
-                                                            <ul>
-                                                                <li>
-                                                                    <span class="title">신청일자</span>
-                                                                    <span class="tx-cont">2018.05.23</span>
-                                                                </li>
-                                                                <li>
-                                                                    <span class="title">납부방법</span>
-                                                                    <span class="tx-cont">휴대폰요금</span>
-                                                                </li>
-                                                                <li>
-                                                                    <span class="title">납부금액</span>
-                                                                    <span class="tx-cont"><strong>27,000</strong> 원</span>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                    <div class="detail-btn">
-                                                        <button type="button">상세내역보기</button>
-                                                    </div>
-                                                </div>
-                                                <div class="payment-detail-box">
-                                                    <div class="detail-inner">
-                                                        <div class="pay-state">
-                                                            <span class="payment-com">납부완료</span>
-                                                        </div>
-                                                        <div class="detail-list">
-                                                            <ul>
-                                                                <li>
-                                                                    <span class="title">신청일자</span>
-                                                                    <span class="tx-cont">2018.05.23</span>
-                                                                </li>
-                                                                <li>
-                                                                    <span class="title">납부방법</span>
-                                                                    <span class="tx-cont">휴대폰요금</span>
-                                                                </li>
-                                                                <li>
-                                                                    <span class="title">납부금액</span>
-                                                                    <span class="tx-cont"><strong>27,000</strong> 원</span>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                    <div class="detail-btn">
-                                                        <button type="button">상세내역보기</button>
-                                                    </div>
-                                                </div>
-                                                <!--// payment-detail-wrap -->
-                                                <div class="contents-info-list">
-                                                    <a href="" class="bt-more" title="">더보기<span>(20)</span></a>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <!-- OK캐쉬백 포인트 납부 예약 내역이 없는 경우 -->
-
-                                        <div class="cont-box">
-                                            <div class="payment-select">
-                                                <div class="contents-empty">
-                                                    <span class="ico"></span>
-                                                    <p class="desc">OK캐쉬백 포인트 납부예약 내역이 없습니다.</p>
-                                                </div>
-                                                <div class="pay-bottom type1">
-                                                    <p class="title">다음달 청구요금을<br />포인트로 미리 납부하세요</p>
-                                                    <a href="" class="bt-link-tx">OK캐쉬백 납부(예약)하기<span class="ico"></span></a>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <!-- // OK캐쉬백 포인트 납부 예약 내역이 없는 경우 -->
-
-                                    </li>
-                                    <li role="tabpanel" id="tab2-tab" aria-labelledby="tab2">
-                                        <!-- T포인트 포인트 납부 예약 내역이 없는 경우 -->
-                                        <div class="cont-box">
-                                            <div class="payment-select">
-                                                <div class="contents-empty">
-                                                    <span class="ico"></span>
-                                                    <p class="desc">T포인트 납부예약 내역이 없습니다.</p>
-                                                </div>
-                                                <div class="pay-bottom type1">
-                                                    <p class="title">다음달 청구요금을<br />포인트로 미리 납부하세요</p>
-                                                    <a href="" class="bt-link-tx">T포인트 납부(예약)하기<span class="ico"></span></a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- // T포인트 포인트 납부 예약 내역이 없는 경우 -->
-
-                                    </li>
-                                    <li role="tabpanel" id="tab3-tab" aria-labelledby="tab3">
-
-                                        <!-- 레인보우 포인트 납부 예약 내역이 없는 경우 -->
-                                        <div class="cont-box">
-                                            <div class="payment-select">
-                                                <div class="contents-empty">
-                                                    <span class="ico"></span>
-                                                    <p class="desc">레인보우 포인트 납부예약 내역이 없습니다.</p>
-                                                </div>
-                                                <div class="pay-bottom type1">
-                                                    <p class="title">다음달 청구요금을<br />포인트로 미리 납부하세요</p>
-                                                    <a href="" class="bt-link-tx">레인보우 포인트 납부(예약)하기<span class="ico"></span></a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- // 레인보우 포인트 납부 예약 내역이 없는 경우 -->
-                                    </li>
+                                    <li role="tabpanel" id="tab1-tab" aria-labelledby="tab1"></li>
+                                    <li role="tabpanel" id="tab2-tab" aria-labelledby="tab2"></li>
+                                    <li role="tabpanel" id="tab3-tab" aria-labelledby="tab3"></li>
                                 </ul>
                             </div>
                         </div>
@@ -230,11 +65,12 @@
             </div>
 
             <hr class="cont-sp type1" aria-hidden="true"/>
+
             <div class="cont-box">
                 <div class="widget">
                     <div class="widget-box accordion">
                         <h5 class="tit-a">꼭 확인해 주세요</h5>
-                        <div class="acco-cover toggle"><!-- toggle : 한개만 열기 -->
+                        <div class="acco-cover"><!-- toggle : 한개만 열기 -->
                             <div class="acco-style btn-hold">
                                 <ul class="acco-list">
                                     <li class="acco-box">
@@ -249,6 +85,92 @@
                                 </ul>
                             </div>
                         </div>
+
+                        <div class="acco-cover"><!-- toggle : 한개만 열기 -->
+                            <div class="acco-style btn-hold">
+                                <ul class="acco-list">
+                                    <li class="acco-box">
+                                        <!-- .on: 열기 -->
+                                        <div class="acco-tit"><span class="bullet">1.</span> 다회선 통합납부 고객<button role="button" aria-pressed="false" class="show-button">상세보기</button></div>
+                                        <div class="acco-cont">
+                                            <ul class="list-dot">
+                                                <li class="list">2개 이상의 회선을 통합된 요금으로 납부하시는 고객의 경우 <em>납부 내역이 합산된 금액으로 확인</em>되시며, 회선 별 납부 내역 출력을 원하실 경우 고객센터[국번 없이 1599-0011(유료)/휴대폰114]로 문의하시기 바랍니다.</li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li class="acco-box">
+                                        <!-- .on: 열기 -->
+                                        <div class="acco-tit"><span class="bullet">2.</span> 납부 내역 조회기간 안내<button role="button" aria-pressed="false" class="show-button">상세보기</button></div>
+                                        <div class="acco-cont">
+                                            <ul class="list-dot">
+                                                <li class="list">요금 납부 내역은 최근 6개월 이내, 환불 처리내역은 최근 10일 이내, OK캐쉬백/T포인트 납부취소는 요금납부 후 20일 이내 처리내역만 조회 가능합니다.</li>
+                                                <li class="list">해당 기간 이외의 내역에 대해서는 고객센터[국번 없이 1599-0011(유료)/휴대폰114]로 문의하시기 바랍니다.</li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li class="acco-box">
+                                        <!-- .on: 열기 -->
+                                        <div class="acco-tit"><span class="bullet">3.</span> 자동납부, 지로납부 확인<button role="button" aria-pressed="false" class="show-button">상세보기</button></div>
+                                        <div class="acco-cont">
+                                            <ul class="list-dot">
+                                                <li class="list">요금자동납부 이용 고객의 경우 인출일로부터 3~4일 이후, 지로납부 이용 고객의 경우 납부 후 3~5일 이후 확인하실 수 있습니다.</li>
+                                                <li class="list">자동납부, 지로납부로 <em>즉시납부 하신 경우</em>는 시스템 처리시간으로 인해 실시간 확인이 불가능하며 <em>3일정도 이후에 확인</em>하실 수 있습니다.</li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li class="acco-box">
+                                        <!-- .on: 열기 -->
+                                        <div class="acco-tit"><span class="bullet">4.</span> 온라인 요금납부 안내 <button role="button" aria-pressed="false" class="show-button">상세보기</button></div>
+                                        <div class="acco-cont">
+                                            <ul class="list-dot">
+                                                <li class="list">상세내역은 청구요금에서 확인하실 수 있습니다.
+                                                    <a href="" class="bt-link-tx">사용요금 및 요금안내서 바로가기 <span class="ico"></span></a>
+                                                    <!-- 링크 버튼 -->
+                                                </li>
+                                                <li class="list">이용정지 고객의 경우 납부기한이 경과한 미납금액을 모두 납부하시면 이용정지가 즉시 해제됩니다.</li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="acco-cover"><!-- toggle : 한개만 열기 -->
+                            <div class="acco-style btn-hold">
+                                <ul class="acco-list">
+                                    <li class="acco-box">
+                                        <!-- .on: 열기 -->
+                                        <div class="acco-tit"><span class="bullet">1.</span> 레인보우포인트 안내<button role="button" aria-pressed="false" class="show-button">상세보기</button></div>
+                                        <div class="acco-cont">
+                                            <ul class="list-dot">
+                                                <li class="list">05년 7월 1일부터 레인보우포인트 1점을 1원 상당으로 변경되었으며 사용금액 및 잔여금액은 월1회 (매월 중순) 업데이트 됩니다.</li>
+                                                <li class="list">신청 당월 사용 분부터 적용됩니다.</li>
+                                                <li class="list">신청 후&nbsp;사용하지 않는 잔여분은 자동 이월되며, 이월 횟수에는 제한이 없습니다.</li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li class="acco-box">
+                                        <!-- .on: 열기 -->
+                                        <div class="acco-tit"><span class="bullet">2.</span> 신청취소 안내<button role="button" aria-pressed="false" class="show-button">상세보기</button></div>
+                                        <div class="acco-cont">
+                                            <ul class="list-dot">
+                                                <li class="list">부가서비스 및 로밍사용요금은 당월에만 취소 가능합니다. (단, 이미 요금납부 처리완료된 포인트는 취소 불가)</li>
+                                                <li class="list">국내음성통화료 및 국내 데이터 통화료는 신청 당월 이후에도&nbsp;사용하지 않은 잔여 포인트에 대해서 취소가 가능합니다.&nbsp;(단, 매월 1~10일 청구기간은 취소 불가)</li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li class="acco-box">
+                                        <!-- .on: 열기 -->
+                                        <div class="acco-tit"><span class="bullet">3.</span> 로밍요금 안내<button role="button" aria-pressed="false" class="show-button">상세보기</button></div>
+                                        <div class="acco-cont">
+                                            <ul class="list-dot">
+                                                <li class="list">로밍요금의 경우 해외사업자간 정산관계로 인하여 신청 후 3개월 이내에 로밍요금이 청구 되지 않으면 포인트로 자동 복원됩니다. (3개월 이후 청구 시에는 재 신청하셔야 합니다.)</li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -256,7 +178,7 @@
         </div>
     </div>
     <!--// #contents -->
-    <% include ../../../../common/views/components/footer.component.html %>
+    <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
 </div>
 
 
@@ -265,5 +187,78 @@
   $(document).ready(function () {
     new Tw.PaymentHistoryPointReserve($(document));
   });
+</script>
+<script id="list-wrapper" type="text/x-handlebars-template">
+    <div class="cont-box nogaps-btm">
+        <div class="payment-detail-wrap">
+            {{> list}}
+            {{#if initialMoreData}}
+            <div class="contents-info-list">
+                <a href="" class="bt-more" title="">더보기<span>(<em>{{restCount}}</em>)</span></a>
+            </div>
+            {{/if}}
+        </div>
+    </div>
+</script>
+<script id="list-default" type="text/x-handlebars-template">
+    {{#each listElement}}
+    <div class="payment-detail-box">
+        <div class="detail-inner">
+            <div class="pay-state">
+                {{#if isReserved}}
+                <span class="cancel-com">예약완료</span>
+                {{ else if isPayCompleted }}
+                <span class="payment-com">납부완료</span>
+                {{/if}}
+            </div>
+            <div class="detail-list">
+                <ul>
+                    <li>
+                        <span class="title">신청일자</span>
+                        <span class="tx-cont">{{reqDate}}</span>
+                    </li>
+                    <li>
+                        <span class="title">납부방법</span>
+                        <span class="tx-cont">{{chargeName}}</span>
+                    </li>
+                    <li>
+                        <span class="title">납부금액</span>
+                        {{#if isPoint}}
+                        <span class="tx-cont"><strong>{{reqAmt}}</strong> 점</span>
+                        {{ else }}
+                        <span class="tx-cont"><strong>{{reqAmt}}</strong> 원</span>
+                        {{/if}}
+                    </li>
+                </ul>
+            </div>
+        </div>
+        {{#if isCancelAble}}
+        <div class="detail-btn item-two">
+            <button type="button" data-list-id="{{listId}}" class="fe-btn">상세내역보기</button>
+            <button type="button" class="fe-btn point-color" data-list-id="{{listId}}">예약취소하기</button>
+        </div>
+        {{ else }}
+        <div class="detail-btn">
+            <button type="button" data-list-id="{{listId}}" class="fe-btn">상세내역보기</button>
+        </div>
+        {{/if}}
+    </div>
+    {{/each}}
+</script>
+<script id="list-empty" type="text/x-handlebars-template">
+    <!-- 포인트 납부 예약 내역이 없는 경우 -->
+    <div class="cont-box">
+        <div class="payment-select">
+            <div class="contents-empty">
+                <span class="ico"></span>
+                <p class="desc">{{pointTitle}} 납부예약 내역이 없습니다.</p>
+            </div>
+            <div class="pay-bottom type1">
+                <p class="title">다음달 청구요금을<br />포인트로 미리 납부하세요</p>
+                <a href="{{pointPayReserveURL}}" class="bt-link-tx">{{pointTitle}} 납부(예약)하기<span class="ico"></span></a>
+            </div>
+        </div>
+    </div>
+    <!-- // 포인트 납부 예약 내역이 없는 경우 -->
 </script>
 <% include ../components/end.component.html %>

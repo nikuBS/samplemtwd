@@ -129,7 +129,65 @@ Tw.MSG_MYT = {
   BILL_GUIDECHANGE_A14: '요금안내서 재발행이 신청되었습니다.',
   BILL_GUIDECHANGE_A15: '선택하신 청구월에 대한 청구서가 이미 재발행 신청 되었습니다.',
   BILL_GUIDECHANGE_A16: '청구지 주소가 정확한지 다시 한번 확인해 주시기 바랍니다.<br />재발행 신청을 하시겠습니까?',
-  BILL_GUIDECHANGE_A17: '이메일 주소가 정확한지 다시 한번 확인해 주시기 바랍니다.<br />재발행 신청을 하시겠습니까?'
+  BILL_GUIDECHANGE_A17: '이메일 주소가 정확한지 다시 한번 확인해 주시기 바랍니다.<br />재발행 신청을 하시겠습니까?',
+  BILLTYPE_LIST : [
+    {
+      'billType': 'P',
+      'value': 'T world <BR/>확인',
+      'desc': '언제 어디서나 PC와 모바일로 요금을 확인할 수 있는 요금안내서',
+      'chgBtnNm' : '"T world 확인"으로 변경하기',
+      'recommend' : true
+    },
+    {
+      'billType': 'H',
+      'value': 'Bill Letter',
+      'desc': '이번 달과 저번 달을 비교해서 알려주는 맞춤형 요금안내서 Bill Letter App',
+      'chgBtnNm' : '"Bill Letter"로 변경하기',
+      'recommend' : true
+    },
+    {
+      'billType': 'B',
+      'value': '문자요금 안내서',
+      'desc': '로그인이나 인증없이 휴대폰 MMS로 요금을 확인할 수 있는 서비스',
+      'chgBtnNm' : '"문자"로 변경하기',
+      'recommend' : false
+    },
+    {
+      'billType': '2',
+      'value': '이메일',
+      'desc': '설정한 이메일로 편리하게 안내서를 받아 보는 서비스',
+      'chgBtnNm' : '"이메일"로 변경하기',
+      'recommend' : true
+    },
+    {
+      'billType': 'I',
+      'value': 'Bill Letter + 이메일',
+      'desc': '스마트폰의 Bill Letter 앱과 설정하신 이메일로 요금안내서를 받으실 수 있습니다.',
+      'chgBtnNm' : '"Bill Letter + 이메일"로 변경하기',
+      'recommend' : false
+    },
+    {
+      'billType': 'A',
+      'value': '문자 + 이메일',
+      'desc': '휴대폰 MMS 안내서와 이메일 안내서를 모두 받아 보는 서비스',
+      'chgBtnNm' : '"문자 + 이메일"로 변경하기',
+      'recommend' : false
+    },
+    {
+      'billType': 'Q',
+      'value': 'Bill Letter + 문자',
+      'desc': 'Bill Letter 안내서와 휴대폰 MMS 안내서를 함께 받아 보는 서비스',
+      'chgBtnNm' : '"Bill Letter + 문자"로 변경하기',
+      'recommend' : false
+    },
+    {
+      'billType': '1',
+      'value': '기타(우편)',
+      'desc': '설정한 주소로 종이 안내서를 받아 보는 서비스',
+      'chgBtnNm' : '"기타(우편)"로 변경하기',
+      'recommend' : false
+    }
+  ]
 };
 
 Tw.MSG_RECHARGE = {
@@ -197,18 +255,27 @@ Tw.MSG_PAYMENT = {
   POINT_A07: '포인트를 입력해 주세요',
   PAYMENT_A13: '보유하신 포인트보다 초과 입력하셨습니다.',
   PAYMENT_A14: '1,000 포인트 이상 입력해 주세요.',
+
   HISTORY_PROCESS_TYPE_APPLY: '신청',
   HISTORY_PROCESS_TYPE_DONE: '완료',
   HISTORY_PROCESS_TYPE_RESERVE_DONE: '예약완료',
   HISTORY_PROCESS_TYPE_CHANGE: '변경',
   HISTORY_PROCESS_TYPE_QUIT: '해지',
-  HISTORY_PROCESS_TYPE_CANCEL: '신청취소',
+  HISTORY_PROCESS_TYPE_CANCEL: '취소',
+  HISTORY_PROCESS_TYPE_RECEIVE_OK: '수납',
+  HISTORY_PROCESS_TYPE_RECEIVE_DONE: '납부완료',
+  HISTORY_PROCESS_TYPE_REQUEST_CANCEL: '신청취소',
   HISTORY_PROCESS_TYPE_WITHDRAWAL_BEFORE: '인출청구전',
   HISTORY_PROCESS_TYPE_WITHDRAWAL_ING: '인출청구중',
   HISTORY_PROCESS_TYPE_WITHDRAWAL_DONE: '정상납부',
+  HISTORY_PROCESS_TYPE_WITHDRAWAL_OK: '정상인출',
+  HISTORY_PROCESS_TYPE_REQUEST_DONE: '청구반영',
+  HISTORY_POINT_CODE_OCB: 'CPT',
+  HISTORY_POINT_CODE_TPOINT: 'TPT',
   HISTORY_POINT_TITLE_OCB: 'OK캐쉬백',
   HISTORY_POINT_TITLE_TPOINT: 'T포인트',
   HISTORY_POINT_TITLE_RAINBOW: '레인보우 포인트',
+  HISTORY_AUTO_CARD_KEYWORD: '카드',
   HISTORY_MENU_TITLE: '납부방식 선택',
   HISTORY_MENU: '전체납부내역,즉시납부내역,자동납부내역,자동납부 통합인출,포인트 납부예약,포인트 자동납부',
   HISTORY_A01: '환불신청 계좌가 등록되었습니다.',
@@ -222,7 +289,8 @@ Tw.MSG_PAYMENT = {
   HISTORY_A06: '세금계산서 이메일 전송이 완료되었습니다.\n이메일 주소 : ',
   HISTORY_A07: '세금계산서 팩스 전송이 완료되었습니다.\n팩스번호 : ',
   HISTORY_A08: '이메일 형식과 맞지 않습니다.\n이메일 주소를 다시 입력하여 주세요.\n예) asc@sktelecom.com',
-  HISTORY_A09: '과납내역을 선택해 주세요.'
+  HISTORY_A09: '과납내역을 선택해 주세요.',
+  HISTORY_A10: '가장 최근 납부 예약건부터 순차적으로 취소 가능합니다'
 };
 
 Tw.MSG_GIFT = {
@@ -269,6 +337,7 @@ Tw.MSG_AUTH = {
 };
 
 Tw.RECHARGE_TYPE = {
+  TOTAL: '전체',
   RECHARGE: '충전',
   CANCEL: '취소',
   REGULAR: '자동'
