@@ -63,19 +63,19 @@ Tw.MyTBillReissue.prototype = {
     // 기본적으로 설정된 값으로 표시
     var selectedItem = this.$guide.text();
     var type = this.$guide.attr('data-type');
-    if ( this.$type ) {
+    if ( this.$type.length > 0 ) {
       //유형이 설정이 된다면 선택된 아이템에서 가져와 표시
       selectedItem = this.$type.find('[aria-checked=true]').text();
       type = this.$type.find(':checked').attr('name');
     }
     var title = Tw.MSG_MYT.BILL_GUIDE_REISSUE_00;
     var contents = selectedItem + Tw.MSG_MYT.BILL_GUIDE_REISSUE_01;
-    if ( type && type === '2' ) {
+    if ( type && (type === '2' || type === '02') ) {
       // 이메일인 경우 문구 다름
       contents = Tw.MSG_MYT.BILL_GUIDE_REISSUE_02;
     }
     //TODO: 04 값은 임의의 값으로 재발행 요청시 기타인 경우에 대한 값 확인 후 변경
-    else if ( type && type === '1' ) {
+    else if ( type && (type === '1' || type === '01') ) {
       // 기타(우편)인 경우
       contents = Tw.MSG_MYT.BILL_GUIDE_REISSUE_04;
     }
@@ -100,24 +100,36 @@ Tw.MyTBillReissue.prototype = {
     // 재발행 데이터 설정
     // sReIssueType	재발행코드종류
     // sInvDt	재발행청구일자
-    var data = {
-      sReIssueType: this.$guide.attr('data-type') || '', // 재발행코드종류
-      sInvDt: this.$month.find(':checked').attr('name') || '', // 재발행청구일자
-      sReisueRsnCd: '01' //기본은 무선
-    };
-    // 청구서타입 유형이 2개인 경우
-    if ( this.$type.length > 0 ) {
-      data.sReIssueType = this.$type.find(':checked').attr('name');
-    }
-
+    var api = Tw.API_CMD.BFF_05_0048;
+    var data;
     // 유선인 경우 재발행 사유 추가
     if ( this.$reason.length > 0 ) {
-      data.sReisueRsnCd = this.$reason.find(':checked').attr('name');
+      api = Tw.API_CMD.BFF_05_0052;
+      data = {
+        reisuType: this.$guide.attr('data-type') || '', // 재발행코드종류
+        invYm: this.$month.find(':checked').attr('name') || '', // 재발행청구일자
+        reisuRsnCd: this.$reason.find(':checked').attr('name')
+      };
+      // 청구서타입 유형이 2개인 경우
+      if ( this.$type.length > 0 ) {
+        data.reisuType = this.$type.find(':checked').attr('name');
+      }
     }
-
+    else {
+      data = {
+        sReIssueType: this.$guide.attr('data-type') || '', // 재발행코드종류
+        sInvDt: this.$month.find(':checked').attr('name') || '', // 재발행청구일자
+        sReisueRsnCd: '01' //기본은 무선
+      };
+      // 청구서타입 유형이 2개인 경우
+      if ( this.$type.length > 0 ) {
+        data.sReIssueType = this.$type.find(':checked').attr('name');
+      }
+    }
     //재발행신청 API 호출
+    // TODO: 회선변경 API 호출 이후(유/무선 전환) 기능동작 확인필요! - 현재 MyT 에서 회선을 변경할 수 없음.
     this._apiService
-      .request(Tw.API_CMD.BFF_05_0048, data)
+      .request(api, data)
       .done($.proxy(this._onApiSuccess, this))
       .fail($.proxy(this._onApiError, this));
   },
@@ -126,7 +138,7 @@ Tw.MyTBillReissue.prototype = {
     Tw.Logger.info(params);
     // 팝업닫고 처리
     this._popupService.close();
-    if (params.code && params.code === 'ZORDE1206') {
+    if ( params.code && params.code === 'ZORDE1206' ) {
       // 기 발행 건인 경우에 대한 처리
       this._popupService.openAlert(Tw.MSG_MYT.BILL_GUIDE_REISSUE_00, Tw.MSG_MYT.BILL_GUIDE_REISSUE_03);
     }
