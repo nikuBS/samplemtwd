@@ -35,12 +35,14 @@
                                 </div>
                                 <dl class="pay-detail">
                                     <dt>청구년월</dt>
-                                    <dd><%= list[i].invYearMonth %></dd>
+                                    <dd class="invDt" data-value="<%= list[i].invDt %>"><%= list[i].invYearMonth %></dd>
                                 </dl>
                                 <dl class="pay-detail">
                                     <dt>사용요금</dt>
-                                    <dd><strong><%= list[i].invMoney %></strong><span class="unit">원</span></dd>
+                                    <dd class="invAmt" data-value="<%= list[i].invAmt %>"><strong><%= list[i].invMoney %></strong><span class="unit">원</span></dd>
                                 </dl>
+                                <dl class="svcMgmtNum none" data-value="<%= list[i].svcMgmtNum %>"></dl>
+                                <dl class="billAcntNum none" data-value="<%= list[i].billAcntNum %>"></dl>
                             </li>
                             <% } %>
                         </ul>
