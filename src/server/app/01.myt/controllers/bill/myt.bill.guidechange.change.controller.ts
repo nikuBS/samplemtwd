@@ -83,6 +83,8 @@ class MyTBillChange extends TwViewController {
       const _curBillGuide = this.getResult(_billTypesList);
       let tmpBillGuideTypes;
 
+      // _svcInfo['svcAttrCd'] = 'S1';
+
       switch ( _svcInfo.svcAttrCd ) {
         case 'M1': // 휴대폰
           tmpBillGuideTypes = cellPhoneBillGuideTypes;
@@ -103,15 +105,18 @@ class MyTBillChange extends TwViewController {
         billGuideType['kidsYn'] = _curBillGuide['kidsYn'];
         billGuideType['beforeBillType'] = _curBillGuide['curBillType'];
         billGuideType['svcInfo'] = _svcInfo;
+
+        // ---------------------------------
+        // billGuideType['kidsYn'] = 'Y';
         // billGuideType['svcInfo'].svcAttrCd = 'M1';
         // billGuideType['curBillType'] = 'P';
-        // billGuideType['isusimchk'] = 'Y';
+        billGuideType['isusimchk'] = 'Y';
         // billGuideType['curBillTypeNm'] = '티월드';
         return billGuideType;
       });
 
       this.renderView(res, 'bill/myt.bill.guidechange.change.html', {
-        svcInfo: _svcInfo,
+        // svcInfo: _svcInfo,
         curBillGuide: _curBillGuide,
         billGuideTypes: billGuideTypes,
         billGuideTypesData: JSON.stringify(billGuideTypes),
