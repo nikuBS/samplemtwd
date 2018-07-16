@@ -7,7 +7,7 @@
 Tw.PaymentHistoryCommon = function (rootEl) {
   this.$container = rootEl;
   this.$window = $(window);
-
+  this._popupService = Tw.Popup;
 
   this.URLS = ['/payment/history', '/payment/history/immediate', '/payment/history/auto',
     '/payment/history/auto/unitedwithdrawal', '/payment/history/point/reserve', '/payment/history/point/auto'];
@@ -17,17 +17,40 @@ Tw.PaymentHistoryCommon = function (rootEl) {
 
 Tw.PaymentHistoryCommon.prototype = {
   _init: function () {
-    var titles = Tw.MSG_PAYMENT.HISTORY_MENU.split(',');
+    this.titles = Tw.MSG_PAYMENT.HISTORY_MENU.split(',');
 
     this.paymentTypePopupValues = {
       title: Tw.MSG_PAYMENT.HISTORY_MENU_TITLE,
-      menus: _.map(this.URLS, function (url, key) {
+      menus: _.map(this.URLS, $.proxy(function (url, key) {
         return {
-          attr: '',
-          text: titles[key]
+          attr: 'class="hbs-menu-list"',
+          text: this.titles[key]
         };
-      })
+      }, this))
     };
+  },
+
+  parse_query_string: function(query) {
+    var vars = query.split('&');
+    var query_string = {};
+    for (var i = 0; i < vars.length; i++) {
+      var pair = vars[i].split('=');
+      var key = decodeURIComponent(pair[0]);
+      var value = decodeURIComponent(pair[1]);
+      if (typeof query_string[key] === 'undefined') {
+        query_string[key] = decodeURIComponent(value);
+      } else if (typeof query_string[key] === 'string') {
+        var arr = [query_string[key], decodeURIComponent(value)];
+        query_string[key] = arr;
+      } else {
+        query_string[key].push(decodeURIComponent(value));
+      }
+    }
+    return query_string;
+  },
+
+  _normalizeNumber: function (num) {
+    return num.replace(/(^0+)/, '');
   },
 
   setMenuChanger: function (target) {
@@ -36,18 +59,19 @@ Tw.PaymentHistoryCommon.prototype = {
 
   setPaymentTypePopupOpener: function ($container) {
     this.choiceButtons = $container.find('.popup-choice button');
-    this.choiceButtons.on('click', $.proxy(this.selectedTypeHandler, this));
+    $container.on('click', '.hbs-menu-list', $.proxy(this.selectedTypeHandler, this));
   },
 
   selectedTypeHandler: function (e) {
-    var index = $(this.choiceButtons).index(e.target);
-
-    Tw.Popup.close();
+    var index = $(this.choiceButtons).index($(e.target));
+    this._popupService.close();
     this._goLoad(this.URLS[index]);
   },
 
   openPaymentTypePopup: function () {
-    Tw.Popup.openChoice(this.paymentTypePopupValues.title, this.paymentTypePopupValues.menus, false, $.proxy(this.setPaymentTypePopupOpener, this));
+    this._popupService.openChoice(
+        this.paymentTypePopupValues.title, this.paymentTypePopupValues.menus,
+        '', $.proxy(this.setPaymentTypePopupOpener, this));
   },
 
   _goLoad: function (url) {
@@ -75,11 +99,11 @@ Tw.PaymentHistoryCommon.prototype.listWithTemplate.prototype = {
     this.listTemplateKeyword = keyword.list;
     this.restButtonTemplateKeyword = keyword.restButton;
     this.viewMoreSelector = viewMoreSelector;
-    this.listWrapperSelector = listWrapperSelector;
 
     this.perPage = perPage;
     this.currentPage = 0;
     this.callBack = callBack;
+
     /*
     data
     wrapper : 리스트 삽입 wrapper
@@ -136,27 +160,6 @@ Tw.PaymentHistoryCommon.prototype.listWithTemplate.prototype = {
     }
   },
 
-  // _buildListUI: function() {
-  //   this.updateNextPageData();
-  //   if (this.data.result.length > this.perPage) {
-  //
-  //     this.data[this.restButtonTemplateKeyword] = this.getRestCounter();
-  //     this.wrapper.on('click', this.viewMoreSelector, $.proxy(this.viewMoreHandler, this));
-  //   } else {
-  //     this.data.initialMoreData = false;
-  //   }
-  //
-  //   Handlebars.registerPartial('list', this.listTemplate(this.data));
-  //   this.wrapper.append(this.listWrapperTemplate(this.data));
-  //   if(this.data.initialMoreData) {
-  //     $(this.listTemplate(this.data)).insertBefore(this.wrapper.find(this.viewMoreSelector).parent());
-  //   } else {
-  //     this.wrapper.find(this.listWrapperSelector).append(this.listTemplate(this.data));
-  //   }
-  //
-  //   if (this.callBack) this.callBack();
-  // },
-
   _buildListUI: function () {
     this.updateNextPageData();
     Handlebars.registerPartial('list', this.listTemplate(this.data));
@@ -164,11 +167,10 @@ Tw.PaymentHistoryCommon.prototype.listWithTemplate.prototype = {
     if (this.data.result.length > this.perPage) {
       this.data.initialMoreData = true;
       this.data[this.restButtonTemplateKeyword] = this.getRestCounter();
-      this.wrapper.on('click', this.viewMoreSelector, $.proxy(this.viewMoreHandler, this));
+      this.wrapper.off().on('click', this.viewMoreSelector, $.proxy(this.viewMoreHandler, this));
     } else {
       this.data.initialMoreData = false;
     }
-    console.log('[payment/history/common]', this.data);
 
     this.wrapper.empty().append(this.listWrapperTemplate(this.data));
 
@@ -183,6 +185,7 @@ Tw.PaymentHistoryCommon.prototype.listWithTemplate.prototype = {
     if (this.data.result.length <= this.perPage * (this.currentPage + 1)) {
       target.hide();
     }
+
     if (this.callBack) this.callBack();
 
     this.updateRestCounter(target);
