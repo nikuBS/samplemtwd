@@ -26,7 +26,7 @@ export class SvcInfoModel implements ISvcInfo {
     this.svcNum = object.svcNum;
     this.svcGr = object.svcGr;
     this.svcAttrCd = object.svcAttrCd;
-    this.repSvcYn = object.respSvcYn;
+    this.repSvcYn = object.repSvcYn;
     this.nickNm = object.nickNm;
     this.addr = object.addr;
     this.svcCnt = object.svcCnt;
