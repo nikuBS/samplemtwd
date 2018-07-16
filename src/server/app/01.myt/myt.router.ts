@@ -20,6 +20,7 @@ import MytBillGuidechange from './controllers/bill/myt.bill.guidechange.controll
 import MyTBillGuidechangeChange from './controllers/bill/myt.bill.guidechange.change.controller';
 import MyTBillGuideChangeComplete from './controllers/bill/myt.bill.guidechange.change-complete.controller';
 import MyTBillGuidechangeUpdate from './controllers/bill/myt.bill.guidechange.update.controller';
+import MyTBillGuidechangeUpdateComplete from './controllers/bill/myt.bill.guidechange.update-complete.controller';
 
 class MytRouter extends TwRouter {
   constructor() {
@@ -45,6 +46,7 @@ class MytRouter extends TwRouter {
     this.controllers.push({ url: '/bill/guidechange/change', controller: new MyTBillGuidechangeChange() });
     this.controllers.push({ url: '/bill/guidechange/change-complete', controller: new MyTBillGuideChangeComplete() });
     this.controllers.push({ url: '/bill/guidechange/update', controller: new MyTBillGuidechangeUpdate() });
+    this.controllers.push({ url: '/bill/guidechange/update-complete', controller: new MyTBillGuidechangeUpdateComplete() });
   }
 }
 

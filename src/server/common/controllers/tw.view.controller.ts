@@ -39,15 +39,16 @@ abstract class TwViewController {
 
     this.loginService.setClientSession(req.session);
 
-    if ( !this.existId(tokenId, userId) ) {
-      if ( URL[path].login ) {
-        this.goSessionLogin(req, res, next);
+    if ( URL[path].login ) {
+      if ( this.existId(tokenId, userId) ) {
+        this.login(req, res, next, tokenId, userId);
       } else {
-        this.render(req, res, next);
+        this.goSessionLogin(req, res, next);
       }
     } else {
-      this.login(req, res, next, tokenId, userId);
+      this.render(req, res, next);
     }
+
   }
 
   private login(req, res, next, tokenId, userId) {
@@ -72,7 +73,7 @@ abstract class TwViewController {
     if ( this.checkLogin(userId) ) {
       this.render(req, res, next, this._loginService.getSvcInfo());
     } else {
-      this._apiService.request(API_CMD.BFF_03_0001, { userId }).subscribe((resp) => {
+      this._apiService.request(API_CMD.BFF_03_0001, { id: userId }).subscribe((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
           this.loginService.setUserId(userId);
           this.render(req, res, next, new SvcInfoModel(resp.result));
@@ -86,7 +87,7 @@ abstract class TwViewController {
   private tidLogin(req, res, next, tokenId) {
     const params = {
       token: tokenId,
-      state: ''
+      state: req.query.state
     };
     this._apiService.request(API_CMD.BFF_03_0008, params).subscribe((resp) => {
       res.send(resp);

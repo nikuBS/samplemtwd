@@ -77,6 +77,11 @@ skt_landing.widgets = {
     }
   },
   widget_step: function () {
+    $('.step-list li').each(function(){
+      if(!$(this).hasClass('on')){
+        $(this).attr('aria-hidden', true);
+      }
+    });
   },
   widget_radio: function (ta) {
     var input = ta ? $(ta).find('.radiobox :radio') : $('.radiobox :radio');
@@ -166,6 +171,9 @@ skt_landing.widgets = {
         slidesToScroll: 3,
         centerMode: false,
         focusOnSelect: false,
+		customPaging: function(slider, i) {
+			return $('<span />').text(i + 1);
+		},
       });
       var $slick = _this.slick('getSlick');
       var $slides = $slick.$slides;

@@ -3,6 +3,7 @@ Tw.PopupService = function () {
   this._prevHashList = [];
   this._confirmCallback = null;
   this._openCallback = null;
+  this._closeCallback = null;
   this._hashService = Tw.Hash;
 
   this._popupObj = {};
@@ -21,7 +22,6 @@ Tw.PopupService.prototype = {
       this._prevHashList.pop();
       Tw.Logger.info('[Popup Close]');
       this._popupClose();
-      this._prevHash = undefined;
     }
   },
   _onOpenPopup: function () {
@@ -34,8 +34,13 @@ Tw.PopupService.prototype = {
     }
   },
   _popupClose: function () {
+    if ( !Tw.FormatHelper.isEmpty(this._closeCallback) ) {
+      this._closeCallback();
+      this._closeCallback = null;
+    }
     this._confirmCallback = null;
     this._openCallback = null;
+
     skt_landing.action.popup.close();
   },
   _addHash: function () {
@@ -67,6 +72,11 @@ Tw.PopupService.prototype = {
       this._openCallback = callback;
     }
   },
+  _setCloseCallback: function (callback) {
+    if ( !Tw.FormatHelper.isEmpty(callback) ) {
+      this._closeCallback = callback;
+    }
+  },
   _sendConfirmCallback: function () {
     this._confirmCallback();
   },
@@ -76,12 +86,13 @@ Tw.PopupService.prototype = {
   _open: function (option) {
     skt_landing.action.popup.open(option, $.proxy(this._onOpenPopup, this));
   },
-  open: function (option, openCallback) {
+  open: function (option, openCallback, closeCallback) {
     this._setOpenCallback(openCallback);
+    this._setCloseCallback(closeCallback);
     this._addHash();
     this._open(option);
   },
-  openAlert: function (message, title, confirmCallback) {
+  openAlert: function (message, title, confirmCallback, closeCallback) {
     var option = {
       title: title || Tw.POPUP_TITLE.NOTIFY,
       close_bt: true,
@@ -93,10 +104,11 @@ Tw.PopupService.prototype = {
       }]
     };
     this._setConfirmCallback(confirmCallback);
+    this._setCloseCallback(closeCallback);
     this._addHash();
     this._open(option);
   },
-  openConfirm: function (title, message, contents, openCallback, confirmCallback) {
+  openConfirm: function (title, message, contents, openCallback, confirmCallback, closeCallback) {
     var option = {
       title: title,
       close_bt: true,
@@ -113,10 +125,11 @@ Tw.PopupService.prototype = {
     };
     this._setOpenCallback(openCallback);
     this._setConfirmCallback(confirmCallback);
+    this._setCloseCallback(closeCallback);
     this._addHash();
     this._open(option);
   },
-  openChoice: function (title, list, type, openCallback) {
+  openChoice: function (title, list, type, openCallback, closeCallback) {
     var option = {
       hbs: 'choice',
       title: title,
@@ -125,6 +138,7 @@ Tw.PopupService.prototype = {
       list: list
     };
     this._setOpenCallback(openCallback);
+    this._setCloseCallback(closeCallback);
     this._addHash();
     this._open(option);
   },
