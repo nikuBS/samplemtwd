@@ -39,8 +39,8 @@ export const API_CMD = {
   BFF_03_0011: { path: '/core-auth/v1/nationalities', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_03_0012: { path: '/user/biz-auth-sessions', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_03_0013: { path: '/user/biz-services', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
-  BFF_03_0014: { path: '/core-auth/v1/marketing-offer-subscriptions/args-0', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
-  BFF_03_0015: { path: '/core-auth/v1/marketing-offer-subscriptions/args-0', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: false },
+  BFF_03_0014: { path: '/core-auth/v1/marketing-offer-subscriptions/args-0', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_03_0015: { path: '/core-auth/v1/marketing-offer-subscriptions/args-0', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
   // MYT
   BFF_05_0001: { path: '/my-t/balances', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0002: { path: '/my-t/balance-add-ons', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
@@ -76,6 +76,8 @@ export const API_CMD = {
   BFF_05_0025: { path: '/core-bill/v1/bill-types-list/', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0035: { path: '/core-bill/v1/hotbill/fee/hotbill-request', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0049: { path: '/core-bill/v1/integrated-services', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_05_0051: { path: 'core-bill/v1/wire-bill-reissue', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_05_0052: { path: 'core-bill/v1/wire-bill-reissue', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   // RECHARGE
   BFF_06_0001: { path: '/core-recharge/v1/refill-coupons', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_06_0002: { path: '/core-recharge/v1/refill-usages', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
