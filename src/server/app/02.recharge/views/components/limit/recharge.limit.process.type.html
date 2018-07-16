@@ -46,12 +46,10 @@
                         <div class="widget">
                             <div class="widget-box tube">
                                 <ul class="tube-list two" role="radiogroup">
-                                    <% const blockTmth = limitData.dataLimitedTmthYn === "N" || limitData.currentTopUpLimit === "0" %>
-                                    <% const blockAuto = limitData.dataLimitedYn === "N" %>
-                                    <li role="radio" aria-checked="true" <%= blockTmth? '': 'class=checked'%>>
-                                        <input type="radio" name="senddata" title="당월 충전" <%= blockTmth? 'disabled' : 'checked' %>>당월 충전</li>
-                                    <li role="radio" aria-checked="false" <%= blockTmth? 'class=checked': ''%>>
-                                        <input type="radio" name="senddata" title="매월 자동 충전" data-type="regular" <%= blockAuto ? 'disabled' : '' %> <%= blockTmth ? 'checked' : '' %>>매월 자동 충전</li>
+                                    <li role="radio" aria-checked="true" id="select-type-tmth">
+                                        <input type="radio" name="senddata" title="당월 충전">당월 충전</li>
+                                    <li role="radio" aria-checked="false" id="select-type-regular">
+                                        <input type="radio" name="senddata" title="매월 자동 충전" data-type="regular">매월 자동 충전</li>
                                 </ul>
                             </div>
                         </div>
