@@ -31,6 +31,7 @@ import billguide_BFF_05_00037 from '../../../../mock/server/myt.bill.billguide.B
 
 class MyTBillBillguide extends TwViewController {
 
+  private reqQuery:any;
   private _svcInfo:any = {
     custNm: '',//고객명
     svcCd: '',//서비스구분코드
@@ -113,6 +114,13 @@ class MyTBillBillguide extends TwViewController {
 
   //실행 : 데이터 가져오기
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+    this.reqQuery = req.query;
+    this.logger.info(this, '[ reqQuery ] : ', this.reqQuery);
+
+    if (this.reqQuery.invDt) {//조회 값이 존재할때는 청구요금 조회할때 값을 전달한다. | BFF_05_0036
+      this.logger.info(this, '[ 청구요금조회 invDt ] : ', this.reqQuery.invDt);
+    }
+
     let thisMain = this;
     this._svcInfo = svcInfo;
 
@@ -179,8 +187,11 @@ class MyTBillBillguide extends TwViewController {
     // });
   }
 
+
   //컨트롤러 초기화 : 가져온 데이터를 활용해서 개발진행
   private controllerInit(res) {
+    this.testQuerySet();//------------------------------------------[페이지 진입시 강제 셋팅]
+
     this.logger.info(this, '[할인금액] : ', this._commDataInfo.discount);
     this.logger.info(this, '[노출조건] : ', this._showConditionInfo);
     /*
@@ -374,6 +385,56 @@ class MyTBillBillguide extends TwViewController {
   //-------------------------------------------------------------[클리이어튼로 전송]
   public renderView(res: Response, view: string, data: any): any {
     res.render(view, data);
+  }
+
+  private testQuerySet() {
+    if (this.reqQuery.type) {
+      this.logger.info(this, '[reqQuery.type true] : ', this.reqQuery.type);
+      switch ( this.reqQuery.type ) {
+        case 'a0' :
+          this.logger.info(this, '[대표청구회선-대표] : ');
+          this._billpayInfo.coClCd = 'T';
+          this._billpayInfo.paidAmtMonthSvcCnt = 3;
+          this._billpayInfo.repSvcYn = 'Y';
+          break;
+        case 'a1' :
+          this.logger.info(this, '[대표청구회선-일반회선] : ');
+          this._billpayInfo.coClCd = 'T';
+          this._billpayInfo.paidAmtMonthSvcCnt = 3;
+          this._billpayInfo.repSvcYn = 'N';
+          break;
+        case 'b0' :
+          this.logger.info(this, '[개별청구-휴대폰] : ');
+          this._billpayInfo.coClCd = 'T';
+          this._billpayInfo.paidAmtMonthSvcCnt = 1;
+          this._billpayInfo.repSvcYn = 'Y';
+          this._circuitInfo.svcAttrCd = 'M1';
+          break;
+        case 'b1' :
+          this.logger.info(this, '[개별청구-PPS] : ');
+          this._billpayInfo.coClCd = 'T';
+          this._billpayInfo.paidAmtMonthSvcCnt = 1;
+          this._billpayInfo.repSvcYn = 'Y';
+          this._circuitInfo.svcAttrCd = 'M2';
+          break;
+        case 'b2' :
+          this.logger.info(this, '[개별청구-기업솔루션] : ');
+          this._billpayInfo.coClCd = 'T';
+          this._billpayInfo.paidAmtMonthSvcCnt = 1;
+          this._billpayInfo.repSvcYn = 'Y';
+          this._circuitInfo.svcAttrCd = 'O1';
+          break;
+        case 'c0' :
+          this.logger.info(this, '[sk브로드밴드 가입회선] : ');
+          this._billpayInfo.coClCd = 'B';
+          this._billpayInfo.paidAmtMonthSvcCnt = 1;
+          this._billpayInfo.repSvcYn = 'Y';
+          break;
+      }
+    }
+    else {
+      this.logger.info(this, '[reqQuery.type false] : ', this.reqQuery.type);
+    }
   }
 
 
