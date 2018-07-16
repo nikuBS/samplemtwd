@@ -6,32 +6,7 @@
 <div class="bill-guide-component" cur-bill-type="<%= curBillGuide.curBillType %>" cur-bill-type-nm="<%= curBillGuide.curBillTypeNm %>" cur-bill-type-component="<%= curBillGuide.component %>">
     <hr class="cont-sp type1" aria-hidden="true"/>
     <div class="cont-box">
-        <% if (curBillGuide.svcInfo.svcAttrCd === 'M1') { %>
-            <% if (curBillGuide.kidsYn === 'Y') { %>
-                <div class="change-plan">
-                    <h3 class="tit-type spc2">요금안내서 정보설정</h3>
-                    <dl>
-                        <dt>법정대리인에게 함께 알려드릴까요?(선택사항)</dt>
-                        <dd>
-                            <span class="inputbox">
-                                <span class="input">
-                                    <input type="text" placeholder="휴대폰번호입력 (숫자만 입력)" title="휴대폰번호 입력 (숫자만 입력)" aria-describedby="aria-rwdesc1" class="input-ccur-noti-svc-num" maxlength="11" onInput="return Tw.InputHelper.inputNumberOnly(this);" value="<%= curBillGuide.ccurNotiSvcNum%>" form-element="input" form-element-key="ccurNotiSvcNum">
-                                    <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
-                                </span>
-                                <span id="aria-rwdesc1" class="guide-txt">미성년고객의 요금안내서는 법정대리인 휴대폰번호로 동시 안내됩니다.</span>
-                            </span>
-                        </dd>
-                    </dl>
-                </div>
-            <% } else { %>
-                <div class="payment-select">
-                    <div class="contents-empty">
-                        <span class="ico"></span>
-                        <p class="desc">&quot;문자 요금안내서&quot;는<br />입력하실 정보가 없습니다.</p>
-                    </div>
-                </div>
-            <% } %>
-        <% } else if (curBillGuide.svcInfo.svcAttrCd === 'S1' || curBillGuide.svcInfo.svcAttrCd === 'S2' || curBillGuide.svcInfo.svcAttrCd === 'S3') { %>
+        <% if (curBillGuide.svcInfo.svcAttrCd === 'S1' || curBillGuide.svcInfo.svcAttrCd === 'S2' || curBillGuide.svcInfo.svcAttrCd === 'S3') { %>
         <div class="change-plan">
             <dl>
                 <dt>휴대폰번호를 입력해주세요</dt>
@@ -62,6 +37,31 @@
                 </dd>
             </dl>
         </div>
+        <% } else { %>
+            <% if (curBillGuide.svcInfo.svcAttrCd === 'M1' && curBillGuide.kidsYn === 'Y') { %>
+                <div class="change-plan">
+                    <h3 class="tit-type spc2">요금안내서 정보설정</h3>
+                    <dl>
+                        <dt>법정대리인에게 함께 알려드릴까요?(선택사항)</dt>
+                        <dd>
+                            <span class="inputbox">
+                                <span class="input">
+                                    <input type="text" placeholder="휴대폰번호입력 (숫자만 입력)" title="휴대폰번호 입력 (숫자만 입력)" aria-describedby="aria-rwdesc1" class="input-ccur-noti-svc-num" maxlength="11" onInput="return Tw.InputHelper.inputNumberOnly(this);" value="<%= curBillGuide.ccurNotiSvcNum%>" form-element="input" form-element-key="ccurNotiSvcNum">
+                                    <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
+                                </span>
+                                <span id="aria-rwdesc1" class="guide-txt">미성년고객의 요금안내서는 법정대리인 휴대폰번호로 동시 안내됩니다.</span>
+                            </span>
+                        </dd>
+                    </dl>
+                </div>
+            <% } else { %>
+                <div class="payment-select">
+                    <div class="contents-empty">
+                        <span class="ico"></span>
+                        <p class="desc">&quot;문자 요금안내서&quot;는<br />입력하실 정보가 없습니다.</p>
+                    </div>
+                </div>
+            <% } %>
         <% } %>
         <div class="inner">
             <div class="contents-btn">
