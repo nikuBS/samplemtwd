@@ -22,7 +22,7 @@ Tw.MytUsageChange.prototype = {
     var $elLine    = $(e.currentTarget);
     var svcMgmtNum = $elLine.data('svcmgmtnum');
 
-    this._apiService.request(Tw.API_CMD.BFF_03_0004_C, {}, { 'svcMgmtNum': svcMgmtNum })
+    this._apiService.request(Tw.API_CMD.BFF_01_0004, {}, { svcMgmtNum: svcMgmtNum })
       .done(function () {
         location.href = '/myt';
       });
