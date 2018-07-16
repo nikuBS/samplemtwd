@@ -1,76 +1,57 @@
 <%#
-* FileName: myt.bill.billguide.combineRepresentPage.html
+* FileName: myt.bill.billguide.subChildBill.html
 * Author: 김명환 (skt.P130714@partner.sk.com)
-* Date: 2018.07.08
-* Info: 통합청구(일반)
+* Date: 2018.07.16
+* Info: 자녀폰 사용요금 조회
 %>
-<% include ../../components/start.component.html %>
-<!-- #skip_navigation -->
-<div id="skipNav" class="skip_navi">
-    <ul>
-        <li><a href="#gnb_area">메뉴 바로가기</a></li>
-        <li><a href="#content">본문 바로가기</a></li>
-        <li><a href="#footer">푸터 바로가기</a></li>
-    </ul>
-</div>
-<!--// #skip_navigation -->
-<div id="wrapFdev" class="wrap">
+
+<div id="childBill" style="display:none">
     <!-- #header -->
-    <div id="header" class="header-wrap">
+    <div  class="header-wrap">
         <div class="header">
             <div class="header-ti">
-                <h1>요금안내서</h1>
-                <a href="#allmenu" class="all-menu"><span class="blind">전체메뉴보기</span></a>
+                <h1>자녀폰 실시간 사용요금</h1>
+                <!--<button class="depth-view" role="button" aria-pressed="false"><span class="blind">메뉴구조보기</span></button>-->
             </div>
-            <a href="#pstep" class="prev-step common-back"><span class="blind">이전으로</span></a>
-            <a href="#search" class="search-content"><span class="blind">검색하기</span></a>
+            <button class="prev-step"><span class="blind">이전으로</span></button>
+            <!--<button class="search-content"><span class="blind">검색하기</span></button>-->
         </div>
     </div>
     <!--// #header -->
     <!-- #contents -->
-    <div id="contents" class="container-wrap">
+    <div  class="container-wrap">
         <h2 class="blind">내용</h2>
         <div class="container">
 
             <div class="cont-box">
-                <div class="payment-info">
-                    <h3 class="blind">대표청구</h3>
-                    <ul>
-                        <li>
-                            <span class="info-num">010-46**-10**</span>
-                        </li>
-                        <li>
-                            <span class="info-type">휴대폰</span>
-                            <span class="info-name"><span class="blind">별명</span>귀여운첫째아들</span>
-                        </li>
-                    </ul>
-                    <span class="info-btn"><a href="" class="btn-choice" role="button">변경</a></span>
+                <div class="payment-info family">
+                    <p class="tit"><strong>자녀</strong>폰 사용요금입니다.</p>
+                    <div class="payment-info-phone">
+                        <!-- 자녀 회선이 1개인 경우 -->
+                        <span class="child-phonenum">010-46**-10*</span>
+                        <!--// 자녀 회선이 1개인 경우 -->
+
+                        <!-- 자녀 회선이 2개 이상인 경우 -->
+                        <!-- <button class="bt-dropdown small" data-select="010-46**-10**,010-46**-10**,010-46**-10**" data-title="전화번호 선택" title="전화번호 선택">010-46**-10**</button> -->
+                        <!--// 자녀 회선이 2개 이상인 경우 -->
+
+                        <span class="device-info">GALAXY S7 32G</span>
+                    </div>
                 </div>
             </div>
 
-            <%#자녀폰 사용요금 컴포넌트  %>
-            <% if ( circuitChildInfo.length > 0) { %>
-            <% include ../../components/bill/myt.bill.billguide.children.html %>
-            <% } %>
-
-            <hr class="cont-sp type1" aria-hidden="true"/>
-
+            <hr class="cont-sp type1" aria-hidden="true" />
             <div class="cont-box">
                 <div class="payment-inquiry">
-                    <a class="bt-link-tx" href=""><%=baseFeePlansInfo.prodName %><span class="ico"></span></a>
-                    <button class="bt-dropdown big" title="조회기간 선택" data-target="totPaySelectBtn"><%=commDataInfo.selClaimDtBtn %><span class="ico"></span></button>
-                    <div class="payment-info family">
-                        <p class="tit"><span class="num">010-0000-0000</span>에<br /><span class="num"><strong>통합청구</strong></span>되었습니다.</p>
-                        <p class="num term"><%=commDataInfo.selStaDt %> ~ <%=commDataInfo.selEndDt %></p>
+                    <a class="bt-link-tx" href="">Band 데이터 6.5G<span class="ico"></span></a>
+                    <button class="bt-dropdown big" title="월별 요금안내서 선택">2018년 6월<span class="ico"></span></button><!-- 2018-07-12 접근성 수정 -->
+                    <div class="payment-all">
+                        <h3 class="blind">사용 요금</h3>
+                        <span><em>201,020</em> 원</span>
+                        <p class="term">2018.06.01~ 2018.06.06</p>
                     </div>
                     <div class="txt-discount">
-                        <% if( commDataInfo.discount === '0' ) {  %>
-                        <!-- 사용요금 + 요금할인내역 0원일때 -->
-                        <p><span class="num"><%=commDataInfo.selClaimDtNum %></span>월 사용 요금은 <span class="num"><%=billpayInfo.useAmtTot %></span>원입니다.</p>
-                        <% } else { %>
-                        <!-- 사용요금 + 요금할인내역 -->
-                        <p><span class="num"><%=commDataInfo.selClaimDtNum %></span>월 사용 요금은 <span class="num"><%=billpayInfo.useAmtTot %></span>원이고<br /><span class="num"><%=commDataInfo.discount %></span>원을 할인 받으셨습니다.</p>
-                        <% } %>
+                        <p><span class="num">5</span>월 사용 요금은 <span class="num">370,000</span>원이고<br /><span class="num">20,000</span>원을 할인 받으셨습니다.</p>
                     </div>
                 </div>
             </div>
@@ -151,17 +132,17 @@
                                             </li>
                                             <li>
                                                 <dl class="pdt-wrap">
-                                                    <dt class="pdt-tit" role="note" aria-labelledby="footnote-01">부가가치세(세금)<span class="ico-foot-2"></span></dt><!-- 주석 달린 텍스트 aria-labelledby, role 속성 추가 -->
+                                                    <dt class="pdt-tit" role="note" aria-labelledby="footnote-01">부가가치세(세금)<span class="badge badge-other"><span class="blind">타사</span></span></dt><!-- 2018-07-11 아이콘 변경 --><!-- 주석 달린 텍스트 aria-labelledby, role 속성 추가 -->
                                                     <dd class="pdt-price"><span class="num">1,760</span>원</dd>
                                                 </dl>
                                                 <ul class="payment-detail-depth2">
                                                     <li>
                                                         <dl class="pdt-wrap">
-                                                            <dt class="pdt-tit" role="note" aria-labelledby="aria-footnote-02">부가세총액<span class="ico-foot-2"></span></dt>
+                                                            <dt class="pdt-tit" role="note" aria-labelledby="footnote-02">부가세총액<span class="ico-foot-2"></span></dt>
                                                             <dd class="pdt-price"><span class="num">3,760</span>원</dd>
                                                         </dl>
                                                         <dl class="pdt-wrap">
-                                                            <dt class="pdt-tit" role="note" aria-labelledby="aria-footnote-02">할인부가세<span class="ico-foot-2"></span></dt>
+                                                            <dt class="pdt-tit" role="note" aria-labelledby="footnote-02">할인부가세<span class="ico-foot-2"></span></dt>
                                                             <dd class="pdt-price discount"><span class="num">-13,760</span>원</dd>
                                                         </dl>
                                                     </li>
@@ -170,8 +151,8 @@
                                         </ul>
                                         <div class="footnote-txt">
                                             <ul>
-                                                <li id="aria-footnote-01"><span class="ico-foot-2"></span>부가가치세 제외 대상 표시</li><!-- 상단 텍스트 aria-labelledby 와 id 속성값을 동일하게 처리해야 함 -->
-                                                <li id="aria-footnote-02"><span class="ico-foot-1"></span>당사에서 청구 대행하는 타사 요금</li>
+                                                <li id="footnote-01"><span class="ico-foot-2"></span>부가가치세 제외 대상 표시</li><!-- 상단 텍스트 aria-labelledby 와 id 속성값을 동일하게 처리해야 함 -->
+                                                <li id="footnote-02"><span class="badge badge-other"><span class="blind">타사</span></span>당사에서 청구 대행하는 타사 요금</li><!-- 2018-07-11 아이콘 변경 -->
                                             </ul>
                                         </div>
                                     </div>
@@ -209,7 +190,7 @@
                                             </li>
                                             <li>
                                                 <dl class="pdt-wrap">
-                                                    <dt class="pdt-tit" role="note" aria-labelledby="footnote-03">콘텐츠이용료<span class="ico-foot-1"></span></dt>
+                                                    <dt class="pdt-tit" role="note" aria-labelledby="footnote-03">콘텐츠이용료<span class="badge badge-other"><span class="blind">타사</span></span></dt><!-- 2018-07-11 아이콘 변경 -->
                                                     <dd class="pdt-price"><span class="num">1,760</span>원</dd>
                                                 </dl>
                                                 <ul class="payment-detail-depth2">
@@ -224,13 +205,13 @@
                                             </li>
                                             <li>
                                                 <dl class="pdt-wrap">
-                                                    <dt class="pdt-tit" role="note" aria-labelledby="aria-footnote-03">소액결제<span class="ico-foot-1"></span></dt>
+                                                    <dt class="pdt-tit" role="note" aria-labelledby="footnote-03">소액결제<span class="badge badge-other"><span class="blind">타사</span></span></dt><!-- 2018-07-11 아이콘 변경 -->
                                                     <dd class="pdt-price"><span class="num">1,760</span>원</dd>
                                                 </dl>
                                                 <ul class="payment-detail-depth2">
                                                     <li>
                                                         <dl class="pdt-wrap">
-                                                            <dt class="pdt-tit" role="note" aria-labelledby="aria-footnote-04">소액결제다날<span class="ico-foot-2"></span></dt>
+                                                            <dt class="pdt-tit" role="note" aria-labelledby="footnote-04">소액결제다날<span class="ico-foot-2"></span></dt>
                                                             <dd class="pdt-price"><span class="num">9,900</span>원</dd>
                                                         </dl>
                                                         <div class="btn-wrap"><a class="bt-link-tx" href="">자세히 보기 (본인인증 필요)<span class="ico"></span></a></div>
@@ -240,8 +221,8 @@
                                         </ul>
                                         <div class="footnote-txt">
                                             <ul>
-                                                <li id="aria-footnote-03"><span class="ico-foot-2"></span>부가가치세 제외 대상 표시</li>
-                                                <li id="aria-footnote-04"><span class="ico-foot-1"></span>당사에서 청구 대행하는 타사 요금</li>
+                                                <li id="footnote-03"><span class="ico-foot-2"></span>부가가치세 제외 대상 표시</li><!-- 상단 텍스트 aria-labelledby 와 id 속성값을 동일하게 처리해야 함 -->
+                                                <li id="footnote-04"><span class="badge badge-other"><span class="blind">타사</span></span>당사에서 청구 대행하는 타사 요금</li><!-- 2018-07-11 아이콘 변경 -->
                                             </ul>
                                         </div>
                                     </div>
@@ -259,17 +240,17 @@
                                         <ul class="payment-detail-depth1">
                                             <li>
                                                 <dl class="pdt-wrap">
-                                                    <dt class="pdt-tit" role="note" aria-labelledby="footnote-05">단말기할부금<span class="ico-foot-1"></span></dt>
+                                                    <dt class="pdt-tit" role="note" aria-labelledby="footnote-05">단말기할부금<span class="badge badge-other"><span class="blind">타사</span></span></dt><!-- 2018-07-11 아이콘 변경 -->
                                                     <dd class="pdt-price"><span class="num">14,610</span>원</dd>
                                                 </dl>
                                                 <ul class="payment-detail-depth2">
                                                     <li>
                                                         <dl class="pdt-wrap">
-                                                            <dt class="pdt-tit" role="note" aria-labelledby="aria-footnote-06">단말기할부원금<span class="ico-foot-2"></span></dt>
+                                                            <dt class="pdt-tit" role="note" aria-labelledby="footnote-06">단말기할부원금<span class="ico-foot-2"></span></dt>
                                                             <dd class="pdt-price"><span class="num">14,050</span>원</dd>
                                                         </dl>
                                                         <dl class="pdt-wrap">
-                                                            <dt class="pdt-tit" role="note" aria-labelledby="aria-footnote-06">단말기할부이자<span class="ico-foot-2"></span></dt>
+                                                            <dt class="pdt-tit" role="note" aria-labelledby="footnote-06">단말기할부이자<span class="ico-foot-2"></span></dt>
                                                             <dd class="pdt-price"><span class="num">532</span>원</dd>
                                                         </dl>
                                                     </li>
@@ -278,8 +259,8 @@
                                         </ul>
                                         <div class="footnote-txt">
                                             <ul>
-                                                <li id="aria-footnote-05"><span class="ico-foot-2"></span>부가가치세 제외 대상 표시</li>
-                                                <li id="aria-footnote-06"><span class="ico-foot-1"></span>당사에서 청구 대행하는 타사 요금</li>
+                                                <li id="footnote-05"><span class="badge badge-other"><span class="blind">타사</span></span>부가가치세 제외 대상 표시</li><!-- 2018-07-11 아이콘 변경 --><!-- 상단 텍스트 aria-labelledby 와 id 속성값을 동일하게 처리해야 함 -->
+                                                <li id="footnote-06"><span class="ico-foot-2"></span>당사에서 청구 대행하는 타사 요금</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -297,26 +278,25 @@
                                         <ul class="payment-detail-depth1">
                                             <li>
                                                 <dl class="pdt-wrap">
-                                                    <dt class="pdt-tit" role="note" aria-labelledby="aria-footnote-07">미리납부하신금액<span class="ico-foot-2"></span></dt>
+                                                    <dt class="pdt-tit" role="note" aria-labelledby="footnote-07">미리납부하신금액<span class="badge badge-other"><span class="blind">타사</span></span></dt><!-- 2018-07-11 아이콘 변경 -->
                                                     <dd class="pdt-price discount"><span class="num">-2,570</span>원</dd>
                                                 </dl>
                                             </li>
                                             <!-- <li>
                                                 <dl class="pdt-wrap">
-                                                    <dt class="pdt-tit" role="note" aria-labelledby="aria-footnote-08">미리납부하신금액<span class="ico-foot-2"></span></dt>
+                                                    <dt class="pdt-tit" role="note" aria-labelledby="footnote-08">미리납부하신금액<span class="ico-foot-2"></span></dt>
                                                     <dd class="pdt-price discount"><span class="num">-2,570</span>원</dd>
                                                 </dl>
                                             </li> -->
                                         </ul>
                                         <div class="footnote-txt">
                                             <ul>
-                                                <li id="aria-footnote-07"><span class="ico-foot-2"></span>부가가치세 제외 대상 표시</li>
-                                                <li id="aria-footnote-08"><span class="ico-foot-1"></span>당사에서 청구 대행하는 타사 요금</li>
+                                                <li id="footnote-07"><span class="badge badge-other"><span class="blind">타사</span></span>부가가치세 제외 대상 표시</li><!-- 2018-07-11 아이콘 변경 --><!-- 상단 텍스트 aria-labelledby 와 id 속성값을 동일하게 처리해야 함 -->
+                                                <li id="footnote-08"><span class="ico-foot-2"></span>당사에서 청구 대행하는 타사 요금</li>
                                             </ul>
                                         </div>
                                     </div>
                                 </li>
-                                <!-- 2018-07-06 추가 -->
                                 <li class="acco-list">
                                     <div class="acco-title">
                                         <button role="button" aria-pressed="false">
@@ -343,7 +323,6 @@
                                         </ul>
                                     </div>
                                 </li>
-                                <!--// 2018-07-06 추가 -->
                             </ul>
                         </div>
                     </div>
@@ -351,42 +330,18 @@
                 <!--// .accordion -->
             </div>
 
-
-            <hr class="cont-sp type1" aria-hidden="true"/>
-            <div class="cont-box nogaps-hoz">
-                <div class="link-long-group">
-                    <div class="link-long">
-                        <a href="" class="" title="약정할인/단말분할상환정보로 이동">약정할인/단말분할상환정보<span class="ico"></span></a>
-                    </div>
-                    <div class="link-long">
-                        <a href="" class="" title="요금제/부가서비스 할인내역확인으로 이동">요금제/부가서비스 할인내역확인<span class="ico"></span></a>
-                    </div>
-                    <div class="link-long">
-                        <a href="" class="" title="콜기프트 요금으로 이동">콜기프트 요금<span class="ico"></span></a>
-                    </div>
-                    <div class="link-long">
-                        <a href="" class="" title="로밍 사용요금 상세조회로 이동">로밍 사용요금 상세조회<span class="ico"></span></a>
-                    </div>
-                    <div class="link-long">
-                        <a href="" class="" title="기부금/후원금 상세조회로 이동">기부금/후원금 상세조회<span class="ico"></span></a>
-                    </div>
-                </div>
-            </div>
-
-
-
-            <hr class="cont-sp type1" aria-hidden="true"/>
+            <hr class="cont-sp type1" aria-hidden="true" />
             <div class="cont-box">
                 <!-- .widget -->
                 <div class="widget">
                     <div class="widget-box accordion">
-                        <h5 class="tit-a">이용안내</h5>
+                        <h5 class="tit-a">꼭 확인해주세요!</h5><!-- 2018-07-05 텍스트 수정 -->
                         <div class="acco-cover toggle"><!-- toggle : 한개만 열기 -->
-                            <div class="acco-style">
+                            <div class="acco-style btn-hold"> <!-- 2018-07-11 수정 -->
                                 <ul class="acco-list">
                                     <li class="acco-box">
                                         <!-- .on: 열기 -->
-                                        <div class="acco-tit"><button role="button" aria-pressed="false">1. 사용 금액 안내</button></div>
+                                        <div class="acco-tit"><span class="bullet">1.</span> 사용 금액 안내 <button role="button" aria-pressed="false">상세보기</button></div><!-- 2018-07-11 수정 -->
                                         <div class="acco-cont">
                                             <ul class="list-dot">
                                                 <li class="list">월 중 번호 이동하신 경우, 시스템 사정으로 인해 사용기간이 1일부터 말일까지 표시됨을 양해해 주시기 바랍니다.</li>
@@ -400,7 +355,7 @@
                                     </li>
                                     <li class="acco-box">
                                         <!-- .on: 열기 -->
-                                        <div class="acco-tit"><button role="button" aria-pressed="false">2. 로밍 청구 요금 안내</button></div>
+                                        <div class="acco-tit"><span class="bullet">2.</span> 로밍 청구 요금 안내 <button role="button" aria-pressed="false">상세보기</button></div><!-- 2018-07-11 수정 -->
                                         <div class="acco-cont">
                                             <ul class="list-dot">
                                                 <li class="list">로밍 국제 수신(SK텔링크 외 4개 국제전화 사업자) : 로밍 음성 수신 시 사용된 국제사업자 연결 요금 (로밍 중 수신호는 한국을 거쳐 다시 현지로 나가게되므로 현지수신+국제수신 두 구간이 모두 요금이 부과됩니다.)</li>
@@ -418,7 +373,7 @@
                                     </li>
                                     <li class="acco-box">
                                         <!-- .on: 열기 -->
-                                        <div class="acco-tit"><button role="button" aria-pressed="false">3. 콜기프트 안내</button></div>
+                                        <div class="acco-tit"><span class="bullet">3.</span> 콜기프트 안내 <button role="button" aria-pressed="false">상세보기</button></div><!-- 2018-07-11 수정 -->
                                         <div class="acco-cont">
                                             <ul class="list-dot">
                                                 <li class="list">콜기프트는 기업의 사은품, 판촉품으로 제공되는 음성 무료통화로 텔코인(주)에서 제공하는 서비스입니다.</li>
@@ -438,21 +393,4 @@
         </div>
     </div>
     <!--// #contents -->
-    <% include ../../../../../common/views/components/footer.component.html %>
 </div>
-<% include ../../components/javascript.component.html %>
-
-<script>
-  $(document).ready(function () {
-    new Tw.mytBillBillguideCombineCommonPage($('#wrapFdev'), {
-      svcInfo: <%-JSON.stringify(svcInfo) %>,
-      circuitInfo: <%-JSON.stringify(circuitInfo) %>,
-      billpayInfo : <%-JSON.stringify(billpayInfo) %>,
-      circuitChildInfo: <%-JSON.stringify(circuitChildInfo) %>,
-      commDataInfo: <%-JSON.stringify(commDataInfo) %>,
-      defaultInfo: <%-JSON.stringify(defaultInfo) %>,
-      showConditionInfo: <%-JSON.stringify(showConditionInfo) %>
-  });
-  });
-</script>
-<% include ../../components/end.component.html %>

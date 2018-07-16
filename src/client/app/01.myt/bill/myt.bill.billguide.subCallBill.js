@@ -1,14 +1,15 @@
 /**
- * FileName: myt.bill.billguide.skbroadbandPage.js
+ * FileName: myt.bill.billguide.subCallBill.js
  * Author: 김명환 (skt.P130714@partner.sk.com)
- * Date: 2018.07.08
- * Info: sk브로드밴드(인터넷/IPTV/집전화)
+ * Date: 2018.07.16
+ * Info: 콜기프트 요금
  */
 
-Tw.mytBillBillguideSkbroadbandPage = function (rootEl, resData) {
+Tw.mytBillBillguideSubCallBill = function (rootEl, resData) {
   this.thisMain = this;
   this.resData = resData;
-  Tw.Logger.info('[서버에서 데이터 받음]', resData);
+  this.init = this._init;
+  Tw.Logger.info('[서버에서 데이터 받음 mytBillBillguideSubCallBill]', resData);
 
   this.$container = rootEl;
   this.$window = window;
@@ -21,40 +22,16 @@ Tw.mytBillBillguideSkbroadbandPage = function (rootEl, resData) {
   this._history = new Tw.HistoryService(this.$container);
   this._history.init('hash');
 
-  this._init();
-  this._bindEvent();
+  return this;
 };
 
-Tw.mytBillBillguideSkbroadbandPage.prototype = {
+Tw.mytBillBillguideSubCallBill.prototype = {
   _init: function () {
-    //this.$refillBtn = this.$container.find('.link-long > a');
+    Tw.Logger.info('[Tw.mytBillBillguideSubCallBill 초기화]');
+    this._bindEvent();
   },
   _bindEvent: function () {
-    //this.$container.on('click', '.slick-slide', $.proxy(this._selectCoupon, this));
-  },
-  //--------------------------------------------------------------------------[이벤트 | 팝업]
-  _totPaySelectFun : function(event) {//팝업 오픈
-    var $target = $(event.currentTarget);
-    var arrOption = [];
-    for ( var i=0, len=this.resData.billpayInfo.invDtArr.length; i<len; i++ ) {
-      arrOption.push({
-        'attr':'onclick=""',
-        text : this._getSelClaimDtBtn( this.resData.billpayInfo.invDtArr[i] )
-      });
-    }
-    this._popupService.openChoice('기간선택', arrOption,
-      'type1', $.proxy(this._totPaySelectEvt, this, $target));
-  },
-  _totPaySelectEvt: function ($target, $layer) {//이벤트 설정
-    console.info('[$target]', $target);//버튼 타겟
-    console.info('[$layer]', $layer);//팝업 레이어 타겟
-    $layer.on('click', '.popup-choice-list', $.proxy(this._totPaySelectExe, this, $target));
-  },
-  _totPaySelectExe: function ($target, event) {
-    var $selectedValue = $(event.currentTarget);
-    //$target.attr('id', $selectedValue.find('button').attr('id'));
-    $target.text($selectedValue.text());
-    this._popupService.close();
+    //this.$container.on('click', '[data-target="totPaySelectBtn"]', $.proxy(this._totPaySelectFun, this));
   },
   //--------------------------------------------------------------------------[api]
   _getDetailSpecification: function() {
