@@ -21,7 +21,7 @@ class HomeMain extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, layerType: string) {
     // this.testApi();
     const remainDate = DateHelper.getRemainDate();
 
@@ -45,7 +45,8 @@ class HomeMain extends TwViewController {
           remainDate,
           usageData,
           refillData,
-          giftData
+          giftData,
+          layerType
         };
         res.render('home.main.html', data);
       });

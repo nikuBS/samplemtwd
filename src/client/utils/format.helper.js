@@ -139,6 +139,34 @@ Tw.FormatHelper = (function () {
     return cardYm.substr(0, 4) + '/' + cardYm.substr(4, 2);
   };
 
+  function getFormattedPhoneNumber(phoneNumber) {
+    var getDashedNumber = function (phoneNumber) {
+      var str = '';
+      if ( phoneNumber.length <= 10 ) {
+        str += phoneNumber.substr(0, 3);
+        str += '-';
+        str += phoneNumber.substr(3, 3);
+        str += '-';
+        str += phoneNumber.substr(6);
+      } else {
+        str += phoneNumber.substr(0, 3);
+        str += '-';
+        str += phoneNumber.substr(3, 4);
+        str += '-';
+        str += phoneNumber.substr(7);
+      }
+      return str;
+    };
+    var getMaskingPhoneNumber = function (mpn) {
+      var tmpArr = mpn.split('-');
+      var MASKING_MARK = '*';
+      tmpArr[1] = Tw.StringHelper.masking(tmpArr[1], MASKING_MARK, 2);
+      tmpArr[2] = Tw.StringHelper.masking(tmpArr[2], MASKING_MARK, 2);
+      return tmpArr.join('-');
+    };
+    return getMaskingPhoneNumber(getDashedNumber(phoneNumber));
+  }
+
   return {
     leadingZeros: leadingZeros,
     isEmpty: isEmpty,
@@ -153,6 +181,7 @@ Tw.FormatHelper = (function () {
     conTelFormatWithDash: conTelFormatWithDash,
     sortObjArrDesc: sortObjArrDesc,
     sortObjArrAsc: sortObjArrAsc,
-    makeCardYymm: makeCardYymm
+    makeCardYymm: makeCardYymm,
+    getFormattedPhoneNumber: getFormattedPhoneNumber
   };
 })();
