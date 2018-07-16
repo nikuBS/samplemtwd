@@ -55,7 +55,7 @@ Tw.AuthLineRegister.prototype = {
     this._popupService.open({
       hbs: 'CO_01_02_04_P01',
       data: data
-    }, $.proxy(this._onOpenNewRegisterLine, this));
+    }, $.proxy(this._onOpenNewRegisterLine, this), $.proxy(this._onCloseNewRegisterLine, this));
   },
 
   // 회선등록 기존회원
@@ -63,7 +63,7 @@ Tw.AuthLineRegister.prototype = {
     this._popupService.open({
       hbs: 'CO_01_02_04_P02',
       data: data
-    }, $.proxy(this._onOpenExistRegisterLine, this));
+    }, $.proxy(this._onOpenExistRegisterLine, this), $.proxy(this._onCloseExistRegisterLine, this));
   },
 
   _onOpenNewRegisterLine: function ($layer) {
@@ -71,6 +71,13 @@ Tw.AuthLineRegister.prototype = {
   },
   _onOpenExistRegisterLine: function ($layer) {
     this._bindEvent($layer);
+  },
+
+  _onCloseNewRegisterLine: function() {
+    console.log('popup close callback');
+  },
+  _onCloseExistRegisterLine: function() {
+    console.log('popup close callback');
   },
   _bindEvent: function ($layer) {
     $layer.on('change', '#all-check', $.proxy(this._onClickAllCheck, this));
