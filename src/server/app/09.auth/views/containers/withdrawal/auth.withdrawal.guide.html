@@ -61,7 +61,7 @@
     <% include ../../../../common/views/components/footer.component.html %>
     <!-- // footer -->
 </div>
-<% include ../../components/javascript.component.html %>
+<%- include('../../components/javascript.component.html', { svcInfo: svcInfo}); %>
 <script>
   $(document).ready(function () {
     new Tw.AuthWithdrawalGuide($('#auth-withdrawal-guide'));

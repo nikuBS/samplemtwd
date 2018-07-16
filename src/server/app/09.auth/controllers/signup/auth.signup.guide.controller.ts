@@ -13,7 +13,7 @@ class AuthSignupGuide extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    res.render('signup/auth.signup.guide.html');
+    res.render('signup/auth.signup.guide.html', { svcInfo: svcInfo });
   }
 }
 
