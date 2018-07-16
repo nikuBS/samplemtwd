@@ -195,7 +195,10 @@ Tw.MyTBillGuideUpdatePrototype = {
     this.$container = null;
     this._apiService = null;
     this._popupService = null;
-    this.options = null;
+    this._options = null;
+    this._history = null;
+    this._curBillGuideType = null;
+    this._curBillGuideTypeNm = null;
 
     this._$btnNext.off('click');
     this._$btnSubmit.off('click');
@@ -282,6 +285,7 @@ Tw.MyTBillGuideUpdateClasses.etc.prototype = $.extend({}, Tw.MyTBillGuideUpdateP
     this._$inputAddr1 = null;
     this._$inputAddr2 = null;
     this._$inputAddr3 = null;
+    this._$inputPhone = null;
   }
 });
 
@@ -302,6 +306,7 @@ Tw.MyTBillGuideUpdateClasses.billLetter.prototype = $.extend({}, Tw.MyTBillGuide
   },
   destroy: function() {
     Tw.MyTBillGuideUpdatePrototype.destroy.apply(this, arguments);
+    this._$inputPhone = null;
     this._$inputCcurNotiSvcNum = null;
   }
 });
@@ -323,6 +328,7 @@ Tw.MyTBillGuideUpdateClasses.sms.prototype = $.extend({}, Tw.MyTBillGuideUpdateP
   },
   destroy: function() {
     Tw.MyTBillGuideUpdatePrototype.destroy.apply(this, arguments);
+    this._$inputPhone = null;
     this._$inputCcurNotiSvcNum = null;
   }
 });
@@ -352,6 +358,7 @@ Tw.MyTBillGuideUpdateClasses.billLetterEmail.prototype = $.extend({}, Tw.MyTBill
   destroy: function() {
     Tw.MyTBillGuideUpdatePrototype.destroy.apply(this, arguments);
     this._$inputEmail = null;
+    this._$inputPhone = null;
     this._$inputCcurNotiSvcNum = null;
   }
 });
@@ -381,6 +388,7 @@ Tw.MyTBillGuideUpdateClasses.smsEmail.prototype = $.extend({}, Tw.MyTBillGuideUp
   destroy: function() {
     Tw.MyTBillGuideUpdatePrototype.destroy.apply(this, arguments);
     this._$inputEmail = null;
+    this._$inputPhone = null;
     this._$inputCcurNotiSvcNum = null;
   }
 });
