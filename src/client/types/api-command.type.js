@@ -1,3 +1,5 @@
+import { API_METHOD, API_SERVER } from '../../server/types/api-command.type';
+
 Tw.API_METHOD = {
   GET: 'GET',
   POST: 'POST',
@@ -42,6 +44,7 @@ Tw.API_CMD = {
   BFF_05_0024: { path: '/core-bill/v1/child/children', method: Tw.API_METHOD.GET },
   BFF_05_0035: { path: '/core-bill/v1/hotbill/fee/hotbill-request', method: Tw.API_METHOD.GET },
   BFF_05_0041: { path: '/core-product/v1/services/base-fee-plans', method: Tw.API_METHOD.GET },
+  BFF_05_0052: { path: '/core-bill/v1/wire-bill-reissue/', method: API_METHOD.POST},
 
   // RECHARGE
   BFF_06_0001: { path: '/core-recharge/v1/refill-coupons', method: Tw.API_METHOD.GET },
