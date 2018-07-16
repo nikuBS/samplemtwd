@@ -49,7 +49,7 @@ Tw.RechargeTing.prototype = {
       this._isNotAdult = true;
     }
 
-    this.$wrap_tpl_block.html(this.tpl_ting_blocked({ isBlocked: this._isBlockedTing || this._isNotAdult || this._isNotAvailableAmount }));
+    this.$wrap_tpl_block.html(this.tpl_ting_blocked({ isBlocked: this._isBlockedTing }));
   },
 
   _activateBlock: function () {
