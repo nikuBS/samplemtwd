@@ -34,6 +34,7 @@ Tw.MyTBillHotBill.prototype = {
     this.$amount = this.$container.find('.payment-all em');
     this.$period = this.$container.find('.payment-all > .term');
     this.$memberInfo = this.$container.find('.use-family');
+    this.$memberTitle = this.$memberInfo.find('[title]');
     this.$numOfMembers = this.$memberInfo.find('[title] strong');
     this.$btPreviousBill = this.$container.find('#previousBill');
   },
@@ -67,8 +68,17 @@ Tw.MyTBillHotBill.prototype = {
       var day = parseInt(resp.result.stdDateHan.match(/(\d+)\uC77C/i)[1], 10);
       if ( day > 1 && this._children && this._svcAttrCd !== this.SVC_TYPE.TPOCKET ) {
         this.$memberInfo.show();
-        //TODO 자녀수
-        this.$numOfMembers.text(this._children.length);
+        if ( this._children.length === 1 ) {
+          var contesnts = this.$memberTitle.contents();
+          if ( contesnts && contesnts.length > 3 ) {
+            contesnts[0].nodeValue = contesnts[0].nodeValue.replace(/\(/, '');
+            contesnts[2].nodeValue = '';
+          } else {
+            Tw.Logger.error('[MyTBillHotBill] Fail to hiding information of the num of children members.');
+          }
+        } else {
+          this.$numOfMembers.text(this._children.length);
+        }
       }
 
       Tw.Logger.info('Day: ' + day + ' CODE:' + this._svcAttrCd);
@@ -164,7 +174,7 @@ Tw.MyTBillHotBill.NO_BILL_FIELDS = ['total', 'noVAT', 'is3rdParty', 'showDesc', 
  *
  * @returns grouped object
  */
-Tw.MyTBillHotBill.arrayToGroup = function(data, fieldAmount){
+Tw.MyTBillHotBill.arrayToGroup = function (data, fieldAmount) {
   // var self = this;
   var amount = 0;
   var noVAT = false;
