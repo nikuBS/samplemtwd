@@ -10,8 +10,8 @@ import { Observable } from 'rxjs/Observable';
 
 export const PARAM = {
   TYPE: {
-    CURRENT: 'Q',
-    PREVIOUS: 'G'
+    CURRENT: 'G',
+    PREVIOUS: 'Q'
   }
 };
 
@@ -30,7 +30,7 @@ class MyTBillHotBill extends TwViewController {
       case 'M1':
         type = '휴대폰';
         //pocketFi: 메월 1일 메세지 표시
-        if ( new Date().getDay() === 1 ) {
+        if ( new Date().getDate() === 1 ) {
           billAvailable = false;
         }
         break;
