@@ -64,6 +64,33 @@ Tw.PAYMENT_DATE_VALUE = {
   TWENTY_THREE: '1'
 };
 
+Tw.PAYMENT_PRODUCT = {
+  CCBBAE0: '국내 음성 통화료',
+  CCRPDDC: '국내 데이터 통화료',
+  CCBCOE0: '부가서비스(컬러링)',
+  CCPCRBE: '부가서비스(퍼팩트콜)',
+  CCPLRBE: '부가서비스(퍼팩트콜라이트)',
+  CCRMRBE: '로밍사용요금',
+  CCRPGDC: '기본료 및 월정액 이용요금'
+};
+
+Tw.PAYMENT_TYPE = {
+  '000': '일시불',
+  '001': '1개월 할부',
+  '002': '2개월 할부',
+  '003': '3개월 할부',
+  '004': '4개월 할부',
+  '005': '5개월 할부',
+  '006': '6개월 할부',
+  '007': '7개월 할부',
+  '008': '8개월 할부',
+  '009': '9개월 할부',
+  '010': '10개월 할부',
+  '011': '11개월 할부',
+  '012': '12개월 할부',
+  '024': '24개월 할부'
+};
+
 Tw.PAYMENT_STRING = {
   BANK_NAME: '은행명'
 };
@@ -133,6 +160,7 @@ Tw.MSG_RECHARGE = {
 
 Tw.MSG_PAYMENT = {
   SELECT_PRODUCT: '요금정보 선택',
+  SELECT_CARD_TYPE: '납부형태 선택',
   REALTIME_A01: '납부 내역을 선택해주세요.',
   REALTIME_A02: '은행명을 선택해주세요.',
   REALTIME_A03: '계좌번호의 정합성이 맞지 않습니다.',
