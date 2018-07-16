@@ -21,35 +21,44 @@ class AuthLineEdit extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     this.category = req.query.category;
-    const lineList = this.parseLineList(LineList.result);
     this.apiService.request(API_CMD.BFF_03_0004, {}).subscribe((resp) => {
-      // if ( resp.code === API_CODE.CODE_00 ) {
-      //   const list = resp.result;
-      // }
-      console.log(lineList);
-      res.render('line/auth.line.edit.html', {
-        lineCategory: SVC_CATEGORY[this.category.toUpperCase()],
-        lineList,
-        svcInfo
-      });
+      if ( resp.code === API_CODE.CODE_00 ) {
+        const lineList = this.parseLineList(resp.result);
+        res.render('line/auth.line.edit.html', Object.assign(lineList, {
+          category: this.category,
+          lineCategory: SVC_CATEGORY[this.category.toUpperCase()],
+          svcInfo
+        }));
+      } else {
+        res.send('api error');
+      }
+
     });
   }
 
   private parseLineList(lineList): any {
     const curLine = lineList[this.category];
     if ( !FormatHelper.isEmpty(curLine) ) {
-      this.convLineData(curLine);
+      return this.convLineData(curLine);
     }
-    return curLine;
+    return { expsY: null, expsN: null };
   }
 
-  private convLineData(lineData) {
+  private convLineData(lineData): any {
+    const expsY: any[] = [];
+    const expsN: any[] = [];
     FormatHelper.sortObjArrAsc(lineData, 'expsSeq');
     lineData.map((line) => {
       line.showSvcAttrCd = SVC_ATTR[line.svcAttrCd];
       line.showSvcScrbDtm = DateHelper.getShortDateNoDot(line.svcScrbDtm);
       line.showName = FormatHelper.isEmpty(line.nickNm) ? SVC_ATTR[line.svcAttrCd] : line.nickNm;
+      if ( line.expsYn === 'Y' ) {
+        expsY.push(line);
+      } else {
+        expsN.push(line);
+      }
     });
+    return { expsY, expsN };
   }
 }
 
