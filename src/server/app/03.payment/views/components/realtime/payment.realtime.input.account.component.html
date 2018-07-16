@@ -3,6 +3,16 @@
 * Author: 공자윤 (jayoon.kong@sk.com)
 * Date: 2018.07.05
 %>
+<!-- #header -->
+<div id="header" class="header-wrap">
+    <div class="header step-page">
+        <div class="header-ti">
+            <h1>납부하기</h1>
+        </div>
+        <button class="close-step common-back"><span class="blind">닫기</span></button>
+    </div>
+</div>
+<!--// #header -->
 <div class="container">
     <div class="cont-box">
         <!-- .widget -->
@@ -19,11 +29,12 @@
     </div>
     <hr class="cont-sp type1" aria-hidden="true"/>
     <div class="cont-box">
-        <div class="pay-info">
+        <div class="pay-info auto">
+            <div class="auto-pay-info none"></div>
             <div class="widget">
                 <h4 class="pay-tit" aria-checked="false">계좌정보</h4>
-                <div class="widget-box check">
-                    <span class="checkbox type01 pay-check-box" role="checkbox" aria-checked="false">
+                <div class="widget-box check auto-info-checkbox none">
+                    <span class="checkbox type01 pay-check-box auto-info" role="checkbox" aria-checked="false">
                         <input type="checkbox" name="checkbox" value="자동납부계좌와 동일" title="체크박스">
                         자동납부계좌와 동일
                     </span>
@@ -43,11 +54,11 @@
                     <h5 class="account-tit">은행명 / 계좌번호</h5>
                     <div class="account-detail">
                         <div class="select-name">
-                            <button class="bt-dropdown select-bank" title="은행 선택하기">은행명<span class="ico"></span></button>
+                            <button class="bt-dropdown select-bank select-bank-first" title="은행 선택하기">은행명<span class="ico"></span></button>
                         </div>
                         <div class="inputbox input-context">
                         <span class="input">
-                            <input type="text" class="only-number" placeholder="계좌번호 (숫자만 입력)" title="계좌번호" aria-describedby="account-num">
+                            <input type="text" class="only-number account-number" placeholder="계좌번호 (숫자만 입력)" title="계좌번호" aria-describedby="account-num">
                             <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
                         </span>
                         </div>
@@ -64,35 +75,35 @@
     </div>
     <hr class="cont-sp type1" aria-hidden="true"/>
     <div class="cont-box">
-        <div class="pay-info">
+        <div class="pay-info refund">
             <div class="widget">
                 <h4 class="pay-tit">환불계좌정보</h4>
-                <div class="widget-box check">
-            <span class="checkbox type01 pay-check-box" role="checkbox" aria-checked="false">
-                <input type="checkbox" name="checkbox" title="체크박스">
-                위와 동일
-            </span>
+                <div class="widget-box refund-info-checkbox check">
+                    <span class="checkbox type01 pay-check-box refund-info" role="checkbox" aria-checked="false">
+                        <input type="checkbox" name="checkbox" title="체크박스">
+                        위와 동일
+                    </span>
                 </div>
             </div>
             <ul>
                 <li class="account-wrap">
                     <h5 class="account-tit">예금주 정보</h5>
                     <div class="inputbox">
-                <span class="input">
-                    <input type="text" class="no-bg-color" placeholder="송*익" title="예금주" disabled="">
-                    <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
-                </span>
+                        <span class="input">
+                            <input type="text" class="no-bg-color" placeholder="송*익" title="예금주" disabled="">
+                            <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
+                        </span>
                     </div>
                 </li>
                 <li class="account-wrap">
                     <h5 class="account-tit">은행명 / 계좌번호</h5>
                     <div class="account-detail">
                         <div class="select-name">
-                            <button class="bt-dropdown select-bank" title="은행 선택하기">은행명<span class="ico"></span></button>
+                            <button class="bt-dropdown select-bank select-bank-second" title="은행 선택하기">은행명<span class="ico"></span></button>
                         </div>
                         <div class="inputbox input-context">
                     <span class="input">
-                        <input type="text" class="only-number" placeholder="계좌번호 (숫자만 입력)" title="계좌번호">
+                        <input type="text" class="only-number account-number" placeholder="계좌번호 (숫자만 입력)" title="계좌번호">
                         <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
                     </span>
                         </div>
