@@ -27,7 +27,7 @@
     <!-- #contents -->
     <div id="contents" class="container-wrap">
         <h2 class="blind">내용</h2>
-        <div class="container">
+        <div id=change-complete" class="container">
             <div class="cont-box nogaps-top">
                 <div class="msg-present-box">
                     <div class="msg-present-comp">
@@ -71,10 +71,8 @@
 </div>
 <% include ../../components/javascript.component.html %>
 <script>
-    // $(document).ready(function () {
-    //   var componentName = $(wrap).data('component');
-    //   var className = componentName.replace(/-([a-z])/g, function (g) { return g[1].toUpperCase(); });
-    //   new Tw.MyTBillGuideChangeClasses[className]($('#wrap'));
-    // });
+    $(document).ready(function () {
+      new Tw.MyTBillGuideChangeComplete($('#change-complete'))
+    });
 </script>
 <% include ../../components/end.component.html %>

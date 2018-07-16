@@ -9,7 +9,8 @@ Tw.MyTBillGuideUpdatePrototype = {
     this.$container = rootEl;
     this._apiService = Tw.Api;
     this._popupService = Tw.Popup;
-    this._options = options;
+    this._options = options || {};
+    this._history = new Tw.HistoryService();
 
     this._assign();
     this._bindEvent();
@@ -49,7 +50,7 @@ Tw.MyTBillGuideUpdatePrototype = {
     }
     // var requestParams = this._getRequestParams();
     // 미성년인경우, 법정대리인 전화번호가 없을 시 얼럿 확인 후 진행
-    if (this._$inputCcurNotiSvcNum.length > 0 && Tw.FormatHelper.isEmpty(this._$inputCcurNotiSvcNum.val())) {
+    if (this._$inputCcurNotiSvcNum && this._$inputCcurNotiSvcNum.length > 0 && Tw.FormatHelper.isEmpty(this._$inputCcurNotiSvcNum.val())) {
       this._popupService.openAlert(Tw.MSG_MYT.BILL_GUIDECHANGE_A05, null, $.proxy(this._openConfirm, this));
     } else {
       this._openConfirm();
@@ -66,12 +67,16 @@ Tw.MyTBillGuideUpdatePrototype = {
   },
 
   onClickBtnChangeConfirm: function () {
+    if (this._popupService) {
+      this._popupService.close();
+    }
+    this._history.pushUrl('/myt/bill/guidechange');
     if (this._options.fromChange) {
       var beforeBillGuideType = this._options.beforeBillGuideType; //수정해야함
       var selectedBillGuideType = this._curBillGuideType;
       window.location.href = '/myt/bill/guidechange/change-complete?beforeBillGuideType=' + beforeBillGuideType + '&afterBillGuideType=' + selectedBillGuideType;
     } else {
-
+      window.location.href = '/myt/bill/guidechange/update-complete';
     }
   },
 
