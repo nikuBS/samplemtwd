@@ -30,6 +30,8 @@ Tw.API_CMD = {
   BFF_03_0011: { path: '/core-auth/v1/nationalities', method: Tw.API_METHOD.GET },
   BFF_03_0012: { path: '/user/biz-auth-sessions', method: Tw.API_METHOD.POST },
   BFF_03_0013: { path: '/user/biz-services', method: Tw.API_METHOD.POST },
+  BFF_03_0014: { path: '/core-auth/v1/marketing-offer-subscriptions/args-0', method: Tw.API_METHOD.GET },
+  BFF_03_0015: { path: '/core-auth/v1/marketing-offer-subscriptions/args-0', method: Tw.API_METHOD.PUT },
 
   // MYT
   BFF_05_0001: { path: '/my-t/balances', method: Tw.API_METHOD.GET },
@@ -42,6 +44,7 @@ Tw.API_CMD = {
   BFF_05_0024: { path: '/core-bill/v1/child/children', method: Tw.API_METHOD.GET },
   BFF_05_0035: { path: '/core-bill/v1/hotbill/fee/hotbill-request', method: Tw.API_METHOD.GET },
   BFF_05_0041: { path: '/core-product/v1/services/base-fee-plans', method: Tw.API_METHOD.GET },
+  BFF_05_0052: { path: '/core-bill/v1/wire-bill-reissue', method: Tw.API_METHOD.POST},
 
   // RECHARGE
   BFF_06_0001: { path: '/core-recharge/v1/refill-coupons', method: Tw.API_METHOD.GET },
@@ -105,6 +108,7 @@ Tw.API_CMD = {
   BFF_07_0028: { path: '/core-bill/v1/bill-pay/avail-point-search', method: Tw.API_METHOD.GET },
   BFF_07_0029: { path: '/core-bill/v1/bill-pay/pay-ocb-tpoint-proc', method: Tw.API_METHOD.POST },
   BFF_07_0039: { path: '/core-bill/v1/payment/auto-integrated-account-payment', method: Tw.API_METHOD.GET },
+  BFF_07_0043: { path: '/core-bill/v1/ocbcard-no-info', method: Tw.API_METHOD.GET },
   BFF_07_0045: { path: '/core-bill/v1/ocb-point-onetime-reserve', method: Tw.API_METHOD.POST },
   BFF_07_0048: { path: '/core-bill/v1/rainbow-point-onetime-reserve', method: Tw.API_METHOD.POST },
   BFF_07_0054: { path: '/core-bill/v1/ocb-point-autopay-modify', method: Tw.API_METHOD.POST },
