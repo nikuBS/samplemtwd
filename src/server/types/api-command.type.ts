@@ -21,7 +21,7 @@ export const API_CMD = {
   BFF_03_0005_C: { path: '/selected-svc', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_03_0023_C: { path: '/core-recharge/v1/refill-gifts', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   // COMMON
-  BFF_01_0002: { path: '/common/services', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_01_0002: { path: '/common/sessions', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_01_0003: { path: '/svc-catalog/detail', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_01_0004: { path: '/common/selected-sessions', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
   BFF_01_0005: { path: '/common/selected-sessions', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
