@@ -26,6 +26,7 @@ Tw.RechargeLimit.prototype = {
     var $limitBlock = this.$container.find('.box-block-list1.btm-border ul');
     this._toggleSwitch(this.TYPE.TMTH, $limitBlock.data('limit-tmth'));
     this._toggleSwitch(this.TYPE.REGULAR, $limitBlock.data('limit-regular'));
+    this._rechargeRegular = $limitBlock.data('recharge-regular');
   },
 
   _cachedElement: function () {
@@ -46,6 +47,7 @@ Tw.RechargeLimit.prototype = {
     this.$container.on('click', '#btn-go-type', $.proxy(this._setDefaultType, this));
     this.$container.on('click', '.btn-switch', $.proxy(this._openChangeLimitPopup, this));
     this.$container.on('click', '.close-step', $.proxy(this._openClosePopup, this));
+    this.$container.on('click', '#btn-cancel-regular', $.proxy(this._openCancelRegularPopup, this));
     this.$stepAmount.on('click', '.tube-list', $.proxy(this._setAmount, this));
   },
 
@@ -102,7 +104,7 @@ Tw.RechargeLimit.prototype = {
     }
 
     if (this.rechargeType) {
-      this._apiService.request(Tw.API_CMD.BFF_06_0037, reqData)
+      this._apiService.request(Tw.API_CMD.BFF_06_0035, reqData)
         .done($.proxy(this._success, this))
         .fail($.proxy(this._fail, this));
     } else {
@@ -131,10 +133,48 @@ Tw.RechargeLimit.prototype = {
     this._popupService.openConfirm(Tw.POPUP_TITLE.NOTIFY, Tw.MSG_RECHARGE.LIMIT_A07, undefined, undefined, $.proxy(this._go, this, 'main'));
   },
 
+  _openCancelRegularPopup: function () {
+    this._popupService.openConfirm(Tw.POPUP_TITLE.NOTIFY, Tw.MSG_RECHARGE.LIMIT_A08, undefined, undefined, $.proxy(this._handleCancelRegular, this));
+  },
+
+  _handleCancelRegular: function () {
+    this._apiService.request(Tw.API_CMD.BFF_06_0037).done($.proxy(this._handleSuccessCancleRegular, this));
+  },
+
+  _handleSuccessCancleRegular: function (resp) {
+    if (resp.code === API_CODE.CODE_00) {
+      this.$container.find('#recharge-regular').remove();
+      this.$container.find('#btn-cancel-regular').remove();
+    }
+    this._popupService.close();
+  },
+
   _openChangeLimitPopup: function (e) {
     e.preventDefault();
 
-    this._popupService.openConfirm(Tw.POPUP_TITLE.NOTIFY, Tw.MSG_RECHARGE.LIMIT_A01, undefined, undefined, $.proxy(this._handleChangeLimit, this, e.currentTarget));
+    var type = e.currentTarget.id === 'limit-tmth' ? this.TYPE.TMTH : this.TYPE.REGULAR;
+    var message = "";
+
+    if (type === this.TYPE.REGULAR) {
+      if (this._rechargeRegular) {
+        this._popupService.openAlert(Tw.MSG_RECHARGE.LIMIT_A03);
+        return;
+      } else {
+        if (this._limitRegular) {
+          message = Tw.MSG_RECHARGE.LIMIT_A02;
+        } else {
+          message = Tw.MSG_RECHARGE.LIMIT_A04;
+        }
+      }
+    } else {
+      if (this._limitTmth) {
+        message = Tw.MSG_RECHARGE.LIMIT_A01;
+      } else {
+        message = Tw.MSG_RECHARGE.LIMIT_A05;
+      }
+    }
+
+    this._popupService.openConfirm(Tw.POPUP_TITLE.NOTIFY, message, undefined, undefined, $.proxy(this._handleChangeLimit, this, type));
   },
 
   _handleToogleLimit: function (resp, type, state) {
@@ -146,9 +186,8 @@ Tw.RechargeLimit.prototype = {
     }
   },
 
-  _handleChangeLimit: function (target) {
-    var state = false;
-    if (target.id === 'limit-tmth') {
+  _handleChangeLimit: function (type) {
+    if (type === this.TYPE.TMTH) {
       state = this.$limitTmth.hasClass('on');
 
       if (state) {
@@ -158,7 +197,6 @@ Tw.RechargeLimit.prototype = {
       }
     } else {
       state = this.$limitRegular.hasClass('on');
-
       if (state) {
         this._apiService.request(Tw.API_CMD.BFF_06_0040).done($.proxy(this._handleToogleLimit, this, this.TYPE.REGULAR, state));
       } else {
@@ -171,6 +209,7 @@ Tw.RechargeLimit.prototype = {
 
   _toggleSwitch: function (type, state) {
     var $switch = null;
+
     switch (type) {
       case this.TYPE.REGULAR:
         $switch = this.$limitRegular;

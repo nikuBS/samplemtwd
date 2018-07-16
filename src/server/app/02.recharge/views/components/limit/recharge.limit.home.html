@@ -65,7 +65,17 @@
                                     <%= limitData.currentTopUpLimit %> 원
                                 </span>
                             </li>
+                            <% const regularTopUp = limitData.regularTopUpYn === "Y"%>
+                            <% if (regularTopUp) { %>
+                            <li id="recharge-regular">
+                                <span class="title">매월 자동 충전</span>
+                                <span class="price"><%= limitData.regularTopUpAmt %></span>
+                            </li>
+                            <% } %>
                         </ul>
+                        <% if (regularTopUp) { %>
+                        <a id="btn-cancel-regular">자동 충전 취소</a>
+                        <% } %>
                     </dd>
                 </dl>
             </div>
@@ -73,7 +83,7 @@
                 <dl>
                     <dt>데이터 차단 설정</dt>
                     <dd class="box-block-list1 btm-border">
-                        <ul data-limit-tmth="<%= limitData.dataLimitedTmthYn === 'Y'%>" data-limit-regular="<%= limitData.dataLimitedYn === 'Y'%>">
+                        <ul data-limit-tmth="<%= limitData.dataLimitedTmthYn === 'Y'%>" data-limit-regular="<%= limitData.dataLimitedYn === 'Y'%>" data-recharge-regular=<%= regularTopUp%>>
                             <li>
                                 <span class="title">이번 달</span>
                                 <span class="toggles">
