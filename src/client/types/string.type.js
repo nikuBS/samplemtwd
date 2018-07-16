@@ -129,7 +129,65 @@ Tw.MSG_MYT = {
   BILL_GUIDECHANGE_A14: '요금안내서 재발행이 신청되었습니다.',
   BILL_GUIDECHANGE_A15: '선택하신 청구월에 대한 청구서가 이미 재발행 신청 되었습니다.',
   BILL_GUIDECHANGE_A16: '청구지 주소가 정확한지 다시 한번 확인해 주시기 바랍니다.<br />재발행 신청을 하시겠습니까?',
-  BILL_GUIDECHANGE_A17: '이메일 주소가 정확한지 다시 한번 확인해 주시기 바랍니다.<br />재발행 신청을 하시겠습니까?'
+  BILL_GUIDECHANGE_A17: '이메일 주소가 정확한지 다시 한번 확인해 주시기 바랍니다.<br />재발행 신청을 하시겠습니까?',
+  BILLTYPE_LIST : [
+    {
+      'billType': 'P',
+      'value': 'T world <BR/>확인',
+      'desc': '언제 어디서나 PC와 모바일로 요금을 확인할 수 있는 요금안내서',
+      'chgBtnNm' : '"T world 확인"으로 변경하기',
+      'recommend' : true
+    },
+    {
+      'billType': 'H',
+      'value': 'Bill Letter',
+      'desc': '이번 달과 저번 달을 비교해서 알려주는 맞춤형 요금안내서 Bill Letter App',
+      'chgBtnNm' : '"Bill Letter"로 변경하기',
+      'recommend' : true
+    },
+    {
+      'billType': 'B',
+      'value': '문자요금 안내서',
+      'desc': '로그인이나 인증없이 휴대폰 MMS로 요금을 확인할 수 있는 서비스',
+      'chgBtnNm' : '"문자"로 변경하기',
+      'recommend' : false
+    },
+    {
+      'billType': '2',
+      'value': '이메일',
+      'desc': '설정한 이메일로 편리하게 안내서를 받아 보는 서비스',
+      'chgBtnNm' : '"이메일"로 변경하기',
+      'recommend' : true
+    },
+    {
+      'billType': 'I',
+      'value': 'Bill Letter + 이메일',
+      'desc': '스마트폰의 Bill Letter 앱과 설정하신 이메일로 요금안내서를 받으실 수 있습니다.',
+      'chgBtnNm' : '"Bill Letter + 이메일"로 변경하기',
+      'recommend' : false
+    },
+    {
+      'billType': 'A',
+      'value': '문자 + 이메일',
+      'desc': '휴대폰 MMS 안내서와 이메일 안내서를 모두 받아 보는 서비스',
+      'chgBtnNm' : '"문자 + 이메일"로 변경하기',
+      'recommend' : false
+    },
+    {
+      'billType': 'Q',
+      'value': 'Bill Letter + 문자',
+      'desc': 'Bill Letter 안내서와 휴대폰 MMS 안내서를 함께 받아 보는 서비스',
+      'chgBtnNm' : '"Bill Letter + 문자"로 변경하기',
+      'recommend' : false
+    },
+    {
+      'billType': '1',
+      'value': '기타(우편)',
+      'desc': '설정한 주소로 종이 안내서를 받아 보는 서비스',
+      'chgBtnNm' : '"기타(우편)"로 변경하기',
+      'recommend' : false
+    }
+  ]
 };
 
 Tw.MSG_RECHARGE = {
