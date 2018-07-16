@@ -28,7 +28,7 @@
                         <ul class="select-list" role="group">
                             <% for (var i = 0; i < list.length; i++) { %>
                             <li class="checkbox type01 checkbox-main" role="checkbox" aria-checked="false">
-                                <input type="checkbox" name="checkbox" value="휴대폰 010-12**-45**" title="체크박스" data-value="<%= list[i].invAmt %>" />
+                                <input type="checkbox" name="checkbox" value="휴대폰 010-12**-45**" title="체크박스" data-value="<%= list[i].intMoney %>" />
                                 <div class="pay-maininfo">
                                     <span class="service-sort"><span class="blind">서비스 구분</span><%= list[i].svcName %></span>
                                     <span class="line-info"><span class="blind">회선 정보</span><%= list[i].svcNum %></span>
@@ -39,7 +39,7 @@
                                 </dl>
                                 <dl class="pay-detail">
                                     <dt>사용요금</dt>
-                                    <dd class="invAmt" data-value="<%= list[i].invAmt %>"><strong><%= list[i].invMoney %></strong><span class="unit">원</span></dd>
+                                    <dd class="invAmt" data-value="<%= list[i].intMoney %>"><strong><%= list[i].invMoney %></strong><span class="unit">원</span></dd>
                                 </dl>
                                 <dl class="svcMgmtNum none" data-value="<%= list[i].svcMgmtNum %>"></dl>
                                 <dl class="billAcntNum none" data-value="<%= list[i].billAcntNum %>"></dl>
