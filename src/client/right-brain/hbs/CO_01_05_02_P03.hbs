@@ -27,7 +27,11 @@
                                 <dl>
                                     <dt class="ti-data">고객 혜택 제공을 위한 <br/>개인정보 수집·이용 동의</dt>
                                     <dd class="tx-data">
-                                        <div class="txt">동의</div>
+                                        {{# if data.agr201Yn }}
+                                            <div class="txt">동의</div>
+                                        {{else}}
+                                            <div class="txt">미동의</div>
+                                        {{/if}}
                                     </dd>
                                 </dl>
                             </li>
@@ -35,7 +39,11 @@
                                 <dl>
                                     <dt class="ti-data">광고정보 수신 동의</dt>
                                     <dd class="tx-data">
-                                        <div class="txt">미동의</div>
+                                        {{# if data.agr203Yn }}
+                                            <div class="txt">동의</div>
+                                        {{else}}
+                                            <div class="txt">미동의</div>
+                                        {{/if}}
                                     </dd>
                                 </dl>
                             </li>
