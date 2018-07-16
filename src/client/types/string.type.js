@@ -64,6 +64,10 @@ Tw.PAYMENT_DATE_VALUE = {
   TWENTY_THREE: '1'
 };
 
+Tw.PAYMENT_STRING = {
+  BANK_NAME: '은행명'
+};
+
 Tw.MSG_COMMON = {
   SERVER_ERROR: '통신 오류입니다. 잠시 후 다시 시도해 주세요.'
 };
