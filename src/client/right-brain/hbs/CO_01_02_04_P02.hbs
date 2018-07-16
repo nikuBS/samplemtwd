@@ -35,8 +35,8 @@
                         <p class="ti">이용하실 회선 선택</p>
                         <div class="widget">
                             <div class="widget-box check">
-                                <div class="checkbox type02 all_chk" role="checkbox" aria-checked="false">
-                                    <input  id="all-check" type="checkbox" name="checkbox" value="" title="체크박스"/>
+                                <div class="checkbox type02 checked all_chk" role="checkbox" aria-checked="true">
+                                    <input type="checkbox" name="checkbox" value="" title="전체" checked/><!-- 접근성 수정 -->
                                     <span class="tit-a">전체</span>
                                     <i class="ico"></i>
                                 </div>
@@ -48,46 +48,50 @@
                             <div class="widget">
                                 <div class="widget-box check">
                                     <ul class="select-list" role="group">
-                                        {{#if data.m}}
-                                            {{#each data.m}}
-                                                {{#if isShow}}
-                                                <li class="checkbox type01" role="checkbox" aria-checked="false" data-svcMgmtNum="{{svcMgmtNum}}">
-                                                    <input class="child-check" type="checkbox" name="checkbox" value="" title="체크박스"/>
-                                                    <dl class="mline-detail">
-                                                        <dt>{{ showSvcAttrCd }}</dt>
-                                                        <dd class="device">갤럭*****</dd>
-                                                        <dd class="ph">{{ svcNum }}</dd>
-                                                    </dl>
-                                                </li>
-                                                {{/if}}
-                                            {{/each}}
-                                        {{/if}}
-                                        {{#if data.s}}
-                                            {{#each data.s}}
-                                                {{#if isShow}}
-                                                <li class="checkbox type01" role="checkbox" aria-checked="false" data-svcMgmtNum="{{svcMgmtNum}}">
-                                                    <input class="child-check" type="checkbox" name="checkbox" value="값4" title="체크박스"/>
-                                                    <dl class="mline-detail">
-                                                        <dt>{{ showSvcAttrCd }}</dt>
-                                                        <dd class="ph">{{ addr }}</dd>
-                                                    </dl>
-                                                </li>
-                                                {{/if}}
-                                            {{/each}}
-                                        {{/if}}
-                                        {{#if data.o}}
-                                            {{#each data.o}}
-                                                {{#if isShow}}
-                                                <li class="checkbox type01" role="checkbox" aria-checked="false" data-svcMgmtNum="{{svcMgmtNum}}">
-                                                    <input class="child-check" type="checkbox" name="checkbox" value="값4" title="체크박스"/>
-                                                    <dl class="mline-detail">
-                                                        <dt>{{ showSvcAttrCd }}</dt>
-                                                        <dd class="ph">{{ svcNum }}</dd>
-                                                    </dl>
-                                                </li>
-                                                {{/if}}
-                                            {{/each}}
-                                        {{/if}}
+                                        <li class="checkbox type01 checked" role="checkbox" aria-checked="true">
+                                            <input type="checkbox" name="checkbox" value="" title="회선 선택" aria-labelledby="aria-mline1" checked/><!-- 접근성 수정 -->
+                                            <dl id="aria-mline1" class="mline-detail" aria-hidden="true"><!-- 접근성 수정 -->
+                                                <dt>휴대폰</dt>
+                                                <dd class="device">갤럭*****</dd>
+                                                <dd class="ph">010-12**-45**</dd>
+                                            </dl>
+                                        </li>
+                                        <li class="checkbox type01 checked" role="checkbox" aria-checked="true">
+                                            <input type="checkbox" name="checkbox" value="" title="회선 선택" aria-labelledby="aria-mline2" checked/><!-- 접근성 수정 -->
+                                            <dl id="aria-mline2" class="mline-detail" aria-hidden="true"><!-- 접근성 수정 -->
+                                                <dt>선불폰</dt>
+                                                <dd class="device">갤럭*****</dd>
+                                                <dd class="ph">010-12**-45**</dd>
+                                            </dl>
+                                        </li>
+                                        <li class="checkbox type01 checked" role="checkbox" aria-checked="true">
+                                            <input type="checkbox" name="checkbox" value="" title="회선 선택" aria-labelledby="aria-mline3" checked/><!-- 접근성 수정 -->
+                                            <dl id="aria-mline3" class="mline-detail" aria-hidden="true"><!-- 접근성 수정 -->
+                                                <dt>T Pocket-Fi</dt>
+                                                <dd class="ph">010-12**-45**</dd>
+                                            </dl>
+                                        </li>
+                                        <li class="checkbox type01 checked" role="checkbox" aria-checked="true">
+                                            <input type="checkbox" name="checkbox" value="" title="회선 선택" aria-labelledby="aria-mline4" checked/><!-- 접근성 수정 -->
+                                            <dl id="aria-mline4" class="mline-detail" aria-hidden="true"><!-- 접근성 수정 -->
+                                                <dt>T Login</dt>
+                                                <dd class="ph">010-12**-45**</dd>
+                                            </dl>
+                                        </li>
+                                        <li class="checkbox type01 checked" role="checkbox" aria-checked="true">
+                                            <input type="checkbox" name="checkbox" value="" title="회선 선택" aria-labelledby="aria-mline5" checked/><!-- 접근성 수정 -->
+                                            <dl id="aria-mline5" class="mline-detail" aria-hidden="true"><!-- 접근성 수정 -->
+                                                <dt>T WiBro</dt>
+                                                <dd class="ph">P******</dd>
+                                            </dl>
+                                        </li>
+                                        <li class="checkbox type01 checked" role="checkbox" aria-checked="true">
+                                            <input type="checkbox" name="checkbox" value="" title="회선 선택" aria-labelledby="aria-mline6" checked/><!-- 접근성 수정 -->
+                                            <dl id="aria-mline6" class="mline-detail" aria-hidden="true"><!-- 접근성 수정 -->
+                                                <dt>인터넷</dt>
+                                                <dd class="ph">인천 연**********</dd>
+                                            </dl>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>

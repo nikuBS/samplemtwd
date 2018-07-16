@@ -23,7 +23,7 @@
                                 <dl>
                                     <dt class="ti-data">회선 닉네임</dt>
                                     <dd class="tx-data">
-                                        <div class="txt">{{ data.showName }}</div>
+                                        <div class="txt">내퐁</div>
                                     </dd>
                                 </dl>
                             </li>
@@ -31,7 +31,7 @@
                                 <dl>
                                     <dt class="ti-data">가입동의 휴대폰 번호</dt>
                                     <dd class="tx-data">
-                                        <div class="txt">{{ data.svcNum }}</div>
+                                        <div class="txt">010-1234-5678</div>
                                     </dd>
                                 </dl>
                             </li>
@@ -49,19 +49,11 @@
                         <div class="widget-box accordion">
                             <div class="widget">
                                 <div class="widget-box check">
-                                    {{#if data.allCheck}}
-                                        <div class="checkbox type02 checked all_chk" role="checkbox" aria-checked="true">
-                                            <i class="ico"></i>
-                                            <input id="all-check" type="checkbox" name="checkbox" value="" title="고객 혜택 제공을 위한 개인정보 수집·이용, 광고성 정보 수신에 모두 동의합니다." checked/><!-- 접근성 수정 -->
-                                            <span class="tit-a">고객 혜택 제공을 위한 개인정보 수집·이용, 광고성 정보 수신에 모두 동의합니다.</span>
-                                        </div>
-                                    {{else}}
-                                        <div class="checkbox type02 all_chk" role="checkbox" aria-checked="false">
-                                            <i class="ico"></i>
-                                            <input id="all-check" type="checkbox" name="checkbox" value="" title="고객 혜택 제공을 위한 개인정보 수집·이용, 광고성 정보 수신에 모두 동의합니다."/><!-- 접근성 수정 -->
-                                            <span class="tit-a">고객 혜택 제공을 위한 개인정보 수집·이용, 광고성 정보 수신에 모두 동의합니다.</span>
-                                        </div>
-                                    {{/if}}
+                                    <div class="checkbox type02 checked all_chk" role="checkbox" aria-checked="true">
+                                        <i class="ico"></i>
+                                        <input type="checkbox" name="checkbox" value="" title="고객 혜택 제공을 위한 개인정보 수집·이용, 광고성 정보 수신에 모두 동의합니다." checked/><!-- 접근성 수정 -->
+                                        <span class="tit-a">고객 혜택 제공을 위한 개인정보 수집·이용, 광고성 정보 수신에 모두 동의합니다.</span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="acco-cover">
@@ -73,19 +65,11 @@
                                             <div class="acco-tit">
                                                 <div class="widget">
                                                     <div class="widget-box check">
-                                                        {{#if data.agr201Yn}}
-                                                            <div class="checkbox type02 checked all_chk" role="checkbox" aria-checked="true">
-                                                                <i class="ico"></i>
-                                                                <input class="child-check" type="checkbox" name="checkbox" value="" title="고객 혜택 제공을 위한 개인정보 수집·이용 동의(선택)" checked/><!-- 접근성 수정 -->
-                                                                <span>고객 혜택 제공을 위한 개인정보 수집·이용 동의(선택)</span>
-                                                            </div>
-                                                        {{else}}
-                                                            <div class="checkbox type02 all_chk" role="checkbox" aria-checked="false">
-                                                                <i class="ico"></i>
-                                                                <input class="child-check" type="checkbox" name="checkbox" value="" title="고객 혜택 제공을 위한 개인정보 수집·이용 동의(선택)"/><!-- 접근성 수정 -->
-                                                                <span>고객 혜택 제공을 위한 개인정보 수집·이용 동의(선택)</span>
-                                                            </div>
-                                                        {{/if}}
+                                                        <div class="checkbox type02 checked all_chk" role="checkbox" aria-checked="true">
+                                                            <i class="ico"></i>
+                                                            <input type="checkbox" name="checkbox" value="" title="고객 혜택 제공을 위한 개인정보 수집·이용 동의(선택)" checked/><!-- 접근성 수정 -->
+                                                            <span>고객 혜택 제공을 위한 개인정보 수집·이용 동의(선택)</span>
+                                                        </div>
                                                     </div>
                                                 </div><!--<button role="button" aria-pressed="false"></button>--><!-- 2018-07-12 button삭제 -->
                                             </div>
@@ -106,19 +90,11 @@
                                             <div class="acco-tit">
                                                 <div class="widget">
                                                     <div class="widget-box check">
-                                                        {{#if data.agr203Yn}}
-                                                            <div class="checkbox type02 checked all_chk" role="checkbox" aria-checked="true">
-                                                                <i class="ico"></i>
-                                                                <input class="child-check" type="checkbox" name="checkbox" value="" title="광고성 정보 수신 동의(선택)" checked/><!-- 접근성 수정 -->
-                                                                <span>광고성 정보 수신 동의(선택)</span>
-                                                            </div>
-                                                        {{else}}
-                                                            <div class="checkbox type02 all_chk" role="checkbox" aria-checked="false">
-                                                                <i class="ico"></i>
-                                                                <input class="child-check" type="checkbox" name="checkbox" value="" title="광고성 정보 수신 동의(선택)"/><!-- 접근성 수정 -->
-                                                                <span>광고성 정보 수신 동의(선택)</span>
-                                                            </div>
-                                                        {{/if}}
+                                                        <div class="checkbox type02 checked all_chk" role="checkbox" aria-checked="true">
+                                                            <i class="ico"></i>
+                                                            <input type="checkbox" name="checkbox" value="" title="광고성 정보 수신 동의(선택)" checked/><!-- 접근성 수정 -->
+                                                            <span>광고성 정보 수신 동의(선택)</span>
+                                                        </div>
                                                     </div>
                                                 </div><!--<button role="button" aria-pressed="false"></button>--><!-- 2018-07-12 button삭제 -->
                                             </div>
@@ -143,14 +119,10 @@
                     <!--// .widget -->
                     <ul class="bt-slice last"><!-- 2018-07-12 버튼 class, 순서 변경 (동의 사항을 모두 체크시 활성화) -->
                         <li class="bt-blue1">
-                            {{#if data.orCheck}}
-                            <button id="bt-agree">동의</button>
-                            {{else}}
-                            <button id="bt-agree" disabled>동의</button>
-                            {{/if}}
+                            <button disabled>동의</button>
                         </li>
                         <li class="bt-white2">
-                            <button id="bt-disagree">미동의</button>
+                            <button>미동의</button>
                         </li>
                     </ul>
                 </div>
