@@ -6,7 +6,7 @@
 import TwViewController from '../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
 import { API_CODE, API_CMD } from '../../../types/api-command.type';
-import { SVC_CD } from '../../../types/bff-common.type';
+import { SVC_ATTR } from '../../../types/bff-common.type';
 import { PAYMENT_VIEW } from '../../../types/string.type';
 import DateHelper from '../../../utils/date.helper';
 import FormatHelper from '../../../utils/format.helper';
@@ -21,7 +21,7 @@ class PaymentRealtimeController extends TwViewController {
     this.apiService.request(API_CMD.BFF_07_0021, {}).subscribe((resp) => {
       this.renderView(res, 'payment.realtime.html', {
         list: this.getResult(UnpaidList),
-        svcInfo
+        svcInfo: this.getSvcInfo(svcInfo)
       });
     });
   }
@@ -46,10 +46,15 @@ class PaymentRealtimeController extends TwViewController {
       list.map((data) => {
         data.invYearMonth = DateHelper.getShortDateWithFormat(data.invDt, 'YYYY.MM');
         data.invMoney = FormatHelper.addComma(data.invAmt);
-        data.svcName = SVC_CD[data.svcCd];
+        data.svcName = SVC_ATTR[data.svcAttrCd];
       });
     }
     return list;
+  }
+
+  private getSvcInfo(svcInfo: any): any {
+    svcInfo.svcName = SVC_ATTR[svcInfo.svcAttrCd];
+    return svcInfo;
   }
 }
 

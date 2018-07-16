@@ -13,7 +13,7 @@ class AuthLoginDormancy extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    res.render('login/auth.login.dormancy.html');
+    res.render('login/auth.login.dormancy.html', { svcInfo: svcInfo });
   }
 }
 

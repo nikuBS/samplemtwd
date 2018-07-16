@@ -192,15 +192,13 @@ Tw.RechargeTingProcess.prototype = {
     }).done($.proxy(this._validComplete, this));
   },
 
-  _validComplete: function () {
-    this._go('complete');
-
-    // if ( response.code === '00' ) {
-    //   this._history.setHistory();
-    //   this._go('#complete');
-    // } else {
-    //   this._sendFail(response);
-    // }
+  _validComplete: function (response) {
+    if ( response.code === '00' ) {
+      this._history.setHistory();
+      this._go('#complete');
+    } else {
+      this._sendFail(response);
+    }
   },
 
   _validateRequestStep1: function () {

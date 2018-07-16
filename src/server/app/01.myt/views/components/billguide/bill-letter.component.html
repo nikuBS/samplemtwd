@@ -9,6 +9,18 @@
         <div class="change-plan">
             <h3 class="tit-type spc2">요금안내서 정보설정</h3>
             <dl>
+                <% if (curBillGuide.svcInfo.svcAttrCd === 'S1' || curBillGuide.svcInfo.svcAttrCd === 'S2' || curBillGuide.svcInfo.svcAttrCd === 'S3') { %>
+                <dt>휴대폰번호를 입력해주세요.</dt>
+                <dd>
+                    <span class="inputbox">
+                        <span class="input">
+                            <input type="text" placeholder="휴대폰번호입력 (숫자만 입력)" title="휴대폰번호 입력 (숫자만 입력)" class="input-phone input-cntc-num1" maxlength="11" onInput="return Tw.InputHelper.inputNumberOnly(this);" value="<%= curBillGuide.cntcNum1 %>" >
+                            <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
+                        </span>
+                    </span>
+                </dd>
+                <% } %>
+
                 <dt>Bill Letter 조회 시, 보안설정하시겠습니까?</dt>
                 <dd>
                     <!-- .widget -->
@@ -30,7 +42,7 @@
                         <span class="noti-type3">생년월일 입력 후 조회하시면 Bill Letter의 보안을 강화할 수 있습니다. </span>
                     </div>
                 </dd>
-                <% if (curBillGuide.kidsYn === 'Y') { %>
+                <% if (curBillGuide.svcInfo.svcAttrCd === 'M1' && curBillGuide.kidsYn === 'Y') { %>
                 <dt>법정대리인에게 함께 알려드릴까요?(선택사항)</dt>
                 <dd>
                     <span class="inputbox">

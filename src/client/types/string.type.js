@@ -64,6 +64,39 @@ Tw.PAYMENT_DATE_VALUE = {
   TWENTY_THREE: '1'
 };
 
+Tw.PAYMENT_PRODUCT = {
+  CCBBAE0: '국내 음성 통화료',
+  CCRPDDC: '국내 데이터 통화료',
+  CCBCOE0: '부가서비스(컬러링)',
+  CCPCRBE: '부가서비스(퍼팩트콜)',
+  CCPLRBE: '부가서비스(퍼팩트콜라이트)',
+  CCRMRBE: '로밍사용요금',
+  CCRPGDC: '기본료 및 월정액 이용요금'
+};
+
+Tw.PAYMENT_TYPE = {
+  '000': '일시불',
+  '001': '1개월 할부',
+  '002': '2개월 할부',
+  '003': '3개월 할부',
+  '004': '4개월 할부',
+  '005': '5개월 할부',
+  '006': '6개월 할부',
+  '007': '7개월 할부',
+  '008': '8개월 할부',
+  '009': '9개월 할부',
+  '010': '10개월 할부',
+  '011': '11개월 할부',
+  '012': '12개월 할부',
+  '024': '24개월 할부'
+};
+
+Tw.PAYMENT_STRING = {
+  BANK_NAME: '은행명',
+  OK_CASHBAG: 'OK캐쉬백',
+  T_POINT: 'T포인트'
+};
+
 Tw.MSG_COMMON = {
   SERVER_ERROR: '통신 오류입니다. 잠시 후 다시 시도해 주세요.'
 };
@@ -82,12 +115,12 @@ Tw.MSG_MYT = {
   HOTBILL_FAIL_REQUEST: '요금 정보 가져오기 실패했습니다.',
   BILL_GUIDE_03: '선택하신 청구월에 대한 청구서가 이미 재발행 신청 되었습니다.',
   BILL_GUIDECHANGE_A01: '요금안내서 정보를 변경하시겠습니까?',
-  BILL_GUIDECHANGE_A02: '[T] 요금안내서가 신청되었습니다.\n[T] 요금안내서 신청 시 기존에 신청하신 요금안내서는 자동 해지 됩니다.',
+  BILL_GUIDECHANGE_A02: '[T] 요금안내서가 신청되었습니다.<br />[T] 요금안내서 신청 시 기존에 신청하신 요금안내서는 자동 해지 됩니다.',
   BILL_GUIDECHANGE_A03: '휴대폰번호를 입력해주세요.',
   BILL_GUIDECHANGE_A04: '휴대폰 번호를 확인해주시기 바랍니다.',
   BILL_GUIDECHANGE_A05: '휴대폰번호를 입력하지 않으면 법정대리인에게 요금안내서를 발송하지 않습니다.',
   BILL_GUIDECHANGE_A06: '법정대리인의 휴대폰번호를 확인해주시기 바랍니다.',
-  BILL_GUIDECHANGE_A07: '입력하신 법정대리인 휴대폰번호로 요금안내서가 동시 통보됩니다.\n신청/변경하시겠습니까?',
+  BILL_GUIDECHANGE_A07: '입력하신 법정대리인 휴대폰번호로 요금안내서가 동시 통보됩니다.<br />신청/변경하시겠습니까?',
   BILL_GUIDECHANGE_A08: '이메일 주소를 확인해 주시기 바랍니다.',
   BILL_GUIDECHANGE_A09: '고객님의 이메일로 신청확인메일이 발송되오니 확인해 주시기 바랍니다.',
   BILL_GUIDECHANGE_A10: '주소를 확인해주시기 바랍니다.',
@@ -95,8 +128,8 @@ Tw.MSG_MYT = {
   BILL_GUIDECHANGE_A13: '[T] 요금안내서 재발행을 신청하시겠습니까?',
   BILL_GUIDECHANGE_A14: '요금안내서 재발행이 신청되었습니다.',
   BILL_GUIDECHANGE_A15: '선택하신 청구월에 대한 청구서가 이미 재발행 신청 되었습니다.',
-  BILL_GUIDECHANGE_A16: '청구지 주소가 정확한지 다시 한번 확인해 주시기 바랍니다.\n재발행 신청을 하시겠습니까?',
-  BILL_GUIDECHANGE_A17: '이메일 주소가 정확한지 다시 한번 확인해 주시기 바랍니다.\n재발행 신청을 하시겠습니까?'
+  BILL_GUIDECHANGE_A16: '청구지 주소가 정확한지 다시 한번 확인해 주시기 바랍니다.<br />재발행 신청을 하시겠습니까?',
+  BILL_GUIDECHANGE_A17: '이메일 주소가 정확한지 다시 한번 확인해 주시기 바랍니다.<br />재발행 신청을 하시겠습니까?'
 };
 
 Tw.MSG_RECHARGE = {
@@ -129,6 +162,8 @@ Tw.MSG_RECHARGE = {
 
 Tw.MSG_PAYMENT = {
   SELECT_PRODUCT: '요금정보 선택',
+  SELECT_CARD_TYPE: '납부형태 선택',
+  SELECT_POINT: '포인트 선택',
   REALTIME_A01: '납부 내역을 선택해주세요.',
   REALTIME_A02: '은행명을 선택해주세요.',
   REALTIME_A03: '계좌번호의 정합성이 맞지 않습니다.',
@@ -217,3 +252,8 @@ Tw.MSG_AUTH = {
   WITHDRAW_A06: '회원해지를 하는 경우 SK텔레콤에서 제공하는 서비스를 사용할 수 없습니다. 해지하시겠습니까?'
 };
 
+Tw.RECHARGE_TYPE = {
+  RECHARGE: '충전',
+  CANCEL: '취소',
+  REGULAR: '자동'
+}

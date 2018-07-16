@@ -74,6 +74,7 @@ export const API_CMD = {
   BFF_05_0022: { path: '/core-bill/v1/hotbill/fee/hotbill-response', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0024: { path: '/core-bill/v1/child/children', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0035: { path: '/core-bill/v1/hotbill/fee/hotbill-request', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0025: { path: '/core-bill/v1/bill-types-list/', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   // RECHARGE
   BFF_06_0001: { path: '/core-recharge/v1/refill-coupons', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_06_0002: { path: '/core-recharge/v1/refill-usages', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
@@ -126,7 +127,7 @@ export const API_CMD = {
   BFF_07_0017: { path: '/core-bill/v1/bill-pay/tax-reprint', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_07_0018: { path: '/core-bill/v1/bill-pay/tax-reprint-email', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_07_0019: { path: '/core-bill/v1/bill-pay/tax-reprint-fax', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
-  BFF_07_0021: { path: '/core-bill/v1/bill-pay/settle-unpaid-list', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_07_0021: { path: '/payment/settle-unpaids', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_07_0022: { path: '/core-bill/v1/bill-pay/autopay-banks', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_07_0023: { path: '/core-bill/v1/bill-pay/settle-pay-bank', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_07_0024: { path: '/core-bill/v1/bill-pay/cardnum-validation', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
@@ -187,6 +188,17 @@ export const API_CODE = {
   CODE_99: '99',    // Circuit Open
   CODE_200: '200',
   CODE_400: '400'
+};
+
+export const API_LOGIN_ERROR = {
+  'ATH1003': 'ATH1003',   // 로그인 30회 초과
+  'ATH3236': 'ATH3236',   // 분실정지 (대표회선)
+  '3211': '3211',       // 고객보호비밀번호 (대표회선) 입력 필요
+  '3213': '3213',       // 고객보호비밀번호 오입력 (3회미만)
+  '3212': '3212',       // 고객번호비밀번호 오입력 (3회)
+  '3215': '3215',       // 고객번호비밀번호 오입력 (4회)
+  '3216': '3216',       // 고객번호비밀번호 잠김 (지점 내점 안내 노출)
+  '3235': '3235',       // 휴면계정
 };
 
 export const API_MYT_ERROR_CODE = [

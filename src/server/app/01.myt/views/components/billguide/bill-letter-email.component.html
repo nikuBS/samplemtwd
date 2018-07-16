@@ -83,6 +83,17 @@
             <div class="change-plan">
                 <h4 class="tit-type2">요금안내서 정보설정 (2/2)</h4>
                 <dl>
+                    <% if (curBillGuide.svcInfo.svcAttrCd === 'S1' || curBillGuide.svcInfo.svcAttrCd === 'S2' || curBillGuide.svcInfo.svcAttrCd === 'S3') { %>
+                    <dt>휴대폰번호를 입력해주세요</dt>
+                    <dd class="box-block-list2">
+                    <span class="inputbox">
+                        <span class="input">
+                          <input type="text" placeholder="휴대폰번호입력 (숫자만 입력)" title="휴대폰번호 입력 (숫자만 입력)" class="input-phone input-cntc-num1" maxlength="11" onInput="return Tw.InputHelper.inputNumberOnly(this);" value="<%= curBillGuide.cntcNum1 %>">
+                          <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
+                        </span>
+                    </span>
+                    </dd>
+                    <% } %>
                     <dt>휴대폰번호 모두 표시할까요?</dt>
                     <dd>
                         <div class="widget">
@@ -99,17 +110,17 @@
                             </div>
                         </div>
                     </dd>
-                    <% if (curBillGuide.kidsYn === 'Y') { %>
-                    <dt>법정대리인에게 함께 알려드릴까요?(선택사항)</dt>
-                    <dd>
-                    <span class="inputbox">
-                        <span class="input">
-                            <input type="text" placeholder="휴대폰번호입력 (숫자만 입력)" title="휴대폰번호 입력 (숫자만 입력)" aria-describedby="rw-desc1" class="input-phone input-ccur-noti-svc-num" maxlength="11" onInput="return Tw.InputHelper.inputNumberOnly(this);" value="<%= curBillGuide.ccurNotiSvcNum%>">
-                            <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
+                    <% if (curBillGuide.svcInfo.svcAttrCd === 'M1' && curBillGuide.kidsYn === 'Y') { %>
+                        <dt>법정대리인에게 함께 알려드릴까요?(선택사항)</dt>
+                        <dd>
+                        <span class="inputbox">
+                            <span class="input">
+                                <input type="text" placeholder="휴대폰번호입력 (숫자만 입력)" title="휴대폰번호 입력 (숫자만 입력)" aria-describedby="rw-desc1" class="input-phone input-ccur-noti-svc-num" maxlength="11" onInput="return Tw.InputHelper.inputNumberOnly(this);" value="<%= curBillGuide.ccurNotiSvcNum%>">
+                                <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
+                            </span>
+                            <span id="rw-desc1" class="guide-txt">미성년고객의 요금안내서는 법정대리인 휴대폰번호로 동시 안내됩니다.</span>
                         </span>
-                        <span id="rw-desc1" class="guide-txt">미성년고객의 요금안내서는 법정대리인 휴대폰번호로 동시 안내됩니다.</span>
-                    </span>
-                    </dd>
+                        </dd>
                     <% } %>
                 </dl>
             </div>

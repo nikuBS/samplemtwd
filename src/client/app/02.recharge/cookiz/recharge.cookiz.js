@@ -16,11 +16,6 @@ Tw.RechargeCookiz = function (rootEl) {
 
 Tw.RechargeCookiz.prototype = {
   _init: function () {
-    this._apiService.request(Tw.API_CMD.BFF_06_0028, {}).done(function (res) {
-      if ( res.code === '00' ) {
-        $('.prodName').text(res.result.prodName);
-      }
-    });
     this.$wrap_tpl_contact.html(this.tpl_contact({ isMobile: Tw.BrowserHelper.isMobile() }));
   },
 
@@ -41,6 +36,14 @@ Tw.RechargeCookiz.prototype = {
   },
 
   _onCancelAutoRefill: function () {
+    this._apiService.request(Tw.API_CMD.BFF_06_0031, {})
+      .done($.proxy(this._onSuccessCancelAutoRefill, this));
+  },
+
+  _onSuccessCancelAutoRefill: function (res) {
+    if ( res.code === '00' ) {
+      location.reload(true);
+    }
   },
 
   _goCookizRequestProcess: function () {

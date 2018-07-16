@@ -13,7 +13,7 @@ class AuthWithdrawlGuide extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    res.render('withdrawal/auth.withdrawal.guide.html');
+    res.render('withdrawal/auth.withdrawal.guide.html', { svcInfo: svcInfo });
   }
 }
 

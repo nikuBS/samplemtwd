@@ -134,6 +134,10 @@ input[type=text], input[type=file], input[type=password], input[type=number] {
   background-size: 50px;
 }
 
+.inputbox .input .cancel {
+  display: none;
+}
+
 .inputbox .guide-txt {
   display: block;
   margin: 0.375rem 0 0;

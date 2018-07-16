@@ -55,7 +55,7 @@ Tw.AuthLineRegister.prototype = {
     this._popupService.open({
       hbs: 'CO_01_02_04_P01',
       data: data
-    }, $.proxy(this._onOpenNewRegisterLine, this));
+    }, $.proxy(this._onOpenNewRegisterLine, this), $.proxy(this._onCloseNewRegisterLine, this));
   },
 
   // 회선등록 기존회원
@@ -63,7 +63,7 @@ Tw.AuthLineRegister.prototype = {
     this._popupService.open({
       hbs: 'CO_01_02_04_P02',
       data: data
-    }, $.proxy(this._onOpenExistRegisterLine, this));
+    }, $.proxy(this._onOpenExistRegisterLine, this), $.proxy(this._onCloseExistRegisterLine, this));
   },
 
   _onOpenNewRegisterLine: function ($layer) {
@@ -71,6 +71,13 @@ Tw.AuthLineRegister.prototype = {
   },
   _onOpenExistRegisterLine: function ($layer) {
     this._bindEvent($layer);
+  },
+
+  _onCloseNewRegisterLine: function () {
+    console.log('popup close callback');
+  },
+  _onCloseExistRegisterLine: function () {
+    console.log('popup close callback');
   },
   _bindEvent: function ($layer) {
     $layer.on('change', '#all-check', $.proxy(this._onClickAllCheck, this));
@@ -104,7 +111,7 @@ Tw.AuthLineRegister.prototype = {
   _onClickRegister: function () {
     var $selected = this.$childChecks.filter(':checked').parent();
     var svcNumList = [];
-    _.map($selected, $.proxy(function(checkbox) {
+    _.map($selected, $.proxy(function (checkbox) {
       svcNumList.push($(checkbox).data('svcmgmtnum'));
     }, this));
     this._registerLineList(svcNumList.join('~'));
@@ -140,15 +147,15 @@ Tw.AuthLineRegister.prototype = {
   },
   _registerLineList: function (lineList) {
     console.log(lineList);
-    this._apiService.request(Tw.API_CMD.BFF_03_0005, {svcCtg: Tw.SVC_CATEGORY.ALL, svcMgmtNumArr: lineList})
+    this._apiService.request(Tw.API_CMD.BFF_03_0005, { svcCtg: Tw.SVC_CATEGORY.ALL, svcMgmtNumArr: lineList })
       .done($.proxy(this._successRegisterLineList, this))
       .fail($.proxy(this._failRegisterLineList, this));
   },
-  _successRegisterLineList: function(resp) {
+  _successRegisterLineList: function (resp) {
     console.log(resp);
     this._popupService.close();
   },
-  _failRegisterLineList: function(error) {
+  _failRegisterLineList: function (error) {
     console.log(error);
   }
 

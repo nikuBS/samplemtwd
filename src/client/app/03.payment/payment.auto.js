@@ -57,7 +57,14 @@ Tw.PaymentAuto.prototype = {
     this._go('#step1-cancel');
   },
   _setDefaultRadioChecked: function (targetClassName) {
+    this.$container.find('.radiobox').removeClass('checked focus');
+    this.$container.find('.radiobox input').removeAttr('checked');
     this.$container.find('.' + targetClassName).addClass('checked');
+    this.$container.find('.' + targetClassName + ' > input').attr('checked', 'checked');
+    if (targetClassName === 'change-first-radio-box') {
+      this.$container.find('.account').show();
+      this.$container.find('.card').hide();
+    }
   },
   _changeField: function (event) {
     var $target = $(event.currentTarget);
