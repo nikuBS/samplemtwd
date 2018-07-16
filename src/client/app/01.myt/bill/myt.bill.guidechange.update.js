@@ -49,8 +49,9 @@ Tw.MyTBillGuideUpdatePrototype = {
       return;
     }
     // 미성년인경우, 법정대리인 전화번호가 없을 시 얼럿 확인 후 진행
-    if (this._$inputCcurNotiSvcNum && this._$inputCcurNotiSvcNum.length > 0 && Tw.FormatHelper.isEmpty(this._$inputCcurNotiSvcNum.val())) {
-      this._popupService.openAlert(Tw.MSG_MYT.BILL_GUIDECHANGE_A05, null, $.proxy(this._openConfirm, this));
+    if (this._$inputCcurNotiSvcNum && this._$inputCcurNotiSvcNum.length > 0) {
+      var alertMsg = (Tw.FormatHelper.isEmpty(this._$inputCcurNotiSvcNum.val())) ? Tw.MSG_MYT.BILL_GUIDECHANGE_A05 : Tw.MSG_MYT.BILL_GUIDECHANGE_A07;
+      this._popupService.openAlert(alertMsg, null, $.proxy(this._openConfirm, this));
     } else {
       this._openConfirm();
     }
@@ -67,26 +68,51 @@ Tw.MyTBillGuideUpdatePrototype = {
       .fail($.proxy(this._submitFail, this));
   },
 
-  _submitSuccess: function() {
+  _showErrorAlert: function(msg) {
+    this._popupService.openAlert(msg);
+  },
+
+  _submitSuccess: function(resp) {
+    if (resp.code === '00') {
+      window.setTimeout($.proxy(function () {
+        var tmpMsg = this._options.fromChange ? Tw.MSG_MYT.BILL_GUIDECHANGE_A02 : Tw.MSG_MYT.BILL_GUIDECHANGE_A12;
+        var alertMsg = tmpMsg.replace(/\[T\]/gi, this._curBillGuideTypeNm);
+        this._popupService.openAlert(alertMsg, Tw.POPUP_TITLE.NOTIFY, $.proxy(this._onClickBtnChangeConfirm, this, resp.result));
+      }, this), 500);
+    } else {
+      this._showErrorAlert(resp.data && resp.data.msg);
+      return;
+    }
+  },
+
+  _submitFail: function(resp) {
+    this._showErrorAlert(resp.data && resp.data.msg);
     return;
-    // window.setTimeout($.proxy(function () {
-    //   var tmpMsg = this._options.fromChange ? Tw.MSG_MYT.BILL_GUIDECHANGE_A02 : Tw.MSG_MYT.BILL_GUIDECHANGE_A12;
-    //   var alertMsg = tmpMsg.replace(/\[T\]/gi, this._curBillGuideTypeNm);
-    //   this._popupService.openAlert(alertMsg, Tw.POPUP_TITLE.NOTIFY, $.proxy(this.onClickBtnChangeConfirm, this));
-    // }, this), 500);
+  },
+  
+  _showEmailChangedAlert: function(result) {
+    this._popupService.openAlert(Tw.MSG_MYT.BILL_GUIDECHANGE_A09, Tw.POPUP_TITLE.NOTIFY, $.proxy(function() {
+      this._goComplete(result);
+    }, this));
+
   },
 
-  _submitFail: function() {
-
-  },
-
-  onClickBtnChangeConfirm: function () {
+  _onClickBtnChangeConfirm: function (result) {
     if (this._popupService) {
       this._popupService.close();
     }
+    if (this._options.fromChange && this._curBillGuideType === '2' ) {
+      window.setTimeout($.proxy(this._showEmailChangedAlert, this, result), 500);
+    } else {
+      this._goComplete(result);
+    }
+  },
+
+  _goComplete: function(result) {
     this._history.pushUrl('/myt/bill/guidechange');
     if (this._options.fromChange) {
-      var beforeBillGuideType = this._options.beforeBillGuideType; //수정해야함
+      // var beforeBillGuideType = this._options.beforeBillGuideType; //수정해야함
+      var beforeBillGuideType = result.beforeBillIsueTypeCd; //수정해야함
       var selectedBillGuideType = this._curBillGuideType;
       window.location.href = '/myt/bill/guidechange/change-complete?beforeBillGuideType=' + beforeBillGuideType + '&afterBillGuideType=' + selectedBillGuideType;
     } else {
@@ -158,6 +184,9 @@ Tw.MyTBillGuideUpdatePrototype = {
       var key = $elem.attr(KEY_ATTR_NAME);
       var value = $elem.val();
       paramsObj[key] = value;
+      if (key === 'ccurNotiSvcNum') {
+        paramsObj.ccurNotiYn = 'Y';
+      }
     });
     return paramsObj;
   },
