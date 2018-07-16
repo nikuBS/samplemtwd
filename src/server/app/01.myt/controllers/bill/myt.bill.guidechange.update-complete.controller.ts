@@ -37,19 +37,16 @@ class MyTBillChange extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     // svcInfo.svcAttrCd = 'S1';
-    const selectedSessionsRequest: Observable<any> = this.apiService.request(API_CMD.BFF_01_0005, {});
     const billTypeListRequest: Observable<any> = this.apiService.request(API_CMD.BFF_05_0025, {});
 
     Observable.combineLatest(
-      selectedSessionsRequest,
       billTypeListRequest,
-    ).subscribe(([_selectedSessions, _billTypesList]) => {
-      const _svcInfo = this.getResult(_selectedSessions);
+    ).subscribe(([_billTypesList]) => {
       const _curBillGuide = this.getResult(_billTypesList);
       this.renderView(res, 'bill/myt.bill.guidechange.update-complete.html', {
-        svcInfo: _svcInfo,
         curBillGuide: _curBillGuide,
-        component: BILL_GUIDE_TYPE_COMPONENT[_curBillGuide.curBillType]
+        component: BILL_GUIDE_TYPE_COMPONENT[_curBillGuide.curBillType],
+        svcInfo
       });
     });
   }

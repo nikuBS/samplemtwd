@@ -7,6 +7,8 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import { Request, Response, NextFunction } from 'express';
 import { BILL_GUIDE_TYPE } from '../../../../types/bff-common.type';
 import { BILL_GUIDE_TYPE_NAME } from '../../../../types/string.type';
+import { Observable } from 'rxjs/Observable';
+import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 
 const BillGuideLabelDefines = {};
 BillGuideLabelDefines[BILL_GUIDE_TYPE.TWORLD] = BILL_GUIDE_TYPE_NAME.TWORLD;
@@ -34,16 +36,32 @@ class MyTBillChange extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    this.renderView(res, 'bill/myt.bill.guidechange.change-complete.html', {
-      beforeBillGuideLabel: BillGuideLabelDefines[req.query.beforeBillGuideType],
-      afterBillGuideLabel: BillGuideLabelDefines[req.query.afterBillGuideType],
-      component: BILL_GUIDE_TYPE_COMPONENT[req.query.afterBillGuideType]
+    const billTypeListRequest: Observable<any> = this.apiService.request(API_CMD.BFF_05_0025, {});
+    Observable.combineLatest(
+      billTypeListRequest,
+    ).subscribe(([_billTypesList]) => {
+      const _curBillGuide = this.getResult(_billTypesList);
+      this.renderView(res, 'bill/myt.bill.guidechange.change-complete.html', {
+        beforeBillGuideLabel: BillGuideLabelDefines[req.query.beforeBillGuideType],
+        afterBillGuideLabel: BillGuideLabelDefines[_curBillGuide.curBillType],
+        component: BILL_GUIDE_TYPE_COMPONENT[_curBillGuide.curBillType],
+        curBillGuide: _curBillGuide,
+        svcInfo
+      });
     });
+
   }
 
   public renderView(res: Response, view: string, data: any): any {
     // TODO error check
     res.render(view, data);
+  }
+
+  private getResult(resp: any): any {
+    if ( resp.code === API_CODE.CODE_00 ) {
+      return resp.result;
+    }
+    return resp;
   }
 
 }

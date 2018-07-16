@@ -46,7 +46,20 @@
                            			<%= afterBillGuideLabel %>
                            		</span>
                         </div>
+
+                        <% if (curBillGuide.curBillType === '1') { %>
+                        <div class="address">
+                            <h3 class="contents-tit">기타(우편)물 받으실 주소</h3>
+                            <span class="inputbox">
+                            <span class="input">
+                                  <input type="text" title="input" value="서울 중구 을지로 65 티타워 1층" aria-labelledby="exp-label1" aria-describedby="exp-desc1"  readonly />
+                                  <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
+                                </span>
+                            </span>
+                        </div>
+                        <% } %>
                     </div>
+
                     <div class="bt-gap">
                         <ul class="bt-slice"><!-- 2018-06-20 버튼 클래스 변경 -->
                             <li class="bt-blue1">
