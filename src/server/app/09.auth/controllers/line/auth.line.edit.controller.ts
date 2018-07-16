@@ -22,7 +22,10 @@ class AuthLineEdit extends TwViewController {
       if ( resp.code === API_CODE.CODE_00 ) {
         const list = resp.result;
       }
-      res.render('line/auth.line.edit.html', lineInfo);
+      res.render('line/auth.line.edit.html', {
+        lineInfo,
+        svcInfo
+      });
     });
   }
 
