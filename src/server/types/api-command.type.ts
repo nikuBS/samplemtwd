@@ -127,7 +127,7 @@ export const API_CMD = {
   BFF_07_0017: { path: '/core-bill/v1/bill-pay/tax-reprint', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_07_0018: { path: '/core-bill/v1/bill-pay/tax-reprint-email', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_07_0019: { path: '/core-bill/v1/bill-pay/tax-reprint-fax', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
-  BFF_07_0021: { path: '/core-bill/v1/bill-pay/settle-unpaid-list', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_07_0021: { path: '/core-bill/v1/bill-pay/settle-unpaids', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_07_0022: { path: '/core-bill/v1/bill-pay/autopay-banks', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_07_0023: { path: '/core-bill/v1/bill-pay/settle-pay-bank', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_07_0024: { path: '/core-bill/v1/bill-pay/cardnum-validation', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
