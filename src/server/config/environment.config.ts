@@ -13,14 +13,13 @@ const environment = {
     TID_REDIRECT: 'http://m.tworld.co.kr:3000'
   },
   development: {
-    BFF_SERVER: 'http://bff-spring.mtw-dev-bff.svc.cluster.local',
+    BFF_SERVER: 'http://bff-spring.mtw-stg-bff.svc.cluster.local',
     CDN: '',
     REDIS: {
-      host: 'dev-backing-redis-mobile-ibm-redis-ha-dev-master-svc.mtw-dev-rdf.svc.cluster.local',
+      host: 'stg-backing-redis-mobile-ibm-redis-ha-dev-master-svc.mtw-stg-rdf.svc.cluster.local',
       port: 6379,
       db: 15
     },
-
     TEMP_CDN: 'http://tstore.rbipt.com/skt',
     TID_SERVER: 'https://auth-stg.skt-id.co.kr',
     TEST_SERVER: 'https://jsonplaceholder.typicode.com',
