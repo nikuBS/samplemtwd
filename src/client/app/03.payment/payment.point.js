@@ -316,13 +316,13 @@ Tw.PaymentPoint.prototype = {
   },
   _getProductList: function () {
     return [
-      { 'attr': 'id="CCBBAE0"', text: '국내 음성 통화료' },
-      { 'attr': 'id="CCRPDDC"', text: '국내 데이터 통화료' },
-      { 'attr': 'id="CCBCOE0"', text: '부가서비스(컬러링)' },
-      { 'attr': 'id="CCPCRBE"', text: '부가서비스(퍼팩트콜)' },
-      { 'attr': 'id="CCPLRBE"', text: '부가서비스(퍼팩트콜라이트)' },
-      { 'attr': 'id="CCRMRBE"', text: '로밍사용요금' },
-      { 'attr': 'id="CCRPGDC"', text: '기본료 및 월정액 이용요금' }
+      { 'attr': 'id="CCBBAE0"', text: Tw.PAYMENT_PRODUCT.CCBBAE0 },
+      { 'attr': 'id="CCRPDDC"', text: Tw.PAYMENT_PRODUCT.CCRPDDC },
+      { 'attr': 'id="CCBCOE0"', text: Tw.PAYMENT_PRODUCT.CCBCOE0 },
+      { 'attr': 'id="CCPCRBE"', text: Tw.PAYMENT_PRODUCT.CCPCRBE },
+      { 'attr': 'id="CCPLRBE"', text: Tw.PAYMENT_PRODUCT.CCPLRBE },
+      { 'attr': 'id="CCRMRBE"', text: Tw.PAYMENT_PRODUCT.CCRMRBE },
+      { 'attr': 'id="CCRPGDC"', text: Tw.PAYMENT_PRODUCT.CCRPGDC }
     ];
   }
 };
