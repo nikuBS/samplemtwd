@@ -313,7 +313,7 @@ Tw.PaymentRealtime.prototype = {
     }
     $target.find('.bank-name').text(this.$autoWrap.find('.select-bank').text());
     $target.find('.refund-bank-name').text(this.$refundWrap.find('.select-bank').text());
-    $target.find('.date').text(Tw.DateHelper.convDateFormat(new Date()));
+    $target.find('.date').text(Tw.DateHelper.getCurrentDateTime(new Date()));
 
     var $detailTarget = this.$container.find('.detail-payment');
     var $checkedBox = this.$container.find('.checkbox-main.checked');
