@@ -51,7 +51,5 @@ class MyTBillHotBill extends TwViewController {
     // TODO error check
     res.render(view, data);
   }
-
 }
-
 export default MyTBillHotBill;
