@@ -29,14 +29,14 @@
     </div>
     <hr class="cont-sp type1" aria-hidden="true"/>
     <div class="cont-box">
-        <div class="pay-info">
+        <div class="pay-info card-first">
             <h4 class="pay-tit">카드정보</h4>
             <ul>
                 <li class="account-wrap">
                     <h5 class="account-tit">카드주명</h5>
                     <div class="inputbox">
                         <span class="input">
-                            <input type="text" class="no-bg-color" placeholder="송*익" title="카드주" disabled="">
+                            <input type="text" class="no-bg-color name" placeholder="<%= svcInfo.mbrNm %>" title="카드주" disabled="disabled">
                             <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
                         </span>
                     </div>
@@ -45,25 +45,25 @@
                     <h5 class="account-tit">카드번호</h5>
                     <div class="inputbox">
                         <span class="input">
-                            <input type="text" class="only-number" maxlength="16" placeholder="숫자만 입력" title="카드번호">
+                            <input type="number" class="only-number card-number" maxlength="16" placeholder="숫자만 입력" title="카드번호">
                             <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
                         </span>
                     </div>
                 </li>
                 <li class="account-wrap">
                     <h5 class="account-tit">납부형태</h5>
-                    <button class="bt-dropdown big select-card-type" title="납부형태" tabindex="">일시불<span class="ico"></span></button>
+                    <button id="000" class="bt-dropdown big select-card-type" title="납부형태" tabindex="">일시불<span class="ico"></span></button>
                 </li>
                 <li class="account-wrap">
                     <h5 class="account-tit">유효기간</h5>
                     <div class="inputbox card-tbl">
                         <span class="input card-cell">
-                            <input type="text" class="only-number" placeholder="YYYY" maxlength="4" title="카드유효기간 년">
+                            <input type="number" class="only-number card-y" placeholder="YYYY" maxlength="4" title="카드유효기간 년">
                             <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
                         </span>
                         <span class="input card-cell">/</span>
                         <span class="input card-cell">
-                            <input type="text" class="c-month only-number" placeholder="MM" maxlength="2" title="카드유효기간 월">
+                            <input type="number" class="c-month only-number card-m" placeholder="MM" maxlength="2" title="카드유효기간 월">
                             <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
                         </span>
                     </div>
@@ -72,7 +72,7 @@
                     <h5 class="account-tit">카드비밀번호</h5>
                     <div class="inputbox">
                         <span class="input">
-                            <input type="text" class="only-number" minlength="2" maxlength="2" placeholder="앞2자리 **" title="카드비밀번호 앞2자리">
+                            <input type="password" class="only-number card-pw" minlength="2" maxlength="2" placeholder="앞2자리 **" title="카드비밀번호 앞2자리">
                             <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
                         </span>
                     </div>
@@ -97,7 +97,7 @@
                     <h5 class="account-tit">예금주 정보</h5>
                     <div class="inputbox">
                 <span class="input">
-                    <input type="text" class="no-bg-color" placeholder="송*익" title="예금주" disabled="">
+                    <input type="text" class="no-bg-color" placeholder="<%= svcInfo.mbrNm %>" title="예금주" disabled="disabled">
                     <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
                 </span>
                     </div>
@@ -110,7 +110,7 @@
                         </div>
                         <div class="inputbox input-context">
                     <span class="input">
-                        <input type="text" class="only-number account-number" placeholder="계좌번호 (숫자만 입력)" title="계좌번호">
+                        <input type="number" class="only-number account-number" placeholder="계좌번호 (숫자만 입력)" title="계좌번호">
                         <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
                     </span>
                         </div>
