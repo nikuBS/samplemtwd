@@ -4,39 +4,59 @@
  * Date: 2018.07.16
  */
 
-Tw.PaymentGetPoint = function (rootEl) {
-  this.$container = rootEl;
+Tw.PaymentGetPoint = function () {
+  this.$container = '';
   this.$window = $(window);
   this.$document = $(document);
 
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._validation = Tw.ValidationHelper;
-  this._history = new Tw.HistoryService(this.$container);
-  this._history.init('hash');
-
-  this.open();
 };
 
 Tw.PaymentGetPoint.prototype = {
-  open: function () {
+  open: function (rootEl) {
+    this.$container = rootEl;
     this._popupService.open({
       hbs: 'PA_05_04_L01'
-    }, $.proxy(this._bindEvent, this));
+    }, $.proxy(this._init, this));
+  },
+  _init: function ($layer) {
+    $layer.find('input[type="text"]').val('');
+    $layer.find('input[type="checkbox"]').removeAttr('checked');
+
+    this.$cardNumber = $layer.find('.account-wrap input');
+    this.$getButton = $layer.find('.footer-wrap button');
+
+    this._bindEvent($layer);
   },
   _bindEvent: function ($layer) {
-    $layer.on('keyup', 'input[type="text"]', $.proxy(this._onlyNumber, this));
-    $layer.on('click', 'button', $.proxy(this._getPoint, this));
+    this.$cardNumber.on('keyup', $.proxy(this._onlyNumber, this));
+    this.$getButton.on('click', $.proxy(this._getPoint, this, $layer));
   },
   _onlyNumber: function (event) {
     Tw.InputHelper.inputNumberOnly(event.currentTarget);
   },
-  _getPoint: function () {
-    if (this._isValid()) {
-
+  _getPoint: function ($layer) {
+    if (this._isValid($layer)) {
+      this._popupService.close();
+      this._apiService.request(Tw.API_CMD.BFF_07_0028, { 'ocbCardNum': $.trim($layer.find('.account-wrap input').val()) })
+        .done($.proxy(this._success, this))
+        .fail($.proxy(this._fail, this));
     }
   },
-  _isValid: function () {
-    return Tw.ValidationHelper.checkEmpty()
+  _success: function (res) {
+    var $target = this.$container.find('.point-box');
+    $target.find('.cashbag-point').text(res.result.availPt);
+    $target.find('.t-point').text(res.result.availTPt);
+    $target.find('.point-card-number').text(res.result.ocbCardNum);
+    $target.removeClass('none');
+  },
+  _fail: function () {
+    Tw.Logger.info('get point fail');
+  },
+  _isValid: function ($layer) {
+    return (this._validation.checkEmpty($layer.find('.account-wrap input').val(), Tw.MSG_PAYMENT.AUTO_A05) &&
+      this._validation.checkIsAgree($layer.find('input[type="checkbox"]'), Tw.MSG_PAYMENT.POINT_A03));
   }
 };

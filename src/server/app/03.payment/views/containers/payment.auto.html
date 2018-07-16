@@ -31,7 +31,7 @@
         <% include ../components/auto/payment.auto.complete-cancel.component.html %>
     </div>
     <!--// #contents -->
-    <% include ../../../../common/views/components/footer.component.html %>
+    <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
 </div>
 <% include ../components/javascript.component.html %>
 <script>
