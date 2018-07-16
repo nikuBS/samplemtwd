@@ -26,13 +26,15 @@ class MyTBillUpdate extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    const selectedSessionsRequest: Observable<any> = this.apiService.request(API_CMD.BFF_01_0005, {});
+    // const selectedSessionsRequest: Observable<any> = this.apiService.request(API_CMD.BFF_01_0005, {});
     const billTypeListRequest: Observable<any> = this.apiService.request(API_CMD.BFF_05_0025, {});
     Observable.combineLatest(
-      selectedSessionsRequest,
+      // selectedSessionsRequest,
       billTypeListRequest,
-    ).subscribe(([_selectedSessions, _billTypesList]) => {
-      const _svcInfo = this.getResult(_selectedSessions);
+    ).subscribe(([_billTypesList]) => {
+      // const _svcInfo = this.getResult(_selectedSessions);
+      // const _svcInfo = svcInfo;
+      console.log('~~~~~~~~svcInfo', svcInfo);
       const _curBillGuide = this.getResult(_billTypesList);
       const anotherBillGuideType = (_curBillGuide.curBillType === BILL_GUIDE_TYPE.TWORLD) ? BILL_GUIDE_TYPE.BILL_LETTER : BILL_GUIDE_TYPE.TWORLD;
       // svcInfo.svcAttrCd = 'M1';
@@ -41,14 +43,15 @@ class MyTBillUpdate extends TwViewController {
       // _curBillGuide['curBillTypeNm'] = '티월드';
 
       _curBillGuide['component'] = BILL_GUIDE_TYPE_COMPONENT[_curBillGuide['curBillType']];
-      _curBillGuide['svcInfo'] = _svcInfo;
+      _curBillGuide['svcInfo'] = svcInfo;
       console.log('~~~~~~~~~_curBillGuide', _curBillGuide);
-      console.log('~~~~~~~~~svcInfo', _svcInfo);
+      console.log('~~~~~~~~~svcInfo', svcInfo);
       this.renderView(res, 'bill/myt.bill.guidechange.update.html', {
         curBillGuide: _curBillGuide,
         curBillGuideData: JSON.stringify(_curBillGuide),
         isUpdate: true,
-        anotherBillGuideType: anotherBillGuideType
+        anotherBillGuideType: anotherBillGuideType,
+        svcInfo
       });
     });
   }
