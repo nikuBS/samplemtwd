@@ -92,7 +92,9 @@ Tw.PAYMENT_TYPE = {
 };
 
 Tw.PAYMENT_STRING = {
-  BANK_NAME: '은행명'
+  BANK_NAME: '은행명',
+  OK_CASHBAG: 'OK캐쉬백',
+  T_POINT: 'T포인트'
 };
 
 Tw.MSG_COMMON = {
@@ -161,6 +163,7 @@ Tw.MSG_RECHARGE = {
 Tw.MSG_PAYMENT = {
   SELECT_PRODUCT: '요금정보 선택',
   SELECT_CARD_TYPE: '납부형태 선택',
+  SELECT_POINT: '포인트 선택',
   REALTIME_A01: '납부 내역을 선택해주세요.',
   REALTIME_A02: '은행명을 선택해주세요.',
   REALTIME_A03: '계좌번호의 정합성이 맞지 않습니다.',
