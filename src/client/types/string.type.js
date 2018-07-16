@@ -249,3 +249,8 @@ Tw.MSG_AUTH = {
   WITHDRAW_A06: '회원해지를 하는 경우 SK텔레콤에서 제공하는 서비스를 사용할 수 없습니다. 해지하시겠습니까?'
 };
 
+Tw.RECHARGE_TYPE = {
+  RECHARGE: '충전',
+  CANCEL: '취소',
+  REGULAR: '자동'
+}
