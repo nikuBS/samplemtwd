@@ -35,16 +35,18 @@
             <h2><span class="blind">전체메뉴</span></h2>
             <div class="user-info-box">
                 <h3 class="blind">회원관리</h3>
+                <% if(svcInfo) { %>
                 <!-- 로그인 후 -->
-                <!--<div class="user-msg">
-                    <p><span class="txt-name all-menu-focus">박*준 고객님 </span><br/>반갑습니다.</p>
+                <div class="user-msg">
+                    <p><span class="txt-name all-menu-focus"><%= svcInfo.mbrNm %> 고객님 </span><br/>반갑습니다.</p>
                     <button class="ico-chat"><span class="blind">채팅하기</span></button>
                 </div>
                 <ul class="user-info">
                     <li><a href=""><span class="blind">회원정보</span></a></li>
                     <li><a href=""><span class="blind">회원설정</span></a></li>
-                </ul>-->
+                </ul>
                 <!-- //로그인 후 -->
+                <% } else { %>
                 <!-- 로그인 전-->
                 <div class="user-msg">
                     <p class="logoff all-menu-focus">로그인하시면 <br/><span class="txt-name">더 많은 정보와 서비스를 </span><br/>이용하실 수 있습니다.</p>
@@ -52,6 +54,7 @@
                     <button class="ico-chat"><span class="blind">채팅하기</span></button>
                 </div>
                 <!-- //로그인 전-->
+                <% } %>
                 <ul class="t-menu">
                     <li><a href="">T World 다이렉트</a></li>
                     <li><a href="">T 로밍</a></li>

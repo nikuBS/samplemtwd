@@ -14,7 +14,7 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div class="wrap back-reload">
+<div id="home" class="wrap back-reload" data-layerType="<%= layerType %>">
     <h1 class="blind">SKT</h1>
     <!-- #header
     <div id="header" class="header-wrap">
@@ -274,7 +274,7 @@
                                     리필쿠폰을 사용할 수 있는<br/><em class="tx-bold">요금제</em>가 아닙니다.
                                 </dd>
                                 <dd>
-                                    <span class="tx-noti"><em class="tx-customer"><%= svcInfo.custNm %></em>님께 데이터 충전이 가능한<br/><em
+                                    <span class="tx-noti"><em class="tx-customer"><%= svcInfo.mbrNm %></em>님께 데이터 충전이 가능한<br/><em
                                         class="tx-pt">리필 쿠폰이 <%= refillData.refillCoupon.length %>장</em> 있습니다.</span>
                                 </dd>
                             </dl>
@@ -430,7 +430,7 @@
         </div>
         <!--// #contents -->
     </div>
-    <% include ../../../../common/views/components/footer.component.html %>
+    <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
 </div>
 <% if (giftData) { %>
 <% if (giftData.giftSender) { %>
@@ -549,7 +549,7 @@
 <script>
   $(document).ready(function () {
     var lineRegisterLayer = new Tw.AuthLineRegister();
-    new Tw.HomeMain($('.wrap'), lineRegisterLayer);
+    new Tw.HomeMain($('#home'), lineRegisterLayer);
   });
 </script>
 <% include ../components/end.component.html %>
