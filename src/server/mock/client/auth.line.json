@@ -3,7 +3,7 @@
   "msg": "",
   "result":
   {
-    "M": [{
+    "m": [{
       "svcMgmtNum": "7100000001",
       "svcGr": "A",
       "svcAttrCd": "M1",
@@ -59,7 +59,7 @@
       "addr": "인천시",
       "svcScrbDtm": "20171125102458"
     }],
-    "S": [{
+    "s": [{
       "svcMgmtNum": "7100000001",
       "svcGr": "A",
       "svcAttrCd": "S1",
@@ -82,7 +82,7 @@
       "addr": "인천시",
       "svcScrbDtm": "20171125102458"
     }],
-    "O": [{
+    "o": [{
       "svcMgmtNum": "7100000001",
       "svcGr": "A",
       "svcAttrCd": "O1",

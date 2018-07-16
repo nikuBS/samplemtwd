@@ -9,7 +9,7 @@ import { API_CMD, API_CODE } from '../../../types/api-command.type';
 import FormatHelper from '../../../utils/format.helper';
 import { Observable } from 'rxjs/Observable';
 import { PAYMENT_VIEW } from '../../../types/string.type';
-import { REQUEST_VALUE } from '../../../types/bff-common.type';
+import {REQUEST_VALUE, SVC_ATTR} from '../../../types/bff-common.type';
 import StringHelper from '../../../utils/string.helper';
 
 class PaymentPointController extends TwViewController {
@@ -121,11 +121,16 @@ class PaymentPointController extends TwViewController {
 
   private getData(svcInfo: any, cashbagAndT: any, rainbowPoint: any): any {
     return {
-      svcInfo,
+      svcInfo: this.getSvcInfo(svcInfo),
       cashbagAndT,
       rainbowPoint,
       isError: this.isError(cashbagAndT) || this.isError(rainbowPoint)
     };
+  }
+
+  private getSvcInfo(svcInfo: any): any {
+    svcInfo.svcName = SVC_ATTR[svcInfo.svcAttrCd];
+    return svcInfo;
   }
 
   private isError(data: any): boolean {

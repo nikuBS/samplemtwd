@@ -13,7 +13,7 @@ class AuthLineEmptyRegister extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    res.render('line/auth.line.empty-register.html');
+    res.render('line/auth.line.empty-register.html', { svcInfo });
   }
 }
 

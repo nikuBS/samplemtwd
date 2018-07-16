@@ -1,26 +1,35 @@
 export interface ISvcInfo {
-  custNm: string;
-  svcCd: string;
+  svcMgmtNum: string;
   svcNum: string;
-  svcNickNm: string;
+  svcGr: string;
+  svcAttrCd: string;
   repSvcYn: string;
+  nickNm: string;
+  addr: string;
   svcCnt: string;
+  mbrNm: string;
 }
 
 export class SvcInfoModel implements ISvcInfo {
-  custNm: string = '';
-  svcCd: string = '';
+  svcMgmtNum: string = '';
   svcNum: string = '';
-  svcNickNm: string = '';
+  svcGr: string = '';
+  svcAttrCd: string = '';
   repSvcYn: string = '';
+  nickNm: string = '';
+  addr: string = '';
   svcCnt: string = '';
+  mbrNm: string = '';
 
   constructor(object) {
-    this.custNm = object.custNm;
-    this.svcCd = object.svcCd;
+    this.svcMgmtNum = object.svcMgmtNum;
     this.svcNum = object.svcNum;
-    this.svcNickNm = object.svcNickNm;
-    this.repSvcYn = object.respSvcYn;
+    this.svcGr = object.svcGr;
+    this.svcAttrCd = object.svcAttrCd;
+    this.repSvcYn = object.repSvcYn;
+    this.nickNm = object.nickNm;
+    this.addr = object.addr;
     this.svcCnt = object.svcCnt;
+    this.mbrNm = object.mbrNm;
   }
 }
