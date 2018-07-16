@@ -337,6 +337,7 @@ Tw.MSG_AUTH = {
 };
 
 Tw.RECHARGE_TYPE = {
+  TOTAL: '전체',
   RECHARGE: '충전',
   CANCEL: '취소',
   REGULAR: '자동'
