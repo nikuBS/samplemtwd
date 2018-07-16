@@ -22,7 +22,6 @@ Tw.PopupService.prototype = {
       this._prevHashList.pop();
       Tw.Logger.info('[Popup Close]');
       this._popupClose();
-      this._prevHash = undefined;
     }
   },
   _onOpenPopup: function () {
@@ -87,12 +86,13 @@ Tw.PopupService.prototype = {
   _open: function (option) {
     skt_landing.action.popup.open(option, $.proxy(this._onOpenPopup, this));
   },
-  open: function (option, openCallback) {
+  open: function (option, openCallback, closeCallback) {
     this._setOpenCallback(openCallback);
+    this._setCloseCallback(closeCallback);
     this._addHash();
     this._open(option);
   },
-  openAlert: function (message, title, confirmCallback) {
+  openAlert: function (message, title, confirmCallback, closeCallback) {
     var option = {
       title: title || Tw.POPUP_TITLE.NOTIFY,
       close_bt: true,
@@ -104,10 +104,11 @@ Tw.PopupService.prototype = {
       }]
     };
     this._setConfirmCallback(confirmCallback);
+    this._setCloseCallback(closeCallback);
     this._addHash();
     this._open(option);
   },
-  openConfirm: function (title, message, contents, openCallback, confirmCallback) {
+  openConfirm: function (title, message, contents, openCallback, confirmCallback, closeCallback) {
     var option = {
       title: title,
       close_bt: true,
@@ -124,10 +125,11 @@ Tw.PopupService.prototype = {
     };
     this._setOpenCallback(openCallback);
     this._setConfirmCallback(confirmCallback);
+    this._setCloseCallback(closeCallback);
     this._addHash();
     this._open(option);
   },
-  openChoice: function (title, list, type, openCallback) {
+  openChoice: function (title, list, type, openCallback, closeCallback) {
     var option = {
       hbs: 'choice',
       title: title,
@@ -136,17 +138,17 @@ Tw.PopupService.prototype = {
       list: list
     };
     this._setOpenCallback(openCallback);
+    this._setCloseCallback(closeCallback);
     this._addHash();
     this._open(option);
   },
   openSelect: function () {
 
   },
-  close: function (closeCallback) {
+  close: function () {
     // Tw.Logger.log('[Popup] Call Close', location.hash);
     if ( /popup/.test(location.hash) ) {
       history.back();
-      this._setCloseCallback(closeCallback);
     }
   }
 };
