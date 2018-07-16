@@ -39,6 +39,7 @@ Tw.PaymentRealtime.prototype = {
     this.$container.on('click', '.select-card-type', $.proxy(this._selectCardType, this));
     this.$container.on('click', '.get-point', $.proxy(this._getPoint, this));
     this.$container.on('click', '.get-cashbag-point', $.proxy(this._getCashbagPoint, this));
+    this.$container.on('click', '.select-point', $.proxy(this._selectPoint, this));
     this.$container.on('click', '.pay', $.proxy(this._pay, this));
   },
   _onlyNumber: function (event) {
@@ -129,12 +130,12 @@ Tw.PaymentRealtime.prototype = {
   },
   _selectCardType: function (event) {
     var $target = $(event.currentTarget);
-    this._popupService.openChoice(Tw.MSG_PAYMENT.SELECT_CARD_TYPE, this._getTypeList(), 'type2', $.proxy(this._onOpenCardType, this, $target));
+    this._popupService.openChoice(Tw.MSG_PAYMENT.SELECT_CARD_TYPE, this._getTypeList(), 'type2', $.proxy(this._selectPopupCallback, this, $target));
   },
-  _onOpenCardType: function ($target, $layer) {
-    $layer.on('click', '.popup-choice-list', $.proxy(this._setCardType, this, $target));
+  _selectPopupCallback: function ($target, $layer) {
+    $layer.on('click', '.popup-choice-list', $.proxy(this._setSelectedValue, this, $target));
   },
-  _setCardType: function ($target, event) {
+  _setSelectedValue: function ($target, event) {
     var $selectedValue = $(event.currentTarget);
     $target.attr('id', $selectedValue.find('button').attr('id'));
     $target.text($selectedValue.text());
@@ -156,6 +157,10 @@ Tw.PaymentRealtime.prototype = {
   },
   _pointFail: function () {
     Tw.Logger.info('point request fail');
+  },
+  _selectPoint: function (event) {
+    var $target = $(event.currentTarget);
+    this._popupService.openChoice(Tw.MSG_PAYMENT.SELECT_POINT, this._getPointList(), 'type3', $.proxy(this._selectPopupCallback, this, $target));
   },
   _pay: function (event) {
     event.preventDefault();
@@ -190,6 +195,12 @@ Tw.PaymentRealtime.prototype = {
       { 'attr': 'id="011"', text: Tw.PAYMENT_TYPE['011'] },
       { 'attr': 'id="012"', text: Tw.PAYMENT_TYPE['012'] },
       { 'attr': 'id="024"', text: Tw.PAYMENT_TYPE['024'] }
+    ];
+  },
+  _getPointList: function () {
+    return [
+      { 'attr': 'id="10"', text: Tw.PAYMENT_STRING.OK_CASHBAG },
+      { 'attr': 'id="11"', text: Tw.PAYMENT_STRING.T_POINT }
     ];
   }
 };
