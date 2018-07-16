@@ -65,7 +65,17 @@
                                     <%= limitData.currentTopUpLimit %> 원
                                 </span>
                             </li>
+                            <% const regularTopUp = limitData.regularTopUpYn === "Y"%>
+                            <% if (regularTopUp) { %>
+                            <li id="recharge-regular">
+                                <span class="title">매월 자동 충전</span>
+                                <span class="price"><%= limitData.regularTopUpAmt %></span>
+                            </li>
+                            <% } %>
                         </ul>
+                        <% if (regularTopUp) { %>
+                        <a id="btn-cancel-regular">자동 충전 취소</a>
+                        <% } %>
                     </dd>
                 </dl>
             </div>
@@ -73,17 +83,16 @@
                 <dl>
                     <dt>데이터 차단 설정</dt>
                     <dd class="box-block-list1 btm-border">
-                        <ul>
+                        <ul data-limit-tmth="<%= limitData.dataLimitedTmthYn === 'Y'%>" data-limit-regular="<%= limitData.dataLimitedYn === 'Y'%>" data-recharge-regular=<%= regularTopUp%>>
                             <li>
                                 <span class="title">이번 달</span>
                                 <span class="toggles">
                                     <span class="widget">
                                         <span class="widget-box switch">
-                                            <% const dataLimitedTmth = limitData.dataLimitedTmthYn === 'Y'; %>
-                                            <span class="btn-switch type1 <%= dataLimitedTmth ? 'on' : '' %>" id="limit-tmth">
+                                            <span class="btn-switch type1" id="limit-tmth">
                                                 <span>해제</span>
-                                                <span class="switch-style" role="checkbox" aria-checked="false">
-                                                    <input type="checkbox" <%= dataLimitedTmth ? 'checked' : '' %>>
+                                                <span class="switch-style" role="checkbox">
+                                                    <input type="checkbox">
                                                     <span class="blind">ON/OFF스위치</span>
                                                 </span>
                                                 <span>차단</span>
@@ -97,11 +106,10 @@
                                 <span class="toggles">
                                     <span class="widget">
                                         <span class="widget-box switch">
-                                            <% const dataLimited = limitData.dataLimitedYn === 'Y'; %>
-                                            <span class="btn-switch type1 <%= dataLimited ? 'on' : '' %>" id="limit-regular">
+                                            <span class="btn-switch type1" id="limit-regular">
                                                 <span>해제</span>
-                                                <span class="switch-style" role="checkbox" aria-checked="false">
-                                                    <input type="checkbox" <%= dataLimited ? 'checked' : '' %>>
+                                                <span class="switch-style" role="checkbox">
+                                                    <input type="checkbox">
                                                     <span class="blind">ON/OFF스위치</span>
                                                 </span>
                                                 <span>차단</span>
@@ -126,7 +134,7 @@
             <ul class="bt-slice">
                 <li class="bt-blue1">
                     <!-- Dimmed Case는 button에 disabled속성 추가 -->
-                    <a href="#step-type"><button <%= limitData.blockYn === 'Y' ? 'disabled' : '' %>>데이터 한도 요금 충전하기</button></a>
+                    <a href="#step-type"><button id="btn-go-type">데이터 한도 요금 충전하기</button></a>
                 </li>
                 <li class="bt-white1">
                     <a href="/recharge/limit/history">데이터 한도 요금 충전 내역</a>

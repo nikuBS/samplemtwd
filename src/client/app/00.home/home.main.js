@@ -27,14 +27,19 @@ Tw.HomeMain.prototype = {
     }
     this.$giftCard = this.$container.find('#gift-card');
 
-    this._lineRegisterLayer.getLineInfo();
+    this._openPopup();
   },
   _bindEvent: function () {
     this.$container.on('click', '#refill-product', $.proxy(this._openRefillProduct, this));
     this.$container.on('click', '#gift-product', $.proxy(this._openGiftProduct, this));
     this.$container.on('click', '#gift-balance', $.proxy(this._getGiftBalance, this));
   },
+  _openPopup: function () {
+    var layerType = this.$container.data('layertype');
+    console.log(layerType);
 
+    this._lineRegisterLayer.openRegisterLinePopup(layerType);
+  },
 
   // 리필하기
   _openRefillProduct: function () {

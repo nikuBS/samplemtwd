@@ -7,7 +7,6 @@
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
-import LineList from '../../../../mock/server/auth.line';
 import FormatHelper from '../../../../utils/format.helper';
 import { LINE_NAME, SVC_ATTR } from '../../../../types/bff-common.type';
 import DateHelper from '../../../../utils/date.helper';
@@ -18,13 +17,16 @@ class AuthLine extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    let lineInfo = this.parseLineList(LineList.result);
     this.apiService.request(API_CMD.BFF_03_0004, {}).subscribe((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
         const list = resp.result;
-        lineInfo = this.parseLineList(list);
+        const lineInfo = this.parseLineList(list);
+        res.render('line/auth.line.html', Object.assign(lineInfo, {
+          svcInfo
+        }));
+      } else {
+        res.send('api error');
       }
-      res.render('line/auth.line.html', lineInfo);
     });
   }
 

@@ -271,6 +271,34 @@
   padding-bottom: 0;
 }
 
+.accordion .acco-list .acco-box.imp-view > .acco-tit button:after {
+  background-position: 0 -21.875rem;
+}
+
+.accordion .acco-list .acco-box.imp-view > .acco-cont {
+  display: block;
+  height: auto;
+  overflow: auto;
+  visibility: visible;
+  padding: 1.125rem 0 2.375rem;
+}
+
+.accordion .acco-list .acco-box.imp-view > .acco-cont .bt-slice {
+  margin-top: 0.5rem;
+}
+
+.accordion .acco-list .acco-box.imp-view > .acco-cont > .list-dot > li:last-child .ex-txt {
+  margin-bottom: 0;
+}
+
+.accordion .acco-list .acco-box.imp-view > .acco-tit + .acco-cont {
+  padding: 0.5rem 0 2.375rem;
+}
+
+.accordion .acco-list .acco-box.imp-view:last-of-type > .acco-cont {
+  padding-bottom: 0;
+}
+
 .accordion .acco-style.btn-hold .acco-list .acco-box .acco-tit {
   display: block;
   position: relative;

@@ -4,7 +4,7 @@ const billguide_BFF_05_00037 = {
   'msg': 'success',
   'result':
     {
-      'useObjYn': 'N',//이용정지해제 버튼
+      'useObjYn': 'Y',//이용정지해제 버튼
       'maxConnDt': '20180731',
       'evtNum': null,
       'colMgmtTypCd': null,
