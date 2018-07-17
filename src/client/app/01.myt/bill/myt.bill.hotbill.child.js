@@ -33,7 +33,7 @@ Tw.MyTBillHotBillChild.prototype = {
     if ( this.$childSelect ) {
       var strItems = this.$container.find('[data-items]').attr('data-items');
       this._children = JSON.parse(strItems);
-      _.forEach(this._children, function(child){
+      _.forEach(this._children, function (child) {
         child.svcNum = child.svcNum.replace(/(\d{3})(\d{2})(\d{2})(\d{2})(\d{2})/, '$1-$2**-$4**');
       });
     }
@@ -78,9 +78,10 @@ Tw.MyTBillHotBillChild.prototype = {
       } else {
         var billData = resp.result.hotBillInfo;
         var day = parseInt(resp.result.stdDateHan.match(/(\d+)\uC77C/i)[1], 10);
-        var target = _.find(this._children, {svcMgmtNum: resp.result.svcMgmtNum});
+        var target = _.find(this._children, { svcMgmtNum: resp.result.svcMgmtNum });
         this.$deviceInfo.text(target.childEqpMdNm);
         this.$svcNum.text(target.svcNum);
+        this._preBillAvailable = (billData.bf_mth_yn === 'Y');
 
         //자녀 핸드폰: 7일까지 전월요금보기 보이기
         if ( day <= 7 ) {
@@ -115,19 +116,23 @@ Tw.MyTBillHotBillChild.prototype = {
   },
 
   _showChildrenChoice: function () {
-    var members = [];
-    var item = null;
-    //자녀가 없을 경유 메뉴 접근 불가
-
-    this._children.forEach(function (member) {
-      item = {
-        attr: 'id=' + member.svcMgmtNum,
-        text: member.svcNum + (member.childEqpMdNm ? '(' + member.childEqpMdNm + ')' : '')
-      };
-      members.push(item);
-    });
-    this._popupService.openChoice(Tw.MSG_MYT.HOTBILL_MEMBER_POPUP_TITLE, members, 'type1', $.proxy(this._onOpenChildrenChoice, this));
-
+    if ( this._preBillAvailable ) {
+      var members = [];
+      var item = null;
+      this._children.forEach(function (member) {
+        item = {
+          attr: 'id=' + member.svcMgmtNum,
+          text: member.svcNum + (member.childEqpMdNm ? '(' + member.childEqpMdNm + ')' : '')
+        };
+        members.push(item);
+      });
+      this._popupService.openChoice(Tw.MSG_MYT.HOTBILL_MEMBER_POPUP_TITLE, members, 'type1', $.proxy(this._onOpenChildrenChoice, this));
+    } else {
+      this._popupService.open({
+        hbs: 'MY_03_01_01_L03_case',
+        data: { svcNum: this._svcNum, svcType: this._svcAttrCd === this.SVC_TYPE.MOBILE ? '휴대폰' : 'T Pocket-Fi' }
+      });
+    }
   },
   _onOpenChildrenChoice: function ($popup) {
     $popup.one('click', '.popup-choice-list button', $.proxy(this._onClickChildButton, this));
