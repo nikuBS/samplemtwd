@@ -68,7 +68,8 @@ Tw.AuthLineCopRegister.prototype = {
       .done($.proxy(this._successBizSession, this))
       .fail($.proxy(this._failBizSession, this));
   },
-  _successBizSession: function (type, resp) {
+  _successBizSession: function (resp) {
+    console.log(resp);
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       var svcMgmtNum = resp.result.svcMgmtNum;
       this._sendRegisterBiz(svcMgmtNum);
@@ -86,7 +87,8 @@ Tw.AuthLineCopRegister.prototype = {
       .done($.proxy(this._successRegisterBiz, this))
       .fail($.proxy(this._failRegisterBiz, this));
   },
-  _successRegisterBiz: function () {
+  _successRegisterBiz: function (resp) {
+    console.log(resp);
   },
   _failRegisterBiz: function () {
   },
