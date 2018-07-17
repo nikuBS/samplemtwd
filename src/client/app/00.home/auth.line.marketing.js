@@ -18,19 +18,19 @@ Tw.AuthLineMarketing = function () {
 };
 
 Tw.AuthLineMarketing.prototype = {
-  openMarketingOffer: function (svcMgmtNum, showName) {
+  openMarketingOffer: function (svcMgmtNum, showName, svcNum) {
     this.svcMgmtNum = svcMgmtNum;
     this._apiService.request(Tw.API_CMD.BFF_03_0014, {}, {}, svcMgmtNum)
-      .done($.proxy(this._successGetMarketingOffer, this, showName))
+      .done($.proxy(this._successGetMarketingOffer, this, showName, svcNum))
       .fail($.proxy(this._failGetMargetingOffer, this));
   },
-  _successGetMarketingOffer: function (showName, resp) {
+  _successGetMarketingOffer: function (showName, svcNum, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._openMarketingOfferPopup(showName, resp.result);
     } else {
       console.log('_failGetMargetingOffer');
       var result = {
-        svcNum: '0102222333',
+        svcNum: svcNum,
         agr201Yn: 'Y',
         agr203Yn: 'N'
       };

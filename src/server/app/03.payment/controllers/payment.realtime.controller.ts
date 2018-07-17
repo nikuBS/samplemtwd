@@ -34,18 +34,24 @@ class PaymentRealtimeController extends TwViewController {
 
   private parseData(list: any): any {
     if (!FormatHelper.isEmpty(list)) {
+      if (list.length === 1) {
+        list.isAlone = true;
+      }
+      list.totalAmount = 0;
       list.map((data) => {
         data.invYearMonth = DateHelper.getShortDateWithFormat(data.invDt, 'YYYY.MM');
         data.intMoney = this.removeZero(data.invAmt);
-        data.invMoney = FormatHelper.addComma(data.intMoney.toString());
+        data.invMoney = FormatHelper.addComma(data.intMoney);
         data.svcName = SVC_CD[data.svcCd];
+        list.totalAmount += parseInt(data.intMoney, 10);
       });
     }
     list.code = API_CODE.CODE_00;
+    list.totalAmount = FormatHelper.addComma(list.totalAmount.toString());
     return list;
   }
 
-  private removeZero(input: string): any {
+  private removeZero(input: string): string {
     let isNotZero = false;
     for (let i = 0; i < input.length; i++) {
       if (!isNotZero) {

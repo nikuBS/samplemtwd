@@ -28,7 +28,7 @@ Tw.UIService.prototype = {
         Tw.Logger.info('[Back Loaded]');
         if ( $('.back-reload').length > 0 ) {
           Tw.Logger.info('[Prev]', document.referrer);
-          // document.location.reload();
+          document.location.reload();
         }
       }
     });

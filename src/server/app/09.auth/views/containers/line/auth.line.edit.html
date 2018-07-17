@@ -56,7 +56,11 @@
                                         <span class="ico-move" aria-hidden="true"><span class="blind">목록 이동</span></span><!-- 접근성 수정 -->
                                         <div class="state-box">
                                             <p class="ti"><%= line.showName %></p><!-- 접근성 수정 -->
+                                            <% if(category !== 's') { %>
                                             <span class="ph"><%= line.svcNum %></span>
+                                            <% } else { %>
+                                            <span class="ph"><%= line.addr %></span>
+                                            <% } %>
                                         </div>
                                         <div class="state-bt">
                                             <button class="bt-sort up"><span class="blind">해당 회선 위로</span></button>
@@ -72,8 +76,12 @@
                                         <button class="bt-active" type="button"><span class="blind">회선 활성화 하기</span></button>
                                         <span class="ico-move" aria-hidden="true"><span class="blind">목록 이동</span></span><!-- 접근성 수정 -->
                                         <div class="state-box">
-                                            <p class="ti"><%= line.showName %></p>
+                                            <p class="ti"><%= line.showName %></p><!-- 접근성 수정 -->
+                                            <% if(category !== 's') { %>
                                             <span class="ph"><%= line.svcNum %></span>
+                                            <% } else { %>
+                                            <span class="ph"><%= line.addr %></span>
+                                            <% } %>
                                         </div>
                                         <div class="state-bt">
                                             <button class="bt-sort up"><span class="blind">해당 회선 위로</span></button>

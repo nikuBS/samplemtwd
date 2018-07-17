@@ -17,6 +17,7 @@ Tw.RechargeCookizProcess = function (rootEl) {
 };
 
 Tw.RechargeCookizProcess.prototype = {
+  DEFAULT_AMOUNT: 1000,
   target: {
     name: '',
     phone: '',
@@ -27,7 +28,7 @@ Tw.RechargeCookizProcess.prototype = {
   provider: {
     prodId: '',
     prodName: '',
-    amount: 7000
+    amount: 5000
   },
 
   _init: function () {
@@ -35,6 +36,13 @@ Tw.RechargeCookizProcess.prototype = {
       if ( res.code === '00' ) {
         var result = res.result;
         this.provider.amount = Number(result.currentTopUpLimit);
+
+        if ( this.provider.amount < this.target.amount ) {
+          this.target.amount = this.DEFAULT_AMOUNT;
+          this._setAmount();
+        }
+
+        this._setAvailableAmount();
       }
     };
 
@@ -50,10 +58,11 @@ Tw.RechargeCookizProcess.prototype = {
 
   _bindEvent: function () {
     this.$container.on('click', '#btn_prev', $.proxy(this._goBack, this));
-    this.$container.on('click', '.btn_confirm', $.proxy(this._goToMain, this));
     this.$container.on('click', '#btn_addr', $.proxy(this._onClickBtnAddr, this));
     this.$container.on('click', '.btn_go_history', $.proxy(this._goHistory, this));
     this.$container.on('click', '.close-step', $.proxy(this._onCloseProcess, this));
+    this.$container.on('click', '.btn_confirm', $.proxy(this._goToCookizMain, this));
+    this.$container.on('input', '.input input', $.proxy(this._setPhoneNumber, this));
     this.$container.on('click', '.tube-select', $.proxy(this._onClickSelectPopup, this));
     this.$container.on('click', '.btn_validateStep1', $.proxy(this._validateCookizStep1, this));
     this.$container.on('click', '.btn_select_amount', $.proxy(this._onClickSelectAmount, this));
@@ -71,6 +80,16 @@ Tw.RechargeCookizProcess.prototype = {
     var params = resp;
     var phoneNumber = params.phoneNumber.replace(/-/gi, '');
     this.$container.find('.inp_phone').val(phoneNumber);
+  },
+
+  _setPhoneNumber: function (e) {
+    Tw.InputHelper.inputNumberOnly(e.currentTarget);
+    this.target.phone = $(e.currentTarget).val();
+    if ( this.target.phone.length <= 0 ) {
+      $('.btn_validateRequestStep1').prop('disabled', true);
+    } else {
+      $('.btn_validateRequestStep1').prop('disabled', false);
+    }
   },
 
   _setAvailableAmount: function () {
@@ -111,8 +130,8 @@ Tw.RechargeCookizProcess.prototype = {
   },
 
   _setAmount: function () {
-    $('.tx-data.money .tx-bold').text(Tw.FormatHelper.addComma(this.target.amount));
-    $('.tx-data .num.amount').text(Tw.FormatHelper.addComma(this.target.amount));
+    $('.tx-data.money .tx-bold').text(Tw.FormatHelper.addComma(this.target.amount.toString()));
+    $('.tx-data .num.amount').text(Tw.FormatHelper.addComma(this.target.amount.toString()));
   },
 
   _onClickSelectPopup: function () {
@@ -176,6 +195,8 @@ Tw.RechargeCookizProcess.prototype = {
   },
 
   _validateCookizStep1: function () {
+    $('.money-select-comment em').text(Tw.FormatHelper.addComma(this.provider.amount.toString()) + Tw.CURRENCY_UNIT.WON);
+
     this._go('#step2');
   },
 
@@ -191,15 +212,26 @@ Tw.RechargeCookizProcess.prototype = {
 
   _onSuccessCookizComplete: function (res) {
     if ( res.code === '00' ) {
-      $('.recharge_amount').text(Tw.FormatHelper.addComma(this.target.amount));
+      $('.recharge_amount').text(Tw.FormatHelper.addComma(String(this.target.amount)));
       this._go('#complete');
     } else {
       this._sendFail(res);
     }
   },
 
+  _getCurrentTabIndex: function () {
+    var $currentTab = $('[aria-selected="true"]').first();
+    return $('[role=tablist]').children().index($currentTab);
+  },
+
   _onCloseProcess: function () {
-    this._popupService.openConfirm(Tw.POPUP_TITLE.NOTIFY, Tw.MSG_GIFT.TING_A12, null, null, $.proxy(this._goToMain, this));
+    if ( this._getCurrentTabIndex() === 0 ) {
+      this._popupService.openConfirm(Tw.POPUP_TITLE.NOTIFY, Tw.MSG_GIFT.COOKIZ_A07, null, null, $.proxy(this._goToMain, this));
+    }
+
+    if ( this._getCurrentTabIndex() === 1 ) {
+      this._popupService.openConfirm(Tw.POPUP_TITLE.NOTIFY, Tw.MSG_GIFT.TING_A13, null, null, $.proxy(this._goToMain, this));
+    }
   },
 
   _sendFail: function (res) {
@@ -209,7 +241,11 @@ Tw.RechargeCookizProcess.prototype = {
   },
 
   _goToMain: function () {
-    this._go('#main');
+    this._go('main');
+  },
+
+  _goToCookizMain: function () {
+    this._goBack();
   },
 
   _goHistory: function () {

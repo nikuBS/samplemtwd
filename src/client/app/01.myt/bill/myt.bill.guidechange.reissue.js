@@ -140,7 +140,7 @@ Tw.MyTBillReissue.prototype = {
     this._popupService.close();
     if ( params.code && params.code === 'ZORDE1206' ) {
       // 기 발행 건인 경우에 대한 처리
-      this._popupService.openAlert(Tw.MSG_MYT.BILL_GUIDE_REISSUE_00, Tw.MSG_MYT.BILL_GUIDE_REISSUE_03);
+      this._popupService.openAlert(Tw.MSG_MYT.BILL_GUIDE_REISSUE_03, Tw.MSG_MYT.BILL_GUIDE_REISSUE_00);
     }
     else {
       // 발행 된 건이 없는 경우

@@ -50,7 +50,7 @@ gulp.task('js-util', function () {
     'src/client/common/**/*.js'])
     .pipe(concat('util.js'))
     .pipe(gulp.dest(dist + 'js'))
-    //.pipe(uglify())
+    .pipe(uglify())
     .on('error', function (err) {
       gutil.log(gutil.colors.red('[Error]'), err.toString());
     })
@@ -63,7 +63,7 @@ appNames.map(function (app, index) {
     return gulp.src('src/client/app/0' + index + '.' + app + '/**/*.js')
       .pipe(concat(app + '.js'))
       .pipe(gulp.dest(dist + 'js'))
-      //.pipe(uglify())
+      .pipe(uglify())
       .on('error', function (err) {
         gutil.log(gutil.colors.red('[Error]'), err.toString());
       })
@@ -100,7 +100,7 @@ gulp.task('js-rb-sprint3', function () {
   return gulp.src('src/client/right-brain/js-sprint3/**/*.js')
     .pipe(concat('ui-sprint3.js'))
     .pipe(gulp.dest(dist + 'js'))
-    //.pipe(uglify())
+    .pipe(uglify())
     .on('error', function (err) {
       gutil.log(gutil.colors.red('[Error]'), err.toString());
     })

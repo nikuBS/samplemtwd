@@ -18,6 +18,7 @@ Tw.RechargeTingProcess = function (rootEl) {
 };
 
 Tw.RechargeTingProcess.prototype = {
+  DEFAULT_AMOUNT: 1000,
   target: {
     name: '',
     phone: '',
@@ -66,13 +67,16 @@ Tw.RechargeTingProcess.prototype = {
 
   _setProvider: function (response) {
     if ( response.code === '00' ) {
-      this.provider.amount = Number(response.result.transferableAmt);
+      var result = response.result;
+      this.provider.amount = Number(result.transferableAmt);
+
+      if ( this.provider.amount < this.target.amount ) {
+        this.target.amount = this.DEFAULT_AMOUNT;
+        this._setAmount();
+      }
+
       this._setAvailableAmount();
     }
-  },
-
-  _onCloseProcess: function () {
-    this._popupService.openConfirm(Tw.POPUP_TITLE.NOTIFY, Tw.MSG_GIFT.TING_A12, null, null, $.proxy(this._goToMain, this));
   },
 
   _setPhoneNumber: function (e) {
@@ -224,6 +228,21 @@ Tw.RechargeTingProcess.prototype = {
   _sendFail: function (res) {
     if ( res.data ) {
       this._popupService.openAlert(res.data.orgDebugMessage);
+    }
+  },
+
+  _getCurrentTabIndex: function () {
+    var $currentTab = $('[aria-selected="true"]').first();
+    return $('[role=tablist]').children().index($currentTab);
+  },
+
+  _onCloseProcess: function () {
+    if ( this._getCurrentTabIndex() === 0 ) {
+      this._popupService.openConfirm(Tw.POPUP_TITLE.NOTIFY, Tw.MSG_GIFT.TING_A12, null, null, $.proxy(this._goToMain, this));
+    }
+
+    if ( this._getCurrentTabIndex() === 1 ) {
+      this._popupService.openConfirm(Tw.POPUP_TITLE.NOTIFY, Tw.MSG_GIFT.TING_A13, null, null, $.proxy(this._goToMain, this));
     }
   },
 
