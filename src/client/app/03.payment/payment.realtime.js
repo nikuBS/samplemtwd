@@ -38,6 +38,7 @@ Tw.PaymentRealtime.prototype = {
     this.$cardTypeSelector = this.$container.find('.select-card-type');
     this.$pointSelector = this.$container.find('.select-point');
     this.$point = this.$container.find('.point');
+    this.$pointCardNumber = this.$container.find('.point-card-number');
     this.$pointPw = this.$container.find('.point-pw');
     this.$pointBox = this.$container.find('.point-box');
 
@@ -296,21 +297,28 @@ Tw.PaymentRealtime.prototype = {
     }
   },
   _isPointValid: function () {
+    var $isSelectedPoint = this.$pointSelector.attr('id');
+    var className = '.cashbag-point';
+    if ($isSelectedPoint === Tw.PAYMENT_POINT_VALUE.T_POINT) {
+      className = '.t-point';
+    }
     return (this._isGetPoint() &&
       this._validation.checkEmpty(this.$point.val(), Tw.MSG_PAYMENT.POINT_A07) &&
-      this._validation.checkIsAvailablePoint(this.$point.val(), this.$pointBox.find('.cashbag-point').text(), Tw.MSG_PAYMENT.REALTIME_A12) &&
+      this._validation.checkIsAvailablePoint(this.$point.val(),
+        parseInt(this.$pointBox.find(className).attr('id'), 10),
+        Tw.MSG_PAYMENT.REALTIME_A12) &&
       this._validation.checkIsMore(this.$point.val(), 1000, Tw.MSG_PAYMENT.REALTIME_A08) &&
       this._validation.checkIsTenUnit(this.$point.val(), Tw.MSG_PAYMENT.POINT_A06) &&
       this._validation.checkEmpty(this.$pointPw.val(), Tw.MSG_PAYMENT.AUTO_A04));
   },
   _makeRequestDataForPoint: function () {
     var reqData = {
-      settleWayCd: this.$pointSelector.attr('id'),
+      settlWayCd: this.$pointSelector.attr('id'),
       ocbPrePoint: $.trim(this.$point.val()),
-      ocbPwd: this.$pointPw.val(),
-      requestMon: this._getCheckedBillList(),
-      chkRept: this._getCheckedBillList().length,
-      ocbCardNum: $.trim(this.$cardNumber.val())
+      ocbPwd: $.trim(this.$pointPw.val()),
+      requestMon: this._getCheckedBillList('point'),
+      chkRept: this._getCheckedBillList('point').length.toString(),
+      ocbCardNum: this.$pointCardNumber.attr('id').toString()
     };
     return reqData;
   },
@@ -348,6 +356,11 @@ Tw.PaymentRealtime.prototype = {
     $target.find('.refund-bank-name').text(this.$refundWrap.find('.select-bank').text());
     $target.find('.date').text(Tw.DateHelper.getCurrentDateTime(new Date()));
 
+    if (type === 'point') {
+      $target.find('.bank-number').text(this.$pointCardNumber.text());
+      $target.find('.point-info').text(this.$pointSelector.text() + ' ' + Tw.FormatHelper.addComma($.trim(this.$point.val())) + '점');
+    }
+
     var $detailTarget = this.$container.find('.detail-payment');
     var $checkedBox = this.$container.find('.checkbox-main.checked');
     $checkedBox.each(function () {
@@ -363,19 +376,29 @@ Tw.PaymentRealtime.prototype = {
   _payFail: function () {
     Tw.Logger.info('pay request fail');
   },
-  _getCheckedBillList: function () {
+  _getCheckedBillList: function (type) {
     var $listBox = this.$container.find('.payment-select .select-list');
-    var list = [];
+    var list = '';
     $listBox.find('li').each(function () {
       var $this = $(this);
+      var invDt = $this.find('.invDt').data('value').toString();
+      var billSvcMgmtNum = $this.find('.svcMgmtNum').data('value').toString();
+      var billAcntNum = $this.find('.billAcntNum').data('value').toString();
+      var payAmt = $this.find('.invAmt').data('value').toString();
+
       if ($this.hasClass('checked')) {
-        var obj = {
-          invDt: $this.find('.invDt').data('value').toString(),
-          biillSvcMgmtNum: $this.find('.svcMgmtNum').data('value').toString(),
-          billAcntNum: $this.find('.billAcntNum').data('value').toString(),
-          payAmt: $this.find('.invAmt').data('value').toString()
-        };
-        list.push(obj);
+        if (type === 'point') {
+          list += invDt + ':' + billSvcMgmtNum + ':' + billAcntNum + ':' + payAmt + ';';
+        } else {
+          list = [];
+          var obj = {
+            invDt: invDt,
+            billSvcMgmtNum: billSvcMgmtNum,
+            billAcntNum: billAcntNum,
+            payAmt: payAmt
+          };
+          list.push(obj);
+        }
       }
     });
     return list;
