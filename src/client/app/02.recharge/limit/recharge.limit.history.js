@@ -141,6 +141,7 @@ Tw.RechargeLimitHistory.prototype = {
       }
     }
     item.refundable = item.refundableYn === "Y" ? true : false;
+    item.opDt = Tw.DateHelper.getShortDateNoDot(item.opDt);
     return item;
   },
 
@@ -178,6 +179,7 @@ Tw.RechargeLimitHistory.prototype = {
       default:
         return;
     }
+    item.opDt = Tw.DateHelper.getShortDateNoDot(item.opDt);
 
     return item;
   },
