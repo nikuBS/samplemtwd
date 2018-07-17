@@ -84,6 +84,22 @@
                             </div>
                         </div>
                     </dd>
+                    <dt>콘텐츠 이용 상세내역을 받으시겠어요?</dt>
+                    <dd>
+                        <div class="widget">
+                            <div class="widget-box tube">
+                                <ul class="tube-list two" role="radiogroup" form-element="radio" form-element-key="invDtlsIncldYn">
+                                    <% if (curBillGuide.invDtlsIncldYn === 'N') { %>
+                                    <li role="radio" aria-checked="true" class="checked" form-element-value="N"><input type="radio" name="selectset1" title="일부 내역만 보기">일부 내역만 보기</li>
+                                    <li role="radio" aria-checked="false" form-element-value="Y"><input type="radio" name="selectset1" title="상세내역 보기">상세내역 보기</li>
+                                    <% } else {%>
+                                    <li role="radio" aria-checked="false" form-element-value="N"><input type="radio" name="selectset1" title="일부 내역만 보기">일부 내역만 보기</li>
+                                    <li role="radio" aria-checked="true" class="checked" form-element-value="Y"><input type="radio" name="selectset1" title="상세내역 보기">상세내역 보기</li>
+                                    <% } %>
+                                </ul>
+                            </div>
+                        </div>
+                    </dd>
                 </dl>
             </div>
             <div class="inner">

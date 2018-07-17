@@ -90,13 +90,13 @@ class MyTBillChange extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    const selectedSessionsRequest: Observable<any> = this.apiService.request(API_CMD.BFF_01_0005, {});
+    // const selectedSessionsRequest: Observable<any> = this.apiService.request(API_CMD.BFF_01_0005, {});
     const billTypeListRequest: Observable<any> = this.apiService.request(API_CMD.BFF_05_0025, {});
     Observable.combineLatest(
-      selectedSessionsRequest,
+      // selectedSessionsRequest,
       billTypeListRequest,
-    ).subscribe(([_selectedSessions, _billTypesList]) => {
-      svcInfo = this.getResult(_selectedSessions);
+    ).subscribe(([_billTypesList]) => {
+      // svcInfo = this.getResult(_selectedSessions);
       console.log('~~~~~~~~~svcInfo', svcInfo);
       const _curBillGuide = this.getResult(_billTypesList);
       let tmpBillGuideTypes;

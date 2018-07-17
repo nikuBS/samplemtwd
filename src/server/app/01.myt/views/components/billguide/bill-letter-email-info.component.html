@@ -60,6 +60,14 @@
 </li>
 <li>
     <dl>
+        <dt class="ti-data">콘텐츠 이용료 청구 상세내역 수신</dt>
+        <dd class="tx-data">
+            <%= (curBillGuide.invDtlsIncldYn === 'N' ? '일부 내역만 보기' : '상세내역 보기') %>
+        </dd>
+    </dl>
+</li>
+<li>
+    <dl>
         <dt class="ti-data">광고정보 수신</dt>
         <dd class="tx-data">
             <%= (curBillGuide.emailRcvAgreeYn === 'N' ? '아니오' : '예') %>

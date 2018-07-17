@@ -35,19 +35,21 @@ class MyTBillUpdate extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    const selectedSessionsRequest: Observable<any> = this.apiService.request(API_CMD.BFF_01_0005, {});
+    // const selectedSessionsRequest: Observable<any> = this.apiService.request(API_CMD.BFF_01_0005, {});
     const billTypeListRequest: Observable<any> = this.apiService.request(API_CMD.BFF_05_0025, {});
     Observable.combineLatest(
-      selectedSessionsRequest,
+      // selectedSessionsRequest,
       billTypeListRequest,
-    ).subscribe(([_selectedSessions, _billTypesList]) => {
-      svcInfo = this.getResult(_selectedSessions);
+    ).subscribe(([_billTypesList]) => {
+      // svcInfo = this.getResult(_selectedSessions);
       console.log('~~~~~~~~~svcInfo', svcInfo);
       const _curBillGuide = this.getResult(_billTypesList);
+      console.log('~~~~~~~~~svcInfo', _curBillGuide);
       // const isWire = (svcInfo.svcAttrCd === 'S1' || svcInfo.svcAttrCd === 'S2' || svcInfo.svcAttrCd === 'S3') ? true : false;
       // const billGuideTypeDefine = isWire ? WIRE_BILL_GUIDE_TYPE : BILL_GUIDE_TYPE;
       const anotherBillGuideType = (_curBillGuide.curBillType === BILL_GUIDE_TYPE.TWORLD) ? BILL_GUIDE_TYPE.BILL_LETTER : BILL_GUIDE_TYPE.TWORLD;
       _curBillGuide['component'] = BILL_GUIDE_TYPE_COMPONENT[_curBillGuide['curBillType']];
+      console.log('~~~~~~~~~`_curBillGuide', _curBillGuide)
       _curBillGuide['wireCurBillType'] = _curBillGuide['curBillType'];
       this.renderView(res, 'bill/myt.bill.guidechange.update.html', {
         curBillGuide: _curBillGuide,
