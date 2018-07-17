@@ -340,7 +340,9 @@ Tw.RECHARGE_TYPE = {
   TOTAL: '전체',
   RECHARGE: '충전',
   CANCEL: '취소',
-  REGULAR: '자동'
+  REGULAR: '자동',
+  CHANGE: '변경',
+  BLOCK: '차단'
 }
 
 Tw.BLOCK_TYPE = {
