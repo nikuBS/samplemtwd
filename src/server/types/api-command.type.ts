@@ -189,12 +189,18 @@ export const API_CODE = {
   CODE_03: 'RDT0003',    // 2차 인증
   CODE_04: 'RDT0004',    // 로그인 필요
   CODE_05: 'RDT0005',    // 접근 불가 (권한)
-  CODE_06: 'RDT0006',    // 고객 비밀번호 인증 필요
-  CODE_07: 'RDT0007',    // 고객 비밀번호 재설정 필요
-  CODE_08: 'RDT0008',    // 고객 비밀번호 초기화상
+  // CODE_06: 'RDT0006',    // 고객 비밀번호 인증 필요
+  // CODE_07: 'RDT0007',    // 고객 비밀번호 재설정 필요
+  // CODE_08: 'RDT0008',    // 고객 비밀번호 초기화상
   CODE_99: 'RDT0099',    // Circuit Open
   CODE_200: '200',
   CODE_400: '400'
+};
+
+export const API_SVC_PWD_ERROR = {
+  RDT0006: 'RDT0006',
+  RDT0007: 'RDT0007',
+  RDT0008: 'RDT0008'
 };
 
 export const API_LOGIN_ERROR = {
