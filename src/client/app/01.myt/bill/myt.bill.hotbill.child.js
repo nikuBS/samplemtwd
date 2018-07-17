@@ -60,7 +60,13 @@ Tw.MyTBillHotBillChild.prototype = {
         this.$amount.text(billData.tot_open_bal2);
         var strPeriod = Tw.MyTBillHotBill.getFormattedPeriod(resp.result.termOfHotBill);
         this.$period.text(strPeriod);
-        var group = Tw.MyTBillHotBill.arrayToGroup(billData.record1, 'inv_amt2', Tw.MyTBillHotBill.NO_BILL_FIELDS);
+        var fieldInfo = {
+          lcl: 'bill_itm_lcl_nm',
+          scl: 'bill_itm_scl_nm',
+          name: 'bill_itm_nm',
+          value: 'inv_amt2'
+        };
+        var group = Tw.MyTBillHotBill.arrayToGroup(billData.record1, fieldInfo);
         this._renderBillGroup(group);
       }
     } else {

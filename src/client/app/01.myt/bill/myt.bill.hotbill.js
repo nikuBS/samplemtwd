@@ -42,7 +42,7 @@ Tw.MyTBillHotBill.prototype = {
 
   _getBillResponse: function (gubun) {
     this._apiService
-      .request(Tw.API_CMD.BFF_05_0022, { gubun: gubun || Tw.MyTBillHotBill.PARAM.TYPE.CURRENT})
+      .request(Tw.API_CMD.BFF_05_0022, { gubun: gubun || Tw.MyTBillHotBill.PARAM.TYPE.CURRENT })
       .done($.proxy(this._onReceivedBillData, this))
       .fail($.proxy(this._onErrorReceivedBillData, this));
   },
@@ -99,10 +99,15 @@ Tw.MyTBillHotBill.prototype = {
 
         if ( this._billInfoAvailable ) {
           this.$amount.text(billData.tot_open_bal2);
-
           var strPeriod = Tw.MyTBillHotBill.getFormattedPeriod(resp.result.termOfHotBill);
           this.$period.text(strPeriod);
-          var group = Tw.MyTBillHotBill.arrayToGroup(billData.record1, 'inv_amt2', Tw.MyTBillHotBill.NO_BILL_FIELDS);
+          var fieldInfo = {
+            lcl: 'bill_itm_lcl_nm',
+            scl: 'bill_itm_scl_nm',
+            name: 'bill_itm_nm',
+            value: 'inv_amt2'
+          };
+          var group = Tw.MyTBillHotBill.arrayToGroup(billData.record1, fieldInfo);
           this._renderBillGroup(group);
         }
       }
@@ -118,7 +123,6 @@ Tw.MyTBillHotBill.prototype = {
       location.href = '/myt';
     });
   },
-
   /**
    * renders an accordion menu with a bill data grouped by attributes
    * @param   bill data object
@@ -183,11 +187,11 @@ Tw.MyTBillHotBill.PARAM = {
 /**
  * converts an array of objects to object grouped by multiple attributes
  * @param data :  object array
- * @param fieldAmout inv_amt2: 당월 , inv_amt1: 전월, etc.
+ * @param fieldInfo 대분류, 소분류, 이름, 금액을 포함하는 object
  *
  * @returns grouped object
  */
-Tw.MyTBillHotBill.arrayToGroup = function (data, fieldAmount) {
+Tw.MyTBillHotBill.arrayToGroup = function (data, fieldInfo) {
   // var self = this;
   var amount = 0;
   var noVAT = false;
@@ -199,8 +203,8 @@ Tw.MyTBillHotBill.arrayToGroup = function (data, fieldAmount) {
   data.forEach(function (item) {
     noVAT = false;
     is3rdParty = false;
-    var groupL = item.bill_itm_lcl_nm;
-    var groupS = item.bill_itm_scl_nm;
+    var groupL = item[fieldInfo.lcl];
+    var groupS = item[fieldInfo.scl];
 
     if ( !group[groupL] ) {
       group[groupL] = { total: 0, showDesc: DEFAULT_DESC_VISIBILITY };
@@ -220,19 +224,19 @@ Tw.MyTBillHotBill.arrayToGroup = function (data, fieldAmount) {
       group[groupL][groupS] = { items: [], total: 0, noVAT: noVAT, is3rdParty: is3rdParty };
     }
 
-    amount = parseInt(item[fieldAmount].replace(/,/g, ''), 10);
+    amount = Tw.StringHelper.parseCommaedStringToInt(item[fieldInfo.value]);
     group[groupL].total += amount;
     group[groupL][groupS].total += amount;
 
     var bill_item = {
-      name: item.bill_itm_nm.replace(/[*#]/g, ''),
-      amount: item[fieldAmount].replace(/(\d)(?=(\d{3})+$)/gi, '$1,'),
-      noVAT: item.bill_itm_nm.indexOf('*') > -1 ? true : false,
-      is3rdParty: item.bill_itm_nm.indexOf('#') > -1 ? true : false,
+      name: item[fieldInfo.name].replace(/[*#]/g, ''),
+      amount: Tw.StringHelper.commaSeperatedString(item[fieldInfo.value]),
+      noVAT: item[fieldInfo.name].indexOf('*') > -1 ? true : false,
+      is3rdParty: item[fieldInfo.name].indexOf('#') > -1 ? true : false,
       discount: amount < 0 ? true : false
     };
     group[groupL][groupS].items.push($.extend({}, bill_item));
-    bill_item.amount = item[fieldAmount];
+    bill_item.amount = item[fieldInfo.value];
   });
 
   //아이템 이름과 소분류가 같은 경우 2depth 보여주지 않음
@@ -244,10 +248,10 @@ Tw.MyTBillHotBill.arrayToGroup = function (data, fieldAmount) {
           delete itemS.items[0];
         }
         itemS.discount = itemS.total < 0 ? true : false;
-        itemS.total = itemS.total.toString().replace(/(\d)(?=(\d{3})+$)/gi, '$1,');
+        itemS.total = Tw.StringHelper.commaSeperatedString(itemS.total);
       }
       itemL.discount = itemL.total < 0 ? true : false;
-      itemL.total = itemL.total.toString().replace(/(\d)(?=(\d{3})+$)/gi, '$1,');
+      itemL.total = Tw.StringHelper.commaSeperatedString(itemL.total);
     });
   });
   return group;
@@ -256,7 +260,13 @@ Tw.MyTBillHotBill.arrayToGroup = function (data, fieldAmount) {
 Tw.MyTBillHotBill.openPrevBillPopup = function (resp, num, type) {
   var strPeriod = Tw.MyTBillHotBill.getFormattedPeriod(resp.result.termOfHotBill);
   var billData = resp.result.hotBillInfo;
-  var group = Tw.MyTBillHotBill.arrayToGroup(billData.record1, 'inv_amt1', Tw.MyTBillHotBill.NO_BILL_FIELDS);
+  var fieldInfo = {
+    lcl: 'bill_itm_lcl_nm',
+    scl: 'bill_itm_scl_nm',
+    name: 'bill_itm_nm',
+    value: 'inv_amt1'
+  };
+  var group = Tw.MyTBillHotBill.arrayToGroup(billData.record1, fieldInfo, Tw.MyTBillHotBill.NO_BILL_FIELDS);
 
   var data = {
     amount: billData.tot_open_bal1,
@@ -279,9 +289,5 @@ Tw.MyTBillHotBill.openPrevBillPopup = function (resp, num, type) {
  * @returns yyyy.mm.dd ~ yyyy.mm.dd
  */
 Tw.MyTBillHotBill.getFormattedPeriod = function (strPeriod) {
-  var formatted = strPeriod
-    .replace(/[\uB144\uC6D4]/gi, '.')
-    .replace(/[\uC77C:&nbsp;:]/gi, '')
-    .replace('~', ' ~ ');
-  return formatted;
+  return Tw.StringHelper.replaceDateNotaionnToDot(strPeriod).replace('~', ' ~ ');
 };
