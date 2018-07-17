@@ -4,7 +4,7 @@
  * Date: 2018.07.12
  */
 
-Tw.MyTBillGuideUpdatePrototype = {
+Tw.MyTBillGuidechangeUpdatePrototype = {
   _construct: function (rootEl, options) {
     this.$container = rootEl;
     this._apiService = Tw.Api;
@@ -209,7 +209,7 @@ Tw.MyTBillGuideUpdatePrototype = {
   }
 
 };
-Tw.MyTBillGuideUpdateClasses = {
+Tw.MyTBillGuidechangeUpdateClasses = {
   'tworld': function () {
     return this._construct.apply(this, arguments);
   },
@@ -236,15 +236,15 @@ Tw.MyTBillGuideUpdateClasses = {
   }
 };
 
-Tw.MyTBillGuideUpdateClasses.tworld.prototype = $.extend({}, Tw.MyTBillGuideUpdatePrototype, {
+Tw.MyTBillGuidechangeUpdateClasses.tworld.prototype = $.extend({}, Tw.MyTBillGuidechangeUpdatePrototype, {
   _checkValidation: function () {
     return true;
   }
 });
 
-Tw.MyTBillGuideUpdateClasses.email.prototype = $.extend({}, Tw.MyTBillGuideUpdatePrototype, {
+Tw.MyTBillGuidechangeUpdateClasses.email.prototype = $.extend({}, Tw.MyTBillGuidechangeUpdatePrototype, {
   _assign: function () {
-    Tw.MyTBillGuideUpdatePrototype._assign.apply(this, arguments);
+    Tw.MyTBillGuidechangeUpdatePrototype._assign.apply(this, arguments);
     this._$inputEmail = this.$container.find('.input-email');
   },
   _checkValidation: function () {
@@ -257,14 +257,14 @@ Tw.MyTBillGuideUpdateClasses.email.prototype = $.extend({}, Tw.MyTBillGuideUpdat
     this._popupService.openAlert(Tw.MSG_MYT.BILL_GUIDECHANGE_A08);
   },
   destroy: function() {
-    Tw.MyTBillGuideUpdatePrototype.destroy.apply(this, arguments);
+    Tw.MyTBillGuidechangeUpdatePrototype.destroy.apply(this, arguments);
     this._$inputEmail = null;
   }
 });
 
-Tw.MyTBillGuideUpdateClasses.etc.prototype = $.extend({}, Tw.MyTBillGuideUpdatePrototype, {
+Tw.MyTBillGuidechangeUpdateClasses.etc.prototype = $.extend({}, Tw.MyTBillGuidechangeUpdatePrototype, {
   _assign: function () {
-    Tw.MyTBillGuideUpdatePrototype._assign.apply(this, arguments);
+    Tw.MyTBillGuidechangeUpdatePrototype._assign.apply(this, arguments);
     this._$inputAddr1 = this.$container.find('.input-addr1');
     this._$inputAddr2 = this.$container.find('.input-addr2');
     this._$inputAddr3 = this.$container.find('.input-addr3');
@@ -281,7 +281,7 @@ Tw.MyTBillGuideUpdateClasses.etc.prototype = $.extend({}, Tw.MyTBillGuideUpdateP
     this._popupService.openAlert(Tw.MSG_MYT.BILL_GUIDECHANGE_A10);
   },
   destroy: function() {
-    Tw.MyTBillGuideUpdatePrototype.destroy.apply(this, arguments);
+    Tw.MyTBillGuidechangeUpdatePrototype.destroy.apply(this, arguments);
     this._$inputAddr1 = null;
     this._$inputAddr2 = null;
     this._$inputAddr3 = null;
@@ -289,9 +289,9 @@ Tw.MyTBillGuideUpdateClasses.etc.prototype = $.extend({}, Tw.MyTBillGuideUpdateP
   }
 });
 
-Tw.MyTBillGuideUpdateClasses.billLetter.prototype = $.extend({}, Tw.MyTBillGuideUpdatePrototype, {
+Tw.MyTBillGuidechangeUpdateClasses.billLetter.prototype = $.extend({}, Tw.MyTBillGuidechangeUpdatePrototype, {
   _assign: function () {
-    Tw.MyTBillGuideUpdatePrototype._assign.apply(this, arguments);
+    Tw.MyTBillGuidechangeUpdatePrototype._assign.apply(this, arguments);
     this._$inputPhone = this.$container.find('.input-phone');
     this._$inputCcurNotiSvcNum = this.$container.find('.input-ccur-noti-svc-num');
   },
@@ -305,15 +305,15 @@ Tw.MyTBillGuideUpdateClasses.billLetter.prototype = $.extend({}, Tw.MyTBillGuide
     return true;
   },
   destroy: function() {
-    Tw.MyTBillGuideUpdatePrototype.destroy.apply(this, arguments);
+    Tw.MyTBillGuidechangeUpdatePrototype.destroy.apply(this, arguments);
     this._$inputPhone = null;
     this._$inputCcurNotiSvcNum = null;
   }
 });
 
-Tw.MyTBillGuideUpdateClasses.sms.prototype = $.extend({}, Tw.MyTBillGuideUpdatePrototype, {
+Tw.MyTBillGuidechangeUpdateClasses.sms.prototype = $.extend({}, Tw.MyTBillGuidechangeUpdatePrototype, {
   _assign: function () {
-    Tw.MyTBillGuideUpdatePrototype._assign.apply(this, arguments);
+    Tw.MyTBillGuidechangeUpdatePrototype._assign.apply(this, arguments);
     this._$inputPhone = this.$container.find('.input-phone');
     this._$inputCcurNotiSvcNum = this.$container.find('.input-ccur-noti-svc-num');
   },
@@ -327,15 +327,15 @@ Tw.MyTBillGuideUpdateClasses.sms.prototype = $.extend({}, Tw.MyTBillGuideUpdateP
     return true;
   },
   destroy: function() {
-    Tw.MyTBillGuideUpdatePrototype.destroy.apply(this, arguments);
+    Tw.MyTBillGuidechangeUpdatePrototype.destroy.apply(this, arguments);
     this._$inputPhone = null;
     this._$inputCcurNotiSvcNum = null;
   }
 });
 
-Tw.MyTBillGuideUpdateClasses.billLetterEmail.prototype = $.extend({}, Tw.MyTBillGuideUpdatePrototype, {
+Tw.MyTBillGuidechangeUpdateClasses.billLetterEmail.prototype = $.extend({}, Tw.MyTBillGuidechangeUpdatePrototype, {
   _assign: function () {
-    Tw.MyTBillGuideUpdatePrototype._assign.apply(this, arguments);
+    Tw.MyTBillGuidechangeUpdatePrototype._assign.apply(this, arguments);
     this._$inputEmail = this.$container.find('.input-email');
     this._$inputPhone = this.$container.find('.input-phone');
     this._$inputCcurNotiSvcNum = this.$container.find('.input-ccur-noti-svc-num');
@@ -356,16 +356,16 @@ Tw.MyTBillGuideUpdateClasses.billLetterEmail.prototype = $.extend({}, Tw.MyTBill
     this._popupService.openAlert(Tw.MSG_MYT.BILL_GUIDECHANGE_A08);
   },
   destroy: function() {
-    Tw.MyTBillGuideUpdatePrototype.destroy.apply(this, arguments);
+    Tw.MyTBillGuidechangeUpdatePrototype.destroy.apply(this, arguments);
     this._$inputEmail = null;
     this._$inputPhone = null;
     this._$inputCcurNotiSvcNum = null;
   }
 });
 
-Tw.MyTBillGuideUpdateClasses.smsEmail.prototype = $.extend({}, Tw.MyTBillGuideUpdatePrototype, {
+Tw.MyTBillGuidechangeUpdateClasses.smsEmail.prototype = $.extend({}, Tw.MyTBillGuidechangeUpdatePrototype, {
   _assign: function () {
-    Tw.MyTBillGuideUpdatePrototype._assign.apply(this, arguments);
+    Tw.MyTBillGuidechangeUpdatePrototype._assign.apply(this, arguments);
     this._$inputEmail = this.$container.find('.input-email');
     this._$inputPhone = this.$container.find('.input-phone');
     this._$inputCcurNotiSvcNum = this.$container.find('.input-ccur-noti-svc-num');
@@ -386,14 +386,14 @@ Tw.MyTBillGuideUpdateClasses.smsEmail.prototype = $.extend({}, Tw.MyTBillGuideUp
     this._popupService.openAlert(Tw.MSG_MYT.BILL_GUIDECHANGE_A08);
   },
   destroy: function() {
-    Tw.MyTBillGuideUpdatePrototype.destroy.apply(this, arguments);
+    Tw.MyTBillGuidechangeUpdatePrototype.destroy.apply(this, arguments);
     this._$inputEmail = null;
     this._$inputPhone = null;
     this._$inputCcurNotiSvcNum = null;
   }
 });
 
-Tw.MyTBillGuideUpdateClasses.billLetterSms.prototype = $.extend({}, Tw.MyTBillGuideUpdatePrototype, {
+Tw.MyTBillGuidechangeUpdateClasses.billLetterSms.prototype = $.extend({}, Tw.MyTBillGuidechangeUpdatePrototype, {
   _checkValidation: function () {
     return true;
   }

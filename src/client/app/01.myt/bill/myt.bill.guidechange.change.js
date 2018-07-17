@@ -4,7 +4,7 @@
  * Date: 2018.07.05
  */
 
-Tw.MyTBillGuideChange = function (rootEl) {
+Tw.MyTBillGuidechangeChange = function (rootEl) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -37,7 +37,7 @@ Tw.MyTBillGuideChange = function (rootEl) {
   this._init();
 };
 
-Tw.MyTBillGuideChange.prototype = {
+Tw.MyTBillGuidechangeChange.prototype = {
   _assign: function () {
     this._curBillGuideType = this.$container.data('cur-bill-guide-type');
     this._$btnDropdown = this.$container.find('.bt-dropdown');
@@ -90,7 +90,7 @@ Tw.MyTBillGuideChange.prototype = {
     if ( this._billGuideUpdateInstance ) {
       this._billGuideUpdateInstance.destroy();
     }
-    this._billGuideUpdateInstance = new Tw.MyTBillGuideUpdateClasses[componentClassName]($component, {
+    this._billGuideUpdateInstance = new Tw.MyTBillGuidechangeUpdateClasses[componentClassName]($component, {
       fromChange: true,
       beforeBillGuideType: this._curBillGuideType
     });
