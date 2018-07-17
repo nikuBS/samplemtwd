@@ -16,7 +16,7 @@ Tw.RechargeCookiz = function (rootEl) {
 
 Tw.RechargeCookiz.prototype = {
   _init: function () {
-    this.$wrap_tpl_contact.html(this.tpl_contact({ isMobile: Tw.BrowserHelper.isMobile() }));
+    this.$wrap_tpl_contact.html(this.tpl_contact({ isMobile: Tw.BrowserHelper.isApp() }));
   },
 
   _cachedElement: function () {
@@ -25,10 +25,21 @@ Tw.RechargeCookiz.prototype = {
   },
 
   _bindEvent: function () {
+    this.$container.on('click', '#btn_addr', $.proxy(this._onClickBtnAddr, this));
     this.$container.on('click', '.btn_go_history', $.proxy(this._goHistory, this));
     this.$container.on('click', '.btn_go_cookiz_process', $.proxy(this._goCookizProcess, this));
     this.$container.on('click', '.btn_cancel_autoRefill', $.proxy(this._cancelAutoRefill, this));
     this.$container.on('click', '#btn_cookiz_request', $.proxy(this._goCookizRequestProcess, this));
+  },
+
+  _onClickBtnAddr: function () {
+    this._nativeService.send(Tw.NTV_CMD.GET_CONTACT, {}, $.proxy(this._onContact, this));
+  },
+
+  _onContact: function (resp) {
+    var params = resp;
+    var phoneNumber = params.phoneNumber.replace(/-/gi, '');
+    this.$container.find('.inp_phone').val(phoneNumber);
   },
 
   _cancelAutoRefill: function () {

@@ -16,7 +16,11 @@
 <div id="payment-realtime" class="wrap">
     <!-- #contents -->
     <div id="main" class="container-wrap">
-        <% include ../components/realtime/payment.realtime.home.component.html %>
+        <% if (list.code === "00") { %>
+            <% include ../components/realtime/payment.realtime.home.component.html %>
+        <% } else { %>
+            <% include ../components/realtime/payment.realtime.home.exception.component.html %>
+        <% } %>
     </div>
     <div id="step1" class="container-wrap" style="display:none;">
         <% include ../components/realtime/payment.realtime.select.option.component.html %>
