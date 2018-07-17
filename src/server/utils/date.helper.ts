@@ -38,6 +38,22 @@ class DateHelper {
   };
 
   /**
+   * @param date {Date} or {string} : YYYYMMDD
+   * @returns {string} : currentDateTime - 1 year
+   */
+  static getPastYearShortDate = function () {
+    return moment().subtract(1, 'years').format('YYYYMMDD');
+  };
+
+  /**
+   * @param date {Date} or {string} : YYYYMMDD
+   * @returns {string} : currentDateTime + 1 year
+   */
+  static getNextYearShortDate = function () {
+    return moment().add(1, 'years').format('YYYY.MM.DD');
+  };
+
+  /**
    * @param date {Date} or {string} : YYYYMMDDhhmmss
    * @returns {string} : 18년 12월 31일
    */
