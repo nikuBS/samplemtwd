@@ -33,7 +33,7 @@ Tw.StringHelper = (function () {
    * @param strDate
    * @returns {*}
    */
-  function replaceDateNotaionWithoDot(strDate) {
+  function replaceDateNotaionWithDot(strDate) {
     return strDate.replace(/[\uB144\uC6D4]/gi, '.').replace(/[\uC77C:&nbsp;:\s]/gi, '');
   }
 
@@ -41,7 +41,7 @@ Tw.StringHelper = (function () {
     replaceAt: replaceAt,
     masking: masking,
     commaSeparatedString: commaSeparatedString,
-    replaceDateNotaionWithoDot: replaceDateNotaionWithoDot,
+    replaceDateNotaionWithDot: replaceDateNotaionWithDot,
     parseCommaedStringToInt: parseCommaedStringToInt
   };
 })();

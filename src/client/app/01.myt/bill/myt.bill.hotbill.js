@@ -297,5 +297,5 @@ Tw.MyTBillHotBill.openPrevBillPopup = function (resp, num, type) {
  * @returns yyyy.mm.dd ~ yyyy.mm.dd
  */
 Tw.MyTBillHotBill.getFormattedPeriod = function (strPeriod) {
-  return Tw.StringHelper.replaceDateNotaionWithoDot(strPeriod).replace('~', ' ~ ');
+  return Tw.StringHelper.replaceDateNotaionWithDot(strPeriod).replace('~', ' ~ ');
 };
