@@ -15,28 +15,13 @@ class LoginService {
     LoginService.instance = this;
   }
 
-  public isLogin(userId?: string): boolean {
-    if ( !FormatHelper.isEmpty(userId) ) {
-      return !FormatHelper.isEmpty(this.session.serverSession) && this.session.userId === userId;
-    }
+  public isLogin(): boolean {
     return !FormatHelper.isEmpty(this.session.serverSession);
   }
 
   public setClientSession(session) {
     this.session = session;
   }
-
-  public setUserId(userId: string) {
-    this.session.userId = userId;
-    this.session.save(() => {
-      this.logger.log(this, '[setUserId]', this.session.userId);
-    });
-  }
-
-  public getUserId(): string {
-    return this.session.userId;
-  }
-
 
   public getSvcInfo(): any {
     return this.session.svcInfo;
@@ -57,9 +42,18 @@ class LoginService {
   }
 
   public setServerSession(serverSession: string) {
-    this.session.serverSession = serverSession;
-    this.session.save(() => {
-      this.logger.log(this, '[setServerSession]', this.session);
+    if ( !FormatHelper.isEmpty(this.session) ) {
+      this.session.serverSession = serverSession;
+      this.session.save(() => {
+        this.logger.log(this, '[setServerSession]', this.session);
+      });
+    }
+
+  }
+
+  public logoutSession() {
+    this.session.destroy(() => {
+      this.logger.log(this, '[logoutSession]');
     });
   }
 }
