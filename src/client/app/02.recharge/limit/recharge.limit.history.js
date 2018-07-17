@@ -79,7 +79,6 @@ Tw.RechargeLimitHistory.prototype = {
 
   _handleTabChange: function (e) {
     this._selectedTab = e.currentTarget.getAttribute('data-type');
-    this._go(this._selectedTab);
     if (!this._items[this._selectedTab]) this._getData();
   },
 
@@ -276,10 +275,5 @@ Tw.RechargeLimitHistory.prototype = {
       toDt: Tw.DateHelper.getCurrentShortDate(),
       fromDt: Tw.DateHelper.getPastShortDate(period)
     });
-  },
-
-  _go: function (hash) {
-    this._history.setHistory();
-    window.location.hash = hash;
   },
 }
