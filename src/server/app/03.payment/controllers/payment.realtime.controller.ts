@@ -6,11 +6,10 @@
 import TwViewController from '../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
 import { API_CODE, API_CMD } from '../../../types/api-command.type';
-import { SVC_ATTR } from '../../../types/bff-common.type';
+import { SVC_CD, SVC_ATTR } from '../../../types/bff-common.type';
 import { PAYMENT_VIEW } from '../../../types/string.type';
 import DateHelper from '../../../utils/date.helper';
 import FormatHelper from '../../../utils/format.helper';
-import UnpaidList from '../../../mock/server/payment/payment.realtime.unpaid.list';
 
 class PaymentRealtimeController extends TwViewController {
   constructor() {
@@ -47,7 +46,7 @@ class PaymentRealtimeController extends TwViewController {
         data.invYearMonth = DateHelper.getShortDateWithFormat(data.invDt, 'YYYY.MM');
         data.intMoney = this.removeZero(data.invAmt);
         data.invMoney = FormatHelper.addComma(data.intMoney.toString());
-        data.svcName = SVC_ATTR[data.svcAttrCd];
+        data.svcName = SVC_CD[data.svcCd];
       });
     }
     return list;

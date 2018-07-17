@@ -68,7 +68,7 @@
                         <!-- .widget -->
                         <div class="widget">
                             <div class="widget-box tube">
-                                <ul class="tube-list two" role="radiogroup">
+                                <ul class="tube-list two" role="radiogroup" id="select-amount">
                                     <li class="checked" role="radio" aria-checked="true" data-value="5000">
                                         <input type="radio" name="senddata" checked title="5000">5,000 원</li>
                                     <li role="radio" aria-checked="false" data-value="10000">
@@ -83,11 +83,7 @@
                         <!-- //.widget -->
                     </div>
                 </div>
-                <p class="money-select-comment">충전 가능 금액
-                    <em>
-                        <%= limitData.currentTopUpLimit %>
-                    </em>
-                </p>
+                <p class="money-select-comment">충전 가능 금액 <em><%= limitData.currentTopUpLimit %>원</em></p>
             </div>
             <ul class="bt-slice item-two">
                 <li class="bt-white2">

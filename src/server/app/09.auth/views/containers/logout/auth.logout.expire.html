@@ -1,15 +1,16 @@
-<!--
+<%#
 * FileName: auth.logout.expire.html
 * Author: Ara Jo (araara.jo@sk.com)
 * Date: 2018.07.03
--->
+* CO_01_03_02
+%>
 
 <% include ../../components/start.component.html %>
 <!-- body -->
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
     <ul>
-        <li><a href="#gnb_area">메뉴 바로가기</a></li>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
         <li><a href="#contents">본문 바로가기</a></li>
         <li><a href="#footer">푸터 바로가기</a></li>
     </ul>
@@ -40,7 +41,7 @@
                         <div class="suggest-bt">
                             <ul class="bt-slice">
                                 <li class="bt-red1">
-                                    <button>재로그인</button>
+                                    <a href="/auth/tid/login">재로그인</a>
                                 </li>
                             </ul>
                         </div>
@@ -49,11 +50,11 @@
             </div>
             <!--// .cont-box -->
 
-            <hr class="cont-sp type1" />
+            <hr class="cont-sp type1" aria-hidden="true" />
 
             <div class="cont-box nogaps">
                 <div class="bt-link-box">
-                    <a class="bt-link-tx" href="">홈으로 가기</a>
+                    <a class="bt-link-tx" href="/home">홈으로</a>
                 </div>
             </div>
         </div>

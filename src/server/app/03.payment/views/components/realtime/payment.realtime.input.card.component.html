@@ -9,7 +9,7 @@
         <div class="header-ti">
             <h1>납부하기</h1>
         </div>
-        <button class="close-step common-back"><span class="blind">닫기</span></button>
+        <button class="close-step cancel-process"><span class="blind">닫기</span></button>
     </div>
 </div>
 <!--// #header -->
@@ -97,7 +97,7 @@
                     <h5 class="account-tit">예금주 정보</h5>
                     <div class="inputbox">
                 <span class="input">
-                    <input type="text" class="no-bg-color" placeholder="<%= svcInfo.mbrNm %>" title="예금주" disabled="disabled">
+                    <input type="text" class="no-bg-color" placeholder="<%= svcInfo.mbrNm %>" data-value="<%= svcInfo.mbrNm %>" title="예금주" disabled="disabled">
                     <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
                 </span>
                     </div>

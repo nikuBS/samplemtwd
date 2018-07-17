@@ -14,7 +14,7 @@
                 <dd>
                     <span class="inputbox">
                         <span class="input">
-                            <input type="text" placeholder="휴대폰번호입력 (숫자만 입력)" title="휴대폰번호 입력 (숫자만 입력)" class="input-phone input-cntc-num1" maxlength="11" onInput="return Tw.InputHelper.inputNumberOnly(this);" value="<%= curBillGuide.cntcNum1 %>" >
+                            <input type="text" placeholder="휴대폰번호입력 (숫자만 입력)" title="휴대폰번호 입력 (숫자만 입력)" class="input-phone" maxlength="11" onInput="return Tw.InputHelper.inputNumberOnly(this);" value="<%= curBillGuide.wireSmtBillSvcNum %>" form-element="input" form-element-key="wireSmtBillSvcNum">
                             <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
                         </span>
                     </span>
@@ -26,13 +26,13 @@
                     <!-- .widget -->
                     <div class="widget">
                         <div class="widget-box tube">
-                            <ul class="tube-list two" role="radiogroup">
+                            <ul class="tube-list two" role="radiogroup" form-element="radio" form-element-key="scurBillYn">
                                 <% if (curBillGuide.scurBillYn === 'N') { %>
-                                <li role="radio" aria-checked="true" class="checked"><input type="radio" name="infoset" title="설정없이 조회 선택">설정없이 조회</li>
-                                <li role="radio" aria-checked="false"><input type="radio" name="infoset" title="생년월일 입력 후, 조회 선택">생년월일 입력 후, 조회</li>
+                                <li role="radio" aria-checked="true" class="checked" form-element-value="N"><input type="radio" name="infoset" title="설정없이 조회 선택">설정없이 조회</li>
+                                <li role="radio" aria-checked="false" form-element-value="Y"><input type="radio" name="infoset" title="생년월일 입력 후, 조회 선택">생년월일 입력 후, 조회</li>
                                 <% } else {%>
-                                <li role="radio" aria-checked="false"><input type="radio" name="infoset" title="설정없이 조회 선택">설정없이 조회</li>
-                                <li role="radio" aria-checked="true" class="checked"><input type="radio" name="infoset" title="생년월일 입력 후, 조회 선택">생년월일 입력 후, 조회</li>
+                                <li role="radio" aria-checked="false" form-element-value="N"><input type="radio" name="infoset" title="설정없이 조회 선택">설정없이 조회</li>
+                                <li role="radio" aria-checked="true" class="checked" form-element-value="Y"><input type="radio" name="infoset" title="생년월일 입력 후, 조회 선택">생년월일 입력 후, 조회</li>
                                 <% } %>
                             </ul>
                         </div>
@@ -47,7 +47,7 @@
                 <dd>
                     <span class="inputbox">
                         <span class="input">
-                            <input type="text" placeholder="휴대폰번호입력 (숫자만 입력)" title="휴대폰번호 입력 (숫자만 입력)" aria-describedby="rw-desc1" class="input-phone input-ccur-noti-svc-num" maxlength="11" onInput="return Tw.InputHelper.inputNumberOnly(this);" value="<%= curBillGuide.ccurNotiSvcNum%>">
+                            <input type="text" placeholder="휴대폰번호입력 (숫자만 입력)" title="휴대폰번호 입력 (숫자만 입력)" aria-describedby="rw-desc1" class="input-ccur-noti-svc-num" maxlength="11" onInput="return Tw.InputHelper.inputNumberOnly(this);" value="<%= curBillGuide.ccurNotiSvcNum%>" form-element="input" form-element-key="ccurNotiSvcNum">
                             <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
                         </span>
                         <span id="rw-desc1" class="guide-txt">미성년고객의 요금안내서는 법정대리인 휴대폰번호로 동시 안내됩니다.</span>

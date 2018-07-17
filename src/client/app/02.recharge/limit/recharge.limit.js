@@ -23,6 +23,8 @@ Tw.RechargeLimit.prototype = {
   _init: function () {
     this.rechargeAmount = "5000";
 
+    var amount = this.$container.find('span.price').data('possible-amount');
+    this._possibleRecharge = !!amount && Number(amount.replace(/,/g, '')) > 0;
     var $limitBlock = this.$container.find('.box-block-list1.btm-border ul');
     this._toggleSwitch(this.TYPE.TMTH, $limitBlock.data('limit-tmth'));
     this._toggleSwitch(this.TYPE.REGULAR, $limitBlock.data('limit-regular'));
@@ -48,7 +50,7 @@ Tw.RechargeLimit.prototype = {
     this.$container.on('click', '.btn-switch', $.proxy(this._openChangeLimitPopup, this));
     this.$container.on('click', '.close-step', $.proxy(this._openClosePopup, this));
     this.$container.on('click', '#btn-cancel-regular', $.proxy(this._openCancelRegularPopup, this));
-    this.$stepAmount.on('click', '.tube-list', $.proxy(this._setAmount, this));
+    this.$stepAmount.on('click', '#select-amount', $.proxy(this._setAmount, this));
   },
 
   _goToAmount: function () {
@@ -117,6 +119,8 @@ Tw.RechargeLimit.prototype = {
   _success: function (res) {
     if (res.code === '00') {
       this._go('step-complete');
+    } else {
+      this._popupService.openAlert(res.data && res.data.msg);
     }
   },
 
@@ -125,7 +129,7 @@ Tw.RechargeLimit.prototype = {
   },
 
   _setAmount: function (e) {
-    this.rechargeAmount = e.currentTarget.title;
+    this.rechargeAmount = e.target.title;
     this.$typeAmount.text(Tw.FormatHelper.addComma(this.rechargeAmount));
   },
 
@@ -145,8 +149,11 @@ Tw.RechargeLimit.prototype = {
     if (resp.code === API_CODE.CODE_00) {
       this.$container.find('#recharge-regular').remove();
       this.$container.find('#btn-cancel-regular').remove();
+      this._popupService.close();
+    } else {
+      this._popupService.close();
+      this._popupService.openAlert(resp.data && resp.data.msg);
     }
-    this._popupService.close();
   },
 
   _openChangeLimitPopup: function (e) {
@@ -232,7 +239,7 @@ Tw.RechargeLimit.prototype = {
     $switch.find('input').attr('checked', state);
     $switch.find('.switch-style').attr('aria-checked', state);
 
-    if (!this._limitTmth && !this._limitRegular) {
+    if (!this._possibleRecharge || !this._limitTmth && !this._limitRegular) {
       this.$btnRecharge.attr('disabled', true);
     } else {
       this.$btnRecharge.attr('disabled', false);
