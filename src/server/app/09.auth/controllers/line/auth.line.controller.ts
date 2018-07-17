@@ -25,7 +25,8 @@ class AuthLine extends TwViewController {
           svcInfo
         }));
       } else {
-        res.send('api error');
+        // ICAS3101
+        res.render('line/auth.line.empty-register.html',  { svcInfo });
       }
     });
   }
