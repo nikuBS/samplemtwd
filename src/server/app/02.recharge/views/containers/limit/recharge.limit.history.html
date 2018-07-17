@@ -46,17 +46,14 @@
                         <div class="tab-area type1"><!-- 타입별 탭형태 변환 -->
                             <div class="tab-linker">
                                 <ul role="tablist">
-                                    <li role="tab" aria-selected="true" aria-controls="aria-tab1-tab" id="aria-tab1"><button>충전내역</button></li><!-- true 열림 -->
-                                    <li role="tab" aria-selected="false" aria-controls="aria-tab2-tab" id="aria-tab2"><button>데이터 차단 설정 내역</button></li>
+                                    <li role="tab" aria-selected="true" aria-controls="aria-tab1-tab" id="aria-tab1" data-type="recharge" ><button>충전내역</button></li><!-- true 열림 -->
+                                    <li role="tab" aria-selected="false" aria-controls="aria-tab2-tab" id="aria-tab2" data-type="block" ><button>데이터 차단 설정 내역</button></li>
                                 </ul>
                             </div>
                             <div class="tab-contents">
                                 <ul>
-                                    <li role="tabpanel" id="aria-tab1-tab" aria-labelledby="aria-tab1" class="tab-recharge">
-                                    </li>
-                                    <li role="tabpanel" id="aria-tab2-tab" aria-labelledby="aria-tab2" class="tab-limit">
-                                        <% include ../../components/limit/recharge.limit.history.block.no.data.html %>
-                                    </li>
+                                    <li role="tabpanel" id="aria-tab1-tab" aria-labelledby="aria-tab1" class="tab-recharge"></li>
+                                    <li role="tabpanel" id="aria-tab2-tab" aria-labelledby="aria-tab2" class="tab-block"></li>
                                 </ul>
                             </div>
                         </div>
@@ -71,6 +68,7 @@
 </div>
 <% include ../../components/javascript.component.html %>
 <% include ../../components/limit/recharge.limit.history.recharge.list.html %>
+<% include ../../components/limit/recharge.limit.history.block.list.html %>
 <script>
     $(document).ready(function () {
         new Tw.RechargeLimitHistory($('.wrap'));
