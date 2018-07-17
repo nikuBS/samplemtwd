@@ -241,7 +241,10 @@ Tw.PaymentAuto.prototype = {
     Tw.Logger.info('cancel request fail');
   },
   _showAlert: function () {
-    this._popupService.openAlert(Tw.MSG_PAYMENT.AUTO_A09);
+    var $bankSelector = this.$container.find('.auto-cancel-select-bank');
+    if (this._validation.checkIsSelected($bankSelector, Tw.MSG_PAYMENT.REALTIME_A02)) {
+      this._popupService.openAlert(Tw.MSG_PAYMENT.AUTO_A09);
+    }
   },
   _go: function (hash) {
     window.location.hash = hash;
