@@ -15,19 +15,23 @@ class MyTBillReissue extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     const self = this;
-    // TODO:사용회선조회 ( 이전화면에서 회선 변경에 따른 값이 설정된 다면 제거 )
+    // TODO:선택사용회선조회 ( 이전화면에서 회선 변경에 따른 값이 설정된 다면 제거 )
     this.apiService.request(API_CMD.BFF_01_0005, {}).subscribe((info) => {
       if ( info.result || info.result.svcAttrCd ) {
         let api = API_CMD.BFF_05_0028;
         if ( info.result.svcAttrCd.indexOf('S') !== -1 ) {
-            api = API_CMD.BFF_05_0051;
+          api = API_CMD.BFF_05_0051;
         }
-        self.apiService.request(api, {svcMgmtNum: info.result.svcMgmtNum})
-          .subscribe((reissueData) => {
-          // 화면 데이터 설정
-          const data = self.convertData(reissueData, svcInfo);
-          res.render('bill/myt.bill.guidechange.reissue.html', { data });
+        svcInfo = this.clone({
+          target: svcInfo,
+          obj: info.result
         });
+        self.apiService.request(api, { svcMgmtNum: info.result.svcMgmtNum })
+          .subscribe((reissueData) => {
+            // 화면 데이터 설정
+            const data = self.convertData(reissueData, svcInfo);
+            res.render('bill/myt.bill.guidechange.reissue.html', { data });
+          });
       }
     });
     // this.apiService.request(API_CMD.BFF_05_0028, {}).subscribe((reissueData) => {
@@ -35,6 +39,20 @@ class MyTBillReissue extends TwViewController {
     //   const data = this.convertData(reissueData, svcInfo);
     //   res.render('bill/myt.bill.guidechange.reissue.html', { data });
     // });
+  }
+
+  public clone(params): any {
+    const obj = params.obj;
+    const target = params.target;
+    if ( obj === null || typeof(obj) !== 'object' ) {
+      return obj;
+    }
+    for ( const attr in obj ) {
+      if ( obj.hasOwnProperty(attr) ) {
+        target[attr] = obj[attr];
+      }
+    }
+    return target;
   }
 
   private findMyReissueType(key): string {
