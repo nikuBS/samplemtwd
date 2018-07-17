@@ -1,9 +1,9 @@
 /**
- * FileName: payment.history.auto.js
+ * FileName: payment.history.realtime.js
  * Author: 이상형 (silion@sk.com)
  * Date: 2018.07.04
  */
-Tw.PaymentHistoryAuto = function (rootEl) {
+Tw.PaymentHistoryRealtime = function (rootEl) {
   this.$container = rootEl;
 
   this._apiService = Tw.Api;
@@ -18,7 +18,7 @@ Tw.PaymentHistoryAuto = function (rootEl) {
   this._init();
 };
 
-Tw.PaymentHistoryAuto.prototype = {
+Tw.PaymentHistoryRealtime.prototype = {
   _cachedElement: function () {
     this.$menuChanger = this.$container.find('.cont-box .bt-dropdown.big');
 
@@ -27,6 +27,8 @@ Tw.PaymentHistoryAuto.prototype = {
     this.listWrapperTemplate = $('#list-wrapper');
     this.defaultListTemplate = $('#list-default');
     this.emptyListTemplate = $('#list-empty');
+
+    this.useTemplate = this.defaultListTemplate;
   },
 
   _bindDOM: function () {
@@ -34,22 +36,16 @@ Tw.PaymentHistoryAuto.prototype = {
   },
 
   _init: function () {
-    this._setPageInfo();
-
     this.STRING = {
-      HBS_BANK: 'PA_06_03_L01',
-      HBS_CARD: 'PA_06_03_L02'
+      HBS_OCB: 'PA_06_02_L01',
+      HBS_TPOINT: 'PA_06_02_L02',
+      HBS_BANK: 'PA_06_02_L03',
+      HBS_CARD: 'PA_06_02_L04'
     };
+    this.apiName = Tw.API_CMD.BFF_07_0035;
+    this.autoPaymentApplyURL = '/payment/auto';
 
     this._getData();
-  },
-
-  _setPageInfo: function () {
-    this.useTemplate = this.defaultListTemplate;
-
-    this.apiName = Tw.API_CMD.BFF_07_0037;
-
-    this.autoPaymentApplyURL = '/payment/realtime';
   },
 
   _getData: function () {
@@ -63,31 +59,23 @@ Tw.PaymentHistoryAuto.prototype = {
   _setData: function (res) {
 
     if (res.code !== Tw.API_CODE.CODE_00) return this._apiError(res);
-    this.result = res.result.autoPaymentRecord;
+    this.result = res.result.realTimePaymentRecord;
 
     if (this.result.length) {
 
       this.result.map($.proxy(function (o, i) {
-        o.isCard = this._isCard(o.bankCardCoCdNm);
-        this._getStatusCodeAndColor(o, o.drwErrCdNm);
-
-        o.reqDate = this._dateHelper.getShortDateWithFormat(o.lastInvDt, 'YYYY.MM.DD');
-
-        o.drwYm = this._dateHelper.getShortDateWithFormat(o.drwYm + '01', 'YYYY.MM');
-        o.startDate = this._dateHelper.getShortDateWithFormatAddByUnit(o.drwYm, -1, 'months', 'YYYY.MM.DD', 'YYYY.MM');
-        o.endDate = this._dateHelper.getEndOfMonth(o.startDate, 'YYYY.MM');
-
-        // TODO : API수정 FU, 청구월, 청구 기간, 상세 구분
-        // o.drwYm = o.invDtYm;
-        // o.startDate = o.lastInvDtFromTo.substr(0, 10);
-        // o.endDate = o.lastInvDtFromTo.substr(-10);
-        // o.type = o.tmthColClCdNm;
-        o.type = '당월 + 미납';
-
-        o.drwAmt = Tw.FormatHelper.addComma(this.common._normalizeNumber(o.drwAmt)) || '0';
-        o.drwReqAmt = Tw.FormatHelper.addComma(this.common._normalizeNumber(o.drwReqAmt));
 
         o.listId = i;
+        o.paymentReqDate = this._dateHelper.getShortDateWithFormat(o.opDt, 'YYYY.MM.DD', 'YYYYMMDD');
+        o.reqDate = this._dateHelper.getShortDateWithFormat(o.reqDtm, 'YYYY.MM.DD', 'YYYYMMDD');
+        o.resDate = this._dateHelper.getShortDateWithFormat(o.resDtm, 'YYYY.MM.DD', 'YYYYMMDD');
+        this.getDataPaymentType(o);
+        o.svcNum = Tw.FormatHelper.getFormattedPhoneNumber(o.svcNum);
+        o.paymentName = o.cardCdNm;
+        o.payAmt = Tw.FormatHelper.addComma(this.common._normalizeNumber(o.payAmt));
+        // TODO : 무조건 개인으로 설정
+        o.isPersonal = true;
+        // o.isCompany = true;
 
       }, this));
 
@@ -110,19 +98,35 @@ Tw.PaymentHistoryAuto.prototype = {
     }, 10, '.contents-info-list .bt-more', '', $.proxy(this.appendListCallBack, this));
   },
 
-  _getStatusCodeAndColor: function (o, drwErrCdNm) {
+  getDataPaymentType: function (o) {
+    switch (o.settleWayCd) {
+      case '10' :
+        o.isOCB = true;
+        break;
+      case '11' :
+        o.isTpoint = true;
+        break;
+      case '41' :
+        o.isBank = true;
+        break;
+      case '02' :
+        o.isCard = true;
+        break;
+      default :
+        break;
+    }
+  },
+
+  _getStatusCode: function (o, drwErrCdNm) {
     switch (drwErrCdNm) {
       case Tw.MSG_PAYMENT.HISTORY_PROCESS_TYPE_WITHDRAWAL_BEFORE :
         o.isBefore = true;
-        o.payStateColorClass = 'cancel-com';
         break;
       case Tw.MSG_PAYMENT.HISTORY_PROCESS_TYPE_WITHDRAWAL_ING :
         o.isIng = true;
-        o.payStateColorClass = 'gray-com';
         break;
       case Tw.MSG_PAYMENT.HISTORY_PROCESS_TYPE_WITHDRAWAL_OK :
         o.isDone = true;
-        o.payStateColorClass = 'payment-com';
         break;
       default :
         break;
@@ -144,17 +148,45 @@ Tw.PaymentHistoryAuto.prototype = {
     this.$container.find('.detail-btn').off().on('click', '.fe-btn', $.proxy(this.listButtonHandler, this));
   },
 
+  getCurrentHBS_TEXT: function(data) {
+    if(data.isOCB) {
+      return this.STRING.HBS_OCB;
+    }
+    if(data.isTpoint) {
+      return this.STRING.HBS_TPOINT;
+    }
+    if(data.isBank) {
+      return this.STRING.HBS_BANK;
+    }
+    if(data.isCard) {
+      return this.STRING.HBS_CARD;
+    }
+  },
+
   listButtonHandler: function (e) {
-    var index = $(e.target).data('list-id');
+    this.currentIndex = $(e.target).data('list-id');
+
     this._popupService.open({
-          hbs: this.result[index].isCard ? this.STRING.HBS_CARD : this.STRING.HBS_BANK,
-          data: this.result[index]
+          hbs: this.getCurrentHBS_TEXT(this.result[this.currentIndex]),
+          data: this.result[this.currentIndex]
         },
         $.proxy(this.detailOpenCallback, this));
   },
 
   detailOpenCallback: function ($layer) {
     $layer.on('click', '.bt-blue1 button', $.proxy(this._popupService.close, this));
+    if(this.result[this.currentIndex].isBank) {
+      $layer.on('click', '.fe-btn', $.proxy(this._moveReceiptPage, this));
+    }
+  },
+
+  _moveReceiptPage: function(e) {
+    this._popupService.close();
+    if ($(e.target).hasClass('cash')) {
+      this.common._goLoad('/payment/history/receipt/cash');
+    } else {
+      this.common._goLoad('/payment/history/receipt/tax');
+    }
   },
 
   _apiError: function (res) {

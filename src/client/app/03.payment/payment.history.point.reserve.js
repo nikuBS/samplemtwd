@@ -124,21 +124,18 @@ Tw.PaymentHistoryPointReserve.prototype = {
   },
 
   _setData: function (res) {
-    if (res.code !== Tw.API_CODE) this.common._apiError(res);
+    if (res.code !== Tw.API_CODE.CODE_00) return this._apiError(res);
 
     if (res.result.length) {
 
       res.result.map($.proxy(function (o, i) {
         o.isPoint = true;
 
-        // rainbow : rbpChgRsnCdNm '신청취소', '신청', '청구반영'
-        // ocb, tp : payClNm '취소', '수납'
-
-        o.isReserved = o.rbpChgRsnCdNm === Tw.MSG_PAYMENT.HISTORY_PROCESS_TYPE_APPLY;
-        o.isPayCompleted = o.payClNm === Tw.MSG_PAYMENT.HISTORY_PROCESS_TYPE_RECEIVE_OK ||
-            o.rbpChgRsnCdNm === Tw.MSG_PAYMENT.HISTORY_PROCESS_TYPE_REQUEST_DONE;
-        o.isCanceled = o.payClNm === Tw.MSG_PAYMENT.HISTORY_PROCESS_TYPE_CANCEL ||
-            o.rbpChgRsnCdNm === Tw.MSG_PAYMENT.HISTORY_PROCESS_TYPE_REQUEST_CANCEL;
+        o.isReserved = o.rbpChgRsnCdNm === Tw.MSG_PAYMENT.HISTORY_PROCESS_TYPE_RESERVE_DONE;
+        o.isPayCompleted = o.payClNm === Tw.MSG_PAYMENT.HISTORY_PROCESS_TYPE_RECEIVE_DONE ||
+            o.rbpChgRsnCdNm === Tw.MSG_PAYMENT.HISTORY_PROCESS_TYPE_RECEIVE_DONE;
+        o.isCanceled = o.payClNm === (Tw.MSG_PAYMENT.HISTORY_PROCESS_TYPE_CANCEL + Tw.MSG_PAYMENT.HISTORY_PROCESS_TYPE_DONE) ||
+            o.rbpChgRsnCdNm === (Tw.MSG_PAYMENT.HISTORY_PROCESS_TYPE_CANCEL + Tw.MSG_PAYMENT.HISTORY_PROCESS_TYPE_DONE);
 
         o.reqDate = this._dateHelper.getShortDateWithFormat(o.opDt || o.reqDt, 'YYYY.MM.DD');
         o.chargeName = o.chargeName || o.prodNameTxt;
@@ -183,9 +180,10 @@ Tw.PaymentHistoryPointReserve.prototype = {
   },
 
   _getRecentIndex: function () {
-    this.reserveCancelableIndex = (_.find(this.currentData, function(o) {
+    var reserveCancelableIndex = (_.find(this.currentData, function(o) {
       return o.cancleYn === 'Y';
-    })).listId;
+    }));
+    this.reserveCancelableIndex = !reserveCancelableIndex ? null : reserveCancelableIndex.listId;
   },
 
   _canReserveCancel: function (index) {
@@ -299,6 +297,8 @@ Tw.PaymentHistoryPointReserve.prototype = {
 
   _apiError: function (res) {
     Tw.Logger.error(res.msg);
+    this.$listWrapper.html('<br /><div style=\"color:red;padding:1.8rem;\"><b>SERVER ERROR : </b>' + res.msg + '</div>');
+    return false;
   }
 
 };

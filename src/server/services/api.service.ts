@@ -100,11 +100,13 @@ class ApiService {
     const error = err.response.data;
     this.logger.error(this, '[API_ERR]', error);
     let message = 'unknown error';
-    if ( FormatHelper.isObject(error) && !FormatHelper.isEmpty(error.msg) ) {
-      message = error.msg;
+    let code = API_CODE.CODE_400;
+    if ( FormatHelper.isObject(error) ) {
+      message = error.msg || message;
+      code = error.code || code;
     }
     // observer.error(err);
-    observer.next({ code: API_CODE.CODE_400, msg: message, data: error });
+    observer.next({code, message, error});
     observer.complete();
   }
 

@@ -5,12 +5,7 @@
  */
 Tw.MyTBillHotBill = function (rootEl) {
   this.SVC_TYPE = { MOBILE: 'M1', TPOCKET: 'M3' };
-  this.PARAM = {
-    TYPE: {
-      CURRENT: 'G',
-      PREVIOUS: 'Q'
-    }
-  };
+
   this._children = null;
   this.$container = rootEl;
   this._apiService = Tw.Api;
@@ -22,14 +17,10 @@ Tw.MyTBillHotBill = function (rootEl) {
   this._billInfoAvailable = this.$amount.length > 0; //서버날짜로 일 별 노출조건 세팅해서 내려옴
   if ( this._billInfoAvailable ) {
     skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
-    this._resTimerID = setTimeout(this._getBillResponse(this.PARAM.TYPE.CURRENT), 500);
+    this._resTimerID = setTimeout(this._getBillResponse(Tw.MyTBillHotBill.PARAM.TYPE.CURRENT), 500);
     Handlebars.registerHelper('isBill', function (val, options) {
       return (Tw.MyTBillHotBill.NO_BILL_FIELDS.indexOf(val) < 0 ) ? options.fn(this) : options.inverse(this);
     });
-  } else {
-    //PocketFi 1일에 요금조회 불가 & 7일까지만 전월요금 조회 가능
-    //따라서 _billInfoAvailable 에선 무조건 show 조건 충족
-    this.$btPreviousBill.show();
   }
 };
 
@@ -51,7 +42,7 @@ Tw.MyTBillHotBill.prototype = {
 
   _getBillResponse: function (gubun) {
     this._apiService
-      .request(Tw.API_CMD.BFF_05_0022, { gubun: gubun || this.PARAM.TYPE.CURRENT })
+      .request(Tw.API_CMD.BFF_05_0022, { gubun: gubun || Tw.MyTBillHotBill.PARAM.TYPE.CURRENT })
       .done($.proxy(this._onReceivedBillData, this))
       .fail($.proxy(this._onErrorReceivedBillData, this));
   },
@@ -63,13 +54,14 @@ Tw.MyTBillHotBill.prototype = {
     }
 
     if ( resp.result && resp.result.isSuccess === 'Y' ) {
-      if ( resp.result.gubun === this.PARAM.TYPE.PREVIOUS ) {
+      if ( resp.result.gubun === Tw.MyTBillHotBill.PARAM.TYPE.PREVIOUS ) {
         var type = this._svcAttrCd === this.SVC_TYPE.MOBILE ? '휴대폰' : 'T Pocket-Fi';
         Tw.MyTBillHotBill.openPrevBillPopup(resp, this._svcNum, type);
       } else {
         this._svcAttrCd = this.$container.find('.info-type').attr('data-type');
         this._svcNum = this.$container.find('.info-type').attr('data-num');
         var billData = resp.result.hotBillInfo;
+        this._preBillAvailable = (billData.bf_mth_yn === 'Y');
         //자녀 회선 메뉴는 매월 1일과 자녀회선 없을 시 비노출
         //TODO 오늘 날짜 가져오는 방법 공통 로직 여부 논의 필요
         if ( resp.result.isChildAvailableYN === 'Y' ) {
@@ -108,13 +100,15 @@ Tw.MyTBillHotBill.prototype = {
 
         if ( this._billInfoAvailable ) {
           this.$amount.text(billData.tot_open_bal2);
-          //yyyy년mm월dd일 -> yyyy.mm.dd
-          var strPeriod = resp.result.termOfHotBill
-            .replace(/[\uB144\uC6D4]/gi, '.')
-            .replace(/[\uC77C:&nbsp;:]/gi, '')
-            .replace('~', ' ~ ');
+          var strPeriod = Tw.MyTBillHotBill.getFormattedPeriod(resp.result.termOfHotBill);
           this.$period.text(strPeriod);
-          var group = Tw.MyTBillHotBill.arrayToGroup(billData.record1, 'inv_amt2', Tw.MyTBillHotBill.NO_BILL_FIELDS);
+          var fieldInfo = {
+            lcl: 'bill_itm_lcl_nm',
+            scl: 'bill_itm_scl_nm',
+            name: 'bill_itm_nm',
+            value: 'inv_amt2'
+          };
+          var group = Tw.MyTBillHotBill.arrayToGroup(billData.record1, fieldInfo);
           this._renderBillGroup(group);
         }
       }
@@ -130,7 +124,6 @@ Tw.MyTBillHotBill.prototype = {
       location.href = '/myt';
     });
   },
-
   /**
    * renders an accordion menu with a bill data grouped by attributes
    * @param   bill data object
@@ -150,7 +143,7 @@ Tw.MyTBillHotBill.prototype = {
     var item = null;
     //자녀가 없을 경유 메뉴 접근 불가
     if ( this._children.length === 1 ) {
-      location.href = '/myt/bill/hotbill/child?svcMgmtNum=' + this._children[0].svcMgmtNum;
+      location.href = '/myt/bill/hotbill/child?childSvcMgmtNum=' + this._children[0].svcMgmtNum;
     } else {
       this._children.forEach(function (member) {
         item = {
@@ -168,32 +161,45 @@ Tw.MyTBillHotBill.prototype = {
   },
 
   _onClickChildButton: function (e) {
-    location.href = '/myt/bill/hotbill/child?svcMgmtNum=' + e.target.id;
+    location.href = '/myt/bill/hotbill/child?childSvcMgmtNum=' + e.target.id;
   },
 
   _showPreviousBill: function () {
     event.preventDefault();
-    var self = this;
-    skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
-    this._apiService
-      .request(Tw.API_CMD.BFF_05_0035, { gubun: this.PARAM.TYPE.PREVIOUS })
-      .done(function () {
-        self._resTimerID = setTimeout(self._getBillResponse(self.PARAM.TYPE.PREVIOUS), 500);
-      })
-      .fail($.proxy(this._onErrorReceivedBillData, this));
+    if ( this._preBillAvailable ) {
+      var self = this;
+      skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
+      this._apiService
+        .request(Tw.API_CMD.BFF_05_0035, { gubun: Tw.MyTBillHotBill.PARAM.TYPE.PREVIOUS })
+        .done(function () {
+          self._resTimerID = setTimeout(self._getBillResponse(Tw.MyTBillHotBill.PARAM.TYPE.PREVIOUS), 500);
+        })
+        .fail($.proxy(this._onErrorReceivedBillData, this));
+    } else {
+      this._popupService.open({
+        hbs: 'MY_03_01_01_L03_case',
+        data: { svcNum: this._svcNum, svcType: this._svcAttrCd === this.SVC_TYPE.MOBILE ? '휴대폰' : 'T Pocket-Fi' }
+      });
+    }
   }
 };
 
 
 Tw.MyTBillHotBill.NO_BILL_FIELDS = ['total', 'noVAT', 'is3rdParty', 'showDesc', 'discount'];
+Tw.MyTBillHotBill.PARAM = {
+  TYPE: {
+    CURRENT: 'G',
+    PREVIOUS: 'Q'
+  }
+};
 /**
  * converts an array of objects to object grouped by multiple attributes
  * @param data :  object array
- * @param fieldAmout inv_amt2: 당월 , inv_amt1: 전월, etc.
+ * @param fieldInfo 대분류, 소분류, 이름, 금액을 포함하는 object
  *
  * @returns grouped object
  */
-Tw.MyTBillHotBill.arrayToGroup = function (data, fieldAmount) {
+Tw.MyTBillHotBill.arrayToGroup = function (data, fieldInfo) {
   // var self = this;
   var amount = 0;
   var noVAT = false;
@@ -205,8 +211,8 @@ Tw.MyTBillHotBill.arrayToGroup = function (data, fieldAmount) {
   data.forEach(function (item) {
     noVAT = false;
     is3rdParty = false;
-    var groupL = item.bill_itm_lcl_nm;
-    var groupS = item.bill_itm_scl_nm;
+    var groupL = item[fieldInfo.lcl];
+    var groupS = item[fieldInfo.scl];
 
     if ( !group[groupL] ) {
       group[groupL] = { total: 0, showDesc: DEFAULT_DESC_VISIBILITY };
@@ -226,19 +232,19 @@ Tw.MyTBillHotBill.arrayToGroup = function (data, fieldAmount) {
       group[groupL][groupS] = { items: [], total: 0, noVAT: noVAT, is3rdParty: is3rdParty };
     }
 
-    amount = parseInt(item[fieldAmount].replace(/,/g, ''), 10);
+    amount = Tw.StringHelper.parseCommaedStringToInt(item[fieldInfo.value]);
     group[groupL].total += amount;
     group[groupL][groupS].total += amount;
 
     var bill_item = {
-      name: item.bill_itm_nm.replace(/[*#]/g, ''),
-      amount: item[fieldAmount].replace(/(\d)(?=(\d{3})+$)/gi, '$1,'),
-      noVAT: item.bill_itm_nm.indexOf('*') > -1 ? true : false,
-      is3rdParty: item.bill_itm_nm.indexOf('#') > -1 ? true : false,
+      name: item[fieldInfo.name].replace(/[*#]/g, ''),
+      amount: Tw.StringHelper.commaSeparatedString(item[fieldInfo.value]),
+      noVAT: item[fieldInfo.name].indexOf('*') > -1 ? true : false,
+      is3rdParty: item[fieldInfo.name].indexOf('#') > -1 ? true : false,
       discount: amount < 0 ? true : false
     };
     group[groupL][groupS].items.push($.extend({}, bill_item));
-    bill_item.amount = item[fieldAmount];
+    bill_item.amount = item[fieldInfo.value];
   });
 
   //아이템 이름과 소분류가 같은 경우 2depth 보여주지 않음
@@ -250,22 +256,25 @@ Tw.MyTBillHotBill.arrayToGroup = function (data, fieldAmount) {
           delete itemS.items[0];
         }
         itemS.discount = itemS.total < 0 ? true : false;
-        itemS.total = itemS.total.toString().replace(/(\d)(?=(\d{3})+$)/gi, '$1,');
+        itemS.total = Tw.StringHelper.commaSeparatedString(itemS.total);
       }
       itemL.discount = itemL.total < 0 ? true : false;
-      itemL.total = itemL.total.toString().replace(/(\d)(?=(\d{3})+$)/gi, '$1,');
+      itemL.total = Tw.StringHelper.commaSeparatedString(itemL.total);
     });
   });
   return group;
 };
 
 Tw.MyTBillHotBill.openPrevBillPopup = function (resp, num, type) {
-  var strPeriod = resp.result.termOfHotBill
-    .replace(/[\uB144\uC6D4]/gi, '.')
-    .replace(/[\uC77C:&nbsp;:]/gi, '')
-    .replace('~', ' ~ ');
+  var strPeriod = Tw.MyTBillHotBill.getFormattedPeriod(resp.result.termOfHotBill);
   var billData = resp.result.hotBillInfo;
-  var group = Tw.MyTBillHotBill.arrayToGroup(billData.record1, 'inv_amt1', Tw.MyTBillHotBill.NO_BILL_FIELDS);
+  var fieldInfo = {
+    lcl: 'bill_itm_lcl_nm',
+    scl: 'bill_itm_scl_nm',
+    name: 'bill_itm_nm',
+    value: 'inv_amt1'
+  };
+  var group = Tw.MyTBillHotBill.arrayToGroup(billData.record1, fieldInfo, Tw.MyTBillHotBill.NO_BILL_FIELDS);
 
   var data = {
     amount: billData.tot_open_bal1,
@@ -280,4 +289,13 @@ Tw.MyTBillHotBill.openPrevBillPopup = function (resp, num, type) {
     billItems: group
   });
 
+};
+
+/**
+ * yyyy년mm월dd일 -> yyyy.mm.dd
+ * @param strPeriod ex)yyyy년mm월dd일~yyyy년mm월dd일
+ * @returns yyyy.mm.dd ~ yyyy.mm.dd
+ */
+Tw.MyTBillHotBill.getFormattedPeriod = function (strPeriod) {
+  return Tw.StringHelper.replaceDateNotaionWithDot(strPeriod).replace('~', ' ~ ');
 };
