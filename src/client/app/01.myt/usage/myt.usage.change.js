@@ -26,6 +26,8 @@ Tw.MytUsageChange.prototype = {
       .done(function (resp) {
         if ( resp.code === Tw.API_CODE.CODE_00 ) {
           location.href = '/myt';
+        } else if ( resp.code === Tw.API_CODE.CODE_06 ) {
+          // 고객보호 비밀번호 레이어 팝업
         }
       });
   },
