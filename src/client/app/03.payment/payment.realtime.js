@@ -225,9 +225,7 @@ Tw.PaymentRealtime.prototype = {
   _payCard: function () {
     if (this._isCardValid()) {
       var reqData = this._makeRequestDataForCard();
-      this._apiService.request(Tw.API_CMD.BFF_07_0025, reqData)
-        .done($.proxy(this._paySuccess, this, reqData, 'card'))
-        .fail($.proxy(this._payFail, this));
+      this._getCardCode(reqData);
     }
   },
   _isCardValid: function () {
@@ -245,14 +243,39 @@ Tw.PaymentRealtime.prototype = {
       payovrBankCd: this.$cardWrap.find('.select-bank').attr('id'),
       payovrBankNum: $.trim(this.$cardWrap.find('.account-number').val()),
       payovrCustNm: $.trim(this.$cardWrap.find('.name').data('value')),
-      bankOrCardCode: $.trim(this.$cardNumber.val()).substr(0,6),
+      drwagrPrfKeyVal: '',
+      acntNum: this.$autoPayInfo.attr('acnt-num').toString(),
+      payAmt: this.$amount.toString(),
       bankOrCardAccn: $.trim(this.$cardNumber.val()),
-      cdexpy: this.$cardY.val().substr(2,2),
+      cdexpy: this.$cardY.val(),
       cdexpm: this.$cardM.val(),
+      instmm: this.$cardTypeSelector.attr('id').toString(),
       ccPwd: this.$cardPw.val(),
-      unpaidBillList: this._getCheckedBillList()
+      unpaidBillList: this._getCheckedBillList(),
+      recCnt1: this._getCheckedBillList().length.toString()
     };
     return reqData;
+  },
+  _payCardRequest: function (reqData) {
+    this._apiService.request(Tw.API_CMD.BFF_07_0025, reqData)
+      .done($.proxy(this._paySuccess, this, reqData, 'card'))
+      .fail($.proxy(this._payFail, this));
+  },
+  _getCardCode: function (reqData) {
+    this._apiService.request(Tw.API_CMD.BFF_07_0068, {}, {}, $.trim(this.$cardNumber.val()).substr(0,6))
+      .done($.proxy(this._getSuccess, this, reqData))
+      .fail($.proxy(this._getFail, this));
+  },
+  _getSuccess: function (reqData, res) {
+    if (res.code === Tw.API_CODE.CODE_00) {
+      reqData.bankOrCardCode = res.result.isueCardCd;
+      this._payCardRequest(reqData);
+    } else {
+      this._popupService.openAlert(Tw.MSG_COMMON.SERVER_ERROR);
+    }
+  },
+  _getFail: function () {
+    Tw.Logger.info('get card fail');
   },
   _payPoint: function () {
     if (this._isPointValid()) {
