@@ -35,11 +35,11 @@
                     <span class="blind">나의 통합대표 회선</span><!-- 2018-07-06 수정-->
                     <ul>
                         <li>
-                            <span class="info-num">010-46**-10**</span>
+                            <span class="info-num"><%= svcInfo.svcNum%></span>
                         </li>
                         <li>
-                            <span class="info-type"><span class="blind">회선정보</span>휴대폰</span>
-                            <span class="info-name"><span class="blind">별명</span>귀여운첫째아들</span>
+                            <span class="info-type"><span class="blind">회선정보</span><%= data.lineType%></span>
+                            <span class="info-name"><span class="blind">별명</span><%= svcInfo.nickNm %></span>
                         </li>
                     </ul>
                     <span class="info-btn"><a href="" class="btn-choice" role="button">변경</a></span>
@@ -52,7 +52,7 @@
                     <p class="pay-disc">통합청구로 등록한 경우 <br/><strong>통합대표 회선만 사용 가능</strong>한<br/>메뉴입니다.</p>
                     <div class="main-linebox">
                         <span class="title">나의 통합대표 회선</span><!-- 2018-07-06 수정-->
-                        <span class="text">010-12**-45**</span>
+                        <span class="text"><%= data.representSvcNum%></span>
                         <a href="" class="bt-link-tx">회선변경 <span class="ico"></span></a>
                     </div>
                     <!-- 2018-07-09 수정 --><!-- 안내문구삭제 -->
