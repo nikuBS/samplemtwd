@@ -15,7 +15,6 @@ class MyTBillHotBillChild extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    var preBillAvailable = new Date().getDate() <= 7;
     const billRequest: Observable<any> =  this.apiService.request(API_CMD.BFF_05_0035, {
         gubun: PARAM.TYPE.CURRENT,
         childSvcMgmtNum: req.query.childSvcMgmtNum
@@ -28,7 +27,6 @@ class MyTBillHotBillChild extends TwViewController {
       if ( billData['result'] && billData['result']['isSuccess'] === 'Y' ) {
         this.renderView(res, 'bill/myt.bill.hotbill.child.html', {
           svcInfo: svcInfo,
-          preBillAvailable: preBillAvailable,
           onlyChild: (children.result.length <= 1),
           children: JSON.stringify( children.result)
          });
