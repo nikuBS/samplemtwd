@@ -8,6 +8,7 @@ import {Request, Response, NextFunction} from 'express';
 import {MYT_GUIDE_CHANGE_INIT_INFO} from '../../../../types/string.type';
 import {Observable} from 'rxjs/Observable';
 import {API_CMD} from '../../../../types/api-command.type';
+import {SVC_ATTR} from '../../../../types/bff-common.type';
 
 class MytBillGuidechange extends TwViewController {
   constructor() {
@@ -63,7 +64,7 @@ class MytBillGuidechange extends TwViewController {
       selectedSessionReq
     ).subscribe(([billTypeInfo, integraionService, selectedSession]) => {
       if ( integraionService.code !== '00' ) {
-        integraionService = {result : {}};
+        integraionService = {result : []};
       }
 
       svcInfo = Object.assign({}, selectedSession.result);
@@ -71,10 +72,32 @@ class MytBillGuidechange extends TwViewController {
         billTypeDesc : MYT_GUIDE_CHANGE_INIT_INFO.billTypeDesc,
         billTypeList : this.getFlickingList(MYT_GUIDE_CHANGE_INIT_INFO.billTypeList, svcInfo),
         billTypeInfo : billTypeInfo.result,
-        itgSvc : integraionService.result
+        itgSvc : integraionService.result,
+        representSvcNum : '', // 대표회선 번호
+        representYN : 'Y',  // 대표회선 여부
+        integYN : integraionService.result.length > 1 ? 'Y' : 'N', // 통합회선 여부
+        lineType : SVC_ATTR[svcInfo.svcAttrCd]
       };
 
-      res.render('bill/myt.bill.guidechange.html', { svcInfo: svcInfo, data: data });
+      let path = 'bill/myt.bill.guidechange.html';
+      // 통합대표회선 대표회선 아닌경우 확인
+      if ( data.integYN === 'Y') {
+        const imsiArr = data.itgSvc.filter( (line) => {
+          if ( line.acntRepYN === 'Y' ) {
+            if ( svcInfo.svcMgmtNum !== line.svcMgmtNum ) {
+              data.representSvcNum = line.svcNum;
+              data.representYN = 'N';
+              path = 'bill/myt.bill.guidechange.noRepresent.html';
+            }
+          }
+        });
+        this.logger.info('.', '>>>>>> ', JSON.stringify(data));
+      } else {
+        this.logger.info('.', '>>>>>> 개별 회선이다');
+      }
+
+      res.render(path, { svcInfo: svcInfo, data: data });
+      // res.render('bill/myt.bill.guidechange.html', { svcInfo: svcInfo, data: data });
     });
   }
 }
