@@ -27,15 +27,27 @@
                 <div class="payment-info family">
                     <p class="tit"><strong>자녀</strong>폰 사용요금입니다.</p>
                     <div class="payment-info-phone">
+
+                        <!--<span class="child-phonenum" data-target="childPhonenum"><%=circuitChildInfo[0].svcNum %></span>-->
+                        <!--<span class="device-info" data-target="deviceInfo"><%=circuitChildInfo[0].childEqpMdNm %></span>-->
+
+                        <% if ( circuitChildInfo.length == 1) { %>
                         <!-- 자녀 회선이 1개인 경우 -->
-                        <span class="child-phonenum">010-46**-10*</span>
+                        <!--<span class="child-phonenum" data-target="childPhonenum"><%=circuitChildInfo[0].svcNum %></span>-->
+                        <!--<span class="device-info" data-target="deviceInfo"><%=circuitChildInfo[0].childEqpMdNm %></span>-->
                         <!--// 자녀 회선이 1개인 경우 -->
 
+                        <% } else if ( circuitChildInfo.length > 1 ) { %>
                         <!-- 자녀 회선이 2개 이상인 경우 -->
-                        <!-- <button class="bt-dropdown small" data-select="010-46**-10**,010-46**-10**,010-46**-10**" data-title="전화번호 선택" title="전화번호 선택">010-46**-10**</button> -->
+                        <!--<button class="bt-dropdown small"-->
+                                <!--data-title="전화번호 선택"-->
+                                <!--title="전화번호 선택"-->
+                                <!--data-target="childPhonenumBtn"><%=circuitChildInfo[0].svcNum %></button>-->
+                        <!--<span class="device-info" data-target="deviceInfo"><%=circuitChildInfo[0].childEqpMdNm %></span>-->
                         <!--// 자녀 회선이 2개 이상인 경우 -->
+                        <% } %>
 
-                        <span class="device-info">GALAXY S7 32G</span>
+
                     </div>
                 </div>
             </div>
@@ -43,15 +55,15 @@
             <hr class="cont-sp type1" aria-hidden="true" />
             <div class="cont-box">
                 <div class="payment-inquiry">
-                    <a class="bt-link-tx" href="">Band 데이터 6.5G<span class="ico"></span></a>
-                    <button class="bt-dropdown big" title="월별 요금안내서 선택">2018년 6월<span class="ico"></span></button><!-- 2018-07-12 접근성 수정 -->
+                    <a class="bt-link-tx" data-target="feePlanName">Band 데이터 6.5G<span class="ico"></span></a>
+                    <button class="bt-dropdown big" title="월별 요금안내서 선택" data-target="billMonthName"></span></button><!-- 2018-07-12 접근성 수정 -->
                     <div class="payment-all">
                         <h3 class="blind">사용 요금</h3>
-                        <span><em>201,020</em> 원</span>
-                        <p class="term">2018.06.01~ 2018.06.06</p>
+                        <span><em data-target="useAmtTot"></em> 원</span>
+                        <p class="term" data-target="periodOfUse"></p>
                     </div>
-                    <div class="txt-discount">
-                        <p><span class="num">5</span>월 사용 요금은 <span class="num">370,000</span>원이고<br /><span class="num">20,000</span>원을 할인 받으셨습니다.</p>
+                    <div class="txt-discount" data-target="discountArea">
+                        <!--<p><span class="num">5</span>월 사용 요금은 <span class="num">370,000</span>원이고<br /><span class="num">20,000</span>원을 할인 받으셨습니다.</p>-->
                     </div>
                 </div>
             </div>
@@ -302,24 +314,24 @@
                                         <button role="button" aria-pressed="false">
                                                 <span class="pt-tit-wrap">
                                                     <span class="pt-tit">미납요금</span>
-                                                    <span class="pt-price"><span class="num">80,550</span>원</span>
+                                                    <span class="pt-price"><span class="num" data-target="unpaidChargesTot">80,550</span>원</span>
                                                 </span>
                                         </button>
                                     </div>
                                     <div class="acco-content">
-                                        <ul class="payment-detail-depth1">
-                                            <li>
-                                                <dl class="pdt-wrap">
-                                                    <dt class="pdt-tit">2018년 4월</dt>
-                                                    <dd class="pdt-price"><span class="num">40,000</span>원</dd>
-                                                </dl>
-                                            </li>
-                                            <li>
-                                                <dl class="pdt-wrap">
-                                                    <dt class="pdt-tit">2018년 5월</dt>
-                                                    <dd class="pdt-price"><span class="num">40,000</span>원</dd>
-                                                </dl>
-                                            </li>
+                                        <ul class="payment-detail-depth1" data-target="unpaidChargesList">
+                                            <!--<li>-->
+                                                <!--<dl class="pdt-wrap">-->
+                                                    <!--<dt class="pdt-tit">2018년 4월</dt>-->
+                                                    <!--<dd class="pdt-price"><span class="num">40,000</span>원</dd>-->
+                                                <!--</dl>-->
+                                            <!--</li>-->
+                                            <!--<li>-->
+                                                <!--<dl class="pdt-wrap">-->
+                                                    <!--<dt class="pdt-tit">2018년 5월</dt>-->
+                                                    <!--<dd class="pdt-price"><span class="num">40,000</span>원</dd>-->
+                                                <!--</dl>-->
+                                            <!--</li>-->
                                         </ul>
                                     </div>
                                 </li>
