@@ -118,6 +118,8 @@ Tw.RechargeLimit.prototype = {
   _success: function (res) {
     if (res.code === '00') {
       this._go('step-complete');
+    } else {
+      this._popupService.openAlert(res.data && res.data.msg);
     }
   },
 
@@ -146,8 +148,11 @@ Tw.RechargeLimit.prototype = {
     if (resp.code === API_CODE.CODE_00) {
       this.$container.find('#recharge-regular').remove();
       this.$container.find('#btn-cancel-regular').remove();
+      this._popupService.close();
+    } else {
+      this._popupService.close();
+      this._popupService.openAlert(resp.data && resp.data.msg);
     }
-    this._popupService.close();
   },
 
   _openChangeLimitPopup: function (e) {
