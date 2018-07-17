@@ -140,8 +140,7 @@ Tw.NODE_CMD = {
   GET_ENVIRONMENT: { path: '/environment', method: Tw.API_METHOD.GET },
   SET_DEVICE: { path: '/device', method: Tw.API_METHOD.POST },
   CHANGE_SESSION: { path: '/change-session', method: Tw.API_METHOD.POST },
-  SVC_PASSWORD_LOGIN: { path: '/service-password-sessions/login', method: Tw.API_METHOD.POST },
-  SVC_PASSWORD_SESSION: { path: '/service-password-sessions/session', method: Tw.API_METHOD.POST }
+  SVC_PASSWORD_LOGIN: { path: '/service-password-sessions/login', method: Tw.API_METHOD.POST }
 };
 
 Tw.API_CODE = {
