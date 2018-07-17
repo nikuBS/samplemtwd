@@ -118,10 +118,7 @@ Tw.MyTBillGuidechangeUpdatePrototype = {
   _goComplete: function(result) {
     this._history.pushUrl('/myt/bill/guidechange');
     if (this._options.fromChange) {
-      // var beforeBillGuideType = this._options.beforeBillGuideType; //수정해야함
-      var beforeBillGuideType = result.beforeBillIsueTypeCd; //수정해야함
-      var selectedBillGuideType = this._curBillGuideType;
-      window.location.href = '/myt/bill/guidechange/change-complete?beforeBillGuideType=' + beforeBillGuideType + '&afterBillGuideType=' + selectedBillGuideType;
+      window.location.href = '/myt/bill/guidechange/change-complete?beforeBillGuideType=' + result.beforeBillIsueTypeCd;
     } else {
       window.location.href = '/myt/bill/guidechange/update-complete';
     }
@@ -282,8 +279,8 @@ Tw.MyTBillGuidechangeUpdateClasses.etc.prototype = $.extend({}, Tw.MyTBillGuidec
     return this._phoneNumValidation.apply(this, this._$inputPhone);
   },
   _checkHalfValidation: function () {
-    // return !!this._$inputAddr1.val() && !!this._$inputAddr2.val() && !!this._$inputAddr3.val();
-    return !!this._$inputAddr3.val();
+    return !!this._$inputAddr1.val() && !!this._$inputAddr2.val() && !!this._$inputAddr3.val();
+    // return !!this._$inputAddr3.val();
   },
   _failHalfValidation: function () {
     this._popupService.openAlert(Tw.MSG_MYT.BILL_GUIDECHANGE_A10);
