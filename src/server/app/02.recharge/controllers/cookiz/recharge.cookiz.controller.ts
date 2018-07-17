@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
+import FormatHelper from '../../../../utils/format.helper';
 
 class RechargeCookiz extends TwViewController {
   constructor() {
@@ -26,14 +27,28 @@ class RechargeCookiz extends TwViewController {
       if ( cookizInfo.code !== '00' ) {
         res.render('cookiz/recharge.cookiz.blocked.html', { svcInfo: svcInfo });
       } else {
+        cookizInfo = this.parseCookizInfo(cookizInfo.result);
+
         res.render('cookiz/recharge.cookiz.html', {
           svcInfo: svcInfo,
           myProductInfo: myProductInfo.result,
-          cookizInfo: cookizInfo.result,
+          cookizInfo: cookizInfo,
           isRefillCoupon: isRefillCoupon
         });
       }
     });
+  }
+
+  private parseCookizInfo(cookizInfo) {
+    if ( cookizInfo.currentTopUpLimit ) {
+      cookizInfo.currentTopUpLimit = FormatHelper.addComma(cookizInfo.currentTopUpLimit);
+    }
+
+    if ( cookizInfo.regularTopUpAmt ) {
+      cookizInfo.regularTopUpAmt = FormatHelper.addComma(cookizInfo.regularTopUpAmt);
+    }
+
+    return cookizInfo;
   }
 }
 

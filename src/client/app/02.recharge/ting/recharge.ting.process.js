@@ -18,6 +18,7 @@ Tw.RechargeTingProcess = function (rootEl) {
 };
 
 Tw.RechargeTingProcess.prototype = {
+  DEFAULT_AMOUNT: 1000,
   target: {
     name: '',
     phone: '',
@@ -66,7 +67,14 @@ Tw.RechargeTingProcess.prototype = {
 
   _setProvider: function (response) {
     if ( response.code === '00' ) {
-      this.provider.amount = Number(response.result.transferableAmt);
+      var result = response.result;
+      this.provider.amount = Number(result.transferableAmt);
+
+      if ( this.provider.amount < this.target.amount ) {
+        this.target.amount = this.DEFAULT_AMOUNT;
+        this._setAmount();
+      }
+
       this._setAvailableAmount();
     }
   },
