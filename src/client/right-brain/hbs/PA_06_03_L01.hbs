@@ -22,23 +22,23 @@
                     <ul>
                       <li>
                         <span class="title">납부일자</span>
-                        <span class="tx-cont">2018.05.23</span>
+                        <span class="tx-cont">{{data.reqDate}}</span>
                       </li>
                       <li>
                         <div class="inner-top">
                           <span class="title">납부금액</span>
                           <span class="tx-cont">
-                          <strong class="num">27,000</strong> 원</span>
+                          <strong class="num">{{data.drwAmt}}</strong> 원</span>
                         </div>
                         <div class="inner-row">
                           <ul>
                             <li>
                               <span class="title">청구금액</span>
-                              <span class="tx-cont">27,000 원</span>
+                              <span class="tx-cont">{{data.drwReqAmt}} 원</span>
                             </li>
                             <li>
                               <span class="title">청구년월 <br /> (사용기간)</span>
-                              <span class="tx-cont">2018.04 <br /> (2018.03.01 ~ 2018.03.31)</span>
+                              <span class="tx-cont">{{data.drwYm}} <br /> ({{data.startDate}} ~ {{data.endDate}})</span>
                             </li>
                           </ul>
                         </div>
@@ -52,11 +52,11 @@
                           <ul>
                             <li>
                               <span class="title">은행명</span>
-                              <span class="tx-cont">국민은행</span>
+                              <span class="tx-cont">{{data.bankCardCoCdNm}}</span>
                             </li>
                             <li>
                               <span class="title">계좌번호</span>
-                              <span class="tx-cont">9870 *** ******</span>
+                              <span class="tx-cont">{{data.bankCardNum}}</span>
                             </li>
                           </ul>
                         </div>
@@ -64,11 +64,11 @@
 
                       <li>
                         <span class="title">사유</span>
-                        <span class="tx-cont">인출청구권</span>
+                        <span class="tx-cont">{{data.drwErrCdNm}}</span>
                       </li>
                       <li>
                         <span class="title">구분</span>
-                        <span class="tx-cont">당월 + 미납</span>
+                        <span class="tx-cont">{{data.type}}</span>
                       </li>
                     </ul>
                   </div>
