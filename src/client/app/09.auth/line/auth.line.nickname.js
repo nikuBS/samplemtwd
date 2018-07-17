@@ -63,7 +63,7 @@ Tw.AuthLineNickname.prototype = {
   },
   _changeNickname: function (nickname, svcMgmtNum) {
     var params = {
-      nickname: nickname
+      nickNm: nickname
     };
     this._apiService.request(Tw.API_CMD.BFF_03_0006, params, {}, svcMgmtNum)
       .done($.proxy(this._successChangeNickname, this, nickname))
