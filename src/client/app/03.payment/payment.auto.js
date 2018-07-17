@@ -97,8 +97,8 @@ Tw.PaymentAuto.prototype = {
   },
   _getDateValue: function ($target) {
     var value =Tw.PAYMENT_DATE_VALUE.FIFTEEN;
-    if (!$target.hasClass('first')) {
-      if ($target.hasClass('last')) {
+    if (!$target.hasClass('top-left')) {
+      if ($target.hasClass('top-right')) {
         value = Tw.PAYMENT_DATE_VALUE.TWENTY_THREE;
       } else {
         value = Tw.PAYMENT_DATE_VALUE.TWENTY_ONE;
@@ -107,7 +107,7 @@ Tw.PaymentAuto.prototype = {
     return value;
   },
   _changeDateRequest: function (value) {
-    this._apiService.request(Tw.API_CMD.BFF_07_0065, {}, {}, '?payCyclCd=' + value.toString())
+    this._apiService.request(Tw.API_CMD.BFF_07_0065, {}, {}, '?payCyclCd=' + value)
       .done($.proxy(this._changeDateSuccess, this))
       .fail($.proxy(this._changeDateFail, this));
     this._popupService.close();
