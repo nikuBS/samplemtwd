@@ -201,25 +201,6 @@ class ApiService {
         }
       });
   }
-
-  public requestSvcPasswordSession(params: any): Observable<any> {
-    return this.request(API_CMD.BFF_03_0009, params)
-      .switchMap((resp) => {
-        if ( resp.code === API_CODE.CODE_00 ) {
-          return this.request(API_CMD.BFF_01_0005, {});
-        } else {
-          throw resp.code;
-        }
-      }).map((resp) => {
-        if ( resp.code === API_CODE.CODE_00 ) {
-          const result = resp.result;
-          this.loginService.setSvcInfo(result);
-          return result;
-        } else {
-          throw resp.code;
-        }
-      });
-  }
 }
 
 export default ApiService;
