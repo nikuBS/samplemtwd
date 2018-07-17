@@ -6,7 +6,11 @@
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
 import { API_CODE } from '../../../../types/api-command.type';
-import { BILL_GUIDE_TYPE, LINE_NAME, WIRE_BILL_GUIDE_TYPE } from '../../../../types/bff-common.type';
+import {
+  BILL_GUIDE_TYPE,
+  WIRE_BILL_GUIDE_TYPE,
+  BILL_GUIDE_TYPE_WITH_WIRE
+} from '../../../../types/bff-common.type';
 import { API_CMD } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 
@@ -20,36 +24,26 @@ BILL_GUIDE_TYPE_COMPONENT[BILL_GUIDE_TYPE.SMS_EMAIL] = 'sms-email';
 BILL_GUIDE_TYPE_COMPONENT[BILL_GUIDE_TYPE.BILL_LETTER_SMS] = 'bill-letter-sms';
 BILL_GUIDE_TYPE_COMPONENT[BILL_GUIDE_TYPE.ETC] = 'etc';
 
-BILL_GUIDE_TYPE_COMPONENT[WIRE_BILL_GUIDE_TYPE.TWORLD] = 'tworld';
-BILL_GUIDE_TYPE_COMPONENT[WIRE_BILL_GUIDE_TYPE.BILL_LETTER] = 'bill-letter';
-BILL_GUIDE_TYPE_COMPONENT[WIRE_BILL_GUIDE_TYPE.SMS] = 'sms';
-BILL_GUIDE_TYPE_COMPONENT[WIRE_BILL_GUIDE_TYPE.EMAIL] = 'email';
-BILL_GUIDE_TYPE_COMPONENT[WIRE_BILL_GUIDE_TYPE.BILL_LETTER_EMAIL] = 'bill-letter-email';
-BILL_GUIDE_TYPE_COMPONENT[WIRE_BILL_GUIDE_TYPE.SMS_EMAIL] = 'sms-email';
-BILL_GUIDE_TYPE_COMPONENT[WIRE_BILL_GUIDE_TYPE.BILL_LETTER_SMS] = 'bill-letter-sms';
-BILL_GUIDE_TYPE_COMPONENT[WIRE_BILL_GUIDE_TYPE.ETC] = 'etc';
-
 class MyTBillUpdate extends TwViewController {
   constructor() {
     super();
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    // const selectedSessionsRequest: Observable<any> = this.apiService.request(API_CMD.BFF_01_0005, {});
     const billTypeListRequest: Observable<any> = this.apiService.request(API_CMD.BFF_05_0025, {});
     Observable.combineLatest(
-      // selectedSessionsRequest,
       billTypeListRequest,
     ).subscribe(([_billTypesList]) => {
-      // svcInfo = this.getResult(_selectedSessions);
-      console.log('~~~~~~~~~svcInfo', svcInfo);
       const _curBillGuide = this.getResult(_billTypesList);
-      console.log('~~~~~~~~~svcInfo', _curBillGuide);
-      // const isWire = (svcInfo.svcAttrCd === 'S1' || svcInfo.svcAttrCd === 'S2' || svcInfo.svcAttrCd === 'S3') ? true : false;
-      // const billGuideTypeDefine = isWire ? WIRE_BILL_GUIDE_TYPE : BILL_GUIDE_TYPE;
-      const anotherBillGuideType = (_curBillGuide.curBillType === BILL_GUIDE_TYPE.TWORLD) ? BILL_GUIDE_TYPE.BILL_LETTER : BILL_GUIDE_TYPE.TWORLD;
-      _curBillGuide['component'] = BILL_GUIDE_TYPE_COMPONENT[_curBillGuide['curBillType']];
-      console.log('~~~~~~~~~`_curBillGuide', _curBillGuide)
+      const isWire = (svcInfo.svcAttrCd === 'S1' || svcInfo.svcAttrCd === 'S2' || svcInfo.svcAttrCd === 'S3') ? true : false;
+      let anotherBillGuideType;
+      if (isWire) {
+        _curBillGuide['component'] = BILL_GUIDE_TYPE_COMPONENT[BILL_GUIDE_TYPE_WITH_WIRE[_curBillGuide['curBillType']]];
+        anotherBillGuideType = (_curBillGuide.curBillType === WIRE_BILL_GUIDE_TYPE.TWORLD) ? WIRE_BILL_GUIDE_TYPE.BILL_LETTER : WIRE_BILL_GUIDE_TYPE.TWORLD;
+      } else {
+        _curBillGuide['component'] = BILL_GUIDE_TYPE_COMPONENT[_curBillGuide['curBillType']];
+        anotherBillGuideType = (_curBillGuide.curBillType === BILL_GUIDE_TYPE.TWORLD) ? BILL_GUIDE_TYPE.BILL_LETTER : BILL_GUIDE_TYPE.TWORLD;
+      }
       _curBillGuide['wireCurBillType'] = _curBillGuide['curBillType'];
       this.renderView(res, 'bill/myt.bill.guidechange.update.html', {
         curBillGuide: _curBillGuide,

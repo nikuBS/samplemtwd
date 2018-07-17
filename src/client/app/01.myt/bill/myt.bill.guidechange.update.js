@@ -87,7 +87,11 @@ Tw.MyTBillGuidechangeUpdatePrototype = {
         this._popupService.openAlert(alertMsg, Tw.POPUP_TITLE.NOTIFY, $.proxy(this._onClickBtnChangeConfirm, this, resp.result));
       }, this), 500);
     } else {
-      this._showErrorAlert(resp.data && resp.data.msg);
+      if (resp.data) {
+        this._showErrorAlert(resp.data && resp.data.msg);
+      } else {
+        this._showErrorAlert(resp.error && resp.error.msg);
+      }
       return;
     }
   },
