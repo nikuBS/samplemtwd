@@ -23,15 +23,23 @@ class MyTBillHotBill extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     var type = '';
     var billAvailable = true;
+    var preBillAvailable = true;
     switch ( svcInfo.svcAttrCd ) {
       case 'M3':
         type = 'T pocket Fi';
+        if (new Date().getDate() > 7){ //7일까지 보이기
+          preBillAvailable = true;
+        }
         break;
       case 'M1':
         type = '휴대폰';
         //pocketFi: 메월 1일 메세지 표시
         if ( new Date().getDate() === 1 ) {
           billAvailable = false;
+        }
+
+        if(new Date().getDate() < 9){ //9일부터 보이기
+          preBillAvailable = false;
         }
         break;
       default:
@@ -41,9 +49,17 @@ class MyTBillHotBill extends TwViewController {
     }
     svcInfo.svcType = type;
     Observable.combineLatest(
-      this.apiService.request(API_CMD.BFF_05_0035, { gubun: PARAM.TYPE.PREVIOUS })
-    ).subscribe(([]) => {
-      this.renderView(res, 'bill/myt.bill.hotbill.html', { svcInfo: svcInfo, billAvailable: billAvailable });
+      this.apiService.request(API_CMD.BFF_05_0035, { gubun: PARAM.TYPE.CURRENT })
+    ).subscribe(([billData]) => {
+      if ( billData['result'] && billData['result']['isSuccess'] === 'Y' ) {
+        this.renderView(res, 'bill/myt.bill.hotbill.html', {
+          svcInfo: svcInfo,
+          billAvailable: billAvailable,
+          preBillAvailable: preBillAvailable
+        });
+      } else {
+        //TODO error처리
+      }
     });
   }
 
