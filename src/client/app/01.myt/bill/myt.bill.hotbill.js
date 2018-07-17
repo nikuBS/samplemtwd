@@ -142,7 +142,7 @@ Tw.MyTBillHotBill.prototype = {
     var item = null;
     //자녀가 없을 경유 메뉴 접근 불가
     if ( this._children.length === 1 ) {
-      location.href = '/myt/bill/hotbill/child?svcMgmtNum=' + this._children[0].svcMgmtNum;
+      location.href = '/myt/bill/hotbill/child?childSvcMgmtNum=' + this._children[0].svcMgmtNum;
     } else {
       this._children.forEach(function (member) {
         item = {

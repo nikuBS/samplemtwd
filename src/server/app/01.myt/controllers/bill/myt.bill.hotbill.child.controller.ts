@@ -16,17 +16,22 @@ class MyTBillHotBillChild extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     var preBillAvailable = new Date().getDate() <= 7;
-    Observable.combineLatest(
-      this.apiService.request(API_CMD.BFF_05_0035, {
+    const billRequest: Observable<any> =  this.apiService.request(API_CMD.BFF_05_0035, {
         gubun: PARAM.TYPE.CURRENT,
         childSvcMgmtNum: req.query.childSvcMgmtNum
-      })
-    ).subscribe(([billData]) => {
+      });
+    const childrenRequest: Observable<any> = this.apiService.request(API_CMD.BFF_05_0024, {})
+    Observable.combineLatest(
+      billRequest,
+      childrenRequest
+    ).subscribe(([billData, children]) => {
       if ( billData['result'] && billData['result']['isSuccess'] === 'Y' ) {
         this.renderView(res, 'bill/myt.bill.hotbill.child.html', {
           svcInfo: svcInfo,
-          preBillAvailable: preBillAvailable
-        });
+          preBillAvailable: preBillAvailable,
+          onlyChild: (children.result.length <= 1),
+          children: JSON.stringify( children.result)
+         });
       } else {
         //TODO error처리
       }

@@ -1,5 +1,5 @@
 /**
- * FileName: myt.bill.hotbill.child.js.js
+ * FileName: myt.bill.hotbill.child.js
  * Author: Hyeryoun Lee (skt.P130712@partner.sk.com)
  * Date: 2018. 7. 9.
  */
@@ -12,9 +12,8 @@ Tw.MyTBillHotBillChild = function (rootEl) {
   this._cachedElement();
   this._bindEvent();
 
-  skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
-  this.childSvcMgmtNum = Tw.UrlHelper.getQueryParams().childSvcMgmtNum;
-  this._resTimerID = setTimeout(this._getBillResponse(Tw.MyTBillHotBill.PARAM.TYPE.CURRENT, this.childSvcMgmtNum), 500);
+  var childSvcMgmtNum = Tw.UrlHelper.getQueryParams().childSvcMgmtNum;
+  this._startGetBillResponseTimer(Tw.MyTBillHotBill.PARAM.TYPE.CURRENT, childSvcMgmtNum);
   Handlebars.registerHelper('isBill', function (val, options) {
     return (Tw.MyTBillHotBill.NO_BILL_FIELDS.indexOf(val) < 0 ) ? options.fn(this) : options.inverse(this);
   });
@@ -25,20 +24,46 @@ Tw.MyTBillHotBillChild.prototype = {
     this.$billMenu = this.$container.find('#childBillAccordion');
     this.$amount = this.$container.find('.payment-all em');
     this.$period = this.$container.find('.payment-all > .term');
+    this.$childSelect = this.$container.find('.bt-dropdown');
+    this.$deviceInfo = this.$container.find('.device-info');
+    this.$svcNum = this.$container.find('.svc-num');
   },
 
   _bindEvent: function () {
-    this.$container.on('click', '.use-family', $.proxy(this._openFamilyMemberSelect, this));
+    if ( this.$childSelect ) {
+      var strItems = this.$container.find('[data-items]').attr('data-items');
+      this._children = JSON.parse(strItems);
+      _.forEach(this._children, function(child){
+        child.svcNum = child.svcNum.replace(/(\d{3})(\d{2})(\d{2})(\d{2})(\d{2})/, '$1-$2**-$4**');
+      });
+    }
+    this.$childSelect.on('click', $.proxy(this._showChildrenChoice, this));
   },
 
   _getBillResponse: function (gubun, childNum) {
     this._apiService
       .request(Tw.API_CMD.BFF_05_0022, {
-        gubun: gubun || this.PARAM.TYPE.CURRENT,
+        gubun: gubun || Tw.MyTBillHotBill.PARAM.TYPE.CURRENT,
         childSvcMgmtNum: childNum
       })
       .done($.proxy(this._onReceivedBillData, this))
       .fail($.proxy(this._onErrorReceivedBillData, this));
+  },
+
+  _sendBillRequest: function (gubun, childnum) {
+    this._apiService
+      .request(Tw.API_CMD.BFF_05_0022, {
+        gubun: gubun || Tw.MyTBillHotBill.PARAM.TYPE.CURRENT,
+        childSvcMgmtNum: childnum
+      })
+      .done($.proxy(this._startGetBillResponseTimer, this, gubun, childnum))
+      .fail($.proxy(this._onErrorReceivedBillData, this));
+
+  },
+
+  _startGetBillResponseTimer: function (gubum, num) {
+    skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
+    this._resTimerID = setTimeout(this._getBillResponse(gubum, num), 500);
   },
 
   _onReceivedBillData: function (resp) {
@@ -49,13 +74,18 @@ Tw.MyTBillHotBillChild.prototype = {
 
     if ( resp.result && resp.result.isSuccess === 'Y' ) {
       if ( resp.result.gubun === Tw.MyTBillHotBill.PARAM.TYPE.PREVIOUS ) {
-        // var type = this._svcAttrCd === this.SVC_TYPE.MOBILE ? '휴대폰' : 'T Pocket-Fi';
-        Tw.MyTBillHotBill.openPrevBillPopup(resp, this._svcNum, 'M1');
+        Tw.MyTBillHotBill.openPrevBillPopup(resp, this._svcNum, '휴대폰');
       } else {
-        this._svcAttrCd = this.$container.find('.info-type').attr('data-type');
-        this._svcNum = this.$container.find('.info-type').attr('data-num');
         var billData = resp.result.hotBillInfo;
-        //TODO 자녀 회선 select widget
+        var day = parseInt(resp.result.stdDateHan.match(/(\d+)\uC77C/i)[1], 10);
+        var target = _.find(this._children, {svcMgmtNum: resp.result.svcMgmtNum});
+        this.$deviceInfo.text(target.childEqpMdNm);
+        this.$svcNum.text(target.svcNum);
+
+        //자녀 핸드폰: 7일까지 전월요금보기 보이기
+        if ( day <= 7 ) {
+          this.$btPreviousBill.show();
+        }
 
         this.$amount.text(billData.tot_open_bal2);
         var strPeriod = Tw.MyTBillHotBill.getFormattedPeriod(resp.result.termOfHotBill);
@@ -79,7 +109,32 @@ Tw.MyTBillHotBillChild.prototype = {
     var source = $('#tmplBillGroup').html();
     var template = Handlebars.compile(source);
     var output = template({ billItems: group });
+    this.$billMenu.empty();
     this.$billMenu.append(output);
     skt_landing.widgets.widget_accordion2();
+  },
+
+  _showChildrenChoice: function () {
+    var members = [];
+    var item = null;
+    //자녀가 없을 경유 메뉴 접근 불가
+
+    this._children.forEach(function (member) {
+      item = {
+        attr: 'id=' + member.svcMgmtNum,
+        text: member.svcNum + (member.childEqpMdNm ? '(' + member.childEqpMdNm + ')' : '')
+      };
+      members.push(item);
+    });
+    this._popupService.openChoice(Tw.MSG_MYT.HOTBILL_MEMBER_POPUP_TITLE, members, 'type1', $.proxy(this._onOpenChildrenChoice, this));
+
+  },
+  _onOpenChildrenChoice: function ($popup) {
+    $popup.one('click', '.popup-choice-list button', $.proxy(this._onClickChildButton, this));
+  },
+
+  _onClickChildButton: function (e) {
+    this._sendBillRequest(Tw.MyTBillHotBill.PARAM.TYPE.CURRENT, e.target.id);
+    Tw.Popup.close();
   }
 };

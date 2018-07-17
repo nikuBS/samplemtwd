@@ -37,14 +37,15 @@
                     <p class="tit"><strong>자녀 휴대폰</strong><br/>실시간 요금 현황입니다.</p>
                     <div class="payment-info-phone">
                         <!-- 자녀 회선이 1개인 경우 -->
-                        <span class="child-phonenum">010-46**-10*</span>
+                        <% if( onlyChild ){ %>
+                        <span class="child-phonenum svc-num" data-items=<%= children %>></span>
                         <!--// 자녀 회선이 1개인 경우 -->
-
+                        <% } else { %>
                         <!-- 자녀 회선이 2개 이상인 경우 -->
-                        <!-- <button class="bt-dropdown small" title="전화번호 선택" aria-haspopup="true">010-46**-10**</button> -->
+                        <button class="bt-dropdown small svc-num" title="전화번호 선택" aria-haspopup="true" data-items=<%= children %>></button>
                         <!--// 자녀 회선이 2개 이상인 경우 -->
-
-                        <span class="device-info">GALAXY S7 32G</span>
+                        <% } %>
+                        <span class="device-info"></span>
                     </div>
                 </div>
             </div>
@@ -83,7 +84,7 @@
         </div>
     </div>
     <!--// #contents -->
-    <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
+    <% include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
 </div>
 <% include ../../components/javascript.component.html %>
 <script>
