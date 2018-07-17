@@ -1,16 +1,25 @@
 <%#
-* FileName: myt.bill.billguide.subDonationBill.html
+* FileName: myt.bill.billguide.subRoamingBill.html
 * Author: 김명환 (skt.P130714@partner.sk.com)
 * Date: 2018.07.16
-* Info: 기부금/후원금
+* Info: 로밍 사용요금
 %>
-
-<div id="donationBill" >
+<% include ../../components/start.component.html %>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb_area">메뉴 바로가기</a></li>
+        <li><a href="#content">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div id="wrapFdev" class="wrap">
     <!-- #header -->
     <div  class="header-wrap">
         <div class="header">
             <div class="header-ti">
-                <h1>기부금/후원금 상세조회</h1>
+                <h1>로밍 사용요금 상세조회</h1>
                 <!--<button class="depth-view" role="button" aria-pressed="false"><span class="blind">메뉴구조보기</span></button>-->
             </div>
             <button class="prev-step"><span class="blind">이전으로</span></button>
@@ -25,7 +34,7 @@
 
             <div class="cont-box nogaps-hoz">
                 <div class="inquiry-tit">
-                    <p class="tit-wrap"><span class="num">010-12**-56**</span><span class="mark-txt">기부금/후원금</span><br />내역을 조회해보세요.</p></p>
+                    <p class="tit-wrap"><span class="num">010-12**-56**</span><span class="mark-txt">로밍</span><br />사용요금을 조회해보세요.</p></p><!-- 2017-07-06 텍스트 수정 -->
                 </div>
             </div>
 
@@ -34,7 +43,7 @@
                 <div class="widget">
                     <div class="widget-box tube">
                         <ul class="tube-list three" role="radiogroup">
-                            <li role="radio" aria-checked="true" class="checked"><input type="radio" name="selectdate" title="전일 선택" checked="checked">전일</li>
+                            <li class="checked" role="radio" aria-checked="true"><input type="radio" name="selectdate" title="전일 선택" checked="checked">전일</li>
                             <li role="radio" aria-checked="false"><input type="radio" name="selectdate" title="1주일 선택">1주일</li>
                             <li role="radio" aria-checked="false"><input type="radio" name="selectdate" title="3주일 선택">3주일</li>
                             <li role="radio" aria-checked="false"><input type="radio" name="selectdate" title="1개월 선택">1개월</li>
@@ -60,14 +69,9 @@
                                     <li class="acco-box on">
                                         <div class="acco-cont">
                                             <ul class="list-dot">
-                                                <li class="list">
-                                                    최근 6개월까지만 조회 가능합니다.
-                                                    <ul class="inner-group type1">
-                                                        <li class="inner-list"><span class="bullet">예)</span>조회일이 7월 15일인 경우 1.15~6.14까지 조회 가능</li>
-                                                    </ul>
-                                                </li>
-                                                <li class="list">본인이 아닌 타인에게 아이디와 패스워드가 유출 될 경우 중요한 개인정보 유출의 우려가 있음으로 발신번호 일부가 *로 표시됩니다.</li>
-                                                <li class="list">인쇄하기 기능은 온라인 티월드(<a class="text-link" href="http://www.tworld.co.kr" title="티월드로 이동하기 - 새창열림">www.tworld.co.kr</a>)에서만 가능합니다. </li>
+                                                <li class="list">최근 6개월까지만 조회 가능합니다.</li>
+                                                <li class="list">로밍 청구요금의 경우 국내 사용료와 달리 해외사업자의 과금자료를 기준으로 요금이 부과되므로 사용 후 즉시요금이 부과되지 않습니다. 이로 인해 요금 청구 전 조회한 &acute;로밍청구내역서&acute;이 금액과 최종 청구금액이 다를 수 있습니다. </li>
+                                                <li class="list">로밍 청구요금은 서비스 이용 후 다음월 청구되며, 해외사업자의 과금자료 전송 지연으로 인해 최대 3개월후까지 청구될 수 있습니다. </li>
                                             </ul>
                                         </div>
                                     </li>
@@ -82,4 +86,23 @@
         </div>
     </div>
     <!--// #contents -->
+    <% include ../../../../../common/views/components/footer.component.html %>
 </div>
+
+<% include ../../components/javascript.component.html %>
+
+<script>
+  $(document).ready(function () {
+    new Tw.mytBillBillguideSubRoamingBill($('#wrapFdev'), {
+      svcInfo: <%-JSON.stringify(svcInfo) %>,
+      billpayInfo : <%-JSON.stringify(billpayInfo) %>,
+      circuitChildInfo: <%-JSON.stringify(circuitChildInfo) %>,
+      commDataInfo: <%-JSON.stringify(commDataInfo) %>,
+      defaultInfo: <%-JSON.stringify(defaultInfo) %>,
+      showConditionInfo: <%-JSON.stringify(showConditionInfo) %>
+  });
+
+  });
+</script>
+
+<% include ../../components/end.component.html %>

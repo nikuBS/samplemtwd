@@ -4,8 +4,17 @@
 * Date: 2018.07.16
 * Info: 콜기프트 요금
 %>
-
-<div id="callBill" >
+<% include ../../components/start.component.html %>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb_area">메뉴 바로가기</a></li>
+        <li><a href="#content">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div id="wrapFdev" class="wrap">
     <!-- #header -->
     <div  class="header-wrap">
         <div class="header">
@@ -74,4 +83,23 @@
         </div>
     </div>
     <!--// #contents -->
+    <% include ../../../../../common/views/components/footer.component.html %>
 </div>
+
+<% include ../../components/javascript.component.html %>
+
+<script>
+  $(document).ready(function () {
+    new Tw.mytBillBillguideSubCallBill($('#wrapFdev'), {
+      svcInfo: <%-JSON.stringify(svcInfo) %>,
+      billpayInfo : <%-JSON.stringify(billpayInfo) %>,
+      circuitChildInfo: <%-JSON.stringify(circuitChildInfo) %>,
+      commDataInfo: <%-JSON.stringify(commDataInfo) %>,
+      defaultInfo: <%-JSON.stringify(defaultInfo) %>,
+      showConditionInfo: <%-JSON.stringify(showConditionInfo) %>
+  });
+
+  });
+</script>
+
+<% include ../../components/end.component.html %>
