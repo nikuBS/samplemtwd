@@ -344,6 +344,7 @@ Tw.RECHARGE_TYPE = {
 }
 
 Tw.BLOCK_TYPE = {
+  TOTAL: '전체',
   UNBLOCK: '차단',
   BLOCK: '차단 해제',
   TMTH_UNBLOCK: '이번 달 차단 해제',

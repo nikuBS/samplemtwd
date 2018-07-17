@@ -33,7 +33,7 @@ Tw.RechargeLimitHistory.prototype = {
         period: Tw.DATE_UNIT.THREE_MONTH
       },
       block: {
-        type: Tw.DATE_UNIT.THREE_MONTH,
+        type: Tw.BLOCK_TYPE.TOTAL,
         period: Tw.DATE_UNIT.THREE_MONTH
       }
     }
@@ -191,12 +191,38 @@ Tw.RechargeLimitHistory.prototype = {
   },
 
   _openSelectConditionPopup: function () {
-    this._popupService.open({
+    var option = {
       'hbs': 'select',
       'title': Tw.POPUP_TITLE.CHANGE_SEARCH_CONDITION,
       'multiplex': true,
-      /*'close_bt': true,*/
-      'select': [
+      'bt_num': 'one',
+      'type': [{
+        style_class: 'bt-red1',
+        txt: Tw.BUTTON_LABEL.CONFIRM
+      }]
+    };
+
+    if (this._selectedTab === this.TABS.BLOCK) {
+      option.select = [
+        {
+          'title': 'Type', 'style_num': 'three',
+          'options': [
+            { checked: true, value: Tw.BLOCK_TYPE.TOTAL },
+            { checked: false, value: Tw.BLOCK_TYPE.UNBLOCK },
+            { checked: false, value: Tw.BLOCK_TYPE.BLOCK }
+          ]
+        }, {
+          'title': Tw.POPUP_PROPERTY.PERIOD, 'style_num': 'two',
+          'options': [
+            { checked: false, value: Tw.DATE_UNIT.ONE_MONTH },
+            { checked: true, value: Tw.DATE_UNIT.THREE_MONTH },
+            { checked: false, value: Tw.DATE_UNIT.SIX_MONTH },
+            { checked: false, value: Tw.DATE_UNIT.ONE_YEAR },
+          ]
+        },
+      ];
+    } else {
+      option.select = [
         {
           'title': 'Type', 'style_num': 'three',
           'options': [
@@ -213,13 +239,10 @@ Tw.RechargeLimitHistory.prototype = {
             { checked: false, value: Tw.DATE_UNIT.ONE_YEAR },
           ]
         },
-      ],
-      'bt_num': 'one',
-      'type': [{
-        style_class: 'bt-red1',
-        txt: Tw.BUTTON_LABEL.CONFIRM
-      }]
-    }, $.proxy(this._handleSelectClick, this))
+      ];
+    }
+
+    this._popupService.open(option, $.proxy(this._handleSelectClick, this));
   },
 
   _handleSelectClick: function ($layer) {
