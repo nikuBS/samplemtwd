@@ -138,7 +138,8 @@ Tw.API_CMD = {
 
 Tw.NODE_CMD = {
   GET_ENVIRONMENT: { path: '/environment', method: Tw.API_METHOD.GET },
-  SET_DEVICE: { path: '/device', method: Tw.API_METHOD.POST }
+  SET_DEVICE: { path: '/device', method: Tw.API_METHOD.POST },
+  CHANGE_SESSION: { path: '/change-session', method: Tw.API_METHOD.POST }
 };
 
 Tw.API_CODE = {
