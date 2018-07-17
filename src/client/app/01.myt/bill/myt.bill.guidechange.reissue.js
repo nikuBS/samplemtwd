@@ -157,7 +157,7 @@ Tw.MyTBillReissue.prototype = {
       window.location.href = 'reissue/complete?typeCd=' + type + '&month=' + month;
     }
     else {
-      Tw.Logger.error(Tw.MSG_MYT.BILL_GUIDE_REISSUE_FAIL + ' __ ' + params.msg);
+      Tw.Logger.error(Tw.MSG_MYT.BILL_GUIDE_REISSUE_FAIL + ' __ ' + (params.msg || (params.error && params.error.msg)));
       // this._popupService.openAlert(Tw.MSG_MYT.BILL_GUIDE_REISSUE_FAIL, Tw.MSG_MYT.BILL_GUIDE_REISSUE_00);
     }
   },
