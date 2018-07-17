@@ -49,7 +49,7 @@ Tw.RechargeLimit.prototype = {
     this.$container.on('click', '.btn-switch', $.proxy(this._openChangeLimitPopup, this));
     this.$container.on('click', '.close-step', $.proxy(this._openClosePopup, this));
     this.$container.on('click', '#btn-cancel-regular', $.proxy(this._openCancelRegularPopup, this));
-    this.$stepAmount.on('click', '.tube-list', $.proxy(this._setAmount, this));
+    this.$stepAmount.on('click', '#select-amount', $.proxy(this._setAmount, this));
   },
 
   _goToAmount: function () {
@@ -128,7 +128,7 @@ Tw.RechargeLimit.prototype = {
   },
 
   _setAmount: function (e) {
-    this.rechargeAmount = e.currentTarget.title;
+    this.rechargeAmount = e.target.title;
     this.$typeAmount.text(Tw.FormatHelper.addComma(this.rechargeAmount));
   },
 
