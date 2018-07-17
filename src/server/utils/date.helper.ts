@@ -30,6 +30,14 @@ class DateHelper {
   }
 
   /**
+   * @param date {Date} or {string} : YYYYMMDD
+   * @returns {string} : 2018.06.01 12:00:00
+   */
+  static getCurrentDateTime = function () {
+    return moment().format('YYYY.MM.DD hh:mm:ss');
+  };
+
+  /**
    * @param date {Date} or {string} : YYYYMMDDhhmmss
    * @returns {string} : 18년 12월 31일
    */
