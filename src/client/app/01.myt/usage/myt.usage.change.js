@@ -1,5 +1,6 @@
-Tw.MytUsageChange = function () {
+Tw.MytUsageChange = function (loginServicePwd) {
   this._apiService = new Tw.ApiService();
+  this.loginServicePwd = loginServicePwd;
 
   this._cachedElement();
   this._bindEvent();
