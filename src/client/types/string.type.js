@@ -295,7 +295,8 @@ Tw.MSG_PAYMENT = {
   HISTORY_A07: '세금계산서 팩스 전송이 완료되었습니다.\n팩스번호 : ',
   HISTORY_A08: '이메일 형식과 맞지 않습니다.\n이메일 주소를 다시 입력하여 주세요.\n예) asc@sktelecom.com',
   HISTORY_A09: '과납내역을 선택해 주세요.',
-  HISTORY_A10: '가장 최근 납부 예약건부터 순차적으로 취소 가능합니다'
+  HISTORY_A10: '가장 최근 납부 예약건부터 순차적으로 취소 가능합니다',
+  HISTORY_A11: '팩스 번호를 입력해주세요.'
 };
 
 Tw.MSG_GIFT = {

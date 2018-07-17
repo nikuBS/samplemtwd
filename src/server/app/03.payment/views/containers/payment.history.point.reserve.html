@@ -54,9 +54,11 @@
                             </div>
                             <div class="tab-contents">
                                 <ul>
+
                                     <li role="tabpanel" id="tab1-tab" aria-labelledby="tab1"></li>
                                     <li role="tabpanel" id="tab2-tab" aria-labelledby="tab2"></li>
                                     <li role="tabpanel" id="tab3-tab" aria-labelledby="tab3"></li>
+
                                 </ul>
                             </div>
                         </div>
@@ -207,8 +209,12 @@
             <div class="pay-state">
                 {{#if isReserved}}
                 <span class="cancel-com">예약완료</span>
-                {{ else if isPayCompleted }}
+                {{/if}}
+                {{#if isPayCompleted}}
                 <span class="payment-com">납부완료</span>
+                {{/if}}
+                {{#if isCanceled}}
+                <span class="paychange-com">취소완료</span>
                 {{/if}}
             </div>
             <div class="detail-list">

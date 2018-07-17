@@ -93,13 +93,7 @@
     <div class="payment-detail-box">
         <div class="detail-inner">
             <div class="pay-state">
-                {{#if isBefore }}
-                <span class="cancel-com">인출청구전</span>
-                {{ else if isIng }}
-                <span class="gray-com">인출청구중</span>
-                {{ else if isDone }}
-                <span class="payment-com">정상납부</span>
-                {{/if}}
+                <span class="{{payStateColorClass}}">{{drwErrCdNm}}</span>
             </div>
             <div class="detail-list">
                 <ul>
