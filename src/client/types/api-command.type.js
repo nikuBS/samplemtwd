@@ -22,7 +22,7 @@ Tw.API_CMD = {
   BFF_03_0002: { path: '/user/account-auth-sessions', method: Tw.API_METHOD.POST },
   BFF_03_0003: { path: '/core-auth/v1/members', method: Tw.API_METHOD.DELETE },
   BFF_03_0004: { path: '/core-auth/v1/services', method: Tw.API_METHOD.GET },
-  BFF_03_0005: { path: '/core-auth/v1/multi-svc', method: Tw.API_METHOD.POST },
+  BFF_03_0005: { path: '/user/services', method: Tw.API_METHOD.PUT },
   BFF_03_0006: { path: '/user/nick-names/args-0', method: Tw.API_METHOD.PUT },
   BFF_03_0007: { path: '/user/tid-keys', method: Tw.API_METHOD.GET },
   BFF_03_0009: { path: '/user/service-password-sessions', method: Tw.API_METHOD.POST },
