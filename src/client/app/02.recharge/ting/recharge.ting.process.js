@@ -71,10 +71,6 @@ Tw.RechargeTingProcess.prototype = {
     }
   },
 
-  _onCloseProcess: function () {
-    this._popupService.openConfirm(Tw.POPUP_TITLE.NOTIFY, Tw.MSG_GIFT.TING_A12, null, null, $.proxy(this._goToMain, this));
-  },
-
   _setPhoneNumber: function (e) {
     Tw.InputHelper.inputNumberOnly(e.currentTarget);
     this.target.phone = $(e.currentTarget).val();
@@ -224,6 +220,21 @@ Tw.RechargeTingProcess.prototype = {
   _sendFail: function (res) {
     if ( res.data ) {
       this._popupService.openAlert(res.data.orgDebugMessage);
+    }
+  },
+
+  _getCurrentTabIndex: function () {
+    var $currentTab = $('[aria-selected="true"]').first();
+    return $('[role=tablist]').children().index($currentTab);
+  },
+
+  _onCloseProcess: function () {
+    if ( this._getCurrentTabIndex() === 0 ) {
+      this._popupService.openConfirm(Tw.POPUP_TITLE.NOTIFY, Tw.MSG_GIFT.TING_A12, null, null, $.proxy(this._goToMain, this));
+    }
+
+    if ( this._getCurrentTabIndex() === 1 ) {
+      this._popupService.openConfirm(Tw.POPUP_TITLE.NOTIFY, Tw.MSG_GIFT.TING_A13, null, null, $.proxy(this._goToMain, this));
     }
   },
 

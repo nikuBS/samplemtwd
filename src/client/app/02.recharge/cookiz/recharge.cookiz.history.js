@@ -98,14 +98,14 @@ Tw.RechargeCookizHistory.prototype = {
       this._apiService.request(Tw.API_CMD.BFF_06_0032, {
         type: this.tab1_searchType,
         fromDt: Tw.DateHelper.getCurrentShortDate(),
-        endDt: Tw.DateHelper.getShortDateWithFormatAddByUnit(new Date(), this.tab1_searchPeriod, 'month', 'YYYYMMDD')
+        toDt: Tw.DateHelper.getShortDateWithFormatAddByUnit(new Date(), this.tab1_searchPeriod, 'month', 'YYYYMMDD')
       }).done($.proxy(this._onSuccessFetchData, this));
     }
 
     if ( nCurrentTabIndex === 1 ) {
       this._apiService.request(Tw.API_CMD.BFF_06_0033, {
         fromDt: Tw.DateHelper.getCurrentShortDate(),
-        endDt: Tw.DateHelper.getShortDateWithFormatAddByUnit(new Date(), this.tab2_searchPeriod, 'month', 'YYYYMMDD')
+        toDt: Tw.DateHelper.getShortDateWithFormatAddByUnit(new Date(), this.tab2_searchPeriod, 'month', 'YYYYMMDD')
       }).done($.proxy(this._onSuccessFetchData, this));
     }
   },
@@ -115,10 +115,10 @@ Tw.RechargeCookizHistory.prototype = {
 
     if ( res.code === Tw.API_CODE.CODE_00 ) {
 
-      // if ( res.result.length === 0 ) {
-      //   this._renderNoList();
-      //   return false;
-      // }
+      if ( res.result.length === 0 ) {
+        this._renderNoList();
+        return false;
+      }
 
       if ( nCurrentTabIndex === 0 ) {
         // TEST MOCKUP DATA
@@ -146,11 +146,11 @@ Tw.RechargeCookizHistory.prototype = {
     wrapHistoryResult.siblings('.gift-bt-more').hide();
 
     if ( nCurrentTabIndex === 0 ) {
-      wrapHistoryResult.html(this.tpl_ting_item_no_history({ content: Tw.MSG_GIFT.TING_NO_HISTORY }));
+      wrapHistoryResult.html(this.tpl_ting_item_no_history({ content: Tw.MSG_GIFT.COOKIZ_NO_HISTORY }));
     }
 
     if ( nCurrentTabIndex === 1 ) {
-      wrapHistoryResult.html(this.tpl_ting_item_no_history({ content: Tw.MSG_GIFT.TING_NO_BLOCK_HISTORY }));
+      wrapHistoryResult.html(this.tpl_ting_item_no_history({ content: Tw.MSG_GIFT.COOKIZ_NO_AUTH_HISTORY }));
     }
   },
 
@@ -315,57 +315,57 @@ Tw.RechargeCookizHistory.prototype = {
 };
 
 var tab1_response = {
-  "code": "00",
-  "msg": "success",
-  "result": [
+  'code': '00',
+  'msg': 'success',
+  'result': [
     {
-      "opDt": "20180623",
-      "amt": "2000",
-      "opTypCd": "1",
-      "opTypNm": "후불충전",
-      "refundableYn": "Y"
+      'opDt': '20180623',
+      'amt': '2000',
+      'opTypCd': '1',
+      'opTypNm': '후불충전',
+      'refundableYn': 'Y'
     },
     {
-      "opDt": "20180623",
-      "amt": "2000",
-      "opTypCd": "2",
-      "opTypNm": "후불충전",
-      "refundableYn": "N"
+      'opDt': '20180623',
+      'amt': '2000',
+      'opTypCd': '2',
+      'opTypNm': '후불충전',
+      'refundableYn': 'N'
     },
     {
-      "opDt": "20180623",
-      "amt": "2000",
-      "opTypCd": "3",
-      "opTypNm": "후불충전",
-      "refundableYn": "Y"
+      'opDt': '20180623',
+      'amt': '2000',
+      'opTypCd': '3',
+      'opTypNm': '후불충전',
+      'refundableYn': 'Y'
     },
     {
-      "opDt": "20180623",
-      "amt": "2000",
-      "opTypCd": "4",
-      "opTypNm": "후불충전",
-      "refundableYn": "N"
+      'opDt': '20180623',
+      'amt': '2000',
+      'opTypCd': '4',
+      'opTypNm': '후불충전',
+      'refundableYn': 'N'
     }
   ]
 };
 
 var tab2_response = {
-  "code": "00",
-  "msg": "success",
-  "result": [
+  'code': '00',
+  'msg': 'success',
+  'result': [
     {
-      "opDt": "20180623",
-      "topUpLimit": "20000",
-      "opTypCd": "1",
-      "opTypNm": "충전 허용 금액",
-      "opOrgNm": "강남지점"
+      'opDt': '20180623',
+      'topUpLimit': '20000',
+      'opTypCd': '1',
+      'opTypNm': '충전 허용 금액',
+      'opOrgNm': '강남지점'
     },
     {
-      "opDt": "20180621",
-      "topUpLimit": "30000",
-      "opTypCd": "2",
-      "opTypNm": "충전 차단",
-      "opOrgNm": "강남지점"
+      'opDt': '20180621',
+      'topUpLimit': '30000',
+      'opTypCd': '2',
+      'opTypNm': '충전 차단',
+      'opOrgNm': '강남지점'
     }
   ]
 };
