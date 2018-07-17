@@ -14,13 +14,13 @@
                     <dd>
                         <div class="widget">
                             <div class="widget-box tube">
-                                <ul class="tube-list two" role="radiogroup">
+                                <ul class="tube-list two" role="radiogroup" form-element="radio" form-element-key="scurBillYn">
                                     <% if (curBillGuide.scurBillYn === 'N') { %>
-                                    <li role="radio" aria-checked="true" class="checked"><input type="radio" name="infoset" title="설정없이 조회 선택">설정없이 조회</li>
-                                    <li role="radio" aria-checked="false"><input type="radio" name="infoset" title="생년월일 입력 후, 조회 선택">생년월일 입력 후, 조회</li>
+                                    <li role="radio" aria-checked="true" class="checked" form-element-value="N"><input type="radio" name="infoset" title="설정없이 조회 선택">설정없이 조회</li>
+                                    <li role="radio" aria-checked="false" form-element-value="Y"><input type="radio" name="infoset" title="생년월일 입력 후, 조회 선택">생년월일 입력 후, 조회</li>
                                     <% } else {%>
-                                    <li role="radio" aria-checked="false"><input type="radio" name="infoset" title="설정없이 조회 선택">설정없이 조회</li>
-                                    <li role="radio" aria-checked="true" class="checked"><input type="radio" name="infoset" title="생년월일 입력 후, 조회 선택">생년월일 입력 후, 조회</li>
+                                    <li role="radio" aria-checked="false" form-element-value="N"><input type="radio" name="infoset" title="설정없이 조회 선택">설정없이 조회</li>
+                                    <li role="radio" aria-checked="true" class="checked" form-element-value="Y"><input type="radio" name="infoset" title="생년월일 입력 후, 조회 선택">생년월일 입력 후, 조회</li>
                                     <% } %>
                                 </ul>
                             </div>
@@ -33,31 +33,32 @@
                     <dd>
                         <span class="inputbox">
                             <span class="input">
-                                <input type="text" placeholder="name@example.co.kr" title="이메일 주소 입력" value="<%= curBillGuide.invEmailAddr %>" class="input-email">
+                                <input type="text" placeholder="name@example.co.kr" title="이메일 주소 입력" value="<%= curBillGuide.invEmailAddr %>" class="input-email" form-element="input" form-element-key="invEmailAddr">
                             </span>
                         </span>
                         <div class="widget">
                             <div class="widget-box check">
-                                <ul class="select-list" role="group">
+                                <ul class="select-list" role="group" form-element="checkbox" form-element-key="scurMailYn">
                                     <% if (curBillGuide.scurMailYn === 'N') { %>
-                                    <li class="checkbox type01" role="checkbox" aria-checked="false">
+                                    <li class="checkbox type01" role="checkbox" aria-checked="false" form-element-value="N">
                                         <input type="checkbox" name="checkbox" value="이메일 보안 설정" title="이메일 보안 설정 선택">
                                         이메일 보안 설정
                                     </li>
                                     <% } else { %>
-                                    <li class="checkbox type01 checked" role="checkbox" aria-checked="true">
+                                    <li class="checkbox type01 checked" role="checkbox" aria-checked="true" form-element-value="Y">
                                         <input type="checkbox" name="checkbox" value="이메일 보안 설정" title="이메일 보안 설정 선택" checked="checked">
                                         이메일 보안 설정
                                     </li>
                                     <% } %>
-
+                                </ul>
+                                <ul class="select-list" role="group" form-element="checkbox" key="emailRcvAgreeYn">
                                     <% if (curBillGuide.emailRcvAgreeYn === 'N') { %>
-                                    <li class="checkbox type01" role="checkbox" aria-checked="false">
+                                    <li class="checkbox type01" role="checkbox" aria-checked="false" form-element-value="N">
                                         <input type="checkbox" name="checkbox" value="입력한 이메일로 다양한 혜택 정보 받기" title="입력한 이메일로 다양한 혜택 정보 받기 선택" aria-labelledby="aria-guide01">
                                         입력한 이메일로 다양한 혜택 정보 받기
                                     </li>
                                     <% } else { %>
-                                    <li class="checkbox type01 checked" role="checkbox" aria-checked="true">
+                                    <li class="checkbox type01 checked" role="checkbox" aria-checked="true" form-element-value="Y">
                                         <input type="checkbox" name="checkbox" value="입력한 이메일로 다양한 혜택 정보 받기" title="입력한 이메일로 다양한 혜택 정보 받기 선택" checked="checked" aria-labelledby="aria-guide01">
                                         입력한 이메일로 다양한 혜택 정보 받기
                                     </li>
@@ -88,7 +89,7 @@
                     <dd class="box-block-list2">
                     <span class="inputbox">
                         <span class="input">
-                          <input type="text" placeholder="휴대폰번호입력 (숫자만 입력)" title="휴대폰번호 입력 (숫자만 입력)" class="input-phone input-cntc-num1" maxlength="11" onInput="return Tw.InputHelper.inputNumberOnly(this);" value="<%= curBillGuide.cntcNum1 %>">
+                          <input type="text" placeholder="휴대폰번호입력 (숫자만 입력)" title="휴대폰번호 입력 (숫자만 입력)" class="input-phone" maxlength="11" onInput="return Tw.InputHelper.inputNumberOnly(this);" value="<%= curBillGuide.wireSmtBillSvcNum %>" form-element="input" form-element-key="wireSmtBillSvcNum">
                           <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
                         </span>
                     </span>
@@ -98,13 +99,13 @@
                     <dd>
                         <div class="widget">
                             <div class="widget-box tube">
-                                <ul class="tube-list two" role="radiogroup">
+                                <ul class="tube-list two" role="radiogroup" form-element="radio" form-element-key="phonNumPrtClCd">
                                     <% if (curBillGuide.phonNumPrtClCd === 'N') { %>
-                                    <li role="radio" aria-checked="true" class="checked"><input type="radio" name="selectset1" title="일부 별표 표시 선택">일부 별표 표시</li>
-                                    <li role="radio" aria-checked="false"><input type="radio" name="selectset1" title="전체 표시 선택">전체 표시</li>
+                                    <li role="radio" aria-checked="true" class="checked" form-element-value="N"><input type="radio" name="selectset1" title="일부 별표 표시 선택">일부 별표 표시</li>
+                                    <li role="radio" aria-checked="false" form-element-value="Y"><input type="radio" name="selectset1" title="전체 표시 선택">전체 표시</li>
                                     <% } else {%>
-                                    <li role="radio" aria-checked="false"><input type="radio" name="selectset1" title="일부 별표 표시 선택">일부 별표 표시</li>
-                                    <li role="radio" aria-checked="true" class="checked"><input type="radio" name="selectset1" title="전체 표시 선택">전체 표시</li>
+                                    <li role="radio" aria-checked="false" form-element-value="N"><input type="radio" name="selectset1" title="일부 별표 표시 선택">일부 별표 표시</li>
+                                    <li role="radio" aria-checked="true" class="checked" form-element-value="Y"><input type="radio" name="selectset1" title="전체 표시 선택">전체 표시</li>
                                     <% } %>
                                 </ul>
                             </div>
@@ -115,7 +116,7 @@
                         <dd>
                         <span class="inputbox">
                             <span class="input">
-                                <input type="text" placeholder="휴대폰번호입력 (숫자만 입력)" title="휴대폰번호 입력 (숫자만 입력)" aria-describedby="rw-desc1" class="input-phone input-ccur-noti-svc-num" maxlength="11" onInput="return Tw.InputHelper.inputNumberOnly(this);" value="<%= curBillGuide.ccurNotiSvcNum%>">
+                                <input type="text" placeholder="휴대폰번호입력 (숫자만 입력)" title="휴대폰번호 입력 (숫자만 입력)" aria-describedby="rw-desc1" class="input-ccur-noti-svc-num" maxlength="11" onInput="return Tw.InputHelper.inputNumberOnly(this);" value="<%= curBillGuide.ccurNotiSvcNum%>" form-element="input" form-element-key="ccurNotiSvcNum">
                                 <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
                             </span>
                             <span id="rw-desc1" class="guide-txt">미성년고객의 요금안내서는 법정대리인 휴대폰번호로 동시 안내됩니다.</span>

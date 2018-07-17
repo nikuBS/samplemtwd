@@ -18,7 +18,7 @@ Tw.PopupService.prototype = {
   },
   _onHashChange: function (hash) {
     var lastHash = this._prevHashList[this._prevHashList.length - 1];
-    Tw.Logger.log('[Popup] Hash Change', '#' + hash.base, lastHash);
+    // Tw.Logger.log('[Popup] Hash Change', '#' + hash.base, lastHash);
     if ( !Tw.FormatHelper.isEmpty(lastHash) && ('#' + hash.base) === lastHash.curHash ) {
       var closeCallback = lastHash.closeCallback;
       this._prevHashList.pop();
@@ -37,7 +37,6 @@ Tw.PopupService.prototype = {
   },
   _popupClose: function (closeCallback) {
     this._confirmCallback = null;
-    this._openCallback = null;
     if ( !Tw.FormatHelper.isEmpty(closeCallback) ) {
       closeCallback();
     }
@@ -45,7 +44,7 @@ Tw.PopupService.prototype = {
   },
   _addHash: function (closeCallback) {
     var curHash = location.hash || '#';
-    Tw.Logger.log('[Popup] Add Hash', curHash);
+    // Tw.Logger.log('[Popup] Add Hash', curHash);
     this._prevHashList.push({
       curHash: curHash,
       closeCallback: closeCallback
@@ -80,6 +79,7 @@ Tw.PopupService.prototype = {
   },
   _sendOpenCallback: function ($container) {
     this._openCallback($container);
+    this._openCallback = null;
   },
   _open: function (option) {
     skt_landing.action.popup.open(option, $.proxy(this._onOpenPopup, this));
@@ -140,9 +140,9 @@ Tw.PopupService.prototype = {
 
   },
   close: function () {
-    Tw.Logger.log('[Popup] Call Close', location.hash);
+    // Tw.Logger.log('[Popup] Call Close', location.hash);
     if ( /popup/.test(location.hash) ) {
-      Tw.Logger.log('[Popup] history back');
+      // Tw.Logger.log('[Popup] history back');
       history.back();
     }
   }

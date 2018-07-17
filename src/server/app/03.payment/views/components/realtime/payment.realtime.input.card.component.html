@@ -9,7 +9,7 @@
         <div class="header-ti">
             <h1>납부하기</h1>
         </div>
-        <button class="close-step common-back"><span class="blind">닫기</span></button>
+        <button class="close-step cancel-process"><span class="blind">닫기</span></button>
     </div>
 </div>
 <!--// #header -->
@@ -36,7 +36,7 @@
                     <h5 class="account-tit">카드주명</h5>
                     <div class="inputbox">
                         <span class="input">
-                            <input type="text" class="no-bg-color name" placeholder="<%= svcInfo.mbrNm %>" title="카드주" disabled="disabled">
+                            <input type="text" class="no-bg-color name" placeholder="<%= svcInfo.mbrNm %>" data-value="<%= svcInfo.mbrNm %>" title="카드주" disabled="disabled">
                             <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
                         </span>
                     </div>
@@ -83,9 +83,9 @@
     <hr class="cont-sp type1" aria-hidden="true"/>
     <div class="cont-box">
         <div class="pay-info card">
-            <div class="widget">
+            <div class="widget card-auto-info-checkbox none">
                 <h4 class="pay-tit">환불계좌정보</h4>
-                <div class="widget-box check card-auto-info-checkbox none">
+                <div class="widget-box check">
                     <span class="checkbox type01 pay-check-box card-auto-info" role="checkbox" aria-checked="false">
                         <input type="checkbox" name="checkbox" title="체크박스">
                         자동납부계좌와 동일
@@ -97,7 +97,7 @@
                     <h5 class="account-tit">예금주 정보</h5>
                     <div class="inputbox">
                 <span class="input">
-                    <input type="text" class="no-bg-color" placeholder="<%= svcInfo.mbrNm %>" title="예금주" disabled="disabled">
+                    <input type="text" class="no-bg-color" placeholder="<%= svcInfo.mbrNm %>" data-value="<%= svcInfo.mbrNm %>" title="예금주" disabled="disabled">
                     <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
                 </span>
                     </div>

@@ -3,7 +3,7 @@
     <div class="header-wrap">
         <div class="page-header">
             <div class="header-ti">
-                <h1>통합청구 회선안내 </h1>
+                <h1>통합대표 회선안내 </h1>
             </div>
         </div>
     </div>
@@ -15,43 +15,29 @@
             <div class="cont-box noborder">
                 <div class="commend-bill-info">
                     <p class="bill-tit">
-                        <strong class="num">010-12**-56**</strong>에 통합되어<br />요금이 안내되는 회선은 총<strong class="num">4</strong>개 입니다.
+                        {{svcNum}}
+                        <strong class="num">{{data.svcNum}}</strong>에 통합되어<br />요금이 안내되는 회선은 총<strong class="num">{{data.svcCnt}}</strong>개 입니다.
                     </p>
                     <div class="contents-info-list">
                         <ul class="bill-history">
+                            {{#each data.list}}
                             <li>
                                 <div class="info-user">
-                                    <span class="info-title">휴대폰</span>
+                                    <span class="info-title">{{svcType}}</span>
                                 </div>
                                 <div class="info-data">
-                                    <span class="info-title num"><span class="badge badge-allpay"><span class="blind">통합대표</span></span>010-23**-45**</span>
+                                    <span class="info-title num">
+                                        {{#if isCeo}}
+                                        <span class="badge badge-allpay"><span class="blind">통합대표</span></span>
+                                        {{/if}}
+                                        {{svcNum}}
+                                    </span>
+                                    {{#if haveAddr}}
+                                    <span class="info-sub">{{dtlAddr}}</span>
+                                    {{/if}}
                                 </div>
                             </li>
-                            <li>
-                                <div class="info-user">
-                                    <span class="info-title">휴대폰</span>
-                                </div>
-                                <div class="info-data">
-                                    <span class="info-title num">010-23**-45**</span>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="info-user">
-                                    <span class="info-title">집전화</span>
-                                </div>
-                                <div class="info-data">
-                                    <span class="info-title num">031-12**-45**</span>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="info-user">
-                                    <span class="info-title">IPTV</span>
-                                </div>
-                                <div class="info-data">
-                                    <span class="info-title num">107동 603호</span>
-                                    <span class="info-sub">권선동,수원아이파크시티1단<br />(권선동,1360)</span>
-                                </div>
-                            </li>
+                            {{/each}}
                         </ul>
                     </div>
                 </div>

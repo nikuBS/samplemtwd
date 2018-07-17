@@ -169,11 +169,12 @@ Tw.RechargeTingProcess.prototype = {
   },
 
   _validStep1: function (response) {
+    this.target.phone_no_mask = this.target.phone;
+
     if ( response.code === '00' ) {
       var result = response.result;
       this.target.name = result.custName;
       this.target.phone = result.befrSvcNum;
-      this.target.phone_no_mask = this.target.phone;
 
       $('.money-select-comment em').text(Tw.FormatHelper.addComma(this.provider.amount.toString()) + Tw.CURRENCY_UNIT.WON);
       $('.t-gift-data .txt').html(this.target.name);
@@ -186,7 +187,8 @@ Tw.RechargeTingProcess.prototype = {
   },
 
   _validateStep2: function () {
-    this._apiService.request(Tw.API_CMD.BFF_06_0022, {
+
+    this._apiService.request(Tw.API_CMD.BFF_06_0023, {
       befrSvcNum: this.target.phone_no_mask,
       amt: this.target.amount
     }).done($.proxy(this._validComplete, this));

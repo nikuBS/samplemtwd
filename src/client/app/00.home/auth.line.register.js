@@ -4,11 +4,13 @@
  * Date: 2018.07.11
  */
 
-Tw.AuthLineRegister = function () {
+Tw.AuthLineRegister = function (lineMarketingLayer) {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
+  this.lineMarketingLayer = lineMarketingLayer;
 
   this._registerLength = 0;
+  this._svcMngmtNum = '';
 
   this.$btnCancel = null;
   this.$btnRegister = null;
@@ -153,8 +155,13 @@ Tw.AuthLineRegister.prototype = {
       .fail($.proxy(this._failRegisterLineList, this));
   },
   _successRegisterLineList: function (registerLength, resp) {
-    this._registerLength = registerLength;
-    this._popupService.close();
+    if(resp.code === Tw.API_CODE.CODE_00) {
+      this._registerLength = registerLength;
+      this._svcMngmtNum = '';
+      this._popupService.close();
+    } else {
+      this._popupService.close();
+    }
   },
   _failRegisterLineList: function (error) {
     console.log(error);
@@ -177,14 +184,18 @@ Tw.AuthLineRegister.prototype = {
   _onOpenCompletePopup: function ($layer) {
     $layer.on('click', '.bt-link-tx', $.proxy(this._closeCompletePopup, this));
     $layer.on('click', '#bt-line-edit', $.proxy(this._goAuthLine, this));
+
+    setTimeout($.proxy(function() {
+      this.lineMarketingLayer.openMarketingOffer();
+    }, this), 0);
   },
   _closeCompletePopup: function() {
     this._popupService.close();
+
   },
   _goAuthLine: function() {
     this._popupService.close();
     location.href = '/auth/line';
-
   }
 
 };

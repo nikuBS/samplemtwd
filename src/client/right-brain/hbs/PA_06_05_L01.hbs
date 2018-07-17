@@ -22,33 +22,31 @@
                                 <li>
                                     <dl>
                                         <dt>납부예약포인트</dt>
-                                        <dd><em class="number">1,000</em> 점</dd>
+                                        <dd><em class="number">{{data.reqAmt}}</em> 점</dd>
                                     </dl>
                                 </li>
                                 <li>
                                     <dl>
                                         <dt>요청내용</dt>
-                                        <dd>로밍사용요금-납부신청완료<br />
-                                            010-23**-45**
-                                        </dd>
+                                        <dd>{{{data.reqDetailTxt}}}</dd>
                                     </dl>
                                 </li>
                                 <li>
                                     <dl>
                                         <dt>요청결과</dt>
-                                        <dd>납부예약 신청완료</dd>
+                                        <dd>{{data.reqResult}}</dd>
                                     </dl>
                                 </li>
                                 <li>
                                     <dl>
                                         <dt>포인트 종류</dt>
-                                        <dd>OK캐쉬백 포인트</dd>
+                                        <dd>{{data.bamtClNm}}</dd>
                                     </dl>
                                 </li>
                                 <li>
                                     <dl>
                                         <dt>처리 영업장</dt>
-                                        <dd>T월드</dd>
+                                        <dd>{{data.opSaleOrgNm}}</dd>
                                     </dl>
                                 </li>
                             </ul>

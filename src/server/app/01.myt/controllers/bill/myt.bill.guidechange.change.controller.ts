@@ -7,8 +7,8 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import { Request, Response, NextFunction } from 'express';
 import { BILL_GUIDE_TYPE, SVC_ATTR } from '../../../../types/bff-common.type';
 import { BILL_GUIDE_TYPE_NAME, BILL_GUIDE_SELECTOR_LABEL } from '../../../../types/string.type';
-import { API_CODE } from '../../../../types/api-command.type';
-import curBillGuide from '../../../../mock/server/myt.bill.guidechange.bill-types-list';
+import { API_CMD, API_CODE } from '../../../../types/api-command.type';
+import { Observable } from 'rxjs/Observable';
 
 const BILL_GUIDE_TYPE_COMPONENT = {};
 BILL_GUIDE_TYPE_COMPONENT[BILL_GUIDE_TYPE.TWORLD] = 'tworld';
@@ -73,39 +73,53 @@ class MyTBillChange extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    const _curBillGuide = this.getResult(curBillGuide);
-    let tmpBillGuideTypes;
-    svcInfo.svcAttrCd = 'M5';
-    console.log('~~~~~~~~~~~~svcInfo', svcInfo);
-    switch ( svcInfo.svcAttrCd ) {
-      case 'M1': // 휴대폰
-        tmpBillGuideTypes = cellPhoneBillGuideTypes;
-        break;
-      case 'S1': // 인터넷
-      case 'S2': // IPTV
-      case 'S3': // 집전화
-        tmpBillGuideTypes = mixedBillGuidetypes;
-        break;
-      case 'M5': // T Wibro
-        tmpBillGuideTypes = defaultBillGuideTypes;
-        break;
-      default: // 없는 경우가 있음 기본은 휴대폰
-        tmpBillGuideTypes = cellPhoneBillGuideTypes;
-        break;
-    }
-    const billGuideTypes = tmpBillGuideTypes.map((billGuideType) => {
-      billGuideType['kidsYn'] = _curBillGuide['kidsYn'];
-      billGuideType['beforeBillType'] = _curBillGuide['curBillType'];
-      billGuideType['svcInfo'] = svcInfo;
-      return billGuideType;
-    });
+    const billTypeListRequest: Observable<any> = this.apiService.request(API_CMD.BFF_05_0025, {});
+    Observable.combineLatest(
+      billTypeListRequest,
+    ).subscribe(([_billTypesList]) => {
+      const _curBillGuide = this.getResult(_billTypesList);
+      let tmpBillGuideTypes;
 
-    this.renderView(res, 'bill/myt.bill.guidechange.change.html', {
-      svcInfo: svcInfo,
-      curBillGuide: _curBillGuide,
-      billGuideTypes: billGuideTypes,
-      billGuideTypesData: JSON.stringify(billGuideTypes),
-      isUpdate: false
+      // _svcInfo['svcAttrCd'] = 'S1';
+
+      switch ( svcInfo.svcAttrCd ) {
+        case 'M1': // 휴대폰
+          tmpBillGuideTypes = cellPhoneBillGuideTypes;
+          break;
+        case 'S1': // 인터넷
+        case 'S2': // IPTV
+        case 'S3': // 집전화
+          tmpBillGuideTypes = mixedBillGuidetypes;
+          break;
+        case 'M5': // T Wibro
+          tmpBillGuideTypes = defaultBillGuideTypes;
+          break;
+        default: // 없는 경우가 있음 기본은 휴대폰
+          tmpBillGuideTypes = cellPhoneBillGuideTypes;
+          break;
+      }
+      const billGuideTypes = tmpBillGuideTypes.map((billGuideType) => {
+        billGuideType['kidsYn'] = _curBillGuide['kidsYn'];
+        billGuideType['beforeBillType'] = _curBillGuide['curBillType'];
+        billGuideType['svcInfo'] = svcInfo;
+
+        // ---------------------------------
+        // billGuideType['kidsYn'] = 'Y';
+        // billGuideType['svcInfo'].svcAttrCd = 'M1';
+        // billGuideType['curBillType'] = 'P';
+        billGuideType['isusimchk'] = 'Y';
+        // billGuideType['curBillTypeNm'] = '티월드';
+        return billGuideType;
+      });
+
+      this.renderView(res, 'bill/myt.bill.guidechange.change.html', {
+        // svcInfo: _svcInfo,
+        curBillGuide: _curBillGuide,
+        billGuideTypes: billGuideTypes,
+        billGuideTypesData: JSON.stringify(billGuideTypes),
+        isUpdate: false,
+        svcInfo
+      });
     });
   }
 

@@ -38,7 +38,7 @@ Tw.HomeMain.prototype = {
     var layerType = this.$container.data('layertype');
     console.log(layerType);
 
-    this._lineRegisterLayer.openRegisterLinePopup(layerType);
+    this._lineRegisterLayer.openRegisterLinePopup('01');
   },
 
   // 리필하기

@@ -117,7 +117,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    var comp = new Tw.MyTBillReturnHistory($('#myt-bill-return-history'));
+    var comp = new Tw.MyTBillReturnHistory($('#myt-bill-return-history'), '<%- JSON.stringify(data.svcInfo) %>');
   });
 </script>
 <% include ../../components/end.component.html %>
