@@ -1,0 +1,65 @@
+<%#
+* FileName: payment.realtime.home.exception.component.html
+* Author: 공자윤 (jayoon.kong@sk.com)
+* Date: 2018.07.17
+%>
+<!-- #header -->
+<div id="header" class="header-wrap">
+    <div class="header">
+        <div class="header-ti">
+            <h1>즉시납부</h1>
+            <button class="depth-view" role="button" aria-pressed="false"><span class="blind">메뉴구조보기</span></button>
+        </div>
+        <button class="prev-step common-back"><span class="blind">이전으로</span></button>
+        <button class="search-content"><span class="blind">검색하기</span></button>
+    </div>
+</div>
+<!--// #header -->
+<!-- #contents -->
+<div id="contents" class="container-wrap">
+    <h2 class="blind">내용</h2>
+    <div class="container">
+        <% include ../components/line.info.component.html %>
+        <hr class="cont-sp type1" aria-hidden="true" />
+        <div class="cont-box">
+            <div class="payment-select">
+                <div class="contents-empty">
+                    <span class="ico"></span>
+                    <p class="desc"><%= list.msg %></p>
+                </div>
+                <div class="pay-bottom type1">
+                    <p class="title">다음달 청구요금을 포인트로 미리 납부 예약해보세요.</p>
+                    <a href="/payment/point" class="bt-link-tx">포인트 1회 납부(예약) 하기 <span class="ico"></span></a>
+                </div>
+            </div>
+        </div>
+        <hr class="cont-sp type1" aria-hidden="true" />
+        <div class="cont-box">
+            <!-- .widget -->
+            <div class="widget">
+                <div class="widget-box accordion">
+                    <h5 class="tit-a">꼭 확인해 주세요!</h5><!-- 2018-07-05 수정-->
+                    <div class="acco-cover toggle"><!-- toggle : 한개만 열기 -->
+                        <div class="acco-style btn-hold">
+                            <ul class="acco-list">
+                                <li class="acco-box">
+                                    <!-- .on: 열기 -->
+                                    <div class="acco-tit"><span class="bullet">1.</span> 이용안내<button role="button" aria-pressed="false">상세보기</button></div>
+                                    <div class="acco-cont">
+                                        <ul class="list-dot">
+                                            <li class="list">요금납부는 SK텔레콤 지점/대리점 및 고객센터(유료:1599-0011 또는 무료: SK텔레콤 휴대폰에서 지역번호 없이 114)에서 도 납부 가능합니다.</li>
+                                            <li class="list">이용정지 고객의 경우 납부기한이 경과한 미납액을 모두 납부하시면 이용정지가 즉시 해제됩니다</li>
+                                            <li class="list">대표회선인 경우에만 미납내역이 조회되며, 대표회선이 아닌 경우 대표회선번호로 로그인 해주십시오</li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--// .widget -->
+        </div>
+    </div>
+</div>
+<!--// #contents -->
