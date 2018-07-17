@@ -138,9 +138,22 @@ Tw.API_CMD = {
 
 Tw.NODE_CMD = {
   GET_ENVIRONMENT: { path: '/environment', method: Tw.API_METHOD.GET },
-  SET_DEVICE: { path: '/device', method: Tw.API_METHOD.POST }
+  SET_DEVICE: { path: '/device', method: Tw.API_METHOD.POST },
+  CHANGE_SESSION: { path: '/change-session', method: Tw.API_METHOD.POST },
+  SVC_PASSWORD_LOGIN: { path: '/service-password-sessions/login', method: Tw.API_METHOD.POST },
+  SVC_PASSWORD_SESSION: { path: '/service-password-sessions/session', method: Tw.API_METHOD.POST }
 };
 
 Tw.API_CODE = {
-  CODE_00: '00'
+  CODE_00: '00',    // success
+  CODE_01: '01',    // 화면 차단
+  CODE_02: '02',    // API 차단
+  CODE_03: '03',    // 2차 인증
+  CODE_04: '04',    // 로그인 필요
+  CODE_05: '05',    // 접근 불가 (권한)
+  CODE_06: '06',    // 고객 비밀번호 인증 필요
+  CODE_07: '07',    // 고객 비밀번호 재설정 필요
+  CODE_99: '99',    // Circuit Open
+  CODE_200: '200',
+  CODE_400: '400'
 };

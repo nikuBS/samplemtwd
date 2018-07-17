@@ -38,9 +38,9 @@ export const MYT_REISSUE_TYPE = {
   'B': '문자',
   '2': '이메일',
   '1': '기타 (우편)',
+  'I': 'Bill Letter+이메일', // 무선
   'K': 'Bill Letter+이메일', // 유선
   'A': '문자+이메일', // 유선
-  'I': 'Bill Letter', // 유선
   'J': 'Bill Letter' // 유선
 };
 

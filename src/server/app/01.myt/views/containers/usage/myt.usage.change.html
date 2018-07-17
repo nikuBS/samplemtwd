@@ -286,11 +286,11 @@
     {{ }); }}
 </script>
 <!-- // Template :: line list -->
-
 <% include ../../components/javascript.sprint3.component.html %>
+<script src="<%= CDN %>/js/auth.min.js"></script>
 <script>
   $(document).ready(function () {
-    var oMytUsageChange    = new Tw.MytUsageChange();
+    var oMytUsageChange    = new Tw.MytUsageChange(new Tw.AuthLoginServicePwd());
     var oMytUsageChangeSub = new Tw.MytUsageChangeSub();
   });
 </script>

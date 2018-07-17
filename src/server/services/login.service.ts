@@ -1,17 +1,16 @@
 import FormatHelper from '../utils/format.helper';
 import LoggerService from './logger.service';
+import { SvcInfoModel } from '../models/svc-info.model';
 
 class LoginService {
   static instance;
   private session;
-  private logger;
+  private logger = new LoggerService();
 
   constructor() {
     if ( LoginService.instance ) {
       return LoginService.instance;
     }
-
-    this.logger = new LoggerService();
     LoginService.instance = this;
   }
 
@@ -28,9 +27,13 @@ class LoginService {
   }
 
   public setSvcInfo(svcInfo: any) {
-    this.session.svcInfo = svcInfo;
+    if ( FormatHelper.isEmpty(this.session.svcInfo) ) {
+      this.session.svcInfo = new SvcInfoModel(svcInfo);
+    } else {
+      Object.assign(this.session.svcInfo, svcInfo);
+    }
     this.session.save(() => {
-      this.logger.log(this, '[setSvcInfo]', this.session.setSvcInfo);
+      this.logger.debug(this, '[setSvcInfo]', this.session.svcInfo);
     });
   }
 
@@ -45,15 +48,14 @@ class LoginService {
     if ( !FormatHelper.isEmpty(this.session) ) {
       this.session.serverSession = serverSession;
       this.session.save(() => {
-        this.logger.log(this, '[setServerSession]', this.session);
+        this.logger.debug(this, '[setServerSession]', this.session);
       });
     }
-
   }
 
   public logoutSession() {
     this.session.destroy(() => {
-      this.logger.log(this, '[logoutSession]');
+      this.logger.debug(this, '[logoutSession]');
     });
   }
 }

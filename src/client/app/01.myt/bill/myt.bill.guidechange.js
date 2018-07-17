@@ -4,10 +4,10 @@
  * Date: 2018.07.05
  */
 Tw.MyTBillGuidechange = function (rootEl, svcInfo) {
-  this.$container = rootEl;
+  this.$container = rootEl || $('#myt-bill-billguide');
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
-  this.svcInfo = JSON.parse( svcInfo );
+  this.svcInfo = svcInfo !== undefined ? JSON.parse( svcInfo ) : {};
   this._bindEvent();
 };
 
@@ -22,6 +22,11 @@ Tw.MyTBillGuidechange.prototype = {
     this.$container.on('click', '._sel-nm', $.proxy(this._goModify,this) );
     this.$container.on('click', '#onReissue', $.proxy(this._goReissue,this) );
     this.$container.on('click', '#onReturnHistory', $.proxy(this._goReturnHistory,this) );
+  },
+
+  // set 서비스 속성
+  _setSvcAttrCd : function( svcAttrCd ) {
+    this.svcInfo.svcAttrCd = svcAttrCd;
   },
 
   // 안내서 정보변경 링크
@@ -66,6 +71,12 @@ Tw.MyTBillGuidechange.prototype = {
     } else {
       return this.svcInfo.svcAttrCd;
     }
+  },
+
+  // 외부에서 직접 호출시
+  callOpenPreview : function( data ) {
+    this._setSvcAttrCd( data.svcAttrCd );
+    this._openPreview( data.billType );
   },
 
   // 미리보기 클릭 이벤트

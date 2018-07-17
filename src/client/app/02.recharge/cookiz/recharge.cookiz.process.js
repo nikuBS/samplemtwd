@@ -39,15 +39,19 @@ Tw.RechargeCookizProcess.prototype = {
     };
 
     this._apiService.request(Tw.API_CMD.BFF_06_0028, {}).done($.proxy(setProvider, this));
+    this.$wrap_tpl_contact.html(this.tpl_contact({ isMobile: Tw.BrowserHelper.isApp() }));
   },
 
   _cachedElement: function () {
+    this.$wrap_tpl_contact = $('.wrap_tpl_contact');
     this.$tubeList = $('.tube-list.two.wrap_amount_change');
+    this.tpl_contact = Handlebars.compile($('#tpl_contact').text());
   },
 
   _bindEvent: function () {
     this.$container.on('click', '#btn_prev', $.proxy(this._goBack, this));
     this.$container.on('click', '.btn_confirm', $.proxy(this._goToMain, this));
+    this.$container.on('click', '#btn_addr', $.proxy(this._onClickBtnAddr, this));
     this.$container.on('click', '.btn_go_history', $.proxy(this._goHistory, this));
     this.$container.on('click', '.close-step', $.proxy(this._onCloseProcess, this));
     this.$container.on('click', '.tube-select', $.proxy(this._onClickSelectPopup, this));
@@ -57,6 +61,16 @@ Tw.RechargeCookizProcess.prototype = {
     this.$container.on('click', '.btn_validateRequestStep1', $.proxy(this._validateRequestStep1, this));
     this.$container.on('click', '.wrap_type_change input[name=senddata]', $.proxy(this._onChangeType, this));
     this.$container.on('click', '.wrap_amount_change input[name=senddata]', $.proxy(this._onChangeAmount, this));
+  },
+
+  _onClickBtnAddr: function () {
+    this._nativeService.send(Tw.NTV_CMD.GET_CONTACT, {}, $.proxy(this._onContact, this));
+  },
+
+  _onContact: function (resp) {
+    var params = resp;
+    var phoneNumber = params.phoneNumber.replace(/-/gi, '');
+    this.$container.find('.inp_phone').val(phoneNumber);
   },
 
   _setAvailableAmount: function () {
