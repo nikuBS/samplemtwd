@@ -7,7 +7,7 @@ export interface ISvcInfo {
   nickNm: string;           // 닉네임
   addr: string;             // 주소
   eqpMdlNm: string;         // 펫네임 or 단말모델명
-  svcScrbDtm: string;       // 가입일
+  svcScrbDt: string;       // 가입일
   svcLastUpdDtm: string;    // 최종변경일
   mbrNm: string;            // 고객명
 }
@@ -21,7 +21,7 @@ export class SvcInfoModel implements ISvcInfo {
   nickNm: string = '';
   addr: string = '';
   eqpMdlNm: string = '';
-  svcScrbDtm: string = '';
+  svcScrbDt: string = '';
   svcLastUpdDtm: string = '';
   mbrNm: string = '';
 
@@ -34,7 +34,7 @@ export class SvcInfoModel implements ISvcInfo {
     this.nickNm = object.nickNm;
     this.addr = object.addr;
     this.eqpMdlNm = object.eqpMdlNm;
-    this.svcScrbDtm = object.svcScrbDtm;
+    this.svcScrbDt = object.svcScrbDt;
     this.svcLastUpdDtm = object.svcLastUpdDtm;
     this.mbrNm = object.mbrNm;
   }
