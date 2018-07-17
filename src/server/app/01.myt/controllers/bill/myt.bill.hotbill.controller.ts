@@ -23,16 +23,23 @@ class MyTBillHotBill extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     var type = '';
     var billAvailable = true;
-    var preBillAvailable = (new Date().getDate() <= 7);
+    var preBillAvailable = true;
     switch ( svcInfo.svcAttrCd ) {
       case 'M3':
         type = 'T pocket Fi';
+        if (new Date().getDate() > 7){ //7일까지 보이기
+          preBillAvailable = true;
+        }
         break;
       case 'M1':
         type = '휴대폰';
         //pocketFi: 메월 1일 메세지 표시
         if ( new Date().getDate() === 1 ) {
           billAvailable = false;
+        }
+
+        if(new Date().getDate() < 9){ //9일부터 보이기
+          preBillAvailable = false;
         }
         break;
       default:
