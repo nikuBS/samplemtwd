@@ -6,6 +6,8 @@ import LoginService from './login.service';
 import LoggerService from './logger.service';
 import FormatHelper from '../utils/format.helper';
 import EnvHelper from '../utils/env.helper';
+import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/map';
 
 class ApiService {
   static instance;
