@@ -42,6 +42,7 @@ Tw.PaymentAuto.prototype = {
     this.$container.on('click', '.select-bank', $.proxy(this._selectBank, this));
     this.$container.on('click', '.change', $.proxy(this._change, this));
     this.$container.on('click', '.cancel', $.proxy(this._cancel, this));
+    this.$container.on('click', '.sms-get-confirm', $.proxy(this._showAlert, this));
   },
   _goInput: function (event) {
     event.preventDefault();
@@ -238,6 +239,9 @@ Tw.PaymentAuto.prototype = {
   },
   _cancelFail: function () {
     Tw.Logger.info('cancel request fail');
+  },
+  _showAlert: function () {
+    this._popupService.openAlert(Tw.MSG_PAYMENT.AUTO_A09);
   },
   _go: function (hash) {
     window.location.hash = hash;
