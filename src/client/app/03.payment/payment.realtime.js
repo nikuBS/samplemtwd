@@ -52,6 +52,7 @@ Tw.PaymentRealtime.prototype = {
     this.$container.on('click', '.get-point', $.proxy(this._openGetPoint, this));
     this.$container.on('click', '.select-point', $.proxy(this._selectPoint, this));
     this.$container.on('click', '.pay', $.proxy(this._pay, this));
+    this.$container.on('click', '.cancel-process', $.proxy(this._cancelProcess, this));
   },
   _onlyNumber: function (event) {
     Tw.InputHelper.inputNumberOnly(event.currentTarget);
@@ -376,6 +377,11 @@ Tw.PaymentRealtime.prototype = {
       return false;
     }
     return true;
+  },
+  _cancelProcess: function () {
+    this._history.setHistory();
+    this._history.complete();
+    this._history.resetHistory(this._history.getHistoryLength());
   },
   _go: function (hash) {
     window.location.hash = hash;
