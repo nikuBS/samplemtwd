@@ -116,6 +116,17 @@ export const BILL_GUIDE_TYPE = {
   'ETC': '1'
 };
 
+export const WIRE_BILL_GUIDE_TYPE = {
+  'TWORLD': 'P',
+  'BILL_LETTER': 'J',
+  'SMS': 'B',
+  'EMAIL': '2',
+  'BILL_LETTER_EMAIL': 'K',
+  'SMS_EMAIL': 'A',
+  'BILL_LETTER_SMS': 'Q',
+  'ETC': '1'
+};
+
 export const LOGIN_NOTICE_TYPE = {
   NEW_CUSTOMER: '01',
   EXIST_CUSTOMER: '02',

@@ -45,6 +45,7 @@ Tw.API_CMD = {
   BFF_05_0027: { path: '/core-bill/v1/bill-types-change', method: Tw.API_METHOD.POST },
   BFF_05_0035: { path: '/core-bill/v1/hotbill/fee/hotbill-request', method: Tw.API_METHOD.GET },
   BFF_05_0041: { path: '/core-product/v1/services/base-fee-plans', method: Tw.API_METHOD.GET },
+  BFF_05_0050: { path: '/core-bill/v1/wire-bill-types', method: Tw.API_METHOD.POST },
   BFF_05_0052: { path: '/core-bill/v1/wire-bill-reissue', method: Tw.API_METHOD.POST},
 
   // RECHARGE

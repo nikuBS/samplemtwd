@@ -3,10 +3,10 @@
 * Author: 이정민 (skt.p130713@partner.sk.com)
 * Date: 2018.07.05
 -->
-<div class="bill-guide-component" cur-bill-type="<%= curBillGuide.curBillType %>" cur-bill-type-nm="<%= curBillGuide.curBillTypeNm %>" cur-bill-type-component="<%= curBillGuide.component %>">
+<div class="bill-guide-component" cur-bill-type="<%= curBillGuide.curBillType %>" cur-bill-type-nm="<%= curBillGuide.curBillTypeNm %>" cur-bill-type-component="<%= curBillGuide.component %>" wire-cur-bill-type="<%= curBillGuide.wireCurBillType %>" svc-attr-cd="<%= svcInfo.svcAttrCd %>">
     <hr class="cont-sp type1" aria-hidden="true"/>
     <div class="cont-box">
-        <% if (curBillGuide.svcInfo.svcAttrCd === 'S1' || curBillGuide.svcInfo.svcAttrCd === 'S2' || curBillGuide.svcInfo.svcAttrCd === 'S3') { %>
+        <% if (svcInfo.svcAttrCd === 'S1' || svcInfo.svcAttrCd === 'S2' || svcInfo.svcAttrCd === 'S3') { %>
         <div class="change-plan">
             <dl>
                 <dt>휴대폰번호를 입력해주세요</dt>
@@ -38,7 +38,7 @@
             </dl>
         </div>
         <% } else { %>
-            <% if (curBillGuide.svcInfo.svcAttrCd === 'M1' && curBillGuide.kidsYn === 'Y') { %>
+            <% if (svcInfo.svcAttrCd === 'M1' && curBillGuide.kidsYn === 'Y') { %>
                 <div class="change-plan">
                     <h3 class="tit-type spc2">요금안내서 정보설정</h3>
                     <dl>

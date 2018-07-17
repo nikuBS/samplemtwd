@@ -38,7 +38,10 @@
             </div>
 
             <div class="component-wrap">
-                <%- include('../../components/billguide/'+ curBillGuide.component +'.component.html', {curBillGuide: curBillGuide}) %>
+                <%- include('../../components/billguide/'+ curBillGuide.component +'.component.html', {
+                    curBillGuide: curBillGuide,
+                    svcInfo: svcInfo
+                }) %>
             </div>
 
         </div>

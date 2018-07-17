@@ -21,6 +21,8 @@ Tw.MyTBillGuidechangeUpdatePrototype = {
   _assign: function () {
     this._curBillGuideType = this.$container.attr('cur-bill-type');
     this._curBillGuideTypeNm = this.$container.attr('cur-bill-type-nm');
+    this._wireCurBillGuideType = this.$container.attr('wire-cur-bill-type');
+    this._svcAttrCd = this.$container.attr('svc-attr-cd');
     this._$btnSubmit = this.$container.find('.btn-submit');
     this._$btnNext = this.$container.find('.btn-next');
     this._$steps = this.$container.find('.step');
@@ -62,8 +64,13 @@ Tw.MyTBillGuidechangeUpdatePrototype = {
       this._popupService.close();
     }
     var requestParams = this._getRequestParams();
-    console.log('~~~~~~~~~~~requestParams', requestParams);
-    this._apiService.request(Tw.API_CMD.BFF_05_0027, requestParams)
+    var isWire = (this._svcAttrCd === 'S1' || this._svcAttrCd === 'S2' || this._svcAttrCd === 'S3') ? true : false;
+    var apiUrl =  isWire ? Tw.API_CMD.BFF_05_0050 : Tw.API_CMD.BFF_05_0027;
+
+    console.log('~~~~~isWire', isWire);
+    console.log('~~~~~apiUrl', apiUrl);
+    console.log('~~~~~requestParams', requestParams);
+    this._apiService.request(apiUrl, requestParams)
       .done($.proxy(this._submitSuccess, this))
       .fail($.proxy(this._submitFail, this));
   },
@@ -163,8 +170,9 @@ Tw.MyTBillGuidechangeUpdatePrototype = {
   _getRequestParams: function() {
     var KEY_ATTR_NAME = 'form-element-key';
     var VALUE_ATTR_NAME = 'form-element-value';
+    var isWire = (this._svcAttrCd === 'S1' || this._svcAttrCd === 'S2' || this._svcAttrCd === 'S3') ? true : false;
     var paramsObj = {
-      toBillTypeCd: this._curBillGuideType
+      toBillTypeCd: isWire ? this._wireCurBillGuideType: this._curBillGuideType
     };
 
     this.$container.find('[form-element="radio"]').each(function() {

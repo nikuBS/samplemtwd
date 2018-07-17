@@ -43,7 +43,7 @@
                                         <dd class="tx-data"><%= curBillGuide.curBillTypeNm %></dd>
                                     </dl>
                                 </li>
-                                <%- include('../../components/billguide/'+ component +'-info.component.html') %>
+                                <%- include('../../components/billguide/'+ component +'-info.component.html', { svcInfo: svcInfo }) %>
                             </ul>
                         </div>
                         <div class="bt-gap">

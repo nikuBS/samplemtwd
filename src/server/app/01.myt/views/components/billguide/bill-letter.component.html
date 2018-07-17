@@ -3,13 +3,13 @@
 * Author: 이정민 (skt.p130713@partner.sk.com)
 * Date: 2018.07.05
 -->
-<div class="bill-guide-component" cur-bill-type="<%= curBillGuide.curBillType %>" cur-bill-type-nm="<%= curBillGuide.curBillTypeNm %>" cur-bill-type-component="<%= curBillGuide.component %>">
+<div class="bill-guide-component" cur-bill-type="<%= curBillGuide.curBillType %>" cur-bill-type-nm="<%= curBillGuide.curBillTypeNm %>" cur-bill-type-component="<%= curBillGuide.component %>" wire-cur-bill-type="<%= curBillGuide.wireCurBillType %>" svc-attr-cd="<%= svcInfo.svcAttrCd %>">
     <hr class="cont-sp type1" aria-hidden="true"/>
     <div class="cont-box">
         <div class="change-plan">
             <h3 class="tit-type spc2">요금안내서 정보설정</h3>
             <dl>
-                <% if (curBillGuide.svcInfo.svcAttrCd === 'S1' || curBillGuide.svcInfo.svcAttrCd === 'S2' || curBillGuide.svcInfo.svcAttrCd === 'S3') { %>
+                <% if (svcInfo.svcAttrCd === 'S1' || svcInfo.svcAttrCd === 'S2' || svcInfo.svcAttrCd === 'S3') { %>
                 <dt>휴대폰번호를 입력해주세요.</dt>
                 <dd>
                     <span class="inputbox">
@@ -42,7 +42,7 @@
                         <span class="noti-type3">생년월일 입력 후 조회하시면 Bill Letter의 보안을 강화할 수 있습니다. </span>
                     </div>
                 </dd>
-                <% if (curBillGuide.svcInfo.svcAttrCd === 'M1' && curBillGuide.kidsYn === 'Y') { %>
+                <% if (svcInfo.svcAttrCd === 'M1' && curBillGuide.kidsYn === 'Y') { %>
                 <dt>법정대리인에게 함께 알려드릴까요?(선택사항)</dt>
                 <dd>
                     <span class="inputbox">
