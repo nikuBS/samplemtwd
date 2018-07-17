@@ -41,6 +41,7 @@ class PaymentRealtimeController extends TwViewController {
         data.svcName = SVC_CD[data.svcCd];
       });
     }
+    list.code = API_CODE.CODE_00;
     return list;
   }
 

@@ -21,18 +21,55 @@
     <div class="container">
         <% include ../components/line.info.component.html %>
         <hr class="cont-sp type1" aria-hidden="true" />
+        <% if (list.code === 'BIL0011') { %>
+        <div class="cont-box">
+            <div class="payment-select">
+                <p class="pay-disc"><%= list.msg %></p>
+                <div class="pay-bottom">
+                    <p class="title-small">SK브로드밴드 서비스는 사용이 불가능한 메뉴입니다.</p>
+                    <a href="http://www.skbroadband.com/Main.do" target="_blank" class="bt-link-tx">SK브로드밴드 바로가기 <span class="ico"></span></a>
+                </div>
+            </div>
+        </div>
+        <% } else if (list.code === 'BIL0012') { %>
+        <div class="cont-box">
+            <div class="payment-select">
+                <!-- 2018-07-06 수정-->
+                <p class="pay-disc"><%= list.msg %></p>
+                <div class="main-linebox">
+                    <span class="title">나의 통합대표 회선</span><!-- 2018-07-06 수정-->
+                    <span class="text"><%= svcInfo.svcNum %></span>
+                    <a href="/myt/usage/change" class="bt-link-tx">회선변경 <span class="ico"></span></a>
+                </div>
+                <!-- 2018-07-09 수정 --><!-- 안내문구삭제 -->
+            </div>
+        </div>
+        <% } else if (list.code === 'BIL0014') { %>
+        <div class="cont-box">
+            <div class="payment-select">
+                <p class="pay-disc"><%= list.msg %></p>
+                <ul class="contents-notice type2">
+                    <li class="noti-type2">자동납부(인출)가 진행되고 있는 기간에는 이중납부가 될 수 있어 즉시 납부 서비스를 사용하실 수 없습니다</li>
+                    <li class="noti-type2">지로납부 고객은 항시 이용가능하며 자동납부 인출기간이 아닐 경우 사용할 수 있습니다.</li>
+                </ul>
+            </div>
+        </div>
+        <% } else { %>
         <div class="cont-box">
             <div class="payment-select">
                 <div class="contents-empty">
                     <span class="ico"></span>
                     <p class="desc"><%= list.msg %></p>
                 </div>
+                <% if (list.code === 'BIL0013') { %>
                 <div class="pay-bottom type1">
                     <p class="title">다음달 청구요금을 포인트로 미리 납부 예약해보세요.</p>
                     <a href="/payment/point" class="bt-link-tx">포인트 1회 납부(예약) 하기 <span class="ico"></span></a>
                 </div>
+                <% } %>
             </div>
         </div>
+        <% } %>
         <hr class="cont-sp type1" aria-hidden="true" />
         <div class="cont-box">
             <!-- .widget -->
