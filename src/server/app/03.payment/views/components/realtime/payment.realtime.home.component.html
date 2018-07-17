@@ -17,6 +17,18 @@
 <!--// #header -->
 <div class="container">
     <% include ../components/line.info.component.html %>
+    <% if (!list.isAlone) { %>
+    <hr class="cont-sp type1" aria-hidden="true" />
+    <div class="cont-box"><!--2018-07-05 문구추가-->
+        <div class="payment-select">
+            <!-- 2018-07-10 수정 -->
+            <p class="pay-disc">납부 가능한 금액은<br /><strong>총 <span class="pay-num"><%= list.totalAmount %></span>원</strong> 입니다.<br />납부하실 회선을 선택해 주세요.</p>
+        </div>
+        <div class="contents-notice type1">
+            <span class="noti-type1">2대 이상의 회선을 통합청구신청 하신 고객님은 합산된 청구요금이 보여집니다.</span>
+        </div>
+    </div>
+    <% } %>
     <hr class="cont-sp type1" aria-hidden="true" />
     <div class="cont-box">
         <div class="payment-select">
