@@ -34,6 +34,19 @@ Tw.PaymentPoint.prototype = {
     this.$errorContainer = this.$container.find('.error-data');
     this.$selectedPoint = null;
     this.$pointType = null;
+
+    this._init();
+  },
+  _init: function () {
+    var $cId = this.$pointSelectBox.attr('id');
+    if (!Tw.FormatHelper.isEmpty($cId)) {
+      this.$pointSelectBox.text($cId + 'P');
+    }
+
+    var $tId = this.$pointList.attr('id');
+    if (!Tw.FormatHelper.isEmpty($tId)) {
+      this.$pointList.find('input[title="' + $tId + '"]').attr('checked', 'checked');
+    }
   },
   _bindEvent: function () {
     this.$container.on('keyup', '.only-number', $.proxy(this._onlyNumber, this));
@@ -73,32 +86,35 @@ Tw.PaymentPoint.prototype = {
           'style_num': 'three',
           'style_class': 'point-select',
           'options': [
-            {checked: false,value: '500P'},
-            {checked: true,value: '1,000P'},
-            {checked: false,value: '1,500P'},
-            {checked: false,value: '2,000P'},
-            {checked: false,value: '2,500P'},
-            {checked: false,value: '3,000P'},
-            {checked: false,value: '3,500P'},
-            {checked: false,value: '4,000P'},
-            {checked: false,value: '4,500P'},
-            {checked: false,value: '5,000P'},
-            {checked: false,value: '5,500P'},
-            {checked: false,value: '6,000P'},
-            {checked: false,value: '6,500P'},
-            {checked: false,value: '7,000P'},
-            {checked: false,value: '7,500P'},
-            {checked: false,value: '8,000P'},
-            {checked: false,value: '8,500P'},
-            {checked: false,value: '9,000P'},
-            {checked: false,value: '9,500P'},
-            {checked: false,value: '10,000P'}
+            {checked: false, value: '500P', title: '500'},
+            {checked: true,  value: '1,000P', title: '1,000'},
+            {checked: false, value: '1,500P', title: '1,500'},
+            {checked: false, value: '2,000P', title: '2,000'},
+            {checked: false, value: '2,500P', title: '2,500'},
+            {checked: false, value: '3,000P', title: '3,000'},
+            {checked: false, value: '3,500P', title: '3,500'},
+            {checked: false, value: '4,000P', title: '4,000'},
+            {checked: false, value: '4,500P', title: '4,500'},
+            {checked: false, value: '5,000P', title: '5,000'},
+            {checked: false, value: '5,500P', title: '5,500'},
+            {checked: false, value: '6,000P', title: '6,000'},
+            {checked: false, value: '6,500P', title: '6,500'},
+            {checked: false, value: '7,000P', title: '7,000'},
+            {checked: false, value: '7,500P', title: '7,500'},
+            {checked: false, value: '8,000P', title: '8,000'},
+            {checked: false, value: '8,500P', title: '8,500'},
+            {checked: false, value: '9,000P', title: '9,000'},
+            {checked: false, value: '9,500P', title: '9,500'},
+            {checked: false, value: '10,000P', title: '1,0000'}
           ]
         }
       ]
     }, $.proxy(this._onOpenSelect, this));
   },
   _onOpenSelect: function($layer) {
+    if (!Tw.FormatHelper.isEmpty(this.$pointSelectBox.attr('id'))) {
+      $layer.find('input[title="' + this.$pointSelectBox.attr('id') + '"]').attr('checked', 'checked');
+    }
     $layer.on('click', '.point-select', $.proxy(this._setPoint, this, $layer));
   },
   _setPoint: function ($layer) {

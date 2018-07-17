@@ -137,3 +137,7 @@ export enum BILL_GUIDE_SELECTOR_LABEL {
   BILL_LETTER_SMS = 'Bill Letter + 문자 요금안내서',
   ETC = '기타(우편) 요금안내서'
 }
+
+export enum SELECT_POINT {
+  DEFAULT = '포인트 선택'
+}
