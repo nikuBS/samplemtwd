@@ -6,11 +6,10 @@
 import TwViewController from '../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
 import { API_CODE, API_CMD } from '../../../types/api-command.type';
-import { SVC_ATTR } from '../../../types/bff-common.type';
+import { SVC_CD, SVC_ATTR } from '../../../types/bff-common.type';
 import { PAYMENT_VIEW } from '../../../types/string.type';
 import DateHelper from '../../../utils/date.helper';
 import FormatHelper from '../../../utils/format.helper';
-import UnpaidList from '../../../mock/server/payment/payment.realtime.unpaid.list';
 
 class PaymentRealtimeController extends TwViewController {
   constructor() {
@@ -19,19 +18,11 @@ class PaymentRealtimeController extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     this.apiService.request(API_CMD.BFF_07_0021, {}).subscribe((resp) => {
-      this.renderView(res, 'payment.realtime.html', {
+      res.render('payment.realtime.html', {
         list: this.getResult(resp),
         svcInfo: this.getSvcInfo(svcInfo)
       });
     });
-  }
-
-  public renderView(res: Response, view: string, data: any): any {
-    if (data.code === undefined) {
-      res.render(view, data);
-    } else {
-      res.render(PAYMENT_VIEW.ERROR, data);
-    }
   }
 
   private getResult(resp: any): any {
@@ -47,9 +38,10 @@ class PaymentRealtimeController extends TwViewController {
         data.invYearMonth = DateHelper.getShortDateWithFormat(data.invDt, 'YYYY.MM');
         data.intMoney = this.removeZero(data.invAmt);
         data.invMoney = FormatHelper.addComma(data.intMoney.toString());
-        data.svcName = SVC_ATTR[data.svcAttrCd];
+        data.svcName = SVC_CD[data.svcCd];
       });
     }
+    list.code = API_CODE.CODE_00;
     return list;
   }
 

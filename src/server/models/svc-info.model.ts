@@ -1,13 +1,15 @@
 export interface ISvcInfo {
-  svcMgmtNum: string;
-  svcNum: string;
-  svcGr: string;
-  svcAttrCd: string;
-  repSvcYn: string;
-  nickNm: string;
-  addr: string;
-  svcCnt: string;
-  mbrNm: string;
+  svcMgmtNum: string;       // 서비스 관리번호
+  svcNum: string;           // 서비스 번호
+  svcGr: string;            // 서비스 등급
+  svcAttrCd: string;        // 서비스 속석
+  repSvcYn: string;         // 기준회선 여부
+  nickNm: string;           // 닉네임
+  addr: string;             // 주소
+  eqpMdlNm: string;         // 펫네임 or 단말모델명
+  svcScrbDtm: string;       // 가입일
+  svcLastUpdDtm: string;    // 최종변경일
+  mbrNm: string;            // 고객명
 }
 
 export class SvcInfoModel implements ISvcInfo {
@@ -18,7 +20,9 @@ export class SvcInfoModel implements ISvcInfo {
   repSvcYn: string = '';
   nickNm: string = '';
   addr: string = '';
-  svcCnt: string = '';
+  eqpMdlNm: string = '';
+  svcScrbDtm: string = '';
+  svcLastUpdDtm: string = '';
   mbrNm: string = '';
 
   constructor(object) {
@@ -29,7 +33,9 @@ export class SvcInfoModel implements ISvcInfo {
     this.repSvcYn = object.repSvcYn;
     this.nickNm = object.nickNm;
     this.addr = object.addr;
-    this.svcCnt = object.svcCnt;
+    this.eqpMdlNm = object.eqpMdlNm;
+    this.svcScrbDtm = object.svcScrbDtm;
+    this.svcLastUpdDtm = object.svcLastUpdDtm;
     this.mbrNm = object.mbrNm;
   }
 }

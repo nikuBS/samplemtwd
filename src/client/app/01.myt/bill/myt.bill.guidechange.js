@@ -4,16 +4,17 @@
  * Date: 2018.07.05
  */
 Tw.MyTBillGuidechange = function (rootEl, svcInfo) {
-  this.$container = rootEl;
+  this.$container = rootEl || $('#myt-bill-billguide');
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
-  this.svcInfo = JSON.parse(svcInfo);
+  this.svcInfo = svcInfo !== undefined ? JSON.parse( svcInfo ) : {};
   this._bindEvent();
 };
 
 Tw.MyTBillGuidechange.prototype = {
 
   _bindEvent: function () {
+    this._popupService._popupClose();
     this.$container.on('click', '.swiper-slide', $.proxy(this._onClickFlicking, this));
     this.$container.on('click', '._sel-preview', $.proxy(this._openPreview, this, ''));
     this.$container.on('click', '._sel-join-bill', $.proxy(this._openJoinBill, this));
@@ -21,6 +22,11 @@ Tw.MyTBillGuidechange.prototype = {
     this.$container.on('click', '._sel-nm', $.proxy(this._goModify,this) );
     this.$container.on('click', '#onReissue', $.proxy(this._goReissue,this) );
     this.$container.on('click', '#onReturnHistory', $.proxy(this._goReturnHistory,this) );
+  },
+
+  // set 서비스 속성
+  _setSvcAttrCd : function( svcAttrCd ) {
+    this.svcInfo.svcAttrCd = svcAttrCd;
   },
 
   // 안내서 정보변경 링크
@@ -31,6 +37,7 @@ Tw.MyTBillGuidechange.prototype = {
   // 안내서 변경 링크
   _goModify : function(e) {
     var billType = $(e.currentTarget).data('billType');
+    this._popupService._popupClose();
     window.location.href='/myt/bill/guidechange/change?selectedBillGuideType='+billType;
   },
 
@@ -46,7 +53,6 @@ Tw.MyTBillGuidechange.prototype = {
 
   _changePreview: function (e, $container) {
     var billType = $(e.currentTarget).data('billType');
-    Tw.Logger.info('>> 11 ', billType);
     $container.find('._sel-desc').text(billType.desc);
     $container.find('._sel-nm').data('billType', billType.billType).text(billType.chgBtnNm);
   },
@@ -60,12 +66,17 @@ Tw.MyTBillGuidechange.prototype = {
 
   // 현재 접속 회선정보 리턴
   _getServiceType: function () {
-    this.svcInfo = this.svcInfo.svcAttrCd || '';
-    if (['S1', 'S2', 'S3'].includes(this.svcAttrCd)) {
+    if (['S1', 'S2', 'S3'].includes(this.svcInfo.svcAttrCd)) {
       return 'S';
     } else {
-      return this.svcAttrCd;
+      return this.svcInfo.svcAttrCd;
     }
+  },
+
+  // 외부에서 직접 호출시
+  callOpenPreview : function( data ) {
+    this._setSvcAttrCd( data.svcAttrCd );
+    this._openPreview( data.billType );
   },
 
   // 미리보기 클릭 이벤트

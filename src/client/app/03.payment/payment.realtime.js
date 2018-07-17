@@ -52,6 +52,7 @@ Tw.PaymentRealtime.prototype = {
     this.$container.on('click', '.get-point', $.proxy(this._openGetPoint, this));
     this.$container.on('click', '.select-point', $.proxy(this._selectPoint, this));
     this.$container.on('click', '.pay', $.proxy(this._pay, this));
+    this.$container.on('click', '.cancel-process', $.proxy(this._cancelProcess, this));
   },
   _onlyNumber: function (event) {
     Tw.InputHelper.inputNumberOnly(event.currentTarget);
@@ -225,9 +226,7 @@ Tw.PaymentRealtime.prototype = {
   _payCard: function () {
     if (this._isCardValid()) {
       var reqData = this._makeRequestDataForCard();
-      this._apiService.request(Tw.API_CMD.BFF_07_0025, reqData)
-        .done($.proxy(this._paySuccess, this, reqData, 'card'))
-        .fail($.proxy(this._payFail, this));
+      this._getCardCode(reqData);
     }
   },
   _isCardValid: function () {
@@ -245,14 +244,39 @@ Tw.PaymentRealtime.prototype = {
       payovrBankCd: this.$cardWrap.find('.select-bank').attr('id'),
       payovrBankNum: $.trim(this.$cardWrap.find('.account-number').val()),
       payovrCustNm: $.trim(this.$cardWrap.find('.name').data('value')),
-      bankOrCardCode: $.trim(this.$cardNumber.val()).substr(0,6),
+      drwagrPrfKeyVal: '',
+      acntNum: this.$autoPayInfo.attr('acnt-num').toString(),
+      payAmt: this.$amount.toString(),
       bankOrCardAccn: $.trim(this.$cardNumber.val()),
-      cdexpy: this.$cardY.val().substr(2,2),
+      cdexpy: this.$cardY.val(),
       cdexpm: this.$cardM.val(),
+      instmm: this.$cardTypeSelector.attr('id').toString(),
       ccPwd: this.$cardPw.val(),
-      unpaidBillList: this._getCheckedBillList()
+      unpaidBillList: this._getCheckedBillList(),
+      recCnt1: this._getCheckedBillList().length.toString()
     };
     return reqData;
+  },
+  _payCardRequest: function (reqData) {
+    this._apiService.request(Tw.API_CMD.BFF_07_0025, reqData)
+      .done($.proxy(this._paySuccess, this, reqData, 'card'))
+      .fail($.proxy(this._payFail, this));
+  },
+  _getCardCode: function (reqData) {
+    this._apiService.request(Tw.API_CMD.BFF_07_0068, {}, {}, $.trim(this.$cardNumber.val()).substr(0,6))
+      .done($.proxy(this._getSuccess, this, reqData))
+      .fail($.proxy(this._getFail, this));
+  },
+  _getSuccess: function (reqData, res) {
+    if (res.code === Tw.API_CODE.CODE_00) {
+      reqData.bankOrCardCode = res.result.isueCardCd;
+      this._payCardRequest(reqData);
+    } else {
+      this._popupService.openAlert(Tw.MSG_COMMON.SERVER_ERROR);
+    }
+  },
+  _getFail: function () {
+    Tw.Logger.info('get card fail');
   },
   _payPoint: function () {
     if (this._isPointValid()) {
@@ -313,7 +337,7 @@ Tw.PaymentRealtime.prototype = {
     }
     $target.find('.bank-name').text(this.$autoWrap.find('.select-bank').text());
     $target.find('.refund-bank-name').text(this.$refundWrap.find('.select-bank').text());
-    $target.find('.date').text(Tw.DateHelper.convDateFormat(new Date()));
+    $target.find('.date').text(Tw.DateHelper.getCurrentDateTime(new Date()));
 
     var $detailTarget = this.$container.find('.detail-payment');
     var $checkedBox = this.$container.find('.checkbox-main.checked');
@@ -353,6 +377,11 @@ Tw.PaymentRealtime.prototype = {
       return false;
     }
     return true;
+  },
+  _cancelProcess: function () {
+    this._history.setHistory();
+    this._history.complete();
+    this._history.resetHistory(this._history.getHistoryLength());
   },
   _go: function (hash) {
     window.location.hash = hash;

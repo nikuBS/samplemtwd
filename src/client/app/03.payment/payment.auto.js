@@ -42,6 +42,7 @@ Tw.PaymentAuto.prototype = {
     this.$container.on('click', '.select-bank', $.proxy(this._selectBank, this));
     this.$container.on('click', '.change', $.proxy(this._change, this));
     this.$container.on('click', '.cancel', $.proxy(this._cancel, this));
+    this.$container.on('click', '.sms-get-confirm', $.proxy(this._showAlert, this));
   },
   _goInput: function (event) {
     event.preventDefault();
@@ -82,7 +83,7 @@ Tw.PaymentAuto.prototype = {
     }, $.proxy(this._setChangeDateEvent, this));
   },
   _setChangeDateEvent: function ($layer) {
-    $layer.on('click', 'button', $.proxy(this._changeDate, this, $layer));
+    $layer.on('click', '.contents-btn button', $.proxy(this._changeDate, this, $layer));
   },
   _changeDate: function ($layer, event) {
     var $target = $(event.currentTarget);
@@ -96,8 +97,8 @@ Tw.PaymentAuto.prototype = {
   },
   _getDateValue: function ($target) {
     var value =Tw.PAYMENT_DATE_VALUE.FIFTEEN;
-    if (!$target.hasClass('first')) {
-      if ($target.hasClass('last')) {
+    if (!$target.hasClass('top-left')) {
+      if ($target.hasClass('top-right')) {
         value = Tw.PAYMENT_DATE_VALUE.TWENTY_THREE;
       } else {
         value = Tw.PAYMENT_DATE_VALUE.TWENTY_ONE;
@@ -106,7 +107,7 @@ Tw.PaymentAuto.prototype = {
     return value;
   },
   _changeDateRequest: function (value) {
-    this._apiService.request(Tw.API_CMD.BFF_07_0065, {}, {}, '?payCyclCd=' + value.toString())
+    this._apiService.request(Tw.API_CMD.BFF_07_0065, {}, {}, '?payCyclCd=' + value)
       .done($.proxy(this._changeDateSuccess, this))
       .fail($.proxy(this._changeDateFail, this));
     this._popupService.close();
@@ -238,6 +239,12 @@ Tw.PaymentAuto.prototype = {
   },
   _cancelFail: function () {
     Tw.Logger.info('cancel request fail');
+  },
+  _showAlert: function () {
+    var $bankSelector = this.$container.find('.auto-cancel-select-bank');
+    if (this._validation.checkIsSelected($bankSelector, Tw.MSG_PAYMENT.REALTIME_A02)) {
+      this._popupService.openAlert(Tw.MSG_PAYMENT.AUTO_A09);
+    }
   },
   _go: function (hash) {
     window.location.hash = hash;

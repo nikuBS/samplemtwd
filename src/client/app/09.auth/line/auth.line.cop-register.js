@@ -8,6 +8,7 @@ Tw.AuthLineCopRegister = function (rootEl, nicknamePopup) {
 
   this.$container = rootEl;
   this._apiService = Tw.Api;
+  this._popupService = Tw.Popup;
   this._nicknamePopup = nicknamePopup;
 
   this.$inputMdn = null;
@@ -40,8 +41,22 @@ Tw.AuthLineCopRegister.prototype = {
 
   },
   _onClickRegister: function () {
-    this._sendBizSession('register');
-
+    if ( this._isValidInput() ) {
+      this._sendBizSession();
+    }
+  },
+  _isValidInput: function () {
+    if ( Tw.FormatHelper.isEmpty(this.$inputMdn.val()) ) {
+      this._popupService.openAlert(Tw.MSG_AUTH.LINE_A31);
+      return false;
+    } else if ( Tw.FormatHelper.isEmpty(this.$inputCop.val()) ) {
+      this._popupService.openAlert(Tw.MSG_AUTH.LINE_A32);
+      return false;
+    } else if ( Tw.FormatHelper.isEmpty(this.$inputCopNum.val()) ) {
+      this._popupService.openAlert(Tw.MSG_AUTH.LINE_A33);
+      return false;
+    }
+    return true;
   },
   _sendBizSession: function () {
     var params = {
@@ -75,7 +90,7 @@ Tw.AuthLineCopRegister.prototype = {
   },
   _failRegisterBiz: function () {
   },
-  _onCloseNickname: function(nickname) {
+  _onCloseNickname: function (nickname) {
     this.$inputNickname.val(nickname);
   }
 };

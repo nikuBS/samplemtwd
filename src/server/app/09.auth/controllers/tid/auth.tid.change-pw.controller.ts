@@ -29,8 +29,7 @@ class AuthTidChangePw extends TwViewController {
           '/auth/login/route?target=/home&state=' + resp.result.state,
           client_type: TID.CLIENT_TYPE,
           scope: TID.SCOPE,
-          response_type: TID.RESP_TYPE,
-          login_id: this.loginService.getUserId()
+          response_type: TID.RESP_TYPE
         };
         const url = this.apiService.getServerUri(API_CMD.OIDC) + API_CMD.OIDC.path + ParamsHelper.setQueryParams(params);
         this.logger.info(this, '[redirect]', url);
