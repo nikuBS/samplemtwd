@@ -6,11 +6,9 @@
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
 import { API_CODE } from '../../../../types/api-command.type';
-import { BILL_GUIDE_TYPE } from '../../../../types/bff-common.type';
+import { BILL_GUIDE_TYPE, LINE_NAME } from '../../../../types/bff-common.type';
 import { API_CMD } from '../../../../types/api-command.type';
-import curBillGuide from '../../../../mock/server/myt.bill.guidechange.bill-types-list';
 import { Observable } from 'rxjs/Observable';
-import { PARAM } from './myt.bill.hotbill.controller';
 
 const BILL_GUIDE_TYPE_COMPONENT = {};
 BILL_GUIDE_TYPE_COMPONENT[BILL_GUIDE_TYPE.TWORLD] = 'tworld';
@@ -28,28 +26,30 @@ class MyTBillUpdate extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-
+    const billTypeListRequest: Observable<any> = this.apiService.request(API_CMD.BFF_05_0025, {});
     Observable.combineLatest(
-      this.apiService.request(API_CMD.BFF_05_0025, {})
-    ).subscribe(([billTypesList]) => {
-      const _curBillGuide = this.getResult(billTypesList);
-      // console.log('~~~~~~`_curBillGuide', _curBillGuide);
-      // console.log('~~~~~~`svcInfo', svcInfo);
-      if (!svcInfo.svcAttrCd) {
-        svcInfo.svcAttrCd = 'M1';
-      }
+      billTypeListRequest,
+    ).subscribe(([_billTypesList]) => {
+      console.log('~~~~~~~~svcInfo', svcInfo);
+      const _curBillGuide = this.getResult(_billTypesList);
       const anotherBillGuideType = (_curBillGuide.curBillType === BILL_GUIDE_TYPE.TWORLD) ? BILL_GUIDE_TYPE.BILL_LETTER : BILL_GUIDE_TYPE.TWORLD;
+      // svcInfo.svcAttrCd = 'M1';
+      // _curBillGuide['curBillType'] = 'P';
+      // _curBillGuide['isusimchk'] = 'Y';
+      // _curBillGuide['curBillTypeNm'] = '티월드';
+
       _curBillGuide['component'] = BILL_GUIDE_TYPE_COMPONENT[_curBillGuide['curBillType']];
       _curBillGuide['svcInfo'] = svcInfo;
+      console.log('~~~~~~~~~_curBillGuide', _curBillGuide);
+      console.log('~~~~~~~~~svcInfo', svcInfo);
       this.renderView(res, 'bill/myt.bill.guidechange.update.html', {
         curBillGuide: _curBillGuide,
         curBillGuideData: JSON.stringify(_curBillGuide),
         isUpdate: true,
-        anotherBillGuideType: anotherBillGuideType
+        anotherBillGuideType: anotherBillGuideType,
+        svcInfo
       });
     });
-
-
   }
 
   public renderView(res: Response, view: string, data: any): any {
