@@ -23,11 +23,12 @@ Tw.RechargeLimit.prototype = {
   _init: function () {
     this.rechargeAmount = "5000";
 
+    var amount = this.$container.find('span.price').data('possible-amount');
+    this._possibleRecharge = !!amount && Number(amount.replace(/,/g, '')) > 0;
     var $limitBlock = this.$container.find('.box-block-list1.btm-border ul');
     this._toggleSwitch(this.TYPE.TMTH, $limitBlock.data('limit-tmth'));
     this._toggleSwitch(this.TYPE.REGULAR, $limitBlock.data('limit-regular'));
     this._rechargeRegular = $limitBlock.data('recharge-regular');
-    this._possibleRecharge = Number(this.$container.find('span.price').data('possible-amount').replace(/,/g, '')) > 0;
   },
 
   _cachedElement: function () {
@@ -238,7 +239,7 @@ Tw.RechargeLimit.prototype = {
     $switch.find('input').attr('checked', state);
     $switch.find('.switch-style').attr('aria-checked', state);
 
-    if (this._possibleRecharge && !this._limitTmth && !this._limitRegular) {
+    if (!this._possibleRecharge || !this._limitTmth && !this._limitRegular) {
       this.$btnRecharge.attr('disabled', true);
     } else {
       this.$btnRecharge.attr('disabled', false);
