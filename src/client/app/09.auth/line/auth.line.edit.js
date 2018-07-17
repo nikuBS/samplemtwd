@@ -54,12 +54,12 @@ Tw.AuthLineEdit.prototype = {
     this._popupService.close();
     var lineList = svcNumList.join('~');
     this._apiService.request(Tw.API_CMD.BFF_03_0005, { svcCtg: this._category.toUpperCase(), svcMgmtNumArr: lineList })
-      .done($.proxy(this._successRegisterLineList, this, svcNumList))
+      .done($.proxy(this._successRegisterLineList, this))
       .fail($.proxy(this._failRegisterLineList, this));
   },
-  _successRegisterLineList: function (svcNumList, resp) {
+  _successRegisterLineList: function (resp) {
     if(resp.code === Tw.API_CODE.CODE_00) {
-      this._checkRepSvc(svcNumList);
+      this._checkRepSvc(resp.result);
     } else {
       this._popupService.openAlert('api error');
     }
@@ -67,9 +67,9 @@ Tw.AuthLineEdit.prototype = {
   _failRegisterLineList: function () {
 
   },
-  _checkRepSvc: function (svcNumList) {
-    console.log(svcNumList[0], this._repSvc);
-    if(svcNumList[0] !== this._repSvc) {
+  _checkRepSvc: function (result) {
+    // TODO: 첫번째 회선 변경 오류 체크
+    if(result) {
       this._popupService.openAlert(Tw.MSG_AUTH.LINE_A11, null, $.proxy(this._confirmChangeRepSvc, this), $.proxy(this._confirmChangeRepSvc, this));
     } else {
       history.back();

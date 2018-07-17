@@ -4,8 +4,8 @@
  * Date: 2018.07.16
  */
 
-Tw.PaymentGetPoint = function () {
-  this.$container = '';
+Tw.PaymentGetPoint = function (rootEl) {
+  this.$container = rootEl;
   this.$window = $(window);
   this.$document = $(document);
 
@@ -15,8 +15,8 @@ Tw.PaymentGetPoint = function () {
 };
 
 Tw.PaymentGetPoint.prototype = {
-  open: function (rootEl) {
-    this.$container = rootEl;
+  open: function () {
+    console.log(this.$container);
     this._popupService.open({
       hbs: 'PA_05_04_L01'
     }, $.proxy(this._init, this));
@@ -47,9 +47,9 @@ Tw.PaymentGetPoint.prototype = {
   },
   _success: function (res) {
     var $target = this.$container.find('.point-box');
-    $target.find('.cashbag-point').text(res.result.availPt);
-    $target.find('.t-point').text(res.result.availTPt);
-    $target.find('.point-card-number').text(res.result.ocbCcno);
+    $target.find('.cashbag-point').attr('id', res.result.availPt).text(Tw.FormatHelper.addComma(res.result.availPt));
+    $target.find('.t-point').attr('id', res.result.availTPt).text(Tw.FormatHelper.addComma(res.result.availTPt));
+    $target.find('.point-card-number').attr('id', res.result.ocbCcno).text(Tw.StringHelper.masking(res.result.ocbCcno, '*', 10));
     $target.removeClass('none');
   },
   _fail: function () {

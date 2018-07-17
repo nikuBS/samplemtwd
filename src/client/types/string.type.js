@@ -97,6 +97,11 @@ Tw.PAYMENT_STRING = {
   T_POINT: 'T포인트'
 };
 
+Tw.PAYMENT_POINT_VALUE = {
+  OK_CASHBAG: '10',
+  T_POINT: '11'
+};
+
 Tw.MSG_COMMON = {
   SERVER_ERROR: '통신 오류입니다. 잠시 후 다시 시도해 주세요.'
 };

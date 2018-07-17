@@ -6,6 +6,8 @@ import LoginService from './login.service';
 import LoggerService from './logger.service';
 import FormatHelper from '../utils/format.helper';
 import EnvHelper from '../utils/env.helper';
+import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/map';
 
 class ApiService {
   static instance;
@@ -185,25 +187,6 @@ class ApiService {
         if ( resp.code === API_CODE.CODE_00 ) {
           // TODO: 필드명 확인 필요
           this.loginService.setSvcInfo({ mbrNm: resp.result.mbrNm });
-          return this.request(API_CMD.BFF_01_0005, {});
-        } else {
-          throw resp.code;
-        }
-      }).map((resp) => {
-        if ( resp.code === API_CODE.CODE_00 ) {
-          const result = resp.result;
-          this.loginService.setSvcInfo(result);
-          return result;
-        } else {
-          throw resp.code;
-        }
-      });
-  }
-
-  public requestSvcPasswordSession(params: any): Observable<any> {
-    return this.request(API_CMD.BFF_03_0009, params)
-      .switchMap((resp) => {
-        if ( resp.code === API_CODE.CODE_00 ) {
           return this.request(API_CMD.BFF_01_0005, {});
         } else {
           throw resp.code;

@@ -31,7 +31,7 @@ class RechargeLimit extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     Observable.combineLatest(this.getFeeData(), this.getLimitData()).subscribe(([feeData, limitData]) => {
-      res.render("limit/recharge.limit.html", { svcInfo, limitData: { ...limitData, ...feeData } });
+      res.render("limit/recharge.limit.html", { svcInfo, limitData, feeData });
     });
   }
 
@@ -45,7 +45,8 @@ class RechargeLimit extends TwViewController {
     return this.apiService.request(API_CMD.BFF_06_0034).map((resp: { code: string, result: ILimitData }) => {
       return {
         ...resp.result,
-        currentTopUpLimit: FormatHelper.addComma(resp.result.currentTopUpLimit)
+        currentTopUpLimit: FormatHelper.addComma(resp.result.currentTopUpLimit),
+        regularTopUpAmt: FormatHelper.addComma(resp.result.regularTopUpAmt),
       };
     });
   }
