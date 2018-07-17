@@ -8,7 +8,6 @@ import { Request, Response, NextFunction } from 'express';
 import { API_CMD, API_CODE } from '../../../types/api-command.type';
 import DateHelper from '../../../utils/date.helper';
 import FormatHelper from '../../../utils/format.helper';
-import { PAYMENT_VIEW } from '../../../types/string.type';
 import {PAYMENT_OPTION, PAYMENT_OPTION_TEXT, SVC_ATTR} from '../../../types/bff-common.type';
 
 class PaymentAutoController extends TwViewController {
@@ -18,16 +17,8 @@ class PaymentAutoController extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     this.apiService.request(API_CMD.BFF_07_0060, {}).subscribe((resp) => {
-      this.renderView(res, 'payment.auto.html', this.getData(svcInfo, resp));
+      res.render('payment.auto.html', this.getData(svcInfo, resp));
     });
-  }
-
-  public renderView(res: Response, view: string, data: any): any {
-    if (data.payment.code === undefined) {
-      res.render(view, data);
-    } else {
-      res.render(PAYMENT_VIEW.ERROR, data);
-    }
   }
 
   private getResult(resp: any): any {
@@ -57,6 +48,7 @@ class PaymentAutoController extends TwViewController {
       data.paymentTitle = PAYMENT_OPTION_TEXT.VIRTUAL;
     }
     data.firstOutDate = DateHelper.getShortDateNoDot(data.fstDrwSchdDt);
+    data.code = API_CODE.CODE_00;
     return data;
   }
 
