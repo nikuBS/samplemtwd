@@ -2,10 +2,12 @@ import express from 'express';
 import { Router, Request, Response, NextFunction } from 'express';
 import { API_CODE } from '../types/api-command.type';
 import LoggerService from '../services/logger.service';
+import ApiService from '../services/api.service';
 
 class ApiRouter {
   public router: Router;
   private logger: LoggerService = new LoggerService();
+  private apiService: ApiService = new ApiService();
 
   constructor() {
     this.router = express.Router();
@@ -16,6 +18,7 @@ class ApiRouter {
   private setApi() {
     this.router.get('/environment', this.getEnvironment.bind(this));
     this.router.post('/device', this.setDeviceInfo.bind(this));
+    this.router.post('/change-session', this.changeSession.bind(this));
   }
 
   private getEnvironment(req: Request, res: Response, next: NextFunction) {
@@ -37,6 +40,14 @@ class ApiRouter {
       code: API_CODE.CODE_00
     };
     res.json(resp);
+  }
+
+  private changeSession(req: Request, res: Response, next: NextFunction) {
+    const svcMgmtNum = req.body;
+    this.logger.info(this, '[chagne session]', svcMgmtNum);
+    this.apiService.requestChangeSession(svcMgmtNum).subscribe((resp) => {
+      res.json(resp);
+    });
   }
 }
 

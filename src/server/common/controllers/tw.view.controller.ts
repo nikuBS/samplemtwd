@@ -68,8 +68,7 @@ abstract class TwViewController {
   }
 
   private testLogin(req, res, next, userId) {
-    this.goTestLogin(userId).subscribe((resp) => {
-      this.loginService.setSvcInfo(new SvcInfoModel(resp));
+    this.apiService.requestLoginTest(userId).subscribe((resp) => {
       this.render(req, res, next, new SvcInfoModel(resp), resp.noticeTpyCd);
     }, (error) => {
       // 로그인 실패
@@ -78,59 +77,12 @@ abstract class TwViewController {
   }
 
   private tidLogin(req, res, next, tokenId) {
-    this.goTidLogin(tokenId, req.query.state).subscribe((resp) => {
-      this.loginService.setSvcInfo(new SvcInfoModel(resp));
+    this.apiService.requestLoginTid(tokenId, req.query.state).subscribe((resp) => {
       this.render(req, res, next, new SvcInfoModel(resp), resp.noticeTpyCd);
     }, (error) => {
       // 로그인 실패
       console.log('error', error);
     });
-  }
-
-  private goTestLogin(userId): Observable<any> {
-    let loginData = null;
-    return this._apiService.request(API_CMD.BFF_03_0001, { id: userId })
-      .switchMap((resp) => {
-        if ( resp.code === API_CODE.CODE_00 ) {
-          loginData = resp.result;
-          return this._apiService.request(API_CMD.BFF_01_0005, {});
-        } else {
-          throw resp.code;
-        }
-      }).map((resp) => {
-        if ( resp.code === API_CODE.CODE_00 ) {
-          const result = resp.result;
-          Object.assign(result, loginData);
-          return result;
-        } else {
-          throw resp.code;
-        }
-      });
-  }
-
-  private goTidLogin(tokenId, state): Observable<any> {
-    let loginData = null;
-    const params = {
-      token: tokenId,
-      state: state
-    };
-    return this._apiService.request(API_CMD.BFF_03_0008, params)
-      .switchMap((resp) => {
-        if ( resp.code === API_CODE.CODE_00 ) {
-          loginData = resp.result;
-          return this._apiService.request(API_CMD.BFF_01_0005, {});
-        } else {
-          throw resp.code;
-        }
-      }).map((resp) => {
-        if ( resp.code === API_CODE.CODE_00 ) {
-          const result = resp.result;
-          Object.assign(result, loginData);
-          return result;
-        } else {
-          throw resp.code;
-        }
-      });
   }
 
   private goSessionLogin(req, res, next, path) {

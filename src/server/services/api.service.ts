@@ -90,9 +90,6 @@ class ApiService {
       this.setServerSession(resp.headers);
     }
 
-    if ( FormatHelper.isObject(respData) && this.isSessionCallback(command) && respData.code === API_CODE.CODE_00 ) {
-      this.setSvcInfo(respData.result);
-    }
     observer.next(respData);
     observer.complete();
   }
@@ -109,14 +106,6 @@ class ApiService {
     observer.complete();
   }
 
-  private isSessionCallback(command: any): boolean {
-    if ( command === API_CMD.BFF_03_0004_C
-      || command === API_CMD.BFF_03_0005_C ) {
-      return true;
-    }
-    return false;
-  }
-
   private setServerSession(headers) {
     this.logger.debug(this, 'Headers: ', JSON.stringify(headers));
     if ( headers['set-cookie'] ) {
@@ -125,9 +114,69 @@ class ApiService {
     }
   }
 
-  private setSvcInfo(result) {
-    this.logger.debug(this, 'Change SvcInfo');
-    this.loginService.setSvcInfo(result);
+  public requestLoginTest(userId: string): Observable<any> {
+    let loginData = null;
+    return this.request(API_CMD.BFF_03_0001, { id: userId })
+      .switchMap((resp) => {
+        if ( resp.code === API_CODE.CODE_00 ) {
+          loginData = resp.result;
+          this.loginService.setSvcInfo({ mbrNm: resp.result.mbrNm });
+          return this.request(API_CMD.BFF_01_0005, {});
+        } else {
+          throw resp.code;
+        }
+      }).map((resp) => {
+        if ( resp.code === API_CODE.CODE_00 ) {
+          const result = resp.result;
+          this.loginService.setSvcInfo(result);
+          Object.assign(result, loginData);
+          return result;
+        } else {
+          throw resp.code;
+        }
+      });
+  }
+
+  public requestLoginTid(token: string, state: string): Observable<any> {
+    let loginData = null;
+    return this.request(API_CMD.BFF_03_0008, { token, state })
+      .switchMap((resp) => {
+        if ( resp.code === API_CODE.CODE_00 ) {
+          loginData = resp.result;
+          this.loginService.setSvcInfo({ mbrNm: resp.result.mbrNm });
+          return this.request(API_CMD.BFF_01_0005, {});
+        } else {
+          throw resp.code;
+        }
+      }).map((resp) => {
+        if ( resp.code === API_CODE.CODE_00 ) {
+          const result = resp.result;
+          this.loginService.setSvcInfo(result);
+          Object.assign(result, loginData);
+          return result;
+        } else {
+          throw resp.code;
+        }
+      });
+  }
+
+  public requestChangeSession(params: any): Observable<any> {
+    return this.request(API_CMD.BFF_01_0004, params)
+      .switchMap((resp) => {
+        if ( resp.code === API_CODE.CODE_00 ) {
+          return this.request(API_CMD.BFF_01_0005, {});
+        } else {
+          throw resp.code;
+        }
+      }).map((resp) => {
+        if ( resp.code === API_CODE.CODE_00 ) {
+          const result = resp.result;
+          this.loginService.setSvcInfo(result);
+          return resp;
+        } else {
+          throw resp.code;
+        }
+      });
   }
 }
 
