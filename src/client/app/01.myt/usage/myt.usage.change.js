@@ -1,5 +1,6 @@
-Tw.MytUsageChange = function () {
+Tw.MytUsageChange = function (loginServicePwd) {
   this._apiService = new Tw.ApiService();
+  this.loginServicePwd = loginServicePwd;
 
   this._cachedElement();
   this._bindEvent();
@@ -8,7 +9,7 @@ Tw.MytUsageChange = function () {
 Tw.MytUsageChange.prototype = {
   _cachedElement: function () {
     this.$popupContainer = $('.pop-container');
-    this.$container      = $('#usage_change');
+    this.$container = $('#usage_change');
   },
 
   _bindEvent: function () {
@@ -19,12 +20,17 @@ Tw.MytUsageChange.prototype = {
   },
 
   choiceLine: function (e) {
-    var $elLine    = $(e.currentTarget);
+    var $elLine = $(e.currentTarget);
     var svcMgmtNum = $elLine.data('svcmgmtnum');
 
-    this._apiService.request(Tw.API_CMD.BFF_01_0004, {}, { svcMgmtNum: svcMgmtNum })
-      .done(function () {
-        location.href = '/myt';
+    this._apiService.request(Tw.NODE_CMD.CHANGE_SESSION, { svcMgmtNum: svcMgmtNum })
+      .done(function (resp) {
+        if ( resp.code === Tw.API_CODE.CODE_00 ) {
+          this._goMyt();
+        } else if ( resp.code === Tw.API_CODE.CODE_06 ) {
+          // TODO: add mdn(svcNum)
+          this._openSvcPwdPopup('mdn', svcMgmtNum);
+        }
       });
   },
 
@@ -54,5 +60,19 @@ Tw.MytUsageChange.prototype = {
 
   hideSubView: function () {
     this.$container.show();
+  },
+
+  _openSvcPwdPopup: function (svcNum, svcMgmtNum) {
+    // 고객보호 비밀번호 레이어 팝업
+    this.loginServicePwd.openLayer(svcNum, svcMgmtNum, $.proxy(this._closeSvcPwdPopup, this));
+  },
+
+  _closeSvcPwdPopup: function () {
+    this._goMyt();
+  },
+
+  _goMyt: function () {
+    // TODO: change location.back
+    location.href = '/myt';
   }
 };

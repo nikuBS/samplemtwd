@@ -30,7 +30,7 @@ export const API_CMD = {
   BFF_03_0002: { path: '/user/account-auth-sessions', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_03_0003: { path: '/core-auth/v1/members', method: API_METHOD.DELETE, server: API_SERVER.BFF, bypass: true },
   BFF_03_0004: { path: '/core-auth/v1/services', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
-  BFF_03_0005: { path: '/core-auth/v1/multi-svc', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_03_0005: { path: '/user/services', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
   BFF_03_0006: { path: '/user/nick-names/args-0', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
   BFF_03_0007: { path: '/user/tid-keys', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_03_0008: { path: '/user/sessions', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: false },
@@ -183,14 +183,15 @@ export const API_CMD = {
 
 export const API_CODE = {
   CODE_00: '00',    // success
-  CODE_01: '01',    // 화면 차단
-  CODE_02: '02',    // API 차단
-  CODE_03: '03',    // 2차 인증
-  CODE_04: '04',    // 로그인 필요
-  CODE_05: '05',    // 접근 불가 (권한)
-  CODE_06: '06',    // 고객 비밀번호 인증 필요
-  CODE_07: '07',    // 고객 비밀번호 재설정 필요
-  CODE_99: '99',    // Circuit Open
+  CODE_01: 'RDT0001',    // 화면 차단
+  CODE_02: 'RDT0002',    // API 차단
+  CODE_03: 'RDT0003',    // 2차 인증
+  CODE_04: 'RDT0004',    // 로그인 필요
+  CODE_05: 'RDT0005',    // 접근 불가 (권한)
+  CODE_06: 'RDT0006',    // 고객 비밀번호 인증 필요
+  CODE_07: 'RDT0007',    // 고객 비밀번호 재설정 필요
+  CODE_08: 'RDT0008',    // 고객 비밀번호 초기화상
+  CODE_99: 'RDT0099',    // Circuit Open
   CODE_200: '200',
   CODE_400: '400'
 };

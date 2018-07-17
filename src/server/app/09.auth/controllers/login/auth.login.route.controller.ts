@@ -15,6 +15,7 @@ class AuthLoginRoute extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     const query = req.query;
+    console.log(query);
     if ( !FormatHelper.isEmpty(query.error) ) {
       res.send(query.error_description);
     } else {

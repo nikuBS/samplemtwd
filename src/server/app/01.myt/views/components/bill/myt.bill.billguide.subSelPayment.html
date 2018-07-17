@@ -30,27 +30,27 @@
             </div>
 
             <hr class="cont-sp type1" aria-hidden="true" />
-            <div class="cont-box noborder nogaps-btm">
-                <button class="bt-dropdown big" title="납부가능일 선택">납부가능일 선택<span class="ico"></span></button><!-- 2018-07-12 접근성 수정 -->
+            <div class="cont-box noborder nogaps-btm" data-target="selPaymentSelArea" style="display: none;">
+                <button class="bt-dropdown big" title="납부가능일 선택" data-target="selPaymentSelBtn">납부가능일 선택<span class="ico"></span></button><!-- 2018-07-12 접근성 수정 -->
             </div>
 
             <div class="cont-box nogaps-btm noborder">
                 <div class="">
                     <h3 class="tit">청구일정</h3>
                     <div class="payment-summary">
-                        <ul>
-                            <li><strong>1차 청구</strong>
-                                <p>YYYY.MM.DD일~YYYY.MM.DD일까지 매일<br /><span>(인출일이 휴일인 경우 다음날 인출) </span></p>
-                            </li>
-                            <li><strong>2차 청구</strong>
-                                <div class="list-dot-wrap">
-                                    <ul class="list-dot">
-                                        <li class="list">1회차  2015.06.26 (금)</li>
-                                        <li class="list">2회차  2015.06.29 (월)</li>
-                                        <li class="list">3회차  2015.06.30 (화)</li>
-                                    </ul>
-                                </div>
-                            </li>
+                        <ul data-target="paymentSummaryArea">
+                            <!--<li><strong>1차 청구</strong>-->
+                                <!--<p>YYYY.MM.DD일~YYYY.MM.DD일까지 매일<br /><span>(인출일이 휴일인 경우 다음날 인출) </span></p>-->
+                            <!--</li>-->
+                            <!--<li><strong>2차 청구</strong>-->
+                                <!--<div class="list-dot-wrap">-->
+                                    <!--<ul class="list-dot">-->
+                                        <!--<li class="list">1회차  2015.06.26 (금)</li>-->
+                                        <!--<li class="list">2회차  2015.06.29 (월)</li>-->
+                                        <!--<li class="list">3회차  2015.06.30 (화)</li>-->
+                                    <!--</ul>-->
+                                <!--</div>-->
+                            <!--</li>-->
                         </ul>
                     </div>
                 </div>
@@ -60,15 +60,13 @@
                 <!-- 납부전&자동납부신청중이 아닐 경우 -->
                 <ul class="bt-slice item-two">
                     <li class="bt-white1">
-                        <button class="">취소</button>
+                        <button class="" data-target="cancelBtn">취소</button>
                     </li>
                     <li class="bt-blue1">
-                        <button>선택완료</button>
+                        <button data-target="submitBtn">선택완료</button>
                     </li>
                 </ul>
             </div>
-
-
 
             <hr class="cont-sp type1" aria-hidden="true" />
             <div class="cont-box">

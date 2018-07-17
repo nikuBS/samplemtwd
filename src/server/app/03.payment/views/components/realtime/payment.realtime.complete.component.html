@@ -21,7 +21,7 @@
                             </dd>
                         </dl>
                     </li>
-                    <li>
+                    <li class="account card none">
                         <dl>
                             <dt class="ti-data">납부금액</dt>
                             <dd class="tx-data"><span class="tx-bold num payAmt"></span> 원</dd>
@@ -51,16 +51,22 @@
                             <dd class="tx-data"><span class="num bankOrCardAccn"></span></dd>
                         </dl>
                     </li>
-                    <li class="card none">
+                    <li class="card point none">
                         <dl>
                             <dt class="ti-data">카드번호</dt>
                             <dd class="tx-data"><span class="num bank-number"></span></dd>
                         </dl>
                     </li>
-                    <li>
+                    <li class="account card none">
                         <dl>
                             <dt class="ti-data">예금주</dt>
                             <dd class="tx-data"><%= svcInfo.mbrNm %></dd>
+                        </dl>
+                    </li>
+                    <li class="point none">
+                        <dl>
+                            <dt class="ti-data">납부포인트</dt>
+                            <dd class="tx-data point-info"></dd>
                         </dl>
                     </li>
                     <li>
@@ -80,7 +86,7 @@
                             </li>
                         </ul>
                     </li>
-                    <li>
+                    <li class="account card none">
                         <dl>
                             <dt class="ti-data">환불계좌정보</dt>
                             <dd class="tx-data">

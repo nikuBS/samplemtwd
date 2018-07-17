@@ -22,7 +22,7 @@ Tw.API_CMD = {
   BFF_03_0002: { path: '/user/account-auth-sessions', method: Tw.API_METHOD.POST },
   BFF_03_0003: { path: '/core-auth/v1/members', method: Tw.API_METHOD.DELETE },
   BFF_03_0004: { path: '/core-auth/v1/services', method: Tw.API_METHOD.GET },
-  BFF_03_0005: { path: '/core-auth/v1/multi-svc', method: Tw.API_METHOD.POST },
+  BFF_03_0005: { path: '/user/services', method: Tw.API_METHOD.PUT },
   BFF_03_0006: { path: '/user/nick-names/args-0', method: Tw.API_METHOD.PUT },
   BFF_03_0007: { path: '/user/tid-keys', method: Tw.API_METHOD.GET },
   BFF_03_0009: { path: '/user/service-password-sessions', method: Tw.API_METHOD.POST },
@@ -138,9 +138,22 @@ Tw.API_CMD = {
 
 Tw.NODE_CMD = {
   GET_ENVIRONMENT: { path: '/environment', method: Tw.API_METHOD.GET },
-  SET_DEVICE: { path: '/device', method: Tw.API_METHOD.POST }
+  SET_DEVICE: { path: '/device', method: Tw.API_METHOD.POST },
+  CHANGE_SESSION: { path: '/change-session', method: Tw.API_METHOD.POST },
+  SVC_PASSWORD_LOGIN: { path: '/service-password-sessions/login', method: Tw.API_METHOD.POST }
 };
 
 Tw.API_CODE = {
-  CODE_00: '00'
+  CODE_00: '00',    // success
+  CODE_01: 'RDT0001',    // 화면 차단
+  CODE_02: 'RDT0002',    // API 차단
+  CODE_03: 'RDT0003',    // 2차 인증
+  CODE_04: 'RDT0004',    // 로그인 필요
+  CODE_05: 'RDT0005',    // 접근 불가 (권한)
+  CODE_06: 'RDT0006',    // 고객 비밀번호 인증 필요
+  CODE_07: 'RDT0007',    // 고객 비밀번호 재설정 필요
+  CODE_08: 'RDT0008',    // 고객 비밀번호 초기화상
+  CODE_99: 'RDT0099',    // Circuit Open
+  CODE_200: '200',
+  CODE_400: '400'
 };

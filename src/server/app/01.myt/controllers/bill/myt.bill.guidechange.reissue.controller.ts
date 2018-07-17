@@ -14,27 +14,29 @@ class MyTBillReissue extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    const self = this;
-    // TODO:사용회선조회 ( 이전화면에서 회선 변경에 따른 값이 설정된 다면 제거 )
-    this.apiService.request(API_CMD.BFF_01_0005, {}).subscribe((info) => {
-      if ( info.result || info.result.svcAttrCd ) {
-        let api = API_CMD.BFF_05_0028;
-        if ( info.result.svcAttrCd.indexOf('S') !== -1 ) {
-            api = API_CMD.BFF_05_0051;
-        }
-        self.apiService.request(api, {svcMgmtNum: info.result.svcMgmtNum})
-          .subscribe((reissueData) => {
-          // 화면 데이터 설정
-          const data = self.convertData(reissueData, svcInfo);
-          res.render('bill/myt.bill.guidechange.reissue.html', { data });
-        });
-      }
+    let api = API_CMD.BFF_05_0028;
+    if ( svcInfo.svcAttrCd.indexOf('S') !== -1 ) {
+      api = API_CMD.BFF_05_0051;
+    }
+    this.apiService.request(api, {}).subscribe((reissueData) => {
+      // 화면 데이터 설정
+      const data = this.convertData(reissueData, svcInfo);
+      res.render('bill/myt.bill.guidechange.reissue.html', { data });
     });
-    // this.apiService.request(API_CMD.BFF_05_0028, {}).subscribe((reissueData) => {
-    //   // 화면 데이터 설정
-    //   const data = this.convertData(reissueData, svcInfo);
-    //   res.render('bill/myt.bill.guidechange.reissue.html', { data });
-    // });
+  }
+
+  public clone(params): any {
+    const obj = params.obj;
+    const target = params.target;
+    if ( obj === null || typeof(obj) !== 'object' ) {
+      return obj;
+    }
+    for ( const attr in obj ) {
+      if ( obj.hasOwnProperty(attr) ) {
+        target[attr] = obj[attr];
+      }
+    }
+    return target;
   }
 
   private findMyReissueType(key): string {
@@ -57,11 +59,9 @@ class MyTBillReissue extends TwViewController {
     };
     // 서버에서 받은 데이터 설정
     if ( response.result ) {
-      // if ( svc.svcAttrCd && svc.svcAttrCd.indexOf('S') !== -1 ) {
       // 유선인 경우에 재발행 사유 정보가 있어 아래정보로 유,무선 구분한다.
       if ( response.result.reissueReasons ) {
         data['reasons'] = response.result.reissueReasons;
-        // TODO:서버 API 명세서에 J 가 있고 I 코드 값이 없어 문의 해둔 상태 (업데이트 필요!)
         data['title'] = MYT_REISSUE_TYPE[response.result.billIsueTypCd];
         data['type'] = '02';
         // }

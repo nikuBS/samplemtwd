@@ -14,7 +14,6 @@ class MyTBillReturnHistory extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-
     this.apiService.request(API_CMD.BFF_05_0039, {}).subscribe((returnData) => {
       const data: any = {
         totCnt: 0,
@@ -41,6 +40,20 @@ class MyTBillReturnHistory extends TwViewController {
       }
       res.render('bill/myt.bill.guidechange.returnhistory.html', { data });
     });
+  }
+
+  public clone(params): any {
+    const obj = params.obj;
+    const target = params.target;
+    if ( obj === null || typeof(obj) !== 'object' ) {
+      return obj;
+    }
+    for ( const attr in obj ) {
+      if ( obj.hasOwnProperty(attr) ) {
+        target[attr] = obj[attr];
+      }
+    }
+    return target;
   }
 }
 

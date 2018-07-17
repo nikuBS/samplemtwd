@@ -52,11 +52,22 @@ abstract class TwViewController {
   private login(req, res, next, tokenId, userId) {
     if ( !FormatHelper.isEmpty(tokenId) ) {
       // TID login
-      this.tidLogin(req, res, next, tokenId);
+      this.apiService.requestLoginTid(tokenId, req.query.state).subscribe((resp) => {
+        this.render(req, res, next, new SvcInfoModel(resp), resp.noticeTpyCd);
+      }, (error) => {
+        // 로그인 실패
+        console.log('error', error);
+      });
     } else {
       // TEST login
-      this.testLogin(req, res, next, userId);
+      this.apiService.requestLoginTest(userId).subscribe((resp) => {
+        this.render(req, res, next, new SvcInfoModel(resp), resp.noticeTpyCd);
+      }, (error) => {
+        // 로그인 실패
+        console.log('error', error);
+      });
     }
+
   }
 
   private existId(tokenId: string, userId: string) {
@@ -65,72 +76,6 @@ abstract class TwViewController {
 
   private checkLogin(): boolean {
     return this.loginService.isLogin();
-  }
-
-  private testLogin(req, res, next, userId) {
-    this.goTestLogin(userId).subscribe((resp) => {
-      this.loginService.setSvcInfo(new SvcInfoModel(resp));
-      this.render(req, res, next, new SvcInfoModel(resp), resp.noticeTpyCd);
-    }, (error) => {
-      // 로그인 실패
-      console.log('error', error);
-    });
-  }
-
-  private tidLogin(req, res, next, tokenId) {
-    this.goTidLogin(tokenId, req.query.state).subscribe((resp) => {
-      this.loginService.setSvcInfo(new SvcInfoModel(resp));
-      this.render(req, res, next, new SvcInfoModel(resp), resp.noticeTpyCd);
-    }, (error) => {
-      // 로그인 실패
-      console.log('error', error);
-    });
-  }
-
-  private goTestLogin(userId): Observable<any> {
-    let loginData = null;
-    return this._apiService.request(API_CMD.BFF_03_0001, { id: userId })
-      .switchMap((resp) => {
-        if ( resp.code === API_CODE.CODE_00 ) {
-          loginData = resp.result;
-          return this._apiService.request(API_CMD.BFF_01_0005, {});
-        } else {
-          throw resp.code;
-        }
-      }).map((resp) => {
-        if ( resp.code === API_CODE.CODE_00 ) {
-          const result = resp.result;
-          Object.assign(result, loginData);
-          return result;
-        } else {
-          throw resp.code;
-        }
-      });
-  }
-
-  private goTidLogin(tokenId, state): Observable<any> {
-    let loginData = null;
-    const params = {
-      token: tokenId,
-      state: state
-    };
-    return this._apiService.request(API_CMD.BFF_03_0008, params)
-      .switchMap((resp) => {
-        if ( resp.code === API_CODE.CODE_00 ) {
-          loginData = resp.result;
-          return this._apiService.request(API_CMD.BFF_01_0005, {});
-        } else {
-          throw resp.code;
-        }
-      }).map((resp) => {
-        if ( resp.code === API_CODE.CODE_00 ) {
-          const result = resp.result;
-          Object.assign(result, loginData);
-          return result;
-        } else {
-          throw resp.code;
-        }
-      });
   }
 
   private goSessionLogin(req, res, next, path) {

@@ -19,6 +19,7 @@ class MyTUsage extends TwViewController {
     Observable.combineLatest(
       this.getUsageData()
     ).subscribe(([usageData]) => {
+      console.log('myt')
       this.renderView(res, 'usage/myt.usage.html', this.getData(usageData, svcInfo));
     });
   }
@@ -27,7 +28,8 @@ class MyTUsage extends TwViewController {
     if (data.usageData.code === undefined) {
       res.render(view, data);
     } else {
-      res.render(MYT_VIEW.ERROR, data);
+      res.render(view, data);
+      // res.render(MYT_VIEW.ERROR, data);
     }
   }
 

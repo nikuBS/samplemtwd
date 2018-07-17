@@ -25,7 +25,8 @@ class AuthLine extends TwViewController {
           svcInfo
         }));
       } else {
-        res.send('api error');
+        // ICAS3101
+        res.render('line/auth.line.empty-register.html',  { svcInfo });
       }
     });
   }
@@ -51,7 +52,7 @@ class AuthLine extends TwViewController {
     FormatHelper.sortObjArrAsc(lineData, 'expsSeq');
     lineData.map((line) => {
       line.showSvcAttrCd = SVC_ATTR[line.svcAttrCd];
-      line.showSvcScrbDtm = DateHelper.getShortDateNoDot(line.svcScrbDtm);
+      line.showSvcScrbDtm = DateHelper.getShortDateNoDot(line.svcScrbDt);
       line.showName = FormatHelper.isEmpty(line.nickNm) ? SVC_ATTR[line.svcAttrCd] : line.nickNm;
     });
   }

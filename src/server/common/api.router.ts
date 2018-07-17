@@ -2,10 +2,12 @@ import express from 'express';
 import { Router, Request, Response, NextFunction } from 'express';
 import { API_CODE } from '../types/api-command.type';
 import LoggerService from '../services/logger.service';
+import ApiService from '../services/api.service';
 
 class ApiRouter {
   public router: Router;
   private logger: LoggerService = new LoggerService();
+  private apiService: ApiService = new ApiService();
 
   constructor() {
     this.router = express.Router();
@@ -16,6 +18,8 @@ class ApiRouter {
   private setApi() {
     this.router.get('/environment', this.getEnvironment.bind(this));
     this.router.post('/device', this.setDeviceInfo.bind(this));
+    this.router.post('/change-session', this.changeSession.bind(this));
+    this.router.post('/service-password-sessions/login', this.svcPasswordLogin.bind(this));
   }
 
   private getEnvironment(req: Request, res: Response, next: NextFunction) {
@@ -37,6 +41,25 @@ class ApiRouter {
       code: API_CODE.CODE_00
     };
     res.json(resp);
+  }
+
+  private changeSession(req: Request, res: Response, next: NextFunction) {
+    const params = req.body;
+    this.logger.info(this, '[chagne session]', params);
+    this.apiService.requestChangeSession(params).subscribe((resp) => {
+      res.json(resp);
+    }, (error) => {
+      res.json({ code: error });
+    });
+  }
+
+  private svcPasswordLogin(req: Request, res: Response, next: NextFunction) {
+    const params = req.body;
+    this.apiService.requestSvcPasswordLogin(params).subscribe((resp) => {
+      res.json(resp);
+    }, (error) => {
+      res.json({ code: error });
+    });
   }
 }
 

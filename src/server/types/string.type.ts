@@ -38,9 +38,9 @@ export const MYT_REISSUE_TYPE = {
   'B': '문자',
   '2': '이메일',
   '1': '기타 (우편)',
+  'I': 'Bill Letter+이메일', // 무선
   'K': 'Bill Letter+이메일', // 유선
   'A': '문자+이메일', // 유선
-  'I': 'Bill Letter', // 유선
   'J': 'Bill Letter' // 유선
 };
 
@@ -136,4 +136,8 @@ export enum BILL_GUIDE_SELECTOR_LABEL {
   SMS_EMAIL = '문자 + 이메일 요금안내서',
   BILL_LETTER_SMS = 'Bill Letter + 문자 요금안내서',
   ETC = '기타(우편) 요금안내서'
+}
+
+export enum SELECT_POINT {
+  DEFAULT = '포인트 선택'
 }
