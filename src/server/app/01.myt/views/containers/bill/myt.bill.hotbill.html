@@ -85,9 +85,11 @@
             <!-- .cont-box -->
             <div class="cont-box nogaps-hoz">
                 <div class="helpbox-link">
+                    <% if(preBillAvailable){ %>
                     <div class="link-long" id="previousBill" style="display:none;">
                         <a href="" class="disabled">전월요금보기<span class="ico"></span></a>
                     </div>
+                    <% } %>
                     <% if(billAvailable){ %>
                     <div class="link-long">
                         <a href="/myt" class="disabled">나의 사용량 조회하기<span class="ico"></span></a>
@@ -104,7 +106,7 @@
         </div>
     </div>
     <!--// #contents -->
-    <% include ../../../../../common/views/components/footer.component.html %>
+    <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
 </div>
 <% include ../../components/javascript.component.html %>
 <script>

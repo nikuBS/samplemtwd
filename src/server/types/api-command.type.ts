@@ -140,6 +140,7 @@ export const API_CMD = {
   BFF_07_0027: { path: '/core-bill/v1/bill-pay/settle-vb-sms', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_07_0028: { path: '/core-bill/v1/bill-pay/avail-point-search', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_07_0029: { path: '/core-bill/v1/bill-pay/pay-ocb-tpoint-proc', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_07_0035: { path: '/core-bill/v1/payment/realtime-payment', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_07_0037: { path: '/core-bill/v1/payment/auto-payment', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_07_0039: { path: '/core-bill/v1/payment/auto-integrated-account-payment', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_07_0041: { path: '/core-bill/v1/ocbcard-info-check-show', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
