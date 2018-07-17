@@ -52,11 +52,22 @@ abstract class TwViewController {
   private login(req, res, next, tokenId, userId) {
     if ( !FormatHelper.isEmpty(tokenId) ) {
       // TID login
-      this.tidLogin(req, res, next, tokenId);
+      this.apiService.requestLoginTid(tokenId, req.query.state).subscribe((resp) => {
+        this.render(req, res, next, new SvcInfoModel(resp), resp.noticeTpyCd);
+      }, (error) => {
+        // 로그인 실패
+        console.log('error', error);
+      });
     } else {
       // TEST login
-      this.testLogin(req, res, next, userId);
+      this.apiService.requestLoginTest(userId).subscribe((resp) => {
+        this.render(req, res, next, new SvcInfoModel(resp), resp.noticeTpyCd);
+      }, (error) => {
+        // 로그인 실패
+        console.log('error', error);
+      });
     }
+
   }
 
   private existId(tokenId: string, userId: string) {
@@ -65,24 +76,6 @@ abstract class TwViewController {
 
   private checkLogin(): boolean {
     return this.loginService.isLogin();
-  }
-
-  private testLogin(req, res, next, userId) {
-    this.apiService.requestLoginTest(userId).subscribe((resp) => {
-      this.render(req, res, next, new SvcInfoModel(resp), resp.noticeTpyCd);
-    }, (error) => {
-      // 로그인 실패
-      console.log('error', error);
-    });
-  }
-
-  private tidLogin(req, res, next, tokenId) {
-    this.apiService.requestLoginTid(tokenId, req.query.state).subscribe((resp) => {
-      this.render(req, res, next, new SvcInfoModel(resp), resp.noticeTpyCd);
-    }, (error) => {
-      // 로그인 실패
-      console.log('error', error);
-    });
   }
 
   private goSessionLogin(req, res, next, path) {

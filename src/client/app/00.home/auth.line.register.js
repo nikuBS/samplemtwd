@@ -10,12 +10,13 @@ Tw.AuthLineRegister = function (lineMarketingLayer) {
   this.lineMarketingLayer = lineMarketingLayer;
 
   this._registerLength = 0;
-  this._svcMngmtNum = '';
+  this._marketingSvc = '';
 
   this.$btnCancel = null;
   this.$btnRegister = null;
   this.$childChecks = null;
   this.$allCheck = null;
+  this.$list = null;
 };
 
 Tw.AuthLineRegister.prototype = {
@@ -92,6 +93,10 @@ Tw.AuthLineRegister.prototype = {
     this.$btnRegister = $layer.find('.indiv-big');
     this.$childChecks = $layer.find('.child-check');
     this.$allCheck = $layer.find('#all-check');
+    this.$list = $layer.find('.checkbox', '.type01');
+
+    console.log(this.$list);
+    console.log();
   },
   _onClickAllCheck: function ($event) {
     var $currentTarget = $($event.currentTarget);
@@ -150,14 +155,15 @@ Tw.AuthLineRegister.prototype = {
     }
   },
   _registerLineList: function (lineList, length) {
-    this._apiService.request(Tw.API_CMD.BFF_03_0005, { svcCtg: Tw.SVC_CATEGORY.ALL, svcMgmtNumArr: lineList })
+    console.log({ svcCtg: Tw.SVC_CATEGORY.ALL, svcMgmtNumArr: lineList });
+    this._apiService.request(Tw.API_CMD.BFF_03_0005, { svcCtg: Tw.LINE_NAME.ALL, svcMgmtNumArr: lineList })
       .done($.proxy(this._successRegisterLineList, this, length))
       .fail($.proxy(this._failRegisterLineList, this));
   },
   _successRegisterLineList: function (registerLength, resp) {
     if(resp.code === Tw.API_CODE.CODE_00) {
       this._registerLength = registerLength;
-      this._svcMngmtNum = '';
+      this._marketingSvc = '7229672308';
       this._popupService.close();
     } else {
       this._popupService.close();
@@ -168,7 +174,6 @@ Tw.AuthLineRegister.prototype = {
   },
   _onCloseNewRegisterLine: function () {
     this._openCompletePopup();
-
   },
   _onCloseExistRegisterLine: function () {
     this._openCompletePopup();
@@ -185,9 +190,17 @@ Tw.AuthLineRegister.prototype = {
     $layer.on('click', '.bt-link-tx', $.proxy(this._closeCompletePopup, this));
     $layer.on('click', '#bt-line-edit', $.proxy(this._goAuthLine, this));
 
-    setTimeout($.proxy(function() {
-      this.lineMarketingLayer.openMarketingOffer();
-    }, this), 0);
+    this._openMarketingOfferPopup();
+  },
+  _openMarketingOfferPopup: function () {
+    if(!Tw.FormatHelper.isEmpty(this._marketingSvc)) {
+      console.log(this.$list);
+      var $target = this.$list.filter('[data-svcmgmtnum=7229672308]');
+      setTimeout($.proxy(function() {
+        this.lineMarketingLayer.openMarketingOffer(this._marketingSvc, $target.data('showname'), $target.data('svcnum'));
+      }, this), 0);
+    }
+
   },
   _closeCompletePopup: function() {
     this._popupService.close();
