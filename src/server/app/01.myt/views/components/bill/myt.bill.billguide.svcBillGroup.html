@@ -1,0 +1,119 @@
+<!--
+* FileName: myt.bill.billguide.svcBillGroup.html.html
+* Author: Hyeryoun Lee (skt.P130712@partner.sk.com)
+* Date: 2018. 7. 16.
+-->
+<script id="tmplSvcBillGroup" type="text/x-handlebars-template">
+    {{#each paidAmtDetailInfo}}
+    <div class="payment-summary-wrap">
+        <h3 class="tit">{{svcInfo.name}} <span class="pay-summary-num">010-12**-34**</span></h3>
+        <div class="payment-summary">
+            <span class="type">
+                <span class="blind">사용중인 요금제 </span>
+                <a class="bt-link-tx" href="">Band 데이터 6.5G<span class="ico"></span></a>
+            </span>
+            <span class="total">
+                <span class="blind">해당 회선의 청구요금 합계 </span>
+                <strong class="num">{{svcTotal}}</strong>원
+            </span>
+        </div>
+    </div>
+    <!-- .accordion -->
+    <div class="widget">
+        <div class="widget-box accordion2">
+            <div class="acco-style payment-list">
+                <ul class="acco-box">
+                    <!-- 아코디언 한줄 -->
+                    {{#each billItems}}
+                    <li class="acco-list"><!-- on , off -->
+                        <!-- 아코디언 타이틀 -->
+                        <div class="acco-title">
+                            <button role="button" aria-pressed="false">
+												<span class="pt-tit-wrap">
+													<span class="pt-tit">{{@key}}</span>
+                                                     {{#if discount}}
+													<span class="pt-price discount"><span class="num">{{this.total}}</span>원</span>
+                                                    {{else}}
+                                                    <span class="pt-price"><span class="num">{{this.total}}</span>원</span>
+                                                    {{/if}}
+												</span>
+                            </button>
+                        </div>
+                        <!--// 아코디언 타이틀 -->
+                        <!-- 아코디언 내용 -->
+                        <div class="acco-content">
+
+                            <ul class="payment-detail-depth1">
+                                {{#each this}}
+                                {{#isBill @key}}
+                                <!-- depth-1 -->
+                                <li>
+                                    <dl class="pdt-wrap">
+                                        <dt class="pdt-tit">{{@key}}
+                                            {{#if noVAT}}
+                                            <span class="ico-foot-2"></span>
+                                            {{else}}
+                                            {{#if is3rdParty}}
+                                            <span class="ico-foot-1"></span>
+                                            {{/if}}
+                                            {{/if}}
+                                        </dt>
+                                        {{#if discount}}
+                                        <dd class="pdt-price discount"><span class="num">{{this.total}}</span>원</dd>
+                                        {{else}}
+                                        <dd class="pdt-price"><span class="num">{{this.total}}</span>원</dd>
+                                        {{/if}}
+                                    </dl>
+
+                                    <!-- depth-2 -->
+
+                                    <ul class="payment-detail-depth2">
+                                        {{#items}}
+                                        <li>
+                                            <dl class="pdt-wrap">
+                                                <dt class="pdt-tit" role="note" aria-labelledby="aria-footnote-02">{{name}}
+                                                    {{#if noVAT}}
+                                                    <span class="ico-foot-2"></span>
+                                                    {{else}}
+                                                    {{#if is3rdParty}}
+                                                    <span class="ico-foot-1"></span>
+                                                    {{/if}}
+                                                    {{/if}}
+                                                </dt>
+                                                {{#if discount}}
+                                                <dd class="pdt-price discount"><span class="num">{{amount}}</span>원</dd>
+                                                {{else}}
+                                                <dd class="pdt-price"><span class="num">{{amount}}</span>원</dd>
+                                                {{/if}}
+                                            </dl>
+
+                                        </li>
+                                        {{/items}}
+                                    </ul>
+                                </li>
+
+                                {{/isBill}}
+                                <!--// depth-2 -->
+
+                                <!--// depth-1 -->
+                                {{/each}}
+                            </ul>
+                            {{#if showDesc}}
+                            <div class="footnote-txt">
+                                <ul>
+                                    <li id="aria-footnote-01"><span class="ico-foot-2"></span>부가가치세 제외 대상 표시</li><!-- 상단 텍스트 aria-labelledby 와 id 속성값을 동일하게 처리해야 함 -->
+                                    <li id="aria-footnote-02"><span class="badge badge-other"><span class="blind">타사</span></span>당사에서 청구 대행하는 타사 요금</li>
+                                </ul>
+                            </div>
+                            {{/if}}
+                        </div>
+                        <!--// 아코디언 내용 -->
+                    </li>
+                    {{/each}}
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--// .accordion -->
+    {{/each}}
+</script>

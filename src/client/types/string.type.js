@@ -114,6 +114,7 @@ Tw.MSG_MYT = {
   BILL_GUIDE_REISSUE_02: '이메일 주소가 정확한지 다시 한번 확인해주시기 바랍니다. 재발행을 신청하시겠습니까?',
   BILL_GUIDE_REISSUE_03: '선택하신 청구월에 대한 청구서가 이미 재발행 신청 되었습니다.',
   BILL_GUIDE_REISSUE_04: '청구지 주소가 정확한지 다시 한번 확인해 주시기 바랍니다. 재발행 신청을 하시겠습니까?',
+  BILL_GUIDE_REISSUE_FAIL: '재발행 요청이 실패했습니다.',
   BILL_GUIDE_REISSUE_EXIT: '요금안내서 재발행을 종료하시겠습니까?',
   HOTBILL_MEMBER_POPUP_TITLE: '자녀 선택',
   HOTBILL_FAIL_REQUEST_TITLE: '요청 실패.',
@@ -295,7 +296,8 @@ Tw.MSG_PAYMENT = {
   HISTORY_A07: '세금계산서 팩스 전송이 완료되었습니다.\n팩스번호 : ',
   HISTORY_A08: '이메일 형식과 맞지 않습니다.\n이메일 주소를 다시 입력하여 주세요.\n예) asc@sktelecom.com',
   HISTORY_A09: '과납내역을 선택해 주세요.',
-  HISTORY_A10: '가장 최근 납부 예약건부터 순차적으로 취소 가능합니다'
+  HISTORY_A10: '가장 최근 납부 예약건부터 순차적으로 취소 가능합니다',
+  HISTORY_A11: '팩스 번호를 입력해주세요.'
 };
 
 Tw.MSG_GIFT = {

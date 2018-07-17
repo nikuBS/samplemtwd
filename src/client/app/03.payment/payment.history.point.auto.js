@@ -109,7 +109,7 @@ Tw.PaymentHistoryPointAuto.prototype = {
   },
 
   _setHistoryData: function (res) {
-    if (res.code !== Tw.API_CODE) this.common._apiError(res);
+    if (res.code !== Tw.API_CODE.CODE_00) return this._apiError(res);
 
     if (res.result.payHist.length || res.result.reqHist.length) {
 
@@ -196,5 +196,6 @@ Tw.PaymentHistoryPointAuto.prototype = {
 
   _apiError: function (res) {
     Tw.Logger.error(res.msg);
+    return false;
   }
 };

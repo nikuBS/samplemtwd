@@ -49,7 +49,7 @@ export const URL = {
   '/payment/auto': { login: true },
   '/payment/point': { login: true },
   '/payment/history': { login: true },
-  '/payment/history/immediate': { login: true },
+  '/payment/history/realtime': { login: true },
   '/payment/history/auto': { login: true },
   '/payment/history/auto/unitedwithdrawal': { login: true },
   '/payment/history/point/reserve': { login: true },

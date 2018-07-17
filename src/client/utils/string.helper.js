@@ -10,8 +10,38 @@ Tw.StringHelper = (function () {
     return str;
   }
 
+  /**
+   * Converts Integer to String comma separated.(123456 to 123,456)
+   * @param num
+   * @returns {*}
+   */
+  function commaSeparatedString(num) {
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  }
+
+  /**
+   * Converts String comma separated number format to Integer. ( 234,000 to 234000)
+   * @param strNum
+   * @returns {Number|number}
+   */
+  function parseCommaedStringToInt(strNum) {
+    return parseInt(strNum.replace(/,/g, ''), 10);
+  }
+
+  /**
+   * Replaces Korean date notations(년, 월, 일) with a single period. (1980년 1월 2일 -> 1980.1.2)
+   * @param strDate
+   * @returns {*}
+   */
+  function replaceDateNotaionWithDot(strDate) {
+    return strDate.replace(/[\uB144\uC6D4]/gi, '.').replace(/[\uC77C:&nbsp;:\s]/gi, '');
+  }
+
   return {
     replaceAt: replaceAt,
-    masking: masking
+    masking: masking,
+    commaSeparatedString: commaSeparatedString,
+    replaceDateNotaionWithDot: replaceDateNotaionWithDot,
+    parseCommaedStringToInt: parseCommaedStringToInt
   };
 })();

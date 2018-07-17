@@ -114,6 +114,10 @@ Tw.MyTBillReissue.prototype = {
       if ( this.$type.length > 0 ) {
         data.reisuType = this.$type.find(':checked').attr('name');
       }
+      // 우편인 경우 post 로 설정 BFF_명세서 기준
+      if ( data.reisuType === '01' ) {
+        data.reisuType = 'post';
+      }
     }
     else {
       data = {
@@ -142,8 +146,8 @@ Tw.MyTBillReissue.prototype = {
       // 기 발행 건인 경우에 대한 처리
       this._popupService.openAlert(Tw.MSG_MYT.BILL_GUIDE_REISSUE_03, Tw.MSG_MYT.BILL_GUIDE_REISSUE_00);
     }
-    else {
-      // 발행 된 건이 없는 경우
+    else if ( params.code && params.code === '00' ) {
+      //성공 - 발행 된 건이 없는 경우
       var type = this.$guide.attr('data-type');
       var month = this.$month.find(':checked').attr('name') || '';
       if ( this.$type.length > 0 ) {
@@ -151,6 +155,10 @@ Tw.MyTBillReissue.prototype = {
       }
       // 재발행 요청 완료 화면으로 이동
       window.location.href = 'reissue/complete?typeCd=' + type + '&month=' + month;
+    }
+    else {
+      Tw.Logger.error(Tw.MSG_MYT.BILL_GUIDE_REISSUE_FAIL + ' __ ' + (params.msg || (params.error && params.error.msg)));
+      // this._popupService.openAlert(Tw.MSG_MYT.BILL_GUIDE_REISSUE_FAIL, Tw.MSG_MYT.BILL_GUIDE_REISSUE_00);
     }
   },
 
