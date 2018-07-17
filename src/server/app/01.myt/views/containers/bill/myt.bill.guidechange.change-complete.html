@@ -27,7 +27,7 @@
     <!-- #contents -->
     <div id="contents" class="container-wrap">
         <h2 class="blind">내용</h2>
-        <div class="container">
+        <div id=change-complete" class="container">
             <div class="cont-box nogaps-top">
                 <div class="msg-present-box">
                     <div class="msg-present-comp">
@@ -46,7 +46,20 @@
                            			<%= afterBillGuideLabel %>
                            		</span>
                         </div>
+
+                        <% if (curBillGuide.curBillType === '1') { %>
+                        <div class="address">
+                            <h3 class="contents-tit">기타(우편)물 받으실 주소</h3>
+                            <span class="inputbox">
+                            <span class="input">
+                                  <input type="text" title="input" value="<%= curBillGuide.basAddr %> <%= curBillGuide.dtlAddr %>" aria-labelledby="exp-label1" aria-describedby="exp-desc1"  readonly />
+                                  <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
+                                </span>
+                            </span>
+                        </div>
+                        <% } %>
                     </div>
+
                     <div class="bt-gap">
                         <ul class="bt-slice"><!-- 2018-06-20 버튼 클래스 변경 -->
                             <li class="bt-blue1">
@@ -63,18 +76,16 @@
                 </div>
             </div>
             <hr class="cont-sp type1" aria-hidden="true"/>
-            <%- include('../../components/billguide/'+ component +'-change-complete.component.html') %>
+            <%- include('../../components/billguide/'+ component +'-guide.component.html') %>
         </div>
     </div>
     <!--// #contents -->
-    <% include ../../../../../common/views/components/footer.component.html %>
+    <%- include('../../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }) %>
 </div>
 <% include ../../components/javascript.component.html %>
 <script>
-    // $(document).ready(function () {
-    //   var componentName = $(wrap).data('component');
-    //   var className = componentName.replace(/-([a-z])/g, function (g) { return g[1].toUpperCase(); });
-    //   new Tw.MyTBillGuideChangeClasses[className]($('#wrap'));
-    // });
+    $(document).ready(function () {
+      new Tw.MyTBillGuideChangeComplete($('#change-complete'))
+    });
 </script>
 <% include ../../components/end.component.html %>

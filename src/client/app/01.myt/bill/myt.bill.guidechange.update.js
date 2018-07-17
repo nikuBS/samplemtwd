@@ -9,7 +9,8 @@ Tw.MyTBillGuideUpdatePrototype = {
     this.$container = rootEl;
     this._apiService = Tw.Api;
     this._popupService = Tw.Popup;
-    this._options = options;
+    this._options = options || {};
+    this._history = new Tw.HistoryService();
 
     this._assign();
     this._bindEvent();
@@ -38,7 +39,7 @@ Tw.MyTBillGuideUpdatePrototype = {
       this._popupService.close();
     }
     window.setTimeout($.proxy(function() {
-      this._popupService.openConfirm(Tw.POPUP_TITLE.NOTIFY, Tw.MSG_MYT.BILL_GUIDECHANGE_A01, '', null, $.proxy(this._changeBillGuideType, this));
+      this._popupService.openConfirm(Tw.POPUP_TITLE.NOTIFY, Tw.MSG_MYT.BILL_GUIDECHANGE_A01, '', null, $.proxy(this._submitBillGuideType, this));
     }, this), 500);
   },
 
@@ -47,31 +48,75 @@ Tw.MyTBillGuideUpdatePrototype = {
     if ( !isValid ) {
       return;
     }
-    // var requestParams = this._getRequestParams();
     // 미성년인경우, 법정대리인 전화번호가 없을 시 얼럿 확인 후 진행
-    if (this._$inputCcurNotiSvcNum.length > 0 && Tw.FormatHelper.isEmpty(this._$inputCcurNotiSvcNum.val())) {
-      this._popupService.openAlert(Tw.MSG_MYT.BILL_GUIDECHANGE_A05, null, $.proxy(this._openConfirm, this));
+    if (this._$inputCcurNotiSvcNum && this._$inputCcurNotiSvcNum.length > 0) {
+      var alertMsg = (Tw.FormatHelper.isEmpty(this._$inputCcurNotiSvcNum.val())) ? Tw.MSG_MYT.BILL_GUIDECHANGE_A05 : Tw.MSG_MYT.BILL_GUIDECHANGE_A07;
+      this._popupService.openAlert(alertMsg, null, $.proxy(this._openConfirm, this));
     } else {
       this._openConfirm();
     }
   },
 
-  _changeBillGuideType: function () {
-    this._popupService.close();
-    window.setTimeout($.proxy(function () {
-      var tmpMsg = this._options.fromChange ? Tw.MSG_MYT.BILL_GUIDECHANGE_A02 : Tw.MSG_MYT.BILL_GUIDECHANGE_A12;
-      var alertMsg = tmpMsg.replace(/\[T\]/gi, this._curBillGuideTypeNm);
-      this._popupService.openAlert(alertMsg, Tw.POPUP_TITLE.NOTIFY, $.proxy(this.onClickBtnChangeConfirm, this));
-    }, this), 1000);
+  _submitBillGuideType: function () {
+    if (this._popupService) {
+      this._popupService.close();
+    }
+    var requestParams = this._getRequestParams();
+    console.log('~~~~~~~~~~~requestParams', requestParams);
+    this._apiService.request(Tw.API_CMD.BFF_05_0027, requestParams)
+      .done($.proxy(this._submitSuccess, this))
+      .fail($.proxy(this._submitFail, this));
   },
 
-  onClickBtnChangeConfirm: function () {
+  _showErrorAlert: function(msg) {
+    this._popupService.openAlert(msg);
+  },
+
+  _submitSuccess: function(resp) {
+    if (resp.code === '00') {
+      window.setTimeout($.proxy(function () {
+        var tmpMsg = this._options.fromChange ? Tw.MSG_MYT.BILL_GUIDECHANGE_A02 : Tw.MSG_MYT.BILL_GUIDECHANGE_A12;
+        var alertMsg = tmpMsg.replace(/\[T\]/gi, this._curBillGuideTypeNm);
+        this._popupService.openAlert(alertMsg, Tw.POPUP_TITLE.NOTIFY, $.proxy(this._onClickBtnChangeConfirm, this, resp.result));
+      }, this), 500);
+    } else {
+      this._showErrorAlert(resp.data && resp.data.msg);
+      return;
+    }
+  },
+
+  _submitFail: function(resp) {
+    this._showErrorAlert(resp.data && resp.data.msg);
+    return;
+  },
+  
+  _showEmailChangedAlert: function(result) {
+    this._popupService.openAlert(Tw.MSG_MYT.BILL_GUIDECHANGE_A09, Tw.POPUP_TITLE.NOTIFY, $.proxy(function() {
+      this._goComplete(result);
+    }, this));
+
+  },
+
+  _onClickBtnChangeConfirm: function (result) {
+    if (this._popupService) {
+      this._popupService.close();
+    }
+    if (this._options.fromChange && this._curBillGuideType === '2' ) {
+      window.setTimeout($.proxy(this._showEmailChangedAlert, this, result), 500);
+    } else {
+      this._goComplete(result);
+    }
+  },
+
+  _goComplete: function(result) {
+    this._history.pushUrl('/myt/bill/guidechange');
     if (this._options.fromChange) {
-      var beforeBillGuideType = this._options.beforeBillGuideType; //수정해야함
+      // var beforeBillGuideType = this._options.beforeBillGuideType; //수정해야함
+      var beforeBillGuideType = result.beforeBillIsueTypeCd; //수정해야함
       var selectedBillGuideType = this._curBillGuideType;
       window.location.href = '/myt/bill/guidechange/change-complete?beforeBillGuideType=' + beforeBillGuideType + '&afterBillGuideType=' + selectedBillGuideType;
     } else {
-
+      window.location.href = '/myt/bill/guidechange/update-complete';
     }
   },
 
@@ -115,11 +160,45 @@ Tw.MyTBillGuideUpdatePrototype = {
     return true;
   },
 
+  _getRequestParams: function() {
+    var KEY_ATTR_NAME = 'form-element-key';
+    var VALUE_ATTR_NAME = 'form-element-value';
+    var paramsObj = {
+      toBillTypeCd: this._curBillGuideType
+    };
+
+    this.$container.find('[form-element="radio"]').each(function() {
+      var $elem = $(this);
+      var key = $elem.attr(KEY_ATTR_NAME);
+      var value = $elem.find('[aria-checked="true"]').attr(VALUE_ATTR_NAME);
+      paramsObj[key] = value;
+    });
+    this.$container.find('[form-element="checkbox"]').each(function() {
+      var $elem = $(this);
+      var key = $elem.attr(KEY_ATTR_NAME);
+      var value = ($elem.find('[aria-checked]').attr('aria-checked') === 'true') ? 'Y' : 'N';
+      paramsObj[key] = value;
+    });
+    this.$container.find('[form-element="input"]').each(function() {
+      var $elem = $(this);
+      var key = $elem.attr(KEY_ATTR_NAME);
+      var value = $elem.val();
+      paramsObj[key] = value;
+      if (key === 'ccurNotiSvcNum') {
+        paramsObj.ccurNotiYn = 'Y';
+      }
+    });
+    return paramsObj;
+  },
+
   destroy: function() {
     this.$container = null;
     this._apiService = null;
     this._popupService = null;
-    this.options = null;
+    this._options = null;
+    this._history = null;
+    this._curBillGuideType = null;
+    this._curBillGuideTypeNm = null;
 
     this._$btnNext.off('click');
     this._$btnSubmit.off('click');
@@ -160,11 +239,9 @@ Tw.MyTBillGuideUpdateClasses = {
 Tw.MyTBillGuideUpdateClasses.tworld.prototype = $.extend({}, Tw.MyTBillGuideUpdatePrototype, {
   _checkValidation: function () {
     return true;
-  },
-  _getRequestParams: function () {
-    return {};
   }
 });
+
 Tw.MyTBillGuideUpdateClasses.email.prototype = $.extend({}, Tw.MyTBillGuideUpdatePrototype, {
   _assign: function () {
     Tw.MyTBillGuideUpdatePrototype._assign.apply(this, arguments);
@@ -172,9 +249,6 @@ Tw.MyTBillGuideUpdateClasses.email.prototype = $.extend({}, Tw.MyTBillGuideUpdat
   },
   _checkValidation: function () {
     return true;
-  },
-  _getRequestParams: function () {
-    return {};
   },
   _checkHalfValidation: function () {
     return Tw.ValidationHelper.isEmail(this._$inputEmail.val());
@@ -187,22 +261,21 @@ Tw.MyTBillGuideUpdateClasses.email.prototype = $.extend({}, Tw.MyTBillGuideUpdat
     this._$inputEmail = null;
   }
 });
+
 Tw.MyTBillGuideUpdateClasses.etc.prototype = $.extend({}, Tw.MyTBillGuideUpdatePrototype, {
   _assign: function () {
     Tw.MyTBillGuideUpdatePrototype._assign.apply(this, arguments);
     this._$inputAddr1 = this.$container.find('.input-addr1');
     this._$inputAddr2 = this.$container.find('.input-addr2');
     this._$inputAddr3 = this.$container.find('.input-addr3');
-    this._$inputCntcNum1 = this.$container.find('.input-cntc-num1');
+    this._$inputPhone = this.$container.find('.input-phone');
   },
   _checkValidation: function () {
-    return this._phoneNumValidation.apply(this, this._$inputCntcNum1);
-  },
-  _getRequestParams: function () {
-    return {};
+    return this._phoneNumValidation.apply(this, this._$inputPhone);
   },
   _checkHalfValidation: function () {
-    return !!this._$inputAddr1.val() && !!this._$inputAddr2.val() && !!this._$inputAddr3.val();
+    // return !!this._$inputAddr1.val() && !!this._$inputAddr2.val() && !!this._$inputAddr3.val();
+    return !!this._$inputAddr3.val();
   },
   _failHalfValidation: function () {
     this._popupService.openAlert(Tw.MSG_MYT.BILL_GUIDECHANGE_A10);
@@ -212,69 +285,69 @@ Tw.MyTBillGuideUpdateClasses.etc.prototype = $.extend({}, Tw.MyTBillGuideUpdateP
     this._$inputAddr1 = null;
     this._$inputAddr2 = null;
     this._$inputAddr3 = null;
+    this._$inputPhone = null;
   }
 });
+
 Tw.MyTBillGuideUpdateClasses.billLetter.prototype = $.extend({}, Tw.MyTBillGuideUpdatePrototype, {
   _assign: function () {
     Tw.MyTBillGuideUpdatePrototype._assign.apply(this, arguments);
-    this._$inputCntcNum1 = this.$container.find('.input-cntc-num1');
+    this._$inputPhone = this.$container.find('.input-phone');
     this._$inputCcurNotiSvcNum = this.$container.find('.input-ccur-noti-svc-num');
   },
   _checkValidation: function () {
-    if (this._$inputCntcNum1.length > 0) {
-      return this._phoneNumValidation.apply(this, this._$inputCntcNum1);
+    if (this._$inputPhone.length > 0) {
+      return this._phoneNumValidation.apply(this, this._$inputPhone);
     }
     if (this._$inputCcurNotiSvcNum.length > 0) {
       return this._representativePhoneNumValidation.apply(this, this._$inputCcurNotiSvcNum);
     }
-  },
-  _getRequestParams: function () {
-    return {};
+    return true;
   },
   destroy: function() {
     Tw.MyTBillGuideUpdatePrototype.destroy.apply(this, arguments);
+    this._$inputPhone = null;
     this._$inputCcurNotiSvcNum = null;
   }
 });
+
 Tw.MyTBillGuideUpdateClasses.sms.prototype = $.extend({}, Tw.MyTBillGuideUpdatePrototype, {
   _assign: function () {
     Tw.MyTBillGuideUpdatePrototype._assign.apply(this, arguments);
-    this._$inputCntcNum1 = this.$container.find('.input-cntc-num1');
+    this._$inputPhone = this.$container.find('.input-phone');
     this._$inputCcurNotiSvcNum = this.$container.find('.input-ccur-noti-svc-num');
   },
   _checkValidation: function () {
-    if (this._$inputCntcNum1.length > 0) {
-      return this._phoneNumValidation.apply(this, this._$inputCntcNum1);
+    if (this._$inputPhone.length > 0) {
+      return this._phoneNumValidation.apply(this, this._$inputPhone);
     }
     if (this._$inputCcurNotiSvcNum.length > 0) {
       return this._representativePhoneNumValidation.apply(this, this._$inputCcurNotiSvcNum);
     }
-  },
-  _getRequestParams: function () {
-    return {};
+    return true;
   },
   destroy: function() {
     Tw.MyTBillGuideUpdatePrototype.destroy.apply(this, arguments);
+    this._$inputPhone = null;
     this._$inputCcurNotiSvcNum = null;
   }
 });
+
 Tw.MyTBillGuideUpdateClasses.billLetterEmail.prototype = $.extend({}, Tw.MyTBillGuideUpdatePrototype, {
   _assign: function () {
     Tw.MyTBillGuideUpdatePrototype._assign.apply(this, arguments);
     this._$inputEmail = this.$container.find('.input-email');
-    this._$inputCntcNum1 = this.$container.find('.input-cntc-num1');
+    this._$inputPhone = this.$container.find('.input-phone');
     this._$inputCcurNotiSvcNum = this.$container.find('.input-ccur-noti-svc-num');
   },
   _checkValidation: function () {
-    if (this._$inputCntcNum1.length > 0) {
-      return this._phoneNumValidation.apply(this, this._$inputCntcNum1);
+    if (this._$inputPhone.length > 0) {
+      return this._phoneNumValidation.apply(this, this._$inputPhone);
     }
     if (this._$inputCcurNotiSvcNum.length > 0) {
       return this._representativePhoneNumValidation.apply(this, this._$inputCcurNotiSvcNum);
     }
-  },
-  _getRequestParams: function () {
-    return {};
+    return true;
   },
   _checkHalfValidation: function () {
     return Tw.ValidationHelper.isEmail(this._$inputEmail.val());
@@ -285,26 +358,26 @@ Tw.MyTBillGuideUpdateClasses.billLetterEmail.prototype = $.extend({}, Tw.MyTBill
   destroy: function() {
     Tw.MyTBillGuideUpdatePrototype.destroy.apply(this, arguments);
     this._$inputEmail = null;
+    this._$inputPhone = null;
     this._$inputCcurNotiSvcNum = null;
   }
 });
+
 Tw.MyTBillGuideUpdateClasses.smsEmail.prototype = $.extend({}, Tw.MyTBillGuideUpdatePrototype, {
   _assign: function () {
     Tw.MyTBillGuideUpdatePrototype._assign.apply(this, arguments);
     this._$inputEmail = this.$container.find('.input-email');
-    this._$inputCntcNum1 = this.$container.find('.input-cntc-num1');
+    this._$inputPhone = this.$container.find('.input-phone');
     this._$inputCcurNotiSvcNum = this.$container.find('.input-ccur-noti-svc-num');
   },
   _checkValidation: function () {
-    if (this._$inputCntcNum1.length > 0) {
-      return this._phoneNumValidation.apply(this, this._$inputCntcNum1);
+    if (this._$inputPhone.length > 0) {
+      return this._phoneNumValidation.apply(this, this._$inputPhone);
     }
     if (this._$inputCcurNotiSvcNum.length > 0) {
       return this._representativePhoneNumValidation.apply(this, this._$inputCcurNotiSvcNum);
     }
-  },
-  _getRequestParams: function () {
-    return {};
+    return true;
   },
   _checkHalfValidation: function () {
     return Tw.ValidationHelper.isEmail(this._$inputEmail.val());
@@ -315,14 +388,13 @@ Tw.MyTBillGuideUpdateClasses.smsEmail.prototype = $.extend({}, Tw.MyTBillGuideUp
   destroy: function() {
     Tw.MyTBillGuideUpdatePrototype.destroy.apply(this, arguments);
     this._$inputEmail = null;
+    this._$inputPhone = null;
     this._$inputCcurNotiSvcNum = null;
   }
 });
+
 Tw.MyTBillGuideUpdateClasses.billLetterSms.prototype = $.extend({}, Tw.MyTBillGuideUpdatePrototype, {
   _checkValidation: function () {
     return true;
-  },
-  _getRequestParams: function () {
-    return {};
   }
 });
