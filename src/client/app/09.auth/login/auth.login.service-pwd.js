@@ -4,30 +4,22 @@
  * Date: 2018.07.11
  */
 
-/**
- * Service password login page
- * @param options for layer popup(hbs), options MUST contain number and callback fields,
- *                for routing page, options MUST contain rootEl field.
- */
-Tw.AuthLoginServicePwd = function (options) {
+Tw.AuthLoginServicePwd = function (rootEl) {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
+  this._isCloseCallbackNeeded = false;
+  this._pwdSuccess = false;
 
-  if (options.rootEl) {
-    this._isPopup = false;
-    this.$container = options.rootEl;
-
-    this._cachedElement();
-    this._bindEvent();
-  } else if (options.number && options.callback) {
+  if (Tw.FormatHelper.isEmpty(rootEl)) {
     this._isPopup = true;
-    this._serviceNumber = options.number;
-    this._callback = options.callback;
-
-    this._popupService.open({ hbs: 'CO_01_02_03_P01' }, $.proxy(this._onPopupOpend, this));
-  } else {
-    Tw.Logger.error('AuthLoginServicePwd constructor: Wrong params!!');
+    return;
   }
+
+  this._isPopup = false;
+  this.$container = rootEl;
+
+  this._cachedElement();
+  this._bindEvent();
 };
 
 Tw.AuthLoginServicePwd.prototype = {
@@ -82,25 +74,50 @@ Tw.AuthLoginServicePwd.prototype = {
   _changeCount: function (msg, count) {
     return msg.replace(/\d/, count);
   },
+  _onPwdPopupClosed: function () {
+    if (!this._isCloseCallbackNeeded) {
+      return;
+    }
+    if (this._pwdSuccessp) {
+      if (this._isPopup) {
+        this._callback();
+      }
+    } else {
+      if (this._isPopup) {
+        this._popupService.open({ hbs: 'CO_01_02_03_P01_P01' }, function ($layer) {
+          $layer.on('click', '.bt-red1 > button', function () {
+            Tw.Popup.close();
+          });
+        // TODO: Insert href for a tags when routings ready
+        });
+      }
+    }
+  },
   _onSuccess: function () {
+    this._pwdSuccess = true;
     if (this._isPopup) {
+      this._isCloseCallbackNeeded = true;
       this._popupService.close();
-      this._callback();
     } else {
       window.location = '/home';
     }
   },
   _showFail: function () {
+    this._pwdSuccess = false;
     if (this._isPopup) {
+      this._isCloseCallbackNeeded = true;
       this._popupService.close();
-      this._popupService.open({ hbs: 'CO_01_02_03_P01_P01' }, function ($layer) {
-        $layer.on('click', '.bt-red1 > button', function () {
-          Tw.Popup.close();
-        });
-        // TODO: Insert href for a tags when routings ready
-      });
     } else {
       window.location = '/auth/login/service-pwd-fail';
     }
+  },
+  openLayer: function (mdn, serviceNumber, callback) {
+    this._mdn = mdn;
+    this._serviceNumber = serviceNumber;
+    this._callback = callback;
+
+    this._popupService.open({ hbs: 'CO_01_02_03_P01' },
+      $.proxy(this._onPopupOpend, this),
+      $.proxy(this._onPwdPopupClosed, this));
   }
 };
