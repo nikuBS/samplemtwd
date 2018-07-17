@@ -20,7 +20,6 @@ class ApiRouter {
     this.router.post('/device', this.setDeviceInfo.bind(this));
     this.router.post('/change-session', this.changeSession.bind(this));
     this.router.post('/service-password-sessions/login', this.svcPasswordLogin.bind(this));
-    this.router.post('/service-password-sessions/session', this.svcPasswordSession.bind(this));
   }
 
   private getEnvironment(req: Request, res: Response, next: NextFunction) {
@@ -61,16 +60,6 @@ class ApiRouter {
     }, (error) => {
       res.json({ code: error });
     });
-  }
-
-  private svcPasswordSession(req: Request, res: Response, next: NextFunction) {
-    const params = req.body;
-    this.apiService.requestSvcPasswordSession(params).subscribe((resp) => {
-      res.json(resp);
-    }, (error) => {
-      res.json({ code: error });
-    });
-
   }
 }
 

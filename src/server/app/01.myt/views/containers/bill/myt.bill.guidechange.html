@@ -1,5 +1,5 @@
 <!--
-* FileName: myt.bill.guidechange_back.html
+* FileName: myt.bill.guidechange.html
 * Author: Jung kyu yang (skt.P130715@partner.sk.com)
 * Date: 2018.07.05
 -->
@@ -44,7 +44,7 @@
                             <!-- 2018-07-06 수정-->
                             <span class="badge badge-allpay"><span class="blind">통합대표</span></span>
                             <!--// 2018-07-06 수정-->
-                            <span class="info-type"><span class="blind">회선정보</span>휴대폰</span>
+                            <span class="info-type"><span class="blind">회선정보</span><%= data.lineType%></span>
                             <span class="info-name"><span class="blind">별명</span><%= svcInfo.nickNm %></span>
                         </li>
                     </ul>
@@ -56,7 +56,7 @@
                 <div class="t-charge-guide">
                     <h4>현재 사용중인 요금안내서</h4>
                     <p class="charge-t1t"><%= data.billTypeInfo.curBillTypeNm%></p>
-                    <% if(data.itgSvc.length > 0) { %>
+                    <% if(data.itgSvc.length > 1) { %>
                     <a class="bt-link-tx _sel-join-bill">통합청구 <%=data.itgSvc.length%>개<span class="ico"></span></a>
                     <% } %>
                     <span class="charge-txt"><%- data.billTypeDesc[data.billTypeInfo.curBillType] %></span>

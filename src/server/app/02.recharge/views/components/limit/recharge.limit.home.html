@@ -59,7 +59,7 @@
                     <dt>데이터 요금 충전</dt>
                     <dd class="box-block-list1">
                         <ul>
-                            <li>
+                            <li id="recharge-upto-amount">
                                 <span class="title">충전 가능 금액</span>
                                 <span class="price" data-possible-amount="<%= limitData.currentTopUpLimit %>">
                                     <%= limitData.currentTopUpLimit %> 원
@@ -91,10 +91,7 @@
                                         <span class="widget-box switch">
                                             <span class="btn-switch type1" id="limit-tmth">
                                                 <span>해제</span>
-                                                <span class="switch-style" role="checkbox">
-                                                    <input type="checkbox">
-                                                    <span class="blind">ON/OFF스위치</span>
-                                                </span>
+                                                <span class="switch-style" role="checkbox"><input type="checkbox" title="데이터차단설정 이번달 차단" /></span><!-- 접근성 수정 -->
                                                 <span>차단</span>
                                             </span>
                                         </span>
@@ -108,10 +105,7 @@
                                         <span class="widget-box switch">
                                             <span class="btn-switch type1" id="limit-regular">
                                                 <span>해제</span>
-                                                <span class="switch-style" role="checkbox">
-                                                    <input type="checkbox">
-                                                    <span class="blind">ON/OFF스위치</span>
-                                                </span>
+                                                <span class="switch-style" role="checkbox"><input type="checkbox" title="데이터차단설정 다음달부터 차단" /></span><!-- 접근성 수정 -->
                                                 <span>차단</span>
                                             </span>
                                         </span>

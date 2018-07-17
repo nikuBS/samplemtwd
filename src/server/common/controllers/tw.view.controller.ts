@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import ApiService from '../../services/api.service';
 import LoginService from '../../services/login.service';
-import { API_CMD, API_CODE } from '../../types/api-command.type';
+import { API_CMD, API_CODE, API_SVC_PWD_ERROR } from '../../types/api-command.type';
 import LoggerService from '../../services/logger.service';
 import { SvcInfoModel } from '../../models/svc-info.model';
 import { URL } from '../../types/url.type';
@@ -52,11 +52,30 @@ abstract class TwViewController {
   private login(req, res, next, tokenId, userId) {
     if ( !FormatHelper.isEmpty(tokenId) ) {
       // TID login
-      this.tidLogin(req, res, next, tokenId);
+      this.apiService.requestLoginTid(tokenId, req.query.state).subscribe((resp) => {
+        this.render(req, res, next, new SvcInfoModel(resp), resp.noticeTpyCd);
+      }, (error) => {
+        // 로그인 실패
+        if ( error === API_SVC_PWD_ERROR.RDT0006 ) {
+          res.redirect('/auth/login/service-pwd');
+        } else {
+          res.send(error);
+        }
+      });
     } else {
       // TEST login
-      this.testLogin(req, res, next, userId);
+      this.apiService.requestLoginTest(userId).subscribe((resp) => {
+        this.render(req, res, next, new SvcInfoModel(resp), resp.noticeTpyCd);
+      }, (error) => {
+        // 로그인 실패
+        if ( error === API_SVC_PWD_ERROR.RDT0006 ) {
+          res.redirect('/auth/login/service-pwd');
+        } else {
+          res.send(error);
+        }
+      });
     }
+
   }
 
   private existId(tokenId: string, userId: string) {
@@ -65,24 +84,6 @@ abstract class TwViewController {
 
   private checkLogin(): boolean {
     return this.loginService.isLogin();
-  }
-
-  private testLogin(req, res, next, userId) {
-    this.apiService.requestLoginTest(userId).subscribe((resp) => {
-      this.render(req, res, next, new SvcInfoModel(resp), resp.noticeTpyCd);
-    }, (error) => {
-      // 로그인 실패
-      console.log('error', error);
-    });
-  }
-
-  private tidLogin(req, res, next, tokenId) {
-    this.apiService.requestLoginTid(tokenId, req.query.state).subscribe((resp) => {
-      this.render(req, res, next, new SvcInfoModel(resp), resp.noticeTpyCd);
-    }, (error) => {
-      // 로그인 실패
-      console.log('error', error);
-    });
   }
 
   private goSessionLogin(req, res, next, path) {

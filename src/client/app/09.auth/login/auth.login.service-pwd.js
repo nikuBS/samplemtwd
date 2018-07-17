@@ -10,6 +10,13 @@ Tw.AuthLoginServicePwd = function (rootEl) {
   this._isCloseCallbackNeeded = false;
   this._pwdSuccess = false;
 
+  this._errorCode = {
+    UNDER_3: 'ICAS3213',       // 고객보호비밀번호 오입력(3회 미만)
+    ERROR_3: 'ICAS3212',       // 고객보호비밀번호 오입력(3회)
+    ERROR_4: 'ICAS3215',       //고객보호비밀번호 오입력 (4회)
+    BLOCKED: 'ICAS3216'        //고객보호비밀번호 잠김 (지점 내점 안내 노출)
+  };
+
   if (Tw.FormatHelper.isEmpty(rootEl)) {
     this._isPopup = true;
     return;
@@ -26,6 +33,8 @@ Tw.AuthLoginServicePwd.prototype = {
   _onPopupOpend: function ($layer) {
     this.$container = $layer;
 
+    this.$container.find('.badge').hide();
+    this.$container.find('.circuit-tx').text(this._mdn);
     this._cachedElement();
     this._bindEvent();
   },
@@ -45,28 +54,41 @@ Tw.AuthLoginServicePwd.prototype = {
   },
   _requestLogin: function () {
     var pwd = this.$pwd.val();
-    this._apiService.request(Tw.API_CMD.BFF_03_0009, { svcPwd: pwd })
+    var api = this._isPopup ? Tw.NODE_CMD.CHANGE_SESSION : Tw.NODE_CMD.SVC_PASSWORD_LOGIN;
+    var data = { svcPwd: pwd};
+    if (this._isPopup) {
+      data.svcMgmtNum = this._serviceNumber;
+    }
+    this._apiService.request(api, data)
       .done($.proxy(this._onLoginReuestDone, this))
       .fail(function (err) {
-        Tw.Logger.error('BFF_03_0009 Fail', err);
+        Tw.Logger.error('auth.login.service.pwd Fail', err);
       });
   },
   _onLoginReuestDone: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
       this._onSuccess();
     } else {
-      // TODO: find error count from response when api done
-      var errCount = 1;
-      if (errCount === 5) {
-        this._showFail();
-        return;
+      var errCount = 0;
+      switch (res.code) {
+        case this._errorCode.ERROR_3:
+          errCount = 3;
+          break;
+        case this._errorCode.ERROR_4:
+          errCount = 4;
+          break;
+        case this._errorCode.BLOCKED:
+          this._showFail();
+          return;
       }
 
-      this.$inputBox.addClass('error');
-      this.$deleteIcon.removeClass('none');
-      this.$errMsg.removeClass('none');
+      if (errCount >= 3) {
+        this.$inputBox.addClass('error');
+        this.$deleteIcon.removeClass('none');
+        this.$errMsg.removeClass('none');
 
-      this.$errMsg.text(this._changeCount(this.$errMsg.text(), errCount));
+        this.$errMsg.text(this._changeCount(this.$errMsg.text(), errCount));
+      }
 
       this._popupService.openAlert(Tw.MSG_AUTH.LOGIN_A01);
     }
@@ -88,7 +110,7 @@ Tw.AuthLoginServicePwd.prototype = {
           $layer.on('click', '.bt-red1 > button', function () {
             Tw.Popup.close();
           });
-        // TODO: Insert href for a tags when routings ready
+          // TODO: Insert href for a tags when routings ready
         });
       }
     }

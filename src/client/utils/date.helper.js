@@ -55,6 +55,14 @@ Tw.DateHelper = (function () {
   };
 
   /**
+   * @param date {Date} or {string} : YYYYMMDD
+   * @returns {string} : currentDateTime + 1 year
+   */
+  var getNextYearShortDate = function () {
+    return moment().add(1, 'years').format('YYYY.MM.DD');
+  };
+
+  /**
    * @param period {period}
    * @returns {string} : currentDateTime - {period}
    */
@@ -115,7 +123,7 @@ Tw.DateHelper = (function () {
   var getEndOfMonth = function (date, currentFormat) {
     var days = moment(date, currentFormat).daysInMonth();
     return moment(date, currentFormat).add(days - 1, 'days').format('YYYY.MM.DD');
-  }
+  };
 
   return {
     getRemainDate: getRemainDate,
@@ -125,6 +133,7 @@ Tw.DateHelper = (function () {
     getCurrentShortDate: getCurrentShortDate,
     getCurrentDateTime: getCurrentDateTime,
     getPastYearShortDate: getPastYearShortDate,
+    getNextYearShortDate: getNextYearShortDate,
     getEndOfMonth: getEndOfMonth,
     getPastShortDate: getPastShortDate,
     getShortDateWithFormat: getShortDateWithFormat,

@@ -96,7 +96,7 @@ Tw.RechargeTingHistory.prototype = {
     if ( nCurrentTabIndex === 0 ) {
       this._apiService.request(Tw.API_CMD.BFF_06_0026, {
         type: this.tab1_searchType,
-        fromDt: '20170601',
+        fromDt: Tw.DateHelper.getShortDateWithFormatAddByUnit(new Date(), this.tab1_searchPeriod, 'month', 'YYYYMMDD'),
         toDt: Tw.DateHelper.getCurrentShortDate()
       }).done($.proxy(this._onSuccessFetchData, this));
     }
@@ -180,7 +180,8 @@ Tw.RechargeTingHistory.prototype = {
 
     this._popupService.close();
 
-    var $btn_dropdown = $($('.bt-dropdown.small').get(nCurrentTabIndex));
+    var $wrap_tab_contents = $($('.tab-contents li').get(nCurrentTabIndex));
+    var $btn_dropdown = $wrap_tab_contents.find('.bt-dropdown.small');
     $btn_dropdown.text(sType + ' · ' + sPeriod);
 
     this._fetchData();

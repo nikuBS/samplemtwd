@@ -25,10 +25,10 @@ Tw.RechargeLimit.prototype = {
     this.rechargeAmount = "5000";
     this._limit = {};
 
-    var amount = this.$container.find('span.price').data('possible-amount');
+    this.upToAmount = this.$container.find('#recharge-upto-amount .price').data('possible-amount') || "0";
     var $limitBlock = this.$container.find('.box-block-list1.btm-border ul');
 
-    this._possibleRecharge = !!amount && Number(amount.replace(/,/g, '')) > 0;
+    this._possibleRecharge = Number(this.upToAmount.replace(/,/g, '')) > 0;
     this._rechargeRegular = $limitBlock.data('recharge-regular');
     this._toggleSwitch(this.TMTH, $limitBlock.data('limit-tmth'));
     this._toggleSwitch(this.REGULAR, $limitBlock.data('limit-regular'));
@@ -103,8 +103,8 @@ Tw.RechargeLimit.prototype = {
     var typeText = $typeInput.attr('title');
     this.$container.find('.rechargeType').text(typeText);
 
-    var upToAmount = Number(this.$stepAmount.find('.money-select-comment em').text().replace(',', ''));
-    this.$stepAmount.find('li').each(function (idx, item) {
+    var upToAmount = Number(this.upToAmount.replace(/,/g, ''));
+    this.$stepAmount.find('#select-amount li').each(function (idx, item) {
       var $item = $(item);
       var $input = $item.find('input');
       var itemValue = Number($item.data('value'));

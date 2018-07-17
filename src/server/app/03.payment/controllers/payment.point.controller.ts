@@ -8,9 +8,10 @@ import { Request, Response, NextFunction } from 'express';
 import { API_CMD, API_CODE } from '../../../types/api-command.type';
 import FormatHelper from '../../../utils/format.helper';
 import { Observable } from 'rxjs/Observable';
-import { PAYMENT_VIEW } from '../../../types/string.type';
-import {REQUEST_VALUE, SVC_ATTR} from '../../../types/bff-common.type';
+import { PAYMENT_VIEW, SELECT_POINT } from '../../../types/string.type';
+import { REQUEST_VALUE, SVC_ATTR } from '../../../types/bff-common.type';
 import StringHelper from '../../../utils/string.helper';
+import DateHelper from '../../../utils/date.helper';
 
 class PaymentPointController extends TwViewController {
   constructor() {
@@ -40,10 +41,20 @@ class PaymentPointController extends TwViewController {
       this.getAutoCashbag(),
       this.getAutoTpoint(),
       (cashbagAndTpoint, autoCashbag, autoTpoint) => {
-        cashbagAndTpoint.isAutoCashbag = this.getAutoValue(autoCashbag);
-        cashbagAndTpoint.isAutoTpoint = this.getAutoValue(autoTpoint);
-        return cashbagAndTpoint;
+        return this.getCashbagAndT(cashbagAndTpoint, autoCashbag, autoTpoint);
       });
+  }
+
+  private getCashbagAndT(cashbagAndTpoint: any, autoCashbag: any, autoTpoint: any): any {
+    cashbagAndTpoint.isAutoCashbag = this.getAutoValue(autoCashbag.strRbpStatTxt);
+    cashbagAndTpoint.isAutoTpoint = this.getAutoValue(autoTpoint.strRbpStatTxt);
+    cashbagAndTpoint.cashbagEndDate = autoCashbag.endDate;
+    cashbagAndTpoint.tEndDate = autoTpoint.endDate;
+    cashbagAndTpoint.cOcbTermTodoAmt = autoCashbag.ocbTermTodoAmt;
+    cashbagAndTpoint.tOcbTermTodoAmt = autoTpoint.ocbTermTodoAmt;
+    cashbagAndTpoint.cAmtText = autoCashbag.amtText;
+    cashbagAndTpoint.tAmtText = autoTpoint.amtText;
+    return cashbagAndTpoint;
   }
 
   private getAllRainbowPoint(): Observable<any> {
@@ -64,20 +75,27 @@ class PaymentPointController extends TwViewController {
 
   private getAutoCashbag(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_07_0051, { ptClCd: 'CPT' }).map((response) => {
-      if (response.code === API_CODE.CODE_00) {
-        return response.result.strRbpStatTxt;
-      }
-      return null;
+      return this.getAutoData(response);
     });
   }
 
   private getAutoTpoint(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_07_0051, { ptClCd: 'TPT' }).map((response) => {
-      if (response.code === API_CODE.CODE_00) {
-        return response.result.strRbpStatTxt;
-      }
-      return null;
+      return this.getAutoData(response);
     });
+  }
+
+  private getAutoData(response: any): any {
+    if (response.code === API_CODE.CODE_00) {
+      return {
+        strRbpStatTxt: response.result.strRbpStatTxt,
+        endDate: FormatHelper.isEmpty(response.result.disOcbEffDate) ? DateHelper.getNextYearShortDate()
+          : DateHelper.getShortDateNoDot(response.result.disOcbEffDate),
+        ocbTermTodoAmt: FormatHelper.addComma(response.result.ocbTermTodoAmt),
+        amtText: FormatHelper.isEmpty(response.result.ocbTermTodoAmt) ? SELECT_POINT.DEFAULT : FormatHelper.addComma(response.result.ocbTermTodoAmt)
+      };
+    }
+    return null;
   }
 
   private getRainbowPoint(): Observable<any> {
@@ -115,6 +133,7 @@ class PaymentPointController extends TwViewController {
         data.tPt = FormatHelper.addComma(data.availTPt);
         data.cardNum = StringHelper.masking(data.ocbCcno, '*', 10);
       }
+      data.endDate = DateHelper.getNextYearShortDate();
     }
     return data;
   }

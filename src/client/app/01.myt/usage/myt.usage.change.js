@@ -26,9 +26,10 @@ Tw.MytUsageChange.prototype = {
     this._apiService.request(Tw.NODE_CMD.CHANGE_SESSION, { svcMgmtNum: svcMgmtNum })
       .done(function (resp) {
         if ( resp.code === Tw.API_CODE.CODE_00 ) {
-          location.href = '/myt';
+          this._goMyt();
         } else if ( resp.code === Tw.API_CODE.CODE_06 ) {
-          // 고객보호 비밀번호 레이어 팝업
+          // TODO: add mdn(svcNum)
+          this._openSvcPwdPopup('mdn', svcMgmtNum);
         }
       });
   },
@@ -59,5 +60,19 @@ Tw.MytUsageChange.prototype = {
 
   hideSubView: function () {
     this.$container.show();
+  },
+
+  _openSvcPwdPopup: function (svcNum, svcMgmtNum) {
+    // 고객보호 비밀번호 레이어 팝업
+    this.loginServicePwd.openLayer(svcNum, svcMgmtNum, $.proxy(this._closeSvcPwdPopup, this));
+  },
+
+  _closeSvcPwdPopup: function () {
+    this._goMyt();
+  },
+
+  _goMyt: function () {
+    // TODO: change location.back
+    location.href = '/myt';
   }
 };

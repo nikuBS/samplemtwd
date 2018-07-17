@@ -15,8 +15,7 @@
 </div>
 <!--// #skip_navigation -->
 <div id="wrapFdev" class="wrap">
-<%# * ----------------[메인]  %>
-    <div id="main">
+    <div>
         <!-- #header -->
         <div class="header-wrap">
             <div class="header">
@@ -41,7 +40,7 @@
                         <!--// 2018-07-06 수정-->
                         <ul>
                             <li>
-                                <span class="info-num"><%=circuitInfo.svcNum %></span>
+                                <span class="info-num"><%=svcInfo.svcNum %></span>
                             </li>
                             <li>
                                 <!-- 2018-07-06 수정-->
@@ -67,7 +66,7 @@
                 <% include ../../components/bill/myt.bill.billguide.hireNone.html %>
     <% } else { %>
                 <div class="cont-box  nogaps-btm noborder">
-                    <button class="bt-dropdown big" title="전체납부내역" aria-haspopup="true" data-target="totPaySelectBtn" ><%=commDataInfo.selClaimDtBtn %><span class="ico"></span></button>
+                    <button class="bt-dropdown big" title="전체납부내역" aria-haspopup="true" data-target="selDateBtn" ><%=commDataInfo.selClaimDtBtn %><span class="ico"></span></button>
                     <div class="payment-inquiry">
                         <div class="payment-all">
                             <h3 class="blind">전체납부내역</h3>
@@ -350,27 +349,6 @@
         <!--// #contents -->
     </div>
 
-    <%# * ----------------[상세요금 내역]  %>
-    <% include ../../components/bill/myt.bill.billguide.subDetailSpecification.html %>
-
-    <%# * ----------------[납부가능일 선택]  %>
-    <% include ../../components/bill/myt.bill.billguide.subSelPayment.html %>
-
-    <%# * ----------------[이용정지 해제]  %>
-    <% include ../../components/bill/myt.bill.billguide.subSusRelease.html %>
-
-    <%# * ----------------[자녀폰 사용요금]  %>
-    <% include ../../components/bill/myt.bill.billguide.subChildBill.html %>
-
-    <%# * ----------------[콜기프트 요금]  %>
-    <% include ../../components/bill/myt.bill.billguide.subCallBill.html %>
-
-    <%# * ----------------[로밍사용 요금]  %>
-    <% include ../../components/bill/myt.bill.billguide.subRoamingBill.html %>
-
-    <%# * ----------------[기부금/후원금]  %>
-    <% include ../../components/bill/myt.bill.billguide.subDonationBill.html %>
-
     <% include ../../../../../common/views/components/footer.component.html %>
 </div>
 <% include ../../components/javascript.component.html %>
@@ -379,7 +357,6 @@
   $(document).ready(function () {
     new Tw.mytBillBillguideCombineRepresentPage($('#wrapFdev'), {
       svcInfo: <%-JSON.stringify(svcInfo) %>,
-      circuitInfo: <%-JSON.stringify(circuitInfo) %>,
       billpayInfo : <%-JSON.stringify(billpayInfo) %>,
       circuitChildInfo: <%-JSON.stringify(circuitChildInfo) %>,
       commDataInfo: <%-JSON.stringify(commDataInfo) %>,

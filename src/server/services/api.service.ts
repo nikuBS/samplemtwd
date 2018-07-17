@@ -6,6 +6,8 @@ import LoginService from './login.service';
 import LoggerService from './logger.service';
 import FormatHelper from '../utils/format.helper';
 import EnvHelper from '../utils/env.helper';
+import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/map';
 
 class ApiService {
   static instance;
@@ -98,11 +100,13 @@ class ApiService {
     const error = err.response.data;
     this.logger.error(this, '[API_ERR]', error);
     let message = 'unknown error';
-    if ( FormatHelper.isObject(error) && !FormatHelper.isEmpty(error.msg) ) {
-      message = error.msg;
+    let code = API_CODE.CODE_400;
+    if ( FormatHelper.isObject(error) ) {
+      message = error.msg || message;
+      code = error.code || code;
     }
     // observer.error(err);
-    observer.next({ code: API_CODE.CODE_400, msg: message, data: error });
+    observer.next({code, message, error});
     observer.complete();
   }
 
@@ -185,25 +189,6 @@ class ApiService {
         if ( resp.code === API_CODE.CODE_00 ) {
           // TODO: 필드명 확인 필요
           this.loginService.setSvcInfo({ mbrNm: resp.result.mbrNm });
-          return this.request(API_CMD.BFF_01_0005, {});
-        } else {
-          throw resp.code;
-        }
-      }).map((resp) => {
-        if ( resp.code === API_CODE.CODE_00 ) {
-          const result = resp.result;
-          this.loginService.setSvcInfo(result);
-          return result;
-        } else {
-          throw resp.code;
-        }
-      });
-  }
-
-  public requestSvcPasswordSession(params: any): Observable<any> {
-    return this.request(API_CMD.BFF_03_0009, params)
-      .switchMap((resp) => {
-        if ( resp.code === API_CODE.CODE_00 ) {
           return this.request(API_CMD.BFF_01_0005, {});
         } else {
           throw resp.code;
