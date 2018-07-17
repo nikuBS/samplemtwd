@@ -230,7 +230,7 @@ Tw.MyTBillHotBill.arrayToGroup = function (data, fieldInfo) {
 
     var bill_item = {
       name: item[fieldInfo.name].replace(/[*#]/g, ''),
-      amount: Tw.StringHelper.commaSeperatedString(item[fieldInfo.value]),
+      amount: Tw.StringHelper.commaSeparatedString(item[fieldInfo.value]),
       noVAT: item[fieldInfo.name].indexOf('*') > -1 ? true : false,
       is3rdParty: item[fieldInfo.name].indexOf('#') > -1 ? true : false,
       discount: amount < 0 ? true : false
@@ -248,10 +248,10 @@ Tw.MyTBillHotBill.arrayToGroup = function (data, fieldInfo) {
           delete itemS.items[0];
         }
         itemS.discount = itemS.total < 0 ? true : false;
-        itemS.total = Tw.StringHelper.commaSeperatedString(itemS.total);
+        itemS.total = Tw.StringHelper.commaSeparatedString(itemS.total);
       }
       itemL.discount = itemL.total < 0 ? true : false;
-      itemL.total = Tw.StringHelper.commaSeperatedString(itemL.total);
+      itemL.total = Tw.StringHelper.commaSeparatedString(itemL.total);
     });
   });
   return group;
@@ -289,5 +289,5 @@ Tw.MyTBillHotBill.openPrevBillPopup = function (resp, num, type) {
  * @returns yyyy.mm.dd ~ yyyy.mm.dd
  */
 Tw.MyTBillHotBill.getFormattedPeriod = function (strPeriod) {
-  return Tw.StringHelper.replaceDateNotaionnToDot(strPeriod).replace('~', ' ~ ');
+  return Tw.StringHelper.replaceDateNotaionWithoDot(strPeriod).replace('~', ' ~ ');
 };

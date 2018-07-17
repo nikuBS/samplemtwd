@@ -11,11 +11,11 @@ Tw.StringHelper = (function () {
   }
 
   /**
-   * Converts Integer to String comma seoerated.(123456 to 123,456)
+   * Converts Integer to String comma separated.(123456 to 123,456)
    * @param num
    * @returns {*}
    */
-  function commaSeperatedString(num) {
+  function commaSeparatedString(num) {
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   }
 
@@ -33,15 +33,15 @@ Tw.StringHelper = (function () {
    * @param strDate
    * @returns {*}
    */
-  function replaceDateNotaionnToDot(strDate) {
+  function replaceDateNotaionWithoDot(strDate) {
     return strDate.replace(/[\uB144\uC6D4]/gi, '.').replace(/[\uC77C:&nbsp;:\s]/gi, '');
   }
 
   return {
     replaceAt: replaceAt,
     masking: masking,
-    commaSeperatedString: commaSeperatedString,
-    replaceDateNotaionnToDot: replaceDateNotaionnToDot,
+    commaSeparatedString: commaSeparatedString,
+    replaceDateNotaionWithoDot: replaceDateNotaionWithoDot,
     parseCommaedStringToInt: parseCommaedStringToInt
   };
 })();

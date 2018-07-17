@@ -97,7 +97,7 @@ Tw.mytBillBillguideSubDetailSpecification.prototype = {
       detailGroups[svcMgmtNum].svcTotal = _.reduce(detailGroups[svcMgmtNum].billItems, function (sum, item) {
         return sum + parseInt(item.total.replace(/,/gi, ''), 10);
       }, 0);
-      detailGroups[svcMgmtNum].svcTotal = Tw.StringHelper.commaSeperatedString(detailGroups[svcMgmtNum].svcTotal);
+      detailGroups[svcMgmtNum].svcTotal = Tw.StringHelper.commaSeparatedString(detailGroups[svcMgmtNum].svcTotal);
     });
     console.log(detailGroups);
     return detailGroups;
