@@ -69,7 +69,7 @@
                                                             <dl>
                                                                 <dt>충전 서비스 차단 여부</dt>
                                                                 <%if(cookizInfo.blockYn === 'Y'){%>
-                                                                <dd>충전 불가</dd>
+                                                                <dd>충전 차단</dd>
                                                                 <%}else{%>
                                                                 <dd>충전 허용</dd>
                                                                 <%}%>
@@ -404,11 +404,11 @@
                                 <div class="widget">
                                     <div class="widget-box tube">
                                         <ul class="tube-list two wrap_amount_change" role="radiogroup">
-                                            <li role="radio" aria-checked="false" class="checked"><input type="radio" name="senddata"
+                                            <li role="radio" aria-checked="false" class=""><input type="radio" name="senddata"
                                                                                                         title="1000">1,000
                                                 원
                                             </li>
-                                            <li class="" role="radio" aria-checked="true"><input type="radio" name="senddata" title="5000" checked="checked">5,000
+                                            <li class="" role="radio" aria-checked="false"><input type="radio" name="senddata" title="5000">5,000
                                                 원
                                             </li>
                                             <li role="radio" aria-checked="false" class=""><input type="radio" name="senddata"
@@ -501,7 +501,7 @@
                 <hr class="cont-sp type1" aria-hidden="true">
                 <div class="cont-box nogaps">
                     <div class="bt-link-box">
-                        <a class="bt-link-tx" href="">홈으로</a>
+                        <a class="bt-link-tx" href="/home">홈으로</a>
                     </div>
                 </div>
                 <hr class="cont-sp type1" aria-hidden="true">
@@ -535,7 +535,7 @@
                         <div class="contents-btn">
                             <ul class="bt-slice"><!-- 2018-06-20 버튼 클래스 변경 -->
                                 <li class="bt-blue1">
-                                    <button class="btn_validateRequestStep1">다음</button>
+                                    <button class="btn_validateRequestStep1" disabled>다음</button>
                                 </li>
                             </ul>
                         </div>
