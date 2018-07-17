@@ -30,6 +30,8 @@ Tw.API_CMD = {
   BFF_03_0011: { path: '/core-auth/v1/nationalities', method: Tw.API_METHOD.GET },
   BFF_03_0012: { path: '/user/biz-auth-sessions', method: Tw.API_METHOD.POST },
   BFF_03_0013: { path: '/user/biz-services', method: Tw.API_METHOD.POST },
+  BFF_03_0014: { path: '/core-auth/v1/marketing-offer-subscriptions/args-0', method: Tw.API_METHOD.GET },
+  BFF_03_0015: { path: '/core-auth/v1/marketing-offer-subscriptions/args-0', method: Tw.API_METHOD.PUT },
 
   // MYT
   BFF_05_0001: { path: '/my-t/balances', method: Tw.API_METHOD.GET },
@@ -105,17 +107,22 @@ Tw.API_CMD = {
   BFF_07_0027: { path: '/core-bill/v1/bill-pay/settle-vb-sms', method: Tw.API_METHOD.GET },
   BFF_07_0028: { path: '/core-bill/v1/bill-pay/avail-point-search', method: Tw.API_METHOD.GET },
   BFF_07_0029: { path: '/core-bill/v1/bill-pay/pay-ocb-tpoint-proc', method: Tw.API_METHOD.POST },
+  BFF_07_0037: { path: '/core-bill/v1/payment/auto-payment', method: Tw.API_METHOD.GET },
   BFF_07_0039: { path: '/core-bill/v1/payment/auto-integrated-account-payment', method: Tw.API_METHOD.GET },
+  BFF_07_0043: { path: '/core-bill/v1/ocbcard-no-info', method: Tw.API_METHOD.GET },
   BFF_07_0045: { path: '/core-bill/v1/ocb-point-onetime-reserve', method: Tw.API_METHOD.POST },
+  BFF_07_0047: { path: '/core-bill/v1/ocb-point-onetime-cancel', method: Tw.API_METHOD.POST },
   BFF_07_0048: { path: '/core-bill/v1/rainbow-point-onetime-reserve', method: Tw.API_METHOD.POST },
+  BFF_07_0050: { path: '/core-bill/v1/rainbow-point-onetime-cancel', method: Tw.API_METHOD.POST },
   BFF_07_0054: { path: '/core-bill/v1/ocb-point-autopay-modify', method: Tw.API_METHOD.POST },
   BFF_07_0056: { path: '/core-bill/v1/rainbow-point-autopay-change', method: Tw.API_METHOD.POST },
+  BFF_07_0058: { path: '/core-bill/v1/ocb-point-onetime-history', method: Tw.API_METHOD.GET },
+  BFF_07_0059: { path: '/core-bill/v1/rainbow-point-onetime-history', method: Tw.API_METHOD.GET },
   BFF_07_0061: { path: '/core-bill/v1/auto-payments', method: Tw.API_METHOD.POST },
   BFF_07_0062: { path: '/core-bill/v1/auto-payments', method: Tw.API_METHOD.PUT },
   BFF_07_0063: { path: '/core-bill/v1/auto-payments', method: Tw.API_METHOD.DELETE },
   BFF_07_0065: { path: '/core-bill/v1/autopay/pay-cycl-chg/args-0', method: Tw.API_METHOD.PUT },
   BFF_07_0068: { path: '/core-bill/v1/autopay/card-info/args-0', method: Tw.API_METHOD.GET },
-
   // TEST
   GET: { path: '/posts', method: Tw.API_METHOD.GET },
   GET_PARAM: { path: '/comments', method: Tw.API_METHOD.GET },

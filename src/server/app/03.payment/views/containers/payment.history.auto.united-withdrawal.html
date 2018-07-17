@@ -22,7 +22,7 @@
                 <h1>납부내역조회</h1>
                 <button class="all-menu"><span class="blind">전체메뉴보기</span></button>
             </div>
-            <button class="prev-step"><span class="blind">이전으로</span></button>
+            <button class="prev-step common-back"><span class="blind">이전으로</span></button>
             <button class="search-content"><span class="blind">검색하기</span></button>
         </div>
     </div>
@@ -31,175 +31,23 @@
     <div id="contents" class="container-wrap">
         <h2 class="blind">내용</h2>
         <div class="container">
+
             <%- include('../components/line.info.component.html', { svcInfo: svcInfo }); %>
+
             <hr class="cont-sp type1">
-            <div class="cont-box nogaps-btm">
+            <div class="cont-box">
                 <button class="bt-dropdown big" title="납부방식 선택" aria-haspopup="true">자동납부 통합인출<span class="ico"></span></button>
-                <!-- payment-detail-wrap -->
-                <div class="payment-detail-wrap">
-                    <p class="info-txt">6개월간의 요금납부 내역만 확인 가능합니다.</p>
-                    <div class="payment-detail-box">
-                        <div class="detail-inner">
-                            <div class="detail-list">
-                                <ul>
-                                    <li>
-                                        <span class="title">청구일자</span>
-                                        <span class="tx-cont">2018.06.25</span>
-                                    </li>
-                                    <li>
-                                        <div class="inner-top">
-                                            <span class="title">통합인출금액</span>
-                                            <span class="tx-cont">
-                            <!-- '과납' 뱃지 -->
-                                                <!--span class="badge badge-over"></span--><strong>144,000</strong> 원</span>
-                                        </div>
-                                        <div class="inner-row">
-                                            <ul>
-                                                <li>
-                                                    <span class="title num">010-23**-45**</span>
-                                                    <span class="tx-cont">100,000 원</span>
-                                                </li>
-                                                <li>
-                                                    <span class="title num">010-56**-78**</span>
-                                                    <span class="tx-cont">44,000 원</span>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="inner-top">
-                                            <span class="title">계좌번호</span>
-                                            <span class="tx-cont"><strong>12312*******</strong></span>
-                                        </div>
-                                        <div class="inner-row">
-                                            <ul>
-                                                <li>
-                                                    <span class="title">(은행)</span>
-                                                    <span class="tx-cont">(국민은행)</span>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="payment-detail-box">
-                        <div class="detail-inner">
-                            <div class="detail-list">
-                                <ul>
-                                    <li>
-                                        <span class="title">청구일자</span>
-                                        <span class="tx-cont">2018.06.25</span>
-                                    </li>
-                                    <li>
-                                        <div class="inner-top">
-                                            <span class="title">통합인출금액</span>
-                                            <span class="tx-cont"><strong>27,000</strong> 원</span>
-                                        </div>
-                                        <div class="inner-row">
-                                            <ul>
-                                                <li>
-                                                    <span class="title num">010-23**-45**</span>
-                                                    <span class="tx-cont">27,000 원</span>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="inner-top">
-                                            <span class="title">계좌번호</span>
-                                            <span class="tx-cont"><strong>12312*******</strong></span>
-                                        </div>
-                                        <div class="inner-row">
-                                            <ul>
-                                                <li>
-                                                    <span class="title">(은행)</span>
-                                                    <span class="tx-cont">(국민은행)</span>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="payment-detail-box">
-                        <div class="detail-inner">
-                            <div class="detail-list">
-                                <ul>
-                                    <li>
-                                        <span class="title">청구일자</span>
-                                        <span class="tx-cont">2018.06.25</span>
-                                    </li>
-                                    <li>
-                                        <div class="inner-top">
-                                            <span class="title">통합인출금액</span>
-                                            <span class="tx-cont"><strong>184,000</strong> 원</span>
-                                        </div>
-                                        <div class="inner-row">
-                                            <ul>
-                                                <li>
-                                                    <span class="title num">010-23**-45**</span>
-                                                    <span class="tx-cont">100,000 원</span>
-                                                </li>
-                                                <li>
-                                                    <span class="title num">010-56**-78**</span>
-                                                    <span class="tx-cont">44,000 원</span>
-                                                </li>
-                                                <li>
-                                                    <span class="title num">010-68**-59**</span>
-                                                    <span class="tx-cont">44,000 원</span>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="inner-top">
-                                            <span class="title">계좌번호</span>
-                                            <span class="tx-cont"><strong>12312*******</strong></span>
-                                        </div>
-                                        <div class="inner-row">
-                                            <ul>
-                                                <li>
-                                                    <span class="title">(은행)</span>
-                                                    <span class="tx-cont">(국민은행)</span>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <p class="box-undtxt2">동일계좌로 통합인출된 내역을 확인할 수 있으며 통장에서 출금 시<br/>에는 통합인출금액 1건으로 확인 됩니다.</p>
-                    <div class="contents-info-list">
-                        <a href="" class="bt-more bdt-none" title="">더보기<span>(20)</span></a>
-                    </div>
-                </div>
-                <!--// payment-detail-wrap -->
-<%#     자동납부 통합인출 내역이 없는 경우
-                <div class="payment-select">
-                    <div class="contents-empty">
-                        <span class="ico"></span>
-                        <p class="desc">자동납부 통합인출 내역이 없습니다.</p>
-                    </div>
-                    <div class="pay-bottom type1">
-                        <p class="title">자동납부 신청을 통해 편하게<br/>이용 해보세요.</p>
-                        <a href="" class="bt-link-tx">자동납부 신청하기<span class="ico"></span></a>
-                    </div>
-                </div>
-%>
+                <div id="fe-list-wrapper"></div>
             </div>
         </div>
         <hr class="cont-sp type1">
 
-<!--     자동납부 통합인출 내역이 없는 경우 삭제 처리 -->
+
         <!-- .cont-box -->
-        <div class="cont-box">
+        <div class="cont-box none" id="fe-quit-process">
             <div class="bt-gap">
                 <ul class="bt-slice">
-                    <li class="bt-gray2">
+                    <li class="bt-white2">
                         <button>자동납부 통합인출 해지신청</button>
                     </li>
                     <li>
@@ -210,7 +58,7 @@
         </div>
         <hr class="cont-sp type1">
         <!-- .cont-box -->
-<!--     //--END-- 자동납부 통합인출 내역이 없는 경우 삭제 처리 -->
+
         <div class="cont-box">
             <!-- .widget -->
             <div class="widget">
@@ -239,7 +87,7 @@
         <!--// .cont-box -->
     </div>
     <!--// #contents -->
-    <% include ../../../../common/views/components/footer.component.html %>
+    <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
 </div>
 
 <% include ../components/javascript.component.html %>
@@ -247,5 +95,81 @@
   $(document).ready(function () {
     new Tw.PaymentHistoryAutoUnitedWithdrawal($(document));
   });
+</script>
+<script id="list-wrapper" type="text/x-handlebars-template">
+    <div class="payment-detail-wrap">
+        <p class="info-txt">6개월간의 요금납부 내역만 확인 가능합니다.</p>
+        {{> list}}
+        <p class="box-undtxt2">동일계좌로 통합인출된 내역을 확인할 수 있으며 통장에서 출금 시<br/>에는 통합인출금액 1건으로 확인 됩니다.</p>
+        {{#if initialMoreData}}
+        <div class="contents-info-list">
+            <a href="" class="bt-more" title="">더보기<span>(<em>{{restCount}}</em>)</span></a>
+        </div>
+        {{/if}}
+    </div>
+</script>
+<script id="list-default" type="text/x-handlebars-template">
+    <!-- payment-detail-wrap -->
+    {{#each listElement}}
+    <div class="payment-detail-box">
+        <div class="detail-inner">
+            <div class="detail-list">
+                <ul>
+                    <li>
+                        <span class="title">청구일자</span>
+                        <span class="tx-cont">2018.06.25</span>
+                    </li>
+                    <li>
+                        <div class="inner-top">
+                            <span class="title">통합인출금액</span>
+                            <span class="tx-cont">
+                        <!-- '과납' 뱃지 -->
+                                <!--span class="badge badge-over"></span--><strong>144,000</strong> 원</span>
+                        </div>
+                        <div class="inner-row">
+                            <ul>
+                                {{#lines}}
+                                <li>
+                                    <span class="title num">010-23**-45**</span>
+                                    <span class="tx-cont">100,000 원</span>
+                                </li>
+                                {{/lines}}
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="inner-top">
+                            <span class="title">계좌번호</span>
+                            <span class="tx-cont"><strong>12312*******</strong></span>
+                        </div>
+                        <div class="inner-row">
+                            <ul>
+                                <li>
+                                    <span class="title">(은행)</span>
+                                    <span class="tx-cont">(국민은행)</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    {{/each}}
+    <!--// payment-detail-wrap -->
+</script>
+<script id="list-empty" type="text/x-handlebars-template">
+    <!-- 자동납부 내역 없는 경우 -->
+    <div class="payment-select">
+        <div class="contents-empty">
+            <span class="ico"></span>
+            <p class="desc">자동납부 통합인출 내역이 없습니다.</p>
+        </div>
+        <div class="pay-bottom type1">
+            <p class="title">자동납부 신청을 통해 편하게<br/>이용 해보세요.</p>
+            <a href="{{autoPaymentApplyURL}}" class="bt-link-tx">자동납부 신청하기<span class="ico"></span></a>
+        </div>
+    </div>
+    <!-- 자동납부 내역 없는 경우 -->
 </script>
 <% include ../components/end.component.html %>

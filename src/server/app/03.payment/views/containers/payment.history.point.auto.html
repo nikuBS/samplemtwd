@@ -45,9 +45,9 @@
                         <div class="tab-area type1"><!-- 타입별 탭형태 변환 -->
                             <div class="tab-linker">
                                 <ul role="tablist">
-                                    <li role="tab" aria-selected="true" aria-controls="tab1-tab" id="tab1"><button>OK캐쉬백</button></li><!-- true 열림 -->
-                                    <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2"><button>T포인트</button></li>
-                                    <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab3"><button>레인보우포인트</button></li>
+                                    <li role="tab" aria-selected="false" aria-controls="tab1-tab" id="tab1"><a href="#ocb" class="replace-history">OK캐쉬백</a></li><!-- true 열림 -->
+                                    <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2"><a href="#tpoint" class="replace-history">T포인트</a></li>
+                                    <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab3"><a href="#rainbow" class="replace-history">레인보우포인트</a></li>
                                 </ul>
                             </div>
                             <div class="tab-contents">
@@ -90,13 +90,13 @@
         </div>
     </div>
     <!--// #contents -->
-    <% include ../../../../common/views/components/footer.component.html %>
+    <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
 </div>
 
 <% include ../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.PaymentHistoryPointAuto($(document));
+    new Tw.PaymentHistoryPointAuto($('.wrap'));
   });
 </script>
 <script id="list-wrapper" type="text/x-handlebars-template">
@@ -116,7 +116,7 @@
             <div class="payment-detail-box">
                 <div class="detail-inner">
                     <div class="pay-state">
-                        {{#if isRequest}}
+                        {{#if isApply}}
                         <span class="cancel-com">납부신청</span>
                         {{/if}}
                         {{#if isQuit}}
@@ -194,7 +194,7 @@
             <div class="payment-detail-box">
                 <div class="detail-inner">
                     <div class="pay-state">
-                        {{#if isRequest}}
+                        {{#if isApply}}
                         <span class="cancel-com">납부신청</span>
                         {{/if}}
                         {{#if isQuit}}

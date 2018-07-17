@@ -11,65 +11,72 @@
                 <p class="txt"><span class="tx-bold">납부</span>가 정상적으로<br />처리되었습니다.</p>
             </div>
             <div class="pay-data-cont">
-                <ul class="t-pay-data">
+                <ul class="t-pay-data complete-payment">
                     <li>
                         <dl>
                             <dt class="ti-data">요청(처리)일시</dt>
                             <dd class="tx-data">
-                                <span class="blind">날짜</span><span class="num">2018.06.25</span><br />
-                                <span class="blind">시간</span><span class="num">17:23:42</span>
+                                <span class="blind">날짜</span><span class="num date"></span><br />
+                                <span class="blind">시간</span><span class="num time"></span>
                             </dd>
                         </dl>
                     </li>
                     <li>
                         <dl>
                             <dt class="ti-data">납부금액</dt>
-                            <dd class="tx-data"><span class="tx-bold num">102,860</span> 원</dd>
+                            <dd class="tx-data"><span class="tx-bold num payAmt"></span> 원</dd>
                         </dl>
                     </li>
-                    <li>
+                    <li class="card none">
+                        <dl>
+                            <dt class="ti-data">납부형태</dt>
+                            <dd class="tx-data payment-card-type"></dd>
+                        </dl>
+                    </li>
+                    <li class="account none">
                         <dl>
                             <dt class="ti-data">은행명</dt>
-                            <dd class="tx-data">국민은행</dd>
+                            <dd class="tx-data bank-name"></dd>
                         </dl>
                     </li>
-                    <li>
+                    <li class="card none">
+                        <dl>
+                            <dt class="ti-data">카드사</dt>
+                            <dd class="tx-data bank-name"></dd>
+                        </dl>
+                    </li>
+                    <li class="account none">
                         <dl>
                             <dt class="ti-data">계좌번호</dt>
-                            <dd class="tx-data"><span class="num">01121*******</span></dd>
+                            <dd class="tx-data"><span class="num bankOrCardAccn"></span></dd>
+                        </dl>
+                    </li>
+                    <li class="card none">
+                        <dl>
+                            <dt class="ti-data">카드번호</dt>
+                            <dd class="tx-data"><span class="num bank-number"></span></dd>
                         </dl>
                     </li>
                     <li>
                         <dl>
                             <dt class="ti-data">예금주</dt>
-                            <dd class="tx-data">송창익</dd>
+                            <dd class="tx-data"><%= svcInfo.mbrNm %></dd>
                         </dl>
                     </li>
                     <li>
                         <h3 class="ti-pay-detail">상세내역</h3>
-                        <ul class="inquiry">
+                        <ul class="inquiry detail-payment none">
                             <li>
-                                <span class="ti-data">휴대폰</span>
-                                <span class="tx-data num">010-12**-45**</span>
+                                <span class="ti-data svc-name"></span>
+                                <span class="tx-data num svc-number"></span>
                             </li>
                             <li>
                                 <span class="ti-data">청구년월</span>
-                                <span class="tx-data num">2018.05</span>
+                                <span class="tx-data invDt"></span>
                             </li>
                             <li>
                                 <span class="ti-data">사용요금</span>
-                                <span class="tx-data num">102,860</span><span class="won">원</span>
-                            </li>
-                            <li class="line-gap">
-                                <span class="ti-data num">IPTV_smart STB<br/>(서울 강남구 선릉로 72길 26-80)</span>
-                            </li>
-                            <li>
-                                <span class="ti-data">청구년월</span>
-                                <span class="tx-data num">2018.05</span>
-                            </li>
-                            <li>
-                                <span class="ti-data">납부금액</span>
-                                <span class="tx-data num">102,860</span><span class="won">원</span>
+                                <span class="tx-data num invAmt"></span><span class="won">원</span>
                             </li>
                         </ul>
                     </li>
@@ -77,8 +84,8 @@
                         <dl>
                             <dt class="ti-data">환불계좌정보</dt>
                             <dd class="tx-data">
-                                <span class="blind">계좌번호</span><span class="num">01121*******</span><br />
-                                <span class="blind">은행명</span><span class="bank">(농협)</span>
+                                <span class="blind">계좌번호</span><span class="num payovrBankNum"></span><br />
+                                <span class="blind">은행명</span><span class="bank refund-bank-name"></span>
                             </dd>
                         </dl>
                     </li>
@@ -92,10 +99,10 @@
                 <div class="bt-gap">
                     <ul class="bt-slice">
                         <li class="bt-white1">
-                            <button>요금납부 상세내역</button>
+                            <a href="/payment/history">요금납부 상세내역</a>
                         </li>
                         <li class="bt-blue1">
-                            <button>확인</button>
+                            <button class="common-back">확인</button>
                         </li>
                     </ul>
                 </div>
