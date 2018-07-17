@@ -90,7 +90,7 @@ Tw.RechargeLimitHistory.prototype = {
     Handlebars.registerPartial(this._selectedTab + 'Items', $('#tmpl-items-' + this._selectedTab).html());
     var totalCount = this._items[this._selectedTab].length;
     var contents = template({
-      totalCount,
+      totalCount: totalCount,
       leftCount: Math.max(0, totalCount - this.DEFAULT_LIST_COUNT),
       items: this._items[this._selectedTab].slice(0, this.DEFAULT_LIST_COUNT)
     });
@@ -268,7 +268,7 @@ Tw.RechargeLimitHistory.prototype = {
       return;
     }
 
-    this._searchCondition[this._selectedTab] = { type, period }
+    this._searchCondition[this._selectedTab] = { type: type, period: period }
 
     this._getData({
       type: typeIdx,
