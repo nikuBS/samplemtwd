@@ -44,7 +44,9 @@ Tw.PaymentHistoryAutoUnitedWithdrawal.prototype = {
 
     this.apiName = Tw.API_CMD.BFF_07_0039;
 
-    this.withdrawalStopTemplateName = 'PA_06_04_L01';
+    this.STRING = {
+      HBS_WITHDRAWAL: 'PA_06_04_L01'
+    };
 
     this.autoPaymentApplyURL = '/payment/auto';
   },
@@ -58,8 +60,8 @@ Tw.PaymentHistoryAutoUnitedWithdrawal.prototype = {
   },
 
   _setData: function (res) {
-    console.log(res, res.result.length);
-    if (res.code !== Tw.API_CODE) this.common._apiError(res);
+
+    if (res.code !== Tw.API_CODE.CODE_00) return this._apiError(res);
 
     if (res.result.length) {
 
@@ -108,19 +110,13 @@ Tw.PaymentHistoryAutoUnitedWithdrawal.prototype = {
 
   appendListCallBack: function () {
     if (this.result.length) {
-      this.$listWrapper.addClass('nogaps-btm');
+      this.$listWrapper.parent().addClass('nogaps-btm');
     }
     this.addListButtonHandler();
   },
 
   _apiError: function (res) {
     Tw.Logger.error(res.msg);
+    return false;
   }
-
-  /*  자동납부 통합인출 서비스 해지 신청 팝업
-
-  popup.open({
-    hbs:'PA_06_04_L01'// hbs의 파일명
-  });
-  */
 };
