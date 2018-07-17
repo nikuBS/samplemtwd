@@ -37,30 +37,22 @@
                     <p class="tit"><strong>자녀</strong>폰 사용요금입니다.</p>
                     <div class="payment-info-phone">
 
-                        <% if ( circuitChildInfo.length > 0) { %>
-                        <span class="child-phonenum" data-target="childPhonenum"><%=circuitChildInfo[0].svcNum %></span>
-                        <span class="device-info" data-target="deviceInfo"><%=circuitChildInfo[0].childEqpMdNm %></span>
-                        <% } else { %>
-                        <span class="child-phonenum" data-target="childPhonenum"></span>
-                        <span class="device-info" data-target="deviceInfo"></span>
-                        <% } %>
-
                         <% if ( circuitChildInfo.length == 1) { %>
                         <!-- 자녀 회선이 1개인 경우 -->
-                        <!--<span class="child-phonenum" data-target="childPhonenum"><%=circuitChildInfo[0].svcNum %></span>-->
-                        <!--<span class="device-info" data-target="deviceInfo"><%=circuitChildInfo[0].childEqpMdNm %></span>-->
-                        <!--// 자녀 회선이 1개인 경우 -->
+                        <span class="child-phonenum" data-target="childPhonenum"><%=circuitChildInfo[0].svcNum %></span>
+                        <span class="device-info" data-target="deviceInfo"><%=circuitChildInfo[0].childEqpMdNm %></span>
 
                         <% } else if ( circuitChildInfo.length > 1 ) { %>
                         <!-- 자녀 회선이 2개 이상인 경우 -->
-                        <!--<button class="bt-dropdown small"-->
-                                <!--data-title="전화번호 선택"-->
-                                <!--title="전화번호 선택"-->
-                                <!--data-target="childPhonenumBtn"><%=circuitChildInfo[0].svcNum %></button>-->
-                        <!--<span class="device-info" data-target="deviceInfo"><%=circuitChildInfo[0].childEqpMdNm %></span>-->
-                        <!--// 자녀 회선이 2개 이상인 경우 -->
+                        <button class="bt-dropdown small"
+                                data-title="전화번호 선택"
+                                title="전화번호 선택"
+                                data-target="childPhonenumBtn"><%=circuitChildInfo[0].svcNum %></button>
+                        <span class="device-info" data-target="deviceInfo"><%=circuitChildInfo[0].childEqpMdNm %></span>
                         <% } else { %>
 
+                        <span class="child-phonenum" data-target="childPhonenum"></span>
+                        <span class="device-info" data-target="deviceInfo"></span>
 
                         <% } %>
 
@@ -431,13 +423,9 @@
   $(document).ready(function () {
     new Tw.mytBillBillguideSubChildBill($('#wrapFdev'), {
       svcInfo: <%-JSON.stringify(svcInfo) %>,
-      billpayInfo : <%-JSON.stringify(billpayInfo) %>,
       circuitChildInfo: <%-JSON.stringify(circuitChildInfo) %>,
-      commDataInfo: <%-JSON.stringify(commDataInfo) %>,
-      defaultInfo: <%-JSON.stringify(defaultInfo) %>,
-      showConditionInfo: <%-JSON.stringify(showConditionInfo) %>
+      commDataInfo: <%-JSON.stringify(commDataInfo) %>
   });
-
   });
 </script>
 

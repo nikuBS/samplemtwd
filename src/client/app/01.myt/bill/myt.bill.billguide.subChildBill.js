@@ -22,23 +22,40 @@ Tw.mytBillBillguideSubChildBill = function (rootEl, resData) {
   this._history = new Tw.HistoryService(this.$container);
   this._history.init('hash');
 
-  this.selectDataInfo = { //조회 할때 사용할 데이터
-    selectChildPhoneId : null,
-    selectChildBillMonth : null
+  this.selectDataInfo = {
+    selNum : 0,
+    selChildPhoneId : null,//svcMgmtNum
+    selChildBillMonth : null//invDt
   };
-
   this.usedAmounts = null; //BFF_05_0047 사용요금 조회(본인/자녀)
 
-  return this;
+  this._init();
 };
 
 Tw.mytBillBillguideSubChildBill.prototype = {
   _init: function () {
     Tw.Logger.info('[Tw.mytBillBillguideSubChildBill 초기화]');
-    this.selectDataInfo.selectPhoneId = this.resData.circuitChildInfo[0].svcMgmtNum;
+
+    //자녀가 있을때
+    if(this.resData.circuitChildInfo.length > 0) {
+
+      this.selectDataInfo.selNum = this.resData.commDataInfo.selNum;
+      this.selectDataInfo.selChildPhoneId = this.resData.circuitChildInfo[ this.selectDataInfo.selNum ].svcMgmtNum;
+
+      if ( this.resData.commDataInfo.invDt ) {
+        this.selectDataInfo.selChildBillMonth = this.resData.commDataInfo.invDt;
+      } else {
+
+      }
+    }
+    //console.info('[데이터 : ]', this.selectDataInfo);
+    this._getUsedAmounts({
+      childSvcMgmtNum : this.selectDataInfo.selChildPhoneId,
+      invDt: this.selectDataInfo.selChildBillMonth
+    });
 
     this._bindEvent();
-    this._getUsedAmounts();
+
   },
   _cachedElement: function () {
     this.$childPhonenum = $('[data-target="childPhonenum"]');//회선번호
@@ -54,12 +71,36 @@ Tw.mytBillBillguideSubChildBill.prototype = {
     this.$unpaidChargesTot = $('[data-target="unpaidChargesTot"]');//미납요금
     this.$unpaidChargesList = $('[data-target="unpaidChargesList"]');//미납요금리스트
 
-
-
   },
   _bindEvent: function () {
-    //this.$container.on('click', '[data-target="totPaySelectBtn"]', $.proxy(this._totPaySelectFun, this));
+    this.$container.on('click', '[data-target="billMonthName"]', $.proxy(this._selPopOpen, this)); //조회 월 셀렉트 버튼
   },
+  //--------------------------------------------------------------------------[이벤트 | 팝업]
+  _selPopOpen : function(event) {
+    var $target = $(event.currentTarget);
+    var tempArr = this.usedAmounts.invDtArr;
+    var arrOption = [];
+    for ( var i=0, len=tempArr.length; i<len; i++ ) {
+      arrOption.push({
+        'attr' : 'data-info="' + tempArr[i] + '"',
+        text : this._getSelClaimDtBtn( tempArr[i] )
+      });
+    }
+    this._popupService.openChoice('기간선택', arrOption, 'type1', $.proxy(this._selPopOpenEvt, this, $target));
+  },
+  _selPopOpenEvt: function ($target, $layer) {
+    $layer.on('click', '.popup-choice-list', $.proxy(this._selPopOpenEvtExe, this, $target, $layer));
+  },
+  _selPopOpenEvtExe: function ($target, $layer, event) {
+    var curTg = $(event.currentTarget);
+    var tg = $target;
+    var dataTemp = curTg.find('button').attr('data-info');
+    tg.text( curTg.text() );
+    tg.attr('data-info', dataTemp );
+    this._popupService.close();
+    this._goLoad('/myt/bill/billguide/subChildBill?invDt='+ dataTemp);
+  },
+  //--------------------------------------------------------------------------[데이터 완료후 실행]
   _usedAmountsInit: function() {
     this._cachedElement();
 
@@ -121,27 +162,16 @@ Tw.mytBillBillguideSubChildBill.prototype = {
 
   },
   //--------------------------------------------------------------------------[api]
-  _getUsedAmounts: function() {//BFF_05_0047 사용요금 조회(본인/자녀)
+  _getUsedAmounts: function(param) {//BFF_05_0047 사용요금 조회(본인/자녀)
+    Tw.Logger.info('[param]', param);
 
-    $.ajax('http://localhost:3000/mock/myt.bill.billguide.BFF_05_00047.json')
+    this._apiService.request(Tw.API_CMD.BFF_05_0047, param)
       .done($.proxy(function(resp){
-        console.log('성공');
-        Tw.Logger.info('[BFF_05_00047]', resp);
+        Tw.Logger.info('[자녀폰 사용 요금조회]', resp);
         this.usedAmounts = resp.result;
         this._usedAmountsInit();
-
       }, this))
-      .fail(function(err) {
-        console.log('실패');
-        Tw.Logger.info('[BFF_05_00047]', err);
-      });
-
-
-    // this._apiService.request(Tw.API_CMD.BFF_05_0036, { detailYn: 'Y' })
-    //   .done(function(resp){
-    //     Tw.Logger.info('[청구요금 | 상세요금조회]', resp);
-    //   })
-    //   .fail(function(err){})
+      .fail(function(err){})
   },
 
   //--------------------------------------------------------------------------[공통]
