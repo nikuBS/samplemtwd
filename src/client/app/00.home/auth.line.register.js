@@ -56,7 +56,7 @@ Tw.AuthLineRegister.prototype = {
     Tw.FormatHelper.sortObjArrAsc(lineData, 'expsSeq');
     _.map(lineData, $.proxy(function (line) {
       line.showSvcAttrCd = Tw.SVC_ATTR[line.svcAttrCd];
-      line.showSvcScrbDtm = Tw.DateHelper.getShortDateNoDot(line.svcScrbDtm);
+      line.showSvcScrbDtm = Tw.DateHelper.getShortDateNoDot(line.svcScrbDt);
       line.showName = Tw.FormatHelper.isEmpty(line.nickNm) ? Tw.SVC_ATTR[line.svcAttrCd] : line.nickNm;
       line.isShow = line.expsYn === 'N';
     }, this));
