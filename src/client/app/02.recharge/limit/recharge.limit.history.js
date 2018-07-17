@@ -8,6 +8,8 @@ Tw.RechargeLimitHistory = function (rootEl) {
   this.$container = rootEl;
   this._popupService = Tw.Popup;
   this._apiService = Tw.Api;
+  this._history = new Tw.HistoryService(rootEl);
+  this._history.init('hash');
 
   this._cachedElement();
   this._bindEvent();
@@ -19,7 +21,7 @@ Tw.RechargeLimitHistory.prototype = {
 
   TABS: {
     RECHARGE: 'recharge',
-    LIMIT: 'limit',
+    BLOCK: 'block',
   },
 
   _init: function () {
@@ -30,23 +32,28 @@ Tw.RechargeLimitHistory.prototype = {
         type: Tw.RECHARGE_TYPE.TOTAL,
         period: Tw.DATE_UNIT.THREE_MONTH
       },
-      limit: {
+      block: {
         type: Tw.DATE_UNIT.THREE_MONTH,
         period: Tw.DATE_UNIT.THREE_MONTH
       }
     }
+
+    this._items = {}
     this._getData();
   },
 
   _cachedElement: function () {
-    this.$rechargeTab = this.$container.find('li.tab-recharge');
-    this.$limitTab = this.$container.find('li.tab-limit');
+    this.$tabs = {
+      recharge: this.$container.find('li.tab-recharge'),
+      block: this.$container.find('li.tab-block')
+    }
   },
 
   _bindEvent: function () {
     this.$container.on('click', '.info-cancel button', $.proxy(this._openCancelAlert, this));
     this.$container.on('click', '.gift-bt-more', $.proxy(this._handleMoreClick, this));
     this.$container.on('click', '.bt-dropdown.small', $.proxy(this._openSelectConditionPopup, this));
+    this.$container.on('click', '.tab-linker li', $.proxy(this._handleTabChange, this));
   },
 
   _openCancelAlert: function () {
@@ -54,17 +61,26 @@ Tw.RechargeLimitHistory.prototype = {
   },
 
   _getData: function (option) {
-    if (this._selectedTab === 'limit') {
-
+    var api = null;
+    if (this._selectedTab === this.TABS.BLOCK) {
+      api = Tw.API_CMD.BFF_06_0043;
     } else {
-      this._apiService.request(Tw.API_CMD.BFF_06_0042, option)
-        .done($.proxy(this._handleLoadNewData, this))
-        .fail($.proxy(this._fail, this));
+      api = Tw.API_CMD.BFF_06_0042;
     }
+
+    this._apiService.request(api, option)
+      .done($.proxy(this._handleLoadNewData, this))
+      .fail($.proxy(this._fail, this));
   },
 
   _fail: function (err) {
     Tw.Logger.log('limit fail', err);
+  },
+
+  _handleTabChange: function (e) {
+    this._selectedTab = e.currentTarget.getAttribute('data-type');
+    this._go(this._selectedTab);
+    if (!this._items[this._selectedTab]) this._getData();
   },
 
   _handleLoadNewData: function (resp) {
@@ -72,12 +88,14 @@ Tw.RechargeLimitHistory.prototype = {
 
     var tab = this.$container.find('.tab-contents li.tab-' + this._selectedTab);
     var template = Handlebars.compile($('#tmpl-' + this._selectedTab).html());
-    Handlebars.registerPartial('rechargeItems', $('#tmpl-items-' + this._selectedTab).html());
+    Handlebars.registerPartial(this._selectedTab + 'Items', $('#tmpl-items-' + this._selectedTab).html());
+    var totalCount = this._items[this._selectedTab].length;
     var contents = template({
-      totalCount: this._rechargeItems.length,
-      leftCount: Math.max(0, this._rechargeItems.length - this.DEFAULT_LIST_COUNT),
-      items: this._rechargeItems.slice(0, this.DEFAULT_LIST_COUNT)
+      totalCount,
+      leftCount: Math.max(0, totalCount - this.DEFAULT_LIST_COUNT),
+      items: this._items[this._selectedTab].slice(0, this.DEFAULT_LIST_COUNT)
     });
+
     tab.html(contents);
     this._popupService.close();
 
@@ -86,25 +104,14 @@ Tw.RechargeLimitHistory.prototype = {
   },
 
   _handleMoreClick: function (e) {
-    var items, $tab;
-
-    switch (this._selectedTab) {
-      case this.TABS.LIMIT:
-        items = this._limitItems;
-        $tab = this.$limitTab;
-        break;
-      case this.TABS.RECHARGE:
-      default:
-        items = this._rechargeItems;
-        $tab = this.$rechargeTab;
-        break;
-    }
+    var items = this._items[this._selectedTab];
+    var $tab = this.$tabs[this._selectedTab];
 
     var template = Handlebars.compile('{{>' + this._selectedTab + 'Items}}');
     var leftCount = e.target.getAttribute('data-left-count');
     var firstIdx = items.length - leftCount;
     var eItems = template({ items: items.slice(firstIdx, firstIdx + this.DEFAULT_LIST_COUNT) });
-    $tab.find('ul').append(eItems);
+    $tab.find('ul.recharge-history').append(eItems);
     leftCount = leftCount - this.DEFAULT_LIST_COUNT;
 
     if (leftCount > 0) {
@@ -137,15 +144,49 @@ Tw.RechargeLimitHistory.prototype = {
     return item;
   },
 
-  _setItems: function (resp) {
-    switch (this._selectedTab) {
-      case this.TABS.LIMIT:
-        this._limitItems = resp.result;
+  _setProperBlock: function (item) {
+    switch (item.opTypCd) {
+      case "1":
+        item.type = {
+          icon: "unblock",
+          label: Tw.BLOCK_TYPE.UNBLOCK
+        };
+        item.opTypNm = Tw.BLOCK_TYPE.TMTH_UNBLOCK;
         break;
-      case this.TABS.RECHARGE:
+      case "2":
+        item.type = {
+          icon: "block",
+          label: Tw.BLOCK_TYPE.BLOCK
+        };
+        item.opTypNm = Tw.BLOCK_TYPE.TMTH_BLOCK;
+        break;
+      case "3":
+        item.type = {
+          icon: "unblock",
+          label: Tw.BLOCK_TYPE.UNBLOCK
+        };
+        item.opTypNm = Tw.BLOCK_TYPE.REGULAR_UNBLOCK;
+        break;
+      case "4":
+        item.type = {
+          icon: "block",
+          label: Tw.BLOCK_TYPE.BLOCK,
+          complete: true,
+        }
+        item.opTypNm = Tw.BLOCK_TYPE.REGULAR_BLOCK;
+        break;
       default:
-        this._rechargeItems = resp.result.map(this._setProperRecharge);
-        break;
+        return;
+    }
+
+    return item;
+  },
+
+  _setItems: function (resp) {
+    if (this._selectedTab === this.TABS.BLOCK) {
+      this._items[this._selectedTab] = resp.result.map(this._setProperBlock);
+    } else {
+      this._items[this._selectedTab] = resp.result.map(this._setProperRecharge);
     }
   },
 
@@ -210,5 +251,10 @@ Tw.RechargeLimitHistory.prototype = {
       toDt: Tw.DateHelper.getCurrentShortDate(),
       fromDt: Tw.DateHelper.getPastShortDate(period)
     });
+  },
+
+  _go: function (hash) {
+    this._history.setHistory();
+    window.location.hash = hash;
   },
 }
