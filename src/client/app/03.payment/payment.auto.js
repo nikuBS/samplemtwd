@@ -83,7 +83,7 @@ Tw.PaymentAuto.prototype = {
     }, $.proxy(this._setChangeDateEvent, this));
   },
   _setChangeDateEvent: function ($layer) {
-    $layer.on('click', 'button', $.proxy(this._changeDate, this, $layer));
+    $layer.on('click', '.contents-btn button', $.proxy(this._changeDate, this, $layer));
   },
   _changeDate: function ($layer, event) {
     var $target = $(event.currentTarget);

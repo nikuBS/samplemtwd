@@ -18,19 +18,11 @@ class PaymentRealtimeController extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     this.apiService.request(API_CMD.BFF_07_0021, {}).subscribe((resp) => {
-      this.renderView(res, 'payment.realtime.html', {
+      res.render('payment.realtime.html', {
         list: this.getResult(resp),
         svcInfo: this.getSvcInfo(svcInfo)
       });
     });
-  }
-
-  public renderView(res: Response, view: string, data: any): any {
-    if (data.code === undefined) {
-      res.render(view, data);
-    } else {
-      res.render(PAYMENT_VIEW.ERROR, data);
-    }
   }
 
   private getResult(resp: any): any {
@@ -49,6 +41,7 @@ class PaymentRealtimeController extends TwViewController {
         data.svcName = SVC_CD[data.svcCd];
       });
     }
+    list.code = API_CODE.CODE_00;
     return list;
   }
 
