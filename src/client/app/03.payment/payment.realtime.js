@@ -223,13 +223,9 @@ Tw.PaymentRealtime.prototype = {
       payovrBankCd: this.$refundWrap.find('.select-bank').attr('id'),
       payovrBankNum: $.trim(this.$refundWrap.find('.account-number').val()),
       payovrCustNm: $.trim(this.$refundWrap.find('.name').data('value')),
-      drwagrPrfKeyVal: '',
-      acntNum: this.$autoPayInfo.attr('acnt-num').toString(),
-      payAmt: this.$amount.toString(),
       bankOrCardCode: this.$autoWrap.find('.select-bank').attr('id'),
       bankOrCardAccn: $.trim(this.$autoWrap.find('.account-number').val()),
-      unpaidBillList: this._getCheckedBillList(),
-      recCnt1: this._getCheckedBillList().length.toString()
+      unpaidBillList: this._getCheckedBillList()
     };
     return reqData;
   },
@@ -254,16 +250,11 @@ Tw.PaymentRealtime.prototype = {
       payovrBankCd: this.$cardWrap.find('.select-bank').attr('id'),
       payovrBankNum: $.trim(this.$cardWrap.find('.account-number').val()),
       payovrCustNm: $.trim(this.$cardWrap.find('.name').data('value')),
-      drwagrPrfKeyVal: '',
-      acntNum: this.$autoPayInfo.attr('acnt-num').toString(),
-      payAmt: this.$amount.toString(),
       bankOrCardAccn: $.trim(this.$cardNumber.val()),
       cdexpy: this.$cardY.val(),
       cdexpm: this.$cardM.val(),
       instmm: this.$cardTypeSelector.attr('id').toString(),
-      ccPwd: this.$cardPw.val(),
-      unpaidBillList: this._getCheckedBillList(),
-      recCnt1: this._getCheckedBillList().length.toString()
+      unpaidBillList: this._getCheckedBillList()
     };
     return reqData;
   },
@@ -355,6 +346,7 @@ Tw.PaymentRealtime.prototype = {
     $target.find('.bank-name').text(this.$autoWrap.find('.select-bank').text());
     $target.find('.refund-bank-name').text(this.$refundWrap.find('.select-bank').text());
     $target.find('.date').text(Tw.DateHelper.getCurrentDateTime(new Date()));
+    $target.find('.payAmt').text(Tw.FormatHelper.addComma(this.$amount.toString()));
 
     if (type === 'point') {
       $target.find('.bank-number').text(this.$pointCardNumber.text());
@@ -393,7 +385,7 @@ Tw.PaymentRealtime.prototype = {
           list = [];
           var obj = {
             invDt: invDt,
-            billSvcMgmtNum: billSvcMgmtNum,
+            biillSvcMgmtNum: billSvcMgmtNum,
             billAcntNum: billAcntNum,
             payAmt: payAmt
           };
@@ -420,20 +412,20 @@ Tw.PaymentRealtime.prototype = {
   },
   _getTypeList: function () {
     return [
-      { 'attr': 'id="000"', text: Tw.PAYMENT_TYPE['000'] },
-      { 'attr': 'id="001"', text: Tw.PAYMENT_TYPE['001'] },
-      { 'attr': 'id="002"', text: Tw.PAYMENT_TYPE['002'] },
-      { 'attr': 'id="003"', text: Tw.PAYMENT_TYPE['003'] },
-      { 'attr': 'id="004"', text: Tw.PAYMENT_TYPE['004'] },
-      { 'attr': 'id="005"', text: Tw.PAYMENT_TYPE['005'] },
-      { 'attr': 'id="006"', text: Tw.PAYMENT_TYPE['006'] },
-      { 'attr': 'id="007"', text: Tw.PAYMENT_TYPE['007'] },
-      { 'attr': 'id="008"', text: Tw.PAYMENT_TYPE['008'] },
-      { 'attr': 'id="009"', text: Tw.PAYMENT_TYPE['009'] },
-      { 'attr': 'id="010"', text: Tw.PAYMENT_TYPE['010'] },
-      { 'attr': 'id="011"', text: Tw.PAYMENT_TYPE['011'] },
-      { 'attr': 'id="012"', text: Tw.PAYMENT_TYPE['012'] },
-      { 'attr': 'id="024"', text: Tw.PAYMENT_TYPE['024'] }
+      { 'attr': 'id="0"', text: Tw.PAYMENT_TYPE['000'] },
+      { 'attr': 'id="1"', text: Tw.PAYMENT_TYPE['001'] },
+      { 'attr': 'id="2"', text: Tw.PAYMENT_TYPE['002'] },
+      { 'attr': 'id="3"', text: Tw.PAYMENT_TYPE['003'] },
+      { 'attr': 'id="4"', text: Tw.PAYMENT_TYPE['004'] },
+      { 'attr': 'id="5"', text: Tw.PAYMENT_TYPE['005'] },
+      { 'attr': 'id="6"', text: Tw.PAYMENT_TYPE['006'] },
+      { 'attr': 'id="7"', text: Tw.PAYMENT_TYPE['007'] },
+      { 'attr': 'id="8"', text: Tw.PAYMENT_TYPE['008'] },
+      { 'attr': 'id="9"', text: Tw.PAYMENT_TYPE['009'] },
+      { 'attr': 'id="10"', text: Tw.PAYMENT_TYPE['010'] },
+      { 'attr': 'id="11"', text: Tw.PAYMENT_TYPE['011'] },
+      { 'attr': 'id="12"', text: Tw.PAYMENT_TYPE['012'] },
+      { 'attr': 'id="24"', text: Tw.PAYMENT_TYPE['024'] }
     ];
   },
   _getPointList: function () {
