@@ -34,6 +34,9 @@ class PaymentRealtimeController extends TwViewController {
 
   private parseData(list: any): any {
     if (!FormatHelper.isEmpty(list)) {
+      if (list.length === 1) {
+        list.isAlone = true;
+      }
       list.map((data) => {
         data.invYearMonth = DateHelper.getShortDateWithFormat(data.invDt, 'YYYY.MM');
         data.intMoney = this.removeZero(data.invAmt);

@@ -22,13 +22,14 @@
         <div class="payment-select">
             <h3>납부선택</h3>
             <div class="pay-breakdown">
-                <h4 class="blind">개별 회선 납부 내역 제공</h4>
+                <h4 class="blind">납부 가능 내역 제공</h4>
                 <div class="widget">
                     <div class="widget-box check">
-                        <ul class="select-list" role="group">
+                        <ul class="select-list payment-list" role="group">
                             <% for (var i = 0; i < list.length; i++) { %>
                             <li class="checkbox type01 checkbox-main" role="checkbox" aria-checked="false">
-                                <input type="checkbox" name="checkbox" value="휴대폰 010-12**-45**" title="체크박스" data-value="<%= list[i].intMoney %>" />
+                                <input type="checkbox" name="checkbox" value="<%= list[i].svcNum %>" title="체크박스" data-value="<%= list[i].intMoney %>"
+                                       <% if (list.isAlone) { %>checked="checked" disabled="disabled"<% } %> />
                                 <div class="pay-maininfo">
                                     <span class="service-sort"><span class="blind svc-name"><%= list[i].svcName %></span><%= list[i].svcName %></span>
                                     <span class="line-info"><span class="blind svc-number"><%= list[i].svcNum %></span><%= list[i].svcNum %></span>
@@ -54,7 +55,7 @@
     <div class="cont-box">
         <h3 class="contents-tit">납부하실 요금</h3>
         <div class="payment-all">
-            <span>총 <em class="total-amount">0</em> 원</span>
+            <span>총 <em class="total-amount"><% if (list.isAlone) { %><%= list[0].invMoney %><% } else { %>0<% } %></em> 원</span>
         </div>
         <div class="contents-btn">
             <ul class="bt-slice">

@@ -40,6 +40,15 @@ Tw.PaymentRealtime.prototype = {
     this.$point = this.$container.find('.point');
     this.$pointPw = this.$container.find('.point-pw');
     this.$pointBox = this.$container.find('.point-box');
+
+    this._init();
+  },
+  _init: function () {
+    var $target = this.$container.find('.payment-list > li > input');
+    if ($target.attr('disabled') === 'disabled') {
+      this.$amount = $target.data('value');
+      this.$container.find('.total-amount').text(Tw.FormatHelper.addComma(this.$amount.toString()));
+    }
   },
   _bindEvent: function () {
     this.$container.on('keyup', '.only-number', $.proxy(this._onlyNumber, this));
