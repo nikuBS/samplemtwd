@@ -3,7 +3,7 @@
 * Author: 이정민 (skt.p130713@partner.sk.com)
 * Date: 2018.07.05
 -->
-<div class="bill-guide-component" cur-bill-type="<%= curBillGuide.curBillType %>" cur-bill-type-nm="<%= curBillGuide.curBillTypeNm %>" cur-bill-type-component="<%= curBillGuide.component %>">
+<div class="bill-guide-component" cur-bill-type="<%= curBillGuide.curBillType %>" cur-bill-type-nm="<%= curBillGuide.curBillTypeNm %>" cur-bill-type-component="<%= curBillGuide.component %>" wire-cur-bill-type="<%= curBillGuide.wireCurBillType %>" svc-attr-cd="<%= svcInfo.svcAttrCd %>">
     <hr class="cont-sp type1" aria-hidden="true"/>
     <div class="cont-box">
         <div class="step" step="1">
@@ -15,7 +15,7 @@
                         <div class="address-form">
                             <span class="inputbox bt-add">
                                 <span class="input">
-                                    <input type="text" class="no-bg-color input-addr1" title="우편번호" value="<%= curBillGuide.zip %>" disabled="disabled" form-element="input" form-element-key="zip">
+                                    <input type="text" class="no-bg-color input-addr1" title="우편번호" value="임시 우편번호" disabled="disabled" form-element="input" form-element-key="zip">
                                     <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
                                 </span>
                                 <span class="bt-box">
@@ -24,13 +24,13 @@
                             </span>
                             <span class="inputbox">
                                 <span class="input">
-                                  <input type="text" class="no-bg-color input-addr2" title="주소" value="<%= curBillGuide.basAddr %>" disabled="disabled" form-element="input" form-element-key="basAddr">
+                                  <input type="text" class="no-bg-color input-addr2" title="주소" value="임시 주소" disabled="disabled" form-element="input" form-element-key="basAddr">
                                   <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
                                 </span>
                             </span>
                             <span class="inputbox">
                                 <span class="input">
-                                  <input type="text" title="상세주소"  class="input-addr3" value="<%= curBillGuide.dtlAddr %>" form-element="input" form-element-key="dtlAddr">
+                                  <input type="text" title="상세주소"  class="input-addr3" form-element="input" form-element-key="dtlAddr">
                                   <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
                                 </span>
                             </span>
@@ -84,7 +84,7 @@
                     <dd class="box-block-list2">
                         <span class="inputbox">
                             <span class="input">
-                                <% if (curBillGuide.svcInfo.svcAttrCd === 'S1' || curBillGuide.svcInfo.svcAttrCd === 'S2' || curBillGuide.svcInfo.svcAttrCd === 'S3') { %>
+                                <% if (svcInfo.svcAttrCd === 'S1' || svcInfo.svcAttrCd === 'S2' || svcInfo.svcAttrCd === 'S3') { %>
                                   <input type="text" placeholder="휴대폰번호입력 (숫자만 입력)" title="휴대폰번호 입력 (숫자만 입력)" class="input-phone" maxlength="11" onInput="return Tw.InputHelper.inputNumberOnly(this);" value="<%= curBillGuide.wireSmtBillSvcNum %>" form-element="input" form-element-key="wireSmtBillSvcNum">
                                 <% } else { %>
                                   <input type="text" placeholder="휴대폰번호입력 (숫자만 입력)" title="휴대폰번호 입력 (숫자만 입력)" class="input-phone" maxlength="11" onInput="return Tw.InputHelper.inputNumberOnly(this);" value="<%= curBillGuide.cntcNum1 %>" form-element="input" form-element-key="cntcNum1">

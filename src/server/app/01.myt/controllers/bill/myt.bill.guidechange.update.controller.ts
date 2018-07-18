@@ -6,7 +6,11 @@
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
 import { API_CODE } from '../../../../types/api-command.type';
-import { BILL_GUIDE_TYPE, LINE_NAME } from '../../../../types/bff-common.type';
+import {
+  BILL_GUIDE_TYPE,
+  WIRE_BILL_GUIDE_TYPE,
+  BILL_GUIDE_TYPE_WITH_WIRE
+} from '../../../../types/bff-common.type';
 import { API_CMD } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 
@@ -30,18 +34,17 @@ class MyTBillUpdate extends TwViewController {
     Observable.combineLatest(
       billTypeListRequest,
     ).subscribe(([_billTypesList]) => {
-      console.log('~~~~~~~~svcInfo', svcInfo);
       const _curBillGuide = this.getResult(_billTypesList);
-      const anotherBillGuideType = (_curBillGuide.curBillType === BILL_GUIDE_TYPE.TWORLD) ? BILL_GUIDE_TYPE.BILL_LETTER : BILL_GUIDE_TYPE.TWORLD;
-      // svcInfo.svcAttrCd = 'M1';
-      // _curBillGuide['curBillType'] = 'P';
-      // _curBillGuide['isusimchk'] = 'Y';
-      // _curBillGuide['curBillTypeNm'] = '티월드';
-
-      _curBillGuide['component'] = BILL_GUIDE_TYPE_COMPONENT[_curBillGuide['curBillType']];
-      _curBillGuide['svcInfo'] = svcInfo;
-      console.log('~~~~~~~~~_curBillGuide', _curBillGuide);
-      console.log('~~~~~~~~~svcInfo', svcInfo);
+      const isWire = (svcInfo.svcAttrCd === 'S1' || svcInfo.svcAttrCd === 'S2' || svcInfo.svcAttrCd === 'S3') ? true : false;
+      let anotherBillGuideType;
+      if (isWire) {
+        _curBillGuide['component'] = BILL_GUIDE_TYPE_COMPONENT[BILL_GUIDE_TYPE_WITH_WIRE[_curBillGuide['curBillType']]];
+        anotherBillGuideType = (_curBillGuide.curBillType === WIRE_BILL_GUIDE_TYPE.TWORLD) ? WIRE_BILL_GUIDE_TYPE.BILL_LETTER : WIRE_BILL_GUIDE_TYPE.TWORLD;
+      } else {
+        _curBillGuide['component'] = BILL_GUIDE_TYPE_COMPONENT[_curBillGuide['curBillType']];
+        anotherBillGuideType = (_curBillGuide.curBillType === BILL_GUIDE_TYPE.TWORLD) ? BILL_GUIDE_TYPE.BILL_LETTER : BILL_GUIDE_TYPE.TWORLD;
+      }
+      _curBillGuide['wireCurBillType'] = _curBillGuide['curBillType'];
       this.renderView(res, 'bill/myt.bill.guidechange.update.html', {
         curBillGuide: _curBillGuide,
         curBillGuideData: JSON.stringify(_curBillGuide),

@@ -4,7 +4,7 @@
  * Date: 2018.07.05
  */
 
-Tw.MyTBillGuideChange = function (rootEl) {
+Tw.MyTBillGuidechangeChange = function (rootEl) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -37,9 +37,10 @@ Tw.MyTBillGuideChange = function (rootEl) {
   this._init();
 };
 
-Tw.MyTBillGuideChange.prototype = {
+Tw.MyTBillGuidechangeChange.prototype = {
   _assign: function () {
     this._curBillGuideType = this.$container.data('cur-bill-guide-type');
+    this._svcAttrCd = this.$container.data('svc-attr-cd');
     this._$btnDropdown = this.$container.find('.bt-dropdown');
     this._$componentWrap = this.$container.find('.component-wrap');
     this._$selectedBillGuideTypeName = this.$container.find('.selected-bill-guide-type-name');
@@ -90,7 +91,7 @@ Tw.MyTBillGuideChange.prototype = {
     if ( this._billGuideUpdateInstance ) {
       this._billGuideUpdateInstance.destroy();
     }
-    this._billGuideUpdateInstance = new Tw.MyTBillGuideUpdateClasses[componentClassName]($component, {
+    this._billGuideUpdateInstance = new Tw.MyTBillGuidechangeUpdateClasses[componentClassName]($component, {
       fromChange: true,
       beforeBillGuideType: this._curBillGuideType
     });
@@ -100,7 +101,13 @@ Tw.MyTBillGuideChange.prototype = {
 
   _init: function () {
     var queryParams = Tw.UrlHelper.getQueryParams();
-    var selectedBillGuideType = (queryParams.selectedBillGuideType) ? queryParams.selectedBillGuideType : Tw.BILL_GUIDE_TYPE.TWORLD;
+    var selectedBillGuideType;
+    if (this._svcAttrCd === 'S1' || this._svcAttrCd === 'S2' || this._svcAttrCd === 'S3') {
+      selectedBillGuideType = (queryParams.selectedBillGuideType) ? Tw.WIRE_BILL_GUIDE_TYPE[queryParams.selectedBillGuideType] : Tw.BILL_GUIDE_TYPE.TWORLD;
+    } else {
+      selectedBillGuideType = (queryParams.selectedBillGuideType) ? queryParams.selectedBillGuideType : Tw.BILL_GUIDE_TYPE.TWORLD;
+    }
+
     this._setBillGuideComponent(selectedBillGuideType);
   }
 };
