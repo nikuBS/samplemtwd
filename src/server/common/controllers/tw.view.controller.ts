@@ -62,8 +62,10 @@ abstract class TwViewController {
         } else if ( error === API_LOGIN_ERROR.ICAS3235 ) {
           // 휴면계정
           res.redirect('/auth/login/dormancy');
+        } else if ( error === API_LOGIN_ERROR.ATH1003 ) {
+          res.redirect('/auth/login/exceed-fail');
         } else {
-          res.send(error);
+          res.redirect('/auth/login/fail?errorCode=' + error);
         }
       });
     } else {
@@ -78,8 +80,10 @@ abstract class TwViewController {
         } else if ( error === API_LOGIN_ERROR.ICAS3235 ) {
           // 휴면계정
           res.redirect('/auth/login/dormancy');
+        } else if ( error === API_LOGIN_ERROR.ATH1003 ) {
+          res.redirect('/auth/login/exceed-fail');
         } else {
-          res.send(error);
+          res.redirect('/auth/login/fail?errorCode=' + error);
         }
       });
     }
