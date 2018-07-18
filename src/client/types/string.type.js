@@ -193,7 +193,17 @@ Tw.MSG_MYT = {
       'chgBtnNm': '"기타(우편)"로 변경하기',
       'recommend': false
     }
-  ]
+  ],
+  BILL_PREVIEW: {
+    TWORLD : '<img src="/img/dummy/ex_preview2.jpg" alt="이달청구요금">',
+    BILL_LETTER : '<img src="/img/dummy/ex_preview6.jpg" alt="이달 요금안내 유형">',
+    SMS_HP : '<img src="/img/dummy/ex_preview9.jpg" alt="요금 안내서 문자서비스">', // 문자 (휴대폰)
+    SMS_INT : '<img src="/img/dummy/ex_preview3.jpg" alt="요금 안내서 문자서비스">', // 문자 (인터넷/집전화/IPTV)
+    EMAIL_HP : '<img src="/img/dummy/ex_preview7.jpg" alt="요금 안내서 이메일서비스">', // 이메일 (휴대폰)
+    EMAIL_INT : '<img src="/img/dummy/ex_preview5.jpg" alt="요금 안내서 이메일서비스">', // 이메일 (인터넷/집전화/IPTV , T-WIBRO)
+    ETC_HP : '<img src="/img/dummy/ex_preview10.jpg" alt="요금 안내서 우편서비스">', // 기타(우편) : 휴대폰
+    ETC_INT : '<img src="/img/dummy/ex_preview4.jpg" alt="요금 안내서 우편서비스">', // 기타(우편) : (인터넷/집전화/IPTV , T-WIBRO)
+  }
 };
 
 Tw.MSG_RECHARGE = {

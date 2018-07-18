@@ -168,10 +168,15 @@ Tw.MyTBillGuidechange.prototype = {
       - 하단에 안내서별 안내문구 변환
    */
   _changeTabAndBottomText: function ($layer, billType) {
-    // Bill Letter + 문자(Q)
+    var imgData = Tw.MSG_MYT.BILL_PREVIEW;
+    // Bill Letter + 문자(Q) 일때는 탭이 없다.
     if ('Q' === billType) {
       $layer.find('._contents-tab').hide();
-      $layer.find('._contents-normal').show();
+      var $contents = $layer.find('._contents-normal');
+
+      var path = imgData.BILL_LETTER+imgData.SMS_HP;
+      $contents.find('.pay_preview').html(path);
+      $contents.show();
     } else {
       $layer.find('._contents-normal').hide();
       if (!['P', '2', '1'].includes(billType)) {
@@ -179,12 +184,56 @@ Tw.MyTBillGuidechange.prototype = {
       } else {
         $layer.find('#aria-tab3').show();
       }
+
+      var $tabContents = $layer.find('.tab-contents');
+      // 안내서에 해당하는 회선별 미리보기 셋팅
+      switch (billType) {
+        // T world 확인
+        case 'P':
+          $tabContents.find('.pay_preview').html( imgData.TWORLD );
+          break;
+        // Bell Letter
+        case 'H' :
+        case 'J' :
+          $tabContents.find('.pay_preview').html( imgData.BILL_LETTER );
+          break;
+        // 문자
+        case 'B' :
+          $tabContents.find('.pay_preview').eq(0).html( imgData.SMS_HP );
+          $tabContents.find('.pay_preview').eq(1).html( imgData.SMS_INT );
+          break;
+        //  이메일
+        case '2' :
+          $tabContents.find('.pay_preview').eq(0).html( imgData.EMAIL_HP );
+          $tabContents.find('.pay_preview').eq(1).html( imgData.EMAIL_INT );
+          $tabContents.find('.pay_preview').eq(2).html( imgData.EMAIL_INT );
+          break;
+        // Bll Letter + 이메일
+        case 'I' :
+        case 'K' :
+          $tabContents.find('.pay_preview').eq(0).html( imgData.BILL_LETTER+imgData.EMAIL_HP );
+          $tabContents.find('.pay_preview').eq(1).html( imgData.BILL_LETTER+imgData.EMAIL_INT );
+          break;
+        // 문자 + 이메일
+        case 'A' :
+          $tabContents.find('.pay_preview').eq(0).html( imgData.SMS_HP+imgData.EMAIL_HP );
+          $tabContents.find('.pay_preview').eq(1).html( imgData.SMS_INT+imgData.EMAIL_INT );
+          break;
+        case '1' :
+          $tabContents.find('.pay_preview').eq(0).html( imgData.ETC_HP );
+          $tabContents.find('.pay_preview').eq(1).html( imgData.ETC_INT );
+          $tabContents.find('.pay_preview').eq(2).html( imgData.ETC_INT );
+          break;
+        default : break;
+      }
+
+      // 첫번째 탭 활성화
       $layer.find('[role=tab]', '._contents-tab').eq(0).attr('aria-selected','true').siblings().attr('aria-selected','false');
       this._previewOnClickTab($layer);
       $layer.find('._contents-tab').show();
     }
 
-    // 회선이 인터넷/집전화/IPTV 이면서 안내서가 Bill Letter 확인 일 때
+    // 버튼 하단 안내문구 : 회선이 인터넷/집전화/IPTV 이면서 안내서가 Bill Letter 확인 일 때
     $layer.find('._bottom-text1').hide();
     $layer.find('._bottom-text2').hide();
     if ('S' === this._getServiceType() && 'H' === billType) {
