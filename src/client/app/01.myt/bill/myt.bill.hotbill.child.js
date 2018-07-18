@@ -48,19 +48,18 @@ Tw.MyTBillHotBillChild.prototype = {
         gubun: gubun || Tw.MyTBillHotBill.PARAM.TYPE.CURRENT,
         childSvcMgmtNum: childNum
       })
-      .done($.proxy(this._onReceivedBillData, this))
+      .done($.proxy(this._onReceivedBillData, this, gubun, childNum))
       .fail($.proxy(this._onErrorReceivedBillData, this));
   },
 
   _sendBillRequest: function (gubun, childnum) {
     this._apiService
-      .request(Tw.API_CMD.BFF_05_0022, {
+      .request(Tw.API_CMD.BFF_05_0035, {
         gubun: gubun || Tw.MyTBillHotBill.PARAM.TYPE.CURRENT,
         childSvcMgmtNum: childnum
       })
       .done($.proxy(this._startGetBillResponseTimer, this, gubun, childnum))
       .fail($.proxy(this._onErrorReceivedBillData, this));
-
   },
 
   _startGetBillResponseTimer: function (gubum, num) {
@@ -68,7 +67,7 @@ Tw.MyTBillHotBillChild.prototype = {
     this._resTimerID = setTimeout(this._getBillResponse(gubum, num), 500);
   },
 
-  _onReceivedBillData: function (resp) {
+  _onReceivedBillData: function (gubun, childNum, resp) {
     if ( this._resTimerID ) {
       clearTimeout(this._resTimerID);
       this._resTimerID = null;
@@ -87,7 +86,7 @@ Tw.MyTBillHotBillChild.prototype = {
         this._preBillAvailable = (billData.bf_mth_yn === 'Y');
 
         //자녀 핸드폰: 7일까지 전월요금보기 보이기
-        if ( day <= 7) {
+        if ( day <= 7 ) {
           this.$btPreviousBill.show();
         }
 
@@ -104,6 +103,11 @@ Tw.MyTBillHotBillChild.prototype = {
         this._renderBillGroup(group);
       }
     } else {
+      if ( resp.code === Tw.MyTBillHotBill.CODE.ERROR.NO_BILL_REQUEST_EXIST ) {
+        //Hotbill 요청 내역 존재하지 않는 애러일 경우 재요청한다
+        this._sendBillRequest(gubun, childNum);
+        return;
+      }
       this._onErrorReceivedBillData();
     }
     skt_landing.action.loading.off({ ta: '.container' });
@@ -162,5 +166,15 @@ Tw.MyTBillHotBillChild.prototype = {
   _onClickChildButton: function (e) {
     this._sendBillRequest(Tw.MyTBillHotBill.PARAM.TYPE.CURRENT, e.target.id);
     Tw.Popup.close();
+  },
+
+  _onErrorReceivedBillData: function (e) {
+
+    Tw.Logger.error('[Myt > Bill > HotBill]');
+    Tw.Logger.error(e);
+    //TODO error alert 공통모듈
+    this._popupService.openAlert(Tw.MSG_MYT.HOTBILL_FAIL_REQUEST, Tw.MSG_MYT.HOTBILL_FAIL_REQUEST_TITLE, function () {
+      location.href = '/myt';
+    });
   }
 };

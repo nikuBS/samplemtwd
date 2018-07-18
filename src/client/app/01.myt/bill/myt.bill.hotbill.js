@@ -5,7 +5,6 @@
  */
 Tw.MyTBillHotBill = function (rootEl) {
   this.SVC_TYPE = { MOBILE: 'M1', TPOCKET: 'M3' };
-
   this._children = null;
   this.$container = rootEl;
   this._apiService = Tw.Api;
@@ -16,8 +15,7 @@ Tw.MyTBillHotBill = function (rootEl) {
   this._bindEvent();
   this._billInfoAvailable = this.$amount.length > 0; //서버날짜로 일 별 노출조건 세팅해서 내려옴
   if ( this._billInfoAvailable ) {
-    skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
-    this._resTimerID = setTimeout(this._getBillResponse(Tw.MyTBillHotBill.PARAM.TYPE.CURRENT), 500);
+    this._startGetBillResponseTimer(Tw.MyTBillHotBill.PARAM.TYPE.CURRENT);
     Handlebars.registerHelper('isBill', function (val, options) {
       return (Tw.MyTBillHotBill.NO_BILL_FIELDS.indexOf(val) < 0 ) ? options.fn(this) : options.inverse(this);
     });
@@ -43,11 +41,25 @@ Tw.MyTBillHotBill.prototype = {
   _getBillResponse: function (gubun) {
     this._apiService
       .request(Tw.API_CMD.BFF_05_0022, { gubun: gubun || Tw.MyTBillHotBill.PARAM.TYPE.CURRENT })
-      .done($.proxy(this._onReceivedBillData, this))
+      .done($.proxy(this._onReceivedBillData, this, gubun))
       .fail($.proxy(this._onErrorReceivedBillData, this));
   },
 
-  _onReceivedBillData: function (resp) {
+  _sendBillRequest: function (gubun) {
+    this._apiService
+      .request(Tw.API_CMD.BFF_05_0035, {
+        gubun: gubun
+      })
+      .done($.proxy(this._startGetBillResponseTimer, this, gubun))
+      .fail($.proxy(this._onErrorReceivedBillData, this));
+  },
+
+  _startGetBillResponseTimer: function (gubun) {
+    skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
+    this._resTimerID = setTimeout(this._getBillResponse(gubun), 500);
+  },
+
+  _onReceivedBillData: function (gubun, resp) {
     if ( this._resTimerID ) {
       clearTimeout(this._resTimerID);
       this._resTimerID = null;
@@ -113,12 +125,20 @@ Tw.MyTBillHotBill.prototype = {
         }
       }
     } else {
+      if ( resp.code === Tw.MyTBillHotBill.CODE.ERROR.NO_BILL_REQUEST_EXIST ) {
+        //Hotbill 요청 내역 존재하지 않는 애러일 경우 재요청한다
+        this._sendBillRequest(gubun);
+        return;
+      }
       this._onErrorReceivedBillData();
     }
     skt_landing.action.loading.off({ ta: '.container' });
   },
 
-  _onErrorReceivedBillData: function () {
+  _onErrorReceivedBillData: function (e) {
+    Tw.Logger.error('[Myt > Bill > HotBill]');
+    Tw.Logger.error(e);
+
     //TODO error alert 공통모듈
     this._popupService.openAlert(Tw.MSG_MYT.HOTBILL_FAIL_REQUEST, Tw.MSG_MYT.HOTBILL_FAIL_REQUEST_TITLE, function () {
       location.href = '/myt';
@@ -190,6 +210,11 @@ Tw.MyTBillHotBill.PARAM = {
   TYPE: {
     CURRENT: 'G',
     PREVIOUS: 'Q'
+  }
+};
+Tw.MyTBillHotBill.CODE = {
+  ERROR: {
+    NO_BILL_REQUEST_EXIST: 'ZINVN8888'
   }
 };
 /**
