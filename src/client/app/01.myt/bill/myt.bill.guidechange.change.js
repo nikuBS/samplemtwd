@@ -114,7 +114,7 @@ Tw.MyTBillGuidechangeChange.prototype = {
   },
 
   _closeStep: function() {
-    window.history.back();
+    window.location.href = '/myt/bill/guidechange';
   }
 
 };
