@@ -31,7 +31,7 @@ Tw.mytBillBillguideSubSelPayment = function (rootEl, resData) {
     weekdaysShort: ["일","월","화","수","목","금","토"],
   });
 
-  return this;
+  this._init();
 };
 
 Tw.mytBillBillguideSubSelPayment.prototype = {
