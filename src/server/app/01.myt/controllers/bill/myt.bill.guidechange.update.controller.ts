@@ -30,7 +30,6 @@ class MyTBillUpdate extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    console.log('~~~~~~~~svcInfo', svcInfo);
     const billTypeListRequest: Observable<any> = this.apiService.request(API_CMD.BFF_05_0025, {});
     Observable.combineLatest(
       billTypeListRequest,

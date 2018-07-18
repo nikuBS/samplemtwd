@@ -94,9 +94,7 @@ class MyTBillChange extends TwViewController {
     Observable.combineLatest(
       billTypeListRequest,
     ).subscribe(([_billTypesList]) => {
-      console.log('~~~~~~~~~svcInfo', svcInfo);
       const _curBillGuide = this.getResult(_billTypesList);
-      console.log('~~~~~~~~~_curBillGuide', _curBillGuide);
       let tmpBillGuideTypes;
       // _svcInfo['svcAttrCd'] = 'S1';
       switch ( svcInfo.svcAttrCd ) {
@@ -118,17 +116,8 @@ class MyTBillChange extends TwViewController {
       const billGuideTypes = tmpBillGuideTypes.map((billGuideType) => {
         billGuideType['kidsYn'] = _curBillGuide['kidsYn'];
         billGuideType['beforeBillType'] = _curBillGuide['curBillType'];
-        // billGuideType['svcInfo'] = svcInfo;
-
-        // ---------------------------------
-        // billGuideType['kidsYn'] = 'Y';
-        // billGuideType['svcInfo'].svcAttrCd = 'M1';
-        // billGuideType['curBillType'] = 'P';
-        // billGuideType['isusimchk'] = 'Y';
-        // billGuideType['curBillTypeNm'] = '티월드';
         return billGuideType;
       });
-      console.log('~~~~~~~~~~~~~~`billGuideTypes', billGuideTypes);
 
       this.renderView(res, 'bill/myt.bill.guidechange.change.html', {
         // svcInfo: _svcInfo,
