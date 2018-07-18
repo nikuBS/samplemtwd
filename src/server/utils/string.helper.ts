@@ -10,6 +10,14 @@ class StringHelper {
     return str;
   }
 
+  /**
+   * Replaces cellphone number string with a dashed cellphone number (01012341234 -> 010-1234-1234)
+   * @param strCellphoneNum
+   * @returns {String}
+   */
+  static phoneStringToDash(strCellphoneNum: string): string {
+    return strCellphoneNum.replace(/(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/, '$1-$2-$3');
+  }
 }
 
 export default StringHelper;
