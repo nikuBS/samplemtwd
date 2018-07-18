@@ -25,6 +25,7 @@ import AuthTidSignUpForeigner from './controllers/tid/auth.tid.signup-foreigner.
 import AuthLogoutComplete from './controllers/logout/auth.logout.complete.controller';
 import AuthLogoutExpire from './controllers/logout/auth.logout.expire.controller';
 import AuthLoginRoute from './controllers/login/auth.login.route.controller';
+import AuthLoginExceedFail from './controllers/login/auth.login.exceed-fail.controller';
 
 class AuthRouter extends TwRouter {
   constructor() {
@@ -35,6 +36,7 @@ class AuthRouter extends TwRouter {
     this.controllers.push({ url: '/line/register/corporation', controller: new AuthLineCopRegister() });
     this.controllers.push({ url: '/line/register/empty', controller: new AuthLineEmptyRegister() });
     // login
+    this.controllers.push({ url: '/login/exceed-fail', controller: new AuthLoginExceedFail() });
     this.controllers.push({ url: '/login/fail', controller: new AuthLoginFail() });
     this.controllers.push({ url: '/login/dormancy', controller: new AuthLoginDormancy() });
     this.controllers.push({ url: '/login/find-id-pwd', controller: new AuthLoginFindIdPwd() });

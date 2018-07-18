@@ -27,7 +27,7 @@ Tw.MytUsageChange.prototype = {
       .done(function (resp) {
         if ( resp.code === Tw.API_CODE.CODE_00 ) {
           this._goMyt();
-        } else if ( resp.code === Tw.API_CODE.CODE_06 ) {
+        } else if ( resp.code === Tw.API_CODE.ATH3000 || resp.code === Tw.API_CODE.BFF9000 ) {
           // TODO: add mdn(svcNum)
           this._openSvcPwdPopup('mdn', svcMgmtNum);
         }

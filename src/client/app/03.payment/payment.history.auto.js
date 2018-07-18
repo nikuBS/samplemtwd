@@ -49,7 +49,7 @@ Tw.PaymentHistoryAuto.prototype = {
 
     this.apiName = Tw.API_CMD.BFF_07_0037;
 
-    this.autoPaymentApplyURL = '/payment/realtime';
+    this.emptyURL = '/payment/auto';
   },
 
   _getData: function () {
@@ -92,7 +92,7 @@ Tw.PaymentHistoryAuto.prototype = {
       }, this));
 
     } else {
-      res.autoPaymentApplyURL = this.autoPaymentApplyURL;
+      this.result.removeURL = this.emptyURL;
     }
 
     var list = new this.common.listWithTemplate();
