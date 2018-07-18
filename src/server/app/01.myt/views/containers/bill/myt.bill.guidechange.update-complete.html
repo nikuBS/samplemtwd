@@ -43,7 +43,7 @@
                                         <dd class="tx-data"><%= curBillGuide.curBillTypeNm %></dd>
                                     </dl>
                                 </li>
-                                <%- include('../../components/billguide/'+ component +'-info.component.html') %>
+                                <%- include('../../components/billguide/'+ component +'-info.component.html', { svcInfo: svcInfo }) %>
                             </ul>
                         </div>
                         <div class="bt-gap">
@@ -74,7 +74,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
     $(document).ready(function () {
-      new Tw.MyTBillGuideUpdateComplete($('#update-complete'))
+      new Tw.MyTBillGuidechangeUpdateComplete($('#update-complete'))
     });
 </script>
 <% include ../../components/end.component.html %>

@@ -30,7 +30,7 @@ Tw.RechargeCookizHistory.prototype = {
   },
 
   _cachedElement: function () {
-    this.$wrap_gift_history = $('#wrap_cookiz_recharge_histor');
+    this.$wrap_gift_history = $('#wrap_cookiz_recharge_history');
     this.$wrap_gift_block_history = $('#wrap_cookiz_recharge_auth_history');
     this.tpl_ting_item_history = Handlebars.compile($('#tpl_cookiz_recharge_history').text());
     this.tpl_ting_item_no_history = Handlebars.compile($('#tpl_ting_item_no_history').text());
@@ -62,7 +62,6 @@ Tw.RechargeCookizHistory.prototype = {
     var elBtnMore = $('.gift-bt-more')[nCurrentTabIndex];
 
     if ( nCurrentTabIndex === 0 ) {
-
       if ( this.tab1_list.length <= this.DEFAULT_LIST_COUNT ) {
         $(elBtnMore).hide();
       } else {
@@ -84,6 +83,7 @@ Tw.RechargeCookizHistory.prototype = {
       $(elBtnMore).hide();
     } else {
       $(elBtnMore).find('.num').text(length - listIndex);
+      $(elBtnMore).show();
     }
   },
 
@@ -112,7 +112,6 @@ Tw.RechargeCookizHistory.prototype = {
 
   _onSuccessFetchData: function (res) {
     var nCurrentTabIndex = this._getCurrentTabIndex();
-
     if ( res.code === Tw.API_CODE.CODE_00 ) {
 
       if ( res.result.length === 0 ) {
@@ -121,15 +120,13 @@ Tw.RechargeCookizHistory.prototype = {
       }
 
       if ( nCurrentTabIndex === 0 ) {
-        // TEST MOCKUP DATA
-        res = $.extend(true, [], tab1_response);
+        res = $.extend(true, [], res);
         this.tab1_list = res.result;
         this._renderList(this._parseHistoryData(this.tab1_list.slice(0, this.tab1_listIndex)));
       }
 
       if ( nCurrentTabIndex === 1 ) {
-        // TEST MOCKUP DATA
-        res = $.extend(true, [], tab2_response);
+        res = $.extend(true, [], res);
         this.tab2_list = res.result;
         this._renderList(this._parseHistoryData(this.tab2_list.slice(0, this.tab2_listIndex)));
       }
@@ -159,7 +156,6 @@ Tw.RechargeCookizHistory.prototype = {
       item.amt = item.amt ? Tw.FormatHelper.addComma(item.amt) : '';
       item.topUpLimit = item.topUpLimit ? Tw.FormatHelper.addComma(item.topUpLimit) : '';
       item.opDt = Tw.DateHelper.getShortDateWithFormat(item.opDt, 'YYYY.MM.DD');
-      // item.svcNum = Tw.FormatHelper.conTelFormatWithDash(item.svcNum);
     });
   },
 
@@ -174,16 +170,18 @@ Tw.RechargeCookizHistory.prototype = {
     if ( nCurrentTabIndex === 0 ) {
       this.tab1_searchType = $searchType.val();
       this.tab1_searchPeriod = $searchPeriod.val();
+      this.tab1_listIndex = this.DEFAULT_LIST_COUNT;
     }
 
     if ( nCurrentTabIndex === 1 ) {
       this.tab2_searchType = $searchType.val();
       this.tab2_searchPeriod = $searchPeriod.val();
+      this.tab2_listIndex = this.DEFAULT_LIST_COUNT;
     }
 
     this._popupService.close();
 
-    var $wrap_tab_contents = $($('.tab-contents li').get(nCurrentTabIndex));
+    var $wrap_tab_contents = $($('.tab-contents [role="tabpanel"]').get(nCurrentTabIndex));
     var $btn_dropdown = $wrap_tab_contents.find('.bt-dropdown.small');
     $btn_dropdown.text(sType + ' · ' + sPeriod);
 
@@ -313,60 +311,4 @@ Tw.RechargeCookizHistory.prototype = {
   _cancelRecharge: function () {
     this._popupService.openAlert(Tw.MSG_GIFT.COOKIZ_A02);
   }
-};
-
-var tab1_response = {
-  'code': '00',
-  'msg': 'success',
-  'result': [
-    {
-      'opDt': '20180623',
-      'amt': '2000',
-      'opTypCd': '1',
-      'opTypNm': '후불충전',
-      'refundableYn': 'Y'
-    },
-    {
-      'opDt': '20180623',
-      'amt': '2000',
-      'opTypCd': '2',
-      'opTypNm': '후불충전',
-      'refundableYn': 'N'
-    },
-    {
-      'opDt': '20180623',
-      'amt': '2000',
-      'opTypCd': '3',
-      'opTypNm': '후불충전',
-      'refundableYn': 'Y'
-    },
-    {
-      'opDt': '20180623',
-      'amt': '2000',
-      'opTypCd': '4',
-      'opTypNm': '후불충전',
-      'refundableYn': 'N'
-    }
-  ]
-};
-
-var tab2_response = {
-  'code': '00',
-  'msg': 'success',
-  'result': [
-    {
-      'opDt': '20180623',
-      'topUpLimit': '20000',
-      'opTypCd': '1',
-      'opTypNm': '충전 허용 금액',
-      'opOrgNm': '강남지점'
-    },
-    {
-      'opDt': '20180621',
-      'topUpLimit': '30000',
-      'opTypCd': '2',
-      'opTypNm': '충전 차단',
-      'opOrgNm': '강남지점'
-    }
-  ]
 };

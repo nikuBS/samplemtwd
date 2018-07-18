@@ -15,15 +15,25 @@ class AuthLoginRoute extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     const query = req.query;
-    console.log(query);
     if ( !FormatHelper.isEmpty(query.error) ) {
       res.send(query.error_description);
     } else {
-      const param = {
-        target: query.params.split('=')[0],
-        state: query.params.split('=')[1]
+      const param = this.getParams(query.target);
+      res.render('login/auth.login.route.html', param);
+    }
+  }
+
+  private getParams(params): any {
+    if ( params.indexOf('=') !== -1 ) {
+      return {
+        target: params.split('=')[0],
+        state: params.split('=')[1]
       };
-      res.render('login/auth.login.route.html', param );
+    } else {
+      return {
+        target: params,
+        state: null
+      };
     }
   }
 }

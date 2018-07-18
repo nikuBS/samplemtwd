@@ -102,7 +102,8 @@ export enum PAYMENT_OPTION_TEXT {
   BANK_NAME = '은행명',
   CARD_NAME = '카드사',
   ACCOUNT = '계좌번호',
-  CARD_NUM = '카드번호'
+  CARD_NUM = '카드번호',
+  ZERO = '0'
 }
 
 export const BILL_GUIDE_TYPE = {
@@ -114,6 +115,28 @@ export const BILL_GUIDE_TYPE = {
   'SMS_EMAIL': 'A',
   'BILL_LETTER_SMS': 'Q',
   'ETC': '1'
+};
+
+export const WIRE_BILL_GUIDE_TYPE = {
+  'TWORLD': 'P',
+  'BILL_LETTER': 'J',
+  'SMS': 'B',
+  'EMAIL': '2',
+  'BILL_LETTER_EMAIL': 'K',
+  'SMS_EMAIL': 'A',
+  'BILL_LETTER_SMS': 'Q',
+  'ETC': '1'
+};
+
+export const BILL_GUIDE_TYPE_WITH_WIRE = {
+  'P': BILL_GUIDE_TYPE.TWORLD,
+  'J': BILL_GUIDE_TYPE.BILL_LETTER,
+  'B': BILL_GUIDE_TYPE.SMS,
+  '2': BILL_GUIDE_TYPE.EMAIL,
+  'K': BILL_GUIDE_TYPE.BILL_LETTER_EMAIL,
+  'A': BILL_GUIDE_TYPE.SMS_EMAIL,
+  'Q': BILL_GUIDE_TYPE.BILL_LETTER_SMS,
+  '1': BILL_GUIDE_TYPE.ETC
 };
 
 export const LOGIN_NOTICE_TYPE = {

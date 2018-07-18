@@ -4,7 +4,7 @@
  * Date: 2018.07.12
  */
 
-Tw.MyTBillGuideUpdatePrototype = {
+Tw.MyTBillGuidechangeUpdatePrototype = {
   _construct: function (rootEl, options) {
     this.$container = rootEl;
     this._apiService = Tw.Api;
@@ -21,6 +21,8 @@ Tw.MyTBillGuideUpdatePrototype = {
   _assign: function () {
     this._curBillGuideType = this.$container.attr('cur-bill-type');
     this._curBillGuideTypeNm = this.$container.attr('cur-bill-type-nm');
+    this._wireCurBillGuideType = this.$container.attr('wire-cur-bill-type');
+    this._svcAttrCd = this.$container.attr('svc-attr-cd');
     this._$btnSubmit = this.$container.find('.btn-submit');
     this._$btnNext = this.$container.find('.btn-next');
     this._$steps = this.$container.find('.step');
@@ -62,8 +64,13 @@ Tw.MyTBillGuideUpdatePrototype = {
       this._popupService.close();
     }
     var requestParams = this._getRequestParams();
-    console.log('~~~~~~~~~~~requestParams', requestParams);
-    this._apiService.request(Tw.API_CMD.BFF_05_0027, requestParams)
+    var isWire = (this._svcAttrCd === 'S1' || this._svcAttrCd === 'S2' || this._svcAttrCd === 'S3') ? true : false;
+    var apiUrl =  isWire ? Tw.API_CMD.BFF_05_0050 : Tw.API_CMD.BFF_05_0027;
+
+    console.log('~~~~~isWire', isWire);
+    console.log('~~~~~apiUrl', apiUrl);
+    console.log('~~~~~requestParams', requestParams);
+    this._apiService.request(apiUrl, requestParams)
       .done($.proxy(this._submitSuccess, this))
       .fail($.proxy(this._submitFail, this));
   },
@@ -80,7 +87,11 @@ Tw.MyTBillGuideUpdatePrototype = {
         this._popupService.openAlert(alertMsg, Tw.POPUP_TITLE.NOTIFY, $.proxy(this._onClickBtnChangeConfirm, this, resp.result));
       }, this), 500);
     } else {
-      this._showErrorAlert(resp.data && resp.data.msg);
+      if (resp.data) {
+        this._showErrorAlert(resp.data && resp.data.msg);
+      } else {
+        this._showErrorAlert(resp.error && resp.error.msg);
+      }
       return;
     }
   },
@@ -111,10 +122,7 @@ Tw.MyTBillGuideUpdatePrototype = {
   _goComplete: function(result) {
     this._history.pushUrl('/myt/bill/guidechange');
     if (this._options.fromChange) {
-      // var beforeBillGuideType = this._options.beforeBillGuideType; //수정해야함
-      var beforeBillGuideType = result.beforeBillIsueTypeCd; //수정해야함
-      var selectedBillGuideType = this._curBillGuideType;
-      window.location.href = '/myt/bill/guidechange/change-complete?beforeBillGuideType=' + beforeBillGuideType + '&afterBillGuideType=' + selectedBillGuideType;
+      window.location.href = '/myt/bill/guidechange/change-complete?beforeBillGuideType=' + result.beforeBillIsueTypeCd;
     } else {
       window.location.href = '/myt/bill/guidechange/update-complete';
     }
@@ -163,8 +171,9 @@ Tw.MyTBillGuideUpdatePrototype = {
   _getRequestParams: function() {
     var KEY_ATTR_NAME = 'form-element-key';
     var VALUE_ATTR_NAME = 'form-element-value';
+    var isWire = (this._svcAttrCd === 'S1' || this._svcAttrCd === 'S2' || this._svcAttrCd === 'S3') ? true : false;
     var paramsObj = {
-      toBillTypeCd: this._curBillGuideType
+      toBillTypeCd: isWire ? this._wireCurBillGuideType: this._curBillGuideType
     };
 
     this.$container.find('[form-element="radio"]').each(function() {
@@ -209,7 +218,7 @@ Tw.MyTBillGuideUpdatePrototype = {
   }
 
 };
-Tw.MyTBillGuideUpdateClasses = {
+Tw.MyTBillGuidechangeUpdateClasses = {
   'tworld': function () {
     return this._construct.apply(this, arguments);
   },
@@ -236,15 +245,15 @@ Tw.MyTBillGuideUpdateClasses = {
   }
 };
 
-Tw.MyTBillGuideUpdateClasses.tworld.prototype = $.extend({}, Tw.MyTBillGuideUpdatePrototype, {
+Tw.MyTBillGuidechangeUpdateClasses.tworld.prototype = $.extend({}, Tw.MyTBillGuidechangeUpdatePrototype, {
   _checkValidation: function () {
     return true;
   }
 });
 
-Tw.MyTBillGuideUpdateClasses.email.prototype = $.extend({}, Tw.MyTBillGuideUpdatePrototype, {
+Tw.MyTBillGuidechangeUpdateClasses.email.prototype = $.extend({}, Tw.MyTBillGuidechangeUpdatePrototype, {
   _assign: function () {
-    Tw.MyTBillGuideUpdatePrototype._assign.apply(this, arguments);
+    Tw.MyTBillGuidechangeUpdatePrototype._assign.apply(this, arguments);
     this._$inputEmail = this.$container.find('.input-email');
   },
   _checkValidation: function () {
@@ -257,14 +266,14 @@ Tw.MyTBillGuideUpdateClasses.email.prototype = $.extend({}, Tw.MyTBillGuideUpdat
     this._popupService.openAlert(Tw.MSG_MYT.BILL_GUIDECHANGE_A08);
   },
   destroy: function() {
-    Tw.MyTBillGuideUpdatePrototype.destroy.apply(this, arguments);
+    Tw.MyTBillGuidechangeUpdatePrototype.destroy.apply(this, arguments);
     this._$inputEmail = null;
   }
 });
 
-Tw.MyTBillGuideUpdateClasses.etc.prototype = $.extend({}, Tw.MyTBillGuideUpdatePrototype, {
+Tw.MyTBillGuidechangeUpdateClasses.etc.prototype = $.extend({}, Tw.MyTBillGuidechangeUpdatePrototype, {
   _assign: function () {
-    Tw.MyTBillGuideUpdatePrototype._assign.apply(this, arguments);
+    Tw.MyTBillGuidechangeUpdatePrototype._assign.apply(this, arguments);
     this._$inputAddr1 = this.$container.find('.input-addr1');
     this._$inputAddr2 = this.$container.find('.input-addr2');
     this._$inputAddr3 = this.$container.find('.input-addr3');
@@ -274,14 +283,14 @@ Tw.MyTBillGuideUpdateClasses.etc.prototype = $.extend({}, Tw.MyTBillGuideUpdateP
     return this._phoneNumValidation.apply(this, this._$inputPhone);
   },
   _checkHalfValidation: function () {
-    // return !!this._$inputAddr1.val() && !!this._$inputAddr2.val() && !!this._$inputAddr3.val();
-    return !!this._$inputAddr3.val();
+    return !!this._$inputAddr1.val() && !!this._$inputAddr2.val() && !!this._$inputAddr3.val();
+    // return !!this._$inputAddr3.val();
   },
   _failHalfValidation: function () {
     this._popupService.openAlert(Tw.MSG_MYT.BILL_GUIDECHANGE_A10);
   },
   destroy: function() {
-    Tw.MyTBillGuideUpdatePrototype.destroy.apply(this, arguments);
+    Tw.MyTBillGuidechangeUpdatePrototype.destroy.apply(this, arguments);
     this._$inputAddr1 = null;
     this._$inputAddr2 = null;
     this._$inputAddr3 = null;
@@ -289,9 +298,9 @@ Tw.MyTBillGuideUpdateClasses.etc.prototype = $.extend({}, Tw.MyTBillGuideUpdateP
   }
 });
 
-Tw.MyTBillGuideUpdateClasses.billLetter.prototype = $.extend({}, Tw.MyTBillGuideUpdatePrototype, {
+Tw.MyTBillGuidechangeUpdateClasses.billLetter.prototype = $.extend({}, Tw.MyTBillGuidechangeUpdatePrototype, {
   _assign: function () {
-    Tw.MyTBillGuideUpdatePrototype._assign.apply(this, arguments);
+    Tw.MyTBillGuidechangeUpdatePrototype._assign.apply(this, arguments);
     this._$inputPhone = this.$container.find('.input-phone');
     this._$inputCcurNotiSvcNum = this.$container.find('.input-ccur-noti-svc-num');
   },
@@ -305,15 +314,15 @@ Tw.MyTBillGuideUpdateClasses.billLetter.prototype = $.extend({}, Tw.MyTBillGuide
     return true;
   },
   destroy: function() {
-    Tw.MyTBillGuideUpdatePrototype.destroy.apply(this, arguments);
+    Tw.MyTBillGuidechangeUpdatePrototype.destroy.apply(this, arguments);
     this._$inputPhone = null;
     this._$inputCcurNotiSvcNum = null;
   }
 });
 
-Tw.MyTBillGuideUpdateClasses.sms.prototype = $.extend({}, Tw.MyTBillGuideUpdatePrototype, {
+Tw.MyTBillGuidechangeUpdateClasses.sms.prototype = $.extend({}, Tw.MyTBillGuidechangeUpdatePrototype, {
   _assign: function () {
-    Tw.MyTBillGuideUpdatePrototype._assign.apply(this, arguments);
+    Tw.MyTBillGuidechangeUpdatePrototype._assign.apply(this, arguments);
     this._$inputPhone = this.$container.find('.input-phone');
     this._$inputCcurNotiSvcNum = this.$container.find('.input-ccur-noti-svc-num');
   },
@@ -327,15 +336,15 @@ Tw.MyTBillGuideUpdateClasses.sms.prototype = $.extend({}, Tw.MyTBillGuideUpdateP
     return true;
   },
   destroy: function() {
-    Tw.MyTBillGuideUpdatePrototype.destroy.apply(this, arguments);
+    Tw.MyTBillGuidechangeUpdatePrototype.destroy.apply(this, arguments);
     this._$inputPhone = null;
     this._$inputCcurNotiSvcNum = null;
   }
 });
 
-Tw.MyTBillGuideUpdateClasses.billLetterEmail.prototype = $.extend({}, Tw.MyTBillGuideUpdatePrototype, {
+Tw.MyTBillGuidechangeUpdateClasses.billLetterEmail.prototype = $.extend({}, Tw.MyTBillGuidechangeUpdatePrototype, {
   _assign: function () {
-    Tw.MyTBillGuideUpdatePrototype._assign.apply(this, arguments);
+    Tw.MyTBillGuidechangeUpdatePrototype._assign.apply(this, arguments);
     this._$inputEmail = this.$container.find('.input-email');
     this._$inputPhone = this.$container.find('.input-phone');
     this._$inputCcurNotiSvcNum = this.$container.find('.input-ccur-noti-svc-num');
@@ -356,16 +365,16 @@ Tw.MyTBillGuideUpdateClasses.billLetterEmail.prototype = $.extend({}, Tw.MyTBill
     this._popupService.openAlert(Tw.MSG_MYT.BILL_GUIDECHANGE_A08);
   },
   destroy: function() {
-    Tw.MyTBillGuideUpdatePrototype.destroy.apply(this, arguments);
+    Tw.MyTBillGuidechangeUpdatePrototype.destroy.apply(this, arguments);
     this._$inputEmail = null;
     this._$inputPhone = null;
     this._$inputCcurNotiSvcNum = null;
   }
 });
 
-Tw.MyTBillGuideUpdateClasses.smsEmail.prototype = $.extend({}, Tw.MyTBillGuideUpdatePrototype, {
+Tw.MyTBillGuidechangeUpdateClasses.smsEmail.prototype = $.extend({}, Tw.MyTBillGuidechangeUpdatePrototype, {
   _assign: function () {
-    Tw.MyTBillGuideUpdatePrototype._assign.apply(this, arguments);
+    Tw.MyTBillGuidechangeUpdatePrototype._assign.apply(this, arguments);
     this._$inputEmail = this.$container.find('.input-email');
     this._$inputPhone = this.$container.find('.input-phone');
     this._$inputCcurNotiSvcNum = this.$container.find('.input-ccur-noti-svc-num');
@@ -386,14 +395,14 @@ Tw.MyTBillGuideUpdateClasses.smsEmail.prototype = $.extend({}, Tw.MyTBillGuideUp
     this._popupService.openAlert(Tw.MSG_MYT.BILL_GUIDECHANGE_A08);
   },
   destroy: function() {
-    Tw.MyTBillGuideUpdatePrototype.destroy.apply(this, arguments);
+    Tw.MyTBillGuidechangeUpdatePrototype.destroy.apply(this, arguments);
     this._$inputEmail = null;
     this._$inputPhone = null;
     this._$inputCcurNotiSvcNum = null;
   }
 });
 
-Tw.MyTBillGuideUpdateClasses.billLetterSms.prototype = $.extend({}, Tw.MyTBillGuideUpdatePrototype, {
+Tw.MyTBillGuidechangeUpdateClasses.billLetterSms.prototype = $.extend({}, Tw.MyTBillGuidechangeUpdatePrototype, {
   _checkValidation: function () {
     return true;
   }

@@ -385,7 +385,7 @@ Tw.PaymentRealtime.prototype = {
           list = [];
           var obj = {
             invDt: invDt,
-            biillSvcMgmtNum: billSvcMgmtNum,
+            billSvcMgmtNum: billSvcMgmtNum,
             billAcntNum: billAcntNum,
             payAmt: payAmt
           };

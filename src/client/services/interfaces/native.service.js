@@ -19,7 +19,10 @@ Tw.NativeService.prototype = {
   },
 
   _init: function () {
-    this._bridge = Tw.BrowserHelper.isAndroid() ? window.tworld : Tw.BrowserHelper.isIos() ? window.webkit.messageHandlers.tworld : null;
+    this._bridge = null;
+    if ( Tw.BrowserHelper.isApp() ) {
+      this._bridge = Tw.BrowserHelper.isAndroid() ? window.tworld : Tw.BrowserHelper.isIos() ? window.webkit.messageHandlers.tworld : null;
+    }
     window.onNativeCallback = $.proxy(this._onNativeCallback, this);
     window.onBack = $.proxy(this._onBack, this);
   },

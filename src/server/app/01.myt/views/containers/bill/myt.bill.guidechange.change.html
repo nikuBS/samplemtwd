@@ -5,7 +5,10 @@
 -->
 <% for (var i = 0; i < billGuideTypes.length; i++) {%>
 <script id="tmpl-<%= billGuideTypes[i].curBillType %>" type="text/x-handlebars-template">
-    <%- include('../../components/billguide/'+ billGuideTypes[i].component +'.component.html', {curBillGuide: billGuideTypes[i]}) %>
+    <%- include('../../components/billguide/'+ billGuideTypes[i].component +'.component.html', {
+        curBillGuide: billGuideTypes[i],
+        svcInfo: svcInfo
+    }) %>
 </script>
 <% } %>
 
@@ -19,7 +22,7 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div id="wrap" class="wrap" data-bill-guide-types-data="<%= billGuideTypesData %>" data-cur-bill-guide-type="<%= curBillGuide.curBillType %>">
+<div id="wrap" class="wrap" data-bill-guide-types-data="<%= billGuideTypesData %>" data-cur-bill-guide-type="<%= curBillGuide.curBillType %>" data-svc-attr-cd="<%= svcInfo.svcAttrCd %>">
     <!-- #header -->
     <div id="header" class="header-wrap">
         <div class="header step-page">
@@ -55,7 +58,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
     $(document).ready(function () {
-      new Tw.MyTBillGuideChange($('#wrap'));
+      new Tw.MyTBillGuidechangeChange($('#wrap'));
     });
 </script>
 <% include ../../components/end.component.html %>

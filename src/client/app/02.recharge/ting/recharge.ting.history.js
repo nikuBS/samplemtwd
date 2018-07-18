@@ -83,6 +83,7 @@ Tw.RechargeTingHistory.prototype = {
       $(elBtnMore).hide();
     } else {
       $(elBtnMore).find('.num').text(length - listIndex);
+      $(elBtnMore).show();
     }
   },
 
@@ -171,16 +172,18 @@ Tw.RechargeTingHistory.prototype = {
     if ( nCurrentTabIndex === 0 ) {
       this.tab1_searchType = $searchType.val();
       this.tab1_searchPeriod = $searchPeriod.val();
+      this.tab1_listIndex = this.DEFAULT_LIST_COUNT;
     }
 
     if ( nCurrentTabIndex === 1 ) {
       this.tab2_searchType = $searchType.val();
       this.tab2_searchPeriod = $searchPeriod.val();
+      this.tab2_listIndex = this.DEFAULT_LIST_COUNT;
     }
 
     this._popupService.close();
 
-    var $wrap_tab_contents = $($('.tab-contents li').get(nCurrentTabIndex));
+    var $wrap_tab_contents = $($('.tab-contents [role="tabpanel"]').get(nCurrentTabIndex));
     var $btn_dropdown = $wrap_tab_contents.find('.bt-dropdown.small');
     $btn_dropdown.text(sType + ' · ' + sPeriod);
 

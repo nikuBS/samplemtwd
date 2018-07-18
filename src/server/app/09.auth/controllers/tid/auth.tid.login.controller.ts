@@ -17,16 +17,16 @@ class AuthTidLogin extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    this.apiService.request(API_CMD.BFF_03_0007, { chnl: 'mo-web' }).subscribe((resp) => {
+    this.apiService.request(API_CMD.BFF_03_0007, {}).subscribe((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
         const params = {
           client_id: resp.result.clientId,
           client_secret: resp.result.clientSecret,
           state: resp.result.state,
           nonce: resp.result.nonce,
-          service_type: TID_SVC_TYPE.ID_LOGIN,
+          service_type: TID_SVC_TYPE.LOGIN,
           redirect_uri: EnvHelper.getEnvironment('TID_REDIRECT') +
-          '/auth/login/route?target=/home&state=' + resp.result.state,
+          '/auth/login/route?target=/home=' + resp.result.state,
           client_type: TID.CLIENT_TYPE,
           scope: TID.SCOPE,
           response_type: TID.RESP_TYPE
@@ -35,23 +35,7 @@ class AuthTidLogin extends TwViewController {
         this.logger.info(this, '[redirect]', url);
         res.redirect(url);
       } else {
-        // TODO: Test Login
-        const params = {
-          client_id: 'df3c0ea4-ea4d-439f-8e2f-01f683af0c95',
-          client_secret: 'eac44fbe-b96b-4f9d-9da7-0e58dfc13b90',
-          state: '3646bae6eff00',
-          nonce: 'df597de4c079',
-          service_type: TID_SVC_TYPE.ID_LOGIN,
-          redirect_uri: EnvHelper.getEnvironment('TID_REDIRECT') +
-          '/auth/login/route?params=/home=3646bae6eff00',
-          client_type: TID.CLIENT_TYPE,
-          scope: TID.SCOPE,
-          response_type: TID.RESP_TYPE
-        };
-        const url = this.apiService.getServerUri(API_CMD.OIDC) + API_CMD.OIDC.path + ParamsHelper.setQueryParams(params);
-        this.logger.info(this, '[redirect]', url);
-        res.redirect(url);
-        // res.send('login fail');
+        res.send('login fail');
       }
     });
   }
