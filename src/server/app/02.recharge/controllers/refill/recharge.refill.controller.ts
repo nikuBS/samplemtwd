@@ -76,7 +76,6 @@ class RechargeRefill extends TwViewController {
   }
 
   private getData(lineList: any, usageOptions: any, usageData: any, svcInfo: any): any {
-    console.log(lineList.result);
     return {
       lineList: lineList.result.m,
       usageOptions,
