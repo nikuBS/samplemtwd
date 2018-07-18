@@ -4,6 +4,7 @@ Tw.NTV_CMD = {
   GET_DEVICE: 'getDevice',
   OPEN_URL: 'openUrl',
   LOGIN: 'login',
+  LOGOUT: 'logout',
   LOG: 'log'
 };
 

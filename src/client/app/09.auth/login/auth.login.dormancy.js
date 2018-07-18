@@ -13,10 +13,12 @@ Tw.AuthLoginDormancy = function (rootEl) {
 Tw.AuthLoginDormancy.prototype = {
   _bindEvent: function () {
     this.$container.on('click', '#btn-activate', function() {
-      Tw.Api.request(Tw.API_CMD.BFF_03_0010)
+      Tw.Api.request(Tw.NODE_CMD.USER_LOCK_LOGIN)
         .done(function (res) {
           if (res.code === Tw.API_CODE.CODE_00) {
             window.location = '/home';
+          } else if (res.code === Tw.API_LOGIN_ERROR.ICAS3228) {  // Need service password
+            window.location = '/auth/login/service-pwd';
           } else {
             Tw.Popup.openAlert(res.msg);
           }
