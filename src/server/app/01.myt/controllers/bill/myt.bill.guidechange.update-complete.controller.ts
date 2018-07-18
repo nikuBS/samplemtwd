@@ -9,6 +9,7 @@ import { BILL_GUIDE_TYPE } from '../../../../types/bff-common.type';
 import { BILL_GUIDE_TYPE_NAME } from '../../../../types/string.type';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
+import StringHelper from '../../../../utils/string.helper';
 
 const BillGuideLabelDefines = {};
 BillGuideLabelDefines[BILL_GUIDE_TYPE.TWORLD] = BILL_GUIDE_TYPE_NAME.TWORLD;
@@ -42,7 +43,18 @@ class MyTBillChange extends TwViewController {
       billTypeListRequest,
     ).subscribe(([_billTypesList]) => {
       const _curBillGuide = this.getResult(_billTypesList);
-      console.log('~~~~~~~~~~~_curBillGuide', _curBillGuide);
+      if (_curBillGuide.ccurNotiSvcNum) {
+        _curBillGuide.ccurNotiSvcNum = StringHelper.phoneStringToDash(_curBillGuide.ccurNotiSvcNum);
+      }
+      if (_curBillGuide.cntcNum1) {
+        _curBillGuide.cntcNum1 = StringHelper.phoneStringToDash(_curBillGuide.cntcNum1);
+      }
+      if (_curBillGuide.wireSmtBillSvcNum) {
+        _curBillGuide.wireSmtBillSvcNum = StringHelper.phoneStringToDash(_curBillGuide.wireSmtBillSvcNum);
+      }
+      if (_curBillGuide.wsmsBillSndNum) {
+        _curBillGuide.wsmsBillSndNum = StringHelper.phoneStringToDash(_curBillGuide.wsmsBillSndNum);
+      }
       this.renderView(res, 'bill/myt.bill.guidechange.update-complete.html', {
         curBillGuide: _curBillGuide,
         component: BILL_GUIDE_TYPE_COMPONENT[_curBillGuide.curBillType],
