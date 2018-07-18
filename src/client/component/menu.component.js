@@ -14,7 +14,7 @@ Tw.MenuComponent.prototype = {
   _onClickLogin: function () {
     if(Tw.BrowserHelper.isApp()) {
       console.log('app');
-      this._nativeService.request(Tw.NODE_CMD.LOGIN, {}, $.proxy(this._onNativeLogin, this));
+      this._nativeService.send(Tw.NTV_CMD.LOGIN, {}, $.proxy(this._onNativeLogin, this));
     } else {
       console.log('mo-web');
       location.href = '/auth/tid/login';
