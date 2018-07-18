@@ -9,7 +9,7 @@ Tw.mytBillBillguideSubChildBill = function (rootEl, resData) {
   this.thisMain = this;
   this.resData = resData;
   this.init = this._init;
-  Tw.Logger.info('[서버에서 데이터 받음 mytBillBillguideSubChildBill]', resData);
+  Tw.Logger.info('[서버에서 데이터 받음]', resData);
 
   this.$container = rootEl;
   this.$window = window;
@@ -28,7 +28,6 @@ Tw.mytBillBillguideSubChildBill = function (rootEl, resData) {
     selChildBillMonth : null//invDt
   };
   this.usedAmounts = null; //BFF_05_0047 사용요금 조회(본인/자녀)
-
   this._init();
 };
 
@@ -36,30 +35,26 @@ Tw.mytBillBillguideSubChildBill.prototype = {
   _init: function () {
     Tw.Logger.info('[Tw.mytBillBillguideSubChildBill 초기화]');
 
-    //자녀가 있을때
-    if(this.resData.circuitChildInfo.length > 0) {
-
-      this.selectDataInfo.selNum = this.resData.commDataInfo.selNum;
-      this.selectDataInfo.selChildPhoneId = this.resData.circuitChildInfo[ this.selectDataInfo.selNum ].svcMgmtNum;
-
-      if ( this.resData.commDataInfo.invDt ) {
-        this.selectDataInfo.selChildBillMonth = this.resData.commDataInfo.invDt;
-      } else {
-
-      }
-    }
-    //console.info('[데이터 : ]', this.selectDataInfo);
+    this._queryInit();
     this._getUsedAmounts({
       childSvcMgmtNum : this.selectDataInfo.selChildPhoneId,
       invDt: this.selectDataInfo.selChildBillMonth
     });
-
+    // this._getMyPlanReq({
+    // });
     this._bindEvent();
-
+  },
+  //--------------------------------------------------------------------------[쿼리스트링]
+  _queryInit: function() {
+    if(this.resData.circuitChildInfo.length > 0) { //자녀가 있을때
+      this.selectDataInfo.selNum = ( this.resData.reqQuery.selNum ) ? this.resData.reqQuery.selNum : 0;
+      this.selectDataInfo.selChildPhoneId = this.resData.circuitChildInfo[ this.selectDataInfo.selNum ].svcMgmtNum;
+      this.selectDataInfo.selChildBillMonth = ( this.resData.reqQuery.invDt ) ? this.resData.reqQuery.invDt : null;
+    }
   },
   _cachedElement: function () {
     this.$childPhonenum = $('[data-target="childPhonenum"]');//회선번호
-    //this.$childPhonenumBtn = $('[data-target="childPhonenumBtn"]');
+    this.$childPhonenumBtn = $('[data-target="childPhonenumBtn"]');
     this.$deviceInfo = $('[data-target="deviceInfo"]');//제품명
 
     this.$feePlanName = $('[data-target="feePlanName"]');//요금제명
@@ -74,8 +69,39 @@ Tw.mytBillBillguideSubChildBill.prototype = {
   },
   _bindEvent: function () {
     this.$container.on('click', '[data-target="billMonthName"]', $.proxy(this._selPopOpen, this)); //조회 월 셀렉트 버튼
+    this.$container.on('click', '[data-target="childPhonenumBtn"]', $.proxy(this._selChildPopOpen, this));
   },
-  //--------------------------------------------------------------------------[이벤트 | 팝업]
+  //--------------------------------------------------------------------------[이벤트 | 팝업 | 자녀회선 선택]
+  _selChildPopOpen : function(event) {
+    console.info('자녀버튼 클릭!!!!');
+    var $target = $(event.currentTarget);
+    var tempArr = this.resData.circuitChildInfo;
+    var arrOption = [];
+    for ( var i=0, len=tempArr.length; i<len; i++ ) {
+      arrOption.push({
+        'attr' : 'data-info="' + i + '"',
+        text : tempArr[i].svcNum
+      });
+    }
+    this._popupService.openChoice('자녀회선선택', arrOption, 'type1', $.proxy(this._selChildPopOpenEvt, this, $target));
+  },
+  _selChildPopOpenEvt: function ($target, $layer) {
+    $layer.on('click', '.popup-choice-list', $.proxy(this._selChildPopOpenEvtExe, this, $target, $layer));
+  },
+  _selChildPopOpenEvtExe: function ($target, $layer, event) {
+    var curTg = $(event.currentTarget);
+    var tg = $target;
+    var dataTemp = curTg.find('button').attr('data-info');
+    tg.text(curTg.text());
+    tg.attr('data-info', dataTemp);
+    //this._popupService.close();
+    var paramData = {
+      invDt: this.selectDataInfo.selChildBillMonth,
+      selNum: dataTemp
+    };
+    this._goLoad('/myt/bill/billguide/subChildBill' + '?' + $.param(paramData));
+  },
+  //--------------------------------------------------------------------------[이벤트 | 팝업 | 청구월 선택]
   _selPopOpen : function(event) {
     var $target = $(event.currentTarget);
     var tempArr = this.usedAmounts.invDtArr;
@@ -97,12 +123,32 @@ Tw.mytBillBillguideSubChildBill.prototype = {
     var dataTemp = curTg.find('button').attr('data-info');
     tg.text( curTg.text() );
     tg.attr('data-info', dataTemp );
-    this._popupService.close();
-    this._goLoad('/myt/bill/billguide/subChildBill?invDt='+ dataTemp);
+    //this._popupService.close();
+    var paramData = {
+      invDt: dataTemp,
+      selNum: this.selectDataInfo.selNum
+    };
+    this._goLoad('/myt/bill/billguide/subChildBill' + '?' + $.param(paramData));
   },
   //--------------------------------------------------------------------------[데이터 완료후 실행]
+  _myPlanReqInit: function(resObj) {
+    console.info('[_myPlanReqInit 요금제명] : ', resObj);
+    this._cachedElement();
+    this.$feePlanName.html($.proxy(function(){
+      var htmlStr = '';
+      htmlStr += '';
+      return htmlStr;
+    }, this));
+
+  },
   _usedAmountsInit: function() {
     this._cachedElement();
+
+    this.$childPhonenumBtn.html($.proxy(function(){
+      var htmlStr = '';
+      htmlStr += this.resData.circuitChildInfo[ this.selectDataInfo.selNum ].svcNum;
+      return htmlStr;
+    }, this));
 
     this.$billMonthName.html($.proxy(function(){
       this.$billMonthName.attr( 'data-info', this.usedAmounts.invDt );
@@ -170,6 +216,15 @@ Tw.mytBillBillguideSubChildBill.prototype = {
         Tw.Logger.info('[자녀폰 사용 요금조회]', resp);
         this.usedAmounts = resp.result;
         this._usedAmountsInit();
+      }, this))
+      .fail(function(err){})
+  },
+  _getMyPlanReq: function(param) {//BFF_05_0041 나의요금제
+    Tw.Logger.info('[param]', param);
+
+    this._apiService.request(Tw.API_CMD.BFF_05_0041, param)
+      .done($.proxy(function(resp){
+        this._myPlanReqInit(resp.result);
       }, this))
       .fail(function(err){})
   },

@@ -23,8 +23,6 @@ class MyTBillBillguideSubChildBill extends TwViewController {
 
   //공통데이터
   private _commDataInfo:any = {
-    invDt : null,
-    selNum : null
   };
 
   //노출조건
@@ -37,9 +35,6 @@ class MyTBillBillguideSubChildBill extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     this._svcInfo = svcInfo;
     this.reqQuery = req.query;
-
-    ( this.reqQuery.invDt ) ? this._commDataInfo.invDt = this.reqQuery.invDt : this._commDataInfo.invDt = null;
-    ( this.reqQuery.selNum ) ? this._commDataInfo.selNum = this.reqQuery.selNum : this._commDataInfo.selNum = 0;
 
     const childrenLineReq: Observable<any> = this.apiService.request(API_CMD.BFF_05_0024, {});//자녀회선
 
@@ -102,6 +97,7 @@ class MyTBillBillguideSubChildBill extends TwViewController {
   private pageRenderView(res) {
     this.logger.info(this, '[_urlTplInfo.pageRenderView] : ', this._urlTplInfo.pageRenderView);
     this.renderView(res, this._urlTplInfo.pageRenderView, {
+      reqQuery: this.reqQuery,
       svcInfo: this._svcInfo,
       circuitChildInfo: this._circuitChildInfo,
       commDataInfo:this._commDataInfo

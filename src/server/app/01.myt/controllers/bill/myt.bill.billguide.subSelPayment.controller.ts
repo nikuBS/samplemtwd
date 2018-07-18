@@ -186,6 +186,7 @@ class MyTBillBillguideSubSelPayment extends TwViewController {
   private pageRenderView(res) {
     this.logger.info(this, '[_urlTplInfo.pageRenderView] : ', this._urlTplInfo.pageRenderView);
     this.renderView(res, this._urlTplInfo.pageRenderView, {
+      reqQuery: this.reqQuery,
       svcInfo: this._svcInfo,
       billpayInfo : this._billpayInfo,
       circuitChildInfo: this._circuitChildInfo,

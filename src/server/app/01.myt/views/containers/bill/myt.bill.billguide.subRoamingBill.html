@@ -94,6 +94,7 @@
 <script>
   $(document).ready(function () {
     new Tw.mytBillBillguideSubRoamingBill($('#wrapFdev'), {
+      reqQuery: <%-JSON.stringify(reqQuery) %>,
       svcInfo: <%-JSON.stringify(svcInfo) %>,
       billpayInfo : <%-JSON.stringify(billpayInfo) %>,
       circuitChildInfo: <%-JSON.stringify(circuitChildInfo) %>,
