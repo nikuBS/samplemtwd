@@ -103,11 +103,7 @@ abstract class TwViewController {
       this.render(req, res, next, this._loginService.getSvcInfo());
     } else {
       // TODO: 세션 만료 or 새로 진입
-      if ( !URL[path].login ) {
-        this.render(req, res, next);
-      } else {
-        res.render('logout/auth.logout.expire.html');
-      }
+      this.render(req, res, next);
     }
   }
 
