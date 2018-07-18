@@ -2,6 +2,7 @@ Tw.NativeService = function () {
   this._bridge = null;
   this._callbackList = [];
   this._randomCode = 0;
+  this._apiService = new Tw.ApiService();
 
   this._init();
 };
@@ -25,6 +26,7 @@ Tw.NativeService.prototype = {
     }
     window.onNativeCallback = $.proxy(this._onNativeCallback, this);
     window.onBack = $.proxy(this._onBack, this);
+    window.onInit = $.proxy(this._onInitApp, this);
   },
 
   _setParameter: function (command, params, callback) {
@@ -73,5 +75,10 @@ Tw.NativeService.prototype = {
       }).callback;
       fn(resp.params);
     }
+  },
+
+  _onInitApp: function () {
+    Tw.Logger.info('[Init]');
   }
+
 };

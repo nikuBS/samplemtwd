@@ -12,9 +12,23 @@ Tw.MyTBillGuidechangeUpdateComplete = function (rootEl) {
   this._history = new Tw.HistoryService();
 
   this._complete();
+  this._assign();
+  this._bindEvent();
 };
 
 Tw.MyTBillGuidechangeUpdateComplete.prototype = {
+  _assign: function () {
+    this._$closeStep = this.$container.find('.close-step');
+  },
+
+  _bindEvent: function () {
+    this._$closeStep.on('click', $.proxy(this._closeStep, this));
+  },
+
+  _closeStep: function() {
+    window.location.href = '/myt/bill/guidechange';
+  },
+
   _complete: function () {
     this._history.complete();
   }
