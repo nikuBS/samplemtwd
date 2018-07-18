@@ -130,6 +130,7 @@ Tw.PaymentPoint.prototype = {
     this.$container.find('.point-pay-info').hide();
     this.$container.find('.' + this.$pointType + '-title').show();
     this.$container.find('.' + this.$pointType + '-info').show();
+    this.$container.find('.point-name').text($target.data('name'));
   },
   _openCashbagAgree: function () {
     if (this.$agreement.is(':checked')) {
@@ -222,7 +223,8 @@ Tw.PaymentPoint.prototype = {
   _payRainbowAuto: function (event) {
     event.preventDefault();
 
-    this._apiService.request(Tw.API_CMD.BFF_07_0056, { prodId: this.$productSelectBoxForAuto.attr('id'), rbpChgRsnCd: Tw.RAINBOW_CHANGE_CODE.REQUEST })
+    this._apiService.request(Tw.API_CMD.BFF_07_0056,
+      { prodId: this.$productSelectBoxForAuto.attr('id'), rbpChgRsnCd: Tw.RAINBOW_CHANGE_CODE.REQUEST })
       .done($.proxy(this._paySuccess, this))
       .fail($.proxy(this._payFail, this));
   },

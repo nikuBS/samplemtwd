@@ -97,15 +97,15 @@ Tw.RechargeCookizHistory.prototype = {
     if ( nCurrentTabIndex === 0 ) {
       this._apiService.request(Tw.API_CMD.BFF_06_0032, {
         type: this.tab1_searchType,
-        fromDt: Tw.DateHelper.getCurrentShortDate(),
-        toDt: Tw.DateHelper.getShortDateWithFormatAddByUnit(new Date(), this.tab1_searchPeriod, 'month', 'YYYYMMDD')
+        fromDt: Tw.DateHelper.getShortDateWithFormatAddByUnit(new Date(), this.tab1_searchPeriod, 'month', 'YYYYMMDD'),
+        toDt: Tw.DateHelper.getCurrentShortDate()
       }).done($.proxy(this._onSuccessFetchData, this));
     }
 
     if ( nCurrentTabIndex === 1 ) {
       this._apiService.request(Tw.API_CMD.BFF_06_0033, {
-        fromDt: Tw.DateHelper.getCurrentShortDate(),
-        toDt: Tw.DateHelper.getShortDateWithFormatAddByUnit(new Date(), this.tab2_searchPeriod, 'month', 'YYYYMMDD')
+        fromDt: Tw.DateHelper.getShortDateWithFormatAddByUnit(new Date(), this.tab2_searchPeriod, 'month', 'YYYYMMDD'),
+        toDt: Tw.DateHelper.getCurrentShortDate()
       }).done($.proxy(this._onSuccessFetchData, this));
     }
   },
@@ -183,7 +183,8 @@ Tw.RechargeCookizHistory.prototype = {
 
     this._popupService.close();
 
-    var $btn_dropdown = $($('.bt-dropdown.small').get(nCurrentTabIndex));
+    var $wrap_tab_contents = $($('.tab-contents li').get(nCurrentTabIndex));
+    var $btn_dropdown = $wrap_tab_contents.find('.bt-dropdown.small');
     $btn_dropdown.text(sType + ' · ' + sPeriod);
 
     this._fetchData();

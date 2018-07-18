@@ -77,6 +77,7 @@ export const API_CMD = {
   BFF_05_0035: { path: '/core-bill/v1/hotbill/fee/hotbill-request', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0049: { path: '/core-bill/v1/integrated-services', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0027: { path: '/core-bill/v1/bill-types-change/', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0050: { path: '/core-bill/v1/wire-bill-types', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
   BFF_05_0051: { path: '/core-bill/v1/wire-bill-reissue/', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0052: { path: '/core-bill/v1/wire-bill-reissue/', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   // RECHARGE
@@ -140,6 +141,7 @@ export const API_CMD = {
   BFF_07_0027: { path: '/core-bill/v1/bill-pay/settle-vb-sms', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_07_0028: { path: '/core-bill/v1/bill-pay/avail-point-search', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_07_0029: { path: '/core-bill/v1/bill-pay/pay-ocb-tpoint-proc', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_07_0035: { path: '/core-bill/v1/payment/realtime-payment', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_07_0037: { path: '/core-bill/v1/payment/auto-payment', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_07_0039: { path: '/core-bill/v1/payment/auto-integrated-account-payment', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_07_0041: { path: '/core-bill/v1/ocbcard-info-check-show', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
@@ -188,12 +190,18 @@ export const API_CODE = {
   CODE_03: 'RDT0003',    // 2차 인증
   CODE_04: 'RDT0004',    // 로그인 필요
   CODE_05: 'RDT0005',    // 접근 불가 (권한)
-  CODE_06: 'RDT0006',    // 고객 비밀번호 인증 필요
-  CODE_07: 'RDT0007',    // 고객 비밀번호 재설정 필요
-  CODE_08: 'RDT0008',    // 고객 비밀번호 초기화상
+  // CODE_06: 'RDT0006',    // 고객 비밀번호 인증 필요
+  // CODE_07: 'RDT0007',    // 고객 비밀번호 재설정 필요
+  // CODE_08: 'RDT0008',    // 고객 비밀번호 초기화상
   CODE_99: 'RDT0099',    // Circuit Open
   CODE_200: '200',
   CODE_400: '400'
+};
+
+export const API_SVC_PWD_ERROR = {
+  RDT0006: 'RDT0006',
+  RDT0007: 'RDT0007',
+  RDT0008: 'RDT0008'
 };
 
 export const API_LOGIN_ERROR = {

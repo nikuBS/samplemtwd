@@ -8,8 +8,8 @@ import { Request, Response, NextFunction } from 'express';
 import { API_CMD, API_CODE } from '../../../types/api-command.type';
 import FormatHelper from '../../../utils/format.helper';
 import { Observable } from 'rxjs/Observable';
-import { PAYMENT_VIEW, SELECT_POINT } from '../../../types/string.type';
-import { REQUEST_VALUE, SVC_ATTR } from '../../../types/bff-common.type';
+import { SELECT_POINT } from '../../../types/string.type';
+import { PAYMENT_OPTION_TEXT, REQUEST_VALUE, SVC_ATTR } from '../../../types/bff-common.type';
 import StringHelper from '../../../utils/string.helper';
 import DateHelper from '../../../utils/date.helper';
 
@@ -23,16 +23,8 @@ class PaymentPointController extends TwViewController {
       this.getAllCashbagAndTpoint(),
       this.getAllRainbowPoint()
     ).subscribe(([cashbagAndT, rainbowPoint]) => {
-      this.renderView(res, 'payment.point.html', this.getData(svcInfo, cashbagAndT, rainbowPoint));
+      res.render('payment.point.html', this.getData(svcInfo, cashbagAndT, rainbowPoint));
     });
-  }
-
-  public renderView(res: Response, view: string, data: any): any {
-    if (data.isError) {
-      res.render(PAYMENT_VIEW.ERROR, data);
-    } else {
-      res.render(view, data);
-    }
   }
 
   private getAllCashbagAndTpoint(): Observable<any> {
@@ -134,6 +126,8 @@ class PaymentPointController extends TwViewController {
         data.cardNum = StringHelper.masking(data.ocbCcno, '*', 10);
       }
       data.endDate = DateHelper.getNextYearShortDate();
+    } else {
+      data.rainbowPt = PAYMENT_OPTION_TEXT.ZERO;
     }
     return data;
   }

@@ -105,7 +105,7 @@ class MyTBillReissue extends TwViewController {
 
       data['type1'] = `${pre_date.getFullYear()}년 ${month_label}월`;
       data['type2'] = `${pre_date.getFullYear()}.${month_label}.${lastDay}`;
-      data['type3'] = pre_date.getFullYear() + month_label + '01';
+      data['type3'] = pre_date.getFullYear() + month_label + lastDay;
 
       result.push(data);
     }
