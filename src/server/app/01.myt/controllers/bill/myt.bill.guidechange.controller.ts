@@ -48,18 +48,14 @@ class MytBillGuidechange extends TwViewController {
     const billTypeReq: Observable<any> = this.apiService.request(API_CMD.BFF_05_0025, {});
     // 통합청구회선 조회
     const itgSvcReq: Observable<any> =  this.apiService.request(API_CMD.BFF_05_0049, {});
-    // 선택회선 조회
-    const selectedSessionReq: Observable<any> =  this.apiService.request(API_CMD.BFF_01_0005, {});
     Observable.combineLatest(
       billTypeReq,
-      itgSvcReq,
-      selectedSessionReq
-    ).subscribe(([billTypeInfo, integraionService, selectedSession]) => {
+      itgSvcReq
+    ).subscribe(([billTypeInfo, integraionService]) => {
       if ( integraionService.code !== '00' ) {
         integraionService = {result : []};
       }
 
-      svcInfo = Object.assign({}, selectedSession.result);
       const data = {
         billTypeDesc : MYT_GUIDE_CHANGE_INIT_INFO.billTypeDesc,
         billTypeList : this.getFlickingList(MYT_GUIDE_CHANGE_INIT_INFO.billTypeList, svcInfo),
@@ -85,7 +81,7 @@ class MytBillGuidechange extends TwViewController {
           }
         });
       }
-      res.render(path, { svcInfo: svcInfo, data: data });
+      res.render(path, { data: data, svcInfo });
     });
   }
 }

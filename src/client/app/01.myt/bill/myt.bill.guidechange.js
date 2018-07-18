@@ -179,6 +179,8 @@ Tw.MyTBillGuidechange.prototype = {
       } else {
         $layer.find('#aria-tab3').show();
       }
+      $layer.find('[role=tab]', '._contents-tab').eq(0).attr('aria-selected','true').siblings().attr('aria-selected','false');
+      this._previewOnClickTab($layer);
       $layer.find('._contents-tab').show();
     }
 
@@ -219,8 +221,13 @@ Tw.MyTBillGuidechange.prototype = {
 
   // 미리보기 > tab 클릭
   _previewOnClickTab: function ($layer, e) {
-    e.preventDefault();
-    var $_this = $(e.currentTarget);
+    var $_this = null;
+    if (e) {
+      e.preventDefault();
+      $_this = $(e.currentTarget);
+    } else {
+      $_this = $layer.find('[role=tab]', '._contents-tab').eq(0);
+    }
     $_this.attr('aria-selected', 'true').siblings().attr('aria-selected', 'false');
     var currentId = '.' + $_this.attr('id');
     $layer.find(currentId, '.tab-contents').show().siblings().hide();
