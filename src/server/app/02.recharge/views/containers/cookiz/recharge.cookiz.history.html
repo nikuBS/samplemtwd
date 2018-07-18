@@ -60,7 +60,7 @@
                                                     </div>
                                                 </div>
                                                 <!--// .widget -->
-                                                <ul id="wrap_cookiz_recharge_history"  class="recharge-history">
+                                                <ul id="wrap_cookiz_recharge_history" class="recharge-history">
 
                                                 </ul>
                                             </div>
@@ -150,15 +150,29 @@
         </div>
         <div class="info-data">
             <span class="info-title">{{amt}} 원</span>
+            {{#ifCond opTypCd '===' '1'}}
             <span class="info-sub">당월충전</span>
+            {{/ifCond}}
+            {{#ifCond opTypCd '===' '2'}}
+            <span class="info-sub">당월충전</span>
+            {{/ifCond}}
+            {{#ifCond opTypCd '===' '3'}}
             <span class="info-sub">매월충전</span>
+            {{/ifCond}}
+            {{#ifCond opTypCd '===' '4'}}
+            <span class="info-sub">매월충전</span>
+            {{/ifCond}}
         </div>
         <div class="info-cancel">
-            {{#ifCond refundableYn '===' 'Y'}}
-            <button class="btn_refundable">취소</button>
+            {{#ifCond opTypCd '===' '1'}}
+                {{#ifCond refundableYn '===' 'Y'}}
+                <button class="btn_refundable">취소</button>
+                {{/ifCond}}
             {{/ifCond}}
-            {{#ifCond refundableYn '===' 'N'}}
-            <span>취소 완료</span>
+            {{#ifCond opTypCd '===' '4'}}
+                {{#ifCond refundableYn '===' 'N'}}
+                <span>취소 완료</span>
+                {{/ifCond}}
             {{/ifCond}}
         </div>
     </li>
@@ -185,7 +199,7 @@
             <span class="info-date">{{opDt}}</span>
         </div>
         <div class="info-data">
-            <span class="info-title">{{topUpLimit}} 원</span>
+            <span class="info-title">{{amt}} 원</span>
             <span class="info-sub">{{opTypNm}}</span>
         </div>
     </li>
