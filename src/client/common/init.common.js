@@ -3,6 +3,7 @@ Tw.Init = function () {
   this._nativeService = null;
 
   this._initService();
+  this._initComponent();
   this._getDeviceInfo();
   this._getEnvironment();
 };
@@ -17,6 +18,10 @@ Tw.Init.prototype = {
 
     this._apiService = Tw.Api;
     this._nativeService = Tw.Native;
+  },
+
+  _initComponent: function () {
+    new Tw.MenuComponent();
   },
 
   _logVersion: function (resp) {

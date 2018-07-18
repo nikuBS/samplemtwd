@@ -304,6 +304,7 @@ class MyTBillBillguide extends TwViewController {
   private skbroadbandCircuit(res) {
     this.logger.info(this, '[_urlTplInfo.skbroadbandPage] : ', this._urlTplInfo.skbroadbandPage);
     this.renderView(res, this._urlTplInfo.skbroadbandPage, {
+      reqQuery: this.reqQuery,
       svcInfo: this._svcInfo,
       billpayInfo : this._billpayInfo,
       circuitChildInfo: this._circuitChildInfo,

@@ -22,7 +22,7 @@ Tw.mytBillBillguideSubSusRelease = function (rootEl, resData) {
   this._history = new Tw.HistoryService(this.$container);
   this._history.init('hash');
 
-  return this;
+  this._init();
 };
 
 Tw.mytBillBillguideSubSusRelease.prototype = {

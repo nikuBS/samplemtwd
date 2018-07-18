@@ -99,14 +99,14 @@ class ApiService {
   private handleError(observer, err) {
     const error = err.response.data;
     this.logger.error(this, '[API_ERR]', error);
-    let message = 'unknown error';
+    let msg = 'unknown error';
     let code = API_CODE.CODE_400;
     if ( FormatHelper.isObject(error) ) {
-      message = error.msg || message;
+      msg = error.msg || msg;
       code = error.code || code;
     }
     // observer.error(err);
-    observer.next({code, message, error});
+    observer.next({code, msg, error});
     observer.complete();
   }
 

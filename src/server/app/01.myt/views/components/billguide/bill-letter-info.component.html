@@ -14,19 +14,18 @@
         </dl>
     </li>
     <% } %>
-<% } else { %>
-    <% if (curBillGuide.cntcNum1) { %>
+<% } else if (svcInfo.svcAttrCd === 'S1' || svcInfo.svcAttrCd === 'S2' || svcInfo.svcAttrCd === 'S3') { %>
+    <% if (curBillGuide.wireSmtBillSvcNum) { %>
     <li>
         <dl>
             <dt class="ti-data">청구인 휴대폰번호</dt>
             <dd class="tx-data">
-                <%= curBillGuide.cntcNum1 %>
+                <%= curBillGuide.wireSmtBillSvcNum %>
             </dd>
         </dl>
     </li>
     <% } %>
 <% } %>
-
 <li>
     <dl>
         <dt class="ti-data">보안사용</dt>

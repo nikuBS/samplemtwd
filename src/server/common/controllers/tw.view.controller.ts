@@ -52,7 +52,7 @@ abstract class TwViewController {
   private login(req, res, next, tokenId, userId) {
     if ( !FormatHelper.isEmpty(tokenId) ) {
       // TID login
-      this.apiService.requestLoginTid(tokenId, req.query.state).subscribe((resp) => {
+      this.apiService.requestLoginTid(tokenId, req.query.stateVal).subscribe((resp) => {
         this.render(req, res, next, new SvcInfoModel(resp), resp.noticeTpyCd);
       }, (error) => {
         // 로그인 실패

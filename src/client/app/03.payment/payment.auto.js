@@ -115,14 +115,17 @@ Tw.PaymentAuto.prototype = {
   _changeDateSuccess: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
       this._popupService.openAlert(Tw.MSG_PAYMENT.AUTO_A12, null, $.proxy(this._reload, this));
+    } else {
+      this._changeDateFail(res);
     }
+  },
+  _changeDateFail: function (err) {
+    this._popupService.close();
+    this._popupService.openAlert(err.error.msg);
   },
   _reload: function () {
     this._popupService.close();
     window.location.reload();
-  },
-  _changeDateFail: function () {
-    Tw.Logger.info('change request fail');
   },
   _onlyNumber: function (event) {
     Tw.InputHelper.inputNumberOnly(event.currentTarget);
@@ -235,6 +238,7 @@ Tw.PaymentAuto.prototype = {
   },
   _cancelSuccess: function () {
     this._history.setHistory();
+    this._setDefaultRadioChecked('sms-first-radio-box');
     this._go('#complete-cancel');
   },
   _cancelFail: function () {
