@@ -192,7 +192,6 @@ class ApiService {
     return this.request(API_CMD.BFF_03_0009, params)
       .switchMap((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
-          // TODO: 필드명 확인 필요
           this.loginService.setSvcInfo({ mbrNm: resp.result.mbrNm });
           return this.request(API_CMD.BFF_01_0005, {});
         } else {

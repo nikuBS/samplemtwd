@@ -27,7 +27,7 @@ Tw.Init.prototype = {
   _logVersion: function (resp) {
     if(resp.code === Tw.API_CODE.CODE_00) {
       var result = resp.result;
-      if ( result.environment === 'development' || result.environment === 'qa' ) {
+      if ( (result.environment === 'development' || result.environment === 'qa') && /\/home/.test(location.href)) {
         /* jshint undef: false */
         alert(Tw.environment.version);
         /* jshint undef: false */
