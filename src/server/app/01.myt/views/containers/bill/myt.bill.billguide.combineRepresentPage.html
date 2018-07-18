@@ -15,7 +15,6 @@
 </div>
 <!--// #skip_navigation -->
 <div id="wrapFdev" class="wrap">
-    <div>
         <!-- #header -->
         <div class="header-wrap">
             <div class="header">
@@ -347,7 +346,6 @@
             <!--// .cont-box -->
         </div>
         <!--// #contents -->
-    </div>
 
     <% include ../../../../../common/views/components/footer.component.html %>
 </div>
@@ -356,6 +354,7 @@
 <script>
   $(document).ready(function () {
     new Tw.mytBillBillguideCombineRepresentPage($('#wrapFdev'), {
+      reqQuery: <%-JSON.stringify(reqQuery) %>,
       svcInfo: <%-JSON.stringify(svcInfo) %>,
       billpayInfo : <%-JSON.stringify(billpayInfo) %>,
       circuitChildInfo: <%-JSON.stringify(circuitChildInfo) %>,
@@ -363,7 +362,6 @@
       defaultInfo: <%-JSON.stringify(defaultInfo) %>,
       showConditionInfo: <%-JSON.stringify(showConditionInfo) %>
     });
-
   });
 </script>
 

@@ -44,35 +44,40 @@ Tw.mytBillBillguideCombineRepresentPage.prototype = {
     this.$container.on('click', '[data-target="extraSvcBtn"]', $.proxy(this._goExtraSvcBill, this));//요금제/부가서비스 할인내역확인
 
   },
+  //--------------------------------------------------------------------------[상세요금내역]
+  _goDetailSpecification: function () {//상세요금조회
+    Tw.Logger.info('상세요금 내역');
+    this._goLoad('/myt/bill/billguide/subDetailSpecification');
+  },
   //--------------------------------------------------------------------------[납부가능일 선택]
   _goSelPayment: function() {
     Tw.Logger.info('납부가능일 선택');
-    //this._goLoad('selPayment');
+    this._goLoad('/myt/bill/billguide/subSelPayment');
   },
   //--------------------------------------------------------------------------[이용정지 해제]
   _goSusReleaseBtn: function() {
     Tw.Logger.info('이용정지 해제');
-    //this._goLoad('susRelease');
+    this._goLoad('/myt/bill/billguide/subSusRelease');
   },
   //--------------------------------------------------------------------------[자녀폰 사용요금 조회]
   _goChildBill: function() {
-    Tw.Logger.info('자녀폰 사용요금 조회');
-    //this._goLoad('childBill');
+    Tw.Logger.info('자녀폰 사용요금 조회2');
+    this._goLoad('/myt/bill/billguide/subChildBill');
   },
   //--------------------------------------------------------------------------[콜기프트 요금]
   _goCallBill: function() {
     Tw.Logger.info('콜기프트 요금');
-    //this._goLoad('callBill');
+    this._goLoad('/myt/bill/billguide/subCallBill');
   },
   //--------------------------------------------------------------------------[로밍 사용요금]
   _goRoamingBill: function() {
     Tw.Logger.info('로밍 사용요금');
-    //this._goLoad('roamingBill');
+    this._goLoad('/myt/bill/billguide/subRoamingBill');
   },
   //--------------------------------------------------------------------------[기부금/후원금]
   _goDonationBill: function() {
     Tw.Logger.info('기부금/후원금');
-    //this._goLoad('donationBill');
+    this._goLoad('/myt/bill/billguide/subDonationBill');
   },
   //--------------------------------------------------------------------------[정할인/단말분할상환정보]
   _goPartialRedemption: function() {
@@ -82,11 +87,6 @@ Tw.mytBillBillguideCombineRepresentPage.prototype = {
   //--------------------------------------------------------------------------[요금제/부가서비스 할인내역확인]
   _goExtraSvcBill: function() {
     Tw.Logger.info('요금제/부가서비스 할인내역확인');
-    //this._goLoad('');
-  },
-  //--------------------------------------------------------------------------[이벤트]
-  _goDetailSpecification: function () {//상세요금조회
-    Tw.Logger.info('상세요금 내역');
     //this._goLoad('');
   },
   //--------------------------------------------------------------------------[이벤트 | 팝업]
@@ -112,7 +112,7 @@ Tw.mytBillBillguideCombineRepresentPage.prototype = {
     tg.text( curTg.text() );
     tg.attr('data-info', dataTemp );
     this._popupService.close();
-    this._goLoad('http://localhost:3000/myt/bill/billguide?invDt='+ dataTemp);
+    this._goLoad('/myt/bill/billguide?invDt='+ dataTemp);
   },
   //--------------------------------------------------------------------------[api]
   _getTest: function() {

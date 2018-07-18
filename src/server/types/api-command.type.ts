@@ -57,9 +57,9 @@ export const API_CMD = {
   BFF_05_0014: { path: '/core-bill/v1/pps-histories', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0028: { path: '/core-bill/v1/bill-types-reissue-list/', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0030: { path: '/core-bill/v1/bill-pay/unpaid-bills', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
-  BFF_05_0031: { path: '/core-bill/v1/bill-pay/payment-possible-day', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_05_0031: { path: '/core-bill/v1/bill-pay/payment-possible-day', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0032: { path: '/core-bill/v1/bill-pay/payment-possible-day-input', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: false },
-  BFF_05_0033: { path: '/core-bill/v1/bill-pay/autopay-schedule', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_05_0033: { path: '/core-bill/v1/bill-pay/autopay-schedule', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0034: { path: '/core-bill/v1/bill-pay/suspension-cancel', method: API_METHOD.DELETE, server: API_SERVER.BFF, bypass: false },
   BFF_05_0036: { path: '/core-bill/v1/bill-pay/bills', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0037: { path: '/core-bill/v1/bill-pay/suspension', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
@@ -69,7 +69,7 @@ export const API_CMD = {
   BFF_05_0041: { path: '/core-product/v1/services/base-fee-plans', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0044: { path: '/core-bill/v1/bill-pay/roaming', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0045: { path: '/core-bill/v1/bill-pay/call-gift', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
-  BFF_05_0047: { path: '/core-bill/v1/bill-pay/used-amounts', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_05_0047: { path: '/core-bill/v1/bill-pay/used-amounts', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0048: { path: '/core-bill/v1/bill-types-reissue-request/', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_05_0022: { path: '/core-bill/v1/hotbill/fee/hotbill-response', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0024: { path: '/core-bill/v1/child/children', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
@@ -169,6 +169,7 @@ export const API_CMD = {
 
   // TID
   OIDC: { path: '/auth/authorize.do', method: API_METHOD.GET, server: API_SERVER.TID, bypass: false },
+  LOGOUT: { path: '/sso/web/v1/ssologout.do', method: API_METHOD.GET, server: API_SERVER.TID, bypass: false },
 
   // TEST
   GET: { path: '/posts', method: API_METHOD.GET, server: API_SERVER.TEST, bypass: true },
@@ -199,20 +200,21 @@ export const API_CODE = {
 };
 
 export const API_SVC_PWD_ERROR = {
-  RDT0006: 'RDT0006',
-  RDT0007: 'RDT0007',
-  RDT0008: 'RDT0008'
+  ATH3000: 'ATH3000',     // 변경할 회선 고객보호비밀번호 입력 필요
+  BFF9000: 'BFF9000',     // 변경할 회선 고객보호비밀번호 입력 필요
+  ICAS3481: 'ICAS3481',   // 고객보호비밀번호 입력 오류 1회
+  ICAS3482: 'ICAS3482',   // 고객보호비밀번호 입력 오류 2회
+  ICAS3483: 'ICAS3483',   // 고객보호비밀번호 입력 오류 3회
+  ICAS3484: 'ICAS3484',   // 고객보호비밀번호 입력 오류 4회
+  ICAS3215: 'ICAS3215',   // 고객보호비밀번호 입력 오류 5회 (잠김예정)
+  ICAS3216: 'ICAS3216'    // 고객보호비밀번호 기 잠김
 };
 
 export const API_LOGIN_ERROR = {
-  'ATH1003': 'ATH1003',   // 로그인 30회 초과
-  'ATH3236': 'ATH3236',   // 분실정지 (대표회선)
-  '3211': '3211',       // 고객보호비밀번호 (대표회선) 입력 필요
-  '3213': '3213',       // 고객보호비밀번호 오입력 (3회미만)
-  '3212': '3212',       // 고객번호비밀번호 오입력 (3회)
-  '3215': '3215',       // 고객번호비밀번호 오입력 (4회)
-  '3216': '3216',       // 고객번호비밀번호 잠김 (지점 내점 안내 노출)
-  '3235': '3235',       // 휴면계정
+  ATH1003: 'ATH1003',     // 로그인 30회 초과
+  ATH3236: 'ATH3236',     // 분실정지(대표회선)
+  ICAS3228: 'ICAS3228',   // 고객보호비밀번호(대표회선) 입력 필요
+  ICAS3235: 'ICAS3235'    // 휴면계정
 };
 
 export const API_MYT_ERROR_CODE = [

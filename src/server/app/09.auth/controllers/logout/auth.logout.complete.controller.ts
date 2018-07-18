@@ -13,7 +13,7 @@ class AuthLogoutComplete extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    res.render('logout/auth.logout.complete.html');
+    res.render('logout/auth.logout.complete.html', { svcInfo });
   }
 }
 

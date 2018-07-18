@@ -14,7 +14,6 @@ export const PARAM = {
     PREVIOUS: 'Q'
   }
 };
-
 class MyTBillHotBill extends TwViewController {
   constructor() {
     super();
@@ -27,7 +26,7 @@ class MyTBillHotBill extends TwViewController {
     switch ( svcInfo.svcAttrCd ) {
       case 'M3':
         type = 'T pocket Fi';
-        if (new Date().getDate() > 7){ //7일까지 보이기
+        if ( new Date().getDate() > 7 ) { //7일까지 보이기
           preBillAvailable = true;
         }
         break;
@@ -38,7 +37,7 @@ class MyTBillHotBill extends TwViewController {
           billAvailable = false;
         }
 
-        if(new Date().getDate() < 9){ //9일부터 보이기
+        if ( new Date().getDate() < 9 ) { //9일부터 보이기
           preBillAvailable = false;
         }
         break;
@@ -48,6 +47,7 @@ class MyTBillHotBill extends TwViewController {
         break;
     }
     svcInfo.svcType = type;
+
     Observable.combineLatest(
       this.apiService.request(API_CMD.BFF_05_0035, { gubun: PARAM.TYPE.CURRENT })
     ).subscribe(([billData]) => {

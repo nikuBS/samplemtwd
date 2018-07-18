@@ -68,19 +68,18 @@ Tw.MyTBillReissue.prototype = {
       selectedItem = this.$type.find('[aria-checked=true]').text();
       type = this.$type.find(':checked').attr('name');
     }
-    var title = Tw.MSG_MYT.BILL_GUIDE_REISSUE_00;
+    //  재발행 이후 처리로 인하여 추가
+    this.type = type;
     var contents = selectedItem + Tw.MSG_MYT.BILL_GUIDE_REISSUE_01;
     if ( type && (type === '2' || type === '02') ) {
       // 이메일인 경우 문구 다름
       contents = Tw.MSG_MYT.BILL_GUIDE_REISSUE_02;
     }
-    //TODO: 04 값은 임의의 값으로 재발행 요청시 기타인 경우에 대한 값 확인 후 변경
     else if ( type && (type === '1' || type === '01') ) {
       // 기타(우편)인 경우
       contents = Tw.MSG_MYT.BILL_GUIDE_REISSUE_04;
     }
-    this._popupService.openConfirm(Tw.POPUP_TITLE.NOTIFY, title, contents,
-      null, $.proxy(this._onOkPopupClicked, this));
+    this._popupService.openConfirm(Tw.POPUP_TITLE.NOTIFY, contents, null, null, $.proxy(this._onOkPopupClicked, this));
   },
 
   _onCloseClicked: function (/*event*/) {
@@ -96,10 +95,17 @@ Tw.MyTBillReissue.prototype = {
     this._requestReissue();
   },
 
+  _goToComplete: function () {
+    var type = this.$guide.attr('data-type');
+    var month = this.$month.find(':checked').attr('name') || '';
+    if ( this.$type.length > 0 ) {
+      type = this.$type.find(':checked').attr('name');
+    }
+    // 재발행 요청 완료 화면으로 이동
+    window.location.href = 'reissue/complete?typeCd=' + type + '&month=' + month;
+  },
+
   _requestReissue: function (/*event*/) {
-    // 재발행 데이터 설정
-    // sReIssueType	재발행코드종류
-    // sInvDt	재발행청구일자
     var api = Tw.API_CMD.BFF_05_0048;
     var data;
     // 유선인 경우 재발행 사유 추가
@@ -131,7 +137,6 @@ Tw.MyTBillReissue.prototype = {
       }
     }
     //재발행신청 API 호출
-    // TODO: 회선변경 API 호출 이후(유/무선 전환) 기능동작 확인필요! - 현재 MyT 에서 회선을 변경할 수 없음.
     this._apiService
       .request(api, data)
       .done($.proxy(this._onApiSuccess, this))
@@ -139,22 +144,26 @@ Tw.MyTBillReissue.prototype = {
   },
 
   _onApiSuccess: function (params) {
+    var self = this;
     Tw.Logger.info(params);
     // 팝업닫고 처리
     this._popupService.close();
     if ( params.code && params.code === 'ZORDE1206' ) {
       // 기 발행 건인 경우에 대한 처리
-      this._popupService.openAlert(Tw.MSG_MYT.BILL_GUIDE_REISSUE_03, Tw.MSG_MYT.BILL_GUIDE_REISSUE_00);
+      setTimeout(function () {
+        self._popupService.openAlert(Tw.MSG_MYT.BILL_GUIDE_REISSUE_03, Tw.POPUP_TITLE.NOTIFY);
+      }, 100);
     }
     else if ( params.code && params.code === '00' ) {
       //성공 - 발행 된 건이 없는 경우
-      var type = this.$guide.attr('data-type');
-      var month = this.$month.find(':checked').attr('name') || '';
-      if ( this.$type.length > 0 ) {
-        type = this.$type.find(':checked').attr('name');
+      if ( (this.type === '2' || this.type === '02') || (this.type === '1' || this.type === '01') ) {
+        this._goToComplete();
       }
-      // 재발행 요청 완료 화면으로 이동
-      window.location.href = 'reissue/complete?typeCd=' + type + '&month=' + month;
+      else {
+        setTimeout(function () {
+          self._popupService.openAlert(Tw.MSG_MYT.BILL_GUIDECHANGE_A14, Tw.POPUP_TITLE.NOTIFY, $.proxy(self._goToComplete, self));
+        }, 100);
+      }
     }
     else {
       Tw.Logger.error(Tw.MSG_MYT.BILL_GUIDE_REISSUE_FAIL + ' __ ' + (params.msg || (params.error && params.error.msg)));

@@ -20,6 +20,8 @@ class ApiRouter {
     this.router.post('/device', this.setDeviceInfo.bind(this));
     this.router.post('/change-session', this.changeSession.bind(this));
     this.router.post('/service-password-sessions/login', this.svcPasswordLogin.bind(this));
+    this.router.post('/login-tid', this.loginTid.bind(this));
+    this.router.post('/user-locks/login', this.setUserLocks.bind(this));
   }
 
   private getEnvironment(req: Request, res: Response, next: NextFunction) {
@@ -56,6 +58,24 @@ class ApiRouter {
   private svcPasswordLogin(req: Request, res: Response, next: NextFunction) {
     const params = req.body;
     this.apiService.requestSvcPasswordLogin(params).subscribe((resp) => {
+      res.json(resp);
+    }, (error) => {
+      res.json({ code: error });
+    });
+  }
+
+  private loginTid(req: Request, res: Response, next: NextFunction) {
+    const params = req.body;
+    this.apiService.requestLoginTid(params.tokenId, params.state).subscribe((resp) => {
+      res.json(resp);
+    }, (error) => {
+      res.json({ code: error });
+    });
+  }
+
+  private setUserLocks(req: Request, res: Response, next: NextFunction) {
+    const params = req.body;
+    this.apiService.requestUserLocks(params).subscribe((resp) => {
       res.json(resp);
     }, (error) => {
       res.json({ code: error });

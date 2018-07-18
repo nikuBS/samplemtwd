@@ -25,12 +25,12 @@ class RechargeRefill extends TwViewController {
       this.getUsageOptions(),
       this.getusageData()
     ).subscribe(([lineList, usageOptions, usageData]) => {
-      this.myTUsage.renderView(res, 'refill/recharge.refill.html', this.getData(lineList, usageOptions, usageData));
+      this.myTUsage.renderView(res, 'refill/recharge.refill.html', this.getData(lineList, usageOptions, usageData, svcInfo));
     });
   }
 
   private getLineList(): any {
-    return this.apiService.request(API_CMD.BFF_03_0003_C, { svcCtg: LINE_NAME.MOBILE });
+    return this.apiService.request(API_CMD.BFF_03_0004, {});
   }
 
   private getUsageOptions(): any {
@@ -75,11 +75,12 @@ class RechargeRefill extends TwViewController {
     return usageData;
   }
 
-  private getData(lineList: any, usageOptions: any, usageData: any): any {
+  private getData(lineList: any, usageOptions: any, usageData: any, svcInfo: any): any {
     return {
-      lineList: lineList.result,
+      lineList: lineList.result.m,
       usageOptions,
-      usageData
+      usageData,
+      svcInfo
     };
   }
 }
