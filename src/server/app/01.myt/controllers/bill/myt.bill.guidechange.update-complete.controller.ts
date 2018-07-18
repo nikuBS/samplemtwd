@@ -38,11 +38,11 @@ class MyTBillChange extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     // svcInfo.svcAttrCd = 'S1';
     const billTypeListRequest: Observable<any> = this.apiService.request(API_CMD.BFF_05_0025, {});
-
     Observable.combineLatest(
       billTypeListRequest,
     ).subscribe(([_billTypesList]) => {
       const _curBillGuide = this.getResult(_billTypesList);
+      console.log('~~~~~~~~~~~_curBillGuide', _curBillGuide);
       this.renderView(res, 'bill/myt.bill.guidechange.update-complete.html', {
         curBillGuide: _curBillGuide,
         component: BILL_GUIDE_TYPE_COMPONENT[_curBillGuide.curBillType],

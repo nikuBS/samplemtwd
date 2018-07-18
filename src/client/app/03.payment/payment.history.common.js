@@ -9,7 +9,7 @@ Tw.PaymentHistoryCommon = function (rootEl) {
   this.$window = $(window);
   this._popupService = Tw.Popup;
 
-  this.URLS = ['/payment/history', '/payment/history/immediate', '/payment/history/auto',
+  this.URLS = ['/payment/history', '/payment/history/realtime', '/payment/history/auto',
     '/payment/history/auto/unitedwithdrawal', '/payment/history/point/reserve', '/payment/history/point/auto'];
 
   this._init();
@@ -54,7 +54,8 @@ Tw.PaymentHistoryCommon.prototype = {
   },
 
   setMenuChanger: function (target) {
-    target.on('click', $.proxy(this.openPaymentTypePopup, this));
+    if(target)
+      target.on('click', $.proxy(this.openPaymentTypePopup, this));
   },
 
   setPaymentTypePopupOpener: function ($container) {
@@ -192,7 +193,7 @@ Tw.PaymentHistoryCommon.prototype.listWithTemplate.prototype = {
   },
 
   _isEmptyList: function () {
-    return !this.data.result.length;
+    return this.data.result !== undefined && !this.data.result.length;
   },
 
   _buildEmptyUI: function () {

@@ -1,5 +1,5 @@
 /**
- * FileName: myt.bill.hotbill.child.js.js
+ * FileName: myt.bill.hotbill.child.js
  * Author: Hyeryoun Lee (skt.P130712@partner.sk.com)
  * Date: 2018. 7. 9.
  */
@@ -11,200 +11,156 @@ Tw.MyTBillHotBillChild = function (rootEl) {
   this._history.init();
   this._cachedElement();
   this._bindEvent();
-  this.record = [
-    {
-      'bill_itm_lcl_nm': '통신서비스요금',
-      'bill_itm_scl_nm': '월정액',
-      'bill_itm_nm': '월정액',
-      'bill_itm_cd': 'AA1',
-      'inv_amt1': '0',
-      'inv_amt2': '31,495'
-    },
-    {
-      'bill_itm_lcl_nm': '통신서비스요금',
-      'bill_itm_scl_nm': '옵션요금제',
-      'bill_itm_nm': '안심옵션 프리미엄',
-      'bill_itm_cd': 'DUV',
-      'inv_amt1': '0',
-      'inv_amt2': '7,200'
-    },
-    {
-      'bill_itm_lcl_nm': '통신서비스요금',
-      'bill_itm_scl_nm': '옵션요금제',
-      'bill_itm_nm': '안심옵션 프리미엄2#',
-      'bill_itm_cd': 'DUV',
-      'inv_amt1': '0',
-      'inv_amt2': '2,200'
-    },
-    {
-      'bill_itm_lcl_nm': '통신서비스요금',
-      'bill_itm_scl_nm': '국내통화료',
-      'bill_itm_nm': '음성통화료',
-      'bill_itm_cd': 'AA2',
-      'inv_amt1': '0',
-      'inv_amt2': '33,200'
-    },
-    {
-      'bill_itm_lcl_nm': '통신서비스요금',
-      'bill_itm_scl_nm': '문자이용료',
-      'bill_itm_nm': '안심문자',
-      'bill_itm_cd': 'ASC',
-      'inv_amt1': '0',
-      'inv_amt2': '810'
-    },
-    {
-      'bill_itm_lcl_nm': '통신서비스요금',
-      'bill_itm_scl_nm': '요금할인',
-      'bill_itm_nm': '무약정플랜 포인트할인',
-      'bill_itm_cd': 'ED9',
-      'inv_amt1': '0',
-      'inv_amt2': '-1'
-    },
-    {
-      'bill_itm_lcl_nm': '통신서비스요금',
-      'bill_itm_scl_nm': '요금할인',
-      'bill_itm_nm': '레인보우포인트결제',
-      'bill_itm_cd': 'A5P',
-      'inv_amt1': '0',
-      'inv_amt2': '-53'
-    },
-    {
-      'bill_itm_lcl_nm': '통신서비스요금',
-      'bill_itm_scl_nm': '부가가치세(세금)*',
-      'bill_itm_nm': '부가세총액*',
-      'bill_itm_cd': 'A15',
-      'inv_amt1': '0',
-      'inv_amt2': '7,720'
-    },
-    {
-      'bill_itm_lcl_nm': '통신서비스요금',
-      'bill_itm_scl_nm': '부가가치세(세금)*',
-      'bill_itm_nm': '레인보우p 할인부가세*',
-      'bill_itm_cd': 'EDA',
-      'inv_amt1': '0',
-      'inv_amt2': '-5'
-    },
-    {
-      'bill_itm_lcl_nm': '통신서비스요금',
-      'bill_itm_scl_nm': '부가가치세(세금)*',
-      'bill_itm_nm': 'T렌탈대여요금부가세*',
-      'bill_itm_cd': 'DV9',
-      'inv_amt1': '0',
-      'inv_amt2': '3,290'
-    },
-    {
-      'bill_itm_lcl_nm': '부가사용금액',
-      'bill_itm_scl_nm': '부가서비스이용료',
-      'bill_itm_nm': 'oksusu 프리',
-      'bill_itm_cd': 'ECF',
-      'inv_amt1': '0',
-      'inv_amt2': '4,500'
-    },
-    {
-      'bill_itm_lcl_nm': '부가사용금액',
-      'bill_itm_scl_nm': 'T렌탈이용금액',
-      'bill_itm_nm': 'T렌탈대여요금',
-      'bill_itm_cd': 'DQS',
-      'inv_amt1': '0',
-      'inv_amt2': '32,900'
-    },
-    {
-      'bill_itm_lcl_nm': '단말기할부금',
-      'bill_itm_scl_nm': '분할상환금',
-      'bill_itm_nm': '단말기분할상환금*',
-      'bill_itm_cd': 'C44',
-      'inv_amt1': '0',
-      'inv_amt2': '9,700'
-    },
-    {
-      'bill_itm_lcl_nm': '단말기할부금',
-      'bill_itm_scl_nm': '분할상환금',
-      'bill_itm_nm': '단말분할상환수수료*',
-      'bill_itm_cd': 'C46',
-      'inv_amt1': '0',
-      'inv_amt2': '940'
-    }
 
-  ];
+  var childSvcMgmtNum = Tw.UrlHelper.getQueryParams().childSvcMgmtNum;
+  this._startGetBillResponseTimer(Tw.MyTBillHotBill.PARAM.TYPE.CURRENT, childSvcMgmtNum);
   Handlebars.registerHelper('isBill', function (val, options) {
-    return (val !== 'total' && val !== 'noVAT'&& val !== 'is3rdParty') ? options.fn(this) : options.inverse(this);
+    return (Tw.MyTBillHotBill.NO_BILL_FIELDS.indexOf(val) < 0 ) ? options.fn(this) : options.inverse(this);
   });
-  this._makeBillGroup();
-  this._renderBillGroup();
 };
 
 Tw.MyTBillHotBillChild.prototype = {
   _cachedElement: function () {
     this.$billMenu = this.$container.find('#childBillAccordion');
+    this.$amount = this.$container.find('.payment-all em');
+    this.$period = this.$container.find('.payment-all > .term');
+    this.$childSelect = this.$container.find('.bt-dropdown');
+    this.$deviceInfo = this.$container.find('.device-info');
+    this.$svcNum = this.$container.find('.svc-num');
+    this.$btPreviousBill = this.$container.find('#previousBill');
   },
 
   _bindEvent: function () {
-    this.$container.on('click', '.use-family', $.proxy(this._openFamilyMemberSelect, this));
+    if ( this.$childSelect ) {
+      var strItems = this.$container.find('[data-items]').attr('data-items');
+      this._children = JSON.parse(strItems);
+      _.forEach(this._children, function (child) {
+        child.svcNum = child.svcNum.replace(/(\d{3})(\d{2})(\d{2})(\d{2})(\d{2})/, '$1-$2**-$4**');
+      });
+    }
+    this.$childSelect.on('click', $.proxy(this._showChildrenChoice, this));
+    this.$btPreviousBill.on('click', $.proxy(this._showPreviousBill, this));
   },
 
-  _makeBillGroup: function () {
-    var self = this;
-    var amount = 0;
-    var noVAT = false;
-    var is3rdParty = false;
+  _getBillResponse: function (gubun, childNum) {
+    this._apiService
+      .request(Tw.API_CMD.BFF_05_0022, {
+        gubun: gubun || Tw.MyTBillHotBill.PARAM.TYPE.CURRENT,
+        childSvcMgmtNum: childNum
+      })
+      .done($.proxy(this._onReceivedBillData, this))
+      .fail($.proxy(this._onErrorReceivedBillData, this));
+  },
 
-    this._group = {};
-    this._groupPrev = {};
-    this.record.forEach(function (item) {
-      noVAT = false;
-      is3rdParty = false;
-      var groupL = item.bill_itm_lcl_nm;
-      var groupS = item.bill_itm_scl_nm;
+  _sendBillRequest: function (gubun, childnum) {
+    this._apiService
+      .request(Tw.API_CMD.BFF_05_0022, {
+        gubun: gubun || Tw.MyTBillHotBill.PARAM.TYPE.CURRENT,
+        childSvcMgmtNum: childnum
+      })
+      .done($.proxy(this._startGetBillResponseTimer, this, gubun, childnum))
+      .fail($.proxy(this._onErrorReceivedBillData, this));
 
-      if ( !self._group[groupL] ) {
-        self._group[groupL] = { total: 0 };
-        self._groupPrev[groupL] = { total: 0 };
-      }
+  },
 
-      if ( !self._group[groupL][groupS] ) {
-        if ( groupS.indexOf('*') > -1 ) {
-          groupS = groupS.replace(/\*/g, '');
-          noVAT = true;
-        } else if ( groupS.indexOf('#') > -1 ) {
-          groupS = groupS.replace(/#/g, '');
-          is3rdParty = true;
+  _startGetBillResponseTimer: function (gubum, num) {
+    skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
+    this._resTimerID = setTimeout(this._getBillResponse(gubum, num), 500);
+  },
+
+  _onReceivedBillData: function (resp) {
+    if ( this._resTimerID ) {
+      clearTimeout(this._resTimerID);
+      this._resTimerID = null;
+    }
+
+    if ( resp.result && resp.result.isSuccess === 'Y' ) {
+      if ( resp.result.gubun === Tw.MyTBillHotBill.PARAM.TYPE.PREVIOUS ) {
+        Tw.MyTBillHotBill.openPrevBillPopup(resp, this._svcNum, '휴대폰');
+      } else {
+        var billData = resp.result.hotBillInfo;
+        var day = parseInt(resp.result.stdDateHan.match(/(\d+)\uC77C/i)[1], 10);
+        this._childSvcNum = resp.result.svcMgmtNum;
+        var target = _.find(this._children, { svcMgmtNum: this._childSvcNum });
+        this.$deviceInfo.text(target.childEqpMdNm);
+        this.$svcNum.text(target.svcNum);
+        this._preBillAvailable = (billData.bf_mth_yn === 'Y');
+
+        //자녀 핸드폰: 7일까지 전월요금보기 보이기
+        if ( day <= 7) {
+          this.$btPreviousBill.show();
         }
-        self._group[groupL][groupS] = { items: [], total: 0, noVAT: noVAT, is3rdParty: is3rdParty };
-        self._groupPrev[groupL][groupS] = { items: [], total: 0, noVAT: noVAT, is3rdParty: is3rdParty };
-      }
 
-      amount = parseInt(item.inv_amt2.replace(/,/g, ''), 10);
-      self._group[groupL].total += amount;
-      self._group[groupL][groupS].total += amount;
-
-      amount = parseInt(item.inv_amt1.replace(/,/g, ''), 10);
-      self._groupPrev[groupL].total += amount;
-      self._groupPrev[groupL][groupS].total += amount;
-
-      //아이템 이름과  소분류가 같은 경우 2depth 보여주지 않음
-      if ( groupS !== item.bill_itm_nm ) {
-        var bill_item = {
-          name: item.bill_itm_nm.replace(/[*#]/g, ''),
-          amount: item.inv_amt2,
-          noVAT: item.bill_itm_nm.indexOf('*') > -1 ? true : false,
-          is3rdParty: item.bill_itm_nm.indexOf('#') > -1 ? true : false
+        this.$amount.text(billData.tot_open_bal2);
+        var strPeriod = Tw.MyTBillHotBill.getFormattedPeriod(resp.result.termOfHotBill);
+        this.$period.text(strPeriod);
+        var fieldInfo = {
+          lcl: 'bill_itm_lcl_nm',
+          scl: 'bill_itm_scl_nm',
+          name: 'bill_itm_nm',
+          value: 'inv_amt2'
         };
-
-        self._group[groupL][groupS].items.push($.extend({}, bill_item));
-
-        bill_item.amount = item.inv_amt1;
-        self._groupPrev[groupL][groupS].items.push(bill_item);
+        var group = Tw.MyTBillHotBill.arrayToGroup(billData.record1, fieldInfo);
+        this._renderBillGroup(group);
       }
-
-    });
+    } else {
+      this._onErrorReceivedBillData();
+    }
+    skt_landing.action.loading.off({ ta: '.container' });
   },
 
-  _renderBillGroup: function () {
+  _renderBillGroup: function (group) {
     var source = $('#tmplBillGroup').html();
     var template = Handlebars.compile(source);
-    var output = template({ billItems: this._group });
+    var output = template({ billItems: group });
+    this.$billMenu.empty();
     this.$billMenu.append(output);
-    // skt_landing.action.loading.off({ta:'.load-area'});
-  }
+    skt_landing.widgets.widget_accordion2();
+  },
 
+  _showChildrenChoice: function () {
+    var members = [];
+    var item = null;
+    this._children.forEach(function (member) {
+      item = {
+        attr: 'id=' + member.svcMgmtNum,
+        text: member.svcNum + (member.childEqpMdNm ? '(' + member.childEqpMdNm + ')' : '')
+      };
+      members.push(item);
+    });
+    this._popupService.openChoice(Tw.MSG_MYT.HOTBILL_MEMBER_POPUP_TITLE, members, 'type1', $.proxy(this._onOpenChildrenChoice, this));
+  },
+
+  _showPreviousBill: function () {
+    event.preventDefault();
+    if ( this._preBillAvailable ) {
+      skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
+      this._apiService
+        .request(Tw.API_CMD.BFF_05_0035, {
+          gubun: Tw.MyTBillHotBill.PARAM.TYPE.PREVIOUS,
+          childSvcMgmtNum: this._childSvcNum
+        })
+        .done(function () {
+          this._startGetBillResponseTimer(Tw.MyTBillHotBill.PARAM.TYPE.PREVIOUS, this._childSvcNum);
+        })
+        .fail($.proxy(this._onErrorReceivedBillData, this));
+    } else {
+      this._popupService.open({
+        hbs: 'MY_03_01_01_L03_case',
+        data: {
+          svcNum: this._svcNum,
+          svcType: '휴대폰'
+        }
+      });
+    }
+  },
+
+  _onOpenChildrenChoice: function ($popup) {
+    $popup.one('click', '.popup-choice-list button', $.proxy(this._onClickChildButton, this));
+  },
+
+  _onClickChildButton: function (e) {
+    this._sendBillRequest(Tw.MyTBillHotBill.PARAM.TYPE.CURRENT, e.target.id);
+    Tw.Popup.close();
+  }
 };

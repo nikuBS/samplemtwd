@@ -15,24 +15,6 @@ class MytBillGuidechange extends TwViewController {
     super();
   }
 
-  /* 안내서 유형조회(BFF_05_0025) 호출
-     URL : /core-bill/v1/bill-types-list/
-   */
-  private reqBillType(): any {
-    const res = {
-      code: '00',
-      msg: 'success',
-      result: {
-        curBillType: 'P',
-        curBillTypeNm: 'Tworld 확인',
-        ccurNotiYn: 'Y', // 법정 대리인 동시통보 유무
-        ccurNotiSvcNum: '010-11**-22**', // 법정대리인 동시통보서비스 번호
-        smsRecieveYN: 'Y' // SMS 수신불가 유무 ( 이건 아직 미정의 되어 임의생성함)
-      }
-    };
-    return res;
-  }
-
   /*
     요금안내서 플리킹 리스트
     회선(핸드폰,Twibro, 인터넷/집전화/IPTV) 에 맞는 요금 안내서 리스트를 만든다.
@@ -44,7 +26,17 @@ class MytBillGuidechange extends TwViewController {
         return ',P,2,1'.indexOf(line.billType) > 0 ? true : false;
       } else if (['S1', 'S2', 'S3'].some(e => e === svcInfo.svcAttrCd)) {
         // 인터넷/집전화/IPTV
-        return ['P', 'H', 'B', '2', 'I', 'A', '1'].some(e => e === line.billType);
+        if ( ['P', 'H', 'B', '2', 'I', 'A', '1'].some(e => e === line.billType) ) {
+          // 유선의 경우 코드가 다르기 때문에 변환해준다.
+          if ( line.billType === 'H' ) {
+            line.billType = 'J';
+          } else if ( line.billType === 'I' ) {
+            line.billType = 'K';
+          }
+          return true;
+        } else {
+          return false;
+        }
       }
       return true;
     });
@@ -82,8 +74,9 @@ class MytBillGuidechange extends TwViewController {
       let path = 'bill/myt.bill.guidechange.html';
       // 통합대표회선 대표회선 아닌경우 확인
       if ( data.integYN === 'Y') {
-        const imsiArr = data.itgSvc.filter( (line) => {
+        data.itgSvc.filter( (line) => {
           if ( line.acntRepYN === 'Y' ) {
+            // 현재 라인이 대표회선인데, 현재 서비스 번호와 로그인회선의 서비스 번호가 다르면 현재 회선은 대표회선이 아니다.
             if ( svcInfo.svcMgmtNum !== line.svcMgmtNum ) {
               data.representSvcNum = line.svcNum;
               data.representYN = 'N';
@@ -91,13 +84,8 @@ class MytBillGuidechange extends TwViewController {
             }
           }
         });
-        this.logger.info('.', '>>>>>> ', JSON.stringify(data));
-      } else {
-        this.logger.info('.', '>>>>>> 개별 회선이다');
       }
-
       res.render(path, { svcInfo: svcInfo, data: data });
-      // res.render('bill/myt.bill.guidechange.html', { svcInfo: svcInfo, data: data });
     });
   }
 }

@@ -4,7 +4,7 @@
  * Date: 2018.07.16
  */
 
-Tw.MyTBillGuideChangeComplete = function (rootEl) {
+Tw.MyTBillGuidechangeChangeComplete = function (rootEl) {
   this.$container = rootEl;
   this.$document = $(document);
   this.$window = window;
@@ -14,7 +14,7 @@ Tw.MyTBillGuideChangeComplete = function (rootEl) {
   this._complete();
 };
 
-Tw.MyTBillGuideChangeComplete.prototype = {
+Tw.MyTBillGuidechangeChangeComplete.prototype = {
   _complete: function () {
     this._history.complete();
   }

@@ -38,13 +38,13 @@
         </dl>
     </li>
     <% } %>
-<% } else { %>
-    <% if (curBillGuide.cntcNum1) { %>
+<% } else if (svcInfo.svcAttrCd === 'S1' || svcInfo.svcAttrCd === 'S2' || svcInfo.svcAttrCd === 'S3') { %>
+    <% if (curBillGuide.wireSmtBillSvcNum) { %>
     <li>
         <dl>
             <dt class="ti-data">청구인 휴대폰번호</dt>
             <dd class="tx-data">
-                <%= curBillGuide.cntcNum1 %>
+                <%= curBillGuide.wireSmtBillSvcNum %>
             </dd>
         </dl>
     </li>
@@ -55,6 +55,14 @@
         <dt class="ti-data">휴대폰 번호 전체 표시</dt>
         <dd class="tx-data">
             <%= (curBillGuide.phonNumPrtClCd === 'N' ? '일부 별표 표시' : '전체 표시') %>
+        </dd>
+    </dl>
+</li>
+<li>
+    <dl>
+        <dt class="ti-data">콘텐츠 이용료 청구 상세내역 수신</dt>
+        <dd class="tx-data">
+            <%= (curBillGuide.invDtlsIncldYn === 'N' ? '일부 내역만 보기' : '상세내역 보기') %>
         </dd>
     </dl>
 </li>

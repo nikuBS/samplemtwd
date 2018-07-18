@@ -103,8 +103,8 @@
                                                 <li class="swiper-slide" data-bill-type="<%= JSON.stringify(line)%>" >
                                                     <div class="swiper-cont bg-color3">
                                                         <div class="t-commend-info">
-                                                            <!--추천 태크 표시대상 : P:T world, H:Bill Letter, 2:이메일-->
-                                                            <% if( ',P,H,2'.indexOf(line.billType) > 0 ) { %>
+                                                            <!--추천 태크 표시대상 : P:T world, H,J:Bill Letter, 2:이메일-->
+                                                            <% if( ',P,H,J,2'.indexOf(line.billType) > 0 ) { %>
                                                             <span class="ico-commend"><em class="blind">추천</em></span>
                                                             <% } %>
                                                             <p class="commend-info-txt info-txt-w"><%- line.value%></p>

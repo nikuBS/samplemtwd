@@ -5,7 +5,7 @@
  */
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
-import { BILL_GUIDE_TYPE, SVC_ATTR } from '../../../../types/bff-common.type';
+import { BILL_GUIDE_TYPE, SVC_ATTR, WIRE_BILL_GUIDE_TYPE } from '../../../../types/bff-common.type';
 import { BILL_GUIDE_TYPE_NAME, BILL_GUIDE_SELECTOR_LABEL } from '../../../../types/string.type';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
@@ -20,50 +20,67 @@ BILL_GUIDE_TYPE_COMPONENT[BILL_GUIDE_TYPE.SMS_EMAIL] = 'sms-email';
 BILL_GUIDE_TYPE_COMPONENT[BILL_GUIDE_TYPE.BILL_LETTER_SMS] = 'bill-letter-sms';
 BILL_GUIDE_TYPE_COMPONENT[BILL_GUIDE_TYPE.ETC] = 'etc';
 
+BILL_GUIDE_TYPE_COMPONENT[WIRE_BILL_GUIDE_TYPE.TWORLD] = 'tworld';
+BILL_GUIDE_TYPE_COMPONENT[WIRE_BILL_GUIDE_TYPE.BILL_LETTER] = 'bill-letter';
+BILL_GUIDE_TYPE_COMPONENT[WIRE_BILL_GUIDE_TYPE.SMS] = 'sms';
+BILL_GUIDE_TYPE_COMPONENT[WIRE_BILL_GUIDE_TYPE.EMAIL] = 'email';
+BILL_GUIDE_TYPE_COMPONENT[WIRE_BILL_GUIDE_TYPE.BILL_LETTER_EMAIL] = 'bill-letter-email';
+BILL_GUIDE_TYPE_COMPONENT[WIRE_BILL_GUIDE_TYPE.SMS_EMAIL] = 'sms-email';
+BILL_GUIDE_TYPE_COMPONENT[WIRE_BILL_GUIDE_TYPE.BILL_LETTER_SMS] = 'bill-letter-sms';
+BILL_GUIDE_TYPE_COMPONENT[WIRE_BILL_GUIDE_TYPE.ETC] = 'etc';
+
 const defaultBillGuideTypes = [{
   curBillType: BILL_GUIDE_TYPE.TWORLD,
   curBillTypeNm: BILL_GUIDE_TYPE_NAME.TWORLD,
   component: BILL_GUIDE_TYPE_COMPONENT[BILL_GUIDE_TYPE.TWORLD],
-  selectorLabel: BILL_GUIDE_SELECTOR_LABEL.TWORLD
+  selectorLabel: BILL_GUIDE_SELECTOR_LABEL.TWORLD,
+  wireCurBillType: WIRE_BILL_GUIDE_TYPE.TWORLD
 }, {
   curBillType: BILL_GUIDE_TYPE.EMAIL,
   curBillTypeNm: BILL_GUIDE_TYPE_NAME.EMAIL,
   component: BILL_GUIDE_TYPE_COMPONENT[BILL_GUIDE_TYPE.EMAIL],
-  selectorLabel: BILL_GUIDE_SELECTOR_LABEL.EMAIL
+  selectorLabel: BILL_GUIDE_SELECTOR_LABEL.EMAIL,
+  wireCurBillType: WIRE_BILL_GUIDE_TYPE.EMAIL
 }, {
   curBillType: BILL_GUIDE_TYPE.ETC,
   curBillTypeNm: BILL_GUIDE_TYPE_NAME.ETC,
   component: BILL_GUIDE_TYPE_COMPONENT[BILL_GUIDE_TYPE.ETC],
-  selectorLabel: BILL_GUIDE_SELECTOR_LABEL.ETC
+  selectorLabel: BILL_GUIDE_SELECTOR_LABEL.ETC,
+  wireCurBillType: WIRE_BILL_GUIDE_TYPE.ETC
 }];
 
 const mixedBillGuidetypes = defaultBillGuideTypes.concat([{
   curBillType: BILL_GUIDE_TYPE.BILL_LETTER,
   curBillTypeNm: BILL_GUIDE_TYPE_NAME.BILL_LETTER,
   component: BILL_GUIDE_TYPE_COMPONENT[BILL_GUIDE_TYPE.BILL_LETTER],
-  selectorLabel: BILL_GUIDE_SELECTOR_LABEL.BILL_LETTER
+  selectorLabel: BILL_GUIDE_SELECTOR_LABEL.BILL_LETTER,
+  wireCurBillType: WIRE_BILL_GUIDE_TYPE.BILL_LETTER
 }, {
   curBillType: BILL_GUIDE_TYPE.SMS,
   curBillTypeNm: BILL_GUIDE_TYPE_NAME.SMS,
   component: BILL_GUIDE_TYPE_COMPONENT[BILL_GUIDE_TYPE.SMS],
-  selectorLabel: BILL_GUIDE_SELECTOR_LABEL.SMS
+  selectorLabel: BILL_GUIDE_SELECTOR_LABEL.SMS,
+  wireCurBillType: WIRE_BILL_GUIDE_TYPE.SMS
 }, {
   curBillType: BILL_GUIDE_TYPE.BILL_LETTER_EMAIL,
   curBillTypeNm: BILL_GUIDE_TYPE_NAME.BILL_LETTER_EMAIL,
   component: BILL_GUIDE_TYPE_COMPONENT[BILL_GUIDE_TYPE.BILL_LETTER_EMAIL],
-  selectorLabel: BILL_GUIDE_SELECTOR_LABEL.BILL_LETTER_EMAIL
+  selectorLabel: BILL_GUIDE_SELECTOR_LABEL.BILL_LETTER_EMAIL,
+  wireCurBillType: WIRE_BILL_GUIDE_TYPE.BILL_LETTER_EMAIL
 }, {
   curBillType: BILL_GUIDE_TYPE.SMS_EMAIL,
   curBillTypeNm: BILL_GUIDE_TYPE_NAME.SMS_EMAIL,
   component: BILL_GUIDE_TYPE_COMPONENT[BILL_GUIDE_TYPE.SMS_EMAIL],
-  selectorLabel: BILL_GUIDE_SELECTOR_LABEL.SMS_EMAIL
+  selectorLabel: BILL_GUIDE_SELECTOR_LABEL.SMS_EMAIL,
+  wireCurBillType: WIRE_BILL_GUIDE_TYPE.SMS_EMAIL
 }]);
 
 const cellPhoneBillGuideTypes = mixedBillGuidetypes.concat([{
   curBillType: BILL_GUIDE_TYPE.BILL_LETTER_SMS,
   curBillTypeNm: BILL_GUIDE_TYPE_NAME.BILL_LETTER_SMS,
   component: BILL_GUIDE_TYPE_COMPONENT[BILL_GUIDE_TYPE.BILL_LETTER_SMS],
-  selectorLabel: BILL_GUIDE_SELECTOR_LABEL.BILL_LETTER_SMS
+  selectorLabel: BILL_GUIDE_SELECTOR_LABEL.BILL_LETTER_SMS,
+  wireCurBillType: WIRE_BILL_GUIDE_TYPE.BILL_LETTER_SMS
 }]);
 
 
@@ -77,11 +94,11 @@ class MyTBillChange extends TwViewController {
     Observable.combineLatest(
       billTypeListRequest,
     ).subscribe(([_billTypesList]) => {
+      console.log('~~~~~~~~~svcInfo', svcInfo);
       const _curBillGuide = this.getResult(_billTypesList);
+      console.log('~~~~~~~~~_curBillGuide', _curBillGuide);
       let tmpBillGuideTypes;
-
       // _svcInfo['svcAttrCd'] = 'S1';
-
       switch ( svcInfo.svcAttrCd ) {
         case 'M1': // 휴대폰
           tmpBillGuideTypes = cellPhoneBillGuideTypes;
@@ -101,16 +118,17 @@ class MyTBillChange extends TwViewController {
       const billGuideTypes = tmpBillGuideTypes.map((billGuideType) => {
         billGuideType['kidsYn'] = _curBillGuide['kidsYn'];
         billGuideType['beforeBillType'] = _curBillGuide['curBillType'];
-        billGuideType['svcInfo'] = svcInfo;
+        // billGuideType['svcInfo'] = svcInfo;
 
         // ---------------------------------
         // billGuideType['kidsYn'] = 'Y';
         // billGuideType['svcInfo'].svcAttrCd = 'M1';
         // billGuideType['curBillType'] = 'P';
-        billGuideType['isusimchk'] = 'Y';
+        // billGuideType['isusimchk'] = 'Y';
         // billGuideType['curBillTypeNm'] = '티월드';
         return billGuideType;
       });
+      console.log('~~~~~~~~~~~~~~`billGuideTypes', billGuideTypes);
 
       this.renderView(res, 'bill/myt.bill.guidechange.change.html', {
         // svcInfo: _svcInfo,

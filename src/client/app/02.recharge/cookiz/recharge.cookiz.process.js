@@ -17,6 +17,7 @@ Tw.RechargeCookizProcess = function (rootEl) {
 };
 
 Tw.RechargeCookizProcess.prototype = {
+  DEFAULT_AMOUNT: 1000,
   target: {
     name: '',
     phone: '',
@@ -27,7 +28,7 @@ Tw.RechargeCookizProcess.prototype = {
   provider: {
     prodId: '',
     prodName: '',
-    amount: 7000
+    amount: 5000
   },
 
   _init: function () {
@@ -35,6 +36,12 @@ Tw.RechargeCookizProcess.prototype = {
       if ( res.code === '00' ) {
         var result = res.result;
         this.provider.amount = Number(result.currentTopUpLimit);
+
+        if ( this.provider.amount < this.target.amount ) {
+          this.target.amount = this.DEFAULT_AMOUNT;
+          this._setAmount();
+        }
+
         this._setAvailableAmount();
       }
     };
@@ -123,8 +130,8 @@ Tw.RechargeCookizProcess.prototype = {
   },
 
   _setAmount: function () {
-    $('.tx-data.money .tx-bold').text(Tw.FormatHelper.addComma(this.target.amount));
-    $('.tx-data .num.amount').text(Tw.FormatHelper.addComma(this.target.amount));
+    $('.tx-data.money .tx-bold').text(Tw.FormatHelper.addComma(this.target.amount.toString()));
+    $('.tx-data .num.amount').text(Tw.FormatHelper.addComma(this.target.amount.toString()));
   },
 
   _onClickSelectPopup: function () {
@@ -205,7 +212,7 @@ Tw.RechargeCookizProcess.prototype = {
 
   _onSuccessCookizComplete: function (res) {
     if ( res.code === '00' ) {
-      $('.recharge_amount').text(Tw.FormatHelper.addComma(this.target.amount));
+      $('.recharge_amount').text(Tw.FormatHelper.addComma(String(this.target.amount)));
       this._go('#complete');
     } else {
       this._sendFail(res);

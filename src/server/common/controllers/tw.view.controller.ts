@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import ApiService from '../../services/api.service';
 import LoginService from '../../services/login.service';
-import { API_CMD, API_CODE } from '../../types/api-command.type';
+import { API_CMD, API_CODE, API_SVC_PWD_ERROR } from '../../types/api-command.type';
 import LoggerService from '../../services/logger.service';
 import { SvcInfoModel } from '../../models/svc-info.model';
 import { URL } from '../../types/url.type';
@@ -56,7 +56,11 @@ abstract class TwViewController {
         this.render(req, res, next, new SvcInfoModel(resp), resp.noticeTpyCd);
       }, (error) => {
         // 로그인 실패
-        console.log('error', error);
+        if ( error === API_SVC_PWD_ERROR.RDT0006 ) {
+          res.redirect('/auth/login/service-pwd');
+        } else {
+          res.send(error);
+        }
       });
     } else {
       // TEST login
@@ -64,7 +68,11 @@ abstract class TwViewController {
         this.render(req, res, next, new SvcInfoModel(resp), resp.noticeTpyCd);
       }, (error) => {
         // 로그인 실패
-        console.log('error', error);
+        if ( error === API_SVC_PWD_ERROR.RDT0006 ) {
+          res.redirect('/auth/login/service-pwd');
+        } else {
+          res.send(error);
+        }
       });
     }
 
