@@ -9,7 +9,7 @@ Tw.mytBillBillguideSubSelPayment = function (rootEl, resData) {
 
   this.resData = resData;
   this.init = this._init;
-  Tw.Logger.info('[서버에서 데이터 받음 mytBillBillguideSubSelPayment]', resData);
+  Tw.Logger.info('[서버에서 데이터 받음]', resData);
 
   this.$container = rootEl;
   this.$window = window;
@@ -172,43 +172,24 @@ Tw.mytBillBillguideSubSelPayment.prototype = {
     }, this));
   },
   //--------------------------------------------------------------------------[api]
-  _getAutopaySchedule: function() {
-
-    $.ajax('http://localhost:3000/mock/myt.bill.billguide.BFF_05_00033_1.json')
+  _getAutopaySchedule: function() {//BFF_05_0033
+    this._apiService.request(Tw.API_CMD.BFF_05_0033, {})
       .done($.proxy(function(resp){
-        console.log('성공');
-        Tw.Logger.info('[BFF_05_00033]', resp);
+        Tw.Logger.info('[BFF_05_0033]', resp);
         this.autopaySchedule = resp.result;
         this._dataInit();
-
       }, this))
-      .fail(function(err) {
-        console.log('실패');
-        Tw.Logger.info('[BFF_05_00033]', err);
-      });
-
-    // this._apiService.request(Tw.API_CMD.BFF_05_0036, { detailYn: 'Y' })
-    //   .done(function(resp){
-    //     Tw.Logger.info('[청구요금 | 상세요금조회]', resp);
-    //   })
-    //   .fail(function(err){})
+      .fail(function(err){})
   },
-  _getPaymentPossibleDay: function() {
-    $.ajax('http://localhost:3000/mock/myt.bill.billguide.BFF_05_00031.json')
+  _getPaymentPossibleDay: function() {//BFF_05_0031
+    this._apiService.request(Tw.API_CMD.BFF_05_0031, {})
       .done($.proxy(function(resp){
-        console.log('성공');
-        Tw.Logger.info('[BFF_05_00031]', resp);
+        Tw.Logger.info('[BFF_05_0031]', resp);
         this.PaymentPossibleDay = resp.result;
         this._selectBtnInit();
-
       }, this))
-      .fail(function(err) {
-        console.log('실패');
-        Tw.Logger.info('[BFF_05_00033]', err);
-      });
-
+      .fail(function(err){})
   },
-
   //--------------------------------------------------------------------------[공통]
   _onOpenSelectPopup: function () {
     //$('.popup-info').addClass('scrolling');
