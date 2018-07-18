@@ -225,6 +225,7 @@ class MyTBillBillguide extends TwViewController {
   }
 
   public getCircuitChildInfoMask(obj: any):any { //휴대폰 마스킹 처리
+    this.logger.info(this, '[_휴대폰 마스킹 처리 : ', obj);
     this._commDataInfo.subChildBillInfo = obj.map( item => {
 
       let phoneNum_0 = item.svcNum.substr(0, 3) ;

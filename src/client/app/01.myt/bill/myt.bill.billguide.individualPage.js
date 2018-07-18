@@ -31,7 +31,7 @@ Tw.mytBillBillguideIndividualPage.prototype = {
   },
   _bindEvent: function () {
     //this.$container.on('click', '.slick-slide', $.proxy(this._selectCoupon, this));
-    this.$container.on('click', '[data-target="totPaySelectBtn"]', $.proxy(this._totPaySelectFun, this));
+    //this.$container.on('click', '[data-target="totPaySelectBtn"]', $.proxy(this._totPaySelectFun, this));
     this.$container.on('click', '[data-target="selDateBtn"]', $.proxy(this._selPopOpen, this)); //조회 월 셀렉트 버튼
   },
   //--------------------------------------------------------------------------[이벤트 | 팝업]
