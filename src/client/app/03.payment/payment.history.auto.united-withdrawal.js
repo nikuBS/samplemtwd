@@ -48,7 +48,7 @@ Tw.PaymentHistoryAutoUnitedWithdrawal.prototype = {
       HBS_WITHDRAWAL: 'PA_06_04_L01'
     };
 
-    this.autoPaymentApplyURL = '/payment/auto';
+    this.emptyURL = '/payment/auto';
   },
 
   _getData: function () {
@@ -63,9 +63,78 @@ Tw.PaymentHistoryAutoUnitedWithdrawal.prototype = {
 
     if (res.code !== Tw.API_CODE.CODE_00) return this._apiError(res);
 
-    if (res.result.length) {
+    res = {
+      'code': '00',
+      'msg': 'success',
+      'result': {
+        'recCnt': '',
+        'recCnt1': '',
+        'recCnt2': '',
+        'idrwObjYn': 'Y',
+        'idrwRejtYn': 'N',
+        'dpstrRelCd': '010',
+        'bankCd': '',
+        'bankNm': '국민은행',
+        'bankSerNum': '',
+        'bankNum': '00000000000000',
+        'm6ObjYn': 'Y',
+        'idrwCnt': '0002',
+        'idrwAmt': '000000000034560',
+        'maxDrwYm': '201710',
+        'selDrwYm': '201709',
+        'errCd': '',
+        'respMsg': '',
+        'integratedDrawalRecord': [
+          {
+            'acntNum': '1111111111',
+            'drwYm': '201709',
+            'drwDt': '20170921',
+            'reqSvcNum': '7257037325',
+            'svcNum': '7257037325',
+            'svcCd': 'I',
+            'svcCdNm': '인터넷',
+            'drwStCd': 'NR',
+            'drwStCdNm': '정상인출',
+            'drwErrCd': '00',
+            'drwErrCdNm': 'EDI 정상인출',
+            'drwAmt': '000000000020040',
+            'drwAmtTyp': 'D',
+            'payCyclCd': '3',
+            'reqTs': '1',
+            'tmthColClCd': '9',
+            'bankNum': '91930201528450',
+            'bankNm': '국민은행'
+          },
+          {
+            'acntNum': '1111111111',
+            'drwYm': '201709',
+            'drwDt': '20170921',
+            'reqSvcNum': '7257037325',
+            'svcNum': '7257037325',
+            'svcCd': 'I',
+            'svcCdNm': '인터넷',
+            'drwStCd': 'NR',
+            'drwStCdNm': '정상인출',
+            'drwErrCd': '00',
+            'drwErrCdNm': 'EDI 정상인출',
+            'drwAmt': '000000000020040',
+            'drwAmtTyp': 'D',
+            'payCyclCd': '3',
+            'reqTs': '1',
+            'tmthColClCd': '9',
+            'bankNum': '91930201528450',
+            'bankNm': '국민은행'
+          }
+        ]
+      }
+    };
 
-      res.result.map($.proxy(function (o) {
+    console.log(res);
+
+
+    if (res.result.integratedDrawalRecord.length) {
+
+      res.result.integratedDrawalRecord.map($.proxy(function (o) {
         o.isPoint = true;
 
         // rainbow : rbpChgRsnCdNm '신청취소', '신청', '청구반영'
@@ -86,7 +155,7 @@ Tw.PaymentHistoryAutoUnitedWithdrawal.prototype = {
       }, this));
 
     } else {
-      res.autoPaymentApplyURL = this.autoPaymentApplyURL;
+      res.removeURL = this.emptyURL;
     }
 
     var list = new this.common.listWithTemplate();

@@ -43,7 +43,7 @@ Tw.PaymentHistoryRealtime.prototype = {
       HBS_CARD: 'PA_06_02_L04'
     };
     this.apiName = Tw.API_CMD.BFF_07_0035;
-    this.autoPaymentApplyURL = '/payment/auto';
+    this.emptyURL = '/payment/point';
 
     this._getData();
   },
@@ -80,7 +80,7 @@ Tw.PaymentHistoryRealtime.prototype = {
       }, this));
 
     } else {
-      res.autoPaymentApplyURL = this.autoPaymentApplyURL;
+      this.result.removeURL = this.emptyURL;
     }
 
     var list = new this.common.listWithTemplate();
