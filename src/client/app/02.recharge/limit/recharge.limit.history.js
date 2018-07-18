@@ -21,7 +21,7 @@ Tw.RechargeLimitHistory.prototype = {
 
   TABS: {
     RECHARGE: 'recharge',
-    BLOCK: 'block',
+    BLOCK: 'block'
   },
 
   _init: function () {
@@ -36,9 +36,9 @@ Tw.RechargeLimitHistory.prototype = {
         type: Tw.BLOCK_TYPE.TOTAL,
         period: Tw.DATE_UNIT.THREE_MONTH
       }
-    }
+    };
 
-    this._items = {}
+    this._items = {};
     this._getData();
   },
 
@@ -46,7 +46,7 @@ Tw.RechargeLimitHistory.prototype = {
     this.$tabs = {
       recharge: this.$container.find('li.tab-recharge'),
       block: this.$container.find('li.tab-block')
-    }
+    };
   },
 
   _bindEvent: function () {
@@ -99,7 +99,7 @@ Tw.RechargeLimitHistory.prototype = {
     this._popupService.close();
 
     var searchCondition = this._searchCondition[this._selectedTab];
-    this.$container.find('#search-condition-' + this._selectedTab).text(searchCondition.type + " · " + searchCondition.period);
+    this.$container.find('#search-condition-' + this._selectedTab).text(searchCondition.type + ' · ' + searchCondition.period);
   },
 
   _handleMoreClick: function (e) {
@@ -122,57 +122,57 @@ Tw.RechargeLimitHistory.prototype = {
   },
 
   _setProperRecharge: function (item) {
-    if (item.opTypCd === "1") {
+    if (item.opTypCd === '1') {
       item.type = {
-        icon: "complete",
+        icon: 'complete',
         label: Tw.RECHARGE_TYPE.RECHARGE
-      }
-    } else if (item.opTypCd === "3") {
+      };
+    } else if (item.opTypCd === '3') {
       item.type = {
-        icon: "auto",
+        icon: 'auto',
         label: Tw.RECHARGE_TYPE.REGULAR
-      }
+      };
     } else {
       item.type = {
-        icon: "cancel",
+        icon: 'cancel',
         label: Tw.RECHARGE_TYPE.CANCEL,
-        complete: true,
-      }
+        complete: true
+      };
     }
-    item.refundable = item.refundableYn === "Y" ? true : false;
+    item.refundable = item.refundableYn === 'Y' ? true : false;
     item.opDt = Tw.DateHelper.getShortDateNoDot(item.opDt);
     return item;
   },
 
   _setProperBlock: function (item) {
     switch (item.opTypCd) {
-      case "1":
+      case '1':
         item.type = {
-          icon: "unblock",
+          icon: 'unblock',
           label: Tw.BLOCK_TYPE.UNBLOCK
         };
         item.opTypNm = Tw.BLOCK_TYPE.TMTH_UNBLOCK;
         break;
-      case "2":
+      case '2':
         item.type = {
-          icon: "block",
+          icon: 'block',
           label: Tw.BLOCK_TYPE.BLOCK
         };
         item.opTypNm = Tw.BLOCK_TYPE.TMTH_BLOCK;
         break;
-      case "3":
+      case '3':
         item.type = {
-          icon: "unblock",
+          icon: 'unblock',
           label: Tw.BLOCK_TYPE.UNBLOCK
         };
         item.opTypNm = Tw.BLOCK_TYPE.REGULAR_UNBLOCK;
         break;
-      case "4":
+      case '4':
         item.type = {
-          icon: "block",
+          icon: 'block',
           label: Tw.BLOCK_TYPE.BLOCK,
-          complete: true,
-        }
+          complete: true
+        };
         item.opTypNm = Tw.BLOCK_TYPE.REGULAR_BLOCK;
         break;
       default:
@@ -218,9 +218,9 @@ Tw.RechargeLimitHistory.prototype = {
             { checked: false, value: Tw.DATE_UNIT.ONE_MONTH },
             { checked: true, value: Tw.DATE_UNIT.THREE_MONTH },
             { checked: false, value: Tw.DATE_UNIT.SIX_MONTH },
-            { checked: false, value: Tw.DATE_UNIT.ONE_YEAR },
+            { checked: false, value: Tw.DATE_UNIT.ONE_YEAR }
           ]
-        },
+        }
       ];
     } else {
       option.select = [
@@ -237,9 +237,9 @@ Tw.RechargeLimitHistory.prototype = {
             { checked: false, value: Tw.DATE_UNIT.ONE_MONTH },
             { checked: true, value: Tw.DATE_UNIT.THREE_MONTH },
             { checked: false, value: Tw.DATE_UNIT.SIX_MONTH },
-            { checked: false, value: Tw.DATE_UNIT.ONE_YEAR },
+            { checked: false, value: Tw.DATE_UNIT.ONE_YEAR }
           ]
-        },
+        }
       ];
     }
 
@@ -268,12 +268,12 @@ Tw.RechargeLimitHistory.prototype = {
       return;
     }
 
-    this._searchCondition[this._selectedTab] = { type: type, period: period }
+    this._searchCondition[this._selectedTab] = { type: type, period: period };
 
     this._getData({
       type: typeIdx,
       toDt: Tw.DateHelper.getCurrentShortDate(),
       fromDt: Tw.DateHelper.getPastShortDate(period)
     });
-  },
-}
+  }
+};

@@ -77,6 +77,7 @@ export const URL = {
   '/auth/login/route': { login: false },
   '/auth/logout/complete': { login: true },
   '/auth/logout/expire': { login: true },
+  '/auth/logout/route': { login: true },
   '/auth/member/management': { login: true },
   '/auth/signup/guide': { login: false },
   '/auth/tid/login': { login: false },

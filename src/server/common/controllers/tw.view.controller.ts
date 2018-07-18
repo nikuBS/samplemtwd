@@ -56,13 +56,13 @@ abstract class TwViewController {
         this.render(req, res, next, new SvcInfoModel(resp), resp.noticeTpyCd);
       }, (error) => {
         // 로그인 실패
-        if ( error === API_LOGIN_ERROR.ICAS3228 ) {
+        if ( error.code === API_LOGIN_ERROR.ICAS3228 ) {
           // 고객보호비밀번호
           res.redirect('/auth/login/service-pwd');
-        } else if ( error === API_LOGIN_ERROR.ICAS3235 ) {
+        } else if ( error.code === API_LOGIN_ERROR.ICAS3235 ) {
           // 휴면계정
           res.redirect('/auth/login/dormancy');
-        } else if ( error === API_LOGIN_ERROR.ATH1003 ) {
+        } else if ( error.code === API_LOGIN_ERROR.ATH1003 ) {
           res.redirect('/auth/login/exceed-fail');
         } else {
           res.redirect('/auth/login/fail?errorCode=' + error);
@@ -74,13 +74,13 @@ abstract class TwViewController {
         this.render(req, res, next, new SvcInfoModel(resp), resp.noticeTpyCd);
       }, (error) => {
         // 로그인 실패
-        if ( error === API_LOGIN_ERROR.ICAS3228 ) {
+        if ( error.code === API_LOGIN_ERROR.ICAS3228 ) {
           // 고객보호비밀번호
           res.redirect('/auth/login/service-pwd');
-        } else if ( error === API_LOGIN_ERROR.ICAS3235 ) {
+        } else if ( error.code === API_LOGIN_ERROR.ICAS3235 ) {
           // 휴면계정
           res.redirect('/auth/login/dormancy');
-        } else if ( error === API_LOGIN_ERROR.ATH1003 ) {
+        } else if ( error.code === API_LOGIN_ERROR.ATH1003 ) {
           res.redirect('/auth/login/exceed-fail');
         } else {
           res.redirect('/auth/login/fail?errorCode=' + error);
@@ -103,11 +103,7 @@ abstract class TwViewController {
       this.render(req, res, next, this._loginService.getSvcInfo());
     } else {
       // TODO: 세션 만료 or 새로 진입
-      if ( !URL[path].login ) {
-        this.render(req, res, next);
-      } else {
-        res.render('logout/auth.logout.expire.html');
-      }
+      this.render(req, res, next);
     }
   }
 

@@ -61,7 +61,6 @@ Tw.RechargeTingHistory.prototype = {
     var elBtnMore = $('.gift-bt-more')[nCurrentTabIndex];
 
     if ( nCurrentTabIndex === 0 ) {
-
       if ( this.tab1_list.length <= this.DEFAULT_LIST_COUNT ) {
         $(elBtnMore).hide();
       } else {
@@ -114,21 +113,18 @@ Tw.RechargeTingHistory.prototype = {
     var nCurrentTabIndex = this._getCurrentTabIndex();
 
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-
       if ( res.result.length === 0 ) {
         this._renderNoList();
         return false;
       }
 
       if ( nCurrentTabIndex === 0 ) {
-        // TEST MOCKUP DATA
         res = $.extend(true, [], res);
         this.tab1_list = res.result;
         this._renderList(this.tab1_list.slice(0, this.tab1_listIndex));
       }
 
       if ( nCurrentTabIndex === 1 ) {
-        // TEST MOCKUP DATA
         res = $.extend(true, [], res);
         this.tab2_list = res.result;
         this._renderList(this.tab2_list.slice(0, this.tab2_listIndex));
@@ -185,7 +181,12 @@ Tw.RechargeTingHistory.prototype = {
 
     var $wrap_tab_contents = $($('.tab-contents [role="tabpanel"]').get(nCurrentTabIndex));
     var $btn_dropdown = $wrap_tab_contents.find('.bt-dropdown.small');
-    $btn_dropdown.text(sType + ' · ' + sPeriod);
+
+    if ( sType ) {
+      $btn_dropdown.text(sType + ' · ' + sPeriod);
+    } else {
+      $btn_dropdown.text(sPeriod);
+    }
 
     this._fetchData();
   },
@@ -266,25 +267,44 @@ Tw.RechargeTingHistory.prototype = {
       return item;
     });
 
-    this._popupService.open({
-      hbs: 'select',
-      title: Tw.POPUP_TITLE.CHANGE_SEARCH_CONDITION,
-      multiplex: true,
-      select: [{
-        title: 'Type',
-        style_class: 'three wrap_search_type',
-        options: typeOption
-      }, {
-        title: Tw.POPUP_PROPERTY.PERIOD,
-        style_class: 'two wrap_search_period',
-        options: periodOption
-      }],
-      bt_num: 'one',
-      type: [{
-        style_class: 'bt-red1 search_condition',
-        txt: Tw.BUTTON_LABEL.SELECT
-      }]
-    });
+    if ( nCurrentTabIndex === 0 ) {
+      this._popupService.open({
+        hbs: 'select',
+        title: Tw.POPUP_TITLE.CHANGE_SEARCH_CONDITION,
+        multiplex: true,
+        select: [{
+          title: 'Type',
+          style_class: 'three wrap_search_type',
+          options: typeOption
+        }, {
+          title: Tw.POPUP_PROPERTY.PERIOD,
+          style_class: 'two wrap_search_period',
+          options: periodOption
+        }],
+        bt_num: 'one',
+        type: [{
+          style_class: 'bt-red1 search_condition',
+          txt: Tw.BUTTON_LABEL.SELECT
+        }]
+      });
+    } else {
+      this._popupService.open({
+        hbs: 'select',
+        title: Tw.POPUP_TITLE.CHANGE_SEARCH_CONDITION,
+        multiplex: true,
+        select: [{
+          title: Tw.POPUP_PROPERTY.PERIOD,
+          style_class: 'two wrap_search_period',
+          options: periodOption
+        }],
+        bt_num: 'one',
+        type: [{
+          style_class: 'bt-red1 search_condition',
+          txt: Tw.BUTTON_LABEL.SELECT
+        }]
+      });
+    }
+
   },
 
   _getCurrentTabIndex: function () {
