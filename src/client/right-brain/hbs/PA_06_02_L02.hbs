@@ -21,11 +21,11 @@
                             <ul>
                                 <li>
                                     <span class="title">납부금액</span>
-                                    <span class="tx-cont"><strong>27,000</strong> 원</span>
+                                    <span class="tx-cont"><strong>{{data.payAmt}}</strong> 원</span>
                                 </li>
                                 <li>
                                     <span class="title">납부내용</span>
-                                    <span class="tx-cont">2018년 05월 청구분<br />010-23**-45**</span>
+                                    <span class="tx-cont">{{data.invDt}} 청구분<br />{{data.svcNum}}</span>
                                 </li>
                                 <li>
                                     <div class="inner-top">
@@ -35,15 +35,15 @@
                                         <ul>
                                             <li>
                                                 <span class="title">요청결과</span>
-                                                <span class="tx-cont">납부완료</span>
+                                                <span class="tx-cont">{{data.cardProcNm}}</span>
                                             </li>
                                             <li>
                                                 <span class="title">요청일시</span>
-                                                <span class="tx-cont">2018.05.23</span>
+                                                <span class="tx-cont">{{data.reqDate}}</span>
                                             </li>
                                             <li>
                                                 <span class="title">승인일시</span>
-                                                <span class="tx-cont">2018.05.23</span>
+                                                <span class="tx-cont">{{data.resDate}}</span>
                                             </li>
                                         </ul>
                                     </div>
@@ -54,11 +54,11 @@
                                 </li>
                                 <li>
                                     <span class="title">카드번호</span>
-                                    <span class="tx-cont">1212*********</span>
+                                    <span class="tx-cont">{{data.cardNum}}</span>
                                 </li>
                                 <li>
                                     <span class="title">승인번호</span>
-                                    <span class="tx-cont">1234567</span>
+                                    <span class="tx-cont">{{data.aprvNum}}</span>
                                 </li>
                             </ul>
                         </div>

@@ -21,11 +21,11 @@
                             <ul>
                                 <li>
                                     <span class="title">납부금액</span>
-                                    <span class="tx-cont"><strong>11,000</strong> 원</span>
+                                    <span class="tx-cont"><strong>{{data.payAmt}}</strong> 원</span>
                                 </li>
                                 <li>
                                     <span class="title">납부내용</span>
-                                    <span class="tx-cont">2018년 05월 청구분<br />010-23**-45**</span>
+                                    <span class="tx-cont">{{data.invDt}} 청구분<br />{{data.svcNum}}</span>
                                 </li>
                                 <li>
                                     <div class="inner-top">
@@ -35,22 +35,22 @@
                                         <ul>
                                             <li>
                                                 <span class="title">요청결과</span>
-                                                <span class="tx-cont">결제완료</span>
+                                                <span class="tx-cont">{{data.cardProcNm}}</span>
                                             </li>
                                             <li>
                                                 <span class="title">요청일시</span>
-                                                <span class="tx-cont">2018.05.23</span>
+                                                <span class="tx-cont">{{data.reqDate}}</span>
                                             </li>
                                         </ul>
                                     </div>
                                 </li>
                                 <li>
                                     <span class="title">은행명</span>
-                                    <span class="tx-cont">국민은행</span>
+                                    <span class="tx-cont">{{data.paymentName}}</span>
                                 </li>
                                 <li>
                                     <span class="title">계좌번호</span>
-                                    <span class="tx-cont">1212*********</span>
+                                    <span class="tx-cont">{{data.cardNum}}</span>
                                 </li>
                             </ul>
                         </div>
@@ -64,9 +64,16 @@
                 <div class="page-gnb">
                     <div class="bt-popup">
                         <ul class="bt-slice">
+                            {{#if data.isPersonal}}
                             <li class="bt-white1">
-                                <button>현금영수증 발행내역</button>
+                                <button class="fe-btn cash">현금영수증 발행내역</button>
                             </li>
+                            {{/if}}
+                            {{#if data.isCompany}}
+                                <li class="bt-white1">
+                                    <button class="fe-btn tax">세금계산서 발행내역</button>
+                                </li>
+                            {{/if}}
                             <li class="bt-blue1">
                                 <button>닫기</button>
                             </li>
