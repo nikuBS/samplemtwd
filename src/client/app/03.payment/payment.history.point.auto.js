@@ -56,25 +56,23 @@ Tw.PaymentHistoryPointAuto.prototype = {
 
   _setPageInfo: function () {
     this.useTemplate = this.currentPoint !== 'rainbow' ? this.defaultPointTemplate : this.rainbowPointTemplate;
+    this.empty = '/payment/point';
 
     switch (this.currentPoint) {
       case 'tpoint':
         this.apiName = Tw.API_CMD.BFF_07_0006;
         this.$listWrapper = this.$tPointListWrapper;
         this.pointTitle = Tw.MSG_PAYMENT.HISTORY_POINT_TITLE_TPOINT;
-        this.pointAutoPayURL = '/payment/point';
         break;
       case 'rainbow':
         this.apiName = Tw.API_CMD.BFF_07_0007;
         this.$listWrapper = this.$rainbowListWrapper;
         this.pointTitle = Tw.MSG_PAYMENT.HISTORY_POINT_TITLE_RAINBOW;
-        this.pointAutoPayURL = '/payment/point';
         break;
       case 'ocb':
         this.apiName = Tw.API_CMD.BFF_07_0005;
         this.$listWrapper = this.$ocbListWrapper;
         this.pointTitle = Tw.MSG_PAYMENT.HISTORY_POINT_TITLE_OCB;
-        this.pointAutoPayURL = '/payment/point';
         break;
       default:
         Tw.Logger.error('Wrong Excess');
@@ -148,7 +146,7 @@ Tw.PaymentHistoryPointAuto.prototype = {
 
     } else {
       res.pointTitle = this.pointTitle;
-      res.pointAutoPayURL = this.pointAutoPayURL;
+      res.removeURL = this.emptyURL;
     }
 
     var list = new this.common.listWithTemplate();

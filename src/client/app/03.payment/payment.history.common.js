@@ -197,6 +197,7 @@ Tw.PaymentHistoryCommon.prototype.listWithTemplate.prototype = {
   },
 
   _buildEmptyUI: function () {
+    console.log(this.data);
     this.wrapper.empty().append(this.emptyTemplate(this.data));
   },
 
