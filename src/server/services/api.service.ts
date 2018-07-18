@@ -102,7 +102,7 @@ class ApiService {
     let msg = 'unknown error';
     let code = API_CODE.CODE_400;
     if ( FormatHelper.isObject(error) ) {
-      msg = error.msg || message;
+      msg = error.msg || msg;
       code = error.code || code;
     }
     // observer.error(err);
