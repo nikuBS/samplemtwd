@@ -102,7 +102,8 @@ export enum PAYMENT_OPTION_TEXT {
   BANK_NAME = '은행명',
   CARD_NAME = '카드사',
   ACCOUNT = '계좌번호',
-  CARD_NUM = '카드번호'
+  CARD_NUM = '카드번호',
+  ZERO = '0'
 }
 
 export const BILL_GUIDE_TYPE = {

@@ -18,25 +18,36 @@
 <div class="container">
     <% include ../components/line.info.component.html %>
     <hr class="cont-sp type1" aria-hidden="true"/>
-    <div id="data-set" style="display:none;">
-        <span id="acntNum"><%= payment.acntNum %></span>
-        <span id="payerNumClCd"><%= payment.payerNumClCd %></span>
-        <span id="serNum"><%= payment.serNum %></span>
-        <span id="authReqSerNum"><%= payment.authReqSerNum %></span>
-        <span id="rltmSerNum"><%= payment.rltmSerNum %></span>
-        <span id="fstDrwSchdDt"><%= payment.fstDrwSchdDt %></span>
-    </div>
-    <div class="cont-box">
-        <% if (payment.option === 'card' || payment.option === 'bank') { %>
-            <% include ../components/auto/payment.auto.home-main.component.html %>
-        <% } else { %>
-            <% include ../components/auto/payment.auto.home-etc.component.html %>
-        <% } %>
-    </div>
+    <% if (payment.code === '00') { %>
+        <div id="data-set" style="display:none;">
+            <span id="acntNum"><%= payment.acntNum %></span>
+            <span id="payerNumClCd"><%= payment.payerNumClCd %></span>
+            <span id="serNum"><%= payment.serNum %></span>
+            <span id="authReqSerNum"><%= payment.authReqSerNum %></span>
+            <span id="rltmSerNum"><%= payment.rltmSerNum %></span>
+            <span id="fstDrwSchdDt"><%= payment.fstDrwSchdDt %></span>
+        </div>
+        <div class="cont-box">
+            <% if (payment.option === 'card' || payment.option === 'bank') { %>
+                <% include ../components/auto/payment.auto.home-main.component.html %>
+            <% } else { %>
+                <% include ../components/auto/payment.auto.home-etc.component.html %>
+            <% } %>
+        </div>
+    <% } else { %>
+        <div class="cont-box">
+            <div class="payment-select">
+                <div class="contents-empty">
+                    <span class="ico"></span>
+                    <p class="desc"><%= payment.error.msg %></p>
+                </div>
+            </div>
+        </div>
+    <% } %>
 </div>
 <hr class="cont-sp type1" aria-hidden="true"/>
 <% if (payment.option === 'card' || payment.option === 'bank') { %>
-<% include ../components/info/payment.auto.main.info.component.html %>
+    <% include ../components/info/payment.auto.main.info.component.html %>
 <% } else { %>
-<% include ../components/info/payment.auto.etc.info.component.html %>
+    <% include ../components/info/payment.auto.etc.info.component.html %>
 <% } %>

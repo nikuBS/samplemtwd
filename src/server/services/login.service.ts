@@ -15,7 +15,10 @@ class LoginService {
   }
 
   public isLogin(): boolean {
-    return !FormatHelper.isEmpty(this.session.serverSession);
+    if ( !FormatHelper.isEmpty(this.session) ) {
+      return !FormatHelper.isEmpty(this.session.serverSession);
+    }
+    return false;
   }
 
   public setClientSession(session) {

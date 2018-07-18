@@ -60,7 +60,7 @@
     </div>
     <!--// #contents -->
     <!-- footer -->
-    <% include ../../../../common/views/components/footer.component.html %>
+    <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
     <!-- // footer -->
 </div>
 <% include ../../components/javascript.component.html %>

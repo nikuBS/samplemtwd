@@ -13,6 +13,6 @@ Tw.AuthLoginRoute = function (target, state) {
 Tw.AuthLoginRoute.prototype = {
   _init: function() {
     var hash = window.location.hash.replace(/^#/i, '');
-    location.href = this.target + '?state=' + this.state + '&' + hash;
+    location.href = this.target + '?stateVal=' + this.state + '&' + hash;
   }
 };
