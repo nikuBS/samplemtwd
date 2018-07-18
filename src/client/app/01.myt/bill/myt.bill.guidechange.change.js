@@ -44,10 +44,12 @@ Tw.MyTBillGuidechangeChange.prototype = {
     this._$btnDropdown = this.$container.find('.bt-dropdown');
     this._$componentWrap = this.$container.find('.component-wrap');
     this._$selectedBillGuideTypeName = this.$container.find('.selected-bill-guide-type-name');
+    this._$closeStep = this.$container.find('.close-step');
   },
 
   _bindEvent: function () {
     this._$btnDropdown.on('click', $.proxy(this._openTypeSelectPopup, this));
+    this._$closeStep.on('click', $.proxy(this._closeStep, this));
   },
 
   _openTypeSelectPopup: function (event) {
@@ -109,5 +111,10 @@ Tw.MyTBillGuidechangeChange.prototype = {
     }
 
     this._setBillGuideComponent(selectedBillGuideType);
+  },
+
+  _closeStep: function() {
+    window.history.back();
   }
+
 };
