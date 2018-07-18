@@ -191,7 +191,6 @@ Tw.RechargeTingProcess.prototype = {
   },
 
   _validateStep2: function () {
-
     this._apiService.request(Tw.API_CMD.BFF_06_0023, {
       befrSvcNum: this.target.phone_no_mask,
       amt: this.target.amount
@@ -228,6 +227,10 @@ Tw.RechargeTingProcess.prototype = {
   _sendFail: function (res) {
     if ( res.data ) {
       this._popupService.openAlert(res.data.orgDebugMessage);
+    }
+
+    if ( res.msg ) {
+      this._popupService.openAlert(res.msg);
     }
   },
 

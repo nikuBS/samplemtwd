@@ -16,7 +16,7 @@
             <span class="text"></span>
             <select title="회선 목록">
                 <% lineList.map((line) => { %>
-                <option <% if (line.repSvcYn === 'Y') { %>selected<% } %>><%= line.svcNum %></option>
+                <option <% if (line.repSvcYn === 'Y') { %>selected="selected"<% } %>><%= line.svcNum %></option>
                 <% }) %>
             </select>
         </div>

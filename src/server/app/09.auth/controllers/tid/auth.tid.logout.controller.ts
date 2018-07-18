@@ -17,22 +17,15 @@ class AuthTidLogout extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    console.log('logout');
     this.apiService.request(API_CMD.BFF_03_0007, {}).subscribe((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
         const params = {
           client_id: resp.result.clientId,
-          client_secret: resp.result.clientSecret,
-          state: resp.result.state,
-          nonce: resp.result.nonce,
-          service_type: TID_SVC_TYPE.SSO_LOGOUT,
           redirect_uri: EnvHelper.getEnvironment('TID_REDIRECT') +
-          '/auth/login/route?target=/home=' + resp.result.state,
+          '/auth/logout/route?target=/auth/logout/complete',
           client_type: TID.CLIENT_TYPE,
-          scope: TID.SCOPE,
-          response_type: TID.RESP_TYPE
         };
-        const url = this.apiService.getServerUri(API_CMD.OIDC) + API_CMD.OIDC.path + ParamsHelper.setQueryParams(params);
+        const url = this.apiService.getServerUri(API_CMD.LOGOUT) + API_CMD.LOGOUT.path + ParamsHelper.setQueryParams(params);
         this.logger.info(this, '[redirect]', url);
         res.redirect(url);
       } else {

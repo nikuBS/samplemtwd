@@ -43,6 +43,8 @@ Tw.API_CMD = {
   BFF_05_0022: { path: '/core-bill/v1/hotbill/fee/hotbill-response', method: Tw.API_METHOD.GET },
   BFF_05_0024: { path: '/core-bill/v1/child/children', method: Tw.API_METHOD.GET },
   BFF_05_0027: { path: '/core-bill/v1/bill-types-change', method: Tw.API_METHOD.POST },
+  BFF_05_0031: { path: '/core-bill/v1/bill-pay/payment-possible-day', method: Tw.API_METHOD.GET },
+  BFF_05_0033: { path: '/core-bill/v1/bill-pay/autopay-schedule', method: Tw.API_METHOD.GET },
   BFF_05_0035: { path: '/core-bill/v1/hotbill/fee/hotbill-request', method: Tw.API_METHOD.GET },
   BFF_05_0041: { path: '/core-product/v1/services/base-fee-plans', method: Tw.API_METHOD.GET },
   BFF_05_0047: { path: '/core-bill/v1/bill-pay/used-amounts', method: Tw.API_METHOD.GET },
@@ -144,7 +146,9 @@ Tw.NODE_CMD = {
   SET_DEVICE: { path: '/device', method: Tw.API_METHOD.POST },
   CHANGE_SESSION: { path: '/change-session', method: Tw.API_METHOD.POST },
   SVC_PASSWORD_LOGIN: { path: '/service-password-sessions/login', method: Tw.API_METHOD.POST },
-  LOGIN_TID: { path: '/login-tid', method: Tw.API_METHOD.POST }
+  LOGIN_TID: { path: '/login-tid', method: Tw.API_METHOD.POST },
+  LOGOUT_TID: { path: '/logout-tid', method: Tw.API_METHOD.POST },
+  USER_LOCK_LOGIN: {path: '/user-locks/login', method: Tw.API_METHOD.POST }
 };
 
 Tw.API_CODE = {

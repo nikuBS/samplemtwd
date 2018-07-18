@@ -98,6 +98,13 @@ class ApiService {
 
   private handleError(observer, err) {
     const error = err.response.data;
+    const returnError = this.makeErrorMessage(error);
+    // observer.error(err);
+    observer.next(returnError);
+    observer.complete();
+  }
+
+  private makeErrorMessage(error): any {
     this.logger.error(this, '[API_ERR]', error);
     let msg = 'unknown error';
     let code = API_CODE.CODE_400;
@@ -105,9 +112,7 @@ class ApiService {
       msg = error.msg || msg;
       code = error.code || code;
     }
-    // observer.error(err);
-    observer.next({code, msg, error});
-    observer.complete();
+    return {code, msg, error};
   }
 
   private setServerSession(headers) {
@@ -127,7 +132,7 @@ class ApiService {
           this.loginService.setSvcInfo({ mbrNm: resp.result.mbrNm });
           return this.request(API_CMD.BFF_01_0005, {});
         } else {
-          throw resp.code;
+          throw this.makeErrorMessage(resp);
         }
       }).map((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
@@ -136,7 +141,7 @@ class ApiService {
           Object.assign(result, loginData);
           return result;
         } else {
-          throw resp.code;
+          throw this.makeErrorMessage(resp);
         }
       });
   }
@@ -150,7 +155,7 @@ class ApiService {
           this.loginService.setSvcInfo({ mbrNm: resp.result.mbrNm });
           return this.request(API_CMD.BFF_01_0005, {});
         } else {
-          throw resp.code;
+          throw this.makeErrorMessage(resp);
         }
       }).map((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
@@ -159,7 +164,7 @@ class ApiService {
           Object.assign(result, loginData);
           return result;
         } else {
-          throw resp.code;
+          throw this.makeErrorMessage(resp);
         }
       });
   }
@@ -170,7 +175,7 @@ class ApiService {
         if ( resp.code === API_CODE.CODE_00 ) {
           return this.request(API_CMD.BFF_01_0005, {});
         } else {
-          throw resp.code;
+          throw this.makeErrorMessage(resp);
         }
       }).map((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
@@ -178,7 +183,7 @@ class ApiService {
           this.loginService.setSvcInfo(result);
           return resp;
         } else {
-          throw resp.code;
+          throw this.makeErrorMessage(resp);
         }
       });
   }
@@ -191,15 +196,35 @@ class ApiService {
           this.loginService.setSvcInfo({ mbrNm: resp.result.mbrNm });
           return this.request(API_CMD.BFF_01_0005, {});
         } else {
-          throw resp.code;
+          throw this.makeErrorMessage(resp);
         }
       }).map((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
           const result = resp.result;
           this.loginService.setSvcInfo(result);
-          return result;
+          return resp;
         } else {
-          throw resp.code;
+          throw this.makeErrorMessage(resp);
+        }
+      });
+  }
+
+  public requestUserLocks(params: any): Observable<any> {
+    return this.request(API_CMD.BFF_03_0010, params)
+      .switchMap((resp) => {
+        if ( resp.code === API_CODE.CODE_00 ) {
+          this.loginService.setSvcInfo({ mbrNm: resp.result.mbrNm });
+          return this.request(API_CMD.BFF_01_0005, {});
+        } else {
+          throw this.makeErrorMessage(resp);
+        }
+      }).map((resp) => {
+        if ( resp.code === API_CODE.CODE_00 ) {
+          const result = resp.result;
+          this.loginService.setSvcInfo(result);
+          return resp;
+        } else {
+          throw this.makeErrorMessage(resp);
         }
       });
   }
