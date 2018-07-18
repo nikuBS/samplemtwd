@@ -99,6 +99,11 @@ Tw.MyTBillGuidechange.prototype = {
       // 인터넷/집전화/IPTV
       else if (this._getServiceType() === 'S') {
         if (',P,H,B,2,I,A,1'.indexOf(billType.billType) > 0) {
+          if ( billType.billType === 'H' ) {
+            billType.billType = 'J';
+          } else if ( billType.billType === 'I' ) {
+            billType.billType = 'K';
+          }
           imsiList.push(billType);
         }
       }
