@@ -106,7 +106,11 @@
                         <span class="tx-cont">{{bankCardCoCdNm}}</span>
                     </li>
                     <li>
+                        {{#if isIng}}
+                        <span class="title">납부금액</span>
+                        {{else}}
                         <span class="title">인출/승인금액</span>
+                        {{/if}}
                         <span class="tx-cont"><strong>{{#if drwAmt}}{{drwAmt}}{{else}}{{drwReqAmt}}{{/if}}</strong> 원</span>
                     </li>
                 </ul>
