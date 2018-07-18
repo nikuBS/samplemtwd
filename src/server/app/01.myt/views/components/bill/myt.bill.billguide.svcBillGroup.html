@@ -8,12 +8,12 @@
     <div class="payment-summary-wrap">
         <h3 class="tit">{{svcNm}} <span class="pay-summary-num">{{svcInfoNm}}</span></h3>
         <div class="payment-summary">
-            <!-- 2018.07.18 v1.8에서 삭제. markup 작업 완료 후 수정 필요
+            {{#if ../onlyService}}
             <span class="type">
                 <span class="blind">사용중인 요금제 </span>
-                <a class="bt-link-tx" href="">Band 데이터 6.5G<span class="ico"></span></a>
+                <a class="bt-link-tx" href="">{{prodName}}<span class="ico"></span></a>
             </span>
-            -->
+            {{/if}}
             <span class="total">
                 <span class="blind">해당 회선의 청구요금 합계 </span>
                 <strong class="num">{{svcTotal}}</strong>원

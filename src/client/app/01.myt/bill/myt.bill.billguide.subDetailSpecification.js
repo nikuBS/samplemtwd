@@ -21,11 +21,14 @@ Tw.mytBillBillguideSubDetailSpecification.prototype = {
     Tw.Logger.info('[Tw.mytBillBillguideSubDetailSpecification 초기화]');
     this.$billMenu = this.$container.find('#billMenu');
     this.$btMoreWrapper = this.$container.find('.bt-more-wrapper');
+    this.$btSelectService = this.$container.find('.bt-dropdown');
     this._bindEvent();
     this._getDetailSpecification();
   },
   _bindEvent: function () {
     this.$btMoreWrapper.on('click', 'button', $.proxy(this._onClickMore, this));
+    this.$btSelectService.on('click', $.proxy(this._onClickSelectService, this));
+
   },
   //--------------------------------------------------------------------------[api]
   _getDetailSpecification: function () {
@@ -36,9 +39,9 @@ Tw.mytBillBillguideSubDetailSpecification.prototype = {
   },
 
   //--------------------------------------------------------------------------[공통]
-  _onOpenSelectPopup: function () {
-    //$('.popup-info').addClass('scrolling');
-  },
+  // _onOpenSelectPopup: function () {
+  //   //$('.popup-info').addClass('scrolling');
+  // },
   // _goHistory: function () {
   //   this._goLoad('/recharge/cookiz/history');
   // },
@@ -55,10 +58,20 @@ Tw.mytBillBillguideSubDetailSpecification.prototype = {
   //   return moment(str).add(1, 'days').format('YYYY년 MM월');
   // },
   _onDetailDataReset: function (resp) {
+    var self = this;
     Tw.Logger.info(resp);
-    this._svcGroups = this._getGrouppedBillData(resp.result);
-    this._countLeftItem = this._svcGroups.length;
-    this._renderBillGroup(this._svcGroups.slice(0, this.NUM_OF_ITEMS));
+    this._svcBillGroups = this._getGrouppedBillData(resp.result);
+    this._services = [];
+    resp.result.paidAmtMonthSvcNum.forEach(function (svc) {
+      var item = {
+        attr: 'id=' + svc.svcMgmtNum,
+        text: svc.name,
+        id: svc.svcMgmtNum
+      };
+      self._services.push(item);
+    });
+    this._countLeftItem = this._svcBillGroups.length;
+    this._renderBillGroup(this._svcBillGroups.slice(0, this.NUM_OF_ITEMS));
     //총합계
     this.$container.find('[data-id="total"]').text(Tw.StringHelper.commaSeparatedString(this._sumOfSvcs));
     //조회년월
@@ -95,25 +108,65 @@ Tw.mytBillBillguideSubDetailSpecification.prototype = {
     return detailGroups;
   },
 
-  _renderBillGroup: function (groups) {
+  _renderBillGroup: function (groups, onlyService) {
     Handlebars.registerHelper('isBill', function (val, options) {
       return (Tw.MyTBillHotBill.NO_BILL_FIELDS.indexOf(val) < 0 ) ? options.fn(this) : options.inverse(this);
     });
     var source = $('#tmplSvcBillGroup').html();
     var template = Handlebars.compile(source);
-    var output = template({ paidAmtDetailInfo: groups });
-    $(output).insertBefore(this.$btMoreWrapper);
-    this._countLeftItem = Math.max(this._countLeftItem - this.NUM_OF_ITEMS, 0);
-    if ( this._countLeftItem > 0 ) {
-      this.$btMoreWrapper.find('span').text('(' + this._countLeftItem + ')');
-    } else {
+    var output = template({ paidAmtDetailInfo: groups, onlyService: onlyService });
+    if ( onlyService ) {
+      this.$billMenu.find('>div:not(:last-child)').remove();
       this.$btMoreWrapper.hide();
+    } else {
+      this._countLeftItem = Math.max(this._countLeftItem - this.NUM_OF_ITEMS, 0);
+      if ( this._countLeftItem > 0 ) {
+        this.$btMoreWrapper.find('span').text('(' + this._countLeftItem + ')');
+        this.$btMoreWrapper.show();
+      } else {
+        this.$btMoreWrapper.hide();
+      }
     }
+    $(output).insertBefore(this.$btMoreWrapper);
+
     skt_landing.widgets.widget_accordion2();
   },
 
   _onClickMore: function () {
-    var idxFrom = this._svcGroups.length - this._countLeftItem;
-    this._renderBillGroup(this._svcGroups.slice(idxFrom, idxFrom + this.NUM_OF_ITEMS));
+    var idxFrom = this._svcBillGroups.length - this._countLeftItem;
+    this._renderBillGroup(this._svcBillGroups.slice(idxFrom, idxFrom + this.NUM_OF_ITEMS));
+  },
+
+  _onClickSelectService: function () {
+    //TODO 전체보기
+    this._popupService.openChoice(Tw.MSG_PAYMENT.SELECT_PRODUCT, this._services, 'type1', $.proxy(this._onOpenSelectPopup, this));
+  },
+
+  _onOpenSelectPopup: function ($popup) {
+    $popup.on('click', 'button', $.proxy(this._onClickPopupButton, this));
+  },
+
+  _onClickPopupButton: function (e) {
+    var self = this;
+    var service = e.target.id;
+    var selectedService = _.find(this._svcBillGroups, { svcMgmtNum: service });
+    if ( selectedService.prodName ) {
+      this._renderOnlyService(selectedService);
+    } else {
+      //TODO parameter
+      this._apiService
+        .request(Tw.API_CMD.BFF_05_0041, { svcMgmtNum: service })
+        .done(function (resp) {
+          selectedService.prodName = resp.result.prodName;
+          self.$btSelectService.text(e.target.textContent);
+          self._renderOnlyService(selectedService);
+        })
+        .fail();
+    }
+    this._popupService.close();
+  },
+  _renderOnlyService: function (service) {
+    // service.showProdName = true;
+    this._renderBillGroup([service], true);
   }
 };
