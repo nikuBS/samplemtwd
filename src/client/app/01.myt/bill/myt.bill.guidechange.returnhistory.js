@@ -7,9 +7,8 @@ Tw.MyTBillReturnHistory = function (rootEl, svcInfo) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
-  // TODO: 함수 변경이 되면 아래 코드 처리, 현재와 동일하게 간다면 제거
-  // this._svcInfo = JSON.parse(svcInfo);
-  this._myGuideChange = new Tw.MyTBillGuidechange($('<div/>'), svcInfo);
+  this._svcInfo = JSON.parse(svcInfo);
+  this._myGuideChange = new Tw.MyTBillGuidechange();
   this._rendered();
   this._bindEvent();
 };
@@ -53,12 +52,10 @@ Tw.MyTBillReturnHistory.prototype = {
       //   hbs: 'MY_03_03_01_L02'// hbs의 파일명
       // });
       // 미리보기 팝업 이동 시 MytGuidechange 내 함수 호출하도록 수정
-      this._myGuideChange._openPreview('P');
-      // TODO: 함수 변경이 되면 아래 코드 처리, 현재와 동일하게 간다면 제거
-      // this._myGuideChange.prototype._openPreview({
-      //   type: 'H',
-      //   svcInfo: this._svcInfo
-      // });
+      this._myGuideChange.callOpenPreview({
+        svcAttrCd: this._svcInfo.svcAttrCd,
+        billType: 'P'
+      });
     }
   },
 
