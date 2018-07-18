@@ -22,10 +22,10 @@ Tw.RechargeLimit.prototype = {
   TMTH: 'tmth',
 
   _init: function () {
-    this.rechargeAmount = "5000";
+    this.rechargeAmount = '5000';
     this._limit = {};
 
-    this.upToAmount = this.$container.find('#recharge-upto-amount .price').data('possible-amount') || "0";
+    this.upToAmount = this.$container.find('#recharge-upto-amount .price').data('possible-amount') || '0';
     var $limitBlock = this.$container.find('.box-block-list1.btm-border ul');
 
     this._possibleRecharge = Number(this.upToAmount.replace(/,/g, '')) > 0;
@@ -43,11 +43,11 @@ Tw.RechargeLimit.prototype = {
     this.$limit = {
       tmth: this.$container.find('#limit-tmth'),
       regular: this.$container.find('#limit-regular')
-    }
+    };
     this.$select = {
       tmth: this.$stepType.find('#select-type-tmth'),
       regular: this.$stepType.find('#select-type-regular')
-    }
+    };
   },
 
   _bindEvent: function () {
@@ -170,7 +170,7 @@ Tw.RechargeLimit.prototype = {
     e.preventDefault();
 
     var type = this.TMTH;
-    var message = "";
+    var message = '';
 
     if (e.currentTarget.id === 'limit-regular') {
       type = this.REGULAR;
@@ -181,7 +181,7 @@ Tw.RechargeLimit.prototype = {
         message = this._limit.regular ? Tw.MSG_RECHARGE.LIMIT_A02 : Tw.MSG_RECHARGE.LIMIT_A04;
       }
     } else {
-      message = this._limit.tmth ? Tw.MSG_RECHARGE.LIMIT_A01 : Tw.MSG_RECHARGE.LIMIT_A05
+      message = this._limit.tmth ? Tw.MSG_RECHARGE.LIMIT_A01 : Tw.MSG_RECHARGE.LIMIT_A05;
     }
 
     this._popupService.openConfirm(Tw.POPUP_TITLE.NOTIFY, message, undefined, undefined, $.proxy(this._handleChangeLimit, this, type));
