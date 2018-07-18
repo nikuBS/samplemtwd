@@ -10,11 +10,20 @@ Tw.AuthLoginServicePwd = function (rootEl) {
   this._isCloseCallbackNeeded = false;
   this._pwdSuccess = false;
 
-  this._errorCode = {
+  // error when login
+  this._loginErrorCode = {
     UNDER_3: 'ICAS3213',       // 고객보호비밀번호 오입력(3회 미만)
     ERROR_3: 'ICAS3212',       // 고객보호비밀번호 오입력(3회)
     ERROR_4: 'ICAS3215',       //고객보호비밀번호 오입력 (4회)
     BLOCKED: 'ICAS3216'        //고객보호비밀번호 잠김 (지점 내점 안내 노출)
+  };
+
+  this._lineChangeErrorCode = {
+    ERROR_1: 'ICAS3481',       // 고객보호비밀번호 입력 오류 1회
+    ERROR_2: 'ICAS3482',       // 고객보호비밀번호 입력 오류 2회
+    ERROR_3: 'ICAS3483',       // 고객보호비밀번호 입력 오류 3회
+    ERROR_4: 'ICAS3484',       // 고객보호비밀번호 입력 오류 4회
+    BLOCKED: 'ICAS3215'       // 고객보호비밀번호 입력 오류 5회 (잠김예정)
   };
 
   if (Tw.FormatHelper.isEmpty(rootEl)) {
@@ -70,19 +79,32 @@ Tw.AuthLoginServicePwd.prototype = {
       this._onSuccess();
     } else {
       var errCount = 0;
+      var unexpectedError = false;
       switch (res.code) {
-        case this._errorCode.ERROR_3:
+        case this._lineChangeErrorCode.ERROR_1:
+          errCount = 1;
+          break;
+        case this._lineChangeErrorCode.ERROR_2:
+          errCount = 2;
+          break;
+        case this._lineChangeErrorCode.ERROR_3:
+        case this._loginErrorCode.ERROR_3:
           errCount = 3;
           break;
-        case this._errorCode.ERROR_4:
+        case this._lineChangeErrorCode.ERROR_4:
+        case this._loginErrorCode.ERROR_4:
           errCount = 4;
           break;
-        case this._errorCode.BLOCKED:
+        case this._lineChangeErrorCode.BLOCKED:
+        case this._loginErrorCode.BLOCKED:
           this._showFail();
           return;
+        default:
+          unexpectedError = true;
+          break;
       }
 
-      if (errCount >= 3) {
+      if (errCount >= 1) {
         this.$inputBox.addClass('error');
         this.$deleteIcon.removeClass('none');
         this.$errMsg.removeClass('none');
@@ -90,7 +112,8 @@ Tw.AuthLoginServicePwd.prototype = {
         this.$errMsg.text(this._changeCount(this.$errMsg.text(), errCount));
       }
 
-      this._popupService.openAlert(Tw.MSG_AUTH.LOGIN_A01);
+      var errorMsg = unexpectedError ? res.code + ' ' + res.msg : Tw.MSG_AUTH.LOGIN_A01;
+      this._popupService.openAlert(errorMsg);
     }
   },
   _changeCount: function (msg, count) {
