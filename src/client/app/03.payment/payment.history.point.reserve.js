@@ -94,7 +94,7 @@ Tw.PaymentHistoryPointReserve.prototype = {
         Tw.Logger.error('Wrong Excess');
         break;
     }
-    this.pointAutoPayURL = '/payment/point';
+    this.emptyURL = '/payment/point';
   },
 
   _initTabUI: function () {
@@ -146,13 +146,13 @@ Tw.PaymentHistoryPointReserve.prototype = {
       }, this));
 
       this.currentData = res.result;
-      if(this.currentPoint !== 'rainbow') {
+      if (this.currentPoint !== 'rainbow') {
         this._getRecentIndex();
       }
 
     } else {
       res.pointTitle = this.pointTitle;
-      res.pointAutoPayURL = this.pointAutoPayURL;
+      res.removeURL = this.emptyURL;
     }
 
     var list = new this.common.listWithTemplate();
@@ -180,15 +180,15 @@ Tw.PaymentHistoryPointReserve.prototype = {
   },
 
   _getRecentIndex: function () {
-    var reserveCancelableIndex = (_.find(this.currentData, function(o) {
+    var reserveCancelableIndex = (_.find(this.currentData, function (o) {
       return o.cancleYn === 'Y';
     }));
     this.reserveCancelableIndex = !reserveCancelableIndex ? null : reserveCancelableIndex.listId;
   },
 
   _canReserveCancel: function (index) {
-    if(this.currentPoint === 'rainbow') return true;
-    if(this.reserveCancelableIndex === index) return true;
+    if (this.currentPoint === 'rainbow') return true;
+    if (this.reserveCancelableIndex === index) return true;
     return false;
   },
 
@@ -200,7 +200,7 @@ Tw.PaymentHistoryPointReserve.prototype = {
     var index = $(e.target).data('list-id');
 
     if ($(e.target).hasClass('point-color')) {
-      if(this._canReserveCancel(index)) {
+      if (this._canReserveCancel(index)) {
         this._popupService.openConfirm(Tw.POPUP_TITLE.NOTIFY, this.STRING.CLOSE, '',
             null,
             $.proxy(this.reserveCancelConfirmCallBack, this),
@@ -229,15 +229,15 @@ Tw.PaymentHistoryPointReserve.prototype = {
   reserveCancelCloseCallBack: function (data) {
     if (this.isPopupConfimClicked) {
 
-      if(this.currentPoint !== 'rainbow') {
+      if (this.currentPoint !== 'rainbow') {
         this._reserveCancel({
-          ptClCd : this.apiOption.ptClCd,
-          opDt : data.opDt,
-          payOpTm : data.payOpTm
+          ptClCd: this.apiOption.ptClCd,
+          opDt: data.opDt,
+          payOpTm: data.payOpTm
         });
       } else {
         this._reserveCancel({
-          rbpSerNum : data.rbpSerNum
+          rbpSerNum: data.rbpSerNum
         });
       }
     }
@@ -257,10 +257,10 @@ Tw.PaymentHistoryPointReserve.prototype = {
   },
 
   _reserveCancel: function (option) {
-    this._apiService.request(this.apiReserveCancelName, option).done($.proxy(this._reserveCancelHandler, this)).error($.proxy(function() {
-      this._apiError();
-      this._popupService.close();
-    }, this
+    this._apiService.request(this.apiReserveCancelName, option).done($.proxy(this._reserveCancelHandler, this)).error($.proxy(function () {
+          this._apiError();
+          this._popupService.close();
+        }, this
     ));
   },
 
