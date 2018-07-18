@@ -111,6 +111,7 @@
                             </div>
                         </div>
                     </dd>
+                    <% if (svcInfo.svcAttrCd === 'M1' || svcInfo.svcAttrCd === 'M5') { %>
                     <dt>콘텐츠 이용 상세내역을 받으시겠어요?</dt>
                     <dd>
                         <div class="widget">
@@ -127,6 +128,7 @@
                             </div>
                         </div>
                     </dd>
+                    <% } %>
                     <% if (svcInfo.svcAttrCd === 'M1' && curBillGuide.kidsYn === 'Y') { %>
                         <dt>법정대리인에게 함께 알려드릴까요?(선택사항)</dt>
                         <dd>
