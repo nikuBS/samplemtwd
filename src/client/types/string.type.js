@@ -261,6 +261,11 @@ Tw.MSG_PAYMENT = {
   POINT_A07: '포인트를 입력해 주세요',
   PAYMENT_A13: '보유하신 포인트보다 초과 입력하셨습니다.',
   PAYMENT_A14: '1,000 포인트 이상 입력해 주세요.',
+  PRE_A01: '선결제 금액을 입력해 주세요.',
+  PRE_A06: '선결제를 종료하시겠습니까?',
+  PRE_A07: '자동 선결제를 해지 하시겠습니까?',
+  PRE_A08: '선결제 금액은 기준금액을 넘을 수 없습니다.',
+  PRE_A10: '자동 선결제 신청 및 변경을 종료하시겠습니까?',
 
   HISTORY_PROCESS_TYPE_APPLY: '신청',
   HISTORY_PROCESS_TYPE_DONE: '완료',
@@ -350,7 +355,7 @@ Tw.RECHARGE_TYPE = {
   REGULAR: '자동',
   CHANGE: '변경',
   BLOCK: '차단'
-}
+};
 
 Tw.BLOCK_TYPE = {
   TOTAL: '전체',
@@ -360,4 +365,4 @@ Tw.BLOCK_TYPE = {
   TMTH_BLOCK: '이번 달 차단',
   REGULAR_UNBLOCK: '다음 달부터 차단 해제',
   REGULAR_BLOCK: '다음 달부터 차단',
-}
+};

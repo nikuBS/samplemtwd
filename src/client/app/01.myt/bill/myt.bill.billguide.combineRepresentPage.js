@@ -44,6 +44,11 @@ Tw.mytBillBillguideCombineRepresentPage.prototype = {
     this.$container.on('click', '[data-target="extraSvcBtn"]', $.proxy(this._goExtraSvcBill, this));//요금제/부가서비스 할인내역확인
 
   },
+  //--------------------------------------------------------------------------[상세요금내역]
+  _goDetailSpecification: function () {//상세요금조회
+    Tw.Logger.info('상세요금 내역');
+    this._goLoad('/myt/bill/billguide/subDetailSpecification');
+  },
   //--------------------------------------------------------------------------[납부가능일 선택]
   _goSelPayment: function() {
     Tw.Logger.info('납부가능일 선택');
@@ -82,11 +87,6 @@ Tw.mytBillBillguideCombineRepresentPage.prototype = {
   //--------------------------------------------------------------------------[요금제/부가서비스 할인내역확인]
   _goExtraSvcBill: function() {
     Tw.Logger.info('요금제/부가서비스 할인내역확인');
-    //this._goLoad('');
-  },
-  //--------------------------------------------------------------------------[이벤트]
-  _goDetailSpecification: function () {//상세요금조회
-    Tw.Logger.info('상세요금 내역');
     //this._goLoad('');
   },
   //--------------------------------------------------------------------------[이벤트 | 팝업]

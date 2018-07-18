@@ -31,31 +31,33 @@ Tw.mytBillBillguideIndividualPage.prototype = {
   },
   _bindEvent: function () {
     //this.$container.on('click', '.slick-slide', $.proxy(this._selectCoupon, this));
-    this.$container.on('click', '[data-target="totPaySelectBtn"]', $.proxy(this._totPaySelectFun, this));
+    //this.$container.on('click', '[data-target="totPaySelectBtn"]', $.proxy(this._totPaySelectFun, this));
+    this.$container.on('click', '[data-target="selDateBtn"]', $.proxy(this._selPopOpen, this)); //조회 월 셀렉트 버튼
   },
   //--------------------------------------------------------------------------[이벤트 | 팝업]
-  _totPaySelectFun : function(event) {//팝업 오픈
+  _selPopOpen : function(event) {
     var $target = $(event.currentTarget);
+    var tempArr = this.resData.billpayInfo.invDtArr;
     var arrOption = [];
-    for ( var i=0, len=this.resData.billpayInfo.invDtArr.length; i<len; i++ ) {
+    for ( var i=0, len=tempArr.length; i<len; i++ ) {
       arrOption.push({
-        'attr':'onclick=""',
-        text : this._getSelClaimDtBtn( this.resData.billpayInfo.invDtArr[i] )
+        'attr' : 'data-info="' + tempArr[i] + '"',
+        text : this._getSelClaimDtBtn( tempArr[i] )
       });
     }
-    this._popupService.openChoice('기간선택', arrOption,
-      'type1', $.proxy(this._totPaySelectEvt, this, $target));
+    this._popupService.openChoice('기간선택', arrOption, 'type1', $.proxy(this._selPopOpenEvt, this, $target));
   },
-  _totPaySelectEvt: function ($target, $layer) {//이벤트 설정
-    console.info('[$target]', $target);//버튼 타겟
-    console.info('[$layer]', $layer);//팝업 레이어 타겟
-    $layer.on('click', '.popup-choice-list', $.proxy(this._totPaySelectExe, this, $target));
+  _selPopOpenEvt: function ($target, $layer) {
+    $layer.on('click', '.popup-choice-list', $.proxy(this._selPopOpenEvtExe, this, $target, $layer));
   },
-  _totPaySelectExe: function ($target, event) {
-    var $selectedValue = $(event.currentTarget);
-    //$target.attr('id', $selectedValue.find('button').attr('id'));
-    $target.text($selectedValue.text());
+  _selPopOpenEvtExe: function ($target, $layer, event) {
+    var curTg = $(event.currentTarget);
+    var tg = $target;
+    var dataTemp = curTg.find('button').attr('data-info');
+    tg.text( curTg.text() );
+    tg.attr('data-info', dataTemp );
     this._popupService.close();
+    this._goLoad('/myt/bill/billguide?invDt='+ dataTemp);
   },
   //--------------------------------------------------------------------------[api]
   _getDetailSpecification: function() {
