@@ -84,9 +84,7 @@
                     <dd class="box-block-list2">
                         <span class="inputbox">
                             <span class="input">
-                                <% if (svcInfo.svcAttrCd === 'S1' || svcInfo.svcAttrCd === 'S2' || svcInfo.svcAttrCd === 'S3') { %>
-                                  <input type="text" placeholder="휴대폰번호입력 (숫자만 입력)" title="휴대폰번호 입력 (숫자만 입력)" class="input-phone" maxlength="11" onInput="return Tw.InputHelper.inputNumberOnly(this);" value="<%= curBillGuide.wireSmtBillSvcNum %>" form-element="input" form-element-key="wireSmtBillSvcNum">
-                                <% } else { %>
+                                <% if (svcInfo.svcAttrCd === 'M1' || svcInfo.svcAttrCd === 'M5') { %>
                                   <input type="text" placeholder="휴대폰번호입력 (숫자만 입력)" title="휴대폰번호 입력 (숫자만 입력)" class="input-phone" maxlength="11" onInput="return Tw.InputHelper.inputNumberOnly(this);" value="<%= curBillGuide.cntcNum1 %>" form-element="input" form-element-key="cntcNum1">
                                 <% } %>
                               <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
