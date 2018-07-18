@@ -18,12 +18,12 @@ class MyTBillBillguide extends TwViewController {
   }
   public reqQuery:any;//쿼리스트링
   private _svcInfo:any;
-  private _billpayInfo: any = {}; //청구요금조회 BFF_05_0036
-  private _circuitChildInfo: any = []; //자녀회선조회 BFF_05_00024
-  private _defaultInfo: any; //미납내역 BFF_05_0030
-  private _baseFeePlansInfo: any; //나의요금제 BFF_05_0041
-  private _paymentPossibleDayInfo: any; //미납요금 납부가능일 조회 BFF_05_0031
-  private _suspensionInfo: any; //미납요금 이용정지해제 정보 조회 BFF_05_0037
+  private _billpayInfo: any = {}; //청구요금조회 | BFF_05_0036
+  private _baseFeePlansInfo: any; //나의요금제 | BFF_05_0041
+  private _circuitChildInfo: any = []; //자녀회선조회 | BFF_05_00024
+  private _defaultInfo: any; //미납내역 | BFF_05_0030
+  private _paymentPossibleDayInfo: any; //미납요금 납부가능일 조회 | BFF_05_0031
+  private _suspensionInfo: any; //미납요금 이용정지해제 정보 조회 | BFF_05_0037
 
   //공통데이터
   private _commDataInfo:any = {
@@ -34,6 +34,7 @@ class MyTBillBillguide extends TwViewController {
     discount:'',//할인액
     joinSvcList: '', //가입 서비스 리스트
     unPaidTotSum: '', //미납금액
+    unPaidDetails: '' //미납금액 상세내역
   };
 
   //노출조건
@@ -41,9 +42,6 @@ class MyTBillBillguide extends TwViewController {
     autopayYn: null, //자동납부신청
     childYn: null, //자녀회선
     phoneYn: null, //선택회선이 휴대폰
-    roamingYn: null, //로밍
-    callGiftYn: null, //콜기프트
-    donationYn: null, //기부금/후원금
     chargeTtYn: null, //요금제: "T끼리 T내는 요금" prodId : "NA00001901"
     defaultYn: null, //납부전
     paymentBtnYn: null, //납부가능일 버튼
@@ -141,68 +139,12 @@ class MyTBillBillguide extends TwViewController {
                 }
                 thisMain.logger.info(this, '-------------------------------------[TEST END]');
                 thisMain.logger.info(this, '[ 페이지 진입 ] this._typeChk : ', thisMain._typeChk);
-                //thisMain.controllerInit(res);
+                thisMain.controllerInit(res);
               }}
           );//subscribe end
 
     }
     //---------------------------------------------------------------------------------[화면 구분 END]
-    //
-    // let chargeRateReq: Observable<any>;
-    // if( this.reqQuery.invDt ) {
-    //   chargeRateReq = this.apiService.request(API_CMD.BFF_05_0036, { invDt: this.reqQuery.invDt});//청구요금
-    // } else {
-    //   chargeRateReq = this.apiService.request(API_CMD.BFF_05_0036, {});//청구요금
-    // }
-    //
-    // //const chargeRateReq: Observable<any> = this.apiService.request(API_CMD.BFF_05_0036, {});//청구요금
-    // const myPlanReq: Observable<any> = this.apiService.request(API_CMD.BFF_05_0041, {});//나의요금제
-    // const childrenLineReq: Observable<any> = this.apiService.request(API_CMD.BFF_05_0024, {});//자녀회선
-    // const nonPaymenthistoryReq: Observable<any> = this.apiService.request(API_CMD.BFF_05_0030, {});//미납내역
-    // const nonPaymenthistoryDayReq: Observable<any> = this.apiService.request(API_CMD.BFF_05_0031, {});//미납내역 납부가능일
-    // const nonPaymenthistorySetFreeReq: Observable<any> = this.apiService.request(API_CMD.BFF_05_0037, {});//미납요금 이용정지해제 정보 조회
-    //
-    // var thisMain = this;
-    //
-    // Observable.combineLatest(
-    //   chargeRateReq,
-    //   myPlanReq,
-    //   childrenLineReq,
-    //   nonPaymenthistoryReq,
-    //   nonPaymenthistoryDayReq,
-    //   nonPaymenthistorySetFreeReq
-    // ).subscribe(
-    //   {
-    //     next( [
-    //             chargeRateReq,
-    //             myPlanReq,
-    //             childrenLineReq,
-    //             nonPaymenthistoryReq,
-    //             nonPaymenthistoryDayReq,
-    //             nonPaymenthistorySetFreeReq
-    //           ] ) {
-    //       thisMain.logger.info(this, '[ 1. next > chargeRateReq ] 청구요금 : ', chargeRateReq);
-    //       thisMain.logger.info(this, '[ 2. next > myPlanReq ] 나의요금제 : ', myPlanReq);
-    //       thisMain.logger.info(this, '[ 3. next > childrenLineReq ] 자녀회선 : ', childrenLineReq);
-    //       thisMain.logger.info(this, '[ 4. next > nonPaymenthistoryReq ] 미납내역 : ', nonPaymenthistoryReq);
-    //       thisMain.logger.info(this, '[ 5. next > nonPaymenthistoryDayReq ] 미납내역 납부가능일 : ', nonPaymenthistoryDayReq);
-    //       thisMain.logger.info(this, '[ 6. next > nonPaymenthistorySetFreeReq ] 미납요금 이용정지해제 정보 조회 : ', nonPaymenthistorySetFreeReq);
-    //
-    //       thisMain._billpayInfo = (chargeRateReq.code==='00') ? chargeRateReq.result : null;//청구요금
-    //       thisMain._baseFeePlansInfo = (myPlanReq.code==='00') ? myPlanReq.result : null;// 나의요금제
-    //       thisMain._circuitChildInfo = (childrenLineReq.code==='00') ? childrenLineReq.result : null;//자녀회선
-    //       thisMain._defaultInfo = (nonPaymenthistoryReq.code==='00') ? nonPaymenthistoryReq.result : null;//미납내역
-    //       thisMain._paymentPossibleDayInfo = (nonPaymenthistoryDayReq.code==='00') ? nonPaymenthistoryDayReq.result : null;//미납내역 납부가능일
-    //       thisMain._suspensionInfo = (nonPaymenthistorySetFreeReq.code==='00') ? nonPaymenthistorySetFreeReq.result : null;//미납요금 이용정지해제 정보 조회
-    //     },
-    //     error(error) {
-    //       thisMain.logger.info(this, '[ error ] : ', error.message || error);
-    //     },
-    //     complete() {
-    //       thisMain.logger.info(this, '[ complete ] : ');
-    //       thisMain.controllerInit(res);
-    //     } }
-    // );
 
   }//render end
 
@@ -236,45 +178,8 @@ class MyTBillBillguide extends TwViewController {
       default :
 
     }
-    // this.logger.info(this, '[ controllerInit ] : ');
-    // this._commDataInfo.selClaimDtNum = (this._billpayInfo) ? this.getSelClaimDtNum( String(this._billpayInfo.invDt) ) : null;
-    // this._commDataInfo.selClaimDtBtn = (this._billpayInfo) ? this.getSelClaimDtBtn( String(this._billpayInfo.invDt) ) : null;
-    // this._commDataInfo.selStaDt = (this._billpayInfo) ? this.getSelStaDt( String(this._billpayInfo.invDt) ) : null;
-    //
-    // this._commDataInfo.selEndDt = (this._billpayInfo) ? DateHelper.getShortDateNoDot( String(this._billpayInfo.invDt) ) : null;
-    //
-    // this._commDataInfo.discount = (this._billpayInfo) ? FormatHelper.addComma( String(Math.abs( Number(this._billpayInfo.deduckTotInvAmt))) ) : 0;
-    //
-    // this._commDataInfo.unPaidTotSum = (this._defaultInfo) ? FormatHelper.addComma( String(this._defaultInfo.unPaidTotSum) ) : null;
-    //
-    // this._commDataInfo.joinSvcList = (this._billpayInfo) ? ( this._billpayInfo.paidAmtSvcCdList ) : null;
-    //
-    // this.getCircuitChildInfoMask( this._circuitChildInfo );
-    //
-    // this.setShowCondition();//노출조건 셋팅
   }
-  //-------------------------------------------------------------[데이터 가공]
-  private resDataInit() {
-
-  }
-
   //-------------------------------------------------------------[서비스 필터: 해당 데이터 필터링]
-  public setShowCondition() {//노출조건 정보 셋팅
-    this._showConditionInfo.autopayYn = (this._billpayInfo.autopayYn === 'Y') ? 'Y' : 'N';
-    this._showConditionInfo.childYn = (this._circuitChildInfo.length > 0) ? 'Y' : 'N';
-    this._showConditionInfo.phoneYn = (this._svcInfo.svcAttrCd === 'M1') ? 'Y' : 'N';
-
-    if(this._defaultInfo) {
-      this._showConditionInfo.defaultYn = (this._defaultInfo.unPaidAmtMonthInfoList.length !== 0) ? 'Y' : 'N';
-    } else {
-      this._showConditionInfo.defaultYn = 'N';
-    }
-
-    this._showConditionInfo.chargeTtYn = (this._baseFeePlansInfo.prodId === 'NA00001901') ? 'Y' : 'N';
-    this._showConditionInfo.paymentBtnYn = (this._paymentPossibleDayInfo.useObjYn === 'Y') ? 'Y' : 'N';
-    this._showConditionInfo.suspensionYn = (this._suspensionInfo.useObjYn === 'Y') ? 'Y' : 'N';
-  }
-
   public getSelStaDt(date: string):any {//월 시작일 구하기
     return this._commDataInfo.selStaDt = moment(date).format('YYYY.MM') + '.01';
   }
@@ -310,25 +215,105 @@ class MyTBillBillguide extends TwViewController {
   //-------------------------------------------------------------[서비스]
   //통합청구(대표)
   private combineRepresentCircuit(res) {
-    //this.rxObs.
+    let chargeRateReq: Observable<any>;
+    if( this.reqQuery.invDt ) {
+      chargeRateReq = this.apiService.request(API_CMD.BFF_05_0036, { invDt: this.reqQuery.invDt});
+    } else {
+      chargeRateReq = this.apiService.request(API_CMD.BFF_05_0036, {});
+    }
+    const myPlanReq: Observable<any> = this.apiService.request(API_CMD.BFF_05_0041, {});//나의요금제
+    const childrenLineReq: Observable<any> = this.apiService.request(API_CMD.BFF_05_0024, {});//자녀회선
+    const nonPaymenthistoryReq: Observable<any> = this.apiService.request(API_CMD.BFF_05_0030, {});//미납여부 버튼 노출
+    const nonPaymenthistoryDayReq: Observable<any> = this.apiService.request(API_CMD.BFF_05_0031, {});//미납 납부가능일 선택버튼
+    const nonPaymenthistorySetFreeReq: Observable<any> = this.apiService.request(API_CMD.BFF_05_0037, {});//미납 이용정지해제 버튼노출
+
+    var thisMain = this;
+
+    const dataInit = function () {
+      thisMain._commDataInfo.selClaimDtNum = (thisMain._billpayInfo) ? thisMain.getSelClaimDtNum( String(thisMain._billpayInfo.invDt) ) : null;
+      thisMain._commDataInfo.selClaimDtBtn = (thisMain._billpayInfo) ? thisMain.getSelClaimDtBtn( String(thisMain._billpayInfo.invDt) ) : null;
+      thisMain._commDataInfo.selStaDt = (thisMain._billpayInfo) ? thisMain.getSelStaDt( String(thisMain._billpayInfo.invDt) ) : null;
+      thisMain._commDataInfo.selEndDt = (thisMain._billpayInfo) ? DateHelper.getShortDateNoDot( String(thisMain._billpayInfo.invDt) ) : null;
+      thisMain._commDataInfo.discount = (thisMain._billpayInfo) ? FormatHelper.addComma( String(Math.abs( Number(thisMain._billpayInfo.deduckTotInvAmt))) ) : 0;
+      thisMain._commDataInfo.joinSvcList = (thisMain._billpayInfo) ? ( thisMain._billpayInfo.paidAmtSvcCdList ) : null;
+      thisMain._commDataInfo.unPaidTotSum = (thisMain._defaultInfo) ? FormatHelper.addComma( String(thisMain._defaultInfo.unPaidTotSum) ) : null;
+      thisMain._commDataInfo.unPaidDetails = (thisMain._defaultInfo) ? thisMain._defaultInfo.unPaidAmtMonthInfoList : null;
+
+      thisMain._commDataInfo.unPaidDetails.map( (item) => {
+        item.unPaidInvDt = moment(String(item.unPaidInvDt)).add(1, 'days').format('YYYY년 MM월');
+        item.unPaidAmt = FormatHelper.addComma(String(item.unPaidAmt));
+      });
+
+      thisMain.logger.info(thisMain, '[ 미납요금 상세내역 ]', thisMain._commDataInfo.unPaidDetails);
+
+      thisMain.getCircuitChildInfoMask( thisMain._circuitChildInfo );//전화번호 마스킹
+      //노출조건 셋팅
+      thisMain._showConditionInfo.autopayYn = (thisMain._billpayInfo.autopayYn === 'Y') ? 'Y' : 'N';
+      thisMain._showConditionInfo.childYn = (thisMain._circuitChildInfo.length > 0) ? 'Y' : 'N';
+      thisMain._showConditionInfo.phoneYn = (thisMain._svcInfo.svcAttrCd === 'M1') ? 'Y' : 'N';
+      if(thisMain._defaultInfo) {
+        thisMain._showConditionInfo.defaultYn = (thisMain._defaultInfo.unPaidAmtMonthInfoList.length !== 0) ? 'Y' : 'N';
+      } else {
+        thisMain._showConditionInfo.defaultYn = 'N';
+      }
+      thisMain._showConditionInfo.chargeTtYn = (thisMain._baseFeePlansInfo.prodId === 'NA00001901') ? 'Y' : 'N';
+      thisMain._showConditionInfo.paymentBtnYn = (thisMain._paymentPossibleDayInfo.useObjYn === 'Y') ? 'Y' : 'N';
+      thisMain._showConditionInfo.suspensionYn = (thisMain._suspensionInfo.useObjYn === 'Y') ? 'Y' : 'N';
+    };
 
     Observable.combineLatest(
-      this.rxObs.myPlanReq
+      chargeRateReq,
+      myPlanReq,
+      childrenLineReq,
+      nonPaymenthistoryReq,
+      nonPaymenthistoryDayReq,
+      nonPaymenthistorySetFreeReq
+    ).subscribe(
+      {
+        next( [
+                chargeRateReq,
+                myPlanReq,
+                childrenLineReq,
+                nonPaymenthistoryReq,
+                nonPaymenthistoryDayReq,
+                nonPaymenthistorySetFreeReq
+              ] ) {
+          thisMain.logger.info(this, '[ 1. next > chargeRateReq ] 청구요금 : ', chargeRateReq);
+          thisMain.logger.info(this, '[ 2. next > myPlanReq ] 나의요금제 : ', myPlanReq);
+          thisMain.logger.info(this, '[ 3. next > childrenLineReq ] 자녀회선 : ', childrenLineReq);
+          thisMain.logger.info(this, '[ 4. next > nonPaymenthistoryReq ] 미납내역 : ', nonPaymenthistoryReq);
+          thisMain.logger.info(this, '[ 5. next > nonPaymenthistoryDayReq ] 미납내역 납부가능일 : ', nonPaymenthistoryDayReq);
+          thisMain.logger.info(this, '[ 6. next > nonPaymenthistorySetFreeReq ] 미납요금 이용정지해제 정보 조회 : ', nonPaymenthistorySetFreeReq);
+
+          thisMain._billpayInfo = (chargeRateReq.code==='00') ? chargeRateReq.result : null;//청구요금
+          thisMain._baseFeePlansInfo = (myPlanReq.code==='00') ? myPlanReq.result : null;// 나의요금제
+          thisMain._circuitChildInfo = (childrenLineReq.code==='00') ? childrenLineReq.result : null;//자녀회선
+          thisMain._defaultInfo = (nonPaymenthistoryReq.code==='00') ? nonPaymenthistoryReq.result : null;//미납내역
+          thisMain._paymentPossibleDayInfo = (nonPaymenthistoryDayReq.code==='00') ? nonPaymenthistoryDayReq.result : null;//미납내역 납부가능일
+          thisMain._suspensionInfo = (nonPaymenthistorySetFreeReq.code==='00') ? nonPaymenthistorySetFreeReq.result : null;//미납요금 이용정지해제 정보 조회
+        },
+        error(error) {
+          thisMain.logger.info(this, '[ error ] : ', error.message || error);
+        },
+        complete() {
+          thisMain.logger.info(this, '[ complete ] : ');
+          dataInit();
+          thisMain.logger.info(this, '[_urlTplInfo.combineRepresentPage] : ', thisMain._urlTplInfo.combineRepresentPage);
+          thisMain.renderView(res, thisMain._urlTplInfo.combineRepresentPage, {
+            reqQuery: thisMain.reqQuery,
+            svcInfo: thisMain._svcInfo,
+            billpayInfo : thisMain._billpayInfo,
+            circuitChildInfo: thisMain._circuitChildInfo,
+            commDataInfo: thisMain._commDataInfo,
+            defaultInfo: thisMain._defaultInfo,
+            showConditionInfo: thisMain._showConditionInfo,
+            baseFeePlansInfo: thisMain._baseFeePlansInfo
+          } );
+
+        } }
     );
-
-
-    this.logger.info(this, '[_urlTplInfo.combineRepresentPage] : ', this._urlTplInfo.combineRepresentPage);
-    this.renderView(res, this._urlTplInfo.combineRepresentPage, {
-      reqQuery: this.reqQuery,
-      svcInfo: this._svcInfo,
-      billpayInfo : this._billpayInfo,
-      circuitChildInfo: this._circuitChildInfo,
-      commDataInfo: this._commDataInfo,
-      defaultInfo: this._defaultInfo,
-      showConditionInfo: this._showConditionInfo,
-      baseFeePlansInfo: this._baseFeePlansInfo
-    } );
   }
+
   //통합청구(일반)
   private combineCommonCircuit(res) {
     this.logger.info(this, '[_urlTplInfo.combineCommonPage] : ', this._urlTplInfo.combineCommonPage);
@@ -343,6 +328,7 @@ class MyTBillBillguide extends TwViewController {
       baseFeePlansInfo: this._baseFeePlansInfo
     } );
   }
+
   //개별청구
   private individualCircuit(res) {
     this.logger.info(this, '[_urlTplInfo.individualPage] : ', this._urlTplInfo.individualPage);
