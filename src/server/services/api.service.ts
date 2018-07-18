@@ -202,7 +202,7 @@ class ApiService {
         if ( resp.code === API_CODE.CODE_00 ) {
           const result = resp.result;
           this.loginService.setSvcInfo(result);
-          return result;
+          return resp;
         } else {
           throw this.makeErrorMessage(resp);
         }
@@ -222,7 +222,7 @@ class ApiService {
         if ( resp.code === API_CODE.CODE_00 ) {
           const result = resp.result;
           this.loginService.setSvcInfo(result);
-          return result;
+          return resp;
         } else {
           throw this.makeErrorMessage(resp);
         }
