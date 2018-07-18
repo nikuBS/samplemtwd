@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import ApiService from '../../services/api.service';
 import LoginService from '../../services/login.service';
-import { API_CMD, API_CODE, API_SVC_PWD_ERROR } from '../../types/api-command.type';
+import { API_CMD, API_CODE, API_LOGIN_ERROR, API_SVC_PWD_ERROR } from '../../types/api-command.type';
 import LoggerService from '../../services/logger.service';
 import { SvcInfoModel } from '../../models/svc-info.model';
 import { URL } from '../../types/url.type';
@@ -56,8 +56,12 @@ abstract class TwViewController {
         this.render(req, res, next, new SvcInfoModel(resp), resp.noticeTpyCd);
       }, (error) => {
         // 로그인 실패
-        if ( error === API_SVC_PWD_ERROR.RDT0006 ) {
+        if ( error === API_LOGIN_ERROR.ICAS3228 ) {
+          // 고객보호비밀번호
           res.redirect('/auth/login/service-pwd');
+        } else if ( error === API_LOGIN_ERROR.ICAS3235 ) {
+          // 휴면계정
+          res.redirect('/auth/login/dormancy');
         } else {
           res.send(error);
         }
@@ -68,8 +72,12 @@ abstract class TwViewController {
         this.render(req, res, next, new SvcInfoModel(resp), resp.noticeTpyCd);
       }, (error) => {
         // 로그인 실패
-        if ( error === API_SVC_PWD_ERROR.RDT0006 ) {
+        if ( error === API_LOGIN_ERROR.ICAS3228 ) {
+          // 고객보호비밀번호
           res.redirect('/auth/login/service-pwd');
+        } else if ( error === API_LOGIN_ERROR.ICAS3235 ) {
+          // 휴면계정
+          res.redirect('/auth/login/dormancy');
         } else {
           res.send(error);
         }
