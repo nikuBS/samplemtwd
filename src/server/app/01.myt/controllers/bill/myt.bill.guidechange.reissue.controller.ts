@@ -51,6 +51,7 @@ class MyTBillReissue extends TwViewController {
 
   private findMyReissueType(key): string {
     let value = '';
+    // 유선, 무선 청구서 유형에 타입 코드가 달라 구분하여 처리
     let reissueType = Object.keys(MYT_REISSUE_REQ_CODE);
     if ( this.isLocal ) {
       reissueType = Object.keys(MYT_REISSUE_REQ_LOCAL_CODE);
@@ -82,9 +83,9 @@ class MyTBillReissue extends TwViewController {
       if ( this.isLocal ) {
         data['reasons'] = response.result.reissueReasons;
         data['title'] = MYT_REISSUE_TYPE[response.result.billIsueTypCd];
+        // 유선인 경우 서버에서 재발행 월 정보가 리스트로 넘어와 출력
         data['halfYear'] = this.setLocalHalfYearData(response.result.reissueYMs);
         data['type'] = '02';
-        // }
       } else {
         // 청구서명
         data['title'] = response.result.curBillTypeNm;
