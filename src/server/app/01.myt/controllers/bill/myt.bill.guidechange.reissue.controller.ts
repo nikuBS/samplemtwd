@@ -82,6 +82,7 @@ class MyTBillReissue extends TwViewController {
       if ( this.isLocal ) {
         data['reasons'] = response.result.reissueReasons;
         data['title'] = MYT_REISSUE_TYPE[response.result.billIsueTypCd];
+        data['halfYear'] = this.setLocalHalfYearData(response.result.reissueYMs);
         data['type'] = '02';
         // }
       } else {
@@ -100,6 +101,25 @@ class MyTBillReissue extends TwViewController {
     }
 
     return data;
+  }
+
+  private setLocalHalfYearData(array): any {
+    const result: any = [];
+    const length = array.length;
+    // 순차적으로 가장 최근날짜로 정렬되어있음
+    for ( let i = 0; i < length; i++ ) {
+      const data = {};
+      const yy = array[i].slice(0, 4);
+      const mm = array[i].slice(4, 6);
+      const dd = array[i].slice(6, 8);
+      data['type1'] = `${yy}년 ${mm}월`;
+      data['type2'] = `${yy}.${mm}.${dd}`;
+      data['type3'] = array[i];
+
+      result.push(data);
+    }
+
+    return result;
   }
 
   private getHalfYearData(): any {
