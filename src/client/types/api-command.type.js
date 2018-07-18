@@ -144,7 +144,8 @@ Tw.NODE_CMD = {
   SET_DEVICE: { path: '/device', method: Tw.API_METHOD.POST },
   CHANGE_SESSION: { path: '/change-session', method: Tw.API_METHOD.POST },
   SVC_PASSWORD_LOGIN: { path: '/service-password-sessions/login', method: Tw.API_METHOD.POST },
-  LOGIN_TID: { path: '/login-tid', method: Tw.API_METHOD.POST }
+  LOGIN_TID: { path: '/login-tid', method: Tw.API_METHOD.POST },
+  USER_LOCK_LOGIN: {path: '/user-locks/login', method: Tw.API_METHOD.POST }
 };
 
 Tw.API_CODE = {
