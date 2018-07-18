@@ -15,10 +15,9 @@ Tw.AuthLoginDormancy.prototype = {
     this.$container.on('click', '#btn-activate', function() {
       Tw.Api.request(Tw.API_CMD.BFF_03_0010)
         .done(function (res) {
-          if (res.code === '00') {
+          if (res.code === Tw.API_CODE.CODE_00) {
             window.location = '/home';
           } else {
-            Tw.Logger.error(res);
             Tw.Popup.openAlert(res.msg);
           }
         })
