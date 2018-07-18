@@ -59,15 +59,6 @@ class MyTBillBillguide extends TwViewController {
 
   private _typeChk:any = null; //화면구분
 
-  public rxObs:any = {
-    chargeRateReq: null,
-    myPlanReq: null,
-    childrenLineReq: null,
-    nonPaymenthistoryReq: null,
-    nonPaymenthistoryDayReq: null,
-    nonPaymenthistorySetFreeReq: null
-  };
-
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     this._svcInfo = svcInfo;
     this.logger.info(this, '[ svcInfo ] 사용자 정보 : ', svcInfo);
