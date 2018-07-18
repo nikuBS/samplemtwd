@@ -68,6 +68,7 @@ export const URL = {
   '/auth/line/edit': { login: true },
   '/auth/line/register/corporation': { login: true },
   '/auth/line/register/empty': { login: true },
+  '/auth/login/exceed-fail': { login: false },
   '/auth/login/fail': { login: false },
   '/auth/login/dormancy': { login: false },
   '/auth/login/find-id-pwd': { login: false },

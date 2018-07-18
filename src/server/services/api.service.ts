@@ -99,14 +99,14 @@ class ApiService {
   private handleError(observer, err) {
     const error = err.response.data;
     this.logger.error(this, '[API_ERR]', error);
-    let message = 'unknown error';
+    let msg = 'unknown error';
     let code = API_CODE.CODE_400;
     if ( FormatHelper.isObject(error) ) {
-      message = error.msg || message;
+      msg = error.msg || msg;
       code = error.code || code;
     }
     // observer.error(err);
-    observer.next({code, message, error});
+    observer.next({code, msg, error});
     observer.complete();
   }
 
@@ -188,6 +188,26 @@ class ApiService {
       .switchMap((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
           // TODO: 필드명 확인 필요
+          this.loginService.setSvcInfo({ mbrNm: resp.result.mbrNm });
+          return this.request(API_CMD.BFF_01_0005, {});
+        } else {
+          throw resp.code;
+        }
+      }).map((resp) => {
+        if ( resp.code === API_CODE.CODE_00 ) {
+          const result = resp.result;
+          this.loginService.setSvcInfo(result);
+          return result;
+        } else {
+          throw resp.code;
+        }
+      });
+  }
+
+  public requestUserLocks(params: any): Observable<any> {
+    return this.request(API_CMD.BFF_03_0010, params)
+      .switchMap((resp) => {
+        if ( resp.code === API_CODE.CODE_00 ) {
           this.loginService.setSvcInfo({ mbrNm: resp.result.mbrNm });
           return this.request(API_CMD.BFF_01_0005, {});
         } else {

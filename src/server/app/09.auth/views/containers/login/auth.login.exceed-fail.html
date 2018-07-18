@@ -1,15 +1,15 @@
-<!--
-* FileName: auth.logout.complete.html
+<%#
+* FileName: auth.login.exceed-fail.html
 * Author: Ara Jo (araara.jo@sk.com)
 * Date: 2018.07.03
--->
+%>
 
 <% include ../../components/start.component.html %>
 <!-- body -->
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
     <ul>
-        <li><a href="#gnb_area">메뉴 바로가기</a></li>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
         <li><a href="#contents">본문 바로가기</a></li>
         <li><a href="#footer">푸터 바로가기</a></li>
     </ul>
@@ -20,7 +20,7 @@
     <div id="header" class="header-wrap">
         <div class="header">
             <div class="header-ti">
-                <h1>로그아웃</h1>
+                <h1>로그인 실패</h1>
             </div>
         </div>
     </div>
@@ -33,35 +33,27 @@
             <div class="cont-box">
                 <div class="box-suggest">
                     <div class="suggest-info">
-                        <p class="suggest-ti">T world 이용에 감사 드립니다.<br /><em class="tx-bold">안전하게 로그아웃</em> 되었습니다.</p>
-                        <ul class="suggest-list nodot">
-                            <li>항상 더 좋은 서비스로 여러분에게 보답하는 T world가 되도록 노력하겠습니다.</li>
+                        <p class="suggest-ti">1일 로그인<br /><em class="tx-bold">허용 횟수를 초과</em>하였습니다.</p>
+                        <ul class="suggest-list">
+                            <li>1일 로그인 허용횟수인 30회를 초과하여 <em class="tx-bold">오늘 24시까지 T world 이용이 불가</em>합니다.</li>
+                            <li>접속 품질을 위한 조치이오니 양해 바랍니다.</li>
                         </ul>
-                        <div class="suggest-bt">
-                            <ul class="bt-slice">
-                                <li class="bt-red1">
-                                    <button>재로그인</button>
-                                </li>
-                            </ul>
-                        </div>
                     </div>
                 </div>
             </div>
             <!--// .cont-box -->
 
-            <hr class="cont-sp type1" />
+            <hr class="cont-sp type1" aria-hidden="true" />
 
             <div class="cont-box nogaps">
                 <div class="bt-link-box">
-                    <a class="bt-link-tx" href="">홈으로 가기</a>
+                    <a class="bt-link-tx replace-history" href="/home">홈으로</a>
                 </div>
             </div>
         </div>
     </div>
     <!--// #contents -->
-    <!-- footer -->
     <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
-    <!-- // footer -->
 </div>
 <% include ../../components/javascript.component.html %>
 <script>
