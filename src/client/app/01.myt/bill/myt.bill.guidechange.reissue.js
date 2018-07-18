@@ -137,7 +137,6 @@ Tw.MyTBillReissue.prototype = {
       }
     }
     //재발행신청 API 호출
-    // TODO: 회선변경 API 호출 이후(유/무선 전환) 기능동작 확인필요! - 현재 MyT 에서 회선을 변경할 수 없음.
     this._apiService
       .request(api, data)
       .done($.proxy(this._onApiSuccess, this))
