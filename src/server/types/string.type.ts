@@ -30,10 +30,6 @@ export enum MYT_VIEW {
   ERROR = 'error/myt.usage.error.html'
 }
 
-export enum PAYMENT_VIEW {
-  ERROR = 'error/payment.realtime.error.html'
-}
-
 export const MYT_REISSUE_TYPE = {
   'H': 'Bill Letter',
   'B': '문자',
