@@ -57,7 +57,7 @@
             <div class="cont-box nogaps-btm noborder">
                 <div class="payment-inquiry">
                     <a class="bt-link-tx" href=""><%=baseFeePlansInfo.prodName %><span class="ico"></span></a>
-                    <button class="bt-dropdown big" title="전체납부내역" aria-haspopup="true" data-target="totPaySelectBtn"><%=commDataInfo.selClaimDtBtn %><span class="ico"></span></button>
+                    <button class="bt-dropdown big" title="전체납부내역" aria-haspopup="true" data-target="selDateBtn"><%=commDataInfo.selClaimDtBtn %><span class="ico"></span></button>
                 </div>
                 <div class="payment-inquiry">
                     <div class="payment-all">
@@ -399,6 +399,7 @@
 <script>
   $(document).ready(function () {
     new Tw.mytBillBillguideCompanyPage($('#wrapFdev'), {
+      reqQuery: <%-JSON.stringify(reqQuery) %>,
       svcInfo: <%-JSON.stringify(svcInfo) %>,
       billpayInfo : <%-JSON.stringify(billpayInfo) %>,
       circuitChildInfo: <%-JSON.stringify(circuitChildInfo) %>,
