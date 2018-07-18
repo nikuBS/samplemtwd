@@ -13,7 +13,7 @@ class AuthLogoutExpire extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    res.render('logout/auth.logout.expire.html');
+    res.render('logout/auth.logout.expire.html', { svcInfo });
   }
 }
 
