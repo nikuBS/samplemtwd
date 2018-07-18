@@ -399,6 +399,7 @@
 <script>
   $(document).ready(function () {
     new Tw.mytBillBillguideCompanyPage($('#wrapFdev'), {
+      reqQuery: <%-JSON.stringify(reqQuery) %>,
       svcInfo: <%-JSON.stringify(svcInfo) %>,
       billpayInfo : <%-JSON.stringify(billpayInfo) %>,
       circuitChildInfo: <%-JSON.stringify(circuitChildInfo) %>,
