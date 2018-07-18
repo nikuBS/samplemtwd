@@ -8,6 +8,7 @@ Tw.RechargeCookizProcess = function (rootEl) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
+  this._nativeService = Tw.Native;
   this._history = new Tw.HistoryService(this.$container);
   this._history.init('hash');
 
