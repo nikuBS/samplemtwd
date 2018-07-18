@@ -169,6 +169,7 @@ export const API_CMD = {
 
   // TID
   OIDC: { path: '/auth/authorize.do', method: API_METHOD.GET, server: API_SERVER.TID, bypass: false },
+  LOGOUT: { path: '/sso/web/v1/ssologout.do', method: API_METHOD.GET, server: API_SERVER.TID, bypass: false },
 
   // TEST
   GET: { path: '/posts', method: API_METHOD.GET, server: API_SERVER.TEST, bypass: true },
