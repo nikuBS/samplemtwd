@@ -5,7 +5,7 @@
  */
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
-import { BILL_GUIDE_TYPE } from '../../../../types/bff-common.type';
+import { BILL_GUIDE_TYPE, BILL_GUIDE_TYPE_WITH_WIRE } from '../../../../types/bff-common.type';
 import { BILL_GUIDE_TYPE_NAME } from '../../../../types/string.type';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
@@ -43,21 +43,28 @@ class MyTBillChange extends TwViewController {
       billTypeListRequest,
     ).subscribe(([_billTypesList]) => {
       const _curBillGuide = this.getResult(_billTypesList);
-      if (_curBillGuide.ccurNotiSvcNum) {
+      if ( _curBillGuide.ccurNotiSvcNum ) {
         _curBillGuide.ccurNotiSvcNum = StringHelper.phoneStringToDash(_curBillGuide.ccurNotiSvcNum);
       }
-      if (_curBillGuide.cntcNum1) {
+      if ( _curBillGuide.cntcNum1 ) {
         _curBillGuide.cntcNum1 = StringHelper.phoneStringToDash(_curBillGuide.cntcNum1);
       }
-      if (_curBillGuide.wireSmtBillSvcNum) {
+      if ( _curBillGuide.wireSmtBillSvcNum ) {
         _curBillGuide.wireSmtBillSvcNum = StringHelper.phoneStringToDash(_curBillGuide.wireSmtBillSvcNum);
       }
-      if (_curBillGuide.wsmsBillSndNum) {
+      if ( _curBillGuide.wsmsBillSndNum ) {
         _curBillGuide.wsmsBillSndNum = StringHelper.phoneStringToDash(_curBillGuide.wsmsBillSndNum);
+      }
+      const isWire = (svcInfo.svcAttrCd === 'S1' || svcInfo.svcAttrCd === 'S2' || svcInfo.svcAttrCd === 'S3') ? true : false;
+      let component;
+      if ( isWire ) {
+        component = BILL_GUIDE_TYPE_COMPONENT[BILL_GUIDE_TYPE_WITH_WIRE[_curBillGuide['curBillType']]];
+      } else {
+        component = BILL_GUIDE_TYPE_COMPONENT[_curBillGuide['curBillType']];
       }
       this.renderView(res, 'bill/myt.bill.guidechange.update-complete.html', {
         curBillGuide: _curBillGuide,
-        component: BILL_GUIDE_TYPE_COMPONENT[_curBillGuide.curBillType],
+        component: component,
         svcInfo
       });
     });
