@@ -4,6 +4,40 @@
 * Date: 2018.07.16
 * Info: 로밍 사용요금
 %>
+<script id="amt-total" type="text/x-handlebars-template">
+    <div class="result-box price">
+        <h3 class="blind">조회결과:</h3>
+        <p class="result-value">
+            <span class="num">{{amt}}</span>
+            <span class="txt">원</span>
+        </p>
+        <p class="result-date">{{startDt}} ~ {{endDt}}</p>
+    </div>
+</script>
+<script id="amt-list" type="text/x-handlebars-template">
+    <div class="payment-detail-wrap">
+        <div class="payment-detail-box">
+            <div class="detail-inner">
+                <div class="detail-list">
+                    <ul>
+                        {{#each roamingList}}
+                        <li>
+                            <span class="title">{{ chargetItemDesc }}</span>
+                            <span class="tx-cont"><strong>{{ amt }}</strong>원</span>
+                        </li>
+                        {{/each}}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+<script id="amt-empty" type="text/x-handlebars-template">
+    <div class="result-box no-result">
+        <h3 class="blind">조회결과:</h3>
+        <p>이용내역이 없습니다.</p>
+    </div>
+</script>
 <% include ../../components/start.component.html %>
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
@@ -34,7 +68,7 @@
 
             <div class="cont-box nogaps-hoz">
                 <div class="inquiry-tit">
-                    <p class="tit-wrap"><span class="num">010-12**-56**</span><span class="mark-txt">로밍</span><br />사용요금을 조회해보세요.</p></p><!-- 2017-07-06 텍스트 수정 -->
+                    <p class="tit-wrap"><span class="num"><%= svcInfo.svcNum %></span><span class="mark-txt">로밍</span><br />사용요금을 조회해보세요.</p></p><!-- 2017-07-06 텍스트 수정 -->
                 </div>
             </div>
 
@@ -43,18 +77,24 @@
                 <div class="widget">
                     <div class="widget-box tube">
                         <ul class="tube-list three" role="radiogroup">
-                            <li class="checked" role="radio" aria-checked="true"><input type="radio" name="selectdate" title="전일 선택" checked="checked">전일</li>
-                            <li role="radio" aria-checked="false"><input type="radio" name="selectdate" title="1주일 선택">1주일</li>
-                            <li role="radio" aria-checked="false"><input type="radio" name="selectdate" title="3주일 선택">3주일</li>
-                            <li role="radio" aria-checked="false"><input type="radio" name="selectdate" title="1개월 선택">1개월</li>
-                            <li role="radio" aria-checked="false"><input type="radio" name="selectdate" title="3개월 선택">3개월</li>
-                            <li role="radio" aria-checked="false"><input type="radio" name="selectdate" title="6개월 선택">6개월</li>
+                            <li role="radio" aria-checked="false" unit="1" measurements="days"><input type="radio" name="selectdate" title="전일 선택">전일</li>
+                            <li role="radio" aria-checked="false" unit="7" measurements="days"><input type="radio" name="selectdate" title="1주일 선택">1주일</li>
+                            <li role="radio" aria-checked="false" unit="3" measurements="weeks"><input type="radio" name="selectdate" title="3주일 선택">3주일</li>
+                            <li role="radio" aria-checked="false" unit="1" measurements="month"><input type="radio" name="selectdate" title="1개월 선택">1개월</li>
+                            <li role="radio" aria-checked="false" unit="3" measurements="month"><input type="radio" name="selectdate" title="3개월 선택">3개월</li>
+                            <li role="radio" aria-checked="false" unit="6" measurements="month"><input type="radio" name="selectdate" title="6개월 선택">6개월</li>
                         </ul>
                     </div>
                 </div>
-                <div class="result-box no-result">
-                    <p>원하시는 기간을 선택해주세요.</p>
+                <!--<div class="result-box no-result">-->
+                    <!--<p>원하시는 기간을 선택해주세요.</p>-->
+                <!--</div>-->
+                <div class="amt-total-wrap">
+                    <div class="result-box no-result">
+                        <p>원하시는 기간을 선택해주세요.</p>
+                    </div>
                 </div>
+                <div class="amt-list-wrap"></div>
             </div>
 
             <hr class="cont-sp type1" aria-hidden="true" />
@@ -93,16 +133,7 @@
 
 <script>
   $(document).ready(function () {
-    new Tw.mytBillBillguideSubRoamingBill($('#wrapFdev'), {
-      reqQuery: <%-JSON.stringify(reqQuery) %>,
-      svcInfo: <%-JSON.stringify(svcInfo) %>,
-      billpayInfo : <%-JSON.stringify(billpayInfo) %>,
-      circuitChildInfo: <%-JSON.stringify(circuitChildInfo) %>,
-      commDataInfo: <%-JSON.stringify(commDataInfo) %>,
-      defaultInfo: <%-JSON.stringify(defaultInfo) %>,
-      showConditionInfo: <%-JSON.stringify(showConditionInfo) %>
-  });
-
+    new Tw.mytBillBillguideSubRoamingBill($('#wrapFdev'))
   });
 </script>
 
