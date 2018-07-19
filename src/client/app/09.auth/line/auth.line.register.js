@@ -159,7 +159,7 @@ Tw.AuthLineRegister.prototype = {
   _successRegisterLineList: function (registerLength, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._registerLength = registerLength;
-      this._marketingSvc = resp.result;
+      this._marketingSvc = resp.result.offerSvcMgmtNum;
       this._popupService.close();
     } else {
       this._popupService.close();
@@ -193,7 +193,7 @@ Tw.AuthLineRegister.prototype = {
     this._openMarketingOfferPopup();
   },
   _openMarketingOfferPopup: function () {
-    if ( !Tw.FormatHelper.isEmpty(this._marketingSvc) ) {
+    if ( !Tw.FormatHelper.isEmpty(this._marketingSvc) && this._marketingSvc !== '0' ) {
       var $target = this.$list.filter('[data-svcmgmtnum=' + this._marketingSvc + ']');
       setTimeout($.proxy(function () {
         this.lineMarketingLayer.openMarketingOffer(this._marketingSvc, $target.data('showname'), $target.data('svcnum'));

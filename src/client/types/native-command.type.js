@@ -5,6 +5,10 @@ Tw.NTV_CMD = {
   OPEN_URL: 'openUrl',
   LOGIN: 'login',
   LOGOUT: 'logout',
+  FIND_ID: 'findId',
+  FIND_PW: 'findPw',
+  CHANGE_PW: 'changePw',
+  ACCOUNT: 'account',
   LOG: 'log'
 };
 

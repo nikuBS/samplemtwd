@@ -4,17 +4,17 @@
  * Date: 2018.07.06
  */
 
-Tw.AuthLineEdit = function (rootEl, category) {
+Tw.AuthLineEdit = function (rootEl, category, lineMarketingLayer) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
-  this._category = category
+  this._category = category;
+  this.lineMarketingLayer = lineMarketingLayer;
 
-  this._repSvc = '';
+  this._marketingSvc = '';
 
   this._init();
   this._bindEvent();
-  this._cachedElement();
 };
 
 Tw.AuthLineEdit.prototype = {
@@ -27,9 +27,7 @@ Tw.AuthLineEdit.prototype = {
   _bindEvent: function () {
     this.$container.on('click', '#bt-guide', $.proxy(this._openGuidePopup, this));
     this.$container.on('click', '#bt-complete', $.proxy(this._completeEdit, this));
-  },
-  _cachedElement: function () {
-    this._repSvc = $(this.$container.find('#sortable-enabled').children()[0]).data('svcmgmtnum');
+    this.$list = this.$container.find('.ui-state-default');
   },
   _openGuidePopup: function () {
     this._popupService.open({
@@ -58,24 +56,42 @@ Tw.AuthLineEdit.prototype = {
       .fail($.proxy(this._failRegisterLineList, this));
   },
   _successRegisterLineList: function (resp) {
-    if(resp.code === Tw.API_CODE.CODE_00) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      this._marketingSvc = resp.result.offerSvcMgmtNum;
       this._checkRepSvc(resp.result);
     } else {
-      this._popupService.openAlert('api error');
+      this._popupService.openAlert(resp.code + ' ' + resp.msg);
     }
   },
   _failRegisterLineList: function () {
 
   },
   _checkRepSvc: function (result) {
-    // TODO: 첫번째 회선 변경 오류 체크
-    if(result) {
-      this._popupService.openAlert(Tw.MSG_AUTH.LINE_A11, null, $.proxy(this._confirmChangeRepSvc, this), $.proxy(this._confirmChangeRepSvc, this));
+    if ( result.repSvcChgYn === 'Y' ) {
+      this._popupService.openAlert(Tw.MSG_AUTH.LINE_A11, null, $.proxy(this._confirmChangeRepSvc, this), $.proxy(this._closeChangeRepSvc, this));
+    } else {
+      this._checkMarketingOffer();
+    }
+  },
+  _confirmChangeRepSvc: function () {
+    this._popupService.close();
+  },
+  _closeChangeRepSvc: function () {
+    this._checkMarketingOffer();
+  },
+  _checkMarketingOffer: function () {
+    if ( !Tw.FormatHelper.isEmpty(this._marketingSvc) && this._marketingSvc !== '0' ) {
+      var $target = this.$list.filter('[data-svcmgmtnum=' + this._marketingSvc + ']');
+      setTimeout($.proxy(function () {
+        this.lineMarketingLayer.openMarketingOffer(this._marketingSvc,
+          $target.data('showname'), $target.data('svcnum'), $.proxy(this._closeMarketingOfferPopup, this));
+      }, this), 0);
     } else {
       history.back();
     }
   },
-  _confirmChangeRepSvc: function() {
+  _closeMarketingOfferPopup: function () {
     history.back();
   }
+
 };

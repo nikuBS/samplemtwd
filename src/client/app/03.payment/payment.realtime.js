@@ -62,7 +62,7 @@ Tw.PaymentRealtime.prototype = {
     this.$container.on('click', '.get-point', $.proxy(this._openGetPoint, this));
     this.$container.on('click', '.select-point', $.proxy(this._selectPoint, this));
     this.$container.on('click', '.pay', $.proxy(this._pay, this));
-    this.$container.on('click', '.cancel-process', $.proxy(this._cancelProcess, this));
+    this.$container.on('click', '.cancel-process', $.proxy(this._openCancel, this));
   },
   _onlyNumber: function (event) {
     Tw.InputHelper.inputNumberOnly(event.currentTarget);
@@ -240,8 +240,8 @@ Tw.PaymentRealtime.prototype = {
       this._validation.checkEmpty(this.$cardY.val(), Tw.MSG_PAYMENT.AUTO_A01) &&
       this._validation.checkEmpty(this.$cardM.val(), Tw.MSG_PAYMENT.AUTO_A01) &&
       this._validation.checkEmpty(this.$cardPw.val(), Tw.MSG_PAYMENT.AUTO_A04) &&
-      this._validation.checkYear(this.$cardY.val(), Tw.MSG_PAYMENT.REALTIME_A05) &&
-      this._validation.checkMonth(this.$cardM.val(), Tw.MSG_PAYMENT.REALTIME_A05) &&
+      this._validation.checkYear(this.$cardY.val(), Tw.MSG_PAYMENT.REALTIME_A04) &&
+      this._validation.checkMonth(this.$cardM.val(), Tw.MSG_PAYMENT.REALTIME_A04) &&
       this._validation.checkIsSelected(this.$cardWrap.find('.select-bank'), Tw.MSG_PAYMENT.REALTIME_A02) &&
       this._validation.checkEmpty(this.$cardWrap.find('.account-number').val(), Tw.MSG_PAYMENT.AUTO_A03));
   },
@@ -315,7 +315,7 @@ Tw.PaymentRealtime.prototype = {
   },
   _paySms: function () {
     if (this._isSmsValid()) {
-      this._apiService.request(Tw.API_CMD.BFF_07_0027, { msg: 'sms' })
+      this._apiService.request(Tw.API_CMD.BFF_07_0027, {}, {}, '?msg=******')
         .done($.proxy(this._paySuccess, this))
         .fail($.proxy(this._payFail, this));
     }
@@ -324,10 +324,13 @@ Tw.PaymentRealtime.prototype = {
     return this._validation.checkIsSelected(this.$container.find('.select-bank-sms'), Tw.MSG_PAYMENT.REALTIME_A02);
   },
   _paySuccess: function (reqData, type, res) {
+    this._history.setHistory();
     if (res.code === Tw.API_CODE.CODE_00) {
-      this._history.setHistory();
       this._setCompleteData(reqData, type);
       this._go('#complete');
+    } else {
+      this.$container.find('.payment-err-msg').text(res.error.msg);
+      this._go('#error');
     }
   },
   _setCompleteData: function (reqData, type) {
@@ -365,8 +368,11 @@ Tw.PaymentRealtime.prototype = {
       $('.detail-payment:last').after($newTarget);
     });
   },
-  _payFail: function () {
+  _payFail: function (err) {
     Tw.Logger.info('pay request fail');
+    this._history.setHistory();
+    this.$container.find('.payment-err-msg').text(err.error.msg);
+    this._go('#error');
   },
   _getCheckedBillList: function (type) {
     var $listBox = this.$container.find('.payment-select .select-list');
@@ -401,6 +407,9 @@ Tw.PaymentRealtime.prototype = {
       return false;
     }
     return true;
+  },
+  _openCancel: function () {
+    this._popupService.openAlert(Tw.MSG_PAYMENT.REALTIME_A09, null, $.proxy(this._cancelProcess, this));
   },
   _cancelProcess: function () {
     this._history.setHistory();

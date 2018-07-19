@@ -51,12 +51,32 @@
             <hr class="cont-sp type1" aria-hidden="true" />
             <div class="cont-box noborder">
                 <div class="payment-inquiry">
-                    <a class="bt-link-tx" href="">선불요금제 Lite<span class="ico"></span></a>
+                    <a class="bt-link-tx" href=""><%=commDataInfo.prodNm %><span class="ico"></span></a>
                 </div>
                 <div class="payment-all payment-all-mt used-count">
+
+                    <% if ( commDataInfo.dataYn === 'Y' ) { %>  <%#데이터 요금제 %>
+
                     <h5 class="account-tit">카드잔액</h5>
-                    <span><em>210,000</em> 원</span>
-                    <p class="term">2018.05.01 15:05</p>
+                    <span><em><%=commDataInfo.prodAmt %></em> 원</span>
+
+                    <% } else { %>
+
+                        <% if( commDataInfo.dataProdYn === 'N' ) {%>  <%#음성 요금제 %>
+
+                        <h5 class="account-tit">카드잔액</h5>
+                        <span><em><%=commDataInfo.prodAmt %></em> 원</span>
+
+                        <% } else { %>  <%#음성 + 데이터 %>
+
+                        <h5 class="account-tit">데이터량</h5>
+                        <span><em><%=commDataInfo.prodAmt %></em> MB</span>
+
+                        <% } %>
+
+                    <% } %>
+
+                    <p class="term"><%=commDataInfo.curDt %></p>
                 </div>
             </div>
 
@@ -68,7 +88,7 @@
                                 <dl>
                                     <dt class="ti-data">발신/사용기간</dt>
                                     <dd class="tx-data">
-                                        <span class="blind">날짜</span>2018.07.12 까지<br />
+                                        <span class="blind">날짜</span><%=commDataInfo.useEndDt %> 까지<br />
                                         <span class="blind">발신가능여부</span>발신가능
                                     </dd>
                                 </dl>
@@ -77,7 +97,7 @@
                                 <dl>
                                     <dt class="ti-data">수신/데이터유지기간</dt>
                                     <dd class="tx-data">
-                                        <span class="blind">날짜</span>2018.07.12 까지<br />
+                                        <span class="blind">날짜</span><%=commDataInfo.dataKeepTrmDt %> 까지<br />
                                         <span class="blind">수신가능여부</span>수신가능
                                     </dd>
                                 </dl>
@@ -86,19 +106,21 @@
                                 <dl>
                                     <dt class="ti-data">번호유지기간</dt>
                                     <dd class="tx-data">
-                                        <span class="blind">날짜</span>2018.07.12 까지<br />
+                                        <span class="blind">날짜</span><%=commDataInfo.numKeepTrmDt %> 까지<br />
                                         <span class="blind">번호유지여부</span>번호유지
                                     </dd>
                                 </dl>
                             </li>
+                            <% if (commDataInfo.remained) { %>
                             <li>
                                 <dl>
                                     <dt class="ti-data">잔여데이터</dt>
                                     <!-- 2018-07-10 수정 -->
-                                    <dd class="tx-data"><span class="num-area"><strong>100</strong> MB</span></dd>
+                                    <dd class="tx-data"><span class="num-area"><strong><%=commDataInfo.remained %></strong> MB</span></dd>
                                     <!--// 2018-07-10 수정 -->
                                 </dl>
                             </li>
+                            <% } %>
 
                         </ul>
                     </div>
@@ -113,6 +135,8 @@
                             <!-- 2017-07-10 수정-->
                             <h3 class="account-tit2">사용내역 확인</h3>
                             <!--// 2017-07-10 수정-->
+
+                            <% if( commDataInfo.dataYn === 'Y' ) {%>
                             <!-- 라디오 영역 -->
                             <div class="widget msg-account-info pad-t0">
                                 <div class="widget-box radio">
@@ -129,13 +153,15 @@
                                 </div>
                             </div>
                             <!--// 라디오 영역 -->
+                            <% } %>
+
                             <div class="account-detail">
                                 <div class="select-name-table">
-                                    <button class="bt-dropdown wd-shrink" title="조회시작날짜선택" aria-haspopup="true">2018.04<span class="ico"></span></button><!-- 2018-07-12 접근성 수정 -->
+                                    <button class="bt-dropdown wd-shrink" title="조회시작날짜선택" aria-haspopup="true" data-target="startDtBtn"><span class="ico"></span></button><!-- 2018-07-12 접근성 수정 -->
                                 </div>
                                 <div class="line"></div>
                                 <div class="select-name-table">
-                                    <button class="bt-dropdown wd-shrink" title="조회종료날짜선택" aria-haspopup="true">2018.05<span class="ico"></span></button><!-- 2018-07-12 접근성 수정 -->
+                                    <button class="bt-dropdown wd-shrink" title="조회종료날짜선택" aria-haspopup="true" data-target="endDtBtn"><span class="ico"></span></button><!-- 2018-07-12 접근성 수정 -->
                                 </div>
                             </div>
 
@@ -144,7 +170,7 @@
                     <div class="contents-btn">
                         <ul class="bt-slice">
                             <li class="bt-blue1">
-                                <button>조회</button>
+                                <button data-target="getListBtn">조회</button>
                             </li>
                         </ul>
                     </div>
@@ -239,11 +265,9 @@
     new Tw.mytBillBillguidePrepaidPage($('#wrapFdev'), {
       reqQuery: <%-JSON.stringify(reqQuery) %>,
       svcInfo: <%-JSON.stringify(svcInfo) %>,
-      billpayInfo : <%-JSON.stringify(billpayInfo) %>,
-      circuitChildInfo: <%-JSON.stringify(circuitChildInfo) %>,
+      ppsInfoLookupInfo: <%-JSON.stringify(ppsInfoLookupInfo) %>,
       commDataInfo: <%-JSON.stringify(commDataInfo) %>,
-      defaultInfo: <%-JSON.stringify(defaultInfo) %>,
-      showConditionInfo: <%-JSON.stringify(showConditionInfo) %>
+
   });
   });
 </script>
