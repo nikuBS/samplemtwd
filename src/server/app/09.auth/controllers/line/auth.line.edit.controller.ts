@@ -30,7 +30,7 @@ class AuthLineEdit extends TwViewController {
           svcInfo
         }));
       } else {
-        res.send('api error');
+        res.send('api error' + resp.code + ' ' + resp.msg);
       }
 
     });
