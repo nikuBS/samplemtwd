@@ -62,7 +62,7 @@ Tw.PaymentRealtime.prototype = {
     this.$container.on('click', '.get-point', $.proxy(this._openGetPoint, this));
     this.$container.on('click', '.select-point', $.proxy(this._selectPoint, this));
     this.$container.on('click', '.pay', $.proxy(this._pay, this));
-    this.$container.on('click', '.cancel-process', $.proxy(this._cancelProcess, this));
+    this.$container.on('click', '.cancel-process', $.proxy(this._openCancel, this));
   },
   _onlyNumber: function (event) {
     Tw.InputHelper.inputNumberOnly(event.currentTarget);
@@ -240,8 +240,8 @@ Tw.PaymentRealtime.prototype = {
       this._validation.checkEmpty(this.$cardY.val(), Tw.MSG_PAYMENT.AUTO_A01) &&
       this._validation.checkEmpty(this.$cardM.val(), Tw.MSG_PAYMENT.AUTO_A01) &&
       this._validation.checkEmpty(this.$cardPw.val(), Tw.MSG_PAYMENT.AUTO_A04) &&
-      this._validation.checkYear(this.$cardY.val(), Tw.MSG_PAYMENT.REALTIME_A05) &&
-      this._validation.checkMonth(this.$cardM.val(), Tw.MSG_PAYMENT.REALTIME_A05) &&
+      this._validation.checkYear(this.$cardY.val(), Tw.MSG_PAYMENT.REALTIME_A04) &&
+      this._validation.checkMonth(this.$cardM.val(), Tw.MSG_PAYMENT.REALTIME_A04) &&
       this._validation.checkIsSelected(this.$cardWrap.find('.select-bank'), Tw.MSG_PAYMENT.REALTIME_A02) &&
       this._validation.checkEmpty(this.$cardWrap.find('.account-number').val(), Tw.MSG_PAYMENT.AUTO_A03));
   },
@@ -401,6 +401,9 @@ Tw.PaymentRealtime.prototype = {
       return false;
     }
     return true;
+  },
+  _openCancel: function () {
+    this._popupService.openAlert(Tw.MSG_PAYMENT.REALTIME_A09, null, $.proxy(this._cancelProcess, this));
   },
   _cancelProcess: function () {
     this._history.setHistory();
