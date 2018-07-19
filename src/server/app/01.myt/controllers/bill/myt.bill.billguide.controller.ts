@@ -24,6 +24,7 @@ class MyTBillBillguide extends TwViewController {
   private _defaultInfo: any; //미납내역 | BFF_05_0030
   private _paymentPossibleDayInfo: any; //미납요금 납부가능일 조회 | BFF_05_0031
   private _suspensionInfo: any; //미납요금 이용정지해제 정보 조회 | BFF_05_0037
+  private _ppsInfoLookupInfo: any; //PPS 요금안내서 정보조회
 
   //공통데이터
   private _commDataInfo:any = {
@@ -34,7 +35,16 @@ class MyTBillBillguide extends TwViewController {
     discount:'',//할인액
     joinSvcList: '', //가입 서비스 리스트
     unPaidTotSum: '', //미납금액
-    unPaidDetails: '' //미납금액 상세내역
+    unPaidDetails: '', //미납금액 상세내역
+    prodNm: '', //pps 요금제
+    prodAmt: '',//pps 잔액
+    useEndDt: '',//pps 발신/사용기간
+    dataKeepTrmDt: '',//pps 수신/데이터유지기간
+    numKeepTrmDt: '',//pps 번유지기간
+    curDt: '',//현재날짜
+    remained: '',//잔여데이터 KB | 공백일 경우 표시안함
+    dataYn: '', //음성+데이터 'Y'
+    dataProdYn: ''//MB 'Y' | 원 'N'
   };
 
   //노출조건
@@ -86,54 +96,63 @@ class MyTBillBillguide extends TwViewController {
       default :
           var thisMain = this;
 
-          Observable.combineLatest(
-            chargeRateReq
-          ).subscribe(
-            {
-              next( [chargeRateReq] ) {
-                if ( chargeRateReq.code === '00' ) {
-                  thisMain.logger.info(this, '[ BFF_05_0036 ] : ', chargeRateReq);
-                  thisMain.logger.info(this, '[ result.coClCd ] 회사구분 :', chargeRateReq.result.coClCd);
-                  thisMain.logger.info(this, '[ result.repSvcYn ] 대표청구회선여부 : ', chargeRateReq.result.repSvcYn);
-                  thisMain.logger.info(this, '[ result.paidAmtMonthSvcCnt ] 청구월회선수 :', chargeRateReq.result.paidAmtMonthSvcCnt);
-                  thisMain.logger.info(this, '[ result.autopayYn ] 자동납부여부 :', chargeRateReq.result.autopayYn);
-                  thisMain._billpayInfo = chargeRateReq.result;
-                } else {
-                  thisMain.logger.info(this, '[ ERROR ] : 회선 확인 필요! | 청구요금 조회 에러 BFF_05_0036');
-                }
-              },
-              error(error) {
-                thisMain.logger.info(this, '[ error > BFF_05_0036 ] : ', error.message || error);
-              },
-              complete() {
-                thisMain.logger.info(this, '[ complete > BFF_05_0036] ');
+          if ( this._svcInfo.svcAttrCd != 'M2' && this._svcInfo.svcAttrCd != 'O1' ) {
+            this.logger.info(this, '[ PPS, 기업솔루션이 아닌경우 ]');
 
-                if ( thisMain._billpayInfo.coClCd === 'B') {
-                  thisMain.logger.info(this, '[ SK브로드밴드 가입 ]', thisMain._billpayInfo.coClCd);
-                  thisMain._typeChk = 'A3';
-                }
-                else {
-                  if( thisMain._billpayInfo.paidAmtMonthSvcCnt === 1 ) {
-                    thisMain.logger.info(this, '[ 개별청구회선 ]', thisMain._billpayInfo.paidAmtMonthSvcCnt);
-                    thisMain._typeChk = 'A4';
+            Observable.combineLatest(
+              chargeRateReq
+            ).subscribe(
+              {
+                next( [chargeRateReq] ) {
+                  if ( chargeRateReq.code === '00' ) {
+                    thisMain.logger.info(this, '[ BFF_05_0036 ] : ', chargeRateReq);
+                    thisMain.logger.info(this, '[ result.coClCd ] 회사구분 :', chargeRateReq.result.coClCd);
+                    thisMain.logger.info(this, '[ result.repSvcYn ] 대표청구회선여부 : ', chargeRateReq.result.repSvcYn);
+                    thisMain.logger.info(this, '[ result.paidAmtMonthSvcCnt ] 청구월회선수 :', chargeRateReq.result.paidAmtMonthSvcCnt);
+                    thisMain.logger.info(this, '[ result.autopayYn ] 자동납부여부 :', chargeRateReq.result.autopayYn);
+                    thisMain._billpayInfo = chargeRateReq.result;
+                  } else {
+                    thisMain.logger.info(this, '[ ERROR ] : 회선 확인 필요! | 청구요금 조회 에러 BFF_05_0036');
+                  }
+                },
+                error(error) {
+                  thisMain.logger.info(this, '[ error > BFF_05_0036 ] : ', error.message || error);
+                },
+                complete() {
+                  thisMain.logger.info(this, '[ complete > BFF_05_0036] ');
+
+                  if ( thisMain._billpayInfo.coClCd === 'B') {
+                    thisMain.logger.info(this, '[ SK브로드밴드 가입 ]', thisMain._billpayInfo.coClCd);
+                    thisMain._typeChk = 'A3';
                   }
                   else {
-                    if ( thisMain._billpayInfo.repSvcYn === 'Y') {
-                      thisMain.logger.info(this, '[ 통합청구회선 > 대표 ]', thisMain._billpayInfo.repSvcYn);
-                      thisMain._typeChk = 'A5';
+                    if( thisMain._billpayInfo.paidAmtMonthSvcCnt === 1 ) {
+                      thisMain.logger.info(this, '[ 개별청구회선 ]', thisMain._billpayInfo.paidAmtMonthSvcCnt);
+                      thisMain._typeChk = 'A4';
                     }
                     else {
-                      thisMain.logger.info(this, '[ 통합청구회선 > 대표 아님!!!! ]', thisMain._billpayInfo.repSvcYn);
-                      thisMain._typeChk = 'A6';
+                      if ( thisMain._billpayInfo.repSvcYn === 'Y') {
+                        thisMain.logger.info(this, '[ 통합청구회선 > 대표 ]', thisMain._billpayInfo.repSvcYn);
+                        thisMain._typeChk = 'A5';
+                      }
+                      else {
+                        thisMain.logger.info(this, '[ 통합청구회선 > 대표 아님!!!! ]', thisMain._billpayInfo.repSvcYn);
+                        thisMain._typeChk = 'A6';
+                      }
                     }
                   }
-                }
-                thisMain.logger.info(this, '-------------------------------------[TEST END]');
-                thisMain.logger.info(this, '[ 페이지 진입 ] this._typeChk : ', thisMain._typeChk);
-                thisMain.controllerInit(res);
-              }}
-          );//subscribe end
+                  thisMain.logger.info(this, '-------------------------------------[TEST END]');
+                  thisMain.logger.info(this, '[ 페이지 진입 ] this._typeChk : ', thisMain._typeChk);
+                  thisMain.controllerInit(res);
+                }}
+            );//subscribe end
 
+          }
+    }
+
+    if ( this._typeChk === 'A1' || this._typeChk === 'A2' ) {
+      this.logger.info(this, '[ PPS 선불폰, 기업솔루션 ]', this._typeChk);
+      this.controllerInit(res);
     }
     //---------------------------------------------------------------------------------[화면 구분 END]
 
@@ -322,31 +341,149 @@ class MyTBillBillguide extends TwViewController {
 
   //개별청구
   private individualCircuit(res) {
-    this.logger.info(this, '[_urlTplInfo.individualPage] : ', this._urlTplInfo.individualPage);
-    this.renderView(res, this._urlTplInfo.individualPage, {
-      reqQuery: this.reqQuery,
-      svcInfo: this._svcInfo,
-      billpayInfo : this._billpayInfo,
-      circuitChildInfo: this._circuitChildInfo,
-      commDataInfo: this._commDataInfo,
-      defaultInfo: this._defaultInfo,
-      showConditionInfo: this._showConditionInfo,
-      baseFeePlansInfo: this._baseFeePlansInfo
-    } );
+    let chargeRateReq: Observable<any>;
+    if( this.reqQuery.invDt ) {
+      chargeRateReq = this.apiService.request(API_CMD.BFF_05_0036, { invDt: this.reqQuery.invDt});
+    } else {
+      chargeRateReq = this.apiService.request(API_CMD.BFF_05_0036, {});
+    }
+    const myPlanReq: Observable<any> = this.apiService.request(API_CMD.BFF_05_0041, {});//나의요금제
+    const childrenLineReq: Observable<any> = this.apiService.request(API_CMD.BFF_05_0024, {});//자녀회선
+    const nonPaymenthistoryReq: Observable<any> = this.apiService.request(API_CMD.BFF_05_0030, {});//미납여부 버튼 노출
+    const nonPaymenthistoryDayReq: Observable<any> = this.apiService.request(API_CMD.BFF_05_0031, {});//미납 납부가능일 선택버튼
+    const nonPaymenthistorySetFreeReq: Observable<any> = this.apiService.request(API_CMD.BFF_05_0037, {});//미납 이용정지해제 버튼노출
+
+    var thisMain = this;
+
+    const dataInit = function () {
+      thisMain._commDataInfo.selClaimDtNum = (thisMain._billpayInfo) ? thisMain.getSelClaimDtNum( String(thisMain._billpayInfo.invDt) ) : null;
+      thisMain._commDataInfo.selClaimDtBtn = (thisMain._billpayInfo) ? thisMain.getSelClaimDtBtn( String(thisMain._billpayInfo.invDt) ) : null;
+      thisMain._commDataInfo.selStaDt = (thisMain._billpayInfo) ? thisMain.getSelStaDt( String(thisMain._billpayInfo.invDt) ) : null;
+      thisMain._commDataInfo.selEndDt = (thisMain._billpayInfo) ? DateHelper.getShortDateNoDot( String(thisMain._billpayInfo.invDt) ) : null;
+      thisMain._commDataInfo.discount = (thisMain._billpayInfo) ? FormatHelper.addComma( String(Math.abs( Number(thisMain._billpayInfo.deduckTotInvAmt))) ) : 0;
+      thisMain._commDataInfo.joinSvcList = (thisMain._billpayInfo) ? ( thisMain._billpayInfo.paidAmtSvcCdList ) : null;
+      thisMain._commDataInfo.unPaidTotSum = (thisMain._defaultInfo) ? FormatHelper.addComma( String(thisMain._defaultInfo.unPaidTotSum) ) : null;
+      thisMain._commDataInfo.unPaidDetails = (thisMain._defaultInfo) ? thisMain._defaultInfo.unPaidAmtMonthInfoList : null;
+
+      thisMain._commDataInfo.unPaidDetails.map( (item) => {
+        item.unPaidInvDt = moment(String(item.unPaidInvDt)).add(1, 'days').format('YYYY년 MM월');
+        item.unPaidAmt = FormatHelper.addComma(String(item.unPaidAmt));
+      });
+
+      thisMain.logger.info(thisMain, '[ 미납요금 상세내역 ]', thisMain._commDataInfo.unPaidDetails);
+
+      thisMain.getCircuitChildInfoMask( thisMain._circuitChildInfo );//전화번호 마스킹
+      //노출조건 셋팅
+      thisMain._showConditionInfo.autopayYn = (thisMain._billpayInfo.autopayYn === 'Y') ? 'Y' : 'N';
+      thisMain._showConditionInfo.childYn = (thisMain._circuitChildInfo.length > 0) ? 'Y' : 'N';
+      thisMain._showConditionInfo.phoneYn = (thisMain._svcInfo.svcAttrCd === 'M1') ? 'Y' : 'N';
+      if(thisMain._defaultInfo) {
+        thisMain._showConditionInfo.defaultYn = (thisMain._defaultInfo.unPaidAmtMonthInfoList.length !== 0) ? 'Y' : 'N';
+      } else {
+        thisMain._showConditionInfo.defaultYn = 'N';
+      }
+      thisMain._showConditionInfo.chargeTtYn = (thisMain._baseFeePlansInfo.prodId === 'NA00001901') ? 'Y' : 'N';
+      thisMain._showConditionInfo.paymentBtnYn = (thisMain._paymentPossibleDayInfo.useObjYn === 'Y') ? 'Y' : 'N';
+      thisMain._showConditionInfo.suspensionYn = (thisMain._suspensionInfo.useObjYn === 'Y') ? 'Y' : 'N';
+    };
+
+    Observable.combineLatest(
+      chargeRateReq,
+      myPlanReq,
+      childrenLineReq,
+      nonPaymenthistoryReq,
+      nonPaymenthistoryDayReq,
+      nonPaymenthistorySetFreeReq
+    ).subscribe(
+      {
+        next( [
+                chargeRateReq,
+                myPlanReq,
+                childrenLineReq,
+                nonPaymenthistoryReq,
+                nonPaymenthistoryDayReq,
+                nonPaymenthistorySetFreeReq
+              ] ) {
+          thisMain.logger.info(this, '[ 1. next > chargeRateReq ] 청구요금 : ', chargeRateReq);
+          thisMain.logger.info(this, '[ 2. next > myPlanReq ] 나의요금제 : ', myPlanReq);
+          thisMain.logger.info(this, '[ 3. next > childrenLineReq ] 자녀회선 : ', childrenLineReq);
+          thisMain.logger.info(this, '[ 4. next > nonPaymenthistoryReq ] 미납내역 : ', nonPaymenthistoryReq);
+          thisMain.logger.info(this, '[ 5. next > nonPaymenthistoryDayReq ] 미납내역 납부가능일 : ', nonPaymenthistoryDayReq);
+          thisMain.logger.info(this, '[ 6. next > nonPaymenthistorySetFreeReq ] 미납요금 이용정지해제 정보 조회 : ', nonPaymenthistorySetFreeReq);
+
+          thisMain._billpayInfo = (chargeRateReq.code==='00') ? chargeRateReq.result : null;//청구요금
+          thisMain._baseFeePlansInfo = (myPlanReq.code==='00') ? myPlanReq.result : null;// 나의요금제
+          thisMain._circuitChildInfo = (childrenLineReq.code==='00') ? childrenLineReq.result : null;//자녀회선
+          thisMain._defaultInfo = (nonPaymenthistoryReq.code==='00') ? nonPaymenthistoryReq.result : null;//미납내역
+          thisMain._paymentPossibleDayInfo = (nonPaymenthistoryDayReq.code==='00') ? nonPaymenthistoryDayReq.result : null;//미납내역 납부가능일
+          thisMain._suspensionInfo = (nonPaymenthistorySetFreeReq.code==='00') ? nonPaymenthistorySetFreeReq.result : null;//미납요금 이용정지해제 정보 조회
+        },
+        error(error) {
+          thisMain.logger.info(this, '[ error ] : ', error.message || error);
+        },
+        complete() {
+          thisMain.logger.info(this, '[ complete ] : ');
+          dataInit();
+          thisMain.logger.info(this, '[_urlTplInfo.individualPage] : ', thisMain._urlTplInfo.individualPage);
+          thisMain.renderView(res, thisMain._urlTplInfo.individualPage, {
+            reqQuery: thisMain.reqQuery,
+            svcInfo: thisMain._svcInfo,
+            billpayInfo : thisMain._billpayInfo,
+            circuitChildInfo: thisMain._circuitChildInfo,
+            commDataInfo: thisMain._commDataInfo,
+            defaultInfo: thisMain._defaultInfo,
+            showConditionInfo: thisMain._showConditionInfo,
+            baseFeePlansInfo: thisMain._baseFeePlansInfo
+          } );
+
+        } }
+    );
   }
   //PPS(선불폰)
   private prepaidCircuit(res) {
-    this.logger.info(this, '[_urlTplInfo.prepaidPage] : ', this._urlTplInfo.prepaidPage);
-    this.renderView(res, this._urlTplInfo.prepaidPage, {
-      reqQuery: this.reqQuery,
-      svcInfo: this._svcInfo,
-      billpayInfo : this._billpayInfo,
-      circuitChildInfo: this._circuitChildInfo,
-      commDataInfo: this._commDataInfo,
-      defaultInfo: this._defaultInfo,
-      showConditionInfo: this._showConditionInfo,
-      baseFeePlansInfo: this._baseFeePlansInfo
-    } );
+
+    const ppsInfoLookup: Observable<any> = this.apiService.request(API_CMD.BFF_05_0013, {});//PPS 요금안내서 정보조회
+    var thisMain = this;
+    const dataInit = function () {
+      thisMain._commDataInfo.prodNm = (thisMain._ppsInfoLookupInfo) ? thisMain._ppsInfoLookupInfo.prodNm : null;
+      thisMain._commDataInfo.prodAmt = (thisMain._ppsInfoLookupInfo) ? FormatHelper.addComma( String(thisMain._ppsInfoLookupInfo.prodAmt) ) : null;
+      thisMain._commDataInfo.useEndDt = (thisMain._ppsInfoLookupInfo) ? DateHelper.getShortDateWithFormat( String(thisMain._ppsInfoLookupInfo.useEndDt), 'YYYY.MM.DD' ) : null;
+      thisMain._commDataInfo.dataKeepTrmDt = (thisMain._ppsInfoLookupInfo) ? DateHelper.getShortDateWithFormat( String(thisMain._ppsInfoLookupInfo.dataKeepTrmDt), 'YYYY.MM.DD' ) : null;
+      thisMain._commDataInfo.numKeepTrmDt = (thisMain._ppsInfoLookupInfo) ? DateHelper.getShortDateWithFormat( String(thisMain._ppsInfoLookupInfo.numKeepTrmDt), 'YYYY.MM.DD' ) : null;
+      thisMain._commDataInfo.curDt = moment().format('YYYY.MM.DD h:mm:ss');
+      thisMain._commDataInfo.remained = (thisMain._ppsInfoLookupInfo) ? thisMain._ppsInfoLookupInfo.remained : null;
+      thisMain._commDataInfo.dataYn = (thisMain._ppsInfoLookupInfo) ? thisMain._ppsInfoLookupInfo.dataYn : null;
+      thisMain._commDataInfo.dataProdYn = (thisMain._ppsInfoLookupInfo) ? thisMain._ppsInfoLookupInfo.dataProdYn : null;
+    };
+
+    Observable.combineLatest(
+      ppsInfoLookup
+    ).subscribe(
+      {
+        next( [
+                ppsInfoLookup
+              ] ) {
+
+          thisMain.logger.info(this, '[ 1. next > ppsInfoLookup ] PPS 요금안내서 정보조회 : ', ppsInfoLookup);
+          thisMain._ppsInfoLookupInfo = (ppsInfoLookup.code==='00') ? ppsInfoLookup.result : null;//PPS 요금안내서 정보조회
+        },
+        error(error) {
+          thisMain.logger.info(this, '[ error ] : ', error.message || error);
+        },
+        complete() {
+          thisMain.logger.info(this, '[ complete ] : ');
+          dataInit();
+          thisMain.logger.info(this, '[_urlTplInfo.prepaidPage] : ', thisMain._urlTplInfo.prepaidPage);
+          thisMain.renderView(res, thisMain._urlTplInfo.prepaidPage, {
+            reqQuery: thisMain.reqQuery,
+            svcInfo: thisMain._svcInfo,
+            ppsInfoLookupInfo: thisMain._ppsInfoLookupInfo,
+            commDataInfo: thisMain._commDataInfo
+          } );
+
+        } }
+    );
+
   }
   //기업솔루션(포인트캠)
   private companyCircuit(res) {

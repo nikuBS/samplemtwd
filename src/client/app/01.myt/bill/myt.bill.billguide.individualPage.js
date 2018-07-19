@@ -30,9 +30,62 @@ Tw.mytBillBillguideIndividualPage.prototype = {
     //this.$refillBtn = this.$container.find('.link-long > a');
   },
   _bindEvent: function () {
-    //this.$container.on('click', '.slick-slide', $.proxy(this._selectCoupon, this));
-    //this.$container.on('click', '[data-target="totPaySelectBtn"]', $.proxy(this._totPaySelectFun, this));
+    this.$container.on('click', '[data-target="detailedChargeBtn"]', $.proxy(this._goDetailSpecification, this));//가입 서비스별 상세 요금 버튼
     this.$container.on('click', '[data-target="selDateBtn"]', $.proxy(this._selPopOpen, this)); //조회 월 셀렉트 버튼
+
+    this.$container.on('click', '[data-target="selPaymentBtn"]', $.proxy(this._goSelPayment, this));//납부가능일 선택
+    this.$container.on('click', '[data-target="susReleaseBtn"]', $.proxy(this._goSusReleaseBtn, this));//이용정지 해제
+    this.$container.on('click', '[data-target="childBillBtn"]', $.proxy(this._goChildBill, this));//자녀폰 사용요금 조회
+    this.$container.on('click', '[data-target="callBillBtn"]', $.proxy(this._goCallBill, this));//콜기프트 요금
+    this.$container.on('click', '[data-target="roamingBillBtn"]', $.proxy(this._goRoamingBill, this));//로밍 사용요금
+    this.$container.on('click', '[data-target="donationBillBtn"]', $.proxy(this._goDonationBill, this));//기부금/후원금
+    this.$container.on('click', '[data-target="partialRedemptionBtn"]', $.proxy(this._goPartialRedemption, this));//정할인/단말분할상환정보
+    this.$container.on('click', '[data-target="extraSvcBtn"]', $.proxy(this._goExtraSvcBill, this));//요금제/부가서비스 할인내역확인
+  },
+  //--------------------------------------------------------------------------[상세요금내역]
+  _goDetailSpecification: function () {//상세요금조회
+    Tw.Logger.info('상세요금 내역');
+    this._goLoad('/myt/bill/billguide/subDetailSpecification');
+  },
+  //--------------------------------------------------------------------------[납부가능일 선택]
+  _goSelPayment: function() {
+    Tw.Logger.info('납부가능일 선택');
+    this._goLoad('/myt/bill/billguide/subSelPayment');
+  },
+  //--------------------------------------------------------------------------[이용정지 해제]
+  _goSusReleaseBtn: function() {
+    Tw.Logger.info('이용정지 해제');
+    this._goLoad('/myt/bill/billguide/subSusRelease');
+  },
+  //--------------------------------------------------------------------------[자녀폰 사용요금 조회]
+  _goChildBill: function() {
+    Tw.Logger.info('자녀폰 사용요금 조회2');
+    this._goLoad('/myt/bill/billguide/subChildBill');
+  },
+  //--------------------------------------------------------------------------[콜기프트 요금]
+  _goCallBill: function() {
+    Tw.Logger.info('콜기프트 요금');
+    this._goLoad('/myt/bill/billguide/subCallBill');
+  },
+  //--------------------------------------------------------------------------[로밍 사용요금]
+  _goRoamingBill: function() {
+    Tw.Logger.info('로밍 사용요금');
+    this._goLoad('/myt/bill/billguide/subRoamingBill');
+  },
+  //--------------------------------------------------------------------------[기부금/후원금]
+  _goDonationBill: function() {
+    Tw.Logger.info('기부금/후원금');
+    this._goLoad('/myt/bill/billguide/subDonationBill');
+  },
+  //--------------------------------------------------------------------------[정할인/단말분할상환정보]
+  _goPartialRedemption: function() {
+    Tw.Logger.info('정할인/단말분할상환정보');
+    //this._goLoad('');
+  },
+  //--------------------------------------------------------------------------[요금제/부가서비스 할인내역확인]
+  _goExtraSvcBill: function() {
+    Tw.Logger.info('요금제/부가서비스 할인내역확인');
+    //this._goLoad('');
   },
   //--------------------------------------------------------------------------[이벤트 | 팝업]
   _selPopOpen : function(event) {

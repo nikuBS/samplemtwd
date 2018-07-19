@@ -53,24 +53,33 @@ Tw.RechargeTing.prototype = {
   },
 
   _activateBlock: function () {
-    this._popupService.openConfirm(Tw.POPUP_TITLE.NOTIFY, Tw.MSG_GIFT.TING_A01, '', null, $.proxy(this._requestActivateBlock, this));
+    this._popupService.openConfirm(Tw.POPUP_TITLE.NOTIFY, Tw.MSG_GIFT.TING_A01, null, null, $.proxy(this._requestActivateBlock, this));
   },
 
   _requestActivateBlock: function () {
+    this._popupService.close();
+
+    var onSuccessActivateBlock = function (res) {
+      if ( res.code === '00' ) {
+        location.reload(true);
+      } else {
+        this._sendFail(res);
+      }
+    };
+
     this._apiService.request(Tw.API_CMD.BFF_06_0021, {})
-      .done(function (res) {
-        if ( res.code === '00' ) {
-          location.reload(true);
-        }
-      });
+      .done($.proxy(onSuccessActivateBlock, this));
   },
 
   _deactivateBlock: function () {
     this._popupService.openAlert(Tw.MSG_GIFT.TING_A02);
   },
 
-  _sendFail: function (message) {
-    this._popupService.openAlert(Tw.POPUP_TITLE.NOTIFY, message);
+  _sendFail: function (res) {
+    if ( res.msg ) {
+      this._popupService.openAlert(res.msg);
+      return false;
+    }
   },
 
   _goTingGiftProcess: function () {

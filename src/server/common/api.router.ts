@@ -3,11 +3,13 @@ import { Router, Request, Response, NextFunction } from 'express';
 import { API_CODE } from '../types/api-command.type';
 import LoggerService from '../services/logger.service';
 import ApiService from '../services/api.service';
+import LoginService from '../services/login.service';
 
 class ApiRouter {
   public router: Router;
   private logger: LoggerService = new LoggerService();
   private apiService: ApiService = new ApiService();
+  private loginService: LoginService = new LoginService();
 
   constructor() {
     this.router = express.Router();
@@ -21,6 +23,7 @@ class ApiRouter {
     this.router.post('/change-session', this.changeSession.bind(this));
     this.router.post('/service-password-sessions/login', this.svcPasswordLogin.bind(this));
     this.router.post('/login-tid', this.loginTid.bind(this));
+    this.router.post('/logout-tid', this.logoutTid.bind(this));
     this.router.post('/user-locks/login', this.setUserLocks.bind(this));
   }
 
@@ -51,7 +54,7 @@ class ApiRouter {
     this.apiService.requestChangeSession(params).subscribe((resp) => {
       res.json(resp);
     }, (error) => {
-      res.json({ code: error });
+      res.json(error);
     });
   }
 
@@ -60,7 +63,7 @@ class ApiRouter {
     this.apiService.requestSvcPasswordLogin(params).subscribe((resp) => {
       res.json(resp);
     }, (error) => {
-      res.json({ code: error });
+      res.json(error);
     });
   }
 
@@ -69,8 +72,14 @@ class ApiRouter {
     this.apiService.requestLoginTid(params.tokenId, params.state).subscribe((resp) => {
       res.json(resp);
     }, (error) => {
-      res.json({ code: error });
+      res.json(error);
     });
+  }
+
+  private logoutTid(req: Request, res: Response, next: NextFunction) {
+    this.loginService.logoutSession();
+    res.clearCookie('twm');
+    res.json({ code: API_CODE.CODE_00 });
   }
 
   private setUserLocks(req: Request, res: Response, next: NextFunction) {
@@ -78,7 +87,7 @@ class ApiRouter {
     this.apiService.requestUserLocks(params).subscribe((resp) => {
       res.json(resp);
     }, (error) => {
-      res.json({ code: error });
+      res.json(error);
     });
   }
 }

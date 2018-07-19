@@ -37,11 +37,21 @@ Tw.StringHelper = (function () {
     return strDate.replace(/[\uB144\uC6D4]/gi, '.').replace(/[\uC77C:&nbsp;:\s]/gi, '');
   }
 
+  /**
+   * Replaces cellphone number string with a dashed cellphone number (01012341234 -> 010-1234-1234)
+   * @param strCellphoneNum
+   * @returns {String}
+   */
+  function phoneStringToDash(strCellphoneNum) {
+    return strCellphoneNum.replace(/(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/,'$1-$2-$3');
+  }
+
   return {
     replaceAt: replaceAt,
     masking: masking,
     commaSeparatedString: commaSeparatedString,
     replaceDateNotaionWithDot: replaceDateNotaionWithDot,
-    parseCommaedStringToInt: parseCommaedStringToInt
+    parseCommaedStringToInt: parseCommaedStringToInt,
+    phoneStringToDash: phoneStringToDash
   };
 })();

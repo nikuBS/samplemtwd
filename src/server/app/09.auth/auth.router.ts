@@ -26,6 +26,7 @@ import AuthLogoutComplete from './controllers/logout/auth.logout.complete.contro
 import AuthLogoutExpire from './controllers/logout/auth.logout.expire.controller';
 import AuthLoginRoute from './controllers/login/auth.login.route.controller';
 import AuthLoginExceedFail from './controllers/login/auth.login.exceed-fail.controller';
+import AuthLogoutRoute from './controllers/logout/auth.logout.route.controller';
 
 class AuthRouter extends TwRouter {
   constructor() {
@@ -46,6 +47,7 @@ class AuthRouter extends TwRouter {
     // logout
     this.controllers.push({ url: '/logout/complete', controller: new AuthLogoutComplete() });
     this.controllers.push({ url: '/logout/expire', controller: new AuthLogoutExpire() });
+    this.controllers.push({ url: '/logout/route', controller: new AuthLogoutRoute() });
     // member
     this.controllers.push({ url: '/member/management', controller: new AuthMemberManagement() });
     // signup

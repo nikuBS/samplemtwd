@@ -30,7 +30,7 @@ class RechargeRefill extends TwViewController {
   }
 
   private getLineList(): any {
-    return this.apiService.request(API_CMD.BFF_03_0003_C, { svcCtg: LINE_NAME.MOBILE });
+    return this.apiService.request(API_CMD.BFF_03_0004, {});
   }
 
   private getUsageOptions(): any {
@@ -77,7 +77,7 @@ class RechargeRefill extends TwViewController {
 
   private getData(lineList: any, usageOptions: any, usageData: any, svcInfo: any): any {
     return {
-      lineList: lineList.result,
+      lineList: lineList.result.m,
       usageOptions,
       usageData,
       svcInfo

@@ -137,7 +137,6 @@ Tw.MyTBillReissue.prototype = {
       }
     }
     //재발행신청 API 호출
-    // TODO: 회선변경 API 호출 이후(유/무선 전환) 기능동작 확인필요! - 현재 MyT 에서 회선을 변경할 수 없음.
     this._apiService
       .request(api, data)
       .done($.proxy(this._onApiSuccess, this))
@@ -151,7 +150,9 @@ Tw.MyTBillReissue.prototype = {
     this._popupService.close();
     if ( params.code && params.code === 'ZORDE1206' ) {
       // 기 발행 건인 경우에 대한 처리
-      this._popupService.openAlert(Tw.MSG_MYT.BILL_GUIDE_REISSUE_03, Tw.POPUP_TITLE.NOTIFY);
+      setTimeout(function () {
+        self._popupService.openAlert(Tw.MSG_MYT.BILL_GUIDE_REISSUE_03, Tw.POPUP_TITLE.NOTIFY);
+      }, 100);
     }
     else if ( params.code && params.code === '00' ) {
       //성공 - 발행 된 건이 없는 경우
@@ -159,7 +160,7 @@ Tw.MyTBillReissue.prototype = {
         this._goToComplete();
       }
       else {
-        setTimeout(function() {
+        setTimeout(function () {
           self._popupService.openAlert(Tw.MSG_MYT.BILL_GUIDECHANGE_A14, Tw.POPUP_TITLE.NOTIFY, $.proxy(self._goToComplete, self));
         }, 100);
       }
