@@ -327,6 +327,7 @@ class MyTBillBillguide extends TwViewController {
   //통합청구(일반)
   private combineCommonCircuit(res) {
     this.logger.info(this, '[_urlTplInfo.combineCommonPage] : ', this._urlTplInfo.combineCommonPage);
+    let billItems = this.arrayToObject(this._billpayInfo.paidAmtDetailInfo, this.fieldInfo);
     this.renderView(res, this._urlTplInfo.combineCommonPage, {
       reqQuery: this.reqQuery,
       svcInfo: this._svcInfo,
@@ -335,7 +336,8 @@ class MyTBillBillguide extends TwViewController {
       commDataInfo: this._commDataInfo,
       defaultInfo: this._defaultInfo,
       showConditionInfo: this._showConditionInfo,
-      baseFeePlansInfo: this._baseFeePlansInfo
+      baseFeePlansInfo: this._baseFeePlansInfo,
+      billItems: billItems
     } );
   }
 
@@ -492,6 +494,7 @@ class MyTBillBillguide extends TwViewController {
   //기업솔루션(포인트캠)
   private companyCircuit(res) {
     this.logger.info(this, '[_urlTplInfo.companyPage] : ', this._urlTplInfo.companyPage);
+    let billItems = this.arrayToObject(this._billpayInfo.paidAmtDetailInfo, this.fieldInfo);
     this.renderView(res, this._urlTplInfo.companyPage, {
       reqQuery: this.reqQuery,
       svcInfo: this._svcInfo,
@@ -500,7 +503,8 @@ class MyTBillBillguide extends TwViewController {
       commDataInfo: this._commDataInfo,
       defaultInfo: this._defaultInfo,
       showConditionInfo: this._showConditionInfo,
-      baseFeePlansInfo: this._baseFeePlansInfo
+      baseFeePlansInfo: this._baseFeePlansInfo,
+      billItems: billItems
     } );
   }
   //sk브로드밴드(인터넷/IPTV/집전화)
