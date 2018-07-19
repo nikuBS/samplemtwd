@@ -61,7 +61,7 @@ Tw.AuthLineEdit.prototype = {
     if(resp.code === Tw.API_CODE.CODE_00) {
       this._checkRepSvc(resp.result);
     } else {
-      this._popupService.openAlert('api error');
+      this._popupService.openAlert(resp.code + ' ' + resp.msg);
     }
   },
   _failRegisterLineList: function () {
