@@ -30,7 +30,8 @@ Tw.POPUP_TITLE = {
   CHANGE_NICKNAME: '닉네임 설정',
   SELECT_BANK: '은행선택',
   SELECT_GIFT_AMOUNT: '선물할 금액 선택',
-  CHANGE_BILL_GUIDE_TYPE: '어떤 안내서를 보여 드릴까요?'
+  CHANGE_BILL_GUIDE_TYPE: '어떤 안내서를 보여 드릴까요?',
+  OVER_PAY:'과납 안내 드립니다.'
 };
 
 Tw.POPUP_PROPERTY = {
@@ -94,7 +95,8 @@ Tw.PAYMENT_TYPE = {
 Tw.PAYMENT_STRING = {
   BANK_NAME: '은행명',
   OK_CASHBAG: 'OK캐쉬백',
-  T_POINT: 'T포인트'
+  T_POINT: 'T포인트',
+  BANK_NUMBER: '계좌번호'
 };
 
 Tw.PAYMENT_POINT_VALUE = {
@@ -293,6 +295,13 @@ Tw.MSG_PAYMENT = {
   HISTORY_PROCESS_TYPE_REQUEST_DONE: '청구반영',
   HISTORY_POINT_CODE_OCB: 'CPT',
   HISTORY_POINT_CODE_TPOINT: 'TPT',
+  HISTORY_OVER_PAY: {
+    SUBTITLE: '의<br />휴대폰 요금',
+    SUBTITLE_SUB: '건이 과납되었습니다.',
+    CONTENTS: '<strong>환불받으실 금액을 확인</strong>하시고<br /> 환불 받을 계좌를 등록해 주세요!',
+    BUTTON_TEXT: '과납금액확인하기',
+    CHECK_TEXT: '하루동안 보지 않기'
+  },
   HISTORY_POINT_TITLE_OCB: 'OK캐쉬백',
   HISTORY_POINT_TITLE_TPOINT: 'T포인트',
   HISTORY_POINT_TITLE_RAINBOW: '레인보우 포인트',
@@ -301,6 +310,7 @@ Tw.MSG_PAYMENT = {
   HISTORY_MENU: '전체납부내역,즉시납부내역,자동납부내역,자동납부 통합인출,포인트 납부예약,포인트 자동납부',
   HISTORY_A01: '환불신청 계좌가 등록되었습니다.',
   HISTORY_A02: '자동납부 통합인출 서비스가 해지되었습니다.',
+  HISTORY_A02_01: '자동납부 통합인출 서비스 해지를 실패했습니다.',
   HISTORY_A03: 'OK캐쉬백 포인트 납부 예약을 취소하시겠습니까?',
   HISTORY_A03_01: 'OK캐쉬백 포인트 납부 예약이 취소되었습니다.',
   HISTORY_A04: 'T포인트 납부 예약을 취소하시겠습니까? ',
