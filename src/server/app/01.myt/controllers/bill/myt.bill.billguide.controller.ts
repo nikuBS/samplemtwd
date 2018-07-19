@@ -25,6 +25,7 @@ class MyTBillBillguide extends TwViewController {
   private _baseFeePlansInfo: any; //나의요금제 BFF_05_0041
   private _paymentPossibleDayInfo: any; //미납요금 납부가능일 조회 BFF_05_0031
   private _suspensionInfo: any; //미납요금 이용정지해제 정보 조회 BFF_05_0037
+  private _usedAmountsInfo: any; //사용요금 조회 BFF_05_0047
 
   //공통데이터
   private _commDataInfo:any = {
@@ -77,6 +78,7 @@ class MyTBillBillguide extends TwViewController {
     const nonPaymenthistoryReq: Observable<any> = this.apiService.request(API_CMD.BFF_05_0030, {});//미납내역
     const nonPaymenthistoryDayReq: Observable<any> = this.apiService.request(API_CMD.BFF_05_0031, {});//미납내역 납부가능일
     const nonPaymenthistorySetFreeReq: Observable<any> = this.apiService.request(API_CMD.BFF_05_0037, {});//미납요금 이용정지해제 정보 조회
+    const usedAmountsReq: Observable<any> = this.apiService.request(API_CMD.BFF_05_0047, {});//사용요금 조회
 
     var thisMain = this;
 
@@ -86,7 +88,8 @@ class MyTBillBillguide extends TwViewController {
       childrenLineReq,
       nonPaymenthistoryReq,
       nonPaymenthistoryDayReq,
-      nonPaymenthistorySetFreeReq
+      nonPaymenthistorySetFreeReq,
+      usedAmountsReq
     ).subscribe(
       {
         next( [
@@ -95,7 +98,8 @@ class MyTBillBillguide extends TwViewController {
                 childrenLineReq,
                 nonPaymenthistoryReq,
                 nonPaymenthistoryDayReq,
-                nonPaymenthistorySetFreeReq
+                nonPaymenthistorySetFreeReq,
+                usedAmountsReq
               ] ) {
           thisMain.logger.info(this, '[ 1. next > chargeRateReq ] 청구요금 : ', chargeRateReq);
           thisMain.logger.info(this, '[ 2. next > myPlanReq ] 나의요금제 : ', myPlanReq);
@@ -110,6 +114,7 @@ class MyTBillBillguide extends TwViewController {
           thisMain._defaultInfo = (nonPaymenthistoryReq.code==='00') ? nonPaymenthistoryReq.result : null;//미납내역
           thisMain._paymentPossibleDayInfo = (nonPaymenthistoryDayReq.code==='00') ? nonPaymenthistoryDayReq.result : null;//미납내역 납부가능일
           thisMain._suspensionInfo = (nonPaymenthistorySetFreeReq.code==='00') ? nonPaymenthistorySetFreeReq.result : null;//미납요금 이용정지해제 정보 조회
+          thisMain._usedAmountsInfo = (usedAmountsReq.code==='00') ? usedAmountsReq.result : null;//사용요금 조회
         },
         error(error) {
           thisMain.logger.info(this, '[ error ] : ', error.message || error);
@@ -140,6 +145,7 @@ class MyTBillBillguide extends TwViewController {
     // });
 
     this._commDataInfo.joinSvcList = (this._billpayInfo) ? ( this._billpayInfo.paidAmtSvcCdList ) : null;
+    this._commDataInfo.repSvcNm = (this._usedAmountsInfo) ? ( this._usedAmountsInfo.repSvcNm ) : null;
 
     this.getCircuitChildInfoMask( this._circuitChildInfo );
 
