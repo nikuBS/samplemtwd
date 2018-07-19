@@ -303,7 +303,9 @@ skt_landing.widgets = {
 
       var accoList = _this.find('> .acco-cover > .acco-style > .acco-list > .acco-box');
       var accoList_leng = accoList.length;
-      for(var i=0; i<accoList_leng; ++i){
+      
+      /* 2018-07-17 한줄일경우 보여주는 스크립트 삭제 */
+      /*for(var i=0; i<accoList_leng; ++i){
         var forTarget = accoList.eq(i).find('> .acco-cont').children();
         forTarget = forTarget.children().length > 0 ? forTarget.children() : forTarget;
         var targetLineHeight = parseInt(forTarget.css('line-height')) ? parseInt(forTarget.css('line-height')) : 0,
@@ -313,15 +315,22 @@ skt_landing.widgets = {
         }else{
           accoList.eq(i).addClass('imp-view').find('> .acco-tit button').addClass('hide-button');
         }
-      }
-      if($(this).find('> .acco-cover > .acco-style').hasClass('none-event')) return ;
+      }*/
+      
+      if($(this).find('> .acco-cover > .acco-style').hasClass('none-event')) return ; // 이벤트를 적용하지 않을 경우
 
       var setOnList = _this.find('> .acco-cover > .acco-style > .acco-list > .acco-box');
       for(var i=0, leng=setOnList.length; i<leng; ++i){
         if(setOnList.eq(i).find('> .acco-tit button').length < 1 && _this.find('.acco-cover.disabled').length < 1){
+          // 열고닫는 버튼이 없고 diabled 클래스도 없는 경우
           setOnList.eq(i).addClass('on');
         }
+        if(setOnList.eq(i).find('> .acco-tit').length < 1 && setOnList.eq(i).find('> .acco-cont').length > 0){
+          // 제목이 없고 내용만 있는 경우
+          setOnList.eq(i).addClass('imp-view');
+        }
       }
+      _this.find('.acco-cover').addClass('toggle').find('.acco-box.on').removeClass('on');  // 2018-07-17 default : 모두 닫힘, 1개만 열리도록 수정
       _this.find('> .acco-cover > .bt-whole button').on('click',function(){
         if(!$(this).closest('.acco-cover').hasClass('on')){
           $(this).attr('aria-pressed', 'true');

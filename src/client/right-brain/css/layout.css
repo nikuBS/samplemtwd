@@ -267,6 +267,11 @@
   height: 1.875rem;
 }
 
+.all-menu .all-menu-box .user-info-box .user-info li a {
+  display: block;
+  height: 100%;
+}
+
 .all-menu .all-menu-box .user-info-box .user-info li:first-of-type {
   background: url(/img/ico/ico-group-allmenu.png) no-repeat -0.625rem -0.625rem;
   background-size: 6.25rem;

@@ -25,16 +25,16 @@
                                             <!-- type1: 카드형 -->
                                             <ul class="slider">
                                                 {{#each data.billTypeList}}
-                                                <li class="swiper-slide" data-bill-type="{{toJSON this}}">
-                                                    <div class="swiper-cont bg-color3">
-                                                        <div class="t-commend-info">
-                                                            {{#if recommend}}
-                                                            <span class="ico-commend"><em class="blind">추천</em></span>
-                                                            {{/if}}
-                                                            <p class="commend-info-txt">{{{value}}}</p>
+                                                    <li class="swiper-slide" data-bill-type="{{toJSON this}}">
+                                                        <div class="swiper-cont bg-color3">
+                                                            <div class="t-commend-info">
+                                                                {{#if recommend}}
+                                                                    <span class="ico-commend"><em class="blind">추천</em></span>
+                                                                {{/if}}
+                                                                <p class="commend-info-txt">{{{value}}}</p>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </li>
+                                                    </li>
                                                 {{/each}}
                                             </ul>
                                         </div>
@@ -62,25 +62,17 @@
                                     <li role="tab" aria-selected="false" aria-controls="aria-tab3-tab" id="aria-tab3"><a>T-WiBro</a></li>
                                 </ul>
                             </div>
-                            <div class="tab-contents" style="height:500px;">
-                                <div class="aria-tab1">
-                                    <p>이미지 수급 후 진행 예정</p>
-                                </div>
-                                <div class="aria-tab2" style="display: none">
-                                    <p>이미지 수급 후 진행 예정</p>
-                                </div>
-                                <div class="aria-tab3" style="display: none">
-                                    <p>이미지 수급 후 진행 예정</p>
-                                </div>
+                            <div class="tab-contents">
+                                <div class="aria-tab1 pay_preview">이미지반영</div>
+                                <div class="aria-tab2 pay_preview">이미지반영</div>
+                                <div class="aria-tab3 pay_preview">이미지반영</div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="cont-box _contents-normal" style="display: none">
-                <div style="height:500px;">
-                    <p>이미지 수급 후 진행 예정</p>
-                </div>
+                <div class="pay_preview">이미지반영</div>
             </div>
             <hr class="cont-sp type1" aria-hidden="true"/>
             <div class="cont-box noborder">
@@ -119,7 +111,7 @@
                 </div>
             </div>
         </div>
-    <!--// #contents -->
+        <!--// #contents -->
     </div>
     <!-- .popup-closeBtn -->
     <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button>

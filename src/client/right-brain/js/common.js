@@ -130,7 +130,6 @@ skt_landing.action = {
     if(all_btn.length < 1) return;
     all_btn.on('click', function(){
       if(!$('.depth-view-box').hasClass('open')){
-        console.log('a');
         $(this).addClass('on');
         $('.depth-view-box').addClass('open');
         $('.header-wrap').addClass('fixed');
