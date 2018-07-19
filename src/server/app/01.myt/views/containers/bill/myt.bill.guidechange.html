@@ -64,11 +64,15 @@
                 <div class="contents-btn">
                     <ul class="bt-slice item-two">
                         <!-- T world 확인의 경우는 재발행 하기 숨김 -->
-                        <% if(data.billTypeInfo.curBillType !== 'P') { %>
-                        <li class="bt-white1">
-                            <button id="onReissue">재발행 하기</button>
+                        <%if( data.billTypeInfo.curBillType === 'P' ){%>
+                        <li class="bt-white1" style="visibility: hidden">
+                            <button class="onReissue">재발행 하기</button>
                         </li>
-                        <% }%>
+                        <%} else {%>
+                        <li class="bt-white1">
+                            <button class="onReissue">재발행 하기</button>
+                        </li>
+                        <%}%>
                         <!-- 요금 안내서가 '문자'인 경우는 숨김(법정 대리인 동시통보 아닌경우) -->
                         <% if( !(  data.billTypeInfo.curBillType === 'B' && data.billTypeInfo.ccurNotiYn !== 'Y' ) ) { %>
                         <li class="bt-white1">
@@ -92,6 +96,7 @@
                                         <div class="slider-box">
                                             <!-- type1: 카드형 -->
                                             <ul class="slider">
+                                                <% delete this.flickingInfo %>
                                                 <% data.billTypeList.map ( (line) =>  {
                                                     if ( line.billType === data.billTypeInfo.curBillType ) {
                                                         return false;
@@ -176,4 +181,5 @@
         comp._setJoinBill( '<%- JSON.stringify(data.itgSvc) %>' );
     });
 </script>
+
 <% include ../../components/end.component.html %>

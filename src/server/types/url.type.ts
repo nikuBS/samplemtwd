@@ -89,6 +89,7 @@ export const URL = {
   '/auth/tid/signup-local': { login: false },
   '/auth/tid/signup-foreigner': { login: false },
   '/auth/tid/guide': { login: false },
+  '/auth/tid/route': { login: false },
   '/auth/withdrawal/guide': { login: true },
   '/auth/withdrawal/survey': { login: true },
   '/auth/withdrawal/complete': { login: false }

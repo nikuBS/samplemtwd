@@ -102,7 +102,7 @@ skt_landing.action = {
       'width':'100%',
       'z-index': -1,
       'overflow-y':'visible'
-    }).find('input').attr('tabindex',-1);  
+    }).find('input').attr('tabindex',-1);
     if($('.container-wrap').length == 1){
       $('body,html').css('height','100%');
        $('.wrap').css({
@@ -172,7 +172,7 @@ skt_landing.action = {
         duration:500,
         complete:function(){
           skt_landing.action.fix_scroll();
-          skt_landing.action.setFocus($('.all-menu-focus'),0);  
+          skt_landing.action.setFocus($('.all-menu-focus'),0);
         }
       });
     },
@@ -235,8 +235,8 @@ skt_landing.action = {
       },{
         queue:false,
         duration:500,
-        complete:function(){ 
-          skt_landing.action.setFocus($('.all-menu-focus'),0); 
+        complete:function(){
+          skt_landing.action.setFocus($('.all-menu-focus'),0);
         }
       });
       //$('.all-menu-prev').off('click');
@@ -282,7 +282,7 @@ skt_landing.action = {
       },{
         queue:false,
         duration:500,
-        complete:function(){ 
+        complete:function(){
           skt_landing.action.setFocus($('.all-menu-box-depth2 h3'),0);
         }
       });
@@ -368,7 +368,7 @@ skt_landing.action = {
   setFocus: function(target, idx){  // target : selector(string) | jquery selector
     var target = $(target),
         idx = idx ? idx : 0;
-    target.eq(idx).attr('tabindex',0).focus(); //포커스 
+    target.eq(idx).attr('tabindex',0).focus(); //포커스
   },
   top_btn: function () {
     if (skt_landing.util.win_info.get_scrollT() > 0) {
@@ -419,7 +419,7 @@ skt_landing.action = {
       loading_ico.appendTo(loading_box);
       loading_ico.append(svg);
       if(!ta || ta == '.wrap'){
-        skt_landing.action.fix_scroll(); 
+        skt_landing.action.fix_scroll();
       }
       if(size){
         loading_box.addClass('full');
@@ -515,7 +515,7 @@ skt_landing.action = {
         });
         _this.cancel();
         _this.scroll_chk();
-         if(popup_info.hbs == 'popup' || popup_info.hbs == 'select'){
+         if(popup_info.hbs == 'popup' || popup_info.hbs == 'dropdown' || popup_info.hbs == 'select'){
           skt_landing.widgets.widget_init('.popup');
         }else{
           skt_landing.widgets.widget_init('.popup-page');
@@ -657,7 +657,7 @@ skt_landing.dev = {
        $(this).find('.blind').text('회선 삭제 하기');
      }
    });
-   $target.parent().on('touchstart touchend touchmove','.bt-sort',function(e){
+   $target.on('touchstart touchend touchmove','.bt-sort',function(e){
      e.stopPropagation();
    });
    $target.parent().on('click', '.connectedSortable .bt-sort', function(){

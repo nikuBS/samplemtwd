@@ -42,7 +42,7 @@ class MyTBillBillguide extends TwViewController {
     dataKeepTrmDt: '',//pps 수신/데이터유지기간
     numKeepTrmDt: '',//pps 번유지기간
     curDt: '',//현재날짜
-    remained: '',//잔여데이터 KB | 공백일 경우 표시안함
+    remained: '',//잔여데이터 KB | 공백일 경우 표시안
     dataYn: '', //음성+데이터 'Y'
     dataProdYn: ''//MB 'Y' | 원 'N'
   };
@@ -326,11 +326,12 @@ class MyTBillBillguide extends TwViewController {
 
   //통합청구(일반)
   private combineCommonCircuit(res) {
+
     let chargeRateReq: Observable<any>;
     if( this.reqQuery.invDt ) {
       chargeRateReq = this.apiService.request(API_CMD.BFF_05_0047, { invDt: this.reqQuery.invDt});
     } else {
-      chargeRateReq = this.apiService.request(API_CMD.BFF_05_0036, {});
+      chargeRateReq = this.apiService.request(API_CMD.BFF_05_0047, {});
     }
     const myPlanReq: Observable<any> = this.apiService.request(API_CMD.BFF_05_0041, {});//나의요금제
 
@@ -380,16 +381,13 @@ class MyTBillBillguide extends TwViewController {
       {
         next( [
                 chargeRateReq,
-                myPlanReq,
-                nonPaymenthistoryReq
+                myPlanReq
               ] ) {
           thisMain.logger.info(this, '[ 1. next > chargeRateReq ] 청구요금 : ', chargeRateReq);
           thisMain.logger.info(this, '[ 2. next > myPlanReq ] 나의요금제 : ', myPlanReq);
-          thisMain.logger.info(this, '[ 3. next > nonPaymenthistoryReq ] 미납내역 : ', nonPaymenthistoryReq);
 
           thisMain._billpayInfo = (chargeRateReq.code==='00') ? chargeRateReq.result : null;//청구요금
           thisMain._baseFeePlansInfo = (myPlanReq.code==='00') ? myPlanReq.result : null;// 나의요금제
-          thisMain._defaultInfo = (nonPaymenthistoryReq.code==='00') ? nonPaymenthistoryReq.result : null;//미납내역
 
         },
         error(error) {
@@ -399,6 +397,7 @@ class MyTBillBillguide extends TwViewController {
           thisMain.logger.info(this, '[ complete ] : ');
           dataInit();
           thisMain.logger.info(this, '[_urlTplInfo.combineCommonPage] : ', thisMain._urlTplInfo.combineCommonPage);
+          let billItems = thisMain.arrayToObject(thisMain._billpayInfo.paidAmtDetailInfo, thisMain.fieldInfo);
           thisMain.renderView(res, thisMain._urlTplInfo.combineCommonPage, {
             reqQuery: thisMain.reqQuery,
             svcInfo: thisMain._svcInfo,
@@ -407,7 +406,8 @@ class MyTBillBillguide extends TwViewController {
             commDataInfo: thisMain._commDataInfo,
             defaultInfo: thisMain._defaultInfo,
             showConditionInfo: thisMain._showConditionInfo,
-            baseFeePlansInfo: thisMain._baseFeePlansInfo
+            baseFeePlansInfo: thisMain._baseFeePlansInfo,
+            billItems: billItems
           } );
 
         } }
@@ -419,9 +419,9 @@ class MyTBillBillguide extends TwViewController {
   private individualCircuit(res) {
     let chargeRateReq: Observable<any>;
     if( this.reqQuery.invDt ) {
-      chargeRateReq = this.apiService.request(API_CMD.BFF_05_0036, { invDt: this.reqQuery.invDt});
+      chargeRateReq = this.apiService.request(API_CMD.BFF_05_0036, { invDt: this.reqQuery.invDt, detailYn: 'Y'});
     } else {
-      chargeRateReq = this.apiService.request(API_CMD.BFF_05_0036, {});
+      chargeRateReq = this.apiService.request(API_CMD.BFF_05_0036, {detailYn: 'Y'});
     }
     const myPlanReq: Observable<any> = this.apiService.request(API_CMD.BFF_05_0041, {});//나의요금제
     const childrenLineReq: Observable<any> = this.apiService.request(API_CMD.BFF_05_0024, {});//자녀회선
@@ -430,6 +430,7 @@ class MyTBillBillguide extends TwViewController {
     const nonPaymenthistorySetFreeReq: Observable<any> = this.apiService.request(API_CMD.BFF_05_0037, {});//미납 이용정지해제 버튼노출
 
     var thisMain = this;
+    let billItems = {};
 
     const dataInit = function () {
       thisMain._commDataInfo.selClaimDtNum = (thisMain._billpayInfo) ? thisMain.getSelClaimDtNum( String(thisMain._billpayInfo.invDt) ) : null;
@@ -493,6 +494,8 @@ class MyTBillBillguide extends TwViewController {
           thisMain._defaultInfo = (nonPaymenthistoryReq.code==='00') ? nonPaymenthistoryReq.result : null;//미납내역
           thisMain._paymentPossibleDayInfo = (nonPaymenthistoryDayReq.code==='00') ? nonPaymenthistoryDayReq.result : null;//미납내역 납부가능일
           thisMain._suspensionInfo = (nonPaymenthistorySetFreeReq.code==='00') ? nonPaymenthistorySetFreeReq.result : null;//미납요금 이용정지해제 정보 조회
+
+          billItems = thisMain.arrayToObject(thisMain._billpayInfo.paidAmtDetailInfo, thisMain.fieldInfo);
         },
         error(error) {
           thisMain.logger.info(this, '[ error ] : ', error.message || error);
@@ -509,7 +512,8 @@ class MyTBillBillguide extends TwViewController {
             commDataInfo: thisMain._commDataInfo,
             defaultInfo: thisMain._defaultInfo,
             showConditionInfo: thisMain._showConditionInfo,
-            baseFeePlansInfo: thisMain._baseFeePlansInfo
+            baseFeePlansInfo: thisMain._baseFeePlansInfo,
+            billItems: billItems
           } );
 
         } }
@@ -564,6 +568,7 @@ class MyTBillBillguide extends TwViewController {
   //기업솔루션(포인트캠)
   private companyCircuit(res) {
     this.logger.info(this, '[_urlTplInfo.companyPage] : ', this._urlTplInfo.companyPage);
+    let billItems = this.arrayToObject(this._billpayInfo.paidAmtDetailInfo, this.fieldInfo);
     this.renderView(res, this._urlTplInfo.companyPage, {
       reqQuery: this.reqQuery,
       svcInfo: this._svcInfo,
@@ -572,7 +577,8 @@ class MyTBillBillguide extends TwViewController {
       commDataInfo: this._commDataInfo,
       defaultInfo: this._defaultInfo,
       showConditionInfo: this._showConditionInfo,
-      baseFeePlansInfo: this._baseFeePlansInfo
+      baseFeePlansInfo: this._baseFeePlansInfo,
+      billItems: billItems
     } );
   }
   //sk브로드밴드(인터넷/IPTV/집전화)
@@ -595,7 +601,84 @@ class MyTBillBillguide extends TwViewController {
     res.render(view, data);
   }
 
+  public NO_BILL_FIELDS = ['total', 'noVAT', 'is3rdParty', 'showDesc', 'discount'];
+  public fieldInfo = {
+    lcl: 'billItmLclNm',
+    scl: 'billItmSclNm',
+    name: 'billItmNm',
+    value: 'invAmt'
+  };
 
+  public arrayToObject(data: any, fieldInfo: any) {
+    var amount = 0;
+    var noVAT = false;
+    var is3rdParty = false;
+    var group = {};
+    var DEFAULT_DESC_VISIBILITY = true;
+    var groupInfoFields = this.NO_BILL_FIELDS;
+
+    // data.forEach(function (item) {
+    for(let item of data ){
+      noVAT = false;
+      is3rdParty = false;
+      var groupL = item[fieldInfo.lcl];
+      var groupS = item[fieldInfo.scl];
+
+      if ( !group[groupL] ) {
+        group[groupL] = { total: 0, showDesc: DEFAULT_DESC_VISIBILITY };
+        if ( groupL === '미납요금' ) {
+          group[groupL].showDesc = false;
+        }
+      }
+
+      if ( !group[groupL][groupS] ) {
+        if ( groupS.indexOf('*') > -1 ) {
+          groupS = groupS.replace(/\*/g, '');
+          noVAT = true;
+        } else if ( groupS.indexOf('#') > -1 ) {
+          groupS = groupS.replace(/#/g, '');
+          is3rdParty = true;
+        }
+        group[groupL][groupS] = { items: [], total: 0, noVAT: noVAT, is3rdParty: is3rdParty };
+      }
+
+      amount = parseInt(item[fieldInfo.value].replace(/,/,''));
+      group[groupL].total += amount;
+      group[groupL][groupS].total += amount;
+
+      var bill_item = {
+        name: item[fieldInfo.name].replace(/[*#]/g, ''),
+        amount: item[fieldInfo.value],
+        noVAT: item[fieldInfo.name].indexOf('*') > -1 ? true : false,
+        is3rdParty: item[fieldInfo.name].indexOf('#') > -1 ? true : false,
+        discount: amount < 0 ? true : false
+      };
+      group[groupL][groupS].items.push({ ...bill_item });
+      bill_item.amount = item[fieldInfo.value];
+    };
+
+    //아이템 이름과 소분류가 같은 경우 2depth 보여주지 않음
+    // $.each(group, function (key1, itemL) {
+    Object.keys(group).forEach(key1 => {
+      var itemL = group[key1];
+      // $.each(itemL, function (key2, itemS) {
+      Object.keys(itemL).forEach(key2 => {
+        var itemS = itemL[key2];
+        // if ( self.NO_BILL_FIELDS.indexOf(key2) < 0 ) {
+        if ( groupInfoFields.indexOf(key2) < 0 ) {
+          if ( itemS.items.length === 1 && itemS.items[0].name === key2 ) {
+            delete itemS.items[0];
+          }
+          itemS.discount = itemS.total < 0 ? true : false;
+          itemS.total =  itemS.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        }
+        itemL.discount = itemL.total < 0 ? true : false;
+        itemL.total =  itemL.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      });
+    });
+    console.log(group);
+    return group;
+  }
 }//MyTBillBillguide end
 
 export default MyTBillBillguide;

@@ -20,7 +20,7 @@ Tw.MyTBillGuidechange.prototype = {
     this.$container.on('click', '._sel-join-bill', $.proxy(this._openJoinBill, this));
     this.$container.on('click', '#onModifyInfo', $.proxy(this._goModifyInfo,this) );
     this.$container.on('click', '._sel-nm', $.proxy(this._goModify,this) );
-    this.$container.on('click', '#onReissue', $.proxy(this._goReissue,this) );
+    this.$container.on('click', '.onReissue', $.proxy(this._goReissue,this) );
     this.$container.on('click', '#onReturnHistory', $.proxy(this._goReturnHistory,this) );
   },
 

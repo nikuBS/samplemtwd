@@ -330,7 +330,7 @@ skt_landing.widgets = {
           setOnList.eq(i).addClass('imp-view');
         }
       }
-      _this.find('.acco-cover').addClass('toggle').find('.acco-box.on').removeClass('on');  // 2018-07-17 default : 모두 닫힘, 1개만 열리도록 수정
+      _this.find('.acco-cover')/*.addClass('toggle')*/.find('.acco-box.on').removeClass('on');  // 2018-07-19 default : 모두 닫힘, toggle 여부에 따라 다름
       _this.find('> .acco-cover > .bt-whole button').on('click',function(){
         if(!$(this).closest('.acco-cover').hasClass('on')){
           $(this).attr('aria-pressed', 'true');
@@ -383,7 +383,7 @@ skt_landing.widgets = {
     });
   },
   widget_switch: function (ta) {
-    var widget = ta ? $(ta).find('.btn-switch input') : $('.btn-switch input');
+    var widget = ta ? $(ta).find('.switch .btn-switch input') : $('.switch .btn-switch input');
     $(widget).each(function () {
       checkSwitch(this, !$(this).closest('.btn-switch').hasClass('on'));
       $(this).on('change', function () {
@@ -411,6 +411,31 @@ skt_landing.widgets = {
         target.attr('checked',true);
       }
     }
+  },
+  widget_switch2: function (ta) {
+    var widget = ta ? $(ta).find('.switch2 .btn-switch input') : $('.switch2 .btn-switch input');
+    $(widget).each(function () {
+      var box = $(this).closest('li');
+      $(this).is(':checked') ? box.addClass('checked').attr('aria-checked',true) : box.removeClass('checked').attr('aria-checked',false);
+      $(this).is(':disabled') ? box.addClass('disabled').attr('aria-disabled',true) : box.removeClass('disabled');
+      $(this).on('change', function () {
+        if ($(this).prop('disabled')) return;
+        var nameGroup = $('[name=' + $(this).attr('name') + ']').not(this);
+        nameGroup.closest('li').removeClass('checked').attr('aria-checked',false);
+        nameGroup.attr('checked', false).prop('checked',false);
+        $(this).closest('li').addClass('checked').attr('aria-checked',true);
+        $(this).attr('checked', 'checked').prop('checked',true);
+      }).on('focusin', function () {
+        box.addClass('focus');
+      }).on('focusout', function () {
+        box.removeClass('focus');
+      });
+
+      box.on('click',function(e){
+        if(e.target.tagName.toLowerCase() == 'input' && e.target != e.currentTarget) return ;
+        $(this).find('input').trigger('change');
+      });
+    });
   },
   /*widget_draglist : function(ta){
     var widget = ta ? $(ta).find('.draglist') : $('.draglist');

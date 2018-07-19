@@ -225,6 +225,14 @@ Tw.RechargeTingProcess.prototype = {
   },
 
   _sendFail: function (res) {
+    if ( res.code === 'RCG0106' ) {
+      this._popupService.openAlert(Tw.MSG_GIFT.TING_A04);
+    }
+
+    if ( res.code === 'INF9001' ) {
+      this._popupService.openAlert(Tw.MSG_GIFT.COOKIZ_A06);
+    }
+
     if ( res.data ) {
       this._popupService.openAlert(res.data.orgDebugMessage);
     }

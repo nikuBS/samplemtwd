@@ -27,6 +27,7 @@ import AuthLogoutExpire from './controllers/logout/auth.logout.expire.controller
 import AuthLoginRoute from './controllers/login/auth.login.route.controller';
 import AuthLoginExceedFail from './controllers/login/auth.login.exceed-fail.controller';
 import AuthLogoutRoute from './controllers/logout/auth.logout.route.controller';
+import AuthTidRoute from './controllers/tid/auth.tid.route';
 
 class AuthRouter extends TwRouter {
   constructor() {
@@ -62,6 +63,7 @@ class AuthRouter extends TwRouter {
     this.controllers.push({ url: '/tid/signup-local', controller: new AuthTidSignUpLocal() });
     this.controllers.push({ url: '/tid/signup-foreigner', controller: new AuthTidSignUpForeigner() });
     this.controllers.push({ url: '/tid/guide', controller: new AuthTidGuide() });
+    this.controllers.push({ url: '/tid/route', controller: new AuthTidRoute() });
     // withdrawal
     this.controllers.push({ url: '/withdrawal/guide', controller: new AuthWithdrawalGuide() });
     this.controllers.push({ url: '/withdrawal/survey', controller: new AuthWithdrawalSurvey() });
