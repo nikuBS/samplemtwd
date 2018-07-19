@@ -139,7 +139,7 @@ class ApiService {
           const result = resp.result;
           this.loginService.setSvcInfo(result);
           Object.assign(result, loginData);
-          return result;
+          return resp;
         } else {
           throw this.makeErrorMessage(resp);
         }
@@ -162,7 +162,7 @@ class ApiService {
           const result = resp.result;
           this.loginService.setSvcInfo(result);
           Object.assign(result, loginData);
-          return result;
+          return resp;
         } else {
           throw this.makeErrorMessage(resp);
         }
