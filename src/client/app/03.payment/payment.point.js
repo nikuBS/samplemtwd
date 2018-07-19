@@ -161,7 +161,7 @@ Tw.PaymentPoint.prototype = {
     if (this._isValidForCashbagOne()) {
       var reqData = this._makeRequestDataForCashbagOne();
       this._apiService.request(Tw.API_CMD.BFF_07_0045, reqData)
-        .done($.proxy(this._paySuccess, this))
+        .done($.proxy(this._paySuccess, this, 'reserve'))
         .fail($.proxy(this._payFail, this));
     }
   },
@@ -179,7 +179,7 @@ Tw.PaymentPoint.prototype = {
     if (this._isValidForCashbagAuto()) {
       var reqData = this._makeRequestDataForCashbagAuto();
       this._apiService.request(Tw.API_CMD.BFF_07_0054, reqData)
-        .done($.proxy(this._paySuccess, this))
+        .done($.proxy(this._paySuccess, this, 'auto'))
         .fail($.proxy(this._payFail, this));
     }
   },
@@ -210,7 +210,7 @@ Tw.PaymentPoint.prototype = {
     if (this._isValidForRainbow()) {
       var reqData = this._makeRequestDataForRainbow();
       this._apiService.request(Tw.API_CMD.BFF_07_0048, reqData)
-        .done($.proxy(this._paySuccess, this))
+        .done($.proxy(this._paySuccess, this, 'reserve'))
         .fail($.proxy(this._payFail, this));
     }
   },
@@ -225,13 +225,14 @@ Tw.PaymentPoint.prototype = {
 
     this._apiService.request(Tw.API_CMD.BFF_07_0056,
       { prodId: this.$productSelectBoxForAuto.attr('id'), rbpChgRsnCd: Tw.RAINBOW_CHANGE_CODE.REQUEST })
-      .done($.proxy(this._paySuccess, this))
+      .done($.proxy(this._paySuccess, this, 'auto'))
       .fail($.proxy(this._payFail, this));
   },
-  _paySuccess: function (res) {
+  _paySuccess: function (type, res) {
     if (res.code === Tw.API_CODE.CODE_00) {
       this._setData(res);
       this._history.setHistory();
+      this.$container.find('.get-history').attr('href', '/payment/history/point/' + type);
       this._go('#complete');
     } else {
       this._payFail(res);
