@@ -20,7 +20,7 @@ Tw.AuthLoginDormancy.prototype = {
           } else if (res.code === Tw.API_LOGIN_ERROR.ICAS3228) {  // Need service password
             window.location = '/auth/login/service-pwd';
           } else {
-            Tw.Popup.openAlert(res.msg);
+            Tw.Popup.openAlert(res.code + ' ' + res.msg);
           }
         })
         .fail(function (err) {
