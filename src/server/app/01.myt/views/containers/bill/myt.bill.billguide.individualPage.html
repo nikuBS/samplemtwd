@@ -66,7 +66,7 @@
 <% } else { %>
             <div class="cont-box nogaps-btm noborder">
                 <div class="payment-inquiry">
-                    <a class="bt-link-tx" href=""><%=baseFeePlansInfo.prodName %><span class="ico"></span></a>
+                    <a class="bt-link-tx" ><%=baseFeePlansInfo.prodName %><span class="ico"></span></a>
                     <button class="bt-dropdown big" title="전체납부내역" aria-haspopup="true" data-target="selDateBtn"><%=commDataInfo.selClaimDtBtn %><span class="ico"></span></button>
                 </div>
                 <div class="payment-inquiry">
@@ -238,21 +238,15 @@
                                     <!-- 아코디언 내용 -->
                                     <div class="acco-content">
                                         <ul class="payment-detail-depth1">
-                                            <!-- depth-1 -->
+
+                                            <% for(var i=0; i < defaultInfo.unPaidAmtMonthInfoList.length; i++) { %>
                                             <li>
                                                 <dl class="pdt-wrap">
-                                                    <dt class="pdt-tit">2018년 4월</dt>
-                                                    <dd class="pdt-price"><span class="num">40,000</span>원</dd>
+                                                    <dt class="pdt-tit"><%=defaultInfo.unPaidAmtMonthInfoList[i].unPaidInvDt %></dt>
+                                                    <dd class="pdt-price"><span class="num"><%=defaultInfo.unPaidAmtMonthInfoList[i].unPaidAmt %></span>원</dd>
                                                 </dl>
                                             </li>
-                                            <!--// depth-1 -->
-                                            <!-- depth-2 -->
-                                            <li>
-                                                <dl class="pdt-wrap">
-                                                    <dt class="pdt-tit">2018년 5월</dt>
-                                                    <dd class="pdt-price"><span class="num">40,000</span>원</dd>
-                                                </dl>
-                                            </li>
+                                            <% } %>
 
                                         </ul>
                                         <div class="footnote-txt">
