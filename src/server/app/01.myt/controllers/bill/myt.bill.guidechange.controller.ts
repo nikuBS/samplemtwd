@@ -58,31 +58,30 @@ class MytBillGuidechange extends TwViewController {
   }
 
   private getResult(data: any, billTypeInfo: any, integInfo: any, svcInfo: any): any {
+    data = {
+      representYN : 'N',
+      path : 'bill/myt.bill.guidechange.noRepresent.html'
+    };
+
     if ( integInfo.code !== API_CODE.CODE_00 ) {
-      data = {
-        representYN : 'N',
-        path : 'bill/myt.bill.guidechange.noRepresent.html'
-      };
+      this.logger.error(this, '[API CALL:BFF_05_0049 ERROR] : ', integInfo);
       return data;
     }
 
     // 대표회선여부 확인
-    integInfo.result.map( (line) => {
+    const isNotCeo = integInfo.result.some( (line) => {
       // 현재 요소가 대표회선일 때
       if ( line.acntRepYN === 'Y' ) {
         // 현재 서비스 번호와 로그인회선의 서비스 번호가 다르면 현재 회선은 대표회선이 아니다.
         if ( svcInfo.svcMgmtNum !== line.svcMgmtNum ) {
-          data = {
-            representSvcNum : line.svcNum,
-            representYN : 'N',
-            path : 'bill/myt.bill.guidechange.noRepresent.html'
-          };
+          data.representSvcNum = line.svcNum;
+          return true;
         }
       }
     });
 
     // 대표회선이 아닌경우 다음 스텝 진행하지 않는다.
-    if ( data.representYN === 'N' ) {
+    if ( isNotCeo ) {
       return data;
     }
 
@@ -101,15 +100,7 @@ class MytBillGuidechange extends TwViewController {
       };
 
     } else {
-      if ( billTypeInfo.code !== '00' ) {
-        this.logger.error(this, '[API CALL:BFF_05_0025 ERROR] : ', billTypeInfo);
-      } else if ( integInfo.code !== '00' ) {
-        this.logger.error(this, '[API CALL:BFF_05_0049 ERROR] : ', integInfo);
-      }
-
-      data = {
-        path : 'bill/myt.bill.guidechange.noRepresent.html'
-      };
+      this.logger.error(this, '[API CALL:BFF_05_0025 ERROR] : ', billTypeInfo);
     }
 
     return data;
