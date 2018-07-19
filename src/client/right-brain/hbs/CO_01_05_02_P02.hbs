@@ -69,7 +69,11 @@
                                 <div class="acco-style btn-hold">
                                     <ul class="acco-list">
                                         <!-- .on: 열기 -->
-                                        <li class="acco-box on"><!-- 2018-07-12 .on추가 -->
+                                        {{#if data.agr201Yn}}
+                                        <li class="acco-box on none"><!-- 2018-07-12 .on추가 -->
+                                        {{else}}
+                                        <li class="acco-box on">
+                                        {{/if}}
                                             <div class="acco-tit">
                                                 <div class="widget">
                                                     <div class="widget-box check">
@@ -102,7 +106,11 @@
                                                 </div>
                                             </div>
                                         </li>
-                                        <li class="acco-box on"><!-- 2018-07-12 .on추가 -->
+                                        {{#if data.agr203Yn}}
+                                        <li class="acco-box on none"><!-- 2018-07-12 .on추가 -->
+                                        {{else}}
+                                        <li class="acco-box on">
+                                        {{/if}}
                                             <div class="acco-tit">
                                                 <div class="widget">
                                                     <div class="widget-box check">

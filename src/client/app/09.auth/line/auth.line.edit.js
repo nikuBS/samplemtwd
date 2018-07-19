@@ -96,13 +96,34 @@ Tw.AuthLineEdit.prototype = {
   _checkMarketingOffer: function () {
     if ( !Tw.FormatHelper.isEmpty(this._marketingSvc) && this._marketingSvc !== '0' ) {
       var $target = this.$list.filter('[data-svcmgmtnum=' + this._marketingSvc + ']');
-      setTimeout($.proxy(function () {
-        this.lineMarketingLayer.openMarketingOffer(this._marketingSvc,
-          $target.data('showname'), $target.data('svcnum'), $.proxy(this._closeMarketingOfferPopup, this));
-      }, this), 0);
+
+      this._apiService.request(Tw.API_CMD.BFF_03_0014, {}, {}, this._marketingSvc)
+        .done($.proxy(this._successGetMarketingOffer, this, $target.data('showname'), $target.data('svcnum')))
+        .fail($.proxy(this._failGetMargetingOffer, this));
+
     } else {
       history.back();
     }
+  },
+  _successGetMarketingOffer: function (showName, svcNum, resp) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      this.agr201Yn = resp.result.agr201Yn;
+      this.agr203Yn = resp.result.agr203Yn;
+
+      if ( resp.result.agr201Yn !== 'Y' && resp.result.agr203Yn !== 'Y' ) {
+        setTimeout($.proxy(function () {
+          this.lineMarketingLayer.openMarketingOffer(this._marketingSvc,
+            showName, svcNum, resp.result.agr201Yn, resp.result.agr203Yn, $.proxy(this._closeMarketingOfferPopup, this));
+        }, this), 0);
+      } else {
+        history.back();
+      }
+    } else {
+      this.openAlert(resp.code + ' ' + resp.msg);
+    }
+  },
+  _failGetMargetingOffer: function () {
+
   },
   _closeMarketingOfferPopup: function () {
     history.back();
