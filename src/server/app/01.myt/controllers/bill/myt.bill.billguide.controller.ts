@@ -42,7 +42,7 @@ class MyTBillBillguide extends TwViewController {
     dataKeepTrmDt: '',//pps 수신/데이터유지기간
     numKeepTrmDt: '',//pps 번유지기간
     curDt: '',//현재날짜
-    remained: '',//잔여데이터 KB | 공백일 경우 표시안함
+    remained: '',//잔여데이터 KB | 공백일 경우 표시안
     dataYn: '', //음성+데이터 'Y'
     dataProdYn: ''//MB 'Y' | 원 'N'
   };
@@ -326,19 +326,66 @@ class MyTBillBillguide extends TwViewController {
 
   //통합청구(일반)
   private combineCommonCircuit(res) {
-    this.logger.info(this, '[_urlTplInfo.combineCommonPage] : ', this._urlTplInfo.combineCommonPage);
-    let billItems = this.arrayToObject(this._billpayInfo.paidAmtDetailInfo, this.fieldInfo);
-    this.renderView(res, this._urlTplInfo.combineCommonPage, {
-      reqQuery: this.reqQuery,
-      svcInfo: this._svcInfo,
-      billpayInfo : this._billpayInfo,
-      circuitChildInfo: this._circuitChildInfo,
-      commDataInfo: this._commDataInfo,
-      defaultInfo: this._defaultInfo,
-      showConditionInfo: this._showConditionInfo,
-      baseFeePlansInfo: this._baseFeePlansInfo,
-      billItems: billItems
-    } );
+
+    let chargeRateReq: Observable<any>;
+    if( this.reqQuery.invDt ) {
+      chargeRateReq = this.apiService.request(API_CMD.BFF_05_0047, { invDt: this.reqQuery.invDt});
+    } else {
+      chargeRateReq = this.apiService.request(API_CMD.BFF_05_0047, { });
+    }
+    const myPlanReq: Observable<any> = this.apiService.request(API_CMD.BFF_05_0041, {});//나의요금제
+
+    var thisMain = this;
+
+    const dataInit = function () {
+      thisMain._commDataInfo.selClaimDtNum = (thisMain._billpayInfo) ? thisMain.getSelClaimDtNum( String(thisMain._billpayInfo.invDt) ) : null;
+      thisMain._commDataInfo.selClaimDtBtn = (thisMain._billpayInfo) ? thisMain.getSelClaimDtBtn( String(thisMain._billpayInfo.invDt) ) : null;
+      thisMain._commDataInfo.selStaDt = (thisMain._billpayInfo) ? thisMain.getSelStaDt( String(thisMain._billpayInfo.invDt) ) : null;
+      thisMain._commDataInfo.selEndDt = (thisMain._billpayInfo) ? DateHelper.getShortDateNoDot( String(thisMain._billpayInfo.invDt) ) : null;
+      thisMain._commDataInfo.discount = (thisMain._billpayInfo) ? FormatHelper.addComma( String(Math.abs( Number(thisMain._billpayInfo.deduckTotInvAmt))) ) : 0;
+    };
+
+    Observable.combineLatest(
+      chargeRateReq,
+      myPlanReq,
+
+    ).subscribe(
+      {
+        next( [
+                chargeRateReq,
+                myPlanReq
+              ] ) {
+          thisMain.logger.info(this, '[ 1. next > chargeRateReq ] 청구요금 : ', chargeRateReq);
+          thisMain.logger.info(this, '[ 2. next > myPlanReq ] 나의요금제 : ', myPlanReq);
+
+          thisMain._billpayInfo = (chargeRateReq.code==='00') ? chargeRateReq.result : null;//청구요금
+          thisMain._baseFeePlansInfo = (myPlanReq.code==='00') ? myPlanReq.result : null;// 나의요금제
+
+        },
+        error(error) {
+          thisMain.logger.info(this, '[ error ] : ', error.message || error);
+        },
+        complete() {
+          thisMain.logger.info(this, '[ complete ] : ');
+          dataInit();
+          thisMain.logger.info(this, '[_urlTplInfo.combineCommonPage] : ', thisMain._urlTplInfo.combineCommonPage);
+
+          let billItems = thisMain.arrayToObject(thisMain._billpayInfo.useAmtDetailInfo, thisMain.fieldInfo);
+
+          thisMain.renderView(res, thisMain._urlTplInfo.combineCommonPage, {
+            reqQuery: thisMain.reqQuery,
+            svcInfo: thisMain._svcInfo,
+            billpayInfo : thisMain._billpayInfo,
+            circuitChildInfo: thisMain._circuitChildInfo,
+            commDataInfo: thisMain._commDataInfo,
+            showConditionInfo: thisMain._showConditionInfo,
+            baseFeePlansInfo: thisMain._baseFeePlansInfo,
+            billItems: billItems
+          } );
+
+        } }
+    );
+
   }
 
   //개별청구

@@ -75,7 +75,16 @@ Tw.MyTBillHotBillChild.prototype = {
 
     if ( resp.result && resp.result.isSuccess === 'Y' ) {
       if ( resp.result.gubun === Tw.MyTBillHotBill.PARAM.TYPE.PREVIOUS ) {
-        Tw.MyTBillHotBill.openPrevBillPopup(resp, this._svcNum, '휴대폰');
+        var type = this._svcAttrCd === this.SVC_TYPE.MOBILE ? '휴대폰' : 'T Pocket-Fi';
+        //전월요금 없음
+        if ( resp.result.bf_mth_yn === 'Y' && resp.result.hotBillInfo.tot_open_bal1 === '0' && resp.result.hotBillInfo.tot_dedt_bal1 === '0' ) {
+          this._popupService.open({
+            hbs: 'MY_03_01_01_L03_case',
+            data: { svcNum: this._svcNum, svcType: type }
+          });
+        } else {
+          Tw.MyTBillHotBill.openPrevBillPopup(resp, this._svcNum, type);
+        }
       } else {
         var billData = resp.result.hotBillInfo;
         var day = parseInt(resp.result.stdDateHan.match(/(\d+)\uC77C/i)[1], 10);
@@ -83,8 +92,6 @@ Tw.MyTBillHotBillChild.prototype = {
         var target = _.find(this._children, { svcMgmtNum: this._childSvcNum });
         this.$deviceInfo.text(target.childEqpMdNm);
         this.$svcNum.text(target.svcNum);
-        this._preBillAvailable = (billData.bf_mth_yn === 'Y');
-
         //자녀 핸드폰: 7일까지 전월요금보기 보이기
         if ( day <= 7 ) {
           this.$btPreviousBill.show();
@@ -137,26 +144,17 @@ Tw.MyTBillHotBillChild.prototype = {
 
   _showPreviousBill: function () {
     event.preventDefault();
-    if ( this._preBillAvailable ) {
-      skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
-      this._apiService
-        .request(Tw.API_CMD.BFF_05_0035, {
-          gubun: Tw.MyTBillHotBill.PARAM.TYPE.PREVIOUS,
-          childSvcMgmtNum: this._childSvcNum
-        })
-        .done(function () {
-          this._startGetBillResponseTimer(Tw.MyTBillHotBill.PARAM.TYPE.PREVIOUS, this._childSvcNum);
-        })
-        .fail($.proxy(this._onErrorReceivedBillData, this));
-    } else {
-      this._popupService.open({
-        hbs: 'MY_03_01_01_L03_case',
-        data: {
-          svcNum: this._svcNum,
-          svcType: '휴대폰'
-        }
-      });
-    }
+    skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
+    this._apiService
+      .request(Tw.API_CMD.BFF_05_0035, {
+        gubun: Tw.MyTBillHotBill.PARAM.TYPE.PREVIOUS,
+        childSvcMgmtNum: this._childSvcNum
+      })
+      .done(function () {
+        this._startGetBillResponseTimer(Tw.MyTBillHotBill.PARAM.TYPE.PREVIOUS, this._childSvcNum);
+      })
+      .fail($.proxy(this._onErrorReceivedBillData, this));
+
   },
 
   _onOpenChildrenChoice: function ($popup) {
@@ -169,7 +167,6 @@ Tw.MyTBillHotBillChild.prototype = {
   },
 
   _onErrorReceivedBillData: function (e) {
-
     Tw.Logger.error('[Myt > Bill > HotBill]');
     Tw.Logger.error(e);
     //TODO error alert 공통모듈
