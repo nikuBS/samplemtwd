@@ -14,7 +14,7 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div class="wrap">
+<div id="authLoginFind" class="wrap">
     <!-- #header -->
     <div id="header" class="header-wrap">
         <div class="header">
@@ -42,10 +42,10 @@
             <!-- .cont-box -->
             <div class="cont-box nogaps-hoz">
                 <div class="link-long">
-                    <a href="/auth/tid/find/id" title="아이디 찾기로 이동">아이디 찾기<span class="ico"></span></a>
+                    <a class="bt-find-id" title="아이디 찾기로 이동">아이디 찾기<span class="ico"></span></a>
                 </div>
                 <div class="link-long last">
-                    <a href="/auth/tid/find/pw" title="비밀번호 재설정로 이동">비밀번호 재설정<span class="ico"></span></a>
+                    <a class="bt-find-pw" title="비밀번호 재설정로 이동">비밀번호 재설정<span class="ico"></span></a>
                 </div>
             </div>
             <!--// .cont-box -->
@@ -55,4 +55,9 @@
     <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
 </div>
 <% include ../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    new Tw.TidLandingComponent($('#authLoginFind'));
+  });
+</script>
 <% include ../../components/end.component.html %>
