@@ -21,6 +21,7 @@ Tw.AuthLine.prototype = {
     this.$container.on('click', '.bt-nickname', $.proxy(this._openNickname, this));
     this.$container.on('click', '#cop-password', $.proxy(this._openCopPassword, this));
     this.$container.on('click', '.bt-more', $.proxy(this._onClickMore, this));
+    this.$container.on('change', '.cb-change-first', $.proxy(this._onChangeFirst, this));
   },
 
   _openNickname: function ($event) {
@@ -32,7 +33,7 @@ Tw.AuthLine.prototype = {
     this.$showNickname = $currentLine.find('.show-nickname');
     this._nicknamePopup.openNickname(svcMgntNum, $.proxy(this._onCloseNickname, this));
   },
-  _onCloseNickname: function(nickname) {
+  _onCloseNickname: function (nickname) {
     this.$inputNickname.val(nickname);
     this.$showNickname.html(nickname);
   },
@@ -52,6 +53,34 @@ Tw.AuthLine.prototype = {
     var $btMore = $($event.currentTarget);
     $btMore.siblings('.widget').removeClass('none');
     $btMore.hide();
+  },
+
+  _onChangeFirst: function ($event) {
+    var $currentTarget = $($event.currentTarget);
+    this._popupService.openConfirm(Tw.POPUP_TITLE.NOTIFY, Tw.MSG_AUTH.LINE_A01, null, null, $.proxy(this._confirmNotifyPopup, this, $currentTarget));
+  },
+  _confirmNotifyPopup: function ($currentTarget) {
+    var currentSvcMgmtNum = $currentTarget.parents('.js-show-line').data('svcmgmtnum');
+    var $remainList = $currentTarget.parents('.js-line-list').find('.js-show-line').filter('[data-svcmgmtnum!=' + currentSvcMgmtNum + ']');
+    var changeList = [currentSvcMgmtNum];
+    _.map($remainList, $.proxy(function (remainLine) {
+      changeList.push($(remainLine).data('svcmgmtnum'));
+    }, this));
+    this._requestChangeList(changeList);
+  },
+  _requestChangeList: function (svcNumList) {
+    var lineList = svcNumList.join('~');
+    this._apiService.request(Tw.API_CMD.BFF_03_0005, { svcCtg: Tw.LINE_NAME.MOBILE, svcMgmtNumArr: lineList })
+      .done($.proxy(this._successRegisterLineList, this))
+      .fail($.proxy(this._failRegisterLineList, this));
+  },
+  _successRegisterLineList: function (resp) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      location.reload();
+    }
+  },
+  _failRegisterLineList: function (error) {
+    Tw.Logger.error(error);
   }
 
 };
