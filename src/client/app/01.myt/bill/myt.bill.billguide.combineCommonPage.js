@@ -4,8 +4,8 @@
  * Date: 2018.07.08
  * Info: 통합청구(일반)
  */
-
 Tw.mytBillBillguideCombineCommonPage = function (rootEl, resData) {
+
   this.thisMain = this;
   this.resData = resData;
   Tw.Logger.info('[서버에서 데이터 받음]', resData);
