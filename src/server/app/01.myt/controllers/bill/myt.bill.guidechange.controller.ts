@@ -7,7 +7,7 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import {Request, Response, NextFunction} from 'express';
 import {MYT_GUIDE_CHANGE_INIT_INFO} from '../../../../types/string.type';
 import {Observable} from 'rxjs/Observable';
-import {API_CMD} from '../../../../types/api-command.type';
+import {API_CMD, API_CODE} from '../../../../types/api-command.type';
 import {SVC_ATTR} from '../../../../types/bff-common.type';
 
 class MytBillGuidechange extends TwViewController {
@@ -48,45 +48,71 @@ class MytBillGuidechange extends TwViewController {
     const billTypeReq: Observable<any> = this.apiService.request(API_CMD.BFF_05_0025, {});
     // 통합청구회선 조회
     const itgSvcReq: Observable<any> =  this.apiService.request(API_CMD.BFF_05_0049, {});
-    // 선택회선 조회
-    const selectedSessionReq: Observable<any> =  this.apiService.request(API_CMD.BFF_01_0005, {});
     Observable.combineLatest(
       billTypeReq,
-      itgSvcReq,
-      selectedSessionReq
-    ).subscribe(([billTypeInfo, integraionService, selectedSession]) => {
-      if ( integraionService.code !== '00' ) {
-        integraionService = {result : []};
-      }
+      itgSvcReq
+    ).subscribe(([billTypeInfo, integInfo]) => {
+      const data = this.getResult({}, billTypeInfo, integInfo, svcInfo);
+      res.render( data.path, { data: data, svcInfo } );
+    });
+  }
 
-      svcInfo = Object.assign({}, selectedSession.result);
-      const data = {
+  private getResult(data: any, billTypeInfo: any, integInfo: any, svcInfo: any): any {
+    if ( integInfo.code !== API_CODE.CODE_00 ) {
+      data = {
+        representYN : 'N',
+        path : 'bill/myt.bill.guidechange.noRepresent.html'
+      };
+      return data;
+    }
+
+    // 대표회선여부 확인
+    integInfo.result.map( (line) => {
+      // 현재 요소가 대표회선일 때
+      if ( line.acntRepYN === 'Y' ) {
+        // 현재 서비스 번호와 로그인회선의 서비스 번호가 다르면 현재 회선은 대표회선이 아니다.
+        if ( svcInfo.svcMgmtNum !== line.svcMgmtNum ) {
+          data = {
+            representSvcNum : line.svcNum,
+            representYN : 'N',
+            path : 'bill/myt.bill.guidechange.noRepresent.html'
+          };
+        }
+      }
+    });
+
+    // 대표회선이 아닌경우 다음 스텝 진행하지 않는다.
+    if ( data.representYN === 'N' ) {
+      return data;
+    }
+
+    // 성공
+    if ( billTypeInfo.code === API_CODE.CODE_00 ) {
+      data = {
         billTypeDesc : MYT_GUIDE_CHANGE_INIT_INFO.billTypeDesc,
         billTypeList : this.getFlickingList(MYT_GUIDE_CHANGE_INIT_INFO.billTypeList, svcInfo),
         billTypeInfo : billTypeInfo.result,
-        itgSvc : integraionService.result,
+        itgSvc : integInfo.result,
         representSvcNum : '', // 대표회선 번호
         representYN : 'Y',  // 대표회선 여부
-        integYN : integraionService.result.length > 1 ? 'Y' : 'N', // 통합회선 여부
-        lineType : SVC_ATTR[svcInfo.svcAttrCd]
+        integYN : integInfo.result.length > 1 ? 'Y' : 'N', // 통합회선 여부
+        lineType : SVC_ATTR[svcInfo.svcAttrCd],
+        path : 'bill/myt.bill.guidechange.html'
       };
 
-      let path = 'bill/myt.bill.guidechange.html';
-      // 통합대표회선 대표회선 아닌경우 확인
-      if ( data.integYN === 'Y') {
-        data.itgSvc.filter( (line) => {
-          if ( line.acntRepYN === 'Y' ) {
-            // 현재 라인이 대표회선인데, 현재 서비스 번호와 로그인회선의 서비스 번호가 다르면 현재 회선은 대표회선이 아니다.
-            if ( svcInfo.svcMgmtNum !== line.svcMgmtNum ) {
-              data.representSvcNum = line.svcNum;
-              data.representYN = 'N';
-              path = 'bill/myt.bill.guidechange.noRepresent.html';
-            }
-          }
-        });
+    } else {
+      if ( billTypeInfo.code !== '00' ) {
+        this.logger.error(this, '[API CALL:BFF_05_0025 ERROR] : ', billTypeInfo);
+      } else if ( integInfo.code !== '00' ) {
+        this.logger.error(this, '[API CALL:BFF_05_0049 ERROR] : ', integInfo);
       }
-      res.render(path, { svcInfo: svcInfo, data: data });
-    });
+
+      data = {
+        path : 'bill/myt.bill.guidechange.noRepresent.html'
+      };
+    }
+
+    return data;
   }
 }
 
