@@ -15,7 +15,7 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div class="wrap">
+<div id="authMember" class="wrap">
     <!-- #header -->
     <div id="header" class="header-wrap">
         <div class="header">
@@ -50,7 +50,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="/auth/tid/account" title="회선관리로 이동">
+                                <a class="bt-account" title="회선관리로 이동">
                                     <span class="cell"><span class="ico-linktheme type2"></span></span>
                                     <dl>
                                         <dt class="theme-ti">회원정보</dt>
@@ -85,6 +85,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
+    new Tw.TidLandingComponent($('#authMember'));
 
   });
 </script>
