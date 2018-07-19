@@ -31,6 +31,7 @@
     <div id="contents" class="container-wrap">
         <h2 class="blind">내용</h2>
         <div class="container">
+            <% if (lineList.m) { %>
             <% if (lineList.m.length > 0) { %>
             <hr class="cont-sp type1" aria-hidden="true"/>
 
@@ -62,7 +63,11 @@
                                         <div class="mline-btzone"><a href="/auth/line/edit?category=m" class="bt-mline edit">편집</a><!-- <button class="bt-mline complete">완료</button> --></div>
                                         <% lineList.m.map((line, index) => { %>
                                         <!-- .widget -->
+                                        <% if(index >= showParam.defaultCnt) { %>
+                                        <div class="widget none">
+                                        <% } else { %>
                                         <div class="widget">
+                                        <% } %>
                                             <div class="widget-box accordion">
                                                 <% if(line.expsYn === 'Y') { %>
                                                 <div class="acco-cover">
@@ -75,7 +80,7 @@
                                                             <li class="acco-box">
                                                                 <div class="acco-tit">
                                                                     <div class="mline-acc-top">
-                                                                        <p class="ti"><%= line.showName %><% if (line.repSvcYn === 'Y') { %><span class="ico-like" role="img" aria-label="기준회선"><span class="blind">기준회선</span></span><% } %></p>
+                                                                        <p class="ti"><span class="show-nickname"><%= line.showName %></span><% if (line.repSvcYn === 'Y') { %><span class="ico-like" role="img" aria-label="기준회선"><span class="blind">기준회선</span></span><% } %></p>
                                                                         <span class="ph"><%= line.svcNum %></span>
                                                                     </div>
                                                                     <% if(line.expsYn === 'Y') { %>
@@ -111,8 +116,8 @@
                                         </div>
                                         <!--// .widget -->
                                         <% }) %>
-                                        <% if (lineList.m.length > 20) { %>
-                                        <a class="bt-more" href="">더보기<span>(20)</span></a>
+                                        <% if (lineList.m.length > showParam.defaultCnt) { %>
+                                        <a class="bt-more">더보기<span>(<%= lineList.m.length - showParam.defaultCnt %>)</span></a>
                                         <% } %>
                                     </div>
                                     <!--// 아코디언 내용 -->
@@ -127,6 +132,8 @@
             </div>
             <!--// 모바일 -->
             <% } %>
+            <% } %>
+            <% if (lineList.s) { %>
             <% if (lineList.s.length > 0) { %>
             <hr class="cont-sp type1" aria-hidden="true"/>
 
@@ -156,9 +163,13 @@
                                     <!-- 아코디언 내용 -->
                                     <div class="acco-content">
                                         <div class="mline-btzone"><a href="/auth/line/edit?category=s" class="bt-mline edit">편집</a><!-- <button class="bt-mline complete">완료</button> --></div>
-                                        <% lineList.s.map((line) => { %>
+                                        <% lineList.s.map((line, index) => { %>
                                         <!-- .widget -->
+                                        <% if(index >= showParam.defaultCnt) { %>
+                                        <div class="widget none">
+                                        <% } else { %>
                                         <div class="widget">
+                                        <% } %>
                                             <div class="widget-box accordion">
                                                 <% if(line.expsYn === 'Y') { %>
                                                 <div class="acco-cover">
@@ -207,8 +218,8 @@
                                         </div>
                                         <!--// .widget -->
                                         <% }) %>
-                                        <% if (lineList.s.length > 20) { %>
-                                        <a class="bt-more" href="">더보기<span>(20)</span></a>
+                                        <% if (lineList.s.length > showParam.defaultCnt) { %>
+                                        <a class="bt-more">더보기<span>(<%= lineList.s.length - showParam.defaultCnt %>)</span></a>
                                         <% } %>
                                     </div>
                                     <!--// 아코디언 내용 -->
@@ -223,6 +234,8 @@
             </div>
             <!--// 인터넷/IPTV/집전화 -->
             <% } %>
+            <% } %>
+            <% if (lineList.o) { %>
             <% if (lineList.o.length > 0) { %>
             <hr class="cont-sp type1" aria-hidden="true"/>
 
@@ -236,9 +249,9 @@
                                 <!-- 아코디언 한줄 -->
                                 <% if(showParam.o) { %>
                                 <li class="acco-list on">
-                                    <% } else { %>
+                                <% } else { %>
                                 <li class="acco-list"><!-- on , off -->
-                                    <% } %>
+                                <% } %>
                                     <!-- 아코디언 타이틀 -->
                                     <div class="acco-title">
                                         <button role="button" aria-pressed="false">
@@ -252,9 +265,13 @@
                                     <!-- 아코디언 내용 -->
                                     <div class="acco-content">
                                         <div class="mline-btzone"><a href="/auth/line/edit?category=o" class="bt-mline edit">편집</a></div>
-                                        <% lineList.o.map((line) => { %>
+                                        <% lineList.o.map((line, index) => { %>
                                         <!-- .widget -->
+                                        <% if(index >= showParam.defaultCnt) { %>
+                                        <div class="widget none">
+                                        <% } else { %>
                                         <div class="widget">
+                                        <% } %>
                                             <div class="widget-box accordion">
                                                 <% if(line.expsYn === 'Y') { %>
                                                 <div class="acco-cover">
@@ -303,8 +320,8 @@
                                         </div>
                                         <!--// .widget -->
                                         <% }) %>
-                                        <% if (lineList.o.length > 20) { %>
-                                        <a class="bt-more" href="">더보기<span>(20)</span></a>
+                                        <% if (lineList.o.length > showParam.defaultCnt) { %>
+                                        <a class="bt-more">더보기<span>(<%= lineList.o.length - showParam.defaultCnt %>)</span></a>
                                         <% } %>
                                     </div>
                                     <!--// 아코디언 내용 -->
@@ -318,6 +335,7 @@
                 <!--// .accordion -->
             </div>
             <!--// 보안솔루션 -->
+            <% } %>
             <% } %>
 
             <hr class="cont-sp type1" aria-hidden="true"/>
