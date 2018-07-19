@@ -143,6 +143,8 @@ Tw.PaymentHistoryPointReserve.prototype = {
         o.isCancelAble = o.cancleYn === 'Y';
         o.listId = i;
 
+        console.log(o);
+
       }, this));
 
       this.currentData = res.result;

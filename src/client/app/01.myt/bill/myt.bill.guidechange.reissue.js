@@ -120,10 +120,6 @@ Tw.MyTBillReissue.prototype = {
       if ( this.$type.length > 0 ) {
         data.reisuType = this.$type.find(':checked').attr('name');
       }
-      // 우편인 경우 post 로 설정 BFF_명세서 기준
-      if ( data.reisuType === '01' ) {
-        data.reisuType = 'post';
-      }
     }
     else {
       data = {
@@ -166,8 +162,12 @@ Tw.MyTBillReissue.prototype = {
       }
     }
     else {
-      Tw.Logger.error(Tw.MSG_MYT.BILL_GUIDE_REISSUE_FAIL + ' __ ' + (params.msg || (params.error && params.error.msg)));
-      // this._popupService.openAlert(Tw.MSG_MYT.BILL_GUIDE_REISSUE_FAIL, Tw.MSG_MYT.BILL_GUIDE_REISSUE_00);
+      var errorMsg = Tw.MSG_MYT.BILL_GUIDE_REISSUE_FAIL + '<br/>' + (params.msg || (params.error && params.error.msg));
+      Tw.Logger.error(errorMsg);
+      // 에러를 가시적으로 볼수 있도록 alert에 추가 표시
+      setTimeout(function () {
+        self._popupService.openAlert(errorMsg, Tw.POPUP_TITLE.NOTIFY);
+      }, 100);
     }
   },
 

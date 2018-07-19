@@ -43,6 +43,10 @@ Tw.RechargeCookizProcess.prototype = {
           this._setAmount();
         }
 
+        if ( result.regularTopUpYn === 'Y' ) {
+          $('.wrap_type_change').find('.last').addClass('disabled');
+        }
+
         this._setAvailableAmount();
       }
     };

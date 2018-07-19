@@ -6,9 +6,18 @@
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { NextFunction, Request, Response } from 'express';
 import { API_CMD } from '../../../../types/api-command.type';
-import { MYT_REISSUE_REQ_CODE, MYT_REISSUE_TYPE } from '../../../../types/string.type';
+import { MYT_REISSUE_REQ_CODE, MYT_REISSUE_REQ_LOCAL_CODE, MYT_REISSUE_TYPE } from '../../../../types/string.type';
 
 class MyTBillReissue extends TwViewController {
+  private _isLocal: boolean = false;
+  set isLocal(val) {
+    this._isLocal = val;
+  }
+
+  get isLocal() {
+    return this._isLocal;
+  }
+
   constructor() {
     super();
   }
@@ -17,6 +26,7 @@ class MyTBillReissue extends TwViewController {
     let api = API_CMD.BFF_05_0028;
     if ( svcInfo.svcAttrCd.indexOf('S') !== -1 ) {
       api = API_CMD.BFF_05_0051;
+      this.isLocal = true;
     }
     this.apiService.request(api, {}).subscribe((reissueData) => {
       // 화면 데이터 설정
@@ -41,10 +51,20 @@ class MyTBillReissue extends TwViewController {
 
   private findMyReissueType(key): string {
     let value = '';
-    const reissueType = Object.keys(MYT_REISSUE_REQ_CODE);
+    // 유선, 무선 청구서 유형에 타입 코드가 달라 구분하여 처리
+    let reissueType = Object.keys(MYT_REISSUE_REQ_CODE);
+    if ( this.isLocal ) {
+      reissueType = Object.keys(MYT_REISSUE_REQ_LOCAL_CODE);
+    }
     reissueType.forEach((val) => {
-      if ( (key.trim()).indexOf(MYT_REISSUE_REQ_CODE[val]) !== -1 ) {
-        value = val;
+      if ( this.isLocal ) {
+        if ( (key.trim()).indexOf(MYT_REISSUE_REQ_LOCAL_CODE[val]) !== -1 ) {
+          value = val;
+        }
+      } else {
+        if ( (key.trim()).indexOf(MYT_REISSUE_REQ_CODE[val]) !== -1 ) {
+          value = val;
+        }
       }
     });
     return value;
@@ -60,11 +80,12 @@ class MyTBillReissue extends TwViewController {
     // 서버에서 받은 데이터 설정
     if ( response.result ) {
       // 유선인 경우에 재발행 사유 정보가 있어 아래정보로 유,무선 구분한다.
-      if ( response.result.reissueReasons ) {
+      if ( this.isLocal ) {
         data['reasons'] = response.result.reissueReasons;
         data['title'] = MYT_REISSUE_TYPE[response.result.billIsueTypCd];
+        // 유선인 경우 서버에서 재발행 월 정보가 리스트로 넘어와 출력
+        data['halfYear'] = this.setLocalHalfYearData(response.result.reissueYMs);
         data['type'] = '02';
-        // }
       } else {
         // 청구서명
         data['title'] = response.result.curBillTypeNm;
@@ -81,6 +102,25 @@ class MyTBillReissue extends TwViewController {
     }
 
     return data;
+  }
+
+  private setLocalHalfYearData(array): any {
+    const result: any = [];
+    const length = array.length;
+    // 순차적으로 가장 최근날짜로 정렬되어있음
+    for ( let i = 0; i < length; i++ ) {
+      const data = {};
+      const yy = array[i].slice(0, 4);
+      const mm = array[i].slice(4, 6);
+      const dd = array[i].slice(6, 8);
+      data['type1'] = `${yy}년 ${mm}월`;
+      data['type2'] = `${yy}.${mm}.${dd}`;
+      data['type3'] = array[i];
+
+      result.push(data);
+    }
+
+    return result;
   }
 
   private getHalfYearData(): any {

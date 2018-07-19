@@ -43,9 +43,21 @@ Tw.PaymentHistoryRealtime.prototype = {
       HBS_CARD: 'PA_06_02_L04'
     };
     this.apiName = Tw.API_CMD.BFF_07_0035;
+    this.api_detailName = Tw.API_CMD.BFF_07_0036;
+    this.stupidBE_ApiName = Tw.API_CMD.BFF_07_0017;
     this.emptyURL = '/payment/point';
 
     this._getData();
+  },
+
+  _isPersonalCompany: function () {
+    if (this.stupidBE_ApiName) {
+      this._apiService.request(this.stupidBE_ApiName, '')
+          .done($.proxy(function(res) {
+            console.log(res);
+          }, this))
+          .error($.proxy(function() {}, this));
+    }
   },
 
   _getData: function () {
@@ -60,6 +72,8 @@ Tw.PaymentHistoryRealtime.prototype = {
 
     if (res.code !== Tw.API_CODE.CODE_00) return this._apiError(res);
     this.result = res.result.realTimePaymentRecord;
+
+    this._isPersonalCompany();
 
     if (this.result.length) {
 
@@ -76,6 +90,8 @@ Tw.PaymentHistoryRealtime.prototype = {
         // TODO : 무조건 개인으로 설정
         o.isPersonal = true;
         // o.isCompany = true;
+
+        console.log(o);
 
       }, this));
 
@@ -191,6 +207,7 @@ Tw.PaymentHistoryRealtime.prototype = {
 
   _apiError: function (res) {
     Tw.Logger.error(res.msg);
+    this.$listWrapper.html('<br /><span style=\"color:red;\"><b>ERROR: </b>' + res.msg + '</span>');
     return false;
   }
 };

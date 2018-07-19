@@ -62,7 +62,6 @@ class MyTBillChange extends TwViewController {
       } else {
         component = BILL_GUIDE_TYPE_COMPONENT[_curBillGuide['curBillType']];
       }
-      console.log('~~~~~~~~~_curBillGuide', _curBillGuide);
       this.renderView(res, 'bill/myt.bill.guidechange.update-complete.html', {
         curBillGuide: _curBillGuide,
         component: component,

@@ -42,15 +42,19 @@ class MyTBillChange extends TwViewController {
     ).subscribe(([_billTypesList]) => {
       const _curBillGuide = this.getResult(_billTypesList);
       const isWire = (svcInfo.svcAttrCd === 'S1' || svcInfo.svcAttrCd === 'S2' || svcInfo.svcAttrCd === 'S3') ? true : false;
-      let component;
+      let component, beforeBillGuideLabel, afterBillGuideLabel;
       if ( isWire ) {
         component = BILL_GUIDE_TYPE_COMPONENT[BILL_GUIDE_TYPE_WITH_WIRE[_curBillGuide['curBillType']]];
+        beforeBillGuideLabel = BillGuideLabelDefines[BILL_GUIDE_TYPE_WITH_WIRE[req.query.beforeBillGuideType]];
+        afterBillGuideLabel = BillGuideLabelDefines[BILL_GUIDE_TYPE_WITH_WIRE[_curBillGuide.curBillType]];
       } else {
         component = BILL_GUIDE_TYPE_COMPONENT[_curBillGuide['curBillType']];
+        beforeBillGuideLabel = BillGuideLabelDefines[req.query.beforeBillGuideType];
+        afterBillGuideLabel = BillGuideLabelDefines[_curBillGuide.curBillType];
       }
       this.renderView(res, 'bill/myt.bill.guidechange.change-complete.html', {
-        beforeBillGuideLabel: BillGuideLabelDefines[req.query.beforeBillGuideType],
-        afterBillGuideLabel: BillGuideLabelDefines[_curBillGuide.curBillType],
+        beforeBillGuideLabel: beforeBillGuideLabel,
+        afterBillGuideLabel: afterBillGuideLabel,
         component: component,
         curBillGuide: _curBillGuide,
         svcInfo

@@ -97,6 +97,7 @@ Tw.PaymentHistoryCommon.prototype.listWithTemplate.prototype = {
 
     this.template = template;
     this.helper = helper;
+    this.particalKeyword = keyword.partial || 'list';
     this.listTemplateKeyword = keyword.list;
     this.restButtonTemplateKeyword = keyword.restButton;
     this.viewMoreSelector = viewMoreSelector;
@@ -163,7 +164,7 @@ Tw.PaymentHistoryCommon.prototype.listWithTemplate.prototype = {
 
   _buildListUI: function () {
     this.updateNextPageData();
-    Handlebars.registerPartial('list', this.listTemplate(this.data));
+    Handlebars.registerPartial(this.particalKeyword, this.listTemplate(this.data));
 
     if (this.data.result.length > this.perPage) {
       this.data.initialMoreData = true;

@@ -38,7 +38,7 @@ Tw.mytBillBillguideCombineCommonPage.prototype = {
     var arrOption = [];
     for ( var i=0, len=this.resData.billpayInfo.invDtArr.length; i<len; i++ ) {
       arrOption.push({
-        'attr':'onclick=""',
+        'attr':'invDt="'+this.resData.billpayInfo.invDtArr[i]+'"',
         text : this._getSelClaimDtBtn( this.resData.billpayInfo.invDtArr[i] )
       });
     }
@@ -52,9 +52,9 @@ Tw.mytBillBillguideCombineCommonPage.prototype = {
   },
   _totPaySelectExe: function ($target, event) {
     var $selectedValue = $(event.currentTarget);
-    //$target.attr('id', $selectedValue.find('button').attr('id'));
-    $target.text($selectedValue.text());
+    var invDt = $selectedValue.find('button').attr('invDt');
     this._popupService.close();
+    window.location.href = '/myt/bill/billguide?invDt=' + invDt;
   },
   //--------------------------------------------------------------------------[api]
   _getDetailSpecification: function() {
