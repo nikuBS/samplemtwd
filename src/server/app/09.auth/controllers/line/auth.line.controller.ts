@@ -61,13 +61,15 @@ class AuthLine extends TwViewController {
     const showParam = {
       m: false,
       s: false,
-      o: false
+      o: false,
+      defaultCnt: 20
     };
 
     list.map((category, index) => {
       if ( index === 0 ) {
         showParam[category] = true;
       } else {
+        showParam.defaultCnt = 10;
         if ( totalCount <= 20 ) {
           showParam[category] = true;
         }
