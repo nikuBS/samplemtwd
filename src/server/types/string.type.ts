@@ -34,7 +34,7 @@ export const MYT_REISSUE_TYPE = {
   'H': 'Bill Letter',
   'B': '문자',
   '2': '이메일',
-  '1': '기타(우편)',
+  '1': '기타(우편 요금)',
   'I': 'Bill Letter+이메일', // 무선
   'K': 'Bill Letter+이메일', // 유선
   'A': '문자+이메일', // 유선
@@ -45,6 +45,13 @@ export const MYT_REISSUE_REQ_CODE = {
   '01': '기타',
   '02': '이메일',
   '03': '문자',
+  '05': 'Bill Letter'
+};
+
+export const MYT_REISSUE_REQ_LOCAL_CODE = {
+  'post': '기타',
+  '02': '이메일',
+  '10': '문자',
   '05': 'Bill Letter'
 };
 

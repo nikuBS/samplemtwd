@@ -77,18 +77,19 @@ Tw.PaymentHistoryAuto.prototype = {
         o.startDate = this._dateHelper.getShortDateWithFormatAddByUnit(o.drwYm, -1, 'months', 'YYYY.MM.DD', 'YYYY.MM');
         o.endDate = this._dateHelper.getEndOfMonth(o.startDate, 'YYYY.MM');
 
-        // TODO : API수정 FU, 청구월, 청구 기간, 상세 구분
-        // o.drwYm = o.invDtYm;
-        // o.startDate = o.lastInvDtFromTo.substr(0, 10);
-        // o.endDate = o.lastInvDtFromTo.substr(-10);
-        // o.type = o.tmthColClCdNm;
-        o.type = '당월 + 미납';
+        o.drwYm = o.invDtYm;
+        o.startDate = o.lastInvDtFromTo.substr(0, 10);
+        o.endDate = o.lastInvDtFromTo.substr(-10);
+        o.type = o.tmthColClCdNm;
+        // o.type = '당월 + 미납';
 
         o.drwAmt = Tw.FormatHelper.addComma(this.common._normalizeNumber(o.drwAmt)) || '0';
         o.drwReqAmt = Tw.FormatHelper.addComma(this.common._normalizeNumber(o.drwReqAmt));
 
         o.listId = i;
 
+
+        // console.log(o);
       }, this));
 
     } else {

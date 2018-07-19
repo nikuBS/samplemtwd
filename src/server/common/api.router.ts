@@ -78,7 +78,7 @@ class ApiRouter {
 
   private logoutTid(req: Request, res: Response, next: NextFunction) {
     this.loginService.logoutSession();
-    res.clearCookie('twm');
+    res.clearCookie('TWM');
     res.json({ code: API_CODE.CODE_00 });
   }
 

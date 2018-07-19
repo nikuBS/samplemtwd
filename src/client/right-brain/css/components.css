@@ -2166,6 +2166,16 @@
   border-top: 1px solid #000;
 }
 
+/*요금안내서이미지*/
+.pay_preview {
+  padding: 1.5625rem;
+}
+
+.pay_preview img {
+  width: 100%;
+  height: 100%;
+}
+
 /*추가 납부내역조회*/
 .pay-state .paychange-com {
   color: #f65d00;
@@ -2183,8 +2193,12 @@
   right: 0.0625rem;
 }
 
-.link-long-group .link-long .link-info-1 {
+.link-long-group .link-long.link-long-type1 .link-info-1 {
   color: #757575;
+}
+
+.link-long-group .link-long.link-long-type1 .link-info-2 {
+  padding-right: 0%;
 }
 
 /*MY03_02_02_08*/
@@ -4352,12 +4366,11 @@ li.payment-detail-box:last-child {
 }
 
 .payment-summary .type {
-  float: left;
+  float: right;
 }
 
 .payment-summary .total {
-  float: right;
-  text-align: right;
+  float: left;
 }
 
 .payment-summary .total .numb {
@@ -4421,7 +4434,7 @@ li.payment-detail-box:last-child {
 }
 
 .bt-full-wrap.pd-ver {
-  padding: 2.5rem 0 2.5rem;
+  padding: 2.5rem 0 0rem;
 }
 
 .bt-full-wrap.pd-ver .bt-full-more {

@@ -20,7 +20,7 @@ Tw.API_CMD = {
 
   // AUTH
   BFF_03_0002: { path: '/user/account-auth-sessions', method: Tw.API_METHOD.POST },
-  BFF_03_0003: { path: '/core-auth/v1/members', method: Tw.API_METHOD.DELETE },
+  BFF_03_0003: { path: '/user/accounts', method: Tw.API_METHOD.DELETE },
   BFF_03_0004: { path: '/core-auth/v1/services', method: Tw.API_METHOD.GET },
   BFF_03_0005: { path: '/user/services', method: Tw.API_METHOD.PUT },
   BFF_03_0006: { path: '/user/nick-names/args-0', method: Tw.API_METHOD.PUT },
@@ -46,6 +46,7 @@ Tw.API_CMD = {
   BFF_05_0031: { path: '/core-bill/v1/bill-pay/payment-possible-day', method: Tw.API_METHOD.GET },
   BFF_05_0033: { path: '/core-bill/v1/bill-pay/autopay-schedule', method: Tw.API_METHOD.GET },
   BFF_05_0035: { path: '/core-bill/v1/hotbill/fee/hotbill-request', method: Tw.API_METHOD.GET },
+  BFF_05_0036: { path: '/core-bill/v1/bill-pay/bills', method: Tw.API_METHOD.GET },
   BFF_05_0041: { path: '/core-product/v1/services/base-fee-plans', method: Tw.API_METHOD.GET },
   BFF_05_0047: { path: '/core-bill/v1/bill-pay/used-amounts', method: Tw.API_METHOD.GET },
   BFF_05_0050: { path: '/core-bill/v1/wire-bill-types', method: Tw.API_METHOD.PUT },
@@ -112,9 +113,12 @@ Tw.API_CMD = {
   BFF_07_0027: { path: '/core-bill/v1/bill-pay/settle-vb-sms', method: Tw.API_METHOD.GET },
   BFF_07_0028: { path: '/core-bill/v1/bill-pay/avail-point-search', method: Tw.API_METHOD.GET },
   BFF_07_0029: { path: '/core-bill/v1/bill-pay/pay-ocb-tpoint-proc', method: Tw.API_METHOD.POST },
+  BFF_07_0030: { path: '/core-bill/v1/payment/total-payment', method: Tw.API_METHOD.GET },
   BFF_07_0035: { path: '/core-bill/v1/payment/realtime-payment', method: Tw.API_METHOD.GET },
+  BFF_07_0036: { path: '/core-bill/v1/payment/realtime-payment-detail', method: Tw.API_METHOD.GET },
   BFF_07_0037: { path: '/core-bill/v1/payment/auto-payment', method: Tw.API_METHOD.GET },
   BFF_07_0039: { path: '/core-bill/v1/payment/auto-integrated-account-payment', method: Tw.API_METHOD.GET },
+  BFF_07_0040: { path: '/core-bill/v1/payment/auto-integrated-payment-cancle-request', method: Tw.API_METHOD.POST },
   BFF_07_0043: { path: '/core-bill/v1/ocbcard-no-info', method: Tw.API_METHOD.GET },
   BFF_07_0045: { path: '/core-bill/v1/ocb-point-onetime-reserve', method: Tw.API_METHOD.POST },
   BFF_07_0047: { path: '/core-bill/v1/ocb-point-onetime-cancel', method: Tw.API_METHOD.POST },
@@ -183,3 +187,4 @@ Tw.API_LOGIN_ERROR = {
   ICAS3228: 'ICAS3228',   // 고객보호비밀번호(대표회선) 입력 필요
   ICAS3235: 'ICAS3235'    // 휴면계정
 };
+

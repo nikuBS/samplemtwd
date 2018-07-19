@@ -67,9 +67,6 @@ Tw.MyTBillGuidechangeUpdatePrototype = {
     var isWire = (this._svcAttrCd === 'S1' || this._svcAttrCd === 'S2' || this._svcAttrCd === 'S3') ? true : false;
     var apiUrl =  isWire ? Tw.API_CMD.BFF_05_0050 : Tw.API_CMD.BFF_05_0027;
 
-    console.log('~~~~~isWire', isWire);
-    console.log('~~~~~apiUrl', apiUrl);
-    console.log('~~~~~requestParams', requestParams);
     this._apiService.request(apiUrl, requestParams)
       .done($.proxy(this._submitSuccess, this))
       .fail($.proxy(this._submitFail, this));
@@ -90,7 +87,11 @@ Tw.MyTBillGuidechangeUpdatePrototype = {
       if (resp.data) {
         this._showErrorAlert(resp.data && resp.data.msg);
       } else {
-        this._showErrorAlert(resp.error && resp.error.msg);
+        if (resp.error) {
+          this._showErrorAlert(resp.error.msg);
+        } else {
+          this._showErrorAlert(resp.msg);
+        }
       }
       return;
     }

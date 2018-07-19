@@ -41,7 +41,7 @@ class PaymentRealtimeController extends TwViewController {
         data.invYearMonth = DateHelper.getShortDateWithFormat(data.invDt, 'YYYY.MM');
         data.intMoney = this.removeZero(data.invAmt);
         data.invMoney = FormatHelper.addComma(data.intMoney);
-        data.svcName = SVC_CD[data.svcCd];
+        data.svcName = SVC_ATTR[data.svcAttrCd];
         list.totalAmount += parseInt(data.intMoney, 10);
       });
     }

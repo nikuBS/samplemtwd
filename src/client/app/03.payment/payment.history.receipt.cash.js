@@ -38,6 +38,11 @@ Tw.PaymentHistoryReceiptCash.prototype = {
 
   _setPageInfo: function () {
     this.useTemplate = this.defaultListTemplate;
+    // API 안나오는 경우 지난 데이터(6개월 이전)
+    // this.apiOption = {
+    //   frmDt: '20101111',
+    //   toDt: '20201111'
+    // };
 
     this.apiName = Tw.API_CMD.BFF_07_0004;
   },
@@ -51,15 +56,14 @@ Tw.PaymentHistoryReceiptCash.prototype = {
   },
 
   _setData: function (res) {
-
     if (res.code !== Tw.API_CODE.CODE_00) return this._apiError(res);
+
     this.result = res.result;
 
-    if (!this.result && this.result.length) {
-
+    if (this.result.length) {
       this.result.map($.proxy(function (o) {
         o.dealDate = this._dateHelper.getShortDateWithFormat(o.opDt, 'YYYY.MM.DD', 'YYYYMMDD');
-        o.svcNumber = Tw.FormatHelper.getFormattedPhoneNumber(o.svcNum);
+        o.svcNumber = o.svcNum;
         o.receiptedAmount = Tw.FormatHelper.addComma(this.common._normalizeNumber(o.opAmt));
       }, this));
     }
