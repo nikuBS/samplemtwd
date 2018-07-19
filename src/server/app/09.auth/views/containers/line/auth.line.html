@@ -102,7 +102,13 @@
                                                                                     <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
                                                                                 </span>
                                                                                 <span class="bt-box">
-                                                                                    <button class="bt-nickname" type="button" data-svcMgmtNum="<%= line.svcMgmtNum%>">닉네임 변경</button>
+                                                                                    <button class="bt-nickname" type="button" data-svcMgmtNum="<%= line.svcMgmtNum%>">
+                                                                                        <% if(line.nickNm === line.showName) { %>
+                                                                                        닉네임 변경
+                                                                                        <% } else { %>
+                                                                                        닉네임 등록
+                                                                                        <% } %>
+                                                                                    </button>
                                                                                 </span>
                                                                             </span>
                                                                         </div>
@@ -204,7 +210,13 @@
                                                                                     <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
                                                                                 </span>
                                                                                 <span class="bt-box">
-                                                                                    <button class="bt-nickname" type="button" data-svcMgmtNum="<%= line.svcMgmtNum%>">닉네임 변경</button>
+                                                                                    <button class="bt-nickname" type="button" data-svcMgmtNum="<%= line.svcMgmtNum%>">
+                                                                                        <% if(line.nickNm === line.showName) { %>
+                                                                                        닉네임 변경
+                                                                                        <% } else { %>
+                                                                                        닉네임 등록
+                                                                                        <% } %>
+                                                                                    </button>
                                                                                 </span>
                                                                             </span>
                                                                         </div>
@@ -306,7 +318,13 @@
                                                                                     <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
                                                                                 </span>
                                                                                 <span class="bt-box">
-                                                                                    <button class="bt-nickname" type="button" data-svcMgmtNum="<%= line.svcMgmtNum%>">닉네임 변경</button>
+                                                                                    <button class="bt-nickname" type="button" data-svcMgmtNum="<%= line.svcMgmtNum%>">
+                                                                                        <% if(line.nickNm === line.showName) { %>
+                                                                                        닉네임 변경
+                                                                                        <% } else { %>
+                                                                                        닉네임 등록
+                                                                                        <% } %>
+                                                                                    </button>
                                                                                 </span>
                                                                             </span>
                                                                         </div>
