@@ -326,17 +326,93 @@ class MyTBillBillguide extends TwViewController {
 
   //통합청구(일반)
   private combineCommonCircuit(res) {
-    this.logger.info(this, '[_urlTplInfo.combineCommonPage] : ', this._urlTplInfo.combineCommonPage);
-    this.renderView(res, this._urlTplInfo.combineCommonPage, {
-      reqQuery: this.reqQuery,
-      svcInfo: this._svcInfo,
-      billpayInfo : this._billpayInfo,
-      circuitChildInfo: this._circuitChildInfo,
-      commDataInfo: this._commDataInfo,
-      defaultInfo: this._defaultInfo,
-      showConditionInfo: this._showConditionInfo,
-      baseFeePlansInfo: this._baseFeePlansInfo
-    } );
+    let chargeRateReq: Observable<any>;
+    if( this.reqQuery.invDt ) {
+      chargeRateReq = this.apiService.request(API_CMD.BFF_05_0047, { invDt: this.reqQuery.invDt});
+    } else {
+      chargeRateReq = this.apiService.request(API_CMD.BFF_05_0036, {});
+    }
+    const myPlanReq: Observable<any> = this.apiService.request(API_CMD.BFF_05_0041, {});//나의요금제
+
+    const nonPaymenthistoryReq: Observable<any> = this.apiService.request(API_CMD.BFF_05_0030, {});//미납여부 버튼 노출
+
+
+    var thisMain = this;
+
+    const dataInit = function () {
+      thisMain._commDataInfo.selClaimDtNum = (thisMain._billpayInfo) ? thisMain.getSelClaimDtNum( String(thisMain._billpayInfo.invDt) ) : null;
+      thisMain._commDataInfo.selClaimDtBtn = (thisMain._billpayInfo) ? thisMain.getSelClaimDtBtn( String(thisMain._billpayInfo.invDt) ) : null;
+      thisMain._commDataInfo.selStaDt = (thisMain._billpayInfo) ? thisMain.getSelStaDt( String(thisMain._billpayInfo.invDt) ) : null;
+      thisMain._commDataInfo.selEndDt = (thisMain._billpayInfo) ? DateHelper.getShortDateNoDot( String(thisMain._billpayInfo.invDt) ) : null;
+      thisMain._commDataInfo.discount = (thisMain._billpayInfo) ? FormatHelper.addComma( String(Math.abs( Number(thisMain._billpayInfo.deduckTotInvAmt))) ) : 0;
+      thisMain._commDataInfo.joinSvcList = (thisMain._billpayInfo) ? ( thisMain._billpayInfo.paidAmtSvcCdList ) : null;
+      thisMain._commDataInfo.unPaidTotSum = (thisMain._defaultInfo) ? FormatHelper.addComma( String(thisMain._defaultInfo.unPaidTotSum) ) : null;
+      thisMain._commDataInfo.unPaidDetails = (thisMain._defaultInfo) ? thisMain._defaultInfo.unPaidAmtMonthInfoList : null;
+
+      thisMain._commDataInfo.unPaidDetails.map( (item) => {
+        item.unPaidInvDt = moment(String(item.unPaidInvDt)).add(1, 'days').format('YYYY년 MM월');
+        item.unPaidAmt = FormatHelper.addComma(String(item.unPaidAmt));
+      });
+
+      thisMain.logger.info(thisMain, '[ 미납요금 상세내역 ]', thisMain._commDataInfo.unPaidDetails);
+
+      thisMain.getCircuitChildInfoMask( thisMain._circuitChildInfo );//전화번호 마스킹
+      //노출조건 셋팅
+      thisMain._showConditionInfo.autopayYn = (thisMain._billpayInfo.autopayYn === 'Y') ? 'Y' : 'N';
+      thisMain._showConditionInfo.childYn = (thisMain._circuitChildInfo.length > 0) ? 'Y' : 'N';
+      thisMain._showConditionInfo.phoneYn = (thisMain._svcInfo.svcAttrCd === 'M1') ? 'Y' : 'N';
+      if(thisMain._defaultInfo) {
+        thisMain._showConditionInfo.defaultYn = (thisMain._defaultInfo.unPaidAmtMonthInfoList.length !== 0) ? 'Y' : 'N';
+      } else {
+        thisMain._showConditionInfo.defaultYn = 'N';
+      }
+      thisMain._showConditionInfo.chargeTtYn = (thisMain._baseFeePlansInfo.prodId === 'NA00001901') ? 'Y' : 'N';
+      thisMain._showConditionInfo.paymentBtnYn = (thisMain._paymentPossibleDayInfo.useObjYn === 'Y') ? 'Y' : 'N';
+      thisMain._showConditionInfo.suspensionYn = (thisMain._suspensionInfo.useObjYn === 'Y') ? 'Y' : 'N';
+    };
+
+    Observable.combineLatest(
+      chargeRateReq,
+      myPlanReq,
+      nonPaymenthistoryReq
+
+    ).subscribe(
+      {
+        next( [
+                chargeRateReq,
+                myPlanReq,
+                nonPaymenthistoryReq
+              ] ) {
+          thisMain.logger.info(this, '[ 1. next > chargeRateReq ] 청구요금 : ', chargeRateReq);
+          thisMain.logger.info(this, '[ 2. next > myPlanReq ] 나의요금제 : ', myPlanReq);
+          thisMain.logger.info(this, '[ 3. next > nonPaymenthistoryReq ] 미납내역 : ', nonPaymenthistoryReq);
+
+          thisMain._billpayInfo = (chargeRateReq.code==='00') ? chargeRateReq.result : null;//청구요금
+          thisMain._baseFeePlansInfo = (myPlanReq.code==='00') ? myPlanReq.result : null;// 나의요금제
+          thisMain._defaultInfo = (nonPaymenthistoryReq.code==='00') ? nonPaymenthistoryReq.result : null;//미납내역
+
+        },
+        error(error) {
+          thisMain.logger.info(this, '[ error ] : ', error.message || error);
+        },
+        complete() {
+          thisMain.logger.info(this, '[ complete ] : ');
+          dataInit();
+          thisMain.logger.info(this, '[_urlTplInfo.combineCommonPage] : ', thisMain._urlTplInfo.combineCommonPage);
+          thisMain.renderView(res, thisMain._urlTplInfo.combineCommonPage, {
+            reqQuery: thisMain.reqQuery,
+            svcInfo: thisMain._svcInfo,
+            billpayInfo : thisMain._billpayInfo,
+            circuitChildInfo: thisMain._circuitChildInfo,
+            commDataInfo: thisMain._commDataInfo,
+            defaultInfo: thisMain._defaultInfo,
+            showConditionInfo: thisMain._showConditionInfo,
+            baseFeePlansInfo: thisMain._baseFeePlansInfo
+          } );
+
+        } }
+    );
+
   }
 
   //개별청구
