@@ -315,7 +315,7 @@ Tw.PaymentRealtime.prototype = {
   },
   _paySms: function () {
     if (this._isSmsValid()) {
-      this._apiService.request(Tw.API_CMD.BFF_07_0027, { msg: 'sms' })
+      this._apiService.request(Tw.API_CMD.BFF_07_0027, {}, {}, '?msg=******')
         .done($.proxy(this._paySuccess, this))
         .fail($.proxy(this._payFail, this));
     }
@@ -324,10 +324,13 @@ Tw.PaymentRealtime.prototype = {
     return this._validation.checkIsSelected(this.$container.find('.select-bank-sms'), Tw.MSG_PAYMENT.REALTIME_A02);
   },
   _paySuccess: function (reqData, type, res) {
+    this._history.setHistory();
     if (res.code === Tw.API_CODE.CODE_00) {
-      this._history.setHistory();
       this._setCompleteData(reqData, type);
       this._go('#complete');
+    } else {
+      this.$container.find('.payment-err-msg').text(res.error.msg);
+      this._go('#error');
     }
   },
   _setCompleteData: function (reqData, type) {
@@ -365,8 +368,11 @@ Tw.PaymentRealtime.prototype = {
       $('.detail-payment:last').after($newTarget);
     });
   },
-  _payFail: function () {
+  _payFail: function (err) {
     Tw.Logger.info('pay request fail');
+    this._history.setHistory();
+    this.$container.find('.payment-err-msg').text(err.error.msg);
+    this._go('#error');
   },
   _getCheckedBillList: function (type) {
     var $listBox = this.$container.find('.payment-select .select-list');
