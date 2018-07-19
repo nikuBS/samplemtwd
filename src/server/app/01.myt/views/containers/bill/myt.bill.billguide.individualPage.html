@@ -168,13 +168,30 @@
                                     <!--// 아코디언 타이틀 -->
                                     <!-- 아코디언 내용 -->
                                      <div class="acco-content">
+                                         <ul class="payment-detail-depth1">
                                             <% Object.keys(group).forEach(function(groupSKey) { %>
-                                            <% var sGroup = group[groupSKey]; %>
-                                            <% console.log(sGroup); %>
-                                                <% if(sGroup.items) { %>
-                                                <ul class="payment-detail-depth1">
+                                              <% var sGroup = group[groupSKey]; %>
+                                              <% if(sGroup.items) { %>
+                                                <li>
+                                                 <dl class="pdt-wrap">
+                                                     <dt class="pdt-tit"><%= groupSKey %>
+                                                         <% if(sGroup.noVAT){ %>
+                                                         <span class="ico-foot-2"></span>
+                                                         <% } %>
+                                                         <% if(sGroup.is3rdParty){ %>
+                                                         <span class="ico-foot-1"></span>
+                                                         <% } %>
+                                                     </dt>
+                                                     <% if(sGroup.discount){ %>
+                                                     <dd class="pdt-price discount"><span class="num"><%= sGroup.total %></span>원</dd>
+                                                     <% } else {%>
+                                                     <dd class="pdt-price"><span class="num"><%= sGroup.total %></span>원</dd>
+                                                     <% } %>
+                                                 </dl>
+
+                                               <!-- depth-2 -->
+                                                 <ul class="payment-detail-depth2">
                                                   <% sGroup.items.forEach((item) => { %>
-                                                  <!-- is bill -->
                                                     <li>
                                                         <dl class="pdt-wrap">
                                                             <dt class="pdt-tit"><%= item.name %>
@@ -190,21 +207,21 @@
                                                             <dd class="pdt-price"><span class="num"><%= item.amount %></span>원</dd>
                                                             <% } %>
                                                         </dl>
-
                                                     </li>
-                                                 <% }) %>
+                                                   <% }) %><!-- end loop items-->
                                                 </ul>
-                                              <% } %>
-                                            <!-- //is bill -->
-                                        <% if(sGroup.showDesc){ %>
+                                             </li>
+                                               <% } %> <!-- end isBill -->
+                                           <% }) %><!-- end sgroup -->
+                                        </ul>
+                                        <% if(group.showDesc){ %>
                                         <div class="footnote-txt">
                                             <ul>
-                                                <li id="aria-footnote-01"><span class="ico-foot-2"></span>부가가치세 제외 대상 표시</li>&lt;!&ndash; 상단 텍스트 aria-labelledby 와 id 속성값을 동일하게 처리해야 함 &ndash;&gt;
+                                                <li id="aria-footnote-01"><span class="ico-foot-2"></span>부가가치세 제외 대상 표시</li><!--상단 텍스트 aria-labelledby 와 id 속성값을 동일하게 처리해야 함 -->
                                                 <li id="aria-footnote-02"><span class="badge badge-other"><span class="blind">타사</span></span>당사에서 청구 대행하는 타사 요금</li>
                                             </ul>
                                         </div>
                                          <% } %>
-                                      <% }) %>
                                     </div>
                                     <!--// 아코디언 내용 -->
                                 </li>

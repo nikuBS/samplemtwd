@@ -343,9 +343,9 @@ class MyTBillBillguide extends TwViewController {
   private individualCircuit(res) {
     let chargeRateReq: Observable<any>;
     if( this.reqQuery.invDt ) {
-      chargeRateReq = this.apiService.request(API_CMD.BFF_05_0036, { invDt: this.reqQuery.invDt});
+      chargeRateReq = this.apiService.request(API_CMD.BFF_05_0036, { invDt: this.reqQuery.invDt, detailYn: 'Y'});
     } else {
-      chargeRateReq = this.apiService.request(API_CMD.BFF_05_0036, {});
+      chargeRateReq = this.apiService.request(API_CMD.BFF_05_0036, {detailYn: 'Y'});
     }
     const myPlanReq: Observable<any> = this.apiService.request(API_CMD.BFF_05_0041, {});//나의요금제
     const childrenLineReq: Observable<any> = this.apiService.request(API_CMD.BFF_05_0024, {});//자녀회선
@@ -354,6 +354,7 @@ class MyTBillBillguide extends TwViewController {
     const nonPaymenthistorySetFreeReq: Observable<any> = this.apiService.request(API_CMD.BFF_05_0037, {});//미납 이용정지해제 버튼노출
 
     var thisMain = this;
+    let billItems = {};
 
     const dataInit = function () {
       thisMain._commDataInfo.selClaimDtNum = (thisMain._billpayInfo) ? thisMain.getSelClaimDtNum( String(thisMain._billpayInfo.invDt) ) : null;
@@ -417,6 +418,8 @@ class MyTBillBillguide extends TwViewController {
           thisMain._defaultInfo = (nonPaymenthistoryReq.code==='00') ? nonPaymenthistoryReq.result : null;//미납내역
           thisMain._paymentPossibleDayInfo = (nonPaymenthistoryDayReq.code==='00') ? nonPaymenthistoryDayReq.result : null;//미납내역 납부가능일
           thisMain._suspensionInfo = (nonPaymenthistorySetFreeReq.code==='00') ? nonPaymenthistorySetFreeReq.result : null;//미납요금 이용정지해제 정보 조회
+
+          billItems = thisMain.arrayToObject(thisMain._billpayInfo.paidAmtDetailInfo, thisMain.fieldInfo);
         },
         error(error) {
           thisMain.logger.info(this, '[ error ] : ', error.message || error);
@@ -433,7 +436,8 @@ class MyTBillBillguide extends TwViewController {
             commDataInfo: thisMain._commDataInfo,
             defaultInfo: thisMain._defaultInfo,
             showConditionInfo: thisMain._showConditionInfo,
-            baseFeePlansInfo: thisMain._baseFeePlansInfo
+            baseFeePlansInfo: thisMain._baseFeePlansInfo,
+            billItems: billItems
           } );
 
         } }
@@ -560,19 +564,17 @@ class MyTBillBillguide extends TwViewController {
         group[groupL][groupS] = { items: [], total: 0, noVAT: noVAT, is3rdParty: is3rdParty };
       }
 
-      // amount = Tw.StringHelper.parseCommaedStringToInt(item[fieldInfo.value]);
+      amount = parseInt(item[fieldInfo.value].replace(/,/,''));
       group[groupL].total += amount;
       group[groupL][groupS].total += amount;
 
       var bill_item = {
         name: item[fieldInfo.name].replace(/[*#]/g, ''),
-        // amount: Tw.StringHelper.commaSeparatedString(item[fieldInfo.value]),
         amount: item[fieldInfo.value],
         noVAT: item[fieldInfo.name].indexOf('*') > -1 ? true : false,
         is3rdParty: item[fieldInfo.name].indexOf('#') > -1 ? true : false,
         discount: amount < 0 ? true : false
       };
-      // group[groupL][groupS].items.push($.extend({}, bill_item));
       group[groupL][groupS].items.push({ ...bill_item });
       bill_item.amount = item[fieldInfo.value];
     };
@@ -590,10 +592,10 @@ class MyTBillBillguide extends TwViewController {
             delete itemS.items[0];
           }
           itemS.discount = itemS.total < 0 ? true : false;
-          // itemS.total = Tw.StringHelper.commaSeparatedString(itemS.total);
+          itemS.total =  itemS.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
         }
         itemL.discount = itemL.total < 0 ? true : false;
-        // itemL.total = Tw.StringHelper.commaSeparatedString(itemL.total);
+        itemL.total =  itemL.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
       });
     });
     console.log(group);
