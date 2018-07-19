@@ -39,10 +39,10 @@ Tw.RechargeCookizHistory.prototype = {
 
   _bindEvent: function () {
     this.$container.on('click', '.bt-dropdown.small', $.proxy(this.openWidget, this));
+    this.$container.on('click', '.btn_refundable', $.proxy(this._cancelRecharge, this));
     this.$container.on('click', '.tab-linker button', $.proxy(this._onChangeTab, this));
     this.$container.on('click', '.gift-bt-more', $.proxy(this._onClickMoreButton, this));
     this.$container.on('click', '.search_condition button', $.proxy(this._onSelectCondition, this));
-    this.$container.on('click', '.btn_refundable', $.proxy(this._cancelRecharge, this));
   },
 
   _onClickMoreButton: function () {
@@ -104,6 +104,7 @@ Tw.RechargeCookizHistory.prototype = {
 
     if ( nCurrentTabIndex === 1 ) {
       this._apiService.request(Tw.API_CMD.BFF_06_0033, {
+        type: this.tab2_searchType,
         fromDt: Tw.DateHelper.getShortDateWithFormatAddByUnit(new Date(), this.tab2_searchPeriod, 'month', 'YYYYMMDD'),
         toDt: Tw.DateHelper.getCurrentShortDate()
       }).done($.proxy(this._onSuccessFetchData, this));
