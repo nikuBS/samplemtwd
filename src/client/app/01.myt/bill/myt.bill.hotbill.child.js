@@ -75,7 +75,16 @@ Tw.MyTBillHotBillChild.prototype = {
 
     if ( resp.result && resp.result.isSuccess === 'Y' ) {
       if ( resp.result.gubun === Tw.MyTBillHotBill.PARAM.TYPE.PREVIOUS ) {
-        Tw.MyTBillHotBill.openPrevBillPopup(resp, this._svcNum, '휴대폰');
+        var type = this._svcAttrCd === this.SVC_TYPE.MOBILE ? '휴대폰' : 'T Pocket-Fi';
+        //전월요금 없음
+        if ( resp.result.bf_mth_yn === 'Y' && resp.result.hotBillInfo.tot_open_bal1 === '0' && resp.result.hotBillInfo.tot_dedt_bal1 === '0' ) {
+          this._popupService.open({
+            hbs: 'MY_03_01_01_L03_case',
+            data: { svcNum: this._svcNum, svcType: type }
+          });
+        } else {
+          Tw.MyTBillHotBill.openPrevBillPopup(resp, this._svcNum, type);
+        }
       } else {
         var billData = resp.result.hotBillInfo;
         var day = parseInt(resp.result.stdDateHan.match(/(\d+)\uC77C/i)[1], 10);
@@ -149,13 +158,7 @@ Tw.MyTBillHotBillChild.prototype = {
         })
         .fail($.proxy(this._onErrorReceivedBillData, this));
     } else {
-      this._popupService.open({
-        hbs: 'MY_03_01_01_L03_case',
-        data: {
-          svcNum: this._svcNum,
-          svcType: '휴대폰'
-        }
-      });
+
     }
   },
 
@@ -169,7 +172,6 @@ Tw.MyTBillHotBillChild.prototype = {
   },
 
   _onErrorReceivedBillData: function (e) {
-
     Tw.Logger.error('[Myt > Bill > HotBill]');
     Tw.Logger.error(e);
     //TODO error alert 공통모듈
