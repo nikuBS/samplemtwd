@@ -21,62 +21,104 @@ Tw.mytBillBillguidePrepaidPage = function (rootEl, resData) {
   this._history = new Tw.HistoryService(this.$container);
   this._history.init('hash');
 
+  this.dateObj = {
+    selArr: [],
+    termNum: 2,
+    startDt: null,
+    endDt: null
+  };
+
   this._init();
   this._bindEvent();
 };
 
 Tw.mytBillBillguidePrepaidPage.prototype = {
   _init: function () {
-    //this.$refillBtn = this.$container.find('.link-long > a');
+    this.dateObj.startDt = moment().subtract(2, 'months');
+    this.dateObj.endDt = moment();
+
+    for ( var i=this.dateObj.termNum,len=0; i>=len; i-- ) {
+      var tempDateFormat = moment().subtract(i, 'months').format('YYYYMM');
+      this.dateObj.selArr.push(tempDateFormat);
+    }
+
+    this._cachedElement();
+
+    this.$startDtBtn.text( this.dateObj.startDt.format('YYYY.MM') );
+    this.$startDtBtn.attr( 'data-info', this.dateObj.startDt.format('YYYYMM') );
+
+    this.$endDtBtn.text( this.dateObj.endDt.format('YYYY.MM') );
+    this.$endDtBtn.attr( 'data-info', this.dateObj.endDt.format('YYYYMM') );
+
   },
   _bindEvent: function () {
-    //this.$container.on('click', '.slick-slide', $.proxy(this._selectCoupon, this));
+    this.$container.on('click', '[data-target="startDtBtn"]', $.proxy(this._selPopOpen, this));
+    this.$container.on('click', '[data-target="endDtBtn"]', $.proxy(this._selPopOpen, this));
+    this.$container.on('click', '[data-target="getListBtn"]', $.proxy(this._getList, this));
+  },
+  _queryInit: function() {
+
+  },
+  _cachedElement: function () {
+    this.$startDtBtn = $('[data-target="startDtBtn"]');
+    this.$endDtBtn = $('[data-target="endDtBtn"]');
   },
   //--------------------------------------------------------------------------[이벤트 | 팝업]
-  _totPaySelectFun : function(event) {//팝업 오픈
+  _selPopOpen : function(event) {
     var $target = $(event.currentTarget);
+    var tempArr = this.dateObj.selArr;
     var arrOption = [];
-    for ( var i=0, len=this.resData.billpayInfo.invDtArr.length; i<len; i++ ) {
+    for ( var i=0, len=tempArr.length; i<len; i++ ) {
       arrOption.push({
-        'attr':'onclick=""',
-        text : this._getSelClaimDtBtn( this.resData.billpayInfo.invDtArr[i] )
+        'attr' : 'data-info="' + tempArr[i] + '"',
+        text : this._getSelBtn( tempArr[i] )
       });
     }
-    this._popupService.openChoice('기간선택', arrOption,
-      'type1', $.proxy(this._totPaySelectEvt, this, $target));
+    this._popupService.openChoice('기간선택', arrOption, 'type1', $.proxy(this._selPopOpenEvt, this, $target));
   },
-  _totPaySelectEvt: function ($target, $layer) {//이벤트 설정
-    console.info('[$target]', $target);//버튼 타겟
-    console.info('[$layer]', $layer);//팝업 레이어 타겟
-    $layer.on('click', '.popup-choice-list', $.proxy(this._totPaySelectExe, this, $target));
+  _selPopOpenEvt: function ($target, $layer) {
+    $layer.on('click', '.popup-choice-list', $.proxy(this._selPopOpenEvtExe, this, $target, $layer));
   },
-  _totPaySelectExe: function ($target, event) {
-    var $selectedValue = $(event.currentTarget);
-    //$target.attr('id', $selectedValue.find('button').attr('id'));
-    $target.text($selectedValue.text());
+  _selPopOpenEvtExe: function ($target, $layer, event) {
+    var curTg = $(event.currentTarget);
+    var tg = $target;
+    var dataTemp = curTg.find('button').attr('data-info');
+    tg.text( curTg.text() );
+    tg.attr('data-info', dataTemp );
     this._popupService.close();
+    //this._goLoad('/myt/bill/billguide?invDt='+ dataTemp);
   },
   //--------------------------------------------------------------------------[api]
-  _getDetailSpecification: function() {
+  _getList: function() {
+    console.info('[_getList]');
 
-    $.ajax('http://localhost:3000/mock/myt.bill.billguide.BFF_05_00036.json')
-      .done(function(resp){
-        console.log('성공');
-        Tw.Logger.info(resp);
-      })
-      .fail(function(err) {
-        console.log('실패');
-        Tw.Logger.info(err);
-      });
+    this._cachedElement();
 
-    // this._apiService.request(Tw.API_CMD.BFF_05_0036, { detailYn: 'Y' })
-    //   .done(function(resp){
-    //     Tw.Logger.info('[청구요금 | 상세요금조회]', resp);
-    //   })
-    //   .fail(function(err){})
+    var tempParam = {
+      startMM: this.$startDtBtn.attr('data-info'),
+      endMM:this.$endDtBtn.attr('data-info')
+    };
+
+    console.info('[tempParam]', tempParam);
+
+    this._apiService.request(Tw.API_CMD.BFF_05_0014, tempParam)
+      .done($.proxy(function(resp){
+        this._getListOutput(resp.result);
+      }, this))
+      .fail(function(err){})
   },
-
   //--------------------------------------------------------------------------[공통]
+  _getListOutput: function(dataList) {
+    this._cachedElement();
+    var tempList = dataList;
+
+    console.info('[tempList]', tempList);
+
+    // for ( var i=0,len=tempList.length; i<len; i++ ) {
+    //
+    // }
+
+  },
   _onOpenSelectPopup: function () {
     //$('.popup-info').addClass('scrolling');
   },
@@ -94,5 +136,8 @@ Tw.mytBillBillguidePrepaidPage.prototype = {
   },
   _getSelClaimDtBtn: function (str) {
     return moment(str).add(1, 'days').format('YYYY년 MM월');
+  },
+  _getSelBtn: function (str) {
+    return moment(str).add(1, 'days').format('YYYY.MM');
   }
 };

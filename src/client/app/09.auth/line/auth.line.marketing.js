@@ -10,6 +10,7 @@ Tw.AuthLineMarketing = function () {
   this.svcMgmtNum = '';
   this.agr201Yn = '';
   this.agr203Yn = '';
+  this.callback = null;
 
   this.$btnDisagree = null;
   this.$btnAgree = null;
@@ -18,23 +19,20 @@ Tw.AuthLineMarketing = function () {
 };
 
 Tw.AuthLineMarketing.prototype = {
-  openMarketingOffer: function (svcMgmtNum, showName, svcNum) {
+  openMarketingOffer: function (svcMgmtNum, showName, svcNum, callback) {
     this.svcMgmtNum = svcMgmtNum;
+    this.callback = callback;
     this._apiService.request(Tw.API_CMD.BFF_03_0014, {}, {}, svcMgmtNum)
       .done($.proxy(this._successGetMarketingOffer, this, showName, svcNum))
       .fail($.proxy(this._failGetMargetingOffer, this));
   },
   _successGetMarketingOffer: function (showName, svcNum, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      this.agr201Yn = resp.result.agr201Yn;
+      this.agr203Yn = resp.result.agr203Yn;
       this._openMarketingOfferPopup(showName, resp.result);
     } else {
-      console.log('_failGetMargetingOffer');
-      var result = {
-        svcNum: svcNum,
-        agr201Yn: 'Y',
-        agr203Yn: 'N'
-      };
-      this._openMarketingOfferPopup(showName, result);
+      this.openAlert(resp.code + ' ' + resp.msg);
     }
   },
   _failGetMargetingOffer: function () {
@@ -78,7 +76,6 @@ Tw.AuthLineMarketing.prototype = {
     this._enableBtns();
   },
   _onClickAgree: function () {
-    this._setAgreeValue();
     var params = {
       agr201Yn: this.agr201Yn,
       agr203Yn: this.agr203Yn
@@ -87,16 +84,21 @@ Tw.AuthLineMarketing.prototype = {
       .done($.proxy(this._successAgreeMarketing, this))
       .fail($.proxy(this._failAgreeMarketing, this));
   },
-  _setAgreeValue: function () {
-    this.agr201Yn = $(this.$childChecks[0]).is(':checked') ? 'Y' : 'N';
-    this.agr203Yn = $(this.$childChecks[1]).is(':checked') ? 'Y' : 'N';
-  },
   _onClickDisagree: function () {
-    this._setAgreeValue();
     this._popupService.close();
   },
   _closeOpenMarketingOfferPopup: function () {
     this._openCompleteMarketingPopup();
+  },
+  _successAgreeMarketing: function (resp) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      this.agr201Yn = $(this.$childChecks[0]).is(':checked') ? 'Y' : 'N';
+      this.agr203Yn = $(this.$childChecks[1]).is(':checked') ? 'Y' : 'N';
+      this._popupService.close();
+    }
+  },
+  _failAgreeMarketing: function () {
+
   },
   _checkElement: function ($element) {
     $element.prop('checked', true);
@@ -138,16 +140,11 @@ Tw.AuthLineMarketing.prototype = {
     $layer.on('click', '.bt-red1', $.proxy(this._confirmCompleteMarketingPopup, this));
 
   },
-  _successAgreeMarketing: function (resp) {
-    if(resp.code === Tw.API_CODE.CODE_00) {
-      this._openCompleteMarketingPopup();
-    }
-  },
-  _failAgreeMarketing: function () {
-
-  },
   _confirmCompleteMarketingPopup: function () {
     this._popupService.close();
+    if ( !Tw.FormatHelper.isEmpty(this.callback) ) {
+      this.callback();
+    }
   }
 };
 

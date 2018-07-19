@@ -68,12 +68,19 @@ Tw.MyTBillHotBill.prototype = {
     if ( resp.result && resp.result.isSuccess === 'Y' ) {
       if ( resp.result.gubun === Tw.MyTBillHotBill.PARAM.TYPE.PREVIOUS ) {
         var type = this._svcAttrCd === this.SVC_TYPE.MOBILE ? '휴대폰' : 'T Pocket-Fi';
-        Tw.MyTBillHotBill.openPrevBillPopup(resp, this._svcNum, type);
+        //전월요금 없음
+        if ( resp.result.bf_mth_yn === 'Y' && resp.result.hotBillInfo.tot_open_bal1 === '0' && resp.result.hotBillInfo.tot_dedt_bal1 === '0' ) {
+          this._popupService.open({
+            hbs: 'MY_03_01_01_L03_case',
+            data: { svcNum: this._svcNum, svcType: type }
+          });
+        } else {
+          Tw.MyTBillHotBill.openPrevBillPopup(resp, this._svcNum, type);
+        }
       } else {
         this._svcAttrCd = this.$container.find('.info-type').attr('data-type');
         this._svcNum = this.$container.find('.info-type').attr('data-num');
         var billData = resp.result.hotBillInfo;
-        this._preBillAvailable = (billData.bf_mth_yn === 'Y');
         //자녀 회선 메뉴는 매월 1일과 자녀회선 없을 시 비노출
         //TODO 오늘 날짜 가져오는 방법 공통 로직 여부 논의 필요
         if ( resp.result.isChildAvailableYN === 'Y' ) {
@@ -186,21 +193,15 @@ Tw.MyTBillHotBill.prototype = {
 
   _showPreviousBill: function () {
     event.preventDefault();
-    if ( this._preBillAvailable ) {
-      var self = this;
-      skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
-      this._apiService
-        .request(Tw.API_CMD.BFF_05_0035, { gubun: Tw.MyTBillHotBill.PARAM.TYPE.PREVIOUS })
-        .done(function () {
-          self._resTimerID = setTimeout(self._getBillResponse(Tw.MyTBillHotBill.PARAM.TYPE.PREVIOUS), 500);
-        })
-        .fail($.proxy(this._onErrorReceivedBillData, this));
-    } else {
-      this._popupService.open({
-        hbs: 'MY_03_01_01_L03_case',
-        data: { svcNum: this._svcNum, svcType: this._svcAttrCd === this.SVC_TYPE.MOBILE ? '휴대폰' : 'T Pocket-Fi' }
-      });
-    }
+    var self = this;
+    skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
+    this._apiService
+      .request(Tw.API_CMD.BFF_05_0035, { gubun: Tw.MyTBillHotBill.PARAM.TYPE.PREVIOUS })
+      .done(function () {
+        self._resTimerID = setTimeout(self._getBillResponse(Tw.MyTBillHotBill.PARAM.TYPE.PREVIOUS), 500);
+      })
+      .fail($.proxy(this._onErrorReceivedBillData, this));
+
   }
 };
 
