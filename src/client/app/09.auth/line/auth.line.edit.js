@@ -27,6 +27,8 @@ Tw.AuthLineEdit.prototype = {
   _bindEvent: function () {
     this.$container.on('click', '#bt-guide', $.proxy(this._openGuidePopup, this));
     this.$container.on('click', '#bt-complete', $.proxy(this._completeEdit, this));
+    this.$container.on('click', '.bt-remove', $.proxy(this._onClickRemove, this));
+    this.$container.on('click', '.bt-add', $.proxy(this._onClickAdd, this));
     this.$list = this.$container.find('.ui-state-default');
   },
   _openGuidePopup: function () {
@@ -45,6 +47,18 @@ Tw.AuthLineEdit.prototype = {
   // _changeSort: function ($event, ui) {
   //
   // },
+  _onClickAdd: function ($event) {
+    var $target = $($event.currentTarget);
+    $target.addClass('bt-remove');
+    $target.removeClass('bt-add');
+
+  },
+  _onClickRemove: function ($event) {
+    var $target = $($event.currentTarget);
+    $target.addClass('bt-add');
+    $target.removeClass('bt-remove');
+    this._popupService.openAlert(Tw.MSG_AUTH.LINE_A21);
+  },
   _openRegisterPopup: function (svcNumList) {
     this._popupService.openConfirm(Tw.POPUP_TITLE.NOTIFY, Tw.MSG_AUTH.LINE_A22, null, null, $.proxy(this._confirmRegisterPopup, this, svcNumList));
   },
