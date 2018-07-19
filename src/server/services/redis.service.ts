@@ -16,7 +16,7 @@ class RedisService {
   }
 
   public middleware = session({
-    key: 'twm',
+    key: 'TWM',
     store: new this.RedisStore(this.redisOption),
     cookie: { maxAge: 60 * 60 * 1000 }, // 1hours
     secret: 'sktechx',

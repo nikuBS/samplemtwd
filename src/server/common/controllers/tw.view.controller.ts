@@ -53,7 +53,8 @@ abstract class TwViewController {
     if ( !FormatHelper.isEmpty(tokenId) ) {
       // TID login
       this.apiService.requestLoginTid(tokenId, req.query.stateVal).subscribe((resp) => {
-        this.render(req, res, next, new SvcInfoModel(resp), resp.noticeTpyCd);
+        console.log(resp);
+        this.render(req, res, next, this.loginService.getSvcInfo(), resp.noticeTpyCd);
       }, (error) => {
         // 로그인 실패
         if ( error.code === API_LOGIN_ERROR.ICAS3228 ) {
@@ -65,13 +66,13 @@ abstract class TwViewController {
         } else if ( error.code === API_LOGIN_ERROR.ATH1003 ) {
           res.redirect('/auth/login/exceed-fail');
         } else {
-          res.redirect('/auth/login/fail?errorCode=' + error);
+          res.redirect('/auth/login/fail?errorCode=' + error.code);
         }
       });
     } else {
       // TEST login
       this.apiService.requestLoginTest(userId).subscribe((resp) => {
-        this.render(req, res, next, new SvcInfoModel(resp), resp.noticeTpyCd);
+        this.render(req, res, next, this.loginService.getSvcInfo(), resp.noticeTpyCd);
       }, (error) => {
         // 로그인 실패
         if ( error.code === API_LOGIN_ERROR.ICAS3228 ) {
@@ -83,7 +84,7 @@ abstract class TwViewController {
         } else if ( error.code === API_LOGIN_ERROR.ATH1003 ) {
           res.redirect('/auth/login/exceed-fail');
         } else {
-          res.redirect('/auth/login/fail?errorCode=' + error);
+          res.redirect('/auth/login/fail?errorCode=' + error.code);
         }
       });
     }
