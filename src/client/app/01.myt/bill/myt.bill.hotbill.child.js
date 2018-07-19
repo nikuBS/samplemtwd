@@ -92,8 +92,6 @@ Tw.MyTBillHotBillChild.prototype = {
         var target = _.find(this._children, { svcMgmtNum: this._childSvcNum });
         this.$deviceInfo.text(target.childEqpMdNm);
         this.$svcNum.text(target.svcNum);
-        this._preBillAvailable = (billData.bf_mth_yn === 'Y');
-
         //자녀 핸드폰: 7일까지 전월요금보기 보이기
         if ( day <= 7 ) {
           this.$btPreviousBill.show();
@@ -146,20 +144,17 @@ Tw.MyTBillHotBillChild.prototype = {
 
   _showPreviousBill: function () {
     event.preventDefault();
-    if ( this._preBillAvailable ) {
-      skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
-      this._apiService
-        .request(Tw.API_CMD.BFF_05_0035, {
-          gubun: Tw.MyTBillHotBill.PARAM.TYPE.PREVIOUS,
-          childSvcMgmtNum: this._childSvcNum
-        })
-        .done(function () {
-          this._startGetBillResponseTimer(Tw.MyTBillHotBill.PARAM.TYPE.PREVIOUS, this._childSvcNum);
-        })
-        .fail($.proxy(this._onErrorReceivedBillData, this));
-    } else {
+    skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
+    this._apiService
+      .request(Tw.API_CMD.BFF_05_0035, {
+        gubun: Tw.MyTBillHotBill.PARAM.TYPE.PREVIOUS,
+        childSvcMgmtNum: this._childSvcNum
+      })
+      .done(function () {
+        this._startGetBillResponseTimer(Tw.MyTBillHotBill.PARAM.TYPE.PREVIOUS, this._childSvcNum);
+      })
+      .fail($.proxy(this._onErrorReceivedBillData, this));
 
-    }
   },
 
   _onOpenChildrenChoice: function ($popup) {
