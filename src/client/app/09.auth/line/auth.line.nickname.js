@@ -38,13 +38,7 @@ Tw.AuthLineNickname.prototype = {
       this.$nickNameInput.addClass('error');
       this.$nickNameGuide.addClass('error-txt');
     } else {
-      if(!Tw.FormatHelper.isEmpty(svcMgmtNum)) {
-        this._changeNickname(inputValue, svcMgmtNum);
-      } else {
-        this._closeCallback(inputValue);
-        this._closeCallback = null;
-      }
-      this._popupService.close();
+      this._changeNickname(inputValue, svcMgmtNum);
     }
   },
   _onKeyupNickname: function () {
@@ -70,9 +64,13 @@ Tw.AuthLineNickname.prototype = {
       .fail($.proxy(this._failChangeNickname, this, nickname));
   },
   _successChangeNickname: function (nickname, resp) {
-    this._closeCallback(nickname);
-    this._closeCallback = null;
-    console.log('popup change success', resp);
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      this._popupService.close();
+      this._closeCallback(nickname);
+      this._closeCallback = null;
+    } else {
+      this._popupService.openAlert(resp.code + ' ' + resp.msg);
+    }
   },
   _failChangeNickname: function (nickname, error) {
     console.log('popup change fail', error);
