@@ -10,6 +10,8 @@ Tw.AuthLine = function (rootEl, nicknamePopup) {
   this._apiService = Tw.Api;
   this._nicknamePopup = nicknamePopup;
 
+  this._changeList = false;
+
   this.$inputNickname = null;
   this.$showNickname = null;
 
@@ -27,7 +29,7 @@ Tw.AuthLine.prototype = {
   _openNickname: function ($event) {
     var $btNickname = $($event.currentTarget);
     var svcMgntNum = $btNickname.data('svcmgmtnum');
-    var $currentLine = $btNickname.parents('.widget');
+    var $currentLine = $btNickname.parents('.js-show-line');
 
     this.$inputNickname = $currentLine.find('.input-nickname');
     this.$showNickname = $currentLine.find('.show-nickname');
@@ -57,16 +59,23 @@ Tw.AuthLine.prototype = {
 
   _onChangeFirst: function ($event) {
     var $currentTarget = $($event.currentTarget);
-    this._popupService.openConfirm(Tw.POPUP_TITLE.NOTIFY, Tw.MSG_AUTH.LINE_A01, null, null, $.proxy(this._confirmNotifyPopup, this, $currentTarget));
+    this._popupService.openConfirm(Tw.POPUP_TITLE.NOTIFY, Tw.MSG_AUTH.LINE_A01, null, null,
+      $.proxy(this._confirmNotifyPopup, this), $.proxy(this._closeNotifyPopup, this, $currentTarget));
   },
-  _confirmNotifyPopup: function ($currentTarget) {
-    var currentSvcMgmtNum = $currentTarget.parents('.js-show-line').data('svcmgmtnum');
-    var $remainList = $currentTarget.parents('.js-line-list').find('.js-show-line').filter('[data-svcmgmtnum!=' + currentSvcMgmtNum + ']');
-    var changeList = [currentSvcMgmtNum];
-    _.map($remainList, $.proxy(function (remainLine) {
-      changeList.push($(remainLine).data('svcmgmtnum'));
-    }, this));
-    this._requestChangeList(changeList);
+  _confirmNotifyPopup: function () {
+    this._popupService.close();
+    this._changeList = true;
+  },
+  _closeNotifyPopup: function ($currentTarget) {
+    if ( this._changeList ) {
+      var currentSvcMgmtNum = $currentTarget.parents('.js-show-line').data('svcmgmtnum');
+      var $remainList = $currentTarget.parents('.js-line-list').find('.js-show-line').filter('[data-svcmgmtnum!=' + currentSvcMgmtNum + ']');
+      var changeList = [currentSvcMgmtNum];
+      _.map($remainList, $.proxy(function (remainLine) {
+        changeList.push($(remainLine).data('svcmgmtnum'));
+      }, this));
+      this._requestChangeList(changeList);
+    }
   },
   _requestChangeList: function (svcNumList) {
     var lineList = svcNumList.join('~');
