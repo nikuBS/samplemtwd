@@ -23,36 +23,36 @@
                                 <ul>
                                     <li>
                                         <span class="title">발행일자</span>
-                                        <span class="tx-cont">2018.05.23</span>
+                                        <span class="tx-cont">{{data.receiptDate}}</span>
                                     </li>
                                     <li>
                                         <div class="inner-top">
                                             <span class="title">고객/사업자명</span>
-                                            <span class="tx-cont">라이트브레인</span>
+                                            <span class="tx-cont">{{data.customerName}}</span>
                                         </div>
                                     </li>
                                     <li>
                                         <span class="title">사업자 번호</span>
-                                        <span class="tx-cont">456456456456</span>
+                                        <span class="tx-cont">{{data.companyNumber}}</span>
                                     </li>
                                     <li>
                                         <div class="inner-top">
                                             <span class="title">납부금액</span>
-                                            <span class="tx-cont">27,000 원</span>
+                                            <span class="tx-cont">{{data.receiptedAmount}} 원</span>
                                         </div>
                                         <div class="inner-row">
                                             <ul>
                                                 <li>
                                                     <span class="title">공급가액</span>
-                                                    <span class="tx-cont">27,000 원</span>
+                                                    <span class="tx-cont">{{data.priceAmount}} 원</span>
                                                 </li>
                                                 <li>
                                                     <span class="title">부가세액</span>
-                                                    <span class="tx-cont">2,000원</span>
+                                                    <span class="tx-cont">{{data.taxAmount}} 원</span>
                                                 </li>
                                                 <li>
                                                     <span class="title">합계금액</span>
-                                                    <span class="tx-cont">22,000원</span>
+                                                    <span class="tx-cont">{{data.totalAmount}} 원</span>
                                                 </li>
                                             </ul>
                                         </div>

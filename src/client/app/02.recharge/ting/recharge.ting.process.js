@@ -31,7 +31,7 @@ Tw.RechargeTingProcess.prototype = {
 
   _init: function () {
     this._apiService.request(Tw.API_CMD.BFF_06_0020, {}).done($.proxy(this._setProvider, this));
-    this.$wrap_tpl_contact.html(this.tpl_contact({ isMobile: Tw.BrowserHelper.isMobile() }));
+    this.$wrap_tpl_contact.html(this.tpl_contact({ isMobile: Tw.BrowserHelper.isApp() }));
   },
 
   _cachedElement: function () {
