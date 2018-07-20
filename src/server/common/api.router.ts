@@ -4,6 +4,8 @@ import { API_CODE } from '../types/api-command.type';
 import LoggerService from '../services/logger.service';
 import ApiService from '../services/api.service';
 import LoginService from '../services/login.service';
+import BrowserHelper from '../utils/browser.helper';
+import { CHANNEL_TYPE, COOKIE_KEY } from '../types/bff-common.type';
 
 class ApiRouter {
   public router: Router;
@@ -20,6 +22,7 @@ class ApiRouter {
   private setApi() {
     this.router.get('/environment', this.getEnvironment.bind(this));
     this.router.post('/device', this.setDeviceInfo.bind(this));
+    this.router.post('/channel', this.setChannel.bind(this));
     this.router.post('/change-session', this.changeSession.bind(this));
     this.router.post('/service-password-sessions/login', this.svcPasswordLogin.bind(this));
     this.router.post('/login-tid', this.loginTid.bind(this));
@@ -41,7 +44,16 @@ class ApiRouter {
     const deviceInfo = req.body;
     const deviceCookie = `osType: ${deviceInfo.osType}; appVersion: ${deviceInfo.appVersion}; osVersion: ${deviceInfo.osVersion}`;
     this.logger.info(this, '[set cookie]', deviceCookie);
-    res.cookie('device', deviceCookie);
+    res.cookie(COOKIE_KEY.DEVICE, deviceCookie);
+    const resp = {
+      code: API_CODE.CODE_00
+    };
+    res.json(resp);
+  }
+
+  private setChannel(req: Request, res: Response, next: NextFunction) {
+    const channel = BrowserHelper.isApp(req) ? CHANNEL_TYPE.MOBILE_APP : CHANNEL_TYPE.MOBILE_WEB;
+    res.cookie(COOKIE_KEY.CHANNEL, channel);
     const resp = {
       code: API_CODE.CODE_00
     };
