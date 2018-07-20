@@ -46,6 +46,7 @@ Tw.API_CMD = {
   BFF_05_0027: { path: '/core-bill/v1/bill-types-change', method: Tw.API_METHOD.POST },
   BFF_05_0031: { path: '/core-bill/v1/bill-pay/payment-possible-day', method: Tw.API_METHOD.GET },
   BFF_05_0033: { path: '/core-bill/v1/bill-pay/autopay-schedule', method: Tw.API_METHOD.GET },
+  BFF_05_0034: { path: '/core-bill/v1/bill-pay/suspension-cancel', method: Tw.API_METHOD.DELETE },
   BFF_05_0035: { path: '/core-bill/v1/hotbill/fee/hotbill-request', method: Tw.API_METHOD.GET },
   BFF_05_0036: { path: '/core-bill/v1/bill-pay/bills', method: Tw.API_METHOD.GET },
   BFF_05_0041: { path: '/core-product/v1/services/base-fee-plans', method: Tw.API_METHOD.GET },

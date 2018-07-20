@@ -31,26 +31,23 @@ Tw.mytBillBillguideSubSusRelease.prototype = {
     this._bindEvent();
   },
   _bindEvent: function () {
-    //this.$container.on('click', '[data-target="totPaySelectBtn"]', $.proxy(this._totPaySelectFun, this));
+    this.$container.on('click', '[data-target="cancelBtn"]', $.proxy(this._goBack, this));
+    this.$container.on('click', '[data-target="susReleaseBtn"]', $.proxy(this._susReleaseFun, this));
   },
   //--------------------------------------------------------------------------[api]
-  _getDetailSpecification: function() {
+  _susReleaseFun: function() {
+    var param = {
+      evtNum:this.resData.suspensionInfo,
+      colAmt:''
+    };
+    Tw.Logger.info('[param]', param);
 
-    $.ajax('http://localhost:3000/mock/myt.bill.billguide.BFF_05_00036.json')
-      .done(function(resp){
-        console.log('성공');
-        Tw.Logger.info(resp);
-      })
-      .fail(function(err) {
-        console.log('실패');
-        Tw.Logger.info(err);
-      });
-
-    // this._apiService.request(Tw.API_CMD.BFF_05_0036, { detailYn: 'Y' })
-    //   .done(function(resp){
-    //     Tw.Logger.info('[청구요금 | 상세요금조회]', resp);
-    //   })
-    //   .fail(function(err){})
+    this._apiService.request(Tw.API_CMD.BFF_05_0034, param)
+      .done($.proxy(function(resp){
+        Tw.Logger.info('[BFF_05_0025 > resp]', resp);
+        //this._myPlanReqInit(resp.result);
+      }, this))
+      .fail(function(err){})
   },
 
   //--------------------------------------------------------------------------[공통]

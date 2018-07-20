@@ -59,52 +59,19 @@ class MyTBillBillguideSubSusRelease extends TwViewController {
     this._svcInfo = svcInfo;
     this.reqQuery = req.query;
 
-    let chargeRateReq: Observable<any>;
-    if( this.reqQuery.invDt ) {
-      chargeRateReq = this.apiService.request(API_CMD.BFF_05_0036, { invDt: this.reqQuery.invDt});//청구요금
-    } else {
-      chargeRateReq = this.apiService.request(API_CMD.BFF_05_0036, {});//청구요금
-    }
-
     //const chargeRateReq: Observable<any> = this.apiService.request(API_CMD.BFF_05_0036, {});//청구요금
-    const myPlanReq: Observable<any> = this.apiService.request(API_CMD.BFF_05_0041, {});//나의요금제
-    const childrenLineReq: Observable<any> = this.apiService.request(API_CMD.BFF_05_0024, {});//자녀회선
-    const nonPaymenthistoryReq: Observable<any> = this.apiService.request(API_CMD.BFF_05_0030, {});//미납내역
-    const nonPaymenthistoryDayReq: Observable<any> = this.apiService.request(API_CMD.BFF_05_0031, {});//미납내역 납부가능일
     const nonPaymenthistorySetFreeReq: Observable<any> = this.apiService.request(API_CMD.BFF_05_0037, {});//미납요금 이용정지해제 정보 조회
 
     var thisMain = this;
 
     Observable.combineLatest(
-      chargeRateReq,
-      myPlanReq,
-      childrenLineReq,
-      nonPaymenthistoryReq,
-      nonPaymenthistoryDayReq,
       nonPaymenthistorySetFreeReq
     ).subscribe(
       {
         next( [
-                chargeRateReq,
-                myPlanReq,
-                childrenLineReq,
-                nonPaymenthistoryReq,
-                nonPaymenthistoryDayReq,
                 nonPaymenthistorySetFreeReq
-
               ] ) {
-          thisMain.logger.info(this, '[ 1. next > chargeRateReq ] 청구요금 : ', chargeRateReq);
-          thisMain.logger.info(this, '[ 2. next > myPlanReq ] 나의요금제 : ', myPlanReq);
-          thisMain.logger.info(this, '[ 3. next > childrenLineReq ] 자녀회선 : ', childrenLineReq);
-          thisMain.logger.info(this, '[ 4. next > nonPaymenthistoryReq ] 미납내역 : ', nonPaymenthistoryReq);
-          thisMain.logger.info(this, '[ 5. next > nonPaymenthistoryDayReq ] 미납내역 납부가능일 : ', nonPaymenthistoryDayReq);
-          thisMain.logger.info(this, '[ 6. next > nonPaymenthistorySetFreeReq ] 미납요금 이용정지해제 정보 조회 : ', nonPaymenthistorySetFreeReq);
-
-          thisMain._billpayInfo = chargeRateReq.result;//청구요금
-          thisMain._baseFeePlansInfo = myPlanReq.result;// 나의요금제
-          thisMain._circuitChildInfo = childrenLineReq.result;//자녀회선
-          thisMain._defaultInfo = nonPaymenthistoryReq.result;//미납내역
-          thisMain._paymentPossibleDayInfo = nonPaymenthistoryDayReq.result;//미납내역 납부가능일
+          thisMain.logger.info(this, '[ 1. next > nonPaymenthistorySetFreeReq ] 미납요금 이용정지해제 정보 조회 : ', nonPaymenthistorySetFreeReq);
           thisMain._suspensionInfo = nonPaymenthistorySetFreeReq.result;//미납요금 이용정지해제 정보 조회
         },
         error(error) {
@@ -112,20 +79,6 @@ class MyTBillBillguideSubSusRelease extends TwViewController {
         },
         complete() {
           thisMain.logger.info(this, '[ complete ] : ');
-          thisMain._commDataInfo.selClaimDtNum = thisMain.getSelClaimDtNum( String(thisMain._billpayInfo.invDt) );
-          thisMain._commDataInfo.selClaimDtBtn = thisMain.getSelClaimDtBtn( String(thisMain._billpayInfo.invDt) );
-          thisMain._commDataInfo.selStaDt = thisMain.getSelStaDt( String(thisMain._billpayInfo.invDt) );
-          thisMain._commDataInfo.selEndDt = DateHelper.getShortDateNoDot( String(thisMain._billpayInfo.invDt) );
-          thisMain._commDataInfo.discount = FormatHelper.addComma( String(Math.abs( Number(0))) );
-          thisMain._commDataInfo.unPaidTotSum = FormatHelper.addComma( String(thisMain._defaultInfo.unPaidTotSum) );
-          thisMain._commDataInfo.joinSvcList = _.cloneDeep( thisMain._billpayInfo.paidAmtSvcCdList );
-          thisMain._commDataInfo.joinSvcList.map(item => {
-            if ( item.svcNm === '이동전화' ) {
-              item.svcNm = '휴대폰';
-            }
-          });
-          thisMain.getCircuitChildInfoMask( thisMain._circuitChildInfo );
-          thisMain.setShowCondition();//노출조건 셋팅
           thisMain.controllerInit(res);
         } }
     );
@@ -189,12 +142,7 @@ class MyTBillBillguideSubSusRelease extends TwViewController {
     this.renderView(res, this._urlTplInfo.pageRenderView, {
       reqQuery: this.reqQuery,
       svcInfo: this._svcInfo,
-      billpayInfo : this._billpayInfo,
-      circuitChildInfo: this._circuitChildInfo,
-      commDataInfo: this._commDataInfo,
-      defaultInfo: this._defaultInfo,
-      showConditionInfo: this._showConditionInfo,
-      baseFeePlansInfo: this._baseFeePlansInfo
+      suspensionInfo : this._suspensionInfo
     } );
   }
 
