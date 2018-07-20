@@ -115,9 +115,12 @@ Tw.mytBillBillguideSubChildBill.prototype = {
     this._popupService.openChoice('기간선택', arrOption, 'type1', $.proxy(this._selPopOpenEvt, this, $target));
   },
   _selPopOpenEvt: function ($target, $layer) {
-    $layer.on('click', '.popup-choice-list', $.proxy(this._selPopOpenEvtExe, this, $target, $layer));
+    //$layer.on('click', '.popup-choice-list', $.proxy(this._selPopOpenEvtExe, this, $target, $layer));
+    $layer.find('.popup-choice-list').on('click', $.proxy(this._selPopOpenEvtExe, this, $target, $layer) );
+
   },
   _selPopOpenEvtExe: function ($target, $layer, event) {
+    console.info('청구월 선택');
     var curTg = $(event.currentTarget);
     var tg = $target;
     var dataTemp = curTg.find('button').attr('data-info');
@@ -126,8 +129,10 @@ Tw.mytBillBillguideSubChildBill.prototype = {
     //this._popupService.close();
     var paramData = {
       invDt: dataTemp,
-      selNum: this.selectDataInfo.selNum
+      selNum: this.selectDataInfo.selNum,
+      childSvcMgmtNum:  this.resData.selectSvcMgmtNum
     };
+    console.info('청구월 선택 > ', paramData);
     this._goLoad('/myt/bill/billguide/subChildBill' + '?' + $.param(paramData));
   },
   //--------------------------------------------------------------------------[데이터 완료후 실행]
