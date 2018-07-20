@@ -54,7 +54,7 @@
     $(document).ready(function () {
       var $wrap = $('#wrap');
       var $component = $('.bill-guide-component');
-      var componentName = $component.attr('cur-bill-type-component');
+      var componentName = $component.data('cur-bill-type-component');
       var componentClassName = componentName.replace(/-([a-z])/g, function (g) { return g[1].toUpperCase(); });
       new Tw.MyTBillGuidechangeUpdateClasses[componentClassName]($component);
 
