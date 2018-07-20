@@ -22,26 +22,26 @@
                                 <ul>
                                     <li>
                                         <span class="title">신청일자</span>
-										<span class="tx-cont">2018.05.23</span>
+										<span class="tx-cont">{{data.reqeustDate}}</span>
                                     </li>
                                     <li>
                                         <div class="inner-top">
 											<span class="title">신청금액</span>
-											<span class="tx-cont">27,000 원</span>
+											<span class="tx-cont">{{data.requestAmount}} 원</span>
 										</div>
 										<div class="inner-row">
 											<ul>
 												<li>
 													<span class="title">과납</span>
-													<span class="tx-cont">27,000 원</span>
+													<span class="tx-cont">{{data.overPay}} 원</span>
 												</li>
 												<li>
 													<span class="title">채권보전료</span>
-													<span class="tx-cont">0 원</span>
+													<span class="tx-cont">{{data.bondPay}} 원</span>
 												</li>
 												<li>
 													<span class="title">합계</span>
-													<span class="tx-cont">27,000 원</span>
+													<span class="tx-cont">{{data.totalAmount}} 원</span>
 												</li>
 											</ul>
 										</div>
@@ -49,21 +49,22 @@
                                     <li>
                                         <div class="inner-top">
 											<span class="title">처리결과</span>
-											<span class="tx-cont">송금완료(27,000원)</span>
+											<span class="tx-cont">{{data.resultMsg}}</span>
+                                            {{!-- 송금완료(27,000원) --}}
 										</div>
 										<div class="inner-row">
 											<ul>
 												<li>
 													<span class="title">은행</span>
-													<span class="tx-cont">국민은행</span>
+													<span class="tx-cont">{{data.bankName}}</span>
 												</li>
 												<li>
 													<span class="title">계좌번호</span>
-													<span class="tx-cont">9870*** ******</span>
+													<span class="tx-cont">{{data.bankAcount}}</span>
 												</li>
 												<li>
 													<span class="title">처리일자</span>
-													<span class="tx-cont">2018.05.28</span>
+													<span class="tx-cont">{{data.refundProceeDate}}</span>
 												</li>
 											</ul>
 										</div>
