@@ -34,7 +34,8 @@ class MyTBillBillguideSubSusRelease extends TwViewController {
     selStaDt:'',//선택시작
     selEndDt:'',//선택끝
     unPaidTotSum: '', //미납금액
-    joinSvcList: '' //가입 서비스 리스트
+    joinSvcList: '', //가입 서비스 리스트
+    colAmt:''
   };
 
   //노출조건
@@ -79,6 +80,7 @@ class MyTBillBillguideSubSusRelease extends TwViewController {
         },
         complete() {
           thisMain.logger.info(this, '[ complete ] : ');
+          thisMain._commDataInfo.colAmt = FormatHelper.addComma( String( thisMain._suspensionInfo.colAmt ) );
           thisMain.controllerInit(res);
         } }
     );
@@ -95,10 +97,6 @@ class MyTBillBillguideSubSusRelease extends TwViewController {
     this._showConditionInfo.autopayYn = this._billpayInfo.autopayYn;
     this._showConditionInfo.childYn = (this._circuitChildInfo.length > 0) ? 'Y' : 'N';
     this._showConditionInfo.phoneYn = (this._svcInfo.svcAttrCd === 'M1') ? 'Y' : 'N';
-
-    // this._showConditionInfo.roamingYn = (this._roamingInfo.roamingList.length !== 0 ) ? 'Y' : 'N';
-    // this._showConditionInfo.callGiftYn = (this._callGiftInfo.callData !== '0분 0초') ? 'Y' : 'N';
-    // this._showConditionInfo.donationYn = (this._donationInfo.donationList.length !== 0) ? 'Y' : 'N';
 
     this._showConditionInfo.defaultYn = (this._defaultInfo.unPaidAmtMonthInfoList.length !== 0) ? 'Y' : 'N';
     this._showConditionInfo.chargeTtYn = (this._baseFeePlansInfo.prodId === 'NA00001901') ? 'Y' : 'N';
@@ -142,7 +140,8 @@ class MyTBillBillguideSubSusRelease extends TwViewController {
     this.renderView(res, this._urlTplInfo.pageRenderView, {
       reqQuery: this.reqQuery,
       svcInfo: this._svcInfo,
-      suspensionInfo : this._suspensionInfo
+      suspensionInfo : this._suspensionInfo,
+      commDataInfo : this._commDataInfo
     } );
   }
 
