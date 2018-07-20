@@ -41,7 +41,7 @@
                 <div class="widget">
                     <div class="widget-box accordion2">
                         <div class="acco-style mline-list">
-                            <ul class="acco-box">
+                            <ul class="acco-box js-line-list">
                                 <!-- 아코디언 한줄 -->
                                 <% if(showParam.m) { %>
                                 <li class="acco-list on">
@@ -70,7 +70,7 @@
                                         <% } %>
                                             <div class="widget-box accordion">
                                                 <% if(line.expsYn === 'Y') { %>
-                                                <div class="acco-cover">
+                                                <div class="acco-cover js-show-line" data-svcMgmtNum="<%= line.svcMgmtNum%>">
                                                 <% } else { %>
                                                 <div class="acco-cover disabled" aria-disabled="true"><!-- toggle : 한개만 열기 -->
                                                 <% } %>
@@ -102,9 +102,31 @@
                                                                                     <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
                                                                                 </span>
                                                                                 <span class="bt-box">
-                                                                                    <button class="bt-nickname" type="button" data-svcMgmtNum="<%= line.svcMgmtNum%>">닉네임 변경</button>
+                                                                                    <button class="bt-nickname" type="button" data-svcMgmtNum="<%= line.svcMgmtNum%>">
+                                                                                        <% if(line.nickNm === line.showName) { %>
+                                                                                        닉네임 변경
+                                                                                        <% } else { %>
+                                                                                        닉네임 등록
+                                                                                        <% } %>
+                                                                                    </button>
                                                                                 </span>
                                                                             </span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <% if(index === 0) { %>
+                                                                    <div class="mline-chk none">
+                                                                    <% } else { %>
+                                                                    <div class="mline-chk">
+                                                                    <% } %>
+                                                                        <div class="widget">
+                                                                            <div class="widget-box check">
+                                                                                <ul class="select-list" role="group">
+                                                                                    <li class="checkbox type01" role="checkbox" aria-checked="false">
+                                                                                        <input class="cb-change-first" type="checkbox" name="checkbox" value="" title="첫 번째 순서로 바꾸기"/><!-- 접근성 수정 -->
+                                                                                        첫 번째 순서로 바꾸기
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -204,7 +226,13 @@
                                                                                     <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
                                                                                 </span>
                                                                                 <span class="bt-box">
-                                                                                    <button class="bt-nickname" type="button" data-svcMgmtNum="<%= line.svcMgmtNum%>">닉네임 변경</button>
+                                                                                    <button class="bt-nickname" type="button" data-svcMgmtNum="<%= line.svcMgmtNum%>">
+                                                                                        <% if(line.nickNm === line.showName) { %>
+                                                                                        닉네임 변경
+                                                                                        <% } else { %>
+                                                                                        닉네임 등록
+                                                                                        <% } %>
+                                                                                    </button>
                                                                                 </span>
                                                                             </span>
                                                                         </div>
@@ -306,7 +334,13 @@
                                                                                     <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
                                                                                 </span>
                                                                                 <span class="bt-box">
-                                                                                    <button class="bt-nickname" type="button" data-svcMgmtNum="<%= line.svcMgmtNum%>">닉네임 변경</button>
+                                                                                    <button class="bt-nickname" type="button" data-svcMgmtNum="<%= line.svcMgmtNum%>">
+                                                                                        <% if(line.nickNm === line.showName) { %>
+                                                                                        닉네임 변경
+                                                                                        <% } else { %>
+                                                                                        닉네임 등록
+                                                                                        <% } %>
+                                                                                    </button>
                                                                                 </span>
                                                                             </span>
                                                                         </div>

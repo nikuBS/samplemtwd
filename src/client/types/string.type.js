@@ -122,6 +122,7 @@ Tw.MSG_MYT = {
   HOTBILL_FAIL_REQUEST_TITLE: '요청 실패.',
   HOTBILL_FAIL_REQUEST: '요금 정보 가져오기 실패했습니다.',
   BILL_GUIDE_03: '선택하신 청구월에 대한 청구서가 이미 재발행 신청 되었습니다.',
+  BILL_GUIDE_04: '합계',
   BILL_GUIDECHANGE_A01: '요금안내서 정보를 변경하시겠습니까?',
   BILL_GUIDECHANGE_A02: '[T] 요금안내서가 신청되었습니다.<br />[T] 요금안내서 신청 시 기존에 신청하신 요금안내서는 자동 해지 됩니다.',
   BILL_GUIDECHANGE_A03: '휴대폰번호를 입력해주세요.',

@@ -19,35 +19,24 @@ Tw.AuthLineMarketing = function () {
 };
 
 Tw.AuthLineMarketing.prototype = {
-  openMarketingOffer: function (svcMgmtNum, showName, svcNum, callback) {
+  openMarketingOffer: function (svcMgmtNum, showName, svcNum, agr201Yn, agr203Yn, callback) {
     this.svcMgmtNum = svcMgmtNum;
+    this.agr201Yn = agr201Yn;
+    this.agr203Yn = agr203Yn;
     this.callback = callback;
-    this._apiService.request(Tw.API_CMD.BFF_03_0014, {}, {}, svcMgmtNum)
-      .done($.proxy(this._successGetMarketingOffer, this, showName, svcNum))
-      .fail($.proxy(this._failGetMargetingOffer, this));
+    this._openMarketingOfferPopup(showName, svcNum, agr201Yn, agr203Yn);
   },
-  _successGetMarketingOffer: function (showName, svcNum, resp) {
-    if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      this.agr201Yn = resp.result.agr201Yn;
-      this.agr203Yn = resp.result.agr203Yn;
-      this._openMarketingOfferPopup(showName, resp.result);
-    } else {
-      this.openAlert(resp.code + ' ' + resp.msg);
-    }
-  },
-  _failGetMargetingOffer: function () {
 
-  },
-  _openMarketingOfferPopup: function (showName, result) {
+  _openMarketingOfferPopup: function (showName, svcNum, agr201Yn, agr203Yn) {
     this._popupService.open({
       hbs: 'CO_01_05_02_P02',
       data: {
         showName: showName,
-        svcNum: result.svcNum,
-        agr201Yn: result.agr201Yn === 'Y',
-        agr203Yn: result.agr203Yn === 'Y',
-        allCheck: result.agr201Yn === 'Y' && result.agr203Yn === 'Y',
-        orCheck: result.agr201Yn === 'Y' || result.agr203Yn === 'Y'
+        svcNum: svcNum,
+        agr201Yn: agr201Yn === 'Y',
+        agr203Yn: agr203Yn === 'Y',
+        allCheck: agr201Yn === 'Y' && agr203Yn === 'Y',
+        orCheck: agr201Yn === 'Y' || agr203Yn === 'Y'
       }
     }, $.proxy(this._onOpenMarketingOfferPopup, this), $.proxy(this._closeOpenMarketingOfferPopup, this));
   },
