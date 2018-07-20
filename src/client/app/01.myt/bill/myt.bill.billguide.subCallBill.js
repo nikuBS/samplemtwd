@@ -5,71 +5,68 @@
  * Info: 콜기프트 요금
  */
 
-Tw.mytBillBillguideSubCallBill = function (rootEl, resData) {
-  this.thisMain = this;
-  this.resData = resData;
-  this.init = this._init;
-  Tw.Logger.info('[서버에서 데이터 받음 mytBillBillguideSubCallBill]', resData);
-
+Tw.mytBillBillguideSubCallBill = function (rootEl) {
   this.$container = rootEl;
-  this.$window = window;
-  this.$document = $(document);
-  this.$btnTarget = null;
-
-  this._popupService = Tw.Popup;
   this._apiService = Tw.Api;
 
-  this._history = new Tw.HistoryService(this.$container);
-  this._history.init('hash');
-
-  this._init();
+  this._assign();
+  this._bindEvent();
 };
 
 Tw.mytBillBillguideSubCallBill.prototype = {
-  _init: function () {
-    Tw.Logger.info('[Tw.mytBillBillguideSubCallBill 초기화]');
-    this._bindEvent();
+  _assign: function () {
+    this._$amtTotalWrap = this.$container.find('.amt-total-wrap');
+    this._$dateLi = this.$container.find('.tube-list li');
   },
+
   _bindEvent: function () {
-    //this.$container.on('click', '[data-target="totPaySelectBtn"]', $.proxy(this._totPaySelectFun, this));
-  },
-  //--------------------------------------------------------------------------[api]
-  _getDetailSpecification: function() {
-
-    $.ajax('http://localhost:3000/mock/myt.bill.billguide.BFF_05_00036.json')
-      .done(function(resp){
-        console.log('성공');
-        Tw.Logger.info(resp);
-      })
-      .fail(function(err) {
-        console.log('실패');
-        Tw.Logger.info(err);
-      });
-
-    // this._apiService.request(Tw.API_CMD.BFF_05_0036, { detailYn: 'Y' })
-    //   .done(function(resp){
-    //     Tw.Logger.info('[청구요금 | 상세요금조회]', resp);
-    //   })
-    //   .fail(function(err){})
+    this._$dateLi.on('click', $.proxy(this._onClickDate, this));
   },
 
-  //--------------------------------------------------------------------------[공통]
-  _onOpenSelectPopup: function () {
-    //$('.popup-info').addClass('scrolling');
+  _onClickDate: function (event) {
+    var $target = $(event.currentTarget);
+    var unit = $target.attr('unit');
+    var measurements = $target.attr('measurements');
+    this.startDt = this._getStartDt(unit, measurements);
+    this.endDt = this._getEndDt();
+    this._apiService.request(Tw.API_CMD.BFF_05_0045, {
+      startDt: this.startDt,
+      endDt: this.endDt
+    })
+      .done($.proxy(this._submitSuccess, this))
+      .fail($.proxy(this._submitFail, this));
   },
-  _goHistory: function () {
-    this._goLoad('/recharge/cookiz/history');
+
+  _submitSuccess: function (resp) {
+    if ( resp.code === '00' ) {
+      if ( resp.result ) {
+        var result = {
+          callData: resp.result.callData,
+          startDt: moment(this.startDt).format('YYYY.MM.DD'),
+          endDt: moment(this.endDt).format('YYYY.MM.DD')
+        };
+        this._setDataToTemplate(this._$amtTotalWrap, 'amt-total', result);
+      } else {
+        this._setDataToTemplate(this._$amtTotalWrap, 'amt-empty', {});
+      }
+    }
   },
-  _goBack: function () {
-    this._history.go(-1);
+
+  _setDataToTemplate: function ($element, templateName, data) {
+    $element.html(this._getTmplHtml(templateName, data));
   },
-  _goLoad: function (url) {
-    location.href = url;
+
+  _getStartDt: function (unit, measurements) {
+    return moment().subtract(unit, measurements).format('YYYYMMDD');
   },
-  _go: function (hash) {
-    window.location.hash = hash;
+
+  _getEndDt: function () {
+    return moment().format('YYYYMMDD');
   },
-  _getSelClaimDtBtn: function (str) {
-    return moment(str).add(1, 'days').format('YYYY년 MM월');
+
+  _getTmplHtml: function (name, data) {
+    var source = $('#' + name).html();
+    var template = Handlebars.compile(source);
+    return template(data);
   }
 };
