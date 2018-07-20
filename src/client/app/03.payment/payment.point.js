@@ -32,7 +32,7 @@ Tw.PaymentPoint.prototype = {
     this.$productSelectBox = this.$container.find('.select-product-one');
     this.$productSelectBoxForAuto = this.$container.find('.select-product-auto');
     this.$errorContainer = this.$container.find('.error-data');
-    this.$selectedPoint = null;
+    this.$selectedPoint = 1000;
     this.$pointType = null;
 
     this._init();
@@ -209,7 +209,7 @@ Tw.PaymentPoint.prototype = {
 
     if (this._isValidForRainbow()) {
       var reqData = this._makeRequestDataForRainbow();
-      this._apiService.request(Tw.API_CMD.BFF_07_0048, reqData)
+      this._apiService.request(Tw.API_CMD.BFF_07_0048, reqData, { 'T-Channel-Name': 'mobile-app' })
         .done($.proxy(this._paySuccess, this, 'reserve'))
         .fail($.proxy(this._payFail, this));
     }
@@ -224,15 +224,16 @@ Tw.PaymentPoint.prototype = {
     event.preventDefault();
 
     this._apiService.request(Tw.API_CMD.BFF_07_0056,
-      { prodId: this.$productSelectBoxForAuto.attr('id'), rbpChgRsnCd: Tw.RAINBOW_CHANGE_CODE.REQUEST })
+      { prodId: this.$productSelectBoxForAuto.attr('id'), rbpChgRsnCd: Tw.RAINBOW_CHANGE_CODE.REQUEST },
+      { 'T-Channel-Name': 'mobile-app' })
       .done($.proxy(this._paySuccess, this, 'auto'))
       .fail($.proxy(this._payFail, this));
   },
   _paySuccess: function (type, res) {
+    this._history.setHistory();
     if (res.code === Tw.API_CODE.CODE_00) {
-      this._setData(res);
-      this._history.setHistory();
       this.$container.find('.get-history').attr('href', '/payment/history/point/' + type);
+      this._setData(res);
       this._go('#complete');
     } else {
       this._payFail(res);
@@ -240,7 +241,7 @@ Tw.PaymentPoint.prototype = {
   },
   _payFail: function (res) {
     this.$errorContainer.find('.code').empty().text(res.code);
-    this.$errorContainer.find('.message').empty().text(res.orgDebugMessage);
+    this.$errorContainer.find('.message').empty().text(res.error.msg);
     this._go('#error');
   },
   _setData: function (res) {
