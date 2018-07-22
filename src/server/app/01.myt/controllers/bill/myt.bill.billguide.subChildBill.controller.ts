@@ -20,12 +20,30 @@ class MyTBillBillguideSubChildBill extends TwViewController {
   }
   public reqQuery:any;//쿼리스트링
   private _svcInfo:any;
+
   private _circuitChildInfo: any = []; //자녀회선조회 BFF_05_00024
   private _usedAmountChildInfo:any; //자녀회선 사용요금 조회 BFF_05_00047
   private _defaultInfo: any; //미납내역 | BFF_05_0030
 
   //공통데이터
   private _commDataInfo:any = {
+    selClaimDtBtn:'',//선택 청구 월 | 2017년 10월
+    selClaimDtNum:'',//선택 청구 월 | number
+    selStaDt:'',//선택시작
+    selEndDt:'',//선택끝
+    discount:'',//할인액
+    joinSvcList: '', //가입 서비스 리스트
+    unPaidTotSum: '', //미납금액
+    unPaidDetails: '', //미납금액 상세내역
+    prodNm: '', //pps 요금제
+    prodAmt: '',//pps 잔액
+    useEndDt: '',//pps 발신/사용기간
+    dataKeepTrmDt: '',//pps 수신/데이터유지기간
+    numKeepTrmDt: '',//pps 번유지기간
+    curDt: '',//현재날짜
+    remained: '',//잔여데이터 KB | 공백일 경우 표시안
+    dataYn: '', //음성+데이터 'Y'
+    dataProdYn: '', //MB 'Y' | 원 'N'
     phone: null
   };
 
@@ -73,6 +91,15 @@ class MyTBillBillguideSubChildBill extends TwViewController {
     let billItems = {};
     let selectSvcMgmtNum;
 
+    const dataInit = function () {
+      thisMain._commDataInfo.selClaimDtNum = (thisMain._usedAmountChildInfo) ? thisMain.getSelClaimDtNum( String(thisMain._usedAmountChildInfo.invDt) ) : null;
+      thisMain._commDataInfo.selClaimDtBtn = (thisMain._usedAmountChildInfo) ? thisMain.getSelClaimDtBtn( String(thisMain._usedAmountChildInfo.invDt) ) : null;
+      thisMain._commDataInfo.selStaDt = (thisMain._usedAmountChildInfo) ? thisMain.getSelStaDt( String(thisMain._usedAmountChildInfo.invDt) ) : null;
+      thisMain._commDataInfo.selEndDt = (thisMain._usedAmountChildInfo) ? DateHelper.getShortDateNoDot( String(thisMain._usedAmountChildInfo.invDt) ) : null;
+      thisMain._commDataInfo.discount = (thisMain._usedAmountChildInfo) ? FormatHelper.addComma( String(Math.abs( Number(thisMain._usedAmountChildInfo.deduckTotInvAmt))) ) : 0;
+      thisMain._commDataInfo.joinSvcList = (thisMain._usedAmountChildInfo) ? ( thisMain._usedAmountChildInfo.paidAmtSvcCdList ) : null;
+    };
+
     fromPromise( this._childrenLineApi() ).subscribe({
       next(item:any) {
         console.dir(item);
@@ -84,14 +111,17 @@ class MyTBillBillguideSubChildBill extends TwViewController {
         /*
         * 쿼리스트링 값이 있으면 쿼리스트링 값으로 셋팅한다.
          */
+        thisMain.logger.info(thisMain, '[ 쿼리스트링 ] : ', thisMain.reqQuery );
+
+        let tempSelNum = ( thisMain.reqQuery.selNum ) ? thisMain.reqQuery.selNum : 0;
+        selectSvcMgmtNum = thisMain._circuitChildInfo[ tempSelNum ].svcMgmtNum;
+
         if ( thisMain.reqQuery.childSvcMgmtNum || thisMain.reqQuery.invDt ) {
           usedAmountChildReq = thisMain.apiService.request(API_CMD.BFF_05_0047, {
             childSvcMgmtNum: thisMain.reqQuery.childSvcMgmtNum,
             invDt: thisMain.reqQuery.invDt
           });
         } else {
-          let tempSelNum = ( thisMain.reqQuery.selNum ) ? thisMain.reqQuery.selNum : 0;
-          selectSvcMgmtNum = thisMain._circuitChildInfo[ tempSelNum ].svcMgmtNum;
           usedAmountChildReq = thisMain.apiService.request(API_CMD.BFF_05_0047, {
             childSvcMgmtNum: selectSvcMgmtNum
           });
@@ -117,7 +147,15 @@ class MyTBillBillguideSubChildBill extends TwViewController {
 
               thisMain._commDataInfo.phone = thisMain.getPhoneMask(thisMain._circuitChildInfo);
 
+              thisMain.logger.info(thisMain, '[ 1.reqQuery  ]  : ', thisMain.reqQuery);
+              thisMain.logger.info(thisMain, '[ 2.svcInfo  ]  : ', thisMain._svcInfo);
+              thisMain.logger.info(thisMain, '[ 3.selectSvcMgmtNum  ]  : ', selectSvcMgmtNum);
+              thisMain.logger.info(thisMain, '[ 4.circuitChildInfo  ]  : ', thisMain._circuitChildInfo);
+              thisMain.logger.info(thisMain, '[ 5.usedAmountChildInfo  ]  : ', thisMain._usedAmountChildInfo);
+              thisMain.logger.info(thisMain, '[ 6.commDataInfo  ]  : ', thisMain._commDataInfo);
+              thisMain.logger.info(thisMain, '[ 7.billItems  ]  : ', billItems);
 
+              dataInit();
               thisMain.logger.info(thisMain, '[_urlTplInfo.pageRenderView] : ', thisMain._urlTplInfo.pageRenderView);
               thisMain.renderView(res, thisMain._urlTplInfo.pageRenderView, {
                 reqQuery: thisMain.reqQuery,

@@ -65,14 +65,22 @@
             <div class="cont-box">
                 <div class="payment-inquiry">
                     <a class="bt-link-tx" data-target="feePlanName">Band 데이터 6.5G<span class="ico"></span></a>
-                    <button class="bt-dropdown big" title="월별 요금안내서 선택" data-target="billMonthName"></span></button><!-- 2018-07-12 접근성 수정 -->
+                    <button class="bt-dropdown big" title="월별 요금안내서 선택" data-target="billMonthName"><%=commDataInfo.selClaimDtBtn %></span></button><!-- 2018-07-12 접근성 수정 -->
                     <div class="payment-all">
                         <h3 class="blind">사용 요금</h3>
-                        <span><em data-target="useAmtTot"></em> 원</span>
-                        <p class="term" data-target="periodOfUse"></p>
+                        <!--<span><em data-target="useAmtTot"></em> 원</span>-->
+                        <!--<p class="term" data-target="periodOfUse"></p>-->
+                        <span><em><%=usedAmountChildInfo.useAmtTot %></em> 원</span>
+                        <p class="term"><%=commDataInfo.selStaDt %> ~ <%=commDataInfo.selEndDt %></p>
                     </div>
                     <div class="txt-discount" data-target="discountArea">
-                        <!--<p><span class="num">5</span>월 사용 요금은 <span class="num">370,000</span>원이고<br /><span class="num">20,000</span>원을 할인 받으셨습니다.</p>-->
+                        <% if( commDataInfo.discount === '0' ) {  %>
+                        <!-- 사용요금 + 요금할인내역 0원일때 -->
+                        <p><span class="num"><%=commDataInfo.selClaimDtNum %></span>월 사용 요금은 <span class="num"><%=usedAmountChildInfo.useAmtTot %></span>원입니다.</p>
+                        <% } else { %>
+                        <!-- 사용요금 + 요금할인내역 -->
+                        <p><span class="num"><%=commDataInfo.selClaimDtNum %></span>월 사용 요금은 <span class="num"><%=usedAmountChildInfo.useAmtTot %></span>원이고<br /><span class="num"><%=commDataInfo.discount %></span>원을 할인 받으셨습니다.</p>
+                        <% } %>
                     </div>
                 </div>
             </div>
