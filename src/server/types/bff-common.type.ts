@@ -1,3 +1,13 @@
+export const CHANNEL_TYPE = {
+  MOBILE_APP: 'mobile-app',
+  MOBILE_WEB: 'mobile-web'
+};
+
+export const COOKIE_KEY = {
+  DEVICE: 'TWM_DEVICE',
+  CHANNEL: 'TWM_CHANNEL'
+};
+
 export const SVC_CD = {
   C: '휴대폰',
   S: 'PPS',
