@@ -123,13 +123,13 @@ Tw.MyTBillReissue.prototype = {
     }
     else {
       data = {
-        sReIssueType: this.$guide.attr('data-type') || '', // 재발행코드종류
+        sReisueTypCd: this.$guide.attr('data-type') || '', // 재발행코드종류
         sInvDt: this.$month.find(':checked').attr('name') || '', // 재발행청구일자
         sReisueRsnCd: '01' //기본은 무선
       };
       // 청구서타입 유형이 2개인 경우
       if ( this.$type.length > 0 ) {
-        data.sReIssueType = this.$type.find(':checked').attr('name');
+        data.sReisueTypCd = this.$type.find(':checked').attr('name');
       }
     }
     //재발행신청 API 호출

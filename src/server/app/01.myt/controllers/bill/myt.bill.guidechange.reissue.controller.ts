@@ -7,6 +7,7 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import { NextFunction, Request, Response } from 'express';
 import { API_CMD } from '../../../../types/api-command.type';
 import { MYT_REISSUE_REQ_CODE, MYT_REISSUE_REQ_LOCAL_CODE, MYT_REISSUE_TYPE } from '../../../../types/string.type';
+import moment from 'moment';
 
 class MyTBillReissue extends TwViewController {
   private _isLocal: boolean = false;
@@ -72,19 +73,18 @@ class MyTBillReissue extends TwViewController {
 
   private convertData(response, svc): any {
     const data: any = {
-      halfYear: this.getHalfYearData(),
       type: '01', // 01:무선, 02:유선, 03:etc
       title: '미조회', // 청구서유형명,
       svcInfo: svc
     };
     // 서버에서 받은 데이터 설정
     if ( response.result ) {
+      // 2018-07-20 양정규 : 유/무선 둘다 날짜를 반환하기 때문에 공통적으로 세팅해준다.
+      data['halfYear'] = this.setLocalHalfYearData(response.result.reissueYMs);
       // 유선인 경우에 재발행 사유 정보가 있어 아래정보로 유,무선 구분한다.
       if ( this.isLocal ) {
         data['reasons'] = response.result.reissueReasons;
         data['title'] = MYT_REISSUE_TYPE[response.result.billIsueTypCd];
-        // 유선인 경우 서버에서 재발행 월 정보가 리스트로 넘어와 출력
-        data['halfYear'] = this.setLocalHalfYearData(response.result.reissueYMs);
         data['type'] = '02';
       } else {
         // 청구서명
@@ -110,11 +110,8 @@ class MyTBillReissue extends TwViewController {
     // 순차적으로 가장 최근날짜로 정렬되어있음
     for ( let i = 0; i < length; i++ ) {
       const data = {};
-      const yy = array[i].slice(0, 4);
-      const mm = array[i].slice(4, 6);
-      const dd = array[i].slice(6, 8);
-      data['type1'] = `${yy}년 ${mm}월`;
-      data['type2'] = `${yy}.${mm}.${dd}`;
+      data['type1'] = moment(array[i]).add(1, 'month').format('YYYY년 MM월');
+      data['type2'] = moment(array[i]).format('YYYY.MM.DD');
       data['type3'] = array[i];
 
       result.push(data);
@@ -123,6 +120,7 @@ class MyTBillReissue extends TwViewController {
     return result;
   }
 
+  // 무선 조회할때도 날짜를 반환해줘서 현재 메소드 사용안함. (양정규)
   private getHalfYearData(): any {
     // 현재 시간 기준으로 6개월 전 날짜 정보 설정
     const result: any = [];
