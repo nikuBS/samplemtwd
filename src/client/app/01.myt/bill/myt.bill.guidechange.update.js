@@ -19,10 +19,10 @@ Tw.MyTBillGuidechangeUpdatePrototype = {
   },
 
   _assign: function () {
-    this._curBillGuideType = this.$container.attr('cur-bill-type');
-    this._curBillGuideTypeNm = this.$container.attr('cur-bill-type-nm');
-    this._wireCurBillGuideType = this.$container.attr('wire-cur-bill-type');
-    this._svcAttrCd = this.$container.attr('svc-attr-cd');
+    this._curBillGuideType = this.$container.data('cur-bill-type');
+    this._curBillGuideTypeNm = this.$container.data('cur-bill-type-nm');
+    this._wireCurBillGuideType = this.$container.data('wire-cur-bill-type');
+    this._svcAttrCd = this.$container.data('svc-attr-cd');
     this._$btnSubmit = this.$container.find('.btn-submit');
     this._$btnNext = this.$container.find('.btn-next');
     this._$steps = this.$container.find('.step');
@@ -177,21 +177,21 @@ Tw.MyTBillGuidechangeUpdatePrototype = {
       toBillTypeCd: isWire ? this._wireCurBillGuideType: this._curBillGuideType
     };
 
-    this.$container.find('[form-element="radio"]').each(function() {
+    this.$container.find('[data-form-element="radio"]').each(function() {
       var $elem = $(this);
-      var key = $elem.attr(KEY_ATTR_NAME);
-      var value = $elem.find('[aria-checked="true"]').attr(VALUE_ATTR_NAME);
+      var key = $elem.data(KEY_ATTR_NAME);
+      var value = $elem.find('[aria-checked="true"]').data(VALUE_ATTR_NAME);
       paramsObj[key] = value;
     });
-    this.$container.find('[form-element="checkbox"]').each(function() {
+    this.$container.find('[data-form-element="checkbox"]').each(function() {
       var $elem = $(this);
-      var key = $elem.attr(KEY_ATTR_NAME);
+      var key = $elem.data(KEY_ATTR_NAME);
       var value = ($elem.find('[aria-checked]').attr('aria-checked') === 'true') ? 'Y' : 'N';
       paramsObj[key] = value;
     });
-    this.$container.find('[form-element="input"]').each(function() {
+    this.$container.find('[data-form-element="input"]').each(function() {
       var $elem = $(this);
-      var key = $elem.attr(KEY_ATTR_NAME);
+      var key = $elem.data(KEY_ATTR_NAME);
       var value = $elem.val();
       paramsObj[key] = value;
       if (key === 'ccurNotiSvcNum') {
