@@ -3,10 +3,10 @@
 * Author: 이정민 (skt.p130713@partner.sk.com)
 * Date: 2018.07.05
 -->
-<div class="bill-guide-component" data-cur-bill-type="<%= curBillGuide.curBillType %>" data-cur-bill-type-nm="<%= curBillGuide.curBillTypeNm %>" data-cur-bill-type-component="<%= curBillGuide.component %>" wire-cur-bill-type="<%= curBillGuide.wireCurBillType %>" data-svc-attr-cd="<%= svcInfo.svcAttrCd %>">
+<div class="fe-bill-guide-component" data-cur-bill-type="<%= curBillGuide.curBillType %>" data-cur-bill-type-nm="<%= curBillGuide.curBillTypeNm %>" data-cur-bill-type-component="<%= curBillGuide.component %>" wire-cur-bill-type="<%= curBillGuide.wireCurBillType %>" data-svc-attr-cd="<%= svcInfo.svcAttrCd %>">
     <hr class="cont-sp type1" aria-hidden="true"/>
     <div class="cont-box">
-        <div class="step" step="1">
+        <div class="fe-step" step="1">
             <div class="change-plan">
                 <h4 class="tit-type2">요금안내서 정보설정(1/2)</h4>
                 <dl>
@@ -70,13 +70,13 @@
                 <div class="contents-btn">
                     <ul class="bt-slice">
                         <li class="bt-blue1">
-                            <button class="btn-next">다음</button>
+                            <button class="fe-btn-next">다음</button>
                         </li>
                     </ul>
                 </div>
             </div>
         </div>
-        <div class="step" step="2" style="display: none;">
+        <div class="fe-step" step="2" style="display: none;">
             <div class="change-plan">
                 <h4 class="tit-type2">요금안내서 정보설정(2/2)</h4>
                 <dl>
@@ -120,9 +120,9 @@
                     <ul class="bt-slice">
                         <li class="bt-blue1">
                             <% if (isUpdate) { %>
-                            <button class="btn-submit">요금안내서 정보변경하기</button>
+                            <button class="fe-btn-submit">요금안내서 정보변경하기</button>
                             <% } else { %>
-                            <button class="btn-submit">&quot;기타(우편)&quot;으로 변경하기</button>
+                            <button class="fe-btn-submit">&quot;기타(우편)&quot;으로 변경하기</button>
                             <% } %>
                         </li>
                     </ul>

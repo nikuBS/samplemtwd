@@ -42,7 +42,7 @@ Tw.MyTBillGuidechangeChange.prototype = {
     this._curBillGuideType = this.$container.data('cur-bill-guide-type');
     this._svcAttrCd = this.$container.data('svc-attr-cd');
     this._$btnDropdown = this.$container.find('.bt-dropdown');
-    this._$componentWrap = this.$container.find('.component-wrap');
+    this._$componentWrap = this.$container.find('.fe-component-wrap');
     this._$selectedBillGuideTypeName = this.$container.find('.selected-bill-guide-type-name');
     this._$closeStep = this.$container.find('.close-step');
   },
@@ -77,7 +77,7 @@ Tw.MyTBillGuidechangeChange.prototype = {
   },
 
   _setComponentHtml: function (selectedBillGuideType) {
-    var source = $('#tmpl-' + selectedBillGuideType).html();
+    var source = $('#fe-tmpl-' + selectedBillGuideType).html();
     var template = Handlebars.compile(source);
     var html = template();
     this._$componentWrap.html(html);
@@ -85,7 +85,7 @@ Tw.MyTBillGuidechangeChange.prototype = {
 
   _setBillGuideComponent: function (selectedBillGuideType) {
     this._setComponentHtml(selectedBillGuideType);
-    var $component = this._$componentWrap.find('.bill-guide-component');
+    var $component = this._$componentWrap.find('.fe-bill-guide-component');
     var componentName = this.BILL_GUIDE_TYPE_COMPONENT[selectedBillGuideType];
     var componentClassName = componentName.replace(/-([a-z])/g, function (g) {
       return g[1].toUpperCase();
