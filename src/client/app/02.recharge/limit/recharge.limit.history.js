@@ -39,7 +39,11 @@ Tw.RechargeLimitHistory.prototype = {
     };
 
     this._items = {};
-    this._getData();
+    this._getData({
+      type: 0,
+      toDt: Tw.DateHelper.getCurrentShortDate(),
+      fromDt: Tw.DateHelper.getPastShortDate(Tw.DATE_UNIT.THREE_MONTH)
+    });
   },
 
   _cachedElement: function () {
@@ -122,23 +126,39 @@ Tw.RechargeLimitHistory.prototype = {
   },
 
   _setProperRecharge: function (item) {
-    if (item.opTypCd === '1') {
-      item.type = {
-        icon: 'complete',
-        label: Tw.RECHARGE_TYPE.RECHARGE
-      };
-    } else if (item.opTypCd === '3') {
-      item.type = {
-        icon: 'auto',
-        label: Tw.RECHARGE_TYPE.REGULAR
-      };
-    } else {
-      item.type = {
-        icon: 'cancel',
-        label: Tw.RECHARGE_TYPE.CANCEL,
-        complete: true
-      };
+    switch (item.opTypCd) {
+      case "1":
+        item.type = {
+          icon: 'complete',
+          label: Tw.RECHARGE_TYPE.RECHARGE
+        };
+        item.opTypNm = Tw.RECHARGE_TYPE.TMTH_RECHARGE;
+        break;
+      case "2":
+        item.type = {
+          icon: 'cancel',
+          label: Tw.RECHARGE_TYPE.CANCEL,
+          complete: true
+        };
+        item.opTypNm = Tw.RECHARGE_TYPE.TMTH_RECHARGE;
+        break;
+      case "3":
+        item.type = {
+          icon: 'auto',
+          label: Tw.RECHARGE_TYPE.REGULAR
+        };
+        item.opTypNm = Tw.RECHARGE_TYPE.REGULAR_RECHARGE;
+        break;
+      case "4":
+        item.type = {
+          icon: 'cancel',
+          label: Tw.RECHARGE_TYPE.CANCEL,
+          complete: true
+        };
+        item.opTypNm = Tw.RECHARGE_TYPE.REGULAR_RECHARGE;
+        break;
     }
+
     item.refundable = item.refundableYn === 'Y' ? true : false;
     item.opDt = Tw.DateHelper.getShortDateNoDot(item.opDt);
     return item;
@@ -184,6 +204,11 @@ Tw.RechargeLimitHistory.prototype = {
   },
 
   _setItems: function (resp) {
+    if (!resp.result) {
+      this._items[this._selectedTab] = [];
+      return;
+    }
+
     if (this._selectedTab === this.TABS.BLOCK) {
       this._items[this._selectedTab] = resp.result.map(this._setProperBlock);
     } else {
@@ -192,6 +217,9 @@ Tw.RechargeLimitHistory.prototype = {
   },
 
   _openSelectConditionPopup: function () {
+    var selectedType = this._searchCondition[this._selectedTab].type;
+    var selectedPeriod = this._searchCondition[this._selectedTab].period;
+
     var option = {
       'hbs': 'select',
       'title': Tw.POPUP_TITLE.CHANGE_SEARCH_CONDITION,
@@ -208,17 +236,17 @@ Tw.RechargeLimitHistory.prototype = {
         {
           'title': 'Type', 'style_num': 'three',
           'options': [
-            { checked: true, value: Tw.BLOCK_TYPE.TOTAL },
-            { checked: false, value: Tw.BLOCK_TYPE.UNBLOCK },
-            { checked: false, value: Tw.BLOCK_TYPE.BLOCK }
+            { checked: selectedType === Tw.BLOCK_TYPE.TOTAL, value: Tw.BLOCK_TYPE.TOTAL },
+            { checked: selectedType === Tw.BLOCK_TYPE.UNBLOCK, value: Tw.BLOCK_TYPE.UNBLOCK },
+            { checked: selectedType === Tw.BLOCK_TYPE.BLOCK, value: Tw.BLOCK_TYPE.BLOCK }
           ]
         }, {
           'title': Tw.POPUP_PROPERTY.PERIOD, 'style_num': 'two',
           'options': [
-            { checked: false, value: Tw.DATE_UNIT.ONE_MONTH },
-            { checked: true, value: Tw.DATE_UNIT.THREE_MONTH },
-            { checked: false, value: Tw.DATE_UNIT.SIX_MONTH },
-            { checked: false, value: Tw.DATE_UNIT.ONE_YEAR }
+            { checked: selectedPeriod === Tw.DATE_UNIT.ONE_MONTH, value: Tw.DATE_UNIT.ONE_MONTH },
+            { checked: selectedPeriod === Tw.DATE_UNIT.THREE_MONTH, value: Tw.DATE_UNIT.THREE_MONTH },
+            { checked: selectedPeriod === Tw.DATE_UNIT.SIX_MONTH, value: Tw.DATE_UNIT.SIX_MONTH },
+            { checked: selectedPeriod === Tw.DATE_UNIT.ONE_YEAR, value: Tw.DATE_UNIT.ONE_YEAR }
           ]
         }
       ];
@@ -227,17 +255,17 @@ Tw.RechargeLimitHistory.prototype = {
         {
           'title': 'Type', 'style_num': 'three',
           'options': [
-            { checked: true, value: Tw.RECHARGE_TYPE.TOTAL },
-            { checked: false, value: Tw.RECHARGE_TYPE.RECHARGE },
-            { checked: false, value: Tw.RECHARGE_TYPE.CANCEL }
+            { checked: selectedType === Tw.RECHARGE_TYPE.TOTAL, value: Tw.RECHARGE_TYPE.TOTAL },
+            { checked: selectedType === Tw.RECHARGE_TYPE.RECHARGE, value: Tw.RECHARGE_TYPE.RECHARGE },
+            { checked: selectedType === Tw.RECHARGE_TYPE.CANCEL, value: Tw.RECHARGE_TYPE.CANCEL }
           ]
         }, {
           'title': Tw.POPUP_PROPERTY.PERIOD, 'style_num': 'two',
           'options': [
-            { checked: false, value: Tw.DATE_UNIT.ONE_MONTH },
-            { checked: true, value: Tw.DATE_UNIT.THREE_MONTH },
-            { checked: false, value: Tw.DATE_UNIT.SIX_MONTH },
-            { checked: false, value: Tw.DATE_UNIT.ONE_YEAR }
+            { checked: selectedPeriod === Tw.DATE_UNIT.ONE_MONTH, value: Tw.DATE_UNIT.ONE_MONTH },
+            { checked: selectedPeriod === Tw.DATE_UNIT.THREE_MONTH, value: Tw.DATE_UNIT.THREE_MONTH },
+            { checked: selectedPeriod === Tw.DATE_UNIT.SIX_MONTH, value: Tw.DATE_UNIT.SIX_MONTH },
+            { checked: selectedPeriod === Tw.DATE_UNIT.ONE_YEAR, value: Tw.DATE_UNIT.ONE_YEAR }
           ]
         }
       ];

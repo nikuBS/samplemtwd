@@ -31,7 +31,7 @@ Tw.POPUP_TITLE = {
   SELECT_BANK: '은행선택',
   SELECT_GIFT_AMOUNT: '선물할 금액 선택',
   CHANGE_BILL_GUIDE_TYPE: '어떤 안내서를 보여 드릴까요?',
-  OVER_PAY:'과납 안내 드립니다.'
+  OVER_PAY: '과납 안내 드립니다.'
 };
 
 Tw.POPUP_PROPERTY = {
@@ -204,14 +204,14 @@ Tw.MSG_MYT = {
     }
   ],
   BILL_PREVIEW: {
-    TWORLD : '<img src="/img/dummy/ex_preview2.jpg" alt="이달청구요금">',
-    BILL_LETTER : '<img src="/img/dummy/ex_preview6.jpg" alt="이달 요금안내 유형">',
-    SMS_HP : '<img src="/img/dummy/ex_preview9.jpg" alt="요금 안내서 문자서비스">', // 문자 (휴대폰)
-    SMS_INT : '<img src="/img/dummy/ex_preview3.jpg" alt="요금 안내서 문자서비스">', // 문자 (인터넷/집전화/IPTV)
-    EMAIL_HP : '<img src="/img/dummy/ex_preview7.jpg" alt="요금 안내서 이메일서비스">', // 이메일 (휴대폰)
-    EMAIL_INT : '<img src="/img/dummy/ex_preview5.jpg" alt="요금 안내서 이메일서비스">', // 이메일 (인터넷/집전화/IPTV , T-WIBRO)
-    ETC_HP : '<img src="/img/dummy/ex_preview10.jpg" alt="요금 안내서 우편서비스">', // 기타(우편) : 휴대폰
-    ETC_INT : '<img src="/img/dummy/ex_preview4.jpg" alt="요금 안내서 우편서비스">', // 기타(우편) : (인터넷/집전화/IPTV , T-WIBRO)
+    TWORLD: '<img src="/img/dummy/ex_preview2.jpg" alt="이달청구요금">',
+    BILL_LETTER: '<img src="/img/dummy/ex_preview6.jpg" alt="이달 요금안내 유형">',
+    SMS_HP: '<img src="/img/dummy/ex_preview9.jpg" alt="요금 안내서 문자서비스">', // 문자 (휴대폰)
+    SMS_INT: '<img src="/img/dummy/ex_preview3.jpg" alt="요금 안내서 문자서비스">', // 문자 (인터넷/집전화/IPTV)
+    EMAIL_HP: '<img src="/img/dummy/ex_preview7.jpg" alt="요금 안내서 이메일서비스">', // 이메일 (휴대폰)
+    EMAIL_INT: '<img src="/img/dummy/ex_preview5.jpg" alt="요금 안내서 이메일서비스">', // 이메일 (인터넷/집전화/IPTV , T-WIBRO)
+    ETC_HP: '<img src="/img/dummy/ex_preview10.jpg" alt="요금 안내서 우편서비스">', // 기타(우편) : 휴대폰
+    ETC_INT: '<img src="/img/dummy/ex_preview4.jpg" alt="요금 안내서 우편서비스">', // 기타(우편) : (인터넷/집전화/IPTV , T-WIBRO)
   }
 };
 
@@ -382,7 +382,9 @@ Tw.RECHARGE_TYPE = {
   CANCEL: '취소',
   REGULAR: '자동',
   CHANGE: '변경',
-  BLOCK: '차단'
+  BLOCK: '차단',
+  TMTH_RECHARGE: '당월 충전',
+  REGULAR_RECHARGE: '매월 충전',
 };
 
 Tw.BLOCK_TYPE = {
