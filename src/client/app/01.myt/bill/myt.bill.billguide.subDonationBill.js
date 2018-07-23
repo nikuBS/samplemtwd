@@ -8,21 +8,24 @@
 Tw.mytBillBillguideSubDonationBill = function (rootEl) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
+  this._donationList = [];
+  this._LENGTH_PER_PAGE = 10;
+  this._currentPage = 1;
 
   this._assign();
   this._bindEvent();
-  this._init();
 };
 
 Tw.mytBillBillguideSubDonationBill.prototype = {
   _assign: function () {
-    this._$amtListWrap = this.$container.find('.amt-list-wrap');
-    this._$amtTotalWrap = this.$container.find('.amt-total-wrap');
-    this._$dateLi = this.$container.find('.tube-list li');
+    this._$amtListWrap = this.$container.find('.fe-amt-list-wrap');
+    this._$amtTotalWrap = this.$container.find('.fe-amt-total-wrap');
+    this._$amtPagingWrap = this.$container.find('.fe-amt-paging-wrap');
   },
 
   _bindEvent: function () {
-    this._$dateLi.on('click', $.proxy(this._onClickDate, this));
+    this.$container.on('click', '.tube-list li', $.proxy(this._onClickDate, this));
+    this.$container.on('click', '.fe-amt-paging-wrap .fe-btn-page', $.proxy(this._onClickBtnPage, this));
   },
 
   _onClickDate: function (event) {
@@ -39,30 +42,61 @@ Tw.mytBillBillguideSubDonationBill.prototype = {
       .fail($.proxy(this._submitFail, this));
   },
 
-  _init: function () {
+  _onClickBtnPage: function (event) {
+    var $target = $(event.currentTarget);
+    if ( $target.data('idx') === this._currentPage ) {
+      return;
+    }
+    this._currentPage = $target.data('idx');
+    this.$container.find('.fe-amt-paging-wrap .fe-btn-page').removeClass('active');
+    $target.addClass('active');
+    this._drawList();
   },
 
   _submitSuccess: function (resp) {
     if ( resp.code === '00' ) {
-      if ( resp.result && _.size(resp.result.donationList) ) {
-        var donationList = this._getAmtList(resp.result.donationList);
+      var donationList = resp.result.donationList;
+      if ( resp.result && _.size(donationList) ) {
+        this._donationList = donationList;
+        this._drawList();
+        this._drawPaging();
         var amtTotal = this._getAmtTotal(resp.result);
-        this._setDataToTemplate(this._$amtListWrap, 'amt-list', {
-          donationList: donationList
-        });
-        this._setDataToTemplate(this._$amtTotalWrap, 'amt-total', amtTotal);
+        this._setDataToTemplate(this._$amtTotalWrap, 'fe-amt-total', amtTotal);
       } else {
         this._$amtListWrap.html('');
-        this._setDataToTemplate(this._$amtTotalWrap, 'amt-empty', {});
+        this._$amtPagingWrap.html('');
+        this._setDataToTemplate(this._$amtTotalWrap, 'fe-amt-empty', {});
       }
     }
+  },
+
+  _drawList: function () {
+    var listPerpage = this._getAmtListPerPage();
+    this._$amtListWrap.html('');
+    this._setDataToTemplate(this._$amtListWrap, 'fe-amt-list', {
+      donationList: listPerpage
+    });
+  },
+
+  _drawPaging: function () {
+    var pagingSize = Math.ceil(Number(_.size(this._donationList) / this._LENGTH_PER_PAGE));
+    var pages = _.map(_.range(pagingSize), $.proxy(function (v, idx) {
+      return {
+        isActive: (this._currentPage - 1) === idx,
+        idx: idx + 1
+      };
+    }, this));
+
+    this._setDataToTemplate(this._$amtPagingWrap, 'fe-amt-paging', {
+      pages: pages
+    });
   },
 
   _submitFail: function () {
 
   },
 
-  _getAmtTotal: function(result) {
+  _getAmtTotal: function (result) {
     return {
       amt: this._getAmtWithAdded(result.totSponAmt),
       startDt: moment(this.startDt).format('YYYY.MM.DD'),
@@ -70,14 +104,22 @@ Tw.mytBillBillguideSubDonationBill.prototype = {
     };
   },
 
-  _getAmtList: function(donationList) {
-    return _.each(donationList, $.proxy(function (amtItem) {
-      amtItem.billTcDt = moment(amtItem.billTcDt).format('YYYY.MM.DD');
-      amtItem.sponAmt = this._getAmtWithAdded(amtItem.sponAmt);
-    }, this));
+  _getAmtListPerPage: function () {
+    var list = [];
+    var start = (this._currentPage - 1) * this._LENGTH_PER_PAGE;
+    var end = (this._currentPage * this._LENGTH_PER_PAGE);
+    for ( var i = start; i < end; i++ ) {
+      if ( this._donationList[i] ) {
+        var item = this._donationList[i];
+        item.billTcDt = moment(item.billTcDt).format('YYYY.MM.DD');
+        item.sponAmt = this._getAmtWithAdded(item.sponAmt);
+        list.push(item);
+      }
+    }
+    return list;
   },
 
-  _setDataToTemplate: function($element, templateName, data) {
+  _setDataToTemplate: function ($element, templateName, data) {
     $element.html(this._getTmplHtml(templateName, data));
   },
 

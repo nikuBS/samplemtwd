@@ -4,7 +4,7 @@
 * Date: 2018.07.16
 * Info: 기부금/후원금
 %>
-<script id="amt-total" type="text/x-handlebars-template">
+<script id="fe-amt-total" type="text/x-handlebars-template">
     <div class="result-box price">
         <h3 class="blind">조회결과:</h3>
         <p class="result-value">
@@ -14,7 +14,7 @@
         <p class="result-date">{{startDt}} ~ {{endDt}}</p>
     </div>
 </script>
-<script id="amt-list" type="text/x-handlebars-template">
+<script id="fe-amt-list" type="text/x-handlebars-template">
     <ul class="payment-detail-wrap">
         <!-- 박스하나 시작 -->
         {{#each donationList}}
@@ -40,12 +40,24 @@
         </li>
         {{/each}}
     </ul>
-
 </script>
-<script id="amt-empty" type="text/x-handlebars-template">
+<script id="fe-amt-empty" type="text/x-handlebars-template">
     <div class="result-box no-result">
         <h3 class="blind">조회결과:</h3>
         <p>이용내역이 없습니다.</p>
+    </div>
+</script>
+<script id="fe-amt-paging" type="text/x-handlebars-template">
+    <div class="paging">
+        <!--<a href="#" role="button" class="prev"><span class="pg-blind">이전 페이지로 이동</span></a>-->
+        {{#each pages}}
+            {{#if isActive}}
+                <a role="button" class="fe-btn-page active" title="현재페이지" data-idx="{{ idx }}">{{ idx }}</a>
+            {{else}}
+                <a role="button" class="fe-btn-page" data-idx="{{ idx }}">{{ idx }}</a>
+            {{/if}}
+        {{/each}}
+        <!--<a href="#" role="button" class="next disabled"><span class="pg-blind">다음 페이지로 이동</span></a>&lt;!&ndash; 비활성화시 disabled 클래스 추가 &ndash;&gt;-->
     </div>
 </script>
 <% include ../../components/start.component.html %>
@@ -96,12 +108,13 @@
                         </ul>
                     </div>
                 </div>
-                <div class="amt-total-wrap">
+                <div class="fe-amt-total-wrap">
                     <div class="result-box no-result">
                         <p>원하시는 기간을 선택해주세요.</p>
                     </div>
                 </div>
-                <div class="amt-list-wrap"></div>
+                <div class="fe-amt-list-wrap"></div>
+                <div class="fe-amt-paging-wrap"></div>
             </div>
 
             <hr class="cont-sp type1" aria-hidden="true" />
