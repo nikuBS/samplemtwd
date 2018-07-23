@@ -39,7 +39,11 @@ Tw.RechargeLimitHistory.prototype = {
     };
 
     this._items = {};
-    this._getData();
+    this._getData({
+      type: 0,
+      toDt: Tw.DateHelper.getCurrentShortDate(),
+      fromDt: Tw.DateHelper.getPastShortDate(Tw.DATE_UNIT.THREE_MONTH)
+    });
   },
 
   _cachedElement: function () {
@@ -122,23 +126,39 @@ Tw.RechargeLimitHistory.prototype = {
   },
 
   _setProperRecharge: function (item) {
-    if (item.opTypCd === '1') {
-      item.type = {
-        icon: 'complete',
-        label: Tw.RECHARGE_TYPE.RECHARGE
-      };
-    } else if (item.opTypCd === '3') {
-      item.type = {
-        icon: 'auto',
-        label: Tw.RECHARGE_TYPE.REGULAR
-      };
-    } else {
-      item.type = {
-        icon: 'cancel',
-        label: Tw.RECHARGE_TYPE.CANCEL,
-        complete: true
-      };
+    switch (item.opTypCd) {
+      case "1":
+        item.type = {
+          icon: 'complete',
+          label: Tw.RECHARGE_TYPE.RECHARGE
+        };
+        item.opTypNm = Tw.RECHARGE_TYPE.TMTH_RECHARGE;
+        break;
+      case "2":
+        item.type = {
+          icon: 'cancel',
+          label: Tw.RECHARGE_TYPE.CANCEL,
+          complete: true
+        };
+        item.opTypNm = Tw.RECHARGE_TYPE.TMTH_RECHARGE;
+        break;
+      case "3":
+        item.type = {
+          icon: 'auto',
+          label: Tw.RECHARGE_TYPE.REGULAR
+        };
+        item.opTypNm = Tw.RECHARGE_TYPE.REGULAR_RECHARGE;
+        break;
+      case "4":
+        item.type = {
+          icon: 'cancel',
+          label: Tw.RECHARGE_TYPE.CANCEL,
+          complete: true
+        };
+        item.opTypNm = Tw.RECHARGE_TYPE.REGULAR_RECHARGE;
+        break;
     }
+
     item.refundable = item.refundableYn === 'Y' ? true : false;
     item.opDt = Tw.DateHelper.getShortDateNoDot(item.opDt);
     return item;
