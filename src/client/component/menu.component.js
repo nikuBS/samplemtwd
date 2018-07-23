@@ -27,9 +27,7 @@ Tw.MenuComponent.prototype = {
   _successLogin: function (resp) {
     Tw.Logger.info('[Login Resp]', resp);
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      setTimeout(function () {
-        document.location.reload();
-      }, 100);
+      document.location.reload();
     } else if ( resp.code === Tw.API_LOGIN_ERROR.ICAS3228 ) {
       // 고객보호비밀번호
       location.href = '/auth/login/service-pwd';
