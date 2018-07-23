@@ -81,16 +81,20 @@ Tw.RechargeLimit.prototype = {
 
     if (!this._limit.regular || this._rechargeRegular) {
       $selectRegular.find('input').attr('disabled', true);
+      $selectRegular.addClass('disabled');
     } else {
       $selectRegular.find('input').attr('disabled', false);
+      $selectRegular.removeClass('disabled');
     }
   },
 
   _setTypeRadioState: function ($switch, state) {
     if (state) {
       $switch.addClass('checked');
+      $switch.removeClass('disabled');
     } else {
       $switch.removeClass('checked');
+      $switch.addClass('disabled');
     }
 
     $switch.find('input').attr({ 'checked': state, 'aria-checked': state, 'disabled': !state });
