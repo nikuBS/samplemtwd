@@ -17,7 +17,7 @@ class LoginService {
 
   public isLogin(): boolean {
     if ( !FormatHelper.isEmpty(this.session) ) {
-      return !FormatHelper.isEmpty(this.session.serverSession);
+      return !FormatHelper.isEmpty(this.session.svcInfo);
     }
     return false;
   }
