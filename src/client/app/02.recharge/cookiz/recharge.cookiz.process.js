@@ -44,7 +44,7 @@ Tw.RechargeCookizProcess.prototype = {
         }
 
         if ( result.regularTopUpYn === 'Y' ) {
-          $('.wrap_type_change').find('.last').addClass('disabled');
+          $('.fe-wrap_type_change').find('.last').addClass('disabled');
         }
 
         this._setAvailableAmount();
@@ -57,24 +57,23 @@ Tw.RechargeCookizProcess.prototype = {
 
   _cachedElement: function () {
     this.$wrap_tpl_contact = $('.wrap_tpl_contact');
-    this.$tubeList = $('.tube-list.two.wrap_amount_change');
+    this.$tubeList = $('.tube-list.two.fe-wrap_amount_change');
     this.tpl_contact = Handlebars.compile($('#tpl_contact').text());
   },
 
   _bindEvent: function () {
-    this.$container.on('click', '#btn_prev', $.proxy(this._goBack, this));
-    this.$container.on('click', '#btn_addr', $.proxy(this._onClickBtnAddr, this));
-    this.$container.on('click', '.btn_go_history', $.proxy(this._goHistory, this));
+    this.$container.on('click', '.fe-btn_prev', $.proxy(this._goBack, this));
+    this.$container.on('click', '.fe-btn_addr', $.proxy(this._onClickBtnAddr, this));
     this.$container.on('click', '.close-step', $.proxy(this._onCloseProcess, this));
-    this.$container.on('click', '.btn_confirm', $.proxy(this._goToCookizMain, this));
+    this.$container.on('click', '.fe-btn_confirm', $.proxy(this._goToCookizMain, this));
     this.$container.on('input', '.input input', $.proxy(this._setPhoneNumber, this));
     this.$container.on('click', '.tube-select', $.proxy(this._onClickSelectPopup, this));
-    this.$container.on('click', '.btn_validateStep1', $.proxy(this._validateCookizStep1, this));
-    this.$container.on('click', '.btn_select_amount', $.proxy(this._onClickSelectAmount, this));
-    this.$container.on('click', '#btn_cookiz_complete', $.proxy(this._validateCookizComplete, this));
-    this.$container.on('click', '.btn_validateRequestStep1', $.proxy(this._validateRequestStep1, this));
-    this.$container.on('click', '.wrap_type_change input[name=senddata]', $.proxy(this._onChangeType, this));
-    this.$container.on('click', '.wrap_amount_change input[name=senddata]', $.proxy(this._onChangeAmount, this));
+    this.$container.on('click', '.fe-btn_validateStep1', $.proxy(this._validateCookizStep1, this));
+    this.$container.on('click', '.fe-btn_select_amount', $.proxy(this._onClickSelectAmount, this));
+    this.$container.on('click', '.fe-btn_cookiz_complete', $.proxy(this._validateCookizComplete, this));
+    this.$container.on('click', '.fe-btn_validateRequestStep1', $.proxy(this._validateRequestStep1, this));
+    this.$container.on('click', '.fe-wrap_type_change input[name=senddata]', $.proxy(this._onChangeType, this));
+    this.$container.on('click', '.fe-wrap_amount_change input[name=senddata]', $.proxy(this._onChangeAmount, this));
   },
 
   _onClickBtnAddr: function () {
@@ -91,9 +90,9 @@ Tw.RechargeCookizProcess.prototype = {
     Tw.InputHelper.inputNumberOnly(e.currentTarget);
     this.target.phone = $(e.currentTarget).val();
     if ( this.target.phone.length <= 0 ) {
-      $('.btn_validateRequestStep1').prop('disabled', true);
+      $('.fe-btn_validateRequestStep1').prop('disabled', true);
     } else {
-      $('.btn_validateRequestStep1').prop('disabled', false);
+      $('.fe-btn_validateRequestStep1').prop('disabled', false);
     }
   },
 
@@ -116,7 +115,7 @@ Tw.RechargeCookizProcess.prototype = {
 
   _onChangeType: function (e) {
     var elWrapInput = $(e.currentTarget);
-    this.target.type = $('.wrap_type_change').find('input').index(elWrapInput);
+    this.target.type = $('.fe-wrap_type_change').find('input').index(elWrapInput);
     var sTypeName = elWrapInput.parent().text().trim();
     $('.recharge_type').text(sTypeName);
   },
@@ -157,7 +156,7 @@ Tw.RechargeCookizProcess.prototype = {
       select: [{ options: arrOption }],
       bt_num: 'one',
       type: [{
-        style_class: 'bt-red1 btn_select_amount',
+        style_class: 'bt-red1 fe-btn_select_amount',
         txt: Tw.BUTTON_LABEL.SELECT
       }]
     }, $.proxy(this._onOpenSelectPopup, this));
@@ -259,11 +258,6 @@ Tw.RechargeCookizProcess.prototype = {
 
   _goToCookizMain: function () {
     this._goBack();
-  },
-
-  _goHistory: function () {
-    this._history.setHistory();
-    this._goLoad('/recharge/cookiz/history');
   },
 
   _goBack: function () {
