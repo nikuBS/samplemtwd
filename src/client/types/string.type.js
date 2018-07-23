@@ -286,6 +286,7 @@ Tw.MSG_PAYMENT = {
   PRE_A08: '선결제 금액은 기준금액을 넘을 수 없습니다.',
   PRE_A10: '자동 선결제 신청 및 변경을 종료하시겠습니까?',
 
+  HISTORY_TEXT_PAYMENT: '결제',
   HISTORY_PROCESS_TYPE_APPLY: '신청',
   HISTORY_PROCESS_TYPE_DONE: '완료',
   HISTORY_PROCESS_TYPE_RESERVE_DONE: '예약완료',
@@ -303,7 +304,7 @@ Tw.MSG_PAYMENT = {
   HISTORY_POINT_CODE_OCB: 'CPT',
   HISTORY_POINT_CODE_TPOINT: 'TPT',
   HISTORY_OVER_PAY: {
-    SUBTITLE: '의<br />휴대폰 요금',
+    SUBTITLE: '님의<br />휴대폰 요금',
     SUBTITLE_SUB: '건이 과납되었습니다.',
     CONTENTS: '<strong>환불받으실 금액을 확인</strong>하시고<br /> 환불 받을 계좌를 등록해 주세요!',
     BUTTON_TEXT: '과납금액확인하기',
@@ -313,6 +314,7 @@ Tw.MSG_PAYMENT = {
   HISTORY_POINT_TITLE_TPOINT: 'T포인트',
   HISTORY_POINT_TITLE_RAINBOW: '레인보우 포인트',
   HISTORY_AUTO_CARD_KEYWORD: '카드',
+  HISTORY_DATE_YYYYMM_CASE: 'YYYY년 MM월',
   HISTORY_MENU_TITLE: '납부방식 선택',
   HISTORY_MENU: '전체납부내역,즉시납부내역,자동납부내역,자동납부 통합인출,포인트 납부예약,포인트 자동납부',
   HISTORY_A01: '환불신청 계좌가 등록되었습니다.',
