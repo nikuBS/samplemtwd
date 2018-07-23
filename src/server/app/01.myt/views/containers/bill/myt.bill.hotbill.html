@@ -30,7 +30,7 @@
     <!-- #contents -->
     <div id="contents" class="container-wrap">
         <h2 class="blind">내용</h2>
-        <div id="myt-bill-hotbill" class="container">
+        <div id="fe-myt-bill-hotbill" class="container">
 
             <div class="cont-box">
                 <div class="payment-info">
@@ -77,7 +77,7 @@
             </div>
 
             <hr class="cont-sp type1" aria-hidden="true"/>
-            <div class="cont-box nogaps noborder" id="billAccordion">
+            <div class="cont-box nogaps noborder" id="fe-billAccordion">
                 <!-- billItems -->
             </div>
 
@@ -86,7 +86,7 @@
             <div class="cont-box nogaps-hoz">
                 <div class="helpbox-link">
                     <% if(preBillAvailable){ %>
-                    <div class="link-long" id="previousBill" style="display:none;">
+                    <div class="link-long" id="fe-previousBill" style="display:none;">
                         <a href="" class="disabled">전월요금보기<span class="ico"></span></a>
                     </div>
                     <% } %>
@@ -111,7 +111,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
     $(document).ready(function () {
-        var comp = new Tw.MyTBillHotBill($('#myt-bill-hotbill'));
+        var comp = new Tw.MyTBillHotBill($('#fe-myt-bill-hotbill'));
     });
 </script>
 <% include ../../components/end.component.html %>

@@ -6,6 +6,7 @@ Tw.Init = function () {
   this._initComponent();
   this._getDeviceInfo();
   this._getEnvironment();
+  this._setChannel();
 };
 
 Tw.Init.prototype = {
@@ -25,9 +26,9 @@ Tw.Init.prototype = {
   },
 
   _logVersion: function (resp) {
-    if(resp.code === Tw.API_CODE.CODE_00) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
       var result = resp.result;
-      if ( (result.environment === 'development' || result.environment === 'qa') && /\/home/.test(location.href)) {
+      if ( (result.environment === 'development' || result.environment === 'qa') && /\/home/.test(location.href) ) {
         /* jshint undef: false */
         alert(Tw.environment.version);
         /* jshint undef: false */
@@ -50,7 +51,14 @@ Tw.Init.prototype = {
     this._apiService.request(Tw.NODE_CMD.SET_DEVICE, resp)
       .done($.proxy(this._successSetDivice, this));
   },
-  _successSetDivice: function(resp) {
+  _successSetDivice: function (resp) {
+    console.log(resp);
+  },
+  _setChannel: function () {
+    this._apiService.request(Tw.NODE_CMD.SET_CHANNEL, {})
+      .done($.proxy(this._successSetChannel, this));
+  },
+  _successSetChannel: function (resp) {
     console.log(resp);
   }
 };

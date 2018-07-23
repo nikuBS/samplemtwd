@@ -15,14 +15,6 @@ class MyTBillBillguideSubRoamingBill extends TwViewController {
 
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    // const roamingBillRequest: Observable<any> = this.apiService.request(API_CMD.BFF_05_0044, {});
-    // Observable.combineLatest(
-    //   roamingBillRequest,
-    // ).subscribe(([_roamingBill]) => {
-    //   const roamingBill = this.getResult(_roamingBill);
-    //   console.log('~~~~svcInfo', svcInfo);
-    //   console.log('~~~~roamingBill', roamingBill);
-    // });
     this.renderView(res, 'bill/myt.bill.billguide.subRoamingBill.html', {
       svcInfo
     });

@@ -205,10 +205,10 @@
                 <% if( showConditionInfo.paymentBtnYn === 'Y' && showConditionInfo.suspensionYn === 'Y') { %>
                 <ul class="bt-slice item-two">
                     <li class="bt-white1">
-                        <button>납부가능일 선택</button>
+                        <button class="" data-target="selPaymentBtn">납부가능일 선택</button>
                     </li>
                     <li class="bt-white1">
-                        <button class="">이용정지 해제</button>
+                        <button class="" data-target="susReleaseBtn">이용정지 해제</button>
                     </li>
                 </ul>
                 <% } else if( showConditionInfo.paymentBtnYn === 'N' && showConditionInfo.suspensionYn === 'Y') { %>
@@ -217,13 +217,13 @@
                     <!--<button>납부가능일 선택</button>-->
                     <!--</li>-->
                     <li class="bt-white1">
-                        <button class="">이용정지 해제</button>
+                        <button class="" data-target="susReleaseBtn">이용정지 해제</button>
                     </li>
                 </ul>
                 <% } else if( showConditionInfo.paymentBtnYn === 'Y' && showConditionInfo.suspensionYn === 'N') { %>
                 <ul class="bt-slice item-one">
                     <li class="bt-white1">
-                        <button>납부가능일 선택</button>
+                        <button data-target="selPaymentBtn">납부가능일 선택</button>
                     </li>
                     <!--<li class="bt-white1">-->
                     <!--<button class="">이용정지 해제</button>-->
