@@ -4,6 +4,7 @@
  * Date: 2018. 7. 9.
  */
 Tw.MyTBillHotBillChild = function (rootEl) {
+  this.SVC_TYPE = { MOBILE: 'M1', TPOCKET: 'M3' };
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -21,13 +22,13 @@ Tw.MyTBillHotBillChild = function (rootEl) {
 
 Tw.MyTBillHotBillChild.prototype = {
   _cachedElement: function () {
-    this.$billMenu = this.$container.find('#childBillAccordion');
+    this.$billMenu = this.$container.find('#fe-childBillAccordion');
     this.$amount = this.$container.find('.payment-all em');
     this.$period = this.$container.find('.payment-all > .term');
     this.$childSelect = this.$container.find('.bt-dropdown');
     this.$deviceInfo = this.$container.find('.device-info');
-    this.$svcNum = this.$container.find('.svc-num');
-    this.$btPreviousBill = this.$container.find('#previousBill');
+    this.$svcNum = this.$container.find('.fe-svc-num');
+    this.$btPreviousBill = this.$container.find('#fe-previousBill');
   },
 
   _bindEvent: function () {
@@ -75,7 +76,7 @@ Tw.MyTBillHotBillChild.prototype = {
 
     if ( resp.result && resp.result.isSuccess === 'Y' ) {
       if ( resp.result.gubun === Tw.MyTBillHotBill.PARAM.TYPE.PREVIOUS ) {
-        var type = this._svcAttrCd === this.SVC_TYPE.MOBILE ? '휴대폰' : 'T Pocket-Fi';
+        var type = (this._svcAttrCd === this.SVC_TYPE.MOBILE )? '휴대폰' : 'T Pocket-Fi';
         //전월요금 없음
         if ( resp.result.bf_mth_yn === 'Y' && resp.result.hotBillInfo.tot_open_bal1 === '0' && resp.result.hotBillInfo.tot_dedt_bal1 === '0' ) {
           this._popupService.open({
@@ -96,7 +97,6 @@ Tw.MyTBillHotBillChild.prototype = {
         if ( day <= 7 ) {
           this.$btPreviousBill.show();
         }
-
         this.$amount.text(billData.tot_open_bal2);
         var strPeriod = Tw.MyTBillHotBill.getFormattedPeriod(resp.result.termOfHotBill);
         this.$period.text(strPeriod);
@@ -143,6 +143,7 @@ Tw.MyTBillHotBillChild.prototype = {
   },
 
   _showPreviousBill: function () {
+    var self = this;
     event.preventDefault();
     skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
     this._apiService
@@ -151,7 +152,7 @@ Tw.MyTBillHotBillChild.prototype = {
         childSvcMgmtNum: this._childSvcNum
       })
       .done(function () {
-        this._startGetBillResponseTimer(Tw.MyTBillHotBill.PARAM.TYPE.PREVIOUS, this._childSvcNum);
+        self._startGetBillResponseTimer(Tw.MyTBillHotBill.PARAM.TYPE.PREVIOUS, self._childSvcNum);
       })
       .fail($.proxy(this._onErrorReceivedBillData, this));
 

@@ -30,7 +30,7 @@
     <!-- #contents -->
     <div id="contents" class="container-wrap">
         <h2 class="blind">내용</h2>
-        <div id="myt-bill-hotbill-child" class="container">
+        <div id="fe-myt-bill-hotbill-child" class="container">
 
             <div class="cont-box">
                 <div class="payment-info family">
@@ -38,11 +38,11 @@
                     <div class="payment-info-phone">
                         <!-- 자녀 회선이 1개인 경우 -->
                         <% if( onlyChild ){ %>
-                        <span class="child-phonenum svc-num" data-items=<%= children %>></span>
+                        <span class="child-phonenum fe-svc-num" data-items=<%= children %>></span>
                         <!--// 자녀 회선이 1개인 경우 -->
                         <% } else { %>
                         <!-- 자녀 회선이 2개 이상인 경우 -->
-                        <button class="bt-dropdown small svc-num" title="전화번호 선택" aria-haspopup="true" data-items=<%= children %>></button>
+                        <button class="bt-dropdown small fe-svc-num" title="전화번호 선택" aria-haspopup="true" data-items=<%= children %>></button>
                         <!--// 자녀 회선이 2개 이상인 경우 -->
                         <% } %>
                         <span class="device-info"></span>
@@ -60,7 +60,7 @@
             </div>
 
             <hr class="cont-sp type1" aria-hidden="true"/>
-            <div class="cont-box nogaps noborder" id="childBillAccordion">
+            <div class="cont-box nogaps noborder" id="fe-childBillAccordion">
                 <!-- billItems -->
             </div>
 
@@ -68,7 +68,7 @@
             <!-- .cont-box -->
             <div class="cont-box nogaps-hoz">
                 <div class="helpbox-link">
-                    <div class="link-long" id="previousBill" style="display:none;">
+                    <div class="link-long" id="fe-previousBill" style="display:none;">
                         <a href="" class="disabled">전월요금보기<span class="ico"></span></a>
                     </div>
                 </div>
@@ -87,7 +87,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
     $(document).ready(function () {
-        var comp = new Tw.MyTBillHotBillChild($('#myt-bill-hotbill-child'));
+        var comp = new Tw.MyTBillHotBillChild($('#fe-myt-bill-hotbill-child'));
     });
 </script>
 <% include ../../components/end.component.html %>

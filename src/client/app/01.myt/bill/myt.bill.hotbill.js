@@ -24,18 +24,18 @@ Tw.MyTBillHotBill = function (rootEl) {
 
 Tw.MyTBillHotBill.prototype = {
   _cachedElement: function () {
-    this.$billMenu = this.$container.find('#billAccordion');
+    this.$billMenu = this.$container.find('fe-billAccordion');
     this.$amount = this.$container.find('.payment-all em');
     this.$period = this.$container.find('.payment-all > .term');
     this.$memberInfo = this.$container.find('.use-family');
     this.$memberTitle = this.$memberInfo.find('[title]');
     this.$numOfMembers = this.$memberInfo.find('[title] strong');
-    this.$btPreviousBill = this.$container.find('#previousBill');
+    this.$btPreviousBill = this.$container.find('#fe-previousBill');
   },
 
   _bindEvent: function () {
     this.$container.on('click', '.use-family', $.proxy(this._showChildrenChoice, this));
-    this.$container.on('click', '#previousBill', $.proxy(this._showPreviousBill, this));
+    this.$container.on('click', '#fe-previousBill', $.proxy(this._showPreviousBill, this));
   },
 
   _getBillResponse: function (gubun) {
@@ -67,7 +67,7 @@ Tw.MyTBillHotBill.prototype = {
 
     if ( resp.result && resp.result.isSuccess === 'Y' ) {
       if ( resp.result.gubun === Tw.MyTBillHotBill.PARAM.TYPE.PREVIOUS ) {
-        var type = this._svcAttrCd === this.SVC_TYPE.MOBILE ? '휴대폰' : 'T Pocket-Fi';
+        var type = (this._svcAttrCd === this.SVC_TYPE.MOBILE) ? '휴대폰' : 'T Pocket-Fi';
         //전월요금 없음
         if ( resp.result.bf_mth_yn === 'Y' && resp.result.hotBillInfo.tot_open_bal1 === '0' && resp.result.hotBillInfo.tot_dedt_bal1 === '0' ) {
           this._popupService.open({
