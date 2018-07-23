@@ -30,8 +30,8 @@ Tw.mytBillBillguideSubDonationBill.prototype = {
 
   _onClickDate: function (event) {
     var $target = $(event.currentTarget);
-    var unit = $target.attr('unit');
-    var measurements = $target.attr('measurements');
+    var unit = $target.data('unit');
+    var measurements = $target.data('measurements');
     this.startDt = this._getStartDt(unit, measurements);
     this.endDt = this._getEndDt();
     this._apiService.request(Tw.API_CMD.BFF_05_0038, {
