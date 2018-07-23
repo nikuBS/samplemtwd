@@ -120,9 +120,9 @@ Tw.DateHelper = (function () {
     return moment(date, currentFormat).add(amount, unit).format(format);
   };
 
-  var getEndOfMonth = function (date, currentFormat) {
+  var getEndOfMonth = function (date, format, currentFormat) {
     var days = moment(date, currentFormat).daysInMonth();
-    return moment(date, currentFormat).add(days - 1, 'days').format('YYYY.MM.DD');
+    return moment(date, currentFormat).add(days - 1, 'days').format(format);
   };
 
   return {
