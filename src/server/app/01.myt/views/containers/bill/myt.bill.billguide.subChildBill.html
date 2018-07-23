@@ -19,7 +19,7 @@
     <div  class="header-wrap">
         <div class="header">
             <div class="header-ti">
-                <h1>자녀폰 실시간 사용요금</h1>
+                <h1>자녀폰 사용요금</h1>
                 <!--<button class="depth-view" role="button" aria-pressed="false"><span class="blind">메뉴구조보기</span></button>-->
             </div>
             <button class="prev-step"><span class="blind">이전으로</span></button>
@@ -47,8 +47,8 @@
                         <button class="bt-dropdown small"
                                 data-title="전화번호 선택"
                                 title="전화번호 선택"
-                                data-target="childPhonenumBtn"><%=circuitChildInfo[0].svcNum %></button>
-                        <span class="device-info" data-target="deviceInfo"><%=circuitChildInfo[0].childEqpMdNm %></span>
+                                data-target="childPhonenumBtn"><%=circuitChildInfo[reqQuery.selNum].svcNum %></button>
+                        <span class="device-info" data-target="deviceInfo"><%=circuitChildInfo[reqQuery.selNum].childEqpMdNm %></span>
                         <% } else { %>
 
                         <span class="child-phonenum" data-target="childPhonenum"></span>
@@ -65,20 +65,35 @@
             <div class="cont-box">
                 <div class="payment-inquiry">
                     <a class="bt-link-tx" data-target="feePlanName">Band 데이터 6.5G<span class="ico"></span></a>
-                    <button class="bt-dropdown big" title="월별 요금안내서 선택" data-target="billMonthName"></span></button><!-- 2018-07-12 접근성 수정 -->
+                    <button class="bt-dropdown big" title="월별 요금안내서 선택" data-target="billMonthName"><%=commDataInfo.selClaimDtBtn %></span></button><!-- 2018-07-12 접근성 수정 -->
                     <div class="payment-all">
                         <h3 class="blind">사용 요금</h3>
-                        <span><em data-target="useAmtTot"></em> 원</span>
-                        <p class="term" data-target="periodOfUse"></p>
+                        <!--<span><em data-target="useAmtTot"></em> 원</span>-->
+                        <!--<p class="term" data-target="periodOfUse"></p>-->
+                        <span><em><%=usedAmountChildInfo.useAmtTot %></em> 원</span>
+                        <p class="term"><%=commDataInfo.selStaDt %> ~ <%=commDataInfo.selEndDt %></p>
                     </div>
                     <div class="txt-discount" data-target="discountArea">
-                        <!--<p><span class="num">5</span>월 사용 요금은 <span class="num">370,000</span>원이고<br /><span class="num">20,000</span>원을 할인 받으셨습니다.</p>-->
+                        <% if( commDataInfo.discount === '0' ) {  %>
+                        <!-- 사용요금 + 요금할인내역 0원일때 -->
+                        <p><span class="num"><%=commDataInfo.selClaimDtNum %></span>월 사용 요금은 <span class="num"><%=usedAmountChildInfo.useAmtTot %></span>원입니다.</p>
+                        <% } else { %>
+                        <!-- 사용요금 + 요금할인내역 -->
+                        <p><span class="num"><%=commDataInfo.selClaimDtNum %></span>월 사용 요금은 <span class="num"><%=usedAmountChildInfo.useAmtTot %></span>원이고<br /><span class="num"><%=commDataInfo.discount %></span>원을 할인 받으셨습니다.</p>
+                        <% } %>
                     </div>
                 </div>
             </div>
 
             <div class="cont-box nogaps">
                 <h3 class="pg-tit">휴대폰/SKT</h3>
+                <!-- .accordion -->
+                <%- include('../../components/billguide/myt.bill.billguide.billmenu.html', {billItems: billItems}) %>
+                <!--// .accordion -->
+            </div>
+
+            <hr class="cont-sp type1" aria-hidden="true"/>
+            <div class="cont-box nogaps noborder">
                 <!-- .accordion -->
                 <div class="widget">
                     <div class="widget-box accordion2">
@@ -90,8 +105,8 @@
                                     <div class="acco-title">
                                         <button role="button" aria-pressed="false">
                                                 <span class="pt-tit-wrap">
-                                                    <span class="pt-tit">통신서비스요금</span>
-                                                    <span class="pt-price"><span class="num">12,550</span>원</span>
+                                                    <span class="pt-tit">미납요금</span>
+                                                    <span class="pt-price"><span class="num"><%=usedAmountChildInfo.unPayAmt %></span>원</span>
                                                 </span>
                                         </button>
                                     </div>
@@ -99,250 +114,29 @@
                                     <!-- 아코디언 내용 -->
                                     <div class="acco-content">
                                         <ul class="payment-detail-depth1">
-                                            <!-- depth-1 -->
+
+                                            <% for(var i=0; i < usedAmountChildInfo.unPayAmtList.length; i++) { %>
                                             <li>
                                                 <dl class="pdt-wrap">
-                                                    <dt class="pdt-tit">월정액</dt>
-                                                    <dd class="pdt-price"><span class="num">24,480</span>원</dd>
+                                                    <dt class="pdt-tit"><%=usedAmountChildInfo.unPayAmtList[i].invDt %></dt>
+                                                    <dd class="pdt-price"><span class="num"><%=usedAmountChildInfo.unPayAmtList[i].comBat %></span>원</dd>
                                                 </dl>
                                             </li>
-                                            <!--// depth-1 -->
-                                            <!-- depth-2 -->
-                                            <li>
-                                                <dl class="pdt-wrap">
-                                                    <dt class="pdt-tit">국내통화료</dt>
-                                                    <dd class="pdt-price"><span class="num">20</span>원</dd>
-                                                </dl>
-                                                <ul class="payment-detail-depth2">
-                                                    <li>
-                                                        <dl class="pdt-wrap">
-                                                            <dt class="pdt-tit">음성통화료</dt>
-                                                            <dd class="pdt-price"><span class="num">0</span>원</dd>
-                                                        </dl>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <!--// depth-2 -->
-                                            <li>
-                                                <dl class="pdt-wrap">
-                                                    <dt class="pdt-tit">데이터통화료</dt>
-                                                    <dd class="pdt-price"><span class="num">24,480</span>원</dd>
-                                                </dl>
-                                            </li>
-                                            <li>
-                                                <dl class="pdt-wrap">
-                                                    <dt class="pdt-tit">요금할인</dt>
-                                                    <dd class="pdt-price discount"><span class="num">-13,760</span>원</dd><!-- 할인 항목 숫자에 discount 클래스 추가 -->
-                                                </dl>
-                                                <ul class="payment-detail-depth2">
-                                                    <li>
-                                                        <dl class="pdt-wrap">
-                                                            <dt class="pdt-tit">온가족+B인터넷할인</dt>
-                                                            <dd class="pdt-price discount"><span class="num">-13,760</span>원</dd>
-                                                        </dl>
-                                                        <dl class="pdt-wrap">
-                                                            <dt class="pdt-tit">oksusu_쿠폰할인</dt>
-                                                            <dd class="pdt-price discount"><span class="num">-13,760</span>원</dd>
-                                                        </dl>
-                                                        <dl class="pdt-wrap">
-                                                            <dt class="pdt-tit">oksusu_요금할인</dt>
-                                                            <dd class="pdt-price discount"><span class="num">-13,760</span>원</dd>
-                                                        </dl>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li>
-                                                <dl class="pdt-wrap">
-                                                    <dt class="pdt-tit" role="note" aria-labelledby="footnote-01">부가가치세(세금)<span class="badge badge-other"><span class="blind">타사</span></span></dt><!-- 2018-07-11 아이콘 변경 --><!-- 주석 달린 텍스트 aria-labelledby, role 속성 추가 -->
-                                                    <dd class="pdt-price"><span class="num">1,760</span>원</dd>
-                                                </dl>
-                                                <ul class="payment-detail-depth2">
-                                                    <li>
-                                                        <dl class="pdt-wrap">
-                                                            <dt class="pdt-tit" role="note" aria-labelledby="footnote-02">부가세총액<span class="ico-foot-2"></span></dt>
-                                                            <dd class="pdt-price"><span class="num">3,760</span>원</dd>
-                                                        </dl>
-                                                        <dl class="pdt-wrap">
-                                                            <dt class="pdt-tit" role="note" aria-labelledby="footnote-02">할인부가세<span class="ico-foot-2"></span></dt>
-                                                            <dd class="pdt-price discount"><span class="num">-13,760</span>원</dd>
-                                                        </dl>
-                                                    </li>
-                                                </ul>
-                                            </li>
+                                            <% } %>
+
                                         </ul>
                                         <div class="footnote-txt">
-                                            <ul>
-                                                <li id="footnote-01"><span class="ico-foot-2"></span>부가가치세 제외 대상 표시</li><!-- 상단 텍스트 aria-labelledby 와 id 속성값을 동일하게 처리해야 함 -->
-                                                <li id="footnote-02"><span class="badge badge-other"><span class="blind">타사</span></span>당사에서 청구 대행하는 타사 요금</li><!-- 2018-07-11 아이콘 변경 -->
+                                            <ul class="list-dot">
+                                                <li class="list">2대이상의 회선을 통합청구신청 하신 고객님은 합산된 청구요금이 보여집니다.</li>
+                                                <li class="list">고객님은 현재 미납된 요금이 있습니다. 이용에 불편이 없도록 납부바랍니다.</li>
+
+                                                <!-- 3번째, 4번째 안내문구는 “납부가능일 선택” 버튼이 노출될 경우 문구출력 -->
+                                                <li class="list">즉시요금 납부가 어려우시면 ‘납부 가능일 입력＇을 선택하여 주세요.</li>
+                                                <li class="list">고객님의 이용정지 예정일은 2018년 01월 16일 입니다.</li>
                                             </ul>
                                         </div>
                                     </div>
                                     <!--// 아코디언 내용 -->
-                                </li>
-                                <!--// 아코디언 한줄 -->
-                                <li class="acco-list">
-                                    <div class="acco-title">
-                                        <button role="button" aria-pressed="false">
-                                                <span class="pt-tit-wrap">
-                                                    <span class="pt-tit">부가사용금액</span>
-                                                    <span class="pt-price"><span class="num">11,399</span>원</span>
-                                                </span>
-                                        </button>
-                                    </div>
-                                    <div class="acco-content">
-                                        <ul class="payment-detail-depth1">
-                                            <li>
-                                                <dl class="pdt-wrap">
-                                                    <dt class="pdt-tit">부가서비스이용료</dt>
-                                                    <dd class="pdt-price"><span class="num">1,499</span>원</dd>
-                                                </dl>
-                                                <ul class="payment-detail-depth2">
-                                                    <li>
-                                                        <dl class="pdt-wrap">
-                                                            <dt class="pdt-tit">착신전환서비스</dt>
-                                                            <dd class="pdt-price"><span class="num">532</span>원</dd>
-                                                        </dl>
-                                                        <dl class="pdt-wrap">
-                                                            <dt class="pdt-tit">oksusu_기본월정액</dt>
-                                                            <dd class="pdt-price"><span class="num">532</span>원</dd>
-                                                        </dl>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li>
-                                                <dl class="pdt-wrap">
-                                                    <dt class="pdt-tit" role="note" aria-labelledby="footnote-03">콘텐츠이용료<span class="badge badge-other"><span class="blind">타사</span></span></dt><!-- 2018-07-11 아이콘 변경 -->
-                                                    <dd class="pdt-price"><span class="num">1,760</span>원</dd>
-                                                </dl>
-                                                <ul class="payment-detail-depth2">
-                                                    <li>
-                                                        <dl class="pdt-wrap">
-                                                            <dt class="pdt-tit" role="note" aria-labelledby="footnote-04">티스토어콘텐츠<span class="ico-foot-2"></span></dt>
-                                                            <dd class="pdt-price"><span class="num">9,900</span>원</dd>
-                                                        </dl>
-                                                        <div class="btn-wrap"><a class="bt-link-tx" href="">자세히 보기 (본인인증 필요)<span class="ico"></span></a></div>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li>
-                                                <dl class="pdt-wrap">
-                                                    <dt class="pdt-tit" role="note" aria-labelledby="footnote-03">소액결제<span class="badge badge-other"><span class="blind">타사</span></span></dt><!-- 2018-07-11 아이콘 변경 -->
-                                                    <dd class="pdt-price"><span class="num">1,760</span>원</dd>
-                                                </dl>
-                                                <ul class="payment-detail-depth2">
-                                                    <li>
-                                                        <dl class="pdt-wrap">
-                                                            <dt class="pdt-tit" role="note" aria-labelledby="footnote-04">소액결제다날<span class="ico-foot-2"></span></dt>
-                                                            <dd class="pdt-price"><span class="num">9,900</span>원</dd>
-                                                        </dl>
-                                                        <div class="btn-wrap"><a class="bt-link-tx" href="">자세히 보기 (본인인증 필요)<span class="ico"></span></a></div>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                        <div class="footnote-txt">
-                                            <ul>
-                                                <li id="footnote-03"><span class="ico-foot-2"></span>부가가치세 제외 대상 표시</li><!-- 상단 텍스트 aria-labelledby 와 id 속성값을 동일하게 처리해야 함 -->
-                                                <li id="footnote-04"><span class="badge badge-other"><span class="blind">타사</span></span>당사에서 청구 대행하는 타사 요금</li><!-- 2018-07-11 아이콘 변경 -->
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="acco-list">
-                                    <div class="acco-title">
-                                        <button role="button" aria-pressed="false">
-                                                <span class="pt-tit-wrap">
-                                                    <span class="pt-tit">단말기할부금</span>
-                                                    <span class="pt-price"><span class="num">14,610</span>원</span>
-                                                </span>
-                                        </button>
-                                    </div>
-                                    <div class="acco-content">
-                                        <ul class="payment-detail-depth1">
-                                            <li>
-                                                <dl class="pdt-wrap">
-                                                    <dt class="pdt-tit" role="note" aria-labelledby="footnote-05">단말기할부금<span class="badge badge-other"><span class="blind">타사</span></span></dt><!-- 2018-07-11 아이콘 변경 -->
-                                                    <dd class="pdt-price"><span class="num">14,610</span>원</dd>
-                                                </dl>
-                                                <ul class="payment-detail-depth2">
-                                                    <li>
-                                                        <dl class="pdt-wrap">
-                                                            <dt class="pdt-tit" role="note" aria-labelledby="footnote-06">단말기할부원금<span class="ico-foot-2"></span></dt>
-                                                            <dd class="pdt-price"><span class="num">14,050</span>원</dd>
-                                                        </dl>
-                                                        <dl class="pdt-wrap">
-                                                            <dt class="pdt-tit" role="note" aria-labelledby="footnote-06">단말기할부이자<span class="ico-foot-2"></span></dt>
-                                                            <dd class="pdt-price"><span class="num">532</span>원</dd>
-                                                        </dl>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                        <div class="footnote-txt">
-                                            <ul>
-                                                <li id="footnote-05"><span class="badge badge-other"><span class="blind">타사</span></span>부가가치세 제외 대상 표시</li><!-- 2018-07-11 아이콘 변경 --><!-- 상단 텍스트 aria-labelledby 와 id 속성값을 동일하게 처리해야 함 -->
-                                                <li id="footnote-06"><span class="ico-foot-2"></span>당사에서 청구 대행하는 타사 요금</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="acco-list">
-                                    <div class="acco-title">
-                                        <button role="button" aria-pressed="false">
-                                                <span class="pt-tit-wrap">
-                                                    <span class="pt-tit">기타요금</span>
-                                                    <span class="pt-price"><span class="num">80,000</span>원</span>
-                                                </span>
-                                        </button>
-                                    </div>
-                                    <div class="acco-content">
-                                        <ul class="payment-detail-depth1">
-                                            <li>
-                                                <dl class="pdt-wrap">
-                                                    <dt class="pdt-tit" role="note" aria-labelledby="footnote-07">미리납부하신금액<span class="badge badge-other"><span class="blind">타사</span></span></dt><!-- 2018-07-11 아이콘 변경 -->
-                                                    <dd class="pdt-price discount"><span class="num">-2,570</span>원</dd>
-                                                </dl>
-                                            </li>
-                                            <!-- <li>
-                                                <dl class="pdt-wrap">
-                                                    <dt class="pdt-tit" role="note" aria-labelledby="footnote-08">미리납부하신금액<span class="ico-foot-2"></span></dt>
-                                                    <dd class="pdt-price discount"><span class="num">-2,570</span>원</dd>
-                                                </dl>
-                                            </li> -->
-                                        </ul>
-                                        <div class="footnote-txt">
-                                            <ul>
-                                                <li id="footnote-07"><span class="badge badge-other"><span class="blind">타사</span></span>부가가치세 제외 대상 표시</li><!-- 2018-07-11 아이콘 변경 --><!-- 상단 텍스트 aria-labelledby 와 id 속성값을 동일하게 처리해야 함 -->
-                                                <li id="footnote-08"><span class="ico-foot-2"></span>당사에서 청구 대행하는 타사 요금</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="acco-list">
-                                    <div class="acco-title">
-                                        <button role="button" aria-pressed="false">
-                                                <span class="pt-tit-wrap">
-                                                    <span class="pt-tit">미납요금</span>
-                                                    <span class="pt-price"><span class="num" data-target="unpaidChargesTot">80,550</span>원</span>
-                                                </span>
-                                        </button>
-                                    </div>
-                                    <div class="acco-content">
-                                        <ul class="payment-detail-depth1" data-target="unpaidChargesList">
-                                            <!--<li>-->
-                                                <!--<dl class="pdt-wrap">-->
-                                                    <!--<dt class="pdt-tit">2018년 4월</dt>-->
-                                                    <!--<dd class="pdt-price"><span class="num">40,000</span>원</dd>-->
-                                                <!--</dl>-->
-                                            <!--</li>-->
-                                            <!--<li>-->
-                                                <!--<dl class="pdt-wrap">-->
-                                                    <!--<dt class="pdt-tit">2018년 5월</dt>-->
-                                                    <!--<dd class="pdt-price"><span class="num">40,000</span>원</dd>-->
-                                                <!--</dl>-->
-                                            <!--</li>-->
-                                        </ul>
-                                    </div>
                                 </li>
                             </ul>
                         </div>
@@ -424,8 +218,11 @@
     new Tw.mytBillBillguideSubChildBill($('#wrapFdev'), {
       reqQuery: <%-JSON.stringify(reqQuery) %>,
       svcInfo: <%-JSON.stringify(svcInfo) %>,
+      selectSvcMgmtNum: <%-JSON.stringify(selectSvcMgmtNum) %>,
       circuitChildInfo: <%-JSON.stringify(circuitChildInfo) %>,
-      commDataInfo: <%-JSON.stringify(commDataInfo) %>
+      usedAmountChildInfo: <%-JSON.stringify(usedAmountChildInfo) %>,
+      commDataInfo: <%-JSON.stringify(commDataInfo) %>,
+      billItems: <%-JSON.stringify(billItems) %>
   });
   });
 </script>

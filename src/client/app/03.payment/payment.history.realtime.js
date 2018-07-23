@@ -44,20 +44,20 @@ Tw.PaymentHistoryRealtime.prototype = {
     };
     this.apiName = Tw.API_CMD.BFF_07_0035;
     this.api_detailName = Tw.API_CMD.BFF_07_0036;
-    this.stupidBE_ApiName = Tw.API_CMD.BFF_07_0017;
     this.emptyURL = '/payment/point';
 
     this._getData();
   },
 
   _isPersonalCompany: function () {
-    if (this.stupidBE_ApiName) {
-      this._apiService.request(this.stupidBE_ApiName, '')
-          .done($.proxy(function(res) {
-            console.log(res);
-          }, this))
-          .error($.proxy(function() {}, this));
-    }
+    // if (this.stupidBE_ApiName) {
+    //   this._apiService.request(this.stupidBE_ApiName, '')
+    //       .done($.proxy(function (res) {
+    //         console.log(res);
+    //       }, this))
+    //       .error($.proxy(function () {
+    //       }, this));
+    // }
   },
 
   _getData: function () {
@@ -75,27 +75,27 @@ Tw.PaymentHistoryRealtime.prototype = {
 
     this._isPersonalCompany();
 
-    if (this.result.length) {
+    if (this.result.length) this.result.map($.proxy(function (o, i) {
 
-      this.result.map($.proxy(function (o, i) {
+      o.listId = i;
+      o.paymentReqDate = this._dateHelper.getShortDateWithFormat(o.opDt, 'YYYY.MM.DD', 'YYYYMMDD');
+      o.reqDate = this._dateHelper.getShortDateWithFormat(o.reqDtm, 'YYYY.MM.DD', 'YYYYMMDD');
+      o.resDate = this._dateHelper.getShortDateWithFormat(o.resDtm, 'YYYY.MM.DD', 'YYYYMMDD');
+      this.getDataPaymentType(o);
+      o.svcNum = Tw.FormatHelper.getFormattedPhoneNumber(o.svcNum);
+      o.paymentName = o.cardCdNm;
+      o.payAmt = Tw.FormatHelper.addComma(this.common._normalizeNumber(o.payAmt));
+      o.isFinish = !!o.cardProcNm;
+      o.detailOption = {
+        opDt: o.opDt || o.resDtm,
+        payOpTm: o.payOpTm
+      };
 
-        o.listId = i;
-        o.paymentReqDate = this._dateHelper.getShortDateWithFormat(o.opDt, 'YYYY.MM.DD', 'YYYYMMDD');
-        o.reqDate = this._dateHelper.getShortDateWithFormat(o.reqDtm, 'YYYY.MM.DD', 'YYYYMMDD');
-        o.resDate = this._dateHelper.getShortDateWithFormat(o.resDtm, 'YYYY.MM.DD', 'YYYYMMDD');
-        this.getDataPaymentType(o);
-        o.svcNum = Tw.FormatHelper.getFormattedPhoneNumber(o.svcNum);
-        o.paymentName = o.cardCdNm;
-        o.payAmt = Tw.FormatHelper.addComma(this.common._normalizeNumber(o.payAmt));
-        // TODO : 무조건 개인으로 설정
-        o.isPersonal = true;
-        // o.isCompany = true;
+      // TODO : 무조건 개인으로 설정
+      o.isPersonal = true;
+      // o.isCompany = true;
 
-        console.log(o);
-
-      }, this));
-
-    } else {
+    }, this)); else {
       this.result.removeURL = this.emptyURL;
     }
 
@@ -164,39 +164,59 @@ Tw.PaymentHistoryRealtime.prototype = {
     this.$container.find('.detail-btn').off().on('click', '.fe-btn', $.proxy(this.listButtonHandler, this));
   },
 
-  getCurrentHBS_TEXT: function(data) {
-    if(data.isOCB) {
+  getCurrentHBS_TEXT: function (data) {
+    if (data.isOCB) {
       return this.STRING.HBS_OCB;
     }
-    if(data.isTpoint) {
+    if (data.isTpoint) {
       return this.STRING.HBS_TPOINT;
     }
-    if(data.isBank) {
+    if (data.isBank) {
       return this.STRING.HBS_BANK;
     }
-    if(data.isCard) {
+    if (data.isCard) {
       return this.STRING.HBS_CARD;
     }
   },
 
   listButtonHandler: function (e) {
     this.currentIndex = $(e.target).data('list-id');
+    var selectedList = this.result[this.currentIndex];
+    this._apiService.request(this.api_detailName, selectedList.detailOption).done(
+        $.proxy(this.detailSuccess, this, selectedList)).error($.proxy(this._apiError, this));
+  },
+
+  detailSuccess: function (oData, res) {
+
+    var data = res.result.realTimePaymentRecord[0];
+    data.payAmt = Tw.FormatHelper.addComma(this.common._normalizeNumber(data.payAmt));
+    data.reqDate = oData.isBank ?
+        this._dateHelper.getShortDateWithFormat(data.invDt, 'YYYY.MM.DD') :
+        this._dateHelper.getShortDateWithFormat(data.reqDtm, 'YYYY.MM.DD', 'YYYYMMDDhhmmss');
+    data.invDt = this._dateHelper.getShortDateWithFormat(
+        data.invDt, Tw.MSG_PAYMENT.HISTORY_DATE_YYYYMM_CASE, 'YYYYMMDD');
+    data.cardProcNm = Tw.MSG_PAYMENT.HISTORY_TEXT_PAYMENT + (data.cardProcNm === 'Y' ?
+            Tw.MSG_PAYMENT.HISTORY_PROCESS_TYPE_DONE :
+            Tw.MSG_PAYMENT.HISTORY_PROCESS_TYPE_CANCEL
+    );
+    data.resDate = this._dateHelper.getShortDateWithFormat(data.resDtm, 'YYYY.MM.DD', 'YYYYMMDDhhmmss');
+    data.paymentName = data.cardCdNm;
 
     this._popupService.open({
-          hbs: this.getCurrentHBS_TEXT(this.result[this.currentIndex]),
-          data: this.result[this.currentIndex]
+          hbs: this.getCurrentHBS_TEXT(oData),
+          data: data
         },
         $.proxy(this.detailOpenCallback, this));
   },
 
   detailOpenCallback: function ($layer) {
     $layer.on('click', '.bt-blue1 button', $.proxy(this._popupService.close, this));
-    if(this.result[this.currentIndex].isBank) {
+    if (this.result[this.currentIndex].isBank) {
       $layer.on('click', '.fe-btn', $.proxy(this._moveReceiptPage, this));
     }
   },
 
-  _moveReceiptPage: function(e) {
+  _moveReceiptPage: function (e) {
     this._popupService.close();
     if ($(e.target).hasClass('cash')) {
       this.common._goLoad('/payment/history/receipt/cash');

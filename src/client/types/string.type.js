@@ -31,7 +31,7 @@ Tw.POPUP_TITLE = {
   SELECT_BANK: '은행선택',
   SELECT_GIFT_AMOUNT: '선물할 금액 선택',
   CHANGE_BILL_GUIDE_TYPE: '어떤 안내서를 보여 드릴까요?',
-  OVER_PAY:'과납 안내 드립니다.'
+  OVER_PAY: '과납 안내 드립니다.'
 };
 
 Tw.POPUP_PROPERTY = {
@@ -123,6 +123,12 @@ Tw.MSG_MYT = {
   HOTBILL_FAIL_REQUEST: '요금 정보 가져오기 실패했습니다.',
   BILL_GUIDE_03: '선택하신 청구월에 대한 청구서가 이미 재발행 신청 되었습니다.',
   BILL_GUIDE_04: '합계',
+  BILL_GUIDE_SUBSELPAYMENT_SUCCESS_TITLE: '요청성공',
+  BILL_GUIDE_SUBSELPAYMENT_SUCCESS_ERROR: '요청실패',
+  BILL_GUIDE_SUBSELPAYMENT_SUCCESS: '납부가능일 등록 완료 되었습니다.',
+  BILL_GUIDE_SUBSELPAYMENT_ERROR: '이미 납부가능일이 등록 되었습니다.',
+  BILL_GUIDE_SUBSUSSRELEASE_SUCCESS: '이용정지 해제 되었습니다.',
+  BILL_GUIDE_SUBSUSSRELEASE_ERROR: '이용정지 해제 실패 했습니다.',
   BILL_GUIDECHANGE_A01: '요금안내서 정보를 변경하시겠습니까?',
   BILL_GUIDECHANGE_A02: '[T] 요금안내서가 신청되었습니다.<br />[T] 요금안내서 신청 시 기존에 신청하신 요금안내서는 자동 해지 됩니다.',
   BILL_GUIDECHANGE_A03: '휴대폰번호를 입력해주세요.',
@@ -198,14 +204,14 @@ Tw.MSG_MYT = {
     }
   ],
   BILL_PREVIEW: {
-    TWORLD : '<img src="/img/dummy/ex_preview2.jpg" alt="이달청구요금">',
-    BILL_LETTER : '<img src="/img/dummy/ex_preview6.jpg" alt="이달 요금안내 유형">',
-    SMS_HP : '<img src="/img/dummy/ex_preview9.jpg" alt="요금 안내서 문자서비스">', // 문자 (휴대폰)
-    SMS_INT : '<img src="/img/dummy/ex_preview3.jpg" alt="요금 안내서 문자서비스">', // 문자 (인터넷/집전화/IPTV)
-    EMAIL_HP : '<img src="/img/dummy/ex_preview7.jpg" alt="요금 안내서 이메일서비스">', // 이메일 (휴대폰)
-    EMAIL_INT : '<img src="/img/dummy/ex_preview5.jpg" alt="요금 안내서 이메일서비스">', // 이메일 (인터넷/집전화/IPTV , T-WIBRO)
-    ETC_HP : '<img src="/img/dummy/ex_preview10.jpg" alt="요금 안내서 우편서비스">', // 기타(우편) : 휴대폰
-    ETC_INT : '<img src="/img/dummy/ex_preview4.jpg" alt="요금 안내서 우편서비스">', // 기타(우편) : (인터넷/집전화/IPTV , T-WIBRO)
+    TWORLD: '<img src="/img/dummy/ex_preview2.jpg" alt="이달청구요금">',
+    BILL_LETTER: '<img src="/img/dummy/ex_preview6.jpg" alt="이달 요금안내 유형">',
+    SMS_HP: '<img src="/img/dummy/ex_preview9.jpg" alt="요금 안내서 문자서비스">', // 문자 (휴대폰)
+    SMS_INT: '<img src="/img/dummy/ex_preview3.jpg" alt="요금 안내서 문자서비스">', // 문자 (인터넷/집전화/IPTV)
+    EMAIL_HP: '<img src="/img/dummy/ex_preview7.jpg" alt="요금 안내서 이메일서비스">', // 이메일 (휴대폰)
+    EMAIL_INT: '<img src="/img/dummy/ex_preview5.jpg" alt="요금 안내서 이메일서비스">', // 이메일 (인터넷/집전화/IPTV , T-WIBRO)
+    ETC_HP: '<img src="/img/dummy/ex_preview10.jpg" alt="요금 안내서 우편서비스">', // 기타(우편) : 휴대폰
+    ETC_INT: '<img src="/img/dummy/ex_preview4.jpg" alt="요금 안내서 우편서비스">', // 기타(우편) : (인터넷/집전화/IPTV , T-WIBRO)
   }
 };
 
@@ -280,6 +286,7 @@ Tw.MSG_PAYMENT = {
   PRE_A08: '선결제 금액은 기준금액을 넘을 수 없습니다.',
   PRE_A10: '자동 선결제 신청 및 변경을 종료하시겠습니까?',
 
+  HISTORY_TEXT_PAYMENT: '결제',
   HISTORY_PROCESS_TYPE_APPLY: '신청',
   HISTORY_PROCESS_TYPE_DONE: '완료',
   HISTORY_PROCESS_TYPE_RESERVE_DONE: '예약완료',
@@ -297,7 +304,7 @@ Tw.MSG_PAYMENT = {
   HISTORY_POINT_CODE_OCB: 'CPT',
   HISTORY_POINT_CODE_TPOINT: 'TPT',
   HISTORY_OVER_PAY: {
-    SUBTITLE: '의<br />휴대폰 요금',
+    SUBTITLE: '님의<br />휴대폰 요금',
     SUBTITLE_SUB: '건이 과납되었습니다.',
     CONTENTS: '<strong>환불받으실 금액을 확인</strong>하시고<br /> 환불 받을 계좌를 등록해 주세요!',
     BUTTON_TEXT: '과납금액확인하기',
@@ -307,6 +314,7 @@ Tw.MSG_PAYMENT = {
   HISTORY_POINT_TITLE_TPOINT: 'T포인트',
   HISTORY_POINT_TITLE_RAINBOW: '레인보우 포인트',
   HISTORY_AUTO_CARD_KEYWORD: '카드',
+  HISTORY_DATE_YYYYMM_CASE: 'YYYY년 MM월',
   HISTORY_MENU_TITLE: '납부방식 선택',
   HISTORY_MENU: '전체납부내역,즉시납부내역,자동납부내역,자동납부 통합인출,포인트 납부예약,포인트 자동납부',
   HISTORY_A01: '환불신청 계좌가 등록되었습니다.',
@@ -376,7 +384,9 @@ Tw.RECHARGE_TYPE = {
   CANCEL: '취소',
   REGULAR: '자동',
   CHANGE: '변경',
-  BLOCK: '차단'
+  BLOCK: '차단',
+  TMTH_RECHARGE: '당월 충전',
+  REGULAR_RECHARGE: '매월 충전',
 };
 
 Tw.BLOCK_TYPE = {

@@ -9,6 +9,9 @@ Tw.PaymentHistory = function (rootEl) {
   this.$window = $(window);
 
   this._apiService = Tw.Api;
+  this._hash = Tw.Hash;
+  this._popupService = Tw.Popup;
+  this._dateHelper = Tw.DateHelper;
 
   this.common = new Tw.PaymentHistoryCommon(rootEl);
 
@@ -43,6 +46,8 @@ Tw.PaymentHistory.prototype = {
     this.apiName = Tw.API_CMD.BFF_07_0030;
     this.emptyURL = '/payment/point';
 
+    this.countOverPaid = 0;
+
     this._getData();
   },
 
@@ -55,7 +60,7 @@ Tw.PaymentHistory.prototype = {
   },
 
   isSubResultsOk: function (res) {
-    if(res === undefined || res === null) return false;
+    if (res === undefined || res === null) return false;
     return _.isEmpty(res.paymentRecord) || _.isEmpty(res.refundRecord);
   },
 
@@ -63,6 +68,15 @@ Tw.PaymentHistory.prototype = {
     return _.chain().union(payment, refund).sortBy(function (obj) {
       return obj.opDt || obj.opDt1;
     }, this).value().reverse();
+  },
+
+  checkHasAccountRegistrable: function (data) {
+    data.map($.proxy(function (o) {
+      if(!o.effStaDt) {
+        o.isOverPaid = true;
+        this.countOverPaid++;
+      }
+    }, this));
   },
 
   _setData: function (res) {
@@ -74,38 +88,57 @@ Tw.PaymentHistory.prototype = {
 
     // refundPaymentRecord : 환불한 내역
 
+    // console.log(res.result.paymentRecord, res.result.refundRecord);
+
     if (this.isSubResultsOk(res.result)) {
+
+      if (!_.isEmpty(res.result.refundRecord)) {
+        this.checkHasAccountRegistrable(res.result.refundRecord);
+      }
 
       this.defaultResult = this.unionRelativeResult(res.result.paymentRecord, res.result.refundRecord);
       // console.log(this.defaultResult);
 
-    //   this.result.map($.proxy(function (o, i) {
-    //
-    //     o.listId = i;
-    //     o.paymentReqDate = this._dateHelper.getShortDateWithFormat(o.opDt, 'YYYY.MM.DD', 'YYYYMMDD');
-    //     o.reqDate = this._dateHelper.getShortDateWithFormat(o.reqDtm, 'YYYY.MM.DD', 'YYYYMMDD');
-    //     o.resDate = this._dateHelper.getShortDateWithFormat(o.resDtm, 'YYYY.MM.DD', 'YYYYMMDD');
-    //     this.getDataPaymentType(o);
-    //     o.svcNum = Tw.FormatHelper.getFormattedPhoneNumber(o.svcNum);
-    //     o.paymentName = o.cardCdNm;
-    //     o.payAmt = Tw.FormatHelper.addComma(this.common._normalizeNumber(o.payAmt));
-    //     // o.isPersonal = true;
-    //     // o.isCompany = true;
-    //
-    //     console.log(o);
-    //
-    //   }, this));
+      this.customerName = res.result.custName;
+
+      this.defaultResult.map($.proxy(function (o, i) {
+
+        o.listId = i;
+        o.date = this._dateHelper.getShortDateWithFormat(o.opDt || o.opDt1, 'YYYY.MM.DD', 'YYYYMMDD');
+
+        o.reqAmount = Tw.FormatHelper.addComma(this.common._normalizeNumber(o.payAmt || o.svcBamt));
+        o.amount = o.reqAmount;
+        o.reqYYYYMM = this._dateHelper.getShortDateWithFormatAddByUnit(
+            o.invDt || o.opDt1, 1, 'months', 'YYYY.MM', 'YYYYMMDD');
+        o.reqYYYYMMDD_start = this._dateHelper.getShortDateWithFormat(o.reqYYYYMM, 'YYYY.MM.DD', 'YYYY.MM');
+        o.reqYYYYMMDD_end = this._dateHelper.getEndOfMonth(o.reqYYYYMM, 'YYYY.MM.DD', 'YYYY.MM');
+        o.reqType = o.isOverPaid ? 'SERVER VALUE ERROR' : o.payMthdCdNm;
+
+      }, this));
 
     } else {
       this.defaultResult = {
-        removeURL : this.emptyURL
+        removeURL: this.emptyURL
       };
     }
 
-    console.log(this.defaultResult, this.refundResult);
+    if (!_.isEmpty(res.result.refundPaymentRecord)) {
+      // set refund(환불한 내역) list value 설정
+      this.refundResult = res.result.refundPaymentRecord;
+      this.refundResult.map($.proxy(function (o, i) {
+        o.listId = i;
 
+        o.inProcess = null;
+        o.date = null;
+        o.amount = null;
+      }, this));
+    }
 
-    this.defaultList = this._setListUI(
+    if(this.countOverPaid) {
+      this.openOverPaidPopup();
+    }
+
+    this._setListUI(
         this.defaultResult, '',
         this.$listWrapper,
         this.defaultListTemplate,
@@ -113,15 +146,37 @@ Tw.PaymentHistory.prototype = {
         this.emptyListTemplate, 10, '.contents-info-list .bt-more',
         $.proxy(this.paymentListCallBack, this));
 
-    if(this.refundResult && this.refundResult.length) {
-      this.refundList = this._setListUI(
+    if (this.refundResult && this.refundResult.length) {
+      this._setListUI(
           this.refundResult, 'list2',
           this.$refundListWrapper,
           this.refundListTemplate,
           this.refundListWrapperTemplate,
           '', 10, '#fe-refund-request-wrapper .acco-inner-btn-more .bt-more',
-          '');
+          $.proxy(this.refundListCallBack, this));
     }
+  },
+
+  openOverPaidPopup: function() {
+    this._popupService.open({
+        'title': Tw.POPUP_TITLE.OVER_PAY,
+        'close_bt': true,
+        'title2': this.customerName +
+          Tw.MSG_PAYMENT.HISTORY_OVER_PAY.SUBTITLE + ' ' + this.countOverPaid +
+          Tw.MSG_PAYMENT.HISTORY_OVER_PAY.SUBTITLE_SUB,
+        'contents': Tw.MSG_PAYMENT.HISTORY_OVER_PAY.CONTENTS,
+        'type': [{
+          style_class: 'bt-red1',
+          href: 'submit',
+          txt: Tw.MSG_PAYMENT.HISTORY_OVER_PAY.BUTTON_TEXT
+        }],
+        'contents_b': '<div class=\'widget pop-btm-area\'>' +
+        '<div class=\'widget-box check\'><ul class=\'select-list\' role=\'group\'>' +
+        '<li class=\'checkbox type01\' role=\'checkbox\' aria-checked=\'false\'>' +
+        '<input type=\'checkbox\' name=\'checkbox\' title=\''+
+        Tw.MSG_PAYMENT.HISTORY_OVER_PAY.CHECK_TEXT +
+        '\'>' + Tw.MSG_PAYMENT.HISTORY_OVER_PAY.CHECK_TEXT + '</li></ul></div></div>'
+      });
   },
 
   _setListUI: function (data, partial, listWrapper, listTemplate, wrapperTemplate, emptyTemplate, count, btnMoreSelector, callback) {
@@ -145,31 +200,33 @@ Tw.PaymentHistory.prototype = {
     if (this.defaultResult !== undefined && this.defaultResult.length) {
       this.$listWrapper.parent().addClass('nogaps-btm');
     }
-    // this.addListButtonHandler();
+    this.$container.find('#fe-list-wrapper .detail-btn').off().on('click', '.fe-btn', $.proxy(this.defaultListButtonHandler, this));
   },
 
-  // addListButtonHandler: function () {
-  //   this.$container.find('.detail-btn').off().on('click', '.fe-btn', $.proxy(this.listButtonHandler, this));
-  // },
+  defaultListButtonHandler: function () {
 
-  listButtonHandler: function (e) {
-    this.currentIndex = $(e.target).data('list-id');
+    // this.currentIndex = $(e.target).data('list-id');
+
+    // 환불계좌 등록 process
+    this.common._goLoad('/payment/history/excesspay');
+  },
+
+  refundListCallBack: function () {
+    this.$container.find('#fe-refund-request-wrapper').off().on(
+        'click', '.fe-btn', $.proxy(this.refundListButtonHandler, this));
+  },
+
+  refundListButtonHandler: function (e) {
+    var index = $(e.target).data('list-id');
 
     this._popupService.open({
-          hbs: this.getCurrentHBS_TEXT(this.result[this.currentIndex]),
-          data: this.result[this.currentIndex]
-        },
-        $.proxy(this.detailOpenCallback, this));
+      hbs: this.STRING.REFUND_DETAIL,
+      data: this.refundResult[index]
+    }, function () {
+    });
   },
 
-  detailOpenCallback: function ($layer) {
-    $layer.on('click', '.bt-blue1 button', $.proxy(this._popupService.close, this));
-    if(this.result[this.currentIndex].isBank) {
-      $layer.on('click', '.fe-btn', $.proxy(this._moveReceiptPage, this));
-    }
-  },
-
-  _moveReceiptPage: function(e) {
+  _moveReceiptPage: function (e) {
     this._popupService.close();
     if ($(e.target).hasClass('cash')) {
       this.common._goLoad('/payment/history/receipt/cash');
@@ -184,7 +241,7 @@ Tw.PaymentHistory.prototype = {
     return false;
   },
 
-  dummy : {
+  dummy: {
     'code': '00',
     'msg': 'success',
     'result': {
