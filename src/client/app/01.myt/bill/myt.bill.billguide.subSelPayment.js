@@ -55,11 +55,19 @@ Tw.mytBillBillguideSubSelPayment.prototype = {
     this.$container.on('click', '[data-target="submitBtn"]', $.proxy(this._submitExe, this));
   },
   _cancelExe: function() {
-    this._goBack();
+    location.href = '/myt/bill/billguide';
+    //this._goBack();
   },
   _submitExe: function() {
-    var tg = this.$container.find('[data-target="selPaymentSelBtn"]');
-    Tw.Logger.info('[데이터 정송 _submitExe ] ', tg.attr('data-info'));
+    this._cachedElement();
+    var param = {
+      evtNum: '1234',//이벤트 번호
+      sPayApntDt: this.$selPaymentSelBtn.attr('data-info'),//납부약속일자 (YYYYMMDD)
+      sPayApntAmt: '2000',//납부약속금액
+      sColAmt: '2000'//미납금액
+    };
+    Tw.Logger.info('[데이터 전송 _submitExe ] ', param);
+    this._postPaymentInput(param)
   },
   _dataInit: function() {
     if ( this.autopaySchedule.payMthdCd === '02') {
@@ -77,13 +85,18 @@ Tw.mytBillBillguideSubSelPayment.prototype = {
         this._cachedElement();
         this._stateTypeC();
       }
+      else {
+        Tw.Logger.info('[this.autopaySchedule.payMthdCd]',this.autopaySchedule.payMthdCd);
+        Tw.Logger.info('[this.autopaySchedule.drwInvCyclCd]',this.autopaySchedule.drwInvCyclCd);
+      }
     }
   },
   _selectBtnInit: function() {
     this._cachedElement();
     //납부가능일 버튼 활성화
     var useObjYn = this.PaymentPossibleDay.useObjYn;
-    (useObjYn === 'Y') ? this.$selPaymentSelArea.show() : this.$selPaymentSelArea.hide();
+    Tw.Logger.info('[납부가능일 버튼 활성화]',useObjYn);
+    //(useObjYn === 'Y') ? this.$selPaymentSelArea.show() : this.$selPaymentSelArea.hide();
   },
   //--------------------------------------------------------------------------[셀릭트 팝업]
   _selPopOpen: function() {
@@ -172,7 +185,7 @@ Tw.mytBillBillguideSubSelPayment.prototype = {
     }, this));
   },
   //--------------------------------------------------------------------------[api]
-  _getAutopaySchedule: function() {//BFF_05_0033
+  _getAutopaySchedule: function() {//BFF_05_0033 미납 납부가능일 청구일정 조회
     this._apiService.request(Tw.API_CMD.BFF_05_0033, {})
       .done($.proxy(function(resp){
         Tw.Logger.info('[BFF_05_0033]', resp);
@@ -181,7 +194,22 @@ Tw.mytBillBillguideSubSelPayment.prototype = {
       }, this))
       .fail(function(err){})
   },
-  _getPaymentPossibleDay: function() {//BFF_05_0031
+  _postPaymentInput: function(param) {//BFF_05_0032 미납 납부가능일 입력
+    //Tw.Logger.info('[_postPaymentInput > param]', param);
+    this._apiService.request(Tw.API_CMD.BFF_05_0032, param)
+      .done($.proxy(function(resp){
+        Tw.Logger.info('[BFF_05_0032]', resp);
+        if ( resp.result.success === 'Y' ) {
+          this._onSuccess();
+        } else if ( resp.result.success === 'R' ) {
+          this._onError();
+        } else {
+          Tw.Logger.info('[resp.result.success]', resp.result.success);
+        }
+      }, this))
+      .fail(function(err){})
+  },
+  _getPaymentPossibleDay: function() {//BFF_05_0031 미납 납부가능일 조회 | 납부가능일 버튼 활성화/비활성화
     this._apiService.request(Tw.API_CMD.BFF_05_0031, {})
       .done($.proxy(function(resp){
         Tw.Logger.info('[BFF_05_0031]', resp);
@@ -211,5 +239,19 @@ Tw.mytBillBillguideSubSelPayment.prototype = {
   },
   _getDateTypeA: function (str) {
     return moment(str).format('YYYY.MM.DD (ddd)');
+  },
+  _onSuccess: function (e) {
+    Tw.Logger.info(e);
+    //TODO success alert 공통모듈
+    this._popupService.openAlert(Tw.MSG_MYT.BILL_GUIDE_SUBSELPAYMENT_SUCCESS, Tw.MSG_MYT.BILL_GUIDE_SUBSELPAYMENT_SUCCESS_TITLE, function () {
+      location.href = '/myt/bill/billguide';
+    });
+  },
+  _onError: function (e) {
+    Tw.Logger.error(e);
+    //TODO error alert 공통모듈
+    this._popupService.openAlert(Tw.MSG_MYT.BILL_GUIDE_SUBSELPAYMENT_ERROR, Tw.MSG_MYT.BILL_GUIDE_SUBSELPAYMENT_SUCCESS_ERROR, function () {
+      location.href = '/myt/bill/billguide';
+    });
   }
 };
