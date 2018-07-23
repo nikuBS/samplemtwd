@@ -97,8 +97,12 @@ class ApiService {
   }
 
   private handleError(observer, err) {
-    const error = err.response.data;
-    const returnError = this.makeErrorMessage(error);
+    let returnError = { code: API_CODE.CODE_400, msg: 'unknown error' };
+    if ( !FormatHelper.isEmpty(err.response) && !FormatHelper.isEmpty(err.response.data) ) {
+      const error = err.response.data;
+      returnError = this.makeErrorMessage(error);
+    }
+
     // observer.error(err);
     observer.next(returnError);
     observer.complete();
