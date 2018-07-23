@@ -36,23 +36,23 @@ Tw.RechargeTingProcess.prototype = {
 
   _cachedElement: function () {
     this.$tubeList = $('.tube-list.two');
-    this.$wrap_tpl_contact = $('.wrap_tpl_contact');
+    this.$wrap_tpl_contact = $('.fe-wrap_tpl_contact');
     this.tpl_contact = Handlebars.compile($('#tpl_contact').text());
   },
 
   _bindEvent: function () {
-    this.$container.on('click', '#btn_prev', $.proxy(this._goBack, this));
-    this.$container.on('click', '.btn_confirm', $.proxy(this._goTingMain, this));
-    this.$container.on('click', '#btn_addr', $.proxy(this._onClickBtnAddr, this));
-    this.$container.on('click', '.btn_go_history', $.proxy(this._goHistory, this));
     this.$container.on('click', '.close-step', $.proxy(this._onCloseProcess, this));
     this.$container.on('input', '.input input', $.proxy(this._setPhoneNumber, this));
-    this.$container.on('click', '#btn_go_complete', $.proxy(this._validateStep2, this));
     this.$container.on('click', '.tube-select', $.proxy(this._onClickSelectPopup, this));
-    this.$container.on('click', '.btn_validateStep1', $.proxy(this._validateStep1, this));
     this.$container.on('click', 'input[name=senddata]', $.proxy(this._onChangeAmount, this));
-    this.$container.on('click', '.btn_select_amount', $.proxy(this._onClickSelectAmount, this));
-    this.$container.on('click', '.btn_validateRequestStep1', $.proxy(this._validateRequestStep1, this));
+    this.$container.on('click', '.fe-btn_prev', $.proxy(this._goBack, this));
+    this.$container.on('click', '.fe-btn_confirm', $.proxy(this._goTingMain, this));
+    this.$container.on('click', '.fe-btn_addr', $.proxy(this._onClickBtnAddr, this));
+    this.$container.on('click', '.fe-btn_go_history', $.proxy(this._goHistory, this));
+    this.$container.on('click', '.fe-btn_gift', $.proxy(this._validateStep2, this));
+    this.$container.on('click', '.fe-btn_step1', $.proxy(this._validateStep1, this));
+    this.$container.on('click', '.fe-btn_select_amount', $.proxy(this._onClickSelectAmount, this));
+    this.$container.on('click', '.fe-btn_request_step1', $.proxy(this._validateRequestStep1, this));
   },
 
   _onClickBtnAddr: function () {
@@ -83,9 +83,9 @@ Tw.RechargeTingProcess.prototype = {
     Tw.InputHelper.inputNumberOnly(e.currentTarget);
     this.target.phone = $(e.currentTarget).val();
     if ( this.target.phone.length <= 0 ) {
-      $('.btn_validateStep1').prop('disabled', true);
+      $('.fe-btn_step1').prop('disabled', true);
     } else {
-      $('.btn_validateStep1').prop('disabled', false);
+      $('.fe-btn_step1').prop('disabled', false);
     }
   },
 
@@ -120,7 +120,7 @@ Tw.RechargeTingProcess.prototype = {
       select: [{ options: arrOption }],
       bt_num: 'one',
       type: [{
-        style_class: 'bt-red1 btn_select_amount',
+        style_class: 'bt-red1 fe-btn_select_amount',
         txt: Tw.BUTTON_LABEL.SELECT
       }]
     }, $.proxy(this._onOpenSelectPopup, this));
