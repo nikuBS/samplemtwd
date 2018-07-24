@@ -103,6 +103,14 @@ class DateHelper {
 
   /**
    * @param date {Date} or {string} : YYYYMMDDhhmmss
+   * @returns {string} : 2018.06.01 12:00:00
+   */
+  static getFullDateAndTime(date) {
+    return moment(this.convDateFormat(date)).format('YYYY.MM.DD hh:mm:ss');
+  }
+
+  /**
+   * @param date {Date} or {string} : YYYYMMDDhhmmss
    * @returns {string} : 2018-06-02 11:59
    */
   static getAddDay(date) {
