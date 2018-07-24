@@ -41,7 +41,6 @@ abstract class TwViewController {
     const userId = req.query.userId;
 
     this.loginService.setClientSession(req.session);
-
     if ( this.existId(tokenId, userId) ) {
       this.login(req, res, next, tokenId, userId);
     } else {
