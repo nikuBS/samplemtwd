@@ -12,6 +12,12 @@ import PaymentHistoryReceiptTaxController from './controllers/payment.history.re
 import PaymentHistoryReceiptCashController from './controllers/payment.history.receipt.cash.controller';
 import PaymentHistoryExcessPayController from './controllers/payment.history.excess-pay.controller';
 import PaymentHistoryExcessPayAccountController from './controllers/payment.history.excess-pay.account.controller';
+import PaymentPrepayMicroController from './controllers/payment.prepay.micro.controller';
+import PaymentPrepayContentsController from './controllers/payment.prepay.contents.controller';
+import PaymentPrepayMicroHistoryController from './controllers/payment.prepay.micro.history.controller';
+import PaymentPrepayContentsHistoryController from './controllers/payment.prepay.contents.history.controller';
+import PaymentPrepayContentsAutoHistoryController from './controllers/payment.prepay.contents.auto.history.controller';
+import PaymentPrepayMicroAutoHistoryController from './controllers/payment.prepay.micro.auto.history.controller';
 
 class PaymentRouter extends TwRouter {
   constructor() {
@@ -29,6 +35,12 @@ class PaymentRouter extends TwRouter {
     this.controllers.push({url: '/history/receipt/cash', controller: new PaymentHistoryReceiptCashController()});
     this.controllers.push({url: '/history/excesspay/', controller: new PaymentHistoryExcessPayController()});
     this.controllers.push({url: '/history/excesspay/account', controller: new PaymentHistoryExcessPayAccountController()});
+    this.controllers.push({url: '/prepay/micro', controller: new PaymentPrepayMicroController()});
+    this.controllers.push({url: '/prepay/contents', controller: new PaymentPrepayContentsController()});
+    this.controllers.push({url: '/prepay/micro/history', controller: new PaymentPrepayMicroHistoryController()});
+    this.controllers.push({url: '/prepay/contents/history', controller: new PaymentPrepayContentsHistoryController()});
+    this.controllers.push({url: '/prepay/micro/auto/history', controller: new PaymentPrepayMicroAutoHistoryController()});
+    this.controllers.push({url: '/prepay/contents/auto/history', controller: new PaymentPrepayContentsAutoHistoryController()});
   }
 }
 

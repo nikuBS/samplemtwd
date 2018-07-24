@@ -90,7 +90,7 @@
                                                                 <%}%>
                                                             </ul>
                                                             <%if(cookizInfo.regularTopUpYn === 'Y'){%>
-                                                            <a class="btn_cancel_autoRefill">자동 충전 취소</a>
+                                                            <a class="fe-btn_cancel_autoRefill">자동 충전 취소</a>
                                                             <%}%>
                                                         </dd>
                                                     </dl>
@@ -105,13 +105,13 @@
                                                     <li class="bt-blue1">
                                                         <!-- Dimmed Case는 button에 disabled속성 추가 -->
                                                         <%if(cookizInfo.currentTopUpLimit!='0'){%>
-                                                        <button class="btn_go_cookiz_process">팅/쿠키즈/안심음성 충전하기</button>
+                                                        <button class="fe-btn_go_cookiz_process">팅/쿠키즈/안심음성 충전하기</button>
                                                         <%}else{%>
-                                                        <button class="btn_go_cookiz_process" disabled="true">팅/쿠키즈/안심음성 충전하기</button>
+                                                        <button class="fe-btn_go_cookiz_process" disabled="true">팅/쿠키즈/안심음성 충전하기</button>
                                                         <%}%>
                                                     </li>
                                                     <li class="bt-white1">
-                                                        <button class="btn_go_history">팅/쿠키즈/안심음성 충전 내역</button>
+                                                        <button class="fe-btn_go_history">팅/쿠키즈/안심음성 충전 내역</button>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -157,7 +157,7 @@
                                                 </div>
                                                 <ul class="bt-slice"><!-- 2018-06-20 버튼 클래스 변경 -->
                                                     <li class="bt-blue1">
-                                                        <button id="btn_cookiz_request">조르기 신청하기</button>
+                                                        <button class="fe-btn_cookiz_request">조르기 신청하기</button>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -309,7 +309,7 @@
                             <dd class="box-block-list2">
                                 <div class="widget">
                                     <div class="widget-box tube">
-                                        <ul class="tube-list two wrap_type_change" role="radiogroup">
+                                        <ul class="tube-list two fe-wrap_type_change" role="radiogroup">
                                             <li role="radio" aria-checked="true" class="first checked">
                                                 <input type="radio" name="senddata" title="당월 충전" checked="checked">당월 충전
                                             </li>
@@ -332,7 +332,7 @@
                         <div class="contents-btn">
                             <ul class="bt-slice">
                                 <li class="bt-blue1">
-                                    <button class="btn_validateStep1">다음</button>
+                                    <button class="fe-btn_validateStep1">다음</button>
                                 </li>
                             </ul>
                         </div>
@@ -402,7 +402,7 @@
                                 <!-- .widget -->
                                 <div class="widget">
                                     <div class="widget-box tube">
-                                        <ul class="tube-list two wrap_amount_change" role="radiogroup">
+                                        <ul class="tube-list two fe-wrap_amount_change" role="radiogroup">
                                             <li role="radio" aria-checked="false"><input type="radio" name="senddata" title="1000">1,000 원</li>
                                             <li role="radio" aria-checked="false"><input type="radio" name="senddata" title="5000">5,000 원</li>
                                             <li role="radio" aria-checked="false"><input type="radio" name="senddata" title="10000">10,000 원</li>
@@ -422,10 +422,10 @@
                     </div>
                     <ul class="bt-slice item-two">
                         <li class="bt-white2">
-                            <button id="btn_prev">이전</button>
+                            <button class="fe-btn_prev">이전</button>
                         </li>
                         <li class="bt-red1">
-                            <button id="btn_cookiz_complete" class="selected">충전하기</button>
+                            <button class="fe-btn_cookiz_complete" class="selected">충전하기</button>
                         </li>
                     </ul>
                 </div>
@@ -474,10 +474,10 @@
                             <div class="bt-gap">
                                 <ul class="bt-slice last">
                                     <li class="bt-white1">
-                                        <button class="btn_go_history">충전 내역보기</button>
+                                        <button class="fe-btn_go_history">충전 내역보기</button>
                                     </li>
                                     <li class="bt-blue1">
-                                        <button class="btn_confirm">확인</button>
+                                        <button class="fe-btn_confirm">확인</button>
                                     </li>
                                 </ul>
                             </div>
@@ -522,7 +522,7 @@
                         <div class="contents-btn">
                             <ul class="bt-slice"><!-- 2018-06-20 버튼 클래스 변경 -->
                                 <li class="bt-blue1">
-                                    <button class="btn_validateRequestStep1" disabled>다음</button>
+                                    <button class="fe-btn_validateRequestStep1" disabled>다음</button>
                                 </li>
                             </ul>
                         </div>
@@ -567,7 +567,7 @@
                             <div class="bt-gap">
                                 <ul class="bt-slice last">
                                     <li class="bt-blue1">
-                                        <button class="btn_confirm">확인</button>
+                                        <button class="fe-btn_confirm">확인</button>
                                     </li>
                                 </ul>
                             </div>
@@ -595,7 +595,7 @@
             <input class='inp_phone' type="text" placeholder="‘-’ 없이 숫자만 입력해주세요." title="휴대폰 번호 입력" maxlength="11">
         </span>
         <span class="bt-box">
-            <button id="btn_addr">주소록</button>
+            <button class="fe-btn_addr">주소록</button>
         </span>
     </span>
     {{else}}

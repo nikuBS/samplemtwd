@@ -42,9 +42,13 @@ class MyTBillBillguide extends TwViewController {
     dataKeepTrmDt: '',//pps 수신/데이터유지기간
     numKeepTrmDt: '',//pps 번유지기간
     curDt: '',//현재날짜
-    remained: '',//잔여데이터 KB | 공백일 경우 표시안
+    remained: '',//잔여데이터 KB | 공백일 경우 표시안함
     dataYn: '', //음성+데이터 'Y'
-    dataProdYn: ''//MB 'Y' | 원 'N'
+    dataProdYn: '',//MB 'Y' | 원 'N'
+  };
+
+  private _ppsInfo: any = {
+    ppsPlan: null
   };
 
   //노출조건
@@ -507,6 +511,23 @@ class MyTBillBillguide extends TwViewController {
       thisMain._commDataInfo.remained = (thisMain._ppsInfoLookupInfo) ? thisMain._ppsInfoLookupInfo.remained : null;
       thisMain._commDataInfo.dataYn = (thisMain._ppsInfoLookupInfo) ? thisMain._ppsInfoLookupInfo.dataYn : null;
       thisMain._commDataInfo.dataProdYn = (thisMain._ppsInfoLookupInfo) ? thisMain._ppsInfoLookupInfo.dataProdYn : null;
+
+      /*
+      * 데이터요금제 : _ppsInfoLookupInfo.dataProdYn 'Y'
+      * 음성요금제 : _ppsInfoLookupInfo.dataProdYn 'N' && _ppsInfoLookupInfo.remained === ''
+      * 음성+데이터 요금제 :  _ppsInfoLookupInfo.dataProdYn 'N' && _ppsInfoLookupInfo.remained === '데이터가 있을때'
+       */
+      thisMain._ppsInfo.ppsPlan = (function() {
+        if ( thisMain._ppsInfoLookupInfo.dataProdYn === 'Y' ) { //데이터 요금제
+          return 'dataPlan';
+        } else {
+          if ( thisMain._ppsInfoLookupInfo.remained === '' ) {
+            return 'voicePlan';
+          } else {
+            return 'voiceDataPlan';
+          }
+        }
+      })();
     };
 
     Observable.combineLatest(
@@ -531,7 +552,8 @@ class MyTBillBillguide extends TwViewController {
             reqQuery: thisMain.reqQuery,
             svcInfo: thisMain._svcInfo,
             ppsInfoLookupInfo: thisMain._ppsInfoLookupInfo,
-            commDataInfo: thisMain._commDataInfo
+            commDataInfo: thisMain._commDataInfo,
+            ppsInfo: thisMain._ppsInfo
           } );
 
         } }

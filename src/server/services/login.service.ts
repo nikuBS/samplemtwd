@@ -1,6 +1,7 @@
 import FormatHelper from '../utils/format.helper';
 import LoggerService from './logger.service';
 import { SvcInfoModel } from '../models/svc-info.model';
+import { Observable } from 'rxjs/Observable';
 
 class LoginService {
   static instance;
@@ -16,27 +17,42 @@ class LoginService {
 
   public isLogin(): boolean {
     if ( !FormatHelper.isEmpty(this.session) ) {
-      return !FormatHelper.isEmpty(this.session.serverSession);
+      return !FormatHelper.isEmpty(this.session.svcInfo);
     }
     return false;
   }
 
   public setClientSession(session) {
-    this.session = session;
+    this.logger.info(this, '[Set session]', session, this.session);
+    if ( FormatHelper.isEmpty(this.session) ) {
+      this.session = session;
+    }
   }
 
   public getSvcInfo(): any {
-    return this.session.svcInfo;
+    if ( !FormatHelper.isEmpty(this.session) && !FormatHelper.isEmpty(this.session.svcInfo) ) {
+      return this.session.svcInfo;
+    }
+    return null;
   }
 
-  public setSvcInfo(svcInfo: any) {
-    if ( FormatHelper.isEmpty(this.session.svcInfo) ) {
-      this.session.svcInfo = new SvcInfoModel(svcInfo);
-    } else {
-      Object.assign(this.session.svcInfo, svcInfo);
-    }
-    this.session.save(() => {
-      this.logger.debug(this, '[setSvcInfo]', this.session.svcInfo);
+  public setSvcInfo(svcInfo: any): Observable<any> {
+    return Observable.create((observer) => {
+      if ( !FormatHelper.isEmpty(this.session) ) {
+        if ( FormatHelper.isEmpty(this.session.svcInfo) ) {
+          this.session.svcInfo = new SvcInfoModel(svcInfo);
+        } else {
+          Object.assign(this.session.svcInfo, svcInfo);
+        }
+        this.session.save(() => {
+          this.logger.debug(this, '[setSvcInfo]', this.session.svcInfo);
+          observer.next(this.session.svcInfo);
+          observer.complete();
+        });
+      } else {
+        observer.next(null);
+        observer.complete();
+      }
     });
   }
 
@@ -47,18 +63,38 @@ class LoginService {
     return '';
   }
 
-  public setServerSession(serverSession: string) {
-    if ( !FormatHelper.isEmpty(this.session) ) {
-      this.session.serverSession = serverSession;
-      this.session.save(() => {
-        this.logger.debug(this, '[setServerSession]', this.session);
-      });
-    }
+  public setServerSession(serverSession: string): Observable<any> {
+    return Observable.create((observer) => {
+      if ( !FormatHelper.isEmpty(this.session) ) {
+        this.session.serverSession = serverSession;
+        this.session.save(() => {
+          this.logger.debug(this, '[setServerSession]', this.session);
+          observer.next(this.session.serverSession);
+          observer.complete();
+        });
+      } else {
+        observer.next(null);
+        observer.complete();
+      }
+
+    });
   }
 
-  public logoutSession() {
-    this.session.destroy(() => {
-      this.logger.debug(this, '[logoutSession]');
+  public logoutSession(): Observable<any> {
+    return Observable.create((observer) => {
+      if ( !FormatHelper.isEmpty(this.session) ) {
+        delete this.session.svcInfo;
+        delete this.session.severSession;
+        this.session.save(() => {
+          this.logger.debug(this, '[logoutSession]', this.session);
+          this.session = null;
+          observer.next();
+          observer.complete();
+        });
+      } else {
+        observer.next(null);
+        observer.complete();
+      }
     });
   }
 }

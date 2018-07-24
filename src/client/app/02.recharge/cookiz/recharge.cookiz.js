@@ -25,10 +25,10 @@ Tw.RechargeCookiz.prototype = {
   },
 
   _bindEvent: function () {
-    this.$container.on('click', '.btn_go_history', $.proxy(this._goHistory, this));
-    this.$container.on('click', '.btn_go_cookiz_process', $.proxy(this._goCookizProcess, this));
-    this.$container.on('click', '.btn_cancel_autoRefill', $.proxy(this._cancelAutoRefill, this));
-    this.$container.on('click', '#btn_cookiz_request', $.proxy(this._goCookizRequestProcess, this));
+    this.$container.on('click', '.fe-btn_go_history', $.proxy(this._goHistory, this));
+    this.$container.on('click', '.fe-btn_go_cookiz_process', $.proxy(this._goCookizProcess, this));
+    this.$container.on('click', '.fe-btn_cancel_autoRefill', $.proxy(this._cancelAutoRefill, this));
+    this.$container.on('click', '.fe-btn_cookiz_request', $.proxy(this._goCookizRequestProcess, this));
   },
 
   _cancelAutoRefill: function () {

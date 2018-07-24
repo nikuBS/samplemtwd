@@ -136,72 +136,43 @@
                 <ul>
                     <li>
                         <span class="title">납부일자</span>
-                        <span class="tx-cont">2018.05.23</span>
+                        <span class="tx-cont">{{date}}</span>
                     </li>
                     <li>
                         <div class="inner-top">
                             <span class="title">납부금액</span>
                             <span class="tx-cont">
-												<!-- '과납' 뱃지 -->
-												<span class="badge badge-over"><span class="blind">과납</span></span><strong>27,000</strong> 원</span>
+                                {{#if isOverPaid}}
+                                <span class="badge badge-over"><span class="blind">과납</span></span>
+                                {{/if}}
+                                <strong>{{amount}}</strong> 원
+                            </span>
                         </div>
                         <div class="inner-row">
                             <ul>
                                 <li>
                                     <span class="title">청구금액</span>
-                                    <span class="tx-cont">27,000 원</span>
+                                    <span class="tx-cont">{{reqAmount}} 원</span>
                                 </li>
                                 <li>
                                     <span class="title">청구년월 <br /> (사용기간)</span>
-                                    <span class="tx-cont">2018.04 <br /> (2018.03.01 ~ 2018.03.31)</span>
+                                    <span class="tx-cont">{{reqYYYYMM}} <br /> ({{reqYYYYMMDD_start}} ~ {{reqYYYYMMDD_end}})</span>
                                 </li>
                             </ul>
                         </div>
                     </li>
                     <li>
                         <span class="title">납부방법</span>
-                        <span class="tx-cont">은행자동납부</span>
+                        <span class="tx-cont">{{reqType}}</span>
                     </li>
                 </ul>
             </div>
         </div>
+        {{#if isOverPaid}}
         <div class="detail-btn">
-            <button type="button">과납금액 환불계좌 등록하기</button>
+            <button type="button" class="fe-btn" data-list-id="{{listId}}">과납금액 환불계좌 등록하기</button>
         </div>
-    </div>
-    <div class="payment-detail-box">
-        <div class="detail-inner">
-            <div class="detail-list">
-                <ul>
-                    <li>
-                        <span class="title">납부일자</span>
-                        <span class="tx-cont">2018.05.23</span>
-                    </li>
-                    <li>
-                        <div class="inner-top">
-                            <span class="title">납부금액</span>
-                            <span class="tx-cont"><strong>27,000</strong> 원</span>
-                        </div>
-                        <div class="inner-row">
-                            <ul>
-                                <li>
-                                    <span class="title">청구금액</span>
-                                    <span class="tx-cont">27,000 원</span>
-                                </li>
-                                <li>
-                                    <span class="title">청구년월 <br /> (사용기간)</span>
-                                    <span class="tx-cont">2018.04 <br /> (2018.03.01 ~ 2018.03.31)</span>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li>
-                        <span class="title">납부방법</span>
-                        <span class="tx-cont">은행자동납부</span>
-                    </li>
-                </ul>
-            </div>
-        </div>
+        {{/if}}
     </div>
     {{/each}}
 </script>
@@ -244,46 +215,27 @@
     <div class="payment-detail-box">
         <div class="detail-inner">
             <div class="pay-state">
+                {{#if inProcess}}
                 <span class="cancel-com">처리 중</span>
-            </div>
-            <div class="detail-list">
-                <ul>
-                    <li>
-                        <span class="title">신청일자</span>
-                        <span class="tx-cont">2018.05.23</span>
-                    </li>
-                    <li>
-                        <span class="title">신청금액</span>
-                        <span class="tx-cont"><strong>27,000</strong> 원</span>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div class="detail-btn">
-            <button type="button">상세내역보기</button>
-        </div>
-    </div>
-
-    <div class="payment-detail-box">
-        <div class="detail-inner">
-            <div class="pay-state">
+                {{else}}
                 <span class="payment-com">송금완료</span>
+                {{/if}}
             </div>
             <div class="detail-list">
                 <ul>
                     <li>
                         <span class="title">신청일자</span>
-                        <span class="tx-cont">2018.05.23</span>
+                        <span class="tx-cont">{{date}}</span>
                     </li>
                     <li>
                         <span class="title">신청금액</span>
-                        <span class="tx-cont"><strong>27,000</strong> 원</span>
+                        <span class="tx-cont"><strong>{{amount}}</strong> 원</span>
                     </li>
                 </ul>
             </div>
         </div>
         <div class="detail-btn">
-            <button type="button">상세내역보기</button>
+            <button type="button" class="fe-btn" data-list-id="{{listId}}">상세내역보기</button>
         </div>
     </div>
     {{/each}}
