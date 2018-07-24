@@ -1,0 +1,37 @@
+<%#
+* FileName: myt.joinService.contractTerminalInfo.phone.twibro.html
+* Author: 김명환 (skt.P130714@partner.sk.com)
+* Date: 2018.07.24
+* Info:
+%>
+<% include ../../components/start.component.html %>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb_area">메뉴 바로가기</a></li>
+        <li><a href="#content">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div id="wrapFdev" class="wrap">
+    <!-- #header -->
+    <div id="header" class="header-wrap">
+    </div>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap"></div>
+    <!--// #contents -->
+    <% include ../../../../../common/views/components/footer.component.html %>
+</div>
+<% include ../../components/javascript.component.html %>
+
+<script>
+  $(document).ready(function () {
+    new Tw.myttest($('#wrapFdev'), {
+      reqQuery: <%-JSON.stringify(reqQuery) %>,
+      svcInfo: <%-JSON.stringify(svcInfo) %>
+  });
+  });
+</script>
+<% include ../../components/end.component.html %>
