@@ -290,6 +290,8 @@ Tw.MSG_PAYMENT = {
   PRE_A07: '자동 선결제를 해지 하시겠습니까?',
   PRE_A08: '선결제 금액은 기준금액을 넘을 수 없습니다.',
   PRE_A10: '자동 선결제 신청 및 변경을 종료하시겠습니까?',
+  PRE_A11: '선결제 금액은 10,000원 단위로 입력해 주세요.',
+  ERROR_GET_CARD: '카드정보 조회에 실패하였습니다. 다시 시도해 주세요.',
 
   HISTORY_TEXT_PAYMENT: '결제',
   HISTORY_PROCESS_TYPE_APPLY: '신청',
