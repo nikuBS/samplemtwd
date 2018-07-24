@@ -63,6 +63,12 @@ export const URL = {
   // product
   // direct
   // customer
+  '/customer/notice': { login: false },
+  '/customer/prevent-damage': { login: false },
+  '/customer/prevent-damage/guide': { login: false },
+  '/customer/prevent-damage/our-activity': { login: false },
+  '/customer/prevent-damage/useful-service': { login: false },
+  '/customer/prevent-damage/relate-site': { login: false },
   // auth
   '/auth/line': { login: true, id: 'CO_01_05_02' }, // 회선관리
   '/auth/line/edit': { login: true, id: 'CO_01_05_02_01' }, // 회선편집
