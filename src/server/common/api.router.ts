@@ -42,7 +42,7 @@ class ApiRouter {
 
   private setDeviceInfo(req: Request, res: Response, next: NextFunction) {
     const deviceInfo = req.body;
-    const deviceCookie = `osType: ${deviceInfo.osType}; appVersion: ${deviceInfo.appVersion}; osVersion: ${deviceInfo.osVersion}`;
+    const deviceCookie = `osType:${deviceInfo.osType}|appVersion:${deviceInfo.appVersion}|osVersion:${deviceInfo.osVersion}`;
     this.logger.info(this, '[set cookie]', deviceCookie);
     res.cookie(COOKIE_KEY.DEVICE, deviceCookie);
     const resp = {
@@ -80,7 +80,7 @@ class ApiRouter {
   }
 
   private loginTid(req: Request, res: Response, next: NextFunction) {
-    const params = req.body;
+    const params = req.body
     this.apiService.requestLoginTid(params.tokenId, params.state).subscribe((resp) => {
       this.logger.info('[TID login]', resp);
       res.json(resp);

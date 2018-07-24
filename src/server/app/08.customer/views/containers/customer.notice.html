@@ -1,0 +1,9 @@
+<% include ../components/start.component.html %>
+<div class="container"></div>
+<% include ../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    var comp = new Tw.CustomerNotice($('.container'));
+  });
+</script>
+<% include ../components/end.component.html %>
