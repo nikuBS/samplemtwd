@@ -21,7 +21,8 @@ import MyTBillGuidechangeChange from './controllers/bill/myt.bill.guidechange.ch
 import MyTBillGuideChangeComplete from './controllers/bill/myt.bill.guidechange.change-complete.controller';
 import MyTBillGuidechangeUpdate from './controllers/bill/myt.bill.guidechange.update.controller';
 import MyTBillGuidechangeUpdateComplete from './controllers/bill/myt.bill.guidechange.update-complete.controller';
-import SubDetailSpecification, { default as MyTBillBillguideSubDetailSpecification } from './controllers/bill/myt.bill.billguide.subDetailSpecification.controller';
+import SubDetailSpecification,
+{ default as MyTBillBillguideSubDetailSpecification } from './controllers/bill/myt.bill.billguide.subDetailSpecification.controller';
 import MyTBillBillguideSubSelPayment from './controllers/bill/myt.bill.billguide.subSelPayment.controller';
 import MyTBillBillguideSubSusRelease from './controllers/bill/myt.bill.billguide.subSusRelease.controller';
 import MyTBillBillguideSubChildBill from './controllers/bill/myt.bill.billguide.subChildBill.controller';
