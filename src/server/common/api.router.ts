@@ -82,6 +82,7 @@ class ApiRouter {
   private loginTid(req: Request, res: Response, next: NextFunction) {
     const params = req.body;
     this.apiService.requestLoginTid(params.tokenId, params.state).subscribe((resp) => {
+      this.logger.info('[TID login]', resp);
       res.json(resp);
     }, (error) => {
       res.json(error);
@@ -89,9 +90,10 @@ class ApiRouter {
   }
 
   private logoutTid(req: Request, res: Response, next: NextFunction) {
-    this.loginService.logoutSession();
-    res.clearCookie('TWM');
-    res.json({ code: API_CODE.CODE_00 });
+    this.loginService.logoutSession().subscribe((resp) => {
+      res.clearCookie('TWM');
+      res.json({ code: API_CODE.CODE_00 });
+    });
   }
 
   private setUserLocks(req: Request, res: Response, next: NextFunction) {
