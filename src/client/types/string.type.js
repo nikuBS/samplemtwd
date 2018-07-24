@@ -75,6 +75,11 @@ Tw.PAYMENT_PRODUCT = {
   CCRPGDC: '기본료 및 월정액 이용요금'
 };
 
+Tw.AUTO_CHARGE_CODE = {
+  USE: 'U',
+  UNUSE: 'D'
+};
+
 Tw.PAYMENT_TYPE = {
   '000': '일시불',
   '001': '1개월 할부',
