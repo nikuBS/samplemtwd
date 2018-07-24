@@ -7,6 +7,7 @@ const contractTerminalInfo_BFF_05_0063 = {
       "sCustomer": "TSupportAgree",
       "isSuces": "N",
       "tabletUser": "",
+      "wibroUser": "",
       "agrmtUser": "",
       "isRsvPen": "TSupportAgree",
       "iDiscountCnt": 2,
@@ -24,6 +25,7 @@ const contractTerminalInfo_BFF_05_0063 = {
           {
             "disProdNm": "요금약정할인제도 (730 일)",
             "agrmtDcAmt": "0",
+            "agrmtStNm": "약정가입중",
             "agrmtDcStaDt": "20160525",
             "agrmtDcEndDt": "20180525",
             "svcAgrmtDcId": "AA1000000033562306",
@@ -32,6 +34,7 @@ const contractTerminalInfo_BFF_05_0063 = {
           {
             "disProdNm": "선택약정할인제도 (24 개월)",
             "agrmtDcAmt": "-154412",
+            "agrmtStNm": "약정가입중",
             "agrmtDcStaDt": "20160525",
             "agrmtDcEndDt": "20180525",
             "svcAgrmtDcId": "AG1000000033562311",
@@ -76,6 +79,15 @@ const contractTerminalInfo_BFF_05_0063 = {
           "tInstallmentOpDt": "20170304"
         },
       "tablet":
+        {
+          "agrmtMthCnt": "24",
+          "dcAmt": "66000",
+          "rmnDayCnt": "24",
+          "staDt": "0",
+          "agrmtTermDt": "20170304",
+          "penAmt": ""
+        },
+      "wibro":
         {
           "agrmtMthCnt": "24",
           "dcAmt": "66000",
