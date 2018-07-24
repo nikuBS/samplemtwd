@@ -8,6 +8,7 @@ import TwViewController from '../../../common/controllers/tw.view.controller';
 import { API_CMD, API_CODE } from '../../../types/api-command.type';
 import FormatHelper from '../../../utils/format.helper';
 import { AUTO_CHARGE_CODE } from '../../../types/bff-common.type';
+import DateHelper from '../../../utils/date.helper';
 
 class PaymentPrepayMicroController extends TwViewController {
   constructor() {
@@ -18,7 +19,8 @@ class PaymentPrepayMicroController extends TwViewController {
     this.apiService.request(API_CMD.BFF_07_0072, {}).subscribe((resp) => {
       res.render('payment.prepay.micro.html', {
         prepay: this.getResult(resp),
-        svcInfo: svcInfo
+        svcInfo: svcInfo,
+        currentMonth: this.getCurrentMonth()
       });
     });
   }
@@ -40,6 +42,10 @@ class PaymentPrepayMicroController extends TwViewController {
     }
     result.code = API_CODE.CODE_00;
     return result;
+  }
+
+  private getCurrentMonth(): any {
+    return DateHelper.getCurrentMonth();
   }
 }
 

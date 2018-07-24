@@ -47,6 +47,14 @@ Tw.DateHelper = (function () {
   };
 
   /**
+   * @param none
+   * @returns {string} : 12
+   */
+  var getCurrentMonth = function () {
+    return moment().format('M');
+  };
+
+  /**
    * @param date {Date} or {string} : YYYYMMDD
    * @returns {string} : currentDateTime - 1 year
    */
@@ -173,6 +181,7 @@ Tw.DateHelper = (function () {
     convDateFormat: convDateFormat,
     getCurrentShortDate: getCurrentShortDate,
     getCurrentDateTime: getCurrentDateTime,
+    getCurrentMonth: getCurrentMonth,
     getPastYearShortDate: getPastYearShortDate,
     getNextYearShortDate: getNextYearShortDate,
     getEndOfMonth: getEndOfMonth,
