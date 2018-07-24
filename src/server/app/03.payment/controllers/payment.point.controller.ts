@@ -91,13 +91,13 @@ class PaymentPointController extends TwViewController {
   }
 
   private getRainbowPoint(): Observable<any> {
-    return this.apiService.request(API_CMD.BFF_07_0042, {}, { 'T-Channel-Name': 'mobile-app' }).map((response) => {
+    return this.apiService.request(API_CMD.BFF_07_0042, {}).map((response) => {
       return this.parseData(response, 'rainbow');
     });
   }
 
   private getAutoRainbowPoint(): Observable<any> {
-    return this.apiService.request(API_CMD.BFF_07_0052, {}, { 'T-Channel-Name': 'mobile-app' }).map((response) => {
+    return this.apiService.request(API_CMD.BFF_07_0052, {}).map((response) => {
       if (response.code === API_CODE.CODE_00) {
         return response.result.reqStateNm;
       }

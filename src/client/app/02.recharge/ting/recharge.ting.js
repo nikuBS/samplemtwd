@@ -31,11 +31,11 @@ Tw.RechargeTing.prototype = {
   },
 
   _bindEvent: function () {
-    this.$container.on('click', '#btn_go_history', $.proxy(this._goHistory, this));
-    this.$container.on('click', '#btn_activate_block', $.proxy(this._activateBlock, this));
-    this.$container.on('click', '#btn_process_ting', $.proxy(this._goTingGiftProcess, this));
-    this.$container.on('click', '#btn_deactivate_block', $.proxy(this._deactivateBlock, this));
-    this.$container.on('click', '#btn_ting_request', $.proxy(this._goTingRequestProcess, this));
+    this.$container.on('click', '.fe-btn_go_history', $.proxy(this._goHistory, this));
+    this.$container.on('click', '.fe-btn_activate_block', $.proxy(this._activateBlock, this));
+    this.$container.on('click', '.fe-btn_process_ting', $.proxy(this._goTingGiftProcess, this));
+    this.$container.on('click', '.fe-btn_deactivate_block', $.proxy(this._deactivateBlock, this));
+    this.$container.on('click', '.fe-btn_ting_request', $.proxy(this._goTingRequestProcess, this));
   },
 
   _onSuccessGetProvider: function (res) {

@@ -41,7 +41,6 @@ abstract class TwViewController {
     const userId = req.query.userId;
 
     this.loginService.setClientSession(req.session);
-
     if ( this.existId(tokenId, userId) ) {
       this.login(req, res, next, tokenId, userId);
     } else {
@@ -53,7 +52,7 @@ abstract class TwViewController {
     if ( !FormatHelper.isEmpty(tokenId) ) {
       // TID login
       this.apiService.requestLoginTid(tokenId, req.query.stateVal).subscribe((resp) => {
-        this.render(req, res, next, this.loginService.getSvcInfo(), resp.noticeTpyCd);
+        this.render(req, res, next, this._loginService.getSvcInfo(), resp.noticeTpyCd);
       }, (error) => {
         // 로그인 실패
         if ( error.code === API_LOGIN_ERROR.ICAS3228 ) {
@@ -71,7 +70,7 @@ abstract class TwViewController {
     } else {
       // TEST login
       this.apiService.requestLoginTest(userId).subscribe((resp) => {
-        this.render(req, res, next, this.loginService.getSvcInfo(), resp.noticeTpyCd);
+        this.render(req, res, next, this._loginService.getSvcInfo(), resp.noticeTpyCd);
       }, (error) => {
         // 로그인 실패
         if ( error.code === API_LOGIN_ERROR.ICAS3228 ) {
@@ -100,9 +99,11 @@ abstract class TwViewController {
 
   private goSessionLogin(req, res, next, path) {
     if ( this.checkLogin() ) {
+      this._logger.info(this, '[Session Login]', this._loginService.getSvcInfo());
       this.render(req, res, next, this._loginService.getSvcInfo());
     } else {
       // TODO: 세션 만료 or 새로 진입
+      this._logger.info(this, '[Session expired]');
       this.render(req, res, next);
     }
   }
