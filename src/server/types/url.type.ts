@@ -82,16 +82,16 @@ export const URL = {
   '/auth/line/register/empty': { login: true, id: 'CO_01_05_02_02' }, // 가입된 회선 없음
   '/auth/login/exceed-fail': { login: false, id: 'CO_01_02_01_02' },  // 로그인 횟수 초과
   '/auth/login/fail': { login: false, id: 'CO_01_02_01_01' },  // 로그인 실패
-  '/auth/login/dormancy': { login: false, id: '' },
-  '/auth/login/find-id-pwd': { login: false, id: '' },
-  '/auth/login/service-pwd': { login: true, id: '' },
-  '/auth/login/service-pwd-fail': { login: true, id: '' },
+  '/auth/login/dormancy': { login: false, id: 'CO_01_02_02' },
+  '/auth/login/find-id-pwd': { login: false, id: 'CO_01_04' },
+  '/auth/login/service-pwd': { login: true, id: 'CO_01_02_03_01' },
+  '/auth/login/service-pwd-fail': { login: true, id: 'CO_01_02_03_01_01' },
   '/auth/login/route': { login: false, id: '' },
   '/auth/logout/complete': { login: true, id: 'CO_01_03_01' },  // 로그아웃 성공
   '/auth/logout/expire': { login: true, id: 'CO_01_03_02' },  // 세션 만료
   '/auth/logout/route': { login: true, id: '' },
   '/auth/member/management': { login: true, id: 'CO_01_05' }, // 회원 정보 관리
-  '/auth/signup/guide': { login: false, id: '' },
+  '/auth/signup/guide': { login: false, id: 'CO_01_01' },
   '/auth/tid/login': { login: false, id: '' },
   '/auth/tid/account': { login: true, id: '' },
   '/auth/tid/change/pw': { login: true, id: '' },
@@ -102,7 +102,7 @@ export const URL = {
   '/auth/tid/signup-foreigner': { login: false, id: '' },
   '/auth/tid/guide': { login: false, id: '' },
   '/auth/tid/route': { login: false, id: '' },
-  '/auth/withdrawal/guide': { login: true, id: '' },
-  '/auth/withdrawal/survey': { login: true, id: '' },
-  '/auth/withdrawal/complete': { login: false, id: '' }
+  '/auth/withdrawal/guide': { login: true, id: 'CO_01_05_01_01' },
+  '/auth/withdrawal/survey': { login: true, id: 'CO_01_05_01_03' },
+  '/auth/withdrawal/complete': { login: false, id: 'CO_01_05_01_04_01' }
 };
