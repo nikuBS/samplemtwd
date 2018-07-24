@@ -14,7 +14,7 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div id="recharge-limit" class="wrap">
+<div class="wrap">
     <!-- #contents -->
     <% if (limitData.blockYn) { %>
         <div id="main">
@@ -38,7 +38,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
     $(document).ready(function () {
-        new Tw.RechargeLimit($('#recharge-limit'));
+        new Tw.RechargeLimit($('.wrap'));
     });
 </script>
 <% include ../../components/end.component.html %>
