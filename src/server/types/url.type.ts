@@ -38,12 +38,12 @@ export const URL = {
   '/recharge/gift/process/members': { login: true, id: '' },
   '/recharge/gift/process/request': { login: true, id: '' },
   '/recharge/gift/history': { login: true, id: '' },
-  '/recharge/cookiz': { login: true, id: '' },
-  '/recharge/cookiz/history': { login: true, id: '' },
-  '/recharge/limit': { login: true, id: 'DA_05_01' },
-  '/recharge/limit/history': { login: true, id: 'DA_05_04_01' },
-  '/recharge/ting': { login: true, id: '' },
-  '/recharge/ting/history': { login: true, id: '' },
+  '/recharge/cookiz': { login: true, id: 'DA_04_01' }, // 팅/쿠키즈/안심음성 충전하기
+  '/recharge/cookiz/history': { login: true, id: 'DA_04_04_01' }, // 팅/쿠키즈/안심음성 내역
+  '/recharge/limit': { login: true, id: 'DA_05_01' }, // 데이터한도요금 충전
+  '/recharge/limit/history': { login: true, id: 'DA_05_04_01' }, // 데이터한도요금 충전내역
+  '/recharge/ting': { login: true, id: 'DA_03_01' }, // 팅 선물하기
+  '/recharge/ting/history': { login: true, id: 'DA_03_03_01' }, // 팅 선물하기 내역
   // payment
   '/payment/realtime': { login: true, id: 'PA_02_01' }, // 즉시납부
   '/payment/auto': { login: true, id: 'PA_03_01' }, // 자동납부 신청 및 변경
@@ -69,6 +69,10 @@ export const URL = {
   // product
   // direct
   // customer
+  '/customer': { login: true, id: 'CI_01_01' }, // 고객센터 서브메인
+  '/customer/email/question': { login: true, id: 'CI_04_09' }, // 이메일 문의
+  '/customer/voice/info': { login: true, id: 'CI_10_01' }, // 목소리인증 안내
+  '/customer/voice/sms': { login: true, id: 'CI_10_02' }, // 목소리인증 문자발송
   '/customer/notice': { login: false, id: 'CI_06_01' }, // 공지사항
   '/customer/prevent-damage': { login: false, id: 'CI_07_01' }, // 이용자 피해예방 센터 메인
   '/customer/prevent-damage/guide': { login: false, id: 'CI_07_03' }, // 이용자 피해예방 가이드
