@@ -45,7 +45,9 @@ Tw.API_CMD = {
   BFF_05_0024: { path: '/core-bill/v1/child/children', method: Tw.API_METHOD.GET },
   BFF_05_0027: { path: '/core-bill/v1/bill-types-change', method: Tw.API_METHOD.POST },
   BFF_05_0031: { path: '/core-bill/v1/bill-pay/payment-possible-day', method: Tw.API_METHOD.GET },
+  BFF_05_0032: { path: '/core-bill/v1/bill-pay/payment-possible-day-input', method: Tw.API_METHOD.POST },
   BFF_05_0033: { path: '/core-bill/v1/bill-pay/autopay-schedule', method: Tw.API_METHOD.GET },
+  BFF_05_0034: { path: '/core-bill/v1/bill-pay/suspension-cancel', method: Tw.API_METHOD.DELETE },
   BFF_05_0035: { path: '/core-bill/v1/hotbill/fee/hotbill-request', method: Tw.API_METHOD.GET },
   BFF_05_0036: { path: '/core-bill/v1/bill-pay/bills', method: Tw.API_METHOD.GET },
   BFF_05_0038: { path: '/core-bill/v1/bill-pay/donation', method: Tw.API_METHOD.GET },
@@ -152,6 +154,7 @@ Tw.API_CMD = {
 Tw.NODE_CMD = {
   GET_ENVIRONMENT: { path: '/environment', method: Tw.API_METHOD.GET },
   SET_DEVICE: { path: '/device', method: Tw.API_METHOD.POST },
+  SET_CHANNEL: { path: '/channel', method: Tw.API_METHOD.POST },
   CHANGE_SESSION: { path: '/change-session', method: Tw.API_METHOD.POST },
   SVC_PASSWORD_LOGIN: { path: '/service-password-sessions/login', method: Tw.API_METHOD.POST },
   LOGIN_TID: { path: '/login-tid', method: Tw.API_METHOD.POST },

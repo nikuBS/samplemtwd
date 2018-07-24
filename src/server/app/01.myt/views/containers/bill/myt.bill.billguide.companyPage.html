@@ -22,7 +22,7 @@
                 <h1>요금안내서</h1>
                 <a href="#allmenu" class="all-menu"><span class="blind">전체메뉴보기</span></a>
             </div>
-            <a href="#pstep" class="prev-step common-back"><span class="blind">이전으로</span></a>
+            <a href="#pstep" class="prev-step fe-common-back"><span class="blind">이전으로</span></a>
             <a href="#search" class="search-content"><span class="blind">검색하기</span></a>
         </div>
     </div>
@@ -163,21 +163,14 @@
                                     <!-- 아코디언 내용 -->
                                     <div class="acco-content">
                                         <ul class="payment-detail-depth1">
-                                            <!-- depth-1 -->
+                                            <% for(var i=0; i < defaultInfo.unPaidAmtMonthInfoList.length; i++) { %>
                                             <li>
                                                 <dl class="pdt-wrap">
-                                                    <dt class="pdt-tit">2018년 4월</dt>
-                                                    <dd class="pdt-price"><span class="num">40,000</span>원</dd>
+                                                    <dt class="pdt-tit"><%=defaultInfo.unPaidAmtMonthInfoList[i].unPaidInvDt %></dt>
+                                                    <dd class="pdt-price"><span class="num"><%=defaultInfo.unPaidAmtMonthInfoList[i].unPaidAmt %></span>원</dd>
                                                 </dl>
                                             </li>
-                                            <!--// depth-1 -->
-                                            <!-- depth-2 -->
-                                            <li>
-                                                <dl class="pdt-wrap">
-                                                    <dt class="pdt-tit">2018년 5월</dt>
-                                                    <dd class="pdt-price"><span class="num">40,000</span>원</dd>
-                                                </dl>
-                                            </li>
+                                            <% } %>
 
                                         </ul>
                                         <div class="footnote-txt">
@@ -206,10 +199,10 @@
                 <% if( showConditionInfo.paymentBtnYn === 'Y' && showConditionInfo.suspensionYn === 'Y') { %>
                 <ul class="bt-slice item-two">
                     <li class="bt-white1">
-                        <button>납부가능일 선택</button>
+                        <button class="" data-target="selPaymentBtn">납부가능일 선택</button>
                     </li>
                     <li class="bt-white1">
-                        <button class="">이용정지 해제</button>
+                        <button class="" data-target="susReleaseBtn">이용정지 해제</button>
                     </li>
                 </ul>
                 <% } else if( showConditionInfo.paymentBtnYn === 'N' && showConditionInfo.suspensionYn === 'Y') { %>
@@ -218,13 +211,13 @@
                     <!--<button>납부가능일 선택</button>-->
                     <!--</li>-->
                     <li class="bt-white1">
-                        <button class="">이용정지 해제</button>
+                        <button class="" data-target="susReleaseBtn">이용정지 해제</button>
                     </li>
                 </ul>
                 <% } else if( showConditionInfo.paymentBtnYn === 'Y' && showConditionInfo.suspensionYn === 'N') { %>
                 <ul class="bt-slice item-one">
                     <li class="bt-white1">
-                        <button>납부가능일 선택</button>
+                        <button data-target="selPaymentBtn">납부가능일 선택</button>
                     </li>
                     <!--<li class="bt-white1">-->
                     <!--<button class="">이용정지 해제</button>-->

@@ -15,7 +15,7 @@ Tw.mytBillBillguideSubCallBill = function (rootEl) {
 
 Tw.mytBillBillguideSubCallBill.prototype = {
   _assign: function () {
-    this._$amtTotalWrap = this.$container.find('.amt-total-wrap');
+    this._$amtTotalWrap = this.$container.find('.fe-amt-total-wrap');
     this._$dateLi = this.$container.find('.tube-list li');
   },
 
@@ -25,8 +25,8 @@ Tw.mytBillBillguideSubCallBill.prototype = {
 
   _onClickDate: function (event) {
     var $target = $(event.currentTarget);
-    var unit = $target.attr('unit');
-    var measurements = $target.attr('measurements');
+    var unit = $target.data('unit');
+    var measurements = $target.data('measurements');
     this.startDt = this._getStartDt(unit, measurements);
     this.endDt = this._getEndDt();
     this._apiService.request(Tw.API_CMD.BFF_05_0045, {
@@ -45,9 +45,9 @@ Tw.mytBillBillguideSubCallBill.prototype = {
           startDt: moment(this.startDt).format('YYYY.MM.DD'),
           endDt: moment(this.endDt).format('YYYY.MM.DD')
         };
-        this._setDataToTemplate(this._$amtTotalWrap, 'amt-total', result);
+        this._setDataToTemplate(this._$amtTotalWrap, 'fe-amt-total', result);
       } else {
-        this._setDataToTemplate(this._$amtTotalWrap, 'amt-empty', {});
+        this._setDataToTemplate(this._$amtTotalWrap, 'fe-amt-empty', {});
       }
     }
   },

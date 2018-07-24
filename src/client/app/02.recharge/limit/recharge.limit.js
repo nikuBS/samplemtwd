@@ -25,7 +25,7 @@ Tw.RechargeLimit.prototype = {
     this.rechargeAmount = '5000';
     this._limit = {};
 
-    this.upToAmount = this.$container.find('#recharge-upto-amount .price').data('possible-amount') || '0';
+    this.upToAmount = this.$container.find('.box-block-list1 .price').data('possible-amount') || '0';
     var $limitBlock = this.$container.find('.box-block-list1.btm-border ul');
 
     this._possibleRecharge = Number(this.upToAmount.replace(/,/g, '')) > 0;
@@ -36,30 +36,31 @@ Tw.RechargeLimit.prototype = {
   },
 
   _cachedElement: function () {
-    this.$stepAmount = this.$container.find('#step-amount');
+    this.$stepMain = this.$container.find('#main');
     this.$stepType = this.$container.find('#step-type');
+    this.$stepAmount = this.$container.find('#step-amount');
     this.$typeAmount = this.$container.find('.rechargeAmount');
-    this.$btnRecharge = this.$container.find('#btn-go-type');
+    this.$btnRecharge = this.$stepMain.find('.bt-blue1 button');
     this.$limit = {
-      tmth: this.$container.find('#limit-tmth'),
-      regular: this.$container.find('#limit-regular')
+      tmth: this.$container.find('#fe-limit-tmth'),
+      regular: this.$container.find('#fe-limit-regular')
     };
     this.$select = {
-      tmth: this.$stepType.find('#select-type-tmth'),
-      regular: this.$stepType.find('#select-type-regular')
+      tmth: this.$stepType.find('#fe-select-type-tmth'),
+      regular: this.$stepType.find('#fe-select-type-regular')
     };
   },
 
   _bindEvent: function () {
-    this.$container.on('click', '#btn-go-amount', $.proxy(this._goToAmount, this));
-    this.$container.on('click', '#btn-go-back', $.proxy(this._go, this, 'step-type'));
-    this.$container.on('click', '#btn-submit', $.proxy(this._recharge, this));
-    this.$container.on('click', '#btn-go-type', $.proxy(this._setDataToTypeStep, this));
     this.$container.on('click', '.btn-switch', $.proxy(this._openChangeLimitPopup, this));
     this.$container.on('click', '.close-step', $.proxy(this._openClosePopup, this));
-    this.$container.on('click', '#btn-cancel-regular', $.proxy(this._openCancelRegularPopup, this));
-    this.$stepAmount.on('click', '#select-amount', $.proxy(this._setSelectedAmount, this));
+    this.$container.on('click', '.box-block-list1 button', $.proxy(this._openCancelRegularPopup, this));
     this.$container.on('click', 'a', $.proxy(this._setHistory, this));
+    this.$stepMain.on('click', '.bt-blue1 button', $.proxy(this._setDataToTypeStep, this));
+    this.$stepType.on('click', '.bt-blue1 button', $.proxy(this._goToAmount, this));
+    this.$container.on('click', '.bt-red1 button', $.proxy(this._recharge, this));
+    this.$stepAmount.on('click', '.tube-list.two', $.proxy(this._setSelectedAmount, this));
+    this.$stepAmount.on('click', '.bt-white2', $.proxy(this._go, this, 'step-type'));
   },
 
   _goToAmount: function () {
@@ -81,16 +82,20 @@ Tw.RechargeLimit.prototype = {
 
     if (!this._limit.regular || this._rechargeRegular) {
       $selectRegular.find('input').attr('disabled', true);
+      $selectRegular.addClass('disabled');
     } else {
       $selectRegular.find('input').attr('disabled', false);
+      $selectRegular.removeClass('disabled');
     }
   },
 
   _setTypeRadioState: function ($switch, state) {
     if (state) {
       $switch.addClass('checked');
+      $switch.removeClass('disabled');
     } else {
       $switch.removeClass('checked');
+      $switch.addClass('disabled');
     }
 
     $switch.find('input').attr({ 'checked': state, 'aria-checked': state, 'disabled': !state });
@@ -104,7 +109,7 @@ Tw.RechargeLimit.prototype = {
     this.$container.find('.rechargeType').text(typeText);
 
     var upToAmount = Number(this.upToAmount.replace(/,/g, ''));
-    this.$stepAmount.find('#select-amount li').each(function (idx, item) {
+    this.$stepAmount.find('.tube-list.two li').each(function (idx, item) {
       var $item = $(item);
       var $input = $item.find('input');
       var itemValue = Number($item.data('value'));
@@ -155,8 +160,8 @@ Tw.RechargeLimit.prototype = {
 
   _handleSuccessCancelRegular: function (resp) {
     if (resp.code === Tw.API_CODE.CODE_00) {
-      this.$container.find('#recharge-regular').remove();
-      this.$container.find('#btn-cancel-regular').remove();
+      this.$container.find('#fe-recharge-regular').remove();
+      this.$container.find('.box-block-list1 button').remove();
       delete this._rechargeRegular;
       this._checkNextBtnDisabled();
       this._popupService.close();
@@ -172,7 +177,7 @@ Tw.RechargeLimit.prototype = {
     var type = this.TMTH;
     var message = '';
 
-    if (e.currentTarget.id === 'limit-regular') {
+    if (e.currentTarget.id === 'fe-limit-regular') {
       type = this.REGULAR;
       if (this._rechargeRegular) {
         this._popupService.openAlert(Tw.MSG_RECHARGE.LIMIT_A03);

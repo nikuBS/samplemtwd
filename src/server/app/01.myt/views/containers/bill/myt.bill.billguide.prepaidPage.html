@@ -4,6 +4,7 @@
 * Date: 2018.07.08
 * Info: PPS(선불폰)
 %>
+<% include ../../components/billguide/myt.billguide.pps.bill-list.html %>
 <% include ../../components/start.component.html %>
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
@@ -136,7 +137,7 @@
                             <h3 class="account-tit2">사용내역 확인</h3>
                             <!--// 2017-07-10 수정-->
 
-                            <% if( commDataInfo.dataYn === 'Y' ) {%>
+                            <% if( ppsInfo.ppsPlan === 'voiceDataPlan' ) {%>
                             <!-- 라디오 영역 -->
                             <div class="widget msg-account-info pad-t0">
                                 <div class="widget-box radio">
@@ -267,6 +268,7 @@
       svcInfo: <%-JSON.stringify(svcInfo) %>,
       ppsInfoLookupInfo: <%-JSON.stringify(ppsInfoLookupInfo) %>,
       commDataInfo: <%-JSON.stringify(commDataInfo) %>,
+      ppsInfo: <%-JSON.stringify(ppsInfo) %>
 
   });
   });

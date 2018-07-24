@@ -1,3 +1,13 @@
+export const CHANNEL_TYPE = {
+  MOBILE_APP: 'mobile-app',
+  MOBILE_WEB: 'mobile-web'
+};
+
+export const COOKIE_KEY = {
+  DEVICE: 'TWM_DEVICE',
+  CHANNEL: 'TWM_CHANNEL'
+};
+
 export const SVC_CD = {
   C: '휴대폰',
   S: 'PPS',
@@ -104,6 +114,11 @@ export enum PAYMENT_OPTION_TEXT {
   ACCOUNT = '계좌번호',
   CARD_NUM = '카드번호',
   ZERO = '0'
+}
+
+export enum AUTO_CHARGE_CODE {
+  USE = 'U',
+  UNUSE = 'D'
 }
 
 export const BILL_GUIDE_TYPE = {

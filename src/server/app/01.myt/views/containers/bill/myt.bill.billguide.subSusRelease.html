@@ -34,7 +34,7 @@
                 <div class="cont-box nogaps-top noborder">
                     <div class="box-suggest">
                         <div class="suggest-info suggest-info-type2">
-                            <p class="suggest-ti space-btm">고객님의 미납요금 <em class="tx-bold col-red">300,000</em>원이 내일까지 납부 확인되지 않으면 다시 이용이 정지됩니다.</p><!-- 2017-07-06 텍스트 수정 -->
+                            <p class="suggest-ti space-btm">고객님의 미납요금 <em class="tx-bold col-red"><%=commDataInfo.colAmt%></em>원이 내일까지 납부 확인되지 않으면 다시 이용이 정지됩니다.</p><!-- 2017-07-06 텍스트 수정 -->
                             <p class="suggest-ti"><em class="tx-bold">지금 정지해제를 하시겠습니까?</em></p>
                             <ul class="suggest-list nodot">
                                 <li>자동납부고객님은 이중인출의 우려가 있으니 통장의 잔고를 비워주시기 바랍니다.</li>
@@ -46,10 +46,10 @@
                     <div class="bt-popup">
                         <ul class="bt-slice item-two">
                             <li class="bt-white2">
-                                <button>취소</button>
+                                <button data-target="cancelBtn">취소</button>
                             </li>
                             <li class="bt-blue1">
-                                <button>이용정지해제</button>
+                                <button data-target="susReleaseBtn">이용정지해제</button>
                             </li>
                         </ul>
                     </div>
@@ -72,11 +72,8 @@
     new Tw.mytBillBillguideSubSusRelease($('#wrapFdev'), {
       reqQuery: <%-JSON.stringify(reqQuery) %>,
       svcInfo: <%-JSON.stringify(svcInfo) %>,
-      billpayInfo : <%-JSON.stringify(billpayInfo) %>,
-      circuitChildInfo: <%-JSON.stringify(circuitChildInfo) %>,
-      commDataInfo: <%-JSON.stringify(commDataInfo) %>,
-      defaultInfo: <%-JSON.stringify(defaultInfo) %>,
-      showConditionInfo: <%-JSON.stringify(showConditionInfo) %>
+      suspensionInfo : <%-JSON.stringify(suspensionInfo) %>,
+      commDataInfo : <%-JSON.stringify(commDataInfo) %>
   });
 
   });

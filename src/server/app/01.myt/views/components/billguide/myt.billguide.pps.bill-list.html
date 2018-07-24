@@ -1,0 +1,42 @@
+<!--
+* FileName: myt.billguide.pps.bill-list.html
+* Author: Hyeryoun Lee (skt.P130712@partner.sk.com)
+* Date: 2018. 7. 23.
+-->
+<script id="ppsBillList" type="text/x-handlebars-template">
+    <div class="payment-select">
+        <!-- 2017-07-10 수정 -->
+        {{#each items}}
+        <ul class="select-list">
+            <li>
+                <dl class="pay-detail">
+                    <dt>사용일자</dt>
+                    <dd>{{usedDt}}</dd>
+                </dl>
+                <dl class="pay-detail">
+                    {{#if_eq ../unit 'MB'}}
+                    <dt>사용량</dt>
+                    {{else}}
+                    <dt>사용금액</dt>
+                    {{/if_eq}}
+                    <dd><strong>{{value}}</strong>{{#if showUnit}}<span class="unit">{{../unit}}</span>{{/if}}</dd>
+                </dl>
+                <dl class="pay-detail">
+                    <dt>사용내역</dt>
+                    <dd>{{usedType}}</dd>
+                </dl>
+            </li>
+        </ul>
+        {{/each}}
+        <!--// 2017-07-10 수정 -->
+    </div>
+    <!-- 2017-07-16 접근성 수정 -->
+    <div class="paging">
+        <a href="#" role="button" class="prev {{#if disablePrev}}disabled{{/if}}"><span class="pg-blind">이전 페이지로 이동</span></a>
+        {{#for page.from page.to 1}}
+            <a href="#{{this}}" role="button" >{{this}}</a>
+        {{/for}}
+        <a href="#" role="button" class="next {{#if disableNext}}disabled{{/if}}"><span class="pg-blind">다음 페이지로 이동</span></a>
+        <!-- 비활성화시 disabled 클래스 추가 -->
+    </div>
+</script>

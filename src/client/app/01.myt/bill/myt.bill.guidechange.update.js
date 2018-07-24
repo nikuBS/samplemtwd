@@ -23,9 +23,9 @@ Tw.MyTBillGuidechangeUpdatePrototype = {
     this._curBillGuideTypeNm = this.$container.data('cur-bill-type-nm');
     this._wireCurBillGuideType = this.$container.data('wire-cur-bill-type');
     this._svcAttrCd = this.$container.data('svc-attr-cd');
-    this._$btnSubmit = this.$container.find('.btn-submit');
-    this._$btnNext = this.$container.find('.btn-next');
-    this._$steps = this.$container.find('.step');
+    this._$btnSubmit = this.$container.find('.fe-btn-submit');
+    this._$btnNext = this.$container.find('.fe-btn-next');
+    this._$steps = this.$container.find('.fe-step');
   },
 
   _bindEvent: function () {

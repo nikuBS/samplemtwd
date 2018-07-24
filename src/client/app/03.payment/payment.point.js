@@ -209,7 +209,7 @@ Tw.PaymentPoint.prototype = {
 
     if (this._isValidForRainbow()) {
       var reqData = this._makeRequestDataForRainbow();
-      this._apiService.request(Tw.API_CMD.BFF_07_0048, reqData, { 'T-Channel-Name': 'mobile-app' })
+      this._apiService.request(Tw.API_CMD.BFF_07_0048, reqData)
         .done($.proxy(this._paySuccess, this, 'reserve'))
         .fail($.proxy(this._payFail, this));
     }
@@ -224,8 +224,7 @@ Tw.PaymentPoint.prototype = {
     event.preventDefault();
 
     this._apiService.request(Tw.API_CMD.BFF_07_0056,
-      { prodId: this.$productSelectBoxForAuto.attr('id'), rbpChgRsnCd: Tw.RAINBOW_CHANGE_CODE.REQUEST },
-      { 'T-Channel-Name': 'mobile-app' })
+      { prodId: this.$productSelectBoxForAuto.attr('id'), rbpChgRsnCd: Tw.RAINBOW_CHANGE_CODE.REQUEST })
       .done($.proxy(this._paySuccess, this, 'auto'))
       .fail($.proxy(this._payFail, this));
   },

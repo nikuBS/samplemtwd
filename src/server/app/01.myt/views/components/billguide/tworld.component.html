@@ -3,7 +3,7 @@
 * Author: 이정민 (skt.p130713@partner.sk.com)
 * Date: 2018.07.05
 -->
-<div class="bill-guide-component" data-cur-bill-type="<%= curBillGuide.curBillType %>" data-cur-bill-type-nm="<%= curBillGuide.curBillTypeNm %>" data-cur-bill-type-component="<%= curBillGuide.component %>" data-wire-cur-bill-type="<%= curBillGuide.wireCurBillType %>" data-svc-attr-cd="<%= svcInfo.svcAttrCd %>">
+<div class="fe-bill-guide-component" data-cur-bill-type="<%= curBillGuide.curBillType %>" data-cur-bill-type-nm="<%= curBillGuide.curBillTypeNm %>" data-cur-bill-type-component="<%= curBillGuide.component %>" data-wire-cur-bill-type="<%= curBillGuide.wireCurBillType %>" data-svc-attr-cd="<%= svcInfo.svcAttrCd %>">
     <hr class="cont-sp type1" aria-hidden="true"/>
     <div class="cont-box">
         <% if (svcInfo.svcAttrCd === 'M1' && curBillGuide.isusimchk === 'Y') { %>
@@ -45,9 +45,9 @@
                 <ul class="bt-slice">
                     <li class="bt-blue1">
                         <% if (isUpdate) { %>
-                        <button class="btn-submit">요금안내서 정보변경하기</button>
+                        <button class="fe-btn-submit">요금안내서 정보변경하기</button>
                         <% } else { %>
-                        <button class="btn-submit">&quot;T world 확인&quot;으로 변경하기</button>
+                        <button class="fe-btn-submit">&quot;T world 확인&quot;으로 변경하기</button>
                         <% } %>
                     </li>
                 </ul>

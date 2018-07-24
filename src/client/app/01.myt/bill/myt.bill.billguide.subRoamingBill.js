@@ -16,8 +16,8 @@ Tw.mytBillBillguideSubRoamingBill = function (rootEl) {
 
 Tw.mytBillBillguideSubRoamingBill.prototype = {
   _assign: function () {
-    this._$amtListWrap = this.$container.find('.amt-list-wrap');
-    this._$amtTotalWrap = this.$container.find('.amt-total-wrap');
+    this._$amtListWrap = this.$container.find('.fe-amt-list-wrap');
+    this._$amtTotalWrap = this.$container.find('.fe-amt-total-wrap');
     this._$dateLi = this.$container.find('.tube-list li');
   },
 
@@ -27,8 +27,8 @@ Tw.mytBillBillguideSubRoamingBill.prototype = {
 
   _onClickDate: function (event) {
     var $target = $(event.currentTarget);
-    var unit = $target.attr('unit');
-    var measurements = $target.attr('measurements');
+    var unit = $target.data('unit');
+    var measurements = $target.data('measurements');
     this.startDt = this._getStartDt(unit, measurements);
     this.endDt = this._getEndDt();
     this._apiService.request(Tw.API_CMD.BFF_05_0044, {
@@ -47,13 +47,13 @@ Tw.mytBillBillguideSubRoamingBill.prototype = {
       if ( resp.result && _.size(resp.result.roamingList) ) {
         var amtList = this._getAmtList(resp.result.roamingList);
         var amtTotal = this._getAmtTotal(resp.result.roamingList);
-        this._setDataToTemplate(this._$amtListWrap, 'amt-list', {
+        this._setDataToTemplate(this._$amtListWrap, 'fe-amt-list', {
           roamingList: amtList
         });
-        this._setDataToTemplate(this._$amtTotalWrap, 'amt-total', amtTotal);
+        this._setDataToTemplate(this._$amtTotalWrap, 'fe-amt-total', amtTotal);
       } else {
         this._$amtListWrap.html('');
-        this._setDataToTemplate(this._$amtTotalWrap, 'amt-empty', {});
+        this._setDataToTemplate(this._$amtTotalWrap, 'fe-amt-empty', {});
       }
     }
   },

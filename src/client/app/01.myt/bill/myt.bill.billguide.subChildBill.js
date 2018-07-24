@@ -35,23 +35,24 @@ Tw.mytBillBillguideSubChildBill.prototype = {
   _init: function () {
     Tw.Logger.info('[Tw.mytBillBillguideSubChildBill 초기화]');
 
-    this._queryInit();
-    this._getUsedAmounts({
-      childSvcMgmtNum : this.selectDataInfo.selChildPhoneId,
-      invDt: this.selectDataInfo.selChildBillMonth
-    });
+    //this._queryInit();
+    // this._getUsedAmounts({
+    //   childSvcMgmtNum : this.selectDataInfo.selChildPhoneId,
+    //   invDt: this.selectDataInfo.selChildBillMonth
+    //});
     // this._getMyPlanReq({
     // });
+
     this._bindEvent();
   },
   //--------------------------------------------------------------------------[쿼리스트링]
-  _queryInit: function() {
-    if(this.resData.circuitChildInfo.length > 0) { //자녀가 있을때
-      this.selectDataInfo.selNum = ( this.resData.reqQuery.selNum ) ? this.resData.reqQuery.selNum : 0;
-      this.selectDataInfo.selChildPhoneId = this.resData.circuitChildInfo[ this.selectDataInfo.selNum ].svcMgmtNum;
-      this.selectDataInfo.selChildBillMonth = ( this.resData.reqQuery.invDt ) ? this.resData.reqQuery.invDt : null;
-    }
-  },
+  // _queryInit: function() {
+  //   if(this.resData.circuitChildInfo.length > 0) { //자녀가 있을때
+  //     this.selectDataInfo.selNum = ( this.resData.reqQuery.selNum ) ? this.resData.reqQuery.selNum : 0;
+  //     this.selectDataInfo.selChildPhoneId = this.resData.circuitChildInfo[ this.selectDataInfo.selNum ].svcMgmtNum;
+  //     this.selectDataInfo.selChildBillMonth = ( this.resData.reqQuery.invDt ) ? this.resData.reqQuery.invDt : null;
+  //   }
+  //},
   _cachedElement: function () {
     this.$childPhonenum = $('[data-target="childPhonenum"]');//회선번호
     this.$childPhonenumBtn = $('[data-target="childPhonenumBtn"]');
@@ -104,7 +105,7 @@ Tw.mytBillBillguideSubChildBill.prototype = {
   //--------------------------------------------------------------------------[이벤트 | 팝업 | 청구월 선택]
   _selPopOpen : function(event) {
     var $target = $(event.currentTarget);
-    var tempArr = this.usedAmounts.invDtArr;
+    var tempArr = this.resData.usedAmountChildInfo.invDtArr;
     var arrOption = [];
     for ( var i=0, len=tempArr.length; i<len; i++ ) {
       arrOption.push({
@@ -115,9 +116,12 @@ Tw.mytBillBillguideSubChildBill.prototype = {
     this._popupService.openChoice('기간선택', arrOption, 'type1', $.proxy(this._selPopOpenEvt, this, $target));
   },
   _selPopOpenEvt: function ($target, $layer) {
-    $layer.on('click', '.popup-choice-list', $.proxy(this._selPopOpenEvtExe, this, $target, $layer));
+    //$layer.on('click', '.popup-choice-list', $.proxy(this._selPopOpenEvtExe, this, $target, $layer));
+    $layer.find('.popup-choice-list').on('click', $.proxy(this._selPopOpenEvtExe, this, $target, $layer) );
+
   },
   _selPopOpenEvtExe: function ($target, $layer, event) {
+    console.info('청구월 선택');
     var curTg = $(event.currentTarget);
     var tg = $target;
     var dataTemp = curTg.find('button').attr('data-info');
@@ -126,8 +130,10 @@ Tw.mytBillBillguideSubChildBill.prototype = {
     //this._popupService.close();
     var paramData = {
       invDt: dataTemp,
-      selNum: this.selectDataInfo.selNum
+      selNum: this.selectDataInfo.selNum,
+      childSvcMgmtNum:  this.resData.selectSvcMgmtNum
     };
+    console.info('청구월 선택 > ', paramData);
     this._goLoad('/myt/bill/billguide/subChildBill' + '?' + $.param(paramData));
   },
   //--------------------------------------------------------------------------[데이터 완료후 실행]
@@ -208,26 +214,26 @@ Tw.mytBillBillguideSubChildBill.prototype = {
 
   },
   //--------------------------------------------------------------------------[api]
-  _getUsedAmounts: function(param) {//BFF_05_0047 사용요금 조회(본인/자녀)
-    Tw.Logger.info('[param]', param);
-
-    this._apiService.request(Tw.API_CMD.BFF_05_0047, param)
-      .done($.proxy(function(resp){
-        Tw.Logger.info('[자녀폰 사용 요금조회]', resp);
-        this.usedAmounts = resp.result;
-        this._usedAmountsInit();
-      }, this))
-      .fail(function(err){})
-  },
-  _getMyPlanReq: function(param) {//BFF_05_0041 나의요금제
-    Tw.Logger.info('[param]', param);
-
-    this._apiService.request(Tw.API_CMD.BFF_05_0041, param)
-      .done($.proxy(function(resp){
-        this._myPlanReqInit(resp.result);
-      }, this))
-      .fail(function(err){})
-  },
+  // _getUsedAmounts: function(param) {//BFF_05_0047 사용요금 조회(본인/자녀)
+  //   Tw.Logger.info('[param]', param);
+  //
+  //   this._apiService.request(Tw.API_CMD.BFF_05_0047, param)
+  //     .done($.proxy(function(resp){
+  //       Tw.Logger.info('[자녀폰 사용 요금조회]', resp);
+  //       this.usedAmounts = resp.result;
+  //       this._usedAmountsInit();
+  //     }, this))
+  //     .fail(function(err){})
+  // },
+  // _getMyPlanReq: function(param) {//BFF_05_0041 나의요금제
+  //   Tw.Logger.info('[param]', param);
+  //
+  //   this._apiService.request(Tw.API_CMD.BFF_05_0041, param)
+  //     .done($.proxy(function(resp){
+  //       this._myPlanReqInit(resp.result);
+  //     }, this))
+  //     .fail(function(err){})
+  // },
 
   //--------------------------------------------------------------------------[공통]
   _onOpenSelectPopup: function () {

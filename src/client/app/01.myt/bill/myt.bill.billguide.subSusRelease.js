@@ -31,26 +31,29 @@ Tw.mytBillBillguideSubSusRelease.prototype = {
     this._bindEvent();
   },
   _bindEvent: function () {
-    //this.$container.on('click', '[data-target="totPaySelectBtn"]', $.proxy(this._totPaySelectFun, this));
+    this.$container.on('click', '[data-target="cancelBtn"]', $.proxy(this._goBack, this));
+    this.$container.on('click', '[data-target="susReleaseBtn"]', $.proxy(this._susReleaseFun, this));
   },
   //--------------------------------------------------------------------------[api]
-  _getDetailSpecification: function() {
+  _susReleaseFun: function() {
+    var param = {
+      evtNum: '1234',
+      colAmt: this.resData.suspensionInfo.colAmt
+    };
+    Tw.Logger.info('[param]', param);
 
-    $.ajax('http://localhost:3000/mock/myt.bill.billguide.BFF_05_00036.json')
-      .done(function(resp){
-        console.log('성공');
-        Tw.Logger.info(resp);
-      })
-      .fail(function(err) {
-        console.log('실패');
-        Tw.Logger.info(err);
-      });
-
-    // this._apiService.request(Tw.API_CMD.BFF_05_0036, { detailYn: 'Y' })
-    //   .done(function(resp){
-    //     Tw.Logger.info('[청구요금 | 상세요금조회]', resp);
-    //   })
-    //   .fail(function(err){})
+    this._apiService.request(Tw.API_CMD.BFF_05_0034, param)
+      .done($.proxy(function(resp){
+        Tw.Logger.info('[BFF_05_0025 > resp]', resp);
+        if ( resp.result.success === 'Y' ) {
+          this._onSuccess();
+        } else if ( resp.result.success === 'R' ) {
+          this._onError();
+        } else {
+          Tw.Logger.info('[resp.result.success]', resp.result.success);
+        }
+      }, this))
+      .fail(function(err){})
   },
 
   //--------------------------------------------------------------------------[공통]
@@ -71,5 +74,19 @@ Tw.mytBillBillguideSubSusRelease.prototype = {
   },
   _getSelClaimDtBtn: function (str) {
     return moment(str).add(1, 'days').format('YYYY년 MM월');
+  },
+  _onSuccess: function (e) {
+    Tw.Logger.info(e);
+    //TODO success alert 공통모듈
+    this._popupService.openAlert(Tw.MSG_MYT.BILL_GUIDE_SUBSUSSRELEASE_SUCCESS, Tw.MSG_MYT.BILL_GUIDE_SUBSELPAYMENT_SUCCESS_TITLE, function () {
+      location.href = '/myt/bill/billguide';
+    });
+  },
+  _onError: function (e) {
+    Tw.Logger.error(e);
+    //TODO error alert 공통모듈
+    this._popupService.openAlert(Tw.MSG_MYT.BILL_GUIDE_SUBSUSSRELEASE_ERROR, Tw.MSG_MYT.BILL_GUIDE_SUBSELPAYMENT_SUCCESS_ERROR, function () {
+      location.href = '/myt/bill/billguide';
+    });
   }
 };
