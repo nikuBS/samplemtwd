@@ -38,12 +38,12 @@ export const URL = {
   '/recharge/gift/process/members': { login: true, id: '' },
   '/recharge/gift/process/request': { login: true, id: '' },
   '/recharge/gift/history': { login: true, id: '' },
-  '/recharge/cookiz': { login: true, id: '' },
-  '/recharge/cookiz/history': { login: true, id: '' },
+  '/recharge/cookiz': { login: true, id: 'DA_04_01' },
+  '/recharge/cookiz/history': { login: true, id: 'DA_04_04_01' },
   '/recharge/limit': { login: true, id: 'DA_05_01' },
   '/recharge/limit/history': { login: true, id: 'DA_05_04_01' },
-  '/recharge/ting': { login: true, id: '' },
-  '/recharge/ting/history': { login: true, id: '' },
+  '/recharge/ting': { login: true, id: 'DA_03_01' },
+  '/recharge/ting/history': { login: true, id: 'DA_03_03_01' },
   // payment
   '/payment/realtime': { login: true, id: 'PA_02_01' }, // 즉시납부
   '/payment/auto': { login: true, id: 'PA_03_01' }, // 자동납부 신청 및 변경
@@ -69,6 +69,10 @@ export const URL = {
   // product
   // direct
   // customer
+  '/customer': { login: true, id: 'CI_01_01' },
+  '/customer/email/question': { login: true, id: 'CI_04_09' },
+  '/customer/voice/info': { login: true, id: 'CI_10_01' },
+  '/customer/voice/sms': { login: true, id: 'CI_10_02' },
   '/customer/notice': { login: false, id: 'CI_06_01' }, // 공지사항
   '/customer/prevent-damage': { login: false, id: 'CI_07_01' }, // 이용자 피해예방 센터 메인
   '/customer/prevent-damage/guide': { login: false, id: 'CI_07_03' }, // 이용자 피해예방 가이드
