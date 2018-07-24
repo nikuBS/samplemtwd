@@ -58,6 +58,12 @@ export const URL = {
   '/payment/history/receipt/cash': { login: true },
   '/payment/history/excesspay': { login: true },
   '/payment/history/excesspay/account': { login: true },
+  '/payment/prepay/micro': { login: true },
+  '/payment/prepay/contents': { login: true },
+  '/payment/prepay/micro/history': { login: true },
+  '/payment/prepay/contents/history': { login: true },
+  '/payment/prepay/micro/auto/history': { login: true },
+  '/payment/prepay/contents/auto/history': { login: true },
   // management
   // membership
   // product
