@@ -119,8 +119,7 @@ Tw.PaymentHistoryPointReserve.prototype = {
     if (this.apiName) {
       this._apiService.request(
           this.apiName,
-          this.apiOption,
-          {'T-Channel-Name': 'mobile-app'}
+          this.apiOption
       ).done($.proxy(this._setData, this)).error($.proxy(this._apiError, this));
     } else {
       // TODO : history replace

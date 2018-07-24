@@ -30,7 +30,7 @@ Tw.PaymentHistoryCommon.prototype = {
     };
   },
 
-  parse_query_string: function(query) {
+  parse_query_string: function (query) {
     var vars = query.split('&');
     var query_string = {};
     for (var i = 0; i < vars.length; i++) {
@@ -54,7 +54,7 @@ Tw.PaymentHistoryCommon.prototype = {
   },
 
   setMenuChanger: function (target) {
-    if(target)
+    if (target)
       target.on('click', $.proxy(this.openPaymentTypePopup, this));
   },
 
@@ -75,12 +75,22 @@ Tw.PaymentHistoryCommon.prototype = {
         '', $.proxy(this.setPaymentTypePopupOpener, this));
   },
 
+  _setValueToLD: function (label, value) {
+    localStorage.setItem(label, value);
+  },
+
+  _getValueFromLD: function (label) {
+    return localStorage.getItem(label);
+  },
+
   _goLoad: function (url) {
     location.href = url;
   },
 
   _apiError: function (err) {
     Tw.Logger.error(err.code, err.msg);
+    this._popupService.openAlert(Tw.MSG_COMMON.SERVER_ERROR + '<br />' + err.code + ' : ' + err.msg);
+    return false;
   }
 };
 
@@ -101,6 +111,7 @@ Tw.PaymentHistoryCommon.prototype.listWithTemplate.prototype = {
     this.listTemplateKeyword = keyword.list;
     this.restButtonTemplateKeyword = keyword.restButton;
     this.viewMoreSelector = viewMoreSelector;
+    this.listWrapperSelector = listWrapperSelector;
 
     this.perPage = perPage;
     this.currentPage = 0;
@@ -183,7 +194,12 @@ Tw.PaymentHistoryCommon.prototype.listWithTemplate.prototype = {
     this.currentPage++;
     this.updateNextPageData();
 
-    $(this.listTemplate(this.data)).insertBefore(target.parent());
+    if (!this.listWrapperSelector) {
+      $(this.listTemplate(this.data)).insertBefore(target.parent());
+    } else {
+      $(this.listTemplate(this.data)).insertBefore(this.$container.find(this.listWrapperSelector));
+    }
+
     if (this.data.result.length <= this.perPage * (this.currentPage + 1)) {
       target.hide();
     }
