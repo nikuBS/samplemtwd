@@ -8,14 +8,14 @@ Tw.UIService = function () {
 Tw.UIService.prototype = {
   setBack: function () {
     /* 뒤로가기 추가 */
-    $('.common-back').on('click', function () {
+    $('.fe-common-back').on('click', function () {
       Tw.Logger.info('[Common Back]');
       history.back();
     });
   },
 
   setReplace: function () {
-    $('.replace-history').on('click', function ($event) {
+    $('.fe-replace-history').on('click', function ($event) {
       Tw.Logger.info('[Replace History]');
       location.replace($event.currentTarget.href);
       return false;
@@ -26,7 +26,7 @@ Tw.UIService.prototype = {
     $(window).bind('pageshow', function ($event) {
       if ( $event.originalEvent.persisted || window.performance && window.performance.navigation.type === 2 ) {
         Tw.Logger.info('[Back Loaded]');
-        if ( $('.back-reload').length > 0 ) {
+        if ( $('.fe-back-reload').length > 0 ) {
           Tw.Logger.info('[Prev]', document.referrer);
           document.location.reload();
         }
@@ -64,7 +64,7 @@ Tw.UIService.prototype = {
 };
 
 Tw.UIService.toggle = function (selector) {
-  if ( selector.hasClass('on') ) {
+  if ( selector.hasClass('on') ) {g
     selector.removeClass('on');
   }
   else {
