@@ -25,11 +25,11 @@ export const URL = {
   '/myt/bill/guidechange/update': { login: true, id: '' },
   '/myt/bill/guidechange/update-complete': { login: true, id: '' },
   // recharge
-  '/recharge/refill': { login: true, id: '' },
+  '/recharge/refill': { login: true, id: 'DA_01_01_01' }, // 리필하기
   '/recharge/refill/history': { login: true, id: '' },
-  '/recharge/refill/select': { login: true, id: '' },
-  '/recharge/refill/complete': { login: true, id: '' },
-  '/recharge/refill/error': { login: true, id: '' },
+  '/recharge/refill/select': { login: true, id: 'DA_01_01_03_01' }, // 리필하기 > 데이터/음성 선택
+  '/recharge/refill/complete': { login: true, id: 'DA_01_01_03_02' }, // 리필완료
+  '/recharge/refill/error': { login: true, id: 'DA_01_01_03_02' }, // 리필 실패
   '/recharge/refill/gift': { login: true, id: '' },
   '/recharge/refill/gift-complete': { login: true, id: '' },
   '/recharge/refill/gift-products': { login: true, id: '' },
@@ -45,25 +45,25 @@ export const URL = {
   '/recharge/ting': { login: true, id: '' },
   '/recharge/ting/history': { login: true, id: '' },
   // payment
-  '/payment/realtime': { login: true },
-  '/payment/auto': { login: true },
-  '/payment/point': { login: true },
-  '/payment/history': { login: true },
-  '/payment/history/realtime': { login: true },
-  '/payment/history/auto': { login: true },
-  '/payment/history/auto/unitedwithdrawal': { login: true },
-  '/payment/history/point/reserve': { login: true },
-  '/payment/history/point/auto': { login: true },
-  '/payment/history/receipt/tax': { login: true },
-  '/payment/history/receipt/cash': { login: true },
-  '/payment/history/excesspay': { login: true },
-  '/payment/history/excesspay/account': { login: true },
-  '/payment/prepay/micro': { login: true },
-  '/payment/prepay/contents': { login: true },
-  '/payment/prepay/micro/history': { login: true },
-  '/payment/prepay/contents/history': { login: true },
-  '/payment/prepay/micro/auto/history': { login: true },
-  '/payment/prepay/contents/auto/history': { login: true },
+  '/payment/realtime': { login: true, id: 'PA_02_01' }, // 즉시납부
+  '/payment/auto': { login: true, id: 'PA_03_01' }, // 자동납부 신청 및 변경
+  '/payment/point': { login: true, id: 'PA_05_01' }, // 포인트 요금납부
+  '/payment/history': { login: true, id: '' },
+  '/payment/history/realtime': { login: true, id: '' },
+  '/payment/history/auto': { login: true, id: '' },
+  '/payment/history/auto/unitedwithdrawal': { login: true, id: '' },
+  '/payment/history/point/reserve': { login: true, id: '' },
+  '/payment/history/point/auto': { login: true, id: '' },
+  '/payment/history/receipt/tax': { login: true, id: '' },
+  '/payment/history/receipt/cash': { login: true, id: '' },
+  '/payment/history/excesspay': { login: true, id: '' },
+  '/payment/history/excesspay/account': { login: true, id: '' },
+  '/payment/prepay/micro': { login: true, id: 'PA_08_01_01' }, // 소액결제 선결제/자동선결제
+  '/payment/prepay/contents': { login: true, id: 'PA_07_01_01' }, // 콘텐츠이용료 선결제/자동선결제
+  '/payment/prepay/micro/history': { login: true, id: 'PA_08_04' }, // 소액결제 선결제 내역
+  '/payment/prepay/contents/history': { login: true, id: 'PA_07_04' }, // 콘텐츠이용료 선결제 내역
+  '/payment/prepay/micro/auto/history': { login: true, id: 'PA_08_05' }, // 소액결제 자동선결제 내역
+  '/payment/prepay/contents/auto/history': { login: true, id: 'PA_07_05' }, // 콘텐츠이용료 자동선결제 내역
   // management
   // membership
   // product
