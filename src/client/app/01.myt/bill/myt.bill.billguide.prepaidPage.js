@@ -17,6 +17,7 @@ Tw.mytBillBillguidePrepaidPage = function (rootEl, resData) {
 
   this._popupService = Tw.Popup;
   this._apiService = Tw.Api;
+  this._hashService = Tw.Hash;
 
   this._history = new Tw.HistoryService(this.$container);
   this._history.init('hash');
@@ -34,21 +35,23 @@ Tw.mytBillBillguidePrepaidPage = function (rootEl, resData) {
 
 Tw.mytBillBillguidePrepaidPage.prototype = {
   _init: function () {
+    this._hashService.initHashNav($.proxy(this._onHashChange, this));
+
     this.dateObj.startDt = moment().subtract(2, 'months');
     this.dateObj.endDt = moment();
 
-    for ( var i=this.dateObj.termNum,len=0; i>=len; i-- ) {
+    for ( var i = this.dateObj.termNum, len = 0; i >= len; i-- ) {
       var tempDateFormat = moment().subtract(i, 'months').format('YYYYMM');
       this.dateObj.selArr.push(tempDateFormat);
     }
 
     this._cachedElement();
 
-    this.$startDtBtn.text( this.dateObj.startDt.format('YYYY.MM') );
-    this.$startDtBtn.attr( 'data-info', this.dateObj.startDt.format('YYYYMM') );
+    this.$startDtBtn.text(this.dateObj.startDt.format('YYYY.MM'));
+    this.$startDtBtn.attr('data-info', this.dateObj.startDt.format('YYYYMM'));
 
-    this.$endDtBtn.text( this.dateObj.endDt.format('YYYY.MM') );
-    this.$endDtBtn.attr( 'data-info', this.dateObj.endDt.format('YYYYMM') );
+    this.$endDtBtn.text(this.dateObj.endDt.format('YYYY.MM'));
+    this.$endDtBtn.attr('data-info', this.dateObj.endDt.format('YYYYMM'));
 
   },
   _bindEvent: function () {
@@ -56,22 +59,23 @@ Tw.mytBillBillguidePrepaidPage.prototype = {
     this.$container.on('click', '[data-target="endDtBtn"]', $.proxy(this._selPopOpen, this));
     this.$container.on('click', '[data-target="getListBtn"]', $.proxy(this._getList, this));
   },
-  _queryInit: function() {
+  _queryInit: function () {
 
   },
   _cachedElement: function () {
     this.$startDtBtn = $('[data-target="startDtBtn"]');
     this.$endDtBtn = $('[data-target="endDtBtn"]');
+    this.$listWrapper = $('.payment-select');
   },
   //--------------------------------------------------------------------------[이벤트 | 팝업]
-  _selPopOpen : function(event) {
+  _selPopOpen: function (event) {
     var $target = $(event.currentTarget);
     var tempArr = this.dateObj.selArr;
     var arrOption = [];
-    for ( var i=0, len=tempArr.length; i<len; i++ ) {
+    for ( var i = 0, len = tempArr.length; i < len; i++ ) {
       arrOption.push({
-        'attr' : 'data-info="' + tempArr[i] + '"',
-        text : this._getSelBtn( tempArr[i] )
+        'attr': 'data-info="' + tempArr[i] + '"',
+        text: this._getSelBtn(tempArr[i])
       });
     }
     this._popupService.openChoice('기간선택', arrOption, 'type1', $.proxy(this._selPopOpenEvt, this, $target));
@@ -83,43 +87,101 @@ Tw.mytBillBillguidePrepaidPage.prototype = {
     var curTg = $(event.currentTarget);
     var tg = $target;
     var dataTemp = curTg.find('button').attr('data-info');
-    tg.text( curTg.text() );
-    tg.attr('data-info', dataTemp );
+    tg.text(curTg.text());
+    tg.attr('data-info', dataTemp);
     this._popupService.close();
     //this._goLoad('/myt/bill/billguide?invDt='+ dataTemp);
   },
   //--------------------------------------------------------------------------[api]
-  _getList: function() {
+  _getList: function () {
     console.info('[_getList]');
 
     this._cachedElement();
 
     var tempParam = {
       startMM: this.$startDtBtn.attr('data-info'),
-      endMM:this.$endDtBtn.attr('data-info')
+      endMM: this.$endDtBtn.attr('data-info')
     };
 
     console.info('[tempParam]', tempParam);
 
     this._apiService.request(Tw.API_CMD.BFF_05_0014, tempParam)
-      .done($.proxy(function(resp){
+      .done($.proxy(function (resp) {
         this._getListOutput(resp.result);
       }, this))
-      .fail(function(err){})
+      .fail(function () {
+      });
   },
   //--------------------------------------------------------------------------[공통]
-  _getListOutput: function(dataList) {
-    this._cachedElement();
-    var tempList = dataList;
+  _getListOutput: function (dataList) {
 
-    console.info('[tempList]', tempList);
+    this._ppsList = dataList;
+    _.each(this._ppsList, function (item) {
+      if ( parseInt(item.used, 10) < 0 ) {
+        item.used = '-';
+        item.unit = false;
+      } else {
+        item.used = item.used;
+        item.unit = true;
+      }
+      item.usedDt = moment(item.usedDt, 'YYYYMMDD').format('YYYY.MM.DD');
+    });
+    /*    this._ppsList = [];
+     for ( var i = 0; i < 30; i++ ) {
+     var item = {
+     used: i,
+     usedDt: '1234.33.33'
+     };
+     this._ppsList.push(item);
+     }*/
 
-    // for ( var i=0,len=tempList.length; i<len; i++ ) {
-    //
-    // }
+    this.PER_PAGE = 2;
+    this.NUM_OF_PAGES = 5;
+    this.totalPage = Math.ceil(this._ppsList.length / this.PER_PAGE); //1부터 시작
+
+    Handlebars.registerHelper('for', function (from, to, incr, block) {
+      var accum = '';
+      for ( var i = from; i <= to; i += incr )
+        accum += block.fn(i);
+      return accum;
+    });
+
+    this._renderList(1);
+  },
+
+  _renderList: function (page) {
+    var startPage, endPage;
+    this.currentPage = parseInt(page, 10);
+    if ( this.currentPage - (this.NUM_OF_PAGES >> 1) <= 1 ) {//less than 5
+      startPage = 1;
+      endPage = Math.min(this.NUM_OF_PAGES, this.totalPage);
+    } else if ( this.currentPage + (this.NUM_OF_PAGES >> 1) >= this.totalPage ) {//more than total-5
+      endPage = this.totalPage;
+      startPage = Math.max(this.totalPage - this.NUM_OF_PAGES + 1, 1);
+    } else {
+      startPage = Math.max(1, this.currentPage - (this.NUM_OF_PAGES >> 1));
+      endPage = Math.min(this.totalPage, this.currentPage + (this.NUM_OF_PAGES >> 1));
+    }
+    var offset = this.PER_PAGE * (this.currentPage - 1);
+    var options = {
+      page: { from: startPage, to: endPage, current: this.currentPage },
+      items: this._ppsList.slice(offset, offset + this.PER_PAGE),
+      unit: 'MB',
+      disablePrev: startPage <= 1,
+      disableNext: endPage >= this.totalPage
+    };
+    var source = $('#ppsBillList').html();
+    var template = Handlebars.compile(source);
+    var output = template(options);
+    this.$listWrapper.empty();
+    this.$listWrapper.append(output);
+
+    this.$listWrapper.find('a.prev').on('click', $.proxy(this._onClickPrev, this));
+    this.$listWrapper.find('a.next').on('click', $.proxy(this._onClickNext, this));
+    this.$listWrapper.find('a[href="#' + this.currentPage + '"]').addClass('active');
 
   },
-  _onOpenSelectPopup: function () {
+/*  _onOpenSelectPopup: function () {
     //$('.popup-info').addClass('scrolling');
   },
   _goHistory: function () {
@@ -133,11 +195,25 @@ Tw.mytBillBillguidePrepaidPage.prototype = {
   },
   _go: function (hash) {
     window.location.hash = hash;
-  },
+  },*/
   _getSelClaimDtBtn: function (str) {
     return moment(str).add(1, 'days').format('YYYY년 MM월');
   },
   _getSelBtn: function (str) {
     return moment(str).add(1, 'days').format('YYYY.MM');
+  },
+  _onHashChange: function (hash) {
+    if ( hash.raw ) {
+      this._renderList(hash.raw);
+    }
+  },
+  _onClickNext: function (e) {
+    e.preventDefault();
+    window.location.hash = this.currentPage + 1;
+
+  },
+  _onclickPrev: function (e) {
+    e.preventDefault();
+    window.location.hash = this.currentPage - 1;
   }
 };
