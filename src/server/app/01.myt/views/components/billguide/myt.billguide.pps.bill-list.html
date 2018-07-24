@@ -14,8 +14,12 @@
                     <dd>{{usedDt}}</dd>
                 </dl>
                 <dl class="pay-detail">
+                    {{#if_eq ../unit 'MB'}}
                     <dt>사용량</dt>
-                    <dd><strong>{{used}}</strong>{{#if unit}}<span class="unit">{{../unit}}</span>{{/if}}</dd>
+                    {{else}}
+                    <dt>사용금액</dt>
+                    {{/if_eq}}
+                    <dd><strong>{{value}}</strong>{{#if showUnit}}<span class="unit">{{../unit}}</span>{{/if}}</dd>
                 </dl>
                 <dl class="pay-detail">
                     <dt>사용내역</dt>

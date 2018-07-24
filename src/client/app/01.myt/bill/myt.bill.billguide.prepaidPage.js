@@ -8,6 +8,26 @@
 Tw.mytBillBillguidePrepaidPage = function (rootEl, resData) {
   this.thisMain = this;
   this.resData = resData;
+  this.TYPE = {
+    DATA: 'used',
+    VOICE: 'rate'
+  };
+  this._field = '';//data, voice type
+  this.PER_PAGE = 5; //리스트 아이템 노출 최대수
+  this.NUM_OF_PAGES = 5;//페이지 번호 노출 최대수
+
+  switch ( resData.ppsInfo.ppsPlan ) {
+    case 'dataPlan':
+      this._field = this.TYPE.DATA; //data
+      break;
+    case 'voicePlan':
+      this._field = this.TYPE.VOICE;//voice
+      break;
+    case 'voiceDataPlan':
+      this._field = this.TYPE.VOICE;
+      break;
+  }
+
   Tw.Logger.info('[서버에서 데이터 받음]', resData);
 
   this.$container = rootEl;
@@ -28,7 +48,6 @@ Tw.mytBillBillguidePrepaidPage = function (rootEl, resData) {
     startDt: null,
     endDt: null
   };
-
   this._init();
   this._bindEvent();
 };
@@ -114,29 +133,18 @@ Tw.mytBillBillguidePrepaidPage.prototype = {
   },
   //--------------------------------------------------------------------------[공통]
   _getListOutput: function (dataList) {
-
+    var self = this;
     this._ppsList = dataList;
     _.each(this._ppsList, function (item) {
-      if ( parseInt(item.used, 10) < 0 ) {
-        item.used = '-';
-        item.unit = false;
+      if ( self._field === self.TYPE.DATA && parseInt(item[self._field], 10) < 0 ) {
+        item.value = '-';
+        item.showUnit = false;
       } else {
-        item.used = item.used;
-        item.unit = true;
+        item.value = item[self._field];
+        item.showUnit = true;
       }
       item.usedDt = moment(item.usedDt, 'YYYYMMDD').format('YYYY.MM.DD');
     });
-    /*    this._ppsList = [];
-     for ( var i = 0; i < 30; i++ ) {
-     var item = {
-     used: i,
-     usedDt: '1234.33.33'
-     };
-     this._ppsList.push(item);
-     }*/
-
-    this.PER_PAGE = 2;
-    this.NUM_OF_PAGES = 5;
     this.totalPage = Math.ceil(this._ppsList.length / this.PER_PAGE); //1부터 시작
 
     Handlebars.registerHelper('for', function (from, to, incr, block) {
@@ -146,10 +154,18 @@ Tw.mytBillBillguidePrepaidPage.prototype = {
       return accum;
     });
 
+    Handlebars.registerHelper('if_eq', function (v1, v2, options) {
+      if ( v1 === v2 ) {
+        return options.fn(this);
+      }
+      return options.inverse(this);
+    });
+
     this._renderList(1);
   },
 
   _renderList: function (page) {
+    //페이지 설정
     var startPage, endPage;
     this.currentPage = parseInt(page, 10);
     if ( this.currentPage - (this.NUM_OF_PAGES >> 1) <= 1 ) {//less than 5
@@ -166,36 +182,24 @@ Tw.mytBillBillguidePrepaidPage.prototype = {
     var options = {
       page: { from: startPage, to: endPage, current: this.currentPage },
       items: this._ppsList.slice(offset, offset + this.PER_PAGE),
-      unit: 'MB',
+      unit: this._field === this.TYPE.VOICE ? '원' : 'MB',
       disablePrev: startPage <= 1,
       disableNext: endPage >= this.totalPage
     };
+
+    //rendering
     var source = $('#ppsBillList').html();
     var template = Handlebars.compile(source);
     var output = template(options);
     this.$listWrapper.empty();
     this.$listWrapper.append(output);
 
+    //binding event
     this.$listWrapper.find('a.prev').on('click', $.proxy(this._onClickPrev, this));
     this.$listWrapper.find('a.next').on('click', $.proxy(this._onClickNext, this));
     this.$listWrapper.find('a[href="#' + this.currentPage + '"]').addClass('active');
 
   },
-/*  _onOpenSelectPopup: function () {
-    //$('.popup-info').addClass('scrolling');
-  },
-  _goHistory: function () {
-    this._goLoad('/recharge/cookiz/history');
-  },
-  _goBack: function () {
-    this._history.go(-1);
-  },
-  _goLoad: function (url) {
-    location.href = url;
-  },
-  _go: function (hash) {
-    window.location.hash = hash;
-  },*/
   _getSelClaimDtBtn: function (str) {
     return moment(str).add(1, 'days').format('YYYY년 MM월');
   },
