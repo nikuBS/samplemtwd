@@ -1,11 +1,11 @@
 /**
- * FileName: myt.joinService.payClaimInfo.phone.js
+ * FileName: myt.joinService.payClaimInfo.iptv.js
  * Author: 김명환 (skt.P130714@partner.sk.com)
  * Date: 2018.07.24
  * Info:
  */
 
-Tw.mytJoinServicePayClaimInfoIptv = function (rootEl, resData) {
+Tw.MytJoinServicePayClaimInfoIptv = function (rootEl, resData) {
   this.thisMain = this;
   this.resData = resData;
   this.init = this._init;
@@ -25,7 +25,7 @@ Tw.mytJoinServicePayClaimInfoIptv = function (rootEl, resData) {
   this._init();
 };
 
-Tw.mytJoinServicePayClaimInfoIptv.prototype = {
+Tw.MytJoinServicePayClaimInfoIptv.prototype = {
   _init: function () {
     Tw.Logger.info('[초기화]');
 

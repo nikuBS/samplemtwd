@@ -5,7 +5,7 @@
  * Info:
  */
 
-Tw.mytJoinServicePayClaimInfoTpocketfi = function (rootEl, resData) {
+Tw.MytJoinServicePayClaimInfoTpocketfi = function (rootEl, resData) {
   this.thisMain = this;
   this.resData = resData;
   this.init = this._init;
@@ -25,7 +25,7 @@ Tw.mytJoinServicePayClaimInfoTpocketfi = function (rootEl, resData) {
   this._init();
 };
 
-Tw.mytJoinServicePayClaimInfoTpocketfi.prototype = {
+Tw.MytJoinServicePayClaimInfoTpocketfi.prototype = {
   _init: function () {
     Tw.Logger.info('[초기화]');
 

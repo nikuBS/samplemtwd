@@ -5,7 +5,7 @@
  * Info:
  */
 
-Tw.mytJoinServicePayClaimInfoPointcam = function (rootEl, resData) {
+Tw.MytJoinServicePayClaimInfoPointcam = function (rootEl, resData) {
   this.thisMain = this;
   this.resData = resData;
   this.init = this._init;
@@ -25,7 +25,7 @@ Tw.mytJoinServicePayClaimInfoPointcam = function (rootEl, resData) {
   this._init();
 };
 
-Tw.mytJoinServicePayClaimInfoPointcam.prototype = {
+Tw.MytJoinServicePayClaimInfoPointcam.prototype = {
   _init: function () {
     Tw.Logger.info('[초기화]');
 

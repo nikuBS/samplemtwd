@@ -13,7 +13,7 @@ import DateHelper from '../../../../utils/date.helper';
 import FormatHelper from '../../../../utils/format.helper';
 
 
-class MytJoinServiceContractTerminalInfoPhoneController extends TwViewController {
+class MytJoinServiceContractTerminalInfoPhone extends TwViewController {
   constructor() {
     super();
   }
@@ -37,5 +37,5 @@ class MytJoinServiceContractTerminalInfoPhoneController extends TwViewController
 
 }
 
-export default MytJoinServiceContractTerminalInfoPhoneController;
+export default MytJoinServiceContractTerminalInfoPhone;
 

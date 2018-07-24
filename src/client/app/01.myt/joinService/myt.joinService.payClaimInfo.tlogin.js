@@ -1,11 +1,11 @@
 /**
- * FileName: myt.joinService.payClaimInfo.twibro.js
+ * FileName: myt.joinService.payClaimInfo.tlogin.js
  * Author: 김명환 (skt.P130714@partner.sk.com)
  * Date: 2018.07.24
  * Info:
  */
 
-Tw.mytJoinServicePayClaimInfoTwibro = function (rootEl, resData) {
+Tw.MytJoinServicePayClaimInfoTlogin = function (rootEl, resData) {
   this.thisMain = this;
   this.resData = resData;
   this.init = this._init;
@@ -25,7 +25,7 @@ Tw.mytJoinServicePayClaimInfoTwibro = function (rootEl, resData) {
   this._init();
 };
 
-Tw.mytJoinServicePayClaimInfoTwibro.prototype = {
+Tw.MytJoinServicePayClaimInfoTlogin.prototype = {
   _init: function () {
     Tw.Logger.info('[초기화]');
 

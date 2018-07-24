@@ -13,7 +13,7 @@ import DateHelper from '../../../../utils/date.helper';
 import FormatHelper from '../../../../utils/format.helper';
 
 
-class MytJoinServicePayClaimInfoController extends TwViewController {
+class MytJoinServicePayClaimInfo extends TwViewController {
   constructor() {
     super();
   }
@@ -40,5 +40,5 @@ class MytJoinServicePayClaimInfoController extends TwViewController {
 
 }
 
-export default MytJoinServicePayClaimInfoController;
+export default MytJoinServicePayClaimInfo;
 
