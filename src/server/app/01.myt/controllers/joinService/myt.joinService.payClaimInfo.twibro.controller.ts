@@ -27,13 +27,26 @@ class MytJoinServicePayClaimInfoTwibro extends TwViewController {
   //노출조건
   private _showConditionInfo: any = {};
 
+  private _urlTplInfo:any = {
+    pageRenderView:  'joinService/myt.joinService.payClaimInfo.twibro.html'
+  };
+
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     this._svcInfo = svcInfo;
     this.logger.info(this, '[ svcInfo ] 사용자 정보 : ', svcInfo);
     this.reqQuery = req.query;
-
-
+    var thisMain = this;
+    thisMain.logger.info(thisMain, '[_urlTplInfo.pageRenderView] : ', thisMain._urlTplInfo.pageRenderView);
+    thisMain.renderView(res, thisMain._urlTplInfo.pageRenderView, {
+      reqQuery: thisMain.reqQuery,
+      svcInfo: thisMain._svcInfo
+    } );
   }//render end
+
+  //-------------------------------------------------------------[클리이어튼로 전송]
+  public renderView(res: Response, view: string, data: any): any {
+    res.render(view, data);
+  }
 
 }
 
