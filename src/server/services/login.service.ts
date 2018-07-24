@@ -6,6 +6,8 @@ import { Observable } from 'rxjs/Observable';
 class LoginService {
   static instance;
   private session;
+  private request;
+  private response;
   private logger = new LoggerService();
 
   constructor() {
@@ -15,18 +17,32 @@ class LoginService {
     LoginService.instance = this;
   }
 
-  public isLogin(): boolean {
+  public setCurrentReq(req, res) {
+    this.logger.info(this, '[setCurrentReq]', req.session, this.session);
+    this.request = req;
+    this.response = res;
+  }
+
+  public isLogin(session): boolean {
+    if ( !FormatHelper.isEmpty(session) ) {
+      return !FormatHelper.isEmpty(session.svcInfo) && !FormatHelper.isEmpty(session.serverSession);
+    }
+    return false;
+  }
+
+  public isExpiredSession(session) {
+    if ( this.isLogin(session) ) {
+      return false;
+    }
     if ( !FormatHelper.isEmpty(this.session) ) {
-      return !FormatHelper.isEmpty(this.session.svcInfo);
+      return !FormatHelper.isEmpty(this.session.svcInfo) && !FormatHelper.isEmpty(this.session.serverSession);
     }
     return false;
   }
 
   public setClientSession(session) {
     this.logger.info(this, '[Set session]', session, this.session);
-    if ( FormatHelper.isEmpty(this.session) ) {
-      this.session = session;
-    }
+    this.session = session;
   }
 
   public getSvcInfo(): any {
@@ -38,21 +54,16 @@ class LoginService {
 
   public setSvcInfo(svcInfo: any): Observable<any> {
     return Observable.create((observer) => {
-      if ( !FormatHelper.isEmpty(this.session) ) {
-        if ( FormatHelper.isEmpty(this.session.svcInfo) ) {
-          this.session.svcInfo = new SvcInfoModel(svcInfo);
-        } else {
-          Object.assign(this.session.svcInfo, svcInfo);
-        }
-        this.session.save(() => {
-          this.logger.debug(this, '[setSvcInfo]', this.session.svcInfo);
-          observer.next(this.session.svcInfo);
-          observer.complete();
-        });
+      if ( FormatHelper.isEmpty(this.session.svcInfo) ) {
+        this.session.svcInfo = new SvcInfoModel(svcInfo);
       } else {
-        observer.next(null);
-        observer.complete();
+        Object.assign(this.session.svcInfo, svcInfo);
       }
+      this.session.save(() => {
+        this.logger.debug(this, '[setSvcInfo]', this.session.svcInfo);
+        observer.next(this.session.svcInfo);
+        observer.complete();
+      });
     });
   }
 
@@ -65,17 +76,15 @@ class LoginService {
 
   public setServerSession(serverSession: string): Observable<any> {
     return Observable.create((observer) => {
-      if ( !FormatHelper.isEmpty(this.session) ) {
-        this.session.serverSession = serverSession;
-        this.session.save(() => {
-          this.logger.debug(this, '[setServerSession]', this.session);
-          observer.next(this.session.serverSession);
-          observer.complete();
-        });
-      } else {
-        observer.next(null);
-        observer.complete();
+      if ( FormatHelper.isEmpty(this.session) ) {
+        this.session = this.request.session;
       }
+      this.session.serverSession = serverSession;
+      this.session.save(() => {
+        this.logger.debug(this, '[setServerSession]', this.session);
+        observer.next(this.session.serverSession);
+        observer.complete();
+      });
 
     });
   }
