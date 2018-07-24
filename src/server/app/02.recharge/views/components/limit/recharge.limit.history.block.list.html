@@ -4,7 +4,7 @@
 * Date: 2018.07.11
 %>
 
-<script id="tmpl-items-block" type="text/x-handlebars-template">
+<script id="fe-tmpl-items-block" type="text/x-handlebars-template">
     {{#each items}}
         <li>
             <div class="info-charge">
@@ -22,14 +22,14 @@
     {{/each}}
 </script>
 
-<script id="tmpl-block" type="text/x-handlebars-template">
+<script id="fe-tmpl-block" type="text/x-handlebars-template">
     {{#if totalCount}}
     <div class="inner">
         <div class="contents-info-list">
             <p class="ti-desc"><strong><span class="num">{{totalCount}}</span>개</strong> 데이터 차단 설정 내역이 있습니다.</p>
             <div class="list-top">
                 <div class="inline">
-                    <button class="bt-dropdown small" id="search-condition-block" title="셀렉트 선택">전체 · 3개월<span class="ico"></span></button>
+                    <button class="bt-dropdown small" id="fe-search-condition-block" title="셀렉트 선택">전체 · 3개월<span class="ico"></span></button>
                 </div>
             </div>
             <!--// .widget -->
