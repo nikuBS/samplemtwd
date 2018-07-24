@@ -80,7 +80,7 @@ class ApiRouter {
   }
 
   private loginTid(req: Request, res: Response, next: NextFunction) {
-    const params = req.body
+    const params = req.body;
     this.apiService.requestLoginTid(params.tokenId, params.state).subscribe((resp) => {
       this.logger.info('[TID login]', resp);
       res.json(resp);

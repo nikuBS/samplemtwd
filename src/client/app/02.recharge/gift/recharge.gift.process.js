@@ -176,7 +176,13 @@ Tw.RechargeGiftProcess.prototype = {
 
   _onClickFamilyHistoryItem: function (e) {
     this.removeHistoryItemEvent = $(e.currentTarget);
-    this._popupService.openConfirm(Tw.POPUP_TITLE.GIFT_FAMILY_INFO, Tw.MSG_RECHARGE.GIFT_FAMILY_L07, '', null, $.proxy(this._removeFamilyHistoryItem, this));
+    this._popupService.openConfirm(
+      Tw.POPUP_TITLE.GIFT_FAMILY_INFO,
+      Tw.MSG_RECHARGE.GIFT_FAMILY_L07,
+      null,
+      null,
+      $.proxy(this._removeFamilyHistoryItem, this)
+    );
   },
 
   _onClickMembersHistoryItem: function (e) {

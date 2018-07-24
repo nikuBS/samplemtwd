@@ -90,8 +90,8 @@ Tw.RechargeLimitHistory.prototype = {
     this._setItems(resp);
 
     var tab = this.$container.find('.tab-contents li.tab-' + this._selectedTab);
-    var template = Handlebars.compile($('#tmpl-' + this._selectedTab).html());
-    Handlebars.registerPartial(this._selectedTab + 'Items', $('#tmpl-items-' + this._selectedTab).html());
+    var template = Handlebars.compile($('#fe-tmpl-' + this._selectedTab).html());
+    Handlebars.registerPartial(this._selectedTab + 'Items', $('#fe-tmpl-items-' + this._selectedTab).html());
     var totalCount = this._items[this._selectedTab].length;
     var contents = template({
       totalCount: totalCount,
@@ -103,7 +103,7 @@ Tw.RechargeLimitHistory.prototype = {
     this._popupService.close();
 
     var searchCondition = this._searchCondition[this._selectedTab];
-    this.$container.find('#search-condition-' + this._selectedTab).text(searchCondition.type + ' · ' + searchCondition.period);
+    this.$container.find('#fe-search-condition-' + this._selectedTab).text(searchCondition.type + ' · ' + searchCondition.period);
   },
 
   _handleMoreClick: function (e) {
