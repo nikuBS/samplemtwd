@@ -28,6 +28,7 @@ import MyTBillBillguideSubChildBill from './controllers/bill/myt.bill.billguide.
 import MyTBillBillguideSubCallBill from './controllers/bill/myt.bill.billguide.subCallBill.controller';
 import MyTBillBillguideSubRoamingBill from './controllers/bill/myt.bill.billguide.subRoamingBill.controller';
 import MyTBillBillguideSubDonationBill from './controllers/bill/myt.bill.billguide.subDonationBill.controller';
+import MytJoinServicePayClaimInfoController from './controllers/joinService/myt.joinService.payClaimInfo.controller';
 
 class MytRouter extends TwRouter {
   constructor() {
@@ -63,6 +64,25 @@ class MytRouter extends TwRouter {
     this.controllers.push({ url: '/bill/guidechange/change-complete', controller: new MyTBillGuideChangeComplete() });
     this.controllers.push({ url: '/bill/guidechange/update', controller: new MyTBillGuidechangeUpdate() });
     this.controllers.push({ url: '/bill/guidechange/update-complete', controller: new MyTBillGuidechangeUpdateComplete() });
+
+    this.controllers.push({ url: '/joinService/payClaimInfo', controller: new MytJoinServicePayClaimInfoController() });
+    this.controllers.push({ url: '/joinService/payClaimInfo/phone', controller: new MyTBillBillguide() });
+    this.controllers.push({ url: '/joinService/payClaimInfo/iptv', controller: new MyTBillBillguide() });
+    this.controllers.push({ url: '/joinService/payClaimInfo/tlogin', controller: new MyTBillBillguide() });
+    this.controllers.push({ url: '/joinService/payClaimInfo/twibro', controller: new MyTBillBillguide() });
+    this.controllers.push({ url: '/joinService/payClaimInfo/tpocketfi', controller: new MyTBillBillguide() });
+    this.controllers.push({ url: '/joinService/payClaimInfo/pointcam', controller: new MyTBillBillguide() });
+
+    this.controllers.push({ url: '/joinService/contractTerminalInfo', controller: new MyTBillBillguide() });
+    this.controllers.push({ url: '/joinService/contractTerminalInfo/phone', controller: new MyTBillBillguide() });
+    this.controllers.push({ url: '/joinService/contractTerminalInfo/phone/detail', controller: new MyTBillBillguide() });
+    this.controllers.push({ url: '/joinService/contractTerminalInfo/tpocketfi', controller: new MyTBillBillguide() });
+    this.controllers.push({ url: '/joinService/contractTerminalInfo/tpocketfi/detail', controller: new MyTBillBillguide() });
+    this.controllers.push({ url: '/joinService/contractTerminalInfo/twibro', controller: new MyTBillBillguide() });
+    this.controllers.push({ url: '/joinService/contractTerminalInfo/tlogin', controller: new MyTBillBillguide() });
+    this.controllers.push({ url: '/joinService/contractTerminalInfo/tlogin/detail', controller: new MyTBillBillguide() });
+
+
   }
 }
 
