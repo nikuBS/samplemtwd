@@ -66,72 +66,6 @@ Tw.PaymentHistoryAutoUnitedWithdrawal.prototype = {
 
     if (res.code !== Tw.API_CODE.CODE_00) return this._apiError(res);
 
-    // res = {
-    //   'code': '00',
-    //   'msg': 'success',
-    //   'result': {
-    //     'recCnt': '',
-    //     'recCnt1': '',
-    //     'recCnt2': '',
-    //     'idrwObjYn': 'Y',
-    //     'idrwRejtYn': 'N',
-    //     'dpstrRelCd': '010',
-    //     'bankCd': '',
-    //     'bankNm': '국민은행',
-    //     'bankSerNum': '',
-    //     'bankNum': '00000000000000',
-    //     'm6ObjYn': 'Y',
-    //     'idrwCnt': '0002',
-    //     'idrwAmt': '000000000034560',
-    //     'maxDrwYm': '201710',
-    //     'selDrwYm': '201709',
-    //     'errCd': '',
-    //     'respMsg': '',
-    //     'integratedDrawalRecord': [
-    //       {
-    //         'acntNum': '1111111111',
-    //         'drwYm': '201709',
-    //         'drwDt': '20170921',
-    //         'reqSvcNum': '7257037325',
-    //         'svcNum': '7257037325',
-    //         'svcCd': 'I',
-    //         'svcCdNm': '인터넷',
-    //         'drwStCd': 'NR',
-    //         'drwStCdNm': '정상인출',
-    //         'drwErrCd': '00',
-    //         'drwErrCdNm': 'EDI 정상인출',
-    //         'drwAmt': '000000000020040',
-    //         'drwAmtTyp': 'D',
-    //         'payCyclCd': '3',
-    //         'reqTs': '1',
-    //         'tmthColClCd': '9',
-    //         'bankNum': '91930201528450',
-    //         'bankNm': '국민은행'
-    //       },
-    //       {
-    //         'acntNum': '1111111111',
-    //         'drwYm': '201709',
-    //         'drwDt': '20170921',
-    //         'reqSvcNum': '7257037325',
-    //         'svcNum': '7257037325',
-    //         'svcCd': 'I',
-    //         'svcCdNm': '인터넷',
-    //         'drwStCd': 'NR',
-    //         'drwStCdNm': '정상인출',
-    //         'drwErrCd': '00',
-    //         'drwErrCdNm': 'EDI 정상인출',
-    //         'drwAmt': '000000000020040',
-    //         'drwAmtTyp': 'D',
-    //         'payCyclCd': '3',
-    //         'reqTs': '1',
-    //         'tmthColClCd': '9',
-    //         'bankNum': '91930201528450',
-    //         'bankNm': '국민은행'
-    //       }
-    //     ]
-    //   }
-    // };
-
     this.result = res.result.integratedDrawalRecord;
 
     if (this.result.length) {
@@ -181,8 +115,8 @@ Tw.PaymentHistoryAutoUnitedWithdrawal.prototype = {
     $layer.find('.bt-blue1 button').on('click', $.proxy(this.checkAndGoStopWithdrawal, this, $layer.find('.input input')));
   },
 
-  checkAndGoStopWithdrawal: function (input, e) {
-    if(this.checkFormatEmpty($(input).val())) {
+  checkAndGoStopWithdrawal: function (input) {
+    if (this.checkFormatEmpty($(input).val())) {
       this._popupService.openAlert(
           Tw.MSG_PAYMENT.AUTO_A03,
           Tw.POPUP_TITLE.NOTIFY,
@@ -196,12 +130,12 @@ Tw.PaymentHistoryAutoUnitedWithdrawal.prototype = {
 
   sendRequestStop: function (value) {
     this._apiService.request(this.stopWithdrawapApiName, {
-      rfndBankNum : value
+      rfndBankNum: value
     }).done($.proxy(this.stopWithdrawalSucess, this)).error($.proxy(this._apiError, this));
   },
 
   stopWithdrawalSucess: function (res) {
-    if(res.code === '00') {
+    if (res.code === '00') {
       this._popupService.openAlert(
           Tw.MSG_PAYMENT.HISTORY_A02,
           Tw.POPUP_TITLE.NOTIFY,
@@ -219,13 +153,11 @@ Tw.PaymentHistoryAutoUnitedWithdrawal.prototype = {
   },
 
   checkFormatEmpty: function (v) {
-    if(v === null || v === undefined) return true;
+    if (v === null || v === undefined) return true;
     return !v.replace(/^\s+/g, '').length;
   },
 
   _apiError: function (res) {
-    Tw.Logger.error(res.msg);
-    this.$listWrapper.html('<br /><span style=\"color:red;\"><b>ERROR: </b>' + res.msg + '</span>');
-    return false;
+    this.common._apiError(res);
   }
 };

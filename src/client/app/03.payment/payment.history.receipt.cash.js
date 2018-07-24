@@ -90,8 +90,6 @@ Tw.PaymentHistoryReceiptCash.prototype = {
   },
 
   _apiError: function (res) {
-    Tw.Logger.error(res.msg);
-    this.$listWrapper.html('<br /><span style=\"color:red;\"><b>ERROR: </b>' + res.msg + '</span>');
-    return false;
+    this.common._apiError(res);
   }
 };
