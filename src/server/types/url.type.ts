@@ -40,8 +40,8 @@ export const URL = {
   '/recharge/gift/history': { login: true, id: '' },
   '/recharge/cookiz': { login: true, id: '' },
   '/recharge/cookiz/history': { login: true, id: '' },
-  '/recharge/limit': { login: true, id: '' },
-  '/recharge/limit/history': { login: true, id: '' },
+  '/recharge/limit': { login: true, id: 'DA_05_01' },
+  '/recharge/limit/history': { login: true, id: 'DA_05_04_01' },
   '/recharge/ting': { login: true, id: '' },
   '/recharge/ting/history': { login: true, id: '' },
   // payment
