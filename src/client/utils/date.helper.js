@@ -47,6 +47,14 @@ Tw.DateHelper = (function () {
   };
 
   /**
+   * @param none
+   * @returns {string} : 12
+   */
+  var getCurrentMonth = function () {
+    return moment().format('M');
+  };
+
+  /**
    * @param date {Date} or {string} : YYYYMMDD
    * @returns {string} : currentDateTime - 1 year
    */
@@ -78,6 +86,8 @@ Tw.DateHelper = (function () {
         unit = 'years';
         break;
       case Tw.DATE_UNIT.MONTH:
+        unit = 'months';
+        break;
       default:
         unit = 'months';
         break;
@@ -100,6 +110,41 @@ Tw.DateHelper = (function () {
    */
   var getShortDateNoDot = function (date) {
     return moment(convDateFormat(date)).format('YYYY.MM.DD');
+  };
+
+  /**
+   * @param date {Date} or {string} : YYYYMMDDhhmmss
+   * @returns {string} : 06.01
+   */
+  var getShortDateNoYear = function (date) {
+    return moment(convDateFormat(date)).format('MM.DD');
+  };
+
+  /**
+   * @param date {Date} or {string} : YYYYMMDDhhmmss
+   * @returns {string} : 2018.06.01 12:00
+   */
+  var getShortDateAndTime = function (date) {
+    return moment(convDateFormat(date)).format('YYYY.MM.DD hh:mm');
+  };
+
+  /**
+   * @param date {Date} or {string} : YYYYMMDDhhmmss
+   * @returns {string} : 2018.06.01 12:00:00
+   */
+  var getFullDateAndTime = function (date) {
+    return moment(convDateFormat(date)).format('YYYY.MM.DD hh:mm:ss');
+  };
+
+  /**
+   * @param date {Date} or {string} : YYYYMMDDhhmmss
+   * @returns {string} : 2018-06-02 11:59
+   */
+  var getAddDay = function (date) {
+    return moment(convDateFormat(date))
+      .add(1, 'days')
+      .subtract(1, 'minutes')
+      .format('YYYY.MM.DD hh:mm');
   };
 
   /**
@@ -129,9 +174,14 @@ Tw.DateHelper = (function () {
     getRemainDate: getRemainDate,
     getShortDate: getShortDate,
     getShortDateNoDot: getShortDateNoDot,
+    getShortDateNoYear: getShortDateNoYear,
+    getShortDateAndTime: getShortDateAndTime,
+    getFullDateAndTime: getFullDateAndTime,
+    getAddDay: getAddDay,
     convDateFormat: convDateFormat,
     getCurrentShortDate: getCurrentShortDate,
     getCurrentDateTime: getCurrentDateTime,
+    getCurrentMonth: getCurrentMonth,
     getPastYearShortDate: getPastYearShortDate,
     getNextYearShortDate: getNextYearShortDate,
     getEndOfMonth: getEndOfMonth,

@@ -38,6 +38,14 @@ class DateHelper {
   };
 
   /**
+   * @param none
+   * @returns {string} : 12
+   */
+  static getCurrentMonth = function () {
+    return moment().format('M');
+  };
+
+  /**
    * @param date {Date} or {string} : YYYYMMDD
    * @returns {string} : currentDateTime - 1 year
    */
@@ -99,6 +107,14 @@ class DateHelper {
    */
   static getShortDateAndTime(date) {
     return moment(this.convDateFormat(date)).format('YYYY.MM.DD hh:mm');
+  }
+
+  /**
+   * @param date {Date} or {string} : YYYYMMDDhhmmss
+   * @returns {string} : 2018.06.01 12:00:00
+   */
+  static getFullDateAndTime(date) {
+    return moment(this.convDateFormat(date)).format('YYYY.MM.DD hh:mm:ss');
   }
 
   /**

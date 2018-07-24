@@ -116,6 +116,11 @@ export enum PAYMENT_OPTION_TEXT {
   ZERO = '0'
 }
 
+export enum AUTO_CHARGE_CODE {
+  USE = 'U',
+  UNUSE = 'D'
+}
+
 export const BILL_GUIDE_TYPE = {
   'TWORLD': 'P',
   'BILL_LETTER': 'H',
