@@ -142,6 +142,7 @@ export const API_CMD = {
   BFF_07_0028: { path: '/core-bill/v1/bill-pay/avail-point-search', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_07_0029: { path: '/core-bill/v1/bill-pay/pay-ocb-tpoint-proc', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_07_0030: { path: '/core-bill/v1/payment/total-payment', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_07_0032: { path: '/core-bill/v1/payment/over-payment-refund-account', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_07_0035: { path: '/core-bill/v1/payment/realtime-payment', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_07_0036: { path: '/core-bill/v1/payment/realtime-payment-detail', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_07_0037: { path: '/core-bill/v1/payment/auto-payment', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },

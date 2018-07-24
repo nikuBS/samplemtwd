@@ -314,9 +314,12 @@ Tw.MSG_PAYMENT = {
     SUBTITLE: '님의<br />휴대폰 요금',
     SUBTITLE_SUB: '건이 과납되었습니다.',
     CONTENTS: '<strong>환불받으실 금액을 확인</strong>하시고<br /> 환불 받을 계좌를 등록해 주세요!',
-    BUTTON_TEXT: '과납금액확인하기',
-    CHECK_TEXT: '하루동안 보지 않기'
+    BUTTON_TEXT: '과납금액확인하기'
   },
+  HISTORY_OVER_PAY_POPUP: '<div class=\'widget pop-btm-area\'>' +
+  '<div class=\'widget-box check\'><ul class=\'select-list\' role=\'group\'>' +
+  '<li class=\'checkbox type01\' role=\'checkbox\' aria-checked=\'false\'>' +
+  '<input type=\'checkbox\' name=\'checkbox\' title=\'하루동안 보지 않기\'> 하루동안 보지 않기</li></ul></div></div>',
   HISTORY_POINT_TITLE_OCB: 'OK캐쉬백',
   HISTORY_POINT_TITLE_TPOINT: 'T포인트',
   HISTORY_POINT_TITLE_RAINBOW: '레인보우 포인트',

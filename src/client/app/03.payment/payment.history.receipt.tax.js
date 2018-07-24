@@ -144,7 +144,7 @@ Tw.PaymentHistoryReceiptTax.prototype = {
     var validateValue;
 
     if ($trigger.hasClass('fax')) {
-      validateValue = $layer.find('.input input').eq(0).val()
+      validateValue = $layer.find('.input input').eq(0).val();
       if (this.checkFormatEmpty(validateValue) || validateValue.trim().length < 9) {
         this._popupService.openAlert(
             Tw.MSG_PAYMENT.HISTORY_A11,
@@ -171,7 +171,7 @@ Tw.PaymentHistoryReceiptTax.prototype = {
   },
 
   checkFormatEmpty: function (v) {
-    if(v === null || v === undefined) return true;
+    if (v === null || v === undefined) return true;
     return !v.replace(/^\s+/g, '').length;
   },
 
@@ -180,9 +180,7 @@ Tw.PaymentHistoryReceiptTax.prototype = {
     return re.test(v);
   },
 
-  _apiError: function (res) {
-    Tw.Logger.error(res.msg);
-    this.$listWrapper.html('<br /><span style=\"color:red;\"><b>ERROR: </b>' + res.msg + '</span>');
-    return false;
+  _apiError: function (err) {
+    this.common._apiError(err);
   }
 };
