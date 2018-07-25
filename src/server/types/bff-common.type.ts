@@ -121,6 +121,11 @@ export enum AUTO_CHARGE_CODE {
   UNUSE = 'D'
 }
 
+export enum PREPAY_TITLE {
+  MICRO = '소액결제',
+  CONTENTS = '콘텐츠이용료'
+}
+
 export const BILL_GUIDE_TYPE = {
   'TWORLD': 'P',
   'BILL_LETTER': 'H',
