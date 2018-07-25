@@ -1,0 +1,114 @@
+<%#
+* FileName: myt.joinService.payClaimInfo.billGuideType.html
+* Author: 김명환 (skt.P130714@partner.sk.com)
+* Date: 2018.07.25
+* Info: 요금안내서 유형
+%>
+<li>
+    <span class="title">요금 안내서 <br />유형</span>
+    <span class="tx-cont"><%=resDataInfo.billTypeNm %></span>
+</li>
+
+<% if ( resDataInfo.billTypeCd == '1' ) { %> <%#1. 기타(우편요금) : 주소, 이메일주소 %>
+<li>
+    <span class="title">주소</span>
+    <span class="tx-cont"><%=resDataInfo.cntcAddr %></span>
+</li>
+<li>
+    <span class="title">이메일 주소</span>
+    <span class="tx-cont"><%=resDataInfo.cntcEmail %></span>
+</li>
+<% } else if( resDataInfo.billTypeCd == '2' ) { %> <%#2. 이메일 : 이메일주소 %>
+<li>
+    <span class="title">이메일 주소</span>
+    <span class="tx-cont"><%=resDataInfo.cntcEmail %></span>
+</li>
+<% } else if( resDataInfo.billTypeCd == 'A' ) { %> <%#3. 문자 + 이메일 : 연락처, 이메일주소 %>
+<li>
+    <span class="title">연락처</span>
+    <span class="tx-cont"><%=resDataInfo.cntcNum %></span>
+</li>
+<li>
+    <span class="title">이메일 주소</span>
+    <span class="tx-cont"><%=resDataInfo.cntcEmail %></span>
+</li>
+<% } else if( resDataInfo.billTypeCd == 'B' ) { %> <%#4. 문자 : 연락처 %>
+<li>
+    <span class="title">연락처</span>
+    <span class="tx-cont"><%=resDataInfo.cntcNum %></span>
+</li>
+<% } else if( resDataInfo.billTypeCd == 'D' ) { %> <%#5. 모바일 퀵 청구서 : 비노출 %>
+
+<% } else if( resDataInfo.billTypeCd == 'E' ) { %> <%#6. 모바일 퀵 + 이메일 : 이메일주소 %>
+<li>
+    <span class="title">이메일 주소</span>
+    <span class="tx-cont"><%=resDataInfo.cntcEmail %></span>
+</li>
+<% } else if( resDataInfo.billTypeCd == 'H' ) { %> <%#7. Bill Letter : 비노출 %>
+
+<% } else if( resDataInfo.billTypeCd == 'I' ) { %> <%#8. Bill Letter + 이메일 : 이메일주소 %>
+<li>
+    <span class="title">이메일 주소</span>
+    <span class="tx-cont"><%=resDataInfo.cntcEmail %></span>
+</li>
+<% } else if( resDataInfo.billTypeCd == 'J' ) { %> <%#9. Bill Letter 유선전용 : 비노출 %>
+
+<% } else if( resDataInfo.billTypeCd == 'K' ) { %> <%#10. Bill Letter + 이메일(유선전용) : 이메일주소 %>
+<li>
+    <span class="title">이메일 주소</span>
+    <span class="tx-cont"><%=resDataInfo.cntcEmail %></span>
+</li>
+<% } else if( resDataInfo.billTypeCd == 'P' ) { %> <%#11. T world 확인 : 비노출 %>
+
+<% } else if( resDataInfo.billTypeCd == 'Q' ) { %> <%#12. Bill Letter + 문자 : 연락처 %>
+<li>
+    <span class="title">연락처</span>
+    <span class="tx-cont"><%=resDataInfo.cntcNum %></span>
+</li>
+<% } else if( resDataInfo.billTypeCd == 'T' ) { %> <%#13. 우편 + 문자 + Bill Letter(전자추가발송) : 연락처, 주소 %>
+<li>
+    <span class="title">연락처</span>
+    <span class="tx-cont"><%=resDataInfo.cntcNum %></span>
+</li>
+<li>
+    <span class="title">주소</span>
+    <span class="tx-cont"><%=resDataInfo.cntcAddr %></span>
+</li>
+<% } else if( resDataInfo.billTypeCd == 'U' ) { %> <%#14. 우편 + 문자(전자추가발송) : 연락처, 주소 %>
+<li>
+    <span class="title">연락처</span>
+    <span class="tx-cont"><%=resDataInfo.cntcNum %></span>
+</li>
+<li>
+    <span class="title">주소</span>
+    <span class="tx-cont"><%=resDataInfo.cntcAddr %></span>
+</li>
+<% } else if( resDataInfo.billTypeCd == 'W' ) { %> <%#15. 우편 + Bill Letter : 주소 %>
+<li>
+    <span class="title">주소</span>
+    <span class="tx-cont"><%=resDataInfo.cntcAddr %></span>
+</li>
+<% } else if( resDataInfo.billTypeCd == 'Y' ) { %> <%#16. 우편 + 이메일 + Bill Letter(전자추가발송) : 이메일주소, 주소 %>
+<li>
+    <span class="title">이메일 주소</span>
+    <span class="tx-cont"><%=resDataInfo.cntcEmail %></span>
+</li>
+<li>
+    <span class="title">주소</span>
+    <span class="tx-cont"><%=resDataInfo.cntcAddr %></span>
+</li>
+<% } else if( resDataInfo.billTypeCd == 'X' ) { %> <%#17. 우편 + 이메일 + 문자 : 연락처, 이메일주소, 주소 %>
+<li>
+    <span class="title">연락처</span>
+    <span class="tx-cont"><%=resDataInfo.cntcNum %></span>
+</li>
+<li>
+    <span class="title">이메일 주소</span>
+    <span class="tx-cont"><%=resDataInfo.cntcEmail %></span>
+</li>
+<li>
+    <span class="title">주소</span>
+    <span class="tx-cont"><%=resDataInfo.cntcAddr %></span>
+</li>
+
+<% } %>
