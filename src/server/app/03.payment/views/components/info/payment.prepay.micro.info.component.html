@@ -1,0 +1,109 @@
+<%#
+* FileName: payment.prepay.micro.info.component.html
+* Author: 공자윤 (jayoon.kong@sk.com)
+* Date: 2018.07.25
+%>
+<div class="cont-box nogaps-hoz">
+    <div class="box-confirm">
+        <!-- .widget -->
+        <div class="widget">
+            <div class="widget-box accordion">
+                <h3 class="tit-a">이용안내</h3>
+                <div class="acco-cover toggle"><!-- toggle : 한개만 열기 -->
+                    <div class="bt-whole"><button role="button" aria-pressed="false"><span class="blind">내용 열기</span></button></div>
+                    <div class="acco-style">
+                        <ul class="acco-list">
+                            <li class="acco-box">
+                                <div class="acco-tit"><button role="button" aria-pressed="false"><span class="bullet">1.</span> 소액결제 선결제 란?</button></div>
+                                <div class="acco-cont">
+                                    <ul class="list-dot">
+                                        <li class="list">이번 달에 11번가/T페이 등에서 소액결제 이용한도가 부족한 경우 선결제한 금액만큼 추가로 이용할 수 있는 서비스 입니다.</li>
+                                        <li class="list">결제 방식에 따라 일반 선결제와 자동 선결제로 구분됩니다.
+                                            <ul class="inner-group type5">
+                                                <li class="inner-list">
+                                                    <dl>
+                                                        <dt class="inner-tit">일반 선결제</dt>
+                                                        <dd class="inner-cont">소액결제 이용한도가 부족할 때마다 수동으로 선결제하는 것을 말합니다.</dd>
+                                                    </dl>
+                                                </li>
+                                                <li class="inner-list">
+                                                    <dl>
+                                                        <dt class="inner-tit">자동 선결제</dt>
+                                                        <dd class="inner-cont">고객님께서 사전에 설정한 일정 한도 이상 콘텐츠 이용료 이용 시 자동으로 선결제하는 것을 말합니다.</dd>
+                                                    </dl>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="acco-box">
+                                <div class="acco-tit"><button role="button" aria-pressed="false"><span class="bullet">2.</span> 선결제 시 선결제한 금액만큼 [월/일] 이용한도가 복원되어 추가 이용이 가능합니다.</button></div>
+                                <div class="acco-cont">
+                                    <ul class="list-dot">
+                                        <li class="list">월 최대 이용가능 금액 (이용한도+선결제 복원한도를 포함한 월 최대 이용 가능 금액) : 500만원 (16.08.01부터 적용)</li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="acco-box">
+                                <div class="acco-tit"><button role="button" aria-pressed="false"><span class="bullet">3.</span> 선결제는 본인 신용카드 및 체크카드만 이용하실 수 있습니다.</button></div>
+                                <div class="acco-cont">
+                                    <ul class="list-dot">
+                                        <li class="list">선결제 금액은 다음 달 청구서에 [소액결제 선결제] 항목으로 차감 반영됩니다.</li>
+                                        <li class="list">동일 체크/신용카드로 월 5회까지 선결제 가능합니다 (자동 선결제 제외)<br/>※ 5회 초과 시 본인 명의의 다른 체크/신용카드를 이용하시기 바랍니다.</li>
+                                        <li class="list">선결제 이용에 따른 별도의 이자는 지급되지 않습니다.</li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="acco-box">
+                                <div class="acco-tit"><button role="button" aria-pressed="false"><span class="bullet">4.</span> 선결제 후 소액결제 이용 시 , 체크/신용카드 결제에 대한 부분 환불이 불가합니다.</button></div>
+                                <div class="acco-cont">
+                                    <ul class="list-dot">
+                                        <li class="list">선결제 후 당월 내 사용이력이 없을 경우에 한해 영업점 또는 고객센터 “국번없이 1599-0011(유료) / 휴대폰 114(무료)”에서 환불이 가능합니다.</li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="acco-box">
+                                <div class="acco-tit"><button role="button" aria-pressed="false"><span class="bullet">5.</span> 콘텐츠이용료와 소액결제의 이용한도는 각각 관리됩니다.</button></div>
+                                <div class="acco-cont">
+                                    <ul class="list-dot">
+                                        <li class="list">소액결제 선결제 이용을 희망하는 고객님께서는 소액결제 선결제 항목에서 처리 바랍니다.</li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="acco-box">
+                                <div class="acco-tit"><button role="button" aria-pressed="false"><span class="bullet">6.</span> 자동 선결제 신청 시점부터 고객님이 설정한 기준금액 도달 시 자동 선결제가 됩니다.</button></div>
+                                <div class="acco-cont">
+                                    <ul class="list-dot">
+                                        <li class="list">소액결제 선결제 이용을 희망하는 고객님께서는 소액결제 선결제 항목에서 처리 바랍니다.
+                                            <ul class="inner-group type5">
+                                                <li class="inner-list">
+                                                    <dl>
+                                                        <dt class="inner-tit">기준금액</dt>
+                                                        <dd class="inner-cont">자동 선결제가 되는 시점의 금액을 말하며, 고객님 콘텐츠 이용한도의 최대 90%까지 설정 가능합니다.<br/>예시)<br/>자동선결제가 기준금액 : 5만원으로 설정 시, 이번 달 소액결제를 5만원 이상 결제 시점에 자동으로 선결제됩니다.</dd>
+                                                    </dl>
+                                                </li>
+                                                <li class="inner-list">
+                                                    <dl>
+                                                        <dt class="inner-tit">선결제 금액</dt>
+                                                        <dd class="inner-cont">자동 선결제 기준금액을 도달했을 경우, 설정한 금액만큼 자동으로 선결되는 것을 말하며, 자동 선결제 금액은 기준금액 보다 적거나 같아야 합니다. <br/>예시)<br/>자동선결제 기준금액 : 5만원, 자동선결제 금액 : 5만원으로 설정 시, 이번달 콘텐츠이용료를 5만원 이상 결제된 시점에 5만원이 자동으로 선결제됩니다.                                                                                    </dd>
+                                                    </dl>
+                                                </li>
+
+                                            </ul>
+                                        </li>
+                                        <li class="list">1일 5회까지 자동 선결제 가능합니다.<br/>※ 5회 초과 시 월 최대 이용가능금액 내에서 일반 선결제 이용이 가능합니다. (월 횟수 제한없음)</li>
+                                        <li class="list">자동 선결제 신청 후 카드 정보 / 기준금액 / 선결제 금액 변경이 가능합니다.</li>
+                                        <li class="list">자동 선결제 이용 중 이용한도 변경 시 기준금액 / 선결제 금액 변경이 필요합니다.</li>
+                                        <li class="list">휴대폰 정지 중에는 자동 선결제 신청이 불가능합니다.</li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--// .widget -->
+    </div>
+</div>

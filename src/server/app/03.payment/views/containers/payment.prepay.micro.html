@@ -13,7 +13,21 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div id="payment-prepay-micro"></div>
+<div id="payment-prepay-micro" class="wrap">
+    <!-- #header -->
+    <div id="header" class="header-wrap">
+        <div class="header">
+            <div class="header-ti align-l">
+                <h1>소액결제 선결제하기</h1>
+                <button class="bt-dropdown size2" title="전화번호 선택" aria-haspopup="true">010-46**-10**</button>
+            </div>
+            <button class="prev-step fe-common-back"><span class="blind">이전으로</span></button>
+        </div>
+    </div>
+    <!--// #header -->
+    <% include ../components/prepay/payment.prepay.home.component.html %>
+    <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
+</div>
 <% include ../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
