@@ -1395,6 +1395,41 @@
   top: 0.5rem;
 }
 
+.popup .popup-file {
+  padding: 0 1.25rem;
+}
+
+.popup .popup-file .file-input-list li {
+  margin: 0 0 0.625rem 0;
+}
+
+.popup .popup-file .warning_msg {
+  margin: 0 0 1.875rem 0;
+}
+
+.popup .popup-file .warning_msg li {
+  position: relative;
+  margin: 0.625rem 0;
+  padding: 0 0 0 0.625rem;
+  font-size: 0.75rem;
+  color: #757575;
+}
+
+.popup .popup-file .warning_msg li:before {
+  position: absolute;
+  content: '';
+  left: 0;
+  top: 0.4375rem;
+  width: 0.1875rem;
+  height: 0.1875rem;
+  background: #757575;
+  border-radius: 0.1875rem;
+}
+
+.popup .popup-file .warning_msg li.bold {
+  font-weight: 700;
+}
+
 .popup-blind {
   position: absolute;
   left: 0;
@@ -3525,6 +3560,11 @@
   padding-top: 0.625rem;
 }
 
+.contents-notice.line-none {
+  border-top: none !important;
+  padding-top: 1.25rem;
+}
+
 .tab-area .tab-contents ul li .inner {
   padding: 2.5rem 1.625rem 0;
 }
@@ -3537,16 +3577,15 @@
   float: none;
 }
 
-.contents-info-list .list-top {
+.list-top {
   overflow: hidden;
-  margin-bottom: 0.75rem;
 }
 
-.contents-info-list .list-top .btn-wrap {
+.list-top .btn-wrap {
   float: right;
 }
 
-.contents-info-list .list-top .btn-wrap .btn-white-m {
+.list-top .btn-wrap .btn-white-m {
   height: 1.5rem;
   padding: 0 0.75rem;
   font-size: 0.75rem;
@@ -3554,43 +3593,82 @@
   border-radius: 0.3125rem;
 }
 
-.contents-info-list .list-top .select-left {
+.list-top .select-left {
   float: left;
 }
 
-.contents-info-list .list-top .select-left .btn-toggle.open button:after, .contents-info-list .list-top .select-left .btn-toggle.open a:after {
+.list-top .select-left .btn-toggle.open:after {
   -webkit-transform: rotate(180deg);
           transform: rotate(180deg);
 }
 
-.contents-info-list .list-top .select-left .bt-dropdown {
+.list-top .select-left .bt-detail {
+  position: relative;
   height: auto;
   padding: 0 2.25rem 0 0;
   font-size: 0.875rem;
   background: transparent;
 }
 
-.contents-info-list .list-top .select-right {
+.list-top .select-left .bt-detail:after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 0.8125rem;
+  display: inline-block;
+  width: 0.9375rem;
+  height: 0.9375rem;
+  margin: -0.5rem 0 0 0;
+  background: url(/img/ico/ico-group.png) no-repeat -0.9375rem -6.5625rem;
+  background-size: 1.875rem;
+}
+
+.list-top .select-left .bt-dropdown {
+  height: auto;
+  padding: 0 2.25rem 0 0;
+  font-size: 0.875rem;
+  background: transparent;
+}
+
+.list-top .select-right {
   float: right;
 }
 
-.contents-info-list .list-top .select-right .btn-toggle.open button:after, .contents-info-list .list-top .select-right .btn-toggle.open a:after {
+.list-top .select-right .btn-toggle.open:after {
   -webkit-transform: rotate(180deg);
           transform: rotate(180deg);
 }
 
-.contents-info-list .list-top .select-right .bt-dropdown {
+.list-top .select-right .bt-detail {
+  position: relative;
+  height: 1.5rem;
+  padding: 0 1.25rem 0 0.75rem;
+  font-size: 0.75rem;
+  color: #757575;
+  background: transparent;
+}
+
+.list-top .select-right .bt-detail:after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 0;
+  display: inline-block;
+  width: 0.9375rem;
+  height: 0.9375rem;
+  margin: -0.5rem 0 0 0;
+  background: url(/img/ico/ico-group.png) no-repeat -0.9375rem -6.5625rem;
+  background-size: 1.875rem;
+}
+
+.list-top .select-right .bt-dropdown {
   height: 1.5rem;
   padding: 0 1.875rem 0 0.75rem;
   font-size: 0.75rem;
 }
 
-.contents-info-list .list-top .select-right .bt-dropdown.bt-detail {
-  height: auto;
-  padding: 0 2.25rem 0 0;
-  font-size: 0.75rem;
-  color: #757575;
-  background: transparent;
+.contents-info-list .list-top {
+  margin-bottom: 0.75rem;
 }
 
 .contents-info-list [class^="result-"] li {
@@ -5291,17 +5369,46 @@
 }
 
 .payment-detail-box .detail-inner .detail-list.type2 ul li .title {
+  width: 30%;
   color: #757575;
   font-size: 0.875rem;
 }
 
 .payment-detail-box .detail-inner .detail-list.type2 ul li .tx-cont {
+  width: 70%;
   font-size: 0.9375rem;
 }
 
 .payment-detail-box .detail-inner .detail-list.type2 ul li .tx-cont .divice-sort {
   display: block;
   font-weight: 300;
+}
+
+.payment-detail-box .detail-inner .detail-list.type3 ul li .title {
+  color: #757575;
+  font-size: 0.8125rem;
+}
+
+.payment-detail-box .detail-inner .detail-list.type3 ul li .tx-cont {
+  font-size: 0.8125rem;
+}
+
+.payment-detail-box .detail-inner .detail-list.type3 ul li .tx-cont .divice-sort {
+  display: block;
+  font-weight: 300;
+}
+
+.payment-detail-box .detail-inner .detail-list.type3 ul li .tx-result {
+  font-size: 0.8125rem;
+}
+
+.payment-detail-box .detail-inner .detail-list.type3 ul li .tx-result .tx-red {
+  font-weight: 700;
+  vertical-align: baseline;
+}
+
+.payment-detail-box .detail-inner .detail-list.type3 ul li .blue-btn, .payment-detail-box .detail-inner .detail-list.type3 ul li .red-btn {
+  font-size: 0.8125rem;
 }
 
 .payment-detail-box .pay-state {
@@ -6549,7 +6656,11 @@ li.payment-detail-box:last-child {
 }
 
 .discount-info .inner-list li {
-  margin-top: 1.25rem;
+  margin-top: 1.375rem;
+}
+
+.discount-info .inner-list li:first-child {
+  margin-top: 0.9375rem;
 }
 
 .discount-info .inner-list li dl {
@@ -6560,7 +6671,7 @@ li.payment-detail-box:last-child {
   float: left;
   color: #757575;
   font-size: 0.875rem;
-  font-weight: 300;
+  font-weight: 400;
 }
 
 .discount-info .inner-list li dl dd {
@@ -6568,10 +6679,23 @@ li.payment-detail-box:last-child {
   font-size: 0.9375rem;
 }
 
-.discount-info .inner-list li dl dd .char {
+.discount-info .inner-list li dl dd .num {
   font-family: "Helvetica Neue", Roboto, sans-serif;
   vertical-align: baseline;
   letter-spacing: 0;
+  font-weight: 700;
+}
+
+.discount-info .inner-list li dl dd .num.blue {
+  color: #325ec1;
+}
+
+.discount-info .inner-list li dl dd .used-data-info .header-info {
+  margin-bottom: 0.375rem;
+}
+
+.discount-info .inner-list li dl dd .used-data-info .sub-info .char {
+  font-weight: 400;
 }
 
 .discount-info .inner-list li dl dd .used-data-info .sub-info .rest {
@@ -6820,7 +6944,7 @@ li.payment-detail-box:last-child {
   color: #325ec1;
 }
 
-/** 6차 0719 */
+/** 선결제 가능 잔여한도 PA_08_01_01.html */
 .cont-box.square {
   padding: 1.25rem 1.625rem;
 }
@@ -6865,6 +6989,10 @@ li.payment-detail-box:last-child {
 .cont-box.square .payment-info .bt-link-tx {
   font-size: 0.75rem;
   color: #808698;
+}
+
+.cont-box.square .payment-info .bt-link-tx .ico {
+  background-position: -0.375rem -40.4375rem;
 }
 
 .cont-box.square .payment-info .bt-link-tx.on {
@@ -6928,6 +7056,7 @@ li.payment-detail-box:last-child {
   font-size: 0.8125rem;
 }
 
+/** 선결제 가능 잔여한도_하단 PA_08_01_01.html */
 .cont-box.comment.square {
   background: #eee;
   padding: 1.25rem 1.625rem 1.875rem;
@@ -6966,6 +7095,10 @@ li.payment-detail-box:last-child {
   color: #808698;
 }
 
+.cont-box.comment.square .payment-detail-box .detail-inner .bt-link-tx .ico {
+  background-position: -0.375rem -40.4375rem;
+}
+
 .cont-box.comment.square .payment-detail-box .detail-inner .bt-link-tx.on {
   color: #f65d00;
 }
@@ -6979,10 +7112,7 @@ li.payment-detail-box:last-child {
   height: 0.6875rem;
 }
 
-.payment-info .bt-link-tx .ico, .cont-box.comment.square .bt-link-tx .ico {
-  background-position: -0.375rem -40.4375rem;
-}
-
+/** 선결제 가능 최대 금액 내 아코디언 PA_08_02_02.html */
 .widget.payment-detail .helpbox-link .link-long {
   border-color: #e1e1e1;
 }
@@ -7973,7 +8103,6 @@ span[class*=char-star][class*=red] {
 
 .infomation-icon-box .ico {
   display: inline-block;
-  margin: 0 0 0 0.5rem;
   width: 1.5625rem;
   height: 1.5625rem;
   background: url(/img/ico/ico-group.png) no-repeat 0 -45.3125rem;
@@ -8000,6 +8129,146 @@ span[class*=char-star][class*=red] {
   font-size: 0.875rem;
   font-weight: 400;
   color: #757575;
+}
+
+/* 우편번호 조회 */
+.addr-inquiry .addr-inquiry-tit {
+  display: block;
+  margin: 0 0 2.25rem;
+  font-size: 0.8125rem;
+  font-weight: 700;
+}
+
+.addr-inquiry .addr-inquiry-des1 {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 400;
+}
+
+.addr-inquiry .addr-inquiry-des2 {
+  display: block;
+  margin: 0.25rem 0 0;
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: #757575;
+}
+
+.addr-inquiry .addr-inquiry-feildset {
+  margin: 1rem 0 0;
+}
+
+.addr-inquiry .addr-inquiry-feildset .formbox {
+  margin: 0.625rem 0 0;
+}
+
+.addr-inquiry .addr-inquiry-feildset .formbox:first-of-type {
+  margin: 0;
+}
+
+.addr-inquiry .addr-inquiry-feildset .formbox .formbox-tit {
+  display: block;
+  margin: 0 0 0.5625rem;
+  font-size: 0.8125rem;
+  font-weight: 700;
+}
+
+.addr-inquiry .addr-inquiry-feildset .formbox .form-readonly {
+  display: block;
+  padding: 0.75rem 0.875rem;
+  border: 1px solid #dfe2ea;
+  border-radius: 0.3125rem;
+  font-size: 0.9375rem;
+  font-weight: 400;
+}
+
+.widget .widget-box.radio .select-list.address .radiobox {
+  display: block;
+  margin: 0.625rem 0 0;
+  padding: 1.25rem;
+  border: 1px solid #cfcfcf;
+  border-radius: 0.25rem;
+}
+
+.widget .widget-box.radio .select-list.address .radiobox:first-child {
+  margin: 0;
+}
+
+.widget .widget-box.radio .select-list.address .radiobox:before {
+  margin-right: 0.9375rem;
+}
+
+.widget .widget-box.radio .select-list.address .radiobox .radio-address {
+  display: inline-block;
+  width: calc(100% - 2.5rem);
+  /* 20px */
+  vertical-align: middle;
+}
+
+.widget .widget-box.radio .select-list.address .radiobox .radio-address .address1 {
+  display: block;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.widget .widget-box.radio .select-list.address .radiobox .radio-address .address2 {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 400;
+}
+
+.widget .widget-box.radio .select-list.address .radiobox .radio-address .address2 + .address2 {
+  position: relative;
+  margin-left: 0.3125rem;
+  padding-left: 0.3125rem;
+}
+
+.widget .widget-box.radio .select-list.address .radiobox .radio-address .address2 + .address2:before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  margin: -0.3125rem 0 0;
+  width: 0.0625rem;
+  height: 0.625rem;
+  background: #cfcfcf;
+}
+
+.addr-result-empty .contents-empty {
+  padding: 0.625rem 0 2.8125rem;
+  position: relative;
+}
+
+.addr-result-empty .contents-empty .desc {
+  font-size: 0.9375rem;
+  color: #8f8f8f;
+  text-align: center;
+  padding-top: 0.9375rem;
+  font-weight: 400;
+}
+
+.addr-result-empty .contents-empty .ico {
+  position: static;
+  -webkit-transform: none;
+          transform: none;
+  display: block;
+  margin: 0 auto;
+  width: 5rem;
+  height: 5rem;
+  background-image: url(/img/ico/ico-illustration.png);
+  background-position: -3.0625rem -47.75rem;
+  background-size: 55.8125rem;
+}
+
+.addr-result-empty .contents-empty.type2 {
+  padding: 2.5rem;
+}
+
+.addr-result-empty .contents-empty.type2 .ico {
+  top: 2.5rem;
+}
+
+.addr-result-empty .contents-empty.type2 .desc {
+  padding-top: 6.6875rem;
 }
 
 /* 김세정 */
@@ -9796,6 +10065,7 @@ span[class*=char-star][class*=red] {
 .email-question-top {
   position: relative;
   padding: 2.8125rem 1.625rem 1.875rem;
+  border-bottom: 1px solid #f1f1f1;
 }
 
 .email-question-top .ico-ill-email {
@@ -9826,8 +10096,9 @@ span[class*=char-star][class*=red] {
   font-weight: 400;
 }
 
-.box-email-form .email-form {
-  margin-top: 1.875rem;
+.box-email-form .email-form .bt-dropdown.big {
+  font-size: 0.9375rem;
+  font-weight: 400;
 }
 
 .box-email-form .email-form .form-cell {
@@ -10823,6 +11094,7 @@ span[class*=char-star][class*=red] {
   height: 8.125rem;
   overflow-y: auto;
   background: #f5f5f5;
+  border-radius: 0.3125rem;
 }
 
 .agree-list .accordion .acco-style.btn-hold .acco-list .acco-box .acco-tit {
@@ -11414,6 +11686,23 @@ span[class*=char-star][class*=red] {
   font-size: 0.875rem;
   color: #325ec1;
   border-bottom: 1px solid #325ec1;
+}
+
+.order-lookup-wrap p {
+  font-size: 0.875rem;
+}
+
+.order-lookup-wrap .order-radio {
+  margin: 2.1875rem 0 1.25rem;
+}
+
+.order-lookup-wrap .order-radio .select-list li {
+  margin: 0 1.875rem 0 0;
+}
+
+.order-lookup-wrap .order-radio .select-list li .txt {
+  font-size: 0.9375rem;
+  margin: 0 0 0 0.3125rem;
 }
 
 /* 김재성 */
