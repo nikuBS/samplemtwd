@@ -28,7 +28,7 @@ Tw.mytBillBillguidePrepaidPage = function (rootEl, resData) {
       break;
   }
 
-  Tw.Logger.info('[서버에서 데이터 받음]', resData);
+  Tw.Logger.info('[Server Res Data]', resData);
 
   this.$container = rootEl;
   this.$window = window;
@@ -97,7 +97,7 @@ Tw.mytBillBillguidePrepaidPage.prototype = {
         text: this._getSelBtn(tempArr[i])
       });
     }
-    this._popupService.openChoice('기간선택', arrOption, 'type1', $.proxy(this._selPopOpenEvt, this, $target));
+    this._popupService.openChoice(Tw.POPUP_TITLE.PERIOD_SELECT, arrOption, 'type1', $.proxy(this._selPopOpenEvt, this, $target));
   },
   _selPopOpenEvt: function ($target, $layer) {
     $layer.on('click', '.popup-choice-list', $.proxy(this._selPopOpenEvtExe, this, $target, $layer));
@@ -201,7 +201,7 @@ Tw.mytBillBillguidePrepaidPage.prototype = {
 
   },
   _getSelClaimDtBtn: function (str) {
-    return moment(str).add(1, 'days').format('YYYY년 MM월');
+    return moment(str).add(1, 'days').format(Tw.DATE_FORMAT.YYYYDD_TYPE_0);
   },
   _getSelBtn: function (str) {
     return moment(str).add(1, 'days').format('YYYY.MM');
