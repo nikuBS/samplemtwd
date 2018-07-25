@@ -5,7 +5,9 @@ export const CHANNEL_TYPE = {
 
 export const COOKIE_KEY = {
   DEVICE: 'TWM_DEVICE',
-  CHANNEL: 'TWM_CHANNEL'
+  CHANNEL: 'TWM_CHANNEL',
+  TWM_LOGIN: 'TWM_LOGIN',
+  TWM: 'TWM'
 };
 
 export const SVC_CD = {

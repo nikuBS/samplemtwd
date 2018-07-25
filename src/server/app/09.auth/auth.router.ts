@@ -56,9 +56,9 @@ class AuthRouter extends TwRouter {
     // tid
     this.controllers.push({ url: '/tid/login', controller: new AuthTidLogin() });
     this.controllers.push({ url: '/tid/account', controller: new AuthTidAccountInfo() });
-    this.controllers.push({ url: '/tid/change/pw', controller: new AuthTidChangePw() });
-    this.controllers.push({ url: '/tid/find/id', controller: new AuthTidFindId() });
-    this.controllers.push({ url: '/tid/find/pw', controller: new AuthTidFindPw() });
+    this.controllers.push({ url: '/tid/change-pw', controller: new AuthTidChangePw() });
+    this.controllers.push({ url: '/tid/find-id', controller: new AuthTidFindId() });
+    this.controllers.push({ url: '/tid/find-pw', controller: new AuthTidFindPw() });
     this.controllers.push({ url: '/tid/logout', controller: new AuthTidLogout() });
     this.controllers.push({ url: '/tid/signup-local', controller: new AuthTidSignUpLocal() });
     this.controllers.push({ url: '/tid/signup-foreigner', controller: new AuthTidSignUpForeigner() });
