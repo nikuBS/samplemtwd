@@ -63,10 +63,10 @@ Tw.PaymentPrepay.prototype = {
   },
   _getRemainLimit: function () {
     this.$getDetailBtn.removeAttr('disabled');
-    $.ajax('mock/payment.remain-limit.json')
+    $.ajax('/mock/payment.remain-limit.json')
     //this._apiService.request(Tw.API_CMD.BFF_07_0073, {})
-      .done($.proxy(this._getRemainLimitSuccess))
-      .fail($.proxy(this._getRemainLimitFail));
+      .done($.proxy(this._getRemainLimitSuccess, this))
+      .fail($.proxy(this._getRemainLimitFail, this));
   },
   _getRemainLimitSuccess: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
@@ -104,11 +104,11 @@ Tw.PaymentPrepay.prototype = {
     }
   },
   _getRemainAmount: function () {
-    var remainAmount = parseInt(this.$remainAmount, 10);
+    var limitAmount = parseInt(this.$limitAmount, 10);
     var useAmount = parseInt(this.$useAmount, 10);
     var prepayAmount = parseInt(this.$prepayAmount, 10);
 
-    return remainAmount - useAmount + prepayAmount;
+    return limitAmount - useAmount + prepayAmount;
   },
   _setAutoPrepayInfo: function ($result) {
     this.$isAutoPrepay = 'Y';
@@ -143,8 +143,8 @@ Tw.PaymentPrepay.prototype = {
   },
   _cancelAutoPrepay: function () {
     this._apiService.request(Tw.API_CMD.BFF_07_0077, {})
-      .done($.proxy(this._cancelAutoPrepaySuccess))
-      .fail($.proxy(this._cancelAutoPrepayFail));
+      .done($.proxy(this._cancelAutoPrepaySuccess, this))
+      .fail($.proxy(this._cancelAutoPrepayFail, this));
   },
   _cancelAutoPrepaySuccess: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
