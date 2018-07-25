@@ -44,20 +44,22 @@ Tw.PaymentHistoryRealtime.prototype = {
     };
     this.apiName = Tw.API_CMD.BFF_07_0035;
     this.api_detailName = Tw.API_CMD.BFF_07_0036;
+    this.api_getCtzBizNum = Tw.API_CMD.BFF_07_0017;
     this.emptyURL = '/payment/point';
 
     this._getData();
   },
 
   _isPersonalCompany: function () {
-    // if (this.stupidBE_ApiName) {
-    //   this._apiService.request(this.stupidBE_ApiName, '')
-    //       .done($.proxy(function (res) {
-    //         console.log(res);
-    //       }, this))
-    //       .error($.proxy(function () {
-    //       }, this));
-    // }
+    if (this.api_getCtzBizNum) {
+      this._apiService.request(this.api_getCtzBizNum, '')
+          .done($.proxy(function (res) {
+            if (res.code !== Tw.API_CODE.CODE_00) return this._apiError(res);
+
+            console.log(res);
+          }, this))
+          .error($.proxy(this._apiError, this));
+    }
   },
 
   _getData: function () {
@@ -226,8 +228,6 @@ Tw.PaymentHistoryRealtime.prototype = {
   },
 
   _apiError: function (res) {
-    Tw.Logger.error(res.msg);
-    this.$listWrapper.html('<br /><span style=\"color:red;\"><b>ERROR: </b>' + res.msg + '</span>');
-    return false;
+    this.common._apiError(res);
   }
 };

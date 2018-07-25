@@ -4,7 +4,7 @@
 * Date: 2018.07.11
 %>
 
-<script id="tmpl-items-recharge" type="text/x-handlebars-template">
+<script id="fe-tmpl-items-recharge" type="text/x-handlebars-template">
     {{#each items}}
         <li>
             <div class="info-charge">
@@ -30,14 +30,14 @@
     {{/each}}
 </script>
 
-<script id="tmpl-recharge" type="text/x-handlebars-template">
+<script id="fe-tmpl-recharge" type="text/x-handlebars-template">
 {{#if totalCount}}
 <div class="inner">
     <div class="contents-info-list">
         <p class="ti-desc"><strong><span class="num">{{totalCount}}</span>개</strong> 충전 내역이 있습니다.</p>
         <div class="list-top">
             <div class="inline">
-                <button class="bt-dropdown small" title="type, 기간 선택" id="search-condition-recharge">전체 · 3개월<span class="ico"></span></button>
+                <button class="bt-dropdown small" title="type, 기간 선택" id="fe-search-condition-recharge">전체 · 3개월<span class="ico"></span></button>
             </div>
         </div>
         <!--// .widget -->

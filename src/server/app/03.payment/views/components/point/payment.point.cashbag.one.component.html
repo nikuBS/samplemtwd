@@ -9,24 +9,24 @@
         <div class="header-ti">
             <h1>1회 납부(예약)</h1>
         </div>
-        <button class="close-step common-back"><span class="blind">닫기</span></button>
+        <button class="close-step fe-common-back"><span class="blind">닫기</span></button>
     </div>
 </div>
 <!--// #header -->
 <div class="container">
     <div class="cont-box">
-        <div class="CPT-title point-title" style="display:none;">
+        <div class="fe-CPT-title fe-point-title" style="display:none;">
             <h3 class="blind">OK캐쉬백 포인트</h3>
             <div class="point-payment">
                 <span class="p-company">OK캐쉬백</span>
-                <span class="p-result"><em class="num point-value"><%= cashbagAndT.cashbagPt %></em> 점</span>
+                <span class="p-result"><em class="num fe-point-value"><%= cashbagAndT.cashbagPt %></em> 점</span>
             </div>
         </div>
-        <div class="TPT-title point-title" style="display:none;">
+        <div class="fe-TPT-title fe-point-title" style="display:none;">
             <h3 class="blind">T포인트</h3>
             <div class="point-payment">
                 <span class="p-company">T포인트</span>
-                <span class="p-result"><em class="num point-value"><%= cashbagAndT.tPt %></em> 점</span>
+                <span class="p-result"><em class="num fe-point-value"><%= cashbagAndT.tPt %></em> 점</span>
             </div>
         </div>
         <div class="inner">
@@ -36,7 +36,7 @@
                     <h5 class="account-tit">카드번호</h5>
                     <div class="inputbox">
                         <span class="input">
-                            <input type="text" class="only-number card-number" placeholder="카드번호 (숫자만 입력)" maxlength="16" title="카드번호" data-value="<%= cashbagAndT.ocbCcno %>"
+                            <input type="text" class="fe-only-number fe-card-number" placeholder="카드번호 (숫자만 입력)" maxlength="16" title="카드번호" data-value="<%= cashbagAndT.ocbCcno %>"
                                    <% if (cashbagAndT.ocbCcno !== '') { %> value=<%= cashbagAndT.cardNum %> disabled="true" <% } %>>
                             <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
                         </span>
@@ -46,7 +46,7 @@
                     <h5 class="account-tit">비밀번호</h5>
                     <div class="inputbox">
                         <span class="input">
-                            <input type="password" class="only-number password" minlength="4" maxlength="4" placeholder="비밀번호를 입력해주세요" title="비밀번호" aria-describedby="area-password-desc1">
+                            <input type="password" class="fe-only-number fe-password" minlength="4" maxlength="4" placeholder="비밀번호를 입력해주세요" title="비밀번호" aria-describedby="area-password-desc1">
                             <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
                         </span>
                     </div>
@@ -63,7 +63,7 @@
                 <div class="widget pop-agree add-arrow">
                     <div class="widget-box check">
                         <span class="checkbox type01 p-click" role="checkbox" aria-checked="false">
-                            <input type="checkbox" name="checkbox" class="cashbag-agree" value="OK캐쉬백 제3자 정보 제공동의" title="OK캐쉬백 제3자 정보 제공동의">
+                            <input type="checkbox" name="checkbox" class="fe-cashbag-agree" value="OK캐쉬백 제3자 정보 제공동의" title="OK캐쉬백 제3자 정보 제공동의">
                             OK캐쉬백 제3자 정보 제공동의(필수)
                         </span>
                     </div>
@@ -80,21 +80,21 @@
             <h5 class="account-tit">납부하실 포인트</h5>
             <div class="inputbox">
                 <span class="input">
-                    <input type="number" class="only-number cashbag-point" minlength="4" maxlength="8" placeholder="최소 1,000포인트 이상" title="포인트 입력" aria-describedby="area-point-desc1">
+                    <input type="number" class="fe-only-number fe-cashbag-point" minlength="4" maxlength="8" placeholder="최소 1,000포인트 이상" title="포인트 입력" aria-describedby="area-point-desc1">
                     <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
                 </span>
             </div>
             <div class="contents-notice type1" id="area-point-desc1">
-                <span class="noti-type3"><span class="point-name"></span>는 1,000점 이상 10원 단위로 납부가 가능합니다.</span>
+                <span class="noti-type3"><span class="fe-point-name"></span>는 1,000점 이상 10원 단위로 납부가 가능합니다.</span>
             </div>
         </div>
         <div class="contents-btn">
             <ul class="bt-slice item-two">
                 <li class="bt-white2">
-                    <button class="common-back">이전</button>
+                    <button class="fe-common-back">이전</button>
                 </li>
                 <li class="bt-red1">
-                    <button class="pay pay-cashbag-one"><a href="#complete">납부하기</a></button>
+                    <button class="fe-pay fe-pay-cashbag-one"><a href="#complete">납부하기</a></button>
                 </li>
             </ul>
         </div>

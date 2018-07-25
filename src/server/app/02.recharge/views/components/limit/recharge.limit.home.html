@@ -2,6 +2,7 @@
 * FileName: recharge.limit.home.html
 * Author: Jiyoung Jo (jiyoungjo@sk.com)
 * Date: 2018.07.10
+* DA_05_01
 %>
 
 <!-- #header -->
@@ -11,7 +12,7 @@
             <h1>데이터 한도 요금 충전</h1>
             <button class="depth-view" role="button" aria-pressed="false"><span class="blind">메뉴구조보기</span></button>
         </div>
-        <button class="prev-step common-back"><span class="blind">이전으로</span></button>
+        <button class="prev-step fe-common-back"><span class="blind">이전으로</span></button>
         <button class="search-content"><span class="blind">검색하기</span></button>
     </div>
 </div>
@@ -59,7 +60,7 @@
                     <dt>데이터 요금 충전</dt>
                     <dd class="box-block-list1">
                         <ul>
-                            <li id="recharge-upto-amount">
+                            <li>
                                 <span class="title">충전 가능 금액</span>
                                 <span class="price" data-possible-amount="<%= limitData.currentTopUpLimit %>">
                                     <%= limitData.currentTopUpLimit %> 원
@@ -67,14 +68,14 @@
                             </li>
                             <% const regularTopUp = limitData.regularTopUpYn === "Y"%>
                             <% if (regularTopUp) { %>
-                            <li id="recharge-regular">
+                            <li id="fe-recharge-regular">
                                 <span class="title">매월 자동 충전</span>
                                 <span class="price"><%= limitData.regularTopUpAmt %> 원</span>
                             </li>
                             <% } %>
                         </ul>
                         <% if (regularTopUp) { %>
-                        <button id="btn-cancel-regular">자동 충전 취소</button>
+                        <button>자동 충전 취소</button>
                         <% } %>
                     </dd>
                 </dl>
@@ -89,7 +90,7 @@
                                 <span class="toggles">
                                     <span class="widget">
                                         <span class="widget-box switch">
-                                            <span class="btn-switch type1" id="limit-tmth">
+                                            <span class="btn-switch type1" id="fe-limit-tmth">
                                                 <span>해제</span>
                                                 <span class="switch-style" role="checkbox"><input type="checkbox" title="데이터차단설정 이번달 차단" /></span><!-- 접근성 수정 -->
                                                 <span>차단</span>
@@ -103,7 +104,7 @@
                                 <span class="toggles">
                                     <span class="widget">
                                         <span class="widget-box switch">
-                                            <span class="btn-switch type1" id="limit-regular">
+                                            <span class="btn-switch type1" id="fe-limit-regular">
                                                 <span>해제</span>
                                                 <span class="switch-style" role="checkbox"><input type="checkbox" title="데이터차단설정 다음달부터 차단" /></span><!-- 접근성 수정 -->
                                                 <span>차단</span>
@@ -128,7 +129,7 @@
             <ul class="bt-slice">
                 <li class="bt-blue1">
                     <!-- Dimmed Case는 button에 disabled속성 추가 -->
-                    <a href="#step-type"><button id="btn-go-type">데이터 한도 요금 충전하기</button></a>
+                    <a href="#step-type"><button>데이터 한도 요금 충전하기</button></a>
                 </li>
                 <li class="bt-white1">
                     <a href="/recharge/limit/history">데이터 한도 요금 충전 내역</a>

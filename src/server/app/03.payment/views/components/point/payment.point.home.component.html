@@ -10,7 +10,7 @@
             <h1>포인트 요금납부</h1>
             <button class="depth-view" role="button" aria-pressed="false"><span class="blind">메뉴구조보기</span></button>
         </div>
-        <button class="prev-step common-back"><span class="blind">이전으로</span></button>
+        <button class="prev-step fe-common-back"><span class="blind">이전으로</span></button>
         <button class="search-content"><span class="blind">검색하기</span></button>
     </div>
 </div>
@@ -21,11 +21,11 @@
     <div class="cont-box">
         <h3 class="title-h3">보유 포인트</h3>
 
-        <h4 class="title-h4 first-type">OK캐쉬백
+        <h4 class="title-h4 fe-first-type">OK캐쉬백
             <% if (cashbagAndT.svcYN === 'Y') { %>
             <span class="score-text"><em><%= cashbagAndT.cashbagPt %></em> 점</span>
             <% } else { %>
-            <button class="bt-link-tx get-point">포인트 조회하기 <span class="ico"></span></button>
+            <button class="bt-link-tx fe-get-point">포인트 조회하기 <span class="ico"></span></button>
             <% } %>
         </h4>
         <ul class="contents-notice type3">
@@ -42,24 +42,24 @@
             <% if (cashbagAndT.isAutoCashbag) { %>
                 <ul class="bt-slice">
                     <li class="bt-white2">
-                        <button class="select-payment-point" data-value="#step1-cashbag-one" data-type="CPT" data-name="OK캐쉬백 포인트">1회 납부(예약)</button>
+                        <button class="fe-select-payment-point" data-value="#step1-cashbag-one" data-type="CPT" data-name="OK캐쉬백 포인트">1회 납부(예약)</button>
                     </li>
                 </ul>
                 <ul class="bt-slice item-two">
                     <li class="bt-white1">
-                        <button class="select-payment-point" data-value="#step1-cashbag-auto" data-type="CPT" data-code="2">자동납부 변경</button>
+                        <button class="fe-select-payment-point" data-value="#step1-cashbag-auto" data-type="CPT" data-code="2">자동납부 변경</button>
                     </li>
                     <li class="bt-white1">
-                        <button class="cancel-cashbag-autopay" data-type="CPT">자동납부 해지</button>
+                        <button class="fe-cancel-cashbag-autopay" data-type="CPT">자동납부 해지</button>
                     </li>
                 </ul>
             <% } else { %>
                 <ul class="bt-slice">
                     <li class="bt-white2">
-                        <button class="select-payment-point" data-value="#step1-cashbag-one" data-type="CPT" data-name="OK캐쉬백 포인트">1회 납부(예약)</button>
+                        <button class="fe-select-payment-point" data-value="#step1-cashbag-one" data-type="CPT" data-name="OK캐쉬백 포인트">1회 납부(예약)</button>
                     </li>
                     <li class="bt-white1">
-                        <button class="select-payment-point" data-value="#step1-cashbag-auto" data-type="CPT" data-code="1">자동납부 신청</button>
+                        <button class="fe-select-payment-point" data-value="#step1-cashbag-auto" data-type="CPT" data-code="1">자동납부 신청</button>
                     </li>
                 </ul>
             <% } %>
@@ -80,24 +80,24 @@
             <% if (cashbagAndT.isAutoTpoint) { %>
                 <ul class="bt-slice">
                     <li class="bt-white2">
-                        <button class="select-payment-point" data-value="#step1-cashbag-one" data-type="TPT" data-name="T포인트">1회 납부(예약)</button>
+                        <button class="fe-select-payment-point" data-value="#step1-cashbag-one" data-type="TPT" data-name="T포인트">1회 납부(예약)</button>
                     </li>
                 </ul>
                 <ul class="bt-slice item-two">
                     <li class="bt-white1">
-                        <button class="select-payment-point" data-value="#step1-cashbag-auto" data-type="TPT" data-code="2">자동납부 변경</button>
+                        <button class="fe-select-payment-point" data-value="#step1-cashbag-auto" data-type="TPT" data-code="2">자동납부 변경</button>
                     </li>
                     <li class="bt-white1">
-                        <button class="cancel-cashbag-autopay" data-type="TPT">자동납부 해지</button>
+                        <button class="fe-cancel-cashbag-autopay" data-type="TPT">자동납부 해지</button>
                     </li>
                 </ul>
             <% } else { %>
                 <ul class="bt-slice">
                     <li class="bt-white2">
-                        <button class="select-payment-point" data-value="#step1-cashbag-one" data-type="TPT" data-name="T포인트">1회 납부(예약)</button>
+                        <button class="fe-select-payment-point" data-value="#step1-cashbag-one" data-type="TPT" data-name="T포인트">1회 납부(예약)</button>
                     </li>
                     <li class="bt-white1">
-                        <button class="select-payment-point" data-value="#step1-cashbag-auto" data-type="TPT" data-code="1">자동납부 신청</button>
+                        <button class="fe-select-payment-point" data-value="#step1-cashbag-auto" data-type="TPT" data-code="1">자동납부 신청</button>
                     </li>
                 </ul>
             <% } %>
@@ -116,25 +116,25 @@
             <% if (cashbagAndT.isAutoRainbow) { %>
                 <ul class="bt-slice">
                     <li class="bt-white2">
-                        <button class="select-payment-point" data-value="#step1-rainbow-one">1회 납부(예약)</button>
+                        <button class="fe-select-payment-point" data-value="#step1-rainbow-one">1회 납부(예약)</button>
                     </li>
                 </ul>
                 <ul class="bt-slice item-two">
                     <li class="bt-white1">
-                        <button class="select-payment-point" data-value="#step1-rainbow-auto" data-code="2">자동납부 변경</button>
+                        <button class="fe-select-payment-point" data-value="#step1-rainbow-auto" data-code="2">자동납부 변경</button>
                     </li>
                     <li class="bt-white1">
-                        <button class="cancel-rainbow-autopay">자동납부 해지</button>
+                        <button class="fe-cancel-rainbow-autopay">자동납부 해지</button>
                     </li>
                 </ul>
             <% } else { %>
                 <% if (rainbowPoint.code === '00') { %>
                 <ul class="bt-slice">
                     <li class="bt-white2">
-                        <button class="select-payment-point" data-value="#step1-rainbow-one">1회 납부(예약)</button>
+                        <button class="fe-select-payment-point" data-value="#step1-rainbow-one">1회 납부(예약)</button>
                     </li>
                     <li class="bt-white1">
-                        <button class="select-payment-point" data-value="#step1-rainbow-auto" data-code="1">자동납부 신청</button>
+                        <button class="fe-select-payment-point" data-value="#step1-rainbow-auto" data-code="1">자동납부 신청</button>
                     </li>
                 </ul>
                 <% } %>
