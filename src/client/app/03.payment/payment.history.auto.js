@@ -73,15 +73,14 @@ Tw.PaymentHistoryAuto.prototype = {
 
         o.reqDate = this._dateHelper.getShortDateWithFormat(o.lastInvDt, 'YYYY.MM.DD');
 
-        o.drwYm = this._dateHelper.getShortDateWithFormat(o.drwYm + '01', 'YYYY.MM');
+        o.drwYm = this._dateHelper.getShortDateWithFormat(o.drwYm + '01', 'YYYY.MM', 'YYYYMMDD');
         o.startDate = this._dateHelper.getShortDateWithFormatAddByUnit(o.drwYm, -1, 'months', 'YYYY.MM.DD', 'YYYY.MM');
-        o.endDate = this._dateHelper.getEndOfMonth(o.startDate, 'YYYY.MM');
+        o.endDate = this._dateHelper.getEndOfMonth(o.startDate, 'YYYY.MM', 'YYYYMMDD');
 
         o.drwYm = o.invDtYm;
         o.startDate = o.lastInvDtFromTo.substr(0, 10);
         o.endDate = o.lastInvDtFromTo.substr(-10);
         o.type = o.tmthColClCdNm;
-        // o.type = '당월 + 미납';
 
         o.drwAmt = Tw.FormatHelper.addComma(this.common._normalizeNumber(o.drwAmt)) || '0';
         o.drwReqAmt = Tw.FormatHelper.addComma(this.common._normalizeNumber(o.drwReqAmt));
@@ -158,8 +157,7 @@ Tw.PaymentHistoryAuto.prototype = {
     $layer.on('click', '.bt-blue1 button', $.proxy(this._popupService.close, this));
   },
 
-  _apiError: function (res) {
-    Tw.Logger.error(res.msg);
-    return false;
+  _apiError: function (err) {
+    this.common._apiError(err);
   }
 };

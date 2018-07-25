@@ -19,7 +19,6 @@ class MyTUsage extends TwViewController {
     Observable.combineLatest(
       this.getUsageData()
     ).subscribe(([usageData]) => {
-      console.log('myt')
       this.renderView(res, 'usage/myt.usage.html', this.getData(usageData, svcInfo));
     });
   }

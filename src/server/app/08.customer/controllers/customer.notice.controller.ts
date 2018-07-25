@@ -9,7 +9,7 @@ class CustomerNoticeController extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     const category = req.query.category || 'tworld';
 
     // @todo category 값이 미리 정의된 것이 아닐경우 오류처리 필요.
@@ -18,7 +18,8 @@ class CustomerNoticeController extends TwViewController {
     // }
 
     res.render('customer.notice.html', {
-      category: category
+      category: category,
+      svcInfo: svcInfo
     });
   }
 }

@@ -32,7 +32,7 @@ Tw.PaymentHistory.prototype = {
     this.emptyListTemplate = $('#list-empty');
 
     this.refundListWrapperTemplate = $('#refund-request-wrapper');
-    this.refundListTemplate = $('list-refund');
+    this.refundListTemplate = $('#list-refund');
   },
 
   _bindDOM: function () {
@@ -47,6 +47,9 @@ Tw.PaymentHistory.prototype = {
     this.emptyURL = '/payment/point';
 
     this.countOverPaid = 0;
+    if (!this.common._getValueFromLD('overpay_close_time')) {
+      this.common._setValueToLD('overpay_close_time', '');
+    }
 
     this._getData();
   },
@@ -61,7 +64,7 @@ Tw.PaymentHistory.prototype = {
 
   isSubResultsOk: function (res) {
     if (res === undefined || res === null) return false;
-    return _.isEmpty(res.paymentRecord) || _.isEmpty(res.refundRecord);
+    return !_.isEmpty(res.paymentRecord) || !_.isEmpty(res.refundRecord);
   },
 
   unionRelativeResult: function (payment, refund) {
@@ -72,7 +75,7 @@ Tw.PaymentHistory.prototype = {
 
   checkHasAccountRegistrable: function (data) {
     data.map($.proxy(function (o) {
-      if(!o.effStaDt) {
+      if (!o.effStaDt) {
         o.isOverPaid = true;
         this.countOverPaid++;
       }
@@ -88,7 +91,7 @@ Tw.PaymentHistory.prototype = {
 
     // refundPaymentRecord : 환불한 내역
 
-    // console.log(res.result.paymentRecord, res.result.refundRecord);
+    // res = this.dummy;
 
     if (this.isSubResultsOk(res.result)) {
 
@@ -97,7 +100,6 @@ Tw.PaymentHistory.prototype = {
       }
 
       this.defaultResult = this.unionRelativeResult(res.result.paymentRecord, res.result.refundRecord);
-      // console.log(this.defaultResult);
 
       this.customerName = res.result.custName;
 
@@ -134,7 +136,7 @@ Tw.PaymentHistory.prototype = {
       }, this));
     }
 
-    if(this.countOverPaid) {
+    if (this.countOverPaid) {
       this.openOverPaidPopup();
     }
 
@@ -157,26 +159,48 @@ Tw.PaymentHistory.prototype = {
     }
   },
 
-  openOverPaidPopup: function() {
-    this._popupService.open({
-        'title': Tw.POPUP_TITLE.OVER_PAY,
-        'close_bt': true,
-        'title2': this.customerName +
-          Tw.MSG_PAYMENT.HISTORY_OVER_PAY.SUBTITLE + ' ' + this.countOverPaid +
-          Tw.MSG_PAYMENT.HISTORY_OVER_PAY.SUBTITLE_SUB,
-        'contents': Tw.MSG_PAYMENT.HISTORY_OVER_PAY.CONTENTS,
-        'type': [{
-          style_class: 'bt-red1',
-          href: 'submit',
-          txt: Tw.MSG_PAYMENT.HISTORY_OVER_PAY.BUTTON_TEXT
-        }],
-        'contents_b': '<div class=\'widget pop-btm-area\'>' +
-        '<div class=\'widget-box check\'><ul class=\'select-list\' role=\'group\'>' +
-        '<li class=\'checkbox type01\' role=\'checkbox\' aria-checked=\'false\'>' +
-        '<input type=\'checkbox\' name=\'checkbox\' title=\''+
-        Tw.MSG_PAYMENT.HISTORY_OVER_PAY.CHECK_TEXT +
-        '\'>' + Tw.MSG_PAYMENT.HISTORY_OVER_PAY.CHECK_TEXT + '</li></ul></div></div>'
-      });
+  openOverPaidPopup: function () {
+    if (!this.common._getValueFromLD('overpay_close_time') || this._isOverPayPopupOpen()) {
+      this.common._setValueToLD('overpay_close_time', '');
+      this._popupService.open({
+            'title': Tw.POPUP_TITLE.OVER_PAY,
+            'close_bt': true,
+            'title2': this.customerName +
+            Tw.MSG_PAYMENT.HISTORY_OVER_PAY.SUBTITLE + ' ' + this.countOverPaid +
+            Tw.MSG_PAYMENT.HISTORY_OVER_PAY.SUBTITLE_SUB,
+            'contents': Tw.MSG_PAYMENT.HISTORY_OVER_PAY.CONTENTS,
+            'type': [{
+              style_class: 'bt-red1',
+              href: 'submit',
+              txt: Tw.MSG_PAYMENT.HISTORY_OVER_PAY.BUTTON_TEXT
+            }],
+            'contents_b': Tw.MSG_PAYMENT.HISTORY_OVER_PAY_POPUP
+          },
+          $.proxy(this._overPayLayerOpenCallback, this));
+    }
+  },
+
+  _isOverPayPopupOpen: function () {
+    var current = new Date().getTime();
+
+    return (current - this.common._getValueFromLD('overpay_close_time') > (24 * 60 * 60 * 1000));
+  },
+
+  _overPayLayerOpenCallback: function () {
+    this.$container.on('click', '.popup .bt-red1 button', $.proxy(this._set_pageMoveHandler, this));
+    this.$container.on('click', '.popup .checkbox input', $.proxy(this._set_popupClose24hours, this));
+  },
+
+  _set_pageMoveHandler: function () {
+    this._popupService.close();
+    this.common._goLoad('/payment/history/excesspay');
+  },
+
+  _set_popupClose24hours: function (e) {
+    if ($(e.target).attr('checked')) {
+      this.common._setValueToLD('overpay_close_time', new Date().getTime());
+      this._popupService.close();
+    }
   },
 
   _setListUI: function (data, partial, listWrapper, listTemplate, wrapperTemplate, emptyTemplate, count, btnMoreSelector, callback) {
@@ -203,17 +227,19 @@ Tw.PaymentHistory.prototype = {
     this.$container.find('#fe-list-wrapper .detail-btn').off().on('click', '.fe-btn', $.proxy(this.defaultListButtonHandler, this));
   },
 
-  defaultListButtonHandler: function () {
+  defaultListButtonHandler: function (e) {
 
-    // this.currentIndex = $(e.target).data('list-id');
+    var current = this.defaultResult[$(e.target).data('list-id')];
 
     // 환불계좌 등록 process
-    this.common._goLoad('/payment/history/excesspay');
+    this.common._goLoad('/payment/history/excesspay/account?total=' + current.svcBamt +
+        '&recCnt=1&svcMgmtNum=' + current.svcMgmtNum + '&bamtClCd=' + current.bamtClCd);
   },
 
   refundListCallBack: function () {
     this.$container.find('#fe-refund-request-wrapper').off().on(
         'click', '.fe-btn', $.proxy(this.refundListButtonHandler, this));
+    skt_landing.widgets.widget_init();
   },
 
   refundListButtonHandler: function (e) {
@@ -222,8 +248,11 @@ Tw.PaymentHistory.prototype = {
     this._popupService.open({
       hbs: this.STRING.REFUND_DETAIL,
       data: this.refundResult[index]
-    }, function () {
-    });
+    }, $.proxy(function ($layer) {
+      $layer.on('click', '.bt-blue1 button', $.proxy(function () {
+        this._popupService.close();
+      }, this));
+    }, this));
   },
 
   _moveReceiptPage: function (e) {
@@ -235,10 +264,8 @@ Tw.PaymentHistory.prototype = {
     }
   },
 
-  _apiError: function (res) {
-    Tw.Logger.error(res.msg);
-    this.$listWrapper.html('<br /><span style=\"color:red;\"><b>ERROR: </b>' + res.msg + '</span>');
-    return false;
+  _apiError: function (err) {
+    this.common._apiError(err);
   },
 
   dummy: {
@@ -296,31 +323,4 @@ Tw.PaymentHistory.prototype = {
       ]
     }
   }
-  /*
-    과납 안내 관련 팝업
-    popup.open({
-      'title': '과납 안내 드립니다.',
-      'close_bt': true,
-      'title2': '홍길동님의<br />휴대폰 요금 3건이 과납되었습니다.',
-      'contents': '<strong>환불받으실 금액을 확인</strong>하시고<br /> 환불 받을 계좌를 등록해 주세요!',
-      'bt_num':'',
-      'type': [{
-        class: 'bt-red1',
-        href: 'submit',
-        txt: '과납금액확인하기'
-       }],
-       'contents_b': '<div class='widget pop-btm-area'>' +
-        '<div class='widget-box check'><ul class="select-list" role="group">' +
-        '<li class="checkbox type01" role="checkbox" aria-checked="false">' +
-        '<input type="checkbox" name="checkbox" title="하루동안 보지 않기"> 하루동안 보지 않기</li></ul></div></div>'
-      });
-    */
-
-
-  /* 환불 처리 내역 상세 팝업
-      popup.open({
-          hbs:'PA_06_07_L02'// hbs의 파일명
-      });
-
-   */
 };

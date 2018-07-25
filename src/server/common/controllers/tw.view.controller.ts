@@ -3,11 +3,8 @@ import ApiService from '../../services/api.service';
 import LoginService from '../../services/login.service';
 import { API_CMD, API_CODE, API_LOGIN_ERROR, API_SVC_PWD_ERROR } from '../../types/api-command.type';
 import LoggerService from '../../services/logger.service';
-import { SvcInfoModel } from '../../models/svc-info.model';
 import { URL } from '../../types/url.type';
 import FormatHelper from '../../utils/format.helper';
-import { Observable } from 'rxjs/Observable';
-import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 
 
 abstract class TwViewController {
@@ -40,7 +37,8 @@ abstract class TwViewController {
     const tokenId = req.query.id_token;
     const userId = req.query.userId;
 
-    this.loginService.setClientSession(req.session);
+    this._loginService.setCurrentReq(req, res);
+
     if ( this.existId(tokenId, userId) ) {
       this.login(req, res, next, tokenId, userId);
     } else {
@@ -93,18 +91,26 @@ abstract class TwViewController {
     return !(FormatHelper.isEmpty(tokenId) && FormatHelper.isEmpty(userId));
   }
 
-  private checkLogin(): boolean {
-    return this.loginService.isLogin();
+  private checkLogin(session): boolean {
+    return this._loginService.isLogin(session);
   }
 
   private goSessionLogin(req, res, next, path) {
-    if ( this.checkLogin() ) {
+    if ( this.checkLogin(req.session) ) {
       this._logger.info(this, '[Session Login]', this._loginService.getSvcInfo());
       this.render(req, res, next, this._loginService.getSvcInfo());
     } else {
-      // TODO: 세션 만료 or 새로 진입
-      this._logger.info(this, '[Session expired]');
-      this.render(req, res, next);
+      if ( this._loginService.isExpiredSession(req.session) ) {
+        this._logger.info(this, '[Session expired]');
+        this._loginService.setClientSession(req.session);
+        res.redirect('/auth/logout/expire');
+      } else {
+        if ( URL[path].login ) {
+          res.send('need login');
+        } else {
+          this.render(req, res, next);
+        }
+      }
     }
   }
 

@@ -6,12 +6,12 @@
 
 <% include ../components/start.component.html %>
 
-test
+<div class="wrap"></div>
 
 <% include ../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    var oCustomerMain = new Tw.CustomerMain(document);
+    var oCustomerMain = new Tw.CustomerMain($('.wrap'));
   });
 </script>
 <% include ../components/end.component.html %>

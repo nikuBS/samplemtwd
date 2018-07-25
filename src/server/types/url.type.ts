@@ -38,26 +38,26 @@ export const URL = {
   '/recharge/gift/process/members': { login: true, id: '' },
   '/recharge/gift/process/request': { login: true, id: '' },
   '/recharge/gift/history': { login: true, id: '' },
-  '/recharge/cookiz': { login: true, id: '' },
-  '/recharge/cookiz/history': { login: true, id: '' },
-  '/recharge/limit': { login: true, id: '' },
-  '/recharge/limit/history': { login: true, id: '' },
-  '/recharge/ting': { login: true, id: '' },
-  '/recharge/ting/history': { login: true, id: '' },
+  '/recharge/cookiz': { login: true, id: 'DA_04_01' }, // 팅/쿠키즈/안심음성 충전하기
+  '/recharge/cookiz/history': { login: true, id: 'DA_04_04_01' }, // 팅/쿠키즈/안심음성 내역
+  '/recharge/limit': { login: true, id: 'DA_05_01' }, // 데이터한도요금 충전
+  '/recharge/limit/history': { login: true, id: 'DA_05_04_01' }, // 데이터한도요금 충전내역
+  '/recharge/ting': { login: true, id: 'DA_03_01' }, // 팅 선물하기
+  '/recharge/ting/history': { login: true, id: 'DA_03_03_01' }, // 팅 선물하기 내역
   // payment
   '/payment/realtime': { login: true, id: 'PA_02_01' }, // 즉시납부
   '/payment/auto': { login: true, id: 'PA_03_01' }, // 자동납부 신청 및 변경
   '/payment/point': { login: true, id: 'PA_05_01' }, // 포인트 요금납부
-  '/payment/history': { login: true, id: '' },
-  '/payment/history/realtime': { login: true, id: '' },
-  '/payment/history/auto': { login: true, id: '' },
-  '/payment/history/auto/unitedwithdrawal': { login: true, id: '' },
-  '/payment/history/point/reserve': { login: true, id: '' },
-  '/payment/history/point/auto': { login: true, id: '' },
-  '/payment/history/receipt/tax': { login: true, id: '' },
-  '/payment/history/receipt/cash': { login: true, id: '' },
-  '/payment/history/excesspay': { login: true, id: '' },
-  '/payment/history/excesspay/account': { login: true, id: '' },
+  '/payment/history': { login: true, id: 'PA_06_01' },  // 전체납부내역
+  '/payment/history/realtime': { login: true, id: 'PA_06_02' }, // 즉시납부내역
+  '/payment/history/auto': { login: true, id: 'PA_06_03' },  // 자동납부내역
+  '/payment/history/auto/unitedwithdrawal': { login: true, id: 'PA_06_04' },  // 자동납부 통합인출 내역
+  '/payment/history/point/reserve': { login: true, id: 'PA_06_05' },  // 포인트 납부 예약 내역
+  '/payment/history/point/auto': { login: true, id: 'PA_06_06' }, // 포인트 자동 납부 내역
+  '/payment/history/receipt/tax': { login: true, id: 'PA_06_09' },  // 세금 계산서 발행내역
+  '/payment/history/receipt/cash': { login: true, id: 'PA_06_10' }, // 현금 영수증 발행내역
+  '/payment/history/excesspay': { login: true, id: 'PA_06_07' },  // 과납금액 환불 내역
+  '/payment/history/excesspay/account': { login: true, id: 'PA_06_07_01' },  // 과납금액 환불 계좌 입력
   '/payment/prepay/micro': { login: true, id: 'PA_08_01_01' }, // 소액결제 선결제/자동선결제
   '/payment/prepay/contents': { login: true, id: 'PA_07_01_01' }, // 콘텐츠이용료 선결제/자동선결제
   '/payment/prepay/micro/history': { login: true, id: 'PA_08_04' }, // 소액결제 선결제 내역
@@ -69,12 +69,16 @@ export const URL = {
   // product
   // direct
   // customer
-  '/customer/notice': { login: false },
-  '/customer/prevent-damage': { login: false },
-  '/customer/prevent-damage/guide': { login: false },
-  '/customer/prevent-damage/our-activity': { login: false },
-  '/customer/prevent-damage/useful-service': { login: false },
-  '/customer/prevent-damage/relate-site': { login: false },
+  '/customer': { login: true, id: 'CI_01_01' }, // 고객센터 서브메인
+  '/customer/email/question': { login: true, id: 'CI_04_09' }, // 이메일 문의
+  '/customer/voice/info': { login: true, id: 'CI_10_01' }, // 목소리인증 안내
+  '/customer/voice/sms': { login: true, id: 'CI_10_02' }, // 목소리인증 문자발송
+  '/customer/notice': { login: false, id: 'CI_06_01' }, // 공지사항
+  '/customer/prevent-damage': { login: false, id: 'CI_07_01' }, // 이용자 피해예방 센터 메인
+  '/customer/prevent-damage/guide': { login: false, id: 'CI_07_03' }, // 이용자 피해예방 가이드
+  '/customer/prevent-damage/guide/view': { login: false, id: 'CI_07_05' }, // 이용자 피해예방 가이드 - 상세
+  '/customer/prevent-damage/useful-service': { login: false, id: 'CI_07_09' },  // 유용한 부가서비스
+  '/customer/prevent-damage/relate-site': { login: false, id: 'CI_07_10' }, // 이용자 피해예방 관련 사이트
   // auth
   '/auth/line': { login: true, id: 'CO_01_05_02' }, // 회선관리
   '/auth/line/edit': { login: true, id: 'CO_01_05_02_01' }, // 회선편집

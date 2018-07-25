@@ -21,19 +21,13 @@ class PaymentHistoryExcessPayController extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
 
-    this.apiService.request(API_CMD.BFF_07_0005, {}).subscribe((resp) => {
+    // this.apiService.request(API_CMD.BFF_07_0030, {}).subscribe((resp) => {
 
-      console.log(resp);
+      // console.log(resp);
 
       this.renderView(res, 'payment.history.excess-pay.html', {
-        svcInfo: svcInfo,
-        result: {
-          total: '50,000'
-        }
+        svcInfo: svcInfo
       });
-    });
-
-
   }
 
 }

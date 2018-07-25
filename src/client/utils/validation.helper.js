@@ -129,6 +129,15 @@ Tw.ValidationHelper = (function () {
     return true;
   }
 
+  /* 배수 체크하는 function */
+  function checkMultiple(value, standard, message) {
+    if (parseInt($.trim(value), 10) % standard !== 0) {
+      Tw.Popup.openAlert(message);
+      return false;
+    }
+    return true;
+  }
+
   return {
     regExpTest: regExpTest,
     isCellPhone: isCellPhone,
@@ -144,6 +153,7 @@ Tw.ValidationHelper = (function () {
     checkIsTenUnit: checkIsTenUnit,
     checkIsSelected: checkIsSelected,
     checkYear: checkYear,
-    checkMonth: checkMonth
+    checkMonth: checkMonth,
+    checkMultiple: checkMultiple
   };
 })();
