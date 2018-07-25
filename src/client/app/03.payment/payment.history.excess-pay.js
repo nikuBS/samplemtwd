@@ -160,8 +160,8 @@ Tw.PaymentHistoryExcessPay.prototype = {
     }
   },
 
-  _apiError: function (res) {
-    this.common._apiError(res);
+  _apiError: function (err) {
+    this.common._apiError(err);
   },
 
   dummy: {

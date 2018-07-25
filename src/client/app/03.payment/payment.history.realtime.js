@@ -54,7 +54,7 @@ Tw.PaymentHistoryRealtime.prototype = {
     if (this.api_getCtzBizNum) {
       this._apiService.request(this.api_getCtzBizNum, '')
           .done($.proxy(function (res) {
-            if (res.code !== Tw.API_CODE.CODE_00) return this._apiError(res);
+            if (res.code !== Tw.API_CODE.CODE_00) this._apiError(res);
 
             console.log(res);
           }, this))
@@ -75,7 +75,7 @@ Tw.PaymentHistoryRealtime.prototype = {
     if (res.code !== Tw.API_CODE.CODE_00) return this._apiError(res);
     this.result = res.result.realTimePaymentRecord;
 
-    this._isPersonalCompany();
+    // this._isPersonalCompany();
 
     if (this.result.length) this.result.map($.proxy(function (o, i) {
 
@@ -227,7 +227,7 @@ Tw.PaymentHistoryRealtime.prototype = {
     }
   },
 
-  _apiError: function (res) {
-    this.common._apiError(res);
+  _apiError: function (err) {
+    this.common._apiError(err);
   }
 };

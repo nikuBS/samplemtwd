@@ -55,7 +55,7 @@ Tw.mytBillBillguideSubDetailSpecification.prototype = {
   //   window.location.hash = hash;
   // },
   // _getSelClaimDtBtn: function (str) {
-  //   return moment(str).add(1, 'days').format('YYYY년 MM월');
+  //   return moment(str).add(1, 'days').format(Tw.DATE_FORMAT.YYYYDD_TYPE_0);
   // },
   _onDetailDataReset: function (resp) {
     var self = this;
