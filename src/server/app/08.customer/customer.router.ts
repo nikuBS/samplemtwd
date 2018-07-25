@@ -1,9 +1,9 @@
 import CustomerNotice from './controllers/customer.notice.controller';
-import CustomerPreventDamage from './controllers/customer.prevent-damage.controller';
-import CustomerPreventDamageGuide from './controllers/customer.prevent-damage.guide.controller';
-import CustomerPreventDamageGuideView from './controllers/customer.prevent-damage.guide.view.controller';
-import CustomerPreventDamageUsefulService from './controllers/customer.prevent-damage.useful-service.controller';
-import CustomerPreventDamageRelateSite from './controllers/customer.prevent-damage.relate-site.controller';
+import CustomerPreventdamageMain from './controllers/preventdamage/customer.preventdamage.main.controller';
+import CustomerPreventdamageGuide from './controllers/preventdamage/customer.preventdamage.guide.controller';
+import CustomerPreventdamageGuideview from './controllers/preventdamage/customer.preventdamage.guideview.controller';
+import CustomerPreventdamageUsefulservice from './controllers/preventdamage/customer.preventdamage.usefulservice.controller';
+import CustomerPreventdamageRelatesite from './controllers/preventdamage/customer.preventdamage.relatesite.controller';
 
 import TwRouter from '../../common/route/tw.router';
 import CustomerMainController from './controllers/customer.main.controller';

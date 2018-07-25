@@ -1,3 +1,9 @@
+/**
+ * FileName: customer.notice.controller.ts
+ * Author: 양지훈 (jihun202@sk.com)
+ * Date: 2018.07.23
+ */
+
 import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../../common/controllers/tw.view.controller';
 import { API_CMD, API_CODE } from '../../../types/api-command.type';
@@ -9,6 +15,13 @@ class CustomerNoticeController extends TwViewController {
     super();
   }
 
+  private categoryLabel = {
+    tworld: 'T world',
+    directshop: '다이렉트샵',
+    membership: '멤버십',
+    roaming: '로밍'
+  };
+
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     const category = req.query.category || 'tworld';
 
@@ -19,6 +32,7 @@ class CustomerNoticeController extends TwViewController {
 
     res.render('customer.notice.html', {
       category: category,
+      categoryLabel: this.categoryLabel[category],
       svcInfo: svcInfo
     });
   }

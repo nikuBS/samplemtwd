@@ -1,3 +1,5 @@
+import {API_METHOD, API_SERVER} from "../../server/types/api-command.type";
+
 Tw.API_METHOD = {
   GET: 'GET',
   POST: 'POST',
@@ -153,6 +155,10 @@ Tw.API_CMD = {
   BFF_08_0001: { path: '/core-modification/v1/counsel-time-check', method: Tw.API_METHOD.GET },
   BFF_08_0002: { path: '/core-modification/v1/counsel-reserve', method: Tw.API_METHOD.POST },
   BFF_08_0003: { path: '/core-modification/v1/counsel-histories', method: Tw.API_METHOD.GET },
+  BFF_08_0029: { path: '/core-modification/v1/tworld-notice', method: Tw.API_METHOD.GET },
+  BFF_08_0030: { path: '/core-modification/v1/directshop-notice', method: Tw.API_METHOD.GET },
+  BFF_08_0031: { path: '/core-modification/v1/membership-notice', method: Tw.API_METHOD.GET },
+  BFF_08_0032: { path: '/core-modification/v1/roaming-notice', method: Tw.API_METHOD.GET },
 
   // TEST
   GET: { path: '/posts', method: Tw.API_METHOD.GET },
