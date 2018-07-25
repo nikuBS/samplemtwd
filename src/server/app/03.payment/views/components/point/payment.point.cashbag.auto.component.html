@@ -15,18 +15,18 @@
 <!--// #header -->
 <div class="container">
     <div class="cont-box">
-        <div class="CPT-title point-title" style="display:none;">
+        <div class="fe-CPT-title fe-point-title" style="display:none;">
             <h3 class="blind">OK캐쉬백 포인트</h3>
             <div class="point-payment">
                 <span class="p-company">OK캐쉬백</span>
-                <span class="p-result"><em class="num point-value"><%= cashbagAndT.cashbagPt %></em> 점</span>
+                <span class="p-result"><em class="num fe-point-value"><%= cashbagAndT.cashbagPt %></em> 점</span>
             </div>
         </div>
-        <div class="TPT-title point-title" style="display:none;">
+        <div class="fe-TPT-title fe-point-title" style="display:none;">
             <h3 class="blind">T포인트</h3>
             <div class="point-payment">
                 <span class="p-company">T포인트</span>
-                <span class="p-result"><em class="num point-value"><%= cashbagAndT.tPt %></em> 점</span>
+                <span class="p-result"><em class="num fe-point-value"><%= cashbagAndT.tPt %></em> 점</span>
             </div>
         </div>
         <div class="inner">
@@ -37,7 +37,7 @@
                     <h5 class="account-tit">카드번호</h5>
                     <div class="inputbox">
                         <span class="input">
-                            <input type="text" class="only-number card-number" placeholder="카드번호 (숫자만 입력)" title="카드번호" data-value="<%= cashbagAndT.ocbCcno %>"
+                            <input type="text" class="fe-only-number fe-card-number" placeholder="카드번호 (숫자만 입력)" title="카드번호" data-value="<%= cashbagAndT.ocbCcno %>"
                                    <% if (cashbagAndT.ocbCcno !== '') { %> value=<%= cashbagAndT.cardNum %> disabled="true" <% } %>>
                             <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
                         </span>
@@ -46,7 +46,7 @@
                 <div class="widget pop-agree-2 add-arrow">
                     <div class="widget-box check">
                         <span class="checkbox type01 p-click" role="checkbox" aria-checked="false">
-                            <input type="checkbox" name="checkbox" class="cashbag-agree" value="OK캐쉬백 제3자 정보 제공동의" title="OK캐쉬백 제3자 정보 제공동의">
+                            <input type="checkbox" name="checkbox" class="fe-cashbag-agree" value="OK캐쉬백 제3자 정보 제공동의" title="OK캐쉬백 제3자 정보 제공동의">
                             OK캐쉬백 제3자 정보 제공동의(필수)
                         </span>
                     </div>
@@ -56,7 +56,7 @@
     </div>
     <hr class="cont-sp type1" aria-hidden="true"/>
     <div class="cont-box">
-        <div class="pay-info CPT-info point-pay-info" style="display:none;">
+        <div class="pay-info fe-CPT-info fe-point-pay-info" style="display:none;">
             <h4 class="pay-tit">납부하실 포인트 선택</h4>
             <div class="account-wrap">
                 <div class="due-date">자동 납부 종료예정일
@@ -70,7 +70,7 @@
                 </div>
                 <div class="account-detail">
                     <div class="select-name" aria-describedby="pointsel-desc1">
-                        <button class="bt-dropdown select-auto-cashbag-point" id="<%= cashbagAndT.cOcbTermTodoAmt %>" title="포인트 선택하기">
+                        <button class="bt-dropdown fe-select-auto-cashbag-point" id="<%= cashbagAndT.cOcbTermTodoAmt %>" title="포인트 선택하기">
                             <%= cashbagAndT.cAmtText %><span class="ico"></span>
                         </button>
                     </div>
@@ -80,22 +80,22 @@
                 </div>
             </div>
         </div>
-        <div class="pay-info TPT-info point-pay-info" style="display:none;">
+        <div class="pay-info fe-TPT-info fe-point-pay-info" style="display:none;">
             <h4 class="pay-tit">납부하실 포인트 입력</h4>
             <div class="account-wrap">
                 <div class="due-date">자동 납부 종료예정일
                     <em class="date">
                         <% if (cashbagAndT.isAutoTpoint) { %>
-                            <%= cashbagAndT.tEndDate %>
+                        <%= cashbagAndT.tEndDate %>
                         <% } else { %>
-                            <%= cashbagAndT.endDate %>
+                        <%= cashbagAndT.endDate %>
                         <% } %>
                     </em>
                 </div>
                 <!-- .widget -->
                 <div class="widget">
                     <div class="widget-box tube">
-                        <ul class="tube-list two cashbag-point-list" role="radiogroup" id="<%= cashbagAndT.tOcbTermTodoAmt %>">
+                        <ul class="tube-list two fe-cashbag-point-list" role="radiogroup" id="<%= cashbagAndT.tOcbTermTodoAmt %>">
                             <li role="radio" aria-checked="true" class="checked"><input type="radio" name="summitpoint" title="10,000" checked="checked">10,000</li>
                             <li role="radio" aria-checked="false"><input type="radio" name="summitpoint" title="20,000">20,000</li>
                             <li role="radio" aria-checked="false" class=""><input type="radio" name="summitpoint" title="50,000">50,000</li>
@@ -112,7 +112,7 @@
                     <button class="fe-common-back">이전</button>
                 </li>
                 <li class="bt-red1">
-                    <button class="pay pay-cashbag-auto"><a href="#complete">납부하기</a></button>
+                    <button class="fe-pay fe-pay-cashbag-auto"><a href="#complete">납부하기</a></button>
                 </li>
             </ul>
         </div>

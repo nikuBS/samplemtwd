@@ -55,16 +55,16 @@ export const URL = {
   '/payment/realtime': { login: true, id: 'PA_02_01' }, // 즉시납부
   '/payment/auto': { login: true, id: 'PA_03_01' }, // 자동납부 신청 및 변경
   '/payment/point': { login: true, id: 'PA_05_01' }, // 포인트 요금납부
-  '/payment/history': { login: true, id: '' },
-  '/payment/history/realtime': { login: true, id: '' },
-  '/payment/history/auto': { login: true, id: '' },
-  '/payment/history/auto/unitedwithdrawal': { login: true, id: '' },
-  '/payment/history/point/reserve': { login: true, id: '' },
-  '/payment/history/point/auto': { login: true, id: '' },
-  '/payment/history/receipt/tax': { login: true, id: '' },
-  '/payment/history/receipt/cash': { login: true, id: '' },
-  '/payment/history/excesspay': { login: true, id: '' },
-  '/payment/history/excesspay/account': { login: true, id: '' },
+  '/payment/history': { login: true, id: 'PA_06_01' },  // 전체납부내역
+  '/payment/history/realtime': { login: true, id: 'PA_06_02' }, // 즉시납부내역
+  '/payment/history/auto': { login: true, id: 'PA_06_03' },  // 자동납부내역
+  '/payment/history/auto/unitedwithdrawal': { login: true, id: 'PA_06_04' },  // 자동납부 통합인출 내역
+  '/payment/history/point/reserve': { login: true, id: 'PA_06_05' },  // 포인트 납부 예약 내역
+  '/payment/history/point/auto': { login: true, id: 'PA_06_06' }, // 포인트 자동 납부 내역
+  '/payment/history/receipt/tax': { login: true, id: 'PA_06_09' },  // 세금 계산서 발행내역
+  '/payment/history/receipt/cash': { login: true, id: 'PA_06_10' }, // 현금 영수증 발행내역
+  '/payment/history/excesspay': { login: true, id: 'PA_06_07' },  // 과납금액 환불 내역
+  '/payment/history/excesspay/account': { login: true, id: 'PA_06_07_01' },  // 과납금액 환불 계좌 입력
   '/payment/prepay/micro': { login: true, id: 'PA_08_01_01' }, // 소액결제 선결제/자동선결제
   '/payment/prepay/contents': { login: true, id: 'PA_07_01_01' }, // 콘텐츠이용료 선결제/자동선결제
   '/payment/prepay/micro/history': { login: true, id: 'PA_08_04' }, // 소액결제 선결제 내역

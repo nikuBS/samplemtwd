@@ -22,39 +22,39 @@ Tw.PaymentAuto = function (rootEl) {
 
 Tw.PaymentAuto.prototype = {
   _initVariables: function () {
-    this.$dataSet = this.$container.find('#data-set');
+    this.$dataSet = this.$container.find('#fe-data-set');
     this.$bankSelector = this.$container.find('.select-bank');
-    this.$accountNumber = this.$container.find('.account-number');
-    this.$cardNumber = this.$container.find('.card-number');
-    this.$cardY = this.$container.find('.card-y');
-    this.$cardM = this.$container.find('.card-m');
-    this.$accountPhoneNumber = this.$container.find('.account-phone-number');
-    this.$cardPhoneNumber = this.$container.find('.card-phone-number');
-    this.$cardDate = this.$container.find('.card-date');
+    this.$accountNumber = this.$container.find('.fe-account-number');
+    this.$cardNumber = this.$container.find('.fe-card-number');
+    this.$cardY = this.$container.find('.fe-card-y');
+    this.$cardM = this.$container.find('.fe-card-m');
+    this.$accountPhoneNumber = this.$container.find('.fe-account-phone-number');
+    this.$cardPhoneNumber = this.$container.find('.fe-card-phone-number');
+    this.$cardDate = this.$container.find('.fe-card-date');
     this.$apiName = Tw.API_CMD.BFF_07_0062;
   },
   _bindEvent: function () {
-    this.$container.on('click', '.go-change', $.proxy(this._goInput, this));
-    this.$container.on('click', '.go-cancel', $.proxy(this._goCancel, this));
-    this.$container.on('click', '.change-radiobox', $.proxy(this._changeField, this));
-    this.$container.on('click', '.change-date', $.proxy(this._openChangeDate, this));
-    this.$container.on('keyup', '.only-number', $.proxy(this._onlyNumber, this));
+    this.$container.on('click', '.fe-go-change', $.proxy(this._goInput, this));
+    this.$container.on('click', '.fe-go-cancel', $.proxy(this._goCancel, this));
+    this.$container.on('click', '.fe-change-radiobox', $.proxy(this._changeField, this));
+    this.$container.on('click', '.fe-change-date', $.proxy(this._openChangeDate, this));
+    this.$container.on('keyup', '.fe-only-number', $.proxy(this._onlyNumber, this));
     this.$container.on('click', '.select-bank', $.proxy(this._selectBank, this));
-    this.$container.on('click', '.change', $.proxy(this._change, this));
-    this.$container.on('click', '.cancel', $.proxy(this._cancel, this));
-    this.$container.on('click', '.sms-get-confirm', $.proxy(this._showAlert, this));
+    this.$container.on('click', '.fe-change', $.proxy(this._change, this));
+    this.$container.on('click', '.fe-cancel', $.proxy(this._cancel, this));
+    this.$container.on('click', '.fe-sms-get-confirm', $.proxy(this._showAlert, this));
   },
   _goInput: function (event) {
     event.preventDefault();
-    if ($(event.currentTarget).hasClass('new')) {
+    if ($(event.currentTarget).hasClass('fe-new')) {
       this.$apiName = Tw.API_CMD.BFF_07_0061;
     }
-    this._setDefaultRadioChecked('change-first-radio-box');
+    this._setDefaultRadioChecked('fe-change-first-radio-box');
     this._go('#step1-change');
   },
   _goCancel: function (event) {
     event.preventDefault();
-    this._setDefaultRadioChecked('cancel-first-radio-box');
+    this._setDefaultRadioChecked('fe-cancel-first-radio-box');
     this._go('#step1-cancel');
   },
   _setDefaultRadioChecked: function (targetClassName) {
@@ -62,19 +62,19 @@ Tw.PaymentAuto.prototype = {
     this.$container.find('.radiobox input').removeAttr('checked');
     this.$container.find('.' + targetClassName).addClass('checked');
     this.$container.find('.' + targetClassName + ' > input').attr('checked', 'checked');
-    if (targetClassName === 'change-first-radio-box') {
-      this.$container.find('.account').show();
-      this.$container.find('.card').hide();
+    if (targetClassName === 'fe-change-first-radio-box') {
+      this.$container.find('.fe-account').show();
+      this.$container.find('.fe-card').hide();
     }
   },
   _changeField: function (event) {
     var $target = $(event.currentTarget);
-    if ($target.hasClass('change-first-radio-box')) {
-      this.$container.find('.account').show();
-      this.$container.find('.card').hide();
+    if ($target.hasClass('fe-change-first-radio-box')) {
+      this.$container.find('.fe-account').show();
+      this.$container.find('.fe-card').hide();
     } else {
-      this.$container.find('.card').show();
-      this.$container.find('.account').hide();
+      this.$container.find('.fe-card').show();
+      this.$container.find('.fe-account').hide();
     }
   },
   _openChangeDate: function () {
@@ -135,7 +135,7 @@ Tw.PaymentAuto.prototype = {
   },
   _change: function (event) {
     event.preventDefault();
-    var code = this.$container.find('.change-radiobox.checked').data('code').toString();
+    var code = this.$container.find('.fe-change-radiobox.checked').data('code').toString();
 
     if (this._isValid(code)) {
       var reqData = this._makeAccountRequestData(code);
@@ -230,7 +230,7 @@ Tw.PaymentAuto.prototype = {
     this._popupService.close();
 
     var reqData = this._makeDefaultRequestData();
-    reqData.payMthdCd = this.$container.find('.cancel-radiobox.checked').data('code').toString();
+    reqData.payMthdCd = this.$container.find('.fe-cancel-radiobox.checked').data('code').toString();
 
     this._apiService.request(Tw.API_CMD.BFF_07_0063, reqData)
       .done($.proxy(this._cancelSuccess, this))
@@ -238,14 +238,14 @@ Tw.PaymentAuto.prototype = {
   },
   _cancelSuccess: function () {
     this._history.setHistory();
-    this._setDefaultRadioChecked('sms-first-radio-box');
+    this._setDefaultRadioChecked('fe-sms-first-radio-box');
     this._go('#complete-cancel');
   },
   _cancelFail: function () {
     Tw.Logger.info('cancel request fail');
   },
   _showAlert: function () {
-    var $bankSelector = this.$container.find('.auto-cancel-select-bank');
+    var $bankSelector = this.$container.find('.fe-auto-cancel-select-bank');
     if (this._validation.checkIsSelected($bankSelector, Tw.MSG_PAYMENT.REALTIME_A02)) {
       this._popupService.openAlert(Tw.MSG_PAYMENT.AUTO_A09);
     }

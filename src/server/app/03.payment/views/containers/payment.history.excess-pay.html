@@ -29,63 +29,24 @@
     <div id="contents" class="container-wrap">
         <h2 class="blind">내용</h2>
         <div class="container">
-            <div class="cont-box noborder nogaps-btm">
+            <div class="cont-box noborder">
                 <div class="box-inquiry-info">
                     <span class="inquiry-info-stxt"><%=svcInfo.mbrNm%>님이<strong>환불 받을</strong></span>
-                    <span class="inquiry-info-txt"><strong>총 금액은 50,000원</strong> 입니다.</span>
+                    <span class="inquiry-info-txt"><strong>총 금액은 <span class="fe-total-amount"></span></strong> 입니다.</span>
                 </div>
                 <div class="payment-detail-wrap payment-select">
-                    <p class="info-txt">총 3건의 과납 내역이 있습니다</p>
+                    <p class="info-txt">총 <span class="fe-total-count"></span>건의 과납 내역이 있습니다</p>
                     <h3 class="blind">환불 받을 수 있는 총 금액 내역 제공</h3>
-                    <div class="widget">
-                        <div class="widget-box check">
-                            <ul class="select-list" role="group">
-                                <li class="checkbox type01" role="checkbox" aria-checked="false">
-                                    <input type="checkbox" name="checkbox" value="환급 받을 내역을 선택" title="체크박스"/>
-                                    <dl class="pay-detail">
-                                        <dt>과납발생일자</dt>
-                                        <dd>2018.05.23</dd>
-                                    </dl>
-                                    <dl class="pay-detail">
-                                        <dt>과납금액</dt>
-                                        <dd><strong>20,000</strong><span class="unit">원</span></dd>
-                                    </dl>
-                                </li>
-                                <li class="checkbox type01" role="checkbox" aria-checked="false">
-                                    <input type="checkbox" name="checkbox" value="환급 받을 내역을 선택" title="체크박스"/>
-                                    <dl class="pay-detail">
-                                        <dt>과납발생일자</dt>
-                                        <dd>2018.05.23</dd>
-                                    </dl>
-                                    <dl class="pay-detail">
-                                        <dt>과납금액</dt>
-                                        <dd><strong>20,000</strong><span class="unit">원</span></dd>
-                                    </dl>
-                                </li>
-                                <li class="checkbox type01" role="checkbox" aria-checked="false">
-                                    <input type="checkbox" name="checkbox" value="환급 받을 내역을 선택" title="체크박스"/>
-                                    <dl class="pay-detail">
-                                        <dt>과납발생일자</dt>
-                                        <dd>2018.05.23</dd>
-                                    </dl>
-                                    <dl class="pay-detail">
-                                        <dt>과납금액</dt>
-                                        <dd><strong>20,000</strong><span class="unit">원</span></dd>
-                                    </dl>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="contents-info-list">
-                        <a href="" class="bt-more" title="">더보기<span>(20)</span></a>
-                    </div>
+
+                    <div id="fe-list-wrapper"></div>
+
                 </div>
             </div>
             <hr class="cont-sp type1" aria-hidden="true"/>
             <div class="cont-box">
                 <ul class="bt-slice">
                     <li class="bt-blue1">
-                        <button>40,000원 환불요청하기</button>
+                        <button class="fe-selected-amount"><span></span>원 환불요청하기</button>
                     </li>
                 </ul>
             </div>
@@ -100,5 +61,34 @@
   $(document).ready(function () {
     new Tw.PaymentHistoryExcessPay($(document));
   });
+</script>
+<script id="list-wrapper" type="text/x-handlebars-template">
+    <div class="widget">
+        <div class="widget-box check">
+            <ul class="select-list" role="group" id="overPaidListWrapper">
+                {{> list}}
+            </ul>
+        </div>
+    </div>
+    {{#if initialMoreData}}
+    <div class="contents-info-list">
+        <a href="" class="bt-more" title="">더보기<span>(<em>{{restCount}}</em>)</span></a>
+    </div>
+    {{/if}}
+</script>
+<script id="list-default" type="text/x-handlebars-template">
+    {{#each listElement}}
+  <li class="checkbox type01" role="checkbox" aria-checked="true" data-list-id="{{listId}}">
+      <input type="checkbox" name="checkbox" value="환급 받을 내역을 선택" title="체크박스" checked="true" />
+      <dl class="pay-detail">
+          <dt>과납발생일자</dt>
+          <dd>{{reqDate}}</dd>
+      </dl>
+      <dl class="pay-detail">
+          <dt>과납금액</dt>
+          <dd><strong>{{reqAmount}}</strong><span class="unit">원</span></dd>
+      </dl>
+  </li>
+    {{/each}}
 </script>
 <% include ../components/end.component.html %>

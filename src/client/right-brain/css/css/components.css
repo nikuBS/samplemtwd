@@ -4756,6 +4756,10 @@
   vertical-align: middle;
 }
 
+.history-list ul.basic-type li .in-item span {
+  vertical-align: baseline;
+}
+
 .history-list ul.basic-type li .in-item:last-of-type {
   text-align: right;
 }
@@ -4978,6 +4982,7 @@
 
 .info-detail ul li .title, .info-detail ul li .tx-cont {
   display: table-cell;
+  vertical-align: top;
 }
 
 .info-detail ul li .title span, .info-detail ul li .tx-cont span {
@@ -4987,6 +4992,12 @@
 .info-detail ul li .title {
   color: #757575;
   font-size: 0.875rem;
+}
+
+.info-detail ul li .title .date-txt {
+  display: block;
+  font-size: 0.75rem;
+  padding-top: 0.25rem;
 }
 
 .info-detail ul li .tx-cont {
@@ -5005,6 +5016,10 @@
 
 .info-detail ul li:first-of-type .tx-cont {
   font-size: 1rem;
+}
+
+.use-inner {
+  padding: 1.75rem 1.625rem 0;
 }
 
 /* 임지선 */
@@ -5678,10 +5693,6 @@ li.payment-detail-box:last-child {
   padding-right: 0.25rem;
   font-weight: 700;
   letter-spacing: 0;
-}
-
-.cont-btm-info {
-  line-height: 1;
 }
 
 .cont-btm-info.bdt {

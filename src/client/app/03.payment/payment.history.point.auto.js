@@ -192,8 +192,7 @@ Tw.PaymentHistoryPointAuto.prototype = {
     return this.common.parse_query_string(window.location.search.substring(1)).point;
   },
 
-  _apiError: function (res) {
-    Tw.Logger.error(res.msg);
-    return false;
+  _apiError: function (err) {
+    this.common._apiError(err);
   }
 };

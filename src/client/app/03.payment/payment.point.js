@@ -22,16 +22,16 @@ Tw.PaymentPoint = function (rootEl) {
 
 Tw.PaymentPoint.prototype = {
   _initVariables: function () {
-    this.$cardNumber = this.$container.find('.card-number');
-    this.$password = this.$container.find('.password');
-    this.$agreement = this.$container.find('.cashbag-agree');
-    this.$pointList = this.$container.find('.cashbag-point-list');
-    this.$cashbagPoint = this.$container.find('.cashbag-point');
-    this.$rainbowPoint = this.$container.find('.rainbow-point');
-    this.$pointSelectBox = this.$container.find('.select-auto-cashbag-point');
-    this.$productSelectBox = this.$container.find('.select-product-one');
-    this.$productSelectBoxForAuto = this.$container.find('.select-product-auto');
-    this.$errorContainer = this.$container.find('.error-data');
+    this.$cardNumber = this.$container.find('.fe-card-number');
+    this.$password = this.$container.find('.fe-password');
+    this.$agreement = this.$container.find('.fe-cashbag-agree');
+    this.$pointList = this.$container.find('.fe-cashbag-point-list');
+    this.$cashbagPoint = this.$container.find('.fe-cashbag-point');
+    this.$rainbowPoint = this.$container.find('.fe-rainbow-point');
+    this.$pointSelectBox = this.$container.find('.fe-select-auto-cashbag-point');
+    this.$productSelectBox = this.$container.find('.fe-select-product-one');
+    this.$productSelectBoxForAuto = this.$container.find('.fe-select-product-auto');
+    this.$errorContainer = this.$container.find('.fe-error-data');
     this.$selectedPoint = 1000;
     this.$pointType = null;
 
@@ -49,18 +49,18 @@ Tw.PaymentPoint.prototype = {
     }
   },
   _bindEvent: function () {
-    this.$container.on('keyup', '.only-number', $.proxy(this._onlyNumber, this));
-    this.$container.on('click', '.get-point', $.proxy(this._openGetPoint, this));
-    this.$container.on('click', '.select-payment-point', $.proxy(this._changeStep, this));
-    this.$container.on('click', '.select-auto-cashbag-point', $.proxy(this._selectAutoCashbagPoint, this));
-    this.$container.on('click', '.select-product', $.proxy(this._selectProduct, this));
-    this.$container.on('click', '.cashbag-agree', $.proxy(this._openCashbagAgree, this));
-    this.$container.on('click', '.pay-cashbag-one', $.proxy(this._payCashbagOne, this));
-    this.$container.on('click', '.pay-cashbag-auto', $.proxy(this._payCashbagAuto, this));
-    this.$container.on('click', '.pay-rainbow-one', $.proxy(this._payRainbowOne, this));
-    this.$container.on('click', '.pay-rainbow-auto', $.proxy(this._payRainbowAuto, this));
-    this.$container.on('click', '.cancel-cashbag-autopay', $.proxy(this._cancelAutoPay, this));
-    this.$container.on('click', '.cancel-rainbow-autopay', $.proxy(this._cancelAutoPay, this));
+    this.$container.on('keyup', '.fe-only-number', $.proxy(this._onlyNumber, this));
+    this.$container.on('click', '.fe-get-point', $.proxy(this._openGetPoint, this));
+    this.$container.on('click', '.fe-select-payment-point', $.proxy(this._changeStep, this));
+    this.$container.on('click', '.fe-select-auto-cashbag-point', $.proxy(this._selectAutoCashbagPoint, this));
+    this.$container.on('click', '.fe-select-product', $.proxy(this._selectProduct, this));
+    this.$container.on('click', '.fe-cashbag-agree', $.proxy(this._openCashbagAgree, this));
+    this.$container.on('click', '.fe-pay-cashbag-one', $.proxy(this._payCashbagOne, this));
+    this.$container.on('click', '.fe-pay-cashbag-auto', $.proxy(this._payCashbagAuto, this));
+    this.$container.on('click', '.fe-pay-rainbow-one', $.proxy(this._payRainbowOne, this));
+    this.$container.on('click', '.fe-pay-rainbow-auto', $.proxy(this._payRainbowAuto, this));
+    this.$container.on('click', '.fe-cancel-cashbag-autopay', $.proxy(this._cancelAutoPay, this));
+    this.$container.on('click', '.fe-cancel-rainbow-autopay', $.proxy(this._cancelAutoPay, this));
   },
   _onlyNumber: function (event) {
     Tw.InputHelper.inputNumberOnly(event.currentTarget);
@@ -126,11 +126,11 @@ Tw.PaymentPoint.prototype = {
   _setType: function ($target) {
     this.$pointType = $target.data('type');
     this.$autoCode = $target.data('code');
-    this.$container.find('.point-title').hide();
-    this.$container.find('.point-pay-info').hide();
-    this.$container.find('.' + this.$pointType + '-title').show();
-    this.$container.find('.' + this.$pointType + '-info').show();
-    this.$container.find('.point-name').text($target.data('name'));
+    this.$container.find('.fe-point-title').hide();
+    this.$container.find('.fe-point-pay-info').hide();
+    this.$container.find('.fe-' + this.$pointType + '-title').show();
+    this.$container.find('.fe-' + this.$pointType + '-info').show();
+    this.$container.find('.fe-point-name').text($target.data('name'));
   },
   _openCashbagAgree: function () {
     if (this.$agreement.is(':checked')) {
@@ -231,7 +231,7 @@ Tw.PaymentPoint.prototype = {
   _paySuccess: function (type, res) {
     this._history.setHistory();
     if (res.code === Tw.API_CODE.CODE_00) {
-      this.$container.find('.get-history').attr('href', '/payment/history/point/' + type);
+      this.$container.find('.fe-get-history').attr('href', '/payment/history/point/' + type);
       this._setData(res);
       this._go('#complete');
     } else {
@@ -239,12 +239,12 @@ Tw.PaymentPoint.prototype = {
     }
   },
   _payFail: function (res) {
-    this.$errorContainer.find('.code').empty().text(res.code);
-    this.$errorContainer.find('.message').empty().text(res.error.msg);
+    this.$errorContainer.find('.fe-code').empty().text(res.code);
+    this.$errorContainer.find('.fe-message').empty().text(res.error.msg);
     this._go('#error');
   },
   _setData: function (res) {
-    var $target = this.$container.find('.complete-target');
+    var $target = this.$container.find('.fe-complete-target');
     var $result = res.result;
     for (var key in $result) {
       $target.find('.' + key).text($result[key]);
@@ -256,7 +256,7 @@ Tw.PaymentPoint.prototype = {
   _cancel: function ($target) {
     var apiName = Tw.API_CMD.BFF_07_0054;
     var isRainbow = false;
-    if ($target.hasClass('cancel-rainbow-autopay')) {
+    if ($target.hasClass('fe-cancel-rainbow-autopay')) {
       apiName = Tw.API_CMD.BFF_07_0056;
       isRainbow = true;
     }
@@ -292,7 +292,7 @@ Tw.PaymentPoint.prototype = {
     window.location.reload();
   },
   _isValidForCashbagOne: function () {
-    var point = this.$container.find('.point-title:visible .point-value').text().replace(',', '');
+    var point = this.$container.find('.fe-point-title:visible .fe-point-value').text().replace(',', '');
     return (this._validation.checkEmpty(this.$cardNumber.val(), Tw.MSG_PAYMENT.AUTO_A05) &&
       this._validation.checkLength(this.$cardNumber.val(), 16, Tw.MSG_PAYMENT.REALTIME_A06) &&
       this._validation.checkEmpty(this.$password.val(), Tw.MSG_PAYMENT.AUTO_A04) &&
@@ -311,7 +311,7 @@ Tw.PaymentPoint.prototype = {
       this._validation.checkIsSelected(this.$pointSelectBox, Tw.MSG_PAYMENT.POINT_A07, isTPoint);
   },
   _isValidForRainbow: function () {
-    var point = this.$container.find('.rainbow-point-value').text().replace(',', '');
+    var point = this.$container.find('.fe-rainbow-point-value').text().replace(',', '');
     return this._checkPoint(this.$rainbowPoint.val(), 1, point);
   },
   _checkPoint: function ($value, minPoint, havePoint) {
