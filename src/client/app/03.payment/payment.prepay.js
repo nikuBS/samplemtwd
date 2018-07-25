@@ -27,8 +27,12 @@ Tw.PaymentPrepay.prototype = {
     this._initVariables();
   },
   _initVariables: function () {
-    this.$remainLimit = this.$container.find('.fe-remain-limit');
+    this.$remainBtnWrap = this.$container.find('.fe-get-remain-btn-wrap');
+    this.$remainInfo = this.$container.find('.fe-remain-info');
+    this.$remainInfoWrap = this.$container.find('.fe-remain-info-wrap');
+    this.$maxAmountWrap = this.$container.find('.fe-max-amount-wrap');
     this.$maxAmount = this.$container.find('.fe-max-amount');
+    this.$getDetailBtn = this.$container.find('.fe-get-detail');
     this.$autoPrepayInfo = this.$container.find('.fe-auto-prepay-info');
     this.$inputPrepayAmount = this.$container.find('.fe-input-prepay-amount');
     this.$newCardWrap = this.$container.find('.fe-new-card-wrap');
@@ -42,10 +46,10 @@ Tw.PaymentPrepay.prototype = {
   _bindEvent: function () {
     this.$container.on('keyup', '.fe-only-number', $.proxy(this._onlyNumber, this));
     this.$container.on('change', '.fe-change-type', $.proxy(this._changeType, this));
-    this.$container.on('click', '.fe-get-remain-limit', $.proxy(this._getRemainLimit, this));
+    this.$container.on('click', '.fe-get-remain-btn', $.proxy(this._getRemainLimit, this));
     this.$container.on('click', '.fe-change-limit', $.proxy(this._openChangeLimit, this));
     this.$container.on('click', '.fe-standard-amount-info', $.proxy(this._openStandardAmountInfo, this));
-    this.$container.on('click', '.fe-get-detail-auto-prepay', $.proxy(this._openDetailAutoPrepay, this));
+    this.$container.on('click', '.fe-get-detail', $.proxy(this._openDetailPrepay, this));
     this.$container.on('click', '.fe-cancel-auto-prepay', $.proxy(this._confirmCancel, this));
     this.$container.on('click', '.fe-pay-check-box', $.proxy(this._setAutoInfo, this));
     this.$container.on('click', '.fe-prepay', $.proxy(this._prepay, this));
@@ -58,13 +62,16 @@ Tw.PaymentPrepay.prototype = {
     // change type field
   },
   _getRemainLimit: function () {
-    this.$container.find('.fe-get-detail').removeAttr('disabled');
-    this._apiService.request(Tw.API_CMD.BFF_07_0073, {})
-      .done($.proxy(this._getRemainLimitSuccess))
-      .fail($.proxy(this._getRemainLimitFail));
+    this.$getDetailBtn.removeAttr('disabled');
+    $.ajax('/mock/payment.remain-limit.json')
+    //this._apiService.request(Tw.API_CMD.BFF_07_0073, {})
+      .done($.proxy(this._getRemainLimitSuccess, this))
+      .fail($.proxy(this._getRemainLimitFail, this));
   },
   _getRemainLimitSuccess: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
+      this.$remainBtnWrap.hide();
+
       var $result = res.result;
       this._setRemainLimitInfo($result);
 
@@ -73,7 +80,9 @@ Tw.PaymentPrepay.prototype = {
       }
 
       this.$container.on('click', '.fe-change-limit', $.proxy(this._openChangeLimit, this));
-      this.$remainLimit.show();
+
+      this.$remainInfoWrap.removeClass('none');
+      this.$maxAmountWrap.removeClass('none');
     }
   },
   _getRemainLimitFail: function () {
@@ -86,8 +95,8 @@ Tw.PaymentPrepay.prototype = {
     this.$possibleAmount = $result.tmthChrgPsblAmt;
     this.$remainAmount = this._getRemainAmount();
 
-    this.$remainLimit.find('span').text(Tw.FormatHelper.addComma(this.$remainAmount));
-    this.$maxAmount.find('span').text(Tw.FormatHelper.addComma(this.$possibleAmount));
+    this.$remainInfo.text(Tw.FormatHelper.addComma(this.$remainAmount));
+    this.$maxAmount.text(Tw.FormatHelper.addComma(this.$possibleAmount));
 
     if (this.$possibleAmount > 0) {
       this.$container.find('.fe-go-prepay').removeAttr('disabled');
@@ -95,17 +104,17 @@ Tw.PaymentPrepay.prototype = {
     }
   },
   _getRemainAmount: function () {
-    var remainAmount = parseInt(this.$remainAmount, 10);
+    var limitAmount = parseInt(this.$limitAmount, 10);
     var useAmount = parseInt(this.$useAmount, 10);
     var prepayAmount = parseInt(this.$prepayAmount, 10);
 
-    return remainAmount - useAmount + prepayAmount;
+    return limitAmount - useAmount + prepayAmount;
   },
   _setAutoPrepayInfo: function ($result) {
     this.$isAutoPrepay = 'Y';
     this.$container.find('.fe-auto-charge-amt').text($result.autoChrgAmt);
     this.$container.find('.fe-auto-charge-standard-amt').text($result.autoChrgStrdAmt);
-    this.$container.find('.fe-auto-prepay-arrow').show();
+    this.$container.find('.fe-auto-prepay-arrow').removeClass('none');
   },
   _openChangeLimit: function () {
     this._popupService.open('');
@@ -115,10 +124,12 @@ Tw.PaymentPrepay.prototype = {
       hbs: 'PA_08_02_L02'
     }, $.proxy(this._closePopup, this));
   },
-  _openDetailAutoPrepay: function () {
-    this._popupService.open('', $.proxy(this._setDetailAutoPrepay, this));
+  _openDetailPrepay: function () {
+    this._popupService.open({
+      hbs: 'PA_08_L01'
+    }, $.proxy(this._setDetailPrepay, this));
   },
-  _setDetailAutoPrepay: function ($layer) {
+  _setDetailPrepay: function ($layer) {
     $layer.find('.fe-remain-amount').text(Tw.FormatHelper.addComma(this.$remainAmount));
     $layer.find('.fe-limit-amount').text(Tw.FormatHelper.addComma(this.$limitAmount));
     $layer.find('.fe-use-amount').text(Tw.FormatHelper.addComma(this.$useAmount));
@@ -132,8 +143,8 @@ Tw.PaymentPrepay.prototype = {
   },
   _cancelAutoPrepay: function () {
     this._apiService.request(Tw.API_CMD.BFF_07_0077, {})
-      .done($.proxy(this._cancelAutoPrepaySuccess))
-      .fail($.proxy(this._cancelAutoPrepayFail));
+      .done($.proxy(this._cancelAutoPrepaySuccess, this))
+      .fail($.proxy(this._cancelAutoPrepayFail, this));
   },
   _cancelAutoPrepaySuccess: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
