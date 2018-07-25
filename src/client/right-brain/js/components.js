@@ -1,17 +1,22 @@
 $(document).on('ready', function () {
-  $('.component').each(function (idx) {
-    var com = $(this).find('.component-box').attr('class').replace(/component-box /, '');
-    component_list['component_' + com] = skt_landing.components['component_' + com];
-  });
-  for (var com_name in component_list) {
-    component_list[com_name]();
-  }
+  skt_landing.components.component_init();
 });
 skt_landing.components = {
+  component_init: function(ta){
+    component_list = {};
+    ta = ta ? $(ta+' .component') : $('.component');
+    ta.each(function (idx) {
+      var com = $(this).find('.component-box').attr('class').replace(/component-box /, '');
+      component_list['component_' + com] = skt_landing.components['component_' + com];
+    });
+    for (var com_name in component_list) {
+      component_list[com_name](ta);
+    }  
+  },
   component_test: function () {
   },
-  component_tabs: function () {
-    var tabArr = $('.tabs .tab-area');
+  component_tabs: function (ta) {
+    var tabArr = ta ? $(ta).find('.tabs .tab-area') : $('.tabs .tab-area');
     tabArr.each(function () {
       var _this = $(this),
           tabList = _this.find('.tab-linker'),
@@ -33,21 +38,21 @@ skt_landing.components = {
       }
     });
   },
-  component_flcarddefault: function () {
-    skt_landing.action.toggleon($('.flcarddefault .bt-like')); //좋아요 스위치
+  component_flcarddefault: function (ta) {
+    skt_landing.action.toggleon(ta ? $(ta).find('.flcarddefault .bt-like') : $('.flcarddefault .bt-like')); //좋아요 스위치
   },
-  component_flcardcta: function () {
-    skt_landing.action.toggleon($('.flcardcta .bt-like')); //좋아요 스위치
+  component_flcardcta: function (ta) {
+    skt_landing.action.toggleon(ta ? $(ta).find('.flcardcta .bt-like') : $('.flcardcta .bt-like')); //좋아요 스위치
   },
   component_flcardbarcode: function () {
   },
-  component_flcardbanner1: function () {
-    skt_landing.action.toggleon($('.flcardbanner1 .bt-like')); //좋아요 스위치
+  component_flcardbanner1: function (ta) {
+    skt_landing.action.toggleon(ta ? $(ta).find('.flcardbanner1 .bt-like') : $('.flcardbanner1 .bt-like')); //좋아요 스위치
   },
-  component_flcardbanner2: function () {
-    skt_landing.action.toggleon($('.flcardbanner2 .bt-scrap')); //스크랩 스위치
+  component_flcardbanner2: function (ta) {
+    skt_landing.action.toggleon(ta ? $(ta).find('.flcardbanner2 .bt-scrap') : $('.flcardbanner2 .bt-scrap')); //스크랩 스위치
   },
-  component_flcardsns: function () {
-    skt_landing.action.toggleon($('.flcardsns .bt-scrap')); //스크랩 스위치
+  component_flcardsns: function (ta) {
+    skt_landing.action.toggleon(ta ? $(ta).find('.flcardsns .bt-scrap') : $('.flcardsns .bt-scrap')); //스크랩 스위치
   }
 }

@@ -2,10 +2,10 @@ import FormatHelper from '../utils/format.helper';
 import LoggerService from './logger.service';
 import { SvcInfoModel } from '../models/svc-info.model';
 import { Observable } from 'rxjs/Observable';
+import { COOKIE_KEY } from '../types/bff-common.type';
 
 class LoginService {
   static instance;
-  // private session;
   private request;
   private response;
   private logger = new LoggerService();
@@ -18,7 +18,7 @@ class LoginService {
   }
 
   public setCurrentReq(req, res) {
-    this.logger.info(this, '[setCurrentReq]', req.session);
+    this.logger.info(this, '[setCurrentReq]', req.session, req.headers.referer, req.hostname);
     this.request = req;
     this.response = res;
   }
@@ -30,20 +30,13 @@ class LoginService {
     return false;
   }
 
-  // public isExpiredSession(session) {
-  //   if ( this.isLogin(session) ) {
-  //     return false;
-  //   }
-  //   if ( !FormatHelper.isEmpty(this.session) ) {
-  //     return !FormatHelper.isEmpty(this.session.svcInfo) && !FormatHelper.isEmpty(this.session.serverSession);
-  //   }
-  //   return false;
-  // }
+  public isNewSession(): boolean {
+    const prevUrl = this.request.headers.referer || '';
+    const currentHost = this.request.hostname;
 
-  public setClientSession(session) {
-    this.logger.info(this, '[Set session]', session);
-    // this.session = session;
+    return prevUrl.indexOf(currentHost) === -1;
   }
+
 
   public getSvcInfo(): any {
     if ( !FormatHelper.isEmpty(this.request.session) && !FormatHelper.isEmpty(this.request.session.svcInfo) ) {
@@ -54,6 +47,7 @@ class LoginService {
 
   public setSvcInfo(svcInfo: any): Observable<any> {
     return Observable.create((observer) => {
+      this.response.cookie(COOKIE_KEY.TWM_LOGIN, 'Y');
       if ( FormatHelper.isEmpty(this.request.session.svcInfo) ) {
         this.request.session.svcInfo = new SvcInfoModel(svcInfo);
       } else {
@@ -76,9 +70,6 @@ class LoginService {
 
   public setServerSession(serverSession: string): Observable<any> {
     return Observable.create((observer) => {
-      // if ( FormatHelper.isEmpty(this.session) ) {
-      //   this.session = this.request.session;
-      // }
       this.request.session.serverSession = serverSession;
       this.request.session.save(() => {
         this.logger.debug(this, '[setServerSession]', this.request.session);
@@ -91,16 +82,13 @@ class LoginService {
 
   public logoutSession(): Observable<any> {
     return Observable.create((observer) => {
-      // if ( !FormatHelper.isEmpty(this.session) ) {
-        delete this.request.session.svcInfo;
-        delete this.request.session.severSession;
-        this.request.session.save(() => {
-          this.logger.debug(this, '[logoutSession]', this.request.session);
-          // this.session = null;
-          observer.next();
-          observer.complete();
-        });
-
+      this.request.session.destroy(() => {
+        this.logger.debug(this, '[logoutSession]', this.request.session);
+        this.response.clearCookie(COOKIE_KEY.TWM);
+        this.response.clearCookie(COOKIE_KEY.TWM_LOGIN);
+        observer.next();
+        observer.complete();
+      });
     });
   }
 }
