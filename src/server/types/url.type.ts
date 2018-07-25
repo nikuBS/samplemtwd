@@ -98,6 +98,9 @@ export const URL = {
   '/auth/login/service-pwd': { login: true, id: 'CO_01_02_03_01' },
   '/auth/login/service-pwd-fail': { login: true, id: 'CO_01_02_03_01_01' },
   '/auth/login/route': { login: false, id: '' },
+  '/auth/login/easy-aos': { login: false, id: 'CO_01_02_06_01' }, // 간편로그인 안드로이드
+  '/auth/login/easy-ios': { login: false, id: 'CO_01_02_06_02' }, // 간편로그인 IOS
+  '/auth/login/easy-fail': { login: false, id: 'CO_01_02_06_03' },  // 간편로그인 이용불가
   '/auth/logout/complete': { login: false, id: 'CO_01_03_01' },  // 로그아웃 성공
   '/auth/logout/expire': { login: false, id: 'CO_01_03_02' },  // 세션 만료
   '/auth/logout/route': { login: false, id: '' },

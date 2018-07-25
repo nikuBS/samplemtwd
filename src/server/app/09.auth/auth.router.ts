@@ -28,6 +28,9 @@ import AuthLoginRoute from './controllers/login/auth.login.route.controller';
 import AuthLoginExceedFail from './controllers/login/auth.login.exceed-fail.controller';
 import AuthLogoutRoute from './controllers/logout/auth.logout.route.controller';
 import AuthTidRoute from './controllers/tid/auth.tid.route';
+import AuthLoginEasyAos from './controllers/login/auth.login.easy-aos.controller';
+import AuthLoginEasyIos from './controllers/login/auth.login.easy-ios.controller';
+import AuthLoginEasyFail from './controllers/login/auth.login.easy-fail.controller';
 
 class AuthRouter extends TwRouter {
   constructor() {
@@ -45,6 +48,10 @@ class AuthRouter extends TwRouter {
     this.controllers.push({ url: '/login/service-pwd', controller: new AuthLoginServicePwd() });
     this.controllers.push({ url: '/login/service-pwd-fail', controller: new AuthLoginServicePwdFail() });
     this.controllers.push({ url: '/login/route', controller: new AuthLoginRoute() });
+    this.controllers.push({ url: '/login/easy-aos', controller: new AuthLoginEasyAos() });
+    this.controllers.push({ url: '/login/easy-ios', controller: new AuthLoginEasyIos() });
+    this.controllers.push({ url: '/login/easy-fail', controller: new AuthLoginEasyFail() });
+
     // logout
     this.controllers.push({ url: '/logout/complete', controller: new AuthLogoutComplete() });
     this.controllers.push({ url: '/logout/expire', controller: new AuthLogoutExpire() });
