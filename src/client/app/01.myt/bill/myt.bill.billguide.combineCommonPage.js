@@ -8,7 +8,7 @@ Tw.mytBillBillguideCombineCommonPage = function (rootEl, resData) {
 
   this.thisMain = this;
   this.resData = resData;
-  Tw.Logger.info('[서버에서 데이터 받음]', resData);
+  Tw.Logger.info('[Server Res Data]', resData);
 
   this.$container = rootEl;
   this.$window = window;
@@ -42,7 +42,7 @@ Tw.mytBillBillguideCombineCommonPage.prototype = {
         text : this._getSelClaimDtBtn( this.resData.billpayInfo.invDtArr[i] )
       });
     }
-    this._popupService.openChoice('기간선택', arrOption,
+    this._popupService.openChoice(Tw.POPUP_TITLE.PERIOD_SELECT, arrOption,
       'type1', $.proxy(this._totPaySelectEvt, this, $target));
   },
   _totPaySelectEvt: function ($target, $layer) {//이벤트 설정
@@ -61,11 +61,9 @@ Tw.mytBillBillguideCombineCommonPage.prototype = {
 
     $.ajax('http://localhost:3000/mock/myt.bill.billguide.BFF_05_00036.json')
       .done(function(resp){
-        console.log('성공');
         Tw.Logger.info(resp);
       })
       .fail(function(err) {
-        console.log('실패');
         Tw.Logger.info(err);
       });
 
@@ -93,6 +91,6 @@ Tw.mytBillBillguideCombineCommonPage.prototype = {
     window.location.hash = hash;
   },
   _getSelClaimDtBtn: function (str) {
-    return moment(str).add(1, 'days').format('YYYY년 MM월');
+    return moment(str).add(1, 'days').format(Tw.DATE_FORMAT.YYYYDD_TYPE_0);
   }
 };

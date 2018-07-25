@@ -8,7 +8,7 @@
 Tw.mytBillBillguideCompanyPage = function (rootEl, resData) {
   this.thisMain = this;
   this.resData = resData;
-  Tw.Logger.info('[서버에서 데이터 받음]', resData);
+  Tw.Logger.info('[Server Res Data]', resData);
 
   this.$container = rootEl;
   this.$window = window;
@@ -44,47 +44,38 @@ Tw.mytBillBillguideCompanyPage.prototype = {
   },
   //--------------------------------------------------------------------------[상세요금내역]
   _goDetailSpecification: function () {//상세요금조회
-    Tw.Logger.info('상세요금 내역');
     this._goLoad('/myt/bill/billguide/subDetailSpecification');
   },
   //--------------------------------------------------------------------------[납부가능일 선택]
   _goSelPayment: function() {
-    Tw.Logger.info('납부가능일 선택');
     this._goLoad('/myt/bill/billguide/subSelPayment');
   },
   //--------------------------------------------------------------------------[이용정지 해제]
   _goSusReleaseBtn: function() {
-    Tw.Logger.info('이용정지 해제');
     this._goLoad('/myt/bill/billguide/subSusRelease');
   },
   //--------------------------------------------------------------------------[자녀폰 사용요금 조회]
   _goChildBill: function() {
-    Tw.Logger.info('자녀폰 사용요금 조회2');
     this._goLoad('/myt/bill/billguide/subChildBill');
   },
   //--------------------------------------------------------------------------[콜기프트 요금]
   _goCallBill: function() {
-    Tw.Logger.info('콜기프트 요금');
     this._goLoad('/myt/bill/billguide/subCallBill');
   },
   //--------------------------------------------------------------------------[로밍 사용요금]
   _goRoamingBill: function() {
-    Tw.Logger.info('로밍 사용요금');
     this._goLoad('/myt/bill/billguide/subRoamingBill');
   },
   //--------------------------------------------------------------------------[기부금/후원금]
   _goDonationBill: function() {
-    Tw.Logger.info('기부금/후원금');
     this._goLoad('/myt/bill/billguide/subDonationBill');
   },
   //--------------------------------------------------------------------------[정할인/단말분할상환정보]
   _goPartialRedemption: function() {
-    Tw.Logger.info('정할인/단말분할상환정보');
     //this._goLoad('');
   },
   //--------------------------------------------------------------------------[요금제/부가서비스 할인내역확인]
   _goExtraSvcBill: function() {
-    Tw.Logger.info('요금제/부가서비스 할인내역확인');
     //this._goLoad('');
   },
   //--------------------------------------------------------------------------[이벤트 | 팝업]
@@ -98,7 +89,7 @@ Tw.mytBillBillguideCompanyPage.prototype = {
         text : this._getSelClaimDtBtn( tempArr[i] )
       });
     }
-    this._popupService.openChoice('기간선택', arrOption, 'type1', $.proxy(this._selPopOpenEvt, this, $target));
+    this._popupService.openChoice(Tw.POPUP_TITLE.PERIOD_SELECT, arrOption, 'type1', $.proxy(this._selPopOpenEvt, this, $target));
   },
   _selPopOpenEvt: function ($target, $layer) {
     $layer.on('click', '.popup-choice-list', $.proxy(this._selPopOpenEvtExe, this, $target, $layer));
@@ -117,11 +108,9 @@ Tw.mytBillBillguideCompanyPage.prototype = {
 
     $.ajax('http://localhost:3000/mock/myt.bill.billguide.BFF_05_00036.json')
       .done(function(resp){
-        console.log('성공');
         Tw.Logger.info(resp);
       })
       .fail(function(err) {
-        console.log('실패');
         Tw.Logger.info(err);
       });
 
@@ -149,6 +138,6 @@ Tw.mytBillBillguideCompanyPage.prototype = {
     window.location.hash = hash;
   },
   _getSelClaimDtBtn: function (str) {
-    return moment(str).add(1, 'days').format('YYYY년 MM월');
+    return moment(str).add(1, 'days').format(Tw.DATE_FORMAT.YYYYDD_TYPE_0);
   }
 };

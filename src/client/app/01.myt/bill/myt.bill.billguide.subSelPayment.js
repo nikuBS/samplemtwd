@@ -9,7 +9,7 @@ Tw.mytBillBillguideSubSelPayment = function (rootEl, resData) {
 
   this.resData = resData;
   this.init = this._init;
-  Tw.Logger.info('[서버에서 데이터 받음]', resData);
+  Tw.Logger.info('[Server Res Data]', resData);
 
   this.$container = rootEl;
   this.$window = window;
@@ -235,7 +235,7 @@ Tw.mytBillBillguideSubSelPayment.prototype = {
     window.location.hash = hash;
   },
   _getSelClaimDtBtn: function (str) {
-    return moment(str).add(1, 'days').format('YYYY년 MM월');
+    return moment(str).add(1, 'days').format(Tw.DATE_FORMAT.YYYYDD_TYPE_0);
   },
   _getDateTypeA: function (str) {
     return moment(str).format('YYYY.MM.DD (ddd)');
