@@ -1,5 +1,5 @@
 <%#
-* FileName: myt.joinService.payClaimInfo.phone.html
+* FileName: myt.joinService.payClaimInfo.iptvSk.html
 * Author: 김명환 (skt.P130714@partner.sk.com)
 * Date: 2018.07.24
 * Info:
@@ -17,7 +17,7 @@
 <div id="wrapFdev" class="wrap">
     <!-- #header -->
     <div id="header" class="header-wrap">
-        <h1>myt.joinService.payClaimInfo.phone</h1>
+        <h1>myt.joinService.payClaimInfo.iptvSk</h1>
     </div>
     <!--// #header -->
     <!-- #contents -->
@@ -29,10 +29,9 @@
 
 <script>
   $(document).ready(function () {
-    new Tw.MytJoinServicePayClaimInfoPhone($('#wrapFdev'), {
+    new Tw.MytJoinServicePayClaimInfoIptvSk($('#wrapFdev'), {
       reqQuery: <%-JSON.stringify(reqQuery) %>,
-      svcInfo: <%-JSON.stringify(svcInfo) %>,
-      testInfo: <%-JSON.stringify(testInfo) %>
+      svcInfo: <%-JSON.stringify(svcInfo) %>
   });
   });
 </script>

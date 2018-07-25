@@ -45,6 +45,8 @@ import MytJoinServiceContractTerminalInfoTwibro from './controllers/joinService/
 import MytJoinServiceContractTerminalInfoTlogin from './controllers/joinService/myt.joinService.contractTerminalInfo.tlogin.controller';
 import MytJoinServiceContractTerminalInfoTloginDetail from './controllers/joinService/myt.joinService.contractTerminalInfo.tlogin.detail.controller';
 import MytJoinServiceContractTerminalInfoPhone from './controllers/joinService/myt.joinService.contractTerminalInfo.phone.controller';
+import MytJoinServicePayClaimInfoIptvSk from './controllers/joinService/myt.joinService.payClaimInfo.iptvSk.controller';
+
 
 class MytRouter extends TwRouter {
   constructor() {
@@ -84,6 +86,7 @@ class MytRouter extends TwRouter {
     this.controllers.push({ url: '/joinService/payClaimInfo', controller: new MytJoinServicePayClaimInfo() });
     this.controllers.push({ url: '/joinService/payClaimInfo/phone', controller: new MytJoinServicePayClaimInfoPhone() });
     this.controllers.push({ url: '/joinService/payClaimInfo/iptv', controller: new MytJoinServicePayClaimInfoIptv() });
+    this.controllers.push({ url: '/joinService/payClaimInfo/iptvSk', controller: new MytJoinServicePayClaimInfoIptvSk() });
     this.controllers.push({ url: '/joinService/payClaimInfo/tlogin', controller: new MytJoinServicePayClaimInfoTlogin() });
     this.controllers.push({ url: '/joinService/payClaimInfo/twibro', controller: new MytJoinServicePayClaimInfoTwibro() });
     this.controllers.push({ url: '/joinService/payClaimInfo/tpocketfi', controller: new MytJoinServicePayClaimInfoTpocketfi() });
