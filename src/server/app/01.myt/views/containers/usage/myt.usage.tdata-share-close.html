@@ -1,148 +1,102 @@
-<%- include('../../components/start.sprint3.component.html') %>
-
-<!-- skip -->
-<div class="skip"><a href="#content">본문 바로가기</a></div>
-<!-- // skip -->
-<div id="myt-usage-tdatashare-close">
-    <!-- wrap -->
-    <div id="wrap">
-        <!-- header -->
-        <header class="header-sub">
-            <button class="btn-back fe-common-back"><span class="blind">뒤로가기</span></button>
-            <h1 class="title-txt">T데이터셰어링 USIM 해지하기</h1>
-            <button class="btn-search"><span class="blind">검색</span></button>
-        </header>
-        <!-- // header -->
-        <!-- content -->
-        <div id="content">
-            <!-- container -->
-            <section id="tdatashare-close" class="container">
-
-                <div class="notibar">
-                    <p class="ttl">해지신청</p>
-                    <div class="step">
-                        <span class="here"><em>1</em></span><span><em>2</em></span>
-                    </div>
-                </div>
-
-                <div class="outarea">
-                    <!-- sharing-num// -->
-                    <div class="sharing-num" data-cSvcMgmtNum="<%= result.cSvcMgmtNum %>">
-                        <p class="ttl">T 데이터 셰어링 연결된 휴대폰 번호</p>
-                        <strong class="moebius-bold"><%= svcInfo.svcNum %></strong>
-                        <span class="txt">※ 휴대폰번호의 하나의 데이터요금으로 공유하여 <br/>다양한 디지털 기기에서 동시에 무선인터넷을<br/>이용 할 수 있습니다.</span>
-                    </div>
-                    <!-- //sharing-num -->
-
-                    <!-- sharing-num// -->
-                    <div class="sharing-num">
-                        <p class="ttl">T 데이터셰어링 해지하는 USIM 번호</p>
-                        <strong class="moebius-bold"><%= result.usimNum %></strong>
-                        <span class="txt">※ T데이터셰어링 USIM은 해지 후 1개월 이내에 다시 등록할 수 없습니다.</span>
-                        <span class="caution">(다른휴대폰에서도 1개월 이내에 다시 등록할 수 없습니다.)</span>
-                    </div>
-                    <!-- //sharing-num -->
-
-                    <div class="btn-group shared">
-                        <p class="txt-type01">T데이터셰어링 USIM을<br/><strong>해지하시겠습니까?</strong></p>
-                        <div class="col2">
-                            <a class="btn-type02 fe-common-back">취소</a>
-                            <a class="btn-type02 positive termChild">해지</a>
+<!--
+* FileName: myt.usage.tdata-share-close.html
+* Author: 이정민 (skt.p130713@partner.sk.com)
+* Date: 2018.07.25
+-->
+<% include ../../components/start.component.html %>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap">
+    <!-- #header -->
+    <div id="header" class="header-wrap">
+        <div class="header step-page">
+            <div class="header-ti">
+                <h1>T데이터셰어링 USIM 해지하기</h1>
+            </div>
+            <button class="close-step"><span class="blind">닫기</span></button>
+        </div>
+    </div>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <div class="cont-box">
+                <div class="top-info">
+                    <span class="info-text">T 데이터셰어링 연결된<br />휴대폰 번호</span>
+                    <div class="payment-detail-box mt20">
+                        <div class="detail-inner">
+                            <div class="detail-list type1">
+                                <ul>
+                                    <li>
+                                        <span class="title">휴대폰 번호</span>
+                                        <span class="tx-cont"><span class="fs-type">010-45**-12**</span></span>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <!-- //outarea -->
+            </div>
 
-            </section>
-            <!-- // container -->
+            <hr class="cont-sp type1" aria-hidden="true" />
 
-            <!-- container -->
-            <section id="tdatashare-success" class="container" style="display:none">
-
-                <div class="notibar">
-                    <p class="ttl">해지완료</p>
-                    <div class="step">
-                        <span><em>1</em></span><span class="here"><em>2</em></span>
+            <div class="cont-box">
+                <div class="top-info">
+                    <span class="info-text">T 데이터셰어링 해지하는<br />USIM 번호</span>
+                    <div class="payment-detail-box mt20">
+                        <div class="detail-inner">
+                            <div class="detail-list type1">
+                                <ul>
+                                    <li>
+                                        <span class="title">T데이터셰어링<br />해지 USIM 번호</span>
+                                        <span class="tx-cont"><span class="fs-type">1010-1003-7379-2F</span></span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
-                </div>
-
-                <div class="outarea">
-                    <!-- info-area// -->
-                    <div class="info-area complete">
-                        <p class="txt-type02">감사합니다.<br/>고객님의 <strong>T데이터 셰어링 USIM</strong>이 <br/><strong>해지
-                            완료</strong>
-                            되었습니다.</p>
-                    </div>
-                    <!-- //info-area -->
-
-                    <!-- cacel-shared// -->
-                    <div class="cacel-shared">
-                        <p class="ttl">T 데이터셰어링 해지하는 USIM 번호</p>
-                        <dl>
-                            <dt>해지일시</dt>
-                            <dd class="moebius-bold"><%= date %></dd>
-                        </dl>
-                        <dl>
-                            <dt>T데이터셰어링 해지 <br/>USIM 번호</dt>
-                            <dd class="moebius-bold">1010-100-7379-2F</dd>
-                        </dl>
-                    </div>
-                    <!-- //cacel-shared -->
-                    <div class="btn-area">
-                        <a class="btn-type02 positive fe-common-back">확인</a>
-                    </div>
-                </div>
-                <!-- //outarea -->
-
-            </section>
-            <!-- // container -->
-
-        </div>
-        <!-- // content -->
-        <!-- footer -->
-        <% include ../../../../../common/views/components/footer.component.html %>
-        <!-- // footer -->
-    </div>
-    <!-- // wrap -->
-    <!-- popup-container -->
-    <div id="tdatashare-fail" class="pop-container">
-        <!-- popup-base -->
-        <div class="popup-base" style="display:block;">
-            <div class="container">
-                <div class="head">
-                    <h1>죄송합니다.</h1>
-                    <a class="btn-close fe-common-back"><span class="blind">닫기</span></a>
-                </div>
-                <div class="body">
-                    <div class="message-error">
-                        T데이터셰어링 <strong>USIM 해지 신청이 실패</strong>하였습니다.
-                    </div>
-                    <div class="box-gray">
-                        <ul>
-                            <li><strong>실패사유 :</strong><span>실패사 유실패사유 실패사유 실패사 유실패사유 실패사유</span></li>
-                            <li><strong>에러코드 :</strong><span>ZNXXX00</span></li>
-                        </ul>
-                    </div>
-                    <div class="pop-help-desk">
-                        <h1>도와드릴까요?</h1>
-                        <ul class="list">
-                            <li><a href="#">온라인 상담/문의 문의하기</a></li>
-                            <li><a href="#">T world 고객센터 바로가기</a></li>
-                        </ul>
-                    </div>
-                    <div class="btn-group">
-                        <div class="col1"><a class="btn-type07 fe-common-back">확인</a></div>
+                    <div class="note-comment-3">
+                            <span>
+                                T데이터셰어링 USIM은 해지 후 1개월 이내에 다시 등록할 수
+                                없습니다.<br />
+                                (다른 휴대폰에서도 1개월 이내에 다시 등록할 수 없습니다.)
+                            </span>
                     </div>
                 </div>
             </div>
+
+            <hr class="cont-sp type1" aria-hidden="true" />
+
+            <div class="cont-box">
+                <div class="top-info">
+                    <span class="info-text">T 데이터셰어링 USIM을<br /><em>해지</em>하시겠습니까?</span>
+                </div>
+                <div class="contents-btn">
+                    <ul class="bt-slice item-two">
+                        <li class="bt-white2">
+                            <button>취소</button>
+                        </li>
+                        <li class="bt-red1">
+                            <button>해지</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
-        <!-- // popup-base -->
     </div>
-    <!-- // popup-container -->
+    <!--// #contents -->
+    <%- include('../../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }) %>
 </div>
 
-
-<% include ../../components/javascript.sprint3.component.html %>
+<% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
     var comp = new Tw.MytUsageTdatashareClose($('#myt-usage-tdatashare-close'));
