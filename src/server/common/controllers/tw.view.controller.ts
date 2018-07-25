@@ -100,16 +100,15 @@ abstract class TwViewController {
       this._logger.info(this, '[Session Login]', this._loginService.getSvcInfo());
       this.render(req, res, next, this._loginService.getSvcInfo());
     } else {
-      if ( this._loginService.isExpiredSession(req.session) ) {
-        this._logger.info(this, '[Session expired]');
-        this._loginService.setClientSession(req.session);
-        res.redirect('/auth/logout/expire');
+      // if ( this._loginService.isExpiredSession(req.session) ) {
+      //   this._logger.info(this, '[Session expired]');
+      //   this._loginService.setClientSession(req.session);
+      //   res.redirect('/auth/logout/expire');
+      // }
+      if ( URL[path].login ) {
+        res.send('need login');
       } else {
-        if ( URL[path].login ) {
-          res.send('need login');
-        } else {
-          this.render(req, res, next);
-        }
+        this.render(req, res, next);
       }
     }
   }

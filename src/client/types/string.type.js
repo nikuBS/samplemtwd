@@ -31,7 +31,8 @@ Tw.POPUP_TITLE = {
   SELECT_BANK: '은행선택',
   SELECT_GIFT_AMOUNT: '선물할 금액 선택',
   CHANGE_BILL_GUIDE_TYPE: '어떤 안내서를 보여 드릴까요?',
-  OVER_PAY: '과납 안내 드립니다.'
+  OVER_PAY: '과납 안내 드립니다.',
+  PERIOD_SELECT: '기간선택'
 };
 
 Tw.POPUP_PROPERTY = {
@@ -407,4 +408,7 @@ Tw.BLOCK_TYPE = {
   TMTH_BLOCK: '이번 달 차단',
   REGULAR_UNBLOCK: '다음 달부터 차단 해제',
   REGULAR_BLOCK: '다음 달부터 차단',
+};
+Tw.DATE_FORMAT = {
+  YYYYDD_TYPE_0: 'YYYY년 MM월'
 };

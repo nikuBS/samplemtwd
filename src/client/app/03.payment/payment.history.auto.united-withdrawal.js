@@ -157,7 +157,7 @@ Tw.PaymentHistoryAutoUnitedWithdrawal.prototype = {
     return !v.replace(/^\s+/g, '').length;
   },
 
-  _apiError: function (res) {
-    this.common._apiError(res);
+  _apiError: function (err) {
+    this.common._apiError(err);
   }
 };
