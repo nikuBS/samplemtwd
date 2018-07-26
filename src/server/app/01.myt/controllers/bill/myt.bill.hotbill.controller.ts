@@ -20,29 +20,29 @@ class MyTBillHotBill extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    var type = '';
-    var billAvailable = true;
-    var preBillAvailable = true;
+    let type = '';
+    let billAvailable = true;
+    let preBillAvailable = true;
     switch ( svcInfo.svcAttrCd ) {
       case 'M3':
         type = 'T pocket Fi';
-        if ( new Date().getDate() > 7 ) { //7일까지 보이기
+        if ( new Date().getDate() > 7 ) { // 7일까지 보이기
           preBillAvailable = true;
         }
         break;
       case 'M1':
         type = '휴대폰';
-        //pocketFi: 메월 1일 메세지 표시
+        // pocketFi: 메월 1일 메세지 표시
         if ( new Date().getDate() === 1 ) {
           billAvailable = false;
         }
 
-        if ( new Date().getDate() < 9 ) { //9일부터 보이기
+        if ( new Date().getDate() < 9 ) { // 9일부터 보이기
           preBillAvailable = false;
         }
         break;
       default:
-        //TODO 메뉴에서 거르지 못하고 진입 시 처리
+        // TODO 메뉴에서 거르지 못하고 진입 시 처리
         this.logger.error(this, '[API_ERR]', `Unsupported type '${type}' in the hotbill service.`);
         break;
     }
@@ -58,7 +58,7 @@ class MyTBillHotBill extends TwViewController {
           preBillAvailable: preBillAvailable
         });
       } else {
-        //TODO error처리
+        // TODO error처리
       }
     });
   }
