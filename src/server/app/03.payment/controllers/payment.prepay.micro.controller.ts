@@ -42,7 +42,6 @@ class PaymentPrepayMicroController extends TwViewController {
       }
     }
     result.code = API_CODE.CODE_00;
-    console.log(result);
     return result;
   }
 
