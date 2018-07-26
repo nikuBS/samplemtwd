@@ -59,7 +59,7 @@ class ApiService {
       case API_SERVER.BFF:
         return Object.assign(header, {
           'content-type': 'application/json; charset=UTF-8',
-          cookie: this.makeCookie(),
+          cookie: this.loginService.getServerSession(),
         });
       case API_SERVER.TID:
         return Object.assign(header, {
@@ -74,7 +74,8 @@ class ApiService {
   }
 
   private makeCookie(): string {
-    return this.loginService.getServerSession() + ';' +
+    const serverSession = this.loginService.getServerSession() ? this.loginService.getServerSession() + ';' : '';
+    return serverSession +
       COOKIE_KEY.CHANNEL + '=' + this.loginService.getChannelCookie() + ';' +
       COOKIE_KEY.DEVICE + '=' + this.loginService.getDeviceCookie();
   }
