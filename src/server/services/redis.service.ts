@@ -2,6 +2,7 @@ import session from 'express-session';
 import connect from 'connect-redis';
 import redis from 'redis';
 import EnvHelper from '../utils/env.helper';
+import { COOKIE_KEY } from '../types/bff-common.type';
 
 class RedisService {
   private envRedis = EnvHelper.getEnvironment('REDIS');
@@ -16,7 +17,7 @@ class RedisService {
   }
 
   public middleware = session({
-    key: 'TWM',
+    key: COOKIE_KEY.TWM,
     store: new this.RedisStore(this.redisOption),
     cookie: { maxAge: 60 * 60 * 1000 }, // 1hours
     secret: 'sktechx',

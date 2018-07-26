@@ -13,7 +13,7 @@ export const URL = {
   '/myt/usage/troaming': { login: true, id: '' },
   '/myt/usage/ting': { login: true, id: '' },
   '/usage/24hourdiscount': { login: true, id: '' },
-  '/myt/bill/hotbill': { login: true, id: '' },
+  '/myt/bill/hotbill': { login: true, id: 'MY_03_01_01' }, //실시간 사용요금
   '/myt/bill/guidechange/reissue': { login: true, id: '' },
   '/myt/bill/guidechange/reissue/complete': { login: true, id: '' },
   '/myt/bill/billguide/returnhistory': { login: true, id: '' },
@@ -25,7 +25,7 @@ export const URL = {
   '/myt/bill/billguide/subCallBill': { login: true, id: '' },
   '/myt/bill/billguide/subRoamingBill': { login: true, id: '' },
   '/myt/bill/billguide/subDonationBill': { login: true, id: '' },
-  '/myt/bill/hotbill/child': { login: true, id: '' },
+  '/myt/bill/hotbill/child': { login: true, id: 'MY_03_01_01_01' }, //실시간 사용요금 자녀회선
   '/myt/bill/guidechange': { login: true, id: '' },
   '/myt/bill/guidechange/change': { login: true, id: '' },
   '/myt/bill/guidechange/change-complete': { login: true, id: '' },
@@ -33,7 +33,7 @@ export const URL = {
   '/myt/bill/guidechange/update-complete': { login: true, id: '' },
   // recharge
   '/recharge/refill': { login: true, id: 'DA_01_01_01' }, // 리필하기
-  '/recharge/refill/history': { login: true, id: '' },
+  '/recharge/refill/history': { login: true, id: 'DA_01_02_01' }, //리필 히스토리
   '/recharge/refill/select': { login: true, id: 'DA_01_01_03_01' }, // 리필하기 > 데이터/음성 선택
   '/recharge/refill/complete': { login: true, id: 'DA_01_01_03_02' }, // 리필완료
   '/recharge/refill/error': { login: true, id: 'DA_01_01_03_02' }, // 리필 실패
@@ -98,17 +98,20 @@ export const URL = {
   '/auth/login/service-pwd': { login: true, id: 'CO_01_02_03_01' },
   '/auth/login/service-pwd-fail': { login: true, id: 'CO_01_02_03_01_01' },
   '/auth/login/route': { login: false, id: '' },
-  '/auth/logout/complete': { login: true, id: 'CO_01_03_01' },  // 로그아웃 성공
-  '/auth/logout/expire': { login: true, id: 'CO_01_03_02' },  // 세션 만료
-  '/auth/logout/route': { login: true, id: '' },
+  '/auth/login/easy-aos': { login: false, id: 'CO_01_02_06_01' }, // 간편로그인 안드로이드
+  '/auth/login/easy-ios': { login: false, id: 'CO_01_02_06_02' }, // 간편로그인 IOS
+  '/auth/login/easy-fail': { login: false, id: 'CO_01_02_06_03' },  // 간편로그인 이용불가
+  '/auth/logout/complete': { login: false, id: 'CO_01_03_01' },  // 로그아웃 성공
+  '/auth/logout/expire': { login: false, id: 'CO_01_03_02' },  // 세션 만료
+  '/auth/logout/route': { login: false, id: '' },
   '/auth/member/management': { login: true, id: 'CO_01_05' }, // 회원 정보 관리
   '/auth/signup/guide': { login: false, id: 'CO_01_01' },
   '/auth/tid/login': { login: false, id: '' },
   '/auth/tid/account': { login: true, id: '' },
-  '/auth/tid/change/pw': { login: true, id: '' },
-  '/auth/tid/find/id': { login: false, id: '' },
-  '/auth/tid/find/pw': { login: false, id: '' },
-  '/auth/tid/logout': { login: true, id: '' },
+  '/auth/tid/change-pw': { login: true, id: '' },
+  '/auth/tid/find-id': { login: false, id: '' },
+  '/auth/tid/find-pw': { login: false, id: '' },
+  '/auth/tid/logout': { login: false, id: '' },
   '/auth/tid/signup-local': { login: false, id: '' },
   '/auth/tid/signup-foreigner': { login: false, id: '' },
   '/auth/tid/guide': { login: false, id: '' },

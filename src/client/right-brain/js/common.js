@@ -338,15 +338,6 @@ skt_landing.action = {
       });
     });
   },
-  selecton: function (ta) {
-    ta.on('click', function () {
-      if (ta.find('a').length > 0) {
-        $(this).find('a').addClass('on');
-      } else {
-        $(this).addClass('on');
-      }
-    });
-  },
   toggleon: function (ta) {
     ta.on('click', function (e) {
       e.stopPropagation();
@@ -488,13 +479,6 @@ skt_landing.action = {
       }
   },
   popup: { //popup 공통
-    button_size_check: function () {
-      var btn_size = $('.btn-box a').size();
-      var btn_width = 100 / btn_size;
-      $('.btn-box a').css({
-        'width': parseInt(btn_width) + '%'
-      });
-    },
     open: function (popup_info,callback_open) {
       skt_landing.action.fix_scroll();
       var _this = this;
@@ -517,8 +501,13 @@ skt_landing.action = {
         _this.scroll_chk();
          if(popup_info.hbs == 'popup' || popup_info.hbs == 'dropdown' || popup_info.hbs == 'select'){
           skt_landing.widgets.widget_init('.popup');
+          skt_landing.components.component_init('.popup');
         }else{
           skt_landing.widgets.widget_init('.popup-page');
+          skt_landing.components.component_init('.popup-page');
+        }
+        if(popup_info.hbs == 'dropdown'){
+          skt_landing.action.popup.dropdown_size_chk();
         }
       });
       //skt_landing.action.popup.open({'title':'타이틀','contents':'팝업입니다.','type':[{style_class:'btn-submit',href:'#submit',txt:'확인'},{style_class:'btn-modify',href:'#modify',txt:'수정'},{style_class:'btn-cancel',href:'#cancel',txt:'취소'}]});
@@ -556,12 +545,21 @@ skt_landing.action = {
         $('.popup-closeBtn').off('click').on('click', function () {
           _this.close();
         });
-        $('.popup-sns li a').off('click').on('click', _this.sns);
+        $('.popup-sns li a, .popup-sns li button').off('click').on('click', _this.sns);
         $('.btn-copy-url').off('click').on('click', function () {
           _this.close();
           _this.sns_url_copy();
         });
       });
+    },
+    dropdown_size_chk: function(){
+      var dropdown_list = $('.popup-dropdown .popup-contents').height(),
+          win_box = $(window).height()-$('.btn-box').height()*2;
+      if(dropdown_list > win_box){
+        $('.popup-dropdown').addClass('scrolling');
+      }else{
+        $('.popup-dropdown').removeClass('scrolling');
+      }
     },
     change: function (popup_info) {
       this.close();
@@ -609,21 +607,6 @@ skt_landing.action = {
         }
       });
     }
-  },
-  switch: function (ta) {
-    ta.on('click', function () {
-      if (ta.find('a').length > 0) {
-        if (!$(this).find('a').hasClass('on')) {
-          $(this).find('a').addClass('on');
-          $(this).siblings('li').find('a').removeClass('on');
-        }
-      }
-    });
-  },
-  select_sort: function () {
-    $('.select-sort li a').off('click').on('click', function () {
-      $(this).parent().addClass('on').siblings('li').removeClass('on');
-    });
   },
   iscroll:function(selector, height){
     if(!height){
