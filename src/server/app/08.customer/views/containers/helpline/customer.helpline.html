@@ -17,14 +17,7 @@
 <!--// #skip_navigation -->
 <div class="wrap">
     <!-- #header -->
-    <div id="header" class="header-wrap">
-        <div class="header step-page">
-            <div class="header-ti">
-                <h1>전화상담 예약</h1>
-            </div>
-            <button class="close-step"><span class="blind">닫기</span></button>
-        </div>
-    </div>
+    <%- include('../../../../common/views/components/header.component.html', { title: '전화상담 예약', svcInfo: svcInfo }); %>
     <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap">
@@ -39,20 +32,20 @@
                     <div class="citation-form mt0">
                         <div class="form-cell">
                             <span id="aria-citation-counseltype" class="form-ti">상담유형<span class="point-indicate ml4" aria-hidden="true">*</span></span>
-                            <button class="bt-dropdown big" title="유형 선택" aria-haspopup="true">일반<span class="ico"></span></button>
+                            <button class="bt-dropdown big" id="fe-btn-type" title="유형 선택" aria-haspopup="true">일반<span class="ico"></span></button>
                         </div>
                         <div class="form-cell">
                             <span id="aria-citation-place" class="form-ti">상담지역<span class="point-indicate ml4" aria-hidden="true">*</span></span>
-                            <button class="bt-dropdown big placeholder" title="지역 선택" aria-haspopup="true">지역을 선택해 주세요.<span class="ico"></span></button><!-- 선택된 값이 없는 상태이며 안내문구 노출될 경우 .placeholder 클래스 추가 -->
+                            <button class="bt-dropdown big placeholder" id="fe-btn-area" title="지역 선택" aria-haspopup="true">지역을 선택해 주세요.<span class="ico"></span></button><!-- 선택된 값이 없는 상태이며 안내문구 노출될 경우 .placeholder 클래스 추가 -->
                         </div>
                         <div class="form-cell">
                             <span id="aria-citation-reservations" class="form-ti">예약일시<span class="point-indicate ml4" aria-hidden="true">*</span></span>
                             <span class="inputbox bt-add2">
                                 <span class="input">
-                                    <input type="text" title="날짜" aria-labelledby="aria-citation-reservations" aria-describedby="aria-exp-desc1" value="2018.07.02" readonly>
+                                    <input type="text" title="날짜" aria-labelledby="aria-citation-reservations" aria-describedby="aria-exp-desc1" value="<%= timeInfo.curDate %>" readonly>
                                     <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
                                 </span>
-                                <button class="bt-dropdown big" title="지역 선택" aria-haspopup="true">17:00<span class="ico"></span></button>
+                                <button class="bt-dropdown big" id="fe-btn-time" title="시간 선택" aria-haspopup="true" data-available-times='<%= JSON.stringify(timeInfo.availHours) %>'><%= timeInfo.availHours[0] %>:00<span class="ico"></span></button>
                                 <span class="tx-box"><span id="aria-exp-desc1" class="guide-txt">상담예약은 당일만 가능합니다.</span></span>
                             </span>
                         </div>
