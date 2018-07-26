@@ -53,6 +53,7 @@ class ApiRouter {
 
   private setChannel(req: Request, res: Response, next: NextFunction) {
     const channel = BrowserHelper.isApp(req) ? CHANNEL_TYPE.MOBILE_APP : CHANNEL_TYPE.MOBILE_WEB;
+    this.logger.info(this, '[set cookie]', channel);
     res.cookie(COOKIE_KEY.CHANNEL, channel);
     const resp = {
       code: API_CODE.CODE_00
