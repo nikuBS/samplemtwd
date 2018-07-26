@@ -3,15 +3,7 @@
 * Author: 공자윤 (jayoon.kong@sk.com)
 * Date: 2018.07.26
 %>
-<div id="header" class="header-wrap">
-    <div class="header">
-        <div class="header-ti align-l">
-            <h1>소액결제 선결제하기</h1>
-            <button class="bt-dropdown size2" title="전화번호 선택" aria-haspopup="true">010-46**-10**</button>
-        </div>
-        <button class="prev-step fe-common-back"><span class="blind">이전으로</span></button>
-    </div>
-</div>
+<%- include(‘../../../../common/views/components/header.component.html’, { title: ‘소액결제 선결제하기’, svcInfo: svcInfo }); %>
 <h2 class="blind">내용</h2>
 <div class="container">
     <div class="cont-box nogaps-top">
