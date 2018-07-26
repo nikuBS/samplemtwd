@@ -19,7 +19,6 @@ class AuthLogoutRoute extends TwViewController {
       res.send(query.error_description);
     } else {
       this.loginService.logoutSession().subscribe((resp) => {
-        res.clearCookie('TWM');
         res.redirect(query.target);
       });
 

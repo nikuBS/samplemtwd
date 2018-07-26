@@ -133,17 +133,38 @@ skt_landing.widgets = {
       });
     });
   },
-  widget_slider: function () {
-    /*$('.slider').each(function (idx) {
-      var swiper,
-        tagClass = 'slide-number' + idx,
-        _this = $(this).find('.slider-box').addClass(tagClass);
-      _this.find('.page-total .total').text(_this.find('.swiper-slide').length);
-      swiper = new Swiper('.slider .' + tagClass, {
-        pagination: '.swiper-pagination',
-        paginationClickable: true
+  widget_slider1: function (ta) {
+    var widget = ta ? $(ta).find('.slider1') : $('.slider1');
+    $(widget).each(function(){
+      var _this = $(this).find('.slider');
+      _this.slick({
+        dots: true,
+        arrows: true,
+        infinite: false,
+        speed : 300,
+        centerMode: false,
+        focusOnSelect: false,
+		customPaging: function(slider, i) {
+			return $('<span />').text(i + 1);
+		},
       });
-    });*/
+      
+      var $slick = _this.slick('getSlick');
+      var $slides = $slick.$slides;
+      var slideIndex = $slick.slickCurrentSlide();
+      console.log(_this);
+      $slides.on('click', function () {
+        var $this = $(this);
+        slideIndex = $slides.index($this);
+        $slides.removeClass('slick-current slick-active');
+        $this.addClass('slick-current slick-active');
+      });
+      _this.on('beforeChange', function (e) {
+        setTimeout(function () {
+          $slides.eq(slideIndex).triggerHandler('click');
+        }, 0);
+      });
+    });
   },
   widget_slider2: function () {
     /*$('.slider2').each(function (idx) {
@@ -330,7 +351,7 @@ skt_landing.widgets = {
           setOnList.eq(i).addClass('imp-view');
         }
       }
-      _this.find('.acco-cover')/*.addClass('toggle')*/.find('.acco-box.on').removeClass('on');  // 2018-07-19 default : 모두 닫힘, toggle 여부에 따라 다름
+      _this.find('.acco-cover:not(".focuson")')/*.addClass('toggle')*/.find('.acco-box.on').removeClass('on');  // 2018-07-19 default : 모두 닫힘, toggle 여부에 따라 다름
       _this.find('> .acco-cover > .bt-whole button').on('click',function(){
         if(!$(this).closest('.acco-cover').hasClass('on')){
           $(this).attr('aria-pressed', 'true');
@@ -574,6 +595,7 @@ skt_landing.widgets = {
         $(this).closest('.toggle').find('.toggler').toggle('fast', function(){
             var isVisible = $(this).is(':visible');
             _this.attr('aria-pressed', (isVisible? 'true': 'false'));
+            _this.attr('class', (isVisible? 'btn-toggle open ' : 'btn-toggle'));
         });
     });
   }

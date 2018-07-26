@@ -28,8 +28,8 @@ class MytJoinServicePayClaimInfoPhone extends TwViewController {
   //노출조건
   private _showConditionInfo: any = {};
 
-  private _urlTplInfo:any = {
-    pageRenderView:  'joinService/myt.joinService.payClaimInfo.phone.html'
+  private _urlTplInfo: any = {
+    pageRenderView: 'joinService/myt.joinService.payClaimInfo.phone.html'
   };
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
@@ -38,12 +38,12 @@ class MytJoinServicePayClaimInfoPhone extends TwViewController {
     this.reqQuery = req.query;
     var thisMain = this;
 
-    const p1 = this._getPromiseApi( this.apiService.request(API_CMD.BFF_05_0041, {}), '테스트 api' );
-    const p1_mock = this._getPromiseApiMock( payClaimInfo_BFF_05_0058, 'p1 Mock 데이터' );
+    const p1 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0041, {}), '테스트 api');
+    const p1_mock = this._getPromiseApiMock(payClaimInfo_BFF_05_0058, 'p1 Mock 데이터');
 
-    Promise.all([p1_mock]).then( function(resArr) {
+    Promise.all([p1_mock]).then(function (resArr) {
       console.dir(resArr);
-      thisMain.logger.info(thisMain, `[ Promise.all ] : ` , resArr);
+      thisMain.logger.info(thisMain, `[ Promise.all ] : `, resArr);
 
       /*
       * 실 데이터 사용시
@@ -69,11 +69,11 @@ class MytJoinServicePayClaimInfoPhone extends TwViewController {
       /*
       * Mock 데이터 사용시
        */
-          thisMain.renderView(res, thisMain._urlTplInfo.pageRenderView, {
-            reqQuery: thisMain.reqQuery,
-            svcInfo: thisMain._svcInfo,
-            testInfo: resArr[0].result
-          } );
+      thisMain.renderView(res, thisMain._urlTplInfo.pageRenderView, {
+        reqQuery: thisMain.reqQuery,
+        svcInfo: thisMain._svcInfo,
+        resDataInfo: resArr[0].result
+      });
 
 
     });//Promise.all END
@@ -81,16 +81,16 @@ class MytJoinServicePayClaimInfoPhone extends TwViewController {
   }//render end
 
   //-------------------------------------------------------------[프로미스 생성]
-  public _getPromiseApi(reqObj, msg):any {
+  public _getPromiseApi(reqObj, msg): any {
     let thisMain = this;
-    let tempData:any;
+    let tempData: any;
     let reqObjObservable: Observable<any> = reqObj;
 
     return new Promise((resolve, reject) => {
       Observable.combineLatest(
         reqObjObservable
       ).subscribe({
-        next( reqObjObservable ) {
+        next(reqObjObservable) {
           thisMain.logger.info(thisMain, `[ ${ msg } next ] : `, reqObjObservable);
         },
         error(error) {
@@ -98,21 +98,22 @@ class MytJoinServicePayClaimInfoPhone extends TwViewController {
         },
         complete() {
           thisMain.logger.info(thisMain, `[ ${ msg } complete ] : `, reqObjObservable);
-          resolve( reqObjObservable );
+          resolve(reqObjObservable);
         }
       });
 
     });
   }
+
 //-------------------------------------------------------------[프로미스 생성 - Mock]
-  public _getPromiseApiMock(mockData, msg):any {
-    return new Promise( (resolve, reject) => {
+  public _getPromiseApiMock(mockData, msg): any {
+    return new Promise((resolve, reject) => {
       let ms: number = Math.floor(Math.random() * 1000) + 1;
-      setTimeout( function() {
+      setTimeout(function () {
         console.log(`[ ${ msg } _getPromiseApiMock ] : ` + mockData);
         resolve(mockData);
         //reject('실패');
-      }, ms );
+      }, ms);
     });
   }
 

@@ -63,6 +63,7 @@ class ApiRouter {
   private changeSession(req: Request, res: Response, next: NextFunction) {
     const params = req.body;
     this.logger.info(this, '[chagne session]', params);
+    this.loginService.setCurrentReq(req, res);
     this.apiService.requestChangeSession(params).subscribe((resp) => {
       res.json(resp);
     }, (error) => {
@@ -72,6 +73,7 @@ class ApiRouter {
 
   private svcPasswordLogin(req: Request, res: Response, next: NextFunction) {
     const params = req.body;
+    this.loginService.setCurrentReq(req, res);
     this.apiService.requestSvcPasswordLogin(params).subscribe((resp) => {
       res.json(resp);
     }, (error) => {
@@ -81,6 +83,7 @@ class ApiRouter {
 
   private loginTid(req: Request, res: Response, next: NextFunction) {
     const params = req.body;
+    this.loginService.setCurrentReq(req, res);
     this.apiService.requestLoginTid(params.tokenId, params.state).subscribe((resp) => {
       this.logger.info('[TID login]', resp);
       res.json(resp);
@@ -90,14 +93,15 @@ class ApiRouter {
   }
 
   private logoutTid(req: Request, res: Response, next: NextFunction) {
+    this.loginService.setCurrentReq(req, res);
     this.loginService.logoutSession().subscribe((resp) => {
-      res.clearCookie('TWM');
       res.json({ code: API_CODE.CODE_00 });
     });
   }
 
   private setUserLocks(req: Request, res: Response, next: NextFunction) {
     const params = req.body;
+    this.loginService.setCurrentReq(req, res);
     this.apiService.requestUserLocks(params).subscribe((resp) => {
       res.json(resp);
     }, (error) => {

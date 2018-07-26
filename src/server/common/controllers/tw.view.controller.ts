@@ -5,6 +5,7 @@ import { API_CMD, API_CODE, API_LOGIN_ERROR, API_SVC_PWD_ERROR } from '../../typ
 import LoggerService from '../../services/logger.service';
 import { URL } from '../../types/url.type';
 import FormatHelper from '../../utils/format.helper';
+import { COOKIE_KEY } from '../../types/bff-common.type';
 
 
 abstract class TwViewController {
@@ -100,15 +101,26 @@ abstract class TwViewController {
       this._logger.info(this, '[Session Login]', this._loginService.getSvcInfo());
       this.render(req, res, next, this._loginService.getSvcInfo());
     } else {
-      // if ( this._loginService.isExpiredSession(req.session) ) {
-      //   this._logger.info(this, '[Session expired]');
-      //   this._loginService.setClientSession(req.session);
-      //   res.redirect('/auth/logout/expire');
-      // }
-      if ( URL[path].login ) {
-        res.send('need login');
+      if ( this._loginService.isNewSession() ) {
+        if ( URL[path].login ) {
+          res.send('need login');
+        } else {
+          this.render(req, res, next);
+        }
       } else {
-        this.render(req, res, next);
+        const loginYn = req.cookies[COOKIE_KEY.TWM_LOGIN];
+        if ( !FormatHelper.isEmpty(loginYn) && loginYn === 'Y' ) {
+          this._logger.info(this, '[Session expired]');
+          res.clearCookie(COOKIE_KEY.TWM_LOGIN);
+          res.redirect('/auth/logout/expire');
+        } else {
+          this._logger.info(this, '[Session empty]');
+          if ( URL[path].login ) {
+            res.send('need login');
+          } else {
+            this.render(req, res, next);
+          }
+        }
       }
     }
   }

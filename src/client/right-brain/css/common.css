@@ -1,6 +1,6 @@
 @charset "UTF-8";
 /*Default set*/
-html, body, form, div, p, h1, h2, h3, h4, h5, h6, dl, dt, dd, ul, ol, li, fieldset, a, button, input, table, th, td, figure, hr {
+html, body, form, div, p, h1, h2, h3, h4, h5, h6, dl, dt, dd, ul, ol, li, fieldset, a, button, input, textarea, table, th, td, figure, hr {
   margin: 0;
   padding: 0;
   font-weight: 300;
@@ -241,6 +241,10 @@ input[type=text], input[type=file], input[type=password], input[type=number] {
   width: 98%;
 }
 
+.inputbox.bt-add .input .fileview {
+  color: #808698;
+}
+
 .inputbox.bt-add .bt-box {
   display: table-cell;
   width: 16%;
@@ -250,6 +254,10 @@ input[type=text], input[type=file], input[type=password], input[type=number] {
   border-radius: 0.3125rem;
   background: #fff;
   text-align: center;
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: #757575;
+  white-space: nowrap;
 }
 
 .inputbox.bt-add .bt-box button {
@@ -259,8 +267,23 @@ input[type=text], input[type=file], input[type=password], input[type=number] {
   white-space: nowrap;
 }
 
+.inputbox.bt-add .bt-box input[type=file] {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+}
+
 .inputbox.bt-add .tx-box {
   display: table-row;
+}
+
+.inputbox.bt-add.order .tx-box .guide-txt {
+  width: 119%;
 }
 
 .inputbox.bt-add2 {
@@ -384,26 +407,130 @@ input[type=text], input[type=file], input[type=password], input[type=number] {
   border-radius: 0.3125rem;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
+  border: 1px solid #f5f5f5;
   background: #f5f5f5;
+}
+
+.txfield-combined.focus {
+  border: 1px solid #000;
+  background: #fff;
+}
+
+.txfield-combined.focus .txfield-combined-top input {
+  color: #000;
+}
+
+.txfield-combined.focus .txfield-combined-btm input {
+  color: #000;
+}
+
+.txfield-combined.focus .txfield-combined-btm textarea {
+  color: #000;
+}
+
+.txfield-combined.focus input {
+  color: #000;
+}
+
+.txfield-combined.focus textarea {
+  color: #000;
+}
+
+.txfield-combined.focus .combined-ti {
+  color: #000;
+}
+
+.txfield-combined.focus .combined-information .combined-cell dt, .txfield-combined.focus .combined-information .combined-cell dd {
+  color: #000;
 }
 
 .txfield-combined > div {
   position: relative;
+  font-size: 0.9375rem;
 }
 
-.txfield-combined input[type="text"] {
+.txfield-combined .byte {
+  padding: 0;
+  font-size: 0.8125rem;
+  font-weight: 400;
+  color: #8f8f8f;
+}
+
+.txfield-combined .txfield-combined-top input {
   display: block;
   width: 100%;
   padding: 0.75rem 0;
+  font-size: 0.9375rem;
+  color: #8f8f8f;
 }
 
-.txfield-combined textarea {
-  padding: 0.75rem 0;
-  background: none;
+.txfield-combined .txfield-combined-top .byte {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0.8125rem 0;
 }
 
 .txfield-combined .txfield-combined-btm {
+  padding: 0.75rem 0;
   border-top: 1px solid #e1e1e1;
+}
+
+.txfield-combined .txfield-combined-btm textarea {
+  padding: 0;
+  font-size: 0.9375rem;
+  font-weight: 400;
+  color: #8f8f8f;
+  background: none;
+}
+
+.txfield-combined .txfield-combined-btm textarea::-webkit-input-placeholder {
+  font-size: 0.9375rem;
+}
+
+.txfield-combined .combined-ti {
+  margin-bottom: 0.3125rem;
+  font-size: 0.9375rem;
+  color: #8f8f8f;
+  letter-spacing: -1.5px;
+}
+
+.txfield-combined .combined-information {
+  width: 100%;
+}
+
+.txfield-combined .combined-information .combined-cell {
+  overflow: hidden;
+}
+
+.txfield-combined .combined-information .combined-cell dt, .txfield-combined .combined-information .combined-cell dd {
+  float: left;
+  color: #8f8f8f;
+}
+
+.txfield-combined .combined-information .combined-cell dt {
+  line-height: 1.625rem;
+}
+
+.txfield-combined .combined-information .combined-cell dd input {
+  display: block;
+  height: 1.625rem;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  padding-left: 0.625rem;
+  font-size: 0.9375rem;
+}
+
+.txfield-combined .combined-information .combined-cell dd textarea {
+  padding: 0.1875rem 0;
+}
+
+.txfield-combined .combined-information .combined-cell:last-of-type dd {
+  width: 75.5%;
+}
+
+.txfield-combined .combined-information .combined-cell:last-of-type dd textarea {
+  padding-left: 0.625rem;
 }
 
 .select-list {
@@ -492,8 +619,12 @@ input::-webkit-scrollbar, textarea::-webkit-scrollbar {
   height: 0;
 }
 
-input::-webkit-scrollbar-thumb, textarea::-webkit-scrollbar-thumb {
+input::-webkit-scrollbar-thumb, ::-webkit-scrollbar-thumb {
   background: none;
+}
+
+textarea::-webkit-input-placeholder {
+  color: #8f8f8f;
 }
 
 input + .hyphen {
@@ -570,13 +701,10 @@ textarea {
   -webkit-box-sizing: border-box;
   border-radius: 0.25rem;
   resize: none;
-  font-size: 13px;
+  font-size: 0.9375rem;
   color: #8f8f8f;
+  outline: 0;
   background-color: #f5f5f5;
-}
-
-textarea:focus {
-  border: 1px solid #002a7b;
 }
 
 .box-txarea {
@@ -757,6 +885,10 @@ a, a:link, a:visited, a:active, a:hover {
 
 .inline {
   display: inline-block;
+}
+
+.block {
+  display: block;
 }
 
 button {
@@ -1742,6 +1874,19 @@ h1.blind, h2.blind, h3.blind, h4.blind, h5.blind, h6.blind {
   vertical-align: baseline !important;
 }
 
+/* text-align */
+.tl {
+  text-align: left !important;
+}
+
+.tc {
+  text-align: center !important;
+}
+
+.tr {
+  text-align: right !important;
+}
+
 /* notice ico */
 .notice-triangle {
   position: relative;
@@ -1761,6 +1906,106 @@ h1.blind, h2.blind, h3.blind, h4.blind, h5.blind, h6.blind {
   width: 1.5625rem;
   height: 1.5625rem;
   background: url(/img/ico/ico-group.png) no-repeat -1.5625rem -45.375rem;
+  background-size: 3.125rem;
+}
+
+/* 첨부파일 리스트 */
+.box-file-addlist {
+  position: relative;
+}
+
+.box-file-addlist .addlist-cell {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.box-file-addlist .file-addlist-top {
+  display: table;
+  width: 100%;
+  padding: 1.375rem 0 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.box-file-addlist .file-addlist-top .ti {
+  font-size: 0.875rem;
+  font-weight: 400;
+}
+
+.box-file-addlist .file-addlist-top .bt-file {
+  float: right;
+  padding: 0 0.75rem;
+  height: 2.5rem;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  border: 1px solid #cfcfcf;
+  border-radius: 0.3125rem;
+  font-weight: 400;
+  font-size: 0.9375rem;
+  color: #757575;
+}
+
+.box-file-addlist .file-addlist {
+  display: table;
+  width: 100%;
+  margin-top: 1.375rem;
+}
+
+.box-file-addlist .file-addlist li {
+  display: table-row;
+}
+
+.box-file-addlist .file-addlist li:first-of-type .addlist-cell {
+  border-top: 1px solid #e1e1e1;
+}
+
+.box-file-addlist .file-addlist li .addlist-cell {
+  padding: 1.25rem 0;
+  border-bottom: 1px solid #e1e1e1;
+  background: #f4fdff;
+  text-align: center;
+}
+
+.box-file-addlist .file-addlist li .addlist-cell:nth-of-type(1) {
+  width: 20%;
+}
+
+.box-file-addlist .file-addlist li .addlist-cell:nth-of-type(2) {
+  width: 65%;
+  text-align: left;
+}
+
+.box-file-addlist .file-addlist li .addlist-cell:nth-of-type(3) {
+  width: 15%;
+}
+
+.box-file-addlist .file-addlist li .addlist-cell .file-name {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: #225dc8;
+}
+
+.box-file-addlist .file-addlist li .addlist-cell .file-byte {
+  font-size: 0.8125rem;
+  font-weight: 400;
+  color: #757575;
+}
+
+.box-file-addlist .file-addlist li .addlist-cell .ico-file-img {
+  display: inline-block;
+  width: 1.5625rem;
+  height: 1.5625rem;
+  background: url(/img/ico/ico-group.png) no-repeat -1.5625rem -46.875rem;
+  background-size: 3.125rem;
+}
+
+.box-file-addlist .file-addlist li .addlist-cell .bt-file-del {
+  display: inline-block;
+  width: 1.5625rem;
+  height: 1.5625rem;
+  vertical-align: middle;
+  background: url(/img/ico/ico-group.png) no-repeat -1.5625rem -48.4375rem;
   background-size: 3.125rem;
 }
 
@@ -2469,6 +2714,12 @@ a.ui-button:active,
   font-size: 0.9375rem;
 }
 
+.bt-indiv button.indiv-single {
+  width: 100%;
+  font-weight: 700;
+  font-size: 0.9375rem;
+}
+
 .bt-indiv.bt-red1 {
   background: #df3636;
 }
@@ -2664,6 +2915,11 @@ a.ui-button:active,
 .ti-desc .num {
   font-family: Helvetica Neue, Roboto, sans-serif;
   vertical-align: baseline;
+}
+
+.ti-normal {
+  font-size: 1.25rem;
+  font-weight: 300;
 }
 
 .loading {
@@ -3043,4 +3299,24 @@ a.ui-button:active,
 
 .bar-chart-hoz .data-bar.violet {
   background-color: #c73fff;
+}
+
+.empty-cont {
+  position: relative;
+  text-align: center;
+}
+
+.empty-cont .desc {
+  margin: 1.25rem 0 0 0;
+  font-size: 0.9375rem;
+  color: #8f8f8f;
+  text-align: center;
+}
+
+.empty-cont .ico {
+  display: inline-block;
+  width: 5rem;
+  height: 5rem;
+  background: url(/img/ico/ico-illustration.png) no-repeat -3.0625rem -47.75rem;
+  background-size: 55.8125rem;
 }
