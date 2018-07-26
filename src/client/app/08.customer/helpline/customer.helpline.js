@@ -17,6 +17,7 @@ Tw.CustomerHelpline = function (rootEl) {
 };
 
 Tw.CustomerHelpline.prototype = {
+  PHONE_REGEX: /^0\d{8,10}$/,
   _init: function () {
     this._availableTimes = this.$btnTime.data('available-times');
     this._reservationTime = this._availableTimes[0];
@@ -25,12 +26,16 @@ Tw.CustomerHelpline.prototype = {
 
   _bindEvent: function () {
     this.$container.on('click', '.form-cell button', $.proxy(this._openSelectPopup, this));
+    this.$areaPhone.on('keyup', 'input', $.proxy(this._handlePhoneType, this));
+    this.$areaPhone.on('change', 'input', $.proxy(this._validatePhone, this));
   },
 
   _cachedElement: function () {
     this.$btnType = this.$container.find('#fe-btn-type');
     this.$btnArea = this.$container.find('#fe-btn-area');
     this.$btnTime = this.$container.find('#fe-btn-time');
+    this.$btnSubmit = this.$container.find('.bt-red1 button');
+    this.$areaPhone = this.$container.find('.inputbox.mt10');
   },
 
   _openSelectPopup: function (e) {
@@ -51,11 +56,11 @@ Tw.CustomerHelpline.prototype = {
       'select': [
         {
           'options': [
-            { 'title': Tw.HELPLINE_TYPE.GENERAL, checked: this._reservationType == 0, value: 0, text: Tw.HELPLINE_TYPE.GENERAL },
-            { 'title': Tw.HELPLINE_TYPE.ROAMING, checked: this._reservationType == 1, value: 1, text: Tw.HELPLINE_TYPE.ROAMING },
-            { 'title': Tw.HELPLINE_TYPE.QUALITY, checked: this._reservationType == 2, value: 2, text: Tw.HELPLINE_TYPE.QUALITY }
+            { 'title': Tw.HELPLINE_TYPE.GENERAL, checked: this._reservationType === 0, value: 0, text: Tw.HELPLINE_TYPE.GENERAL },
+            { 'title': Tw.HELPLINE_TYPE.ROAMING, checked: this._reservationType === 1, value: 1, text: Tw.HELPLINE_TYPE.ROAMING },
+            { 'title': Tw.HELPLINE_TYPE.QUALITY, checked: this._reservationType === 2, value: 2, text: Tw.HELPLINE_TYPE.QUALITY }
           ]
-        },
+        }
       ],
       'bt_num': 'one',
       'type': [{
@@ -75,7 +80,7 @@ Tw.CustomerHelpline.prototype = {
         { 'attr': 'data-area-code="5"', text: Tw.HELPLINE_AREA.CENTER },
         { 'attr': 'data-area-code="4"', text: Tw.HELPLINE_AREA.EAST },
         { 'attr': 'data-area-code="3"', text: Tw.HELPLINE_AREA.DAEGU },
-        { 'attr': 'data-area-code="2"', text: Tw.HELPLINE_AREA.BUSAN },
+        { 'attr': 'data-area-code="2"', text: Tw.HELPLINE_AREA.BUSAN }
       ]
     }, $.proxy(this._handleSelectArea, this));
   },
@@ -115,6 +120,7 @@ Tw.CustomerHelpline.prototype = {
       this.$btnArea.text(e.target.innerText);
       this.$btnArea.removeClass('placeholder');
     }
+    this._setSubmitState();
     this._popupService.close();
   },
 
@@ -125,6 +131,7 @@ Tw.CustomerHelpline.prototype = {
       this._reservationTime = selectedTime;
       this.$btnTime.text(selectedTime + ':00');
     }
+    this._setSubmitState();
     this._popupService.close();
   },
 
@@ -136,7 +143,43 @@ Tw.CustomerHelpline.prototype = {
       this._reservationType = selectedType;
       this.$btnType.text(selectedItem.attr('title'));
     }
+    this._setSubmitState();
     this._popupService.close();
+  },
+
+  _handlePhoneType: function (e) {
+    this._reservationPhoneNum = e.target.value;
+    this._setSubmitState();
+  },
+
+  _validatePhone: function () {
+    var $errorText = this.$areaPhone.find('#aria-exp-desc3');
+    var $input = this.$areaPhone.find('input');
+    var errorState = this.$areaPhone.hasClass('error');
+
+    if (!this.PHONE_REGEX.test(this._reservationPhoneNum)) {
+      if (!errorState) {
+        this.$areaPhone.addClass('error');
+        $input.attr('aria-describedby', 'aria-exp-desc2 aria-exp-desc3');
+        $errorText.removeClass('none');
+      }
+    } else {
+      if (errorState) {
+        this.$areaPhone.removeClass('error');
+        $input.attr('aria-describedby', 'aria-exp-desc2');
+        $errorText.addClass('none');
+      }
+    }
+  },
+
+  _setSubmitState: function () {
+    var disabled = this.$btnSubmit.attr('disabled');
+
+    if (this._reservationArea && this._reservationPhoneNum) {
+      if (disabled) this.$btnSubmit.attr('disabled', false);
+    } else {
+      if (!disabled) this.$btnSubmit.attr('disabled', true);
+    }
   },
 
   _getTimeData: function (time) {
@@ -147,4 +190,4 @@ Tw.CustomerHelpline.prototype = {
       text: time + ':00'
     };
   }
-}
+};

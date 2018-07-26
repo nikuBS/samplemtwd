@@ -17,7 +17,14 @@
 <!--// #skip_navigation -->
 <div class="wrap">
     <!-- #header -->
-    <%- include('../../../../common/views/components/header.component.html', { title: '전화상담 예약', svcInfo: svcInfo }); %>
+    <div id="header" class="header-wrap">
+        <div class="header step-page">
+            <div class="header-ti">
+                <h1>전화상담 예약</h1>
+            </div>
+            <button class="close-step"><span class="blind">닫기</span></button>
+        </div>
+    </div>
     <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap">
@@ -81,7 +88,7 @@
                         <button>이전</button>
                     </li>
                     <li class="bt-red1">
-                        <button>예약하기</button>
+                        <button disabled="true">예약하기</button>
                     </li>
                 </ul>
             </div>
