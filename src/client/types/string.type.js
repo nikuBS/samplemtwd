@@ -225,7 +225,8 @@ Tw.MSG_MYT = {
     EMAIL_INT: '<img src="/img/dummy/ex_preview5.jpg" alt="요금 안내서 이메일서비스">', // 이메일 (인터넷/집전화/IPTV , T-WIBRO)
     ETC_HP: '<img src="/img/dummy/ex_preview10.jpg" alt="요금 안내서 우편서비스">', // 기타(우편) : 휴대폰
     ETC_INT: '<img src="/img/dummy/ex_preview4.jpg" alt="요금 안내서 우편서비스">', // 기타(우편) : (인터넷/집전화/IPTV , T-WIBRO)
-  }
+  },
+  JOIN_SERVICE_PROTECT_TEST: '확인 Confirm 팝업(변경필요)', // 내용 확정시 변경 필요
 };
 
 Tw.MSG_RECHARGE = {

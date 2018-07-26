@@ -26,7 +26,7 @@ Tw.MyTJSProtectInquiry.prototype = {
 
   _onOkClicked: function (/*event*/) {
     // 비밀번호 확인
-    this._popupService.openConfirm(Tw.POPUP_TITLE.NOTIFY, '비밀번호가 확인 팝업(변경필요)', null, null, $.proxy(this._onOkPopupClicked, this));
+    this._popupService.openConfirm(Tw.POPUP_TITLE.NOTIFY, Tw.MSG_MYT.JOIN_SERVICE_PROTECT_TEST, null, null, $.proxy(this._onOkPopupClicked, this));
   },
 
   _onOkPopupClicked: function () {
