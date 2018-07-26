@@ -13,20 +13,32 @@ export const URL = {
   '/myt/usage/troaming': { login: true, id: '' },
   '/myt/usage/ting': { login: true, id: '' },
   '/usage/24hourdiscount': { login: true, id: '' },
-  '/myt/bill/hotbill': { login: true, id: '' },
+  '/myt/bill/hotbill': { login: true, id: 'MY_03_01_01' }, //실시간 사용요금
   '/myt/bill/guidechange/reissue': { login: true, id: '' },
   '/myt/bill/guidechange/reissue/complete': { login: true, id: '' },
   '/myt/bill/billguide/returnhistory': { login: true, id: '' },
   '/myt/bill/billguide': { login: true, id: '' },
-  '/myt/bill/hotbill/child': { login: true, id: '' },
+  '/myt/bill/billguide/subDetailSpecification': { login: true, id: '' },
+  '/myt/bill/billguide/subSelPayment': { login: true, id: '' },
+  '/myt/bill/billguide/subSusRelease': { login: true, id: '' },
+  '/myt/bill/billguide/subChildBill': { login: true, id: '' },
+  '/myt/bill/billguide/subCallBill': { login: true, id: '' },
+  '/myt/bill/billguide/subRoamingBill': { login: true, id: '' },
+  '/myt/bill/billguide/subDonationBill': { login: true, id: '' },
+  '/myt/bill/hotbill/child': { login: true, id: 'MY_03_01_01_01' }, //실시간 사용요금 자녀회선
   '/myt/bill/guidechange': { login: true, id: '' },
   '/myt/bill/guidechange/change': { login: true, id: '' },
   '/myt/bill/guidechange/change-complete': { login: true, id: '' },
   '/myt/bill/guidechange/update': { login: true, id: '' },
   '/myt/bill/guidechange/update-complete': { login: true, id: '' },
+  '/myt/bill/history/micro': { login: true, id: 'MY_02_03_04_01' }, // 나의 요금 > 소액결제 이용내역
+  '/myt/bill/history/micro/password': { login: true, id: 'MY_02_03_04_01_05' }, // 나의 요금 > 소액결제 이용내역 > 소액결제 비밀번호 번경
+  '/myt/bill/history/micro/limit': { login: true, id: 'MY_02_03_04_01_06' }, // 나의 요금 > 소액결제 이용내역 > 소액결제 한도 변경
+  '/myt/bill/history/contents': { login: true, id: 'My_02_03_05_01' },  // 나의 요금 > 콘텐츠 이용료 이용내역
+  '/myt/bill/history/contents/limit': { login: true, id: 'My_02_03_05_01_02' },  // 나의 요금 > 콘텐츠 이용료 이용내역 > 콘텐츠 이용 한도 변경
   // recharge
   '/recharge/refill': { login: true, id: 'DA_01_01_01' }, // 리필하기
-  '/recharge/refill/history': { login: true, id: '' },
+  '/recharge/refill/history': { login: true, id: 'DA_01_02_01' }, //리필 히스토리
   '/recharge/refill/select': { login: true, id: 'DA_01_01_03_01' }, // 리필하기 > 데이터/음성 선택
   '/recharge/refill/complete': { login: true, id: 'DA_01_01_03_02' }, // 리필완료
   '/recharge/refill/error': { login: true, id: 'DA_01_01_03_02' }, // 리필 실패
@@ -77,8 +89,11 @@ export const URL = {
   '/customer/prevent-damage': { login: false, id: 'CI_07_01' }, // 이용자 피해예방 센터 메인
   '/customer/prevent-damage/guide': { login: false, id: 'CI_07_03' }, // 이용자 피해예방 가이드
   '/customer/prevent-damage/guide/view': { login: false, id: 'CI_07_05' }, // 이용자 피해예방 가이드 - 상세
+  '/customer/prevent-damage/latest-warning': { login: false, id: 'CI_07_07' },  // 최신 이용자 피해예방 주의보
+  '/customer/prevent-damage/latest-warning/view': { login: false, id: 'CI_07_08' },  // 최신 이용자 피해예방 주의보 - 상세
   '/customer/prevent-damage/useful-service': { login: false, id: 'CI_07_09' },  // 유용한 부가서비스
   '/customer/prevent-damage/relate-site': { login: false, id: 'CI_07_10' }, // 이용자 피해예방 관련 사이트
+  '/customer/helpline': { login: false, id: 'CI_05_01' }, // 전화상담예약
   // auth
   '/auth/line': { login: true, id: 'CO_01_05_02' }, // 회선관리
   '/auth/line/edit': { login: true, id: 'CO_01_05_02_01' }, // 회선편집
@@ -88,20 +103,23 @@ export const URL = {
   '/auth/login/fail': { login: false, id: 'CO_01_02_01_01' },  // 로그인 실패
   '/auth/login/dormancy': { login: false, id: 'CO_01_02_02' },
   '/auth/login/find-id-pwd': { login: false, id: 'CO_01_04' },
-  '/auth/login/service-pwd': { login: true, id: 'CO_01_02_03_01' },
-  '/auth/login/service-pwd-fail': { login: true, id: 'CO_01_02_03_01_01' },
+  '/auth/login/service-pwd': { login: false, id: 'CO_01_02_03_01' },
+  '/auth/login/service-pwd-fail': { login: false, id: 'CO_01_02_03_01_01' },
   '/auth/login/route': { login: false, id: '' },
-  '/auth/logout/complete': { login: true, id: 'CO_01_03_01' },  // 로그아웃 성공
-  '/auth/logout/expire': { login: true, id: 'CO_01_03_02' },  // 세션 만료
-  '/auth/logout/route': { login: true, id: '' },
+  '/auth/login/easy-aos': { login: false, id: 'CO_01_02_06_01' }, // 간편로그인 안드로이드
+  '/auth/login/easy-ios': { login: false, id: 'CO_01_02_06_02' }, // 간편로그인 IOS
+  '/auth/login/easy-fail': { login: false, id: 'CO_01_02_06_03' },  // 간편로그인 이용불가
+  '/auth/logout/complete': { login: false, id: 'CO_01_03_01' },  // 로그아웃 성공
+  '/auth/logout/expire': { login: false, id: 'CO_01_03_02' },  // 세션 만료
+  '/auth/logout/route': { login: false, id: '' },
   '/auth/member/management': { login: true, id: 'CO_01_05' }, // 회원 정보 관리
   '/auth/signup/guide': { login: false, id: 'CO_01_01' },
   '/auth/tid/login': { login: false, id: '' },
   '/auth/tid/account': { login: true, id: '' },
-  '/auth/tid/change/pw': { login: true, id: '' },
-  '/auth/tid/find/id': { login: false, id: '' },
-  '/auth/tid/find/pw': { login: false, id: '' },
-  '/auth/tid/logout': { login: true, id: '' },
+  '/auth/tid/change-pw': { login: true, id: '' },
+  '/auth/tid/find-id': { login: false, id: '' },
+  '/auth/tid/find-pw': { login: false, id: '' },
+  '/auth/tid/logout': { login: false, id: '' },
   '/auth/tid/signup-local': { login: false, id: '' },
   '/auth/tid/signup-foreigner': { login: false, id: '' },
   '/auth/tid/guide': { login: false, id: '' },

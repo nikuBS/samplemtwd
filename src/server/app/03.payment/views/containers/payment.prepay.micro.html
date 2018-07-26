@@ -13,7 +13,26 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div id="payment-prepay-micro"></div>
+<div id="payment-prepay-micro" class="wrap">
+    <!-- #contents -->
+    <div id="main" class="container-wrap">
+        <% include ../components/prepay/payment.prepay.home.component.html %>
+    </div>
+    <div id="step1-prepay" class="container-wrap" style="display:none;">
+        <% include ../components/prepay/payment.prepay.input.component.html %>
+    </div>
+    <div id="step1-auto-prepay" class="container-wrap" style="display:none;">
+        <% include ../components/prepay/payment.prepay.auto.component.html %>
+    </div>
+    <div id="complete-prepay" class="container-wrap" style="display:none;">
+        <% include ../components/prepay/payment.prepay.complete.component.html %>
+    </div>
+    <div id="error" class="container-wrap" style="display:none;">
+        <% include ../components/prepay/payment.prepay.error.component.html %>
+    </div>
+    <!--// #contents -->
+    <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
+</div>
 <% include ../components/javascript.component.html %>
 <script>
   $(document).ready(function () {

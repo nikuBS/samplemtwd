@@ -121,7 +121,8 @@ Tw.PaymentHistoryAuto.prototype = {
         o.payStateColorClass = 'gray-com';
         break;
       case Tw.MSG_PAYMENT.HISTORY_PROCESS_TYPE_WITHDRAWAL_OK :
-        o.isDone = true;
+        o.drwErrCdNm = Tw.MSG_PAYMENT.HISTORY_PROCESS_TYPE_WITHDRAWAL_DONE;
+        o.isIng = true;
         o.payStateColorClass = 'payment-com';
         break;
       default :

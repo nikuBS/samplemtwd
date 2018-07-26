@@ -5,7 +5,10 @@ export const CHANNEL_TYPE = {
 
 export const COOKIE_KEY = {
   DEVICE: 'TWM_DEVICE',
-  CHANNEL: 'TWM_CHANNEL'
+  CHANNEL: 'TWM_CHANNEL',
+  TWM_LOGIN: 'TWM_LOGIN',
+  TWM: 'TWM',
+  SESSION: 'SESSION'
 };
 
 export const SVC_CD = {
@@ -119,6 +122,11 @@ export enum PAYMENT_OPTION_TEXT {
 export enum AUTO_CHARGE_CODE {
   USE = 'U',
   UNUSE = 'D'
+}
+
+export enum PREPAY_TITLE {
+  MICRO = '소액결제',
+  CONTENTS = '콘텐츠이용료'
 }
 
 export const BILL_GUIDE_TYPE = {

@@ -1,0 +1,83 @@
+<%#
+* FileName: customer.preventdamage.relatesite.html
+* Author: 양지훈 (jihun202@sk.com)
+* Date: 2018.07.23
+%>
+<% include ../../components/start.component.html %>
+<div class="wrap">
+    <%- include('../../../../common/views/components/header.component.html', { title: '유용한 부가서비스', svcInfo: svcInfo }) %>
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <hr class="cont-sp type1" aria-hidden="true" />
+
+            <!-- .cont-box -->
+            <div class="cont-box nogaps-btm">
+                <div class="contents-info-list">
+                    <p class="ti-desc mb0">상담/신고기관</p>
+                </div>
+
+                <div class="link-group-box">
+                    <ul class="link-group-list thin">
+                        <li>
+                            <button class="link-group-btn">개인정보 침해 신고센터</button>
+                        </li>
+                        <li>
+                            <button class="link-group-btn">KISA 불법스팸 대응센터</button>
+                        </li>
+                        <li>
+                            <button class="link-group-btn">KISA보호나라&amp;KrCERT</button>
+                        </li>
+                        <li>
+                            <button class="link-group-btn">명의도용 방지 서비스</button>
+                        </li>
+                        <li>
+                            <button class="link-group-btn">휴대폰 A/S 결제 중재센터</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!--// .cont-box -->
+            <hr class="cont-sp type1" aria-hidden="true" />
+
+            <!-- .cont-box -->
+            <div class="cont-box nogaps-btm">
+                <div class="contents-info-list">
+                    <p class="ti-desc mb0">관련기관</p>
+                </div>
+
+                <div class="link-group-box">
+                    <ul class="link-group-list thin">
+                        <li>
+                            <button class="link-group-btn">정보통신망법</button>
+                        </li>
+                        <li>
+                            <button class="link-group-btn">방송통신 위원회</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!--// .cont-box -->
+            <hr class="cont-sp type1" aria-hidden="true" />
+
+            <!-- .cont-box -->
+            <div class="cont-box nogaps-hoz">
+                <div class="mark-acquisition">
+                    <span class="icon"></span>
+                    <span class="txt">PIMS 개인정보 보호 관리체계 인증마크 획득</span>
+                </div>
+            </div>
+            <!--// .cont-box -->
+        </div>
+    </div>
+    <!--// #contents -->
+    <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }) %>
+</div>
+<% include ../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    var comp = new Tw.CustomerPreventdamageRelatesite($('.wrap'));
+  });
+</script>
+<% include ../../components/end.component.html %>
