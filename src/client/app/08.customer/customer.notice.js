@@ -47,7 +47,7 @@ Tw.CustomerNotice.prototype = {
       'bt_num': 'one',
       'type': [{
         style_class: 'bt-red1 fe-btn-apply-category',
-        txt: '확인'
+        txt: Tw.BUTTON_LABEL.CONFIRM
       }]
     }, $.proxy(this._categoryPopupBindEvent, this));
   },

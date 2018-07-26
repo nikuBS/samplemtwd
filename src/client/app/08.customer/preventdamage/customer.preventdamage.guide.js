@@ -20,7 +20,7 @@ Tw.CustomerPreventdamageGuide.prototype = {
   },
 
   _bindEvent: function() {
-    //this._popupService.close();
+    this._popupService.close();
     this.$btnCategory.on('click', $.proxy(this._openCategorySelectPopup, this));
   },
 
@@ -43,7 +43,7 @@ Tw.CustomerPreventdamageGuide.prototype = {
       'bt_num': 'one',
       'type': [{
         style_class: 'bt-red1 fe-btn-apply-category',
-        txt: '확인'
+        txt: Tw.BUTTON_LABEL.CONFIRM
       }]
     }, $.proxy(this._categoryPopupBindEvent, this));
   },

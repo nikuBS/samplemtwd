@@ -439,7 +439,7 @@ Tw.HELPLINE_TYPE = {
   GENERAL: '일반',
   ROAMING: '로밍',
   QUALITY: '통화품질 상담'
-}
+};
 
 Tw.HELPLINE_AREA = {
   CAPITAL: '수도권 (서울, 경기, 인천, 강원)',
@@ -447,4 +447,4 @@ Tw.HELPLINE_AREA = {
   EAST: '서부 (전남, 전북, 광주, 제주)',
   DAEGU: '대구 (경북, 대구)',
   BUSAN: '부산 (경남, 울산, 부산)',
-}
+};
