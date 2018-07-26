@@ -140,6 +140,15 @@ Tw.API_CMD = {
   BFF_07_0063: { path: '/core-bill/v1/auto-payments', method: Tw.API_METHOD.DELETE },
   BFF_07_0065: { path: '/core-bill/v1/autopay/pay-cycl-chg/args-0', method: Tw.API_METHOD.PUT },
   BFF_07_0068: { path: '/core-bill/v1/autopay/card-info/args-0', method: Tw.API_METHOD.GET },
+  BFF_07_0073: { path: '/core-bill/v1/microPrepay-requests', method: Tw.API_METHOD.GET },
+  BFF_07_0074: { path: '/core-bill/v1/microPrepay', method: Tw.API_METHOD.POST },
+  BFF_07_0076: { path: '/core-bill/v1/microPrepay-auto-req', method: Tw.API_METHOD.POST },
+  BFF_07_0077: { path: '/core-bill/v1/microPrepay-auto-delete', method: Tw.API_METHOD.POST },
+  BFF_07_0081: { path: '/core-bill/v1/useContentsPrepay-requests', method: Tw.API_METHOD.GET },
+  BFF_07_0082: { path: '/core-bill/v1/useContentsPrepay', method: Tw.API_METHOD.POST },
+  BFF_07_0083: { path: '/core-bill/v1/useContentsPrepay-auto-req', method: Tw.API_METHOD.POST },
+  BFF_07_0084: { path: '/core-bill/v1/useContentsPrepay-auto-delete', method: Tw.API_METHOD.POST },
+
   // TEST
   GET: { path: '/posts', method: Tw.API_METHOD.GET },
   GET_PARAM: { path: '/comments', method: Tw.API_METHOD.GET },

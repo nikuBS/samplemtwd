@@ -3,128 +3,127 @@
 * Author: 공자윤 (jayoon.kong@sk.com)
 * Date: 2018.07.25
 %>
-<!-- #contents -->
-<div id="contents" class="container-wrap">
-    <h2 class="blind">내용</h2>
-    <div class="container">
-        <div class="cont-box noborder square">
-            <div class="payment-info">
-                <h3 class="info-ti"><%= currentMonth %>월 <%= title %></h3>
-                <div class="info-btn">
-                    <button class="bt-link-tx fe-get-detail" title="<%= currentMonth %>월 <%= title %> 상세보기" aria-haspopup="true" disabled="disabled">상세보기<span class="ico"></span></button>
-                </div>
-                <ul class="bt-slice fe-get-remain-btn-wrap">
-                    <li class="bt-white1">
-                        <button class="fe-get-remain-btn">선결제 가능 잔여한도 조회하기</button>
-                    </li>
-                </ul>
-                <div class="payment-detail-wrap fe-remain-info-wrap none">
-                    <div class="payment-detail-box">
-                        <div class="detail-inner top">
-                            <div class="detail-list">
-                                <ul>
-                                    <li>
-                                        <span class="title">잔여한도</span>
-                                        <span class="tx-cont"><strong class="num fe-remain-info"></strong> 원</span>
-                                    </li>
-                                    <li>
-                                        <span class="tx-cont"><button class="btn-choice fe-change-limit">이용한도변경</button></span>
-                                    </li>
-                                </ul>
-                            </div>
+<div id="header" class="header-wrap">
+    <div class="header">
+        <div class="header-ti align-l">
+            <h1>소액결제 선결제하기</h1>
+            <button class="bt-dropdown size2" title="전화번호 선택" aria-haspopup="true">010-46**-10**</button>
+        </div>
+        <button class="prev-step fe-common-back"><span class="blind">이전으로</span></button>
+    </div>
+</div>
+<h2 class="blind">내용</h2>
+<div class="container">
+    <div class="cont-box noborder square">
+        <div class="payment-info">
+            <h3 class="info-ti fe-main-title"><%= currentMonth %>월 <%= title %></h3>
+            <div class="info-btn">
+                <button class="bt-link-tx fe-get-detail" title="<%= currentMonth %>월 <%= title %> 상세보기" aria-haspopup="true" disabled="disabled">상세보기<span class="ico"></span></button>
+            </div>
+            <ul class="bt-slice fe-get-remain-btn-wrap">
+                <li class="bt-white1">
+                    <button class="fe-get-remain-btn">선결제 가능 잔여한도 조회하기</button>
+                </li>
+            </ul>
+            <div class="payment-detail-wrap fe-remain-info-wrap none">
+                <div class="payment-detail-box">
+                    <div class="detail-inner top">
+                        <div class="detail-list">
+                            <ul>
+                                <li>
+                                    <span class="title">잔여한도</span>
+                                    <span class="tx-cont"><strong class="num fe-remain-info"></strong> 원</span>
+                                </li>
+                                <li>
+                                    <span class="tx-cont"><button class="btn-choice fe-change-limit">이용한도변경</button></span>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="payment-inner">
-                <div class="payment-detail-wrap">
-                    <div class="payment-detail-box">
-                        <div class="detail-inner">
-                            <div class="detail-list">
-                                <ul>
-                                    <li>
-                                        <div class="inner-top">
-                                            <span class="title">선결제 가능 최대금액</span>
-                                            <span class="tx-cont fe-max-amount-wrap none"><strong class="num fe-max-amount"></strong> 원</span>
-                                        </div>
-                                        <% if (prepay.autoChrgStCd === 'U') { %>
-                                        <div class="inner-row">
-                                            <ul>
-                                                <li>
-                                                    <span class="title line">자동 선결제 이용 중</span>
-                                                    <span class="tx-cont"><strong class="num"><%= prepay.autoChrgAmount %></strong> 원</span>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div class="inner-row fe-auto-prepay-arrow none">
-                                            <!-- .widget -->
-                                            <div class="widget payment-detail">
-                                                <div class="widget-box accordion">
-                                                    <div class="acco-cover toggle"><!-- toggle : 한개만 열기 -->
-                                                        <div class="acco-style btn-hold">
-                                                            <ul class="acco-list">
-                                                                <li class="acco-box">
-                                                                    <!-- .on: 열기 -->
-                                                                    <div class="acco-tit">
-                                                                        <span class="title line">자동 선결제 이용 중</span><span class="money"><strong class="num fe-auto-charge-amt"></strong> 원</span>
-                                                                        <button role="button" title="상세보기" aria-pressed="false" class="fe-standard-amount-info">상세보기</button>
-                                                                    </div>
-                                                                    <div class="acco-cont">
-                                                                        <div class="inner-sub">
-                                                                            <div class="inner-sub-top">
-                                                                                <span class="title">선결제 가능 최대금액<button class="ico blind" aria-haspopup="true">기준 최대금액 설명 보기</button><br/>(기준금액)</span>
-                                                                                <span class="tx-cont"><em class="num fe-auto-charge-standard-amt"></em> 원</span>
+        </div>
+        <div class="payment-inner">
+            <div class="payment-detail-wrap">
+                <div class="payment-detail-box">
+                    <div class="detail-inner">
+                        <div class="detail-list">
+                            <ul>
+                                <li>
+                                    <div class="inner-top">
+                                        <span class="title">선결제 가능 최대금액</span>
+                                        <span class="tx-cont fe-max-amount-wrap none"><strong class="num fe-max-amount"></strong> 원</span>
+                                    </div>
+                                    <% if (prepay.autoChrgStCd === 'U') { %>
+                                    <div class="inner-row">
+                                        <!-- .widget -->
+                                        <div class="widget payment-detail">
+                                            <div class="widget-box accordion">
+                                                <div class="acco-cover toggle"><!-- toggle : 한개만 열기 -->
+                                                    <div class="acco-style btn-hold">
+                                                        <ul class="acco-list">
+                                                            <li class="acco-box">
+                                                                <!-- .on: 열기 -->
+                                                                <div class="acco-tit">
+                                                                    <span class="title line">자동 선결제 이용 중</span>
+                                                                    <span class="money"><strong class="num"><%= prepay.autoChrgAmount %></strong> 원</span>
+                                                                    <span class="fe-auto-prepay-info none"><%= prepay.cardNum %></span>
+                                                                    <button role="button" title="상세보기" aria-pressed="false" class="fe-auto-prepay-arrow none">상세보기</button>
+                                                                </div>
+                                                                <div class="acco-cont">
+                                                                    <div class="inner-sub">
+                                                                        <div class="inner-sub-top">
+                                                                            <span class="title">선결제 가능 최대금액<button class="ico blind fe-standard-amount-info" aria-haspopup="true">기준 최대금액 설명 보기</button><br/>(기준금액)</span>
+                                                                            <span class="tx-cont"><em class="num fe-auto-charge-standard-amt"></em> 원</span>
+                                                                        </div>
+                                                                        <div class="helpbox-link">
+                                                                            <div class="link-long">
+                                                                                <button class="disabled fe-get-detail-auto-prepay">자동 선결제 상세내역보기<span class="ico"></span></button>
                                                                             </div>
-                                                                            <div class="helpbox-link">
-                                                                                <div class="link-long">
-                                                                                    <button class="disabled fe-get-detail-auto-prepay">자동 선결제 상세내역보기<span class="ico"></span></button>
-                                                                                </div>
-                                                                                <div class="link-long">
-                                                                                    <button class="disabled">선결제 금액 및 카드 변경<span class="ico"></span></button>
-                                                                                </div>
-                                                                                <div class="link-long">
-                                                                                    <button class="disabled fe-cancel-auto-prepay">해지<span class="ico"></span></button>
-                                                                                </div>
+                                                                            <div class="link-long">
+                                                                                <button class="disabled">선결제 금액 및 카드 변경<span class="ico"></span></button>
+                                                                            </div>
+                                                                            <div class="link-long">
+                                                                                <button class="disabled fe-cancel-auto-prepay">해지<span class="ico"></span></button>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!--// .widget -->
                                         </div>
-                                        <% } %>
-                                    </li>
-                                </ul>
-                            </div>
+                                        <!--// .widget -->
+                                    </div>
+                                    <% } %>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>
-                <ul class="bt-slice item-two">
-                    <li class="bt-white2">
-                        <a href="/payment/prepay/micro/history">선결제 내역</a>
-                    </li>
-                    <li class="bt-gray1">
-                        <button disabled="disabled" class="fe-go-prepay">선결제하기</button>
-                    </li>
-                </ul>
             </div>
+            <ul class="bt-slice item-two">
+                <li class="bt-white2">
+                    <a href="/payment/prepay/micro/history">선결제 내역</a>
+                </li>
+                <li class="bt-gray1 fe-go-prepay">
+                    <a href="#step1" disabled="disabled">선결제하기</a>
+                </li>
+            </ul>
         </div>
-        <% if (prepay.autoChrgStCd !== 'U') { %>
-        <div class="cont-box comment square">
-            <div class="payment-detail-box">
-                <div class="detail-inner">
-                    <div class="title">매번 선결제하시기 번거로우셨죠?</div>
-                    <div class="info-btn"><button class="bt-link-tx" disabled="disabled">자동 선결제 신청<span class="ico"></span></button></div>
-                </div>
-                <div class="img"></div>
-            </div>
-        </div>
-        <% } %>
-        <% include ../components/info/payment.prepay.micro.info.component.html %>
     </div>
+    <% if (prepay.autoChrgStCd !== 'U') { %>
+    <div class="cont-box comment square">
+        <div class="payment-detail-box">
+            <div class="detail-inner">
+                <div class="title">매번 선결제하시기 번거로우셨죠?</div>
+                <div class="info-btn"><button class="bt-link-tx" disabled="disabled">자동 선결제 신청<span class="ico"></span></button></div>
+            </div>
+            <div class="img"></div>
+        </div>
+    </div>
+    <% } %>
+    <% include ../components/info/payment.prepay.micro.info.component.html %>
 </div>
-<!--// #contents -->
