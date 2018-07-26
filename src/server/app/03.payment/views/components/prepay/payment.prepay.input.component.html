@@ -1,0 +1,111 @@
+<%#
+* FileName: payment.prepay.input.component.html
+* Author: 공자윤 (jayoon.kong@sk.com)
+* Date: 2018.07.26
+%>
+<%- include('../../../../common/views/components/header.component.html', { title: '선결제하기', svcInfo: svcInfo }); %>
+<h2 class="blind">내용</h2>
+<div class="container">
+    <div class="cont-box">
+        <div class="pay-info">
+            <h3 class="pay-tit">선결제 가능 최대금액</h3>
+            <div class="payment-all type2">
+                <span><em class="fe-max-amount"></em> 원</span>
+            </div>
+        </div>
+        <ul class="account-inner">
+            <li class="account-wrap type2">
+                <h4 class="account-tit">선결제금액</h4>
+                <div class="inputbox">
+                    <span class="input">
+                        <input type="number" class="fe-only-number fe-input-prepay-amount" placeholder="1만원 단위(숫자만 입력)" title="1만원 단위(숫자만 입력)">
+                        <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
+                    </span>
+                </div>
+                <div class="contents-notice type1">
+                    <span class="noti-type3">선결제는 1만원 단위로 가능합니다.</span>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <hr class="cont-sp type1" aria-hidden="true" />
+    <div class="cont-box">
+        <div class="pay-info fe-new-card-wrap">
+            <div class="widget">
+                <h3 class="pay-tit" aria-checked="false">카드정보</h3>
+                <div class="widget-box check">
+                    <span class="checkbox type01 pay-check-box fe-prepay-check-box" role="checkbox" aria-checked="false">
+                        <input type="checkbox" name="checkbox" value="" title="자동납부정보와 동일">
+                        자동납부정보와 동일
+                    </span>
+                </div>
+            </div>
+            <ul class="account-inner">
+                <li class="account-wrap">
+                    <h4 class="account-tit">카드주명</h4>
+                    <div class="account-form">
+                        <span class="pay-view-box fe-card-owner"><%= svcInfo.mbrNm %></span>
+                    </div>
+                </li>
+                <li class="account-wrap">
+                    <h4 class="account-tit">카드번호</h4>
+                    <div class="account-form">
+                        <div class="inputbox">
+                            <span class="input">
+                                <input type="number" class="fe-only-number fe-card-number" placeholder="숫자만 입력" title="카드번호 숫자만 입력">
+                                <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
+                            </span>
+                        </div>
+                    </div>
+                </li>
+                <li class="account-wrap">
+                    <h4 class="account-tit">납부형태</h4>
+                    <div class="account-form">
+                        <span class="account-form-select">
+                            <button id="00" class="bt-dropdown big fe-card-type-selector" title="납부형태 변경 선택" aria-haspopup="true">일시불<span class="ico"></span></button>
+                        </span>
+                        <!-- 5만원 이하인 경우 “일시불” 문구만 노출
+                        <span class="account-form-select">일시불</span>
+                        -->
+                    </div>
+                </li>
+                <li class="account-wrap">
+                    <h4 class="account-tit">유효기간</h4>
+                    <div class="inputbox card-tbl">
+                        <span class="input card-cell">
+                            <input type="number" class="fe-only-number fe-card-y" maxlength="4" placeholder="YYYY" title="카드유효기간 년">
+                            <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
+                        </span>
+                        <span class="input card-cell">/</span>
+                        <span class="input card-cell">
+                            <input type="number" maxlength="2" class="c-month fe-only-number fe-card-m" placeholder="MM" title="카드유효기간 월">
+                            <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
+                        </span>
+                    </div>
+                </li>
+                <li class="account-wrap">
+                    <h4 class="account-tit">카드비밀번호</h4>
+                    <div class="inputbox">
+                        <span class="input">
+                            <input type="password" class="fe-only-number fe-card-password" maxlength="2" placeholder="앞2자리 **" title="카드비밀번호 앞2자리">
+                            <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
+                        </span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="contents-btn">
+            <ul class="bt-slice item-two">
+                <li class="bt-white2">
+                    <button class="fe-common-back">이전</button>
+                </li>
+                <li class="bt-red1">
+                    <button class="fe-prepay">선결제하기</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <hr class="cont-sp type1" aria-hidden="true" />
+    <% include ../components/info/payment.prepay.micro.info.component.html %>
+</div>

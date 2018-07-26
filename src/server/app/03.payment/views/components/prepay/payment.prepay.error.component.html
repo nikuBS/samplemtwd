@@ -1,0 +1,55 @@
+<%#
+* FileName: payment.prepay.error.component.html
+* Author: 공자윤 (jayoon.kong@sk.com)
+* Date: 2018.07.26
+%>
+<%- include('../../../../common/views/components/header.component.html', { title: '소액결제 선결제하기', svcInfo: svcInfo }); %>
+<h2 class="blind">내용</h2>
+<div class="container">
+    <div class="cont-box nogaps-top">
+        <div class="msg-present-box">
+            <div class="msg-present-comp">
+                <span class="ico"></span>
+                <p class="txt"><span class="tx-bold"><%= title %> 선결제</span>에<br/>실패하였습니다.</p>
+            </div>
+            <div class="gift-data-cont">
+                <div class="pay-data-cont">
+                    <ul class="t-pay-data">
+                        <li>
+                            <dl>
+                                <dt class="ti-data">오류코드</dt>
+                                <dd class="tx-data fe-error-code"></dd>
+                            </dl>
+                        </li>
+                        <li>
+                            <dl>
+                                <dt class="ti-data">오류 메시지</dt>
+                                <dd class="tx-data fe-error-message"></dd>
+                            </dl>
+                        </li>
+                    </ul>
+                    <div class="contents-notice line-top">
+                        <span class="noti-type3">선결제 후 당월 내 사용이력이 없을 경우에 한해 영업점 또는 고객센터를 통해 환불 신청하실 수 있습니다.</span>
+                        <span class="noti-type3">(고객센터 : 국번없이 1599-0011(유료) / 휴대폰 114)</span>
+                    </div>
+                </div>
+                <div class="contents-btn">
+                    <ul class="bt-slice">
+                        <li class="bt-white1">
+                            <a href="/payment/prepay/micro/history">선결제 내역</a>
+                        </li>
+                        <li class="bt-blue1">
+                            <a class="fe-common-back">확인</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr class="cont-sp type1" aria-hidden="true" />
+    <div class="cont-box nogaps">
+        <div class="bt-link-box">
+            <a href="/home" class="bt-link-tx fe-replace-history">홈으로</a>
+        </div>
+    </div>
+</div>

@@ -14,18 +14,20 @@
 </div>
 <!--// #skip_navigation -->
 <div id="payment-prepay-micro" class="wrap">
-    <!-- #header -->
-    <div id="header" class="header-wrap">
-        <div class="header">
-            <div class="header-ti align-l">
-                <h1>소액결제 선결제하기</h1>
-                <button class="bt-dropdown size2" title="전화번호 선택" aria-haspopup="true">010-46**-10**</button>
-            </div>
-            <button class="prev-step fe-common-back"><span class="blind">이전으로</span></button>
-        </div>
+    <!-- #contents -->
+    <div id="main" class="container-wrap">
+        <% include ../components/prepay/payment.prepay.home.component.html %>
     </div>
-    <!--// #header -->
-    <% include ../components/prepay/payment.prepay.home.component.html %>
+    <div id="step1" class="container-wrap" style="display:none;">
+        <% include ../components/prepay/payment.prepay.input.component.html %>
+    </div>
+    <div id="complete-prepay" class="container-wrap" style="display:none;">
+        <% include ../components/prepay/payment.prepay.complete.component.html %>
+    </div>
+    <div id="error" class="container-wrap" style="display:none;">
+        <% include ../components/prepay/payment.prepay.error.component.html %>
+    </div>
+    <!--// #contents -->
     <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
 </div>
 <% include ../components/javascript.component.html %>

@@ -13,7 +13,39 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div id="payment-prepay-micro-history"></div>
+<div id="payment-prepay-micro-history" class="wrap">
+    <%- include('../../../../common/views/components/header.component.html', { title: '선결제 내역', svcInfo: svcInfo }); %>
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <div class="cont-box nogaps noborder">
+                <div class="payment-select space-type">
+                    <h3>소액결제 선결제 내역</h3>
+                    <% if (microPrepayRecord) { %>
+                    <ul class="select-list">
+                        <% for (var i = 0; i < microPrepayRecord.length; i++) { %>
+                        <li>
+                            <div class="pay-maininfo">
+                                <span class="service-sort"><%= microPrepayRecord[i].date %> <%= microPrepayRecord[i].payOpTm %></span>
+                            </div>
+                            <dl class="pay-detail type2">
+                                <dt>처리구분</dt>
+                                <dd><%= microPrepayRecord[i].settlWayNm %></dd>
+                                <dt>선결제 금액</dt>
+                                <dd><strong><%= microPrepayRecord[i].amount %></strong> <span class="unit">원</span></dd>
+                            </dl>
+                        </li>
+                        <% } %>
+                    </ul>
+                    <% } %>
+                </div>
+                <button class="bt-more">더보기<span>(20)</span></button>
+            </div>
+            <hr class="cont-sp type1" aria-hidden="true" />
+            <% include ../components/info/payment.prepay.micro.history.info.component.html %>
+        </div>
+    </div>
+</div>
 <% include ../components/javascript.component.html %>
 <script>
   $(document).ready(function () {

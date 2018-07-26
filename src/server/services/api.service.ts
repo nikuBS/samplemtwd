@@ -8,6 +8,7 @@ import FormatHelper from '../utils/format.helper';
 import EnvHelper from '../utils/env.helper';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/map';
+import { COOKIE_KEY } from '../types/bff-common.type';
 
 class ApiService {
   static instance;
@@ -58,7 +59,7 @@ class ApiService {
       case API_SERVER.BFF:
         return Object.assign(header, {
           'content-type': 'application/json; charset=UTF-8',
-          cookie: this.loginService.getServerSession()
+          cookie: this.makeCookie(),
         });
       case API_SERVER.TID:
         return Object.assign(header, {
@@ -70,6 +71,12 @@ class ApiService {
           'content-type': 'application/json; charset=UTF-8'
         });
     }
+  }
+
+  private makeCookie(): string {
+    return this.loginService.getServerSession() + ';' +
+      COOKIE_KEY.CHANNEL + '=' + this.loginService.getChannelCookie() + ';' +
+      COOKIE_KEY.DEVICE + '=' + this.loginService.getDeviceCookie();
   }
 
   private makePath(path: string, method: API_METHOD, params: any, args: any[]): string {
