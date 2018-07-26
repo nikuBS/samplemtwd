@@ -27,8 +27,8 @@ Tw.mytBillBillguideSubSelPayment = function (rootEl, resData) {
 
   //요일 셋팅
   moment.lang('ko', {
-    weekdays: ["일요일","월요일","화요일","수요일","목요일","금요일","토요일"],
-    weekdaysShort: ["일","월","화","수","목","금","토"],
+    weekdays: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'],
+    weekdaysShort: ['일', '월', '화', '수', '목', '금', '토']
   });
 
   this._init();
@@ -54,11 +54,11 @@ Tw.mytBillBillguideSubSelPayment.prototype = {
     this.$container.on('click', '[data-target="cancelBtn"]', $.proxy(this._cancelExe, this));
     this.$container.on('click', '[data-target="submitBtn"]', $.proxy(this._submitExe, this));
   },
-  _cancelExe: function() {
+  _cancelExe: function () {
     location.href = '/myt/bill/billguide';
     //this._goBack();
   },
-  _submitExe: function() {
+  _submitExe: function () {
     this._cachedElement();
     var param = {
       evtNum: '1234',//이벤트 번호
@@ -67,10 +67,10 @@ Tw.mytBillBillguideSubSelPayment.prototype = {
       sColAmt: '2000'//미납금액
     };
     Tw.Logger.info('[데이터 전송 _submitExe ] ', param);
-    this._postPaymentInput(param)
+    this._postPaymentInput(param);
   },
-  _dataInit: function() {
-    if ( this.autopaySchedule.payMthdCd === '02') {
+  _dataInit: function () {
+    if ( this.autopaySchedule.payMthdCd === '02' ) {
       Tw.Logger.info('[카드]', this.$paymentSummaryArea);
       this._cachedElement();
       this._stateTypeA();
@@ -86,58 +86,58 @@ Tw.mytBillBillguideSubSelPayment.prototype = {
         this._stateTypeC();
       }
       else {
-        Tw.Logger.info('[this.autopaySchedule.payMthdCd]',this.autopaySchedule.payMthdCd);
-        Tw.Logger.info('[this.autopaySchedule.drwInvCyclCd]',this.autopaySchedule.drwInvCyclCd);
+        Tw.Logger.info('[this.autopaySchedule.payMthdCd]', this.autopaySchedule.payMthdCd);
+        Tw.Logger.info('[this.autopaySchedule.drwInvCyclCd]', this.autopaySchedule.drwInvCyclCd);
       }
     }
   },
-  _selectBtnInit: function() {
+  _selectBtnInit: function () {
     this._cachedElement();
     //납부가능일 버튼 활성화
     var useObjYn = this.PaymentPossibleDay.useObjYn;
-    Tw.Logger.info('[납부가능일 버튼 활성화]',useObjYn);
+    Tw.Logger.info('[납부가능일 버튼 활성화]', useObjYn);
     //(useObjYn === 'Y') ? this.$selPaymentSelArea.show() : this.$selPaymentSelArea.hide();
   },
   //--------------------------------------------------------------------------[셀릭트 팝업]
-  _selPopOpen: function() {
+  _selPopOpen: function () {
     var $target = $(event.currentTarget);
     var arrOption = [];
-    for ( var i=0, len=this.PaymentPossibleDay.maxPtpDtList.length; i<len; i++ ) {
+    for ( var i = 0, len = this.PaymentPossibleDay.maxPtpDtList.length; i < len; i++ ) {
       arrOption.push({
-        'attr' : 'data-info="' + this.PaymentPossibleDay.maxPtpDtList[i] + '"',
-        text : Tw.DateHelper.getShortDateWithFormat( this.PaymentPossibleDay.maxPtpDtList[i], 'YYYY년 MM월 DD일' )
+        'attr': 'data-info="' + this.PaymentPossibleDay.maxPtpDtList[i] + '"',
+        text: Tw.DateHelper.getShortDateWithFormat(this.PaymentPossibleDay.maxPtpDtList[i], 'YYYY년 MM월 DD일')
       });
     }
     console.info('arrOption : ', arrOption);
     this._popupService.openChoice('납부가능일 선택', arrOption, 'type1', $.proxy(this._selPopOpenEvt, this, $target));
   },
-  _selPopOpenEvt: function($target, $layer) {
+  _selPopOpenEvt: function ($target, $layer) {
     $layer.on('click', '.popup-choice-list', $.proxy(this._selPopOpenEvtExe, this, $target, $layer));
   },
-  _selPopOpenEvtExe: function($target, $layer, event) {
+  _selPopOpenEvtExe: function ($target, $layer, event) {
     var $selectedValue = $(event.currentTarget);
     var tg = $target.find('[data-target="selPaymentSelBtn"]');
     tg.text($selectedValue.text());
-    tg.attr( 'data-info', $selectedValue.find('button').attr('data-info') );
+    tg.attr('data-info', $selectedValue.find('button').attr('data-info'));
     this._popupService.close();
   },
   //--------------------------------------------------------------------------[카드]
-  _stateTypeA: function() {
+  _stateTypeA: function () {
     var dataArr = this.autopaySchedule.autoPayHistoryList;
     var html = '';
 
-    for (var i=0, len=dataArr.length; i < len; i++) {
+    for ( var i = 0, len = dataArr.length; i < len; i++ ) {
       html += '<li><strong>' + dataArr[i].billNum + '차 청구</strong>';
       html += '<p>' + dataArr[i].autoPayDrawList[0].seq + '회차 ' + this._getDateTypeA(dataArr[i].autoPayDrawList[0].drwDt) + '</p>';
       html += '</li>';
     }
 
-    this.$paymentSummaryArea.html($.proxy(function() {
+    this.$paymentSummaryArea.html($.proxy(function () {
       return html;
     }, this));
   },
   //--------------------------------------------------------------------------[[은행 + 데일리]]
-  _stateTypeB: function() {
+  _stateTypeB: function () {
     var dataArr = this.autopaySchedule.autoPayHistoryList;
     var pStartDay = dataArr[0].autoPayDrawList[0].pStartDay;
     var pEndDay = dataArr[0].autoPayDrawList[0].pEndDay;
@@ -146,8 +146,10 @@ Tw.mytBillBillguideSubSelPayment.prototype = {
 
     var html = '';
     html += '<li><strong>1차 청구</strong>';
-    html += '<p>' + Tw.DateHelper.getShortDateNoDot( pStartDay ) + '일~' + Tw.DateHelper.getShortDateNoDot( pEndDay ) + '일까지 매일<br /><span>(인출일이 휴일인 경우 다음날 인출) </span></p>';
-    html += '<p>' + Tw.DateHelper.getShortDateNoDot( tStartDay ) + '일~' + Tw.DateHelper.getShortDateNoDot( tEndDay ) + '일까지 매일<br /><span>(인출일이 휴일인 경우 다음날 인출) </span></p>';
+    html += '<p>' + Tw.DateHelper.getShortDateNoDot(pStartDay) + '일~' + Tw.DateHelper.getShortDateNoDot(pEndDay);
+    html += '일까지 매일<br /><span>(인출일이 휴일인 경우 다음날 인출) </span></p>';
+    html += '<p>' + Tw.DateHelper.getShortDateNoDot(tStartDay) + '일~' + Tw.DateHelper.getShortDateNoDot(tEndDay);
+    html += '일까지 매일<br /><span>(인출일이 휴일인 경우 다음날 인출) </span></p>';
     html += '</li>';
 
     html += '<li><strong>2차 청구</strong>';
@@ -159,45 +161,44 @@ Tw.mytBillBillguideSubSelPayment.prototype = {
     html += '</div>';
     html += '</li>';
 
-    this.$paymentSummaryArea.html($.proxy(function() {
+    this.$paymentSummaryArea.html($.proxy(function () {
       return html;
     }, this));
   },
   //--------------------------------------------------------------------------[은행 + 금결원]
-  _stateTypeC: function() {
+  _stateTypeC: function () {
     var dataArr = this.autopaySchedule.autoPayHistoryList;
     var html = '';
 
-    for (var i=0, len=dataArr.length; i < len; i++) {
+    for ( var i = 0, len = dataArr.length; i < len; i++ ) {
       html += '<li><strong>' + dataArr[i].billNum + '차 청구</strong>';
 
       var drawListLen = dataArr[i].autoPayDrawList.length;
 
-      for (var a=0; a < drawListLen; a++ ) {
+      for ( var a = 0; a < drawListLen; a++ ) {
         html += '<p>' + dataArr[i].autoPayDrawList[a].seq + '회차 ' + this._getDateTypeA(dataArr[i].autoPayDrawList[a].drwDt) + '</p>';
       }
 
       html += '</li>';
     }
 
-    this.$paymentSummaryArea.html($.proxy(function() {
+    this.$paymentSummaryArea.html($.proxy(function () {
       return html;
     }, this));
   },
   //--------------------------------------------------------------------------[api]
-  _getAutopaySchedule: function() {//BFF_05_0033 미납 납부가능일 청구일정 조회
+  _getAutopaySchedule: function () {//BFF_05_0033 미납 납부가능일 청구일정 조회
     this._apiService.request(Tw.API_CMD.BFF_05_0033, {})
-      .done($.proxy(function(resp){
+      .done($.proxy(function (resp) {
         Tw.Logger.info('[BFF_05_0033]', resp);
         this.autopaySchedule = resp.result;
         this._dataInit();
-      }, this))
-      .fail(function(err){})
+      }, this));
   },
-  _postPaymentInput: function(param) {//BFF_05_0032 미납 납부가능일 입력
+  _postPaymentInput: function (param) {//BFF_05_0032 미납 납부가능일 입력
     //Tw.Logger.info('[_postPaymentInput > param]', param);
     this._apiService.request(Tw.API_CMD.BFF_05_0032, param)
-      .done($.proxy(function(resp){
+      .done($.proxy(function (resp) {
         Tw.Logger.info('[BFF_05_0032]', resp);
         if ( resp.result.success === 'Y' ) {
           this._onSuccess();
@@ -206,17 +207,15 @@ Tw.mytBillBillguideSubSelPayment.prototype = {
         } else {
           Tw.Logger.info('[resp.result.success]', resp.result.success);
         }
-      }, this))
-      .fail(function(err){})
+      }, this));
   },
-  _getPaymentPossibleDay: function() {//BFF_05_0031 미납 납부가능일 조회 | 납부가능일 버튼 활성화/비활성화
+  _getPaymentPossibleDay: function () {//BFF_05_0031 미납 납부가능일 조회 | 납부가능일 버튼 활성화/비활성화
     this._apiService.request(Tw.API_CMD.BFF_05_0031, {})
-      .done($.proxy(function(resp){
+      .done($.proxy(function (resp) {
         Tw.Logger.info('[BFF_05_0031]', resp);
         this.PaymentPossibleDay = resp.result;
         this._selectBtnInit();
-      }, this))
-      .fail(function(err){})
+      }, this));
   },
   //--------------------------------------------------------------------------[공통]
   _onOpenSelectPopup: function () {

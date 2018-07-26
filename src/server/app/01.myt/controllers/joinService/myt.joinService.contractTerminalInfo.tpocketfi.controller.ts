@@ -18,32 +18,32 @@ class MytJoinServiceContractTerminalInfoTpocketfi extends TwViewController {
     super();
   }
 
-  public reqQuery: any;//쿼리스트링
+  public reqQuery: any; // 쿼리스트링
   private _svcInfo: any;
 
-  //공통데이터
+  // 공통데이터
   private _commDataInfo: any = {};
 
-  //노출조건
+  // 노출조건
   private _showConditionInfo: any = {};
 
-  private _urlTplInfo:any = {
-    pageRenderView:  'joinService/myt.joinService.contractTerminalInfo.tpocketfi.html'
+  private _urlTplInfo: any = {
+    pageRenderView: 'joinService/myt.joinService.contractTerminalInfo.tpocketfi.html'
   };
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     this._svcInfo = svcInfo;
     this.logger.info(this, '[ svcInfo ] 사용자 정보 : ', svcInfo);
     this.reqQuery = req.query;
-    var thisMain = this;
+    const thisMain = this;
     thisMain.logger.info(thisMain, '[_urlTplInfo.pageRenderView] : ', thisMain._urlTplInfo.pageRenderView);
     thisMain.renderView(res, thisMain._urlTplInfo.pageRenderView, {
       reqQuery: thisMain.reqQuery,
       svcInfo: thisMain._svcInfo
-    } );
-  }//render end
+    });
+  } // render end
 
-  //-------------------------------------------------------------[클리이어튼로 전송]
+  // -------------------------------------------------------------[클리이어튼로 전송]
   public renderView(res: Response, view: string, data: any): any {
     res.render(view, data);
   }

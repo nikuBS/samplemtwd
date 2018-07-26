@@ -39,7 +39,7 @@ Tw.MytJoinServicePayClaimInfoIptvSk.prototype = {
     this.$container.on('click', '[data-target="goSkBroadbandBtn"]', $.proxy(this._goSkBroadband, this));
   },
   _goSkBroadband: function() {
-    window.open( Tw.URL_PATH.BROADBAND, "_blank");
+    window.open( Tw.URL_PATH.BROADBAND, '_blank');
   },
   //--------------------------------------------------------------------------[이벤트 | 팝업]
   // _selPopOpen : function(event) {
