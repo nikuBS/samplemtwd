@@ -6,7 +6,7 @@
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
 import { API_CMD } from '../../../../types/api-command.type';
-import { PARAM } from './myt.bill.hotbill.controller'
+import { PARAM } from './myt.bill.hotbill.controller';
 import { Observable } from 'rxjs/Observable';
 
 class MyTBillHotBillChild extends TwViewController {
@@ -19,7 +19,7 @@ class MyTBillHotBillChild extends TwViewController {
         gubun: PARAM.TYPE.CURRENT,
         childSvcMgmtNum: req.query.childSvcMgmtNum
       });
-    const childrenRequest: Observable<any> = this.apiService.request(API_CMD.BFF_05_0024, {})
+    const childrenRequest: Observable<any> = this.apiService.request(API_CMD.BFF_05_0024, {});
     Observable.combineLatest(
       billRequest,
       childrenRequest
@@ -31,7 +31,7 @@ class MyTBillHotBillChild extends TwViewController {
           children: JSON.stringify( children.result)
          });
       } else {
-        //TODO error처리
+        // TODO error처리
       }
     });
   }
