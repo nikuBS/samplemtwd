@@ -1,17 +1,17 @@
 /**
- * FileName: customer.prevent-damage.js
+ * FileName: customer.preventdamage.guideview.js
  * Author: Jihun Yang (jihun202@sk.com)
  * Date: 2018.07.24
  */
 
-Tw.CustomerPreventDamageRelateSite = function(rootEl) {
+Tw.CustomerPreventdamageGuideview = function(rootEl) {
   this.$container = rootEl;
 
   this._cachedElement();
   this._bindEvent();
 };
 
-Tw.CustomerPreventDamageRelateSite.prototype = {
+Tw.CustomerPreventdamageGuideview.prototype = {
   _cachedElement: function() {
     //
   },
