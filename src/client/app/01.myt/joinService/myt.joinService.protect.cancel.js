@@ -1,9 +1,9 @@
 /**
- * FileName: myt.joinService.protect.inquiry.js
+ * FileName: myt.joinService.protect.cancel.js
  * Author: Kim Inhwan (skt.P132150@partner.sk.com)
  * Date: 2018.07.24
  */
-Tw.MyTJSProtectInquiry= function ($element) {
+Tw.MyTJSProtectCancel= function ($element) {
   this.$container = $element;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -11,7 +11,7 @@ Tw.MyTJSProtectInquiry= function ($element) {
   this._bindEvent();
 };
 
-Tw.MyTJSProtectInquiry.prototype = {
+Tw.MyTJSProtectCancel.prototype = {
   //element event bind
   _bindEvent: function () {
     // 확인
@@ -43,11 +43,11 @@ Tw.MyTJSProtectInquiry.prototype = {
     //   .request(api, {})
     //   .done($.proxy(this._onApiSuccess, this))
     //   .fail($.proxy(this._onApiError, this));
-    this._popupService.close();
   },
 
   _onApiSuccess: function (params) {
     Tw.Logger.info(params);
+    this._popupService.close();
   },
 
   _onApiError: function (params) {

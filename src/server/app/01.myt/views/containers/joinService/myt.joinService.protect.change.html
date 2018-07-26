@@ -7,28 +7,19 @@
 <% include ../../components/start.component.html %>
 <% include ../../components/javascript.component.html %>
 <div class="wrap">
-    <!-- #header -->
-    <div id="header" class="header-wrap">
-        <div class="header step-page">
-            <div class="header-ti">
-                <h1>고객보호 비밀번호 설정</h1>
-            </div>
-            <button class="close-step"><span class="blind">닫기</span></button>
-        </div>
-    </div>
-    <!--// #header -->
+    <%- include('../../../../common/views/components/header.component.html', { title: '고객보호  비밀번호 변경', svcInfo: data.svcInfo }); %>
     <!-- #contents -->
     <div id="contents" class="container-wrap">
         <h2 class="blind">내용</h2>
-        <div class="container">
+        <div id="protect-change" class="container">
             <div class="cont-box">
                 <div class="payment-detail-box mb20">
                     <div class="detail-inner">
                         <div class="detail-list type1">
                             <ul>
                                 <li>
-                                    <span class="title">휴대폰 번호</span>
-                                    <span class="tx-cont"><span class="fs-type">010-12**-45**</span></span>
+                                    <span class="title"><%= data.title %></span>
+                                    <span class="tx-cont"><span class="fs-type"><%= data.number %></span></span>
                                 </li>
                             </ul>
                         </div>
@@ -57,6 +48,11 @@
                         <li class="bt-red1">
                             <button>고객보호 비밀번호 설정</button>
                         </li>
+                        <% if( !data.isNew ) { %>
+                        <li class="bt-white2">
+                            <button>고객보호 비밀번호 서비스 해지</button>
+                        </li>
+                        <% } %>
                     </ul>
                 </div>
             </div>
@@ -110,8 +106,12 @@
         </div>
     </div>
     <!--// #contents -->
+    <%- include('../../../../common/views/components/footer.component.html', { svcInfo: data.svcInfo }); %>
 </div>
 
 <script>
+  $(document).ready(function () {
+    var comp = new Tw.MyTJSProtectChange($('#protect-change'));
+  });
 </script>
 <% include ../../components/end.component.html %>

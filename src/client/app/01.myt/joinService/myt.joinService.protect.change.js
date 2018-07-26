@@ -1,9 +1,9 @@
 /**
- * FileName: myt.joinService.protect.inquiry.js
+ * FileName: myt.joinService.protect.change.js
  * Author: Kim Inhwan (skt.P132150@partner.sk.com)
  * Date: 2018.07.24
  */
-Tw.MyTJSProtectInquiry= function ($element) {
+Tw.MyTJSProtectChange= function ($element) {
   this.$container = $element;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -11,7 +11,7 @@ Tw.MyTJSProtectInquiry= function ($element) {
   this._bindEvent();
 };
 
-Tw.MyTJSProtectInquiry.prototype = {
+Tw.MyTJSProtectChange.prototype = {
   //element event bind
   _bindEvent: function () {
     // 확인
@@ -30,14 +30,14 @@ Tw.MyTJSProtectInquiry.prototype = {
   },
 
   _onOkPopupClicked: function () {
-    this._requestProtectPwd();
+    this._requestProtectChangePwd();
   },
 
   _goToComplete: function () {
     // api 성공 후 처리
   },
 
-  _requestProtectPwd: function (/*event*/) {
+  _requestProtectChangePwd: function (/*event*/) {
     // var api = Tw.API_CMD.BFF_05_0069;
     // this._apiService
     //   .request(api, {})
