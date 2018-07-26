@@ -15,13 +15,67 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div class="wrap">
+<div id="authLoginEasyAos" class="wrap">
+    <%- include('../../../../common/views/components/header.component.html', { title: '간편 로그인', svcInfo: svcInfo }); %>
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <!-- .cont-box -->
+            <div class="cont-box">
+                <div class="box-suggest">
+                    <div class="suggest-info">
+                        <p class="suggest-ti"><em class="tx-bold">본인확인 후</em> 간편하게<br />요금, 잔여량 조회 서비스를<br />이용하실 수 있습니다.</p>
+                        <dl class="suggest-circuit">
+                            <dt class="circuit-ti">휴대폰</dt>
+                            <dd class="circuit-tx">010-2345-6789</dd>
+                        </dl>
+                        <div class="sugget-form type1">
+                            <span id="aria-regist-num" class="form-ti">생년월일/외국인 등록번호</span>
+                            <!-- 입력창 기본 -->
+                            <span class="inputbox"><!-- 입력창 오류 경우 .inputbox에 .error 추가 -->
+                                    <span class="input">
+                                        <input type="number" value="" placeholder="생년월일/외국인 등록번호 6자리" title="생년월일/외국인 등록번호 6자리" aria-labelledby="aria-regist-num" aria-describedby="aria-regist-tx" />
+                                        <button href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></button>
+                                        <span class="ico none"></span><!-- 입력창 오류 경우 .none 삭제 -->
+                                    </span>
+                                    <span id="aria-regist-tx" class="error-txt none">명의자 정보와 일치하지 않습니다.</span><!-- 입력창 오류 경우 .none 삭제 -->
+                                </span>
+                            <!--// 입력창 기본 -->
+                        </div>
+                        <div class="suggest-bt">
+                            <ul class="bt-slice">
+                                <li class="bt-red1">
+                                    <button disabled>간편 로그인</button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--// .cont-box -->
+
+            <hr class="cont-sp type1" aria-hidden="true"/>
+
+            <!-- .cont-box -->
+            <div class="cont-box nogaps-hoz">
+                <div class="link-long">
+                    <button>아이디 로그인 하기<span class="ico"></span></button>
+                </div>
+                <div class="link-long last">
+                    <button>회원 가입 하기<span class="ico"></span></button>
+                </div>
+            </div>
+            <!--// .cont-box -->
+        </div>
+    </div>
     <!--// #contents -->
     <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
 </div>
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
+    new Tw.AuthLoginEasyAos($('#authLoginEasyAos'));
   });
 </script>
 <% include ../../components/end.component.html %>

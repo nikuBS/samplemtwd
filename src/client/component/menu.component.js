@@ -1,11 +1,15 @@
+/**
+ * FileName: menu.component.js
+ * Author: Ara Jo (araara.jo@sk.com)
+ * Date: 2018.06.22
+ */
+
 Tw.MenuComponent = function () {
-  this.$container = $('#all-menu');
+  this.$container = $('#fe-all-menu');
 
   this._nativeService = Tw.Native;
   this._apiService = Tw.Api;
   this._bindEvent();
-
-
 };
 
 Tw.MenuComponent.prototype = {
