@@ -16,6 +16,38 @@
 </div>
 <!--// #skip_navigation -->
 <div class="wrap">
+    <%- include('../../../../common/views/components/header.component.html', { title: '서비스 이용불가 안내', svcInfo: svcInfo }); %>
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <!-- .cont-box -->
+            <div class="cont-box">
+                <div class="box-suggest">
+                    <div class="suggest-info">
+                        <p class="suggest-ti">아이디 <em class="tx-bold">로그인 후</em><br />이용하실 수 있습니다.</p>
+                        <ul class="suggest-list nodot">
+                            <li>서비스를 이용하시려면 ‘T아이디 로그인’을 하시거나 ‘T아이디 회원가입’ 후 이용해 주세요.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!--// .cont-box -->
+
+            <hr class="cont-sp type1" aria-hidden="true"/>
+
+            <!-- .cont-box -->
+            <div class="cont-box nogaps-hoz">
+                <div class="link-long">
+                    <button>아이디 로그인 하기<span class="ico"></span></button>
+                </div>
+                <div class="link-long last">
+                    <button>회원 가입 하기<span class="ico"></span></button>
+                </div>
+            </div>
+            <!--// .cont-box -->
+        </div>
+    </div>
     <!--// #contents -->
     <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
 </div>
