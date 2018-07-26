@@ -50,7 +50,7 @@ class MyTUsageTDataShare extends TwViewController {
         }
       };
 
-      res.render('usage/myt.usage.tdata-share_0725.html', data);
+      res.render('usage/myt.usage.tdata-share_backup.html', data);
     });
   }
 }
