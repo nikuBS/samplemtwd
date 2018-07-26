@@ -23,6 +23,7 @@ Tw.Init.prototype = {
 
   _initComponent: function () {
     new Tw.MenuComponent();
+    new Tw.LineComponent();
   },
 
   _logVersion: function (resp) {
