@@ -407,6 +407,20 @@ Tw.RECHARGE_TYPE = {
   REGULAR_RECHARGE: '매월 충전',
 };
 
+Tw.NOTICE = {
+  TITLE: '카테고리 설정',
+  DIRECTSHOP: '다이렉트샵',
+  MEMBERSHIP: '멤버십',
+  ROAMING: '로밍',
+};
+
+Tw.PREVENTDAMAGE_GUIDE = {
+  TITLE: '카테고리 설정',
+  VIDEO: '동영상으로 보는 피해예방법',
+  WEBTOON: '웹툰으로 보는 피해예방법',
+  LATEST: '최신 이용자 피해예방 정보'
+};
+
 Tw.BLOCK_TYPE = {
   TOTAL: '전체',
   UNBLOCK: '차단',
@@ -416,6 +430,7 @@ Tw.BLOCK_TYPE = {
   REGULAR_UNBLOCK: '다음 달부터 차단 해제',
   REGULAR_BLOCK: '다음 달부터 차단',
 };
+
 Tw.DATE_FORMAT = {
   YYYYDD_TYPE_0: 'YYYY년 MM월'
 };
@@ -424,7 +439,7 @@ Tw.HELPLINE_TYPE = {
   GENERAL: '일반',
   ROAMING: '로밍',
   QUALITY: '통화품질 상담'
-}
+};
 
 Tw.HELPLINE_AREA = {
   CAPITAL: '수도권 (서울, 경기, 인천, 강원)',
@@ -432,4 +447,4 @@ Tw.HELPLINE_AREA = {
   EAST: '서부 (전남, 전북, 광주, 제주)',
   DAEGU: '대구 (경북, 대구)',
   BUSAN: '부산 (경남, 울산, 부산)',
-}
+};

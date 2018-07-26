@@ -80,6 +80,14 @@ export const API_CMD = {
   BFF_05_0050: { path: '/core-bill/v1/wire-bill-types', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
   BFF_05_0051: { path: '/core-bill/v1/wire-bill-reissue/', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0052: { path: '/core-bill/v1/wire-bill-reissue/', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0064: { path: '/core-bill/v1/useContents', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0066: { path: '/core-bill/v1/useContentsLimit', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0067: { path: '/core-bill/v1/updateUseContents', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0079: { path: '/core-bill/v1/microPay-hist-requests', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0080: { path: '/core-bill/v1/microPay-requests', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0081: { path: '/core-bill/v1/microPay-requests', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0082: { path: '/core-bill/v1/microPay-auto-set', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0083: { path: '/core-bill/v1/microPay-requests', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
   // RECHARGE
   BFF_06_0001: { path: '/core-recharge/v1/refill-coupons', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_06_0002: { path: '/core-recharge/v1/refill-usages', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
@@ -188,10 +196,14 @@ export const API_CMD = {
   BFF_07_0083: { path: '/core-bill/v1/useContentsPrepay-auto-req', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_07_0084: { path: '/core-bill/v1/useContentsPrepay-auto-delete', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
 
-  //CUSTOMER
+  // CUSTOMER
   BFF_08_0001: { path: '/core-modification/v1/counsel-time-check', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_08_0002: { path: '/core-modification/v1/counsel-reserve', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_08_0003: { path: '/core-modification/v1/counsel-histories', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_08_0029: { path: '/core-modification/v1/tworld-notice', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_08_0030: { path: '/core-modification/v1/directshop-notice', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_08_0031: { path: '/core-modification/v1/membership-notice', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_08_0032: { path: '/core-modification/v1/roaming-notice', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
 
   // TID
   OIDC: { path: '/auth/authorize.do', method: API_METHOD.GET, server: API_SERVER.TID, bypass: false },

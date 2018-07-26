@@ -1,8 +1,20 @@
+/**
+ * FileName: customer.notice.controller.ts
+ * Author: 양지훈 (jihun202@sk.com)
+ * Date: 2018.07.23
+ */
+
 import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../../common/controllers/tw.view.controller';
 import { API_CMD, API_CODE } from '../../../types/api-command.type';
-import { Observable } from 'rxjs/Observable';
-import FormatHelper from '../../../utils/format.helper';
+import { CUSTOMER_NOTICE_CATEGORY } from '../../../types/string.type';
+
+const categoryLabel = {
+  tworld: CUSTOMER_NOTICE_CATEGORY.TWORLD,
+  directshop: CUSTOMER_NOTICE_CATEGORY.DIRECTSHOP,
+  membership: CUSTOMER_NOTICE_CATEGORY.MEMBERSHIP,
+  roaming: CUSTOMER_NOTICE_CATEGORY.ROAMING
+};
 
 class CustomerNoticeController extends TwViewController {
   constructor() {
@@ -19,6 +31,7 @@ class CustomerNoticeController extends TwViewController {
 
     res.render('customer.notice.html', {
       category: category,
+      categoryLabel: categoryLabel[category],
       svcInfo: svcInfo
     });
   }
