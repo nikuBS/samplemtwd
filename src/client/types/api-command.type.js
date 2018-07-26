@@ -149,6 +149,11 @@ Tw.API_CMD = {
   BFF_07_0083: { path: '/core-bill/v1/useContentsPrepay-auto-req', method: Tw.API_METHOD.POST },
   BFF_07_0084: { path: '/core-bill/v1/useContentsPrepay-auto-delete', method: Tw.API_METHOD.POST },
 
+  //CUSTOMER
+  BFF_08_0001: { path: '/core-modification/v1/counsel-time-check', method: Tw.API_METHOD.GET },
+  BFF_08_0002: { path: '/core-modification/v1/counsel-reserve', method: Tw.API_METHOD.POST },
+  BFF_08_0003: { path: '/core-modification/v1/counsel-histories', method: Tw.API_METHOD.GET },
+
   // TEST
   GET: { path: '/posts', method: Tw.API_METHOD.GET },
   GET_PARAM: { path: '/comments', method: Tw.API_METHOD.GET },
@@ -169,7 +174,7 @@ Tw.NODE_CMD = {
   SVC_PASSWORD_LOGIN: { path: '/service-password-sessions/login', method: Tw.API_METHOD.POST },
   LOGIN_TID: { path: '/login-tid', method: Tw.API_METHOD.POST },
   LOGOUT_TID: { path: '/logout-tid', method: Tw.API_METHOD.POST },
-  USER_LOCK_LOGIN: {path: '/user-locks/login', method: Tw.API_METHOD.POST }
+  USER_LOCK_LOGIN: { path: '/user-locks/login', method: Tw.API_METHOD.POST }
 };
 
 Tw.API_CODE = {

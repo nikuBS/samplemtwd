@@ -7,6 +7,7 @@ import CustomerPreventDamageRelateSite from './controllers/customer.prevent-dama
 
 import TwRouter from '../../common/route/tw.router';
 import CustomerMainController from './controllers/customer.main.controller';
+import CustomerHelpline from './controllers/helpline/customer.helpline.controller';
 
 class CustomerRouter extends TwRouter {
   constructor() {
@@ -18,6 +19,7 @@ class CustomerRouter extends TwRouter {
     this.controllers.push({ url: '/prevent-damage/guide/view', controller: new CustomerPreventDamageGuideView() });
     this.controllers.push({ url: '/prevent-damage/useful-service', controller: new CustomerPreventDamageUsefulService() });
     this.controllers.push({ url: '/prevent-damage/relate-site', controller: new CustomerPreventDamageRelateSite() });
+    this.controllers.push({ url: '/helpline', controller: new CustomerHelpline() });
   }
 }
 

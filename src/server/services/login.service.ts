@@ -91,6 +91,14 @@ class LoginService {
       });
     });
   }
+
+  public getChannelCookie(): string {
+    return this.request.cookies[COOKIE_KEY.CHANNEL];
+  }
+
+  public getDeviceCookie(): string {
+    return this.request.cookies[COOKIE_KEY.DEVICE];
+  }
 }
 
 export default LoginService;
