@@ -31,6 +31,9 @@ export const URL = {
   '/myt/bill/guidechange/change-complete': { login: true, id: '' },
   '/myt/bill/guidechange/update': { login: true, id: '' },
   '/myt/bill/guidechange/update-complete': { login: true, id: '' },
+  '/myt/joinService/protect/cancel': { login: true, id: 'MY_01_02_09' },
+  '/myt/joinService/protect/change': { login: true, id: 'MY_01_02_08' },
+  '/myt/joinService/protect/inquiry': { login: true, id: 'MY_01_02_07' },
   // recharge
   '/recharge/refill': { login: true, id: 'DA_01_01_01' }, // 리필하기
   '/recharge/refill/history': { login: true, id: 'DA_01_02_01' }, //리필 히스토리
