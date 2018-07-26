@@ -37,39 +37,43 @@ Tw.MytJoinServicePayClaimInfoTlogin.prototype = {
 
   },
   _bindEvent: function () {
-    this.$container.on('click', '[data-target="billMonthName"]', $.proxy(this._selPopOpen, this));
+    //this.$container.on('click', '[data-target="billMonthName"]', $.proxy(this._selPopOpen, this));
+    this.$container.on('click', '[data-target="billguideBtn"]', $.proxy(this._goBillguide, this));
   },
-  //--------------------------------------------------------------------------[이벤트 | 팝업 | 청구월 선택]
-  _selPopOpen : function(event) {
-    var $target = $(event.currentTarget);
-    var tempArr = this.resData.usedAmountChildInfo.invDtArr;
-    var arrOption = [];
-    for ( var i=0, len=tempArr.length; i<len; i++ ) {
-      arrOption.push({
-        'attr' : 'data-info="' + tempArr[i] + '"',
-        text : this._getSelClaimDtBtn( tempArr[i] )
-      });
-    }
-    this._popupService.openChoice(Tw.POPUP_TITLE.PERIOD_SELECT, arrOption, 'type1', $.proxy(this._selPopOpenEvt, this, $target));
+  _goBillguide: function() {
+    this._goLoad('/myt/bill/billguide');
   },
-  _selPopOpenEvt: function ($target, $layer) {
-    $layer.find('.popup-choice-list').on('click', $.proxy(this._selPopOpenEvtExe, this, $target, $layer) );
-
-  },
-  _selPopOpenEvtExe: function ($target, $layer, event) {
-    var curTg = $(event.currentTarget);
-    var tg = $target;
-    var dataTemp = curTg.find('button').attr('data-info');
-    tg.text( curTg.text() );
-    tg.attr('data-info', dataTemp );
-    //this._popupService.close();
-    var paramData = {
-      invDt: dataTemp,
-      selNum: this.selectDataInfo.selNum,
-      childSvcMgmtNum:  this.resData.selectSvcMgmtNum
-    };
-    this._goLoad('/myt/bill/billguide/subChildBill' + '?' + $.param(paramData));
-  },
+  //--------------------------------------------------------------------------[이벤트 | 팝업]
+  // _selPopOpen : function(event) {
+  //   var $target = $(event.currentTarget);
+  //   var tempArr = this.resData.usedAmountChildInfo.invDtArr;
+  //   var arrOption = [];
+  //   for ( var i=0, len=tempArr.length; i<len; i++ ) {
+  //     arrOption.push({
+  //       'attr' : 'data-info="' + tempArr[i] + '"',
+  //       text : this._getSelClaimDtBtn( tempArr[i] )
+  //     });
+  //   }
+  //   this._popupService.openChoice(Tw.POPUP_TITLE.PERIOD_SELECT, arrOption, 'type1', $.proxy(this._selPopOpenEvt, this, $target));
+  // },
+  // _selPopOpenEvt: function ($target, $layer) {
+  //   $layer.find('.popup-choice-list').on('click', $.proxy(this._selPopOpenEvtExe, this, $target, $layer) );
+  //
+  // },
+  // _selPopOpenEvtExe: function ($target, $layer, event) {
+  //   var curTg = $(event.currentTarget);
+  //   var tg = $target;
+  //   var dataTemp = curTg.find('button').attr('data-info');
+  //   tg.text( curTg.text() );
+  //   tg.attr('data-info', dataTemp );
+  //   //this._popupService.close();
+  //   var paramData = {
+  //     invDt: dataTemp,
+  //     selNum: this.selectDataInfo.selNum,
+  //     childSvcMgmtNum:  this.resData.selectSvcMgmtNum
+  //   };
+  //   this._goLoad('/myt/bill/billguide/subChildBill' + '?' + $.param(paramData));
+  // },
   //--------------------------------------------------------------------------[api]
   // _getUsedAmounts: function(param) {
   //   Tw.Logger.info('[param]', param);

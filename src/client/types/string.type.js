@@ -409,6 +409,11 @@ Tw.BLOCK_TYPE = {
   REGULAR_UNBLOCK: '다음 달부터 차단 해제',
   REGULAR_BLOCK: '다음 달부터 차단',
 };
+
 Tw.DATE_FORMAT = {
   YYYYDD_TYPE_0: 'YYYY년 MM월'
+};
+
+Tw.URL_PATH = {
+  BROADBAND: 'http://www.skbroadband.com/'
 };

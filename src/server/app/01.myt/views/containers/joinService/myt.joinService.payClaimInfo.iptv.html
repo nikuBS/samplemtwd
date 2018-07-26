@@ -40,11 +40,11 @@
                                     <span class="title">사용중인 상품</span>
                                     <span class="tx-cont"><button class="blue-btn"><%=resDataInfo.feeProdNm %></button></span>
                                 </li>
-                                <li>
-                                    <span class="title">납부방법</span>
-                                    <span class="tx-cont"><%=resDataInfo.bankCardCo %> 납부<br /><%=resDataInfo.bankCardNum %></span>
-                                </li>
 
+                                <%#납부 방법 %>
+                                <% include ../../components/joinService/myt.joinService.payClaimInfo.payWay.html %>
+
+                                <%#요금안내서 유형 %>
                                 <% include ../../components/joinService/myt.joinService.payClaimInfo.billGuideType.html %>
 
                             </ul>
@@ -72,7 +72,8 @@
   $(document).ready(function () {
     new Tw.MytJoinServicePayClaimInfoIptv($('#wrapFdev'), {
       reqQuery: <%-JSON.stringify(reqQuery) %>,
-      svcInfo: <%-JSON.stringify(svcInfo) %>
+      svcInfo: <%-JSON.stringify(svcInfo) %>,
+      resDataInfo: <%-JSON.stringify(resDataInfo) %>
   });
   });
 </script>
