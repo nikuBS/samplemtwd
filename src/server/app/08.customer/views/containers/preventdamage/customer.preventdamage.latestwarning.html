@@ -1,0 +1,81 @@
+<%#
+* FileName: customer.preventdamage.latestwarning.html
+* Author: 양지훈 (jihun202@sk.com)
+* Date: 2018.07.26
+%>
+<% include ../../components/start.component.html %>
+<div class="wrap">
+    <%- include('../../../../common/views/components/header.component.html', { title: '최신 이용자 피해예방 주의보', svcInfo: svcInfo }) %>
+    <!-- #header -->
+    <div id="header" class="header-wrap">
+        <div class="header">
+            <div class="header-ti align-l">
+                <h1>최신 이용자 피해예방 주의보</h1>
+            </div>
+            <button class="prev-step"><span class="blind">이전으로</span></button>
+        </div>
+    </div>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+
+            <hr class="cont-sp type1" aria-hidden="true" />
+
+            <!-- .cont-box -->
+            <div class="cont-box nogaps-hoz">
+                <div class="link-group-box">
+                    <ul class="link-group-list thin">
+                        <li class="link-highlight">
+                            <button class="link-group-btn">
+                                스마트폰 앱 접근권한 개인정보보호 안내
+                                <span class="link-group-date">2018.06.28</span>
+                            </button>
+                        </li>
+                        <li class="link-highlight">
+                            <button class="link-group-btn">
+                                SK텔레콤 이메일 요금안내서를 사칭한 피싱 메일에 주의하세요.
+                                <span class="link-group-date">2018.06.28</span>
+                            </button>
+                        </li>
+                        <li>
+                            <button class="link-group-btn">
+                                SK텔레콤 사칭 악성 메일 주의
+                                <span class="link-group-date">2018.06.28</span>
+                            </button>
+                        </li>
+                        <li>
+                            <button class="link-group-btn">
+                                명의도용 피해 안내
+                                <span class="link-group-date">2018.06.28</span>
+                            </button>
+                        </li>
+                        <li>
+                            <button class="link-group-btn">
+                                크롬 사칭 악성앱 대응 방법 안내
+                                <span class="link-group-date">2018.06.28</span>
+                            </button>
+                        </li>
+                        <li>
+                            <button class="link-group-btn">
+                                해외 로밍 피해예방법
+                                <span class="link-group-date">2018.06.28</span>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!--// .cont-box -->
+        </div>
+    </div>
+    <!--// #contents -->
+    <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }) %>
+</div>
+<% include ../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    var comp = new Tw.CustomerPreventdamageLatestwarning($('.wrap'));
+  });
+</script>
+<% include ../../components/end.component.html %>

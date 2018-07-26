@@ -19,28 +19,28 @@ Tw.CustomerNotice = function(rootEl) {
 Tw.CustomerNotice.prototype = {
 
   _cachedElement: function() {
-    this.$list = this.$container.find('ul[data-id="list"]');
-    this.$btnCategory = this.$container.find('button[data-id="category"]');
+    this.$list = this.$container.find('.fe-list');
+    this.$btnCategory = this.$container.find('.fe-btn_category');
     this.$btnMoreList = this.$container.find('.fe-btn_more_list');
   },
 
   _bindEvent: function() {
-    this._popupService._popupClose();
-    this.$btnCategory.on('click', $.proxy(this._openCategoryPopup, this));
+    this._popupService.close();
+    this.$btnCategory.on('click', $.proxy(this._openCategorySelectPopup, this));
     this.$btnMoreList.on('click', $.proxy(this._loadMoreList, this));
   },
 
-  _openCategoryPopup: function() {
+  _openCategorySelectPopup: function() {
     this._popupService.open({
       'hbs': 'select',
-      'title': '카테고리 설정',
+      'title': Tw.NOTICE.TITLE,
       'select': [
         {
           'options': [
-            {'title': 'Tworld', checked: (this._category === 'tworld'), value: 'tworld',  text: 'Tworld'},
-            {'title': '다이렉트샵', checked: (this._category === 'directshop'), value: 'directshop',  text: '다이렉트샵' },
-            {'title': '멤버십', checked: (this._category === 'membership'), value: 'membership',  text: '멤버십' },
-            {'title': '로밍', checked: (this._category === 'roaming'), value: 'roaming',  text: '로밍' }
+            {'title': 'T world', checked: (this._category === 'tworld'), value: 'tworld',  text: 'T world'},
+            {'title': Tw.NOTICE.DIRECTSHOP, checked: (this._category === 'directshop'), value: 'directshop',  text: Tw.NOTICE.DIRECTSHOP },
+            {'title': Tw.NOTICE.MEMBERSHIP, checked: (this._category === 'membership'), value: 'membership',  text: Tw.NOTICE.MEMBERSHIP },
+            {'title': Tw.NOTICE.ROAMING, checked: (this._category === 'roaming'), value: 'roaming',  text: Tw.NOTICE.ROAMING }
           ]
         }
       ],

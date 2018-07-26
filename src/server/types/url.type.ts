@@ -84,6 +84,8 @@ export const URL = {
   '/customer/prevent-damage': { login: false, id: 'CI_07_01' }, // 이용자 피해예방 센터 메인
   '/customer/prevent-damage/guide': { login: false, id: 'CI_07_03' }, // 이용자 피해예방 가이드
   '/customer/prevent-damage/guide/view': { login: false, id: 'CI_07_05' }, // 이용자 피해예방 가이드 - 상세
+  '/customer/prevent-damage/latest-warning': { login: false, id: 'CI_07_07' },  // 최신 이용자 피해예방 주의보
+  '/customer/prevent-damage/latest-warning/view': { login: false, id: 'CI_07_08' },  // 최신 이용자 피해예방 주의보 - 상세
   '/customer/prevent-damage/useful-service': { login: false, id: 'CI_07_09' },  // 유용한 부가서비스
   '/customer/prevent-damage/relate-site': { login: false, id: 'CI_07_10' }, // 이용자 피해예방 관련 사이트
   '/customer/helpline': { login: false, id: 'CI_05_01' }, // 전화상담예약

@@ -6,6 +6,13 @@
 
 import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
+import {CUSTOMER_NOTICE_CATEGORY, CUSTOMER_PREVENTDAMAGE_GUIDE} from '../../../../types/string.type';
+
+const categoryLabel = {
+  video: CUSTOMER_PREVENTDAMAGE_GUIDE.VIDEO,
+  webtoon: CUSTOMER_PREVENTDAMAGE_GUIDE.WEBTOON,
+  latest: CUSTOMER_PREVENTDAMAGE_GUIDE.LATEST
+};
 
 class CustomerPreventdamageGuideController extends TwViewController {
   constructor() {
@@ -13,7 +20,11 @@ class CustomerPreventdamageGuideController extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    res.render('customer.prevent-damage.guide.html', {
+    const category = req.query.category || 'video';
+
+    res.render('preventdamage/customer.preventdamage.guide.html', {
+      category: category,
+      categoryLabel: categoryLabel[category],
       svcInfo: svcInfo
     });
   }

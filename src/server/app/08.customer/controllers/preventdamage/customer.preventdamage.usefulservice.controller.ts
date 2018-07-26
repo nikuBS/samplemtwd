@@ -13,7 +13,7 @@ class CustomerPreventdamageUsefulserviceController extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    res.render('customer.prevent-damage.useful-service.html', {
+    res.render('preventdamage/customer.preventdamage.usefulservice.html', {
       svcInfo: svcInfo
     });
   }

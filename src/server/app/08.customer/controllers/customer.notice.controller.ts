@@ -7,20 +7,19 @@
 import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../../common/controllers/tw.view.controller';
 import { API_CMD, API_CODE } from '../../../types/api-command.type';
-import { Observable } from 'rxjs/Observable';
-import FormatHelper from '../../../utils/format.helper';
+import { CUSTOMER_NOTICE_CATEGORY } from '../../../types/string.type';
+
+const categoryLabel = {
+  tworld: CUSTOMER_NOTICE_CATEGORY.TWORLD,
+  directshop: CUSTOMER_NOTICE_CATEGORY.DIRECTSHOP,
+  membership: CUSTOMER_NOTICE_CATEGORY.MEMBERSHIP,
+  roaming: CUSTOMER_NOTICE_CATEGORY.ROAMING
+};
 
 class CustomerNoticeController extends TwViewController {
   constructor() {
     super();
   }
-
-  private categoryLabel = {
-    tworld: 'T world',
-    directshop: '다이렉트샵',
-    membership: '멤버십',
-    roaming: '로밍'
-  };
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     const category = req.query.category || 'tworld';
@@ -32,7 +31,7 @@ class CustomerNoticeController extends TwViewController {
 
     res.render('customer.notice.html', {
       category: category,
-      categoryLabel: this.categoryLabel[category],
+      categoryLabel: categoryLabel[category],
       svcInfo: svcInfo
     });
   }

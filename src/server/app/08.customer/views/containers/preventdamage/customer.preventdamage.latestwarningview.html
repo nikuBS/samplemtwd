@@ -1,11 +1,11 @@
 <%#
-* FileName: customer.preventdamage.guide.html
+* FileName: customer.preventdamage.latestwarningview.html
 * Author: 양지훈 (jihun202@sk.com)
-* Date: 2018.07.23
+* Date: 2018.07.26
 %>
 <% include ../../components/start.component.html %>
-<div class="wrap" data-category="<%= category %>">
-    <%- include('../../../../common/views/components/header.component.html', { title: '이용자 피해예방 가이드', svcInfo: svcInfo }) %>
+<div class="wrap">
+    <%- include('../../../../common/views/components/header.component.html', { title: '최신 이용자 피해예방 주의보', svcInfo: svcInfo }) %>
     <!-- #header -->
     <div id="header" class="header-wrap">
         <div class="header">
@@ -22,19 +22,20 @@
         <div class="container">
             <!-- .cont-box -->
             <div class="cont-box">
-                <button class="bt-dropdown big fe-btn_category" title="가이드 종류" aria-haspopup="true"><%= categoryLabel %><span class="ico"></span></button>
+                <h3 class="detail-aria-title">
+                    스마트 폰 앱 접근권한 개인정보보호
+                    <span class="detail-area-date">2017.04.09</span>
+                </h3>
             </div>
             <!--// .cont-box -->
 
             <hr class="cont-sp type1" aria-hidden="true" />
 
-            <% if (category == 'video') { %>
-               <%- include('customer.preventdamage.guide.video.html') %>
-            <% } else if (category == 'webtoon') { %>
-                <%- include('customer.preventdamage.guide.webtoon.html') %>
-            <% } else if (category == 'latest') { %>
-                <%- include('customer.preventdamage.guide.latest.html') %>
-            <% } %>
+            <!-- .cont-box -->
+            <div class="cont-box">
+                <!-- 상세정보 제공 AS-IS 동일 -->
+            </div>
+            <!--// .cont-box -->
         </div>
     </div>
     <!--// #contents -->
@@ -43,7 +44,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    var comp = new Tw.CustomerPreventdamageGuide($('.wrap'));
+    var comp = new Tw.CustomerPreventdamageLatestwarningview($('.wrap'));
   });
 </script>
 <% include ../../components/end.component.html %>

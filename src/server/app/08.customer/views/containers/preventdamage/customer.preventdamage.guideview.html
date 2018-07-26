@@ -3,15 +3,62 @@
 * Author: 양지훈 (jihun202@sk.com)
 * Date: 2018.07.23
 %>
-<% include ../components/start.component.html %>
-<div class="container">
+<% include ../../components/start.component.html %>
+<div class="wrap">
+    <%- include('../../../../common/views/components/header.component.html', { title: '이용자 피해예방 가이드 - 상세', svcInfo: svcInfo }) %>
+    <!-- #header -->
+    <div id="header" class="header-wrap">
+        <div class="header">
+            <div class="header-ti align-l">
+                <h1>이용자 피해예방 가이드</h1>
+            </div>
+            <button class="prev-step"><span class="blind">이전으로</span></button>
+        </div>
+    </div>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <!-- .cont-box -->
+            <div class="cont-box">
+                <h3 class="detail-aria-title">
+                    대출빙자형 보이스피싱 주의
+                    <span class="detail-area-date">등록일 2017.04.09</span>
+                </h3>
+            </div>
+            <!--// .cont-box -->
+
+            <hr class="cont-sp type1" aria-hidden="true" />
+
+            <!-- .cont-box -->
+            <div class="cont-box">
+                <div class="img-detail-box">
+                    <img src="/img/dummy/dmy-cartoon-detail.png" alt="카툰으로 보는 방송통신이용자정보포털 와이즈유저에서 제공하는 방송통신서비스 해지시 확인사항." aria-describedby="aria-cartoon-describe">
+                    <div id="aria-cartoon-describe" class="blind" aria-hidden="true">
+                        <p>
+                            고양이 : 어? 이게뭐야?
+                            오리 : 너 해지신청 할 때.
+                            고양이 : 아니… 그게 무슨말이야?
+                        </p>
+                    </div>
+                </div>
+                <div class="bt-slice mt20">
+                    <li class="bt-white1">
+                        <button>목록으로</button>
+                    </li>
+                </div>
+            </div>
+            <!--// .cont-box -->
+        </div>
+    </div>
     <!--// #contents -->
     <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }) %>
 </div>
-<% include ../components/javascript.component.html %>
+<% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    var comp = new Tw.CustomerPreventdamageGuideview($('.container'));
+    var comp = new Tw.CustomerPreventdamageGuideview($('.wrap'));
   });
 </script>
-<% include ../components/end.component.html %>
+<% include ../../components/end.component.html %>

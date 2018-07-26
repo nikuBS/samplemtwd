@@ -3,8 +3,9 @@
 * Author: 양지훈 (jihun202@sk.com)
 * Date: 2018.07.23
 %>
-<% include ../components/start.component.html %>
+<% include ../../components/start.component.html %>
 <div class="wrap">
+    <%- include('../../../../common/views/components/header.component.html', { title: '이용자 피해예방 센터', svcInfo: svcInfo }) %>
     <!-- #header -->
     <div id="header" class="header-wrap">
         <div class="header">
@@ -86,6 +87,29 @@
                     </ul>
                     <button class="link-group-more fe-btn_guide_more">더보기</button>
                     <% } %>
+                </div>
+            </div>
+            <!--// .cont-box -->
+
+            <hr class="cont-sp type1" aria-hidden="true" />
+
+            <!-- .cont-box -->
+            <div class="cont-box nogaps-btm">
+                <div class="link-group-box">
+                    <p class="link-group-tit">최신 이용자 피해예방 주의보</p>
+                    <ul class="link-group-list">
+                        <li>
+                            <button class="link-group-btn">
+                                스마트폰 앱 접근권한 개인정보보호 안내
+                            </button>
+                        </li>
+                        <li>
+                            <button class="link-group-btn">
+                                SK텔레콤 이메일 요금안내서를 사칭한 피싱 메일에 주의하세요
+                            </button>
+                        </li>
+                    </ul>
+                    <button class="link-group-more">더보기</button>
                 </div>
             </div>
             <!--// .cont-box -->
@@ -186,8 +210,35 @@
                                                     <li class="swiper-slide">
                                                         <div class="swiper-cont bg-color3">
                                                             <div class="t-commend-info">
-                                                                <!--<span class="ico-commend"><em class="blind">추천</em></span>-->
                                                                 <p class="commend-info-txt info-txt-w">휴대폰 <br/>보호 서비스</p>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li class="swiper-slide">
+                                                        <div class="swiper-cont bg-color3">
+                                                            <div class="t-commend-info">
+                                                                <p class="commend-info-txt info-txt-w">번호도용<br/>문자차단</p>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li class="swiper-slide">
+                                                        <div class="swiper-cont bg-color3">
+                                                            <div class="t-commend-info">
+                                                                <p class="commend-info-txt info-txt-w">정보보호 <br/>알림이</p>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li class="swiper-slide">
+                                                        <div class="swiper-cont bg-color3">
+                                                            <div class="t-commend-info">
+                                                                <p class="commend-info-txt info-txt-w">휴대폰결제 <br/>비밀번호</p>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li class="swiper-slide">
+                                                        <div class="swiper-cont bg-color3">
+                                                            <div class="t-commend-info">
+                                                                <p class="commend-info-txt info-txt-w">비밀번호 <br/>통화</p>
                                                             </div>
                                                         </div>
                                                     </li>
@@ -227,10 +278,10 @@
     <!--// #contents -->
     <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }) %>
 </div>
-<% include ../components/javascript.component.html %>
+<% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    var comp = new Tw.CustomerPreventdamageMain($('.container'));
+    var comp = new Tw.CustomerPreventdamageMain($('.wrap'));
   });
 </script>
-<% include ../components/end.component.html %>
+<% include ../../components/end.component.html %>
