@@ -188,7 +188,7 @@ export const API_CMD = {
   BFF_07_0083: { path: '/core-bill/v1/useContentsPrepay-auto-req', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_07_0084: { path: '/core-bill/v1/useContentsPrepay-auto-delete', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
 
-  //CUSTOMER
+  // CUSTOMER
   BFF_08_0001: { path: '/core-modification/v1/counsel-time-check', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_08_0002: { path: '/core-modification/v1/counsel-reserve', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_08_0003: { path: '/core-modification/v1/counsel-histories', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },

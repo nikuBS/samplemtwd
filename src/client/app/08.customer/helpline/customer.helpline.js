@@ -56,11 +56,11 @@ Tw.CustomerHelpline.prototype = {
       'select': [
         {
           'options': [
-            { 'title': Tw.HELPLINE_TYPE.GENERAL, checked: this._reservationType == 0, value: 0, text: Tw.HELPLINE_TYPE.GENERAL },
-            { 'title': Tw.HELPLINE_TYPE.ROAMING, checked: this._reservationType == 1, value: 1, text: Tw.HELPLINE_TYPE.ROAMING },
-            { 'title': Tw.HELPLINE_TYPE.QUALITY, checked: this._reservationType == 2, value: 2, text: Tw.HELPLINE_TYPE.QUALITY }
+            { 'title': Tw.HELPLINE_TYPE.GENERAL, checked: this._reservationType === 0, value: 0, text: Tw.HELPLINE_TYPE.GENERAL },
+            { 'title': Tw.HELPLINE_TYPE.ROAMING, checked: this._reservationType === 1, value: 1, text: Tw.HELPLINE_TYPE.ROAMING },
+            { 'title': Tw.HELPLINE_TYPE.QUALITY, checked: this._reservationType === 2, value: 2, text: Tw.HELPLINE_TYPE.QUALITY }
           ]
-        },
+        }
       ],
       'bt_num': 'one',
       'type': [{
@@ -80,7 +80,7 @@ Tw.CustomerHelpline.prototype = {
         { 'attr': 'data-area-code="5"', text: Tw.HELPLINE_AREA.CENTER },
         { 'attr': 'data-area-code="4"', text: Tw.HELPLINE_AREA.EAST },
         { 'attr': 'data-area-code="3"', text: Tw.HELPLINE_AREA.DAEGU },
-        { 'attr': 'data-area-code="2"', text: Tw.HELPLINE_AREA.BUSAN },
+        { 'attr': 'data-area-code="2"', text: Tw.HELPLINE_AREA.BUSAN }
       ]
     }, $.proxy(this._handleSelectArea, this));
   },
@@ -190,4 +190,4 @@ Tw.CustomerHelpline.prototype = {
       text: time + ':00'
     };
   }
-}
+};

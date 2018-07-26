@@ -4,15 +4,15 @@
  * Date: 2018.07.25
  */
 
-import TwViewController from "../../../../common/controllers/tw.view.controller";
-import { Request, Response, NextFunction } from "express";
-// import { API_CMD } from "../../../../types/api-command.type";
-// import { Observable } from "rxjs/Observable";
-// import DateHelper from "../../../../utils/date.helper";
+import TwViewController from '../../../../common/controllers/tw.view.controller';
+import { Request, Response, NextFunction } from 'express';
+// import { API_CMD } from '../../../../types/api-command.type';
+// import { Observable } from 'rxjs/Observable';
+// import DateHelper from '../../../../utils/date.helper';
 
 interface ITimeInfo {
-  curDate: string; //"상담날짜" - "20180725",
-  availHours: string[]; //"상담가능시간" - ["1600", "1700"]
+  curDate: string; // '상담날짜' - '20180725',
+  availHours: string[]; // '상담가능시간' - ['1600', '1700']
 }
 
 export default class CustomerHelpline extends TwViewController {
@@ -25,9 +25,9 @@ export default class CustomerHelpline extends TwViewController {
     // })
 
     const timeInfo: ITimeInfo = {
-      curDate: "2018.07.25",
-      availHours: ["15", "16", "17", "18"]
-    }
+      curDate: '2018.07.25',
+      availHours: ['15', '16', '17', '18']
+    };
 
     res.render('helpline/customer.helpline.html', { svcInfo, timeInfo });
   }
