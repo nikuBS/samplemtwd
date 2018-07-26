@@ -93,15 +93,22 @@
                         <div class="tab-area type1"><!-- 타입별 탭형태 변환 -->
                             <div class="tab-linker">
                                 <ul role="tablist">
-                                    <li role="tab" aria-selected="false" aria-controls="aria-tab1-tab" id="aria-tab1"><a href="">휴대폰</a></li>
-                                    <li role="tab" aria-selected="true" aria-controls="aria-tab2-tab" id="aria-tab2"><a href="">인터넷/집전화/IPTV</a></li><!-- true 열림 -->
+                                    <li role="tab" aria-selected="false" aria-controls="tab1-tab" id="tab1"><button>휴대폰</button></li>
+                                    <li role="tab" aria-selected="true" aria-controls="tab2-tab" id="tab2"><button>인터넷/집전화/IPTV</button></li><!-- true 열림 -->
                                 </ul>
                             </div>
                             <div class="tab-contents">
-                                <div class="pay_preview">
-                                    <img src="/img/dummy/ex_preview1.jpg" alt="요금 안내서 유형">
-                                    <img src="/img/dummy/ex_preview5.jpg" alt="요금 안내서 이메일서비스">
-                                </div>
+                                <ul>
+                                    <li role="tabpanel" id="tab1-tab" aria-labelledby="tab1">
+                                        1
+                                    </li>
+                                    <li role="tabpanel" id="tab2-tab" aria-labelledby="tab2">
+                                        <div class="pay_preview">
+                                            <img src="/img/dummy/ex_preview1.jpg" alt="요금 안내서 유형">
+                                            <img src="/img/dummy/ex_preview5.jpg" alt="요금 안내서 이메일서비스">
+                                        </div>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </div>
