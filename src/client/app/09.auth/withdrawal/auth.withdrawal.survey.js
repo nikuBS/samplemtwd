@@ -59,24 +59,35 @@ Tw.AuthWithdrawalSurvey.prototype = {
 
     Tw.Api.request(Tw.API_CMD.BFF_03_0003, data)
       .done($.proxy(this._onRequestDone, this))
-      .fail($.proxy(this._onRequestFail, this));
+      .fail(function (err) {
+        Tw.Logger.error('BFF_03_0003 Fail', err);
+      });
 
     Tw.Popup.close();
   },
   _onRequestDone: function (res) {
-    if (res.code === '00') {
+    if (res.code === Tw.API_CODE.CODE_00) {
       var href = '';
       if (res.result.tidYn === 'Y') {
         href = '/auth/withdrawal/complete?tid=Y'; // Still usable with TID
       } else {
         href = '/auth/withdrawal/complete'; // Need to sign-up with TID
       }
-      window.location = href;
+
+      // Getting rid of session
+      Tw.Api.request(Tw.NODE_CMD.LOGOUT_TID, {})
+        .done(function () {
+          if (res.code === Tw.API_CODE.CODE_00) {
+            window.location = href;
+          } else {
+            Tw.Popup.openAlert('TID_LOGOUT: ' + res.code + ' ' + res.msg);
+          }
+        })
+        .fail(function (err) {
+          Tw.Logger.error('NODE_CMD.LOGOUT_TID fail', err);
+        });
     } else {
-      Tw.Popup.openAlert(res.msg);
+      Tw.Popup.openAlert(res.code + ' ' + res.msg);
     }
-  },
-  _onRequestFail: function (err) {
-    Tw.Logger.error('BFF_03_0003 Fail', err);
   }
 };
