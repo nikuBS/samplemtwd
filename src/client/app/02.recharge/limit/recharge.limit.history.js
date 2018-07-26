@@ -127,14 +127,14 @@ Tw.RechargeLimitHistory.prototype = {
 
   _setProperRecharge: function (item) {
     switch (item.opTypCd) {
-      case "1":
+      case '1':
         item.type = {
           icon: 'complete',
           label: Tw.RECHARGE_TYPE.RECHARGE
         };
         item.opTypNm = Tw.RECHARGE_TYPE.TMTH_RECHARGE;
         break;
-      case "2":
+      case '2':
         item.type = {
           icon: 'cancel',
           label: Tw.RECHARGE_TYPE.CANCEL,
@@ -142,14 +142,14 @@ Tw.RechargeLimitHistory.prototype = {
         };
         item.opTypNm = Tw.RECHARGE_TYPE.TMTH_RECHARGE;
         break;
-      case "3":
+      case '3':
         item.type = {
           icon: 'auto',
           label: Tw.RECHARGE_TYPE.REGULAR
         };
         item.opTypNm = Tw.RECHARGE_TYPE.REGULAR_RECHARGE;
         break;
-      case "4":
+      case '4':
         item.type = {
           icon: 'cancel',
           label: Tw.RECHARGE_TYPE.CANCEL,

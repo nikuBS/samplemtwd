@@ -12,6 +12,10 @@ Tw.VOICE_UNIT = {
   SEC: '초'
 };
 
+Tw.TIME_UNIT = {
+  HOUR: '시',
+}
+
 Tw.DATE_UNIT = {
   MONTH: '개월',
   MONTH_S: '월',
@@ -32,7 +36,10 @@ Tw.POPUP_TITLE = {
   SELECT_GIFT_AMOUNT: '선물할 금액 선택',
   CHANGE_BILL_GUIDE_TYPE: '어떤 안내서를 보여 드릴까요?',
   OVER_PAY: '과납 안내 드립니다.',
-  PERIOD_SELECT: '기간선택'
+  PERIOD_SELECT: '기간선택',
+  SET_HELPLINE_TYPE: '상담유형 설정',
+  SET_HELPLINE_AREA: '지역설정',
+  SET_HELPLINE_TIME: '시간설정',
 };
 
 Tw.POPUP_PROPERTY = {
@@ -318,9 +325,9 @@ Tw.MSG_PAYMENT = {
     BUTTON_TEXT: '과납금액확인하기'
   },
   HISTORY_OVER_PAY_POPUP: '<div class=\'widget pop-btm-area\'>' +
-  '<div class=\'widget-box check\'><ul class=\'select-list\' role=\'group\'>' +
-  '<li class=\'checkbox type01\' role=\'checkbox\' aria-checked=\'false\'>' +
-  '<input type=\'checkbox\' name=\'checkbox\' title=\'하루동안 보지 않기\'> 하루동안 보지 않기</li></ul></div></div>',
+    '<div class=\'widget-box check\'><ul class=\'select-list\' role=\'group\'>' +
+    '<li class=\'checkbox type01\' role=\'checkbox\' aria-checked=\'false\'>' +
+    '<input type=\'checkbox\' name=\'checkbox\' title=\'하루동안 보지 않기\'> 하루동안 보지 않기</li></ul></div></div>',
   HISTORY_POINT_TITLE_OCB: 'OK캐쉬백',
   HISTORY_POINT_TITLE_TPOINT: 'T포인트',
   HISTORY_POINT_TITLE_RAINBOW: '레인보우 포인트',
@@ -412,3 +419,17 @@ Tw.BLOCK_TYPE = {
 Tw.DATE_FORMAT = {
   YYYYDD_TYPE_0: 'YYYY년 MM월'
 };
+
+Tw.HELPLINE_TYPE = {
+  GENERAL: '일반',
+  ROAMING: '로밍',
+  QUALITY: '통화품질 상담'
+}
+
+Tw.HELPLINE_AREA = {
+  CAPITAL: '수도권 (서울, 경기, 인천, 강원)',
+  CENTER: '중부 (충남, 충북, 대전)',
+  EAST: '서부 (전남, 전북, 광주, 제주)',
+  DAEGU: '대구 (경북, 대구)',
+  BUSAN: '부산 (경남, 울산, 부산)',
+}

@@ -86,6 +86,7 @@ export const URL = {
   '/customer/prevent-damage/guide/view': { login: false, id: 'CI_07_05' }, // 이용자 피해예방 가이드 - 상세
   '/customer/prevent-damage/useful-service': { login: false, id: 'CI_07_09' },  // 유용한 부가서비스
   '/customer/prevent-damage/relate-site': { login: false, id: 'CI_07_10' }, // 이용자 피해예방 관련 사이트
+  '/customer/helpline': { login: false, id: 'CI_05_01' }, // 전화상담예약
   // auth
   '/auth/line': { login: true, id: 'CO_01_05_02' }, // 회선관리
   '/auth/line/edit': { login: true, id: 'CO_01_05_02_01' }, // 회선편집
@@ -95,20 +96,23 @@ export const URL = {
   '/auth/login/fail': { login: false, id: 'CO_01_02_01_01' },  // 로그인 실패
   '/auth/login/dormancy': { login: false, id: 'CO_01_02_02' },
   '/auth/login/find-id-pwd': { login: false, id: 'CO_01_04' },
-  '/auth/login/service-pwd': { login: true, id: 'CO_01_02_03_01' },
-  '/auth/login/service-pwd-fail': { login: true, id: 'CO_01_02_03_01_01' },
+  '/auth/login/service-pwd': { login: false, id: 'CO_01_02_03_01' },
+  '/auth/login/service-pwd-fail': { login: false, id: 'CO_01_02_03_01_01' },
   '/auth/login/route': { login: false, id: '' },
-  '/auth/logout/complete': { login: true, id: 'CO_01_03_01' },  // 로그아웃 성공
-  '/auth/logout/expire': { login: true, id: 'CO_01_03_02' },  // 세션 만료
-  '/auth/logout/route': { login: true, id: '' },
+  '/auth/login/easy-aos': { login: false, id: 'CO_01_02_06_01' }, // 간편로그인 안드로이드
+  '/auth/login/easy-ios': { login: false, id: 'CO_01_02_06_02' }, // 간편로그인 IOS
+  '/auth/login/easy-fail': { login: false, id: 'CO_01_02_06_03' },  // 간편로그인 이용불가
+  '/auth/logout/complete': { login: false, id: 'CO_01_03_01' },  // 로그아웃 성공
+  '/auth/logout/expire': { login: false, id: 'CO_01_03_02' },  // 세션 만료
+  '/auth/logout/route': { login: false, id: '' },
   '/auth/member/management': { login: true, id: 'CO_01_05' }, // 회원 정보 관리
   '/auth/signup/guide': { login: false, id: 'CO_01_01' },
   '/auth/tid/login': { login: false, id: '' },
   '/auth/tid/account': { login: true, id: '' },
-  '/auth/tid/change/pw': { login: true, id: '' },
-  '/auth/tid/find/id': { login: false, id: '' },
-  '/auth/tid/find/pw': { login: false, id: '' },
-  '/auth/tid/logout': { login: true, id: '' },
+  '/auth/tid/change-pw': { login: true, id: '' },
+  '/auth/tid/find-id': { login: false, id: '' },
+  '/auth/tid/find-pw': { login: false, id: '' },
+  '/auth/tid/logout': { login: false, id: '' },
   '/auth/tid/signup-local': { login: false, id: '' },
   '/auth/tid/signup-foreigner': { login: false, id: '' },
   '/auth/tid/guide': { login: false, id: '' },

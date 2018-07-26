@@ -7,7 +7,7 @@
                         {{#each list}}
                         <li class="radiobox type02 {{option}} {{representation}} {{dimmed}}" role="radio" aria-checked="true">
                             <input type="radio" name="droplist" value="" title="{{txt}}" {{option}} />
-                            <span class="txt">{{txt}}</span><span class="ico"></span><span class="line">{{line}}</span>
+                            <span class="txt">{{txt}}</span><span class="ico"></span><span class="line">{{#if representation}}<span class="badge badge-allpay"><span class="blind">통합대표</span></span>{{/if}}{{line}}</span>
                         </li>
                         {{/each}}
                     </ul>

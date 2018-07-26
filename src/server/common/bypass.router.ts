@@ -3,11 +3,13 @@ import { Router, Request, Response, NextFunction } from 'express';
 import { API_CMD, API_METHOD } from '../types/api-command.type';
 import ApiService from '../services/api.service';
 import FormatHelper from '../utils/format.helper';
+import LoginService from '../services/login.service';
 
 
 class BypassRouter {
   public router: Router;
   private apiService;
+  private loginService: LoginService = new LoginService();
 
   constructor() {
     this.router = express.Router();
@@ -56,9 +58,10 @@ class BypassRouter {
       cookie: req.headers.cookie,
       'user-agent': req.headers['user-agent']
     };
-
     const parameter = FormatHelper.isEmpty(params.parameter) ? {} : params.parameter;
     const pathVariables = FormatHelper.isEmpty(params.pathVariables) ? [] : params.pathVariables;
+
+    this.loginService.setCurrentReq(req, res);
     this.apiService.request(cmd, parameter, headers, ...(pathVariables))
       .subscribe((data) => {
         return res.json(data);
