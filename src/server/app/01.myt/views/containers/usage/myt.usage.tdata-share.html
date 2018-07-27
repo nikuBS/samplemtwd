@@ -3,6 +3,48 @@
 * Author: 이정민 (skt.p130713@partner.sk.com)
 * Date: 2018.07.25
 -->
+<script id="fe-child-item" type="text/x-handlebars-template">
+<div class="payment-detail-box">
+    <div class="detail-inner">
+        <div class="detail-list type2">
+            <ul>
+                <li>
+                    <span class="title">T데이터셰어링<br />USIM 번호</span>
+                    <span class="tx-cont">
+                        <span class="ff-hn">{{ usimNum }}</span>
+                        <span class="divice-sort"></span>
+                    </span>
+                </li>
+                <li>
+                    <span class="title">서비스 등록일</span>
+                    <span class="tx-cont"><span class="ff-hn">{{ svcScrbDt }}</span></span>
+                </li>
+                <li>
+                    <span class="title">T데이터셰어링<br />USIM 상태</span>
+                    <span class="tx-cont">
+                        {{ svcStNm }}
+                        {{#if doLostReport}}
+                        <span class="block">
+                            <button role="button" class="blue-btn mt12">분실신고해제</button>
+                        </span>
+                        {{/if}}
+                    </span>
+                </li>
+                <li>
+                    <span class="title">이번달 사용량</span>
+                    <span class="tx-cont"><span class="ff-hn">{{ useAmt.data }}{{ useAmt.unit }}</span></span>
+                </li>
+                {{#if using}}
+                <li>
+                    <span class="title">서비스 해지</span>
+                    <span class="tx-cont"><a href="/myt/usage/tdatashare/close?cSvcMgmtNum={{cSvcMgmtNum}}" role="button" class="red-btn">해지하기</a></span>
+                </li>
+                {{/if}}
+            </ul>
+        </div>
+    </div>
+</div>
+</script>
 <% include ../../components/start.component.html %>
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
@@ -14,7 +56,7 @@
 </div>
 <!--// #skip_navigation -->
 <!-- wrap -->
-<div class="wrap">
+<div id="fe-myt-usage-tdatashare" class="wrap">
     <!-- #header -->
     <div id="header" class="header-wrap">
         <div class="header">
@@ -31,7 +73,7 @@
         <div class="container">
             <div class="cont-box">
                 <div class="top-info">
-                    <span class="info-text">홍길동 고객님은 <em>5</em>개 USIM으로 T데이터셰어링을 이용중이시네요!</span>
+                    <span class="info-text"><%= svcInfo.mbrNm %> 고객님은 <em class="fe-childlist-length"><%= result.childList.length %></em>개 USIM으로 T데이터셰어링을 이용중이시네요!</span>
                 </div>
             </div>
 
@@ -40,143 +82,32 @@
             <div class="cont-box nogaps-btm">
                 <h2 class="title-h2">T데이터셰어링 사용량 정보</h2>
                 <div class="payment-detail-wrap">
+                    <% if (result.opmdBasic.data !== '-1') { %>
                     <div class="usage-wrap">
                         <h3 class="usage-tit">기본제공 데이터 사용량</h3>
-                        <button role="button" class="ico-info"><span class="blind">기본제공 데이터 사용량 상세보기</span></button>
+                        <button role="button" class="ico-info fe-btn-opmd-basic"><span class="blind">기본제공 데이터 사용량 상세보기</span></button>
                     </div>
                     <div class="usage-all">
-                        <span class="usage-cont"><em>1</em>GB <span class="sub-txt">(1,024MB)</span></span>
+                        <span class="usage-cont">
+                            <em class="fe-opmdBasic-data"><%= result.opmdBasic.data %></em>
+                            <span class="fe-opmdBasic-unit"><%= result.opmdBasic.unit %></span>
+                        </span>
                     </div>
-
+                    <% } %>
                     <div class="usage-wrap">
                         <h3 class="usage-tit">총 데이터 사용량</h3>
-                        <button role="button" class="ico-info"><span class="blind">총 데이터 사용량 상세보기</span></button>
+                        <button role="button" class="ico-info fe-btn-tot-shar"><span class="blind">총 데이터 사용량 상세보기</span></button>
                     </div>
                     <div class="usage-all">
-                        <span class="usage-cont"><em>1</em>GB <span class="sub-txt">(1,024MB)</span></span>
+                        <span class="usage-cont">
+                            <em class="fe-totShar-data"><%= result.totShar.data %></em>
+                            <span class="fe-totShar-unit"><%= result.totShar.unit %></span>
+                        </span>
                     </div>
-
-                    <div class="payment-detail-box">
-                        <div class="detail-inner">
-                            <div class="detail-list type2">
-                                <ul>
-                                    <li>
-                                        <span class="title">T데이터셰어링<br />USIM 번호</span>
-                                        <span class="tx-cont">
-                                                <span class="ff-hn">1010-1003-7399-1F</span>
-                                                <span class="divice-sort">(한도형)</span>
-                                            </span>
-                                    </li>
-                                    <li>
-                                        <span class="title">서비스 등록일</span>
-                                        <span class="tx-cont"><span class="ff-hn">2018.05.16</span></span>
-                                    </li>
-                                    <li>
-                                        <span class="title">T데이터셰어링<br />USIM 상태</span>
-                                        <span class="tx-cont">사용중</span>
-                                    </li>
-                                    <li>
-                                        <span class="title">이번달 사용량</span>
-                                        <span class="tx-cont"><span class="ff-hn">0MB</span></span>
-                                    </li>
-                                    <li>
-                                        <span class="title">서비스 해지</span>
-                                        <span class="tx-cont"><button role="button" class="red-btn">해지하기</button></span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="payment-detail-box">
-                        <div class="detail-inner">
-                            <div class="detail-list type2">
-                                <ul>
-                                    <li>
-                                        <span class="title">T데이터셰어링<br />USIM 번호</span>
-                                        <span class="tx-cont">
-                                                <span class="ff-hn">1010-1003-7399-1F</span>
-                                                <span class="divice-sort">(한도형)</span>
-                                            </span>
-                                    </li>
-                                    <li>
-                                        <span class="title">서비스 등록일</span>
-                                        <span class="tx-cont"><span class="ff-hn">2018.05.16</span></span>
-                                    </li>
-                                    <li>
-                                        <span class="title">T데이터셰어링<br />USIM 상태</span>
-                                        <span class="tx-cont">
-                                                <span class="block">분실신고</span>
-                                                <button role="button" class="blue-btn mt12">분실신고해제</button>
-                                            </span>
-                                    </li>
-                                    <li>
-                                        <span class="title">이번달 사용량</span>
-                                        <span class="tx-cont"><span class="ff-hn">0MB</span></span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="payment-detail-box">
-                        <div class="detail-inner">
-                            <div class="detail-list type2">
-                                <ul>
-                                    <li>
-                                        <span class="title">T데이터셰어링<br />USIM 번호</span>
-                                        <span class="tx-cont">
-                                                <span class="ff-hn">1010-1003-7399-1F</span>
-                                                <span class="divice-sort">(한도형)</span>
-                                            </span>
-                                    </li>
-                                    <li>
-                                        <span class="title">서비스 등록일</span>
-                                        <span class="tx-cont"><span class="ff-hn">2018.05.16</span></span>
-                                    </li>
-                                    <li>
-                                        <span class="title">T데이터셰어링<br />USIM 상태</span>
-                                        <span class="tx-cont">일반해지</span>
-                                    </li>
-                                    <li>
-                                        <span class="title">이번달 사용량</span>
-                                        <span class="tx-cont"><span class="ff-hn">0MB</span></span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="payment-detail-box">
-                        <div class="detail-inner">
-                            <div class="detail-list type2">
-                                <ul>
-                                    <li>
-                                        <span class="title">T데이터셰어링<br />USIM 번호</span>
-                                        <span class="tx-cont">
-                                                <span class="ff-hn">1010-1003-7399-1F</span>
-                                                <span class="divice-sort">(한도형)</span>
-                                            </span>
-                                    </li>
-                                    <li>
-                                        <span class="title">서비스 등록일</span>
-                                        <span class="tx-cont"><span class="ff-hn">2018.05.16</span></span>
-                                    </li>
-                                    <li>
-                                        <span class="title">T데이터셰어링<br />USIM 상태</span>
-                                        <span class="tx-cont">정지</span>
-                                    </li>
-                                    <li>
-                                        <span class="title">이번달 사용량</span>
-                                        <span class="tx-cont"><span class="ff-hn">0MB</span></span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+                    <div class="fe-child-list"></div>
                 </div>
-                <div class="bt-more-wrap">
-                    <button role="button" class="bt-more" title="">더보기<span>(20)</span></button>
+                <div class="bt-more-wrap" style="display: none;">
+                    <button role="button" class="bt-more" title="">더보기</button>
                 </div>
             </div>
 
@@ -284,7 +215,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    // var comp = new Tw.MytUsageView($('.container'));
+    new Tw.MytUsageTdatashare($('#fe-myt-usage-tdatashare'));
   });
 </script>
 <% include ../../components/end.component.html %>

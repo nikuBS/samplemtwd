@@ -13,21 +13,21 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div class="wrap">
+<div id="fe-myt-usage-tdatashare-close" class="wrap" data-csvcmgmtnum="<%= cSvcMgmtNum %>">
     <!-- #header -->
     <div id="header" class="header-wrap">
         <div class="header step-page">
             <div class="header-ti">
                 <h1>T데이터셰어링 USIM 해지하기</h1>
             </div>
-            <button class="close-step"><span class="blind">닫기</span></button>
+            <a href="/myt/usage/tdatashare" class="close-step fe-replace-history"><span class="blind">닫기</span></a>
         </div>
     </div>
     <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap">
         <h2 class="blind">내용</h2>
-        <div id="fe-tdata-share-close">
+        <div id="fe-main">
             <div class="container">
                 <div class="cont-box">
                     <div class="top-info">
@@ -38,7 +38,7 @@
                                     <ul>
                                         <li>
                                             <span class="title">휴대폰 번호</span>
-                                            <span class="tx-cont"><span class="fs-type">010-45**-12**</span></span>
+                                            <span class="tx-cont"><span class="fs-type"><%= svcInfo.svcNum %></span></span>
                                         </li>
                                     </ul>
                                 </div>
@@ -58,7 +58,7 @@
                                     <ul>
                                         <li>
                                             <span class="title">T데이터셰어링<br />해지 USIM 번호</span>
-                                            <span class="tx-cont"><span class="fs-type">1010-1003-7379-2F</span></span>
+                                            <span class="tx-cont"><span class="fs-type"><%= cSvcMgmtNum %></span></span>
                                         </li>
                                     </ul>
                                 </div>
@@ -83,17 +83,17 @@
                     <div class="contents-btn">
                         <ul class="bt-slice item-two">
                             <li class="bt-white2">
-                                <button>취소</button>
+                                <a href="/myt/usage/tdatashare" class="close-step fe-replace-history">취소</a>
                             </li>
                             <li class="bt-red1">
-                                <button>해지</button>
+                                <button class="fe-close-submit">해지</button>
                             </li>
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
-        <div id="fe-tdata-share-close-complete" style="display: none;">
+        <div id="fe-complete" style="display: none;">
             <div class="container">
                 <div class="cont-box nogaps-top">
                     <div class="msg-present-box">
@@ -107,20 +107,20 @@
                                 <li>
                                     <dl>
                                         <dt class="ti-data">해지일시</dt>
-                                        <dd class="tx-data">2018.05.16</dd>
+                                        <dd class="tx-data"><%= closeDate %></dd>
                                     </dl>
                                 </li>
                                 <li>
                                     <dl>
                                         <dt class="ti-data">T데이터셰어링<br />해지 USIM 번호</dt>
-                                        <dd class="tx-data">1010-1003-7379-2F</dd>
+                                        <dd class="tx-data"><%= cSvcMgmtNum %></dd>
                                     </dl>
                                 </li>
                             </ul>
                             <div class="contents-btn">
                                 <ul class="bt-slice">
                                     <li class="bt-blue1">
-                                        <button>확인</button>
+                                        <a href="/myt/usage/tdatashare" class="close-step fe-replace-history">확인</a>
                                     </li>
                                 </ul>
                             </div>
@@ -138,7 +138,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    var comp = new Tw.MytUsageTdatashareClose($('#myt-usage-tdatashare-close'));
+    new Tw.MytUsageTdatashareClose($('#fe-myt-usage-tdatashare-close'));
   });
 </script>
 <% include ../../components/end.component.html %>

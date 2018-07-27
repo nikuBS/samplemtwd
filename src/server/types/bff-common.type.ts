@@ -167,3 +167,8 @@ export const LOGIN_NOTICE_TYPE = {
   NEW_LINE: '03',
   BIZ_DELETE: '04'
 };
+
+export const TDATA_SHARE_SVC_ST_CD = {
+  AC: 'AC', // 분실신고
+  SP: 'SP'  // 분실
+};

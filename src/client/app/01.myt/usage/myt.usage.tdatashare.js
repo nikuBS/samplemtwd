@@ -1,118 +1,128 @@
+/**
+ * FileName: myt.usage.tdatashare.js
+ * Author: 이정민 (skt.p130713@partner.sk.com)
+ * Date: 2018.07.27
+ */
+
 Tw.MytUsageTdatashare = function (rootEl) {
   this.$container = rootEl;
-  this._ui = {};
+  this.$window = window;
+  this._apiService = Tw.Api;
+  this._popupService = Tw.Popup;
+  this._LENGTH_PER_PAGE = 5;
+  this._loadedItemLength = 0;
 
-  this._uiFunction();
-  this._changeDataUnit();
+  this._assign();
+  this._bindEvent();
+  this._init();
 };
 
 Tw.MytUsageTdatashare.prototype = {
-  currentUShimListLastIndex: null,
-  _setUI: function () {
-    this._ui.$contentWrap = $('body');
-    this._ui.$miniPopupTriggers = $('.btn-detail');
-    this._ui.$miniPopupWrap = $('#miniPopupWrapper');
-    this._ui.$miniPopupSubWrap = this._ui.$miniPopupWrap.find('.popup-base');
-    this._ui.$miniPopup = this._ui.$miniPopupWrap.find('.container');
-    this._ui.$miniPopupCloser = $('.popup-base .container a');
-    this._ui.$childUSimList = $('.d-table.type02');
-    this._ui.$childUSimListShowMore = $('.btn-more-list');
-    this._ui.$GBtoMB_Switcher = $('#data-size-changer.btn-change');
+  _assign: function () {
+    this._$childItemTmpl = $('#fe-child-item');
+    this._$childListWrap = this.$container.find('.fe-child-list');
+    this._$btMoreWrap = this.$container.find('.bt-more-wrap');
   },
-  _uiFunction: function () {
-    this._setUI();
 
-    this.descriptionLayerBtnClickHandler();
-    this.uShimListInit();
+  _bindEvent: function () {
+    this.$container.on('click', '.bt-more-wrap', $.proxy(this._onClickMoreBtn, this));
+    this.$container.on('click', '.fe-btn-opmd-basic', $.proxy(this._onClickBtnInfoAlert, this,
+      Tw.MSG_MYT.TDATA_SHARE.M01_TITLE, Tw.MSG_MYT.TDATA_SHARE.M01_CONTENTS));
+    this.$container.on('click', '.fe-btn-tot-shar', $.proxy(this._onClickBtnInfoAlert, this,
+      Tw.MSG_MYT.TDATA_SHARE.M02_TITLE, Tw.MSG_MYT.TDATA_SHARE.M02_CONTENTS));
   },
-  _changeDataUnit: function () {
-    this.$container.on('change', '.btn-change', $.proxy(this._setDataByUnit, this));
+
+  _init: function () {
+    this._request();
   },
-  _setDataByUnit: function ($event) {
-    var defaultUnit = 'KB';
-    var unit = this._getUnit($event.target.checked);
 
-    this.$container.find('[data-value]').each(function () {
-      var $this = $(this);
-      var dataValue = $this.data('value');
-      var data = Tw.FormatHelper.customDataFormat(dataValue, defaultUnit, unit);
+  _request: function () {
+    this._apiService.request(Tw.API_CMD.BFF_05_0005)
+      .done($.proxy(this._requestDone, this))
+      .fail($.proxy(this._requestFail, this));
+  },
 
-      if ( $this.siblings('.unit').length ) {
-        $this.text(data.data);
-        $this.siblings('span').text(data.unit);
-      } else {
-        $this.text(data.data + data.unit);
-      }
+  _requestDone: function (res) {
+    this._setData(res);
+  },
+
+  _requestFail: function () {
+
+  },
+
+  _onClickMoreBtn: function () {
+    this._setChildListData();
+  },
+
+  _onClickBtnInfoAlert: function (title2, contents) {
+    this._popupService.open({
+      title: Tw.POPUP_TITLE.GUIDE,
+      close_bt: true,
+      title2: title2,
+      bt_num: 'one',
+      contents: contents,
+      type: [{
+        style_class: 'bt-red1 tw-popup-confirm',
+        txt: Tw.BUTTON_LABEL.CONFIRM
+      }]
     });
   },
-  _getUnit: function (isMb) {
-    var unit = 'GB';
-    if ( isMb ) {
-      unit = 'MB';
-    }
-    return unit;
-  },
-  contentOverflowToggle: function () {
-    var currentState     = this._ui.$contentWrap,
-        miniPopUpWrap    = this._ui.$miniPopupWrap,
-        miniPopUpSubWrap = this._ui.$miniPopupSubWrap;
 
-    if ( currentState.css('overflow-y') === 'visible' ) {
-      currentState.css({ 'overflow-y': 'hidden' });
-      miniPopUpWrap.show();
-      miniPopUpSubWrap.show();
+  _setData: function (res) {
+    var result = this._getResult(res);
+    if ( !result ) {
+      return;
+    }
+    this.childList = result.childList;
+    this._setChildListData();
+  },
+
+  _setChildListData: function () {
+    var source = this._$childItemTmpl.html();
+    for ( var i = 0; i < this._LENGTH_PER_PAGE; i++ ) {
+      var child = this.childList[this._loadedItemLength];
+      if ( !child ) {
+        break;
+      }
+      var template = Handlebars.compile(source);
+      var html = template(child);
+      this._$childListWrap.append(html);
+      ++this._loadedItemLength;
+    }
+    if ( _.size(this.childList) > this._loadedItemLength ) {
+      this._$btMoreWrap.show();
     } else {
-      currentState.css({ 'overflow-y': 'visible' });
-      miniPopUpWrap.hide();
-      miniPopUpSubWrap.hide();
+      this._$btMoreWrap.hide();
     }
 
   },
-  miniPopupToggle: function (targetTag) {
-    this.contentOverflowToggle();
-    if ( targetTag ) {
-      $('#' + targetTag).show();
-    } else {
-      this._ui.$miniPopup.hide();
+
+  _getResult: function (res) {
+    if ( res.code === '00' && !Tw.FormatHelper.isEmpty(res.result) ) {
+      return this._parseData(res.result);
     }
   },
-  descriptionLayerBtnClickHandler: function () {
-    var miniPopupTriggers = this._ui.$miniPopupTriggers;
-    this._ui.$miniPopup.hide();
 
+  _parseData: function (result) {
+    if ( !Tw.FormatHelper.isEmpty(result.childList) ) {
+      // var tmpArr = [];
+      // for (var i = 0; i < 18; i++) {
+      //   tmpArr.push(_.clone(result.childList[0]));
+      // }
+      // result.childList = tmpArr;
+      _.map(result.childList, function (child, idx) {
+        child.idx = idx;
+        child.useAmt = Tw.FormatHelper.convDataFormat(child.useAmt, Tw.DATA_UNIT.KB);
+        child.svcScrbDt = Tw.DateHelper.getShortDateNoDot(child.svcScrbDt);
 
-    if ( miniPopupTriggers.length ) {
-      miniPopupTriggers.on('click', $.proxy(function (e) {
-        e.preventDefault();
-        // if(e.target.nodeName.toLowerCase() === 'span') e.target = e.target.parentNode;
-
-        this.miniPopupToggle('miniPopup0' + $(e.target).data('popup-type'));
-      }, this));
-    }
-    if ( this._ui.$miniPopupCloser.length ) {
-      this._ui.$miniPopupCloser.on('click', $.proxy(function (e) {
-        e.preventDefault();
-        this.miniPopupToggle();
-      }, this));
-    }
-  },
-  uShimListInit: function () {
-    if ( this._ui.$childUSimListShowMore ) {
-      this._ui.$childUSimList.map(function (i, o) {
-        if ( i > 4 ) {
-          $(o).hide();
-        }
+        // 사용중인 경우
+        child.using = result.isAdultInd === 'T' && child.svcStCd === Tw.TDATA_SHARE_SVC_ST_CD.AC;
+        // 분실신고된 경우
+        child.doLostReport = result.isAdultInd === 'T' && child.eqpMgmtStCd === Tw.TDATA_SHARE_EQPMGMT_ST_CD['09'];
+        return child;
       });
-      this.currentUShimListLastIndex = 4;
-      this._ui.$childUSimListShowMore.on('click', 'a', this.uShimListShowMore.bind(this));
     }
-  },
-  uShimListShowMore: function (e) {
-    e.preventDefault();
-    this._ui.$childUSimList.slice(this.currentUShimListLastIndex + 1, this.currentUShimListLastIndex + 6).show();
-    if ( this.currentUShimListLastIndex + 6 >= this._ui.$childUSimList.length ) {
-      this._ui.$childUSimListShowMore.hide();
-    }
+    return result;
   }
-};
 
+};
