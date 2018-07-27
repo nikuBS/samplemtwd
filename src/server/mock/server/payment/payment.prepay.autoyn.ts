@@ -3,8 +3,8 @@ const AutoYn = {
   'msg': 'success',
   'result': {
     'autoChrgStCd': 'D',
-    'autoChrgAmt': '10000',
-    'autoChrgStrdAmt': '10000',
+    'autoChrgAmt': '100000',
+    'autoChrgStrdAmt': '100000',
     'cardNum': '371002*********',
     'cardCdNm': '하나카드'
   }

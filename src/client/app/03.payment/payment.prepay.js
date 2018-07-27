@@ -27,14 +27,17 @@ Tw.PaymentPrepay.prototype = {
     this._initVariables();
   },
   _initVariables: function () {
-    this.$mainTitle = this.$container.find('.fe-main-title').text();
+    this._mainTitle = this.$container.find('.fe-main-title').text();
+    this._amountList = [];
     this.$remainBtnWrap = this.$container.find('.fe-get-remain-btn-wrap');
     this.$remainInfo = this.$container.find('.fe-remain-info');
     this.$remainInfoWrap = this.$container.find('.fe-remain-info-wrap');
     this.$maxAmountWrap = this.$container.find('.fe-max-amount-wrap');
     this.$maxAmount = this.$container.find('.fe-max-amount');
+    this.$standardAmount = this.$container.find('.fe-standard-amount');
     this.$getDetailBtn = this.$container.find('.fe-get-detail');
     this.$goPrepayBtn = this.$container.find('.fe-go-prepay');
+    this.$autoStandardAmount = this.$container.find('.fe-auto-standard-amt');
     this.$autoPrepayBtn = this.$container.find('.fe-auto-prepay');
     this.$autoPrepayInfo = this.$container.find('.fe-auto-prepay-info');
     this.$inputPrepayAmount = this.$container.find('.fe-input-prepay-amount');
@@ -45,6 +48,8 @@ Tw.PaymentPrepay.prototype = {
     this.$newCardM = this.$newCardWrap.find('.fe-card-m');
     this.$newCardPassword = this.$newCardWrap.find('.fe-card-password');
     this.$cardTypeSelector = this.$newCardWrap.find('.fe-card-type-selector');
+    this.$autoStandardSelector = this.$container.find('.fe-select-standard-amount');
+    this.$autoPrepaySelector = this.$container.find('.fe-select-prepay-amount');
     this.$isAutoPrepay = 'N';
   },
   _bindEvent: function () {
@@ -60,6 +65,7 @@ Tw.PaymentPrepay.prototype = {
     this.$container.on('click', '.fe-cancel-auto-prepay', $.proxy(this._confirmCancel, this));
     this.$container.on('click', '.pay-check-box', $.proxy(this._setAutoInfo, this));
     this.$container.on('click', '.fe-prepay', $.proxy(this._prepay, this));
+    this.$container.on('click', '.fe-select-prepay-amount', $.proxy(this._selectPrepayAmount, this));
     this.$cardTypeSelector.on('click', $.proxy(this._selectCardType, this));
   },
   _onlyNumber: function (event) {
@@ -83,7 +89,8 @@ Tw.PaymentPrepay.prototype = {
       this._setRemainLimitInfo($result);
 
       if ($result.autoChrgStCd === Tw.AUTO_CHARGE_CODE.USE) {
-        this._setAutoPrepayInfo($result);
+        this.$isAutoPrepay = 'Y';
+        this.$container.find('.fe-auto-prepay-arrow').removeClass('none');
       }
 
       this.$remainInfoWrap.removeClass('none');
@@ -103,6 +110,11 @@ Tw.PaymentPrepay.prototype = {
     this.$remainInfo.text(Tw.FormatHelper.addComma(this.$remainAmount));
     this.$maxAmount.text(Tw.FormatHelper.addComma(this.$possibleAmount));
 
+    this.$standardAmountAbbr = this.$limitAmount / 10000;
+    this.$standardAmount.text(this.$standardAmountAbbr);
+    this.$autoStandardSelector.text(this.$standardAmountAbbr + Tw.CURRENCY_UNIT.TEN_THOUSAND);
+    this.$autoPrepaySelector.text(this.$standardAmountAbbr + Tw.CURRENCY_UNIT.TEN_THOUSAND);
+
     if (this.$possibleAmount > 0) {
       this.$goPrepayBtn.removeAttr('disabled').removeClass('bt-gray1').addClass('bt-blue1');
       this._setCardTypeDisabled(this.$possibleAmount);
@@ -117,19 +129,15 @@ Tw.PaymentPrepay.prototype = {
 
     return limitAmount - useAmount + prepayAmount;
   },
-  _setAutoPrepayInfo: function ($result) {
-    this.$isAutoPrepay = 'Y';
-    this.$container.find('.fe-auto-charge-amt').text($result.autoChrgAmt);
-    this.$container.find('.fe-auto-charge-standard-amt').text($result.autoChrgStrdAmt);
-    this.$container.find('.fe-auto-prepay-arrow').removeClass('none');
-  },
   _openChangeLimit: function () {
     this._popupService.open('');
   },
   _openStandardAmountInfo: function () {
     this._popupService.open({
-      hbs: 'PA_08_02_L02'
-    }, $.proxy(this._closePopup, this));
+      'title': Tw.PAYMENT_STRD_MSG.TITLE_L02,
+      'close_bt': true,
+      'contents': Tw.PAYMENT_STRD_MSG.CONTENTS_L02
+    });
   },
   _openDetailPrepay: function () {
     this._popupService.open({
@@ -137,7 +145,7 @@ Tw.PaymentPrepay.prototype = {
     }, $.proxy(this._setDetailPrepay, this));
   },
   _setDetailPrepay: function ($layer) {
-    $layer.find('.fe-detail-title').text(this.$mainTitle);
+    $layer.find('.fe-detail-title').text(this._mainTitle);
     $layer.find('.fe-remain-amount').text(Tw.FormatHelper.addComma(this.$remainAmount));
     $layer.find('.fe-limit-amount').text(Tw.FormatHelper.addComma(this.$limitAmount));
     $layer.find('.fe-use-amount').text(Tw.FormatHelper.addComma(this.$useAmount));
@@ -198,7 +206,8 @@ Tw.PaymentPrepay.prototype = {
   },
   _selectCardType: function (event) {
     var $target = $(event.currentTarget);
-    this._popupService.openChoice(Tw.MSG_PAYMENT.SELECT_CARD_TYPE, this._getTypeList(), 'type2', $.proxy(this._selectPopupCallback, this, $target));
+    this._popupService.openChoice(Tw.MSG_PAYMENT.SELECT_CARD_TYPE, this._getTypeList(), 'type2',
+      $.proxy(this._selectPopupCallback, this, $target));
   },
   _selectPopupCallback: function ($target, $layer) {
     $layer.on('click', '.popup-choice-list', $.proxy(this._setSelectedValue, this, $target));
@@ -214,6 +223,11 @@ Tw.PaymentPrepay.prototype = {
       var reqData = this._makeRequestDataForPrepay();
       this._getCardInfo(reqData);
     }
+  },
+  _selectPrepayAmount: function (event) {
+    var $target = $(event.currentTarget);
+    this._popupService.openChoice(Tw.MSG_PAYMENT.SELECT_AMOUNT, this._getStandardAmountList(), 'type1',
+      $.proxy(this._selectPopupCallback, this, $target));
   },
   _getCardInfo: function (reqData) {
     this._apiService.request(Tw.API_CMD.BFF_07_0068, {}, {}, $.trim(this.$newCardNumber.val()).substr(0,6))
@@ -319,6 +333,20 @@ Tw.PaymentPrepay.prototype = {
       { 'attr': 'id="12"', text: Tw.PAYMENT_TYPE['012'] },
       { 'attr': 'id="24"', text: Tw.PAYMENT_TYPE['024'] }
     ];
+  },
+  _getStandardAmountList: function () {
+    if (Tw.FormatHelper.isEmpty(this._amountList)) {
+      var strdAmt = this.$standardAmountAbbr;
+      var firstAmt = 10000;
+      for (var i = 1; i <= strdAmt; i++) {
+        var obj = {
+          'attr': 'id="' + i * firstAmt + '"',
+          'text': Tw.FormatHelper.addComma((i * firstAmt).toString()) + Tw.CURRENCY_UNIT.WON
+        };
+        this._amountList.push(obj);
+      }
+    }
+    return this._amountList;
   },
   _closePopup: function () {
     this._popupService.close();

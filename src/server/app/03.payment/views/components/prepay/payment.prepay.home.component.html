@@ -66,7 +66,9 @@
                                                                     <div class="inner-sub">
                                                                         <div class="inner-sub-top">
                                                                             <span class="title">선결제 가능 최대금액<button class="ico blind fe-standard-amount-info" aria-haspopup="true">기준 최대금액 설명 보기</button><br/>(기준금액)</span>
-                                                                            <span class="tx-cont"><em class="num fe-auto-charge-standard-amt"></em> 원</span>
+                                                                            <span class="tx-cont">
+                                                                                <em class="num fe-auto-standard-amt" data-value="<%= payment.autoChrgStrdAmt %>"><%= payment.autoChrgStrdAmount %></em> 원
+                                                                            </span>
                                                                         </div>
                                                                         <div class="helpbox-link">
                                                                             <div class="link-long">
