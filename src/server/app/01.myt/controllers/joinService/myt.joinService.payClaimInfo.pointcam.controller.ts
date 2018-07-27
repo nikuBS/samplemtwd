@@ -11,7 +11,7 @@ import StringHelper from '../../../../utils/string.helper';
 import moment = require('moment');
 import DateHelper from '../../../../utils/date.helper';
 import FormatHelper from '../../../../utils/format.helper';
-import payClaimInfo_BFF_05_0058 from '../../../../mock/server/payClaimInfo.BFF_05_0058';
+import payClaimInfo_BFF_05_0058 from '../../../../mock/server/payClaimInfo.BFF_05_0058.mock';
 
 
 class MytJoinServicePayClaimInfoPointcam extends TwViewController {
