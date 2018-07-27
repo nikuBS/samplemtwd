@@ -206,7 +206,7 @@ Tw.PaymentPrepay.prototype = {
   },
   _selectCardType: function (event) {
     var $target = $(event.currentTarget);
-    this._popupService.openChoice(Tw.MSG_PAYMENT.SELECT_CARD_TYPE, this._getTypeList(), 'type2',
+    this._popupService.openChoice(Tw.MSG_PAYMENT.SELECT_CARD_TYPE, Tw.PAYMENT_CARD_TYPE_LIST, 'type2',
       $.proxy(this._selectPopupCallback, this, $target));
   },
   _selectPopupCallback: function ($target, $layer) {
@@ -315,24 +315,6 @@ Tw.PaymentPrepay.prototype = {
   },
   _go: function (hash) {
     window.location.hash = hash;
-  },
-  _getTypeList: function () {
-    return [
-      { 'attr': 'id="00"', text: Tw.PAYMENT_TYPE['000'] },
-      { 'attr': 'id="01"', text: Tw.PAYMENT_TYPE['001'] },
-      { 'attr': 'id="02"', text: Tw.PAYMENT_TYPE['002'] },
-      { 'attr': 'id="03"', text: Tw.PAYMENT_TYPE['003'] },
-      { 'attr': 'id="04"', text: Tw.PAYMENT_TYPE['004'] },
-      { 'attr': 'id="05"', text: Tw.PAYMENT_TYPE['005'] },
-      { 'attr': 'id="06"', text: Tw.PAYMENT_TYPE['006'] },
-      { 'attr': 'id="07"', text: Tw.PAYMENT_TYPE['007'] },
-      { 'attr': 'id="08"', text: Tw.PAYMENT_TYPE['008'] },
-      { 'attr': 'id="09"', text: Tw.PAYMENT_TYPE['009'] },
-      { 'attr': 'id="10"', text: Tw.PAYMENT_TYPE['010'] },
-      { 'attr': 'id="11"', text: Tw.PAYMENT_TYPE['011'] },
-      { 'attr': 'id="12"', text: Tw.PAYMENT_TYPE['012'] },
-      { 'attr': 'id="24"', text: Tw.PAYMENT_TYPE['024'] }
-    ];
   },
   _getStandardAmountList: function () {
     if (Tw.FormatHelper.isEmpty(this._amountList)) {
