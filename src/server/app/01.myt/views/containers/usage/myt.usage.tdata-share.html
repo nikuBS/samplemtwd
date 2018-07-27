@@ -73,7 +73,9 @@
         <div class="container">
             <div class="cont-box">
                 <div class="top-info">
+                    <% if (result.childList) { %>
                     <span class="info-text"><%= svcInfo.mbrNm %> 고객님은 <em class="fe-childlist-length"><%= result.childList.length %></em>개 USIM으로 T데이터셰어링을 이용중이시네요!</span>
+                    <% } %>
                 </div>
             </div>
 
