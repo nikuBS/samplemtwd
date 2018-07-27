@@ -2,6 +2,7 @@
  * FileName: myt.joinService.contractTerminalInfo.controller
  * Author: 김명환 (skt.P130714@partner.sk.com)
  * Date: 2018.07.24
+ * info : 페이지 진입시
  */
 import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -18,13 +19,13 @@ class MytJoinServiceContractTerminalInfo extends TwViewController {
     super();
   }
 
-  public reqQuery: any;//쿼리스트링
+  public reqQuery: any; // 쿼리스트링
   private _svcInfo: any;
 
-  //공통데이터
+  // 공통데이터
   private _commDataInfo: any = {};
 
-  //url
+  // url
   private _urlTplInfo: any = {
     combineRepresentPage: 'bill/myt.bill.billguide.combineRepresentPage.html'
   };
@@ -36,7 +37,7 @@ class MytJoinServiceContractTerminalInfo extends TwViewController {
     this.reqQuery = req.query;
 
 
-  }//render end
+  } // render end
 
 }
 

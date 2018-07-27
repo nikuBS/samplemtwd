@@ -96,22 +96,24 @@ const contractTerminalInfo_BFF_05_0063 = {
           "agrmtTermDt": "20170304",
           "penAmt": ""
         },
-      "sucesAgree":
-        {
-          "bfEqpDcClCd": "",
-          "bfEqpDcClNm": "",
-          "eqpMdlNm": "",
-          "agrmtDcAmt": "0",
-          "agrmtMthCnt": "24",
-          "sucesDt": "",
-          "sucesPenAmt": "",
-          "sucesAgrmtStaDt": "",
-          "sucesAgrmtEndDt": "",
-          "sucesRemDayCnt": "",
-          "remMthCnt": ""
-        }
+      "sucesAgreeList":
+        [
+          {
+            "bfEqpDcClCd": "",
+            "bfEqpDcClNm": "",
+            "eqpMdlNm": "",
+            "agrmtDcAmt": "0",
+            "agrmtMthCnt": "24",
+            "sucesDt": "",
+            "sucesPenAmt": "",
+            "sucesAgrmtStaDt": "",
+            "sucesAgrmtEndDt": "",
+            "sucesRemDayCnt": "",
+            "remMthCnt": ""
+          }
+        ]
     }
-};
+}
 
 export default contractTerminalInfo_BFF_05_0063;
 

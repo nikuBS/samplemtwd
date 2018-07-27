@@ -57,9 +57,17 @@ Tw.API_CMD = {
   BFF_05_0047: { path: '/core-bill/v1/bill-pay/used-amounts', method: Tw.API_METHOD.GET },
   BFF_05_0050: { path: '/core-bill/v1/wire-bill-types', method: Tw.API_METHOD.PUT },
   BFF_05_0052: { path: '/core-bill/v1/wire-bill-reissue', method: Tw.API_METHOD.POST },
+  BFF_05_0064: { path: '/core-bill/v1/useContents', method: Tw.API_METHOD.GET },
+  BFF_05_0066: { path: '/core-bill/v1/useContentsLimit', method: Tw.API_METHOD.GET },
+  BFF_05_0067: { path: '/core-bill/v1/updateUseContents', method: Tw.API_METHOD.GET },
   BFF_05_0069: { path: '/core-auth/v1/service-passwords', method: Tw.API_METHOD.PUT },
   BFF_05_0070: { path: '/core-auth/v1/service-passwords-change', method: Tw.API_METHOD.PUT },
   BFF_05_0071: { path: '/core-auth/v1/service-passwords', method: Tw.API_METHOD.DELETE },
+  BFF_05_0079: { path: '/core-bill/v1/microPay-hist-requests', method: Tw.API_METHOD.GET },
+  BFF_05_0080: { path: '/core-bill/v1/microPay-requests', method: Tw.API_METHOD.GET },
+  BFF_05_0081: { path: '/core-bill/v1/microPay-requests', method: Tw.API_METHOD.POST },
+  BFF_05_0082: { path: '/core-bill/v1/microPay-auto-set', method: Tw.API_METHOD.POST },
+  BFF_05_0083: { path: '/core-bill/v1/microPay-requests', method: Tw.API_METHOD.PUT },
 
   // RECHARGE
   BFF_06_0001: { path: '/core-recharge/v1/refill-coupons', method: Tw.API_METHOD.GET },
@@ -156,6 +164,10 @@ Tw.API_CMD = {
   BFF_08_0001: { path: '/core-modification/v1/counsel-time-check', method: Tw.API_METHOD.GET },
   BFF_08_0002: { path: '/core-modification/v1/counsel-reserve', method: Tw.API_METHOD.POST },
   BFF_08_0003: { path: '/core-modification/v1/counsel-histories', method: Tw.API_METHOD.GET },
+  BFF_08_0029: { path: '/core-modification/v1/tworld-notice', method: Tw.API_METHOD.GET },
+  BFF_08_0030: { path: '/core-modification/v1/directshop-notice', method: Tw.API_METHOD.GET },
+  BFF_08_0031: { path: '/core-modification/v1/membership-notice', method: Tw.API_METHOD.GET },
+  BFF_08_0032: { path: '/core-modification/v1/roaming-notice', method: Tw.API_METHOD.GET },
 
   // TEST
   GET: { path: '/posts', method: Tw.API_METHOD.GET },
