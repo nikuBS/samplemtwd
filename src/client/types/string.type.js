@@ -14,7 +14,7 @@ Tw.VOICE_UNIT = {
 
 Tw.TIME_UNIT = {
   HOUR: '시'
-}
+};
 
 Tw.DATE_UNIT = {
   MONTH: '개월',
@@ -57,7 +57,8 @@ Tw.BUTTON_LABEL = {
 };
 
 Tw.CURRENCY_UNIT = {
-  WON: '원'
+  WON: '원',
+  TEN_THOUSAND: '만원'
 };
 
 Tw.PAYMENT_OPTION = {
@@ -115,6 +116,11 @@ Tw.PAYMENT_STRING = {
 Tw.PAYMENT_POINT_VALUE = {
   OK_CASHBAG: '10',
   T_POINT: '11'
+};
+
+Tw.PAYMENT_STRD_MSG = {
+  CONTENTS_L02: '자동 선결제가 되는 시점의 금액을 말하며, 고객님 콘텐츠 이용한도의 최대 90%까지 설정 가능합니다.<br /><br />예시) 자동선결제가 기준금액 : 5만원으로 설정 시, 이번 달 소액결제를 5만원 이상 결제 시점에 자동으로 선결제됩니다.',
+  TITLE_L02: '기준금액이란?'
 };
 
 Tw.MSG_COMMON = {
@@ -260,6 +266,7 @@ Tw.MSG_PAYMENT = {
   SELECT_PRODUCT: '요금정보 선택',
   SELECT_CARD_TYPE: '납부형태 선택',
   SELECT_POINT: '포인트 선택',
+  SELECT_AMOUNT: '금액선택',
   REALTIME_A01: '납부 내역을 선택해주세요.',
   REALTIME_A02: '은행명을 선택해주세요.',
   REALTIME_A03: '계좌번호의 정합성이 맞지 않습니다.',
