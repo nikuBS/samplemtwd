@@ -3,7 +3,7 @@
  * Author: Kim Inhwan (skt.P132150@partner.sk.com)
  * Date: 2018.07.24
  */
-Tw.MyTJSProtectInquiry= function ($element) {
+Tw.MyTJSProtectInquiry = function ($element) {
   this.$container = $element;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
