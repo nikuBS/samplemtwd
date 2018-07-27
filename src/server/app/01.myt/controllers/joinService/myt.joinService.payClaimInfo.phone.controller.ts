@@ -19,13 +19,13 @@ class MytJoinServicePayClaimInfoPhone extends TwViewController {
     super();
   }
 
-  public reqQuery: any;//쿼리스트링
+  public reqQuery: any; // 쿼리스트링
   private _svcInfo: any;
 
-  //공통데이터
+  // 공통데이터
   private _commDataInfo: any = {};
 
-  //노출조건
+  // 노출조건
   private _showConditionInfo: any = {};
 
   private _urlTplInfo: any = {
@@ -36,7 +36,7 @@ class MytJoinServicePayClaimInfoPhone extends TwViewController {
     this._svcInfo = svcInfo;
     this.logger.info(this, '[ svcInfo ] 사용자 정보 : ', svcInfo);
     this.reqQuery = req.query;
-    var thisMain = this;
+    const thisMain = this;
 
     const p1 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0041, {}), '테스트 api');
     const p1_mock = this._getPromiseApiMock(payClaimInfo_BFF_05_0058, 'p1 Mock 데이터');
@@ -76,48 +76,49 @@ class MytJoinServicePayClaimInfoPhone extends TwViewController {
       });
 
 
-    });//Promise.all END
+    }); // Promise.all END
 
-  }//render end
+  } // render end
 
-  //-------------------------------------------------------------[프로미스 생성]
+  // -------------------------------------------------------------[프로미스 생성]
   public _getPromiseApi(reqObj, msg): any {
-    let thisMain = this;
-    let tempData: any;
-    let reqObjObservable: Observable<any> = reqObj;
+    const thisMain = this;
+    // let tempData: any;
+    const reqObjObservableApi: Observable<any> = reqObj;
 
     return new Promise((resolve, reject) => {
       Observable.combineLatest(
-        reqObjObservable
+        reqObjObservableApi
       ).subscribe({
         next(reqObjObservable) {
           thisMain.logger.info(thisMain, `[ ${ msg } next ] : `, reqObjObservable);
+          resolve(reqObjObservable);
         },
         error(error) {
           thisMain.logger.info(thisMain, `[ ${ msg } error ] : `, error.stack || error);
         },
         complete() {
-          thisMain.logger.info(thisMain, `[ ${ msg } complete ] : `, reqObjObservable);
-          resolve(reqObjObservable);
+          thisMain.logger.info(thisMain, `[ ${ msg } complete ] : `);
+
         }
       });
 
     });
   }
 
-//-------------------------------------------------------------[프로미스 생성 - Mock]
+// -------------------------------------------------------------[프로미스 생성 - Mock]
   public _getPromiseApiMock(mockData, msg): any {
     return new Promise((resolve, reject) => {
-      let ms: number = Math.floor(Math.random() * 1000) + 1;
+      const ms: number = Math.floor(Math.random() * 1000) + 1;
       setTimeout(function () {
         console.log(`[ ${ msg } _getPromiseApiMock ] : ` + mockData);
         resolve(mockData);
-        //reject('실패');
+        // reject('실패');
       }, ms);
     });
   }
 
-  //-------------------------------------------------------------[클리이어튼로 전송]
+  // -------------------------------------------------------------[클리이어튼로 전송]
   public renderView(res: Response, view: string, data: any): any {
     this.logger.info(this, '[ HTML ] : ', view);
     res.render(view, data);

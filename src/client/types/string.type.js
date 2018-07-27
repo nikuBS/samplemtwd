@@ -13,7 +13,7 @@ Tw.VOICE_UNIT = {
 };
 
 Tw.TIME_UNIT = {
-  HOUR: '시',
+  HOUR: '시'
 }
 
 Tw.DATE_UNIT = {
@@ -39,7 +39,7 @@ Tw.POPUP_TITLE = {
   PERIOD_SELECT: '기간선택',
   SET_HELPLINE_TYPE: '상담유형 설정',
   SET_HELPLINE_AREA: '지역설정',
-  SET_HELPLINE_TIME: '시간설정',
+  SET_HELPLINE_TIME: '시간설정'
 };
 
 Tw.POPUP_PROPERTY = {
@@ -224,7 +224,7 @@ Tw.MSG_MYT = {
     EMAIL_HP: '<img src="/img/dummy/ex_preview7.jpg" alt="요금 안내서 이메일서비스">', // 이메일 (휴대폰)
     EMAIL_INT: '<img src="/img/dummy/ex_preview5.jpg" alt="요금 안내서 이메일서비스">', // 이메일 (인터넷/집전화/IPTV , T-WIBRO)
     ETC_HP: '<img src="/img/dummy/ex_preview10.jpg" alt="요금 안내서 우편서비스">', // 기타(우편) : 휴대폰
-    ETC_INT: '<img src="/img/dummy/ex_preview4.jpg" alt="요금 안내서 우편서비스">', // 기타(우편) : (인터넷/집전화/IPTV , T-WIBRO)
+    ETC_INT: '<img src="/img/dummy/ex_preview4.jpg" alt="요금 안내서 우편서비스">' // 기타(우편) : (인터넷/집전화/IPTV , T-WIBRO)
   }
 };
 
@@ -253,7 +253,7 @@ Tw.MSG_RECHARGE = {
   LIMIT_A06: '데이터 차단 해제는 월 3회까지만 신청 가능합니다.',
   LIMIT_A07: '충전하기를 종료하시겠습니까?',
   LIMIT_A08: '신청되어 있는 매월 자동 충전을 취소하시겠습니까? 취소는 다음 달부터 적용됩니다.',
-  LIMIT_A09: '충전 취소는 고객센터 [국번 없이 1599-0011(유료) / 휴대폰 114]를 통해 당일에 한해 가능합니다.',
+  LIMIT_A09: '충전 취소는 고객센터 [국번 없이 1599-0011(유료) / 휴대폰 114]를 통해 당일에 한해 가능합니다.'
 };
 
 Tw.MSG_PAYMENT = {
@@ -325,9 +325,9 @@ Tw.MSG_PAYMENT = {
     BUTTON_TEXT: '과납금액확인하기'
   },
   HISTORY_OVER_PAY_POPUP: '<div class=\'widget pop-btm-area\'>' +
-    '<div class=\'widget-box check\'><ul class=\'select-list\' role=\'group\'>' +
-    '<li class=\'checkbox type01\' role=\'checkbox\' aria-checked=\'false\'>' +
-    '<input type=\'checkbox\' name=\'checkbox\' title=\'하루동안 보지 않기\'> 하루동안 보지 않기</li></ul></div></div>',
+  '<div class=\'widget-box check\'><ul class=\'select-list\' role=\'group\'>' +
+  '<li class=\'checkbox type01\' role=\'checkbox\' aria-checked=\'false\'>' +
+  '<input type=\'checkbox\' name=\'checkbox\' title=\'하루동안 보지 않기\'> 하루동안 보지 않기</li></ul></div></div>',
   HISTORY_POINT_TITLE_OCB: 'OK캐쉬백',
   HISTORY_POINT_TITLE_TPOINT: 'T포인트',
   HISTORY_POINT_TITLE_RAINBOW: '레인보우 포인트',
@@ -373,7 +373,7 @@ Tw.MSG_GIFT = {
   COOKIZ_A06: 'SK텔레콤을 사용하고 계신 분에게만 조르기 신청을 하실 수 있습니다.',
   COOKIZ_A07: '충전하기를 종료하시겠습니까?',
   COOKIZ_NO_HISTORY: '충전 내역이 없습니다.',
-  COOKIZ_NO_AUTH_HISTORY: '권한 변경 내역이 없습니다.',
+  COOKIZ_NO_AUTH_HISTORY: '권한 변경 내역이 없습니다.'
 };
 
 Tw.MSG_AUTH = {
@@ -404,14 +404,14 @@ Tw.RECHARGE_TYPE = {
   CHANGE: '변경',
   BLOCK: '차단',
   TMTH_RECHARGE: '당월 충전',
-  REGULAR_RECHARGE: '매월 충전',
+  REGULAR_RECHARGE: '매월 충전'
 };
 
 Tw.NOTICE = {
   TITLE: '카테고리 설정',
   DIRECTSHOP: '다이렉트샵',
   MEMBERSHIP: '멤버십',
-  ROAMING: '로밍',
+  ROAMING: '로밍'
 };
 
 Tw.PREVENTDAMAGE_GUIDE = {
@@ -428,11 +428,7 @@ Tw.BLOCK_TYPE = {
   TMTH_UNBLOCK: '이번 달 차단 해제',
   TMTH_BLOCK: '이번 달 차단',
   REGULAR_UNBLOCK: '다음 달부터 차단 해제',
-  REGULAR_BLOCK: '다음 달부터 차단',
-};
-
-Tw.DATE_FORMAT = {
-  YYYYDD_TYPE_0: 'YYYY년 MM월'
+  REGULAR_BLOCK: '다음 달부터 차단'
 };
 
 Tw.HELPLINE_TYPE = {
@@ -446,5 +442,14 @@ Tw.HELPLINE_AREA = {
   CENTER: '중부 (충남, 충북, 대전)',
   EAST: '서부 (전남, 전북, 광주, 제주)',
   DAEGU: '대구 (경북, 대구)',
-  BUSAN: '부산 (경남, 울산, 부산)',
+  BUSAN: '부산 (경남, 울산, 부산)'
 };
+
+Tw.DATE_FORMAT = {
+  YYYYDD_TYPE_0: 'YYYY년 MM월'
+};
+
+Tw.URL_PATH = {
+  BROADBAND: 'http://www.skbroadband.com/'
+};
+
