@@ -7,6 +7,7 @@
 Tw.TidLandingComponent = function (rootEl) {
   this.$container = rootEl;
   this._nativeService = Tw.Native;
+  this._historyService = new Tw.HistoryService();
 
   this._bindEvent();
 };
@@ -22,7 +23,7 @@ Tw.TidLandingComponent.prototype = {
     if ( Tw.BrowserHelper.isApp() ) {
       this._nativeService.send(nativeCommand, {}, callback);
     } else {
-      location.href = url;
+      this._historyService.goLoad(url);
     }
   },
   _onClickBtAccount: function () {

@@ -10,6 +10,7 @@ Tw.AuthLineCopRegister = function (rootEl, nicknamePopup) {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._nicknamePopup = nicknamePopup;
+  this._historyService = new Tw.HistoryService();
 
   this.$inputMdn = null;
   this.$inputCop = null;
@@ -44,7 +45,7 @@ Tw.AuthLineCopRegister.prototype = {
     this._nicknamePopup.openNickname(null, $.proxy(this._onCloseNickname, this));
   },
   _onClickCancel: function () {
-    history.back();
+    this._historyService.goBack();
 
   },
   _onClickRegister: function () {
@@ -97,7 +98,7 @@ Tw.AuthLineCopRegister.prototype = {
   },
   _successRegisterBiz: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      history.back();
+      this._historyService.gBack();
     } else {
       this._popupService.openAlert(resp.code + ' ' + resp.msg);
     }
