@@ -54,7 +54,8 @@ Tw.MyTBillGuidechangeChange.prototype = {
 
   _openTypeSelectPopup: function (event) {
     var $target = $(event.currentTarget);
-    this._popupService.openChoice(Tw.POPUP_TITLE.CHANGE_BILL_GUIDE_TYPE, this._billGuideTypesData, 'type3', $.proxy(this._onOpenChoicePopup, this, $target));
+    this._popupService.openChoice(Tw.POPUP_TITLE.CHANGE_BILL_GUIDE_TYPE, this._billGuideTypesData,
+      'type3', $.proxy(this._onOpenChoicePopup, this, $target));
   },
 
   _onOpenChoicePopup: function ($target, $layer) {
@@ -105,7 +106,8 @@ Tw.MyTBillGuidechangeChange.prototype = {
     var queryParams = Tw.UrlHelper.getQueryParams();
     var selectedBillGuideType;
     if (this._svcAttrCd === 'S1' || this._svcAttrCd === 'S2' || this._svcAttrCd === 'S3') {
-      selectedBillGuideType = (queryParams.selectedBillGuideType) ? Tw.WIRE_BILL_GUIDE_TYPE[queryParams.selectedBillGuideType] : Tw.BILL_GUIDE_TYPE.TWORLD;
+      selectedBillGuideType = (queryParams.selectedBillGuideType) ?
+        Tw.WIRE_BILL_GUIDE_TYPE[queryParams.selectedBillGuideType] : Tw.BILL_GUIDE_TYPE.TWORLD;
     } else {
       selectedBillGuideType = (queryParams.selectedBillGuideType) ? queryParams.selectedBillGuideType : Tw.BILL_GUIDE_TYPE.TWORLD;
     }

@@ -66,7 +66,9 @@
                                                                     <div class="inner-sub">
                                                                         <div class="inner-sub-top">
                                                                             <span class="title">선결제 가능 최대금액<button class="ico blind fe-standard-amount-info" aria-haspopup="true">기준 최대금액 설명 보기</button><br/>(기준금액)</span>
-                                                                            <span class="tx-cont"><em class="num fe-auto-charge-standard-amt"></em> 원</span>
+                                                                            <span class="tx-cont">
+                                                                                <em class="num fe-auto-standard-amt" data-value="<%= payment.autoChrgStrdAmt %>"><%= payment.autoChrgStrdAmount %></em> 원
+                                                                            </span>
                                                                         </div>
                                                                         <div class="helpbox-link">
                                                                             <div class="link-long">
@@ -100,8 +102,8 @@
                 <li class="bt-white2">
                     <a href="/payment/prepay/micro/history">선결제 내역</a>
                 </li>
-                <li class="bt-gray1 fe-go-prepay">
-                    <a href="#step1" disabled="disabled">선결제하기</a>
+                <li class="bt-gray1 fe-go-prepay" disabled="disabled">
+                    <a href="#step1-prepay">선결제하기</a>
                 </li>
             </ul>
         </div>
@@ -111,7 +113,7 @@
         <div class="payment-detail-box">
             <div class="detail-inner">
                 <div class="title">매번 선결제하시기 번거로우셨죠?</div>
-                <div class="info-btn"><button class="bt-link-tx" disabled="disabled">자동 선결제 신청<span class="ico"></span></button></div>
+                <div class="info-btn"><button class="bt-link-tx fe-auto-prepay" disabled="disabled">자동 선결제 신청<span class="ico"></span></button></div>
             </div>
             <div class="img"></div>
         </div>

@@ -1,6 +1,6 @@
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
-import myTRoamingData from '../../../../mock/server/myt.usage.troaming-share';
+import myTRoamingData from '../../../../mock/server/myt.usage.troaming-share.mock';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
 import { DATA_UNIT, USER_CNT } from '../../../../types/string.type';

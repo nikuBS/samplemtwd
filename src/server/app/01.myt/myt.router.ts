@@ -22,14 +22,19 @@ import MyTBillGuidechangeChange from './controllers/bill/myt.bill.guidechange.ch
 import MyTBillGuideChangeComplete from './controllers/bill/myt.bill.guidechange.change-complete.controller';
 import MyTBillGuidechangeUpdate from './controllers/bill/myt.bill.guidechange.update.controller';
 import MyTBillGuidechangeUpdateComplete from './controllers/bill/myt.bill.guidechange.update-complete.controller';
-import SubDetailSpecification,
-{ default as MyTBillBillguideSubDetailSpecification } from './controllers/bill/myt.bill.billguide.subDetailSpecification.controller';
+import MyTBillBillguideSubDetailSpecification from './controllers/bill/myt.bill.billguide.subDetailSpecification.controller';
 import MyTBillBillguideSubSelPayment from './controllers/bill/myt.bill.billguide.subSelPayment.controller';
 import MyTBillBillguideSubSusRelease from './controllers/bill/myt.bill.billguide.subSusRelease.controller';
 import MyTBillBillguideSubChildBill from './controllers/bill/myt.bill.billguide.subChildBill.controller';
 import MyTBillBillguideSubCallBill from './controllers/bill/myt.bill.billguide.subCallBill.controller';
 import MyTBillBillguideSubRoamingBill from './controllers/bill/myt.bill.billguide.subRoamingBill.controller';
 import MyTBillBillguideSubDonationBill from './controllers/bill/myt.bill.billguide.subDonationBill.controller';
+import MyTBillHistoryMicro from './controllers/bill/myt.bill.history.micro.controller';
+import MyTBillHistoryMicroPassword from './controllers/bill/myt.bill.history.micro.password.controller';
+import MyTBillHistoryMicroLimit from './controllers/bill/myt.bill.history.micro.limit.controller';
+import MyTBillHistoryContents from './controllers/bill/myt.bill.history.contents.controller';
+import MyTBillHistoryContentsLimit from './controllers/bill/myt.bill.history.contents.limit.controller';
+
 import MytJoinServicePayClaimInfo from './controllers/joinService/myt.joinService.payClaimInfo.controller';
 import MytJoinServicePayClaimInfoPhone from './controllers/joinService/myt.joinService.payClaimInfo.phone.controller';
 import MytJoinServicePayClaimInfoIptv from './controllers/joinService/myt.joinService.payClaimInfo.iptv.controller';
@@ -40,8 +45,7 @@ import MytJoinServicePayClaimInfoPointcam from './controllers/joinService/myt.jo
 import MytJoinServiceContractTerminalInfo from './controllers/joinService/myt.joinService.contractTerminalInfo.controller';
 import MytJoinServiceContractTerminalInfoPhoneDetail from './controllers/joinService/myt.joinService.contractTerminalInfo.phone.detail.controller';
 import MytJoinServiceContractTerminalInfoTpocketfi from './controllers/joinService/myt.joinService.contractTerminalInfo.tpocketfi.controller';
-import MytJoinServiceContractTerminalInfoTpocketfiDetail
-  from './controllers/joinService/myt.joinService.contractTerminalInfo.tpocketfi.detail.controller';
+import MytJoinServiceContractTerminalInfoTpocketfiDetail from './controllers/joinService/myt.joinService.contractTerminalInfo.tpocketfi.detail.controller';
 import MytJoinServiceContractTerminalInfoTwibro from './controllers/joinService/myt.joinService.contractTerminalInfo.twibro.controller';
 import MytJoinServiceContractTerminalInfoTlogin from './controllers/joinService/myt.joinService.contractTerminalInfo.tlogin.controller';
 import MytJoinServiceContractTerminalInfoTloginDetail from './controllers/joinService/myt.joinService.contractTerminalInfo.tlogin.detail.controller';
@@ -86,6 +90,12 @@ class MytRouter extends TwRouter {
     this.controllers.push({ url: '/bill/guidechange/update', controller: new MyTBillGuidechangeUpdate() });
     this.controllers.push({ url: '/bill/guidechange/update-complete', controller: new MyTBillGuidechangeUpdateComplete() });
 
+    this.controllers.push({ url: '/bill/history/micro', controller: new MyTBillHistoryMicro() });
+    this.controllers.push({ url: '/bill/history/micro/password', controller: new MyTBillHistoryMicroPassword() });
+    this.controllers.push({ url: '/bill/history/micro/limit', controller: new MyTBillHistoryMicroLimit() });
+    this.controllers.push({ url: '/bill/history/contents', controller: new MyTBillHistoryContents() });
+    this.controllers.push({ url: '/bill/history/contents/limit', controller: new MyTBillHistoryContentsLimit() });
+
     this.controllers.push({ url: '/joinService/payClaimInfo', controller: new MytJoinServicePayClaimInfo() });
     this.controllers.push({ url: '/joinService/payClaimInfo/phone', controller: new MytJoinServicePayClaimInfoPhone() });
     this.controllers.push({ url: '/joinService/payClaimInfo/iptv', controller: new MytJoinServicePayClaimInfoIptv() });
@@ -99,12 +109,12 @@ class MytRouter extends TwRouter {
     this.controllers.push({ url: '/joinService/contractTerminalInfo/phone', controller: new MytJoinServiceContractTerminalInfoPhone() });
     this.controllers.push({ url: '/joinService/contractTerminalInfo/phone/detail', controller: new MytJoinServiceContractTerminalInfoPhoneDetail() });
     this.controllers.push({ url: '/joinService/contractTerminalInfo/tpocketfi', controller: new MytJoinServiceContractTerminalInfoTpocketfi() });
-    this.controllers.push({ url: '/joinService/contractTerminalInfo/tpocketfi/detail', controller: new MytJoinServiceContractTerminalInfoTpocketfiDetail() });
+    this.controllers.push({ url: '/joinService/contractTerminalInfo/tpocketfi/detail',
+      controller: new MytJoinServiceContractTerminalInfoTpocketfiDetail() });
     this.controllers.push({ url: '/joinService/contractTerminalInfo/twibro', controller: new MytJoinServiceContractTerminalInfoTwibro() });
     this.controllers.push({ url: '/joinService/contractTerminalInfo/tlogin', controller: new MytJoinServiceContractTerminalInfoTlogin() });
-    this.controllers.push({ url: '/joinService/contractTerminalInfo/tlogin/detail', controller: new MytJoinServiceContractTerminalInfoTloginDetail() });
-
-
+    this.controllers.push({ url: '/joinService/contractTerminalInfo/tlogin/detail',
+      controller: new MytJoinServiceContractTerminalInfoTloginDetail() });
   }
 }
 

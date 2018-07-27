@@ -9,7 +9,15 @@ Tw.ValidationHelper = (function () {
    */
   function isCellPhone(str) {
     var phone = str.split('-').join('');
-    return Tw.ValidationHelper.regExpTest(/^01([0|1|6|7|8|9]?)-?([0-9]{3,4})-?([0-9]{4})$/, phone);
+    return Tw.ValidationHelper.regExpTest(/^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/, phone);
+  }
+
+  /**
+   * @param {String} : 02-0000-0000 or 0200000000
+   * @returns {Boolean}
+   */
+  function isTelephone(str) {
+    return regExpTest(/^0(2|[3-9]\d?)-?(\d{3,4})-?(\d{4})$/, str);
   }
 
   /**
@@ -22,8 +30,8 @@ Tw.ValidationHelper = (function () {
 
   function isSeriesNum(string, maxSeries) {
     var checkSeriesNum = '0123456789';
-    for ( var i = 0; i <= checkSeriesNum.length - maxSeries; i++ ) {
-      if ( string.indexOf(checkSeriesNum.substr(i, maxSeries)) !== -1 ) {
+    for (var i = 0; i <= checkSeriesNum.length - maxSeries; i++) {
+      if (string.indexOf(checkSeriesNum.substr(i, maxSeries)) !== -1) {
         return true;
       }
     }
@@ -141,6 +149,7 @@ Tw.ValidationHelper = (function () {
   return {
     regExpTest: regExpTest,
     isCellPhone: isCellPhone,
+    isTelephone: isTelephone,
     isSeriesNum: isSeriesNum,
     isEmail: isEmail,
     containSpecial: containSpecial,

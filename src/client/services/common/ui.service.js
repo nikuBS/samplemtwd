@@ -10,7 +10,7 @@ Tw.UIService.prototype = {
     /* 뒤로가기 추가 */
     $('.fe-common-back').on('click', function () {
       Tw.Logger.info('[Common Back]');
-      history.back();
+      window.history.back();
     });
   },
 
@@ -64,7 +64,7 @@ Tw.UIService.prototype = {
 };
 
 Tw.UIService.toggle = function (selector) {
-  if ( selector.hasClass('on') ) {g
+  if ( selector.hasClass('on') ) {
     selector.removeClass('on');
   }
   else {

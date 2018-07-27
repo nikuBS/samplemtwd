@@ -1,0 +1,39 @@
+<%#
+* FileName: customer.preventdamage.guide.html
+* Author: 양지훈 (jihun202@sk.com)
+* Date: 2018.07.23
+%>
+<% include ../../components/start.component.html %>
+<div class="wrap" data-category="<%= category %>">
+    <%- include('../../../../common/views/components/header.component.html', { title: '이용자 피해예방 가이드', svcInfo: svcInfo }) %>
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <!-- .cont-box -->
+            <div class="cont-box">
+                <button class="bt-dropdown big fe-btn_category" title="가이드 종류" aria-haspopup="true"><%= categoryLabel %><span class="ico"></span></button>
+            </div>
+            <!--// .cont-box -->
+
+            <hr class="cont-sp type1" aria-hidden="true" />
+
+            <% if (category == 'video') { %>
+               <%- include('customer.preventdamage.guide.video.html') %>
+            <% } else if (category == 'webtoon') { %>
+                <%- include('customer.preventdamage.guide.webtoon.html') %>
+            <% } else if (category == 'latest') { %>
+                <%- include('customer.preventdamage.guide.latest.html') %>
+            <% } %>
+        </div>
+    </div>
+    <!--// #contents -->
+    <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }) %>
+</div>
+<% include ../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    var comp = new Tw.CustomerPreventdamageGuide($('.wrap'));
+  });
+</script>
+<% include ../../components/end.component.html %>

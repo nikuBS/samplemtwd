@@ -1,0 +1,49 @@
+<%#
+* FileName: customer.helpline.html
+* Author: Jiyoung Jo (jiyoungjo@sk.com)
+* Date: 2018.07.25
+* CI_05_01
+%>
+
+
+<% include ../../components/start.component.html %>
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap">
+    <!-- #header -->
+    <div id="header" class="header-wrap">
+        <div class="header step-page">
+            <div class="header-ti">
+                <h1>전화상담 예약</h1>
+            </div>
+            <button class="close-step"><span class="blind">닫기</span></button>
+        </div>
+    </div>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div id="main" class="container">
+            <% include ../components/helpline/customer.helpline.input.html %>
+        </div>
+        <div id="complete" class="container">
+            <% include ../components/helpline/customer.helpline.complete.html %>
+        </div>
+    </div>
+    <!--// #contents -->
+    <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }) %>
+</div>
+
+<% include ../../components/javascript.component.html %>
+<script>
+    $(document).ready(function () {
+        new Tw.CustomerHelpline($('.wrap'));
+    });
+</script>
+<% include ../../components/end.component.html %>

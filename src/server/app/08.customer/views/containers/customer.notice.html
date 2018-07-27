@@ -1,12 +1,85 @@
+<%#
+* FileName: customer.notice.html
+* Author: 양지훈 (jihun202@sk.com)
+* Date: 2018.07.23
+%>
 <% include ../components/start.component.html %>
-<div class="container">
+<div class="wrap" data-category="<%= category %>">
+    <%- include('../../../../common/views/components/header.component.html', { title: '공지사항', svcInfo: svcInfo }) %>
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <!-- .cont-box -->
+            <div class="cont-box">
+                <button class="bt-dropdown big fe-btn_category" title="카테고리 설정" aria-haspopup="true"><%= categoryLabel %><span class="ico"></span></button>
+            </div>
+            <!--// .cont-box -->
+            <hr class="cont-sp type1" aria-hidden="true" />
+            <!-- .cont-box -->
+            <div class="cont-box nogaps">
+                <!-- .accordion -->
+                <div class="widget">
+                    <div class="widget-box accordion2">
+                        <div class="acco-style acco-notice"><!-- 스타일별 클래스 추가 -->
+                            <ul class="acco-box fe-list">
+                                <li class="acco-list">
+                                    <div class="acco-title new impo"><!-- new : 새로운 글 뱃지 --> <!-- impo : 중요 공지 -->
+                                        <button role="button" aria-pressed="false">
+                                            <span class="acco-notice-tit">(7월 1주) 서비스 점검 안내</span>
+                                            <span class="acco-notice-type">안내</span>
+                                            <span class="acco-notice-date">2018.06.28</span>
+                                        </button>
+                                    </div>
+                                    <div class="acco-content">상세내용 모두노출 상세내용 모두노출 상세내용 모두노출 상세내용 모두노출 상세내용 모두노출 상세내용 모두노출</div>
+                                </li>
+                                <li class="acco-list">
+                                    <div class="acco-title impo"><!-- impo : 중요 공지 -->
+                                        <button role="button" aria-pressed="false">
+                                            <span class="acco-notice-tit">메시지커플, 메세지버디 상품 가입 중단 안내 메시지커플</span>
+                                            <span class="acco-notice-type">공지</span>
+                                            <span class="acco-notice-date">2018.06.28</span>
+                                        </button>
+                                    </div>
+                                    <div class="acco-content">상세내용 모두노출 상세내용 모두노출 상세내용 모두노출 상세내용 모두노출 상세내용 모두노출 상세내용 모두노출</div>
+                                </li>
+                                <li class="acco-list">
+                                    <div class="acco-title new"><!-- new : 새로운 글 뱃지 -->
+                                        <button role="button" aria-pressed="false">
+                                            <span class="acco-notice-tit">T world 개인정보 처리방침 변경 안내</span>
+                                            <span class="acco-notice-type">안내</span>
+                                            <span class="acco-notice-date">2018.06.28</span>
+                                        </button>
+                                    </div>
+                                    <div class="acco-content">상세내용 모두노출 상세내용 모두노출 상세내용 모두노출 상세내용 모두노출 상세내용 모두노출 상세내용 모두노출</div>
+                                </li>
+                                <li class="acco-list">
+                                    <div class="acco-title">
+                                        <button role="button" aria-pressed="false">
+                                            <span class="acco-notice-tit">T world 개인정보 처리방침 변경 안내</span>
+                                            <span class="acco-notice-type">안내</span>
+                                            <span class="acco-notice-date">2018.06.28</span>
+                                        </button>
+                                    </div>
+                                    <div class="acco-content">상세내용 모두노출 상세내용 모두노출 상세내용 모두노출 상세내용 모두노출 상세내용 모두노출 상세내용 모두노출</div>
+                                </li>
+                            </ul>
+                            <button class="acco-notice-more" >더보기(20)</button>
+                        </div>
+                    </div>
+                </div>
+                <!--// .accordion -->
+            </div>
+            <!--// .cont-box -->
+        </div>
+    </div>
     <!--// #contents -->
     <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }) %>
 </div>
 <% include ../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    var comp = new Tw.CustomerNotice($('.container'));
+    var comp = new Tw.CustomerNotice($('.wrap'));
   });
 </script>
 <% include ../components/end.component.html %>

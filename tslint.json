@@ -136,5 +136,10 @@
     "no-access-missing-member": false,
     "templates-use-public": true,
     "invoke-injectable": true
+  },
+  "linterOptions": {
+    "exclude": [
+      "**/*.mock.ts"
+    ]
   }
 }

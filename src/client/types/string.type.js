@@ -12,6 +12,12 @@ Tw.VOICE_UNIT = {
   SEC: '초'
 };
 
+Tw.TIME_UNIT = {
+  HOUR: '시'
+};
+
+Tw.WEEKDAYS = ['월', '화', '수', '목', '금', '토', '일'];
+
 Tw.DATE_UNIT = {
   MONTH: '개월',
   MONTH_S: '월',
@@ -24,6 +30,7 @@ Tw.DATE_UNIT = {
 
 Tw.POPUP_TITLE = {
   NOTIFY: '알림',
+  CONFIRM: '확인',
   GUIDE: '안내',
   REQUEST_DELETE: '조르기 삭제안내',
   GIFT_FAMILY_INFO: '데이터 자동 선물 안내',
@@ -33,7 +40,10 @@ Tw.POPUP_TITLE = {
   SELECT_GIFT_AMOUNT: '선물할 금액 선택',
   CHANGE_BILL_GUIDE_TYPE: '어떤 안내서를 보여 드릴까요?',
   OVER_PAY: '과납 안내 드립니다.',
-  PERIOD_SELECT: '기간선택'
+  PERIOD_SELECT: '기간선택',
+  SET_HELPLINE_TYPE: '상담유형 설정',
+  SET_HELPLINE_AREA: '지역설정',
+  SET_HELPLINE_TIME: '시간설정'
 };
 
 Tw.POPUP_PROPERTY = {
@@ -51,7 +61,8 @@ Tw.BUTTON_LABEL = {
 };
 
 Tw.CURRENCY_UNIT = {
-  WON: '원'
+  WON: '원',
+  TEN_THOUSAND: '만원'
 };
 
 Tw.PAYMENT_OPTION = {
@@ -109,6 +120,11 @@ Tw.PAYMENT_STRING = {
 Tw.PAYMENT_POINT_VALUE = {
   OK_CASHBAG: '10',
   T_POINT: '11'
+};
+
+Tw.PAYMENT_STRD_MSG = {
+  CONTENTS_L02: '자동 선결제가 되는 시점의 금액을 말하며, 고객님 콘텐츠 이용한도의 최대 90%까지 설정 가능합니다.<br /><br />예시) 자동선결제가 기준금액 : 5만원으로 설정 시, 이번 달 소액결제를 5만원 이상 결제 시점에 자동으로 선결제됩니다.',
+  TITLE_L02: '기준금액이란?'
 };
 
 Tw.MSG_COMMON = {
@@ -218,7 +234,7 @@ Tw.MSG_MYT = {
     EMAIL_HP: '<img src="/img/dummy/ex_preview7.jpg" alt="요금 안내서 이메일서비스">', // 이메일 (휴대폰)
     EMAIL_INT: '<img src="/img/dummy/ex_preview5.jpg" alt="요금 안내서 이메일서비스">', // 이메일 (인터넷/집전화/IPTV , T-WIBRO)
     ETC_HP: '<img src="/img/dummy/ex_preview10.jpg" alt="요금 안내서 우편서비스">', // 기타(우편) : 휴대폰
-    ETC_INT: '<img src="/img/dummy/ex_preview4.jpg" alt="요금 안내서 우편서비스">', // 기타(우편) : (인터넷/집전화/IPTV , T-WIBRO)
+    ETC_INT: '<img src="/img/dummy/ex_preview4.jpg" alt="요금 안내서 우편서비스">' // 기타(우편) : (인터넷/집전화/IPTV , T-WIBRO)
   },
   TDATA_SHARE: {
     M01_TITLE: 'T데이터셰어링 기본제공 데이터 사용량',
@@ -253,13 +269,14 @@ Tw.MSG_RECHARGE = {
   LIMIT_A06: '데이터 차단 해제는 월 3회까지만 신청 가능합니다.',
   LIMIT_A07: '충전하기를 종료하시겠습니까?',
   LIMIT_A08: '신청되어 있는 매월 자동 충전을 취소하시겠습니까? 취소는 다음 달부터 적용됩니다.',
-  LIMIT_A09: '충전 취소는 고객센터 [국번 없이 1599-0011(유료) / 휴대폰 114]를 통해 당일에 한해 가능합니다.',
+  LIMIT_A09: '충전 취소는 고객센터 [국번 없이 1599-0011(유료) / 휴대폰 114]를 통해 당일에 한해 가능합니다.'
 };
 
 Tw.MSG_PAYMENT = {
   SELECT_PRODUCT: '요금정보 선택',
   SELECT_CARD_TYPE: '납부형태 선택',
   SELECT_POINT: '포인트 선택',
+  SELECT_AMOUNT: '금액선택',
   REALTIME_A01: '납부 내역을 선택해주세요.',
   REALTIME_A02: '은행명을 선택해주세요.',
   REALTIME_A03: '계좌번호의 정합성이 맞지 않습니다.',
@@ -325,9 +342,9 @@ Tw.MSG_PAYMENT = {
     BUTTON_TEXT: '과납금액확인하기'
   },
   HISTORY_OVER_PAY_POPUP: '<div class=\'widget pop-btm-area\'>' +
-  '<div class=\'widget-box check\'><ul class=\'select-list\' role=\'group\'>' +
-  '<li class=\'checkbox type01\' role=\'checkbox\' aria-checked=\'false\'>' +
-  '<input type=\'checkbox\' name=\'checkbox\' title=\'하루동안 보지 않기\'> 하루동안 보지 않기</li></ul></div></div>',
+    '<div class=\'widget-box check\'><ul class=\'select-list\' role=\'group\'>' +
+    '<li class=\'checkbox type01\' role=\'checkbox\' aria-checked=\'false\'>' +
+    '<input type=\'checkbox\' name=\'checkbox\' title=\'하루동안 보지 않기\'> 하루동안 보지 않기</li></ul></div></div>',
   HISTORY_POINT_TITLE_OCB: 'OK캐쉬백',
   HISTORY_POINT_TITLE_TPOINT: 'T포인트',
   HISTORY_POINT_TITLE_RAINBOW: '레인보우 포인트',
@@ -373,7 +390,7 @@ Tw.MSG_GIFT = {
   COOKIZ_A06: 'SK텔레콤을 사용하고 계신 분에게만 조르기 신청을 하실 수 있습니다.',
   COOKIZ_A07: '충전하기를 종료하시겠습니까?',
   COOKIZ_NO_HISTORY: '충전 내역이 없습니다.',
-  COOKIZ_NO_AUTH_HISTORY: '권한 변경 내역이 없습니다.',
+  COOKIZ_NO_AUTH_HISTORY: '권한 변경 내역이 없습니다.'
 };
 
 Tw.MSG_AUTH = {
@@ -396,6 +413,15 @@ Tw.MSG_AUTH = {
   LINE_A6: '약관 상세 내용을 먼저 확인 해 주세요.'
 };
 
+Tw.MSG_CUSTOMER = {
+  VOICE_A01: '이미 신청된 내역이 있습니다. \n 고객센터(114)로 전화하여 목소리 등록을 진행해주세요.',
+  VOICE_A02: '목소리인증서비스 신청을 취소하시겠습니까?',
+  VOICE_A03: '진행을 취소하시고 첫 화면으로 이동하시겠습니까?',
+  HELPLINE_A01: '예약을 취소하시겠습니까?',
+  HELPLINE_A02: '지역을 선택해 주세요.',
+  HELPLINE_A03: '진행을 취소하시고 첫 화면으로 이동하시겠습니까?'
+}
+
 Tw.RECHARGE_TYPE = {
   TOTAL: '전체',
   RECHARGE: '충전',
@@ -404,7 +430,21 @@ Tw.RECHARGE_TYPE = {
   CHANGE: '변경',
   BLOCK: '차단',
   TMTH_RECHARGE: '당월 충전',
-  REGULAR_RECHARGE: '매월 충전',
+  REGULAR_RECHARGE: '매월 충전'
+};
+
+Tw.NOTICE = {
+  TITLE: '카테고리 설정',
+  DIRECTSHOP: '다이렉트샵',
+  MEMBERSHIP: '멤버십',
+  ROAMING: '로밍'
+};
+
+Tw.PREVENTDAMAGE_GUIDE = {
+  TITLE: '카테고리 설정',
+  VIDEO: '동영상으로 보는 피해예방법',
+  WEBTOON: '웹툰으로 보는 피해예방법',
+  LATEST: '최신 이용자 피해예방 정보'
 };
 
 Tw.BLOCK_TYPE = {
@@ -414,8 +454,28 @@ Tw.BLOCK_TYPE = {
   TMTH_UNBLOCK: '이번 달 차단 해제',
   TMTH_BLOCK: '이번 달 차단',
   REGULAR_UNBLOCK: '다음 달부터 차단 해제',
-  REGULAR_BLOCK: '다음 달부터 차단',
+  REGULAR_BLOCK: '다음 달부터 차단'
 };
+
+Tw.HELPLINE_TYPE = {
+  GENERAL: '일반',
+  ROAMING: '로밍',
+  QUALITY: '통화품질 상담'
+};
+
+Tw.HELPLINE_AREA = {
+  CAPITAL: '수도권 (서울, 경기, 인천, 강원)',
+  CENTER: '중부 (충남, 충북, 대전)',
+  EAST: '서부 (전남, 전북, 광주, 제주)',
+  DAEGU: '대구 (경북, 대구)',
+  BUSAN: '부산 (경남, 울산, 부산)'
+};
+
 Tw.DATE_FORMAT = {
   YYYYDD_TYPE_0: 'YYYY년 MM월'
 };
+
+Tw.URL_PATH = {
+  BROADBAND: 'http://www.skbroadband.com/'
+};
+
