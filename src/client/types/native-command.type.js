@@ -9,6 +9,8 @@ Tw.NTV_CMD = {
   FIND_PW: 'findPw',
   CHANGE_PW: 'changePw',
   ACCOUNT: 'account',
+  GET_MDN: 'getMdn',
+  CLEAR_HISTORY: 'clearHistory',
   LOG: 'log'
 };
 

@@ -74,7 +74,7 @@ class ApiService {
   }
 
   private makeCookie(): string {
-    return this.loginService.getServerSession() + ';' +
+    return COOKIE_KEY.SESSION + '=' + this.loginService.getServerSession() + ';' +
       COOKIE_KEY.CHANNEL + '=' + this.loginService.getChannelCookie() + ';' +
       COOKIE_KEY.DEVICE + '=' + this.loginService.getDeviceCookie();
   }
@@ -130,8 +130,15 @@ class ApiService {
     this.logger.debug(this, 'Headers: ', JSON.stringify(headers));
     if ( headers['set-cookie'] ) {
       this.logger.info(this, 'Set Session Cookie');
-      this.loginService.setServerSession(headers['set-cookie'][0]).subscribe();
+      this.loginService.setServerSession(this.parseSessionCookie(headers['set-cookie'][0])).subscribe();
     }
+  }
+
+  private parseSessionCookie(cookie: string): string {
+    if ( cookie.indexOf(COOKIE_KEY.SESSION) !== -1 ) {
+      return cookie.split(';')[0].split('=')[1];
+    }
+    return '';
   }
 
   public requestLoginTest(userId: string): Observable<any> {

@@ -144,6 +144,19 @@ export enum BILL_GUIDE_SELECTOR_LABEL {
   ETC = '기타(우편) 요금안내서'
 }
 
+export enum CUSTOMER_NOTICE_CATEGORY {
+  TWORLD = 'T world',
+  DIRECTSHOP = '다이렉트샵',
+  MEMBERSHIP = '멤버십',
+  ROAMING = '로밍'
+}
+
+export enum CUSTOMER_PREVENTDAMAGE_GUIDE {
+  VIDEO = '동영상으로 보는 피해예방법',
+  WEBTOON = '웹툰으로 보는 피해예방법',
+  LATEST = '최신 이용자 피해예방 정보'
+}
+
 export enum SELECT_POINT {
   DEFAULT = '포인트 선택'
 }

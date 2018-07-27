@@ -1,0 +1,249 @@
+<% include ../../components/start.component.html %>
+<%#
+* FileName: myt.bill.history.micro.html
+* Author: 이상형 (silion@sk.com)
+* Date: 2018.07.25
+%>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap">
+
+    <%- include('../../../../../common/views/components/header.component.html', { title: '소액결제 이용내역', svcInfo: svcInfo }); %>
+
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <div class="cont-box nogaps-btm">
+                <div class="usage-top">
+                    <span class="date">7.01 ~ 7.11</span>
+                    <button class="bt-link-tx underline">사용금액/잔여한도 조회하기</button>
+                </div>
+                <!-- 2018-07-26 기획디자인변경반영 -->
+                <div class="usage-list">
+                    <ul>
+                        <li class="no-arrow">
+                                <span class="bt-inner">
+                                    <span class="tit">소액결제 사용여부</span>
+                                    <span class="txt">
+                                        <span class="state-txt">사용중</span>
+                                        <span class="toggles">
+                                            <span class="widget">
+                                                <span class="widget-box switch">
+                                                    <span class="btn-switch type1 on">
+                                                        <span class="blind">해제</span>
+                                                        <span class="switch-style" role="checkbox" aria-checked="false"><input type="checkbox" title="데이터차단설정 이번달 차단" /></span><!-- 접근성 수정 -->
+                                                        <span class="blind">차단</span>
+                                                    </span>
+                                                </span>
+                                            </span>
+                                        </span>
+                                    </span>
+                                </span>
+                        </li>
+                        <li>
+                            <button role="button">
+                                    <span class="bt-inner">
+                                        <span class="tit">결제비밀번호 서비스</span>
+                                        <span class="txt">사용중</span>
+                                    </span>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+                <!--// 2018-07-26 기획디자인변경반영 -->
+            </div>
+
+            <hr class="cont-sp type1" aria-hidden="true" />
+
+            <div class="cont-box nogaps">
+                <!-- .component -->
+                <div class="component">
+                    <div class="component-box tabs">
+                        <div class="tab-area type1"><!-- 타입별 탭형태 변환 -->
+                            <div class="tab-linker">
+                                <ul role="tablist">
+                                    <li role="tab" aria-selected="true" aria-controls="tab1-tab" id="tab1"><button>이용내역</button></li>
+                                    <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2"><button>자동결제 차단내역</button></li>
+                                </ul>
+                            </div>
+                            <div class="tab-contents">
+                                <ul>
+                                    <li role="tabpanel" id="tab1-tab" aria-labelledby="tab1">
+                                        <div class="cont-box nogaps-btm"><!-- 2017-07-25 클래스 변경 -->
+                                            <!-- 2018-07-25 내역 마크업 수정 -->
+                                            <div class="contents-info-list">
+                                                <p class="ti-desc"><strong><span class="num">123</span>개</strong>(8,126,300원) 이용 내역이<br />있습니다.</p>
+                                                <!-- .widget -->
+                                                <div class="widget">
+                                                    <div class="widget-box toggle">
+                                                        <div class="list-top">
+                                                            <div class="select-left">
+                                                                <!-- 2018-07-25 버튼클래스 수정 -->
+                                                                <button class="btn-toggle bt-detail" role="button" aria-pressed="false" title="상세검색 영역">2018년 7월<span class="ico"></span></button>
+                                                            </div>
+                                                            <div class="select-right">
+                                                                <button class="bt-dropdown" title="셀렉트 선택">결제종류 전체<span class="ico"></span></button>
+                                                            </div>
+                                                        </div>
+                                                        <div class="toggler">
+                                                            <div class="history-inquiry">
+                                                                <div class="radio-wrap">
+                                                                    <div class="widget">
+                                                                        <div class="widget-box radio">
+                                                                            <ul class="select-list" role="radiogroup">
+                                                                                <li class="radiobox type01 checked" role="radio" aria-checked="true">
+                                                                                    <input type="radio" name="radio1" value="" title="월별 선택" checked />월별
+                                                                                </li>
+                                                                                <li class="radiobox type01" role="radio" aria-checked="false">
+                                                                                    <input type="radio" name="radio1" value="" title="날짜별 선택" />날짜별</li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <button class="bt-dropdown big" title="이용내역 기간 선택" aria-haspopup="true">2018년 7월<span class="ico"></span></button>
+                                                                <div class="contents-btn mb40">
+                                                                    <ul class="bt-slice">
+                                                                        <li class="bt-blue1">
+                                                                            <button>조회</button>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- //.widget -->
+
+                                                <div class="history-list">
+                                                    <ul class="list-inner">
+                                                        <li>
+                                                            <button role="button" title="소액결제 내역 상세보기 페이지로 이동">
+                                                                    <span class="bt-inner">
+                                                                        <span class="his-item1">
+                                                                            <span class="name"><span class="blind">서비스명</span>카카**(****)</span>
+                                                                            <span class="date-gray"><span class="blind">결제일</span>2018.05.20</span>
+                                                                        </span>
+                                                                        <span class="his-item2"><span class="blind">결제금액</span><em>500,000</em>원</span>
+                                                                        <span class="his-item3"><span class="blind">결제종류</span>일반결제</span>
+                                                                    </span>
+                                                            </button>
+                                                        </li>
+                                                        <li>
+                                                            <button role="button" title="소액결제 내역 상세보기 페이지로 이동">
+                                                                    <span class="bt-inner">
+                                                                        <span class="his-item1">
+                                                                            <span class="name"><span class="blind">서비스명</span>카카**(****)</span>
+                                                                            <span class="date-gray"><span class="blind">결제일</span>2018.05.20</span>
+                                                                        </span>
+                                                                        <span class="his-item2"><span class="blind">결제금액</span><em>500,000</em>원</span>
+                                                                        <span class="his-item3"><span class="blind">결제종류</span>일반결제</span>
+                                                                    </span>
+                                                            </button>
+                                                        </li>
+                                                        <li>
+                                                            <button role="button" title="소액결제 내역 상세보기 페이지로 이동">
+                                                                    <span class="bt-inner">
+                                                                        <span class="his-item1">
+                                                                            <span class="name"><span class="blind">서비스명</span>카카**(****)</span>
+                                                                            <span class="date-gray"><span class="blind">결제일</span>2018.05.20</span>
+                                                                        </span>
+                                                                        <span class="his-item2"><span class="blind">결제금액</span><em>500,000</em>원</span>
+                                                                        <span class="his-item3"><span class="blind">결제종류</span>일반결제</span>
+                                                                    </span>
+                                                            </button>
+                                                        </li>
+                                                    </ul>
+                                                    <div class="bt-more-wrap">
+                                                        <button role="button" class="bt-more" title="">더보기<span>(20)</span></button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--// 2018-07-25 내역 마크업 수정 -->
+                                        </div>
+                                    </li>
+                                    <li role="tabpanel" id="tab2-tab" aria-labelledby="tab2">
+                                        <div class="cont-box">
+                                            자동결제 차단내역
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--// .component -->
+            </div>
+
+            <hr class="cont-sp type1" aria-hidden="true" />
+
+            <div class="cont-box nogaps-hoz">
+                <div class="box-confirm">
+                    <!-- .widget -->
+                    <div class="widget">
+                        <div class="widget-box accordion">
+                            <h3 class="tit-a">이용안내</h3>
+                            <div class="acco-cover toggle"><!-- toggle : 한개만 열기 -->
+                                <div class="bt-whole"><button role="button" aria-pressed="false"><span class="blind">내용 열기</span></button></div>
+                                <div class="acco-style btn-hold">
+                                    <ul class="acco-list">
+                                        <li class="acco-box">
+                                            <div class="acco-tit"><span class="bullet">1.</span> 고객정보 보호를 위해 서비스 명의 일부가 *로 표시되며, *로 가려진 정보는 사용처에서 확인 하실 수 있습니다.</div>
+                                        </li>
+                                        <li class="acco-box">
+                                            <div class="acco-tit"><span class="bullet">2.</span> 묶음결제란 여러 상품을 묶어서 한 번에 진행된 결제입니다. (예 : 온라인 쇼핑몰 장바구니)</div>
+                                        </li>
+                                        <li class="acco-box">
+                                            <div class="acco-tit"><span class="bullet">3.</span> 구글 플레이스토어, 원스토어 결제는 콘텐츠이용료로 과금되므로, 소액결제 이용내역에는 포함되지 않습니다. </div>
+                                        </li>
+                                        <li class="acco-box">
+                                            <div class="acco-tit"><span class="bullet">4.</span> 자동결제 <button role="button" aria-pressed="false"></button></div>
+                                            <div class="acco-cont">
+                                                <ul class="list-dot">
+                                                    <li class="list">‘자동결제’란 한 번의 인증으로 다음 달부터 추가 인증 없이 자동으로 이루어진 결제입니다.</li>
+                                                    <li class="list">자동결제 차단 서비스는 사용처(콘텐츠 제공사)에서 과금 시도 시, 고객이 <em>자동결제 차단신청을 한 상태이면 T world에서 임시로 과금되지 않도록 차단하는 서비스</em> 입니다.</li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li class="acco-box">
+                                            <div class="acco-tit"><span class="bullet">5.</span> 자동결제 차단/해제 <button role="button" aria-pressed="false"></button></div>
+                                            <div class="acco-cont">
+                                                <ul class="list-dot">
+                                                    <li class="list">em자동결제 차단 서비스는 사용처(콘텐츠 제공사)에서 과금 시도 시, 고객이 <em>자동결제 차단신청을 한 상태이면 T world에서 임시로 과금되지 않도록 차단하는 서비스</em> 입니다.</li>
+                                                    <li class="list"><em>신청 월 말일의 설정 상태를 기준</em>으로 신청 월 다음 달부터 적용됩니다. 고객님이 7월 25일에 “자동결제 차단하기”를 설정했을 경우, 7월 31일 기준으로 “자동결제 차단” 상태이므로 8월부터 자동결제 차단이 적용됩니다.</li>
+                                                    <li class="list">자동결제 차단/해제는 월 단위로 적용됩니다.   고객님이 7월 25일에 “자동결제 차단하기”를 설정하였다가 8월 1일에 “자동결제 차단해제”를 설정할 경우, 8월분은 자동결제 차단이 되고 9월부터 자동결제 차단해제가 됩니다.</li>
+                                                    <li class="list">자동결제 차단/해제는 사용처(콘텐츠 제공사) 단위로 적용되므로, 동일 사용처의 특정 콘텐츠에 대한 자동결제 차단/해제를 희망하실 경우에는 사용처(콘텐츠 제공사)의 고객센터로 문의하시기 바랍니다.</li>
+                                                    <li class="list">자동결제 차단/해제는 사용처(콘텐츠 제공사)에서 과금 시도 시, 고객이 자동결제 차단신청을 한 상태이면 T world에서 임시로 과금되지 않도록 차단하는 서비스입니다. 자동결제 차단하기는 자동결제 내역이 있을 경우 신청이 가능합니다. 자동결제를 완전히 차단하시고자 하는 고객님께서는 사용처(콘텐츠 제공사) 고객센터를 통해 자동결제를 해지하셔야 합니다.</li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                    </ul>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--// .widget -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--// #contents -->
+
+    <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
+</div>
+
+<% include ../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    new Tw.MyTBillHistoryMicro($(document));
+  });
+</script>
+<% include ../../components/end.component.html %>
