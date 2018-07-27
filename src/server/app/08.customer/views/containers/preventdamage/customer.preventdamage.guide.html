@@ -23,22 +23,18 @@
             <% if (category == 'video' || category == 'latest') { %>
                 <div class="cont-box nogaps-hoz">
                     <div class="link-group-box">
-                        <ul class="link-group-list thin fe-outlink_list">
+                        <ul class="link-group-list thin fe-list">
                             <%
                             const listLength = list.length > 30 ? 30 : list.length;
                             for (var i = 0; i < listLength; i++) { %>
                             <li>
-                                <a class="link-group-btn" href="<%= list[i].LINK %>">
-                                    <%= list[i].TEXT %>
-                                </a>
+                                <a class="link-group-btn" href="<%= list[i].LINK %>" target="_blank"><%= list[i].TEXT %></a>
                             </li>
                             <% } %>
                             <% if (list.length > 30) {
                                for (var i = 30; i < list.length; i++) { %>
                             <li style="display: none">
-                                <a class="link-group-btn" href="<%= list[i].LINK %>">
-                                    <%= list[i].TEXT %>
-                                </a>
+                                <a class="link-group-btn" href="<%= list[i].LINK %>" target="_blank"><%= list[i].TEXT %></a>
                             </li>
                             <% }
                             } %>
@@ -48,10 +44,12 @@
                         const moreLength = (list.length-30) > 30 ? 30 : list.length-30;
                     %>
                     <div class="bt-more-wrap mt0">
-                        <button role="button" class="bt-more" title="">더보기<span>(<%= moreLength %>)</span></button>
+                        <button role="button" class="bt-more fe-btn_list_more" title="">더보기<span>(<%= moreLength %>)</span></button>
                     </div>
                     <% } %>
                 </div>
+            <% } %>
+            <% if (category == 'webtoon') { %>
             <% } %>
         </div>
     </div>

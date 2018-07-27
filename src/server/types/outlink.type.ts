@@ -40,7 +40,7 @@ export const CUSTOMER_PREVENTDAMAGE_GUIDE_VIDEO = [
     LINK: 'http://tv.naver.com/v/564858'
   },
   {
-    TEXT: '랜섬웨어 감영에 주의하세요',
+    TEXT: '랜섬웨어 감염에 주의하세요',
     LINK: 'http://tv.naver.com/v/1037441'
   }
 ];

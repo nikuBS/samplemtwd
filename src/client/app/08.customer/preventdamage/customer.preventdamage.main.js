@@ -6,6 +6,7 @@
 
 Tw.CustomerPreventdamageMain = function(rootEl) {
   this.$container = rootEl;
+  this._history = new Tw.HistoryService();
 
   this._cachedElement();
   this._bindEvent();
@@ -31,30 +32,26 @@ Tw.CustomerPreventdamageMain.prototype = {
   },
 
   _goGuide: function(e) {
-    this._go('/customer/prevent-damage/guide?category=' + $(e.currentTarget).data('category'));
+    this._history.goLoad('/customer/prevent-damage/guide?category=' + $(e.currentTarget).data('category'));
   },
 
   _goGuideMore: function() {
-    this._go('/customer/prevent-damage/guide');
+    this._history.goLoad('/customer/prevent-damage/guide');
   },
 
   _goLatestWarningMore: function() {
-    this._go('/customer/prevent-damage/latest-warning');
+    this._history.goLoad('/customer/prevent-damage/latest-warning');
   },
 
   _goLatestWarningView: function(e) {
-    this._go('/customer/prevent-damage/latest-warning/view?lwid=' + $(e.currentTarget).data('lwid'));
+    this._history.goLoad('/customer/prevent-damage/latest-warning/view?lwid=' + $(e.currentTarget).data('lwid'));
   },
 
   _goUsefulServiceMore: function() {
-    this._go('/customer/prevent-damage/useful-service');
+    this._history.goLoad('/customer/prevent-damage/useful-service');
   },
 
   _goRelateSite: function() {
-    this._go('/customer/prevent-damage/relate-site');
-  },
-
-  _go: function(url) {
-    location.href = url;
+    this._history.goLoad('/customer/prevent-damage/relate-site');
   }
 };
