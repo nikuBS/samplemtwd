@@ -20,8 +20,8 @@ export interface ILimitData {
 }
 
 interface IFeeData {
-  prodId: string,  // '상품코드'
-  prodName: string,  // '상품명'
+  prodId: string;  // '상품코드'
+  prodName: string;  // '상품명'
 }
 
 class RechargeLimit extends TwViewController {
