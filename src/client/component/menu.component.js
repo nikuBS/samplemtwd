@@ -9,6 +9,7 @@ Tw.MenuComponent = function () {
 
   this._nativeService = Tw.Native;
   this._apiService = Tw.Api;
+  this._historyService = new Tw.HistoryService();
   this._bindEvent();
 };
 
@@ -31,17 +32,17 @@ Tw.MenuComponent.prototype = {
   _successLogin: function (resp) {
     Tw.Logger.info('[Login Resp]', resp);
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      document.location.reload();
+      this._historyService.reload();
     } else if ( resp.code === Tw.API_LOGIN_ERROR.ICAS3228 ) {
       // 고객보호비밀번호
-      location.href = '/auth/login/service-pwd';
+      this._historyService.goLoad('/auth/login/service-pwd');
     } else if ( resp.code === Tw.API_LOGIN_ERROR.ICAS3235 ) {
       // 휴면계정
-      location.href = '/auth/login/dormancy';
+      this._historyService.goLoad('/auth/login/dormancy');
     } else if ( resp.code === Tw.API_LOGIN_ERROR.ATH1003 ) {
-      location.href = '/auth/login/exceed-fail';
+      this._historyService.goLoad('/auth/login/exceed-fail');
     } else {
-      location.href = '/auth/login/fail?errorCode=' + resp.code;
+      this._historyService.goLoad('/auth/login/fail?errorCode=' + resp.code);
     }
   },
   _onClickLogout: function () {
@@ -49,7 +50,7 @@ Tw.MenuComponent.prototype = {
     if ( Tw.BrowserHelper.isApp() ) {
       this._nativeService.send(Tw.NTV_CMD.LOGOUT, {}, $.proxy(this._onNativeLogout, this));
     } else {
-      location.href = '/auth/tid/logout';
+      this._historyService.goLoad('/auth/tid/logout');
     }
   },
   _onNativeLogout: function () {
@@ -59,7 +60,7 @@ Tw.MenuComponent.prototype = {
   _successLogout: function (resp) {
     Tw.Logger.info('[Logout Resp]', resp);
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      location.href = '/auth/logout/complete';
+      this._historyService.goLoad('/auth/logout/complete');
     }
   }
 };

@@ -8,6 +8,7 @@ Tw.AuthLineRegister = function (lineMarketingLayer) {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this.lineMarketingLayer = lineMarketingLayer;
+  this._historyService = new Tw.HistoryService();
 
   this._registerLength = 0;
   this._marketingSvc = '';
@@ -212,7 +213,7 @@ Tw.AuthLineRegister.prototype = {
           showName, svcNum, resp.result.agr201Yn, resp.result.agr203Yn);
       }, this), 0);
       // } else {
-      //   history.back();
+      //   this._historyService.goBack();
       // }
     } else {
       this.openAlert(resp.code + ' ' + resp.msg);
@@ -227,7 +228,7 @@ Tw.AuthLineRegister.prototype = {
   },
   _goAuthLine: function () {
     this._popupService.close();
-    location.href = '/auth/line';
+    this._historyService.goLoad('/auth/line');
   }
 
 };

@@ -10,6 +10,7 @@ Tw.AuthLineEdit = function (rootEl, category, lineMarketingLayer) {
   this._popupService = Tw.Popup;
   this._category = category;
   this.lineMarketingLayer = lineMarketingLayer;
+  this._historyService = new Tw.HistoryService();
 
   this._marketingSvc = '';
 
@@ -102,7 +103,7 @@ Tw.AuthLineEdit.prototype = {
         .fail($.proxy(this._failGetMargetingOffer, this));
 
     } else {
-      history.back();
+      this._historyService.goBack();
     }
   },
   _successGetMarketingOffer: function (showName, svcNum, resp) {
@@ -116,7 +117,7 @@ Tw.AuthLineEdit.prototype = {
             showName, svcNum, resp.result.agr201Yn, resp.result.agr203Yn, $.proxy(this._closeMarketingOfferPopup, this));
         }, this), 0);
       } else {
-        history.back();
+        this._historyService.goBack();
       }
     } else {
       this.openAlert(resp.code + ' ' + resp.msg);
@@ -126,7 +127,7 @@ Tw.AuthLineEdit.prototype = {
 
   },
   _closeMarketingOfferPopup: function () {
-    history.back();
+    this._historyService.goBack();
   }
 
 };
