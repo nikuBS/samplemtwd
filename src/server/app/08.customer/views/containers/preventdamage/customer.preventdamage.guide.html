@@ -12,18 +12,46 @@
         <div class="container">
             <!-- .cont-box -->
             <div class="cont-box">
-                <button class="bt-dropdown big fe-btn_category" title="가이드 종류" aria-haspopup="true"><%= categoryLabel %><span class="ico"></span></button>
+                <button class="bt-dropdown big fe-btn_category" title="가이드 종류" aria-haspopup="true">
+                    <%= categoryLabel %><span class="ico"></span>
+                </button>
             </div>
             <!--// .cont-box -->
 
             <hr class="cont-sp type1" aria-hidden="true" />
 
-            <% if (category == 'video') { %>
-               <%- include('customer.preventdamage.guide.video.html') %>
-            <% } else if (category == 'webtoon') { %>
-                <%- include('customer.preventdamage.guide.webtoon.html') %>
-            <% } else if (category == 'latest') { %>
-                <%- include('customer.preventdamage.guide.latest.html') %>
+            <% if (category == 'video' || category == 'latest') { %>
+                <div class="cont-box nogaps-hoz">
+                    <div class="link-group-box">
+                        <ul class="link-group-list thin fe-outlink_list">
+                            <%
+                            const listLength = list.length > 30 ? 30 : list.length;
+                            for (var i = 0; i < listLength; i++) { %>
+                            <li>
+                                <a class="link-group-btn" href="<%= list[i].LINK %>">
+                                    <%= list[i].TEXT %>
+                                </a>
+                            </li>
+                            <% } %>
+                            <% if (list.length > 30) {
+                               for (var i = 30; i < list.length; i++) { %>
+                            <li style="display: none">
+                                <a class="link-group-btn" href="<%= list[i].LINK %>">
+                                    <%= list[i].TEXT %>
+                                </a>
+                            </li>
+                            <% }
+                            } %>
+                        </ul>
+                    </div>
+                    <% if (list.length > 30) {
+                        const moreLength = (list.length-30) > 30 ? 30 : list.length-30;
+                    %>
+                    <div class="bt-more-wrap mt0">
+                        <button role="button" class="bt-more" title="">더보기<span>(<%= moreLength %>)</span></button>
+                    </div>
+                    <% } %>
+                </div>
             <% } %>
         </div>
     </div>

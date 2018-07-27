@@ -16,7 +16,8 @@ class CustomerPreventdamageMainController extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     res.render('preventdamage/customer.preventdamage.main.html', {
       svcInfo: svcInfo,
-      isApp: BrowserHelper.isApp(req)
+      isApp: BrowserHelper.isApp(req),
+      latestWarningList: []
     });
   }
 }

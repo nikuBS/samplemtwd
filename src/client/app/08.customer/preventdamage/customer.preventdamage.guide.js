@@ -17,11 +17,13 @@ Tw.CustomerPreventdamageGuide.prototype = {
 
   _cachedElement: function() {
     this.$btnCategory = this.$container.find('.fe-btn_category');
+    this.$outlinkList = this.$container.find('.fe-outlink_list');
   },
 
   _bindEvent: function() {
-    this._popupService.close();
+    this._popupService._popupClose();
     this.$btnCategory.on('click', $.proxy(this._openCategorySelectPopup, this));
+    this.$outlinkList.on('click', '.link-group-btn', $.proxy(this._goOutlink, this));
   },
 
   _openCategorySelectPopup: function() {
@@ -60,6 +62,12 @@ Tw.CustomerPreventdamageGuide.prototype = {
 
   _goList : function() {
     location.href = '/customer/prevent-damage/guide?category=' + this._category;
+  },
+
+  _goOutlink: function(e) {
+    console.log(e);
+
+    window.open($(e.currentTarget).data('link'));
   }
 
 };

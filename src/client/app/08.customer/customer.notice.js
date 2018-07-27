@@ -25,7 +25,7 @@ Tw.CustomerNotice.prototype = {
   },
 
   _bindEvent: function() {
-    this._popupService.close();
+    this._popupService._popupClose();
     this.$btnCategory.on('click', $.proxy(this._openCategorySelectPopup, this));
     this.$btnMoreList.on('click', $.proxy(this._loadMoreList, this));
   },
@@ -64,6 +64,7 @@ Tw.CustomerNotice.prototype = {
 
   _loadMoreList: function() {
     // @todo 비동기 API 호출하여 더보기 목록 append
+
   },
 
   _goList : function() {
