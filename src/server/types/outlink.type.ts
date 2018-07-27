@@ -52,7 +52,7 @@ export const CUSTOMER_PREVENTDAMAGE_GUIDE_LATEST = [
   },
   {
     TEXT: '꼭 지켜야 할 정보보호 실천수칙 10가지',
-    LINK: ''
+    LINK: 'http://m.tworld.co.kr/mpoc/html/center/mCS6.1.1.3T.6.html'
   },
   {
     TEXT: '무심코 스쳐간 광고! "악성코드에 감염되셨습니다"',
@@ -152,23 +152,23 @@ export const CUSTOMER_PREVENTDAMAGE_GUIDE_LATEST = [
   },
   {
     TEXT: '명의도용 피해예방법',
-    LINK: ''
+    LINK: 'http://m.tworld.co.kr/mpoc/html/center/mCS6.1.1.3T.1.html' // TODO 추후 기획 예정
   },
   {
     TEXT: '소액결제 피해예방법',
-    LINK: ''
+    LINK: 'http://m.tworld.co.kr/mpoc/html/center/mCS6.1.1.3T.2.html' // TODO 추후 기획 예정
   },
   {
     TEXT: '결합상품 피해예방법',
-    LINK: ''
+    LINK: 'http://m.tworld.co.kr/mpoc/html/center/mCS6.1.1.3T.3.html' // TODO 추후 기획 예정
   },
   {
     TEXT: '해외 로밍 피해예방법',
-    LINK: ''
+    LINK: 'http://m.tworld.co.kr/mpoc/html/center/mCS6.1.1.3T.4.html' // TODO 추후 기획 예정
   },
   {
     TEXT: '무선 공유기 해킹 주의보!',
-    LINK: ''
+    LINK: 'https://www.krcert.or.kr/cyber/internetModem.do'
   },
   {
     TEXT: 'PC타고 스마트폰까지 침투하는 악성코드 주의보',
@@ -176,7 +176,7 @@ export const CUSTOMER_PREVENTDAMAGE_GUIDE_LATEST = [
   },
   {
     TEXT: '스미싱 피해예방 안내',
-    LINK: ''
+    LINK: 'http://m.tworld.co.kr/mnormal.do?serviceId=S_WITH0020&viewId=V_CENT6023&seqNo=3761'  // TODO 이럴 땐 이렇게 하세요 > 개인정보 보호 편 > 스미싱 예방편
   },
   {
     TEXT: '메모리 해킹 주의보',
@@ -217,5 +217,67 @@ export const CUSTOMER_PREVENTDAMAGE_GUIDE_LATEST = [
   {
     TEXT: '유출된 개인정보로 인한 피해 최소화 방법',
     LINK: 'http://blog.skbroadband.com/1729'
+  }
+];
+
+export const CUSTOMER_PREVENTDAMAGE_REPORT_ORG = [
+  {
+    TEXT: '개인정보 침해 신고센터',
+    LINK: 'http://privacy.kisa.or.kr/kor/main.jsp'
+  },
+  {
+    TEXT: 'KISA 불법스팸 대응센터',
+    LINK: 'https://spam.kisa.or.kr/integration/main.do'
+  },
+  {
+    TEXT: 'KISA 보호나라&KrCERT',
+    LINK: 'https://www.krcert.or.kr/main.do'
+  },
+  {
+    TEXT: '명의도용 방지 서비스',
+    LINK: 'https://www.msafer.or.kr/index.do'
+  },
+  {
+    TEXT: '휴대폰 A/S 결제 중재센터',
+    LINK: 'http://www.spayment.org/'
+  }
+];
+
+export const CUSTOMER_PREVENTDAMAGE_RELATE_ORG = [
+  {
+    TEXT: '정보통신망법',
+    LINK: 'http://www.law.go.kr/lsSc.do?menuId=0&p1=&subMenu=1&nwYn=1&query=%EC%A0%95%EB%B3%B4%ED%86%B5%EC%8B%A0%EB%A7%9D%EB%B2%95&x=0&y=0'
+  },
+  {
+    TEXT: '방송통신 위원회',
+    LINK: 'http://www.kcc.go.kr/'
+  },
+  {
+    TEXT: '방송통신 심의 위원회',
+    LINK: 'http://www.kocsc.or.kr/mainPage.do'
+  },
+  {
+    TEXT: '방송통신 이용자 정보 포털',
+    LINK: 'http://www.wiseuser.go.kr/'
+  },
+  {
+    TEXT: '그린 i-Net',
+    LINK: 'http://www.greeninet.or.kr/'
+  },
+  {
+    TEXT: '문화체육관광부',
+    LINK: 'http://www.mcst.go.kr/main.jsp'
+  },
+  {
+    TEXT: '경찰청 사이버안전국',
+    LINK: 'http://cyberbureau.police.go.kr/index.do'
+  },
+  {
+    TEXT: '국가 사이버 안전센터',
+    LINK: 'http://www.nis.go.kr/AF/1_7.do'
+  },
+  {
+    TEXT: '국가 인터넷 진흥원(Kisa)',
+    LINK: 'http://www.kisa.or.kr/main.jsp'
   }
 ];

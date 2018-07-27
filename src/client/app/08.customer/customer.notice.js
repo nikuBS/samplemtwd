@@ -8,7 +8,7 @@ Tw.CustomerNotice = function(rootEl) {
   this.$container = rootEl;
   this._apiSerivce = Tw.Api;
   this._popupService = Tw.Popup;
-  this._category = rootEl.data('category');
+  this._history = new Tw.HistoryService();
   this._page = 1;
   this._pageNum = 20;
 
@@ -37,10 +37,10 @@ Tw.CustomerNotice.prototype = {
       'select': [
         {
           'options': [
-            {'title': 'T world', checked: (this._category === 'tworld'), value: 'tworld',  text: 'T world'},
-            {'title': Tw.NOTICE.DIRECTSHOP, checked: (this._category === 'directshop'), value: 'directshop',  text: Tw.NOTICE.DIRECTSHOP },
-            {'title': Tw.NOTICE.MEMBERSHIP, checked: (this._category === 'membership'), value: 'membership',  text: Tw.NOTICE.MEMBERSHIP },
-            {'title': Tw.NOTICE.ROAMING, checked: (this._category === 'roaming'), value: 'roaming',  text: Tw.NOTICE.ROAMING }
+            {'title': 'T world', checked: (this.$container.data('category') === 'tworld'), value: 'tworld',  text: 'T world'},
+            {'title': Tw.NOTICE.DIRECTSHOP, checked: (this.$container.data('category') === 'directshop'), value: 'directshop',  text: Tw.NOTICE.DIRECTSHOP },
+            {'title': Tw.NOTICE.MEMBERSHIP, checked: (this.$container.data('category') === 'membership'), value: 'membership',  text: Tw.NOTICE.MEMBERSHIP },
+            {'title': Tw.NOTICE.ROAMING, checked: (this.$container.data('category') === 'roaming'), value: 'roaming',  text: Tw.NOTICE.ROAMING }
           ]
         }
       ],
@@ -57,18 +57,11 @@ Tw.CustomerNotice.prototype = {
   },
 
   _applyCategory: function($layer) {
-    this._category = $layer.find('input[name="radio"]:checked').val();
-    this._popupService._popupClose();
-    this._goList();
+    this._history.goLoad($layer.find('input[name="radio"]:checked').val());
   },
 
   _loadMoreList: function() {
     // @todo 비동기 API 호출하여 더보기 목록 append
-
-  },
-
-  _goList : function() {
-    location.href = '/customer/notice?category=' + this._category;
   }
 
 };
