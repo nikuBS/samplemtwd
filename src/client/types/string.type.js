@@ -16,6 +16,8 @@ Tw.TIME_UNIT = {
   HOUR: '시'
 };
 
+Tw.WEEKDAYS = ['월', '화', '수', '목', '금', '토', '일'];
+
 Tw.DATE_UNIT = {
   MONTH: '개월',
   MONTH_S: '월',
@@ -409,7 +411,8 @@ Tw.MSG_CUSTOMER = {
   VOICE_A02: '목소리인증서비스 신청을 취소하시겠습니까?',
   VOICE_A03: '진행을 취소하시고 첫 화면으로 이동하시겠습니까?',
   HELPLINE_A01: '예약을 취소하시겠습니까?',
-  HELPLINE_A02: '지역을 선택해 주세요.'
+  HELPLINE_A02: '지역을 선택해 주세요.',
+  HELPLINE_A03: '진행을 취소하시고 첫 화면으로 이동하시겠습니까?'
 }
 
 Tw.RECHARGE_TYPE = {

@@ -5,8 +5,8 @@ Tw.FormatHelper = (function () {
   };
 
   var isEmpty = function (value) {
-    if ( value === '' || value == null || value === undefined ||
-      (value != null && typeof value === 'object' && !Object.keys(value).length) ) {
+    if (value === '' || value == null || value === undefined ||
+      (value != null && typeof value === 'object' && !Object.keys(value).length)) {
       return true;
     }
     return false;
@@ -21,7 +21,7 @@ Tw.FormatHelper = (function () {
   };
 
   var isString = function (value) {
-    return typeof(value) === 'string';
+    return typeof (value) === 'string';
   };
 
   var addComma = function (value) {
@@ -30,7 +30,7 @@ Tw.FormatHelper = (function () {
   };
 
   var removeZero = function (value) {
-    if ( value.indexOf('.') !== -1 ) {
+    if (value.indexOf('.') !== -1) {
       return value.replace(/(0+$)/, '');
     }
 
@@ -38,13 +38,13 @@ Tw.FormatHelper = (function () {
   };
 
   var convNumFormat = function (number) {
-    if ( number > 0 && number < 100 && number % 1 !== 0 ) {
+    if (number > 0 && number < 100 && number % 1 !== 0) {
       return removeZero(number.toFixed(2));
     }
-    if ( number >= 100 && number < 1000 && number % 1 !== 0 ) {
+    if (number >= 100 && number < 1000 && number % 1 !== 0) {
       return removeZero(number.toFixed(1));
     }
-    if ( number > 1000 ) {
+    if (number > 1000) {
       return addComma(number.toFixed(0));
     }
 
@@ -64,12 +64,12 @@ Tw.FormatHelper = (function () {
 
     var i = 0;
     data = +data;
-    if ( sub > 0 ) {
-      for ( i = 0; i < sub; i++ ) {
+    if (sub > 0) {
+      for (i = 0; i < sub; i++) {
         data = data / 1024;
       }
     } else {
-      for ( i = 0; i < sub * -1; i++ ) {
+      for (i = 0; i < sub * -1; i++) {
         data = data * 1024;
       }
     }
@@ -87,14 +87,14 @@ Tw.FormatHelper = (function () {
     });
 
     data = +data;
-    if ( !isFinite(data) ) {
+    if (!isFinite(data)) {
       return {
         data: data,
         unit: curUnit
       };
     }
 
-    while ( data >= 1024 ) {
+    while (data >= 1024) {
       data /= 1024;
       unitIdx++;
     }
@@ -135,28 +135,62 @@ Tw.FormatHelper = (function () {
     });
   };
 
-  var makeCardYymm = function(cardYm) {
+  var makeCardYymm = function (cardYm) {
     return cardYm.substr(0, 4) + '/' + cardYm.substr(4, 2);
   };
 
-  function getFormattedPhoneNumber(phoneNumber) {
-    var getDashedNumber = function (phoneNumber) {
-      var str = '';
-      if ( phoneNumber.length <= 10 ) {
-        str += phoneNumber.substr(0, 3);
-        str += '-';
-        str += phoneNumber.substr(3, 3);
-        str += '-';
-        str += phoneNumber.substr(6);
+  function _getDashedCellPhoneNumber(phoneNumber) {
+    var str = '';
+    if (phoneNumber.length <= 10) {
+      str += phoneNumber.substr(0, 3);
+      str += '-';
+      str += phoneNumber.substr(3, 3);
+      str += '-';
+      str += phoneNumber.substr(6);
+    } else {
+      str += phoneNumber.substr(0, 3);
+      str += '-';
+      str += phoneNumber.substr(3, 4);
+      str += '-';
+      str += phoneNumber.substr(7);
+    }
+    return str;
+  };
+
+  function _getDashedTelephoneNumber(phoneNumber) {
+    var str = '';
+    if (/^02/.test(phoneNumber)) {
+      str += phoneNumber.substring(0, 2);
+      str += '-';
+
+      var centerIdx = -1;
+      if (phoneNumber.length === 9) {
+        centerIdx = 5;
       } else {
-        str += phoneNumber.substr(0, 3);
-        str += '-';
-        str += phoneNumber.substr(3, 4);
-        str += '-';
-        str += phoneNumber.substr(7);
+        centerIdx = 6;
       }
-      return str;
-    };
+      str += phoneNumber.substring(2, centerIdx);
+      str += '-';
+      str += phoneNumber.substring(centerIdx);
+    } else {
+      str += phoneNumber.substring(0, 3);
+      str += '-';
+
+      var centerIdx = -1;
+      if (phoneNumber.length === 10) {
+        centerIdx = 5;
+      } else {
+        centerIdx = 7;
+      }
+      str += phoneNumber.substring(3, centerIdx);
+      str += '-';
+      str += phoneNumber.substring(centerIdx);
+    }
+
+    return str;
+  };
+
+  function getFormattedPhoneNumber(phoneNumber) {
     var getMaskingPhoneNumber = function (mpn) {
       var tmpArr = mpn.split('-');
       var MASKING_MARK = '*';
@@ -164,8 +198,18 @@ Tw.FormatHelper = (function () {
       tmpArr[2] = Tw.StringHelper.masking(tmpArr[2], MASKING_MARK, 2);
       return tmpArr.join('-');
     };
-    return getMaskingPhoneNumber(getDashedNumber(phoneNumber));
-  }
+    return getMaskingPhoneNumber(_getDashedCellPhoneNumber(phoneNumber));
+  };
+
+  function getDashedPhoneNumber(phoneNumber) {
+    if (Tw.ValidationHelper.isTelephone(phoneNumber)) {
+      return _getDashedTelephoneNumber(phoneNumber);
+    } else if (Tw.ValidationHelper.isCellPhone(phoneNumber)) {
+      return _getDashedCellPhoneNumber(phoneNumber);
+    }
+
+    return phoneNumber;
+  };
 
   return {
     leadingZeros: leadingZeros,
@@ -182,6 +226,7 @@ Tw.FormatHelper = (function () {
     sortObjArrDesc: sortObjArrDesc,
     sortObjArrAsc: sortObjArrAsc,
     makeCardYymm: makeCardYymm,
-    getFormattedPhoneNumber: getFormattedPhoneNumber
+    getFormattedPhoneNumber: getFormattedPhoneNumber,
+    getDashedPhoneNumber: getDashedPhoneNumber
   };
 })();
