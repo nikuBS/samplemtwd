@@ -31,7 +31,7 @@ class ApiService {
     return Observable.create((observer) => {
       axios(options)
         .then(this.apiCallback.bind(this, observer, command))
-        .catch(this.handleError.bind(this, observer));
+        .catch(this.handleError.bind(this, observer, command));
     });
   }
 
@@ -103,27 +103,19 @@ class ApiService {
     observer.complete();
   }
 
-  private handleError(observer, err) {
-    let returnError = { code: API_CODE.CODE_400, msg: 'unknown error' };
-    if ( !FormatHelper.isEmpty(err.response) && !FormatHelper.isEmpty(err.response.data) ) {
+  private handleError(observer, command, err) {
+    if ( !FormatHelper.isEmpty(err.response) ) {
       const error = err.response.data;
-      returnError = this.makeErrorMessage(error);
-    }
+      const headers = err.response.headers;
 
-    // observer.error(err);
-    observer.next(returnError);
+      if ( command.server === API_SERVER.BFF ) {
+        this.setServerSession(headers);
+      }
+      observer.next(error);
+    } else {
+      observer.next(err);
+    }
     observer.complete();
-  }
-
-  private makeErrorMessage(error): any {
-    this.logger.error(this, '[API_ERR]', error);
-    let msg = 'unknown error';
-    let code = API_CODE.CODE_400;
-    if ( FormatHelper.isObject(error) ) {
-      msg = error.msg || msg;
-      code = error.code || code;
-    }
-    return { code, msg, error };
   }
 
   private setServerSession(headers) {
@@ -141,15 +133,15 @@ class ApiService {
     return '';
   }
 
-  public requestLoginTest(userId: string): Observable<any> {
+  private requestLogin(command, params): Observable<any> {
     let loginData = null;
-    return this.request(API_CMD.BFF_03_0001, { id: userId })
+    return this.request(command, params)
       .switchMap((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
           loginData = resp.result;
           return this.loginService.setSvcInfo({ mbrNm: resp.result.mbrNm });
         } else {
-          throw this.makeErrorMessage(resp);
+          throw resp;
         }
       })
       .switchMap((resp) => this.request(API_CMD.BFF_01_0005, {}))
@@ -157,34 +149,27 @@ class ApiService {
         if ( resp.code === API_CODE.CODE_00 ) {
           return this.loginService.setSvcInfo(resp.result);
         } else {
-          throw this.makeErrorMessage(resp);
+          throw resp;
         }
-      }).map((resp) => {
+      }).map(() => {
         return { code: API_CODE.CODE_00, result: loginData };
       });
   }
 
+  public requestLoginTest(userId: string): Observable<any> {
+    return this.requestLogin(API_CMD.BFF_03_0001, { id: userId });
+  }
+
   public requestLoginTid(token: string, state: string): Observable<any> {
-    let loginData = null;
-    return this.request(API_CMD.BFF_03_0008, { token, state })
-      .switchMap((resp) => {
-        if ( resp.code === API_CODE.CODE_00 ) {
-          loginData = resp.result;
-          return this.loginService.setSvcInfo({ mbrNm: resp.result.mbrNm });
-        } else {
-          throw this.makeErrorMessage(resp);
-        }
-      })
-      .switchMap((resp) => this.request(API_CMD.BFF_01_0005, {}))
-      .switchMap((resp) => {
-        if ( resp.code === API_CODE.CODE_00 ) {
-          return this.loginService.setSvcInfo(resp.result);
-        } else {
-          throw this.makeErrorMessage(resp);
-        }
-      }).map((resp) => {
-        return { code: API_CODE.CODE_00, result: loginData };
-      });
+    return this.requestLogin(API_CMD.BFF_03_0008, { token, state });
+  }
+
+  public requestSvcPasswordLogin(params: any): Observable<any> {
+    return this.requestLogin(API_CMD.BFF_03_0009, params);
+  }
+
+  public requestUserLocks(params: any): Observable<any> {
+    return this.requestLogin(API_CMD.BFF_03_0010, params);
   }
 
   public requestChangeSession(params: any): Observable<any> {
@@ -193,57 +178,15 @@ class ApiService {
         if ( resp.code === API_CODE.CODE_00 ) {
           return this.request(API_CMD.BFF_01_0005, {});
         } else {
-          throw this.makeErrorMessage(resp);
+          throw resp;
         }
       }).switchMap((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
           return this.loginService.setSvcInfo(resp.result);
         } else {
-          throw this.makeErrorMessage(resp);
+          throw resp;
         }
-      }).map((resp) => {
-        return { code: API_CODE.CODE_00 };
-      });
-  }
-
-  public requestSvcPasswordLogin(params: any): Observable<any> {
-    return this.request(API_CMD.BFF_03_0009, params)
-      .switchMap((resp) => {
-        if ( resp.code === API_CODE.CODE_00 ) {
-          return this.loginService.setSvcInfo({ mbrNm: resp.result.mbrNm });
-        } else {
-          throw this.makeErrorMessage(resp);
-        }
-      })
-      .switchMap((resp) => this.request(API_CMD.BFF_01_0005, {}))
-      .switchMap((resp) => {
-        if ( resp.code === API_CODE.CODE_00 ) {
-          return this.loginService.setSvcInfo(resp.result);
-        } else {
-          throw this.makeErrorMessage(resp);
-        }
-      }).map((resp) => {
-        return { code: API_CODE.CODE_00 };
-      });
-  }
-
-  public requestUserLocks(params: any): Observable<any> {
-    return this.request(API_CMD.BFF_03_0010, params)
-      .switchMap((resp) => {
-        if ( resp.code === API_CODE.CODE_00 ) {
-          return this.loginService.setSvcInfo({ mbrNm: resp.result.mbrNm });
-        } else {
-          throw this.makeErrorMessage(resp);
-        }
-      })
-      .switchMap((resp) => this.request(API_CMD.BFF_01_0005, {}))
-      .switchMap((resp) => {
-        if ( resp.code === API_CODE.CODE_00 ) {
-          return this.loginService.setSvcInfo(resp.result);
-        } else {
-          throw this.makeErrorMessage(resp);
-        }
-      }).map((resp) => {
+      }).map(() => {
         return { code: API_CODE.CODE_00 };
       });
   }
