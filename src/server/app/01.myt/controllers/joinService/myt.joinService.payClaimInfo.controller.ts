@@ -19,13 +19,13 @@ class MytJoinServicePayClaimInfo extends TwViewController {
     super();
   }
 
-  public reqQuery: any;//쿼리스트링
+  public reqQuery: any; // 쿼리스트링
   private _svcInfo: any;
 
-  //공통데이터
+  // 공통데이터
   private _commDataInfo: any = {};
 
-  private _typeChk:any = null;
+  private _typeChk: any = null;
 
   private _redirectUrlInfo: any = {
     A1: '/myt/joinService/payClaimInfo/phone',
@@ -44,7 +44,7 @@ class MytJoinServicePayClaimInfo extends TwViewController {
     this._typeChkFun();
     this._goRedirect(res);
 
-  }//render end
+  } // render end
 
   private _typeChkFun() {
     /*
@@ -76,7 +76,7 @@ class MytJoinServicePayClaimInfo extends TwViewController {
       case 'S1' :
       case 'S2' :
       case 'S3' :
-        if (false) {
+        if ( false ) {
           this.logger.info(this, '[ 인터넷 / IPTV / 집전화 ] : ', this._svcInfo.svcAttrCd);
           this._typeChk = 'B1';
         } else {
@@ -97,42 +97,41 @@ class MytJoinServicePayClaimInfo extends TwViewController {
       case 'A1' :
         tempVar = this._redirectUrlInfo.A1;
         this.logger.info(this, '[ _redirectUrlInfo ] : ', tempVar);
-        res.redirect( tempVar );
+        res.redirect(tempVar);
         break;
       case 'A2' :
         tempVar = this._redirectUrlInfo.A2;
         this.logger.info(this, '[ _redirectUrlInfo ] : ', tempVar);
-        res.redirect( tempVar );
+        res.redirect(tempVar);
         break;
       case 'A3' :
         tempVar = this._redirectUrlInfo.A3;
         this.logger.info(this, '[ _redirectUrlInfo ] : ', tempVar);
-        res.redirect( tempVar );
+        res.redirect(tempVar);
         break;
       case 'A4' :
         tempVar = this._redirectUrlInfo.A4;
         this.logger.info(this, '[ _redirectUrlInfo ] : ', tempVar);
-        res.redirect( tempVar );
+        res.redirect(tempVar);
         break;
       case 'B1' :
         tempVar = this._redirectUrlInfo.B1;
         this.logger.info(this, '[ _redirectUrlInfo ] : ', tempVar);
-        res.redirect( tempVar );
+        res.redirect(tempVar);
         break;
       case 'B2' :
         tempVar = this._redirectUrlInfo.B2;
         this.logger.info(this, '[ _redirectUrlInfo ] : ', tempVar);
-        res.redirect( tempVar );
+        res.redirect(tempVar);
         break;
       case 'O1' :
         tempVar = this._redirectUrlInfo.O1;
         this.logger.info(this, '[ _redirectUrlInfo ] : ', tempVar);
-        res.redirect( tempVar );
+        res.redirect(tempVar);
         break;
     }
 
   }
-
 
 
 }
