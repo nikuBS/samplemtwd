@@ -9,6 +9,7 @@ import CustomerPreventdamageUsefulserviceController from './controllers/preventd
 import CustomerPreventdamageRelatesiteController from './controllers/preventdamage/customer.preventdamage.relatesite.controller';
 import CustomerPreventdamageLatestwarningController from './controllers/preventdamage/customer.preventdamage.latestwarning.controller';
 import CustomerPreventdamageLatestwarningviewController from './controllers/preventdamage/customer.preventdamage.latestwarningview.controller';
+import CustomerVoiceController from './controllers/voice/customer.voice.controller';
 
 class CustomerRouter extends TwRouter {
   constructor() {
@@ -23,6 +24,7 @@ class CustomerRouter extends TwRouter {
     this.controllers.push({ url: '/prevent-damage/latest-warning', controller: new CustomerPreventdamageLatestwarningController() });
     this.controllers.push({ url: '/prevent-damage/latest-warning/view', controller: new CustomerPreventdamageLatestwarningviewController() });
     this.controllers.push({ url: '/helpline', controller: new CustomerHelpline() });
+    this.controllers.push({ url: '/voice/:type', controller: new CustomerVoiceController() });
   }
 }
 
