@@ -4,8 +4,8 @@
  * Date: 2018.07.11
  */
 
-import { NextFunction, Request, Response } from "express";
-import TwViewController from "../../../../common/controllers/tw.view.controller";
+import { NextFunction, Request, Response } from 'express';
+import TwViewController from '../../../../common/controllers/tw.view.controller';
 
 export default class RechargeLimitHistory extends TwViewController {
   constructor() {

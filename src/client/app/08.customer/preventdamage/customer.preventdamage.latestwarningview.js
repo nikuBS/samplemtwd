@@ -1,17 +1,17 @@
 /**
- * FileName: customer.prevent-damage.js
+ * FileName: customer.preventdamage.latestwarningview.js
  * Author: Jihun Yang (jihun202@sk.com)
- * Date: 2018.07.24
+ * Date: 2018.07.26
  */
 
-Tw.CustomerPreventDamageUsefulService = function(rootEl) {
+Tw.CustomerPreventdamageLatestwarningview = function(rootEl) {
   this.$container = rootEl;
 
   this._cachedElement();
   this._bindEvent();
 };
 
-Tw.CustomerPreventDamageUsefulService.prototype = {
+Tw.CustomerPreventdamageLatestwarningview.prototype = {
   _cachedElement: function() {
     //
   },

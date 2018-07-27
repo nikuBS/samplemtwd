@@ -1,3 +1,9 @@
+/**
+ * FileName: tid-landing.component.js
+ * Author: Ara Jo (araara.jo@sk.com)
+ * Date: 2018.06.22
+ */
+
 Tw.TidLandingComponent = function (rootEl) {
   this.$container = rootEl;
   this._nativeService = Tw.Native;
