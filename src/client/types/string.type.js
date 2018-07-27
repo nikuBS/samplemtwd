@@ -28,6 +28,7 @@ Tw.DATE_UNIT = {
 
 Tw.POPUP_TITLE = {
   NOTIFY: '알림',
+  CONFIRM: '확인',
   REQUEST_DELETE: '조르기 삭제안내',
   GIFT_FAMILY_INFO: '데이터 자동 선물 안내',
   CHANGE_SEARCH_CONDITION: '검색 조건 변경',
@@ -332,9 +333,9 @@ Tw.MSG_PAYMENT = {
     BUTTON_TEXT: '과납금액확인하기'
   },
   HISTORY_OVER_PAY_POPUP: '<div class=\'widget pop-btm-area\'>' +
-  '<div class=\'widget-box check\'><ul class=\'select-list\' role=\'group\'>' +
-  '<li class=\'checkbox type01\' role=\'checkbox\' aria-checked=\'false\'>' +
-  '<input type=\'checkbox\' name=\'checkbox\' title=\'하루동안 보지 않기\'> 하루동안 보지 않기</li></ul></div></div>',
+    '<div class=\'widget-box check\'><ul class=\'select-list\' role=\'group\'>' +
+    '<li class=\'checkbox type01\' role=\'checkbox\' aria-checked=\'false\'>' +
+    '<input type=\'checkbox\' name=\'checkbox\' title=\'하루동안 보지 않기\'> 하루동안 보지 않기</li></ul></div></div>',
   HISTORY_POINT_TITLE_OCB: 'OK캐쉬백',
   HISTORY_POINT_TITLE_TPOINT: 'T포인트',
   HISTORY_POINT_TITLE_RAINBOW: '레인보우 포인트',
@@ -406,7 +407,9 @@ Tw.MSG_AUTH = {
 Tw.MSG_CUSTOMER = {
   VOICE_A01: '이미 신청된 내역이 있습니다. \n 고객센터(114)로 전화하여 목소리 등록을 진행해주세요.',
   VOICE_A02: '목소리인증서비스 신청을 취소하시겠습니까?',
-  VOICE_A03: '진행을 취소하시고 첫 화면으로 이동하시겠습니까?'
+  VOICE_A03: '진행을 취소하시고 첫 화면으로 이동하시겠습니까?',
+  HELPLINE_A01: '예약을 취소하시겠습니까?',
+  HELPLINE_A02: '지역을 선택해 주세요.'
 }
 
 Tw.RECHARGE_TYPE = {

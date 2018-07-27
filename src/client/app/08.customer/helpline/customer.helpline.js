@@ -26,6 +26,7 @@ Tw.CustomerHelpline.prototype = {
 
   _bindEvent: function () {
     this.$container.on('click', '.form-cell button', $.proxy(this._openSelectPopup, this));
+    this.$container.on('click', '.bt-slice.item-two .bt-white2', $.proxy(this._openCancelPopup, this));
     this.$areaPhone.on('keyup', 'input', $.proxy(this._handlePhoneType, this));
     this.$areaPhone.on('change', 'input', $.proxy(this._validatePhone, this));
   },
@@ -157,7 +158,7 @@ Tw.CustomerHelpline.prototype = {
     var $input = this.$areaPhone.find('input');
     var errorState = this.$areaPhone.hasClass('error');
 
-    if (!this.PHONE_REGEX.test(this._reservationPhoneNum)) {
+    if (this._reservationPhoneNum && !this.PHONE_REGEX.test(this._reservationPhoneNum)) {
       if (!errorState) {
         this.$areaPhone.addClass('error');
         $input.attr('aria-describedby', 'aria-exp-desc2 aria-exp-desc3');
@@ -180,6 +181,25 @@ Tw.CustomerHelpline.prototype = {
     } else {
       if (!disabled) this.$btnSubmit.attr('disabled', true);
     }
+  },
+
+  _openCancelPopup: function () {
+    this._popupService.openConfirm(Tw.POPUP_TITLE.CONFIRM, Tw.MSG_CUSTOMER.HELPLINE_A01, undefined, undefined, $.proxy(this._clearData, this));
+  },
+
+  _clearData: function () {
+    this._reservationType = 0;
+    this._reservationArea = '';
+    this._reservationTime = this._availableTimes[0];
+    this._reservationPhoneNum = '';
+
+    this.$btnType.text(Tw.HELPLINE_TYPE.GENERAL);
+    this.$btnArea.text(Tw.MSG_CUSTOMER.HELPLINE_A02);
+    this.$btnArea.addClass('placeholder');
+    this.$btnTime.text(this._availableTimes[0] + ':00');
+    this.$areaPhone.find('input').val('');
+    this._validatePhone();
+    this._popupService.close();
   },
 
   _getTimeData: function (time) {
