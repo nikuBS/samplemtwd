@@ -13,8 +13,6 @@ skt_landing.widgets = {
       widget_list[com_name](ta);
     }
   },
-  widget_test: function () {
-  },
   widget_tube: function (ta) {
     var widget = ta ? $(ta).find('.widget-box.tube') : $('.widget-box.tube');
     $(widget).each(function(){
@@ -130,6 +128,30 @@ skt_landing.widgets = {
       box.on('click',function(e){
         if(e.target.tagName.toLowerCase() == 'input' && e.target != e.currentTarget) return ;
         $(this).find('input').trigger('click');
+      });
+    });
+  },
+  widget_file: function(ta){
+    var input = ta ? $(ta).find('.widget-box.file') : $('.widget-box.file');
+    input.each(function(){
+      var file = $(this).find('.file'),
+          vfile = $(this).find('.fileview');
+      console.log(vfile)
+      if(vfile){
+        file.on('change',function(){
+          vfile.val($(this).val());
+        });
+      }
+    });
+  },
+  widget_tfCombined: function (ta) {
+    var box = ta ? $(ta).find('.txfield-combined') : $('.txfield-combined');
+    box.each(function(){
+      var _this = $(this);
+      _this.find('.input-focus').on('focus',function(){
+        _this.addClass('focus');
+      }).on('blur',function(){
+        _this.removeClass('focus');
       });
     });
   },
@@ -592,11 +614,16 @@ skt_landing.widgets = {
     var widget = ta ? $(ta).find('.btn-toggle') : $('.btn-toggle');
     $(widget).on('click', function(){
         var _this = $(this);
-        $(this).closest('.toggle').find('.toggler').toggle('fast', function(){
-            var isVisible = $(this).is(':visible');
-            _this.attr('aria-pressed', (isVisible? 'true': 'false'));
-            _this.attr('class', (isVisible? 'btn-toggle open ' : 'btn-toggle'));
-        });
+        var toggler = _this.closest('.toggle').find('.toggler');
+        if (toggler.is(':hidden')) {
+          toggler.slideDown();
+          _this.attr('aria-pressed', 'true');
+          _this.addClass('open');
+        } else {
+          toggler.slideUp();
+          _this.attr('aria-pressed', 'false');
+          _this.removeClass('open');
+        }
     });
   }
 }
