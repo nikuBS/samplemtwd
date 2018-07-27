@@ -414,9 +414,7 @@ Tw.PaymentRealtime.prototype = {
     this._popupService.openAlert(Tw.MSG_PAYMENT.REALTIME_A09, null, $.proxy(this._cancelProcess, this));
   },
   _cancelProcess: function () {
-    this._history.setHistory();
-    this._history.complete();
-    this._history.resetHistory(this._history.getHistoryLength());
+    this._history.cancelProcess();
   },
   _go: function (hash) {
     window.location.hash = hash;
