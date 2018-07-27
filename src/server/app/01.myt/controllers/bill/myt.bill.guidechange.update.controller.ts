@@ -39,7 +39,8 @@ class MyTBillUpdate extends TwViewController {
       let anotherBillGuideType;
       if (isWire) {
         _curBillGuide['component'] = BILL_GUIDE_TYPE_COMPONENT[BILL_GUIDE_TYPE_WITH_WIRE[_curBillGuide['curBillType']]];
-        anotherBillGuideType = (_curBillGuide.curBillType === WIRE_BILL_GUIDE_TYPE.TWORLD) ? WIRE_BILL_GUIDE_TYPE.BILL_LETTER : WIRE_BILL_GUIDE_TYPE.TWORLD;
+        anotherBillGuideType = (_curBillGuide.curBillType === WIRE_BILL_GUIDE_TYPE.TWORLD) ?
+          WIRE_BILL_GUIDE_TYPE.BILL_LETTER : WIRE_BILL_GUIDE_TYPE.TWORLD;
       } else {
         _curBillGuide['component'] = BILL_GUIDE_TYPE_COMPONENT[_curBillGuide['curBillType']];
         const targetBillGuideType = (svcInfo.svcAttrCd === 'M5') ? BILL_GUIDE_TYPE.EMAIL : BILL_GUIDE_TYPE.BILL_LETTER;
