@@ -17,7 +17,6 @@ Tw.CustomerHelpline = function (rootEl) {
 };
 
 Tw.CustomerHelpline.prototype = {
-  PHONE_REGEX: /^0\d{8,10}$/,
   _init: function () {
     this._availableTimes = this.$btnTime.data('available-times');
     this._reservationTime = this._availableTimes[0];
@@ -158,7 +157,9 @@ Tw.CustomerHelpline.prototype = {
     var $input = this.$areaPhone.find('input');
     var errorState = this.$areaPhone.hasClass('error');
 
-    if (this._reservationPhoneNum && !this.PHONE_REGEX.test(this._reservationPhoneNum)) {
+    var isValidated = Tw.ValidationHelper.isTelephone(this._reservationPhoneNum) || Tw.ValidationHelper.isCellPhone(this._reservationPhoneNum);
+
+    if (this._reservationPhoneNum && !isValidated) {
       if (!errorState) {
         this.$areaPhone.addClass('error');
         $input.attr('aria-describedby', 'aria-exp-desc2 aria-exp-desc3');
