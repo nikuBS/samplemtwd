@@ -21,8 +21,7 @@ import MyTBillGuidechangeChange from './controllers/bill/myt.bill.guidechange.ch
 import MyTBillGuideChangeComplete from './controllers/bill/myt.bill.guidechange.change-complete.controller';
 import MyTBillGuidechangeUpdate from './controllers/bill/myt.bill.guidechange.update.controller';
 import MyTBillGuidechangeUpdateComplete from './controllers/bill/myt.bill.guidechange.update-complete.controller';
-import SubDetailSpecification,
-{ default as MyTBillBillguideSubDetailSpecification } from './controllers/bill/myt.bill.billguide.subDetailSpecification.controller';
+import MyTBillBillguideSubDetailSpecification from './controllers/bill/myt.bill.billguide.subDetailSpecification.controller';
 import MyTBillBillguideSubSelPayment from './controllers/bill/myt.bill.billguide.subSelPayment.controller';
 import MyTBillBillguideSubSusRelease from './controllers/bill/myt.bill.billguide.subSusRelease.controller';
 import MyTBillBillguideSubChildBill from './controllers/bill/myt.bill.billguide.subChildBill.controller';
@@ -45,8 +44,7 @@ import MytJoinServicePayClaimInfoPointcam from './controllers/joinService/myt.jo
 import MytJoinServiceContractTerminalInfo from './controllers/joinService/myt.joinService.contractTerminalInfo.controller';
 import MytJoinServiceContractTerminalInfoPhoneDetail from './controllers/joinService/myt.joinService.contractTerminalInfo.phone.detail.controller';
 import MytJoinServiceContractTerminalInfoTpocketfi from './controllers/joinService/myt.joinService.contractTerminalInfo.tpocketfi.controller';
-import MytJoinServiceContractTerminalInfoTpocketfiDetail
-  from './controllers/joinService/myt.joinService.contractTerminalInfo.tpocketfi.detail.controller';
+import MytJoinServiceContractTerminalInfoTpocketfiDetail from './controllers/joinService/myt.joinService.contractTerminalInfo.tpocketfi.detail.controller';
 import MytJoinServiceContractTerminalInfoTwibro from './controllers/joinService/myt.joinService.contractTerminalInfo.twibro.controller';
 import MytJoinServiceContractTerminalInfoTlogin from './controllers/joinService/myt.joinService.contractTerminalInfo.tlogin.controller';
 import MytJoinServiceContractTerminalInfoTloginDetail from './controllers/joinService/myt.joinService.contractTerminalInfo.tlogin.detail.controller';
@@ -108,10 +106,12 @@ class MytRouter extends TwRouter {
     this.controllers.push({ url: '/joinService/contractTerminalInfo/phone', controller: new MytJoinServiceContractTerminalInfoPhone() });
     this.controllers.push({ url: '/joinService/contractTerminalInfo/phone/detail', controller: new MytJoinServiceContractTerminalInfoPhoneDetail() });
     this.controllers.push({ url: '/joinService/contractTerminalInfo/tpocketfi', controller: new MytJoinServiceContractTerminalInfoTpocketfi() });
-    this.controllers.push({ url: '/joinService/contractTerminalInfo/tpocketfi/detail', controller: new MytJoinServiceContractTerminalInfoTpocketfiDetail() });
+    this.controllers.push({ url: '/joinService/contractTerminalInfo/tpocketfi/detail',
+      controller: new MytJoinServiceContractTerminalInfoTpocketfiDetail() });
     this.controllers.push({ url: '/joinService/contractTerminalInfo/twibro', controller: new MytJoinServiceContractTerminalInfoTwibro() });
     this.controllers.push({ url: '/joinService/contractTerminalInfo/tlogin', controller: new MytJoinServiceContractTerminalInfoTlogin() });
-    this.controllers.push({ url: '/joinService/contractTerminalInfo/tlogin/detail', controller: new MytJoinServiceContractTerminalInfoTloginDetail() });
+    this.controllers.push({ url: '/joinService/contractTerminalInfo/tlogin/detail',
+      controller: new MytJoinServiceContractTerminalInfoTloginDetail() });
   }
 }
 

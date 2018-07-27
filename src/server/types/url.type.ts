@@ -13,7 +13,7 @@ export const URL = {
   '/myt/usage/troaming': { login: true, id: '' },
   '/myt/usage/ting': { login: true, id: '' },
   '/usage/24hourdiscount': { login: true, id: '' },
-  '/myt/bill/hotbill': { login: true, id: 'MY_03_01_01' }, //실시간 사용요금
+  '/myt/bill/hotbill': { login: true, id: 'MY_03_01_01' }, // 실시간 사용요금
   '/myt/bill/guidechange/reissue': { login: true, id: '' },
   '/myt/bill/guidechange/reissue/complete': { login: true, id: '' },
   '/myt/bill/billguide/returnhistory': { login: true, id: '' },
@@ -25,7 +25,7 @@ export const URL = {
   '/myt/bill/billguide/subCallBill': { login: true, id: '' },
   '/myt/bill/billguide/subRoamingBill': { login: true, id: '' },
   '/myt/bill/billguide/subDonationBill': { login: true, id: '' },
-  '/myt/bill/hotbill/child': { login: true, id: 'MY_03_01_01_01' }, //실시간 사용요금 자녀회선
+  '/myt/bill/hotbill/child': { login: true, id: 'MY_03_01_01_01' }, // 실시간 사용요금 자녀회선
   '/myt/bill/guidechange': { login: true, id: '' },
   '/myt/bill/guidechange/change': { login: true, id: '' },
   '/myt/bill/guidechange/change-complete': { login: true, id: '' },
@@ -38,7 +38,7 @@ export const URL = {
   '/myt/bill/history/contents/limit': { login: true, id: 'My_02_03_05_01_02' },  // 나의 요금 > 콘텐츠 이용료 이용내역 > 콘텐츠 이용 한도 변경
   // recharge
   '/recharge/refill': { login: true, id: 'DA_01_01_01' }, // 리필하기
-  '/recharge/refill/history': { login: true, id: 'DA_01_02_01' }, //리필 히스토리
+  '/recharge/refill/history': { login: true, id: 'DA_01_02_01' }, // 리필 히스토리
   '/recharge/refill/select': { login: true, id: 'DA_01_01_03_01' }, // 리필하기 > 데이터/음성 선택
   '/recharge/refill/complete': { login: true, id: 'DA_01_01_03_02' }, // 리필완료
   '/recharge/refill/error': { login: true, id: 'DA_01_01_03_02' }, // 리필 실패
