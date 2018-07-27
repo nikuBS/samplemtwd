@@ -8,7 +8,7 @@ import TwViewController from '../../../common/controllers/tw.view.controller';
 import { API_CMD, API_CODE } from '../../../types/api-command.type';
 import FormatHelper from '../../../utils/format.helper';
 import DateHelper from '../../../utils/date.helper';
-import prepayMicroHistory from '../../../mock/server/payment/payment.prepay.micro.history';
+import prepayMicroHistory from '../../../mock/server/payment/payment.prepay.micro.history.mock';
 
 class PaymentPrepayMicroHistoryController extends TwViewController {
   constructor() {

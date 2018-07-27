@@ -64,7 +64,7 @@ Tw.UIService.prototype = {
 };
 
 Tw.UIService.toggle = function (selector) {
-  if ( selector.hasClass('on') ) {g
+  if ( selector.hasClass('on') ) {
     selector.removeClass('on');
   }
   else {

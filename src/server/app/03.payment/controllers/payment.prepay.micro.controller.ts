@@ -9,7 +9,7 @@ import { API_CMD, API_CODE } from '../../../types/api-command.type';
 import FormatHelper from '../../../utils/format.helper';
 import {AUTO_CHARGE_CODE, PREPAY_TITLE} from '../../../types/bff-common.type';
 import DateHelper from '../../../utils/date.helper';
-import AutoYn from '../../../mock/server/payment/payment.prepay.autoyn';
+import AutoYn from '../../../mock/server/payment/payment.prepay.autoyn.mock';
 
 class PaymentPrepayMicroController extends TwViewController {
   constructor() {
