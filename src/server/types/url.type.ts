@@ -94,6 +94,7 @@ export const URL = {
   '/customer/prevent-damage/useful-service': { login: false, id: 'CI_07_09' },  // 유용한 부가서비스
   '/customer/prevent-damage/relate-site': { login: false, id: 'CI_07_10' }, // 이용자 피해예방 관련 사이트
   '/customer/helpline': { login: false, id: 'CI_05_01' }, // 전화상담예약
+  '/customer/shop/search': { login: false, id: 'CI_02_01' }, // 매장 및 AS센터 > 지점/대리점 찾기
   // auth
   '/auth/line': { login: true, id: 'CO_01_05_02' }, // 회선관리
   '/auth/line/edit': { login: true, id: 'CO_01_05_02_01' }, // 회선편집
