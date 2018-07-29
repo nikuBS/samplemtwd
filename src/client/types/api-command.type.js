@@ -200,6 +200,7 @@ Tw.API_CODE = {
   CODE_07: 'RDT0007',    // 고객 비밀번호 재설정 필요
   CODE_08: 'RDT0008',    // 고객 비밀번호 초기화상
   CODE_99: 'RDT0099',    // Circuit Open
+  CODE_BIL0018: 'BIL0018',  // 개인 사업자 번호 조회 불가
   CODE_200: '200',
   CODE_400: '400'
 };
