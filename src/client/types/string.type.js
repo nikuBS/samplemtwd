@@ -57,7 +57,8 @@ Tw.POPUP_PROPERTY = {
 Tw.BUTTON_LABEL = {
   SELECT: '선택',
   CONFIRM: '확인',
-  CANCEL: '취소'
+  CANCEL: '취소',
+  MORE: '더보기'
 };
 
 Tw.CURRENCY_UNIT = {

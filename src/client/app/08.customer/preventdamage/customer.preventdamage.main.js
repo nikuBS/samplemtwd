@@ -6,6 +6,7 @@
 
 Tw.CustomerPreventdamageMain = function(rootEl) {
   this.$container = rootEl;
+  this._history = new Tw.HistoryService();
 
   this._cachedElement();
   this._bindEvent();
@@ -14,23 +15,20 @@ Tw.CustomerPreventdamageMain = function(rootEl) {
 Tw.CustomerPreventdamageMain.prototype = {
   _cachedElement: function() {
     this.$btnGuide = this.$container.find('.fe-btn_guide');
-    this.$btnGuideMore = this.$container.find('.fe-btn_guide_more');
+    this.$listLatestWarning = this.$container.find('.fe-latest_warning_list');
   },
 
   _bindEvent: function() {
     this.$btnGuide.on('click', $.proxy(this._goGuide, this));
-    this.$btnGuideMore.on('click', $.proxy(this._goGuideMore, this));
+    this.$listLatestWarning.on('click', $.proxy(this._goLatestWarningView, this));
   },
 
   _goGuide: function(e) {
-    this._go('/customer/prevent-damage/guide?category=' + $(e.currentTarget).data('category'));
+    this._history.goLoad('/customer/prevent-damage/guide?category=' + $(e.currentTarget).data('category'));
   },
 
-  _goGuideMore: function() {
-    this._go('/customer/prevent-damage/guide');
-  },
-
-  _go: function(url) {
-    location.href = url;
+  _goLatestWarningView: function(e) {
+    this._history.goLoad('/customer/prevent-damage/latest-warning/view?lwid=' + $(e.currentTarget).data('lwid'));
   }
+
 };
