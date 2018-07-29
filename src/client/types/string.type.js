@@ -31,6 +31,7 @@ Tw.DATE_UNIT = {
 Tw.POPUP_TITLE = {
   NOTIFY: '알림',
   CONFIRM: '확인',
+  GUIDE: '안내',
   REQUEST_DELETE: '조르기 삭제안내',
   GIFT_FAMILY_INFO: '데이터 자동 선물 안내',
   CHANGE_SEARCH_CONDITION: '검색 조건 변경',
@@ -235,6 +236,12 @@ Tw.MSG_MYT = {
     EMAIL_INT: '<img src="/img/dummy/ex_preview5.jpg" alt="요금 안내서 이메일서비스">', // 이메일 (인터넷/집전화/IPTV , T-WIBRO)
     ETC_HP: '<img src="/img/dummy/ex_preview10.jpg" alt="요금 안내서 우편서비스">', // 기타(우편) : 휴대폰
     ETC_INT: '<img src="/img/dummy/ex_preview4.jpg" alt="요금 안내서 우편서비스">' // 기타(우편) : (인터넷/집전화/IPTV , T-WIBRO)
+  },
+  TDATA_SHARE: {
+    M01_TITLE: 'T데이터셰어링 기본제공 데이터 사용량',
+    M01_CONTENTS: '올인원 요금제 등 기본으로 데이터를 제공하는 요금제를 이용하는 고객님 중 제한된 USIM(한도형)의 데이터 정보만 노출합니다.',
+    M02_TITLE: 'T데이터셰어링 총 데이터 사용량',
+    M02_CONTENTS: '등록하신 각각의 T 데이터셰어링 USIM의 사용량을 합산한 정보입니다.'
   }
 };
 

@@ -62,3 +62,13 @@ Tw.LOGIN_NOTICE_TYPE = {
   NEW_LINE: '03',
   BIZ_DELETE: '04'
 };
+
+Tw.TDATA_SHARE_SVC_ST_CD = {
+  AC: 'AC', // 분실신고
+  SP: 'SP'  // 분실
+};
+
+Tw.TDATA_SHARE_EQPMGMT_ST_CD = {
+  '02': '02', // 개통
+  '09': '09' // 분실/분실신고
+};
