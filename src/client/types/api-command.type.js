@@ -15,6 +15,7 @@ Tw.API_CMD = {
   BFF_03_0023_C: { path: '/core-recharge/v1/refill-gifts', method: Tw.API_METHOD.POST },
 
   // COMMON
+  BFF_01_0002: { path: '/common/sessions', method: Tw.API_METHOD.GET },
   BFF_01_0004: { path: '/common/selected-sessions', method: Tw.API_METHOD.PUT },
   BFF_01_0005: { path: '/common/selected-sessions', method: Tw.API_METHOD.GET },
 
@@ -32,6 +33,9 @@ Tw.API_CMD = {
   BFF_03_0013: { path: '/user/biz-services', method: Tw.API_METHOD.POST },
   BFF_03_0014: { path: '/core-auth/v1/marketing-offer-subscriptions/args-0', method: Tw.API_METHOD.GET },
   BFF_03_0015: { path: '/core-auth/v1/marketing-offer-subscriptions/args-0', method: Tw.API_METHOD.PUT },
+  BFF_03_0017: { path: '/user/login/android', method: Tw.API_METHOD.POST },
+  BFF_03_0018: { path: '/user/login/ios', method: Tw.API_METHOD.POST },
+  BFF_03_0019: { path: '/core-auth/v1/users/args-0/otp', method: Tw.API_METHOD.POST },
 
   // MYT
   BFF_05_0001: { path: '/my-t/balances', method: Tw.API_METHOD.GET },

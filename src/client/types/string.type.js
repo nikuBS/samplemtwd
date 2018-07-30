@@ -59,7 +59,8 @@ Tw.BUTTON_LABEL = {
   SELECT: '선택',
   CONFIRM: '확인',
   CANCEL: '취소',
-  MORE: '더보기'
+  MORE: '더보기',
+  LINE: '회선관리'
 };
 
 Tw.CURRENCY_UNIT = {
