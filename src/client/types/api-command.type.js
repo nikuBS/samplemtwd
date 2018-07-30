@@ -162,10 +162,13 @@ Tw.API_CMD = {
   BFF_08_0001: { path: '/core-modification/v1/counsel-time-check', method: Tw.API_METHOD.GET },
   BFF_08_0002: { path: '/core-modification/v1/counsel-reserve', method: Tw.API_METHOD.POST },
   BFF_08_0003: { path: '/core-modification/v1/counsel-histories', method: Tw.API_METHOD.GET },
+  BFF_08_0009: { path: '/core-modification/v1/voice-certification-check', method: Tw.API_METHOD.GET },
+  BFF_08_0014: { path: '/cs/file-upload', method: Tw.API_METHOD.POST },
   BFF_08_0029: { path: '/core-modification/v1/tworld-notice', method: Tw.API_METHOD.GET },
   BFF_08_0030: { path: '/core-modification/v1/directshop-notice', method: Tw.API_METHOD.GET },
   BFF_08_0031: { path: '/core-modification/v1/membership-notice', method: Tw.API_METHOD.GET },
   BFF_08_0032: { path: '/core-modification/v1/roaming-notice', method: Tw.API_METHOD.GET },
+  BFF_08_0034: { path: '/core-modification/v1/voice-certification', method: Tw.API_METHOD.POST },
 
   // TEST
   GET: { path: '/posts', method: Tw.API_METHOD.GET },
