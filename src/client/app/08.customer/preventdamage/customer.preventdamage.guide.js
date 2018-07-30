@@ -69,7 +69,7 @@ Tw.CustomerPreventdamageGuide.prototype = {
 
     if (hiddenLength > 30) {
       this.$list.find('li:hidden:lt(30)').show();
-      $(e.currentTarget).html(Tw.BUTTON_LABEL.MORE + '<span>' + ((hiddenLength-30) > 30 ? 30 : hiddenLength-30) + '</span>');
+      $(e.currentTarget).find('span').text('(' + hiddenLength + ')');
     }
   }
 

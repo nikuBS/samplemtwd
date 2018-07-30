@@ -40,11 +40,9 @@
                             } %>
                         </ul>
                     </div>
-                    <% if (list.length > 30) {
-                        const moreLength = (list.length-30) > 30 ? 30 : list.length-30;
-                    %>
+                    <% if (list.length > 30) { %>
                     <div class="bt-more-wrap mt0">
-                        <button role="button" class="bt-more fe-btn_list_more" title="">더보기<span>(<%= moreLength %>)</span></button>
+                        <button role="button" class="bt-more fe-btn_list_more" title="">더보기<span>(<%= (list.length-30) %>)</span></button>
                     </div>
                     <% } %>
                 </div>

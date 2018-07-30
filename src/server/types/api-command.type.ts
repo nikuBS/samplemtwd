@@ -235,7 +235,9 @@ export const API_CMD = {
   BFF_08_0030: { path: '/core-modification/v1/directshop-notice', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_08_0031: { path: '/core-modification/v1/membership-notice', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_08_0032: { path: '/core-modification/v1/roaming-notice', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_08_0033: { path: '/core-modification/v1/prevent/notice', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_08_0034: { path: '/core-modification/v1/voice-certification', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_08_0041: { path: '/core-modification/v1/prevent/notice/args-0', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
 
   // TID
   OIDC: { path: '/auth/authorize.do', method: API_METHOD.GET, server: API_SERVER.TID, bypass: false },
