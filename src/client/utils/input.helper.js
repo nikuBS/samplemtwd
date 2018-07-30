@@ -4,7 +4,7 @@ Tw.InputHelper = (function () {
     $input.val($input.val().replace(/[^0-9]/g, ''));
   }
 
-  function inputKeyDown(event) {
+  function inputNumKeyDown(event) {
     // input keydown event (only input number)
     var key = event.which;
     if ( key === 0 || key === 8 || key === 46 || key === 9 ) {
@@ -26,7 +26,7 @@ Tw.InputHelper = (function () {
     }
   }
 
-  function inputKeyUp(event) {
+  function inputNumKeyUp(event) {
     // input keyup event (only input number)
     var key = event.which;
     if ( key === 8 || key === 46 || key === 37 || key === 39 ) {
@@ -37,9 +37,9 @@ Tw.InputHelper = (function () {
     }
   }
 
-  function inputFocusOut($elem) {
-    // input focusout event (only input number)
-    $elem.val($elem.val().replace(/[^0-9]/g, ''));
+  function validateNumber(number) {
+    var reg = /[^0-9]/g;
+    return reg.test(number);
   }
 
   function validateEmail(email) {
@@ -50,8 +50,8 @@ Tw.InputHelper = (function () {
   return {
     inputNumberOnly: inputNumberOnly,
     validateEmail: validateEmail,
-    focusout: inputFocusOut,
-    keyup: inputKeyUp,
-    keydown: inputKeyDown
+    validateNumber: validateNumber,
+    inputNumKeyUp: inputNumKeyUp,
+    inputNumKeyDown: inputNumKeyDown
   };
 })();
