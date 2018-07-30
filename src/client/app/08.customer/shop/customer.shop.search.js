@@ -7,15 +7,14 @@
 Tw.CustomerShopSearch = function (rootEl) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
-  this._hashService = Tw.Hash;
+  this._historyService = new Tw.HistoryService();
 
   this._currentTab = 1;
   this._storeType = '0';
 
   this._cacheElements();
   this._bindEvent();
-
-  this._hashService.initHashNav($.proxy(this._onTabChanged, this));
+  this._init();
 };
 
 Tw.CustomerShopSearch.prototype = {
@@ -27,23 +26,39 @@ Tw.CustomerShopSearch.prototype = {
     this.$optionsTitle = this.$container.find('#fe-options-title');
   },
   _bindEvent: function () {
+    this.$container.on('click', 'li[role="tab"] > button', $.proxy(this._onTabChanged, this));
     this.$container.on('keyup', 'input[type="text"]', $.proxy(this._onOffSearchButton, this));
     this.$container.on('click', '.bt-red1 > button', $.proxy(this._requestSearch, this));
     this.$container.on('change', 'input[type="radio"]', $.proxy(this._onOptionsChanged, this));
     this.$container.on('change', 'input[type="checkbox"]', $.proxy(this._onOptionsChanged, this));
   },
-  _onTabChanged: function (hash) {
-    switch (hash.raw) {
-      case '':
-      case 'name':
+  _init: function () {
+    var selectedTab = this.$container.find('li[role="tab"][aria-selected="true"]')[0].id;
+    switch (selectedTab) {
+      case 'tab1':
+        this._currentTab = 1;
+        break;
+      case 'tab2':
+        this._currentTab = 2;
+        break;
+      case 'tab3':
+        this._currentTab = 3;
+        break;
+      default:
+        break;
+    }
+  },
+  _onTabChanged: function (evt) {
+    switch (evt.target.id) {
+      case 'fe-tab1':
         this._currentTab = 1;
         this._onOffSearchButton({ currentTarget: { id: 'fe-text-name' } });
         break;
-      case 'address':
+      case 'fe-tab2':
         this._currentTab = 2;
         this._onOffSearchButton({ currentTarget: { id: 'fe-text-address' } });
         break;
-      case 'tube':
+      case 'fe-tab3':
         this._currentTab = 3;
         this._onOffSearchButton({ currentTarget: { id: 'fe-text-tube' } });
         break;
@@ -107,22 +122,23 @@ Tw.CustomerShopSearch.prototype = {
     }
   },
   _requestSearch: function () {
-    var query = '';
+    var params = { storeType: this._storeType };
     switch (this._currentTab) {
       case 1:
-        query = this.$inputName.val();
+        params.searchType = 1;
+        params.searchText =  this.$inputName.val();
         break;
       case 2:
-        query = this.$inputAddress.val();
+        params.searchType = 2;
+        params.searchText = this.$inputAddress.val();
         break;
       case 3:
-        query = this.$inputTube.val();
+        params.searchType = 3;
+        params.searchText = this.$inputTube.val();
         break;
       default:
         break;
     }
-    var params = { searchText: query };
-    params.storeType = this._storeType;
 
     var jobs = this.$container.find('input:checked[type=checkbox]');
     if (jobs.length === 0 || jobs[0].value === 'all') {
@@ -154,6 +170,13 @@ Tw.CustomerShopSearch.prototype = {
       });
     }
 
-    // TODO: request search
+    var searchUrl = _.reduce(params, function (str, param, key) {
+      if (str.match(/\?$/)) {
+        return str + key + '=' + param;
+      } else {
+        return str + '&' + key + '=' + param;
+      }
+    }, '/customer/shop/search?');
+    this._historyService.goLoad(searchUrl);
   }
 };
