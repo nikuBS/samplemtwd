@@ -50,7 +50,7 @@ import MytJoinServiceContractTerminalInfoTlogin from './controllers/joinService/
 import MytJoinServiceContractTerminalInfoTloginDetail from './controllers/joinService/myt.joinService.contractTerminalInfo.tlogin.detail.controller';
 import MytJoinServiceContractTerminalInfoPhone from './controllers/joinService/myt.joinService.contractTerminalInfo.phone.controller';
 import MytJoinServicePayClaimInfoIptvSk from './controllers/joinService/myt.joinService.payClaimInfo.iptvSk.controller';
-import MyTJoinServiceJoinInfoController from './controllers/joinService/myt.joinService.joinInfo.controller';
+import MytJoinJoinInfoController from './controllers/join/myt.join.join-info.controller';
 
 
 class MytRouter extends TwRouter {
@@ -113,7 +113,7 @@ class MytRouter extends TwRouter {
     this.controllers.push({ url: '/joinService/contractTerminalInfo/tlogin', controller: new MytJoinServiceContractTerminalInfoTlogin() });
     this.controllers.push({ url: '/joinService/contractTerminalInfo/tlogin/detail', controller: new MytJoinServiceContractTerminalInfoTloginDetail() });
 
-    this.controllers.push({ url: '/joinService/joinInfo', controller: new MyTJoinServiceJoinInfoController() });
+    this.controllers.push({ url: '/join/join-info', controller: new MytJoinJoinInfoController() });
 
 
   }
