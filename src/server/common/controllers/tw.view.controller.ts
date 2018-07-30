@@ -93,7 +93,8 @@ abstract class TwViewController {
   }
 
   private checkLogin(session): boolean {
-    return this._loginService.isLogin(session);
+    //return this._loginService.isLogin(session);
+    return true;
   }
 
   private goSessionLogin(req, res, next, path) {

@@ -17,6 +17,14 @@ Tw.API_CMD = {
   // COMMON
   BFF_01_0004: { path: '/common/selected-sessions', method: Tw.API_METHOD.PUT },
   BFF_01_0005: { path: '/common/selected-sessions', method: Tw.API_METHOD.GET },
+  BFF_01_0006: { path: '/core-modification/v1/address/legal-dongs', method: Tw.API_METHOD.GET },
+  BFF_01_0007: { path: '/core-modification/v1/address/legal-dongs', method: Tw.API_METHOD.GET },
+  BFF_01_0008: { path: '/core-modification/v1/address/street-names', method: Tw.API_METHOD.GET },
+  BFF_01_0009: { path: '/core-modification/v1/address/mailboxes', method: Tw.API_METHOD.GET },
+  BFF_01_0010: { path: '/core-modification/v1/address/lot-numbers', method: Tw.API_METHOD.GET },
+  BFF_01_0011: { path: '/core-modification/v1/address/buildings', method: Tw.API_METHOD.GET },
+  BFF_01_0012: { path: '/core-modification/v1/address/standard', method: Tw.API_METHOD.GET },
+  BFF_01_0013: { path: '/core-modification/v1/address/standard', method: Tw.API_METHOD.GET },
 
   // AUTH
   BFF_03_0002: { path: '/user/account-auth-sessions', method: Tw.API_METHOD.POST },
@@ -149,12 +157,12 @@ Tw.API_CMD = {
   BFF_07_0063: { path: '/core-bill/v1/auto-payments', method: Tw.API_METHOD.DELETE },
   BFF_07_0065: { path: '/core-bill/v1/autopay/pay-cycl-chg/args-0', method: Tw.API_METHOD.PUT },
   BFF_07_0068: { path: '/core-bill/v1/autopay/card-info/args-0', method: Tw.API_METHOD.GET },
-  BFF_07_0073: { path: '/core-bill/v1/microPrepay-requests', method: Tw.API_METHOD.GET },
+  BFF_07_0073: { path: '/core-bill/v1/microPrepay/microPrepay-requests', method: Tw.API_METHOD.GET },
   BFF_07_0074: { path: '/core-bill/v1/microPrepay', method: Tw.API_METHOD.POST },
-  BFF_07_0076: { path: '/core-bill/v1/microPrepay-auto-req', method: Tw.API_METHOD.POST },
-  BFF_07_0077: { path: '/core-bill/v1/microPrepay-auto-delete', method: Tw.API_METHOD.POST },
-  BFF_07_0081: { path: '/core-bill/v1/useContentsPrepay-requests', method: Tw.API_METHOD.GET },
-  BFF_07_0082: { path: '/core-bill/v1/useContentsPrepay', method: Tw.API_METHOD.POST },
+  BFF_07_0076: { path: '/core-bill/v1/microPrepay/microPrepay-auto-req', method: Tw.API_METHOD.POST },
+  BFF_07_0077: { path: '/core-bill/v1/microPrepay/microPrepay-auto-delete', method: Tw.API_METHOD.POST },
+  BFF_07_0081: { path: '/core-bill/v1/useContentsPrepay/useContentsPrepay-requests', method: Tw.API_METHOD.GET },
+  BFF_07_0082: { path: '/core-bill/v1/useContentsPrepay/useContentsPrepay-requests', method: Tw.API_METHOD.POST },
   BFF_07_0083: { path: '/core-bill/v1/useContentsPrepay-auto-req', method: Tw.API_METHOD.POST },
   BFF_07_0084: { path: '/core-bill/v1/useContentsPrepay-auto-delete', method: Tw.API_METHOD.POST },
 

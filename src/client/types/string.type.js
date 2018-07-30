@@ -420,7 +420,7 @@ Tw.MSG_CUSTOMER = {
   HELPLINE_A03: '진행을 취소하시고 첫 화면으로 이동하시겠습니까?',
   HELPLINE_A04: '이미 예약하신 정보가 있습니다.',
   HELPLINE_A05: '전화상담 예약은 지역별 1일 1회로 제한되며 중복 신청을 하실 수 없습니다. 예약현황을 확인하시겠습니까?'
-}
+};
 
 Tw.RECHARGE_TYPE = {
   TOTAL: '전체',
@@ -479,3 +479,16 @@ Tw.URL_PATH = {
   BROADBAND: 'http://www.skbroadband.com/'
 };
 
+Tw.MSG_POSTCODE = {
+  L01: '광역시/도를 선택해주세요.',
+  L02: '시/군/구를 선택해주세요.',
+  L03: '검색어는 최소 2글자 이상 입력해주세요.',
+  L04: '검색된 주소가 없습니다.\n다시 한번 주소를 선택 및 입력해주세요.',
+  L05: '검색된 사서함이 없습니다.\n다시 한번 사서함 주소를 선택 및 입력해주세요.'
+};
+
+Tw.POSTCODE_TEXT = {
+  BUILDING_CODE: '건물번호',
+  ZIP_CODE: '우편번호',
+  SELECT_ADDRESS: '주소를 선택해주세요'
+};
