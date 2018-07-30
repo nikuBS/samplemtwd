@@ -14,7 +14,9 @@ Tw.VOICE_UNIT = {
 
 Tw.TIME_UNIT = {
   HOUR: '시'
-}
+};
+
+Tw.WEEKDAYS = ['월', '화', '수', '목', '금', '토', '일'];
 
 Tw.DATE_UNIT = {
   MONTH: '개월',
