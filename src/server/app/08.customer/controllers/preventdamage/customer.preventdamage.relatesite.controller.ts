@@ -5,6 +5,7 @@
  */
 
 import { NextFunction, Request, Response } from 'express';
+import { CUSTOMER_PREVENTDAMAGE_RELATE_ORG, CUSTOMER_PREVENTDAMAGE_REPORT_ORG } from '../../../../types/outlink.type';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 
 class CustomerPreventdamageRelatesiteController extends TwViewController {
@@ -14,7 +15,9 @@ class CustomerPreventdamageRelatesiteController extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     res.render('preventdamage/customer.preventdamage.relatesite.html', {
-      svcInfo: svcInfo
+      svcInfo: svcInfo,
+      outlinkReport: CUSTOMER_PREVENTDAMAGE_REPORT_ORG,
+      outlinkRelate: CUSTOMER_PREVENTDAMAGE_RELATE_ORG
     });
   }
 }

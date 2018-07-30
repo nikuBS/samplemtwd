@@ -182,10 +182,14 @@
   line-height: 1.25rem;
   vertical-align: top;
   text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .header-wrap .header .header-ti.align-l h1 {
   text-align: left;
+  margin: 0 8.125rem 0 3.125rem;
 }
 
 .header-wrap .header .header-ti .depth-view {

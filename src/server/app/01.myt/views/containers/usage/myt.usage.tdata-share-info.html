@@ -1,53 +1,74 @@
-<% include ../../components/start.sprint3.component.html %>
-<!-- skip -->
-<div class="skip"><a href="#content">본문 바로가기</a></div>
-<!-- // skip -->
+<!--
+* FileName: myt.usage.tdata-share-info.html
+* Author: 이정민 (skt.p130713@partner.sk.com)
+* Date: 2018.07.25
+-->
+<% include ../../components/start.component.html %>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
 <!-- wrap -->
-<div id="wrap">
-    <!-- header -->
-    <header class="header-sub fe-common-back">
-        <button class="btn-back"><span class="blind">뒤로가기</span></button>
-        <h1 class="title-txt">T데이터셰어링 서비스 안내</h1>
-        <button class="btn-search"><span class="blind">검색</span></button>
-    </header>
-    <!-- // header -->
-    <!-- content -->
-    <div id="content">
-        <!-- container -->
-        <section class="container">
-
-            <div class="outarea">
-                <!-- info-area// -->
-                <div class="info-area">
-                    <p class="txt-type01"><%=userName %> 고객님,<br/><strong>T데이터셰어링</strong>을 이용해보세요!</p>
-                    <img src="http://tstore.rbipt.com/skt/img/img_sharing00.png" alt=""/>
-                    <p class="txt-type02"><strong>하나의 데이터</strong> 요금으로<br/><strong>여러 디지털기기</strong> 이용하기</p>
-                    <span class="txt">이동전화 데이터요금제의 데이터를 공유하여 <br/>T 데이터셰어링 USIM을 장착한 디지털기기에서 <br/>무선 인터넷을 즐길 수 있는 서비스입니다. <br/>월 3,300원(부가세 포함)</span>
-                    <a href="<%=url.checkTDataShareInfo%>" class="more-service">이용방법 알아보기</a>
-                </div>
-                <!-- //info-area -->
+<div class="wrap">
+    <!-- #header -->
+    <div id="header" class="header-wrap">
+        <div class="header">
+            <div class="header-ti align-l">
+                <h1>T데이터셰어링 서비스 안내</h1>
             </div>
-            <!-- //outarea -->
-            <!-- help-desk -->
-            <article class="help-desk">
-                <h1>도와드릴까요?</h1>
-                <ul class="list">
-                    <li><a href="<%=url.onLineQnA%>">온라인 상담/문의 문의하기</a></li>
-                    <li><a href="<%=url.customerCenter%>">T world 고객센터 바로가기</a></li>
-                </ul>
-            </article>
-            <!-- // help-desk -->
-
-        </section>
-        <!-- // container -->
+            <button class="prev-step"><span class="blind">이전으로</span></button>
+        </div>
     </div>
-    <!-- // content -->
-    <!-- footer -->
-    <% include ../../../../../common/views/components/footer.component.html %>
-    <!-- // footer -->
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <div class="cont-box">
+                <div class="top-info">
+                    <span class="info-text"><%= svcInfo.mbrNm %> 고객님,<br />T데이터셰어링을 이용해보세요!</span>
+                    <div class="info-img">
+                        <img src="/img/product/vi-tsharing.png" alt="T데이터셰어링">
+                    </div>
+                    <span class="info-text">
+                            <em>하나의 데이터 요금</em>으로<br />
+                            <em>여러 디지털기기</em> 이용하기
+                        </span>
+                    <div class="note-comment-2">
+                        이동전화 데이터요금제의 데이터를 공유하여<br />
+                        T 데이터셰어링 USIM을 장착한 디지털기기에서
+                        무선 인터넷을 즐길 수 있는 서비스입니다.<br />
+                        월 3,300원(부가세 포함)
+                    </div>
+                    <a href="<%= url.checkTDataShareInfo %>" class="bt-link-tx mt24" title="이용방법 알아보기">이용방법 알아보기<span class="ico"></span></a>
+                </div>
+            </div>
+
+            <hr class="cont-sp type1" aria-hidden="true" />
+
+            <div class="cont-box nogaps-btm">
+                <h2 class="title-h2">도와드릴까요?</h2>
+                <div class="link-long-group mt18">
+                    <div class="link-long">
+                        <a href="<%= url.onLineQnA %>">온라인 상담/문의 바로가기<span class="ico"></span></a>
+                    </div>
+                    <div class="link-long">
+                        <a href="<%= url.customerCenter %>">T월드 고객센터 바로가기<span class="ico"></span></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--// #contents -->
+    <%- include('../../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }) %>
 </div>
 <!-- // wrap -->
-<% include ../../components/javascript.sprint3.component.html %>
+<% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
     // var comp = new Tw.MytUsageView($('.container'));

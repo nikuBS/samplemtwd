@@ -115,6 +115,7 @@ Tw.PaymentHistory.prototype = {
         o.reqYYYYMMDD_start = this._dateHelper.getShortDateWithFormat(o.reqYYYYMM, 'YYYY.MM.DD', 'YYYY.MM');
         o.reqYYYYMMDD_end = this._dateHelper.getEndOfMonth(o.reqYYYYMM, 'YYYY.MM.DD', 'YYYY.MM');
         o.reqType = o.isOverPaid ? 'SERVER VALUE ERROR' : o.payMthdCdNm;
+        o.isPoint = !o.reqType.indexOf(Tw.PAYMENT_STRING.POINT) ? true : false;
 
       }, this));
 
@@ -174,7 +175,7 @@ Tw.PaymentHistory.prototype = {
               href: 'submit',
               txt: Tw.MSG_PAYMENT.HISTORY_OVER_PAY.BUTTON_TEXT
             }],
-            'contents_b': Tw.MSG_PAYMENT.HISTORY_OVER_PAY_POPUP
+            'contents_b': Tw.POPUP_TPL.HISTORY_OVER_PAY_POPUP
           },
           $.proxy(this._overPayLayerOpenCallback, this));
     }
@@ -266,61 +267,5 @@ Tw.PaymentHistory.prototype = {
 
   _apiError: function (err) {
     this.common._apiError(err);
-  },
-
-  dummy: {
-    'code': '00',
-    'msg': 'success',
-    'result': {
-      'occursCnt': 12,
-      'custName': '김OO',
-      'custTel': '01011112222',
-      'recCnt': '00001',
-      'recCnt1': '00012',
-      'recCnt2': '00001',
-      'recCnt3': '00000',
-      'repYn': 'Y',
-      'autoTrnsfYn': 'Y',
-      'mtYn': 'N',
-      'errCd': '',
-      'respMsg': '',
-      'paymentRecord': [
-        {
-          'opDt': '20180409',
-          'payAmt': '000000000026790',
-          'invDt': '20170831',
-          'invAmt': '000000000026790',
-          'payMthdCd': '20',
-          'svcCnt': '001'
-        }
-      ],
-      'refundRecord': [
-        {
-          'svcMgmtNum': '',
-          'svcCd': '',
-          'bamtClCd': '',
-          'opDt1': '',
-          'svcBamt': '',
-          'effStaDt': '',
-          'rfndBankCd': '',
-          'rfndBankNm': '',
-          'rfndBankNum': '',
-          'rfndDpstrNm': '김OO'
-        }
-      ],
-      'refundPaymentRecord': [
-        {
-          'rfndReqDt': '',
-          'ovrPay': '',
-          'rfndObjAmt': '',
-          'sumAmt': '',
-          'effStaDt1': '',
-          'bankCd': '',
-          'rfndBankNm1': '',
-          'rfndBankNum1': '',
-          'msg': ''
-        }
-      ]
-    }
   }
 };

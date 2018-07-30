@@ -173,7 +173,8 @@ Tw.PaymentRealtime.prototype = {
   },
   _selectCardType: function (event) {
     var $target = $(event.currentTarget);
-    this._popupService.openChoice(Tw.MSG_PAYMENT.SELECT_CARD_TYPE, this._getTypeList(), 'type2', $.proxy(this._selectPopupCallback, this, $target));
+    this._popupService.openChoice(Tw.MSG_PAYMENT.SELECT_CARD_TYPE, Tw.PAYMENT_CARD_TYPE_LIST, 'type2',
+      $.proxy(this._selectPopupCallback, this, $target));
   },
   _selectPopupCallback: function ($target, $layer) {
     $layer.on('click', '.popup-choice-list', $.proxy(this._setSelectedValue, this, $target));
@@ -189,7 +190,8 @@ Tw.PaymentRealtime.prototype = {
   },
   _selectPoint: function (event) {
     var $target = $(event.currentTarget);
-    this._popupService.openChoice(Tw.MSG_PAYMENT.SELECT_POINT, this._getPointList(), 'type3', $.proxy(this._selectPopupCallback, this, $target));
+    this._popupService.openChoice(Tw.MSG_PAYMENT.SELECT_POINT, this._getPointList(), 'type3',
+      $.proxy(this._selectPopupCallback, this, $target));
   },
   _pay: function (event) {
     event.preventDefault();
@@ -412,30 +414,10 @@ Tw.PaymentRealtime.prototype = {
     this._popupService.openAlert(Tw.MSG_PAYMENT.REALTIME_A09, null, $.proxy(this._cancelProcess, this));
   },
   _cancelProcess: function () {
-    this._history.setHistory();
-    this._history.complete();
-    this._history.resetHistory(this._history.getHistoryLength());
+    this._history.cancelProcess();
   },
   _go: function (hash) {
     window.location.hash = hash;
-  },
-  _getTypeList: function () {
-    return [
-      { 'attr': 'id="0"', text: Tw.PAYMENT_TYPE['000'] },
-      { 'attr': 'id="1"', text: Tw.PAYMENT_TYPE['001'] },
-      { 'attr': 'id="2"', text: Tw.PAYMENT_TYPE['002'] },
-      { 'attr': 'id="3"', text: Tw.PAYMENT_TYPE['003'] },
-      { 'attr': 'id="4"', text: Tw.PAYMENT_TYPE['004'] },
-      { 'attr': 'id="5"', text: Tw.PAYMENT_TYPE['005'] },
-      { 'attr': 'id="6"', text: Tw.PAYMENT_TYPE['006'] },
-      { 'attr': 'id="7"', text: Tw.PAYMENT_TYPE['007'] },
-      { 'attr': 'id="8"', text: Tw.PAYMENT_TYPE['008'] },
-      { 'attr': 'id="9"', text: Tw.PAYMENT_TYPE['009'] },
-      { 'attr': 'id="10"', text: Tw.PAYMENT_TYPE['010'] },
-      { 'attr': 'id="11"', text: Tw.PAYMENT_TYPE['011'] },
-      { 'attr': 'id="12"', text: Tw.PAYMENT_TYPE['012'] },
-      { 'attr': 'id="24"', text: Tw.PAYMENT_TYPE['024'] }
-    ];
   },
   _getPointList: function () {
     return [

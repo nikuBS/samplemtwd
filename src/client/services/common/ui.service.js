@@ -10,7 +10,7 @@ Tw.UIService.prototype = {
     /* 뒤로가기 추가 */
     $('.fe-common-back').on('click', function () {
       Tw.Logger.info('[Common Back]');
-      history.back();
+      window.history.back();
     });
   },
 

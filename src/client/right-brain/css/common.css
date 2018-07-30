@@ -518,28 +518,22 @@ input[type=text], input[type=file], input[type=password], input[type=number] {
 }
 
 .txfield-combined .combined-information .combined-cell dt {
-  position: absolute;
-  top: 0;
-  left: 0;
   display: block;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   line-height: 1.625rem;
-}
-
-.txfield-combined .combined-information .combined-cell dd {
-  display: block;
-  width: 100%;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  word-break: keep-all;
+  white-space: nowrap;
 }
 
 .txfield-combined .combined-information .combined-cell dd input {
   display: block;
   width: 100%;
   height: 1.625rem;
+  padding: 0 0 0 0.625rem;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
+  line-height: 1.625rem;
   font-size: 0.9375rem;
   font-weight: 400;
 }
@@ -547,22 +541,7 @@ input[type=text], input[type=file], input[type=password], input[type=number] {
 .txfield-combined .combined-information .combined-cell dd textarea {
   padding: 0.1875rem 0;
   font-weight: 400;
-}
-
-.txfield-combined .combined-information .combined-cell:nth-of-type(1) dd {
-  padding-left: 2.4375rem;
-}
-
-.txfield-combined .combined-information .combined-cell:nth-of-type(2) dd {
-  padding-left: 7rem;
-}
-
-.txfield-combined .combined-information .combined-cell:nth-of-type(3) dd {
-  padding-left: 6.0625rem;
-}
-
-.txfield-combined .combined-information .combined-cell:nth-of-type(4) dd {
-  padding-left: 4.125rem;
+  line-height: 1.1875rem;
 }
 
 .txfield-combined .combined-information .combined-cell:last-of-type dd {
@@ -570,7 +549,7 @@ input[type=text], input[type=file], input[type=password], input[type=number] {
 }
 
 .txfield-combined .combined-information .combined-cell:last-of-type dd textarea {
-  padding-left: 0.625rem;
+  padding: 0.1875rem 0 0 0.625rem;
 }
 
 .txfield-combined .combined-information .combined-cell:last-of-type dd .byte {
@@ -3321,6 +3300,10 @@ a.ui-button:active,
   background: repeating-linear-gradient(-45deg, #679dff, #679dff 4px, #2572ff 4px, #2572ff 9px);
 }
 
+.bar-chart-hoz .data-bar.blue1 {
+  background-color: #3f8cff;
+}
+
 .bar-chart-hoz .data-bar.deepblue {
   background-color: #325ec1;
 }
@@ -3336,6 +3319,10 @@ a.ui-button:active,
 
 .bar-chart-hoz .data-bar.orange {
   background-color: #f65d00;
+}
+
+.bar-chart-hoz .data-bar.orange1 {
+  background-color: #ff4d3f;
 }
 
 .bar-chart-hoz .data-bar.orange-dazzle {

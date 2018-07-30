@@ -12,6 +12,7 @@ Tw.HistoryService = function (selector) {
   this._hashList = [];
 };
 Tw.HistoryService.prototype = {
+  // public
   init: function (hash) {
     if (hash === undefined) {
       this.$window.on('pageshow', $.proxy(this.checkIsBack, this));
@@ -20,20 +21,42 @@ Tw.HistoryService.prototype = {
       this._hashService.detectIsReload();
     }
   },
+  cancelProcess: function () {
+    this.setHistory();
+    this.complete();
+    this.resetHistory(this.getHistoryLength());
+  },
+  setHistory: function () {
+    this.$container.addClass('process-complete');
+    this.replace();
+  },
+  pushUrl: function (targetUrl) {
+    this.history.pushState(this.historyObj, this.fullPathName, targetUrl);
+  },
+  complete: function () {
+    Tw.UIService.setLocalStorage(this.storageName, 'done');
+  },
+  reload: function () {
+    window.location.reload();
+  },
+  goLoad: function(url) {
+    window.location.href = url;
+  },
+  goBack: function () {
+    window.history.back();
+  },
+  goHash: function (hash) {
+    window.location.hash = hash;
+  },
+  // private
   push: function () {
     this.history.pushState(this.historyObj, this.historyName, this.pathname);
   },
   replace: function () {
     this.history.replaceState(this.historyObj, this.historyName, this.pathname);
   },
-  pushUrl: function (targetUrl) {
-    this.history.pushState(this.historyObj, this.fullPathName, targetUrl);
-  },
   go: function (len) {
     this.history.go([len]);
-  },
-  reload: function () {
-    window.location.reload();
   },
   checkIsBack: function (event) {
     if (event.originalEvent.persisted || window.performance && window.performance.navigation.type === 2) {
@@ -77,10 +100,6 @@ Tw.HistoryService.prototype = {
     this.resetHistory(this.getHistoryLength());
     this._hashList = [];
   },
-  setHistory: function () {
-    this.$container.addClass('process-complete');
-    this.replace();
-  },
   resetHistory: function (historyLength) {
     this.go(historyLength);
     this.reload();
@@ -101,9 +120,6 @@ Tw.HistoryService.prototype = {
   },
   isDone: function () {
     return Tw.UIService.getLocalStorage(this.storageName) === 'done';
-  },
-  complete: function () {
-    Tw.UIService.setLocalStorage(this.storageName, 'done');
   },
   checkIsCompleted: function () {
     if (this.isReturendMain() && this.isCompleted()) {

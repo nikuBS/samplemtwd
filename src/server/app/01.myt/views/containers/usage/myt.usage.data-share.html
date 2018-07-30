@@ -1,103 +1,138 @@
-<% include ../../components/start.sprint3.component.html %>
-<!-- skip -->
-<div class="skip"><a href="#content">본문 바로가기</a></div>
-<!-- // skip -->
+<!--
+* FileName: myt.usage.data-share.html
+* Author: 이정민 (skt.p130713@partner.sk.com)
+* Date: 2018.07.26
+-->
+<% include ../../components/start.component.html %>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
 <!-- wrap -->
-<div id="wrap">
-    <!-- header -->
-    <header class="header-sub">
-        <button class="btn-back fe-common-back"><span class="blind">뒤로가기</span></button>
-        <h1 class="title-txt">데이터 함께쓰기 사용량 조회</h1>
-        <button class="btn-search"><span class="blind">검색</span></button>
-    </header>
-    <!-- // header -->
-    <!-- content -->
-    <div id="content">
-        <!-- container -->
-        <section id="data-share" class="container">
-            <!-- yprod -->
-            <div class="yprod pb30">
-                <% if (svcInfo && usageData) { %><strong class="line-bt"><%= svcInfo.svcNum %></strong>번호로<strong> <%= usageData.userCnt %></strong>과<br><strong>데이터 함께쓰기</strong>를 이용중이시네요!<% } %>
+<div class="wrap">
+    <!-- #header -->
+    <div id="header" class="header-wrap">
+        <div class="header">
+            <div class="header-ti align-l">
+                <h1>데이터 함께쓰기 사용량 조회</h1>
+                <button class="depth-view" role="button" aria-pressed="false"><span class="blind">메뉴구조보기</span></button>
             </div>
-            <!-- // yprod -->
-            <!-- prd-state -->
-            <div class="prd-state">
-                <!-- section -->
-                <section>
-                    <h2 class="normal">데이터 함께쓰기 사용량 정보</h2>
-                    <div class="box-white add mb10">
-                        <!-- total-shared -->
-                        <div class="total-shared">
-                            <div class="txt01">총 사용량</div>
-                            <% if (usageData) { %><div class="txt02 moebius-bold"><strong><%= usageData.showTotal.data %></strong><%= usageData.showTotal.unit %></div><% } %>
-                        </div>
-                        <!-- // total-shared -->
-                    </div>
-                    <% if( usageData.childList.length > 0 ) { %>
-                    <div class="box-white">
-                        <!-- usim-list -->
-                        <div class="usim-list">
-                            <% for (var i = 0; i < usageData.childList.length; i++) { %>
-                            <!-- d-table -->
-                            <div class="d-table type03">
-                                <div class="caption">
-                                    <div class="txt01">회선번호</div>
-                                    <div class="txt02"><%= usageData.childList[i].svcNum %></div>
-                                </div>
-                                <div class="row">
-                                    <div class="cell">요금제</div>
-                                    <div id="<%= usageData.childList[i].feeProdId %>" class="cell"><em class="moebius-bold"><%= usageData.childList[i].feeProdNm %></em><br><span class="thin">(스마트폰)</span></div>
-                                </div>
-                                <div class="row">
-                                    <div class="cell">번호설정일자</div>
-                                    <div class="cell"><em class="moebius-bold"><%= usageData.childList[i].setDate %></em></div>
-                                </div>
-                                <div class="row">
-                                    <div class="cell">사용량</div>
-                                    <!-- 조회하기 버튼 클릭시 데이터 노출 -->
-                                    <div class="cell">
-                                        <a href="#" class="btn-type03 get-usage-data" data-value="<%= usageData.childList[i].svcMgmtNum %>">조회하기</a>
-                                        <em class="moebius-bold" style="display:none;"><%= usageData.childList[i].showUsed.data %><%= usageData.childList[i].showUsed.unit %></em>
-                                    </div>
-                                    <!-- // 조회하기 버튼 클릭시 데이터 노출 -->
-                                    <!--
-                                    <div class="cell"><em class="moebius-bold">300MB</em></div>
-                                    -->
-                                </div>
-                            </div>
-                            <!-- //	d-table -->
-                            <% } %>
-                        </div>
-                        <!-- // usim-list -->
-                        <% if (i === usageData.childList.length) { %>
-                        <!-- btn-more -->
-                        <div class="shared-info">
-                            <p>데이터 함께쓰기가 설정된 회선의 명의변경
-                                /해지/일시정지 등의 변경 처리가 발생할 경우
-                                사용량을 조회할 수 없으며, 이에 따라 데이터
-                                함께쓰기 총 사용량과는 차이가 있을 수 있습니다.</p>
-                        </div>
-                        <!-- // btn-more -->
-                        <% } %>
-                    </div>
-                    <% } %>
-                </section>
-                <!-- // section -->
-            </div>
-            <!-- // prd-state -->
-        </section>
-        <!-- // container -->
+            <button class="prev-step"><span class="blind">이전으로</span></button>
+        </div>
     </div>
-    <!-- // content -->
-    <!-- footer -->
-    <% include ../../../../../common/views/components/footer.component.html %>
-    <!-- // footer -->
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <div class="cont-box">
+                <div class="top-info">
+                    <span class="info-text">010-12**-56** 번호로 <em>세 분</em>과<br />데이터 함께쓰기를 이용 중이시네요!</span>
+                </div>
+            </div>
+
+            <hr class="cont-sp type1" aria-hidden="true" />
+
+            <div class="cont-box">
+                <h2 class="title-h2">데이터 함께쓰기 사용량 정보</h2>
+                <div class="payment-detail-wrap">
+                    <h3 class="usage-tit">총 사용량</h3>
+                    <div class="usage-all">
+                        <span class="usage-cont"><em>2.4</em>GB <span class="sub-txt">(2,678MB)</span></span>
+                    </div>
+                    <div class="payment-detail-box">
+                        <div class="detail-inner">
+                            <div class="detail-list type2">
+                                <ul>
+                                    <li>
+                                        <span class="title">회선번호</span>
+                                        <span class="tx-cont"><span class="ff-hn">010-45**-12**</span></span>
+                                    </li>
+                                    <li>
+                                        <span class="title">요금제</span>
+                                        <span class="tx-cont">LTE함께쓰기Basic<span class="divice-sort">(스마트폰)</span></span>
+                                    </li>
+                                    <li>
+                                        <span class="title">번호설정일자</span>
+                                        <span class="tx-cont"><span class="ff-hn">2014.10.10</span></span>
+                                    </li>
+                                    <li>
+                                        <span class="title">사용량</span>
+                                        <span class="tx-cont"><button role="button" class="blue-btn">조회하기</button></span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="payment-detail-box">
+                        <div class="detail-inner">
+                            <div class="detail-list type2">
+                                <ul>
+                                    <li>
+                                        <span class="title">회선번호</span>
+                                        <span class="tx-cont"><span class="ff-hn">010-45**-12**</span></span>
+                                    </li>
+                                    <li>
+                                        <span class="title">요금제</span>
+                                        <span class="tx-cont">LTE함께쓰기Basic<span class="divice-sort">(스마트폰)</span></span>
+                                    </li>
+                                    <li>
+                                        <span class="title">번호설정일자</span>
+                                        <span class="tx-cont"><span class="ff-hn">2014.10.10</span></span>
+                                    </li>
+                                    <li>
+                                        <span class="title">사용량</span>
+                                        <span class="tx-cont"><button role="button" class="blue-btn">조회하기</button></span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="payment-detail-box">
+                        <div class="detail-inner">
+                            <div class="detail-list type2">
+                                <ul>
+                                    <li>
+                                        <span class="title">회선번호</span>
+                                        <span class="tx-cont"><span class="ff-hn">010-45**-12**</span></span>
+                                    </li>
+                                    <li>
+                                        <span class="title">요금제</span>
+                                        <span class="tx-cont">LTE함께쓰기Basic<span class="divice-sort">(스마트폰)</span></span>
+                                    </li>
+                                    <li>
+                                        <span class="title">번호설정일자</span>
+                                        <span class="tx-cont"><span class="ff-hn">2014.10.10</span></span>
+                                    </li>
+                                    <li>
+                                        <span class="title">사용량</span>
+                                        <span class="tx-cont"><button role="button" class="blue-btn">조회하기</button></span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="contents-notice type3">
+                        <span class="noti-type1">데이터 함께쓰기가 설정된 회선의 명의변경/해지/일시정지 등의 변경 처리가 발생할 경우, 사용량을 조회할 수 으며, 이에 따라 데이터 함께쓰기 총 사용량과는 차이가 있을 수 있습니다.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--// #contents -->
+    <%- include('../../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }) %>
 </div>
 <!-- // wrap -->
-<% include ../../components/javascript.sprint3.component.html %>
+<% include ../../components/javascript.component.html %>
 <script>
-    $(document).ready(function () {
-        var comp = new Tw.MytUsageDataShare($('#data-share'));
-    });
+  $(document).ready(function () {
+    // var comp = new Tw.MytUsageView($('.container'));
+  });
 </script>
 <% include ../../components/end.component.html %>

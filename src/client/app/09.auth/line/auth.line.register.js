@@ -8,6 +8,7 @@ Tw.AuthLineRegister = function (lineMarketingLayer) {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this.lineMarketingLayer = lineMarketingLayer;
+  this._historyService = new Tw.HistoryService();
 
   this._registerLength = 0;
   this._marketingSvc = '';
@@ -21,12 +22,11 @@ Tw.AuthLineRegister = function (lineMarketingLayer) {
 
 Tw.AuthLineRegister.prototype = {
   openRegisterLinePopup: function (type) {
-    this._getLineInfo(type);
+    if ( !Tw.FormatHelper.isEmpty(type) ) {
+      this._getLineInfo(type);
+    }
   },
   _getLineInfo: function (type) {
-    // $.ajax('mock/auth.line.json')
-    //   .done($.proxy(this._successGetLineInfo, this, type))
-    //   .fail($.proxy(this._failGetLineInfo, this));
     this._apiService.request(Tw.API_CMD.BFF_03_0004, {})
       .done($.proxy(this._successGetLineInfo, this, type))
       .fail($.proxy(this._failGetLineInfo, this));
@@ -208,12 +208,12 @@ Tw.AuthLineRegister.prototype = {
       this.agr203Yn = resp.result.agr203Yn;
 
       // if ( resp.result.agr201Yn !== 'Y' && resp.result.agr203Yn !== 'Y' ) {
-        setTimeout($.proxy(function () {
-          this.lineMarketingLayer.openMarketingOffer(this._marketingSvc,
-            showName, svcNum, resp.result.agr201Yn, resp.result.agr203Yn);
-        }, this), 0);
+      setTimeout($.proxy(function () {
+        this.lineMarketingLayer.openMarketingOffer(this._marketingSvc,
+          showName, svcNum, resp.result.agr201Yn, resp.result.agr203Yn);
+      }, this), 0);
       // } else {
-      //   history.back();
+      //   this._historyService.goBack();
       // }
     } else {
       this.openAlert(resp.code + ' ' + resp.msg);
@@ -228,7 +228,7 @@ Tw.AuthLineRegister.prototype = {
   },
   _goAuthLine: function () {
     this._popupService.close();
-    location.href = '/auth/line';
+    this._historyService.goLoad('/auth/line');
   }
 
 };
