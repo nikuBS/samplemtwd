@@ -12,6 +12,7 @@ import CustomerShopNearController from './controllers/shop/customer.shop.near.co
 import CustomerShopSearchController from './controllers/shop/customer.shop.search.controller';
 import CustomerVoiceController from './controllers/voice/customer.voice.controller';
 import CustomerMainController from './controllers/main/customer.main.controller';
+import CustomerResearches from './controllers/researches/customer.researches.controller';
 
 class CustomerRouter extends TwRouter {
   constructor() {
@@ -29,6 +30,7 @@ class CustomerRouter extends TwRouter {
     this.controllers.push({ url: '/shop/near', controller: new CustomerShopNearController });
     this.controllers.push({ url: '/shop/search', controller: new CustomerShopSearchController() });
     this.controllers.push({ url: '/voice/:type', controller: new CustomerVoiceController() });
+    this.controllers.push({ url: '/researches(/:researchId)?', controller: new CustomerResearches() });
   }
 }
 

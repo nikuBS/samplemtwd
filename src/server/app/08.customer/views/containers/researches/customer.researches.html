@@ -1,0 +1,116 @@
+<%#
+* FileName: customer.researches.html
+* Author: Jiyoung Jo (jiyoungjo@sk.com)
+* Date: 2018.07.30
+* CI_09_02
+%>
+
+
+<% include ../../components/start.component.html %>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap">
+    <!-- #header -->
+    <div id="header" class="header-wrap">
+        <div class="header">
+            <div class="header-ti align-l">
+                <h1>고객의견</h1>
+            </div>
+            <button class="prev-step"><span class="blind">이전으로</span></button>
+        </div>
+    </div>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <!-- .cont-box -->
+            <div class="cont-box">
+                <div class="poll-info">
+                    <h3 class="poll-tit">설문으로<br/>고객님의 의견을 들려주세요!</h3>
+                </div>
+            </div>
+            <hr class="cont-sp type1" aria-hidden="true"/>
+            <!-- .cont-box -->
+            <div class="cont-box nogaps">
+                <!-- .widget -->
+                <div class="widget">
+                    <div class="widget-box accordion">
+                        <h5 class="tit-a blind">설문조사</h5>
+                        <div class="acco-cover focuson"><!-- toggle : 한개만 열기 -->
+                            <div class="acco-style btn-hold">
+                                <ul class="acco-list acco-poll pt0"><!-- .on: 열기 -->
+                                    <% for (let i = 0; i < researches.length; i++) { %>
+                                        <% const research = researches[i]; %>
+                                        <li class="acco-box <%= research.isProceeding? 'on': ''%>">
+                                            <div class="acco-tit"><em class="poll-condition"><%= research.isProceeding? '진행중':'종료' %></em><%= research.bnnrRsrchTitleNm %><span class="poll-date"><%= research.staDtm %> <span class="blind">에서</span><span class="vt" aria-hidden="true">-</span> <%= research.endDtm %></span><button role="button" aria-pressed="true"></button></div>
+                                            <div class="acco-cont pb0">
+                                                <div class="cont-box nogaps-acco">
+                                                    <% if (research.bnnrRsrchTypCd === 'Q' && research.hintExUrl) { %><button class="bt-link-tx">힌트보기<span class="ico"></span></button><% } %>
+                                                    <div class="poll-option-cont">
+                                                        <% if (research.result) { %>
+                                                            <div class="widget">
+                                                                <% const isRadio = research.bnnrRsrchRpsTypCd === 'S' %>
+                                                                <div class="widget-box <%= isRadio? 'radio' : 'check' %>">
+                                                                    <!-- <div class="video-img"><img src="/img/dummy/dummy_poll02.jpg" alt=""/></div> // 비디오--> 
+                                                                    <ul class="select-list <%= research.bnnrRsrchSortMthdCd === 'D'? 'division-two mb0' : '' %>" role="<%= isRadio? 'radio': '' %>group">
+                                                                        <% for (let i = 0; i < research.result.length; i++) { %>
+                                                                            <% const exam = research.result[i]; %>
+                                                                            <li class="<%= isRadio? 'radiobox type03' : 'checkbox type02' %> alignment" role="<%= isRadio? 'radio' : 'checkbox' %>" aria-checked="">
+                                                                                <% if (exam.exImgFilePathNm) { %><div class="poll-img"><img src="<%= exam.exImgFilePathNm %>" alt=""/></div><% } %>
+                                                                                <div class="alignment-box">
+                                                                                    <i class="ico"></i>
+                                                                                    <input type="<%= isRadio? 'radio' : 'checkbox' %>" name="<%= isRadio? 'radio' : 'checkbox' %>" value="" title="<%= exam.exCtt %>"/>
+                                                                                    <span class="txt"><%= exam.exCtt %></span>
+                                                                                </div>
+                                                                            </li>
+                                                                        <% } %>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                            <% if (research.motMsgHtmlCtt) { %><%- research.motMsgHtmlCtt %><% } %>
+                                                        <% } else { %>
+                                                            <!-- <div class="video-img"><img src="/img/dummy/dummy_poll02.jpg" alt=""/></div> // 비디오--> 
+                                                            <textarea class="poll-area mt10" cols="20" rows="3" placeholder="형식에 맞게 입력해주십시오."></textarea> 
+                                                        <% } %> 
+                                                        <ul class="bt-slice item-two">
+                                                            <li class="bt-white2">
+                                                                <button>결과보기</button>
+                                                            </li>
+                                                            <li class="bt-blue1">
+                                                                <button>참여하기</button>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    <% } %>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--// .widget -->
+            </div>
+            <!--// .cont-box -->
+        </div>
+    </div>
+    <!--// #contents -->
+    <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }) %>
+</div>
+
+<% include ../../components/javascript.component.html %>
+<script>
+    $(document).ready(function () {
+        new Tw.CustomerResearches($('.wrap'));
+    });
+</script>
+<% include ../../components/end.component.html %>
