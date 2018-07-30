@@ -146,14 +146,24 @@ skt_landing.widgets = {
   },
   widget_tfCombined: function (ta) {
     var box = ta ? $(ta).find('.txfield-combined') : $('.txfield-combined');
-    box.each(function(){
-      var _this = $(this);
-      _this.find('.input-focus').on('focus',function(){
-        _this.addClass('focus');
-      }).on('blur',function(){
-        _this.removeClass('focus');
+      $(window).on('load', function(){
+        box.each(function(){
+          var _this = $(this);
+          _this.find('.input-focus').on('focus',function(){
+            _this.addClass('focus');
+          }).on('blur',function(){
+            _this.removeClass('focus');
+          });
+        });
+
+        box.find('.combined-cell').each(function(num){
+          var _this = $(this);
+          var _this_w = _this.width();
+          var _dt_w = _this.find('dt').width();
+          $('.combined-cell').eq(num).find('dt').width(_dt_w);
+          $('.combined-cell').eq(num).find('dd').width(_this_w-_dt_w);
+        });
       });
-    });
   },
   widget_slider1: function (ta) {
     var widget = ta ? $(ta).find('.slider1') : $('.slider1');
@@ -166,11 +176,11 @@ skt_landing.widgets = {
         speed : 300,
         centerMode: false,
         focusOnSelect: false,
-		customPaging: function(slider, i) {
-			return $('<span />').text(i + 1);
-		},
+    customPaging: function(slider, i) {
+      return $('<span />').text(i + 1);
+    },
       });
-      
+
       var $slick = _this.slick('getSlick');
       var $slides = $slick.$slides;
       var slideIndex = $slick.slickCurrentSlide();
@@ -214,9 +224,9 @@ skt_landing.widgets = {
         slidesToScroll: 3,
         centerMode: false,
         focusOnSelect: false,
-		customPaging: function(slider, i) {
-			return $('<span />').text(i + 1);
-		},
+    customPaging: function(slider, i) {
+      return $('<span />').text(i + 1);
+    },
       });
       var $slick = _this.slick('getSlick');
       var $slides = $slick.$slides;
@@ -346,7 +356,7 @@ skt_landing.widgets = {
 
       var accoList = _this.find('> .acco-cover > .acco-style > .acco-list > .acco-box');
       var accoList_leng = accoList.length;
-      
+
       /* 2018-07-17 한줄일경우 보여주는 스크립트 삭제 */
       /*for(var i=0; i<accoList_leng; ++i){
         var forTarget = accoList.eq(i).find('> .acco-cont').children();
@@ -359,7 +369,7 @@ skt_landing.widgets = {
           accoList.eq(i).addClass('imp-view').find('> .acco-tit button').addClass('hide-button');
         }
       }*/
-      
+
       if($(this).find('> .acco-cover > .acco-style').hasClass('none-event')) return ; // 이벤트를 적용하지 않을 경우
 
       var setOnList = _this.find('> .acco-cover > .acco-style > .acco-list > .acco-box');

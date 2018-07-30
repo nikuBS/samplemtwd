@@ -503,15 +503,12 @@ skt_landing.action = {
         });
         _this.cancel();
         _this.scroll_chk();
-         if(popup_info.hbs != 'popup-page'){
-          skt_landing.widgets.widget_init('.popup');
-          skt_landing.components.component_init('.popup');
-        }else{
+        if($('.popup,.popup-page').last().hasClass('popup-page')){
           skt_landing.widgets.widget_init('.popup-page');
           skt_landing.components.component_init('.popup-page');
-        }
-        if(popup_info.hbs == 'dropdown'){
-          skt_landing.action.popup.dropdown_size_chk();
+        }else{
+          skt_landing.widgets.widget_init('.popup');
+          skt_landing.components.component_init('.popup');
         }
       });
       //skt_landing.action.popup.open({'title':'타이틀','contents':'팝업입니다.','type':[{style_class:'btn-submit',href:'#submit',txt:'확인'},{style_class:'btn-modify',href:'#modify',txt:'수정'},{style_class:'btn-cancel',href:'#cancel',txt:'취소'}]});
@@ -555,15 +552,6 @@ skt_landing.action = {
           _this.sns_url_copy();
         });
       });
-    },
-    dropdown_size_chk: function(){
-      var dropdown_list = $('.popup-dropdown .popup-contents').height(),
-          win_box = $(window).height()-$('.btn-box').height()*2;
-      if(dropdown_list > win_box){
-        $('.popup-dropdown').addClass('scrolling');
-      }else{
-        $('.popup-dropdown').removeClass('scrolling');
-      }
     },
     change: function (popup_info) {
       this.close();

@@ -1129,6 +1129,7 @@
 
 .popup.dropdown {
   top: 3.75rem;
+  border-top: 1px solid #e1e1e1;
 }
 
 .popup .popup-info {
@@ -1335,29 +1336,37 @@
   left: 0;
   right: 0;
   top: 0;
+  bottom: 0;
+  overflow: hidden;
+  z-index: 30;
+  /*padding-bottom:rem(40px);*/
+}
+
+.popup .popup-dropdown .popup-contents {
+  max-height: 70%;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
   overflow-y: auto;
   background: #fff;
-  z-index: 30;
 }
 
-.popup .popup-dropdown.scrolling {
-  bottom: 3.375rem;
+.popup .popup-dropdown .dropdown-group {
+  margin: 1.875rem 0;
 }
 
-.popup .popup-dropdown.scrolling .btn-box {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
+.popup .popup-dropdown .dropdown-title {
+  padding: 0 0.875rem 0.3125rem;
+  font-size: 0.8125rem;
+  font-weight: 400;
 }
 
 .popup .popup-dropdown .dropdown-list {
-  margin: 0.9375rem 0;
+  /*margin:rem(15px 0);*/
 }
 
 .popup .popup-dropdown .dropdown-list li {
   display: block;
-  padding: 0.9375rem 0.9375rem;
+  padding: 0.9375rem;
 }
 
 .popup .popup-dropdown .dropdown-list li .txt {
@@ -3555,6 +3564,41 @@
   text-align: right;
 }
 
+.cellular-chart-wrap li {
+  margin-top: 1.875rem;
+}
+
+.cellular-chart-wrap li .chart-title {
+  font-size: 1.25rem;
+  text-align: left;
+}
+
+.cellular-chart-wrap li .chart-usage {
+  display: table;
+  width: 100%;
+  margin-top: 0.25rem;
+}
+
+.cellular-chart-wrap li .chart-usage .average {
+  display: table-cell;
+  width: 30%;
+  font-size: 0.875rem;
+  color: #757575;
+}
+
+.cellular-chart-wrap li .chart-usage .result {
+  display: table-cell;
+  width: 70%;
+  font-size: 1.25rem;
+  text-align: right;
+}
+
+.cellular-chart-wrap li .chart-usage .result span {
+  font-family: "Helvetica Neue", Roboto, sans-serif;
+  font-weight: 700;
+  vertical-align: baseline;
+}
+
 /* 김예리 */
 /* 4차 sprint */
 .inner {
@@ -5339,7 +5383,7 @@
 }
 
 .contents-empty.type2 {
-  padding: 2.5rem;
+  padding: 2.5rem 0 2.5rem;
 }
 
 .contents-empty.type2 .ico {
@@ -5351,7 +5395,7 @@
 }
 
 .contents-empty.type3 {
-  padding: 0 2.5rem 3.125rem;
+  padding: 0 0 3.125rem;
 }
 
 .contents-empty.type3 .ico {
@@ -6908,17 +6952,16 @@ li.payment-detail-box:last-child {
   margin-top: 0.625rem;
 }
 
-.avrg-data dl {
-  display: table;
-  width: 100%;
+.avrg-data li {
   border-bottom: 1px solid #e1e1e1;
 }
 
-.avrg-data dl:last-child {
-  border-bottom: 0;
+.avrg-data li dl {
+  display: table;
+  width: 100%;
 }
 
-.avrg-data dl dt {
+.avrg-data li dl dt {
   display: table-cell;
   width: 50%;
   height: 3.625rem;
@@ -6928,7 +6971,7 @@ li.payment-detail-box:last-child {
   font-weight: 400;
 }
 
-.avrg-data dl dd {
+.avrg-data li dl dd {
   display: table-cell;
   width: 50%;
   height: 3.625rem;
@@ -6938,12 +6981,93 @@ li.payment-detail-box:last-child {
   font-weight: 700;
 }
 
-.avrg-data dl dd.minus {
+.avrg-data li dl dd.minus {
   color: #325ec1;
+}
+
+.avrg-data li:last-child {
+  border-bottom: 0;
 }
 
 .graph-wrap {
   padding: 1.875rem 0 2.5rem;
+}
+
+.graph-wrap .msg-graph {
+  position: relative;
+  padding: 6.75rem 0 4.8125rem;
+  text-align: center;
+  font-size: 0.9375rem;
+  color: #8f8f8f;
+}
+
+.graph-wrap .msg-graph.no-data:before {
+  position: absolute;
+  left: 50%;
+  top: 0.75rem;
+  display: block;
+  width: 5rem;
+  height: 5rem;
+  margin-left: -2.5rem;
+  content: '';
+  background-image: url(/img/ico/ico-illustration.png);
+  background-position: -3.0625rem -47.75rem;
+  background-size: 55.8125rem;
+}
+
+.graph-wrap .graph-title {
+  overflow: hidden;
+  padding-top: 0.75rem;
+  border-top: 1px solid #e1e1e1;
+}
+
+.graph-wrap .graph-title .graph-column {
+  float: left;
+  font-size: 0.75rem;
+  color: #757575;
+}
+
+.graph-wrap .graph-title .graph-column .tit {
+  position: relative;
+  margin-left: 1.875rem;
+}
+
+.graph-wrap .graph-title .graph-column .tit .ico {
+  display: inline-block;
+  width: 0.625rem;
+  height: 0.625rem;
+  margin-right: 0.3125rem;
+  content: '';
+  border-radius: 50%;
+}
+
+.graph-wrap .graph-title .graph-column .tit .ico.type1 {
+  background-color: #d6dbe5;
+}
+
+.graph-wrap .graph-title .graph-column .tit .ico.type2 {
+  background-color: #325ec1;
+  background: url(/img/chart/pattern.gif) repeat;
+  background-size: 0.5rem 0.625rem;
+}
+
+.graph-wrap .graph-title .graph-column .tit .ico.type3 {
+  width: 1.125rem;
+  height: 0.0625rem;
+  vertical-align: middle;
+  margin-top: -0.1875rem;
+  background: url(/img/ico/ico-group.png) no-repeat -1.8125rem -50.4375rem;
+  background-size: 3.125rem;
+}
+
+.graph-wrap .graph-title .graph-column .tit:first-child {
+  margin-left: 0;
+}
+
+.graph-wrap .graph-title .unit {
+  float: right;
+  font-size: 0.75rem;
+  color: #757575;
 }
 
 .plan-recommend {
@@ -11530,11 +11654,11 @@ span[class*=char-star][class*=red] {
   font-family: "Helvetica Neue", Roboto, sans-serif;
 }
 
-.poll-step-box .poll-step-inner {
+.poll-chart-space .poll-space-inner {
   position: relative;
 }
 
-.poll-step-box .bt-slice {
+.poll-chart-space .bt-slice {
   margin-top: 2.5rem;
 }
 
