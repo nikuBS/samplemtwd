@@ -503,7 +503,7 @@ skt_landing.action = {
         });
         _this.cancel();
         _this.scroll_chk();
-        if($('.popup,.popup-page').last().hasClass('popup-page')){
+        if(createdTarget.hasClass('popup-page')){
           skt_landing.widgets.widget_init('.popup-page');
           skt_landing.components.component_init('.popup-page');
         }else{

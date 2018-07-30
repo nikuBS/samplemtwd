@@ -8,7 +8,7 @@ $.fn.chart = function(option){
       pa_idx = 0,
       pat = [],
       max = [],
-      inter = null;
+      target_num = 0;
   
   var chart_length = chart_data.da_arr.length;
   
@@ -82,18 +82,22 @@ $.fn.chart = function(option){
             'style':{},
             'txt':''
           });
-          make_obj({
-            'tag':'path',
-            'p':svg,
-            'obj':{
-              'd':'M'+(chart_gap*i+_gap)+' '+ani_arr[i]+' L'+(chart_gap*(i+1)+_gap)+' '+ani_arr[i+1]+' Z',
-              'stroke':'#ddd',
-              'stroke-width':'1'
-            },
-            'style':{},
-            'txt':'',
-            'target':true
-          });
+          if(i != chart_length-1){
+            make_obj({
+              'tag':'path',
+              'p':svg,
+              'obj':{
+                'd':'M'+(chart_gap*i+_gap)+' '+ani_arr[i]+' L'+(chart_gap*(i+1)+_gap)+' '+ani_arr[i+1]+' Z',
+                'stroke':'#ddd',
+                'stroke-width':'1'
+              },
+              'style':{'transition':'all 2s'},
+              'txt':'',
+              'target':true
+            });
+          }
+        }
+        for(var i = 0; i < chart_length; ++i){
           make_obj({
             'tag':'circle',
             'p':svg,
@@ -105,42 +109,42 @@ $.fn.chart = function(option){
               'cy':ani_arr[i],
               'r':'5'
             },
-            'style':{},
+            'style':{'transition':'all 2s'},
             'txt':'',
             'target':true
           });
         }
         break;
     }
-    inter = setInterval(ani,10);
+    setTimeout(ani,1000);
   }
   function ani(){
     switch(option.type){
       case 'circle':
         break;
       case 'bar':
+        
         break;
       case 'bar_1':
+        
         break;
       case 'basic':
         
       default:
         for(var i = 0; i < chart_length; ++i){
-          var _sum = sum_aver(chart_data.da_arr[i].data,{'decimal':option.decimal});
-          ani_arr[i] += (unit_count(option.max-_sum)-ani_arr[i])*option.spd;
-          //target[0].setAttribute('d','M'+(chart_gap*i+_gap)+' '+ani_arr[i]+' L'+(chart_gap*(i+1)+_gap)+' '+ani_arr[i+1]+' Z');
-          //target[1].setAttribute('cy',ani_arr[i]);
-          //console.log(target[1])
+          var a = chart_data.da_arr[i].data,
+              b = chart_data.da_arr[i+1] ? chart_data.da_arr[i+1].data : 0,
+              c = {'decimal':option.decimal};
+          if(b){
+            target[i].setAttribute('d','M'+(chart_gap*i+_gap)+' '+unit_count(option.max-sum_aver(a,c))+' L'+(chart_gap*(i+1)+_gap)+' '+unit_count(option.max-sum_aver(b,c))+' Z');
+          }
+          target[i+2].setAttribute('cy',unit_count(option.max-sum_aver(a,c)));
         }
         break;
     }
   }
-  setTimeout(function(){
-    clearInterval(inter);
-  },1000);
   function make_obj(option){    
-    var t = document.createElementNS(xmlns, option.tag),
-        target_num = 0;
+    var t = document.createElementNS(xmlns, option.tag);
     for(var i in option.obj){
       t.setAttribute(i,option.obj[i]);
     }
@@ -148,11 +152,11 @@ $.fn.chart = function(option){
       t.style[i] = option.style[i];
     }
     if(option.txt) t.innerHTML = option.txt;
-    option.p.appendChild(t);
     if(option.target){
-      console.log(t);
-      target[target_num] = t;
+      target[target_num] = option.p.appendChild(t);
       target_num++;
+    }else{
+      option.p.appendChild(t);
     }
   }
   
@@ -210,7 +214,49 @@ $.fn.chart = function(option){
         'txt':option.x_name
       });
     }else if(option.type == 'bar'){
-      
+      make_obj({
+        'tag':'path',
+        'p':svg,
+        'obj':{
+          'd':'M0 '+(option.h-20)+' L'+(ww-pding)+' '+(option.h-20)+' Z',
+          'stroke':'#eee',
+          'stroke-width':'1'
+        },
+        'style':{},
+        'txt':''
+      });
+      for(var i = 0; i < pattern_legnth; ++i){
+        make_obj({
+          'tag':'circle',
+          'p':svg,
+          'obj':{
+            'fill':'#fff',
+            'stroke':chart_data.line_co,
+            'stroke-width':'1',
+            'cx':chart_gap*i+_gap,
+            'cy':ani_arr[i],
+            'r':'5'
+          },
+          'style':{'transition':'all 2s'},
+          'txt':'',
+          'target':true
+        });
+        var tt = i == 0 ? '사용' : '할인';
+        make_obj({
+          'tag':'text',
+          'p':svg,
+          'obj':{
+            'x':0,
+            'y':option.h-rem(12),
+            'fill':chart_data.txt_co,
+            'text-anchor':'start'
+          },
+          'style':{
+            'font-size':rem(12,true)
+          },
+          'txt':tt
+        });
+      }
     }else if(option.type == 'circle'){
       
     }
