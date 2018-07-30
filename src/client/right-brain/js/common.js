@@ -497,13 +497,14 @@ skt_landing.action = {
         var createdTarget = $('.popup,.popup-page').last();
         if(popup_info.hbs == 'dropdown'){
           createdTarget.addClass('dropdown');
+          createdTarget.find('.popup-contents').css('max-height',$(window).height()*0.65);
         }
         createdTarget.find('.popup-blind').on('click',function(e){
           e.stopPropagation();
         });
         _this.cancel();
         _this.scroll_chk();
-        if($('.popup,.popup-page').last().hasClass('popup-page')){
+        if(createdTarget.hasClass('popup-page')){
           skt_landing.widgets.widget_init('.popup-page');
           skt_landing.components.component_init('.popup-page');
         }else{
