@@ -160,9 +160,9 @@ Tw.CustomerHelpline.prototype = {
     var $input = this.$areaPhone.find('input');
     var errorState = this.$areaPhone.hasClass('error');
 
-    var isValidated = Tw.ValidationHelper.isTelephone(this._reservationPhoneNum) || Tw.ValidationHelper.isCellPhone(this._reservationPhoneNum);
+    this.isValidated = Tw.ValidationHelper.isTelephone(this._reservationPhoneNum) || Tw.ValidationHelper.isCellPhone(this._reservationPhoneNum);
 
-    if (this._reservationPhoneNum && !isValidated) {
+    if (this._reservationPhoneNum && !this.isValidated) {
       if (!errorState) {
         this.$areaPhone.addClass('error');
         $input.attr('aria-describedby', 'aria-exp-desc2 aria-exp-desc3');
@@ -207,16 +207,43 @@ Tw.CustomerHelpline.prototype = {
   },
 
   _handleSubmit: function () {
-    this._fillReservationInfo();
-    this._history.setHistory();
-    this._history.goHash('complete');
+    if (!this.isValidated) {
+      this.$areaPhone.find('input').focus();
+    }
+
+    this._apiService.request(Tw.API_CMD.BFF_08_0002, {
+      reserveType: this._reservationType.toString(),
+      reserveArea: this._reservationArea,
+      reserveTime: this._reservationDate.replace(/\./g, '') + this._reservationTime,
+      reserveSvcNum: this._reservationPhoneNum
+    })
+      .done($.proxy(this._successSubmit, this));
   },
 
-  _fillReservationInfo: function () {
-    var phoneNum = this._reservationPhoneNum;
+  _successSubmit: function (resp) {
+    if (resp.code === Tw.API_CODE.CODE_00) {
+      if (resp.result.historiesYn === "Y") {
+        this._clearData();
+        this._popupService.openConfirm(Tw.POPUP_TITLE.CONFIRM, Tw.MSG_CUSTOMER.HELPLINE_A04, Tw.MSG_CUSTOMER.HELPLINE_A05, undefined, $.proxy(this._handleGoToHistory, this));
+      } else {
+        this._fillReservationInfo(resp.result);
+        this._history.setHistory();
+        this._history.goHash('complete');
+      }
+    } else {
+      this._popupService.openAlert(resp.msg);
+    }
+  },
+
+  _handleGoToHistory: function () {
+    this._popupService.close();
+  },
+
+  _fillReservationInfo: function (result) {
+    var phoneNum = result.reserveSvcNum;
     var formattedNum = Tw.FormatHelper.getDashedPhoneNumber(phoneNum);
     this.$container.find('.fe-number').text(formattedNum);
-    this.$container.find('.fe-date').text(this._reservationDate + '(' + Tw.DateHelper.getDayOfWeek(this._reservationDate) + ')');
+    this.$container.find('.fe-date').text(this._reservationDate + '(' + result.weekName + ')');
   },
 
   _openClosePopup: function () {
