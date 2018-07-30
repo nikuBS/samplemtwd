@@ -1,19 +1,24 @@
 <div class="popup">
     <div class="popup-dropdown" role="alertdialog">
         <div class="popup-contents" id="alertText">
-            <div class="widget dropdown-list">
-                <div class="widget-box radio">
-                    <ul class="select-list" role="radiogroup">
-                        {{#each list}}
-                        <li class="radiobox type02 {{option}} {{representation}} {{dimmed}}" role="radio" aria-checked="true">
-                            <input type="radio" name="droplist" value="" title="{{txt}}" {{option}} />
-                            <span class="txt">{{txt}}</span><span class="ico"></span><span class="line">{{#if representation}}<span class="badge badge-allpay"><span class="blind">통합대표</span></span>{{/if}}{{line}}</span>
-                        </li>
-                        {{/each}}
-                    </ul>
+           {{#each group}}
+            <div class="dropdown-group">
+                <p class="dropdown-title">{{{title}}}({{list.length}})</p>
+                <div class="widget dropdown-list">
+                    <div class="widget-box radio">
+                        <ul class="select-list" role="radiogroup">
+                            {{#each list}}
+                            <li class="radiobox type02 {{option}} {{representation}} {{dimmed}}" role="radio" aria-checked="true">
+                                <input type="radio" name="droplist" value="" title="{{txt}}" {{option}} />
+                                <span class="txt">{{txt}}</span><span class="ico"></span><span class="line">{{#if representation}}<span class="badge badge-allpay"><span class="blind">통합대표</span></span>{{/if}}{{line}}</span>
+                            </li>
+                            {{/each}}
+                        </ul>
+                    </div>
                 </div>
             </div>
-            <button class="bt-more">더보기(20)</button>
+            {{/each}}
+            <!--<button class="bt-more">더보기(20)</button>-->
         </div>
         <div class="btn-box">
             <ul class="bt-slice full align-r">

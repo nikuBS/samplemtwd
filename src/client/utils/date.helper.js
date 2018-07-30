@@ -170,6 +170,15 @@ Tw.DateHelper = (function () {
     return moment(date, currentFormat).add(days - 1, 'days').format(format);
   };
 
+
+  moment.locale('ko', {
+    weekdaysMin: Tw.WEEKDAYS
+  });
+
+  var getDayOfWeek = function (date) {
+    return moment(convDateFormat(date)).format('dd');
+  }
+
   return {
     getRemainDate: getRemainDate,
     getShortDate: getShortDate,
@@ -187,6 +196,7 @@ Tw.DateHelper = (function () {
     getEndOfMonth: getEndOfMonth,
     getPastShortDate: getPastShortDate,
     getShortDateWithFormat: getShortDateWithFormat,
-    getShortDateWithFormatAddByUnit: getShortDateWithFormatAddByUnit
+    getShortDateWithFormatAddByUnit: getShortDateWithFormatAddByUnit,
+    getDayOfWeek: getDayOfWeek
   };
 })();

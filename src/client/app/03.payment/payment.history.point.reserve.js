@@ -300,10 +300,8 @@ Tw.PaymentHistoryPointReserve.prototype = {
     return this.common.parse_query_string(window.location.search.substring(1)).point;
   },
 
-  _apiError: function (res) {
-    Tw.Logger.error(res.msg);
-    this.$listWrapper.html('<br /><div style=\"color:red;padding:1.8rem;\"><b>SERVER ERROR : </b>' + res.msg + '</div>');
-    return false;
+  _apiError: function (err) {
+    this.common._apiError(err);
   }
 
 };

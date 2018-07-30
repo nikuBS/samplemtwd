@@ -33,9 +33,11 @@ export const URL = {
   '/myt/bill/guidechange/update-complete': { login: true, id: '' },
   '/myt/bill/history/micro': { login: true, id: 'MY_02_03_04_01' }, // 나의 요금 > 소액결제 이용내역
   '/myt/bill/history/micro/password': { login: true, id: 'MY_02_03_04_01_05' }, // 나의 요금 > 소액결제 이용내역 > 소액결제 비밀번호 번경
-  '/myt/bill/history/micro/limit': { login: true, id: 'MY_02_03_04_01_06' }, // 나의 요금 > 소액결제 이용내역 > 소액결제 한도 변경
+  '/myt/bill/history/micro/limit': { login: true, id: 'MY_02_03_04_01_06' }, // 나의 요금 > 소액결제 이용내역 > 소액결제 한도 확인
+  '/myt/bill/history/micro/limit/change': { login: true, id: 'MY_02_03_04_01_01' }, // 나의 요금 > 소액결제 이용내역 > 소액결제 한도 변경
   '/myt/bill/history/contents': { login: true, id: 'My_02_03_05_01' },  // 나의 요금 > 콘텐츠 이용료 이용내역
-  '/myt/bill/history/contents/limit': { login: true, id: 'My_02_03_05_01_02' },  // 나의 요금 > 콘텐츠 이용료 이용내역 > 콘텐츠 이용 한도 변경
+  '/myt/bill/history/contents/limit': { login: true, id: 'My_02_03_05_01_02' },  // 나의 요금 > 콘텐츠 이용료 이용내역 > 콘텐츠 이용 한도 확인
+  '/myt/bill/history/contents/limit/change': { login: true, id: 'My_02_03_05_01_01' },  // 나의 요금 > 콘텐츠 이용료 이용내역 > 콘텐츠 이용 한도 변경
   '/myt/joinService/protect/cancel': { login: true, id: 'MY_01_02_09' },
   '/myt/joinService/protect/change': { login: true, id: 'MY_01_02_08' },
   '/myt/joinService/protect/inquiry': { login: true, id: 'MY_01_02_07' },
@@ -97,6 +99,7 @@ export const URL = {
   '/customer/prevent-damage/useful-service': { login: false, id: 'CI_07_09' },  // 유용한 부가서비스
   '/customer/prevent-damage/relate-site': { login: false, id: 'CI_07_10' }, // 이용자 피해예방 관련 사이트
   '/customer/helpline': { login: false, id: 'CI_05_01' }, // 전화상담예약
+  '/customer/shop/search': { login: false, id: 'CI_02_01' }, // 매장 및 AS센터 > 지점/대리점 찾기
   // auth
   '/auth/line': { login: true, id: 'CO_01_05_02' }, // 회선관리
   '/auth/line/edit': { login: true, id: 'CO_01_05_02_01' }, // 회선편집

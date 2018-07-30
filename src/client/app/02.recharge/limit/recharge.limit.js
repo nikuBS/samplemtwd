@@ -243,7 +243,7 @@ Tw.RechargeLimit.prototype = {
 
   _go: function (hash) {
     this._setHistory();
-    window.location.hash = hash;
+    this._history.goHash(hash);
   },
 
   _setHistory: function () {

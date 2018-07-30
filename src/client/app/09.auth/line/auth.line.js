@@ -9,6 +9,7 @@ Tw.AuthLine = function (rootEl, nicknamePopup) {
   this._popupService = Tw.Popup;
   this._apiService = Tw.Api;
   this._nicknamePopup = nicknamePopup;
+  this._historyService = new Tw.HistoryService();
 
   this._changeList = false;
 
@@ -85,7 +86,7 @@ Tw.AuthLine.prototype = {
   },
   _successRegisterLineList: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      location.reload();
+      this._historyService.reload();
     }
   },
   _failRegisterLineList: function (error) {

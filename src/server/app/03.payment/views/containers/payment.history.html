@@ -154,10 +154,13 @@
                                     <span class="title">청구금액</span>
                                     <span class="tx-cont">{{reqAmount}} 원</span>
                                 </li>
+                                {{#if isPoint}}
+                                {{else}}
                                 <li>
                                     <span class="title">청구년월 <br /> (사용기간)</span>
                                     <span class="tx-cont">{{reqYYYYMM}} <br /> ({{reqYYYYMMDD_start}} ~ {{reqYYYYMMDD_end}})</span>
                                 </li>
+                                {{/if}}
                             </ul>
                         </div>
                     </li>

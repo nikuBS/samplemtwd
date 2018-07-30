@@ -28,6 +28,8 @@ Tw.DATE_UNIT = {
 
 Tw.POPUP_TITLE = {
   NOTIFY: '알림',
+  CONFIRM: '확인',
+  GUIDE: '안내',
   REQUEST_DELETE: '조르기 삭제안내',
   GIFT_FAMILY_INFO: '데이터 자동 선물 안내',
   CHANGE_SEARCH_CONDITION: '검색 조건 변경',
@@ -53,11 +55,13 @@ Tw.POPUP_PROPERTY = {
 Tw.BUTTON_LABEL = {
   SELECT: '선택',
   CONFIRM: '확인',
-  CANCEL: '취소'
+  CANCEL: '취소',
+  MORE: '더보기'
 };
 
 Tw.CURRENCY_UNIT = {
-  WON: '원'
+  WON: '원',
+  TEN_THOUSAND: '만원'
 };
 
 Tw.PAYMENT_OPTION = {
@@ -109,12 +113,18 @@ Tw.PAYMENT_STRING = {
   BANK_NAME: '은행명',
   OK_CASHBAG: 'OK캐쉬백',
   T_POINT: 'T포인트',
-  BANK_NUMBER: '계좌번호'
+  BANK_NUMBER: '계좌번호',
+  POINT: '포인트'
 };
 
 Tw.PAYMENT_POINT_VALUE = {
   OK_CASHBAG: '10',
   T_POINT: '11'
+};
+
+Tw.PAYMENT_STRD_MSG = {
+  CONTENTS_L02: '자동 선결제가 되는 시점의 금액을 말하며, 고객님 콘텐츠 이용한도의 최대 90%까지 설정 가능합니다.<br /><br />예시) 자동선결제가 기준금액 : 5만원으로 설정 시, 이번 달 소액결제를 5만원 이상 결제 시점에 자동으로 선결제됩니다.',
+  TITLE_L02: '기준금액이란?'
 };
 
 Tw.MSG_COMMON = {
@@ -224,7 +234,13 @@ Tw.MSG_MYT = {
     EMAIL_HP: '<img src="/img/dummy/ex_preview7.jpg" alt="요금 안내서 이메일서비스">', // 이메일 (휴대폰)
     EMAIL_INT: '<img src="/img/dummy/ex_preview5.jpg" alt="요금 안내서 이메일서비스">', // 이메일 (인터넷/집전화/IPTV , T-WIBRO)
     ETC_HP: '<img src="/img/dummy/ex_preview10.jpg" alt="요금 안내서 우편서비스">', // 기타(우편) : 휴대폰
-    ETC_INT: '<img src="/img/dummy/ex_preview4.jpg" alt="요금 안내서 우편서비스">', // 기타(우편) : (인터넷/집전화/IPTV , T-WIBRO)
+    ETC_INT: '<img src="/img/dummy/ex_preview4.jpg" alt="요금 안내서 우편서비스">' // 기타(우편) : (인터넷/집전화/IPTV , T-WIBRO)
+  },
+  TDATA_SHARE: {
+    M01_TITLE: 'T데이터셰어링 기본제공 데이터 사용량',
+    M01_CONTENTS: '올인원 요금제 등 기본으로 데이터를 제공하는 요금제를 이용하는 고객님 중 제한된 USIM(한도형)의 데이터 정보만 노출합니다.',
+    M02_TITLE: 'T데이터셰어링 총 데이터 사용량',
+    M02_CONTENTS: '등록하신 각각의 T 데이터셰어링 USIM의 사용량을 합산한 정보입니다.'
   },
   JOIN_SERVICE_PROTECT_TEST: '확인 Confirm 팝업(변경필요)', // 내용 확정시 변경 필요
 };
@@ -261,6 +277,7 @@ Tw.MSG_PAYMENT = {
   SELECT_PRODUCT: '요금정보 선택',
   SELECT_CARD_TYPE: '납부형태 선택',
   SELECT_POINT: '포인트 선택',
+  SELECT_AMOUNT: '금액선택',
   REALTIME_A01: '납부 내역을 선택해주세요.',
   REALTIME_A02: '은행명을 선택해주세요.',
   REALTIME_A03: '계좌번호의 정합성이 맞지 않습니다.',
@@ -325,10 +342,6 @@ Tw.MSG_PAYMENT = {
     CONTENTS: '<strong>환불받으실 금액을 확인</strong>하시고<br /> 환불 받을 계좌를 등록해 주세요!',
     BUTTON_TEXT: '과납금액확인하기'
   },
-  HISTORY_OVER_PAY_POPUP: '<div class=\'widget pop-btm-area\'>' +
-  '<div class=\'widget-box check\'><ul class=\'select-list\' role=\'group\'>' +
-  '<li class=\'checkbox type01\' role=\'checkbox\' aria-checked=\'false\'>' +
-  '<input type=\'checkbox\' name=\'checkbox\' title=\'하루동안 보지 않기\'> 하루동안 보지 않기</li></ul></div></div>',
   HISTORY_POINT_TITLE_OCB: 'OK캐쉬백',
   HISTORY_POINT_TITLE_TPOINT: 'T포인트',
   HISTORY_POINT_TITLE_RAINBOW: '레인보우 포인트',
@@ -400,7 +413,10 @@ Tw.MSG_AUTH = {
 Tw.MSG_CUSTOMER = {
   VOICE_A01: '이미 신청된 내역이 있습니다. \n 고객센터(114)로 전화하여 목소리 등록을 진행해주세요.',
   VOICE_A02: '목소리인증서비스 신청을 취소하시겠습니까?',
-  VOICE_A03: '진행을 취소하시고 첫 화면으로 이동하시겠습니까?'
+  VOICE_A03: '진행을 취소하시고 첫 화면으로 이동하시겠습니까?',
+  HELPLINE_A01: '예약을 취소하시겠습니까?',
+  HELPLINE_A02: '지역을 선택해 주세요.',
+  HELPLINE_A03: '진행을 취소하시고 첫 화면으로 이동하시겠습니까?'
 }
 
 Tw.RECHARGE_TYPE = {

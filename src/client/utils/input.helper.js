@@ -42,9 +42,14 @@ Tw.InputHelper = (function () {
     $elem.val($elem.val().replace(/[^0-9]/g, ''));
   }
 
+  function validateEmail(email) {
+    var re = /[a-z0-9_+.-]+@([a-z0-9-]+\.)+[a-z0-9]{2,4}/gi;
+    return re.test(email);
+  }
+
   return {
     inputNumberOnly: inputNumberOnly,
-    // 내용 확인하여 수정필요
+    validateEmail: validateEmail,
     focusout: inputFocusOut,
     keyup: inputKeyUp,
     keydown: inputKeyDown

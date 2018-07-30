@@ -75,7 +75,7 @@
                             <button class="link-group-btn fe-btn_guide" data-category="latest"><span class="link-group-ico ico3"></span>최신 이용자 피해예방 정보</button>
                         </li>
                     </ul>
-                    <button class="link-group-more fe-btn_guide_more">더보기</button>
+                    <a class="link-group-more" href="/customer/prevent-damage/guide">더보기</a>
                     <% } %>
                 </div>
             </div>
@@ -87,19 +87,16 @@
             <div class="cont-box nogaps-btm">
                 <div class="link-group-box">
                     <p class="link-group-tit">최신 이용자 피해예방 주의보</p>
-                    <ul class="link-group-list">
+                    <ul class="link-group-list fe-latest_warning_list">
+                        <% for (var i in latestWarningList) { %>
                         <li>
-                            <button class="link-group-btn">
-                                스마트폰 앱 접근권한 개인정보보호 안내
+                            <button class="link-group-btn" data-lwid="<%= latestWarningList[i].bltn2BltnId %>">
+                                <%= latestWarningList[i].bltnTitleNm %>
                             </button>
                         </li>
-                        <li>
-                            <button class="link-group-btn">
-                                SK텔레콤 이메일 요금안내서를 사칭한 피싱 메일에 주의하세요
-                            </button>
-                        </li>
+                        <% } %>
                     </ul>
-                    <button class="link-group-more">더보기</button>
+                    <a class="link-group-more" href="/customer/prevent-damage/latest-warning">더보기</a>
                 </div>
             </div>
             <!--// .cont-box -->
@@ -112,6 +109,7 @@
                     <p class="link-group-tit">개인정보 보호를 위한 SKT의 다양한 제도</p>
                     <span class="link-group-sub">고객님의 개인정보 보호를 위한 제도를 안내해드립니다.</span>
                     <ul class="link-group-list">
+                        <!-- @todo sprint 7 -->
                         <li>
                             <button class="link-group-btn">
                                 로그인 제한제도
@@ -154,6 +152,7 @@
                                 <span class="link-group-sub">SK텔레콤에서 자체개발한 강화된 안드로이드 스마트폰 전용 인증 방식</span>
                             </button>
                         </li>
+                        <!-- // @todo sprint 7 -->
                     </ul>
                 </div>
             </div>
@@ -244,7 +243,7 @@
                             <p class="txt">고객님의 생활패턴에 맞춘 다양한 서비스를 제공해드립니다. </p>
                         </div>
                     </div>
-                    <button class="link-group-more">더보기</button>
+                    <a class="link-group-more" href="/customer/prevent-damage/useful-service">더보기</a>
                 </div>
                 <!-- //.widget -->
             </div>
@@ -257,7 +256,7 @@
                 <div class="link-group-box">
                     <ul class="link-group-list">
                         <li>
-                            <button class="link-group-btn">이용자 피해예방 관련 사이트에서 <br/>더 많은 정보를 확인하세요!</button>
+                            <a class="link-group-btn" href="/customer/prevent-damage/relate-site">이용자 피해예방 관련 사이트에서 <br/>더 많은 정보를 확인하세요!</a>
                         </li>
                     </ul>
                 </div>
