@@ -53,6 +53,9 @@ import MytJoinServiceContractTerminalInfoTlogin from './controllers/joinService/
 import MytJoinServiceContractTerminalInfoTloginDetail from './controllers/joinService/myt.joinService.contractTerminalInfo.tlogin.detail.controller';
 import MytJoinServiceContractTerminalInfoPhone from './controllers/joinService/myt.joinService.contractTerminalInfo.phone.controller';
 import MytJoinServicePayClaimInfoIptvSk from './controllers/joinService/myt.joinService.payClaimInfo.iptvSk.controller';
+import MytJSProtectInquiryController from './controllers/joinService/myt.joinService.protect.inquiry.controller';
+import MytJSProtectChangeController from './controllers/joinService/myt.joinService.protect.change.controller';
+import MytJoinJoinInfoController from './controllers/join/myt.join.join-info.controller';
 
 
 class MytRouter extends TwRouter {
@@ -117,8 +120,11 @@ class MytRouter extends TwRouter {
       controller: new MytJoinServiceContractTerminalInfoTpocketfiDetail() });
     this.controllers.push({ url: '/joinService/contractTerminalInfo/twibro', controller: new MytJoinServiceContractTerminalInfoTwibro() });
     this.controllers.push({ url: '/joinService/contractTerminalInfo/tlogin', controller: new MytJoinServiceContractTerminalInfoTlogin() });
+    this.controllers.push({ url: '/join/join-info', controller: new MytJoinJoinInfoController() });
     this.controllers.push({ url: '/joinService/contractTerminalInfo/tlogin/detail',
       controller: new MytJoinServiceContractTerminalInfoTloginDetail() });
+    this.controllers.push({ url: '/joinService/protect/inquiry', controller: new MytJSProtectInquiryController() });
+    this.controllers.push({ url: '/joinService/protect/change', controller: new MytJSProtectChangeController() });
   }
 }
 

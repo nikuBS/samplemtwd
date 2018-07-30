@@ -32,6 +32,7 @@ Tw.POPUP_TITLE = {
   NOTIFY: '알림',
   CONFIRM: '확인',
   GUIDE: '안내',
+  SELECT_LINE: '회선 선택',
   REQUEST_DELETE: '조르기 삭제안내',
   GIFT_FAMILY_INFO: '데이터 자동 선물 안내',
   CHANGE_SEARCH_CONDITION: '검색 조건 변경',
@@ -58,7 +59,8 @@ Tw.BUTTON_LABEL = {
   SELECT: '선택',
   CONFIRM: '확인',
   CANCEL: '취소',
-  MORE: '더보기'
+  MORE: '더보기',
+  LINE: '회선관리'
 };
 
 Tw.CURRENCY_UNIT = {
@@ -243,6 +245,11 @@ Tw.MSG_MYT = {
     M01_CONTENTS: '올인원 요금제 등 기본으로 데이터를 제공하는 요금제를 이용하는 고객님 중 제한된 USIM(한도형)의 데이터 정보만 노출합니다.',
     M02_TITLE: 'T데이터셰어링 총 데이터 사용량',
     M02_CONTENTS: '등록하신 각각의 T 데이터셰어링 USIM의 사용량을 합산한 정보입니다.'
+  },
+  JOIN_SERVICE: {
+    EMPTY_PWD: '6자리 이상의 숫자를 입력해주세요.',
+    ONLY_PWD: '비밀번호는 숫자만 입력 가능합니다.',
+    FAIL_PWD: '비밀번호가 일치하지 않습니다. \n 다시 입력해주시기 바랍니다.'
   }
 };
 

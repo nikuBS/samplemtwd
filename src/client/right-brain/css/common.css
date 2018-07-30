@@ -428,6 +428,10 @@ input[type=text], input[type=file], input[type=password], input[type=number] {
   color: #000;
 }
 
+.txfield-combined.focus .txfield-combined-tx textarea.inner-tx {
+  color: #000;
+}
+
 .txfield-combined.focus input {
   color: #000;
 }
@@ -487,6 +491,7 @@ input[type=text], input[type=file], input[type=password], input[type=number] {
 .txfield-combined .txfield-combined-tx textarea {
   padding: 0;
   font-size: 0.9375rem;
+  line-height: 1.1875rem;
   font-weight: 400;
   color: #000;
   background: none;
@@ -494,6 +499,14 @@ input[type=text], input[type=file], input[type=password], input[type=number] {
 
 .txfield-combined .txfield-combined-tx textarea::-webkit-input-placeholder {
   font-size: 0.9375rem;
+}
+
+.txfield-combined .txfield-combined-tx textarea.inner-tx {
+  color: #8f8f8f;
+}
+
+.txfield-combined .txfield-combined-tx textarea.inner-tx.once {
+  color: #000;
 }
 
 .txfield-combined .combined-ti {
@@ -2873,6 +2886,16 @@ a.ui-button:active,
 .bt-dropdown.placeholder {
   background: #f5f5f5;
   color: #8f8f8f;
+}
+
+.bt-dropdown.disabled {
+  background: #e5e8ee;
+  color: #808698;
+}
+
+.bt-dropdown.disabled:after {
+  background-position: 0 -6.5625rem;
+  opacity: .3;
 }
 
 .bt-dropdown:hover {

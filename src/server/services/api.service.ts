@@ -107,6 +107,7 @@ class ApiService {
     if ( !FormatHelper.isEmpty(err.response) ) {
       const error = err.response.data;
       const headers = err.response.headers;
+      this.logger.error(this, '[API ERROR]', error);
 
       if ( command.server === API_SERVER.BFF ) {
         this.setServerSession(headers);
@@ -119,7 +120,7 @@ class ApiService {
   }
 
   private setServerSession(headers) {
-    this.logger.debug(this, 'Headers: ', JSON.stringify(headers));
+    this.logger.info(this, 'Headers: ', JSON.stringify(headers));
     if ( headers['set-cookie'] ) {
       this.logger.info(this, 'Set Session Cookie');
       this.loginService.setServerSession(this.parseSessionCookie(headers['set-cookie'][0])).subscribe();

@@ -6,6 +6,7 @@
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
+import FormatHelper from '../../../../utils/format.helper';
 
 class AuthLoginEasyAos extends TwViewController {
   constructor() {
@@ -13,7 +14,10 @@ class AuthLoginEasyAos extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    res.render('login/auth.login.easy-aos.html', { svcInfo });
+    const query = req.query;
+    const mdn = FormatHelper.conTelFormatWithDash(query.mdn);
+
+    res.render('login/auth.login.easy-aos.html', { svcInfo, mdn });
   }
 }
 

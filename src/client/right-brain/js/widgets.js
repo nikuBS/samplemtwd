@@ -149,8 +149,13 @@ skt_landing.widgets = {
       $(window).on('load', function(){
         box.each(function(){
           var _this = $(this);
-          _this.find('.input-focus').on('focus',function(){
+          var count = 0;
+          _this.find('.input-focus').on('focus',function(e){
+            count ++;
             _this.addClass('focus');
+            if(count > 0){
+              _this.find('.inner-tx').addClass('once');
+            }
           }).on('blur',function(){
             _this.removeClass('focus');
           });

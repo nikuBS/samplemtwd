@@ -30,6 +30,14 @@ Tw.UIService.prototype = {
           Tw.Logger.info('[Prev]', document.referrer);
           document.location.reload();
         }
+
+        if ( Tw.UIService.getLocalStorage('lineRefresh') === 'Y') {
+          Tw.Logger.info('[Line Refresh]', document.referrer);
+          document.location.reload();
+          if ( /\/home/.test(location.href) ) {
+            Tw.UIService.setLocalStorage('lineRefresh', 'N');
+          }
+        }
       }
     });
   },
