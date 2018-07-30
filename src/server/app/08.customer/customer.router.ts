@@ -1,5 +1,4 @@
 import TwRouter from '../../common/route/tw.router';
-import CustomerMainController from './controllers/customer.main.controller';
 import CustomerHelpline from './controllers/helpline/customer.helpline.controller';
 import CustomerNoticeController from './controllers/customer.notice.controller';
 import CustomerPreventdamageMainController from './controllers/preventdamage/customer.preventdamage.main.controller';
@@ -11,6 +10,7 @@ import CustomerPreventdamageLatestwarningController from './controllers/preventd
 import CustomerPreventdamageLatestwarningviewController from './controllers/preventdamage/customer.preventdamage.latestwarningview.controller';
 import CustomerShopSearch from './controllers/shop/customer.shop.search.controller';
 import CustomerVoiceController from './controllers/voice/customer.voice.controller';
+import CustomerMainController from './controllers/main/customer.main.controller';
 
 class CustomerRouter extends TwRouter {
   constructor() {
