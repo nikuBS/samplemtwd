@@ -1,7 +1,14 @@
+/**
+ * FileName: customer.voice.js
+ * Author: Jiman Park (jiman.park@sk.com)
+ * Date: 2018.07.25
+ */
+
 Tw.CustomerVoice = function (rootEl) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
+
   this._history = new Tw.HistoryService(this.$container);
   this._history.init('hash');
 
@@ -11,12 +18,11 @@ Tw.CustomerVoice = function (rootEl) {
 
 Tw.CustomerVoice.prototype = {
   _cachedElement: function () {
-
+    this.$btn_go_voice_sms = $('#fe-btn-go-sms');
   },
 
   _bindEvent: function () {
-    this.$container.on('click', '.fe-btn-go-sms', $.proxy(this._goToSms, this));
-    this.$container.on('click', '.fe-btn-go-info', $.proxy(this._goToInfo, this));
+    this.$btn_go_voice_sms.on('click', $.proxy(this._goToVoiceSms, this));
     this.$container.on('click', '.fe-btn-auth', $.proxy(this._openAuthConfirm, this));
     this.$container.on('click', '.fe-btn-auth-cancel', $.proxy(this._openAuthCancel, this));
     this.$container.on('click', '.fe-inp-term', $.proxy(this._checkTerms, this));
@@ -60,14 +66,31 @@ Tw.CustomerVoice.prototype = {
     this._popupService.close();
   },
 
-  _goToInfo: function () {
-    // this._history.resetHistory();
-    // location.href = '/customer/voice/info';
-    this._history.resetHashHistory();
-    location.href = '/customer/voice/info';
-  },
+  _goToVoiceSms: function () {
+    var response = {
+      code: '00',
+      msg: 'success',
+      result: {
+        hitoriesYn: 'N',
+        svcInfo: [
+          {
+            svcMgmtNum: '7016134141',
+            svcNum: '01053573886'
+          },
+          {
+            svcMgmtNum: '7039762321',
+            svcNum: '01063753891'
+          }
+        ]
+      }
+    };
 
-  _goToSms: function () {
-    location.href = '/customer/voice/sms';
+    if ( response.result.historyYn === 'N' ) {
+      //TODO: alert
+      // this._history.goLoad('/customer/voice/sms');
+      return false;
+    }
+
+    return true;
   }
 };
