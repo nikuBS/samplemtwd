@@ -54,7 +54,6 @@ import MytJoinServiceContractTerminalInfoTloginDetail from './controllers/joinSe
 import MytJoinServiceContractTerminalInfoPhone from './controllers/joinService/myt.joinService.contractTerminalInfo.phone.controller';
 import MytJoinServicePayClaimInfoIptvSk from './controllers/joinService/myt.joinService.payClaimInfo.iptvSk.controller';
 import MytJSProtectInquiryController from './controllers/joinService/myt.joinService.protect.inquiry.controller';
-import MytJSProtectCancelController from './controllers/joinService/myt.joinService.protect.cancel.controller';
 import MytJSProtectChangeController from './controllers/joinService/myt.joinService.protect.change.controller';
 
 
@@ -124,7 +123,6 @@ class MytRouter extends TwRouter {
       controller: new MytJoinServiceContractTerminalInfoTloginDetail() });
 
     this.controllers.push({ url: '/joinService/protect/inquiry', controller: new MytJSProtectInquiryController() });
-    this.controllers.push({ url: '/joinService/protect/cancel', controller: new MytJSProtectCancelController() });
     this.controllers.push({ url: '/joinService/protect/change', controller: new MytJSProtectChangeController() });
   }
 }

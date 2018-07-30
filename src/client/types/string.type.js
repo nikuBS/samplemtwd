@@ -242,7 +242,11 @@ Tw.MSG_MYT = {
     M02_TITLE: 'T데이터셰어링 총 데이터 사용량',
     M02_CONTENTS: '등록하신 각각의 T 데이터셰어링 USIM의 사용량을 합산한 정보입니다.'
   },
-  JOIN_SERVICE_PROTECT_TEST: '확인 Confirm 팝업(변경필요)', // 내용 확정시 변경 필요
+  JOIN_SERVICE: {
+    EMPTY_PWD: '6자리 이상의 숫자를 입력해주세요.',
+    ONLY_PWD: '비밀번호는 숫자만 입력 가능합니다.',
+    FAIL_PWD: '비밀번호가 일치하지 않습니다. \n 다시 입력해주시기 바랍니다.'
+  }
 };
 
 Tw.MSG_RECHARGE = {
@@ -417,7 +421,7 @@ Tw.MSG_CUSTOMER = {
   HELPLINE_A01: '예약을 취소하시겠습니까?',
   HELPLINE_A02: '지역을 선택해 주세요.',
   HELPLINE_A03: '진행을 취소하시고 첫 화면으로 이동하시겠습니까?'
-}
+};
 
 Tw.RECHARGE_TYPE = {
   TOTAL: '전체',

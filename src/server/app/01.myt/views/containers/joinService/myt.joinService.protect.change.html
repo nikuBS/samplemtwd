@@ -7,7 +7,16 @@
 <% include ../../components/start.component.html %>
 <% include ../../components/javascript.component.html %>
 <div class="wrap">
-    <%- include('../../../../common/views/components/header.component.html', { title: '고객보호  비밀번호 변경', svcInfo: data.svcInfo }); %>
+    <!-- #header -->
+    <div id="header" class="header-wrap">
+        <div class="header step-page">
+            <div class="header-ti">
+                <h1>고객보호 비밀번호 설정</h1>
+            </div>
+            <button class="close-step"><span class="blind">닫기</span></button>
+        </div>
+    </div>
+    <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap">
         <h2 class="blind">내용</h2>
@@ -25,20 +34,20 @@
                         </div>
                     </div>
                 </div>
-                <div class="account-wrap">
+                <div id="change-pwd" class="account-wrap">
                     <h3 class="account-tit">비밀번호 입력</h3>
                     <div class="inputbox">
                             <span class="input">
-                                <input type="text" placeholder="비밀번호 6자리 숫자 입력" title="비밀번호 6자리 숫자 입력">
+                                <input type="password" placeholder="비밀번호 6자리 숫자 입력" title="비밀번호 6자리 숫자 입력">
                                 <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
                             </span>
                     </div>
                 </div>
-                <div class="account-wrap">
+                <div id="change-pwd-check" class="account-wrap">
                     <h3 class="account-tit">비밀번호 확인</h3>
                     <div class="inputbox">
                             <span class="input">
-                                <input type="text" placeholder="비밀번호 6자리 숫자 입력" title="비밀번호 6자리 숫자 입력">
+                                <input type="password" placeholder="비밀번호 6자리 숫자 입력" title="비밀번호 6자리 숫자 입력">
                                 <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
                             </span>
                     </div>
@@ -46,13 +55,12 @@
                 <div class="contents-btn">
                     <ul class="bt-slice">
                         <li class="bt-red1">
+                            <% if( data.isNew ) { %>
                             <button>고객보호 비밀번호 설정</button>
+                            <% } else { %>
+                            <button>고객보호 비밀번호 변경</button>
+                            <% } %>
                         </li>
-                        <% if( !data.isNew ) { %>
-                        <li class="bt-white2">
-                            <button>고객보호 비밀번호 서비스 해지</button>
-                        </li>
-                        <% } %>
                     </ul>
                 </div>
             </div>
@@ -111,7 +119,8 @@
 
 <script>
   $(document).ready(function () {
-    var comp = new Tw.MyTJSProtectChange($('#protect-change'));
+    var isNew = '<%= data.isNew %>';
+    var comp = new Tw.MyTJSProtectChange($('#protect-change'), isNew);
   });
 </script>
 <% include ../../components/end.component.html %>

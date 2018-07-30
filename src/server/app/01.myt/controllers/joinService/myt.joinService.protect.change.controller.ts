@@ -34,7 +34,6 @@ class MytJSProtectChangeController extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    const self = this;
     this.svcInfo = svcInfo;
     this.logger.info(this, 'UserInfo ', svcInfo);
     // 비밀번호 조회 시 최초 설정이 안되어있는 경우와 등록이 된 경우로 구분하여
@@ -56,19 +55,6 @@ class MytJSProtectChangeController extends TwViewController {
     // const data = self.convertData(responseData);
     res.render('joinService/myt.joinService.protect.change.html', { data });
     // });
-  }
-
-  private convertData(data: any) {
-    const result = {
-      svcInfo: this.svcInfo
-    };
-    if ( data.code === '00' && data.result ) {
-      result['data'] = data.result;
-    } else {
-      // mook up data
-      result['data'] = {};
-    }
-    return result;
   }
 }
 
