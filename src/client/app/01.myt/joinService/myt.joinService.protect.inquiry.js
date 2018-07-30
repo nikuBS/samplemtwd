@@ -32,6 +32,10 @@ Tw.MyTJSProtectInquiry.prototype = {
       callback: $.proxy(this._onLayerOpened, this)
     };
     this._loginService.openLayer(params);
+  },
+
+  _onLayerOpened: function() {
+
   }
 };
 
@@ -77,9 +81,7 @@ Tw.MyTJSProtectPwd.prototype = {
   _bindEvent: function () {
     this.$container.on('click', '.bt-red1 > button', $.proxy(this._requestLogin, this));
     this.$deleteIcon.on('click', $.proxy(this._removePwd, this));
-    this.$pwdInput.on('keydown', $.proxy(this._onKeyDown, this))
-      .on('keyup', $.proxy(this._onKeyUp, this))
-      .on('focusout', $.proxy(this._onFocusOut, this));
+
   },
   _removePwd: function () {
     this.$pwd.val('');
@@ -138,18 +140,6 @@ Tw.MyTJSProtectPwd.prototype = {
       var errorMsg = unexpectedError ? res.code + ' ' + res.msg : Tw.MSG_AUTH.LOGIN_A01;
       this._popupService.openAlert(errorMsg);
     }
-  },
-  _onKeyUp: function(event) {
-    Tw.InputHelper.keyup(event);
-  },
-
-  _onKeyDown: function(event) {
-    Tw.InputHelper.keydown(event);
-  },
-
-  _onFocusOut: function(event) {
-    var $target = $(event.target);
-    Tw.InputHelper.focusout($target);
   },
 
   _changeCount: function (msg, count) {
