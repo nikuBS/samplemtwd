@@ -15,6 +15,7 @@ class MyTUsageTDataShareClose extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     res.render('usage/myt.usage.tdata-share-close.html', {
       cSvcMgmtNum: req.query.cSvcMgmtNum,
+      usimNum: req.query.usimNum,
       closeDate: DateHelper.getShortDateNoDot(new Date()),
       svcInfo
     });
