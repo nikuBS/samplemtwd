@@ -15,7 +15,7 @@ class MytJSProtectInquiryController extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    this.logger.info(this, '사용자 정보 : ', svcInfo);
+    this.logger.info(this, 'UserInfo: ', svcInfo);
 
     const data = {
       title: svcInfo.svcAttrCd ? SVC_ATTR[svcInfo.svcAttrCd] : '',
