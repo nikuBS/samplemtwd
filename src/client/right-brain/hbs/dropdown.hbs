@@ -8,8 +8,8 @@
                     <div class="widget-box radio">
                         <ul class="select-list" role="radiogroup">
                             {{#each list}}
-                            <li class="radiobox type02 {{option}} {{#if representation}}representation {{/if}}{{dimmed}}" role="radio" aria-checked="true">
-                                <input type="radio" name="droplist" value="" title="{{txt}}" {{option}} />
+                            <li class="radiobox type02 {{option}} {{#if representation}}representation {{/if}}{{dimmed}}" role="radio" aria-checked="true" data-svcMgmtNum="{{svcMgmtNum}}">
+                                <input type="radio" class="fe-radio-list" name="droplist" value="" title="{{txt}}" {{option}} />
                                 <span class="txt">{{txt}}</span><span class="ico"></span><span class="line">{{#if integration}}<span class="badge badge-allpay"><span class="blind">통합대표</span></span>{{/if}}{{line}}</span>
                             </li>
                             {{/each}}
@@ -23,7 +23,7 @@
         <div class="btn-box">
             <ul class="bt-slice full align-r">
                 <li class="bt-blue1">
-                  <button>{{bt_txt}} <span class="ico"></span></button>
+                  <button class="fe-btn-txt">{{bt_txt}} <span class="ico"></span></button>
                 </li>
             </ul>
         </div>

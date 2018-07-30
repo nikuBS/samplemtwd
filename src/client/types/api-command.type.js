@@ -15,6 +15,7 @@ Tw.API_CMD = {
   BFF_03_0023_C: { path: '/core-recharge/v1/refill-gifts', method: Tw.API_METHOD.POST },
 
   // COMMON
+  BFF_01_0002: { path: '/common/sessions', method: Tw.API_METHOD.GET },
   BFF_01_0004: { path: '/common/selected-sessions', method: Tw.API_METHOD.PUT },
   BFF_01_0005: { path: '/common/selected-sessions', method: Tw.API_METHOD.GET },
 
