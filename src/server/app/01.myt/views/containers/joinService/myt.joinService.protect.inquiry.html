@@ -100,9 +100,12 @@
     <%- include('../../../../common/views/components/footer.component.html', { svcInfo: data.svcInfo }); %>
 </div>
 
+<script src="<%= CDN %>/js/auth.min.js"></script>
+
 <script>
   $(document).ready(function () {
-    var comp = new Tw.MyTJSProtectInquiry($('#protect-inquiry'));
+    var svcInfo = '<%- JSON.stringify(data.svcInfo) %>';
+    var comp = new Tw.MyTJSProtectInquiry($('#protect-inquiry'), JSON.parse(svcInfo));
   });
 </script>
 <% include ../../components/end.component.html %>
