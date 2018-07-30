@@ -4,7 +4,7 @@
  * Date: 2018.07.23
  */
 
-import TwViewController from '../../../common/controllers/tw.view.controller';
+import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { NextFunction, Request, Response } from 'express';
 
 class CustomerEmailController extends TwViewController {

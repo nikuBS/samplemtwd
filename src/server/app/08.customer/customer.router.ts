@@ -1,5 +1,4 @@
 import TwRouter from '../../common/route/tw.router';
-import CustomerMainController from './controllers/customer.main.controller';
 import CustomerHelpline from './controllers/helpline/customer.helpline.controller';
 import CustomerNoticeController from './controllers/customer.notice.controller';
 import CustomerPreventdamageMainController from './controllers/preventdamage/customer.preventdamage.main.controller';
@@ -9,8 +8,10 @@ import CustomerPreventdamageUsefulserviceController from './controllers/preventd
 import CustomerPreventdamageRelatesiteController from './controllers/preventdamage/customer.preventdamage.relatesite.controller';
 import CustomerPreventdamageLatestwarningController from './controllers/preventdamage/customer.preventdamage.latestwarning.controller';
 import CustomerPreventdamageLatestwarningviewController from './controllers/preventdamage/customer.preventdamage.latestwarningview.controller';
-import CustomerShopSearch from './controllers/shop/customer.shop.search.controller';
+import CustomerShopNearController from './controllers/shop/customer.shop.near.controller';
+import CustomerShopSearchController from './controllers/shop/customer.shop.search.controller';
 import CustomerVoiceController from './controllers/voice/customer.voice.controller';
+import CustomerMainController from './controllers/main/customer.main.controller';
 
 class CustomerRouter extends TwRouter {
   constructor() {
@@ -25,7 +26,8 @@ class CustomerRouter extends TwRouter {
     this.controllers.push({ url: '/prevent-damage/latest-warning', controller: new CustomerPreventdamageLatestwarningController() });
     this.controllers.push({ url: '/prevent-damage/latest-warning/view', controller: new CustomerPreventdamageLatestwarningviewController() });
     this.controllers.push({ url: '/helpline', controller: new CustomerHelpline() });
-    this.controllers.push({ url: '/shop/search', controller: new CustomerShopSearch() });
+    this.controllers.push({ url: '/shop/near', controller: new CustomerShopNearController });
+    this.controllers.push({ url: '/shop/search', controller: new CustomerShopSearchController() });
     this.controllers.push({ url: '/voice/:type', controller: new CustomerVoiceController() });
   }
 }

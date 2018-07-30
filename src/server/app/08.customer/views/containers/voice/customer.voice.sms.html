@@ -1,4 +1,4 @@
-<%#
+<script src="../../../customer.router.ts"></script><%#
 * FileName: customer.voice.sms.html
 * Author: 박지만 (jiman.park@sk.com)
 * Date: 2018.07.23
@@ -96,12 +96,12 @@
                     </div>
                     <div class="top-line-box">
                         <span class="top-line-tit">안내 받으실 휴대폰 번호</span>
-                        <div class="inputbox">
-                            <span class="input">
-                                <input type="number" placeholder="숫자만 입력" title="휴대폰 번호">
-                                <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
-                            </span>
-                        </div>
+                        <!--<div class="inputbox">-->
+                            <!--<span class="input">-->
+                                <!--<input type="text" title="휴대폰 번호" value="<%=svcInfo.svcNum%>" disabled>-->
+                            <!--</span>-->
+                        <!--</div>-->
+                        <button class="bt-dropdown big fe-select-line" title="휴대폰 번호" aria-haspopup="true"><%=svcInfo.svcNum%><span class="ico"></span></button>
                         <em class="notice-triangle"><span class="ico"><span class="blind">중요</span></span>목소리 등록 문자는 114번호로 발송되며, 등록 신청은 1일
                             1회만
                             가능합니다.</em>
@@ -151,7 +151,7 @@
                             </div>
                             <ul class="bt-slice">
                                 <li class="bt-blue1">
-                                    <button class="fe-btn-go-info">확인</button>
+                                    <a href="/customer/voice/info" class="fe-replace-history">확인</a>
                                 </li>
                             </ul>
                             <ul class="result-list">
@@ -164,7 +164,7 @@
                 <hr class="cont-sp type1" aria-hidden="true">
                 <div class="cont-box nogaps">
                     <div class="bt-link-box">
-                        <button class="bt-link-tx">홈으로</button>
+                        <a href="/home" class="bt-link-tx fe-replace-history">홈으로</a>
                     </div>
                 </div>
                 <hr class="cont-sp type1" aria-hidden="true">

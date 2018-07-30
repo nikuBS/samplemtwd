@@ -1,0 +1,49 @@
+<%#
+* FileName: myt.joinService.joinInfo.html
+* Author: 양정규 (skt.P130715@partner.sk.com)
+* Date: 2018.07.25
+%>
+
+<div class="cont-box nogaps-btm">
+    <div class="info-box">
+        <span class="state-text">사용중</span>
+        <span class="name"><span class="tx-bold ff-hn"><%= data.eqpMdlNm %></span></span>
+        <button class="bt-link-tx">USIM 변경 안내 <span class="ico"></span></button>
+    </div>
+    <h3 class="title-bold mt30">최종 개통 정보</h3>
+    <div class="info-cont">
+        <ul class="inner-list">
+            <li>
+                <dl>
+                    <dt>개통일자</dt>
+                    <dd><%= data.chgDt %> / <%= data.chgCd%></dd>
+                </dl>
+                <div class="contents-btn">
+                    <ul class="bt-slice item-two">
+                        <li class="bt-white2">
+                            <button>개통/변경이력 조회</button>
+                        </li>
+                        <li class="bt-white2">
+                            <button>개통 대리점 찾기</button>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+            <li>
+                <dl>
+                    <dt>가입비</dt>
+                    <dd><span class="ff-hn vbl"><%= data.apprAmt %></span> 원</dd>
+                </dl>
+            </li>
+            <li>
+                <dl>
+                    <dt>고객보호 비밀번호</dt>
+                    <dd>
+                        <span class="block">사용중</span>
+                        <button role="button" class="blue-btn">비밀번호 변경</button>
+                    </dd>
+                </dl>
+            </li>
+        </ul>
+    </div>
+</div>

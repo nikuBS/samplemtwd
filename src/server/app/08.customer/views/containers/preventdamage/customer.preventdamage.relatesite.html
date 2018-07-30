@@ -5,7 +5,7 @@
 %>
 <% include ../../components/start.component.html %>
 <div class="wrap">
-    <%- include('../../../../common/views/components/header.component.html', { title: '유용한 부가서비스', svcInfo: svcInfo }) %>
+    <%- include('../../../../common/views/components/header.component.html', { title: '이용자 피해예방 관련 사이트', svcInfo: svcInfo }) %>
     <!-- #contents -->
     <div id="contents" class="container-wrap">
         <h2 class="blind">내용</h2>
@@ -20,21 +20,11 @@
 
                 <div class="link-group-box">
                     <ul class="link-group-list thin">
+                        <% for (var i in outlinkReport) { %>
                         <li>
-                            <button class="link-group-btn">개인정보 침해 신고센터</button>
+                            <a class="link-group-btn" href="<%= outlinkReport[i].LINK %>" target="_blank"><%= outlinkReport[i].TEXT %></a>
                         </li>
-                        <li>
-                            <button class="link-group-btn">KISA 불법스팸 대응센터</button>
-                        </li>
-                        <li>
-                            <button class="link-group-btn">KISA보호나라&amp;KrCERT</button>
-                        </li>
-                        <li>
-                            <button class="link-group-btn">명의도용 방지 서비스</button>
-                        </li>
-                        <li>
-                            <button class="link-group-btn">휴대폰 A/S 결제 중재센터</button>
-                        </li>
+                        <% } %>
                     </ul>
                 </div>
             </div>
@@ -49,12 +39,11 @@
 
                 <div class="link-group-box">
                     <ul class="link-group-list thin">
+                        <% for (var i in outlinkRelate) { %>
                         <li>
-                            <button class="link-group-btn">정보통신망법</button>
+                            <a class="link-group-btn" href="<%= outlinkRelate[i].LINK %>" target="_blank"><%= outlinkRelate[i].TEXT %></a>
                         </li>
-                        <li>
-                            <button class="link-group-btn">방송통신 위원회</button>
-                        </li>
+                        <% } %>
                     </ul>
                 </div>
             </div>

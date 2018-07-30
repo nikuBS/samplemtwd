@@ -10,6 +10,7 @@ import MyTUsageTRoamingShare from './controllers/usage/myt.usage.troaming-share.
 import MyTUsageTing from './controllers/usage/myt.usage.ting.controller';
 import MyTUsage24hours50discount from './controllers/usage/myt.usage.24hours-50discount.controller';
 import MyTUsageDataLimit from './controllers/usage/myt.usage.data-limit.controller';
+import MyTUsageCombineWithMine from './controllers/usage/myt.usage.combine-with-mine.controller';
 import MyTHotBill from './controllers/bill/myt.bill.hotbill.controller';
 import MyTReissue from './controllers/bill/myt.bill.guidechange.reissue.controller';
 import MyTReissueComplete from './controllers/bill/myt.bill.guidechange.reissue-complete.controller';
@@ -31,8 +32,10 @@ import MyTBillBillguideSubDonationBill from './controllers/bill/myt.bill.billgui
 import MyTBillHistoryMicro from './controllers/bill/myt.bill.history.micro.controller';
 import MyTBillHistoryMicroPassword from './controllers/bill/myt.bill.history.micro.password.controller';
 import MyTBillHistoryMicroLimit from './controllers/bill/myt.bill.history.micro.limit.controller';
+import MyTBillHistoryMicroLimitChange from './controllers/bill/myt.bill.history.micro.limit.change.controller';
 import MyTBillHistoryContents from './controllers/bill/myt.bill.history.contents.controller';
 import MyTBillHistoryContentsLimit from './controllers/bill/myt.bill.history.contents.limit.controller';
+import MyTBillHistoryContentsLimitChange from './controllers/bill/myt.bill.history.contents.limit.change.controller';
 
 import MytJoinPayClaim from './controllers/join/myt.join.pay-claim.controller';
 import MytJoinPayClaimPhone from './controllers/join/myt.join.pay-claim.phone.controller';
@@ -51,6 +54,9 @@ import MytJoinContractTerminalTwibro from './controllers/join/myt.join.contract-
 import MytJoinContractTerminalTlogin from './controllers/join/myt.join.contract-terminal.tlogin.controller';
 import MytJoinContractTerminalTloginDetail from './controllers/join/myt.join.contract-terminal.tlogin.detail.controller';
 
+import MytJoinJoinInfoController from './controllers/join/myt.join.join-info.controller';
+
+
 
 class MytRouter extends TwRouter {
   constructor() {
@@ -66,6 +72,8 @@ class MytRouter extends TwRouter {
     this.controllers.push({ url: '/usage/troaming', controller: new MyTUsageTRoamingShare() });
     this.controllers.push({ url: '/usage/ting', controller: new MyTUsageTing() });
     this.controllers.push({ url: '/usage/24hourdiscount', controller: new MyTUsage24hours50discount() });
+    this.controllers.push({ url: '/usage/combinewithmine', controller: new MyTUsageCombineWithMine() });
+
     this.controllers.push({ url: '/bill/hotbill', controller: new MyTHotBill() });
     this.controllers.push({ url: '/bill/guidechange/reissue', controller: new MyTReissue() });
     this.controllers.push({ url: '/bill/guidechange/reissue/complete', controller: new MyTReissueComplete() });
@@ -90,8 +98,10 @@ class MytRouter extends TwRouter {
     this.controllers.push({ url: '/bill/history/micro', controller: new MyTBillHistoryMicro() });
     this.controllers.push({ url: '/bill/history/micro/password', controller: new MyTBillHistoryMicroPassword() });
     this.controllers.push({ url: '/bill/history/micro/limit', controller: new MyTBillHistoryMicroLimit() });
+    this.controllers.push({ url: '/bill/history/micro/limit/change', controller: new MyTBillHistoryMicroLimitChange() });
     this.controllers.push({ url: '/bill/history/contents', controller: new MyTBillHistoryContents() });
     this.controllers.push({ url: '/bill/history/contents/limit', controller: new MyTBillHistoryContentsLimit() });
+    this.controllers.push({ url: '/bill/history/contents/limit/change', controller: new MyTBillHistoryContentsLimitChange() });
 
     this.controllers.push({ url: '/join/pay-claim', controller: new MytJoinPayClaim() });
     this.controllers.push({ url: '/join/pay-claim/phone', controller: new MytJoinPayClaimPhone() });
@@ -112,6 +122,9 @@ class MytRouter extends TwRouter {
     this.controllers.push({ url: '/join/contract-terminal/tlogin', controller: new MytJoinContractTerminalTlogin() });
     this.controllers.push({ url: '/join/contract-terminal/tlogin/detail',
       controller: new MytJoinContractTerminalTloginDetail() });
+
+    this.controllers.push({ url: '/join/join-info', controller: new MytJoinJoinInfoController() });
+
   }
 }
 

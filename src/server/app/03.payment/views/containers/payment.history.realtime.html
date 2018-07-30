@@ -135,8 +135,7 @@
                         <span class="tx-cont">계좌이체 ({{paymentName}})
                             {{#if isPersonal}}
                             <a href="/payment/history/receipt/cash" class="bt-link-tx">현금영수증 발행내역 <span class="ico"></span></a>
-                            {{/if}}
-                            {{#if isCompany}}
+                            {{else}}
                             <a href="/payment/history/receipt/tax" class="bt-link-tx">세금계산서 발급내역 <span class="ico"></span></a>
                             {{/if}}
                         </span>

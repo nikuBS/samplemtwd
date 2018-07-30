@@ -7,7 +7,7 @@
 Tw.CustomerPreventdamageGuide = function(rootEl) {
   this.$container = rootEl;
   this._popupService = Tw.Popup;
-  this._category = rootEl.data('category');
+  this._history = new Tw.HistoryService();
 
   this._cachedElement();
   this._bindEvent();
@@ -17,11 +17,14 @@ Tw.CustomerPreventdamageGuide.prototype = {
 
   _cachedElement: function() {
     this.$btnCategory = this.$container.find('.fe-btn_category');
+    this.$btnListMore = this.$container.find('.fe-btn_list_more');
+    this.$list = this.$container.find('.fe-list');
   },
 
   _bindEvent: function() {
-    this._popupService.close();
+    this._popupService._popupClose();
     this.$btnCategory.on('click', $.proxy(this._openCategorySelectPopup, this));
+    this.$btnListMore.on('click', $.proxy(this._showListMore, this));
   },
 
   _openCategorySelectPopup: function() {
@@ -31,11 +34,11 @@ Tw.CustomerPreventdamageGuide.prototype = {
       'select': [
         {
           'options': [
-            { 'title': Tw.PREVENTDAMAGE_GUIDE.VIDEO, checked: (this._category === 'video'),
+            { 'title': Tw.PREVENTDAMAGE_GUIDE.VIDEO, checked: (this.$container.data('category') === 'video'),
               value: 'video', text: Tw.PREVENTDAMAGE_GUIDE.VIDEO },
-            { 'title': Tw.PREVENTDAMAGE_GUIDE.WEBTOON, checked: (this._category === 'webtoon'),
+            { 'title': Tw.PREVENTDAMAGE_GUIDE.WEBTOON, checked: (this.$container.data('category') === 'webtoon'),
               value: 'webtoon', text: Tw.PREVENTDAMAGE_GUIDE.WEBTOON },
-            { 'title': Tw.PREVENTDAMAGE_GUIDE.LATEST, checked: (this._category === 'latest'),
+            { 'title': Tw.PREVENTDAMAGE_GUIDE.LATEST, checked: (this.$container.data('category') === 'latest'),
               value: 'latest', text: Tw.PREVENTDAMAGE_GUIDE.LATEST }
           ]
         }
@@ -53,13 +56,21 @@ Tw.CustomerPreventdamageGuide.prototype = {
   },
 
   _applyCategory: function($layer) {
-    this._category = $layer.find('input[name="radio"]:checked').val();
-    this._popupService._popupClose();
-    this._goList();
+    this._history.goLoad('/customer/prevent-damage/guide?category=' + $layer.find('input[name="radio"]:checked').val());
   },
 
-  _goList : function() {
-    location.href = '/customer/prevent-damage/guide?category=' + this._category;
+  _showListMore: function(e) {
+    var hiddenLength = this.$list.find('li:hidden').length;
+
+    if (hiddenLength <= 30) {
+      this.$list.find('li:hidden').show();
+      $(e.currentTarget).parent().remove();
+    }
+
+    if (hiddenLength > 30) {
+      this.$list.find('li:hidden:lt(30)').show();
+      $(e.currentTarget).html(Tw.BUTTON_LABEL.MORE + '<span>' + ((hiddenLength-30) > 30 ? 30 : hiddenLength-30) + '</span>');
+    }
   }
 
 };

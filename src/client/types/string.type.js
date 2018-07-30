@@ -31,6 +31,8 @@ Tw.DATE_UNIT = {
 Tw.POPUP_TITLE = {
   NOTIFY: '알림',
   CONFIRM: '확인',
+  GUIDE: '안내',
+  SELECT_LINE: '회선 선택',
   REQUEST_DELETE: '조르기 삭제안내',
   GIFT_FAMILY_INFO: '데이터 자동 선물 안내',
   CHANGE_SEARCH_CONDITION: '검색 조건 변경',
@@ -56,7 +58,8 @@ Tw.POPUP_PROPERTY = {
 Tw.BUTTON_LABEL = {
   SELECT: '선택',
   CONFIRM: '확인',
-  CANCEL: '취소'
+  CANCEL: '취소',
+  MORE: '더보기'
 };
 
 Tw.CURRENCY_UNIT = {
@@ -113,7 +116,8 @@ Tw.PAYMENT_STRING = {
   BANK_NAME: '은행명',
   OK_CASHBAG: 'OK캐쉬백',
   T_POINT: 'T포인트',
-  BANK_NUMBER: '계좌번호'
+  BANK_NUMBER: '계좌번호',
+  POINT: '포인트'
 };
 
 Tw.PAYMENT_POINT_VALUE = {
@@ -234,6 +238,12 @@ Tw.MSG_MYT = {
     EMAIL_INT: '<img src="/img/dummy/ex_preview5.jpg" alt="요금 안내서 이메일서비스">', // 이메일 (인터넷/집전화/IPTV , T-WIBRO)
     ETC_HP: '<img src="/img/dummy/ex_preview10.jpg" alt="요금 안내서 우편서비스">', // 기타(우편) : 휴대폰
     ETC_INT: '<img src="/img/dummy/ex_preview4.jpg" alt="요금 안내서 우편서비스">' // 기타(우편) : (인터넷/집전화/IPTV , T-WIBRO)
+  },
+  TDATA_SHARE: {
+    M01_TITLE: 'T데이터셰어링 기본제공 데이터 사용량',
+    M01_CONTENTS: '올인원 요금제 등 기본으로 데이터를 제공하는 요금제를 이용하는 고객님 중 제한된 USIM(한도형)의 데이터 정보만 노출합니다.',
+    M02_TITLE: 'T데이터셰어링 총 데이터 사용량',
+    M02_CONTENTS: '등록하신 각각의 T 데이터셰어링 USIM의 사용량을 합산한 정보입니다.'
   }
 };
 
@@ -334,10 +344,6 @@ Tw.MSG_PAYMENT = {
     CONTENTS: '<strong>환불받으실 금액을 확인</strong>하시고<br /> 환불 받을 계좌를 등록해 주세요!',
     BUTTON_TEXT: '과납금액확인하기'
   },
-  HISTORY_OVER_PAY_POPUP: '<div class=\'widget pop-btm-area\'>' +
-    '<div class=\'widget-box check\'><ul class=\'select-list\' role=\'group\'>' +
-    '<li class=\'checkbox type01\' role=\'checkbox\' aria-checked=\'false\'>' +
-    '<input type=\'checkbox\' name=\'checkbox\' title=\'하루동안 보지 않기\'> 하루동안 보지 않기</li></ul></div></div>',
   HISTORY_POINT_TITLE_OCB: 'OK캐쉬백',
   HISTORY_POINT_TITLE_TPOINT: 'T포인트',
   HISTORY_POINT_TITLE_RAINBOW: '레인보우 포인트',
@@ -412,7 +418,9 @@ Tw.MSG_CUSTOMER = {
   VOICE_A03: '진행을 취소하시고 첫 화면으로 이동하시겠습니까?',
   HELPLINE_A01: '예약을 취소하시겠습니까?',
   HELPLINE_A02: '지역을 선택해 주세요.',
-  HELPLINE_A03: '진행을 취소하시고 첫 화면으로 이동하시겠습니까?'
+  HELPLINE_A03: '진행을 취소하시고 첫 화면으로 이동하시겠습니까?',
+  HELPLINE_A04: '이미 예약하신 정보가 있습니다.',
+  HELPLINE_A05: '전화상담 예약은 지역별 1일 1회로 제한되며 중복 신청을 하실 수 없습니다. 예약현황을 확인하시겠습니까?'
 }
 
 Tw.RECHARGE_TYPE = {

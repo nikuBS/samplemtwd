@@ -46,13 +46,13 @@ export const API_CMD = {
   BFF_05_0002: { path: '/my-t/balance-add-ons', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0003: { path: '/core-balance/v1/troaming-sharings', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0004: { path: '/core-balance/v1/data-sharings', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
-  BFF_05_0005: { path: '/core-balance/v1/tdata-sharings', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_05_0005: { path: '/core-balance/v1/tdata-sharings', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0006: { path: '/core-balance/v1/data-top-up', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0007: { path: '/core-balance/v1/ting', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0008: { path: '/core-balance/v1/data-discount', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0009: { path: '/core-balance/v1/data-sharings/balances', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0010: { path: '/core-balance/v1/children', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
-  BFF_05_0011: { path: '/core-balance/v1/data-sharings/args-0', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0011: { path: '/core-balance/v1/data-sharings', method: API_METHOD.DELETE, server: API_SERVER.BFF, bypass: true },
   BFF_05_0013: { path: '/core-bill/v1/pps-bills', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0014: { path: '/core-bill/v1/pps-histories', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0028: { path: '/core-bill/v1/bill-types-reissue-list/', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
@@ -65,7 +65,12 @@ export const API_CMD = {
   BFF_05_0037: { path: '/core-bill/v1/bill-pay/suspension', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0038: { path: '/core-bill/v1/bill-pay/donation', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0039: { path: '/core-bill/v1/bill-types-return-list/', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
-  BFF_05_0040: { path: '/core-product/v1/services/wireless/additions/args-0', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_05_0040: {
+    path: '/core-product/v1/services/wireless/additions/args-0',
+    method: API_METHOD.GET,
+    server: API_SERVER.BFF,
+    bypass: false
+  },
   BFF_05_0041: { path: '/core-product/v1/services/base-fee-plans', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0044: { path: '/core-bill/v1/bill-pay/roaming', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0045: { path: '/core-bill/v1/bill-pay/call-gift', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
@@ -154,7 +159,12 @@ export const API_CMD = {
   BFF_07_0035: { path: '/core-bill/v1/payment/realtime-payment', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_07_0036: { path: '/core-bill/v1/payment/realtime-payment-detail', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_07_0037: { path: '/core-bill/v1/payment/auto-payment', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
-  BFF_07_0039: { path: '/core-bill/v1/payment/auto-integrated-account-payment', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_07_0039: {
+    path: '/core-bill/v1/payment/auto-integrated-account-payment',
+    method: API_METHOD.GET,
+    server: API_SERVER.BFF,
+    bypass: true
+  },
   BFF_07_0040: {
     path: '/core-bill/v1/payment/auto-integrated-payment-cancle-request',
     method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true
@@ -200,10 +210,15 @@ export const API_CMD = {
   BFF_08_0001: { path: '/core-modification/v1/counsel-time-check', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_08_0002: { path: '/core-modification/v1/counsel-reserve', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_08_0003: { path: '/core-modification/v1/counsel-histories', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_08_0009: { path: '/core-modification/v1/voice-certification-check', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_08_0014: { path: '/cs/file-upload', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_08_0025: { path: '/core-modification/v1/survey/surveyMainBanner', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_08_0028: { path: '/core-modification/v1/notice/tworld-submain', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_08_0029: { path: '/core-modification/v1/tworld-notice', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_08_0030: { path: '/core-modification/v1/directshop-notice', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_08_0031: { path: '/core-modification/v1/membership-notice', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_08_0032: { path: '/core-modification/v1/roaming-notice', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_08_0034: { path: '/core-modification/v1/voice-certification', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
 
   // TID
   OIDC: { path: '/auth/authorize.do', method: API_METHOD.GET, server: API_SERVER.TID, bypass: false },
