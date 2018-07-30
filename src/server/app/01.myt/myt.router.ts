@@ -34,22 +34,22 @@ import MyTBillHistoryMicroLimit from './controllers/bill/myt.bill.history.micro.
 import MyTBillHistoryContents from './controllers/bill/myt.bill.history.contents.controller';
 import MyTBillHistoryContentsLimit from './controllers/bill/myt.bill.history.contents.limit.controller';
 
-import MytJoinServicePayClaimInfo from './controllers/joinService/myt.joinService.payClaimInfo.controller';
-import MytJoinServicePayClaimInfoPhone from './controllers/joinService/myt.joinService.payClaimInfo.phone.controller';
-import MytJoinServicePayClaimInfoIptv from './controllers/joinService/myt.joinService.payClaimInfo.iptv.controller';
-import MytJoinServicePayClaimInfoTlogin from './controllers/joinService/myt.joinService.payClaimInfo.tlogin.controller';
-import MytJoinServicePayClaimInfoTwibro from './controllers/joinService/myt.joinService.payClaimInfo.twibro.controller';
-import MytJoinServicePayClaimInfoTpocketfi from './controllers/joinService/myt.joinService.payClaimInfo.tpocketfi.controller';
-import MytJoinServicePayClaimInfoPointcam from './controllers/joinService/myt.joinService.payClaimInfo.pointcam.controller';
-import MytJoinServiceContractTerminalInfo from './controllers/joinService/myt.joinService.contractTerminalInfo.controller';
-import MytJoinServiceContractTerminalInfoPhoneDetail from './controllers/joinService/myt.joinService.contractTerminalInfo.phone.detail.controller';
-import MytJoinServiceContractTerminalInfoTpocketfi from './controllers/joinService/myt.joinService.contractTerminalInfo.tpocketfi.controller';
-import MytJoinServiceContractTerminalInfoTpocketfiDetail from './controllers/joinService/myt.joinService.contractTerminalInfo.tpocketfi.detail.controller';
-import MytJoinServiceContractTerminalInfoTwibro from './controllers/joinService/myt.joinService.contractTerminalInfo.twibro.controller';
-import MytJoinServiceContractTerminalInfoTlogin from './controllers/joinService/myt.joinService.contractTerminalInfo.tlogin.controller';
-import MytJoinServiceContractTerminalInfoTloginDetail from './controllers/joinService/myt.joinService.contractTerminalInfo.tlogin.detail.controller';
-import MytJoinServiceContractTerminalInfoPhone from './controllers/joinService/myt.joinService.contractTerminalInfo.phone.controller';
-import MytJoinServicePayClaimInfoIptvSk from './controllers/joinService/myt.joinService.payClaimInfo.iptvSk.controller';
+import MytJoinPayClaim from './controllers/join/myt.join.pay-claim.controller';
+import MytJoinPayClaimPhone from './controllers/join/myt.join.pay-claim.phone.controller';
+import MytJoinPayClaimIptv from './controllers/join/myt.join.pay-claim.iptv.controller';
+import MytJoinPayClaimIptvSk from './controllers/join/myt.join.pay-claim.iptvSk.controller';
+import MytJoinPayClaimTlogin from './controllers/join/myt.join.pay-claim.tlogin.controller';
+import MytJoinPayClaimTwibro from './controllers/join/myt.join.pay-claim.twibro.controller';
+import MytJoinPayClaimTpocketfi from './controllers/join/myt.join.pay-claim.tpocketfi.controller';
+import MytJoinPayClaimPointcam from './controllers/join/myt.join.pay-claim.pointcam.controller';
+import MytJoinContractTerminal from './controllers/join/myt.join.contract-terminal.controller';
+import MytJoinContractTerminalPhone from './controllers/join/myt.join.contract-terminal.phone.controller';
+import MytJoinContractTerminalPhoneDetail from './controllers/join/myt.join.contract-terminal.phone.detail.controller';
+import MytJoinContractTerminalTpocketfi from './controllers/join/myt.join.contract-terminal.tpocketfi.controller';
+import MytJoinContractTerminalTpocketfiDetail from './controllers/join/myt.join.contract-terminal.tpocketfi.detail.controller';
+import MytJoinContractTerminalTwibro from './controllers/join/myt.join.contract-terminal.twibro.controller';
+import MytJoinContractTerminalTlogin from './controllers/join/myt.join.contract-terminal.tlogin.controller';
+import MytJoinContractTerminalTloginDetail from './controllers/join/myt.join.contract-terminal.tlogin.detail.controller';
 
 
 class MytRouter extends TwRouter {
@@ -93,25 +93,25 @@ class MytRouter extends TwRouter {
     this.controllers.push({ url: '/bill/history/contents', controller: new MyTBillHistoryContents() });
     this.controllers.push({ url: '/bill/history/contents/limit', controller: new MyTBillHistoryContentsLimit() });
 
-    this.controllers.push({ url: '/joinService/payClaimInfo', controller: new MytJoinServicePayClaimInfo() });
-    this.controllers.push({ url: '/joinService/payClaimInfo/phone', controller: new MytJoinServicePayClaimInfoPhone() });
-    this.controllers.push({ url: '/joinService/payClaimInfo/iptv', controller: new MytJoinServicePayClaimInfoIptv() });
-    this.controllers.push({ url: '/joinService/payClaimInfo/iptvSk', controller: new MytJoinServicePayClaimInfoIptvSk() });
-    this.controllers.push({ url: '/joinService/payClaimInfo/tlogin', controller: new MytJoinServicePayClaimInfoTlogin() });
-    this.controllers.push({ url: '/joinService/payClaimInfo/twibro', controller: new MytJoinServicePayClaimInfoTwibro() });
-    this.controllers.push({ url: '/joinService/payClaimInfo/tpocketfi', controller: new MytJoinServicePayClaimInfoTpocketfi() });
-    this.controllers.push({ url: '/joinService/payClaimInfo/pointcam', controller: new MytJoinServicePayClaimInfoPointcam() });
+    this.controllers.push({ url: '/join/pay-claim', controller: new MytJoinPayClaim() });
+    this.controllers.push({ url: '/join/pay-claim/phone', controller: new MytJoinPayClaimPhone() });
+    this.controllers.push({ url: '/join/pay-claim/iptv', controller: new MytJoinPayClaimIptv() });
+    this.controllers.push({ url: '/join/pay-claim/iptvSk', controller: new MytJoinPayClaimIptvSk() });
+    this.controllers.push({ url: '/join/pay-claim/tlogin', controller: new MytJoinPayClaimTlogin() });
+    this.controllers.push({ url: '/join/pay-claim/twibro', controller: new MytJoinPayClaimTwibro() });
+    this.controllers.push({ url: '/join/pay-claim/tpocketfi', controller: new MytJoinPayClaimTpocketfi() });
+    this.controllers.push({ url: '/join/pay-claim/pointcam', controller: new MytJoinPayClaimPointcam() });
 
-    this.controllers.push({ url: '/joinService/contractTerminalInfo', controller: new MytJoinServiceContractTerminalInfo() });
-    this.controllers.push({ url: '/joinService/contractTerminalInfo/phone', controller: new MytJoinServiceContractTerminalInfoPhone() });
-    this.controllers.push({ url: '/joinService/contractTerminalInfo/phone/detail', controller: new MytJoinServiceContractTerminalInfoPhoneDetail() });
-    this.controllers.push({ url: '/joinService/contractTerminalInfo/tpocketfi', controller: new MytJoinServiceContractTerminalInfoTpocketfi() });
-    this.controllers.push({ url: '/joinService/contractTerminalInfo/tpocketfi/detail',
-      controller: new MytJoinServiceContractTerminalInfoTpocketfiDetail() });
-    this.controllers.push({ url: '/joinService/contractTerminalInfo/twibro', controller: new MytJoinServiceContractTerminalInfoTwibro() });
-    this.controllers.push({ url: '/joinService/contractTerminalInfo/tlogin', controller: new MytJoinServiceContractTerminalInfoTlogin() });
-    this.controllers.push({ url: '/joinService/contractTerminalInfo/tlogin/detail',
-      controller: new MytJoinServiceContractTerminalInfoTloginDetail() });
+    this.controllers.push({ url: '/join/contract-terminal', controller: new MytJoinContractTerminal() });
+    this.controllers.push({ url: '/join/contract-terminal/phone', controller: new MytJoinContractTerminalPhone() });
+    this.controllers.push({ url: '/join/contract-terminal/phone/detail', controller: new MytJoinContractTerminalPhoneDetail() });
+    this.controllers.push({ url: '/join/contract-terminal/tpocketfi', controller: new MytJoinContractTerminalTpocketfi() });
+    this.controllers.push({ url: '/join/contract-terminal/tpocketfi/detail',
+      controller: new MytJoinContractTerminalTpocketfiDetail() });
+    this.controllers.push({ url: '/join/contract-terminal/twibro', controller: new MytJoinContractTerminalTwibro() });
+    this.controllers.push({ url: '/join/contract-terminal/tlogin', controller: new MytJoinContractTerminalTlogin() });
+    this.controllers.push({ url: '/join/contract-terminal/tlogin/detail',
+      controller: new MytJoinContractTerminalTloginDetail() });
   }
 }
 
