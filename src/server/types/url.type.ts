@@ -38,6 +38,7 @@ export const URL = {
   '/myt/bill/history/contents': { login: true, id: 'My_02_03_05_01' },  // 나의 요금 > 콘텐츠 이용료 이용내역
   '/myt/bill/history/contents/limit': { login: true, id: 'My_02_03_05_01_02' },  // 나의 요금 > 콘텐츠 이용료 이용내역 > 콘텐츠 이용 한도 확인
   '/myt/bill/history/contents/limit/change': { login: true, id: 'My_02_03_05_01_01' },  // 나의 요금 > 콘텐츠 이용료 이용내역 > 콘텐츠 이용 한도 변경
+  '/myt/join/join-info': { login: true, id: 'MY_01_02' }, // 가입정보
   // recharge
   '/recharge/refill': { login: true, id: 'DA_01_01_01' }, // 리필하기
   '/recharge/refill/history': { login: true, id: 'DA_01_02_01' }, // 리필 히스토리
