@@ -14,26 +14,73 @@ Tw.CustomerVoice = function (rootEl) {
 
   this._cachedElement();
   this._bindEvent();
+  this._init();
 };
 
 Tw.CustomerVoice.prototype = {
+  _init: function () {
+    this._apiService.request(Tw.API_CMD.BFF_08_0009, {})
+      .done($.proxy(this._onSuccessVoiceStatus, this));
+  },
   _cachedElement: function () {
-    this.$btn_go_voice_sms = $('#fe-btn-go-sms');
   },
 
   _bindEvent: function () {
-    this.$btn_go_voice_sms.on('click', $.proxy(this._goToVoiceSms, this));
+    this.$container.on('click', '.fe-btn-go-sms', $.proxy(this._goToVoiceSms, this));
     this.$container.on('click', '.fe-btn-auth', $.proxy(this._openAuthConfirm, this));
     this.$container.on('click', '.fe-btn-auth-cancel', $.proxy(this._openAuthCancel, this));
     this.$container.on('click', '.fe-inp-term', $.proxy(this._checkTerms, this));
     this.$container.on('click', '.close-step', $.proxy(this._openCloseProcess, this));
+    this.$container.on('click', '.fe-select-line', $.proxy(this._openSelectLine, this));
+    this.$container.on('click', '.fe-select-line-confirm', $.proxy(this._selectLine, this));
+  },
+
+  _onSuccessVoiceStatus: function (res) {
+    this.voiceCustomer = res.result;
   },
 
   _checkTerms: function (e) {
     $('.fe-btn-auth').prop('disabled', !$(e.currentTarget).prop('checked'));
   },
 
+  _openSelectLine: function () {
+    var htOptions = _.map(this.voiceCustomer.svcInfo, function (svcInfo) {
+      return { title: svcInfo.svcNum, checked: false, value: svcInfo.svcMgmtNum, text: svcInfo.svcNum };
+    });
+    // [
+    //   { 'title': '010-21**-43**', checked: true, value: '값1', text: '010-21**-43**' },
+    //   { 'title': '010-21**-21**', checked: false, value: '값2', text: '010-21**-21**' },
+    //   { 'title': '010-21**-22**', checked: false, value: '값3', text: '010-21**-39**' }
+    // ]
+
+    this._popupService.open({
+      hbs: 'select',
+      title: Tw.POPUP_TITLE.SELECT_LINE,
+      select: [
+        {
+          options: htOptions
+        }
+      ],
+      bt_num: 'one',
+      type: [{
+        style_class: 'bt-red1 fe-select-line-confirm',
+        txt: '확인'
+      }]
+    });
+  },
+
+  _selectLine: function () {
+    this._popupClose();
+  },
+
   _openAuthConfirm: function () {
+    this._apiService.request(Tw.API_CMD.BFF_08_0034, {
+      svcMgmtNum: this.voiceCustomer.svcInfo[0].svcMgmtNum,
+      svcNum: this.voiceCustomer.svcInfo[0].svcMgmtNum
+    }).done($.proxy(this._onSuccessSMS, this));
+  },
+
+  _onSuccessSMS: function () {
     this._history.setHistory();
     location.hash = 'complete';
   },
@@ -45,7 +92,7 @@ Tw.CustomerVoice.prototype = {
       null,
       null,
       $.proxy(this._authConfirm, this),
-      $.proxy(this._authCancel, this));
+      $.proxy(this._popupClose, this));
   },
 
   _openCloseProcess: function () {
@@ -55,42 +102,24 @@ Tw.CustomerVoice.prototype = {
       null,
       null,
       $.proxy(this._authConfirm, this),
-      $.proxy(this._authCancel, this));
+      $.proxy(this._popupClose, this));
   },
 
   _authConfirm: function () {
-
+    this._popupClose();
+    this._history.goBack();
   },
 
-  _authCancel: function () {
+  _popupClose: function () {
     this._popupService.close();
   },
 
   _goToVoiceSms: function () {
-    var response = {
-      code: '00',
-      msg: 'success',
-      result: {
-        hitoriesYn: 'N',
-        svcInfo: [
-          {
-            svcMgmtNum: '7016134141',
-            svcNum: '01053573886'
-          },
-          {
-            svcMgmtNum: '7039762321',
-            svcNum: '01063753891'
-          }
-        ]
-      }
-    };
-
-    if ( response.result.historyYn === 'N' ) {
-      //TODO: alert
-      // this._history.goLoad('/customer/voice/sms');
+    if ( this.voiceCustomer.hitoriesYn === 'Y' ) {
+      this._popupService.openAlert(Tw.MSG_CUSTOMER.VOICE_A01, Tw.BUTTON_LABEL.CONFIRM, $.proxy(this._authCancel, this));
       return false;
+    } else {
+      this._history.goLoad('/customer/voice/sms');
     }
-
-    return true;
   }
 };
