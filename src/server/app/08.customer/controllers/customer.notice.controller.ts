@@ -9,11 +9,23 @@ import TwViewController from '../../../common/controllers/tw.view.controller';
 import { API_CMD, API_CODE } from '../../../types/api-command.type';
 import { CUSTOMER_NOTICE_CATEGORY } from '../../../types/string.type';
 
-const categoryLabel = {
-  tworld: CUSTOMER_NOTICE_CATEGORY.TWORLD,
-  directshop: CUSTOMER_NOTICE_CATEGORY.DIRECTSHOP,
-  membership: CUSTOMER_NOTICE_CATEGORY.MEMBERSHIP,
-  roaming: CUSTOMER_NOTICE_CATEGORY.ROAMING
+const categorySwitchingData = {
+  tworld: {
+    LABEL: CUSTOMER_NOTICE_CATEGORY.TWORLD,
+    API: API_CMD.BFF_08_0029
+  },
+  directshop: {
+    LABEL: CUSTOMER_NOTICE_CATEGORY.DIRECTSHOP,
+    API: API_CMD.BFF_08_0030
+  },
+  membership: {
+    LABEL: CUSTOMER_NOTICE_CATEGORY.MEMBERSHIP,
+    API: API_CMD.BFF_08_0031
+  },
+  roaming: {
+    LABEL: CUSTOMER_NOTICE_CATEGORY.ROAMING,
+    API: API_CMD.BFF_08_0032
+  }
 };
 
 class CustomerNoticeController extends TwViewController {
@@ -21,19 +33,40 @@ class CustomerNoticeController extends TwViewController {
     super();
   }
 
+  private convertData(data): any {
+    if (data.code !== API_CODE.CODE_00) {
+      return {
+        total: 0,
+        remain: 0,
+        list: [],
+        last: true
+      };
+    }
+
+    return {
+      total: data.result.total,
+      remain: data.result.remainCounts,
+      list: data.result.content,
+      last: data.result.last
+    };
+  }
+
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     const category = req.query.category || 'tworld';
 
-    // @todo category 값이 미리 정의된 것이 아닐경우 오류처리 필요.
-    // if (['tworld', 'directshop', 'roaming', 'membership'].indexOf(category) === -1) {
-    //   res.redirect();
-    // }
+    if (['tworld', 'directshop', 'roaming', 'membership'].indexOf(category) === -1) {
+      res.redirect('/customer/notice');
+    }
 
-    res.render('customer.notice.html', {
-      category: category,
-      categoryLabel: categoryLabel[category],
-      svcInfo: svcInfo
-    });
+    this.apiService.request(categorySwitchingData[category].API, {page: 1, size: 20})
+      .subscribe((data) => {
+        res.render('customer.notice.html', {
+          category: category,
+          categoryLabel: categorySwitchingData[category].LABEL,
+          svcInfo: svcInfo,
+          data: this.convertData(data)
+        });
+      });
   }
 }
 

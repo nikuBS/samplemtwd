@@ -66,13 +66,13 @@
                     <% } else { %>
                     <ul class="link-group-list use-icon">
                         <li>
-                            <button class="link-group-btn fe-btn_guide" data-category="video"><span class="link-group-ico ico1"></span>동영상으로 보는 피해예방법</button>
+                            <a class="link-group-btn" href="/customer/prevent-damage/guide?category=video"><span class="link-group-ico ico1"></span>동영상으로 보는 피해예방법</a>
                         </li>
                         <li>
-                            <button class="link-group-btn fe-btn_guide" data-category="webtoon"><span class="link-group-ico ico2"></span>웹툰으로 보는 피해예방법</button>
+                            <a class="link-group-btn" href="/customer/prevent-damage/guide?category=webtoon"><span class="link-group-ico ico2"></span>웹툰으로 보는 피해예방법</a>
                         </li>
                         <li>
-                            <button class="link-group-btn fe-btn_guide" data-category="latest"><span class="link-group-ico ico3"></span>최신 이용자 피해예방 정보</button>
+                            <a class="link-group-btn" href="/customer/prevent-damage/guide?category=latest"><span class="link-group-ico ico3"></span>최신 이용자 피해예방 정보</a>
                         </li>
                     </ul>
                     <a class="link-group-more" href="/customer/prevent-damage/guide">더보기</a>
@@ -90,9 +90,9 @@
                     <ul class="link-group-list fe-latest_warning_list">
                         <% for (var i in latestWarningList) { %>
                         <li>
-                            <button class="link-group-btn" data-lwid="<%= latestWarningList[i].bltn2BltnId %>">
+                            <a class="link-group-btn" href="/customer/prevent-damage/latest-warning/view?lw_id=<%= latestWarningList[i].bltn2BltnId %>">
                                 <%= latestWarningList[i].bltnTitleNm %>
-                            </button>
+                            </a>
                         </li>
                         <% } %>
                     </ul>
@@ -268,9 +268,4 @@
     <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }) %>
 </div>
 <% include ../../components/javascript.component.html %>
-<script>
-  $(document).ready(function () {
-    var comp = new Tw.CustomerPreventdamageMain($('.wrap'));
-  });
-</script>
 <% include ../../components/end.component.html %>
