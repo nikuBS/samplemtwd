@@ -1,4 +1,4 @@
-const contractTerminalInfo_BFF_05_0076 = {
+const contractTerminal_BFF_05_0076 = {
   'code': '00',
   'msg': '',
   'result':
@@ -10,5 +10,5 @@ const contractTerminalInfo_BFF_05_0076 = {
     }
 };
 
-export default contractTerminalInfo_BFF_05_0076;
+export default contractTerminal_BFF_05_0076;
 
