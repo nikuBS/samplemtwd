@@ -10,7 +10,7 @@ Tw.CustomerNotice = function(rootEl) {
   this._popupService = Tw.Popup;
   this._history = new Tw.HistoryService();
   this._template = Handlebars.compile($('#tpl_notice_list_item').html());
-  this._page = 0;
+  this._page = 1;
 
   this._cachedElement();
   this._bindEvent();
@@ -93,11 +93,11 @@ Tw.CustomerNotice.prototype = {
 
     if (res.result.last) this.$btnMoreList.remove();
     else {
-      this.$btnMoreList.html(Tw.BUTTON_LABEL.MORE + '<span>(' + this._getRemainCount({
+      this.$btnMoreList.find('span').text('(' + this._getRemainCount({
         total: res.result.totalElements,
         page: res.result.pageable.pageNumber,
         size: res.result.pageable.pageSize
-      })  + ')</span>');
+      })  + ')');
       this._page++;
     }
   },

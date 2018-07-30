@@ -43,11 +43,11 @@ Tw.CustomerPreventdamageLatestwarning.prototype = {
 
     if (res.result.last) this.$btnMoreList.remove();
     else {
-      this.$btnMoreList.html(Tw.BUTTON_LABEL.MORE + '<span>(' + this._getRemainCount({
+      this.$btnMoreList.find('span').text('(' + this._getRemainCount({
         total: res.result.totalElements,
         page: res.result.pageable.pageNumber,
         size: res.result.pageable.pageSize
-      })  + ')</span>');
+      }) + ')');
       this._page++;
     }
   },
