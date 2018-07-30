@@ -41,6 +41,7 @@ export const URL = {
   '/myt/joinService/protect/cancel': { login: true, id: 'MY_01_02_09' },
   '/myt/joinService/protect/change': { login: true, id: 'MY_01_02_08' },
   '/myt/joinService/protect/inquiry': { login: true, id: 'MY_01_02_07' },
+  '/myt/join/join-info': { login: true, id: 'MY_01_02' }, // 가입정보
   // recharge
   '/recharge/refill': { login: true, id: 'DA_01_01_01' }, // 리필하기
   '/recharge/refill/history': { login: true, id: 'DA_01_02_01' }, // 리필 히스토리

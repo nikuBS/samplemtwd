@@ -30,6 +30,7 @@ Tw.POPUP_TITLE = {
   NOTIFY: '알림',
   CONFIRM: '확인',
   GUIDE: '안내',
+  SELECT_LINE: '회선 선택',
   REQUEST_DELETE: '조르기 삭제안내',
   GIFT_FAMILY_INFO: '데이터 자동 선물 안내',
   CHANGE_SEARCH_CONDITION: '검색 조건 변경',
@@ -416,7 +417,9 @@ Tw.MSG_CUSTOMER = {
   VOICE_A03: '진행을 취소하시고 첫 화면으로 이동하시겠습니까?',
   HELPLINE_A01: '예약을 취소하시겠습니까?',
   HELPLINE_A02: '지역을 선택해 주세요.',
-  HELPLINE_A03: '진행을 취소하시고 첫 화면으로 이동하시겠습니까?'
+  HELPLINE_A03: '진행을 취소하시고 첫 화면으로 이동하시겠습니까?',
+  HELPLINE_A04: '이미 예약하신 정보가 있습니다.',
+  HELPLINE_A05: '전화상담 예약은 지역별 1일 1회로 제한되며 중복 신청을 하실 수 없습니다. 예약현황을 확인하시겠습니까?'
 }
 
 Tw.RECHARGE_TYPE = {
