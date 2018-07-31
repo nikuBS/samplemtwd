@@ -25,7 +25,7 @@ class PaymentPrepayMicroController extends TwViewController {
           title: PREPAY_TITLE.MICRO
         });
       }
-      res.render('payment.prepay.error.html', { err: resp, svcInfo: svcInfo, title: PREPAY_TITLE });
+      res.render('payment.prepay.error.html', { err: resp, svcInfo: svcInfo, title: PREPAY_TITLE.MICRO + ' ' + PREPAY_TITLE.PREPAY });
     });
   }
 
