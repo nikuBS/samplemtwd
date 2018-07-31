@@ -104,7 +104,7 @@ Tw.PostcodeMain.prototype = {
       if (res.result.length > 0) {
         this._detailList = this._setList(this.$detailSelector, this._detailList, res.result);
         this._initAddress();
-        this._history.goHash('step2-load');
+        this._history.goHash('#step2-load');
       } else {
         this._getPostFail();
       }
@@ -255,6 +255,6 @@ Tw.PostcodeMain.prototype = {
       this._validation.checkMoreLength(this.$loadName.val(), 2, Tw.MSG_POSTCODE.L03);
   },
   _goStep3: function () {
-    this._history.hash('step3');
+    this._history.goHash('#step3');
   }
 };

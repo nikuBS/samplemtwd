@@ -1,5 +1,3 @@
-import { API_METHOD, API_SERVER } from "../../server/types/api-command.type";
-
 Tw.API_METHOD = {
   GET: 'GET',
   POST: 'POST',
@@ -83,6 +81,7 @@ Tw.API_CMD = {
   BFF_05_0081: { path: '/core-bill/v1/microPay-requests', method: Tw.API_METHOD.POST },
   BFF_05_0082: { path: '/core-bill/v1/microPay-auto-set', method: Tw.API_METHOD.POST },
   BFF_05_0083: { path: '/core-bill/v1/microPay-requests', method: Tw.API_METHOD.PUT },
+  BFF_05_0089: { path: '/core-bill/v1/prepayInfo', method: Tw.API_METHOD.GET },
 
   // RECHARGE
   BFF_06_0001: { path: '/core-recharge/v1/refill-coupons', method: Tw.API_METHOD.GET },
@@ -248,4 +247,3 @@ Tw.API_LOGIN_ERROR = {
   ICAS3228: 'ICAS3228',   // 고객보호비밀번호(대표회선) 입력 필요
   ICAS3235: 'ICAS3235'    // 휴면계정
 };
-

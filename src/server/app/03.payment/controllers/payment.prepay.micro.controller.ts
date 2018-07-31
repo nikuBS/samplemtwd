@@ -9,7 +9,6 @@ import { API_CMD, API_CODE } from '../../../types/api-command.type';
 import FormatHelper from '../../../utils/format.helper';
 import {AUTO_CHARGE_CODE, PREPAY_TITLE} from '../../../types/bff-common.type';
 import DateHelper from '../../../utils/date.helper';
-import AutoYn from '../../../mock/server/payment/payment.prepay.autoyn.mock';
 
 class PaymentPrepayMicroController extends TwViewController {
   constructor() {
@@ -19,7 +18,7 @@ class PaymentPrepayMicroController extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     this.apiService.request(API_CMD.BFF_07_0072, {}).subscribe((resp) => {
       res.render('payment.prepay.micro.html', {
-        prepay: this.getResult(AutoYn),
+        prepay: this.getResult(resp),
         svcInfo: svcInfo,
         currentMonth: this.getCurrentMonth(),
         title: PREPAY_TITLE.MICRO
