@@ -1,0 +1,70 @@
+<!--
+* FileName: myt.usage.graphbox.html
+* Author: Hyeryoun Lee (skt.P130712@partner.sk.com)
+* Date: 2018. 7. 27.
+* Bill group accordion menu Handlebars template
+-->
+<div class="title-wrap">
+    <h2 class="title-h2"><%= type %></h2>
+    <!-- 용량 선택 -->
+        <div class="widget">
+        <div class="widget-box switch2">
+            <div class="btn-switch type2">
+                <ul>
+                    <li role="radio" aria-checked="false"><input name="gbmb" type="radio" title="용량 타입 선택"/>GB
+                    </li>
+                    <li role="radio" aria-checked="true" class="checked"><input name="gbmb" type="radio"
+                                                                                title="용량 타입 선택" checked/>MB
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- end 용량 선택 -->
+</div>
+
+<% for (var i = 0; i < items.length; i++) { %>
+<div class="used-data-info">
+    <div class="header-info">
+        <div class="left">
+            <% if(items[i].isRemainUnlimited) { %>
+            <span class="btit"><%= items[i].remained %></span>
+            <% } else { %>
+            <span class="stit">잔여</span>
+            <span class="data">
+                    <% for (var j = 0; j < items[i].showRemaineds.length; j++) { %>
+                    <span class="char red"><%= items[i].showRemaineds[j].data %></span><%= items[i].showRemaineds[j].unit %>
+                    <% } %>
+                </span>
+            <% } %>
+        </div>
+        <div class="right">
+            <% if (!items[i].isUsedUnlimited) { %>
+            <span class="stit">사용</span>
+            <span class="data">
+                <% for (var j = 0; j < items[i].showUseds.length; j++) { %>
+                <span class="char red"><%= items[i].showUseds[j].data %></span><%= items[i].showUseds[j].unit %>
+                <% } %>
+                </span>
+            <% } %>
+        </div>
+    </div>
+    <div class="bar-chart-hoz">
+        <span class="data-bar <%= items[i].barClass %>" style="width:<%= items[i].remainedRatio %>%;"></span>
+    </div>
+    <div class="sub-info">
+            <span class="type"><%= items[i].skipName %>
+                <% if (items[i].isExceed) { %>
+                <span class="badge badge-exceed">
+                    <span class="blind">초과</span>
+                </span>
+                <% } %>
+            </span>
+        <% if (items[i].couponDate !== '') { %>
+        <span class="rest">쿠폰등록일<span class="char"><%= items[i].couponDate  %></span></span>
+        <% } else if (items[i].isVisibleDayBtn) { %>
+        <span class="rest"><button class="bt-link-tx">당일 사용량 조회<span class="ico"></span></button></span>
+        <% } %>
+    </div>
+</div>
+<% } %>
