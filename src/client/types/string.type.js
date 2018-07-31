@@ -488,10 +488,23 @@ Tw.URL_PATH = {
   BROADBAND: 'http://www.skbroadband.com/'
 };
 
+Tw.MSG_POSTCODE = {
+  L01: '광역시/도를 선택해주세요.',
+  L02: '시/군/구를 선택해주세요.',
+  L03: '검색어는 최소 2글자 이상 입력해주세요.',
+  L04: '검색된 주소가 없습니다.\n다시 한번 주소를 선택 및 입력해주세요.',
+  L05: '검색된 사서함이 없습니다.\n다시 한번 사서함 주소를 선택 및 입력해주세요.'
+};
+
+Tw.POSTCODE_TEXT = {
+  BUILDING_CODE: '건물번호',
+  ZIP_CODE: '우편번호',
+  SELECT_ADDRESS: '주소를 선택해주세요'
+};
+
 Tw.CUSTOMER_EMAIL = {
   PHONE: '휴대폰',
   INTERNET: '인터넷/집전화/TV',
   DIRECT: '다이렉트샵',
   CHOCO: '초콜렛'
-}
-
+};
