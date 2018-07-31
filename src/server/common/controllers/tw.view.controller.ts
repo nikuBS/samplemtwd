@@ -40,11 +40,16 @@ abstract class TwViewController {
 
     this._loginService.setCurrentReq(req, res);
 
-    if ( this.existId(tokenId, userId) ) {
-      this.login(req, res, next, tokenId, userId);
+    if ( this.checkLogin(req.session) ) {
+      this.sessionLogin(req, res, next);
     } else {
-      this.goSessionLogin(req, res, next, path);
+      if ( this.existId(tokenId, userId) ) {
+        this.login(req, res, next, tokenId, userId);
+      } else {
+        this.routePage(req, res, next, path);
+      }
     }
+
   }
 
   private login(req, res, next, tokenId, userId) {
@@ -85,7 +90,6 @@ abstract class TwViewController {
         }
       });
     }
-
   }
 
   private existId(tokenId: string, userId: string) {
@@ -96,30 +100,30 @@ abstract class TwViewController {
     return this._loginService.isLogin(session);
   }
 
-  private goSessionLogin(req, res, next, path) {
-    if ( this.checkLogin(req.session) ) {
-      this._logger.info(this, '[Session Login]', this._loginService.getSvcInfo());
-      this.render(req, res, next, this._loginService.getSvcInfo());
+  private sessionLogin(req, res, next) {
+    this._logger.info(this, '[Session Login]', this._loginService.getSvcInfo());
+    this.render(req, res, next, this._loginService.getSvcInfo());
+  }
+
+  private routePage(req, res, next, path) {
+    if ( this._loginService.isNewSession() ) {
+      if ( URL[path].login ) {
+        res.send('need login');
+      } else {
+        this.render(req, res, next);
+      }
     } else {
-      if ( this._loginService.isNewSession() ) {
+      const loginYn = req.cookies[COOKIE_KEY.TWM_LOGIN];
+      if ( !FormatHelper.isEmpty(loginYn) && loginYn === 'Y' ) {
+        this._logger.info(this, '[Session expired]');
+        res.clearCookie(COOKIE_KEY.TWM_LOGIN);
+        res.redirect('/auth/logout/expire');
+      } else {
+        this._logger.info(this, '[Session empty]');
         if ( URL[path].login ) {
           res.send('need login');
         } else {
           this.render(req, res, next);
-        }
-      } else {
-        const loginYn = req.cookies[COOKIE_KEY.TWM_LOGIN];
-        if ( !FormatHelper.isEmpty(loginYn) && loginYn === 'Y' ) {
-          this._logger.info(this, '[Session expired]');
-          res.clearCookie(COOKIE_KEY.TWM_LOGIN);
-          res.redirect('/auth/logout/expire');
-        } else {
-          this._logger.info(this, '[Session empty]');
-          if ( URL[path].login ) {
-            res.send('need login');
-          } else {
-            this.render(req, res, next);
-          }
         }
       }
     }
