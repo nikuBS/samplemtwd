@@ -173,3 +173,9 @@ export const TDATA_SHARE_SVC_ST_CD = {
   AC: 'AC', // 분실신고
   SP: 'SP'  // 분실
 };
+
+export const VOICE_UNIT = {
+  HOURS: '시간',
+  MIN: '분',
+  SEC: '초'
+};
