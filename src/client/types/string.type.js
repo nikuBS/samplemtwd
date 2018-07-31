@@ -504,8 +504,9 @@ Tw.POSTCODE_TEXT = {
 };
 
 Tw.CUSTOMER_EMAIL = {
-  PHONE: '휴대폰',
+  CELL: '휴대폰',
   INTERNET: '인터넷/집전화/TV',
   DIRECT: '다이렉트샵',
-  CHOCO: '초콜렛'
+  CHOCO: '초콜렛',
+  SELECT_CATEGORY: '문의사항 선택'
 };
