@@ -1,5 +1,3 @@
-import { API_METHOD, API_SERVER } from "../../server/types/api-command.type";
-
 Tw.API_METHOD = {
   GET: 'GET',
   POST: 'POST',
