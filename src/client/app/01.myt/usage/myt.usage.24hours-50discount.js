@@ -1,4 +1,4 @@
-Tw.MytUsageData24Hours50Discount = function (rootEl) {
+Tw.MytUsage24Hours50Discount = function (rootEl) {
   this.$container = rootEl;
   this._popupService = Tw.Popup;
   this._history = new Tw.HistoryService(rootEl);
@@ -6,7 +6,7 @@ Tw.MytUsageData24Hours50Discount = function (rootEl) {
   this._bindEvent();
 };
 
-Tw.MytUsageData24Hours50Discount.prototype = {
+Tw.MytUsage24Hours50Discount.prototype = {
   _bindEvent: function () {
     this.$container.on('click', '.prev-step', $.proxy(this._onClickPrevStep, this));
     this.$container.on('click', '.fe-btn-detail-date', $.proxy(this._onClickBtnDetailDate, this));
