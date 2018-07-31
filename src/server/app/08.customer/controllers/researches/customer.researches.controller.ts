@@ -9,24 +9,24 @@ import { Request, Response, NextFunction } from 'express';
 import DateHelper from '../../../../utils/date.helper';
 
 interface IResearch {
-  bnnrRsrchTypCd: string, // 배너리서치유형코드(R:설문조사, P:POLL, Q:QUIZ)
-  bnnrRsrchTitleNm: string, // 배너리서치제목
-  bnnrRsrchRpsTypCd: string, // 응답유형코드(S:단일, C:복수)
-  bnnrRsrchSortMthdCd: string, // 좌우정렬방식
-  hintExUrl: string, // POLL:사용안함, Quiz : 힌트보기URL , 설문조사 : 설문ID(qstn_id)
-  cmplYn: string, // 참여여부
-  canswNum: string, // 정답번호(QUIZ)
-  staDtm: string, // 시작년월일
-  endDtm: string, // 종료년월일
-  motMsgHtmlCtt: string, // MOT메시지HTML내용
-  isProceeding?: boolean, // 종료 여부
-  result?: IExample[]
+  bnnrRsrchTypCd: string; // 배너리서치유형코드(R:설문조사, P:POLL, Q:QUIZ)
+  bnnrRsrchTitleNm: string; // 배너리서치제목
+  bnnrRsrchRpsTypCd: string; // 응답유형코드(S:단일, C:복수)
+  bnnrRsrchSortMthdCd: string; // 좌우정렬방식
+  hintExUrl: string; // POLL:사용안함, Quiz : 힌트보기URL , 설문조사 : 설문ID(qstn_id)
+  cmplYn: string; // 참여여부
+  staDtm: string; // 시작년월일
+  endDtm: string; // 종료년월일
+  motMsgHtmlCtt: string; // MOT메시지HTML내용
+  canswNum?: string; // 정답번호(QUIZ)
+  result?: IExample[]; // 보기 목록
+  isProceeding?: boolean; // 종료 여부
 }
 
 interface IExample {
-  exCtt: string // 보기내용
-  motExCtt?: string // MOT
-  exImgFilePathNm?: string // 보기이미지
+  exCtt: string; // 보기내용
+  motExCtt?: string; // MOT
+  exImgFilePathNm?: string; // 보기이미지
 }
 
 export default class CustomerResearches extends TwViewController {
@@ -99,6 +99,6 @@ export default class CustomerResearches extends TwViewController {
     return {
       ...research,
       isProceeding: DateHelper.getDifference(research.endDtm) > 0
-    }
+    };
   }
 }
