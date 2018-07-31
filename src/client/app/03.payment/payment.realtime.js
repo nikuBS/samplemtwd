@@ -7,8 +7,6 @@
 Tw.PaymentRealtime = function (rootEl) {
   this.$container = rootEl;
   this.$bankList = [];
-  this.$window = $(window);
-  this.$document = $(document);
 
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -417,7 +415,7 @@ Tw.PaymentRealtime.prototype = {
     this._history.cancelProcess();
   },
   _go: function (hash) {
-    window.location.hash = hash;
+    this._history.goHash(hash);
   },
   _getPointList: function () {
     return [
