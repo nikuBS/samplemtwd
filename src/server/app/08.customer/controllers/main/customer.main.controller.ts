@@ -19,7 +19,7 @@ class CustomerMainController extends TwViewController {
       this.getBanners(),
       this.getNotice()
     ).subscribe((...rest) => {
-      res.render('customer.main.html', { svcInfo: svcInfo });
+      res.render('main/customer.main.html', { svcInfo: svcInfo });
     });
   }
 

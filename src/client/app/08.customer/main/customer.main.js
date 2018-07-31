@@ -15,7 +15,6 @@ Tw.CustomerMain = function (rootEl) {
 
 Tw.CustomerMain.prototype = {
   _cachedElement: function () {
-
   },
 
   _bindEvent: function () {

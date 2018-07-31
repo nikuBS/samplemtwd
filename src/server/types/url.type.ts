@@ -86,10 +86,10 @@ export const URL = {
   // product
   // direct
   // customer
-  '/customer': { login: true, id: 'CI_01_01' }, // 고객센터 서브메인
-  '/customer/email/question': { login: true, id: 'CI_04_09' }, // 이메일 문의
-  '/customer/voice/info': { login: true, id: 'CI_10_01' }, // 목소리인증 안내
-  '/customer/voice/sms': { login: true, id: 'CI_10_02' }, // 목소리인증 문자발송
+  '/customer': { login: false, id: 'CI_01_01' }, // 고객센터 서브메인
+  '/customer/email': { login: false, id: 'CI_04_09' }, // 이메일 문의
+  '/customer/voice/info': { login: false, id: 'CI_10_01' }, // 목소리인증 안내
+  '/customer/voice/sms': { login: false, id: 'CI_10_02' }, // 목소리인증 문자발송
   '/customer/notice': { login: false, id: 'CI_06_01' }, // 공지사항
   '/customer/prevent-damage': { login: false, id: 'CI_07_01' }, // 이용자 피해예방 센터 메인
   '/customer/prevent-damage/guide': { login: false, id: 'CI_07_03' }, // 이용자 피해예방 가이드

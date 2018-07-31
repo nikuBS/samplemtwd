@@ -222,6 +222,8 @@ export const API_CMD = {
   BFF_08_0002: { path: '/core-modification/v1/counsel-reserve', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_08_0003: { path: '/core-modification/v1/counsel-histories', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_08_0009: { path: '/core-modification/v1/voice-certification-check', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_08_0010: { path: '/core-modification/v1/email-inquiry-categories', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_08_0013: { path: '/core-modification/v1/email-inquiry', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_08_0014: { path: '/cs/file-upload', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_08_0025: { path: '/core-modification/v1/survey/surveyMainBanner', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_08_0028: { path: '/core-modification/v1/notice/tworld-submain', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
