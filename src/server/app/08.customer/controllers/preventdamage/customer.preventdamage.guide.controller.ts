@@ -8,6 +8,8 @@ import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { CUSTOMER_PREVENTDAMAGE_GUIDE } from '../../../../types/string.type';
 import { CUSTOMER_PREVENTDAMAGE_GUIDE_VIDEO, CUSTOMER_PREVENTDAMAGE_GUIDE_LATEST } from '../../../../types/outlink.type';
+import { CUSTOMER_PREVENTDAMAGE_GUIDE_WEBTOON } from '../../../../types/static.type';
+import _ from 'lodash';
 
 const categorySwithingData = {
   video: {
@@ -16,7 +18,7 @@ const categorySwithingData = {
   },
   webtoon: {
     LABEL: CUSTOMER_PREVENTDAMAGE_GUIDE.WEBTOON,
-    LIST: []
+    LIST: CUSTOMER_PREVENTDAMAGE_GUIDE_WEBTOON
   },
   latest: {
     LABEL: CUSTOMER_PREVENTDAMAGE_GUIDE.LATEST,
@@ -29,6 +31,14 @@ class CustomerPreventdamageGuideController extends TwViewController {
     super();
   }
 
+  private _convertWebtoonList(webtoonList) {
+    return _.map(webtoonList, function(data, code) {
+      return _.merge(data, {
+        CODE: code
+      });
+    }).reverse();
+  }
+
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     const category = req.query.category || 'video';
 
@@ -36,7 +46,7 @@ class CustomerPreventdamageGuideController extends TwViewController {
       category: category,
       categoryLabel: categorySwithingData[category].LABEL,
       svcInfo: svcInfo,
-      list: categorySwithingData[category].LIST
+      list: category !== 'webtoon' ? categorySwithingData[category].LIST : this._convertWebtoonList(categorySwithingData[category].LIST)
     });
   }
 }

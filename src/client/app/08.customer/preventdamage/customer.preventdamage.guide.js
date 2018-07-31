@@ -22,7 +22,7 @@ Tw.CustomerPreventdamageGuide.prototype = {
   },
 
   _bindEvent: function() {
-    this._popupService._popupClose();
+    this._popupService.close();
     this.$btnCategory.on('click', $.proxy(this._openCategorySelectPopup, this));
     this.$btnListMore.on('click', $.proxy(this._showListMore, this));
   },
@@ -60,15 +60,16 @@ Tw.CustomerPreventdamageGuide.prototype = {
   },
 
   _showListMore: function(e) {
-    var hiddenLength = this.$list.find('li:hidden').length;
+    var hiddenLength = this.$list.find('li:hidden').length,
+      listSize = this.$list.data('size');
 
-    if (hiddenLength <= 30) {
+    if (hiddenLength <= listSize) {
       this.$list.find('li:hidden').show();
       $(e.currentTarget).parent().remove();
     }
 
-    if (hiddenLength > 30) {
-      this.$list.find('li:hidden:lt(30)').show();
+    if (hiddenLength > listSize) {
+      this.$list.find('li:hidden:lt(' + listSize + ')').show();
       $(e.currentTarget).find('span').text('(' + hiddenLength + ')');
     }
   }

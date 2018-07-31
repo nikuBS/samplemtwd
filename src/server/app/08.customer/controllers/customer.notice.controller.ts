@@ -60,6 +60,7 @@ class CustomerNoticeController extends TwViewController {
 
     this.apiService.request(categorySwitchingData[category].API, {page: 1, size: 20})
       .subscribe((data) => {
+        console.log(data);
         res.render('customer.notice.html', {
           category: category,
           categoryLabel: categorySwitchingData[category].LABEL,

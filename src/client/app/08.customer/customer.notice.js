@@ -31,7 +31,7 @@ Tw.CustomerNotice.prototype = {
   },
 
   _bindEvent: function() {
-    this._popupService._popupClose();
+    this._popupService.close();
     this.$btnCategory.on('click', $.proxy(this._openCategorySelectPopup, this));
     this.$btnMoreList.on('click', $.proxy(this._loadMoreList, this));
   },

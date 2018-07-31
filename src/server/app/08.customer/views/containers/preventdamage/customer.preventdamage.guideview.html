@@ -13,8 +13,8 @@
             <!-- .cont-box -->
             <div class="cont-box">
                 <h3 class="detail-aria-title">
-                    대출빙자형 보이스피싱 주의
-                    <span class="detail-area-date">등록일 2017.04.09</span>
+                    <%= data.TITLE %>
+                    <span class="detail-area-date">등록일 <%= data.DATE %></span>
                 </h3>
             </div>
             <!--// .cont-box -->
@@ -24,18 +24,18 @@
             <!-- .cont-box -->
             <div class="cont-box">
                 <div class="img-detail-box">
-                    <img src="/img/dummy/dmy-cartoon-detail.png" alt="카툰으로 보는 방송통신이용자정보포털 와이즈유저에서 제공하는 방송통신서비스 해지시 확인사항." aria-describedby="aria-cartoon-describe">
+                    <% for (var i in data.IMG_LIST) { %>
+                    <img src="/img/webtoon/<%= data.IMG_LIST[i].IMG %>" alt="<%= data.IMG_LIST[i].TITLE %>" aria-describedby="aria-cartoon-describe">
+                    <% } %>
                     <div id="aria-cartoon-describe" class="blind" aria-hidden="true">
                         <p>
-                            고양이 : 어? 이게뭐야?
-                            오리 : 너 해지신청 할 때.
-                            고양이 : 아니… 그게 무슨말이야?
+                            <%- data.HIDDEN_TEXT %>
                         </p>
                     </div>
                 </div>
                 <div class="bt-slice mt20">
                     <li class="bt-white1">
-                        <button>목록으로</button>
+                        <a href="/customer/prevent-damage/guide?category=<%= category %>">목록으로</a>
                     </li>
                 </div>
             </div>
