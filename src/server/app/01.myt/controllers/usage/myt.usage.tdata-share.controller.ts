@@ -18,6 +18,12 @@ class MyTUsageTDataShare extends TwViewController {
   private parseData(data: any): any {
     data.opmdBasic = FormatHelper.convDataFormat(data.opmdBasic, DATA_UNIT.KB);
     data.totShar = FormatHelper.convDataFormat(data.totShar, DATA_UNIT.KB);
+    if ( data.opmdBasic.unit !== DATA_UNIT.KB ) {
+      data.opmdBasicSub = this.getSubData(data.opmdBasic);
+    }
+    if ( data.totShar.unit !== DATA_UNIT.KB ) {
+      data.totSharSub = this.getSubData(data.totShar);
+    }
     return data;
   }
 
@@ -33,6 +39,22 @@ class MyTUsageTDataShare extends TwViewController {
         svcInfo
       });
     });
+  }
+
+  private getSubData(data: any): any {
+    const subData = {
+      data: FormatHelper.convNumFormat(data.data.replace(/,/gi, '') * 1024)
+    };
+    switch ( data.unit ) {
+      case DATA_UNIT.GB:
+        subData['unit'] = DATA_UNIT.MB;
+        break;
+      case DATA_UNIT.MB:
+        subData['unit'] = DATA_UNIT.KB;
+        break;
+    }
+    return subData;
+
   }
 
   private getResult(resp: any): any {
