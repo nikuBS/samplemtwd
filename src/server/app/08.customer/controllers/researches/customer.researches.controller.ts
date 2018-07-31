@@ -50,6 +50,7 @@ interface IResearch {
   isProceeding: boolean; // 설문 진행여부
   examples: IExample[]; // 보기 배열
   hintUrl?: string; // 힌트 URL
+  answerNum?: string;
 }
 
 
@@ -96,7 +97,8 @@ export default class CustomerResearches extends TwViewController {
       motHtml: research.motMsgHtmlCtt,
       isProceeding: DateHelper.getDifference(research.endDtm) > 0,
       examples,
-      hintUrl: research.hintExUrl
+      hintUrl: research.hintExUrl,
+      answerNum: research.canswNum
     };
   }
 }
