@@ -26,12 +26,12 @@
                 <div class="img-detail-box">
                     <% for (var i in data.IMG_LIST) { %>
                     <img src="/img/webtoon/<%= data.IMG_LIST[i].IMG %>" alt="<%= data.IMG_LIST[i].TITLE %>" aria-describedby="aria-cartoon-describe">
-                    <% } %>
                     <div id="aria-cartoon-describe" class="blind" aria-hidden="true">
                         <p>
-                            <%- data.HIDDEN_TEXT %>
+                            <%- data.IMG_LIST[i].HIDDEN_TEXT %>
                         </p>
                     </div>
+                    <% } %>
                 </div>
                 <div class="bt-slice mt20">
                     <li class="bt-white1">
