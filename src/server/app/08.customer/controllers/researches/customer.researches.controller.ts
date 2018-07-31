@@ -7,6 +7,8 @@
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
 import DateHelper from '../../../../utils/date.helper';
+import { Researches } from '../../../../mock/server/customer.researches.mock';
+
 
 interface IResearchBFF {
   bnnrRsrchId: string; // 배너리서치ID
@@ -63,62 +65,7 @@ export default class CustomerResearches extends TwViewController {
     if (req.params.researchId) {
       res.render('researches/customer.researches.research.html', { svcInfo });
     } else {
-      const mock: IResearch[] = [{
-        bnnrRsrchId: '0614',
-        bnnrRsrchTypCd: 'R',
-        bnnrRsrchTitleNm: 'SKT 중고 거래 앱 서비스는 무엇일까요?',
-        bnnrRsrchRpsTypCd: 'S',
-        bnnrRsrchSortMthdCd: '',
-        hintExUrl: '',
-        cmplYn: 'N',
-        canswNum: '',
-        staDtm: '2018.07.19',
-        endDtm: '2018.12.31',
-        motMsgHtmlCtt: '<button class="bt-link-tx mb20">생활플랫폼 서비스 자세히보기<span class="ico"></span></button>',
-        exCtt1: 'T apps',
-        exCtt2: 'T freemium',
-        exCtt3: '딜라이트 딜라이트 딜라이트 딜라이트 딜라이트 딜라이트 딜라이트 딜라이트',
-        exCtt4: 'T 가이드',
-        exCttCnt: '4'
-      }, {
-        bnnrRsrchId: '0615',
-        bnnrRsrchTypCd: 'R',
-        bnnrRsrchTitleNm: '생활플랫폼 CF 중 인상이 많이 남는 모델은?',
-        bnnrRsrchRpsTypCd: 'C',
-        bnnrRsrchSortMthdCd: 'D',
-        hintExUrl: '',
-        cmplYn: 'N',
-        canswNum: '',
-        staDtm: '2018.07.19',
-        endDtm: '2018.12.31',
-        motMsgHtmlCtt: '<button class="bt-link-tx mb20">생활플랫폼 서비스 자세히보기<span class="ico"></span></button>',
-        exCtt1: '요즘 대세 설현',
-        exImgFilePathNm1: '/img/dummy/dummy_poll03.jpg',
-        motExCtt1: '<button class="bt-link-tx mt10">자세히보기<span class="ico"></span></button>',
-        exCtt2: '폼나는 조진웅',
-        exImgFilePathNm2: '/img/dummy/dummy_poll04.jpg',
-        motExCtt2: '<button class="bt-link-tx mt10">자세히보기<span class="ico"></span></button>',
-        exCtt3: '요즘 대세 설현',
-        exImgFilePathNm3: '/img/dummy/dummy_poll03.jpg',
-        motExCtt3: '<button class="bt-link-tx mt10">자세히보기<span class="ico"></span></button>',
-        exCtt4: '잘 모르겠다',
-        exImgFilePathNm4: '/img/dummy/dummy_poll04.jpg',
-        motExCtt4: '<button class="bt-link-tx mt10">자세히보기<span class="ico"></span></button>',
-        exCttCnt: '4'
-      }, {
-        bnnrRsrchId: '0616',
-        bnnrRsrchTypCd: 'R',
-        bnnrRsrchTitleNm: 'SKT 중고 거래 앱 서비스는 무엇일까요?',
-        bnnrRsrchRpsTypCd: 'S',
-        bnnrRsrchSortMthdCd: 'D',
-        hintExUrl: '',
-        cmplYn: 'N',
-        canswNum: '',
-        staDtm: '2018.07.19',
-        endDtm: '2018.07.29',
-        motMsgHtmlCtt: '<button class="bt-link-tx mb20">생활플랫폼 서비스 자세히보기<span class="ico"></span></button>',
-        exCttCnt: '0'
-      }].map(this.isOpen);
+      const mock: IResearch[] = Researches.map(this.isOpen);
 
       res.render('researches/customer.researches.html', { svcInfo, researches: mock });
     }
