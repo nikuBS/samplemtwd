@@ -2,6 +2,7 @@ Tw.NTV_CMD = {
   TOAST: 'toast',
   GET_CONTACT: 'getContact',
   GET_DEVICE: 'getDevice',
+  GET_LOCATION: 'currentLocation',
   OPEN_URL: 'openUrl',
   LOGIN: 'login',
   LOGOUT: 'logout',
