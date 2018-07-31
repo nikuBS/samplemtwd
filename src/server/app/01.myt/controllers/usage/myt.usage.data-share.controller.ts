@@ -19,17 +19,8 @@ class MyTUsageDataShare extends TwViewController {
     Observable.combineLatest(
       this.getUsageData()
     ).subscribe(([usageData]) => {
-      this.renderView(res, 'usage/myt.usage.data-share.html', this.getData(usageData, svcInfo));
+      res.render('usage/myt.usage.data-share.html', this.getData(usageData, svcInfo));
     });
-  }
-
-  private renderView(res: Response, view: string, data: any): any {
-    if ( data.usageData.code === undefined ) {
-      res.render(view, data);
-    } else {
-      res.render(view, data);
-      // res.render(MYT_VIEW.ERROR, data);
-    }
   }
 
   private getUsageData(): Observable<any> {
@@ -40,42 +31,44 @@ class MyTUsageDataShare extends TwViewController {
 
   private getResult(resp: any, usageData: any): any {
     if ( resp.code === API_CODE.CODE_00 ) {
-      usageData = this.parseData(resp.result.data);
+      usageData = this.parseData(resp.result);
     } else {
       usageData = resp;
     }
     return usageData;
   }
 
-  private parseData(_usageData: any): any {
-    const data = {
-      'used': '900',
-      'childList': [{
-        'svcNum': '010-45**-12**',
-        'svcMgmtNum': '7200XXXX',
-        'feeProdId': '상품ID',
-        'feeProdNm': 'LTE함께쓰기Basic',
-        'auditDtm': '20150113'
-      }, {
-        'svcNum': '010-45**-11**',
-        'svcMgmtNum': '7200XXXX',
-        'feeProdId': '상품ID',
-        'feeProdNm': 'LTE함께쓰기Basic',
-        'auditDtm': '20150113'
-      }]
-    };
+  private parseData(result: any): any {
+    // const data = {
+    //   'used': '900',
+    //   'childList': [{
+    //     'svcNum': '010-45**-12**',
+    //     'svcMgmtNum': '7200XXXX',
+    //     'feeProdId': '상품ID',
+    //     'feeProdNm': 'LTE함께쓰기Basic',
+    //     'auditDtm': '20150113'
+    //   }, {
+    //     'svcNum': '010-45**-11**',
+    //     'svcMgmtNum': '7200XXXX',
+    //     'feeProdId': '상품ID',
+    //     'feeProdNm': 'LTE함께쓰기Basic',
+    //     'auditDtm': '20150113'
+    //   }]
+    // };
+    const data = result.data;
+    const childList = result.childList;
     data.used = FormatHelper.convDataFormat(data.used, DATA_UNIT.KB);
     if ( data.used['unit'] !== DATA_UNIT.KB ) {
       data['usedSub'] = this.getSubData(data.used);
     }
-    if ( data.childList.length > 0 ) {
-      data.childList.map(function (child) {
+    if ( childList.length > 0 ) {
+      childList.map(function (child) {
         child['auditDtm'] = DateHelper.getShortDateNoDot(child['auditDtm']);
       });
-      data['korLengStr'] = (data.childList.length < 6) ? USER_CNT[data.childList.length - 1] : data.childList.length;
+      data['korLengStr'] = (childList.length < 6) ? USER_CNT[childList.length - 1] : childList.length;
     }
 
-    return data;
+    return result;
   }
 
 

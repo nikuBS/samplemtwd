@@ -25,7 +25,8 @@ Tw.MytUsageDataShare.prototype = {
 
   _requestDone: function (targetSelector, resp) {
     if ( resp.code === '00' ) {
-      targetSelector.siblings('em').text(resp.result.used);
+      var used = Tw.FormatHelper.convDataFormat(resp.result.used, Tw.DATA_UNIT.KB);
+      targetSelector.siblings('.ff-hn').text(used.data + used.unit);
       targetSelector.hide();
     } else {
       if ( resp.data ) {

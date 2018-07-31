@@ -1,5 +1,3 @@
-import { API_METHOD, API_SERVER } from "../../server/types/api-command.type";
-
 Tw.API_METHOD = {
   GET: 'GET',
   POST: 'POST',
@@ -43,7 +41,7 @@ Tw.API_CMD = {
   BFF_05_0001: { path: '/my-t/balances', method: Tw.API_METHOD.GET },
   BFF_05_0002: { path: '/my-t/balance-add-ons', method: Tw.API_METHOD.GET },
   BFF_05_0005: { path: '/core-balance/v1/tdata-sharings', method: Tw.API_METHOD.GET },
-  BFF_05_0009: { path: '/core-balance/v1/data-sharings/balances', method: Tw.API_METHOD.GET },
+  BFF_05_0009: { path: '/core-balance/v1/data-sharings/child', method: Tw.API_METHOD.GET },
   BFF_05_0010: { path: '/core-balance/v1/children', method: Tw.API_METHOD.GET },
   BFF_05_0011: { path: '/core-balance/v1/tdata-sharings/args-0', method: Tw.API_METHOD.DELETE },
   BFF_05_0014: { path: '/core-bill/v1/pps-histories', method: Tw.API_METHOD.GET },

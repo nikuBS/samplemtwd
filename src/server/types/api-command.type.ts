@@ -55,7 +55,7 @@ export const API_CMD = {
   BFF_05_0006: { path: '/core-balance/v1/data-top-up', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0007: { path: '/core-balance/v1/ting', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0008: { path: '/core-balance/v1/data-discount', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
-  BFF_05_0009: { path: '/core-balance/v1/data-sharings/balances', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0009: { path: '/core-balance/v1/data-sharings/child', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0010: { path: '/core-balance/v1/children', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0011: { path: '/core-balance/v1/tdata-sharings/args-0', method: API_METHOD.DELETE, server: API_SERVER.BFF, bypass: true },
   BFF_05_0013: { path: '/core-bill/v1/pps-bills', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
