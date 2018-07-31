@@ -16,7 +16,6 @@ Tw.API_CMD = {
 
   // COMMON
   BFF_01_0002: { path: '/common/sessions', method: Tw.API_METHOD.GET },
-  BFF_01_0004: { path: '/common/selected-sessions', method: Tw.API_METHOD.PUT },
   BFF_01_0005: { path: '/common/selected-sessions', method: Tw.API_METHOD.GET },
   BFF_01_0006: { path: '/core-modification/v1/address/legal-dongs', method: Tw.API_METHOD.GET },
   BFF_01_0007: { path: '/core-modification/v1/address/legal-dongs', method: Tw.API_METHOD.GET },
