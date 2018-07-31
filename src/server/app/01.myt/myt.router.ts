@@ -57,7 +57,6 @@ import MytJoinContractTerminalTloginDetail from './controllers/join/myt.join.con
 import MytJoinJoinInfoController from './controllers/join/myt.join.join-info.controller';
 
 
-
 class MytRouter extends TwRouter {
   constructor() {
     super();

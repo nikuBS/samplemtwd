@@ -15,6 +15,7 @@ Tw.API_CMD = {
   BFF_03_0023_C: { path: '/core-recharge/v1/refill-gifts', method: Tw.API_METHOD.POST },
 
   // COMMON
+  BFF_01_0002: { path: '/common/sessions', method: Tw.API_METHOD.GET },
   BFF_01_0004: { path: '/common/selected-sessions', method: Tw.API_METHOD.PUT },
   BFF_01_0005: { path: '/common/selected-sessions', method: Tw.API_METHOD.GET },
 
@@ -32,6 +33,9 @@ Tw.API_CMD = {
   BFF_03_0013: { path: '/user/biz-services', method: Tw.API_METHOD.POST },
   BFF_03_0014: { path: '/core-auth/v1/marketing-offer-subscriptions/args-0', method: Tw.API_METHOD.GET },
   BFF_03_0015: { path: '/core-auth/v1/marketing-offer-subscriptions/args-0', method: Tw.API_METHOD.PUT },
+  BFF_03_0017: { path: '/user/login/android', method: Tw.API_METHOD.POST },
+  BFF_03_0018: { path: '/user/login/ios', method: Tw.API_METHOD.POST },
+  BFF_03_0019: { path: '/core-auth/v1/users/args-0/otp', method: Tw.API_METHOD.POST },
 
   // MYT
   BFF_05_0001: { path: '/my-t/balances', method: Tw.API_METHOD.GET },
@@ -61,6 +65,9 @@ Tw.API_CMD = {
   BFF_05_0064: { path: '/core-bill/v1/useContents', method: Tw.API_METHOD.GET },
   BFF_05_0066: { path: '/core-bill/v1/useContentsLimit', method: Tw.API_METHOD.GET },
   BFF_05_0067: { path: '/core-bill/v1/updateUseContents', method: Tw.API_METHOD.GET },
+  BFF_05_0069: { path: '/core-auth/v1/service-passwords', method: Tw.API_METHOD.PUT },
+  BFF_05_0070: { path: '/core-auth/v1/service-passwords-change', method: Tw.API_METHOD.PUT },
+  BFF_05_0071: { path: '/core-auth/v1/service-passwords', method: Tw.API_METHOD.DELETE },
   BFF_05_0079: { path: '/core-bill/v1/microPay-hist-requests', method: Tw.API_METHOD.GET },
   BFF_05_0080: { path: '/core-bill/v1/microPay-requests', method: Tw.API_METHOD.GET },
   BFF_05_0081: { path: '/core-bill/v1/microPay-requests', method: Tw.API_METHOD.POST },
@@ -168,6 +175,7 @@ Tw.API_CMD = {
   BFF_08_0030: { path: '/core-modification/v1/directshop-notice', method: Tw.API_METHOD.GET },
   BFF_08_0031: { path: '/core-modification/v1/membership-notice', method: Tw.API_METHOD.GET },
   BFF_08_0032: { path: '/core-modification/v1/roaming-notice', method: Tw.API_METHOD.GET },
+  BFF_08_0033: { path: '/core-modification/v1/prevent/notice', method: Tw.API_METHOD.GET },
   BFF_08_0034: { path: '/core-modification/v1/voice-certification', method: Tw.API_METHOD.POST },
 
   // TEST
