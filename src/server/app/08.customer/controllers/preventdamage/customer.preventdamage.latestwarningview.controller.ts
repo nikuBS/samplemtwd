@@ -22,7 +22,6 @@ class CustomerPreventdamageLatestwarningviewController extends TwViewController 
 
     this.apiService.request(API_CMD.BFF_08_0041, {}, {}, lwid)
       .subscribe((data) => {
-        console.log(data.result.rgstDtm);
         res.render('preventdamage/customer.preventdamage.latestwarningview.html', {
           svcInfo: svcInfo,
           data: data.result
