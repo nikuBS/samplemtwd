@@ -6,6 +6,8 @@ import DateHelper from '../../../../utils/date.helper';
 import FormatHelper from '../../../../utils/format.helper';
 import { Observable } from 'rxjs/Observable';
 import MyTUsage from './myt.usage.controller';
+import { DATA_UNIT } from '../../../../types/string.type';
+import moment = require('moment');
 
 class MyTUsage24hour50discount extends TwViewController {
   public myTUsage = new MyTUsage();
@@ -29,7 +31,7 @@ class MyTUsage24hour50discount extends TwViewController {
   }
 
   private getResult(resp: any, usageData: any): any {
-    if (resp.code === API_CODE.CODE_00) {
+    if ( resp.code === API_CODE.CODE_00 ) {
       usageData = this.parseData(resp.result);
     } else {
       usageData = resp;
@@ -38,10 +40,22 @@ class MyTUsage24hour50discount extends TwViewController {
   }
 
   private parseData(usageData: any): any {
-    if (usageData) {
-      usageData.showUsed = FormatHelper.convDataFormat(usageData.used, UNIT[usageData.unit]);
-    }
-    return usageData;
+    const data = {
+      'skipId': '공제항목ID',
+      'skipName': '공제항목명',
+      'total': '기본제공량',
+      'used': '900000',
+      'remained': '잔여량',
+      'unit': '140',
+      'couponDate': '201404011410'
+    };
+    const DATE_FORMAT = 'YYYY.MM.DD HH:mm';
+    const startDate = DateHelper.convDateFormat(data.couponDate);
+    const endDate = moment(startDate).add(1, 'days').add(-1, 'minutes');
+    data['used'] = FormatHelper.convDataFormat(data.used, UNIT[usageData.unit]);
+    data['startDateStr'] = DateHelper.getShortDateWithFormat(startDate, DATE_FORMAT);
+    data['endDateStr'] = DateHelper.getShortDateWithFormat(endDate, DATE_FORMAT);
+    return data;
   }
 
   private getData(usageData: any, svcInfo: any): any {

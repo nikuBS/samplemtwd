@@ -14,7 +14,7 @@
 </div>
 <!--// #skip_navigation -->
 <!-- wrap -->
-<div class="wrap">
+<div id="fe-myt-usage-24hours-50discount" class="wrap">
     <!-- #header -->
     <div id="header" class="header-wrap">
         <div class="header">
@@ -33,11 +33,13 @@
 
             <div class="cont-box">
                 <div class="top-info">
-                    <span class="info-text">010-12**-56** <em>24시간 데이터<br />50% 할인</em>사용현황입니다.</span>
+                    <span class="info-text"><%= svcInfo.svcNum %> <em>24시간 데이터<br />50% 할인</em>사용현황입니다.</span>
                 </div>
                 <div class="sub-info-line">
-                    <em>데이터사용량 50% 할인 적용기간</em><button role="button" class="ico-info"><span class="blind">데이터사용량 50% 할인 적용기간 상세보기</span></button>
-                    <p>2014.04.01 14:10 ~ 2014.04.02 14:09</p>
+                    <em>데이터사용량 50% 할인 적용기간</em><button role="button" class="ico-info fe-btn-detail-date"><span class="blind">데이터사용량 50% 할인 적용기간 상세보기</span></button>
+                    <p>
+                        <%= usageData.startDateStr %> ~ <%= usageData.endDateStr %>
+                    </p>
                 </div>
             </div>
 
@@ -45,12 +47,14 @@
             <div class="cont-box">
                 <h3 class="usage-tit pt0">할인된 데이터사용량</h3>
                 <div class="usage-all pb30">
-                    <span class="usage-cont"><em>900</em>MB</span>
+                    <span class="usage-cont">
+                        <em><%= usageData.used.data %></em><%= usageData.used.unit %>
+                    </span>
                 </div>
                 <div class="msg-border1">할인적용기간 종료 후 상품은 자동 해지됩니다.<br />데이터 잔여량은 50% 할인이 적용되어 노출됩니다.<br />(실 데이터 사용량은 사용량 조회 에서 확인 가능합니다.)</div>
                 <ul class="bt-slice mt40">
                     <li class="bt-white2">
-                        <button>실시간 요금조회 바로가기</button>
+                        <a href="/myt/bill/hotbill">실시간 요금조회 바로가기</a>
                     </li>
                 </ul>
             </div>
@@ -64,6 +68,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
+    new Tw.MytUsageData24Hours50Discount($('#fe-myt-usage-24hours-50discount'));
     // var comp = new Tw.MytUsageView($('.container'));
   });
 </script>
