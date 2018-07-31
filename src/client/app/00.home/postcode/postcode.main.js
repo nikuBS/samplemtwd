@@ -40,6 +40,7 @@ Tw.PostcodeMain.prototype = {
     this.$standardAddress = this.$container.find('#fe-standard-address-field');
     this.$remainAddressWrap = this.$container.find('.fe-remain-address-wrap');
     this.$remainAddress = this.$container.find('.fe-remain-address');
+    this.$selectDetailAddress = this.$container.find('.fe-go-step3');
   },
   _bindEvent: function () {
     this.$container.on('keyup', '.fe-load-name', $.proxy(this._activeButton, this));
@@ -47,8 +48,9 @@ Tw.PostcodeMain.prototype = {
     this.$container.on('click', '.fe-select-gun', $.proxy(this._getSecondList, this));
     this.$container.on('click', '.fe-get-postcode', $.proxy(this._getPostCode, this));
     this.$container.on('click', '.fe-select-load-detail', $.proxy(this._getDetailList, this));
-    this.$container.on('click', '.fe-get-building-name', $.proxy(this._initDetailAddress, this));
-    this.$container.on('click', '.fe-remain-address-wrap button', $.proxy(this._getMore, this));
+    this.$container.on('click', '.fe-get-building-name', $.proxy(this._getMoreDetailList, this));
+    this.$container.on('click', '.fe-remain-address-wrap', $.proxy(this._getMore, this));
+    this.$container.on('click', '.fe-go-step3', $.proxy(this._goStep3, this));
   },
   _activeButton: function (event) {
     var $value = $(event.currentTarget).val();
@@ -99,9 +101,13 @@ Tw.PostcodeMain.prototype = {
   },
   _getPostSuccess: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
-      this._detailList = this._setList(this.$detailSelector, this._detailList, res.result);
-      this._initAddress();
-      this._history.goHash('#step2-load');
+      if (res.result.length > 0) {
+        this._detailList = this._setList(this.$detailSelector, this._detailList, res.result);
+        this._initAddress();
+        this._history.goHash('step2-load');
+      } else {
+        this._getPostFail();
+      }
     } else {
       this._getPostFail();
     }
@@ -112,8 +118,10 @@ Tw.PostcodeMain.prototype = {
   _initAddress: function () {
     this.$detailSelector.removeAttr('id');
     this.$detailSelector.text(Tw.POSTCODE_TEXT.SELECT_ADDRESS);
-    this.$fieldSet.removeClass('none');
-    this.$container.find('.fe-add-address').remove();
+    if (!this.$fieldSet.hasClass('none')) {
+      this.$fieldSet.addClass('none');
+    }
+    this._initDetailAddress();
   },
   _getChoiceColumnName: function ($target) {
     var obj = {};
@@ -164,18 +172,18 @@ Tw.PostcodeMain.prototype = {
       this._gunCode = $id;
     } else {
       this._id = $id;
-      this._initDetailAddress();
+      this._getMoreDetailList();
     }
   },
   _initDetailAddress: function () {
+    this._nextPage = 1;
     this.$container.find('.fe-add-address').remove();
     if (!this.$remainAddressWrap.hasClass('none')) {
       this.$remainAddressWrap.addClass('none');
     }
-    this._nextPage = 1;
-    this._getMoreDetailList();
+    this.$selectDetailAddress.attr('disabled', 'disabled');
   },
-  _getMoreDetailList: function () {
+  _requestMoreDetailList: function () {
     this._apiService.request(Tw.API_CMD.BFF_01_0011, {
       postType: 'B',
       stNmCd: this._id,
@@ -183,6 +191,10 @@ Tw.PostcodeMain.prototype = {
       bldNm: encodeURI($.trim(this.$buildingName.val()))
     }).done($.proxy(this._getDetailSuccess, this))
       .fail($.proxy(this._getDetailFail, this));
+  },
+  _getMoreDetailList: function () {
+    this._initDetailAddress();
+    this._requestMoreDetailList();
   },
   _getDetailSuccess: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
@@ -195,6 +207,7 @@ Tw.PostcodeMain.prototype = {
         $addressField.find('.address1').text($content[i].bldNm);
         $addressField.find('.address2').text(Tw.POSTCODE_TEXT.BUILDING_CODE + ' ' + $content[i].bldTotNum);
         $addressField.find('.address3').text(Tw.POSTCODE_TEXT.ZIP_CODE + ' ' + $content[i].zip);
+        $addressField.on('click', $.proxy(this._onSelectDetailAddress, this));
         this.$loadAddress.append($addressField);
       }
     }
@@ -203,6 +216,7 @@ Tw.PostcodeMain.prototype = {
 
   },
   _setPage: function ($result) {
+    this.$fieldSet.removeClass('none');
     if (this._nextPage === 1) {
       this._initPageVariables($result);
     }
@@ -222,14 +236,25 @@ Tw.PostcodeMain.prototype = {
     this._totalPage = $result.totalPages;
     this._totalElements = $result.totalElements;
   },
+  _onSelectDetailAddress: function (event) {
+    var $target = $(event.currentTarget);
+    if (!$target.hasClass('checked')) {
+      $target.addClass('checked').attr('aria-checked', 'true').find('input').attr('checked', 'checked');
+      $target.siblings().removeClass('checked').attr('aria-checked', 'false').find('input').removeAttr('checked');
+    }
+    this.$selectDetailAddress.removeAttr('disabled');
+  },
   _getMore: function () {
     if (this._nextPage <= this._totalPage) {
-      this._getMoreDetailList();
+      this._requestMoreDetailList();
     }
   },
   _isValid: function () {
     return this._validation.checkIsSelected(this.$citySelector, Tw.MSG_POSTCODE.L01) &&
       this._validation.checkIsSelected(this.$gunSelector, Tw.MSG_POSTCODE.L02) &&
       this._validation.checkMoreLength(this.$loadName.val(), 2, Tw.MSG_POSTCODE.L03);
+  },
+  _goStep3: function () {
+    this._history.hash('step3');
   }
 };
