@@ -80,6 +80,7 @@
                                                             <!-- <div class="video-img"><img src="/img/dummy/dummy_poll02.jpg" alt=""/></div> // 비디오--> 
                                                             <textarea class="poll-area mt10" cols="20" rows="3" placeholder="형식에 맞게 입력해주십시오."></textarea> 
                                                         <% } %> 
+                                                        <% if (research.isProceeding) { %>
                                                         <ul class="bt-slice item-two">
                                                             <li class="bt-white2">
                                                                 <button>결과보기</button>
@@ -88,6 +89,13 @@
                                                                 <button>참여하기</button>
                                                             </li>
                                                         </ul>
+                                                        <% } else { %>
+                                                        <ul class="bt-slice">
+                                                            <li class="bt-blue1">
+                                                                <button>결과보기</button>
+                                                            </li>
+                                                        </ul>
+                                                        <% } %>
                                                     </div>
                                                 </div>
                                             </div>
