@@ -375,13 +375,8 @@ Tw.PaymentPrepay.prototype = {
   _prepaySuccess: function (type, res) {
     if (res.code === Tw.API_CODE.CODE_00) {
       this._history.setHistory();
-      var hash = '#complete-prepay';
-      if (type === 'auto') {
-        hash = '#complete-auto-prepay';
-      } else if (type === 'change') {
-        hash = '#complete-change-prepay';
-      }
-      this._go(hash);
+      this._setCompleteTitle(type);
+      this._go('#complete-prepay');
     } else {
       this._prepayFail(res);
     }
@@ -391,6 +386,23 @@ Tw.PaymentPrepay.prototype = {
     this.$container.find('.fe-error-code').text(err.code);
     this.$container.find('.fe-error-message').text(err.msg);
     this._go('#error');
+  },
+  _setCompleteTitle: function (type) {
+    var $title = this.$container.find('.fe-complete-title');
+    var $message = this.$container.find('.fe-complete-message');
+    if (type === 'auto') {
+      $title.text(Tw.PAYMENT_PREPAY_TITLE.AUTO_PREPAY);
+      $message.text(Tw.PAYMENT_PREPAY_TITLE.AUTO_COMPLETE);
+    } else if (type === 'cancel') {
+      $title.text(Tw.PAYMENT_PREPAY_TITLE.AUTO_PREPAY);
+      $message.text(Tw.PAYMENT_PREPAY_TITLE.CANCEL_COMPLETE);
+    } else if (type === 'change') {
+      $title.text(Tw.PAYMENT_PREPAY_TITLE.CHANGE_MONEY);
+      $message.text(Tw.PAYMENT_PREPAY_TITLE.AUTO_COMPLETE);
+    } else {
+      $title.text(Tw.PAYMENT_PREPAY_TITLE.MICRO_PREPAY);
+      $message.text(Tw.PAYMENT_PREPAY_TITLE.PREPAY_COMPLETE);
+    }
   },
   _isValid: function ($wrap, type) {
     var isValid = false;
