@@ -64,7 +64,7 @@ appNames.map(function (app, index) {
     return gulp.src('src/client/app/0' + index + '.' + app + '/**/*.js')
       .pipe(concat(app + '.js'))
       .pipe(gulp.dest(dist + 'js'))
-      .pipe(uglify())
+      // .pipe(uglify())
       .on('error', function (err) {
         gutil.log(gutil.colors.red('[Error]'), err.toString());
       })

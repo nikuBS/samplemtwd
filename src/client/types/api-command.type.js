@@ -183,6 +183,7 @@ Tw.API_CMD = {
   BFF_08_0013: { path: '/core-modification/v1/email-inquiry', method: Tw.API_METHOD.POST },
   BFF_08_0014: { path: '/cs/file-upload', method: Tw.API_METHOD.POST },
   BFF_08_0025: { path: '/core-modification/v1/survey/surveyMainBanner', method: Tw.API_METHOD.GET },
+  BFF_08_0026: { path: '/core-modification/v1/guide/categories', method: Tw.API_METHOD.GET },
   BFF_08_0028: { path: '/core-modification/v1/notice/tworld-submain', method: Tw.API_METHOD.GET },
   BFF_08_0029: { path: '/core-modification/v1/tworld-notice', method: Tw.API_METHOD.GET },
   BFF_08_0030: { path: '/core-modification/v1/directshop-notice', method: Tw.API_METHOD.GET },
