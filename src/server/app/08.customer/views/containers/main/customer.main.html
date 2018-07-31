@@ -191,22 +191,22 @@
                         <ul class="customer-link">
                             <li>
                                 <div class="link-long">
-                                    <button title="가입/변경/해지 구비서류 안내로 이동">가입/변경/해지 구비서류 안내<span class="ico"></span></button>
+                                    <a title="가입/변경/해지 구비서류 안내로 이동">가입/변경/해지 구비서류 안내<span class="ico"></span></a>
                                 </div>
                             </li>
                             <li>
                                 <div class="link-long">
-                                    <button title="이메일 문의하기로 이동">이메일 문의하기<span class="ico"></span></button>
+                                    <a href="/customer/email" title="이메일 문의하기로 이동">이메일 문의하기<span class="ico"></span></a>
                                 </div>
                             </li>
                             <li>
                                 <div class="link-long">
-                                    <button title="칭찬합니다로 이동">칭찬합니다<span class="ico"></span></button>
+                                    <a title="칭찬합니다로 이동">칭찬합니다<span class="ico"></span></a>
                                 </div>
                             </li>
                             <li>
                                 <div class="link-long">
-                                    <button title="이용자 피해예방센터로 이동">이용자 피해예방센터<span class="ico"></span></button>
+                                    <a title="이용자 피해예방센터로 이동">이용자 피해예방센터<span class="ico"></span></a>
                                 </div>
                             </li>
                             <li>
@@ -240,7 +240,7 @@
     <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
 </div>
 
-<% include ../components/javascript.component.html %>
+<% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
     var oCustomerMain = new Tw.CustomerMain($('.wrap'));

@@ -6,8 +6,8 @@
 
 Tw.CustomerResearches = function (rootEl) {
   this.$container = rootEl;
-}
+};
 
 Tw.CustomerResearches.prototype = {
 
-}
+};

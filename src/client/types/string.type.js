@@ -37,6 +37,7 @@ Tw.POPUP_TITLE = {
   GIFT_FAMILY_INFO: '데이터 자동 선물 안내',
   CHANGE_SEARCH_CONDITION: '검색 조건 변경',
   CHANGE_NICKNAME: '닉네임 설정',
+  SELECT_SERVICE: '서비스 선택',
   SELECT_BANK: '은행선택',
   SELECT_GIFT_AMOUNT: '선물할 금액 선택',
   CHANGE_BILL_GUIDE_TYPE: '어떤 안내서를 보여 드릴까요?',
@@ -498,4 +499,11 @@ Tw.POSTCODE_TEXT = {
   BUILDING_CODE: '건물번호',
   ZIP_CODE: '우편번호',
   SELECT_ADDRESS: '주소를 선택해주세요'
+};
+
+Tw.CUSTOMER_EMAIL = {
+  PHONE: '휴대폰',
+  INTERNET: '인터넷/집전화/TV',
+  DIRECT: '다이렉트샵',
+  CHOCO: '초콜렛'
 };
