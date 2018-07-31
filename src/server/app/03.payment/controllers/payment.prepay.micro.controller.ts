@@ -7,8 +7,9 @@ import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../../common/controllers/tw.view.controller';
 import { API_CMD, API_CODE } from '../../../types/api-command.type';
 import FormatHelper from '../../../utils/format.helper';
-import {AUTO_CHARGE_CODE, PREPAY_TITLE} from '../../../types/bff-common.type';
+import { AUTO_CHARGE_CODE, PREPAY_TITLE } from '../../../types/bff-common.type';
 import DateHelper from '../../../utils/date.helper';
+import AutoYn from '../../../mock/server/payment/payment.prepay.autoyn.mock';
 
 class PaymentPrepayMicroController extends TwViewController {
   constructor() {
@@ -19,7 +20,7 @@ class PaymentPrepayMicroController extends TwViewController {
     this.apiService.request(API_CMD.BFF_07_0072, {}).subscribe((resp) => {
       if (resp.code === API_CODE.CODE_00) {
         res.render('payment.prepay.micro.html', {
-          prepay: this.parseData(resp.result),
+          prepay: this.parseData(AutoYn.result),
           svcInfo: svcInfo,
           currentMonth: this.getCurrentMonth(),
           title: PREPAY_TITLE.MICRO

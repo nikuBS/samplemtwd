@@ -1,0 +1,158 @@
+<%#
+* FileName: payment.prepay.auto.change.component.html
+* Author: 공자윤 (jayoon.kong@sk.com)
+* Date: 2018.07.31
+%>
+<!-- #header -->
+<div id="header" class="header-wrap step-page">
+    <div class="header step-page">
+        <div class="header-ti">
+            <h1>자동 선결제 금액 및 카드변경</h1>
+        </div>
+        <button class="close-step fe-common-back"><span class="blind">닫기</span></button>
+    </div>
+</div>
+<!--// #header -->
+<h2 class="blind">내용</h2>
+<div class="container">
+    <div class="cont-box nogaps-top">
+        <div class="payment-select type2">
+            <ul class="select-list">
+                <li>
+                    <div class="pay-maininfo">
+                        <span class="service-sort"><span class="fe-auto-cardname"><%= prepay.cardCdNm %></span><br /><span class="fe-auto-cardnum"><%= prepay.cardNum %></span></span>
+                    </div>
+                    <dl class="pay-detail type2">
+                        <dt>선결제 금액</dt>
+                        <dd><strong><%= prepay.autoChrgAmount %></strong> <span class="unit">원</span></dd>
+                        <dt>기준금액</dt>
+                        <dd><strong><%= prepay.autoChrgStrdAmount %></strong> <span class="unit">원</span></dd>
+                    </dl>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <hr class="cont-sp type1" aria-hidden="true" />
+    <div class="cont-box">
+        <div class="pay-info">
+            <h3 class="pay-tit">변경 항목을 선택해 주세요.</h3>
+            <div class="widget select-way">
+                <div class="widget-box radio">
+                    <ul class="select-list fe-change-type" role="radiogroup">
+                        <li class="radiobox type01" role="radio" aria-checked="true">
+                            <input type="radio" class="fe-money" name="radio1" value="" title="금액 선택" checked="checked">
+                            금액
+                        </li>
+                        <li class="radiobox type01" role="radio" aria-checked="false">
+                            <input type="radio" class="fe-card" name="radio1" value="" title="카드 선택" />
+                            카드
+                        </li>
+                        <li class="radiobox type01 checked" role="radio" aria-checked="false">
+                            <input type="radio" class="fe-all" name="radio1" value="" title="금액 및 카드 선택" />
+                            금액 및 카드
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr class="cont-sp type1" aria-hidden="true" />
+    <div class="cont-box fe-change-money-info">
+        <div class="pay-info">
+            <h3 class="pay-tit">금액정보</h3>
+            <ul class="account-inner">
+                <li class="account-wrap type2">
+                    <h4 class="account-tit">기준금액 <span class="max-account">최대 <em class="fe-standard-amount"></em>만원 <button class="max-account-info blind" aria-haspopup="true">기준 최대금액 설명 보기</button></span></h4>
+                    <div class="account-form">
+                        <span class="account-form-input">
+                            <span class="pay-view-box"><em class="fe-standard-amount"></em>만원</span>
+                        </span>
+                        <span class="account-form-arrow"></span>
+                        <span class="account-form-select"><button class="bt-dropdown big fe-select-standard-amount" title="기준금액 변경 선택" aria-haspopup="true"><span class="ico"></span></button></span>
+                    </div>
+                </li>
+                <li class="account-wrap type2">
+                    <h4 class="account-tit">선결제 금액 <span class="max-account">최대 <em class="fe-standard-amount"></em>만원 <button class="max-account-info blind" aria-haspopup="true">선결제 최대금액 설명 보기</button></span></h4>
+                    <div class="account-form">
+                        <span class="account-form-input">
+                            <span class="pay-view-box"><em class="fe-standard-amount"></em>만원</span>
+                        </span>
+                        <span class="account-form-arrow"></span>
+                        <span class="account-form-select"><button class="bt-dropdown big fe-select-prepay-amount" title="선결제 금액 변경 선택" aria-haspopup="true"><span class="ico"></span></button></span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <hr class="cont-sp type1" aria-hidden="true" />
+    <div class="cont-box">
+        <div class="pay-info fe-change-card-wrap">
+            <div class="widget">
+                <h3 class="pay-tit fe-card-info-title" aria-checked="false" style="display:none;">카드정보</h3>
+                <div class="widget-box check">
+                    <span class="checkbox type01 pay-check-box fe-change-prepay-check-box" role="checkbox" aria-checked="false">
+                        <input type="checkbox" name="checkbox" value="" title="자동납부정보와 동일">
+                        자동납부정보와 동일
+                    </span>
+                </div>
+            </div>
+            <div class="payment-select fe-change-card-info">
+                <p class="pay-disc">카드정보 확인을 위해<br />유효기간 및 비밀번호를 입력해주세요.</p>
+            </div>
+            <ul class="account-inner">
+                <li class="account-wrap">
+                    <h4 class="account-tit">카드주명</h4>
+                    <div class="account-form">
+                        <span class="pay-view-box fe-card-owner"><%= svcInfo.mbrNm %></span>
+                    </div>
+                </li>
+                <li class="account-wrap">
+                    <h4 class="account-tit">카드번호</h4>
+                    <div class="account-form">
+                        <div class="inputbox input-context">
+                            <span class="input">
+                                <input type="text" class="fe-only-number fe-card-number" placeholder="숫자만 입력" title="카드번호 숫자만 입력" value="<%= prepay.cardCdNm %> <%= prepay.cardNum %>" disabled>
+                                <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
+                            </span>
+                        </div>
+                    </div>
+                </li>
+                <li class="account-wrap">
+                    <h4 class="account-tit">유효기간</h4>
+                    <div class="inputbox card-tbl">
+                        <span class="input card-cell">
+                            <input type="number" class="fe-only-number fe-card-y" maxlength="4" placeholder="YYYY" title="카드유효기간 년">
+                            <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
+                        </span>
+                        <span class="input card-cell">/</span>
+                        <span class="input card-cell">
+                            <input type="number" class="fe-only-number fe-card-m" maxlength="2" class="c-month" placeholder="MM" title="카드유효기간 월">
+                            <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
+                        </span>
+                    </div>
+                </li>
+                <li class="account-wrap">
+                    <h4 class="account-tit">카드비밀번호</h4>
+                    <div class="inputbox">
+                        <span class="input">
+                            <input type="password" class="fe-only-number fe-card-password" maxlength="2" placeholder="앞2자리 **" title="카드비밀번호 앞2자리">
+                            <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
+                        </span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="contents-btn">
+            <ul class="bt-slice item-two">
+                <li class="bt-white2">
+                    <button class="fe-common-back">이전</button>
+                </li>
+                <li class="bt-red1">
+                    <button class="fe-request-change-prepay">변경하기</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <hr class="cont-sp type1" aria-hidden="true" />
+    <% include ../components/info/payment.prepay.micro.history.info.component.html %>
+</div>

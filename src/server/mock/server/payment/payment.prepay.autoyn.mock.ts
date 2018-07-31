@@ -2,7 +2,7 @@ const AutoYn = {
   'code': '00',
   'msg': 'success',
   'result': {
-    'autoChrgStCd': 'D',
+    'autoChrgStCd': 'U',
     'autoChrgAmt': '100000',
     'autoChrgStrdAmt': '100000',
     'cardNum': '371002*********',
