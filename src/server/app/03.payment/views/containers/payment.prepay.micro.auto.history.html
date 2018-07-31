@@ -13,7 +13,83 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div id="payment-prepay-micro-auto-history"></div>
+<div id="payment-prepay-micro-auto-history" class="wrap">
+    <!-- #header -->
+    <div id="header" class="header-wrap">
+        <div class="header">
+            <div class="header-ti align-l">
+                <h1>자동 선결제 상세보기</h1>
+            </div>
+            <button class="prev-step fe-common-back"><span class="blind">이전으로</span></button>
+        </div>
+    </div>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <div class="cont-box nogaps-top">
+                <div class="payment-select">
+                    <h3>자동 선결제 정보</h3>
+                    <ul class="select-list">
+                        <li>
+                            <div class="pay-maininfo">
+                                <span class="service-sort">신한카드 <br />436420********</span>
+                            </div>
+                            <dl class="pay-detail type2">
+                                <dt>선결제 금액</dt>
+                                <dd><strong>40,000</strong> <span class="unit">원</span></dd>
+                                <dt>기준금액</dt>
+                                <dd><strong>30,000</strong> <span class="unit">원</span></dd>
+                            </dl>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="cont-sp type1" aria-hidden="true" />
+            <div class="cont-box nogaps noborder">
+                <div class="payment-select space-type pt28">
+                    <h3>신청 및 변경내역</h3>
+                    <ul class="select-list">
+                        <li>
+                            <div class="pay-maininfo">
+                                <span class="service-sort">신규 <br />2018.12.11 17:23:42</span>
+                            </div>
+                            <dl class="pay-detail type2">
+                                <dt>카드정보</dt>
+                                <dd>
+                                    신한카드<br />436420********
+                                </dd>
+                                <dt>선결제 금액</dt>
+                                <dd><strong>40,000</strong> <span class="unit">원</span></dd>
+                                <dt>기준금액</dt>
+                                <dd><strong>30,000</strong> <span class="unit">원</span></dd>
+                            </dl>
+                        </li>
+                        <li>
+                            <div class="pay-maininfo">
+                                <span class="service-sort">변경 <br />2018.12.11 17:23:42</span>
+                            </div>
+                            <dl class="pay-detail type2">
+                                <dt>카드정보</dt>
+                                <dd>
+                                    신한카드<br />436420********
+                                </dd>
+                                <dt>선결제 금액</dt>
+                                <dd><strong>40,000</strong> <span class="unit">원</span></dd>
+                                <dt>기준금액</dt>
+                                <dd><strong>30,000</strong> <span class="unit">원</span></dd>
+                            </dl>
+                        </li>
+                    </ul>
+                </div>
+                <button class="bt-more">더보기<span>(20)</span></button>
+            </div>
+        </div>
+    </div>
+    <!--// #contents -->
+    <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
+</div>
 <% include ../components/javascript.component.html %>
 <script>
   $(document).ready(function () {

@@ -58,7 +58,7 @@ class CustomerNoticeController extends TwViewController {
       res.redirect('/customer/notice');
     }
 
-    this.apiService.request(categorySwitchingData[category].API, {page: 1, size: 20})
+    this.apiService.request(categorySwitchingData[category].API, {page: 0, size: 20})
       .subscribe((data) => {
         res.render('customer.notice.html', {
           category: category,

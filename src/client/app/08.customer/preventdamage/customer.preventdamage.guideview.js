@@ -7,16 +7,18 @@
 Tw.CustomerPreventdamageGuideview = function(rootEl) {
   this.$container = rootEl;
 
-  this._cachedElement();
-  this._bindEvent();
+  this._init();
 };
 
 Tw.CustomerPreventdamageGuideview.prototype = {
-  _cachedElement: function() {
-    //
+  _init: function() {
+    setTimeout($.proxy(this._loadImgs, this), 1000);
   },
 
-  _bindEvent: function() {
-    //
+  _loadImgs: function() {
+    this.$container.find('[data-src]')
+      .each(function() {
+        $(this).attr('src', $(this).data('src')).show();
+      });
   }
 };

@@ -81,6 +81,7 @@ Tw.API_CMD = {
   BFF_05_0081: { path: '/core-bill/v1/microPay-requests', method: Tw.API_METHOD.POST },
   BFF_05_0082: { path: '/core-bill/v1/microPay-auto-set', method: Tw.API_METHOD.POST },
   BFF_05_0083: { path: '/core-bill/v1/microPay-requests', method: Tw.API_METHOD.PUT },
+  BFF_05_0089: { path: '/core-bill/v1/prepayInfo', method: Tw.API_METHOD.GET },
 
   // RECHARGE
   BFF_06_0001: { path: '/core-recharge/v1/refill-coupons', method: Tw.API_METHOD.GET },
@@ -182,6 +183,7 @@ Tw.API_CMD = {
   BFF_08_0013: { path: '/core-modification/v1/email-inquiry', method: Tw.API_METHOD.POST },
   BFF_08_0014: { path: '/cs/file-upload', method: Tw.API_METHOD.POST },
   BFF_08_0025: { path: '/core-modification/v1/survey/surveyMainBanner', method: Tw.API_METHOD.GET },
+  BFF_08_0026: { path: '/core-modification/v1/guide/categories', method: Tw.API_METHOD.GET },
   BFF_08_0028: { path: '/core-modification/v1/notice/tworld-submain', method: Tw.API_METHOD.GET },
   BFF_08_0029: { path: '/core-modification/v1/tworld-notice', method: Tw.API_METHOD.GET },
   BFF_08_0030: { path: '/core-modification/v1/directshop-notice', method: Tw.API_METHOD.GET },
@@ -246,4 +248,3 @@ Tw.API_LOGIN_ERROR = {
   ICAS3228: 'ICAS3228',   // 고객보호비밀번호(대표회선) 입력 필요
   ICAS3235: 'ICAS3235'    // 휴면계정
 };
-

@@ -127,6 +127,18 @@ Tw.PAYMENT_POINT_VALUE = {
   T_POINT: '11'
 };
 
+Tw.PAYMENT_PREPAY_TITLE = {
+  MICRO_PREPAY: '소액결제 선결제',
+  AUTO_PREPAY: '자동 선결제',
+  CHANGE_CARD: '카드정보 변경',
+  CHANGE_MONEY: '금액정보 변경',
+  CHANGE_ALL: '카드정보 및<br />금액정보 변경',
+  PREPAY_COMPLETE: '가<br />정상적으로<br />처리되었습니다.',
+  CANCEL_COMPLETE: '해지가<br />완료되었습니다.',
+  AUTO_COMPLETE: '가<br />신청되었습니다.',
+  AUTO_CHANGE_COMPLETE: '이<br />신청되었습니다.'
+};
+
 Tw.PAYMENT_STRD_MSG = {
   CONTENTS_L02: '자동 선결제가 되는 시점의 금액을 말하며, 고객님 콘텐츠 이용한도의 최대 90%까지 설정 가능합니다.<br /><br />예시) 자동선결제가 기준금액 : 5만원으로 설정 시, 이번 달 소액결제를 5만원 이상 결제 시점에 자동으로 선결제됩니다.',
   TITLE_L02: '기준금액이란?'
@@ -325,6 +337,7 @@ Tw.MSG_PAYMENT = {
   PRE_A06: '선결제를 종료하시겠습니까?',
   PRE_A07: '자동 선결제를 해지 하시겠습니까?',
   PRE_A08: '선결제 금액은 기준금액을 넘을 수 없습니다.',
+  PRE_A09: '생년월일을 입력해 주세요.',
   PRE_A10: '자동 선결제 신청 및 변경을 종료하시겠습니까?',
   PRE_A11: '선결제 금액은 10,000원 단위로 입력해 주세요.',
   ERROR_GET_CARD: '카드정보 조회에 실패하였습니다. 다시 시도해 주세요.',
@@ -503,8 +516,9 @@ Tw.POSTCODE_TEXT = {
 };
 
 Tw.CUSTOMER_EMAIL = {
-  PHONE: '휴대폰',
+  CELL: '휴대폰',
   INTERNET: '인터넷/집전화/TV',
   DIRECT: '다이렉트샵',
-  CHOCO: '초콜렛'
+  CHOCO: '초콜렛',
+  SELECT_CATEGORY: '문의사항 선택'
 };
