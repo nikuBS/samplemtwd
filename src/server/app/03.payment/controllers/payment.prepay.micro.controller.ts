@@ -24,8 +24,9 @@ class PaymentPrepayMicroController extends TwViewController {
           currentMonth: this.getCurrentMonth(),
           title: PREPAY_TITLE.MICRO
         });
+      } else {
+        res.render('payment.prepay.error.html', {err: resp, svcInfo: svcInfo, title: PREPAY_TITLE.MICRO + ' ' + PREPAY_TITLE.PREPAY});
       }
-      res.render('payment.prepay.error.html', { err: resp, svcInfo: svcInfo, title: PREPAY_TITLE.MICRO + ' ' + PREPAY_TITLE.PREPAY });
     });
   }
 
