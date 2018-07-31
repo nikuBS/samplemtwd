@@ -5,7 +5,9 @@
  */
 
 import { NextFunction, Request, Response } from 'express';
+import { API_CMD } from '../../../../types/api-command.type';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
+import FormatHelper from '../../../../utils/format.helper';
 
 class CustomerPreventdamageLatestwarningviewController extends TwViewController {
   constructor() {
@@ -13,9 +15,18 @@ class CustomerPreventdamageLatestwarningviewController extends TwViewController 
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    res.render('preventdamage/customer.preventdamage.latestwarningview.html', {
-      svcInfo: svcInfo
-    });
+    const lwid = req.query.lw_id || '';
+    if (FormatHelper.isEmpty(lwid)) {
+      res.redirect('/customer/prevent-damage/latest-warning');
+    }
+
+    this.apiService.request(API_CMD.BFF_08_0041, {}, {}, lwid)
+      .subscribe((data) => {
+        res.render('preventdamage/customer.preventdamage.latestwarningview.html', {
+          svcInfo: svcInfo,
+          data: data.result
+        });
+      });
   }
 }
 

@@ -8,7 +8,9 @@ $.fn.chart = function(option){
       pa_idx = 0,
       pat = [],
       max = [],
-      inter = null;
+      target_num = 0,
+      inter = null,
+      target_ani = [];
   
   var chart_length = chart_data.da_arr.length;
   
@@ -60,61 +62,7 @@ $.fn.chart = function(option){
   
   create_tag(chart_data,chart_length);
   function make_svg(){
-    switch(option.type){
-      case 'circle':
-        break;
-      case 'bar':
-        break;
-      case 'bar_1':
-        break;
-      case 'basic':
-        
-      default:
-        for(var i = 0; i < chart_length; ++i){
-          make_obj({
-            'tag':'path',
-            'p':svg,
-            'obj':{
-              'd':'M'+(chart_gap*i+_gap)+' '+unit_count(0)+' L'+(chart_gap*i+_gap)+' '+unit_count(option.max)+' Z',
-              'stroke':'#ddd',
-              'stroke-width':'1'
-            },
-            'style':{},
-            'txt':''
-          });
-          make_obj({
-            'tag':'path',
-            'p':svg,
-            'obj':{
-              'd':'M'+(chart_gap*i+_gap)+' '+ani_arr[i]+' L'+(chart_gap*(i+1)+_gap)+' '+ani_arr[i+1]+' Z',
-              'stroke':'#ddd',
-              'stroke-width':'1'
-            },
-            'style':{},
-            'txt':'',
-            'target':true
-          });
-          make_obj({
-            'tag':'circle',
-            'p':svg,
-            'obj':{
-              'fill':'#fff',
-              'stroke':chart_data.line_co,
-              'stroke-width':'1',
-              'cx':chart_gap*i+_gap,
-              'cy':ani_arr[i],
-              'r':'5'
-            },
-            'style':{},
-            'txt':'',
-            'target':true
-          });
-        }
-        break;
-    }
-    inter = setInterval(ani,10);
-  }
-  function ani(){
+    var ani_idx = 0;
     switch(option.type){
       case 'circle':
         break;
@@ -127,20 +75,108 @@ $.fn.chart = function(option){
       default:
         for(var i = 0; i < chart_length; ++i){
           var _sum = sum_aver(chart_data.da_arr[i].data,{'decimal':option.decimal});
-          ani_arr[i] += (unit_count(option.max-_sum)-ani_arr[i])*option.spd;
-          //target[0].setAttribute('d','M'+(chart_gap*i+_gap)+' '+ani_arr[i]+' L'+(chart_gap*(i+1)+_gap)+' '+ani_arr[i+1]+' Z');
-          //target[1].setAttribute('cy',ani_arr[i]);
-          //console.log(target[1])
+          make_obj({
+            'tag':'path',
+            'p':svg,
+            'obj':{
+              'd':'M'+(chart_gap*i+_gap)+' '+unit_count(0)+' L'+(chart_gap*i+_gap)+' '+unit_count(option.max)+' Z',
+              'stroke':'#ddd',
+              'stroke-width':'1'
+            },
+            'style':{},
+            'txt':''
+          });
+          if(i != chart_length-1){
+            target_ani[ani_idx] = make_obj({
+              'tag':'path',
+              'p':svg,
+              'obj':{
+                'd':'M'+(chart_gap*i+_gap)+' '+ani_arr[i]+' L'+(chart_gap*(i+1)+_gap)+' '+ani_arr[i+1]+' Z',
+                'stroke':chart_data.line_co,
+                'stroke-width':'1'
+              },
+              'txt':'',
+              'target':true
+            });
+            ani_idx++;
+          }
+          target_ani[ani_idx] = make_obj({
+            'tag':'circle',
+            'p':svg,
+            'obj':{
+              'fill':'#fff',
+              'stroke':chart_data.line_co,
+              'stroke-width':'1',
+              'cx':chart_gap*i+_gap,
+              'cy':ani_arr[i],
+              'r':'5'
+            },
+            'txt':'',
+            'target':true
+          });
+          ani_idx++;
+          make_obj({
+            'tag':'text',
+            'p':svg,
+            'obj':{
+              'x':chart_gap*i+_gap,
+              'y':unit_count(0)-_gap*.2,
+              'fill':chart_data.txt_co,
+              'text-anchor':'middle'
+            },
+            'style':{
+              'font-size':rem(10,true)
+            },
+            'txt':option.type  == 'basic_1' ? operation_time(_sum) : _sum 
+          });
+          make_obj({
+            'tag':'text',
+            'p':svg,
+            'obj':{
+              'x':chart_gap*i+_gap,
+              'y':unit_count(option.max)+_gap*.3,
+              'fill':chart_data.txt_co,
+              'text-anchor':'middle'
+            },
+            'style':{
+              'font-size':rem(13,true)
+            },
+            'txt':chart_data.da_arr[i].na
+          });
+        }
+        break;
+    }
+    inter = setInterval(ani,10);
+    setInterval(function(){clearInterval(inter);},1000);
+  }
+  function ani(){
+    switch(option.type){
+      case 'circle':
+        break;
+      case 'bar':
+        
+        break;
+      case 'bar_1':
+        
+        break;
+      case 'basic':
+        
+      default:
+        for(var i = 0; i < target_ani.length; ++i){
+          var j = Math.floor(i/2);
+          var _sum = sum_aver(chart_data.da_arr[j].data,{'decimal':option.decimal});
+          ani_arr[j] += (unit_count(option.max-_sum)-ani_arr[j])*option.spd;
+          if(target_ani[i].nodeName == 'path'){
+            target_ani[i].setAttribute('d','M'+(chart_gap*j+_gap)+' '+ani_arr[j]+' L'+(chart_gap*(j+1)+_gap)+' '+ani_arr[j+1]+' Z');
+          }else if(target_ani[i].nodeName == 'circle'){
+            target_ani[i].setAttribute('cy',ani_arr[j]);
+          }
         }
         break;
     }
   }
-  setTimeout(function(){
-    clearInterval(inter);
-  },1000);
   function make_obj(option){    
-    var t = document.createElementNS(xmlns, option.tag),
-        target_num = 0;
+    var t = document.createElementNS(xmlns, option.tag);
     for(var i in option.obj){
       t.setAttribute(i,option.obj[i]);
     }
@@ -148,12 +184,13 @@ $.fn.chart = function(option){
       t.style[i] = option.style[i];
     }
     if(option.txt) t.innerHTML = option.txt;
-    option.p.appendChild(t);
     if(option.target){
-      console.log(t);
-      target[target_num] = t;
+      target[target_num] = option.p.appendChild(t);
       target_num++;
+    }else{
+      option.p.appendChild(t);
     }
+    return t;
   }
   
   function guide_line(){
@@ -210,7 +247,49 @@ $.fn.chart = function(option){
         'txt':option.x_name
       });
     }else if(option.type == 'bar'){
-      
+      make_obj({
+        'tag':'path',
+        'p':svg,
+        'obj':{
+          'd':'M0 '+(option.h-20)+' L'+(ww-pding)+' '+(option.h-20)+' Z',
+          'stroke':'#eee',
+          'stroke-width':'1'
+        },
+        'style':{},
+        'txt':''
+      });
+      for(var i = 0; i < pattern_legnth; ++i){
+        make_obj({
+          'tag':'circle',
+          'p':svg,
+          'obj':{
+            'fill':'#fff',
+            'stroke':chart_data.line_co,
+            'stroke-width':'1',
+            'cx':chart_gap*i+_gap,
+            'cy':ani_arr[i],
+            'r':'5'
+          },
+          'style':{'transition':'all 2s'},
+          'txt':'',
+          'target':true
+        });
+        var tt = i == 0 ? '사용' : '할인';
+        make_obj({
+          'tag':'text',
+          'p':svg,
+          'obj':{
+            'x':0,
+            'y':option.h-rem(12),
+            'fill':chart_data.txt_co,
+            'text-anchor':'start'
+          },
+          'style':{
+            'font-size':rem(12,true)
+          },
+          'txt':tt
+        });
+      }
     }else if(option.type == 'circle'){
       
     }

@@ -5,12 +5,345 @@
 %>
 
 <% include ../components/start.component.html %>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap">
+    <!-- #header -->
+    <div id="header" class="header-wrap">
+        <div class="header">
+            <div class="header-ti align-l">
+                <h1>이메일 상담</h1>
+            </div>
+            <button class="prev-step fe-common-back"><span class="blind">이전으로</span></button>
+        </div>
+    </div>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <hr class="cont-sp type1" aria-hidden="true">
+            <!-- .cont-box -->
+            <div class="cont-box nogaps">
+                <!-- .component -->
+                <div class="component">
+                    <div class="component-box tabs">
+                        <div class="tab-area type1"><!-- 타입별 탭형태 변환 -->
+                            <div class="tab-linker">
+                                <ul role="tablist">
+                                    <li role="tab" aria-selected="true" aria-controls="tab1-tab" id="tab1"><a>서비스 관련 문의</a></li><!-- true 열림 -->
+                                    <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2"><a>통화품질 상담</a></li>
+                                </ul>
+                            </div>
+                            <div class="tab-contents">
+                                <ul>
+                                    <li role="tabpanel" id="tab1-tab" aria-labelledby="tab1" aria-selected="false">
+                                        <div class="email-question-top">
+                                            <p class="tx-dropdown-box">
+                                                <button class="tx-dropdown blue fe-btn-select-service" title="이메일 문의" aria-haspopup="true">서비스 선택</button>
+                                                서비스의<br>
+                                                <button class="tx-dropdown blue fe-btn-select-service-category" title="이메일 문의" aria-haspopup="true">문의사항 선택</button>
+                                                에 대해<br>문의합니다.
+                                            </p>
+                                            <span class="ico-ill-email"></span>
+                                            <button class="bt-link-tx">지금 해결할 수 있는 문의가 있는지 살펴보세요<span class="ico"></span></button>
+                                        </div>
+                                        <div class="cont-box">
+                                            <div class="box-email-form">
+                                                <p class="page-desc2"><em>*</em>표시는 필수 입력 항목입니다.</p>
+                                                <div class="email-form">
+                                                    <div class="form-cell">
+                                                        <span class="form-ti">문의하실 내용을 작성해주세요<span class="point-indicate ml4" aria-hidden="true">*</span></span>
+                                                        <div class="widget">
+                                                            <div class="widget-box tfCombined">
+                                                                <div class="txfield-combined">
+                                                                    <div class="txfield-combined-ti">
+                                                                        <input class="input-focus" type="text" placeholder="제목을 입력해주세요." title="이메일 문의 제목" value="" maxlength="20" aria-labelledby="aria-email-qacont">
+                                                                        <span class="byte"><span class="byte-current">0</span>/<span class="byte-total">20</span>자</span>
+                                                                    </div>
+                                                                    <div class="txfield-combined-tx">
+                                                                        <textarea class="input-focus" cols="20" rows="3" placeholder="내용을 입력해주세요." aria-labelledby="aria-email-qacont" maxlength="12000"></textarea>
+                                                                        <span class="byte"><span class="byte-current">0</span>/<span class="byte-total">12,000</span>자</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-cell">
+                                                        <span class="form-ti">연락가능번호<span class="point-indicate ml4" aria-hidden="true">*</span></span>
+                                                        <div class="widget mb10">
+                                                            <div class="widget-box radio">
+                                                                <ul class="select-list" role="radiogroup">
+                                                                    <li class="radiobox type01 checked" role="radio" aria-checked="true">
+                                                                        <input type="radio" name="radio1" value="" title="휴대폰" aria-labelledby="aria-email-phone" checked="">
+                                                                        휴대폰
+                                                                    </li>
+                                                                    <li class="radiobox type01" role="radio" aria-checked="false">
+                                                                        <input type="radio" name="radio1" value="" title="일반전화" aria-labelledby="aria-email-phone">
+                                                                        일반전화
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                        <span class="inputbox mt20"><!-- error일 경우 error 클래스 추가 -->
+                                                                <span class="input">
+                                                                    <input type="number" placeholder="숫자만 입력" title="휴대폰 번호" aria-labelledby="aria-email-phone" aria-describedby="aria-exp-desc1">
+                                                                    <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
+                                                                </span>
+                                                                <span class="error-txt none">잘못된 형식입니다.</span><!-- error일 경우 none 클래스 삭제 -->
+                                                                <div class="widget">
+                                                                    <div class="widget-box check">
+                                                                        <div class="checkbox type02 checked all_chk" role="checkbox" aria-checked="true">
+                                                                            <i class="ico"></i>
+                                                                            <input type="checkbox" name="checkbox" value="" title="답변이 등록되면 SMS 알림을 받습니다." checked="">
+                                                                            <span class="tit-a">답변이 등록되면 SMS 알림을 받습니다.</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </span>
+                                                    </div>
+                                                    <div class="form-cell">
+                                                        <span class="form-ti">이메일<span class="point-indicate ml4" aria-hidden="true">*</span></span>
+                                                        <span class="inputbox"><!-- error일 경우 error 클래스 추가 -->
+                                                                <span class="input">
+                                                                    <input type="text" value="" placeholder="" title="이메일" aria-labelledby="aria-email-place" aria-describedby="aria-exp-desc2"><!-- error일 경우 aria-describedby="aria-exp-desc2  aria-exp-desc3" 로 변경-->
+                                                                </span>
+                                                                <span class="error-txt none">잘못된 형식입니다.</span><!-- error일 경우 none 클래스 삭제 -->
+                                                                <span class="tx-box"><span class="guide-txt">이메일로 답변이 발송됩니다.</span></span>
+                                                            </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li role="tabpanel" id="tab2-tab" aria-labelledby="tab2" aria-selected="true">
+                                        <div class="email-question-top">
+                                            <p class="tx-dropdown-box">
+                                                <button class="tx-dropdown blue" title="이메일 문의" aria-haspopup="true">서비스 선택</button><br>
+                                                통화품질 개선을<br>요청합니다.
+                                            </p>
+                                            <span class="ico-ill-email"></span>
+                                            <button class="bt-link-tx">지금 해결할 수 있는 문의가 있는지 살펴보세요<span class="ico"></span></button>
+                                        </div>
+                                        <!-- .cont-box -->
+                                        <div class="cont-box">
+                                            <div class="box-email-form">
+                                                <p class="page-desc2"><em>*</em>표시는 필수 입력 항목입니다.</p>
+                                                <div class="email-form">
+                                                    <div class="form-cell">
+                                                        <span id="aria-email-qacont" class="form-ti">문의하실 내용을 작성해주세요<span class="point-indicate ml4" aria-hidden="true">*</span></span>
+                                                        <div class="widget">
+                                                            <div class="widget-box tfCombined">
+                                                                <div class="txfield-combined">
+                                                                    <div class="txfield-combined-ti">
+                                                                        <input class="input-focus" type="text" placeholder="제목을 입력해주세요." title="이메일 문의 제목" value="" maxlength="20" aria-labelledby="aria-email-qacont">
+                                                                        <span class="byte"><span class="byte-current">0</span>/<span class="byte-total">20</span>자</span>
+                                                                    </div>
+                                                                    <div class="txfield-combined-tx">
+                                                                        <textarea class="input-focus" cols="20" rows="3" placeholder="내용을 입력해주세요." maxlength="12000" aria-labelledby="aria-email-qacont"></textarea>
+                                                                        <span class="byte"><span class="byte-current">0</span>/<span class="byte-total">12,000</span>자</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-cell">
+                                                        <span id="aria-email-phone" class="form-ti">연락가능번호<span class="point-indicate ml4" aria-hidden="true">*</span></span>
+                                                        <div class="widget mb20">
+                                                            <div class="widget-box radio">
+                                                                <ul class="select-list" role="radiogroup">
+                                                                    <li class="radiobox type01 checked" role="radio" aria-checked="true">
+                                                                        <input type="radio" name="radio1" value="" title="휴대폰" checked="">
+                                                                        휴대폰
+                                                                    </li>
+                                                                    <li class="radiobox type01" role="radio" aria-checked="false">
+                                                                        <input type="radio" name="radio1" value="" title="일반전화">
+                                                                        일반전화
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                        <span class="inputbox mt10"><!-- error일 경우 error 클래스 추가 -->
+                                                                <span class="input">
+                                                                    <input type="number" placeholder="숫자만 입력" title="휴대폰 번호" aria-labelledby="aria-email-phone" aria-describedby="aria-exp-desc1">
+                                                                    <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
+                                                                </span>
+                                                                <span id="aria-exp-desc1" class="error-txt none">잘못된 형식입니다.</span><!-- error일 경우 none 클래스 삭제 -->
+                                                                <div class="widget">
+                                                                    <div class="widget-box check">
+                                                                        <div class="checkbox type02 checked all_chk" role="checkbox" aria-checked="true">
+                                                                            <i class="ico"></i>
+                                                                            <input type="checkbox" name="checkbox" value="" title="답변이 등록되면 SMS 알림을 받습니다." checked="">
+                                                                            <span class="tit-a">답변이 등록되면 SMS 알림을 받습니다.</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </span>
+                                                    </div>
+                                                    <div class="form-cell">
+                                                        <span id="aria-email-place" class="form-ti">이메일<span class="point-indicate ml4" aria-hidden="true">*</span></span>
+                                                        <span class="inputbox"><!-- error일 경우 error 클래스 추가 -->
+                                                                <span class="input">
+                                                                    <input type="text" value="" placeholder="" title="이메일" aria-labelledby="aria-email-place" aria-describedby="aria-exp-desc2"><!-- error일 경우 aria-describedby="aria-exp-desc2  aria-exp-desc3" 로 변경-->
+                                                                </span>
+                                                                <span id="aria-exp-desc3" class="error-txt none">잘못된 형식입니다.</span><!-- error일 경우 none 클래스 삭제 -->
+                                                                <span class="tx-box"><span id="aria-exp-desc2" class="guide-txt">이메일로 답변이 발송됩니다.</span></span>
+                                                            </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--// .cont-box -->
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--// .cont-box -->
 
+            <hr class="cont-sp type1" aria-hidden="true">
 
-<% include ../components/javascript.component.html %>
+            <div class="cont-box nogaps-top">
+                <div class="box-email-agree">
+                    <div class="agree-list type-03">
+                        <div class="widget">
+                            <div class="widget-box accordion">
+                                <div class="acco-cover on"><!-- toggle : 한개만 열기 -->
+                                    <div class="acco-style btn-hold">
+                                        <ul class="acco-list"><!-- .on: 열기 -->
+                                            <li class="acco-box">
+                                                <div class="acco-tit">
+                                                    <div class="widget">
+                                                        <div class="widget-box check">
+                                                            <div class="checkbox type02 all_chk" role="checkbox" aria-checked="false">
+                                                                <i class="ico"></i>
+                                                                <input type="checkbox" name="checkbox" value="" title="개인정보 수집이용에 대한 동의 (필수)">
+                                                                <span>개인정보 수집이용에 대한 동의 (필수)</span>
+                                                            </div>
+                                                        </div>
+                                                    </div><button role="button" aria-pressed="true">상세보기</button><!--// 2018-07-11 수정-->
+                                                </div>
+                                                <div class="acco-cont">
+                                                    <div class="agree-cont">
+                                                        <p class="agree-cont-defined">
+                                                            개인정보 수집, 이용목적<br>SK텔레콤의 서비스(이동전화, 인터넷, 결합상품, 집전화, 인터넷 전화 WiBro, 멤버십 등) 관련 상담<br><br>개인정보 수집항목
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="acco-box">
+                                                <div class="acco-tit">
+                                                    <div class="widget">
+                                                        <div class="widget-box check">
+                                                            <div class="checkbox type02 all_chk" role="checkbox" aria-checked="false">
+                                                                <i class="ico"></i>
+                                                                <input type="checkbox" name="checkbox" value="" title="개인정보 처리위탁에 대한 동의 (필수)">
+                                                                <span>개인정보 처리위탁에 대한 동의 (필수)</span>
+                                                            </div>
+                                                        </div>
+                                                    </div><button role="button" aria-pressed="true">상세보기</button><!--// 2018-07-11 수정-->
+                                                </div>
+                                                <div class="acco-cont">
+                                                    <div class="agree-cont">
+                                                        <p class="agree-cont-defined">
+                                                            개인정보 처리위탁을 받는자(“수탁자”)<br>㈜서비스 에이스, ㈜서비스 탑<br><br>개인정보 처리위탁을 하는 업무의 내용<br>SK텔레콤의 서비스(이동전화, 인터넷, 결합상품, 집전화
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--// .widget -->
+                    </div>
+                    <ul class="bt-slice item-two">
+                        <li class="bt-white2">
+                            <button class="fe-email-cancel">취소</button>
+                        </li>
+                        <li class="bt-blue1">
+                            <button class="fe-email-register" disabled>등록하기</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!--// .cont-box -->
+
+            <hr class="cont-sp type1" aria-hidden="true">
+
+            <!-- .cont-box -->
+            <div class="cont-box nogaps-hoz">
+                <div class="box-confirm">
+                    <!-- .widget -->
+                    <div class="widget">
+                        <div class="widget-box accordion">
+                            <h3 class="tit-a">이용안내</h3>
+                            <div class="acco-cover toggle">
+                                <div class="bt-whole"><button role="button" aria-pressed="false"><span class="blind">내용 열기</span></button></div>
+                                <div class="acco-style">
+                                    <ul class="acco-list">
+                                        <li class="acco-box">
+                                            <!-- .on: 열기 -->
+                                            <div class="acco-tit"><button role="button" aria-pressed="false"><span class="bullet">1.</span> T world Direct 고객센터가 궁금해요.</button></div>
+                                            <div class="acco-cont">
+                                                <ul class="list-dot">
+                                                    <li class="list">휴대폰 관련 상담문의<br>SKT고객 1525(무료) / 유선 및 타사고객<br>1599-0224(유료)<br>상담시간: (평일) 09:00-21:00 / (토요일) 10:00-15:00</li>
+                                                    <li class="list">T기프트/액세서리 문의<br>1600-5380(유료)<br>상담시간: (평일)10:00-19:00</li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li class="acco-box">
+                                            <div class="acco-tit"><button role="button" aria-pressed="false"><span class="bullet">2.</span> 개인정보는 안전한가요?</button></div>
+                                            <div class="acco-cont">
+                                                <ul class="list-dot">
+                                                    <li class="list">상담접수 시 작성하신 개인정보(주민번호, 카드/계좌, 이동전화번호, 연락처 등)는 고객님의 정보보호를 위해 모바일 관련 문의는 접수일로부터 10일, 인터넷/집전화/TV 관련 문의는 30일 경과 후일부 암호화(*) 조치됩니다.</li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li class="acco-box">
+                                            <div class="acco-tit"><button role="button" aria-pressed="false"><span class="bullet">3.</span> 예전에 작성한 문의에 이어 문의하고 싶어요.</button></div>
+                                            <div class="acco-cont">
+                                                <ul class="list-dot">
+                                                    <li class="list">문의하신 내용에 추가적으로 궁금하신 사항이 있으실경우 <em>myT &gt; 나의활동 &gt; 나의문의내역</em>에서 ‘추가문의’ 버튼 클릭 시 추가 상담 문의를 하실 수 있습니다</li>
+                                                    <li class="list">접수된 문의는 접수순서에 따라 순차적으로 진행됩니다.</li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li class="acco-box">
+                                            <div class="acco-tit"><button role="button" aria-pressed="false"><span class="bullet">4.</span> SK브로드밴드를 통한 가입서비스에 대해 문의하고 싶어요.</button></div>
+                                            <div class="acco-cont">
+                                                <ul class="list-dot">
+                                                    <li class="list">SK브로드밴드를 통해 가입하신 서비스에 대한 문의는 SK브로드밴드 고객센터 (전화 106 또는 <button>http://www.skbroadband.com</button>)를 이용해주시기 바랍니다.</li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--// .widget -->
+                </div>
+            </div>
+            <!--// .cont-box -->
+        </div>
+    </div>
+    <!--// #contents -->
+</div>
+<% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    // TODO customer email
+    var oCustomerEmail = new Tw.CustomerEmail($('.wrap'));
   });
 </script>
 <% include ../components/end.component.html %>

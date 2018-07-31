@@ -9,15 +9,19 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import { CUSTOMER_PREVENTDAMAGE_GUIDE } from '../../../../types/string.type';
 import { CUSTOMER_PREVENTDAMAGE_GUIDE_VIDEO, CUSTOMER_PREVENTDAMAGE_GUIDE_LATEST } from '../../../../types/outlink.type';
 
-const categoryLabel = {
-  video: CUSTOMER_PREVENTDAMAGE_GUIDE.VIDEO,
-  webtoon: CUSTOMER_PREVENTDAMAGE_GUIDE.WEBTOON,
-  latest: CUSTOMER_PREVENTDAMAGE_GUIDE.LATEST
-};
-
-const outlink = {
-  video: CUSTOMER_PREVENTDAMAGE_GUIDE_VIDEO,
-  latest: CUSTOMER_PREVENTDAMAGE_GUIDE_LATEST
+const categorySwithingData = {
+  video: {
+    LABEL: CUSTOMER_PREVENTDAMAGE_GUIDE.VIDEO,
+    LIST: CUSTOMER_PREVENTDAMAGE_GUIDE_VIDEO
+  },
+  webtoon: {
+    LABEL: CUSTOMER_PREVENTDAMAGE_GUIDE.WEBTOON,
+    LIST: []
+  },
+  latest: {
+    LABEL: CUSTOMER_PREVENTDAMAGE_GUIDE.LATEST,
+    LIST: CUSTOMER_PREVENTDAMAGE_GUIDE_LATEST
+  }
 };
 
 class CustomerPreventdamageGuideController extends TwViewController {
@@ -30,9 +34,9 @@ class CustomerPreventdamageGuideController extends TwViewController {
 
     res.render('preventdamage/customer.preventdamage.guide.html', {
       category: category,
-      categoryLabel: categoryLabel[category],
+      categoryLabel: categorySwithingData[category].LABEL,
       svcInfo: svcInfo,
-      list: (category === 'video' || category === 'latest') ? outlink[category] : []
+      list: categorySwithingData[category].LIST
     });
   }
 }

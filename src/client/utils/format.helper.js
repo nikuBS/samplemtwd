@@ -155,15 +155,15 @@ Tw.FormatHelper = (function () {
       str += phoneNumber.substr(7);
     }
     return str;
-  };
+  }
 
   function _getDashedTelephoneNumber(phoneNumber) {
     var str = '';
+    var centerIdx = -1;
     if (/^02/.test(phoneNumber)) {
       str += phoneNumber.substring(0, 2);
       str += '-';
 
-      var centerIdx = -1;
       if (phoneNumber.length === 9) {
         centerIdx = 5;
       } else {
@@ -176,7 +176,6 @@ Tw.FormatHelper = (function () {
       str += phoneNumber.substring(0, 3);
       str += '-';
 
-      var centerIdx = -1;
       if (phoneNumber.length === 10) {
         centerIdx = 5;
       } else {
@@ -188,7 +187,7 @@ Tw.FormatHelper = (function () {
     }
 
     return str;
-  };
+  }
 
   function getFormattedPhoneNumber(phoneNumber) {
     var getMaskingPhoneNumber = function (mpn) {
@@ -199,7 +198,7 @@ Tw.FormatHelper = (function () {
       return tmpArr.join('-');
     };
     return getMaskingPhoneNumber(_getDashedCellPhoneNumber(phoneNumber));
-  };
+  }
 
   function getDashedPhoneNumber(phoneNumber) {
     if (Tw.ValidationHelper.isTelephone(phoneNumber)) {
@@ -209,7 +208,7 @@ Tw.FormatHelper = (function () {
     }
 
     return phoneNumber;
-  };
+  }
 
   return {
     leadingZeros: leadingZeros,

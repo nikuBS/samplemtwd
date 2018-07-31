@@ -38,6 +38,8 @@ export const URL = {
   '/myt/bill/history/contents': { login: true, id: 'My_02_03_05_01' },  // 나의 요금 > 콘텐츠 이용료 이용내역
   '/myt/bill/history/contents/limit': { login: true, id: 'My_02_03_05_01_02' },  // 나의 요금 > 콘텐츠 이용료 이용내역 > 콘텐츠 이용 한도 확인
   '/myt/bill/history/contents/limit/change': { login: true, id: 'My_02_03_05_01_01' },  // 나의 요금 > 콘텐츠 이용료 이용내역 > 콘텐츠 이용 한도 변경
+  '/myt/joinService/protect/change': { login: true, id: 'MY_01_02_08' },
+  '/myt/joinService/protect/inquiry': { login: true, id: 'MY_01_02_07' },
   '/myt/join/join-info': { login: true, id: 'MY_01_02' }, // 가입정보
   // recharge
   '/recharge/refill': { login: true, id: 'DA_01_01_01' }, // 리필하기
@@ -84,10 +86,10 @@ export const URL = {
   // product
   // direct
   // customer
-  '/customer': { login: true, id: 'CI_01_01' }, // 고객센터 서브메인
-  '/customer/email/question': { login: true, id: 'CI_04_09' }, // 이메일 문의
-  '/customer/voice/info': { login: true, id: 'CI_10_01' }, // 목소리인증 안내
-  '/customer/voice/sms': { login: true, id: 'CI_10_02' }, // 목소리인증 문자발송
+  '/customer': { login: false, id: 'CI_01_01' }, // 고객센터 서브메인
+  '/customer/email': { login: false, id: 'CI_04_09' }, // 이메일 문의
+  '/customer/voice/info': { login: false, id: 'CI_10_01' }, // 목소리인증 안내
+  '/customer/voice/sms': { login: false, id: 'CI_10_02' }, // 목소리인증 문자발송
   '/customer/notice': { login: false, id: 'CI_06_01' }, // 공지사항
   '/customer/prevent-damage': { login: false, id: 'CI_07_01' }, // 이용자 피해예방 센터 메인
   '/customer/prevent-damage/guide': { login: false, id: 'CI_07_03' }, // 이용자 피해예방 가이드
@@ -100,6 +102,7 @@ export const URL = {
   '/customer/shop/detail': { login: false, id: 'CI_02_04' }, // 매장 및 AS센터 > 매장정보
   '/customer/shop/near': { login: false, id: 'CI_02_05' }, // 매장 및 AS센터 > 내 위치와 가까운 매장 검색
   '/customer/shop/search': { login: false, id: 'CI_02_01' }, // 매장 및 AS센터 > 지점/대리점 찾기
+  '/customer/researches': { login: true, id: 'CI_09_02' }, // 설문조사 리스트
   // auth
   '/auth/line': { login: true, id: 'CO_01_05_02' }, // 회선관리
   '/auth/line/edit': { login: true, id: 'CO_01_05_02_01' }, // 회선편집

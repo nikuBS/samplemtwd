@@ -23,48 +23,22 @@
                     <div class="widget-box accordion2">
                         <div class="acco-style acco-notice"><!-- 스타일별 클래스 추가 -->
                             <ul class="acco-box fe-list">
+                                <% for (var i in data.list) { %>
                                 <li class="acco-list">
-                                    <div class="acco-title new impo"><!-- new : 새로운 글 뱃지 --> <!-- impo : 중요 공지 -->
+                                    <div class="acco-title new impo"><!-- new : 새로운 글 뱃지 --> <!-- impo : 중요 공지 --><!-- TODO -->
                                         <button role="button" aria-pressed="false">
-                                            <span class="acco-notice-tit">(7월 1주) 서비스 점검 안내</span>
+                                            <span class="acco-notice-tit"><%= data.list[i].title %></span>
                                             <span class="acco-notice-type">안내</span>
-                                            <span class="acco-notice-date">2018.06.28</span>
+                                            <span class="acco-notice-date"><%= data.list[i].rgstDt %></span>
                                         </button>
                                     </div>
-                                    <div class="acco-content">상세내용 모두노출 상세내용 모두노출 상세내용 모두노출 상세내용 모두노출 상세내용 모두노출 상세내용 모두노출</div>
+                                    <div class="acco-content"><%= data.list[i].content %></div>
                                 </li>
-                                <li class="acco-list">
-                                    <div class="acco-title impo"><!-- impo : 중요 공지 -->
-                                        <button role="button" aria-pressed="false">
-                                            <span class="acco-notice-tit">메시지커플, 메세지버디 상품 가입 중단 안내 메시지커플</span>
-                                            <span class="acco-notice-type">공지</span>
-                                            <span class="acco-notice-date">2018.06.28</span>
-                                        </button>
-                                    </div>
-                                    <div class="acco-content">상세내용 모두노출 상세내용 모두노출 상세내용 모두노출 상세내용 모두노출 상세내용 모두노출 상세내용 모두노출</div>
-                                </li>
-                                <li class="acco-list">
-                                    <div class="acco-title new"><!-- new : 새로운 글 뱃지 -->
-                                        <button role="button" aria-pressed="false">
-                                            <span class="acco-notice-tit">T world 개인정보 처리방침 변경 안내</span>
-                                            <span class="acco-notice-type">안내</span>
-                                            <span class="acco-notice-date">2018.06.28</span>
-                                        </button>
-                                    </div>
-                                    <div class="acco-content">상세내용 모두노출 상세내용 모두노출 상세내용 모두노출 상세내용 모두노출 상세내용 모두노출 상세내용 모두노출</div>
-                                </li>
-                                <li class="acco-list">
-                                    <div class="acco-title">
-                                        <button role="button" aria-pressed="false">
-                                            <span class="acco-notice-tit">T world 개인정보 처리방침 변경 안내</span>
-                                            <span class="acco-notice-type">안내</span>
-                                            <span class="acco-notice-date">2018.06.28</span>
-                                        </button>
-                                    </div>
-                                    <div class="acco-content">상세내용 모두노출 상세내용 모두노출 상세내용 모두노출 상세내용 모두노출 상세내용 모두노출 상세내용 모두노출</div>
-                                </li>
+                                <% } %>
                             </ul>
-                            <button class="acco-notice-more" >더보기(20)</button>
+                            <% if (!data.last) { %>
+                            <button class="acco-notice-more fe-btn_more_list" >더보기(<%= data.remain %>)</button>
+                            <% } %>
                         </div>
                     </div>
                 </div>
@@ -77,6 +51,20 @@
     <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }) %>
 </div>
 <% include ../components/javascript.component.html %>
+<script type="text/template" id="tpl_notice_list_item">
+    {{#list}}
+    <li class="acco-list">
+        <div class="acco-title new impo"><!-- new : 새로운 글 뱃지 --> <!-- impo : 중요 공지 --><!-- TODO -->
+            <button role="button" aria-pressed="false">
+                <span class="acco-notice-tit">{{title}}</span>
+                <span class="acco-notice-type">안내</span>
+                <span class="acco-notice-date">{{rgstDt}}</span>
+            </button>
+        </div>
+        <div class="acco-content">{{content}}</div>
+    </li>
+    {{/list}}
+</script>
 <script>
   $(document).ready(function () {
     var comp = new Tw.CustomerNotice($('.wrap'));

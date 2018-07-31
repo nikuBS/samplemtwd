@@ -177,7 +177,7 @@ Tw.DateHelper = (function () {
 
   var getDayOfWeek = function (date) {
     return moment(convDateFormat(date)).format('dd');
-  }
+  };
 
   return {
     getRemainDate: getRemainDate,
