@@ -29,9 +29,9 @@
                         <div class="tab-area type1"><!-- 타입별 탭형태 변환 -->
                             <div class="tab-linker">
                                 <ul role="tablist">
-                                    <li role="tab" aria-selected="true" aria-controls="tab1-tab" id="tab1"><a class="fe-replace-history" href="#name">매장명</a></li><!-- true 열림 -->
-                                    <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2"><a class="fe-replace-history" href="#address">주소</a></li>
-                                    <li role="tab" aria-selected="false" aria-controls="tab3-tab" id="tab3"><a class="fe-replace-history" href="#tube">지하철</a></li>
+                                    <li role="tab" aria-selected="<%= !searched ? true : searchType === '1' ? true : false %>" aria-controls="tab1-tab" id="tab1"><button id="fe-tab1">매장명</button></li>
+                                    <li role="tab" aria-selected="<%= !searched ? false : searchType === '2' ? true : false %>" aria-controls="tab2-tab" id="tab2"><button id="fe-tab2">주소</button></li>
+                                    <li role="tab" aria-selected="<%= !searched ? false : searchType === '3' ? true : false %>" aria-controls="tab3-tab" id="tab3"><button id="fe-tab3">지하철</button></li>
                                 </ul>
                             </div>
                             <div class="tab-contents">
@@ -40,7 +40,7 @@
                                         <div class="store-search">
                                             <span class="inputbox">
                                                 <span class="input">
-                                                    <input id="fe-text-name" type="text" placeholder="지점, 대리점명을 입력하세요." title="매장명" value="">
+                                                    <input id="fe-text-name" type="text" placeholder="지점, 대리점명을 입력하세요." title="매장명" value="<%= searched && searchType === '1' ? searchText : '' %>">
                                                     <button href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></button>
                                                 </span>
                                             </span>
@@ -50,7 +50,7 @@
                                         <div class="store-search">
                                             <span class="inputbox">
                                                 <span class="input">
-                                                    <input id="fe-text-address" type="text" placeholder="주소 또는 지역명을 입력해 주세요." title="주소" value="">
+                                                    <input id="fe-text-address" type="text" placeholder="주소 또는 지역명을 입력해 주세요." title="주소" value="<%= searched && searchType === '2' ? searchText : '' %>">
                                                     <button class="cancel"><span class="blind">삭제</span></button>
                                                 </span>
                                             </span>
@@ -60,7 +60,7 @@
                                         <div class="store-search">
                                             <span class="inputbox">
                                                 <span class="input">
-                                                    <input id="fe-text-tube" class="place-small" type="text" placeholder="역명을 정확하게 입력해 주세요 예) 홍대역(X), 홍대입구역(O)" title="지하철" value="">
+                                                    <input id="fe-text-tube" class="place-small" type="text" placeholder="역명을 정확하게 입력해 주세요 예) 홍대역(X), 홍대입구역(O)" title="지하철" value="<%= searched && searchType === '3' ? searchText : '' %>">
                                                     <button class="cancel"><span class="blind">삭제</span></button>
                                                 </span>
                                             </span>
@@ -154,7 +154,7 @@
                         </div>
                         <ul class="bt-slice">
                             <li class="bt-red1">
-                                <button disabled>검색</button>
+                                <button <%= !searched ? 'disabled' : undefined %>>검색</button>
                             </li>
                         </ul>
                     </div>
@@ -163,6 +163,64 @@
 
             </div>
             <!--// .cont-box -->
+
+            <hr class="cont-sp type1" aria-hidden="true"/>
+
+            <% if (searched && result.length === 0) { %>
+            <!-- .cont-box -->
+            <div class="cont-box nogaps">
+                <div class="box-store-result">
+                    <p class="result-ti"><em class="num">0개</em>의 매장이 검색되었습니다.</p>
+                    <div class="store-result-list">
+                        <div class="contents-empty">
+                            <span class="ico"></span>
+                            <p class="desc">검색 결과가 없습니다.<br />다시 검색해주세요.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--// .cont-box -->
+            <% } %>
+
+            <% if (searched && result.length > 0) { %>
+            <!-- .cont-box -->
+            <div class="cont-box nogaps">
+                <div class="box-store-result">
+                    <p class="result-ti"><em class="num">4개</em>의 매장이 검색되었습니다.</p>
+                    <div class="store-result-list">
+                        <div>
+                            <button>
+                                <dl>
+                                    <dt>신사대리점</dt>
+                                    <dd>서울시 중구 만리재로 175, 상가2동 102호<br />(만리동 2가 37-2)</dd>
+                                </dl>
+                            </button>
+                            <button class="bt-tel"><span role="img" class="blind">매장으로 전화하기</span></button>
+                        </div>
+                        <div>
+                            <button>
+                                <dl>
+                                    <dt>PS&amp;M4 대리점<br />연수 T프리미엄 스토어점</dt>
+                                    <dd>서울시 관악구 관악로 201<br />(봉천동 859-40)</dd>
+                                </dl>
+                            </button>
+                            <button class="bt-tel"><span role="img" class="blind">매장으로 전화하기</span></button>
+                        </div>
+                        <div>
+                            <button>
+                                <dl>
+                                    <dt>신사직대리점</dt>
+                                    <dd>부산 동래구 석사로 4<br />(사직동 77-12)</dd>
+                                </dl>
+                            </button>
+                            <button class="bt-tel"><span role="img" class="blind">매장으로 전화하기</span></button>
+                        </div>
+                    </div>
+                    <a class="bt-more" href="">더보기<span>(20)</span></a>
+                </div>
+            </div>
+            <!--// .cont-box -->
+            <% } %>
 
             <!-- .component -->
             <div class="component">
@@ -180,6 +238,7 @@
             </div>
             <!--// .component -->
 
+            <% if (!searched) { %>
             <!-- .cont-box -->
             <div class="cont-box">
                 <div class="box-store-time">
@@ -202,6 +261,8 @@
                 </div>
             </div>
             <!--// .cont-box -->
+            <% } %>
+
 
             <hr class="cont-sp type1" aria-hidden="true"/>
 
