@@ -15,14 +15,17 @@ Tw.CustomerEmail = function (rootEl) {
 };
 
 Tw.CustomerEmail.prototype = {
+  categoryId: '',
   serviceType: '',
   serviceCategory: [],
+
   _init: function () {
     this._apiService.request(Tw.API_CMD.BFF_08_0010, {}).done($.proxy(this._setServiceCategory, this));
   },
 
   _cachedElement: function () {
     this.$select_service = $('.fe-btn-select-service');
+    this.$select_service_category = $('.fe-btn-select-service-category');
   },
 
   _bindEvent: function () {
@@ -34,6 +37,7 @@ Tw.CustomerEmail.prototype = {
 
   _setServiceCategory: function (res) {
     this.serviceCategory = res.result;
+    this.serviceCategory.INTERNET = res.result.INTERNET.concat(res.result.PHONE);
   },
 
   _selectService: function (e) {
@@ -45,34 +49,45 @@ Tw.CustomerEmail.prototype = {
     this._popupService.close();
   },
 
-  _selectServiceCategory: function () {
+  _selectServiceCategory: function (e) {
+    var elTarget = $(e.currentTarget);
+    var categoryName = elTarget.text();
+    this.categoryId = elTarget.data('category-id');
+
+    this.$select_service_category.text(categoryName);
+    this._popupService.close();
   },
 
   _showServicePopup: function () {
     var list = [
-      { attr: 'data-service=PHONE', text: Tw.CUSTOMER_EMAIL.PHONE },
+      { attr: 'data-service=CELL', text: Tw.CUSTOMER_EMAIL.CELL },
       { attr: 'data-service=INTERNET', text: Tw.CUSTOMER_EMAIL.INTERNET },
       { attr: 'data-service=DIRECT', text: Tw.CUSTOMER_EMAIL.DIRECT },
       { attr: 'data-service=CHOCO', text: Tw.CUSTOMER_EMAIL.CHOCO }
     ];
 
     this._popupService.openChoice(
-      Tw.POPUP_TITLE.SELECT_SERVICE, list, '', null, function () {
-        this._popupService.close();
-      }.bind(this)
+      Tw.POPUP_TITLE.SELECT_SERVICE,
+      list,
+      '',
+      null,
+      this._popupService.close
     );
+
+    this.$select_service_category.text(Tw.CUSTOMER_EMAIL.SELECT_CATEGORY);
   },
 
   _showServiceCategoryPopup: function () {
-
     var list = _.map(this.serviceCategory[this.serviceType], function (item) {
       return { attr: 'data-category-id=' + item.ofrCtgSeq, text: item.ctgNm };
     });
 
     this._popupService.openChoice(
-      Tw.POPUP_TITLE.SELECT_SERVICE, list, '', null, function () {
-        this._popupService.close();
-      }.bind(this)
+      Tw.POPUP_TITLE.SELECT_SERVICE,
+      list,
+      '',
+      null,
+      this._popupService.close
     );
   }
 };

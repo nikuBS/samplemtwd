@@ -37,7 +37,7 @@
                 {{#if using}}
                 <li>
                     <span class="title">서비스 해지</span>
-                    <span class="tx-cont"><a href="/myt/usage/tdatashare/close?cSvcMgmtNum={{cSvcMgmtNum}}" role="button" class="red-btn">해지하기</a></span>
+                    <span class="tx-cont"><a href="/myt/usage/tdatashare/close?cSvcMgmtNum={{cSvcMgmtNum}}&usimNum={{usimNum}}" role="button" class="red-btn">해지하기</a></span>
                 </li>
                 {{/if}}
             </ul>
@@ -93,6 +93,12 @@
                         <span class="usage-cont">
                             <em class="fe-opmdBasic-data"><%= result.opmdBasic.data %></em>
                             <span class="fe-opmdBasic-unit"><%= result.opmdBasic.unit %></span>
+                            <% if (result.opmdBasicSub) { %>
+                            <span class="sub-txt">
+                                (<%= result.opmdBasicSub.data %>
+                                <%= result.opmdBasicSub.unit %>)
+                            </span>
+                            <% } %>
                         </span>
                     </div>
                     <% } %>
@@ -104,6 +110,12 @@
                         <span class="usage-cont">
                             <em class="fe-totShar-data"><%= result.totShar.data %></em>
                             <span class="fe-totShar-unit"><%= result.totShar.unit %></span>
+                            <% if (result.totSharSub) { %>
+                            <span class="sub-txt">
+                                (<%= result.totSharSub.data %>
+                                <%= result.totSharSub.unit %>)
+                            </span>
+                            <% } %>
                         </span>
                     </div>
                     <div class="fe-child-list"></div>

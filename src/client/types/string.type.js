@@ -127,6 +127,18 @@ Tw.PAYMENT_POINT_VALUE = {
   T_POINT: '11'
 };
 
+Tw.PAYMENT_PREPAY_TITLE = {
+  MICRO_PREPAY: '소액결제 선결제',
+  AUTO_PREPAY: '자동 선결제',
+  CHANGE_CARD: '카드정보 변경',
+  CHANGE_MONEY: '금액정보 변경',
+  CHANGE_ALL: '카드정보 및<br />금액정보 변경',
+  PREPAY_COMPLETE: '가<br />정상적으로<br />처리되었습니다.',
+  CANCEL_COMPLETE: '해지가<br />완료되었습니다.',
+  AUTO_COMPLETE: '가<br />신청되었습니다.',
+  AUTO_CHANGE_COMPLETE: '이<br />신청되었습니다.'
+};
+
 Tw.PAYMENT_STRD_MSG = {
   CONTENTS_L02: '자동 선결제가 되는 시점의 금액을 말하며, 고객님 콘텐츠 이용한도의 최대 90%까지 설정 가능합니다.<br /><br />예시) 자동선결제가 기준금액 : 5만원으로 설정 시, 이번 달 소액결제를 5만원 이상 결제 시점에 자동으로 선결제됩니다.',
   TITLE_L02: '기준금액이란?'
@@ -245,7 +257,8 @@ Tw.MSG_MYT = {
     M01_TITLE: 'T데이터셰어링 기본제공 데이터 사용량',
     M01_CONTENTS: '올인원 요금제 등 기본으로 데이터를 제공하는 요금제를 이용하는 고객님 중 제한된 USIM(한도형)의 데이터 정보만 노출합니다.',
     M02_TITLE: 'T데이터셰어링 총 데이터 사용량',
-    M02_CONTENTS: '등록하신 각각의 T 데이터셰어링 USIM의 사용량을 합산한 정보입니다.'
+    M02_CONTENTS: '등록하신 각각의 T 데이터셰어링 USIM의 사용량을 합산한 정보입니다.',
+    A01: '진행을 취소하시고 이전 화면으로 이동하시겠습니까?'
   },
   JOIN_SERVICE: {
     EMPTY_PWD: '6자리 이상의 숫자를 입력해주세요.',
@@ -324,6 +337,7 @@ Tw.MSG_PAYMENT = {
   PRE_A06: '선결제를 종료하시겠습니까?',
   PRE_A07: '자동 선결제를 해지 하시겠습니까?',
   PRE_A08: '선결제 금액은 기준금액을 넘을 수 없습니다.',
+  PRE_A09: '생년월일을 입력해 주세요.',
   PRE_A10: '자동 선결제 신청 및 변경을 종료하시겠습니까?',
   PRE_A11: '선결제 금액은 10,000원 단위로 입력해 주세요.',
   ERROR_GET_CARD: '카드정보 조회에 실패하였습니다. 다시 시도해 주세요.',
@@ -487,10 +501,24 @@ Tw.URL_PATH = {
   BROADBAND: 'http://www.skbroadband.com/'
 };
 
+Tw.MSG_POSTCODE = {
+  L01: '광역시/도를 선택해주세요.',
+  L02: '시/군/구를 선택해주세요.',
+  L03: '검색어는 최소 2글자 이상 입력해주세요.',
+  L04: '검색된 주소가 없습니다.\n다시 한번 주소를 선택 및 입력해주세요.',
+  L05: '검색된 사서함이 없습니다.\n다시 한번 사서함 주소를 선택 및 입력해주세요.'
+};
+
+Tw.POSTCODE_TEXT = {
+  BUILDING_CODE: '건물번호',
+  ZIP_CODE: '우편번호',
+  SELECT_ADDRESS: '주소를 선택해주세요'
+};
+
 Tw.CUSTOMER_EMAIL = {
-  PHONE: '휴대폰',
+  CELL: '휴대폰',
   INTERNET: '인터넷/집전화/TV',
   DIRECT: '다이렉트샵',
-  CHOCO: '초콜렛'
-}
-
+  CHOCO: '초콜렛',
+  SELECT_CATEGORY: '문의사항 선택'
+};

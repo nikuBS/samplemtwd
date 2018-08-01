@@ -1,5 +1,3 @@
-import { API_METHOD, API_SERVER } from "../../server/types/api-command.type";
-
 Tw.API_METHOD = {
   GET: 'GET',
   POST: 'POST',
@@ -20,6 +18,14 @@ Tw.API_CMD = {
   BFF_01_0002: { path: '/common/sessions', method: Tw.API_METHOD.GET },
   BFF_01_0004: { path: '/common/selected-sessions', method: Tw.API_METHOD.PUT },
   BFF_01_0005: { path: '/common/selected-sessions', method: Tw.API_METHOD.GET },
+  BFF_01_0006: { path: '/core-modification/v1/address/legal-dongs', method: Tw.API_METHOD.GET },
+  BFF_01_0007: { path: '/core-modification/v1/address/legal-dongs', method: Tw.API_METHOD.GET },
+  BFF_01_0008: { path: '/core-modification/v1/address/street-names', method: Tw.API_METHOD.GET },
+  BFF_01_0009: { path: '/core-modification/v1/address/mailboxes', method: Tw.API_METHOD.GET },
+  BFF_01_0010: { path: '/core-modification/v1/address/lot-numbers', method: Tw.API_METHOD.GET },
+  BFF_01_0011: { path: '/core-modification/v1/address/buildings', method: Tw.API_METHOD.GET },
+  BFF_01_0012: { path: '/core-modification/v1/address/standard', method: Tw.API_METHOD.GET },
+  BFF_01_0013: { path: '/core-modification/v1/address/standard', method: Tw.API_METHOD.GET },
 
   // AUTH
   BFF_03_0002: { path: '/user/account-auth-sessions', method: Tw.API_METHOD.POST },
@@ -43,9 +49,9 @@ Tw.API_CMD = {
   BFF_05_0001: { path: '/my-t/balances', method: Tw.API_METHOD.GET },
   BFF_05_0002: { path: '/my-t/balance-add-ons', method: Tw.API_METHOD.GET },
   BFF_05_0005: { path: '/core-balance/v1/tdata-sharings', method: Tw.API_METHOD.GET },
-  BFF_05_0009: { path: '/core-balance/v1/data-sharings/balances', method: Tw.API_METHOD.GET },
+  BFF_05_0009: { path: '/core-balance/v1/data-sharings/child', method: Tw.API_METHOD.GET },
   BFF_05_0010: { path: '/core-balance/v1/children', method: Tw.API_METHOD.GET },
-  BFF_05_0011: { path: '/core-balance/v1/data-sharings', method: Tw.API_METHOD.DELETE },
+  BFF_05_0011: { path: '/core-balance/v1/tdata-sharings/args-0', method: Tw.API_METHOD.DELETE },
   BFF_05_0014: { path: '/core-bill/v1/pps-histories', method: Tw.API_METHOD.GET },
   BFF_05_0048: { path: '/core-bill/v1/bill-types-reissue-request/', method: Tw.API_METHOD.POST },
   BFF_05_0022: { path: '/core-bill/v1/hotbill/fee/hotbill-response', method: Tw.API_METHOD.GET },
@@ -75,6 +81,7 @@ Tw.API_CMD = {
   BFF_05_0081: { path: '/core-bill/v1/microPay-requests', method: Tw.API_METHOD.POST },
   BFF_05_0082: { path: '/core-bill/v1/microPay-auto-set', method: Tw.API_METHOD.POST },
   BFF_05_0083: { path: '/core-bill/v1/microPay-requests', method: Tw.API_METHOD.PUT },
+  BFF_05_0089: { path: '/core-bill/v1/prepayInfo', method: Tw.API_METHOD.GET },
 
   // RECHARGE
   BFF_06_0001: { path: '/core-recharge/v1/refill-coupons', method: Tw.API_METHOD.GET },
@@ -158,12 +165,12 @@ Tw.API_CMD = {
   BFF_07_0063: { path: '/core-bill/v1/auto-payments', method: Tw.API_METHOD.DELETE },
   BFF_07_0065: { path: '/core-bill/v1/autopay/pay-cycl-chg/args-0', method: Tw.API_METHOD.PUT },
   BFF_07_0068: { path: '/core-bill/v1/autopay/card-info/args-0', method: Tw.API_METHOD.GET },
-  BFF_07_0073: { path: '/core-bill/v1/microPrepay-requests', method: Tw.API_METHOD.GET },
+  BFF_07_0073: { path: '/core-bill/v1/microPrepay/microPrepay-requests', method: Tw.API_METHOD.GET },
   BFF_07_0074: { path: '/core-bill/v1/microPrepay', method: Tw.API_METHOD.POST },
-  BFF_07_0076: { path: '/core-bill/v1/microPrepay-auto-req', method: Tw.API_METHOD.POST },
-  BFF_07_0077: { path: '/core-bill/v1/microPrepay-auto-delete', method: Tw.API_METHOD.POST },
-  BFF_07_0081: { path: '/core-bill/v1/useContentsPrepay-requests', method: Tw.API_METHOD.GET },
-  BFF_07_0082: { path: '/core-bill/v1/useContentsPrepay', method: Tw.API_METHOD.POST },
+  BFF_07_0076: { path: '/core-bill/v1/microPrepay/microPrepay-auto-req', method: Tw.API_METHOD.POST },
+  BFF_07_0077: { path: '/core-bill/v1/microPrepay/microPrepay-auto-delete', method: Tw.API_METHOD.POST },
+  BFF_07_0081: { path: '/core-bill/v1/useContentsPrepay/useContentsPrepay-requests', method: Tw.API_METHOD.GET },
+  BFF_07_0082: { path: '/core-bill/v1/useContentsPrepay/useContentsPrepay-requests', method: Tw.API_METHOD.POST },
   BFF_07_0083: { path: '/core-bill/v1/useContentsPrepay-auto-req', method: Tw.API_METHOD.POST },
   BFF_07_0084: { path: '/core-bill/v1/useContentsPrepay-auto-delete', method: Tw.API_METHOD.POST },
 
@@ -176,6 +183,7 @@ Tw.API_CMD = {
   BFF_08_0013: { path: '/core-modification/v1/email-inquiry', method: Tw.API_METHOD.POST },
   BFF_08_0014: { path: '/cs/file-upload', method: Tw.API_METHOD.POST },
   BFF_08_0025: { path: '/core-modification/v1/survey/surveyMainBanner', method: Tw.API_METHOD.GET },
+  BFF_08_0026: { path: '/core-modification/v1/guide/categories', method: Tw.API_METHOD.GET },
   BFF_08_0028: { path: '/core-modification/v1/notice/tworld-submain', method: Tw.API_METHOD.GET },
   BFF_08_0029: { path: '/core-modification/v1/tworld-notice', method: Tw.API_METHOD.GET },
   BFF_08_0030: { path: '/core-modification/v1/directshop-notice', method: Tw.API_METHOD.GET },
@@ -240,4 +248,3 @@ Tw.API_LOGIN_ERROR = {
   ICAS3228: 'ICAS3228',   // 고객보호비밀번호(대표회선) 입력 필요
   ICAS3235: 'ICAS3235'    // 휴면계정
 };
-

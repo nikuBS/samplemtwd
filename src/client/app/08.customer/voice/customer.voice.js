@@ -12,17 +12,19 @@ Tw.CustomerVoice = function (rootEl) {
   this._history = new Tw.HistoryService(this.$container);
   this._history.init('hash');
 
-  this._cachedElement();
   this._bindEvent();
   this._init();
 };
 
 Tw.CustomerVoice.prototype = {
+  currentLine: {
+    svcMgmtNum: '',
+    svcNum: ''
+  },
+
   _init: function () {
     this._apiService.request(Tw.API_CMD.BFF_08_0009, {})
       .done($.proxy(this._onSuccessVoiceStatus, this));
-  },
-  _cachedElement: function () {
   },
 
   _bindEvent: function () {
@@ -37,6 +39,15 @@ Tw.CustomerVoice.prototype = {
 
   _onSuccessVoiceStatus: function (res) {
     this.voiceCustomer = res.result;
+
+    _.map(this.voiceCustomer.svcInfo, function (svcInfo) {
+      var maskNumber = $('.fe-select-line').text();
+      var svcNumMask = Tw.FormatHelper.conTelFormatWithDash(svcInfo.svcNumMask);
+
+      if ( maskNumber === svcNumMask ) {
+        this.currentLine = svcInfo;
+      }
+    });
   },
 
   _checkTerms: function (e) {
@@ -45,39 +56,43 @@ Tw.CustomerVoice.prototype = {
 
   _openSelectLine: function () {
     var htOptions = _.map(this.voiceCustomer.svcInfo, function (svcInfo) {
-      return { title: svcInfo.svcNum, checked: false, value: svcInfo.svcMgmtNum, text: svcInfo.svcNum };
+      var maskNumber = Tw.FormatHelper.conTelFormatWithDash(svcInfo.svcNumMask);
+      return {
+        title: svcInfo.svcNum,
+        checked: maskNumber === $('.fe-select-line').text() ? true : false,
+        value: svcInfo.svcMgmtNum,
+        text: maskNumber
+      };
     });
-    // [
-    //   { 'title': '010-21**-43**', checked: true, value: '값1', text: '010-21**-43**' },
-    //   { 'title': '010-21**-21**', checked: false, value: '값2', text: '010-21**-21**' },
-    //   { 'title': '010-21**-22**', checked: false, value: '값3', text: '010-21**-39**' }
-    // ]
 
     this._popupService.open({
       hbs: 'select',
       title: Tw.POPUP_TITLE.SELECT_LINE,
-      select: [
-        {
-          options: htOptions
-        }
-      ],
+      select: [{ options: htOptions }],
       bt_num: 'one',
       type: [{
         style_class: 'bt-red1 fe-select-line-confirm',
-        txt: '확인'
+        txt: Tw.BUTTON_LABEL.CONFIRM
       }]
     });
   },
 
   _selectLine: function () {
+    var $checkedLine = $('.popup').find('input:checked');
+
+    this.currentLine = {
+      svcNum: $checkedLine.attr('title'),
+      svcMgmtNum: $checkedLine.val()
+    };
+
+    var nSelectMaskNumber = $('.popup').find('li.checked').text().trim();
+    $('.fe-select-line').text(nSelectMaskNumber);
+    $('.sended-info-num').text(nSelectMaskNumber);
     this._popupClose();
   },
 
   _openAuthConfirm: function () {
-    this._apiService.request(Tw.API_CMD.BFF_08_0034, {
-      svcMgmtNum: this.voiceCustomer.svcInfo[0].svcMgmtNum,
-      svcNum: this.voiceCustomer.svcInfo[0].svcMgmtNum
-    }).done($.proxy(this._onSuccessSMS, this));
+    this._apiService.request(Tw.API_CMD.BFF_08_0034, this.currentLine).done($.proxy(this._onSuccessSMS, this));
   },
 
   _onSuccessSMS: function () {
