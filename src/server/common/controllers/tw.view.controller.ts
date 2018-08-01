@@ -21,7 +21,7 @@ abstract class TwViewController {
 
   abstract render(req: Request, res: Response, next: NextFunction, svcInfo?: any, layerType?: string): void;
 
-  protected get apiService(): any {
+  protected get apiService(): ApiService {
     return this._apiService;
   }
 

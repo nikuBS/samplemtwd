@@ -71,6 +71,15 @@ Tw.ValidationHelper = (function () {
     return true;
   }
 
+  /* input 값의 길이가 기준값보다 적은 경우 alert 띄우는 function */
+  function checkMoreLength(value, length, message) {
+    if ($.trim(value).length < length) {
+      Tw.Popup.openAlert(message);
+      return false;
+    }
+    return true;
+  }
+
   /* input 값이 param보다 적은 경우 alert 띄우는 function */
   function checkIsMore(value, minVal, message) {
     if (parseInt($.trim(value), 10) < minVal) {
@@ -156,6 +165,7 @@ Tw.ValidationHelper = (function () {
     containNumber: containNumber,
     checkEmpty: checkEmpty,
     checkLength: checkLength,
+    checkMoreLength: checkMoreLength,
     checkIsMore: checkIsMore,
     checkIsAgree: checkIsAgree,
     checkIsAvailablePoint: checkIsAvailablePoint,

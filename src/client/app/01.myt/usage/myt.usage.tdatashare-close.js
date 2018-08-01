@@ -6,7 +6,9 @@
 
 Tw.MytUsageTdatashareClose = function (rootEl) {
   this.$container = rootEl;
-  this._apiService = new Tw.ApiService();
+  this._apiService = Tw.Api;
+  this._popupService = Tw.Popup;
+  this._history = new Tw.HistoryService(rootEl);
 
   this._assign();
   this._bindEvent();
@@ -22,6 +24,7 @@ Tw.MytUsageTdatashareClose.prototype = {
 
   _bindEvent: function () {
     this.$container.on('click', '.fe-close-submit', $.proxy(this._closeSubmit, this));
+    this.$container.on('click', '.fe-btn-back', $.proxy(this._onClickBtnBack, this));
   },
 
   _init: function () {
@@ -29,15 +32,43 @@ Tw.MytUsageTdatashareClose.prototype = {
   },
 
   _closeSubmit: function () {
-    Tw.API_CMD.BFF_05_0011.path = Tw.API_CMD.BFF_05_0011.path + '/' + this._cSvcMgmtNum;
-    this._apiService.request(Tw.API_CMD.BFF_05_0011, {}, {}, 'abc')
+    this._apiService.request(Tw.API_CMD.BFF_05_0011, {}, {}, this._cSvcMgmtNum)
       .done($.proxy(this._requestDone, this))
       .fail($.proxy(this._requestFail, this));
   },
 
-  _requestDone: function () {
-    this._$complete.show();
-    this._$main.hide();
+  _requestDone: function (resp) {
+    if ( resp.code === '00' ) {
+      this._$complete.show();
+      this._$main.hide();
+    } else {
+      if ( resp.data ) {
+        this._showErrorAlert(resp.data && resp.data.msg);
+      } else {
+        if ( resp.error ) {
+          this._showErrorAlert(resp.error.msg);
+        } else {
+          this._showErrorAlert(resp.msg);
+        }
+      }
+    }
+  },
+
+  _requestFail: function (resp) {
+    this._showErrorAlert(resp.data && resp.data.msg);
+  },
+
+  _showErrorAlert: function (msg) {
+    this._popupService.openAlert(msg);
+  },
+
+  _onClickBtnBack: function () {
+    this._popupService.openConfirm(Tw.POPUP_TITLE.CONFIRM, Tw.MSG_MYT.TDATA_SHARE.A01, undefined, undefined, $.proxy(this._handleBack, this));
+  },
+
+  _handleBack: function () {
+    this._popupService.close();
+    this._history.goBack();
   }
 
 };

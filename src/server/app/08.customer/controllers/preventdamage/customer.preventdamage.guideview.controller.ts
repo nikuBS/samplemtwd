@@ -6,6 +6,12 @@
 
 import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
+import { CUSTOMER_PREVENTDAMAGE_GUIDE_WEBTOON } from '../../../../types/static.type';
+import _ from 'lodash';
+
+const categoryData = {
+  webtoon: CUSTOMER_PREVENTDAMAGE_GUIDE_WEBTOON
+};
 
 class CustomerPreventdamageGuideviewController extends TwViewController {
   constructor() {
@@ -13,8 +19,22 @@ class CustomerPreventdamageGuideviewController extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+    const code = req.query.code || '',
+      backUrl = '/customer/prevent-damage/guide?category=webtoon';
+
+    if (_.isEmpty(code)) {
+      res.redirect(backUrl);
+    }
+
+    const category = code.split('_')[0];
+    if (_.isEmpty(categoryData[category][code])) {
+      res.redirect(backUrl);
+    }
+
     res.render('preventdamage/customer.preventdamage.guideview.html', {
-      svcInfo: svcInfo
+      svcInfo: svcInfo,
+      category: category,
+      data: categoryData[category][code]
     });
   }
 }

@@ -7,7 +7,7 @@
     "tmthChrgAmt" : "100000",
     "tmthChrgPsblAmt" : "100000",
     "remainUseLimit":"100000",
-    "autoChrgStCd" : "D",
+    "autoChrgStCd" : "U",
     "autoChrgStrdAmt" : "100000",
     "autoChrgAmt" : "100000"
   }

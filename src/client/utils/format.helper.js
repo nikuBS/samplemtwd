@@ -226,6 +226,7 @@ Tw.FormatHelper = (function () {
     sortObjArrAsc: sortObjArrAsc,
     makeCardYymm: makeCardYymm,
     getFormattedPhoneNumber: getFormattedPhoneNumber,
-    getDashedPhoneNumber: getDashedPhoneNumber
+    getDashedPhoneNumber: getDashedPhoneNumber,
+    convNumFormat: convNumFormat
   };
 })();

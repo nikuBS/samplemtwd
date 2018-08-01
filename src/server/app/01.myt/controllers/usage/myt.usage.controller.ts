@@ -3,9 +3,8 @@ import { Request, Response, NextFunction } from 'express';
 
 import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
-import { UNIT, UNIT_E } from '../../../../types/bff-common.type';
-import { SVC_CD } from '../../../../types/bff-common.type';
-import { API_CMD, API_CODE} from '../../../../types/api-command.type';
+import { UNIT, UNIT_E, SVC_CD } from '../../../../types/bff-common.type';
+import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { SKIP_NAME, MYT_VIEW } from '../../../../types/string.type';
 import { DAY_BTN_STANDARD_SKIP_ID } from '../../../../types/bff-common.type';
 import { Observable } from 'rxjs/Observable';
@@ -24,7 +23,7 @@ class MyTUsage extends TwViewController {
   }
 
   public renderView(res: Response, view: string, data: any): any {
-    if (data.usageData.code === undefined) {
+    if ( data.usageData.code === undefined ) {
       res.render(view, data);
     } else {
       res.render(view, data);
@@ -33,7 +32,7 @@ class MyTUsage extends TwViewController {
   }
 
   public getSvcInfo(svcInfo: any): any {
-    if (svcInfo) {
+    if ( svcInfo ) {
       svcInfo.svcName = SVC_CD[svcInfo.svcCd];
     }
     return svcInfo;
@@ -46,7 +45,7 @@ class MyTUsage extends TwViewController {
   }
 
   private getResult(resp: any, usageData: any): any {
-    if (resp.code === API_CODE.CODE_00) {
+    if ( resp.code === API_CODE.CODE_00 ) {
       usageData = this.parseUsageData(resp.result);
     } else {
       usageData = resp;
@@ -58,11 +57,11 @@ class MyTUsage extends TwViewController {
     const kinds = ['data', 'voice', 'sms', 'etc'];
 
     kinds.map((kind) => {
-        if (!FormatHelper.isEmpty(usageData[kind])) {
-          usageData[kind].map((data) => {
-            this.convShowData(data);
-          });
-        }
+      if ( !FormatHelper.isEmpty(usageData[kind]) ) {
+        usageData[kind].map((data) => {
+          this.convShowData(data);
+        });
+      }
     });
     return usageData;
   }
@@ -83,14 +82,23 @@ class MyTUsage extends TwViewController {
     data.showUsed = this.convFormat(data.used, data.unit);
 
     if ( !data.isUnlimited ) {
+      // TODO 삭제예정
       data.showUsed = this.convFormat(data.used, data.unit);
       data.showRemained = this.convFormat(data.remained, data.unit);
+
       data.remainedRatio = data.remained / data.total * 100;
+    }
+    if ( !data.isUsedUnlimited ) {
+      data.showUseds = this.convFormatWithUnit(data.used, data.unit);
+    }
+    if ( !data.isRemainUnlimited ) {
+      data.showRemaineds = this.convFormatWithUnit(data.remained, data.unit);
     }
 
     data.isExceed = data.skipId === SKIP_NAME.EXCEED;
     data.couponDate = this.getCouponDate(data.couponDate);
-    data.barClassName = this.getBarStayle(data.isUnlimited);
+    data.barClassName = this.getBarStayle(data.isUnlimited); // TODO 삭제예정
+    data.barClass = this.getBarStyle(data.isUnlimited, data.unit);
     data.isVisibleDayBtn = this.isVisibleDayBtn(data.skipId);
   }
 
@@ -109,26 +117,64 @@ class MyTUsage extends TwViewController {
     return '';
   }
 
+  private convFormatWithUnit(data: string, unit: string): object[] {
+    switch ( unit ) {
+      case UNIT_E.DATA:
+        return [FormatHelper.convDataFormat(data, UNIT[unit])];
+      case UNIT_E.VOICE:
+        return FormatHelper.convVoiceFormatWithUnit(data);
+      case UNIT_E.SMS:
+        return [{ data: FormatHelper.addComma(data), unit: UNIT[unit] }];
+      case UNIT_E.FEE:
+        return [{ data: FormatHelper.addComma(data), unit: UNIT[unit] }];
+    }
+    return [];
+  }
+
   private getCouponDate(date: string): string {
     let couponDate = '';
-    if (couponDate !== '' && couponDate !== null) {
+    if ( couponDate !== '' && couponDate !== null ) {
       couponDate = DateHelper.getShortDateNoDot(date);
     }
     return couponDate;
   }
 
+  // TODO 삭제예정
   private getBarStayle(isUnlimited: boolean): string {
     let className = 'progressbar-type01';
-    if (isUnlimited) {
+    if ( isUnlimited ) {
       className = 'progressbar-type02';
+    }
+    return className;
+  }
+
+  private getBarStyle(isUnlimited: boolean, unit: string): string {
+    let className = '';
+    switch ( unit ) {
+      case UNIT_E.DATA:
+        className = 'red';
+        break;
+      case UNIT_E.VOICE:
+        className = 'blue';
+        break;
+      case UNIT_E.SMS:
+        className = 'green';
+        break;
+      case UNIT_E.FEE:
+        className = 'orange';
+        break;
+      default:
+    }
+    if ( isUnlimited ) {
+      className += '-stripe';
     }
     return className;
   }
 
   private isVisibleDayBtn(skipId: any): boolean {
     let isVisible = false;
-    for (const item of DAY_BTN_STANDARD_SKIP_ID) {
-      if (item === skipId) {
+    for ( const item of DAY_BTN_STANDARD_SKIP_ID ) {
+      if ( item === skipId ) {
         isVisible = true;
       }
     }
