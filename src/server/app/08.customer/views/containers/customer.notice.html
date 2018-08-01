@@ -26,7 +26,7 @@
                                 <% for (var i in data.list) { %>
                                 <li class="acco-list">
                                     <div class="acco-title <%= data.list[i].itemClass %>">
-                                        <button role="button" aria-pressed="false">
+                                        <button role="button" aria-pressed="false" data-sernum="<%= data.list[i].serNum %>">
                                             <span class="acco-notice-tit"><%= data.list[i].title %></span>
                                             <% if (data.list[i].type) { %>
                                             <span class="acco-notice-type"><%= data.list[i].type %></span>
