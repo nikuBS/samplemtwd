@@ -17,9 +17,10 @@ class CustomerMainController extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo?: any, layerType?: string): void {
     combineLatest(
       this.getBanners(),
-      // this.getNotice()
-    ).subscribe(([banners]) => {
-      res.render('main/customer.main.html', { svcInfo: svcInfo });
+      this.getNotice(),
+      this.getResearch(),
+    ).subscribe(([banners, noticeList, research]) => {
+      res.render('main/customer.main.html', { svcInfo: svcInfo, banners: banners, noticeList: noticeList });
     });
   }
 
