@@ -34,7 +34,6 @@ class MytJoinContractTerminal extends TwViewController {
     A3: '/myt/join/contract-terminal/tlogin',
     A4: '/myt/join/contract-terminal/twibro',
     B1: '',
-    B2: '',
     C1: ''
   };
 
@@ -54,7 +53,6 @@ class MytJoinContractTerminal extends TwViewController {
     * A3.로그인
     * A4.와이브로
     * B1.인터넷/IPTV/집전화
-    * B2.인터넷/IPTV/집전화 - SK브로드밴드 가입자
     * C1.보안 솔루션
      */
     switch ( this._svcInfo.svcAttrCd ) {
@@ -77,13 +75,8 @@ class MytJoinContractTerminal extends TwViewController {
       case 'S1' :
       case 'S2' :
       case 'S3' :
-        if ( false ) {
-          this.logger.info(this, '[ 인터넷 / IPTV / 집전화 ] : ', this._svcInfo.svcAttrCd);
-          this._typeChk = 'B1';
-        } else {
-          this.logger.info(this, '[ 인터넷 / IPTV / 집전화 ] SK브로드밴드 가입자 : ', this._svcInfo.svcAttrCd);
-          this._typeChk = 'B2';
-        }
+        this.logger.info(this, '[ 인터넷 / IPTV / 집전화 ] : ', this._svcInfo.svcAttrCd);
+        this._typeChk = 'B1';
         break;
       case 'O1' :
         this.logger.info(this, '[ 보안솔루션 ] : ', this._svcInfo.svcAttrCd);
@@ -117,11 +110,6 @@ class MytJoinContractTerminal extends TwViewController {
         break;
       case 'B1' :
         tempVar = this._redirectUrlInfo.B1;
-        this.logger.info(this, '[ _redirectUrlInfo ] : ', tempVar);
-        res.redirect(tempVar);
-        break;
-      case 'B2' :
-        tempVar = this._redirectUrlInfo.B2;
         this.logger.info(this, '[ _redirectUrlInfo ] : ', tempVar);
         res.redirect(tempVar);
         break;
