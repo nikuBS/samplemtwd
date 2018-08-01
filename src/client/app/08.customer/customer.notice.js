@@ -14,6 +14,7 @@ Tw.CustomerNotice = function(rootEl) {
 
   this._cachedElement();
   this._bindEvent();
+  this._init();
 };
 
 Tw.CustomerNotice.prototype = {
@@ -34,6 +35,23 @@ Tw.CustomerNotice.prototype = {
     this._popupService.close();
     this.$btnCategory.on('click', $.proxy(this._openCategorySelectPopup, this));
     this.$btnMoreList.on('click', $.proxy(this._loadMoreList, this));
+  },
+
+  _init: function() {
+    var hashSerNum = location.hash.replace('#', '');
+    if (_.isEmpty(hashSerNum)) {
+      return;
+    }
+
+    var item = this.$list.find('[data-sernum="' + hashSerNum  + '"]');
+    if (item.length > 0) {
+      setTimeout(function() {
+        item.trigger('click');
+      }, 0);
+    }
+
+    this._history.pathname += this._history.search;
+    this._history.replace();
   },
 
   _getApi: function() {
@@ -89,12 +107,10 @@ Tw.CustomerNotice.prototype = {
       list: _.map(res.result.content, function(item) {
         item.type = _.isEmpty(item.ctgNm) ? '' : item.ctgNm;
         item.date = item.rgstDt.substr(0, 4) + '.' + item.rgstDt.substr(4, 2) + '.' + item.rgstDt.substr(6, 2);
-        item.itemClass = (item.isTop ? 'impo ' : '') + (item.isNew ? 'new' : '')
+        item.itemClass = (item.isTop ? 'impo ' : '') + (item.isNew ? 'new' : '');
         return item;
       })
     }));
-
-    skt_landing.widgets.widget_accordion2();
 
     if (res.result.last) this.$btnMoreList.remove();
     else {

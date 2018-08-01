@@ -26,9 +26,9 @@
                 <div class="img-detail-box">
                     <% for (var i in data.IMG_LIST) { %>
                     <% if (i < 4) { %>
-                    <img src="/img/webtoon/<%= data.IMG_LIST[i].IMG %>" alt="<%= data.IMG_LIST[i].TITLE %>" aria-describedby="aria-cartoon-describe">
+                    <img src="/resource/webtoon/<%= data.IMG_LIST[i].IMG %>" alt="<%= data.IMG_LIST[i].TITLE %>" aria-describedby="aria-cartoon-describe">
                     <% } else { %>
-                    <img src="" data-src="/img/webtoon/<%= data.IMG_LIST[i].IMG %>" alt="<%= data.IMG_LIST[i].TITLE %>" aria-describedby="aria-cartoon-describe" style="display: none">
+                    <img src="" data-src="/resource/webtoon/<%= data.IMG_LIST[i].IMG %>" alt="<%= data.IMG_LIST[i].TITLE %>" aria-describedby="aria-cartoon-describe" style="display: none">
                     <% } %>
                     <div id="aria-cartoon-describe" class="blind" aria-hidden="true">
                         <p>
