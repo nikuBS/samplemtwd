@@ -78,12 +78,16 @@ class MytJoinPayClaimIptv extends TwViewController {
       }, function (err) {
         thisMain.logger.info(thisMain, `[ Promise.all > err ] : `, err);
         console.dir(err);
-        res.redirect(thisMain._redirectUrlInfo.iptvSk);
+        // res.redirect(thisMain._redirectUrlInfo.iptvSk);
 
-        // if ( err.code === API_MYT_ERROR.BIL0011 ) {
-        //   res.redirect(thisMain._redirectUrlInfo.iptvSk);
-        //   return;
-        // }
+        if ( err.code === API_MYT_ERROR.BIL0011 ) {
+          thisMain.logger.info(thisMain, '[ SK 브로드 밴드 가입자, 리다이렉트 ]');
+          res.redirect(thisMain._redirectUrlInfo.iptvSk);
+          return;
+        } else {
+          thisMain.logger.info(thisMain, `[ Promise.all > err > 계정확인 필요 ] : `, err);
+          return;
+        }
 
       }); // Promise.all END
 
