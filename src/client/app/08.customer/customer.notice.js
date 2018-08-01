@@ -94,8 +94,6 @@ Tw.CustomerNotice.prototype = {
       })
     }));
 
-    skt_landing.widgets.widget_accordion2();
-
     if (res.result.last) this.$btnMoreList.remove();
     else {
       this.$btnMoreList.find('span').text('(' + this._getRemainCount({
