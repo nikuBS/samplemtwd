@@ -5,7 +5,9 @@ import { API_CMD, API_CODE, API_LOGIN_ERROR, API_SVC_PWD_ERROR } from '../../typ
 import LoggerService from '../../services/logger.service';
 import { URL } from '../../types/url.type';
 import FormatHelper from '../../utils/format.helper';
-import { COOKIE_KEY } from '../../types/bff-common.type';
+import { CHANNEL_TYPE, COOKIE_KEY } from '../../types/bff-common.type';
+import BrowserHelper from '../../utils/browser.helper';
+import { Observable } from 'rxjs/Observable';
 
 
 abstract class TwViewController {
@@ -39,17 +41,18 @@ abstract class TwViewController {
     const userId = req.query.userId;
 
     this._loginService.setCurrentReq(req, res);
-
-    if ( this.checkLogin(req.session) ) {
-      this.sessionLogin(req, res, next);
-    } else {
-      if ( this.existId(tokenId, userId) ) {
-        this.login(req, res, next, tokenId, userId);
-      } else {
-        this.routePage(req, res, next, path);
-      }
-    }
-
+    this.setChannel(req, res)
+      .subscribe((resp) => {
+        if ( this.checkLogin(req.session) ) {
+          this.sessionLogin(req, res, next);
+        } else {
+          if ( this.existId(tokenId, userId) ) {
+            this.login(req, res, next, tokenId, userId);
+          } else {
+            this.routePage(req, res, next, path);
+          }
+        }
+      });
   }
 
   private login(req, res, next, tokenId, userId) {
@@ -127,6 +130,12 @@ abstract class TwViewController {
         }
       }
     }
+  }
+
+  private setChannel(req, res): Observable<any> {
+    const channel = BrowserHelper.isApp(req) ? CHANNEL_TYPE.MOBILE_APP : CHANNEL_TYPE.MOBILE_WEB;
+    this.logger.info(this, '[set cookie]', channel);
+    return this._loginService.setChannel(channel);
   }
 
   private checkError(error: string, errorMessage: string) {
