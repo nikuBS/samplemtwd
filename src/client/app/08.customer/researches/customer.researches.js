@@ -16,6 +16,7 @@ Tw.CustomerResearches = function (rootEl) {
 Tw.CustomerResearches.prototype = {
   _bindEvent: function () {
     this.$container.on('click', 'li.bt-blue1 > button', $.proxy(this._handleParticipate, this));
+    this.$container.on('click', 'li.bt-white2 > button', $.proxy(this._handleShowResult, this));
     this.$container.on('click', 'ul.select-list > li', $.proxy(this._setAvailableBtn, this));
   },
 
@@ -69,6 +70,13 @@ Tw.CustomerResearches.prototype = {
     } else {
       this._popupService.openAlert(resp.msg);
     }
+  },
+
+  _handleShowResult: function (e) {
+    // 결과보기
+    var $root = $(e.currentTarget).parents('li.acco-box');
+    var researchId = $root.data('research-id');
+    this._history.goLoad('/customer/researches/result?researchId=' + researchId);
   },
 
   _setAvailableBtn: function (e) {
