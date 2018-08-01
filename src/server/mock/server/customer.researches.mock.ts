@@ -1,6 +1,6 @@
 export const Researches = [{
   bnnrRsrchId: '0614',
-  bnnrRsrchTypCd: 'R',
+  bnnrRsrchTypCd: 'P',
   bnnrRsrchTitleNm: 'SKT 중고 거래 앱 서비스는 무엇일까요?',
   bnnrRsrchRpsTypCd: 'S',
   bnnrRsrchSortMthdCd: '',
@@ -17,7 +17,7 @@ export const Researches = [{
   exCttCnt: '4'
 }, {
   bnnrRsrchId: '0615',
-  bnnrRsrchTypCd: 'R',
+  bnnrRsrchTypCd: 'P',
   bnnrRsrchTitleNm: '생활플랫폼 CF 중 인상이 많이 남는 모델은?',
   bnnrRsrchRpsTypCd: 'C',
   bnnrRsrchSortMthdCd: 'D',
@@ -44,13 +44,25 @@ export const Researches = [{
   bnnrRsrchId: '0616',
   bnnrRsrchTypCd: 'R',
   bnnrRsrchTitleNm: 'SKT 중고 거래 앱 서비스는 무엇일까요?',
+  hintExUrl: 'test_question',
+  cmplYn: 'N',
+  staDtm: '2018.07.19',
+  endDtm: '2018.09.30'
+}, {
+  bnnrRsrchId: '0616',
+  bnnrRsrchTypCd: 'P',
+  bnnrRsrchTitleNm: 'SKT 중고 거래 앱 서비스는 무엇일까요?',
   bnnrRsrchRpsTypCd: 'S',
-  bnnrRsrchSortMthdCd: 'D',
+  bnnrRsrchSortMthdCd: '',
   hintExUrl: '',
   cmplYn: 'N',
   canswNum: '',
   staDtm: '2018.07.19',
   endDtm: '2018.07.29',
   motMsgHtmlCtt: '<button class="bt-link-tx mb20">생활플랫폼 서비스 자세히보기<span class="ico"></span></button>',
-  exCttCnt: '0'
+  exCtt1: '요즘 대세 설현',
+  exCtt2: '폼나는 조진웅',
+  exCtt3: '요즘 대세 설현',
+  exCtt4: 'QSTNETC',
+  exCttCnt: '4'
 }];

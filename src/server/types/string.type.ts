@@ -161,7 +161,11 @@ export enum SELECT_POINT {
   DEFAULT = '포인트 선택'
 }
 
-export enum  DATE_FORMAT  {
-  YYYYMM_TYPE_0= 'YYYY년 MM월',
-  YYYYMMDD_TYPE_0= 'YYYY년 MM월 DD일'
+export enum DATE_FORMAT {
+  YYYYMM_TYPE_0 = 'YYYY년 MM월',
+  YYYYMMDD_TYPE_0 = 'YYYY년 MM월 DD일'
+}
+
+export enum RESEARCH_EXAMPLE_TYPE {
+  ETC = '기타'
 }

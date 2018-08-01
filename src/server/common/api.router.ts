@@ -22,7 +22,6 @@ class ApiRouter {
   private setApi() {
     this.router.get('/environment', this.getEnvironment.bind(this));
     this.router.post('/device', this.setDeviceInfo.bind(this));
-    this.router.post('/channel', this.setChannel.bind(this));
     this.router.post('/change-session', this.changeSession.bind(this));
     this.router.post('/service-password-sessions/login', this.svcPasswordLogin.bind(this));
     this.router.post('/login-tid', this.loginTid.bind(this));
@@ -45,16 +44,6 @@ class ApiRouter {
     const deviceCookie = `osType:${deviceInfo.osType}|appVersion:${deviceInfo.appVersion}|osVersion:${deviceInfo.osVersion}`;
     this.logger.info(this, '[set cookie]', deviceCookie);
     res.cookie(COOKIE_KEY.DEVICE, deviceCookie);
-    const resp = {
-      code: API_CODE.CODE_00
-    };
-    res.json(resp);
-  }
-
-  private setChannel(req: Request, res: Response, next: NextFunction) {
-    const channel = BrowserHelper.isApp(req) ? CHANNEL_TYPE.MOBILE_APP : CHANNEL_TYPE.MOBILE_WEB;
-    this.logger.info(this, '[set cookie]', channel);
-    res.cookie(COOKIE_KEY.CHANNEL, channel);
     const resp = {
       code: API_CODE.CODE_00
     };
