@@ -75,7 +75,7 @@ class ApiService {
 
   private makeCookie(): string {
     return COOKIE_KEY.SESSION + '=' + this.loginService.getServerSession() + ';' +
-      COOKIE_KEY.CHANNEL + '=' + this.loginService.getChannelCookie() + ';' +
+      COOKIE_KEY.CHANNEL + '=' + this.loginService.getChannel() + ';' +
       COOKIE_KEY.DEVICE + '=' + this.loginService.getDeviceCookie();
   }
 

@@ -100,7 +100,7 @@ Tw.LineComponent.prototype = {
   },
   _onSelectLine: function ($event) {
     var $selectedLine = $($event.currentTarget).parent();
-    this._apiService.request(Tw.API_CMD.BFF_01_0004, { svcMgmtNum: $selectedLine.data('svcmgmtnum') })
+    this._apiService.request(Tw.NODE_CMD.CHANGE_SESSION, { svcMgmtNum: $selectedLine.data('svcmgmtnum') })
       .done($.proxy(this._successChangeLine, this));
   },
   _onClickTxtButton: function () {

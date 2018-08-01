@@ -6,7 +6,6 @@ Tw.Init = function () {
   this._initComponent();
   this._getDeviceInfo();
   this._getEnvironment();
-  this._setChannel();
 };
 
 Tw.Init.prototype = {
@@ -53,13 +52,6 @@ Tw.Init.prototype = {
       .done($.proxy(this._successSetDivice, this));
   },
   _successSetDivice: function (resp) {
-    console.log(resp);
-  },
-  _setChannel: function () {
-    this._apiService.request(Tw.NODE_CMD.SET_CHANNEL, {})
-      .done($.proxy(this._successSetChannel, this));
-  },
-  _successSetChannel: function (resp) {
     console.log(resp);
   }
 };
