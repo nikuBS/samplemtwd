@@ -3,12 +3,22 @@
 * Author: 공자윤 (jayoon.kong@sk.com)
 * Date: 2018.07.30
 %>
+<!-- #header -->
+<div id="header" class="header-wrap">
+    <div class="header step-page">
+        <div class="header-ti">
+            <h1>우편번호 조회</h1>
+        </div>
+        <button class="close-step fe-common-back"><span class="blind">이전으로</span></button>
+    </div>
+</div>
+<!--// #header -->
 <div class="tab-area type1">
     <div class="tab-linker">
         <ul role="tablist">
-            <li role="tab" aria-selected="true" aria-controls="tab1-tab" id="tab1"><a>도로명주소</a></li><!-- true 열림 -->
-            <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2"><a>지번주소</a></li>
-            <li role="tab" aria-selected="false" aria-controls="tab3-tab" id="tab3"><a>사서함</a></li>
+            <li role="tab" aria-selected="false" aria-controls="tab1-tab" id="tab1" type="B"><a>도로명주소</a></li><!-- true 열림 -->
+            <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2" type="A"><a>지번주소</a></li>
+            <li role="tab" aria-selected="false" aria-controls="tab3-tab" id="tab3" type="C"><a>사서함</a></li>
         </ul>
     </div>
     <div class="tab-contents">
@@ -20,7 +30,7 @@
                         <p class="addr-inquiry-des1">원하시는 주소를 선택해주세요.</p>
                         <div class="addr-inquiry-feildset">
                             <div class="formbox">
-                                <button class="bt-dropdown big placeholder fe-select-detail" title="대분류" aria-haspopup="true">주소를 선택해주세요<span class="ico"></span></button>
+                                <button class="bt-dropdown big placeholder fe-select-detail fe-select-load-detail" title="대분류" aria-haspopup="true">주소를 선택해주세요<span class="ico"></span></button>
                                 <p class="addr-inquiry-des2">원하시는 주소가 없을 시 [이전]으로 돌아가신 후 다시 한번 주소를 조회해주세요.</p>
                             </div>
                         </div>

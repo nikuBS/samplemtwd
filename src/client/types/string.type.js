@@ -518,7 +518,8 @@ Tw.MSG_POSTCODE = {
 Tw.POSTCODE_TEXT = {
   BUILDING_CODE: '건물번호',
   ZIP_CODE: '우편번호',
-  SELECT_ADDRESS: '주소를 선택해주세요'
+  SELECT_ADDRESS: '주소를 선택해주세요',
+  CITY_GUN_GU: '시/군/구'
 };
 
 Tw.CUSTOMER_EMAIL = {
