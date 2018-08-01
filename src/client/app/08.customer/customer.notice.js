@@ -32,7 +32,6 @@ Tw.CustomerNotice.prototype = {
   },
 
   _bindEvent: function() {
-    this._popupService.close();
     this.$btnCategory.on('click', $.proxy(this._openCategorySelectPopup, this));
     this.$btnMoreList.on('click', $.proxy(this._loadMoreList, this));
   },
@@ -89,6 +88,7 @@ Tw.CustomerNotice.prototype = {
   },
 
   _applyCategory: function($layer) {
+    this._popupService.close();
     this._history.goLoad('/customer/notice?category=' + $layer.find('input[name="radio"]:checked').val());
   },
 

@@ -22,8 +22,8 @@ Tw.CustomerPreventdamageRelatesite.prototype = {
 
   _openOutlink: function(e) {
     this._popupService.openAlert('3G/LTE망 사용시 데이터 요금이 발생됩니다.', null, $.proxy(function() {
-      window.open($(e.currentTarget).attr('href'));
       this._popupService.close();
+      window.open($(e.currentTarget).attr('href'));
     }, this));
 
     e.preventDefault();
