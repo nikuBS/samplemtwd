@@ -64,7 +64,7 @@ export default class CustomerResearchResult extends TwViewController {
       examples.push({
         content: result['exCtt' + i],
         count: result['rpsCtt' + i + 'Cnt'],
-        rate: Math.floor(result['rpsCtt' + i + 'Cnt'] / totalCount * 100),
+        rate: totalCount === 0 ? 0 : Math.floor(result['rpsCtt' + i + 'Cnt'] / totalCount * 100),
         isAnswer: answer === i
       });
       i++;
