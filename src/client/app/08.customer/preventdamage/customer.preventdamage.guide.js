@@ -26,7 +26,7 @@ Tw.CustomerPreventdamageGuide.prototype = {
     this.$btnCategory.on('click', $.proxy(this._openCategorySelectPopup, this));
     this.$btnListMore.on('click', $.proxy(this._showListMore, this));
 
-    if (Tw.BrowserHelper.isApp()||true) {
+    if (Tw.BrowserHelper.isApp()) {
       this.$container.on('click', '.fe-outlink', $.proxy(this._openOutlink, this));
     }
   },

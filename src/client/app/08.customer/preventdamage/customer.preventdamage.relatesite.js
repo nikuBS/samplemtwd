@@ -15,7 +15,7 @@ Tw.CustomerPreventdamageRelatesite = function(rootEl) {
 Tw.CustomerPreventdamageRelatesite.prototype = {
 
   _bindEvent: function() {
-    if (Tw.BrowserHelper.isApp()||true) {
+    if (Tw.BrowserHelper.isApp()) {
       this.$container.on('click', '.fe-outlink', $.proxy(this._openOutlink, this));
     }
   },
