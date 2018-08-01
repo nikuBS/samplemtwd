@@ -15,48 +15,18 @@ class MytUsageBandDataSharingsController extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    // Observable.combineLatest(
-    //   this.getUsageData()
-    // ).subscribe(([usageData]) => {
-    //   this.myTUsage.renderView(res, 'usage/myt.usage.band-data-sharings.html', this.getData(usageData, svcInfo));
-    // });
-
-    const usageData = this.getResult({
-      'code': '00',
-      'msg': '',
-      'result': {
-        data: {
-          used: '300000'
-        },
-        'childList': [{
-          'svcMgmtNum': '722xxxxxx',
-          'svcNum': '01012345678',
-          'feeProdId': 'NA000xxx',
-          'feeProdNm': 'LTE함께쓰기',
-          'auditDtm': '20141010'
-        }, {
-          'svcMgmtNum': '722xxxxxx',
-          'svcNum': '01012345678',
-          'feeProdId': 'NA000xxx',
-          'feeProdNm': 'LTE함께쓰기',
-          'auditDtm': '20141010'
-        }, {
-          'svcMgmtNum': '722xxxxxx',
-          'svcNum': '01012345678',
-          'feeProdId': 'NA000xxx',
-          'feeProdNm': 'LTE함께쓰기',
-          'auditDtm': '20141010'
-        }]
-      }
-    }, {});
-    this.myTUsage.renderView(res, 'usage/myt.usage.band-data-sharings.html', this.getData(usageData, svcInfo));
+    Observable.combineLatest(
+      this.getUsageData()
+    ).subscribe(([usageData]) => {
+      this.myTUsage.renderView(res, 'usage/myt.usage.band-data-sharings.html', this.getData(usageData, svcInfo));
+    });
   }
 
-  // private getUsageData(): Observable<any> {
-  //   return this.apiService.request(API_CMD.BFF_05_0078, {}).map((resp) => {
-  //     return this.getResult(resp, {});
-  //   });
-  // }
+  private getUsageData(): Observable<any> {
+    return this.apiService.request(API_CMD.BFF_05_0078, {}).map((resp) => {
+      return this.getResult(resp, {});
+    });
+  }
 
   private getResult(resp: any, usageData: any): any {
     if ( resp.code === API_CODE.CODE_00 ) {

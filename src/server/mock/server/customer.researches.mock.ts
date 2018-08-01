@@ -1,5 +1,5 @@
 export const Researches = [{
-  bnnrRsrchId: '0614',
+  bnnrRsrchId: '0161',
   bnnrRsrchTypCd: 'P',
   bnnrRsrchTitleNm: 'SKT 중고 거래 앱 서비스는 무엇일까요?',
   bnnrRsrchRpsTypCd: 'S',
@@ -16,7 +16,7 @@ export const Researches = [{
   exCtt4: 'T 가이드',
   exCttCnt: '4'
 }, {
-  bnnrRsrchId: '0615',
+  bnnrRsrchId: '0162',
   bnnrRsrchTypCd: 'P',
   bnnrRsrchTitleNm: '생활플랫폼 CF 중 인상이 많이 남는 모델은?',
   bnnrRsrchRpsTypCd: 'C',
@@ -41,7 +41,7 @@ export const Researches = [{
   motExCtt4: '<button class="bt-link-tx mt10">자세히보기<span class="ico"></span></button>',
   exCttCnt: '4'
 }, {
-  bnnrRsrchId: '0616',
+  bnnrRsrchId: '0162',
   bnnrRsrchTypCd: 'R',
   bnnrRsrchTitleNm: 'SKT 중고 거래 앱 서비스는 무엇일까요?',
   hintExUrl: 'test_question',
@@ -49,7 +49,7 @@ export const Researches = [{
   staDtm: '2018.07.19',
   endDtm: '2018.09.30'
 }, {
-  bnnrRsrchId: '0616',
+  bnnrRsrchId: '0161',
   bnnrRsrchTypCd: 'P',
   bnnrRsrchTitleNm: 'SKT 중고 거래 앱 서비스는 무엇일까요?',
   bnnrRsrchRpsTypCd: 'S',
