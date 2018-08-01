@@ -9,6 +9,7 @@ import { Request, Response, NextFunction } from 'express';
 import DateHelper from '../../../../utils/date.helper';
 import { Researches } from '../../../../mock/server/customer.researches.mock';
 import { RESEARCH_EXAMPLE_TYPE } from '../../../../types/string.type';
+import { API_CMD } from '../../../../types/api-command.type';
 
 
 interface IResearchBFF {
@@ -68,9 +69,11 @@ export default class CustomerResearches extends TwViewController {
     if (req.params.researchId) {
       res.render('researches/customer.researches.research.html', { svcInfo });
     } else {
-      const mock: IResearch[] = Researches.map(this.setData);
-
-      res.render('researches/customer.researches.html', { svcInfo, researches: mock });
+      this.apiService.request(API_CMD.BFF_08_0023, {}).subscribe(resp => {
+        // const researches = Researches.map(this.setData);
+        const researches = resp.result.map(this.setData);
+        res.render('researches/customer.researches.html', { svcInfo, researches });
+      });
     }
   }
 
@@ -89,7 +92,6 @@ export default class CustomerResearches extends TwViewController {
         isEtc
       });
     }
-
 
     return {
       id: research.bnnrRsrchId,

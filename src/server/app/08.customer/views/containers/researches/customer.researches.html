@@ -53,7 +53,7 @@
                                             <div class="acco-tit"><em class="poll-condition"><%= research.isProceeding? '진행중':'종료' %></em><%= research.title %><span class="poll-date"><%= research.startDate %> <span class="blind">에서</span><span class="vt" aria-hidden="true">-</span> <%= research.endDate %></span><button role="button" aria-pressed="true"></button></div>
                                             <div class="acco-cont pb0">
                                                 <div class="cont-box nogaps-acco">
-                                                    <% if (research.type === 'Q' && research.hintUrl) { %><button class="bt-link-tx">힌트보기<span class="ico"></span></button><% } %>
+                                                    <% if (research.type === 'Q' && research.hintUrl) { %><a class="bt-link-tx" href="<%= research.hintUrl %>">힌트보기<span class="ico"></span></a><% } %>
                                                     <div class="poll-option-cont">
                                                         <% if (research.examples.length > 0) { %>
                                                             <% const examCount = research.examples.length; %>
