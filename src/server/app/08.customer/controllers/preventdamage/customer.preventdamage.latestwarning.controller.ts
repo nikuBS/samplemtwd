@@ -13,7 +13,7 @@ class CustomerPreventdamageLatestwarningController extends TwViewController {
     super();
   }
 
-  private convertData(data): any {
+  private _convertData(data): any {
     if (data.code !== API_CODE.CODE_00) {
       return {
         total: 0,
@@ -25,13 +25,13 @@ class CustomerPreventdamageLatestwarningController extends TwViewController {
 
     return {
       total: data.result.totalElements,
-      remain: this.getRemainCount(data.result.totalElements, data.result.pageable.pageNumber, data.result.pageable.pageSize),
+      remain: this._getRemainCount(data.result.totalElements, data.result.pageable.pageNumber, data.result.pageable.pageSize),
       list: data.result.content,
       last: data.result.last
     };
   }
 
-  private getRemainCount(total, page, pageSize): any {
+  private _getRemainCount(total, page, pageSize): any {
     const count = total - ((++page) * pageSize);
     return count < 0 ? 0 : count;
   }
@@ -41,7 +41,7 @@ class CustomerPreventdamageLatestwarningController extends TwViewController {
       .subscribe((data) => {
         res.render('preventdamage/customer.preventdamage.latestwarning.html', {
           svcInfo: svcInfo,
-          data: this.convertData(data)
+          data: this._convertData(data)
         });
       });
   }
