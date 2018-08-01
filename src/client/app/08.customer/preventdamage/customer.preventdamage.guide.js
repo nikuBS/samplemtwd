@@ -25,6 +25,10 @@ Tw.CustomerPreventdamageGuide.prototype = {
     this._popupService.close();
     this.$btnCategory.on('click', $.proxy(this._openCategorySelectPopup, this));
     this.$btnListMore.on('click', $.proxy(this._showListMore, this));
+
+    if (Tw.BrowserHelper.isApp()) {
+      this.$container.on('click', '.fe-outlink', $.proxy(this._openOutlink, this));
+    }
   },
 
   _openCategorySelectPopup: function() {
@@ -72,6 +76,16 @@ Tw.CustomerPreventdamageGuide.prototype = {
       this.$list.find('li:hidden:lt(' + listSize + ')').show();
       $(e.currentTarget).find('span').text('(' + hiddenLength + ')');
     }
+  },
+
+  _openOutlink: function(e) {
+    this._popupService.openAlert('3G/LTE망 사용시 데이터 요금이 발생됩니다.', null, $.proxy(function() {
+      window.open($(e.currentTarget).attr('href'));
+      this._popupService.close();
+    }, this));
+
+    e.preventDefault();
+    e.stopPropagation();
   }
 
 };

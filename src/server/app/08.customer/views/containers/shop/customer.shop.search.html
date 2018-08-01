@@ -29,9 +29,9 @@
                         <div class="tab-area type1"><!-- 타입별 탭형태 변환 -->
                             <div class="tab-linker">
                                 <ul role="tablist">
-                                    <li role="tab" aria-selected="<%= !searched ? true : searchType === '1' ? true : false %>" aria-controls="tab1-tab" id="tab1"><button id="fe-tab1">매장명</button></li>
-                                    <li role="tab" aria-selected="<%= !searched ? false : searchType === '2' ? true : false %>" aria-controls="tab2-tab" id="tab2"><button id="fe-tab2">주소</button></li>
-                                    <li role="tab" aria-selected="<%= !searched ? false : searchType === '3' ? true : false %>" aria-controls="tab3-tab" id="tab3"><button id="fe-tab3">지하철</button></li>
+                                    <li role="tab" aria-selected="<%= !searched ? true : searchType === 'name' ? true : false %>" aria-controls="tab1-tab" id="tab1"><button id="fe-tab1">매장명</button></li>
+                                    <li role="tab" aria-selected="<%= !searched ? false : searchType === 'address' ? true : false %>" aria-controls="tab2-tab" id="tab2"><button id="fe-tab2">주소</button></li>
+                                    <li role="tab" aria-selected="<%= !searched ? false : searchType === 'tube' ? true : false %>" aria-controls="tab3-tab" id="tab3"><button id="fe-tab3">지하철</button></li>
                                 </ul>
                             </div>
                             <div class="tab-contents">
@@ -186,37 +186,26 @@
             <!-- .cont-box -->
             <div class="cont-box nogaps">
                 <div class="box-store-result">
-                    <p class="result-ti"><em class="num">4개</em>의 매장이 검색되었습니다.</p>
+                    <p class="result-ti"><em class="num"><%= result.length %>개</em>의 매장이 검색되었습니다.</p>
                     <div class="store-result-list">
+                        <% for (let i = 0; i < result.length; i++) { %>
+                        <% if (i < 20) { %>
                         <div>
+                        <% } else { %>
+                        <div class="none">
+                        <% } %>
                             <button>
                                 <dl>
-                                    <dt>신사대리점</dt>
-                                    <dd>서울시 중구 만리재로 175, 상가2동 102호<br />(만리동 2가 37-2)</dd>
+                                    <dt><%= result[i].locName %></dt>
+                                    <dd><%= result[i].searchAddr %><br /><%= result[i].jibunAddr %></dd>
                                 </dl>
                             </button>
-                            <button class="bt-tel"><span role="img" class="blind">매장으로 전화하기</span></button>
+                            <a class="bt-tel" href="tel:<%= result[i].tel %>"><span role="img" class="blind">매장으로 전화하기</span></a>
                         </div>
-                        <div>
-                            <button>
-                                <dl>
-                                    <dt>PS&amp;M4 대리점<br />연수 T프리미엄 스토어점</dt>
-                                    <dd>서울시 관악구 관악로 201<br />(봉천동 859-40)</dd>
-                                </dl>
-                            </button>
-                            <button class="bt-tel"><span role="img" class="blind">매장으로 전화하기</span></button>
-                        </div>
-                        <div>
-                            <button>
-                                <dl>
-                                    <dt>신사직대리점</dt>
-                                    <dd>부산 동래구 석사로 4<br />(사직동 77-12)</dd>
-                                </dl>
-                            </button>
-                            <button class="bt-tel"><span role="img" class="blind">매장으로 전화하기</span></button>
-                        </div>
-                    </div>
-                    <a class="bt-more" href="">더보기<span>(20)</span></a>
+                        <% } %>
+                    <% if (result.length > 20) { %>
+                    <button class="bt-more">더보기<span id="fe-more-count">(<%= result.length - 20 > 20 ? 20 : result.length - 20 %>)</span></button>
+                    <% } %>
                 </div>
             </div>
             <!--// .cont-box -->
@@ -311,7 +300,7 @@
                                                 <div class="acco-bt-slice">
                                                    <ul class="bt-slice">
                                                         <li class="bt-white2">
-                                                            <button>영업점 주소 오류 신고하기</button>
+                                                            <a href="/customer/email">영업점 주소 오류 신고하기</a>
                                                         </li>
                                                     </ul>
                                                 </div>

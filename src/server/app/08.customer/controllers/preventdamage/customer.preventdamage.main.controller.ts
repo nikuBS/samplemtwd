@@ -14,7 +14,7 @@ class CustomerPreventdamageMainController extends TwViewController {
     super();
   }
 
-  private convertData(data): any {
+  private _convertData(data): any {
     return (data.code !== '00') ? [] : data.result.content;
   }
 
@@ -24,7 +24,7 @@ class CustomerPreventdamageMainController extends TwViewController {
         res.render('preventdamage/customer.preventdamage.main.html', {
           svcInfo: svcInfo,
           isApp: BrowserHelper.isApp(req),
-          latestWarningList: this.convertData(data)
+          latestWarningList: this._convertData(data)
         });
       });
   }
