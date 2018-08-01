@@ -24,7 +24,7 @@ class MytJoinContractTerminalPhone extends TwViewController {
 
   // 공통데이터
   private _commDataInfo: any = {
-    feeInfo: null,
+    feeInfo: [],
     terminalInfo: [],
     repaymentInfo: null
   };
@@ -92,6 +92,10 @@ class MytJoinContractTerminalPhone extends TwViewController {
   } // render end
 
   private _dataInit() {
+    this._commDataInfo.feeInfo = [];
+    this._commDataInfo.terminalInfo = [];
+    this._commDataInfo.repaymentInfo = null;
+
     this.logger.info(this, '[ _dataInit() start ]');
     const thisMain = this;
     const iDiscountCnt = thisMain._resDataInfo.iDiscountCnt;
@@ -141,11 +145,20 @@ class MytJoinContractTerminalPhone extends TwViewController {
       if ( feeAgrmtCnt > 0 ) { // 요금약정갯수
         if ( tabletUser === 'Y' ) { // 태블릿 약정 가입 여부 | Case 6 구 태블릿 약정
           this.logger.info(this, '[ 요금약정 > 태블릿 약정 ]', tabletUser);
-          thisMain._commDataInfo.feeInfo = priceList;
+          tablet.titNm = '구 태블릿 약정';
+          thisMain._commDataInfo.feeInfo.push(tablet);
         }
         if ( agrmtUser === 'Y' ) { // 요금약정할인 가입 여부 | Case 7 뉴 태블릿 약정
           this.logger.info(this, '[ 요금약정 > 요금약정할인 ]', agrmtUser);
-          thisMain._commDataInfo.feeInfo = priceList;
+          for ( let i = 0; i < priceList.length; i++ ) {
+            priceList[i].titNm = '뉴 태블릿 약정';
+            /*
+            * param : 데이터, 약정시작일, 약정종료일
+             */
+            thisMain._proDate(priceList[i], priceList[i].agrmtDcStaDt, priceList[i].agrmtDcEndDt);
+
+            thisMain._commDataInfo.feeInfo.push(priceList[i]);
+          }
         }
       }
 
@@ -215,37 +228,44 @@ class MytJoinContractTerminalPhone extends TwViewController {
       * BfEqpDcClCd : 할인구분코드
        */
       if ( isSuces === 'Y' ) { // 승계정보 여부 : Y / N
+        this.logger.info(this, '[ 승계 ]', isSuces);
+        console.dir(sucesAgreeList);
 
-        if ( BfEqpDcClCd === '1' ) { // T약정 할부 지원
-          // sucesAgreeList
-          this.logger.info(this, '[ 단말기약정 승계 > BfEqpDcClCd > 1 ]', BfEqpDcClCd);
-          sucesAgreeList.titNm = '승계/T약정 할부 지원';
-          thisMain._commDataInfo.terminalInfo.push(sucesAgreeList);
+        for ( let i = 0; i < sucesAgreeList.length; i++ ) {
+          if ( sucesAgreeList[i].bfEqpDcClCd === '1' ) { // T약정 할부 지원
+            // sucesAgreeList
+            this.logger.info(this, '[ 단말기약정 승계 > bfEqpDcClCd > 1 ]');
+            sucesAgreeList[i].titNm = '승계/T약정 할부 지원';
+            thisMain._commDataInfo.terminalInfo.push(sucesAgreeList[i]);
+          }
+          if ( sucesAgreeList[i].bfEqpDcClCd === '2' ) { //
+            // sucesAgreeList
+            this.logger.info(this, '[ 단말기약정 승계 > bfEqpDcClCd > 2 ]');
+            sucesAgreeList[i].titNm = '승계/T기본 약정';
+            thisMain._commDataInfo.terminalInfo.push(sucesAgreeList[i]);
+          }
+          if ( sucesAgreeList[i].bfEqpDcClCd === '3' ) { //
+            // sucesAgreeList
+            this.logger.info(this, '[ 단말기약정 승계 > bfEqpDcClCd > 3 ]');
+            sucesAgreeList[i].titNm = '승계/약정 위약금2';
+            thisMain._commDataInfo.terminalInfo.push(sucesAgreeList[i]);
+          }
+          if ( sucesAgreeList[i].bfEqpDcClCd === '7' ) { //
+            // sucesAgreeList
+            this.logger.info(this, '[ 단말기약정 승계 > bfEqpDcClCd > 7 ]');
+            sucesAgreeList[i].titNm = '승계/T지원금 약정';
+            thisMain._commDataInfo.terminalInfo.push(sucesAgreeList[i]);
+          }
         }
-        if ( BfEqpDcClCd === '2' ) { //
-          // sucesAgreeList
-          this.logger.info(this, '[ 단말기약정 승계 > BfEqpDcClCd > 2 ]', BfEqpDcClCd);
-          sucesAgreeList.titNm = '승계/T기본 약정';
-          thisMain._commDataInfo.terminalInfo.push(sucesAgreeList);
-        }
-        if ( BfEqpDcClCd === '3' ) { //
-          // sucesAgreeList
-          this.logger.info(this, '[ 단말기약정 승계 > BfEqpDcClCd > 3 ]', BfEqpDcClCd);
-          sucesAgreeList.titNm = '승계/약정 위약금2';
-          thisMain._commDataInfo.terminalInfo.push(sucesAgreeList);
-        }
-        if ( wibroUser === '7' ) { //
-          // sucesAgreeList
-          this.logger.info(this, '[ 단말기약정 승계 > BfEqpDcClCd > 7 ]', wibroUser);
-          sucesAgreeList.titNm = '승계/T지원금 약정';
-          thisMain._commDataInfo.terminalInfo.push(sucesAgreeList);
-        }
+
+
 
       }
 
       if ( wibroUser === 'Y' ) { // 와이브로 약정 가입 여부
         this.logger.info(this, '[ 단말기약정 > wibroUser ]', wibroUser);
-        thisMain._commDataInfo.terminalInfo.push(sucesAgreeList);
+        wibro.titNm = 'wibro';
+        thisMain._commDataInfo.terminalInfo.push(wibro);
       }
 
     }
@@ -261,8 +281,20 @@ class MytJoinContractTerminalPhone extends TwViewController {
 
 
     this.logger.info(this, '[ _dataInit() end ]');
+    console.dir( thisMain._commDataInfo.terminalInfo );
   }
-
+  // -------------------------------------------------------------[서비스]
+  private _proDate(dataObj: any, start: string, end: string) {
+    this.logger.info(this, '[ 서비스 > _proDate ]');
+    const startDt = start;
+    const endDt = end;
+    dataObj.startDt = DateHelper.getShortDateWithFormat(startDt, 'YYYY.MM.DD');
+    dataObj.endDt = DateHelper.getShortDateWithFormat(endDt, 'YYYY.MM.DD');
+    dataObj.totDt = moment(endDt, 'YYYYMMDD').diff(startDt, 'day');
+    dataObj.curDt = moment(endDt, 'YYYYMMDD').diff( moment().format('YYYYMMDD'), 'day');
+    dataObj.perDt = Math.floor( ( dataObj.curDt / dataObj.totDt) * 100 ); // 퍼센트
+    dataObj.totMt = moment(endDt, 'YYYYMMDD').diff(startDt, 'month');
+  }
 
   // -------------------------------------------------------------[프로미스 생성]
   public _getPromiseApi(reqObj, msg): any {
