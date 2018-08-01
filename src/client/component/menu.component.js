@@ -9,6 +9,7 @@ Tw.MenuComponent = function () {
 
   this._nativeService = Tw.Native;
   this._historyService = new Tw.HistoryService();
+  this._apiService = Tw.Api;
 
   this._bindEvent();
   this._bindLogin();
