@@ -28,13 +28,13 @@
                         const listLength = list.length > 30 ? 30 : list.length;
                         for (var i = 0; i < listLength; i++) { %>
                         <li>
-                            <a class="link-group-btn" href="<%= list[i].LINK %>" target="_blank"><%= list[i].TEXT %></a>
+                            <a class="link-group-btn fe-outlink" href="<%= list[i].LINK %>" target="_blank"><%= list[i].TEXT %></a>
                         </li>
                         <% } %>
                         <% if (list.length > 30) {
                            for (var i = 30; i < list.length; i++) { %>
                         <li style="display: none">
-                            <a class="link-group-btn" href="<%= list[i].LINK %>" target="_blank"><%= list[i].TEXT %></a>
+                            <a class="link-group-btn fe-outlink" href="<%= list[i].LINK %>" target="_blank"><%= list[i].TEXT %></a>
                         </li>
                         <% }
                         } %>
