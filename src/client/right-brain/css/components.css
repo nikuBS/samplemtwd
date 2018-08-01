@@ -11659,6 +11659,10 @@ span[class*=char-star][class*=red] {
   color: #757575;
 }
 
+.poll-chart-box .poll-chart-txt.correct dt span {
+  color: #000;
+}
+
 .poll-chart-box .poll-chart-txt dd {
   display: table-cell;
   width: 30%;
@@ -12185,6 +12189,10 @@ span[class*=char-star][class*=red] {
   margin: 0 0 0 0.3125rem;
 }
 
+.order-lookup-wrap .order-radio .select-list li:last-of-type {
+  margin-right: 0;
+}
+
 .order-lookup-wrap .order-lookup-cont {
   position: relative;
   margin: 1.875rem 0 0;
@@ -12218,9 +12226,7 @@ span[class*=char-star][class*=red] {
 
 .order-lookup-wrap .order-lookup-cont .order-lookup-list .radio .select-list .radiobox {
   position: relative;
-  width: 100%;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  display: block;
   margin: 0;
   padding: 1.25rem 0;
   border-top: 1px solid #e1e1e1;
