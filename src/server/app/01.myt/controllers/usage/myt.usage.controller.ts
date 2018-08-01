@@ -120,7 +120,7 @@ class MyTUsage extends TwViewController {
   private convFormatWithUnit(data: string, unit: string): object[] {
     switch ( unit ) {
       case UNIT_E.DATA:
-        return [FormatHelper.convDataFormat(data, UNIT[unit])];
+        return [FormatHelper.customDataFormat(data, UNIT[unit], 'GB')];
       case UNIT_E.VOICE:
         return FormatHelper.convVoiceFormatWithUnit(data);
       case UNIT_E.SMS:
