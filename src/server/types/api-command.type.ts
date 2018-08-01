@@ -104,6 +104,7 @@ export const API_CMD = {
   BFF_05_0069: { path: '/core-auth/v1/service-passwords', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
   BFF_05_0070: { path: '/core-auth/v1/service-passwords-change', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
   BFF_05_0071: { path: '/core-auth/v1/service-passwords', method: API_METHOD.DELETE, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0078: { path: '/core-balance/v1/band-data-sharings', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0079: { path: '/core-bill/v1/microPay-hist-requests', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0080: { path: '/core-bill/v1/microPay-requests', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0081: { path: '/core-bill/v1/microPay-requests', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
