@@ -67,7 +67,8 @@ Tw.MenuComponent.prototype = {
   _successLogin: function (resp) {
     Tw.Logger.info('[Login Resp]', resp);
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      this._historyService.reload();
+      // this._historyService.reload();
+      this._historyService.goLoad('/home');
     } else if ( resp.code === Tw.API_LOGIN_ERROR.ICAS3228 ) {
       // 고객보호비밀번호
       this._historyService.goLoad('/auth/login/service-pwd');
