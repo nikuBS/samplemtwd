@@ -3,6 +3,7 @@ Tw.NativeService = function () {
   this._callbackList = [];
   this._randomCode = 0;
   this._apiService = new Tw.ApiService();
+  this._popupService = Tw.Popup;
 
   this._init();
 };
@@ -27,6 +28,7 @@ Tw.NativeService.prototype = {
     window.onNativeCallback = $.proxy(this._onNativeCallback, this);
     window.onBack = $.proxy(this._onBack, this);
     window.onInit = $.proxy(this._onInitApp, this);
+    window.onEasyLogin = $.proxy(this._onEasyLogin, this);
   },
 
   _setParameter: function (command, params, callback) {
@@ -79,6 +81,18 @@ Tw.NativeService.prototype = {
 
   _onInitApp: function () {
     Tw.Logger.info('[Init]');
+  },
+
+  _onEasyLogin: function (resp) {
+    if(resp.resultCode === Tw.NTV_CODE.CODE_00) {
+      if(Tw.BrowserHelper.isAndroid()) {
+        window.location.href = '/auth/login/easy-aos?mdn=' + resp.params.mdn;
+      } else {
+        window.location.href = '/auth/login/easy-ios';
+      }
+    } else {
+      this._popupService.openAlert(Tw.MSG_AUTH.EASY_LOGIN_FAIL);
+    }
   }
 
 };

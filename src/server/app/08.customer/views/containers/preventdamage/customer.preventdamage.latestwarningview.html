@@ -15,7 +15,7 @@ console.log(data);
             <div class="cont-box">
                 <h3 class="detail-aria-title">
                     <%= data.bltnTitleNm %>
-                    <span class="detail-area-date"><%= data.auditDtm %></span>
+                    <span class="detail-area-date"><%= data.date %></span>
                 </h3>
             </div>
             <!--// .cont-box -->
@@ -33,9 +33,4 @@ console.log(data);
     <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }) %>
 </div>
 <% include ../../components/javascript.component.html %>
-<script>
-  $(document).ready(function () {
-    var comp = new Tw.CustomerPreventdamageLatestwarningview($('.wrap'));
-  });
-</script>
 <% include ../../components/end.component.html %>

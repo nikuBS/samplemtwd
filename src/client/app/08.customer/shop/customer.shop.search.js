@@ -24,6 +24,8 @@ Tw.CustomerShopSearch.prototype = {
     this.$inputTube = this.$container.find('#fe-text-tube');
     this.$btnSearch = this.$container.find('.bt-red1 > button');
     this.$optionsTitle = this.$container.find('#fe-options-title');
+    this.$btnMore = this.$container.find('.bt-more');
+    this.$moreCount = this.$container.find('#fe-more-count');
   },
   _bindEvent: function () {
     this.$container.on('click', 'li[role="tab"] > button', $.proxy(this._onTabChanged, this));
@@ -31,6 +33,7 @@ Tw.CustomerShopSearch.prototype = {
     this.$container.on('click', '.bt-red1 > button', $.proxy(this._requestSearch, this));
     this.$container.on('change', 'input[type="radio"]', $.proxy(this._onOptionsChanged, this));
     this.$container.on('change', 'input[type="checkbox"]', $.proxy(this._onOptionsChanged, this));
+    this.$btnMore.on('click', $.proxy(this._onMore, this));
   },
   _init: function () {
     var selectedTab = this.$container.find('li[role="tab"][aria-selected="true"]')[0].id;
@@ -121,19 +124,31 @@ Tw.CustomerShopSearch.prototype = {
       this.$optionsTitle.text(this.$optionsTitle.text().replace(/,.*/, ', ' + optionsText));
     }
   },
+  _onMore: function () {
+    var result = this.$container.find('.store-result-list > .none');
+    for (var i = 0; i < (result.length < 20 ? result.length: 20); i++) {
+      $(result[i]).removeClass('none');
+    }
+
+    if (result.length - 20 <= 0) {
+      this.$btnMore.hide();
+    } else {
+      this.$moreCount.text('(' + (result.length - 20 < 20 ? result.length - 20 : 20) + ')');
+    }
+  },
   _requestSearch: function () {
     var params = { storeType: this._storeType };
     switch (this._currentTab) {
       case 1:
-        params.searchType = 1;
-        params.searchText =  this.$inputName.val();
+        params.searchType = 'name';
+        params.searchText = this.$inputName.val();
         break;
       case 2:
-        params.searchType = 2;
+        params.searchType = 'address';
         params.searchText = this.$inputAddress.val();
         break;
       case 3:
-        params.searchType = 3;
+        params.searchType = 'tube';
         params.searchText = this.$inputTube.val();
         break;
       default:

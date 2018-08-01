@@ -23,14 +23,15 @@ class CustomerShopSearchController extends TwViewController {
     delete query.searchType;
 
     if (!FormatHelper.isEmpty(query) && !FormatHelper.isEmpty(query.searchText)) {
-      // TODO: Check api availability
-      this.requestSearch(query).subscribe((result) => {
+      query.searchText = encodeURI(query.searchText); // Encode korean chracters
+      this.requestSearch(query, searchType).subscribe((resp) => {
+        resp.result = resp.result.filter((item, idx) => idx < 19);
         res.render(url, {
           svcInfo: svcInfo,
           searched: true,
           searchType: searchType,
-          searchText: query.searchText,
-          result: [result]
+          searchText: decodeURI(query.searchText),
+          result: FormatHelper.isEmpty(resp.result) ? [] : resp.result
         });
       });
     } else {
@@ -42,8 +43,24 @@ class CustomerShopSearchController extends TwViewController {
     }
   }
 
-  private requestSearch(params: any): Observable<any> {
-    return this.apiService.request(API_CMD.BFF_08_0004, params);
+  private requestSearch(params: any, searchType: string): Observable<any> {
+    const cmd = ((type) => {
+      switch (type) {
+        case 'name':
+          return API_CMD.BFF_08_0004;
+          break;
+        case 'address':
+          return API_CMD.BFF_08_0005;
+          break;
+        case 'tube':
+          return API_CMD.BFF_08_0006;
+          break;
+        default:
+          return API_CMD.BFF_08_0004;
+          break;
+      }
+    })(searchType);
+    return this.apiService.request(cmd, params);
   }
 }
 

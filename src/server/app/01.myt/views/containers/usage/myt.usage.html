@@ -10,7 +10,7 @@
 </div>
 <!--// #skip_navigation -->
 <!-- wrap -->
-<div class="wrap">
+<div class="wrap" id="myt-usage">
     <!-- header -->
     <div id="header" class="header-wrap">
         <div class="header">
@@ -36,23 +36,31 @@
             <% if (usageData.data && usageData.data.length > 0) { %>
             <hr class="cont-sp type1" aria-hidden="true" />
             <div class="cont-box">
-                <%- include('../../components/usage/myt.usage.graphbox.html', { type: '데이터', items: usageData.data }); %>
+                <%- include('../../components/usage/myt.usage.graphbox.html', { type: '데이터', items: usageData.data, showUnitSwitch: true }); %>
 
                 <div class="list-link">
                     <ul>
-                        <li>
-                            <button>리필하기<span class="qnt">(<span>5</span>)</span></button>
+                        <li class="fe-refill-btn" style="display: none;">
+                            <button>리필하기<span class="qnt">(<span class="fe-refill-cnt"></span>)</span></button>
                         </li>
                         <li>
                             <button>T끼리 데이터선물 / 조르기</button>
                         </li>
-                        <li>
+                        <li class="fe-t-data-sharing-btn" style="display:none;">
                             <button>T데이터셰어링 사용량</button>
                         </li>
                     </ul>
                 </div>
 
-                <div class="msg-guide-link">
+                <!-- 선택한 회선이 T데이터 셰어링 미가입 & 대상요금제 사용자일 경우 노출 -->
+                <div class="msg-guide-link" style="display:none;">
+                    <strong class="tit fe-ad1">데이터 Tip</strong>
+                    <p class="txt">하나의 데이터로<br />여러 개의 기기를 이용한다고??</p>
+                    <button class="bt-link-tx">T데이터셰어링 알아보기<span class="ico"></span></button>
+                </div>
+
+                <!-- 데이터 촤과 사용중 중일 경우 노출 -->
+                <div class="msg-guide-link fe-ad2" style="display:none;">
                     <strong class="tit">요금제 Tip</strong>
                     <p class="txt">통화는 자주 안 하지만 데이터가<br />부족하다면??</p>
                     <button class="bt-link-tx">다른 요금제 알아보기<span class="ico"></span></button>
@@ -68,15 +76,15 @@
 
                 <div class="list-link">
                     <ul>
-                        <li>
-                            <button>리필하기<span class="qnt">(<span>5</span>)</span></button>
+                        <li class="fe-refill-btn" style="display: none;">
+                            <button>리필하기<span class="qnt">(<span class="fe-refill-cnt"></span>)</span></button>
                         </li>
                     </ul>
                 </div>
             </div>
             <% } %>
 
-            <% if (usageData.sms && usageData.voice.sms > 0) { %>
+            <% if (usageData.sms && usageData.sms.length > 0) { %>
             <hr class="cont-sp type1" aria-hidden="true" />
             <div class="cont-box">
                 <%- include('../../components/usage/myt.usage.graphbox.html', { type: '문자', items: usageData.sms }); %>
@@ -94,28 +102,32 @@
             <hr class="cont-sp type1" aria-hidden="true" />
             <div class="cont-box nogaps-hoz">
                 <div class="link-long-group">
-                    <div class="link-long">
+                    <div class="link-long fe-t-roaming-sharing-btn" style="display:none;">
                         <button>T로밍 함께쓰기<span class="ico"></span></button>
                     </div>
-                    <div class="link-long">
+                    <div class="link-long fe-data-sharing-btn" style="display:none;">
                         <button>데이터 함께쓰기<span class="ico"></span></button>
                     </div>
+                    <% if (usageData.dataTopUp === 'Y') { %>
                     <div class="link-long">
                         <button>데이터 한도요금제<span class="ico"></span></button>
                     </div>
+                    <% } %>
+                    <% if (usageData.ting === 'Y') { %>
                     <div class="link-long">
                         <button>팅 요금상품<span class="ico"></span></button>
                     </div>
+                    <% } %>
+                    <% if (usageData.dataDiscount === 'Y') { %>
                     <div class="link-long">
                         <button>24시간 데이터 50% 할인<span class="ico"></span></button>
                     </div>
-                    <!-- 2017-07-27 버튼 추가 -->
-                    <div class="link-long">
+                    <% } %>
+                    <div class="link-long fe-band-data-sharing" style="display:none;">
                         <button>내폰끼리 결합<span class="ico"></span></button>
                     </div>
-                    <!--// 2017-07-27 버튼 추가 -->
-                    <div class="link-long">
-                        <button>자녀폰 사용량 조회 (<span class="bold">5</span>명)<span class="ico"></span><span class="badge badge-fam"><span class="blind">자녀</span></span></button>
+                    <div class="link-long fe-child-btn" style="display:none;" >
+                        <button>자녀폰 사용량 조회 (<span class="bold fe-child-cnt"></span>명)<span class="ico"></span><span class="badge badge-fam"><span class="blind">자녀</span></span></button>
                     </div>
                 </div>
             </div>

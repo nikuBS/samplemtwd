@@ -3,6 +3,7 @@ import LoggerService from './logger.service';
 import { SvcInfoModel } from '../models/svc-info.model';
 import { Observable } from 'rxjs/Observable';
 import { COOKIE_KEY } from '../types/bff-common.type';
+import BrowserHelper from '../utils/browser.helper';
 
 class LoginService {
   static instance;
@@ -95,7 +96,7 @@ class LoginService {
     if ( !FormatHelper.isEmpty(this.request.session) && !FormatHelper.isEmpty(this.request.session.channel) ) {
       return this.request.session.channel;
     }
-    return '';
+    return this.request.cookies[COOKIE_KEY.CHANNEL];
   }
 
   public logoutSession(): Observable<any> {

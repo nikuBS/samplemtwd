@@ -38,6 +38,9 @@ Tw.FormatHelper = (function () {
   };
 
   var convNumFormat = function (number) {
+    if ( number < 1 ) {
+      return setDecimalPlace(number, 2);
+    }
     if (number > 0 && number < 100 && number % 1 !== 0) {
       return removeZero(number.toFixed(2));
     }
@@ -139,6 +142,10 @@ Tw.FormatHelper = (function () {
     return cardYm.substr(0, 4) + '/' + cardYm.substr(4, 2);
   };
 
+  var setDecimalPlace = function(value, point) {
+    return parseFloat(value.toFixed(point));
+  };
+
   function _getDashedCellPhoneNumber(phoneNumber) {
     var str = '';
     if (phoneNumber.length <= 10) {
@@ -227,6 +234,7 @@ Tw.FormatHelper = (function () {
     makeCardYymm: makeCardYymm,
     getFormattedPhoneNumber: getFormattedPhoneNumber,
     getDashedPhoneNumber: getDashedPhoneNumber,
-    convNumFormat: convNumFormat
+    convNumFormat: convNumFormat,
+    setDecimalPlace: setDecimalPlace
   };
 })();

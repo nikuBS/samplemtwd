@@ -1,2 +1,5 @@
+// Common
+Tw.DEFAULT_LIST_COUNT = 20;
+
 // Auth
 Tw.MAX_NICKNAME_LEN = 7;
