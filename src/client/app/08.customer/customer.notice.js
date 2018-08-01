@@ -6,7 +6,7 @@
 
 Tw.CustomerNotice = function(rootEl) {
   this.$container = rootEl;
-  this._apiSerivce = Tw.Api;
+  this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._history = new Tw.HistoryService();
   this._template = Handlebars.compile($('#tpl_notice_list_item').html());
@@ -75,7 +75,7 @@ Tw.CustomerNotice.prototype = {
   },
 
   _loadMoreList: function() {
-    this._apiSerivce.request(this._getApi(), {page: this._page, size: 20}).done($.proxy(this._appendMoreList, this));
+    this._apiService.request(this._getApi(), {page: this._page, size: 20}).done($.proxy(this._appendMoreList, this));
   },
 
   _getRemainCount: function(param) {
