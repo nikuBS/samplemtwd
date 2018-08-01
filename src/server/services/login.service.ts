@@ -80,6 +80,24 @@ class LoginService {
     });
   }
 
+  public setChannel(channel: string): Observable<any> {
+    return Observable.create((observer) => {
+      this.request.session.channel = channel;
+      this.request.session.save(() => {
+        this.logger.debug(this, '[setChannel]', this.request.session);
+        observer.next(this.request.session.channel);
+        observer.complete();
+      });
+    });
+  }
+
+  public getChannel(): string {
+    if ( !FormatHelper.isEmpty(this.request.session) && !FormatHelper.isEmpty(this.request.session.channel) ) {
+      return this.request.session.channel;
+    }
+    return '';
+  }
+
   public logoutSession(): Observable<any> {
     return Observable.create((observer) => {
       this.request.session.destroy(() => {
@@ -90,10 +108,6 @@ class LoginService {
         observer.complete();
       });
     });
-  }
-
-  public getChannelCookie(): string {
-    return this.request.cookies[COOKIE_KEY.CHANNEL];
   }
 
   public getDeviceCookie(): string {

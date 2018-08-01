@@ -16,7 +16,6 @@ Tw.API_CMD = {
 
   // COMMON
   BFF_01_0002: { path: '/common/sessions', method: Tw.API_METHOD.GET },
-  BFF_01_0004: { path: '/common/selected-sessions', method: Tw.API_METHOD.PUT },
   BFF_01_0005: { path: '/common/selected-sessions', method: Tw.API_METHOD.GET },
   BFF_01_0006: { path: '/core-modification/v1/address/legal-dongs', method: Tw.API_METHOD.GET },
   BFF_01_0007: { path: '/core-modification/v1/address/legal-dongs', method: Tw.API_METHOD.GET },
@@ -207,7 +206,6 @@ Tw.API_CMD = {
 Tw.NODE_CMD = {
   GET_ENVIRONMENT: { path: '/environment', method: Tw.API_METHOD.GET },
   SET_DEVICE: { path: '/device', method: Tw.API_METHOD.POST },
-  SET_CHANNEL: { path: '/channel', method: Tw.API_METHOD.POST },
   CHANGE_SESSION: { path: '/change-session', method: Tw.API_METHOD.POST },
   SVC_PASSWORD_LOGIN: { path: '/service-password-sessions/login', method: Tw.API_METHOD.POST },
   LOGIN_TID: { path: '/login-tid', method: Tw.API_METHOD.POST },

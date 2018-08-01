@@ -23,7 +23,7 @@ export const API_CMD = {
   // COMMON
   BFF_01_0002: { path: '/common/sessions', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_01_0003: { path: '/svc-catalog/detail', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
-  BFF_01_0004: { path: '/common/selected-sessions', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
+  BFF_01_0004: { path: '/common/selected-sessions', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: false },
   BFF_01_0005: { path: '/common/selected-sessions', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_01_0006: { path: '/core-modification/v1/address/legal-dongs', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_01_0007: { path: '/core-modification/v1/address/legal-dongs', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
