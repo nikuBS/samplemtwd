@@ -19,7 +19,7 @@ class MyTUsageDataShare extends TwViewController {
     Observable.combineLatest(
       this.getUsageData()
     ).subscribe(([usageData]) => {
-      res.render('usage/myt.usage.data-share.html', this.getData(usageData, svcInfo));
+      this.myTUsage.renderView(res, 'usage/myt.usage.data-share.html', this.getData(usageData, svcInfo));
     });
   }
 

@@ -10,7 +10,7 @@ import MyTUsageTRoamingShare from './controllers/usage/myt.usage.troaming-share.
 import MyTUsageTing from './controllers/usage/myt.usage.ting.controller';
 import MyTUsage24hours50discount from './controllers/usage/myt.usage.24hours-50discount.controller';
 import MyTUsageDataLimit from './controllers/usage/myt.usage.data-limit.controller';
-import MyTUsageCombineWithMine from './controllers/usage/myt.usage.combine-with-mine.controller';
+import MyTUsageBandDataSharings from './controllers/usage/myt.usage.band-data-sharings.controller';
 import MyTHotBill from './controllers/bill/myt.bill.hotbill.controller';
 import MyTReissue from './controllers/bill/myt.bill.guidechange.reissue.controller';
 import MyTReissueComplete from './controllers/bill/myt.bill.guidechange.reissue-complete.controller';
@@ -71,7 +71,7 @@ class MytRouter extends TwRouter {
     this.controllers.push({ url: '/usage/troaming', controller: new MyTUsageTRoamingShare() });
     this.controllers.push({ url: '/usage/ting', controller: new MyTUsageTing() });
     this.controllers.push({ url: '/usage/24hourdiscount', controller: new MyTUsage24hours50discount() });
-    this.controllers.push({ url: '/usage/combinewithmine', controller: new MyTUsageCombineWithMine() });
+    this.controllers.push({ url: '/usage/band-data-sharings', controller: new MyTUsageBandDataSharings() });
 
     this.controllers.push({ url: '/bill/hotbill', controller: new MyTHotBill() });
     this.controllers.push({ url: '/bill/guidechange/reissue', controller: new MyTReissue() });
