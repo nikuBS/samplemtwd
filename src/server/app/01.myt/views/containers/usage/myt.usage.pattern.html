@@ -86,7 +86,20 @@
                                         </div>
                                     </li>
                                     <li role="tabpanel" id="tab2-tab" aria-labelledby="tab2">
-                                        <div class="cont-box">
+                                        <% if (data.isTotal) { %>
+                                            <div class="inner">
+                                                <div class="cont-box nogaps-hoz">
+                                                    <!-- .contents-empty -->
+                                                    <div class="contents-empty type3">
+                                                        <span class="ico"></span>
+                                                        <p class="desc type2">집계중 입니다.</p>
+                                                        <p class="subdesc"><span class="ff-hn vbl">5</span>일 부터 조회 가능</p>
+                                                    </div>
+                                                    <!--// .contents-empty -->
+                                                </div>
+                                            </div>
+                                        <% } else { %>
+                                            <div class="cont-box">
                                             <div id="amt-btn-grp" class="chart-title">
                                                 <button class="bt-prev"></button>
                                                 <span data-index="2" class="item-tit blind"><%= data.names[2] || '' %></span>
@@ -275,6 +288,7 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <% } %>
                                     </li>
                                 </ul>
                             </div>

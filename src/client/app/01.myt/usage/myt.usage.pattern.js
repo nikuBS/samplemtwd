@@ -18,6 +18,7 @@ Tw.MyTUsagePattern = function (params) {
   this._chartOutVoiceData = params.data.chartOutVoiceData;
   this._chartVidVoiceData = params.data.chartVidVoiceData;
   this._empty = params.data.empty;
+  this._isTotal = params.data.isTotal;
   this._defaultChartSetting = {
     min: 0, //Min크기
     max: 250, //Max크기
@@ -65,14 +66,16 @@ Tw.MyTUsagePattern.prototype = {
 
     if ( $target.attr('id') === 'tab2' ) {
       if ( !this._initSecondtab ) {
-        this._initPatternChart();
-        this._showPatternChart();
+        if ( !this._isTotal ) {
+          this._initPatternChart();
+          this._showPatternChart();
+        }
         this._initSecondtab = true;
       }
     }
   },
 
-  _onDetailMoveButton: function() {
+  _onDetailMoveButton: function () {
     this._historyService.goLoad('/myt/usage/pattern/detail');
   },
 

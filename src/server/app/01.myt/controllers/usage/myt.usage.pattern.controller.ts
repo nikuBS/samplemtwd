@@ -28,8 +28,10 @@ class MyTUsagePattern extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     let data = {
-      svcInfo: svcInfo
+      svcInfo: svcInfo,
+      isTotal: false
     };
+    const curDate = new Date().getDate();
     const api = this.getPatternApi(svcInfo);
     if ( !api ) {
       // 제공하지 않는 유형의 서비스인 경우
@@ -46,8 +48,13 @@ class MyTUsagePattern extends TwViewController {
           data = _.extend(data, conf_data);
         }
         if ( patternData.code === API_CODE.CODE_00 ) {
-          const conp_data = this.convertPatternData(patternData);
-          data = _.extend(data, conp_data);
+          // 1~4일 인 경우
+          if ( curDate < 5 ) {
+            data.isTotal = true;
+          } else {
+            const conp_data = this.convertPatternData(patternData);
+            data = _.extend(data, conp_data);
+          }
         }
         const cone_data = this.checkEmptyData(data);
         data = _.extend(data, cone_data);
@@ -110,7 +117,7 @@ class MyTUsagePattern extends TwViewController {
       const iovInfos = _.map(data, 'inoutnetVideoUseVdto');
       const length = data.length;
       const voice: any = [], inVoice: any = [], outVoice: any = [], vidVoice: any = [],
-          sms: any = [], cData: any = [], months: any = [];
+        sms: any = [], cData: any = [], months: any = [];
       let totalVoice = 0, totalSms = 0, totalcData = 0, inTotalVoice = 0, outTotalVoice = 0, vidTotalVoice = 0;
       _.forEach(_.map(data, 'invDtTemp'), (value) => {
         months.push(value + '월');
