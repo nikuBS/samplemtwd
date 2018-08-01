@@ -16,6 +16,7 @@ Tw.LineComponent = function () {
 
   this._goAuthLine = false;
   this._bindEvent();
+  Tw.Logger.info('[Line] init complete');
 };
 
 Tw.LineComponent.prototype = {
