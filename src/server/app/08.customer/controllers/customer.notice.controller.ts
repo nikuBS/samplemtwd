@@ -8,6 +8,7 @@ import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../../common/controllers/tw.view.controller';
 import { API_CMD, API_CODE } from '../../../types/api-command.type';
 import { CUSTOMER_NOTICE_CATEGORY } from '../../../types/string.type';
+import _ from 'lodash';
 
 const categorySwitchingData = {
   tworld: {
@@ -16,7 +17,7 @@ const categorySwitchingData = {
   },
   directshop: {
     LABEL: CUSTOMER_NOTICE_CATEGORY.DIRECTSHOP,
-    API: API_CMD.BFF_08_0030
+    API: API_CMD.BFF_08_0039
   },
   membership: {
     LABEL: CUSTOMER_NOTICE_CATEGORY.MEMBERSHIP,
@@ -24,7 +25,7 @@ const categorySwitchingData = {
   },
   roaming: {
     LABEL: CUSTOMER_NOTICE_CATEGORY.ROAMING,
-    API: API_CMD.BFF_08_0032
+    API: API_CMD.BFF_08_0040
   }
 };
 
@@ -33,7 +34,7 @@ class CustomerNoticeController extends TwViewController {
     super();
   }
 
-  private convertData(data): any {
+  private _convertData(data): any {
     if (data.code !== API_CODE.CODE_00) {
       return {
         total: 0,
@@ -45,10 +46,21 @@ class CustomerNoticeController extends TwViewController {
 
     return {
       total: data.result.total,
-      remain: data.result.remainCounts,
-      list: data.result.content,
+      remain: this._getRemainCount(data.result.totalElements, data.result.pageable.pageNumber, data.result.pageable.pageSize),
+      list: _.map(data.result.content, (item) => {
+        return _.merge(item, {
+          date: item.rgstDt.substr(0, 4) + '.' + item.rgstDt.substr(4, 2) + '.' + item.rgstDt.substr(6, 2),
+          type: _.isEmpty(item.ctgNm) ? '' : item.ctgNm,
+          itemClass: (item.isTop ? 'impo ' : '') + (item.isNew ? 'new' : '')
+        });
+      }),
       last: data.result.last
     };
+  }
+
+  private _getRemainCount(total, page, pageSize): any {
+    const count = total - ((++page) * pageSize);
+    return count < 0 ? 0 : count;
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
@@ -64,7 +76,7 @@ class CustomerNoticeController extends TwViewController {
           category: category,
           categoryLabel: categorySwitchingData[category].LABEL,
           svcInfo: svcInfo,
-          data: this.convertData(data)
+          data: this._convertData(data)
         });
       });
   }

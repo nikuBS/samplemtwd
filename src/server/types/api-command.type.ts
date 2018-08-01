@@ -23,7 +23,7 @@ export const API_CMD = {
   // COMMON
   BFF_01_0002: { path: '/common/sessions', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_01_0003: { path: '/svc-catalog/detail', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
-  BFF_01_0004: { path: '/common/selected-sessions', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
+  BFF_01_0004: { path: '/common/selected-sessions', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: false },
   BFF_01_0005: { path: '/common/selected-sessions', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_01_0006: { path: '/core-modification/v1/address/legal-dongs', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_01_0007: { path: '/core-modification/v1/address/legal-dongs', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
@@ -104,6 +104,7 @@ export const API_CMD = {
   BFF_05_0069: { path: '/core-auth/v1/service-passwords', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
   BFF_05_0070: { path: '/core-auth/v1/service-passwords-change', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
   BFF_05_0071: { path: '/core-auth/v1/service-passwords', method: API_METHOD.DELETE, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0078: { path: '/core-balance/v1/band-data-sharings', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0079: { path: '/core-bill/v1/microPay-hist-requests', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0080: { path: '/core-bill/v1/microPay-requests', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0081: { path: '/core-bill/v1/microPay-requests', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
@@ -244,11 +245,11 @@ export const API_CMD = {
   BFF_08_0026: { path: '/core-modification/v1/guide/categories', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_08_0028: { path: '/core-modification/v1/notice/tworld-submain', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_08_0029: { path: '/core-modification/v1/tworld-notice', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
-  BFF_08_0030: { path: '/core-modification/v1/directshop-notice', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_08_0031: { path: '/core-modification/v1/membership-notice', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
-  BFF_08_0032: { path: '/core-modification/v1/roaming-notice', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_08_0033: { path: '/core-modification/v1/prevent/notice', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_08_0034: { path: '/core-modification/v1/voice-certification', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_08_0039: { path: '/core-modification/v1/notice-direct', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_08_0040: { path: '/core-modification/v1/notice-roaming', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_08_0041: { path: '/core-modification/v1/prevent/notice/args-0', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
 
   // TID
