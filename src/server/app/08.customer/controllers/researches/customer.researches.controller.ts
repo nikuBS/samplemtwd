@@ -8,19 +8,20 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import { Request, Response, NextFunction } from 'express';
 import DateHelper from '../../../../utils/date.helper';
 import { Researches } from '../../../../mock/server/customer.researches.mock';
+import { RESEARCH_EXAMPLE_TYPE } from '../../../../types/string.type';
 
 
 interface IResearchBFF {
   bnnrRsrchId: string; // 배너리서치ID
   bnnrRsrchTypCd: string; // 배너리서치유형코드(R:설문조사, P:POLL, Q:QUIZ)
   bnnrRsrchTitleNm: string; // 배너리서치제목
-  bnnrRsrchRpsTypCd: string; // 응답유형코드(S:단일, C:복수)
-  bnnrRsrchSortMthdCd: string; // 좌우정렬방식
-  hintExUrl: string; // POLL:사용안함, Quiz : 힌트보기URL , 설문조사 : 설문ID(qstn_id)
   cmplYn: string; // 참여여부
   staDtm: string; // 시작년월일
   endDtm: string; // 종료년월일
-  exCttCnt: string; // 총 보기 건수
+  bnnrRsrchRpsTypCd?: string; // 응답유형코드(S:단일, C:복수)
+  bnnrRsrchSortMthdCd?: string; // 좌우정렬방식
+  hintExUrl?: string; // POLL:사용안함, Quiz : 힌트보기URL , 설문조사 : 설문ID(qstn_id)
+  exCttCnt?: string; // 총 보기 건수
   motMsgHtmlCtt?: string; // MOT메시지HTML내용
   exCtt1?: string; // 보기1,          
   exCtt2?: string; // 보기2          
@@ -57,6 +58,7 @@ interface IResearch {
 
 interface IExample {
   content: string; // 보기 내용
+  isEtc: boolean; // 기타항목 여부
   image?: string; // 보기 이미지
   motHtml?: string; // 보기 MOT
 }
@@ -66,24 +68,28 @@ export default class CustomerResearches extends TwViewController {
     if (req.params.researchId) {
       res.render('researches/customer.researches.research.html', { svcInfo });
     } else {
-      const mock: IResearch[] = Researches.map(this.isOpen);
+      const mock: IResearch[] = Researches.map(this.setData);
 
       res.render('researches/customer.researches.html', { svcInfo, researches: mock });
     }
   }
 
-  private isOpen(research: IResearchBFF): IResearch {
+  private setData(research: IResearchBFF): IResearch {
     const examples: IExample[] = [];
     const count = Number(research.exCttCnt);
 
     for (let i = 0; i < count; i++) {
       const idx = i + 1;
+      const isEtc = idx === count && research['exCtt' + idx] === 'QSTNETC';
+
       examples.push({
-        content: research['exCtt' + idx] || '',
+        content: isEtc ? RESEARCH_EXAMPLE_TYPE.ETC : research['exCtt' + idx] || '',
         image: research['exImgFilePathNm' + idx],
         motHtml: research['motExCtt' + idx],
+        isEtc
       });
     }
+
 
     return {
       id: research.bnnrRsrchId,
@@ -95,7 +101,7 @@ export default class CustomerResearches extends TwViewController {
       startDate: research.staDtm,
       endDate: research.endDtm,
       motHtml: research.motMsgHtmlCtt,
-      isProceeding: DateHelper.getDifference(research.endDtm) > 0,
+      isProceeding: DateHelper.getDifference(research.endDtm.replace(/\./g, '')) > 0,
       examples,
       hintUrl: research.hintExUrl,
       answerNum: research.canswNum

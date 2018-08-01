@@ -55,13 +55,14 @@
                                                 <div class="cont-box nogaps-acco">
                                                     <% if (research.type === 'Q' && research.hintUrl) { %><button class="bt-link-tx">힌트보기<span class="ico"></span></button><% } %>
                                                     <div class="poll-option-cont">
-                                                        <% if (research.examples) { %>
+                                                        <% if (research.examples.length > 0) { %>
+                                                            <% const examCount = research.examples.length; %>
+                                                            <% const isRadio = !research.isMultiple; %>
                                                             <div class="widget">
-                                                                <% const isRadio = !research.isMultiple %>
                                                                 <div class="widget-box <%= isRadio? 'radio' : 'check' %>">
                                                                     <!-- <div class="video-img"><img src="/img/dummy/dummy_poll02.jpg" alt=""/></div> // 비디오--> 
                                                                     <ul class="select-list <%= research.isMultiStage? 'division-two mb0' : '' %>" role="<%= isRadio? 'radio': '' %>group">
-                                                                        <% for (let i = 0; i < research.examples.length; i++) { %>
+                                                                        <% for (let i = 0; i < examCount; i++) { %>
                                                                             <% const exam = research.examples[i]; %>
                                                                             <li class="<%= isRadio? 'radiobox type03' : 'checkbox type02' %> alignment" role="<%= isRadio? 'radio' : 'checkbox' %>" aria-checked="">
                                                                                 <% if (exam.image) { %><div class="poll-img"><img src="<%= exam.image %>" alt=""/></div><% } %>
@@ -73,12 +74,10 @@
                                                                             </li>
                                                                         <% } %>
                                                                     </ul>
+                                                                    <% if (research.examples[examCount - 1].isEtc) { %><textarea class="poll-area fe-etc-area" data-etc-idx="<%= examCount %>" cols="20" rows="3"></textarea><% } %>
                                                                 </div>
                                                             </div>
                                                             <% if (research.motHtml) { %><%- research.motHtml %><% } %>
-                                                        <% } else { %>
-                                                            <!-- <div class="video-img"><img src="/img/dummy/dummy_poll02.jpg" alt=""/></div> // 비디오--> 
-                                                            <textarea class="poll-area mt10" cols="20" rows="3" placeholder="형식에 맞게 입력해주십시오."></textarea> 
                                                         <% } %> 
                                                         <% if (research.isProceeding) { %>
                                                         <ul class="bt-slice item-two">
@@ -86,7 +85,11 @@
                                                                 <button>결과보기</button>
                                                             </li>
                                                             <li class="bt-blue1">
-                                                                <button disabled>참여하기</button>
+                                                                <% if (research.type === "R") { %>
+                                                                    <button data-question-id="<%= research.hintUrl %>">설문 시작하기</button>
+                                                                <% } else { %>
+                                                                    <button disabled>참여하기</button>
+                                                                <% } %>
                                                             </li>
                                                         </ul>
                                                         <% } else { %>

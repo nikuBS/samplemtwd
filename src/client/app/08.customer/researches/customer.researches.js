@@ -20,37 +20,49 @@ Tw.CustomerResearches.prototype = {
   },
 
   _handleParticipate: function (e) {
-    // 참여하기 버튼 클릭
+    var questionId = $(e.currentTarget).data('question-id');
     // var $root = $(e.currentTarget).parents('li.acco-box');
-    // var $list = $root.find('ul.select-list > li');
 
-    // var options = {
-    //   bnnr_rsrch_id: $root.data('research-id'),
-    //   bnnr_rsrch_typ_cd: $root.data('type-code'),
-    //   canswNum: $root.data('answer-num')
-    // };
+    if (questionId) {
+      // 설문 시작하기
+      this._history.goLoad('researches/' + questionId);
+    } else {
+      // 참여하기 버튼 클릭
+      // var $list = $root.find('ul.select-list > li');
+      // var $etcText = $root.find('textarea.fe-etc-area');
 
-    // for (var i = 0; i < $list.length; i++) {
-    //   options['rps_ctt' + (i + 1)] = $list[i].getAttribute('aria-checked');
-    // }
+      // var options = {
+      //   bnnr_rsrch_id: $root.data('research-id'),
+      //   bnnr_rsrch_typ_cd: $root.data('type-code'),
+      //   canswNum: $root.data('answer-num'),
+      //   etc_text_num: $etcText.data('etc-idx'),
+      //   etc_text: $etcText.val()
+      // };
 
-    // this._apiService.request(Tw.API_CMD.BFF_08_0035, options).done();
-    this._successParticipate({
-      code: Tw.API_CODE.CODE_00,
-      result: {
-        errorCode: "SUCCESSY"
-      }
-    });
+      // for (var i = 0; i < $list.length; i++) {
+      //   if ($list[i].getAttribute('aria-checked') === "true") {
+      //     options['rps_ctt' + (i + 1)] = i + 1;
+      //   }
+      // }
+
+      // this._apiService.request(Tw.API_CMD.BFF_08_0035, options).done();
+      this._successParticipate({
+        code: Tw.API_CODE.CODE_00,
+        result: {
+          errorCode: 'SUCCESSY'
+        }
+      });
+    }
   },
 
   _successParticipate: function (resp) {
     if (resp.code === Tw.API_CODE.CODE_00) {
       switch (resp.result.errorCode) {
-        case "DUPLICATE":
+        case 'DUPLICATE':
           this._popupService.openAlert(Tw.MSG_CUSTOMER.RESEARCH_A01);
           break;
-        case "SUCCESSY":
-        case "SUCCESSN":
+        case 'SUCCESSY':
+        case 'SUCCESSN':
           this._popupService.openAlert(Tw.MSG_CUSTOMER.RESEARCH_A02);
           break;
       }
