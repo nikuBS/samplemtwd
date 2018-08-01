@@ -76,13 +76,15 @@ class MytJoinPayClaim extends TwViewController {
       case 'S1' :
       case 'S2' :
       case 'S3' :
-        if ( false ) {
-          this.logger.info(this, '[ 인터넷 / IPTV / 집전화 ] : ', this._svcInfo.svcAttrCd);
-          this._typeChk = 'B1';
-        } else {
-          this.logger.info(this, '[ 인터넷 / IPTV / 집전화 ] SK브로드밴드 가입자 : ', this._svcInfo.svcAttrCd);
-          this._typeChk = 'B2';
-        }
+        this.logger.info(this, '[ 인터넷 / IPTV / 집전화 ] : ', this._svcInfo.svcAttrCd);
+        this._typeChk = 'B1';
+        // if ( true ) {
+        //   this.logger.info(this, '[ 인터넷 / IPTV / 집전화 ] : ', this._svcInfo.svcAttrCd);
+        //   this._typeChk = 'B1';
+        // } else {
+        //   this.logger.info(this, '[ 인터넷 / IPTV / 집전화 ] SK브로드밴드 가입자 : ', this._svcInfo.svcAttrCd);
+        //   this._typeChk = 'B2';
+        // }
         break;
       case 'O1' :
         this.logger.info(this, '[ 보안솔루션 ] : ', this._svcInfo.svcAttrCd);
