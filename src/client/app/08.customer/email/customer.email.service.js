@@ -1,10 +1,10 @@
 /**
- * FileName: customer.email.js
+ * FileName: customer.email.service.js
  * Author: Jiman Park (jiman.park@sk.com)
  * Date: 2018.07.30
  */
 
-Tw.CustomerEmail = function (rootEl) {
+Tw.CustomerEmailService = function (rootEl) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -17,7 +17,7 @@ Tw.CustomerEmail = function (rootEl) {
   this._init();
 };
 
-Tw.CustomerEmail.prototype = {
+Tw.CustomerEmailService.prototype = {
   categoryId: '',
   serviceType: '',
   serviceCategory: [],

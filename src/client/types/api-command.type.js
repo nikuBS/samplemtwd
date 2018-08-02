@@ -188,6 +188,7 @@ Tw.API_CMD = {
   BFF_08_0031: { path: '/core-modification/v1/notice-membership', method: Tw.API_METHOD.GET },
   BFF_08_0033: { path: '/core-modification/v1/prevent/notice', method: Tw.API_METHOD.GET },
   BFF_08_0034: { path: '/core-modification/v1/voice-certification', method: Tw.API_METHOD.POST },
+  BFF_08_0035: { path: '/core-modification/v1/survey/surveyJoin', method: Tw.API_METHOD.POST },
   BFF_08_0039: { path: '/core-modification/v1/notice-direct', method: Tw.API_METHOD.GET },
   BFF_08_0040: { path: '/core-modification/v1/notice-roaming', method: Tw.API_METHOD.GET },
 
