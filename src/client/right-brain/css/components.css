@@ -5099,7 +5099,7 @@
 .noti-link button, .noti-link a {
   display: block;
   width: 100%;
-  padding: 19px 0;
+  padding: 1.1875rem 0;
   font-size: 0.9375rem;
   color: #325ec1;
   text-align: center;
@@ -6635,6 +6635,7 @@ li.payment-detail-box:last-child {
   font-weight: 400;
   font-size: 0.875rem;
   text-align: left;
+  color: #000;
 }
 
 .list-link li a:after, .list-link li button:after {
