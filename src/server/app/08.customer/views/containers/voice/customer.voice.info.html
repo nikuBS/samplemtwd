@@ -1,0 +1,175 @@
+<%#
+* FileName: customer.voice.info.html
+* Author: 박지만 (jiman.park@sk.com)
+* Date: 2018.07.23
+%>
+
+<% include ../components/start.component.html %>
+
+<div class="wrap">
+        <!-- #header -->
+        <div class="header-wrap">
+            <div class="header">
+                <div class="header-ti align-l">
+                    <h1>목소리인증서비스</h1>
+                </div>
+                <button class="prev-step fe-common-back"><span class="blind">이전으로</span></button>
+            </div>
+        </div>
+        <!--// #header -->
+        <!-- #contents -->
+        <div class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+                <!-- .cont-box -->
+                <div class="cont-box">
+                    <div class="contents-info-list">
+                        <p class="ti-desc"><em class="tx-bold">고객님의 목소리를 등록</em>하시면, <br>고객센터와 상담 시 목소리만으로 <br>고객님을 확인할 수 있습니다.</p>
+                    </div>
+                    <div class="step-order">
+                        <h3 class="step-order-tit">목소리 등록 및 이용방법</h3>
+                        <div class="step-order-list">
+                            <ul>
+                                <li class="step-order-box">
+                                    <span class="step-order-num step01" role="img">STEP 01</span>
+                                    <p class="step-order-txt">목소리등록 문자를 받습니다.</p>
+                                    <p class="step-order-sub">휴대폰 문자로 본인확인 후 <br>목소리인증서비스를 신청할 수 있습니다.</p>
+                                    <ul class="bt-slice">
+                                        <li class="bt-blue1">
+                                            <button class="fe-btn-go-sms">목소리 등록 신청하기</button>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="step-order-box">
+                                    <span class="step-order-num step02" role="img">STEP 02</span>
+                                    <p class="step-order-txt">고객센터에서 목소리를 등록합니다.</p>
+                                    <p class="step-order-sub">1. 고객센터(114)연결 후 1번 선택 <br>2. <span
+                                        class="tx-bold">“SK텔레콤 비밀번호는 내 목소리 입니다.”</span> 3회 등록</p>
+                                </li>
+                                <li class="step-order-box">
+                                    <span class="step-order-num step03" role="img">STEP 03</span>
+                                    <p class="step-order-txt">등록이 완료되면 상담 시 <br>목소리인증을 이용하실 수 있습니다.</p>
+                                    <p class="step-order-sub">ARS를 이용하시거나 상담을 진행하실 때 <br>“SK텔레콤 비밀번호는 내 목소리 입니다.”를 말씀해주세요.</p>
+                                </li>
+                            </ul>
+                        </div>
+                        <em class="notice-triangle"><span class="ico"><span class="blind">중요</span></span>목소리 등록 문자의 유효시간은 12시간입니다. <br>유효시간
+                            내에는
+                            새로 문자를 받으실 필요 없습니다.</em>
+                    </div>
+                </div>
+                <!--// .cont-box -->
+
+                <hr class="cont-sp type1" aria-hidden="true">
+
+                <!-- .cont-box -->
+                <div class="cont-box nogaps-hoz">
+                    <div class="box-confirm">
+                        <div class="widget">
+                            <div class="widget-box accordion">
+                                <h5 class="tit-a">이용안내</h5>
+                                <div class="acco-cover toggle on"><!-- toggle : 한개만 열기 -->
+                                    <div class="bt-whole">
+                                        <button role="button" aria-pressed="true"><span class="blind">내용 열기</span></button>
+                                    </div>
+                                    <div class="acco-style">
+                                        <ul class="acco-list">
+                                            <li class="acco-box">
+                                                <div class="acco-tit">
+                                                    <button role="button" aria-pressed="false"><span class="bullet">1.</span> '목소리 인증 서비스'가
+                                                        무엇인가요?
+                                                    </button>
+                                                </div>
+                                                <div class="acco-cont">
+                                                    <ul class="list-dot">
+                                                        <li class="list">목소리에는 개인 고유의 특징이 있기 때문에 고객님과 가까운 사람들은 얼굴을 보지 않고도 전화 목소리만으로 고객님을 알 수
+                                                            있습니다. 이러한 고객님의 목소리 특징을 세밀하게 인지하여 고객님을 확인하는 방법이 목소리 인증 서비스 입니다.
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                            <li class="acco-box">
+                                                <div class="acco-tit">
+                                                    <button role="button" aria-pressed="false"><span class="bullet">2.</span> 목소리 등록 과정에서
+                                                        실패되었습니다.
+                                                    </button>
+                                                </div>
+                                                <div class="acco-cont">
+                                                    <ul class="list-dot">
+                                                        <li class="list">등록 과정에서 “SK텔레콤 비밀번호는 내 목소리입니다”를 너무 빨리 말씀하시거나, 너무 크게 말씀하시거나, 주변이
+                                                            시끄럽거나,
+                                                            다른 문장을 말씀하신 경우 실패됩니다.
+                                                        </li>
+                                                        <li class="list">타인 음성이 섞이지 않도록 주변이 조용한 곳에서 114로 다시 전화하여 휴대폰에 입을 조금 떼고 정확한 문장을 말씀하시면
+                                                            성공적으로 등록됩니다.
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                            <li class="acco-box">
+                                                <div class="acco-tit">
+                                                    <button role="button" aria-pressed="false"><span class="bullet">3.</span> 등록한 목소리가 해킹으로
+                                                        유출될
+                                                        수 있나요?
+                                                    </button>
+                                                </div>
+                                                <div class="acco-cont">
+                                                    <ul class="list-dot">
+                                                        <li class="list">고객님이 등록해 주신 목소리는 이진수 형태의 256바이트 암호화 파일로 저장되어 정보 유출 위험 없이 절대
+                                                            안전합니다.
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                            <li class="acco-box">
+                                                <div class="acco-tit">
+                                                    <button role="button" aria-pressed="false"><span class="bullet">4.</span> 목감기로 목소리가 변해도
+                                                        인증
+                                                        서비스를 받을 수 있나요?
+                                                    </button>
+                                                </div>
+                                                <div class="acco-cont">
+                                                    <ul class="list-dot">
+                                                        <li class="list">목소리 비교 시 발음, 강조, 액센트, 속도와 같은 특성과 성대특성, 비강구조, 입 모양과 크기 등의 신체적 특성에 따른
+                                                            다양한
+                                                            값을 비교하기 때문에 약간의 목소리 변화는 서비스를 이용하는데 지장이 없습니다.
+                                                        </li>
+                                                        <li class="list">변성기 전후/성대결절/심한 목감기 등 목소리가 많이 변했을 때는 인증되지 않을 수 있습니다.</li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                            <li class="acco-box">
+                                                <div class="acco-tit">
+                                                    <button role="button" aria-pressed="false"><span class="bullet">5.</span> 주변 소음이 심해도 인증
+                                                        서비스를
+                                                        받을 수 있나요?
+                                                    </button>
+                                                </div>
+                                                <div class="acco-cont">
+                                                    <ul class="list-dot">
+                                                        <li class="list">주변 잡음 제거 기술이 적용되어 있어 일반적인 생활 소음은 지장을 주지 않습니다.</li>
+                                                        <li class="list">그렇지만, 고객님의 목소리보다 주변 소음이 크거나 타인의 목소리가 더 큰 경우에는 인증되지 않을 수 있습니다.</li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--// .cont-box -->
+            </div>
+        </div>
+        <!--// #contents -->
+    <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
+</div>
+
+<% include ../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    var oVoiceComponent = new Tw.CustomerVoice($('.wrap'));
+  });
+</script>
+<% include ../components/end.component.html %>

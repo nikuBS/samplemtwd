@@ -9,7 +9,7 @@ Tw.CustomerHelpline = function (rootEl) {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._history = new Tw.HistoryService(rootEl);
-  this._history.init();
+  this._history.init('hash');
 
   this._cachedElement();
   this._bindEvent();
@@ -17,34 +17,37 @@ Tw.CustomerHelpline = function (rootEl) {
 };
 
 Tw.CustomerHelpline.prototype = {
-  PHONE_REGEX: /^0\d{8,10}$/,
   _init: function () {
     this._availableTimes = this.$btnTime.data('available-times');
     this._reservationTime = this._availableTimes[0];
+    this._reservationDate = this.$container.find('.inputbox.bt-add2 input').val();
     this._reservationType = 0;
   },
 
   _bindEvent: function () {
     this.$container.on('click', '.form-cell button', $.proxy(this._openSelectPopup, this));
+    this.$container.on('click', '.bt-slice.item-two .bt-white2', $.proxy(this._openCancelPopup, this));
+    this.$container.on('click', '.close-step', $.proxy(this._openClosePopup, this));
     this.$areaPhone.on('keyup', 'input', $.proxy(this._handlePhoneType, this));
     this.$areaPhone.on('change', 'input', $.proxy(this._validatePhone, this));
+    this.$btnSubmit.on('click', $.proxy(this._handleSubmit, this));
   },
 
   _cachedElement: function () {
-    this.$btnType = this.$container.find('#fe-btn-type');
-    this.$btnArea = this.$container.find('#fe-btn-area');
-    this.$btnTime = this.$container.find('#fe-btn-time');
+    this.$btnType = this.$container.find('.fe-type');
+    this.$btnArea = this.$container.find('.fe-area');
+    this.$btnTime = this.$container.find('.fe-time');
     this.$btnSubmit = this.$container.find('.bt-red1 button');
     this.$areaPhone = this.$container.find('.inputbox.mt10');
   },
 
   _openSelectPopup: function (e) {
-    var target = e.currentTarget;
-    if (target.id === 'fe-btn-type') {
+    var $target = $(e.currentTarget);
+    if ($target.hasClass('fe-type')) {
       this._openSelectTypePopup();
-    } else if (target.id === 'fe-btn-area') {
+    } else if ($target.hasClass('fe-area')) {
       this._openSelectAreaPopup();
-    } else if (target.id === 'fe-btn-time') {
+    } else if ($target.hasClass('fe-time')) {
       this._openSelectTimePopup();
     }
   },
@@ -157,7 +160,9 @@ Tw.CustomerHelpline.prototype = {
     var $input = this.$areaPhone.find('input');
     var errorState = this.$areaPhone.hasClass('error');
 
-    if (!this.PHONE_REGEX.test(this._reservationPhoneNum)) {
+    this.isValidated = Tw.ValidationHelper.isTelephone(this._reservationPhoneNum) || Tw.ValidationHelper.isCellPhone(this._reservationPhoneNum);
+
+    if (this._reservationPhoneNum && !this.isValidated) {
       if (!errorState) {
         this.$areaPhone.addClass('error');
         $input.attr('aria-describedby', 'aria-exp-desc2 aria-exp-desc3');
@@ -180,6 +185,80 @@ Tw.CustomerHelpline.prototype = {
     } else {
       if (!disabled) this.$btnSubmit.attr('disabled', true);
     }
+  },
+
+  _openCancelPopup: function () {
+    this._popupService.openConfirm(Tw.POPUP_TITLE.CONFIRM, Tw.MSG_CUSTOMER.HELPLINE_A01, undefined, undefined, $.proxy(this._clearData, this));
+  },
+
+  _clearData: function () {
+    this._reservationType = 0;
+    this._reservationArea = '';
+    this._reservationTime = this._availableTimes[0];
+    this._reservationPhoneNum = '';
+
+    this.$btnType.text(Tw.HELPLINE_TYPE.GENERAL);
+    this.$btnArea.text(Tw.MSG_CUSTOMER.HELPLINE_A02);
+    this.$btnArea.addClass('placeholder');
+    this.$btnTime.text(this._availableTimes[0] + ':00');
+    this.$areaPhone.find('input').val('');
+    this._validatePhone();
+    this._popupService.close();
+  },
+
+  _handleSubmit: function () {
+    if (!this.isValidated) {
+      this.$areaPhone.find('input').focus();
+    }
+
+    this._apiService.request(Tw.API_CMD.BFF_08_0002, {
+      reserveType: this._reservationType.toString(),
+      reserveArea: this._reservationArea,
+      reserveTime: this._reservationDate.replace(/\./g, '') + this._reservationTime,
+      reserveSvcNum: this._reservationPhoneNum
+    })
+      .done($.proxy(this._successSubmit, this));
+  },
+
+  _successSubmit: function (resp) {
+    if (resp.code === Tw.API_CODE.CODE_00) {
+      if (resp.result.historiesYn === 'Y') {
+        this._clearData();
+        this._popupService.openConfirm(
+          Tw.POPUP_TITLE.CONFIRM,
+          Tw.MSG_CUSTOMER.HELPLINE_A04,
+          Tw.MSG_CUSTOMER.HELPLINE_A05,
+          undefined,
+          $.proxy(this._handleGoToHistory, this)
+        );
+      } else {
+        this._fillReservationInfo(resp.result);
+        this._history.setHistory();
+        this._history.goHash('complete');
+      }
+    } else {
+      this._popupService.openAlert(resp.msg);
+    }
+  },
+
+  _handleGoToHistory: function () {
+    this._popupService.close();
+  },
+
+  _fillReservationInfo: function (result) {
+    var phoneNum = result.reserveSvcNum;
+    var formattedNum = Tw.FormatHelper.getDashedPhoneNumber(phoneNum);
+    this.$container.find('.fe-number').text(formattedNum);
+    this.$container.find('.fe-date').text(this._reservationDate + '(' + result.weekName + ')');
+  },
+
+  _openClosePopup: function () {
+    this._popupService.openConfirm(Tw.POPUP_TITLE.CONFIRM, Tw.MSG_CUSTOMER.HELPLINE_A03, undefined, undefined, $.proxy(this._handleClose, this));
+  },
+
+  _handleClose: function () {
+    this._clearData();
+    this._history.goBack();
   },
 
   _getTimeData: function (time) {

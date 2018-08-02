@@ -10,6 +10,7 @@ Tw.PaymentHistoryReceiptTax = function (rootEl) {
   this._hash = Tw.Hash;
   this._popupService = Tw.Popup;
   this._dateHelper = Tw.DateHelper;
+  this._inputHelper = Tw.InputHelper;
 
   this.common = new Tw.PaymentHistoryCommon(rootEl);
 
@@ -60,25 +61,6 @@ Tw.PaymentHistoryReceiptTax.prototype = {
 
     this.result = res.result.taxReprintList;
 
-    // this.result = [{
-    //   'taxBillIsueDt': '20180310',
-    //   'taxBillIsuNum': '000520645684',
-    //   'ctzBizNum': '1160614738',
-    //   'splyBizNum': '1048137225',
-    //   'splyPrc': 48800,
-    //   'vatAmt': 4880,
-    //   'totAmt': 53680
-    // },
-    //   {
-    //     'taxBillIsueDt': '20180508',
-    //     'taxBillIsuNum': '000523864955',
-    //     'ctzBizNum': '1160614738',
-    //     'splyBizNum': '1048137225',
-    //     'splyPrc': 48800,
-    //     'vatAmt': 4880,
-    //     'totAmt': 53680
-    //   }];
-
     if (this.result.length) {
 
       this.result.reverse();
@@ -95,7 +77,6 @@ Tw.PaymentHistoryReceiptTax.prototype = {
         o.taxAmount = Tw.FormatHelper.addComma(o.vatAmt.toString());
         o.totalAmount = Tw.FormatHelper.addComma(o.totAmt.toString());
 
-        console.log(o);
       }, this));
     }
 
@@ -176,8 +157,7 @@ Tw.PaymentHistoryReceiptTax.prototype = {
   },
 
   checkStringFormatEmail: function (v) {
-    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(v);
+    return this._inputHelper.validateEmail(v);
   },
 
   _apiError: function (err) {

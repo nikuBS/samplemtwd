@@ -494,20 +494,22 @@ skt_landing.action = {
         if(callback_open){
           callback_open();
         }
-        $('.popup').find('.popup-blind').on('click',function(e){
+        var createdTarget = $('.popup,.popup-page').last();
+        if(popup_info.hbs == 'dropdown'){
+          createdTarget.addClass('dropdown');
+          createdTarget.find('.popup-contents').css('max-height',$(window).height()*0.65);
+        }
+        createdTarget.find('.popup-blind').on('click',function(e){
           e.stopPropagation();
         });
         _this.cancel();
         _this.scroll_chk();
-         if(popup_info.hbs == 'popup' || popup_info.hbs == 'dropdown' || popup_info.hbs == 'select'){
-          skt_landing.widgets.widget_init('.popup');
-          skt_landing.components.component_init('.popup');
-        }else{
+        if(createdTarget.hasClass('popup-page')){
           skt_landing.widgets.widget_init('.popup-page');
           skt_landing.components.component_init('.popup-page');
-        }
-        if(popup_info.hbs == 'dropdown'){
-          skt_landing.action.popup.dropdown_size_chk();
+        }else{
+          skt_landing.widgets.widget_init('.popup');
+          skt_landing.components.component_init('.popup');
         }
       });
       //skt_landing.action.popup.open({'title':'타이틀','contents':'팝업입니다.','type':[{style_class:'btn-submit',href:'#submit',txt:'확인'},{style_class:'btn-modify',href:'#modify',txt:'수정'},{style_class:'btn-cancel',href:'#cancel',txt:'취소'}]});
@@ -552,15 +554,6 @@ skt_landing.action = {
         });
       });
     },
-    dropdown_size_chk: function(){
-      var dropdown_list = $('.popup-dropdown .popup-contents').height(),
-          win_box = $(window).height()-$('.btn-box').height()*2;
-      if(dropdown_list > win_box){
-        $('.popup-dropdown').addClass('scrolling');
-      }else{
-        $('.popup-dropdown').removeClass('scrolling');
-      }
-    },
     change: function (popup_info) {
       this.close();
       this.open(popup_info);
@@ -581,9 +574,17 @@ skt_landing.action = {
       });
     },
     scroll_chk: function () {
-      var pop_h = $('.popup-contents').height();
+      var pop_h = $('.popup,.popup-page').last().find('.popup-contents').height();
       if (pop_h > 290) {
-        $('.popup-info').addClass('scrolling');
+        $('.popup,.popup-page').last().find('.popup-info').addClass('scrolling');
+        /*$('.popup,.popup-page').last().find('.popup-info .popup-contents').on('scroll',function(){
+          var scrTop = $(this).scrollTop();
+          if(scrTop == 0){
+            $('.popup,.popup-page').last().find('.popup-info').removeClass('scrolling-shadow');
+          }else if(scrTop != 0 && !$('.popup,.popup-page').last().find('.popup-info').hasClass('scrolling-shadow')){
+            $('.popup,.popup-page').last().find('.popup-info').addClass('scrolling-shadow');
+          }
+        });*/
       }
     }
   },

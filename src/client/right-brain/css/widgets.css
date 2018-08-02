@@ -181,7 +181,7 @@
 
 .accordion .acco-cover.on {
   height: auto;
-  overflow: auto;
+  overflow: visible;
 }
 
 .accordion .acco-cover.on .bt-whole button {

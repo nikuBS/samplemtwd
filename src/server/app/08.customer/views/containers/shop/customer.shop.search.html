@@ -1,0 +1,329 @@
+<%#
+* FileName: customer.shop-search.html (CI_02_01)
+* Author: Hakjoon Sim(hakjoon.simk@sk.com)
+* Date: 2018.07.25
+%>
+
+<% include ../../components/start.component.html %>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap">
+    <%- include('../../../../common/views/components/header.component.html', { title: '매장 및 AS 센터', svcInfo: svcInfo}); %>
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div id="fe-customer-shop-search" class="container">
+            <hr class="cont-sp type1" aria-hidden="true"/>
+            <!-- .cont-box -->
+            <div class="cont-box nogaps">
+                <!-- .component -->
+                <div class="component">
+                    <div class="component-box tabs">
+                        <div class="tab-area type1"><!-- 타입별 탭형태 변환 -->
+                            <div class="tab-linker">
+                                <ul role="tablist">
+                                    <li role="tab" aria-selected="<%= !searched ? true : searchType === 'name' ? true : false %>" aria-controls="tab1-tab" id="tab1"><button id="fe-tab1">매장명</button></li>
+                                    <li role="tab" aria-selected="<%= !searched ? false : searchType === 'address' ? true : false %>" aria-controls="tab2-tab" id="tab2"><button id="fe-tab2">주소</button></li>
+                                    <li role="tab" aria-selected="<%= !searched ? false : searchType === 'tube' ? true : false %>" aria-controls="tab3-tab" id="tab3"><button id="fe-tab3">지하철</button></li>
+                                </ul>
+                            </div>
+                            <div class="tab-contents">
+                                <ul>
+                                    <li role="tabpanel" id="tab1-tab" aria-labelledby="tab1">
+                                        <div class="store-search">
+                                            <span class="inputbox">
+                                                <span class="input">
+                                                    <input id="fe-text-name" type="text" placeholder="지점, 대리점명을 입력하세요." title="매장명" value="<%= searched && searchType === '1' ? searchText : '' %>">
+                                                    <button href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></button>
+                                                </span>
+                                            </span>
+                                        </div>
+                                    </li>
+                                    <li role="tabpanel" id="tab2-tab" aria-labelledby="tab2">
+                                        <div class="store-search">
+                                            <span class="inputbox">
+                                                <span class="input">
+                                                    <input id="fe-text-address" type="text" placeholder="주소 또는 지역명을 입력해 주세요." title="주소" value="<%= searched && searchType === '2' ? searchText : '' %>">
+                                                    <button class="cancel"><span class="blind">삭제</span></button>
+                                                </span>
+                                            </span>
+                                        </div>
+                                    </li>
+                                    <li role="tabpanel" id="tab3-tab" aria-labelledby="tab3">
+                                        <div class="store-search">
+                                            <span class="inputbox">
+                                                <span class="input">
+                                                    <input id="fe-text-tube" class="place-small" type="text" placeholder="역명을 정확하게 입력해 주세요 예) 홍대역(X), 홍대입구역(O)" title="지하철" value="<%= searched && searchType === '3' ? searchText : '' %>">
+                                                    <button class="cancel"><span class="blind">삭제</span></button>
+                                                </span>
+                                            </span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="store-tab-option">
+                    <!-- .box-store-option -->
+                    <div class="box-store-option">
+                        <div class="store-option">
+                            <!-- .widget -->
+                            <div class="widget">
+                                <div class="widget-box accordion">
+                                    <h5 class="tit-a">매장검색 옵션</h5>
+                                    <div class="acco-cover"><!-- toggle : 한개만 열기 -->
+                                        <div class="acco-style btn-hold">
+                                            <ul class="acco-list"><!-- .on: 열기 -->
+                                                <li class="acco-box">
+                                                    <div class="acco-tit"><span id="fe-options-title">전체, 전체</span><button role="button" aria-pressed="false"></button></div>
+                                                    <div class="acco-cont">
+                                                        <div class="store-option-cont">
+                                                            <span class="option-ti">매장형태</span>
+                                                            <div class="widget">
+                                                                <div class="widget-box radio">
+                                                                    <ul class="select-list division-three" role="radiogroup">
+                                                                        <li class="radiobox type01 checked" role="radio" aria-checked="true">
+                                                                            <input type="radio" name="radio1" value="0" title="전체" checked />
+                                                                            전체
+                                                                        </li>
+                                                                        <li class="radiobox type01" role="radio" aria-checked="false">
+                                                                            <input type="radio" name="radio1" value="1" title="지점" />
+                                                                            지점
+                                                                        </li>
+                                                                        <li class="radiobox type01" role="radio" aria-checked="false">
+                                                                            <input type="radio" name="radio1" value="2" title="대리점" />
+                                                                            대리점
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="store-option-cont">
+                                                            <span class="option-ti">처리업무</span>
+                                                            <div class="widget">
+                                                                <div class="widget-box check">
+                                                                    <ul class="select-list division-two" role="group">
+                                                                        <li class="checkbox type01 checked" role="checkbox" aria-checked="true">
+                                                                            <input type="checkbox" name="checkbox" value="all" title="전체" checked/>
+                                                                            전체
+                                                                        </li>
+                                                                        <li class="checkbox type01" role="checkbox" aria-checked="false">
+                                                                            <input type="checkbox" name="checkbox" value="premium" title="T Premium Store" />
+                                                                            T Premium Store
+                                                                        </li>
+                                                                        <li class="checkbox type01" role="checkbox" aria-checked="false">
+                                                                            <input type="checkbox" name="checkbox" value="pickup" title="바로픽업" />
+                                                                            바로픽업
+                                                                        </li>
+                                                                        <li class="checkbox type01" role="checkbox" aria-checked="false">
+                                                                            <input type="checkbox" name="checkbox" value="rental" title="임대폰" />
+                                                                            임대폰
+                                                                        </li>
+                                                                        <li class="checkbox type01" role="checkbox" aria-checked="false">
+                                                                            <input type="checkbox" name="checkbox" value="skb" title="SKT 브로드밴드" />
+                                                                            SKT 브로드밴드
+                                                                        </li>
+                                                                        <li class="checkbox type01" role="checkbox" aria-checked="false">
+                                                                            <input type="checkbox" name="checkbox" value="apple" title="애플취급점" />
+                                                                            애플취급점
+                                                                        </li>
+                                                                        <li class="checkbox type01" role="checkbox" aria-checked="false">
+                                                                            <input type="checkbox" name="checkbox" value="official" title="공식 인증대리점" />
+                                                                            공식 인증대리점
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--// .widget -->
+                        </div>
+                        <ul class="bt-slice">
+                            <li class="bt-red1">
+                                <button <%= !searched ? 'disabled' : undefined %>>검색</button>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--// .box-store-option -->
+                </div>
+
+            </div>
+            <!--// .cont-box -->
+
+            <hr class="cont-sp type1" aria-hidden="true"/>
+
+            <% if (searched && result.length === 0) { %>
+            <!-- .cont-box -->
+            <div class="cont-box nogaps">
+                <div class="box-store-result">
+                    <p class="result-ti"><em class="num">0개</em>의 매장이 검색되었습니다.</p>
+                    <div class="store-result-list">
+                        <div class="contents-empty">
+                            <span class="ico"></span>
+                            <p class="desc">검색 결과가 없습니다.<br />다시 검색해주세요.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--// .cont-box -->
+            <% } %>
+
+            <% if (searched && result.length > 0) { %>
+            <!-- .cont-box -->
+            <div class="cont-box nogaps">
+                <div class="box-store-result">
+                    <p class="result-ti"><em class="num"><%= result.length %>개</em>의 매장이 검색되었습니다.</p>
+                    <div class="store-result-list">
+                        <% for (let i = 0; i < result.length; i++) { %>
+                        <% if (i < 20) { %>
+                        <div>
+                        <% } else { %>
+                        <div class="none">
+                        <% } %>
+                            <button class="fe-shop-detail" value="<%= result[i].locCode %>">
+                                <dl>
+                                    <dt><%= result[i].locName %></dt>
+                                    <dd><%= result[i].searchAddr %><br /><%= result[i].jibunAddr %></dd>
+                                </dl>
+                            </button>
+                            <a class="bt-tel" href="tel:<%= result[i].tel %>"><span role="img" class="blind">매장으로 전화하기</span></a>
+                        </div>
+                        <% } %>
+                    <% if (result.length > 20) { %>
+                    <button class="bt-more">더보기<span id="fe-more-count">(<%= result.length - 20 > 20 ? 20 : result.length - 20 %>)</span></button>
+                    <% } %>
+                </div>
+            </div>
+            <!--// .cont-box -->
+            <% } %>
+
+            <!-- .component -->
+            <div class="component">
+                <div class="component-box flcardcta">
+                    <div class="flcard-cont no-btn-bottom">
+                        <div class="flcard-area">
+                            <div class="store-card">
+                                <p class="card-ti">나의 위치와<br /><em class="tx-bold">가까운 매장을 검색<br />해보세요.</em></p>
+                                <a class="bt-link-tx" href="/customer/shop/near">검색하러 가기<span class="ico"></span></a>
+                            </div>
+                        </div>
+                        <span class="ico-ill-store"></span>
+                    </div>
+                </div>
+            </div>
+            <!--// .component -->
+
+            <% if (!searched) { %>
+            <!-- .cont-box -->
+            <div class="cont-box">
+                <div class="box-store-time">
+                    <p class="store-ti">업무시간 안내</p>
+                    <div class="store-time">
+                        <div class="store-time-list">
+                            <div>
+                                <dl>
+                                    <dt>일반지점</dt>
+                                    <dd>09:00 ~ 18:00</dd>
+                                </dl>
+                            </div>
+                            <ul class="time-list-sub">
+                                <li>경주, 거제 소형지점 09:30 ~ 18:30</li>
+                                <li>토, 일요일 및 공휴일 휴무</li>
+                                <li>대리점 업무시간은 매장 별로 상이합니다.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--// .cont-box -->
+            <% } %>
+
+
+            <hr class="cont-sp type1" aria-hidden="true"/>
+
+            <!-- .cont-box -->
+            <div class="cont-box nogaps-hoz">
+                <div class="box-confirm">
+                    <!-- .widget -->
+                    <div class="widget">
+                        <div class="widget-box accordion">
+                            <h3 class="tit-a">이용안내</h3><!-- 2018-06-19 : h태그 수정/삭제 -->
+                            <div class="acco-cover toggle">
+                                <div class="bt-whole"><button role="button" aria-pressed="false"><span class="blind">내용 열기</span></button></div>
+                                <div class="acco-style">
+                                    <ul class="acco-list">
+                                        <li class="acco-box">
+                                            <!-- .on: 열기 -->
+                                            <div class="acco-tit"><button role="button" aria-pressed="false"><span class="bullet">1.</span> T데이터 셰어링 USIM은 어디서 살 수 있나요?</button></div>
+                                            <div class="acco-cont">
+                                                <ul class="list-dot">
+                                                    <li class="list">T데이터 셰어링 USIM 구입처는 지점에서만 가능합니다.</li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li class="acco-box">
+                                            <div class="acco-tit"><button role="button" aria-pressed="false"><span class="bullet">2.</span> 애플 기기는 어디에서 살 수 있나요?</button></div>
+                                            <div class="acco-cont">
+                                                <ul class="list-dot">
+                                                    <li class="list">애플 취급점에서 처리하는 단말 기종과 매장에서 보유하고 있는 단말 현황은 미리 문의하신 후에 방문 바랍니다.</li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li class="acco-box">
+                                            <div class="acco-tit"><button role="button" aria-pressed="false"><span class="bullet">3.</span> 영업시간은 어떻게 확인하나요?</button></div>
+                                            <div class="acco-cont">
+                                                <ul class="list-dot">
+                                                    <li class="list">지점/대리점/AS센터마다 운영시간이 다를 수 있으며, 각 매장에서 처리하는 업무가 다를 수 있습니다. 방문하시기 전에 고객센터(국번없이 114)에서 꼭 확인하신 후에 방문해 주시기 바랍니다.</li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li class="acco-box">
+                                            <div class="acco-tit"><button role="button" aria-pressed="false"><span class="bullet">4.</span> 영업점 주소가 잘못 됐어요.</button></div>
+                                            <div class="acco-cont">
+                                                <ul class="list-dot">
+                                                    <li class="list">검색된 주소가 방문하신 주소와 다를 경우, 신고해주시면 빠른 시간 안에 정정하도록 하겠습니다.</li>
+                                                </ul>
+                                                <div class="acco-bt-slice">
+                                                   <ul class="bt-slice">
+                                                        <li class="bt-white2">
+                                                            <a href="/customer/email">영업점 주소 오류 신고하기</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--// .widget -->
+                </div>
+            </div>
+            <!--// .cont-box -->
+        </div>
+    </div>
+    <!--// #contents -->
+    <%- include('../../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
+</div>
+<% include ../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    new Tw.CustomerShopSearch($('#fe-customer-shop-search'));
+  });
+</script>
+<% include ../../components/end.component.html %>

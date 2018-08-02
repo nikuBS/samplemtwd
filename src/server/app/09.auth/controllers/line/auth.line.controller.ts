@@ -10,6 +10,7 @@ import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
 import { LINE_NAME, SVC_ATTR } from '../../../../types/bff-common.type';
 import DateHelper from '../../../../utils/date.helper';
+import { DEFAULT_LIST_COUNT } from '../../../../types/config.type';
 
 class AuthLine extends TwViewController {
   constructor() {
@@ -62,7 +63,7 @@ class AuthLine extends TwViewController {
       m: false,
       s: false,
       o: false,
-      defaultCnt: 20
+      defaultCnt: DEFAULT_LIST_COUNT
     };
 
     list.map((category, index) => {
@@ -70,7 +71,7 @@ class AuthLine extends TwViewController {
         showParam[category] = true;
       } else {
         showParam.defaultCnt = 10;
-        if ( totalCount <= 20 ) {
+        if ( totalCount <= DEFAULT_LIST_COUNT ) {
           showParam[category] = true;
         }
       }

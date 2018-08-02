@@ -1,4 +1,5 @@
 import { DATA_UNIT } from '../types/string.type';
+import { VOICE_UNIT } from '../types/bff-common.type';
 
 class FormatHelper {
   static leadingZeros(number: number, length: number): string {
@@ -73,6 +74,9 @@ class FormatHelper {
   }
 
   static convNumFormat(number: number): string {
+    if ( number < 1 ) {
+      return FormatHelper.setDecimalPlace(number, 2).toString();
+    }
     if ( number > 0 && number < 100 && number % 1 !== 0 ) {
       return FormatHelper.removeZero(number.toFixed(2));
     }
@@ -111,6 +115,23 @@ class FormatHelper {
     return { hours, min, sec };
   }
 
+  static convVoiceFormatWithUnit(data: any): any[] {
+    const formatted: any = [];
+    data = +data;
+    const hours = Math.floor(data / 3600);
+    if ( hours > 0 ) {
+      formatted.push({ data: hours, unit: VOICE_UNIT.HOURS });
+    }
+    const min = Math.floor((data - (hours * 3600)) / 60);
+    if ( min > 0 ) {
+      formatted.push({ data: min, unit: VOICE_UNIT.MIN });
+    }
+    const sec = data - (hours * 3600) - (min * 60);
+    formatted.push({ data: sec, unit: sec > 0 ? VOICE_UNIT.SEC : VOICE_UNIT.MIN });
+
+    return formatted;
+  }
+
   static convMinToDay(min: any): any {
     min = +min;
     const day = Math.floor(min / 1440);
@@ -137,6 +158,10 @@ class FormatHelper {
 
   static makeCardYymm(cardYm: string): string {
     return cardYm.substr(0, 4) + '/' + cardYm.substr(4, 2);
+  }
+
+  static setDecimalPlace(value: number, point: number): number {
+    return parseFloat(value.toFixed(point));
   }
 
 }

@@ -1,24 +1,31 @@
 <div class="popup">
     <div class="popup-dropdown" role="alertdialog">
         <div class="popup-contents" id="alertText">
-            <div class="widget dropdown-list">
-                <div class="widget-box radio">
-                    <ul class="select-list" role="radiogroup">
-                        {{#each list}}
-                        <li class="radiobox type02 {{option}} {{representation}} {{dimmed}}" role="radio" aria-checked="true">
-                            <input type="radio" name="droplist" value="" title="{{txt}}" {{option}} />
-                            <span class="txt">{{txt}}</span><span class="ico"></span><span class="line">{{#if representation}}<span class="badge badge-allpay"><span class="blind">통합대표</span></span>{{/if}}{{line}}</span>
-                        </li>
-                        {{/each}}
-                    </ul>
+           {{#each group}}
+            <div class="dropdown-group {{showService}}">
+                <p class="dropdown-title">{{{title}}}({{list.length}})</p>
+                <div class="widget dropdown-list">
+                    <div class="widget-box radio">
+                        <ul class="select-list" role="radiogroup">
+                            {{#each list}}
+                            <li class="radiobox type02 {{option}} {{#if representation}}representation {{/if}}{{display}} {{dimmed}}" role="radio" aria-checked="true" data-svcMgmtNum="{{svcMgmtNum}}" data-index="{{index}}">
+                                <input type="radio" class="fe-radio-list" name="droplist" value="" title="{{txt}}" {{option}} />
+                                <span class="txt">{{txt}}</span><span class="ico"></span><span class="line">{{#if integration}}<span class="badge badge-allpay"><span class="blind">통합대표</span></span>{{/if}}{{line}}</span>
+                            </li>
+                            {{/each}}
+                        </ul>
+                    </div>
                 </div>
             </div>
-            <button class="bt-more">더보기(20)</button>
+            {{/each}}
+            {{#if bt_more.show}}
+                <button class="bt-more">더보기(<span class="fe-remain-cnt">{{bt_more.txt}}</span>)</button>
+            {{/if}}
         </div>
         <div class="btn-box">
             <ul class="bt-slice full align-r">
                 <li class="bt-blue1">
-                  <button>{{bt_txt}} <span class="ico"></span></button>
+                  <button class="fe-btn-txt">{{bt_txt}} <span class="ico"></span></button>
                 </li>
             </ul>
         </div>

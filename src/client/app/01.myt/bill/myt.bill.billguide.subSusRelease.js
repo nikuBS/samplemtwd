@@ -52,8 +52,7 @@ Tw.mytBillBillguideSubSusRelease.prototype = {
         } else {
           Tw.Logger.info('[resp.result.success]', resp.result.success);
         }
-      }, this))
-      .fail(function(err){})
+      }, this));
   },
 
   //--------------------------------------------------------------------------[공통]

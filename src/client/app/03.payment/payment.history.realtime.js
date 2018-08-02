@@ -47,16 +47,19 @@ Tw.PaymentHistoryRealtime.prototype = {
     this.api_getCtzBizNum = Tw.API_CMD.BFF_07_0017;
     this.emptyURL = '/payment/point';
 
-    this._getData();
+    this._isPersonalCompany();
   },
 
   _isPersonalCompany: function () {
     if (this.api_getCtzBizNum) {
-      this._apiService.request(this.api_getCtzBizNum, '')
+      this._apiService.request(this.api_getCtzBizNum)
           .done($.proxy(function (res) {
-            if (res.code !== Tw.API_CODE.CODE_00) this._apiError(res);
-
-            console.log(res);
+            if (res.code !== Tw.API_CODE.CODE_BIL0018) {
+              this.isCompany = true;
+            } else {
+              this.isPersonal = true;
+            }
+            this._getData();
           }, this))
           .error($.proxy(this._apiError, this));
     }
@@ -75,8 +78,6 @@ Tw.PaymentHistoryRealtime.prototype = {
     if (res.code !== Tw.API_CODE.CODE_00) return this._apiError(res);
     this.result = res.result.realTimePaymentRecord;
 
-    // this._isPersonalCompany();
-
     if (this.result.length) this.result.map($.proxy(function (o, i) {
 
       o.listId = i;
@@ -93,9 +94,7 @@ Tw.PaymentHistoryRealtime.prototype = {
         payOpTm: o.payOpTm
       };
 
-      // TODO : 무조건 개인으로 설정
-      o.isPersonal = true;
-      // o.isCompany = true;
+      o.isPersonal = this.isPersonal;
 
     }, this)); else {
       this.result.removeURL = this.emptyURL;

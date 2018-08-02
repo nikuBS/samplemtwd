@@ -5,6 +5,7 @@
  */
 
 import { NextFunction, Request, Response } from 'express';
+import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 
 class CustomerPreventdamageLatestwarningController extends TwViewController {
@@ -12,10 +13,37 @@ class CustomerPreventdamageLatestwarningController extends TwViewController {
     super();
   }
 
+  private _convertData(data): any {
+    if (data.code !== API_CODE.CODE_00) {
+      return {
+        total: 0,
+        remain: 0,
+        list: [],
+        last: true
+      };
+    }
+
+    return {
+      total: data.result.totalElements,
+      remain: this._getRemainCount(data.result.totalElements, data.result.pageable.pageNumber, data.result.pageable.pageSize),
+      list: data.result.content,
+      last: data.result.last
+    };
+  }
+
+  private _getRemainCount(total, page, pageSize): any {
+    const count = total - ((++page) * pageSize);
+    return count < 0 ? 0 : count;
+  }
+
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    res.render('preventdamage/customer.preventdamage.latestwarning.html', {
-      svcInfo: svcInfo
-    });
+    this.apiService.request(API_CMD.BFF_08_0033, {page: 0, size: 20})
+      .subscribe((data) => {
+        res.render('preventdamage/customer.preventdamage.latestwarning.html', {
+          svcInfo: svcInfo,
+          data: this._convertData(data)
+        });
+      });
   }
 }
 

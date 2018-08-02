@@ -1,0 +1,104 @@
+<%#
+* FileName: postcode.main.component.html
+* Author: 공자윤 (jayoon.kong@sk.com)
+* Date: 2018.07.30
+%>
+<!-- #header -->
+<div id="header" class="header-wrap">
+    <div class="header step-page">
+        <div class="header-ti">
+            <h1>우편번호 조회</h1>
+        </div>
+        <button class="close-step fe-common-back"><span class="blind">이전으로</span></button>
+    </div>
+</div>
+<!--// #header -->
+<div class="component-box tabs">
+    <div class="tab-area type1">
+        <div class="tab-linker fe-tab-menu">
+            <ul role="tablist">
+                <li role="tab" aria-selected="true" aria-controls="tab1-tab" id="tab1" type="B" name="load"><a>도로명주소</a></li><!-- true 열림 -->
+                <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2" type="A" name="number"><a>지번주소</a></li>
+                <li role="tab" aria-selected="false" aria-controls="tab3-tab" id="tab3" type="C" name="office"><a>사서함</a></li>
+            </ul>
+        </div>
+        <div class="tab-contents">
+            <ul>
+                <li role="tabpanel" id="tab1-tab" aria-labelledby="tab1">
+                    <div class="cont-box">
+                        <div class="addr-inquiry">
+                            <h3 class="addr-inquiry-tit">도로명 주소 조회 (1/3)</h3>
+                            <p class="addr-inquiry-des1">찾으시려는 지역을 선택하시고 도로명을 입력 후, 조회 버튼을 눌러주세요.</p>
+                            <span class="addr-inquiry-des2">예) 서울시 강남구 선택, “봉은사로” 입력</span>
+                            <div class="addr-inquiry-feildset">
+                                <div class="formbox">
+                                    <button class="bt-dropdown big placeholder fe-select-city" title="대분류" aria-haspopup="true">광역시/도<span class="ico"></span></button>
+                                </div>
+                                <div class="formbox">
+                                    <button class="bt-dropdown big placeholder fe-select-gun" title="중분류" aria-haspopup="true">시/군/구<span class="ico"></span></button>
+                                </div>
+                                <div class="formbox">
+                                    <span class="inputbox">
+                                        <span class="input">
+                                          <input type="text" class="fe-search-value" placeholder="도로명 입력" title="input" value="">
+                                          <button href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></button>
+                                        </span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li role="tabpanel" id="tab2-tab" aria-labelledby="tab2">
+                    <div class="cont-box">
+                        <div class="addr-inquiry">
+                            <h3 class="addr-inquiry-tit">지번주소 조회 (1/3)</h3>
+                            <p class="addr-inquiry-des1">찾으시려는 주소지의 동/읍/면/리 이름을 입력 후, 조회 버튼을 눌러주세요.</p>
+                            <span class="addr-inquiry-des2">예) ‘서울 강남구 삼성동’의 경우 ‘삼성’ 입력</span>
+                            <div class="addr-inquiry-feildset">
+                                <div class="formbox">
+                                    <span class="inputbox">
+                                        <span class="input">
+                                          <input type="text" class="fe-search-value" placeholder="동/읍/면/리 입력" title="검색할 주소">
+                                          <button href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></button>
+                                        </span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li role="tabpanel" id="tab3-tab" aria-labelledby="tab3">
+                    <div class="cont-box">
+                        <div class="addr-inquiry">
+                            <h3 class="addr-inquiry-tit">사서함 조회 (1/3)</h3>
+                            <p class="addr-inquiry-des1">찾으시려는 주소지의 동/읍/면/리 이름을 입력 후, 조회 버튼을 눌러주세요.</p>
+                            <span class="addr-inquiry-des2">예) 서울 영등포구 선택,’여의도 우체국의 경우 ‘여의도’ 입력</span>
+                            <div class="addr-inquiry-feildset">
+                                <div class="formbox">
+                                    <button class="bt-dropdown big placeholder fe-select-city" title="대분류" aria-haspopup="true">광역시/도<span class="ico"></span></button>
+                                </div>
+                                <div class="formbox">
+                                    <button class="bt-dropdown big placeholder fe-select-gun" title="중분류" aria-haspopup="true">시/군/구<span class="ico"></span></button>
+                                </div>
+                                <div class="formbox">
+                                    <span class="inputbox">
+                                        <span class="input">
+                                          <input type="text" class="fe-search-value" placeholder="동/읍/면/리 입력" title="input" value="">
+                                          <button href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></button>
+                                        </span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <div class="floating-bottom">
+                <div class="bt-indiv bt-blue1">
+                    <button class="indiv-single fe-get-postcode">조회</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

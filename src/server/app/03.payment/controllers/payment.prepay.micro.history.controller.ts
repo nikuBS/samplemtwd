@@ -8,7 +8,7 @@ import TwViewController from '../../../common/controllers/tw.view.controller';
 import { API_CMD, API_CODE } from '../../../types/api-command.type';
 import FormatHelper from '../../../utils/format.helper';
 import DateHelper from '../../../utils/date.helper';
-import prepayMicroHistory from '../../../mock/server/payment/payment.prepay.micro.history';
+import prepayMicroHistory from '../../../mock/server/payment/payment.prepay.micro.history.mock';
 
 class PaymentPrepayMicroHistoryController extends TwViewController {
   constructor() {
@@ -18,7 +18,7 @@ class PaymentPrepayMicroHistoryController extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     this.apiService.request(API_CMD.BFF_07_0071, {}).subscribe((resp) => {
       res.render('payment.prepay.micro.history.html', {
-        microPrepayRecord: this.getResult(prepayMicroHistory),
+        microPrepayRecord: this.getResult(resp),
         svcInfo: svcInfo
       });
     });

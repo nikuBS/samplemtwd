@@ -9,7 +9,15 @@ Tw.ValidationHelper = (function () {
    */
   function isCellPhone(str) {
     var phone = str.split('-').join('');
-    return Tw.ValidationHelper.regExpTest(/^01([0|1|6|7|8|9]?)-?([0-9]{3,4})-?([0-9]{4})$/, phone);
+    return Tw.ValidationHelper.regExpTest(/^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/, phone);
+  }
+
+  /**
+   * @param {String} : 02-0000-0000 or 0200000000
+   * @returns {Boolean}
+   */
+  function isTelephone(str) {
+    return regExpTest(/^0(2|[3-9]\d?)-?(\d{3,4})-?(\d{4})$/, str);
   }
 
   /**
@@ -22,8 +30,8 @@ Tw.ValidationHelper = (function () {
 
   function isSeriesNum(string, maxSeries) {
     var checkSeriesNum = '0123456789';
-    for ( var i = 0; i <= checkSeriesNum.length - maxSeries; i++ ) {
-      if ( string.indexOf(checkSeriesNum.substr(i, maxSeries)) !== -1 ) {
+    for (var i = 0; i <= checkSeriesNum.length - maxSeries; i++) {
+      if (string.indexOf(checkSeriesNum.substr(i, maxSeries)) !== -1) {
         return true;
       }
     }
@@ -57,6 +65,15 @@ Tw.ValidationHelper = (function () {
   /* input 값의 길이가 맞지 않는 경우 alert 띄우는 function */
   function checkLength(value, length, message) {
     if ($.trim(value).length !== length) {
+      Tw.Popup.openAlert(message);
+      return false;
+    }
+    return true;
+  }
+
+  /* input 값의 길이가 기준값보다 적은 경우 alert 띄우는 function */
+  function checkMoreLength(value, length, message) {
+    if ($.trim(value).length < length) {
       Tw.Popup.openAlert(message);
       return false;
     }
@@ -141,12 +158,14 @@ Tw.ValidationHelper = (function () {
   return {
     regExpTest: regExpTest,
     isCellPhone: isCellPhone,
+    isTelephone: isTelephone,
     isSeriesNum: isSeriesNum,
     isEmail: isEmail,
     containSpecial: containSpecial,
     containNumber: containNumber,
     checkEmpty: checkEmpty,
     checkLength: checkLength,
+    checkMoreLength: checkMoreLength,
     checkIsMore: checkIsMore,
     checkIsAgree: checkIsAgree,
     checkIsAvailablePoint: checkIsAvailablePoint,

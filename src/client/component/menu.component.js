@@ -8,21 +8,57 @@ Tw.MenuComponent = function () {
   this.$container = $('#fe-all-menu');
 
   this._nativeService = Tw.Native;
+  this._historyService = new Tw.HistoryService();
   this._apiService = Tw.Api;
-  this._bindEvent();
-};
 
+  this._bindEvent();
+  this._bindLogin();
+  Tw.Logger.info('[Menu] init complete');
+};
 Tw.MenuComponent.prototype = {
   _bindEvent: function () {
-    this.$container.on('click', '.ico-login', $.proxy(this._onClickLogin, this));
-    this.$container.on('click', '.test-logout', $.proxy(this._onClickLogout, this));
+    // TODO
+    $('.all-menu-bt').off('click').on('click', function () {
+      //skt_landing.action.gnb_menu.open(callback);
+      skt_landing.action.gnb_menu.open(function () {
+        console.log('gnb_menu open');
+      });
+    });
+    $('.all-menu-close').off('click').on('click', function () {
+      //skt_landing.action.gnb_menu.close(callback);
+      skt_landing.action.gnb_menu.close(function () {
+        console.log('gnb_menu close');
+      });
+    });
+    $('.user-menu li .sub-menu').off('click').on('click', function () {
+      //skt_landing.action.gnb_menu.depth_open(callback);
+      skt_landing.action.gnb_menu.depth_open($(this), function () {
+        console.log('gnb_menu_depth open');
+      });
+    });
+    $('.all-menu-prev').off('click').on('click', function () {
+      //skt_landing.action.gnb_menu.depth_close(callback);
+      skt_landing.action.gnb_menu.depth_close(function () {
+        console.log('gnb_menu_depth close');
+      });
+    });
+  },
+  _bindLogin: function () {
+    $('.fe-bt-login').on('click', $.proxy(this._onClickLogin, this));
+    $('.fe-bt-logout').on('click', $.proxy(this._onClickLogout, this));
+  },
+  _goLoad: function (nativeCommand, url, callback) {
+    if ( Tw.BrowserHelper.isApp() ) {
+      this._nativeService.send(nativeCommand, {}, callback);
+    } else {
+      this._historyService.goLoad(url);
+    }
   },
   _onClickLogin: function () {
-    if ( Tw.BrowserHelper.isApp() ) {
-      this._nativeService.send(Tw.NTV_CMD.LOGIN, {}, $.proxy(this._onNativeLogin, this));
-    } else {
-      location.href = '/auth/tid/login';
-    }
+    this._goLoad(Tw.NTV_CMD.LOGIN, '/auth/tid/login', $.proxy(this._onNativeLogin, this));
+  },
+  _onClickLogout: function () {
+    this._goLoad(Tw.NTV_CMD.LOGOUT, '/auth/tid/logout', $.proxy(this._onNativeLogout, this));
   },
   _onNativeLogin: function (resp) {
     this._apiService.request(Tw.NODE_CMD.LOGIN_TID, resp)
@@ -31,25 +67,18 @@ Tw.MenuComponent.prototype = {
   _successLogin: function (resp) {
     Tw.Logger.info('[Login Resp]', resp);
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      document.location.reload();
+      // this._historyService.reload();
+      this._historyService.goLoad('/home');
     } else if ( resp.code === Tw.API_LOGIN_ERROR.ICAS3228 ) {
       // 고객보호비밀번호
-      location.href = '/auth/login/service-pwd';
+      this._historyService.goLoad('/auth/login/service-pwd');
     } else if ( resp.code === Tw.API_LOGIN_ERROR.ICAS3235 ) {
       // 휴면계정
-      location.href = '/auth/login/dormancy';
+      this._historyService.goLoad('/auth/login/dormancy');
     } else if ( resp.code === Tw.API_LOGIN_ERROR.ATH1003 ) {
-      location.href = '/auth/login/exceed-fail';
+      this._historyService.goLoad('/auth/login/exceed-fail');
     } else {
-      location.href = '/auth/login/fail?errorCode=' + resp.code;
-    }
-  },
-  _onClickLogout: function () {
-    Tw.Logger.info('[Logout]', Tw.BrowserHelper.isApp());
-    if ( Tw.BrowserHelper.isApp() ) {
-      this._nativeService.send(Tw.NTV_CMD.LOGOUT, {}, $.proxy(this._onNativeLogout, this));
-    } else {
-      location.href = '/auth/tid/logout';
+      this._historyService.goLoad('/auth/login/fail?errorCode=' + resp.code);
     }
   },
   _onNativeLogout: function () {
@@ -59,7 +88,7 @@ Tw.MenuComponent.prototype = {
   _successLogout: function (resp) {
     Tw.Logger.info('[Logout Resp]', resp);
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      location.href = '/auth/logout/complete';
+      this._historyService.goLoad('/auth/logout/complete');
     }
   }
 };

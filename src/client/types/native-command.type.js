@@ -2,6 +2,7 @@ Tw.NTV_CMD = {
   TOAST: 'toast',
   GET_CONTACT: 'getContact',
   GET_DEVICE: 'getDevice',
+  GET_LOCATION: 'currentLocation',
   OPEN_URL: 'openUrl',
   LOGIN: 'login',
   LOGOUT: 'logout',
@@ -11,11 +12,14 @@ Tw.NTV_CMD = {
   ACCOUNT: 'account',
   GET_MDN: 'getMdn',
   CLEAR_HISTORY: 'clearHistory',
+  GET_NETWORK: 'getNetwork',
+  GET_IP: 'getIp',
   LOG: 'log'
 };
 
 Tw.NTV_CODE = {
-  CODE_00: 0    // success
+  CODE_00: 0,    // success
+  CODE_ERROR: -1
 };
 
 Tw.IOS_URL = 'tworld://';

@@ -1,37 +1,75 @@
+/**
+ * FileName: myt.usage.tdatashare-close.js
+ * Author: 이정민 (skt.p130713@partner.sk.com)
+ * Date: 2018.07.27
+ */
+
 Tw.MytUsageTdatashareClose = function (rootEl) {
   this.$container = rootEl;
-  this._apiService = new Tw.ApiService();
+  this._apiService = Tw.Api;
+  this._popupService = Tw.Popup;
+  this._history = new Tw.HistoryService(rootEl);
 
+  this._assign();
   this._bindEvent();
+  this._init();
 };
 
 Tw.MytUsageTdatashareClose.prototype = {
+  _assign: function () {
+    this._$main = this.$container.find('#fe-main');
+    this._$complete = this.$container.find('#fe-complete');
+    this._cSvcMgmtNum = this.$container.data('csvcmgmtnum');
+  },
+
   _bindEvent: function () {
-    this.$container.on('click', '.termChild', $.proxy(this._termChild, this));
-    console.log(this.$container.find('#tdatashare-fail'));
+    this.$container.on('click', '.fe-close-submit', $.proxy(this._closeSubmit, this));
+    this.$container.on('click', '.fe-btn-back', $.proxy(this._onClickBtnBack, this));
   },
-  _termChild: function () {
-    // var cSvcMgmtNum = this.$container.find('[data-cSvcMgmtNum]').attr('data-cSvcMgmtNum');
-    // this._apiService.request(Tw.API_CMD.BFF_05_0011, {}, {}, cSvcMgmtNum)
-    //   .done($.proxy(this._termSuccess, this))
-    //   .fail($.proxy(this._termFail, this));
+
+  _init: function () {
+
   },
-  _termSuccess: function (resp) {
+
+  _closeSubmit: function () {
+    this._apiService.request(Tw.API_CMD.BFF_05_0011, {}, {}, this._cSvcMgmtNum)
+      .done($.proxy(this._requestDone, this))
+      .fail($.proxy(this._requestFail, this));
+  },
+
+  _requestDone: function (resp) {
     if ( resp.code === '00' ) {
-      this._showSuccess();
+      this._$complete.show();
+      this._$main.hide();
     } else {
-      this._showFail();
+      if ( resp.data ) {
+        this._showErrorAlert(resp.data && resp.data.msg);
+      } else {
+        if ( resp.error ) {
+          this._showErrorAlert(resp.error.msg);
+        } else {
+          this._showErrorAlert(resp.msg);
+        }
+      }
     }
   },
-  _termFail: function () {
-    this._showFail();
+
+  _requestFail: function (resp) {
+    this._showErrorAlert(resp.data && resp.data.msg);
   },
-  _showSuccess: function() {
-    this.$container.find('#tdatashare-close').hide();
-    this.$container.find('#tdatashare-success').show();
+
+  _showErrorAlert: function (msg) {
+    this._popupService.openAlert(msg);
   },
-  _showFail: function() {
-    this.$container.find('#tdatashare-fail').css('display', 'block');
+
+  _onClickBtnBack: function () {
+    this._popupService.openConfirm(Tw.POPUP_TITLE.CONFIRM, Tw.MSG_MYT.TDATA_SHARE.A01, undefined, undefined, $.proxy(this._handleBack, this));
+  },
+
+  _handleBack: function () {
+    this._popupService.close();
+    this._history.goBack();
   }
+
 };
 

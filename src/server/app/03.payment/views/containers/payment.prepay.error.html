@@ -1,0 +1,74 @@
+<%#
+* FileName: payment.prepay.error.html
+* Author: 공자윤 (jayoon.kong@sk.com)
+* Date: 2018.07.31
+%>
+<% include ../components/start.component.html %>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap">
+    <!-- #header -->
+    <%- include('../../../../common/views/components/header.component.html', { title: title, svcInfo: svcInfo }); %>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <% if (err.code === 'BIL0030') { %>
+            <div class="cont-box">
+                <div class="pay-info">
+                    <h3 class="pay-tit"><strong>휴대폰 결제 이용동의</strong> 후<br />사용 가능한 메뉴입니다.</h3>
+                    <div class="pay-cont type3">
+                        휴대폰 결제 이용동의란?<br />SK텔레콤이 제공하는 통신과금서비스를 <br />이용하기 위한 사전 동의 <strong>무료</strong> 부가 서비스입니다.
+                        <div class="bt-link-wrap">
+                            <button class="bt-link-tx">휴대폰 결제 이용동의 바로가기<span class="ico"></span></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <% } else if (err.code === 'BIL0031') { %>
+            <div class="cont-box">
+                <div class="pay-info">
+                    <h3 class="pay-tit"><strong>미성년자명의 휴대폰 고객</strong>은<br />사용이 제한된 메뉴입니다.</h3>
+                </div>
+            </div>
+            <% } else if (err.code === 'BIL0033') { %>
+            <div class="cont-box">
+                <div class="pay-info">
+                    <h3 class="pay-tit"><strong>휴대폰 결제 차단 고객</strong>은<br />사용이 제한된 메뉴입니다.</h3>
+                    <p class="pay-cont type2">차단 해제를 원하시는 고객님은<br />고객센터 [국번없이1599-0590]로 문의해 주세요.</p>
+                </div>
+            </div>
+            <% } else if (err.code === 'BIL0034') { %>
+            <div class="cont-box">
+                <div class="pay-info">
+                    <h3 class="pay-tit"><strong>소액결제<br />부가서비스</strong>미가입자는<br />이용할 수 없습니다.</h3>
+                    <p class="pay-cont type2">가까운 지점/대리점에 방문하셔서 가입 가능합니다.<br />(신청자 본인 신분증 지참)</p>
+                </div>
+            </div>
+            <% } else { %>
+            <div class="cont-box">
+                <div class="pay-info">
+                    <h3 class="pay-tit"><%= err.msg %></h3>
+                </div>
+            </div>
+            <% } %>
+            <hr class="cont-sp type1" aria-hidden="true" />
+            <div class="cont-box nogaps">
+                <div class="bt-link-box">
+                    <a href="/home" class="bt-link-tx">홈으로</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--// #contents -->
+    <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
+</div>
+<% include ../components/end.component.html %>

@@ -20,8 +20,8 @@ export interface ILimitData {
 }
 
 interface IFeeData {
-  prodId: string,  // '상품코드'
-  prodName: string,  // '상품명'
+  prodId: string;  // '상품코드'
+  prodName: string;  // '상품명'
 }
 
 class RechargeLimit extends TwViewController {
@@ -36,13 +36,13 @@ class RechargeLimit extends TwViewController {
   }
 
   private getFeeData(): Observable<IFeeData> {
-    return this.apiService.request(API_CMD.BFF_05_0041).map((resp: { code: string, result: IFeeData }) => {
+    return this.apiService.request(API_CMD.BFF_05_0041, {}).map((resp: { code: string, result: IFeeData }) => {
       return resp.result;
     });
   }
 
   private getLimitData(): Observable<ILimitData> {
-    return this.apiService.request(API_CMD.BFF_06_0034).map((resp: { code: string, result: ILimitData }) => {
+    return this.apiService.request(API_CMD.BFF_06_0034, {}).map((resp: { code: string, result: ILimitData }) => {
       return {
         ...resp.result,
         currentTopUpLimit: FormatHelper.addComma(resp.result.currentTopUpLimit),

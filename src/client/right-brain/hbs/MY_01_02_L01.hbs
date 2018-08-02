@@ -14,23 +14,25 @@
         <h2 class="blind">내용</h2>
         <div class="container">
             <div class="cont-box">
+                {{#each data.list}}
                 <div class="payment-detail-box mb20">
                     <div class="detail-inner">
                         <div class="detail-list type1">
                             <ul>
                                 <li>
                                     <span class="title">일자</span>
-                                    <span class="tx-cont"><span class="ff-type">2018.05.23</span></span>
+                                    <span class="tx-cont"><span class="ff-type">{{chgDt}}</span></span>
                                 </li>
                                 <li>
                                     <span class="title">처리업무</span>
-                                    <span class="tx-cont">신규가입</span>
+                                    <span class="tx-cont">{{chgCd}}</span>
                                 </li>
                             </ul>
                         </div>
                     </div>
                 </div>
-            </div>    
+                {{/each}}
+            </div>
             
             <hr class="cont-sp type1" aria-hidden="true" />
 

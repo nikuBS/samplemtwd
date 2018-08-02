@@ -134,7 +134,7 @@ class DateHelper {
    * @returns {Date}
    */
   static convDateFormat(date: any): Date {
-    if ( !(date instanceof Date) ) {
+    if (!(date instanceof Date)) {
       return moment(date, 'YYYYMMDDhhmmss').toDate();
     }
     return date;
@@ -158,6 +158,15 @@ class DateHelper {
     return moment(date).add(amount, unit).format(format);
   }
 
+
+  /**
+   * Convert Date Format (BFF string to Date)
+   * @param {date} date || {string} date, {number} amount, {string} unit, {string} format
+   * @returns {Date} : YYMMDD, YYYYMMDD, YY.MM.DD
+   */
+  static getDifference(endDate: string, startDate?: string): number {
+    return moment(endDate).diff(startDate || new Date());
+  }
 }
 
 export default DateHelper;

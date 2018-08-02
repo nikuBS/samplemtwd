@@ -13,8 +13,6 @@ skt_landing.widgets = {
       widget_list[com_name](ta);
     }
   },
-  widget_test: function () {
-  },
   widget_tube: function (ta) {
     var widget = ta ? $(ta).find('.widget-box.tube') : $('.widget-box.tube');
     $(widget).each(function(){
@@ -133,6 +131,45 @@ skt_landing.widgets = {
       });
     });
   },
+  widget_file: function(ta){
+    var input = ta ? $(ta).find('.widget-box.file') : $('.widget-box.file');
+    input.each(function(){
+      var file = $(this).find('.file'),
+          vfile = $(this).find('.fileview');
+      console.log(vfile)
+      if(vfile){
+        file.on('change',function(){
+          vfile.val($(this).val());
+        });
+      }
+    });
+  },
+  widget_tfCombined: function (ta) {
+    var box = ta ? $(ta).find('.txfield-combined') : $('.txfield-combined');
+      $(window).on('load', function(){
+        box.each(function(){
+          var _this = $(this);
+          var count = 0;
+          _this.find('.input-focus').on('focus',function(e){
+            count ++;
+            _this.addClass('focus');
+            if(count > 0){
+              _this.find('.inner-tx').addClass('once');
+            }
+          }).on('blur',function(){
+            _this.removeClass('focus');
+          });
+        });
+
+        box.find('.combined-cell').each(function(num){
+          var _this = $(this);
+          var _this_w = _this.width();
+          var _dt_w = _this.find('dt').width();
+          $('.combined-cell').eq(num).find('dt').width(_dt_w);
+          $('.combined-cell').eq(num).find('dd').width(_this_w-_dt_w);
+        });
+      });
+  },
   widget_slider1: function (ta) {
     var widget = ta ? $(ta).find('.slider1') : $('.slider1');
     $(widget).each(function(){
@@ -144,11 +181,11 @@ skt_landing.widgets = {
         speed : 300,
         centerMode: false,
         focusOnSelect: false,
-		customPaging: function(slider, i) {
-			return $('<span />').text(i + 1);
-		},
+    customPaging: function(slider, i) {
+      return $('<span />').text(i + 1);
+    },
       });
-      
+
       var $slick = _this.slick('getSlick');
       var $slides = $slick.$slides;
       var slideIndex = $slick.slickCurrentSlide();
@@ -192,9 +229,9 @@ skt_landing.widgets = {
         slidesToScroll: 3,
         centerMode: false,
         focusOnSelect: false,
-		customPaging: function(slider, i) {
-			return $('<span />').text(i + 1);
-		},
+    customPaging: function(slider, i) {
+      return $('<span />').text(i + 1);
+    },
       });
       var $slick = _this.slick('getSlick');
       var $slides = $slick.$slides;
@@ -324,7 +361,7 @@ skt_landing.widgets = {
 
       var accoList = _this.find('> .acco-cover > .acco-style > .acco-list > .acco-box');
       var accoList_leng = accoList.length;
-      
+
       /* 2018-07-17 한줄일경우 보여주는 스크립트 삭제 */
       /*for(var i=0; i<accoList_leng; ++i){
         var forTarget = accoList.eq(i).find('> .acco-cont').children();
@@ -337,7 +374,7 @@ skt_landing.widgets = {
           accoList.eq(i).addClass('imp-view').find('> .acco-tit button').addClass('hide-button');
         }
       }*/
-      
+
       if($(this).find('> .acco-cover > .acco-style').hasClass('none-event')) return ; // 이벤트를 적용하지 않을 경우
 
       var setOnList = _this.find('> .acco-cover > .acco-style > .acco-list > .acco-box');
@@ -385,7 +422,7 @@ skt_landing.widgets = {
         setState(btn.eq(i), list.eq(i).hasClass('on'));
       }
       if($(this).find('> .acco-style').hasClass('none-event')) return;
-      btn.on('click',function(){
+      box.on('click','> .acco-list > .acco-title button',function(){
         setState($(this), !$(this).closest('.acco-list').hasClass('on'));
       });
       function setState(button, state){
@@ -592,11 +629,16 @@ skt_landing.widgets = {
     var widget = ta ? $(ta).find('.btn-toggle') : $('.btn-toggle');
     $(widget).on('click', function(){
         var _this = $(this);
-        $(this).closest('.toggle').find('.toggler').toggle('fast', function(){
-            var isVisible = $(this).is(':visible');
-            _this.attr('aria-pressed', (isVisible? 'true': 'false'));
-            _this.attr('class', (isVisible? 'btn-toggle open ' : 'btn-toggle'));
-        });
+        var toggler = _this.closest('.toggle').find('.toggler');
+        if (toggler.is(':hidden')) {
+          toggler.slideDown();
+          _this.attr('aria-pressed', 'true');
+          _this.addClass('open');
+        } else {
+          toggler.slideUp();
+          _this.attr('aria-pressed', 'false');
+          _this.removeClass('open');
+        }
     });
   }
 }
