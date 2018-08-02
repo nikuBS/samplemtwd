@@ -64,7 +64,8 @@ interface IExample {
 interface IStepResearch {
   id: string;
   title: string;
-  date: string;
+  startDate: string;
+  endDate: string;
   questionCount: number;
   questions: { [key: number]: IStepQuestion };
 }
@@ -175,7 +176,8 @@ export default class CustomerResearches extends TwViewController {
     return {
       id: researchData.qstnId,
       title: researchData.qstnTitleNm,
-      date: researchData.staDtm,
+      startDate: researchData.staDtm,
+      endDate: researchData.endDtm,
       questionCount: researchData.totInqItmNum,
       questions
     };
