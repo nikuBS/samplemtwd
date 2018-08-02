@@ -9,8 +9,8 @@ const contractTerminal_BFF_05_0063 = {
             'disProdNm': '요금약정할인제도 (730 일)',
             'agrmtDcAmt': '0',
             'agrmtStNm': '약정가입중',
-            'agrmtDcStaDt': '20160525',
-            'agrmtDcEndDt': '20180525',
+            'agrmtDcStaDt': '20170525',
+            'agrmtDcEndDt': '20190525',
             'svcAgrmtDcId': 'AA1000000033562306',
             'svcAgrmtDcCd': 'AA'
           },
@@ -18,8 +18,8 @@ const contractTerminal_BFF_05_0063 = {
             'disProdNm': '선택약정할인제도 (24 개월)',
             'agrmtDcAmt': '-154412',
             'agrmtStNm': '약정가입중',
-            'agrmtDcStaDt': '20160525',
-            'agrmtDcEndDt': '20180525',
+            'agrmtDcStaDt': '20170525',
+            'agrmtDcEndDt': '20190525',
             'svcAgrmtDcId': 'AG1000000033562311',
             'svcAgrmtDcCd': 'AG'
           }
@@ -28,16 +28,16 @@ const contractTerminal_BFF_05_0063 = {
         {
           'agrmtDcAmt': '-174226',
           'agrmtDayCnt': '699',
-          'agrmtDcStaDt': '20160901',
-          'agrmtDcEndDt': '20180831',
+          'agrmtDcStaDt': '20170901',
+          'agrmtDcEndDt': '20190831',
           'aGrmtPenAmt': '7390'
         },
       'wibro':
         {
           'agrmtDcAmt': '-174226',
           'agrmtDayCnt': '699',
-          'agrmtDcStaDt': '20160901',
-          'agrmtDcEndDt': '20180831',
+          'agrmtDcStaDt': '20170901',
+          'agrmtDcEndDt': '20190831',
           'aGrmtPenAmt': '7390'
         },
       'tAgree':
@@ -88,8 +88,8 @@ const contractTerminal_BFF_05_0063 = {
             'allotStaDt': '20170304',
             'allotMthCnt': '24',
             'invRmn': '18',
-            'allotApprAmt': '1056',
-            'invBamt': '786'
+            'allotApprAmt': '850000',
+            'invBamt': '457000'
           }
         ]
     }

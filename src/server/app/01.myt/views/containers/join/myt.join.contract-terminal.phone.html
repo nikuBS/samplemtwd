@@ -35,13 +35,14 @@
                 <h3 class="title-h2 pt14">요금약정할인</h3>
                 <div class="discount-info">
 
+                    <% for(var i=0; i < commDataInfo.feeInfo.length; i++) { %>
 
-                    <strong class="sub-tit">요금약정할인24 (730일)</strong>
+                    <strong class="sub-tit"><%=commDataInfo.feeInfo[i].titNm%></strong>
                     <ul class="inner-list">
                         <li>
                             <dl>
                                 <dt>전월 기준 할인 금액 합계<button role="button" class="ico-info"><span class="blind">전월 기준 할인 금액 합계 상세보기</span></button></dt>
-                                <dd><span class="num blue">-196,451</span>원</dd>
+                                <dd><span class="num blue"><%=commDataInfo.feeInfo[i].salePay%></span>원</dd>
                             </dl>
                         </li>
                         <li>
@@ -51,17 +52,17 @@
                                     <div class="used-data-info">
                                         <div class="header-info">
                                             <div class="left">
-                                                <span class="data"><span class="char red">274</span>일</span>
+                                                <span class="data"><span class="char red"><%=commDataInfo.feeInfo[i].curDt%></span>일</span>
                                             </div>
                                             <div class="right">
-                                                <span class="data"><span class="char">365</span>일</span>
+                                                <span class="data"><span class="char"><%=commDataInfo.feeInfo[i].totDt%></span>일</span>
                                             </div>
                                         </div>
                                         <div class="bar-chart-hoz">
-                                            <span class="data-bar red" style="width:80%"></span>
+                                            <span class="data-bar red" style="width:<%=commDataInfo.feeInfo[i].perDt%>%"></span>
                                         </div>
                                         <div class="sub-info">
-                                            <span class="type"><span class="char">2018.05.23~2019.05.23</span></span>
+                                            <span class="type"><span class="char"><%=commDataInfo.feeInfo[i].startDt%>~<%=commDataInfo.feeInfo[i].endDt%></span></span>
                                             <span class="rest">가입중</span>
                                         </div>
                                     </div>
@@ -85,14 +86,16 @@
                                                     <li>
                                                         <span class="title">할인지원 혜택</span>
                                                         <span class="tx-cont">
-                                                                요금약정할인<span class="ff-hn">24 (730일)</span>
+                                                                <span><%=commDataInfo.feeInfo[i].titNm%></span>
                                                                 <button role="button" class="ico-info"><span class="blind">요금약정할인 상세보기</span></button>
                                                             </span>
                                                     </li>
                                                     <li>
                                                         <div class="link-long-group">
                                                             <div class="link-long">
-                                                                <button>상세 할인 내역 보기<span class="ico"></span></button>
+                                                                <button data-target="detailBtn"
+                                                                    data-svcAgrmtDcId="<%=commDataInfo.feeInfo[i].svcAgrmtDcId%>"
+                                                                    data-svcAgrmtDcCd="<%=commDataInfo.feeInfo[i].svcAgrmtDcCd%>">상세 할인 내역 보기<span class="ico"></span></button>
                                                             </div>
                                                         </div>
                                                     </li>
@@ -109,11 +112,11 @@
                         </div>
                     </div>
 
+                    <% } %>
 
                 </div>
             </div>
             <!--// CASE : 요금약정할인 -->
-
 
 
             <hr class="cont-sp type1" aria-hidden="true" />
@@ -122,14 +125,15 @@
                 <h3 class="title-h2">단말기 (약정할인)</h3>
                 <div class="discount-info">
 
+                    <% for(var i=0; i < commDataInfo.terminalInfo.length; i++) { %>
 
-                    <strong class="sub-tit">가입 / T기본 약정</strong>
+                    <strong class="sub-tit"><%=commDataInfo.terminalInfo[i].titNm%></strong>
                     <ul class="inner-list">
                         <li>
                             <dl>
                                 <dt>할인지원 혜택</dt>
                                 <dd>
-                                    <button class="text-link">T지원금 약정</button>
+                                    <button class="text-link"><%=commDataInfo.terminalInfo[i].agreeNm%></button>
                                     <button role="button" class="ico-info"><span class="blind">기본제공 데이터 사용량 상세보기</span></button>
                                 </dd>
                             </dl>
@@ -141,17 +145,17 @@
                                     <div class="used-data-info">
                                         <div class="header-info">
                                             <div class="left">
-                                                <span class="data"><span class="char red">125</span>일</span>
+                                                <span class="data"><span class="char red"><%=commDataInfo.terminalInfo[i].curDt%></span>일</span>
                                             </div>
                                             <div class="right">
-                                                <span class="data"><span class="char">365</span>일</span>
+                                                <span class="data"><span class="char"><%=commDataInfo.terminalInfo[i].totDt%></span>일</span>
                                             </div>
                                         </div>
                                         <div class="bar-chart-hoz">
-                                            <span class="data-bar red" style="width:40%"></span>
+                                            <span class="data-bar red" style="width:<%=commDataInfo.terminalInfo[i].perDt%>%"></span>
                                         </div>
                                         <div class="sub-info">
-                                            <span class="type"><span class="char">2018.05.23~2019.05.23</span></span>
+                                            <span class="type"><span class="char"><%=commDataInfo.terminalInfo[i].startDt%>~<%=commDataInfo.terminalInfo[i].endDt%></span></span>
                                         </div>
                                     </div>
                                 </dd>
@@ -173,7 +177,7 @@
                                                 <ul>
                                                     <li>
                                                         <span class="title">약정기간</span>
-                                                        <span class="tx-cont"><span class="ff-hn">24</span>개월 (잔여 <span class="ff-hn">268</span>일)</span>
+                                                        <span class="tx-cont"><span class="ff-hn"><%=commDataInfo.terminalInfo[i].agreeTotMonth%></span>개월 (잔여 <span class="ff-hn"><%=commDataInfo.terminalInfo[i].remDt%></span>일)</span>
                                                     </li>
                                                     <li>
                                                         <span class="title">구분</span>
@@ -181,10 +185,10 @@
                                                     </li>
                                                     <li>
                                                         <span class="title">지원약정금액</span>
-                                                        <span class="tx-cont"><span class="ff-hn">124,000</span> 원</span>
+                                                        <span class="tx-cont"><span class="ff-hn"><%=commDataInfo.terminalInfo[i].agreePay%></span> 원</span>
                                                     </li>
                                                     <li>
-                                                        <span class="tx-result">해지 하시는 경우 약정위약금은 <span class="tx-red"><span class="ff-hn vbl">301,470</span>원</span> 입니다.</span>
+                                                        <span class="tx-result">해지 하시는 경우 약정위약금은 <span class="tx-red"><span class="ff-hn vbl"><%=commDataInfo.terminalInfo[i].penalty%></span>원</span> 입니다.</span>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -199,11 +203,12 @@
                         </div>
                     </div>
 
+                    <% } %>
+
 
                 </div>
             </div>
             <!--// CASE : 단말기 (약정할인) -->
-
 
 
 
@@ -212,18 +217,21 @@
             <div class="cont-box">
                 <h3 class="title-h2">단말기 분할상환 정보</h3>
                 <div class="discount-info">
-                    <strong class="sub-tit ff-hn">IPHONE6S_64G</strong>
+
+                    <% for(var i=0; i < commDataInfo.repaymentInfo.length; i++) { %>
+
+                    <strong class="sub-tit ff-hn"><%=commDataInfo.repaymentInfo[i].titNm%></strong>
                     <ul class="inner-list">
                         <li>
                             <dl>
                                 <dt>총 분할상환 청구금액</dt>
-                                <dd><span class="num">850,000</span>원</dd>
+                                <dd><span class="num"><%=commDataInfo.repaymentInfo[i].totSubsidy%></span>원</dd>
                             </dl>
                         </li>
                         <li>
                             <dl>
                                 <dt>잔여 분할상환 청구 금액</dt>
-                                <dd><span class="num">457,000</span>원</dd>
+                                <dd><span class="num"><%=commDataInfo.repaymentInfo[i].agreeClaimPay%></span>원</dd>
                             </dl>
                         </li>
                         <li>
@@ -233,24 +241,23 @@
                                     <div class="used-data-info">
                                         <div class="header-info">
                                             <div class="left">
-                                                <span class="data"><span class="char red">11</span>개월</span>
+                                                <span class="data"><span class="char red"><%=commDataInfo.repaymentInfo[i].totMt - commDataInfo.repaymentInfo[i].invRmn %></span>개월</span>
                                             </div>
                                             <div class="right">
-                                                <span class="data"><span class="char">24</span>개월</span>
+                                                <span class="data"><span class="char"><%=commDataInfo.repaymentInfo[i].totMt%></span>개월</span>
                                             </div>
                                         </div>
                                         <div class="bar-chart-hoz">
                                             <span class="data-bar red" style="width:40%"></span>
                                         </div>
                                         <div class="sub-info">
-                                            <span class="type"><span class="char">24</span>개월(잔여 <span class="char">13</span>개월) </span>
+                                            <span class="type"><span class="char"><%=commDataInfo.repaymentInfo[i].totMt%></span>개월(잔여 <span class="char"><%=commDataInfo.repaymentInfo[i].invRmn%></span>개월) </span>
                                         </div>
                                     </div>
                                 </dd>
                             </dl>
                         </li>
                     </ul>
-                    <!-- 자세히보기 -->
                     <div class="widget">
                         <div class="widget-box toggle">
                             <div class="list-top">
@@ -266,11 +273,11 @@
                                                 <ul>
                                                     <li>
                                                         <span class="title">모델명</span>
-                                                        <span class="tx-cont"><span class="ff-hn">CBR-510S</span></span>
+                                                        <span class="tx-cont"><span class="ff-hn"><%=commDataInfo.repaymentInfo[i].titNm%></span></span>
                                                     </li>
                                                     <li>
                                                         <span class="title">분할상환 시작일</span>
-                                                        <span class="tx-cont"><span class="ff-hn">2018.05.23</span></span>
+                                                        <span class="tx-cont"><span class="ff-hn"><%=commDataInfo.repaymentInfo[i].startDt%></span></span>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -283,7 +290,9 @@
                             </div>
                         </div>
                     </div>
-                    <!--// 자세히보기 -->
+
+                    <% } %>
+
                 </div>
             </div>
             <!--// CASE : 단말기 분할상환 정보 -->
