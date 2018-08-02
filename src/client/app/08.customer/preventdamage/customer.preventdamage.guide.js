@@ -22,7 +22,6 @@ Tw.CustomerPreventdamageGuide.prototype = {
   },
 
   _bindEvent: function() {
-    this._popupService.close();
     this.$btnCategory.on('click', $.proxy(this._openCategorySelectPopup, this));
     this.$btnListMore.on('click', $.proxy(this._showListMore, this));
 
@@ -60,6 +59,7 @@ Tw.CustomerPreventdamageGuide.prototype = {
   },
 
   _applyCategory: function($layer) {
+    this._popupService.close();
     this._history.goLoad('/customer/prevent-damage/guide?category=' + $layer.find('input[name="radio"]:checked').val());
   },
 
@@ -80,8 +80,8 @@ Tw.CustomerPreventdamageGuide.prototype = {
 
   _openOutlink: function(e) {
     this._popupService.openAlert('3G/LTE망 사용시 데이터 요금이 발생됩니다.', null, $.proxy(function() {
-      window.open($(e.currentTarget).attr('href'));
       this._popupService.close();
+      window.open($(e.currentTarget).attr('href'));
     }, this));
 
     e.preventDefault();
