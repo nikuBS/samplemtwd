@@ -40,7 +40,7 @@
                             <a href="/recharge/gift">T끼리 데이터선물 / 조르기</a>
                         </li>
                         <li class="fe-t-data-sharing-btn" style="display:none;">
-                            <a href="/myt/usage/bandshare">T데이터셰어링 사용량</a>
+                            <a href="/myt/usage/tdatashare">T데이터셰어링 사용량</a>
                         </li>
                     </ul>
                 </div>
@@ -49,7 +49,7 @@
                 <div class="msg-guide-link" style="display:none;">
                     <strong class="tit fe-ad1">데이터 Tip</strong>
                     <p class="txt">하나의 데이터로<br />여러 개의 기기를 이용한다고??</p>
-                    <button class="bt-link-tx">T데이터셰어링 알아보기<span class="ico"></span></button>
+                    <a href="/myt/usage/tdatashare/info" class="bt-link-tx">T데이터셰어링 알아보기<span class="ico"></span></a>
                 </div>
 
                 <!-- 데이터 촤과 사용중 중일 경우 노출 -->
@@ -95,7 +95,7 @@
 
             <% if (svcInfo.svcAttrCd === 'M1') { %>
             <hr class="cont-sp type1" aria-hidden="true" />
-            <div class="cont-box nogaps-hoz">
+            <div class="cont-box nogaps-hoz fe-M1-menu">
                 <div class="link-long-group">
                     <div class="link-long fe-t-roaming-sharing-btn" style="display:none;">
                         <a href="/myt/usage/troaming">T로밍 함께쓰기<span class="ico"></span></a>
@@ -119,7 +119,7 @@
                     </div>
                     <% } %>
                     <div class="link-long fe-band-data-sharing" style="display:none;">
-                        <a href="/myt/usage/bandshare">내폰끼리 결합<span class="ico"></span></a>
+                        <a href="/myt/usage/band-data-sharing">내폰끼리 결합<span class="ico"></span></a>
                     </div>
                     <div class="link-long fe-child-btn" style="display:none;" >
                         <a href="/myt/usage/children">자녀폰 사용량 조회 (<span class="bold fe-child-cnt"></span>명)<span class="ico"></span><span class="badge badge-fam"><span class="blind">자녀</span></span></a>
@@ -137,7 +137,7 @@
                     </div>
 
                     <div class="link-long">
-                        <a href="/myt">나의 사용패턴<span class="ico"></span></a>
+                        <a href="/myt/usage/pattern">나의 사용패턴<span class="ico"></span></a>
                     </div>
                 </div>
             </div>

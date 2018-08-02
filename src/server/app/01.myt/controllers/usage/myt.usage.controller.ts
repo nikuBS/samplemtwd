@@ -18,7 +18,7 @@ class MyTUsage extends TwViewController {
       // this.getUsageData()
     ).subscribe(([usageData]) => {
         if ( usageData.code === API_CODE.CODE_00 ) {
-          const fomattedData = this.parseUsageData(usageData.result);
+          const fomattedData = this.parseUsageData(usageData.result, svcInfo);
           const options = { usageData: fomattedData, svcInfo: svcInfo, remainDate: DateHelper.getRemainDate() };
           res.render('usage/myt.usage.html', options);
         } else {
@@ -33,8 +33,14 @@ class MyTUsage extends TwViewController {
 
   }
 
-  private parseUsageData(usageData: any): any {
+  private parseUsageData(usageData: any, svcInfo: any): any {
     const kinds = ['data', 'voice', 'sms', 'etc'];
+
+    // 집전화는 balance의 첫번째 레코드가 음성 → (1개 레코드일 경우 음성, 2개 레코드일 경우 첫번째가 음성/두번째가 SMS)
+    if ( svcInfo.svcAttrCd === 'S3' && usageData.balance ) {
+      usageData.voice = usageData.balance[0] ? [usageData.balance[0]] : [];
+      usageData.sms = usageData.balance[1] ? [usageData.balance[1]] : [];
+    }
     kinds.map((kind) => {
       if ( !FormatHelper.isEmpty(usageData[kind]) ) {
         usageData[kind].map((data) => {

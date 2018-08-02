@@ -43,8 +43,10 @@ class MyTUsageGraphbox {
       case UNIT_E.DATA:
         return FormatHelper.convDataFormat(data, UNIT[unit]);
       case UNIT_E.VOICE:
+      case UNIT_E.VOICE_2:
         return FormatHelper.convVoiceFormat(data);
       case UNIT_E.SMS:
+      case UNIT_E.SMS_2:
         return FormatHelper.addComma(data);
       case UNIT_E.FEE:
         return FormatHelper.addComma(data);
@@ -58,8 +60,10 @@ class MyTUsageGraphbox {
       case UNIT_E.DATA:
         return [FormatHelper.customDataFormat(data, UNIT[unit], 'GB')];
       case UNIT_E.VOICE:
+      case UNIT_E.VOICE_2:
         return FormatHelper.convVoiceFormatWithUnit(data);
       case UNIT_E.SMS:
+      case UNIT_E.SMS_2:
         return [{ data: FormatHelper.addComma(data), unit: UNIT[unit] }];
       case UNIT_E.FEE:
         return [{ data: FormatHelper.addComma(data), unit: UNIT[unit] }];
@@ -83,9 +87,11 @@ class MyTUsageGraphbox {
         className = 'red';
         break;
       case UNIT_E.VOICE:
+      case UNIT_E.VOICE_2:
         className = 'blue';
         break;
       case UNIT_E.SMS:
+      case UNIT_E.SMS_2:
         className = 'green';
         break;
       case UNIT_E.FEE:
