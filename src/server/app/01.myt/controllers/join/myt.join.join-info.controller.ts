@@ -9,7 +9,8 @@ import {DATE_FORMAT, CURRENCY_UNIT, MYT_JOIN_TYPE} from '../../../../types/strin
 import {Info, History} from '../../../..//mock/server/join.info.mock';
 import DateHelper from '../../../../utils/date.helper';
 import FormatHelper from '../../../../utils/format.helper';
-import {API_CMD} from '../../../../types/api-command.type';
+import {API_CMD, API_CODE} from '../../../../types/api-command.type';
+import {Observable} from 'rxjs/Observable';
 
 class MytJoinJoinInfoController extends TwViewController {
   private _svcInfo: any;
@@ -37,23 +38,29 @@ class MytJoinJoinInfoController extends TwViewController {
   // 마스킹된 날짜 포맷설정
   private getMarskingDateFormat(date, format): any {
     let _chgDt = date;
-    _chgDt = _chgDt.replace(/\*/g, '1');
-    _chgDt = DateHelper.getShortDateWithFormat(_chgDt, format);
-    _chgDt = _chgDt.replace(/1/g, '*');
+    // 마스킹 되어 있을 경우(*을 1로 바꿔서 날짜 포맷팅 후 다시 *로 바꾼다.)
+    if ( date.indexOf('*') > -1 ) {
+      _chgDt = _chgDt.replace(/\*/g, '1');
+      _chgDt = DateHelper.getShortDateWithFormat(_chgDt, format);
+      _chgDt = _chgDt.replace(/1/g, '*');
+    } else {
+      _chgDt = DateHelper.getShortDateWithFormat(_chgDt, format);
+    }
+
     return _chgDt;
   }
 
-  // 휴대폰 / T Login / T Pocket-FI 정보 세팅
+  // 모바일 (휴대폰 / T Login / T Pocket-FI) 정보 세팅
   private getMobileResult(data: any): any {
 
-    const history = History.result;
-    const historyLastOne = history[history.length - 1];
+    const history = data.history;
+    const historyData = history[0];
     Object.assign(data, {
-      chgDt : this.getMarskingDateFormat(historyLastOne.chgDt, DATE_FORMAT.YYYYMMDD_TYPE_0),
-      chgCd : historyLastOne.chgCd
+      chgDt : this.getMarskingDateFormat(historyData.chgDt, DATE_FORMAT.YYYYMMDD_TYPE_0),
+      chgCd : historyData.chgCd
     });
 
-    data.apprAmt = FormatHelper.addComma(data.apprAmt); // 휴대폰 일때 세팅
+    data.apprAmt = FormatHelper.addComma(data.apprAmt);
 
     // 가입비 표시[S]
     if ( data.invBamt > 0 ) {
@@ -67,10 +74,10 @@ class MytJoinJoinInfoController extends TwViewController {
     // 가입비 표시[E]
 
     // 개통/변경 히스토리 set
-    history.map( (o) => {
+    /*history.map( (o) => {
       o.chgDt = this.getMarskingDateFormat(o.chgDt, 'YYYY.MM.DD');
     });
-    data.history = history;
+    data.history = history;*/
 
     return data;
   }
@@ -121,10 +128,78 @@ class MytJoinJoinInfoController extends TwViewController {
     }
   }
 
+  private getAllJoinInfo(): Observable<any> {
+    // 모바일 일때만 가입정보와 개통/변경 이력조회 함
+    if ( this.getLinetype() === 'M' ) {
+      return this.getJoinInfoAndHistory();
+    } else {
+      return this.getJoinInfo();
+    }
+  }
+
+  // 가입정보 + 개통/변경 이력조회
+  private getJoinInfoAndHistory(): Observable<any> {
+    return Observable.combineLatest(
+      this.getJoinInfo(),
+      this.getHistory(),
+      (joinInfo, history) => {
+        if ( joinInfo !== null && history !== null ) {
+          joinInfo.history = history;
+          return joinInfo;
+        } else {
+          return null;
+        }
+      });
+  }
+
+  // 가입정보 조회
+  private getJoinInfo(): Observable<any> {
+    return this.apiService.request(API_CMD.BFF_05_0068, {}).map((response) => {
+      return this.getResult(response);
+    });
+  }
+
+  // 개통/변경 이력 조회
+  private getHistory(): Observable<any> {
+    return this.apiService.request(API_CMD.BFF_05_0061, {}).map((response) => {
+      return this.parseHistory(this.getResult(response));
+    });
+  }
+
+  private parseHistory(data: any): any {
+    data.map( (o) => {
+      o.chgDt = this.getMarskingDateFormat(o.chgDt, 'YYYY.MM.DD');
+    });
+    return data;
+  }
+
+  private getResult(data: any): any {
+    if (data.code === API_CODE.CODE_00) {
+      return data.result;
+    } else {
+      return null;
+    }
+  }
+
+  private getJoinInfoData(data: any): any {
+
+    switch (this.getLinetype()) {
+      case 'M':  data = this.getMobileResult(data);
+        break;
+      case 'W':  data = this.getWibroResult(data);
+        break;
+      case 'S':  data = this.getInternetResult(data);
+        break;
+      case 'O':
+        // 보안 솔루션은 7차 스프린트에서..
+        this.logger.info(this, 'O1 is 7 sprint...');
+        return null;
+    }
+    return data;
+  }
 
   private getData(svcInfo: any, data: any): any {
-    // 약정 할인 및 단말.. 버튼 노출 여부
-    svcInfo.svcAttrCd = 'M5';
+    // svcInfo.svcAttrCd = 'M5';
     // svcInfo.svcGr = 'S';
 
     const lineType = this.getLinetype();
@@ -135,11 +210,12 @@ class MytJoinJoinInfoController extends TwViewController {
     } else if ( lineType === 'S' || lineType === 'O' ) {
       isContract = false;
     }
-
+    // 약정 할인 및 단말.. 버튼 노출 여부
     data.isContract = isContract;
 
     // 회선별 페이지 PATH
     data.path = this._urlPath[this.getLinetype()];
+
 
     return {
       svcInfo,
@@ -150,10 +226,18 @@ class MytJoinJoinInfoController extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     this.svcInfo = svcInfo;
 
-    const data = this.getWibroResult( Info.wibro.result );
+    // const data = this.getWibroResult( Info.wibro.result );
     // const data = this.getMobileResult( Info.mobile.result );
     // const data = this.getInternetResult( Info.internet.result );
-    res.render( 'join/myt.join.join-info.html', this.getData(svcInfo, data) );
+    Observable.combineLatest(
+      this.getAllJoinInfo()
+    ).subscribe(([joinInfo]) => {
+      const data = this.getData(svcInfo, this.getJoinInfoData(joinInfo));
+      this.logger.info(this, '#### data ', data);
+
+      res.render('join/myt.join.join-info.html', data);
+    });
+    // res.render( 'join/myt.join.join-info.html', this.getData(svcInfo, data) );
 
     /*this.apiService.request(API_CMD.BFF_05_0068, {}).subscribe((resp) => {
       this.logger.info(this, '#### res ', resp)
