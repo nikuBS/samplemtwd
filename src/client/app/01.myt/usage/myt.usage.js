@@ -100,13 +100,8 @@ Tw.MytUsage.prototype = {
 
     if ( res.result && res.result.length > 0 ) {
       childCntField.text(res.result.length);
-
-      // this._makeBorderStyle(true);
       childBtn.show();
     }
-    // else {
-    //     //   // this._makeBorderStyle(false);
-    //     // }
   },
   _childFail: function (err) {
     console.log('child api fail', err);

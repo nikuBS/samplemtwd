@@ -14,16 +14,7 @@
 </div>
 <!--// #skip_navigation -->
 <div class="wrap">
-    <!-- #header -->
-    <div id="header" class="header-wrap">
-        <div class="header">
-            <div class="header-ti align-l">
-                <h1>매장정보</h1>
-            </div>
-            <button class="prev-step"><span class="blind">이전으로</span></button>
-        </div>
-    </div>
-    <!--// #header -->
+    <%- include('../../../../common/views/components/header.component.html', { title: '매장정보', svcInfo: svcInfo}); %>
     <!-- #contents -->
     <div id="contents" class="container-wrap">
         <h2 class="blind">내용</h2>
@@ -32,18 +23,19 @@
             <div class="cont-box nogaps-hoz pt10">
                 <div class="box-store-grade">
                     <div class="store-grade-top">
-                        <h3 class="store-grade-ti">PS&amp;M4 대리점 연수 T프리미엄 스토어점</h3>
+                        <h3 class="store-grade-ti"><%= detail.storeName %></h3>
                         <div class="store-grade-per">
-                            <span class="grade-star" aria-hidden="true"><span class="star-count star1"><span class="blind">별점</span></span></span><!-- 별 갯수에 따라 .star1~star5로 설정 -->
-                            평점 <span class="grade-total">0.0</span> (<span class="grade-count">0</span>명)
+                            <span class="grade-star" aria-hidden="true"><span class="star-count <%= detail.star %>"><span class="blind">별점</span></span></span><!-- 별 갯수에 따라 .star1~star5로 설정 -->
+                            평점 <span class="grade-total"><%= detail.custRateAvg %></span> (<span class="grade-count"><%= detail.custRateCnt %></span>명)
                         </div>
                         <div class="store-hash">
                             <ul class="hash-list">
-                                <li>바로픽업</li>
-                                <li>Tpremium Store</li>
-                                <li>바로픽업매장</li>
-                                <li>애플 취급점</li>
-                                <li>공식인증 대리점</li>
+                                <% if (detail.direct === 'Y') { %><li>바로픽업</li> <% } %>
+                                <% if (detail.premium === 'Y') { %><li>Tpremium Store</li> <% } %>
+                                <% if (detail.rent === 'Y') { %><li>임대폰</li><% } %>
+                                <% if (detail.skb === 'Y') { %><li>SK브로드밴드</li><% } %>
+                                <% if (detail.apple === 'Y') { %><li>애플 취급점</li><% } %>
+                                <% if (detail.authAgnYn === 'Y') { %><li>공식인증 대리점</li><% } %>
                             </ul>
                         </div>
                     </div>
@@ -52,10 +44,7 @@
             <!--// .cont-box -->
             <!-- .cont-box -->
             <div class="cont-box nogaps">
-                <div id="TmapBox" class="box-store-map">
-                    <span class="ico-tmap-pin" style="top:100px;left:100px;"><img src="/img/ico/ico-tmap-pin.png" alt="지도 위치 핀" /></span>
-                    <img src="/img/dummy/map.jpg" alt="임시이미지" />
-                </div>
+                <div id="TmapBox" class="box-store-map"></div>
             </div>
             <!--// .cont-box -->
             <!-- .cont-box -->
@@ -64,22 +53,22 @@
                     <div>
                         <dl>
                             <dt>주소</dt>
-                            <dd>서울 서초구 신반포로 176, 1층 130호<br />(반포동, 센트럴시티빌딩)</dd>
+                            <dd><%= detail.searchAddr %><br />(<%= detail.jibunAddr %>)</dd>
                         </dl>
                     </div>
                     <div>
                         <dl>
                             <dt>연락처</dt>
-                            <dd>02-554-4011</dd>
+                            <dd><%= detail.tel %></dd>
                         </dl>
-                        <button class="bt-tel"><span role="img" class="blind">매장으로 전화하기</span></button>
+                        <a class="bt-tel" href="tel:<%= detail.tel %>"><span role="img" class="blind">매장으로 전화하기</span></a>
                     </div>
                     <div>
                         <dl>
                             <dt>운영시간</dt>
-                            <dd>평일 10:00~20:00</dd>
-                            <dd>주말 11:00~17:00</dd>
-                            <dd>공휴 09:00~09:00</dd>
+                            <dd>평일 <%= detail.weekdayOpenTime %>~<%= detail.weekdayCloseTime %></dd>
+                            <dd>주말 <%= detail.satOpenTime %>~<%= detail.satCloseTime %></dd>
+                            <dd>공휴 <%= detail.holidayOpenTime %>~<%= detail.holidayCloseTime %></dd>
                         </dl>
                     </div>
                     <div>
@@ -97,10 +86,14 @@
     <!--// #contents -->
 </div>
 <% include ../../components/javascript.component.html %>
+<% include ../../components/tmap.component.html %>
 
 <script>
   $(document).ready(function () {
-
+    new Tw.CustomerShopDetail($('#TmapBox'), {
+        lon: '<%= detail.geoX %>',
+        lat: '<%= detail.geoY %>'
+    });
   });
 </script>
 
