@@ -22,13 +22,13 @@ Tw.CustomerResearches.prototype = {
 
   _handleParticipate: function (e) {
     var questionId = $(e.currentTarget).data('question-id');
-    // var $root = $(e.currentTarget).parents('li.acco-box');
 
     if (questionId) {
       // 설문 시작하기
       this._history.goLoad('researches/' + questionId);
     } else {
       // 참여하기 버튼 클릭
+      // var $root = $(e.currentTarget).parents('li.acco-box');
       // var $list = $root.find('ul.select-list > li');
       // var $etcText = $root.find('textarea.fe-etc-area');
 
@@ -46,7 +46,9 @@ Tw.CustomerResearches.prototype = {
       //   }
       // }
 
-      // this._apiService.request(Tw.API_CMD.BFF_08_0035, options).done();
+      // this._apiService.request(Tw.API_CMD.BFF_08_0035, options)
+      //   .done($.proxy(this._successParticipate, this));
+
       this._successParticipate({
         code: Tw.API_CODE.CODE_00,
         result: {
