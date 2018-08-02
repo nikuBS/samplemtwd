@@ -165,3 +165,13 @@ export enum  DATE_FORMAT  {
   YYYYMM_TYPE_0= 'YYYY년 MM월',
   YYYYMMDD_TYPE_0= 'YYYY년 MM월 DD일'
 }
+
+export enum CURRENCY_UNIT  {
+  WON = '원',
+  TEN_THOUSAND = '만원'
+}
+
+export enum MYT_JOIN_TYPE  {
+  PAY = '납부',
+  UNPAID = '미청구'
+}

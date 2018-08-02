@@ -5,36 +5,115 @@
  */
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import {Request, Response, NextFunction} from 'express';
-import {DATE_FORMAT} from '../../../../types/string.type';
+import {DATE_FORMAT, CURRENCY_UNIT, MYT_JOIN_TYPE} from '../../../../types/string.type';
 import {Info, History} from '../../../..//mock/server/join.info.mock';
 import DateHelper from '../../../../utils/date.helper';
 import FormatHelper from '../../../../utils/format.helper';
 
 class MytJoinJoinInfoController extends TwViewController {
+  private _svcInfo: any;
+
+  get svcInfo() {
+    return this._svcInfo;
+  }
+  set svcInfo( __svcInfo: any ) {
+    this._svcInfo = __svcInfo;
+  }
+
   constructor() {
     super();
+  }
+
+
+  // 마스킹된 날짜 포맷설정
+  private getMarskingDateFormat(date, format): any {
+    let _chgDt = date;
+    _chgDt = _chgDt.replace(/\*/g, '1');
+    _chgDt = DateHelper.getShortDateWithFormat(_chgDt, format);
+    _chgDt = _chgDt.replace(/1/g, '*');
+    return _chgDt;
   }
 
   // 휴대폰 / T Login / T Pocket-FI 정보 세팅
   private getMobileResult(data: any): any {
 
-    const history = History.result[History.result.length - 1];
-    let _chgDt = history.chgDt;
-    _chgDt = _chgDt.replace(/\*/g, '1');
-    _chgDt = DateHelper.getShortDateWithFormat(_chgDt, DATE_FORMAT.YYYYMMDD_TYPE_0);
-    _chgDt = _chgDt.replace(/1/g, '*');
-    data = Object.assign(data, {
-      chgDt : _chgDt,
-      chgCd : history.chgCd
+    const history = History.result;
+    const historyLastOne = history[history.length - 1];
+    Object.assign(data, {
+      chgDt : this.getMarskingDateFormat(historyLastOne.chgDt, DATE_FORMAT.YYYYMMDD_TYPE_0),
+      chgCd : historyLastOne.chgCd
     });
+
     data.apprAmt = FormatHelper.addComma(data.apprAmt); // 휴대폰 일때 세팅
+
+    // 가입비 표시[S]
+    if ( data.invBamt > 0 ) {
+      const won = CURRENCY_UNIT.WON; // 원
+      const pay = MYT_JOIN_TYPE.PAY; // 납부
+      const upPayid = MYT_JOIN_TYPE.UNPAID; // 미청구
+      data.amtDesc = `(${data.payAmt} ${won} ${pay} / ${data.invBamt} ${won} ${upPayid})`;
+    } else {
+      data.amtDesc = data.admFeeNm !== '' ? `(${data.admFeeNm})` : '';
+    }
+    // 가입비 표시[E]
+
+    // 개통/변경 히스토리 set
+    history.map( (o) => {
+      o.chgDt = this.getMarskingDateFormat(o.chgDt, 'YYYY.MM.DD');
+    });
+    data.history = history;
 
     return data;
   }
 
+  // 인터넷/집전화/IPTV
+  private getInternetResult(data: any): any {
+    Object.assign(data, {
+      joinDate : DateHelper.getShortDateWithFormat(data.joinDate, 'YYYY.MM.DD'),        // 가입일
+      svcPrdStaDt : DateHelper.getShortDateWithFormat(data.svcPrdStaDt, 'YYYY.MM.DD'),  // 서비스 약정 시작일
+      svcPrdEndDt : DateHelper.getShortDateWithFormat(data.svcPrdEndDt, 'YYYY.MM.DD'),  // 서비스 약정 종료일
+      setPrdStaDt : DateHelper.getShortDateWithFormat(data.setPrdStaDt, 'YYYY.MM.DD'),  // 세트 약정 시작일
+      setPrdEndDt : DateHelper.getShortDateWithFormat(data.setPrdEndDt, 'YYYY.MM.DD')  // 세트 약정 종료일
+    });
+
+    return data;
+  }
+
+  // 현재 회선 타입
+  private getLinetype(): any {
+    switch (this.svcInfo.svcAttrCd) {
+      case 'M1':  // 휴대폰
+      case 'M3':  // T pocket FI
+      case 'M4':  // T Login
+        return 'M'; // 모바일
+      case 'S1' :
+      case 'S2' :
+      case 'S3' :
+        return 'S'; // 인터넷/집전화/IPTV
+      case 'O1' :
+        return 'O'; // 보안 솔루션
+      default :
+        return 'X'; // 현재 회선은 권한 없음.
+    }
+  }
+
+
   private getData(svcInfo: any, data: any): any {
     // 약정 할인 및 단말.. 버튼 노출 여부
-    data.isContract = (svcInfo.svcAttrCd === 'M1' && data.isRsvYn === 'N') || svcInfo.svcGr === 'S' || svcInfo.svcGr === 'O' ?  true : false;
+    svcInfo.svcAttrCd = 'S1';
+    svcInfo.svcGr = 'S';
+
+    // 모바일 일때..
+    const lineType = this.getLinetype();
+    let isContract = true;
+    if ( lineType === 'M' && data.isRsvYn === 'Y') {
+      isContract = false;
+    } else if ( lineType === 'S' || lineType === 'O' ) {
+      isContract = false;
+    }
+
+    data.isContract = isContract;
+
     return {
       svcInfo,
       data : data
@@ -42,12 +121,11 @@ class MytJoinJoinInfoController extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    const data = this.getMobileResult( Info.mobile.result );
-    res.render( 'join/myt.join.join-info.html', this.getData(svcInfo, data) );
-  }
+    this.svcInfo = svcInfo;
 
-  private getResult(data: any, svcInfo: any): any {
-    return data;
+    const data = this.getInternetResult( Info.internet.result );
+    // const data = this.getMobileResult( Info.mobile.result );
+    res.render( 'join/myt.join.join-info.html', this.getData(svcInfo, data) );
   }
 }
 

@@ -6,10 +6,10 @@
 
 <div class="cont-box nogaps-btm">
     <div class="info-box">
-        <span class="state-text">사용중</span>
+        <span class="state-text"><%= data.svcStatNm%></span>
         <span class="name"><span class="tx-bold ff-hn"><%= data.eqpMdlNm %></span></span>
         <button class="bt-link-tx">USIM 변경 안내 <span class="ico"></span></button>
-    </div>
+    </div>미청구 영어로
     <h3 class="title-bold mt30">최종 개통 정보</h3>
     <div class="info-cont">
         <ul class="inner-list">
@@ -33,8 +33,7 @@
                 <dl>
                     <dt>가입비</dt>
                     <dd>
-                        <span class="ff-hn vbl"><%= data.apprAmt %></span> 원
-
+                        <span class="ff-hn vbl"><%= data.apprAmt %></span> 원 <%= data.amtDesc%>
                     </dd>
                 </dl>
             </li>
