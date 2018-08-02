@@ -153,9 +153,9 @@ class MytJSProtectChangeController extends TwViewController {
           vidTotalVoice += parseInt(vidItem, 10);
           vidVoice.push(this.secToMS(vidItem, 'B'));
         } else {
-          inVoice.push('');
-          outVoice.push('');
-          vidVoice.push('');
+          inVoice.push('0:0');
+          outVoice.push('0:0');
+          vidVoice.push('0:0');
         }
       });
 

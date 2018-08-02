@@ -11,6 +11,11 @@ Tw.MyTUsagePattern = function (params) {
   this._popupService = Tw.Popup;
   this._chartFeeData = params.chartFeeData;
   this._chartCTData = params.chartCTData;
+  this._chartSmsData = params.chartSmsData;
+  this._chartVoiceData = params.chartVoiceData;
+  this._chartInVoiceData = params.chartInVoiceData;
+  this._chartOutVoiceData = params.chartOutVoiceData;
+  this._chartVidVoiceData = params.chartVidVoiceData;
   this._defaultChartSetting = {
     min: 0, //Min크기
     max: 250, //Max크기
@@ -82,26 +87,110 @@ Tw.MyTUsagePattern.prototype = {
           txt_co: Tw.MSG_MYT.USAGE_PATTERN.TXT,//글자색상
           da_arr:[
             {
-              na: this._chartCTData[2][0],
-              data:[this._chartCTData[2][1]]//배열 평균값으로 전달
+              na: this._chartVoiceData[2][0],
+              data:[this._chartVoiceData[2][1]]//배열 평균값으로 전달
             },{
-              na:this._chartCTData[1][0],
-              data:[this._chartCTData[1][1]]
+              na:this._chartVoiceData[1][0],
+              data:[this._chartVoiceData[1][1]]
             },{
-              na:this._chartCTData[0][0],
-              data:[this._chartCTData[0][1]]
+              na:this._chartVoiceData[0][0],
+              data:[this._chartVoiceData[0][1]]
             }
           ]
-        }
-        var setting = {
-          type: 'basic', //basic, basic_1, bar, circle
+        };
+        var setting_1 = {
+          type: 'basic_1', //basic, basic_1, bar, circle
           container: 'can-box1', //클래스명 String
-          x_name: Tw.MSG_MYT.USAGE_PATTERN.LINE_CHART.X, //x축 이름
+          x_name: Tw.MSG_MYT.USAGE_PATTERN.LINE_CHART.X1, //x축 이름
           guide_num: 1, //가이드 갯수
           decimal: 0, //소숫점자리
           data: chart_data1 //데이터 obj
         };
-        this.$container.find('.tab2-tab').chart($.extend(setting, this._defaultChartSetting));
+        var chart_data2 = {
+          caption: Tw.MSG_MYT.USAGE_PATTERN.CAPTION,//숨겨진표에 사용 접근성관련이슈
+          tf_txt: Tw.MSG_MYT.USAGE_PATTERN.TF,//숨겨진표에 사용 접근성관련이슈
+          td_txt: Tw.MSG_MYT.USAGE_PATTERN.LINE_CHART.TD,//숨겨진표에 사용 접근성관련이슈
+          line_co: Tw.MSG_MYT.USAGE_PATTERN.LINE_CHART.LINE,//라인색상
+          txt_co: Tw.MSG_MYT.USAGE_PATTERN.TXT,//글자색상
+          da_arr:[
+            {
+              na: this._chartInVoiceData[2][0],
+              data:[this._chartInVoiceData[2][1]]//배열 평균값으로 전달
+            },{
+              na:this._chartInVoiceData[1][0],
+              data:[this._chartInVoiceData[1][1]]
+            },{
+              na:this._chartInVoiceData[0][0],
+              data:[this._chartInVoiceData[0][1]]
+            }
+          ]
+        };
+        var setting_2 = {
+          type: 'basic_1', //basic, basic_1, bar, circle
+          container: 'can-box2', //클래스명 String
+          x_name: Tw.MSG_MYT.USAGE_PATTERN.LINE_CHART.X1, //x축 이름
+          guide_num: 1, //가이드 갯수
+          decimal: 0, //소숫점자리
+          data: chart_data2 //데이터 obj
+        };
+        var chart_data3 = {
+          caption: Tw.MSG_MYT.USAGE_PATTERN.CAPTION,//숨겨진표에 사용 접근성관련이슈
+          tf_txt: Tw.MSG_MYT.USAGE_PATTERN.TF,//숨겨진표에 사용 접근성관련이슈
+          td_txt: Tw.MSG_MYT.USAGE_PATTERN.LINE_CHART.TD,//숨겨진표에 사용 접근성관련이슈
+          line_co: Tw.MSG_MYT.USAGE_PATTERN.LINE_CHART.LINE,//라인색상
+          txt_co: Tw.MSG_MYT.USAGE_PATTERN.TXT,//글자색상
+          da_arr:[
+            {
+              na: this._chartOutVoiceData[2][0],
+              data:[this._chartOutVoiceData[2][1]]//배열 평균값으로 전달
+            },{
+              na:this._chartOutVoiceData[1][0],
+              data:[this._chartOutVoiceData[1][1]]
+            },{
+              na:this._chartOutVoiceData[0][0],
+              data:[this._chartOutVoiceData[0][1]]
+            }
+          ]
+        };
+        var setting_3 = {
+          type: 'basic_1', //basic, basic_1, bar, circle
+          container: 'can-box33', //클래스명 String
+          x_name: Tw.MSG_MYT.USAGE_PATTERN.LINE_CHART.X1, //x축 이름
+          guide_num: 1, //가이드 갯수
+          decimal: 0, //소숫점자리
+          data: chart_data3 //데이터 obj
+        };
+        var chart_data4 = {
+          caption: Tw.MSG_MYT.USAGE_PATTERN.CAPTION,//숨겨진표에 사용 접근성관련이슈
+          tf_txt: Tw.MSG_MYT.USAGE_PATTERN.TF,//숨겨진표에 사용 접근성관련이슈
+          td_txt: Tw.MSG_MYT.USAGE_PATTERN.LINE_CHART.TD,//숨겨진표에 사용 접근성관련이슈
+          line_co: Tw.MSG_MYT.USAGE_PATTERN.LINE_CHART.LINE,//라인색상
+          txt_co: Tw.MSG_MYT.USAGE_PATTERN.TXT,//글자색상
+          da_arr:[
+            {
+              na: this._chartVidVoiceData[2][0],
+              data:[this._chartVidVoiceData[2][1]]//배열 평균값으로 전달
+            },{
+              na:this._chartVidVoiceData[1][0],
+              data:[this._chartVidVoiceData[1][1]]
+            },{
+              na:this._chartVidVoiceData[0][0],
+              data:[this._chartVidVoiceData[0][1]]
+            }
+          ]
+        };
+        var setting_4 = {
+          type: 'basic_1', //basic, basic_1, bar, circle
+          container: 'can-box4', //클래스명 String
+          x_name: Tw.MSG_MYT.USAGE_PATTERN.LINE_CHART.X1, //x축 이름
+          guide_num: 1, //가이드 갯수
+          decimal: 0, //소숫점자리
+          data: chart_data4 //데이터 obj
+        };
+        this.$container.find('.tab2-tab').chart($.extend(setting_1, this._defaultChartSetting));
+        this.$container.find('.tab2-tab').chart($.extend(setting_2, this._defaultChartSetting));
+        this.$container.find('.tab2-tab').chart($.extend(setting_3, this._defaultChartSetting));
+        this.$container.find('.tab2-tab').chart($.extend(setting_4, this._defaultChartSetting));
         this._initSecondtab = true;
       }
     }

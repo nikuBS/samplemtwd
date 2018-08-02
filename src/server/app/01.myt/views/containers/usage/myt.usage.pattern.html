@@ -88,11 +88,26 @@
                                     <li role="tabpanel" id="tab2-tab" aria-labelledby="tab2">
                                         <div class="cont-box">
                                             <div class="chart-title">
-                                                <button class="bt-prev"><span class="blind"><%= data.names[2] || '' %> 사용량 보기</span></button>
-                                                <span class="item-tit"><%= data.names[0] || '' %></span>
-                                                <button class="bt-next"><span class="blind"><%= data.names[1] || '' %> 사용량 보기</span></button>
+                                                <button class="bt-prev"><span class="blind"><%= data.names[0] || '' %> 사용량 보기</span></button>
+                                                <span class="item-tit"><%= data.names[1] || '' %></span>
+                                                <button class="bt-next"><span class="blind"><%= data.names[2] || '' %> 사용량 보기</span></button>
                                             </div>
-                                            <ul class="cellular-chart-wrap">
+                                            <ul id="cdata-area" class="cellular-chart-wrap blind">
+                                                <li>
+                                                    <div class="chart-usage">
+                                                        <span class="average">평균 사용량</span>
+                                                        <span class="result"><%= data.totCdataAverage || '' %></span>
+                                                    </div>
+                                                    <!-- 그래프 영역 -->
+                                                    <div class="graph-wrap">
+                                                        <div class="can-box122222222">
+                                                            <canvas></canvas>
+                                                        </div>
+                                                    </div>
+                                                    <!--// 그래프 영역 -->
+                                                </li>
+                                            </ul>
+                                            <ul id="sms-area" class="cellular-chart-wrap blind">
                                                 <li>
                                                     <div class="chart-usage">
                                                         <span class="average">평균 사용량</span>
@@ -100,7 +115,66 @@
                                                     </div>
                                                     <!-- 그래프 영역 -->
                                                     <div class="graph-wrap">
+                                                        <div class="can-box99999">
+                                                            <canvas></canvas>
+                                                        </div>
+                                                    </div>
+                                                    <!--// 그래프 영역 -->
+                                                </li>
+                                            </ul>
+
+                                            <ul id="voice-area" class="cellular-chart-wrap">
+                                                <li>
+                                                    <h3 class="chart-title">총 통화량</h3>
+                                                    <div class="chart-usage">
+                                                        <span class="average">평균 사용량</span>
+                                                        <span class="result"><%= data.totVoiceAverage || '' %></span>
+                                                    </div>
+                                                    <!-- 그래프 영역 -->
+                                                    <div class="graph-wrap">
                                                         <div class="can-box1">
+                                                            <canvas></canvas>
+                                                        </div>
+                                                    </div>
+                                                    <!--// 그래프 영역 -->
+                                                </li>
+                                                <li>
+                                                    <h3 class="chart-title">SKT 고객간 통화량</h3>
+                                                    <div class="chart-usage">
+                                                        <span class="average">평균 사용량</span>
+                                                        <span class="result"><%= data.totInVoiceAverage || '' %></span>
+                                                    </div>
+                                                    <!-- 그래프 영역 -->
+                                                    <div class="graph-wrap">
+                                                        <div class="can-box2">
+                                                            <canvas></canvas>
+                                                        </div>
+                                                    </div>
+                                                    <!--// 그래프 영역 -->
+                                                </li>
+                                                <li>
+                                                    <h3 class="chart-title">타 통신사 고객간 통화량</h3>
+                                                    <div class="chart-usage">
+                                                        <span class="average">평균 사용량</span>
+                                                        <span class="result"><%= data.totOutVoiceAverage || '' %></span>
+                                                    </div>
+                                                    <!-- 그래프 영역 -->
+                                                    <div class="graph-wrap">
+                                                        <div class="can-box33">
+                                                            <canvas></canvas>
+                                                        </div>
+                                                    </div>
+                                                    <!--// 그래프 영역 -->
+                                                </li>
+                                                <li>
+                                                    <h3 class="chart-title">영상 통화량</h3>
+                                                    <div class="chart-usage">
+                                                        <span class="average">평균 사용량</span>
+                                                        <span class="result"><%= data.totVidVoiceAverage || '' %></span>
+                                                    </div>
+                                                    <!-- 그래프 영역 -->
+                                                    <div class="graph-wrap">
+                                                        <div class="can-box4">
                                                             <canvas></canvas>
                                                         </div>
                                                     </div>
@@ -174,12 +248,22 @@
 <script>
   var feeData = '<%- JSON.stringify(data.chartFeeData) %>';
   var cData = '<%- JSON.stringify(data.chartCTData) %>';
+  var voice = '<%- JSON.stringify(data.chartVoiceData) %>';
+  var iVoice = '<%- JSON.stringify(data.chartInVoiceData) %>';
+  var oVoice = '<%- JSON.stringify(data.chartOutVoiceData) %>';
+  var vVoice = '<%- JSON.stringify(data.chartVidVoiceData) %>';
+  var sms = '<%- JSON.stringify(data.chartSmsData) %>';
 
   $(document).ready(function () {
     var comp = new Tw.MyTUsagePattern({
       $element: $('#pattern-main'),
       chartFeeData: JSON.parse(feeData),
-      chartCTData: JSON.parse(cData)
+      chartCTData: JSON.parse(cData),
+      chartSmsData: JSON.parse(sms),
+      chartVoiceData: JSON.parse(voice),
+      chartInVoiceData: JSON.parse(iVoice),
+      chartOutVoiceData: JSON.parse(oVoice),
+      chartVidVoiceData: JSON.parse(vVoice),
     });
   });
 </script>
