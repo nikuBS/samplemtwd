@@ -8,6 +8,7 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import { NextFunction, Request, Response } from 'express';
 import { Observable } from '../../../../../../node_modules/rxjs/Observable';
 import { API_CMD } from '../../../../types/api-command.type';
+import FormatHelper from '../../../../utils/format.helper';
 
 class CustomerShopDetailController extends TwViewController {
   constructor() {
@@ -18,40 +19,35 @@ class CustomerShopDetailController extends TwViewController {
     const shopCode = req.query.code;
 
     this.requestShopDetail(shopCode).subscribe((resp) => {
+      this.trimResult(resp.result);
       res.render('./shop/customer.shop.detail.html', {
         svcInfo: svcInfo,
-        detail: resp.result,
-        detail2: { // for test
-          storeName: '유키대리점',
-          searchAddr: '서울 중구 어쩌고 저쩌고......',
-          jibunAddr: '명동 11번지 16층',
-          tel: '02-111-111',
-          geoX: '126.99185612271496',
-          geoY: '37.559779110967696',
-          custRateAvg: '4',
-          custRateCnt: '10',
-          weekdayOpenTime: '0900',
-          weekdayCloseTime: '2100',
-          satOpenTime: '0900',
-          satCloseTime: '1600',
-          holidayOpenTime: '0900',
-          holidayCloseTime: '1600',
-          talkMap: '1.구술약도:.#^2.대중교통:.222222222222',
-          premium: 'Y',
-          direct: 'Y',
-          rent: 'Y',
-          skb: 'Y',
-          apple: 'Y',
-          agnYn: 'Y',
-          authAgnYn: 'Y',
-          star: 'star2'
-        }
+        detail: resp.result
       });
     });
   }
 
   private requestShopDetail(shopCode: string): Observable<any> {
     return this.apiService.request(API_CMD.BFF_08_0007, { locCode: shopCode });
+  }
+
+  private trimResult(result: any): void {
+    result.weekdayOpenTime = FormatHelper.insertColonForTime(result.weekdayOpenTime);
+    result.weekdayCloseTime = FormatHelper.insertColonForTime(result.weekdayCloseTime);
+    result.satOpenTime = FormatHelper.insertColonForTime(result.satOpenTime);
+    result.satCloseTime = FormatHelper.insertColonForTime(result.satCloseTime);
+    result.holidayOpenTime = FormatHelper.insertColonForTime(result.holidayOpenTime);
+    result.holidayCloseTime = FormatHelper.insertColonForTime(result.holidayCloseTime);
+
+    if (!result.custRateAvg.includes('.')) {
+      result.custRateAvg = result.custRateAvg + '.0';
+    }
+
+    const star = Math.round(parseFloat(result.custRateAvg));
+    result.star = 'star' + star;
+
+    result.workDirection = result.talkMap.match(/1\..*:(.*)2\./)[1];
+    result.publicDirection = result.talkMap.match(/2\..*:(.*)/)[1];
   }
 }
 

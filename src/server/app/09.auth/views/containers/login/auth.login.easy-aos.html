@@ -35,25 +35,25 @@
                         <p class="suggest-ti"><em class="tx-bold">본인확인 후</em> 간편하게<br />요금, 잔여량 조회 서비스를<br />이용하실 수 있습니다.</p>
                         <dl class="suggest-circuit">
                             <dt class="circuit-ti">휴대폰</dt>
-                            <dd class="fe-mdn circuit-tx" data-mdn="<%= mdn.original %>"><%= mdn.show %></dd>
+                            <dd id="fe-mdn circuit-tx" data-mdn="<%= mdn.original %>"><%= mdn.show %></dd>
                         </dl>
                         <div class="sugget-form type1">
                             <span id="aria-regist-num" class="form-ti">생년월일/외국인 등록번호</span>
                             <!-- 입력창 기본 -->
-                            <span class="inputbox"><!-- 입력창 오류 경우 .inputbox에 .error 추가 -->
+                            <span id="fe-inputbox" class="inputbox"><!-- 입력창 오류 경우 .inputbox에 .error 추가 -->
                                     <span class="input">
-                                        <input class="fe-input-birth" type="number" value="" min="0" max="999999"placeholder="생년월일/외국인 등록번호 6자리" title="생년월일/외국인 등록번호 6자리" aria-labelledby="aria-regist-num" aria-describedby="aria-regist-tx" />
+                                        <input id="fe-input-birth" type="number" value="" min="0" max="999999"placeholder="생년월일/외국인 등록번호 6자리" title="생년월일/외국인 등록번호 6자리" aria-labelledby="aria-regist-num" aria-describedby="aria-regist-tx" />
                                         <button href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></button>
-                                        <span class="ico none"></span><!-- 입력창 오류 경우 .none 삭제 -->
+                                        <span id="fe-bt-del" class="ico none fe-error"></span><!-- 입력창 오류 경우 .none 삭제 -->
                                     </span>
-                                    <span id="aria-regist-tx" class="error-txt none">명의자 정보와 일치하지 않습니다.</span><!-- 입력창 오류 경우 .none 삭제 -->
+                                    <span id="aria-regist-tx" class="error-txt none fe-error">명의자 정보와 일치하지 않습니다.</span><!-- 입력창 오류 경우 .none 삭제 -->
                                 </span>
                             <!--// 입력창 기본 -->
                         </div>
                         <div class="suggest-bt">
                             <ul class="bt-slice">
                                 <li class="bt-red1">
-                                    <button class="fe-easy-login" disabled>간편 로그인</button>
+                                    <button id="fe-easy-login" disabled>간편 로그인</button>
                                 </li>
                             </ul>
                         </div>

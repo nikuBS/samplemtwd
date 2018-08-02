@@ -17,10 +17,7 @@ Tw.CustomerVoice = function (rootEl) {
 };
 
 Tw.CustomerVoice.prototype = {
-  currentLine: {
-    svcMgmtNum: '',
-    svcNum: ''
-  },
+  currentLine: { svcMgmtNum: '' },
 
   _init: function () {
     this._apiService.request(Tw.API_CMD.BFF_08_0009, {})
@@ -58,7 +55,6 @@ Tw.CustomerVoice.prototype = {
     var htOptions = _.map(this.voiceCustomer.svcInfo, function (svcInfo) {
       var maskNumber = Tw.FormatHelper.conTelFormatWithDash(svcInfo.svcNumMask);
       return {
-        title: svcInfo.svcNum,
         checked: maskNumber === $('.fe-select-line').text() ? true : false,
         value: svcInfo.svcMgmtNum,
         text: maskNumber
@@ -79,15 +75,11 @@ Tw.CustomerVoice.prototype = {
 
   _selectLine: function () {
     var $checkedLine = $('.popup').find('input:checked');
-
-    this.currentLine = {
-      svcNum: $checkedLine.attr('title'),
-      svcMgmtNum: $checkedLine.val()
-    };
+    this.currentLine = { svcMgmtNum: $checkedLine.val() };
 
     var nSelectMaskNumber = $('.popup').find('li.checked').text().trim();
     $('.fe-select-line').text(nSelectMaskNumber);
-    $('.sended-info-num').text(nSelectMaskNumber);
+
     this._popupClose();
   },
 
@@ -96,6 +88,8 @@ Tw.CustomerVoice.prototype = {
   },
 
   _onSuccessSMS: function () {
+    $('.sended-info-num').text($('.fe-select-line').text());
+
     this._history.setHistory();
     location.hash = 'complete';
   },
@@ -131,7 +125,7 @@ Tw.CustomerVoice.prototype = {
 
   _goToVoiceSms: function () {
     if ( this.voiceCustomer.hitoriesYn === 'Y' ) {
-      this._popupService.openAlert(Tw.MSG_CUSTOMER.VOICE_A01, Tw.BUTTON_LABEL.CONFIRM, $.proxy(this._authCancel, this));
+      this._popupService.openAlert(Tw.MSG_CUSTOMER.VOICE_A01, Tw.BUTTON_LABEL.CONFIRM, this._popupService.close);
       return false;
     } else {
       this._history.goLoad('/customer/voice/sms');
