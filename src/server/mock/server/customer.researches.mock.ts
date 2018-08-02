@@ -78,7 +78,8 @@ export const StepResearch = {
       endDtm: '2018.08.05',
       qstnHtmlCtt: '<P>&nbsp;</P>',
       openYn: 'Y',
-      qstnChnlClCd: 'MTWD'
+      qstnChnlClCd: 'MTWD',
+      totInqItmNum: '4'
     }
   ],
   surveyQstnInqItm: [
