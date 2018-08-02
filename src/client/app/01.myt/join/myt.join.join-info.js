@@ -15,6 +15,7 @@ Tw.MyTJoinJoinInfo.prototype = {
   _bindEvent: function () {
     this._popupService._popupClose();
     this.$container.on('click', '#fe-open-history', $.proxy(this._openHistoryPop, this));
+    this.$container.on('click', '#fe-skb-link', $.proxy(this._openSKbrodbandLink, this));
   },
 
   // 개통/변경 이력조회 팝업
@@ -26,6 +27,12 @@ Tw.MyTJoinJoinInfo.prototype = {
         list : $_this.data('history')
       }
     });
+  },
+  
+  // SK브로드밴드 링크 클릭
+  _openSKbrodbandLink : function (e) {
+    var $_this = $(e.currentTarget);
+    window.open($_this.data('url'),'_blank');
   }
 
 };

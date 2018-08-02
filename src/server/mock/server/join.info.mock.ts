@@ -26,6 +26,7 @@ export const Info = {
     'code': '00',
     'msg': 'success',
     'result': {
+      'coClCd' : 'B',
       'setNm': '세트',
       'wireReqrNm': '강이숙',
       'joinDate': '20150223',
@@ -41,6 +42,18 @@ export const Info = {
       'wirePhonNum': '',
       'basAddr': '경기 성남시 분당구 정자로76번길 10,',
       'dtlAddr': '202동1203호(정자동,상록마을라이프2단지아파트)'
+    }
+  },
+  wibro : {
+    'code': '00',
+    'msg': 'success',
+    'result': {
+      'svcStatCd': '일시정지',
+      'svcScrbDt': '20100201',
+      'eqpMdlNm': 'LM-700WU',
+      'eqpSerNum': '1013595',
+      'scrbAmt': '0',
+      'scrbTypNm': '면제'
     }
   }
 };

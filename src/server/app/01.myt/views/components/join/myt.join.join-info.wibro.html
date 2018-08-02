@@ -1,58 +1,37 @@
 <%#
-* FileName: myt.join.join-info.internet.html
+* FileName: myt.join.join-info.wibro.html
 * Author: 양정규 (skt.P130715@partner.sk.com)
-* Date: 2018.07.30
+* Date: 2018.08.02
 %>
 
-<div class="cont-box">
-    <div class="info-box">
-        <span class="state-text"><%= data.svcStNm%></span>
-        <span class="name"><span class="tx-bold"><%= data.wireReqrNm%></span>님</span>
-        <span class="state-date"><span class="date ff-hn"><%= data.joinDate%></span> 가입</span>
-    </div>
-    <h3 class="title-bold mt30">서비스 가입 내역</h3>
+<div class="cont-box nogaps-hoz">
+    <h3 class="title-bold pt18">가입정보</h3>
     <div class="info-cont">
         <ul class="inner-list">
             <li>
                 <dl>
-                    <dt>서비스 약정</dt>
-                    <dd><span class="ff-hn"><%= data.svcAgrmtMth%></span><br /><span class="ff-hn">(<%=data.svcPrdStaDt%> ~ <%=data.svcPrdEndDt%>)</span></dd>
+                    <dt>제품번호</dt>
+                    <dd><span class="ff-hn"><%= data.eqpMdlNm%></span></dd>
                 </dl>
             </li>
             <li>
                 <dl>
-                    <dt>세트구분</dt>
-                    <dd><%= data.setNm%> (유선 상품 <span class="ff-hn"><%= data.wireProdCnt%></span>개)</dd>
+                    <dt>서비스 상태</dt>
+                    <dd><%= data.svcStatCd%></dd>
                 </dl>
             </li>
             <li>
                 <dl>
-                    <dt>세트약정</dt>
-                    <dd><span class="ff-hn"><%= data.setAgrmtMth%></span><br /><span class="ff-hn">(<%= data.setPrdStaDt%> ~ <%= data.setPrdEndDt%>)</span></dd>
+                    <dt>가입일자</dt>
+                    <dd><%= data.svcScrbDt%></dd>
                 </dl>
             </li>
             <li>
                 <dl>
-                    <dt>설치장소</dt>
-                    <dd><%= data.basAddr%><br /><span class="ff-hn"><%=data.dtlAddr%></span></dd>
+                    <dt>가입비</dt>
+                    <dd><span class="ff-hn vbl"><%= data.scrbAmt%></span> 원 (<%= data.scrbTypNm%>)</dd>
                 </dl>
-                <div class="contents-btn">
-                    <ul class="bt-slice item-two">
-                        <li class="bt-white2">
-                            <!-- 7차 스프린트에서 진행 -->
-                            <button>이용계약 정보</button>
-                        </li>
-                        <li class="bt-white2">
-                            <!-- 6차 스프린트에서 제외. 해당 메뉴 개발 시 진행한다고 함 -->
-                            <button>사은품 조회하기</button>
-                        </li>
-                    </ul>
-                </div>
             </li>
         </ul>
     </div>
-    <div class="contents-notice line-top pt28">
-        <span class="noti-type3">가입하신 상품관련 신청/변경 및 납부 등의 업무는 SK브로드 밴드 고객센터 (국번없이 106) 또는 웹 사이트를 통해 가능합니다.</span>
-    </div>
-    <button id="fe-skb-link" class="bt-link-tx pt18" data-url="http://www.skbroadband.com/Main.do">SK브로드밴드 바로가기 <span class="ico"></span></button>
 </div>

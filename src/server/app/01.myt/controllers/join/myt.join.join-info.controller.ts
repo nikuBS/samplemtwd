@@ -9,9 +9,18 @@ import {DATE_FORMAT, CURRENCY_UNIT, MYT_JOIN_TYPE} from '../../../../types/strin
 import {Info, History} from '../../../..//mock/server/join.info.mock';
 import DateHelper from '../../../../utils/date.helper';
 import FormatHelper from '../../../../utils/format.helper';
+import {API_CMD} from '../../../../types/api-command.type';
 
 class MytJoinJoinInfoController extends TwViewController {
   private _svcInfo: any;
+
+  private _urlPath = {
+    M : '../../components/join/myt.join.join-info.mobile.html', // 휴대폰, T Login, T Pocket-Fi
+    S : '../../components/join/myt.join.join-info.internet.html',
+    W : '../../components/join/myt.join.join-info.wibro.html',
+    O : ''
+  };
+
 
   get svcInfo() {
     return this._svcInfo;
@@ -79,6 +88,15 @@ class MytJoinJoinInfoController extends TwViewController {
     return data;
   }
 
+  // wibro
+  private getWibroResult(data: any): any {
+    Object.assign(data, {
+      svcScrbDt : DateHelper.getShortDateWithFormat(data.svcScrbDt, DATE_FORMAT.YYYYMMDD_TYPE_0)
+    });
+
+    return data;
+  }
+
   // 현재 회선 타입
   private getLinetype(): any {
     switch (this.svcInfo.svcAttrCd) {
@@ -86,12 +104,18 @@ class MytJoinJoinInfoController extends TwViewController {
       case 'M3':  // T pocket FI
       case 'M4':  // T Login
         return 'M'; // 모바일
+
+      case 'M5':  // T Wibro
+        return 'W'; // T Wibro
+
       case 'S1' :
       case 'S2' :
       case 'S3' :
         return 'S'; // 인터넷/집전화/IPTV
+
       case 'O1' :
         return 'O'; // 보안 솔루션
+
       default :
         return 'X'; // 현재 회선은 권한 없음.
     }
@@ -100,12 +124,12 @@ class MytJoinJoinInfoController extends TwViewController {
 
   private getData(svcInfo: any, data: any): any {
     // 약정 할인 및 단말.. 버튼 노출 여부
-    svcInfo.svcAttrCd = 'S1';
-    svcInfo.svcGr = 'S';
+    svcInfo.svcAttrCd = 'M5';
+    // svcInfo.svcGr = 'S';
 
-    // 모바일 일때..
     const lineType = this.getLinetype();
     let isContract = true;
+    // 모바일 일때..
     if ( lineType === 'M' && data.isRsvYn === 'Y') {
       isContract = false;
     } else if ( lineType === 'S' || lineType === 'O' ) {
@@ -113,6 +137,9 @@ class MytJoinJoinInfoController extends TwViewController {
     }
 
     data.isContract = isContract;
+
+    // 회선별 페이지 PATH
+    data.path = this._urlPath[this.getLinetype()];
 
     return {
       svcInfo,
@@ -123,9 +150,15 @@ class MytJoinJoinInfoController extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     this.svcInfo = svcInfo;
 
-    const data = this.getInternetResult( Info.internet.result );
+    const data = this.getWibroResult( Info.wibro.result );
     // const data = this.getMobileResult( Info.mobile.result );
+    // const data = this.getInternetResult( Info.internet.result );
     res.render( 'join/myt.join.join-info.html', this.getData(svcInfo, data) );
+
+    /*this.apiService.request(API_CMD.BFF_05_0068, {}).subscribe((resp) => {
+      this.logger.info(this, '#### res ', resp)
+      res.render('join/myt.join.join-info.html', this.getData(svcInfo, resp));
+    });*/
   }
 }
 

@@ -21,13 +21,7 @@
     <div id="contents" class="container-wrap">
         <h2 class="blind">내용</h2>
         <div class="container">
-            <%
-                let path = '../../components/join/myt.join.join-info.mobile.html'
-                if( svcInfo.svcGr === 'S' ){
-                    path = '../../components/join/myt.join.join-info.internet.html'
-                }
-            %>
-            <%- include(path) %>
+            <%- include(data.path) %>
             <hr class="cont-sp type1" aria-hidden="true" />
 
             <div class="cont-box nogaps-hoz">
