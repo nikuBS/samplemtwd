@@ -289,6 +289,7 @@ Tw.MSG_MYT = {
           }
         ]
       },
+      TD: '각 항목값',
       CO: ['#d6dbe5', '/img/chart/pattern2.gif'],
       SALE: '#325ec1',
       X: '(단위:원)'
@@ -313,10 +314,14 @@ Tw.MSG_MYT = {
           }
         ]
       },
+      TD: '각 개월 사용량',
       LINE: '#00a49a',
       X: '(단위:건수)'
     },
+    CAPTION: ' 3개월 평균 사용량',
+    TF: '평균값',
     TXT: '#757575',
+    MONTH: '월'
   },
   JOIN_SERVICE: {
     EMPTY_PWD: '6자리 이상의 숫자를 입력해주세요.',

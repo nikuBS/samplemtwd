@@ -169,3 +169,10 @@ export enum DATE_FORMAT {
 export enum RESEARCH_EXAMPLE_TYPE {
   ETC = '기타'
 }
+
+export enum USAGE_PATTERN_CHART {
+  USED = '사용요금',
+  MSG = '문자',
+  DATA = '데이터',
+  VOICE = '음성통화'
+}
