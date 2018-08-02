@@ -10,6 +10,7 @@ Tw.PostcodeMain = function (rootEl) {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._validation = Tw.ValidationHelper;
+  this._inputHelper = Tw.InputHelper;
   this._history = new Tw.HistoryService(this.$container);
   this._history.init('hash');
 
@@ -32,21 +33,25 @@ Tw.PostcodeMain.prototype = {
     this._selectedTabId = 'tab1';
     this._selectedTabName = 'load';
     this._defaultElementLength = 20;
-    this.$citySelector = this.$container.find('.fe-select-city');
-    this.$gunSelector = this.$container.find('.fe-select-gun');
+    this.$citySelector = this.$container.find('.fe-select-city:first');
+    this.$gunSelector = this.$container.find('.fe-select-gun:first');
     this.$getPostCodeBtn = this.$container.find('.fe-get-postcode');
-    this.$fieldSet = this.$container.find('.fe-field-set');
-    this.$loadAddress = this.$container.find('.fe-load-address');
+    this.$fieldSet = this.$container.find('.fe-field-set:first');
+    this.$loadAddress = this.$container.find('.fe-load-address:first');
     this.$buildingName = this.$container.find('.fe-building-name');
-    this.$standardAddress = this.$container.find('#fe-standard-address-field');
-    this.$remainAddressWrap = this.$container.find('.fe-remain-address-wrap');
-    this.$remainAddress = this.$container.find('.fe-remain-address');
+    this.$standardAddress = this.$container.find('.fe-standard:first');
+    this.$remainAddressWrap = this.$container.find('.fe-remain-address-wrap:first');
+    this.$remainAddress = this.$container.find('.fe-remain-address:first');
     this.$selectDetailAddress = this.$container.find('.fe-go-step3');
     this.$aptLastField = this.$container.find('.fe-apt-last-field');
     this.$etcLastField = this.$container.find('.fe-etc-last-field');
+    this.$numberOrNameSelector = this.$container.find('.fe-select-number-name');
+    this.$numberWrap = this.$container.find('.fe-number');
+    this.$nameWrap = this.$container.find('.fe-name');
   },
   _bindEvent: function () {
     this.$container.on('keyup', '.fe-load-name', $.proxy(this._activeButton, this));
+    this.$container.on('keyup', '.fe-only-number', $.proxy(this._onlyNumber, this));
     this.$container.on('click', '.fe-prevent li', $.proxy(this._preventDefault, this));
     this.$container.on('click', '.fe-tab-menu li', $.proxy(this._onChangeTab, this));
     this.$container.on('click', '.fe-select-city', $.proxy(this._getList, this, this._cityList, Tw.API_CMD.BFF_01_0006, {}));
@@ -56,7 +61,12 @@ Tw.PostcodeMain.prototype = {
     this.$container.on('click', '.fe-get-building-name', $.proxy(this._getMoreDetailList, this, 'btn'));
     this.$container.on('click', '.fe-remain-address-wrap', $.proxy(this._getMore, this));
     this.$container.on('click', '.fe-go-step3', $.proxy(this._goStep3, this));
+    this.$container.on('click', '.fe-select-number-name', $.proxy(this._selectNumberOrName, this));
+    this.$container.on('click', '.fe-get-number-name', $.proxy(this._getMoreDetailList, this, 'btn-number'));
     this.$container.on('click', '.fe-cancel-process', $.proxy(this._cancelProcess, this));
+  },
+  _onlyNumber: function (event) {
+    this._inputHelper.inputNumberOnly(event.currentTarget);
   },
   _activeButton: function (event) {
     var $value = $(event.currentTarget).val();
@@ -74,7 +84,16 @@ Tw.PostcodeMain.prototype = {
     this._selectedTabName = $(event.currentTarget).attr('name');
     this._postType = $(event.currentTarget).attr('type');
 
-    console.log(this._selectedTabId, this._selectedTabName, this._postType);
+    this.$tabSelector = this.$container.find('#' + this._selectedTabId + '-tab');
+    this.$citySelector = this.$tabSelector.find('.fe-select-city');
+    this.$gunSelector = this.$tabSelector.find('.fe-select-gun');
+
+    this.$step2TabContainer = this.$container.find('#' + this._selectedTabId + '-tab.fe-step2');
+    this.$loadAddress = this.$step2TabContainer.find('.fe-load-address');
+    this.$fieldSet = this.$step2TabContainer.find('.fe-field-set');
+    this.$standardAddress = this.$step2TabContainer.find('.fe-standard');
+    this.$remainAddressWrap = this.$step2TabContainer.find('.fe-remain-address-wrap');
+    this.$remainAddress = this.$step2TabContainer.find('.fe-remain-address');
   },
   _getSecondList: function (event) {
     if (this._cityCode === null) {
@@ -97,7 +116,6 @@ Tw.PostcodeMain.prototype = {
   },
   _getListSuccess: function ($target, $list, res) {
     if (res.code === Tw.API_CODE.CODE_00) {
-      this._initNext($target);
       this._initNext($target);
       var $result = res.result;
       $list = this._setList($target, $list, $result);
@@ -158,13 +176,24 @@ Tw.PostcodeMain.prototype = {
   _getPostSuccess: function (res) {
     var $detailSelector = this.$container.find('#' + this._selectedTabId + '-tab .fe-select-detail');
     if (res.code === Tw.API_CODE.CODE_00) {
-      if (res.result.length > 0) {
-        this._detailList = this._setList($detailSelector, this._detailList, res.result);
-        this._initAddress($detailSelector);
-
-        this._history.goHash('#step2-' + this._selectedTabName);
+      var $result = res.result;
+      if (this._selectedTabId === 'tab3') {
+        if ($result.content.length > 0) {
+          this._initDetailAddress();
+          this._setAddressList($result);
+          this._history.goHash('#step2-' + this._selectedTabName);
+        } else {
+          this._popupService.openAlert(Tw.MSG_POSTCODE.L05);
+        }
       } else {
-        this._getPostFail();
+        if ($result.length > 0) {
+          this._detailList = this._setList($detailSelector, this._detailList, res.result);
+          this._initAddress($detailSelector);
+
+          this._history.goHash('#step2-' + this._selectedTabName);
+        } else {
+          this._getPostFail();
+        }
       }
     } else {
       this._getPostFail();
@@ -230,8 +259,27 @@ Tw.PostcodeMain.prototype = {
     $target.attr('id', $id);
     $target.text($selectedValue.text());
 
-    this._setSuperCode($target, $id);
+    if ($target.hasClass('fe-select-number-name')) {
+      this._setNumberOrName($target, $selectedValue);
+    } else {
+      this._setSuperCode($target, $id);
+    }
     this._popupService.close();
+  },
+  _setNumberOrName: function ($target, $selectedValue) {
+    var $key = $selectedValue.find('button').attr('key');
+    $target.attr('key', $key);
+
+    this._initNumberName($target);
+  },
+  _initNumberName: function ($target) {
+    if ($target.attr('id') === 'bldCd') {
+      this.$numberWrap.show();
+      this.$nameWrap.hide();
+    } else {
+      this.$numberWrap.hide();
+      this.$nameWrap.show();
+    }
   },
   _setSuperCode: function ($target, $id) {
     if ($target.hasClass('fe-select-city')) {
@@ -240,16 +288,22 @@ Tw.PostcodeMain.prototype = {
       this._gunCode = $id;
     } else {
       this._id = $id;
-      this._getMoreDetailList();
+
+      var type = '';
+      if ($target.hasClass('fe-select-number-detail')) {
+        type = 'number';
+      }
+      this._getMoreDetailList(type);
     }
   },
   _initDetailAddress: function (type) {
     this._nextPage = 0;
+
     this.$container.find('.fe-add-address').remove();
     if (!this.$remainAddressWrap.hasClass('none')) {
       this.$remainAddressWrap.addClass('none');
     }
-    if (type === undefined) {
+    if (type === '') {
       this.$buildingName.val('');
     }
     this.$selectDetailAddress.attr('disabled', 'disabled');
@@ -261,7 +315,7 @@ Tw.PostcodeMain.prototype = {
       .fail($.proxy(this._getDetailFail, this));
   },
   _makeRequestData: function () {
-    var reqData = {}
+    var reqData = {};
     if (this._selectedTabId === 'tab1') {
       reqData = this._makeLoadRequestData();
     } else if (this._selectedTabId === 'tab2') {
@@ -285,10 +339,17 @@ Tw.PostcodeMain.prototype = {
   _makeNumberRequestData: function () {
     var reqData = {
       postType: this._postType,
-      searchKey: 'BilDING',
       ldongCd: this._id,
       page: this._nextPage
     };
+    if (this.$numberOrNameSelector.attr('id') === 'bldCd') {
+      reqData.mainHouseNumCtt = this.$numberWrap.find('.fe-main-house').val();
+      reqData.subHouseNumCtt = this.$numberWrap.find('.fe-sub-house').val();
+      reqData.searchKey = 'KEY';
+    } else {
+      reqData.bldNm = encodeURI(this.$nameWrap.find('.fe-bld-nm').val());
+      reqData.searchKey = 'BiLDING';
+    }
     return reqData;
   },
   _makeOfficeRequestData: function () {
@@ -296,27 +357,72 @@ Tw.PostcodeMain.prototype = {
   },
   _getMoreDetailList: function (type) {
     this._initDetailAddress(type);
-    this._requestMoreDetailList();
+
+    if (type === 'number') {
+      this._initDetailSelector();
+    } else if (type === 'btn-number') {
+      this._requestMoreDetailList();
+    } else {
+      this._initDetailAddress(type);
+      this._requestMoreDetailList();
+    }
+  },
+  _initDetailSelector: function () {
+    this.$fieldSet.removeClass('none');
+    this.$fieldSet.find('input').val('');
+
+    this._initNumberName(this.$numberOrNameSelector);
+  },
+  _selectNumberOrName: function () {
+    this._openSelector(this.$numberOrNameSelector, this._getNumberOrNameList());
   },
   _getDetailSuccess: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
       var $result = res.result.bldgAddress;
-      this._setPage($result);
-
-      var $content = $result.content;
-      for (var i = 0; i < $content.length; i++) {
-        var $addressField = this.$standardAddress.clone().removeAttr('id').removeClass('none').addClass('fe-add-address');
-        $addressField.attr({'id': $content[i].bldClCd, 'postcode': $content[i].zip });
-        $addressField.find('.address1').text($content[i].bldNm);
-        $addressField.find('.address2').text(Tw.POSTCODE_TEXT.BUILDING_CODE + ' ' + $content[i].bldTotNum);
-        $addressField.find('.address3').text(Tw.POSTCODE_TEXT.ZIP_CODE + ' ' + $content[i].zip);
-        $addressField.on('click', $.proxy(this._onSelectDetailAddress, this));
-        this.$loadAddress.append($addressField);
-      }
+      this._setAddressList($result);
     }
   },
   _getDetailFail: function () {
 
+  },
+  _setAddressList: function ($result) {
+    var _address = this._getAddress();
+    this._setPage($result);
+
+    var $content = $result.content;
+    for (var i = 0; i < $content.length; i++) {
+      var $addressField = this.$standardAddress.clone().removeClass('fe-standard').removeClass('none').addClass('fe-add-address');
+      $addressField.attr({'id': $content[i][_address.id], 'postcode': $content[i].zip, 'ho': $content[i].staMainHouseNumCtt });
+      $addressField.find('.address1').text($content[i][_address.name]);
+      $addressField.find('.address2').text(_address.text + ' ' + $content[i][_address.value]);
+      $addressField.find('.address3').text(Tw.POSTCODE_TEXT.ZIP_CODE + ' ' + $content[i].zip);
+      $addressField.on('click', $.proxy(this._onSelectDetailAddress, this));
+      this.$loadAddress.append($addressField);
+    }
+  },
+  _getAddress: function () {
+    var address = {
+      id: 'bldClCd',
+      name: 'bldNm',
+      text: Tw.POSTCODE_TEXT.BUILDING_CODE,
+      value: 'bldTotNum'
+    };
+    if (this._selectedTabId === 'tab2') {
+      address.text = Tw.POSTCODE_TEXT.BUILDING_NUMBER;
+      address.value = 'totHouse_numCtt';
+    } else if (this._selectedTabId === 'tab3') {
+      address.text = Tw.POSTCODE_TEXT.BUILDING_HO;
+      address.value = 'staMainHouseNumCtt';
+      address.id = 'serNum';
+      address.name = 'largDlvPlcNm';
+    }
+    return address;
+  },
+  _getNumberOrNameList: function () {
+    return [
+      { 'attr': 'id="bldCd",key="KEY"', 'text': Tw.POSTCODE_TEXT.NUMBER },
+      { 'attr': 'id="bldNm",key="BiLDING"', 'text': Tw.POSTCODE_TEXT.NAME }
+    ];
   },
   _setPage: function ($result) {
     this.$fieldSet.removeClass('none');
@@ -361,6 +467,7 @@ Tw.PostcodeMain.prototype = {
     var $baseForm = this.$container.find('.fe-base-form');
     var _baseText = this.$container.find('#' + this._selectedTabId + '-tab .fe-select-detail').text();
     $baseForm.find('.fe-post-code').text($checkedAddress.attr('postcode'));
+    $baseForm.find('.fe-ho').text($checkedAddress.attr('ho'));
     $baseForm.find('.fe-address').text(_baseText + ' ' + $checkedAddress.find('.address1').text());
 
     if ($checkedAddress.attr('id') === 'A2' || $checkedAddress.attr('id') === 'A3') {

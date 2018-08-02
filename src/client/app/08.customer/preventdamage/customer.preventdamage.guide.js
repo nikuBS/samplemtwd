@@ -35,6 +35,7 @@ Tw.CustomerPreventdamageGuide.prototype = {
     this._popupService.open({
       'hbs': 'select',
       'title': Tw.PREVENTDAMAGE_GUIDE.TITLE,
+      'close_bt': true,
       'select': [
         {
           'options': [
@@ -54,6 +55,10 @@ Tw.CustomerPreventdamageGuide.prototype = {
       }]
     }, $.proxy(this._categoryPopupBindEvent, this),
       $.proxy(function() {
+        if (this.$container.data('category') === this._category) {
+          return;
+        }
+
         this._history.goLoad('/customer/prevent-damage/guide?category=' + this._category);
       }, this));
   },
