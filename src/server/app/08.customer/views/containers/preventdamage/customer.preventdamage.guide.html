@@ -21,35 +21,56 @@
             <hr class="cont-sp type1" aria-hidden="true" />
 
             <% if (category == 'video' || category == 'latest') { %>
-                <div class="cont-box nogaps-hoz">
-                    <div class="link-group-box">
-                        <ul class="link-group-list thin fe-list">
-                            <%
-                            const listLength = list.length > 30 ? 30 : list.length;
-                            for (var i = 0; i < listLength; i++) { %>
-                            <li>
-                                <a class="link-group-btn" href="<%= list[i].LINK %>" target="_blank"><%= list[i].TEXT %></a>
-                            </li>
-                            <% } %>
-                            <% if (list.length > 30) {
-                               for (var i = 30; i < list.length; i++) { %>
-                            <li style="display: none">
-                                <a class="link-group-btn" href="<%= list[i].LINK %>" target="_blank"><%= list[i].TEXT %></a>
-                            </li>
-                            <% }
-                            } %>
-                        </ul>
-                    </div>
-                    <% if (list.length > 30) {
-                        const moreLength = (list.length-30) > 30 ? 30 : list.length-30;
-                    %>
-                    <div class="bt-more-wrap mt0">
-                        <button role="button" class="bt-more fe-btn_list_more" title="">더보기<span>(<%= moreLength %>)</span></button>
-                    </div>
-                    <% } %>
+            <div class="cont-box nogaps-hoz">
+                <div class="link-group-box">
+                    <ul class="link-group-list thin fe-list" data-size="30">
+                        <%
+                        const listLength = list.length > 30 ? 30 : list.length;
+                        for (var i = 0; i < listLength; i++) { %>
+                        <li>
+                            <a class="link-group-btn fe-outlink" href="<%= list[i].LINK %>" target="_blank"><%= list[i].TEXT %></a>
+                        </li>
+                        <% } %>
+                        <% if (list.length > 30) {
+                           for (var i = 30; i < list.length; i++) { %>
+                        <li style="display: none">
+                            <a class="link-group-btn fe-outlink" href="<%= list[i].LINK %>" target="_blank"><%= list[i].TEXT %></a>
+                        </li>
+                        <% }
+                        } %>
+                    </ul>
                 </div>
+                <% if (list.length > 30) { %>
+                <div class="bt-more-wrap mt0">
+                    <button role="button" class="bt-more fe-btn_list_more" title="">더보기<span>(<%= (list.length-30) %>)</span></button>
+                </div>
+                <% } %>
+            </div>
             <% } %>
             <% if (category == 'webtoon') { %>
+            <div class="cont-box nogaps-btm">
+                <div class="img-list pt6">
+                    <ul class="fe-list" data-size="20">
+                        <%
+                        const listLength = list.length;
+                        for (var i = 0; i < listLength; i++) { %>
+                        <% if (i < 20) { %>
+                        <li class="img-list-box">
+                        <% } else { %>
+                        <li class="img-list-box" style="display: none">
+                        <% } %>
+                            <a href="/customer/prevent-damage/guide/view?code=<%= list[i].CODE %>"><img src="/resource/webtoon/<%= list[i].THUMB %>" alt="<%= list[i].TITLE %>"></a>
+                        </li>
+                        <% } %>
+                    </ul>
+                </div>
+                <div class="infomation-icon-box mt16">
+                    <p class="info-icon-txt">방송통신이용자포털(http://www.wiswuser.go.kr) <span class="ico"></span></p>
+                </div>
+                <div class="bt-more-wrap mt30">
+                    <button role="button" class="bt-more fe-btn_list_more" title="">더보기<span>(<%= (list.length-20) %>)</span></button>
+                </div>
+            </div>
             <% } %>
         </div>
     </div>

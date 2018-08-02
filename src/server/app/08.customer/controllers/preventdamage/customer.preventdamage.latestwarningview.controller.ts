@@ -5,17 +5,35 @@
  */
 
 import { NextFunction, Request, Response } from 'express';
+import { API_CMD } from '../../../../types/api-command.type';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
+import FormatHelper from '../../../../utils/format.helper';
+import _ from 'lodash';
 
 class CustomerPreventdamageLatestwarningviewController extends TwViewController {
   constructor() {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    res.render('preventdamage/customer.preventdamage.latestwarningview.html', {
-      svcInfo: svcInfo
+  private _convertData(data) {
+    return _.merge(data, {
+      date: data.auditDtm.substr(0, 4) + '.' + data.auditDtm.substr(4, 2) + '.' + data.auditDtm.substr(6, 2)
     });
+  }
+
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+    const lwid = req.query.lw_id || '';
+    if (FormatHelper.isEmpty(lwid)) {
+      res.redirect('/customer/prevent-damage/latest-warning');
+    }
+
+    this.apiService.request(API_CMD.BFF_08_0041, {}, {}, lwid)
+      .subscribe((data) => {
+        res.render('preventdamage/customer.preventdamage.latestwarningview.html', {
+          svcInfo: svcInfo,
+          data: this._convertData(data.result)
+        });
+      });
   }
 }
 

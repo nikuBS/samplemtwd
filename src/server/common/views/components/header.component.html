@@ -6,11 +6,11 @@
         </div>
         <button class="prev-step fe-common-back"><span class="blind">이전으로</span></button>
         <% if (svcInfo) { %>
-        <button id="fe-bt-line" class="bt-dropdown small" title="회선 선택" aria-haspopup="true">010-12**-56**<span class="ico"></span></button><!--팝업 호출된후 disabled부여-->
+        <button id="fe-bt-line" class="bt-dropdown small" title="회선 선택" aria-haspopup="true" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>"><%= svcInfo.svcNum %><span class="ico"></span></button><!--팝업 호출된후 disabled부여-->
         <% } else { %>
         <ul class="bt-slice item-free header-bt">
             <li class="bt-blue1">
-                <button title="로그인">로그인</button>
+                <button class="fe-bt-login" title="로그인">로그인</button>
             </li>
         </ul>
         <% } %>

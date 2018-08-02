@@ -22,9 +22,12 @@ Tw.CustomerPreventdamageGuide.prototype = {
   },
 
   _bindEvent: function() {
-    this._popupService._popupClose();
     this.$btnCategory.on('click', $.proxy(this._openCategorySelectPopup, this));
     this.$btnListMore.on('click', $.proxy(this._showListMore, this));
+
+    if (Tw.BrowserHelper.isApp()) {
+      this.$container.on('click', '.fe-outlink', $.proxy(this._openOutlink, this));
+    }
   },
 
   _openCategorySelectPopup: function() {
@@ -56,21 +59,33 @@ Tw.CustomerPreventdamageGuide.prototype = {
   },
 
   _applyCategory: function($layer) {
+    this._popupService.close();
     this._history.goLoad('/customer/prevent-damage/guide?category=' + $layer.find('input[name="radio"]:checked').val());
   },
 
   _showListMore: function(e) {
-    var hiddenLength = this.$list.find('li:hidden').length;
+    var hiddenLength = this.$list.find('li:hidden').length,
+      listSize = this.$list.data('size');
 
-    if (hiddenLength <= 30) {
+    if (hiddenLength <= listSize) {
       this.$list.find('li:hidden').show();
       $(e.currentTarget).parent().remove();
     }
 
-    if (hiddenLength > 30) {
-      this.$list.find('li:hidden:lt(30)').show();
-      $(e.currentTarget).html(Tw.BUTTON_LABEL.MORE + '<span>' + ((hiddenLength-30) > 30 ? 30 : hiddenLength-30) + '</span>');
+    if (hiddenLength > listSize) {
+      this.$list.find('li:hidden:lt(' + listSize + ')').show();
+      $(e.currentTarget).find('span').text('(' + hiddenLength + ')');
     }
+  },
+
+  _openOutlink: function(e) {
+    this._popupService.openAlert('3G/LTE망 사용시 데이터 요금이 발생됩니다.', null, $.proxy(function() {
+      this._popupService.close();
+      window.open($(e.currentTarget).attr('href'));
+    }, this));
+
+    e.preventDefault();
+    e.stopPropagation();
   }
 
 };

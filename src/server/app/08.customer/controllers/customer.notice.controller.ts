@@ -8,12 +8,25 @@ import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../../common/controllers/tw.view.controller';
 import { API_CMD, API_CODE } from '../../../types/api-command.type';
 import { CUSTOMER_NOTICE_CATEGORY } from '../../../types/string.type';
+import _ from 'lodash';
 
-const categoryLabel = {
-  tworld: CUSTOMER_NOTICE_CATEGORY.TWORLD,
-  directshop: CUSTOMER_NOTICE_CATEGORY.DIRECTSHOP,
-  membership: CUSTOMER_NOTICE_CATEGORY.MEMBERSHIP,
-  roaming: CUSTOMER_NOTICE_CATEGORY.ROAMING
+const categorySwitchingData = {
+  tworld: {
+    LABEL: CUSTOMER_NOTICE_CATEGORY.TWORLD,
+    API: API_CMD.BFF_08_0029
+  },
+  directshop: {
+    LABEL: CUSTOMER_NOTICE_CATEGORY.DIRECTSHOP,
+    API: API_CMD.BFF_08_0039
+  },
+  membership: {
+    LABEL: CUSTOMER_NOTICE_CATEGORY.MEMBERSHIP,
+    API: API_CMD.BFF_08_0031
+  },
+  roaming: {
+    LABEL: CUSTOMER_NOTICE_CATEGORY.ROAMING,
+    API: API_CMD.BFF_08_0040
+  }
 };
 
 class CustomerNoticeController extends TwViewController {
@@ -21,19 +34,51 @@ class CustomerNoticeController extends TwViewController {
     super();
   }
 
+  private _convertData(data): any {
+    if (data.code !== API_CODE.CODE_00) {
+      return {
+        total: 0,
+        remain: 0,
+        list: [],
+        last: true
+      };
+    }
+
+    return {
+      total: data.result.total,
+      remain: this._getRemainCount(data.result.totalElements, data.result.pageable.pageNumber, data.result.pageable.pageSize),
+      list: _.map(data.result.content, (item) => {
+        return _.merge(item, {
+          date: item.rgstDt.substr(0, 4) + '.' + item.rgstDt.substr(4, 2) + '.' + item.rgstDt.substr(6, 2),
+          type: _.isEmpty(item.ctgNm) ? '' : item.ctgNm,
+          itemClass: (item.isTop ? 'impo ' : '') + (item.isNew ? 'new' : '')
+        });
+      }),
+      last: data.result.last
+    };
+  }
+
+  private _getRemainCount(total, page, pageSize): any {
+    const count = total - ((++page) * pageSize);
+    return count < 0 ? 0 : count;
+  }
+
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     const category = req.query.category || 'tworld';
 
-    // @todo category 값이 미리 정의된 것이 아닐경우 오류처리 필요.
-    // if (['tworld', 'directshop', 'roaming', 'membership'].indexOf(category) === -1) {
-    //   res.redirect();
-    // }
+    if (['tworld', 'directshop', 'roaming', 'membership'].indexOf(category) === -1) {
+      res.redirect('/customer/notice');
+    }
 
-    res.render('customer.notice.html', {
-      category: category,
-      categoryLabel: categoryLabel[category],
-      svcInfo: svcInfo
-    });
+    this.apiService.request(categorySwitchingData[category].API, {page: 0, size: 20})
+      .subscribe((data) => {
+        res.render('customer.notice.html', {
+          category: category,
+          categoryLabel: categorySwitchingData[category].LABEL,
+          svcInfo: svcInfo,
+          data: this._convertData(data)
+        });
+      });
   }
 }
 

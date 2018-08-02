@@ -37,6 +37,7 @@ Tw.POPUP_TITLE = {
   GIFT_FAMILY_INFO: '데이터 자동 선물 안내',
   CHANGE_SEARCH_CONDITION: '검색 조건 변경',
   CHANGE_NICKNAME: '닉네임 설정',
+  SELECT_SERVICE: '서비스 선택',
   SELECT_BANK: '은행선택',
   SELECT_GIFT_AMOUNT: '선물할 금액 선택',
   CHANGE_BILL_GUIDE_TYPE: '어떤 안내서를 보여 드릴까요?',
@@ -59,7 +60,8 @@ Tw.BUTTON_LABEL = {
   SELECT: '선택',
   CONFIRM: '확인',
   CANCEL: '취소',
-  MORE: '더보기'
+  MORE: '더보기',
+  LINE: '회선관리'
 };
 
 Tw.CURRENCY_UNIT = {
@@ -123,6 +125,18 @@ Tw.PAYMENT_STRING = {
 Tw.PAYMENT_POINT_VALUE = {
   OK_CASHBAG: '10',
   T_POINT: '11'
+};
+
+Tw.PAYMENT_PREPAY_TITLE = {
+  MICRO_PREPAY: '소액결제 선결제',
+  AUTO_PREPAY: '자동 선결제',
+  CHANGE_CARD: '카드정보 변경',
+  CHANGE_MONEY: '금액정보 변경',
+  CHANGE_ALL: '카드정보 및<br />금액정보 변경',
+  PREPAY_COMPLETE: '가<br />정상적으로<br />처리되었습니다.',
+  CANCEL_COMPLETE: '해지가<br />완료되었습니다.',
+  AUTO_COMPLETE: '가<br />신청되었습니다.',
+  AUTO_CHANGE_COMPLETE: '이<br />신청되었습니다.'
 };
 
 Tw.PAYMENT_STRD_MSG = {
@@ -243,7 +257,17 @@ Tw.MSG_MYT = {
     M01_TITLE: 'T데이터셰어링 기본제공 데이터 사용량',
     M01_CONTENTS: '올인원 요금제 등 기본으로 데이터를 제공하는 요금제를 이용하는 고객님 중 제한된 USIM(한도형)의 데이터 정보만 노출합니다.',
     M02_TITLE: 'T데이터셰어링 총 데이터 사용량',
-    M02_CONTENTS: '등록하신 각각의 T 데이터셰어링 USIM의 사용량을 합산한 정보입니다.'
+    M02_CONTENTS: '등록하신 각각의 T 데이터셰어링 USIM의 사용량을 합산한 정보입니다.',
+    A01: '진행을 취소하시고 이전 화면으로 이동하시겠습니까?'
+  },
+  DISCOUNT: {
+    M01_TITLE: '50% 할인제공 대상 데이터는',
+    M01_CONTENTS: '기본요금상품 및 무료로 제공되는 데이터 제공량에 한합니다. <br />대상 데이터 : 각 요금상품 별 데이터 기본 제공량, T끼리 데이터 선물하기 및 데이터 리필하기 서비스로 받은 데이터 제공량, 눝 데이터 생성하기, T가족혜택 데이터 생성하기'
+  },
+  JOIN_SERVICE: {
+    EMPTY_PWD: '6자리 이상의 숫자를 입력해주세요.',
+    ONLY_PWD: '비밀번호는 숫자만 입력 가능합니다.',
+    FAIL_PWD: '비밀번호가 일치하지 않습니다. \n 다시 입력해주시기 바랍니다.'
   }
 };
 
@@ -317,6 +341,7 @@ Tw.MSG_PAYMENT = {
   PRE_A06: '선결제를 종료하시겠습니까?',
   PRE_A07: '자동 선결제를 해지 하시겠습니까?',
   PRE_A08: '선결제 금액은 기준금액을 넘을 수 없습니다.',
+  PRE_A09: '생년월일을 입력해 주세요.',
   PRE_A10: '자동 선결제 신청 및 변경을 종료하시겠습니까?',
   PRE_A11: '선결제 금액은 10,000원 단위로 입력해 주세요.',
   ERROR_GET_CARD: '카드정보 조회에 실패하였습니다. 다시 시도해 주세요.',
@@ -409,19 +434,24 @@ Tw.MSG_AUTH = {
   LINE_A42: '이미 다른 계정에 등록된 회선입니다.',
   LINE_A43: '이미 등록된 회선 입니다.',
   LINE_A5: '광고 정보 수신동의 항목에 체크해 주세요.',
-  LINE_A6: '약관 상세 내용을 먼저 확인 해 주세요.'
+  LINE_A6: '약관 상세 내용을 먼저 확인 해 주세요.',
+  EASY_LOGIN_FAIL: '휴대폰 번호가 확인되지 않습니다. USIM이 분리된 상태인지 확인해 주세요.'
 };
 
 Tw.MSG_CUSTOMER = {
   VOICE_A01: '이미 신청된 내역이 있습니다. \n 고객센터(114)로 전화하여 목소리 등록을 진행해주세요.',
   VOICE_A02: '목소리인증서비스 신청을 취소하시겠습니까?',
   VOICE_A03: '진행을 취소하시고 첫 화면으로 이동하시겠습니까?',
+  EMAIL_A01: '이메일 상담 신청을 취소하시겠습니까?',
+  EMAIL_A02: 'SMS알림 설정 시 \n 답변이 등록되면 입력하신 휴대전화번호로 \n SMS가 발송됩니다.',
   HELPLINE_A01: '예약을 취소하시겠습니까?',
   HELPLINE_A02: '지역을 선택해 주세요.',
   HELPLINE_A03: '진행을 취소하시고 첫 화면으로 이동하시겠습니까?',
   HELPLINE_A04: '이미 예약하신 정보가 있습니다.',
-  HELPLINE_A05: '전화상담 예약은 지역별 1일 1회로 제한되며 중복 신청을 하실 수 없습니다. 예약현황을 확인하시겠습니까?'
-}
+  HELPLINE_A05: '전화상담 예약은 지역별 1일 1회로 제한되며 중복 신청을 하실 수 없습니다. 예약현황을 확인하시겠습니까?',
+  RESEARCH_A01: '이미 참여하신 설문입니다.',
+  RESEARCH_A02: '설문에 참여해 주셔서 감사합니다.'
+};
 
 Tw.RECHARGE_TYPE = {
   TOTAL: '전체',
@@ -480,3 +510,25 @@ Tw.URL_PATH = {
   BROADBAND: 'http://www.skbroadband.com/'
 };
 
+Tw.MSG_POSTCODE = {
+  L01: '광역시/도를 선택해주세요.',
+  L02: '시/군/구를 선택해주세요.',
+  L03: '검색어는 최소 2글자 이상 입력해주세요.',
+  L04: '검색된 주소가 없습니다.\n다시 한번 주소를 선택 및 입력해주세요.',
+  L05: '검색된 사서함이 없습니다.\n다시 한번 사서함 주소를 선택 및 입력해주세요.'
+};
+
+Tw.POSTCODE_TEXT = {
+  BUILDING_CODE: '건물번호',
+  ZIP_CODE: '우편번호',
+  SELECT_ADDRESS: '주소를 선택해주세요',
+  CITY_GUN_GU: '시/군/구'
+};
+
+Tw.CUSTOMER_EMAIL = {
+  CELL: '휴대폰',
+  INTERNET: '인터넷/집전화/TV',
+  DIRECT: '다이렉트샵',
+  CHOCO: '초콜렛',
+  SELECT_CATEGORY: '문의사항 선택'
+};

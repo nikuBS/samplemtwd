@@ -1,0 +1,82 @@
+<%#
+* FileName: postcode.step2-load.component.html
+* Author: 공자윤 (jayoon.kong@sk.com)
+* Date: 2018.08.01
+%>
+<!-- #header -->
+<div id="header" class="header-wrap">
+    <div class="header step-page">
+        <div class="header-ti">
+            <h1>우편번호 조회</h1>
+        </div>
+        <button class="close-step fe-common-back"><span class="blind">이전으로</span></button>
+    </div>
+</div>
+<!--// #header -->
+<div class="component-box tabs">
+    <div class="tab-area type1">
+        <div class="tab-linker fe-prevent">
+            <ul role="tablist">
+                <li role="tab" aria-selected="true" aria-controls="tab1-tab" id="tab1"><a>도로명주소</a></li><!-- true 열림 -->
+                <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2"><a>지번주소</a></li>
+                <li role="tab" aria-selected="false" aria-controls="tab3-tab" id="tab3"><a>사서함</a></li>
+            </ul>
+        </div>
+        <div class="tab-contents">
+            <ul>
+                <li role="tabpanel" id="tab1-tab" aria-labelledby="tab1">
+                    <div class="cont-box">
+                        <div class="addr-inquiry">
+                            <h3 class="addr-inquiry-tit">도로명 주소 조회 (2/3)</h3>
+                            <p class="addr-inquiry-des1">원하시는 주소를 선택해주세요.</p>
+                            <div class="addr-inquiry-feildset">
+                                <div class="formbox">
+                                    <button class="bt-dropdown big placeholder fe-select-detail fe-select-load-detail" title="대분류" aria-haspopup="true">주소를 선택해주세요<span class="ico"></span></button>
+                                    <p class="addr-inquiry-des2">원하시는 주소가 없을 시 [이전]으로 돌아가신 후 다시 한번 주소를 조회해주세요.</p>
+                                </div>
+                            </div>
+                            <div class="addr-inquiry-feildset fe-field-set none">
+                                <div class="formbox">
+                                    <span class="inputbox bt-add2">
+                                        <span class="input">
+                                            <input type="text" class="fe-building-name" placeholder="건물 번호 입력" title="도로명 주소">
+                                            <button href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></button>
+                                        </span>
+                                        <span class="bt-box fe-get-building-name">
+                                            <button type="button">조회</button>
+                                        </span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="cont-box nogaps-hoz">
+                        <div class="widget">
+                            <div class="widget-box radio">
+                                <ul class="select-list address fe-load-address" role="radiogroup"><!-- address : style class  -->
+                                    <li id="fe-standard-address-field" class="radiobox type01 none" role="radio" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+                                        <input type="radio" name="radio1" value="" title="값2" /><!-- 체크상태일 경우 checked="false" -->
+                                        <span class="radio-address">
+                                            <span class="address1">강남약국</span>
+                                            <span class="address2">건물번호 112</span>
+                                            <span class="address3">우편번호 40526</span>
+                                        </span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <div class="bt-more-wrap mt30">
+                <button role="button" class="bt-more fe-remain-address-wrap none" title="">더보기<span class="fe-remain-address">(20)</span></button>
+            </div>
+            <div class="floating-bottom">
+                <div class="bt-indiv bt-blue1">
+                    <button class="indiv-small fe-common-back">이전</button>
+                    <button class="indiv-big fe-go-step3" data-value="step3-load" disabled>선택</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

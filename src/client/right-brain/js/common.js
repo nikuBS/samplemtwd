@@ -497,6 +497,7 @@ skt_landing.action = {
         var createdTarget = $('.popup,.popup-page').last();
         if(popup_info.hbs == 'dropdown'){
           createdTarget.addClass('dropdown');
+          createdTarget.find('.popup-contents').css('max-height',$(window).height()*0.65);
         }
         createdTarget.find('.popup-blind').on('click',function(e){
           e.stopPropagation();

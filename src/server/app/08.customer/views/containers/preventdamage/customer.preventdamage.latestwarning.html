@@ -16,45 +16,24 @@
             <!-- .cont-box -->
             <div class="cont-box nogaps-hoz">
                 <div class="link-group-box">
-                    <ul class="link-group-list thin">
-                        <li class="link-highlight">
-                            <button class="link-group-btn">
-                                스마트폰 앱 접근권한 개인정보보호 안내
-                                <span class="link-group-date">2018.06.28</span>
-                            </button>
+                    <ul class="link-group-list thin fe-list">
+                        <% for (var i in data.list) {
+                        let emcyClass = data.list[i].emcyYn == 'Y' ? 'link-highlight' : '';
+                        %>
+                        <li class="<%= emcyClass %>">
+                            <a class="link-group-btn" href="/customer/prevent-damage/latest-warning/view?lw_id=<%= data.list[i].bltn2BltnId %>">
+                                <%= data.list[i].bltnTitleNm %>
+                                <span class="link-group-date"><%= data.list[i].rgstDtm %></span>
+                            </a>
                         </li>
-                        <li class="link-highlight">
-                            <button class="link-group-btn">
-                                SK텔레콤 이메일 요금안내서를 사칭한 피싱 메일에 주의하세요.
-                                <span class="link-group-date">2018.06.28</span>
-                            </button>
-                        </li>
-                        <li>
-                            <button class="link-group-btn">
-                                SK텔레콤 사칭 악성 메일 주의
-                                <span class="link-group-date">2018.06.28</span>
-                            </button>
-                        </li>
-                        <li>
-                            <button class="link-group-btn">
-                                명의도용 피해 안내
-                                <span class="link-group-date">2018.06.28</span>
-                            </button>
-                        </li>
-                        <li>
-                            <button class="link-group-btn">
-                                크롬 사칭 악성앱 대응 방법 안내
-                                <span class="link-group-date">2018.06.28</span>
-                            </button>
-                        </li>
-                        <li>
-                            <button class="link-group-btn">
-                                해외 로밍 피해예방법
-                                <span class="link-group-date">2018.06.28</span>
-                            </button>
-                        </li>
+                        <% } %>
                     </ul>
                 </div>
+                <% if (data.reamin > 0) { %>
+                <div class="bt-more-wrap mt0">
+                    <button role="button" class="bt-more fe-btn_more_list" title="">더보기<span>(<%= data.remain %>)</span></button>
+                </div>
+                <% } %>
             </div>
             <!--// .cont-box -->
         </div>
@@ -63,6 +42,21 @@
     <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }) %>
 </div>
 <% include ../../components/javascript.component.html %>
+<script type="text/template" id="tpl_latestwarning_list_item">
+    {{#list}}
+    {{#ifCond emcyYn '===' 'Y'}}
+    <li class="link-highlight">
+    {{/ifCond}}
+    {{#ifCond emcyYn '===' 'N'}}
+    <li>
+    {{/ifCond}}
+        <a class="link-group-btn" href="/customer/prevent-damage/latest-warning/view?lw_id={{bltn2BltnId}}">
+            {{bltnTitleNm}}
+            <span class="link-group-date">{{rgstDtm}}</span>
+        </a>
+    </li>
+    {{/list}}
+</script>
 <script>
   $(document).ready(function () {
     var comp = new Tw.CustomerPreventdamageLatestwarning($('.wrap'));

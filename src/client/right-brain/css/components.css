@@ -1336,14 +1336,12 @@
   left: 0;
   right: 0;
   top: 0;
-  bottom: 0;
   overflow: hidden;
   z-index: 30;
   /*padding-bottom:rem(40px);*/
 }
 
 .popup .popup-dropdown .popup-contents {
-  max-height: 70%;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   overflow-y: auto;
@@ -10299,16 +10297,32 @@ span[class*=char-star][class*=red] {
   width: 0.9375rem;
 }
 
+.box-store-grade .store-grade-top .store-grade-per .grade-star .star-count.star1-5 {
+  width: 1.5rem;
+}
+
 .box-store-grade .store-grade-top .store-grade-per .grade-star .star-count.star2 {
   width: 2rem;
+}
+
+.box-store-grade .store-grade-top .store-grade-per .grade-star .star-count.star2-5 {
+  width: 2.5rem;
 }
 
 .box-store-grade .store-grade-top .store-grade-per .grade-star .star-count.star3 {
   width: 3rem;
 }
 
+.box-store-grade .store-grade-top .store-grade-per .grade-star .star-count.star3-5 {
+  width: 3.5625rem;
+}
+
 .box-store-grade .store-grade-top .store-grade-per .grade-star .star-count.star4 {
   width: 4.0625rem;
+}
+
+.box-store-grade .store-grade-top .store-grade-per .grade-star .star-count.star4-5 {
+  width: 4.5625rem;
 }
 
 .box-store-grade .store-grade-top .store-grade-per .grade-star .star-count.star5 {
@@ -11645,6 +11659,10 @@ span[class*=char-star][class*=red] {
   color: #757575;
 }
 
+.poll-chart-box .poll-chart-txt.correct dt span {
+  color: #000;
+}
+
 .poll-chart-box .poll-chart-txt dd {
   display: table-cell;
   width: 30%;
@@ -12159,7 +12177,7 @@ span[class*=char-star][class*=red] {
 }
 
 .order-lookup-wrap .order-radio {
-  margin: 2.1875rem 0 1.25rem;
+  margin: 2.1875rem 0 0;
 }
 
 .order-lookup-wrap .order-radio .select-list li {
@@ -12171,9 +12189,109 @@ span[class*=char-star][class*=red] {
   margin: 0 0 0 0.3125rem;
 }
 
+.order-lookup-wrap .order-radio .select-list li:last-of-type {
+  margin-right: 0;
+}
+
 .order-lookup-wrap .order-lookup-cont {
   position: relative;
-  padding: 1.875rem 0 0;
+  margin: 1.875rem 0 0;
+}
+
+.order-lookup-wrap .order-lookup-cont .ico-order-delivery {
+  display: block;
+  width: 2.875rem;
+  height: 1rem;
+  overflow: hidden;
+  text-indent: -10000em;
+  background: url(/img/ico/delivery-group.png) no-repeat 0 0;
+  background-size: 3.125rem;
+}
+
+.order-lookup-wrap .order-lookup-cont .ico-order-delivery.delivery1 {
+  background-position: 0 0;
+}
+
+.order-lookup-wrap .order-lookup-cont .ico-order-delivery.delivery2 {
+  background-position: 0 -1.25rem;
+}
+
+.order-lookup-wrap .order-lookup-cont .ico-order-delivery.delivery3 {
+  background-position: 0 -2.5rem;
+}
+
+.order-lookup-wrap .order-lookup-cont .ico-order-delivery.delivery4 {
+  background-position: 0 -3.75rem;
+}
+
+.order-lookup-wrap .order-lookup-cont .order-lookup-list .radio .select-list .radiobox {
+  position: relative;
+  display: block;
+  margin: 0;
+  padding: 1.25rem 0;
+  border-top: 1px solid #e1e1e1;
+}
+
+.order-lookup-wrap .order-lookup-cont .order-lookup-list .radio .select-list .radiobox.type01:before {
+  position: absolute;
+  top: 1.375rem;
+  left: 0;
+}
+
+.order-lookup-wrap .order-lookup-cont .order-lookup-list .radio .select-list .radiobox .order-lookup-cell {
+  position: relative;
+  padding-left: 2rem;
+}
+
+.order-lookup-wrap .order-lookup-cont .order-lookup-list .radio .select-list .radiobox .order-lookup-cell:nth-of-type(2) {
+  margin-top: 1.25rem;
+}
+
+.order-lookup-wrap .order-lookup-cont .order-lookup-list .radio .select-list .radiobox .order-lookup-cell .ico-order-delivery {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.order-lookup-wrap .order-lookup-cont .order-lookup-list .radio .select-list .radiobox .order-lookup-cell .order-ti {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: #757575;
+}
+
+.order-lookup-wrap .order-lookup-cont .order-lookup-list .radio .select-list .radiobox .order-lookup-cell .order-number {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 400;
+  font-family: "Helvetica Neue", Roboto, sans-serif;
+}
+
+.order-lookup-wrap .order-lookup-cont .order-lookup-list .radio .select-list .radiobox .order-lookup-cell .order-tx {
+  display: block;
+  min-height: 4.375rem;
+  padding-right: 5rem;
+  font-size: 0.8125rem;
+  font-weight: 400;
+}
+
+.order-lookup-wrap .order-lookup-cont .order-lookup-list .radio .select-list .radiobox .order-lookup-cell .img-order-delivery {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: inline-block;
+  width: 4.375rem;
+  height: 4.375rem;
+  overflow: hidden;
+  border: 1px solid #e1e1e1;
+  border-radius: 0.3125rem;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  font-size: 0;
+}
+
+.order-lookup-wrap .order-lookup-cont .order-lookup-list .radio .select-list .radiobox .order-lookup-cell .img-order-delivery img {
+  width: 100%;
 }
 
 /* 김재성 */

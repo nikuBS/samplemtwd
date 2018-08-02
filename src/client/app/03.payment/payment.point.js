@@ -6,8 +6,6 @@
 
 Tw.PaymentPoint = function (rootEl) {
   this.$container = rootEl;
-  this.$window = $(window);
-  this.$document = $(document);
 
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -289,7 +287,7 @@ Tw.PaymentPoint.prototype = {
   },
   _cancalSuccessCallback: function () {
     this._popupService.close();
-    window.location.reload();
+    this._history.reload();
   },
   _isValidForCashbagOne: function () {
     var point = this.$container.find('.fe-point-title:visible .fe-point-value').text().replace(',', '');
@@ -336,7 +334,7 @@ Tw.PaymentPoint.prototype = {
     Tw.Logger.info('card check request fail');
   },
   _go: function (hash) {
-    window.location.hash = hash;
+    this._history.goHash(hash);
   },
   _getProductList: function () {
     return [

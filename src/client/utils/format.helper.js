@@ -38,6 +38,9 @@ Tw.FormatHelper = (function () {
   };
 
   var convNumFormat = function (number) {
+    if ( number < 1 ) {
+      return setDecimalPlace(number, 2);
+    }
     if (number > 0 && number < 100 && number % 1 !== 0) {
       return removeZero(number.toFixed(2));
     }
@@ -139,6 +142,10 @@ Tw.FormatHelper = (function () {
     return cardYm.substr(0, 4) + '/' + cardYm.substr(4, 2);
   };
 
+  var setDecimalPlace = function(value, point) {
+    return parseFloat(value.toFixed(point));
+  };
+
   function _getDashedCellPhoneNumber(phoneNumber) {
     var str = '';
     if (phoneNumber.length <= 10) {
@@ -155,15 +162,15 @@ Tw.FormatHelper = (function () {
       str += phoneNumber.substr(7);
     }
     return str;
-  };
+  }
 
   function _getDashedTelephoneNumber(phoneNumber) {
     var str = '';
+    var centerIdx = -1;
     if (/^02/.test(phoneNumber)) {
       str += phoneNumber.substring(0, 2);
       str += '-';
 
-      var centerIdx = -1;
       if (phoneNumber.length === 9) {
         centerIdx = 5;
       } else {
@@ -176,7 +183,6 @@ Tw.FormatHelper = (function () {
       str += phoneNumber.substring(0, 3);
       str += '-';
 
-      var centerIdx = -1;
       if (phoneNumber.length === 10) {
         centerIdx = 5;
       } else {
@@ -188,7 +194,7 @@ Tw.FormatHelper = (function () {
     }
 
     return str;
-  };
+  }
 
   function getFormattedPhoneNumber(phoneNumber) {
     var getMaskingPhoneNumber = function (mpn) {
@@ -199,7 +205,7 @@ Tw.FormatHelper = (function () {
       return tmpArr.join('-');
     };
     return getMaskingPhoneNumber(_getDashedCellPhoneNumber(phoneNumber));
-  };
+  }
 
   function getDashedPhoneNumber(phoneNumber) {
     if (Tw.ValidationHelper.isTelephone(phoneNumber)) {
@@ -209,7 +215,7 @@ Tw.FormatHelper = (function () {
     }
 
     return phoneNumber;
-  };
+  }
 
   return {
     leadingZeros: leadingZeros,
@@ -227,6 +233,8 @@ Tw.FormatHelper = (function () {
     sortObjArrAsc: sortObjArrAsc,
     makeCardYymm: makeCardYymm,
     getFormattedPhoneNumber: getFormattedPhoneNumber,
-    getDashedPhoneNumber: getDashedPhoneNumber
+    getDashedPhoneNumber: getDashedPhoneNumber,
+    convNumFormat: convNumFormat,
+    setDecimalPlace: setDecimalPlace
   };
 })();

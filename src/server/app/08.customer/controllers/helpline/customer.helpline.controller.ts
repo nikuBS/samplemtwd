@@ -16,12 +16,12 @@ interface ITimeInfo {
 
 export default class CustomerHelpline extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    this.apiService.request(API_CMD.BFF_08_0001).subscribe((resp: { code: string, result: ITimeInfo }) => {
+    this.apiService.request(API_CMD.BFF_08_0001, {}).subscribe((resp: { code: string, result: ITimeInfo }) => {
       const timeInfo = {
         curDate: DateHelper.getShortDateNoDot(resp.result.curDate),
-        availHours: resp.result.availHours.map((time) => { return time.slice(0, -2) })
-      }
+        availHours: resp.result.availHours.map((time) => time.slice(0, -2))
+      };
       res.render('helpline/customer.helpline.html', { svcInfo, timeInfo });
-    })
+    });
   }
 }

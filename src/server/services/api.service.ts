@@ -59,6 +59,7 @@ class ApiService {
       case API_SERVER.BFF:
         return Object.assign(header, {
           'content-type': 'application/json; charset=UTF-8',
+          'x-user-ip': '127.0.0.1',
           cookie: this.makeCookie(),
         });
       case API_SERVER.TID:
@@ -75,7 +76,7 @@ class ApiService {
 
   private makeCookie(): string {
     return COOKIE_KEY.SESSION + '=' + this.loginService.getServerSession() + ';' +
-      COOKIE_KEY.CHANNEL + '=' + this.loginService.getChannelCookie() + ';' +
+      COOKIE_KEY.CHANNEL + '=' + this.loginService.getChannel() + ';' +
       COOKIE_KEY.DEVICE + '=' + this.loginService.getDeviceCookie();
   }
 
@@ -107,6 +108,7 @@ class ApiService {
     if ( !FormatHelper.isEmpty(err.response) ) {
       const error = err.response.data;
       const headers = err.response.headers;
+      this.logger.error(this, '[API ERROR]', error);
 
       if ( command.server === API_SERVER.BFF ) {
         this.setServerSession(headers);
@@ -119,7 +121,7 @@ class ApiService {
   }
 
   private setServerSession(headers) {
-    this.logger.debug(this, 'Headers: ', JSON.stringify(headers));
+    this.logger.info(this, 'Headers: ', JSON.stringify(headers));
     if ( headers['set-cookie'] ) {
       this.logger.info(this, 'Set Session Cookie');
       this.loginService.setServerSession(this.parseSessionCookie(headers['set-cookie'][0])).subscribe();
