@@ -70,6 +70,14 @@ class DateHelper {
   }
 
   /**
+   * @param date {Date} or {string} : YYYYMMDD
+   * @returns {string} : 12월
+   */
+  static getShortKoreanMonth(date: any): string  {
+    return moment(this.convDateFormat(date)).format('MM월');
+  }
+
+  /**
    * @param date {Date} or {string} : YYYYMMDDhhmmss
    * @returns {number} : 30
    */

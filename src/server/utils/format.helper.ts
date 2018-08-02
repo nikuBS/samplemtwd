@@ -172,6 +172,10 @@ class FormatHelper {
   static insertColonForTime(val: string): string {
     return val.slice(0, 2) + ':' + val.slice(2);
   }
+
+  static numberWithCommas(num: number): string {
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  }
 }
 
 export default FormatHelper;
