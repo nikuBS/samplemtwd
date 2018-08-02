@@ -1,0 +1,166 @@
+<!--
+  FileName: myt.usage.pattern.html
+  Author: Kim InHwan (skt.P132150@partner.sk.com)
+  Date: 2018.07.30
+-->
+<% include ../../components/start.component.html %>
+<body>
+<div class="wrap">
+    <%- include('../../../../common/views/components/header.component.html', { title: '최근 사용패턴', svcInfo: data.svcInfo }); %>
+    <!-- #contents -->
+    <div id="pattern-main" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <div class="cont-box">
+                <div class="top-info type2">
+                    <span class="info-text">황지우 고객님의<br /><em><span class="ff-hn vbl">3</span>개월 사용패턴</em></span>
+                    <span class="subinfo-text"><span class="ff-hn vbl">3</span>월~<span class="ff-hn vbl">5</span>월</span>
+                </div>
+            </div>
+
+            <hr class="cont-sp type1" aria-hidden="true" />
+
+            <div class="cont-box nogaps">
+                <div class="component">
+                    <div class="component-box tabs">
+                        <div class="tab-area type1"><!-- 타입별 탭형태 변환 -->
+                            <div class="tab-linker">
+                                <ul role="tablist">
+                                    <li role="tab" aria-selected="true" aria-controls="tab1-tab" id="tab1"><button>사용요금</button></li><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
+                                    <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2"><button>사용량</button></li>
+                                </ul>
+                            </div>
+                            <div class="tab-contents">
+                                <ul>
+                                    <li role="tabpanel" id="tab1-tab" aria-labelledby="tab1">
+                                        <div class="cont-box nogaps-top">
+                                            <ul class="avrg-data">
+                                                <li>
+                                                    <dl>
+                                                        <dt>평균 사용요금</dt>
+                                                        <dd>91,940</dd>
+                                                    </dl>
+                                                </li>
+                                                <li>
+                                                    <dl>
+                                                        <dt>평균 할인요금</dt>
+                                                        <dd class="minus">-20,275</dd>
+                                                    </dl>
+                                                </li>
+                                            </ul>
+                                            <!-- 그래프 영역 -->
+                                            <div class="graph-wrap">
+                                                <div class="can-box3">
+                                                    <canvas></canvas>
+                                                </div>
+                                            </div>
+                                            <!--// 그래프 영역 -->
+                                            <div class="list-link">
+                                                <ul>
+                                                    <li>
+                                                        <button>세부 항목별 사용 패턴 <span class="ico"></span></button>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="plan-recommend">
+                                                <strong class="tit">알찬 요금제 추천</strong>
+                                                <p class="txt"><em>band 데이터 6.5G </em>로<br />바꿔보세요.</p>
+                                                <div class="btn-wrap">
+                                                    <button class="bt-link-tx">다른 추천 보기<span class="ico"></span></button>
+                                                    <button class="bt-link-tx">구경하러 가기<span class="ico"></span></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li role="tabpanel" id="tab2-tab" aria-labelledby="tab2">
+                                        <div class="cont-box">
+                                            <div class="chart-title">
+                                                <button class="bt-prev"><span class="blind">음성통화 사용량 보기</span></button>
+                                                <span class="item-tit">문자</span>
+                                                <button class="bt-next"><span class="blind">데이터 사용량 보기</span></button>
+                                            </div>
+                                            <ul class="cellular-chart-wrap">
+                                                <li>
+                                                    <div class="chart-usage">
+                                                        <span class="average">평균 사용량</span>
+                                                        <span class="result"><span>12</span></span>
+                                                    </div>
+                                                    <!-- 그래프 영역 -->
+                                                    <div class="graph-wrap">
+                                                        <div class="can-box1">
+                                                            <canvas></canvas>
+                                                        </div>
+                                                    </div>
+                                                    <!--// 그래프 영역 -->
+                                                </li>
+                                            </ul>
+                                            <div class="plan-recommend">
+                                                <strong class="tit">부가서비스 추천</strong>
+                                                <p class="txt"><em>안심옵션 프리미엄</em><br>이용해보세요.</p>
+                                                <div class="btn-wrap">
+                                                    <button class="bt-link-tx">다른 추천 보기<span class="ico"></span></button>
+                                                    <button class="bt-link-tx">구경하러 가기<span class="ico"></span></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="cont-sp type1" aria-hidden="true" />
+
+            <div class="cont-box nogaps-hoz">
+                <div class="box-confirm">
+                    <!-- .widget -->
+                    <div class="widget">
+                        <div class="widget-box accordion">
+                            <h3 class="tit-a">이용안내</h3>
+                            <div class="acco-cover toggle">
+                                <div class="bt-whole"><button role="button" aria-pressed="false"><span class="blind">내용 열기</span></button></div>
+                                <div class="acco-style">
+                                    <ul class="acco-list">
+                                        <li class="acco-box">
+                                            <div class="acco-tit"><button role="button" aria-pressed="false"><span class="bullet">1.</span> 사용요금 안내</button></div>
+                                            <div class="acco-cont">
+                                                <ul class="list-dot">
+                                                    <li class="list">본 서비스에서 제공되는 일부 데이터는 실제 요금안내서와는 다를 수 있으니 단순 참고용으로만 활용하여 주시기 바랍니다.</li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li class="acco-box">
+                                            <div class="acco-tit"><button role="button" aria-pressed="false"><span class="bullet">2.</span> 사용량 안내</button></div>
+                                            <div class="acco-cont">
+                                                <ul class="list-dot">
+                                                    <li class="list">이전 달 사용량은 다음 달 5일부터 확인하실 수 있습니다.</li>
+                                                    <li class="list">매월 1일~4일 : 이전 달 제외한 2개월 사용량 평균</li>
+                                                    <li class="list">매월 5일~말일 : 최근 3개월 사용량 평균</li>
+                                                    <li class="list">최근 5개월 이내에 신규가입/정지/명의변경 등의 이력이 있는 경우 정보가 조회되지 않을 수 있습니다.</li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--// .widget -->
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!--// #contents -->
+    <%- include('../../../../common/views/components/footer.component.html', { svcInfo: data.svcInfo }); %>
+</div>
+
+<% include ../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    var comp = new Tw.MyTUsagePattern($('#pattern-main'));
+  });
+</script>
+<% include ../../components/end.component.html %>

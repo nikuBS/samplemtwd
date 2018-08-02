@@ -1,9 +1,16 @@
 /**
+ * FileName:
+ * Author: Kim InHwan (skt.P132150@partner.sk.com)
+ * Date: 2018.07.
+ *
+ */
+
+/**
  * FileName: myt.joinService.protect.inquiry.js
  * Author: Kim Inhwan (skt.P132150@partner.sk.com)
  * Date: 2018.07.24
  */
-Tw.MyTJSProtectInquiry = function ($element, svcInfo) {
+Tw.MyTJoinProtectInquiry = function ($element, svcInfo) {
   this._svcInfo = svcInfo;
   this.$container = $element;
   this._loginService = new Tw.MyTJSProtectPwd();
@@ -11,7 +18,7 @@ Tw.MyTJSProtectInquiry = function ($element, svcInfo) {
   this._bindEvent();
 };
 
-Tw.MyTJSProtectInquiry.prototype = {
+Tw.MyTJoinProtectInquiry.prototype = {
   //element event bind
   _bindEvent: function () {
     // 확인

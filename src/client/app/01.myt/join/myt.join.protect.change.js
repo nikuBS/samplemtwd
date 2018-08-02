@@ -1,9 +1,16 @@
 /**
+ * FileName:
+ * Author: Kim InHwan (skt.P132150@partner.sk.com)
+ * Date: 2018.07.
+ *
+ */
+
+/**
  * FileName: myt.joinService.protect.change.js
  * Author: Kim Inhwan (skt.P132150@partner.sk.com)
  * Date: 2018.07.24
  */
-Tw.MyTJSProtectChange = function ($element, isNew) {
+Tw.MyTJoinProtectChange = function ($element, isNew) {
   this.$container = $element;
   this._new = (isNew === 'true');
   this._apiService = Tw.Api;
@@ -13,7 +20,7 @@ Tw.MyTJSProtectChange = function ($element, isNew) {
   this._bindEvent();
 };
 
-Tw.MyTJSProtectChange.prototype = {
+Tw.MyTJoinProtectChange.prototype = {
   //element event bind
   _bindEvent: function () {
     // 확인
