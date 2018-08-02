@@ -46,8 +46,9 @@ class CustomerShopDetailController extends TwViewController {
     const star = Math.round(parseFloat(result.custRateAvg));
     result.star = 'star' + star;
 
-    result.workDirection = result.talkMap.match(/1\..*:(.*)2\./)[1];
-    result.publicDirection = result.talkMap.match(/2\..*:(.*)/)[1];
+    // TODO: API response is..... wanker!!!! Need to communicate with backend
+    // result.workDirection = result.talkMap.match(/1\..*:(.*)2\./)[1];
+    // result.publicDirection = result.talkMap.match(/2\..*:(.*)/)[1];
   }
 }
 
