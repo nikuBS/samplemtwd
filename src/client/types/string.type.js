@@ -518,7 +518,8 @@ Tw.DATE_FORMAT = {
 };
 
 Tw.URL_PATH = {
-  BROADBAND: 'http://www.skbroadband.com/'
+  BROADBAND: 'http://www.skbroadband.com/',
+  COP_SERVICE : 'http://b2b.tworld.co.kr/cs/counsel/certServiceInfo.bc'
 };
 
 Tw.MSG_POSTCODE = {

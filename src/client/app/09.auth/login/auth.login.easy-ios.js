@@ -8,6 +8,7 @@ Tw.AuthLoginEasyIos = function (rootEl) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
+  this._nativeService = Tw.Native;
 
   this.$inputName = null;
   this.$inputBirth = null;
@@ -30,6 +31,8 @@ Tw.AuthLoginEasyIos.prototype = {
     ATH1005: 'ATH1005'    // 휴대폰번호 입력오류
   },
   _bindEvent: function () {
+    this.$container.on('click', '#fe-bt-cop', $.proxy(this._onClickCopBtn, this));
+
     this.$inputName = this.$container.find('#fe-input-name');
     this.$inputBirth = this.$container.find('#fe-input-birth');
     this.$inputGender = this.$container.find('.fe-radio-gender');
@@ -134,5 +137,11 @@ Tw.AuthLoginEasyIos.prototype = {
       return false;
     }
     return true;
+  },
+  _onClickCopBtn: function () {
+    this._nativeService.send(Tw.NTV_CMD.OPEN_URL, {
+      type: Tw.NTV_BROWSER.EXTERNAL,
+      href: Tw.URL_PATH.COP_SERVICE
+    });
   }
 };
