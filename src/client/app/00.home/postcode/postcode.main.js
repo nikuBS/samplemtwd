@@ -33,8 +33,8 @@ Tw.PostcodeMain.prototype = {
     this._selectedTabId = 'tab1';
     this._selectedTabName = 'load';
     this._defaultElementLength = 20;
-    this.$citySelector = this.$container.find('.fe-select-city');
-    this.$gunSelector = this.$container.find('.fe-select-gun');
+    this.$citySelector = this.$container.find('.fe-select-city:first');
+    this.$gunSelector = this.$container.find('.fe-select-gun:first');
     this.$getPostCodeBtn = this.$container.find('.fe-get-postcode');
     this.$fieldSet = this.$container.find('.fe-field-set:first');
     this.$loadAddress = this.$container.find('.fe-load-address:first');
@@ -83,6 +83,10 @@ Tw.PostcodeMain.prototype = {
     this._selectedTabId = $(event.currentTarget).attr('id');
     this._selectedTabName = $(event.currentTarget).attr('name');
     this._postType = $(event.currentTarget).attr('type');
+
+    this.$tabSelector = this.$container.find('#' + this._selectedTabId + '-tab');
+    this.$citySelector = this.$tabSelector.find('.fe-select-city');
+    this.$gunSelector = this.$tabSelector.find('.fe-select-gun');
 
     this.$step2TabContainer = this.$container.find('#' + this._selectedTabId + '-tab.fe-step2');
     this.$loadAddress = this.$step2TabContainer.find('.fe-load-address');
@@ -172,13 +176,24 @@ Tw.PostcodeMain.prototype = {
   _getPostSuccess: function (res) {
     var $detailSelector = this.$container.find('#' + this._selectedTabId + '-tab .fe-select-detail');
     if (res.code === Tw.API_CODE.CODE_00) {
-      if (res.result.length > 0) {
-        this._detailList = this._setList($detailSelector, this._detailList, res.result);
-        this._initAddress($detailSelector);
-
-        this._history.goHash('#step2-' + this._selectedTabName);
+      var $result = res.result;
+      if (this._selectedTabId === 'tab3') {
+        if ($result.content.length > 0) {
+          this._initDetailAddress();
+          this._setAddressList($result);
+          this._history.goHash('#step2-' + this._selectedTabName);
+        } else {
+          this._popupService.openAlert(Tw.MSG_POSTCODE.L05);
+        }
       } else {
-        this._getPostFail();
+        if ($result.length > 0) {
+          this._detailList = this._setList($detailSelector, this._detailList, res.result);
+          this._initAddress($detailSelector);
+
+          this._history.goHash('#step2-' + this._selectedTabName);
+        } else {
+          this._getPostFail();
+        }
       }
     } else {
       this._getPostFail();
@@ -364,34 +379,44 @@ Tw.PostcodeMain.prototype = {
   _getDetailSuccess: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
       var $result = res.result.bldgAddress;
-      var _address2 = this._getAddress2();
-      this._setPage($result);
-
-      var $content = $result.content;
-      for (var i = 0; i < $content.length; i++) {
-        var $addressField = this.$standardAddress.clone().removeClass('fe-standard').removeClass('none').addClass('fe-add-address');
-        $addressField.attr({'id': $content[i].bldClCd, 'postcode': $content[i].zip });
-        $addressField.find('.address1').text($content[i].bldNm);
-        $addressField.find('.address2').text(_address2.text + ' ' + $content[i][_address2.value]);
-        $addressField.find('.address3').text(Tw.POSTCODE_TEXT.ZIP_CODE + ' ' + $content[i].zip);
-        $addressField.on('click', $.proxy(this._onSelectDetailAddress, this));
-        this.$loadAddress.append($addressField);
-      }
+      this._setAddressList($result);
     }
   },
   _getDetailFail: function () {
 
   },
-  _getAddress2: function () {
-    var address2 = {
+  _setAddressList: function ($result) {
+    var _address = this._getAddress();
+    this._setPage($result);
+
+    var $content = $result.content;
+    for (var i = 0; i < $content.length; i++) {
+      var $addressField = this.$standardAddress.clone().removeClass('fe-standard').removeClass('none').addClass('fe-add-address');
+      $addressField.attr({'id': $content[i][_address.id], 'postcode': $content[i].zip, 'ho': $content[i].staMainHouseNumCtt });
+      $addressField.find('.address1').text($content[i][_address.name]);
+      $addressField.find('.address2').text(_address.text + ' ' + $content[i][_address.value]);
+      $addressField.find('.address3').text(Tw.POSTCODE_TEXT.ZIP_CODE + ' ' + $content[i].zip);
+      $addressField.on('click', $.proxy(this._onSelectDetailAddress, this));
+      this.$loadAddress.append($addressField);
+    }
+  },
+  _getAddress: function () {
+    var address = {
+      id: 'bldClCd',
+      name: 'bldNm',
       text: Tw.POSTCODE_TEXT.BUILDING_CODE,
       value: 'bldTotNum'
     };
     if (this._selectedTabId === 'tab2') {
-      address2.text = Tw.POSTCODE_TEXT.BUILDING_NUMBER;
-      address2.value = 'totHouse_numCtt';
+      address.text = Tw.POSTCODE_TEXT.BUILDING_NUMBER;
+      address.value = 'totHouse_numCtt';
+    } else if (this._selectedTabId === 'tab3') {
+      address.text = Tw.POSTCODE_TEXT.BUILDING_HO;
+      address.value = 'staMainHouseNumCtt';
+      address.id = 'serNum';
+      address.name = 'largDlvPlcNm';
     }
-    return address2;
+    return address;
   },
   _getNumberOrNameList: function () {
     return [
@@ -442,6 +467,7 @@ Tw.PostcodeMain.prototype = {
     var $baseForm = this.$container.find('.fe-base-form');
     var _baseText = this.$container.find('#' + this._selectedTabId + '-tab .fe-select-detail').text();
     $baseForm.find('.fe-post-code').text($checkedAddress.attr('postcode'));
+    $baseForm.find('.fe-ho').text($checkedAddress.attr('ho'));
     $baseForm.find('.fe-address').text(_baseText + ' ' + $checkedAddress.find('.address1').text());
 
     if ($checkedAddress.attr('id') === 'A2' || $checkedAddress.attr('id') === 'A3') {
