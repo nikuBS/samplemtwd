@@ -35,6 +35,9 @@ class PaymentPrepayMicroHistoryController extends TwViewController {
     if (!FormatHelper.isEmpty(record)) {
       record.map((data) => {
         data.date = DateHelper.getShortDateNoDot(data.opDt);
+        data.time = data.payOpTm.substr(0, 2) + ':'
+          + data.payOpTm.substr(2, 2) + ':'
+          + data.payOpTm.substr(4, 2);
         data.amount = FormatHelper.addComma(data.chrgAmt);
       });
     }
