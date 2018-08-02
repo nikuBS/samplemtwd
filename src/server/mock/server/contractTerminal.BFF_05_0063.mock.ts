@@ -3,65 +3,93 @@ const contractTerminal_BFF_05_0063 = {
   'msg': 'success',
   'result':
     {
-      'isInstallment': 'Y',
-      'sCustomer': 'TSupportAgree',
-      'isSuces': 'Y',
-      'tabletUser': 'N',
-      'wibroUser': 'N',
-      'agrmtUser': 'Y',
-      'isRsvPen': '',
-      'iDiscountCnt': 3,
-      'eqpAgrmetCnt': 2,
-      'feeAgrmtCnt': 1,
-      'iTInstallmentCnt': 0,
-      'iTAgreeCnt': 0,
-      'iTSupportAgreeCnt': 1,
-      'iRsvPenTInstallmentCnt': 0,
-      'iRsvPenTAgreeCnt': 0,
-      'iRsvPenNoAgreeCnt': 0,
-      'iRsvPenTSupportAgreeCnt': 0,
       'priceList':
         [
           {
             'disProdNm': '요금약정할인제도 (730 일)',
             'agrmtDcAmt': '0',
             'agrmtStNm': '약정가입중',
-            'agrmtDcStaDt': '20170428',
-            'agrmtDcEndDt': '20190428',
-            'svcAgrmtDcId': 'AA1000000045174995',
+            'agrmtDcStaDt': '20160525',
+            'agrmtDcEndDt': '20180525',
+            'svcAgrmtDcId': 'AA1000000033562306',
             'svcAgrmtDcCd': 'AA'
+          },
+          {
+            'disProdNm': '선택약정할인제도 (24 개월)',
+            'agrmtDcAmt': '-154412',
+            'agrmtStNm': '약정가입중',
+            'agrmtDcStaDt': '20160525',
+            'agrmtDcEndDt': '20180525',
+            'svcAgrmtDcId': 'AG1000000033562311',
+            'svcAgrmtDcCd': 'AG'
+          }
+        ],
+      'tablet':
+        {
+          'agrmtDcAmt': '-174226',
+          'agrmtDayCnt': '699',
+          'agrmtDcStaDt': '20160901',
+          'agrmtDcEndDt': '20180831',
+          'aGrmtPenAmt': '7390'
+        },
+      'wibro':
+        {
+          'agrmtDcAmt': '-174226',
+          'agrmtDayCnt': '699',
+          'agrmtDcStaDt': '20160901',
+          'agrmtDcEndDt': '20180831',
+          'aGrmtPenAmt': '7390'
+        },
+      'tAgree':
+        {
+          'agrmtDivision': 'TSupportAgree',
+          'agrmtMthCnt': '24',
+          'dcAmt': '61000',
+          'rmnDayCnt': '81',
+          'staDt': '20161021',
+          'agrmtTermDt': '20181020',
+          'penAmt': '8980'
+        },
+      'tInstallment':
+        {
+          'allotMthCnt': '24',
+          'totAgrmtAmt': '66000',
+          'invRmnCnt': '24',
+          'penAmt2': '0',
+          'tInstallmentOpDt': '20170304'
+        },
+      'rsvPenTAgree':
+        {
+          'rsvPenAmt': '26880',
+          'rtenPenStrdAmt': '66000',
+          'rtenAgrmtMthCnt': '24',
+          'remDayCnt': '224',
+          'rtenAgrmtEndDt': '20190303',
+          'astamtOpDt': '20170304'
+        },
+      'sucesAgreeList':
+        [
+          {
+            'bfEqpDcClCd': '3',
+            'bfEqpDcClNm': '약정위약금2',
+            'agrmtDcAmt': '17500',
+            'agrmtMthCnt': '24',
+            'remMthCnt': '1',
+            'sucesPenAmt': '470',
+            'sucesAgrmtStaDt': '20161021',
+            'sucesAgrmtEndDt': '20161109',
+            'sucesRemDayCnt' : '10'
           }
         ],
       'installmentList':
         [
           {
-            'eqpMdlNm': 'IP***********',
-            'allotStaDt': '20170428',
+            'eqpMdlNm': 'SM-N920S_64GS',
+            'allotStaDt': '20170304',
             'allotMthCnt': '24',
-            'invRmn': '19',
-            'allotApprAmt': '989184',
-            'invBamt': '779024'
-          }
-        ],
-      'tAgree':
-        {
-          'agrmtMthCnt': '24',
-          'dcAmt': '69000',
-          'rmnDayCnt': '271',
-          'staDt': '20170428',
-          'agrmtTermDt': '20190427',
-          'penAmt': '33990'
-        },
-      'sucesAgreeList':
-        [
-          {
-            'bfEqpDcClCd': '7',
-            'bfEqpDcClNm': 'T지원금약정',
-            'agrmtDcAmt': '68000',
-            'agrmtMthCnt': '24',
-            'sucesPenAmt': '21960',
-            'sucesAgrmtStaDt': '20170428',
-            'remMthCnt': '6'
+            'invRmn': '18',
+            'allotApprAmt': '1056',
+            'invBamt': '786'
           }
         ]
     }

@@ -11,6 +11,7 @@ import StringHelper from '../../../../utils/string.helper';
 import moment = require('moment');
 import DateHelper from '../../../../utils/date.helper';
 import FormatHelper from '../../../../utils/format.helper';
+import * as _ from 'underscore';
 import contractTerminal_BFF_05_0063 from '../../../../mock/server/contractTerminal.BFF_05_0063.mock';
 
 
@@ -26,7 +27,7 @@ class MytJoinContractTerminalPhone extends TwViewController {
   private _commDataInfo: any = {
     feeInfo: [],
     terminalInfo: [],
-    repaymentInfo: null
+    repaymentInfo: []
   };
 
   // 노출조건
@@ -92,197 +93,102 @@ class MytJoinContractTerminalPhone extends TwViewController {
   } // render end
 
   private _dataInit() {
+    this.logger.info(this, '[ _dataInit() start ]');
+
+    const thisMain = this;
     this._commDataInfo.feeInfo = [];
     this._commDataInfo.terminalInfo = [];
-    this._commDataInfo.repaymentInfo = null;
+    this._commDataInfo.repaymentInfo = [];
 
-    this.logger.info(this, '[ _dataInit() start ]');
-    const thisMain = this;
-    const iDiscountCnt = thisMain._resDataInfo.iDiscountCnt;
-    const eqpAgrmetCnt = thisMain._resDataInfo.eqpAgrmetCnt;
+    // console.dir(thisMain._resDataInfo);
 
-    // 01. T약정할부 + T약정할부위약금2 ==> Case 3 T약정 할부 + T약정 할부 승계 경우
-    const iTInstallmentCnt = thisMain._resDataInfo.iTInstallmentCnt;
-    const iRsvPenTInstallmentCnt = thisMain._resDataInfo.iRsvPenTInstallmentCnt;
+    const priceList = thisMain._resDataInfo.priceList;
+    const tablet = thisMain._resDataInfo.tablet;
+    const wibro = thisMain._resDataInfo.wibro;
+    this.logger.info(this, '[ _.size(priceList) ]', _.size(priceList));
+    this.logger.info(this, '[ _.size(tablet) ]', _.size(tablet));
+    this.logger.info(this, '[ _.size(wibro) ]', _.size(wibro));
 
-    // 02. T기본약정 + T기본약정위약금2
-    const iTAgreeCnt = thisMain._resDataInfo.iTAgreeCnt;
-    const iTSupportAgreeCnt = thisMain._resDataInfo.iTSupportAgreeCnt;
-    const iRsvPenTAgreeCnt = thisMain._resDataInfo.iRsvPenTAgreeCnt;
-    const iRsvPenTSupportAgreeCnt = thisMain._resDataInfo.iRsvPenTSupportAgreeCnt;
+    const tAgree = thisMain._resDataInfo.tAgree;
+    const tInstallment = thisMain._resDataInfo.tInstallment;
+    const rsvPenTAgree = thisMain._resDataInfo.rsvPenTAgree;
+    const sucesAgreeList = thisMain._resDataInfo.sucesAgreeList;
+    this.logger.info(this, '[ _.size(tAgree) ]', _.size(tAgree));
+    this.logger.info(this, '[ _.size(tInstallment) ]', _.size(tInstallment));
+    this.logger.info(this, '[ _.size(rsvPenTAgree) ]', _.size(rsvPenTAgree));
+    this.logger.info(this, '[ _.size(sucesAgreeList) ]', _.size(sucesAgreeList));
 
-    // 무약정 약정위약금2 ==> Case 5 약정 위약금2 경우
-    const iRsvPenNoAgreeCnt = thisMain._resDataInfo.iRsvPenNoAgreeCnt;
+    const installmentList = thisMain._resDataInfo.installmentList;
+    this.logger.info(this, '[ _.size(installmentList) ]', _.size(installmentList));
 
-    // 03. 승계정보 | 승계된 (약정)할인 정보 ==> Case 3 T약정 할부 + T약정 할부 승계 경우, Case 4 T기본 약정 + T할부지원승계 경우
-    const isSuces = thisMain._resDataInfo.isSuces;
-    const sBfEqpDcClCd = thisMain._resDataInfo.sBfEqpDcClCd; // 문의중!! 키, 벨류 값이 없음.
-    const BfEqpDcClCd = thisMain._resDataInfo.BfEqpDcClCd;
-
-    // 04. 요금약정할인(태블릿약정 / 뉴 태블릿약정 / 요금약정) [[ ==> Case 8 구/뉴 태블릿 약정 가입 경우
-    const feeAgrmtCnt = thisMain._resDataInfo.feeAgrmtCnt;
-    const tabletUser = thisMain._resDataInfo.tabletUser; // 테블릿 약정 ==> Case 6 구 태블릿 약정 가입 경우
-    const agrmtUser = thisMain._resDataInfo.agrmtUser; // 요금 약정==> Case 7 뉴 태블릿 약정 가입 경우
-
-    // 05. 와이브로 요금 약정 일 경우
-    const wibroUser = thisMain._resDataInfo.wibroUser;
-
-    const isInstallment = thisMain._resDataInfo.isInstallment; // 단말기할부 유무
-
-    const tAgree = thisMain._resDataInfo.tAgree; //  T 기본약정 | {}
-    const tInstallment = thisMain._resDataInfo.tInstallment; // T 약정 할부지원 | {}
-    const rsvPenTAgree = thisMain._resDataInfo.rsvPenTAgree; // 약정 위약금2(NEW) | {}
-    const tablet = thisMain._resDataInfo.tablet; // 태블릿 약정할인 | {}
-    const wibro = thisMain._resDataInfo.wibro; // 와이브로약정할인 | {}
-
-    const priceList = thisMain._resDataInfo.priceList; // 요금약정할인 | []
-    const sucesAgreeList = thisMain._resDataInfo.sucesAgreeList; // 승계된 약정정보 | []
-    const installmentList = thisMain._resDataInfo.installmentList; // 단말기 할부 | []
-
-
-    if ( iDiscountCnt > 0 ) { // 약정의 갯수
-      // -------------------------------------------------------------[1. 요금약정할인 정보]
-      if ( feeAgrmtCnt > 0 ) { // 요금약정갯수
-        if ( tabletUser === 'Y' ) { // 태블릿 약정 가입 여부 | Case 6 구 태블릿 약정
-          this.logger.info(this, '[ 요금약정 > 태블릿 약정 ]', tabletUser);
-          tablet.titNm = '구 태블릿 약정';
-          thisMain._commDataInfo.feeInfo.push(tablet);
-        }
-        if ( agrmtUser === 'Y' ) { // 요금약정할인 가입 여부 | Case 7 뉴 태블릿 약정
-          this.logger.info(this, '[ 요금약정 > 요금약정할인 ]', agrmtUser);
-          for ( let i = 0; i < priceList.length; i++ ) {
-            priceList[i].titNm = '뉴 태블릿 약정';
-            /*
-            * param : 데이터, 약정시작일, 약정종료일
-             */
-            thisMain._proDate(priceList[i], priceList[i].agrmtDcStaDt, priceList[i].agrmtDcEndDt);
-
-            thisMain._commDataInfo.feeInfo.push(priceList[i]);
-          }
-        }
+    // -------------------------------------------------------------[1. 요금약정할인 정보]
+    if ( _.size(priceList) > 0 ) {
+      for ( let i = 0; i < priceList.length; i++ ) {
+        priceList[i].titNm = priceList[i].disProdNm;
+        thisMain._proDate(priceList[i], priceList[i].agrmtDcStaDt, priceList[i].agrmtDcEndDt);
+        thisMain._commDataInfo.feeInfo.push(priceList[i]);
       }
-
-      // -------------------------------------------------------------[2. 단말기 약정할인 정보]
-      if ( eqpAgrmetCnt > 0 ) { // 단말약정갯수
-
-      }
-
-      /*
-      * Case 3 T약정할부지원 + T약정 할부 승계 경우
-       */
-      if ( (iTInstallmentCnt + iRsvPenTInstallmentCnt) > 0 ) { // T약정할부지원 갯수 + T약정할부지원 위약금 2 갯수
-        if ( iTInstallmentCnt > 0 ) { // T약정 할부 지원
-          // tInstallment
-          this.logger.info(this, '[ 단말기약정 > iTInstallmentCnt ]', iTInstallmentCnt);
-          tInstallment.titNm = '가입/T약정 할부 지원';
-          thisMain._commDataInfo.terminalInfo.push(tInstallment);
-        }
-        if ( iRsvPenTInstallmentCnt > 0 ) { // 약정 위약금2
-          // rsvPenTAgree
-          this.logger.info(this, '[ 단말기약정 > iRsvPenTInstallmentCnt ]', iRsvPenTInstallmentCnt);
-          rsvPenTAgree.titNm = '가입/약정 위약금2';
-          thisMain._commDataInfo.terminalInfo.push(rsvPenTAgree);
-        }
-      }
-
-      /*
-      * T기본 약정 + T지원금 약정 + T기본약정 약정위약금 2 + T지원금약정 약정위약금 2
-       */
-      if ( (iTAgreeCnt + iTSupportAgreeCnt + iRsvPenTAgreeCnt + iRsvPenTSupportAgreeCnt) > 0 ) {
-        if ( iTAgreeCnt > 0 ) { // T기본 약정
-          // tAgree
-          this.logger.info(this, '[ 단말기약정 > iTAgreeCnt ]', iTAgreeCnt);
-          tAgree.titNm = '가입/T기본 약정';
-          thisMain._commDataInfo.terminalInfo.push(tAgree);
-        }
-        if ( iTSupportAgreeCnt > 0 ) { // T지원금 약정
-          // tAgree
-          this.logger.info(this, '[ 단말기약정 > iTSupportAgreeCnt ]', iTSupportAgreeCnt);
-          tAgree.titNm = '가입/T지원금 약정';
-          thisMain._commDataInfo.terminalInfo.push(tAgree);
-        }
-        if ( iRsvPenTAgreeCnt > 0 ) { // T기본약정 약정위약금2
-          // rsvPenTAgree
-          this.logger.info(this, '[ 단말기약정 > iRsvPenTAgreeCnt ]', iRsvPenTAgreeCnt);
-          rsvPenTAgree.titNm = '가입/T기본약정 약정위약금2';
-          thisMain._commDataInfo.terminalInfo.push(rsvPenTAgree);
-        }
-        if ( iRsvPenTSupportAgreeCnt > 0 ) { // T지원금약정 약정위약금2
-          // rsvPenTAgree
-          this.logger.info(this, '[ 단말기약정 > iRsvPenTSupportAgreeCnt ]', iRsvPenTSupportAgreeCnt);
-          rsvPenTAgree.titNm = '가입/T지원금약정 약정위약금2';
-          thisMain._commDataInfo.terminalInfo.push(rsvPenTAgree);
-        }
-
-      }
-
-      if ( iRsvPenNoAgreeCnt > 0 ) {// 무약정 약정위약금 2
-        // rsvPenTAgree
-        this.logger.info(this, '[ 단말기약정 > iRsvPenNoAgreeCnt ]', iRsvPenNoAgreeCnt);
-        rsvPenTAgree.titNm = '가입/무약정 약정위약금2';
-        thisMain._commDataInfo.terminalInfo.push(rsvPenTAgree);
-      }
-
-      /*
-      * 03. 승계정보 : sucesAgreeList
-      * BfEqpDcClCd : 할인구분코드
-       */
-      if ( isSuces === 'Y' ) { // 승계정보 여부 : Y / N
-        this.logger.info(this, '[ 승계 ]', isSuces);
-        console.dir(sucesAgreeList);
-
-        for ( let i = 0; i < sucesAgreeList.length; i++ ) {
-          if ( sucesAgreeList[i].bfEqpDcClCd === '1' ) { // T약정 할부 지원
-            // sucesAgreeList
-            this.logger.info(this, '[ 단말기약정 승계 > bfEqpDcClCd > 1 ]');
-            sucesAgreeList[i].titNm = '승계/T약정 할부 지원';
-            thisMain._commDataInfo.terminalInfo.push(sucesAgreeList[i]);
-          }
-          if ( sucesAgreeList[i].bfEqpDcClCd === '2' ) { //
-            // sucesAgreeList
-            this.logger.info(this, '[ 단말기약정 승계 > bfEqpDcClCd > 2 ]');
-            sucesAgreeList[i].titNm = '승계/T기본 약정';
-            thisMain._commDataInfo.terminalInfo.push(sucesAgreeList[i]);
-          }
-          if ( sucesAgreeList[i].bfEqpDcClCd === '3' ) { //
-            // sucesAgreeList
-            this.logger.info(this, '[ 단말기약정 승계 > bfEqpDcClCd > 3 ]');
-            sucesAgreeList[i].titNm = '승계/약정 위약금2';
-            thisMain._commDataInfo.terminalInfo.push(sucesAgreeList[i]);
-          }
-          if ( sucesAgreeList[i].bfEqpDcClCd === '7' ) { //
-            // sucesAgreeList
-            this.logger.info(this, '[ 단말기약정 승계 > bfEqpDcClCd > 7 ]');
-            sucesAgreeList[i].titNm = '승계/T지원금 약정';
-            thisMain._commDataInfo.terminalInfo.push(sucesAgreeList[i]);
-          }
-        }
-
-
-
-      }
-
-      if ( wibroUser === 'Y' ) { // 와이브로 약정 가입 여부
-        this.logger.info(this, '[ 단말기약정 > wibroUser ]', wibroUser);
-        wibro.titNm = 'wibro';
-        thisMain._commDataInfo.terminalInfo.push(wibro);
-      }
-
     }
+    if ( _.size(tablet) > 0 ) {
+      tablet.titNm = '태블릿 약정';
+      thisMain._proDate(tablet, tablet.agrmtDcStaDt, tablet.agrmtDcEndDt);
+      thisMain._commDataInfo.feeInfo.push(tablet);
+    }
+    if ( _.size(wibro) > 0 ) {
+      wibro.titNm = 'wibro 약정';
+      thisMain._proDate(wibro, wibro.agrmtDcStaDt, wibro.agrmtDcEndDt);
+      thisMain._commDataInfo.feeInfo.push(wibro);
+    }
+    this.logger.info(this, '[ 1. 요금약정할인 정보 this._commDataInfo.feeInfo ]');
+    console.dir(this._commDataInfo.feeInfo);
+
+    // -------------------------------------------------------------[2. 단말기 약정할인 정보]
+    if ( _.size(tAgree) > 0 ) {
+      tAgree.titNm = '가입 / ' + 'T 기본약정';
+      thisMain._proDate(tAgree, tAgree.staDt, tAgree.agrmtTermDt);
+      thisMain._commDataInfo.terminalInfo.push(tAgree);
+    }
+    if ( _.size(tInstallment) > 0 ) {
+      tInstallment.titNm = '가입 / ' + 'T 약정 할부지원';
+      const tInstallmentEndDt = moment( tInstallment.tInstallmentOpDt ).add(tInstallment.allotMthCnt, 'months').format('YYYYMMDD');
+      thisMain._proDate(tInstallment, tInstallment.tInstallmentOpDt, tInstallmentEndDt);
+      thisMain._commDataInfo.terminalInfo.push(tInstallment);
+    }
+    if ( _.size(rsvPenTAgree) > 0 ) {
+      rsvPenTAgree.titNm = '가입 / ' + '약정 위약금2(NEW)';
+      thisMain._proDate(rsvPenTAgree, rsvPenTAgree.astamtOpDt, rsvPenTAgree.rtenAgrmtEndDt);
+      thisMain._commDataInfo.terminalInfo.push(rsvPenTAgree);
+    }
+    if ( _.size(sucesAgreeList) > 0 ) {
+      for ( let i = 0; i < sucesAgreeList.length; i++ ) {
+        sucesAgreeList[i].titNm = '승계 / ' + sucesAgreeList[i].bfEqpDcClNm;
+
+        thisMain._proDateSuc( sucesAgreeList[i],
+          sucesAgreeList[i].sucesAgrmtStaDt,
+          sucesAgreeList[i].sucesAgrmtEndDt,
+          sucesAgreeList[i].sucesRemDayCnt );
+
+        thisMain._commDataInfo.terminalInfo.push(sucesAgreeList[i]);
+      }
+    }
+    this.logger.info(this, '[ 2. 단말기 약정할인 정보 this._commDataInfo.terminalInfo ]');
+    console.dir(this._commDataInfo.terminalInfo);
 
     // -------------------------------------------------------------[3. 단말기 분할 상환 정보]
-    if ( installmentList.length > 0 ) {
-      if ( isInstallment === 'Y' ) { // 단말기할부 유무
-        // installmentList 단말기 할부
-        this.logger.info(this, '[ 단말기할부 ]', isInstallment);
-        thisMain._commDataInfo.repaymentInfo = installmentList;
+    if ( _.size(installmentList) > 0 ) {
+      for ( let i = 0; i < installmentList.length; i++ ) {
+        installmentList[i].titNm = installmentList[i].eqpMdlNm;
+        const installmentListEndDt = moment( installmentList[i].allotStaDt ).add(installmentList[i].allotMthCnt, 'months').format('YYYYMMDD');
+        thisMain._proDate(installmentList[i], installmentList[i].allotStaDt, installmentListEndDt);
+        thisMain._commDataInfo.repaymentInfo.push(installmentList[i]);
       }
     }
-
+    this.logger.info(this, '[ 3. 단말기 분할 상환 정보 this._commDataInfo.repaymentInfo ]');
+    console.dir(this._commDataInfo.repaymentInfo);
 
     this.logger.info(this, '[ _dataInit() end ]');
-    console.dir( thisMain._commDataInfo.terminalInfo );
   }
+
   // -------------------------------------------------------------[서비스]
   private _proDate(dataObj: any, start: string, end: string) {
     this.logger.info(this, '[ 서비스 > _proDate ]');
@@ -291,8 +197,24 @@ class MytJoinContractTerminalPhone extends TwViewController {
     dataObj.startDt = DateHelper.getShortDateWithFormat(startDt, 'YYYY.MM.DD');
     dataObj.endDt = DateHelper.getShortDateWithFormat(endDt, 'YYYY.MM.DD');
     dataObj.totDt = moment(endDt, 'YYYYMMDD').diff(startDt, 'day');
-    dataObj.curDt = moment(endDt, 'YYYYMMDD').diff( moment().format('YYYYMMDD'), 'day');
-    dataObj.perDt = Math.floor( ( dataObj.curDt / dataObj.totDt) * 100 ); // 퍼센트
+    dataObj.curDt = moment(endDt, 'YYYYMMDD').diff(moment().format('YYYYMMDD'), 'day');
+    dataObj.perDt = Math.floor((dataObj.curDt / dataObj.totDt) * 100); // 퍼센트
+    dataObj.totMt = moment(endDt, 'YYYYMMDD').diff(startDt, 'month');
+  }
+/*
+* _proDateSuc
+* remnant : 잔여일수
+ */
+  private _proDateSuc(dataObj: any, start: string, end: string, remnant: string) {
+    this.logger.info(this, '[ 서비스 > _proDateSuc ]');
+    const startDt = start;
+    const endDt = end;
+    const remnantDt = moment(endDt, 'YYYYMMDD').subtract(remnant, 'day').format('YYYYMMDD'); // 진행날짜
+    dataObj.startDt = DateHelper.getShortDateWithFormat(startDt, 'YYYY.MM.DD');
+    dataObj.endDt = DateHelper.getShortDateWithFormat(endDt, 'YYYY.MM.DD');
+    dataObj.totDt = moment(endDt, 'YYYYMMDD').diff(startDt, 'day');
+    dataObj.curDt = moment(endDt, 'YYYYMMDD').diff(remnantDt, 'day');
+    dataObj.perDt = Math.floor((dataObj.curDt / dataObj.totDt) * 100); // 퍼센트
     dataObj.totMt = moment(endDt, 'YYYYMMDD').diff(startDt, 'month');
   }
 
