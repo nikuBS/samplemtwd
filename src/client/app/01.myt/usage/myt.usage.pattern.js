@@ -6,7 +6,6 @@
  */
 
 Tw.MyTUsagePattern = function ($element) {
-  var self = this;
   this.$container = $element;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -19,9 +18,7 @@ Tw.MyTUsagePattern = function ($element) {
   this._rendered();
   this._bindEvent();
 
-  setTimeout(function () {
-    self._initialize();
-  }, 200);
+  setTimeout($.proxy(this._initialize, this), 200);
 };
 
 Tw.MyTUsagePattern.prototype = {
