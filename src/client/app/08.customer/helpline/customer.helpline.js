@@ -222,9 +222,15 @@ Tw.CustomerHelpline.prototype = {
 
   _successSubmit: function (resp) {
     if (resp.code === Tw.API_CODE.CODE_00) {
-      if (resp.result.historiesYn === "Y") {
+      if (resp.result.historiesYn === 'Y') {
         this._clearData();
-        this._popupService.openConfirm(Tw.POPUP_TITLE.CONFIRM, Tw.MSG_CUSTOMER.HELPLINE_A04, Tw.MSG_CUSTOMER.HELPLINE_A05, undefined, $.proxy(this._handleGoToHistory, this));
+        this._popupService.openConfirm(
+          Tw.POPUP_TITLE.CONFIRM,
+          Tw.MSG_CUSTOMER.HELPLINE_A04,
+          Tw.MSG_CUSTOMER.HELPLINE_A05,
+          undefined,
+          $.proxy(this._handleGoToHistory, this)
+        );
       } else {
         this._fillReservationInfo(resp.result);
         this._history.setHistory();

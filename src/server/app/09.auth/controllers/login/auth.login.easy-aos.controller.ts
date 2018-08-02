@@ -13,9 +13,13 @@ class AuthLoginEasyAos extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+  render(req: Request, res:
+    Response, next: NextFunction, svcInfo: any) {
     const query = req.query;
-    const mdn = FormatHelper.conTelFormatWithDash(query.mdn);
+    const mdn = {
+      original: query.mdn,
+      show: FormatHelper.conTelFormatWithDash(query.mdn)
+    };
 
     res.render('login/auth.login.easy-aos.html', { svcInfo, mdn });
   }

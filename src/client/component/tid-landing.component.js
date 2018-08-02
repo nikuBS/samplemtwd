@@ -14,10 +14,10 @@ Tw.TidLandingComponent = function (rootEl) {
 
 Tw.TidLandingComponent.prototype = {
   _bindEvent: function () {
-    this.$container.on('click', '.bt-account', $.proxy(this._onClickBtAccount, this));
-    this.$container.on('click', '.bt-find-id', $.proxy(this._onClickBtFindId, this));
-    this.$container.on('click', '.bt-find-pw', $.proxy(this._onClickBtFindPw, this));
-    this.$container.on('click', '.bt-change-pw', $.proxy(this._onClickBtChangePw, this));
+    this.$container.on('click', '.fe-bt-account', $.proxy(this._onClickBtAccount, this));
+    this.$container.on('click', '.fe-bt-find-id', $.proxy(this._onClickBtFindId, this));
+    this.$container.on('click', '.fe-bt-find-pw', $.proxy(this._onClickBtFindPw, this));
+    this.$container.on('click', '.fe-bt-change-pw', $.proxy(this._onClickBtChangePw, this));
   },
   _goLoad: function (nativeCommand, url, callback) {
     if ( Tw.BrowserHelper.isApp() ) {

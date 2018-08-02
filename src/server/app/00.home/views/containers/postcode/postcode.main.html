@@ -1,0 +1,58 @@
+<%#
+* FileName: postcode.main.html
+* Author: 공자윤 (jayoon.kong@sk.com)
+* Date: 2018.07.30
+%>
+<% include ../components/start.component.html %>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div id="post-code" class="wrap">
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <hr class="cont-sp type1" aria-hidden="true"/>
+            <!-- .cont-box -->
+            <div class="cont-box nogaps">
+                <!-- .component -->
+                <div id="main" class="component">
+                    <% include ../../components/postcode/postcode.main.component.html %>
+                </div>
+                <div id="step2-load" class="component" style="display:none;">
+                    <% include ../../components/postcode/postcode.step2-load.component.html %>
+                </div>
+                <div id="step2-number" class="component" style="display:none;">
+                    <% include ../../components/postcode/postcode.step2-number.component.html %>
+                </div>
+                <div id="step2-office" class="component" style="display:none;">
+                    <% include ../../components/postcode/postcode.step2-office.component.html %>
+                </div>
+                <div id="step3-load" class="component" style="display:none;">
+                    <% include ../../components/postcode/postcode.step3-load.component.html %>
+                </div>
+                <div id="step3-number" class="component" style="display:none;">
+                    <% include ../../components/postcode/postcode.step3-number.component.html %>
+                </div>
+                <div id="step3-office" class="component" style="display:none;">
+                    <% include ../../components/postcode/postcode.step3-office.component.html %>
+                </div>
+            </div>
+            <!--// .cont-box -->
+        </div>
+    </div>
+    <!--// #contents -->
+</div>
+<% include ../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    new Tw.PostcodeMain($('#post-code'));
+  });
+</script>
+<% include ../components/end.component.html %>

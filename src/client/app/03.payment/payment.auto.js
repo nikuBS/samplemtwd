@@ -6,8 +6,6 @@
 
 Tw.PaymentAuto = function (rootEl) {
   this.$container = rootEl;
-  this.$window = $(window);
-  this.$document = $(document);
 
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -125,7 +123,7 @@ Tw.PaymentAuto.prototype = {
   },
   _reload: function () {
     this._popupService.close();
-    window.location.reload();
+    this._history.reload();
   },
   _onlyNumber: function (event) {
     Tw.InputHelper.inputNumberOnly(event.currentTarget);
@@ -251,6 +249,6 @@ Tw.PaymentAuto.prototype = {
     }
   },
   _go: function (hash) {
-    window.location.hash = hash;
+    this._history.goHash(hash);
   }
 };

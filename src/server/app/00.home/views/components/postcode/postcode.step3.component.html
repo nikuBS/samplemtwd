@@ -1,0 +1,119 @@
+<%#
+* FileName: postcode.step2.load.component.html
+* Author: 공자윤 (jayoon.kong@sk.com)
+* Date: 2018.07.30
+%>
+<!-- #header -->
+<div id="header" class="header-wrap">
+    <div class="header step-page">
+        <div class="header-ti">
+            <h1>우편번호 조회</h1>
+        </div>
+        <button class="close-step fe-cancel-process"><span class="blind">이전으로</span></button>
+    </div>
+</div>
+<!--// #header -->
+<div class="tab-area type1">
+    <div class="tab-linker">
+        <ul role="tablist">
+            <li role="tab" aria-selected="false" aria-controls="tab1-tab" id="tab1"><a>도로명주소</a></li><!-- true 열림 -->
+            <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2"><a>지번주소</a></li>
+            <li role="tab" aria-selected="false" aria-controls="tab3-tab" id="tab3"><a>사서함</a></li>
+        </ul>
+    </div>
+    <div class="tab-contents">
+        <ul>
+            <li role="tabpanel" id="tab1-tab" aria-labelledby="tab1">
+                <div class="cont-box">
+                    <div class="addr-inquiry">
+                        <h3 class="addr-inquiry-tit">도로명 주소 조회 (3/3)</h3>
+                        <p class="addr-inquiry-des1">상세주소를 입력해주세요.</p>
+                        <div class="addr-inquiry-feildset">
+                            <div class="formbox">
+                                <span class="formbox-tit">기본주소</span>
+                                <p class="form-readonly fe-base-form"><span class="fe-post-code">04526</span> | <span class="fe-address">서울 강남구 봉은사로(역삼동) 강남아파트</span></p>
+                            </div>
+                        </div>
+                        <div class="addr-inquiry-feildset mt26">
+                            <div class="formbox">
+                                <span class="formbox-tit">상세주소</span>
+                                <div class="inputbox address-wrap fe-apt-last-field" style="width:100%"><!-- 영역 크기에 따라 width 조절 -->
+                                    <span class="input">
+                                        <input type="number" placeholder="동 입력" maxlength="" title="동">
+                                    </span>
+                                    <span class="dongho first">동</span>
+                                    <span class="input">
+                                        <input type="number" class="fe-only-number" placeholder="호 입력" maxlength="" title="호">
+                                    </span>
+                                    <span class="dongho">호</span>
+                                </div>
+                                <span class="inputbox fe-etc-last-field">
+                                    <span class="input">
+                                        <input type="text" class="fe-only-number" placeholder="상세주소 입력" title="도로명 주소">
+                                        <button href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></button>
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li role="tabpanel" id="tab2-tab" aria-labelledby="tab2">
+                <div class="cont-box">
+                    <div class="addr-inquiry">
+                        <h3 class="addr-inquiry-tit">지번주소 조회 (3/3)</h3>
+                        <p class="addr-inquiry-des1">상세주소를 입력해주세요.</p>
+                        <div class="addr-inquiry-feildset">
+                            <div class="formbox">
+                                <span class="formbox-tit">기본주소</span>
+                                <p class="form-readonly">04526 | 서울 강남구 봉은사로(역삼동) 강남아파트</p>
+                            </div>
+                        </div>
+                        <div class="addr-inquiry-feildset mt26">
+                            <div class="formbox">
+                                <span class="formbox-tit">상세주소</span>
+                                <span class="inputbox">
+                                    <span class="input">
+                                        <input type="text" placeholder="상세주소 입력" title="지번 주소">
+                                        <button href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></button>
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li role="tabpanel" id="tab3-tab" aria-labelledby="tab3">
+                <div class="cont-box pb16">
+                    <div class="addr-inquiry">
+                        <h3 class="addr-inquiry-tit">사서함 조회 (3/3)</h3>
+                        <p class="addr-inquiry-des1">상세주소를 입력해주세요.</p>
+                        <div class="addr-inquiry-feildset">
+                            <div class="formbox">
+                                <span class="formbox-tit">사서함</span>
+                                <p class="form-readonly">07328 | 700 | 서울시 영등포구 여의도우체국</p>
+                            </div>
+                        </div>
+                        <div class="addr-inquiry-feildset mt26">
+                            <div class="formbox">
+                                <span class="formbox-tit">상세주소</span>
+                                <span class="inputbox">
+                                    <span class="input">
+                                        <input type="text" placeholder="상세주소 입력" title="사서함 주소">
+                                        <button href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></button>
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <div class="floating-bottom">
+            <div class="bt-indiv bt-blue1">
+                <button class="indiv-small fe-common-back">이전</button>
+                <button class="indiv-big">완료</button>
+            </div>
+        </div>
+    </div>
+</div>

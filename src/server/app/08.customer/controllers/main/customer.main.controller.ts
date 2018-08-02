@@ -5,9 +5,9 @@
  */
 
 import { NextFunction, Request, Response } from 'express';
-import { Observable } from 'rxjs/Observable';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { API_CMD } from '../../../../types/api-command.type';
+import { combineLatest } from 'rxjs/observable/combineLatest';
 
 class CustomerMainController extends TwViewController {
   constructor() {
@@ -15,15 +15,20 @@ class CustomerMainController extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo?: any, layerType?: string): void {
-    Observable.combineLatest(
+    combineLatest(
       this.getBanners(),
-      this.getNotice()
-    ).subscribe((...rest) => {
-      res.render('customer.main.html', { svcInfo: svcInfo });
+      this.getNotice(),
+      this.getResearch(),
+    ).subscribe(([banners, noticeList, research]) => {
+      res.render('main/customer.main.html', { svcInfo: svcInfo, banners: banners, noticeList: noticeList });
     });
   }
 
   private getBanners() {
+    return this.apiService.request(API_CMD.BFF_08_0026, {});
+  }
+
+  private getResearch() {
     return this.apiService.request(API_CMD.BFF_08_0025, {});
   }
 

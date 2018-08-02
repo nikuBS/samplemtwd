@@ -25,19 +25,21 @@
                             <ul class="acco-box fe-list">
                                 <% for (var i in data.list) { %>
                                 <li class="acco-list">
-                                    <div class="acco-title new impo"><!-- new : 새로운 글 뱃지 --> <!-- impo : 중요 공지 --><!-- TODO -->
-                                        <button role="button" aria-pressed="false">
+                                    <div class="acco-title <%= data.list[i].itemClass %>">
+                                        <button role="button" aria-pressed="false" data-sernum="<%= data.list[i].serNum %>">
                                             <span class="acco-notice-tit"><%= data.list[i].title %></span>
-                                            <span class="acco-notice-type">안내</span>
-                                            <span class="acco-notice-date"><%= data.list[i].rgstDt %></span>
+                                            <% if (data.list[i].type) { %>
+                                            <span class="acco-notice-type"><%= data.list[i].type %></span>
+                                            <% } %>
+                                            <span class="acco-notice-date"><%= data.list[i].date %></span>
                                         </button>
                                     </div>
-                                    <div class="acco-content"><%= data.list[i].content %></div>
+                                    <div class="acco-content"><%- data.list[i].content %></div>
                                 </li>
                                 <% } %>
                             </ul>
-                            <% if (!data.last) { %>
-                            <button class="acco-notice-more fe-btn_more_list" >더보기(<%= data.remain %>)</button>
+                            <% if (data.remain > 0) { %>
+                            <button class="acco-notice-more fe-btn_more_list" >더보기<span>(<%= data.remain %>)</span></button>
                             <% } %>
                         </div>
                     </div>
@@ -54,14 +56,16 @@
 <script type="text/template" id="tpl_notice_list_item">
     {{#list}}
     <li class="acco-list">
-        <div class="acco-title new impo"><!-- new : 새로운 글 뱃지 --> <!-- impo : 중요 공지 --><!-- TODO -->
+        <div class="acco-title {{itemClass}}">
             <button role="button" aria-pressed="false">
                 <span class="acco-notice-tit">{{title}}</span>
-                <span class="acco-notice-type">안내</span>
-                <span class="acco-notice-date">{{rgstDt}}</span>
+                {{#if type}}
+                <span class="acco-notice-type">{{type}}</span>
+                {{/if}}
+                <span class="acco-notice-date">{{date}}</span>
             </button>
         </div>
-        <div class="acco-content">{{content}}</div>
+        <div class="acco-content">{{{content}}}</div>
     </li>
     {{/list}}
 </script>

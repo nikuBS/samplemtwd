@@ -6,7 +6,7 @@
 
 Tw.CustomerNotice = function(rootEl) {
   this.$container = rootEl;
-  this._apiSerivce = Tw.Api;
+  this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._history = new Tw.HistoryService();
   this._template = Handlebars.compile($('#tpl_notice_list_item').html());
@@ -14,14 +14,15 @@ Tw.CustomerNotice = function(rootEl) {
 
   this._cachedElement();
   this._bindEvent();
+  this._init();
 };
 
 Tw.CustomerNotice.prototype = {
   API_CMD: {
     tworld: 'BFF_08_0029',
-    directshop: 'BFF_08_0030',
+    directshop: 'BFF_08_0039',
     membership: 'BFF_08_0031',
-    roaming: 'BFF_08_0032'
+    roaming: 'BFF_08_0040'
   },
 
   _cachedElement: function() {
@@ -31,9 +32,25 @@ Tw.CustomerNotice.prototype = {
   },
 
   _bindEvent: function() {
-    this._popupService._popupClose();
     this.$btnCategory.on('click', $.proxy(this._openCategorySelectPopup, this));
     this.$btnMoreList.on('click', $.proxy(this._loadMoreList, this));
+  },
+
+  _init: function() {
+    var hashSerNum = location.hash.replace('#', '');
+    if (_.isEmpty(hashSerNum)) {
+      return;
+    }
+
+    var item = this.$list.find('[data-sernum="' + hashSerNum  + '"]');
+    if (item.length > 0) {
+      setTimeout(function() {
+        item.trigger('click');
+      }, 0);
+    }
+
+    this._history.pathname += this._history.search;
+    this._history.replace();
   },
 
   _getApi: function() {
@@ -71,34 +88,36 @@ Tw.CustomerNotice.prototype = {
   },
 
   _applyCategory: function($layer) {
+    this._popupService.close();
     this._history.goLoad('/customer/notice?category=' + $layer.find('input[name="radio"]:checked').val());
   },
 
   _loadMoreList: function() {
-    this._apiService.request(this._getApi(), {
-      page: this._page, size: 20
-    }).done($.proxy(this._appendMoreList, this));
+    this._apiService.request(this._getApi(), {page: this._page, size: 20}).done($.proxy(this._appendMoreList, this));
   },
 
   _getRemainCount: function(param) {
-    var count = param.total - ((++param.page) * param.size);
+    var count = param.total - ((++this._page) * param.size);
     return count < 0 ? 0 : count;
   },
 
   _appendMoreList: function(res) {
     if (res.code !== Tw.API_CODE.CODE_00) return this._apiError(res);
     this.$list.append(this._template({
-      list: res.result.content
+      list: _.map(res.result.content, function(item) {
+        item.type = _.isEmpty(item.ctgNm) ? '' : item.ctgNm;
+        item.date = item.rgstDt.substr(0, 4) + '.' + item.rgstDt.substr(4, 2) + '.' + item.rgstDt.substr(6, 2);
+        item.itemClass = (item.isTop ? 'impo ' : '') + (item.isNew ? 'new' : '');
+        return item;
+      })
     }));
 
     if (res.result.last) this.$btnMoreList.remove();
     else {
       this.$btnMoreList.find('span').text('(' + this._getRemainCount({
         total: res.result.totalElements,
-        page: res.result.pageable.pageNumber,
         size: res.result.pageable.pageSize
       })  + ')');
-      this._page++;
     }
   },
 

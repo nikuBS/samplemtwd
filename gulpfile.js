@@ -124,6 +124,11 @@ gulp.task('hbs', function () {
     .pipe(gulp.dest(dist + 'hbs'));
 });
 
+gulp.task('resource', function () {
+  return gulp.src('src/client/right-brain/resource/**/*')
+    .pipe(gulp.dest(dist + 'resource'));
+});
+
 
 gulp.task('watch', function () {
   livereload.listen();
@@ -139,5 +144,5 @@ gulp.task('js-app', appNames.map(function (app) {
 gulp.task('js', ['js-util', 'js-app']);
 gulp.task('vendor', ['js-vendor', 'css-vendor']);
 gulp.task('rb', ['js-rb', 'js-rb-sprint3', 'css-rb', 'img', 'hbs']);
-gulp.task('default', ['server', 'vendor', 'js', 'rb', 'watch']);
-gulp.task('build', ['vendor', 'js', 'rb']);
+gulp.task('default', ['server', 'vendor', 'js', 'rb', 'resource', 'watch']);
+gulp.task('build', ['vendor', 'js', 'rb', 'resource']);

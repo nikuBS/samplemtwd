@@ -2,6 +2,7 @@
 * FileName: customer.preventdamage.latestwarningview.html
 * Author: 양지훈 (jihun202@sk.com)
 * Date: 2018.07.26
+console.log(data);
 %>
 <% include ../../components/start.component.html %>
 <div class="wrap">
@@ -14,7 +15,7 @@
             <div class="cont-box">
                 <h3 class="detail-aria-title">
                     <%= data.bltnTitleNm %>
-                    <span class="detail-area-date"><%= data.rgstDtm %></span>
+                    <span class="detail-area-date"><%= data.date %></span>
                 </h3>
             </div>
             <!--// .cont-box -->
@@ -32,9 +33,4 @@
     <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }) %>
 </div>
 <% include ../../components/javascript.component.html %>
-<script>
-  $(document).ready(function () {
-    var comp = new Tw.CustomerPreventdamageLatestwarningview($('.wrap'));
-  });
-</script>
 <% include ../../components/end.component.html %>

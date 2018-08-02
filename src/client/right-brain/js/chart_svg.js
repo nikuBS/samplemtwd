@@ -67,8 +67,124 @@ $.fn.chart = function(option){
       case 'circle':
         break;
       case 'bar':
+        for(var i = 0; i < chart_length; ++i){
+          var _sum1 = sum(chart_data.da_arr[i].data,true),
+              _sum3 = sum(chart_data.da_arr[i].sale_data,true);
+          for(var j = 0; j<pattern_legnth; ++j){
+            var num_gap = 0,
+              target = null,
+              num_txt = '0',
+              txt_co = '';
+            if(j == 0){
+              num_gap = -15;
+              num_txt = _sum1;
+              txt_co = chart_data.txt_co;
+            }else{
+              num_gap = 15;
+              if(_sum3 != 0) num_txt = '- '+_sum3;
+              txt_co = chart_data.sale_co;
+            }
+            target_ani[ani_idx] = make_obj({
+              'tag':'line',
+              'p':svg,
+              'obj':{
+                'stroke':chart_data.co_p[j],
+                'stroke-linecap':'round',
+                'stroke-width':8,
+                'x1':chart_gap*i+_gap+num_gap,
+                'y1':unit_count(option.max),
+                'x2':chart_gap*i+_gap+num_gap,
+                'y2':unit_count(option.max)
+              }
+            });
+            if(num_txt == '0'){
+              target_ani[ani_idx].style.display = 'none';
+            }
+            ani_idx++;
+            target_ani[ani_idx] = make_obj({
+              'tag':'text',
+              'p':svg,
+              'obj':{
+                'x':chart_gap*i+_gap+num_gap,
+                'y':unit_count(option.max)+_gap*.3,
+                'fill':chart_data.txt_co,
+                'text-anchor':'middle'
+              },
+              'style':{
+                'font-size':rem(9,true)
+              },
+              'txt':0
+            });
+            ani_idx++;
+            make_obj({
+              'tag':'text',
+              'p':svg,
+              'obj':{
+                'x':chart_gap*i+_gap,
+                'y':unit_count(option.max)+_gap*.3,
+                'fill':chart_data.txt_co,
+                'text-anchor':'middle'
+              },
+              'style':{
+                'font-size':rem(13,true)
+              },
+              'txt':chart_data.da_arr[i].na
+            });
+          }
+        }
         break;
       case 'bar_1':
+        for(var i = 0; i < chart_length; ++i){
+          var _sum = sum_data1(chart_data.da_arr[i].data),
+              _sum1 = sum(chart_data.da_arr[i].data,true);
+          target_ani[ani_idx] = make_obj({
+            'tag':'line',
+            'p':svg,
+            'obj':{
+              'stroke':chart_data.co_p[0],
+              'stroke-linecap':'round',
+              'stroke-width':8,
+              'x1':chart_gap*i+_gap,
+              'y1':unit_count(option.max),
+              'x2':chart_gap*i+_gap,
+              'y2':unit_count(option.max)
+            }
+          });
+          if(_sum1 == '0'){
+            target_ani[ani_idx].style.display = 'none';
+          }
+          ani_idx++;
+          target_ani[ani_idx] = make_obj({
+            'tag':'text',
+            'p':svg,
+            'obj':{
+              'x':chart_gap*i+_gap,
+              'y':unit_count(option.max)-15,
+              'fill':'#000',
+              'text-anchor':'middle'
+            },
+            'style':{
+              'font-size':rem(9,true)
+            },
+            'txt':_sum1+' 원'
+          });
+          ani_idx++;
+          make_obj({
+            'tag':'text',
+            'p':svg,
+            'obj':{
+              'x':chart_gap*i+_gap,
+              'y':unit_count(option.max)+20,
+              'fill':chart_data.txt_co,
+              'text-anchor':'middle'
+            },
+            'style':{
+              'font-size':rem(13,true)
+            },
+            'txt':chart_data.da_arr[i].na
+          });
+        }
+        
         break;
       case 'basic':
         
@@ -154,10 +270,42 @@ $.fn.chart = function(option){
       case 'circle':
         break;
       case 'bar':
-        
+        for(var i = 0; i < target_ani.length; ++i){
+          var j = Math.floor(i/4);
+          var _sum = sum_data1(chart_data.da_arr[j].data),
+              _sum1 = sum(chart_data.da_arr[j].data,true),
+              _sum2 = sum_data1(chart_data.da_arr[j].sale_data),
+              _sum3 = sum(chart_data.da_arr[j].sale_data,true);
+          ani_arr[j] += (unit_count(_sum)-ani_arr[j])*option.spd;
+          ani_arr1[j] += (unit_count(_sum2)-ani_arr1[j])*option.spd;
+          if(target_ani[i].nodeName == 'line'){
+            if(i%4 < 2){
+              target_ani[i].setAttribute('y2',ani_arr[j]);
+            }else{
+              target_ani[i].setAttribute('y2',ani_arr1[j]);
+            }
+          }else if(target_ani[i].nodeName == 'text'){
+            if(i%4 < 2){
+              target_ani[i].setAttribute('y',ani_arr[j]-10);
+              target_ani[i].innerHTML = _sum1;
+            }else{
+              target_ani[i].setAttribute('y',ani_arr1[j]-10);
+              target_ani[i].innerHTML = _sum3;
+            }
+          }
+        }
         break;
       case 'bar_1':
-        
+        for(var i = 0; i < target_ani.length; ++i){
+          var j = Math.floor(i/2);
+          var _sum = sum_data1(chart_data.da_arr[j].data);
+          ani_arr[j] += (unit_count(_sum)-ani_arr[j])*option.spd;
+          if(target_ani[i].nodeName == 'line'){
+            target_ani[i].setAttribute('y2',ani_arr[j]);
+          }else if(target_ani[i].nodeName == 'text'){
+            target_ani[i].setAttribute('y',ani_arr[j]-10);
+          }
+        }
         break;
       case 'basic':
         
@@ -175,8 +323,34 @@ $.fn.chart = function(option){
         break;
     }
   }
-  function make_obj(option){    
+  function make_obj(option){
     var t = document.createElementNS(xmlns, option.tag);
+    if((typeof option.obj.fill == 'string' && option.obj.fill.indexOf('img/') > 0) || (typeof option.obj.stroke == 'string' && option.obj.stroke.indexOf('img/') > 0)){
+      var id = ran_id_create();
+      var def = document.createElementNS(xmlns, 'defs');
+      option.p.appendChild(def);
+      var pattern = document.createElementNS(xmlns, 'pattern');
+      pattern.setAttribute('x',0);
+      pattern.setAttribute('y',0);
+      pattern.setAttribute('width',8);
+      pattern.setAttribute('height',8);
+      pattern.setAttribute('patternUnits','userSpaceOnUse');
+      pattern.setAttribute('id',id);
+      def.appendChild(pattern);
+      var im = document.createElementNS(xmlns, 'image');
+      pattern.appendChild(im);
+      im.setAttribute('x',0);
+      im.setAttribute('y',0);
+      im.setAttribute('width',8);
+      im.setAttribute('height',8);
+      if(option.obj.fill){
+        im.setAttribute('href',option.obj.fill);
+        option.obj.fill = 'url(#'+id+')';
+      }else{
+        im.setAttribute('href',option.obj.stroke);
+        option.obj.stroke = 'url(#'+id+')';
+      }
+    }
     for(var i in option.obj){
       t.setAttribute(i,option.obj[i]);
     }
@@ -263,14 +437,11 @@ $.fn.chart = function(option){
           'tag':'circle',
           'p':svg,
           'obj':{
-            'fill':'#fff',
-            'stroke':chart_data.line_co,
-            'stroke-width':'1',
-            'cx':chart_gap*i+_gap,
-            'cy':ani_arr[i],
+            'fill':chart_data.co_p[i],
+            'cx':70*i+5,
+            'cy':option.h-5,
             'r':'5'
           },
-          'style':{'transition':'all 2s'},
           'txt':'',
           'target':true
         });
@@ -279,7 +450,7 @@ $.fn.chart = function(option){
           'tag':'text',
           'p':svg,
           'obj':{
-            'x':0,
+            'x':70*i+15,
             'y':option.h-rem(12),
             'fill':chart_data.txt_co,
             'text-anchor':'start'
@@ -290,6 +461,20 @@ $.fn.chart = function(option){
           'txt':tt
         });
       }
+      make_obj({
+        'tag':'text',
+        'p':svg,
+        'obj':{
+          'x':ww-pding,
+          'y':option.h-rem(12),
+          'fill':chart_data.txt_co,
+          'text-anchor':'end'
+        },
+        'style':{
+          'font-size':rem(12,true)
+        },
+        'txt':option.x_name
+      });
     }else if(option.type == 'circle'){
       
     }
@@ -334,6 +519,14 @@ $.fn.chart = function(option){
       return Math.round((num/total));
     }
   }
+  function sum_data1(arr){
+    var num = 0,
+      total = arr.length;
+    for(var i = 0; i < total; ++i){
+      num += arr[i];
+    }
+    return Math.round((1-(num/option.max))*option.max);
+  }
   function sum_aver_total(arr){//각 배열합 평균 합
     var total = arr.length,
       total_num = 0;
@@ -366,6 +559,16 @@ $.fn.chart = function(option){
       count = (option.h*num1)*(num/option.max)+graph_unit*.5;    
     }
     return count;
+  }
+  
+  function ran_id_create(){
+    var d = new Date().getTime(),
+        ranid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,function(c){
+          var r = (d+Math.random()*16)%16 | 0;
+          d = Math.floor(d/16);
+          return (c=='x' ? r : (r&0x7|0x8)).toString(16);
+        });
+    return ranid;
   }
   function create_tag(chart_data,chart_length){
     var table_container = document.getElementsByClassName(option.container)[0];

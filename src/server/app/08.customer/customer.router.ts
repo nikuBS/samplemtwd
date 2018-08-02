@@ -14,11 +14,14 @@ import CustomerShopSearchController from './controllers/shop/customer.shop.searc
 import CustomerVoiceController from './controllers/voice/customer.voice.controller';
 import CustomerMainController from './controllers/main/customer.main.controller';
 import CustomerResearches from './controllers/researches/customer.researches.controller';
+import CustomerEmailController from './controllers/email/customer.email.controller';
+import CustomerResearchResult from './controllers/researches/customer.researches.result.controller';
 
 class CustomerRouter extends TwRouter {
   constructor() {
     super();
     this.controllers.push({ url: '/', controller: new CustomerMainController() });
+    this.controllers.push({ url: '/email', controller: new CustomerEmailController() });
     this.controllers.push({ url: '/notice', controller: new CustomerNoticeController() });
     this.controllers.push({ url: '/prevent-damage', controller: new CustomerPreventdamageMainController() });
     this.controllers.push({ url: '/prevent-damage/guide', controller: new CustomerPreventdamageGuideController() });
@@ -32,6 +35,7 @@ class CustomerRouter extends TwRouter {
     this.controllers.push({ url: '/shop/near', controller: new CustomerShopNearController });
     this.controllers.push({ url: '/shop/search', controller: new CustomerShopSearchController() });
     this.controllers.push({ url: '/voice/:type', controller: new CustomerVoiceController() });
+    this.controllers.push({ url: '/researches/result', controller: new CustomerResearchResult() });
     this.controllers.push({ url: '/researches(/:researchId)?', controller: new CustomerResearches() });
   }
 }
