@@ -33,6 +33,7 @@ Tw.CustomerShopSearch.prototype = {
     this.$container.on('click', '.bt-red1 > button', $.proxy(this._requestSearch, this));
     this.$container.on('change', 'input[type="radio"]', $.proxy(this._onOptionsChanged, this));
     this.$container.on('change', 'input[type="checkbox"]', $.proxy(this._onOptionsChanged, this));
+    this.$container.on('click', '.fe-shop-detail', $.proxy(this._onShopDetail, this));
     this.$btnMore.on('click', $.proxy(this._onMore, this));
   },
   _init: function () {
@@ -123,6 +124,9 @@ Tw.CustomerShopSearch.prototype = {
       }
       this.$optionsTitle.text(this.$optionsTitle.text().replace(/,.*/, ', ' + optionsText));
     }
+  },
+  _onShopDetail: function (evt) {
+    this._historyService.goLoad('/customer/shop/detail?code=' + evt.currentTarget.value);
   },
   _onMore: function () {
     var result = this.$container.find('.store-result-list > .none');
