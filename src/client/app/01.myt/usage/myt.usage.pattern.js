@@ -10,6 +10,12 @@ Tw.MyTUsagePattern = function ($element) {
   this.$container = $element;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
+  this._defaultChartSetting = {
+    min: 0, //Min크기
+    max: 250, //Max크기
+    spd: 0.05, //애니메이션 속도
+    h: 250 //세로크기
+  };
   this._rendered();
   this._bindEvent();
 
@@ -31,41 +37,15 @@ Tw.MyTUsagePattern.prototype = {
 
   _initialize: function () {
     //test data
-    var chart_data3 = {
-      caption: '표제목',//숨겨진표에 사용 접근성관련이슈
-      tf_txt: '평균값',//숨겨진표에 사용 접근성관련이슈
-      td_txt: '각항목값',//숨겨진표에 사용 접근성관련이슈
-      co_p: ['#d6dbe5', '/img/chart/pattern2.gif'],//배경관련 색상및 패턴이미지 경로
-      txt_co: '#757575',//글자 색상
-      sale_co: '#325ec1',//할인 글자 색상
-      da_arr: [
-        {
-          na: '3월',//각 항목 타이틀
-          data: [113030],//사용량 배열 및 단일값 가능
-          sale_data: [22055]//할인 배열 및 단일값 가능
-        }, {
-          na: '4월',
-          data: [87280],
-          sale_data: [22055]
-        }, {
-          na: '5월',
-          data: [75510],
-          sale_data: [22055]
-        }
-      ]
-    };
-
-    this.$container.find('.tab1-tab').chart({
+    var chart_data3 = Tw.MSG_MYT.USAGE_PATTERN.BAR_CHART.TEST;
+    var setting = {
       type: 'bar', //basic, bar, circle
       container: 'can-box3', //클래스명 String
-      h: 250, //세로크기
-      x_name: '(단위:원)', //x축 이름
-      min: 0, //Min크기
-      max: 250, //Max크기
-      spd: 0.05, //애니메이션 속도
+      x_name: Tw.MSG_MYT.USAGE_PATTERN.BAR_CHART.X, //x축 이름
       guide_num: 0, //가이드 갯수
       data: chart_data3 //데이터 obj
-    });
+    };
+    this.$container.find('.tab1-tab').chart($.extend(setting, this._defaultChartSetting));
   },
 
   _onChangeLinker: function (event) {
@@ -73,37 +53,16 @@ Tw.MyTUsagePattern.prototype = {
 
     if ( $target.attr('id') === 'tab2' ) {
       if(!this._initSecondtab) {
-        var chart_data1 = {
-          caption: '3월,4월,5월 3개월평균 문자사용량',//숨겨진표에 사용 접근성관련이슈
-          tf_txt: '평균값',//숨겨진표에 사용 접근성관련이슈
-          td_txt: '각 개월 사용량',//숨겨진표에 사용 접근성관련이슈
-          line_co: '#00a49a',
-          txt_co: '#757575',
-          da_arr: [
-            {
-              na: '3월',//각 항목 타이틀
-              data: [5]//배열 평균값으로 전달
-            }, {
-              na: '4월',
-              data: [0]
-            }, {
-              na: '5월',
-              data: [13]
-            }
-          ]
-        };
-        this.$container.find('.tab2-tab').chart({
+        var chart_data1 = Tw.MSG_MYT.USAGE_PATTERN.LINE_CHART.TEST;
+        var setting = {
           type: 'basic', //basic, basic_1, bar, circle
           container: 'can-box1', //클래스명 String
-          h: 250, //세로크기
-          x_name: '(단위:건수)', //x축 이름
-          min: 0, //Min크기
-          max: 250, //Max크기
-          spd: .05, //애니메이션 속도
+          x_name: Tw.MSG_MYT.USAGE_PATTERN.LINE_CHART.X, //x축 이름
           guide_num: 1, //가이드 갯수
           decimal: 0, //소숫점자리
           data: chart_data1 //데이터 obj
-        });
+        };
+        this.$container.find('.tab2-tab').chart($.extend(setting, this._defaultChartSetting));
         this._initSecondtab = true;
       }
     }
