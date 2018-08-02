@@ -24,7 +24,7 @@ class MytJSProtectInquiryController extends TwViewController {
     };
 
     // 사용자 정보를 읽어와 화면에 표시한다.
-    res.render('joinService/myt.joinService.protect.inquiry.html', { data });
+    res.render('join/myt.join.protect.inquiry.html', { data });
   }
 }
 

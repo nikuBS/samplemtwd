@@ -54,8 +54,8 @@ import MytJoinContractTerminalTpocketfiDetail from './controllers/join/myt.join.
 import MytJoinContractTerminalTwibro from './controllers/join/myt.join.contract-terminal.twibro.controller';
 import MytJoinContractTerminalTlogin from './controllers/join/myt.join.contract-terminal.tlogin.controller';
 import MytJoinContractTerminalTloginDetail from './controllers/join/myt.join.contract-terminal.tlogin.detail.controller';
-import MytJSProtectInquiryController from './controllers/joinService/myt.joinService.protect.inquiry.controller';
-import MytJSProtectChangeController from './controllers/joinService/myt.joinService.protect.change.controller';
+import MytJoinProtectInquiryController from './controllers/join/myt.join.protect.inquiry.controller';
+import MytJoinProtectChangeController from './controllers/join/myt.join.protect.change.controller';
 import MytJoinJoinInfoController from './controllers/join/myt.join.join-info.controller';
 
 
@@ -123,8 +123,8 @@ class MytRouter extends TwRouter {
     this.controllers.push({ url: '/join/contract-terminal/tlogin/detail', controller: new MytJoinContractTerminalTloginDetail() });
 
     this.controllers.push({ url: '/join/join-info', controller: new MytJoinJoinInfoController() });
-    this.controllers.push({ url: '/joinService/protect/inquiry', controller: new MytJSProtectInquiryController() });
-    this.controllers.push({ url: '/joinService/protect/change', controller: new MytJSProtectChangeController() });
+    this.controllers.push({ url: '/joinService/protect/inquiry', controller: new MytJoinProtectInquiryController() });
+    this.controllers.push({ url: '/joinService/protect/change', controller: new MytJoinProtectChangeController() });
   }
 }
 

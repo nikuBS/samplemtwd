@@ -1,3 +1,10 @@
+/*
+ * FileName:
+ * Author: Kim InHwan (skt.P132150@partner.sk.com)
+ * Date: 2018.07.
+ *
+ */
+
 /**
  * FileName: myt.joinService.protect.change.controller.ts
  * Author: Kim InHwan (skt.P132150@partner.sk.com)
@@ -53,7 +60,7 @@ class MytJSProtectChangeController extends TwViewController {
     // this.apiService.request('', {}).subscribe((responseData) => {
     // 화면 데이터 설정
     // const data = self.convertData(responseData);
-    res.render('joinService/myt.joinService.protect.change.html', { data });
+    res.render('join/myt.join.protect.change.html', { data });
     // });
   }
 }
