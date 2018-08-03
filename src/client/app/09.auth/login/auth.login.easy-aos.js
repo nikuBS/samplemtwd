@@ -7,6 +7,7 @@
 Tw.AuthLoginEasyAos = function (rootEl) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
+  this._historyService = new Tw.HistoryService();
 
   this.$inputBirth = null;
   this.$btnLogin = null;
@@ -51,16 +52,18 @@ Tw.AuthLoginEasyAos.prototype = {
     }
   },
   _requestLogin: function (params) {
-    this._apiService.request(Tw.API_CMD.BFF_03_0017, params)
+    this._apiService.request(Tw.NODE_CMD.EASY_LOGIN_AOS, params)
       .done($.proxy(this._successLogin, this));
   },
   _successLogin: function (resp) {
-    Tw.Logger.log('AOS Easy login', resp);
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      // success
+      Tw.UIService.setLocalStorage('lineRefresh', 'Y');
+      this._historyService.goBack();
     } else if ( resp.code === this.ERROR_CODE.ATH1005 ) {
       this.$errorTxt.removeClass('none');
       this.$inputBox.addClass('error');
+    } else {
+      this._popupService.openAlert(resp.code + ' ' + resp.msg);
     }
   },
   _onClickDel: function () {
