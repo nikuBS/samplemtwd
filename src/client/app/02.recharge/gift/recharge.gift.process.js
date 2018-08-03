@@ -231,7 +231,7 @@ Tw.RechargeGiftProcess.prototype = {
     switch ( this.processType ) {
       case 'members':
         if ( this._isRequestByOpdtm ) {
-          location.replace(this.getNextStepUrl());
+          this.history.replaceURL(this.getNextStepUrl());
         } else {
           this._apiService.request(Tw.API_CMD.BFF_06_0008, { befrSvcNum: this.$input_phone.val() })
             .done($.proxy(this.renderProvider, this));
@@ -239,7 +239,7 @@ Tw.RechargeGiftProcess.prototype = {
         break;
       case 'family':
         if ( this._isRequestByOpdtm ) {
-          location.replace(this.getNextStepUrl());
+          this.history.replaceURL(this.getNextStepUrl());
         } else {
           this._apiService.request(Tw.API_CMD.BFF_06_0008, { befrSvcNum: this.$input_phone.val() })
             .done($.proxy(this.renderProvider, this));
@@ -277,14 +277,14 @@ Tw.RechargeGiftProcess.prototype = {
         $giftData.text(this.provider.dataQty);
         $selectData.text(dataQty);
 
-        location.replace(this.getNextStepUrl());
+        this.history.replaceURL(this.getNextStepUrl());
         break;
       case 'family':
         this._apiService.request(Tw.API_CMD.BFF_06_0004, JSON.stringify({ dataQty: dataQty, befrSvcNum: this.provider.phone }))
           .done(function (res) {
             if ( res.code === Tw.API_CODE.CODE_00 ) {
               this.resetData();
-              location.replace(this.getNextStepUrl());
+              this.history.replaceURL(this.getNextStepUrl());
             } else {
               this.onFailStep(res);
             }
@@ -296,7 +296,7 @@ Tw.RechargeGiftProcess.prototype = {
             .done(function (res) {
               if ( res.code === Tw.API_CODE.CODE_00 ) {
                 this.resetData();
-                location.replace(this.getNextStepUrl());
+                this.history.replaceURL(this.getNextStepUrl());
               } else {
                 this.onFailStep(res);
               }
@@ -306,7 +306,7 @@ Tw.RechargeGiftProcess.prototype = {
             .done(function (res) {
               if ( res.code === Tw.API_CODE.CODE_00 ) {
                 this.resetData();
-                location.replace(this.getNextStepUrl());
+                this.history.replaceURL(this.getNextStepUrl());
               } else {
                 this.onFailStep(res);
               }
@@ -325,7 +325,7 @@ Tw.RechargeGiftProcess.prototype = {
       $('.wrap_provider').html(tpl(this.provider));
       $('.tx-data em').text(this.receiver.dataRemQty + 'MB');
 
-      location.replace(this.getNextStepUrl());
+      this.history.replaceURL(this.getNextStepUrl());
     } else {
       this.onFailStep(res);
     }
@@ -353,14 +353,14 @@ Tw.RechargeGiftProcess.prototype = {
 
   goHistory: function () {
     if ( this.processType === 'request' ) {
-      location.replace('/recharge/gift/history#request');
+      this.history.replaceURL('/recharge/gift/history#request');
     } else {
-      location.replace('/recharge/gift/history#present');
+      this.history.replaceURL('/recharge/gift/history#present');
     }
   },
 
   goBasicStep: function () {
-    location.replace(location.href.replace('step3', 'step1'));
+    this.history.replaceURL(location.href.replace('step3', 'step1'));
     location.reload(true);
   },
 
