@@ -14,7 +14,7 @@ Tw.HistoryService = function (selector) {
 Tw.HistoryService.prototype = {
   // public
   init: function (hash) {
-    if (hash === undefined) {
+    if ( hash === undefined ) {
       this.$window.on('pageshow', $.proxy(this.checkIsBack, this));
     } else {
       this._hashService.initHashNav($.proxy(this.onHashChange, this));
@@ -39,7 +39,7 @@ Tw.HistoryService.prototype = {
   reload: function () {
     window.location.reload();
   },
-  goLoad: function(url) {
+  goLoad: function (url) {
     window.location.href = url;
   },
   goBack: function () {
@@ -55,12 +55,15 @@ Tw.HistoryService.prototype = {
   replace: function () {
     this.history.replaceState(this.historyObj, this.historyName, this.pathname);
   },
+  replaceURL: function (sUrl) {
+    window.location.replace(sUrl);
+  },
   go: function (len) {
     this.history.go([len]);
   },
   checkIsBack: function (event) {
-    if (event.originalEvent.persisted || window.performance && window.performance.navigation.type === 2) {
-      if (this.isDone()) {
+    if ( event.originalEvent.persisted || window.performance && window.performance.navigation.type === 2 ) {
+      if ( this.isDone() ) {
         Tw.UIService.setLocalStorage(this.storageName, '');
         this.resetHistory(-1);
       }
@@ -68,10 +71,10 @@ Tw.HistoryService.prototype = {
   },
   onHashChange: function (hash) {
     var isStep = this.isStep(hash);
-    if (isStep) {
+    if ( isStep ) {
       this.addHashList(hash.base.split('-')[0]);
     }
-    if (isStep || this.isCompleted()) {
+    if ( isStep || this.isCompleted() ) {
       this.scrollInit();
     }
     this.showAndHide();
@@ -79,16 +82,16 @@ Tw.HistoryService.prototype = {
   },
   addHashList: function (hash) {
     var hashList = this._hashList;
-    if (!hashList.includes(hash)) {
+    if ( !hashList.includes(hash) ) {
       hashList.push(hash);
     }
   },
   scrollInit: function () {
-    window.scrollTo(0,0);
+    window.scrollTo(0, 0);
   },
   showAndHide: function () {
     var _id = window.location.hash;
-    if (Tw.FormatHelper.isEmpty(_id)) {
+    if ( Tw.FormatHelper.isEmpty(_id) ) {
       _id = '#main';
     }
 
@@ -122,7 +125,7 @@ Tw.HistoryService.prototype = {
     return Tw.UIService.getLocalStorage(this.storageName) === 'done';
   },
   checkIsCompleted: function () {
-    if (this.isReturendMain() && this.isCompleted()) {
+    if ( this.isReturendMain() && this.isCompleted() ) {
       this.resetHashHistory();
     }
   }

@@ -214,8 +214,18 @@ export const API_CMD = {
   BFF_07_0064: { path: '/core-bill/v1/autopay/db-req', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_07_0065: { path: '/core-bill/v1/autopay/pay-cycl-chg/args-0', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
   BFF_07_0068: { path: '/core-bill/v1/autopay/card-info/args-0', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
-  BFF_07_0071: { path: '/core-bill/v1/microPrepay/microPrepay-hist-requests', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
-  BFF_07_0072: { path: '/core-bill/v1/microPrepay/microPrepay-auto-prepay-Yn', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_07_0071: {
+    path: '/core-bill/v1/microPrepay/microPrepay-hist-requests',
+    method: API_METHOD.GET,
+    server: API_SERVER.BFF,
+    bypass: false
+  },
+  BFF_07_0072: {
+    path: '/core-bill/v1/microPrepay/microPrepay-auto-prepay-Yn',
+    method: API_METHOD.GET,
+    server: API_SERVER.BFF,
+    bypass: false
+  },
   BFF_07_0073: { path: '/core-bill/v1/microPrepay/microPrepay-requests', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_07_0074: { path: '/core-bill/v1/microPrepay', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_07_0075: { path: '/core-bill/v1/microPrepay/microPrepay-autolist', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
@@ -226,9 +236,24 @@ export const API_CMD = {
     server: API_SERVER.BFF, bypass: false
   },
   BFF_07_0079: { path: '/core-bill/v1/useContentsPrepay-autolist', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
-  BFF_07_0080: { path: '/core-bill/v1/useContentsPrepay/useContentsPrepay-requests', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
-  BFF_07_0081: { path: '/core-bill/v1/useContentsPrepay/useContentsPrepay-requests', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
-  BFF_07_0082: { path: '/core-bill/v1/useContentsPrepay/useContentsPrepay-requests', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_07_0080: {
+    path: '/core-bill/v1/useContentsPrepay/useContentsPrepay-requests',
+    method: API_METHOD.GET,
+    server: API_SERVER.BFF,
+    bypass: false
+  },
+  BFF_07_0081: {
+    path: '/core-bill/v1/useContentsPrepay/useContentsPrepay-requests',
+    method: API_METHOD.GET,
+    server: API_SERVER.BFF,
+    bypass: true
+  },
+  BFF_07_0082: {
+    path: '/core-bill/v1/useContentsPrepay/useContentsPrepay-requests',
+    method: API_METHOD.POST,
+    server: API_SERVER.BFF,
+    bypass: true
+  },
   BFF_07_0083: { path: '/core-bill/v1/useContentsPrepay-auto-req', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_07_0084: { path: '/core-bill/v1/useContentsPrepay-auto-delete', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
 
@@ -245,6 +270,10 @@ export const API_CMD = {
   BFF_08_0010: { path: '/core-modification/v1/email-inquiry-categories', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_08_0013: { path: '/core-modification/v1/email-inquiry', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_08_0014: { path: '/cs/file-upload', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_08_0015: { path: '/core-modification/v1/brand-phone-list', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_08_0016: { path: '/core-modification/v1/direct-shop/order-list', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_08_0020: { path: '/core-modification/v1/inquiry-direct-shop', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_08_0021: { path: '/core-modification/v1/inquiry-chocolate', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_08_0023: { path: '/core-modification/v1/survey/surveyCustList', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_08_0024: { path: '/core-modification/v1/survey/surveyViewResult', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_08_0025: { path: '/core-modification/v1/survey/surveyMainBanner', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
@@ -273,7 +302,6 @@ export const API_CMD = {
   PUT_PARAM: { path: '/posts/1', method: API_METHOD.PUT, server: API_SERVER.TEST, bypass: true },
   DELETE: { path: '/posts/1', method: API_METHOD.DELETE, server: API_SERVER.TEST, bypass: true },
   DELETE_PARAM: {}
-
 };
 
 export const API_CODE = {
