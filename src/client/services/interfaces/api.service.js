@@ -10,6 +10,16 @@ Tw.ApiService.prototype = {
     return $.ajax(htOptions);
   },
 
+  requestAjax: function (command, data) {
+    Tw.Logger.info('[API REQ ajax]', command, data);
+
+    return $.ajax({
+      method: command.method,
+      url: command.url + command.path,
+      data: command.method === Tw.API_METHOD.GET ? data : JSON.stringify(data)
+    });
+  },
+
   _makeOptions: function (command, params, headers, pathVariables) {
     var prefix = this._setPrefix(command);
     var data = prefix === '/bypass' ? { parameter: params, pathVariables: pathVariables } : params;

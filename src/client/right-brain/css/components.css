@@ -11639,7 +11639,7 @@ span[class*=char-star][class*=red] {
 }
 
 .poll-chart-box {
-  margin: 2.1875rem 0 0 0;
+  margin: 1.5625rem 0 0 0;
   overflow: hidden;
 }
 
@@ -11673,8 +11673,17 @@ span[class*=char-star][class*=red] {
   font-family: "Helvetica Neue", Roboto, sans-serif;
 }
 
+.poll-chart-space .poll-heading {
+  margin: 0 0 1.25rem 0;
+  font-size: 1rem;
+}
+
 .poll-chart-space .poll-space-inner {
   position: relative;
+}
+
+.poll-chart-space .poll-space-inner .select-list {
+  margin-top: 0;
 }
 
 .poll-chart-space .bt-slice {
@@ -11706,20 +11715,20 @@ span[class*=char-star][class*=red] {
   font-weight: 700;
 }
 
-.acco-list.acco-poll .poll-condition {
+.poll-condition {
   display: block;
   margin: 0 0 0.3125rem 0;
   font-weight: 700;
   font-size: 0.75rem;
 }
 
-.acco-list.acco-poll .poll-option-cont .video-img {
+.poll-option-cont .video-img {
   position: relative;
   margin: 0.625rem 0 0 0;
   width: 100%;
 }
 
-.acco-list.acco-poll .poll-option-cont .video-img button {
+.poll-option-cont .video-img button {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -11730,40 +11739,40 @@ span[class*=char-star][class*=red] {
   background-size: 9.125rem;
 }
 
-.acco-list.acco-poll .poll-option-cont .video-img img {
+.poll-option-cont .video-img img {
   width: 100%;
 }
 
-.acco-list.acco-poll .poll-option-cont .select-list {
+.poll-option-cont .select-list {
   margin: 0.9375rem 0 1.875rem 0;
 }
 
-.acco-list.acco-poll .poll-option-cont .select-list li {
+.poll-option-cont .select-list li {
   margin: 0 0 0.9375rem 0;
   font-size: 0.875rem;
 }
 
-.acco-list.acco-poll .poll-option-cont .select-list.division-two li {
+.poll-option-cont .select-list.division-two li {
   padding: 0 0.3125rem 0 0;
 }
 
-.acco-list.acco-poll .poll-option-cont .select-list.division-two li:nth-of-type(2n) {
+.poll-option-cont .select-list.division-two li:nth-of-type(2n) {
   padding: 0 0 0 0.3125rem;
 }
 
-.acco-list.acco-poll .poll-option-cont.versus {
+.poll-option-cont.versus {
   position: relative;
 }
 
-.acco-list.acco-poll .poll-option-cont.versus .select-list.division-two li {
+.poll-option-cont.versus .select-list.division-two li {
   padding: 0 1.25rem 0 0;
 }
 
-.acco-list.acco-poll .poll-option-cont.versus .select-list.division-two li:nth-of-type(2n) {
+.poll-option-cont.versus .select-list.division-two li:nth-of-type(2n) {
   padding: 0 0 0 1.25rem;
 }
 
-.acco-list.acco-poll .poll-option-cont.versus .versus-icon {
+.poll-option-cont.versus .versus-icon {
   position: absolute;
   left: 0;
   right: 0;
@@ -11773,27 +11782,27 @@ span[class*=char-star][class*=red] {
   font-size: 1.25rem;
 }
 
-.acco-list.acco-poll .poll-option-cont .poll-img {
+.poll-option-cont .poll-img {
   margin: 0 0 0.3125rem 0;
   width: 100%;
 }
 
-.acco-list.acco-poll .poll-option-cont .poll-img img {
+.poll-option-cont .poll-img img {
   width: 100%;
 }
 
-.acco-list.acco-poll .poll-option-cont .poll-area {
+.poll-option-cont .poll-area {
   font-size: 0.9375rem;
 }
 
-.acco-list.acco-poll .poll-option-cont .max-byte {
+.poll-option-cont .max-byte {
   margin: 0 0 1.25rem 0;
   font-size: 0.75rem;
   color: #757575;
   text-align: right;
 }
 
-.acco-list.acco-poll .poll-option-cont .max-byte em {
+.poll-option-cont .max-byte em {
   color: #000;
   vertical-align: middle;
 }

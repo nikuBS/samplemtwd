@@ -20,7 +20,7 @@
     <div id="header" class="header-wrap">
         <div class="header">
             <div class="header-ti align-l">
-                <h1>오늘의 설문조사</h1>
+                <h1>설문조사 진행</h1>
             </div>
             <button class="prev-step fe-common-back"><span class="blind">이전으로</span></button>
         </div>
@@ -34,7 +34,7 @@
             <div class="cont-box noborder">
                 <div class="poll-info">
                     <h3 class="poll-tit"><%= research.title %></h3>
-                    <div class="poll-date"><%= research.date %></div>
+                    <div class="poll-date"><%= research.startDate %> - <%= research.endDate%></div>
                 </div>
                 <% if (research.questionCount > 1) { %>
                 <div class="poll-chart-box">
@@ -51,41 +51,38 @@
                 <% } %>
             </div>
             <!--// .cont-box -->
+            <hr class="cont-sp type1" aria-hidden="true">
             <!-- .cont-box -->
-            <div class="cont-box nogaps-top">
-                <div class="poll-chart-space">
-                    <% for (let questionIdx in research.questions) { %>
+            <div class="cont-box">
+                <% for (let questionIdx in research.questions) { %>
+                    <div class="poll-chart-space" id="<%= questionIdx === '1'? 'main' : 'q' + questionIdx %>">
                         <% const question = research.questions[questionIdx]; %>
-                        <div class="poll-space-inner" id="<%= questionIdx === '1'? 'main' : 'q' + questionIdx %>">
-                            <div class="acco-tit"><%= question.content %></div>
-                            <div class="acco-cont pb0">
-                                <div class="cont-box nogaps-acco">
-                                    <div class="poll-option-cont">
-                                        <% if (question.examples) { %>
-                                        <div class="widget">
-                                            <div class="widget-box radio">
-                                                <ul class="select-list" role="radiogroup">
-                                                    <% const isRadio = !question.isMultiple; %>
-                                                    <% for (let exampleIdx in question.examples) { %>
-                                                        <% const exam = question.examples[exampleIdx]; %>
-                                                        <li class="<%= isRadio? 'radiobox type03' : 'checkbox type02' %> alignment" role="<%= isRadio? 'radio' : 'checkbox' %>" aria-checked="" data-next-question="<%= exam.nextQuestion %>">
-                                                            <div class="alignment-box">
-                                                                <i class="ico"></i>
-                                                                <input type="<%= isRadio? 'radio' : 'checkbox' %>" name="<%= isRadio? 'radio' : 'checkbox' %>" value="" title="<%= exam.content %>"/>
-                                                                <span class="txt"><%= exam.content %></span>
-                                                            </div>
-                                                        </li>
-                                                    <% } %>
-                                                </ul>
-                                                <% if (question.examples[Object.keys(question.examples).length].isEtc) { %><textarea class="poll-area fe-etc-area" data-etc-idx="<%= examCount %>" cols="20" rows="3"></textarea><% } %>
-                                            </div>
-                                        </div>
-                                        <% } else { %>
-                                            <textarea class="poll-area mt10" cols="20" rows="3" placeholder="형식에 맞게 입력해주십시오."></textarea>
-                                            <div class="max-byte"><em>0</em> <span>/ 최대 100byte</span></div>
-                                        <% } %>
+                        <p class="poll-heading"><%= question.content %></p>
+                        <div class="poll-space-inner">
+                            <div class="poll-option-cont">
+                                <% if (question.examples) { %>
+                                <div class="widget">
+                                    <% const isRadio = !question.isMultiple; %>
+                                    <div class="widget-box <%= isRadio? 'radio' : 'check'%>">
+                                        <ul class="select-list <%= research.isMultiStage? 'division-two mb0' : '' %>" role="group">
+                                            <% for (let exampleIdx in question.examples) { %>
+                                                <% const exam = question.examples[exampleIdx]; %>
+                                                <li class="<%= isRadio? 'radiobox type03' : 'checkbox type02' %> alignment" role="<%= isRadio? 'radio' : 'checkbox' %>" aria-checked="" data-next-question="<%= exam.nextQuestion %>">
+                                                    <div class="alignment-box">
+                                                        <i class="ico"></i>
+                                                        <input type="<%= isRadio? 'radio' : 'checkbox' %>" name="<%= isRadio? 'radio' : 'checkbox' %>" value="" title="<%= exam.content %>"/>
+                                                        <span class="txt"><%= exam.content %></span>
+                                                    </div>
+                                                </li>
+                                            <% } %>
+                                        </ul>
+                                        <% if (question.examples[Object.keys(question.examples).length].isEtc) { %><textarea class="poll-area fe-etc-area" data-etc-idx="<%= examCount %>" cols="20" rows="3"></textarea><% } %>
                                     </div>
                                 </div>
+                                <% } else { %>
+                                    <textarea class="poll-area mt10" cols="20" rows="3" placeholder="형식에 맞게 입력해주십시오."></textarea>
+                                    <div class="max-byte"><em>0</em> <span>/ 최대 100byte</span></div>
+                                <% } %>
                             </div>
                             <% if (questionIdx === '1') { %>
                                 <ul class="bt-slice">
@@ -113,8 +110,8 @@
                                 </ul>
                             <% } %>
                         </div>
-                    <% } %>
-                </div>
+                    </div>
+                <% } %>
             </div>
             <!--// .cont-box -->
         </div>

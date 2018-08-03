@@ -1,0 +1,37 @@
+<%#
+* FileName: myt.join.join-info.wibro.html
+* Author: 양정규 (skt.P130715@partner.sk.com)
+* Date: 2018.08.02
+%>
+
+<div class="cont-box nogaps-hoz">
+    <h3 class="title-bold pt18">가입정보</h3>
+    <div class="info-cont">
+        <ul class="inner-list">
+            <li>
+                <dl>
+                    <dt>제품번호</dt>
+                    <dd><span class="ff-hn"><%= data.eqpMdlNm%></span></dd>
+                </dl>
+            </li>
+            <li>
+                <dl>
+                    <dt>서비스 상태</dt>
+                    <dd><%= data.svcStatCd%></dd>
+                </dl>
+            </li>
+            <li>
+                <dl>
+                    <dt>가입일자</dt>
+                    <dd><%= data.svcScrbDt%></dd>
+                </dl>
+            </li>
+            <li>
+                <dl>
+                    <dt>가입비</dt>
+                    <dd><span class="ff-hn vbl"><%= data.scrbAmt%></span> 원 (<%= data.scrbTypNm%>)</dd>
+                </dl>
+            </li>
+        </ul>
+    </div>
+</div>

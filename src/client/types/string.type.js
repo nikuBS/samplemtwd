@@ -151,6 +151,12 @@ Tw.MSG_COMMON = {
 Tw.MSG_HOME = {};
 
 Tw.MSG_MYT = {
+  USAGE_TING_M03: {
+    TITLE: '통화가능 금액이란?',
+    CONTENTS: '팅요금상품 가입 시 선택하신 상한금액에서 기본료를 제외한 나머지 금액입니다.\n' +
+      '예) 팅 100요금상품의 경우, 상한 2만원 선택 시 통화 가능 금액은 7,500원입니다.\n' +
+      '상한(20,000원) – 기본료(12,500원) = 7,500원\n'
+  },
   BILL_GUIDE_REISSUE_00: ' 요금안내서 재발행',
   BILL_GUIDE_REISSUE_01: ' 요금안내서 재발행을 신청하시겠습니까?',
   BILL_GUIDE_REISSUE_02: '이메일 주소가 정확한지 다시 한번 확인해주시기 바랍니다. 재발행을 신청하시겠습니까?',
@@ -579,7 +585,7 @@ Tw.DATE_FORMAT = {
 
 Tw.URL_PATH = {
   BROADBAND: 'http://www.skbroadband.com/',
-  COP_SERVICE : 'http://b2b.tworld.co.kr/cs/counsel/certServiceInfo.bc'
+  COP_SERVICE: 'http://b2b.tworld.co.kr/cs/counsel/certServiceInfo.bc'
 };
 
 Tw.MSG_POSTCODE = {

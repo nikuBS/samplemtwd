@@ -101,6 +101,8 @@ export const URL = {
   '/customer/helpline': { login: true, id: 'CI_05_01' }, // 전화상담예약
   '/customer/shop/detail': { login: false, id: 'CI_02_04' }, // 매장 및 AS센터 > 매장정보
   '/customer/shop/near': { login: false, id: 'CI_02_05' }, // 매장 및 AS센터 > 내 위치와 가까운 매장 검색
+  '/customer/shop/repair': { login: false, id: 'CI_03_01' }, // 매장 및 AS센터 > 지역 별 AS센터
+  '/customer/shop/repair-manufacturer': { login: false, id: 'CI_03_02' }, // 매장 및 AS센터 > 제조사 별 AS센터
   '/customer/shop/search': { login: false, id: 'CI_02_01' }, // 매장 및 AS센터 > 지점/대리점 찾기
   '/customer/researches': { login: true, id: 'CI_09_02' }, // 설문조사 리스트
   '/customer/result': { login: false, id: 'CI_09_04' }, // 설문조사 결과
