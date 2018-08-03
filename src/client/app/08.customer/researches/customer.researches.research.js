@@ -8,6 +8,7 @@
 Tw.CustomerResearch = function (rootEl) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
+  this._popupService = Tw.Popup;
   this._history = new Tw.HistoryService(rootEl);
   this._history.init('hash');
 
@@ -49,6 +50,7 @@ Tw.CustomerResearch.prototype = {
     this._setAnswers($root);
 
     if ($target.hasClass('fe-submit')) {
+      this._history.setHistory();
       this._submitResearch();
     } else if ($target.hasClass('fe-go-next')) {
       this._goToQuestion(this._currentStep + 1);
@@ -60,6 +62,7 @@ Tw.CustomerResearch.prototype = {
       if (!nextQuestion) {
         this._goToQuestion(this._currentStep + 1);
       } else if (nextQuestion === '0') {
+        this._history.setHistory();
         this._submitResearch();
       } else {
         this._goToQuestion(nextQuestion);
@@ -79,6 +82,27 @@ Tw.CustomerResearch.prototype = {
 
   _submitResearch: function () {
     // 참여하기 클릭
+    var values = Object.values(this._answers);
+    this._apiService.request(Tw.API_CMD.BFF_08_0036, {
+      qstnId: this.$container.data('research-id'),
+      totalCnt: values.length,
+      agrmt: values
+    }).done($.proxy(this._successParticipation, this));
+  },
+
+  _successParticipation: function (resp) {
+    if (resp.code === Tw.API_CODE.CODE_00) {
+      switch (resp.result) {
+        case 'DUPLICATE':
+          this._popupService.openAlert(Tw.MSG_CUSTOMER.RESEARCH_A01);
+          break;
+        case 'SUCCESS':
+          this._popupService.openAlert(Tw.MSG_CUSTOMER.RESEARCH_A02);
+          break;
+      }
+    } else {
+      this._popupService.openAlert(resp.msg);
+    }
   },
 
   _setAvailableBtn: function (e) {

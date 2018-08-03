@@ -89,11 +89,10 @@ interface IStepExample {
 export default class CustomerResearches extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     if (req.params.researchId) {
-      // this.apiService.request(API_CMD.BFF_08_0038, { qstn_id: req.params.researchId }).subscribe(resp => {
-      // });
-      const research: IStepResearch = this.getProperResearchData(StepResearch);
-
-      res.render('researches/customer.researches.research.html', { svcInfo, research });
+      this.apiService.request(API_CMD.BFF_08_0038, { qstnId: req.params.researchId }).subscribe(resp => {
+        const research: IStepResearch = this.getProperResearchData(resp.result);
+        res.render('researches/customer.researches.research.html', { svcInfo, research });
+      });
     } else {
       this.apiService.request(API_CMD.BFF_08_0023, {}).subscribe(resp => {
         // const researches = Researches.map(this.setData);
