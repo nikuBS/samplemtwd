@@ -203,10 +203,11 @@
                             <a class="bt-tel" href="tel:<%= result.list[i].tel %>"><span role="img" class="blind">매장으로 전화하기</span></a>
                         </div>
                         <% } %>
-                    <% if (result.totalCount > result.list.length) { %>
-                    <button class="bt-more">더보기<span id="fe-more-count">(<%= result.totalCount - result.list.length > 20 ? 20 : result.totalCount - result.list.length %>)</span></button>
-                    <% } %>
+
                 </div>
+                <% if (result.totalCount > result.list.length) { %>
+                <button class="bt-more">더보기<span id="fe-more-count">(<%= result.totalCount - result.list.length > 20 ? 20 : result.totalCount - result.list.length %>)</span></button>
+                <% } %>
             </div>
             <!--// .cont-box -->
             <% } %>
@@ -321,6 +322,19 @@
     <%- include('../../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
 </div>
 <% include ../../components/javascript.component.html %>
+<script type="text/template" id="tpl_search_result_item">
+    {{#list}}
+    <div>
+        <button class="fe-shop-detail" value="{{locCode}}">
+            <dl>
+                <dt>{{locName}}</dt>
+                <dd>{{searchAddr}}<br />{{jibunAddr}}</dd>
+            </dl>
+        </button>
+        <a class="bt-tel" href="tel:{{tel}}"><span role="img" class="blind">매장으로 전화하기</span></a>
+    </div>
+    {{/list}}
+</script>
 <script>
   $(document).ready(function () {
     new Tw.CustomerShopSearch($('#fe-customer-shop-search'));

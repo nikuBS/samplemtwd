@@ -6,14 +6,20 @@
 
 Tw.CustomerShopSearch = function (rootEl) {
   this.$container = rootEl;
+
   this._apiService = Tw.Api;
   this._historyService = new Tw.HistoryService();
+
+  this._searchedItemTemplate = Handlebars.compile($('#tpl_search_result_item').html());
 
   this._currentTab = 1;
   this._storeType = '0';
 
+  this._pageCount = 2;
+
   this._cacheElements();
   this._bindEvent();
+  this._setCurrentTab();
 };
 
 Tw.CustomerShopSearch.prototype = {
@@ -25,6 +31,7 @@ Tw.CustomerShopSearch.prototype = {
     this.$optionsTitle = this.$container.find('#fe-options-title');
     this.$btnMore = this.$container.find('.bt-more');
     this.$moreCount = this.$container.find('#fe-more-count');
+    this.$result = this.$container.find('.store-result-list');
   },
   _bindEvent: function () {
     this.$container.on('click', 'li[role="tab"] > button', $.proxy(this._onTabChanged, this));
@@ -34,6 +41,10 @@ Tw.CustomerShopSearch.prototype = {
     this.$container.on('change', 'input[type="checkbox"]', $.proxy(this._onOptionsChanged, this));
     this.$container.on('click', '.fe-shop-detail', $.proxy(this._onShopDetail, this));
     this.$btnMore.on('click', $.proxy(this._onMore, this));
+  },
+  _setCurrentTab: function () {
+    var curTabId = this.$container.find('li[role="tab"][aria-selected="true"]').attr('id');
+    this._currentTab = curTabId === 'tab1' ? 1 : curTabId === 'tab2' ? 2 : 3;
   },
   _onTabChanged: function (evt) {
     switch (evt.target.id) {
@@ -120,16 +131,48 @@ Tw.CustomerShopSearch.prototype = {
     this._historyService.goLoad('/customer/shop/detail?code=' + evt.currentTarget.value);
   },
   _onMore: function () {
-    var result = this.$container.find('.store-result-list > .none');
-    for (var i = 0; i < (result.length < 20 ? result.length: 20); i++) {
-      $(result[i]).removeClass('none');
+    var cmd = Tw.API_CMD.BFF_08_0004B;
+    var params = { currentPage: this._pageCount };
+    switch (this._currentTab) {
+      case 1:
+        params.searchText = this.$inputName.val();
+        break;
+      case 2:
+        cmd = Tw.API_CMD.BFF_08_0005B;
+        params.searchText = this.$inputAddress.val();
+        break;
+      case 3:
+        cmd = Tw.API_CMD.BFF_08_0006B;
+        params.searchText = this.$inputTube.val();
+        break;
+      default:
+        break;
     }
 
-    if (result.length - 20 <= 0) {
+    params.searchText = encodeURIComponent(params.searchText);
+
+    this._buildSearchOptions(params);
+
+    this._apiService.request(cmd, params)
+      .done($.proxy(this._onMoreResult, this))
+      .fail(function (err) {
+        Tw.Popup.openAlert(err.code + ' ' + err.msg);
+      });
+  },
+  _onMoreResult: function (res) {
+    if (res.result.lastPageType === 'Y') {
       this.$btnMore.hide();
     } else {
-      this.$moreCount.text('(' + (result.length - 20 < 20 ? result.length - 20 : 20) + ')');
+      var newCount = res.result.totalCount - (this._pageCount * 20) >= 20 ?
+        20 : res.result.totalCount - (this._pageCount * 20);
+      this.$moreCount.text(newCount);
     }
+
+    this.$result.append(this._searchedItemTemplate({
+      list: res.result.regionInfoList
+    }));
+
+    this._pageCount++;
   },
   _requestSearch: function () {
     var params = { storeType: this._storeType };
@@ -150,6 +193,18 @@ Tw.CustomerShopSearch.prototype = {
         break;
     }
 
+    this._buildSearchOptions(params);
+
+    var searchUrl = _.reduce(params, function (str, param, key) {
+      if (str.match(/\?$/)) {
+        return str + key + '=' + param;
+      } else {
+        return str + '&' + key + '=' + param;
+      }
+    }, '/customer/shop/search?');
+    this._historyService.goLoad(searchUrl);
+  },
+  _buildSearchOptions: function (params) {
     var jobs = this.$container.find('input:checked[type=checkbox]');
     _.map(jobs, function (checked) {
       switch (checked.value) {
@@ -175,14 +230,5 @@ Tw.CustomerShopSearch.prototype = {
          break;
       }
     });
-
-    var searchUrl = _.reduce(params, function (str, param, key) {
-      if (str.match(/\?$/)) {
-        return str + key + '=' + param;
-      } else {
-        return str + '&' + key + '=' + param;
-      }
-    }, '/customer/shop/search?');
-    this._historyService.goLoad(searchUrl);
   }
 };
