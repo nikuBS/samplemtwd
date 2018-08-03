@@ -26,7 +26,11 @@
             <div class="cont-box">
                 <div class="top-info">
                     <button role="button" class="link-btn" id="<%= usageData.prodId %>"><%= usageData.prodName %></button>
+                    <% if(svcInfo.svcAttrCd === 'S3') { %>
+                    <span class="info-sub"><em><%= remainDate %></em></span>
+                    <% } else { %>
                     <span class="info-sub">남은 일수 <em><%= remainDate %></em>일</span>
+                    <% } %>
                 </div>
             </div>
             <% if (usageData.data && usageData.data.length > 0) { %>
