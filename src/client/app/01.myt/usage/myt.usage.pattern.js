@@ -9,14 +9,14 @@ Tw.MyTUsagePattern = function (params) {
   this.$container = params.$element;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
-  this._chartFeeData = params.chartFeeData;
-  this._chartCTData = params.chartCTData;
-  this._chartSmsData = params.chartSmsData;
-  this._chartVoiceData = params.chartVoiceData;
-  this._chartInVoiceData = params.chartInVoiceData;
-  this._chartOutVoiceData = params.chartOutVoiceData;
-  this._chartVidVoiceData = params.chartVidVoiceData;
-  this._empty = params.empty;
+  this._chartFeeData = params.data.chartFeeData;
+  this._chartCTData = params.data.chartCTData;
+  this._chartSmsData = params.data.chartSmsData;
+  this._chartVoiceData = params.data.chartVoiceData;
+  this._chartInVoiceData = params.data.chartInVoiceData;
+  this._chartOutVoiceData = params.data.chartOutVoiceData;
+  this._chartVidVoiceData = params.data.chartVidVoiceData;
+  this._empty = params.data.empty;
   this._defaultChartSetting = {
     min: 0, //Min크기
     max: 250, //Max크기
@@ -46,11 +46,11 @@ Tw.MyTUsagePattern.prototype = {
     // 사용량 탭 내 이동 버튼
     this.$amtBtnContainer = this.$container.find('#amt-btn-grp');
     // 음성통화 사용량
-    this.$voiceChartArea = this.$container.find('#voice-area');
+    this.$voiceChartArea = this.$container.find('#fe-voice-area');
     // 문자 사용량
-    this.$smsChartArea = this.$container.find('#sms-area');
+    this.$smsChartArea = this.$container.find('#fe-sms-area');
     // 데이터 사용량
-    this.$cdataChartArea = this.$container.find('#cdata-area');
+    this.$cdataChartArea = this.$container.find('#fe-cdata-area');
   },
 
   _initialize: function () {
