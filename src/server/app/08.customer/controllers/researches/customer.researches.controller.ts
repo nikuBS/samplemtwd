@@ -74,6 +74,7 @@ interface IStepQuestion {
   content: string;
   isMultiple: boolean;
   isMultiStage: boolean;
+  isNecessary: boolean;
   examples?: { [key: number]: IStepExample };
 }
 
@@ -153,6 +154,7 @@ export default class CustomerResearches extends TwViewController {
         content: question.inqDtlCtt,
         isMultiple: question.inqItmTypCd === '1',
         isMultiStage: question.inqSortMthdCd === 'D',
+        isNecessary: question.mndtAnswYn === 'Y',
         examples
       };
     }

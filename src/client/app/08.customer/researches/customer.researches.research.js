@@ -22,6 +22,8 @@ Tw.CustomerResearch.prototype = {
   _bindEvent: function () {
     this.$container.on('click', 'li.bt-white2', $.proxy(this._handleGoToBefore, this));
     this.$container.on('click', 'li.bt-blue1', $.proxy(this._handleGoToNext, this));
+    this.$container.on('change', 'ul.select-list input', $.proxy(this._setAvailableBtn, this));
+    this.$container.on('keyup', 'textarea.mt10', $.proxy(this._handleTypeEssay, this));
   },
 
   _handleGoToBefore: function (e) {
@@ -40,7 +42,7 @@ Tw.CustomerResearch.prototype = {
   _handleGoToNext: function (e) {
     // 다음으로 클릭
     var $target = $(e.currentTarget);
-    var $root = $(e.target).closest('.poll-space-inner');
+    var $root = this.$container.find(this._currentStep > 1 ? '#q' + this._currentStep : '#main');
 
     if ($target.hasClass('fe-submit')) {
       this._submitResearch();
@@ -73,6 +75,30 @@ Tw.CustomerResearch.prototype = {
 
   _submitResearch: function () {
     // 참여하기 클릭
+  },
+
+  _setAvailableBtn: function (e) {
+    var $root = this.$container.find(this._currentStep > 1 ? '#q' + this._currentStep : '#main');
+    var selectedLi = $root.find('ul.select-list li[aria-checked="true"]');
+    var $btn = $root.find('.bt-blue1 button');
+
+    if (selectedLi.length === 0 && !e.target.getAttribute('checked')) {
+      $btn.attr('disabled', true);
+    } else if ($btn.attr('disabled')) {
+      $btn.attr('disabled', false);
+    }
+  },
+
+  _handleTypeEssay: function (e) {
+    var target = e.currentTarget;
+    var $root = this.$container.find(this._currentStep > 1 ? '#q' + this._currentStep : '#main');
+    var $btn = $root.find('.bt-blue1 button');
+
+    if ($root.data('necessary') && !target.value) {
+      $btn.attr('disabled', true);
+    } else if ($btn.attr('disabled')) {
+      $btn.attr('disabled', false);
+    }
   },
 
   _goHash: function (hash) {

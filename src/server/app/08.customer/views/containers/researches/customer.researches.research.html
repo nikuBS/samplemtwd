@@ -55,7 +55,7 @@
             <!-- .cont-box -->
             <div class="cont-box">
                 <% for (let questionIdx in research.questions) { %>
-                    <div class="poll-chart-space" id="<%= questionIdx === '1'? 'main' : 'q' + questionIdx %>">
+                    <div class="poll-chart-space" id="<%= questionIdx === '1'? 'main' : 'q' + questionIdx %>" data-necessary="<%= research.isNecessary %>">
                         <% const question = research.questions[questionIdx]; %>
                         <p class="poll-heading"><%= question.content %></p>
                         <div class="poll-space-inner">
@@ -96,7 +96,7 @@
                                         <button>이전으로</button>
                                     </li>
                                     <li class="bt-blue1 fe-submit">
-                                        <button>참여하기</button>
+                                        <button <%= question.isNecessary? 'disabled' : '' %>>참여하기</button>
                                     </li>
                                 </ul>
                             <% } else { %>
@@ -105,7 +105,7 @@
                                         <button>이전으로</button>
                                     </li>
                                     <li class="bt-blue1 <%= !question.isMultiple && !question.example ? 'fe-go-next' : '' %>">
-                                        <button>다음으로</button>
+                                        <button <%= question.isNecessary? 'disabled' : '' %>>다음으로</button>
                                     </li>
                                 </ul>
                             <% } %>
