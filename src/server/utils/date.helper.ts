@@ -167,6 +167,16 @@ class DateHelper {
   static getDifference(endDate: string, startDate?: string): number {
     return moment(endDate).diff(startDate || new Date());
   }
+
+  /**
+   * Return duration difference
+   * @param {Moment} : moment
+   * @returns {Moment} : moment
+   */
+  static getDiffDuration(endDate: any): any {
+    const diff = moment(endDate).diff(new Date());
+    return moment.duration(diff);
+  }
 }
 
 export default DateHelper;
