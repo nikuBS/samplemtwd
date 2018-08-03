@@ -3,7 +3,7 @@ Tw.NativeService = function () {
   this._callbackList = [];
   this._randomCode = 0;
   this._apiService = new Tw.ApiService();
-  this._popupService = Tw.Popup;
+  this._popupService = new Tw.PopupService();
 
   this._init();
 };
@@ -84,6 +84,7 @@ Tw.NativeService.prototype = {
   },
 
   _onEasyLogin: function (resp) {
+    console.log(resp);
     if(resp.resultCode === Tw.NTV_CODE.CODE_00) {
       if(Tw.BrowserHelper.isAndroid()) {
         window.location.href = '/auth/login/easy-aos?mdn=' + resp.params.mdn;
