@@ -1,0 +1,60 @@
+<!--
+  FileName:
+  Author: Kim InHwan (skt.P132150@partner.sk.com)
+  Date: 2018.07.
+
+  -->
+
+<!--
+  FileName: myt.usage.pattern.fail.html
+  Author: Kim InHwan (skt.P132150@partner.sk.com)
+  Date: 2018.08.03
+-->
+<% include ../../components/start.component.html %>
+<body>
+<div class="wrap">
+    <%- include('../../../../common/views/components/header.component.html', { title: '최근 사용패턴', svcInfo: data.svcInfo }); %>
+    <!-- #contents -->
+    <div id="pattern-fail" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <div class="cont-box">
+                <div class="top-info">
+                    <span class="info-text">선택하신 서비스는 <br /><em>최근 사용패턴 조회 대상</em>이 아닙니다.</span>
+                </div>
+            </div>
+
+            <hr class="cont-sp type1" aria-hidden="true" />
+
+            <div class="cont-box nogaps">
+                <div class="bt-contents-guide">
+                    <button role="button" class="bt-guide">홈으로</button>
+                </div>
+            </div>
+
+            <hr class="cont-sp type1" aria-hidden="true" />
+
+            <div class="cont-box nogaps-btm">
+                <h2 class="title-h2">도와드릴까요?</h2>
+                <div class="link-long-group mt18">
+                    <div class="link-long">
+                        <button>온라인 상담/문의 바로가기<span class="ico"></span></button>
+                    </div>
+                    <div class="link-long">
+                        <button>T월드 고객센터 바로가기<span class="ico"></span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--// #contents -->
+    <%- include('../../../../common/views/components/footer.component.html', { svcInfo: data.svcInfo }); %>
+</div>
+
+<% include ../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    var comp = new Tw.MyTUsagePatternFail($('#pattern-fail'));
+  });
+</script>
+<% include ../../components/end.component.html %>
