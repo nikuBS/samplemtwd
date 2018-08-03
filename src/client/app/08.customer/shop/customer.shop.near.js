@@ -12,10 +12,12 @@ Tw.CustomerShopNear = function (rootEl) {
   this._popupService = Tw.Popup;
 
   this._map = null;
-  this._markerLayer = null;
+  this._markerLayer1 = null;
+  this._markerLayer2 = null;
   this._nearShops = null;
 
   this._cacheElements();
+  this._bindEvents();
   this._init();
 };
 
@@ -25,14 +27,20 @@ Tw.CustomerShopNear.prototype = {
     this.$region2 = this.$container.find('#fe-region-2');
     this.$tmapBox = this.$container.find('#TmapBox');
   },
+  _bindEvents: function () {
+    this.$container.on('change', '.radio', $.proxy(this._onTypeChanged, this));
+  },
   _init: function () {
     if (Tw.BrowserHelper.isApp()) {
-      this._nativeService.send(Tw.NTV_CMD.GET_LOCATION, {}, $.proxy(this._onLocation, this));
+      this._nativeService.send(Tw.NTV_CMD.GET_LOCATION, {}, $.proxy(this._onCurrentLocation, this));
     } else {
       if ('geolocation' in navigator) {
         // Only works in secure mode(Https) - for test, use localhost for url
         navigator.geolocation.getCurrentPosition($.proxy(function (location) {
-          this._onCurrentLocation({ lon: location.coords.longitue, lat: location.coords.latitue });
+          // this._onCurrentLocation({
+            // longitude: location.coords.longitue,
+            // latitude: location.coords.latitue
+          // });
         }, this));
       }
     }
@@ -42,6 +50,19 @@ Tw.CustomerShopNear.prototype = {
     // this._onCurrentLocation({ lon: '128.686677', lat: '35.219317' });
     // this._onCurrentLocation({ lon: '128.471265', lat: '35.290588' });
   },
+  _onTypeChanged: function (evt) {
+    var type = evt.target.value;
+    if (type === '0') {
+      this._markerLayer1.setVisibility(true);
+      this._markerLayer2.setVisibility(true);
+    } else if (type === '1') {
+      this._markerLayer1.setVisibility(true);
+      this._markerLayer2.setVisibility(false);
+    } else {
+      this._markerLayer1.setVisibility(false);
+      this._markerLayer2.setVisibility(true);
+    }
+  },
   _onCurrentLocation: function (location) {
     // init Tmap and show
     this._map = new Tmap.Map({
@@ -50,17 +71,18 @@ Tw.CustomerShopNear.prototype = {
       height: this.$tmapBox.width() + 'px'
     });
     this._map.setCenter(
-      new Tmap.LonLat(location.lon, location.lat).transform('EPSG:4326', 'EPSG:3857'), 15);
+      new Tmap.LonLat(location.longitue, location.latitude).transform('EPSG:4326', 'EPSG:3857'), 15);
 
     // Add marker for current location
-    this._markerLayer = new Tmap.Layer.Markers();
-    this._map.addLayer(this._markerLayer);
+    var markerLayer = new Tmap.Layer.Markers();
+    this._map.addLayer(markerLayer);
     var size = new Tmap.Size(24, 38);
     var offset = new Tmap.Pixel(-(size.w / 2), -(size.h));
-    var lonlat = new Tmap.LonLat(location.lon, location.lat).transform('EPSG:4326', 'EPSG:3857');
+    var lonlat = new Tmap.LonLat(location.longitue, location.lattitude)
+      .transform('EPSG:4326', 'EPSG:3857');
     var icon = new Tmap.Icon(Tw.TMAP.COMPASS, size, offset);
     var marker = new Tmap.Marker(lonlat, icon);
-    this._markerLayer.addMarker(marker);
+    markerLayer.addMarker(marker);
 
     // Retrieve current region
     this._apiService.requestAjax(Tw.AJAX_CMD.GET_TMAP_REGION, {
@@ -70,8 +92,8 @@ Tw.CustomerShopNear.prototype = {
       categories : 'gu_gun',
       searchType : 'COORDINATES',
       reqCoordType: 'WGS84GEO',
-      reqLon: location.lon,
-      reqLat: location.lat,
+      reqLon: location.longitude,
+      reqLat: location.lattitude,
       appKey : Tw.TMAP.APP_KEY
     }).done($.proxy(function (res) {
       var regions = res.searchRegionsInfo[0].regionInfo.description.split(' ');
@@ -88,25 +110,35 @@ Tw.CustomerShopNear.prototype = {
 
     // Retrieve near shops
     this._apiService.request(Tw.API_CMD.BFF_08_0008, {
-      currLocX: location.lon, currLocY: location.lat
-    }).done($.proxy(this._onNearShops, this))
+      currLocX: location.longitude, currLocY: location.latitude
+    }).done($.proxy(function (res) {
+      this._nearShops = res.result.regionInfoList;
+      this._onNearShops();
+    }, this))
     .fail($.proxy(function (err) {
       console.log(err);
-      // this._popupService.openAlert(err);
     }, this));
   },
-  _onNearShops: function (res) {  // Add near shops' markers
-    this._nearShops = res.result;
-
+  _onNearShops: function () {  // Add near shops' markers
     var size = new Tmap.Size(24, 38);
     var offset = new Tmap.Pixel(-(size.w / 2), -(size.h));
 
-    for (var i = 0; i < res.result.length; i++) {
-      var lonlat = new Tmap.LonLat(res.result[i].geoX, res.result[i].geoY)
+    this._markerLayer1 = new Tmap.Layer.Markers();
+    this._markerLayer2 = new Tmap.Layer.Markers();
+    this._map.addLayer(this._markerLayer1);
+    this._map.addLayer(this._markerLayer2);
+    var shops = this._nearShops;
+
+    for (var i = 0; i < shops.length; i++) {
+      var lonlat = new Tmap.LonLat(shops[i].geoX, shops[i].geoY)
         .transform('EPSG:4326', 'EPSG:3857');
       var icon = new Tmap.Icon(Tw.TMAP.PIN, size, offset);
       var marker = new Tmap.Marker(lonlat, icon);
-      this._markerLayer.addMarker(marker);
+      if (shops[i].storeType === '1') {
+        this._markerLayer1.addMarker(marker);
+      } else {
+        this._markerLayer2.addMarker(marker);
+      }
     }
   }
 };
