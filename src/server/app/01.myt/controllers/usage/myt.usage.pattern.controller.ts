@@ -51,6 +51,8 @@ class MytJSProtectChangeController extends TwViewController {
           const conp_data = this.convertPatternData(patternData);
           data = _.extend(data, conp_data);
         }
+        const cone_data = this.checkEmptyData(data);
+        data = _.extend(data, cone_data);
         res.render('usage/myt.usage.pattern.html', { data });
       });
     }
@@ -61,10 +63,9 @@ class MytJSProtectChangeController extends TwViewController {
     // 0: 사용요금, 1: 사용량
     switch ( svcAttrCd ) {
       case 'M1':
-        return [API_CMD.BFF_05_0059, API_CMD.BFF_05_0091];
       case 'M3':
       case 'M4':
-        return [API_CMD.BFF_05_0073, API_CMD.BFF_05_0073];
+        return [API_CMD.BFF_05_0059, API_CMD.BFF_05_0091];
       default:
         return null;
     }
@@ -96,7 +97,7 @@ class MytJSProtectChangeController extends TwViewController {
         disAv += item;
       });
       result.months = months;
-      result.useAverage = FormatHelper.numberWithCommas(Math.round(useAv / length)); // 평균사용금액
+      result.useAverage = (useAv && FormatHelper.numberWithCommas(Math.round(useAv / length))) || null; // 평균사용금액
       result.disAverage = FormatHelper.numberWithCommas(Math.round(disAv / length)); // 평균할인금액
       result.chartFeeData = _.zip(months, totalCharge, discountAdj); // 날짜별 금액정보
     }
@@ -139,7 +140,7 @@ class MytJSProtectChangeController extends TwViewController {
 
       // 망내, 망외, 영상 음성통화
       _.forEach(iovInfos, (value) => {
-        if (value) {
+        if ( value ) {
           const inItem = value['inNetVoiceCallUseQty'];
           const outItem = value['outNetVoiceCallUseQty'];
           const vidItem = value['videoCallUseQty'];
@@ -160,12 +161,12 @@ class MytJSProtectChangeController extends TwViewController {
       });
 
       result.names = ['데이터', '음성통화', '문자'];
-      result.totVoiceAverage = this.secToMS((totalVoice / length), 'A');               // 총 음성통화 평균
-      result.totSmsAverage = Math.round(totalSms / length);                               // 총 문자 평균
-      result.totCdataAverage = this.convDataGB(totalcData);                                  // 총 데이터 평균
-      result.totInVoiceAverage = this.secToMS((inTotalVoice / length), 'A');           // 총 망내음성통화 평균
-      result.totOutVoiceAverage = this.secToMS((outTotalVoice / length), 'A');         // 총 망외음성통화 평균
-      result.totVidVoiceAverage = this.secToMS((vidTotalVoice / length), 'A');         // 총 영상통화 평균
+      result.totVoiceAverage = (totalVoice && this.secToMS((totalVoice / length), 'A')) || null; // 음성통화 평균
+      result.totSmsAverage = (totalSms && Math.round(totalSms / length)) || null; // 문자 평균
+      result.totCdataAverage = (totalcData && this.convDataGB(totalcData)) || null; // 데이터 평균
+      result.totInVoiceAverage = (inTotalVoice && this.secToMS((inTotalVoice / length), 'A')) || null; // 망내음성통화 평균
+      result.totOutVoiceAverage = (outTotalVoice && this.secToMS((outTotalVoice / length), 'A')) || null; // 망외음성통화 평균
+      result.totVidVoiceAverage = (vidTotalVoice && this.secToMS((vidTotalVoice / length), 'A')) || null; // 영상통화 평균
 
       result.chartVoiceData = _.zip(months, voice);
       result.chartSmsData = _.zip(months, sms);
@@ -174,6 +175,20 @@ class MytJSProtectChangeController extends TwViewController {
       result.chartOutVoiceData = _.zip(months, outVoice);
       result.chartVidVoiceData = _.zip(months, vidVoice);
     }
+    return result;
+  }
+
+  checkEmptyData(data): any {
+    const result: any = {};
+    result.empty = {
+      fee: !data.useAverage,
+      voice: !data.totVoiceAverage,
+      sms: !data.totSmsAverage,
+      cdata: !data.totCdataAverage,
+      inVoice: !data.totInVoiceAverage,
+      outVoice: !data.totOutVoiceAverage,
+      vidVoice: !data.totVidVoiceAverage
+    };
     return result;
   }
 
