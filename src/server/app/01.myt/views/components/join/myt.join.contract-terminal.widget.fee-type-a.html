@@ -1,0 +1,48 @@
+<%#
+* FileName: myt.join.contract-terminal.widget.fee-type-a.html
+* Author: 김명환 (skt.P130714@partner.sk.com)
+* Date: 2018.08.03
+* Info: 요금약정할인24 (730) : NA00003677 | fee_type_A
+%>
+
+<div class="widget">
+    <div class="widget-box toggle">
+        <div class="list-top">
+            <div class="select-right">
+                <button class="btn-toggle bt-detail" role="button" aria-pressed="false" title="자세히보기">자세히보기<span class="ico"></span></button>
+            </div>
+        </div>
+        <div class="toggler">
+            <div class="payment-detail-wrap mt12">
+                <div class="payment-detail-box">
+                    <div class="detail-inner">
+                        <div class="detail-list type3">
+                            <ul>
+                                <li>
+                                    <span class="title">할인지원 혜택</span>
+                                    <span class="tx-cont">
+                                                                <span><%=commDataInfo.feeInfo[i].titNm%></span>
+                                                                <button role="button" class="ico-info" data-target="boon_fee_type_A"><span class="blind">요금약정할인 상세보기</span></button>
+                                                            </span>
+                                </li>
+                                <li>
+                                    <div class="link-long-group">
+                                        <div class="link-long">
+                                            <button data-target="detailSaleList"
+                                                    data-svcAgrmtDcId="<%=commDataInfo.feeInfo[i].svcAgrmtDcId%>"
+                                                    data-svcAgrmtDcCd="<%=commDataInfo.feeInfo[i].svcAgrmtDcCd%>">상세 할인 내역 보기<span class="ico"></span></button>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <ul class="contents-notice line-top">
+                            <li class="noti-type2">약정 만료일은 정지 일수에 따라 달라 질 수 있습니다.</li>
+                            <li class="noti-type2">스페셜약정할인, LTE플러스약정할인 프로그램이 ‘요금약정할인’ 으로 통합변경 되었습니다. 이용에 착오 없으시기 바랍니다.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

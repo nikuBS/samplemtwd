@@ -16,6 +16,16 @@ const contractTerminal_BFF_05_0063 = {
             'svcAgrmtDcCd': 'AA'
           },
           {
+            'prodId': 'NA00003681',
+            'disProdNm': 'LTE데이터약정할인제도',
+            'agrmtDcAmt': '-154412',
+            'agrmtStNm': '약정가입중',
+            'agrmtDcStaDt': '20170525',
+            'agrmtDcEndDt': '20190525',
+            'svcAgrmtDcId': 'AG1000000033562311',
+            'svcAgrmtDcCd': 'AG'
+          },
+          {
             'prodId': 'NA00004430',
             'disProdNm': '선택약정할인제도 (24 개월)',
             'agrmtDcAmt': '-154412',

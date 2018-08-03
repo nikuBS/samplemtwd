@@ -127,19 +127,19 @@ class MytJoinContractTerminalPhone extends TwViewController {
 
         /*
         * 상품코드 분류(priceList.prodId)
-        * 요금약정할인24 (730) : NA00003677 | type_A
-        * 테블릿 약정할인 12 (뉴태블릿약정) : NA00003681 | type_B
-        * 태블릿약정(구태블릿약정) : tablet 객체로 구분 | type_C
-        * 해단분류에 포함되지않는 경우 | noType
+        * 요금약정할인24 (730) : NA00003677 | fee_type_A
+        * 테블릿 약정할인 12 (뉴태블릿약정) : NA00003681 | fee_type_B
+        * 태블릿약정(구태블릿약정) : tablet 객체로 구분 | fee_type_C
+        * 해당분류에 포함되지않는 경우 | fee_noType
          */
         if ( priceList[i].prodId === 'NA00003677' ) {
-          priceList[i].typeStr = 'type_A';
+          priceList[i].typeStr = 'fee_type_A';
           priceList[i].titNm = priceList[i].disProdNm;
         } else if ( priceList[i].prodId === 'NA00003681' ) {
-          priceList[i].typeStr = 'type_B';
+          priceList[i].typeStr = 'fee_type_B';
           priceList[i].titNm = '테블릿 약정할인 12';
         } else {
-          priceList[i].typeStr = 'noType';
+          priceList[i].typeStr = 'fee_noType';
           priceList[i].titNm = priceList[i].disProdNm;
         }
 
@@ -150,7 +150,7 @@ class MytJoinContractTerminalPhone extends TwViewController {
     }
     if ( _.size(tablet) > 0 ) {
       tablet.titNm = '테블릿 약정';
-      tablet.typeStr = 'type_C';
+      tablet.typeStr = 'fee_type_C';
       tablet.salePay = FormatHelper.addComma(tablet.agrmtDcAmt);
       tablet.agrmtDayCntNum = FormatHelper.addComma(tablet.agrmtDayCnt);
       tablet.aGrmtPenAmtNum = FormatHelper.addComma(tablet.aGrmtPenAmt);
@@ -159,7 +159,7 @@ class MytJoinContractTerminalPhone extends TwViewController {
     }
     if ( _.size(wibro) > 0 ) {
       wibro.titNm = 'wibro 약정';
-      wibro.typeStr = 'noType';
+      wibro.typeStr = 'fee_noType';
       wibro.salePay = FormatHelper.addComma(wibro.agrmtDcAmt);
       thisMain._proDate(wibro, wibro.agrmtDcStaDt, wibro.agrmtDcEndDt);
       thisMain._commDataInfo.feeInfo.push(wibro);
@@ -169,29 +169,28 @@ class MytJoinContractTerminalPhone extends TwViewController {
 
     // -------------------------------------------------------------[2. 단말기 약정할인 정보]
     if ( _.size(tAgree) > 0 ) {
-      tAgree.titNm = '가입 / ' + 'T 기본약정';
 
       /*
-      *  T 기본약정 약정이름
+      *  T 기본약정 분류(tAgree.agrmtDivision)
+      *  가입/T기본약정 : 'TAgree' | join_type_A
+      *  가입/T지원금약정 : 'TSupportAgree' | join_type_B
+      *  가입/T약정할부지원 : tInstallment 객체로 구분 | join_type_C
+      *  가입/약정위약금2 : rsvPenTAgree 객체로 구분 | join_type_D
+      *  해당분류에 포함되지않는 경우 | join_noType
        */
-      tAgree.agreeNm = (function( strKey ) {
-        let tempStr = '';
-        switch ( strKey ) {
-          case 'NoAgree' :
-            tempStr = '무약정';
-            break;
-          case 'TInstallment' :
-            tempStr = 'T할부지원';
-            break;
-          case 'TAgree' :
-            tempStr = 'T기본약정';
-            break;
-          case 'TSupportAgree' :
-            tempStr = 'T지원금약정';
-            break;
-        }
-        return tempStr;
-      })( tAgree.agrmtDivision );
+      if ( tAgree.agrmtDivision === 'TAgree' ) {
+        tAgree.typeStr = 'join_type_A';
+        tAgree.titNm = '가입 / ' + 'T 기본약정';
+        tAgree.agreeNm = 'T 기본약정';
+      } else if ( tAgree.agrmtDivision === 'TSupportAgree' ) {
+        tAgree.typeStr = 'join_type_B';
+        tAgree.titNm = '가입 / ' + 'T 지원금약정';
+        tAgree.agreeNm = 'T 지원금약정';
+      } else {
+        tAgree.typeStr = 'join_noType';
+        tAgree.titNm = '가입 / ' + '정보없음';
+        tAgree.agreeNm = '정보없음';
+      }
 
       tAgree.agreeTotMonth = tAgree.agrmtMthCnt; // 약정 전체 개월수
       tAgree.agreePay = FormatHelper.addComma(tAgree.dcAmt); // 약정 금액
@@ -200,14 +199,9 @@ class MytJoinContractTerminalPhone extends TwViewController {
       thisMain._commDataInfo.terminalInfo.push(tAgree);
     }
     if ( _.size(tInstallment) > 0 ) {
+      tInstallment.typeStr = 'join_type_C';
       tInstallment.titNm = '가입 / ' + 'T 약정 할부지원';
-
-      /*
-      *  T 약정 할부지원 약정이름
-       */
-      tInstallment.agreeNm = (function() {
-        return 'T 약정 할부지원';
-      })();
+      tInstallment.agreeNm = 'T 약정 할부지원';
 
       tInstallment.agreeTotMonth = tInstallment.allotMthCnt; // 약정 전체 개월수
       tInstallment.agreePay = FormatHelper.addComma(tInstallment.totAgrmtAmt); // 약정 금액
@@ -217,14 +211,9 @@ class MytJoinContractTerminalPhone extends TwViewController {
       thisMain._commDataInfo.terminalInfo.push(tInstallment);
     }
     if ( _.size(rsvPenTAgree) > 0 ) {
+      rsvPenTAgree.typeStr = 'join_type_D';
       rsvPenTAgree.titNm = '가입 / ' + '약정 위약금2(NEW)';
-
-      /*
-      *  T 약정 할부지원 약정이름
-       */
-      rsvPenTAgree.agreeNm = (function() {
-        return '약정 위약금2(NEW)';
-      })();
+      rsvPenTAgree.agreeNm = '약정 위약금2(NEW)';
 
       rsvPenTAgree.agreeTotMonth = rsvPenTAgree.rtenAgrmtMthCnt; // 약정 전체 개월수
       rsvPenTAgree.agreePay = FormatHelper.addComma(rsvPenTAgree.rtenPenStrdAmt); // 약정 금액
@@ -233,9 +222,38 @@ class MytJoinContractTerminalPhone extends TwViewController {
       thisMain._commDataInfo.terminalInfo.push(rsvPenTAgree);
     }
     if ( _.size(sucesAgreeList) > 0 ) {
+
       for ( let i = 0; i < sucesAgreeList.length; i++ ) {
-        sucesAgreeList[i].titNm = '승계 / ' + sucesAgreeList[i].bfEqpDcClNm;
-        sucesAgreeList[i].agreeNm = sucesAgreeList[i].bfEqpDcClNm;
+        /*
+        * T 기본약정 분류(sucesAgreeList.bfEqpDcClCd)
+        * 승계/T할부지원 : '1' | suc_type_A
+        * 승계/T기본약정 : '2' | suc_type_B
+        * 승계/약정위약금2 : '3' | suc_type_C
+        * 승계/T지원금약정 : '7' | suc_type_D
+        * 해당분류에 포함되지않는 경우 | suc_noType
+         */
+        if ( sucesAgreeList[i].bfEqpDcClCd === '1' ) {
+          sucesAgreeList[i].typeStr = 'suc_type_A';
+          sucesAgreeList[i].titNm = '승계 / ' + sucesAgreeList[i].bfEqpDcClNm;
+          sucesAgreeList[i].agreeNm = sucesAgreeList[i].bfEqpDcClNm;
+        } else if ( sucesAgreeList[i].bfEqpDcClCd === '2' ) {
+          sucesAgreeList[i].typeStr = 'suc_type_B';
+          sucesAgreeList[i].titNm = '승계 / ' + sucesAgreeList[i].bfEqpDcClNm;
+          sucesAgreeList[i].agreeNm = sucesAgreeList[i].bfEqpDcClNm;
+        } else if ( sucesAgreeList[i].bfEqpDcClCd === '3' ) {
+          sucesAgreeList[i].typeStr = 'suc_type_C';
+          sucesAgreeList[i].titNm = '승계 / ' + sucesAgreeList[i].bfEqpDcClNm;
+          sucesAgreeList[i].agreeNm = sucesAgreeList[i].bfEqpDcClNm;
+        } else if ( sucesAgreeList[i].bfEqpDcClCd === '7' ) {
+          sucesAgreeList[i].typeStr = 'suc_type_D';
+          sucesAgreeList[i].titNm = '승계 / ' + sucesAgreeList[i].bfEqpDcClNm;
+          sucesAgreeList[i].agreeNm = sucesAgreeList[i].bfEqpDcClNm;
+        } else {
+          sucesAgreeList[i].typeStr = 'suc_noType';
+          sucesAgreeList[i].titNm = '승계 / 정보없음';
+          sucesAgreeList[i].agreeNm = '정보없음';
+        }
+
         sucesAgreeList[i].agreeTotMonth = sucesAgreeList[i].agrmtMthCnt; // 약정 전체 개월수
         sucesAgreeList[i].agreePay = FormatHelper.addComma(sucesAgreeList[i].agrmtDcAmt); // 약정 금액
         sucesAgreeList[i].penalty = FormatHelper.addComma(sucesAgreeList[i].sucesPenAmt); // 위약금
