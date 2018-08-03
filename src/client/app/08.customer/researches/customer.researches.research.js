@@ -7,6 +7,7 @@
 
 Tw.CustomerResearch = function (rootEl) {
   this.$container = rootEl;
+  this._apiService = Tw.Api;
   this._history = new Tw.HistoryService(rootEl);
   this._history.init('hash');
 
@@ -17,6 +18,7 @@ Tw.CustomerResearch = function (rootEl) {
 Tw.CustomerResearch.prototype = {
   _init: function () {
     this._currentStep = 1;
+    this._answers = {};
   },
 
   _bindEvent: function () {
@@ -43,6 +45,8 @@ Tw.CustomerResearch.prototype = {
     // 다음으로 클릭
     var $target = $(e.currentTarget);
     var $root = this.$container.find(this._currentStep > 1 ? '#q' + this._currentStep : '#main');
+
+    this._setAnswers($root);
 
     if ($target.hasClass('fe-submit')) {
       this._submitResearch();
@@ -99,6 +103,37 @@ Tw.CustomerResearch.prototype = {
     } else if ($btn.attr('disabled')) {
       $btn.attr('disabled', false);
     }
+  },
+
+  _setAnswers: function ($root) {
+    var answerType = $root.data('answer-type');
+    var answers = {
+      inqNum: this._currentStep.toString(),
+      inqItmTyp: answerType,
+    }
+    var inqRpsCtt = '';
+    var $etc = $root.find('.fe-etc-area');
+
+    if (answerType === 0) {
+      var selectedInput = $root.find('ul.select-list li[aria-checked="true"] input');
+      inqRpsCtt = selectedInput.attr('title');
+    } else if (answerType === 1) {
+      var selectedInputs = $root.find('ul.select-list li[aria-checked="true"] input');
+      for (var i = 0; i < selectedInputs.length; i++) {
+        if (i > 0) inqRpsCtt += ', '
+        inqRpsCtt += selectedInputs[i].getAttribute('title');
+      }
+    } else {
+      inqRpsCtt = $root.find('textarea.mt10').val();
+    }
+    answers.inqRpsCtt = inqRpsCtt;
+
+    if ($etc) {
+      answers.etcTextNum = $etc.data('etc-area');
+      answers.etcText = $etc.val();
+    }
+
+    this._answers[this._currentStep] = answers;
   },
 
   _goHash: function (hash) {
