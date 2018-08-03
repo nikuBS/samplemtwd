@@ -27,6 +27,8 @@ class ApiRouter {
     this.router.post('/login-tid', this.loginTid.bind(this));
     this.router.post('/logout-tid', this.logoutTid.bind(this));
     this.router.post('/user-locks/login', this.setUserLocks.bind(this));
+    this.router.post('/easy-login/aos', this.easyLoginAos.bind(this));
+    this.router.post('/easy-login/ios', this.easyLoginIos.bind(this));
   }
 
   private getEnvironment(req: Request, res: Response, next: NextFunction) {
@@ -93,6 +95,26 @@ class ApiRouter {
     const params = req.body;
     this.loginService.setCurrentReq(req, res);
     this.apiService.requestUserLocks(params).subscribe((resp) => {
+      res.json(resp);
+    }, (error) => {
+      res.json(error);
+    });
+  }
+
+  private easyLoginAos(req: Request, res: Response, next: NextFunction) {
+    const params = req.body;
+    this.loginService.setCurrentReq(req, res);
+    this.apiService.requestEasyLoginAos(params).subscribe((resp) => {
+      res.json(resp);
+    }, (error) => {
+      res.json(error);
+    });
+  }
+
+  private easyLoginIos(req: Request, res: Response, next: NextFunction) {
+    const params = req.body;
+    this.loginService.setCurrentReq(req, res);
+    this.apiService.requestEasyLoginIos(params).subscribe((resp) => {
       res.json(resp);
     }, (error) => {
       res.json(error);

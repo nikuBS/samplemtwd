@@ -9,6 +9,7 @@ Tw.AuthLoginEasyIos = function (rootEl) {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._nativeService = Tw.Native;
+  this._historyService = new Tw.HistoryService();
 
   this.$inputName = null;
   this.$inputBirth = null;
@@ -104,13 +105,15 @@ Tw.AuthLoginEasyIos.prototype = {
     }
   },
   _requestLogin: function (params) {
-    this._apiService.request(Tw.API_CMD.BFF_03_0018, params)
+    this._apiService.request(Tw.NODE_CMD.EASY_LOGIN_IOS, params)
       .done($.proxy(this._successRequestLogin, this));
   },
   _successRequestLogin: function (resp) {
-    console.log(resp);
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-
+      Tw.UIService.setLocalStorage('lineRefresh', 'Y');
+      this._historyService.goBack();
+    } else {
+      this._popupService.openAlert(resp.code + ' ' + resp.msg);
     }
   },
   _checkCertValidation: function () {
