@@ -37,6 +37,9 @@ Tw.MytJoinContractTerminalPhone.prototype = {
 
   },
   _bindEvent: function () {
+
+    this.$container.on('click', '[data-target="detailSaleList"]', $.proxy(this._detailSaleList, this)); //상세할인내역
+
     this.$container.on('click', '[data-target="beforeSalePriceSum"]', $.proxy(this._beforeSalePriceSumPopOpen, this));
 
     this.$container.on('click', '[data-target="boon_fee_type_A"]', $.proxy(this._boon_fee_type_A_PopOpen, this));
@@ -49,40 +52,53 @@ Tw.MytJoinContractTerminalPhone.prototype = {
     this.$container.on('click', '[data-target="boon_suc_type_B"]', $.proxy(this._boon_suc_type_B_PopOpen, this));
     this.$container.on('click', '[data-target="boon_suc_type_C"]', $.proxy(this._boon_suc_type_C_PopOpen, this));
   },
-  _beforeSalePriceSumPopOpen : function() {
+  _detailSaleList: function (e) {
+    console.info('상세할인내역 클릭', e);
+    console.info('상세할인내역 클릭 > target', e.target);
+    console.info('[ data-svcagrmtdcid ]', $(e.target).attr('data-svcagrmtdcid'));
+    console.info('[ data-svcagrmtdccd ]', $(e.target).attr('data-svcagrmtdccd'));
+
+    var svcagrmtdcid = $(e.target).attr('data-svcagrmtdcid');
+    var svcagrmtdccd = $(e.target).attr('data-svcagrmtdccd');
+    var tempUrl = '/myt/join/contract-terminal/phone/detail' + '?' + 'svcagrmtdcid=' + svcagrmtdcid + '&' + 'svcagrmtdccd=' + svcagrmtdccd;
+    this._goLoad(tempUrl);
+    //window.open( tempUrl, '_blank');
+
+  },
+  _beforeSalePriceSumPopOpen: function () {
     this._popupService.openAlert(Tw.MSG_MYT.CONTRACT_TERMINAL.OPEN_ALERT.BSPS.MSG, Tw.MSG_MYT.CONTRACT_TERMINAL.OPEN_ALERT.BSPS.TITLE);
   },
-  _boon_fee_type_A_PopOpen : function() {
+  _boon_fee_type_A_PopOpen: function () {
     this._popupService.openAlert(Tw.MSG_MYT.CONTRACT_TERMINAL.OPEN_ALERT.BOON_FEE_TYPE_A.MSG,
       Tw.MSG_MYT.CONTRACT_TERMINAL.OPEN_ALERT.BOON_FEE_TYPE_A.TITLE);
   },
-  _boon_fee_type_B_PopOpen : function() {
+  _boon_fee_type_B_PopOpen: function () {
     this._popupService.openAlert(Tw.MSG_MYT.CONTRACT_TERMINAL.OPEN_ALERT.BOON_FEE_TYPE_B.MSG,
       Tw.MSG_MYT.CONTRACT_TERMINAL.OPEN_ALERT.BOON_FEE_TYPE_B.TITLE);
   },
-  _boon_join_type_A_PopOpen : function() {
+  _boon_join_type_A_PopOpen: function () {
     this._popupService.openAlert(Tw.MSG_MYT.CONTRACT_TERMINAL.OPEN_ALERT.BOON_FEE_TYPE_A.MSG,
       Tw.MSG_MYT.CONTRACT_TERMINAL.OPEN_ALERT.BOON_JOIN_TYPE_A.TITLE);
   },
-  _boon_join_type_B_PopOpen : function() {
+  _boon_join_type_B_PopOpen: function () {
     this._popupService.openAlert(Tw.MSG_MYT.CONTRACT_TERMINAL.OPEN_ALERT.BOON_FEE_TYPE_B.MSG,
       Tw.MSG_MYT.CONTRACT_TERMINAL.OPEN_ALERT.BOON_JOIN_TYPE_B.TITLE);
   },
-  _boon_suc_type_A_PopOpen : function() {
+  _boon_suc_type_A_PopOpen: function () {
     this._popupService.openAlert(Tw.MSG_MYT.CONTRACT_TERMINAL.OPEN_ALERT.BOON_SUC_TYPE_A.MSG,
       Tw.MSG_MYT.CONTRACT_TERMINAL.OPEN_ALERT.BOON_SUC_TYPE_A.TITLE);
   },
-  _boon_suc_type_B_PopOpen : function() {
+  _boon_suc_type_B_PopOpen: function () {
     this._popupService.openAlert(Tw.MSG_MYT.CONTRACT_TERMINAL.OPEN_ALERT.BOON_SUC_TYPE_B.MSG,
       Tw.MSG_MYT.CONTRACT_TERMINAL.OPEN_ALERT.BOON_SUC_TYPE_B.TITLE);
   },
-  _boon_suc_type_C_PopOpen : function() {
+  _boon_suc_type_C_PopOpen: function () {
     this._popupService.openAlert(Tw.MSG_MYT.CONTRACT_TERMINAL.OPEN_ALERT.BOON_SUC_TYPE_C.MSG,
       Tw.MSG_MYT.CONTRACT_TERMINAL.OPEN_ALERT.BOON_SUC_TYPE_C.TITLE);
   },
 
   //--------------------------------------------------------------------------[이벤트 | 팝업 | 청구월 선택]
-  // _selPopOpen : function(event) {
+  //_selPopOpen : function(event) {
   //   var $target = $(event.currentTarget);
   //   var tempArr = this.resData.usedAmountChildInfo.invDtArr;
   //   var arrOption = [];
@@ -143,7 +159,7 @@ Tw.MytJoinContractTerminalPhone.prototype = {
   _getSelClaimDtBtn: function (str) {
     return moment(str).add(1, 'days').format(Tw.DATE_FORMAT.YYYYDD_TYPE_0);
   },
-  _getSelPeriod: function(str) {
+  _getSelPeriod: function (str) {
     var startDate = moment(str).format('YYYY.MM') + '.01';
     var endDate = moment(str).format('YYYY.MM.DD');
     return startDate + ' ~ ' + endDate;

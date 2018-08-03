@@ -22,66 +22,80 @@ Tw.MytJoinContractTerminalPhoneDetail = function (rootEl, resData) {
   this._history = new Tw.HistoryService(this.$container);
   this._history.init('hash');
 
+  this.bffListData = null; //리스트 데이터
+  this.spliceLen = 3;
+
   this._init();
 };
 
 Tw.MytJoinContractTerminalPhoneDetail.prototype = {
   _init: function () {
     Tw.Logger.info('[Client Init]');
-
+    this._getDetailList();
     this._bindEvent();
   },
-
   _cachedElement: function () {
-    this.$childPhonenum = $('[data-target="childPhonenum"]');
-
+    this.$tgTpl = $('#fe-contract-terminal-detail');
+    this.$tgDetailList = $('[data-target="detailList"]');
   },
   _bindEvent: function () {
-    this.$container.on('click', '[data-target="billMonthName"]', $.proxy(this._selPopOpen, this));
+    this.$container.on('click', '[data-target="addBtn"]', $.proxy(this._ctrlInit, this));
   },
-  //--------------------------------------------------------------------------[이벤트 | 팝업 | 청구월 선택]
-  _selPopOpen : function(event) {
-    var $target = $(event.currentTarget);
-    var tempArr = this.resData.usedAmountChildInfo.invDtArr;
-    var arrOption = [];
-    for ( var i=0, len=tempArr.length; i<len; i++ ) {
-      arrOption.push({
-        'attr' : 'data-info="' + tempArr[i] + '"',
-        text : this._getSelClaimDtBtn( tempArr[i] )
-      });
-    }
-    this._popupService.openChoice(Tw.POPUP_TITLE.PERIOD_SELECT, arrOption, 'type1', $.proxy(this._selPopOpenEvt, this, $target));
+  _proData: function() { //데이터 가공
+    Tw.Logger.info('[ _proData ]');
+   _.map(this.bffListData, function( item ) {
+      item.invoDt = Tw.DateHelper.getShortDateNoDot( item.invoDt );
+      item.invCnt = Tw.FormatHelper.addComma( item.invCnt );
+      item.penEstDcAmt = Tw.FormatHelper.addComma( item.penEstDcAmt );
+
+      return item;
+    });
   },
-  _selPopOpenEvt: function ($target, $layer) {
-    $layer.find('.popup-choice-list').on('click', $.proxy(this._selPopOpenEvtExe, this, $target, $layer) );
+  _ctrlInit: function() {
+    this._cachedElement();
+    var tempData = this.bffListData.splice(0, this.spliceLen); //데이터 자르기
+
+    var template = Handlebars.compile( this.$tgTpl.html() );
+    var output = template( { tempData:tempData } );
+    this.$tgDetailList.append(output);
+
+    Tw.Logger.info('[_ctrlInit > 데이터가공]', this.bffListData);
+    Tw.Logger.info('[ 데이터 > slice ]', tempData);
 
   },
-  _selPopOpenEvtExe: function ($target, $layer, event) {
-    var curTg = $(event.currentTarget);
-    var tg = $target;
-    var dataTemp = curTg.find('button').attr('data-info');
-    tg.text( curTg.text() );
-    tg.attr('data-info', dataTemp );
-    //this._popupService.close();
-    var paramData = {
-      invDt: dataTemp,
-      selNum: this.selectDataInfo.selNum,
-      childSvcMgmtNum:  this.resData.selectSvcMgmtNum
-    };
-    this._goLoad('/myt/bill/billguide/subChildBill' + '?' + $.param(paramData));
-  },
   //--------------------------------------------------------------------------[api]
-  // _getUsedAmounts: function(param) {
-  //   Tw.Logger.info('[param]', param);
-  //
-  //   this._apiService.request(Tw.API_CMD.BFF_05_0047, param)
-  //     .done($.proxy(function(resp){
-  //       Tw.Logger.info('[자녀폰 사용 요금조회]', resp);
-  //       this.usedAmounts = resp.result;
-  //       this._usedAmountsInit();
-  //     }, this))
-  //     .fail(function(err){})
-  // },
+  _getDetailList: function() {
+    Tw.Logger.info('[resData.reqQuery]', this.resData.reqQuery);
+
+    // var param = {
+    //   svcAgrmtCdId: this.resData.reqQuery.svcagrmtdcid,
+    //   svcAgrmtDcCd: this.resData.reqQuery.svcagrmtdccd
+    // };
+
+    var param = {
+      svcAgrmtCdId: 'AA1000000037069632',
+      svcAgrmtDcCd: 'AA'
+    };
+
+    // $.ajax('http://localhost:3000/mock/contract-terminal.detail.BFF_05_00076.json')
+    //   .done(function(resp){
+    //     Tw.Logger.info(resp);
+    //   })
+    //   .fail(function(err) {
+    //     Tw.Logger.info(err);
+    //   });
+
+    this._apiService.request(Tw.API_CMD.BFF_05_0076, param)
+      .done($.proxy(function(resp){
+        Tw.Logger.info('[BFF_05_0076]', resp);
+        this.bffListData = resp.result.agrmt;
+        this._proData();
+        this._ctrlInit();
+      }, this))
+      .fail(function(err){
+        Tw.Logger.info('[err]', err);
+      });
+  },
   //--------------------------------------------------------------------------[공통]
   _onOpenSelectPopup: function () {
     //$('.popup-info').addClass('scrolling');
