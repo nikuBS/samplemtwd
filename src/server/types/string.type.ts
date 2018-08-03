@@ -122,6 +122,14 @@ export const MYT_GUIDE_CHANGE_INIT_INFO = {
   ]
 };
 
+export const MYT_BILL_HISTORY_STR = {
+  PAGE_TITLE: {
+    MICRO_DETAIL: '소액결제 내역 상세보기',
+    AUTOPAY_BLIND_DETAIL: '자동결제 차단내역 상세보기',
+    ILLEGIAL_ACCESS: '잘못된 접근입니다'
+  }
+};
+
 export enum BILL_GUIDE_TYPE_NAME {
   TWORLD = 'T world 확인',
   BILL_LETTER = 'Bill Letter',
@@ -175,7 +183,8 @@ export enum SELECT_POINT {
 
 export enum DATE_FORMAT {
   YYYYMM_TYPE_0 = 'YYYY년 MM월',
-  YYYYMMDD_TYPE_0 = 'YYYY년 MM월 DD일'
+  YYYYMMDD_TYPE_0 = 'YYYY년 MM월 DD일',
+  YYYYMMDDHHMMSS_TYPE_0 = 'YYYY.MM.DD HH:MM:SS'
 }
 
 export enum RESEARCH_EXAMPLE_TYPE {

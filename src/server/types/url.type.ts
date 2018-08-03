@@ -32,13 +32,17 @@ export const URL = {
   '/myt/bill/guidechange/update': { login: true, id: '' },
   '/myt/bill/guidechange/update-complete': { login: true, id: '' },
   '/myt/bill/history/micro': { login: true, id: 'MY_02_03_04_01' }, // 나의 요금 > 소액결제 이용내역
+  '/myt/bill/history/micro/detail': { login: true, id: 'MY_02_03_04_01_04' }, // 나의 요금 >소액결제 이용내역 상세
   '/myt/bill/history/micro/password': { login: true, id: 'MY_02_03_04_01_05' }, // 나의 요금 > 소액결제 이용내역 > 소액결제 비밀번호 번경
   '/myt/bill/history/micro/limit': { login: true, id: 'MY_02_03_04_01_06' }, // 나의 요금 > 소액결제 이용내역 > 소액결제 한도 확인
   '/myt/bill/history/micro/limit/change': { login: true, id: 'MY_02_03_04_01_01' }, // 나의 요금 > 소액결제 이용내역 > 소액결제 한도 변경
   '/myt/bill/history/contents': { login: true, id: 'My_02_03_05_01' },  // 나의 요금 > 콘텐츠 이용료 이용내역
   '/myt/bill/history/contents/limit': { login: true, id: 'My_02_03_05_01_02' },  // 나의 요금 > 콘텐츠 이용료 이용내역 > 콘텐츠 이용 한도 확인
   '/myt/bill/history/contents/limit/change': { login: true, id: 'My_02_03_05_01_01' },  // 나의 요금 > 콘텐츠 이용료 이용내역 > 콘텐츠 이용 한도 변경
+  '/myt/bill/history/contents/detail': { login: true, id: 'MY_02_03_05_01_03' },  // 나의 요금 > 콘텐츠 이용료 이용내역 상세
   '/myt/join/protect/change': { login: true, id: 'MY_01_02_08' },
+  '/myt/joinService/protect/change': { login: true, id: 'MY_01_02_08' },
+  '/myt/joinService/protect/inquiry': { login: true, id: 'MY_01_02_07' },
   '/myt/join/join-info': { login: true, id: 'MY_01_02' }, // 가입정보
   // recharge
   '/recharge/refill': { login: true, id: 'DA_01_01_01' }, // 리필하기

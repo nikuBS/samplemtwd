@@ -43,6 +43,7 @@ Tw.POPUP_TITLE = {
   CHANGE_BILL_GUIDE_TYPE: '어떤 안내서를 보여 드릴까요?',
   OVER_PAY: '과납 안내 드립니다.',
   PERIOD_SELECT: '기간선택',
+  PAYMENT_TYPE_SELECT: '결제종류 선택',
   SET_HELPLINE_TYPE: '상담유형 설정',
   SET_HELPLINE_AREA: '지역설정',
   SET_HELPLINE_TIME: '시간설정',
@@ -355,7 +356,41 @@ Tw.MSG_MYT = {
         MSG: '단말기 구입 시 설정된 단말할인금액에 대해서, 중간해지 시 위약금이 적용되는 제도입니다.'
       }
     }
-  }
+  },
+  HISTORY_TXT_01: '사용중',
+  HISTORY_TXT_02: '알아보기',
+  HISTORY_TXT_03: '차단중',
+  HISTORY_TXT_04: '결제종류',
+  HISTORY_ALERT_A1: '소액결제 시용이 불가하도록 차단하시겠습니까?',
+  HISTORY_ALERT_A2: '소액결제(휴대폰 결제서비스)를 사용하시겠습니까?',
+  HISTORY_ALERT_A3: '선택하신 서비스의 소액결제 자동결제를 차단하시겠습니까? (다음 달 부터 적용됩니다.)',
+  HISTORY_ALERT_A4: '자동결제차단이 신청되었습니다.',
+  HISTORY_ALERT_A5: '소액결제 자동결제 차단을 해제하시겠습니까? (다음 달 부터 적용됩니다.)',
+  HISTORY_ALERT_A6: '자동결제차단해제가 신청되었습니다.',
+  HISTORY_ALERT_A7: '조회 시작일은 YYYY.MM.DD 부터 가능합니다.',  // 오늘포함 7개월전
+  HISTORY_ALERT_A8: '시작일이 종료일보다 클 수 없습니다.',
+  HISTORY_ALERT_A9: '조회 시작일은 YYYY.MM.DD 부터 가능합니다.',  // 오늘포함 365일전
+  HISTORY_ALERT_A10: '조회 시작일 유효한 일자가 아닙니다.',
+  HISTORY_ALERT_A11: '조회 종료일 유효한 일자가 아닙니다.',
+  HISTORY_ALERT_A12: '이용한도 변경 내역이 없습니다.',
+  HISTORY_ALERT_A13: '소액결제 이용한도 변경을 신청하시겠습니까?',
+  HISTORY_ALERT_A14: '이용한도 변경이 완료 되었습니다.',
+  HISTORY_ALERT_A15: '이번 달 선결제 가능 금액이 없습니다.',
+  HISTORY_ALERT_A16: '선결제 가능한 횟수 초과한 경우 “이번달 설결제 가능횟수(99회)가 초과되셨습니다.',
+  HISTORY_ALERT_A17: '한도금액변경은 월 1회만 가능합니다.',
+  HISTORY_ALERT_A18: '콘텐츠 이용료 한도 변경을 신청하시겠습니까?',
+  HISTORY_ALERT_A19: '소액결제 사용시 다음 날 SMS 추가 수신을 받으시겠습니까?',
+  HISTORY_ALERT_A20: '비밀번호가 일치하지 않습니다. 다시 확인해주세요.',
+  HISTORY_ALERT_A21: '진행을 취소하시고 첫 화면으로 이동하시겠습니까?',
+  HISTORY_ALERT_A22: '연속숫자 6자리는 설정이 불가능합니다. 다른 번호를 입력해주세요',
+  HISTORY_ALERT_A23: '동일숫자 6자리는 설정이 불가능합니다. 다른 번호를 입력해주세요.',
+  HISTORY_ALERT_A24: '비밀번호 확인이 일치하지 않습니다. 다시 한번 확인해주세요.',
+  HISTORY_ALERT_A25: '주민번호 앞자리는 비밀번호 설정이 불가능합니다. 다른 번호를 입력해주세요.',
+  HISTORY_ALERT_A26: '소액결제 비밀번호 설정이 완료 되었습니다.',
+  HISTORY_ALERT_A27: '무선콘텐츠 서비스 시용이 불가하도록 차단하시겠습니까?',
+  HISTORY_ALERT_A28: '무선콘텐츠 서비스를 사용하시겠습니까?',
+  HISTORY_ALERT_A29: '무선콘텐츠 서비스 결제확인 SMS 추가 수신을 받으시겠습니까?',
+  HISTORY_ALERT_A30: '무선콘텐츠 서비스 결제확인 SMS 추가 수신을 받지 않으시겠습니까?'
 };
 
 Tw.MSG_RECHARGE = {
@@ -592,6 +627,15 @@ Tw.HELPLINE_TYPE = {
   QUALITY: '통화품질 상담'
 };
 
+Tw.PAYMENT_TYPE = {
+  TOTAL: '전체',
+  NORMAL: '일반결제',
+  AUTO: '자동결제',
+  PACKAGE: '묶음결제',
+  EASY: '간편결제',
+  COMPLAX: '복합결제'
+}
+
 Tw.HELPLINE_AREA = {
   CAPITAL: '수도권 (서울, 경기, 인천, 강원)',
   CENTER: '중부 (충남, 충북, 대전)',
@@ -601,12 +645,20 @@ Tw.HELPLINE_AREA = {
 };
 
 Tw.DATE_FORMAT = {
-  YYYYDD_TYPE_0: 'YYYY년 MM월'
+  YYYYDD_TYPE_0: 'YYYY년 MM월',
+  YYYYDD_TYPE_1: 'YYYY년 M월'
 };
 
 Tw.URL_PATH = {
   BROADBAND: 'http://www.skbroadband.com/',
-  COP_SERVICE: 'http://b2b.tworld.co.kr/cs/counsel/certServiceInfo.bc'
+  COP_SERVICE : 'http://b2b.tworld.co.kr/cs/counsel/certServiceInfo.bc',
+  CONTETNS_YOUTUBE_HELP_URL: 'https://support.google.com/youtube/contact/commerce_contact?hl=ko&cfsi=subs_red_2',
+  MYT_PAYPASS_SET: '/myt/bill/history/micro/password',
+  MYT_PAYPASS_INFO: '',
+  MYT_PAY_MICRO_LIMIT_CHANGE: '/myt/bill/history/micro/limit/change',
+  MYT_PAY_MICRO_LIMIT_DETAIL: '/myt/bill/history/micro/limit',
+  MYT_PAY_CONTENTS_LIMIT_CHANGE: '/myt/bill/history/contents/limit/change',
+  MYT_PAY_CONTENTS_LIMIT_DETAIL: '/myt/bill/history/contents/limit'
 };
 
 Tw.MSG_POSTCODE = {

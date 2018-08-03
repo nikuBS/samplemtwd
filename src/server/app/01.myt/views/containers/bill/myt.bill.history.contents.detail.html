@@ -1,8 +1,8 @@
 <% include ../../components/start.component.html %>
 <%#
-* FileName: myt.bill.history.micro.limit.html
+* FileName: myt.bill.history.contents.detail.html
 * Author: 이상형 (silion@sk.com)
-* Date: 2018.07.26
+* Date: 2018.08.03
 %>
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
@@ -19,7 +19,7 @@
     <div id="header" class="header-wrap">
         <div class="header step-page">
             <div class="header-ti align-l">
-                <h1>소액결제 한도확인</h1>
+                <h1>콘텐츠 이용료 한도확인</h1>
             </div>
             <button class="prev-step fe-common-back"><span class="blind">이전으로</span></button>
         </div>
@@ -31,7 +31,7 @@
         <div class="container">
             <div class="cont-box">
                 <div class=""></div>
-                <h3 class="my-limit"><%=currentM%>월 소액결제</h3>
+                <h3 class="my-limit"><%=currentM%>월 콘텐츠이용료</h3>
                 <div class="payment-wrap">
                     <div class="payment-detail-box">
                         <div class="detail-inner">
@@ -39,22 +39,22 @@
                                 <ul>
                                     <li>
                                         <span class="title">잔여 한도</span>
-                                        <span class="tx-cont"><span class="fs-type" id="fe-limit-rest"></span> 원</span>
+                                        <span class="tx-cont"><span class="fs-type">482,960</span> 원</span>
                                     </li>
                                     <li>
                                         <div class="inner-row">
                                             <ul>
                                                 <li>
                                                     <span class="title">이용한도</span>
-                                                    <span class="tx-cont"><span class="ff-type" id="fe-limit-usedLimit"></span> 원</span>
+                                                    <span class="tx-cont"><span class="ff-type">500,000</span> 원</span>
                                                 </li>
                                                 <li>
                                                     <span class="title">사용금액</span>
-                                                    <span class="tx-cont"><span class="ff-type" id="fe-limit-use"></span> 원</span>
+                                                    <span class="tx-cont"><span class="ff-type">27,040</span> 원</span>
                                                 </li>
                                                 <li>
                                                     <span class="title">선결제 하신 금액</span>
-                                                    <span class="tx-cont"><span class="ff-type" id="fe-limit-prepay"></span> 원</span>
+                                                    <span class="tx-cont"><span class="ff-type">10,000</span> 원</span>
                                                 </li>
                                             </ul>
                                         </div>
@@ -78,7 +78,7 @@
                                 <ul>
                                     <li>
                                         <span class="title">선결제 가능 최대금액</span>
-                                        <span class="tx-cont"><span class="fs-type" id="fe-prepay-max"></span> 원</span>
+                                        <span class="tx-cont"><span class="fs-type">10,000</span> 원</span>
                                     </li>
                                 </ul>
                             </div>
@@ -88,7 +88,7 @@
                 <div class="contents-btn">
                     <ul class="bt-slice">
                         <li class="bt-blue1">
-                            <a href="/payment/prepay/micro">선결제로 잔여한도 올리기</a>
+                            <button>선결제로 잔여한도 올리기</button>
                         </li>
                     </ul>
                 </div>
@@ -97,7 +97,8 @@
                         한도를 정하지 않은 분들은 처음에는 기본 설정됩니다.
                     </li>
                     <li class="noti-type2">
-                        회사의 관리 기준에 따라 통신과금 (소액결제, 콘텐츠이용료 합산금액) 사용액이 회선별 월 한도액을 초과할 경우에는 결제차단이 될 수 있습니다.</li>
+                        회사의 관리 기준에 따라 통신과금(소액결제, 콘텐츠이용료 합산금액) 사용액이 회선별 월 한도액을 초과할 경우에는 결제차단이 될 수 있습니다.
+                    </li>
                     <li class="noti-type2">
                         매월 휴대폰 요금으로 결제 가능한 회선별 통신과금(소액결제, 콘텐츠이용료 합산금액) 한도는 회사의 관리 기준에 따라 상이할 수 있습니다.
                     </li>
@@ -113,13 +114,14 @@
     </div>
     <!--// #contents -->
 
+
     <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
 </div>
 
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.MyTBillHistoryLimitCommon($(document), '<%=type%>');
+    new Tw.MyTBillHistoryContentsLimit($(document));
   });
 </script>
 <% include ../../components/end.component.html %>

@@ -21,6 +21,17 @@ Tw.ValidationHelper = (function () {
   }
 
   /**
+   * @param {String} : 0000-0000 or 00000000
+   * @returns {Boolean}
+   */
+  function isRepresentNumber(str) {
+    if(str.length > 7 && str.length < 10)
+      return regExpTest(/(\d{4})-?(\d{4})/, str);
+    else
+      return false;
+  }
+
+  /**
    * @param {String} : hong-gil.dong@gmail.com
    * @returns {Boolean}
    */
@@ -159,6 +170,7 @@ Tw.ValidationHelper = (function () {
     regExpTest: regExpTest,
     isCellPhone: isCellPhone,
     isTelephone: isTelephone,
+    isRepresentNumber: isRepresentNumber,
     isSeriesNum: isSeriesNum,
     isEmail: isEmail,
     containSpecial: containSpecial,

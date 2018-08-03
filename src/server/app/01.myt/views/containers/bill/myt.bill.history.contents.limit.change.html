@@ -15,6 +15,90 @@
 <!--// #skip_navigation -->
 <div class="wrap">
 
+    <%- include('../../../../../common/views/components/header.component.html', { title: '콘텐츠 이용료 한도변경', svcInfo: svcInfo }); %>
+
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <div class="cont-box">
+                <div class="payment-wrap">
+                    <div class="payment-detail-box">
+                        <div class="detail-inner">
+                            <div class="detail-list type1">
+                                <ul>
+                                    <li>
+                                        <span class="title vm"><span class="tx-bold">이번 달</span><span class="fw-normal">(매월)</span><br />내가 정한</span>
+                                        <span class="tx-cont vm">
+                                                <button class="bt-dropdown size3" title="내가 정한 한도 매월" aria-haspopup="true">500,000원</button>
+                                            </span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="payment-wrap mt30">
+                    <div class="payment-detail-box">
+                        <div class="detail-inner">
+                            <div class="detail-list type1">
+                                <ul>
+                                    <li>
+                                        <span class="title vm"><span class="tx-bold">오늘</span><span class="fw-normal">(1일)</span><br />내가 정한</span>
+                                        <span class="tx-cont vm">
+                                                <button class="bt-dropdown size3" title="내가 정한 한도 1일" aria-haspopup="true">500,000원</button>
+                                            </span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="payment-wrap mt30">
+                    <div class="payment-detail-box">
+                        <div class="detail-inner">
+                            <div class="detail-list type1">
+                                <ul>
+                                    <li>
+                                        <span class="title vm"><span class="tx-bold">한 번에</span><span class="fw-normal">(1회)</span><br />내가 정한</span>
+                                        <span class="tx-cont vm">
+                                                <button class="bt-dropdown size3" title="내가 정한 한도 1회" aria-haspopup="true">500,000원</button>
+                                            </span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <%#
+                <div class="contents-notice type2">
+                    <span class="noti-type4">연체/미납 중인 고객님은 납부 후 한도변경이 가능합니다.</span>
+                </div>
+                <button class="bt-link-tx mt20" title="납부하러 가기">납부하러 가기<span class="ico"></span></button>
+                %>
+                <div class="contents-btn">
+                    <ul class="bt-slice">
+                        <li class="bt-blue1">
+                            <button>한도변경하기</button>
+                        </li>
+                        <li class="bt-white1">
+                            <button>선결제로 잔여한도 올리기</button>
+                        </li>
+                    </ul>
+                </div>
+                <ul class="contents-notice type2">
+                    <li class="noti-type2">한도를 높게 변경하시려면 본인인증이 필요합니다.</li>
+                    <li class="noti-type2">연체/미납 중인 고객님은 납부 후 한도변경이 가능합니다.</li>
+                    <li class="noti-type2">신규가입 고객님은 고객님의 첫 사용 월~3개월까지 일정금액 내에서만 한도변경이 가능합니다.</li>
+                    <li class="noti-type2">한도가 초과되지 않아도 이용이 제한될 수 있으며, 이 경우 SKT 고객센터(114)로 문의 부탁드립니다.</li>
+                    <li class="noti-type2">콘텐츠이용료 이용한도 변경은 콘텐츠이용료 한도 변경에서 변경이 가능합니다.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--// #contents -->
+
 
     <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
 </div>

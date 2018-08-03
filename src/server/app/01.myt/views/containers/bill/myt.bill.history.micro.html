@@ -23,42 +23,63 @@
         <div class="container">
             <div class="cont-box nogaps-btm">
                 <div class="usage-top">
-                    <span class="date">7.01 ~ 7.11</span>
+                    <span class="date"><%=startMDD%> ~ <%=endMDD%></span>
                     <button class="bt-link-tx underline">사용금액/잔여한도 조회하기</button>
+                    <div id="fe-current-month-usage" class="none">
+                        <ul class="list">
+                            <li>
+                                <span class="title">사용금액</span>
+                                <span class="tx-cont"><span id="fe-micropay-usage" class="tx-bold ff-hn"></span> 원</span>
+                            </li>
+                            <li>
+                                <span class="title">잔여한도</span>
+                                <span class="tx-cont"><span id="fe-micropay-rest-limit" class="ff-hn"></span> 원</span>
+                            </li>
+                        </ul>
+                        <div class="contents-btn">
+                            <ul class="bt-slice item-two">
+                                <li class="bt-white1">
+                                    <button>한도변경</button>
+                                </li>
+                                <li class="bt-white1">
+                                    <button>자세히</button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
-                <!-- 2018-07-26 기획디자인변경반영 -->
                 <div class="usage-list">
                     <ul>
                         <li class="no-arrow">
-                                <span class="bt-inner">
-                                    <span class="tit">소액결제 사용여부</span>
-                                    <span class="txt">
-                                        <span class="state-txt">사용중</span>
-                                        <span class="toggles">
-                                            <span class="widget">
-                                                <span class="widget-box switch">
-                                                    <span class="btn-switch type1 on">
-                                                        <span class="blind">해제</span>
-                                                        <span class="switch-style" role="checkbox" aria-checked="false"><input type="checkbox" title="데이터차단설정 이번달 차단" /></span><!-- 접근성 수정 -->
-                                                        <span class="blind">차단</span>
-                                                    </span>
+                            <span class="bt-inner">
+                                <span class="tit">소액결제 사용여부</span>
+                                <span class="txt">
+                                    <span class="state-txt"></span>
+                                    <span class="toggles">
+                                        <!--<span class="widget">-->
+                                            <!--<span class="widget-box switch">-->
+                                            <span class="switch">
+                                                <span class="btn-switch type1">
+                                                    <span class="blind">해제</span>
+                                                    <span class="switch-style" role="checkbox"><input type="checkbox" title="데이터차단설정 이번달 차단" /></span>
+                                                    <span class="blind">차단</span>
                                                 </span>
                                             </span>
-                                        </span>
+                                        <!--</span>-->
                                     </span>
                                 </span>
+                            </span>
                         </li>
                         <li>
-                            <button role="button">
-                                    <span class="bt-inner">
-                                        <span class="tit">결제비밀번호 서비스</span>
-                                        <span class="txt">사용중</span>
-                                    </span>
+                            <button role="button" class="fe-chk-password-btn">
+                                <span class="bt-inner">
+                                    <span class="tit">결제비밀번호 서비스</span>
+                                    <span class="txt"></span>
+                                </span>
                             </button>
                         </li>
                     </ul>
                 </div>
-                <!--// 2018-07-26 기획디자인변경반영 -->
             </div>
 
             <hr class="cont-sp type1" aria-hidden="true" />
@@ -67,26 +88,24 @@
                 <!-- .component -->
                 <div class="component">
                     <div class="component-box tabs">
-                        <div class="tab-area type1"><!-- 타입별 탭형태 변환 -->
+                        <div class="tab-area type1">
                             <div class="tab-linker">
                                 <ul role="tablist">
-                                    <li role="tab" aria-selected="true" aria-controls="tab1-tab" id="tab1"><button>이용내역</button></li>
-                                    <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2"><button>자동결제 차단내역</button></li>
+                                    <li role="tab" aria-selected="false" aria-controls="tab1-tab" id="tab1"><a href="#usage" class="fe-replace-history">이용내역</a></li>
+                                    <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2"><a href="#preventlist" class="fe-replace-history">자동결제 차단내역</a></li>
                                 </ul>
                             </div>
                             <div class="tab-contents">
                                 <ul>
                                     <li role="tabpanel" id="tab1-tab" aria-labelledby="tab1">
-                                        <div class="cont-box nogaps-btm"><!-- 2017-07-25 클래스 변경 -->
-                                            <!-- 2018-07-25 내역 마크업 수정 -->
+                                        <div class="cont-box nogaps-btm">
                                             <div class="contents-info-list">
-                                                <p class="ti-desc"><strong><span class="num">123</span>개</strong>(8,126,300원) 이용 내역이<br />있습니다.</p>
+                                                <p id="fe-usage-total-desc" class="ti-desc none"><strong><span class="num"></span>개</strong>(<em></em>원) 이용 내역이<br />있습니다.</p>
                                                 <!-- .widget -->
                                                 <div class="widget">
                                                     <div class="widget-box toggle">
                                                         <div class="list-top">
                                                             <div class="select-left">
-                                                                <!-- 2018-07-25 버튼클래스 수정 -->
                                                                 <button class="btn-toggle bt-detail" role="button" aria-pressed="false" title="상세검색 영역">2018년 7월<span class="ico"></span></button>
                                                             </div>
                                                             <div class="select-right">
@@ -109,6 +128,24 @@
                                                                     </div>
                                                                 </div>
                                                                 <button class="bt-dropdown big" title="이용내역 기간 선택" aria-haspopup="true">2018년 7월<span class="ico"></span></button>
+                                                                <div class="widget none">
+                                                                    <div class="widget-box tube">
+                                                                        <ul class="tube-list three" role="radiogroup">
+                                                                            <li role="radio" aria-checked="false" class="top-left"><input type="radio" name="selectdate1" title="1주일 선택">1주일</li>
+                                                                            <li role="radio" aria-checked="false" class=""><input type="radio" name="selectdate1" title="1개월 선택">1개월</li>
+                                                                            <li role="radio" aria-checked="false" class="top-right"><input type="radio" name="selectdate1" title="3개월 선택">3개월</li>
+                                                                            <li role="radio" aria-checked="false" class="bottom-left focus"><input type="radio" name="selectdate1" title="6개월 선택">6개월</li>
+                                                                            <li role="radio" aria-checked="false"><input type="radio" name="selectdate1" title="1년 선택">1년</li>
+                                                                            <li role="radio" aria-checked="true" class="checked bottom-right"><input type="radio" name="selectdate1" title="직접설정 선택" checked="checked">직접설정</li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                                <span class="inputbox date-selcet none">
+                                                                    <button class="bt-dropdown big" title="시작날짜 선택" aria-haspopup="true">2018.05.01<span class="ico"></span></button>
+                                                                    <span class="bar">–</span>
+                                                                    <button class="bt-dropdown big" title="마지막날짜 선택" aria-haspopup="true">2018.05.10<span class="ico"></span></button>
+                                                                </span>
+
                                                                 <div class="contents-btn mb40">
                                                                     <ul class="bt-slice">
                                                                         <li class="bt-blue1">
@@ -123,55 +160,22 @@
                                                 <!-- //.widget -->
 
                                                 <div class="history-list">
-                                                    <ul class="list-inner">
-                                                        <li>
-                                                            <button role="button" title="소액결제 내역 상세보기 페이지로 이동">
-                                                                    <span class="bt-inner">
-                                                                        <span class="his-item1">
-                                                                            <span class="name"><span class="blind">서비스명</span>카카**(****)</span>
-                                                                            <span class="date-gray"><span class="blind">결제일</span>2018.05.20</span>
-                                                                        </span>
-                                                                        <span class="his-item2"><span class="blind">결제금액</span><em>500,000</em>원</span>
-                                                                        <span class="his-item3"><span class="blind">결제종류</span>일반결제</span>
-                                                                    </span>
-                                                            </button>
-                                                        </li>
-                                                        <li>
-                                                            <button role="button" title="소액결제 내역 상세보기 페이지로 이동">
-                                                                    <span class="bt-inner">
-                                                                        <span class="his-item1">
-                                                                            <span class="name"><span class="blind">서비스명</span>카카**(****)</span>
-                                                                            <span class="date-gray"><span class="blind">결제일</span>2018.05.20</span>
-                                                                        </span>
-                                                                        <span class="his-item2"><span class="blind">결제금액</span><em>500,000</em>원</span>
-                                                                        <span class="his-item3"><span class="blind">결제종류</span>일반결제</span>
-                                                                    </span>
-                                                            </button>
-                                                        </li>
-                                                        <li>
-                                                            <button role="button" title="소액결제 내역 상세보기 페이지로 이동">
-                                                                    <span class="bt-inner">
-                                                                        <span class="his-item1">
-                                                                            <span class="name"><span class="blind">서비스명</span>카카**(****)</span>
-                                                                            <span class="date-gray"><span class="blind">결제일</span>2018.05.20</span>
-                                                                        </span>
-                                                                        <span class="his-item2"><span class="blind">결제금액</span><em>500,000</em>원</span>
-                                                                        <span class="his-item3"><span class="blind">결제종류</span>일반결제</span>
-                                                                    </span>
-                                                            </button>
-                                                        </li>
-                                                    </ul>
-                                                    <div class="bt-more-wrap">
-                                                        <button role="button" class="bt-more" title="">더보기<span>(20)</span></button>
-                                                    </div>
+
                                                 </div>
                                             </div>
-                                            <!--// 2018-07-25 내역 마크업 수정 -->
                                         </div>
                                     </li>
                                     <li role="tabpanel" id="tab2-tab" aria-labelledby="tab2">
-                                        <div class="cont-box">
-                                            자동결제 차단내역
+                                        <div class="cont-box nogaps-btm">
+                                            <div class="use-inner">
+                                                <div class="contents-info-list">
+                                                    <p id="fe-blind-total-desc" class="ti-desc none"><strong><span class="num"></span>개 </strong>차단 내역이 있습니다.</p>
+
+                                                    <div class="history-list"><!-- 데이터 없는 경우 type2추가 -->
+
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </li>
                                 </ul>
@@ -245,5 +249,59 @@
   $(document).ready(function () {
     new Tw.MyTBillHistoryMicro($(document));
   });
+</script>
+<script id="list-wrapper" type="text/x-handlebars-template">
+    <ul class="list-inner">
+        {{> list}}
+    </ul>
+    {{#if initialMoreData}}
+    <div class="bt-more-wrap">
+        <button role="button" class="bt-more" title="">더보기<span>(<em>{{restCount}}</em>)</span></button>
+    </div>
+    {{/if}}
+</script>
+<script id="list-default" type="text/x-handlebars-template">
+    {{#each listElement}}
+    <li>
+        <a href="{{linkHREF}}" role="button" title="소액결제 내역 상세보기 페이지로 이동" data-list-id="{{listId}}">
+            <span class="bt-inner">
+                <span class="his-item1">
+                    <span class="name"><span class="blind">서비스명</span>{{serviceName}}</span>
+                    <span class="date-gray"><span class="blind">결제일</span>{{payDate}}</span>
+                </span>
+                <span class="his-item2"><span class="blind">결제금액</span><em>{{sumPrice}}</em>원</span>
+                <span class="his-item3"><span class="blind">결제종류</span>{{paymentType}}</span>
+            </span>
+        </a>
+    </li>
+    {{/each}}
+</script>
+<script id="list-blind" type="text/x-handlebars-template">
+    {{#each listElement}}
+    <li>
+        <a href="{{linkHREF}}" role="button" title="자동결제 차단 상세보기 페이지로 이동" data-list-id="{{listId}}">
+            <span class="bt-inner col2">
+                <span class="his-item">
+                    <span class="name"><span class="blind">서비스명</span>{{serviceName}}</span>
+                    <span class="date-gray">신청일 {{requestDate}}</span>
+                    <span class="date-bk">적용일 {{presentDate}}</span>
+                </span>
+
+                <span class="his-item">{{blindState}}</span>
+            </span>
+        </a>
+    </li>
+    {{/each}}
+</script>
+
+<script id="list-empty" type="text/x-handlebars-template">
+    <div class="no-data">
+        <span>이용 내역이 없습니다.</span>
+    </div>
+</script>
+<script id="list-blind-empty" type="text/x-handlebars-template">
+    <div class="no-data">
+      <span>차단 내역이 없습니다.</span>
+    </div>
 </script>
 <% include ../../components/end.component.html %>
