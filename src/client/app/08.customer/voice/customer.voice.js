@@ -90,8 +90,7 @@ Tw.CustomerVoice.prototype = {
   _onSuccessSMS: function () {
     $('.sended-info-num').text($('.fe-select-line').text());
 
-    this._history.setHistory();
-    location.hash = 'complete';
+    location.replace('/customer/voice/sms#complete');
   },
 
   _openAuthCancel: function () {
@@ -116,7 +115,7 @@ Tw.CustomerVoice.prototype = {
 
   _authConfirm: function () {
     this._popupClose();
-    this._history.goBack();
+    location.replace('/customer/voice/info');
   },
 
   _popupClose: function () {
@@ -125,10 +124,11 @@ Tw.CustomerVoice.prototype = {
 
   _goToVoiceSms: function () {
     if ( this.voiceCustomer.hitoriesYn === 'Y' ) {
-      this._popupService.openAlert(Tw.MSG_CUSTOMER.VOICE_A01, Tw.BUTTON_LABEL.CONFIRM, this._popupService.close);
+      this._popupService.openAlert(Tw.MSG_CUSTOMER.VOICE_A01, Tw.BUTTON_LABEL.CONFIRM, $.proxy(this._popupClose, this));
       return false;
     } else {
-      this._history.goLoad('/customer/voice/sms');
+      this._history.replace()
+      location.replace('/customer/voice/sms');
     }
   }
 };
