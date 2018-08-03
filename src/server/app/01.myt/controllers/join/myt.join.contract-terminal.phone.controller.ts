@@ -124,20 +124,42 @@ class MytJoinContractTerminalPhone extends TwViewController {
     // -------------------------------------------------------------[1. 요금약정할인 정보]
     if ( _.size(priceList) > 0 ) {
       for ( let i = 0; i < priceList.length; i++ ) {
-        priceList[i].titNm = priceList[i].disProdNm;
+
+        /*
+        * 상품코드 분류(priceList.prodId)
+        * 요금약정할인24 (730) : NA00003677 | type_A
+        * 테블릿 약정할인 12 (뉴태블릿약정) : NA00003681 | type_B
+        * 태블릿약정(구태블릿약정) : tablet 객체로 구분 | type_C
+        * 해단분류에 포함되지않는 경우 | noType
+         */
+        if ( priceList[i].prodId === 'NA00003677' ) {
+          priceList[i].typeStr = 'type_A';
+          priceList[i].titNm = priceList[i].disProdNm;
+        } else if ( priceList[i].prodId === 'NA00003681' ) {
+          priceList[i].typeStr = 'type_B';
+          priceList[i].titNm = '테블릿 약정할인 12';
+        } else {
+          priceList[i].typeStr = 'noType';
+          priceList[i].titNm = priceList[i].disProdNm;
+        }
+
         priceList[i].salePay = FormatHelper.addComma(priceList[i].agrmtDcAmt);
         thisMain._proDate(priceList[i], priceList[i].agrmtDcStaDt, priceList[i].agrmtDcEndDt);
         thisMain._commDataInfo.feeInfo.push(priceList[i]);
       }
     }
     if ( _.size(tablet) > 0 ) {
-      tablet.titNm = '구 태블릿 약정';
+      tablet.titNm = '테블릿 약정';
+      tablet.typeStr = 'type_C';
       tablet.salePay = FormatHelper.addComma(tablet.agrmtDcAmt);
+      tablet.agrmtDayCntNum = FormatHelper.addComma(tablet.agrmtDayCnt);
+      tablet.aGrmtPenAmtNum = FormatHelper.addComma(tablet.aGrmtPenAmt);
       thisMain._proDate(tablet, tablet.agrmtDcStaDt, tablet.agrmtDcEndDt);
       thisMain._commDataInfo.feeInfo.push(tablet);
     }
     if ( _.size(wibro) > 0 ) {
       wibro.titNm = 'wibro 약정';
+      wibro.typeStr = 'noType';
       wibro.salePay = FormatHelper.addComma(wibro.agrmtDcAmt);
       thisMain._proDate(wibro, wibro.agrmtDcStaDt, wibro.agrmtDcEndDt);
       thisMain._commDataInfo.feeInfo.push(wibro);

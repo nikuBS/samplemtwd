@@ -70,6 +70,8 @@
                             </dl>
                         </li>
                     </ul>
+
+                    <% if ( commDataInfo.feeInfo[i].typeStr == 'type_A' ) {%> <%#요금약정할인24 (730) : NA00003677 | type_A %>
                     <div class="widget">
                         <div class="widget-box toggle">
                             <div class="list-top">
@@ -94,8 +96,8 @@
                                                         <div class="link-long-group">
                                                             <div class="link-long">
                                                                 <button data-target="detailBtn"
-                                                                    data-svcAgrmtDcId="<%=commDataInfo.feeInfo[i].svcAgrmtDcId%>"
-                                                                    data-svcAgrmtDcCd="<%=commDataInfo.feeInfo[i].svcAgrmtDcCd%>">상세 할인 내역 보기<span class="ico"></span></button>
+                                                                        data-svcAgrmtDcId="<%=commDataInfo.feeInfo[i].svcAgrmtDcId%>"
+                                                                        data-svcAgrmtDcCd="<%=commDataInfo.feeInfo[i].svcAgrmtDcCd%>">상세 할인 내역 보기<span class="ico"></span></button>
                                                             </div>
                                                         </div>
                                                     </li>
@@ -111,8 +113,94 @@
                             </div>
                         </div>
                     </div>
+                    <% } else if ( commDataInfo.feeInfo[i].typeStr == 'type_B' ) { %> <%#테블릿 약정할인 12 (뉴태블릿약정) : NA00003681 | type_B %>
+                    <div class="widget">
+                        <div class="widget-box toggle">
+                            <div class="list-top">
+                                <div class="select-right">
+                                    <button class="btn-toggle bt-detail" role="button" aria-pressed="false" title="자세히보기">자세히보기<span class="ico"></span></button>
+                                </div>
+                            </div>
+                            <div class="toggler">
+                                <div class="payment-detail-wrap mt12">
+                                    <div class="payment-detail-box">
+                                        <div class="detail-inner">
+                                            <div class="detail-list type3">
+                                                <ul>
+                                                    <li>
+                                                        <span class="title">할인지원 혜택</span>
+                                                        <span class="tx-cont">
+                                                                <span><%=commDataInfo.feeInfo[i].titNm%></span>
+                                                                <button role="button" class="ico-info"><span class="blind">요금약정할인 상세보기</span></button>
+                                                            </span>
+                                                    </li>
+                                                    <li>
+                                                        <div class="link-long-group">
+                                                            <div class="link-long">
+                                                                <button data-target="detailBtn"
+                                                                        data-svcAgrmtDcId="<%=commDataInfo.feeInfo[i].svcAgrmtDcId%>"
+                                                                        data-svcAgrmtDcCd="<%=commDataInfo.feeInfo[i].svcAgrmtDcCd%>">상세 할인 내역 보기<span class="ico"></span></button>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <ul class="contents-notice line-top">
+                                                <li class="noti-type2">약정 만료일은 정지 일수에 따라 달라 질 수 있습니다.</li>
+                                                <li class="noti-type2">스페셜약정할인, LTE플러스약정할인 프로그램이 ‘요금약정할인’ 으로 통합변경 되었습니다. 이용에 착오 없으시기 바랍니다.</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <% } else if ( commDataInfo.feeInfo[i].typeStr == 'type_C' ) { %> <%#태블릿약정(구태블릿약정) : tablet 객체로 구분 | type_C %>
+                    <div class="widget">
+                        <div class="widget-box toggle">
+                            <div class="list-top">
+                                <div class="select-right">
+                                    <button class="btn-toggle bt-detail" role="button" aria-pressed="false" title="자세히보기">자세히보기<span class="ico"></span></button>
+                                </div>
+                            </div>
+                            <div class="toggler">
+                                <div class="payment-detail-wrap mt12">
+                                    <div class="payment-detail-box">
+                                        <div class="detail-inner">
+                                            <div class="detail-list type3">
+                                                <ul>
+                                                    <li>
+                                                        <span class="title">사용 일수</span>
+                                                        <span class="tx-cont"><span class="ff-hn"><%=commDataInfo.feeInfo[i].agrmtDayCntNum%></span>일</span>
+                                                    </li>
+                                                    <li>
+                                                        <span class="title">할인지원 혜택</span>
+                                                        <span class="tx-cont"><%=commDataInfo.feeInfo[i].titNm%></span>
+                                                    </li>
+                                                    <li>
+                                                        <span class="tx-result">해지 하시는 경우 약정위약금은 <span class="tx-red"><span class="ff-hn vbl"><%=commDataInfo.feeInfo[i].aGrmtPenAmtNum%></span>원</span> 입니다.</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <ul class="contents-notice line-none">
+                                                <li class="noti-type2">태블릿요금제 약정 기간 내 회선 해지 또는 명의변경(약정 미승계)할 경우 위약금이 발생할 수 있습니다.</li>
+                                                <li class="noti-type2">위약금 = 총 할인받은 금액 <span class="ff-hn vbl">X [1</span>-(약정사용일수/총 약정일수)] (단, 정지기간은 약정사용일수에서 제외)</li>
+                                                <li class="noti-type2">할인받은 금액과 위약금은 부가세 별도 금액입니다.</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <% } else if ( commDataInfo.feeInfo[i].typeStr == 'noType' ) { %> <%#해단분류에 포함되지않는 경우 | noType %>
+
+                    <% } else { %>
 
                     <% } %>
+
+
+                    <% } %> <%# for End %>
 
                 </div>
             </div>

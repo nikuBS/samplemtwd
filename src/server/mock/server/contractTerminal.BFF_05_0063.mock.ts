@@ -6,6 +6,7 @@ const contractTerminal_BFF_05_0063 = {
       'priceList':
         [
           {
+            'prodId': 'NA00003677',
             'disProdNm': '요금약정할인제도 (730 일)',
             'agrmtDcAmt': '0',
             'agrmtStNm': '약정가입중',
@@ -15,6 +16,7 @@ const contractTerminal_BFF_05_0063 = {
             'svcAgrmtDcCd': 'AA'
           },
           {
+            'prodId': 'NA00004430',
             'disProdNm': '선택약정할인제도 (24 개월)',
             'agrmtDcAmt': '-154412',
             'agrmtStNm': '약정가입중',
