@@ -13,8 +13,9 @@
         <div class="container">
             <div class="cont-box">
                 <div class="top-info type2">
-                    <span class="info-text">황지우 고객님의<br /><em><span class="ff-hn vbl">3</span>개월 사용패턴</em></span>
-                    <span class="subinfo-text"><span class="ff-hn vbl">3</span>월~<span class="ff-hn vbl">5</span>월</span>
+                    <span class="info-text"><%= data.svcInfo.mbrNm || '' %> 고객님의<br /><em><span class="ff-hn vbl">3</span>개월 사용패턴</em></span>
+                    <span class="subinfo-text"><span class="ff-hn vbl"><%= data.months[2] || '' %></span>
+                        ~<span class="ff-hn vbl"><%= data.months[0] || '' %></span></span>
                 </div>
             </div>
 
@@ -38,23 +39,35 @@
                                                 <li>
                                                     <dl>
                                                         <dt>평균 사용요금</dt>
-                                                        <dd>91,940</dd>
+                                                        <dd><%= data.useAverage || '-' %></dd>
                                                     </dl>
                                                 </li>
                                                 <li>
                                                     <dl>
                                                         <dt>평균 할인요금</dt>
-                                                        <dd class="minus">-20,275</dd>
+                                                        <dd class="minus"><%= data.disAverage || '-' %></dd>
                                                     </dl>
                                                 </li>
                                             </ul>
-                                            <!-- 그래프 영역 -->
-                                            <div class="graph-wrap">
-                                                <div class="can-box3">
-                                                    <canvas></canvas>
+                                            <% if (data.useAverage) { %>
+                                                <!-- 그래프 영역 -->
+                                                <div class="graph-wrap">
+                                                    <div class="can-box3">
+                                                        <canvas></canvas>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <!--// 그래프 영역 -->
+                                                <!--// 그래프 영역 -->
+                                            <% } else { %>
+                                                <!-- 데이터가 없는 경우 -->
+                                                <div class="msg-graph no-data">최근 3개월간 사용량이 없습니다.</div>
+                                                <div class="graph-title">
+                                                    <div class="graph-column">
+                                                        <span class="tit"><i class="ico type1"></i>사용</span>
+                                                        <span class="tit"><i class="ico type2"></i>할인</span>
+                                                    </div>
+                                                    <div class="unit">(단위 : 원)</div>
+                                                </div>
+                                            <% } %>
                                             <div class="list-link">
                                                 <ul>
                                                     <li>
@@ -74,17 +87,79 @@
                                     </li>
                                     <li role="tabpanel" id="tab2-tab" aria-labelledby="tab2">
                                         <div class="cont-box">
-                                            <div class="chart-title">
-                                                <button class="bt-prev"><span class="blind">음성통화 사용량 보기</span></button>
-                                                <span class="item-tit">문자</span>
-                                                <button class="bt-next"><span class="blind">데이터 사용량 보기</span></button>
+                                            <div id="amt-btn-grp" class="chart-title">
+                                                <button class="bt-prev"></button>
+                                                <span data-index="2" class="item-tit blind"><%= data.names[2] || '' %></span>
+                                                <span data-index="0" class="item-tit"><%= data.names[0] || '' %></span>
+                                                <span data-index="1" class="item-tit blind"><%= data.names[1] || '' %></span>
+                                                <button class="bt-next"></button>
                                             </div>
-                                            <ul class="cellular-chart-wrap">
+                                            <ul id="cdata-area" class="cellular-chart-wrap">
                                                 <li>
                                                     <div class="chart-usage">
                                                         <span class="average">평균 사용량</span>
-                                                        <span class="result"><span>12</span></span>
+                                                        <span class="result"><span><%= data.totCdataAverage || '-' %></span></span>
                                                     </div>
+                                                    <% if (data.totCdataAverage) { %>
+                                                    <!-- 그래프 영역 -->
+                                                    <div class="graph-wrap">
+                                                        <div class="can-box-cdata">
+                                                            <canvas></canvas>
+                                                        </div>
+                                                    </div>
+                                                    <!--// 그래프 영역 -->
+                                                    <% } else { %>
+                                                    <!-- 그래프 영역 : 데이터 없음 -->
+                                                    <div class="graph-wrap">
+                                                        <div class="msg-graph no-data">최근 3개월간 사용량이 없습니다.</div>
+                                                        <div class="graph-title">
+                                                            <div class="graph-column">
+                                                                <span class="tit"><i class="ico type3"></i>3개월 평균</span>
+                                                            </div>
+                                                            <div class="unit">(단위 : 건)</div>
+                                                        </div>
+                                                    </div>
+                                                    <!--// 그래프 영역 : 데이터 없음 -->
+                                                    <% } %>
+                                                </li>
+                                            </ul>
+                                            <ul id="sms-area" class="cellular-chart-wrap">
+                                                <li>
+                                                    <div class="chart-usage">
+                                                        <span class="average">평균 사용량</span>
+                                                        <span class="result"><span><%= data.totSmsAverage || '-' %></span></span>
+                                                    </div>
+                                                    <% if (data.totSmsAverage) { %>
+                                                    <!-- 그래프 영역 -->
+                                                    <div class="graph-wrap">
+                                                        <div class="can-box-sms">
+                                                            <canvas></canvas>
+                                                        </div>
+                                                    </div>
+                                                    <!--// 그래프 영역 -->
+                                                    <% } else { %>
+                                                    <!-- 그래프 영역 : 데이터 없음 -->
+                                                    <div class="graph-wrap">
+                                                        <div class="msg-graph no-data">최근 3개월간 사용량이 없습니다.</div>
+                                                        <div class="graph-title">
+                                                            <div class="graph-column">
+                                                                <span class="tit"><i class="ico type3"></i>3개월 평균</span>
+                                                            </div>
+                                                            <div class="unit">(단위 : 건수)</div>
+                                                        </div>
+                                                    </div>
+                                                    <!--// 그래프 영역 : 데이터 없음 -->
+                                                    <% } %>
+                                                </li>
+                                            </ul>
+                                            <ul id="voice-area" class="cellular-chart-wrap">
+                                                <li>
+                                                    <h3 class="chart-title">총 통화량</h3>
+                                                    <div class="chart-usage">
+                                                        <span class="average">평균 사용량</span>
+                                                        <span class="result"><span><%= data.totVoiceAverage || '-' %></span></span>
+                                                    </div>
+                                                    <% if (data.totVoiceAverage) { %>
                                                     <!-- 그래프 영역 -->
                                                     <div class="graph-wrap">
                                                         <div class="can-box1">
@@ -92,6 +167,103 @@
                                                         </div>
                                                     </div>
                                                     <!--// 그래프 영역 -->
+                                                    <% } else { %>
+                                                        <!-- 그래프 영역 : 데이터 없음 -->
+                                                        <div class="graph-wrap">
+                                                            <div class="msg-graph no-data">최근 3개월간 사용량이 없습니다.</div>
+                                                            <div class="graph-title">
+                                                                <div class="graph-column">
+                                                                    <span class="tit"><i class="ico type3"></i>3개월 평균</span>
+                                                                </div>
+                                                                <div class="unit">(단위 : 분, 초)</div>
+                                                            </div>
+                                                        </div>
+                                                        <!--// 그래프 영역 : 데이터 없음 -->
+                                                    <% } %>
+                                                </li>
+                                                <li>
+                                                    <h3 class="chart-title">SKT 고객간 통화량</h3>
+                                                    <div class="chart-usage">
+                                                        <span class="average">평균 사용량</span>
+                                                        <span class="result"><span><%= data.totInVoiceAverage || '-' %></span></span>
+                                                    </div>
+                                                    <% if (data.totInVoiceAverage) { %>
+                                                    <!-- 그래프 영역 -->
+                                                    <div class="graph-wrap">
+                                                        <div class="can-box2">
+                                                            <canvas></canvas>
+                                                        </div>
+                                                    </div>
+                                                    <!--// 그래프 영역 -->
+                                                    <% } else { %>
+                                                    <!-- 그래프 영역 : 데이터 없음 -->
+                                                    <div class="graph-wrap">
+                                                        <div class="msg-graph no-data">최근 3개월간 사용량이 없습니다.</div>
+                                                        <div class="graph-title">
+                                                            <div class="graph-column">
+                                                                <span class="tit"><i class="ico type3"></i>3개월 평균</span>
+                                                            </div>
+                                                            <div class="unit">(단위 : 분, 초)</div>
+                                                        </div>
+                                                    </div>
+                                                    <!--// 그래프 영역 : 데이터 없음 -->
+                                                    <% } %>
+                                                </li>
+                                                <li>
+                                                    <h3 class="chart-title">타 통신사 고객간 통화량</h3>
+                                                    <div class="chart-usage">
+                                                        <span class="average">평균 사용량</span>
+                                                        <span class="result"><span><%= data.totOutVoiceAverage || '-' %></span></span>
+                                                    </div>
+                                                    <% if (data.totOutVoiceAverage) { %>
+                                                    <!-- 그래프 영역 -->
+                                                    <div class="graph-wrap">
+                                                        <div class="can-box33">
+                                                            <canvas></canvas>
+                                                        </div>
+                                                    </div>
+                                                    <!--// 그래프 영역 -->
+                                                    <% } else { %>
+                                                    <!-- 그래프 영역 : 데이터 없음 -->
+                                                    <div class="graph-wrap">
+                                                        <div class="msg-graph no-data">최근 3개월간 사용량이 없습니다.</div>
+                                                        <div class="graph-title">
+                                                            <div class="graph-column">
+                                                                <span class="tit"><i class="ico type3"></i>3개월 평균</span>
+                                                            </div>
+                                                            <div class="unit">(단위 : 분, 초)</div>
+                                                        </div>
+                                                    </div>
+                                                    <!--// 그래프 영역 : 데이터 없음 -->
+                                                    <% } %>
+                                                </li>
+                                                <li>
+                                                    <h3 class="chart-title">영상 통화량</h3>
+                                                    <div class="chart-usage">
+                                                        <span class="average">평균 사용량</span>
+                                                        <span class="result"><span><%= data.totVidVoiceAverage || '-' %></span></span>
+                                                    </div>
+                                                    <% if (data.totVidVoiceAverage) { %>
+                                                    <!-- 그래프 영역 -->
+                                                    <div class="graph-wrap">
+                                                        <div class="can-box4">
+                                                            <canvas></canvas>
+                                                        </div>
+                                                    </div>
+                                                    <!--// 그래프 영역 -->
+                                                    <% } else { %>
+                                                    <!-- 그래프 영역 : 데이터 없음 -->
+                                                    <div class="graph-wrap">
+                                                        <div class="msg-graph no-data">최근 3개월간 사용량이 없습니다.</div>
+                                                        <div class="graph-title">
+                                                            <div class="graph-column">
+                                                                <span class="tit"><i class="ico type3"></i>3개월 평균</span>
+                                                            </div>
+                                                            <div class="unit">(단위 : 분, 초)</div>
+                                                        </div>
+                                                    </div>
+                                                    <!--// 그래프 영역 : 데이터 없음 -->
+                                                    <% } %>
                                                 </li>
                                             </ul>
                                             <div class="plan-recommend">
@@ -159,8 +331,27 @@
 
 <% include ../../components/javascript.component.html %>
 <script>
+  var feeData = '<%- JSON.stringify(data.chartFeeData) %>';
+  var cData = '<%- JSON.stringify(data.chartCTData) %>';
+  var voice = '<%- JSON.stringify(data.chartVoiceData) %>';
+  var iVoice = '<%- JSON.stringify(data.chartInVoiceData) %>';
+  var oVoice = '<%- JSON.stringify(data.chartOutVoiceData) %>';
+  var vVoice = '<%- JSON.stringify(data.chartVidVoiceData) %>';
+  var sms = '<%- JSON.stringify(data.chartSmsData) %>';
+  var empty = '<%- JSON.stringify(data.empty) %>';
+
   $(document).ready(function () {
-    var comp = new Tw.MyTUsagePattern($('#pattern-main'));
+    var comp = new Tw.MyTUsagePattern({
+      $element: $('#pattern-main'),
+      chartFeeData: JSON.parse(feeData),
+      chartCTData: JSON.parse(cData),
+      chartSmsData: JSON.parse(sms),
+      chartVoiceData: JSON.parse(voice),
+      chartInVoiceData: JSON.parse(iVoice),
+      chartOutVoiceData: JSON.parse(oVoice),
+      chartVidVoiceData: JSON.parse(vVoice),
+      empty: JSON.parse(empty)
+    });
   });
 </script>
 <% include ../../components/end.component.html %>

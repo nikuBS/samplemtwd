@@ -271,58 +271,28 @@ Tw.MSG_MYT = {
     M01_CONTENTS: '기본요금상품 및 무료로 제공되는 데이터 제공량에 한합니다. <br />대상 데이터 : 각 요금상품 별 데이터 기본 제공량, T끼리 데이터 선물하기 및 데이터 리필하기 서비스로 받은 데이터 제공량, 눝 데이터 생성하기, T가족혜택 데이터 생성하기'
   },
   USAGE_PATTERN: {
-    BAR_CHART: {
-      TEST: { // 데이터 확인 후 제거 예정
-        caption: '표제목',//숨겨진표에 사용 접근성관련이슈
-        tf_txt: '평균값',//숨겨진표에 사용 접근성관련이슈
-        td_txt: '각항목값',//숨겨진표에 사용 접근성관련이슈
-        co_p: ['#d6dbe5', '/img/chart/pattern2.gif'],//배경관련 색상및 패턴이미지 경로
-        txt_co: '#757575',//글자 색상
-        sale_co: '#325ec1',//할인 글자 색상
-        da_arr: [
-          {
-            na: '3월',//각 항목 타이틀
-            data: [113030],//사용량 배열 및 단일값 가능
-            sale_data: [22055]//할인 배열 및 단일값 가능
-          }, {
-            na: '4월',
-            data: [87280],
-            sale_data: [22055]
-          }, {
-            na: '5월',
-            data: [75510],
-            sale_data: [22055]
-          }
-        ]
-      },
-      CO: ['#d6dbe5', '/img/chart/pattern2.gif'],
+    COLOR: {
+      BACK: ['#d6dbe5', '/img/chart/pattern2.gif'],
       SALE: '#325ec1',
-      X: '(단위:원)'
+      LINE_V: '#2572ff', // voice
+      LINE_S: '#00a49a', // SMS
+      LINE_B: '#ef0023', // bytes
+      TEXT: '#757575'
     },
-    LINE_CHART: {
-      TEST: { // 데이터 확인 후 제거 예정
-        caption: '3월,4월,5월 3개월평균 문자사용량',//숨겨진표에 사용 접근성관련이슈
-        tf_txt: '평균값',//숨겨진표에 사용 접근성관련이슈
-        td_txt: '각 개월 사용량',//숨겨진표에 사용 접근성관련이슈
-        line_co: '#00a49a',
-        txt_co: '#757575',
-        da_arr: [
-          {
-            na: '3월',//각 항목 타이틀
-            data: [5]//배열 평균값으로 전달
-          }, {
-            na: '4월',
-            data: [0]
-          }, {
-            na: '5월',
-            data: [13]
-          }
-        ]
-      },
-      LINE: '#00a49a',
-      X: '(단위:건수)'
+    UNIT: {
+      WON: '(단위:원)',
+      CASE: '(단위:건수)',
+      TIME: '(단위:분,초)',
+      BYTE: '(단위:GB)'
     },
-    TXT: '#757575',
+    TYPE: {
+      BASIC: 'basic',
+      BASIC_1: 'basic_1',
+      BAR: 'bar'
+    },
+    CAPTION: ' 3개월 평균 사용량',
+    TF: '평균값',
+    TD: '각 항목값'
   },
   JOIN_SERVICE: {
     EMPTY_PWD: '6자리 이상의 숫자를 입력해주세요.',

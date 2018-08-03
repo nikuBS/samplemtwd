@@ -180,3 +180,10 @@ export enum MYT_JOIN_TYPE  {
   PAY = '납부',
   UNPAID = '미청구'
 }
+
+export enum USAGE_PATTERN_CHART {
+  USED = '사용요금',
+  MSG = '문자',
+  DATA = '데이터',
+  VOICE = '음성통화'
+}
