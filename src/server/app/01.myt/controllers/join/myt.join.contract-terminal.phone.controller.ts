@@ -47,45 +47,40 @@ class MytJoinContractTerminalPhone extends TwViewController {
     const thisMain = this;
 
     const p1 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0063, {}), '테스트 api');
-    const p1_mock = this._getPromiseApiMock(contractTerminal_BFF_05_0063, 'p1 Mock 데이터');
+    // const p1_mock = this._getPromiseApiMock(contractTerminal_BFF_05_0063, 'p1 Mock 데이터');
 
-    Promise.all([p1_mock]).then(function (resArr) {
+    Promise.all([p1]).then(function (resArr) {
       console.dir(resArr);
       thisMain.logger.info(thisMain, `[ Promise.all ] : `, resArr);
 
       /*
       * 실 데이터 사용시
        */
-      // resArr[0].subscribe({
-      //   next( dataObj ) {
-      //     thisMain.logger.info(thisMain, '[ next ] : ', dataObj);
-      //   },
-      //   error(error) {
-      //     thisMain.logger.info(thisMain, '[ error ] : ', error.stack || error);
-      //   },
-      //   complete() {
-      //     thisMain.logger.info(thisMain, '[ complete ] : ');
-      //
-      //     thisMain.renderView(res, thisMain._urlTplInfo.pageRenderView, {
-      //       reqQuery: thisMain.reqQuery,
-      //       svcInfo: thisMain._svcInfo
-      //     } );
-      //
-      //   }
-      // });
+      thisMain._resDataInfo = resArr[0][0].result;
+      console.dir(resArr[0][0].result);
 
-      /*
-      * Mock 데이터 사용시
-       */
-      thisMain._resDataInfo = resArr[0].result;
       thisMain._dataInit();
 
       thisMain.renderView(res, thisMain._urlTplInfo.pageRenderView, {
         reqQuery: thisMain.reqQuery,
         svcInfo: thisMain._svcInfo,
         commDataInfo: thisMain._commDataInfo,
-        resDataInfo: thisMain._resDataInfo
+        resDataInfo: thisMain._resDataInfo,
+        errBol: false
       });
+
+      /*
+      * Mock 데이터 사용시
+       */
+      // thisMain._resDataInfo = resArr[0].result;
+      // thisMain._dataInit();
+      //
+      // thisMain.renderView(res, thisMain._urlTplInfo.pageRenderView, {
+      //   reqQuery: thisMain.reqQuery,
+      //   svcInfo: thisMain._svcInfo,
+      //   commDataInfo: thisMain._commDataInfo,
+      //   resDataInfo: thisMain._resDataInfo
+      // });
 
 
     }); // Promise.all END

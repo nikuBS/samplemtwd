@@ -58,9 +58,9 @@ Tw.MytJoinContractTerminalPhone.prototype = {
     console.info('[ data-svcagrmtdcid ]', $(e.target).attr('data-svcagrmtdcid'));
     console.info('[ data-svcagrmtdccd ]', $(e.target).attr('data-svcagrmtdccd'));
 
-    var svcagrmtdcid = $(e.target).attr('data-svcagrmtdcid');
-    var svcagrmtdccd = $(e.target).attr('data-svcagrmtdccd');
-    var tempUrl = '/myt/join/contract-terminal/phone/detail' + '?' + 'svcagrmtdcid=' + svcagrmtdcid + '&' + 'svcagrmtdccd=' + svcagrmtdccd;
+    var svcAgrmtDcId = $(e.target).attr('data-svcAgrmtDcId');
+    var svcAgrmtDcCd = $(e.target).attr('data-svcAgrmtDcCd');
+    var tempUrl = '/myt/join/contract-terminal/phone/detail' + '?' + 'svcAgrmtDcId=' + svcAgrmtDcId + '&' + 'svcAgrmtDcCd=' + svcAgrmtDcCd;
     this._goLoad(tempUrl);
     //window.open( tempUrl, '_blank');
 

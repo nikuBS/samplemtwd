@@ -67,15 +67,15 @@ Tw.MytJoinContractTerminalPhoneDetail.prototype = {
   _getDetailList: function() {
     Tw.Logger.info('[resData.reqQuery]', this.resData.reqQuery);
 
-    // var param = {
-    //   svcAgrmtCdId: this.resData.reqQuery.svcagrmtdcid,
-    //   svcAgrmtDcCd: this.resData.reqQuery.svcagrmtdccd
-    // };
-
     var param = {
-      svcAgrmtCdId: 'AA1000000037069632',
-      svcAgrmtDcCd: 'AA'
+      svcAgrmtCdId: this.resData.reqQuery.svcAgrmtDcId,
+      svcAgrmtDcCd: this.resData.reqQuery.svcAgrmtDcCd
     };
+
+    // var param = {
+    //   svcAgrmtCdId: 'AA1000000037069632',
+    //   svcAgrmtDcCd: 'AA'
+    // };
 
     // $.ajax('http://localhost:3000/mock/contract-terminal.detail.BFF_05_00076.json')
     //   .done(function(resp){
