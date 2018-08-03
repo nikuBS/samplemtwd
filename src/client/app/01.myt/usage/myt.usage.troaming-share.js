@@ -19,5 +19,5 @@ Tw.MytUsageTroamingShare.prototype = {
       $this.text(data.data);
       $this.parent()[0].childNodes[2].nodeValue = data.unit;
     });
-  },
+  }
 };

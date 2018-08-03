@@ -25,13 +25,13 @@ Tw.MytUsageTing.prototype = {
         style_class: 'bt-red1',
         txt: Tw.BUTTON_LABEL.CONFIRM
       }]
-    }
+    };
     this._popupService.open(options, $.proxy(this._onOpenPopup, this));
   },
 
   _onOpenPopup: function ($popup) {
     $popup.one('click', '.bt-red1 button', function () {
       Tw.Popup.close();
-    })
+    });
   }
 };
