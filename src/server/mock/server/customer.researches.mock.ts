@@ -98,7 +98,7 @@ export const StepResearch = {
       qstnId: '1121',
       inqItmNum: '2',
       inqItmHtmlCtt: '<P>&nbsp;</P>',
-      inqItmTypCd: '0',
+      inqItmTypCd: '1',
       nxtInqMovYn: 'N',
       mndtAnswYn: 'Y',
       inqSortMthdCd: 'D',

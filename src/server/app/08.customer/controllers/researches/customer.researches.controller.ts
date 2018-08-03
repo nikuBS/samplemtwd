@@ -74,6 +74,8 @@ interface IStepQuestion {
   content: string;
   isMultiple: boolean;
   isMultiStage: boolean;
+  isNecessary: boolean;
+  answerType: string;
   examples?: { [key: number]: IStepExample };
 }
 
@@ -87,11 +89,10 @@ interface IStepExample {
 export default class CustomerResearches extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     if (req.params.researchId) {
-      // this.apiService.request(API_CMD.BFF_08_0038, { qstn_id: req.params.researchId }).subscribe(resp => {
-      // });
-      const research: IStepResearch = this.getProperResearchData(StepResearch);
-
-      res.render('researches/customer.researches.research.html', { svcInfo, research });
+      this.apiService.request(API_CMD.BFF_08_0038, { qstnId: req.params.researchId }).subscribe(resp => {
+        const research: IStepResearch = this.getProperResearchData(resp.result);
+        res.render('researches/customer.researches.research.html', { svcInfo, research });
+      });
     } else {
       this.apiService.request(API_CMD.BFF_08_0023, {}).subscribe(resp => {
         // const researches = Researches.map(this.setData);
@@ -151,8 +152,10 @@ export default class CustomerResearches extends TwViewController {
 
       questions[idx] = {
         content: question.inqDtlCtt,
+        answerType: question.inqItmTypCd,
         isMultiple: question.inqItmTypCd === '1',
         isMultiStage: question.inqSortMthdCd === 'D',
+        isNecessary: question.mndtAnswYn === 'Y',
         examples
       };
     }
