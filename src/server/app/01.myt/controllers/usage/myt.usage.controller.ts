@@ -24,7 +24,14 @@ class MyTUsage extends TwViewController {
     ).subscribe(([usageData]) => {
         if ( usageData.code === API_CODE.CODE_00 ) {
           const fomattedData = this.parseUsageData(usageData.result, svcInfo);
-          const options = { usageData: fomattedData, svcInfo: svcInfo, remainDate: DateHelper.getRemainDate() };
+          let strDate;
+          if ( svcInfo.svcAttrCd !== 'S3' ) {
+            strDate = DateHelper.getRemainDate();
+          } else {
+            const today = DateHelper.getCurrentDate();
+            strDate = `${DateHelper.getShortDateWithFormat(today, 'YYYY.MM.01')} ~ ${DateHelper.getShortDate(today)}`;
+          }
+          const options = { usageData: fomattedData, svcInfo: svcInfo, remainDate: strDate };
           res.render('usage/myt.usage.html', options);
         } else {
           res.render(MYT_VIEW.ERROR, { usageData: usageData, svcInfo: svcInfo });
