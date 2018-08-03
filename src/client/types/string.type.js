@@ -151,6 +151,12 @@ Tw.MSG_COMMON = {
 Tw.MSG_HOME = {};
 
 Tw.MSG_MYT = {
+  USAGE_TING_M03: {
+    TITLE: '통화가능 금액이란?',
+    CONTENTS: '팅요금상품 가입 시 선택하신 상한금액에서 기본료를 제외한 나머지 금액입니다.\n' +
+      '예) 팅 100요금상품의 경우, 상한 2만원 선택 시 통화 가능 금액은 7,500원입니다.\n' +
+      '상한(20,000원) – 기본료(12,500원) = 7,500원\n'
+  },
   BILL_GUIDE_REISSUE_00: ' 요금안내서 재발행',
   BILL_GUIDE_REISSUE_01: ' 요금안내서 재발행을 신청하시겠습니까?',
   BILL_GUIDE_REISSUE_02: '이메일 주소가 정확한지 다시 한번 확인해주시기 바랍니다. 재발행을 신청하시겠습니까?',
@@ -263,6 +269,60 @@ Tw.MSG_MYT = {
   DISCOUNT: {
     M01_TITLE: '50% 할인제공 대상 데이터는',
     M01_CONTENTS: '기본요금상품 및 무료로 제공되는 데이터 제공량에 한합니다. <br />대상 데이터 : 각 요금상품 별 데이터 기본 제공량, T끼리 데이터 선물하기 및 데이터 리필하기 서비스로 받은 데이터 제공량, 눝 데이터 생성하기, T가족혜택 데이터 생성하기'
+  },
+  USAGE_PATTERN: {
+    BAR_CHART: {
+      TEST: { // 데이터 확인 후 제거 예정
+        caption: '표제목',//숨겨진표에 사용 접근성관련이슈
+        tf_txt: '평균값',//숨겨진표에 사용 접근성관련이슈
+        td_txt: '각항목값',//숨겨진표에 사용 접근성관련이슈
+        co_p: ['#d6dbe5', '/img/chart/pattern2.gif'],//배경관련 색상및 패턴이미지 경로
+        txt_co: '#757575',//글자 색상
+        sale_co: '#325ec1',//할인 글자 색상
+        da_arr: [
+          {
+            na: '3월',//각 항목 타이틀
+            data: [113030],//사용량 배열 및 단일값 가능
+            sale_data: [22055]//할인 배열 및 단일값 가능
+          }, {
+            na: '4월',
+            data: [87280],
+            sale_data: [22055]
+          }, {
+            na: '5월',
+            data: [75510],
+            sale_data: [22055]
+          }
+        ]
+      },
+      CO: ['#d6dbe5', '/img/chart/pattern2.gif'],
+      SALE: '#325ec1',
+      X: '(단위:원)'
+    },
+    LINE_CHART: {
+      TEST: { // 데이터 확인 후 제거 예정
+        caption: '3월,4월,5월 3개월평균 문자사용량',//숨겨진표에 사용 접근성관련이슈
+        tf_txt: '평균값',//숨겨진표에 사용 접근성관련이슈
+        td_txt: '각 개월 사용량',//숨겨진표에 사용 접근성관련이슈
+        line_co: '#00a49a',
+        txt_co: '#757575',
+        da_arr: [
+          {
+            na: '3월',//각 항목 타이틀
+            data: [5]//배열 평균값으로 전달
+          }, {
+            na: '4월',
+            data: [0]
+          }, {
+            na: '5월',
+            data: [13]
+          }
+        ]
+      },
+      LINE: '#00a49a',
+      X: '(단위:건수)'
+    },
+    TXT: '#757575',
   },
   JOIN_SERVICE: {
     EMPTY_PWD: '6자리 이상의 숫자를 입력해주세요.',
@@ -434,13 +494,27 @@ Tw.MSG_AUTH = {
   LINE_A42: '이미 다른 계정에 등록된 회선입니다.',
   LINE_A43: '이미 등록된 회선 입니다.',
   LINE_A5: '광고 정보 수신동의 항목에 체크해 주세요.',
-  LINE_A6: '약관 상세 내용을 먼저 확인 해 주세요.'
+  LINE_A6: '약관 상세 내용을 먼저 확인 해 주세요.',
+  EASY_LOGIN_FAIL: '휴대폰 번호가 확인되지 않습니다. USIM이 분리된 상태인지 확인해 주세요.',
+  EASY_LOGIN_L11: '이름을 입력해 주세요.',
+  EASY_LOGIN_L12: '법정 생년월일 8자리를 입력해 주세요.',
+  EASY_LOGIN_L13: '성별을 선택해 주세요.',
+  EASY_LOGIN_L02: '생년월일 8자리를 정확히 입력해 주세요.',
+  EASY_LOGIN_L03: '입력하신 정보가 일치하지 않습니다. 확인 후 재입력해 주세요.',
+  EASY_LOGIN_L04: '정상적으로 발송되었습니다. <br />인증번호를 확인해 주세요.',
+  EASY_LOGIN_L51: '재전송 제한시간(1분)이 지난 후에 이용해 주세요.',
+  EASY_LOGIN_L52: '제한시간 내 인증번호를 보낼 수 있는 횟수가 넘었습니다. 잠시 후 다시 시도해 주세요.',
+  EASY_LOGIN_L61: '인증번호를 입력해 주세요.',
+  EASY_LOGIN_L62: '인증번호가 일치하지 않습니다. <br />다시 한번 확인 후 입력해 주세요.',
+  EASY_LOGIN_L63: '인증번호 입력 시간이 초과했습니다. <br />인증번호 받기 버튼을 눌러 새로운 인증번호를 받은 후 이용해주세요.'
 };
 
 Tw.MSG_CUSTOMER = {
   VOICE_A01: '이미 신청된 내역이 있습니다. \n 고객센터(114)로 전화하여 목소리 등록을 진행해주세요.',
   VOICE_A02: '목소리인증서비스 신청을 취소하시겠습니까?',
   VOICE_A03: '진행을 취소하시고 첫 화면으로 이동하시겠습니까?',
+  EMAIL_A01: '이메일 상담 신청을 취소하시겠습니까?',
+  EMAIL_A02: 'SMS알림 설정 시 \n 답변이 등록되면 입력하신 휴대전화번호로 \n SMS가 발송됩니다.',
   HELPLINE_A01: '예약을 취소하시겠습니까?',
   HELPLINE_A02: '지역을 선택해 주세요.',
   HELPLINE_A03: '진행을 취소하시고 첫 화면으로 이동하시겠습니까?',
@@ -504,7 +578,8 @@ Tw.DATE_FORMAT = {
 };
 
 Tw.URL_PATH = {
-  BROADBAND: 'http://www.skbroadband.com/'
+  BROADBAND: 'http://www.skbroadband.com/',
+  COP_SERVICE: 'http://b2b.tworld.co.kr/cs/counsel/certServiceInfo.bc'
 };
 
 Tw.MSG_POSTCODE = {
@@ -517,8 +592,13 @@ Tw.MSG_POSTCODE = {
 
 Tw.POSTCODE_TEXT = {
   BUILDING_CODE: '건물번호',
+  BUILDING_NUMBER: '번지',
+  BUILDING_HO: '호',
   ZIP_CODE: '우편번호',
-  SELECT_ADDRESS: '주소를 선택해주세요'
+  SELECT_ADDRESS: '주소를 선택해주세요',
+  CITY_GUN_GU: '시/군/구',
+  NUMBER: '지번',
+  NAME: '건물명'
 };
 
 Tw.CUSTOMER_EMAIL = {

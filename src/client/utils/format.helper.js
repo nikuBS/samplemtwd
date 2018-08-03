@@ -38,6 +38,9 @@ Tw.FormatHelper = (function () {
   };
 
   var convNumFormat = function (number) {
+    if ( number < 1 ) {
+      return setDecimalPlace(number, 2);
+    }
     if (number > 0 && number < 100 && number % 1 !== 0) {
       return removeZero(number.toFixed(2));
     }
@@ -49,6 +52,15 @@ Tw.FormatHelper = (function () {
     }
 
     return number.toString();
+  };
+
+  /**
+   * Insert colon into middle of number string
+   * @param val normally server response. MUST be 4 characters. ex) '0900', '2000'
+   * @returns '09:00', '20:00'
+   */
+  var insertColonForTime = function (val) {
+    return val.slice(0, 2) + ':' + val.slice(2);
   };
 
   var customDataFormat = function (data, curUnit, targetUnit) {
@@ -139,6 +151,10 @@ Tw.FormatHelper = (function () {
     return cardYm.substr(0, 4) + '/' + cardYm.substr(4, 2);
   };
 
+  var setDecimalPlace = function(value, point) {
+    return parseFloat(value.toFixed(point));
+  };
+
   function _getDashedCellPhoneNumber(phoneNumber) {
     var str = '';
     if (phoneNumber.length <= 10) {
@@ -227,6 +243,8 @@ Tw.FormatHelper = (function () {
     makeCardYymm: makeCardYymm,
     getFormattedPhoneNumber: getFormattedPhoneNumber,
     getDashedPhoneNumber: getDashedPhoneNumber,
-    convNumFormat: convNumFormat
+    convNumFormat: convNumFormat,
+    insertColonForTime: insertColonForTime,
+    setDecimalPlace: setDecimalPlace
   };
 })();

@@ -12,7 +12,11 @@ Tw.LineComponent = function () {
   this._historyService = new Tw.HistoryService();
 
   this.$btLine = null;
+  this.$list = null;
+  this.$remainCnt = null;
+  this.$btMore = null;
   this.selectedMgmt = '';
+  this.index = 0;
 
   this._goAuthLine = false;
   this._bindEvent();
@@ -38,6 +42,10 @@ Tw.LineComponent.prototype = {
     this._popupService.open({
       hbs: 'dropdown',
       group: lineData,
+      bt_more: {
+        show: this.index > Tw.DEFAULT_LIST_COUNT,
+        txt: this.index - Tw.DEFAULT_LIST_COUNT
+      },
       bt_txt: Tw.BUTTON_LABEL.LINE
     }, $.proxy(this._onOpenListPopup, this), $.proxy(this._onCloseListPopup, this));
   },
@@ -47,6 +55,11 @@ Tw.LineComponent.prototype = {
     // $popupContainer.on('click', '.popup-blind', $.proxy(this._closePopup, this));
     $popupContainer.on('click', '.fe-radio-list', $.proxy(this._onSelectLine, this));
     $popupContainer.on('click', '.fe-btn-txt', $.proxy(this._onClickTxtButton, this));
+    $popupContainer.on('click', '.bt-more', $.proxy(this._onClickMore, this));
+
+    this.$list = $popupContainer.find('.radiobox', '.type02');
+    this.$remainCnt = $popupContainer.find('.fe-remain-cnt');
+    this.$btMore = $popupContainer.find('.bt-more');
   },
   _onCloseListPopup: function () {
     this.$btLine.removeClass('disabled');
@@ -76,10 +89,20 @@ Tw.LineComponent.prototype = {
   _parseLineList: function (lineList) {
     var category = ['MOBILE', 'INTERNET_PHONE_IPTV', 'SECURITY'];
     var result = [];
-    _.map(category, $.proxy(function (line) {
+    _.map(category, $.proxy(function (line, index) {
       var curLine = lineList[Tw.LINE_NAME[line]];
       if ( !Tw.FormatHelper.isEmpty(curLine) ) {
-        result.push({ title: Tw.SVC_CATEGORY[Tw.LINE_NAME[line]], list: this._convLineData(curLine, line) });
+        var showService = 'none';
+        if ( index === 0 ) {
+          showService = 'block';
+        } else {
+          showService = this.index < Tw.DEFAULT_LIST_COUNT ? 'block' : 'none';
+        }
+        result.push({
+          title: Tw.SVC_CATEGORY[Tw.LINE_NAME[line]],
+          list: this._convLineData(curLine, line),
+          showService: showService
+        });
       }
     }, this));
     return result;
@@ -89,6 +112,8 @@ Tw.LineComponent.prototype = {
     Tw.FormatHelper.sortObjArrAsc(lineData, 'expsSeq');
     _.map(lineData, $.proxy(function (line) {
       result.push({
+        display: this.index < Tw.DEFAULT_LIST_COUNT ? 'block' : 'none',
+        index: this.index++,
         txt: Tw.FormatHelper.isEmpty(line.nickNm) ? Tw.SVC_ATTR[line.svcAttrCd] : line.nickNm,
         option: this.selectedMgmt.toString() === line.svcMgmtNum ? 'checked' : '',   // TODO: Add authority
         integration: line.actRepYn === 'Y',
@@ -114,6 +139,24 @@ Tw.LineComponent.prototype = {
       this._closePopup();
     } else {
       this._popupService.openAlert(resp.code + ' ' + resp.msg);
+    }
+  },
+  _onClickMore: function () {
+    var $hideList = this.$list.filter('.none');
+    var $showList = $hideList.filter(function(index) {
+      return index < 20;
+    });
+    var $service = $showList.parents('.dropdown-group');
+    var remainCnt = $hideList.length - $showList.length;
+
+    $service.removeClass('none');
+    $service.addClass('block');
+    $showList.removeClass('none');
+    $showList.addClass('block');
+
+    this.$remainCnt.html(remainCnt);
+    if(remainCnt === 0) {
+      this.$btMore.hide();
     }
   }
 };

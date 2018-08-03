@@ -105,7 +105,7 @@
 <script>
   $(document).ready(function () {
     var svcInfo = '<%- JSON.stringify(data.svcInfo) %>';
-    var comp = new Tw.MyTJSProtectInquiry($('#protect-inquiry'), JSON.parse(svcInfo));
+    var comp = new Tw.MyTJoinProtectInquiry($('#protect-inquiry'), JSON.parse(svcInfo));
   });
 </script>
 <% include ../../components/end.component.html %>

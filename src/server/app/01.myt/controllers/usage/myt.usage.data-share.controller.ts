@@ -5,12 +5,10 @@ import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { DATA_UNIT, USER_CNT } from '../../../../types/string.type';
 import FormatHelper from '../../../../utils/format.helper';
 import { UNIT } from '../../../../types/bff-common.type';
-import MyTUsage from './myt.usage.controller';
+import MyTUsageGraphbox from './myt.usage.graphbox.controller';
 import { Observable } from 'rxjs/Observable';
 
 class MyTUsageDataShare extends TwViewController {
-  public myTUsage = new MyTUsage();
-
   constructor() {
     super();
   }
@@ -19,8 +17,21 @@ class MyTUsageDataShare extends TwViewController {
     Observable.combineLatest(
       this.getUsageData()
     ).subscribe(([usageData]) => {
-      this.myTUsage.renderView(res, 'usage/myt.usage.data-share.html', this.getData(usageData, svcInfo));
+      const fomattedData = this.parseUsageData(usageData.result);
+      res.render('usage/myt.usage.data-share.html', this.getData(fomattedData, svcInfo));
     });
+  }
+
+  private parseUsageData(usageData: any): any {
+    const kinds = ['data', 'voice', 'sms', 'etc'];
+    kinds.map((kind) => {
+      if ( !FormatHelper.isEmpty(usageData[kind]) ) {
+        usageData[kind].map((data) => {
+          MyTUsageGraphbox.convShowData(data);
+        });
+      }
+    });
+    return usageData;
   }
 
   private getUsageData(): Observable<any> {

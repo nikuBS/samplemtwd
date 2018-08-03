@@ -7,8 +7,9 @@
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
 import DateHelper from '../../../../utils/date.helper';
-import { Researches } from '../../../../mock/server/customer.researches.mock';
+import { StepResearch } from '../../../../mock/server/customer.researches.mock';
 import { RESEARCH_EXAMPLE_TYPE } from '../../../../types/string.type';
+import { API_CMD } from '../../../../types/api-command.type';
 
 
 interface IResearchBFF {
@@ -38,13 +39,12 @@ interface IResearchBFF {
   canswNum?: string; // 정답번호(QUIZ)
 }
 
-interface IResearch {
+interface ISimpleResearch {
   id: string; // 리서치 ID
   type: string; // 리서치 타입
   title: string; // 리서치 타이틀
   isMultiple: boolean; // 응답유형 코드
   isMultiStage: boolean; // 정렬 타입 
-  isParticipate: boolean; // 참여 여부
   startDate: string; // 설문 시작일
   endDate: string; // 설문 종료일
   motHtml?: string; // mot HTML 내용
@@ -54,8 +54,6 @@ interface IResearch {
   answerNum?: string;
 }
 
-
-
 interface IExample {
   content: string; // 보기 내용
   isEtc: boolean; // 기타항목 여부
@@ -63,18 +61,47 @@ interface IExample {
   motHtml?: string; // 보기 MOT
 }
 
+interface IStepResearch {
+  id: string;
+  title: string;
+  startDate: string;
+  endDate: string;
+  questionCount: number;
+  questions: { [key: number]: IStepQuestion };
+}
+
+interface IStepQuestion {
+  content: string;
+  isMultiple: boolean;
+  isMultiStage: boolean;
+  examples?: { [key: number]: IStepExample };
+}
+
+interface IStepExample {
+  content: string;
+  nextQuestion: number;
+  isEtc: boolean;
+}
+
+
 export default class CustomerResearches extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     if (req.params.researchId) {
-      res.render('researches/customer.researches.research.html', { svcInfo });
-    } else {
-      const mock: IResearch[] = Researches.map(this.setData);
+      // this.apiService.request(API_CMD.BFF_08_0038, { qstn_id: req.params.researchId }).subscribe(resp => {
+      // });
+      const research: IStepResearch = this.getProperResearchData(StepResearch);
 
-      res.render('researches/customer.researches.html', { svcInfo, researches: mock });
+      res.render('researches/customer.researches.research.html', { svcInfo, research });
+    } else {
+      this.apiService.request(API_CMD.BFF_08_0023, {}).subscribe(resp => {
+        // const researches = Researches.map(this.setData);
+        const researches = resp.result.map(this.setData);
+        res.render('researches/customer.researches.html', { svcInfo, researches });
+      });
     }
   }
 
-  private setData(research: IResearchBFF): IResearch {
+  private setData(research: IResearchBFF): ISimpleResearch {
     const examples: IExample[] = [];
     const count = Number(research.exCttCnt);
 
@@ -90,14 +117,12 @@ export default class CustomerResearches extends TwViewController {
       });
     }
 
-
     return {
       id: research.bnnrRsrchId,
       type: research.bnnrRsrchTypCd,
       title: research.bnnrRsrchTitleNm,
       isMultiple: research.bnnrRsrchRpsTypCd === 'C',
       isMultiStage: research.bnnrRsrchSortMthdCd === 'D',
-      isParticipate: research.cmplYn === 'Y',
       startDate: research.staDtm,
       endDate: research.endDtm,
       motHtml: research.motMsgHtmlCtt,
@@ -105,6 +130,56 @@ export default class CustomerResearches extends TwViewController {
       examples,
       hintUrl: research.hintExUrl,
       answerNum: research.canswNum
+    };
+  }
+
+  private getProperResearchData = (research: any): IStepResearch => {
+    const researchData = research.surveyQstnMaster[0];
+    const questionData: any[] = research.surveyQstnInqItm;
+    const exampleData: any[] = research.surveyQstnAnswItm;
+    const questions: { [key: number]: IStepQuestion } = {};
+
+    for (let i = 0; i < questionData.length; i++) {
+      const question = questionData[i];
+      const idx = Number(question.inqItmNum);
+
+      let examples: { [key: number]: IStepExample } | undefined;
+
+      if (question.inqItmTypCd !== '2') {
+        examples = {};
+      }
+
+      questions[idx] = {
+        content: question.inqDtlCtt,
+        isMultiple: question.inqItmTypCd === '1',
+        isMultiStage: question.inqSortMthdCd === 'D',
+        examples
+      };
+    }
+
+    for (let i = 0; i < exampleData.length; i++) {
+      const example = exampleData[i];
+      const questionIdx = Number(example.inqItmNum);
+      const exampleIdx = Number(example.answItmNum);
+      const question = questions[questionIdx];
+      const isEtc = example.answItmCtt === 'QSTNETC';
+
+      if (question && question.examples) {
+        question.examples[exampleIdx] = {
+          content: isEtc ? RESEARCH_EXAMPLE_TYPE.ETC : example.answItmCtt || '',
+          nextQuestion: Number(example.nxtInqItmNum),
+          isEtc
+        };
+      }
+    }
+
+    return {
+      id: researchData.qstnId,
+      title: researchData.qstnTitleNm,
+      startDate: researchData.staDtm,
+      endDate: researchData.endDtm,
+      questionCount: researchData.totInqItmNum,
+      questions
     };
   }
 }

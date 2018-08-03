@@ -325,7 +325,7 @@ $.fn.chart = function(option){
   }
   function make_obj(option){
     var t = document.createElementNS(xmlns, option.tag);
-    if((typeof option.obj.fill == 'string' && option.obj.fill.indexOf('pattern') >= 0) || (typeof option.obj.stroke == 'string' && option.obj.stroke.indexOf('pattern') >= 0)){
+    if((typeof option.obj.fill == 'string' && option.obj.fill.indexOf('img/') > 0) || (typeof option.obj.stroke == 'string' && option.obj.stroke.indexOf('img/') > 0)){
       var id = ran_id_create();
       var def = document.createElementNS(xmlns, 'defs');
       option.p.appendChild(def);
@@ -337,19 +337,17 @@ $.fn.chart = function(option){
       pattern.setAttribute('patternUnits','userSpaceOnUse');
       pattern.setAttribute('id',id);
       def.appendChild(pattern);
-      var pattern_svg = '<rect fill="#3E60AD" width="8" height="8"/><rect fill="#9BAFDA" width="1" height="3"/><rect x="1" y="3" fill="#9BAFDA" width="3" height="1"/><rect x="4" y="4" fill="#9BAFDA" width="1" height="3"/><rect x="5" y="7" fill="#9BAFDA" width="3" height="1"/>';
-      pattern.innerHTML = pattern_svg;
-      /*
       var im = document.createElementNS(xmlns, 'image');
       pattern.appendChild(im);
       im.setAttribute('x',0);
       im.setAttribute('y',0);
       im.setAttribute('width',8);
       im.setAttribute('height',8);
-      */
       if(option.obj.fill){
+        im.setAttribute('href',option.obj.fill);
         option.obj.fill = 'url(#'+id+')';
       }else{
+        im.setAttribute('href',option.obj.stroke);
         option.obj.stroke = 'url(#'+id+')';
       }
     }

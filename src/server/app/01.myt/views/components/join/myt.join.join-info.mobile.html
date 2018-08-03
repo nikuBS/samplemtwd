@@ -6,7 +6,7 @@
 
 <div class="cont-box nogaps-btm">
     <div class="info-box">
-        <span class="state-text">사용중</span>
+        <span class="state-text"><%= data.svcStatNm%></span>
         <span class="name"><span class="tx-bold ff-hn"><%= data.eqpMdlNm %></span></span>
         <button class="bt-link-tx">USIM 변경 안내 <span class="ico"></span></button>
     </div>
@@ -21,7 +21,7 @@
                 <div class="contents-btn">
                     <ul class="bt-slice item-two">
                         <li class="bt-white2">
-                            <button>개통/변경이력 조회</button>
+                            <button id="fe-open-history" data-history="<%= JSON.stringify(data.history)%>">개통/변경이력 조회</button>
                         </li>
                         <li class="bt-white2">
                             <button>개통 대리점 찾기</button>
@@ -32,7 +32,9 @@
             <li>
                 <dl>
                     <dt>가입비</dt>
-                    <dd><span class="ff-hn vbl"><%= data.apprAmt %></span> 원</dd>
+                    <dd>
+                        <span class="ff-hn vbl"><%= data.apprAmt %></span> 원 <%= data.amtDesc%>
+                    </dd>
                 </dl>
             </li>
             <li>

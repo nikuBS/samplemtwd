@@ -8,11 +8,12 @@ Tw.HomeMain = function (rootEl, lineRegisterLayer) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
+  this._nativeSrevice = Tw.Native;
   this._lineRegisterLayer = lineRegisterLayer;
 
   this._init();
   this._bindEvent();
-
+  this._clearHistory();
 
   // For dev (Determine if api service issue or bff issue)
   // this._testApi();
@@ -33,6 +34,9 @@ Tw.HomeMain.prototype = {
     this.$container.on('click', '#refill-product', $.proxy(this._openRefillProduct, this));
     this.$container.on('click', '#gift-product', $.proxy(this._openGiftProduct, this));
     this.$container.on('click', '#gift-balance', $.proxy(this._getGiftBalance, this));
+  },
+  _clearHistory: function () {
+    this._nativeSrevice.send(Tw.NTV_CMD.CLEAR_HISTORY, {});
   },
   _openPopup: function () {
     var layerType = this.$container.data('layertype');

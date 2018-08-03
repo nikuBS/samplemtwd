@@ -21,8 +21,7 @@
     <div id="contents" class="container-wrap">
         <h2 class="blind">내용</h2>
         <div class="container">
-            <% let path = '../../components/join/myt.join.join-info.mobile.html' %>
-            <%- include(path) %>
+            <%- include(data.path) %>
             <hr class="cont-sp type1" aria-hidden="true" />
 
             <div class="cont-box nogaps-hoz">
@@ -60,6 +59,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
+    new Tw.MyTJoinJoinInfo( $('.wrap') );
   });
 </script>
 <% include ../../components/end.component.html %>

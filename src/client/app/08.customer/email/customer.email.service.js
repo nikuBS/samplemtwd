@@ -1,20 +1,23 @@
 /**
- * FileName: customer.email.js
+ * FileName: customer.email.service.js
  * Author: Jiman Park (jiman.park@sk.com)
  * Date: 2018.07.30
  */
 
-Tw.CustomerEmail = function (rootEl) {
+Tw.CustomerEmailService = function (rootEl) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
+
+  this._history = new Tw.HistoryService(this.$container);
+  this._history.init('hash');
 
   this._cachedElement();
   this._bindEvent();
   this._init();
 };
 
-Tw.CustomerEmail.prototype = {
+Tw.CustomerEmailService.prototype = {
   categoryId: '',
   serviceType: '',
   serviceCategory: [],
@@ -24,15 +27,33 @@ Tw.CustomerEmail.prototype = {
   },
 
   _cachedElement: function () {
+    // this.$wrap_tpl_email_agree = Handlebars.compile($('#tpl_email_agree').text());
+    this.$wrap_tablist = $('[role=tablist]');
     this.$select_service = $('.fe-btn-select-service');
     this.$select_service_category = $('.fe-btn-select-service-category');
   },
 
   _bindEvent: function () {
+    this.$container.on('click', '.fe-email-cancel', $.proxy(this._onCancelEmail, this));
     this.$container.on('click', '.fe-btn-select-service', $.proxy(this._showServicePopup, this));
     this.$container.on('click', '.fe-btn-select-service-category', $.proxy(this._showServiceCategoryPopup, this));
     this.$container.on('click', '[data-service]', $.proxy(this._selectService, this));
     this.$container.on('click', '[data-category-id]', $.proxy(this._selectServiceCategory, this));
+    this.$container.on('click', '[role=tab]', $.proxy(this._changeTab, this));
+  },
+
+  _changeTab: function () {
+    // $('.fe-wrap_tpl_email_agree').html(this.$wrap_tpl_email_agree());
+  },
+
+  _onCancelEmail: function () {
+    this._popupService.openConfirm(
+      Tw.BUTTON_LABEL.CONFIRM,
+      Tw.MSG_CUSTOMER.EMAIL_A01,
+      null,
+      null,
+      $.proxy(this._goCustomerMain, this),
+      this._popupService.close);
   },
 
   _setServiceCategory: function (res) {
@@ -89,5 +110,11 @@ Tw.CustomerEmail.prototype = {
       null,
       this._popupService.close
     );
+  },
+
+  _goCustomerMain: function () {
+    this._popupService.close();
+    this._history.goBack();
   }
 };
+

@@ -169,3 +169,14 @@ export enum DATE_FORMAT {
 export enum RESEARCH_EXAMPLE_TYPE {
   ETC = '기타'
 }
+
+
+export enum CURRENCY_UNIT  {
+  WON = '원',
+  TEN_THOUSAND = '만원'
+}
+
+export enum MYT_JOIN_TYPE  {
+  PAY = '납부',
+  UNPAID = '미청구'
+}
