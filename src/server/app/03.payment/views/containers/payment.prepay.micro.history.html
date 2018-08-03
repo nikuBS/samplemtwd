@@ -26,7 +26,7 @@
                         <% for (var i = 0; i < microPrepayRecord.length; i++) { %>
                         <li>
                             <div class="pay-maininfo">
-                                <span class="service-sort"><%= microPrepayRecord[i].date %> <%= microPrepayRecord[i].payOpTm %></span>
+                                <span class="service-sort"><%= microPrepayRecord[i].date %> <%= microPrepayRecord[i].time %></span>
                             </div>
                             <dl class="pay-detail type2">
                                 <dt>처리구분</dt>
@@ -39,7 +39,7 @@
                     </ul>
                     <% } %>
                 </div>
-                <button class="bt-more">더보기<span>(20)</span></button>
+                <% if (microPrepayRecord.length > 20) { %><button class="bt-more">더보기<span>(<%= microPrepayRecord.length - 20 %>)</span></button><% } %>
             </div>
             <hr class="cont-sp type1" aria-hidden="true" />
             <% include ../components/info/payment.prepay.micro.history.info.component.html %>

@@ -1,66 +1,37 @@
+/**
+ * FileName: myt.usage.ting.js
+ * Author: Hyeryoun Lee (skt.P130712@partner.sk.com)
+ * Date: 2018.08.02
+ */
 Tw.MytUsageTing = function (rootEl) {
   this.$container = rootEl;
-  this._ui = {};
-
-  this._uiFunction();
+  this._popupService = Tw.Popup;
+  this._bindEvent();
 };
 
 Tw.MytUsageTing.prototype = {
-  _setUI: function () {
-    this._ui.$contentWrap = $('body');
-    this._ui.$miniPopupTriggers = $('.btn-detail');
-    this._ui.$miniPopupWrap = $('#miniPopupWrapper');
-    this._ui.$miniPopupSubWrap = this._ui.$miniPopupWrap.find('.popup-base');
-    this._ui.$miniPopup = this._ui.$miniPopupWrap.find('.container');
-    this._ui.$miniPopupCloser = $('.popup-base .container a');
+  _bindEvent: function () {
+    this.$container.on('click', '.fe-popup-info', $.proxy(this._onClickPopupInfo, this));
   },
-  _uiFunction: function () {
-    this._setUI();
 
-    this.descriptionLayerBtnClickHandler();
+  _onClickPopupInfo: function () {
+    var options = {
+      'title': Tw.POPUP_TITLE.GUIDE,
+      'close_bt': true,
+      'title2': Tw.MSG_MYT.USAGE_TING_M03.TITLE,
+      'contents': Tw.MSG_MYT.USAGE_TING_M03.CONTENTS,
+      'bt_num': 'one',
+      'type': [{
+        style_class: 'bt-red1',
+        txt: Tw.BUTTON_LABEL.CONFIRM
+      }]
+    }
+    this._popupService.open(options, $.proxy(this._onOpenPopup, this));
   },
-  contentOverflowToggle: function () {
-    var currentState = this._ui.$contentWrap,
-        miniPopUpWrap = this._ui.$miniPopupWrap,
-        miniPopUpSubWrap = this._ui.$miniPopupSubWrap;
 
-    if (currentState.css('overflow-y') === 'visible') {
-      currentState.css({'overflow-y': 'hidden'});
-      miniPopUpWrap.show();
-      miniPopUpSubWrap.show();
-    } else {
-      currentState.css({'overflow-y': 'visible'});
-      miniPopUpWrap.hide();
-      miniPopUpSubWrap.hide();
-    }
-
-  },
-  miniPopupToggle: function (targetTag) {
-    this.contentOverflowToggle();
-    if (targetTag) {
-      $('#' + targetTag).show();
-    } else {
-      this._ui.$miniPopup.hide();
-    }
-  },
-  descriptionLayerBtnClickHandler: function () {
-    var miniPopupTriggers = this._ui.$miniPopupTriggers;
-    this._ui.$miniPopup.hide();
-
-
-    if (miniPopupTriggers.length) {
-      miniPopupTriggers.on('click', $.proxy(function (e) {
-        e.preventDefault();
-        if(e.target.nodeName.toLowerCase() === 'span') e.target = e.target.parentNode;
-
-        this.miniPopupToggle('miniPopup0' + $(e.target).data('popup-type'));
-      }, this));
-    }
-    if (this._ui.$miniPopupCloser.length) {
-      this._ui.$miniPopupCloser.on('click', $.proxy(function (e) {
-        e.preventDefault();
-        this.miniPopupToggle();
-      }, this));
-    }
+  _onOpenPopup: function ($popup) {
+    $popup.one('click', '.bt-red1 button', function () {
+      Tw.Popup.close();
+    })
   }
 };

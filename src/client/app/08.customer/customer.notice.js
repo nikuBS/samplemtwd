@@ -47,7 +47,8 @@ Tw.CustomerNotice.prototype = {
     if (item.length > 0) {
       setTimeout(function() {
         item.trigger('click');
-      }, 0);
+        $(window).scrollTop(item.offset().top);
+      }, 500);
     }
 
     this._history.pathname += this._history.search;
@@ -62,6 +63,7 @@ Tw.CustomerNotice.prototype = {
     this._popupService.open({
       'hbs': 'select',
       'title': Tw.NOTICE.TITLE,
+      'close_bt': true,
       'select': [
         {
           'options': [
@@ -83,6 +85,10 @@ Tw.CustomerNotice.prototype = {
       }]
     }, $.proxy(this._categoryPopupBindEvent, this),
       $.proxy(function() {
+        if (this.$container.data('category') === this._category) {
+          return;
+        }
+
         this._history.goLoad('/customer/notice?category=' + this._category);
       }, this));
   },

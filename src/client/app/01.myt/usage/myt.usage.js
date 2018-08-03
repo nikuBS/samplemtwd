@@ -8,8 +8,11 @@ Tw.MytUsage = function (rootEl) {
 
 Tw.MytUsage.prototype = {
   _showAndHide: function () {
-    this._getUsageBtn();
-    this._getChildren();
+    //핸드폰(M1)만 API호출
+    if(this.$container.find('.fe-M1-menu').length){
+      this._getUsageBtn();
+      this._getChildren();
+    }
     this._checkExceed();
     this._setSmsStyle();
   },

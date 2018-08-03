@@ -64,7 +64,9 @@ interface IExample {
 interface IStepResearch {
   id: string;
   title: string;
-  date: string;
+  startDate: string;
+  endDate: string;
+  questionCount: number;
   questions: { [key: number]: IStepQuestion };
 }
 
@@ -78,6 +80,7 @@ interface IStepQuestion {
 interface IStepExample {
   content: string;
   nextQuestion: number;
+  isEtc: boolean;
 }
 
 
@@ -86,7 +89,7 @@ export default class CustomerResearches extends TwViewController {
     if (req.params.researchId) {
       // this.apiService.request(API_CMD.BFF_08_0038, { qstn_id: req.params.researchId }).subscribe(resp => {
       // });
-      const research = this.getProperResearchData(StepResearch);
+      const research: IStepResearch = this.getProperResearchData(StepResearch);
 
       res.render('researches/customer.researches.research.html', { svcInfo, research });
     } else {
@@ -130,7 +133,7 @@ export default class CustomerResearches extends TwViewController {
     };
   }
 
-  private getProperResearchData = (research: any) => {
+  private getProperResearchData = (research: any): IStepResearch => {
     const researchData = research.surveyQstnMaster[0];
     const questionData: any[] = research.surveyQstnInqItm;
     const exampleData: any[] = research.surveyQstnAnswItm;
@@ -164,7 +167,8 @@ export default class CustomerResearches extends TwViewController {
       if (question && question.examples) {
         question.examples[exampleIdx] = {
           content: isEtc ? RESEARCH_EXAMPLE_TYPE.ETC : example.answItmCtt || '',
-          nextQuestion: Number(example.nxtInqItmNum)
+          nextQuestion: Number(example.nxtInqItmNum),
+          isEtc
         };
       }
     }
@@ -172,7 +176,9 @@ export default class CustomerResearches extends TwViewController {
     return {
       id: researchData.qstnId,
       title: researchData.qstnTitleNm,
-      date: researchData.staDtm,
+      startDate: researchData.staDtm,
+      endDate: researchData.endDtm,
+      questionCount: researchData.totInqItmNum,
       questions
     };
   }

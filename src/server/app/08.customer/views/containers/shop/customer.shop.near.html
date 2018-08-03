@@ -20,14 +20,14 @@
     <!-- #contents -->
     <div id="contents" class="container-wrap">
         <h2 class="blind">내용</h2>
-        <div id="fe-shop-near"class="container">
+        <div class="container">
             <!-- .cont-box -->
             <div class="cont-box nogaps-btm">
                 <!-- .box-store-option -->
                 <div class="box-store-option nobd">
                     <div class="store-option">
                         <div class="store-map-step">
-                            <span class="step-tx"><em>서울</em><span class="arrow">&gt;</span><em>중구</em></span>
+                            <span class="step-tx"><em id="fe-region-1"></em><span class="arrow">&gt;</span><em id="fe-region-2"></em></span>
                             <button class="bt-map">위치변경</button>
                         </div>
                         <div class="store-option-cont">
@@ -59,10 +59,10 @@
             <div class="cont-box nogaps">
                 <div id="TmapBox" class="box-store-map">
                     <button class="bt-view-list">리스트 보기</button>
-                    <span class="ico-tmap-pin" style="top:100px;left:300px;"><img src="/img/ico/ico-tmap-pin.png" alt="지도 위치 핀" /></span>
-                    <span class="ico-tmap-pin" style="top:100px;left:100px;"><img src="/img/ico/ico-tmap-pin.png" alt="지도 위치 핀" /></span>
-                    <span class="ico-tmap-compass" style="top:150px;left:200px;"><img src="/img/ico/ico-tmap-compass.png" alt="지도 위치 나침반" /></span>
-                    <img src="/img/dummy/map.jpg" alt="임시이미지" />
+                    <!-- <span class="ico-tmap-pin" style="top:100px;left:300px;"><img src="/img/ico/ico-tmap-pin.png" alt="지도 위치 핀" /></span> -->
+                    <!-- <span class="ico-tmap-pin" style="top:100px;left:100px;"><img src="/img/ico/ico-tmap-pin.png" alt="지도 위치 핀" /></span> -->
+                    <!-- <span class="ico-tmap-compass" style="top:150px;left:200px;"><img src="/img/ico/ico-tmap-compass.png" alt="지도 위치 나침반" /></span> -->
+                    <!-- <img src="/img/dummy/map.jpg" alt="임시이미지" /> -->
                 </div>
             </div>
             <!--// .cont-box -->
@@ -72,10 +72,11 @@
 </div>
 
 <% include ../../components/javascript.component.html %>
+<% include ../../components/tmap.component.html %>
 
 <script>
   $(document).ready(function () {
-    new Tw.CustomerShopNear($('#fe-customer-shop-near'));
+    new Tw.CustomerShopNear($('.wrap'));
   });
 </script>
 

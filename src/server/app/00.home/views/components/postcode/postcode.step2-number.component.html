@@ -24,45 +24,48 @@
         </div>
         <div class="tab-contents">
             <ul>
-                <li role="tabpanel" id="tab1-tab" aria-labelledby="tab1">
-                </li>
-                <li role="tabpanel" id="tab2-tab" aria-labelledby="tab2">
+                <li role="tabpanel" aria-labelledby="tab1"></li>
+                <li role="tabpanel" id="tab2-tab" class="fe-step2" aria-labelledby="tab2">
                     <div class="cont-box">
                         <div class="addr-inquiry">
                             <h3 class="addr-inquiry-tit">지번주소 조회 (2/3)</h3>
                             <p class="addr-inquiry-des1">원하시는 주소를 선택해주세요.</p>
                             <div class="addr-inquiry-feildset">
                                 <div class="formbox">
-                                    <button class="bt-dropdown big placeholder fe-select-detail" title="주소 선택" aria-haspopup="true">주소를 선택해주세요<span class="ico"></span></button>
+                                    <button class="bt-dropdown big placeholder fe-select-detail fe-select-number-detail" title="주소 선택" aria-haspopup="true">
+                                        주소를 선택해주세요<span class="ico"></span>
+                                    </button>
                                 </div>
-                                <div class="formbox">
-                                    <button class="bt-dropdown big" title="조회 타입" aria-haspopup="true">지번<span class="ico"></span></button>
-                                </div>
-                                <div class="formbox fe-number">
-                                    <div class="inputbox address-wrap" style="width:100%"><!-- 영역 크기에 따라 width 조절 -->
-                                        <span class="input">
-                                            <input type="number" placeholder="앞자리" maxlength="" title="우편번호 앞자리">
-                                        </span>
-                                        <span class="hyp"></span>
-                                        <span class="input">
-                                            <input type="number" placeholder="뒷자리" maxlength="" title="우편번호 뒷자리">
-                                        </span>
-                                        <span class="space"></span>
-                                        <span class="bt-box">
-                                            <button type="button">조회</button>
+                                <div class="formbox fe-field-set none">
+                                    <div class="formbox">
+                                        <button class="bt-dropdown big fe-select-number-name" title="조회 타입" aria-haspopup="true" id="bldCd">지번<span class="ico"></span></button>
+                                    </div>
+                                    <div class="formbox fe-number">
+                                        <div class="inputbox address-wrap" style="width:100%"><!-- 영역 크기에 따라 width 조절 -->
+                                            <span class="input">
+                                                <input type="number" class="fe-only-number fe-main-house" placeholder="앞자리" maxlength="" title="우편번호 앞자리">
+                                            </span>
+                                            <span class="hyp"></span>
+                                            <span class="input">
+                                                <input type="number" class="fe-only-number fe-sub-house" placeholder="뒷자리" maxlength="" title="우편번호 뒷자리">
+                                            </span>
+                                            <span class="space"></span>
+                                            <span class="bt-box fe-get-number-name">
+                                                <button type="button">조회</button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="formbox fe-name">
+                                        <span class="inputbox bt-add2">
+                                            <span class="input">
+                                                <input type="text" class="fe-bld-nm" placeholder="건물명 또는 번지수 입력" title="조회할 주소" value="코엑스">
+                                                <button href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></button>
+                                            </span>
+                                            <span class="bt-box fe-get-number-name">
+                                                <button type="button">조회</button>
+                                            </span>
                                         </span>
                                     </div>
-                                </div>
-                                <div class="formbox fe-name">
-                                    <span class="inputbox bt-add2">
-                                        <span class="input">
-                                            <input type="text" placeholder="건물명 또는 번지수 입력" title="조회할 주소" value="코엑스">
-                                            <button href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></button>
-                                        </span>
-                                        <span class="bt-box">
-                                            <button type="button">조회</button>
-                                        </span>
-                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -70,41 +73,24 @@
                     <div class="cont-box nogaps-hoz">
                         <div class="widget">
                             <div class="widget-box radio">
-                                <ul class="select-list address" role="radiogroup"><!-- address : style class  -->
-                                    <li class="radiobox type01" role="radio" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+                                <ul class="select-list address fe-load-address" role="radiogroup"><!-- address : style class  -->
+                                    <li class="radiobox type01 fe-standard none" role="radio" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
                                         <input type="radio" name="radio1" value="" title="값2" /><!-- 체크상태일 경우 checked="false" -->
                                         <span class="radio-address">
-                                    <span class="address1">코엑스</span>
-                                    <span class="address2">번지 113-10</span>
-                                    <span class="address2">우편번호 40526</span>
-                                </span>
-                                    </li>
-                                    <li class="radiobox type01" role="radio" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                        <input type="radio" name="radio1" value="" title="값2" /><!-- 체크상태일 경우 checked="false" -->
-                                        <span class="radio-address">
-                                    <span class="address1">코엑스 주차장 입구</span>
-                                    <span class="address2">번지 27-12</span>
-                                    <span class="address2">우편번호 40526</span>
-                                </span>
-                                    </li>
-                                    <li class="radiobox type01" role="radio" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                        <input type="radio" name="radio1" value="" title="값2" /><!-- 체크상태일 경우 checked="false" -->
-                                        <span class="radio-address">
-                                    <span class="address1">코엑스 강남점</span>
-                                    <span class="address2">지번 125-2</span>
-                                    <span class="address2">우편번호 40526</span>
-                                </span>
+                                            <span class="address1">코엑스</span>
+                                            <span class="address2">번지 113-10</span>
+                                            <span class="address3">우편번호 40526</span>
+                                        </span>
                                     </li>
                                 </ul>
                             </div>
                         </div>
-                        <div class="bt-more-wrap mt30">
-                            <button role="button" class="bt-more" title="">더보기<span>(20)</span></button>
-                        </div>
+                    </div>
+                    <div class="bt-more-wrap mt30">
+                        <button role="button" class="bt-more fe-remain-address-wrap none" title="">더보기<span class="fe-remain-address">(20)</span></button>
                     </div>
                 </li>
-                <li role="tabpanel" id="tab3-tab" aria-labelledby="tab3">
-                </li>
+                <li role="tabpanel" aria-labelledby="tab3"></li>
             </ul>
             <div class="floating-bottom">
                 <div class="bt-indiv bt-blue1">

@@ -40,8 +40,6 @@ Tw.API_CMD = {
   BFF_03_0013: { path: '/user/biz-services', method: Tw.API_METHOD.POST },
   BFF_03_0014: { path: '/core-auth/v1/marketing-offer-subscriptions/args-0', method: Tw.API_METHOD.GET },
   BFF_03_0015: { path: '/core-auth/v1/marketing-offer-subscriptions/args-0', method: Tw.API_METHOD.PUT },
-  BFF_03_0017: { path: '/user/login/android', method: Tw.API_METHOD.POST },
-  BFF_03_0018: { path: '/user/login/ios', method: Tw.API_METHOD.POST },
   BFF_03_0019: { path: '/core-auth/v1/users/args-0/otp', method: Tw.API_METHOD.POST },
 
   // MYT
@@ -177,6 +175,7 @@ Tw.API_CMD = {
   BFF_08_0001: { path: '/core-modification/v1/counsel-time-check', method: Tw.API_METHOD.GET },
   BFF_08_0002: { path: '/core-modification/v1/counsel-reserve', method: Tw.API_METHOD.POST },
   BFF_08_0003: { path: '/core-modification/v1/counsel-histories', method: Tw.API_METHOD.GET },
+  BFF_08_0008: { path: '/core-modification/v1/region-close-store-list', method: Tw.API_METHOD.GET },
   BFF_08_0009: { path: '/core-modification/v1/voice-certification-check', method: Tw.API_METHOD.GET },
   BFF_08_0010: { path: '/core-modification/v1/email-inquiry-categories', method: Tw.API_METHOD.GET },
   BFF_08_0013: { path: '/core-modification/v1/email-inquiry', method: Tw.API_METHOD.POST },
@@ -211,7 +210,21 @@ Tw.NODE_CMD = {
   SVC_PASSWORD_LOGIN: { path: '/service-password-sessions/login', method: Tw.API_METHOD.POST },
   LOGIN_TID: { path: '/login-tid', method: Tw.API_METHOD.POST },
   LOGOUT_TID: { path: '/logout-tid', method: Tw.API_METHOD.POST },
-  USER_LOCK_LOGIN: { path: '/user-locks/login', method: Tw.API_METHOD.POST }
+  USER_LOCK_LOGIN: { path: '/user-locks/login', method: Tw.API_METHOD.POST },
+  EASY_LOGIN_AOS: { path: '/easy-login/aos', method: Tw.API_METHOD.POST },
+  EASY_LOGIN_IOS: { path: '/easy-login/ios', method: Tw.API_METHOD.POST }
+
+};
+
+Tw.TMAP = {
+  REGION_URL: 'https://api2.sktelecom.com/tmap',
+  PIN: '/img/ico/ico-tmap-pin.png',
+  COMPASS: '/img/ico/ico-tmap-compass.png',
+  APP_KEY: 'ecfeceac-3660-4618-bc3b-37a11f952441'
+};
+
+Tw.AJAX_CMD = {
+  GET_TMAP_REGION: { path: '/geofencing/regions', method: Tw.API_METHOD.GET, url: Tw.TMAP.REGION_URL }
 };
 
 Tw.API_CODE = {

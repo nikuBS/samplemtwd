@@ -1,5 +1,9 @@
+<!--
+* FileName: myt.usage.html
+* Author: Hyeryoun Lee (skt.P130712@partner.sk.com)
+* Date: 2018.08.02
+-->
 <% include ../../components/start.component.html %>
-
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
     <ul>
@@ -82,7 +86,6 @@
             <hr class="cont-sp type1" aria-hidden="true" />
             <div class="cont-box">
                 <%- include('../../components/usage/myt.usage.graphbox.html', { type: '문자', items: usageData.sms }); %>
-
             </div>
             <% } %>
 
@@ -95,7 +98,7 @@
 
             <% if (svcInfo.svcAttrCd === 'M1') { %>
             <hr class="cont-sp type1" aria-hidden="true" />
-            <div class="cont-box nogaps-hoz">
+            <div class="cont-box nogaps-hoz fe-M1-menu">
                 <div class="link-long-group">
                     <div class="link-long fe-t-roaming-sharing-btn" style="display:none;">
                         <a href="/myt/usage/troaming">T로밍 함께쓰기<span class="ico"></span></a>
@@ -137,7 +140,7 @@
                     </div>
 
                     <div class="link-long">
-                        <a href="/myt">나의 사용패턴<span class="ico"></span></a>
+                        <a href="/myt/usage/pattern">나의 사용패턴<span class="ico"></span></a>
                     </div>
                 </div>
             </div>

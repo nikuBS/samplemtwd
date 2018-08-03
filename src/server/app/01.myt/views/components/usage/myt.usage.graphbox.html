@@ -5,10 +5,12 @@
 * Bill group accordion menu EJS template
 -->
 
-<div class="title-wrap">
+<div class="title-wrap tit-wrap">
     <h2 class="title-h2"><%= type %></h2>
     <!-- 용량 선택 -->
-
+    <% if(locals.showInfoButton) { %>
+        <button role="button" class="ico-info vt fe-popup-info"><span class="blind"></span></button>
+    <% } %>
     <% if(locals.showUnitSwitch) { %>
         <div class="widget">
             <div class="widget-box switch2">
@@ -29,7 +31,7 @@
 
 
 <% for (var i = 0; i < items.length; i++) { %>
-<div class="used-data-info">
+<div class="used-data-info mb0">
     <div class="header-info">
         <div class="left">
             <% if(items[i].isRemainUnlimited) { %>

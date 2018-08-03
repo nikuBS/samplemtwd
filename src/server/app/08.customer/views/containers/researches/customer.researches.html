@@ -45,7 +45,7 @@
                     <div class="widget-box accordion">
                         <h5 class="tit-a blind">설문조사</h5>
                         <div class="acco-cover focuson"><!-- toggle : 한개만 열기 -->
-                            <div class="acco-style btn-hold">
+                            <div class="acco-style btn-hold none-title">
                                 <ul class="acco-list acco-poll pt0"><!-- .on: 열기 -->
                                     <% for (let i = 0; i < researches.length; i++) { %>
                                         <% const research = researches[i]; %>
@@ -60,8 +60,7 @@
                                                             <% const isRadio = !research.isMultiple; %>
                                                             <div class="widget">
                                                                 <div class="widget-box <%= isRadio? 'radio' : 'check' %>">
-                                                                    <!-- <div class="video-img"><img src="/img/dummy/dummy_poll02.jpg" alt=""/></div> // 비디오--> 
-                                                                    <ul class="select-list <%= research.isMultiStage? 'division-two mb0' : '' %>" role="<%= isRadio? 'radio': '' %>group">
+                                                                    <ul class="select-list <%= research.isMultiStage? 'division-two mb0' : '' %>" role="group">
                                                                         <% for (let i = 0; i < examCount; i++) { %>
                                                                             <% const exam = research.examples[i]; %>
                                                                             <li class="<%= isRadio? 'radiobox type03' : 'checkbox type02' %> alignment" role="<%= isRadio? 'radio' : 'checkbox' %>" aria-checked="">
@@ -80,24 +79,28 @@
                                                             <% if (research.motHtml) { %><%- research.motHtml %><% } %>
                                                         <% } %> 
                                                         <% if (research.isProceeding) { %>
-                                                        <ul class="bt-slice item-two">
-                                                            <li class="bt-white2">
-                                                                <button>결과보기</button>
-                                                            </li>
-                                                            <li class="bt-blue1">
-                                                                <% if (research.type === "R") { %>
-                                                                    <button data-question-id="<%= research.hintUrl %>">설문 시작하기</button>
-                                                                <% } else { %>
-                                                                    <button disabled>참여하기</button>
-                                                                <% } %>
-                                                            </li>
-                                                        </ul>
+                                                            <% if (research.type === "R") { %>
+                                                                <ul class="bt-slice">
+                                                                    <li class="bt-blue1">
+                                                                        <button data-question-id="<%= research.hintUrl %>">설문 시작하기</button>
+                                                                    </li>
+                                                                </ul>
+                                                            <% } else { %>
+                                                                <ul class="bt-slice item-two">
+                                                                    <li class="bt-white2">
+                                                                        <button>결과보기</button>
+                                                                    </li>
+                                                                    <li class="bt-blue1">
+                                                                        <button disabled>참여하기</button>
+                                                                    </li>
+                                                                </ul>
+                                                            <% } %>
                                                         <% } else { %>
-                                                        <ul class="bt-slice">
-                                                            <li class="bt-blue1">
-                                                                <button>결과보기</button>
-                                                            </li>
-                                                        </ul>
+                                                            <ul class="bt-slice">
+                                                                <li class="bt-blue1">
+                                                                    <button>결과보기</button>
+                                                                </li>
+                                                            </ul>
                                                         <% } %>
                                                     </div>
                                                 </div>
