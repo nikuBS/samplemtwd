@@ -40,8 +40,6 @@ Tw.API_CMD = {
   BFF_03_0013: { path: '/user/biz-services', method: Tw.API_METHOD.POST },
   BFF_03_0014: { path: '/core-auth/v1/marketing-offer-subscriptions/args-0', method: Tw.API_METHOD.GET },
   BFF_03_0015: { path: '/core-auth/v1/marketing-offer-subscriptions/args-0', method: Tw.API_METHOD.PUT },
-  BFF_03_0017: { path: '/user/login/android', method: Tw.API_METHOD.POST },
-  BFF_03_0018: { path: '/user/login/ios', method: Tw.API_METHOD.POST },
   BFF_03_0019: { path: '/core-auth/v1/users/args-0/otp', method: Tw.API_METHOD.POST },
 
   // MYT
@@ -182,6 +180,10 @@ Tw.API_CMD = {
   BFF_08_0010: { path: '/core-modification/v1/email-inquiry-categories', method: Tw.API_METHOD.GET },
   BFF_08_0013: { path: '/core-modification/v1/email-inquiry', method: Tw.API_METHOD.POST },
   BFF_08_0014: { path: '/cs/file-upload', method: Tw.API_METHOD.POST },
+  BFF_08_0015: { path: '/core-modification/v1/brand-phone-list', method: Tw.API_METHOD.GET },
+  BFF_08_0016: { path: '/core-modification/v1/direct-shop/order-list', method: Tw.API_METHOD.GET },
+  BFF_08_0020: { path: '/core-modification/v1/inquiry-direct-shop', method: Tw.API_METHOD.POST },
+  BFF_08_0021: { path: '/core-modification/v1/inquiry-chocolate', method: Tw.API_METHOD.POST },
   BFF_08_0025: { path: '/core-modification/v1/survey/surveyMainBanner', method: Tw.API_METHOD.GET },
   BFF_08_0026: { path: '/core-modification/v1/guide/categories', method: Tw.API_METHOD.GET },
   BFF_08_0028: { path: '/core-modification/v1/notice/tworld-submain', method: Tw.API_METHOD.GET },
@@ -212,7 +214,10 @@ Tw.NODE_CMD = {
   SVC_PASSWORD_LOGIN: { path: '/service-password-sessions/login', method: Tw.API_METHOD.POST },
   LOGIN_TID: { path: '/login-tid', method: Tw.API_METHOD.POST },
   LOGOUT_TID: { path: '/logout-tid', method: Tw.API_METHOD.POST },
-  USER_LOCK_LOGIN: { path: '/user-locks/login', method: Tw.API_METHOD.POST }
+  USER_LOCK_LOGIN: { path: '/user-locks/login', method: Tw.API_METHOD.POST },
+  EASY_LOGIN_AOS: { path: '/easy-login/aos', method: Tw.API_METHOD.POST },
+  EASY_LOGIN_IOS: { path: '/easy-login/ios', method: Tw.API_METHOD.POST }
+
 };
 
 Tw.TMAP = {

@@ -1,3 +1,6 @@
+// for APM
+const WhatapAgent = require('whatap').NodeAgent;
+
 // Node Modules
 import * as path from 'path';
 
@@ -27,11 +30,12 @@ import ApiRouter from './common/api.router';
 
 // Application Modules
 import RedisService from './services/redis.service';
-
+// import Whatap from '../../node_modules/whatap';
 
 class App {
   public app: Application = express();
   public redisService = new RedisService();
+
 
   constructor() {
     this.config();

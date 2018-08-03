@@ -606,5 +606,6 @@ Tw.CUSTOMER_EMAIL = {
   INTERNET: '인터넷/집전화/TV',
   DIRECT: '다이렉트샵',
   CHOCO: '초콜렛',
+  WIBRO: '휴대폰/와이브로',
   SELECT_CATEGORY: '문의사항 선택'
 };
