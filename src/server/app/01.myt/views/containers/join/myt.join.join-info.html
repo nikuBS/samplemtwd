@@ -58,8 +58,9 @@
 </div>
 <% include ../../components/javascript.component.html %>
 <script>
+  var svcInfo = '<%- JSON.stringify(svcInfo) %>';
   $(document).ready(function () {
-    new Tw.MyTJoinJoinInfo( $('.wrap') );
+    new Tw.MyTJoinJoinInfo( $('.wrap'), JSON.parse(svcInfo));
   });
 </script>
 <% include ../../components/end.component.html %>

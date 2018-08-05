@@ -1,52 +1,9 @@
 /**
- * FileName:
- * Author: Kim InHwan (skt.P132150@partner.sk.com)
- * Date: 2018.07.
- *
- */
-
-/**
- * FileName: myt.joinService.protect.inquiry.js
+ * FileName: myt.join.protect.pwd.js
  * Author: Kim Inhwan (skt.P132150@partner.sk.com)
  * Date: 2018.07.24
  */
-Tw.MyTJoinProtectInquiry = function ($element, svcInfo) {
-  this._svcInfo = svcInfo;
-  this.$container = $element;
-  this._loginService = new Tw.MyTJSProtectPwd();
-  this._rendered();
-  this._bindEvent();
-};
-
-Tw.MyTJoinProtectInquiry.prototype = {
-  //element event bind
-  _bindEvent: function () {
-    // 확인
-    this.$okButton.on('click', $.proxy(this._onOkClicked, this));
-  },
-
-  //set selector
-  _rendered: function () {
-    //신청버튼
-    this.$okButton = this.$container.find('.bt-red1');
-  },
-
-  _onOkClicked: function (/*event*/) {
-    // 비밀번호 확인
-    var params = {
-      mdn: this._svcInfo.svcNum,
-      serviceNumber: this._svcInfo.svcMgmtNum,
-      callback: $.proxy(this._onLayerOpened, this)
-    };
-    this._loginService.openLayer(params);
-  },
-
-  _onLayerOpened: function() {
-
-  }
-};
-
-Tw.MyTJSProtectPwd = function () {
+Tw.MyTJoinProtectPwd = function () {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
 
@@ -68,7 +25,7 @@ Tw.MyTJSProtectPwd = function () {
 
 };
 
-Tw.MyTJSProtectPwd.prototype = {
+Tw.MyTJoinProtectPwd.prototype = {
   _onPopupOpend: function ($layer) {
     this.$container = $layer;
 
@@ -88,14 +45,13 @@ Tw.MyTJSProtectPwd.prototype = {
   _bindEvent: function () {
     this.$container.on('click', '.bt-red1 > button', $.proxy(this._requestLogin, this));
     this.$deleteIcon.on('click', $.proxy(this._removePwd, this));
-
   },
   _removePwd: function () {
     this.$pwd.val('');
   },
   _requestLogin: function () {
     var pwd = this.$pwd.val();
-    var api = Tw.API_CMD.BFF_05_0069;
+    var api = Tw.API_CMD.BFF_03_0020;
     var data = {
       svcPwd: pwd
     };
