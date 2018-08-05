@@ -40,7 +40,7 @@
                                         <div class="store-search">
                                             <span class="inputbox">
                                                 <span class="input">
-                                                    <input id="fe-text-name" type="text" placeholder="지점, 대리점명을 입력하세요." title="매장명" value="<%= searched && searchType === '1' ? searchText : '' %>">
+                                                    <input id="fe-text-name" type="text" placeholder="지점, 대리점명을 입력하세요." title="매장명" value="<%= searched && searchType === 'name' ? searchText : '' %>" autocomplete="off">
                                                     <button href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></button>
                                                 </span>
                                             </span>
@@ -50,7 +50,7 @@
                                         <div class="store-search">
                                             <span class="inputbox">
                                                 <span class="input">
-                                                    <input id="fe-text-address" type="text" placeholder="주소 또는 지역명을 입력해 주세요." title="주소" value="<%= searched && searchType === '2' ? searchText : '' %>">
+                                                    <input id="fe-text-address" type="text" placeholder="주소 또는 지역명을 입력해 주세요." title="주소" value="<%= searched && searchType === 'address' ? searchText : '' %>" autocomplete="off">
                                                     <button class="cancel"><span class="blind">삭제</span></button>
                                                 </span>
                                             </span>
@@ -60,7 +60,7 @@
                                         <div class="store-search">
                                             <span class="inputbox">
                                                 <span class="input">
-                                                    <input id="fe-text-tube" class="place-small" type="text" placeholder="역명을 정확하게 입력해 주세요 예) 홍대역(X), 홍대입구역(O)" title="지하철" value="<%= searched && searchType === '3' ? searchText : '' %>">
+                                                    <input id="fe-text-tube" class="place-small" type="text" placeholder="역명을 정확하게 입력해 주세요 예) 홍대역(X), 홍대입구역(O)" title="지하철" value="<%= searched && searchType === 'tube' ? searchText : '' %>" autocomplete="off">
                                                     <button class="cancel"><span class="blind">삭제</span></button>
                                                 </span>
                                             </span>
@@ -83,23 +83,32 @@
                                         <div class="acco-style btn-hold">
                                             <ul class="acco-list"><!-- .on: 열기 -->
                                                 <li class="acco-box">
-                                                    <div class="acco-tit"><span id="fe-options-title">전체, 전체</span><button role="button" aria-pressed="false"></button></div>
+                                                    <div class="acco-tit">
+                                                        <span id="fe-options-title">
+                                                        <% if (!searched) { %>
+                                                        전체
+                                                        <% } else { %>
+                                                        <%= optionsText %>
+                                                        <% } %>
+                                                        </span>
+                                                        <button role="button" aria-pressed="false"></button>
+                                                    </div>
                                                     <div class="acco-cont">
                                                         <div class="store-option-cont">
                                                             <span class="option-ti">매장형태</span>
                                                             <div class="widget">
                                                                 <div class="widget-box radio">
                                                                     <ul class="select-list division-three" role="radiogroup">
-                                                                        <li class="radiobox type01 checked" role="radio" aria-checked="true">
-                                                                            <input type="radio" name="radio1" value="0" title="전체" checked />
+                                                                        <li class="radiobox type01" role="radio" aria-checked="<%= !searched ? true : searchShopType === '0' ? true : false %>">
+                                                                            <input type="radio" name="radio1" value="0" title="전체" <%= !searched ? 'checked' : searchShopType === '0' ? 'checked' : '' %> autocomplete="off" />
                                                                             전체
                                                                         </li>
-                                                                        <li class="radiobox type01" role="radio" aria-checked="false">
-                                                                            <input type="radio" name="radio1" value="1" title="지점" />
+                                                                        <li class="radiobox type01" role="radio" aria-checked="<%= searched && searchShopType === '1' ? true : false %>">
+                                                                            <input type="radio" name="radio1" value="1" title="지점" <%= searched && searchShopType === '1' ? 'checked' : '' %> autocomplete="off" />
                                                                             지점
                                                                         </li>
-                                                                        <li class="radiobox type01" role="radio" aria-checked="false">
-                                                                            <input type="radio" name="radio1" value="2" title="대리점" />
+                                                                        <li class="radiobox type01" role="radio" aria-checked="<%= searched && searchShopType === '2' ? true : false %>">
+                                                                            <input type="radio" name="radio1" value="2" title="대리점" <%= searched && searchShopType === '2' ? 'checked' : ''  %> autocomplete="off" />
                                                                             대리점
                                                                         </li>
                                                                     </ul>
@@ -111,32 +120,28 @@
                                                             <div class="widget">
                                                                 <div class="widget-box check">
                                                                     <ul class="select-list division-two" role="group">
-                                                                        <li class="checkbox type01 checked" role="checkbox" aria-checked="true">
-                                                                            <input type="checkbox" name="checkbox" value="all" title="전체" checked/>
-                                                                            전체
-                                                                        </li>
-                                                                        <li class="checkbox type01" role="checkbox" aria-checked="false">
-                                                                            <input type="checkbox" name="checkbox" value="premium" title="T Premium Store" />
+                                                                        <li class="checkbox type01" role="checkbox" aria-checked="<%= searched && searchOptions.premium ? true : false %>">
+                                                                            <input type="checkbox" name="checkbox" value="premium" title="T Premium Store"  <%= searched && searchOptions.premium ? 'checked="checked"' : undefined %> autocomplete="off" />
                                                                             T Premium Store
                                                                         </li>
-                                                                        <li class="checkbox type01" role="checkbox" aria-checked="false">
-                                                                            <input type="checkbox" name="checkbox" value="pickup" title="바로픽업" />
+                                                                        <li class="checkbox type01" role="checkbox" aria-checked="<%= searched && searchOptions.pickup ? true : false %>">
+                                                                            <input type="checkbox" name="checkbox" value="pickup" title="바로픽업" <%= searched && searchOptions.pickup ? 'checked="checked"' : undefined %> autocomplete="off" />
                                                                             바로픽업
                                                                         </li>
-                                                                        <li class="checkbox type01" role="checkbox" aria-checked="false">
-                                                                            <input type="checkbox" name="checkbox" value="rental" title="임대폰" />
+                                                                        <li class="checkbox type01" role="checkbox" aria-checked="<%= searched && searchOptions.rental ? true : false %>">
+                                                                            <input type="checkbox" name="checkbox" value="rental" title="임대폰" <%= searched && searchOptions.rental ? 'checked="checked"' : undefined %> autocomplete="off" />
                                                                             임대폰
                                                                         </li>
-                                                                        <li class="checkbox type01" role="checkbox" aria-checked="false">
-                                                                            <input type="checkbox" name="checkbox" value="skb" title="SKT 브로드밴드" />
+                                                                        <li class="checkbox type01" role="checkbox" aria-checked="<%= searched && searchOptions.skb ? true : false %>">
+                                                                            <input type="checkbox" name="checkbox" value="skb" title="SKT 브로드밴드" <%= searched && searchOptions.skb ? 'checked="checked"' : undefined %> autocomplete="off" />
                                                                             SKT 브로드밴드
                                                                         </li>
-                                                                        <li class="checkbox type01" role="checkbox" aria-checked="false">
-                                                                            <input type="checkbox" name="checkbox" value="apple" title="애플취급점" />
+                                                                        <li class="checkbox type01" role="checkbox" aria-checked="<%= searched && searchOptions.apple ? true : false %>">
+                                                                            <input type="checkbox" name="checkbox" value="apple" title="애플취급점" <%= searched && searchOptions.apple ? 'checked="checked"' : undefined %> autocomplete="off" />
                                                                             애플취급점
                                                                         </li>
-                                                                        <li class="checkbox type01" role="checkbox" aria-checked="false">
-                                                                            <input type="checkbox" name="checkbox" value="official" title="공식 인증대리점" />
+                                                                        <li class="checkbox type01" role="checkbox" aria-checked="<%= searched && searchOptions.official ? true : false %>">
+                                                                            <input type="checkbox" name="checkbox" value="official" title="공식 인증대리점" <%= searched && searchOptions.official ? 'checked="checked"' : undefined %> autocomplete="off" />
                                                                             공식 인증대리점
                                                                         </li>
                                                                     </ul>
@@ -160,13 +165,12 @@
                     </div>
                     <!--// .box-store-option -->
                 </div>
-
             </div>
             <!--// .cont-box -->
 
             <hr class="cont-sp type1" aria-hidden="true"/>
 
-            <% if (searched && result.length === 0) { %>
+            <% if (searched && result.totalCount === 0) { %>
             <!-- .cont-box -->
             <div class="cont-box nogaps">
                 <div class="box-store-result">
@@ -182,31 +186,28 @@
             <!--// .cont-box -->
             <% } %>
 
-            <% if (searched && result.length > 0) { %>
+            <% if (searched && result.totalCount > 0) { %>
             <!-- .cont-box -->
             <div class="cont-box nogaps">
                 <div class="box-store-result">
-                    <p class="result-ti"><em class="num"><%= result.length %>개</em>의 매장이 검색되었습니다.</p>
+                    <p class="result-ti"><em class="num"><%= result.totalCount %>개</em>의 매장이 검색되었습니다.</p>
                     <div class="store-result-list">
-                        <% for (let i = 0; i < result.length; i++) { %>
-                        <% if (i < 20) { %>
+                        <% for (let i = 0; i < result.list.length; i++) { %>
                         <div>
-                        <% } else { %>
-                        <div class="none">
-                        <% } %>
-                            <button class="fe-shop-detail" value="<%= result[i].locCode %>">
+                            <button class="fe-shop-detail" value="<%= result.list[i].locCode %>">
                                 <dl>
-                                    <dt><%= result[i].locName %></dt>
-                                    <dd><%= result[i].searchAddr %><br /><%= result[i].jibunAddr %></dd>
+                                    <dt><%= result.list[i].locName %></dt>
+                                    <dd><%= result.list[i].searchAddr %><br /><%= result.list[i].jibunAddr %></dd>
                                 </dl>
                             </button>
-                            <a class="bt-tel" href="tel:<%= result[i].tel %>"><span role="img" class="blind">매장으로 전화하기</span></a>
+                            <a class="bt-tel" href="tel:<%= result.list[i].tel %>"><span role="img" class="blind">매장으로 전화하기</span></a>
                         </div>
                         <% } %>
-                    <% if (result.length > 20) { %>
-                    <button class="bt-more">더보기<span id="fe-more-count">(<%= result.length - 20 > 20 ? 20 : result.length - 20 %>)</span></button>
-                    <% } %>
+
                 </div>
+                <% if (result.totalCount > result.list.length) { %>
+                <button class="bt-more">더보기<span id="fe-more-count">(<%= result.totalCount - result.list.length > 20 ? 20 : result.totalCount - result.list.length %>)</span></button>
+                <% } %>
             </div>
             <!--// .cont-box -->
             <% } %>
@@ -321,6 +322,19 @@
     <%- include('../../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
 </div>
 <% include ../../components/javascript.component.html %>
+<script type="text/template" id="tpl_search_result_item">
+    {{#list}}
+    <div>
+        <button class="fe-shop-detail" value="{{locCode}}">
+            <dl>
+                <dt>{{locName}}</dt>
+                <dd>{{searchAddr}}<br />{{jibunAddr}}</dd>
+            </dl>
+        </button>
+        <a class="bt-tel" href="tel:{{tel}}"><span role="img" class="blind">매장으로 전화하기</span></a>
+    </div>
+    {{/list}}
+</script>
 <script>
   $(document).ready(function () {
     new Tw.CustomerShopSearch($('#fe-customer-shop-search'));
