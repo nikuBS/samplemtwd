@@ -22,7 +22,7 @@ Tw.MyTUsagePattern = function (params) {
     min: 0, //Min크기
     max: 250, //Max크기
     spd: 0.05, //애니메이션 속도
-    h: 250, //세로크기
+    h: 250 //세로크기
   };
   this._rendered();
   this._bindEvent();
