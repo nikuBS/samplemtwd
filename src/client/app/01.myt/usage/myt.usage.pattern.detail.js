@@ -236,26 +236,30 @@ Tw.MyTUsagePatternDetail.prototype = {
     }
   },
 
-  _popupOpend: function() {
-
+  _popupOpend: function ($layer) {
+    $layer.on('click', '.popup-choice-list button', $.proxy(this._onClickDropDownItem, this));
   },
 
-  _popupCloosed: function() {
-    this._showFeeChart(0);
+  _onClickDropDownItem: function (event) {
+    var $target = $(event.target);
+    var index = parseInt($target.attr('data-index'), 10);
+
+    this._showFeeChart(index);
+    this._popupService.close();
   },
 
   _openDropdownPopup: function () {
     this._popupService.openChoice(Tw.POPUP_TITLE.SET_HELPLINE_ITEM, [
-      { 'attr': 'onclick=""', text: Tw.MSG_MYT.USAGE_PATTERN.DETAIL_ITEMS.ALL },
-      { 'attr': 'onclick=""', text: Tw.MSG_MYT.USAGE_PATTERN.DETAIL_ITEMS.BAS },
-      { 'attr': 'onclick=""', text: Tw.MSG_MYT.USAGE_PATTERN.DETAIL_ITEMS.DOM },
-      { 'attr': 'onclick=""', text: Tw.MSG_MYT.USAGE_PATTERN.DETAIL_ITEMS.DATA },
-      { 'attr': 'onclick=""', text: Tw.MSG_MYT.USAGE_PATTERN.DETAIL_ITEMS.INFO },
-      { 'attr': 'onclick=""', text: Tw.MSG_MYT.USAGE_PATTERN.DETAIL_ITEMS.OPT },
-      { 'attr': 'onclick=""', text: Tw.MSG_MYT.USAGE_PATTERN.DETAIL_ITEMS.MSG },
-      { 'attr': 'onclick=""', text: Tw.MSG_MYT.USAGE_PATTERN.DETAIL_ITEMS.SUPL },
-      { 'attr': 'onclick=""', text: Tw.MSG_MYT.USAGE_PATTERN.DETAIL_ITEMS.OTHR }
-    ], '', $.proxy(this._popupOpend, this), $.proxy(this._popupCloosed, this));
+      { 'attr': 'data-index="0"', text: Tw.MSG_MYT.USAGE_PATTERN.DETAIL_ITEMS.ALL },
+      { 'attr': 'data-index="1"', text: Tw.MSG_MYT.USAGE_PATTERN.DETAIL_ITEMS.BAS },
+      { 'attr': 'data-index="2"', text: Tw.MSG_MYT.USAGE_PATTERN.DETAIL_ITEMS.DOM },
+      { 'attr': 'data-index="3"', text: Tw.MSG_MYT.USAGE_PATTERN.DETAIL_ITEMS.DATA },
+      { 'attr': 'data-index="4"', text: Tw.MSG_MYT.USAGE_PATTERN.DETAIL_ITEMS.INFO },
+      { 'attr': 'data-index="5"', text: Tw.MSG_MYT.USAGE_PATTERN.DETAIL_ITEMS.OPT },
+      { 'attr': 'data-index="6"', text: Tw.MSG_MYT.USAGE_PATTERN.DETAIL_ITEMS.MSG },
+      { 'attr': 'data-index="7"', text: Tw.MSG_MYT.USAGE_PATTERN.DETAIL_ITEMS.SUPL },
+      { 'attr': 'data-index="8"', text: Tw.MSG_MYT.USAGE_PATTERN.DETAIL_ITEMS.OTHR }
+    ], '', $.proxy(this._popupOpend, this), null);
   },
 
   _showFeeChart: function (index) {
@@ -271,13 +275,84 @@ Tw.MyTUsagePatternDetail.prototype = {
         this.$othrCoUseFee.show();
         break;
       case 1:
+        this.$basFee.show();
+        this.$domTcFee.hide();
+        this.$dataTcFee.hide();
+        this.$infoUseFee.hide();
+        this.$optFee.hide();
+        this.$msgUseFee.hide();
+        this.$suplSvcUseFee.hide();
+        this.$othrCoUseFee.hide();
+        break;
       case 2:
+        this.$basFee.hide();
+        this.$domTcFee.show();
+        this.$dataTcFee.hide();
+        this.$infoUseFee.hide();
+        this.$optFee.hide();
+        this.$msgUseFee.hide();
+        this.$suplSvcUseFee.hide();
+        this.$othrCoUseFee.hide();
+        break;
       case 3:
+        this.$basFee.hide();
+        this.$domTcFee.hide();
+        this.$dataTcFee.show();
+        this.$infoUseFee.hide();
+        this.$optFee.hide();
+        this.$msgUseFee.hide();
+        this.$suplSvcUseFee.hide();
+        this.$othrCoUseFee.hide();
+        break;
       case 4:
+        this.$basFee.hide();
+        this.$domTcFee.hide();
+        this.$dataTcFee.hide();
+        this.$infoUseFee.show();
+        this.$optFee.hide();
+        this.$msgUseFee.hide();
+        this.$suplSvcUseFee.hide();
+        this.$othrCoUseFee.hide();
+        break;
       case 5:
+        this.$basFee.hide();
+        this.$domTcFee.hide();
+        this.$dataTcFee.hide();
+        this.$infoUseFee.hide();
+        this.$optFee.show();
+        this.$msgUseFee.hide();
+        this.$suplSvcUseFee.hide();
+        this.$othrCoUseFee.hide();
+        break;
       case 6:
+        this.$basFee.hide();
+        this.$domTcFee.hide();
+        this.$dataTcFee.hide();
+        this.$infoUseFee.hide();
+        this.$optFee.hide();
+        this.$msgUseFee.show();
+        this.$suplSvcUseFee.hide();
+        this.$othrCoUseFee.hide();
+        break;
       case 7:
+        this.$basFee.hide();
+        this.$domTcFee.hide();
+        this.$dataTcFee.hide();
+        this.$infoUseFee.hide();
+        this.$optFee.hide();
+        this.$msgUseFee.hide();
+        this.$suplSvcUseFee.show();
+        this.$othrCoUseFee.hide();
+        break;
       case 8:
+        this.$basFee.hide();
+        this.$domTcFee.hide();
+        this.$dataTcFee.hide();
+        this.$infoUseFee.hide();
+        this.$optFee.hide();
+        this.$msgUseFee.hide();
+        this.$suplSvcUseFee.hide();
+        this.$othrCoUseFee.show();
         break;
     }
   }
