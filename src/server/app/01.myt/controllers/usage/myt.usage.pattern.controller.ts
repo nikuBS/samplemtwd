@@ -27,7 +27,6 @@ class MyTUsagePattern extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    this.logger.info(this, 'UserInfo ', svcInfo);
     let data = {
       svcInfo: svcInfo
     };

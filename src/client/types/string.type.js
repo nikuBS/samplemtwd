@@ -45,7 +45,8 @@ Tw.POPUP_TITLE = {
   PERIOD_SELECT: '기간선택',
   SET_HELPLINE_TYPE: '상담유형 설정',
   SET_HELPLINE_AREA: '지역설정',
-  SET_HELPLINE_TIME: '시간설정'
+  SET_HELPLINE_TIME: '시간설정',
+  SET_HELPLINE_ITEM: '항목설정'
 };
 
 Tw.POPUP_PROPERTY = {
@@ -273,6 +274,10 @@ Tw.MSG_MYT = {
   USAGE_PATTERN: {
     COLOR: {
       BACK: ['#d6dbe5', '/img/chart/pattern2.gif'],
+      BACK_1: ['#2572ff'],
+      BACK_2: ['#f65d00'],
+      BACK_3: ['#ef0023'],
+      BACK_4: ['#00a49a'],
       SALE: '#325ec1',
       LINE_V: '#2572ff', // voice
       LINE_S: '#00a49a', // SMS
@@ -288,11 +293,23 @@ Tw.MSG_MYT = {
     TYPE: {
       BASIC: 'basic',
       BASIC_1: 'basic_1',
-      BAR: 'bar'
+      BAR: 'bar',
+      BAR_1: 'bar_1'
     },
     CAPTION: ' 3개월 평균 사용량',
     TF: '평균값',
-    TD: '각 항목값'
+    TD: '각 항목값',
+    DETAIL_ITEMS: {
+      ALL: '전체',
+      BAS: '월정액',
+      DOM: '국내통화료',
+      DATA: '데이터통화료',
+      INFO: '콘텐츠 이용료',
+      OPT: '옵션요금제',
+      MSG: '문자이용료',
+      SUPL: '부가서비스 이용료',
+      OTHR: '소액결제'
+    }
   },
   JOIN_SERVICE: {
     EMPTY_PWD: '6자리 이상의 숫자를 입력해주세요.',
