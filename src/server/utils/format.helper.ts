@@ -191,6 +191,10 @@ class FormatHelper {
       numberDate.substr(6, 2)
     ].join(dateSeparator);
   }
+
+  static zip(arr, ...arrs): any {
+    return arr.map((val, i) => arrs.reduce((a, _arr) => [...a, _arr[i]], [val]));
+  }
 }
 
 export default FormatHelper;

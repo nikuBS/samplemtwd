@@ -65,170 +65,169 @@ Tw.MyTUsagePatternDetail.prototype = {
   },
 
   _initFeeCharts: function () {
-    var basFeeChart = $.extend({
-      co_p: Tw.MSG_MYT.USAGE_PATTERN.COLOR.BACK_3,
-      da_arr: [
-        {
-          na: this._basFee[2][0],
-          data: [this._basFee[2][1]]
-        }, {
-          na: this._basFee[1][0],
-          data: [this._basFee[1][1]]
-        }, {
-          na: this._basFee[0][0],
-          data: [this._basFee[0][1]]
-        }
-      ]
-    }, this._defaultChartData);
-    var domTcFeeChart = $.extend({
-      co_p: Tw.MSG_MYT.USAGE_PATTERN.COLOR.BACK_1,
-      da_arr: [
-        {
-          na: this._domTcFee[2][0],
-          data: [this._domTcFee[2][1]]
-        }, {
-          na: this._domTcFee[1][0],
-          data: [this._domTcFee[1][1]]
-        }, {
-          na: this._domTcFee[0][0],
-          data: [this._domTcFee[0][1]]
-        }
-      ]
-    }, this._defaultChartData);
-    var dataTcFeeChart = $.extend({
-      co_p: Tw.MSG_MYT.USAGE_PATTERN.COLOR.BACK_3,
-      da_arr: [
-        {
-          na: this._dataTcFee[2][0],
-          data: [this._dataTcFee[2][1]]
-        }, {
-          na: this._dataTcFee[1][0],
-          data: [this._dataTcFee[1][1]]
-        }, {
-          na: this._dataTcFee[0][0],
-          data: [this._dataTcFee[0][1]]
-        }
-      ]
-    }, this._defaultChartData);
-    var infoUseFeeChart = $.extend({
-      co_p: Tw.MSG_MYT.USAGE_PATTERN.COLOR.BACK_2,
-      da_arr: [
-        {
-          na: this._infoUseFee[2][0],
-          data: [this._infoUseFee[2][1]]
-        }, {
-          na: this._infoUseFee[1][0],
-          data: [this._infoUseFee[1][1]]
-        }, {
-          na: this._infoUseFee[0][0],
-          data: [this._infoUseFee[0][1]]
-        }
-      ]
-    }, this._defaultChartData);
-    var optFeeChart = $.extend({
-      co_p: Tw.MSG_MYT.USAGE_PATTERN.COLOR.BACK_3,
-      da_arr: [
-        {
-          na: this._optFee[2][0],
-          data: [this._optFee[2][1]]
-        }, {
-          na: this._optFee[1][0],
-          data: [this._optFee[1][1]]
-        }, {
-          na: this._optFee[0][0],
-          data: [this._optFee[0][1]]
-        }
-      ]
-    }, this._defaultChartData);
-    var msgUseFeeChart = $.extend({
-      co_p: Tw.MSG_MYT.USAGE_PATTERN.COLOR.BACK_4,
-      da_arr: [
-        {
-          na: this._msgUseFee[2][0],
-          data: [this._msgUseFee[2][1]]
-        }, {
-          na: this._msgUseFee[1][0],
-          data: [this._msgUseFee[1][1]]
-        }, {
-          na: this._msgUseFee[0][0],
-          data: [this._msgUseFee[0][1]]
-        }
-      ]
-    }, this._defaultChartData);
-    var suplSvcUseFeeChart = $.extend({
-      co_p: Tw.MSG_MYT.USAGE_PATTERN.COLOR.BACK_2,
-      da_arr: [
-        {
-          na: this._suplSvcUseFee[2][0],
-          data: [this._suplSvcUseFee[2][1]]
-        }, {
-          na: this._suplSvcUseFee[1][0],
-          data: [this._suplSvcUseFee[1][1]]
-        }, {
-          na: this._suplSvcUseFee[0][0],
-          data: [this._suplSvcUseFee[0][1]]
-        }
-      ]
-    }, this._defaultChartData);
-    var othrCoUseFeeChart = $.extend({
-      co_p: Tw.MSG_MYT.USAGE_PATTERN.COLOR.BACK_2,
-      da_arr: [
-        {
-          na: this._othrCoUseFee[2][0],
-          data: [this._othrCoUseFee[2][1]]
-        }, {
-          na: this._othrCoUseFee[1][0],
-          data: [this._othrCoUseFee[1][1]]
-        }, {
-          na: this._othrCoUseFee[0][0],
-          data: [this._othrCoUseFee[0][1]]
-        }
-      ]
-    }, this._defaultChartData);
-
     if ( !this._empty.domTcFee ) {
+      var domTcFeeChart = $.extend({
+        co_p: Tw.MSG_MYT.USAGE_PATTERN.COLOR.BACK_1,
+        da_arr: [
+          {
+            na: this._domTcFee[2][0],
+            data: [this._domTcFee[2][1]]
+          }, {
+            na: this._domTcFee[1][0],
+            data: [this._domTcFee[1][1]]
+          }, {
+            na: this._domTcFee[0][0],
+            data: [this._domTcFee[0][1]]
+          }
+        ]
+      }, this._defaultChartData);
       this.$container.chart($.extend(this._defaultChartSetting, {
         container: 'can-box2', //클래스명 String
         data: domTcFeeChart //데이터 obj
       }));
     }
     if ( !this._empty.dataTcFee ) {
+      var dataTcFeeChart = $.extend({
+        co_p: Tw.MSG_MYT.USAGE_PATTERN.COLOR.BACK_3,
+        da_arr: [
+          {
+            na: this._dataTcFee[2][0],
+            data: [this._dataTcFee[2][1]]
+          }, {
+            na: this._dataTcFee[1][0],
+            data: [this._dataTcFee[1][1]]
+          }, {
+            na: this._dataTcFee[0][0],
+            data: [this._dataTcFee[0][1]]
+          }
+        ]
+      }, this._defaultChartData);
       this.$container.chart($.extend(this._defaultChartSetting, {
         container: 'can-box3', //클래스명 String
         data: dataTcFeeChart //데이터 obj
       }));
     }
     if ( !this._empty.infoUseFee ) {
+      var infoUseFeeChart = $.extend({
+        co_p: Tw.MSG_MYT.USAGE_PATTERN.COLOR.BACK_2,
+        da_arr: [
+          {
+            na: this._infoUseFee[2][0],
+            data: [this._infoUseFee[2][1]]
+          }, {
+            na: this._infoUseFee[1][0],
+            data: [this._infoUseFee[1][1]]
+          }, {
+            na: this._infoUseFee[0][0],
+            data: [this._infoUseFee[0][1]]
+          }
+        ]
+      }, this._defaultChartData);
       this.$container.chart($.extend(this._defaultChartSetting, {
         container: 'can-box4', //클래스명 String
         data: infoUseFeeChart //데이터 obj
       }));
     }
     if ( !this._empty.optFee ) {
+      var optFeeChart = $.extend({
+        co_p: Tw.MSG_MYT.USAGE_PATTERN.COLOR.BACK_3,
+        da_arr: [
+          {
+            na: this._optFee[2][0],
+            data: [this._optFee[2][1]]
+          }, {
+            na: this._optFee[1][0],
+            data: [this._optFee[1][1]]
+          }, {
+            na: this._optFee[0][0],
+            data: [this._optFee[0][1]]
+          }
+        ]
+      }, this._defaultChartData);
       this.$container.chart($.extend(this._defaultChartSetting, {
         container: 'can-box5', //클래스명 String
         data: optFeeChart //데이터 obj
       }));
     }
     if ( !this._empty.msgUseFee ) {
+      var msgUseFeeChart = $.extend({
+        co_p: Tw.MSG_MYT.USAGE_PATTERN.COLOR.BACK_4,
+        da_arr: [
+          {
+            na: this._msgUseFee[2][0],
+            data: [this._msgUseFee[2][1]]
+          }, {
+            na: this._msgUseFee[1][0],
+            data: [this._msgUseFee[1][1]]
+          }, {
+            na: this._msgUseFee[0][0],
+            data: [this._msgUseFee[0][1]]
+          }
+        ]
+      }, this._defaultChartData);
       this.$container.chart($.extend(this._defaultChartSetting, {
         container: 'can-box6', //클래스명 String
         data: msgUseFeeChart //데이터 obj
       }));
     }
     if ( !this._empty.suplSvcUseFee ) {
+      var suplSvcUseFeeChart = $.extend({
+        co_p: Tw.MSG_MYT.USAGE_PATTERN.COLOR.BACK_2,
+        da_arr: [
+          {
+            na: this._suplSvcUseFee[2][0],
+            data: [this._suplSvcUseFee[2][1]]
+          }, {
+            na: this._suplSvcUseFee[1][0],
+            data: [this._suplSvcUseFee[1][1]]
+          }, {
+            na: this._suplSvcUseFee[0][0],
+            data: [this._suplSvcUseFee[0][1]]
+          }
+        ]
+      }, this._defaultChartData);
       this.$container.chart($.extend(this._defaultChartSetting, {
         container: 'can-box7', //클래스명 String
         data: suplSvcUseFeeChart //데이터 obj
       }));
     }
     if ( !this._empty.othrCoUseFee ) {
+      var othrCoUseFeeChart = $.extend({
+        co_p: Tw.MSG_MYT.USAGE_PATTERN.COLOR.BACK_2,
+        da_arr: [
+          {
+            na: this._othrCoUseFee[2][0],
+            data: [this._othrCoUseFee[2][1]]
+          }, {
+            na: this._othrCoUseFee[1][0],
+            data: [this._othrCoUseFee[1][1]]
+          }, {
+            na: this._othrCoUseFee[0][0],
+            data: [this._othrCoUseFee[0][1]]
+          }
+        ]
+      }, this._defaultChartData);
       this.$container.chart($.extend(this._defaultChartSetting, {
         container: 'can-box8', //클래스명 String
         data: othrCoUseFeeChart //데이터 obj
       }));
     }
     if ( !this._empty.basFee ) {
+      var basFeeChart = $.extend({
+        co_p: Tw.MSG_MYT.USAGE_PATTERN.COLOR.BACK_3,
+        da_arr: [
+          {
+            na: this._basFee[2][0],
+            data: [this._basFee[2][1]]
+          }, {
+            na: this._basFee[1][0],
+            data: [this._basFee[1][1]]
+          }, {
+            na: this._basFee[0][0],
+            data: [this._basFee[0][1]]
+          }
+        ]
+      }, this._defaultChartData);
       this.$container.chart($.extend(this._defaultChartSetting, {
         container: 'can-box1', //클래스명 String
         data: basFeeChart //데이터 obj
