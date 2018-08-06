@@ -17,21 +17,8 @@ class MyTUsageDataShare extends TwViewController {
     Observable.combineLatest(
       this.getUsageData()
     ).subscribe(([usageData]) => {
-      const fomattedData = this.parseUsageData(usageData.result);
-      res.render('usage/myt.usage.data-share.html', this.getData(fomattedData, svcInfo));
+      res.render('usage/myt.usage.data-share.html', this.getData(usageData, svcInfo));
     });
-  }
-
-  private parseUsageData(usageData: any): any {
-    const kinds = ['data', 'voice', 'sms', 'etc'];
-    kinds.map((kind) => {
-      if ( !FormatHelper.isEmpty(usageData[kind]) ) {
-        usageData[kind].map((data) => {
-          MyTUsageGraphbox.convShowData(data);
-        });
-      }
-    });
-    return usageData;
   }
 
   private getUsageData(): Observable<any> {
