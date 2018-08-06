@@ -67,7 +67,6 @@ Tw.PaymentPrepay.prototype = {
     this.$container.on('click', '.fe-change-auto-prepay', $.proxy(this._changeAutoPrepay, this));
     this.$container.on('click', '.fe-go-prepay', $.proxy(this._goPrepay, this));
     this.$container.on('click', '.fe-auto-prepay', $.proxy(this._goAutoPrepay, this));
-    this.$container.on('click', '.fe-change-limit', $.proxy(this._openChangeLimit, this));
     this.$container.on('click', '.fe-cancel-auto-prepay', $.proxy(this._confirmCancel, this));
     this.$container.on('click', '.pay-check-box', $.proxy(this._setAutoInfo, this));
     this.$container.on('click', '.fe-prepay', $.proxy(this._requestPrepay, this, 'prepay'));
@@ -112,10 +111,10 @@ Tw.PaymentPrepay.prototype = {
     }
   },
   _getRemainLimit: function () {
-    // this._getPreRemainLimit();
-    $.ajax('/mock/payment.remain-limit.json')
-      .done($.proxy(this._getRemainLimitSuccess, this))
-      .fail($.proxy(this._getRemainLimitFail, this));
+    this._getPreRemainLimit();
+    // $.ajax('/mock/payment.remain-limit.json')
+    //  .done($.proxy(this._getRemainLimitSuccess, this))
+    //  .fail($.proxy(this._getRemainLimitFail, this));
   },
   _getPreRemainLimit: function () {
     this._apiService.request(Tw.API_CMD.BFF_07_0073, {
@@ -191,7 +190,7 @@ Tw.PaymentPrepay.prototype = {
     return limitAmount - useAmount + prepayAmount;
   },
   _openChangeLimit: function () {
-    this._popupService.open('');
+    this._history.goLoad('/myt/bill/history/contents/limit/change');
   },
   _openStandardAmountInfo: function () {
     this._popupService.open({
