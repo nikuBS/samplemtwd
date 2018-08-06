@@ -40,7 +40,7 @@ Tw.API_CMD = {
   BFF_03_0013: { path: '/user/biz-services', method: Tw.API_METHOD.POST },
   BFF_03_0014: { path: '/core-auth/v1/marketing-offer-subscriptions/args-0', method: Tw.API_METHOD.GET },
   BFF_03_0015: { path: '/core-auth/v1/marketing-offer-subscriptions/args-0', method: Tw.API_METHOD.PUT },
-  BFF_03_0016: { path: '/core-auth/v1/service-passwords', method: Tw.API_METHOD.POST},
+  BFF_03_0016: { path: '/core-auth/v1/service-passwords', method: Tw.API_METHOD.POST },
   BFF_03_0019: { path: '/core-auth/v1/users/args-0/otp', method: Tw.API_METHOD.POST },
   BFF_03_0020: { path: '/core-auth/v1/passwords-check', method: Tw.API_METHOD.GET },
 
@@ -81,6 +81,7 @@ Tw.API_CMD = {
   BFF_05_0082: { path: '/core-bill/v1/microPay-auto-set', method: Tw.API_METHOD.POST },
   BFF_05_0083: { path: '/core-bill/v1/microPay-requests', method: Tw.API_METHOD.PUT },
   BFF_05_0089: { path: '/core-bill/v1/prepayInfo', method: Tw.API_METHOD.GET },
+  BFF_05_0076: { path: '/core-modification/v1/myinfo/discount-infos-month', method: Tw.API_METHOD.GET },
 
   // RECHARGE
   BFF_06_0001: { path: '/core-recharge/v1/refill-coupons', method: Tw.API_METHOD.GET },
@@ -200,6 +201,10 @@ Tw.API_CMD = {
   BFF_08_0036: { path: '/core-modification/v1/survey/surveyJoinQstn', method: Tw.API_METHOD.POST },
   BFF_08_0039: { path: '/core-modification/v1/notice-direct', method: Tw.API_METHOD.GET },
   BFF_08_0040: { path: '/core-modification/v1/notice-roaming', method: Tw.API_METHOD.GET },
+  BFF_08_0042: { path: '/core-modification/v1/email-inquiry/service-mobile', method: Tw.API_METHOD.POST },
+  BFF_08_0043: { path: '/core-modification/v1/email-inquiry/service-internet', method: Tw.API_METHOD.POST },
+  BFF_08_0044: { path: '/core-modification/v1/email-inquiry/quality-mobile', method: Tw.API_METHOD.POST },
+  BFF_08_0045: { path: '/core-modification/v1/email-inquiry/quality-internet', method: Tw.API_METHOD.POST },
 
   // TEST
   GET: { path: '/posts', method: Tw.API_METHOD.GET },

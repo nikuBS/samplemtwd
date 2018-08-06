@@ -182,7 +182,6 @@ export enum RESEARCH_EXAMPLE_TYPE {
   ETC = '기타'
 }
 
-
 export enum CURRENCY_UNIT  {
   WON = '원',
   TEN_THOUSAND = '만원'
@@ -198,4 +197,58 @@ export enum USAGE_PATTERN_CHART {
   MSG = '문자',
   DATA = '데이터',
   VOICE = '음성통화'
+
 }
+
+export const MYT_JOIN_CONTRACT_TERMINAL = { // 약정할인 및 단말분할상환정보
+  FEE_TYPE_A: '',
+  FEE_TYPE_B: {
+    TIT_NM: '테블릿 약정할인 12'
+  },
+  FEE_TYPE_C: {
+    TIT_NM: '테블릿 약정'
+  },
+  FEE_NOTYPE: {
+    TIT_NM: 'wibro 약정'
+  },
+  JOIN_TYPE_A: {
+    TITNM: '가입 / T 기본약정',
+    AGREE_NM: 'T 기본약정'
+  },
+  JOIN_TYPE_B: {
+    TITNM: '가입 / T 지원금약정',
+    AGREE_NM: 'T 지원금약정'
+  },
+  JOIN_TYPE_C: {
+    TITNM: '가입 / T 약정 할부지원',
+    AGREE_NM: 'T 약정 할부지원'
+  },
+  JOIN_TYPE_D: {
+    TITNM: '가입 / 약정 위약금2(NEW)',
+    AGREE_NM: '약정 위약금2(NEW)'
+  },
+  JOIN_NOTYPE: {
+    TITNM: '가입 / 정보없음',
+    AGREE_NM: '정보없음'
+  },
+  SUC_TYPE_A: {
+    TITNM: '승계 / ',
+    AGREE_NM: ''
+  },
+  SUC_TYPE_B: {
+    TITNM: '승계 / ',
+    AGREE_NM: ''
+  },
+  SUC_TYPE_C: {
+    TITNM: '승계 / ',
+    AGREE_NM: ''
+  },
+  SUC_TYPE_D: {
+    TITNM: '승계 / ',
+    AGREE_NM: ''
+  },
+  SUC_NOTYPE: {
+    TITNM: '승계 / 정보없음',
+    AGREE_NM: '정보없음'
+  }
+};

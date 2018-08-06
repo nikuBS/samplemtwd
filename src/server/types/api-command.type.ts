@@ -296,6 +296,10 @@ export const API_CMD = {
   BFF_08_0039: { path: '/core-modification/v1/notice-direct', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_08_0040: { path: '/core-modification/v1/notice-roaming', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_08_0041: { path: '/core-modification/v1/prevent/notice/args-0', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_08_0042: { path: '/core-modification/v1/email-inquiry/service-mobile', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_08_0043: { path: '/core-modification/v1/email-inquiry/service-internet', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_08_0044: { path: '/core-modification/v1/email-inquiry/quality-mobile', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_08_0045: { path: '/core-modification/v1/email-inquiry/quality-internet', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
 
   // TID
   OIDC: { path: '/auth/authorize.do', method: API_METHOD.GET, server: API_SERVER.TID, bypass: false },
@@ -350,8 +354,12 @@ export const API_MYT_ERROR_CODE = [
   'BLN0001', // 잔여기본통화 조회횟수 초과
   'BLN0002', // 정지이력
   'BLN0003', // 조회불가대상
-  'BLN0004' // 조회불가대상
+  'BLN0004', // 조회불가대상
 ];
+
+export const API_MYT_ERROR = {
+  BIL0011: 'BIL0011'  // SK브로드밴드 서비스는 사용이 불가능한 메뉴입니다.
+};
 
 export const API_GIFT_ERROR = [
   'RCG0001',   // 제공자 선물하기 불가 상태

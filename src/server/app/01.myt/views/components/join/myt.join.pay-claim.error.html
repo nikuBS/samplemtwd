@@ -1,0 +1,39 @@
+<%#
+* FileName: myt.join.pay-claim.error.html
+* Author: 김명환 (skt.P130714@partner.sk.com)
+* Date: 2018.08.01
+* Info: error
+%>
+
+<div>
+    <table>
+        <therd>
+            <tr>
+                <td>Key</td>
+                <td>Value</td>
+            </tr>
+        </therd>
+        <tbody>
+            <tr>
+                <td>code</td>
+                <td><%=errObj.code %></td>
+            </tr>
+            <tr>
+                <td>appName</td>
+                <td><%=errObj.appName %></td>
+            </tr>
+            <tr>
+                <td>msg</td>
+                <td><%=errObj.msg %></td>
+            </tr>
+            <tr>
+                <td>debugMessage</td>
+                <td><%=errObj.debugMessage %></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<br>
+<div>
+    <%-JSON.stringify(errObj) %>
+</div>

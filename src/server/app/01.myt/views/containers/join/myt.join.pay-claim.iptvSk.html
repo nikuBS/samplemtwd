@@ -16,64 +16,56 @@
 <!--// #skip_navigation -->
 <div id="wrapFdev" class="wrap">
     <!-- #header -->
-    <div id="header" class="header-wrap">
-        <div class="header">
-            <div class="header-ti align-l">
-                <h1>납부/청구정보</h1>
-                <button class="bt-dropdown small" title="전화번호 선택" aria-haspopup="true">010-46**-10**</button>
-            </div>
-            <button class="prev-step"><span class="blind">이전으로</span></button>
-        </div>
-    </div>
+    <%- include('../../../../common/views/components/header.component.html', { title: '납부/청구정보', svcInfo: svcInfo }); %>
     <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap">
         <h2 class="blind">내용</h2>
+        <!-- 2018-08-02 기획디자인 변경 반영 -->
         <div class="container">
 
             <div class="cont-box">
-                <div class="payment-detail-box">
-                    <div class="detail-inner">
-                        <div class="detail-list type2">
-                            <ul>
-                                <li>
-                                    <span class="title">사용중인 상품</span>
-                                    <span class="tx-cont"><button class="blue-btn"><%=resDataInfo.feeProdNm %></button></span>
-                                </li>
-
-                                <%#납부 방법 %>
-                                <% include ../../components/joinService/myt.joinService.payClaimInfo.payWay.html %>
-
-                            </ul>
-                        </div>
+                <div class="payment-select">
+                    <p class="pay-disc">SK브로드밴드 서비스는 <br /><strong>사용이 불가능한 메뉴</strong>입니다.</p>
+                    <div class="pay-bottom">
+                        <p class="title-small">전화 106 또는 SK브로드밴드 웹사이트를 이용해주시기 바랍니다.</p>
+                        <a href="" class="bt-link-tx" data-target="goSkBroadbandBtn" >SK브로드밴드 바로가기 <span class="ico"></span></a>
                     </div>
                 </div>
-                <!--<div class="contents-btn">-->
-                    <!--<ul class="bt-slice">-->
-                        <!--<li class="bt-white1">-->
-                            <!--<button data-target="billguideBtn">요금 안내서 보기</button>-->
-                        <!--</li>-->
-                    <!--</ul>-->
-                <!--</div>-->
-                <div class="contents-btn">
-                    <ul class="bt-slice">
-                        <li class="bt-white1">
-                            <button>사은품 조회하기</button>
-                        </li>
-                    </ul>
-                </div>
-                <div class="cont-btm-info">
-                    <p class="tx-desc">사은품 내역을 조회 할 수 있습니다.</p>
-                </div>
-                <div class="cont-btm-info bdt">
-                    <p class="tx-desc"><span class="ff-hn vbl">SK</span>브로드밴드를 통해 가입하신 상품은 전화 <span class="ff-hn vbl">106</span> 또는 <span class="ff-hn vbl">SK</span>브로드 밴드 웹사이트를 통해 해지 신청이 가능합니다. </p>
-                    <button class="bt-link-tx" data-target="goSkBroadbandBtn"><span class="ff-hn vbl">SK</span>브로드밴드 바로가기 <span class="ico"></span></button>
-                </div>
-
             </div>
-            <!--// .cont-box -->
 
+            <hr class="cont-sp type1" aria-hidden="true" />
+
+            <div class="cont-box nogaps-hoz">
+                <div class="box-confirm">
+                    <!-- .widget -->
+                    <div class="widget">
+                        <div class="widget-box accordion">
+                            <h3 class="tit-a">이용안내</h3>
+                            <div class="acco-cover toggle"><!-- toggle : 한개만 열기 -->
+                                <div class="bt-whole"><button role="button" aria-pressed="false"><span class="blind">내용 열기</span></button></div>
+                                <div class="acco-style btn-hold">
+                                    <ul class="acco-list">
+                                        <li class="acco-box">
+                                            <div class="acco-tit"><span class="bullet">1.</span> 요금납부는 SK텔레콤 지점/대리점 및 고객센터(유료:1599-0011 또는 무료: SK텔레콤 휴대폰에서 지역번호 없이 114)에서 도 납부 가능합니다.</div>
+                                        </li>
+                                        <li class="acco-box">
+                                            <div class="acco-tit"><span class="bullet">2.</span> 이용정지 고객의 경우 납부기한이 경과한 미납액을 모두 납부하시면 이용정지가 즉시 해제됩니다</div>
+                                        </li>
+                                        <li class="acco-box">
+                                            <div class="acco-tit"><span class="bullet">3.</span> 대표회선인 경우에만 미납내역이 조회되며, 대표회선이 아닌 경우 대표회선번호로 로그인 해주십시오 </div>
+                                        </li>
+                                    </ul>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--// .widget -->
+                </div>
+            </div>
         </div>
+        <!--// 2018-08-02 기획디자인 변경 반영 -->
     </div>
     <!--// #contents -->
     <% include ../../../../../common/views/components/footer.component.html %>
@@ -84,8 +76,7 @@
   $(document).ready(function () {
     new Tw.MytJoinPayClaimIptvSk($('#wrapFdev'), {
       reqQuery: <%-JSON.stringify(reqQuery) %>,
-      svcInfo: <%-JSON.stringify(svcInfo) %>,
-      resDataInfo: <%-JSON.stringify(resDataInfo) %>
+      svcInfo: <%-JSON.stringify(svcInfo) %>
   });
   });
 </script>
