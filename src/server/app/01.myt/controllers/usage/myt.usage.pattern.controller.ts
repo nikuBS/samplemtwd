@@ -1,12 +1,5 @@
-/*
- * FileName:
- * Author: Kim InHwan (skt.P132150@partner.sk.com)
- * Date: 2018.07.
- *
- */
-
 /**
- * FileName: myt.joinService.protect.change.controller.ts
+ * FileName: myt.usage.pattern.controller.ts
  * Author: Kim InHwan (skt.P132150@partner.sk.com)
  * Date: 2018.07.25
  *
