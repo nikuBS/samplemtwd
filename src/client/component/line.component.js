@@ -157,7 +157,7 @@ Tw.LineComponent.prototype = {
   _onClickMore: function () {
     var $hideList = this.$list.filter('.none');
     var $showList = $hideList.filter(function (index) {
-      return index < 20;
+      return index < Tw.DEFAULT_LIST_COUNT;
     });
     var $service = $showList.parents('.dropdown-group');
     var remainCnt = $hideList.length - $showList.length;
