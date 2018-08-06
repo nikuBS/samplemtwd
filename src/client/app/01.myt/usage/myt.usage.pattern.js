@@ -9,22 +9,21 @@ Tw.MyTUsagePattern = function (params) {
   this.$container = params.$element;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
-  this._chartFeeData = params.chartFeeData;
-  this._chartCTData = params.chartCTData;
-  this._chartSmsData = params.chartSmsData;
-  this._chartVoiceData = params.chartVoiceData;
-  this._chartInVoiceData = params.chartInVoiceData;
-  this._chartOutVoiceData = params.chartOutVoiceData;
-  this._chartVidVoiceData = params.chartVidVoiceData;
-  this._empty = params.empty;
+  this._historyService = new Tw.HistoryService(this.$container);
+  this._chartFeeData = params.data.chartFeeData;
+  this._chartCTData = params.data.chartCTData;
+  this._chartSmsData = params.data.chartSmsData;
+  this._chartVoiceData = params.data.chartVoiceData;
+  this._chartInVoiceData = params.data.chartInVoiceData;
+  this._chartOutVoiceData = params.data.chartOutVoiceData;
+  this._chartVidVoiceData = params.data.chartVidVoiceData;
+  this._empty = params.data.empty;
+  this._isTotal = params.data.isTotal;
   this._defaultChartSetting = {
     min: 0, //Min크기
     max: 250, //Max크기
     spd: 0.05, //애니메이션 속도
-    h: 250, //세로크기
-    caption: Tw.MSG_MYT.USAGE_PATTERN.CAPTION,//숨겨진표에 사용 접근성관련이슈
-    tf_txt: Tw.MSG_MYT.USAGE_PATTERN.TF,//숨겨진표에 사용 접근성관련이슈
-    td_txt: Tw.MSG_MYT.USAGE_PATTERN.TD//숨겨진표에 사용 접근성관련이슈
+    h: 250 //세로크기
   };
   this._rendered();
   this._bindEvent();
@@ -37,6 +36,7 @@ Tw.MyTUsagePattern.prototype = {
   _bindEvent: function () {
     this.$tabLinker.on('click', 'li', $.proxy(this._onChangeLinker, this));
     this.$amtBtnContainer.on('click', 'button', $.proxy(this._onClickMoveButton, this));
+    this.$detailBtn.on('click', 'button', $.proxy(this._onDetailMoveButton, this));
   },
 
   // set selector
@@ -46,11 +46,13 @@ Tw.MyTUsagePattern.prototype = {
     // 사용량 탭 내 이동 버튼
     this.$amtBtnContainer = this.$container.find('#amt-btn-grp');
     // 음성통화 사용량
-    this.$voiceChartArea = this.$container.find('#voice-area');
+    this.$voiceChartArea = this.$container.find('#fe-voice-area');
     // 문자 사용량
-    this.$smsChartArea = this.$container.find('#sms-area');
+    this.$smsChartArea = this.$container.find('#fe-sms-area');
     // 데이터 사용량
-    this.$cdataChartArea = this.$container.find('#cdata-area');
+    this.$cdataChartArea = this.$container.find('#fe-cdata-area');
+    // 세부이동버튼
+    this.$detailBtn = this.$container.find('.list-link');
   },
 
   _initialize: function () {
@@ -64,11 +66,17 @@ Tw.MyTUsagePattern.prototype = {
 
     if ( $target.attr('id') === 'tab2' ) {
       if ( !this._initSecondtab ) {
-        this._initPatternChart();
-        this._showPatternChart();
+        if ( !this._isTotal ) {
+          this._initPatternChart();
+          this._showPatternChart();
+        }
         this._initSecondtab = true;
       }
     }
+  },
+
+  _onDetailMoveButton: function () {
+    this._historyService.goLoad('/myt/usage/pattern/detail');
   },
 
   _onClickMoveButton: function (event) {
@@ -134,14 +142,23 @@ Tw.MyTUsagePattern.prototype = {
   // 사용량 차트 생성
   _initPatternChart: function () {
     var defaultSms = {
+      caption: Tw.MSG_MYT.USAGE_PATTERN.CAPTION,//숨겨진표에 사용 접근성관련이슈
+      tf_txt: Tw.MSG_MYT.USAGE_PATTERN.TF,//숨겨진표에 사용 접근성관련이슈
+      td_txt: Tw.MSG_MYT.USAGE_PATTERN.TD,//숨겨진표에 사용 접근성관련이슈
       line_co: Tw.MSG_MYT.USAGE_PATTERN.COLOR.LINE_S,//라인색상
       txt_co: Tw.MSG_MYT.USAGE_PATTERN.COLOR.TEXT//글자색상
     };
     var defaultcData = {
+      caption: Tw.MSG_MYT.USAGE_PATTERN.CAPTION,//숨겨진표에 사용 접근성관련이슈
+      tf_txt: Tw.MSG_MYT.USAGE_PATTERN.TF,//숨겨진표에 사용 접근성관련이슈
+      td_txt: Tw.MSG_MYT.USAGE_PATTERN.TD,//숨겨진표에 사용 접근성관련이슈
       line_co: Tw.MSG_MYT.USAGE_PATTERN.COLOR.LINE_B,//라인색상
       txt_co: Tw.MSG_MYT.USAGE_PATTERN.COLOR.TEXT//글자색상
     };
     var defaultVoice = {
+      caption: Tw.MSG_MYT.USAGE_PATTERN.CAPTION,//숨겨진표에 사용 접근성관련이슈
+      tf_txt: Tw.MSG_MYT.USAGE_PATTERN.TF,//숨겨진표에 사용 접근성관련이슈
+      td_txt: Tw.MSG_MYT.USAGE_PATTERN.TD,//숨겨진표에 사용 접근성관련이슈
       line_co: Tw.MSG_MYT.USAGE_PATTERN.COLOR.LINE_V,//라인색상
       txt_co: Tw.MSG_MYT.USAGE_PATTERN.COLOR.TEXT//글자색상
     };

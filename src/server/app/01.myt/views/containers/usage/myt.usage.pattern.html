@@ -8,7 +8,7 @@
 <div class="wrap">
     <%- include('../../../../common/views/components/header.component.html', { title: '최근 사용패턴', svcInfo: data.svcInfo }); %>
     <!-- #contents -->
-    <div id="pattern-main" class="container-wrap">
+    <div id="fe-pattern-main" class="container-wrap">
         <h2 class="blind">내용</h2>
         <div class="container">
             <div class="cont-box">
@@ -86,7 +86,20 @@
                                         </div>
                                     </li>
                                     <li role="tabpanel" id="tab2-tab" aria-labelledby="tab2">
-                                        <div class="cont-box">
+                                        <% if (data.isTotal) { %>
+                                            <div class="inner">
+                                                <div class="cont-box nogaps-hoz">
+                                                    <!-- .contents-empty -->
+                                                    <div class="contents-empty type3">
+                                                        <span class="ico"></span>
+                                                        <p class="desc type2">집계중 입니다.</p>
+                                                        <p class="subdesc"><span class="ff-hn vbl">5</span>일 부터 조회 가능</p>
+                                                    </div>
+                                                    <!--// .contents-empty -->
+                                                </div>
+                                            </div>
+                                        <% } else { %>
+                                            <div class="cont-box">
                                             <div id="amt-btn-grp" class="chart-title">
                                                 <button class="bt-prev"></button>
                                                 <span data-index="2" class="item-tit blind"><%= data.names[2] || '' %></span>
@@ -94,7 +107,7 @@
                                                 <span data-index="1" class="item-tit blind"><%= data.names[1] || '' %></span>
                                                 <button class="bt-next"></button>
                                             </div>
-                                            <ul id="cdata-area" class="cellular-chart-wrap">
+                                            <ul id="fe-cdata-area" class="cellular-chart-wrap">
                                                 <li>
                                                     <div class="chart-usage">
                                                         <span class="average">평균 사용량</span>
@@ -123,7 +136,7 @@
                                                     <% } %>
                                                 </li>
                                             </ul>
-                                            <ul id="sms-area" class="cellular-chart-wrap">
+                                            <ul id="fe-sms-area" class="cellular-chart-wrap">
                                                 <li>
                                                     <div class="chart-usage">
                                                         <span class="average">평균 사용량</span>
@@ -152,7 +165,7 @@
                                                     <% } %>
                                                 </li>
                                             </ul>
-                                            <ul id="voice-area" class="cellular-chart-wrap">
+                                            <ul id="fe-voice-area" class="cellular-chart-wrap">
                                                 <li>
                                                     <h3 class="chart-title">총 통화량</h3>
                                                     <div class="chart-usage">
@@ -275,6 +288,7 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <% } %>
                                     </li>
                                 </ul>
                             </div>
@@ -331,26 +345,11 @@
 
 <% include ../../components/javascript.component.html %>
 <script>
-  var feeData = '<%- JSON.stringify(data.chartFeeData) %>';
-  var cData = '<%- JSON.stringify(data.chartCTData) %>';
-  var voice = '<%- JSON.stringify(data.chartVoiceData) %>';
-  var iVoice = '<%- JSON.stringify(data.chartInVoiceData) %>';
-  var oVoice = '<%- JSON.stringify(data.chartOutVoiceData) %>';
-  var vVoice = '<%- JSON.stringify(data.chartVidVoiceData) %>';
-  var sms = '<%- JSON.stringify(data.chartSmsData) %>';
-  var empty = '<%- JSON.stringify(data.empty) %>';
-
+  var data = '<%- JSON.stringify(data) %>';
   $(document).ready(function () {
     var comp = new Tw.MyTUsagePattern({
-      $element: $('#pattern-main'),
-      chartFeeData: JSON.parse(feeData),
-      chartCTData: JSON.parse(cData),
-      chartSmsData: JSON.parse(sms),
-      chartVoiceData: JSON.parse(voice),
-      chartInVoiceData: JSON.parse(iVoice),
-      chartOutVoiceData: JSON.parse(oVoice),
-      chartVidVoiceData: JSON.parse(vVoice),
-      empty: JSON.parse(empty)
+      $element: $('#fe-pattern-main'),
+      data: JSON.parse(data)
     });
   });
 </script>

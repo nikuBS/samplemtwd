@@ -18,20 +18,20 @@ import { USAGE_PATTERN_CHART } from '../../../../types/string.type';
 import DateHelper from '../../../../utils/date.helper';
 import FormatHelper from '../../../../utils/format.helper';
 import { Observable } from 'rxjs/Observable';
-
 import _ from 'lodash';
 
-class MytJSProtectChangeController extends TwViewController {
+class MyTUsagePattern extends TwViewController {
 
   constructor() {
     super();
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    this.logger.info(this, 'UserInfo ', svcInfo);
     let data = {
-      svcInfo: svcInfo
+      svcInfo: svcInfo,
+      isTotal: false
     };
+    const curDate = new Date().getDate();
     const api = this.getPatternApi(svcInfo);
     if ( !api ) {
       // 제공하지 않는 유형의 서비스인 경우
@@ -48,8 +48,13 @@ class MytJSProtectChangeController extends TwViewController {
           data = _.extend(data, conf_data);
         }
         if ( patternData.code === API_CODE.CODE_00 ) {
-          const conp_data = this.convertPatternData(patternData);
-          data = _.extend(data, conp_data);
+          // 1~4일 인 경우
+          if ( curDate < 5 ) {
+            data.isTotal = true;
+          } else {
+            const conp_data = this.convertPatternData(patternData);
+            data = _.extend(data, conp_data);
+          }
         }
         const cone_data = this.checkEmptyData(data);
         data = _.extend(data, cone_data);
@@ -111,13 +116,8 @@ class MytJSProtectChangeController extends TwViewController {
       const infos = _.map(data, 'bfuqdto');
       const iovInfos = _.map(data, 'inoutnetVideoUseVdto');
       const length = data.length;
-      const voice: any = [];    // 기본
-      const inVoice: any = [];  // 망내
-      const outVoice: any = []; // 망외
-      const vidVoice: any = []; // 영상
-      const sms: any = [];      // 문자
-      const cData: any = [];    // 데이터
-      const months: any = [];   // 월
+      const voice: any = [], inVoice: any = [], outVoice: any = [], vidVoice: any = [],
+        sms: any = [], cData: any = [], months: any = [];
       let totalVoice = 0, totalSms = 0, totalcData = 0, inTotalVoice = 0, outTotalVoice = 0, vidTotalVoice = 0;
       _.forEach(_.map(data, 'invDtTemp'), (value) => {
         months.push(value + '월');
@@ -211,5 +211,5 @@ class MytJSProtectChangeController extends TwViewController {
   }
 }
 
-export default MytJSProtectChangeController;
+export default MyTUsagePattern;
 
