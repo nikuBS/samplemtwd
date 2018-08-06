@@ -63,8 +63,8 @@ Tw.AuthLoginEasyIos.prototype = {
   },
   _onInputBirth: function () {
     var inputBirth = this.$inputBirth.val();
-    if ( inputBirth.length >= Tw.IOS_BIRTH_LEN ) {
-      this.$inputBirth.val(inputBirth.slice(0, Tw.IOS_BIRTH_LEN));
+    if ( inputBirth.length >= Tw.BIRTH_LEN ) {
+      this.$inputBirth.val(inputBirth.slice(0, Tw.BIRTH_LEN));
     }
   },
   _onInputCert: function () {
@@ -145,7 +145,7 @@ Tw.AuthLoginEasyIos.prototype = {
     } else if ( this.$inputGender.filter(':checked').length === 0 ) {
       this._popupService.openAlert(Tw.MSG_AUTH.EASY_LOGIN_L13);
       return false;
-    } else if ( inputBirth.length !== Tw.IOS_BIRTH_LEN ) {
+    } else if ( inputBirth.length !== Tw.BIRTH_LEN ) {
       this._popupService.openAlert(Tw.MSG_AUTH.EASY_LOGIN_L02);
       return false;
     }
