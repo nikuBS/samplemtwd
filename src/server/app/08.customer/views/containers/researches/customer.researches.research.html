@@ -34,17 +34,18 @@
             <div class="cont-box noborder">
                 <div class="poll-info">
                     <h3 class="poll-tit"><%= research.title %></h3>
+                    <%- research.htmlContent %>
                     <div class="poll-date"><%= research.startDate %> - <%= research.endDate%></div>
                 </div>
                 <% if (research.questionCount > 1) { %>
                 <div class="poll-chart-box">
-                    <div class="poll-chart-sbox">
+                    <div class="poll-chart-sbox" data-question-count="<%= research.questionCount %>">
                         <dl class="poll-chart-txt">
                             <dt>진행률</dt>
-                            <dd>50%</dd>
+                            <dd>0%</dd>
                         </dl>
                         <div class="bar-chart-hoz">
-                            <span class="data-bar deepblue" style="width:50%"></span>
+                            <span class="data-bar deepblue" style="width:0"></span>
                         </div><br/>
                     </div>
                 </div>
@@ -57,7 +58,7 @@
                 <% for (let questionIdx in research.questions) { %>
                     <% const question = research.questions[questionIdx]; %>
                     <div class="poll-chart-space" id="<%= questionIdx === '1'? 'main' : 'q' + questionIdx %>" data-necessary="<%= research.isNecessary %>" data-answer-type="<%= question.answerType %>">
-                        <p class="poll-heading"><%= question.content %></p>
+                        <p class="poll-heading"><%= question.content %><%- question.htmlContent %></p>
                         <div class="poll-space-inner">
                             <div class="poll-option-cont">
                                 <% if (question.examples) { %>
@@ -123,7 +124,6 @@
 <% include ../../components/javascript.component.html %>
 <script>
     $(document).ready(function () {
-        console.log(Tw.CustomerResearch)
         new Tw.CustomerResearch($('.wrap'));
     });
 </script>

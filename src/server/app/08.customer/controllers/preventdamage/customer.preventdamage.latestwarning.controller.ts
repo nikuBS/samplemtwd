@@ -26,7 +26,11 @@ class CustomerPreventdamageLatestwarningController extends TwViewController {
     return {
       total: data.result.totalElements,
       remain: this._getRemainCount(data.result.totalElements, data.result.pageable.pageNumber, data.result.pageable.pageSize),
-      list: data.result.content,
+      list: data.result.content.map(item => {
+        return Object.assign(item, {
+          date: item.auditDtm.substr(0, 4) + '.' + item.auditDtm.substr(4, 2) + '.' + item.auditDtm.substr(6, 2)
+        });
+      }),
       last: data.result.last
     };
   }

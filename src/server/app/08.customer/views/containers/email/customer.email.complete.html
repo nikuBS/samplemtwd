@@ -40,7 +40,7 @@
                         <div class="sended-info">
                             <p class="sended-txt">
                                 답변 받으시는 이메일 주소<br>
-                                <em class="tx-bold">abce1234abce1234@naver.com</em>
+                                <em class="tx-bold"><%=email%></em>
                             </p>
                         </div>
                         <ul class="bt-slice">
@@ -57,7 +57,7 @@
             <hr class="cont-sp type1" aria-hidden="true">
             <div class="cont-box nogaps">
                 <div class="bt-link-box">
-                    <button class="bt-link-tx">홈으로</button>
+                    <a href="/home" class="fe-replace-history bt-link-tx">홈으로</a>
                 </div>
             </div>
             <hr class="cont-sp type1" aria-hidden="true">
@@ -69,9 +69,6 @@
 
 <script>
   $(document).ready(function () {
-    var oCustomerEmailTemplate = new Tw.CustomerEmailTemplate($('.wrap'));
-    var oCustomerEmailService = new Tw.CustomerEmailService($('.wrap'));
-    var oCustomerEmailCall = new Tw.CustomerEmailCall($('.wrap'));
   });
 </script>
 
