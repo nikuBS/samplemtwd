@@ -135,7 +135,7 @@ export default class CustomerResearches extends TwViewController {
   }
 
   private getProperResearchData = (research: any): IStepResearch => {
-    const researchData = research.surveyQstnMaster[0];
+    const researchData = research.surveyQstnMaster[0] || {};
     const questionData: any[] = research.surveyQstnInqItm;
     const exampleData: any[] = research.surveyQstnAnswItm;
     const questions: { [key: number]: IStepQuestion } = {};
