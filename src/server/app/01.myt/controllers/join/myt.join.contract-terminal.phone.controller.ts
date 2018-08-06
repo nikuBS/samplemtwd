@@ -317,21 +317,6 @@ class MytJoinContractTerminalPhone extends TwViewController {
     dataObj.remDt = dataObj.totDt - dataObj.curDt; // 잔여일수
   }
 
-  /*
-  * 할인금액 : '-' 데이터
-   */
-  private _salePayFun(salePay: string) {
-    const tempNum = Number(salePay);
-
-    if ( tempNum >= 0) {
-
-
-    } else {
-
-    }
-
-  }
-
   // -------------------------------------------------------------[프로미스 생성]
   public _getPromiseApi(reqObj, msg): any {
     const thisMain = this;
