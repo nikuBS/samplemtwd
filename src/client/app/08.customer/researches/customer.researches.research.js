@@ -18,6 +18,7 @@ Tw.CustomerResearch = function (rootEl) {
 };
 
 Tw.CustomerResearch.prototype = {
+  MAX_ESSAY_BYTES: 100,
   _init: function () {
     this._currentStep = 1;
     this._answers = {};
@@ -138,7 +139,16 @@ Tw.CustomerResearch.prototype = {
 
   _handleTypeEssay: function (e) {
     var target = e.currentTarget;
+    var byteCount = Tw.InputHelper.getByteCount(target.value);
+
+    while (byteCount > this.MAX_ESSAY_BYTES) {
+      target.value = target.value.slice(0, -1);
+      byteCount = Tw.InputHelper.getByteCount(target.value);
+    }
+
     var $root = this.$container.find(this._currentStep > 1 ? '#q' + this._currentStep : '#main');
+    $root.find('.max-byte em').text(byteCount);
+
     var $btn = $root.find('.bt-blue1 button');
 
     if ($root.data('necessary') && !target.value) {
