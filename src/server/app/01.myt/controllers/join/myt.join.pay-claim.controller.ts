@@ -39,7 +39,7 @@ class MytJoinPayClaim extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     this._svcInfo = svcInfo;
-    this.logger.info(this, '[ svcInfo ] 사용자 정보 : ', svcInfo);
+    this.logger.info(this, '[ svcInfo ] : ', svcInfo);
     this.reqQuery = req.query;
     this._typeChkFun();
     this._goRedirect(res);
@@ -119,8 +119,8 @@ class MytJoinPayClaim extends TwViewController {
         this.logger.info(this, '[ _redirectUrlInfo ] : ', tempVar);
         res.redirect(tempVar);
         break;
-      case 'O1' :
-        tempVar = this._redirectUrlInfo.O1;
+      case 'C1' :
+        tempVar = this._redirectUrlInfo.C1;
         this.logger.info(this, '[ _redirectUrlInfo ] : ', tempVar);
         res.redirect(tempVar);
         break;
