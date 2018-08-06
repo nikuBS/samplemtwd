@@ -47,7 +47,10 @@ Tw.POPUP_TITLE = {
   SET_HELPLINE_TYPE: '상담유형 설정',
   SET_HELPLINE_AREA: '지역설정',
   SET_HELPLINE_TIME: '시간설정',
-  SET_HELPLINE_ITEM: '항목설정'
+  SET_HELPLINE_ITEM: '항목설정',
+  MYT_LIMIT_MONTH: '매월 한도선택',
+  MYT_LIMIT_DAY: '1일 한도선택',
+  MYT_LIMIT_ONCE: '1회 한도선택'
 };
 
 Tw.POPUP_PROPERTY = {

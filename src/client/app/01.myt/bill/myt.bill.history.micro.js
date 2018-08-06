@@ -50,7 +50,7 @@ Tw.MyTBillHistoryMicro.prototype = {
     };
 
     this.common._setTab(this._tabChangeCallback, this, this.hashList, this.$tabTriggerWrapper);
-    this.getLimit = new this.common.getLimit();
+    this.getLimit = new Tw.MyTBillHistoryCommon.GetLimit();
 
     this._getData();
   },
@@ -115,7 +115,7 @@ Tw.MyTBillHistoryMicro.prototype = {
   },
 
   _selectPayType: function (evt) {
-    (new this.common.searchComboListUI(
+    (new Tw.MyTBillHistoryCommon.SearchComboListUI(
         this.$searchElement.$paymentTypeSelector,
         Tw.POPUP_TITLE.PAYMENT_TYPE_SELECT,
         'search-pay-type',
@@ -290,7 +290,8 @@ Tw.MyTBillHistoryMicro.prototype = {
     if (_.isEmpty(this.blindHistoies.length)) {
       this.$template.$domBlindListWrapper.addClass('type2');
     }
-    var usageList = new this.common.listWithTemplate();
+
+    var usageList = new Tw.MyTBillHistoryCommon.ListWithTemplate();
     usageList._init({result: this.usageHistories}, this.$template.$domUsageListWrapper, {
       list: this.$template.$listDefault,
       wrapper: this.$template.$listWrapper,
@@ -304,7 +305,7 @@ Tw.MyTBillHistoryMicro.prototype = {
       restButton: 'restCount'
     }, 10, '#tab1-tab .history-list .bt-more', '', $.proxy(this._appendListCallBack, this));
 
-    var blindList = new this.common.listWithTemplate();
+    var blindList = new Tw.MyTBillHistoryCommon.ListWithTemplate();
     blindList._init({result: this.blindHistoies}, this.$template.$domBlindListWrapper, {
       list: this.$template.$listBlind,
       wrapper: this.$template.$listWrapper,

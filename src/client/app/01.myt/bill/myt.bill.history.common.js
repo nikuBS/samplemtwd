@@ -6,6 +6,8 @@
 
 Tw.MyTBillHistoryCommon = function (rootEl) {
   this.$container = rootEl;
+
+  this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._history = new Tw.HistoryService(rootEl);
   this._hash = Tw.Hash;
@@ -115,10 +117,11 @@ Tw.MyTBillHistoryCommon.prototype = {
   }
 };
 
-Tw.MyTBillHistoryCommon.prototype.listWithTemplate = function () {
+Tw.MyTBillHistoryCommon.ListWithTemplate = function () {
+  this.common = new Tw.MyTBillHistoryCommon();
 };
 
-Tw.MyTBillHistoryCommon.prototype.listWithTemplate.prototype = {
+Tw.MyTBillHistoryCommon.ListWithTemplate.prototype = {
   _init: function (data, wrapper, template, helper, keyword, perPage, viewMoreSelector, listWrapperSelector, callBack) {
 
     this.compiler = Handlebars.compile;
@@ -258,8 +261,8 @@ Tw.MyTBillHistoryCommon.prototype.listWithTemplate.prototype = {
   }
 };
 
-Tw.MyTBillHistoryCommon.prototype.searchComboListUI = function (dom, selectUITitle, separatorName, data) {
-  this._popupService = Tw.Popup;
+Tw.MyTBillHistoryCommon.SearchComboListUI = function (dom, selectUITitle, separatorName, data) {
+  this.common = new Tw.MyTBillHistoryCommon();
 
   this.target = dom;
   this.selectUITitle = selectUITitle;
@@ -267,7 +270,7 @@ Tw.MyTBillHistoryCommon.prototype.searchComboListUI = function (dom, selectUITit
   this.separatorName = separatorName;
 };
 
-Tw.MyTBillHistoryCommon.prototype.searchComboListUI.prototype = {
+Tw.MyTBillHistoryCommon.SearchComboListUI.prototype = {
   _init: function (event) {
     this.currentTarget = event.currentTarget;
     this.listData = [];
@@ -287,31 +290,31 @@ Tw.MyTBillHistoryCommon.prototype.searchComboListUI.prototype = {
   },
 
   _openComboListUI: function () {
-    this._popupService.openChoice(this.selectUITitle, this.listData, '', $.proxy(this._onOpenList, this));
+    this.common._popupService.openChoice(this.selectUITitle, this.listData, '', $.proxy(this._onOpenList, this));
   },
 
   _onOpenList: function ($layer) {
     $layer.on('click', '.hbs-' + this.separatorName, $.proxy(this._getSelectedList, this));
   },
 
-  _getSelectedList: function(event) {
+  _getSelectedList: function (event) {
     var $selectedList = this.target;
     var $target = $(event.currentTarget);
     $selectedList.attr('id', $target.attr('id'));
     $selectedList.text($target.text());
-    this._popupService.close();
+    this.common._popupService.close();
   }
 };
 
-Tw.MyTBillHistoryCommon.prototype.getLimit = function () {
-  this._apiService = Tw.Api;
-  this._popupService = Tw.Popup;
+Tw.MyTBillHistoryCommon.GetLimit = function () {
+
+  this.common = new Tw.MyTBillHistoryCommon();
 
   this.usageRequestTitle = 'Request';
   this.usageRequestCounter = 0;
 };
 
-Tw.MyTBillHistoryCommon.prototype.getLimit.prototype = {
+Tw.MyTBillHistoryCommon.GetLimit.prototype = {
   _init: function (API_CMD, callback) {
     this.API_CMD = API_CMD;
     this.callback = callback;
@@ -319,13 +322,13 @@ Tw.MyTBillHistoryCommon.prototype.getLimit.prototype = {
     this._get_init_usageRequest();
   },
 
-  _get_init_usageRequest : function () {
-    this._apiService.request(this.API_CMD, {
+  _get_init_usageRequest: function () {
+    this.common._apiService.request(this.API_CMD, {
       gubun: this.usageRequestTitle,
       requestCnt: this.usageRequestCounter
     })
         .done($.proxy(this._pre_checkUsageLimitCurrentMonth, this))
-        .error($.proxy(this._apiError, this));
+        .error($.proxy(this.common._apiError, this));
   },
 
   _pre_checkUsageLimitCurrentMonth: function (res) {
@@ -337,20 +340,18 @@ Tw.MyTBillHistoryCommon.prototype.getLimit.prototype = {
       if (res.code === Tw.API_CODE.CODE_00) {
         this.callback(res);
       } else {
+        console.log('[myt/bill/history/limit] Retry');
         this.usageRequestTitle = 'Retry';
         this.usageRequestCounter++;
         this._get_init_usageRequest();
       }
     } else {
-      this._apiError(res);
+      this.common._apiError(res);
     }
   },
 
-  _apiError: function (err) {
-    Tw.Logger.error(err.code, err.msg);
-    var msg = Tw.MSG_COMMON.SERVER_ERROR + '<br />' + err.code + ' : ' + err.msg;
-    this._popupService.openAlert(msg);
-    return false;
+  _apiError: function (res) {
+    this.common._apiError(res);
   }
 };
 

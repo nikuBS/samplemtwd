@@ -177,7 +177,7 @@ Tw.MyTBillHistoryContents.prototype = {
   },
 
   _setListUI: function() {
-    var list = new this.common.listWithTemplate();
+    var list = new Tw.MyTBillHistoryCommon.ListWithTemplate();
     list._init({result: this.result}, this.$listWrapper, {
       list: this.useTemplate,
       wrapper: this.listWrapperTemplate,
