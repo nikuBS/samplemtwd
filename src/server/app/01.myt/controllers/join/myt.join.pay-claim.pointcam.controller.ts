@@ -37,11 +37,11 @@ class MytJoinPayClaimPointcam extends TwViewController {
   };
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    if ( svcInfo.svcAttrCd !== 'O1' ) {
-      this.logger.info(this, '[ svcInfo ] 리다이렉트 : ', svcInfo);
-      res.redirect(this._redirectUrlInfo.payClaim);
-      return;
-    }
+    // if ( svcInfo.svcAttrCd !== 'O1' ) {
+    //   this.logger.info(this, '[ svcInfo ] 리다이렉트 : ', svcInfo);
+    //   res.redirect(this._redirectUrlInfo.payClaim);
+    //   return;
+    // }
 
     this._svcInfo = svcInfo;
     this.logger.info(this, '[ svcInfo ] 사용자 정보 : ', svcInfo);
@@ -49,9 +49,10 @@ class MytJoinPayClaimPointcam extends TwViewController {
     const thisMain = this;
 
     const p1 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0058, {}), '테스트 api');
+    const p2 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0041, {}), '나의 요금제');
     // const p1_mock = this._getPromiseApiMock(payClaimInfo_BFF_05_0058, 'p1 Mock 데이터');
 
-    Promise.all([p1]).then(
+    Promise.all([p1, p2]).then(
       function (resArr) {
         console.dir(resArr);
         thisMain.logger.info(thisMain, `[ Promise.all ] : `, resArr);
@@ -63,6 +64,7 @@ class MytJoinPayClaimPointcam extends TwViewController {
           reqQuery: thisMain.reqQuery,
           svcInfo: thisMain._svcInfo,
           resDataInfo: resArr[0].result,
+          baseFeePlans: resArr[1].result,
           errBol: false
         });
 
@@ -72,7 +74,9 @@ class MytJoinPayClaimPointcam extends TwViewController {
         // thisMain.renderView(res, thisMain._urlTplInfo.pageRenderView, {
         //   reqQuery: thisMain.reqQuery,
         //   svcInfo: thisMain._svcInfo,
-        //   resDataInfo: resArr[0].result
+        //   resDataInfo: resArr[0].result,
+        //   baseFeePlans: resArr[1].result,
+        //   errBol: false
         // });
 
       }, function (err) {

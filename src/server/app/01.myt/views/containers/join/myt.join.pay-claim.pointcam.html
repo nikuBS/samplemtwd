@@ -34,7 +34,8 @@
                             <ul>
                                 <li>
                                     <span class="title">사용중인 상품</span>
-                                    <span class="tx-cont"><button class="blue-btn"><%=resDataInfo.feeProdNm %></button></span>
+                                    <!--<span class="tx-cont"><button class="blue-btn"><%=resDataInfo.feeProdNm %></button></span>-->
+                                    <span class="tx-cont"><button class="blue-btn"><%=baseFeePlans.prodName %></button></span>
                                 </li>
 
                                 <%#납부 방법 %>
@@ -69,7 +70,8 @@
     new Tw.MytJoinPayClaimPointcam($('#wrapFdev'), {
       reqQuery: <%-JSON.stringify(reqQuery) %>,
       svcInfo: <%-JSON.stringify(svcInfo) %>,
-      resDataInfo: <%-JSON.stringify(resDataInfo) %>
+      resDataInfo: <%-JSON.stringify(resDataInfo) %>,
+      baseFeePlans: <%-JSON.stringify(baseFeePlans) %>
   });
   });
 </script>

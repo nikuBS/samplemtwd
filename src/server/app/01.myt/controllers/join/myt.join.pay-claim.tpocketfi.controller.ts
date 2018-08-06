@@ -37,7 +37,7 @@ class MytJoinPayClaimTpocketfi extends TwViewController {
   };
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    if ( svcInfo.svcAttrCd !== 'A2' ) {
+    if ( svcInfo.svcAttrCd !== 'M3' ) {
       this.logger.info(this, '[ svcInfo ] 리다이렉트 : ', svcInfo);
       res.redirect(this._redirectUrlInfo.payClaim);
       return;
