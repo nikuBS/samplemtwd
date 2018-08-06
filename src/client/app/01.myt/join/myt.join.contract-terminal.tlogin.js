@@ -53,10 +53,6 @@ Tw.MytJoinContractTerminalTlogin.prototype = {
     this.$container.on('click', '[data-target="boon_suc_type_C"]', $.proxy(this._boon_suc_type_C_PopOpen, this));
   },
   _detailSaleList: function (e) {
-    console.info('상세할인내역 클릭', e);
-    console.info('상세할인내역 클릭 > target', e.target);
-    console.info('[ data-svcagrmtdcid ]', $(e.target).attr('data-svcagrmtdcid'));
-    console.info('[ data-svcagrmtdccd ]', $(e.target).attr('data-svcagrmtdccd'));
 
     var svcAgrmtDcId = $(e.target).attr('data-svcAgrmtDcId');
     var svcAgrmtDcCd = $(e.target).attr('data-svcAgrmtDcCd');

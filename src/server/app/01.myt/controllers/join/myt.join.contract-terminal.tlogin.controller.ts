@@ -159,8 +159,8 @@ class MytJoinContractTerminalTlogin extends TwViewController {
       thisMain._proDate(wibro, wibro.agrmtDcStaDt, wibro.agrmtDcEndDt);
       thisMain._commDataInfo.feeInfo.push(wibro);
     }
-    this.logger.info(this, '[ 1. 요금약정할인 정보 this._commDataInfo.feeInfo ]');
-    console.dir(this._commDataInfo.feeInfo);
+    this.logger.info(this, '[ 1. this._commDataInfo.feeInfo ]');
+    // console.dir(this._commDataInfo.feeInfo);
 
     // -------------------------------------------------------------[2. 단말기 약정할인 정보]
     if ( _.size(tAgree) > 0 ) {
@@ -261,8 +261,8 @@ class MytJoinContractTerminalTlogin extends TwViewController {
         thisMain._commDataInfo.terminalInfo.push(sucesAgreeList[i]);
       }
     }
-    this.logger.info(this, '[ 2. 단말기 약정할인 정보 this._commDataInfo.terminalInfo ]');
-    console.dir(this._commDataInfo.terminalInfo);
+    this.logger.info(this, '[ 2. this._commDataInfo.terminalInfo ]');
+    // console.dir(this._commDataInfo.terminalInfo);
 
     // -------------------------------------------------------------[3. 단말기 분할 상환 정보]
     if ( _.size(installmentList) > 0 ) {
@@ -277,8 +277,8 @@ class MytJoinContractTerminalTlogin extends TwViewController {
         thisMain._commDataInfo.repaymentInfo.push(installmentList[i]);
       }
     }
-    this.logger.info(this, '[ 3. 단말기 분할 상환 정보 this._commDataInfo.repaymentInfo ]');
-    console.dir(this._commDataInfo.repaymentInfo);
+    this.logger.info(this, '[ 3. this._commDataInfo.repaymentInfo ]');
+    // console.dir(this._commDataInfo.repaymentInfo);
 
     this.logger.info(this, '[ _dataInit() end ]');
 
@@ -286,7 +286,6 @@ class MytJoinContractTerminalTlogin extends TwViewController {
 
   // -------------------------------------------------------------[서비스]
   private _proDate(dataObj: any, start: string, end: string) {
-    this.logger.info(this, '[ 서비스 > _proDate ]');
     const startDt = start;
     const endDt = end;
     dataObj.startDt = DateHelper.getShortDateWithFormat(startDt, 'YYYY.MM.DD');
@@ -303,7 +302,6 @@ class MytJoinContractTerminalTlogin extends TwViewController {
   * remnant : 잔여일수
    */
   private _proDateSuc(dataObj: any, start: string, end: string, remnant: string) {
-    this.logger.info(this, '[ 서비스 > _proDateSuc ]');
     const startDt = start;
     const endDt = end;
     const remnantDt = moment(endDt, 'YYYYMMDD').subtract(remnant, 'day').format('YYYYMMDD'); // 진행날짜

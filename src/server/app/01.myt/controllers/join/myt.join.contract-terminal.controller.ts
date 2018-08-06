@@ -39,7 +39,7 @@ class MytJoinContractTerminal extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     this._svcInfo = svcInfo;
-    this.logger.info(this, '[ svcInfo ] 사용자 정보 : ', svcInfo);
+    this.logger.info(this, '[ svcInfo ] : ', svcInfo);
     this.reqQuery = req.query;
     this._typeChkFun();
     this._goRedirect(res);
@@ -57,29 +57,29 @@ class MytJoinContractTerminal extends TwViewController {
      */
     switch ( this._svcInfo.svcAttrCd ) {
       case 'M1' :
-        this.logger.info(this, '[ 휴대폰 ] : ', this._svcInfo.svcAttrCd);
+        this.logger.info(this, '[ svcAttrCd : M1 ] : ', this._svcInfo.svcAttrCd);
         this._typeChk = 'A1';
         break;
       case 'M3' :
-        this.logger.info(this, '[ T포켓파이 ] : ', this._svcInfo.svcAttrCd);
+        this.logger.info(this, '[ svcAttrCd : M3 ] : ', this._svcInfo.svcAttrCd);
         this._typeChk = 'A2';
         break;
       case 'M4' :
-        this.logger.info(this, '[ T로그인 ] : ', this._svcInfo.svcAttrCd);
+        this.logger.info(this, '[ svcAttrCd : M4 ] : ', this._svcInfo.svcAttrCd);
         this._typeChk = 'A3';
         break;
       case 'M5' :
-        this.logger.info(this, '[ T와이브로 ] : ', this._svcInfo.svcAttrCd);
+        this.logger.info(this, '[ svcAttrCd : M5 ] : ', this._svcInfo.svcAttrCd);
         this._typeChk = 'A4';
         break;
       case 'S1' :
       case 'S2' :
       case 'S3' :
-        this.logger.info(this, '[ 인터넷 / IPTV / 집전화 ] : ', this._svcInfo.svcAttrCd);
+        this.logger.info(this, '[ S1 / S2 / S3 ] : ', this._svcInfo.svcAttrCd);
         this._typeChk = 'B1';
         break;
       case 'O1' :
-        this.logger.info(this, '[ 보안솔루션 ] : ', this._svcInfo.svcAttrCd);
+        this.logger.info(this, '[ O1 ] : ', this._svcInfo.svcAttrCd);
         this._typeChk = 'C1';
         break;
     }
