@@ -47,11 +47,17 @@ Tw.InputHelper = (function () {
     return re.test(email);
   }
 
+  function getByteCount(str) {
+    var b = str.match(/[^\x00-\xff]/g);
+    return (str.length + (!b ? 0 : b.length));
+  }
+
   return {
     inputNumberOnly: inputNumberOnly,
     validateEmail: validateEmail,
     validateNumber: validateNumber,
     inputNumKeyUp: inputNumKeyUp,
-    inputNumKeyDown: inputNumKeyDown
+    inputNumKeyDown: inputNumKeyDown,
+    getByteCount: getByteCount
   };
 })();
