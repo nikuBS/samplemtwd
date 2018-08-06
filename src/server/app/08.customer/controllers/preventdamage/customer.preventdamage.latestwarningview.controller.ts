@@ -15,7 +15,7 @@ class CustomerPreventdamageLatestwarningviewController extends TwViewController 
   }
 
   private _convertData = (data: any) => {
-    return Object.assign({}, data, {
+    return Object.assign(data, {
       date: data.auditDtm.substr(0, 4) + '.' + data.auditDtm.substr(4, 2) + '.' + data.auditDtm.substr(6, 2)
     });
   }

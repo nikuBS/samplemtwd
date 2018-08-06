@@ -48,7 +48,7 @@ class CustomerNoticeController extends TwViewController {
       total: data.result.total,
       remain: this._getRemainCount(data.result.totalElements, data.result.pageable.pageNumber, data.result.pageable.pageSize),
       list: data.result.content.map(item => {
-        return Object.assign({}, item, {
+        return Object.assign(item, {
           date: item.rgstDt.substr(0, 4) + '.' + item.rgstDt.substr(4, 2) + '.' + item.rgstDt.substr(6, 2),
           type: FormatHelper.isEmpty(item.ctgNm) ? '' : item.ctgNm,
           itemClass: (item.isTop ? 'impo ' : '') + (item.isNew ? 'new' : '')

@@ -32,11 +32,11 @@ class CustomerPreventdamageGuideController extends TwViewController {
 
   private _convertWebtoonList = (webtoonList: any) => {
     return Object.keys(webtoonList).reverse().map(key => {
-      return Object.assign({}, webtoonList[key], {
+      return Object.assign(webtoonList[key], {
         CODE: key
       });
     });
-  };
+  }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     const category = req.query.category || 'video';
