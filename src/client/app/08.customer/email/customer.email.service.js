@@ -127,11 +127,7 @@ Tw.CustomerEmailService.prototype = {
       });
 
       this._popupService.openChoice(
-        Tw.POPUP_TITLE.SELECT_SERVICE,
-        this.brandlist,
-        '',
-        null,
-        this._popupService.close
+        Tw.POPUP_TITLE.SELECT_SERVICE, this.brandlist, '', null, this._popupService.close
       );
     };
 
@@ -158,11 +154,7 @@ Tw.CustomerEmailService.prototype = {
     });
 
     this._popupService.openChoice(
-      Tw.POPUP_TITLE.SELECT_SERVICE,
-      list,
-      '',
-      null,
-      this._popupService.close
+      Tw.POPUP_TITLE.SELECT_SERVICE, list, '', null, this._popupService.close
     );
   },
 
