@@ -12,6 +12,7 @@ Tw.CustomerResearch = function (rootEl) {
   this._history = new Tw.HistoryService(rootEl);
   this._history.init('hash');
 
+  this._cachedElement();
   this._init();
   this._bindEvent();
 };
@@ -20,6 +21,7 @@ Tw.CustomerResearch.prototype = {
   _init: function () {
     this._currentStep = 1;
     this._answers = {};
+    this._questionCount = this.$progress.data('question-count') || 1;
   },
 
   _bindEvent: function () {
@@ -27,6 +29,10 @@ Tw.CustomerResearch.prototype = {
     this.$container.on('click', 'li.bt-blue1', $.proxy(this._handleGoToNext, this));
     this.$container.on('change', 'ul.select-list input', $.proxy(this._setAvailableBtn, this));
     this.$container.on('keyup', 'textarea.mt10', $.proxy(this._handleTypeEssay, this));
+  },
+
+  _cachedElement: function () {
+    this.$progress = this.$container.find('.poll-chart-sbox');
   },
 
   _handleGoToBefore: function (e) {
@@ -40,6 +46,8 @@ Tw.CustomerResearch.prototype = {
       this._currentStep = beforeQuestion;
       this._goHash('q' + beforeQuestion);
     }
+
+    this._setProgressBar();
   },
 
   _handleGoToNext: function (e) {
@@ -66,6 +74,14 @@ Tw.CustomerResearch.prototype = {
         this._goToQuestion(nextQuestion);
       }
     }
+
+    this._setProgressBar();
+  },
+
+  _setProgressBar: function () {
+    var nProgress = (this._currentStep - 1) / this._questionCount * 100 + '%';
+    this.$progress.find('dd').text(nProgress);
+    this.$progress.find('.data-bar').width(nProgress);
   },
 
   _goToQuestion: function (nextQuestion) {
