@@ -260,6 +260,8 @@ export const API_CMD = {
   },
   BFF_07_0083: { path: '/core-bill/v1/useContentsPrepay-auto-req', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_07_0084: { path: '/core-bill/v1/useContentsPrepay-auto-delete', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_07_0085: { path: '/core-bill/v1/useContentsPrepay/useContents-autoPrepay-amt', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_07_0086: { path: '/core-bill/v1/microPrepay/microPrepay-autoPrepay-amt', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
 
   // CUSTOMER
   BFF_08_0001: { path: '/core-modification/v1/counsel-time-check', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
