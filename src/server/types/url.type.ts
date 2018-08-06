@@ -114,8 +114,8 @@ export const URL = {
   '/auth/login/fail': { login: false, id: 'CO_01_02_01_01' },  // 로그인 실패
   '/auth/login/dormancy': { login: false, id: 'CO_01_02_02' },
   '/auth/login/find-id-pwd': { login: false, id: 'CO_01_04' },
-  '/auth/login/service-pwd': { login: false, id: 'CO_01_02_03_01' },
-  '/auth/login/service-pwd-fail': { login: false, id: 'CO_01_02_03_01_01' },
+  '/auth/login/customer-pwd': { login: false, id: 'CO_01_02_03_01' },
+  '/auth/login/customer-pwd-fail': { login: false, id: 'CO_01_02_03_01_01' },
   '/auth/login/route': { login: false, id: '' },
   '/auth/login/easy-aos': { login: false, id: 'CO_01_02_06_01' }, // 간편로그인 안드로이드
   '/auth/login/easy-ios': { login: false, id: 'CO_01_02_06_02' }, // 간편로그인 IOS

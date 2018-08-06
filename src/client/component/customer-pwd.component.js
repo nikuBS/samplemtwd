@@ -1,10 +1,10 @@
 /**
- * FileName: service-pwd.component.js
+ * FileName: customer-pwd.component.js
  * Author: Hakjoon Sim (hakjoon.sim@sk.com)
  * Date: 2018.08.06
  */
 
-Tw.ServicePwdComponent = function (rootEl) {
+Tw.CustomerPwdComponent = function (rootEl) {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._isCloseCallbackNeeded = false;
@@ -38,7 +38,7 @@ Tw.ServicePwdComponent = function (rootEl) {
   this._bindEvent();
 };
 
-Tw.ServicePwdComponent.prototype = {
+Tw.CustomerPwdComponent.prototype = {
 
   _onPopupOpend: function ($layer) {
     this.$container = $layer;
@@ -134,7 +134,9 @@ Tw.ServicePwdComponent.prototype = {
           $layer.on('click', '.bt-red1 > button', function () {
             Tw.Popup.close();
           });
-          // TODO: Insert href for a tags when routings ready
+
+          this.$container.find('.link-long')[0].href = '/customer/email';
+          this.$container.find('.link-long.last').href = '/customer/shop/search';
         });
       }
     }
@@ -154,7 +156,7 @@ Tw.ServicePwdComponent.prototype = {
       this._isCloseCallbackNeeded = true;
       this._popupService.close();
     } else {
-      window.location = '/auth/login/service-pwd-fail';
+      window.location = '/auth/login/customer-pwd-fail';
     }
   },
   openLayer: function (mdn, serviceNumber, callback) {
