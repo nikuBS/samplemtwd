@@ -179,6 +179,15 @@ Tw.DateHelper = (function () {
     return moment(convDateFormat(date)).format('dd');
   };
 
+  var getDiffByUnit = function (sdate, edate, unit) {
+    return moment(sdate).diff(edate, unit);
+    // return 'hello';
+  };
+
+  var isValid = function (date) {
+    return moment(date).isValid();
+  };
+
   return {
     getRemainDate: getRemainDate,
     getShortDate: getShortDate,
@@ -197,6 +206,8 @@ Tw.DateHelper = (function () {
     getPastShortDate: getPastShortDate,
     getShortDateWithFormat: getShortDateWithFormat,
     getShortDateWithFormatAddByUnit: getShortDateWithFormatAddByUnit,
-    getDayOfWeek: getDayOfWeek
+    getDayOfWeek: getDayOfWeek,
+    getDiffByUnit : getDiffByUnit,
+    isValid : isValid
   };
 })();
