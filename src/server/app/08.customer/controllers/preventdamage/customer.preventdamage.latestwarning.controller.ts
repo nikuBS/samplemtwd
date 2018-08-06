@@ -7,6 +7,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
+import _ from 'lodash';
 
 class CustomerPreventdamageLatestwarningController extends TwViewController {
   constructor() {
@@ -26,7 +27,11 @@ class CustomerPreventdamageLatestwarningController extends TwViewController {
     return {
       total: data.result.totalElements,
       remain: this._getRemainCount(data.result.totalElements, data.result.pageable.pageNumber, data.result.pageable.pageSize),
-      list: data.result.content,
+      list: _.map(data.result.content, (item) => {
+        return _.merge(item, {
+          date: item.auditDtm.substr(0, 4) + '.' + item.auditDtm.substr(4, 2) + '.' + item.auditDtm.substr(6, 2),
+        });
+      }),
       last: data.result.last
     };
   }
