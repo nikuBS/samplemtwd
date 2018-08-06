@@ -13,7 +13,7 @@ class CustomerPreventdamageLatestwarningController extends TwViewController {
     super();
   }
 
-  private _convertData = (data: any) => {
+  private _convertData(data): any {
     if (data.code !== API_CODE.CODE_00) {
       return {
         total: 0,
@@ -35,7 +35,7 @@ class CustomerPreventdamageLatestwarningController extends TwViewController {
     };
   }
 
-  private _getRemainCount = (total: any, page: any, pageSize: any) => {
+  private _getRemainCount(total, page, pageSize): any {
     const count = total - ((++page) * pageSize);
     return count < 0 ? 0 : count;
   }

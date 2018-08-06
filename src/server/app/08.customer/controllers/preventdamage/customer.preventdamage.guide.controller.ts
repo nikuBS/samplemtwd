@@ -30,7 +30,7 @@ class CustomerPreventdamageGuideController extends TwViewController {
     super();
   }
 
-  private _convertWebtoonList = (webtoonList: any) => {
+  private _convertWebtoonList(webtoonList): any {
     return Object.keys(webtoonList).reverse().map(key => {
       return Object.assign(webtoonList[key], {
         CODE: key
