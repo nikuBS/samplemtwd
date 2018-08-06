@@ -9,6 +9,7 @@ import { NextFunction, Request, Response } from 'express';
 import FormatHelper from '../../../../utils/format.helper';
 import { Observable } from '../../../../../../node_modules/rxjs/Observable';
 import { API_CMD } from '../../../../types/api-command.type';
+import { CUSTOMER_SEARCH_OPTIONS } from '../../../../types/string.type';
 
 class CustomerShopSearchController extends TwViewController {
   constructor() {
@@ -24,14 +25,28 @@ class CustomerShopSearchController extends TwViewController {
 
     if (!FormatHelper.isEmpty(query) && !FormatHelper.isEmpty(query.searchText)) {
       query.searchText = encodeURI(query.searchText); // Encode korean chracters
+
       this.requestSearch(query, searchType).subscribe((resp) => {
-        resp.result = resp.result.filter((item, idx) => idx < 19);
         res.render(url, {
           svcInfo: svcInfo,
           searched: true,
-          searchType: searchType,
+          searchType: searchType, // 매장명(name), 주소(address), 전철역(tube)
           searchText: decodeURI(query.searchText),
-          result: FormatHelper.isEmpty(resp.result) ? [] : resp.result
+          searchShopType: query.storeType,
+          searchOptions: {
+            premium: query.premium === 'Y' ? true : false,
+            pickup: query.direct === 'Y' ? true : false,
+            rental: query.rent === 'Y' ? true : false,
+            skb: query.skb === 'Y' ? true : false,
+            apple: query.apple === 'Y' ? true : false,
+            official: query.authAgnYn === 'Y' ? true : false
+          },
+          optionsText: this.buildSearchOptionsTitleText(query),
+          result: {
+            totalCount: resp.result.totalCount,
+            lastPage: resp.result.lastPageType === 'Y' ? true : false,
+            list: resp.result.regionInfoList
+          }
         });
       });
     } else {
@@ -39,7 +54,6 @@ class CustomerShopSearchController extends TwViewController {
         svcInfo: svcInfo,
         searched: false
       });
-
     }
   }
 
@@ -61,6 +75,38 @@ class CustomerShopSearchController extends TwViewController {
       }
     })(searchType);
     return this.apiService.request(cmd, params);
+  }
+
+  private buildSearchOptionsTitleText(query: any): string {
+    let ret = '';
+    if (query.storeType === '0') {
+      ret += CUSTOMER_SEARCH_OPTIONS.SHOP_TYPE_0;
+    } else if (query.storeType === '1') {
+      ret += CUSTOMER_SEARCH_OPTIONS.SHOP_TYPE_1;
+    } else {
+      ret += CUSTOMER_SEARCH_OPTIONS.SHOP_TYPE_2;
+    }
+
+    if (!FormatHelper.isEmpty(query.premium)) {
+      ret += ', ' + CUSTOMER_SEARCH_OPTIONS.OPTION_PREMIUM;
+    }
+    if (!FormatHelper.isEmpty(query.direct)) {
+      ret += ', ' + CUSTOMER_SEARCH_OPTIONS.OPTION_PICKUP;
+    }
+    if (!FormatHelper.isEmpty(query.rent)) {
+      ret += ', ' + CUSTOMER_SEARCH_OPTIONS.OPTION_RENTAL;
+    }
+    if (!FormatHelper.isEmpty(query.skb)) {
+      ret += ', ' + CUSTOMER_SEARCH_OPTIONS.OPTION_SKB;
+    }
+    if (!FormatHelper.isEmpty(query.apple)) {
+      ret += ', ' + CUSTOMER_SEARCH_OPTIONS.OPTION_APPLE;
+    }
+    if (!FormatHelper.isEmpty(query.authAgnYn)) {
+      ret += ', ' + CUSTOMER_SEARCH_OPTIONS.OPTION_OFFICIAL;
+    }
+
+    return ret;
   }
 }
 

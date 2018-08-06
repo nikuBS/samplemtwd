@@ -3,10 +3,13 @@
  * Author: 양정규 (skt.P130715@partner.sk.com)
  * Date: 2018.07.30
  */
-Tw.MyTJoinJoinInfo = function (rootEl) {
+Tw.MyTJoinJoinInfo = function (rootEl, svcInfo) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
+  this._svcInfo = svcInfo;
+  this._loginService = new Tw.MyTJoinProtectPwd();
+  this._historyService = new Tw.HistoryService();
   this._bindEvent();
 };
 
@@ -16,6 +19,7 @@ Tw.MyTJoinJoinInfo.prototype = {
     this._popupService._popupClose();
     this.$container.on('click', '#fe-open-history', $.proxy(this._openHistoryPop, this));
     this.$container.on('click', '#fe-skb-link', $.proxy(this._openSKbrodbandLink, this));
+    this.$container.on('click', '#pwd-change', $.proxy(this._openPwdLayer, this));
   },
 
   // 개통/변경 이력조회 팝업
@@ -33,6 +37,21 @@ Tw.MyTJoinJoinInfo.prototype = {
   _openSKbrodbandLink : function (e) {
     var $_this = $(e.currentTarget);
     window.open($_this.data('url'),'_blank');
-  }
+  },
 
+  // 비밀번호변경 클릭
+  _openPwdLayer: function() {
+    var params = {
+      mdn: this._svcInfo.svcNum,
+      serviceNumber: this._svcInfo.svcMgmtNum,
+      callback: $.proxy(this._onPwdChecked, this)
+    };
+    // 로그인 인증화면으로 이동
+    this._loginService.openLayer(params);
+  },
+
+  _onPwdChecked: function() {
+    // 로그인 인증 성공 후 화면 이동
+    this._historyService.goLoad('/myt/join/protect/change');
+  }
 };

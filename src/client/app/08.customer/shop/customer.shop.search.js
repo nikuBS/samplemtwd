@@ -6,15 +6,20 @@
 
 Tw.CustomerShopSearch = function (rootEl) {
   this.$container = rootEl;
+
   this._apiService = Tw.Api;
   this._historyService = new Tw.HistoryService();
+
+  this._searchedItemTemplate = Handlebars.compile($('#tpl_search_result_item').html());
 
   this._currentTab = 1;
   this._storeType = '0';
 
+  this._pageCount = 2;
+
   this._cacheElements();
   this._bindEvent();
-  this._init();
+  this._setCurrentTab();
 };
 
 Tw.CustomerShopSearch.prototype = {
@@ -26,6 +31,7 @@ Tw.CustomerShopSearch.prototype = {
     this.$optionsTitle = this.$container.find('#fe-options-title');
     this.$btnMore = this.$container.find('.bt-more');
     this.$moreCount = this.$container.find('#fe-more-count');
+    this.$result = this.$container.find('.store-result-list');
   },
   _bindEvent: function () {
     this.$container.on('click', 'li[role="tab"] > button', $.proxy(this._onTabChanged, this));
@@ -36,21 +42,9 @@ Tw.CustomerShopSearch.prototype = {
     this.$container.on('click', '.fe-shop-detail', $.proxy(this._onShopDetail, this));
     this.$btnMore.on('click', $.proxy(this._onMore, this));
   },
-  _init: function () {
-    var selectedTab = this.$container.find('li[role="tab"][aria-selected="true"]')[0].id;
-    switch (selectedTab) {
-      case 'tab1':
-        this._currentTab = 1;
-        break;
-      case 'tab2':
-        this._currentTab = 2;
-        break;
-      case 'tab3':
-        this._currentTab = 3;
-        break;
-      default:
-        break;
-    }
+  _setCurrentTab: function () {
+    var curTabId = this.$container.find('li[role="tab"][aria-selected="true"]').attr('id');
+    this._currentTab = curTabId === 'tab1' ? 1 : curTabId === 'tab2' ? 2 : 3;
   },
   _onTabChanged: function (evt) {
     switch (evt.target.id) {
@@ -106,39 +100,79 @@ Tw.CustomerShopSearch.prototype = {
   _onOptionsChanged: function (evt) {
     if (evt.target.type === 'radio') {
       this._storeType = evt.target.value;
-      this.$optionsTitle.text(this.$optionsTitle.text().replace(/[^,]*,/, evt.target.title + ','));
+      if (this.$optionsTitle.text().includes(',')) {
+        this.$optionsTitle.text(
+          this.$optionsTitle.text().replace(/[^,]*,/, evt.target.title + ','));
+      } else {
+        this.$optionsTitle.text(evt.target.title);
+      }
     } else if (evt.target.type === 'checkbox') {
       var jobs = this.$container.find('input:checked[type=checkbox]');
       var optionsText = '';
-      if (jobs.length === 0) {
-        optionsText = '전체';
-      } else if (jobs[0].value === 'all') {
-        optionsText = jobs[0].title;
+      optionsText = _.reduce(jobs, function (str, job) {
+        if (str.length !== 0) {
+          str += ', ';
+        }
+        return str + job.title;
+      }, '');
+
+      if (this.$optionsTitle.text().includes(',')) {
+        this.$optionsTitle.text(this.$optionsTitle.text().replace(/,.*/, ', ' + optionsText));
       } else {
-        optionsText = _.reduce(jobs, function (str, job) {
-          if (str.length !== 0) {
-            str += ', ';
-          }
-          return str + job.title;
-        }, '');
+        this.$optionsTitle.text(this.$optionsTitle.text() + ',' + optionsText);
       }
-      this.$optionsTitle.text(this.$optionsTitle.text().replace(/,.*/, ', ' + optionsText));
+
+      if (optionsText === '') {
+        this.$optionsTitle.text(this.$optionsTitle.text().replace(',', ''));
+      }
     }
   },
   _onShopDetail: function (evt) {
     this._historyService.goLoad('/customer/shop/detail?code=' + evt.currentTarget.value);
   },
   _onMore: function () {
-    var result = this.$container.find('.store-result-list > .none');
-    for (var i = 0; i < (result.length < 20 ? result.length: 20); i++) {
-      $(result[i]).removeClass('none');
+    var cmd = Tw.API_CMD.BFF_08_0004B;
+    var params = { currentPage: this._pageCount };
+    switch (this._currentTab) {
+      case 1:
+        params.searchText = this.$inputName.val();
+        break;
+      case 2:
+        cmd = Tw.API_CMD.BFF_08_0005B;
+        params.searchText = this.$inputAddress.val();
+        break;
+      case 3:
+        cmd = Tw.API_CMD.BFF_08_0006B;
+        params.searchText = this.$inputTube.val();
+        break;
+      default:
+        break;
     }
 
-    if (result.length - 20 <= 0) {
+    params.searchText = encodeURIComponent(params.searchText);
+
+    this._buildSearchOptions(params);
+
+    this._apiService.request(cmd, params)
+      .done($.proxy(this._onMoreResult, this))
+      .fail(function (err) {
+        Tw.Popup.openAlert(err.code + ' ' + err.msg);
+      });
+  },
+  _onMoreResult: function (res) {
+    if (res.result.lastPageType === 'Y') {
       this.$btnMore.hide();
     } else {
-      this.$moreCount.text('(' + (result.length - 20 < 20 ? result.length - 20 : 20) + ')');
+      var newCount = res.result.totalCount - (this._pageCount * 20) >= 20 ?
+        20 : res.result.totalCount - (this._pageCount * 20);
+      this.$moreCount.text(newCount);
     }
+
+    this.$result.append(this._searchedItemTemplate({
+      list: res.result.regionInfoList
+    }));
+
+    this._pageCount++;
   },
   _requestSearch: function () {
     var params = { storeType: this._storeType };
@@ -159,35 +193,7 @@ Tw.CustomerShopSearch.prototype = {
         break;
     }
 
-    var jobs = this.$container.find('input:checked[type=checkbox]');
-    if (jobs.length === 0 || jobs[0].value === 'all') {
-      params.searchAll = 'Y';
-    } else {
-      _.map(jobs, function (checked) {
-        switch (checked.value) {
-          case 'premium':
-            params.premium = 'Y';
-            break;
-          case 'pickup':
-            params.direct = 'Y';
-            break;
-          case 'rental':
-            params.rent = 'Y';
-            break;
-          case 'skb':
-            params.skb = 'Y';
-            break;
-          case 'apple':
-            params.apple = 'Y';
-            break;
-          case 'official':
-            params.authAgnYn = 'Y';
-            break;
-          default:
-           break;
-        }
-      });
-    }
+    this._buildSearchOptions(params);
 
     var searchUrl = _.reduce(params, function (str, param, key) {
       if (str.match(/\?$/)) {
@@ -197,5 +203,32 @@ Tw.CustomerShopSearch.prototype = {
       }
     }, '/customer/shop/search?');
     this._historyService.goLoad(searchUrl);
+  },
+  _buildSearchOptions: function (params) {
+    var jobs = this.$container.find('input:checked[type=checkbox]');
+    _.map(jobs, function (checked) {
+      switch (checked.value) {
+        case 'premium':
+          params.premium = 'Y';
+          break;
+        case 'pickup':
+          params.direct = 'Y';
+          break;
+        case 'rental':
+          params.rent = 'Y';
+          break;
+        case 'skb':
+          params.skb = 'Y';
+          break;
+        case 'apple':
+          params.apple = 'Y';
+          break;
+        case 'official':
+          params.authAgnYn = 'Y';
+          break;
+        default:
+         break;
+      }
+    });
   }
 };

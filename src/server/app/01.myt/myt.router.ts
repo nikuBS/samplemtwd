@@ -11,6 +11,7 @@ import MyTUsageTing from './controllers/usage/myt.usage.ting.controller';
 import MyTUsage24hours50discount from './controllers/usage/myt.usage.24hours-50discount.controller';
 import MyTUsageDataLimit from './controllers/usage/myt.usage.data-limit.controller';
 import MyTUsagePattern from './controllers/usage/myt.usage.pattern.controller';
+import MyTUsagePatternDetail from './controllers/usage/myt.usage.pattern.detail.controller';
 import MyTUsageBandDataSharings from './controllers/usage/myt.usage.band-data-sharings.controller';
 import MyTHotBill from './controllers/bill/myt.bill.hotbill.controller';
 import MyTReissue from './controllers/bill/myt.bill.guidechange.reissue.controller';
@@ -54,7 +55,6 @@ import MytJoinContractTerminalTpocketfiDetail from './controllers/join/myt.join.
 import MytJoinContractTerminalTwibro from './controllers/join/myt.join.contract-terminal.twibro.controller';
 import MytJoinContractTerminalTlogin from './controllers/join/myt.join.contract-terminal.tlogin.controller';
 import MytJoinContractTerminalTloginDetail from './controllers/join/myt.join.contract-terminal.tlogin.detail.controller';
-import MytJoinProtectInquiryController from './controllers/join/myt.join.protect.inquiry.controller';
 import MytJoinProtectChangeController from './controllers/join/myt.join.protect.change.controller';
 import MytJoinJoinInfoController from './controllers/join/myt.join.join-info.controller';
 
@@ -74,6 +74,7 @@ class MytRouter extends TwRouter {
     this.controllers.push({ url: '/usage/ting', controller: new MyTUsageTing() });
     this.controllers.push({ url: '/usage/24hourdiscount', controller: new MyTUsage24hours50discount() });
     this.controllers.push({ url: '/usage/pattern', controller: new MyTUsagePattern() });
+    this.controllers.push({ url: '/usage/pattern/detail', controller: new MyTUsagePatternDetail() });
     this.controllers.push({ url: '/usage/band-data-sharings', controller: new MyTUsageBandDataSharings() });
     this.controllers.push({ url: '/bill/hotbill', controller: new MyTHotBill() });
     this.controllers.push({ url: '/bill/guidechange/reissue', controller: new MyTReissue() });
@@ -123,8 +124,7 @@ class MytRouter extends TwRouter {
     this.controllers.push({ url: '/join/contract-terminal/tlogin/detail', controller: new MytJoinContractTerminalTloginDetail() });
 
     this.controllers.push({ url: '/join/join-info', controller: new MytJoinJoinInfoController() });
-    this.controllers.push({ url: '/joinService/protect/inquiry', controller: new MytJoinProtectInquiryController() });
-    this.controllers.push({ url: '/joinService/protect/change', controller: new MytJoinProtectChangeController() });
+    this.controllers.push({ url: '/join/protect/change', controller: new MytJoinProtectChangeController() });
   }
 }
 
