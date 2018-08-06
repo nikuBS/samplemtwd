@@ -35,7 +35,6 @@ Tw.CustomerEmailTemplate.prototype = {
     this.tpl_service_direct_type1 = Handlebars.compile($('#tpl_service_direct_type1').text());
     this.tpl_call_wibro = Handlebars.compile($('#tpl_call_wibro').text());
     this.tpl_call_internet = Handlebars.compile($('#tpl_call_internet').text());
-
   },
 
   _bindEvent: function () {
