@@ -184,7 +184,7 @@ Tw.MyTUsagePattern.prototype = {
     $.extend(defaultcDataSetting, this._defaultChartSetting);
     $.extend(defaultVoiceSetting, this._defaultChartSetting);
 
-    var cDataChart = $.extend(defaultcData, {
+    var cDataChart = $.extend({
       da_arr: [{
         na: this._chartCTData[2][0],
         data: [this._chartCTData[2][1]]//배열 평균값으로 전달
@@ -195,8 +195,8 @@ Tw.MyTUsagePattern.prototype = {
         na: this._chartCTData[0][0],
         data: [this._chartCTData[0][1]]
       }]
-    });
-    var voiceChart = $.extend(defaultVoice, {
+    }, defaultcData);
+    var voiceChart = $.extend({
       da_arr: [{
         na: this._chartVoiceData[2][0],
         data: [this._chartVoiceData[2][1]]//배열 평균값으로 전달
@@ -207,8 +207,8 @@ Tw.MyTUsagePattern.prototype = {
         na: this._chartVoiceData[0][0],
         data: [this._chartVoiceData[0][1]]
       }]
-    });
-    var inVoiceChart = $.extend(defaultVoice, {
+    }, defaultVoice);
+    var inVoiceChart = $.extend({
       da_arr: [{
         na: this._chartInVoiceData[2][0],
         data: [this._chartInVoiceData[2][1]]//배열 평균값으로 전달
@@ -219,8 +219,8 @@ Tw.MyTUsagePattern.prototype = {
         na: this._chartInVoiceData[0][0],
         data: [this._chartInVoiceData[0][1]]
       }]
-    });
-    var outVoiceChart = $.extend(defaultVoice, {
+    }, defaultVoice);
+    var outVoiceChart = $.extend({
       da_arr: [{
         na: this._chartOutVoiceData[2][0],
         data: [this._chartOutVoiceData[2][1]]//배열 평균값으로 전달
@@ -231,8 +231,8 @@ Tw.MyTUsagePattern.prototype = {
         na: this._chartOutVoiceData[0][0],
         data: [this._chartOutVoiceData[0][1]]
       }]
-    });
-    var vidVoiceChart = $.extend(defaultVoice, {
+    }, defaultVoice);
+    var vidVoiceChart = $.extend({
       da_arr: [{
         na: this._chartVidVoiceData[2][0],
         data: [this._chartVidVoiceData[2][1]]//배열 평균값으로 전달
@@ -243,8 +243,8 @@ Tw.MyTUsagePattern.prototype = {
         na: this._chartVidVoiceData[0][0],
         data: [this._chartVidVoiceData[0][1]]
       }]
-    });
-    var smsChart = $.extend(defaultSms, {
+    }, defaultVoice);
+    var smsChart = $.extend({
       da_arr: [{
         na: this._chartSmsData[2][0],
         data: [this._chartSmsData[2][1]]//배열 평균값으로 전달
@@ -255,7 +255,7 @@ Tw.MyTUsagePattern.prototype = {
         na: this._chartSmsData[0][0],
         data: [this._chartSmsData[0][1]]
       }]
-    });
+    }, defaultSms);
 
     if ( !this._empty.cdata ) {
       this.$container.find('.tab2-tab').chart($.extend(defaultcDataSetting, {
