@@ -133,8 +133,9 @@ Tw.CustomerResearch.prototype = {
     var answerType = $root.data('answer-type');
     var answers = {
       inqNum: this._currentStep.toString(),
-      inqItmTyp: answerType,
-    }
+      inqItmTyp: answerType
+    };
+
     var inqRpsCtt = '';
     var $etc = $root.find('.fe-etc-area');
 
@@ -144,7 +145,10 @@ Tw.CustomerResearch.prototype = {
     } else if (answerType === 1) {
       var selectedInputs = $root.find('ul.select-list li[aria-checked="true"] input');
       for (var i = 0; i < selectedInputs.length; i++) {
-        if (i > 0) inqRpsCtt += ', '
+        if (i > 0) {
+          inqRpsCtt += ', ';
+        }
+
         inqRpsCtt += selectedInputs[i].getAttribute('title');
       }
     } else {
