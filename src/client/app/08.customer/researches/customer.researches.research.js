@@ -69,8 +69,6 @@ Tw.CustomerResearch.prototype = {
 
       if (!nextQuestion) {
         this._goToQuestion(this._currentStep + 1);
-      } else if (nextQuestion === '0') {
-        this._submitResearch();
       } else {
         this._goToQuestion(nextQuestion);
       }
@@ -80,7 +78,7 @@ Tw.CustomerResearch.prototype = {
   },
 
   _setProgressBar: function () {
-    var nProgress = (this._currentStep - 1) / this._questionCount * 100 + '%';
+    var nProgress = Math.floor((this._currentStep - 1) / this._questionCount * 100) + '%';
     this.$progress.find('dd').text(nProgress);
     this.$progress.find('.data-bar').width(nProgress);
   },
