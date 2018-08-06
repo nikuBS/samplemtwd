@@ -1,6 +1,5 @@
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
-import myTRoamingData from '../../../../mock/server/myt.usage.troaming-share.mock';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
 import { DATA_UNIT, USER_CNT } from '../../../../types/string.type';
@@ -18,54 +17,50 @@ class MyTUsageTRoamingShare extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    // let result = myTRoamingData.result;
-    //
-    // this.apiService.request(API_CMD.BFF_05_0003, {}).subscribe((resp) => {
-    //   console.log(resp);
-    //   if ( resp.code === API_CODE.CODE_00 ) {
-    //     result = resp.result;
-    //
-    //   }
-    //   res.render('usage/myt.usage.troaming-share.html', {
-    //     result: this.parseData(result),
-    //     svcInfo
-    //   });
-    // });
-    const result = this.getResult({
-      code: '00',
-      msg: '결과메세지',
-      result: {
-        dispRemainDay: '200',
-        roamProdNm: 'T로밍 함께쓰기 3GB1',
-        dataSharing: {
-          data: {
-            total: '3000000',
-            remained: '1000000',
-            used: '2000000'
-          },
-          childList: [{
-            role: 'Y',
-            custNm: '홍*동1',
-            svcNum: '010-45**-12**',
-            used: '1000'
-          }, {
-            role: 'N',
-            custNm: '홍*동2',
-            svcNum: '010-45**-12**',
-            used: '2000'
-          }, {
-            role: 'N',
-            custNm: '홍*동3',
-            svcNum: '010-45**-12**',
-            used: '3000'
-          }]
-        }
+    this.apiService.request(API_CMD.BFF_05_0003, {}).subscribe((resp) => {
+      console.log(resp);
+      if ( resp.code === API_CODE.CODE_00 ) {
+        res.render('usage/myt.usage.troaming-share.html', {
+          usageData: this.parseData(resp.result),
+          svcInfo
+        });
       }
     });
-    res.render('usage/myt.usage.troaming-share.html', {
-      usageData: this.parseData(result),
-      svcInfo
-    });
+    // const result = this.getResult({
+    //   code: '00',
+    //   msg: '결과메세지',
+    //   result: {
+    //     dispRemainDay: '200',
+    //     roamProdNm: 'T로밍 함께쓰기 3GB1',
+    //     dataSharing: {
+    //       data: {
+    //         total: '3000000',
+    //         remained: '1000000',
+    //         used: '2000000'
+    //       },
+    //       childList: [{
+    //         role: 'Y',
+    //         custNm: '홍*동1',
+    //         svcNum: '010-45**-12**',
+    //         used: '1000'
+    //       }, {
+    //         role: 'N',
+    //         custNm: '홍*동2',
+    //         svcNum: '010-45**-12**',
+    //         used: '2000'
+    //       }, {
+    //         role: 'N',
+    //         custNm: '홍*동3',
+    //         svcNum: '010-45**-12**',
+    //         used: '3000'
+    //       }]
+    //     }
+    //   }
+    // });
+    // res.render('usage/myt.usage.troaming-share.html', {
+    //   usageData: this.parseData(result),
+    //   svcInfo
+    // });
   }
 
   private parseData(result: any): any {
@@ -79,17 +74,15 @@ class MyTUsageTRoamingShare extends TwViewController {
     if ( result.showTotalUsed.unit !== DATA_UNIT.KB ) {
       result.showTotalUsedSub = this.getSubData(result.showTotalUsed);
     }
-
-    console.log('~~~~~~~~~~`result', result);
     return result;
   }
 
-  private getResult(resp: any): any {
-    if ( resp.code === API_CODE.CODE_00 ) {
-      return resp.result;
-    }
-    return resp;
-  }
+  // private getResult(resp: any): any {
+  //   if ( resp.code === API_CODE.CODE_00 ) {
+  //     return resp.result;
+  //   }
+  //   return resp;
+  // }
 
   private getShowRemainDay(min: string): any {
     const endDate = moment().add(min, 'minutes');

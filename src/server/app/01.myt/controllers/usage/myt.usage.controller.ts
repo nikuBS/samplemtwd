@@ -45,7 +45,7 @@ class MyTUsage extends TwViewController {
 
   }
 
-  private parseUsageData(usageData: any, svcInfo: any): any {
+  public parseUsageData(usageData: any, svcInfo: any): any {
     const kinds = ['data', 'voice', 'sms', 'etc'];
     // 집전화는 balance의 첫번째 레코드가 음성 → (1개 레코드일 경우 음성, 2개 레코드일 경우 첫번째가 음성/두번째가 SMS)
     if ( svcInfo.svcAttrCd === 'S3' && usageData.balance ) {
