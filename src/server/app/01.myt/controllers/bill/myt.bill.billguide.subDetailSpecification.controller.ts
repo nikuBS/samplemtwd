@@ -11,7 +11,6 @@ import StringHelper from '../../../../utils/string.helper';
 import moment = require('moment');
 import DateHelper from '../../../../utils/date.helper';
 import FormatHelper from '../../../../utils/format.helper';
-import * as _ from 'lodash';
 
 class MyTBillBillguideSubDetailSpecification extends TwViewController {
   constructor() {
@@ -119,7 +118,8 @@ class MyTBillBillguideSubDetailSpecification extends TwViewController {
           thisMain._commDataInfo.selEndDt = DateHelper.getShortDateNoDot(String(thisMain._billpayInfo.invDt));
           thisMain._commDataInfo.discount = FormatHelper.addComma(String(Math.abs(Number(0))));
           thisMain._commDataInfo.unPaidTotSum = FormatHelper.addComma(String(thisMain._defaultInfo.unPaidTotSum));
-          thisMain._commDataInfo.joinSvcList = _.cloneDeep(thisMain._billpayInfo.paidAmtSvcCdList);
+          // thisMain._commDataInfo.joinSvcList = _.cloneDeep(thisMain._billpayInfo.paidAmtSvcCdList);
+          thisMain._commDataInfo.joinSvcList = thisMain._billpayInfo.paidAmtSvcCdList;
           thisMain._commDataInfo.joinSvcList.map(item => {
             if ( item.svcNm === '이동전화' ) {
               item.svcNm = '휴대폰';
