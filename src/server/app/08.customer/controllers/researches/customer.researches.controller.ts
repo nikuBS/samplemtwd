@@ -68,6 +68,7 @@ interface IStepResearch {
   endDate: string;
   questionCount: number;
   questions: { [key: number]: IStepQuestion };
+  htmlContent?: string;
 }
 
 interface IStepQuestion {
@@ -76,6 +77,7 @@ interface IStepQuestion {
   isMultiStage: boolean;
   isNecessary: boolean;
   answerType: string;
+  htmlContent?: string;
   examples?: { [key: number]: IStepExample };
 }
 
@@ -156,6 +158,7 @@ export default class CustomerResearches extends TwViewController {
         isMultiple: question.inqItmTypCd === '1',
         isMultiStage: question.inqSortMthdCd === 'D',
         isNecessary: question.mndtAnswYn === 'Y',
+        htmlContent: question.inqItmHtmlCtt,
         examples
       };
     }
@@ -182,7 +185,8 @@ export default class CustomerResearches extends TwViewController {
       startDate: researchData.staDtm,
       endDate: researchData.endDtm,
       questionCount: researchData.totInqItmNum,
-      questions
+      questions,
+      htmlContent: researchData.qstnHtmlCtt,
     };
   }
 }

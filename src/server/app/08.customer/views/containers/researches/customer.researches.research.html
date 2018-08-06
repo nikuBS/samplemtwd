@@ -34,6 +34,7 @@
             <div class="cont-box noborder">
                 <div class="poll-info">
                     <h3 class="poll-tit"><%= research.title %></h3>
+                    <%- research.htmlContent %>
                     <div class="poll-date"><%= research.startDate %> - <%= research.endDate%></div>
                 </div>
                 <% if (research.questionCount > 1) { %>
@@ -57,7 +58,7 @@
                 <% for (let questionIdx in research.questions) { %>
                     <% const question = research.questions[questionIdx]; %>
                     <div class="poll-chart-space" id="<%= questionIdx === '1'? 'main' : 'q' + questionIdx %>" data-necessary="<%= research.isNecessary %>" data-answer-type="<%= question.answerType %>">
-                        <p class="poll-heading"><%= question.content %></p>
+                        <p class="poll-heading"><%= question.content %><%- question.htmlContent %></p>
                         <div class="poll-space-inner">
                             <div class="poll-option-cont">
                                 <% if (question.examples) { %>
