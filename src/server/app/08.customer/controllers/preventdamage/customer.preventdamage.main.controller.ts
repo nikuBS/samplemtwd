@@ -8,6 +8,7 @@ import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import BrowserHelper from '../../../../utils/browser.helper';
 import { API_CMD } from '../../../../types/api-command.type';
+import FormatHelper from '../../../../utils/format.helper';
 
 class CustomerPreventdamageMainController extends TwViewController {
   constructor() {
@@ -21,6 +22,10 @@ class CustomerPreventdamageMainController extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     this.apiService.request(API_CMD.BFF_08_0033, {page: 0, size: 2})
       .subscribe((data) => {
+        if (FormatHelper.isEmpty(data)) {
+          return res.redirect('/customer');
+        }
+
         res.render('preventdamage/customer.preventdamage.main.html', {
           svcInfo: svcInfo,
           isApp: BrowserHelper.isApp(req),
