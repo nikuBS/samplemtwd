@@ -17,12 +17,13 @@ class AuthTidLogout extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+    const target = req.query.target || '/auth/logout/complete';
     this.apiService.request(API_CMD.BFF_03_0007, {}).subscribe((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
         const params = {
           client_id: resp.result.clientId,
           redirect_uri: EnvHelper.getEnvironment('TID_REDIRECT') +
-          '/auth/logout/route?target=/auth/logout/complete',
+          '/auth/logout/route?target=' + target,
           client_type: TID.CLIENT_TYPE,
         };
         const url = this.apiService.getServerUri(API_CMD.LOGOUT) + API_CMD.LOGOUT.path + ParamsHelper.setQueryParams(params);
