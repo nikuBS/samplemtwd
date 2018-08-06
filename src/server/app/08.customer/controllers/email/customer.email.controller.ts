@@ -6,6 +6,7 @@
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { NextFunction, Request, Response } from 'express';
+import FormatHelper from '../../../../utils/format.helper';
 
 class CustomerEmailController extends TwViewController {
   constructor() {
@@ -24,7 +25,7 @@ class CustomerEmailController extends TwViewController {
       });
     } else {
       res.render('email/customer.email.html', {
-        svcInfo: svcInfo,
+        svcInfo: Object.assign({}, svcInfo, { svcNum: FormatHelper.conTelFormatWithDash(svcInfo.svcNum) }),
         type: req.query.type
       });
     }

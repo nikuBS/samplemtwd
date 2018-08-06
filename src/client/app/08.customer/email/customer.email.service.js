@@ -23,9 +23,8 @@ Tw.CustomerEmailService.prototype = {
   },
 
   _cachedElement: function () {
-    this.$input_sms = $('#fe-check-sms');
-    this.$input_phone_number = $('#fe-input-phone');
-    this.$input_email = $('#fe-input-email');
+    this.$input_sms = $('#tab1-tab .fe-inp-chk-sms');
+    this.$input_email = $('#tab1-tab .fe-input-email');
   },
 
   _bindEvent: function () {
@@ -53,56 +52,72 @@ Tw.CustomerEmailService.prototype = {
         case 'CHOCO':
           this._requestEmailChoco();
           break;
-        default:
-          console.log('default');
       }
-
     }
   },
 
   _requestEmailCell: function () {
+    var params = {
+      connSite: Tw.BrowserHelper.isApp() ? 15 : 19,
+      ofrCtgSeq: this._oEmailTemplate.getState().serviceCategory,
+      cntcNum1: this._getPhoneParams(0),
+      cntcNum2: this._getPhoneParams(1),
+      cntcNum3: this._getPhoneParams(2),
+      email: this.$input_email.val(),
+      subject: $('#tab1-tab .fe-inquiry-title').val(),
+      content: $('#tab1-tab .fe-inquiry-content').val(),
+      smsRcvYn: this.$input_sms.prop('checked') ? 'Y' : 'N'
+    };
 
+    this._apiService.request(Tw.API_CMD.BFF_08_0042, params)
+      .done($.proxy(this._onSuccessRequest, this));
   },
 
   _requestEmailInternet: function () {
+    var params = {
+      connSite: Tw.BrowserHelper.isApp() ? 15 : 19,
+      ofrCtgSeq: this._oEmailTemplate.getState().serviceCategory,
+      cntcNum1: this._getPhoneParams(0),
+      cntcNum2: this._getPhoneParams(1),
+      cntcNum3: this._getPhoneParams(2),
+      email: this.$input_email.val(),
+      subject: $('#tab1-tab .fe-inquiry-title').val(),
+      content: $('#tab1-tab .fe-inquiry-content').val(),
+      smsRcvYn: this.$input_sms.prop('checked') ? 'Y' : 'N'
+    };
 
+    this._apiService.request(Tw.API_CMD.BFF_08_0043, params)
+      .done($.proxy(this._onSuccessRequest, this));
   },
 
   _requestEmailDirect: function () {
     var params = {
       category: this._oEmailTemplate.getState().serviceCategory,
-      cntcNum1: '010',
-      cntcNum2: '0000',
-      cntcNum3: '0000',
+      cntcNum1: this._getPhoneParams(0),
+      cntcNum2: this._getPhoneParams(1),
+      cntcNum3: this._getPhoneParams(2),
       email: this.$input_email.val(),
-      subject: $('.fe-inquiry-title').val(),
-      content: $('.fe-inquiry-content').val(),
+      subject: $('#tab1-tab .fe-inquiry-title').val(),
+      content: $('#tab1-tab .fe-inquiry-content').val(),
       smsRcvYn: this.$input_sms.prop('checked') ? 'Y' : 'N',
       phoneId: $('.fe-btn-device').data('id')
-      // orderNo: '12323'
     };
 
     this._apiService.request(Tw.API_CMD.BFF_08_0021, params)
-      .done(function (res) {
-        if ( res.code === '00' ) {
-          this._history.replaceURL('/customer/email/complete?email=' + this.$input_email.val());
-        }
-      }.bind(this));
+      .done($.proxy(this._onSuccessRequest, this));
   },
 
   _requestEmailChoco: function () {
     this._apiService.request(Tw.API_CMD.BFF_08_0021, {
-      category: '010700',
-      cntcNum1: '010',
-      cntcNum2: '0000',
-      cntcNum3: '0000',
-      email: 'test@naver.com',
-      subject: 'test',
-      content: 'test',
+      category: this._oEmailTemplate.getState().serviceCategory,
+      cntcNum1: this._getPhoneParams(0),
+      cntcNum2: this._getPhoneParams(1),
+      cntcNum3: this._getPhoneParams(2),
+      email: this.$input_email.val(),
+      subject: $('#tab1-tab .fe-inquiry-title').val(),
+      content: $('#tab1-tab .fe-inquiry-content').val(),
       smsRcvYn: this.$input_sms.prop('checked') ? 'Y' : 'N'
-    }).done(function () {
-      this._history.replaceURL('/customer/email/complete?email=test@naver.com');
-    }.bind(this));
+    }).done($.proxy(this._onSuccessRequest, this));
   },
 
   _showBrandPopup: function () {
@@ -157,6 +172,20 @@ Tw.CustomerEmailService.prototype = {
     $('.fe-btn-device').text($target.text());
     $('.fe-btn-device').attr('data-id', $target.data('device'));
     this._popupService.close();
+  },
+
+  _getPhoneParams: function (nIndex) {
+    var sPhone = $('#tab1-tab .fe-input-phone').val();
+
+    return Tw.FormatHelper.conTelFormatWithDash(sPhone).split('-')[nIndex];
+  },
+
+  _onSuccessRequest: function (res) {
+    if ( res.code === Tw.API_CODE.CODE_00 ) {
+      this._history.replaceURL('/customer/email/complete?email=' + this.$input_email.val());
+    } else {
+      this._popupService.openAlert(res.code + ' ' + res.msg);
+    }
   }
 };
 

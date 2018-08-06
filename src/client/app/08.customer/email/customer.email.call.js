@@ -24,7 +24,8 @@ Tw.CustomerEmailCall.prototype = {
   },
 
   _cachedElement: function () {
-
+    this.$input_sms = $('#tab2-tab .fe-inp-chk-sms');
+    this.$input_email = $('#tab2-tab .fe-input-email');
   },
 
   _bindEvent: function () {
@@ -35,7 +36,63 @@ Tw.CustomerEmailCall.prototype = {
     var currentState = this._oEmailTemplate.state;
 
     if ( currentState.tabIndex === 1 ) {
-      this._history.replaceURL('/customer/email/complete?email=test@naver.com');
+      switch ( currentState.callCategory ) {
+        case 'WIBRO':
+          this._requestQualityWibro();
+          break;
+        case 'INTERNET':
+          this._requestQualityInternet();
+          break;
+      }
+    }
+  },
+
+  _requestQualityWibro: function () {
+    var params = {
+      connSite: Tw.BrowserHelper.isApp() ? 15 : 19,
+      ofrCtgSeq: this._oEmailTemplate.getState().callCategory,
+      cntcNum1: this._getPhoneParams(0),
+      cntcNum2: this._getPhoneParams(1),
+      cntcNum3: this._getPhoneParams(2),
+      email: $('#tab2-tab .fe-input-email').val(),
+      subject: $('#tab2-tab .fe-inquiry-title').val(),
+      content: $('#tab2-tab .fe-inquiry-content').val(),
+      smsRcvYn: $('#tab2-tab .fe-inp-chk-sms').prop('checked') ? 'Y' : 'N'
+    };
+
+    this._apiService.request(Tw.API_CMD.BFF_08_0044, params)
+      .done($.proxy(this._onSuccessRequest, this));
+  },
+
+  _requestQualityInternet: function () {
+    var params = {
+      connSite: Tw.BrowserHelper.isApp() ? 15 : 19,
+      inqSvcClCd: $('[name=radio_call_internet]:checked').val(),
+      ofrCtgSeq: this._oEmailTemplate.getState().callCategory,
+      cntcNum1: this._getPhoneParams(0),
+      cntcNum2: this._getPhoneParams(1),
+      cntcNum3: this._getPhoneParams(2),
+      email: $('#tab2-tab .fe-input-email').val(),
+      subject: $('#tab2-tab .fe-inquiry-title').val(),
+      content: $('#tab2-tab .fe-inquiry-content').val(),
+      smsRcvYn: $('#tab2-tab .fe-inp-chk-sms').prop('checked') ? 'Y' : 'N'
+    };
+
+    this._apiService.request(Tw.API_CMD.BFF_08_0045, params)
+      .done($.proxy(this._onSuccessRequest, this));
+  },
+
+  _getPhoneParams: function (nIndex) {
+    var sPhone = $('#tab2-tab .fe-input-phone').val();
+
+    return Tw.FormatHelper.conTelFormatWithDash(sPhone).split('-')[nIndex];
+  },
+
+  _onSuccessRequest: function (res) {
+    if ( res.code === Tw.API_CODE.CODE_00 ) {
+      this._history.replaceURL('/customer/email/complete?email=' + this.$input_email.val());
+    } else {
+      this._popupService.openAlert(res.code + ' ' + res.msg);
     }
   }
 };
