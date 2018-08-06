@@ -13,7 +13,21 @@ class CustomerEmailController extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo?: any, layerType?: string): void {
-    res.render('email/customer.email.html', { svcInfo: svcInfo, type: req.query.type });
+    const status = req.params.status;
+    const email = req.query.email ? req.query.email : '';
+
+    if ( status === 'complete' ) {
+      res.render('email/customer.email.complete.html', {
+        svcInfo: svcInfo,
+        type: req.query.type,
+        email: email
+      });
+    } else {
+      res.render('email/customer.email.html', {
+        svcInfo: svcInfo,
+        type: req.query.type
+      });
+    }
   }
 }
 

@@ -23,7 +23,7 @@ class CustomerRouter extends TwRouter {
   constructor() {
     super();
     this.controllers.push({ url: '/', controller: new CustomerMainController() });
-    this.controllers.push({ url: '/email', controller: new CustomerEmailController() });
+    this.controllers.push({ url: '/email(/:status)?', controller: new CustomerEmailController() });
     this.controllers.push({ url: '/notice', controller: new CustomerNoticeController() });
     this.controllers.push({ url: '/prevent-damage', controller: new CustomerPreventdamageMainController() });
     this.controllers.push({ url: '/prevent-damage/guide', controller: new CustomerPreventdamageGuideController() });
