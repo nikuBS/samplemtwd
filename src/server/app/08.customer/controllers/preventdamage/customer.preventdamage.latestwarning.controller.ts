@@ -7,14 +7,13 @@
 import { NextFunction, Request, Response } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
-import _ from 'lodash';
 
 class CustomerPreventdamageLatestwarningController extends TwViewController {
   constructor() {
     super();
   }
 
-  private _convertData(data): any {
+  private _convertData = (data: any) => {
     if (data.code !== API_CODE.CODE_00) {
       return {
         total: 0,
@@ -27,16 +26,16 @@ class CustomerPreventdamageLatestwarningController extends TwViewController {
     return {
       total: data.result.totalElements,
       remain: this._getRemainCount(data.result.totalElements, data.result.pageable.pageNumber, data.result.pageable.pageSize),
-      list: _.map(data.result.content, (item) => {
-        return _.merge(item, {
-          date: item.auditDtm.substr(0, 4) + '.' + item.auditDtm.substr(4, 2) + '.' + item.auditDtm.substr(6, 2),
+      list: data.result.content.map(item => {
+        return Object.assign({}, item, {
+          date: item.auditDtm.substr(0, 4) + '.' + item.auditDtm.substr(4, 2) + '.' + item.auditDtm.substr(6, 2)
         });
       }),
       last: data.result.last
     };
   }
 
-  private _getRemainCount(total, page, pageSize): any {
+  private _getRemainCount = (total: any, page: any, pageSize: any) => {
     const count = total - ((++page) * pageSize);
     return count < 0 ? 0 : count;
   }

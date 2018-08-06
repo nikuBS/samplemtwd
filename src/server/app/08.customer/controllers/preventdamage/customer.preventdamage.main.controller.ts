@@ -14,7 +14,7 @@ class CustomerPreventdamageMainController extends TwViewController {
     super();
   }
 
-  private _convertData(data): any {
+  private _convertData = (data: any) => {
     return (data.code !== '00') ? [] : data.result.content;
   }
 

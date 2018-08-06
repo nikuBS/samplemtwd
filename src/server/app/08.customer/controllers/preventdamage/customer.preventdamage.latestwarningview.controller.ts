@@ -8,15 +8,14 @@ import { NextFunction, Request, Response } from 'express';
 import { API_CMD } from '../../../../types/api-command.type';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import FormatHelper from '../../../../utils/format.helper';
-import _ from 'lodash';
 
 class CustomerPreventdamageLatestwarningviewController extends TwViewController {
   constructor() {
     super();
   }
 
-  private _convertData(data) {
-    return _.merge(data, {
+  private _convertData = (data: any) => {
+    return Object.assign({}, data, {
       date: data.auditDtm.substr(0, 4) + '.' + data.auditDtm.substr(4, 2) + '.' + data.auditDtm.substr(6, 2)
     });
   }

@@ -9,7 +9,6 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import { CUSTOMER_PREVENTDAMAGE_GUIDE } from '../../../../types/string.type';
 import { CUSTOMER_PREVENTDAMAGE_GUIDE_VIDEO, CUSTOMER_PREVENTDAMAGE_GUIDE_LATEST } from '../../../../types/outlink.type';
 import { CUSTOMER_PREVENTDAMAGE_GUIDE_WEBTOON } from '../../../../types/static.type';
-import _ from 'lodash';
 
 const categorySwithingData = {
   video: {
@@ -31,13 +30,13 @@ class CustomerPreventdamageGuideController extends TwViewController {
     super();
   }
 
-  private _convertWebtoonList(webtoonList) {
-    return _.map(webtoonList, function(data, code) {
-      return _.merge(data, {
-        CODE: code
+  private _convertWebtoonList = (webtoonList: any) => {
+    return Object.keys(webtoonList).reverse().map(key => {
+      return Object.assign({}, webtoonList[key], {
+        CODE: key
       });
-    }).reverse();
-  }
+    });
+  };
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     const category = req.query.category || 'video';
