@@ -129,7 +129,8 @@ export enum AUTO_CHARGE_CODE {
 export enum PREPAY_TITLE {
   MICRO = '소액결제',
   CONTENTS = '콘텐츠이용료',
-  PREPAY = '선결제하기'
+  PREPAY = '선결제하기',
+  AUTO_PREPAY = '자동 선결제 신청'
 }
 
 export const BILL_GUIDE_TYPE = {
