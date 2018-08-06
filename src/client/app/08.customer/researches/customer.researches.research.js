@@ -12,14 +12,17 @@ Tw.CustomerResearch = function (rootEl) {
   this._history = new Tw.HistoryService(rootEl);
   this._history.init('hash');
 
+  this._cachedElement();
   this._init();
   this._bindEvent();
 };
 
 Tw.CustomerResearch.prototype = {
+  MAX_ESSAY_BYTES: 100,
   _init: function () {
     this._currentStep = 1;
     this._answers = {};
+    this._questionCount = this.$progress.data('question-count') || 1;
   },
 
   _bindEvent: function () {
@@ -27,6 +30,10 @@ Tw.CustomerResearch.prototype = {
     this.$container.on('click', 'li.bt-blue1', $.proxy(this._handleGoToNext, this));
     this.$container.on('change', 'ul.select-list input', $.proxy(this._setAvailableBtn, this));
     this.$container.on('keyup', 'textarea.mt10', $.proxy(this._handleTypeEssay, this));
+  },
+
+  _cachedElement: function () {
+    this.$progress = this.$container.find('.poll-chart-sbox');
   },
 
   _handleGoToBefore: function (e) {
@@ -40,6 +47,8 @@ Tw.CustomerResearch.prototype = {
       this._currentStep = beforeQuestion;
       this._goHash('q' + beforeQuestion);
     }
+
+    this._setProgressBar();
   },
 
   _handleGoToNext: function (e) {
@@ -50,7 +59,6 @@ Tw.CustomerResearch.prototype = {
     this._setAnswers($root);
 
     if ($target.hasClass('fe-submit')) {
-      this._history.setHistory();
       this._submitResearch();
     } else if ($target.hasClass('fe-go-next')) {
       this._goToQuestion(this._currentStep + 1);
@@ -62,12 +70,19 @@ Tw.CustomerResearch.prototype = {
       if (!nextQuestion) {
         this._goToQuestion(this._currentStep + 1);
       } else if (nextQuestion === '0') {
-        this._history.setHistory();
         this._submitResearch();
       } else {
         this._goToQuestion(nextQuestion);
       }
     }
+
+    this._setProgressBar();
+  },
+
+  _setProgressBar: function () {
+    var nProgress = (this._currentStep - 1) / this._questionCount * 100 + '%';
+    this.$progress.find('dd').text(nProgress);
+    this.$progress.find('.data-bar').width(nProgress);
   },
 
   _goToQuestion: function (nextQuestion) {
@@ -82,6 +97,7 @@ Tw.CustomerResearch.prototype = {
 
   _submitResearch: function () {
     // 참여하기 클릭
+    this._history.setHistory();
     var values = Object.values(this._answers);
     this._apiService.request(Tw.API_CMD.BFF_08_0036, {
       qstnId: this.$container.data('research-id'),
@@ -94,15 +110,19 @@ Tw.CustomerResearch.prototype = {
     if (resp.code === Tw.API_CODE.CODE_00) {
       switch (resp.result) {
         case 'DUPLICATE':
-          this._popupService.openAlert(Tw.MSG_CUSTOMER.RESEARCH_A01);
+          this._popupService.openAlert(Tw.MSG_CUSTOMER.RESEARCH_A01, undefined, undefined, $.proxy(this._goBack, this));
           break;
         case 'SUCCESS':
-          this._popupService.openAlert(Tw.MSG_CUSTOMER.RESEARCH_A02);
+          this._popupService.openAlert(Tw.MSG_CUSTOMER.RESEARCH_A02, undefined, undefined, $.proxy(this._goBack, this));
           break;
       }
     } else {
-      this._popupService.openAlert(resp.msg);
+      this._popupService.openAlert(resp.code + ' ' + resp.msg, undefined, undefined, $.proxy(this._goBack, this));
     }
+  },
+
+  _goBack: function () {
+    this._history.goBack();
   },
 
   _setAvailableBtn: function (e) {
@@ -119,7 +139,16 @@ Tw.CustomerResearch.prototype = {
 
   _handleTypeEssay: function (e) {
     var target = e.currentTarget;
+    var byteCount = Tw.InputHelper.getByteCount(target.value);
+
+    while (byteCount > this.MAX_ESSAY_BYTES) {
+      target.value = target.value.slice(0, -1);
+      byteCount = Tw.InputHelper.getByteCount(target.value);
+    }
+
     var $root = this.$container.find(this._currentStep > 1 ? '#q' + this._currentStep : '#main');
+    $root.find('.max-byte em').text(byteCount);
+
     var $btn = $root.find('.bt-blue1 button');
 
     if ($root.data('necessary') && !target.value) {
@@ -165,7 +194,6 @@ Tw.CustomerResearch.prototype = {
   },
 
   _goHash: function (hash) {
-    this._history.setHistory();
-    this._history.goHash(hash);
+    this._history.replaceURL('#' + hash);
   }
 };

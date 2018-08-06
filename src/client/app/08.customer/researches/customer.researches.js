@@ -63,7 +63,7 @@ Tw.CustomerResearches.prototype = {
           break;
       }
     } else {
-      this._popupService.openAlert(resp.msg);
+      this._popupService.openAlert(resp.code + ' ' + resp.msg);
     }
   },
 
