@@ -174,6 +174,14 @@ class ApiService {
     return this.requestLogin(API_CMD.BFF_03_0010, params);
   }
 
+  public requestEasyLoginAos(params): Observable<any> {
+    return this.requestLogin(API_CMD.BFF_03_0017, params);
+  }
+
+  public requestEasyLoginIos(params): Observable<any> {
+    return this.requestLogin(API_CMD.BFF_03_0018, params);
+  }
+
   public requestChangeSession(params: any): Observable<any> {
     return this.request(API_CMD.BFF_01_0004, params)
       .switchMap((resp) => {

@@ -8,8 +8,6 @@ import MyTUsage from './myt.usage.controller';
 import DateHelper from '../../../../utils/date.helper';
 
 class MyTUsageDataLimit extends TwViewController {
-  public myTUsage = new MyTUsage();
-
   constructor() {
     super();
   }
@@ -18,7 +16,7 @@ class MyTUsageDataLimit extends TwViewController {
     Observable.combineLatest(
       this.getUsageData()
     ).subscribe(([usageData]) => {
-      this.myTUsage.renderView(res, 'usage/myt.usage.data-limit.html', this.getData(usageData, svcInfo));
+      res.render('usage/myt.usage.data-limit.html', this.getData(usageData, svcInfo));
     });
   }
 
@@ -38,21 +36,20 @@ class MyTUsageDataLimit extends TwViewController {
   }
 
   private parseData(usageData: any): any {
-    const data = {
-      'skipId': '공제항목ID',
-      'skipName': '데이터 충전금액 5,000원',
-      'total': '5000',
-      'used': '3200',
-      'remained': '1800',
-      'unit': '110',
-      'couponDate': '20180101'
-    };
-    data['usedRatio'] = parseInt(data.remained, 10) / parseInt(data.total, 10) * 100;
-    data['total'] = FormatHelper.addComma(data.total);
-    data['used'] = FormatHelper.addComma(data.used);
-    data['remained'] = FormatHelper.addComma(data.remained);
-    console.log('~~~~~~~~~~~~~~data', data);
-    return data;
+    // const data = {
+    //   'skipId': '공제항목ID',
+    //   'skipName': '데이터 충전금액 5,000원',
+    //   'total': '5000',
+    //   'used': '3200',
+    //   'remained': '1800',
+    //   'unit': '110',
+    //   'couponDate': '20180101'
+    // };
+    usageData['usedRatio'] = (parseInt(usageData.remained, 10) / parseInt(usageData.total, 10) * 100) || 0;
+    usageData['total'] = FormatHelper.addComma(usageData.total);
+    usageData['used'] = FormatHelper.addComma(usageData.used);
+    usageData['remained'] = FormatHelper.addComma(usageData.remained);
+    return usageData;
   }
 
 

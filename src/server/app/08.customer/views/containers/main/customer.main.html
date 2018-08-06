@@ -50,7 +50,7 @@
                                                     </li>
                                                     <% }) %>
                                                 </ul>
-                                                <img src="/img/dummy/customer_main01.jpg" alt=""/>
+                                                <img src="<%=banner.bnnrImgPathNm%>" alt=""/>
                                             </div>
                                         </li>
                                         <% })} %>
@@ -113,10 +113,10 @@
                         <p class="cont-tit"><em>직접 만나서 서비스</em>를<br/>받으시겠어요?</p>
                         <ul class="customer-list">
                             <li class="customer-search-list1">
-                                <button><span class="ico"></span><span class="txt">지점, 대리점 찾기</span></button>
+                                <a href="/customer/shop/search"><span class="ico"></span><span class="txt">지점, 대리점 찾기</span></a>
                             </li>
                             <li class="customer-search-list2">
-                                <button><span class="ico"></span><span class="txt">AS센터 찾기</span></button>
+                                <a href="/customer/shop/repair"><span class="ico"></span><span class="txt">AS센터 찾기</span></a>
                             </li>
                             <li class="customer-search-list3">
                                 <button><span class="ico"></span><span class="txt">로밍센터 찾기</span></button>
@@ -134,15 +134,19 @@
                             <div class="customer-slider2">
                                 <div class="slider-box">
                                     <ul class="slider">
+                                        <% researchList.result.map((research) => { %>
                                         <li>
                                             <div class="component">
                                                 <div class="component-box flcardcta">
                                                     <div class="flcard-cont no-btn-bottom">
                                                         <div class="flcard-area">
                                                             <div class="store-card">
-                                                                <p class="card-ti">더 좋은 청구서를 <br/>제공하기 위해 <br/><em class="tx-bold">설문에
-                                                                    답해주세요.</em></p>
-                                                                <button class="bt-link-tx">오늘의 설문 참여하기<span class="ico"></span></button>
+                                                                <p class="card-ti">
+                                                                    <span><%=research.bnnrRsrchTitleNm%></span>
+                                                                    <br>
+                                                                    <em class="tx-bold">설문에 답해주세요.</em>
+                                                                </p>
+                                                                <a href="/customer/researches/<%=research.bnnrRsrchId%>" class="bt-link-tx">오늘의 설문 참여하기<span class="ico"></span></a>
                                                             </div>
                                                         </div>
                                                         <span class="ico-ill-store"></span>
@@ -150,38 +154,7 @@
                                                 </div>
                                             </div>
                                         </li>
-                                        <li>
-                                            <div class="component">
-                                                <div class="component-box flcardcta">
-                                                    <div class="flcard-cont no-btn-bottom">
-                                                        <div class="flcard-area">
-                                                            <div class="store-card">
-                                                                <p class="card-ti">더 좋은 청구서를 <br/>제공하기 위해 <br/><em class="tx-bold">설문에
-                                                                    답해주세요.</em></p>
-                                                                <button class="bt-link-tx">오늘의 설문 참여하기<span class="ico"></span></button>
-                                                            </div>
-                                                        </div>
-                                                        <span class="ico-ill-store"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="component">
-                                                <div class="component-box flcardcta">
-                                                    <div class="flcard-cont no-btn-bottom">
-                                                        <div class="flcard-area">
-                                                            <div class="store-card">
-                                                                <p class="card-ti">더 좋은 청구서를 <br/>제공하기 위해 <br/><em class="tx-bold">설문에
-                                                                    답해주세요.</em></p>
-                                                                <button class="bt-link-tx">오늘의 설문 참여하기<span class="ico"></span></button>
-                                                            </div>
-                                                        </div>
-                                                        <span class="ico-ill-store"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
+                                        <% }) %>
                                     </ul>
                                 </div>
                             </div>
@@ -213,7 +186,7 @@
                             </li>
                             <li>
                                 <div class="link-long">
-                                    <a title="이용자 피해예방센터로 이동">이용자 피해예방센터<span class="ico"></span></a>
+                                    <a href="/customer/prevent-damage" title="이용자 피해예방센터로 이동">이용자 피해예방센터<span class="ico"></span></a>
                                 </div>
                             </li>
                             <li>
@@ -248,9 +221,13 @@
         </div>
     </div>
     <!--// #contents -->
-    <!--/customer/notice#98672-->
     <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
 </div>
+
+<script >
+
+</script>
+
 
 <% include ../../components/javascript.component.html %>
 <script>

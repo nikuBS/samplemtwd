@@ -41,7 +41,7 @@
                             <span id="aria-citation-name" class="form-ti">이름</span>
                             <span class="inputbox">
                                     <span class="input">
-                                        <input type="text" value="" placeholder="휴대폰 명의자 이름" title="이름" aria-labelledby="aria-citation-name" />
+                                        <input id="fe-input-name" type="text" value="" placeholder="휴대폰 명의자 이름" title="이름" aria-labelledby="aria-citation-name" />
                                     </span>
                                 </span>
                         </div>
@@ -49,7 +49,7 @@
                             <span id="aria-citation-birth" class="form-ti">법정 생년월일</span>
                             <span class="inputbox">
                                     <span class="input">
-                                        <input type="number" placeholder="명의자의 생년월일 6자리" value="" title="법정 생년월일" aria-labelledby="aria-citation-birth" aria-describedby="aria-birth-tx" />
+                                        <input id="fe-input-birth" type="number" placeholder="명의자의 생년월일 6자리" value="" title="법정 생년월일" aria-labelledby="aria-citation-birth" aria-describedby="aria-birth-tx" />
                                     </span>
                                 </span>
                             <span class="inputbox">
@@ -57,11 +57,11 @@
                                         <div class="widget-box radio">
                                             <ul class="select-list" role="radiogroup">
                                                 <li class="radiobox type01" role="radio" aria-checked="false"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-                                                    <input type="radio" name="radio1" value="" title="남자" /><!-- 체크상태일 경우 checked="checked" -->
+                                                    <input class="fe-radio-gender" type="radio" name="radio1" value="1" title="남자" /><!-- 체크상태일 경우 checked="checked" -->
                                                     남자
                                                 </li>
                                                 <li class="radiobox type01" role="radio" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                                    <input type="radio" name="radio1" value="" title="여자" /><!-- 체크상태일 경우 checked="false" -->
+                                                    <input class="fe-radio-gender" type="radio" name="radio1" value="2" title="여자" /><!-- 체크상태일 경우 checked="false" -->
                                                     여자
                                                 </li>
                                             </ul>
@@ -73,16 +73,16 @@
                             <span id="aria-citation-phone" class="form-ti">SK 텔레콤 휴대폰 번호</span>
                             <span class="inputbox bt-add">
                                     <span class="input">
-                                        <input type="number" placeholder="숫자만 입력" title="휴대폰 번호" aria-labelledby="aria-citation-phone" />
+                                        <input id="fe-input-mdn" type="number" placeholder="숫자만 입력" title="휴대폰 번호" aria-labelledby="aria-citation-phone" />
                                         <button href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></button>
                                     </span>
                                     <span class="bt-box">
-                                        <button type="button">인증번호 받기</button>
+                                        <button id="fe-bt-cert" type="button" disabled>인증번호 받기</button>
                                     </span>
                                 </span>
                             <span class="inputbox mt10">
                                     <span class="input">
-                                        <input type="text" placeholder="인증번호 6자리" title="휴대폰 인증번호" aria-labelledby="aria-citation-phone" />
+                                        <input id="fe-input-cert" type="text" placeholder="인증번호 6자리" title="휴대폰 인증번호" aria-labelledby="aria-citation-phone" />
                                         <button href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></button>
                                     </span>
                                 </span>
@@ -91,7 +91,7 @@
                 </div>
                 <ul class="bt-slice">
                     <li class="bt-red1">
-                        <button>간편 로그인</button>
+                        <button id="fe-bt-login" disabled>간편 로그인</button>
                     </li>
                 </ul>
             </div>
@@ -102,10 +102,10 @@
             <!-- .cont-box -->
             <div class="cont-box nogaps-hoz">
                 <div class="link-long">
-                    <button>아이디 로그인 하기<span class="ico"></span></button>
+                    <button class="fe-bt-login">아이디 로그인 하기<span class="ico"></span></button>
                 </div>
                 <div class="link-long last">
-                    <button>회원 가입 하기<span class="ico"></span></button>
+                    <a href="/auth/signup/guide">회원 가입 하기<span class="ico"></span></a>
                 </div>
             </div>
             <!--// .cont-box -->
@@ -141,7 +141,7 @@
                                                 <div class="acco-bt-slice">
                                                     <ul class="bt-slice">
                                                         <li class="bt-white2">
-                                                            <button>법인 폰 개인인증 서비스란?</button>
+                                                            <button id="fe-bt-cop">법인 폰 개인인증 서비스란?</button>
                                                         </li>
                                                     </ul>
                                                 </div>

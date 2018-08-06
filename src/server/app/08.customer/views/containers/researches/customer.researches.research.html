@@ -15,12 +15,12 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div class="wrap">
+<div class="wrap" data-research-id="<%= research.id %>">
     <!-- #header -->
     <div id="header" class="header-wrap">
         <div class="header">
             <div class="header-ti align-l">
-                <h1>오늘의 설문조사</h1>
+                <h1>설문조사 진행</h1>
             </div>
             <button class="prev-step fe-common-back"><span class="blind">이전으로</span></button>
         </div>
@@ -28,63 +28,102 @@
     <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap">
-            <h2 class="blind">내용</h2>
-            <div class="container">
-                <!-- .cont-box -->
-                <div class="cont-box noborder">
-                    <div class="poll-info">
-                        <h3 class="poll-tit">최근 기억에 남는 SKT 동영상은?</h3>
-                        <div class="poll-date">2017.10.23</div>
-                    </div>
-                    <div class="poll-chart-box">
-                        <div class="poll-chart-sbox">
-                            <dl class="poll-chart-txt">
-                                <dt>진행률</dt>
-                                <dd>50%</dd>
-                            </dl>
-                            <div class="bar-chart-hoz">
-                                <span class="data-bar deepblue" style="width:50%"></span>
-                            </div><br/>
-                        </div>
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <!-- .cont-box -->
+            <div class="cont-box noborder">
+                <div class="poll-info">
+                    <h3 class="poll-tit"><%= research.title %></h3>
+                    <div class="poll-date"><%= research.startDate %> - <%= research.endDate%></div>
+                </div>
+                <% if (research.questionCount > 1) { %>
+                <div class="poll-chart-box">
+                    <div class="poll-chart-sbox">
+                        <dl class="poll-chart-txt">
+                            <dt>진행률</dt>
+                            <dd>50%</dd>
+                        </dl>
+                        <div class="bar-chart-hoz">
+                            <span class="data-bar deepblue" style="width:50%"></span>
+                        </div><br/>
                     </div>
                 </div>
-                <!--// .cont-box -->
-                <!-- .cont-box -->
-                <div class="cont-box nogaps-top">
-                    <div class="poll-chart-space">
-                        <div class="poll-space-inner">
-                            <span style="display:block;padding:100px 0;color:#fff;text-align:center;background:#ff999a;">설문유형 노출영역</span><!-- 유형 노출시 해당 태그 삭제 -->
-                        </div>
-                        <!--<ul class="bt-slice">
-                            <li class="bt-blue1">
-                                <button>다음으로</button>
-                            </li>
-                        </ul>-->
-                        <ul class="bt-slice item-two">
-                            <li class="bt-blue1">
-                                <button disabled>이전</button>
-                            </li>
-                            <li class="bt-blue1">
-                                <button>다음</button>
-                            </li>
-                        </ul>
-                        <!--<ul class="bt-slice">
-                            <li class="bt-blue1">
-                                <button>참여하기</button>
-                            </li>
-                        </ul>-->
-                    </div>
-                </div>
-                <!--// .cont-box -->
+                <% } %>
             </div>
+            <!--// .cont-box -->
+            <hr class="cont-sp type1" aria-hidden="true">
+            <!-- .cont-box -->
+            <div class="cont-box">
+                <% for (let questionIdx in research.questions) { %>
+                    <% const question = research.questions[questionIdx]; %>
+                    <div class="poll-chart-space" id="<%= questionIdx === '1'? 'main' : 'q' + questionIdx %>" data-necessary="<%= research.isNecessary %>" data-answer-type="<%= question.answerType %>">
+                        <p class="poll-heading"><%= question.content %></p>
+                        <div class="poll-space-inner">
+                            <div class="poll-option-cont">
+                                <% if (question.examples) { %>
+                                <div class="widget">
+                                    <% const isRadio = !question.isMultiple; %>
+                                    <div class="widget-box <%= isRadio? 'radio' : 'check'%>">
+                                        <ul class="select-list <%= research.isMultiStage? 'division-two mb0' : '' %>" role="group">
+                                            <% for (let exampleIdx in question.examples) { %>
+                                                <% const exam = question.examples[exampleIdx]; %>
+                                                <li class="<%= isRadio? 'radiobox type03' : 'checkbox type02' %> alignment" role="<%= isRadio? 'radio' : 'checkbox' %>" aria-checked="" data-next-question="<%= exam.nextQuestion %>">
+                                                    <div class="alignment-box">
+                                                        <i class="ico"></i>
+                                                        <input type="<%= isRadio? 'radio' : 'checkbox' %>" name="<%= isRadio? 'radio' : 'checkbox' %>" value="" title="<%= exam.content %>"/>
+                                                        <span class="txt"><%= exam.content %></span>
+                                                    </div>
+                                                </li>
+                                            <% } %>
+                                        </ul>
+                                        <% if (question.examples[Object.keys(question.examples).length].isEtc) { %><textarea class="poll-area fe-etc-area" data-etc-idx="<%= examCount %>" cols="20" rows="3"></textarea><% } %>
+                                    </div>
+                                </div>
+                                <% } else { %>
+                                    <textarea class="poll-area mt10" cols="20" rows="3" placeholder="형식에 맞게 입력해주십시오."></textarea>
+                                    <div class="max-byte"><em>0</em> <span>/ 최대 100byte</span></div>
+                                <% } %>
+                            </div>
+                            <% if (questionIdx === '1') { %>
+                                <ul class="bt-slice">
+                                    <li class="bt-blue1<%= question.answerType !== '0' ? ' fe-go-next' : '' %>">
+                                        <button>다음으로</button>
+                                    </li>
+                                </ul>
+                            <% } else if (questionIdx === research.questionCount) { %>
+                                <ul class="bt-slice item-two">
+                                    <li class="bt-white2">
+                                        <button>이전으로</button>
+                                    </li>
+                                    <li class="bt-blue1 fe-submit">
+                                        <button <%= question.isNecessary? 'disabled' : '' %>>참여하기</button>
+                                    </li>
+                                </ul>
+                            <% } else { %>
+                                <ul class="bt-slice item-two">
+                                    <li class="bt-white2">
+                                        <button>이전으로</button>
+                                    </li>
+                                    <li class="bt-blue1<%= question.answerType !== '0' ? ' fe-go-next' : '' %>">
+                                        <button <%= question.isNecessary? 'disabled' : '' %>>다음으로</button>
+                                    </li>
+                                </ul>
+                            <% } %>
+                        </div>
+                    </div>
+                <% } %>
+            </div>
+            <!--// .cont-box -->
         </div>
-        <!--// #contents -->
+    </div>
+    <!--// #contents -->
     <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }) %>
 </div>
 
 <% include ../../components/javascript.component.html %>
 <script>
     $(document).ready(function () {
+        console.log(Tw.CustomerResearch)
         new Tw.CustomerResearch($('.wrap'));
     });
 </script>

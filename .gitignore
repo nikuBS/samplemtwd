@@ -6,6 +6,7 @@ ee http://help.github.com/ignore-files/ for more about ignoring files.
 /src/server/public
 /tmp
 /out-tsc
+/logs
 
 # dependencies
 /node_modules

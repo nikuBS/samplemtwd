@@ -38,7 +38,7 @@
                                 </li>
                                 <% } %>
                             </ul>
-                            <% if (!data.last) { %>
+                            <% if (data.remain > 0) { %>
                             <button class="acco-notice-more fe-btn_more_list" >더보기<span>(<%= data.remain %>)</span></button>
                             <% } %>
                         </div>

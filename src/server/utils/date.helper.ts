@@ -70,6 +70,14 @@ class DateHelper {
   }
 
   /**
+   * @param date {Date} or {string} : YYYYMMDD
+   * @returns {string} : 12월
+   */
+  static getShortKoreanMonth(date: any): string  {
+    return moment(this.convDateFormat(date)).format('MM월');
+  }
+
+  /**
    * @param date {Date} or {string} : YYYYMMDDhhmmss
    * @returns {number} : 30
    */
@@ -166,6 +174,16 @@ class DateHelper {
    */
   static getDifference(endDate: string, startDate?: string): number {
     return moment(endDate).diff(startDate || new Date());
+  }
+
+  /**
+   * Return duration difference
+   * @param {Moment} : moment
+   * @returns {Moment} : moment
+   */
+  static getDiffDuration(endDate: any): any {
+    const diff = moment(endDate).diff(new Date());
+    return moment.duration(diff);
   }
 }
 

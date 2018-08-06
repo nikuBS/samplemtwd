@@ -47,7 +47,7 @@
                         <% const color = result.type === 'Q' ? exam.isAnswer ? 'orange1' : 'gray' : colors[i]; %>
                         <div class="poll-chart-sbox">
                             <dl class="poll-chart-txt">
-                                <dt><% if (exam.isAnswer) { %><em class="tx-bold">[정답] </em><% } %><%= exam.content%></dt>
+                                <% if (exam.isAnswer) { %><span class="vt tx-bold">[정답] </span><% } %><%= exam.content%></dt>
                                 <dd><%= exam.count %>표(<%= exam.rate %>%)</dd>
                             </dl>
                             <div class="bar-chart-hoz">

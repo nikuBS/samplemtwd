@@ -54,6 +54,15 @@ Tw.FormatHelper = (function () {
     return number.toString();
   };
 
+  /**
+   * Insert colon into middle of number string
+   * @param val normally server response. MUST be 4 characters. ex) '0900', '2000'
+   * @returns '09:00', '20:00'
+   */
+  var insertColonForTime = function (val) {
+    return val.slice(0, 2) + ':' + val.slice(2);
+  };
+
   var customDataFormat = function (data, curUnit, targetUnit) {
     var units = [Tw.DATA_UNIT.KB, Tw.DATA_UNIT.MB, Tw.DATA_UNIT.GB];
     var curUnitIdx = _.findIndex(units, function (value) {
@@ -235,6 +244,7 @@ Tw.FormatHelper = (function () {
     getFormattedPhoneNumber: getFormattedPhoneNumber,
     getDashedPhoneNumber: getDashedPhoneNumber,
     convNumFormat: convNumFormat,
+    insertColonForTime: insertColonForTime,
     setDecimalPlace: setDecimalPlace
   };
 })();

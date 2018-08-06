@@ -157,6 +157,18 @@ export enum CUSTOMER_PREVENTDAMAGE_GUIDE {
   LATEST = '최신 이용자 피해예방 정보'
 }
 
+export enum CUSTOMER_SEARCH_OPTIONS {
+  SHOP_TYPE_0 = '전체',
+  SHOP_TYPE_1 = '지점',
+  SHOP_TYPE_2 = '대리점',
+  OPTION_PREMIUM = 'T Premium Store',
+  OPTION_PICKUP = '바로픽업',
+  OPTION_RENTAL = '임대폰',
+  OPTION_APPLE = '애플',
+  OPTION_SKB = 'SKT 브로드밴드',
+  OPTION_OFFICIAL = '공식 인증대리점'
+}
+
 export enum SELECT_POINT {
   DEFAULT = '포인트 선택'
 }
@@ -168,4 +180,22 @@ export enum DATE_FORMAT {
 
 export enum RESEARCH_EXAMPLE_TYPE {
   ETC = '기타'
+}
+
+
+export enum CURRENCY_UNIT  {
+  WON = '원',
+  TEN_THOUSAND = '만원'
+}
+
+export enum MYT_JOIN_TYPE  {
+  PAY = '납부',
+  UNPAID = '미청구'
+}
+
+export enum USAGE_PATTERN_CHART {
+  USED = '사용요금',
+  MSG = '문자',
+  DATA = '데이터',
+  VOICE = '음성통화'
 }

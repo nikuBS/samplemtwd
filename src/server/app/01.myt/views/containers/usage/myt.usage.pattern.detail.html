@@ -1,0 +1,177 @@
+<!--
+  FileName: myt.usage.pattern.detail.html
+  Author: Kim InHwan (skt.P132150@partner.sk.com)
+  Date: 2018.08.03
+-->
+<% include ../../components/start.component.html %>
+<body>
+<div class="wrap">
+    <%- include('../../../../common/views/components/header.component.html', { title: '최근 사용패턴', svcInfo: data.svcInfo }); %>
+    <!-- #contents -->
+    <div id="pattern-detail" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <div class="cont-box">
+                <button class="bt-dropdown big" title="최근 사용패턴 항목 선택" aria-haspopup="true">전체<span class="ico"></span></button>
+            </div>
+            <hr class="cont-sp type1" aria-hidden="true" />
+            <div id="fe-basfee" class="cont-box">
+                <h2 class="title-h2">월정액</h2>
+                <% if(data.empty.basFee) { %>
+                    <!-- .contents-empty -->
+                    <div class="contents-empty type2 pb50">
+                        <span class="ico"></span>
+                        <p class="desc">최근 3개월간 사용하신 금액이 없습니다.</p>
+                    </div>
+                    <!--// .contents-empty -->
+                <% } else { %>
+                    <div class="pattern-wrap">
+                        <div class="can-box1">
+                            <canvas></canvas>
+                        </div>
+                    </div>
+                <% } %>
+            </div>
+            <hr class="cont-sp type1" aria-hidden="true" />
+            <div id="fe-domtcfee" class="cont-box">
+                <h2 class="title-h2">국내 통화료</h2>
+                <% if(data.empty.domTcFee) { %>
+                <!-- .contents-empty -->
+                <div class="contents-empty type2 pb50">
+                    <span class="ico"></span>
+                    <p class="desc">최근 3개월간 사용하신 금액이 없습니다.</p>
+                </div>
+                <!--// .contents-empty -->
+                <% } else { %>
+                <div class="pattern-wrap">
+                    <div class="can-box2">
+                        <canvas></canvas>
+                    </div>
+                </div>
+                <% } %>
+            </div>
+            <hr class="cont-sp type1" aria-hidden="true" />
+            <div id="fe-datatcfee" class="cont-box">
+                <h2 class="title-h2">데이터 통화료</h2>
+                <% if(data.empty.dataTcFee) { %>
+                <!-- .contents-empty -->
+                <div class="contents-empty type2 pb50">
+                    <span class="ico"></span>
+                    <p class="desc">최근 3개월간 사용하신 금액이 없습니다.</p>
+                </div>
+                <!--// .contents-empty -->
+                <% } else { %>
+                <div class="pattern-wrap">
+                    <div class="can-box3">
+                        <canvas></canvas>
+                    </div>
+                </div>
+                <% } %>
+            </div>
+            <hr class="cont-sp type1" aria-hidden="true" />
+            <div id="fe-infousefee" class="cont-box">
+                <h2 class="title-h2">콘텐츠 이용료</h2>
+                <% if(data.empty.infoUseFee) { %>
+                <!-- .contents-empty -->
+                <div class="contents-empty type2 pb50">
+                    <span class="ico"></span>
+                    <p class="desc">최근 3개월간 사용하신 금액이 없습니다.</p>
+                </div>
+                <!--// .contents-empty -->
+                <% } else { %>
+                <div class="pattern-wrap">
+                    <div class="can-box4">
+                        <canvas></canvas>
+                    </div>
+                </div>
+                <% } %>
+            </div>
+            <hr class="cont-sp type1" aria-hidden="true" />
+            <div id="fe-optfee" class="cont-box">
+                <h2 class="title-h2">옵션 요금제</h2>
+                <% if(data.empty.optFee) { %>
+                <!-- .contents-empty -->
+                <div class="contents-empty type2 pb50">
+                    <span class="ico"></span>
+                    <p class="desc">최근 3개월간 사용하신 금액이 없습니다.</p>
+                </div>
+                <!--// .contents-empty -->
+                <% } else { %>
+                <div class="pattern-wrap">
+                    <div class="can-box5">
+                        <canvas></canvas>
+                    </div>
+                </div>
+                <% } %>
+            </div>
+            <hr class="cont-sp type1" aria-hidden="true" />
+            <div id="fe-msgusefee" class="cont-box">
+                <h2 class="title-h2">문자 이용료</h2>
+                <% if(data.empty.msgUseFee) { %>
+                <!-- .contents-empty -->
+                <div class="contents-empty type2 pb50">
+                    <span class="ico"></span>
+                    <p class="desc">최근 3개월간 사용하신 금액이 없습니다.</p>
+                </div>
+                <!--// .contents-empty -->
+                <% } else { %>
+                <div class="pattern-wrap">
+                    <div class="can-box6">
+                        <canvas></canvas>
+                    </div>
+                </div>
+                <% } %>
+            </div>
+            <hr class="cont-sp type1" aria-hidden="true" />
+            <div id="fe-suplsvcusefee" class="cont-box">
+                <h2 class="title-h2">부가서비스 이용료</h2>
+                <% if(data.empty.suplSvcUseFee) { %>
+                <!-- .contents-empty -->
+                <div class="contents-empty type2 pb50">
+                    <span class="ico"></span>
+                    <p class="desc">최근 3개월간 사용하신 금액이 없습니다.</p>
+                </div>
+                <!--// .contents-empty -->
+                <% } else { %>
+                <div class="pattern-wrap">
+                    <div class="can-box7">
+                        <canvas></canvas>
+                    </div>
+                </div>
+                <% } %>
+            </div>
+            <hr class="cont-sp type1" aria-hidden="true" />
+            <div id="fe-othrcousefee" class="cont-box">
+                <h2 class="title-h2">소액결제</h2>
+                <% if(data.empty.othrCoUseFee) { %>
+                <!-- .contents-empty -->
+                <div class="contents-empty type2 pb50">
+                    <span class="ico"></span>
+                    <p class="desc">최근 3개월간 사용하신 금액이 없습니다.</p>
+                </div>
+                <!--// .contents-empty -->
+                <% } else { %>
+                <div class="pattern-wrap">
+                    <div class="can-box8">
+                        <canvas></canvas>
+                    </div>
+                </div>
+                <% } %>
+            </div>
+        </div>
+    </div>
+    <!--// #contents -->
+    <%- include('../../../../common/views/components/footer.component.html', { svcInfo: data.svcInfo }); %>
+</div>
+
+<% include ../../components/javascript.component.html %>
+<script>
+  var data = '<%- JSON.stringify(data) %>';
+  $(document).ready(function () {
+    var comp = new Tw.MyTUsagePatternDetail({
+      $element:$('#pattern-detail'),
+      data: JSON.parse(data)
+    });
+  });
+</script>
+<% include ../../components/end.component.html %>

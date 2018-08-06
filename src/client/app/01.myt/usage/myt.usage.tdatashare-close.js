@@ -24,6 +24,7 @@ Tw.MytUsageTdatashareClose.prototype = {
 
   _bindEvent: function () {
     this.$container.on('click', '.fe-close-submit', $.proxy(this._closeSubmit, this));
+    this.$container.on('click', '.fe-ico-back', $.proxy(this._onClickIcoBack, this));
     this.$container.on('click', '.fe-btn-back', $.proxy(this._onClickBtnBack, this));
   },
 
@@ -39,8 +40,7 @@ Tw.MytUsageTdatashareClose.prototype = {
 
   _requestDone: function (resp) {
     if ( resp.code === '00' ) {
-      this._$complete.show();
-      this._$main.hide();
+      this._showComplete();
     } else {
       if ( resp.data ) {
         this._showErrorAlert(resp.data && resp.data.msg);
@@ -63,7 +63,21 @@ Tw.MytUsageTdatashareClose.prototype = {
   },
 
   _onClickBtnBack: function () {
-    this._popupService.openConfirm(Tw.POPUP_TITLE.CONFIRM, Tw.MSG_MYT.TDATA_SHARE.A01, undefined, undefined, $.proxy(this._handleBack, this));
+    this._handleBack();
+  },
+
+  _onClickIcoBack: function () {
+    if ( this._isComplete ) {
+      this._handleBack();
+    } else {
+      this._popupService.openConfirm(Tw.POPUP_TITLE.CONFIRM, Tw.MSG_MYT.TDATA_SHARE.A01, undefined, undefined, $.proxy(this._handleBack, this));
+    }
+  },
+
+  _showComplete: function () {
+    this._isComplete = true;
+    this._$complete.show();
+    this._$main.hide();
   },
 
   _handleBack: function () {

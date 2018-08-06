@@ -127,8 +127,9 @@ class FormatHelper {
       formatted.push({ data: min, unit: VOICE_UNIT.MIN });
     }
     const sec = data - (hours * 3600) - (min * 60);
-    formatted.push({ data: sec, unit: sec > 0 ? VOICE_UNIT.SEC : VOICE_UNIT.MIN });
-
+    if ( sec !== 0 || hours + min <= 0) {
+      formatted.push({ data: sec, unit: sec > 0 ? VOICE_UNIT.SEC : VOICE_UNIT.MIN });
+    }
     return formatted;
   }
 
@@ -164,6 +165,18 @@ class FormatHelper {
     return parseFloat(value.toFixed(point));
   }
 
+  /**
+   * Insert colon into middle of number string
+   * @param val normally server response. MUST be 4 characters. ex) '0900', '2000'
+   * @returns '09:00', '20:00'
+   */
+  static insertColonForTime(val: string): string {
+    return val.slice(0, 2) + ':' + val.slice(2);
+  }
+
+  static numberWithCommas(num: number): string {
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  }
 }
 
 export default FormatHelper;
