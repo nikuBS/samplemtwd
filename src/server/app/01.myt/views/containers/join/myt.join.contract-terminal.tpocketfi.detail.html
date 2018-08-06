@@ -4,6 +4,40 @@
 * Date: 2018.07.24
 * Info:
 %>
+<!-- 템플릿 -->
+<script id="fe-contract-terminal-detail" type="text/x-handlebars-template">
+
+    {{# each tempData }}
+    <div class="payment-detail-box">
+        <div class="detail-inner">
+            <div class="detail-list">
+                <ul>
+                    <li>
+                        <span class="title">청구일(회차)</span>
+                        <span class="tx-cont">
+                            <span class="ff-hn">{{invoDt}}</span> (<span class="ff-hn">{{invCnt}}</span>회차)
+                        </span>
+                    </li>
+                    <li>
+                        <span class="title">할인 금액</span>
+                        <span class="tx-cont">
+                            <span class="tx-blue">
+                                <span class="tx-bold"><span class="ff-hn">{{penEstDcAmt}}</span></span> 원
+                            </span>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="title">할인 반환금<br/>산정율(%)</span>
+                        <span class="tx-cont"><span class="ff-hn">{{perEstRt}}</span> %</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    {{/each}}
+
+</script>
+<!-- 템플릿 end -->
 <% include ../../components/start.component.html %>
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
@@ -17,11 +51,64 @@
 <div id="wrapFdev" class="wrap">
     <!-- #header -->
     <div id="header" class="header-wrap">
-        <h1>myt.joinService.contractTerminalInfo.tpocketfi.detail</h1>
+        <div class="header">
+            <div class="header-ti">
+                <h1>월별 상세 할인내역</h1>
+                <button class="depth-view" role="button" aria-pressed="false"><span class="blind">메뉴구조보기</span></button>
+            </div>
+            <button class="prev-step"><span class="blind">이전으로</span></button>
+            <button class="search-content"><span class="blind">검색하기</span></button>
+        </div>
     </div>
     <!--// #header -->
     <!-- #contents -->
-    <div id="contents" class="container-wrap"></div>
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <div class="popup-page"><!-- .no-btn 하단에 버튼이 없을 경우 -->
+                <!-- #header -->
+                <div class="header-wrap">
+                    <div class="page-header">
+                        <div class="header-ti align-l">
+                            <h1>월별 상세 할인내역</h1>
+                        </div>
+                    </div>
+                </div>
+                <!--// #header -->
+                <!-- .container-wrap -->
+                <div class="container-wrap">
+                    <h2 class="blind">내용</h2>
+                    <div class="container">
+                        <!-- .cont-box -->
+                        <div class="cont-box noborder">
+                            <div class="payment-detail-wrap">
+
+                                <div data-target="detailList">
+
+                                </div>
+
+                                <div class="bt-more-wrap type2" data-target="addBtnArea">
+                                    <button role="button" class="bt-more" title="" data-target="addBtn">
+                                        더보기<span>(20)</span></button>
+                                </div>
+
+
+                                <ul class="contents-notice type2">
+                                    <li class="noti-type3">할인반환금 산식 = 월별 할인금액에 할인회차 별 할인반환금 산정율을 적용한 뒤, 합산하여 부과합니다.</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!--// .cont-box -->
+                    </div>
+                </div>
+                <!--// .container-wrap -->
+                <!-- .popup-closeBtn -->
+                <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button>
+                <!--// .popup-closeBtn -->
+            </div>
+
+        </div>
+    </div>
     <!--// #contents -->
     <% include ../../../../../common/views/components/footer.component.html %>
 </div>

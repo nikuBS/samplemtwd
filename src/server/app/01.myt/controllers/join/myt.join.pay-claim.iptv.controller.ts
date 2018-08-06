@@ -6,7 +6,7 @@
 import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Observable } from 'rxjs/Observable';
-import { API_CMD } from '../../../../types/api-command.type';
+import { API_CMD, API_CODE, API_MYT_ERROR, API_MYT_ERROR_CODE } from '../../../../types/api-command.type';
 import StringHelper from '../../../../utils/string.helper';
 import moment = require('moment');
 import DateHelper from '../../../../utils/date.helper';
@@ -32,52 +32,64 @@ class MytJoinPayClaimIptv extends TwViewController {
     pageRenderView: 'join/myt.join.pay-claim.iptv.html'
   };
 
+  private _redirectUrlInfo: any = {
+    payClaim: '/myt/join/pay-claim',
+    iptvSk: '/myt/join/pay-claim/iptvSk'
+  };
+
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+    if ( svcInfo.svcAttrCd !== 'S1' && svcInfo.svcAttrCd !== 'S2' && svcInfo.svcAttrCd !== 'S3' ) {
+      this.logger.info(this, '[ svcInfo ] 리다이렉트 : ', svcInfo);
+      res.redirect(this._redirectUrlInfo.payClaim);
+      return;
+    }
+
     this._svcInfo = svcInfo;
     this.logger.info(this, '[ svcInfo ] 사용자 정보 : ', svcInfo);
     this.reqQuery = req.query;
     const thisMain = this;
 
+    const p1 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0058, {}), '테스트 api');
+    // const p1_mock = this._getPromiseApiMock(payClaimInfo_BFF_05_0058, 'p1 Mock 데이터');
 
-    const p1 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0041, {}), '테스트 api');
-    const p1_mock = this._getPromiseApiMock(payClaimInfo_BFF_05_0058, 'p1 Mock 데이터');
+    Promise.all([p1]).then(
+      function (resArr) {
 
-    Promise.all([p1_mock]).then(function (resArr) {
-      console.dir(resArr);
-      thisMain.logger.info(thisMain, `[ Promise.all ] : `, resArr);
+        console.dir(resArr);
+        thisMain.logger.info(thisMain, `[ Promise.all ] : `, resArr);
 
-      /*
-      * 실 데이터 사용시
-       */
-      // resArr[0].subscribe({
-      //   next( dataObj ) {
-      //     thisMain.logger.info(thisMain, '[ next ] : ', dataObj);
-      //   },
-      //   error(error) {
-      //     thisMain.logger.info(thisMain, '[ error ] : ', error.stack || error);
-      //   },
-      //   complete() {
-      //     thisMain.logger.info(thisMain, '[ complete ] : ');
-      //
-      //     thisMain.renderView(res, thisMain._urlTplInfo.pageRenderView, {
-      //       reqQuery: thisMain.reqQuery,
-      //       svcInfo: thisMain._svcInfo
-      //     } );
-      //
-      //   }
-      // });
+        /*
+        * 실 데이터 사용시
+         */
+        thisMain.renderView(res, thisMain._urlTplInfo.pageRenderView, {
+          reqQuery: thisMain.reqQuery,
+          svcInfo: thisMain._svcInfo,
+          resDataInfo: resArr[0].result
+        });
 
-      /*
-      * Mock 데이터 사용시
-       */
-      thisMain.renderView(res, thisMain._urlTplInfo.pageRenderView, {
-        reqQuery: thisMain.reqQuery,
-        svcInfo: thisMain._svcInfo,
-        resDataInfo: resArr[0].result
-      });
+        /*
+        * Mock 데이터 사용시
+         */
+        // thisMain.renderView(res, thisMain._urlTplInfo.pageRenderView, {
+        //   reqQuery: thisMain.reqQuery,
+        //   svcInfo: thisMain._svcInfo,
+        //   resDataInfo: resArr[0].result
+        // });
+      }, function (err) {
+        thisMain.logger.info(thisMain, `[ Promise.all > err ] : `, err);
+        console.dir(err);
+        // res.redirect(thisMain._redirectUrlInfo.iptvSk);
 
+        if ( err.code === API_MYT_ERROR.BIL0011 ) {
+          thisMain.logger.info(thisMain, '[ SK 브로드 밴드 가입자, 리다이렉트 ]');
+          res.redirect(thisMain._redirectUrlInfo.iptvSk);
+          return;
+        } else {
+          thisMain.logger.info(thisMain, `[ Promise.all > err > 계정확인 필요 ] : `, err);
+          return;
+        }
 
-    }); // Promise.all END
+      }); // Promise.all END
 
   } // render end
 
@@ -91,19 +103,14 @@ class MytJoinPayClaimIptv extends TwViewController {
     return new Promise((resolve, reject) => {
       Observable.combineLatest(
         reqObjObservableApi
-      ).subscribe({
-        next(reqObjObservable) {
-          thisMain.logger.info(thisMain, `[ ${ msg } next ] : `, reqObjObservable);
-          resolve(reqObjObservable);
-        },
-        error(error) {
-          thisMain.logger.info(thisMain, `[ ${ msg } error ] : `, error.stack || error);
-        },
-        complete() {
-          thisMain.logger.info(thisMain, `[ ${ msg } complete ] : `);
+      ).subscribe((resp) => {
+        thisMain.logger.info(thisMain, `[ ${ msg } next ] : `, resp);
+        if ( resp[0].code === API_CODE.CODE_00 ) {
+          resolve(resp[0]);
+        } else {
+          reject(resp[0]);
         }
       });
-
     });
   }
 
@@ -113,8 +120,13 @@ class MytJoinPayClaimIptv extends TwViewController {
       const ms: number = Math.floor(Math.random() * 1000) + 1;
       setTimeout(function () {
         console.log(`[ ${ msg } _getPromiseApiMock ] : ` + mockData);
-        resolve(mockData);
-        // reject('실패');
+
+        if ( mockData.code === API_CODE.CODE_00 ) {
+          resolve(mockData);
+        } else {
+          reject(mockData);
+        }
+
       }, ms);
     });
   }

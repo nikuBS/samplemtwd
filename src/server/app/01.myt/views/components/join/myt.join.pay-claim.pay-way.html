@@ -16,12 +16,20 @@
     <span class="tx-cont"><%=resDataInfo.bankCardCo %><br><span class="ff-hn vbl"><%=resDataInfo.bankCardNum %></span></span>
 </li>
 <% } else if( resDataInfo.payMthdCd == '03' ) { %> <%# 03 : 지로 %>
-
-<% } else if( resDataInfo.payMthdCd == '04' ) { %> <%# 04 : 입금전용계좌 %>
-
-<% } else { %> <%# B상품이거나 청구 계정 대표 상품이 아닐경우 %>
 <li>
     <span class="title">납부방법</span>
-    <span class="tx-cont"><span class="ff-hn vbl">B</span>상품이거나 청구 계정 대표 상품이 아닙니다.</span>
+    <span class="tx-cont"><%=resDataInfo.payMthdNm %></span>
 </li>
+<% } else if( resDataInfo.payMthdCd == '04' ) { %> <%# 04 : 입금전용계좌 %>
+<li>
+    <span class="title">납부방법</span>
+    <span class="tx-cont"><%=resDataInfo.payMthdNm %></span>
+</li>
+<% } else if( resDataInfo.payMthdCd == '05' ) { %> <%# 04 : 가상계좌 %>
+<li>
+    <span class="title">납부방법</span>
+    <span class="tx-cont"><%=resDataInfo.payMthdNm %></span>
+</li>
+<% } else { %> <%# B상품이거나 청구 계정 대표 상품이 아닐경우 %>
+
 <% } %>

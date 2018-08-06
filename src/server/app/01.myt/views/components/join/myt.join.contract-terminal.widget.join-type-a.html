@@ -1,0 +1,47 @@
+<%#
+* FileName: myt.join.contract-terminal.widget.join-type-a.html
+* Author: 김명환 (skt.P130714@partner.sk.com)
+* Date: 2018.08.03
+* Info: 가입 / T기본약정 | join_type_A
+%>
+<div class="widget">
+    <div class="widget-box toggle">
+        <div class="list-top">
+            <div class="select-right">
+                <button class="btn-toggle bt-detail" role="button" aria-pressed="false" title="자세히보기">자세히보기<span class="ico"></span></button>
+            </div>
+        </div>
+        <div class="toggler">
+            <div class="payment-detail-wrap mt12">
+                <div class="payment-detail-box">
+                    <div class="detail-inner">
+                        <div class="detail-list type3">
+                            <ul>
+                                <li>
+                                    <span class="title">약정기간</span>
+                                    <span class="tx-cont"><span class="ff-hn"><%=commDataInfo.terminalInfo[i].agreeTotMonth%></span>개월 (잔여 <span class="ff-hn"><%=commDataInfo.terminalInfo[i].remDt%></span>일)</span>
+                                </li>
+                                <li>
+                                    <span class="title">구분</span>
+                                    <span class="tx-cont">가입</span>
+                                </li>
+                                <li>
+                                    <span class="title">지원약정금액</span>
+                                    <span class="tx-cont"><span class="ff-hn"><%=commDataInfo.terminalInfo[i].agreePay%></span> 원</span>
+                                </li>
+                                <li>
+                                    <span class="tx-result">해지 하시는 경우 약정위약금은 <span class="tx-red"><span class="ff-hn vbl"><%=commDataInfo.terminalInfo[i].penalty%></span>원</span> 입니다.</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <ul class="contents-notice line-none">
+                            <li class="noti-type2"><span class="ff-hn vbl">2011</span>년 <span class="ff-hn vbl">11</span>월 <span class="ff-hn vbl">23</span>일 이후 신규가입/기기변경 고객님께서는 약정기간 내에 가입 당시 약정한 요금상품을 변경하실 경우 보조금 차액이 다음달 청구요금에 반영되어 정산됩니다.</li>
+                            <li class="noti-type2"><span class="ff-hn vbl">2014</span>년 <span class="ff-hn vbl">1</span>월 <span class="ff-hn vbl">8</span>일부터 착한기변 할인 혜택은 <span class="ff-hn vbl">T할부지원(매월 할부금의 일정금액 지원)으로 제공합니다.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
