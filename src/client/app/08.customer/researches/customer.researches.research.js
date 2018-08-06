@@ -117,7 +117,7 @@ Tw.CustomerResearch.prototype = {
           break;
       }
     } else {
-      this._popupService.openAlert(resp.msg, undefined, undefined, $.proxy(this._goBack, this));
+      this._popupService.openAlert(resp.code + ' ' + resp.msg, undefined, undefined, $.proxy(this._goBack, this));
     }
   },
 
