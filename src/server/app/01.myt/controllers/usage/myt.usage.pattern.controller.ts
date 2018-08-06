@@ -22,7 +22,8 @@ class MyTUsagePattern extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     let data = {
       svcInfo: svcInfo,
-      isTotal: false
+      isTotal: false,
+      isPhone: true
     };
     const curDate = new Date().getDate();
     const api = this.getPatternApi(svcInfo);
@@ -51,6 +52,9 @@ class MyTUsagePattern extends TwViewController {
         }
         const cone_data = this.checkEmptyData(data);
         data = _.extend(data, cone_data);
+        if ( data.svcInfo.svcAttrCd === 'M3' || data.svcInfo.svcAttrCd === 'M4' ) {
+          data.isPhone = false;
+        }
         res.render('usage/myt.usage.pattern.html', { data });
       });
     }
