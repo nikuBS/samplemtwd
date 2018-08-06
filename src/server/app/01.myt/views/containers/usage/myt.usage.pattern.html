@@ -101,11 +101,15 @@
                                         <% } else { %>
                                             <div class="cont-box">
                                             <div id="amt-btn-grp" class="chart-title">
+                                                <% if(data.isPhone) { %>
                                                 <button class="bt-prev"></button>
+                                                <% } %>
                                                 <span data-index="2" class="item-tit blind"><%= data.names[2] || '' %></span>
                                                 <span data-index="0" class="item-tit"><%= data.names[0] || '' %></span>
                                                 <span data-index="1" class="item-tit blind"><%= data.names[1] || '' %></span>
+                                                <% if(data.isPhone) { %>
                                                 <button class="bt-next"></button>
+                                                <% } %>
                                             </div>
                                             <ul id="fe-cdata-area" class="cellular-chart-wrap">
                                                 <li>
@@ -136,7 +140,8 @@
                                                     <% } %>
                                                 </li>
                                             </ul>
-                                            <ul id="fe-sms-area" class="cellular-chart-wrap">
+                                            <% if(data.isPhone) { %>
+                                                <ul id="fe-sms-area" class="cellular-chart-wrap">
                                                 <li>
                                                     <div class="chart-usage">
                                                         <span class="average">평균 사용량</span>
@@ -165,7 +170,7 @@
                                                     <% } %>
                                                 </li>
                                             </ul>
-                                            <ul id="fe-voice-area" class="cellular-chart-wrap">
+                                                <ul id="fe-voice-area" class="cellular-chart-wrap">
                                                 <li>
                                                     <h3 class="chart-title">총 통화량</h3>
                                                     <div class="chart-usage">
@@ -279,6 +284,7 @@
                                                     <% } %>
                                                 </li>
                                             </ul>
+                                            <% } %>
                                             <div class="plan-recommend">
                                                 <strong class="tit">부가서비스 추천</strong>
                                                 <p class="txt"><em>안심옵션 프리미엄</em><br>이용해보세요.</p>
