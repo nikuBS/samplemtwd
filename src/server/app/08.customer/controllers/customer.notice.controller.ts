@@ -8,7 +8,7 @@ import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../../common/controllers/tw.view.controller';
 import { API_CMD, API_CODE } from '../../../types/api-command.type';
 import { CUSTOMER_NOTICE_CATEGORY } from '../../../types/string.type';
-import _ from 'lodash';
+import FormatHelper from '../../../utils/format.helper';
 
 const categorySwitchingData = {
   tworld: {
@@ -47,10 +47,10 @@ class CustomerNoticeController extends TwViewController {
     return {
       total: data.result.total,
       remain: this._getRemainCount(data.result.totalElements, data.result.pageable.pageNumber, data.result.pageable.pageSize),
-      list: _.map(data.result.content, (item) => {
-        return _.merge(item, {
+      list: data.result.content.map(item => {
+        return Object.assign(item, {
           date: item.rgstDt.substr(0, 4) + '.' + item.rgstDt.substr(4, 2) + '.' + item.rgstDt.substr(6, 2),
-          type: _.isEmpty(item.ctgNm) ? '' : item.ctgNm,
+          type: FormatHelper.isEmpty(item.ctgNm) ? '' : item.ctgNm,
           itemClass: (item.isTop ? 'impo ' : '') + (item.isNew ? 'new' : '')
         });
       }),
