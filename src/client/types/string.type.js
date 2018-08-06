@@ -271,6 +271,9 @@ Tw.MSG_MYT = {
     M01_TITLE: '50% 할인제공 대상 데이터는',
     M01_CONTENTS: '기본요금상품 및 무료로 제공되는 데이터 제공량에 한합니다. <br />대상 데이터 : 각 요금상품 별 데이터 기본 제공량, T끼리 데이터 선물하기 및 데이터 리필하기 서비스로 받은 데이터 제공량, 눝 데이터 생성하기, T가족혜택 데이터 생성하기'
   },
+  CHILDREN: {
+    SELECT_TITLE: '자녀 휴대폰 회선 선택'
+  },
   USAGE_PATTERN: {
     COLOR: {
       BACK: ['#d6dbe5', '/img/chart/pattern2.gif'],
