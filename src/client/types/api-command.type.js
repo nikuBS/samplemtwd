@@ -69,17 +69,22 @@ Tw.API_CMD = {
   BFF_05_0047: { path: '/core-bill/v1/bill-pay/used-amounts', method: Tw.API_METHOD.GET },
   BFF_05_0050: { path: '/core-bill/v1/wire-bill-types', method: Tw.API_METHOD.PUT },
   BFF_05_0052: { path: '/core-bill/v1/wire-bill-reissue', method: Tw.API_METHOD.POST },
-  BFF_05_0064: { path: '/core-bill/v1/useContents', method: Tw.API_METHOD.GET },
+  BFF_05_0064: { path: '/core-bill/v1/useContents/getUseContents', method: Tw.API_METHOD.GET },
   BFF_05_0066: { path: '/core-bill/v1/useContentsLimit', method: Tw.API_METHOD.GET },
-  BFF_05_0067: { path: '/core-bill/v1/updateUseContents', method: Tw.API_METHOD.GET },
+  BFF_05_0067U: { path: '/core-bill/v1/useContents/getUpdateUseContentsLimit', method: Tw.API_METHOD.POST },
+  BFF_05_0067D: { path: '/core-bill/v1/useContents/getUpdateUseContentsLimitDown', method: Tw.API_METHOD.POST },
   BFF_05_0069: { path: '/core-auth/v1/service-passwords', method: Tw.API_METHOD.PUT },
   BFF_05_0070: { path: '/core-auth/v1/service-passwords-change', method: Tw.API_METHOD.PUT },
   BFF_05_0071: { path: '/core-auth/v1/service-passwords', method: Tw.API_METHOD.DELETE },
-  BFF_05_0079: { path: '/core-bill/v1/microPay-hist-requests', method: Tw.API_METHOD.GET },
-  BFF_05_0080: { path: '/core-bill/v1/microPay-requests', method: Tw.API_METHOD.GET },
-  BFF_05_0081: { path: '/core-bill/v1/microPay-requests', method: Tw.API_METHOD.POST },
+  BFF_05_0079: { path: '/core-bill/v1/microPay-hist-request', method: Tw.API_METHOD.POST },
+  BFF_05_0080: { path: '/core-bill/v1/microPay-request', method: Tw.API_METHOD.GET },
+  BFF_05_0081U: { path: '/core-bill/v1/microPay-requests', method: Tw.API_METHOD.POST },
+  BFF_05_0081D: { path: '/core-bill/v1/microPay-requests/limitDown', method: Tw.API_METHOD.POST },
   BFF_05_0082: { path: '/core-bill/v1/microPay-auto-set', method: Tw.API_METHOD.POST },
   BFF_05_0083: { path: '/core-bill/v1/microPay-requests', method: Tw.API_METHOD.PUT },
+  BFF_05_0085: { path: '/core-bill/v1/micropay-password-status', method: Tw.API_METHOD.GET },
+  BFF_05_0086: { path: '/core-bill/v1/micropay-password-create', method: Tw.API_METHOD.POST },
+  BFF_05_0087: { path: '/core-bill/v1/micropay-password-changes', method: Tw.API_METHOD.PUT },
   BFF_05_0089: { path: '/core-bill/v1/prepayInfo', method: Tw.API_METHOD.GET },
   BFF_05_0076: { path: '/core-modification/v1/myinfo/discount-infos-month', method: Tw.API_METHOD.GET },
 
@@ -254,6 +259,9 @@ Tw.API_CODE = {
   CODE_08: 'RDT0008',    // 고객 비밀번호 초기화상
   CODE_99: 'RDT0099',    // Circuit Open
   CODE_BIL0018: 'BIL0018',  // 개인 사업자 번호 조회 불가
+  CODE_BIL0030: 'BIL0030',  // 휴대폰 결제 이용동의 후 사용 가능한 메뉴입니다
+  CODE_BIL0031: 'BIL0031',  // 미성년자는 이용할 수 없습니다
+  CODE_BIL0034: 'BIL0034',  // 소액결제 부가서비스 미가입자는 이용할 수 없습니다
   CODE_200: '200',
   CODE_400: '400'
 };

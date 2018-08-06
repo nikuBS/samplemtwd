@@ -219,6 +219,14 @@ Tw.FormatHelper = (function () {
     return str;
   }
 
+  function _getDashedRepresentPhoneNumber(phoneNumber) {
+    var str = '';
+    str += phoneNumber.substring(0, 3);
+    str += '-';
+    str += phoneNumber.substring(4);
+    return str;
+  }
+
   function getFormattedPhoneNumber(phoneNumber) {
     var getMaskingPhoneNumber = function (mpn) {
       var tmpArr = mpn.split('-');
@@ -235,6 +243,8 @@ Tw.FormatHelper = (function () {
       return _getDashedTelephoneNumber(phoneNumber);
     } else if (Tw.ValidationHelper.isCellPhone(phoneNumber)) {
       return _getDashedCellPhoneNumber(phoneNumber);
+    } else if (Tw.ValidationHelper.isRepresentNumber(phoneNumber)) {
+      return _getDashedRepresentPhoneNumber(phoneNumber);
     }
 
     return phoneNumber;
