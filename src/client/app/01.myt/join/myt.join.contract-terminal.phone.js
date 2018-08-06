@@ -77,11 +77,11 @@ Tw.MytJoinContractTerminalPhone.prototype = {
       Tw.MSG_MYT.CONTRACT_TERMINAL.OPEN_ALERT.BOON_FEE_TYPE_B.TITLE);
   },
   _boon_join_type_A_PopOpen: function () {
-    this._popupService.openAlert(Tw.MSG_MYT.CONTRACT_TERMINAL.OPEN_ALERT.BOON_FEE_TYPE_A.MSG,
+    this._popupService.openAlert(Tw.MSG_MYT.CONTRACT_TERMINAL.OPEN_ALERT.BOON_JOIN_TYPE_A.MSG,
       Tw.MSG_MYT.CONTRACT_TERMINAL.OPEN_ALERT.BOON_JOIN_TYPE_A.TITLE);
   },
   _boon_join_type_B_PopOpen: function () {
-    this._popupService.openAlert(Tw.MSG_MYT.CONTRACT_TERMINAL.OPEN_ALERT.BOON_FEE_TYPE_B.MSG,
+    this._popupService.openAlert(Tw.MSG_MYT.CONTRACT_TERMINAL.OPEN_ALERT.BOON_JOIN_TYPE_B.MSG,
       Tw.MSG_MYT.CONTRACT_TERMINAL.OPEN_ALERT.BOON_JOIN_TYPE_B.TITLE);
   },
   _boon_suc_type_A_PopOpen: function () {
