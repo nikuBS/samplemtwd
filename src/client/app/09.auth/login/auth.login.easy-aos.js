@@ -44,8 +44,8 @@ Tw.AuthLoginEasyAos.prototype = {
   },
   _onInputBirth: function () {
     var inputBirth = this.$inputBirth.val();
-    if ( inputBirth.length >= Tw.AOS_BIRTH_LEN ) {
-      this.$inputBirth.val(inputBirth.slice(0, Tw.AOS_BIRTH_LEN));
+    if ( inputBirth.length >= Tw.BIRTH_LEN ) {
+      this.$inputBirth.val(inputBirth.slice(0, Tw.BIRTH_LEN));
       this.$btnLogin.attr('disabled', false);
     } else {
       this.$btnLogin.attr('disabled', true);

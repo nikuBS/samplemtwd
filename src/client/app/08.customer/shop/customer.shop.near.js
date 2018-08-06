@@ -11,10 +11,17 @@ Tw.CustomerShopNear = function (rootEl) {
   this._nativeService = Tw.Native;
   this._popupService = Tw.Popup;
 
+  this._searchedItemTemplate = Handlebars.compile($('#tpl_search_result_item').html());
+
+  this._storeType = '0';
+
+  this._isMap = true;
   this._map = null;
   this._markerLayer1 = null;
   this._markerLayer2 = null;
   this._nearShops = null;
+
+  this._listShownCount = 0;
 
   this._cacheElements();
   this._bindEvents();
@@ -26,9 +33,18 @@ Tw.CustomerShopNear.prototype = {
     this.$region1 = this.$container.find('#fe-region-1');
     this.$region2 = this.$container.find('#fe-region-2');
     this.$tmapBox = this.$container.find('#TmapBox');
+    this.$resultList = this.$container.find('.store-result-list');
+    this.$mapArea = this.$container.find('#fe-map-area');
+    this.$listArea = this.$container.find('#fe-list-area');
+    this.$resultCount = this.$container.find('.num');
+    this.$btnMore = this.$container.find('.bt-more');
+    this.$moreCount = this.$container.find('#fe-more-count');
   },
   _bindEvents: function () {
     this.$container.on('change', '.radio', $.proxy(this._onTypeChanged, this));
+    this.$container.on('click', '.bt-view-list, .bt-view-map',
+      $.proxy(this._onSwitchMapList, this));
+    this.$btnMore.on('click', $.proxy(this._onMore, this));
   },
   _init: function () {
     if (Tw.BrowserHelper.isApp()) {
@@ -37,33 +53,60 @@ Tw.CustomerShopNear.prototype = {
       if ('geolocation' in navigator) {
         // Only works in secure mode(Https) - for test, use localhost for url
         navigator.geolocation.getCurrentPosition($.proxy(function (location) {
-          // this._onCurrentLocation({
-            // longitude: location.coords.longitue,
-            // latitude: location.coords.latitue
-          // });
+          this._onCurrentLocation({
+            longitude: location.coords.longitude,
+            latitude: location.coords.latitude
+          });
         }, this));
       }
     }
     // for test
-    // this._onCurrentLocation({ lon: '126.98664959999998', lat: '37.5635968' });
-    // this._onCurrentLocation({ lon: '127.117605', lat: '37.394576' });
-    // this._onCurrentLocation({ lon: '128.686677', lat: '35.219317' });
+    // this._onCurrentLocation({ longitude: '126.98664959999998', latitude: '37.5635968' });
+    // this._onCurrentLocation({ longitude: '127.117605', latitude: '37.394576' });
+    // this._onCurrentLocation({ longitude: '128.686677', latitude: '35.219317' });
     // this._onCurrentLocation({ lon: '128.471265', lat: '35.290588' });
+  },
+  _onSwitchMapList: function () {
+    console.log('hehe');
+    if (this._isMap) {
+      this.$mapArea.addClass('none');
+      this.$listArea.removeClass('none');
+      this._isMap = false;
+    } else {
+      this.$mapArea.removeClass('none');
+      this.$listArea.addClass('none');
+      this._isMap = true;
+    }
   },
   _onTypeChanged: function (evt) {
     var type = evt.target.value;
     if (type === '0') {
       this._markerLayer1.setVisibility(true);
       this._markerLayer2.setVisibility(true);
+
+      this.$container.find('.fe-1, .fe-2').show();
+
+      this._storeType = '0';
     } else if (type === '1') {
       this._markerLayer1.setVisibility(true);
       this._markerLayer2.setVisibility(false);
+
+      this.$container.find('.fe-1').show();
+      this.$container.find('.fe-2').hide();
+
+      this._storeType = '1';
     } else {
       this._markerLayer1.setVisibility(false);
       this._markerLayer2.setVisibility(true);
+
+      this.$container.find('.fe-1').hide();
+      this.$container.find('.fe-2').show();
+
+      this._storeType = '2';
     }
   },
   _onCurrentLocation: function (location) {
+    console.log('onLocation');
     // init Tmap and show
     this._map = new Tmap.Map({
       div: this.$tmapBox.attr('id'),
@@ -71,14 +114,14 @@ Tw.CustomerShopNear.prototype = {
       height: this.$tmapBox.width() + 'px'
     });
     this._map.setCenter(
-      new Tmap.LonLat(location.longitue, location.latitude).transform('EPSG:4326', 'EPSG:3857'), 15);
+      new Tmap.LonLat(location.longitude, location.latitude).transform('EPSG:4326', 'EPSG:3857'), 15);
 
     // Add marker for current location
     var markerLayer = new Tmap.Layer.Markers();
     this._map.addLayer(markerLayer);
     var size = new Tmap.Size(24, 38);
     var offset = new Tmap.Pixel(-(size.w / 2), -(size.h));
-    var lonlat = new Tmap.LonLat(location.longitue, location.lattitude)
+    var lonlat = new Tmap.LonLat(location.longitude, location.latitude)
       .transform('EPSG:4326', 'EPSG:3857');
     var icon = new Tmap.Icon(Tw.TMAP.COMPASS, size, offset);
     var marker = new Tmap.Marker(lonlat, icon);
@@ -93,7 +136,7 @@ Tw.CustomerShopNear.prototype = {
       searchType : 'COORDINATES',
       reqCoordType: 'WGS84GEO',
       reqLon: location.longitude,
-      reqLat: location.lattitude,
+      reqLat: location.latitude,
       appKey : Tw.TMAP.APP_KEY
     }).done($.proxy(function (res) {
       var regions = res.searchRegionsInfo[0].regionInfo.description.split(' ');
@@ -139,6 +182,35 @@ Tw.CustomerShopNear.prototype = {
       } else {
         this._markerLayer2.addMarker(marker);
       }
+    }
+
+    this.$resultCount.text(this.$resultCount.text().replace(/\d*/, shops.length));
+    this._onMore();
+  },
+  _onMore: function () {
+    var shops = this._nearShops;
+    var listToShow = shops.length - this._listShownCount;
+    if (listToShow > 20) {
+      listToShow = 20;
+    }
+    this.$resultList.append(this._searchedItemTemplate({
+      list: shops.slice(this._listShownCount, this._listShownCount + listToShow)
+    }));
+    this._listShownCount += listToShow;
+
+    if (this._listShownCount >= shops.length) {
+      this.$btnMore.hide();
+    } else {
+      this.$moreCount.text(
+        shops.length - this._listShownCount > 20 ? '20' : shops.length - this._listShownCount);
+    }
+
+    if (this._storeType === '1') {
+      this.$container.find('.fe-1').show();
+      this.$container.find('.fe-2').hide();
+    } else if (this._storeType === '2') {
+      this.$container.find('.fe-1').hide();
+      this.$container.find('.fe-2').show();
     }
   }
 };

@@ -56,12 +56,22 @@
             </div>
             <!--// .cont-box -->
             <!-- .cont-box -->
-            <div class="cont-box nogaps">
+            <div id="fe-map-area" class="cont-box nogaps">
                 <div id="TmapBox" class="box-store-map">
                     <button class="bt-view-list">리스트 보기</button>
                 </div>
             </div>
             <!--// .cont-box -->
+            <hr class="cont-sp type1" aria-hidden="true"/>
+
+            <div id="fe-list-area" class="cont-box nogaps none">
+                    <div class="box-store-result">
+                        <p class="result-ti"><em class="num">4개</em>의<br />매장이 검색되었습니다.</p>
+                        <button class="bt-view-map">지도 보기</button>
+                        <div class="store-result-list"></div>
+                        <button class="bt-more">더보기<span>(<span id="fe-more-count">20</span>)</span></button>
+                    </div>
+                </div>
         </div>
     </div>
     <!--// #contents -->
@@ -69,6 +79,20 @@
 
 <% include ../../components/javascript.component.html %>
 <% include ../../components/tmap.component.html %>
+
+<script type="text/template" id="tpl_search_result_item">
+  {{#list}}
+  <div class="fe-{{storeType}}">
+      <button class="fe-shop-detail" value="{{locCode}}">
+          <dl>
+              <dt>{{storeName}}</dt>
+              <dd>{{searchAddr}}<br />({{jibunAddr}})</dd>
+          </dl>
+      </button>
+      <a class="bt-tel" href="tel:{{tel}}"><span role="img" class="blind">매장으로 전화하기</span></a>
+  </div>
+  {{/list}}
+</script>
 
 <script>
   $(document).ready(function () {

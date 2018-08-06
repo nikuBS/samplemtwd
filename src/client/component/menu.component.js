@@ -71,7 +71,7 @@ Tw.MenuComponent.prototype = {
       this._historyService.goLoad('/home');
     } else if ( resp.code === Tw.API_LOGIN_ERROR.ICAS3228 ) {
       // 고객보호비밀번호
-      this._historyService.goLoad('/auth/login/service-pwd');
+      this._historyService.goLoad('/auth/login/customer-pwd');
     } else if ( resp.code === Tw.API_LOGIN_ERROR.ICAS3235 ) {
       // 휴면계정
       this._historyService.goLoad('/auth/login/dormancy');

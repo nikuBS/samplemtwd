@@ -20,7 +20,7 @@ class MyTUsage24hour50discount extends TwViewController {
     Observable.combineLatest(
       this.getUsageData()
     ).subscribe(([usageData]) => {
-      this.myTUsage.renderView(res, 'usage/myt.usage.24hours-50discount.html', this.getData(usageData, svcInfo));
+      res.render('usage/myt.usage.24hours-50discount.html', this.getData(usageData, svcInfo));
     });
   }
 

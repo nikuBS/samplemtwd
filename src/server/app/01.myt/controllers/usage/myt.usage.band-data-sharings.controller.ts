@@ -18,7 +18,7 @@ class MytUsageBandDataSharingsController extends TwViewController {
     Observable.combineLatest(
       this.getUsageData()
     ).subscribe(([usageData]) => {
-      this.myTUsage.renderView(res, 'usage/myt.usage.band-data-sharings.html', this.getData(usageData, svcInfo));
+      res.render('usage/myt.usage.band-data-sharings.html', this.getData(usageData, svcInfo));
     });
   }
 

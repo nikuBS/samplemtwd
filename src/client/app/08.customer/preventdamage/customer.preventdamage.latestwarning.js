@@ -36,7 +36,10 @@ Tw.CustomerPreventdamageLatestwarning.prototype = {
   },
 
   _appendMoreList: function(res) {
-    if (res.code !== Tw.API_CODE.CODE_00) return this._apiError(res);
+    if (res.code !== Tw.API_CODE.CODE_00){
+      return this._apiError(res);
+    }
+
     this.$list.append(this._template({
       list: res.result.content
     }));
@@ -52,9 +55,8 @@ Tw.CustomerPreventdamageLatestwarning.prototype = {
     }
   },
 
-  _apiError: function (err) {
-    Tw.Logger.error(err.code, err.msg);
-    this._popupService.openAlert(Tw.MSG_COMMON.SERVER_ERROR + '<br />' + err.code + ' : ' + err.msg);
+  _apiError: function (res) {
+    this._popupService.openAlert(res.code + ' ' + res.msg);
     return false;
   }
 };
