@@ -177,6 +177,20 @@ class FormatHelper {
   static numberWithCommas(num: number): string {
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   }
+
+  /**
+   * YYYYmmdd to YYYY.mm.dd
+   * @param numberDate
+   * @param dateSeparator
+   * @returns {string}
+   */
+  static convertNumberDateToFormat(numberDate: any, dateSeparator: string): string {
+    return [
+      numberDate.substr(0, 4),
+      numberDate.substr(4, 2),
+      numberDate.substr(6, 2)
+    ].join(dateSeparator);
+  }
 }
 
 export default FormatHelper;

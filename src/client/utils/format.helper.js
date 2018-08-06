@@ -37,6 +37,10 @@ Tw.FormatHelper = (function () {
     return value;
   };
 
+  var setDecimalPlace = function(value, point) {
+    return parseFloat(value.toFixed(point));
+  };
+
   var convNumFormat = function (number) {
     if ( number < 1 ) {
       return setDecimalPlace(number, 2);
@@ -151,8 +155,18 @@ Tw.FormatHelper = (function () {
     return cardYm.substr(0, 4) + '/' + cardYm.substr(4, 2);
   };
 
-  var setDecimalPlace = function(value, point) {
-    return parseFloat(value.toFixed(point));
+  /**
+   * YYYYmmdd to YYYY.mm.dd
+   * @param numberDate
+   * @param dateSeparator
+   * @returns {string}
+   */
+  var convertNumberDateToFormat = function(numberDate, dateSeparator) {
+    return [
+        numberDate.substr(0, 4),
+        numberDate.substr(4, 2),
+        numberDate.substr(6, 2)
+    ].join(dateSeparator);
   };
 
   function _getDashedCellPhoneNumber(phoneNumber) {
@@ -245,6 +259,7 @@ Tw.FormatHelper = (function () {
     getDashedPhoneNumber: getDashedPhoneNumber,
     convNumFormat: convNumFormat,
     insertColonForTime: insertColonForTime,
-    setDecimalPlace: setDecimalPlace
+    setDecimalPlace: setDecimalPlace,
+    convertNumberDateToFormat: convertNumberDateToFormat
   };
 })();
