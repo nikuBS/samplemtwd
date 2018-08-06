@@ -66,3 +66,145 @@ export const Researches = [{
   exCtt4: 'QSTNETC',
   exCttCnt: '4'
 }];
+
+export const StepResearch = {
+  surveyQstnMaster: [
+    {
+      qstnId: '1121',
+      qstnTitleNm: '설문조사 객+주관식',
+      qstnTypCd: 'L',
+      qstnObjClCd: 'M',
+      staDtm: '2018.07.24',
+      endDtm: '2018.08.05',
+      qstnHtmlCtt: '<P>&nbsp;</P>',
+      openYn: 'Y',
+      qstnChnlClCd: 'MTWD',
+      totInqItmNum: '4'
+    }
+  ],
+  surveyQstnInqItm: [
+    {
+      qstnId: '1121',
+      inqItmNum: '1',
+      inqItmHtmlCtt: '<P>&nbsp;</P>',
+      inqItmTypCd: '2',
+      nxtInqMovYn: 'N',
+      mndtAnswYn: 'Y',
+      inqSortMthdCd: 'D',
+      totAnswItmCnt: '1',
+      inqDtlCtt: 'qqqq'
+    },
+    {
+      qstnId: '1121',
+      inqItmNum: '2',
+      inqItmHtmlCtt: '<P>&nbsp;</P>',
+      inqItmTypCd: '1',
+      nxtInqMovYn: 'N',
+      mndtAnswYn: 'Y',
+      inqSortMthdCd: 'D',
+      totAnswItmCnt: '2',
+      inqDtlCtt: 'qqqq'
+    },
+    {
+      qstnId: '1121',
+      inqItmNum: '3',
+      inqItmHtmlCtt: '<P>&nbsp;</P>',
+      inqItmTypCd: '2',
+      nxtInqMovYn: 'N',
+      mndtAnswYn: 'Y',
+      inqSortMthdCd: 'D',
+      totAnswItmCnt: '1',
+      inqDtlCtt: '3333'
+    },
+    {
+      qstnId: '1121',
+      inqItmNum: '4',
+      inqItmHtmlCtt: '<P>&nbsp;</P>',
+      inqItmTypCd: '0',
+      nxtInqMovYn: 'N',
+      mndtAnswYn: 'Y',
+      inqSortMthdCd: 'D',
+      totAnswItmCnt: '3',
+      inqDtlCtt: '4444'
+    }
+  ],
+  surveyQstnAnswItm: [
+    {
+      qstnId: '1121',
+      inqItmNum: '1',
+      answItmNum: '1',
+      answItmCtt: 'qqqq',
+      nxtInqItmNum: '0',
+      inqDtlCtt: 'qqqq',
+      inqItmTypCd: '2',
+      mndtAnswYn: 'Y',
+      inqSortMthdCd: 'D'
+    },
+    {
+      qstnId: '1121',
+      inqItmNum: '2',
+      answItmNum: '1',
+      answItmCtt: '1',
+      nxtInqItmNum: '0',
+      inqDtlCtt: 'qqqq',
+      inqItmTypCd: '0',
+      mndtAnswYn: 'Y',
+      inqSortMthdCd: 'D'
+    },
+    {
+      qstnId: '1121',
+      inqItmNum: '2',
+      answItmNum: '2',
+      answItmCtt: '2',
+      nxtInqItmNum: '0',
+      inqDtlCtt: 'qqqq',
+      inqItmTypCd: '0',
+      mndtAnswYn: 'Y',
+      inqSortMthdCd: 'D'
+    },
+    {
+      qstnId: '1121',
+      inqItmNum: '3',
+      answItmNum: '1',
+      answItmCtt: '3333',
+      nxtInqItmNum: '0',
+      inqDtlCtt: '3333',
+      inqItmTypCd: '2',
+      mndtAnswYn: 'Y',
+      inqSortMthdCd: 'D'
+    },
+    {
+      qstnId: '1121',
+      inqItmNum: '4',
+      answItmNum: '1',
+      answItmCtt: '1',
+      nxtInqItmNum: '0',
+      inqDtlCtt: '4444',
+      inqItmTypCd: '0',
+      mndtAnswYn: 'Y',
+      inqSortMthdCd: 'D'
+    },
+    {
+      qstnId: '1121',
+      inqItmNum: '4',
+      answItmNum: '2',
+      answItmCtt: '2',
+      nxtInqItmNum: '0',
+      inqDtlCtt: '4444',
+      inqItmTypCd: '0',
+      mndtAnswYn: 'Y',
+      inqSortMthdCd: 'D'
+    },
+    {
+      qstnId: '1121',
+      inqItmNum: '4',
+      answItmNum: '3',
+      answItmCtt: '3',
+      nxtInqItmNum: '0',
+      inqDtlCtt: '4444',
+      inqItmTypCd: '0',
+      mndtAnswYn: 'Y',
+      inqSortMthdCd: 'D'
+    }
+  ]
+}

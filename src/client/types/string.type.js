@@ -45,7 +45,8 @@ Tw.POPUP_TITLE = {
   PERIOD_SELECT: '기간선택',
   SET_HELPLINE_TYPE: '상담유형 설정',
   SET_HELPLINE_AREA: '지역설정',
-  SET_HELPLINE_TIME: '시간설정'
+  SET_HELPLINE_TIME: '시간설정',
+  SET_HELPLINE_ITEM: '항목설정'
 };
 
 Tw.POPUP_PROPERTY = {
@@ -151,6 +152,12 @@ Tw.MSG_COMMON = {
 Tw.MSG_HOME = {};
 
 Tw.MSG_MYT = {
+  USAGE_TING_M03: {
+    TITLE: '통화가능 금액이란?',
+    CONTENTS: '팅요금상품 가입 시 선택하신 상한금액에서 기본료를 제외한 나머지 금액입니다.\n' +
+      '예) 팅 100요금상품의 경우, 상한 2만원 선택 시 통화 가능 금액은 7,500원입니다.\n' +
+      '상한(20,000원) – 기본료(12,500원) = 7,500원\n'
+  },
   BILL_GUIDE_REISSUE_00: ' 요금안내서 재발행',
   BILL_GUIDE_REISSUE_01: ' 요금안내서 재발행을 신청하시겠습니까?',
   BILL_GUIDE_REISSUE_02: '이메일 주소가 정확한지 다시 한번 확인해주시기 바랍니다. 재발행을 신청하시겠습니까?',
@@ -255,7 +262,7 @@ Tw.MSG_MYT = {
   },
   TDATA_SHARE: {
     M01_TITLE: 'T데이터셰어링 기본제공 데이터 사용량',
-    M01_CONTENTS: '올인원 요금제 등 기본으로 데이터를 제공하는 요금제를 이용하는 고객님 중 제한된 USIM(한도형)의 데이터 정보만 노출합니다.',
+    M01_CONTENTS: '올인원 요금제 등 기본으로 데이터를 제공하는 요금제를 이용하는 고객님 중 제한된 USIM의 데이터 정보만 노출합니다.',
     M02_TITLE: 'T데이터셰어링 총 데이터 사용량',
     M02_CONTENTS: '등록하신 각각의 T 데이터셰어링 USIM의 사용량을 합산한 정보입니다.',
     A01: '진행을 취소하시고 이전 화면으로 이동하시겠습니까?'
@@ -263,6 +270,46 @@ Tw.MSG_MYT = {
   DISCOUNT: {
     M01_TITLE: '50% 할인제공 대상 데이터는',
     M01_CONTENTS: '기본요금상품 및 무료로 제공되는 데이터 제공량에 한합니다. <br />대상 데이터 : 각 요금상품 별 데이터 기본 제공량, T끼리 데이터 선물하기 및 데이터 리필하기 서비스로 받은 데이터 제공량, 눝 데이터 생성하기, T가족혜택 데이터 생성하기'
+  },
+  USAGE_PATTERN: {
+    COLOR: {
+      BACK: ['#d6dbe5', '/img/chart/pattern2.gif'],
+      BACK_1: ['#2572ff'],
+      BACK_2: ['#f65d00'],
+      BACK_3: ['#ef0023'],
+      BACK_4: ['#00a49a'],
+      SALE: '#325ec1',
+      LINE_V: '#2572ff', // voice
+      LINE_S: '#00a49a', // SMS
+      LINE_B: '#ef0023', // bytes
+      TEXT: '#757575'
+    },
+    UNIT: {
+      WON: '(단위:원)',
+      CASE: '(단위:건수)',
+      TIME: '(단위:분,초)',
+      BYTE: '(단위:GB)'
+    },
+    TYPE: {
+      BASIC: 'basic',
+      BASIC_1: 'basic_1',
+      BAR: 'bar',
+      BAR_1: 'bar_1'
+    },
+    CAPTION: ' 3개월 평균 사용량',
+    TF: '평균값',
+    TD: '각 항목값',
+    DETAIL_ITEMS: {
+      ALL: '전체',
+      BAS: '월정액',
+      DOM: '국내통화료',
+      DATA: '데이터통화료',
+      INFO: '콘텐츠 이용료',
+      OPT: '옵션요금제',
+      MSG: '문자이용료',
+      SUPL: '부가서비스 이용료',
+      OTHR: '소액결제'
+    }
   },
   JOIN_SERVICE: {
     EMPTY_PWD: '6자리 이상의 숫자를 입력해주세요.',
@@ -471,7 +518,18 @@ Tw.MSG_AUTH = {
   LINE_A43: '이미 등록된 회선 입니다.',
   LINE_A5: '광고 정보 수신동의 항목에 체크해 주세요.',
   LINE_A6: '약관 상세 내용을 먼저 확인 해 주세요.',
-  EASY_LOGIN_FAIL: '휴대폰 번호가 확인되지 않습니다. USIM이 분리된 상태인지 확인해 주세요.'
+  EASY_LOGIN_FAIL: '휴대폰 번호가 확인되지 않습니다. USIM이 분리된 상태인지 확인해 주세요.',
+  EASY_LOGIN_L11: '이름을 입력해 주세요.',
+  EASY_LOGIN_L12: '법정 생년월일 8자리를 입력해 주세요.',
+  EASY_LOGIN_L13: '성별을 선택해 주세요.',
+  EASY_LOGIN_L02: '생년월일 6자리를 정확히 입력해 주세요.',
+  EASY_LOGIN_L03: '입력하신 정보가 일치하지 않습니다. 확인 후 재입력해 주세요.',
+  EASY_LOGIN_L04: '정상적으로 발송되었습니다. <br />인증번호를 확인해 주세요.',
+  EASY_LOGIN_L51: '재전송 제한시간(1분)이 지난 후에 이용해 주세요.',
+  EASY_LOGIN_L52: '제한시간 내 인증번호를 보낼 수 있는 횟수가 넘었습니다. 잠시 후 다시 시도해 주세요.',
+  EASY_LOGIN_L61: '인증번호를 입력해 주세요.',
+  EASY_LOGIN_L62: '인증번호가 일치하지 않습니다. <br />다시 한번 확인 후 입력해 주세요.',
+  EASY_LOGIN_L63: '인증번호 입력 시간이 초과했습니다. <br />인증번호 받기 버튼을 눌러 새로운 인증번호를 받은 후 이용해주세요.'
 };
 
 Tw.MSG_CUSTOMER = {
@@ -543,7 +601,8 @@ Tw.DATE_FORMAT = {
 };
 
 Tw.URL_PATH = {
-  BROADBAND: 'http://www.skbroadband.com/'
+  BROADBAND: 'http://www.skbroadband.com/',
+  COP_SERVICE: 'http://b2b.tworld.co.kr/cs/counsel/certServiceInfo.bc'
 };
 
 Tw.MSG_POSTCODE = {
@@ -556,8 +615,13 @@ Tw.MSG_POSTCODE = {
 
 Tw.POSTCODE_TEXT = {
   BUILDING_CODE: '건물번호',
+  BUILDING_NUMBER: '번지',
+  BUILDING_HO: '호',
   ZIP_CODE: '우편번호',
-  SELECT_ADDRESS: '주소를 선택해주세요'
+  SELECT_ADDRESS: '주소를 선택해주세요',
+  CITY_GUN_GU: '시/군/구',
+  NUMBER: '지번',
+  NAME: '건물명'
 };
 
 Tw.CUSTOMER_EMAIL = {
@@ -565,5 +629,6 @@ Tw.CUSTOMER_EMAIL = {
   INTERNET: '인터넷/집전화/TV',
   DIRECT: '다이렉트샵',
   CHOCO: '초콜렛',
+  WIBRO: '휴대폰/와이브로',
   SELECT_CATEGORY: '문의사항 선택'
 };

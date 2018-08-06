@@ -10,6 +10,7 @@ Tw.CustomerNotice = function(rootEl) {
   this._popupService = Tw.Popup;
   this._history = new Tw.HistoryService();
   this._template = Handlebars.compile($('#tpl_notice_list_item').html());
+  this._category = this.$container.data('category');
   this._page = 1;
 
   this._cachedElement();
@@ -32,7 +33,6 @@ Tw.CustomerNotice.prototype = {
   },
 
   _bindEvent: function() {
-    this._popupService.close();
     this.$btnCategory.on('click', $.proxy(this._openCategorySelectPopup, this));
     this.$btnMoreList.on('click', $.proxy(this._loadMoreList, this));
   },
@@ -47,7 +47,8 @@ Tw.CustomerNotice.prototype = {
     if (item.length > 0) {
       setTimeout(function() {
         item.trigger('click');
-      }, 0);
+        $(window).scrollTop(item.offset().top);
+      }, 500);
     }
 
     this._history.pathname += this._history.search;
@@ -62,16 +63,17 @@ Tw.CustomerNotice.prototype = {
     this._popupService.open({
       'hbs': 'select',
       'title': Tw.NOTICE.TITLE,
+      'close_bt': true,
       'select': [
         {
           'options': [
-            {'title': 'T world', checked: (this.$container.data('category') === 'tworld'), value: 'tworld',
+            {'title': 'T world', checked: (this._category === 'tworld'), value: 'tworld',
               text: 'T world'},
-            {'title': Tw.NOTICE.DIRECTSHOP, checked: (this.$container.data('category') === 'directshop'),
+            {'title': Tw.NOTICE.DIRECTSHOP, checked: (this._category === 'directshop'),
               value: 'directshop',  text: Tw.NOTICE.DIRECTSHOP },
-            {'title': Tw.NOTICE.MEMBERSHIP, checked: (this.$container.data('category') === 'membership'),
+            {'title': Tw.NOTICE.MEMBERSHIP, checked: (this._category === 'membership'),
               value: 'membership',  text: Tw.NOTICE.MEMBERSHIP },
-            {'title': Tw.NOTICE.ROAMING, checked: (this.$container.data('category') === 'roaming'),
+            {'title': Tw.NOTICE.ROAMING, checked: (this._category === 'roaming'),
               value: 'roaming',  text: Tw.NOTICE.ROAMING }
           ]
         }
@@ -81,7 +83,14 @@ Tw.CustomerNotice.prototype = {
         style_class: 'bt-red1 fe-btn-apply-category',
         txt: Tw.BUTTON_LABEL.CONFIRM
       }]
-    }, $.proxy(this._categoryPopupBindEvent, this));
+    }, $.proxy(this._categoryPopupBindEvent, this),
+      $.proxy(function() {
+        if (this.$container.data('category') === this._category) {
+          return;
+        }
+
+        this._history.goLoad('/customer/notice?category=' + this._category);
+      }, this));
   },
 
   _categoryPopupBindEvent: function($layer) {
@@ -89,7 +98,8 @@ Tw.CustomerNotice.prototype = {
   },
 
   _applyCategory: function($layer) {
-    this._history.goLoad('/customer/notice?category=' + $layer.find('input[name="radio"]:checked').val());
+    this._category = $layer.find('input[name="radio"]:checked').val();
+    this._popupService.close();
   },
 
   _loadMoreList: function() {

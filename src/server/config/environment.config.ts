@@ -10,7 +10,8 @@ const environment = {
     TEMP_CDN: 'http://tstore.rbipt.com/skt',
     TID_SERVER: 'https://auth-stg.skt-id.co.kr',
     TEST_SERVER: 'https://jsonplaceholder.typicode.com',
-    TID_REDIRECT: 'http://m.tworld.co.kr:3000'
+    TID_REDIRECT: 'http://m.tworld.co.kr:3000',
+    TMAP: 'https://api2.sktelecom.com/tmap/js?version=1&format=javascript&appKey=ecfeceac-3660-4618-bc3b-37a11f952441'
   },
   development: {
     BFF_SERVER: 'http://bff-spring.mtw-stg-bff.svc.cluster.local',
@@ -23,7 +24,8 @@ const environment = {
     TEMP_CDN: 'http://tstore.rbipt.com/skt',
     TID_SERVER: 'https://auth-stg.skt-id.co.kr',
     TEST_SERVER: 'https://jsonplaceholder.typicode.com',
-    TID_REDIRECT: 'http://icp-dev.tworld.co.kr'
+    TID_REDIRECT: 'http://icp-dev.tworld.co.kr',
+    TMAP: 'https://api2.sktelecom.com/tmap/js?version=1&format=javascript&appKey=ecfeceac-3660-4618-bc3b-37a11f952441'
   },
   qa: {
     BFF_SERVER: 'http://bff-spring.mtw-stg-bff.svc.cluster.local',
@@ -36,7 +38,8 @@ const environment = {
     TEMP_CDN: 'http://tstore.rbipt.com/skt',
     TID_SERVER: 'https://auth-stg.skt-id.co.kr',
     TEST_SERVER: 'https://jsonplaceholder.typicode.com',
-    TID_REDIRECT: 'http://icp-stg.tworld.co.kr'
+    TID_REDIRECT: 'http://icp-stg.tworld.co.kr',
+    TMAP: 'https://api2.sktelecom.com/tmap/js?version=1&format=javascript&appKey=ecfeceac-3660-4618-bc3b-37a11f952441'
   },
   production: {
     BFF_SERVER: '',
@@ -45,7 +48,8 @@ const environment = {
     TEMP_CDN: 'http://tstore.rbipt.com/skt',
     TID_SERVER: '',
     TEST_SERVER: '',
-    TID_REDIRECT: ''
+    TID_REDIRECT: '',
+    TMAP: 'https://api2.sktelecom.com/tmap/js?version=1&format=javascript&appKey=ecfeceac-3660-4618-bc3b-37a11f952441'
   }
 };
 

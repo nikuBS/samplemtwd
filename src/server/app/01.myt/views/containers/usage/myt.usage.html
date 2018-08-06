@@ -1,5 +1,9 @@
+<!--
+* FileName: myt.usage.html
+* Author: Hyeryoun Lee (skt.P130712@partner.sk.com)
+* Date: 2018.08.02
+-->
 <% include ../../components/start.component.html %>
-
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
     <ul>
@@ -9,19 +13,11 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
+
 <!-- wrap -->
 <div class="wrap" id="myt-usage">
     <!-- header -->
-    <div id="header" class="header-wrap">
-        <div class="header">
-            <div class="header-ti">
-                <h1>실시간 사용량</h1>
-                <button class="depth-view" role="button" aria-pressed="false"><span class="blind">메뉴구조보기</span></button>
-            </div>
-            <button class="prev-step"><span class="blind">이전으로</span></button>
-            <button class="search-content"><span class="blind">검색하기</span></button>
-        </div>
-    </div>
+    <%- include('../../../../../common/views/components/header.component.html', { title: '실시간 사용량', svcInfo: svcInfo }); %>
     <!-- // header -->
     <!-- content -->
     <div id="contents" class="container-wrap">
@@ -30,7 +26,11 @@
             <div class="cont-box">
                 <div class="top-info">
                     <button role="button" class="link-btn" id="<%= usageData.prodId %>"><%= usageData.prodName %></button>
+                    <% if(svcInfo.svcAttrCd === 'S3') { %>
+                    <span class="info-sub"><em><%= remainDate %></em></span>
+                    <% } else { %>
                     <span class="info-sub">남은 일수 <em><%= remainDate %></em>일</span>
+                    <% } %>
                 </div>
             </div>
             <% if (usageData.data && usageData.data.length > 0) { %>
@@ -38,16 +38,17 @@
             <div class="cont-box">
                 <%- include('../../components/usage/myt.usage.graphbox.html', { type: '데이터', items: usageData.data, showUnitSwitch: true }); %>
 
+                <% if (svcInfo.svcAttrCd === 'M1') { %>
                 <div class="list-link">
                     <ul>
                         <li class="fe-refill-btn" style="display: none;">
-                            <button>리필하기<span class="qnt">(<span class="fe-refill-cnt"></span>)</span></button>
+                            <a href="/recharge/refill">리필하기<span class="qnt">(<span class="fe-refill-cnt"></span>)</span></a>
                         </li>
                         <li>
-                            <button>T끼리 데이터선물 / 조르기</button>
+                            <a href="/recharge/gift">T끼리 데이터선물 / 조르기</a>
                         </li>
                         <li class="fe-t-data-sharing-btn" style="display:none;">
-                            <button>T데이터셰어링 사용량</button>
+                            <a href="/myt/usage/tdatashare">T데이터셰어링 사용량</a>
                         </li>
                     </ul>
                 </div>
@@ -56,7 +57,7 @@
                 <div class="msg-guide-link" style="display:none;">
                     <strong class="tit fe-ad1">데이터 Tip</strong>
                     <p class="txt">하나의 데이터로<br />여러 개의 기기를 이용한다고??</p>
-                    <button class="bt-link-tx">T데이터셰어링 알아보기<span class="ico"></span></button>
+                    <a href="/myt/usage/tdatashare/info" class="bt-link-tx">T데이터셰어링 알아보기<span class="ico"></span></a>
                 </div>
 
                 <!-- 데이터 촤과 사용중 중일 경우 노출 -->
@@ -65,6 +66,7 @@
                     <p class="txt">통화는 자주 안 하지만 데이터가<br />부족하다면??</p>
                     <button class="bt-link-tx">다른 요금제 알아보기<span class="ico"></span></button>
                 </div>
+                <% } %>
 
             </div>
             <% } %>
@@ -77,7 +79,7 @@
                 <div class="list-link">
                     <ul>
                         <li class="fe-refill-btn" style="display: none;">
-                            <button>리필하기<span class="qnt">(<span class="fe-refill-cnt"></span>)</span></button>
+                            <a href="/recharge/refill">리필하기<span class="qnt">(<span class="fe-refill-cnt"></span>)</span></a>
                         </li>
                     </ul>
                 </div>
@@ -88,7 +90,6 @@
             <hr class="cont-sp type1" aria-hidden="true" />
             <div class="cont-box">
                 <%- include('../../components/usage/myt.usage.graphbox.html', { type: '문자', items: usageData.sms }); %>
-
             </div>
             <% } %>
 
@@ -99,48 +100,51 @@
             </div>
             <% } %>
 
+            <% if (svcInfo.svcAttrCd === 'M1') { %>
             <hr class="cont-sp type1" aria-hidden="true" />
-            <div class="cont-box nogaps-hoz">
+            <div class="cont-box nogaps-hoz fe-M1-menu">
                 <div class="link-long-group">
                     <div class="link-long fe-t-roaming-sharing-btn" style="display:none;">
-                        <button>T로밍 함께쓰기<span class="ico"></span></button>
+                        <a href="/myt/usage/troaming">T로밍 함께쓰기<span class="ico"></span></a>
                     </div>
                     <div class="link-long fe-data-sharing-btn" style="display:none;">
-                        <button>데이터 함께쓰기<span class="ico"></span></button>
+                        <a href="/myt/usage/datashare">데이터 함께쓰기<span class="ico"></span></a>
                     </div>
                     <% if (usageData.dataTopUp === 'Y') { %>
                     <div class="link-long">
-                        <button>데이터 한도요금제<span class="ico"></span></button>
+                        <a href="/myt/usage/datalimit">데이터 한도요금제<span class="ico"></span></a>
                     </div>
                     <% } %>
                     <% if (usageData.ting === 'Y') { %>
                     <div class="link-long">
-                        <button>팅 요금상품<span class="ico"></span></button>
+                        <a href="/myt/usage/ting">팅 요금상품<span class="ico"></span></a>
                     </div>
                     <% } %>
                     <% if (usageData.dataDiscount === 'Y') { %>
                     <div class="link-long">
-                        <button>24시간 데이터 50% 할인<span class="ico"></span></button>
+                        <a href="/myt/usage/24hourdiscount">24시간 데이터 50% 할인<span class="ico"></span></a>
                     </div>
                     <% } %>
                     <div class="link-long fe-band-data-sharing" style="display:none;">
-                        <button>내폰끼리 결합<span class="ico"></span></button>
+                        <a href="/myt/usage/band-data-sharing">내폰끼리 결합<span class="ico"></span></a>
                     </div>
                     <div class="link-long fe-child-btn" style="display:none;" >
-                        <button>자녀폰 사용량 조회 (<span class="bold fe-child-cnt"></span>명)<span class="ico"></span><span class="badge badge-fam"><span class="blind">자녀</span></span></button>
+                        <a href="/myt/usage/children">자녀폰 사용량 조회 (<span class="bold fe-child-cnt"></span>명)<span class="ico"></span><span class="badge badge-fam"><span class="blind">자녀</span></span></a>
                     </div>
                 </div>
             </div>
+            <% } %>
 
             <hr class="cont-sp type1" aria-hidden="true" />
             <div class="cont-box nogaps-btm">
                 <h2 class="title-h2">이 메뉴도 보실래요?</h2>
                 <div class="link-long-group mt18">
                     <div class="link-long">
-                        <button>실시간 요금조회<span class="ico"></span></button>
+                        <a href="/myt/bill/hotbill">실시간 요금조회<span class="ico"></span></a>
                     </div>
+
                     <div class="link-long">
-                        <button>나의 사용패턴<span class="ico"></span></button>
+                        <a href="/myt/usage/pattern">나의 사용패턴<span class="ico"></span></a>
                     </div>
                 </div>
             </div>

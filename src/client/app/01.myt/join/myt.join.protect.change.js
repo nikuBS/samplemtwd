@@ -1,19 +1,30 @@
 /**
+ * FileName:
+ * Author: Kim InHwan (skt.P132150@partner.sk.com)
+ * Date: 2018.07.
+ *
+ */
+
+/**
  * FileName: myt.joinService.protect.change.js
  * Author: Kim Inhwan (skt.P132150@partner.sk.com)
  * Date: 2018.07.24
  */
-Tw.MyTJSProtectChange = function ($element, isNew) {
+Tw.MyTJoinProtectChange = function ($element, isNew) {
   this.$container = $element;
   this._new = (isNew === 'true');
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._inputHelper = Tw.InputHelper;
+  this.type = {
+    SET: '20',
+    CHANGE: '30'
+  };
   this._rendered();
   this._bindEvent();
 };
 
-Tw.MyTJSProtectChange.prototype = {
+Tw.MyTJoinProtectChange.prototype = {
   //element event bind
   _bindEvent: function () {
     // 확인
@@ -69,15 +80,19 @@ Tw.MyTJSProtectChange.prototype = {
     this._requestProtectChangePwd();
   },
 
-  _goToComplete: function () {
-    // api 성공 후 처리
-  },
-
   _requestProtectChangePwd: function (/*event*/) {
-    var api = /*this._new ? Tw.API_CMD.BFF_05_0069 :*/ Tw.API_CMD.BFF_05_0070;
+    // var api = /*this._new ? Tw.API_CMD.BFF_05_0069 :*/ Tw.API_CMD.BFF_05_0070;
+    var pwd = this.$pwd.find('input').val();
+    var api = Tw.API_CMD.BFF_03_0016;
     var data = {
-      svcPwd: this.$pwd.find('input').val()
+      // 20:설정, 30:변경,
+      chgCd: this._new ? this.type.SET : this.type.CHANGE, // 필수 값
+      svcChgPwd: pwd // 변경, 설정
     };
+    if ( !this._new ) {
+      // 변경인 경우
+      data.svcPwd = pwd; // 변경
+    }
     this._apiService
       .request(api, data)
       .done($.proxy(this._onApiSuccess, this))
@@ -88,12 +103,11 @@ Tw.MyTJSProtectChange.prototype = {
     Tw.Logger.info(params);
     if ( params.code === Tw.API_CODE.CODE_00 ) {
       // 해당페이지로 진입을 바로 하면 안되므로 replace
-      // TODO: 가입정보 페이지 완료되면 URL 입력
-      // window.location.replace('');
+      window.location.replace('/myt/join/join-info');
     }
     else {
-      var errMsg = params.code + ' ' + (params.msg || params.error && params.error.msg) ;
-      this._popupService.openAlert( errMsg, Tw.POPUP_TITLE.NOTIFY);
+      var errMsg = params.code + ' ' + (params.msg || params.error && params.error.msg);
+      this._popupService.openAlert(errMsg, Tw.POPUP_TITLE.NOTIFY);
     }
   },
 

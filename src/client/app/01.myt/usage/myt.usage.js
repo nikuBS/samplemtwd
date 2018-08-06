@@ -8,8 +8,11 @@ Tw.MytUsage = function (rootEl) {
 
 Tw.MytUsage.prototype = {
   _showAndHide: function () {
-    this._getUsageBtn();
-    this._getChildren();
+    //핸드폰(M1)만 API호출
+    if(this.$container.find('.fe-M1-menu').length){
+      this._getUsageBtn();
+      this._getChildren();
+    }
     this._checkExceed();
     this._setSmsStyle();
   },
@@ -100,13 +103,8 @@ Tw.MytUsage.prototype = {
 
     if ( res.result && res.result.length > 0 ) {
       childCntField.text(res.result.length);
-
-      // this._makeBorderStyle(true);
       childBtn.show();
     }
-    // else {
-    //     //   // this._makeBorderStyle(false);
-    //     // }
   },
   _childFail: function (err) {
     console.log('child api fail', err);

@@ -14,33 +14,33 @@
 </div>
 <!--// #skip_navigation -->
 <div id="post-code" class="wrap">
-    <!-- #header -->
-    <div id="header" class="header-wrap">
-        <div class="header step-page">
-            <div class="header-ti">
-                <h1>우편번호 조회</h1>
-            </div>
-            <button class="close-step fe-common-back"><span class="blind">이전으로</span></button>
-        </div>
-    </div>
-    <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap">
         <h2 class="blind">내용</h2>
         <div class="container">
-            <hr class="cont-sp type1" aria-hidden="true"/>
             <!-- .cont-box -->
             <div class="cont-box nogaps">
                 <!-- .component -->
-                <div class="component">
-                    <div class="component-box tabs">
-                        <div id="main" class="tab-contents">
-                            <% include ../../components/postcode/postcode.main.component.html %>
-                        </div>
-                        <div id="step2-load" class="tab-contents" style="display:none;">
-                            <% include ../../components/postcode/postcode.step2.component.html %>
-                        </div>
-                    </div>
+                <div id="main" class="component">
+                    <% include ../../components/postcode/postcode.main.component.html %>
+                </div>
+                <div id="step2-load" class="component" style="display:none;">
+                    <% include ../../components/postcode/postcode.step2-load.component.html %>
+                </div>
+                <div id="step2-number" class="component" style="display:none;">
+                    <% include ../../components/postcode/postcode.step2-number.component.html %>
+                </div>
+                <div id="step2-office" class="component" style="display:none;">
+                    <% include ../../components/postcode/postcode.step2-office.component.html %>
+                </div>
+                <div id="step3-load" class="component" style="display:none;">
+                    <% include ../../components/postcode/postcode.step3-load.component.html %>
+                </div>
+                <div id="step3-number" class="component" style="display:none;">
+                    <% include ../../components/postcode/postcode.step3-number.component.html %>
+                </div>
+                <div id="step3-office" class="component" style="display:none;">
+                    <% include ../../components/postcode/postcode.step3-office.component.html %>
                 </div>
             </div>
             <!--// .cont-box -->

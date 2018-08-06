@@ -422,7 +422,7 @@ skt_landing.widgets = {
         setState(btn.eq(i), list.eq(i).hasClass('on'));
       }
       if($(this).find('> .acco-style').hasClass('none-event')) return;
-      btn.on('click',function(){
+      box.on('click','> .acco-list > .acco-title button',function(){
         setState($(this), !$(this).closest('.acco-list').hasClass('on'));
       });
       function setState(button, state){

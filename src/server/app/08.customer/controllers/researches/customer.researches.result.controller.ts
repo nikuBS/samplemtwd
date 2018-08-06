@@ -7,6 +7,7 @@
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
 import { API_CMD } from '../../../../types/api-command.type';
+import { RESEARCH_EXAMPLE_TYPE } from '../../../../types/string.type';
 
 interface IResultBFF {
   bnnrRsrchId: string; // 리서치 ID, '0132',
@@ -61,8 +62,9 @@ export default class CustomerResearchResult extends TwViewController {
     const answer = Number(result.canswNum || 0);
 
     while (result['exCtt' + i]) {
+      const content = result['exCtt' + i];
       examples.push({
-        content: result['exCtt' + i],
+        content: content === 'QSTNETC' ? RESEARCH_EXAMPLE_TYPE.ETC : content,
         count: result['rpsCtt' + i + 'Cnt'],
         rate: totalCount === 0 ? 0 : Math.floor(result['rpsCtt' + i + 'Cnt'] / totalCount * 100),
         isAnswer: answer === i

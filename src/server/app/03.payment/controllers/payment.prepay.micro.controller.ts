@@ -20,13 +20,13 @@ class PaymentPrepayMicroController extends TwViewController {
     this.apiService.request(API_CMD.BFF_07_0072, {}).subscribe((resp) => {
       if (resp.code === API_CODE.CODE_00) {
         res.render('payment.prepay.micro.html', {
-          prepay: this.parseData(AutoYn.result),
+          prepay: this.parseData(resp.result),
           svcInfo: svcInfo,
           currentMonth: this.getCurrentMonth(),
           title: PREPAY_TITLE.MICRO
         });
       } else {
-        res.render('payment.prepay.error.html', {err: resp, svcInfo: svcInfo, title: PREPAY_TITLE.MICRO + ' ' + PREPAY_TITLE.PREPAY});
+        res.render('payment.prepay.error.html', { err: resp, svcInfo: svcInfo, title: PREPAY_TITLE.MICRO + ' ' + PREPAY_TITLE.PREPAY });
       }
     });
   }
