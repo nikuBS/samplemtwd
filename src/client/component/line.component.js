@@ -10,6 +10,7 @@ Tw.LineComponent = function () {
   this._popupService = Tw.Popup;
   this._apiService = Tw.Api;
   this._historyService = new Tw.HistoryService();
+  this._customerPwd = new Tw.CustomerPwdComponent();
 
   this.$btLine = null;
   this.$list = null;
@@ -24,6 +25,11 @@ Tw.LineComponent = function () {
 };
 
 Tw.LineComponent.prototype = {
+  ERROR_CODE: {
+    RDT0006: 'RDT0006',    //	service-password required	고객비밀번호 인증필요
+    RDT0007: 'RDT0007',    //	service-password locked	고객비밀번호 인증필요
+    RDT0008: 'RDT0008'     //	service-password initialized	고객비밀번호 재설정 필요 ( 신청, 초기화 상태 )
+  },
   _bindEvent: function () {
     this.$container.on('click', '#fe-bt-line', $.proxy(this._onClickLine, this));
 
@@ -126,24 +132,31 @@ Tw.LineComponent.prototype = {
   },
   _onSelectLine: function ($event) {
     var $selectedLine = $($event.currentTarget).parent();
-    this._apiService.request(Tw.NODE_CMD.CHANGE_SESSION, { svcMgmtNum: $selectedLine.data('svcmgmtnum') })
-      .done($.proxy(this._successChangeLine, this));
+    var svcMgmtNum = $selectedLine.data('svcmgmtnum');
+    var mdn = $selectedLine.data('mdn');
+    this._apiService.request(Tw.NODE_CMD.CHANGE_SESSION, { svcMgmtNum: svcMgmtNum })
+      .done($.proxy(this._successChangeLine, this, svcMgmtNum, mdn));
   },
   _onClickTxtButton: function () {
     this._closePopup();
     this._goAuthLine = true;
   },
-  _successChangeLine: function (resp) {
+  _successChangeLine: function (svcMgmtNum, mdn, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      Tw.UIService.setLocalStorage('lineRefresh', 'Y');
-      this._closePopup();
-    } else {
+      this._completeLogin();
+    } else if ( resp.code === this.ERROR_CODE.RDT0006 || resp.code === this.ERROR_CODE.RDT0007 ) {
+      this._customerPwd.openLayer(mdn, svcMgmtNum, $.proxy(this._completeCustomerLogin, this));
+    } else if ( resp.code === this.ERROR_CODE.RDT0008 ) {
+      // 고객보호 비밀번호 설정 페이지
       this._popupService.openAlert(resp.code + ' ' + resp.msg);
+    } else {
+      this._historyService.goLoad('/auth/login/fail?errorCode=' + resp.code);
+      // this._popupService.openAlert(resp.code + ' ' + resp.msg);
     }
   },
   _onClickMore: function () {
     var $hideList = this.$list.filter('.none');
-    var $showList = $hideList.filter(function(index) {
+    var $showList = $hideList.filter(function (index) {
       return index < 20;
     });
     var $service = $showList.parents('.dropdown-group');
@@ -155,8 +168,15 @@ Tw.LineComponent.prototype = {
     $showList.addClass('block');
 
     this.$remainCnt.html(remainCnt);
-    if(remainCnt === 0) {
+    if ( remainCnt === 0 ) {
       this.$btMore.hide();
     }
+  },
+  _completeLogin: function () {
+    Tw.UIService.setLocalStorage('lineRefresh', 'Y');
+    this._closePopup();
+  },
+  _completeCustomerLogin: function () {
+    this._completeLogin();
   }
 };
