@@ -28,6 +28,10 @@ Tw.AuthLoginEasyIos.prototype = {
     '2': 'FEMALE'
   },
   ERROR_CODE: {
+    SMS2003: 'SMS2003',   // 1분 안에 재발송 오류 처리
+    SMS2006: 'SMS2006',   // 5분 안에 4회 발송 오류 처리
+    SMS2008: 'SMS2008',   // 인증번호를 입력할 수 있는 시간이 초과 하였습니다.
+    SMS2007: 'SMS2007',   // 입력하신 인증번호가 맞지 않습니다. 다시 입력해 주세요.
     ATH1004: 'ATH1004',   // 입력하신 정보가 일치하지 않습니다. 확인 후 재입력해 주세요.
     ATH1005: 'ATH1005'    // 휴대폰번호 입력오류
   },
@@ -89,6 +93,12 @@ Tw.AuthLoginEasyIos.prototype = {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this.$btLogin.attr('disabled', false);
       this._popupService.openAlert(Tw.MSG_AUTH.EASY_LOGIN_L04);
+    } else if ( resp.code === this.ERROR_CODE.SMS2003 ) {
+      this._popupService.openAlert(Tw.MSG_AUTH.EASY_LOGIN_L51);
+    } else if ( resp.code === this.ERROR_CODE.SMS2006 ) {
+      this._popupService.openAlert(Tw.MSG_AUTH.EASY_LOGIN_L52);
+    } else {
+      this._popupService.openAlert(resp.code + ' ' + resp.msg);
     }
   },
   _onClickLogin: function () {
@@ -112,9 +122,16 @@ Tw.AuthLoginEasyIos.prototype = {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       Tw.UIService.setLocalStorage('lineRefresh', 'Y');
       this._historyService.goBack();
+    } else if ( resp.code === this.ERROR_CODE.SMS2007 ) {
+      this._popupService.openAlert(Tw.MSG_AUTH.EASY_LOGIN_L62);
+    } else if ( resp.code === this.ERROR_CODE.SMS2008 ) {
+      this._popupService.openAlert(Tw.MSG_AUTH.EASY_LOGIN_L63);
+    } else if ( resp.code === this.ERROR_CODE.ATH1004 || resp.code === this.ERROR_CODE.ATH1005 ) {
+      this._popupService.openAlert(Tw.MSG_AUTH.EASY_LOGIN_L03);
     } else {
       this._popupService.openAlert(resp.code + ' ' + resp.msg);
     }
+
   },
   _checkCertValidation: function () {
     var inputName = this.$inputName.val();
