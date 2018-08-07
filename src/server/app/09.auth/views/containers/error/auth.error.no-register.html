@@ -1,0 +1,98 @@
+<%#
+* FileName: auth.error.no-register.html
+* Author: Ara Jo (araara.jo@sk.com)
+* Date: 2018.08.08
+* CO_99_06_01_01
+%>
+
+<% include ../../components/start.component.html %>
+<!-- body -->
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb_area">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap">
+    <!-- #header -->
+    <div id="header" class="header-wrap">
+        <div class="header">
+            <div class="header-ti align-l">
+                <h1>메뉴명최대열한자까지됨</h1>
+                <!--
+                    <button class="depth-view" role="button" aria-pressed="false"><span class="blind">메뉴구조보기</span></button>
+                    6차스프린트 공통제거
+                -->
+            </div>
+            <button class="prev-step"><span class="blind">이전으로</span></button>
+            <!--
+                <button class="search-content"><span class="blind">검색하기</span></button>
+                6차스프린트 공통제거
+            -->
+            <ul class="bt-slice item-free header-bt">
+                <li class="bt-blue1">
+                    <button title="로그인">회선 등록</button>
+                </li>
+            </ul>
+            <!--<ul class="bt-slice item-free header-bt">
+                <li class="bt-red1">
+                    <button title="로그인">로그인</button>
+                </li>
+            </ul>-->
+        </div>
+    </div>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <!-- .cont-box -->
+            <div class="cont-box">
+                <div class="box-suggest">
+                    <div class="suggest-info">
+                        <p class="suggest-ti">T World 이용 <em class="tx-bold">회선 등록 후</em><br />사용 가능한 서비스 입니다.</p>
+                        <ul class="suggest-list nodot">
+                            <li>아직 등록되지 않은 회선이 <em class="tx-bold">00개</em> 있습니다.<br />회선 등록 후 이용해 주세요.</li>
+                        </ul>
+                        <div class="suggest-bt">
+                            <ul class="bt-slice">
+                                <li class="bt-red1">
+                                    <a href="/auth/line">회선 등록하기</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--// .cont-box -->
+
+            <hr class="cont-sp type1" aria-hidden="true"/>
+
+            <!-- .cont-box -->
+            <div class="cont-box nogaps-hoz">
+                <p class="ti-normal pt28 mb20">도와드릴까요?</p>
+                <div class="link-long">
+                    <button>온라인 상담/문의 바로가기<span class="ico"></span></button>
+                </div>
+                <div class="link-long last">
+                    <button>T월드 고객센터 바로가기 <span class="ico"></span></button>
+                </div>
+            </div>
+            <!--// .cont-box -->
+        </div>
+    </div>
+    <!--// #contents -->
+    <!-- footer -->
+    <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
+    <!-- // footer -->
+</div>
+<% include ../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    new Tw.AuthLineEmptyRegister($('#authLineEmpty'));
+  });
+</script>
+<% include ../../components/end.component.html %>
