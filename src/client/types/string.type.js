@@ -634,7 +634,7 @@ Tw.HELPLINE_TYPE = {
   QUALITY: '통화품질 상담'
 };
 
-Tw.PAYMENT_CARD_TYPE = {
+Tw.PAYMENT_TYPE = {
   TOTAL: '전체',
   NORMAL: '일반결제',
   AUTO: '자동결제',
