@@ -7,8 +7,8 @@ import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../../common/controllers/tw.view.controller';
 import { API_CMD, API_CODE } from '../../../types/api-command.type';
 import FormatHelper from '../../../utils/format.helper';
-import { PREPAY_TITLE } from '../../../types/bff-common.type';
-import {Observable} from 'rxjs/Observable';
+import { PREPAY_TITLE } from '../../../types/bff.type';
+import { Observable } from 'rxjs/Observable';
 
 class PaymentPrepayContentsAutoController extends TwViewController {
   constructor() {

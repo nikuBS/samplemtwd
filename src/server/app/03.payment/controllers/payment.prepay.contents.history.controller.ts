@@ -8,7 +8,7 @@ import TwViewController from '../../../common/controllers/tw.view.controller';
 import { API_CMD, API_CODE } from '../../../types/api-command.type';
 import FormatHelper from '../../../utils/format.helper';
 import DateHelper from '../../../utils/date.helper';
-import {PREPAY_TITLE} from '../../../types/bff-common.type';
+import { PREPAY_TITLE } from '../../../types/bff.type';
 
 class PaymentPrepayContentsHistoryController extends TwViewController {
   constructor() {
