@@ -65,7 +65,7 @@
                                 <div class="widget">
                                     <% const isRadio = !question.isMultiple; %>
                                     <div class="widget-box <%= isRadio? 'radio' : 'check'%>">
-                                        <ul class="select-list <%= research.isMultiStage? 'division-two mb0' : '' %>" role="group">
+                                        <ul class="select-list <%= question.isMultiStage? 'division-two mb0' : '' %>" role="group">
                                             <% for (let exampleIdx in question.examples) { %>
                                                 <% const exam = question.examples[exampleIdx]; %>
                                                 <li class="<%= isRadio? 'radiobox type03' : 'checkbox type02' %> alignment" role="<%= isRadio? 'radio' : 'checkbox' %>" aria-checked="" data-next-question="<%= exam.nextQuestion %>">
@@ -86,11 +86,17 @@
                                 <% } %>
                             </div>
                             <% if (questionIdx === '1') { %>
+                                <% if (research.questionCount === '1') { %>
+                                    <li class="bt-blue1 fe-submit">
+                                        <button <%= question.isNecessary? 'disabled' : '' %>>참여하기</button>
+                                    </li>
+                                <% } else { %>
                                 <ul class="bt-slice">
                                     <li class="bt-blue1<%= question.answerType !== '0' ? ' fe-go-next' : '' %>">
                                         <button>다음으로</button>
                                     </li>
                                 </ul>
+                                <% } %>
                             <% } else if (questionIdx === research.questionCount) { %>
                                 <ul class="bt-slice item-two">
                                     <li class="bt-white2">

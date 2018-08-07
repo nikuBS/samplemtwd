@@ -49,11 +49,11 @@
                                 <ul class="acco-list acco-poll pt0"><!-- .on: 열기 -->
                                     <% for (let i = 0; i < researches.length; i++) { %>
                                         <% const research = researches[i]; %>
-                                        <li class="acco-box <%= research.isProceeding? 'on': ''%>" data-research-id="<%= research.id %>" data-type-code="<%= research.type %>" data-answer-num="<%= research.answerNum %>">
+                                        <li id="<%= research.id %>" class="acco-box <%= research.isProceeding? 'on': ''%>" data-research-id="<%= research.id %>" data-type-code="<%= research.type %>" data-answer-num="<%= research.answerNum %>">
                                             <div class="acco-tit"><em class="poll-condition"><%= research.isProceeding? '진행중':'종료' %></em><%= research.title %><span class="poll-date"><%= research.startDate %> <span class="blind">에서</span><span class="vt" aria-hidden="true">-</span> <%= research.endDate %></span><button role="button" aria-pressed="true"></button></div>
                                             <div class="acco-cont pb0">
                                                 <div class="cont-box nogaps-acco">
-                                                    <% if (research.type === 'Q' && research.hintUrl) { %><a class="bt-link-tx" href="<%= research.hintUrl %>">힌트보기<span class="ico"></span></a><% } %>
+                                                    <% if (research.type === 'Q' && research.hintUrl) { %><button class="bt-link-tx fe-hint" data-hint-url="<%= research.hintUrl %>">힌트보기<span class="ico"></span></button><% } %>
                                                     <div class="poll-option-cont">
                                                         <% if (research.examples.length > 0) { %>
                                                             <% const examCount = research.examples.length; %>

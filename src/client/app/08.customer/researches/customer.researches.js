@@ -8,7 +8,9 @@ Tw.CustomerResearches = function (rootEl) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
+  this._nativeService = Tw.Native;
   this._history = new Tw.HistoryService(rootEl);
+  this._history.init();
 
   this._bindEvent();
 };
@@ -18,6 +20,7 @@ Tw.CustomerResearches.prototype = {
     this.$container.on('click', 'li.bt-blue1 > button', $.proxy(this._handleParticipate, this));
     this.$container.on('click', 'li.bt-white2 > button', $.proxy(this._handleShowResult, this));
     this.$container.on('click', 'ul.select-list > li', $.proxy(this._setAvailableBtn, this));
+    this.$container.on('click', '.fe-hint', $.proxy(this._goHint, this));
   },
 
   _handleParticipate: function (e) {
@@ -84,6 +87,18 @@ Tw.CustomerResearches.prototype = {
       $btn.attr('disabled', true);
     } else if ($btn.attr('disabled')) {
       $btn.attr('disabled', false);
+    }
+  },
+
+  _goHint: function (e) {
+    var url = e.target.getAttribute('data-hint-url');
+    if (Tw.BrowserHelper.isApp()) {
+      this._nativeService.send(Tw.NTV_CMD.OPEN_URL, {
+        type: Tw.NTV_BROWSER.EXTERNAL,
+        href: url
+      });
+    } else {
+      window.open(url);
     }
   }
 };
