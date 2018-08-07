@@ -8,7 +8,7 @@ import { Request, Response, NextFunction } from 'express';
 import { API_CMD, API_CODE } from '../../../types/api-command.type';
 import DateHelper from '../../../utils/date.helper';
 import FormatHelper from '../../../utils/format.helper';
-import {PAYMENT_OPTION, PAYMENT_OPTION_TEXT, SVC_ATTR} from '../../../types/bff-common.type';
+import {PAYMENT_OPTION, PAYMENT_OPTION_TEXT, SVC_ATTR} from '../../../types/bff.type';
 
 class PaymentAutoController extends TwViewController {
   constructor() {

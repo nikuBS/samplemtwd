@@ -8,7 +8,7 @@ import TwViewController from '../../../common/controllers/tw.view.controller';
 import { API_CMD, API_CODE } from '../../../types/api-command.type';
 import FormatHelper from '../../../utils/format.helper';
 import DateHelper from '../../../utils/date.helper';
-import {REQUEST_TYPE} from '../../../types/bff-common.type';
+import {REQUEST_TYPE} from '../../../types/bff.type';
 
 class PaymentPrepayMicroAutoHistoryController extends TwViewController {
   constructor() {

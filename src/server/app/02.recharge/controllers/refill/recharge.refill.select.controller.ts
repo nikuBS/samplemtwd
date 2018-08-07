@@ -7,7 +7,7 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import { Request, Response, NextFunction } from 'express';
 import { Observable } from 'rxjs/Observable';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
-import { LINE_NAME, REFILL_CLASS_NAME } from '../../../../types/bff-common.type';
+import { LINE_NAME, REFILL_CLASS_NAME } from '../../../../types/bff.type';
 import MyTUsage from '../../../01.myt/controllers/usage/myt.usage.controller';
 import FormatHelper from '../../../../utils/format.helper';
 

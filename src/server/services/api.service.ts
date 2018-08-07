@@ -8,7 +8,7 @@ import FormatHelper from '../utils/format.helper';
 import EnvHelper from '../utils/env.helper';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/map';
-import { COOKIE_KEY } from '../types/bff-common.type';
+import { COOKIE_KEY } from '../types/common.type';
 
 class ApiService {
   static instance;

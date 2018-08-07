@@ -5,7 +5,7 @@ import { Request, Response, NextFunction } from 'express';
 import { API_CMD, API_CODE } from '../../../types/api-command.type';
 import DateHelper from '../../../utils/date.helper';
 import FormatHelper from '../../../utils/format.helper';
-import { UNIT, UNIT_E } from '../../../types/bff-common.type';
+import { UNIT, UNIT_E } from '../../../types/bff.type';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/combineLatest';
 import 'rxjs/add/operator/map';

@@ -120,7 +120,7 @@ Tw.AuthLoginEasyIos.prototype = {
   },
   _successRequestLogin: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      Tw.UIService.setLocalStorage('lineRefresh', 'Y');
+      Tw.UIService.setLocalStorage(Tw.LSTORE_KEY.LINE_REFRESH, 'Y');
       this._historyService.goBack();
     } else if ( resp.code === this.ERROR_CODE.SMS2007 ) {
       this._popupService.openAlert(Tw.MSG_AUTH.EASY_LOGIN_L62);
