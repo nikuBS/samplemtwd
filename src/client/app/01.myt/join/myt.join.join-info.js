@@ -10,7 +10,6 @@ Tw.MyTJoinJoinInfo = function (rootEl, svcInfo) {
   this._svcInfo = svcInfo;
   this._loginService = new Tw.MyTJoinProtectPwd();
   this._historyService = new Tw.HistoryService();
-  this._passwordService = new Tw.MyTJSProtectPwd();
   this._init();
 };
 
