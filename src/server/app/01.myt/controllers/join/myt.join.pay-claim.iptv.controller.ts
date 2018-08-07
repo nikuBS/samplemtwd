@@ -68,7 +68,8 @@ class MytJoinPayClaimIptv extends TwViewController {
           reqQuery: thisMain.reqQuery,
           svcInfo: thisMain._svcInfo,
           resDataInfo: resArr[0].result,
-          errBol: false
+          errBol: false,
+          errObj: null
         });
 
         /*
