@@ -37,6 +37,9 @@ class MytJoinJoinInfoController extends TwViewController {
 
   // 마스킹된 날짜 포맷설정
   private getMarskingDateFormat(date, format): any {
+    if ( FormatHelper.isEmpty(date) ) {
+      return date;
+    }
     let _chgDt = date;
     // 마스킹 되어 있을 경우(*을 1로 바꿔서 날짜 포맷팅 후 다시 *로 바꾼다.)
     if ( date.indexOf('*') > -1 ) {
@@ -85,22 +88,20 @@ class MytJoinJoinInfoController extends TwViewController {
 
   // 인터넷/집전화/IPTV
   private getInternetResult(data: any): any {
-    Object.assign(data, {
-      joinDate : DateHelper.getShortDateWithFormat(data.joinDate, 'YYYY.MM.DD'),        // 가입일
-      svcPrdStaDt : DateHelper.getShortDateWithFormat(data.svcPrdStaDt, 'YYYY.MM.DD'),  // 서비스 약정 시작일
-      svcPrdEndDt : DateHelper.getShortDateWithFormat(data.svcPrdEndDt, 'YYYY.MM.DD'),  // 서비스 약정 종료일
-      setPrdStaDt : DateHelper.getShortDateWithFormat(data.setPrdStaDt, 'YYYY.MM.DD'),  // 세트 약정 시작일
-      setPrdEndDt : DateHelper.getShortDateWithFormat(data.setPrdEndDt, 'YYYY.MM.DD')  // 세트 약정 종료일
-    });
+    const dateFormat = 'YYYY.MM.DD';
+    data.joinDate = this.getMarskingDateFormat(data.joinDate, dateFormat);        // 가입일
+    data.svcPrdStaDt = this.getMarskingDateFormat(data.svcPrdStaDt, dateFormat);  // 서비스 약정 시작일
+    data.svcPrdEndDt = this.getMarskingDateFormat(data.svcPrdEndDt, dateFormat);  // 서비스 약정 종료일
+    data.setPrdStaDt = this.getMarskingDateFormat(data.setPrdStaDt, dateFormat);  // 세트 약정 시작일
+    data.setPrdEndDt = this.getMarskingDateFormat(data.setPrdEndDt, dateFormat);  // 세트 약정 종료일
 
     return data;
   }
 
   // wibro
   private getWibroResult(data: any): any {
-    Object.assign(data, {
-      svcScrbDt : DateHelper.getShortDateWithFormat(data.svcScrbDt, DATE_FORMAT.YYYYMMDD_TYPE_0)
-    });
+    const dateFormat = 'YYYY.MM.DD';
+    data.svcScrbDt = this.getMarskingDateFormat(data.svcScrbDt, dateFormat);
 
     return data;
   }

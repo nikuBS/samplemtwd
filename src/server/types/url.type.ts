@@ -45,6 +45,7 @@ export const URL = {
   '/myt/join/protect/change': { login: true, id: 'MY_01_02_08', title: '고객보호 비밀번호 설정' },
   '/myt/join/join-info': { login: true, id: 'MY_01_02', title: '' }, // 가입정보
   '/myt/join/join-info/no-contract': { login: true, id: 'MY_01_02_10', title: '' }, // 무약정 플랜 포인트 내역
+  '/myt/join/join-info/sms': { login: true, id: 'MY_01_02_02_L01', title: '망 작업 안내 SMS 알림 신청' }, // 망 작업 안내 SMS 알림 신청
   '/myt/join/pay-claim/phone': { login: true, id: 'MY_01_05', title: '납부/청구정보' },
   '/myt/join/pay-claim/iptv': { login: true, id: 'MY_01_05_01', title: '납부/청구정보' },
   '/myt/join/pay-claim/iptvSk': { login: true, id: 'MY_01_05_02', title: '납부/청구정보' },
