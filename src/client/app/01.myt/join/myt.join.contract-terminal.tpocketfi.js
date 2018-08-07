@@ -30,6 +30,7 @@ Tw.MytJoinContractTerminalTpocketfi.prototype = {
     Tw.Logger.info('[Client Init]');
 
     this._bindEvent();
+    this._serverErrPopup();
   },
 
   _cachedElement: function () {
@@ -105,6 +106,12 @@ Tw.MytJoinContractTerminalTpocketfi.prototype = {
   //     .fail(function(err){})
   // },
   //--------------------------------------------------------------------------[공통]
+  _serverErrPopup: function() {
+    if ( this.resData.errBol ) {
+      Tw.Logger.info('[_serverErrPopup]');
+      this._popupService.openAlert(this.resData.errObj[0].msg, this.resData.errObj[0].code);
+    }
+  },
   _onOpenSelectPopup: function () {
     //$('.popup-info').addClass('scrolling');
   },

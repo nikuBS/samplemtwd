@@ -6,7 +6,7 @@
 import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Observable } from 'rxjs/Observable';
-import { API_CMD } from '../../../../types/api-command.type';
+import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import StringHelper from '../../../../utils/string.helper';
 import moment = require('moment');
 import DateHelper from '../../../../utils/date.helper';
@@ -60,8 +60,8 @@ class MytJoinContractTerminalTpocketfi extends TwViewController {
       /*
       * 실 데이터 사용시
        */
-      thisMain._resDataInfo = resArr[0][0].result;
-      console.dir(resArr[0][0].result);
+        thisMain._resDataInfo = resArr[0].result;
+        // console.dir(resArr[0].result);
 
       thisMain._dataInit();
 
@@ -210,8 +210,8 @@ class MytJoinContractTerminalTpocketfi extends TwViewController {
     }
     if ( _.size(tInstallment) > 0 ) {
       tInstallment.typeStr = 'join_type_C';
-      tAgree.titNm = MYT_JOIN_CONTRACT_TERMINAL.JOIN_TYPE_C.TITNM;
-      tAgree.agreeNm = MYT_JOIN_CONTRACT_TERMINAL.JOIN_TYPE_C.AGREE_NM;
+      tInstallment.titNm = MYT_JOIN_CONTRACT_TERMINAL.JOIN_TYPE_C.TITNM;
+      tInstallment.agreeNm = MYT_JOIN_CONTRACT_TERMINAL.JOIN_TYPE_C.AGREE_NM;
 
       tInstallment.agreeTotMonth = tInstallment.allotMthCnt; // 약정 전체 개월수
       tInstallment.agreePay = FormatHelper.addComma(tInstallment.totAgrmtAmt); // 약정 금액
@@ -222,8 +222,8 @@ class MytJoinContractTerminalTpocketfi extends TwViewController {
     }
     if ( _.size(rsvPenTAgree) > 0 ) {
       rsvPenTAgree.typeStr = 'join_type_D';
-      tAgree.titNm = MYT_JOIN_CONTRACT_TERMINAL.JOIN_TYPE_D.TITNM;
-      tAgree.agreeNm = MYT_JOIN_CONTRACT_TERMINAL.JOIN_TYPE_D.AGREE_NM;
+      rsvPenTAgree.titNm = MYT_JOIN_CONTRACT_TERMINAL.JOIN_TYPE_D.TITNM;
+      rsvPenTAgree.agreeNm = MYT_JOIN_CONTRACT_TERMINAL.JOIN_TYPE_D.AGREE_NM;
 
       rsvPenTAgree.agreeTotMonth = rsvPenTAgree.rtenAgrmtMthCnt; // 약정 전체 개월수
       rsvPenTAgree.agreePay = FormatHelper.addComma(rsvPenTAgree.rtenPenStrdAmt); // 약정 금액
@@ -346,23 +346,17 @@ class MytJoinContractTerminalTpocketfi extends TwViewController {
   // -------------------------------------------------------------[프로미스 생성]
   public _getPromiseApi(reqObj, msg): any {
     const thisMain = this;
-    // let tempData: any;
     const reqObjObservableApi: Observable<any> = reqObj;
 
     return new Promise((resolve, reject) => {
       Observable.combineLatest(
         reqObjObservableApi
-      ).subscribe({
-        next(reqObjObservable) {
-          thisMain.logger.info(thisMain, `[ ${ msg } next ] : `, reqObjObservable);
-          resolve(reqObjObservable);
-        },
-        error(error) {
-          thisMain.logger.info(thisMain, `[ ${ msg } error ] : `, error.stack || error);
-        },
-        complete() {
-          thisMain.logger.info(thisMain, `[ ${ msg } complete ] : `);
-
+      ).subscribe((resp) => {
+        thisMain.logger.info(thisMain, `[ ${ msg } next ] : `, resp);
+        if ( resp[0].code === API_CODE.CODE_00 ) {
+          resolve(resp[0]);
+        } else {
+          reject(resp[0]);
         }
       });
 
