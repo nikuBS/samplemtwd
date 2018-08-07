@@ -42,20 +42,12 @@ Tw.MytUsageTdatashareClose.prototype = {
     if ( resp.code === '00' ) {
       this._showComplete();
     } else {
-      if ( resp.data ) {
-        this._showErrorAlert(resp.data && resp.data.msg);
-      } else {
-        if ( resp.error ) {
-          this._showErrorAlert(resp.error.msg);
-        } else {
-          this._showErrorAlert(resp.msg);
-        }
-      }
+      this._showErrorAlert(resp.code + ' ' + resp.msg);
     }
   },
 
   _requestFail: function (resp) {
-    this._showErrorAlert(resp.data && resp.data.msg);
+    this._showErrorAlert(resp.code + ' ' + resp.msg);
   },
 
   _showErrorAlert: function (msg) {

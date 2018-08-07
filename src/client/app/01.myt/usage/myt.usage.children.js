@@ -35,11 +35,13 @@ Tw.MytUsageChildren.prototype = {
           };
         }, this));
       }
+    } else {
+      this._showErrorAlert(resp.code + ' ' + resp.msg);
     }
   },
 
   _childrenReqFail: function (resp) {
-    this._popupService.openAlert(resp.code + '' + resp.msg);
+    this._showErrorAlert(resp.code + ' ' + resp.msg);
   },
 
   _onClickBtDropdown: function (event) {
@@ -69,6 +71,10 @@ Tw.MytUsageChildren.prototype = {
       $this.text(data.data);
       $this.parent()[0].childNodes[2].nodeValue = data.unit;
     });
+  },
+
+  _showErrorAlert: function (msg) {
+    this._popupService.openAlert(msg);
   }
 
 };

@@ -42,12 +42,16 @@ Tw.MytUsageTdatashare.prototype = {
       .fail($.proxy(this._requestFail, this));
   },
 
-  _requestDone: function (res) {
-    this._setData(res);
+  _requestDone: function (resp) {
+    if ( resp.code === '00' ) {
+      this._setData(resp);
+    } else {
+      this._showErrorAlert(resp.code + ' ' + resp.msg);
+    }
   },
 
-  _requestFail: function () {
-
+  _requestFail: function (resp) {
+    this._showErrorAlert(resp.code + ' ' + resp.msg);
   },
 
   _onClickMoreBtn: function () {
@@ -68,8 +72,8 @@ Tw.MytUsageTdatashare.prototype = {
     });
   },
 
-  _setData: function (res) {
-    var result = this._getResult(res);
+  _setData: function (resp) {
+    var result = this._getResult(resp);
     if ( !result ) {
       return;
     }
@@ -97,9 +101,9 @@ Tw.MytUsageTdatashare.prototype = {
 
   },
 
-  _getResult: function (res) {
-    if ( res.code === '00' && !Tw.FormatHelper.isEmpty(res.result) ) {
-      return this._parseData(res.result);
+  _getResult: function (resp) {
+    if (!Tw.FormatHelper.isEmpty(resp.result) ) {
+      return this._parseData(resp.result);
     }
   },
 
