@@ -6,7 +6,7 @@
  */
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { NextFunction, Request, Response } from 'express';
-import { SVC_ATTR } from '../../../../types/bff-common.type';
+import { SVC_ATTR } from '../../../../types/bff.type';
 
 
 class MytJSProtectChangeController extends TwViewController {

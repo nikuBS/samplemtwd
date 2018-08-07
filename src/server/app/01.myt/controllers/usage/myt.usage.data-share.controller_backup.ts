@@ -4,7 +4,7 @@ import DateHelper from '../../../../utils/date.helper';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { USER_CNT } from '../../../../types/string.type';
 import FormatHelper from '../../../../utils/format.helper';
-import { UNIT } from '../../../../types/bff-common.type';
+import { UNIT } from '../../../../types/bff.type';
 import MyTUsage from './myt.usage.controller';
 import { Observable } from 'rxjs/Observable';
 

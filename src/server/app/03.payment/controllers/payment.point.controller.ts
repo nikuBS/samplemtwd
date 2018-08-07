@@ -9,7 +9,7 @@ import { API_CMD, API_CODE } from '../../../types/api-command.type';
 import FormatHelper from '../../../utils/format.helper';
 import { Observable } from 'rxjs/Observable';
 import { SELECT_POINT } from '../../../types/string.type';
-import { PAYMENT_OPTION_TEXT, REQUEST_VALUE, SVC_ATTR } from '../../../types/bff-common.type';
+import { PAYMENT_OPTION_TEXT, REQUEST_VALUE, SVC_ATTR } from '../../../types/bff.type';
 import StringHelper from '../../../utils/string.helper';
 import DateHelper from '../../../utils/date.helper';
 

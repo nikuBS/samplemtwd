@@ -2,7 +2,7 @@ import FormatHelper from '../utils/format.helper';
 import LoggerService from './logger.service';
 import { SvcInfoModel } from '../models/svc-info.model';
 import { Observable } from 'rxjs/Observable';
-import { COOKIE_KEY } from '../types/bff-common.type';
+import { COOKIE_KEY } from '../types/common.type';
 import BrowserHelper from '../utils/browser.helper';
 
 class LoginService {
