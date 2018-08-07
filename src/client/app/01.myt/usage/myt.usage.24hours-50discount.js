@@ -1,14 +1,12 @@
 Tw.MytUsage24Hours50Discount = function (rootEl) {
   this.$container = rootEl;
   this._popupService = Tw.Popup;
-  this._history = new Tw.HistoryService(rootEl);
 
   this._bindEvent();
 };
 
 Tw.MytUsage24Hours50Discount.prototype = {
   _bindEvent: function () {
-    this.$container.on('click', '.prev-step', $.proxy(this._onClickPrevStep, this));
     this.$container.on('click', '.fe-btn-detail-date', $.proxy(this._onClickBtnDetailDate, this));
   },
 
@@ -24,9 +22,5 @@ Tw.MytUsage24Hours50Discount.prototype = {
         txt: Tw.BUTTON_LABEL.CONFIRM
       }]
     });
-  },
-
-  _onClickPrevStep: function () {
-    this._history.goBack();
   }
 };

@@ -2,14 +2,12 @@ Tw.MytUsageDataShare = function (rootEl) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
-  this._historyService = new Tw.HistoryService(rootEl);
 
   this._bindEvent();
 };
 
 Tw.MytUsageDataShare.prototype = {
   _bindEvent: function () {
-    this.$container.on('click', '.prev-step', $.proxy(this._onClickPrevStep, this));
     this.$container.on('click', '.fe-btn-used-data', $.proxy(this._onClickBtnUsedData, this));
   },
   _onClickBtnUsedData: function ($event) {
@@ -47,9 +45,6 @@ Tw.MytUsageDataShare.prototype = {
 
   _showErrorAlert: function (msg) {
     this._popupService.openAlert(msg);
-  },
-
-  _onClickPrevStep: function () {
-    this._historyService.goBack();
   }
+
 };
