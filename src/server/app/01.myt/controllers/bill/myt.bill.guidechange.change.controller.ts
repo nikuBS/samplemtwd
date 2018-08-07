@@ -5,7 +5,7 @@
  */
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
-import { BILL_GUIDE_TYPE, SVC_ATTR, WIRE_BILL_GUIDE_TYPE } from '../../../../types/bff-common.type';
+import { BILL_GUIDE_TYPE, SVC_ATTR, WIRE_BILL_GUIDE_TYPE } from '../../../../types/bff.type';
 import { BILL_GUIDE_TYPE_NAME, BILL_GUIDE_SELECTOR_LABEL } from '../../../../types/string.type';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';

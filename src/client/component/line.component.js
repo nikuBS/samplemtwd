@@ -173,7 +173,7 @@ Tw.LineComponent.prototype = {
     }
   },
   _completeLogin: function () {
-    Tw.UIService.setLocalStorage('lineRefresh', 'Y');
+    Tw.UIService.setLocalStorage(Tw.LSTORE_KEY.LINE_REFRESH, 'Y');
     this._closePopup();
   },
   _completeCustomerLogin: function () {

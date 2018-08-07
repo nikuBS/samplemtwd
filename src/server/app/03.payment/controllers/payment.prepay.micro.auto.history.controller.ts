@@ -8,6 +8,7 @@ import TwViewController from '../../../common/controllers/tw.view.controller';
 import { API_CMD, API_CODE } from '../../../types/api-command.type';
 import FormatHelper from '../../../utils/format.helper';
 import DateHelper from '../../../utils/date.helper';
+import {REQUEST_TYPE} from '../../../types/bff.type';
 
 class PaymentPrepayMicroAutoHistoryController extends TwViewController {
   constructor() {
@@ -32,9 +33,12 @@ class PaymentPrepayMicroAutoHistoryController extends TwViewController {
 
   private parseData(result: any): any {
     if (!FormatHelper.isEmpty(result)) {
-      result.date = DateHelper.getFullDateAndTime(result.oper_dtm);
-      result.autoChrgStrdAmount = FormatHelper.addComma(result.auto_chrg_strd_amt);
-      result.autoChrgAmount = FormatHelper.addComma(result.auto_chrg_amt);
+      result.map((data) => {
+        data.name = REQUEST_TYPE[data.auto_chrg_req_cl_cd];
+        data.date = DateHelper.getFullDateAndTime(data.oper_dtm);
+        data.autoChrgStrdAmount = FormatHelper.addComma(data.auto_chrg_strd_amt);
+        data.autoChrgAmount = FormatHelper.addComma(data.auto_chrg_amt);
+      });
     }
     result.code = API_CODE.CODE_00;
     return result;

@@ -4,7 +4,14 @@
   Date: 2018.07.30
 -->
 <% include ../../components/start.component.html %>
-<body>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
 <div class="wrap">
     <%- include('../../../../common/views/components/header.component.html', { title: '최근 사용패턴', svcInfo: data.svcInfo }); %>
     <!-- #contents -->
@@ -201,6 +208,8 @@
                                                     <!--// 그래프 영역 : 데이터 없음 -->
                                                     <% } %>
                                                 </li>
+                                            </ul>
+                                            <ul id="fe-invoice-area" class="cellular-chart-wrap">
                                                 <li>
                                                     <h3 class="chart-title">SKT 고객간 통화량</h3>
                                                     <div class="chart-usage">
@@ -229,6 +238,8 @@
                                                     <!--// 그래프 영역 : 데이터 없음 -->
                                                     <% } %>
                                                 </li>
+                                            </ul>
+                                            <ul id="fe-outvoice-area" class="cellular-chart-wrap">
                                                 <li>
                                                     <h3 class="chart-title">타 통신사 고객간 통화량</h3>
                                                     <div class="chart-usage">
@@ -257,6 +268,8 @@
                                                     <!--// 그래프 영역 : 데이터 없음 -->
                                                     <% } %>
                                                 </li>
+                                            </ul>
+                                            <ul id="fe-vidvoice-area" class="cellular-chart-wrap">
                                                 <li>
                                                     <h3 class="chart-title">영상 통화량</h3>
                                                     <div class="chart-usage">

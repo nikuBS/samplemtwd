@@ -57,7 +57,7 @@ Tw.AuthLoginEasyAos.prototype = {
   },
   _successLogin: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      Tw.UIService.setLocalStorage('lineRefresh', 'Y');
+      Tw.UIService.setLocalStorage(Tw.LSTORE_KEY.LINE_REFRESH, 'Y');
       this._historyService.goBack();
     } else if ( resp.code === this.ERROR_CODE.ATH1005 ) {
       this.$errorTxt.removeClass('none');

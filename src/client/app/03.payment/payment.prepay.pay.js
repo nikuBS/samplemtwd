@@ -4,8 +4,9 @@
  * Date: 2018.08.06
  */
 
-Tw.PaymentPrepayPay = function (rootEl) {
+Tw.PaymentPrepayPay = function (rootEl, title) {
   this.$container = rootEl;
+  this.$title = title;
   this.$window = $(window);
   this.$document = $(document);
 
@@ -36,7 +37,7 @@ Tw.PaymentPrepayPay.prototype = {
     this._instMm = '00';
   },
   _initAutoCardInfo: function () {
-    this.$autoPrepayInfoWrap = this.$container.find('#fe-s-card-info');
+    this.$autoPrepayInfoWrap = this.$container.find('.fe-s-card-info');
     this._autoCardNumber = null;
     this._autoCardCode = null;
     this._autoCardName = null;
@@ -100,9 +101,8 @@ Tw.PaymentPrepayPay.prototype = {
   },
   _isValid: function () {
     var inputAmount = this.$inputPrepayAmount.val();
-
     return (this._validation.checkEmpty(inputAmount, Tw.MSG_PAYMENT.PRE_A01) &&
-      this._validation.checkIsAvailablePoint(inputAmount, this._possibleAmount, Tw.MSG_PAYMENT.PRE_A08) &&
+      this._validation.checkIsAvailablePoint(inputAmount, this._possibleAmount, Tw.MSG_PAYMENT.PRE_A12) &&
       this._validation.checkIsMore(inputAmount, 9999, Tw.MSG_PAYMENT.PRE_A11) &&
       this._validation.checkMultiple(inputAmount, 10000, Tw.MSG_PAYMENT.PRE_A11) &&
       this._commonValidationForCard(this.$cardWrap));
@@ -167,7 +167,11 @@ Tw.PaymentPrepayPay.prototype = {
     this._popupService.openAlert(Tw.MSG_PAYMENT.ERROR_GET_CARD);
   },
   _prepay: function (reqData) {
-    this._apiService.request(Tw.API_CMD.BFF_07_0074, reqData)
+    var $api = Tw.API_CMD.BFF_07_0074;
+    if (this.$title === 'contents') {
+      $api = Tw.API_CMD.BFF_07_0082;
+    }
+    this._apiService.request($api, reqData)
       .done($.proxy(this._prepaySuccess, this))
       .fail($.proxy(this._prepayFail, this));
   },
@@ -192,7 +196,6 @@ Tw.PaymentPrepayPay.prototype = {
     $target.find('.fe-complete-message').text(Tw.PAYMENT_PREPAY_TITLE.PREPAY_COMPLETE);
   },
   _setCompleteData: function ($result, $target) {
-    var $target = this.$container.find('.fe-complete-data-set');
     for (var key in $result) {
       $target.find('.fe-' + key).text($result[key]);
     }
@@ -202,12 +205,12 @@ Tw.PaymentPrepayPay.prototype = {
   _getInstMm: function (value) {
     var name = '';
     if (value === '00') {
-      name = Tw.PAYMENT_TYPE['000'];
+      name = Tw.PAYMENT_CARD_TYPE['000'];
     } else {
       if (value[0] === '0') {
         value = value.replace(value[0], '');
       }
-      name = value + Tw.PAYMENT_TYPE.M;
+      name = value + Tw.PAYMENT_CARD_TYPE.M;
     }
     return name;
   },

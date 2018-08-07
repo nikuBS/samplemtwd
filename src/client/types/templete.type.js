@@ -11,20 +11,3 @@ Tw.POPUP_TPL = {
     '<li class="checkbox type01" role="checkbox" aria-checked="false">' +
     '<input type="checkbox" name="checkbox" title="하루동안 보지 않기"> 하루동안 보지 않기</li></ul></div></div>'
 };
-
-Tw.PAYMENT_CARD_TYPE_LIST = [
-  { 'attr': 'id="00"', text: Tw.PAYMENT_TYPE['000'] },
-  { 'attr': 'id="01"', text: Tw.PAYMENT_TYPE['001'] },
-  { 'attr': 'id="02"', text: Tw.PAYMENT_TYPE['002'] },
-  { 'attr': 'id="03"', text: Tw.PAYMENT_TYPE['003'] },
-  { 'attr': 'id="04"', text: Tw.PAYMENT_TYPE['004'] },
-  { 'attr': 'id="05"', text: Tw.PAYMENT_TYPE['005'] },
-  { 'attr': 'id="06"', text: Tw.PAYMENT_TYPE['006'] },
-  { 'attr': 'id="07"', text: Tw.PAYMENT_TYPE['007'] },
-  { 'attr': 'id="08"', text: Tw.PAYMENT_TYPE['008'] },
-  { 'attr': 'id="09"', text: Tw.PAYMENT_TYPE['009'] },
-  { 'attr': 'id="10"', text: Tw.PAYMENT_TYPE['010'] },
-  { 'attr': 'id="11"', text: Tw.PAYMENT_TYPE['011'] },
-  { 'attr': 'id="12"', text: Tw.PAYMENT_TYPE['012'] },
-  { 'attr': 'id="24"', text: Tw.PAYMENT_TYPE['024'] }
-];

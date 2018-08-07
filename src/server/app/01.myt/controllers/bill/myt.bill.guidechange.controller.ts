@@ -8,7 +8,7 @@ import {Request, Response, NextFunction} from 'express';
 import {MYT_GUIDE_CHANGE_INIT_INFO} from '../../../../types/string.type';
 import {Observable} from 'rxjs/Observable';
 import {API_CMD, API_CODE} from '../../../../types/api-command.type';
-import {SVC_ATTR} from '../../../../types/bff-common.type';
+import {SVC_ATTR} from '../../../../types/bff.type';
 
 class MytBillGuidechange extends TwViewController {
   constructor() {
