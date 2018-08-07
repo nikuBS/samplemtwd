@@ -144,8 +144,12 @@ class MyTUsagePattern extends TwViewController {
         });
         // 음성통화
         infos.map((item) => item['domUseQty']).forEach((value) => {
-          totalVoice += parseInt(value, 10);
-          voice.push(this.secToMS(value, 'B'));
+          if ( value ) {
+            totalVoice += parseInt(value, 10);
+            voice.push(this.secToMS(value, 'B'));
+          } else {
+            voice.push('00:00');
+          }
         });
         // 문자
         infos.map((item) => item['smsUseQty']).forEach((value) => {
@@ -174,9 +178,9 @@ class MyTUsagePattern extends TwViewController {
             vidTotalVoice += parseInt(vidItem, 10);
             vidVoice.push(this.secToMS(vidItem, 'B'));
           } else {
-            inVoice.push('0:0');
-            outVoice.push('0:0');
-            vidVoice.push('0:0');
+            inVoice.push('00:00');
+            outVoice.push('00:00');
+            vidVoice.push('00:00');
           }
         });
 
