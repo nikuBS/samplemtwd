@@ -45,6 +45,21 @@ export const URL = {
   '/myt/joinService/protect/inquiry': { login: true, id: 'MY_01_02_07', title: '' },
   '/myt/join/join-info': { login: true, id: 'MY_01_02', title: '' }, // 가입정보
   '/myt/join/join-info/no-contract': { login: true, id: 'MY_01_02_10', title: '' }, // 무약정 플랜 포인트 내역
+  '/myt/join/pay-claim/phone': { login: true, id: 'MY_01_05', title: '납부/청구정보' },
+  '/myt/join/pay-claim/iptv': { login: true, id: 'MY_01_05_01', title: '납부/청구정보' },
+  '/myt/join/pay-claim/iptvSk': { login: true, id: 'MY_01_05_02', title: '납부/청구정보' },
+  '/myt/join/pay-claim/tlogin': { login: true, id: 'MY_01_05_03', title: '납부/청구정보' },
+  '/myt/join/pay-claim/twibro': { login: true, id: 'MY_01_05_04', title: '납부/청구정보' },
+  '/myt/join/pay-claim/tpocketfi': { login: true, id: 'MY_01_05_05', title: '납부/청구정보' },
+  '/myt/join/pay-claim/pointcam': { login: true, id: 'MY_01_05_06', title: '납부/청구정보' },
+  '/myt/join/contract-terminal/phone': { login: true, id: 'MY_01_04', title: '약정 할인 및 단말 분할상환 정보' },
+  '/myt/join/contract-terminal/phone/detail': { login: true, id: 'MY_01_04_L01', title: '월별 상세 할인내역' },
+  '/myt/join/contract-terminal/tpocketfi': { login: true, id: 'MY_01_04_03', title: '약정 할인 및 단말 분할상환 정보' },
+  '/myt/join/contract-terminal/tpocketfi/detail': { login: true, id: 'MY_01_04_L01', title: '월별 상세 할인내역' },
+  '/myt/join/contract-terminal/twibro': { login: true, id: 'MY_01_04_01', title: '약정 할인 및 단말 분할상환 정보' },
+  '/myt/join/contract-terminal/tlogin': { login: true, id: 'MY_01_04_02', title: '약정 할인 및 단말 분할상환 정보' },
+  '/myt/join/contract-terminal/tlogin/detail': { login: true, id: 'MY_01_04_L01', title: '월별 상세 할인내역' },
+
   // recharge
   '/recharge/refill': { login: true, id: 'DA_01_01_01', title: '' }, // 리필하기
   '/recharge/refill/history': { login: true, id: 'DA_01_02_01', title: '' }, // 리필 히스토리
