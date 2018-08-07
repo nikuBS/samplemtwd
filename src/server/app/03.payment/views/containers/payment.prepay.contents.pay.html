@@ -31,7 +31,7 @@
             <% include ../components/prepay/payment.prepay.pay.main.component.html %>
         </div>
         <div id="complete" style="display:none;">
-            <% include ../components/prepay/payment.prepay.pay.complete.component.html %>
+            <%- include('../components/prepay/payment.prepay.complete.component.html', { type: 'contents' }); %>
         </div>
     </div>
     <!--// #contents -->
