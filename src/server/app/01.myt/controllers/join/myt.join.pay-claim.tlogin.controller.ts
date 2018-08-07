@@ -28,6 +28,9 @@ class MytJoinPayClaimTlogin extends TwViewController {
   // 노출조건
   private _showConditionInfo: any = {};
 
+  // api 에러
+  private _apiErrInfo: any = [];
+
   private _urlTplInfo: any = {
     pageRenderView: 'join/myt.join.pay-claim.tlogin.html'
   };
@@ -76,20 +79,33 @@ class MytJoinPayClaimTlogin extends TwViewController {
         // });
 
       }, function (err) {
-        thisMain.logger.info(thisMain, `[ Promise.all > err ] : `, err);
-        // console.dir(err);
+        thisMain._errInfoInit(err);
         thisMain.renderView(res, thisMain._urlTplInfo.pageRenderView, {
           reqQuery: thisMain.reqQuery,
           svcInfo: thisMain._svcInfo,
           resDataInfo: null,
           errBol: true,
-          errObj: err
+          errObj: thisMain._apiErrInfo
         });
 
       }); // Promise.all END
 
   } // render end
 
+  // -------------------------------------------------------------[에러 정보 처리]
+  private _errInfoInit(err: any) {
+    const thisMain = this;
+    const len = err.length;
+    thisMain._apiErrInfo = [];
+    thisMain.logger.info(thisMain, `[ Promise.all > err 1 ] : `, err);
+    console.dir(err);
+    const tempErrObj = {
+      code: err.code,
+      msg: err.msg
+    };
+    thisMain._apiErrInfo.push(tempErrObj);
+    thisMain.logger.info(thisMain, `[ _apiErrInfo ] : `, thisMain._apiErrInfo);
+  }
   // -------------------------------------------------------------[프로미스 생성]
   public _getPromiseApi(reqObj, msg): any {
     const thisMain = this;

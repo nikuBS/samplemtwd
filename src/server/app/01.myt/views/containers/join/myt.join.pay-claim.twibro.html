@@ -32,14 +32,18 @@
                             <ul>
                                 <li>
                                     <span class="title">사용중인 상품</span>
-                                    <span class="tx-cont"><button class="blue-btn"><%=resDataInfo.feeProdNm %></button></span>
+                                    <span class="tx-cont"><button class="blue-btn"><%= (errBol) ? '' : resDataInfo.feeProdNm; %></button></span>
                                 </li>
+
+                                <% if(!errBol) { %>
 
                                 <%#납부 방법 %>
                                 <% include ../../components/join/myt.join.pay-claim.pay-way.html %>
 
                                 <%#요금안내서 유형 %>
                                 <% include ../../components/join/myt.join.pay-claim.bill-guide-type.html %>
+
+                                <% } %>
 
                             </ul>
                         </div>
@@ -67,7 +71,10 @@
     new Tw.MytJoinPayClaimTwibro($('#wrapFdev'), {
       reqQuery: <%-JSON.stringify(reqQuery) %>,
       svcInfo: <%-JSON.stringify(svcInfo) %>,
-      resDataInfo: <%-JSON.stringify(resDataInfo) %>
+      resDataInfo: <%-JSON.stringify(resDataInfo) %>,
+      errBol: <%-JSON.stringify(errBol) %>,
+      errObj: <%-JSON.stringify(errObj) %>
+
   });
   });
 </script>
