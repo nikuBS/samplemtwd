@@ -88,6 +88,7 @@ class MytJoinPayClaimPointcam extends TwViewController {
           reqQuery: thisMain.reqQuery,
           svcInfo: thisMain._svcInfo,
           resDataInfo: null,
+          baseFeePlans: null,
           errBol: true,
           errObj: thisMain._apiErrInfo
         });
