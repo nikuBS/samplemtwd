@@ -41,17 +41,17 @@ class MytJoinPayClaimPhone extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     if ( svcInfo.svcAttrCd !== 'M1' ) {
-      this.logger.info(this, '[ svcInfo ] 리다이렉트 : ', svcInfo);
+      this.logger.info(this, '[ svcInfo > redirect ]  : ', svcInfo);
       res.redirect(this._redirectUrlInfo.payClaim);
       return;
     }
 
     this._svcInfo = svcInfo;
-    this.logger.info(this, '[ svcInfo ] 사용자 정보 : ', svcInfo);
+    this.logger.info(this, '[ svcInfo ] : ', svcInfo);
     this.reqQuery = req.query;
     const thisMain = this;
 
-    const p1 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0058, {}), '테스트 api');
+    const p1 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0058, {}), 'BFF_05_0058');
     // const p1_mock = this._getPromiseApiMock(payClaimInfo_BFF_05_0058, 'p1 Mock 데이터');
 
     Promise.all([p1]).then(

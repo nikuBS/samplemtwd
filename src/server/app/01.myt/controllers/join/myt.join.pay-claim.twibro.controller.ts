@@ -41,7 +41,7 @@ class MytJoinPayClaimTwibro extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     if ( svcInfo.svcAttrCd !== 'M5' ) {
-      this.logger.info(this, '[ svcInfo ] : ', svcInfo);
+      this.logger.info(this, '[ svcInfo > redirect ]  : ', svcInfo);
       res.redirect(this._redirectUrlInfo.payClaim);
       return;
     }
@@ -51,7 +51,7 @@ class MytJoinPayClaimTwibro extends TwViewController {
     this.reqQuery = req.query;
     const thisMain = this;
 
-    const p1 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0058, {}), '테스트 api');
+    const p1 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0058, {}), 'BFF_05_0058');
     // const p1_mock = this._getPromiseApiMock(payClaimInfo_BFF_05_0058, 'p1 Mock 데이터');
 
 
