@@ -114,5 +114,7 @@ Tw.MyTJoinProtectChange.prototype = {
   _onApiError: function (params) {
     // API 호출 오류
     Tw.Logger.warn(params);
+    var errMsg = params.code + ' ' + (params.msg || params.error && params.error.msg);
+    this._popupService.openAlert(errMsg, Tw.POPUP_TITLE.NOTIFY);
   }
 };
