@@ -131,7 +131,10 @@ abstract class TwViewController {
           const urlAuth = urlMeta.auth.grades;
           const svcGr = svcInfo.svcGr;
           if ( urlAuth.indexOf(svcGr) !== -1 ) {
-            this.render(req, res, next, svcInfo);
+            const params = Object.assign(svcInfo, {
+              urlAuth
+            });
+            this.render(req, res, next, params);
           } else {
             res.redirect('/auth/error/no-auth');
           }

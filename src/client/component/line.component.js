@@ -21,6 +21,7 @@ Tw.LineComponent = function () {
   this._index = 0;
   this._goAuthLine = false;
   this._lineList = null;
+  this._urlAuth = null;
   this._bindEvent();
   this._init();
 };
@@ -32,12 +33,15 @@ Tw.LineComponent.prototype = {
     RDT0008: 'RDT0008'     //	service-password initialized	고객비밀번호 재설정 필요 ( 신청, 초기화 상태 )
   },
   _init: function() {
-    this._getLineList();
-    Tw.Logger.info('[Line] init complete');
+    if(!Tw.FormatHelper.isEmpty(this._urlAuth)) {
+      this._getLineList();
+      Tw.Logger.info('[Line] init complete', this._urlAuth);
+    }
   },
   _bindEvent: function () {
     this.$btLine = this.$container.find('#fe-bt-line');
     this._selectedMgmt = this.$btLine.data('svcmgmtnum');
+    this._urlAuth = this.$btLine.data('urlauth');
 
     this.$btLine.on('click', $.proxy(this._onClickLine, this));
   },
@@ -127,11 +131,12 @@ Tw.LineComponent.prototype = {
     var result = [];
     Tw.FormatHelper.sortObjArrAsc(lineData, 'expsSeq');
     _.map(lineData, $.proxy(function (line) {
+      var selected = this._selectedMgmt.toString() === line.svcMgmtNum ? 'checked ' : '';
       result.push({
         display: this._index < Tw.DEFAULT_LIST_COUNT ? 'block' : 'none',
         index: this._index++,
         txt: Tw.FormatHelper.isEmpty(line.nickNm) ? Tw.SVC_ATTR[line.svcAttrCd] : line.nickNm,
-        option: this._selectedMgmt.toString() === line.svcMgmtNum ? 'checked' : '',   // TODO: Add authority
+        option: selected + this._urlAuth.indexOf(line.svcAttrCd) === -1 ? 'disabled' : '',   // TODO: Add authority
         integration: line.actRepYn === 'Y',
         representation: line.repSvcYn === 'Y',
         line: Tw.LINE_NAME[category] === 'S' ? line.addr : line.svcNum,
