@@ -206,8 +206,9 @@ export enum USAGE_PATTERN_CHART {
   MSG = '문자',
   DATA = '데이터',
   VOICE = '음성통화'
-
 }
+
+export const USAGE_PATTERN_NAME = ['데이터', '음성통화', '문자'];
 
 export const MYT_JOIN_CONTRACT_TERMINAL = { // 약정할인 및 단말분할상환정보
   FEE_TYPE_A: '',

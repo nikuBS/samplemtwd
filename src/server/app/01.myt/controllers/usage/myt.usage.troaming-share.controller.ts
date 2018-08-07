@@ -5,7 +5,7 @@ import FormatHelper from '../../../../utils/format.helper';
 import { DATA_UNIT, USER_CNT } from '../../../../types/string.type';
 import MyTUsage from './myt.usage.controller';
 import MyTUsageGraphbox from './myt.usage.graphbox.controller';
-import { UNIT, UNIT_E } from '../../../../types/bff-common.type';
+import { UNIT, UNIT_E } from '../../../../types/bff.type';
 import DateHelper from '../../../../utils/date.helper';
 import moment = require('moment');
 

@@ -2,7 +2,7 @@ Tw.MytUsageDataShare = function (rootEl) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
-  this._history = new Tw.HistoryService(rootEl);
+  this._historyService = new Tw.HistoryService(rootEl);
 
   this._bindEvent();
 };
@@ -50,6 +50,6 @@ Tw.MytUsageDataShare.prototype = {
   },
 
   _onClickPrevStep: function () {
-    this._history.goBack();
+    this._historyService.goBack();
   }
 };

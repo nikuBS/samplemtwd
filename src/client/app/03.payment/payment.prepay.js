@@ -4,8 +4,9 @@
  * Date: 2018.07.25
  */
 
-Tw.PaymentPrepay = function (rootEl) {
+Tw.PaymentPrepay = function (rootEl, title) {
   this.$container = rootEl;
+  this.$title = title;
   this.$window = $(window);
   this.$document = $(document);
 
@@ -51,10 +52,14 @@ Tw.PaymentPrepay.prototype = {
     $.ajax('/mock/payment.remain-limit.json')
       .done($.proxy(this._getRemainLimitSuccess, this))
       .fail($.proxy(this._getRemainLimitFail, this));
-      */
+    */
   },
   _getPreRemainLimit: function () {
-    this._apiService.request(Tw.API_CMD.BFF_07_0073, {
+    var $api = Tw.API_CMD.BFF_07_0073;
+    if (this.$title === 'contents') {
+      $api = Tw.API_CMD.BFF_07_0081;
+    }
+    this._apiService.request($api, {
       gubun: this._requestGubun,
       requestCnt: this._requestCount
     }).done($.proxy(this._getPreRemainLimitSuccess, this))
@@ -98,7 +103,11 @@ Tw.PaymentPrepay.prototype = {
     this._popupService.openAlert(err.code + ' ' + err.msg);
   },
   _setRemainLimitInfo: function ($result) {
-    this.$limitAmount = $result.microPayLimitAmt;
+    if (this.$title === 'micro') {
+      this.$limitAmount = $result.microPayLimitAmt;
+    } else {
+      this.$limitAmount = $result.useContentsLimitAmt;
+    }
     this.$useAmount = $result.tmthUseAmt;
     this.$prepayAmount = $result.tmthChrgAmt;
     this.$possibleAmount = $result.tmthChrgPsblAmt;
@@ -119,7 +128,7 @@ Tw.PaymentPrepay.prototype = {
     return limitAmount - useAmount + prepayAmount;
   },
   _openChangeLimit: function () {
-    this._history.goLoad('/myt/bill/history/contents/limit/change');
+    this._history.goLoad('/myt/bill/history/' + this.$title + '/limit/change');
   },
   _openStandardAmountInfo: function () {
     this._popupService.open({
@@ -144,29 +153,33 @@ Tw.PaymentPrepay.prototype = {
     $layer.on('click', '.footer-wrap button', $.proxy(this._closePopup, this));
   },
   _getDetailAutoPrepay: function () {
-    this._history.goLoad('/payment/prepay/micro/auto/history');
+    this._history.goLoad('/payment/prepay/' + this.$title + '/auto/history');
   },
   _goPrepay: function () {
-    this._history.goLoad('/payment/prepay/micro/pay');
+    this._history.goLoad('/payment/prepay/' + this.$title + '/pay');
   },
   _goAutoPrepay: function () {
-    this._history.goLoad('/payment/prepay/micro/auto');
+    this._history.goLoad('/payment/prepay/' + this.$title + '/auto');
   },
   _changeAutoPrepay: function () {
-    this._history.goLoad('/payment/prepay/micro/auto/change');
+    this._history.goLoad('/payment/prepay/' + this.$title + '/auto/change');
   },
   _confirmCancel: function () {
     this._popupService.openAlert(Tw.MSG_PAYMENT.PRE_A07, null, $.proxy(this._cancelAutoPrepay, this));
   },
   _cancelAutoPrepay: function () {
-    this._apiService.request(Tw.API_CMD.BFF_07_0077, {})
+    var $api = Tw.API_CMD.BFF_07_0077;
+    if (this.$title === 'contents') {
+      $api = Tw.API_CMD.BFF_07_0084;
+    }
+    this._apiService.request($api, {})
       .done($.proxy(this._cancelAutoPrepaySuccess, this))
       .fail($.proxy(this._cancelAutoPrepayFail, this));
   },
   _cancelAutoPrepaySuccess: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
       this._history.setHistory();
-      this._history.goLoad('/payment/prepay/micro/auto/cancel');
+      this._history.goLoad('/payment/prepay/' + this.$title + '/auto/cancel');
     } else {
       this._cancelAutoPrepayFail();
     }

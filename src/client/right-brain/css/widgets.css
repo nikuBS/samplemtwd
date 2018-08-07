@@ -700,6 +700,10 @@ li.checkbox.type01 {
   display: table-cell;
 }
 
+.checkbox.alignment .alignment-box .txt a, .checkbox.alignment .alignment-box .txt button {
+  position: relative;
+}
+
 .radiobox.type01 {
   position: relative;
   display: inline-block;

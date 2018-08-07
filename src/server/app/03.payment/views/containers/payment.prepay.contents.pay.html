@@ -1,7 +1,7 @@
 <%#
-* FileName: payment.prepay.micro.pay.html
+* FileName: payment.prepay.contents.pay.html
 * Author: 공자윤 (jayoon.kong@sk.com)
-* Date: 2018.08.06
+* Date: 2018.08.07
 %>
 <% include ../components/start.component.html %>
 <!-- #skip_navigation -->
@@ -25,7 +25,7 @@
     </div>
     <!--// #header -->
     <!-- #contents -->
-    <div id="payment-prepay-micro-pay" class="container-wrap">
+    <div id="payment-prepay-contents-pay" class="container-wrap">
         <h2 class="blind">내용</h2>
         <div id="main" class="container">
             <% include ../components/prepay/payment.prepay.pay.main.component.html %>
@@ -40,7 +40,7 @@
 <% include ../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.PaymentPrepayPay($('#payment-prepay-micro-pay'), 'micro');
+    new Tw.PaymentPrepayPay($('#payment-prepay-contents-pay'), 'contents');
   });
 </script>
 <% include ../components/end.component.html %>

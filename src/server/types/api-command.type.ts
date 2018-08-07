@@ -101,6 +101,7 @@ export const API_CMD = {
   BFF_05_0052: { path: '/core-bill/v1/wire-bill-reissue/', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_05_0058: { path: '/core-bill/v1/accounts', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0059: { path: '/core-bill/v1/recent-usage-fee-pattern', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0060: { path: '/core-modification/v1/no-contract-plan-points', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0061: { path: '/core-modification/v1/my-svc-histories', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0063: { path: '/my-t/myinfo/discount-infos', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0064: { path: '/core-bill/v1/useContents/getUseContents', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
@@ -237,7 +238,7 @@ export const API_CMD = {
     bypass: false
   },
   BFF_07_0073: { path: '/core-bill/v1/microPrepay/microPrepay-requests', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
-  BFF_07_0074: { path: '/core-bill/v1/microPrepay', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_07_0074: { path: '/core-bill/v1/microPrepay/microPrepay-process', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_07_0075: { path: '/core-bill/v1/microPrepay/microPrepay-autolist', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_07_0076: { path: '/core-bill/v1/microPrepay/microPrepay-auto-req', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_07_0077: { path: '/core-bill/v1/microPrepay/microPrepay-auto-delete', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
@@ -259,7 +260,7 @@ export const API_CMD = {
     bypass: true
   },
   BFF_07_0082: {
-    path: '/core-bill/v1/useContentsPrepay/useContentsPrepay-requests',
+    path: '/core-bill/v1/useContentsPrepay/useContentsPrepay-process',
     method: API_METHOD.POST,
     server: API_SERVER.BFF,
     bypass: true
