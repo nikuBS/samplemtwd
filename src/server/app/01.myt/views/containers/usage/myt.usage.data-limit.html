@@ -22,7 +22,7 @@
                 <h1>데이터 한도요금제 사용량 조회</h1>
                 <button class="depth-view" role="button" aria-pressed="false"><span class="blind">메뉴구조보기</span></button>
             </div>
-            <button class="prev-step"><span class="blind">이전으로</span></button>
+            <button class="prev-step fe-common-back"><span class="blind">이전으로</span></button>
         </div>
     </div>
     <!--// #header -->
@@ -73,10 +73,4 @@
 </div>
 <!-- // wrap -->
 <% include ../../components/javascript.component.html %>
-<script>
-  $(document).ready(function () {
-    new Tw.MytUsageDataLimit($('#fe-myt-usage-data-limit'));
-    // var comp = new Tw.MytUsageView($('.container'));
-  });
-</script>
 <% include ../../components/end.component.html %>

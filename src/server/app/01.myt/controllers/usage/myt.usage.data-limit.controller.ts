@@ -46,9 +46,9 @@ class MyTUsageDataLimit extends TwViewController {
     //   'couponDate': '20180101'
     // };
     usageData['usedRatio'] = (parseInt(usageData.remained, 10) / parseInt(usageData.total, 10) * 100) || 0;
-    usageData['total'] = FormatHelper.addComma(usageData.total);
-    usageData['used'] = FormatHelper.addComma(usageData.used);
-    usageData['remained'] = FormatHelper.addComma(usageData.remained);
+    usageData['total'] = FormatHelper.addComma(usageData.total) || 0;
+    usageData['used'] = FormatHelper.addComma(usageData.used) || 0;
+    usageData['remained'] = FormatHelper.addComma(usageData.remained) || 0;
     return usageData;
   }
 

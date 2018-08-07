@@ -30,6 +30,7 @@ Tw.MytJoinPayClaimPointcam.prototype = {
     Tw.Logger.info('[Client Init]');
 
     this._bindEvent();
+    this._serverErrPopup();
   },
 
   _cachedElement: function () {
@@ -43,50 +44,13 @@ Tw.MytJoinPayClaimPointcam.prototype = {
   _goBillguide: function() {
     this._goLoad('/myt/bill/billguide');
   },
-  //--------------------------------------------------------------------------[이벤트 | 팝업]
-  // _selPopOpen : function(event) {
-  //   var $target = $(event.currentTarget);
-  //   var tempArr = this.resData.usedAmountChildInfo.invDtArr;
-  //   var arrOption = [];
-  //   for ( var i=0, len=tempArr.length; i<len; i++ ) {
-  //     arrOption.push({
-  //       'attr' : 'data-info="' + tempArr[i] + '"',
-  //       text : this._getSelClaimDtBtn( tempArr[i] )
-  //     });
-  //   }
-  //   this._popupService.openChoice(Tw.POPUP_TITLE.PERIOD_SELECT, arrOption, 'type1', $.proxy(this._selPopOpenEvt, this, $target));
-  // },
-  // _selPopOpenEvt: function ($target, $layer) {
-  //   $layer.find('.popup-choice-list').on('click', $.proxy(this._selPopOpenEvtExe, this, $target, $layer) );
-  //
-  // },
-  // _selPopOpenEvtExe: function ($target, $layer, event) {
-  //   var curTg = $(event.currentTarget);
-  //   var tg = $target;
-  //   var dataTemp = curTg.find('button').attr('data-info');
-  //   tg.text( curTg.text() );
-  //   tg.attr('data-info', dataTemp );
-  //   //this._popupService.close();
-  //   var paramData = {
-  //     invDt: dataTemp,
-  //     selNum: this.selectDataInfo.selNum,
-  //     childSvcMgmtNum:  this.resData.selectSvcMgmtNum
-  //   };
-  //   this._goLoad('/myt/bill/billguide/subChildBill' + '?' + $.param(paramData));
-  // },
-  //--------------------------------------------------------------------------[api]
-  // _getUsedAmounts: function(param) {
-  //   Tw.Logger.info('[param]', param);
-  //
-  //   this._apiService.request(Tw.API_CMD.BFF_05_0047, param)
-  //     .done($.proxy(function(resp){
-  //       Tw.Logger.info('[자녀폰 사용 요금조회]', resp);
-  //       this.usedAmounts = resp.result;
-  //       this._usedAmountsInit();
-  //     }, this))
-  //     .fail(function(err){})
-  // },
   //--------------------------------------------------------------------------[공통]
+  _serverErrPopup: function() {
+    if ( this.resData.errBol ) {
+      Tw.Logger.info('[_serverErrPopup]');
+      this._popupService.openAlert(this.resData.errObj[0].msg, this.resData.errObj[0].code);
+    }
+  },
   _onOpenSelectPopup: function () {
     //$('.popup-info').addClass('scrolling');
   },

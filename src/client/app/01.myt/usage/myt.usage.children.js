@@ -15,7 +15,6 @@ Tw.MytUsageChildren.prototype = {
   },
 
   _bindEvent: function () {
-    this.$container.on('click', '.prev-step', $.proxy(this._onClickPrevStep, this));
     this.$container.on('click', '.bt-dropdown', $.proxy(this._onClickBtDropdown, this));
     this.$container.on('change', '.fe-unit-switch', $.proxy(this._setDataByUnit, this));
   },
@@ -36,11 +35,13 @@ Tw.MytUsageChildren.prototype = {
           };
         }, this));
       }
+    } else {
+      this._showErrorAlert(resp.code + ' ' + resp.msg);
     }
   },
 
   _childrenReqFail: function (resp) {
-    this._popupService.openAlert(resp.code + '' + resp.msg);
+    this._showErrorAlert(resp.code + ' ' + resp.msg);
   },
 
   _onClickBtDropdown: function (event) {
@@ -72,8 +73,8 @@ Tw.MytUsageChildren.prototype = {
     });
   },
 
-  _onClickPrevStep: function () {
-    this._historyService.goBack();
+  _showErrorAlert: function (msg) {
+    this._popupService.openAlert(msg);
   }
 
 };

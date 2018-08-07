@@ -23,7 +23,7 @@ Tw.MytJoinContractTerminalTpocketfiDetail = function (rootEl, resData) {
   this._history.init('hash');
 
   this.bffListData = null; //리스트 데이터
-  this.spliceLen = 3;
+  this.spliceLen = 20;
 
   this._init();
 };
@@ -87,13 +87,22 @@ Tw.MytJoinContractTerminalTpocketfiDetail.prototype = {
 
     this._apiService.request(Tw.API_CMD.BFF_05_0076, param)
       .done($.proxy(function(resp){
-        Tw.Logger.info('[BFF_05_0076]', resp);
-        this.bffListData = resp.result.agrmt;
-        this._proData();
-        this._ctrlInit();
+
+        if ( resp.code === Tw.API_CODE.CODE_00 ) {
+
+          Tw.Logger.info('[BFF_05_0076]', resp);
+          this.bffListData = resp.result.agrmt;
+          this._proData();
+          this._ctrlInit();
+
+        } else {
+          this._popupService.openAlert(resp.msg, resp.code);
+        }
+
       }, this))
       .fail(function(err){
         Tw.Logger.info('[err]', err);
+        this._popupService.openAlert(err.msg, err.code);
       });
   },
   //--------------------------------------------------------------------------[공통]
