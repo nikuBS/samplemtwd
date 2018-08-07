@@ -36,6 +36,9 @@ class MytJoinContractTerminalTpocketfi extends TwViewController {
   // 데이터
   private _resDataInfo: any = {};
 
+  // api 에러
+  private _apiErrInfo: any = [];
+
   private _urlTplInfo: any = {
     pageRenderView: 'join/myt.join.contract-terminal.tpocketfi.html'
   };
@@ -49,7 +52,8 @@ class MytJoinContractTerminalTpocketfi extends TwViewController {
     const p1 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0063, {}), '테스트 api');
     // const p1_mock = this._getPromiseApiMock(contractTerminal_BFF_05_0063, 'p1 Mock 데이터');
 
-    Promise.all([p1]).then(function (resArr) {
+    Promise.all([p1]).then(
+      function (resArr) {
       console.dir(resArr);
       thisMain.logger.info(thisMain, `[ Promise.all ] : `, resArr);
 
@@ -66,7 +70,8 @@ class MytJoinContractTerminalTpocketfi extends TwViewController {
         svcInfo: thisMain._svcInfo,
         commDataInfo: thisMain._commDataInfo,
         resDataInfo: thisMain._resDataInfo,
-        errBol: false
+        errBol: false,
+        errObj: null
       });
 
       /*
@@ -82,6 +87,16 @@ class MytJoinContractTerminalTpocketfi extends TwViewController {
       //   resDataInfo: thisMain._resDataInfo
       // });
 
+    }, function (err) {
+        thisMain._errInfoInit(err);
+        thisMain.renderView(res, thisMain._urlTplInfo.pageRenderView, {
+          reqQuery: thisMain.reqQuery,
+          svcInfo: thisMain._svcInfo,
+          commDataInfo: thisMain._commDataInfo,
+          resDataInfo: null,
+          errBol: true,
+          errObj: thisMain._apiErrInfo
+        });
 
     }); // Promise.all END
 
@@ -312,6 +327,20 @@ class MytJoinContractTerminalTpocketfi extends TwViewController {
     dataObj.perDt = Math.floor((dataObj.curDt / dataObj.totDt) * 100); // 퍼센트
     dataObj.totMt = moment(endDt, 'YYYYMMDD').diff(startDt, 'month');
     dataObj.remDt = dataObj.totDt - dataObj.curDt; // 잔여일수
+  }
+
+  // -------------------------------------------------------------[에러 정보 처리]
+  private _errInfoInit(err: any) {
+    const thisMain = this;
+    thisMain._apiErrInfo = [];
+    thisMain.logger.info(thisMain, `[ Promise.all > err ] : `, err);
+    console.dir(err);
+    const tempErrObj = {
+      code: err.code,
+      msg: err.msg
+    };
+    thisMain._apiErrInfo.push(tempErrObj);
+    thisMain.logger.info(thisMain, `[ _apiErrInfo ] : `, thisMain._apiErrInfo);
   }
 
   // -------------------------------------------------------------[프로미스 생성]
