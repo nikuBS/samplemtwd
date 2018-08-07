@@ -9,7 +9,6 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import { CUSTOMER_PREVENTDAMAGE_GUIDE } from '../../../../types/string.type';
 import { CUSTOMER_PREVENTDAMAGE_GUIDE_VIDEO, CUSTOMER_PREVENTDAMAGE_GUIDE_LATEST } from '../../../../types/outlink.type';
 import { CUSTOMER_PREVENTDAMAGE_GUIDE_WEBTOON } from '../../../../types/static.type';
-import _ from 'lodash';
 
 const categorySwithingData = {
   video: {
@@ -18,7 +17,7 @@ const categorySwithingData = {
   },
   webtoon: {
     LABEL: CUSTOMER_PREVENTDAMAGE_GUIDE.WEBTOON,
-    LIST: CUSTOMER_PREVENTDAMAGE_GUIDE_WEBTOON
+    LIST: CUSTOMER_PREVENTDAMAGE_GUIDE_WEBTOON.reverse()
   },
   latest: {
     LABEL: CUSTOMER_PREVENTDAMAGE_GUIDE.LATEST,
@@ -31,22 +30,18 @@ class CustomerPreventdamageGuideController extends TwViewController {
     super();
   }
 
-  private _convertWebtoonList(webtoonList) {
-    return _.map(webtoonList, function(data, code) {
-      return _.merge(data, {
-        CODE: code
-      });
-    }).reverse();
-  }
-
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     const category = req.query.category || 'video';
+
+    if (['video', 'webtoon', 'latest'].indexOf(category) === -1) {
+      return res.redirect('/customer/prevent-damage/guide');
+    }
 
     res.render('preventdamage/customer.preventdamage.guide.html', {
       category: category,
       categoryLabel: categorySwithingData[category].LABEL,
       svcInfo: svcInfo,
-      list: category !== 'webtoon' ? categorySwithingData[category].LIST : this._convertWebtoonList(categorySwithingData[category].LIST)
+      list: category !== 'webtoon' ? categorySwithingData[category].LIST : categorySwithingData[category].LIST
     });
   }
 }

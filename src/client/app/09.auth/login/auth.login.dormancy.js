@@ -18,7 +18,7 @@ Tw.AuthLoginDormancy.prototype = {
           if (res.code === Tw.API_CODE.CODE_00) {
             window.location = '/home';
           } else if (res.code === Tw.API_LOGIN_ERROR.ICAS3228) {  // Need service password
-            window.location = '/auth/login/service-pwd';
+            window.location = '/auth/login/customer-pwd';
           } else {
             Tw.Popup.openAlert(res.code + ' ' + res.msg);
           }

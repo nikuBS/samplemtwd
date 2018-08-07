@@ -7,6 +7,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
+import FormatHelper from '../../../../utils/format.helper';
 
 class CustomerPreventdamageLatestwarningController extends TwViewController {
   constructor() {
@@ -26,7 +27,11 @@ class CustomerPreventdamageLatestwarningController extends TwViewController {
     return {
       total: data.result.totalElements,
       remain: this._getRemainCount(data.result.totalElements, data.result.pageable.pageNumber, data.result.pageable.pageSize),
-      list: data.result.content,
+      list: data.result.content.map(item => {
+        return Object.assign(item, {
+          date: FormatHelper.convertNumberDateToFormat(item.auditDtm, '.')
+        });
+      }),
       last: data.result.last
     };
   }
@@ -39,6 +44,10 @@ class CustomerPreventdamageLatestwarningController extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     this.apiService.request(API_CMD.BFF_08_0033, {page: 0, size: 20})
       .subscribe((data) => {
+        if (FormatHelper.isEmpty(data)) {
+          return res.redirect('/customer/prevent-damage');
+        }
+
         res.render('preventdamage/customer.preventdamage.latestwarning.html', {
           svcInfo: svcInfo,
           data: this._convertData(data)

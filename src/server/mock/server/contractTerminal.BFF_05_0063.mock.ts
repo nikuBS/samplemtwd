@@ -3,63 +3,72 @@ const contractTerminal_BFF_05_0063 = {
   'msg': 'success',
   'result':
     {
-      'isInstallment': 'Y',
-      'sCustomer': 'TSupportAgree',
-      'isSuces': 'N',
-      'tabletUser': '',
-      'wibroUser': '',
-      'agrmtUser': '',
-      'isRsvPen': 'TSupportAgree',
-      'iDiscountCnt': 2,
-      'eqpAgrmetCnt': 2,
-      'feeAgrmtCnt': 0,
-      'iTInstallmentCnt': 0,
-      'iTAgreeCnt': 0,
-      'iTSupportAgreeCnt': 1,
-      'iRsvPenTInstallmentCnt': 0,
-      'iRsvPenTAgreeCnt': 0,
-      'iRsvPenNoAgreeCnt': 0,
-      'iRsvPenTSupportAgreeCnt': 1,
       'priceList':
         [
           {
+            'prodId': 'NA00003677',
             'disProdNm': '요금약정할인제도 (730 일)',
             'agrmtDcAmt': '0',
             'agrmtStNm': '약정가입중',
-            'agrmtDcStaDt': '20160525',
-            'agrmtDcEndDt': '20180525',
+            'agrmtDcStaDt': '20170525',
+            'agrmtDcEndDt': '20190525',
             'svcAgrmtDcId': 'AA1000000033562306',
             'svcAgrmtDcCd': 'AA'
           },
           {
+            'prodId': 'NA00003681',
+            'disProdNm': 'LTE데이터약정할인제도',
+            'agrmtDcAmt': '-154412',
+            'agrmtStNm': '약정가입중',
+            'agrmtDcStaDt': '20170525',
+            'agrmtDcEndDt': '20190525',
+            'svcAgrmtDcId': 'AG1000000033562311',
+            'svcAgrmtDcCd': 'AG'
+          },
+          {
+            'prodId': 'NA00004430',
             'disProdNm': '선택약정할인제도 (24 개월)',
             'agrmtDcAmt': '-154412',
             'agrmtStNm': '약정가입중',
-            'agrmtDcStaDt': '20160525',
-            'agrmtDcEndDt': '20180525',
+            'agrmtDcStaDt': '20170525',
+            'agrmtDcEndDt': '20190525',
             'svcAgrmtDcId': 'AG1000000033562311',
             'svcAgrmtDcCd': 'AG'
           }
         ],
-      'installmentList':
-        [
-          {
-            'eqpMdlNm': 'SM-N920S_64GS',
-            'allotStaDt': '20170304',
-            'allotMthCnt': '24',
-            'invRmn': '18',
-            'allotApprAmt': '1056',
-            'invBamt': '786'
-          }
-        ],
+      'tablet':
+        {
+          'agrmtDcAmt': '-174226',
+          'agrmtDayCnt': '699',
+          'agrmtDcStaDt': '20170901',
+          'agrmtDcEndDt': '20190831',
+          'aGrmtPenAmt': '7390'
+        },
+      'wibro':
+        {
+          'agrmtDcAmt': '-174226',
+          'agrmtDayCnt': '699',
+          'agrmtDcStaDt': '20170901',
+          'agrmtDcEndDt': '20190831',
+          'aGrmtPenAmt': '7390'
+        },
       'tAgree':
         {
+          'agrmtDivision': 'TSupportAgree',
           'agrmtMthCnt': '24',
-          'dcAmt': '440000',
-          'rmnDayCnt': '224',
-          'staDt': '20170304',
-          'agrmtTermDt': '20190303',
-          'penAmt': '179200'
+          'dcAmt': '61000',
+          'rmnDayCnt': '81',
+          'staDt': '20161021',
+          'agrmtTermDt': '20181020',
+          'penAmt': '8980'
+        },
+      'tInstallment':
+        {
+          'allotMthCnt': '24',
+          'totAgrmtAmt': '66000',
+          'invRmnCnt': '24',
+          'penAmt2': '0',
+          'tInstallmentOpDt': '20170304'
         },
       'rsvPenTAgree':
         {
@@ -70,50 +79,33 @@ const contractTerminal_BFF_05_0063 = {
           'rtenAgrmtEndDt': '20190303',
           'astamtOpDt': '20170304'
         },
-      'tInstallment':
-        {
-          'allotMthCnt': '24',
-          'totAgrmtAmt': '66000',
-          'invRmnCnt': '24',
-          'penAmt2': '0',
-          'tInstallmentOpDt': '20170304'
-        },
-      'tablet':
-        {
-          'agrmtMthCnt': '24',
-          'dcAmt': '66000',
-          'rmnDayCnt': '24',
-          'staDt': '0',
-          'agrmtTermDt': '20170304',
-          'penAmt': ''
-        },
-      'wibro':
-        {
-          'agrmtMthCnt': '24',
-          'dcAmt': '66000',
-          'rmnDayCnt': '24',
-          'staDt': '0',
-          'agrmtTermDt': '20170304',
-          'penAmt': ''
-        },
       'sucesAgreeList':
         [
           {
-            'bfEqpDcClCd': '',
-            'bfEqpDcClNm': '',
-            'eqpMdlNm': '',
-            'agrmtDcAmt': '0',
+            'bfEqpDcClCd': '3',
+            'bfEqpDcClNm': '약정위약금2',
+            'agrmtDcAmt': '17500',
             'agrmtMthCnt': '24',
-            'sucesDt': '',
-            'sucesPenAmt': '',
-            'sucesAgrmtStaDt': '',
-            'sucesAgrmtEndDt': '',
-            'sucesRemDayCnt': '',
-            'remMthCnt': ''
+            'remMthCnt': '1',
+            'sucesPenAmt': '470',
+            'sucesAgrmtStaDt': '20161021',
+            'sucesAgrmtEndDt': '20161109',
+            'sucesRemDayCnt' : '10'
+          }
+        ],
+      'installmentList':
+        [
+          {
+            'eqpMdlNm': 'SM-N920S_64GS',
+            'allotStaDt': '20170304',
+            'allotMthCnt': '24',
+            'invRmn': '18',
+            'allotApprAmt': '850000',
+            'invBamt': '457000'
           }
         ]
     }
-}
+};
 
 export default contractTerminal_BFF_05_0063;
 

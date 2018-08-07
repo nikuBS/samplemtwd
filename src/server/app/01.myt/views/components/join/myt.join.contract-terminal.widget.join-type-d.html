@@ -1,0 +1,46 @@
+<%#
+* FileName: myt.join.contract-terminal.widget.join-type-d.html
+* Author: 김명환 (skt.P130714@partner.sk.com)
+* Date: 2018.08.03
+* Info: 가입 / 약정위약금2 | join_type_D
+%>
+<div class="widget">
+    <div class="widget-box toggle">
+        <div class="list-top">
+            <div class="select-right">
+                <button class="btn-toggle bt-detail" role="button" aria-pressed="false" title="자세히보기">자세히보기<span class="ico"></span></button>
+            </div>
+        </div>
+        <div class="toggler">
+            <div class="payment-detail-wrap mt12">
+                <div class="payment-detail-box">
+                    <div class="detail-inner">
+                        <div class="detail-list type3">
+                            <ul>
+                                <li>
+                                    <span class="title">약정기간</span>
+                                    <span class="tx-cont"><span class="ff-hn"><%=commDataInfo.terminalInfo[i].agreeTotMonth%></span>개월 (잔여 <span class="ff-hn"><%=commDataInfo.terminalInfo[i].remDt%></span>일)</span>
+                                </li>
+                                <li>
+                                    <span class="title">구분</span>
+                                    <span class="tx-cont">가입</span>
+                                </li>
+                                <li>
+                                    <span class="title">지원약정금액</span>
+                                    <span class="tx-cont"><span class="ff-hn"><%=commDataInfo.terminalInfo[i].agreePay%></span> 원</span>
+                                </li>
+                                <li>
+                                    <span class="tx-result">해지 하시는 경우 약정위약금은 <span class="tx-red"><span class="ff-hn vbl"><%=commDataInfo.terminalInfo[i].penalty%></span>원</span> 입니다.</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <ul class="contents-notice line-none">
+                            <li class="noti-type2">약정위약금 <span class="ff-hn vbl">2</span>는 단말기 구입 시 설정된 단말할인금액에 대해서, 중간해지 시 위약금이 적용되는 제도입니다. </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

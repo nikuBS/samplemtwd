@@ -55,17 +55,16 @@ Tw.RechargeLimit.prototype = {
     this.$container.on('click', '.btn-switch', $.proxy(this._openChangeLimitPopup, this));
     this.$container.on('click', '.close-step', $.proxy(this._openClosePopup, this));
     this.$container.on('click', '.box-block-list1 button', $.proxy(this._openCancelRegularPopup, this));
-    this.$container.on('click', 'a', $.proxy(this._setHistory, this));
     this.$stepMain.on('click', '.bt-blue1 button', $.proxy(this._setDataToTypeStep, this));
     this.$stepType.on('click', '.bt-blue1 button', $.proxy(this._goToAmount, this));
-    this.$container.on('click', '.bt-red1 button', $.proxy(this._recharge, this));
+    this.$stepAmount.on('click', '#fe-btn-submit', $.proxy(this._handleRecharge, this));
     this.$stepAmount.on('click', '.tube-list.two', $.proxy(this._setSelectedAmount, this));
-    this.$stepAmount.on('click', '.bt-white2', $.proxy(this._go, this, 'step-type'));
+    this.$stepAmount.on('click', '.bt-white2', $.proxy(this._goHash, this, 'step-type'));
   },
 
   _goToAmount: function () {
     this._setDataToAmountStep();
-    this._go('step-amount');
+    this._goHash('step-amount');
   },
 
   _setDataToTypeStep: function () {
@@ -121,17 +120,18 @@ Tw.RechargeLimit.prototype = {
     });
   },
 
-  _recharge: function () {
+  _handleRecharge: function () {
     var api = this.rechargeType ? Tw.API_CMD.BFF_06_0035 : Tw.API_CMD.BFF_06_0036;
 
     this._apiService.request(api, { amt: this.rechargeAmount })
-      .done($.proxy(this._success, this))
+      .done($.proxy(this._successRecharge, this))
       .fail($.proxy(this._fail, this));
   },
 
-  _success: function (res) {
+  _successRecharge: function (res) {
+    this._history.setHistory();
     if (res.code === Tw.API_CODE.CODE_00) {
-      this._go('step-complete');
+      this._goHash('step-complete');
     } else {
       this._popupService.openAlert(res.data && res.data.msg);
     }
@@ -147,7 +147,7 @@ Tw.RechargeLimit.prototype = {
   },
 
   _openClosePopup: function () {
-    this._popupService.openConfirm(Tw.POPUP_TITLE.NOTIFY, Tw.MSG_RECHARGE.LIMIT_A07, undefined, undefined, $.proxy(this._go, this, 'main'));
+    this._popupService.openConfirm(Tw.POPUP_TITLE.NOTIFY, Tw.MSG_RECHARGE.LIMIT_A07, undefined, undefined, $.proxy(this._goHash, this, 'main'));
   },
 
   _openCancelRegularPopup: function () {
@@ -241,13 +241,8 @@ Tw.RechargeLimit.prototype = {
     }
   },
 
-  _go: function (hash) {
-    this._setHistory();
-    this._history.goHash(hash);
-  },
-
-  _setHistory: function () {
-    this._history.setHistory();
+  _goHash: function (hash) {
+    this._history.replaceURL('#' + hash);
   }
 };
 

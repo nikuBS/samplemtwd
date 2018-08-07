@@ -15,7 +15,7 @@ class AuthLogoutRoute extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     const query = req.query;
-    if ( !FormatHelper.isEmpty(query.error) ) {
+    if ( query.target.indexOf('error') !== -1 || !FormatHelper.isEmpty(query.error) ) {
       res.send(query.error_description);
     } else {
       this.loginService.logoutSession().subscribe((resp) => {

@@ -31,7 +31,7 @@
         <div class="container">
             <div class="cont-box">
                 <div class=""></div>
-                <h3 class="my-limit">7월 소액결제</h3>
+                <h3 class="my-limit"><%=currentM%>월 소액결제</h3>
                 <div class="payment-wrap">
                     <div class="payment-detail-box">
                         <div class="detail-inner">
@@ -39,22 +39,22 @@
                                 <ul>
                                     <li>
                                         <span class="title">잔여 한도</span>
-                                        <span class="tx-cont"><span class="fs-type">437,000</span> 원</span>
+                                        <span class="tx-cont"><span class="fs-type" id="fe-limit-rest"></span> 원</span>
                                     </li>
                                     <li>
                                         <div class="inner-row">
                                             <ul>
                                                 <li>
                                                     <span class="title">이용한도</span>
-                                                    <span class="tx-cont"><span class="ff-type">500,000</span> 원</span>
+                                                    <span class="tx-cont"><span class="ff-type" id="fe-limit-usedLimit"></span> 원</span>
                                                 </li>
                                                 <li>
                                                     <span class="title">사용금액</span>
-                                                    <span class="tx-cont"><span class="ff-type">27,040</span> 원</span>
+                                                    <span class="tx-cont"><span class="ff-type" id="fe-limit-use"></span> 원</span>
                                                 </li>
                                                 <li>
                                                     <span class="title">선결제 하신 금액</span>
-                                                    <span class="tx-cont"><span class="ff-type">10,000</span> 원</span>
+                                                    <span class="tx-cont"><span class="ff-type" id="fe-limit-prepay"></span> 원</span>
                                                 </li>
                                             </ul>
                                         </div>
@@ -78,17 +78,17 @@
                                 <ul>
                                     <li>
                                         <span class="title">선결제 가능 최대금액</span>
-                                        <span class="tx-cont"><span class="fs-type">10,000</span> 원</span>
+                                        <span class="tx-cont"><span class="fs-type" id="fe-prepay-max"></span> 원</span>
                                     </li>
                                 </ul>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="contents-btn">
+                <div class="contents-btn none">
                     <ul class="bt-slice">
                         <li class="bt-blue1">
-                            <button>선결제로 잔여한도 올리기</button>
+                            <a href="/payment/prepay/micro">선결제로 잔여한도 올리기</a>
                         </li>
                     </ul>
                 </div>
@@ -119,7 +119,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.MyTBillHistoryMicroLimit($(document));
+    new Tw.MyTBillHistoryLimitCommon($(document), '<%=type%>');
   });
 </script>
 <% include ../../components/end.component.html %>

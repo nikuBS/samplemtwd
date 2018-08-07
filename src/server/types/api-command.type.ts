@@ -99,27 +99,33 @@ export const API_CMD = {
   BFF_05_0050: { path: '/core-bill/v1/wire-bill-types', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
   BFF_05_0051: { path: '/core-bill/v1/wire-bill-reissue/', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0052: { path: '/core-bill/v1/wire-bill-reissue/', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0058: { path: '/core-bill/v1/accounts', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0059: { path: '/core-bill/v1/recent-usage-fee-pattern', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0061: { path: '/core-modification/v1/my-svc-histories', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
-  BFF_05_0064: { path: '/core-bill/v1/useContents', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
-  BFF_05_0066: { path: '/core-bill/v1/useContentsLimit', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
-  BFF_05_0067: { path: '/core-bill/v1/updateUseContents', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0063: { path: '/my-t/myinfo/discount-infos', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_05_0064: { path: '/core-bill/v1/useContents/getUseContents', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0066: { path: '/core-bill/v1/useContents/getUseContentsLimit', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0067U: { path: '/core-bill/v1/useContents/getUpdateUseContentsLimit', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0067D: { path: '/core-bill/v1/useContents/getUpdateUseContentsLimitDown', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_05_0068: { path: '/my-t/my-info', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0069: { path: '/core-auth/v1/service-passwords', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
   BFF_05_0070: { path: '/core-auth/v1/service-passwords-change', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
   BFF_05_0071: { path: '/core-auth/v1/service-passwords', method: API_METHOD.DELETE, server: API_SERVER.BFF, bypass: true },
   BFF_05_0074: { path: '/core-modification/v1/use-data-patterns', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0076: { path: '/core-modification/v1/myinfo/discount-infos-month', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0078: { path: '/core-balance/v1/band-data-sharings', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
-  BFF_05_0079: { path: '/core-bill/v1/microPay-hist-requests', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0079: { path: '/core-bill/v1/microPay-hist-request', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_05_0080: { path: '/core-bill/v1/microPay-requests', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
-  BFF_05_0081: { path: '/core-bill/v1/microPay-requests', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0081U: { path: '/core-bill/v1/microPay-requests', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0081D: { path: '/core-bill/v1/microPay-requests/limitDown', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_05_0082: { path: '/core-bill/v1/microPay-auto-set', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_05_0083: { path: '/core-bill/v1/microPay-requests', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
-  BFF_05_0058: { path: '/core-bill/v1/accounts', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
-  BFF_05_0063: { path: '/my-t/myinfo/discount-infos', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
-  BFF_05_0076: { path: '/core-modification/v1/myinfo/discount-infos-month', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0085: { path: '/core-bill/v1/micropay-password-status', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0086: { path: '/core-bill/v1/micropay-password-create', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0087: { path: '/core-bill/v1/micropay-password-changes', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
   BFF_05_0089: { path: '/core-bill/v1/prepayInfo', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0091: { path: '/core-bill/v1/recent-usage-pattern', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+
   // RECHARGE
   BFF_06_0001: { path: '/core-recharge/v1/refill-coupons', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_06_0002: { path: '/core-recharge/v1/refill-usages', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
@@ -260,6 +266,8 @@ export const API_CMD = {
   },
   BFF_07_0083: { path: '/core-bill/v1/useContentsPrepay-auto-req', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_07_0084: { path: '/core-bill/v1/useContentsPrepay-auto-delete', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_07_0085: { path: '/core-bill/v1/useContentsPrepay/useContents-autoPrepay-amt', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_07_0086: { path: '/core-bill/v1/microPrepay/microPrepay-autoPrepay-amt', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
 
   // CUSTOMER
   BFF_08_0001: { path: '/core-modification/v1/counsel-time-check', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
@@ -296,6 +304,10 @@ export const API_CMD = {
   BFF_08_0039: { path: '/core-modification/v1/notice-direct', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_08_0040: { path: '/core-modification/v1/notice-roaming', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_08_0041: { path: '/core-modification/v1/prevent/notice/args-0', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_08_0042: { path: '/core-modification/v1/email-inquiry/service-mobile', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_08_0043: { path: '/core-modification/v1/email-inquiry/service-internet', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_08_0044: { path: '/core-modification/v1/email-inquiry/quality-mobile', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_08_0045: { path: '/core-modification/v1/email-inquiry/quality-internet', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
 
   // TID
   OIDC: { path: '/auth/authorize.do', method: API_METHOD.GET, server: API_SERVER.TID, bypass: false },
@@ -350,8 +362,12 @@ export const API_MYT_ERROR_CODE = [
   'BLN0001', // 잔여기본통화 조회횟수 초과
   'BLN0002', // 정지이력
   'BLN0003', // 조회불가대상
-  'BLN0004' // 조회불가대상
+  'BLN0004', // 조회불가대상
 ];
+
+export const API_MYT_ERROR = {
+  BIL0011: 'BIL0011'  // SK브로드밴드 서비스는 사용이 불가능한 메뉴입니다.
+};
 
 export const API_GIFT_ERROR = [
   'RCG0001',   // 제공자 선물하기 불가 상태

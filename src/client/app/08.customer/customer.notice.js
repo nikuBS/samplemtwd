@@ -39,7 +39,7 @@ Tw.CustomerNotice.prototype = {
 
   _init: function() {
     var hashSerNum = location.hash.replace('#', '');
-    if (_.isEmpty(hashSerNum)) {
+    if (Tw.FormatHelper.isEmpty(hashSerNum)) {
       return;
     }
 
@@ -112,11 +112,14 @@ Tw.CustomerNotice.prototype = {
   },
 
   _appendMoreList: function(res) {
-    if (res.code !== Tw.API_CODE.CODE_00) return this._apiError(res);
+    if (res.code !== Tw.API_CODE.CODE_00) {
+      return this._apiError(res);
+    }
+
     this.$list.append(this._template({
       list: _.map(res.result.content, function(item) {
-        item.type = _.isEmpty(item.ctgNm) ? '' : item.ctgNm;
-        item.date = item.rgstDt.substr(0, 4) + '.' + item.rgstDt.substr(4, 2) + '.' + item.rgstDt.substr(6, 2);
+        item.type = Tw.FormatHelper.isEmpty(item.ctgNm) ? '' : item.ctgNm;
+        item.date = Tw.FormatHelper.convertNumberDateToFormat(item.rgstDt, '.');
         item.itemClass = (item.isTop ? 'impo ' : '') + (item.isNew ? 'new' : '');
         return item;
       })
@@ -131,9 +134,8 @@ Tw.CustomerNotice.prototype = {
     }
   },
 
-  _apiError: function (err) {
-    Tw.Logger.error(err.code, err.msg);
-    this._popupService.openAlert(Tw.MSG_COMMON.SERVER_ERROR + '<br />' + err.code + ' : ' + err.msg);
+  _apiError: function (res) {
+    this._popupService.openAlert(res.code + ' ' + res.msg);
     return false;
   }
 

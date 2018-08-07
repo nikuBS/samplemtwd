@@ -146,7 +146,11 @@
                                                                     <br>
                                                                     <em class="tx-bold">설문에 답해주세요.</em>
                                                                 </p>
+                                                                <% if ( research.bnnrRsrchTypCd === 'R' ) { %>
                                                                 <a href="/customer/researches/<%=research.bnnrRsrchId%>" class="bt-link-tx">오늘의 설문 참여하기<span class="ico"></span></a>
+                                                                <% } else {%>
+                                                                <a href="/customer/researches" class="bt-link-tx">오늘의 설문 참여하기<span class="ico"></span></a>
+                                                                <% }%>
                                                             </div>
                                                         </div>
                                                         <span class="ico-ill-store"></span>

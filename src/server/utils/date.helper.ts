@@ -166,6 +166,10 @@ class DateHelper {
     return moment(date).add(amount, unit).format(format);
   }
 
+  static getEndOfMonth(date: any, format: string, currentFormat: string): string {
+    const days = moment(date, currentFormat).daysInMonth();
+    return moment(date, currentFormat).add(days - 1, 'days').format(format);
+  }
 
   /**
    * Convert Date Format (BFF string to Date)

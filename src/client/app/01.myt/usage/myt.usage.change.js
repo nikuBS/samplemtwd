@@ -1,6 +1,6 @@
-Tw.MytUsageChange = function (loginServicePwd) {
+Tw.MytUsageChange = function (loginCustomerPwd) {
   this._apiService = new Tw.ApiService();
-  this.loginServicePwd = loginServicePwd;
+  this.loginCustomerPwd = loginCustomerPwd;
 
   this._cachedElement();
   this._bindEvent();
@@ -64,7 +64,7 @@ Tw.MytUsageChange.prototype = {
 
   _openSvcPwdPopup: function (svcNum, svcMgmtNum) {
     // 고객보호 비밀번호 레이어 팝업
-    this.loginServicePwd.openLayer(svcNum, svcMgmtNum, $.proxy(this._closeSvcPwdPopup, this));
+    this.loginCustomerPwd.openLayer(svcNum, svcMgmtNum, $.proxy(this._closeSvcPwdPopup, this));
   },
 
   _closeSvcPwdPopup: function () {

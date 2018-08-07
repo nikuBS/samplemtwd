@@ -1,12 +1,14 @@
 /**
- * FileName: service-pwd.component.js
+ * FileName: customer-pwd.component.js
  * Author: Hakjoon Sim (hakjoon.sim@sk.com)
  * Date: 2018.08.06
  */
 
-Tw.ServicePwdComponent = function (rootEl) {
+Tw.CustomerPwdComponent = function (rootEl) {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
+  this._historyService = new Tw.HistoryService();
+
   this._isCloseCallbackNeeded = false;
   this._pwdSuccess = false;
 
@@ -38,7 +40,7 @@ Tw.ServicePwdComponent = function (rootEl) {
   this._bindEvent();
 };
 
-Tw.ServicePwdComponent.prototype = {
+Tw.CustomerPwdComponent.prototype = {
 
   _onPopupOpend: function ($layer) {
     this.$container = $layer;
@@ -124,7 +126,7 @@ Tw.ServicePwdComponent.prototype = {
     if (!this._isCloseCallbackNeeded) {
       return;
     }
-    if (this._pwdSuccessp) {
+    if (this._pwdSuccess) {
       if (this._isPopup) {
         this._callback();
       }
@@ -134,7 +136,9 @@ Tw.ServicePwdComponent.prototype = {
           $layer.on('click', '.bt-red1 > button', function () {
             Tw.Popup.close();
           });
-          // TODO: Insert href for a tags when routings ready
+
+          $layer.find('.link-long > a')[0].href = '/customer/email';
+          $layer.find('.link-long.last > a').attr('href', '/customer/shop/search');
         });
       }
     }
@@ -145,7 +149,7 @@ Tw.ServicePwdComponent.prototype = {
       this._isCloseCallbackNeeded = true;
       this._popupService.close();
     } else {
-      window.location = '/home';
+      this._historyService.goLoad('/home');
     }
   },
   _showFail: function () {
@@ -154,7 +158,7 @@ Tw.ServicePwdComponent.prototype = {
       this._isCloseCallbackNeeded = true;
       this._popupService.close();
     } else {
-      window.location = '/auth/login/service-pwd-fail';
+      this._historyService.goLoad('/auth/tid/logout?target=/auth/login/customer-pwd-fail');
     }
   },
   openLayer: function (mdn, serviceNumber, callback) {

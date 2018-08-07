@@ -1,0 +1,208 @@
+<% include ../../components/start.component.html %>
+<%#
+* FileName: myt.bill.history.micro.detail.html
+* Author: 이상형 (silion@sk.com)
+* Date: 2018.08.02
+%>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap">
+
+    <!-- #header -->
+    <div id="header" class="header-wrap">
+        <div class="header">
+            <div class="header-ti align-l">
+                <h1><%=pageTitle%></h1>
+                <button class="depth-view" role="button" aria-pressed="false"><span class="blind">메뉴구조보기</span></button>
+            </div>
+            <button class="prev-step fe-common-back"><span class="blind">이전으로</span></button>
+        </div>
+    </div>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <div class="cont-box">
+                <!-- payment-detail-wrap -->
+                <div class="payment-detail-wrap">
+                    <div class="payment-detail-box">
+                        <div class="detail-inner">
+                            <div class="detail-list">
+                                <ul>
+                                    <li>
+                                        <% if(type === '0') { %>
+                                        <span class="title">결제일시</span>
+                                        <% } else { %>
+                                        <span class="title">설정일시</span>
+                                        <% } %>
+                                        <span class="tx-cont"><%=useDate%></span>
+                                    </li>
+                                    <% if(type === '0') { %>
+                                    <li>
+                                        <span class="title">구분</span>
+                                        <span class="tx-cont">Web</span>
+                                    </li>
+                                    <% } %>
+                                    <li>
+                                        <span class="title">결제대행업체</span>
+                                        <span class="tx-cont"><%=pgName%></span>
+                                    </li>
+                                    <li>
+                                        <span class="title">사용처</span>
+                                        <span class="tx-cont <%=isLong%>"><span><%=cpName%></span> <br /> <a href="tel:<%=cpTel%>" class="blue-btn fe-tel-text"></a></span>
+                                    </li>
+                                    <% if(type === '0') { %>
+                                    <li>
+                                        <span class="title">서비스명</span>
+                                        <span class="tx-cont"><%=serviceName%></span>
+                                    </li>
+                                    <li>
+                                        <span class="title">결제금액</span>
+                                        <span class="tx-cont"><em class="char"><%=sumPrice%></em>원</span>
+                                    </li>
+                                    <li>
+                                        <span class="title">결제구분</span>
+                                        <span class="tx-cont fe-payment-type">
+                                            <%=payMethodType%>
+                                            <% if(payMethod === '03') { %>
+                                                <% if(cpState !== 'A1' && cpState !== 'A0' && cpState !== 'C1') { %>
+                                            <br /> <button class="red-btn">차단하기</button>
+                                                <% } else if(cpState === 'A1') { %>
+                                            <br /><em>(차단중)</em> <br /> <button class="blue-btn">차단해제</button>
+                                                <% } else if(cpState === 'A0') { %>
+                                            <br /><em>(다음 달 차단예정)</em> <br /> <button class="blue-btn">차단해제</button>
+                                                <% } else if(cpState === 'C1') { %>
+                                            <br /><em>(다음 달 차단해제예정)</em> <br /> <button class="red-btn">차단하기</button>
+                                                <% } %>
+                                            <% } %>
+                                        </span>
+                                    </li>
+                                    <% } else { %>
+                                    <li>
+                                        <span class="title">설정상태</span>
+                                        <span class="tx-cont fe-payment-type">
+                                            자동결제
+                                            <br /><em>(차단중)</em><br /> <button class="blue-btn">차단해제</button>
+                                            <% if(cpState === 'A0') { %>
+                                            <br /><em>(다음 달 차단예정)</em> <br /> <button class="blue-btn">차단해제</button>
+                                            <% } else if(cpState === 'C1') { %>
+                                            <br /><em>(다음 달 차단해제예정)</em> <br /> <button class="red-btn">차단하기</button>
+                                            <% } %>
+                                        </span>
+                                    </li>
+                                    <% } %>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--// payment-detail-wrap -->
+
+                <div class="mt40">
+                    <ul class="bt-slice">
+                        <li class="bt-blue1">
+                            <button>확인</button>
+                        </li>
+                    </ul>
+                </div>
+                <% if(type === '0') { %>
+                <div class="cont-btm-info mt18">
+                    <span class="tx-desc">고객정보 보호를 위해 서비스 명의 일부가 *로 표시되며, *로 가려진 정보는 <em class="tx-bold">사용처</em>에서 확인 하실 수 있습니다.</span>
+                </div>
+                <% } %>
+            </div>
+
+            <hr class="cont-sp type1" aria-hidden="true" />
+            <!-- .cont-box -->
+            <div class="cont-box nogaps-hoz">
+                <div class="box-confirm">
+                    <!-- .widget -->
+                    <div class="widget">
+                        <div class="widget-box accordion">
+                            <h3 class="tit-a">꼭 확인해 주세요!</h3>
+                            <div class="acco-cover toggle"><!-- toggle : 한개만 열기 -->
+                                <div class="bt-whole"><button role="button" aria-pressed="false"><span class="blind">내용 열기</span></button></div>
+                                <div class="acco-style">
+                                    <ul class="acco-list">
+                                        <li class="acco-box on">
+                                            <!-- .on: 열기 -->
+                                            <div class="acco-tit"><button role="button" aria-pressed="true"><span class="ff-hn vbl">1.</span> 자동결제</button></div>
+                                            <div class="acco-cont">
+                                                <ul class="list-dot">
+                                                    <li class="list">‘자동결제’란 한 번의 인증으로 다음 달부터 추가 인증 없이 자동으로 이루어진 결제입니다.</li>
+                                                    <li class="list">자동결제 차단 서비스는 사용처(콘텐츠 제공사)에서 과금 시도 시, 고객이 <em>자동결제 차단신청을 한 상태이면 <span class="ff-hn vbl">T world</span>에서 임시로 과금되지 않도록 차단하는 서비스</em> 입니다.</li>
+                                                </ul>
+                                            </div>
+                                        </li>
+
+                                        <li class="acco-box">
+                                            <div class="acco-tit"><button role="button" aria-pressed="false"><span class="ff-hn vbl">2.</span> 자동결제 차단/해제</button></div>
+                                            <div class="acco-cont">
+                                                <ul class="list-dot">
+                                                    <li class="list">자동결제 차단 서비스는 사용처(콘텐츠 제공사)에서 과금 시도 시, 고객이 <em>자동결제 차단신청을 한 상태이면 <span class="ff-hn vbl">T world</span>에서 임시로 과금되지 않도록 차단하는 서비스</em> 입니다.</li>
+                                                    <li class="list"><em>신청 월 말일의 설정 상태를 기준</em>으로 신청 월 다음 달부터 적용됩니다. 고객님이 <span class="ff-hn vbl">7</span>월 <span class="ff-hn vbl">25</span>일에 “자동결제 차단하기”를 설정했을 경우, <span class="ff-hn vbl">7</span>월 <span class="ff-hn vbl">31</span>일 기준으로 “자동결제 차단” 상태이므로 8월부터 자동결제 차단이 적용됩니다.</li>
+                                                    <li class="list">자동결제 차단/해제는 월 단위로 적용됩니다.   고객님이 <span class="ff-hn vbl">7</span>월 <span class="ff-hn vbl">25</span>일에 “자동결제 차단하기”를 설정하였다가 <span class="ff-hn vbl">8</span>월 <span class="ff-hn vbl">1</span>일에 “자동결제 차단해제”를 설정할 경우, <span class="ff-hn vbl">8</span>월분은 자동결제 차단이 되고 <span class="ff-hn vbl">9</span>월부터 자동결제 차단해제가 됩니다. </li>
+                                                    <li class="list">자동결제 차단/해제는 사용처(콘텐츠 제공사) 단위로 적용되므로, 동일 사용처의 특정 콘텐츠에 대한 자동결제 차단/해제를 희망하실 경우에는 사용처(콘텐츠 제공사)의 고객센터로 문의하시기 바랍니다.</li>
+                                                    <li class="list">자동결제 차단/해제는 사용처(콘텐츠 제공사)에서 과금 시도 시, 고객이 자동결제 차단신청을 한 상태이면 <span class="ff-hn vbl">T world</span>에서 임시로 과금되지 않도록 차단하는 서비스입니다.   자동결제 차단하기는 자동결제 내역이 있을 경우 신청이 가능합니다. 자동결제를 완전히 차단하시고자 하는 고객님께서는 사용처(콘텐츠 제공사) 고객센터를 통해 자동결제를 해지하셔야 합니다.</li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li class="acco-box">
+                                            <div class="acco-tit"><button role="button" aria-pressed="false"><span class="ff-hn vbl">3.</span> 월 중 요금제 변경, 일시정지 시 안내</button></div>
+                                            <div class="acco-cont">
+                                                <ul class="list-dot">
+                                                    <li class="list">월중 변경(요금제 변경, 정지)시 기본제공 음성/문자/데이터 혜택은 일할 계산되며, 초과하여 이용 시에는 추가요금이 청구됩니다. (요금제에 따라 일할 계산된 기본제공 통화혜택은 반영되어 있지 않을 수 있으니 주의하시기 바랍니다.)
+                                                        <div class="acco-bt-slice">
+                                                            <ul class="bt-slice">
+                                                                <li class="bt-white2">
+                                                                    <button>데이터요금 기준 안내</button>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </li>
+                                                    <li class="list">일시정지 중이거나 일시정지 해제를 한 경우에는 해당월 말일까지 실제 사용량과 다소 차이가 있을 수 있습니다. (이월 가능한 요금제의 경우에는 다음달 4일까지 차이가 있을 수 있습니다.)</li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li class="acco-box">
+                                            <div class="acco-tit"><button role="button" aria-pressed="false"><span class="ff-hn vbl">4.</span> 마이벨 서비스 및 다다익선 요금제 이용고객</button></div>
+                                            <div class="acco-cont">
+                                                <ul class="list-dot">
+                                                    <li class="list">마이벨 서비스는 SK텔레콤에 가입되어 있는 휴대폰으로 지역번호 없이 <span class="ff-hn vbl">700-5857</span>로 전화하는 경우에만 무료입니다.</li>
+                                                    <li class="list">다다익선 요금제 이용고객의 경우 전월 일시정지 또는 요금제 변경 시에는 <span class="ff-hn vbl">5</span>일 이전까지는 당월 기본제공 통화분에서 우선적으로 차감됩니다.</li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--// .widget -->
+                </div>
+            </div>
+            <!--// .cont-box -->
+        </div>
+    </div>
+    <!--// #contents -->
+
+
+
+    <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
+</div>
+
+<% include ../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    new Tw.MyTBillHistoryMicroDetail($(document));
+  });
+</script>
+<% include ../../components/end.component.html %>

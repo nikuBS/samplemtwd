@@ -1,5 +1,8 @@
-Tw.MytUsageChildren = function () {
-  this._apiService = new Tw.ApiService();
+Tw.MytUsageChildren = function (rootEl) {
+  this.$container = rootEl;
+  this._apiService = Tw.Api;
+  this._popupService = Tw.Popup;
+  this._historyService = new Tw.HistoryService();
 
   this._cachedElement();
   this._bindEvent();
@@ -7,89 +10,65 @@ Tw.MytUsageChildren = function () {
 };
 
 Tw.MytUsageChildren.prototype = {
-  _init: function () {
-    this._getData();
-  },
-
   _cachedElement: function () {
-    this.$container   = $('#wrap');
-    this.$select_line = this.$container.find('#line_list');
-    this.$mdl_name    = this.$container.find('#mdl_name');
-    this.$descendats  = this.$container.find('.descendants');
-
-    this.$wrap_tpl_product_detail = this.$container.find('#wrap_tpl_product_detail');
-    this.$wrap_tpl_usage_voice    = this.$container.find('#wrap_tpl_usage_voice');
-    this.$wrap_tpl_usage_sms      = this.$container.find('#wrap_tpl_usage_sms');
-    this.$wrap_tpl_usage_etc      = this.$container.find('#wrap_tpl_usage_etc');
-    this.tpl_product_detail       = _.template($('#tpl_product_detail').html());
-    this.tpl_usage_voice          = _.template($('#tpl_usage_voice').html());
-    this.tpl_usage_sms            = _.template($('#tpl_usage_sms').html());
-    this.tpl_usage_etc            = _.template($('#tpl_usage_etc').html());
+    // this.$btDropdown = this.$container.find('.bt-dropdown');
   },
 
   _bindEvent: function () {
-    this.$select_line.on('change', $.proxy(this._changeLine, this));
+    this.$container.on('click', '.bt-dropdown', $.proxy(this._onClickBtDropdown, this));
+    this.$container.on('change', '.fe-unit-switch', $.proxy(this._setDataByUnit, this));
   },
 
-  _changeLine: function () {
-    var $option         = this.$select_line.find(':selected');
-    var mdl             = $option.data('mdl');
-    var childSvcMgmtNum = this.$select_line.val();
-
-    this.$mdl_name.text(mdl);
-    this.$descendats.data('svcmgmtnum', childSvcMgmtNum);
-
-    // TODO: get Fetch Data
-    // this._getData();
+  _init: function () {
+    this._apiService.request(Tw.API_CMD.BFF_05_0010, {})
+      .done($.proxy(this._childrenReqDone, this))
+      .fail($.proxy(this._childrenReqFail, this));
   },
 
-  _getData: function () {
-    var childSvcMgmtNum = this.$descendats.data('svcmgmtnum');
-
-    this._apiService.request(Tw.API_CMD.BFF_05_0001, {}, { 'childSvcMgmtNum': childSvcMgmtNum } )
-      .done($.proxy(this.onSuccessLoadData, this));
+  _childrenReqDone: function (resp) {
+    if ( resp.code === '00' ) {
+      if ( resp.result && resp.result.length > 0 ) {
+        this.children = _.map(resp.result, $.proxy(function (_child) {
+          return {
+            attr: 'id="' + _child.svcMgmtNum + '"',
+            text: _child.svcNum
+          };
+        }, this));
+      }
+    }
   },
 
-  onSuccessLoadData: function (response) {
-    this.data = response.result;
-    this.render();
+  _childrenReqFail: function (resp) {
+    this._popupService.openAlert(resp.code + '' + resp.msg);
   },
 
-  render: function () {
-    var productDetail = {
-      prodId: this.data.prodId,
-      prodName: this.data.prodName,
-      remainDate: Tw.DateHelper.getRemainDate()
-    };
+  _onClickBtDropdown: function (event) {
+    var $target = $(event.currentTarget);
+    this._popupService.openChoice(Tw.MSG_MYT.CHILDREN.SELECT_TITLE, this.children,
+      'type3', $.proxy(this._onOpenChoicePopup, this, $target));
+  },
 
-    var voiceDetail = _.map(this.data.voice, function (item) {
-      return {
-        skipName: item.skipName,
-        showTotal: Tw.FormatHelper.convVoiceFormat(item.total),
-        showUsed: Tw.FormatHelper.convVoiceFormat(item.used),
-        showRemained: Tw.FormatHelper.convVoiceFormat(item.remained),
-        userRatio: (item.remained / item.total) * 100,
-        isUnlimited: isNaN(item.remained)
-      };
+  _onOpenChoicePopup: function ($target, $layer) {
+    $layer.on('click', '.popup-choice-list', $.proxy(this._onSelectChild, this, $target));
+  },
+
+  _onSelectChild: function ($target, event) {
+    this._popupService.close();
+    var selectedChild = $(event.currentTarget).find('button').attr('id');
+    this._historyService.goLoad('/myt/usage/children?childSvcMgmtNum=' + selectedChild);
+  },
+
+  _setDataByUnit: function (event) {
+    var defaultUnit = 'KB';
+    var unit = event.currentTarget.querySelector('input[name="gbmb"]:checked').value;
+    this.$container.find('[data-value]').each(function () {
+      var $this = $(this);
+      var dataValue = $this.attr('data-value');
+      var data = Tw.FormatHelper.customDataFormat(dataValue, defaultUnit, unit);
+
+      $this.text(data.data);
+      $this.parent()[0].childNodes[2].nodeValue = data.unit;
     });
-
-    var smsDetail = _.map(this.data.sms, function (item) {
-      return {
-        skipName: item.skipName,
-        showTotal: Tw.FormatHelper.convVoiceFormat(item.total),
-        showUsed: item.used,
-        showRemained: item.remained,
-        usedPrice: Tw.FormatHelper.convSmsPrice(item.used),
-        remainedPrice: Tw.FormatHelper.convSmsPrice(item.remained),
-        userRatio: (item.remained / item.total) * 100,
-        isUnlimited: isNaN(item.remained)
-      };
-    });
-
-    // template data binding
-    this.$wrap_tpl_product_detail.html(this.tpl_product_detail(productDetail));
-    this.$wrap_tpl_usage_voice.html(this.tpl_usage_voice({ voiceDetail: voiceDetail }));
-    this.$wrap_tpl_usage_sms.html(this.tpl_usage_sms({ smsDetail: smsDetail }));
-    // this.$wrap_tpl_usage_etc.html(this.tpl_usage_etc({}));
   }
+
 };
