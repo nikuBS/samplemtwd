@@ -188,3 +188,9 @@ export const VOICE_UNIT = {
   MIN: '분',
   SEC: '초'
 };
+
+export enum REQUEST_TYPE {
+  R = '신규',
+  C = '변경',
+  F = '해지'
+}

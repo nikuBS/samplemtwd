@@ -102,7 +102,7 @@ Tw.AUTO_CHARGE_CODE = {
   UNUSE: 'D'
 };
 
-Tw.PAYMENT_TYPE = {
+Tw.PAYMENT_CARD_TYPE = {
   '000': '일시불',
   '001': '1개월 할부',
   '002': '2개월 할부',
@@ -472,6 +472,7 @@ Tw.MSG_PAYMENT = {
   PRE_A09: '생년월일을 입력해 주세요.',
   PRE_A10: '자동 선결제 신청 및 변경을 종료하시겠습니까?',
   PRE_A11: '선결제 금액은 10,000원 단위로 입력해 주세요.',
+  PRE_A12: '선결제 가능 금액을 초과하였습니다.',
   ERROR_GET_CARD: '카드정보 조회에 실패하였습니다. 다시 시도해 주세요.',
 
   HISTORY_TEXT_PAYMENT: '결제',
@@ -640,7 +641,7 @@ Tw.PAYMENT_TYPE = {
   PACKAGE: '묶음결제',
   EASY: '간편결제',
   COMPLAX: '복합결제'
-}
+};
 
 Tw.HELPLINE_AREA = {
   CAPITAL: '수도권 (서울, 경기, 인천, 강원)',
@@ -723,6 +724,23 @@ Tw.CUSTOMER_EMAIL = {
     { text: '이사/회사 이동 후 부터' }
   ]
 };
+
+Tw.PAYMENT_CARD_TYPE_LIST = [
+  { 'attr': 'id="00"', text: '일시불' },
+  { 'attr': 'id="01"', text: '1개월 할부' },
+  { 'attr': 'id="02"', text: '2개월 할부' },
+  { 'attr': 'id="03"', text: '3개월 할부' },
+  { 'attr': 'id="04"', text: '4개월 할부' },
+  { 'attr': 'id="05"', text: '5개월 할부' },
+  { 'attr': 'id="06"', text: '6개월 할부' },
+  { 'attr': 'id="07"', text: '7개월 할부' },
+  { 'attr': 'id="08"', text: '8개월 할부' },
+  { 'attr': 'id="09"', text: '9개월 할부' },
+  { 'attr': 'id="10"', text: '10개월 할부' },
+  { 'attr': 'id="11"', text: '11개월 할부' },
+  { 'attr': 'id="12"', text: '12개월 할부' },
+  { 'attr': 'id="24"', text: '24개월 할부' }
+];
 
 Tw.NO_CONTRACT_TYPE = {
   USE : '사용',
