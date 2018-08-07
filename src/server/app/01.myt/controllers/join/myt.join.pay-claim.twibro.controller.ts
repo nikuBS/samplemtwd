@@ -52,10 +52,11 @@ class MytJoinPayClaimTwibro extends TwViewController {
     const thisMain = this;
 
     const p1 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0058, {}), 'BFF_05_0058');
+    const p2 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0041, {}), 'BFF_05_0041');
     // const p1_mock = this._getPromiseApiMock(payClaimInfo_BFF_05_0058, 'p1 Mock 데이터');
 
 
-    Promise.all([p1]).then(
+    Promise.all([p1, p2]).then(
       function (resArr) {
         console.dir(resArr);
         thisMain.logger.info(thisMain, `[ Promise.all ] : `, resArr);
@@ -67,6 +68,7 @@ class MytJoinPayClaimTwibro extends TwViewController {
           reqQuery: thisMain.reqQuery,
           svcInfo: thisMain._svcInfo,
           resDataInfo: resArr[0].result,
+          baseFeePlans: resArr[1].result,
           errBol: false,
           errObj: null
         });
@@ -86,6 +88,7 @@ class MytJoinPayClaimTwibro extends TwViewController {
           reqQuery: thisMain.reqQuery,
           svcInfo: thisMain._svcInfo,
           resDataInfo: null,
+          baseFeePlans: null,
           errBol: true,
           errObj: thisMain._apiErrInfo
         });

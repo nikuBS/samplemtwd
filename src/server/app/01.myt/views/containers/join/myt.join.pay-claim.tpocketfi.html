@@ -31,7 +31,7 @@
                             <ul>
                                 <li>
                                     <span class="title">사용중인 상품</span>
-                                    <span class="tx-cont"><button class="blue-btn"><%= (errBol) ? '' : resDataInfo.feeProdNm; %></button></span>
+                                    <span class="tx-cont"><button class="blue-btn"><%= (errBol) ? '' : baseFeePlans.prodName; %></button></span>
                                 </li>
 
                                 <% if(!errBol) { %>
@@ -70,6 +70,7 @@
       reqQuery: <%-JSON.stringify(reqQuery) %>,
       svcInfo: <%-JSON.stringify(svcInfo) %>,
       resDataInfo: <%-JSON.stringify(resDataInfo) %>,
+      baseFeePlans: <%-JSON.stringify(baseFeePlans) %>,
       errBol: <%-JSON.stringify(errBol) %>,
       errObj: <%-JSON.stringify(errObj) %>
   });
