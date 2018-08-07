@@ -160,19 +160,19 @@ Tw.MyTUsagePattern.prototype = {
       decimal: 2 //소숫점자리
     };
     $.extend(defaultcDataSetting, this._defaultChartSetting);
-    var cDataChart = $.extend({
-      da_arr: [{
-        na: this._chartCTData[2][0],
-        data: [this._chartCTData[2][1]]//배열 평균값으로 전달
-      }, {
-        na: this._chartCTData[1][0],
-        data: [this._chartCTData[1][1]]
-      }, {
-        na: this._chartCTData[0][0],
-        data: [this._chartCTData[0][1]]
-      }]
-    }, defaultcData);
     if ( !this._empty.cdata ) {
+      var cDataChart = $.extend({
+        da_arr: [{
+          na: this._chartCTData[2][0],
+          data: [this._chartCTData[2][1]]//배열 평균값으로 전달
+        }, {
+          na: this._chartCTData[1][0],
+          data: [this._chartCTData[1][1]]
+        }, {
+          na: this._chartCTData[0][0],
+          data: [this._chartCTData[0][1]]
+        }]
+      }, defaultcData);
       this.$container.find('.tab2-tab').chart($.extend(defaultcDataSetting, {
         container: 'can-box-cdata', //클래스명 String
         data: cDataChart //데이터 obj
@@ -208,91 +208,91 @@ Tw.MyTUsagePattern.prototype = {
       };
       $.extend(defaultSmsSetting, this._defaultChartSetting);
       $.extend(defaultVoiceSetting, this._defaultChartSetting);
-      var voiceChart = $.extend({
-        da_arr: [{
-          na: this._chartVoiceData[2][0],
-          data: [this._chartVoiceData[2][1]]//배열 평균값으로 전달
-        }, {
-          na: this._chartVoiceData[1][0],
-          data: [this._chartVoiceData[1][1]]
-        }, {
-          na: this._chartVoiceData[0][0],
-          data: [this._chartVoiceData[0][1]]
-        }]
-      }, defaultVoice);
-      var inVoiceChart = $.extend({
-        da_arr: [{
-          na: this._chartInVoiceData[2][0],
-          data: [this._chartInVoiceData[2][1]]//배열 평균값으로 전달
-        }, {
-          na: this._chartInVoiceData[1][0],
-          data: [this._chartInVoiceData[1][1]]
-        }, {
-          na: this._chartInVoiceData[0][0],
-          data: [this._chartInVoiceData[0][1]]
-        }]
-      }, defaultVoice);
-      var outVoiceChart = $.extend({
-        da_arr: [{
-          na: this._chartOutVoiceData[2][0],
-          data: [this._chartOutVoiceData[2][1]]//배열 평균값으로 전달
-        }, {
-          na: this._chartOutVoiceData[1][0],
-          data: [this._chartOutVoiceData[1][1]]
-        }, {
-          na: this._chartOutVoiceData[0][0],
-          data: [this._chartOutVoiceData[0][1]]
-        }]
-      }, defaultVoice);
-      var vidVoiceChart = $.extend({
-        da_arr: [{
-          na: this._chartVidVoiceData[2][0],
-          data: [this._chartVidVoiceData[2][1]]//배열 평균값으로 전달
-        }, {
-          na: this._chartVidVoiceData[1][0],
-          data: [this._chartVidVoiceData[1][1]]
-        }, {
-          na: this._chartVidVoiceData[0][0],
-          data: [this._chartVidVoiceData[0][1]]
-        }]
-      }, defaultVoice);
-      var smsChart = $.extend({
-        da_arr: [{
-          na: this._chartSmsData[2][0],
-          data: [this._chartSmsData[2][1]]//배열 평균값으로 전달
-        }, {
-          na: this._chartSmsData[1][0],
-          data: [this._chartSmsData[1][1]]
-        }, {
-          na: this._chartSmsData[0][0],
-          data: [this._chartSmsData[0][1]]
-        }]
-      }, defaultSms);
       if ( !this._empty.sms ) {
+        var smsChart = $.extend({
+          da_arr: [{
+            na: this._chartSmsData[2][0],
+            data: [this._chartSmsData[2][1]]//배열 평균값으로 전달
+          }, {
+            na: this._chartSmsData[1][0],
+            data: [this._chartSmsData[1][1]]
+          }, {
+            na: this._chartSmsData[0][0],
+            data: [this._chartSmsData[0][1]]
+          }]
+        }, defaultSms);
         this.$container.find('.tab2-tab').chart($.extend(defaultSmsSetting, {
           container: 'can-box-sms', //클래스명 String
           data: smsChart //데이터 obj
         }));
       }
       if ( !this._empty.voice ) {
+        var voiceChart = $.extend({
+          da_arr: [{
+            na: this._chartVoiceData[2][0],
+            data: [this._chartVoiceData[2][1]]//배열 평균값으로 전달
+          }, {
+            na: this._chartVoiceData[1][0],
+            data: [this._chartVoiceData[1][1]]
+          }, {
+            na: this._chartVoiceData[0][0],
+            data: [this._chartVoiceData[0][1]]
+          }]
+        }, defaultVoice);
         this.$container.find('.tab2-tab').chart($.extend(defaultVoiceSetting, {
           container: 'can-box1', //클래스명 String
           data: voiceChart //데이터 obj
         }));
       }
       if ( !this._empty.inVoice ) {
+        var inVoiceChart = $.extend({
+          da_arr: [{
+            na: this._chartInVoiceData[2][0],
+            data: [this._chartInVoiceData[2][1]]//배열 평균값으로 전달
+          }, {
+            na: this._chartInVoiceData[1][0],
+            data: [this._chartInVoiceData[1][1]]
+          }, {
+            na: this._chartInVoiceData[0][0],
+            data: [this._chartInVoiceData[0][1]]
+          }]
+        }, defaultVoice);
         this.$container.find('.tab2-tab').chart($.extend(defaultVoiceSetting, {
           container: 'can-box2', //클래스명 String
           data: inVoiceChart //데이터 obj
         }));
       }
       if ( !this._empty.outVoice ) {
+        var outVoiceChart = $.extend({
+          da_arr: [{
+            na: this._chartOutVoiceData[2][0],
+            data: [this._chartOutVoiceData[2][1]]//배열 평균값으로 전달
+          }, {
+            na: this._chartOutVoiceData[1][0],
+            data: [this._chartOutVoiceData[1][1]]
+          }, {
+            na: this._chartOutVoiceData[0][0],
+            data: [this._chartOutVoiceData[0][1]]
+          }]
+        }, defaultVoice);
         this.$container.find('.tab2-tab').chart($.extend(defaultVoiceSetting, {
           container: 'can-box33', //클래스명 String
           data: outVoiceChart //데이터 obj
         }));
       }
       if ( !this._empty.vidVoice ) {
+        var vidVoiceChart = $.extend({
+          da_arr: [{
+            na: this._chartVidVoiceData[2][0],
+            data: [this._chartVidVoiceData[2][1]]//배열 평균값으로 전달
+          }, {
+            na: this._chartVidVoiceData[1][0],
+            data: [this._chartVidVoiceData[1][1]]
+          }, {
+            na: this._chartVidVoiceData[0][0],
+            data: [this._chartVidVoiceData[0][1]]
+          }]
+        }, defaultVoice);
         this.$container.find('.tab2-tab').chart($.extend(defaultVoiceSetting, {
           container: 'can-box4', //클래스명 String
           data: vidVoiceChart //데이터 obj

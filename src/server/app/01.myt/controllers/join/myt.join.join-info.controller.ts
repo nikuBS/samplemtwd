@@ -53,12 +53,14 @@ class MytJoinJoinInfoController extends TwViewController {
   // 모바일 (휴대폰 / T Login / T Pocket-FI) 정보 세팅
   private getMobileResult(data: any): any {
 
-    const history = data.history;
-    const historyData = history[0];
-    Object.assign(data, {
-      chgDt : this.getMarskingDateFormat(historyData.chgDt, DATE_FORMAT.YYYYMMDD_TYPE_0),
-      chgCd : historyData.chgCd
-    });
+    if ( data.history !== null && data.history.length > 0) {
+      const history = data.history;
+      const historyData = history[0];
+      Object.assign(data, {
+        chgDt : this.getMarskingDateFormat(historyData.chgDt, DATE_FORMAT.YYYYMMDD_TYPE_0),
+        chgCd : historyData.chgCd
+      });
+    }
 
     data.apprAmt = FormatHelper.addComma(data.apprAmt);
 
@@ -167,9 +169,12 @@ class MytJoinJoinInfoController extends TwViewController {
   }
 
   private parseHistory(data: any): any {
-    data.map( (o) => {
-      o.chgDt = this.getMarskingDateFormat(o.chgDt, 'YYYY.MM.DD');
-    });
+    if ( data !== null && data.length > 0 ) {
+      data.map( (o) => {
+        o.chgDt = this.getMarskingDateFormat(o.chgDt, 'YYYY.MM.DD');
+      });
+    }
+
     return data;
   }
 
@@ -237,12 +242,6 @@ class MytJoinJoinInfoController extends TwViewController {
 
       res.render('join/myt.join.join-info.html', data);
     });
-    // res.render( 'join/myt.join.join-info.html', this.getData(svcInfo, data) );
-
-    /*this.apiService.request(API_CMD.BFF_05_0068, {}).subscribe((resp) => {
-      this.logger.info(this, '#### res ', resp)
-      res.render('join/myt.join.join-info.html', this.getData(svcInfo, resp));
-    });*/
   }
 }
 

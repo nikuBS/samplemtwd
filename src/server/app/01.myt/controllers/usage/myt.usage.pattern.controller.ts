@@ -7,11 +7,10 @@
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { NextFunction, Request, Response } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
-import { USAGE_PATTERN_CHART } from '../../../../types/string.type';
+import { USAGE_PATTERN_CHART, USAGE_PATTERN_NAME } from '../../../../types/string.type';
 import DateHelper from '../../../../utils/date.helper';
 import FormatHelper from '../../../../utils/format.helper';
 import { Observable } from 'rxjs/Observable';
-import _ from 'lodash';
 
 class MyTUsagePattern extends TwViewController {
 
@@ -23,10 +22,12 @@ class MyTUsagePattern extends TwViewController {
     let data = {
       svcInfo: svcInfo,
       isTotal: false,
-      isPhone: true
+      isPhone: true,
+      names: USAGE_PATTERN_NAME
     };
     const curDate = new Date().getDate();
     const api = this.getPatternApi(svcInfo);
+    let conf_data: any, conp_data: any;
     if ( !api ) {
       // 제공하지 않는 유형의 서비스인 경우
       res.render('usage/myt.usage.pattern.fail.html', { data });
@@ -38,20 +39,35 @@ class MyTUsagePattern extends TwViewController {
         usagePatternSevice
       ).subscribe(([feeData, patternData]) => {
         if ( feeData.code === API_CODE.CODE_00 ) {
-          const conf_data = this.convertFeeData(feeData);
-          data = _.extend(data, conf_data);
+          conf_data = this.convertFeeData(feeData);
+        } else {
+          conf_data = this.convertFeeData({
+            result: {
+              useAmtMonthInfos: []
+            }
+          });
         }
-        if ( patternData.code === API_CODE.CODE_00 ) {
-          // 1~4일 인 경우
-          if ( curDate < 5 ) {
-            data.isTotal = true;
+        data = Object.assign(data, conf_data);
+
+        // 1~4일 인 경우
+        if ( curDate < 5 ) {
+          data.isTotal = true;
+        } else {
+          if ( patternData.code === API_CODE.CODE_00 ) {
+            conp_data = this.convertPatternData(patternData);
+            data = Object.assign(data, conp_data);
           } else {
-            const conp_data = this.convertPatternData(patternData);
-            data = _.extend(data, conp_data);
+            conp_data = this.convertPatternData({
+              result: {
+                usageMonths: []
+              }
+            });
           }
+          data = Object.assign(data, conp_data);
         }
-        const cone_data = this.checkEmptyData(data);
-        data = _.extend(data, cone_data);
+
+        const empty = this.checkEmptyData(data);
+        data = Object.assign(data, empty);
         if ( data.svcInfo.svcAttrCd === 'M3' || data.svcInfo.svcAttrCd === 'M4' ) {
           data.isPhone = false;
         }
@@ -80,28 +96,34 @@ class MyTUsagePattern extends TwViewController {
     if ( response.result && response.result.useAmtMonthInfos ) {
       const data = response.result.useAmtMonthInfos;
       const length = data.length;
-      const months: any = [];
-      const totalCharge: any = [];
-      const discountAdj: any = [];
-      let useAv = 0;
-      let disAv = 0;
-      _.forEach(_.map(data, 'invDt'), (value) => {
-        months.push(DateHelper.getShortKoreanMonth(value));
-      });
-      _.forEach(_.map(data, 'totChargAmt'), (value) => {
-        const item = parseInt(value, 10);
-        totalCharge.push(item);
-        useAv += item;
-      });
-      _.forEach(_.map(data, 'dcAdjAmt'), (value) => {
-        const item = parseInt(value, 10);
-        discountAdj.push(Math.abs(item));
-        disAv += item;
-      });
-      result.months = months;
-      result.useAverage = (useAv && FormatHelper.numberWithCommas(Math.round(useAv / length))) || null; // 평균사용금액
-      result.disAverage = FormatHelper.numberWithCommas(Math.round(disAv / length)); // 평균할인금액
-      result.chartFeeData = _.zip(months, totalCharge, discountAdj); // 날짜별 금액정보
+      if ( length > 0 ) {
+        const months: any = [];
+        const totalCharge: any = [];
+        const discountAdj: any = [];
+        let useAv = 0;
+        let disAv = 0;
+        data.map((item) => item['invDt']).forEach((value) => {
+          months.push(DateHelper.getShortKoreanMonth(value));
+        });
+        data.map((item) => item['totChargAmt']).forEach((value) => {
+          const item = parseInt(value, 10);
+          totalCharge.push(item);
+          useAv += item;
+        });
+        data.map((item) => item['dcAdjAmt']).forEach((value) => {
+          const item = parseInt(value, 10);
+          discountAdj.push(Math.abs(item));
+          disAv += item;
+        });
+        result.months = months;
+        result.useAverage = (useAv && FormatHelper.numberWithCommas(Math.round(useAv / length))) || null; // 평균사용금액
+        result.disAverage = (disAv && FormatHelper.numberWithCommas(Math.round(disAv / length))) || null; // 평균할인금액
+        result.chartFeeData = FormatHelper.zip(months, totalCharge, discountAdj); // 날짜별 금액정보
+      } else {
+        result.months = [];
+        result.useAverage = null;
+        result.disAverage = null;
+      }
     }
     return result;
   }
@@ -110,67 +132,75 @@ class MyTUsagePattern extends TwViewController {
     const result: any = {};
     if ( response.result && response.result.usageMonths ) {
       const data = response.result.usageMonths;
-      const infos = _.map(data, 'bfuqdto');
-      const iovInfos = _.map(data, 'inoutnetVideoUseVdto');
-      const length = data.length;
-      const voice: any = [], inVoice: any = [], outVoice: any = [], vidVoice: any = [],
-        sms: any = [], cData: any = [], months: any = [];
-      let totalVoice = 0, totalSms = 0, totalcData = 0, inTotalVoice = 0, outTotalVoice = 0, vidTotalVoice = 0;
-      _.forEach(_.map(data, 'invDtTemp'), (value) => {
-        months.push(value + '월');
-      });
-      // 음성통화
-      _.forEach(_.map(infos, 'domUseQty'), (value) => {
-        totalVoice += parseInt(value, 10);
-        voice.push(this.secToMS(value, 'B'));
-      });
-      // 문자
-      _.forEach(_.map(infos, 'smsUseQty'), (value) => {
-        totalSms += parseInt(value, 10);
-        sms.push(parseInt(value, 10));
-      });
-      // 데이터
-      _.forEach(_.map(infos, 'dataUseQty'), (value) => {
-        totalcData += parseInt(value, 10);
-        cData.push(this.convDataGB(value));
-      });
+      if ( data.length > 0 ) {
+        const infos = data.map((item) => item['bfuqdto']);
+        const iovInfos = data.map((item) => item['inoutnetVideoUseVdto']);
+        const length = data.length;
+        const voice: any = [], inVoice: any = [], outVoice: any = [], vidVoice: any = [],
+          sms: any = [], cData: any = [], months: any = [];
+        let totalVoice = 0, totalSms = 0, totalcData = 0, inTotalVoice = 0, outTotalVoice = 0, vidTotalVoice = 0;
+        data.map((item) => item['invDtTemp']).forEach((value) => {
+          months.push(value + '월');
+        });
+        // 음성통화
+        infos.map((item) => item['domUseQty']).forEach((value) => {
+          totalVoice += parseInt(value, 10);
+          voice.push(this.secToMS(value, 'B'));
+        });
+        // 문자
+        infos.map((item) => item['smsUseQty']).forEach((value) => {
+          totalSms += parseInt(value, 10);
+          sms.push(parseInt(value, 10));
+        });
+        // 데이터
+        infos.map((item) => item['dataUseQty']).forEach((value) => {
+          totalcData += parseInt(value, 10);
+          cData.push(this.convDataGB(value));
+        });
 
-      // 망내, 망외, 영상 음성통화
-      _.forEach(iovInfos, (value) => {
-        if ( value ) {
-          const inItem = value['inNetVoiceCallUseQty'];
-          const outItem = value['outNetVoiceCallUseQty'];
-          const vidItem = value['videoCallUseQty'];
-          // 망내
-          inTotalVoice += parseInt(inItem, 10);
-          inVoice.push(this.secToMS(inItem, 'B'));
-          // 망외
-          outTotalVoice += parseInt(outItem, 10);
-          outVoice.push(this.secToMS(outItem, 'B'));
-          // 영상
-          vidTotalVoice += parseInt(vidItem, 10);
-          vidVoice.push(this.secToMS(vidItem, 'B'));
-        } else {
-          inVoice.push('0:0');
-          outVoice.push('0:0');
-          vidVoice.push('0:0');
-        }
-      });
+        // 망내, 망외, 영상 음성통화
+        iovInfos.forEach((value) => {
+          if ( value ) {
+            const inItem = value['inNetVoiceCallUseQty'];
+            const outItem = value['outNetVoiceCallUseQty'];
+            const vidItem = value['videoCallUseQty'];
+            // 망내
+            inTotalVoice += parseInt(inItem, 10);
+            inVoice.push(this.secToMS(inItem, 'B'));
+            // 망외
+            outTotalVoice += parseInt(outItem, 10);
+            outVoice.push(this.secToMS(outItem, 'B'));
+            // 영상
+            vidTotalVoice += parseInt(vidItem, 10);
+            vidVoice.push(this.secToMS(vidItem, 'B'));
+          } else {
+            inVoice.push('0:0');
+            outVoice.push('0:0');
+            vidVoice.push('0:0');
+          }
+        });
 
-      result.names = ['데이터', '음성통화', '문자'];
-      result.totVoiceAverage = (totalVoice && this.secToMS((totalVoice / length), 'A')) || null; // 음성통화 평균
-      result.totSmsAverage = (totalSms && Math.round(totalSms / length)) || null; // 문자 평균
-      result.totCdataAverage = (totalcData && this.convDataGB(totalcData)) || null; // 데이터 평균
-      result.totInVoiceAverage = (inTotalVoice && this.secToMS((inTotalVoice / length), 'A')) || null; // 망내음성통화 평균
-      result.totOutVoiceAverage = (outTotalVoice && this.secToMS((outTotalVoice / length), 'A')) || null; // 망외음성통화 평균
-      result.totVidVoiceAverage = (vidTotalVoice && this.secToMS((vidTotalVoice / length), 'A')) || null; // 영상통화 평균
+        result.totVoiceAverage = (totalVoice && this.secToMS((totalVoice / length), 'A')) || null; // 음성통화 평균
+        result.totSmsAverage = (totalSms && Math.round(totalSms / length)) || null; // 문자 평균
+        result.totCdataAverage = (totalcData && this.convDataGB(totalcData / length)) || null; // 데이터 평균
+        result.totInVoiceAverage = (inTotalVoice && this.secToMS((inTotalVoice / length), 'A')) || null; // 망내음성통화 평균
+        result.totOutVoiceAverage = (outTotalVoice && this.secToMS((outTotalVoice / length), 'A')) || null; // 망외음성통화 평균
+        result.totVidVoiceAverage = (vidTotalVoice && this.secToMS((vidTotalVoice / length), 'A')) || null; // 영상통화 평균
 
-      result.chartVoiceData = _.zip(months, voice);
-      result.chartSmsData = _.zip(months, sms);
-      result.chartCTData = _.zip(months, cData);
-      result.chartInVoiceData = _.zip(months, inVoice);
-      result.chartOutVoiceData = _.zip(months, outVoice);
-      result.chartVidVoiceData = _.zip(months, vidVoice);
+        result.chartVoiceData = FormatHelper.zip(months, voice);
+        result.chartSmsData = FormatHelper.zip(months, sms);
+        result.chartCTData = FormatHelper.zip(months, cData);
+        result.chartInVoiceData = FormatHelper.zip(months, inVoice);
+        result.chartOutVoiceData = FormatHelper.zip(months, outVoice);
+        result.chartVidVoiceData = FormatHelper.zip(months, vidVoice);
+      } else {
+        result.totVoiceAverage = null; // 음성통화 평균
+        result.totSmsAverage = null; // 문자 평균
+        result.totCdataAverage = null; // 데이터 평균
+        result.totInVoiceAverage = null; // 망내음성통화 평균
+        result.totOutVoiceAverage = null; // 망외음성통화 평균
+        result.totVidVoiceAverage = null; // 영상통화 평균
+      }
     }
     return result;
   }

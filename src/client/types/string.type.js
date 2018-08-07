@@ -116,8 +116,7 @@ Tw.PAYMENT_TYPE = {
   '010': '10개월 할부',
   '011': '11개월 할부',
   '012': '12개월 할부',
-  '024': '24개월 할부',
-  'M': '개월'
+  '024': '24개월 할부'
 };
 
 Tw.PAYMENT_STRING = {
@@ -324,6 +323,10 @@ Tw.MSG_MYT = {
     ONLY_PWD: '비밀번호는 숫자만 입력 가능합니다.',
     FAIL_PWD: '비밀번호가 일치하지 않습니다. \n 다시 입력해주시기 바랍니다.'
   },
+  JOIN_INFO_A01 : '시작일이 종료일보다 클 수 없습니다.',
+  JOIN_INFO_A02 : '조회 시작일은 {0} 부터 가능합니다.',
+  JOIN_INFO_A03 : '조회 시작일 유효한 일자가 아닙니다.',
+  JOIN_INFO_A04 : '조회 종료일 유효한 일자가 아닙니다.',
   CONTRACT_TERMINAL: {
     OPEN_ALERT: {
       BSPS: {
@@ -719,4 +722,10 @@ Tw.CUSTOMER_EMAIL = {
     { text: '며칠 전부터' },
     { text: '이사/회사 이동 후 부터' }
   ]
+};
+
+Tw.NO_CONTRACT_TYPE = {
+  USE : '사용',
+  SAVE : '적립',
+  EXTINCTION : '소멸'
 };
