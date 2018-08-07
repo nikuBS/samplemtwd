@@ -7,7 +7,6 @@
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
 import DateHelper from '../../../../utils/date.helper';
-import { StepResearch } from '../../../../mock/server/customer.researches.mock';
 import { RESEARCH_EXAMPLE_TYPE } from '../../../../types/string.type';
 import { API_CMD } from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
@@ -98,7 +97,6 @@ export default class CustomerResearches extends TwViewController {
       });
     } else {
       this.apiService.request(API_CMD.BFF_08_0023, {}).subscribe(resp => {
-        // const researches = Researches.map(this.setData);
         const researches = resp.result.map(this.setData);
         res.render('researches/customer.researches.html', { svcInfo, researches });
       });
