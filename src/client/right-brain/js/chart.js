@@ -59,7 +59,11 @@ $.fn.chart = function(option){
     }
   }
   inter = setInterval(ani,10);
-  max.sort(function(a,b){return a<b;});
+  
+  max.sort(function(a,b){
+    return b - a;
+  });
+  
   option.max = max[0];
   option.min = max[max.length-1];
   create_tag(chart_data,chart_length);
@@ -168,7 +172,6 @@ $.fn.chart = function(option){
         for(var i = 0; i < chart_length; ++i){
           var _sum = sum_aver(chart_data.da_arr[i].data,{'decimal':option.decimal});
           ani_arr[i] += (unit_count(option.max-_sum)-ani_arr[i])*option.spd;
-          
           can.beginPath();
           can.strokeStyle = '#ddd';
           can.moveTo(chart_gap*i+_gap,unit_count(0));
