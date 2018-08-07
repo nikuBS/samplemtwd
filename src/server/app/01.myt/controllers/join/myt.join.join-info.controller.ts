@@ -41,9 +41,11 @@ class MytJoinJoinInfoController extends TwViewController {
     // 마스킹 되어 있을 경우(*을 1로 바꿔서 날짜 포맷팅 후 다시 *로 바꾼다.)
     if ( date.indexOf('*') > -1 ) {
       _chgDt = _chgDt.replace(/\*/g, '1');
+      _chgDt = DateHelper.convDateFormat(_chgDt);
       _chgDt = DateHelper.getShortDateWithFormat(_chgDt, format);
       _chgDt = _chgDt.replace(/1/g, '*');
     } else {
+      _chgDt = DateHelper.convDateFormat(_chgDt);
       _chgDt = DateHelper.getShortDateWithFormat(_chgDt, format);
     }
 
@@ -75,11 +77,8 @@ class MytJoinJoinInfoController extends TwViewController {
     }
     // 가입비 표시[E]
 
-    // 개통/변경 히스토리 set
-    /*history.map( (o) => {
-      o.chgDt = this.getMarskingDateFormat(o.chgDt, 'YYYY.MM.DD');
-    });
-    data.history = history;*/
+    data.isPwdEditHide = FormatHelper.isEmpty(data.pwdStCd);
+
 
     return data;
   }
@@ -204,8 +203,6 @@ class MytJoinJoinInfoController extends TwViewController {
   }
 
   private getData(svcInfo: any, data: any): any {
-    // svcInfo.svcAttrCd = 'M5';
-    // svcInfo.svcGr = 'S';
 
     const lineType = this.getLinetype();
     let isContract = true;
@@ -220,6 +217,7 @@ class MytJoinJoinInfoController extends TwViewController {
 
     // 회선별 페이지 PATH
     data.path = this._urlPath[this.getLinetype()];
+    data.lineType = lineType;
 
 
     return {
