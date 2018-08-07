@@ -16,13 +16,16 @@ Tw.CustomerEmailTemplate = function (rootEl) {
 
 Tw.CustomerEmailTemplate.prototype = {
   state: {
+    lineList: {},
     tabIndex: 0,
     serviceType: 'CELL',
     serviceCategory: '',
-    callCategory: 0
+    callCategory: ''
   },
 
   _init: function () {
+    this._apiService.request(Tw.API_CMD.BFF_01_0002, {}).done($.proxy(this._onSuccessLineList, this));
+
     this._apiService.request(Tw.API_CMD.BFF_08_0010, {}).done($.proxy(this._setServiceCategory, this));
     this.state.tabIndex = $('[role=tablist]').find('[aria-selected=true]').index();
   },
@@ -38,6 +41,7 @@ Tw.CustomerEmailTemplate.prototype = {
   },
 
   _bindEvent: function () {
+    this.$container.on('click', $.proxy(this._validateRequired, this));
     this.$container.on('click', '[role=tab]', $.proxy(this._changeTab, this));
     this.$container.on('click', '[data-service]', $.proxy(this._selectService, this));
     this.$container.on('click', '[data-call]', $.proxy(this._selectCall, this));
@@ -50,6 +54,10 @@ Tw.CustomerEmailTemplate.prototype = {
     this.$container.on('input', '.fe-inquiry-content', $.proxy(this._onCountContent, this));
   },
 
+  _changeTab: function () {
+    this.state.tabIndex = $('[role=tablist]').find('[aria-selected=true]').index();
+  },
+
   _onCountTitle: function (e) {
     var nSize = $(e.currentTarget).val().length;
     $(e.currentTarget).parent().find('.byte-current').text(nSize);
@@ -60,8 +68,8 @@ Tw.CustomerEmailTemplate.prototype = {
     $(e.currentTarget).parent().find('.byte-current').text(nSize);
   },
 
-  _changeTab: function () {
-    this.state.tabIndex = $('[role=tablist]').find('[aria-selected=true]').index();
+  _onSuccessLineList: function (res) {
+    this._setState({ lineList: res.result });
   },
 
   _setServiceCategory: function (res) {
@@ -92,26 +100,26 @@ Tw.CustomerEmailTemplate.prototype = {
     });
 
     this._popupService.openChoice(
-      Tw.POPUP_TITLE.SELECT_SERVICE,
-      list,
-      '',
-      null,
-      this._popupService.close
+      Tw.POPUP_TITLE.SELECT_SERVICE, list, '', null, this._popupService.close
     );
   },
 
   _showCallPopup: function () {
-    var list = [
-      { attr: 'data-call=WIBRO', text: Tw.CUSTOMER_EMAIL.WIBRO },
-      { attr: 'data-call=INTERNET', text: Tw.CUSTOMER_EMAIL.INTERNET }
-    ];
+    var list = [];
+
+    if ( this.state.lineList.S.length !== 0 ) {
+      list = [
+        { code: 'wibro', attr: 'data-call=WIBRO', text: Tw.CUSTOMER_EMAIL.WIBRO },
+        { code: 'wibro', attr: 'data-call=INTERNET', text: Tw.CUSTOMER_EMAIL.INTERNET }
+      ];
+    } else {
+      list = [
+        { code: 'wibro', attr: 'data-call=WIBRO', text: Tw.CUSTOMER_EMAIL.WIBRO }
+      ];
+    }
 
     this._popupService.openChoice(
-      Tw.POPUP_TITLE.SELECT_SERVICE,
-      list,
-      '',
-      null,
-      this._popupService.close
+      Tw.POPUP_TITLE.SELECT_SERVICE, list, '', null, this._popupService.close
     );
   },
 
@@ -147,7 +155,9 @@ Tw.CustomerEmailTemplate.prototype = {
   },
 
   _setState: function (state) {
-    this.state = $.extend(this.state, state);
+    var tabIndex = $('[role=tablist]').find('[aria-selected=true]').index();
+
+    this.state = $.extend(this.state, state, { tabIndex: tabIndex });
 
     $(this).trigger('onChangeState', this.state);
     this._setTemplate();
@@ -180,11 +190,46 @@ Tw.CustomerEmailTemplate.prototype = {
       }
 
       if ( this.state.callCategory === 'INTERNET' ) {
-        this.$wrap_call.html(this.tpl_call_internet());
+        this.$wrap_call.html(this.tpl_call_internet({ lineList: this.state.lineList.S }));
       }
 
       skt_landing.widgets.widget_init('.fe-wrap-call'); //selector string
       skt_landing.components.component_init('.fe-wrap-call');  //selector string
+    }
+  },
+
+  _validateRequired: function () {
+    var arrValid = [];
+    var $currentTabRequired = this.state.tabIndex === 0 ? $('#tab1-tab [required]') : $('#tab2-tab [required]');
+
+    $currentTabRequired.each(function (index, item) {
+      if ( $(item).prop('type') === 'checkbox' ) {
+        arrValid.push($(item).prop('checked'));
+      }
+
+      if ( $(item).prop('type') === 'number' ) {
+        var isValidNumber = $(item).val().length !== 0 ? true : false;
+        arrValid.push(isValidNumber);
+      }
+
+      if ( $(item).prop('type') === 'text' ) {
+        var isValidText = $(item).val().length !== 0 ? true : false;
+        arrValid.push(isValidText);
+      }
+
+      if ( $(item).prop('type') === 'textarea' ) {
+        var isValidTextArea = $(item).val().length !== 0 ? true : false;
+        arrValid.push(isValidTextArea);
+      }
+    });
+
+    arrValid.push($('.fe-check-term01').prop('checked'));
+    arrValid.push($('.fe-check-term02').prop('checked'));
+
+    if ( arrValid.indexOf(false) === -1 ) {
+      $('.fe-email-register').prop('disabled', false);
+    } else {
+      $('.fe-email-register').prop('disabled', true);
     }
   },
 

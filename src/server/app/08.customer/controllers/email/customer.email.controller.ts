@@ -15,6 +15,7 @@ class CustomerEmailController extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo?: any, layerType?: string): void {
     const status = req.params.status;
+    const category = req.params.category;
     const email = req.query.email ? req.query.email : '';
 
     if ( status === 'complete' ) {
@@ -26,7 +27,9 @@ class CustomerEmailController extends TwViewController {
     } else {
       res.render('email/customer.email.html', {
         svcInfo: Object.assign({}, svcInfo, { svcNum: FormatHelper.conTelFormatWithDash(svcInfo.svcNum) }),
-        type: req.query.type
+        type: req.query.type,
+        status: status,
+        category: category
       });
     }
   }

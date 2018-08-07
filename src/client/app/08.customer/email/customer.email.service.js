@@ -58,6 +58,7 @@ Tw.CustomerEmailService.prototype = {
 
   _requestEmailCell: function () {
     var params = {
+      cntcNumClCd: $('[name=radio_service_phone]:checked').val(),
       connSite: Tw.BrowserHelper.isApp() ? 15 : 19,
       ofrCtgSeq: this._oEmailTemplate.getState().serviceCategory,
       cntcNum1: this._getPhoneParams(0),
@@ -75,6 +76,7 @@ Tw.CustomerEmailService.prototype = {
 
   _requestEmailInternet: function () {
     var params = {
+      cntcNumClCd: $('[name=radio_service_phone]:checked').val(),
       connSite: Tw.BrowserHelper.isApp() ? 15 : 19,
       ofrCtgSeq: this._oEmailTemplate.getState().serviceCategory,
       cntcNum1: this._getPhoneParams(0),
