@@ -38,223 +38,34 @@
                         <div class="tab-area type1"><!-- 타입별 탭형태 변환 -->
                             <div class="tab-linker">
                                 <ul role="tablist">
-                                    <li role="tab" aria-selected="true" aria-controls="tab1-tab" id="tab1"><a>서비스 관련 문의</a></li>
-                                    <!-- true 열림 -->
-                                    <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2"><a>통화품질 상담</a></li>
+                                    <% if ( status === 'quality' ) { %>
+                                    <li role="tab" aria-selected="false" aria-controls="tab1-tab">
+                                        <a>서비스 관련 문의</a>
+                                    </li>
+                                    <li role="tab" aria-selected="true" aria-controls="tab2-tab">
+                                        <a>통화품질 상담</a>
+                                    </li>
+                                    <% } else {%>
+                                    <li role="tab" aria-selected="true" aria-controls="tab1-tab">
+                                        <a>서비스 관련 문의</a>
+                                    </li>
+                                    <li role="tab" aria-selected="false" aria-controls="tab2-tab">
+                                        <a>통화품질 상담</a>
+                                    </li>
+                                    <% } %>
                                 </ul>
                             </div>
                             <div class="tab-contents">
                                 <ul>
                                     <li role="tabpanel" id="tab1-tab" aria-labelledby="tab1" aria-selected="false">
-                                        <div class="email-question-top">
-                                            <p class="tx-dropdown-box">
-                                                <button class="tx-dropdown blue fe-btn-select-service" title="이메일 문의" aria-haspopup="true">
-                                                    서비스 선택
-                                                </button>
-                                                서비스의<br>
-                                                <button class="tx-dropdown blue fe-btn-select-service-category" title="이메일 문의"
-                                                        aria-haspopup="true">문의사항 선택
-                                                </button>
-                                                에 대해<br>문의합니다.
-                                            </p>
-                                            <span class="ico-ill-email"></span>
-                                            <button class="bt-link-tx">지금 해결할 수 있는 문의가 있는지 살펴보세요<span class="ico"></span></button>
-                                        </div>
-                                        <div class="cont-box">
-                                            <div class="box-email-form">
-                                                <p class="page-desc2"><em>*</em>표시는 필수 입력 항목입니다.</p>
-                                                <div class="email-form">
-                                                    <div class="form-cell fe-wrap-service">
-                                                        <span class="form-ti">문의하실 내용을 작성해주세요<span class="point-indicate ml4"
-                                                                                                   aria-hidden="true">*</span></span>
-                                                        <div class="widget">
-                                                            <div class="widget-box tfCombined">
-                                                                <div class="txfield-combined">
-                                                                    <div class="txfield-combined-ti">
-                                                                        <input class="input-focus fe-inquiry-title" type="text"
-                                                                               placeholder="제목을 입력해주세요."
-                                                                               title="이메일 문의 제목" value="" maxlength="20"
-                                                                               aria-labelledby="aria-email-qacont">
-                                                                        <span class="byte"><span class="byte-current">0</span>/<span
-                                                                            class="byte-total">20</span>자</span>
-                                                                    </div>
-                                                                    <div class="txfield-combined-tx">
-                                                                        <textarea class="input-focus fe-inquiry-content" cols="20" rows="3"
-                                                                                  placeholder="내용을 입력해주세요."
-                                                                                  aria-labelledby="aria-email-qacont"
-                                                                                  maxlength="12000"></textarea>
-                                                                        <span class="byte"><span class="byte-current">0</span>/<span
-                                                                            class="byte-total">12,000</span>자</span>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-cell">
-                                                        <span id="aria-email-phone" class="form-ti">연락가능번호<span class="point-indicate ml4"
-                                                                                                                aria-hidden="true">*</span></span>
-                                                        <div class="widget mb10">
-                                                            <div class="widget-box radio">
-                                                                <ul class="select-list" role="radiogroup">
-                                                                    <li class="radiobox type01 checked" role="radio" aria-checked="true">
-                                                                        <input type="radio" name="radio_service_phone" value="" title="휴대폰"
-                                                                               aria-labelledby="aria-email-phone" checked="">
-                                                                        휴대폰
-                                                                    </li>
-                                                                    <li class="radiobox type01" role="radio" aria-checked="false">
-                                                                        <input type="radio" name="radio_service_phone" value="" title="일반전화"
-                                                                               aria-labelledby="aria-email-phone">
-                                                                        일반전화
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                        <span class="inputbox mt20"><!-- error일 경우 error 클래스 추가 -->
-                                                                <span class="input">
-                                                                    <input class="fe-input-phone" type="number" placeholder="숫자만 입력"
-                                                                           title="휴대폰 번호"
-                                                                           aria-labelledby="aria-email-phone"
-                                                                           aria-describedby="aria-exp-desc1">
-                                                                </span>
-                                                                <span id="aria-exp-desc1" class="error-txt none">잘못된 형식입니다.</span>
-                                                            <!-- error일 경우 none 클래스 삭제 -->
-                                                                <div class="widget">
-                                                                    <div class="widget-box check">
-                                                                        <div class="checkbox type02 checked all_chk" role="checkbox"
-                                                                             aria-checked="true">
-                                                                            <i class="ico"></i>
-                                                                            <input class="fe-inp-chk-sms" type="checkbox" name="checkbox"
-                                                                                   value=""
-                                                                                   title="답변이 등록되면 SMS 알림을 받습니다." checked="">
-                                                                            <span class="tit-a">답변이 등록되면 SMS 알림을 받습니다.</span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </span>
-                                                    </div>
-                                                    <div class="form-cell">
-                                                        <span id="aria-email-place" class="form-ti">이메일<span class="point-indicate ml4"
-                                                                                                             aria-hidden="true">*</span></span>
-                                                        <span class="inputbox"><!-- error일 경우 error 클래스 추가 -->
-                                                                <span class="input">
-                                                                    <input class="fe-input-email" type="text" value="" placeholder=""
-                                                                           title="이메일"
-                                                                           aria-labelledby="aria-email-place"
-                                                                           aria-describedby="aria-exp-desc2">
-                                                                    <!-- error일 경우 aria-describedby="aria-exp-desc2  aria-exp-desc3" 로 변경-->
-                                                                </span>
-                                                                <span id="aria-exp-desc3" class="error-txt none">잘못된 형식입니다.</span>
-                                                            <!-- error일 경우 none 클래스 삭제 -->
-                                                                <span class="tx-box"><span id="aria-exp-desc2" class="guide-txt">이메일로 답변이 발송됩니다.</span></span>
-                                                            </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <% include ../components/email/customer.email.service-default.html %>
                                     </li>
                                     <li role="tabpanel" id="tab2-tab" aria-labelledby="tab2" aria-selected="true">
-                                        <div class="email-question-top">
-                                            <p class="tx-dropdown-box">
-                                                <button class="tx-dropdown blue fe-btn-select-call" title="이메일 문의" aria-haspopup="true">서비스
-                                                    선택
-                                                </button>
-                                                <br>
-                                                통화품질 개선을<br>요청합니다.
-                                            </p>
-                                            <span class="ico-ill-email"></span>
-                                            <button class="bt-link-tx">지금 해결할 수 있는 문의가 있는지 살펴보세요<span class="ico"></span></button>
-                                        </div>
-                                        <div class="cont-box">
-                                            <div class="box-email-form">
-                                                <p class="page-desc2"><em>*</em>표시는 필수 입력 항목입니다.</p>
-                                                <div class="email-form">
-                                                    <div class="form-cell fe-wrap-call">
-                                                        <span class="form-ti">문의하실 내용을 작성해주세요<span class="point-indicate ml4"
-                                                                                                   aria-hidden="true">*</span></span>
-                                                        <div class="widget">
-                                                            <div class="widget-box tfCombined">
-                                                                <div class="txfield-combined">
-                                                                    <div class="txfield-combined-ti">
-                                                                        <input class="input-focus fe-inquiry-title" type="text"
-                                                                               placeholder="제목을 입력해주세요."
-                                                                               title="이메일 문의 제목" value="" maxlength="20"
-                                                                               aria-labelledby="aria-email-qacont">
-                                                                        <span class="byte"><span class="byte-current">0</span>/<span
-                                                                            class="byte-total">20</span>자</span>
-                                                                    </div>
-                                                                    <div class="txfield-combined-tx">
-                                                                        <textarea class="input-focus fe-inquiry-content" cols="20" rows="3"
-                                                                                  placeholder="내용을 입력해주세요."
-                                                                                  aria-labelledby="aria-email-qacont"
-                                                                                  maxlength="12000"></textarea>
-                                                                        <span class="byte"><span class="byte-current">0</span>/<span
-                                                                            class="byte-total">12,000</span>자</span>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-cell">
-                                                        <span class="form-ti">연락가능번호<span class="point-indicate ml4"
-                                                                                          aria-hidden="true">*</span></span>
-                                                        <div class="widget mb10">
-                                                            <div class="widget-box radio">
-                                                                <ul class="select-list" role="radiogroup">
-                                                                    <li class="radiobox type01 checked" role="radio" aria-checked="true">
-                                                                        <input type="radio" name="radio_call_phone" value="" title="휴대폰"
-                                                                               aria-labelledby="aria-email-phone" checked="">
-                                                                        휴대폰
-                                                                    </li>
-                                                                    <li class="radiobox type01" role="radio" aria-checked="false">
-                                                                        <input type="radio" name="radio_call_phone" value="" title="일반전화"
-                                                                               aria-labelledby="aria-email-phone">
-                                                                        일반전화
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                        <span class="inputbox mt20"><!-- error일 경우 error 클래스 추가 -->
-                                                                <span class="input">
-                                                                    <input class="fe-input-phone" type="number" placeholder="숫자만 입력"
-                                                                           title="휴대폰 번호"
-                                                                           aria-labelledby="aria-email-phone"
-                                                                           aria-describedby="aria-exp-desc1">
-                                                                </span>
-                                                                <span class="error-txt none">잘못된 형식입니다.</span>
-                                                            <!-- error일 경우 none 클래스 삭제 -->
-                                                                <div class="widget">
-                                                                    <div class="widget-box check">
-                                                                        <div class="checkbox type02 checked all_chk" role="checkbox"
-                                                                             aria-checked="true">
-                                                                            <i class="ico"></i>
-                                                                            <input class="fe-inp-chk-sms" type="checkbox" name="checkbox"
-                                                                                   value=""
-                                                                                   title="답변이 등록되면 SMS 알림을 받습니다." checked="">
-                                                                            <span class="tit-a">답변이 등록되면 SMS 알림을 받습니다.</span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </span>
-                                                    </div>
-                                                    <div class="form-cell">
-                                                        <span class="form-ti">이메일<span class="point-indicate ml4"
-                                                                                       aria-hidden="true">*</span></span>
-                                                        <span class="inputbox"><!-- error일 경우 error 클래스 추가 -->
-                                                                <span class="input">
-                                                                    <input class="fe-input-email" type="text" value="" placeholder=""
-                                                                           title="이메일"
-                                                                           aria-labelledby="aria-email-place"
-                                                                           aria-describedby="aria-exp-desc2">
-                                                                    <!-- error일 경우 aria-describedby="aria-exp-desc2  aria-exp-desc3" 로 변경-->
-                                                                </span>
-                                                                <span class="error-txt none">잘못된 형식입니다.</span>
-                                                            <!-- error일 경우 none 클래스 삭제 -->
-                                                                <span class="tx-box"><span class="guide-txt">이메일로 답변이 발송됩니다.</span></span>
-                                                            </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <% if (status === 'quality' && category === 'wibro' ) { %>
+                                        <% include ../components/email/customer.email.quality-wibro.html %>
+                                        <% } else {%>
+                                        <% include ../components/email/customer.email.quality-default.html %>
+                                        <% } %>
                                     </li>
                                 </ul>
                             </div>
@@ -284,13 +95,13 @@
             <div class="widget-box tfCombined">
                 <div class="txfield-combined">
                     <div class="txfield-combined-ti">
-                        <input class="input-focus fe-inquiry-title" type="text" placeholder="제목을 입력해주세요." title="이메일 문의 제목" value=""
+                        <input required class="input-focus fe-inquiry-title" type="text" placeholder="제목을 입력해주세요." title="이메일 문의 제목" value=""
                                maxlength="20"
                                aria-labelledby="aria-email-qacont">
                         <span class="byte"><span class="byte-current">0</span>/<span class="byte-total">20</span>자</span>
                     </div>
                     <div class="txfield-combined-tx">
-                        <textarea class="input-focus fe-inquiry-content" cols="20" rows="3" placeholder="내용을 입력해주세요."
+                        <textarea required class="input-focus fe-inquiry-content" cols="20" rows="3" placeholder="내용을 입력해주세요."
                                   aria-labelledby="aria-email-qacont"
                                   maxlength="12000"></textarea>
                         <span class="byte"><span class="byte-current">0</span>/<span class="byte-total">12,000</span>자</span>
@@ -302,7 +113,7 @@
 </script>
 
 <script id="tpl_service_direct_type1" type="text/x-handlebars-template">
-    <span id="aria-email-qacont" class="form-ti">
+    <span class="form-ti">
         문의하실 상품의 브랜드와 기종 선택 후 내용을 작성해주세요
         <span class="point-indicate ml4" aria-hidden="true">*</span>
     </span>
@@ -331,6 +142,36 @@
     </div>
 </script>
 
+<script id="tpl_service_direct_type2" type="text/x-handlebars-template">
+    <span class="form-ti">주문번호와 내용을 작성해주세요<span class="point-indicate ml4" aria-hidden="true">*</span></span>
+    <span class="inputbox bt-add mb30 order">
+        <span class="input">
+            <input type="text" placeholder="주문번호를 조회해주세요." title="조회"
+                   aria-describedby="aria-exp-desc1">
+            <button href="javascript:void(0)" class="cancel"><span
+                class="blind">삭제</span></button>
+        </span>
+        <span class="bt-box">
+            <button type="button">조회</button>
+        </span>
+        <span class="tx-box"><span id="aria-exp-desc1" class="guide-txt">배송, 교환/반품 관련 문의 시 주문번호를 선택해 주시면 보다 정확한 답변이 가능합니다.</span></span>
+    </span>
+    <div class="widget">
+        <div class="widget-box tfCombined">
+            <div class="txfield-combined">
+                <div class="txfield-combined-ti">
+                    <input class="input-focus" type="text" placeholder="제목을 입력해주세요." title="이메일 문의 제목" value="" maxlength="20" aria-labelledby="aria-email-qacont">
+                    <span class="byte"><span class="byte-current">0</span>/<span class="byte-total">20</span>자</span>
+                </div>
+                <div class="txfield-combined-tx">
+                    <textarea class="input-focus" cols="20" rows="3" placeholder="내용을 입력해주세요." maxlength="12000" aria-labelledby="aria-email-qacont"></textarea>
+                    <span class="byte"><span class="byte-current">0</span>/<span class="byte-total">12,000</span>자</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+
 <script id="tpl_service_chocolate" type="text/x-handlebars-template">
     <span class="form-ti">내용을 작성해주세요<span class="point-indicate ml4" aria-hidden="true">*</span></span>
     <div class="widget">
@@ -343,15 +184,17 @@
                     <span class="byte"><span class="byte-current">0</span>/<span class="byte-total">20</span>자</span>
                 </div>
                 <div class="txfield-combined-tx">
-                                                                            <textarea class="input-focus fe-inquiry-content inner-tx"
-                                                                                      cols="20" rows="6"
-                                                                                      placeholder="내용을 입력해주세요." maxlength="12000"
-                                                                                      aria-labelledby="aria-email-qacont">원활한 상담을 위해 아래 정보를 입력해주세요.
-- 성함:
-- 구매 휴대폰번호:
-- 구매한 상품명:
-- 문의내용:</textarea>
-                    <span class="byte"><span class="byte-current">58</span>/<span class="byte-total">12,000</span>자</span>
+                <textarea class="input-focus fe-inquiry-content inner-tx"
+                          cols="20" rows="6"
+                          placeholder="내용을 입력해주세요." maxlength="12000"
+                          aria-labelledby="aria-email-qacont">
+                원활한 상담을 위해 아래 정보를 입력해주세요.
+                - 성함:
+                - 구매 휴대폰번호:
+                - 구매한 상품명:
+                - 문의내용:
+                </textarea>
+                <span class="byte"><span class="byte-current">58</span>/<span class="byte-total">12,000</span>자</span>
                     <!-- .byte-current에 입력되어 있는 글자 수를 포함하여 나타냅니다. -->
                 </div>
             </div>
@@ -405,7 +248,8 @@
                             <span class="byte"><span class="byte-current">0</span>/<span class="byte-total">12,000</span>자</span>
                         </div>
                         <div class="txfield-combined-ti">
-                            <input class="input-focus fe-param01" type="text" placeholder="접수자 성함을 입력해주세요.(필수)" title="접수자 성함" value="" maxlength="20"
+                            <input class="input-focus fe-param01" type="text" placeholder="접수자 성함을 입력해주세요.(필수)" title="접수자 성함" value=""
+                                   maxlength="20"
                                    aria-labelledby="aria-email-qacont">
                             <span class="byte"><span class="byte-current">0</span>/<span class="byte-total">20</span>자</span>
                         </div>
@@ -418,7 +262,8 @@
                                                                                    aria-hidden="true">*</span></span>
             <span class="inputbox bt-add">
                                                                 <span class="input">
-                                                                    <input type="text" class="fe-param05" title="우편번호" value="03485" readonly="">
+                                                                    <input type="text" class="fe-param05" title="우편번호" value="03485"
+                                                                           readonly="">
                                                                 </span>
                                                                 <span class="bt-box">
                                                                     <button type="button">우편번호</button>
@@ -426,13 +271,15 @@
                                                             </span>
             <span class="inputbox mt10">
                                                                 <span class="input">
-                                                                    <input class="fe-param06" type="text" title="상세 주소" value="서울특별시 은평구 응암로 41-22"
+                                                                    <input class="fe-param06" type="text" title="상세 주소"
+                                                                           value="서울특별시 은평구 응암로 41-22"
                                                                            aria-labelledby="aria-citation-phone" readonly="">
                                                                 </span>
                                                             </span>
             <span class="inputbox mt10">
                                                                 <span class="input">
-                                                                    <input class="fe-param07" type="text" placeholder="상세주소를 입력해주세요." title="상세 주소"
+                                                                    <input class="fe-param07" type="text" placeholder="상세주소를 입력해주세요."
+                                                                           title="상세 주소"
                                                                            aria-labelledby="aria-citation-phone">
                                                                 </span>
                                                             </span>
@@ -462,6 +309,13 @@
             </div>
         </div>
         <div class="form-cell">
+            <span id="aria-email-qacont" class="form-ti">문의하실 설치 주소와 현상을 선택 후 내용을<br>기재해 주세요<span class="point-indicate ml4"
+                                                                                                  aria-hidden="true">*</span></span>
+            <div class="mb30">
+                <button class="bt-dropdown big no-arrow selected fe-wibro-svcmgmt" title="회선정보 선택" aria-haspopup="false"
+                        data-svcMgmtNum="{{lineList.0.svcMgmtNum}}">{{lineList.0.addr}}
+                </button>
+            </div>
             <div class="widget">
                 <div class="widget-box tfCombined">
                     <div class="txfield-combined">
