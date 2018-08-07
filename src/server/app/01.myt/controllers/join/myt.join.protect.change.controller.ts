@@ -38,7 +38,7 @@ class MytJSProtectChangeController extends TwViewController {
     this.logger.info(this, 'UserInfo ', svcInfo);
     // 비밀번호 조회 시 최초 설정이 안되어있는 경우와 등록이 된 경우로 구분하여
     // ** 고객보호 비밀번호 서비스 해지 버튼 노출여부 설정
-    if ( svcInfo.pwdStCd && (svcInfo.pwdStCd === 10 || svcInfo.pwdStCd === 60) ) {
+    if ( svcInfo.pwdStCd && (svcInfo.pwdStCd === '10' || svcInfo.pwdStCd === '60') ) {
       // 10 -> 신청, 60 -> 초기화 -- 설정가능한상태
       this.isNew = true;
     }
