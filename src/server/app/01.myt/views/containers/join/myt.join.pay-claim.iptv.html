@@ -1,4 +1,4 @@
-<%#
+<script src="../../../../../../client/app/01.myt/join/myt.join.pay-claim.pointcam.js"></script><%#
 * FileName: myt.joinService.payClaimInfo.iptv.html
 * Author: 김명환 (skt.P130714@partner.sk.com)
 * Date: 2018.07.24
@@ -30,8 +30,10 @@
                             <ul>
                                 <li>
                                     <span class="title">사용중인 상품</span>
-                                    <span class="tx-cont"><button class="blue-btn"><%=resDataInfo.feeProdNm %></button></span>
+                                    <span class="tx-cont"><button class="blue-btn"><%= (errBol) ? '' : baseFeePlans.prodName; %></button></span>
                                 </li>
+
+                                <% if(!errBol) { %>
 
                                 <%#납부 방법 %>
                                 <% include ../../components/join/myt.join.pay-claim.pay-way.html %>
@@ -39,6 +41,7 @@
                                 <%#요금안내서 유형 %>
                                 <% include ../../components/join/myt.join.pay-claim.bill-guide-type.html %>
 
+                                <% } %>
                             </ul>
                         </div>
                     </div>
@@ -65,7 +68,10 @@
     new Tw.MytJoinPayClaimIptv($('#wrapFdev'), {
       reqQuery: <%-JSON.stringify(reqQuery) %>,
       svcInfo: <%-JSON.stringify(svcInfo) %>,
-      resDataInfo: <%-JSON.stringify(resDataInfo) %>
+      resDataInfo: <%-JSON.stringify(resDataInfo) %>,
+      baseFeePlans: <%-JSON.stringify(baseFeePlans) %>,
+      errBol: <%-JSON.stringify(errBol) %>,
+      errObj: <%-JSON.stringify(errObj) %>
   });
   });
 </script>

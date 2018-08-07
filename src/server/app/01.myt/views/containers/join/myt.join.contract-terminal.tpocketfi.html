@@ -25,6 +25,7 @@
             <!-- CASE : 요금약정할인 -->
             <div class="cont-box nogaps-top">
                 <h3 class="title-h2 pt14">요금약정할인</h3>
+                <% if(!errBol) { %>
                 <div class="discount-info">
 
                     <% for(var i=0; i < commDataInfo.feeInfo.length; i++) { %>
@@ -85,6 +86,7 @@
                     <% } %> <%# for End %>
 
                 </div>
+                <% } %>
             </div>
             <!--// CASE : 요금약정할인 -->
 
@@ -93,6 +95,7 @@
             <!-- CASE : 단말기 (약정할인) -->
             <div class="cont-box">
                 <h3 class="title-h2">단말기 (약정할인)</h3>
+                <% if(!errBol) { %>
                 <div class="discount-info">
 
                     <% for(var i=0; i < commDataInfo.terminalInfo.length; i++) { %>
@@ -194,6 +197,7 @@
 
 
                 </div>
+                <% } %>
             </div>
             <!--// CASE : 단말기 (약정할인) -->
 
@@ -203,6 +207,7 @@
             <!-- CASE : 단말기 분할상환 정보 -->
             <div class="cont-box">
                 <h3 class="title-h2">단말기 분할상환 정보</h3>
+                <% if(!errBol) { %>
                 <div class="discount-info">
 
                     <% for(var i=0; i < commDataInfo.repaymentInfo.length; i++) { %>
@@ -281,6 +286,7 @@
                     <% } %>
 
                 </div>
+                <% } %>
             </div>
             <!--// CASE : 단말기 분할상환 정보 -->
 
@@ -297,7 +303,9 @@
       reqQuery: <%-JSON.stringify(reqQuery) %>,
       svcInfo: <%-JSON.stringify(svcInfo) %>,
       commDataInfo: <%-JSON.stringify(commDataInfo) %>,
-      resDataInfo: <%-JSON.stringify(resDataInfo) %>
+      resDataInfo: <%-JSON.stringify(resDataInfo) %>,
+      errBol: <%-JSON.stringify(errBol) %>,
+      errObj: <%-JSON.stringify(errObj) %>
   });
   });
 </script>

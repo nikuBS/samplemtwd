@@ -1,0 +1,66 @@
+<%#
+* FileName: payment.prepay.auto.complete.component.html
+* Author: 공자윤 (jayoon.kong@sk.com)
+* Date: 2018.08.06
+%>
+<div class="cont-box nogaps-top fe-complete-data-set">
+    <div class="msg-present-box">
+        <div class="msg-present-comp">
+            <span class="ico"></span>
+            <p class="txt"><span class="tx-bold fe-complete-title"></span><span class="fe-complete-message"></span></p>
+        </div>
+        <div class="gift-data-cont">
+            <div class="pay-data-cont">
+                <ul class="t-pay-data">
+                    <li>
+                        <dl>
+                            <dt class="ti-data">선결제 금액</dt>
+                            <dd class="tx-data"><strong class="fe-autoChrgAmt"></strong> 원</dd>
+                        </dl>
+                    </li>
+                    <li>
+                        <dl>
+                            <dt class="ti-data">기준금액</dt>
+                            <dd class="tx-data"><span class="fe-autoChrgStrdAmt"></span> 원</dd>
+                        </dl>
+                    </li>
+                    <li>
+                        <dl>
+                            <dt class="ti-data">카드번호</dt>
+                            <dd class="tx-data fe-cardNum"></dd>
+                        </dl>
+                    </li>
+                    <li>
+                        <dl>
+                            <dt class="ti-data">카드사</dt>
+                            <dd class="tx-data fe-cardCdNm"></dd>
+                        </dl>
+                    </li>
+                    <li>
+                        <dl>
+                            <dt class="ti-data">예금주</dt>
+                            <dd class="tx-data fe-userName"></dd>
+                        </dl>
+                    </li>
+                </ul>
+                <div class="contents-notice line-top">
+                    <span class="noti-type3">선결제 후 당월 내 사용이력이 없을 경우에 한해 영업점 또는 고객센터를 통해 환불 신청하실 수 있습니다.</span>
+                    <span class="noti-type3">(고객센터 : 국번없이 1599-0011(유료) / 휴대폰 114)</span>
+                </div>
+            </div>
+            <div class="contents-btn">
+                <ul class="bt-slice">
+                    <li class="bt-blue1">
+                        <a href="/payment/prepay/<%= type %>" class="fe-replace-history">확인</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<hr class="cont-sp type1" aria-hidden="true" />
+<div class="cont-box nogaps">
+    <div class="bt-link-box">
+        <a href="/home" class="bt-link-tx fe-replace-history">홈으로</a>
+    </div>
+</div>

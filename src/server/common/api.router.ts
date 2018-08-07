@@ -5,7 +5,8 @@ import LoggerService from '../services/logger.service';
 import ApiService from '../services/api.service';
 import LoginService from '../services/login.service';
 import BrowserHelper from '../utils/browser.helper';
-import { CHANNEL_TYPE, COOKIE_KEY } from '../types/bff-common.type';
+import { COOKIE_KEY } from '../types/common.type';
+import { CHANNEL_TYPE } from '../types/common.type';
 
 class ApiRouter {
   public router: Router;

@@ -1,0 +1,101 @@
+<!--
+* FileName: myt.join.join-info.no-contract.component.html
+* Author: 양정규 (skt.P130715@partner.sk.com)
+* Date: 2018.08.02
+-->
+<script id="tmplHeader" type="text/x-handlebars-template">
+    <div class="info-detail">
+        <ul>
+            <li>
+                <span class="title">사용 가능한 포인트</span>
+                <span class="tx-cont"><span class="ff-hn tx-bold">{{data.usablePt}}</span> 점</span>
+            </li>
+            <li>
+                <span class="title">소멸 예정 포인트 <span class="date-txt"><span class="ff-hn">{{data.extnSchdDt}}</span>일까지</span></span>
+                <span class="tx-cont"><span class="ff-hn">{{data.extnSchdPt}}</span> 점</span>
+            </li>
+        </ul>
+    </div>
+</script>
+
+<script id="tmplList" type="text/x-handlebars-template">
+    {{#each list}}
+    <div class="payment-detail-box">
+        <div class="detail-inner">
+            <div class="detail-list type2">
+                <ul>
+                    <li>
+                        <span class="title">처리날짜</span>
+                        <span class="tx-cont">
+                        <span class="ff-hn">{{op_dt}}</span>
+                    </span>
+                    </li>
+                    <li>
+                        <span class="title">사유</span>
+                        <span class="tx-cont">{{dtl_ctt}}</span>
+                    </li>
+                    <li>
+                        <span class="title">포인트</span>
+                        <span class="tx-cont">
+                        {{#if isUse}}
+                            <span class="tx-bold">{{chg_typ}} <span class="ff-hn">({{chg_pt}})</span></span>
+                        {{else}}
+                        <span class="{{css}}">
+                            <span class="tx-bold">{{chg_typ}} <span class="ff-hn">({{chg_pt}})</span></span>
+                        </span>
+                        {{/if}}
+                    </span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    {{/each}}
+</script>
+
+<!-- 데이터 없을 때 -->
+<script id="tmplNoList" type="text/x-handlebars-template">
+    <div class="payment-detail-wrap">
+        <div class="history-list">
+            <div class="no-data">
+                <span>포인트 사용 내역이 없습니다.</span>
+            </div>
+        </div>
+    </div>
+    <ul class="contents-notice type1">
+        <li class="noti-type2">적립된 포인트는 일괄적으로 사용됩니다.</li>
+        <li class="noti-type2">포인트 조회 내역은 최근 3년까지 조회 가능합니다.</li>
+        <li class="noti-type2">상품은 해지 되더라도 기존 적립된 포인트는 유효 기간중 사용가능합니다.</li>
+    </ul>
+</script>
+
+<!--하단 총 적립 포인트 -->
+<script id="tmpBottom" type="text/x-handlebars-template">
+    <div class="info-detail-box mt0">
+        <ul>
+            <li>
+                <span class="title">총 적립 포인트</span>
+                <span class="tx-cont"><span class="ff-hn">{{data.totAccumPt}}</span> 점</span>
+            </li>
+            <li>
+                <span class="title">총 사용 포인트</span>
+                <span class="tx-cont"><span class="ff-hn">{{data.totUsedPt}}</span> 점</span>
+            </li>
+            <li>
+                <span class="title">총 소멸 포인트</span>
+                <span class="tx-cont"><span class="ff-hn">{{data.totExtnPt}}</span> 점</span>
+            </li>
+        </ul>
+    </div>
+    <ul class="contents-notice type1">
+        <li class="noti-type2">적립된 포인트는 일괄적으로 사용됩니다.</li>
+        <li class="noti-type2">포인트 조회 내역은 최근 3년까지 조회 가능합니다.</li>
+        <li class="noti-type2">상품은 해지 되더라도 기존 적립된 포인트는 유효 기간중 사용가능합니다.</li>
+    </ul>
+    <!-- 다음 스프린트에서..
+    <div class="contents-btn">
+        <ul class="bt-slice">
+            <li class="bt-blue1"><button>요금 납부하기</button></li>
+        </ul>
+    </div>-->
+</script>

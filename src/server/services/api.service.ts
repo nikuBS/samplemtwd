@@ -8,7 +8,7 @@ import FormatHelper from '../utils/format.helper';
 import EnvHelper from '../utils/env.helper';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/map';
-import { COOKIE_KEY } from '../types/bff-common.type';
+import { COOKIE_KEY, LOGIN_TYPE } from '../types/common.type';
 
 class ApiService {
   static instance;
@@ -135,7 +135,7 @@ class ApiService {
     return '';
   }
 
-  private requestLogin(command, params): Observable<any> {
+  private requestLogin(command, params, type): Observable<any> {
     let loginData = null;
     return this.request(command, params)
       .switchMap((resp) => {
@@ -149,6 +149,7 @@ class ApiService {
       .switchMap((resp) => this.request(API_CMD.BFF_01_0005, {}))
       .switchMap((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
+          resp.result.loginType = type;
           return this.loginService.setSvcInfo(resp.result);
         } else {
           throw resp;
@@ -159,27 +160,27 @@ class ApiService {
   }
 
   public requestLoginTest(userId: string): Observable<any> {
-    return this.requestLogin(API_CMD.BFF_03_0001, { id: userId });
+    return this.requestLogin(API_CMD.BFF_03_0001, { id: userId }, LOGIN_TYPE.TID);
   }
 
   public requestLoginTid(token: string, state: string): Observable<any> {
-    return this.requestLogin(API_CMD.BFF_03_0008, { token, state });
+    return this.requestLogin(API_CMD.BFF_03_0008, { token, state }, LOGIN_TYPE.TID);
   }
 
   public requestSvcPasswordLogin(params: any): Observable<any> {
-    return this.requestLogin(API_CMD.BFF_03_0009, params);
+    return this.requestLogin(API_CMD.BFF_03_0009, params, LOGIN_TYPE.TID);
   }
 
   public requestUserLocks(params: any): Observable<any> {
-    return this.requestLogin(API_CMD.BFF_03_0010, params);
+    return this.requestLogin(API_CMD.BFF_03_0010, params, LOGIN_TYPE.TID);
   }
 
   public requestEasyLoginAos(params): Observable<any> {
-    return this.requestLogin(API_CMD.BFF_03_0017, params);
+    return this.requestLogin(API_CMD.BFF_03_0017, params, LOGIN_TYPE.EASY);
   }
 
   public requestEasyLoginIos(params): Observable<any> {
-    return this.requestLogin(API_CMD.BFF_03_0018, params);
+    return this.requestLogin(API_CMD.BFF_03_0018, params, LOGIN_TYPE.EASY);
   }
 
   public requestChangeSession(params: any): Observable<any> {

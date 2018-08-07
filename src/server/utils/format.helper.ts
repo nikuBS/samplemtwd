@@ -1,5 +1,5 @@
 import { DATA_UNIT } from '../types/string.type';
-import { VOICE_UNIT } from '../types/bff-common.type';
+import { VOICE_UNIT } from '../types/bff.type';
 
 class FormatHelper {
   static leadingZeros(number: number, length: number): string {
@@ -190,6 +190,10 @@ class FormatHelper {
       numberDate.substr(4, 2),
       numberDate.substr(6, 2)
     ].join(dateSeparator);
+  }
+
+  static zip(arr, ...arrs): any {
+    return arr.map((val, i) => arrs.reduce((a, _arr) => [...a, _arr[i]], [val]));
   }
 }
 

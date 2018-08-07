@@ -22,7 +22,7 @@
                 <li class="account-wrap type2">
                     <h4 class="account-tit">기준금액
                         <span class="max-account">최대 <em class="fe-standard-amount"><%= autoPrepayInfo.comboStandardAmount %></em>만원
-                            <button class="max-account-info blind" aria-haspopup="true">기준 최대금액 설명 보기</button>
+                            <button class="max-account-info blind fe-standard-amount-info" aria-haspopup="true">기준 최대금액 설명 보기</button>
                         </span>
                     </h4>
                     <div class="account-form">
@@ -35,8 +35,8 @@
                 </li>
                 <li class="account-wrap type2">
                     <h4 class="account-tit">선결제 금액
-                        <span class="max-account">최대 <em class="fe-standard-amount"><%= autoPrepayInfo.comboChargeAmount %></em>만원
-                            <button class="max-account-info blind" aria-haspopup="true">선결제 최대금액 설명 보기</button>
+                        <span class="max-account">최대 <em class="fe-prepay-amount"><%= autoPrepayInfo.comboChargeAmount %></em>만원
+                            <button class="max-account-info blind fe-standard-amount-info" aria-haspopup="true">선결제 최대금액 설명 보기</button>
                         </span>
                     </h4>
                     <div class="account-form">
@@ -53,22 +53,22 @@
 
     <hr class="cont-sp type1" aria-hidden="true" />
     <div class="cont-box">
-        <div class="pay-info fe-auto-card-wrap">
+        <div class="pay-info fe-card-wrap">
             <div class="widget">
                 <h3 class="pay-tit" aria-checked="false">카드정보</h3>
-                <% if (autoCardInfo !== null) { %>
                 <div class="widget-box check">
-                    <span class="checkbox type01 pay-check-box fe-auto-prepay-check-box" role="checkbox" aria-checked="false">
+                    <% if (autoCardInfo !== null) { %>
+                    <span class="checkbox type01 pay-check-box fe-prepay-check-box" role="checkbox" aria-checked="false">
                         <input type="checkbox" name="checkbox" value="" title="자동납부정보와 동일">
                         자동납부정보와 동일
                     </span>
+                    <div id="fe-s-card-info" class="none">
+                        <span class="fe-s-card-number"><%= autoCardInfo.s_bank_card_num %></span>
+                        <span class="fe-s-card-code"><%= autoCardInfo.s_bank_card_co_cd %></span>
+                        <span class="fe-s-card-name"><%= autoCardInfo.s_bank_card_name %></span>
+                    </div>
+                    <% } %>
                 </div>
-                <div id="fe-s-card-info" class="none">
-                    <span class="fe-s-card-number"><%= autoCardInfo.s_bank_card_num %></span>
-                    <span class="fe-s-card-code"><%= autoCardInfo.s_bank_card_co_cd %></span>
-                    <span class="fe-s-card-name"><%= autoCardInfo.s_bank_card_name %></span>
-                </div>
-                <% } %>
             </div>
             <ul class="account-inner">
                 <li class="account-wrap">
@@ -136,5 +136,5 @@
         </div>
     </div>
     <hr class="cont-sp type1" aria-hidden="true" />
-    <% include ../components/info/payment.prepay.micro.info.component.html %>
+    <%- include('../components/info/payment.prepay.history.info.component.html', { title: title }); %>
 </div>

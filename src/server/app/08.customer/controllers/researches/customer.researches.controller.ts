@@ -7,9 +7,9 @@
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
 import DateHelper from '../../../../utils/date.helper';
-import { StepResearch } from '../../../../mock/server/customer.researches.mock';
 import { RESEARCH_EXAMPLE_TYPE } from '../../../../types/string.type';
 import { API_CMD } from '../../../../types/api-command.type';
+import FormatHelper from '../../../../utils/format.helper';
 
 
 interface IResearchBFF {
@@ -97,14 +97,13 @@ export default class CustomerResearches extends TwViewController {
       });
     } else {
       this.apiService.request(API_CMD.BFF_08_0023, {}).subscribe(resp => {
-        // const researches = Researches.map(this.setData);
         const researches = resp.result.map(this.setData);
         res.render('researches/customer.researches.html', { svcInfo, researches });
       });
     }
   }
 
-  private setData(research: IResearchBFF): ISimpleResearch {
+  private setData = (research: IResearchBFF): ISimpleResearch => {
     const examples: IExample[] = [];
     const count = Number(research.exCttCnt);
 
@@ -131,9 +130,21 @@ export default class CustomerResearches extends TwViewController {
       motHtml: research.motMsgHtmlCtt,
       isProceeding: DateHelper.getDifference(research.endDtm.replace(/\./g, '')) > 0,
       examples,
-      hintUrl: research.hintExUrl,
+      hintUrl: this.getUrlFromHint(research.hintExUrl),
       answerNum: research.canswNum
     };
+  }
+
+  private getUrlFromHint = (hint: string = '') => {
+    const HINT_REGEX = /^(?:goLink\(\'|")?([/\w\.\?#]+)(?:"|',.+)?$/;
+
+    const matches = hint.match(HINT_REGEX);
+    if (matches) {
+      const url = matches[1];
+      return !url.includes('http') && FormatHelper.removeNumber(url) ? 'http://' + matches[1] : url;
+    }
+
+    return hint;
   }
 
   private getProperResearchData = (research: any): IStepResearch => {

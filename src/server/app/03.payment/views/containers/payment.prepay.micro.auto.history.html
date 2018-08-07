@@ -15,14 +15,7 @@
 <!--// #skip_navigation -->
 <div id="payment-prepay-micro-auto-history" class="wrap">
     <!-- #header -->
-    <div id="header" class="header-wrap">
-        <div class="header">
-            <div class="header-ti align-l">
-                <h1>자동 선결제 상세보기</h1>
-            </div>
-            <button class="prev-step fe-common-back"><span class="blind">이전으로</span></button>
-        </div>
-    </div>
+    <%- include('../../../../common/views/components/header.component.html', { title: '자동 선결제 상세보기', svcInfo: svcInfo }); %>
     <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap">
@@ -34,13 +27,13 @@
                     <ul class="select-list">
                         <li>
                             <div class="pay-maininfo">
-                                <span class="service-sort">신한카드 <br />436420********</span>
+                                <span class="service-sort"><%= autoCardInfo.cardCdNm %><br /><%= autoCardInfo.cardNum %>******</span>
                             </div>
                             <dl class="pay-detail type2">
                                 <dt>선결제 금액</dt>
-                                <dd><strong>40,000</strong> <span class="unit">원</span></dd>
+                                <dd><strong><%= autoCardInfo.autoChargeAmount %></strong> <span class="unit">원</span></dd>
                                 <dt>기준금액</dt>
-                                <dd><strong>30,000</strong> <span class="unit">원</span></dd>
+                                <dd><strong><%= autoCardInfo.autoChargeStandardAmount %></strong> <span class="unit">원</span></dd>
                             </dl>
                         </li>
                     </ul>
@@ -51,39 +44,34 @@
                 <div class="payment-select space-type pt28">
                     <h3>신청 및 변경내역</h3>
                     <ul class="select-list">
+                        <% if (autoPrepay) { %>
+                        <% for (var i = 0; i < autoPrepay.length; i++) { %>
                         <li>
                             <div class="pay-maininfo">
-                                <span class="service-sort">신규 <br />2018.12.11 17:23:42</span>
+                                <span class="service-sort"><%= autoPrepay[i].name %> <br /><%= autoPrepay[i].date %></span>
                             </div>
+                            <% if (autoPrepay[i].auto_chrg_req_cl_cd === 'F') { %>
+                                <p>자동 선결제가 해지되었습니다.</p>
+                            <% } else { %>
                             <dl class="pay-detail type2">
                                 <dt>카드정보</dt>
                                 <dd>
-                                    신한카드<br />436420********
+                                    <%= autoPrepay[i].prchscardNm %><br /><%= autoPrepay[i].card_num %>
                                 </dd>
                                 <dt>선결제 금액</dt>
-                                <dd><strong>40,000</strong> <span class="unit">원</span></dd>
+                                <dd><strong><%= autoPrepay[i].autoChrgAmount %></strong> <span class="unit">원</span></dd>
                                 <dt>기준금액</dt>
-                                <dd><strong>30,000</strong> <span class="unit">원</span></dd>
+                                <dd><strong><%= autoPrepay[i].autoChrgStrdAmount %></strong> <span class="unit">원</span></dd>
                             </dl>
+                            <% } %>
                         </li>
-                        <li>
-                            <div class="pay-maininfo">
-                                <span class="service-sort">변경 <br />2018.12.11 17:23:42</span>
-                            </div>
-                            <dl class="pay-detail type2">
-                                <dt>카드정보</dt>
-                                <dd>
-                                    신한카드<br />436420********
-                                </dd>
-                                <dt>선결제 금액</dt>
-                                <dd><strong>40,000</strong> <span class="unit">원</span></dd>
-                                <dt>기준금액</dt>
-                                <dd><strong>30,000</strong> <span class="unit">원</span></dd>
-                            </dl>
-                        </li>
+                        <% } %>
+                        <% } %>
                     </ul>
                 </div>
-                <button class="bt-more">더보기<span>(20)</span></button>
+                <% if (autoPrepay.length > 20) { %>
+                    <button class="bt-more">더보기<span>(<span class="fe-more-length"><%= autoPrepay.length - 20 %></span>)</span></button>
+                <% } %>
             </div>
         </div>
     </div>

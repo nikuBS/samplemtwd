@@ -1,15 +1,16 @@
-export const CHANNEL_TYPE = {
-  MOBILE_APP: 'mobile-app',
-  MOBILE_WEB: 'mobile-web'
-};
-
-export const COOKIE_KEY = {
-  DEVICE: 'TWM_DEVICE',
-  CHANNEL: 'TWM_CHANNEL',
-  TWM_LOGIN: 'TWM_LOGIN',
-  TWM: 'TWM',
-  SESSION: 'SESSION'
-};
+export enum SVC_GR {
+  A = 'A',
+  B = 'Y',
+  C = 'R',
+  D = 'D',
+  E = 'E',
+  P = 'P',
+  W = 'W',
+  S1 = 'I',
+  S2 = 'T',
+  S3 = 'U',
+  O = 'O'
+}
 
 export const SVC_CD = {
   C: '휴대폰',
@@ -130,7 +131,8 @@ export enum PREPAY_TITLE {
   MICRO = '소액결제',
   CONTENTS = '콘텐츠이용료',
   PREPAY = '선결제하기',
-  AUTO_PREPAY = '자동 선결제 신청'
+  AUTO_PREPAY = '자동 선결제 신청',
+  AUTO_PREPAY_HISTORY = '자동 선결제 상세보기'
 }
 
 export enum MYT_PAY_HISTORY_TITL {
@@ -188,3 +190,9 @@ export const VOICE_UNIT = {
   MIN: '분',
   SEC: '초'
 };
+
+export enum REQUEST_TYPE {
+  R = '신규',
+  C = '변경',
+  F = '해지'
+}

@@ -20,7 +20,6 @@ Tw.CustomerEmailCall = function (rootEl, oEmailTemplate) {
 
 Tw.CustomerEmailCall.prototype = {
   _init: function () {
-
   },
 
   _cachedElement: function () {
@@ -40,7 +39,6 @@ Tw.CustomerEmailCall.prototype = {
     this.$container.on('click', '[data-id=param08]', $.proxy(this._selectPositionPopup, this));
     this.$container.on('click', '[data-id=param09]', $.proxy(this._selectBuildingPopup, this));
     this.$container.on('click', '[data-id=param10]', $.proxy(this._selectOccurDatePopup, this));
-
   },
 
   _showEnvPopup: function () {
@@ -142,7 +140,7 @@ Tw.CustomerEmailCall.prototype = {
       param10: $('.fe-param10').text(),
       param11: $('.fe-param11').val()
     };
-    
+
     return this.tpl_call_wibro_request(params);
   },
 
@@ -163,6 +161,7 @@ Tw.CustomerEmailCall.prototype = {
 
   _requestQualityWibro: function () {
     var params = {
+      cntcNumClCd: $('[name=radio_call_phone]:checked').val(),
       connSite: Tw.BrowserHelper.isApp() ? 15 : 19,
       inqSvcClCd: $('[name=radio_call_wibro]:checked').val(),
       cntcNum1: this._getPhoneParams(0),
@@ -183,6 +182,8 @@ Tw.CustomerEmailCall.prototype = {
 
   _requestQualityInternet: function () {
     var params = {
+      cntcNumClCd: $('[name=radio_call_phone]:checked').val(),
+      selSvcMgmtNum: $('.fe-wibro-svcmgmt').data('svcmgmtnum'),
       connSite: Tw.BrowserHelper.isApp() ? 15 : 19,
       inqSvcClCd: $('[name=radio_call_internet]:checked').val(),
       ofrCtgSeq: this._oEmailTemplate.getState().callCategory,

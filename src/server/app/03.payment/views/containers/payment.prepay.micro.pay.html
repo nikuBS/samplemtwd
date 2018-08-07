@@ -28,10 +28,10 @@
     <div id="payment-prepay-micro-pay" class="container-wrap">
         <h2 class="blind">내용</h2>
         <div id="main" class="container">
-            <% include ../components/prepay/payment.prepay.micro.pay.main.component.html %>
+            <% include ../components/prepay/payment.prepay.pay.main.component.html %>
         </div>
         <div id="complete" style="display:none;">
-            <% include ../components/prepay/payment.prepay.micro.complete.component.html %>
+            <% include ../components/prepay/payment.prepay.pay.complete.component.html %>
         </div>
     </div>
     <!--// #contents -->
@@ -40,7 +40,7 @@
 <% include ../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.PaymentPrepayPay($('#payment-prepay-micro-pay'));
+    new Tw.PaymentPrepayPay($('#payment-prepay-micro-pay'), 'micro');
   });
 </script>
 <% include ../components/end.component.html %>

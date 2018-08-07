@@ -7,7 +7,7 @@
     <div class="pay-info">
         <h3 class="pay-tit">선결제 가능 최대금액</h3>
         <div class="payment-all type2">
-            <span><em class="fe-max-amount" data="100000"><%= prepayInfo.possibleAmount %></em> 원</span>
+            <span><em class="fe-max-amount" data="<%= prepayInfo.tmthChrgPsblAmt %>"><%= prepayInfo.possibleAmount %></em> 원</span>
         </div>
     </div>
     <ul class="account-inner">
@@ -30,19 +30,19 @@
     <div class="pay-info fe-card-wrap">
         <div class="widget">
             <h3 class="pay-tit" aria-checked="false">카드정보</h3>
-            <% if (autoCardInfo !== null) { %>
             <div class="widget-box check">
+                <% if (autoCardInfo !== null) { %>
                 <span class="checkbox type01 pay-check-box fe-prepay-check-box" role="checkbox" aria-checked="false">
                     <input type="checkbox" name="checkbox" value="" title="자동납부정보와 동일">
                     자동납부정보와 동일
                 </span>
+                <div class="fe-s-card-info none">
+                    <span class="fe-s-card-number"><%= autoCardInfo.s_bank_card_num %></span>
+                    <span class="fe-s-card-code"><%= autoCardInfo.s_bank_card_co_cd %></span>
+                    <span class="fe-s-card-name"><%= autoCardInfo.s_bank_card_name %></span>
+                </div>
+                <% } %>
             </div>
-            <div id="fe-s-card-info" class="none">
-                <span class="fe-s-card-number"><%= autoCardInfo.s_bank_card_num %></span>
-                <span class="fe-s-card-code"><%= autoCardInfo.s_bank_card_co_cd %></span>
-                <span class="fe-s-card-name"><%= autoCardInfo.s_bank_card_name %></span>
-            </div>
-            <% } %>
         </div>
         <ul class="account-inner">
             <li class="account-wrap">
@@ -111,4 +111,4 @@
     </div>
 </div>
 <hr class="cont-sp type1" aria-hidden="true" />
-<% include ../components/info/payment.prepay.micro.info.component.html %>
+<%- include('../components/info/payment.prepay.history.info.component.html', { title: title }); %>

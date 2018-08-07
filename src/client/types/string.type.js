@@ -102,7 +102,7 @@ Tw.AUTO_CHARGE_CODE = {
   UNUSE: 'D'
 };
 
-Tw.PAYMENT_TYPE = {
+Tw.PAYMENT_CARD_TYPE = {
   '000': '일시불',
   '001': '1개월 할부',
   '002': '2개월 할부',
@@ -116,8 +116,7 @@ Tw.PAYMENT_TYPE = {
   '010': '10개월 할부',
   '011': '11개월 할부',
   '012': '12개월 할부',
-  '024': '24개월 할부',
-  'M': '개월'
+  '024': '24개월 할부'
 };
 
 Tw.PAYMENT_STRING = {
@@ -138,16 +137,19 @@ Tw.PAYMENT_PREPAY_TITLE = {
   AUTO_PREPAY: '자동 선결제',
   CHANGE_CARD: '카드정보 변경',
   CHANGE_MONEY: '금액정보 변경',
-  CHANGE_ALL: '카드정보 및<br />금액정보 변경',
-  PREPAY_COMPLETE: '가<br />정상적으로<br />처리되었습니다.',
-  CANCEL_COMPLETE: '해지가<br />완료되었습니다.',
-  AUTO_COMPLETE: '가<br />신청되었습니다.',
-  AUTO_CHANGE_COMPLETE: '이<br />신청되었습니다.'
+  CHANGE_ALL: '카드정보 및\n금액정보 변경',
+  PREPAY_COMPLETE: '가\n정상적으로\n처리되었습니다.',
+  CANCEL_COMPLETE: '해지가\n완료되었습니다.',
+  AUTO_COMPLETE: '가\n신청되었습니다.',
+  AUTO_CHANGE_COMPLETE: '이\n신청되었습니다.'
 };
 
 Tw.PAYMENT_STRD_MSG = {
   CONTENTS_L02: '자동 선결제가 되는 시점의 금액을 말하며, 고객님 콘텐츠 이용한도의 최대 90%까지 설정 가능합니다.<br /><br />예시) 자동선결제가 기준금액 : 5만원으로 설정 시, 이번 달 소액결제를 5만원 이상 결제 시점에 자동으로 선결제됩니다.',
-  TITLE_L02: '기준금액이란?'
+  TITLE_L02: '기준금액이란?',
+  CONTENTS_L03_MICRO: '※ 기준금액 및 선결제 금액은 이용한도의 최대 90%금액까지 설정이 가능합니다.<br /><br />※ 소액결제 이용금액이 고객님께서 설정한 [기준금액] 초과 시점에 [선결제 금액] 만큼 자동 결제됩니다.',
+  CONTENTS_L03_CONTENTS: '※ 기준금액 및 선결제 금액은 이용한도의 최대 90%금액까지 설정이 가능합니다.<br /><br />※ 콘텐츠이용료 이용금액이 고객님께서 설정한 [기준금액] 초과 시점에 [선결제 금액] 만큼 자동 결제됩니다.',
+  TITLE_L03: '기준 및 선결제 최대금액?'
 };
 
 Tw.MSG_COMMON = {
@@ -324,6 +326,10 @@ Tw.MSG_MYT = {
     ONLY_PWD: '비밀번호는 숫자만 입력 가능합니다.',
     FAIL_PWD: '비밀번호가 일치하지 않습니다. \n 다시 입력해주시기 바랍니다.'
   },
+  JOIN_INFO_A01 : '시작일이 종료일보다 클 수 없습니다.',
+  JOIN_INFO_A02 : '조회 시작일은 {0} 부터 가능합니다.',
+  JOIN_INFO_A03 : '조회 시작일 유효한 일자가 아닙니다.',
+  JOIN_INFO_A04 : '조회 종료일 유효한 일자가 아닙니다.',
   CONTRACT_TERMINAL: {
     OPEN_ALERT: {
       BSPS: {
@@ -469,6 +475,7 @@ Tw.MSG_PAYMENT = {
   PRE_A09: '생년월일을 입력해 주세요.',
   PRE_A10: '자동 선결제 신청 및 변경을 종료하시겠습니까?',
   PRE_A11: '선결제 금액은 10,000원 단위로 입력해 주세요.',
+  PRE_A12: '선결제 가능 금액을 초과하였습니다.',
   ERROR_GET_CARD: '카드정보 조회에 실패하였습니다. 다시 시도해 주세요.',
 
   HISTORY_TEXT_PAYMENT: '결제',
@@ -637,7 +644,7 @@ Tw.PAYMENT_TYPE = {
   PACKAGE: '묶음결제',
   EASY: '간편결제',
   COMPLAX: '복합결제'
-}
+};
 
 Tw.HELPLINE_AREA = {
   CAPITAL: '수도권 (서울, 경기, 인천, 강원)',
@@ -719,4 +726,27 @@ Tw.CUSTOMER_EMAIL = {
     { text: '며칠 전부터' },
     { text: '이사/회사 이동 후 부터' }
   ]
+};
+
+Tw.PAYMENT_CARD_TYPE_LIST = [
+  { 'attr': 'id="00"', text: '일시불' },
+  { 'attr': 'id="01"', text: '1개월 할부' },
+  { 'attr': 'id="02"', text: '2개월 할부' },
+  { 'attr': 'id="03"', text: '3개월 할부' },
+  { 'attr': 'id="04"', text: '4개월 할부' },
+  { 'attr': 'id="05"', text: '5개월 할부' },
+  { 'attr': 'id="06"', text: '6개월 할부' },
+  { 'attr': 'id="07"', text: '7개월 할부' },
+  { 'attr': 'id="08"', text: '8개월 할부' },
+  { 'attr': 'id="09"', text: '9개월 할부' },
+  { 'attr': 'id="10"', text: '10개월 할부' },
+  { 'attr': 'id="11"', text: '11개월 할부' },
+  { 'attr': 'id="12"', text: '12개월 할부' },
+  { 'attr': 'id="24"', text: '24개월 할부' }
+];
+
+Tw.NO_CONTRACT_TYPE = {
+  USE : '사용',
+  SAVE : '적립',
+  EXTINCTION : '소멸'
 };

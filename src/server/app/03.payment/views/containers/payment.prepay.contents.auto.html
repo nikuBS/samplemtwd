@@ -1,0 +1,33 @@
+<%#
+* FileName: payment.prepay.contents.auto.html
+* Author: 공자윤 (jayoon.kong@sk.com)
+* Date: 2018.08.07
+%>
+<% include ../components/start.component.html %>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div id="payment-prepay-contents-auto" class="wrap">
+    <!-- #contents -->
+    <div id="main" class="container-wrap">
+        <% include ../components/prepay/payment.prepay.auto.component.html %>
+    </div>
+    <div id="complete" class="container-wrap" style="display:none;">
+        <%- include('../components/prepay/payment.prepay.auto.complete.component.html', { type: 'contents' }); %>
+    </div>
+    <!--// #contents -->
+    <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
+</div>
+<% include ../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    new Tw.PaymentPrepayAuto($('#payment-prepay-contents-auto'), 'contents');
+  });
+</script>
+<% include ../components/end.component.html %>

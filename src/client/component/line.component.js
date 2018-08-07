@@ -16,12 +16,14 @@ Tw.LineComponent = function () {
   this.$list = null;
   this.$remainCnt = null;
   this.$btMore = null;
-  this.selectedMgmt = '';
-  this.index = 0;
 
+  this._selectedMgmt = '';
+  this._index = 0;
   this._goAuthLine = false;
+  this._lineList = null;
+  this._urlAuth = null;
   this._bindEvent();
-  Tw.Logger.info('[Line] init complete');
+  this._init();
 };
 
 Tw.LineComponent.prototype = {
@@ -30,16 +32,42 @@ Tw.LineComponent.prototype = {
     RDT0007: 'RDT0007',    //	service-password locked	고객비밀번호 인증필요
     RDT0008: 'RDT0008'     //	service-password initialized	고객비밀번호 재설정 필요 ( 신청, 초기화 상태 )
   },
+  _init: function() {
+    if(!Tw.FormatHelper.isEmpty(this._urlAuth)) {
+      this._getLineList();
+      Tw.Logger.info('[Line] init complete', this._urlAuth);
+    }
+  },
   _bindEvent: function () {
-    this.$container.on('click', '#fe-bt-line', $.proxy(this._onClickLine, this));
-
     this.$btLine = this.$container.find('#fe-bt-line');
-    this.selectedMgmt = this.$btLine.data('svcmgmtnum');
+    this._selectedMgmt = this.$btLine.data('svcmgmtnum');
+    this._urlAuth = this.$btLine.data('urlauth');
+
+    this.$btLine.on('click', $.proxy(this._onClickLine, this));
+  },
+  _getLineList: function () {
+    this._apiService.request(Tw.API_CMD.BFF_01_0002, {})
+      .done($.proxy(this._successGetLineList, this));
+    // $.ajax('/mock/auth.line.json')
+    //   .done($.proxy(this._successGetLineList, this));
+  },
+  _successGetLineList: function (resp) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      this._lineList = this._parseLineList(resp.result);
+      this._checkLineNum();
+    } else {
+      this._popupService.openAlert(resp.code + ' ' + resp.msg);
+    }
+  },
+  _checkLineNum: function () {
+    if(this._index === 1) {
+      this.$btLine.addClass('no-arrow');
+    }
   },
   _onClickLine: function ($event) {
     var curBtn = $($event.currentTarget);
     if ( !curBtn.hasClass('disabled') ) {
-      this._getLineList();
+      this._openListPopup(this._lineList);
     } else {
       this._closePopup();
     }
@@ -49,8 +77,8 @@ Tw.LineComponent.prototype = {
       hbs: 'dropdown',
       group: lineData,
       bt_more: {
-        show: this.index > Tw.DEFAULT_LIST_COUNT,
-        txt: this.index - Tw.DEFAULT_LIST_COUNT
+        show: this._index > Tw.DEFAULT_LIST_COUNT,
+        txt: this._index - Tw.DEFAULT_LIST_COUNT
       },
       bt_txt: Tw.BUTTON_LABEL.LINE
     }, $.proxy(this._onOpenListPopup, this), $.proxy(this._onCloseListPopup, this));
@@ -78,20 +106,6 @@ Tw.LineComponent.prototype = {
   _closePopup: function () {
     this._popupService.close();
   },
-
-  _getLineList: function () {
-    this._apiService.request(Tw.API_CMD.BFF_01_0002, {})
-      .done($.proxy(this._successGetLineList, this));
-    // $.ajax('/mock/auth.line.json')
-    //   .done($.proxy(this._successGetLineList, this));
-  },
-  _successGetLineList: function (resp) {
-    if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      this._openListPopup(this._parseLineList(resp.result));
-    } else {
-      this._popupService.openAlert(resp.code + ' ' + resp.msg);
-    }
-  },
   _parseLineList: function (lineList) {
     var category = ['MOBILE', 'INTERNET_PHONE_IPTV', 'SECURITY'];
     var result = [];
@@ -102,7 +116,7 @@ Tw.LineComponent.prototype = {
         if ( index === 0 ) {
           showService = 'block';
         } else {
-          showService = this.index < Tw.DEFAULT_LIST_COUNT ? 'block' : 'none';
+          showService = this._index < Tw.DEFAULT_LIST_COUNT ? 'block' : 'none';
         }
         result.push({
           title: Tw.SVC_CATEGORY[Tw.LINE_NAME[line]],
@@ -117,11 +131,12 @@ Tw.LineComponent.prototype = {
     var result = [];
     Tw.FormatHelper.sortObjArrAsc(lineData, 'expsSeq');
     _.map(lineData, $.proxy(function (line) {
+      var selected = this._selectedMgmt.toString() === line.svcMgmtNum ? 'checked ' : '';
       result.push({
-        display: this.index < Tw.DEFAULT_LIST_COUNT ? 'block' : 'none',
-        index: this.index++,
+        display: this._index < Tw.DEFAULT_LIST_COUNT ? 'block' : 'none',
+        index: this._index++,
         txt: Tw.FormatHelper.isEmpty(line.nickNm) ? Tw.SVC_ATTR[line.svcAttrCd] : line.nickNm,
-        option: this.selectedMgmt.toString() === line.svcMgmtNum ? 'checked' : '',   // TODO: Add authority
+        option: selected + this._urlAuth.indexOf(line.svcAttrCd) === -1 ? 'disabled' : '',   // TODO: Add authority
         integration: line.actRepYn === 'Y',
         representation: line.repSvcYn === 'Y',
         line: Tw.LINE_NAME[category] === 'S' ? line.addr : line.svcNum,
@@ -173,7 +188,7 @@ Tw.LineComponent.prototype = {
     }
   },
   _completeLogin: function () {
-    Tw.UIService.setLocalStorage('lineRefresh', 'Y');
+    Tw.UIService.setLocalStorage(Tw.LSTORE_KEY.LINE_REFRESH, 'Y');
     this._closePopup();
   },
   _completeCustomerLogin: function () {

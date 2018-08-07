@@ -2,7 +2,8 @@ import session from 'express-session';
 import connect from 'connect-redis';
 import redis from 'redis';
 import EnvHelper from '../utils/env.helper';
-import { COOKIE_KEY } from '../types/bff-common.type';
+import { COOKIE_KEY } from '../types/common.type';
+import { Observable } from 'rxjs/Observable';
 
 class RedisService {
   private envRedis = EnvHelper.getEnvironment('REDIS');
@@ -13,7 +14,7 @@ class RedisService {
   private client;
 
   constructor() {
-    // this.client = redis.createClient(this.env.REDIS);
+    this.client = redis.createClient(this.envRedis);
   }
 
   public middleware = session({
@@ -25,13 +26,17 @@ class RedisService {
     resave: false, // don't save session if unmodified
   });
 
-  public setRedis(key, value) {
+  public setData(key, value) {
     this.client.set(key, value);
   }
 
-  public getRedis(key) {
-    this.client.get(key, (err, reply) => {
-      console.log('redis', reply);
+  public getData(key): Observable<any> {
+    return Observable.create((observer) => {
+      this.client.get(key, (err, reply) => {
+        const result = JSON.parse(reply);
+        observer.next(result);
+        observer.complete();
+      });
     });
   }
 

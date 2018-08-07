@@ -10,6 +10,9 @@ export interface ISvcInfo {
   svcScrbDt: string;       // 가입일
   svcLastUpdDtm: string;    // 최종변경일
   mbrNm: string;            // 고객명
+  totalSvcCnt: string;      // 전체 회선수
+  expsSvcCnt: string;       // 등록된 회선수
+  loginType: string;        // 로그인 형태  E: 간편로그인 T: TID 로그인
 }
 
 export class SvcInfoModel implements ISvcInfo {
@@ -24,18 +27,24 @@ export class SvcInfoModel implements ISvcInfo {
   svcScrbDt: string = '';
   svcLastUpdDtm: string = '';
   mbrNm: string = '';
+  totalSvcCnt: string = '';
+  expsSvcCnt: string = '';
+  loginType: string = '';
 
   constructor(object) {
-    this.svcMgmtNum = object.svcMgmtNum;
-    this.svcNum = object.svcNum;
-    this.svcGr = object.svcGr;
-    this.svcAttrCd = object.svcAttrCd;
-    this.repSvcYn = object.repSvcYn;
-    this.nickNm = object.nickNm;
-    this.addr = object.addr;
-    this.eqpMdlNm = object.eqpMdlNm;
-    this.svcScrbDt = object.svcScrbDt;
-    this.svcLastUpdDtm = object.svcLastUpdDtm;
-    this.mbrNm = object.mbrNm;
+    this.svcMgmtNum = object.svcMgmtNum || this.svcMgmtNum;
+    this.svcNum = object.svcNum || this.svcNum;
+    this.svcGr = object.svcGr || this.svcGr;
+    this.svcAttrCd = object.svcAttrCd || this.svcAttrCd;
+    this.repSvcYn = object.repSvcYn || this.repSvcYn;
+    this.nickNm = object.nickNm || this.nickNm;
+    this.addr = object.addr || this.addr;
+    this.eqpMdlNm = object.eqpMdlNm || this.eqpMdlNm;
+    this.svcScrbDt = object.svcScrbDt || this.svcScrbDt;
+    this.svcLastUpdDtm = object.svcLastUpdDtm || this.svcLastUpdDtm;
+    this.mbrNm = object.mbrNm || this.mbrNm;
+    this.totalSvcCnt = object.totalSvcCnt || this.totalSvcCnt;
+    this.expsSvcCnt = object.expsSvcCnt || this.expsSvcCnt;
+    this.loginType = object.loginType || this.loginType;
   }
 }
