@@ -39,7 +39,9 @@
                     </ul>
                     <% } %>
                 </div>
-                <% if (microPrepayRecord.length > 20) { %><button class="bt-more">더보기<span>(<%= microPrepayRecord.length - 20 %>)</span></button><% } %>
+                <% if (microPrepayRecord.length > 20) { %>
+                    <button class="bt-more">더보기<span>(<%= microPrepayRecord.length - 20 %>)</span></button>
+                <% } %>
             </div>
             <hr class="cont-sp type1" aria-hidden="true" />
             <% include ../components/info/payment.prepay.micro.history.info.component.html %>
