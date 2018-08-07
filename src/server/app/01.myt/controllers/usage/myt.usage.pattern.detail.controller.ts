@@ -7,8 +7,8 @@
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { NextFunction, Request, Response } from 'express';
 import { API_CMD } from '../../../../types/api-command.type';
-import _ from 'lodash';
 import DateHelper from '../../../../utils/date.helper';
+import FormatHelper from '../../../../utils/format.helper';
 
 
 class MyTUsagePatternDetail extends TwViewController {
@@ -24,7 +24,7 @@ class MyTUsagePatternDetail extends TwViewController {
     const api = this.getPatternApi(svcInfo);
     this.apiService.request(api, {}).subscribe((responseData) => {
       const conv_data = this.convertFeeData(responseData);
-      data = _.extend(data, conv_data);
+      data = Object.assign(data, conv_data);
       res.render('usage/myt.usage.pattern.detail.html', { data });
     });
   }
@@ -51,53 +51,53 @@ class MyTUsagePatternDetail extends TwViewController {
       let basFeeT = 0, domTcFeeT = 0, dataTcFeeT = 0, infoUseFeeT = 0, optFeeT = 0, msgUseFeeT = 0,
         suplSvcUseFeeT = 0, othrCoUseFeeT = 0;
 
-      _.forEach(_.map(data, 'invDt'), (value) => {
+      data.map((item) => item['invDt']).forEach((value) => {
         months.push(DateHelper.getShortKoreanMonth(value));
       });
       // 월정액
-      _.forEach(_.map(data, 'basFee'), (value) => {
+      data.map((item) => item['basFee']).forEach((value) => {
         const item = parseInt(value, 10);
         basFeeT += item;
         basFee.push(item);
       });
       // 국내 통화료
-      _.forEach(_.map(data, 'domTcFee'), (value) => {
+      data.map((item) => item['domTcFee']).forEach((value) => {
         const item = parseInt(value, 10);
         domTcFeeT += item;
         domTcFee.push(item);
       });
       // 데이터 통화료
-      _.forEach(_.map(data, 'dataTcFee'), (value) => {
+      data.map((item) => item['dataTcFee']).forEach((value) => {
         const item = parseInt(value, 10);
         dataTcFeeT += item;
         dataTcFee.push(item);
       });
       // 콘텐츠 이용료
-      _.forEach(_.map(data, 'infoUseFee'), (value) => {
+      data.map((item) => item['infoUseFee']).forEach((value) => {
         const item = parseInt(value, 10);
         infoUseFeeT += item;
         infoUseFee.push(item);
       });
       // 옵션요금제
-      _.forEach(_.map(data, 'optFee'), (value) => {
+      data.map((item) => item['optFee']).forEach((value) => {
         const item = parseInt(value, 10);
         optFeeT += item;
         optFee.push(item);
       });
       // 문자이용료
-      _.forEach(_.map(data, 'msgUseFee'), (value) => {
+      data.map((item) => item['msgUseFee']).forEach((value) => {
         const item = parseInt(value, 10);
         msgUseFeeT += item;
         msgUseFee.push(item);
       });
       // 부가서비스 이용료
-      _.forEach(_.map(data, 'suplSvcUseFee'), (value) => {
+      data.map((item) => item['suplSvcUseFee']).forEach((value) => {
         const item = parseInt(value, 10);
         suplSvcUseFeeT += item;
         suplSvcUseFee.push(item);
       });
       // 소액결제
-      _.forEach(_.map(data, 'othrCoUseFee'), (value) => {
+      data.map((item) => item['othrCoUseFee']).forEach((value) => {
         const item = parseInt(value, 10);
         othrCoUseFeeT += item;
         othrCoUseFee.push(item);
@@ -114,14 +114,14 @@ class MyTUsagePatternDetail extends TwViewController {
         othrCoUseFee: !othrCoUseFeeT
       };
 
-      result.basFee = _.zip(months, basFee);
-      result.domTcFee = _.zip(months, domTcFee);
-      result.dataTcFee = _.zip(months, dataTcFee);
-      result.infoUseFee = _.zip(months, infoUseFee);
-      result.optFee = _.zip(months, optFee);
-      result.msgUseFee = _.zip(months, msgUseFee);
-      result.suplSvcUseFee = _.zip(months, suplSvcUseFee);
-      result.othrCoUseFee = _.zip(months, othrCoUseFee);
+      result.basFee = FormatHelper.zip(months, basFee);
+      result.domTcFee = FormatHelper.zip(months, domTcFee);
+      result.dataTcFee = FormatHelper.zip(months, dataTcFee);
+      result.infoUseFee = FormatHelper.zip(months, infoUseFee);
+      result.optFee = FormatHelper.zip(months, optFee);
+      result.msgUseFee = FormatHelper.zip(months, msgUseFee);
+      result.suplSvcUseFee = FormatHelper.zip(months, suplSvcUseFee);
+      result.othrCoUseFee = FormatHelper.zip(months, othrCoUseFee);
     }
     return result;
   }

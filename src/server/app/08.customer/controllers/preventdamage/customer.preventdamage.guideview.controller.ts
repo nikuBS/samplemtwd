@@ -20,16 +20,16 @@ class CustomerPreventdamageGuideviewController extends TwViewController {
   }
 
   private _isValid(category, idx): any {
-    return !(FormatHelper.isEmpty(category)
-      && FormatHelper.isEmpty(idx)
-      && ['webtoon', 'latest'].indexOf(category) === -1
-      && FormatHelper.isEmpty(categoryData[category][idx]));
+    return !FormatHelper.isEmpty(category)
+        && !FormatHelper.isEmpty(idx)
+        && ['webtoon', 'latest'].indexOf(category) !== -1
+        && !FormatHelper.isEmpty(categoryData[category][idx]);
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     const category = req.query.category || '',
       idx = req.query.idx || '',
-      backUrl = '/customer/prevent-damage/guide?category=' + category;
+      backUrl = '/customer/prevent-damage/guide' + (FormatHelper.isEmpty(category) ? '' : '?category=' + category);
 
     if (!this._isValid(category, idx)) {
       return res.redirect(backUrl);

@@ -101,6 +101,7 @@ export const API_CMD = {
   BFF_05_0052: { path: '/core-bill/v1/wire-bill-reissue/', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_05_0058: { path: '/core-bill/v1/accounts', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0059: { path: '/core-bill/v1/recent-usage-fee-pattern', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0060: { path: '/core-modification/v1/no-contract-plan-points', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0061: { path: '/core-modification/v1/my-svc-histories', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0063: { path: '/my-t/myinfo/discount-infos', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0064: { path: '/core-bill/v1/useContents/getUseContents', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },

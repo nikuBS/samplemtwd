@@ -55,6 +55,7 @@ import MytJoinContractTerminalTlogin from './controllers/join/myt.join.contract-
 import MytJoinContractTerminalTloginDetail from './controllers/join/myt.join.contract-terminal.tlogin.detail.controller';
 import MytJoinProtectChangeController from './controllers/join/myt.join.protect.change.controller';
 import MytJoinJoinInfoController from './controllers/join/myt.join.join-info.controller';
+import MyTJoinJoinInfoNoContractController from './controllers/join/myt.join.join-info.no-contract.controller';
 
 
 class MytRouter extends TwRouter {
@@ -125,6 +126,7 @@ class MytRouter extends TwRouter {
 
     this.controllers.push({ url: '/join/join-info', controller: new MytJoinJoinInfoController() });
     this.controllers.push({ url: '/join/protect/change', controller: new MytJoinProtectChangeController() });
+    this.controllers.push({ url: '/join/join-info/no-contract', controller: new MyTJoinJoinInfoNoContractController() });
   }
 }
 

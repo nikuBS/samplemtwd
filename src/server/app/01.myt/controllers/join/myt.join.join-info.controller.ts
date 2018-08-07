@@ -41,9 +41,11 @@ class MytJoinJoinInfoController extends TwViewController {
     // 마스킹 되어 있을 경우(*을 1로 바꿔서 날짜 포맷팅 후 다시 *로 바꾼다.)
     if ( date.indexOf('*') > -1 ) {
       _chgDt = _chgDt.replace(/\*/g, '1');
+      _chgDt = DateHelper.convDateFormat(_chgDt);
       _chgDt = DateHelper.getShortDateWithFormat(_chgDt, format);
       _chgDt = _chgDt.replace(/1/g, '*');
     } else {
+      _chgDt = DateHelper.convDateFormat(_chgDt);
       _chgDt = DateHelper.getShortDateWithFormat(_chgDt, format);
     }
 
@@ -53,12 +55,14 @@ class MytJoinJoinInfoController extends TwViewController {
   // 모바일 (휴대폰 / T Login / T Pocket-FI) 정보 세팅
   private getMobileResult(data: any): any {
 
-    const history = data.history;
-    const historyData = history[0];
-    Object.assign(data, {
-      chgDt : this.getMarskingDateFormat(historyData.chgDt, DATE_FORMAT.YYYYMMDD_TYPE_0),
-      chgCd : historyData.chgCd
-    });
+    if ( data.history !== null && data.history.length > 0) {
+      const history = data.history;
+      const historyData = history[0];
+      Object.assign(data, {
+        chgDt : this.getMarskingDateFormat(historyData.chgDt, DATE_FORMAT.YYYYMMDD_TYPE_0),
+        chgCd : historyData.chgCd
+      });
+    }
 
     data.apprAmt = FormatHelper.addComma(data.apprAmt);
 
@@ -73,11 +77,8 @@ class MytJoinJoinInfoController extends TwViewController {
     }
     // 가입비 표시[E]
 
-    // 개통/변경 히스토리 set
-    /*history.map( (o) => {
-      o.chgDt = this.getMarskingDateFormat(o.chgDt, 'YYYY.MM.DD');
-    });
-    data.history = history;*/
+    data.isPwdEditHide = FormatHelper.isEmpty(data.pwdStCd);
+
 
     return data;
   }
@@ -167,9 +168,12 @@ class MytJoinJoinInfoController extends TwViewController {
   }
 
   private parseHistory(data: any): any {
-    data.map( (o) => {
-      o.chgDt = this.getMarskingDateFormat(o.chgDt, 'YYYY.MM.DD');
-    });
+    if ( data !== null && data.length > 0 ) {
+      data.map( (o) => {
+        o.chgDt = this.getMarskingDateFormat(o.chgDt, 'YYYY.MM.DD');
+      });
+    }
+
     return data;
   }
 
@@ -199,8 +203,6 @@ class MytJoinJoinInfoController extends TwViewController {
   }
 
   private getData(svcInfo: any, data: any): any {
-    // svcInfo.svcAttrCd = 'M5';
-    // svcInfo.svcGr = 'S';
 
     const lineType = this.getLinetype();
     let isContract = true;
@@ -215,6 +217,7 @@ class MytJoinJoinInfoController extends TwViewController {
 
     // 회선별 페이지 PATH
     data.path = this._urlPath[this.getLinetype()];
+    data.lineType = lineType;
 
 
     return {
@@ -237,12 +240,6 @@ class MytJoinJoinInfoController extends TwViewController {
 
       res.render('join/myt.join.join-info.html', data);
     });
-    // res.render( 'join/myt.join.join-info.html', this.getData(svcInfo, data) );
-
-    /*this.apiService.request(API_CMD.BFF_05_0068, {}).subscribe((resp) => {
-      this.logger.info(this, '#### res ', resp)
-      res.render('join/myt.join.join-info.html', this.getData(svcInfo, resp));
-    });*/
   }
 }
 

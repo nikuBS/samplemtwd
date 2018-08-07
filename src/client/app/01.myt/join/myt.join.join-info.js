@@ -10,16 +10,26 @@ Tw.MyTJoinJoinInfo = function (rootEl, svcInfo) {
   this._svcInfo = svcInfo;
   this._loginService = new Tw.MyTJoinProtectPwd();
   this._historyService = new Tw.HistoryService();
-  this._bindEvent();
+  this._init();
 };
 
 Tw.MyTJoinJoinInfo.prototype = {
 
+  _init : function() {
+    this._initVariables();
+    this._bindEvent();
+  },
+
+  _initVariables: function () {
+    this.$history = this.$container.find('#fe-open-history');
+    this.$skbLink = this.$container.find('#fe-skb-link');
+  },
+
   _bindEvent: function () {
     this._popupService._popupClose();
-    this.$container.on('click', '#fe-open-history', $.proxy(this._openHistoryPop, this));
-    this.$container.on('click', '#fe-skb-link', $.proxy(this._openSKbrodbandLink, this));
     this.$container.on('click', '#pwd-change', $.proxy(this._openPwdLayer, this));
+    this.$history.click($.proxy(this._openHistoryPop, this));
+    this.$skbLink.click($.proxy(this._openSKbrodbandLink, this));
   },
 
   // 개통/변경 이력조회 팝업
@@ -32,7 +42,7 @@ Tw.MyTJoinJoinInfo.prototype = {
       }
     });
   },
-  
+
   // SK브로드밴드 링크 클릭
   _openSKbrodbandLink : function (e) {
     var $_this = $(e.currentTarget);
@@ -54,4 +64,5 @@ Tw.MyTJoinJoinInfo.prototype = {
     // 로그인 인증 성공 후 화면 이동
     this._historyService.goLoad('/myt/join/protect/change');
   }
+
 };

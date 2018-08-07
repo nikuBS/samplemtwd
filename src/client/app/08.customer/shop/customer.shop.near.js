@@ -47,6 +47,7 @@ Tw.CustomerShopNear.prototype = {
     this.$btnMore.on('click', $.proxy(this._onMore, this));
   },
   _init: function () {
+    this.$container.find('.bt-view-list').css('z-index', 1000);
     if (Tw.BrowserHelper.isApp()) {
       this._nativeService.send(Tw.NTV_CMD.GET_LOCATION, {}, $.proxy(this._onCurrentLocation, this));
     } else {
@@ -60,11 +61,6 @@ Tw.CustomerShopNear.prototype = {
         }, this));
       }
     }
-    // for test
-    // this._onCurrentLocation({ longitude: '126.98664959999998', latitude: '37.5635968' });
-    // this._onCurrentLocation({ longitude: '127.117605', latitude: '37.394576' });
-    // this._onCurrentLocation({ longitude: '128.686677', latitude: '35.219317' });
-    // this._onCurrentLocation({ lon: '128.471265', lat: '35.290588' });
   },
   _onSwitchMapList: function () {
     console.log('hehe');
