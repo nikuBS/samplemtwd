@@ -1,7 +1,7 @@
 <%#
 * FileName: payment.prepay.contents.auto.history.html
 * Author: 공자윤 (jayoon.kong@sk.com)
-* Date: 2018.07.25
+* Date: 2018.08.07
 %>
 <% include ../components/start.component.html %>
 <!-- #skip_navigation -->
@@ -13,7 +13,71 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div id="payment-prepay-contents-auto-history"></div>
+<div id="payment-prepay-contents-auto-history" class="wrap">
+    <!-- #header -->
+    <%- include('../../../../common/views/components/header.component.html', { title: '자동 선결제 상세보기', svcInfo: svcInfo }); %>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <div class="cont-box nogaps-top">
+                <div class="payment-select">
+                    <h3>자동 선결제 정보</h3>
+                    <ul class="select-list">
+                        <li>
+                            <div class="pay-maininfo">
+                                <span class="service-sort"><%= autoCardInfo.cardCdNm %><br /><%= autoCardInfo.cardNum %>******</span>
+                            </div>
+                            <dl class="pay-detail type2">
+                                <dt>선결제 금액</dt>
+                                <dd><strong><%= autoCardInfo.autoChargeAmount %></strong> <span class="unit">원</span></dd>
+                                <dt>기준금액</dt>
+                                <dd><strong><%= autoCardInfo.autoChargeStandardAmount %></strong> <span class="unit">원</span></dd>
+                            </dl>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="cont-sp type1" aria-hidden="true" />
+            <div class="cont-box nogaps noborder">
+                <div class="payment-select space-type pt28">
+                    <h3>신청 및 변경내역</h3>
+                    <ul class="select-list">
+                        <% if (autoPrepay) { %>
+                        <% for (var i = 0; i < autoPrepay.length; i++) { %>
+                        <li>
+                            <div class="pay-maininfo">
+                                <span class="service-sort"><%= autoPrepay[i].name %> <br /><%= autoPrepay[i].date %></span>
+                            </div>
+                            <% if (autoPrepay[i].auto_chrg_req_cl_cd === 'F') { %>
+                            <p>자동 선결제가 해지되었습니다.</p>
+                            <% } else { %>
+                            <dl class="pay-detail type2">
+                                <dt>카드정보</dt>
+                                <dd>
+                                    <%= autoPrepay[i].prchscardNm %><br /><%= autoPrepay[i].card_num %>
+                                </dd>
+                                <dt>선결제 금액</dt>
+                                <dd><strong><%= autoPrepay[i].autoChrgAmount %></strong> <span class="unit">원</span></dd>
+                                <dt>기준금액</dt>
+                                <dd><strong><%= autoPrepay[i].autoChrgStrdAmount %></strong> <span class="unit">원</span></dd>
+                            </dl>
+                            <% } %>
+                        </li>
+                        <% } %>
+                        <% } %>
+                    </ul>
+                </div>
+                <% if (autoPrepay.length > 20) { %>
+                <button class="bt-more">더보기<span>(<span class="fe-more-length"><%= autoPrepay.length - 20 %></span>)</span></button>
+                <% } %>
+            </div>
+        </div>
+    </div>
+    <!--// #contents -->
+    <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
+</div>
 <% include ../components/javascript.component.html %>
 <script>
   $(document).ready(function () {

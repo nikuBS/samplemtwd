@@ -1,5 +1,5 @@
 <%#
-* FileName: payment.prepay.pay.complete.component.html
+* FileName: payment.prepay.auto.complete.component.html
 * Author: 공자윤 (jayoon.kong@sk.com)
 * Date: 2018.08.06
 %>
@@ -15,37 +15,31 @@
                     <li>
                         <dl>
                             <dt class="ti-data">선결제 금액</dt>
-                            <dd class="tx-data"><strong class="fe-tmthChrgAmt"></strong> 원</dd>
+                            <dd class="tx-data"><strong class="fe-autoChrgAmt"></strong> 원</dd>
                         </dl>
                     </li>
                     <li>
                         <dl>
-                            <dt class="ti-data">납부형태</dt>
-                            <dd class="tx-data fe-instMm"></dd>
+                            <dt class="ti-data">기준금액</dt>
+                            <dd class="tx-data"><span class="fe-autoChrgStrdAmt"></span> 원</dd>
                         </dl>
                     </li>
                     <li>
                         <dl>
                             <dt class="ti-data">카드번호</dt>
-                            <dd class="tx-data fe-cardNumH"></dd>
+                            <dd class="tx-data fe-cardNum"></dd>
                         </dl>
                     </li>
                     <li>
                         <dl>
                             <dt class="ti-data">카드사</dt>
-                            <dd class="tx-data fe-cardNm"></dd>
+                            <dd class="tx-data fe-cardCdNm"></dd>
                         </dl>
                     </li>
                     <li>
                         <dl>
                             <dt class="ti-data">예금주</dt>
-                            <dd class="tx-data fe-custNm"></dd>
-                        </dl>
-                    </li>
-                    <li>
-                        <dl>
-                            <dt class="ti-data">승인번호</dt>
-                            <dd class="tx-data fe-aprvNum"></dd>
+                            <dd class="tx-data fe-userName"></dd>
                         </dl>
                     </li>
                 </ul>
@@ -56,11 +50,8 @@
             </div>
             <div class="contents-btn">
                 <ul class="bt-slice">
-                    <li class="bt-white1">
-                        <a href="/payment/prepay/micro/history" class="fe-replace-history">선결제 내역</a>
-                    </li>
                     <li class="bt-blue1">
-                        <a href="/payment/prepay/micro" class="fe-replace-history">확인</a>
+                        <a href="/payment/prepay/contents" class="fe-replace-history">확인</a>
                     </li>
                 </ul>
             </div>

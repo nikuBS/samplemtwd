@@ -8,7 +8,8 @@ import TwViewController from '../../../common/controllers/tw.view.controller';
 import { API_CMD, API_CODE } from '../../../types/api-command.type';
 import FormatHelper from '../../../utils/format.helper';
 import DateHelper from '../../../utils/date.helper';
-import {REQUEST_TYPE} from '../../../types/bff.type';
+import { PREPAY_TITLE, REQUEST_TYPE } from '../../../types/bff.type';
+import { Observable } from 'rxjs/Observable';
 
 class PaymentPrepayMicroAutoHistoryController extends TwViewController {
   constructor() {
@@ -16,22 +17,43 @@ class PaymentPrepayMicroAutoHistoryController extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    this.apiService.request(API_CMD.BFF_07_0075, {}).subscribe((resp) => {
-      res.render('payment.prepay.micro.auto.history.html', {
-        autoPrepay: this.getResult(resp),
-        svcInfo: svcInfo
-      });
+    Observable.combineLatest(
+      this.getAutoCardInfo(),
+      this.getAutoPrepayHistory()
+    ).subscribe(([ autoCardInfo, autoPrepay ]) => {
+      if (autoCardInfo.code === API_CODE.CODE_00 && autoPrepay.code === API_CODE.CODE_00) {
+        res.render('payment.prepay.micro.auto.history.html', {
+          autoCardInfo: this.parseCardInfo(autoCardInfo.result),
+          autoPrepay: this.parsePrepayData(autoPrepay.result),
+          svcInfo: svcInfo
+        });
+      } else {
+        res.render('payment.prepay.error.html', { err: autoPrepay, svcInfo: svcInfo, title: PREPAY_TITLE.AUTO_PREPAY_HISTORY });
+      }
     });
   }
 
-  private getResult(resp: any): any {
-    if (resp.code === API_CODE.CODE_00) {
-      return this.parseData(resp.result);
-    }
-    return resp;
+  private getAutoCardInfo(): Observable<any> {
+    return this.apiService.request(API_CMD.BFF_07_0072, {}).map((res) => {
+      return res;
+    });
   }
 
-  private parseData(result: any): any {
+  private getAutoPrepayHistory(): Observable<any> {
+    return this.apiService.request(API_CMD.BFF_07_0075, {}).map((res) => {
+      return res;
+    });
+  }
+
+  private parseCardInfo(result: any): any {
+    if (!FormatHelper.isEmpty(result)) {
+      result.autoChargeAmount = FormatHelper.addComma(result.autoChrgAmt);
+      result.autoChargeStandardAmount = FormatHelper.addComma(result.autoChrgStrdAmt);
+    }
+    return result;
+  }
+
+  private parsePrepayData(result: any): any {
     if (!FormatHelper.isEmpty(result)) {
       result.map((data) => {
         data.name = REQUEST_TYPE[data.auto_chrg_req_cl_cd];

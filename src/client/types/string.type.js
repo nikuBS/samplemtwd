@@ -137,16 +137,19 @@ Tw.PAYMENT_PREPAY_TITLE = {
   AUTO_PREPAY: '자동 선결제',
   CHANGE_CARD: '카드정보 변경',
   CHANGE_MONEY: '금액정보 변경',
-  CHANGE_ALL: '카드정보 및<br />금액정보 변경',
-  PREPAY_COMPLETE: '가<br />정상적으로<br />처리되었습니다.',
-  CANCEL_COMPLETE: '해지가<br />완료되었습니다.',
-  AUTO_COMPLETE: '가<br />신청되었습니다.',
-  AUTO_CHANGE_COMPLETE: '이<br />신청되었습니다.'
+  CHANGE_ALL: '카드정보 및\n금액정보 변경',
+  PREPAY_COMPLETE: '가\n정상적으로\n처리되었습니다.',
+  CANCEL_COMPLETE: '해지가\n완료되었습니다.',
+  AUTO_COMPLETE: '가\n신청되었습니다.',
+  AUTO_CHANGE_COMPLETE: '이\n신청되었습니다.'
 };
 
 Tw.PAYMENT_STRD_MSG = {
   CONTENTS_L02: '자동 선결제가 되는 시점의 금액을 말하며, 고객님 콘텐츠 이용한도의 최대 90%까지 설정 가능합니다.<br /><br />예시) 자동선결제가 기준금액 : 5만원으로 설정 시, 이번 달 소액결제를 5만원 이상 결제 시점에 자동으로 선결제됩니다.',
-  TITLE_L02: '기준금액이란?'
+  TITLE_L02: '기준금액이란?',
+  CONTENTS_L03_MICRO: '※ 기준금액 및 선결제 금액은 이용한도의 최대 90%금액까지 설정이 가능합니다.<br /><br />※ 소액결제 이용금액이 고객님께서 설정한 [기준금액] 초과 시점에 [선결제 금액] 만큼 자동 결제됩니다.',
+  CONTENTS_L03_CONTENTS: '※ 기준금액 및 선결제 금액은 이용한도의 최대 90%금액까지 설정이 가능합니다.<br /><br />※ 콘텐츠이용료 이용금액이 고객님께서 설정한 [기준금액] 초과 시점에 [선결제 금액] 만큼 자동 결제됩니다.',
+  TITLE_L03: '기준 및 선결제 최대금액?'
 };
 
 Tw.MSG_COMMON = {

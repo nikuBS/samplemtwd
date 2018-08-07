@@ -8,8 +8,7 @@ import TwViewController from '../../../common/controllers/tw.view.controller';
 import { API_CMD, API_CODE } from '../../../types/api-command.type';
 import FormatHelper from '../../../utils/format.helper';
 import { PREPAY_TITLE } from '../../../types/bff.type';
-import AutoPreInfo from '../../../mock/server/payment/payment.prepay.auto.pre.mock';
-import {Observable} from 'rxjs/Observable';
+import { Observable } from 'rxjs/Observable';
 
 class PaymentPrepayMicroAutoController extends TwViewController {
   constructor() {
@@ -21,10 +20,11 @@ class PaymentPrepayMicroAutoController extends TwViewController {
       this.getAutoPrepayInfo(),
       this.getAutoCardInfo()
     ).subscribe(([ autoPrepayInfo, autoCardInfo ]) => {
-      if (AutoPreInfo.code === API_CODE.CODE_00) {
+      if (autoPrepayInfo.code === API_CODE.CODE_00) {
         res.render('payment.prepay.micro.auto.html', {
-          autoPrepayInfo: this.parseData(AutoPreInfo.result),
+          autoPrepayInfo: this.parseData(autoPrepayInfo.result),
           autoCardInfo: autoCardInfo,
+          title: PREPAY_TITLE.MICRO,
           svcInfo: svcInfo
         });
       } else {

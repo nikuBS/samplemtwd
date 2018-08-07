@@ -25,6 +25,7 @@ class PaymentPrepayContentsPayController extends TwViewController {
         res.render('payment.prepay.contents.pay.html', {
           prepayInfo: this.parseData(prepayInfo.result),
           autoCardInfo: autoCardInfo,
+          title: PREPAY_TITLE.CONTENTS,
           svcInfo: svcInfo
         });
       } else {
