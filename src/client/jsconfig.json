@@ -1,5 +1,13 @@
 {
   "compilerOptions": {
     "target": "es3"
-  }
+  },
+  "include": [
+    "../../../node_modules/@types/jquery"
+  ],
+  "typeAcquisition": {
+		"include": [
+			"jquery"
+		]
+	}
 }
