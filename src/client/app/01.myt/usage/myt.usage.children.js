@@ -15,6 +15,7 @@ Tw.MytUsageChildren.prototype = {
   },
 
   _bindEvent: function () {
+    this.$container.on('click', '.prev-step', $.proxy(this._onClickPrevStep, this));
     this.$container.on('click', '.bt-dropdown', $.proxy(this._onClickBtDropdown, this));
     this.$container.on('change', '.fe-unit-switch', $.proxy(this._setDataByUnit, this));
   },
@@ -69,6 +70,10 @@ Tw.MytUsageChildren.prototype = {
       $this.text(data.data);
       $this.parent()[0].childNodes[2].nodeValue = data.unit;
     });
+  },
+
+  _onClickPrevStep: function () {
+    this._historyService.goBack();
   }
 
 };
