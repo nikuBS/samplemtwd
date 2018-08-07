@@ -6,7 +6,7 @@
 import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Observable } from 'rxjs/Observable';
-import { API_CMD } from '../../../../types/api-command.type';
+import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import StringHelper from '../../../../utils/string.helper';
 import moment = require('moment');
 import DateHelper from '../../../../utils/date.helper';
@@ -37,6 +37,9 @@ class MytJoinContractTerminalPhone extends TwViewController {
   // 데이터
   private _resDataInfo: any = {};
 
+  // api 에러
+  private _apiErrInfo: any = [];
+
   private _urlTplInfo: any = {
     pageRenderView: 'join/myt.join.contract-terminal.phone.html'
   };
@@ -50,24 +53,25 @@ class MytJoinContractTerminalPhone extends TwViewController {
     const p1 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0063, {}), '테스트 api');
     // const p1_mock = this._getPromiseApiMock(contractTerminal_BFF_05_0063, 'p1 Mock 데이터');
 
-    Promise.all([p1]).then(function (resArr) {
+    Promise.all([p1]).then(
+      function (resArr) {
       console.dir(resArr);
       thisMain.logger.info(thisMain, `[ Promise.all ] : `, resArr);
 
       /*
       * 실 데이터 사용시
        */
-      thisMain._resDataInfo = resArr[0][0].result;
-      console.dir(resArr[0][0].result);
+      thisMain._resDataInfo = resArr[0].result;
+      // console.dir(resArr[0].result);
 
       thisMain._dataInit();
-
       thisMain.renderView(res, thisMain._urlTplInfo.pageRenderView, {
         reqQuery: thisMain.reqQuery,
         svcInfo: thisMain._svcInfo,
         commDataInfo: thisMain._commDataInfo,
         resDataInfo: thisMain._resDataInfo,
-        errBol: false
+        errBol: false,
+        errObj: null
       });
 
       /*
@@ -83,6 +87,16 @@ class MytJoinContractTerminalPhone extends TwViewController {
       //   resDataInfo: thisMain._resDataInfo
       // });
 
+    }, function (err) {
+        thisMain._errInfoInit(err);
+        thisMain.renderView(res, thisMain._urlTplInfo.pageRenderView, {
+          reqQuery: thisMain.reqQuery,
+          svcInfo: thisMain._svcInfo,
+          commDataInfo: thisMain._commDataInfo,
+          resDataInfo: null,
+          errBol: true,
+          errObj: thisMain._apiErrInfo
+        });
 
     }); // Promise.all END
 
@@ -196,8 +210,8 @@ class MytJoinContractTerminalPhone extends TwViewController {
     }
     if ( _.size(tInstallment) > 0 ) {
       tInstallment.typeStr = 'join_type_C';
-      tAgree.titNm = MYT_JOIN_CONTRACT_TERMINAL.JOIN_TYPE_C.TITNM;
-      tAgree.agreeNm = MYT_JOIN_CONTRACT_TERMINAL.JOIN_TYPE_C.AGREE_NM;
+      tInstallment.titNm = MYT_JOIN_CONTRACT_TERMINAL.JOIN_TYPE_C.TITNM;
+      tInstallment.agreeNm = MYT_JOIN_CONTRACT_TERMINAL.JOIN_TYPE_C.AGREE_NM;
 
       tInstallment.agreeTotMonth = tInstallment.allotMthCnt; // 약정 전체 개월수
       tInstallment.agreePay = FormatHelper.addComma(tInstallment.totAgrmtAmt); // 약정 금액
@@ -208,8 +222,8 @@ class MytJoinContractTerminalPhone extends TwViewController {
     }
     if ( _.size(rsvPenTAgree) > 0 ) {
       rsvPenTAgree.typeStr = 'join_type_D';
-      tAgree.titNm = MYT_JOIN_CONTRACT_TERMINAL.JOIN_TYPE_D.TITNM;
-      tAgree.agreeNm = MYT_JOIN_CONTRACT_TERMINAL.JOIN_TYPE_D.AGREE_NM;
+      rsvPenTAgree.titNm = MYT_JOIN_CONTRACT_TERMINAL.JOIN_TYPE_D.TITNM;
+      rsvPenTAgree.agreeNm = MYT_JOIN_CONTRACT_TERMINAL.JOIN_TYPE_D.AGREE_NM;
 
       rsvPenTAgree.agreeTotMonth = rsvPenTAgree.rtenAgrmtMthCnt; // 약정 전체 개월수
       rsvPenTAgree.agreePay = FormatHelper.addComma(rsvPenTAgree.rtenPenStrdAmt); // 약정 금액
@@ -285,6 +299,7 @@ class MytJoinContractTerminalPhone extends TwViewController {
 
   }
 
+
   // -------------------------------------------------------------[서비스]
   private _proDate(dataObj: any, start: string, end: string) {
     const startDt = start;
@@ -315,26 +330,34 @@ class MytJoinContractTerminalPhone extends TwViewController {
     dataObj.remDt = dataObj.totDt - dataObj.curDt; // 잔여일수
   }
 
+  // -------------------------------------------------------------[에러 정보 처리]
+  private _errInfoInit(err: any) {
+    const thisMain = this;
+    thisMain._apiErrInfo = [];
+    thisMain.logger.info(thisMain, `[ Promise.all > err ] : `, err);
+    console.dir(err);
+    const tempErrObj = {
+      code: err.code,
+      msg: err.msg
+    };
+    thisMain._apiErrInfo.push(tempErrObj);
+    thisMain.logger.info(thisMain, `[ _apiErrInfo ] : `, thisMain._apiErrInfo);
+  }
+
   // -------------------------------------------------------------[프로미스 생성]
   public _getPromiseApi(reqObj, msg): any {
     const thisMain = this;
-    // let tempData: any;
     const reqObjObservableApi: Observable<any> = reqObj;
 
     return new Promise((resolve, reject) => {
       Observable.combineLatest(
         reqObjObservableApi
-      ).subscribe({
-        next(reqObjObservable) {
-          thisMain.logger.info(thisMain, `[ ${ msg } next ] : `, reqObjObservable);
-          resolve(reqObjObservable);
-        },
-        error(error) {
-          thisMain.logger.info(thisMain, `[ ${ msg } error ] : `, error.stack || error);
-        },
-        complete() {
-          thisMain.logger.info(thisMain, `[ ${ msg } complete ] : `);
-
+      ).subscribe((resp) => {
+        thisMain.logger.info(thisMain, `[ ${ msg } next ] : `, resp);
+        if ( resp[0].code === API_CODE.CODE_00 ) {
+          resolve(resp[0]);
+        } else {
+          reject(resp[0]);
         }
       });
 
