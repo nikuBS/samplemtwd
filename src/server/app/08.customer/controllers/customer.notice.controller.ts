@@ -49,7 +49,7 @@ class CustomerNoticeController extends TwViewController {
       remain: this._getRemainCount(data.result.totalElements, data.result.pageable.pageNumber, data.result.pageable.pageSize),
       list: data.result.content.map(item => {
         return Object.assign(item, {
-          date: item.rgstDt.substr(0, 4) + '.' + item.rgstDt.substr(4, 2) + '.' + item.rgstDt.substr(6, 2),
+          date: FormatHelper.convertNumberDateToFormat(item.rgstDt, '.'),
           type: FormatHelper.isEmpty(item.ctgNm) ? '' : item.ctgNm,
           itemClass: (item.isTop ? 'impo ' : '') + (item.isNew ? 'new' : '')
         });
@@ -67,11 +67,15 @@ class CustomerNoticeController extends TwViewController {
     const category = req.query.category || 'tworld';
 
     if (['tworld', 'directshop', 'roaming', 'membership'].indexOf(category) === -1) {
-      res.redirect('/customer/notice');
+      return res.redirect('/customer/notice');
     }
 
     this.apiService.request(categorySwitchingData[category].API, {page: 0, size: 20})
       .subscribe((data) => {
+        if (FormatHelper.isEmpty(data)) {
+          return res.redirect('/customer');
+        }
+
         res.render('customer.notice.html', {
           category: category,
           categoryLabel: categorySwitchingData[category].LABEL,

@@ -10,7 +10,8 @@ import { CUSTOMER_PREVENTDAMAGE_GUIDE_WEBTOON } from '../../../../types/static.t
 import FormatHelper from '../../../../utils/format.helper';
 
 const categoryData = {
-  webtoon: CUSTOMER_PREVENTDAMAGE_GUIDE_WEBTOON
+  webtoon: CUSTOMER_PREVENTDAMAGE_GUIDE_WEBTOON,
+  latest: []  // TODO 최신 이용자 피해예방 정보 추가시 사용
 };
 
 class CustomerPreventdamageGuideviewController extends TwViewController {
@@ -18,23 +19,26 @@ class CustomerPreventdamageGuideviewController extends TwViewController {
     super();
   }
 
+  private _isValid(category, idx): any {
+    return !(FormatHelper.isEmpty(category)
+      && FormatHelper.isEmpty(idx)
+      && ['webtoon', 'latest'].indexOf(category) === -1
+      && FormatHelper.isEmpty(categoryData[category][idx]));
+  }
+
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    const code = req.query.code || '',
-      backUrl = '/customer/prevent-damage/guide?category=webtoon';
+    const category = req.query.category || '',
+      idx = req.query.idx || '',
+      backUrl = '/customer/prevent-damage/guide?category=' + category;
 
-    if (FormatHelper.isEmpty(code)) {
-      res.redirect(backUrl);
-    }
-
-    const category = code.split('_')[0];
-    if (FormatHelper.isEmpty(categoryData[category][code])) {
-      res.redirect(backUrl);
+    if (!this._isValid(category, idx)) {
+      return res.redirect(backUrl);
     }
 
     res.render('preventdamage/customer.preventdamage.guideview.html', {
       svcInfo: svcInfo,
       category: category,
-      data: categoryData[category][code]
+      data: categoryData[category][idx]
     });
   }
 }

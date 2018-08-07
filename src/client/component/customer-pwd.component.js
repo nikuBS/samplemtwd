@@ -7,6 +7,8 @@
 Tw.CustomerPwdComponent = function (rootEl) {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
+  this._historyService = new Tw.HistoryService();
+
   this._isCloseCallbackNeeded = false;
   this._pwdSuccess = false;
 
@@ -124,7 +126,7 @@ Tw.CustomerPwdComponent.prototype = {
     if (!this._isCloseCallbackNeeded) {
       return;
     }
-    if (this._pwdSuccessp) {
+    if (this._pwdSuccess) {
       if (this._isPopup) {
         this._callback();
       }
@@ -135,8 +137,8 @@ Tw.CustomerPwdComponent.prototype = {
             Tw.Popup.close();
           });
 
-          this.$container.find('.link-long')[0].href = '/customer/email';
-          this.$container.find('.link-long.last').href = '/customer/shop/search';
+          $layer.find('.link-long > a')[0].href = '/customer/email';
+          $layer.find('.link-long.last > a').attr('href', '/customer/shop/search');
         });
       }
     }
@@ -147,7 +149,7 @@ Tw.CustomerPwdComponent.prototype = {
       this._isCloseCallbackNeeded = true;
       this._popupService.close();
     } else {
-      window.location = '/home';
+      this._historyService.goLoad('/home');
     }
   },
   _showFail: function () {
@@ -156,7 +158,7 @@ Tw.CustomerPwdComponent.prototype = {
       this._isCloseCallbackNeeded = true;
       this._popupService.close();
     } else {
-      window.location = '/auth/login/customer-pwd-fail';
+      this._historyService.goLoad('/auth/tid/logout?target=/auth/login/customer-pwd-fail');
     }
   },
   openLayer: function (mdn, serviceNumber, callback) {

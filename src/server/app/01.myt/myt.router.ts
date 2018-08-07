@@ -33,11 +33,9 @@ import MyTBillBillguideSubRoamingBill from './controllers/bill/myt.bill.billguid
 import MyTBillBillguideSubDonationBill from './controllers/bill/myt.bill.billguide.subDonationBill.controller';
 import MyTBillHistoryMicro from './controllers/bill/myt.bill.history.micro.controller';
 import MyTBillHistoryMicroPassword from './controllers/bill/myt.bill.history.micro.password.controller';
-import MyTBillHistoryMicroLimit from './controllers/bill/myt.bill.history.micro.limit.controller';
-import MyTBillHistoryMicroLimitChange from './controllers/bill/myt.bill.history.micro.limit.change.controller';
+import MyTBillHistoryLimitCommon from './controllers/bill/myt.bill.history.limit.common.controller';
+import MyTBillHistoryLimitChangeCommon from './controllers/bill/myt.bill.history.limit.change.common.controller';
 import MyTBillHistoryContents from './controllers/bill/myt.bill.history.contents.controller';
-import MyTBillHistoryContentsLimit from './controllers/bill/myt.bill.history.contents.limit.controller';
-import MyTBillHistoryContentsLimitChange from './controllers/bill/myt.bill.history.contents.limit.change.controller';
 
 import MytJoinPayClaim from './controllers/join/myt.join.pay-claim.controller';
 import MytJoinPayClaimPhone from './controllers/join/myt.join.pay-claim.phone.controller';
@@ -98,12 +96,14 @@ class MytRouter extends TwRouter {
     this.controllers.push({ url: '/bill/guidechange/update-complete', controller: new MyTBillGuidechangeUpdateComplete() });
 
     this.controllers.push({ url: '/bill/history/micro', controller: new MyTBillHistoryMicro() });
+    this.controllers.push({ url: '/bill/history/micro/detail', controller: new MyTBillHistoryMicro() });
     this.controllers.push({ url: '/bill/history/micro/password', controller: new MyTBillHistoryMicroPassword() });
-    this.controllers.push({ url: '/bill/history/micro/limit', controller: new MyTBillHistoryMicroLimit() });
-    this.controllers.push({ url: '/bill/history/micro/limit/change', controller: new MyTBillHistoryMicroLimitChange() });
+    this.controllers.push({ url: '/bill/history/micro/limit', controller: new MyTBillHistoryLimitCommon() });
+    this.controllers.push({ url: '/bill/history/micro/limit/change', controller: new MyTBillHistoryLimitChangeCommon() });
     this.controllers.push({ url: '/bill/history/contents', controller: new MyTBillHistoryContents() });
-    this.controllers.push({ url: '/bill/history/contents/limit', controller: new MyTBillHistoryContentsLimit() });
-    this.controllers.push({ url: '/bill/history/contents/limit/change', controller: new MyTBillHistoryContentsLimitChange() });
+    this.controllers.push({ url: '/bill/history/contents/detail', controller: new MyTBillHistoryContents() });
+    this.controllers.push({ url: '/bill/history/contents/limit', controller: new MyTBillHistoryLimitCommon() });
+    this.controllers.push({ url: '/bill/history/contents/limit/change', controller: new MyTBillHistoryLimitChangeCommon() });
 
     this.controllers.push({ url: '/join/pay-claim', controller: new MytJoinPayClaim() });
     this.controllers.push({ url: '/join/pay-claim/phone', controller: new MytJoinPayClaimPhone() });

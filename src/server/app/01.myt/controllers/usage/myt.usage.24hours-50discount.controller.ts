@@ -39,20 +39,20 @@ class MyTUsage24hour50discount extends TwViewController {
     return usageData;
   }
 
-  private parseData(usageData: any): any {
-    const data = {
-      'skipId': '공제항목ID',
-      'skipName': '공제항목명',
-      'total': '기본제공량',
-      'used': '900000',
-      'remained': '잔여량',
-      'unit': '140',
-      'couponDate': '201404011410'
-    };
+  private parseData(data: any): any {
+    // const data = {
+    //   'skipId': '공제항목ID',
+    //   'skipName': '공제항목명',
+    //   'total': '기본제공량',
+    //   'used': '900000',
+    //   'remained': '잔여량',
+    //   'unit': '140',
+    //   'couponDate': '201404011410'
+    // };
     const DATE_FORMAT = 'YYYY.MM.DD HH:mm';
     const startDate = DateHelper.convDateFormat(data.couponDate);
     const endDate = moment(startDate).add(1, 'days').add(-1, 'minutes');
-    data['used'] = FormatHelper.convDataFormat(data.used, UNIT[usageData.unit]);
+    data['used'] = FormatHelper.convDataFormat(data.used, UNIT[data.unit]);
     data['startDateStr'] = DateHelper.getShortDateWithFormat(startDate, DATE_FORMAT);
     data['endDateStr'] = DateHelper.getShortDateWithFormat(endDate, DATE_FORMAT);
     return data;

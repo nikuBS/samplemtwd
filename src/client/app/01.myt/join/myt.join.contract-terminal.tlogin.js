@@ -37,38 +37,60 @@ Tw.MytJoinContractTerminalTlogin.prototype = {
 
   },
   _bindEvent: function () {
-    this.$container.on('click', '[data-target="billMonthName"]', $.proxy(this._selPopOpen, this));
+
+    this.$container.on('click', '[data-target="detailSaleList"]', $.proxy(this._detailSaleList, this)); //상세할인내역
+
+    this.$container.on('click', '[data-target="beforeSalePriceSum"]', $.proxy(this._beforeSalePriceSumPopOpen, this));
+
+    this.$container.on('click', '[data-target="boon_fee_type_A"]', $.proxy(this._boon_fee_type_A_PopOpen, this));
+    this.$container.on('click', '[data-target="boon_fee_type_B"]', $.proxy(this._boon_fee_type_B_PopOpen, this));
+
+    this.$container.on('click', '[data-target="boon_join_type_A"]', $.proxy(this._boon_join_type_A_PopOpen, this));
+    this.$container.on('click', '[data-target="boon_join_type_B"]', $.proxy(this._boon_join_type_B_PopOpen, this));
+
+    this.$container.on('click', '[data-target="boon_suc_type_A"]', $.proxy(this._boon_suc_type_A_PopOpen, this));
+    this.$container.on('click', '[data-target="boon_suc_type_B"]', $.proxy(this._boon_suc_type_B_PopOpen, this));
+    this.$container.on('click', '[data-target="boon_suc_type_C"]', $.proxy(this._boon_suc_type_C_PopOpen, this));
   },
-  //--------------------------------------------------------------------------[이벤트 | 팝업 | 청구월 선택]
-  _selPopOpen : function(event) {
-    var $target = $(event.currentTarget);
-    var tempArr = this.resData.usedAmountChildInfo.invDtArr;
-    var arrOption = [];
-    for ( var i=0, len=tempArr.length; i<len; i++ ) {
-      arrOption.push({
-        'attr' : 'data-info="' + tempArr[i] + '"',
-        text : this._getSelClaimDtBtn( tempArr[i] )
-      });
-    }
-    this._popupService.openChoice(Tw.POPUP_TITLE.PERIOD_SELECT, arrOption, 'type1', $.proxy(this._selPopOpenEvt, this, $target));
-  },
-  _selPopOpenEvt: function ($target, $layer) {
-    $layer.find('.popup-choice-list').on('click', $.proxy(this._selPopOpenEvtExe, this, $target, $layer) );
+  _detailSaleList: function (e) {
+
+    var svcAgrmtDcId = $(e.target).attr('data-svcAgrmtDcId');
+    var svcAgrmtDcCd = $(e.target).attr('data-svcAgrmtDcCd');
+    var tempUrl = '/myt/join/contract-terminal/phone/detail' + '?' + 'svcAgrmtDcId=' + svcAgrmtDcId + '&' + 'svcAgrmtDcCd=' + svcAgrmtDcCd;
+    this._goLoad(tempUrl);
+    //window.open( tempUrl, '_blank');
 
   },
-  _selPopOpenEvtExe: function ($target, $layer, event) {
-    var curTg = $(event.currentTarget);
-    var tg = $target;
-    var dataTemp = curTg.find('button').attr('data-info');
-    tg.text( curTg.text() );
-    tg.attr('data-info', dataTemp );
-    //this._popupService.close();
-    var paramData = {
-      invDt: dataTemp,
-      selNum: this.selectDataInfo.selNum,
-      childSvcMgmtNum:  this.resData.selectSvcMgmtNum
-    };
-    this._goLoad('/myt/bill/billguide/subChildBill' + '?' + $.param(paramData));
+  _beforeSalePriceSumPopOpen: function () {
+    this._popupService.openAlert(Tw.MSG_MYT.CONTRACT_TERMINAL.OPEN_ALERT.BSPS.MSG, Tw.MSG_MYT.CONTRACT_TERMINAL.OPEN_ALERT.BSPS.TITLE);
+  },
+  _boon_fee_type_A_PopOpen: function () {
+    this._popupService.openAlert(Tw.MSG_MYT.CONTRACT_TERMINAL.OPEN_ALERT.BOON_FEE_TYPE_A.MSG,
+      Tw.MSG_MYT.CONTRACT_TERMINAL.OPEN_ALERT.BOON_FEE_TYPE_A.TITLE);
+  },
+  _boon_fee_type_B_PopOpen: function () {
+    this._popupService.openAlert(Tw.MSG_MYT.CONTRACT_TERMINAL.OPEN_ALERT.BOON_FEE_TYPE_B.MSG,
+      Tw.MSG_MYT.CONTRACT_TERMINAL.OPEN_ALERT.BOON_FEE_TYPE_B.TITLE);
+  },
+  _boon_join_type_A_PopOpen: function () {
+    this._popupService.openAlert(Tw.MSG_MYT.CONTRACT_TERMINAL.OPEN_ALERT.BOON_JOIN_TYPE_A.MSG,
+      Tw.MSG_MYT.CONTRACT_TERMINAL.OPEN_ALERT.BOON_JOIN_TYPE_A.TITLE);
+  },
+  _boon_join_type_B_PopOpen: function () {
+    this._popupService.openAlert(Tw.MSG_MYT.CONTRACT_TERMINAL.OPEN_ALERT.BOON_JOIN_TYPE_B.MSG,
+      Tw.MSG_MYT.CONTRACT_TERMINAL.OPEN_ALERT.BOON_JOIN_TYPE_B.TITLE);
+  },
+  _boon_suc_type_A_PopOpen: function () {
+    this._popupService.openAlert(Tw.MSG_MYT.CONTRACT_TERMINAL.OPEN_ALERT.BOON_SUC_TYPE_A.MSG,
+      Tw.MSG_MYT.CONTRACT_TERMINAL.OPEN_ALERT.BOON_SUC_TYPE_A.TITLE);
+  },
+  _boon_suc_type_B_PopOpen: function () {
+    this._popupService.openAlert(Tw.MSG_MYT.CONTRACT_TERMINAL.OPEN_ALERT.BOON_SUC_TYPE_B.MSG,
+      Tw.MSG_MYT.CONTRACT_TERMINAL.OPEN_ALERT.BOON_SUC_TYPE_B.TITLE);
+  },
+  _boon_suc_type_C_PopOpen: function () {
+    this._popupService.openAlert(Tw.MSG_MYT.CONTRACT_TERMINAL.OPEN_ALERT.BOON_SUC_TYPE_C.MSG,
+      Tw.MSG_MYT.CONTRACT_TERMINAL.OPEN_ALERT.BOON_SUC_TYPE_C.TITLE);
   },
   //--------------------------------------------------------------------------[api]
   // _getUsedAmounts: function(param) {
@@ -101,11 +123,10 @@ Tw.MytJoinContractTerminalTlogin.prototype = {
   _getSelClaimDtBtn: function (str) {
     return moment(str).add(1, 'days').format(Tw.DATE_FORMAT.YYYYDD_TYPE_0);
   },
-  _getSelPeriod: function(str) {
+  _getSelPeriod: function (str) {
     var startDate = moment(str).format('YYYY.MM') + '.01';
     var endDate = moment(str).format('YYYY.MM.DD');
     return startDate + ' ~ ' + endDate;
   }
-
 
 };

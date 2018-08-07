@@ -43,10 +43,14 @@ Tw.POPUP_TITLE = {
   CHANGE_BILL_GUIDE_TYPE: '어떤 안내서를 보여 드릴까요?',
   OVER_PAY: '과납 안내 드립니다.',
   PERIOD_SELECT: '기간선택',
+  PAYMENT_TYPE_SELECT: '결제종류 선택',
   SET_HELPLINE_TYPE: '상담유형 설정',
   SET_HELPLINE_AREA: '지역설정',
   SET_HELPLINE_TIME: '시간설정',
-  SET_HELPLINE_ITEM: '항목설정'
+  SET_HELPLINE_ITEM: '항목설정',
+  MYT_LIMIT_MONTH: '매월 한도선택',
+  MYT_LIMIT_DAY: '1일 한도선택',
+  MYT_LIMIT_ONCE: '1회 한도선택'
 };
 
 Tw.POPUP_PROPERTY = {
@@ -156,8 +160,8 @@ Tw.MSG_MYT = {
   USAGE_TING_M03: {
     TITLE: '통화가능 금액이란?',
     CONTENTS: '팅요금상품 가입 시 선택하신 상한금액에서 기본료를 제외한 나머지 금액입니다.\n' +
-      '예) 팅 100요금상품의 경우, 상한 2만원 선택 시 통화 가능 금액은 7,500원입니다.\n' +
-      '상한(20,000원) – 기본료(12,500원) = 7,500원\n'
+    '예) 팅 100요금상품의 경우, 상한 2만원 선택 시 통화 가능 금액은 7,500원입니다.\n' +
+    '상한(20,000원) – 기본료(12,500원) = 7,500원\n'
   },
   BILL_GUIDE_REISSUE_00: ' 요금안내서 재발행',
   BILL_GUIDE_REISSUE_01: ' 요금안내서 재발행을 신청하시겠습니까?',
@@ -272,6 +276,9 @@ Tw.MSG_MYT = {
     M01_TITLE: '50% 할인제공 대상 데이터는',
     M01_CONTENTS: '기본요금상품 및 무료로 제공되는 데이터 제공량에 한합니다. <br />대상 데이터 : 각 요금상품 별 데이터 기본 제공량, T끼리 데이터 선물하기 및 데이터 리필하기 서비스로 받은 데이터 제공량, 눝 데이터 생성하기, T가족혜택 데이터 생성하기'
   },
+  CHILDREN: {
+    SELECT_TITLE: '자녀 휴대폰 회선 선택'
+  },
   USAGE_PATTERN: {
     COLOR: {
       BACK: ['#d6dbe5', '/img/chart/pattern2.gif'],
@@ -316,7 +323,77 @@ Tw.MSG_MYT = {
     EMPTY_PWD: '6자리 이상의 숫자를 입력해주세요.',
     ONLY_PWD: '비밀번호는 숫자만 입력 가능합니다.',
     FAIL_PWD: '비밀번호가 일치하지 않습니다. \n 다시 입력해주시기 바랍니다.'
-  }
+  },
+  CONTRACT_TERMINAL: {
+    OPEN_ALERT: {
+      BSPS: {
+        TITLE: '전월 기준 할인 금액 합계',
+        MSG: '전월 기준 할인 금액 합계는 전월 기준으로 제공된 총 할인 금액입니다. <br />월 할인금액은 현재 이용 요금제에 따라 달라질 수 있습니다.'
+      },
+      BOON_FEE_TYPE_A: {
+        TITLE: '요금약정할인24 (730일)',
+        MSG: '고객님께서 특정 요금제를 일정 기간 동안 사용하실 것을 약정하면, 월 사용 요금 구간별로 요금 할인을 받으실 수 있는 제도 입니다'
+      },
+      BOON_FEE_TYPE_B: {
+        TITLE: '테블릿 약정할인 12',
+        MSG: '고객님께서 특정 요금제를 일정 기간 동안 사용하실 것을 약정하면, 월 사용 요금 구간별로 요금 할인을 받으실 수 있는 제도 입니다.'
+      },
+      BOON_JOIN_TYPE_A: {
+        TITLE: 'T기본 약정',
+        MSG: '일정기간 휴대폰 서비스 사용을 조건 이용기간 및 요금 상품에 따라 휴대폰 구입 금액의 일부를 할인해 주는 제도입니다'
+      },
+      BOON_JOIN_TYPE_B: {
+        TITLE: 'T지원금 약정',
+        MSG: '일정기간 휴대폰 서비스 사용을 조건 이용기간 및 요금 상품에 따라 휴대폰 구입 금액의 일부를 할인해 주는 제도입니다'
+      },
+      BOON_SUC_TYPE_A: {
+        TITLE: 'T약정 할부 지원',
+        MSG: '특정 휴대폰을 구입하는 고객에게 청구요금에서 18개월 또는 24개월 할부 기간 동안 매월 일정금액 휴대폰 할부금을 할인해 주는 프로그램입니다.<br />(단, 매월 지원금액은 휴대폰 구입일에 따라 일할로 계산되어 할인됩니다.)'
+      },
+      BOON_SUC_TYPE_B: {
+        TITLE: 'T기본 약정',
+        MSG: '일정기간 휴대폰 서비스 사용을 조건 이용기간 및 요금 상품에 따라 휴대폰 구입 금액의 일부를 할인해 주는 제도입니다'
+      },
+      BOON_SUC_TYPE_C: {
+        TITLE: '약정 위약금2',
+        MSG: '단말기 구입 시 설정된 단말할인금액에 대해서, 중간해지 시 위약금이 적용되는 제도입니다.'
+      }
+    }
+  },
+  HISTORY_TXT_01: '사용중',
+  HISTORY_TXT_02: '알아보기',
+  HISTORY_TXT_03: '차단중',
+  HISTORY_TXT_04: '결제종류',
+  HISTORY_ALERT_A1: '소액결제 시용이 불가하도록 차단하시겠습니까?',
+  HISTORY_ALERT_A2: '소액결제(휴대폰 결제서비스)를 사용하시겠습니까?',
+  HISTORY_ALERT_A3: '선택하신 서비스의 소액결제 자동결제를 차단하시겠습니까? (다음 달 부터 적용됩니다.)',
+  HISTORY_ALERT_A4: '자동결제차단이 신청되었습니다.',
+  HISTORY_ALERT_A5: '소액결제 자동결제 차단을 해제하시겠습니까? (다음 달 부터 적용됩니다.)',
+  HISTORY_ALERT_A6: '자동결제차단해제가 신청되었습니다.',
+  HISTORY_ALERT_A7: '조회 시작일은 YYYY.MM.DD 부터 가능합니다.',  // 오늘포함 7개월전
+  HISTORY_ALERT_A8: '시작일이 종료일보다 클 수 없습니다.',
+  HISTORY_ALERT_A9: '조회 시작일은 YYYY.MM.DD 부터 가능합니다.',  // 오늘포함 365일전
+  HISTORY_ALERT_A10: '조회 시작일 유효한 일자가 아닙니다.',
+  HISTORY_ALERT_A11: '조회 종료일 유효한 일자가 아닙니다.',
+  HISTORY_ALERT_A12: '이용한도 변경 내역이 없습니다.',
+  HISTORY_ALERT_A13: '소액결제 이용한도 변경을 신청하시겠습니까?',
+  HISTORY_ALERT_A14: '이용한도 변경이 완료 되었습니다.',
+  HISTORY_ALERT_A15: '이번 달 선결제 가능 금액이 없습니다.',
+  HISTORY_ALERT_A16: '선결제 가능한 횟수 초과한 경우 “이번달 설결제 가능횟수(99회)가 초과되셨습니다.',
+  HISTORY_ALERT_A17: '한도금액변경은 월 1회만 가능합니다.',
+  HISTORY_ALERT_A18: '콘텐츠 이용료 한도 변경을 신청하시겠습니까?',
+  HISTORY_ALERT_A19: '소액결제 사용시 다음 날 SMS 추가 수신을 받으시겠습니까?',
+  HISTORY_ALERT_A20: '비밀번호가 일치하지 않습니다. 다시 확인해주세요.',
+  HISTORY_ALERT_A21: '진행을 취소하시고 첫 화면으로 이동하시겠습니까?',
+  HISTORY_ALERT_A22: '연속숫자 6자리는 설정이 불가능합니다. 다른 번호를 입력해주세요',
+  HISTORY_ALERT_A23: '동일숫자 6자리는 설정이 불가능합니다. 다른 번호를 입력해주세요.',
+  HISTORY_ALERT_A24: '비밀번호 확인이 일치하지 않습니다. 다시 한번 확인해주세요.',
+  HISTORY_ALERT_A25: '주민번호 앞자리는 비밀번호 설정이 불가능합니다. 다른 번호를 입력해주세요.',
+  HISTORY_ALERT_A26: '소액결제 비밀번호 설정이 완료 되었습니다.',
+  HISTORY_ALERT_A27: '무선콘텐츠 서비스 시용이 불가하도록 차단하시겠습니까?',
+  HISTORY_ALERT_A28: '무선콘텐츠 서비스를 사용하시겠습니까?',
+  HISTORY_ALERT_A29: '무선콘텐츠 서비스 결제확인 SMS 추가 수신을 받으시겠습니까?',
+  HISTORY_ALERT_A30: '무선콘텐츠 서비스 결제확인 SMS 추가 수신을 받지 않으시겠습니까?'
 };
 
 Tw.MSG_RECHARGE = {
@@ -553,6 +630,15 @@ Tw.HELPLINE_TYPE = {
   QUALITY: '통화품질 상담'
 };
 
+Tw.PAYMENT_TYPE = {
+  TOTAL: '전체',
+  NORMAL: '일반결제',
+  AUTO: '자동결제',
+  PACKAGE: '묶음결제',
+  EASY: '간편결제',
+  COMPLAX: '복합결제'
+}
+
 Tw.HELPLINE_AREA = {
   CAPITAL: '수도권 (서울, 경기, 인천, 강원)',
   CENTER: '중부 (충남, 충북, 대전)',
@@ -562,12 +648,20 @@ Tw.HELPLINE_AREA = {
 };
 
 Tw.DATE_FORMAT = {
-  YYYYDD_TYPE_0: 'YYYY년 MM월'
+  YYYYDD_TYPE_0: 'YYYY년 MM월',
+  YYYYDD_TYPE_1: 'YYYY년 M월'
 };
 
 Tw.URL_PATH = {
   BROADBAND: 'http://www.skbroadband.com/',
-  COP_SERVICE: 'http://b2b.tworld.co.kr/cs/counsel/certServiceInfo.bc'
+  COP_SERVICE : 'http://b2b.tworld.co.kr/cs/counsel/certServiceInfo.bc',
+  CONTETNS_YOUTUBE_HELP_URL: 'https://support.google.com/youtube/contact/commerce_contact?hl=ko&cfsi=subs_red_2',
+  MYT_PAYPASS_SET: '/myt/bill/history/micro/password',
+  MYT_PAYPASS_INFO: '',
+  MYT_PAY_MICRO_LIMIT_CHANGE: '/myt/bill/history/micro/limit/change',
+  MYT_PAY_MICRO_LIMIT_DETAIL: '/myt/bill/history/micro/limit',
+  MYT_PAY_CONTENTS_LIMIT_CHANGE: '/myt/bill/history/contents/limit/change',
+  MYT_PAY_CONTENTS_LIMIT_DETAIL: '/myt/bill/history/contents/limit'
 };
 
 Tw.MSG_POSTCODE = {
@@ -595,5 +689,34 @@ Tw.CUSTOMER_EMAIL = {
   DIRECT: '다이렉트샵',
   CHOCO: '초콜렛',
   WIBRO: '휴대폰/와이브로',
-  SELECT_CATEGORY: '문의사항 선택'
+  SELECT_CATEGORY: '문의사항 선택',
+  Q_TYPE01: [
+    { text: '음성통화 불량(HD Voice 포함)' },
+    { text: '영상통화 불량' },
+    { text: '부가서비스 불량' },
+    { text: '데이터(Date) 불량' },
+    { text: '와이브로 품질장애/고장' }
+  ],
+  Q_TYPE02: [
+    { text: '음성발신불량, 음성수신불량 <br>음성발신/수신 모두 불량' },
+    { text: 'SMS발신불량, SMS수신불량 <br>SMS발신/수신 모두불량' },
+    { text: '인터넷접속불량 <br>특정 APP 분량, 기타' }
+  ],
+  Q_TYPE03: [
+    { text: '건물내부(지하층)' },
+    { text: '건물내부(지상층)' },
+    { text: '건물외부' },
+    { text: '위치무관' }
+  ],
+  Q_TYPE04: [
+    { text: '주택, 빌라' },
+    { text: '아파트, 오피스텔' },
+    { text: '사무실, 상가' },
+    { text: '기타' }
+  ],
+  Q_TYPE05: [
+    { text: '사용 중 갑자기' },
+    { text: '며칠 전부터' },
+    { text: '이사/회사 이동 후 부터' }
+  ]
 };

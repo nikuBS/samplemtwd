@@ -37,6 +37,10 @@ Tw.FormatHelper = (function () {
     return value;
   };
 
+  var setDecimalPlace = function(value, point) {
+    return parseFloat(value.toFixed(point));
+  };
+
   var convNumFormat = function (number) {
     if ( number < 1 ) {
       return setDecimalPlace(number, 2);
@@ -151,8 +155,18 @@ Tw.FormatHelper = (function () {
     return cardYm.substr(0, 4) + '/' + cardYm.substr(4, 2);
   };
 
-  var setDecimalPlace = function(value, point) {
-    return parseFloat(value.toFixed(point));
+  /**
+   * YYYYmmdd to YYYY.mm.dd
+   * @param numberDate
+   * @param dateSeparator
+   * @returns {string}
+   */
+  var convertNumberDateToFormat = function(numberDate, dateSeparator) {
+    return [
+        numberDate.substr(0, 4),
+        numberDate.substr(4, 2),
+        numberDate.substr(6, 2)
+    ].join(dateSeparator);
   };
 
   function _getDashedCellPhoneNumber(phoneNumber) {
@@ -205,6 +219,14 @@ Tw.FormatHelper = (function () {
     return str;
   }
 
+  function _getDashedRepresentPhoneNumber(phoneNumber) {
+    var str = '';
+    str += phoneNumber.substring(0, 3);
+    str += '-';
+    str += phoneNumber.substring(4);
+    return str;
+  }
+
   function getFormattedPhoneNumber(phoneNumber) {
     var getMaskingPhoneNumber = function (mpn) {
       var tmpArr = mpn.split('-');
@@ -221,6 +243,8 @@ Tw.FormatHelper = (function () {
       return _getDashedTelephoneNumber(phoneNumber);
     } else if (Tw.ValidationHelper.isCellPhone(phoneNumber)) {
       return _getDashedCellPhoneNumber(phoneNumber);
+    } else if (Tw.ValidationHelper.isRepresentNumber(phoneNumber)) {
+      return _getDashedRepresentPhoneNumber(phoneNumber);
     }
 
     return phoneNumber;
@@ -245,6 +269,7 @@ Tw.FormatHelper = (function () {
     getDashedPhoneNumber: getDashedPhoneNumber,
     convNumFormat: convNumFormat,
     insertColonForTime: insertColonForTime,
-    setDecimalPlace: setDecimalPlace
+    setDecimalPlace: setDecimalPlace,
+    convertNumberDateToFormat: convertNumberDateToFormat
   };
 })();

@@ -16,12 +16,276 @@
 <!--// #skip_navigation -->
 <div id="wrapFdev" class="wrap">
     <!-- #header -->
-    <div id="header" class="header-wrap">
-        <h1>myt.joinService.contractTerminalInfo.twibro</h1>
-    </div>
+    <%- include('../../../../common/views/components/header.component.html', { title: '약정 할인 및 단말 분할상환 정보', svcInfo: svcInfo }); %>
     <!--// #header -->
     <!-- #contents -->
-    <div id="contents" class="container-wrap"></div>
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <!-- CASE : 요금약정할인 -->
+            <div class="cont-box nogaps-top">
+                <h3 class="title-h2 pt14">요금약정할인</h3>
+                <div class="discount-info">
+
+                    <% for(var i=0; i < commDataInfo.feeInfo.length; i++) { %>
+
+                    <strong class="sub-tit"><%=commDataInfo.feeInfo[i].titNm%></strong>
+                    <ul class="inner-list">
+                        <li>
+                            <dl>
+                                <dt>전월 기준 할인 금액 합계<button role="button" class="ico-info" data-target="beforeSalePriceSum"><span class="blind">전월 기준 할인 금액 합계 상세보기</span></button></dt>
+                                <dd><span class="num blue"><%=commDataInfo.feeInfo[i].salePay%></span>원</dd>
+                            </dl>
+                        </li>
+                        <li>
+                            <dl>
+                                <dt>약정기간</dt>
+                                <dd class="graph-area">
+                                    <div class="used-data-info">
+                                        <div class="header-info">
+                                            <div class="left">
+                                                <span class="data"><span class="char red"><%=commDataInfo.feeInfo[i].curDt%></span>일</span>
+                                            </div>
+                                            <div class="right">
+                                                <span class="data"><span class="char"><%=commDataInfo.feeInfo[i].totDt%></span>일</span>
+                                            </div>
+                                        </div>
+                                        <div class="bar-chart-hoz">
+                                            <span class="data-bar red" style="width:<%=commDataInfo.feeInfo[i].perDt%>%"></span>
+                                        </div>
+                                        <div class="sub-info">
+                                            <span class="type"><span class="char"><%=commDataInfo.feeInfo[i].startDt%>~<%=commDataInfo.feeInfo[i].endDt%></span></span>
+                                            <span class="rest">가입중</span>
+                                        </div>
+                                    </div>
+                                </dd>
+                            </dl>
+                        </li>
+                    </ul>
+
+                    <% if ( commDataInfo.feeInfo[i].typeStr == 'fee_type_A' ) {%> <%#요금약정할인24 (730) : NA00003677 | fee_type_A %>
+
+                    <% include ../../components/join/myt.join.contract-terminal.widget.fee-type-a.html %>
+
+                    <% } else if ( commDataInfo.feeInfo[i].typeStr == 'fee_type_B' ) { %> <%#테블릿 약정할인 12 (뉴태블릿약정) : NA00003681 | fee_type_B %>
+
+                    <% include ../../components/join/myt.join.contract-terminal.widget.fee-type-b.html %>
+
+                    <% } else if ( commDataInfo.feeInfo[i].typeStr == 'fee_type_C' ) { %> <%#태블릿약정(구태블릿약정) : tablet 객체로 구분 | fee_type_C %>
+
+                    <% include ../../components/join/myt.join.contract-terminal.widget.fee-type-c.html %>
+
+                    <% } else if ( commDataInfo.feeInfo[i].typeStr == 'fee_noType' ) { %> <%#해단분류에 포함되지않는 경우 | fee_noType %>
+
+                    <% } else { %>
+
+                    <% } %>
+
+
+                    <% } %> <%# for End %>
+
+                </div>
+            </div>
+            <!--// CASE : 요금약정할인 -->
+
+
+            <hr class="cont-sp type1" aria-hidden="true" />
+            <!-- CASE : 단말기 (약정할인) -->
+            <div class="cont-box">
+                <h3 class="title-h2">단말기 (약정할인)</h3>
+                <div class="discount-info">
+
+                    <% for(var i=0; i < commDataInfo.terminalInfo.length; i++) { %>
+
+                    <strong class="sub-tit"><%=commDataInfo.terminalInfo[i].titNm%></strong>
+                    <ul class="inner-list">
+                        <li>
+                            <dl>
+                                <dt>할인지원 혜택</dt>
+                                <dd>
+                                    <button class="text-link"><%=commDataInfo.terminalInfo[i].agreeNm%></button>
+
+                                    <% if ( commDataInfo.terminalInfo[i].typeStr == 'join_type_A' ) {%> <%# 가입 / T기본약정 | join_type_A %>
+
+                                    <button role="button" class="ico-info" data-target="boon_join_type_A"><span class="blind">기본제공 데이터 사용량 상세보기</span></button>
+
+                                    <% } else if ( commDataInfo.terminalInfo[i].typeStr == 'join_type_B' ) { %> <%# 가입 / T지원금약정 | join_type_B %>
+
+                                    <button role="button" class="ico-info" data-target="boon_join_type_B"><span class="blind">기본제공 데이터 사용량 상세보기</span></button>
+
+                                    <% } else if ( commDataInfo.terminalInfo[i].typeStr == 'suc_type_A' ) { %> <%# 승계 / T할부지원 | suc_type_A %>
+
+                                    <button role="button" class="ico-info" data-target="boon_suc_type_A"><span class="blind">기본제공 데이터 사용량 상세보기</span></button>
+
+                                    <% } else if ( commDataInfo.terminalInfo[i].typeStr == 'suc_type_B' ) { %> <%# 승계 / T기본약정 | suc_type_B %>
+
+                                    <button role="button" class="ico-info" data-target="boon_suc_type_B"><span class="blind">기본제공 데이터 사용량 상세보기</span></button>
+
+                                    <% } else if ( commDataInfo.terminalInfo[i].typeStr == 'suc_type_C' ) { %> <%# 승계 / 약정위약금2 | suc_type_C %>
+
+                                    <button role="button" class="ico-info" data-target="boon_suc_type_C"><span class="blind">기본제공 데이터 사용량 상세보기</span></button>
+
+                                    <% } %>
+
+                                </dd>
+                            </dl>
+                        </li>
+                        <li>
+                            <dl>
+                                <dt>약정 시작/종료일</dt>
+                                <dd class="graph-area">
+                                    <div class="used-data-info">
+                                        <div class="header-info">
+                                            <div class="left">
+                                                <span class="data"><span class="char red"><%=commDataInfo.terminalInfo[i].curDt%></span>일</span>
+                                            </div>
+                                            <div class="right">
+                                                <span class="data"><span class="char"><%=commDataInfo.terminalInfo[i].totDt%></span>일</span>
+                                            </div>
+                                        </div>
+                                        <div class="bar-chart-hoz">
+                                            <span class="data-bar red" style="width:<%=commDataInfo.terminalInfo[i].perDt%>%"></span>
+                                        </div>
+                                        <div class="sub-info">
+                                            <span class="type"><span class="char"><%=commDataInfo.terminalInfo[i].startDt%>~<%=commDataInfo.terminalInfo[i].endDt%></span></span>
+                                        </div>
+                                    </div>
+                                </dd>
+                            </dl>
+                        </li>
+                    </ul>
+
+                    <% if ( commDataInfo.terminalInfo[i].typeStr == 'join_type_A' ) {%> <%# 가입 / T기본약정 | join_type_A %>
+
+                    <% include ../../components/join/myt.join.contract-terminal.widget.join-type-a.html %>
+
+                    <% } else if ( commDataInfo.terminalInfo[i].typeStr == 'join_type_B' ) { %> <%# 가입 / T지원금약정 | join_type_B %>
+
+                    <% include ../../components/join/myt.join.contract-terminal.widget.join-type-b.html %>
+
+                    <% } else if ( commDataInfo.terminalInfo[i].typeStr == 'join_type_C' ) { %> <%# 가입 / T약정할부지원 | join_type_C %>
+
+
+                    <% } else if ( commDataInfo.terminalInfo[i].typeStr == 'join_type_D' ) { %> <%# 가입 / 약정위약금2 | join_type_D %>
+
+                    <% include ../../components/join/myt.join.contract-terminal.widget.join-type-d.html %>
+
+                    <% } else if ( commDataInfo.terminalInfo[i].typeStr == 'suc_type_A' ) { %> <%# 승계 / T할부지원 | suc_type_A %>
+
+                    <% include ../../components/join/myt.join.contract-terminal.widget.suc-type-a.html %>
+
+                    <% } else if ( commDataInfo.terminalInfo[i].typeStr == 'suc_type_B' ) { %> <%# 승계 / T기본약정 | suc_type_B %>
+
+                    <% include ../../components/join/myt.join.contract-terminal.widget.suc-type-b.html %>
+
+                    <% } else if ( commDataInfo.terminalInfo[i].typeStr == 'suc_type_C' ) { %> <%# 승계 / 약정위약금2 | suc_type_C %>
+
+                    <% include ../../components/join/myt.join.contract-terminal.widget.suc-type-c.html %>
+
+                    <% } else if ( commDataInfo.terminalInfo[i].typeStr == 'suc_type_D' ) { %> <%# 승계 / T지원금약정 | suc_type_D %>
+
+                    <% } else { %>
+
+                    <% } %>
+
+
+
+                    <% } %> <%# for End %>
+
+
+                </div>
+            </div>
+            <!--// CASE : 단말기 (약정할인) -->
+
+
+
+            <hr class="cont-sp type1" aria-hidden="true" />
+            <!-- CASE : 단말기 분할상환 정보 -->
+            <div class="cont-box">
+                <h3 class="title-h2">단말기 분할상환 정보</h3>
+                <div class="discount-info">
+
+                    <% for(var i=0; i < commDataInfo.repaymentInfo.length; i++) { %>
+
+                    <strong class="sub-tit ff-hn"><%=commDataInfo.repaymentInfo[i].titNm%></strong>
+                    <ul class="inner-list">
+                        <li>
+                            <dl>
+                                <dt>총 분할상환 청구금액</dt>
+                                <dd><span class="num"><%=commDataInfo.repaymentInfo[i].totSubsidy%></span>원</dd>
+                            </dl>
+                        </li>
+                        <li>
+                            <dl>
+                                <dt>잔여 분할상환 청구 금액</dt>
+                                <dd><span class="num"><%=commDataInfo.repaymentInfo[i].agreeClaimPay%></span>원</dd>
+                            </dl>
+                        </li>
+                        <li>
+                            <dl>
+                                <dt>분할상환 기간</dt>
+                                <dd class="graph-area">
+                                    <div class="used-data-info">
+                                        <div class="header-info">
+                                            <div class="left">
+                                                <span class="data"><span class="char red"><%=commDataInfo.repaymentInfo[i].totMt - commDataInfo.repaymentInfo[i].invRmn %></span>개월</span>
+                                            </div>
+                                            <div class="right">
+                                                <span class="data"><span class="char"><%=commDataInfo.repaymentInfo[i].totMt%></span>개월</span>
+                                            </div>
+                                        </div>
+                                        <div class="bar-chart-hoz">
+                                            <span class="data-bar red" style="width:40%"></span>
+                                        </div>
+                                        <div class="sub-info">
+                                            <span class="type"><span class="char"><%=commDataInfo.repaymentInfo[i].totMt%></span>개월(잔여 <span class="char"><%=commDataInfo.repaymentInfo[i].invRmn%></span>개월) </span>
+                                        </div>
+                                    </div>
+                                </dd>
+                            </dl>
+                        </li>
+                    </ul>
+                    <div class="widget">
+                        <div class="widget-box toggle">
+                            <div class="list-top">
+                                <div class="select-right">
+                                    <button class="btn-toggle bt-detail" role="button" aria-pressed="false" title="자세히보기">자세히보기<span class="ico"></span></button>
+                                </div>
+                            </div>
+                            <div class="toggler">
+                                <div class="payment-detail-wrap mt12">
+                                    <div class="payment-detail-box">
+                                        <div class="detail-inner">
+                                            <div class="detail-list type3">
+                                                <ul>
+                                                    <li>
+                                                        <span class="title">모델명</span>
+                                                        <span class="tx-cont"><span class="ff-hn"><%=commDataInfo.repaymentInfo[i].titNm%></span></span>
+                                                    </li>
+                                                    <li>
+                                                        <span class="title">분할상환 시작일</span>
+                                                        <span class="tx-cont"><span class="ff-hn"><%=commDataInfo.repaymentInfo[i].startDt%></span></span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <ul class="contents-notice line-none">
+                                                <li class="noti-type3">분할상환 시작일이 2012년 1월 이후인 경우 할부원금이 일할 청구되어 할부 개월 수보다 청구횟수가 1회 더 많아질 수 있습니다.</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <% } %>
+
+                </div>
+            </div>
+            <!--// CASE : 단말기 분할상환 정보 -->
+
+        </div>
+    </div>
     <!--// #contents -->
     <% include ../../../../../common/views/components/footer.component.html %>
 </div>
@@ -29,9 +293,11 @@
 
 <script>
   $(document).ready(function () {
-    new Tw.MytJoinPayClaimTwibro($('#wrapFdev'), {
+    new Tw.MytJoinContractTerminalPhone($('#wrapFdev'), {
       reqQuery: <%-JSON.stringify(reqQuery) %>,
-      svcInfo: <%-JSON.stringify(svcInfo) %>
+      svcInfo: <%-JSON.stringify(svcInfo) %>,
+      commDataInfo: <%-JSON.stringify(commDataInfo) %>,
+      resDataInfo: <%-JSON.stringify(resDataInfo) %>
   });
   });
 </script>

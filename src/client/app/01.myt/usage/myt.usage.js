@@ -73,7 +73,7 @@ Tw.MytUsage.prototype = {
     }
 
     if ( result.bandDataSharing === 'Y' ) {
-      this.$container.find('.fee-band-data-sharing').show();
+      this.$container.find('.fe-band-data-sharing').show();
     }
 
     this._makeBorderStyle(false);

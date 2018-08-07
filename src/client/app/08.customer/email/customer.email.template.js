@@ -18,14 +18,13 @@ Tw.CustomerEmailTemplate.prototype = {
   state: {
     tabIndex: 0,
     serviceType: 'CELL',
-    serviceCategory: 0,
+    serviceCategory: '',
     callCategory: 0
   },
 
   _init: function () {
     this._apiService.request(Tw.API_CMD.BFF_08_0010, {}).done($.proxy(this._setServiceCategory, this));
     this.state.tabIndex = $('[role=tablist]').find('[aria-selected=true]').index();
-    // this.$wrap_service.html(this.tpl_service_cell());
   },
 
   _cachedElement: function () {
@@ -36,7 +35,6 @@ Tw.CustomerEmailTemplate.prototype = {
     this.tpl_service_direct_type1 = Handlebars.compile($('#tpl_service_direct_type1').text());
     this.tpl_call_wibro = Handlebars.compile($('#tpl_call_wibro').text());
     this.tpl_call_internet = Handlebars.compile($('#tpl_call_internet').text());
-
   },
 
   _bindEvent: function () {
@@ -48,6 +46,18 @@ Tw.CustomerEmailTemplate.prototype = {
     this.$container.on('click', '.fe-btn-select-service', $.proxy(this._showServicePopup, this));
     this.$container.on('click', '.fe-btn-select-call', $.proxy(this._showCallPopup, this));
     this.$container.on('click', '.fe-email-cancel', $.proxy(this._onCancelEmail, this));
+    this.$container.on('input', '.fe-inquiry-title', $.proxy(this._onCountTitle, this));
+    this.$container.on('input', '.fe-inquiry-content', $.proxy(this._onCountContent, this));
+  },
+
+  _onCountTitle: function (e) {
+    var nSize = $(e.currentTarget).val().length;
+    $(e.currentTarget).parent().find('.byte-current').text(nSize);
+  },
+
+  _onCountContent: function (e) {
+    var nSize = $(e.currentTarget).val().length;
+    $(e.currentTarget).parent().find('.byte-current').text(nSize);
   },
 
   _changeTab: function () {
@@ -108,8 +118,12 @@ Tw.CustomerEmailTemplate.prototype = {
   _selectService: function (e) {
     var elTarget = $(e.currentTarget);
     var serviceTypeName = elTarget.text();
-    this._setState({ serviceType: elTarget.data('service').toString() });
+    this._setState({
+      serviceType: elTarget.data('service').toString(),
+      serviceCategory: ''
+    });
 
+    $('.fe-btn-select-service-category').text(Tw.CUSTOMER_EMAIL.SELECT_CATEGORY);
     $('.fe-btn-select-service').text(serviceTypeName);
     this._popupService.close();
   },

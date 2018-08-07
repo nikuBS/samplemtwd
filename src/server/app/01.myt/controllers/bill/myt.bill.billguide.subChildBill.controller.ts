@@ -11,7 +11,6 @@ import StringHelper from '../../../../utils/string.helper';
 import moment = require('moment');
 import DateHelper from '../../../../utils/date.helper';
 import FormatHelper from '../../../../utils/format.helper';
-import * as _ from 'lodash';
 import { fromPromise } from 'rxjs/observable/fromPromise';
 
 class MyTBillBillguideSubChildBill extends TwViewController {

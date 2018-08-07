@@ -15,6 +15,346 @@
 <!--// #skip_navigation -->
 <div class="wrap">
 
+    <%- include('../../../../../common/views/components/header.component.html', { title: '콘텐츠 이용료 이용내역', svcInfo:
+    svcInfo }); %>
+
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <div class="cont-box">
+                <div class="usage-top">
+                    <span class="date"><%=startMDD%> ~ <%=endMDD%></span>
+                    <button class="bt-link-tx underline">사용금액/잔여한도 조회하기</button>
+                    <div id="fe-current-month-usage" class="none">
+                        <ul class="list">
+                            <li>
+                                <span class="title">사용금액</span>
+                                <span class="tx-cont"><span id="fe-micropay-usage" class="tx-bold ff-hn"></span> 원</span>
+                            </li>
+                            <li>
+                                <span class="title">잔여한도</span>
+                                <span class="tx-cont"><span id="fe-micropay-rest-limit" class="ff-hn"></span> 원</span>
+                            </li>
+                        </ul>
+                        <div class="contents-btn">
+                            <ul class="bt-slice item-two">
+                                <li class="bt-white1">
+                                    <button>한도변경</button>
+                                </li>
+                                <li class="bt-white1">
+                                    <button>자세히</button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="cont-sp type1" aria-hidden="true"/>
+
+            <div class="cont-box nogaps">
+                <!-- .component -->
+                <div class="component">
+                    <div class="component-box tabs">
+                        <div class="tab-area type1"><!-- 타입별 탭형태 변환 -->
+                            <div class="tab-linker">
+                                <ul role="tablist">
+                                    <li role="tab" aria-selected="false" aria-controls="tab1-tab" id="tab1"><a
+                                            href="#usage"  class="fe-replace-history">이용내역</a></li>
+                                    <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2"><a
+                                            href="#monthly"  class="fe-replace-history">월별내역</a></li>
+                                </ul>
+                            </div>
+                            <div class="tab-contents">
+                                <ul>
+                                    <li role="tabpanel" id="tab1-tab" aria-labelledby="tab1">
+                                        <div class="use-inner">
+                                            <div class="cont-box nogaps-btm">
+                                                <div class="use-inner">
+                                                    <div class="contents-info-list">
+                                                        <p id="fe-usage-total-desc" class="ti-desc none"><strong><span class="num"></span>개</strong>(<em></em>원) 이용 내역이<br />있습니다.</p>
+
+                                                        <!-- .widget -->
+                                                        <div class="widget">
+                                                            <div class="widget-box toggle">
+                                                                <div class="list-top">
+                                                                    <div class="select-left">
+                                                                        <button class="btn-toggle bt-detail" role="button" aria-pressed="false" title="상세검색 영역">2018년 7월<span class="ico"></span></button>
+                                                                    </div>
+                                                                    <div class="select-right">
+                                                                        <button class="bt-dropdown" title="셀렉트 선택">결제종류 전체<span class="ico"></span></button>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="toggler">
+                                                                    <div class="history-inquiry">
+                                                                        <div class="radio-wrap">
+                                                                            <div class="widget">
+                                                                                <div class="widget-box radio">
+                                                                                    <ul class="select-list" role="radiogroup">
+                                                                                        <li class="radiobox type01 checked" role="radio" aria-checked="true">
+                                                                                            <input type="radio" name="radio1" value="" title="월별 선택" checked />월별
+                                                                                        </li>
+                                                                                        <li class="radiobox type01" role="radio" aria-checked="false">
+                                                                                            <input type="radio" name="radio1" value="" title="날짜별 선택" />날짜별</li>
+                                                                                    </ul>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <button class="bt-dropdown big" title="이용내역 기간 선택" aria-haspopup="true">2018년 7월<span class="ico"></span></button>
+                                                                        <div class="widget none">
+                                                                            <div class="widget-box tube">
+                                                                                <ul class="tube-list three" role="radiogroup">
+                                                                                    <li role="radio" aria-checked="false" class="top-left"><input type="radio" name="selectdate1" title="1주일 선택">1주일</li>
+                                                                                    <li role="radio" aria-checked="false" class=""><input type="radio" name="selectdate1" title="1개월 선택">1개월</li>
+                                                                                    <li role="radio" aria-checked="false" class="top-right"><input type="radio" name="selectdate1" title="3개월 선택">3개월</li>
+                                                                                    <li role="radio" aria-checked="false" class="bottom-left focus"><input type="radio" name="selectdate1" title="6개월 선택">6개월</li>
+                                                                                    <li role="radio" aria-checked="false"><input type="radio" name="selectdate1" title="1년 선택">1년</li>
+                                                                                    <li role="radio" aria-checked="true" class="checked bottom-right"><input type="radio" name="selectdate1" title="직접설정 선택" checked="checked">직접설정</li>
+                                                                                </ul>
+                                                                            </div>
+                                                                        </div>
+                                                                        <span class="inputbox date-selcet none">
+                                                                    <button class="bt-dropdown big" title="시작날짜 선택" aria-haspopup="true">2018.05.01<span class="ico"></span></button>
+                                                                    <span class="bar">–</span>
+                                                                    <button class="bt-dropdown big" title="마지막날짜 선택" aria-haspopup="true">2018.05.10<span class="ico"></span></button>
+                                                                </span>
+
+                                                                        <div class="contents-btn mb40">
+                                                                            <ul class="bt-slice">
+                                                                                <li class="bt-blue1">
+                                                                                    <button>조회</button>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- //.widget -->
+
+                                                        <div class="history-list" id="fe-list-wrapper">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li role="tabpanel" id="tab2-tab" aria-labelledby="tab2">
+                                        <div class="cont-box">
+                                            <div class="show-data-box">
+                                                <!-- .widget -->
+                                                <div class="widget mb12">
+                                                    <div class="widget-box switch2">
+                                                        <div class="btn-switch type2">
+                                                            <ul>
+                                                                <li role="radio" aria-checked="true" class="checked">
+                                                                    <input name="gbmb" type="radio" title="표 선택"
+                                                                           checked="">표
+                                                                </li>
+                                                                <li role="radio" aria-checked="false"><input name="gbmb"
+                                                                                                             type="radio"
+                                                                                                             title="그래프 선택">그래프
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <div class="avarage-fee">평균 사용요금 <span class="ff-strong">26,300</span> 원
+                                                    </div>
+                                                </div>
+                                                <!-- //.widget -->
+                                            </div>
+                                            <div class="history-list">
+                                                <ul class="basic-type">
+                                                    <li>
+                                                            <span class="in-item">
+                                                                <span class="name"><span class="blind">월</span>7월</span>
+                                                            </span>
+                                                        <span class="in-item"><span class="blind">결제금액</span><span
+                                                                class="ff-hn">26,300</span>원</span>
+                                                    </li>
+                                                    <li>
+                                                            <span class="in-item">
+                                                                <span class="name"><span class="blind">월</span>6월</span>
+                                                            </span>
+                                                        <span class="in-item"><span class="blind">결제금액</span><span
+                                                                class="ff-hn">10,300</span>원</span>
+                                                    </li>
+                                                    <li>
+                                                            <span class="in-item">
+                                                                <span class="name"><span class="blind">월</span>5월</span>
+                                                            </span>
+                                                        <span class="in-item"><span class="blind">결제금액</span><span
+                                                                class="ff-hn">33,490</span>원</span>
+                                                    </li>
+                                                    <li>
+                                                            <span class="in-item">
+                                                                <span class="name"><span class="blind">월</span>4월</span>
+                                                            </span>
+                                                        <span class="in-item"><span class="blind">결제금액</span><span
+                                                                class="ff-hn">1,293</span>원</span>
+                                                    </li>
+                                                    <li>
+                                                            <span class="in-item">
+                                                                <span class="name"><span class="blind">월</span>3월</span>
+                                                            </span>
+                                                        <span class="in-item"><span class="blind">결제금액</span><span
+                                                                class="ff-hn">159,200</span>원</span>
+                                                    </li>
+                                                    <li>
+                                                            <span class="in-item">
+                                                                <span class="name"><span class="blind">월</span>2월</span>
+                                                            </span>
+                                                        <span class="in-item"><span class="blind">결제금액</span><span
+                                                                class="ff-hn">0</span>원</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <!-- 그래프로 보기 -->
+                                            <div class="history-list none">
+                                                <div class="mark">
+                                                    <span class="mark-name"><span
+                                                            class="circle c-default"></span>사용금액</span>
+                                                    <span class="mark-name"><span
+                                                            class="circle c-orange"></span>가장 많음</span>
+                                                </div>
+                                                <ul class="monthly-bar-chart">
+                                                    <li class="bar-box">
+                                                        <div class="monthly-data">
+                                                                <span class="in-item">
+                                                                    <span class="name"><span
+                                                                            class="blind">월</span>7월</span>
+                                                                </span>
+                                                            <span class="in-item"><span class="blind">결제금액</span><span
+                                                                    class="ff-hn vbl">26,300</span>원</span>
+                                                        </div>
+                                                        <div class="bar-chart-hoz">
+                                                            <span class="data-bar gray" style="width:60%"></span>
+                                                        </div>
+                                                    </li>
+                                                    <li class="bar-box">
+                                                        <div class="monthly-data">
+                                                                <span class="in-item">
+                                                                    <span class="name"><span
+                                                                            class="blind">월</span>6월</span>
+                                                                </span>
+                                                            <span class="in-item"><span class="blind">결제금액</span><span
+                                                                    class="ff-hn vbl">10,000</span>원</span>
+                                                        </div>
+                                                        <div class="bar-chart-hoz">
+                                                            <span class="data-bar gray" style="width:30%"></span>
+                                                        </div>
+                                                    </li>
+                                                    <li class="bar-box">
+                                                        <div class="monthly-data">
+                                                                <span class="in-item">
+                                                                    <span class="name"><span
+                                                                            class="blind">월</span>5월</span>
+                                                                </span>
+                                                            <span class="in-item"><span class="blind">결제금액</span><span
+                                                                    class="ff-hn vbl">33,490</span>원</span>
+                                                        </div>
+                                                        <div class="bar-chart-hoz">
+                                                            <span class="data-bar gray" style="width:70%"></span>
+                                                        </div>
+                                                    </li>
+                                                    <li class="bar-box">
+                                                        <div class="monthly-data">
+                                                                <span class="in-item">
+                                                                    <span class="name"><span
+                                                                            class="blind">월</span>4월</span>
+                                                                </span>
+                                                            <span class="in-item"><span class="blind">결제금액</span><span
+                                                                    class="ff-hn vbl">1,293</span>원</span>
+                                                        </div>
+                                                        <div class="bar-chart-hoz">
+                                                            <span class="data-bar gray" style="width:20%"></span>
+                                                        </div>
+                                                    </li>
+                                                    <li class="bar-box">
+                                                        <div class="monthly-data">
+                                                                <span class="in-item">
+                                                                    <span class="name"><span
+                                                                            class="blind">월</span>3월</span>
+                                                                </span>
+                                                            <span class="in-item"><span class="blind">결제금액</span><span
+                                                                    class="ff-hn vbl">159,200</span>원</span>
+                                                        </div>
+                                                        <div class="bar-chart-hoz">
+                                                            <span class="data-bar orange-dazzle"
+                                                                  style="width:100%"></span>
+                                                        </div>
+                                                    </li>
+                                                    <li class="bar-box">
+                                                        <div class="monthly-data">
+                                                                <span class="in-item">
+                                                                    <span class="name"><span
+                                                                            class="blind">월</span>3월</span>
+                                                                </span>
+                                                            <span class="in-item"><span class="blind">결제금액</span><span
+                                                                    class="ff-hn vbl">0</span>원</span>
+                                                        </div>
+                                                        <div class="bar-chart-hoz">
+                                                            <span class="data-bar"></span>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <!-- // 그래프로 보기 -->
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--// .component -->
+            </div>
+
+            <hr class="cont-sp type1" aria-hidden="true"/>
+
+            <div class="cont-box nogaps">
+                <div class="bt-contents-guide">
+                    <button role="button" class="bt-guide">콘텐츠 이용료 고객센터 안내</button>
+                </div>
+            </div>
+
+            <hr class="cont-sp type1" aria-hidden="true"/>
+
+            <div class="cont-box nogaps-hoz">
+                <div class="box-confirm">
+                    <!-- .widget -->
+                    <div class="widget">
+                        <div class="widget-box accordion">
+                            <h3 class="tit-a">이용안내</h3>
+                            <div class="acco-cover toggle"><!-- toggle : 한개만 열기 -->
+                                <div class="bt-whole">
+                                    <button role="button" aria-pressed="false"><span class="blind">내용 열기</span></button>
+                                </div>
+                                <div class="acco-style btn-hold">
+                                    <ul class="acco-list">
+                                        <li class="acco-box">
+                                            <div class="acco-tit"><span class="bullet">1.</span> 고객정보 보호를 위해 서비스 명의 일부가
+                                                *로 표시되며, *로 가려진 정보는 사용처에서 확인 하실 수 있습니다.
+                                            </div>
+                                        </li>
+                                        <li class="acco-box">
+                                            <div class="acco-tit"><span class="bullet">2.</span> . 구글 플레이스토어, 원스토어 결제는
+                                                콘텐츠이용료로 과금되므로, 소액결제 이용내역에는 포함되지 않습니다.
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--// .widget -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--// #contents -->
+
 
     <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
 </div>
@@ -22,7 +362,63 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.MyTBillHistoryContents($(document));
+    new Tw.MyTBillHistoryContents($(document), "<%= svcInfo.svcMgmtNum %>");
   });
+</script>
+<script id="list-wrapper" type="text/x-handlebars-template">
+    <ul class="list-inner">
+        {{> list}}
+    </ul>
+    <div class="bt-more-wrap">
+        <button role="button" class="bt-more" title="">더보기<span>(<em></em>)</span></button>
+    </div>
+</script>
+<script id="list-default" type="text/x-handlebars-template">
+    {{#each listElement}}
+    <li>
+        <button role="button" title="콘텐츠 이용료 이용내역 페이지로 이동">
+                                                                            <span class="bt-inner col2">
+                                                                                <span class="his-item">
+                                                                                    <span class="name"><span
+                                                                                            class="blind">서비스명</span>카카**(****)</span>
+                                                                                    <span class="date-gray">2018.05.20</span>
+                                                                                </span>
+                                                                                <span class="his-item"><span
+                                                                                        class="blind">결제금액</span><em>500,000</em>원</span>
+                                                                            </span>
+        </button>
+    </li>
+    <li>
+        <button role="button" title="콘텐츠 이용료 이용내역 페이지로 이동">
+                                                                            <span class="bt-inner col2">
+                                                                                <span class="his-item">
+                                                                                    <span class="name"><span
+                                                                                            class="blind">서비스명</span>카카**(****)</span>
+                                                                                    <span class="date-gray">2018.05.20</span>
+                                                                                </span>
+                                                                                <span class="his-item"><span
+                                                                                        class="blind">결제금액</span><em>500,000</em>원</span>
+                                                                            </span>
+        </button>
+    </li>
+    <li>
+        <button role="button" title="콘텐츠 이용료 이용내역 페이지로 이동">
+                                                                            <span class="bt-inner col2">
+                                                                                <span class="his-item">
+                                                                                    <span class="name"><span
+                                                                                            class="blind">서비스명</span>카카**(****)</span>
+                                                                                    <span class="date-gray">2018.05.20</span>
+                                                                                </span>
+                                                                                <span class="his-item"><span
+                                                                                        class="blind">결제금액</span><em>500,000</em>원</span>
+                                                                            </span>
+        </button>
+    </li>
+    {{/each}}
+</script>
+<script id="list-empty" type="text/x-handlebars-template">
+    <div class="no-data">
+        <span>이용 내역이 없습니다.</span>
+    </div>
 </script>
 <% include ../../components/end.component.html %>

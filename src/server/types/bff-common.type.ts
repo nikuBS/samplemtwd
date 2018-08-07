@@ -133,6 +133,11 @@ export enum PREPAY_TITLE {
   AUTO_PREPAY = '자동 선결제 신청'
 }
 
+export enum MYT_PAY_HISTORY_TITL {
+  MICRO = '소액결제 이용내역',
+  CONTENTS = '콘텐츠 이용료 이용내역'
+}
+
 export const BILL_GUIDE_TYPE = {
   'TWORLD': 'P',
   'BILL_LETTER': 'H',
