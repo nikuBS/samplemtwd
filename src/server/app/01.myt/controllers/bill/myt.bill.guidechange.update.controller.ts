@@ -10,7 +10,7 @@ import {
   BILL_GUIDE_TYPE,
   WIRE_BILL_GUIDE_TYPE,
   BILL_GUIDE_TYPE_WITH_WIRE
-} from '../../../../types/bff-common.type';
+} from '../../../../types/bff.type';
 import { API_CMD } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 

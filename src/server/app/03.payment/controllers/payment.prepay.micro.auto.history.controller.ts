@@ -8,8 +8,8 @@ import TwViewController from '../../../common/controllers/tw.view.controller';
 import { API_CMD, API_CODE } from '../../../types/api-command.type';
 import FormatHelper from '../../../utils/format.helper';
 import DateHelper from '../../../utils/date.helper';
-import {PREPAY_TITLE, REQUEST_TYPE} from '../../../types/bff-common.type';
-import {Observable} from 'rxjs/Observable';
+import { PREPAY_TITLE, REQUEST_TYPE } from '../../../types/bff.type';
+import { Observable } from 'rxjs/Observable';
 
 class PaymentPrepayMicroAutoHistoryController extends TwViewController {
   constructor() {

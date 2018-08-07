@@ -9,7 +9,7 @@ import { Request, Response, NextFunction } from 'express';
 import { API_CMD, API_CODE, API_GIFT_ERROR } from '../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 import FormatHelper from '../../../utils/format.helper';
-import { UNIT, UNIT_E } from '../../../types/bff-common.type';
+import { UNIT, UNIT_E } from '../../../types/bff.type';
 import DateHelper from '../../../utils/date.helper';
 import 'rxjs/add/observable/combineLatest';
 import 'rxjs/add/operator/map';

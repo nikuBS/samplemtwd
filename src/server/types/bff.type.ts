@@ -1,15 +1,16 @@
-export const CHANNEL_TYPE = {
-  MOBILE_APP: 'mobile-app',
-  MOBILE_WEB: 'mobile-web'
-};
-
-export const COOKIE_KEY = {
-  DEVICE: 'TWM_DEVICE',
-  CHANNEL: 'TWM_CHANNEL',
-  TWM_LOGIN: 'TWM_LOGIN',
-  TWM: 'TWM',
-  SESSION: 'SESSION'
-};
+export enum SVC_GR {
+  A = 'A',
+  B = 'Y',
+  C = 'R',
+  D = 'D',
+  E = 'E',
+  P = 'P',
+  W = 'W',
+  S1 = 'I',
+  S2 = 'T',
+  S3 = 'U',
+  O = 'O'
+}
 
 export const SVC_CD = {
   C: '휴대폰',

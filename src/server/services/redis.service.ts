@@ -2,7 +2,7 @@ import session from 'express-session';
 import connect from 'connect-redis';
 import redis from 'redis';
 import EnvHelper from '../utils/env.helper';
-import { COOKIE_KEY } from '../types/bff-common.type';
+import { COOKIE_KEY } from '../types/common.type';
 
 class RedisService {
   private envRedis = EnvHelper.getEnvironment('REDIS');
