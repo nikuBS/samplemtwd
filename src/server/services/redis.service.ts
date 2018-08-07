@@ -14,7 +14,6 @@ class RedisService {
   private client;
 
   constructor() {
-    this.client = redis.createClient(this.envRedis);
   }
 
   public middleware = session({
@@ -31,9 +30,11 @@ class RedisService {
   }
 
   public getData(key): Observable<any> {
+    this.client = redis.createClient(this.envRedis);
     return Observable.create((observer) => {
       this.client.get(key, (err, reply) => {
         const result = JSON.parse(reply);
+        this.client.end();
         observer.next(result);
         observer.complete();
       });
