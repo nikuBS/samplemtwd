@@ -17,8 +17,9 @@ class PaymentPrepayContentsController extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    this.apiService.request(API_CMD.BFF_07_0080, {}).subscribe((resp) => {
+    this.apiService.request(API_CMD.BFF_07_0080, { pageNo: 1, listSize: 20 }).subscribe((resp) => {
       if (resp.code === API_CODE.CODE_00) {
+        console.log(resp);
         res.render('payment.prepay.contents.html', {
           prepay: this.parseData(resp.result),
           svcInfo: svcInfo,

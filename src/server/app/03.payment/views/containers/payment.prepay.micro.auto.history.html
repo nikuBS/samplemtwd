@@ -27,13 +27,13 @@
                     <ul class="select-list">
                         <li>
                             <div class="pay-maininfo">
-                                <span class="service-sort">신한카드<br />123456******</span>
+                                <span class="service-sort"><%= autoCardInfo.cardCdNm %><br /><%= autoCardInfo.cardNum %>******</span>
                             </div>
                             <dl class="pay-detail type2">
                                 <dt>선결제 금액</dt>
-                                <dd><strong>50,000</strong> <span class="unit">원</span></dd>
+                                <dd><strong><%= autoCardInfo.autoChargeAmount %></strong> <span class="unit">원</span></dd>
                                 <dt>기준금액</dt>
-                                <dd><strong>50,000</strong> <span class="unit">원</span></dd>
+                                <dd><strong><%= autoCardInfo.autoChargeStandardAmount %></strong> <span class="unit">원</span></dd>
                             </dl>
                         </li>
                     </ul>

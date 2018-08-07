@@ -1,41 +1,40 @@
 /**
- * FileName: payment.prepay.micro.pay.controller.ts
+ * FileName: payment.prepay.contents.auto.controller.ts
  * Author: 공자윤 (jayoon.kong@sk.com)
- * Date: 2018.08.06
+ * Date: 2018.08.07
  */
 import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../../common/controllers/tw.view.controller';
 import { API_CMD, API_CODE } from '../../../types/api-command.type';
 import FormatHelper from '../../../utils/format.helper';
 import { PREPAY_TITLE } from '../../../types/bff-common.type';
-import { Observable } from 'rxjs/Observable';
+import {Observable} from 'rxjs/Observable';
 
-class PaymentPrepayMicroPayController extends TwViewController {
+class PaymentPrepayContentsAutoController extends TwViewController {
   constructor() {
     super();
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     Observable.combineLatest(
-      this.getPrepayInfo({ gubun: 'Request', requestCnt: 0 }),
-      this.getPrepayInfo({ gubun: 'Done', requestCnt: 1 }),
+      this.getAutoPrepayInfo(),
       this.getAutoCardInfo()
-    ).subscribe(([{}, prepayInfo, autoCardInfo]) => {
-      if (prepayInfo.code === API_CODE.CODE_00) {
-        res.render('payment.prepay.micro.pay.html', {
-          prepayInfo: this.parseData(prepayInfo.result),
+    ).subscribe(([ autoPrepayInfo, autoCardInfo ]) => {
+      if (autoPrepayInfo.code === API_CODE.CODE_00) {
+        res.render('payment.prepay.contents.auto.html', {
+          autoPrepayInfo: this.parseData(autoPrepayInfo.result),
           autoCardInfo: autoCardInfo,
-          title: PREPAY_TITLE.MICRO,
+          title: PREPAY_TITLE.CONTENTS,
           svcInfo: svcInfo
         });
       } else {
-        res.render('payment.prepay.error.html', { err: prepayInfo, svcInfo: svcInfo, title: PREPAY_TITLE.PREPAY });
+        res.render('payment.prepay.error.html', { err: autoPrepayInfo, svcInfo: svcInfo, title: PREPAY_TITLE.AUTO_PREPAY });
       }
     });
   }
 
-  private getPrepayInfo(param: any): Observable<any> {
-    return this.apiService.request(API_CMD.BFF_07_0073, param).map((res) => {
+  private getAutoPrepayInfo(): Observable<any> {
+    return this.apiService.request(API_CMD.BFF_07_0085, {}).map((res) => {
       return res;
     });
   }
@@ -54,11 +53,12 @@ class PaymentPrepayMicroPayController extends TwViewController {
 
   private parseData(result: any): any {
     if (!FormatHelper.isEmpty(result)) {
-      result.possibleAmount = FormatHelper.addComma(result.tmthChrgPsblAmt);
+      result.comboStandardAmount = result.cmbAutoChrgStrdAmt / 10000;
+      result.comboChargeAmount = result.cmbAutoChrgAmt / 10000;
     }
     result.code = API_CODE.CODE_00;
     return result;
   }
 }
 
-export default PaymentPrepayMicroPayController;
+export default PaymentPrepayContentsAutoController;

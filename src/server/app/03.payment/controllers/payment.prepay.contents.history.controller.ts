@@ -7,6 +7,8 @@ import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../../common/controllers/tw.view.controller';
 import { API_CMD, API_CODE } from '../../../types/api-command.type';
 import FormatHelper from '../../../utils/format.helper';
+import DateHelper from '../../../utils/date.helper';
+import {PREPAY_TITLE} from '../../../types/bff-common.type';
 
 class PaymentPrepayContentsHistoryController extends TwViewController {
   constructor() {
@@ -15,9 +17,10 @@ class PaymentPrepayContentsHistoryController extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     this.apiService.request(API_CMD.BFF_07_0078, {}).subscribe((resp) => {
-      res.render('payment.prepay.micro.history.html', {
+      res.render('payment.prepay.contents.history.html', {
         useContentsPrepayRecord: this.getResult(resp),
-        svcInfo: svcInfo
+        svcInfo: svcInfo,
+        title: PREPAY_TITLE.CONTENTS
       });
     });
   }
@@ -32,6 +35,10 @@ class PaymentPrepayContentsHistoryController extends TwViewController {
   private parseData(record: any): any {
     if (!FormatHelper.isEmpty(record)) {
       record.map((data) => {
+        data.date = DateHelper.getShortDateNoDot(data.opDt);
+        data.time = data.payOpTm.substr(0, 2) + ':'
+          + data.payOpTm.substr(2, 2) + ':'
+          + data.payOpTm.substr(4, 2);
         data.amount = FormatHelper.addComma(data.chrgAmt);
       });
     }
