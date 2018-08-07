@@ -5,12 +5,11 @@ import { API_CMD, API_CODE, API_LOGIN_ERROR, API_SVC_PWD_ERROR } from '../../typ
 import LoggerService from '../../services/logger.service';
 import { URL } from '../../types/url.type';
 import FormatHelper from '../../utils/format.helper';
-import { CHANNEL_TYPE, COOKIE_KEY } from '../../types/common.type';
+import { CHANNEL_TYPE, COOKIE_KEY, LOGIN_TYPE } from '../../types/common.type';
 import BrowserHelper from '../../utils/browser.helper';
 import { Observable } from 'rxjs/Observable';
 import RedisService from '../../services/redis.service';
 import { REDIS_URL_META } from '../../types/common.type';
-import { Format } from '../../../../node_modules/winston/scratch/1280/node_modules/logform/index';
 
 
 abstract class TwViewController {
@@ -18,6 +17,7 @@ abstract class TwViewController {
   private _loginService: LoginService;
   private _logger: LoggerService;
   private _redisService: RedisService;
+  private _type: string = '';
 
   constructor() {
     this._apiService = new ApiService();
@@ -44,6 +44,7 @@ abstract class TwViewController {
     const path = req.baseUrl + (req.path !== '/' ? req.path : '');
     const tokenId = req.query.id_token;
     const userId = req.query.userId;
+    this._type = req.query.type;
 
     this._loginService.setCurrentReq(req, res);
     this.setChannel(req, res).subscribe((resp) => {
@@ -135,8 +136,15 @@ abstract class TwViewController {
               urlAuth
             });
             this.render(req, res, next, params);
-          } else {
-            res.redirect('/auth/error/no-auth');
+          } else if (this._type === 'dev') {
+            this.render(req, res, next, svcInfo);
+          }else {
+            const loginType = svcInfo.loginType;
+            if ( loginType === LOGIN_TYPE.EASY ) {
+              res.redirect('/auth/login/easy-fail');
+            } else {
+              res.redirect('/auth/error/no-auth');
+            }
           }
         } else {
           if ( urlMeta.auth.loginYn === 'Y' ) {

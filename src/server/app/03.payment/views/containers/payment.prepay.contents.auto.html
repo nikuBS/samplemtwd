@@ -19,7 +19,7 @@
         <% include ../components/prepay/payment.prepay.auto.component.html %>
     </div>
     <div id="complete" class="container-wrap" style="display:none;">
-        <% include ../components/prepay/payment.prepay.auto.complete.component.html %>
+        <%- include('../components/prepay/payment.prepay.auto.complete.component.html', { type: 'contents' }); %>
     </div>
     <!--// #contents -->
     <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
