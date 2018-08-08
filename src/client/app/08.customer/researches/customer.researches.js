@@ -102,3 +102,18 @@ Tw.CustomerResearches.prototype = {
     }
   }
 };
+
+var goLink = function (url) {
+  if (!url.includes('http')) {
+    url = 'http://' + url;
+  }
+
+  if (Tw.BrowserHelper.isApp()) {
+    this._nativeService.send(Tw.NTV_CMD.OPEN_URL, {
+      type: Tw.NTV_BROWSER.EXTERNAL,
+      href: url
+    });
+  } else {
+    window.open(url);
+  }
+}
