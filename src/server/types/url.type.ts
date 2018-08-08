@@ -61,8 +61,8 @@ export const URL = {
   '/recharge/gift/history': { login: true, id: '', title: '' },
   '/recharge/cookiz': { login: true, id: 'DA_04_01', title: '' }, // 팅/쿠키즈/안심음성 충전하기
   '/recharge/cookiz/history': { login: true, id: 'DA_04_04_01', title: '' }, // 팅/쿠키즈/안심음성 내역
-  '/recharge/limit': { login: true, id: 'DA_05_01', title: '' }, // 데이터한도요금 충전
-  '/recharge/limit/history': { login: true, id: 'DA_05_04_01', title: '' }, // 데이터한도요금 충전내역
+  '/recharge/limit': { login: true, id: 'DA_05_01', title: '데이터 한도 요금 충전' }, // 데이터한도요금 충전
+  '/recharge/limit/history': { login: true, id: 'DA_05_04_01', title: '데이터 한도 요금 충전 내역' }, // 데이터한도요금 충전내역
   '/recharge/ting': { login: true, id: 'DA_03_01', title: '' }, // 팅 선물하기
   '/recharge/ting/history': { login: true, id: 'DA_03_03_01', title: '' }, // 팅 선물하기 내역
   // payment
@@ -102,14 +102,14 @@ export const URL = {
   '/customer/prevent-damage/latest-warning/view': { login: false, id: 'CI_07_08', title: '' },  // 최신 이용자 피해예방 주의보 - 상세
   '/customer/prevent-damage/useful-service': { login: false, id: 'CI_07_09', title: '' },  // 유용한 부가서비스
   '/customer/prevent-damage/relate-site': { login: false, id: 'CI_07_10', title: '' }, // 이용자 피해예방 관련 사이트
-  '/customer/helpline': { login: true, id: 'CI_05_01', title: '' }, // 전화상담예약
+  '/customer/helpline': { login: true, id: 'CI_05_01', title: '전화상담 예약' }, // 전화상담예약
   '/customer/shop/detail': { login: false, id: 'CI_02_04', title: '' }, // 매장 및 AS센터 > 매장정보
   '/customer/shop/near': { login: false, id: 'CI_02_05', title: '' }, // 매장 및 AS센터 > 내 위치와 가까운 매장 검색
   '/customer/shop/repair': { login: false, id: 'CI_03_01', title: '' }, // 매장 및 AS센터 > 지역 별 AS센터
   '/customer/shop/repair-manufacturer': { login: false, id: 'CI_03_02', title: '' }, // 매장 및 AS센터 > 제조사 별 AS센터
   '/customer/shop/search': { login: false, id: 'CI_02_01', title: '' }, // 매장 및 AS센터 > 지점/대리점 찾기
-  '/customer/researches': { login: true, id: 'CI_09_02', title: '' }, // 설문조사 리스트
-  '/customer/result': { login: false, id: 'CI_09_04', title: '' }, // 설문조사 결과
+  '/customer/researches': { login: true, id: 'CI_09_02', title: '고객의견' }, // 설문조사 리스트
+  '/customer/result': { login: false, id: 'CI_09_04', title: '설문조사 결과' }, // 설문조사 결과
   // auth
   '/auth/error/empty-line': { login: true, id: 'CO_99_06_01_02', title: '' },   // 등록된 회선 없음
   '/auth/error/no-auth': { login: true, id: 'CO_99_06_01_03', title: '' },    // 선택 회선 권한 없음
