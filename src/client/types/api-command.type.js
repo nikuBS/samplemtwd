@@ -77,17 +77,18 @@ Tw.API_CMD = {
   BFF_05_0069: { path: '/core-auth/v1/service-passwords', method: Tw.API_METHOD.PUT },
   BFF_05_0070: { path: '/core-auth/v1/service-passwords-change', method: Tw.API_METHOD.PUT },
   BFF_05_0071: { path: '/core-auth/v1/service-passwords', method: Tw.API_METHOD.DELETE },
+  BFF_05_0076: { path: '/core-modification/v1/myinfo/discount-infos-month', method: Tw.API_METHOD.GET },
   BFF_05_0079: { path: '/core-bill/v1/microPay-hist-request', method: Tw.API_METHOD.POST },
   BFF_05_0080: { path: '/core-bill/v1/microPay-request', method: Tw.API_METHOD.GET },
   BFF_05_0081U: { path: '/core-bill/v1/microPay-requests', method: Tw.API_METHOD.POST },
-  BFF_05_0081D: { path: '/core-bill/v1/microPay-requests/limitDown', method: Tw.API_METHOD.POST },
+  BFF_05_0081D: { path: '/core-bill/v1/microPay-requests-limitDown', method: Tw.API_METHOD.POST },
   BFF_05_0082: { path: '/core-bill/v1/microPay-auto-set', method: Tw.API_METHOD.POST },
   BFF_05_0083: { path: '/core-bill/v1/microPay-requests', method: Tw.API_METHOD.PUT },
   BFF_05_0085: { path: '/core-bill/v1/micropay-password-status', method: Tw.API_METHOD.GET },
   BFF_05_0086: { path: '/core-bill/v1/micropay-password-create', method: Tw.API_METHOD.POST },
   BFF_05_0087: { path: '/core-bill/v1/micropay-password-changes', method: Tw.API_METHOD.PUT },
   BFF_05_0089: { path: '/core-bill/v1/prepayInfo', method: Tw.API_METHOD.GET },
-  BFF_05_0076: { path: '/core-modification/v1/myinfo/discount-infos-month', method: Tw.API_METHOD.GET },
+  BFF_05_0093: { path: '/core-bill/v1/microPay-cphist-request', method: Tw.API_METHOD.GET },
 
   // RECHARGE
   BFF_06_0001: { path: '/core-recharge/v1/refill-coupons', method: Tw.API_METHOD.GET },
@@ -264,7 +265,8 @@ Tw.API_CODE = {
   CODE_BIL0031: 'BIL0031',  // 미성년자는 이용할 수 없습니다
   CODE_BIL0034: 'BIL0034',  // 소액결제 부가서비스 미가입자는 이용할 수 없습니다
   CODE_200: '200',
-  CODE_400: '400'
+  CODE_400: '400',
+  CODE_F806: 'F806'       // 소액결제 한도변경 월 1회 이상 시도
 };
 
 Tw.API_SVC_PWD_ERROR = {

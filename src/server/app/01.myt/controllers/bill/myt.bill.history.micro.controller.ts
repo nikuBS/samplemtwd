@@ -32,7 +32,7 @@ class MyTBillHistoryMicro extends TwViewController {
 
         if (isQueryEmpty && current === 'micro') {
 
-          const endMDD = DateHelper.getShortDateWithFormat(new Date(), 'M.DD');
+          const endMDD = DateHelper.getShortDateWithFormat(new Date(), 'M.DD', null);
           const startMDD = endMDD.replace(endMDD.substr(-2), '') + '01';
 
           // if(response.code)
@@ -44,8 +44,8 @@ class MyTBillHistoryMicro extends TwViewController {
 
         } else if (!isQueryEmpty && current === 'detail') {
 
-          req.query.useDate = DateHelper.getShortDateWithFormat(req.query.useDate, DATE_FORMAT.YYYYMMDDHHMMSS_TYPE_0);
-          const isLong = req.query.cpName.length >= 30 ? 'long' : '';
+          req.query.useDate = DateHelper.getShortDateWithFormat(req.query.useDate, DATE_FORMAT.YYYYMMDDHHMM_TYPE_0);
+          const isLong = req.query.pgName.length >= 30 ? 'long' : '';
 
           res.render('bill/myt.bill.history.micro.detail.html', {
             svcInfo: svcInfo,

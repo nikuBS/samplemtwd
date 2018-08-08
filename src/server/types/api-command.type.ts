@@ -118,7 +118,7 @@ export const API_CMD = {
   BFF_05_0079: { path: '/core-bill/v1/microPay-hist-request', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_05_0080: { path: '/core-bill/v1/microPay-requests', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0081U: { path: '/core-bill/v1/microPay-requests', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
-  BFF_05_0081D: { path: '/core-bill/v1/microPay-requests/limitDown', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0081D: { path: '/core-bill/v1/microPay-requests-limitDown', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_05_0082: { path: '/core-bill/v1/microPay-auto-set', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_05_0083: { path: '/core-bill/v1/microPay-requests', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
   BFF_05_0085: { path: '/core-bill/v1/micropay-password-status', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
@@ -126,6 +126,7 @@ export const API_CMD = {
   BFF_05_0087: { path: '/core-bill/v1/micropay-password-changes', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
   BFF_05_0089: { path: '/core-bill/v1/prepayInfo', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0091: { path: '/core-bill/v1/recent-usage-pattern', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0093: { path: '/core-bill/v1/microPay-cphist-request', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
 
   // RECHARGE
   BFF_06_0001: { path: '/core-recharge/v1/refill-coupons', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },

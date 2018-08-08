@@ -399,7 +399,9 @@ Tw.MSG_MYT = {
   HISTORY_ALERT_A27: '무선콘텐츠 서비스 시용이 불가하도록 차단하시겠습니까?',
   HISTORY_ALERT_A28: '무선콘텐츠 서비스를 사용하시겠습니까?',
   HISTORY_ALERT_A29: '무선콘텐츠 서비스 결제확인 SMS 추가 수신을 받으시겠습니까?',
-  HISTORY_ALERT_A30: '무선콘텐츠 서비스 결제확인 SMS 추가 수신을 받지 않으시겠습니까?'
+  HISTORY_ALERT_A30: '무선콘텐츠 서비스 결제확인 SMS 추가 수신을 받지 않으시겠습니까?',
+  HISTORY_ALERT_B01: '1회 한도는 1일 한도를 초과할 수 없습니다.',
+  HISTORY_ALERT_B02: '1일 한도는 월 한도를 초과할 수 없습니다.'
 };
 
 Tw.MSG_RECHARGE = {
@@ -749,4 +751,11 @@ Tw.NO_CONTRACT_TYPE = {
   USE : '사용',
   SAVE : '적립',
   EXTINCTION : '소멸'
+};
+
+Tw.MYT_HISTORY_CPSTATE = {
+  A0: 'A0',
+  A1: 'A1',
+  C0: 'C0',
+  C1: 'C1'
 };

@@ -70,7 +70,9 @@ Tw.MyTBillHistoryLimitCommon.prototype = {
       }
     } else {
       this._currentCallback = this._setPrePayEnvironment;
-      this.limitValueList = [];
+      this.limitValueListMonth = [];
+      this.limitValueListNormal = [];
+
       this.initialData = _.clone(this.data);
       this.limitDown = [];
       this.isChanged = false;
@@ -98,16 +100,26 @@ Tw.MyTBillHistoryLimitCommon.prototype = {
   },
 
   _setChoiceValueList: function () {
-    this.data.paySpectrum.map($.proxy(function (o) {
-      this.limitValueList.push({
+    var temp;
+    this.data.paySpectrumMonth.map($.proxy(function (o) {
+      this.limitValueListMonth.push({
         attr: 'data-value="' + o + '"',
         text: Tw.FormatHelper.addComma(o.toString())
       });
     }, this));
+
+    for (var k = 50; k >= 1; k--) {
+      temp = (k * 10000).toString();
+      this.limitValueListNormal.push({
+        attr: 'data-value="' + (temp) + '"',
+        text: Tw.FormatHelper.addComma(temp)
+      });
+    }
+
   },
 
   _chkChangeLimit: function () {
-    if(!this.isChanged) {
+    if (!this.isChanged) {
       this._popupService.openAlert(
           Tw.MSG_MYT.HISTORY_ALERT_A12,
           Tw.POPUP_TITLE.NOTIFY,
@@ -115,9 +127,39 @@ Tw.MyTBillHistoryLimitCommon.prototype = {
       return false;
     }
 
+    if (this.data.onceLimit > this.data.dayLimit) {
+      this._popupService.openAlert(
+          Tw.MSG_MYT.HISTORY_ALERT_B01,
+          Tw.POPUP_TITLE.NOTIFY,
+          $.proxy(this._confirmCallback, this, this._setLimitOpenerInitData), null);
+      return false;
+    }
+
+    if (this.data.dayLimit > this.data.monLimit) {
+      this._popupService.openAlert(
+          Tw.MSG_MYT.HISTORY_ALERT_B02,
+          Tw.POPUP_TITLE.NOTIFY,
+          $.proxy(this._confirmCallback, this, this._setLimitOpenerInitData), null);
+      return false;
+    }
+
+    this._popupService.openConfirm(
+        Tw.POPUP_TITLE.CONFIRM,
+        Tw.MSG_MYT.HISTORY_ALERT_A13,
+        null,
+        null,
+        $.proxy(this._callUpdateAPI, this),
+        null
+    );
+  },
+
+  _callUpdateAPI: function () {
+    this._popupService.close();
     var updateAPI_NAME = this._getLimitUpDown() ? this.updateApiNameUP : this.updateApiNameDN;
 
-    // console.log('[/myt/bill/history/limit/change', updateAPI_NAME, this.data);
+    // console.log('[/myt/bill/history/limit/change', updateAPI_NAME, 'chgMLimit', this.data.monLimit,
+    //     'chgDLimit', this.data.dayLimit,
+    //     'chgOLimit', this.data.onceLimit);
 
     this._apiService.request(updateAPI_NAME, {
       chgMLimit: this.data.monLimit,
@@ -139,33 +181,64 @@ Tw.MyTBillHistoryLimitCommon.prototype = {
   _handleResponse: function (res) {
     this.limitDown = [];
     if (res.code === Tw.API_CODE.CODE_00) {
-
+      this._popupService.openAlert(
+          Tw.MSG_MYT.HISTORY_ALERT_A14,
+          Tw.POPUP_TITLE.NOTIFY,
+          $.proxy(this._confirmCallback, this), null);
+    } else if (res.code === Tw.API_CODE.CODE_F806) {
+      this._popupService.openAlert(
+          Tw.MSG_MYT.HISTORY_ALERT_A17,
+          Tw.POPUP_TITLE.NOTIFY,
+          $.proxy(this._confirmCallback, this, this._setLimitOpenerInitData), null);
     } else {
       $.proxy(this.chkCurrentLimit._apiError, this.chkCurrentLimit, res)();
     }
-    // console.log(res);
   },
 
   _handleOpenLimitSelect: function (e) {
     var popupIndex = this.$limitSelector.index(e.target);
+    var currentListLimit;
     var popupTitle;
 
     switch (popupIndex) {
       case 0:
+        currentListLimit = this.limitValueListMonth;
         popupTitle = Tw.POPUP_TITLE.MYT_LIMIT_MONTH;
         break;
       case 1:
+        currentListLimit = this.limitValueListNormal;
         popupTitle = Tw.POPUP_TITLE.MYT_LIMIT_DAY;
         break;
       case 2:
+        currentListLimit = this.limitValueListNormal;
         popupTitle = Tw.POPUP_TITLE.MYT_LIMIT_ONCE;
         break;
       default:
         break;
     }
 
-    this._popupService.openChoice(popupTitle, this.limitValueList, '',
+    this._popupService.openChoice(popupTitle, currentListLimit, '',
         $.proxy(this._selectPopupCallback, this, $(e.target), popupIndex));
+  },
+
+  _setLimitOpenerInitData: function () {
+    this.$limitSelector.map($.proxy(function (i, o) {
+      switch (i) {
+        case 0:
+          $(o).html(Tw.FormatHelper.addComma(this.initialData.monLimit));
+          break;
+        case 1:
+          $(o).html(Tw.FormatHelper.addComma(this.initialData.dayLimit));
+          break;
+        case 2:
+          $(o).html(Tw.FormatHelper.addComma(this.initialData.onceLimit));
+          break;
+        default:
+          break;
+      }
+      this.data = _.clone(this.initialData);
+      this.isChanged = false;
+    }, this));
   },
 
   _selectPopupCallback: function (target, index) {
@@ -197,7 +270,7 @@ Tw.MyTBillHistoryLimitCommon.prototype = {
   },
 
   _setPrePayEnvironment: function (empty, res) {
-    if(!empty) {
+    if (!empty) {
       this.$movePrePayPageBtn.parent().removeClass('none');
     } else {
       this.$movePrePayPageBtnWrapper.removeClass('none');
@@ -229,7 +302,9 @@ Tw.MyTBillHistoryLimitCommon.prototype = {
     }
   },
 
-  _confirmCallback: function () {
+  _confirmCallback: function (callback) {
     this._popupService.close();
+    if (callback)
+      ($.proxy(callback, this))();
   }
 };

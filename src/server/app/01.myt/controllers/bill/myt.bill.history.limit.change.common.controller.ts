@@ -57,9 +57,7 @@ class MyTBillHistoryMicroLimitChange extends TwViewController {
           response.result.formedMonLimit = FormatHelper.addComma(response.result.monLimit);
           response.result.formedDayLimit = FormatHelper.addComma(response.result.dayLimit);
           response.result.formedOnceLimit = FormatHelper.addComma(response.result.onceLimit);
-          response.result.paySpectrum = [500000, 300000, 200000, 150000, 120000, 60000, 50000, 30000];
-
-          // paySpectrum에 끼워 넣어야 함.
+          response.result.paySpectrumMonth = [500000, 300000, 200000, 150000, 120000, 60000, 50000, 30000, 10000];
 
           if (response.code === API_CODE.CODE_00) {
             res.render(this.view, {
