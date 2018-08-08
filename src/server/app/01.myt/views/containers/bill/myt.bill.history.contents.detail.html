@@ -17,9 +17,10 @@
 
     <!-- #header -->
     <div id="header" class="header-wrap">
-        <div class="header step-page">
+        <div class="header">
             <div class="header-ti align-l">
-                <h1>콘텐츠 이용료 한도확인</h1>
+                <h1>콘텐츠 이용료 내역 상세보기</h1>
+                <button class="depth-view" role="button" aria-pressed="false"><span class="blind">메뉴구조보기</span></button>
             </div>
             <button class="prev-step fe-common-back"><span class="blind">이전으로</span></button>
         </div>
@@ -30,90 +31,57 @@
         <h2 class="blind">내용</h2>
         <div class="container">
             <div class="cont-box">
-                <div class=""></div>
-                <h3 class="my-limit"><%=currentM%>월 콘텐츠이용료</h3>
-                <div class="payment-wrap">
+                <!-- payment-detail-wrap -->
+                <div class="payment-detail-wrap">
                     <div class="payment-detail-box">
                         <div class="detail-inner">
-                            <div class="detail-list type1">
+                            <div class="detail-list">
                                 <ul>
                                     <li>
-                                        <span class="title">잔여 한도</span>
-                                        <span class="tx-cont"><span class="fs-type">482,960</span> 원</span>
+                                        <span class="title">결제일시</span>
+                                        <span class="tx-cont"><%=payDate%></span>
                                     </li>
                                     <li>
-                                        <div class="inner-row">
-                                            <ul>
-                                                <li>
-                                                    <span class="title">이용한도</span>
-                                                    <span class="tx-cont"><span class="ff-type">500,000</span> 원</span>
-                                                </li>
-                                                <li>
-                                                    <span class="title">사용금액</span>
-                                                    <span class="tx-cont"><span class="ff-type">27,040</span> 원</span>
-                                                </li>
-                                                <li>
-                                                    <span class="title">선결제 하신 금액</span>
-                                                    <span class="tx-cont"><span class="ff-type">10,000</span> 원</span>
-                                                </li>
-                                            </ul>
-                                        </div>
+                                        <span class="title">구분</span>
+                                        <span class="tx-cont"><%=payFlag%></span>
+                                    </li>
+                                    <li>
+                                        <span class="title">사용처</span>
+                                        <span class="tx-cont <%=isLong%>"><span><%=useServiceCompany%></span> <br /> <a class="blue-btn" href="tel:<%=cpTel%>"><%=cpTel%></a></span>
+                                    </li>
+                                    <li>
+                                        <span class="title">서비스명</span>
+                                        <span class="tx-cont"><%=serviceName%></span>
+                                    </li>
+                                    <li>
+                                        <span class="title">결제금액</span>
+                                        <span class="tx-cont"><em class="char"><%=paymentTotal%></em>원</span>
+                                    </li>
+                                    <li>
+                                        <span class="title">공제액</span>
+                                        <span class="tx-cont"><em class="char"><%=deductionCharge%></em>원</span>
                                     </li>
                                 </ul>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="payment-comment-box">
-                    <span>잔여한도 = 이용한도 – 사용 금액 + 선결제 하신 금액 </span>
-                    <ul class="payment-comment-list">
-                        <li>사용 금액 : 이번 달 소액결제 사용 금액</li>
-                        <li>선결제 하신 금액 : 이번 달 선결제 하신 소액결제 금액</li>
-                    </ul>
-                </div>
-                <div class="payment-wrap mt30">
-                    <div class="payment-detail-box">
-                        <div class="detail-inner">
-                            <div class="detail-list type1">
-                                <ul>
-                                    <li>
-                                        <span class="title">선결제 가능 최대금액</span>
-                                        <span class="tx-cont"><span class="fs-type">10,000</span> 원</span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="contents-btn">
+                <!--// payment-detail-wrap -->
+
+                <div class="mt40">
                     <ul class="bt-slice">
                         <li class="bt-blue1">
-                            <button>선결제로 잔여한도 올리기</button>
+                            <button>확인</button>
                         </li>
                     </ul>
                 </div>
-                <ul class="contents-notice type2">
-                    <li class="noti-type2">
-                        한도를 정하지 않은 분들은 처음에는 기본 설정됩니다.
-                    </li>
-                    <li class="noti-type2">
-                        회사의 관리 기준에 따라 통신과금(소액결제, 콘텐츠이용료 합산금액) 사용액이 회선별 월 한도액을 초과할 경우에는 결제차단이 될 수 있습니다.
-                    </li>
-                    <li class="noti-type2">
-                        매월 휴대폰 요금으로 결제 가능한 회선별 통신과금(소액결제, 콘텐츠이용료 합산금액) 한도는 회사의 관리 기준에 따라 상이할 수 있습니다.
-                    </li>
-                    <li class="noti-type2">
-                        한도 변경을 하지 않으신 신규가입 고객님은 통신과금(소액결제, 콘텐츠이용료 합산금액) 관리 기준에 따라, 임의로 산정됩니다.
-                    </li>
-                    <li class="noti-type2">
-                        한도가 초과되지 않아도 이용이 제한될 수 있으며, 이 경우 SKT고객센터(114)로 문의 부탁드립니다.
-                    </li>
-                </ul>
+                <div class="cont-btm-info mt18">
+                    <span class="tx-desc">고객정보 보호를 위해 서비스 명의 일부가 *로 표시되며, *로 가려진 정보는 <em class="tx-bold">사용처</em>에서 확인 하실 수 있습니다.</span>
+                </div>
             </div>
         </div>
     </div>
     <!--// #contents -->
-
 
     <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
 </div>
@@ -121,7 +89,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.MyTBillHistoryContentsLimit($(document));
+    new Tw.MyTBillHistoryDetailCommon($(document));
   });
 </script>
 <% include ../../components/end.component.html %>

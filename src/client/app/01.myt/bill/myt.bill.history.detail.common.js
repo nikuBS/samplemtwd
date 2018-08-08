@@ -10,6 +10,7 @@ Tw.MyTBillHistoryDetailCommon = function (rootEl) {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._dateHelper = Tw.DateHelper;
+  this._historyService = new Tw.HistoryService();
 
   this.common = new Tw.MyTBillHistoryCommon(rootEl);
 
@@ -24,11 +25,10 @@ Tw.MyTBillHistoryDetailCommon.prototype = {
   _init: function () {
     this.query = this.common.parse_query_string();
 
-    console.log(this.query);
-    if(this.query.cpTel)
+    if (this.query.cpTel)
       this.$telTextWrap.html(Tw.FormatHelper.getDashedPhoneNumber(this.query.cpTel));
 
-    switch(this.query.type) {
+    switch (this.query.type) {
       case '0':
         this.btnProcessCallback = this._autoPaymentBlindProcess;
         break;
@@ -50,36 +50,18 @@ Tw.MyTBillHistoryDetailCommon.prototype = {
 
   _bindDOM: function () {
     this.$confirmBtn.on('click', $.proxy(this.common._history.goBack, this));
-    this.$autoPaymentBlindBtn.on('click', $.proxy(this.btnProcessCallback, this));
-    // this.btnProcessCallback
+    this.$autoPaymentBlindBtn.on('click', $.proxy(function () {
+      this.btnProcessCallback();
+    }, this));
   },
 
   _autoPaymentBlindProcess: function () {
-    switch(this.query.payMethod) {
+    switch (this.query.cpState) {
       case 'A0':
       case 'A1':
-        this.stateCode = 'C';
         this.alertMessage = Tw.MSG_MYT.HISTORY_ALERT_A5;
         break;
       default:
-        this.stateCode = 'A';
-        this.alertMessage = Tw.MSG_MYT.HISTORY_ALERT_A3;
-        break;
-    }
-
-    this._openConfirmPopup();
-  },
-
-  _autoPaymentUnBlindProcess: function () {
-    console.log('00000000');
-    switch(this.query.payMethod) {
-      case 'A0':
-      case 'A1':
-        this.stateCode = 'C';
-        this.alertMessage = Tw.MSG_MYT.HISTORY_ALERT_A5;
-        break;
-      default:
-        this.stateCode = 'A';
         this.alertMessage = Tw.MSG_MYT.HISTORY_ALERT_A3;
         break;
     }
@@ -87,26 +69,33 @@ Tw.MyTBillHistoryDetailCommon.prototype = {
     this._openBlindConfirmPopup();
   },
 
-  _openConfirmPopup: function () {
+  _autoPaymentUnBlindProcess: function () {
+    switch (this.query.cpState) {
+      case 'A0':
+      case 'A1':
+        this.alertMessage = Tw.MSG_MYT.HISTORY_ALERT_A5;
+        break;
+      default:
+        this.alertMessage = Tw.MSG_MYT.HISTORY_ALERT_A3;
+        break;
+    }
+
+    this._openBlindConfirmPopup();
+  },
+
+  _openBlindConfirmPopup: function () {
     this._popupService.openConfirm(Tw.POPUP_TITLE.CONFIRM, this.alertMessage, null,
         null, $.proxy(this._confirmCallback, this), null);
   },
 
-  _openBlindConfirmPopup: function () {
-    console.log('00000000');
-    this._popupService.openConfirm(Tw.POPUP_TITLE.CONFIRM, this.alertMessage, null,
-        null, $.proxy(this._confirmUnblindCallback, this), null);
-  },
-
-
   _confirmCallback: function () {
     this._popupService.close();
-    console.log('[confirm]');
+    this.CP_STATE = this.query.cpState.substr(0, 1) === 'C' ? 'A' : 'C';
     var API_OPTION = {
       ID_PG: this.query.idpg,
       TY_SVC: this.query.tySvc,
       CP_CODE: this.query.cpCode,
-      STATE: this.stateCode
+      STATE: this.CP_STATE
     };
 
     this._apiService.request(this.updateUseMicroPayAPI, API_OPTION)
@@ -114,17 +103,31 @@ Tw.MyTBillHistoryDetailCommon.prototype = {
         .error($.proxy(this.common._apiError, this.common));
   },
 
-  _confirmUnblindCallback: function() {
-
-  },
-
   _autoPaymentProcessSuccess: function (res) {
-    console.log('[myt/bill/history/micro/detail]', res);
-    if(res.code === Tw.API_CODE.CODE_00) {
-      console.log('[update state]');
+    // console.log('[myt/bill/history/micro/detail]', res);
+    var alertMsg;
+    if (this.query.cpState.substr(0, 1) === 'C') {
+      // 차단 신청
+      alertMsg = Tw.MSG_MYT.HISTORY_ALERT_A4;
+      this.query.cpState = 'A1';
+    } else {
+      // 차단 해지 신청
+      alertMsg = Tw.MSG_MYT.HISTORY_ALERT_A6;
+      this.query.cpState = 'C1';
+    }
+
+    this.replaceURL = this._historyService.pathname + this.common.getObjetToParamStr(this.query);
+
+    if (res.code === Tw.API_CODE.CODE_00) {
+      this._popupService.openAlert(alertMsg, Tw.POPUP_TITLE.NOTIFY, $.proxy(this._confirmAlertCallback, this), null);
     } else {
       this.common._apiError(res);
     }
+  },
+
+  _confirmAlertCallback: function () {
+    this._popupService.close();
+    this._historyService.replaceURL(this.replaceURL);
   }
 
 };

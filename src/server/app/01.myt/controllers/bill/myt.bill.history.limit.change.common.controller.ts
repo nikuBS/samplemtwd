@@ -26,6 +26,7 @@ class MyTBillHistoryMicroLimitChange extends TwViewController {
       let errorTitle: any;
       let current_API_CMD: any;
 
+
       switch (current) {
         case 'micro':
           current_API_CMD = API_CMD.BFF_05_0080;
@@ -40,13 +41,16 @@ class MyTBillHistoryMicroLimitChange extends TwViewController {
       }
 
       if (resp.code === API_CODE.CODE_00) {
-
         this.apiService.request(current_API_CMD, {}).subscribe((response) => {
+
+          response.result = response.result || {};
 
           switch (current) {
             case 'micro':
               this.view = 'bill/myt.bill.history.micro.limit.change.html';
-              response.result.monLimit = response.result.microPayLimitAmt;
+              if (response.code === API_CODE.CODE_00) {
+                response.result.monLimit = response.result.microPayLimitAmt;
+              }
               break;
             case 'contents' :
               this.view = 'bill/myt.bill.history.contents.limit.change.html';
@@ -54,20 +58,27 @@ class MyTBillHistoryMicroLimitChange extends TwViewController {
             default:
               break;
           }
-          response.result.formedMonLimit = FormatHelper.addComma(response.result.monLimit);
-          response.result.formedDayLimit = FormatHelper.addComma(response.result.dayLimit);
-          response.result.formedOnceLimit = FormatHelper.addComma(response.result.onceLimit);
+          if (response.code === API_CODE.CODE_00) {
+
+            response.result.formedMonLimit = FormatHelper.addComma(response.result.monLimit);
+            response.result.formedDayLimit = FormatHelper.addComma(response.result.dayLimit);
+            response.result.formedOnceLimit = FormatHelper.addComma(response.result.onceLimit);
+          }
           response.result.paySpectrumMonth = [500000, 300000, 200000, 150000, 120000, 60000, 50000, 30000, 10000];
 
-          if (response.code === API_CODE.CODE_00) {
+          this.logger.info(this, '[---------------------------]', this.view, response.result, current, resp.code);
+
+
+
+          // if (response.code === API_CODE.CODE_00) {
             res.render(this.view, {
-              result: response.result,
+              result: response,
               svcInfo: svcInfo,
               current: current
             });
-          } else {
-            this.logger.error(this, response);
-          }
+          // } else {
+          //   this.logger.error(this, response);
+          // }
         });
       } else {
         res.render('../../../03.payment/views/containers/payment.prepay.error.html', {
