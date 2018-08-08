@@ -65,11 +65,11 @@ Tw.MytUsage.prototype = {
     }
     if ( result.tdataSharing === 'Y' ) {
       this.$container.find('.fe-t-data-sharing-btn').show();
+    } else {
+      this.$container.find('.fe-ad1').show();
     }
     if ( result.troamingSharing === 'Y' ) {
       this.$container.find('.fe-t-roaming-sharing-btn').show();
-    } else {
-      this.$container.find('.fe-ad1').show();
     }
 
     if ( result.bandDataSharing === 'Y' ) {
