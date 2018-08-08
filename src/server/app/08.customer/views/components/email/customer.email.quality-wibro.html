@@ -34,7 +34,7 @@
                     <div class="form-cell">
                         <span class="form-ti">문의하실 회선과 현상, 지역정보 선택 후 상세현상을 기재해 주세요<span class="point-indicate ml4" aria-hidden="true">*</span></span>
                         <div class="mb10">
-                            <button class="bt-dropdown big fe-param02" title="전화번호 선택" aria-haspopup="true" data-svcMgmtNum="<%=svcInfo.svcMgmtNum%>">
+                            <button class="bt-dropdown big fe-param02 fe-service-line" title="전화번호 선택" aria-haspopup="true" data-svcMgmtNum="<%=svcInfo.svcMgmtNum%>">
                                 <%=svcInfo.svcNum%>
                             </button>
                         </div>
@@ -54,12 +54,12 @@
                             <div class="widget-box tfCombined">
                                 <div class="txfield-combined">
                                     <div class="txfield-combined-tx">
-                                        <textarea class="input-focus fe-param11" cols="20" rows="3" placeholder="상세한 현상을 입력해주세요.(필수)" maxlength="12000"
+                                        <textarea class="input-focus fe-param11 fe-inquiry-content" cols="20" rows="3" placeholder="상세한 현상을 입력해주세요.(필수)" maxlength="12000"
                                                   aria-labelledby="aria-email-qacont"></textarea>
                                         <span class="byte"><span class="byte-current">0</span>/<span class="byte-total">12,000</span>자</span>
                                     </div>
                                     <div class="txfield-combined-ti">
-                                        <input class="input-focus fe-param01" type="text" placeholder="접수자 성함을 입력해주세요.(필수)" title="접수자 성함" value=""
+                                        <input class="input-focus fe-param01 fe-inquiry-title" type="text" placeholder="접수자 성함을 입력해주세요.(필수)" title="접수자 성함" value=""
                                                maxlength="20"
                                                aria-labelledby="aria-email-qacont">
                                         <span class="byte"><span class="byte-current">0</span>/<span class="byte-total">20</span>자</span>

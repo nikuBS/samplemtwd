@@ -92,13 +92,16 @@
     <div class="form-cell">
         <span class="form-ti">문의하실 회선과 내용을 작성해주세요<span class="point-indicate ml4" aria-hidden="true">*</span></span>
         <div class="mb10">
-            <button class="bt-dropdown big fe-service-line" title="전화번호 선택" aria-haspopup="true" aria-labelledby="aria-email-qacont" data-svcMgmtNum="<%=svcInfo.svcMgmtNum%>"><%=svcInfo.svcNum%></button>
+            <button class="bt-dropdown big fe-service-line" title="전화번호 선택" aria-haspopup="true" aria-labelledby="aria-email-qacont"
+                    data-svcMgmtNum="<%=svcInfo.svcMgmtNum%>"><%=svcInfo.svcNum%>
+            </button>
         </div>
         <div class="widget">
             <div class="widget-box tfCombined">
                 <div class="txfield-combined">
                     <div class="txfield-combined-ti">
-                        <input required class="input-focus fe-inquiry-title" type="text" placeholder="제목을 입력해주세요." title="이메일 문의 제목" value=""
+                        <input required class="input-focus fe-inquiry-title" type="text" placeholder="제목을 입력해주세요." title="이메일 문의 제목"
+                               value=""
                                maxlength="20"
                                aria-labelledby="aria-email-qacont">
                         <span class="byte"><span class="byte-current">0</span>/<span class="byte-total">20</span>자</span>
@@ -149,13 +152,11 @@
     <span class="form-ti">주문번호와 내용을 작성해주세요<span class="point-indicate ml4" aria-hidden="true">*</span></span>
     <span class="inputbox bt-add mb30 order">
         <span class="input">
-            <input type="text" placeholder="주문번호를 조회해주세요." title="조회"
+            <input class="fe-input-order" type="text" placeholder="주문번호를 조회해주세요." title="조회"
                    aria-describedby="aria-exp-desc1">
-            <button href="javascript:void(0)" class="cancel"><span
-                class="blind">삭제</span></button>
         </span>
         <span class="bt-box">
-            <button type="button">조회</button>
+            <button class="fe-direct-search" type="button">조회</button>
         </span>
         <span class="tx-box"><span id="aria-exp-desc1" class="guide-txt">배송, 교환/반품 관련 문의 시 주문번호를 선택해 주시면 보다 정확한 답변이 가능합니다.</span></span>
     </span>
@@ -163,11 +164,13 @@
         <div class="widget-box tfCombined">
             <div class="txfield-combined">
                 <div class="txfield-combined-ti">
-                    <input class="input-focus" type="text" placeholder="제목을 입력해주세요." title="이메일 문의 제목" value="" maxlength="20" aria-labelledby="aria-email-qacont">
+                    <input class="input-focus" type="text" placeholder="제목을 입력해주세요." title="이메일 문의 제목" value="" maxlength="20"
+                           aria-labelledby="aria-email-qacont">
                     <span class="byte"><span class="byte-current">0</span>/<span class="byte-total">20</span>자</span>
                 </div>
                 <div class="txfield-combined-tx">
-                    <textarea class="input-focus" cols="20" rows="3" placeholder="내용을 입력해주세요." maxlength="12000" aria-labelledby="aria-email-qacont"></textarea>
+                    <textarea class="input-focus" cols="20" rows="3" placeholder="내용을 입력해주세요." maxlength="12000"
+                              aria-labelledby="aria-email-qacont"></textarea>
                     <span class="byte"><span class="byte-current">0</span>/<span class="byte-total">12,000</span>자</span>
                 </div>
             </div>
@@ -197,7 +200,7 @@
 - 구매한 상품명:
 - 문의내용:
                 </textarea>
-                <span class="byte"><span class="byte-current">58</span>/<span class="byte-total">12,000</span>자</span>
+                    <span class="byte"><span class="byte-current">58</span>/<span class="byte-total">12,000</span>자</span>
                     <!-- .byte-current에 입력되어 있는 글자 수를 포함하여 나타냅니다. -->
                 </div>
             </div>
@@ -226,7 +229,8 @@
         <div class="form-cell">
             <span class="form-ti">문의하실 회선과 현상, 지역정보 선택 후 상세현상을 기재해 주세요<span class="point-indicate ml4" aria-hidden="true">*</span></span>
             <div class="mb10">
-                <button class="bt-dropdown big fe-param02" title="전화번호 선택" aria-haspopup="true" data-svcMgmtNum="<%=svcInfo.svcMgmtNum%>">
+                <button class="bt-dropdown big fe-param02 fe-service-line" title="전화번호 선택" aria-haspopup="true"
+                        data-svcMgmtNum="<%=svcInfo.svcMgmtNum%>">
                     <%=svcInfo.svcNum%>
                 </button>
             </div>
@@ -246,12 +250,12 @@
                 <div class="widget-box tfCombined">
                     <div class="txfield-combined">
                         <div class="txfield-combined-tx">
-                            <textarea class="input-focus fe-param11" cols="20" rows="3" placeholder="상세한 현상을 입력해주세요.(필수)" maxlength="12000"
+                            <textarea class="input-focus fe-param11 fe-inquiry-content" cols="20" rows="3" placeholder="상세한 현상을 입력해주세요.(필수)" maxlength="12000"
                                       aria-labelledby="aria-email-qacont"></textarea>
                             <span class="byte"><span class="byte-current">0</span>/<span class="byte-total">12,000</span>자</span>
                         </div>
                         <div class="txfield-combined-ti">
-                            <input class="input-focus fe-param01" type="text" placeholder="접수자 성함을 입력해주세요.(필수)" title="접수자 성함" value=""
+                            <input class="input-focus fe-param01 fe-inquiry-title" type="text" placeholder="접수자 성함을 입력해주세요.(필수)" title="접수자 성함" value=""
                                    maxlength="20"
                                    aria-labelledby="aria-email-qacont">
                             <span class="byte"><span class="byte-current">0</span>/<span class="byte-total">20</span>자</span>
@@ -323,7 +327,8 @@
                 <div class="widget-box tfCombined">
                     <div class="txfield-combined">
                         <div class="txfield-combined-ti">
-                            <input required class="input-focus fe-inquiry-title" type="text" placeholder="제목을 입력해주세요." title="이메일 문의 제목" value=""
+                            <input required class="input-focus fe-inquiry-title" type="text" placeholder="제목을 입력해주세요." title="이메일 문의 제목"
+                                   value=""
                                    maxlength="20"
                                    aria-labelledby="aria-email-qacont">
                             <span class="byte"><span class="byte-current">0</span>/<span class="byte-total">20</span>자</span>
@@ -367,6 +372,66 @@
     6. 발생장소 : {{param08}} / {{param09}}
     7. 발생시기 : {{param10}}
     8. 상세현상 : {{param11}}
+</script>
+
+<script id="tpl_direct_popup" type="text/x-handlebars-template">
+    <div class="popup-page fe-direct-result">
+        <!-- .no-btn 하단에 버튼이 없을 경우 -->
+        <!-- #header -->
+        <div class="header-wrap" aria-hidden="true" tabindex="-1">
+            <div class="page-header">
+                <div class="header-ti">
+                    <h1>주문번호 조회</h1>
+                </div>
+            </div>
+        </div>
+        <!--// #header -->
+        <!-- #contents -->
+        <div class="container-wrap" aria-hidden="true" tabindex="-1">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+                <div class="cont-box nogaps-btm">
+                    <div class="order-lookup-wrap">
+                        <p>주문관련 문의의 경우, <br>고객님이 주문하신 상품이 있는 경우에 한해 <br>문의가 가능하며, 주문번호를 입력해 주셔야 합니다.</p>
+                        <div class="order-radio">
+                            <div class="widget">
+                                <div class="widget-box radio">
+                                    <ul class="select-list" role="radiogroup">
+                                        <li class="radiobox type01" role="radio" aria-checked="false">
+                                            <input type="radio" name="radio1" value="" title="쇼핑내역">
+                                            <span class="txt">쇼핑내역</span>
+                                        </li>
+                                        <li class="radiobox type01 checked" role="radio" aria-checked="true">
+                                            <input type="radio" name="radio1" value="" title="외신단말/중고기기" checked="checked">
+                                            <span class="txt">외신단말/중고기기</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="empty-cont mt50 mb40">
+                                <span class="ico"></span>
+                                <p class="desc">주문하신 내역이 없습니다.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="cont-box bb0">
+                    <ul class="bt-slice item-two mt10">
+                        <li class="bt-white2 fe-direct-close">
+                            <button>취소</button>
+                        </li>
+                        <li class="bt-red1 fe-direct-confirm">
+                            <button>완료</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!--// #contents -->
+        <!-- .popup-closeBtn -->
+        <button class="popup-closeBtn fe-direct-close"><span class="blind">팝업 페이지 닫기</span></button>
+        <!--// .popup-closeBtn -->
+    </div>
 </script>
 
 <script>
