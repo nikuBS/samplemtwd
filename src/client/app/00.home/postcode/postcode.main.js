@@ -512,7 +512,7 @@ Tw.PostcodeMain.prototype = {
     var isValid = false;
     if (this.$aptLastField.is(':visible')) {
       isValid = this._checkEmpty(this.$aptLastField);
-      _detailAddress = this.$aptLastField.find('input:first').val() + Tw.POSTCODE_TEXT.DONG +
+      _detailAddress = this.$aptLastField.find('input:first').val() + Tw.POSTCODE_TEXT.DONG + ' ' +
         this.$aptLastField.find('input:last').val() + Tw.POSTCODE_TEXT.HO;
     } else {
       isValid  = true;
