@@ -80,11 +80,11 @@ Tw.MyTBillHistoryCommon.prototype = {
   },
 
   _setValueToLD: function (label, value) {
-    localStorage.setItem(label, value);
+    Tw.UIService.setLocalStorage(label, value);
   },
 
   _getValueFromLD: function (label) {
-    return localStorage.getItem(label);
+    return Tw.UIService.getLocalStorage(label);
   },
 
   _goLoad: function (url) {
@@ -117,8 +117,9 @@ Tw.MyTBillHistoryCommon.prototype = {
   }
 };
 
-Tw.MyTBillHistoryCommon.ListWithTemplate = function () {
-  this.common = new Tw.MyTBillHistoryCommon();
+Tw.MyTBillHistoryCommon.ListWithTemplate = function (rootEL) {
+  this.common = new Tw.MyTBillHistoryCommon(rootEL);
+  this.$container = this.common.$container;
 };
 
 Tw.MyTBillHistoryCommon.ListWithTemplate.prototype = {
@@ -221,7 +222,17 @@ Tw.MyTBillHistoryCommon.ListWithTemplate.prototype = {
     if (!this.listWrapperSelector) {
       $(this.listTemplate(this.data)).insertBefore(target.parent());
     } else {
-      $(this.listTemplate(this.data)).insertBefore(this.$container.find(this.listWrapperSelector));
+
+      this.listWrapper = this.listWrapper || this.wrapper.find(this.listWrapperSelector);
+
+      if(this.listWrapper.length) {
+        this.isULOL = (this.listWrapper.get(0).nodeName === 'UL') || (this.listWrapper.get(0).nodeName === 'OL');
+      }
+
+      if(!this.isULOL)
+        $(this.listTemplate(this.data)).insertBefore(this.$container.find(this.listWrapperSelector));
+      else
+        this.listWrapper.append(this.listTemplate(this.data));
     }
 
     if (this.data.result.length <= this.perPage * (this.currentPage + 1)) {

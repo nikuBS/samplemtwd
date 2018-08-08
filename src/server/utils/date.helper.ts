@@ -153,8 +153,8 @@ class DateHelper {
    * @param {date} date || {string} date, {string} format
    * @returns {Date} : YYMMDD, YYYYMMDD, YY.MM.DD
    */
-  static getShortDateWithFormat(date: any, format: string): any {
-    return moment(date).format(format);
+  static getShortDateWithFormat(date: any, format: string, currentFormat?: any): any {
+    return moment(date, currentFormat).format(format);
   }
 
   /**

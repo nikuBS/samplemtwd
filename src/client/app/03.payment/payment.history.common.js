@@ -76,11 +76,11 @@ Tw.PaymentHistoryCommon.prototype = {
   },
 
   _setValueToLD: function (label, value) {
-    localStorage.setItem(label, value);
+    Tw.UIService.setLocalStorage(label, value);
   },
 
   _getValueFromLD: function (label) {
-    return localStorage.getItem(label);
+    return Tw.UIService.getLocalStorage(label);
   },
 
   _goLoad: function (url) {

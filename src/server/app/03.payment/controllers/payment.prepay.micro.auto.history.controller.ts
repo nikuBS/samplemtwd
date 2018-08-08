@@ -24,7 +24,7 @@ class PaymentPrepayMicroAutoHistoryController extends TwViewController {
       if (autoCardInfo.code === API_CODE.CODE_00 && autoPrepay.code === API_CODE.CODE_00) {
         res.render('payment.prepay.micro.auto.history.html', {
           autoCardInfo: this.parseCardInfo(autoCardInfo.result),
-          autoPrepay: this.parsePrepayData(autoPrepay.result),
+          autoPrepay: this.parsePrepayData(autoPrepay.result.microPrepayReqRecord),
           svcInfo: svcInfo
         });
       } else {
@@ -40,7 +40,7 @@ class PaymentPrepayMicroAutoHistoryController extends TwViewController {
   }
 
   private getAutoPrepayHistory(): Observable<any> {
-    return this.apiService.request(API_CMD.BFF_07_0075, {}).map((res) => {
+    return this.apiService.request(API_CMD.BFF_07_0075, { pageNo: 1, listSize: 20 }).map((res) => {
       return res;
     });
   }
@@ -53,17 +53,17 @@ class PaymentPrepayMicroAutoHistoryController extends TwViewController {
     return result;
   }
 
-  private parsePrepayData(result: any): any {
-    if (!FormatHelper.isEmpty(result)) {
-      result.map((data) => {
+  private parsePrepayData(record: any): any {
+    if (!FormatHelper.isEmpty(record)) {
+      record.map((data) => {
         data.name = REQUEST_TYPE[data.auto_chrg_req_cl_cd];
         data.date = DateHelper.getFullDateAndTime(data.oper_dtm);
         data.autoChrgStrdAmount = FormatHelper.addComma(data.auto_chrg_strd_amt);
         data.autoChrgAmount = FormatHelper.addComma(data.auto_chrg_amt);
       });
     }
-    result.code = API_CODE.CODE_00;
-    return result;
+    record.code = API_CODE.CODE_00;
+    return record;
   }
 }
 
