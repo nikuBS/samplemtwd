@@ -155,8 +155,13 @@ Tw.PaymentPrepay.prototype = {
   _getDetailAutoPrepay: function () {
     this._history.goLoad('/payment/prepay/' + this.$title + '/auto/history');
   },
-  _goPrepay: function () {
-    this._history.goLoad('/payment/prepay/' + this.$title + '/pay');
+  _goPrepay: function (event) {
+    var $target = $(event.currentTarget);
+    if ($target.attr('disabled') === 'disabled') {
+      event.preventDefault();
+    } else {
+      this._history.goLoad('/payment/prepay/' + this.$title + '/pay');
+    }
   },
   _goAutoPrepay: function () {
     this._history.goLoad('/payment/prepay/' + this.$title + '/auto');
