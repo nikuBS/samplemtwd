@@ -14,11 +14,16 @@ Tw.PostcodeMain = function (rootEl) {
   this._history = new Tw.HistoryService(this.$container);
   this._history.init('hash');
 
+  this._init();
   this._initVariables();
   this._bindEvent();
 };
 
 Tw.PostcodeMain.prototype = {
+  _init: function () {
+    this.$container.find('input[type="text"]').val('');
+    Tw.UIService.setLocalStorage('post', '');
+  },
   _initVariables: function () {
     this._cityList = [];
     this._gunList = [];
@@ -33,6 +38,7 @@ Tw.PostcodeMain.prototype = {
     this._selectedTabId = 'tab1';
     this._selectedTabName = 'load';
     this._defaultElementLength = 20;
+    this.$tabSelector = this.$container.find('#tab1-tab');
     this.$citySelector = this.$container.find('.fe-select-city:first');
     this.$gunSelector = this.$container.find('.fe-select-gun:first');
     this.$getPostCodeBtn = this.$container.find('.fe-get-postcode');
@@ -64,6 +70,7 @@ Tw.PostcodeMain.prototype = {
     this.$container.on('click', '.fe-select-number-name', $.proxy(this._selectNumberOrName, this));
     this.$container.on('click', '.fe-get-number-name', $.proxy(this._getMoreDetailList, this, 'btn-number'));
     this.$container.on('click', '.fe-cancel-process', $.proxy(this._cancelProcess, this));
+    this.$container.on('click', '.fe-complete', $.proxy(this._postComplete, this));
   },
   _onlyNumber: function (event) {
     this._inputHelper.inputNumberOnly(event.currentTarget);
@@ -94,6 +101,10 @@ Tw.PostcodeMain.prototype = {
     this.$standardAddress = this.$step2TabContainer.find('.fe-standard');
     this.$remainAddressWrap = this.$step2TabContainer.find('.fe-remain-address-wrap');
     this.$remainAddress = this.$step2TabContainer.find('.fe-remain-address');
+
+    this.$step3TabContainer = this.$container.find('#' + this._selectedTabId + '-tab.fe-step3');
+    this.$aptLastField = this.$step3TabContainer.find('.fe-apt-last-field');
+    this.$etcLastField = this.$step3TabContainer.find('.fe-etc-last-field');
   },
   _getSecondList: function (event) {
     if (this._cityCode === null) {
@@ -392,7 +403,7 @@ Tw.PostcodeMain.prototype = {
     var $content = $result.content;
     for (var i = 0; i < $content.length; i++) {
       var $addressField = this.$standardAddress.clone().removeClass('fe-standard').removeClass('none').addClass('fe-add-address');
-      $addressField.attr({'id': $content[i][_address.id], 'postcode': $content[i].zip, 'ho': $content[i].staMainHouseNumCtt });
+      $addressField.attr({'id': $content[i][_address.id], 'postcode': $content[i].zip, 'ho': $content[i].staMainHouseNumCtt, 'dong': $content[i].ldongNm });
       $addressField.find('.address1').text($content[i][_address.name]);
       $addressField.find('.address2').text(_address.text + ' ' + $content[i][_address.value]);
       $addressField.find('.address3').text(Tw.POSTCODE_TEXT.ZIP_CODE + ' ' + $content[i].zip);
@@ -466,8 +477,18 @@ Tw.PostcodeMain.prototype = {
     var $checkedAddress = this.$loadAddress.find('.checked');
     var $baseForm = this.$container.find('.fe-base-form');
     var _baseText = this.$container.find('#' + this._selectedTabId + '-tab .fe-select-detail').text();
+
+    if (_baseText.includes('(')) {
+      _baseText = _baseText.replace(_baseText.split('(')[1], '');
+      _baseText = _baseText.replace('(', '');
+    }
+
     $baseForm.find('.fe-post-code').text($checkedAddress.attr('postcode'));
     $baseForm.find('.fe-ho').text($checkedAddress.attr('ho'));
+
+    if ($checkedAddress.attr('dong') !== null && $checkedAddress.attr('dong') !== undefined && $checkedAddress.attr('dong') !== '') {
+      _baseText = _baseText + '(' + $checkedAddress.attr('dong') + ')';
+    }
     $baseForm.find('.fe-address').text(_baseText + ' ' + $checkedAddress.find('.address1').text());
 
     if ($checkedAddress.attr('id') === 'A2' || $checkedAddress.attr('id') === 'A3') {
@@ -480,5 +501,33 @@ Tw.PostcodeMain.prototype = {
   },
   _cancelProcess: function () {
     this._history.cancelProcess();
+  },
+  _postComplete: function (event) {
+    var $target = $(event.target);
+    var $form = $target.parents('.tab-contents').find('.fe-last-form');
+    var _postCode = $form.find('.fe-post-code').text();
+    var _address = $form.find('.fe-address').text();
+    var _detailAddress = '';
+
+    var isValid = false;
+    if (this.$aptLastField.is(':visible')) {
+      isValid = this._checkEmpty(this.$aptLastField);
+      _detailAddress = this.$aptLastField.find('input:first').val() + Tw.POSTCODE_TEXT.DONG +
+        this.$aptLastField.find('input:last').val() + Tw.POSTCODE_TEXT.HO;
+    } else {
+      isValid  = true;
+      _detailAddress = this.$etcLastField.find('input').val();
+    }
+
+    if (isValid) {
+      Tw.UIService.setLocalStorage('post', [_postCode, _address, _detailAddress]);
+
+      this._history.setHistory();
+      this._history.goLoad('http://localhost:3000/customer/email/quality/wibro?post=success');
+    }
+  },
+  _checkEmpty: function ($target) {
+    return (this._validation.checkEmpty($target.find('input:first').val(), Tw.MSG_POSTCODE.L06) &&
+      this._validation.checkEmpty($target.find('input:last').val(), Tw.MSG_POSTCODE.L06));
   }
 };
