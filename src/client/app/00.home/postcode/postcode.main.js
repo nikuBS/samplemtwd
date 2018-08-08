@@ -524,7 +524,7 @@ Tw.PostcodeMain.prototype = {
 
       this._history.setHistory();
 
-      var url = 'http://localhost:3000/customer/email/quality/wibro';
+      var url = '/customer/email/quality/wibro';
       this._history.pushUrl(url);
       this._history.goLoad(url + '?post=success');
     }
