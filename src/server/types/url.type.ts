@@ -107,11 +107,11 @@ export const URL = {
   '/customer/prevent-damage/useful-service': { login: false, id: 'CI_07_09', title: '유용한 부가서비스' },  // 유용한 부가서비스
   '/customer/prevent-damage/relate-site': { login: false, id: 'CI_07_10', title: '이용자 피해예방 관련 사이트' }, // 이용자 피해예방 관련 사이트
   '/customer/helpline': { login: true, id: 'CI_05_01', title: '전화상담 예약' }, // 전화상담예약
-  '/customer/shop/detail': { login: false, id: 'CI_02_04', title: '' }, // 매장 및 AS센터 > 매장정보
-  '/customer/shop/near': { login: false, id: 'CI_02_05', title: '' }, // 매장 및 AS센터 > 내 위치와 가까운 매장 검색
-  '/customer/shop/repair': { login: false, id: 'CI_03_01', title: '' }, // 매장 및 AS센터 > 지역 별 AS센터
-  '/customer/shop/repair-manufacturer': { login: false, id: 'CI_03_02', title: '' }, // 매장 및 AS센터 > 제조사 별 AS센터
-  '/customer/shop/search': { login: false, id: 'CI_02_01', title: '' }, // 매장 및 AS센터 > 지점/대리점 찾기
+  '/customer/shop/detail': { login: false, id: 'CI_02_04', title: '매장정보' }, // 매장 및 AS센터 > 매장정보
+  '/customer/shop/near': { login: false, id: 'CI_02_05', title: '내 위치와 가까운 매장' }, // 매장 및 AS센터 > 내 위치와 가까운 매장 검색
+  '/customer/shop/repair': { login: false, id: 'CI_03_01', title: '매장 및 AS 센터' }, // 매장 및 AS센터 > 지역 별 AS센터
+  '/customer/shop/repair-manufacturer': { login: false, id: 'CI_03_02', title: '매장 및 AS 센터' }, // 매장 및 AS센터 > 제조사 별 AS센터
+  '/customer/shop/search': { login: false, id: 'CI_02_01', title: '매장 및 AS 센터' }, // 매장 및 AS센터 > 지점/대리점 찾기
   '/customer/researches': { login: true, id: 'CI_09_02', title: '고객의견' }, // 설문조사 리스트
   '/customer/result': { login: false, id: 'CI_09_04', title: '설문조사 결과' }, // 설문조사 결과
   // auth
@@ -124,10 +124,10 @@ export const URL = {
   '/auth/line/register/empty': { login: true, id: 'CO_01_05_02_02', title: '' }, // 가입된 회선 없음
   '/auth/login/exceed-fail': { login: false, id: 'CO_01_02_01_02', title: '' },  // 로그인 횟수 초과
   '/auth/login/fail': { login: false, id: 'CO_01_02_01_01', title: '' },  // 로그인 실패
-  '/auth/login/dormancy': { login: false, id: 'CO_01_02_02', title: '' },
-  '/auth/login/find-id-pwd': { login: false, id: 'CO_01_04', title: '' },
-  '/auth/login/customer-pwd': { login: false, id: 'CO_01_02_03_01', title: '' },
-  '/auth/login/customer-pwd-fail': { login: false, id: 'CO_01_02_03_01_01', title: '' },
+  '/auth/login/dormancy': { login: false, id: 'CO_01_02_02', title: '휴면 해제' },
+  '/auth/login/find-id-pwd': { login: false, id: 'CO_01_04', title: '아이디 찾기/비밀번호 재설정' },
+  '/auth/login/customer-pwd': { login: false, id: 'CO_01_02_03_01', title: '고객보호 비밀번호 서비스 로그인' },
+  '/auth/login/customer-pwd-fail': { login: false, id: 'CO_01_02_03_01_01', title: '로그인 실패' },
   '/auth/login/route': { login: false, id: '', title: '' },
   '/auth/login/easy-aos': { login: false, id: 'CO_01_02_06_01', title: '' }, // 간편로그인 안드로이드
   '/auth/login/easy-ios': { login: false, id: 'CO_01_02_06_02', title: '' }, // 간편로그인 IOS
@@ -136,7 +136,7 @@ export const URL = {
   '/auth/logout/expire': { login: false, id: 'CO_01_03_02', title: '' },  // 세션 만료
   '/auth/logout/route': { login: false, id: '', title: '' },
   '/auth/member/management': { login: true, id: 'CO_01_05', title: '' }, // 회원 정보 관리
-  '/auth/signup/guide': { login: false, id: 'CO_01_01', title: '' },
+  '/auth/signup/guide': { login: false, id: 'CO_01_01', title: '회원가입 안내' },
   '/auth/tid/login': { login: false, id: '', title: '' },
   '/auth/tid/account': { login: true, id: '', title: '' },
   '/auth/tid/change-pw': { login: true, id: '', title: '' },
@@ -147,7 +147,7 @@ export const URL = {
   '/auth/tid/signup-foreigner': { login: false, id: '', title: '' },
   '/auth/tid/guide': { login: false, id: '', title: '' },
   '/auth/tid/route': { login: false, id: '', title: '' },
-  '/auth/withdrawal/guide': { login: true, id: 'CO_01_05_01_01', title: '' },
-  '/auth/withdrawal/survey': { login: true, id: 'CO_01_05_01_03', title: '' },
-  '/auth/withdrawal/complete': { login: false, id: 'CO_01_05_01_04_01', title: '' }
+  '/auth/withdrawal/guide': { login: true, id: 'CO_01_05_01_01', title: '회원탈퇴' },
+  '/auth/withdrawal/survey': { login: true, id: 'CO_01_05_01_03', title: '회원탈퇴' },
+  '/auth/withdrawal/complete': { login: false, id: 'CO_01_05_01_04_01', title: '회원탈퇴' }
 };
