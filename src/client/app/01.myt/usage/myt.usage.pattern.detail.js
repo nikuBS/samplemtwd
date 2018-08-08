@@ -123,7 +123,7 @@ Tw.MyTUsagePatternDetail.prototype = {
           }
         ]
       }, this._defaultChartData);
-      this.$container.chart($.extend(this._defaultChartSetting, {
+      this.$container.chart($.extend({
         container: 'can-box4', //클래스명 String
         data: infoUseFeeChart //데이터 obj
       }, this._defaultChartSetting));
@@ -144,10 +144,10 @@ Tw.MyTUsagePatternDetail.prototype = {
           }
         ]
       }, this._defaultChartData);
-      this.$container.chart($.extend(this._defaultChartSetting, {
+      this.$container.chart($.extend({
         container: 'can-box5', //클래스명 String
         data: optFeeChart //데이터 obj
-      }));
+      }, this._defaultChartSetting));
     }
     if ( !this._empty.msgUseFee ) {
       var msgUseFeeChart = $.extend({
@@ -165,10 +165,10 @@ Tw.MyTUsagePatternDetail.prototype = {
           }
         ]
       }, this._defaultChartData);
-      this.$container.chart($.extend(this._defaultChartSetting, {
+      this.$container.chart($.extend({
         container: 'can-box6', //클래스명 String
         data: msgUseFeeChart //데이터 obj
-      }));
+      }, this._defaultChartSetting));
     }
     if ( !this._empty.suplSvcUseFee ) {
       var suplSvcUseFeeChart = $.extend({
@@ -186,10 +186,10 @@ Tw.MyTUsagePatternDetail.prototype = {
           }
         ]
       }, this._defaultChartData);
-      this.$container.chart($.extend(this._defaultChartSetting, {
+      this.$container.chart($.extend({
         container: 'can-box7', //클래스명 String
         data: suplSvcUseFeeChart //데이터 obj
-      }));
+      }, this._defaultChartSetting));
     }
     if ( !this._empty.othrCoUseFee ) {
       var othrCoUseFeeChart = $.extend({
@@ -207,10 +207,10 @@ Tw.MyTUsagePatternDetail.prototype = {
           }
         ]
       }, this._defaultChartData);
-      this.$container.chart($.extend(this._defaultChartSetting, {
+      this.$container.chart($.extend({
         container: 'can-box8', //클래스명 String
         data: othrCoUseFeeChart //데이터 obj
-      }));
+      }, this._defaultChartSetting));
     }
     if ( !this._empty.basFee ) {
       var basFeeChart = $.extend({
@@ -228,10 +228,10 @@ Tw.MyTUsagePatternDetail.prototype = {
           }
         ]
       }, this._defaultChartData);
-      this.$container.chart($.extend(this._defaultChartSetting, {
+      this.$container.chart($.extend({
         container: 'can-box1', //클래스명 String
         data: basFeeChart //데이터 obj
-      }));
+      }, this._defaultChartSetting));
     }
   },
 
