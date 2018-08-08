@@ -116,4 +116,4 @@ var goLink = function (url) {
   } else {
     window.open(url);
   }
-}
+};
