@@ -37,6 +37,7 @@ Tw.CustomerEmailService.prototype = {
     this.$container.on('click', '.fe-direct-search', $.proxy(this._showDirectSearchPopup, this));
     this.$container.on('click', '.fe-direct-result .fe-direct-close', $.proxy(this._closeDirectPopup, this));
     this.$container.on('click', '.fe-direct-result .fe-direct-confirm', $.proxy(this._confirmDirectPopup, this));
+    this.$container.on('click', '.fe-direct-result [name=radio_direct]', $.proxy(this._changeDirectPopupTab, this));
   },
 
   _registerEmail: function () {
@@ -99,6 +100,7 @@ Tw.CustomerEmailService.prototype = {
   },
 
   _requestEmailDirect: function () {
+    var serviceCategory = this._oEmailTemplate.getState().serviceCategory;
     var params = {
       category: this._oEmailTemplate.getState().serviceCategory,
       cntcNum1: this._getPhoneParams(0),
@@ -110,6 +112,12 @@ Tw.CustomerEmailService.prototype = {
       smsRcvYn: this.$input_sms.prop('checked') ? 'Y' : 'N',
       phoneId: $('.fe-btn-device').data('id')
     };
+
+    if ( serviceCategory === '08' || serviceCategory === '09' || serviceCategory === '12' ) {
+      if ( $('.fe-input-order').val() !== '' ) {
+        params = $.extend(params, { orderNo: $('.fe-input-order').val() });
+      }
+    }
 
     this._apiService.request(Tw.API_CMD.BFF_08_0021, params)
       .done($.proxy(this._onSuccessRequest, this));
@@ -131,14 +139,39 @@ Tw.CustomerEmailService.prototype = {
   _showDirectSearchPopup: function () {
     $(window).scrollTop(0);
 
-    this.$container.append(this.tpl_direct_popup());
-    document.body.style.overflow = 'hidden';
-    skt_landing.widgets.widget_init('.popup-page'); //selector string
-    skt_landing.components.component_init('.popup-page');  //selector string
+    this._apiService.request(Tw.API_CMD.BFF_08_0016, {
+      svcDvcClCd: 'M'
+    }).done(function (res) {
+      this.$container.append(this.tpl_direct_popup({
+        listShop: res.result.listShop,
+        listUsed: res.result.listUsed
+      }));
+
+      document.body.style.overflow = 'hidden';
+      skt_landing.widgets.widget_init('.popup-page'); //selector string
+      skt_landing.components.component_init('.popup-page');  //selector string
+    }.bind(this));
   },
 
   _confirmDirectPopup: function () {
+    var ordNo = $('.fe-direct-popup-content').find('input:checked').val();
 
+    $('.fe-input-order').val(ordNo);
+
+    this._closeDirectPopup();
+  },
+
+  _changeDirectPopupTab: function () {
+    var nDirectTabIndex = $('.fe-direct-tab input').index($('.fe-direct-tab input:checked'));
+    var $tab1 = $('.direct_tab1');
+    var $tab2 = $('.direct_tab2');
+    if ( nDirectTabIndex === 0 ) {
+      $tab1.show();
+      $tab2.hide();
+    } else {
+      $tab1.hide();
+      $tab2.show();
+    }
   },
 
   _closeDirectPopup: function () {

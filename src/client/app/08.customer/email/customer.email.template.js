@@ -36,12 +36,12 @@ Tw.CustomerEmailTemplate.prototype = {
   _cachedElement: function () {
     this.$wrap_call = $('.fe-wrap-call');
     this.$wrap_service = $('.fe-wrap-service');
+    this.tpl_call_wibro = Handlebars.compile($('#tpl_call_wibro').text());
     this.tpl_service_cell = Handlebars.compile($('#tpl_service_cell').text());
+    this.tpl_call_internet = Handlebars.compile($('#tpl_call_internet').text());
     this.tpl_service_chocolate = Handlebars.compile($('#tpl_service_chocolate').text());
     this.tpl_service_direct_type2 = Handlebars.compile($('#tpl_service_direct_type2').text());
     this.tpl_service_direct_type1 = Handlebars.compile($('#tpl_service_direct_type1').text());
-    this.tpl_call_wibro = Handlebars.compile($('#tpl_call_wibro').text());
-    this.tpl_call_internet = Handlebars.compile($('#tpl_call_internet').text());
   },
 
   _bindEvent: function () {
@@ -222,7 +222,7 @@ Tw.CustomerEmailTemplate.prototype = {
       }
 
       if ( this.state.serviceType === 'DIRECT' ) {
-        if ( this.state.serviceCategory === '08' || this.state.serviceCategory === '09' ) {
+        if ( this.state.serviceCategory === '08' || this.state.serviceCategory === '09' || this.state.serviceCategory === '12' ) {
           this.$wrap_service.html(this.tpl_service_direct_type2());
         } else {
           this.$wrap_service.html(this.tpl_service_direct_type1());
@@ -250,7 +250,6 @@ Tw.CustomerEmailTemplate.prototype = {
 
           if ( Tw.UIService.getLocalStorage('post_info') ) {
             var previousParams = JSON.parse(Tw.UIService.getLocalStorage('post_info'));
-
             $('.fe-param01').val(previousParams.param01);
             $('.fe-param03').text(previousParams.param03);
             $('.fe-param04').text(previousParams.param04);

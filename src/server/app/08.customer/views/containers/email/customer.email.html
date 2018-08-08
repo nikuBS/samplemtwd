@@ -164,12 +164,12 @@
         <div class="widget-box tfCombined">
             <div class="txfield-combined">
                 <div class="txfield-combined-ti">
-                    <input class="input-focus" type="text" placeholder="제목을 입력해주세요." title="이메일 문의 제목" value="" maxlength="20"
+                    <input class="input-focus fe-inquiry-title" type="text" placeholder="제목을 입력해주세요." title="이메일 문의 제목" value="" maxlength="20"
                            aria-labelledby="aria-email-qacont">
                     <span class="byte"><span class="byte-current">0</span>/<span class="byte-total">20</span>자</span>
                 </div>
                 <div class="txfield-combined-tx">
-                    <textarea class="input-focus" cols="20" rows="3" placeholder="내용을 입력해주세요." maxlength="12000"
+                    <textarea class="input-focus fe-inquiry-content" cols="20" rows="3" placeholder="내용을 입력해주세요." maxlength="12000"
                               aria-labelledby="aria-email-qacont"></textarea>
                     <span class="byte"><span class="byte-current">0</span>/<span class="byte-total">12,000</span>자</span>
                 </div>
@@ -250,12 +250,14 @@
                 <div class="widget-box tfCombined">
                     <div class="txfield-combined">
                         <div class="txfield-combined-tx">
-                            <textarea class="input-focus fe-param11 fe-inquiry-content" cols="20" rows="3" placeholder="상세한 현상을 입력해주세요.(필수)" maxlength="12000"
+                            <textarea class="input-focus fe-param11 fe-inquiry-content" cols="20" rows="3" placeholder="상세한 현상을 입력해주세요.(필수)"
+                                      maxlength="12000"
                                       aria-labelledby="aria-email-qacont"></textarea>
                             <span class="byte"><span class="byte-current">0</span>/<span class="byte-total">12,000</span>자</span>
                         </div>
                         <div class="txfield-combined-ti">
-                            <input class="input-focus fe-param01 fe-inquiry-title" type="text" placeholder="접수자 성함을 입력해주세요.(필수)" title="접수자 성함" value=""
+                            <input class="input-focus fe-param01 fe-inquiry-title" type="text" placeholder="접수자 성함을 입력해주세요.(필수)"
+                                   title="접수자 성함" value=""
                                    maxlength="20"
                                    aria-labelledby="aria-email-qacont">
                             <span class="byte"><span class="byte-current">0</span>/<span class="byte-total">20</span>자</span>
@@ -396,21 +398,91 @@
                         <div class="order-radio">
                             <div class="widget">
                                 <div class="widget-box radio">
-                                    <ul class="select-list" role="radiogroup">
-                                        <li class="radiobox type01" role="radio" aria-checked="false">
-                                            <input type="radio" name="radio1" value="" title="쇼핑내역">
+                                    <ul class="select-list fe-direct-tab" role="radiogroup">
+                                        <li class="radiobox type01 checked" role="radio" aria-checked="true">
+                                            <input type="radio" name="radio_direct" value="" title="쇼핑내역" checked="checked">
                                             <span class="txt">쇼핑내역</span>
                                         </li>
-                                        <li class="radiobox type01 checked" role="radio" aria-checked="true">
-                                            <input type="radio" name="radio1" value="" title="외신단말/중고기기" checked="checked">
+                                        <li class="radiobox type01" role="radio" aria-checked="false">
+                                            <input type="radio" name="radio_direct" value="" title="외신단말/중고기기">
                                             <span class="txt">외신단말/중고기기</span>
                                         </li>
                                     </ul>
                                 </div>
                             </div>
-                            <div class="empty-cont mt50 mb40">
-                                <span class="ico"></span>
-                                <p class="desc">주문하신 내역이 없습니다.</p>
+                            <div class="direct_tab1">
+                                {{#if listShop}}
+                                <div class="order-lookup-cont">
+                                    <div class="order-lookup-list">
+                                        <div class="widget">
+                                            <div class="widget-box radio">
+                                                <ul class="select-list fe-direct-popup-content" role="radiogroup">
+                                                    {{#each listShop}}
+                                                    <li class="radiobox type01 checked" role="radio" aria-checked="true">
+                                                        <!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                                                        <input type="radio" name="delivery" value="{{ordNo}}" title="주문 현황">
+                                                        <!-- 체크상태일 경우 checked="checked" -->
+                                                        <div class="order-lookup-cell">
+                                                            <span class="order-ti">주문번호 (주문일자)</span>
+                                                            <span class="order-number">{{ordNo}} ({{ordDate}})</span>
+                                                            <!-- .delivery1 : 주문접수, .delivery2 : 주문취소, .delivery3 : 배송중, .delivery4 : 배송완료 -->
+                                                        </div>
+                                                        <div class="order-lookup-cell">
+                                                            <span class="order-tx">{{ordProdNm}}</span>
+                                                            <span class="img-order-delivery"><img src="{{ordProdUrl}}"
+                                                                                                  alt="IPHONE6S+_16GR"></span>
+                                                        </div>
+                                                    </li>
+                                                    {{/each}}
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {{else}}
+                                <div class="empty-cont mt50 mb40">
+                                    <span class="ico"></span>
+                                    <p class="desc">주문하신 내역이 없습니다.</p>
+                                </div>
+                                {{/if}}
+                            </div>
+                            <div class="direct_tab2" style="display: none">
+                                {{#if listUsed}}
+                                <div class="order-lookup-cont">
+                                    <div class="order-lookup-list">
+                                        <div class="widget">
+                                            <div class="widget-box radio">
+                                                <ul class="select-list fe-direct-popup-content" role="radiogroup">
+                                                    {{#each listUsed}}
+                                                    <li class="radiobox type01 checked" role="radio" aria-checked="true">
+                                                        <!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                                                        <input type="radio" name="delivery" value="{{ordNo}}" title="주문 현황">
+                                                        <!-- 체크상태일 경우 checked="checked" -->
+                                                        <div class="order-lookup-cell">
+                                                            <span class="order-ti">주문번호 (주문일자)</span>
+                                                            <span class="order-number">{{ordNo}} ({{ordDate}})</span>
+                                                            <!-- .delivery1 : 주문접수, .delivery2 : 주문취소, .delivery3 : 배송중, .delivery4 : 배송완료 -->
+                                                        </div>
+                                                        <div class="order-lookup-cell">
+                                                            <span class="order-tx">{{ordProdNm}}</span>
+                                                            <span class="img-order-delivery"><img src="{{ordProdUrl}}"
+                                                                                                  alt="IPHONE6S+_16GR"></span>
+                                                        </div>
+                                                    </li>
+                                                    {{/each}}
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {{else}}
+                                <div class="empty-cont mt50 mb40">
+                                    <span class="ico"></span>
+                                    <p class="desc">주문하신 내역이 없습니다.</p>
+                                </div>
+                                {{/if}}
                             </div>
                         </div>
                     </div>
