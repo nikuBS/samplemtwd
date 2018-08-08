@@ -98,14 +98,14 @@ export const URL = {
   '/customer/email': { login: false, id: 'CI_04_09', title: '' }, // 이메일 문의
   '/customer/voice/info': { login: false, id: 'CI_10_01', title: '' }, // 목소리인증 안내
   '/customer/voice/sms': { login: false, id: 'CI_10_02', title: '' }, // 목소리인증 문자발송
-  '/customer/notice': { login: false, id: 'CI_06_01', title: '' }, // 공지사항
-  '/customer/prevent-damage': { login: false, id: 'CI_07_01', title: '' }, // 이용자 피해예방 센터 메인
-  '/customer/prevent-damage/guide': { login: false, id: 'CI_07_03', title: '' }, // 이용자 피해예방 가이드
-  '/customer/prevent-damage/guide/view': { login: false, id: 'CI_07_05', title: '' }, // 이용자 피해예방 가이드 - 상세
-  '/customer/prevent-damage/latest-warning': { login: false, id: 'CI_07_07', title: '' },  // 최신 이용자 피해예방 주의보
-  '/customer/prevent-damage/latest-warning/view': { login: false, id: 'CI_07_08', title: '' },  // 최신 이용자 피해예방 주의보 - 상세
-  '/customer/prevent-damage/useful-service': { login: false, id: 'CI_07_09', title: '' },  // 유용한 부가서비스
-  '/customer/prevent-damage/relate-site': { login: false, id: 'CI_07_10', title: '' }, // 이용자 피해예방 관련 사이트
+  '/customer/notice': { login: false, id: 'CI_06_01', title: '공지사항' }, // 공지사항
+  '/customer/prevent-damage': { login: false, id: 'CI_07_01', title: '이용자 피해예방 센터' }, // 이용자 피해예방 센터 메인
+  '/customer/prevent-damage/guide': { login: false, id: 'CI_07_03', title: '이용자 피해예방 가이드' }, // 이용자 피해예방 가이드
+  '/customer/prevent-damage/guide/view': { login: false, id: 'CI_07_05', title: '이용자 피해예방 가이드' }, // 이용자 피해예방 가이드 - 상세
+  '/customer/prevent-damage/latest-warning': { login: false, id: 'CI_07_07', title: '최신 이용자 피해예방 주의보' },  // 최신 이용자 피해예방 주의보
+  '/customer/prevent-damage/latest-warning/view': { login: false, id: 'CI_07_08', title: '최신 이용자 피해예방 주의보' },  // 최신 이용자 피해예방 주의보 - 상세
+  '/customer/prevent-damage/useful-service': { login: false, id: 'CI_07_09', title: '유용한 부가서비스' },  // 유용한 부가서비스
+  '/customer/prevent-damage/relate-site': { login: false, id: 'CI_07_10', title: '이용자 피해예방 관련 사이트' }, // 이용자 피해예방 관련 사이트
   '/customer/helpline': { login: true, id: 'CI_05_01', title: '전화상담 예약' }, // 전화상담예약
   '/customer/shop/detail': { login: false, id: 'CI_02_04', title: '' }, // 매장 및 AS센터 > 매장정보
   '/customer/shop/near': { login: false, id: 'CI_02_05', title: '' }, // 매장 및 AS센터 > 내 위치와 가까운 매장 검색

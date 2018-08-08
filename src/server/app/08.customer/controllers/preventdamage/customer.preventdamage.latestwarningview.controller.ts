@@ -5,7 +5,7 @@
  */
 
 import { NextFunction, Request, Response } from 'express';
-import {API_CMD, API_CODE} from '../../../../types/api-command.type';
+import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import FormatHelper from '../../../../utils/format.helper';
 
