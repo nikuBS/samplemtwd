@@ -56,10 +56,10 @@ class PaymentPrepayMicroAutoHistoryController extends TwViewController {
   private parsePrepayData(record: any): any {
     if (!FormatHelper.isEmpty(record)) {
       record.map((data) => {
-        data.name = REQUEST_TYPE[data.auto_chrg_req_cl_cd];
-        data.date = DateHelper.getFullDateAndTime(data.oper_dtm);
-        data.autoChrgStrdAmount = FormatHelper.addComma(data.auto_chrg_strd_amt);
-        data.autoChrgAmount = FormatHelper.addComma(data.auto_chrg_amt);
+        data.name = REQUEST_TYPE[data.autoChrgReqClCd];
+        data.date = DateHelper.getFullDateAndTime(data.operDtm);
+        data.autoChrgStrdAmount = FormatHelper.addComma(data.autoChrgStrdAmt);
+        data.autoChrgAmount = FormatHelper.addComma(data.autoChrgAmt);
       });
     }
     record.code = API_CODE.CODE_00;

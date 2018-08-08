@@ -512,7 +512,7 @@ Tw.PostcodeMain.prototype = {
     var isValid = false;
     if (this.$aptLastField.is(':visible')) {
       isValid = this._checkEmpty(this.$aptLastField);
-      _detailAddress = this.$aptLastField.find('input:first').val() + Tw.POSTCODE_TEXT.DONG +
+      _detailAddress = this.$aptLastField.find('input:first').val() + Tw.POSTCODE_TEXT.DONG + ' ' +
         this.$aptLastField.find('input:last').val() + Tw.POSTCODE_TEXT.HO;
     } else {
       isValid  = true;
@@ -523,7 +523,10 @@ Tw.PostcodeMain.prototype = {
       Tw.UIService.setLocalStorage('post', [_postCode, _address, _detailAddress]);
 
       this._history.setHistory();
-      this._history.goLoad('http://localhost:3000/customer/email/quality/wibro?post=success');
+
+      var url = '/customer/email/quality/wibro';
+      this._history.pushUrl(url);
+      this._history.goLoad(url + '?post=success');
     }
   },
   _checkEmpty: function ($target) {

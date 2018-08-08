@@ -39,6 +39,7 @@ Tw.CustomerEmailCall.prototype = {
     this.$container.on('click', '[data-id=param08]', $.proxy(this._selectPositionPopup, this));
     this.$container.on('click', '[data-id=param09]', $.proxy(this._selectBuildingPopup, this));
     this.$container.on('click', '[data-id=param10]', $.proxy(this._selectOccurDatePopup, this));
+    this.$container.on('click', '.fe-btn-postcode', $.proxy(this._selectPost, this));
   },
 
   _showEnvPopup: function () {
@@ -124,6 +125,26 @@ Tw.CustomerEmailCall.prototype = {
 
     $('.fe-param10').text(elTarget.text());
     this._popupService.close();
+  },
+
+  _selectPost: function () {
+    var params = {
+      param01: $('.fe-param01').val(),
+      param02: $('.fe-param02').text(),
+      param03: $('.fe-param03').text(),
+      param04: $('.fe-param04').text(),
+      param05: $('.fe-param05').val(),
+      param06: $('.fe-param06').val(),
+      param07: $('.fe-param07').val(),
+      param08: $('.fe-param08').text(),
+      param09: $('.fe-param09').text(),
+      param10: $('.fe-param10').text(),
+      param11: $('.fe-param11').val()
+    };
+
+    Tw.UIService.setLocalStorage('post_info', JSON.stringify(params));
+
+    this._history.replaceURL('/home/postcode');
   },
 
   _makeWibroRequestParameter: function () {

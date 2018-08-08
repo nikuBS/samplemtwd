@@ -4,9 +4,10 @@
  * Date: 2018.08.06
  */
 
-Tw.PaymentPrepayAuto = function (rootEl, title) {
+Tw.PaymentPrepayAuto = function (rootEl, title, type) {
   this.$container = rootEl;
   this.$title = title;
+  this.$type = type;
   this.$window = $(window);
   this.$document = $(document);
 
@@ -27,6 +28,8 @@ Tw.PaymentPrepayAuto.prototype = {
 
     this._initVariables();
     this._initAutoCardInfo();
+
+    this.$changeCheckbox.hide();
   },
   _initVariables: function () {
     this._standardAmountList = [];
@@ -42,6 +45,7 @@ Tw.PaymentPrepayAuto.prototype = {
     this.$changeCardInfo = this.$container.find('.fe-change-card-info');
     this.$changeCheckbox = this.$container.find('.fe-change-prepay-check-box');
     this.$cardInfo = this.$container.find('.fe-card-info-title');
+    this.$changeType = 'A';
   },
   _initAutoCardInfo: function () {
     this.$autoPrepayInfoWrap = this.$container.find('.fe-s-card-info');
@@ -62,8 +66,8 @@ Tw.PaymentPrepayAuto.prototype = {
     this.$container.on('click', '.pay-check-box', $.proxy(this._setAutoInfo, this));
     this.$container.on('click', '.fe-select-standard-amount', $.proxy(this._selectAmount, this, this._standardAmountList));
     this.$container.on('click', '.fe-select-prepay-amount', $.proxy(this._selectAmount, this, this._prepayAmountList));
-    this.$container.on('click', '.fe-request-auto-prepay', $.proxy(this._requestPrepay, this, 'auto'));
-    this.$container.on('click', '.fe-request-change-prepay', $.proxy(this._requestPrepay, this, 'change'));
+    this.$container.on('click', '.fe-request-auto-prepay', $.proxy(this._requestPrepay, this));
+    this.$container.on('click', '.fe-request-change-prepay', $.proxy(this._requestPrepay, this));
   },
   _onlyNumber: function (event) {
     Tw.InputHelper.inputNumberOnly(event.currentTarget);
@@ -74,6 +78,8 @@ Tw.PaymentPrepayAuto.prototype = {
     this.$changeCheckbox.removeClass('checked').attr('aria-checked', 'false').find('input').removeAttr('checked');
 
     if ($target.hasClass('fe-money')) {
+      this.$changeType = 'A';
+
       this.$changeMoneyInfo.show();
       this.$changeCardInfo.show();
       this.$changeCheckbox.hide();
@@ -83,6 +89,8 @@ Tw.PaymentPrepayAuto.prototype = {
       var cardNum = this.$container.find('.fe-auto-cardnum').text();
       $cardNumber.attr({ 'type': 'text', 'disabled': 'disabled' }).val(cardName + ' ' + cardNum);
     } else if ($target.hasClass('fe-card')) {
+      this.$changeType = 'C';
+
       this.$changeMoneyInfo.hide();
       this.$changeCardInfo.hide();
       this.$cardInfo.show();
@@ -91,6 +99,8 @@ Tw.PaymentPrepayAuto.prototype = {
       }
       $cardNumber.attr('type', 'number').removeAttr('disabled');
     } else {
+      this.$changeType = 'T';
+
       this.$changeMoneyInfo.show();
       this.$changeCardInfo.hide();
       this.$cardInfo.show();
@@ -152,23 +162,51 @@ Tw.PaymentPrepayAuto.prototype = {
     if (this._isValid()) {
       var reqData = this._makeRequestData();
       if (this.$cardNumber.attr('cardcode') === undefined) {
-        this._getCardInfo(reqData);
+        if (this.$type === 'change' && this.$changeType === 'A') {
+          this._autoPrepay(reqData);
+        } else {
+          this._getCardInfo(reqData);
+        }
       } else {
         this._autoPrepay(reqData);
       }
     }
   },
   _isValid: function () {
+    var isValid = false;
+    if (this.$type === 'auto') {
+      isValid = this._isValidForNew();
+    } else {
+      isValid = this._isValidForChange();
+    }
+    return isValid;
+  },
+  _isValidForNew: function () {
     return (this._validation.checkIsMore(this.$standardSelector.attr('id'), this.$prepaySelector.attr('id'), Tw.MSG_PAYMENT.PRE_A08) &&
+      this._validation.checkEmpty(this.$cardWrap.find('.fe-birth').val(), Tw.MSG_PAYMENT.PRE_A09) &&
+      this._validation.checkEmpty(this.$cardNumber.val(), Tw.MSG_PAYMENT.AUTO_A05) &&
+      this._validation.checkIsMore(this.$cardNumber.val(), 15, Tw.MSG_PAYMENT.REALTIME_A06) &&
       this._commonValidationForCard(this.$cardWrap));
+  },
+  _isValidForChange: function () {
+    if (this.$changeType === 'A') {
+      return (this._validation.checkIsMore(this.$standardSelector.attr('id'), this.$prepaySelector.attr('id'), Tw.MSG_PAYMENT.PRE_A08) &&
+        this._commonValidationForCard(this.$cardWrap));
+    } else if (this.$changeType === 'C') {
+      return (this._validation.checkEmpty(this.$cardNumber.val(), Tw.MSG_PAYMENT.AUTO_A05) &&
+        this._validation.checkIsMore(this.$cardNumber.val(), 15, Tw.MSG_PAYMENT.REALTIME_A06) &&
+        this._commonValidationForCard(this.$cardWrap));
+    } else {
+      return (this._validation.checkIsMore(this.$standardSelector.attr('id'), this.$prepaySelector.attr('id'), Tw.MSG_PAYMENT.PRE_A08) &&
+        this._validation.checkEmpty(this.$cardNumber.val(), Tw.MSG_PAYMENT.AUTO_A05) &&
+        this._validation.checkIsMore(this.$cardNumber.val(), 15, Tw.MSG_PAYMENT.REALTIME_A06) &&
+        this._commonValidationForCard(this.$cardWrap));
+    }
   },
   _commonValidationForCard: function ($target) {
     var vars = this._getVariables($target);
 
-    return (this._validation.checkEmpty(vars.cardBirthVal, Tw.MSG_PAYMENT.PRE_A09) &&
-      this._validation.checkEmpty(vars.cardNumberVal, Tw.MSG_PAYMENT.AUTO_A05) &&
-      this._validation.checkIsMore(vars.cardNumberVal, 15, Tw.MSG_PAYMENT.REALTIME_A06) &&
-      this._validation.checkEmpty(vars.cardYVal, Tw.MSG_PAYMENT.AUTO_A01) &&
+    return (this._validation.checkEmpty(vars.cardYVal, Tw.MSG_PAYMENT.AUTO_A01) &&
       this._validation.checkEmpty(vars.cardMVal, Tw.MSG_PAYMENT.AUTO_A01) &&
       this._validation.checkLength(vars.cardYVal, 4, Tw.MSG_PAYMENT.REALTIME_A04) &&
       this._validation.checkYear(vars.cardYVal, Tw.MSG_PAYMENT.REALTIME_A04) &&
@@ -179,8 +217,6 @@ Tw.PaymentPrepayAuto.prototype = {
   },
   _getVariables: function ($target) {
     return {
-      cardBirthVal: $target.find('.fe-birth').val(),
-      cardNumberVal: $target.find('.fe-card-number').val(),
       cardYVal: $target.find('.fe-card-y').val(),
       cardMVal: $target.find('.fe-card-m').val(),
       cardPasswordVal: $target.find('.fe-card-password').val()
@@ -193,17 +229,27 @@ Tw.PaymentPrepayAuto.prototype = {
       isAuto = 'Y';
     }
 
-    return {
+    var reqData = {
       checkAuto: isAuto,
       autoChrgStrdAmt: this.$standardSelector.attr('id'),
       autoChrgAmt: this.$prepaySelector.attr('id'),
-      cardBirth: $.trim(),
-      cardNum: $.trim(this.$cardNumber.val()),
       cardEffYM: $.trim(vars.cardYVal) + $.trim(vars.cardMVal),
-      cardPwd: $.trim(vars.cardPasswordVal),
-      cardType: this.$cardNumber.attr('cardcode'),
-      cardNm: this.$cardNumber.attr('cardname')
+      cardPwd: $.trim(vars.cardPasswordVal)
     };
+
+    if (this.$type === 'auto') {
+      reqData.cardBirth = $.trim(this.$cardWrap.find('.fe-birth').val());
+    } else {
+      reqData.checkRadio = this.$changeType;
+    }
+
+    if (!(this.$type === 'change' && this.$changeType === 'A')) {
+      reqData.cardNum = $.trim(this.$cardNumber.val());
+      reqData.cardType = this.$cardNumber.attr('cardcode');
+      reqData.cardNm = this.$cardNumber.attr('cardname');
+    }
+
+    return reqData;
   },
   _getCardInfo: function (reqData) {
     this._apiService.request(Tw.API_CMD.BFF_07_0068, {}, {}, $.trim(this.$cardNumber.val()).substr(0, 6))
@@ -236,7 +282,6 @@ Tw.PaymentPrepayAuto.prototype = {
     if (res.code === Tw.API_CODE.CODE_00) {
       this._history.setHistory();
       var $target = this.$container.find('.fe-complete-data-set');
-      this._setCompleteTitle($target);
       this._setCompleteData(res.result, $target);
       this._go('#complete');
     } else {
@@ -246,16 +291,43 @@ Tw.PaymentPrepayAuto.prototype = {
   _autoPrepayFail: function (err) {
     this._popupService.openAlert(err.code + ' ' + err.msg);
   },
-  _setCompleteTitle: function ($target) {
-    $target.find('.fe-complete-title').text(Tw.PAYMENT_PREPAY_TITLE.AUTO_PREPAY);
-    $target.find('.fe-complete-message').text(Tw.PAYMENT_PREPAY_TITLE.AUTO_COMPLETE);
-  },
   _setCompleteData: function ($result, $target) {
+    $target.find('.fe-complete-title').text(this._getCompleteTitle($target));
+    $target.find('.fe-complete-message').text(this._getCompleteMessage());
+
     for (var key in $result) {
       $target.find('.fe-' + key).text($result[key]);
     }
     $target.find('.fe-autoChrgStrdAmt').text(Tw.FormatHelper.addComma($result.autoChrgStrdAmt));
     $target.find('.fe-autoChrgAmt').text(Tw.FormatHelper.addComma($result.autoChrgAmt));
+  },
+  _getCompleteTitle: function ($target) {
+    var title = '';
+    var $className = '.fe-auto';
+    if (this.$type === 'auto') {
+      title = Tw.PAYMENT_PREPAY_TITLE.AUTO_PREPAY;
+    } else {
+      if (this.$changeType === 'A') {
+        title = Tw.PAYMENT_PREPAY_TITLE.CHANGE_MONEY;
+        $className = '.fe-change-money';
+      } else if (this.$changeType === 'C') {
+        title = Tw.PAYMENT_PREPAY_TITLE.CHANGE_CARD;
+        $className = '.fe-change-card';
+      } else {
+        title = Tw.PAYMENT_PREPAY_TITLE.CHANGE_ALL;
+      }
+    }
+    $target.find($className).removeClass('none');
+    return title;
+  },
+  _getCompleteMessage: function () {
+    var message = '';
+    if (this.$type === 'auto') {
+      message = Tw.PAYMENT_PREPAY_TITLE.AUTO_COMPLETE;
+    } else {
+      message = Tw.PAYMENT_PREPAY_TITLE.AUTO_CHANGE_COMPLETE;
+    }
+    return message;
   },
   _go: function (hash) {
     this._history.goHash(hash);
