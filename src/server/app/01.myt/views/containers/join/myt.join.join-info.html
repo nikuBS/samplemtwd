@@ -28,19 +28,29 @@
                 <div class="link-long-group">
                     <% if( data.isContract ) {%>
                     <div class="link-long">
-                        <button>약정 할인 및 단말 할부 정보<span class="ico"></span></button>
+                        <a href="/myt/join/contract-terminal/phone">약정 할인 및 단말 할부 정보<span class="ico"></span></a>
                     </div>
                     <% } %>
                     <% if(svcInfo.svcAttrCd === 'M1' && data.isRsvYn === 'Y' ) {%>
                     <div class="link-long">
                         <a href="/myt/join/join-info/no-contract">무약정 플랜 포인트 내역 보기<span class="ico"></span></a>
-                        <!--<button>무약정 플랜 포인트 내역 보기<span class="ico"></span></button>-->
                     </div>
                     <% } %>
                     <div class="link-long">
-                        <button>납부/청구정보<span class="ico"></span></button>
+                        <a href="/myt/join/pay-claim/phone">납부/청구정보<span class="ico"></span></a>
                     </div>
                 </div>
+
+                <% if(data.lineType === 'S') { %>
+                <div class="line-bot"></div>
+                <div class="contents-btn mt40 pb20">
+                    <ul class="bt-slice">
+                        <li class="bt-white1">
+                            <a href="/myt/join/join-info/sms">우리동네 망 작업 알림 받기</a>
+                        </li>
+                    </ul>
+                </div>
+                <% } %>
             </div>
 
             <hr class="cont-sp type1" aria-hidden="true" />
