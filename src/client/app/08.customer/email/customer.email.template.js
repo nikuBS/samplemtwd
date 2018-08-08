@@ -241,10 +241,24 @@ Tw.CustomerEmailTemplate.prototype = {
         this.$wrap_call.html(this.tpl_call_wibro());
 
         if ( Tw.UrlHelper.getQueryParams().post ) {
-          var location = Tw.UIService.getLocalStorage('post').split(',');
-          $('.fe-param05').val(location[0]);
-          $('.fe-param06').val(location[1]);
-          $('.fe-param07').val(location[2]);
+          if ( Tw.UIService.getLocalStorage('post') ) {
+            var location = Tw.UIService.getLocalStorage('post').split(',');
+            $('.fe-param05').val(location[0]);
+            $('.fe-param06').val(location[1]);
+            $('.fe-param07').val(location[2]);
+          }
+
+          if ( Tw.UIService.getLocalStorage('post_info') ) {
+            var previousParams = JSON.parse(Tw.UIService.getLocalStorage('post_info'));
+
+            $('.fe-param01').val(previousParams.param01);
+            $('.fe-param03').text(previousParams.param03);
+            $('.fe-param04').text(previousParams.param04);
+            $('.fe-param08').text(previousParams.param08);
+            $('.fe-param09').text(previousParams.param09);
+            $('.fe-param10').text(previousParams.param10);
+            $('.fe-param11').val(previousParams.param11);
+          }
         }
       }
 

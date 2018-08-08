@@ -128,6 +128,22 @@ Tw.CustomerEmailCall.prototype = {
   },
 
   _selectPost: function () {
+    var params = {
+      param01: $('.fe-param01').val(),
+      param02: $('.fe-param02').text(),
+      param03: $('.fe-param03').text(),
+      param04: $('.fe-param04').text(),
+      param05: $('.fe-param05').val(),
+      param06: $('.fe-param06').val(),
+      param07: $('.fe-param07').val(),
+      param08: $('.fe-param08').text(),
+      param09: $('.fe-param09').text(),
+      param10: $('.fe-param10').text(),
+      param11: $('.fe-param11').val()
+    };
+
+    Tw.UIService.setLocalStorage('post_info', JSON.stringify(params));
+
     this._history.replaceURL('/home/postcode');
   },
 
