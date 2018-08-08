@@ -46,17 +46,17 @@
                                                 <li>
                                                     <dl>
                                                         <dt>평균 사용요금</dt>
-                                                        <dd><%= data.useAverage || '-' %></dd>
+                                                        <dd><%= data.empty.fee? '-' : data.useAverage %></dd>
                                                     </dl>
                                                 </li>
                                                 <li>
                                                     <dl>
                                                         <dt>평균 할인요금</dt>
-                                                        <dd class="minus"><%= data.disAverage || '-' %></dd>
+                                                        <dd class="minus"><%= data.empty.fee? '-' : data.disAverage %></dd>
                                                     </dl>
                                                 </li>
                                             </ul>
-                                            <% if (data.useAverage) { %>
+                                            <% if (!data.empty.fee) { %>
                                             <!-- 그래프 영역 -->
                                             <div class="graph-wrap">
                                                 <div class="can-box3">
