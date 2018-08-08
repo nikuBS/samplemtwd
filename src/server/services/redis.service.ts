@@ -33,7 +33,13 @@ class RedisService {
     this.client = redis.createClient(this.envRedis);
     return Observable.create((observer) => {
       this.client.get(key, (err, reply) => {
-        const result = JSON.parse(reply);
+        let result;
+        try {
+          result = JSON.parse(reply);
+        } catch (e) {
+          result = null;
+        }
+
         this.client.end();
         observer.next(result);
         observer.complete();
