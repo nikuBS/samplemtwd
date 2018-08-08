@@ -20,13 +20,13 @@
             <ul class="select-list">
                 <li>
                     <div class="pay-maininfo">
-                        <span class="service-sort"><span class="fe-auto-cardname"><%= prepay.cardCdNm %></span><br /><span class="fe-auto-cardnum"><%= prepay.cardNum %></span></span>
+                        <span class="service-sort"><span class="fe-auto-cardname"><%= autoPrepayInfo.cardCdNm %></span><br /><span class="fe-auto-cardnum"><%= autoPrepayInfo.cardNum %></span></span>
                     </div>
                     <dl class="pay-detail type2">
                         <dt>선결제 금액</dt>
-                        <dd><strong><%= prepay.autoChrgAmount %></strong> <span class="unit">원</span></dd>
+                        <dd><strong><%= autoPrepayInfo.autoChrgAmount %></strong> <span class="unit">원</span></dd>
                         <dt>기준금액</dt>
-                        <dd><strong><%= prepay.autoChrgStrdAmount %></strong> <span class="unit">원</span></dd>
+                        <dd><strong><%= autoPrepayInfo.autoChrgStrdAmount %></strong> <span class="unit">원</span></dd>
                     </dl>
                 </li>
             </ul>
@@ -62,23 +62,39 @@
             <h3 class="pay-tit">금액정보</h3>
             <ul class="account-inner">
                 <li class="account-wrap type2">
-                    <h4 class="account-tit">기준금액 <span class="max-account">최대 <em class="fe-standard-amount"></em>만원 <button class="max-account-info blind" aria-haspopup="true">기준 최대금액 설명 보기</button></span></h4>
+                    <h4 class="account-tit">기준금액
+                        <span class="max-account">최대 <em class="fe-standard-amount"><%= autoPrepayInfo.comboStandardAmount %></em>만원
+                            <button class="max-account-info blind fe-standard-amount-info" aria-haspopup="true">기준 최대금액 설명 보기</button>
+                        </span>
+                    </h4>
                     <div class="account-form">
                         <span class="account-form-input">
-                            <span class="pay-view-box"><em class="fe-standard-amount"></em>만원</span>
+                            <span class="pay-view-box"><em class="fe-standard-amount"><%= autoPrepayInfo.comboStandardAmount %></em>만원</span>
                         </span>
                         <span class="account-form-arrow"></span>
-                        <span class="account-form-select"><button class="bt-dropdown big fe-select-standard-amount" title="기준금액 변경 선택" aria-haspopup="true"><span class="ico"></span></button></span>
+                        <span class="account-form-select">
+                            <button class="bt-dropdown big fe-select-standard-amount" title="기준금액 변경 선택" aria-haspopup="true" id="<%= autoPrepayInfo.cmbAutoChrgStrdAmt %>">
+                                <span class="ico"></span><%= autoPrepayInfo.comboStandardAmount %>만원
+                            </button>
+                        </span>
                     </div>
                 </li>
                 <li class="account-wrap type2">
-                    <h4 class="account-tit">선결제 금액 <span class="max-account">최대 <em class="fe-standard-amount"></em>만원 <button class="max-account-info blind" aria-haspopup="true">선결제 최대금액 설명 보기</button></span></h4>
+                    <h4 class="account-tit">선결제 금액
+                        <span class="max-account">최대 <em class="fe-prepay-amount"><%= autoPrepayInfo.comboChargeAmount %></em>만원
+                            <button class="max-account-info blind fe-standard-amount-info" aria-haspopup="true">선결제 최대금액 설명 보기</button>
+                        </span>
+                    </h4>
                     <div class="account-form">
                         <span class="account-form-input">
-                            <span class="pay-view-box"><em class="fe-standard-amount"></em>만원</span>
+                            <span class="pay-view-box"><em class="fe-prepay-amount"><%= autoPrepayInfo.comboChargeAmount %></em>만원</span>
                         </span>
                         <span class="account-form-arrow"></span>
-                        <span class="account-form-select"><button class="bt-dropdown big fe-select-prepay-amount" title="선결제 금액 변경 선택" aria-haspopup="true"><span class="ico"></span></button></span>
+                        <span class="account-form-select">
+                            <button class="bt-dropdown big fe-select-prepay-amount" title="선결제 금액 변경 선택" aria-haspopup="true" id="<%= autoPrepayInfo.cmbAutoChrgAmt %>">
+                                <span class="ico"></span><%= autoPrepayInfo.comboChargeAmount %>만원
+                            </button>
+                        </span>
                     </div>
                 </li>
             </ul>
@@ -86,14 +102,21 @@
     </div>
     <hr class="cont-sp type1" aria-hidden="true" />
     <div class="cont-box">
-        <div class="pay-info fe-change-card-wrap">
+        <div class="pay-info fe-card-wrap">
             <div class="widget">
                 <h3 class="pay-tit fe-card-info-title" aria-checked="false" style="display:none;">카드정보</h3>
                 <div class="widget-box check">
-                    <span class="checkbox type01 pay-check-box fe-change-prepay-check-box" role="checkbox" aria-checked="false">
+                    <% if (autoCardInfo !== null) { %>
+                    <span class="checkbox type01 pay-check-box fe-prepay-check-box" role="checkbox" aria-checked="false">
                         <input type="checkbox" name="checkbox" value="" title="자동납부정보와 동일">
                         자동납부정보와 동일
                     </span>
+                    <div class="fe-s-card-info none">
+                        <span class="fe-s-card-number"><%= autoCardInfo.s_bank_card_num %></span>
+                        <span class="fe-s-card-code"><%= autoCardInfo.s_bank_card_co_cd %></span>
+                        <span class="fe-s-card-name"><%= autoCardInfo.s_bank_card_name %></span>
+                    </div>
+                    <% } %>
                 </div>
             </div>
             <div class="payment-select fe-change-card-info">
@@ -111,7 +134,7 @@
                     <div class="account-form">
                         <div class="inputbox input-context">
                             <span class="input">
-                                <input type="text" class="fe-only-number fe-card-number" placeholder="숫자만 입력" title="카드번호 숫자만 입력" value="<%= prepay.cardCdNm %> <%= prepay.cardNum %>" disabled>
+                                <input type="text" class="fe-only-number fe-card-number" placeholder="숫자만 입력" title="카드번호 숫자만 입력" value="<%= autoPrepayInfo.cardCdNm %> <%= autoPrepayInfo.cardNum %>" disabled>
                                 <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
                             </span>
                         </div>
@@ -154,5 +177,5 @@
         </div>
     </div>
     <hr class="cont-sp type1" aria-hidden="true" />
-    <% include ../components/info/payment.prepay.history.info.component.html %>
+    <%- include('../components/info/payment.prepay.history.info.component.html', { title: title }); %>
 </div>
