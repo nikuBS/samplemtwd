@@ -4904,6 +4904,7 @@
   display: block;
   width: 100%;
   font-weight: 400;
+  color: #000;
 }
 
 .history-list ul.list-inner li button .bt-inner, .history-list ul.list-inner li a .bt-inner {
@@ -8480,8 +8481,8 @@ span[class*=char-star][class*=red] {
 
 .img-list {
   overflow: hidden;
-  margin: 0 -0.0625rem;
-  padding: 0 0.0625rem;
+  margin: 0 -0.0625rem -0.0625rem;
+  padding: 0 0.0625rem 0.0625rem;
 }
 
 .img-list .img-list-box {
@@ -8523,6 +8524,10 @@ span[class*=char-star][class*=red] {
 
 .detail-aria-title {
   font-size: 1.25rem;
+}
+
+.detail-aria-cont img {
+  max-width: 100%;
 }
 
 .detail-area-date {
