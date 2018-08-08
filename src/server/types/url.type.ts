@@ -12,11 +12,13 @@ export const URL = {
   '/myt/usage/tdatashare/close': { login: true, id: '', title: '' },
   '/myt/usage/troaming': { login: true, id: '', title: '' },
   '/myt/usage/ting': { login: true, id: '', title: '' },
+  '/myt/usage/pattern': { login: true, id: 'MY_02_02_02_03_01', title: '최근 사용패턴' },
+  '/myt/usage/pattern/detail': { login: true, id: 'MY_02_02_02_01_03', title: '최근 사용패턴' },
   '/usage/24hourdiscount': { login: true, id: '', title: '' },
   '/myt/bill/hotbill': { login: true, id: 'MY_03_01_01', title: '' }, // 실시간 사용요금
-  '/myt/bill/guidechange/reissue': { login: true, id: '', title: '' },
-  '/myt/bill/guidechange/reissue/complete': { login: true, id: '', title: '' },
-  '/myt/bill/billguide/returnhistory': { login: true, id: '', title: '' },
+  '/myt/bill/guidechange/reissue': { login: true, id: '', title: '요금안내서 재발행' },
+  '/myt/bill/guidechange/reissue/complete': { login: true, id: '', title: '요금안내서 재발행' },
+  '/myt/bill/billguide/returnhistory': { login: true, id: '', title: '요금안내서 반송내역' },
   '/myt/bill/billguide': { login: true, id: '', title: '' },
   '/myt/bill/billguide/subDetailSpecification': { login: true, id: '', title: '' },
   '/myt/bill/billguide/subSelPayment': { login: true, id: '', title: '' },
@@ -40,9 +42,7 @@ export const URL = {
   '/myt/bill/history/contents/limit': { login: true, id: 'My_02_03_05_01_02', title: '' },  // 나의 요금 > 콘텐츠 이용료 이용내역 > 콘텐츠 이용 한도 확인
   '/myt/bill/history/contents/limit/change': { login: true, id: 'My_02_03_05_01_01', title: '' },  // 나의 요금 > 콘텐츠 이용료 이용내역 > 콘텐츠 이용 한도 변경
   '/myt/bill/history/contents/detail': { login: true, id: 'MY_02_03_05_01_03', title: '' },  // 나의 요금 > 콘텐츠 이용료 이용내역 상세
-  '/myt/join/protect/change': { login: true, id: 'MY_01_02_08', title: '' },
-  '/myt/joinService/protect/change': { login: true, id: 'MY_01_02_08', title: '' },
-  '/myt/joinService/protect/inquiry': { login: true, id: 'MY_01_02_07', title: '' },
+  '/myt/join/protect/change': { login: true, id: 'MY_01_02_08', title: '고객보호 비밀번호 설정' },
   '/myt/join/join-info': { login: true, id: 'MY_01_02', title: '' }, // 가입정보
   '/myt/join/join-info/no-contract': { login: true, id: 'MY_01_02_10', title: '' }, // 무약정 플랜 포인트 내역
   // recharge
