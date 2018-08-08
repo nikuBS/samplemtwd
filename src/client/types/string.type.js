@@ -50,7 +50,8 @@ Tw.POPUP_TITLE = {
   SET_HELPLINE_ITEM: '항목설정',
   MYT_LIMIT_MONTH: '매월 한도선택',
   MYT_LIMIT_DAY: '1일 한도선택',
-  MYT_LIMIT_ONCE: '1회 한도선택'
+  MYT_LIMIT_ONCE: '1회 한도선택',
+  MYT_SMS : '번호 선택'
 };
 
 Tw.POPUP_PROPERTY = {
@@ -401,7 +402,10 @@ Tw.MSG_MYT = {
   HISTORY_ALERT_A29: '무선콘텐츠 서비스 결제확인 SMS 추가 수신을 받으시겠습니까?',
   HISTORY_ALERT_A30: '무선콘텐츠 서비스 결제확인 SMS 추가 수신을 받지 않으시겠습니까?',
   HISTORY_ALERT_B01: '1회 한도는 1일 한도를 초과할 수 없습니다.',
-  HISTORY_ALERT_B02: '1일 한도는 월 한도를 초과할 수 없습니다.'
+  HISTORY_ALERT_B02: '1일 한도는 월 한도를 초과할 수 없습니다.',
+  SMS_A01 : '개인정보 제공 및 활용동의에 체크해주세요.',
+  SMS_A02 : '숫자만 입력 가능합니다.',
+  SMS_A03 : 'SMS 받을 번호를 입력해주세요.'
 };
 
 Tw.MSG_RECHARGE = {
@@ -759,3 +763,5 @@ Tw.MYT_HISTORY_CPSTATE = {
   C0: 'C0',
   C1: 'C1'
 };
+
+Tw.HP_NUM_LIST = ['011','016','017','019'];
