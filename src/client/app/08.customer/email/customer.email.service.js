@@ -58,6 +58,7 @@ Tw.CustomerEmailService.prototype = {
 
   _requestEmailCell: function () {
     var params = {
+      selSvcMgmtNum: $('.fe-service-line').text(),
       cntcNumClCd: $('[name=radio_service_phone]:checked').val(),
       connSite: Tw.BrowserHelper.isApp() ? 15 : 19,
       ofrCtgSeq: this._oEmailTemplate.getState().serviceCategory,
@@ -76,6 +77,7 @@ Tw.CustomerEmailService.prototype = {
 
   _requestEmailInternet: function () {
     var params = {
+      selSvcMgmtNum: $('.fe-service-line').text(),
       cntcNumClCd: $('[name=radio_service_phone]:checked').val(),
       connSite: Tw.BrowserHelper.isApp() ? 15 : 19,
       ofrCtgSeq: this._oEmailTemplate.getState().serviceCategory,

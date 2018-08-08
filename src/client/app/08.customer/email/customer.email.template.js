@@ -18,14 +18,13 @@ Tw.CustomerEmailTemplate.prototype = {
   state: {
     lineList: {},
     tabIndex: 0,
-    serviceType: 'CELL',
+    serviceType: '',
     serviceCategory: '',
     callCategory: ''
   },
 
   _init: function () {
     this._apiService.request(Tw.API_CMD.BFF_01_0002, {}).done($.proxy(this._onSuccessLineList, this));
-
     this._apiService.request(Tw.API_CMD.BFF_08_0010, {}).done($.proxy(this._setServiceCategory, this));
     this.state.tabIndex = $('[role=tablist]').find('[aria-selected=true]').index();
   },
@@ -52,6 +51,8 @@ Tw.CustomerEmailTemplate.prototype = {
     this.$container.on('click', '.fe-email-cancel', $.proxy(this._onCancelEmail, this));
     this.$container.on('input', '.fe-inquiry-title', $.proxy(this._onCountTitle, this));
     this.$container.on('input', '.fe-inquiry-content', $.proxy(this._onCountContent, this));
+    this.$container.on('click', '.fe-service-line', $.proxy(this._showSelectLinePopup, this));
+    this.$container.on('click', '.fe-btn_select_line', $.proxy(this._selectLine, this));
   },
 
   _changeTab: function () {
@@ -66,6 +67,41 @@ Tw.CustomerEmailTemplate.prototype = {
   _onCountContent: function (e) {
     var nSize = $(e.currentTarget).val().length;
     $(e.currentTarget).parent().find('.byte-current').text(nSize);
+  },
+
+  _showSelectLinePopup: function () {
+    var arrOption = [];
+    if ( this.state.lineList.M ) {
+      arrOption = _.map(this.state.lineList.M, function (item) {
+        return {
+          checked: item.svcMgmtNum === $('.fe-service-line').data('svcmgmtnum').toString(),
+          value: item.svcMgmtNum,
+          text: Tw.FormatHelper.conTelFormatWithDash(item.svcNum)
+        };
+      });
+    }
+
+    this._popupService.open({
+      hbs: 'select',
+      title: Tw.POPUP_TITLE.SELECT_GIFT_AMOUNT,
+      close_bt: true,
+      select: [{ options: arrOption }],
+      bt_num: 'one',
+      type: [{
+        style_class: 'bt-red1 fe-btn_select_line',
+        txt: Tw.BUTTON_LABEL.SELECT
+      }]
+    });
+  },
+
+  _selectLine: function () {
+    var selectSvcmgmtnum = $('.popup').find(':checked').val();
+    var selectSvcnum = $('.popup').find('.checked').text().trim();
+
+    $('.fe-service-line').attr('data-svcmgmtnum', selectSvcmgmtnum);
+    $('.fe-service-line').text(selectSvcnum);
+
+    this._popupService.close();
   },
 
   _onSuccessLineList: function (res) {

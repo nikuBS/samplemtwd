@@ -90,7 +90,10 @@
 
 <script id="tpl_service_cell" type="text/x-handlebars-template">
     <div class="form-cell">
-        <span class="form-ti">문의하실 내용을 작성해주세요<span class="point-indicate ml4" aria-hidden="true">*</span></span>
+        <span class="form-ti">문의하실 회선과 내용을 작성해주세요<span class="point-indicate ml4" aria-hidden="true">*</span></span>
+        <div class="mb10">
+            <button class="bt-dropdown big fe-service-line" title="전화번호 선택" aria-haspopup="true" aria-labelledby="aria-email-qacont" data-svcMgmtNum="<%=svcInfo.svcMgmtNum%>"><%=svcInfo.svcNum%></button>
+        </div>
         <div class="widget">
             <div class="widget-box tfCombined">
                 <div class="txfield-combined">
@@ -127,13 +130,13 @@
         <div class="widget-box tfCombined">
             <div class="txfield-combined">
                 <div class="txfield-combined-ti">
-                    <input class="input-focus fe-inquiry-title" type="text" placeholder="제목을 입력해주세요." title="이메일 문의 제목" value=""
+                    <input required class="input-focus fe-inquiry-title" type="text" placeholder="제목을 입력해주세요." title="이메일 문의 제목" value=""
                            maxlength="20"
                            aria-labelledby="aria-email-qacont">
                     <span class="byte"><span class="byte-current">0</span>/<span class="byte-total">20</span>자</span>
                 </div>
                 <div class="txfield-combined-tx">
-                    <textarea class="input-focus fe-inquiry-content" cols="20" rows="3" placeholder="내용을 입력해주세요." maxlength="12000"
+                    <textarea required class="input-focus fe-inquiry-content" cols="20" rows="3" placeholder="내용을 입력해주세요." maxlength="12000"
                               aria-labelledby="aria-email-qacont"></textarea>
                     <span class="byte"><span class="byte-current">0</span>/<span class="byte-total">12,000</span>자</span>
                 </div>
@@ -178,21 +181,21 @@
         <div class="widget-box tfCombined">
             <div class="txfield-combined">
                 <div class="txfield-combined-ti">
-                    <input class="input-focus fe-inquiry-title" type="text" placeholder="제목을 입력해주세요." title="이메일 문의 제목" value=""
+                    <input required class="input-focus fe-inquiry-title" type="text" placeholder="제목을 입력해주세요." title="이메일 문의 제목" value=""
                            maxlength="20"
                            aria-labelledby="aria-email-qacont">
                     <span class="byte"><span class="byte-current">0</span>/<span class="byte-total">20</span>자</span>
                 </div>
                 <div class="txfield-combined-tx">
-                <textarea class="input-focus fe-inquiry-content inner-tx"
+                <textarea required class="input-focus fe-inquiry-content inner-tx"
                           cols="20" rows="6"
                           placeholder="내용을 입력해주세요." maxlength="12000"
                           aria-labelledby="aria-email-qacont">
-                원활한 상담을 위해 아래 정보를 입력해주세요.
-                - 성함:
-                - 구매 휴대폰번호:
-                - 구매한 상품명:
-                - 문의내용:
+원활한 상담을 위해 아래 정보를 입력해주세요.
+- 성함:
+- 구매 휴대폰번호:
+- 구매한 상품명:
+- 문의내용:
                 </textarea>
                 <span class="byte"><span class="byte-current">58</span>/<span class="byte-total">12,000</span>자</span>
                     <!-- .byte-current에 입력되어 있는 글자 수를 포함하여 나타냅니다. -->
@@ -320,13 +323,13 @@
                 <div class="widget-box tfCombined">
                     <div class="txfield-combined">
                         <div class="txfield-combined-ti">
-                            <input class="input-focus fe-inquiry-title" type="text" placeholder="제목을 입력해주세요." title="이메일 문의 제목" value=""
+                            <input required class="input-focus fe-inquiry-title" type="text" placeholder="제목을 입력해주세요." title="이메일 문의 제목" value=""
                                    maxlength="20"
                                    aria-labelledby="aria-email-qacont">
                             <span class="byte"><span class="byte-current">0</span>/<span class="byte-total">20</span>자</span>
                         </div>
                         <div class="txfield-combined-tx">
-                            <textarea class="input-focus fe-inquiry-content" cols="20" rows="3" placeholder="내용을 입력해주세요."
+                            <textarea required class="input-focus fe-inquiry-content" cols="20" rows="3" placeholder="내용을 입력해주세요."
                                       aria-labelledby="aria-email-qacont"
                                       maxlength="12000"></textarea>
                             <span class="byte"><span class="byte-current">0</span>/<span class="byte-total">12,000</span>자</span>
