@@ -57,7 +57,10 @@
                                     </li>
                                     <li>
                                         <span class="title">사용처</span>
-                                        <span class="tx-cont <%=isLong%>"><span><%=cpName%></span> <br /> <a href="tel:<%=cpTel%>" class="blue-btn fe-tel-text"></a></span>
+                                        <span class="tx-cont <%=isLong%>"><span><%=cpName%></span>
+                                        <%# cptel값 삭제
+                                            <br /> <a href="tel:<\%=cpTel%\>" class="blue-btn fe-tel-text"></a></span>
+                                        %>
                                     </li>
                                     <% if(type === '0') { %>
                                     <li>
@@ -90,10 +93,11 @@
                                         <span class="title">설정상태</span>
                                         <span class="tx-cont fe-payment-type">
                                             자동결제
+                                            <% if(cpState === 'A1') { %>
                                             <br /><em>(차단중)</em><br /> <button class="blue-btn">차단해제</button>
-                                            <% if(cpState === 'A0') { %>
+                                            <% } else if(cpState === 'A0') { %>
                                             <br /><em>(다음 달 차단예정)</em> <br /> <button class="blue-btn">차단해제</button>
-                                            <% } else if(cpState === 'C1') { %>
+                                            <% } else if(cpState === 'C0') { %>
                                             <br /><em>(다음 달 차단해제예정)</em> <br /> <button class="red-btn">차단하기</button>
                                             <% } %>
                                         </span>
@@ -202,7 +206,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.MyTBillHistoryMicroDetail($(document));
+    new Tw.MyTBillHistoryDetailCommon($(document));
   });
 </script>
 <% include ../../components/end.component.html %>

@@ -1,10 +1,10 @@
 /**
- * FileName: myt.bill.history.micro.detail.js
+ * FileName: myt.bill.history.detail.common.js
  * Author: 이상형 (silion@sk.com)
  * Date: 2018.08.02
  */
 
-Tw.MyTBillHistoryMicroDetail = function (rootEl) {
+Tw.MyTBillHistoryDetailCommon = function (rootEl) {
   this.$container = rootEl;
 
   this._apiService = Tw.Api;
@@ -20,13 +20,13 @@ Tw.MyTBillHistoryMicroDetail = function (rootEl) {
   this._init();
 };
 
-Tw.MyTBillHistoryMicroDetail.prototype = {
+Tw.MyTBillHistoryDetailCommon.prototype = {
   _init: function () {
     this.query = this.common.parse_query_string();
 
     console.log(this.query);
-
-    this.$telTextWrap.html(Tw.FormatHelper.getDashedPhoneNumber(this.query.cpTel));
+    if(this.query.cpTel)
+      this.$telTextWrap.html(Tw.FormatHelper.getDashedPhoneNumber(this.query.cpTel));
 
     switch(this.query.type) {
       case '0':
@@ -34,6 +34,8 @@ Tw.MyTBillHistoryMicroDetail.prototype = {
         break;
       case '1':
         this.btnProcessCallback = this._autoPaymentUnBlindProcess;
+        break;
+      case '2':
         break;
       default:
         break;
@@ -49,6 +51,7 @@ Tw.MyTBillHistoryMicroDetail.prototype = {
   _bindDOM: function () {
     this.$confirmBtn.on('click', $.proxy(this.common._history.goBack, this));
     this.$autoPaymentBlindBtn.on('click', $.proxy(this.btnProcessCallback, this));
+    // this.btnProcessCallback
   },
 
   _autoPaymentBlindProcess: function () {
@@ -68,6 +71,7 @@ Tw.MyTBillHistoryMicroDetail.prototype = {
   },
 
   _autoPaymentUnBlindProcess: function () {
+    console.log('00000000');
     switch(this.query.payMethod) {
       case 'A0':
       case 'A1':
@@ -89,6 +93,7 @@ Tw.MyTBillHistoryMicroDetail.prototype = {
   },
 
   _openBlindConfirmPopup: function () {
+    console.log('00000000');
     this._popupService.openConfirm(Tw.POPUP_TITLE.CONFIRM, this.alertMessage, null,
         null, $.proxy(this._confirmUnblindCallback, this), null);
   },
