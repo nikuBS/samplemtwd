@@ -240,7 +240,7 @@ export const API_CMD = {
   },
   BFF_07_0073: { path: '/core-bill/v1/microPrepay/microPrepay-requests', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_07_0074: { path: '/core-bill/v1/microPrepay/microPrepay-process', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
-  BFF_07_0075: { path: '/core-bill/v1/microPrepay/microPrepay-autoPrepay-hist', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_07_0075: { path: '/core-bill/v1/microPrepay/microPrepay-autolist', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_07_0076: { path: '/core-bill/v1/microPrepay/microPrepay-auto-req', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_07_0077: { path: '/core-bill/v1/microPrepay/microPrepay-auto-delete', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_07_0078: {
