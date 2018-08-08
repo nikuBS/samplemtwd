@@ -523,7 +523,10 @@ Tw.PostcodeMain.prototype = {
       Tw.UIService.setLocalStorage('post', [_postCode, _address, _detailAddress]);
 
       this._history.setHistory();
-      this._history.goLoad('http://localhost:3000/customer/email/quality/wibro?post=success');
+
+      var url = 'http://localhost:3000/customer/email/quality/wibro';
+      this._history.pushUrl(url);
+      this._history.goLoad(url + '?post=success');
     }
   },
   _checkEmpty: function ($target) {

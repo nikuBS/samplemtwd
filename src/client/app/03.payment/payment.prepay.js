@@ -81,7 +81,11 @@ Tw.PaymentPrepay.prototype = {
         this._getPreRemainLimit();
       }
     } else {
-      this._getRemainLimitFail(res);
+      if (res.code === Tw.API_CODE.CODE_00) {
+        this._getRemainLimitSuccess(res);
+      } else {
+        this._getRemainLimitFail(res);
+      }
     }
   },
   _getRemainLimitSuccess: function (res) {

@@ -53,10 +53,10 @@ class PaymentPrepayContentsAutoChangeController extends TwViewController {
 
   private parseData(result: any): any {
     if (!FormatHelper.isEmpty(result)) {
-      result.autoChrgStrdAmount = FormatHelper.addComma((result.autoChrgStrdAmt));
-      result.autoChrgAmount = FormatHelper.addComma((result.autoChrgAmt));
-      result.comboStandardAmount = result.cmbAutoChrgStrdAmt / 10000;
-      result.comboChargeAmount = result.cmbAutoChrgAmt / 10000;
+      result.autoChrgStrdAmount = FormatHelper.addComma(result.autoChrgStrdAmt);
+      result.autoChrgAmount = FormatHelper.addComma(result.autoChrgAmt);
+      result.comboStandardAmount = result.autoChrgStrdAmt / 10000;
+      result.comboChargeAmount = result.autoChrgAmt / 10000;
     }
     result.code = API_CODE.CODE_00;
     return result;
