@@ -24,6 +24,10 @@ Tw.CustomerEmailTemplate.prototype = {
   },
 
   _init: function () {
+    if ( Tw.UrlHelper.getQueryParams().post ) {
+      this._setPostCode();
+    }
+
     this._apiService.request(Tw.API_CMD.BFF_01_0002, {}).done($.proxy(this._onSuccessLineList, this));
     this._apiService.request(Tw.API_CMD.BFF_08_0010, {}).done($.proxy(this._setServiceCategory, this));
     this.state.tabIndex = $('[role=tablist]').find('[aria-selected=true]').index();
@@ -70,6 +74,10 @@ Tw.CustomerEmailTemplate.prototype = {
   _onCountContent: function (e) {
     var nSize = $(e.currentTarget).val().length;
     $(e.currentTarget).parent().find('.byte-current').text(nSize);
+  },
+
+  _setPostCode: function () {
+    this._setState({ callCategory: 'WIBRO' });
   },
 
   _showSelectLinePopup: function () {
@@ -231,6 +239,27 @@ Tw.CustomerEmailTemplate.prototype = {
     } else {
       if ( this.state.callCategory === 'WIBRO' ) {
         this.$wrap_call.html(this.tpl_call_wibro());
+
+        if ( Tw.UrlHelper.getQueryParams().post ) {
+          if ( Tw.UIService.getLocalStorage('post') ) {
+            var location = Tw.UIService.getLocalStorage('post').split(',');
+            $('.fe-param05').val(location[0]);
+            $('.fe-param06').val(location[1]);
+            $('.fe-param07').val(location[2]);
+          }
+
+          if ( Tw.UIService.getLocalStorage('post_info') ) {
+            var previousParams = JSON.parse(Tw.UIService.getLocalStorage('post_info'));
+
+            $('.fe-param01').val(previousParams.param01);
+            $('.fe-param03').text(previousParams.param03);
+            $('.fe-param04').text(previousParams.param04);
+            $('.fe-param08').text(previousParams.param08);
+            $('.fe-param09').text(previousParams.param09);
+            $('.fe-param10').text(previousParams.param10);
+            $('.fe-param11').val(previousParams.param11);
+          }
+        }
       }
 
       if ( this.state.callCategory === 'INTERNET' ) {
