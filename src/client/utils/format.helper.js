@@ -250,6 +250,10 @@ Tw.FormatHelper = (function () {
     return phoneNumber;
   }
 
+  var removeComma = function(str) {
+    return str.replace(/,/g, '');
+  }
+
   return {
     leadingZeros: leadingZeros,
     isEmpty: isEmpty,
@@ -259,6 +263,7 @@ Tw.FormatHelper = (function () {
     customDataFormat: customDataFormat,
     convDataFormat: convDataFormat,
     addComma: addComma,
+    removeComma: removeComma,
     convVoiceFormat: convVoiceFormat,
     convSmsPrice: convSmsPrice,
     conTelFormatWithDash: conTelFormatWithDash,

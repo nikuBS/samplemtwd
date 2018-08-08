@@ -8,6 +8,7 @@ Tw.MyTBillHistoryLimitCommon = function (rootEl, type, data) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
+  this._historyService = new Tw.HistoryService();
 
   this.chkCurrentLimit = new Tw.MyTBillHistoryCommon.GetLimit();
 
@@ -92,7 +93,15 @@ Tw.MyTBillHistoryLimitCommon.prototype = {
       }
       this.$limitChangeTrigger.on('click', $.proxy(this._chkChangeLimit, this));
       this.$limitSelector.on('click', $.proxy(this._handleOpenLimitSelect, this));
-      this._setChoiceValueList();
+
+      if(this.data.code === Tw.API_CODE.CODE_00) {
+        this._setChoiceValueList();
+      } else {
+        this.chkCurrentLimit._apiError(this.data, $.proxy(function() {
+          this._popupService.close();
+          this._historyService.goBack();
+        }, this));
+      }
     }
 
     this.chkCurrentLimit._init(this.apiName, $.proxy(this._currentCallback, this, this.dataSet || null));
@@ -101,7 +110,7 @@ Tw.MyTBillHistoryLimitCommon.prototype = {
 
   _setChoiceValueList: function () {
     var temp;
-    this.data.paySpectrumMonth.map($.proxy(function (o) {
+    this.data.result.paySpectrumMonth.map($.proxy(function (o) {
       this.limitValueListMonth.push({
         attr: 'data-value="' + o + '"',
         text: Tw.FormatHelper.addComma(o.toString())

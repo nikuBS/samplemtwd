@@ -31,9 +31,9 @@
                                         <span class="title vm"><span class="tx-bold">이번 달</span><span class="fw-normal">(매월)</span><br />내가 정한</span>
                                         <span class="tx-cont vm">
                                             <% if(result.isUnpaid !== 'Y') { %>
-                                            <button class="bt-dropdown size3" title="내가 정한 한도 매월" aria-haspopup="true"><%=result.formedMonLimit%></button>
+                                            <button class="bt-dropdown size3" title="내가 정한 한도 매월" aria-haspopup="true"><%=result.result.formedMonLimit%></button>
                                             <% } else { %>
-                                            <button class="bt-dropdown size3" title="입력방지" aria-disabled="true" disabled><%=result.formedMonLimit%></button>
+                                            <button class="bt-dropdown size3" title="입력방지" aria-disabled="true" disabled><%=result.result.formedMonLimit%></button>
                                             <% } %>
                                         </span>
                                     </li>
@@ -50,10 +50,10 @@
                                     <li>
                                         <span class="title vm"><span class="tx-bold">오늘</span><span class="fw-normal">(1일)</span><br />내가 정한</span>
                                         <span class="tx-cont vm">
-                                            <% if(result.isUnpaid !== 'Y') { %>
-                                            <button class="bt-dropdown size3" title="내가 정한 한도 1일" aria-haspopup="true"><%=result.formedDayLimit%></button>
+                                            <% if(result.result.isUnpaid !== 'Y') { %>
+                                            <button class="bt-dropdown size3" title="내가 정한 한도 1일" aria-haspopup="true"><%=result.result.formedDayLimit%></button>
                                             <% } else { %>
-                                            <button class="bt-dropdown size3" title="입력방지" aria-disabled="true" disabled><%=result.formedDayLimit%></button>
+                                            <button class="bt-dropdown size3" title="입력방지" aria-disabled="true" disabled><%=result.result.formedDayLimit%></button>
                                             <% } %>
                                         </span>
                                     </li>
@@ -71,10 +71,10 @@
                                     <li>
                                         <span class="title vm"><span class="tx-bold">한 번에</span><span class="fw-normal">(1회)</span><br />내가 정한</span>
                                         <span class="tx-cont vm">
-                                            <% if(result.isUnpaid !== 'Y') { %>
-                                            <button class="bt-dropdown size3" title="내가 정한 한도 1회" aria-haspopup="true"><%=result.formedOnceLimit%></button>
+                                            <% if(result.result.isUnpaid !== 'Y') { %>
+                                            <button class="bt-dropdown size3" title="내가 정한 한도 1회" aria-haspopup="true"><%=result.result.formedOnceLimit%></button>
                                             <% } else { %>
-                                            <button class="bt-dropdown size3" title="입력방지" aria-disabled="true" disabled><%=result.formedOnceLimit%></button>
+                                            <button class="bt-dropdown size3" title="입력방지" aria-disabled="true" disabled><%=result.result.formedOnceLimit%></button>
                                             <% } %>
                                         </span>
                                     </li>
@@ -83,7 +83,7 @@
                         </div>
                     </div>
                 </div>
-                <% if(result.isUnpaid === 'Y') { %>
+                <% if(result.result.isUnpaid === 'Y') { %>
                 <div class="contents-notice type2">
                     <span class="noti-type4">연체/미납 중인 고객님은 납부 후 한도변경이 가능합니다.</span>
                 </div>

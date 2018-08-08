@@ -22,8 +22,6 @@ class MyTBillHistoryMicro extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
 
     this.apiService.request(API_CMD.BFF_07_0072, {}).subscribe((resp) => {
-      // console.log('---------------------------------- ERROR ----------------------------',
-      //     isQueryEmpty, current === 'micro', resp.code, API_CODE.CODE_00);
 
       const isQueryEmpty: any = FormatHelper.isEmpty(req.query);
       const current: any = req.path.split('/').splice(-1)[0];
@@ -34,10 +32,12 @@ class MyTBillHistoryMicro extends TwViewController {
 
           const endMDD = DateHelper.getShortDateWithFormat(new Date(), 'M.DD', null);
           const startMDD = endMDD.replace(endMDD.substr(-2), '') + '01';
+          const curYYYYM_kor = DateHelper.getShortDateWithFormat(new Date(), DATE_FORMAT.YYYYMM_TYPE_1);
 
           // if(response.code)
           res.render('bill/myt.bill.history.micro.html', {
             svcInfo: svcInfo,
+            curYYYYM_kor: curYYYYM_kor,
             startMDD: startMDD,
             endMDD: endMDD
           });

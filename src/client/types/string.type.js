@@ -767,4 +767,9 @@ Tw.MYT_HISTORY_CPSTATE = {
   C1: 'C1'
 };
 
+Tw.MYT_HISTORY_CPSTATE_KOR = {
+  A0: '차단중',
+  A1: '다음 달<br />차단예정'
+}
+
 Tw.HP_NUM_LIST = ['011','016','017','019'];
