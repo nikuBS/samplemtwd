@@ -81,10 +81,10 @@ Tw.MyTUsagePatternDetail.prototype = {
           }
         ]
       }, this._defaultChartData);
-      this.$container.chart($.extend(this._defaultChartSetting, {
+      this.$container.chart($.extend({
         container: 'can-box2', //클래스명 String
         data: domTcFeeChart //데이터 obj
-      }));
+      }, this._defaultChartSetting));
     }
     if ( !this._empty.dataTcFee ) {
       var dataTcFeeChart = $.extend({
@@ -102,10 +102,10 @@ Tw.MyTUsagePatternDetail.prototype = {
           }
         ]
       }, this._defaultChartData);
-      this.$container.chart($.extend(this._defaultChartSetting, {
+      this.$container.chart($.extend({
         container: 'can-box3', //클래스명 String
         data: dataTcFeeChart //데이터 obj
-      }));
+      }, this._defaultChartSetting));
     }
     if ( !this._empty.infoUseFee ) {
       var infoUseFeeChart = $.extend({
@@ -126,7 +126,7 @@ Tw.MyTUsagePatternDetail.prototype = {
       this.$container.chart($.extend(this._defaultChartSetting, {
         container: 'can-box4', //클래스명 String
         data: infoUseFeeChart //데이터 obj
-      }));
+      }, this._defaultChartSetting));
     }
     if ( !this._empty.optFee ) {
       var optFeeChart = $.extend({

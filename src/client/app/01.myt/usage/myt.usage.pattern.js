@@ -184,12 +184,10 @@ Tw.MyTUsagePattern.prototype = {
                   data: [this._chartVoiceData[0][1]]
                 }]
               }, defaultVoice);
-              setTimeout($.proxy(function () {
-                this.$container.find('.tab2-tab').chart($.extend(defaultVoiceSetting, {
-                  container: 'can-box1', //클래스명 String
-                  data: voiceChart //데이터 obj,
-                }));
-              }, this), 1200);
+              this.$container.find('.tab2-tab').chart($.extend({
+                container: 'can-box1', //클래스명 String
+                data: voiceChart //데이터 obj,
+              }, defaultVoiceSetting));
             }
             if ( !this._empty.inVoice ) {
               var inVoiceChart = $.extend({
@@ -204,12 +202,10 @@ Tw.MyTUsagePattern.prototype = {
                   data: [this._chartInVoiceData[0][1]]
                 }]
               }, defaultVoice);
-              setTimeout($.proxy(function () {
-                this.$container.find('.tab2-tab').chart($.extend(defaultVoiceSetting, {
-                  container: 'can-box2', //클래스명 String
-                  data: inVoiceChart //데이터 obj
-                }));
-              }, this), 700);
+              this.$container.find('.tab2-tab').chart($.extend({
+                container: 'can-box2', //클래스명 String
+                data: inVoiceChart //데이터 obj
+              }, defaultVoiceSetting));
             }
             if ( !this._empty.outVoice ) {
               var outVoiceChart = $.extend({
@@ -224,12 +220,10 @@ Tw.MyTUsagePattern.prototype = {
                   data: [this._chartOutVoiceData[0][1]]
                 }]
               }, defaultVoice);
-              setTimeout($.proxy(function () {
-                this.$container.find('.tab2-tab').chart($.extend(defaultVoiceSetting, {
-                  container: 'can-box33', //클래스명 String
-                  data: outVoiceChart //데이터 obj
-                }));
-              }, this), 500);
+              this.$container.find('.tab2-tab').chart($.extend({
+                container: 'can-box33', //클래스명 String
+                data: outVoiceChart //데이터 obj
+              }, defaultVoiceSetting));
             }
             if ( !this._empty.vidVoice ) {
               var vidVoiceChart = $.extend({
@@ -244,12 +238,10 @@ Tw.MyTUsagePattern.prototype = {
                   data: [this._chartVidVoiceData[0][1]]
                 }]
               }, defaultVoice);
-              setTimeout($.proxy(function () {
-                this.$container.find('.tab2-tab').chart($.extend(defaultVoiceSetting, {
-                  container: 'can-box4', //클래스명 String
-                  data: vidVoiceChart //데이터 obj
-                }));
-              }, this), 200);
+              this.$container.find('.tab2-tab').chart($.extend({
+                container: 'can-box4', //클래스명 String
+                data: vidVoiceChart //데이터 obj
+              }, defaultVoiceSetting));
             }
             this.voiceCreated = true;
           }
@@ -285,10 +277,10 @@ Tw.MyTUsagePattern.prototype = {
                   data: [this._chartSmsData[0][1]]
                 }]
               }, defaultSms);
-              this.$container.find('.tab2-tab').chart($.extend(defaultSmsSetting, {
+              this.$container.find('.tab2-tab').chart($.extend({
                 container: 'can-box-sms', //클래스명 String
                 data: smsChart //데이터 obj
-              }));
+              }, defaultSmsSetting));
             }
             this.smsCreated = true;
           }
