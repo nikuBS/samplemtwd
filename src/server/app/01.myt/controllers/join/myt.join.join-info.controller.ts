@@ -58,7 +58,7 @@ class MytJoinJoinInfoController extends TwViewController {
   // 모바일 (휴대폰 / T Login / T Pocket-FI) 정보 세팅
   private getMobileResult(data: any): any {
 
-    if ( data.history !== null && data.history.length > 0) {
+    if ( data.history && data.history.length > 0) {
       const history = data.history;
       const historyData = history[0];
       Object.assign(data, {
@@ -145,31 +145,32 @@ class MytJoinJoinInfoController extends TwViewController {
       this.getJoinInfo(),
       this.getHistory(),
       (joinInfo, history) => {
-        if ( joinInfo !== null && history !== null ) {
-          joinInfo.history = history;
-          return joinInfo;
-        } else {
-          return null;
-        }
+        joinInfo.history = history;
+        return joinInfo;
       });
   }
 
   // 가입정보 조회
   private getJoinInfo(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_05_0068, {}).map((response) => {
-      return this.getResult(response);
+      return response;
+      // return this.getResult(response);
     });
   }
 
   // 개통/변경 이력 조회
   private getHistory(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_05_0061, {}).map((response) => {
-      return this.parseHistory(this.getResult(response));
+      if ( response.code === API_CODE.CODE_00 ) {
+        return this.parseHistory(response);
+      } else {
+        return response;
+      }
     });
   }
 
   private parseHistory(data: any): any {
-    if ( data !== null && data.length > 0 ) {
+    if ( FormatHelper.isArray(data) && data.length > 0 ) {
       data.map( (o) => {
         o.chgDt = this.getMarskingDateFormat(o.chgDt, 'YYYY.MM.DD');
       });
@@ -178,16 +179,15 @@ class MytJoinJoinInfoController extends TwViewController {
     return data;
   }
 
-  private getResult(data: any): any {
+  /*private getResult(data: any): any {
     if (data.code === API_CODE.CODE_00) {
       return data.result;
     } else {
-      return null;
+      return data;
     }
-  }
+  }*/
 
   private getJoinInfoData(data: any): any {
-
     switch (this.getLinetype()) {
       case 'M':  data = this.getMobileResult(data);
         break;
@@ -198,7 +198,7 @@ class MytJoinJoinInfoController extends TwViewController {
       case 'O':
         // 보안 솔루션은 7차 스프린트에서..
         this.logger.info(this, 'O1 is 7 sprint...');
-        return null;
+        return data;
     }
     return data;
   }
@@ -236,10 +236,15 @@ class MytJoinJoinInfoController extends TwViewController {
     Observable.combineLatest(
       this.getAllJoinInfo()
     ).subscribe(([joinInfo]) => {
-      const data = this.getData(svcInfo, this.getJoinInfoData(joinInfo));
-      this.logger.info(this, '#### data ', data);
+      if ( joinInfo.code === API_CODE.CODE_00) {
+        const data = this.getData(svcInfo, this.getJoinInfoData(joinInfo.result));
+        this.logger.info(this, '#### data ', data);
+        res.render('join/myt.join.join-info.html', data);
+      } else {
+        this.logger.info(this, '#### data222 ', JSON.stringify(joinInfo));
+        res.send('api error' + joinInfo.code + ' ' + joinInfo.msg);
+      }
 
-      res.render('join/myt.join.join-info.html', data);
     });
   }
 }
