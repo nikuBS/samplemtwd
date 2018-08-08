@@ -32,34 +32,43 @@
                         </div>
                     </div>
                     <div class="form-cell">
-                        <span class="form-ti">문의하실 회선과 현상, 지역정보 선택 후 상세현상을 기재해 주세요<span class="point-indicate ml4" aria-hidden="true">*</span></span>
+                        <span class="form-ti">문의하실 회선과 현상, 지역정보 선택 후 상세현상을 기재해 주세요<span class="point-indicate ml4"
+                                                                                        aria-hidden="true">*</span></span>
                         <div class="mb10">
-                            <button class="bt-dropdown big fe-param02 fe-service-line" title="전화번호 선택" aria-haspopup="true" data-svcMgmtNum="<%=svcInfo.svcMgmtNum%>">
+                            <button class="bt-dropdown big fe-param02 fe-service-line" title="전화번호 선택" aria-haspopup="true"
+                                    data-svcMgmtNum="<%=svcInfo.svcMgmtNum%>">
                                 <%=svcInfo.svcNum%>
                             </button>
                         </div>
                         <div class="mb10">
-                            <button class="bt-dropdown big placeholder fe-param03" title="현상 선택" aria-haspopup="true">현상을 선택해 주세요.(필수)</button>
+                            <button class="bt-dropdown big placeholder fe-param03" title="현상 선택" aria-haspopup="true">현상을 선택해 주세요.(필수)
+                            </button>
                         </div>
                         <div class="mb10">
-                            <button class="bt-dropdown big placeholder fe-param04" title="세부현상 선택" aria-haspopup="true">세부현상을 선택해 주세요.(필수)</button>
+                            <button class="bt-dropdown big placeholder fe-param04" title="세부현상 선택" aria-haspopup="true">세부현상을 선택해 주세요.(필수)
+                            </button>
                         </div>
                         <div class="mb10">
-                            <button class="bt-dropdown big placeholder fe-param08" title="발생위치 선택" aria-haspopup="true">발생위치를 선택해 주세요.(필수)</button>
+                            <button class="bt-dropdown big placeholder fe-param08" title="발생위치 선택" aria-haspopup="true">발생위치를 선택해 주세요.(필수)
+                            </button>
                         </div>
                         <div class="mb10">
-                            <button class="bt-dropdown big placeholder fe-param09" title="건물종류 선택" aria-haspopup="true">건물종류를 선택해 주세요.(필수)</button>
+                            <button class="bt-dropdown big placeholder fe-param09" title="건물종류 선택" aria-haspopup="true">건물종류를 선택해 주세요.(필수)
+                            </button>
                         </div>
                         <div class="widget">
                             <div class="widget-box tfCombined">
                                 <div class="txfield-combined">
                                     <div class="txfield-combined-tx">
-                                        <textarea class="input-focus fe-param11 fe-inquiry-content" cols="20" rows="3" placeholder="상세한 현상을 입력해주세요.(필수)" maxlength="12000"
+                                        <textarea class="input-focus fe-param11 fe-inquiry-content" cols="20" rows="3"
+                                                  placeholder="상세한 현상을 입력해주세요.(필수)" maxlength="12000"
                                                   aria-labelledby="aria-email-qacont"></textarea>
-                                        <span class="byte"><span class="byte-current">0</span>/<span class="byte-total">12,000</span>자</span>
+                                        <span class="byte"><span class="byte-current">0</span>/<span
+                                            class="byte-total">12,000</span>자</span>
                                     </div>
                                     <div class="txfield-combined-ti">
-                                        <input class="input-focus fe-param01 fe-inquiry-title" type="text" placeholder="접수자 성함을 입력해주세요.(필수)" title="접수자 성함" value=""
+                                        <input class="input-focus fe-param01 fe-inquiry-title" type="text" placeholder="접수자 성함을 입력해주세요.(필수)"
+                                               title="접수자 성함" value=""
                                                maxlength="20"
                                                aria-labelledby="aria-email-qacont">
                                         <span class="byte"><span class="byte-current">0</span>/<span class="byte-total">20</span>자</span>
@@ -77,7 +86,7 @@
                                                                            readonly="">
                                                                 </span>
                                                                 <span class="bt-box">
-                                                                    <button type="button">우편번호</button>
+                                                                    <button type="button" class="fe-btn-postcode">우편번호</button>
                                                                 </span>
                                                             </span>
                         <span class="inputbox mt10">
@@ -91,11 +100,12 @@
                                                                 <span class="input">
                                                                     <input class="fe-param07" type="text" placeholder="상세주소를 입력해주세요."
                                                                            title="상세 주소"
-                                                                           aria-labelledby="aria-citation-phone">
+                                                                           aria-labelledby="aria-citation-phone" readonly="">
                                                                 </span>
                                                             </span>
                         <div class="mt10">
-                            <button class="bt-dropdown big placeholder fe-param10" title="발생시기 선택" aria-haspopup="true">발생시기를 선택해 주세요.(필수)</button>
+                            <button class="bt-dropdown big placeholder fe-param10" title="발생시기 선택" aria-haspopup="true">발생시기를 선택해 주세요.(필수)
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -121,7 +131,8 @@
                 </div>
                 <span class="inputbox mt20"><!-- error일 경우 error 클래스 추가 -->
                                                                 <span class="input">
-                                                                    <input required class="fe-input-phone" type="number" placeholder="숫자만 입력"
+                                                                    <input required class="fe-input-phone" type="number"
+                                                                           placeholder="숫자만 입력"
                                                                            title="휴대폰 번호"
                                                                            aria-labelledby="aria-email-phone"
                                                                            aria-describedby="aria-exp-desc1">
@@ -147,7 +158,8 @@
                                                                                        aria-hidden="true">*</span></span>
                 <span class="inputbox"><!-- error일 경우 error 클래스 추가 -->
                                                                 <span class="input">
-                                                                    <input required class="fe-input-email" type="text" value="" placeholder=""
+                                                                    <input required class="fe-input-email" type="text" value=""
+                                                                           placeholder=""
                                                                            title="이메일"
                                                                            aria-labelledby="aria-email-place"
                                                                            aria-describedby="aria-exp-desc2">

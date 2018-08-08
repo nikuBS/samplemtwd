@@ -39,6 +39,7 @@ Tw.CustomerEmailCall.prototype = {
     this.$container.on('click', '[data-id=param08]', $.proxy(this._selectPositionPopup, this));
     this.$container.on('click', '[data-id=param09]', $.proxy(this._selectBuildingPopup, this));
     this.$container.on('click', '[data-id=param10]', $.proxy(this._selectOccurDatePopup, this));
+    this.$container.on('click', '.fe-btn-postcode', $.proxy(this._selectPost, this));
   },
 
   _showEnvPopup: function () {
@@ -124,6 +125,10 @@ Tw.CustomerEmailCall.prototype = {
 
     $('.fe-param10').text(elTarget.text());
     this._popupService.close();
+  },
+
+  _selectPost: function () {
+    this._history.replaceURL('/home/postcode');
   },
 
   _makeWibroRequestParameter: function () {
