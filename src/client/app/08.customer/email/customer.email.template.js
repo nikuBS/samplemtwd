@@ -34,6 +34,7 @@ Tw.CustomerEmailTemplate.prototype = {
     this.$wrap_service = $('.fe-wrap-service');
     this.tpl_service_cell = Handlebars.compile($('#tpl_service_cell').text());
     this.tpl_service_chocolate = Handlebars.compile($('#tpl_service_chocolate').text());
+    this.tpl_service_direct_type2 = Handlebars.compile($('#tpl_service_direct_type2').text());
     this.tpl_service_direct_type1 = Handlebars.compile($('#tpl_service_direct_type1').text());
     this.tpl_call_wibro = Handlebars.compile($('#tpl_call_wibro').text());
     this.tpl_call_internet = Handlebars.compile($('#tpl_call_internet').text());
@@ -53,6 +54,8 @@ Tw.CustomerEmailTemplate.prototype = {
     this.$container.on('input', '.fe-inquiry-content', $.proxy(this._onCountContent, this));
     this.$container.on('click', '.fe-service-line', $.proxy(this._showSelectLinePopup, this));
     this.$container.on('click', '.fe-btn_select_line', $.proxy(this._selectLine, this));
+    this.$container.on('keyup', '.fe-input-email', $.proxy(this._validateEmail, this));
+    this.$container.on('keyup', '.fe-input-phone', $.proxy(this._validatePhone, this));
   },
 
   _changeTab: function () {
@@ -177,6 +180,7 @@ Tw.CustomerEmailTemplate.prototype = {
     var categoryName = elTarget.text();
     this._setState({ serviceCategory: elTarget.data('category-id') });
 
+    $('.fe-btn-select-service-category').prop('data-category-id', elTarget.data('category-id'));
     $('.fe-btn-select-service-category').text(categoryName);
     this._popupService.close();
   },
@@ -210,7 +214,11 @@ Tw.CustomerEmailTemplate.prototype = {
       }
 
       if ( this.state.serviceType === 'DIRECT' ) {
-        this.$wrap_service.html(this.tpl_service_direct_type1());
+        if ( this.state.serviceCategory === '08' || this.state.serviceCategory === '09' ) {
+          this.$wrap_service.html(this.tpl_service_direct_type2());
+        } else {
+          this.$wrap_service.html(this.tpl_service_direct_type1());
+        }
       }
 
       if ( this.state.serviceType === 'CHOCO' ) {
@@ -277,6 +285,31 @@ Tw.CustomerEmailTemplate.prototype = {
       null,
       $.proxy(this._goCustomerMain, this),
       this._popupService.close);
+  },
+
+  _validateEmail: function (e) {
+    var sEmail = $(e.currentTarget).val();
+    var $inputBox = $(e.currentTarget).closest('.inputbox');
+    if ( !Tw.ValidationHelper.isEmail(sEmail) ) {
+      $inputBox.addClass('error');
+      $inputBox.find('.error-txt').removeClass('none');
+    } else {
+      $inputBox.removeClass('error');
+      $inputBox.find('.error-txt').addClass('none');
+    }
+  },
+
+  _validatePhone: function (e) {
+    var sPhone = $(e.currentTarget).val();
+    var $inputBox = $(e.currentTarget).closest('.inputbox');
+
+    if ( Tw.ValidationHelper.isCellPhone(sPhone) || Tw.ValidationHelper.isTelephone(sPhone) ) {
+      $inputBox.removeClass('error');
+      $inputBox.find('.error-txt').addClass('none');
+    } else {
+      $inputBox.addClass('error');
+      $inputBox.find('.error-txt').removeClass('none');
+    }
   },
 
   _goCustomerMain: function () {
