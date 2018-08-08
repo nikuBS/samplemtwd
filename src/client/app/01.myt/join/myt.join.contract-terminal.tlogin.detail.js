@@ -22,8 +22,15 @@ Tw.MytJoinContractTerminalTloginDetail = function (rootEl, resData) {
   this._history = new Tw.HistoryService(this.$container);
   this._history.init('hash');
 
-  this.bffListData = null; //리스트 데이터
-  this.spliceLen = 20;
+  this.bffListData = null; //원본 리스트 데이터
+
+  this.detailListObj = {
+    listData: null,
+    curLen : 0, //현재 데이터 카운트
+    startCount: 20, // 시작 데이터 카운트
+    addCount: 20, // 추가 데이터 카운트
+    viewData: [] // 잘라서 넣는 데이터
+  };
 
   this._init();
 };
@@ -37,31 +44,51 @@ Tw.MytJoinContractTerminalTloginDetail.prototype = {
   _cachedElement: function () {
     this.$tgTpl = $('#fe-contract-terminal-detail');
     this.$tgDetailList = $('[data-target="detailList"]');
+    this.$curNum = $('[data-target="curNum"]');
   },
   _bindEvent: function () {
-    this.$container.on('click', '[data-target="addBtn"]', $.proxy(this._ctrlInit, this));
+    this.$container.on('click', '[data-target="addBtn"]', $.proxy(this._addView, this));
+    this.$container.on('click', '[data-target="closeBtn"]', $.proxy(this._goBack, this));
   },
   _proData: function() { //데이터 가공
     Tw.Logger.info('[ _proData ]');
-    _.map(this.bffListData, function( item ) {
+    this.detailListObj.listData = $.extend(true, [], this.bffListData); // deep copy array
+    this.detailListObj.curLen = this.detailListObj.listData.length;
+
+    _.map(this.detailListObj.listData, function( item ) {
       item.invoDt = Tw.DateHelper.getShortDateNoDot( item.invoDt );
       item.invCnt = Tw.FormatHelper.addComma( item.invCnt );
       item.penEstDcAmt = Tw.FormatHelper.addComma( item.penEstDcAmt );
-
       return item;
     });
+    Tw.Logger.info('[ _proData end ]', this.detailListObj);
   },
   _ctrlInit: function() {
     this._cachedElement();
-    var tempData = this.bffListData.splice(0, this.spliceLen); //데이터 자르기
-
+    this._dataSplice( this.detailListObj.listData, this.detailListObj.startCount );
     var template = Handlebars.compile( this.$tgTpl.html() );
-    var output = template( { tempData:tempData } );
+    var output = template( { tempData: this.detailListObj.viewData } );
     this.$tgDetailList.append(output);
+    this.$curNum.html('( ' + this.detailListObj.curLen + ' )');
+  },
+  _addView: function() {
+    if ( this.detailListObj.curLen <= 0 ) { return; }
 
-    Tw.Logger.info('[_ctrlInit > 데이터가공]', this.bffListData);
-    Tw.Logger.info('[ 데이터 > slice ]', tempData);
-
+    this._cachedElement();
+    this._dataSplice( this.detailListObj.listData, this.detailListObj.addCount );
+    var template = Handlebars.compile( this.$tgTpl.html() );
+    var output = template( { tempData: this.detailListObj.viewData } );
+    this.$tgDetailList.append(output);
+    this.$curNum.html('( ' + this.detailListObj.curLen + ' )');
+  },
+  //--------------------------------------------------------------------------[service]
+  _dataSplice: function( listData, count ) {
+    var tempListData = listData;
+    var tempCount = count;
+    var spliceData = tempListData.splice(0, tempCount);
+    this.detailListObj.viewData = spliceData;
+    this.detailListObj.curLen = this.detailListObj.listData.length;
+    Tw.Logger.info('[ _dataSplice end ]', this.detailListObj);
   },
   //--------------------------------------------------------------------------[api]
   _getDetailList: function() {
