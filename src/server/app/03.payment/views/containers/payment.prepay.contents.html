@@ -14,11 +14,11 @@
 </div>
 <!--// #skip_navigation -->
 <div id="payment-prepay-contents" class="wrap">
-    <%- include('../../../../common/views/components/header.component.html', { title: '콘텐츠이용료 선결제하기', svcInfo: svcInfo }); %>
     <!-- #contents -->
     <div class="container-wrap">
         <h2 class="blind">내용</h2>
-        <div class="container">
+        <div id="main" class="container">
+            <%- include('../../../../common/views/components/header.component.html', { title: '콘텐츠이용료 선결제하기', svcInfo: svcInfo }); %>
             <div class="cont-box noborder square">
                 <div class="payment-info">
                     <h3 class="info-ti fe-main-title"><%= currentMonth %>월 <%= title %></h3>
@@ -73,7 +73,7 @@
                                                                             <span class="title line">자동 선결제 이용 중</span>
                                                                             <span class="money"><strong class="num"><%= prepay.autoChrgAmount %></strong> 원</span>
                                                                             <span class="fe-auto-prepay-info none"><%= prepay.cardNum %></span>
-                                                                            <button role="button" title="상세보기" aria-pressed="false" class="fe-auto-prepay-arrow none">상세보기</button>
+                                                                            <button role="button" title="상세보기" aria-pressed="false" class="fe-auto-prepay-arrow">상세보기</button>
                                                                         </div>
                                                                         <div class="acco-cont">
                                                                             <div class="inner-sub">
@@ -133,6 +133,9 @@
             </div>
             <% } %>
             <% include ../components/info/payment.prepay.contents.info.component.html %>
+        </div>
+        <div id="complete-cancel" style="display:none;">
+            <% include ../components/prepay/payment.prepay.cancel.complete.component.html %>
         </div>
     </div>
     <!--// #contents -->
