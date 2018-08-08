@@ -50,7 +50,8 @@ Tw.POPUP_TITLE = {
   SET_HELPLINE_ITEM: '항목설정',
   MYT_LIMIT_MONTH: '매월 한도선택',
   MYT_LIMIT_DAY: '1일 한도선택',
-  MYT_LIMIT_ONCE: '1회 한도선택'
+  MYT_LIMIT_ONCE: '1회 한도선택',
+  MYT_SMS : '번호 선택'
 };
 
 Tw.POPUP_PROPERTY = {
@@ -401,7 +402,10 @@ Tw.MSG_MYT = {
   HISTORY_ALERT_A29: '무선콘텐츠 서비스 결제확인 SMS 추가 수신을 받으시겠습니까?',
   HISTORY_ALERT_A30: '무선콘텐츠 서비스 결제확인 SMS 추가 수신을 받지 않으시겠습니까?',
   HISTORY_ALERT_B01: '1회 한도는 1일 한도를 초과할 수 없습니다.',
-  HISTORY_ALERT_B02: '1일 한도는 월 한도를 초과할 수 없습니다.'
+  HISTORY_ALERT_B02: '1일 한도는 월 한도를 초과할 수 없습니다.',
+  SMS_A01 : '개인정보 제공 및 활용동의에 체크해주세요.',
+  SMS_A02 : '숫자만 입력 가능합니다.',
+  SMS_A03 : 'SMS 받을 번호를 입력해주세요.'
 };
 
 Tw.MSG_RECHARGE = {
@@ -678,7 +682,8 @@ Tw.MSG_POSTCODE = {
   L02: '시/군/구를 선택해주세요.',
   L03: '검색어는 최소 2글자 이상 입력해주세요.',
   L04: '검색된 주소가 없습니다.\n다시 한번 주소를 선택 및 입력해주세요.',
-  L05: '검색된 사서함이 없습니다.\n다시 한번 사서함 주소를 선택 및 입력해주세요.'
+  L05: '검색된 사서함이 없습니다.\n다시 한번 사서함 주소를 선택 및 입력해주세요.',
+  L06: '상세주소를 입력해 주세요.'
 };
 
 Tw.POSTCODE_TEXT = {
@@ -689,7 +694,9 @@ Tw.POSTCODE_TEXT = {
   SELECT_ADDRESS: '주소를 선택해주세요',
   CITY_GUN_GU: '시/군/구',
   NUMBER: '지번',
-  NAME: '건물명'
+  NAME: '건물명',
+  DONG: '동',
+  HO: '호'
 };
 
 Tw.CUSTOMER_EMAIL = {
@@ -759,3 +766,5 @@ Tw.MYT_HISTORY_CPSTATE = {
   C0: 'C0',
   C1: 'C1'
 };
+
+Tw.HP_NUM_LIST = ['011','016','017','019'];

@@ -18,14 +18,13 @@ Tw.CustomerEmailTemplate.prototype = {
   state: {
     lineList: {},
     tabIndex: 0,
-    serviceType: 'CELL',
+    serviceType: '',
     serviceCategory: '',
     callCategory: ''
   },
 
   _init: function () {
     this._apiService.request(Tw.API_CMD.BFF_01_0002, {}).done($.proxy(this._onSuccessLineList, this));
-
     this._apiService.request(Tw.API_CMD.BFF_08_0010, {}).done($.proxy(this._setServiceCategory, this));
     this.state.tabIndex = $('[role=tablist]').find('[aria-selected=true]').index();
   },
@@ -35,6 +34,7 @@ Tw.CustomerEmailTemplate.prototype = {
     this.$wrap_service = $('.fe-wrap-service');
     this.tpl_service_cell = Handlebars.compile($('#tpl_service_cell').text());
     this.tpl_service_chocolate = Handlebars.compile($('#tpl_service_chocolate').text());
+    this.tpl_service_direct_type2 = Handlebars.compile($('#tpl_service_direct_type2').text());
     this.tpl_service_direct_type1 = Handlebars.compile($('#tpl_service_direct_type1').text());
     this.tpl_call_wibro = Handlebars.compile($('#tpl_call_wibro').text());
     this.tpl_call_internet = Handlebars.compile($('#tpl_call_internet').text());
@@ -52,6 +52,10 @@ Tw.CustomerEmailTemplate.prototype = {
     this.$container.on('click', '.fe-email-cancel', $.proxy(this._onCancelEmail, this));
     this.$container.on('input', '.fe-inquiry-title', $.proxy(this._onCountTitle, this));
     this.$container.on('input', '.fe-inquiry-content', $.proxy(this._onCountContent, this));
+    this.$container.on('click', '.fe-service-line', $.proxy(this._showSelectLinePopup, this));
+    this.$container.on('click', '.fe-btn_select_line', $.proxy(this._selectLine, this));
+    this.$container.on('keyup', '.fe-input-email', $.proxy(this._validateEmail, this));
+    this.$container.on('keyup', '.fe-input-phone', $.proxy(this._validatePhone, this));
   },
 
   _changeTab: function () {
@@ -66,6 +70,41 @@ Tw.CustomerEmailTemplate.prototype = {
   _onCountContent: function (e) {
     var nSize = $(e.currentTarget).val().length;
     $(e.currentTarget).parent().find('.byte-current').text(nSize);
+  },
+
+  _showSelectLinePopup: function () {
+    var arrOption = [];
+    if ( this.state.lineList.M ) {
+      arrOption = _.map(this.state.lineList.M, function (item) {
+        return {
+          checked: item.svcMgmtNum === $('.fe-service-line').data('svcmgmtnum').toString(),
+          value: item.svcMgmtNum,
+          text: Tw.FormatHelper.conTelFormatWithDash(item.svcNum)
+        };
+      });
+    }
+
+    this._popupService.open({
+      hbs: 'select',
+      title: Tw.POPUP_TITLE.SELECT_GIFT_AMOUNT,
+      close_bt: true,
+      select: [{ options: arrOption }],
+      bt_num: 'one',
+      type: [{
+        style_class: 'bt-red1 fe-btn_select_line',
+        txt: Tw.BUTTON_LABEL.SELECT
+      }]
+    });
+  },
+
+  _selectLine: function () {
+    var selectSvcmgmtnum = $('.popup').find(':checked').val();
+    var selectSvcnum = $('.popup').find('.checked').text().trim();
+
+    $('.fe-service-line').attr('data-svcmgmtnum', selectSvcmgmtnum);
+    $('.fe-service-line').text(selectSvcnum);
+
+    this._popupService.close();
   },
 
   _onSuccessLineList: function (res) {
@@ -141,6 +180,7 @@ Tw.CustomerEmailTemplate.prototype = {
     var categoryName = elTarget.text();
     this._setState({ serviceCategory: elTarget.data('category-id') });
 
+    $('.fe-btn-select-service-category').prop('data-category-id', elTarget.data('category-id'));
     $('.fe-btn-select-service-category').text(categoryName);
     this._popupService.close();
   },
@@ -174,7 +214,11 @@ Tw.CustomerEmailTemplate.prototype = {
       }
 
       if ( this.state.serviceType === 'DIRECT' ) {
-        this.$wrap_service.html(this.tpl_service_direct_type1());
+        if ( this.state.serviceCategory === '08' || this.state.serviceCategory === '09' ) {
+          this.$wrap_service.html(this.tpl_service_direct_type2());
+        } else {
+          this.$wrap_service.html(this.tpl_service_direct_type1());
+        }
       }
 
       if ( this.state.serviceType === 'CHOCO' ) {
@@ -241,6 +285,31 @@ Tw.CustomerEmailTemplate.prototype = {
       null,
       $.proxy(this._goCustomerMain, this),
       this._popupService.close);
+  },
+
+  _validateEmail: function (e) {
+    var sEmail = $(e.currentTarget).val();
+    var $inputBox = $(e.currentTarget).closest('.inputbox');
+    if ( !Tw.ValidationHelper.isEmail(sEmail) ) {
+      $inputBox.addClass('error');
+      $inputBox.find('.error-txt').removeClass('none');
+    } else {
+      $inputBox.removeClass('error');
+      $inputBox.find('.error-txt').addClass('none');
+    }
+  },
+
+  _validatePhone: function (e) {
+    var sPhone = $(e.currentTarget).val();
+    var $inputBox = $(e.currentTarget).closest('.inputbox');
+
+    if ( Tw.ValidationHelper.isCellPhone(sPhone) || Tw.ValidationHelper.isTelephone(sPhone) ) {
+      $inputBox.removeClass('error');
+      $inputBox.find('.error-txt').addClass('none');
+    } else {
+      $inputBox.addClass('error');
+      $inputBox.find('.error-txt').removeClass('none');
+    }
   },
 
   _goCustomerMain: function () {

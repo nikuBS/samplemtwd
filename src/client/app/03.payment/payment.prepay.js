@@ -12,7 +12,9 @@ Tw.PaymentPrepay = function (rootEl, title) {
 
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
+
   this._history = new Tw.HistoryService(this.$container);
+  this._history.init('hash');
 
   this._initVariables();
   this._bindEvent();
@@ -89,9 +91,6 @@ Tw.PaymentPrepay.prototype = {
       var $result = res.result;
       this._setRemainLimitInfo($result);
 
-      if ($result.autoChrgStCd === Tw.AUTO_CHARGE_CODE.USE) {
-        this.$container.find('.fe-auto-prepay-arrow').removeClass('none');
-      }
       this.$getDetailBtn.removeAttr('disabled').addClass('on');
       this.$remainInfoWrap.removeClass('none');
       this.$maxAmountWrap.removeClass('none');
@@ -173,6 +172,8 @@ Tw.PaymentPrepay.prototype = {
     this._popupService.openAlert(Tw.MSG_PAYMENT.PRE_A07, null, $.proxy(this._cancelAutoPrepay, this));
   },
   _cancelAutoPrepay: function () {
+    this._popupService.close();
+
     var $api = Tw.API_CMD.BFF_07_0077;
     if (this.$title === 'contents') {
       $api = Tw.API_CMD.BFF_07_0084;
@@ -184,7 +185,7 @@ Tw.PaymentPrepay.prototype = {
   _cancelAutoPrepaySuccess: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
       this._history.setHistory();
-      this._history.goLoad('/payment/prepay/' + this.$title + '/auto/cancel');
+      this._history.goHash('#complete-cancel');
     } else {
       this._cancelAutoPrepayFail();
     }

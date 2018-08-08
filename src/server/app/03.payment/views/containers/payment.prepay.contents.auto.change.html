@@ -1,7 +1,7 @@
 <%#
-* FileName: payment.prepay.micro.auto.change.html
+* FileName: payment.prepay.contents.auto.change.html
 * Author: 공자윤 (jayoon.kong@sk.com)
-* Date: 2018.08.06
+* Date: 2018.08.08
 %>
 <% include ../components/start.component.html %>
 <!-- #skip_navigation -->
@@ -13,13 +13,13 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div id="payment-prepay-micro-auto-change" class="wrap">
+<div id="payment-prepay-contents-auto-change" class="wrap">
     <!-- #contents -->
     <div id="main" class="container-wrap">
         <% include ../components/prepay/payment.prepay.auto.change.component.html %>
     </div>
     <div id="complete" class="container-wrap" style="display:none;">
-        <%- include('../components/prepay/payment.prepay.auto.complete.component.html', { type: 'micro' }); %>
+        <%- include('../components/prepay/payment.prepay.auto.complete.component.html', { type: 'contents' }); %>
     </div>
     <!--// #contents -->
     <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
@@ -27,7 +27,7 @@
 <% include ../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.PaymentPrepayAuto($('#payment-prepay-micro-auto-change'), 'micro');
+    new Tw.PaymentPrepayAuto($('#payment-prepay-contents-auto-change'), 'contents');
   });
 </script>
 <% include ../components/end.component.html %>

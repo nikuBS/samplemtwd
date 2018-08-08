@@ -46,17 +46,17 @@
                                                 <li>
                                                     <dl>
                                                         <dt>평균 사용요금</dt>
-                                                        <dd><%= data.useAverage || '-' %></dd>
+                                                        <dd><%= data.empty.fee? '-' : data.useAverage %></dd>
                                                     </dl>
                                                 </li>
                                                 <li>
                                                     <dl>
                                                         <dt>평균 할인요금</dt>
-                                                        <dd class="minus"><%= data.disAverage || '-' %></dd>
+                                                        <dd class="minus"><%= data.empty.fee? '-' : data.disAverage %></dd>
                                                     </dl>
                                                 </li>
                                             </ul>
-                                            <% if (data.useAverage) { %>
+                                            <% if (!data.empty.fee) { %>
                                             <!-- 그래프 영역 -->
                                             <div class="graph-wrap">
                                                 <div class="can-box3">
@@ -67,7 +67,7 @@
                                             <% } else { %>
                                             <!-- 데이터가 없는 경우 -->
                                             <div class="graph-wrap">
-                                                <div class="msg-graph no-data">최근 3개월간 사용량이 없습니다.</div>
+                                                <div class="msg-graph no-data">최근 3개월간 사용요금이 없습니다.</div>
                                                 <div class="graph-title">
                                                     <div class="graph-column">
                                                         <span class="tit"><i class="ico type1"></i>사용</span>

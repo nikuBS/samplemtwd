@@ -25,6 +25,7 @@ Tw.CustomerEmailService.prototype = {
   _cachedElement: function () {
     this.$input_sms = $('#tab1-tab .fe-inp-chk-sms');
     this.$input_email = $('#tab1-tab .fe-input-email');
+    this.tpl_direct_popup = Handlebars.compile($('#tpl_direct_popup').text());
   },
 
   _bindEvent: function () {
@@ -33,6 +34,9 @@ Tw.CustomerEmailService.prototype = {
     this.$container.on('click', '.fe-btn-device', $.proxy(this._showDevicePopup, this));
     this.$container.on('click', '[data-brand]', $.proxy(this._selectBrand, this));
     this.$container.on('click', '[data-device]', $.proxy(this._selectDevice, this));
+    this.$container.on('click', '.fe-direct-search', $.proxy(this._showDirectSearchPopup, this));
+    this.$container.on('click', '.fe-direct-result .fe-direct-close', $.proxy(this._closeDirectPopup, this));
+    this.$container.on('click', '.fe-direct-result .fe-direct-confirm', $.proxy(this._confirmDirectPopup, this));
   },
 
   _registerEmail: function () {
@@ -58,6 +62,7 @@ Tw.CustomerEmailService.prototype = {
 
   _requestEmailCell: function () {
     var params = {
+      selSvcMgmtNum: $('.fe-service-line').text(),
       cntcNumClCd: $('[name=radio_service_phone]:checked').val(),
       connSite: Tw.BrowserHelper.isApp() ? 15 : 19,
       ofrCtgSeq: this._oEmailTemplate.getState().serviceCategory,
@@ -76,6 +81,7 @@ Tw.CustomerEmailService.prototype = {
 
   _requestEmailInternet: function () {
     var params = {
+      selSvcMgmtNum: $('.fe-service-line').text(),
       cntcNumClCd: $('[name=radio_service_phone]:checked').val(),
       connSite: Tw.BrowserHelper.isApp() ? 15 : 19,
       ofrCtgSeq: this._oEmailTemplate.getState().serviceCategory,
@@ -120,6 +126,24 @@ Tw.CustomerEmailService.prototype = {
       content: $('#tab1-tab .fe-inquiry-content').val(),
       smsRcvYn: this.$input_sms.prop('checked') ? 'Y' : 'N'
     }).done($.proxy(this._onSuccessRequest, this));
+  },
+
+  _showDirectSearchPopup: function () {
+    $(window).scrollTop(0);
+
+    this.$container.append(this.tpl_direct_popup());
+    document.body.style.overflow = 'hidden';
+    skt_landing.widgets.widget_init('.popup-page'); //selector string
+    skt_landing.components.component_init('.popup-page');  //selector string
+  },
+
+  _confirmDirectPopup: function () {
+
+  },
+
+  _closeDirectPopup: function () {
+    document.body.style.overflow = 'auto';
+    $('.fe-direct-result').remove();
   },
 
   _showBrandPopup: function () {

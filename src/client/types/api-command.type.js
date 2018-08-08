@@ -70,6 +70,7 @@ Tw.API_CMD = {
   BFF_05_0050: { path: '/core-bill/v1/wire-bill-types', method: Tw.API_METHOD.PUT },
   BFF_05_0052: { path: '/core-bill/v1/wire-bill-reissue', method: Tw.API_METHOD.POST },
   BFF_05_0060: { path: '/core-modification/v1/no-contract-plan-points', method: Tw.API_METHOD.GET },
+  BFF_05_0062: { path: '/core-modification/v1/wire-network-notification', method: Tw.API_METHOD.POST },
   BFF_05_0064: { path: '/core-bill/v1/useContents/getUseContents', method: Tw.API_METHOD.GET },
   BFF_05_0066: { path: '/core-bill/v1/useContentsLimit', method: Tw.API_METHOD.GET },
   BFF_05_0067U: { path: '/core-bill/v1/useContents/getUpdateUseContentsLimit', method: Tw.API_METHOD.POST },
@@ -179,7 +180,7 @@ Tw.API_CMD = {
   BFF_07_0081: { path: '/core-bill/v1/useContentsPrepay/useContentsPrepay-requests', method: Tw.API_METHOD.GET },
   BFF_07_0082: { path: '/core-bill/v1/useContentsPrepay/useContentsPrepay-process', method: Tw.API_METHOD.POST },
   BFF_07_0083: { path: '/core-bill/v1/useContentsPrepay/useContents-autoPrepay-process', method: Tw.API_METHOD.POST },
-  BFF_07_0084: { path: '/core-bill/v1/useContentsPrepay-auto-delete', method: Tw.API_METHOD.POST },
+  BFF_07_0084: { path: '/core-bill/v1/useContentsPrepay/useContents-autoPrepay-delete', method: Tw.API_METHOD.POST },
 
   //CUSTOMER
   BFF_08_0001: { path: '/core-modification/v1/counsel-time-check', method: Tw.API_METHOD.GET },
