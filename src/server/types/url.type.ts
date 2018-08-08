@@ -103,6 +103,8 @@ export const URL = {
   '/payment/prepay/contents/history': { login: true, id: 'PA_07_04', title: '콘텐츠이용료 선결제 내역' }, // 콘텐츠이용료 선결제 내역
   '/payment/prepay/micro/auto': { login: true, id: 'PA_08_07_01', title: '소액결제 자동선결제' }, // 소액결제 자동선결제
   '/payment/prepay/contents/auto': { login: true, id: 'PA_07_07_01', title: '콘텐츠이용료 자동선결제' }, // 콘텐츠이용료 자동선결제
+  '/payment/prepay/micro/auto/change': { login: true, id: 'PA_08_07_02', title: '소액결제 자동선결제 변경' }, // 소액결제 자동선결제 변경
+  '/payment/prepay/contents/auto/change': { login: true, id: 'PA_07_07_02', title: '콘텐츠이용료 자동선결제 변경' }, // 콘텐츠이용료 자동선결제 변경
   '/payment/prepay/micro/auto/history': { login: true, id: 'PA_08_05', title: '소액결제 자동선결제 내역' }, // 소액결제 자동선결제 내역
   '/payment/prepay/contents/auto/history': { login: true, id: 'PA_07_05', title: '콘텐츠이용료 자동선결제 내역' }, // 콘텐츠이용료 자동선결제 내역
   // management

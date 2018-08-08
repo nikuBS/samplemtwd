@@ -22,6 +22,8 @@ import PaymentPrepayContentsAutoHistoryController from './controllers/payment.pr
 import PaymentPrepayMicroAutoHistoryController from './controllers/payment.prepay.micro.auto.history.controller';
 import PaymentPrepayMicroAutoController from './controllers/payment.prepay.micro.auto.controller';
 import PaymentPrepayContentsAutoController from './controllers/payment.prepay.contents.auto.controller';
+import PaymentPrepayMicroAutoChangeController from './controllers/payment.prepay.micro.auto.change.controller';
+import PaymentPrepayContentsAutoChangeController from './controllers/payment.prepay.contents.auto.change.controller';
 
 class PaymentRouter extends TwRouter {
   constructor() {
@@ -47,6 +49,8 @@ class PaymentRouter extends TwRouter {
     this.controllers.push({url: '/prepay/contents/history', controller: new PaymentPrepayContentsHistoryController()});
     this.controllers.push({url: '/prepay/micro/auto', controller: new PaymentPrepayMicroAutoController()});
     this.controllers.push({url: '/prepay/contents/auto', controller: new PaymentPrepayContentsAutoController()});
+    this.controllers.push({url: '/prepay/micro/auto/change', controller: new PaymentPrepayMicroAutoChangeController()});
+    this.controllers.push({url: '/prepay/contents/auto/change', controller: new PaymentPrepayContentsAutoChangeController()});
     this.controllers.push({url: '/prepay/micro/auto/history', controller: new PaymentPrepayMicroAutoHistoryController()});
     this.controllers.push({url: '/prepay/contents/auto/history', controller: new PaymentPrepayContentsAutoHistoryController()});
   }
