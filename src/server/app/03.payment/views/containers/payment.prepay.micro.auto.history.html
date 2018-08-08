@@ -50,13 +50,13 @@
                             <div class="pay-maininfo">
                                 <span class="service-sort"><%= autoPrepay[i].name %> <br /><%= autoPrepay[i].date %></span>
                             </div>
-                            <% if (autoPrepay[i].auto_chrg_req_cl_cd === 'F') { %>
+                            <% if (autoPrepay[i].autoChrgReqClCd === 'F') { %>
                                 <p>자동 선결제가 해지되었습니다.</p>
                             <% } else { %>
                             <dl class="pay-detail type2">
                                 <dt>카드정보</dt>
                                 <dd>
-                                    <%= autoPrepay[i].prchscardNm %><br /><%= autoPrepay[i].card_num %>
+                                    <%= autoPrepay[i].cardNm %><br /><%= autoPrepay[i].cardNumH %>
                                 </dd>
                                 <dt>선결제 금액</dt>
                                 <dd><strong><%= autoPrepay[i].autoChrgAmount %></strong> <span class="unit">원</span></dd>

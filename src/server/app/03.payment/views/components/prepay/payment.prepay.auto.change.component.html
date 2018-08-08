@@ -73,7 +73,7 @@
                         </span>
                         <span class="account-form-arrow"></span>
                         <span class="account-form-select">
-                            <button class="bt-dropdown big fe-select-standard-amount" title="기준금액 변경 선택" aria-haspopup="true" id="<%= autoPrepayInfo.cmbAutoChrgStrdAmt %>">
+                            <button class="bt-dropdown big fe-select-standard-amount" title="기준금액 변경 선택" aria-haspopup="true" id="<%= autoPrepayInfo.autoChrgStrdAmt %>">
                                 <span class="ico"></span><%= autoPrepayInfo.comboStandardAmount %>만원
                             </button>
                         </span>
@@ -91,7 +91,7 @@
                         </span>
                         <span class="account-form-arrow"></span>
                         <span class="account-form-select">
-                            <button class="bt-dropdown big fe-select-prepay-amount" title="선결제 금액 변경 선택" aria-haspopup="true" id="<%= autoPrepayInfo.cmbAutoChrgAmt %>">
+                            <button class="bt-dropdown big fe-select-prepay-amount" title="선결제 금액 변경 선택" aria-haspopup="true" id="<%= autoPrepayInfo.autoChrgAmt %>">
                                 <span class="ico"></span><%= autoPrepayInfo.comboChargeAmount %>만원
                             </button>
                         </span>
@@ -107,7 +107,7 @@
                 <h3 class="pay-tit fe-card-info-title" aria-checked="false" style="display:none;">카드정보</h3>
                 <div class="widget-box check">
                     <% if (autoCardInfo !== null) { %>
-                    <span class="checkbox type01 pay-check-box fe-prepay-check-box" role="checkbox" aria-checked="false">
+                    <span class="checkbox type01 pay-check-box fe-change-prepay-check-box" role="checkbox" aria-checked="false">
                         <input type="checkbox" name="checkbox" value="" title="자동납부정보와 동일">
                         자동납부정보와 동일
                     </span>
