@@ -127,7 +127,7 @@ Tw.LineComponent.prototype = {
         display: this._index < Tw.DEFAULT_LIST_COUNT ? 'block' : 'none',
         index: this._index++,
         txt: Tw.FormatHelper.isEmpty(line.nickNm) ? Tw.SVC_ATTR[line.svcAttrCd] : line.nickNm,
-        option: selected + this._urlAuth.indexOf(line.svcAttrCd) === -1 ? 'disabled' : '',   // TODO: Add authority
+        option: selected + (this._urlAuth.indexOf(line.svcGr) === -1 ? 'disabled' : ''),   // TODO: Add authority
         integration: line.actRepYn === 'Y',
         representation: line.repSvcYn === 'Y',
         line: Tw.LINE_NAME[category] === 'S' ? line.addr : line.svcNum,
