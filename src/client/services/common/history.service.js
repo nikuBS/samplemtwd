@@ -10,11 +10,15 @@ Tw.HistoryService = function (selector) {
   this.historyObj = {};
   this._hashService = Tw.Hash;
   this._hashList = [];
+  this._urlHistoryLength = 1;
 };
 Tw.HistoryService.prototype = {
   // public
-  init: function (hash) {
-    if ( hash === undefined ) {
+  init: function (hash, length) {
+    if ( hash !== 'hash' ) {
+      if (length > 0) {
+        this._urlHistoryLength = length;
+      }
       this.$window.on('pageshow', $.proxy(this.checkIsBack, this));
     } else {
       this._hashService.initHashNav($.proxy(this.onHashChange, this));
@@ -64,8 +68,9 @@ Tw.HistoryService.prototype = {
   checkIsBack: function (event) {
     if ( event.originalEvent.persisted || window.performance && window.performance.navigation.type === 2 ) {
       if ( this.isDone() ) {
+        var historyLength = -(this._urlHistoryLength);
         Tw.UIService.setLocalStorage(this.storageName, '');
-        this.resetHistory(-1);
+        this.resetHistory(historyLength);
       }
     }
   },
