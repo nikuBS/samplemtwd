@@ -62,6 +62,13 @@ Tw.CustomerEmailTemplate.prototype = {
     this.$container.on('click', '.fe-btn_select_line', $.proxy(this._selectLine, this));
     this.$container.on('keyup', '.fe-input-email', $.proxy(this._validateEmail, this));
     this.$container.on('keyup', '.fe-input-phone', $.proxy(this._validatePhone, this));
+    this.$container.on('change', '.fe-inp-chk-sms', $.proxy(this._onChangeSMS, this));
+  },
+
+  _onChangeSMS: function (e) {
+    if ( $(e.currentTarget).prop('checked') ) {
+      this._popupService.openAlert(Tw.MSG_CUSTOMER.EMAIL_A02, Tw.BUTTON_LABEL.CONFIRM);
+    }
   },
 
   _changeTab: function () {
