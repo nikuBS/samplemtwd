@@ -45,7 +45,7 @@ Tw.MytUsage.prototype = {
     return unit;
   },
   _checkExceed: function () {
-    if ( this.$container.find('.exceed').is('visible') ) {
+    if ( this.$container.find('.fe-exceed').length > 0) {
       this.$container.find('.fe-ad2').show();
     }
   },
