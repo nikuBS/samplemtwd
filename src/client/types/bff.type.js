@@ -72,3 +72,9 @@ Tw.TDATA_SHARE_EQPMGMT_ST_CD = {
   '02': '02', // 개통
   '09': '09' // 분실/분실신고
 };
+
+Tw.PAYMENT_REQUEST_TYPE = {
+  R: '신규',
+  C: '변경',
+  F: '해지'
+};
