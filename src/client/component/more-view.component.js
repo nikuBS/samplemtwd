@@ -1,16 +1,15 @@
-Tw.MoreViewService = function () {
+Tw.MoreViewComponent = function () {
 
 };
 
-Tw.MoreViewService.prototype = {
+Tw.MoreViewComponent.prototype = {
 
   // 최초 한번 전체 리스트를 셋 한다.
   init : function (list) {
     if ( !list ) {
       return;
     }
-    this._MORE_CNT = 20;
-    this._moreList = _.chunk(list, this._MORE_CNT);
+    this._moreList = _.chunk(list, Tw.DEFAULT_LIST_COUNT);
   },
 
   // _MORE_CNT 만큼의 리스트 와 다음 리스트의 잔여 카운트를 리턴한다.
