@@ -9,6 +9,7 @@ Tw.CustomerEmailTemplate = function (rootEl) {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._history = new Tw.HistoryService(this.$container);
+  this._history.init('', 3);
 
   this._cachedElement();
   this._bindEvent();
@@ -242,6 +243,7 @@ Tw.CustomerEmailTemplate.prototype = {
         this.$wrap_call.html(this.tpl_call_wibro());
 
         if ( Tw.UrlHelper.getQueryParams().post ) {
+          this._history.complete();
           if ( Tw.UIService.getLocalStorage('post') ) {
             var location = Tw.UIService.getLocalStorage('post').split(',');
             $('.fe-param05').val(location[0]);
