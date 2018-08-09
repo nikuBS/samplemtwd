@@ -43,7 +43,7 @@
             <div class="cont-box nogaps noborder">
                 <div class="payment-select space-type pt28">
                     <h3>신청 및 변경내역</h3>
-                    <ul class="select-list fe-select-list">
+                    <ul class="select-list fe-select-list" data-cnt="<%= autoPrepay.totalCnt %>">
                         <% if (autoPrepay) { %>
                         <% for (var i = 0; i < autoPrepay.length; i++) { %>
                         <li>

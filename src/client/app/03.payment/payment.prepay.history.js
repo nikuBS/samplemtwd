@@ -67,7 +67,7 @@ Tw.PaymentPrepayHistory.prototype = {
       var $result = res.result;
       var $record = [];
       if (this.$title === 'micro') {
-        $record = $result.microAutoPrepayRecord;
+        $record = $result.microPrepayReqRecord;
       } else {
         $record = $result.useContentsAutoPrepayRecord;
       }
