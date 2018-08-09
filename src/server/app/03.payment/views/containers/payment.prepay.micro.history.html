@@ -22,7 +22,7 @@
                 <div class="payment-select space-type">
                     <h3>소액결제 선결제 내역</h3>
                     <% if (microPrepayRecord) { %>
-                    <ul class="select-list">
+                    <ul class="select-list fe-select-list" data-cnt="<%= microPrepayRecord.length %>">
                         <% for (var i = 0; i < microPrepayRecord.length; i++) { %>
                         <li>
                             <div class="pay-maininfo">
@@ -40,7 +40,7 @@
                     <% } %>
                 </div>
                 <% if (microPrepayRecord.length > 20) { %>
-                    <button class="bt-more">더보기<span>(<%= microPrepayRecord.length - 20 %>)</span></button>
+                    <button class="bt-more fe-more-btn">더보기<span class="fe-more-length">(<%= microPrepayRecord.length - 20 %>)</span></button>
                 <% } %>
             </div>
             <hr class="cont-sp type1" aria-hidden="true" />
@@ -51,7 +51,7 @@
 <% include ../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.PaymentPrepayHistory($('#payment-prepay-micro-history'));
+    new Tw.PaymentPrepayHistory($('#payment-prepay-micro-history'), 'micro');
   });
 </script>
 <% include ../components/end.component.html %>
