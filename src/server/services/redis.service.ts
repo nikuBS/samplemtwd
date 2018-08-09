@@ -40,7 +40,7 @@ class RedisService {
           result = null;
         }
 
-        this.client.end();
+        this.client.end(true);
         observer.next(result);
         observer.complete();
       });
