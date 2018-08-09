@@ -41,7 +41,7 @@ Tw.MyTBillHistoryMicro.prototype = {
     // this.currentYYYYMM = this._dateHelper.getShortDateWithFormat(new Date(), 'YYYYMM');
 
     // 7월로 설정
-    this.fromYYYYMM = this._dateHelper.getShortDateWithFormatAddByUnit(new Date(), -1, 'months', 'YYYYMM');
+    // this.fromYYYYMM = this._dateHelper.getShortDateWithFormatAddByUnit(new Date(), -1, 'months', 'YYYYMM');
     this.currentYYYYMM = this._dateHelper.getShortDateWithFormat(new Date(), 'YYYYMM');
 
     // todate : currentDay
@@ -63,6 +63,23 @@ Tw.MyTBillHistoryMicro.prototype = {
     this.common._setTab(this._tabChangeCallback, this, this.hashList, this.$tabTriggerWrapper);
     this.getLimit = new Tw.MyTBillHistoryCommon.GetLimit();
 
+    this.search = new Tw.MyTBillHistoryCommon.Search(this.$searchElement, {
+        defaultMonth: {
+          title: Tw.POPUP_TITLE.PERIOD_SELECT,
+          separator: 'search-pay-default-month',
+          data: this._getChoiceDataMonth(12).map(function(o, i) {
+            return { text : o, key : i };
+          })
+        },
+        paymentType: {
+          title: Tw.POPUP_TITLE.PAYMENT_TYPE_SELECT,
+          separator: 'search-pay-type',
+          data: this.paymentTypeArr,
+          callback: $.proxy(this._selectedPayType, this)
+        }
+      },
+      $.proxy(this._goSearch, this));
+
     this._getData();
   },
 
@@ -82,17 +99,20 @@ Tw.MyTBillHistoryMicro.prototype = {
     this.$payPasswordChkBtn = this.$container.find('.usage-list .fe-chk-password-btn');
     this.$payPasswordChkIndicator = this.$payPasswordChkBtn.find('.txt');
 
-    this.$searchElement = {
+    this.$searchElementCustom = {
       $usageTotalDesc: this.$container.find('#fe-usage-total-desc'),
       $usageTotalCount: this.$container.find('#fe-usage-total-desc .num'),
       $usageTotalAmount: this.$container.find('#fe-usage-total-desc em'),
       $blindTotalDesc: this.$container.find('#fe-blind-total-desc'),
-      $blindTotalCount: this.$container.find('#fe-blind-total-desc .num'),
+      $blindTotalCount: this.$container.find('#fe-blind-total-desc .num')
+    };
+
+    this.$searchElement = {
       $termOpener: this.$container.find('.list-top .select-left button'),
       $paymentTypeSelector: this.$container.find('.list-top .select-right button'),
       $monthlyCustomTermSelector: this.$container.find('.widget-box.radio .select-list li input'),
       $monthSelector: this.$container.find('.history-inquiry > .bt-dropdown'),
-      $customTermSelector: this.$container.find('.history-inquiry .tube-list'),
+      $customTermSelector: this.$container.find('.history-inquiry .tube-list input'),
       $customTermStartSelector: this.$container.find('.history-inquiry .date-selcet button').eq(0),
       $customTermEndSelector: this.$container.find('.history-inquiry .date-selcet button').eq(1),
       $searchBtn: this.$container.find('.history-inquiry .contents-btn button')
@@ -120,39 +140,9 @@ Tw.MyTBillHistoryMicro.prototype = {
     this.$microPayUseSwitchInput.on('click', $.proxy(this._changeMicroPayUse, this));
     this.$payPasswordChkBtn.on('click', $.proxy(this._movePayPasswordPage, this));
 
-    this.$searchElement.$paymentTypeSelector.on('click', $.proxy(this._selectPayType, this));
+    // this.$searchElement.$paymentTypeSelector.on('click', $.proxy(this._selectPayType, this));
     // this.$searchElement.$monthSelector.on('click', $.proxy())
 
-  },
-
-  _selectPayType: function (evt) {
-    (new Tw.MyTBillHistoryCommon.SearchComboListUI(
-        this.$searchElement.$paymentTypeSelector,
-        Tw.POPUP_TITLE.PAYMENT_TYPE_SELECT,
-        'search-pay-type',
-        this.paymentTypeArr
-    ))._init(evt);
-  },
-
-  _getTabHash: function () {
-    this.$tabTriggerWrapper.each($.proxy(function (i, o) {
-      this.hashList.push($(o).find('a').attr('href').split('#')[1]);
-    }, this));
-  },
-
-  _tabChangeCallback: function () {
-    // console.log(this.common.currentTab);
-  },
-
-  _checkUsageLimitCurrentMonth: function () {
-    this.getLimit._init(this.getMonthlyLimitAPI, $.proxy(this._success_checkUsage, this));
-  },
-
-  _success_checkUsage: function (res) {
-    this.$usageLimitCheckTrigger.hide();
-    this.$detailCurrentUsageLimitWrapper.removeClass('none');
-    this.$detailMicroPay.html(Tw.FormatHelper.addComma(res.result.tmthUseAmt));
-    this.$detailMicroPayRest.html(Tw.FormatHelper.addComma(res.result.remainUseLimit));
   },
 
   _getData: function () {
@@ -162,9 +152,21 @@ Tw.MyTBillHistoryMicro.prototype = {
           .error($.proxy(this.common._apiError, this.common));
     }
 
+    this._updateListData();
+  },
+
+  _updateListData: function () {
+    var dataUpdateMethod;
+
+    if(!this.usedMicroPayList) {
+      dataUpdateMethod = this._checkPreRender;
+    } else {
+      dataUpdateMethod = this._updateData;
+    }
+
     if (this.apiName) {
       this._apiService.request(this.apiName, this.apiOption)
-          .done($.proxy(this._checkPreRender, this))
+          .done($.proxy(dataUpdateMethod, this))
           .error($.proxy(this.common._apiError, this.common));
     }
   },
@@ -180,28 +182,29 @@ Tw.MyTBillHistoryMicro.prototype = {
   },
 
   _filterHistory: function (res, blindRes) {
+    // console.log('[_filterHistory]', res, blindRes);
     if (!_.isEmpty(res)) {
       res = res.reverse();
     }
-    if (!_.isEmpty(blindRes)) {
-      blindRes = blindRes ? blindRes.reverse() : [];
+
+    if (!!blindRes && !_.isEmpty(blindRes)) {
+      this.blindHistoies = blindRes.reverse();
     }
+
     this.usageHistories = res ? _.filter(res, $.proxy(function (o) {
       return o.cpState.substr(0, 1) !== 'A';
     })) : [];
-    this.blindHistoies = blindRes || [];
+    this.blindHistoies = this.blindHistoies || [];
   },
 
   _setData: function (blindResponse) {
-    var res = this.usedMicroPayList.result;
     var blindRes = blindResponse.result;
 
-    // console.log('[_setData]', res, blindRes);
     if (!this.useMicroPayUseFlag) {
-      this._initData(res);
+      this._initData(this.usedMicroPayList.result);
     }
 
-    this._filterHistory(res.histories, blindRes.cpHistories);
+    this._filterHistory(this.usedMicroPayList.result.histories, blindRes.cpHistories);
 
     if (_.isEmpty(this.usageHistories)) {
       this.isMicroPayListEmpty = true;
@@ -210,16 +213,29 @@ Tw.MyTBillHistoryMicro.prototype = {
       this.isBlindListEmpty = true;
     }
 
-    this._updateUseData();
+    this._updateUsageListData();
+    this._initBlindListData();
 
     this._setSubInfoUI();
     this._updateListUI();
     this._setBlindListUI();
   },
 
-  _updateUseData: function () {
+  _updateData: function (res) {
+    this._filterHistory(res.result.histories);
+
+    this.isMicroPayListEmpty = _.isEmpty(this.usageHistories);
+
+    this._updateUsageListData();
+    this._updateListUI();
+    this._updateListSubInfo();
+  },
+
+  _updateUsageListData: function () {
+    this.usageHistoriesTotalAmt = 0;
     if (!_.isEmpty(this.usageHistories)) {
       this.usageHistories.map($.proxy(function (o, i) {
+        this.usageHistoriesTotalAmt += parseInt(o.sumPrice, 10);
         o.listId = i;
         o.payDate = this._dateHelper.getShortDateWithFormat(o.useDate, 'YYYY.MM.DD');
         o.sumPrice = Tw.FormatHelper.addComma(o.sumPrice);
@@ -241,8 +257,11 @@ Tw.MyTBillHistoryMicro.prototype = {
             '&cpState=' + o.cpState +
             '&pgName=' + o.pgName;
       }, this));
+      this.usageHistoriesTotalAmt = Tw.FormatHelper.addComma(this.usageHistoriesTotalAmt.toString());
     }
+  },
 
+  _initBlindListData: function () {
     if (!_.isEmpty(this.blindHistoies)) {
       this.blindHistoies.map($.proxy(function (o, i) {
         this._getBlindState(o);
@@ -296,7 +315,6 @@ Tw.MyTBillHistoryMicro.prototype = {
   },
 
   _checkPreRender: function (res) {
-    // console.log('[_checkPreRender]', res);
     this.usedMicroPayList = this.usedMicroPayList || res;
     switch (res.code) {
       case Tw.API_CODE.CODE_00:
@@ -311,7 +329,6 @@ Tw.MyTBillHistoryMicro.prototype = {
       default:
         return this.common._apiError(res);
     }
-
   },
 
   _setSubInfoUI: function () {
@@ -324,21 +341,22 @@ Tw.MyTBillHistoryMicro.prototype = {
 
   _updateListSubInfo: function () {
     if (!this.isMicroPayListEmpty) {
-      this.$searchElement.$usageTotalCount.html(this.usageHistories.length);
-      this.$searchElement.$usageTotalDesc.removeClass('none');
+      this.$searchElementCustom.$usageTotalCount.html(this.usageHistories.length);
+      this.$searchElementCustom.$usageTotalAmount.html(this.usageHistoriesTotalAmt);
+      this.$searchElementCustom.$usageTotalDesc.removeClass('none');
     } else {
-      this.$searchElement.$usageTotalDesc.addClass('none');
+      this.$searchElementCustom.$usageTotalDesc.addClass('none');
     }
     if (!this.isBlindListEmpty) {
-      this.$searchElement.$blindTotalCount.html(this.blindHistoies.length);
-      this.$searchElement.$blindTotalDesc.removeClass('none');
+      this.$searchElementCustom.$blindTotalCount.html(this.blindHistoies.length);
+      this.$searchElementCustom.$blindTotalDesc.removeClass('none');
     } else {
-      this.$searchElement.$blindTotalDesc.addClass('none');
+      this.$searchElementCustom.$blindTotalDesc.addClass('none');
     }
   },
 
-  _setBlindListUI: function() {
-    if (_.isEmpty(this.blindHistoies.length)) {
+  _setBlindListUI: function () {
+    if (_.isEmpty(this.blindHistoies)) {
       this.$template.$domBlindListWrapper.addClass('type2');
     }
 
@@ -371,6 +389,15 @@ Tw.MyTBillHistoryMicro.prototype = {
       list: 'listElement',
       restButton: 'restCount'
     }, 10, '.bt-more', '.list-inner', $.proxy(this._appendListCallBack, this));
+  },
+
+  _goSearch: function (startYYYYMMDD, endYYYYMMDD, paymentType) {
+
+    // console.log(this, this.search, startYYYYMMDD, endYYYYMMDD, paymentType, this.fromYYYYMM, this.currentYYYYMM);
+    this.apiOption.fromdate = startYYYYMMDD;
+    this.apiOption.todate = endYYYYMMDD;
+
+    this._getData();
   },
 
   _appendListCallBack: function () {
@@ -423,8 +450,44 @@ Tw.MyTBillHistoryMicro.prototype = {
     }
   },
 
+  _selectedPayType: function () {
+    var currentID = this.$searchElement.$paymentTypeSelector.attr('id');
+    this.apiOption.payMethod = Tw.PAYMENT_TYPE_CODE[_.last(currentID.split('-'))];
+
+    this._getData();
+  },
+
+  _getChoiceDataMonth: function (term) {
+    var choiceData = [];
+    for (var k = 0; k <= term; k++) {
+      choiceData.push(this._dateHelper.getShortDateWithFormatAddByUnit(this.currentYYYYMM, k * -1, 'months', Tw.DATE_FORMAT.YYYYDD_TYPE_1, 'YYYYMM'));
+    }
+    return choiceData;
+  },
+
   _updatePasswordUseState: function () {
 
+  },
+
+  _getTabHash: function () {
+    this.$tabTriggerWrapper.each($.proxy(function (i, o) {
+      this.hashList.push($(o).find('a').attr('href').split('#')[1]);
+    }, this));
+  },
+
+  _tabChangeCallback: function () {
+    // console.log(this.common.currentTab);
+  },
+
+  _checkUsageLimitCurrentMonth: function () {
+    this.getLimit._init(this.getMonthlyLimitAPI, $.proxy(this._success_checkUsage, this));
+  },
+
+  _success_checkUsage: function (res) {
+    this.$usageLimitCheckTrigger.hide();
+    this.$detailCurrentUsageLimitWrapper.removeClass('none');
+    this.$detailMicroPay.html(Tw.FormatHelper.addComma(res.result.tmthUseAmt));
+    this.$detailMicroPayRest.html(Tw.FormatHelper.addComma(res.result.remainUseLimit));
   },
 
   _changeSwitchUI: function (e) {
