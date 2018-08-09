@@ -37,7 +37,8 @@ Tw.CustomerEmailService.prototype = {
     this.$container.on('click', '.fe-direct-search', $.proxy(this._showDirectSearchPopup, this));
     this.$container.on('click', '.fe-direct-result .fe-direct-close', $.proxy(this._closeDirectPopup, this));
     this.$container.on('click', '.fe-direct-result .fe-direct-confirm', $.proxy(this._confirmDirectPopup, this));
-    this.$container.on('click', '.fe-direct-result [name=radio_direct]', $.proxy(this._changeDirectPopupTab, this));
+    this.$container.on('click', '.fe-direct-popup-content li', $.proxy(this._selectDirectPopupItem, this));
+    this.$container.on('click', '.fe-direct-tab .radiobox', $.proxy(this._changeDirectPopupTab, this));
   },
 
   _registerEmail: function () {
@@ -65,14 +66,30 @@ Tw.CustomerEmailService.prototype = {
     var sEmail = $('#tab1-tab .fe-input-email').val().trim();
     if ( !Tw.ValidationHelper.isEmail(sEmail) ) {
       this._popupService.openAlert(Tw.MSG_CUSTOMER.EMAIL_A03, Tw.BUTTON_LABEL.CONFIRM, function () {
+        setTimeout(function () {
+          $('#tab1-tab .fe-input-email').focus();
+        }, 100);
+
         this._popupService.close();
-      }.bind(this), function () {
-        this._popupService.close();
-      }.bind(this));
+      }.bind(this), this._popupService.close);
+
       return false;
-    } else {
-      return true;
     }
+
+    var sPhone = $('#tab1-tab .fe-input-phone').val().trim();
+    if ( !Tw.ValidationHelper.isCellPhone(sPhone) ) {
+      this._popupService.openAlert(Tw.MSG_CUSTOMER.EMAIL_A04, Tw.BUTTON_LABEL.CONFIRM, function () {
+        setTimeout(function () {
+          $('#tab1-tab .fe-input-phone').focus();
+        }, 100);
+
+        this._popupService.close();
+      }.bind(this), this._popupService.close);
+
+      return false;
+    }
+
+    return true;
   },
 
   _requestEmailCell: function () {
@@ -167,9 +184,12 @@ Tw.CustomerEmailService.prototype = {
     }.bind(this));
   },
 
+  _selectDirectPopupItem: function () {
+    $('.fe-direct-confirm button').prop('disabled', false);
+  },
+
   _confirmDirectPopup: function () {
     var ordNo = $('.fe-direct-popup-content').find('input:checked').val();
-
     $('.fe-input-order').val(ordNo);
 
     this._closeDirectPopup();
@@ -177,14 +197,26 @@ Tw.CustomerEmailService.prototype = {
 
   _changeDirectPopupTab: function () {
     var nDirectTabIndex = $('.fe-direct-tab input').index($('.fe-direct-tab input:checked'));
+    var $btn_direct_confirm = $('.fe-direct-confirm button');
     var $tab1 = $('.direct_tab1');
     var $tab2 = $('.direct_tab2');
+
     if ( nDirectTabIndex === 0 ) {
       $tab1.show();
       $tab2.hide();
+      if ( $tab1.find(':checked').size() > 0 ) {
+        $btn_direct_confirm.prop('disabled', false);
+      } else {
+        $btn_direct_confirm.prop('disabled', true);
+      }
     } else {
       $tab1.hide();
       $tab2.show();
+      if ( $tab2.find(':checked').size() > 0 ) {
+        $btn_direct_confirm.prop('disabled', false);
+      } else {
+        $btn_direct_confirm.prop('disabled', true);
+      }
     }
   },
 

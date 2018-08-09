@@ -8,6 +8,7 @@ Tw.CustomerEmailTemplate = function (rootEl) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
+  this._history = new Tw.HistoryService(this.$container);
 
   this._cachedElement();
   this._bindEvent();
@@ -217,7 +218,7 @@ Tw.CustomerEmailTemplate.prototype = {
 
   _setTemplate: function () {
     if ( this.state.tabIndex === 0 ) {
-      if ( this.state.serviceType === 'CELL' ) {
+      if ( this.state.serviceType === 'CELL' || this.state.serviceType === 'INTERNET' ) {
         this.$wrap_service.html(this.tpl_service_cell());
       }
 
