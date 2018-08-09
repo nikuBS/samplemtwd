@@ -30,6 +30,7 @@ class ApiRouter {
     this.router.post('/user-locks/login', this.setUserLocks.bind(this));
     this.router.post('/easy-login/aos', this.easyLoginAos.bind(this));
     this.router.post('/easy-login/ios', this.easyLoginIos.bind(this));
+    this.router.put('/service-passwords', this.changeSvcPassword.bind(this));
   }
 
   private getEnvironment(req: Request, res: Response, next: NextFunction) {
@@ -116,6 +117,16 @@ class ApiRouter {
     const params = req.body;
     this.loginService.setCurrentReq(req, res);
     this.apiService.requestEasyLoginIos(params).subscribe((resp) => {
+      res.json(resp);
+    }, (error) => {
+      res.json(error);
+    });
+  }
+
+  private changeSvcPassword(req: Request, res: Response, next: NextFunction) {
+    const params = req.body;
+    this.loginService.setCurrentReq(req, res);
+    this.apiService.requestChangeSvcPassword(params).subscribe((resp) => {
       res.json(resp);
     }, (error) => {
       res.json(error);

@@ -83,7 +83,7 @@ Tw.MyTJoinProtectChange.prototype = {
   _requestProtectChangePwd: function (/*event*/) {
     // var api = /*this._new ? Tw.API_CMD.BFF_05_0069 :*/ Tw.API_CMD.BFF_05_0070;
     var pwd = this.$pwd.find('input').val();
-    var api = Tw.API_CMD.BFF_03_0016;
+    var api = Tw.NODE_CMD.CHANGE_SVC_PASSWORD;
     var data = {
       // 20:설정, 30:변경,
       chgCd: this._new ? this.type.SET : this.type.CHANGE, // 필수 값

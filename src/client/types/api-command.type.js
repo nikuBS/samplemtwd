@@ -235,8 +235,8 @@ Tw.NODE_CMD = {
   LOGOUT_TID: { path: '/logout-tid', method: Tw.API_METHOD.POST },
   USER_LOCK_LOGIN: { path: '/user-locks/login', method: Tw.API_METHOD.POST },
   EASY_LOGIN_AOS: { path: '/easy-login/aos', method: Tw.API_METHOD.POST },
-  EASY_LOGIN_IOS: { path: '/easy-login/ios', method: Tw.API_METHOD.POST }
-
+  EASY_LOGIN_IOS: { path: '/easy-login/ios', method: Tw.API_METHOD.POST },
+  CHANGE_SVC_PASSWORD: { path: '/service-passwords', method: Tw.API_METHOD.PUT }
 };
 
 Tw.TMAP = {
