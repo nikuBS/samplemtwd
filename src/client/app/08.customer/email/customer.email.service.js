@@ -43,7 +43,7 @@ Tw.CustomerEmailService.prototype = {
   _registerEmail: function () {
     var currentState = this._oEmailTemplate.getState();
 
-    if ( currentState.tabIndex === 0 ) {
+    if ( currentState.tabIndex === 0 && this._validateForm() ) {
       switch ( currentState.serviceType ) {
         case 'CELL':
           this._requestEmailCell();
@@ -61,9 +61,23 @@ Tw.CustomerEmailService.prototype = {
     }
   },
 
+  _validateForm: function () {
+    var sEmail = $('#tab1-tab .fe-input-email').val().trim();
+    if ( !Tw.ValidationHelper.isEmail(sEmail) ) {
+      this._popupService.openAlert(Tw.MSG_CUSTOMER.EMAIL_A03, Tw.BUTTON_LABEL.CONFIRM, function () {
+        this._popupService.close();
+      }.bind(this), function () {
+        this._popupService.close();
+      }.bind(this));
+      return false;
+    } else {
+      return true;
+    }
+  },
+
   _requestEmailCell: function () {
     var params = {
-      selSvcMgmtNum: $('.fe-service-line').text(),
+      selSvcMgmtNum: $('.fe-service-line').data('svcmgmtnum'),
       cntcNumClCd: $('[name=radio_service_phone]:checked').val(),
       connSite: Tw.BrowserHelper.isApp() ? 15 : 19,
       ofrCtgSeq: this._oEmailTemplate.getState().serviceCategory,
@@ -82,7 +96,7 @@ Tw.CustomerEmailService.prototype = {
 
   _requestEmailInternet: function () {
     var params = {
-      selSvcMgmtNum: $('.fe-service-line').text(),
+      selSvcMgmtNum: $('.fe-service-line').data('svcmgmtnum'),
       cntcNumClCd: $('[name=radio_service_phone]:checked').val(),
       connSite: Tw.BrowserHelper.isApp() ? 15 : 19,
       ofrCtgSeq: this._oEmailTemplate.getState().serviceCategory,

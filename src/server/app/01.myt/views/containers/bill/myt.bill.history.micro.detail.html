@@ -48,7 +48,11 @@
                                     <% if(type === '0') { %>
                                     <li>
                                         <span class="title">구분</span>
+                                        <% if(wapYn === 'Y') {%>
+                                        <span class="tx-cont">무선</span>
+                                        <% } else { %>
                                         <span class="tx-cont">Web</span>
+                                        <% } %>
                                     </li>
                                     <% } %>
                                     <li>
@@ -78,9 +82,9 @@
                                             <% if(payMethod === '03') { %>
                                                 <% if(cpState !== 'A1' && cpState !== 'A0' && cpState !== 'C1') { %>
                                             <br /> <button class="red-btn">차단하기</button>
-                                                <% } else if(cpState === 'A1') { %>
-                                            <br /><em>(차단중)</em> <br /> <button class="blue-btn">차단해제</button>
                                                 <% } else if(cpState === 'A0') { %>
+                                            <br /><em>(차단중)</em> <br /> <button class="blue-btn">차단해제</button>
+                                                <% } else if(cpState === 'A1') { %>
                                             <br /><em>(다음 달 차단예정)</em> <br /> <button class="blue-btn">차단해제</button>
                                                 <% } else if(cpState === 'C1') { %>
                                             <br /><em>(다음 달 차단해제예정)</em> <br /> <button class="red-btn">차단하기</button>
@@ -88,17 +92,17 @@
                                             <% } %>
                                         </span>
                                     </li>
-                                    <% } else { %>
+                                    <% } else if(type === '1') { %>
                                     <li>
                                         <span class="title">설정상태</span>
                                         <span class="tx-cont fe-payment-type">
                                             자동결제
                                             <% if(cpState === 'A1') { %>
-                                            <br /><em>(차단중)</em><br /> <button class="blue-btn">차단해제</button>
-                                            <% } else if(cpState === 'A0') { %>
                                             <br /><em>(다음 달 차단예정)</em> <br /> <button class="blue-btn">차단해제</button>
-                                            <% } else if(cpState === 'C0') { %>
+                                            <% } else if(cpState === 'C1') { %>
                                             <br /><em>(다음 달 차단해제예정)</em> <br /> <button class="red-btn">차단하기</button>
+                                            <% } else { %>
+                                            <br /><em>(차단중)</em><br /> <button class="blue-btn">차단해제</button>
                                             <% } %>
                                         </span>
                                     </li>

@@ -593,6 +593,7 @@ Tw.MSG_CUSTOMER = {
   VOICE_A03: '진행을 취소하시고 첫 화면으로 이동하시겠습니까?',
   EMAIL_A01: '이메일 상담 신청을 취소하시겠습니까?',
   EMAIL_A02: 'SMS알림 설정 시 \n 답변이 등록되면 입력하신 휴대전화번호로 \n SMS가 발송됩니다.',
+  EMAIL_A03: '이메일 주소를 다시 확인해주세요.\n',
   HELPLINE_A01: '예약을 취소하시겠습니까?',
   HELPLINE_A02: '지역을 선택해 주세요.',
   HELPLINE_A03: '진행을 취소하시고 첫 화면으로 이동하시겠습니까?',
@@ -766,5 +767,10 @@ Tw.MYT_HISTORY_CPSTATE = {
   C0: 'C0',
   C1: 'C1'
 };
+
+Tw.MYT_HISTORY_CPSTATE_KOR = {
+  A0: '차단중',
+  A1: '다음 달<br />차단예정'
+}
 
 Tw.HP_NUM_LIST = ['011','016','017','019'];

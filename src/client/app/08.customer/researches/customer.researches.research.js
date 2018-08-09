@@ -166,28 +166,28 @@ Tw.CustomerResearch.prototype = {
     var inqRpsCtt = '';
     var $etc = $root.find('.fe-etc-area');
 
-    if (answerType === 0) {
-      var selectedInput = $root.find('ul.select-list li[aria-checked="true"] input');
-      inqRpsCtt = selectedInput.attr('title');
-    } else if (answerType === 1) {
-      var selectedInputs = $root.find('ul.select-list li[aria-checked="true"] input');
-      for (var i = 0; i < selectedInputs.length; i++) {
-        if (i > 0) {
-          inqRpsCtt += ', ';
-        }
+    var $list = $root.find('ul.select-list li');
+    var listLen = $list.length || 0;
 
-        inqRpsCtt += selectedInputs[i].getAttribute('title');
-      }
-    } else {
+    if (answerType === 2) {
       inqRpsCtt = $root.find('textarea.mt10').val();
+    } else {
+      for (var i = 0; i < listLen; i++) {
+        if ($list[i].getAttribute('aria-checked') === 'true') {
+          if (inqRpsCtt) {
+            inqRpsCtt += ',';
+          }
+          inqRpsCtt += (i + 1);
+        }
+      }
+
+      if ($etc) {
+        answers.etcTextNum = $etc.data('etc-area');
+        answers.etcText = $etc.val();
+      }
     }
+
     answers.inqRpsCtt = inqRpsCtt;
-
-    if ($etc) {
-      answers.etcTextNum = $etc.data('etc-area');
-      answers.etcText = $etc.val();
-    }
-
     this._answers[this._currentStep] = answers;
   },
 

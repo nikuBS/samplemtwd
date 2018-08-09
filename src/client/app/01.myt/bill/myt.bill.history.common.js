@@ -53,6 +53,18 @@ Tw.MyTBillHistoryCommon.prototype = {
     return Tw.UrlHelper.getQueryParams();
   },
 
+  getObjetToParamStr: function (obj) {
+    if (!_.isObject(obj)) {
+      return '';
+    } else {
+      var params = '?';
+      _.mapObject(obj, function (value, key) {
+        params = params + key + '=' + value + '&';
+      });
+      return params.substr(0, params.length - 1);
+    }
+  },
+
   _normalizeNumber: function (num) {
     return num.replace(/(^0+)/, '');
   },
@@ -109,10 +121,15 @@ Tw.MyTBillHistoryCommon.prototype = {
     }
   },
 
-  _apiError: function (err) {
+  _getMonthKeyword: function (from, to, isKor) {
+    console.log(from, to, isKor);
+    return 'M';
+  },
+
+  _apiError: function (err, callback) {
     Tw.Logger.error(err.code, err.msg);
     var msg = Tw.MSG_COMMON.SERVER_ERROR + '<br />' + err.code + ' : ' + err.msg;
-    this._popupService.openAlert(msg);
+    this._popupService.openAlert(msg, Tw.POPUP_TITLE.NOTIFY, callback, callback);
     return false;
   }
 };
@@ -225,11 +242,11 @@ Tw.MyTBillHistoryCommon.ListWithTemplate.prototype = {
 
       this.listWrapper = this.listWrapper || this.wrapper.find(this.listWrapperSelector);
 
-      if(this.listWrapper.length) {
+      if (this.listWrapper.length) {
         this.isULOL = (this.listWrapper.get(0).nodeName === 'UL') || (this.listWrapper.get(0).nodeName === 'OL');
       }
 
-      if(!this.isULOL)
+      if (!this.isULOL)
         $(this.listTemplate(this.data)).insertBefore(this.$container.find(this.listWrapperSelector));
       else
         this.listWrapper.append(this.listTemplate(this.data));
@@ -361,8 +378,8 @@ Tw.MyTBillHistoryCommon.GetLimit.prototype = {
     }
   },
 
-  _apiError: function (res) {
-    this.common._apiError(res);
+  _apiError: function (err, callback) {
+    this.common._apiError(err, callback);
   }
 };
 

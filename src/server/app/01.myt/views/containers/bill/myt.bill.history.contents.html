@@ -80,10 +80,7 @@
                                                             <div class="widget-box toggle">
                                                                 <div class="list-top">
                                                                     <div class="select-left">
-                                                                        <button class="btn-toggle bt-detail" role="button" aria-pressed="false" title="상세검색 영역">2018년 7월<span class="ico"></span></button>
-                                                                    </div>
-                                                                    <div class="select-right">
-                                                                        <button class="bt-dropdown" title="셀렉트 선택">결제종류 전체<span class="ico"></span></button>
+                                                                        <button class="btn-toggle bt-detail" role="button" aria-pressed="false" title="상세검색 영역"><%=curYYYYM_kor%><span class="ico"></span></button>
                                                                     </div>
                                                                 </div>
                                                                 <div class="toggler">
@@ -159,13 +156,14 @@
                                                             </ul>
                                                         </div>
                                                     </div>
-                                                    <div class="avarage-fee">평균 사용요금 <span class="ff-strong">26,300</span> 원
+                                                    <div class="avarage-fee">평균 사용요금 <span class="ff-strong"></span> 원
                                                     </div>
                                                 </div>
                                                 <!-- //.widget -->
                                             </div>
                                             <div class="history-list">
-                                                <ul class="basic-type">
+                                                <%#
+                                                <ul class="basic-type" id="fe-pay-history-bytable">
                                                     <li>
                                                             <span class="in-item">
                                                                 <span class="name"><span class="blind">월</span>7월</span>
@@ -209,16 +207,15 @@
                                                                 class="ff-hn">0</span>원</span>
                                                     </li>
                                                 </ul>
-                                            </div>
-                                            <!-- 그래프로 보기 -->
-                                            <div class="history-list none">
-                                                <div class="mark">
-                                                    <span class="mark-name"><span
-                                                            class="circle c-default"></span>사용금액</span>
-                                                    <span class="mark-name"><span
-                                                            class="circle c-orange"></span>가장 많음</span>
-                                                </div>
-                                                <ul class="monthly-bar-chart">
+                                                <!-- 그래프로 보기 -->
+                                                <div id="fe-pay-history-bygraph">
+                                                    <div class="mark">
+                                                        <span class="mark-name"><span
+                                                                class="circle c-default"></span>사용금액</span>
+                                                        <span class="mark-name"><span
+                                                                class="circle c-orange"></span>가장 많음</span>
+                                                    </div>
+                                                    <ul class="monthly-bar-chart">
                                                     <li class="bar-box">
                                                         <div class="monthly-data">
                                                                 <span class="in-item">
@@ -299,8 +296,10 @@
                                                         </div>
                                                     </li>
                                                 </ul>
+                                                </div>
+                                                <!-- // 그래프로 보기 -->
+                                                %>
                                             </div>
-                                            <!-- // 그래프로 보기 -->
                                         </div>
                                     </li>
                                 </ul>
@@ -369,50 +368,26 @@
     <ul class="list-inner">
         {{> list}}
     </ul>
+    {{#if initialMoreData}}
     <div class="bt-more-wrap">
         <button role="button" class="bt-more" title="">더보기<span>(<em></em>)</span></button>
     </div>
+    {{/if}}
 </script>
 <script id="list-default" type="text/x-handlebars-template">
     {{#each listElement}}
     <li>
-        <button role="button" title="콘텐츠 이용료 이용내역 페이지로 이동">
-                                                                            <span class="bt-inner col2">
-                                                                                <span class="his-item">
-                                                                                    <span class="name"><span
-                                                                                            class="blind">서비스명</span>카카**(****)</span>
-                                                                                    <span class="date-gray">2018.05.20</span>
-                                                                                </span>
-                                                                                <span class="his-item"><span
-                                                                                        class="blind">결제금액</span><em>500,000</em>원</span>
-                                                                            </span>
-        </button>
-    </li>
-    <li>
-        <button role="button" title="콘텐츠 이용료 이용내역 페이지로 이동">
-                                                                            <span class="bt-inner col2">
-                                                                                <span class="his-item">
-                                                                                    <span class="name"><span
-                                                                                            class="blind">서비스명</span>카카**(****)</span>
-                                                                                    <span class="date-gray">2018.05.20</span>
-                                                                                </span>
-                                                                                <span class="his-item"><span
-                                                                                        class="blind">결제금액</span><em>500,000</em>원</span>
-                                                                            </span>
-        </button>
-    </li>
-    <li>
-        <button role="button" title="콘텐츠 이용료 이용내역 페이지로 이동">
-                                                                            <span class="bt-inner col2">
-                                                                                <span class="his-item">
-                                                                                    <span class="name"><span
-                                                                                            class="blind">서비스명</span>카카**(****)</span>
-                                                                                    <span class="date-gray">2018.05.20</span>
-                                                                                </span>
-                                                                                <span class="his-item"><span
-                                                                                        class="blind">결제금액</span><em>500,000</em>원</span>
-                                                                            </span>
-        </button>
+        <a role="button" title="콘텐츠 이용료 이용내역 페이지로 이동" href="{{linkHREF}}" data-list-id="{{listId}}">
+            <span class="bt-inner col2">
+                <span class="his-item">
+                    <span class="name"><span
+                            class="blind">서비스명</span>{{useServiceNm}}</span>
+                    <span class="date-gray">{{payDate}}</span>
+                </span>
+                <span class="his-item"><span
+                        class="blind">결제금액</span><em>{{paymentTotal}}</em>원</span>
+            </span>
+        </a>
     </li>
     {{/each}}
 </script>
@@ -420,5 +395,52 @@
     <div class="no-data">
         <span>이용 내역이 없습니다.</span>
     </div>
+</script>
+<script id="list-monthly-table" type="text/x-handlebars-template">
+<ul class="basic-type" id="fe-pay-history-by-table">
+    {{#each listElement}}
+    <li>
+        <span class="in-item">
+            <span class="name"><span class="blind">월</span>{{formedInvDt}}월</span>
+        </span>
+        <span class="in-item"><span class="blind">결제금액</span><span
+                class="ff-hn">{{formedTotalUse}}</span>원</span>
+    </li>
+    {{/each}}
+</ul>
+</script>
+<script id="list-monthly-graph" type="text/x-handlebars-template">
+<div id="fe-pay-history-by-graph" class="none">
+    <!-- 그래프로 보기 -->
+    <div class="mark">
+        <span class="mark-name"><span
+                class="circle c-default"></span>사용금액</span>
+        <span class="mark-name"><span
+                class="circle c-orange"></span>가장 많음</span>
+    </div>
+    <ul class="monthly-bar-chart">
+        {{#each listElement}}
+        <li class="bar-box">
+            <div class="monthly-data">
+                <span class="in-item">
+                    <span class="name"><span
+                            class="blind">월</span>{{formedInvDt}}월</span>
+                </span>
+                <span class="in-item"><span class="blind">결제금액</span><span
+                        class="ff-hn vbl">{{formedTotalUse}}</span>원</span>
+            </div>
+            <div class="bar-chart-hoz">
+                {{#if isHightest}}
+                <span class="data-bar orange-dazzle"
+                      style="width:100%"></span>
+                {{else}}
+                <span class="data-bar gray" style="width:{{percentVal}}%"></span>
+                {{/if}}
+            </div>
+        </li>
+        {{/each}}
+    </ul>
+    <!-- // 그래프로 보기 -->
+</div>
 </script>
 <% include ../../components/end.component.html %>
