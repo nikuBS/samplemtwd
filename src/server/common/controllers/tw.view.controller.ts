@@ -10,6 +10,7 @@ import BrowserHelper from '../../utils/browser.helper';
 import { Observable } from 'rxjs/Observable';
 import RedisService from '../../services/redis.service';
 import { REDIS_URL_META } from '../../types/common.type';
+import { SVC_ATTR } from '../../types/bff.type';
 
 
 abstract class TwViewController {
@@ -19,7 +20,7 @@ abstract class TwViewController {
   private readonly _redisService: RedisService;
   private _type: string = '';
 
-  protected constructor() {
+  constructor() {
     this._apiService = new ApiService();
     this._loginService = new LoginService();
     this._logger = new LoggerService();
@@ -136,14 +137,15 @@ abstract class TwViewController {
               urlAuth
             });
             this.render(req, res, next, params);
-          } else if (this._type === 'dev') {
+          } else if ( this._type === 'dev' ) {
             this.render(req, res, next, svcInfo);
-          }else {
+          } else {
             const loginType = svcInfo.loginType;
             if ( loginType === LOGIN_TYPE.EASY ) {
               res.redirect('/auth/login/easy-fail');
             } else {
-              res.redirect('/auth/error/no-auth');
+              this.errorAuth(req, res, next, svcInfo);
+
             }
           }
         } else {
@@ -156,6 +158,15 @@ abstract class TwViewController {
       }
 
     });
+  }
+
+  private errorAuth(req, res, next, svcInfo) {
+    const data = {
+      showSvc: svcInfo.svcAttrCd.indexOf('S') === -1 ? svcInfo.svcNum : svcInfo.addr,
+      showAttr: SVC_ATTR[svcInfo.svcAttrCd]
+    };
+
+    res.render('error.no-auth.html', { svcInfo, data });
   }
 
   private renderPage(req, res, next, path) {

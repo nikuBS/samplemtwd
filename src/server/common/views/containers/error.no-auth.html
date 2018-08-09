@@ -5,7 +5,7 @@
 * CO_99_06_01_03
 %>
 
-<% include ../../components/start.component.html %>
+<% include ../components/start.component.html %>
 <!-- body -->
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
@@ -18,7 +18,7 @@
 <!--// #skip_navigation -->
 <div class="wrap">
     <!-- #header -->
-    <%- include('../../../../common/views/components/header.component.html', { title: 'menu', svcInfo: svcInfo }); %>
+    <%- include('../components/header.component.html', { title: 'menu', svcInfo: svcInfo }); %>
     <!-- #contents -->
     <div id="contents" class="container-wrap">
         <h2 class="blind">내용</h2>
@@ -57,13 +57,13 @@
         </div>
     </div>
     <!--// #contents -->    <!-- footer -->
-    <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
+    <%- include('../components/footer.component.html', { svcInfo: svcInfo }); %>
     <!-- // footer -->
 </div>
-<% include ../../components/javascript.component.html %>
+<% include ../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
     new Tw.AuthLineEmptyRegister($('#authLineEmpty'));
   });
 </script>
-<% include ../../components/end.component.html %>
+<% include ../components/end.component.html %>
