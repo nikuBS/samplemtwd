@@ -1,12 +1,5 @@
 /**
- * FileName:
- * Author: Kim InHwan (skt.P132150@partner.sk.com)
- * Date: 2018.07.
- *
- */
-
-/**
- * FileName: myt.joinService.protect.change.js
+ * FileName: myt.join.protect.change.js
  * Author: Kim Inhwan (skt.P132150@partner.sk.com)
  * Date: 2018.07.24
  */
