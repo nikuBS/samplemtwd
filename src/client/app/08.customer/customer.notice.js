@@ -47,8 +47,7 @@ Tw.CustomerNotice.prototype = {
     if (item.length > 0) {
       setTimeout(function() {
         item.trigger('click');
-        $(window).scrollTop(item.offset().top);
-      }, 500);
+      }, 0);
     }
 
     this._history.pathname += this._history.search;
