@@ -78,7 +78,7 @@ Tw.LineComponent.prototype = {
     this.$btLine.addClass('disabled');
 
     // $popupContainer.on('click', '.popup-blind', $.proxy(this._closePopup, this));
-    $popupContainer.on('click', '.fe-radio-list', $.proxy(this._onSelectLine, this));
+    $popupContainer.on('change', '.fe-radio-list', $.proxy(this._onSelectLine, this));
     $popupContainer.on('click', '.fe-btn-txt', $.proxy(this._onClickTxtButton, this));
     $popupContainer.on('click', '.bt-more', $.proxy(this._onClickMore, this));
 
