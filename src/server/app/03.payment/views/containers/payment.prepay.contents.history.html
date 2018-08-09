@@ -13,7 +13,7 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div id="payment-prepay-micro-history" class="wrap">
+<div id="payment-prepay-contents-history" class="wrap">
     <%- include('../../../../common/views/components/header.component.html', { title: '선결제 내역', svcInfo: svcInfo }); %>
     <div id="contents" class="container-wrap">
         <h2 class="blind">내용</h2>
@@ -22,7 +22,7 @@
                 <div class="payment-select space-type">
                     <h3>콘텐츠이용료 선결제 내역</h3>
                     <% if (useContentsPrepayRecord) { %>
-                    <ul class="select-list">
+                    <ul class="select-list fe-select-list" data-cnt="<%= useContentsPrepayRecord.length %>">
                         <% for (var i = 0; i < useContentsPrepayRecord.length; i++) { %>
                         <li>
                             <div class="pay-maininfo">
@@ -40,7 +40,7 @@
                     <% } %>
                 </div>
                 <% if (useContentsPrepayRecord.length > 20) { %>
-                <button class="bt-more">더보기<span>(<%= useContentsPrepayRecord.length - 20 %>)</span></button>
+                <button class="bt-more fe-more-btn">더보기<span class="fe-more-length">(<%= useContentsPrepayRecord.length - 20 %>)</span></button>
                 <% } %>
             </div>
             <hr class="cont-sp type1" aria-hidden="true" />
@@ -51,7 +51,7 @@
 <% include ../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.PaymentPrepayHistory($('#payment-prepay-contents-history'));
+    new Tw.PaymentPrepayHistory($('#payment-prepay-contents-history'), 'contents');
   });
 </script>
 <% include ../components/end.component.html %>

@@ -78,7 +78,7 @@ Tw.LineComponent.prototype = {
     this.$btLine.addClass('disabled');
 
     // $popupContainer.on('click', '.popup-blind', $.proxy(this._closePopup, this));
-    $popupContainer.on('click', '.fe-radio-list', $.proxy(this._onSelectLine, this));
+    $popupContainer.on('change', '.fe-radio-list', $.proxy(this._onSelectLine, this));
     $popupContainer.on('click', '.fe-btn-txt', $.proxy(this._onClickTxtButton, this));
     $popupContainer.on('click', '.bt-more', $.proxy(this._onClickMore, this));
 
@@ -127,7 +127,7 @@ Tw.LineComponent.prototype = {
         display: this._index < Tw.DEFAULT_LIST_COUNT ? 'block' : 'none',
         index: this._index++,
         txt: Tw.FormatHelper.isEmpty(line.nickNm) ? Tw.SVC_ATTR[line.svcAttrCd] : line.nickNm,
-        option: selected + this._urlAuth.indexOf(line.svcAttrCd) === -1 ? 'disabled' : '',   // TODO: Add authority
+        option: selected + (this._urlAuth.indexOf(line.svcGr) === -1 ? 'disabled' : ''),   // TODO: Add authority
         integration: line.actRepYn === 'Y',
         representation: line.repSvcYn === 'Y',
         line: Tw.LINE_NAME[category] === 'S' ? line.addr : line.svcNum,
