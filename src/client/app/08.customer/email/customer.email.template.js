@@ -217,7 +217,7 @@ Tw.CustomerEmailTemplate.prototype = {
 
   _setTemplate: function () {
     if ( this.state.tabIndex === 0 ) {
-      if ( this.state.serviceType === 'CELL' ) {
+      if ( this.state.serviceType === 'CELL' || this.state.serviceType === 'INTERNET' ) {
         this.$wrap_service.html(this.tpl_service_cell());
       }
 
