@@ -13,13 +13,13 @@ import { REDIS_URL_META } from '../../types/common.type';
 
 
 abstract class TwViewController {
-  private _apiService: ApiService;
-  private _loginService: LoginService;
-  private _logger: LoggerService;
-  private _redisService: RedisService;
+  private readonly _apiService: ApiService;
+  private readonly _loginService: LoginService;
+  private readonly _logger: LoggerService;
+  private readonly _redisService: RedisService;
   private _type: string = '';
 
-  constructor() {
+  protected constructor() {
     this._apiService = new ApiService();
     this._loginService = new LoginService();
     this._logger = new LoggerService();
