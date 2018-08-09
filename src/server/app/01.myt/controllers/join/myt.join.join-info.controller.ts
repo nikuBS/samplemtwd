@@ -145,7 +145,7 @@ class MytJoinJoinInfoController extends TwViewController {
       this.getJoinInfo(),
       this.getHistory(),
       (joinInfo, history) => {
-        joinInfo.history = history;
+        joinInfo.result.history = history;
         return joinInfo;
       });
   }
@@ -162,7 +162,7 @@ class MytJoinJoinInfoController extends TwViewController {
   private getHistory(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_05_0061, {}).map((response) => {
       if ( response.code === API_CODE.CODE_00 ) {
-        return this.parseHistory(response);
+        return this.parseHistory(response.result);
       } else {
         return response;
       }
@@ -231,17 +231,13 @@ class MytJoinJoinInfoController extends TwViewController {
     this.svcInfo = svcInfo;
 
     // const data = this.getWibroResult( Info.wibro.result );
-    // const data = this.getMobileResult( Info.mobile.result );
-    // const data = this.getInternetResult( Info.internet.result );
     Observable.combineLatest(
       this.getAllJoinInfo()
     ).subscribe(([joinInfo]) => {
       if ( joinInfo.code === API_CODE.CODE_00) {
         const data = this.getData(svcInfo, this.getJoinInfoData(joinInfo.result));
-        this.logger.info(this, '#### data ', data);
         res.render('join/myt.join.join-info.html', data);
       } else {
-        this.logger.info(this, '#### data222 ', JSON.stringify(joinInfo));
         res.send('api error' + joinInfo.code + ' ' + joinInfo.msg);
       }
 

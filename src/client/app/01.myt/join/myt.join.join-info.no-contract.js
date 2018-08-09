@@ -36,7 +36,6 @@ Tw.MyTJoinJoinInfoNoContract.prototype = {
     this.$period = this.$container.find('.tube-list [role=radio]');
     this.$search = this.$container.find('#fe-search');
     this.$dateSelcet = this.$container.find('.date-selcet');
-    this.MORE_CNT = 3;
     this._initPeriod();
   },
 
@@ -113,8 +112,6 @@ Tw.MyTJoinJoinInfoNoContract.prototype = {
       var edate = this.$inputEdate.val();
       var diff = this._dateHelper.getDiffByUnit(sdate, edate, 'days');
 
-      Tw.Logger.info('### diff...', diff);
-
       // 시작일이 종료일보다 클 경우
       if ( diff > 0 ) {
         this._popupService.openAlert(Tw.MSG_MYT.JOIN_INFO_A01, Tw.POPUP_TITLE.NOTIFY);
@@ -124,7 +121,7 @@ Tw.MyTJoinJoinInfoNoContract.prototype = {
       if ( diff < -365 ) {
         var beforeDate365 = this._dateHelper.getShortDateWithFormatAddByUnit(edate,-365,'days','YYYY-MM-DD','YYYY-MM-DD');
         var msg = Tw.MSG_MYT.JOIN_INFO_A02.replace(/\{0\}/, beforeDate365);
-        this._popupService.openAlert(msg, Tw.POPUP_TITLE.NOTIFY, $.proxy(this._setBefore365,this,beforeDate365));
+        this._popupService.openAlert(msg, Tw.POPUP_TITLE.NOTIFY, $.proxy(this._setBefore365, this,beforeDate365));
         return false;
       }
       // 시작일이 유효한 일자가 아닐경우
@@ -163,16 +160,11 @@ Tw.MyTJoinJoinInfoNoContract.prototype = {
 
     var sdate = this.$tSdate.text();
     var edate = this.$tEdate.text();
-    /*var sdate = this.$tSdate.text().replace(regx, '');
-    var edate = this.$tEdate.text().replace(regx, '');*/
     if ( !sdate || !edate) {
-      Tw.Logger.info(' sdate or edate is undefined' );
-
       edate = this._dateHelper.getCurrentShortDate();
       edate = this._dateHelper.getShortDateNoDot(edate);
       sdate = this._periodDate(edate, -7, 'days');
       this._setHeaderPeriod(sdate, edate);
-      // return;
     }
     var regx = '/[^0-9]/g';
     sdate = sdate.replace(regx, '');
@@ -195,7 +187,7 @@ Tw.MyTJoinJoinInfoNoContract.prototype = {
         endDay : _endDay
       })
       .done($.proxy(this._renderTemplate, this))
-      .fail($.proxy(this._onErrorReceivedBillData, this));
+      .fail($.proxy(this._onFail, this));
   },
 
   _renderTemplate : function (res) {
@@ -206,7 +198,7 @@ Tw.MyTJoinJoinInfoNoContract.prototype = {
       this._renderListOne(res);
 
     } else {
-      Tw.Logger.info('#### res result is not success ', res  );
+      this._onFail(res);
     }
   },
 
@@ -220,7 +212,6 @@ Tw.MyTJoinJoinInfoNoContract.prototype = {
 
   // 상단 템플릿 생성
   _renderHader : function (res) {
-    Tw.Logger.info('#### _renderHader.. ', res  );
     var source = $('#tmplHeader').html();
     var template = Handlebars.compile(source);
     var data = this._parseHeader(res);
@@ -262,7 +253,7 @@ Tw.MyTJoinJoinInfoNoContract.prototype = {
     this.$more.hide();
 
     if ( list.length > 0 ){
-      this._totoalList = _.chunk(list, this.MORE_CNT);
+      this._totoalList = _.chunk(list, Tw.DEFAULT_LIST_COUNT);
       this._renderList(this.$list, this._totoalList.shift());
       this._renderBottom(res);
 
@@ -283,7 +274,6 @@ Tw.MyTJoinJoinInfoNoContract.prototype = {
 
   // 리스트
   _renderList : function ($container, res) {
-    Tw.Logger.info('#### _renderList.. ', res  );
     var source = $('#tmplList').html();
     var template = Handlebars.compile(source);
     var data = this._parseList(res);
@@ -293,7 +283,6 @@ Tw.MyTJoinJoinInfoNoContract.prototype = {
   },
 
   _renderNoList : function () {
-    Tw.Logger.info('#### _renderNoList.. ');
     var source = $('#tmplNoList').html();
     var template = Handlebars.compile(source);
     var output = template();
@@ -302,7 +291,6 @@ Tw.MyTJoinJoinInfoNoContract.prototype = {
 
   // 더보기 클릭
   _onMore : function () {
-    Tw.Logger.info('#### _onMore.. '  );
     if( this._totoalList.length > 0 ){
       this._renderList(this.$list, this._totoalList.shift());
     }
@@ -318,7 +306,6 @@ Tw.MyTJoinJoinInfoNoContract.prototype = {
 
   // 상단 템플릿 생성
   _renderBottom : function (res) {
-    Tw.Logger.info('#### _renderBottom.. ', res  );
     var source = $('#tmpBottom').html();
     var template = Handlebars.compile(source);
     var data = this._parseBottom(res);
@@ -326,9 +313,8 @@ Tw.MyTJoinJoinInfoNoContract.prototype = {
     this.$bottom.empty().append(output).show();
   },
 
-  _onErrorReceivedBillData: function (err) {
-    Tw.Logger.error('[Myt > Join > join-info]');
-    this._popupService.openAlert(err.msg, err.code);
+  _onFail: function (err) {
+    this._popupService.openAlert(err.msg + ' : ' + err.code);
   }
 
 
