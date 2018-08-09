@@ -183,6 +183,25 @@ class ApiService {
     return this.requestLogin(API_CMD.BFF_03_0018, params, LOGIN_TYPE.EASY);
   }
 
+  public requestChangeSvcPassword(params: any): Observable<any> {
+    return this.request(API_CMD.BFF_03_0016, params)
+      .switchMap((resp) => {
+        if ( resp.code === API_CODE.CODE_00 ) {
+          return this.request(API_CMD.BFF_01_0005, {});
+        } else {
+          throw resp;
+        }
+      }).switchMap((resp) => {
+        if ( resp.code === API_CODE.CODE_00 ) {
+          return this.loginService.setSvcInfo(resp.result);
+        } else {
+          throw resp;
+        }
+      }).map(() => {
+        return { code: API_CODE.CODE_00 };
+      });
+  }
+
   public requestChangeSession(params: any): Observable<any> {
     return this.request(API_CMD.BFF_01_0004, params)
       .switchMap((resp) => {

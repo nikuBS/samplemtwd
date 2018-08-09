@@ -31,17 +31,10 @@ import AuthTidRoute from './controllers/tid/auth.tid.route';
 import AuthLoginEasyAos from './controllers/login/auth.login.easy-aos.controller';
 import AuthLoginEasyIos from './controllers/login/auth.login.easy-ios.controller';
 import AuthLoginEasyFail from './controllers/login/auth.login.easy-fail.controller';
-import AuthErrorEmptyLine from './controllers/error/auth.error.empty-line.controller';
-import AuthErrorNoAuth from './controllers/error/auth.error.no-auth';
-import AuthErrorNoRegister from './controllers/error/auth.error.no-register';
 
 class AuthRouter extends TwRouter {
   constructor() {
     super();
-    // error
-    this.controllers.push({ url: '/error/empty-line', controller: new AuthErrorEmptyLine()});
-    this.controllers.push({ url: '/error/no-register', controller: new AuthErrorNoRegister()});
-    this.controllers.push({ url: '/error/no-auth', controller: new AuthErrorNoAuth()});
     // line
     this.controllers.push({ url: '/line', controller: new AuthLine() });
     this.controllers.push({ url: '/line/edit', controller: new AuthLineEdit() });

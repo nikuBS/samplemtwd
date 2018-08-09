@@ -168,7 +168,7 @@ Tw.CustomerEmailCall.prototype = {
   _registerEmail: function () {
     var currentState = this._oEmailTemplate.state;
 
-    if ( currentState.tabIndex === 1 ) {
+    if ( currentState.tabIndex === 1 && this._validateForm() ) {
       switch ( currentState.callCategory ) {
         case 'WIBRO':
           this._requestQualityWibro();
@@ -178,6 +178,36 @@ Tw.CustomerEmailCall.prototype = {
           break;
       }
     }
+  },
+
+  _validateForm: function () {
+    var sEmail = $('#tab2-tab .fe-input-email').val().trim();
+    if ( !Tw.ValidationHelper.isEmail(sEmail) ) {
+      this._popupService.openAlert(Tw.MSG_CUSTOMER.EMAIL_A03, Tw.BUTTON_LABEL.CONFIRM, function () {
+        setTimeout(function () {
+          $('#tab2-tab .fe-input-email').focus();
+        }, 100);
+
+        this._popupService.close();
+      }.bind(this), this._popupService.close);
+
+      return false;
+    }
+
+    var sPhone = $('#tab2-tab .fe-input-phone').val().trim();
+    if ( !Tw.ValidationHelper.isCellPhone(sPhone) ) {
+      this._popupService.openAlert(Tw.MSG_CUSTOMER.EMAIL_A04, Tw.BUTTON_LABEL.CONFIRM, function () {
+        setTimeout(function () {
+          $('#tab2-tab .fe-input-phone').focus();
+        }, 100);
+
+        this._popupService.close();
+      }.bind(this), this._popupService.close);
+
+      return false;
+    }
+
+    return true;
   },
 
   _requestQualityWibro: function () {

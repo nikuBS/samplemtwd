@@ -57,7 +57,7 @@ Tw.MytUsageChildren.prototype = {
   _onSelectChild: function ($target, event) {
     this._popupService.close();
     var selectedChild = $(event.currentTarget).find('button').attr('id');
-    this._historyService.goLoad('/myt/usage/children?childSvcMgmtNum=' + selectedChild);
+    this._historyService.replaceURL('/myt/usage/children?childSvcMgmtNum=' + selectedChild);
   },
 
   _setDataByUnit: function (event) {

@@ -21,6 +21,7 @@ export const API_CMD = {
   BFF_03_0005_C: { path: '/selected-svc', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_03_0023_C: { path: '/core-recharge/v1/refill-gifts', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   // COMMON
+  LOGOUT_BFF: { path: '/logout', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_01_0002: { path: '/common/sessions', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_01_0003: { path: '/svc-catalog/detail', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_01_0004: { path: '/common/selected-sessions', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: false },
@@ -49,7 +50,7 @@ export const API_CMD = {
   BFF_03_0013: { path: '/user/biz-services', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_03_0014: { path: '/core-auth/v1/marketing-offer-subscriptions/args-0', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_03_0015: { path: '/core-auth/v1/marketing-offer-subscriptions/args-0', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
-  BFF_03_0016: { path: '/core-auth/v1/service-passwords', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_03_0016: { path: '/core-auth/v1/service-passwords', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
   BFF_03_0017: { path: '/user/login/android', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: false },
   BFF_03_0018: { path: '/user/login/ios', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: false },
   BFF_03_0019: { path: '/core-auth/v1/users/args-0/otp', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },

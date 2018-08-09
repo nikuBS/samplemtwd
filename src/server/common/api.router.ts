@@ -1,12 +1,14 @@
 import express from 'express';
 import { Router, Request, Response, NextFunction } from 'express';
-import { API_CODE } from '../types/api-command.type';
+import { API_CMD, API_CODE } from '../types/api-command.type';
 import LoggerService from '../services/logger.service';
 import ApiService from '../services/api.service';
 import LoginService from '../services/login.service';
 import BrowserHelper from '../utils/browser.helper';
 import { COOKIE_KEY } from '../types/common.type';
 import { CHANNEL_TYPE } from '../types/common.type';
+import { Observable } from '../../../node_modules/rxjs/Observable';
+import 'rxjs/add/observable/combineLatest';
 
 class ApiRouter {
   public router: Router;
@@ -30,6 +32,7 @@ class ApiRouter {
     this.router.post('/user-locks/login', this.setUserLocks.bind(this));
     this.router.post('/easy-login/aos', this.easyLoginAos.bind(this));
     this.router.post('/easy-login/ios', this.easyLoginIos.bind(this));
+    this.router.put('/service-passwords', this.changeSvcPassword.bind(this));
   }
 
   private getEnvironment(req: Request, res: Response, next: NextFunction) {
@@ -87,7 +90,10 @@ class ApiRouter {
 
   private logoutTid(req: Request, res: Response, next: NextFunction) {
     this.loginService.setCurrentReq(req, res);
-    this.loginService.logoutSession().subscribe((resp) => {
+    Observable.combineLatest(
+      this.apiService.request(API_CMD.LOGOUT_BFF, {}),
+      this.loginService.logoutSession()
+    ).subscribe((resp) => {
       res.json({ code: API_CODE.CODE_00 });
     });
   }
@@ -116,6 +122,16 @@ class ApiRouter {
     const params = req.body;
     this.loginService.setCurrentReq(req, res);
     this.apiService.requestEasyLoginIos(params).subscribe((resp) => {
+      res.json(resp);
+    }, (error) => {
+      res.json(error);
+    });
+  }
+
+  private changeSvcPassword(req: Request, res: Response, next: NextFunction) {
+    const params = req.body;
+    this.loginService.setCurrentReq(req, res);
+    this.apiService.requestChangeSvcPassword(params).subscribe((resp) => {
       res.json(resp);
     }, (error) => {
       res.json(error);

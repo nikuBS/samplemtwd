@@ -4,17 +4,18 @@ export const URL = {
   // myt
   '/myt': { login: true, id: '', title: '' },
   '/myt/usage/change': { login: true, id: '', title: '' },
-  '/myt/usage/children': { login: true, id: '', title: '' },
-  '/myt/usage/datalimit': { login: true, id: '', title: '' },
-  '/myt/usage/datashare': { login: true, id: '', title: '' },
-  '/myt/usage/tdatashare': { login: true, id: '', title: '' },
-  '/myt/usage/tdatashare/info': { login: true, id: '', title: '' },
-  '/myt/usage/tdatashare/close': { login: true, id: '', title: '' },
-  '/myt/usage/troaming': { login: true, id: '', title: '' },
-  '/myt/usage/ting': { login: true, id: '', title: '' },
+  '/myt/usage/children': { login: true, id: 'MY_02_02_01_04_06', title: '자녀 사용량 조회' },
+  '/myt/usage/datalimit': { login: true, id: 'MY_02_02_01_04_08', title: '데이터 한도요금제 사용량 조회' },
+  '/myt/usage/datashare': { login: true, id: 'MY_02_02_01_04_07', title: '데이터 함께쓰기 사용량 조회' },
+  '/myt/usage/tdatashare': { login: true, id: 'MY_02_02_01_04_02', title: 'T데이터셰어링 사용량 조회' },
+  '/myt/usage/tdatashare/info': { login: true, id: 'MY_02_02_01_04_01', title: 'T데이터셰어링 미가입 안내' },
+  '/myt/usage/tdatashare/close': { login: true, id: 'MY_02_02_01_04_03', title: 'T데이터셰어링 USIM 해지' },
+  '/myt/usage/troaming': { login: true, id: 'MY_02_02_01_04_05', title: 'T로밍 함께쓰기 사용량 조회' },
+  '/myt/usage/24hourdiscount': { login: true, id: 'MY_02_02_01_04_10', title: '24시간 데이터 50% 할인' },
+  '/myt/usage/band-data-sharings': { login: true, id: 'MY_02_02_01_04_11', title: '내폰끼리 결합 사용량 조회' },
+  '/myt/usage/ting': { login: true, id: 'MY_02_02_01_04_09', title: '팅요금상품 사용량 조회' },
   '/myt/usage/pattern': { login: true, id: 'MY_02_02_02_03_01', title: '최근 사용패턴' },
   '/myt/usage/pattern/detail': { login: true, id: 'MY_02_02_02_01_03', title: '최근 사용패턴' },
-  '/usage/24hourdiscount': { login: true, id: '', title: '' },
   '/myt/bill/hotbill': { login: true, id: 'MY_03_01_01', title: '' }, // 실시간 사용요금
   '/myt/bill/guidechange/reissue': { login: true, id: '', title: '요금안내서 재발행' },
   '/myt/bill/guidechange/reissue/complete': { login: true, id: '', title: '요금안내서 재발행' },
@@ -133,9 +134,6 @@ export const URL = {
   '/customer/researches': { login: true, id: 'CI_09_02', title: '고객의견' }, // 설문조사 리스트
   '/customer/result': { login: false, id: 'CI_09_04', title: '설문조사 결과' }, // 설문조사 결과
   // auth
-  '/auth/error/empty-line': { login: true, id: 'CO_99_06_01_02', title: '' },   // 등록된 회선 없음
-  '/auth/error/no-auth': { login: true, id: 'CO_99_06_01_03', title: '' },    // 선택 회선 권한 없음
-  '/auth/error/no-register': { login: true, id: 'CO_99_06_01_01', title: '' },  //
   '/auth/line': { login: true, id: 'CO_01_05_02', title: '' }, // 회선관리
   '/auth/line/edit': { login: true, id: 'CO_01_05_02_01', title: '' }, // 회선편집
   '/auth/line/register/corporation': { login: true, id: 'CO_01_05_02_03', title: '' }, // 법인회선등록

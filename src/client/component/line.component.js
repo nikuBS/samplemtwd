@@ -23,7 +23,7 @@ Tw.LineComponent = function () {
   this._lineList = null;
   this._urlAuth = null;
   this._bindEvent();
-  this._init();
+  Tw.Logger.info('[Line] init complete', this._urlAuth);
 };
 
 Tw.LineComponent.prototype = {
@@ -32,18 +32,22 @@ Tw.LineComponent.prototype = {
     RDT0007: 'RDT0007',    //	service-password locked	고객비밀번호 인증필요
     RDT0008: 'RDT0008'     //	service-password initialized	고객비밀번호 재설정 필요 ( 신청, 초기화 상태 )
   },
-  _init: function() {
-    if(!Tw.FormatHelper.isEmpty(this._urlAuth)) {
-      this._getLineList();
-      Tw.Logger.info('[Line] init complete', this._urlAuth);
-    }
-  },
   _bindEvent: function () {
     this.$btLine = this.$container.find('#fe-bt-line');
     this._selectedMgmt = this.$btLine.data('svcmgmtnum');
     this._urlAuth = this.$btLine.data('urlauth');
 
     this.$btLine.on('click', $.proxy(this._onClickLine, this));
+  },
+  _onClickLine: function ($event) {
+    var curBtn = $($event.currentTarget);
+    if ( !curBtn.hasClass('no-arrow') ) {
+      if ( !curBtn.hasClass('disabled') ) {
+        this._getLineList();
+      } else {
+        this._closePopup();
+      }
+    }
   },
   _getLineList: function () {
     this._apiService.request(Tw.API_CMD.BFF_01_0002, {})
@@ -54,22 +58,9 @@ Tw.LineComponent.prototype = {
   _successGetLineList: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._lineList = this._parseLineList(resp.result);
-      this._checkLineNum();
-    } else {
-      this._popupService.openAlert(resp.code + ' ' + resp.msg);
-    }
-  },
-  _checkLineNum: function () {
-    if(this._index === 1) {
-      this.$btLine.addClass('no-arrow');
-    }
-  },
-  _onClickLine: function ($event) {
-    var curBtn = $($event.currentTarget);
-    if ( !curBtn.hasClass('disabled') ) {
       this._openListPopup(this._lineList);
     } else {
-      this._closePopup();
+      this._popupService.openAlert(resp.code + ' ' + resp.msg);
     }
   },
   _openListPopup: function (lineData) {

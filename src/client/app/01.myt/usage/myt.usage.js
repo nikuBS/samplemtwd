@@ -45,7 +45,7 @@ Tw.MytUsage.prototype = {
     return unit;
   },
   _checkExceed: function () {
-    if ( this.$container.find('.exceed').is('visible') ) {
+    if ( this.$container.find('.fe-exceed').length > 0) {
       this.$container.find('.fe-ad2').show();
     }
   },
@@ -65,11 +65,11 @@ Tw.MytUsage.prototype = {
     }
     if ( result.tdataSharing === 'Y' ) {
       this.$container.find('.fe-t-data-sharing-btn').show();
+    } else {
+      this.$container.find('.fe-ad1').show();
     }
     if ( result.troamingSharing === 'Y' ) {
       this.$container.find('.fe-t-roaming-sharing-btn').show();
-    } else {
-      this.$container.find('.fe-ad1').show();
     }
 
     if ( result.bandDataSharing === 'Y' ) {
