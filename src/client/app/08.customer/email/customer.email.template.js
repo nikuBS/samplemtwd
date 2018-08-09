@@ -8,6 +8,7 @@ Tw.CustomerEmailTemplate = function (rootEl) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
+  this._history = new Tw.HistoryService(this.$container);
 
   this._cachedElement();
   this._bindEvent();
