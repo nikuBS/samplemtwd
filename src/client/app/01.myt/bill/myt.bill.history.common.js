@@ -121,11 +121,6 @@ Tw.MyTBillHistoryCommon.prototype = {
     }
   },
 
-  _getMonthKeyword: function (from, to, isKor) {
-    console.log(from, to, isKor);
-    return 'M';
-  },
-
   _apiError: function (err, callback) {
     Tw.Logger.error(err.code, err.msg);
     var msg = Tw.MSG_COMMON.SERVER_ERROR + '<br />' + err.code + ' : ' + err.msg;
@@ -289,51 +284,6 @@ Tw.MyTBillHistoryCommon.ListWithTemplate.prototype = {
   }
 };
 
-Tw.MyTBillHistoryCommon.SearchComboListUI = function (dom, selectUITitle, separatorName, data) {
-  this.common = new Tw.MyTBillHistoryCommon();
-
-  this.target = dom;
-  this.selectUITitle = selectUITitle;
-  this.data = data;
-  this.separatorName = separatorName;
-};
-
-Tw.MyTBillHistoryCommon.SearchComboListUI.prototype = {
-  _init: function (event) {
-    this.currentTarget = event.currentTarget;
-    this.listData = [];
-
-    this._setListData();
-    this._openComboListUI();
-  },
-
-  _setListData: function () {
-    for (var i = 0; i < this.data.length; i++) {
-      var listObj = {
-        attr: 'class="hbs-' + this.separatorName + '" id=' + this.separatorName + '-' + this.data[i].key,
-        text: this.data[i].text
-      };
-      this.listData.push(listObj);
-    }
-  },
-
-  _openComboListUI: function () {
-    this.common._popupService.openChoice(this.selectUITitle, this.listData, '', $.proxy(this._onOpenList, this));
-  },
-
-  _onOpenList: function ($layer) {
-    $layer.on('click', '.hbs-' + this.separatorName, $.proxy(this._getSelectedList, this));
-  },
-
-  _getSelectedList: function (event) {
-    var $selectedList = this.target;
-    var $target = $(event.currentTarget);
-    $selectedList.attr('id', $target.attr('id'));
-    $selectedList.text($target.text());
-    this.common._popupService.close();
-  }
-};
-
 Tw.MyTBillHistoryCommon.GetLimit = function () {
 
   this.common = new Tw.MyTBillHistoryCommon();
@@ -368,7 +318,7 @@ Tw.MyTBillHistoryCommon.GetLimit.prototype = {
       if (res.code === Tw.API_CODE.CODE_00) {
         this.callback(res);
       } else {
-        console.log('[myt/bill/history/limit] Retry');
+        // console.log('[myt/bill/history/limit] Retry');
         this.usageRequestTitle = 'Retry';
         this.usageRequestCounter++;
         this._get_init_usageRequest();
@@ -383,4 +333,256 @@ Tw.MyTBillHistoryCommon.GetLimit.prototype = {
   }
 };
 
+Tw.MyTBillHistoryCommon.Search = function (obj, comboUIObj, searchCallback) {
+  this._dateHelper = Tw.DateHelper;
+
+  this.common = new Tw.MyTBillHistoryCommon();
+
+  this.$elements = obj;
+  this.comboUI = comboUIObj;
+  this.searchCallback = searchCallback;
+
+  this.hasPaymentType = !!this.$elements.$paymentTypeSelector;
+
+  if (this.hasPaymentType) {
+    this.paymentType = new Tw.MyTBillHistoryCommon.Search.ComboListUI(
+        this.$elements.$paymentTypeSelector,
+        this.comboUI.paymentType.title,
+        this.comboUI.paymentType.separator,
+        this.comboUI.paymentType.data,
+        this.comboUI.paymentType.callback
+    );
+  }
+  this.defaultMonth = new Tw.MyTBillHistoryCommon.Search.ComboListUI(
+      this.$elements.$monthSelector,
+      this.comboUI.defaultMonth.title,
+      this.comboUI.defaultMonth.separator,
+      this.comboUI.defaultMonth.data
+  );
+
+  this._cachedElement();
+  this._bindDOM();
+  this._init();
+
+};
+
+Tw.MyTBillHistoryCommon.Search.prototype = {
+  _init: function () {
+    this._resetCustomSelector();
+    this.isByDay = false;
+    this.isByMonth = true;
+
+    this.currentYYMMDD = this._dateHelper.getShortDateWithFormat(new Date(), 'YYYYMMDD');
+  },
+
+  _cachedElement: function () {
+    this.$tubeListWrapper = this.$elements.$customTermSelector.closest('.widget');
+    this.$customTermWrapper = this.$elements.$customTermStartSelector.parent();
+  },
+
+  _bindDOM: function () {
+    if (this.hasPaymentType) {
+      this.$elements.$paymentTypeSelector.on('click', $.proxy(this.paymentType._openComboListUI, this.paymentType));
+    }
+    this.$elements.$monthlyCustomTermSelector.on('change', $.proxy(this._changeSearchType, this));
+    this.$elements.$monthSelector.on('click', $.proxy(this.defaultMonth._openComboListUI, this.defaultMonth));
+    this.$elements.$customTermSelector.on('change', $.proxy(this._updateCustomTerm, this));
+
+    this.$elements.$searchBtn.on('click', $.proxy(this._searchBtnHandler, this));
+  },
+
+  _resetCustomSelector: function () {
+    this.$elements.$customTermSelector.each(function (i, o) {
+      var parent = $(o).parent();
+      parent.attr('aria-checked', false);
+      parent.removeClass('checked');
+      $(o).attr('checked', false);
+    });
+    this.$customTermWrapper.addClass('none');
+    this.termKeyword = '';
+    this.termText = '';
+    this.termSearchKeyword = '';
+    this.termValue = null;
+  },
+
+  _searchBtnHandler: function () {
+    var startYYYYMMDD;
+    var endYYYYMMDD;
+    var indicatorText = '';
+    if(this.paymentType) {
+      var paymentType = Tw.PAYMENT_TYPE_CODE[_.last(this.paymentType.searchpaytype.split('-'))];
+    }
+
+    if (this.isByMonth) {
+      indicatorText = this.defaultMonth.data[this.defaultMonth.selectedIndex].text;
+      var baseYYYYMM = this._dateHelper.getShortDateWithFormat(
+          this.defaultMonth.data[this.defaultMonth.selectedIndex].text, 'YYYYMM',
+          Tw.DATE_FORMAT.YYYYDD_TYPE_1);
+
+      startYYYYMMDD = baseYYYYMM + '01';
+      endYYYYMMDD = this._dateHelper.getEndOfMonth(baseYYYYMM, 'YYYYMMDD', 'YYYYMM');
+    } else {
+      if(this.termKeyword !== 'custom') {
+        indicatorText = this.termText;
+        startYYYYMMDD = this._dateHelper.getShortDateWithFormatAddByUnit(
+            this.currentYYMMDD, this.termValue * -1, this.termSearchKeyword, 'YYYYMMDD');
+        endYYYYMMDD = this.currentYYMMDD;
+      } else {
+
+      }
+    }
+
+    // console.log(this.currentYYMMDD, startYYYYMMDD, endYYYYMMDD, this.termKeyword, this.termSearchKeyword, this.termText, this.termValue, this.defaultMonth.selectedIndex);
+
+    // TODO : update $termOpener text
+    this._updateCurrentIndicator(indicatorText);
+
+    this.searchCallback(startYYYYMMDD, endYYYYMMDD, paymentType);
+  },
+
+  _changeSearchType: function (e) {
+    var index = this.$elements.$monthlyCustomTermSelector.index($(e.target));
+    switch (index) {
+      case 0:
+        this.isByMonth = true;
+        this.isByDay = false;
+        break;
+      case 1:
+        this.isByMonth = false;
+        this.isByDay = true;
+        break;
+      default:
+        break;
+    }
+    this._resetCustomSelector();
+    this._updateSearchSubOption();
+  },
+
+  _updateCustomTerm: function (e) {
+    var index = this.$elements.$customTermSelector.index($(e.target));
+    switch (index) {
+      case 0:
+        this.termText = $(e.target).parent().text();
+        this.termSearchKeyword = 'weeks';
+        break;
+      case 1:
+      case 2:
+      case 3:
+        this.termText = $(e.target).parent().text();
+        this.termSearchKeyword = 'months';
+        break;
+      case 4:
+        this.termText = $(e.target).parent().text();
+        this.termSearchKeyword = 'years';
+        break;
+      case 5:
+        this.termText = $(e.target).parent().text();
+        this.termSearchKeyword = 'custom';
+        break;
+      default:
+        break;
+    }
+    switch (index) {
+      case 0:
+      case 1:
+      case 4:
+        this.termValue = 1;
+        break;
+      case 2:
+        this.termValue = 3;
+        break;
+      case 3:
+        this.termValue = 6;
+        break;
+      case 5:
+        this.termKeyword = 'custom';
+        break;
+      default:
+        break;
+    }
+    this._updateSearchCustomSubOption(index);
+  },
+
+  _updateSearchSubOption: function () {
+    if (this.isByDay) {
+      this.$elements.$monthSelector.addClass('none');
+      this.$tubeListWrapper.removeClass('none');
+
+      this.$elements.$customTermSelector.eq(0).parent().attr('aria-checked', true);
+      this.$elements.$customTermSelector.eq(0).parent().addClass('checked');
+      this.$elements.$customTermSelector.eq(0).attr('checked', true);
+      this.termText = this.$elements.$customTermSelector.eq(0).parent().text();
+      this.termValue = 1;
+      this.termSearchKeyword = 'weeks';
+    } else {
+      this.$elements.$monthSelector.removeClass('none');
+      this.$tubeListWrapper.addClass('none');
+    }
+  },
+
+  _updateSearchCustomSubOption: function (index) {
+    if (index === 5) {
+      this.$customTermWrapper.removeClass('none');
+    } else {
+      this.$customTermWrapper.addClass('none');
+    }
+  },
+
+  _updateCurrentIndicator: function (text) {
+    this.$elements.$termOpener.text(text);
+  }
+};
+
+Tw.MyTBillHistoryCommon.Search.ComboListUI = function (dom, selectUITitle, separatorName, data, callback) {
+  this.common = new Tw.MyTBillHistoryCommon();
+
+  this.target = dom;
+  this.selectUITitle = selectUITitle;
+  this.data = data;
+  this.separatorName = separatorName;
+  this.callback = callback;
+  this.separatorKeyword = this.separatorName.split('-').join('');
+
+  this._init();
+};
+
+Tw.MyTBillHistoryCommon.Search.ComboListUI.prototype = {
+  _init: function () {
+    this.listData = [];
+
+    this._setListData();
+  },
+
+  _setListData: function () {
+    for (var i = 0; i < this.data.length; i++) {
+      var listObj = {
+        attr: 'class="hbs-' + this.separatorName + '" id=' + this.separatorName + '-' + this.data[i].key,
+        text: this.data[i].text
+      };
+      this.listData.push(listObj);
+    }
+    this[this.separatorKeyword] = _.last(this.listData[0].attr.split('='));
+    this.selectedIndex = 0;
+  },
+
+  _openComboListUI: function () {
+    this.common._popupService.openChoice(this.selectUITitle, this.listData, '', $.proxy(this._onOpenList, this));
+  },
+
+  _onOpenList: function ($layer) {
+    $layer.on('click', '.hbs-' + this.separatorName, $.proxy(this._getSelectedList, this));
+  },
+
+  _getSelectedList: function (event) {
+    var $target = $(event.currentTarget);
+    this.target.attr('id', $target.attr('id'));
+    this.target.text($target.text());
+    this[this.separatorKeyword] = $target.attr('id');
+    this.selectedIndex = _.last($target.attr('id').split('-'));
+
+    this.common._popupService.close();
+    if (this.callback)
+      this.callback();
+  }
+};
 

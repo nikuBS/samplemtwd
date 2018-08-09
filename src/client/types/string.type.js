@@ -654,6 +654,15 @@ Tw.PAYMENT_TYPE = {
   COMPLAX: '복합결제'
 };
 
+Tw.PAYMENT_TYPE_CODE = {
+  TOTAL: 'ALL',
+  NORMAL: '01',
+  AUTO: '03',
+  PACKAGE: '02',
+  EASY: '04',
+  COMPLAX: '05'
+};
+
 Tw.HELPLINE_AREA = {
   CAPITAL: '수도권 (서울, 경기, 인천, 강원)',
   CENTER: '중부 (충남, 충북, 대전)',

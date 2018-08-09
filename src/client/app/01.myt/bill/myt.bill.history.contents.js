@@ -52,6 +52,17 @@ Tw.MyTBillHistoryContents.prototype = {
     this.common._setTab(this._tabChangeCallback, this, this.hashList, this.$tabTriggerWrapper);
     this.getLimit = new Tw.MyTBillHistoryCommon.GetLimit();
 
+    this.search = new Tw.MyTBillHistoryCommon.Search(this.$searchElement, {
+          defaultMonth: {
+            title: Tw.POPUP_TITLE.PERIOD_SELECT,
+            separator: 'search-pay-default-month',
+            data: this._getChoiceDataMonth(7).map(function(o, i) {
+              return { text : o, key : i };
+            })
+          }
+        },
+        $.proxy(this._goSearch, this));
+
     this._updateEnvironment();
     this._getData();
   },
@@ -68,16 +79,17 @@ Tw.MyTBillHistoryContents.prototype = {
     this.$limitDetailBtn = this.$container.find('#fe-current-month-usage .contents-btn li button').eq(1);
     this.$monthlyModeSwitcher = this.$container.find('#tab2-tab .btn-switch input');
 
-    this.$searchElement = {
+    this.$searchElementCustom = {
       $usageTotalDesc: this.$container.find('#fe-usage-total-desc'),
       $usageTotalCount: this.$container.find('#fe-usage-total-desc span'),
-      $usageTotalAmount: this.$container.find('#fe-usage-total-desc em'),
+      $usageTotalAmount: this.$container.find('#fe-usage-total-desc em')
+    };
 
+    this.$searchElement = {
       $termOpener: this.$container.find('.list-top .select-left button'),
-      $paymentTypeSelector: this.$container.find('.list-top .select-right button'),
       $monthlyCustomTermSelector: this.$container.find('.widget-box.radio .select-list li input'),
       $monthSelector: this.$container.find('.history-inquiry > .bt-dropdown'),
-      $customTermSelector: this.$container.find('.history-inquiry .tube-list'),
+      $customTermSelector: this.$container.find('.history-inquiry .tube-list input'),
       $customTermStartSelector: this.$container.find('.history-inquiry .date-selcet button').eq(0),
       $customTermEndSelector: this.$container.find('.history-inquiry .date-selcet button').eq(1),
       $searchBtn: this.$container.find('.history-inquiry .contents-btn button')
@@ -251,16 +263,33 @@ Tw.MyTBillHistoryContents.prototype = {
 
   _updateUsageTotalUI: function () {
     if (!_.isEmpty(this.contentsList)) {
-      this.$searchElement.$usageTotalDesc.removeClass('none');
-      this.$searchElement.$usageTotalCount.html(this.contentsList.length);
-      this.$searchElement.$usageTotalAmount.html(
+      this.$searchElementCustom.$usageTotalDesc.removeClass('none');
+      this.$searchElementCustom.$usageTotalCount.html(this.contentsList.length);
+      this.$searchElementCustom.$usageTotalAmount.html(
           Tw.FormatHelper.addComma(this._getTotalAmountUsageList().toString())
       );
     } else {
-      this.$searchElement.$usageTotalDesc.addClass('none');
-      this.$searchElement.$usageTotalCount.html('');
-      this.$searchElement.$usageTotalAmount.html('');
+      this.$searchElementCustom.$usageTotalDesc.addClass('none');
+      this.$searchElementCustom.$usageTotalCount.html('');
+      this.$searchElementCustom.$usageTotalAmount.html('');
     }
+  },
+
+  _getChoiceDataMonth: function (term) {
+    var choiceData = [];
+    for (var k = 0; k <= term; k++) {
+      choiceData.push(this._dateHelper.getShortDateWithFormatAddByUnit(this.currentYYYYMM, k * -1, 'months', Tw.DATE_FORMAT.YYYYDD_TYPE_1, 'YYYYMM'));
+    }
+    return choiceData;
+  },
+
+  _goSearch: function (startYYYYMMDD, endYYYYMMDD, paymentType) {
+
+    // console.log(this, this.search, startYYYYMMDD, endYYYYMMDD, paymentType, this.fromYYYYMM, this.currentYYYYMM);
+    this.apiOption.fromdate = startYYYYMMDD;
+    this.apiOption.todate = endYYYYMMDD;
+
+    this._getData();
   },
 
   _updateListUI: function () {
