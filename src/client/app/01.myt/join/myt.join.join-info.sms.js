@@ -18,16 +18,6 @@ Tw.MyTJoinJoinInfoSms.prototype = {
   _init : function() {
     this._initVariables();
     this._bindEvent();
-
-    var t = [1,2,3];
-
-    var t1 = _.some(t, function (v) {
-      if(v === 2){
-        return false;
-      }
-    });
-
-    Tw.Logger.info('>>>>> ', t1);
   },
 
   _initVariables: function () {
@@ -89,7 +79,6 @@ Tw.MyTJoinJoinInfoSms.prototype = {
         return true;
       }
     });
-    Tw.Logger.info('>>>>>> rs ', result);
 
     if ( !result ) {
       return rs;
@@ -122,21 +111,18 @@ Tw.MyTJoinJoinInfoSms.prototype = {
     this._apiService.request(Tw.API_CMD.BFF_05_0062, data)
       .done($.proxy(this._onSuccess, this))
       .fail($.proxy(this._onFail, this));
-    Tw.Logger.info('#### _submit');
   },
 
   _onSuccess : function (res) {
     if( res.code !== Tw.API_CODE.CODE_00 ){
       this._popupService.openAlert(res.msg, res.code);
     } else {
-      Tw.Logger.info('#### _onSuccess : ', res);
       this._history.goBack();
     }
   },
 
   _onFail : function (err) {
-  Tw.Logger.error('[Myt > Join > join-info > sms]');
-  this._popupService.openAlert(err.msg, err.code);
+    this._popupService.openAlert(err.msg + ' : ' + err.code);
   }
 
 };
