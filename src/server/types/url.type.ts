@@ -134,9 +134,6 @@ export const URL = {
   '/customer/researches': { login: true, id: 'CI_09_02', title: '고객의견' }, // 설문조사 리스트
   '/customer/result': { login: false, id: 'CI_09_04', title: '설문조사 결과' }, // 설문조사 결과
   // auth
-  '/auth/error/empty-line': { login: true, id: 'CO_99_06_01_02', title: '' },   // 등록된 회선 없음
-  '/auth/error/no-auth': { login: true, id: 'CO_99_06_01_03', title: '' },    // 선택 회선 권한 없음
-  '/auth/error/no-register': { login: true, id: 'CO_99_06_01_01', title: '' },  //
   '/auth/line': { login: true, id: 'CO_01_05_02', title: '' }, // 회선관리
   '/auth/line/edit': { login: true, id: 'CO_01_05_02_01', title: '' }, // 회선편집
   '/auth/line/register/corporation': { login: true, id: 'CO_01_05_02_03', title: '' }, // 법인회선등록

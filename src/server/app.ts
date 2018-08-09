@@ -107,6 +107,7 @@ class App {
       path.join(__dirname, 'app/08.customer/views/containers'),
       path.join(__dirname, 'app/09.auth/views/containers'),
       path.join(__dirname, 'app/search/views/containers'),
+      path.join(__dirname, 'common/views/containers')
 
     ]);
   }
