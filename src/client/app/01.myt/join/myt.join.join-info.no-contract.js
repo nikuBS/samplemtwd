@@ -36,7 +36,6 @@ Tw.MyTJoinJoinInfoNoContract.prototype = {
     this.$period = this.$container.find('.tube-list [role=radio]');
     this.$search = this.$container.find('#fe-search');
     this.$dateSelcet = this.$container.find('.date-selcet');
-    this.MORE_CNT = 20;
     this._initPeriod();
   },
 
@@ -254,7 +253,7 @@ Tw.MyTJoinJoinInfoNoContract.prototype = {
     this.$more.hide();
 
     if ( list.length > 0 ){
-      this._totoalList = _.chunk(list, this.MORE_CNT);
+      this._totoalList = _.chunk(list, Tw.DEFAULT_LIST_COUNT);
       this._renderList(this.$list, this._totoalList.shift());
       this._renderBottom(res);
 
