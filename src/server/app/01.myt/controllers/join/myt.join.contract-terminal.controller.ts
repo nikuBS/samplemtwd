@@ -113,7 +113,7 @@ class MytJoinContractTerminal extends TwViewController {
         this.logger.info(this, '[ _redirectUrlInfo ] : ', tempVar);
         res.redirect(tempVar);
         break;
-      case 'O1' :
+      case 'C1' :
         tempVar = this._redirectUrlInfo.O1;
         this.logger.info(this, '[ _redirectUrlInfo ] : ', tempVar);
         res.redirect(tempVar);
