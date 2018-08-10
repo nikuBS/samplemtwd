@@ -156,8 +156,8 @@ Tw.PaymentPrepayPay.prototype = {
   },
   _getCardSuccess: function (reqData, res) {
     if (res.code === Tw.API_CODE.CODE_00) {
-      reqData.cardCorp = res.result.isueCardCd;
-      reqData.cardNm = res.result.isueCardName;
+      reqData.cardCorp = res.result.prchsCardCd;
+      reqData.cardNm = res.result.prcchsCardName;
 
       this._prepay(reqData);
     } else {
@@ -193,7 +193,13 @@ Tw.PaymentPrepayPay.prototype = {
     this._popupService.openAlert(err.code + ' ' + err.msg);
   },
   _setCompleteTitle: function ($target) {
-    $target.find('.fe-complete-title').text(Tw.PAYMENT_PREPAY_TITLE.MICRO_PREPAY);
+    var $title = '';
+    if (this.$title === 'micro') {
+      $title = Tw.PAYMENT_PREPAY_TITLE.MICRO_PREPAY;
+    } else {
+      $title = Tw.PAYMENT_PREPAY_TITLE.CONTENTS_PREPAY;
+    }
+    $target.find('.fe-complete-title').text($title);
     $target.find('.fe-complete-message').text(Tw.PAYMENT_PREPAY_TITLE.PREPAY_COMPLETE);
   },
   _setCompleteData: function ($result, $target) {
