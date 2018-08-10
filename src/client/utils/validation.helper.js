@@ -100,6 +100,17 @@ Tw.ValidationHelper = (function () {
     return true;
   }
 
+  /* input 값이 param보다 적은 경우 alert 띄우고 값 변경해주는 function */
+  function checkIsMoreAndSet($standardSelector, $selector, message) {
+    if (parseInt($.trim($standardSelector.attr('id')), 10) < $selector.attr('id')) {
+      Tw.Popup.openAlert(message);
+      $selector.attr('id', $standardSelector.attr('id'));
+      $selector.text($standardSelector.text());
+      return false;
+    }
+    return true;
+  }
+
   /* 개인정보 제공 동의 체크를 하지 않았을 경우 alert 띄우는 function */
   function checkIsAgree($target, message) {
     if (!$target.is(':checked')) {
@@ -180,6 +191,7 @@ Tw.ValidationHelper = (function () {
     checkLength: checkLength,
     checkMoreLength: checkMoreLength,
     checkIsMore: checkIsMore,
+    checkIsMoreAndSet: checkIsMoreAndSet,
     checkIsAgree: checkIsAgree,
     checkIsAvailablePoint: checkIsAvailablePoint,
     checkIsTenUnit: checkIsTenUnit,
