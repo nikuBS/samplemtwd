@@ -9,6 +9,7 @@ import TwViewController from '../../../common/controllers/tw.view.controller';
 import { API_CMD, API_CODE } from '../../../types/api-command.type';
 import { CUSTOMER_NOTICE_CATEGORY } from '../../../types/string.type';
 import FormatHelper from '../../../utils/format.helper';
+import DateHelper from '../../../utils/date.helper';
 
 const categorySwitchingData = {
   tworld: {
@@ -49,7 +50,7 @@ class CustomerNoticeController extends TwViewController {
       remain: this._getRemainCount(data.result.totalElements, data.result.pageable.pageNumber, data.result.pageable.pageSize),
       list: data.result.content.map(item => {
         return Object.assign(item, {
-          date: FormatHelper.convertNumberDateToFormat(item.rgstDt, '.'),
+          date: DateHelper.getShortDateWithFormat(item.rgstDt, 'YY.MM.DD'),
           type: FormatHelper.isEmpty(item.ctgNm) ? '' : item.ctgNm,
           itemClass: (item.isTop ? 'impo ' : '') + (item.isNew ? 'new' : '')
         });

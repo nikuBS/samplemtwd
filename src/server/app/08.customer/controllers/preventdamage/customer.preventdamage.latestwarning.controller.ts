@@ -8,6 +8,7 @@ import { NextFunction, Request, Response } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import FormatHelper from '../../../../utils/format.helper';
+import DateHelper from '../../../../utils/date.helper';
 
 class CustomerPreventdamageLatestwarningController extends TwViewController {
   constructor() {
@@ -29,7 +30,7 @@ class CustomerPreventdamageLatestwarningController extends TwViewController {
       remain: this._getRemainCount(data.result.totalElements, data.result.pageable.pageNumber, data.result.pageable.pageSize),
       list: data.result.content.map(item => {
         return Object.assign(item, {
-          date: FormatHelper.convertNumberDateToFormat(item.auditDtm, '.')
+          date: DateHelper.getShortDateWithFormat(item.auditDtm, 'YY.MM.DD')
         });
       }),
       last: data.result.last
