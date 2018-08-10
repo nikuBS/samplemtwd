@@ -37,6 +37,9 @@
                         </li>
                         <% } %>
                     </ul>
+                    <% if (microPrepayRecord.length === 0) { %>
+                    <div>선결제 내역이 없습니다.</div>
+                    <% } %>
                     <% } %>
                 </div>
                 <% if (microPrepayRecord.length > 20) { %>
