@@ -19,8 +19,6 @@ Tw.MyTJoinJoinInfoNoContract.prototype = {
     this._initVariables();
     this._bindEvent();
     this._getNoContractResponse();
-
-    Tw.Logger.info('#### init...');
   },
 
   _initVariables: function () {
