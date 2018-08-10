@@ -270,7 +270,7 @@ Tw.PaymentRealtime.prototype = {
   },
   _getSuccess: function (reqData, res) {
     if (res.code === Tw.API_CODE.CODE_00) {
-      reqData.bankOrCardCode = res.result.isueCardCd;
+      reqData.bankOrCardCode = res.result.prchsCardCd;
       this._payCardRequest(reqData);
     } else {
       this._popupService.openAlert(Tw.MSG_COMMON.SERVER_ERROR);

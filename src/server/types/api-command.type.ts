@@ -391,8 +391,8 @@ export const API_LOGIN_ERROR = {
 
 export const API_MYT_ERROR_CODE = [
   'BLN0001', // 잔여기본통화 조회횟수 초과
-  'BLN0002', // 정지이력
-  'BLN0003', // 조회불가대상
+  'BLN0002', // 조회불가대상
+  'BLN0003', // 정지이력
   'BLN0004', // 조회불가대상
 ];
 

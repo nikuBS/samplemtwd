@@ -211,7 +211,7 @@ Tw.PaymentAuto.prototype = {
   },
   _getSuccess: function (reqData, res) {
     if (res.code === Tw.API_CODE.CODE_00) {
-      reqData.bankCardCoCd = res.result.isueCardCd;
+      reqData.bankCardCoCd = res.result.prchsCardCd;
       this._changeRequest(reqData);
     } else {
       this._popupService.openAlert(Tw.MSG_COMMON.SERVER_ERROR);

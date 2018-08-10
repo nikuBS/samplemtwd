@@ -258,8 +258,8 @@ Tw.PaymentPrepayAuto.prototype = {
   },
   _getCardSuccess: function (reqData, res) {
     if (res.code === Tw.API_CODE.CODE_00) {
-      reqData.cardType = res.result.isueCardCd;
-      reqData.cardNm = res.result.isueCardName;
+      reqData.cardType = res.result.prchsCardCd;
+      reqData.cardNm = res.result.prcchsCardName;
 
       this._autoPrepay(reqData);
     } else {
