@@ -85,7 +85,12 @@ Tw.AuthLoginEasyIos.prototype = {
   _onClickCert: function () {
     if ( this._checkCertValidation() ) {
       var mdn = this.$inputMdn.val();
-      this._apiService.request(Tw.API_CMD.BFF_03_0019, {}, {}, mdn)
+      var params = {
+        mbrNm: this.$inputName.val(),
+        birthDt: this.$inputBirth.val(),
+        gender: this.GENDER_CODE[this.$inputGender.filter(':checked').val()]
+      };
+      this._apiService.request(Tw.API_CMD.BFF_03_0019, params, {}, mdn)
         .done($.proxy(this._successRequestCert, this));
     }
   },
@@ -97,6 +102,8 @@ Tw.AuthLoginEasyIos.prototype = {
       this._popupService.openAlert(Tw.MSG_AUTH.EASY_LOGIN_L51);
     } else if ( resp.code === this.ERROR_CODE.SMS2006 ) {
       this._popupService.openAlert(Tw.MSG_AUTH.EASY_LOGIN_L52);
+    } else if ( resp.code === this.ERROR_CODE.ATH1004 ) {
+      this._popupService.openAlert(Tw.MSG_AUTH.EASY_LOGIN_L03);
     } else {
       this._popupService.openAlert(resp.code + ' ' + resp.msg);
     }
