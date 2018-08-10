@@ -418,7 +418,12 @@ Tw.PostcodeMain.prototype = {
     }
     for (var i = 0; i < $content.length; i++) {
       var $addressField = this.$standardAddress.clone().removeClass('fe-standard').removeClass('none').addClass('fe-add-address');
-      $addressField.attr({'id': $content[i][_address.id], 'postcode': $content[i].zip, 'ho': $content[i].staMainHouseNumCtt, 'dong': $content[i].ldongNm });
+      $addressField.attr({
+        'id': $content[i][_address.id],
+        'postcode': $content[i].zip,
+        'ho': $content[i].staMainHouseNumCtt,
+        'dong': $content[i].ldongNm
+      });
       $addressField.find('.address1').text($content[i][_address.name]);
       $addressField.find('.address2').text(_address.text + ' ' + $content[i][_address.value]);
       $addressField.find('.address3').text(Tw.POSTCODE_TEXT.ZIP_CODE + ' ' + $content[i].zip);
