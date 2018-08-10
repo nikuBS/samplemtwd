@@ -58,7 +58,11 @@
     <div class="payment-detail-wrap">
         <div class="history-list">
             <div class="no-data">
+                {{#if data.noUsePoint}}
                 <span>포인트 사용 내역이 없습니다.</span>
+                {{else}}
+                <span>검색된 포인트 사용 내역이 없습니다.</span>
+                {{/if}}
             </div>
         </div>
     </div>

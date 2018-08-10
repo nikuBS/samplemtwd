@@ -19,6 +19,8 @@ Tw.MyTJoinJoinInfoNoContract.prototype = {
     this._initVariables();
     this._bindEvent();
     this._getNoContractResponse();
+
+    Tw.Logger.info('#### init...');
   },
 
   _initVariables: function () {
@@ -114,14 +116,14 @@ Tw.MyTJoinJoinInfoNoContract.prototype = {
 
       // 시작일이 종료일보다 클 경우
       if ( diff > 0 ) {
-        this._popupService.openAlert(Tw.MSG_MYT.JOIN_INFO_A01, Tw.POPUP_TITLE.NOTIFY);
+        this._popupService.openAlert(Tw.MSG_MYT.JOIN_INFO_A01, Tw.POPUP_TITLE.NOTIFY, $.proxy(this._invalidDate, this, this.$inputSdate));
         return false;
       }
       // 시작일이 365일 이상일 경우
       if ( diff < -365 ) {
         var beforeDate365 = this._dateHelper.getShortDateWithFormatAddByUnit(edate,-365,'days','YYYY-MM-DD','YYYY-MM-DD');
         var msg = Tw.MSG_MYT.JOIN_INFO_A02.replace(/\{0\}/, beforeDate365);
-        this._popupService.openAlert(msg, Tw.POPUP_TITLE.NOTIFY, $.proxy(this._setBefore365, this,beforeDate365));
+        this._popupService.openAlert(msg, Tw.POPUP_TITLE.NOTIFY, $.proxy(this._setBefore365, this, beforeDate365));
         return false;
       }
       // 시작일이 유효한 일자가 아닐경우
@@ -148,12 +150,14 @@ Tw.MyTJoinJoinInfoNoContract.prototype = {
 
   _setBefore365 : function (date) {
     this.$inputSdate.val(date);
-    this._popupService.close();
+    this._invalidDate(this.$inputSdate);
   },
 
   _invalidDate : function ($selector) {
-    $selector.focus();
     this._popupService.close();
+    setTimeout(function(){
+      $selector.trigger('click');
+    },500);
   },
 
   _getNoContractResponse: function () {
@@ -194,7 +198,7 @@ Tw.MyTJoinJoinInfoNoContract.prototype = {
     if (res.code === Tw.API_CODE.CODE_00) {
       res = res.result;
 
-      this._renderHader(res);
+      this._renderHeader(res);
       this._renderListOne(res);
 
     } else {
@@ -211,7 +215,7 @@ Tw.MyTJoinJoinInfoNoContract.prototype = {
   },
 
   // 상단 템플릿 생성
-  _renderHader : function (res) {
+  _renderHeader : function (res) {
     var source = $('#tmplHeader').html();
     var template = Handlebars.compile(source);
     var data = this._parseHeader(res);
@@ -258,7 +262,11 @@ Tw.MyTJoinJoinInfoNoContract.prototype = {
       this._renderBottom(res);
 
     } else {
-      this._renderNoList();
+      var data = {noUsePoint : false};
+      if ( res.totUsedPt === 0) {
+        data.noUsePoint = true;
+      }
+      this._renderNoList(data);
     }
   },
 
@@ -282,10 +290,10 @@ Tw.MyTJoinJoinInfoNoContract.prototype = {
     this._moreButton();
   },
 
-  _renderNoList : function () {
+  _renderNoList : function (data) {
     var source = $('#tmplNoList').html();
     var template = Handlebars.compile(source);
-    var output = template();
+    var output = template({data : data});
     this.$noList.empty().append(output);
   },
 
