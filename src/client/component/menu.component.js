@@ -87,8 +87,8 @@ Tw.MenuComponent.prototype = {
   },
   _successLogout: function (resp) {
     Tw.Logger.info('[Logout Resp]', resp);
-    if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      this._historyService.goLoad('/auth/logout/complete');
-    }
+    // if(resp.code === NTV_CODE.CODE_00) {
+    this._historyService.goLoad('/auth/logout/complete');
+    // }
   }
 };

@@ -24,7 +24,7 @@ class PaymentPrepayMicroAutoHistoryController extends TwViewController {
       if (autoCardInfo.code === API_CODE.CODE_00 && autoPrepay.code === API_CODE.CODE_00) {
         res.render('payment.prepay.micro.auto.history.html', {
           autoCardInfo: this.parseCardInfo(autoCardInfo.result),
-          autoPrepay: this.parsePrepayData(autoPrepay.result.microPrepayReqRecord),
+          autoPrepay: this.parsePrepayData(autoPrepay.result),
           svcInfo: svcInfo
         });
       } else {
@@ -53,7 +53,8 @@ class PaymentPrepayMicroAutoHistoryController extends TwViewController {
     return result;
   }
 
-  private parsePrepayData(record: any): any {
+  private parsePrepayData(result: any): any {
+    const record = result.microPrepayReqRecord;
     if (!FormatHelper.isEmpty(record)) {
       record.map((data) => {
         data.name = REQUEST_TYPE[data.autoChrgReqClCd];
@@ -63,6 +64,7 @@ class PaymentPrepayMicroAutoHistoryController extends TwViewController {
       });
     }
     record.code = API_CODE.CODE_00;
+    record.totalCnt = result.totalCnt;
     return record;
   }
 }

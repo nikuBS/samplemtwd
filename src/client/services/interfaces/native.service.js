@@ -71,7 +71,7 @@ Tw.NativeService.prototype = {
   _onNativeCallback: function (_resp) {
     Tw.Logger.info('[onNativeCallBack]', JSON.stringify(_resp));
     var resp = (typeof _resp === 'string') ? JSON.parse(_resp) : _resp;
-    if ( resp.resultCode === Tw.NTV_CODE.CODE_00 && !!resp.randomCode ) {
+    if ( !!resp.randomCode ) {
       var fn = _.find(this._callbackList, function (data) {
         return data.randomCode === resp.randomCode;
       }).callback;
@@ -84,7 +84,6 @@ Tw.NativeService.prototype = {
   },
 
   _onEasyLogin: function (resp) {
-    console.log(resp);
     if(resp.resultCode === Tw.NTV_CODE.CODE_00) {
       if(Tw.BrowserHelper.isAndroid()) {
         window.location.href = '/auth/login/easy-aos?mdn=' + resp.params.mdn;

@@ -256,7 +256,7 @@ export const API_CMD = {
     path: '/core-bill/v1/useContentsPrepay/useContents-autoPrepay-hist',
     method: API_METHOD.GET,
     server: API_SERVER.BFF,
-    bypass: false },
+    bypass: true },
   BFF_07_0080: {
     path: '/core-bill/v1/useContentsPrepay/useContents-autoPrepay-reqYn',
     method: API_METHOD.GET,

@@ -43,25 +43,26 @@
             <div class="cont-box nogaps noborder">
                 <div class="payment-select space-type pt28">
                     <h3>신청 및 변경내역</h3>
-                    <ul class="select-list">
+                    <ul class="select-list fe-select-list" data-cnt="<%= autoPrepay.totalCnt %>">
                         <% if (autoPrepay) { %>
                         <% for (var i = 0; i < autoPrepay.length; i++) { %>
                         <li>
                             <div class="pay-maininfo">
-                                <span class="service-sort"><%= autoPrepay[i].name %> <br /><%= autoPrepay[i].date %></span>
+                                <span class="service-sort fe-date"><%= autoPrepay[i].name %> <br /><%= autoPrepay[i].date %></span>
                             </div>
-                            <% if (autoPrepay[i].auto_chrg_req_cl_cd === 'F') { %>
+                            <p class="fe-cancel-noti none">자동 선결제가 해지되었습니다.</p>
+                            <% if (autoPrepay[i].autoChrgReqClDd === 'F') { %>
                             <p>자동 선결제가 해지되었습니다.</p>
                             <% } else { %>
                             <dl class="pay-detail type2">
                                 <dt>카드정보</dt>
-                                <dd>
-                                    <%= autoPrepay[i].prchscardNm %><br /><%= autoPrepay[i].card_num %>
+                                <dd class="fe-card-info">
+                                    <%= autoPrepay[i].prchsCardNm %><br /><%= autoPrepay[i].cardNum %>
                                 </dd>
                                 <dt>선결제 금액</dt>
-                                <dd><strong><%= autoPrepay[i].autoChrgAmount %></strong> <span class="unit">원</span></dd>
+                                <dd><strong class="fe-auto-chrg-amt"><%= autoPrepay[i].autoChrgAmount %></strong> <span class="unit">원</span></dd>
                                 <dt>기준금액</dt>
-                                <dd><strong><%= autoPrepay[i].autoChrgStrdAmount %></strong> <span class="unit">원</span></dd>
+                                <dd><strong class="fe-auto-chrg-strd-amt"><%= autoPrepay[i].autoChrgStrdAmount %></strong> <span class="unit">원</span></dd>
                             </dl>
                             <% } %>
                         </li>
@@ -70,7 +71,7 @@
                     </ul>
                 </div>
                 <% if (autoPrepay.length > 20) { %>
-                <button class="bt-more">더보기<span>(<span class="fe-more-length"><%= autoPrepay.length - 20 %></span>)</span></button>
+                <button class="bt-more fe-more-btn">더보기<span class="fe-more-length">(<%= autoPrepay.length - 20 %>)</span></button>
                 <% } %>
             </div>
         </div>
@@ -81,7 +82,7 @@
 <% include ../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.PaymentPrepayHistory($('#payment-prepay-contents-auto-history'));
+    new Tw.PaymentPrepayHistory($('#payment-prepay-contents-auto-history'), 'contents', 'auto');
   });
 </script>
 <% include ../components/end.component.html %>
