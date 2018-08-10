@@ -677,7 +677,7 @@ Tw.DATE_FORMAT = {
 };
 
 Tw.URL_PATH = {
-  BROADBAND: 'http://www.skbroadband.com/',
+  BROADBAND: 'http://www.skbroadband.com',
   COP_SERVICE : 'http://b2b.tworld.co.kr/cs/counsel/certServiceInfo.bc',
   CONTETNS_YOUTUBE_HELP_URL: 'https://support.google.com/youtube/contact/commerce_contact?hl=ko&cfsi=subs_red_2',
   MYT_PAYPASS_SET: '/myt/bill/history/micro/password',
