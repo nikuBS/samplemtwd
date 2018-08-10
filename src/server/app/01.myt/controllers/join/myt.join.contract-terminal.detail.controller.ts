@@ -1,5 +1,5 @@
 /**
- * FileName: myt.joinService.contractTerminalInfo.tlogin.detail.controller
+ * FileName: myt.joinService.contractTerminalInfo.phone.detail.controller
  * Author: 김명환 (skt.P130714@partner.sk.com)
  * Date: 2018.07.24
  */
@@ -13,7 +13,7 @@ import DateHelper from '../../../../utils/date.helper';
 import FormatHelper from '../../../../utils/format.helper';
 
 
-class MytJoinContractTerminalTloginDetail extends TwViewController {
+class MytJoinContractTerminalDetail extends TwViewController {
   constructor() {
     super();
   }
@@ -28,7 +28,7 @@ class MytJoinContractTerminalTloginDetail extends TwViewController {
   private _showConditionInfo: any = {};
 
   private _urlTplInfo: any = {
-    pageRenderView: 'join/myt.join.contract-terminal.tlogin.detail.html'
+    pageRenderView: 'join/myt.join.contract-terminal.detail.html'
   };
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
@@ -50,5 +50,5 @@ class MytJoinContractTerminalTloginDetail extends TwViewController {
 
 }
 
-export default MytJoinContractTerminalTloginDetail;
+export default MytJoinContractTerminalDetail;
 
