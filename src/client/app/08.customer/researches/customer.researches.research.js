@@ -39,6 +39,7 @@ Tw.CustomerResearch.prototype = {
   _handleGoToBefore: function (e) {
     // 이전으로 클릭
     var beforeQuestion = $(e.currentTarget).data('before-question');
+    delete this._answers[this._currentStep];
 
     if (beforeQuestion === 'main') {
       this._currentStep = 1;

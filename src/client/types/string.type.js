@@ -654,6 +654,15 @@ Tw.PAYMENT_TYPE = {
   COMPLAX: '복합결제'
 };
 
+Tw.PAYMENT_TYPE_CODE = {
+  TOTAL: 'ALL',
+  NORMAL: '01',
+  AUTO: '03',
+  PACKAGE: '02',
+  EASY: '04',
+  COMPLAX: '05'
+};
+
 Tw.HELPLINE_AREA = {
   CAPITAL: '수도권 (서울, 경기, 인천, 강원)',
   CENTER: '중부 (충남, 충북, 대전)',
@@ -668,7 +677,7 @@ Tw.DATE_FORMAT = {
 };
 
 Tw.URL_PATH = {
-  BROADBAND: 'http://www.skbroadband.com/',
+  BROADBAND: 'http://www.skbroadband.com',
   COP_SERVICE : 'http://b2b.tworld.co.kr/cs/counsel/certServiceInfo.bc',
   CONTETNS_YOUTUBE_HELP_URL: 'https://support.google.com/youtube/contact/commerce_contact?hl=ko&cfsi=subs_red_2',
   MYT_PAYPASS_SET: '/myt/bill/history/micro/password',
