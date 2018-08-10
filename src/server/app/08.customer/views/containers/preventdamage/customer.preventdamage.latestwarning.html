@@ -29,7 +29,7 @@
                         <% } %>
                     </ul>
                 </div>
-                <% if (data.reamin > 0) { %>
+                <% if (data.remain > 0) { %>
                 <div class="bt-more-wrap mt0">
                     <button role="button" class="bt-more fe-btn_more_list" title="">더보기<span>(<%= data.remain %>)</span></button>
                 </div>
@@ -52,7 +52,7 @@
     {{/ifCond}}
         <a class="link-group-btn" href="/customer/prevent-damage/latest-warning/view?lw_id={{bltn2BltnId}}">
             {{bltnTitleNm}}
-            <span class="link-group-date">{{rgstDtm}}</span>
+            <span class="link-group-date">{{date}}</span>
         </a>
     </li>
     {{/list}}

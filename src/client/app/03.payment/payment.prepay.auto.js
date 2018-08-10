@@ -182,7 +182,7 @@ Tw.PaymentPrepayAuto.prototype = {
     return isValid;
   },
   _isValidForNew: function () {
-    return (this._validation.checkIsMore(this.$standardSelector.attr('id'), this.$prepaySelector.attr('id'), Tw.MSG_PAYMENT.PRE_A08) &&
+    return (this._validation.checkIsMoreAndSet(this.$standardSelector, this.$prepaySelector, Tw.MSG_PAYMENT.PRE_A08) &&
       this._validation.checkEmpty(this.$cardWrap.find('.fe-birth').val(), Tw.MSG_PAYMENT.PRE_A09) &&
       this._validation.checkEmpty(this.$cardNumber.val(), Tw.MSG_PAYMENT.AUTO_A05) &&
       this._validation.checkIsMore(this.$cardNumber.val(), 15, Tw.MSG_PAYMENT.REALTIME_A06) &&
@@ -190,14 +190,14 @@ Tw.PaymentPrepayAuto.prototype = {
   },
   _isValidForChange: function () {
     if (this.$changeType === 'A') {
-      return (this._validation.checkIsMore(this.$standardSelector.attr('id'), this.$prepaySelector.attr('id'), Tw.MSG_PAYMENT.PRE_A08) &&
+      return (this._validation.checkIsMoreAndSet(this.$standardSelector, this.$prepaySelector, Tw.MSG_PAYMENT.PRE_A08) &&
         this._commonValidationForCard(this.$cardWrap));
     } else if (this.$changeType === 'C') {
       return (this._validation.checkEmpty(this.$cardNumber.val(), Tw.MSG_PAYMENT.AUTO_A05) &&
         this._validation.checkIsMore(this.$cardNumber.val(), 15, Tw.MSG_PAYMENT.REALTIME_A06) &&
         this._commonValidationForCard(this.$cardWrap));
     } else {
-      return (this._validation.checkIsMore(this.$standardSelector.attr('id'), this.$prepaySelector.attr('id'), Tw.MSG_PAYMENT.PRE_A08) &&
+      return (this._validation.checkIsMoreAndSet(this.$standardSelector, this.$prepaySelector, Tw.MSG_PAYMENT.PRE_A08) &&
         this._validation.checkEmpty(this.$cardNumber.val(), Tw.MSG_PAYMENT.AUTO_A05) &&
         this._validation.checkIsMore(this.$cardNumber.val(), 15, Tw.MSG_PAYMENT.REALTIME_A06) &&
         this._commonValidationForCard(this.$cardWrap));
@@ -209,7 +209,7 @@ Tw.PaymentPrepayAuto.prototype = {
     return (this._validation.checkEmpty(vars.cardYVal, Tw.MSG_PAYMENT.AUTO_A01) &&
       this._validation.checkEmpty(vars.cardMVal, Tw.MSG_PAYMENT.AUTO_A01) &&
       this._validation.checkLength(vars.cardYVal, 4, Tw.MSG_PAYMENT.REALTIME_A04) &&
-      this._validation.checkYear(vars.cardYVal, Tw.MSG_PAYMENT.REALTIME_A04) &&
+      this._validation.checkYear(vars.cardYVal, vars.cardMVal, Tw.MSG_PAYMENT.REALTIME_A04) &&
       this._validation.checkLength(vars.cardMVal, 2, Tw.MSG_PAYMENT.REALTIME_A04) &&
       this._validation.checkMonth(vars.cardMVal, Tw.MSG_PAYMENT.REALTIME_A04) &&
       this._validation.checkEmpty(vars.cardPasswordVal, Tw.MSG_PAYMENT.AUTO_A04) &&
@@ -258,8 +258,8 @@ Tw.PaymentPrepayAuto.prototype = {
   },
   _getCardSuccess: function (reqData, res) {
     if (res.code === Tw.API_CODE.CODE_00) {
-      reqData.cardType = res.result.isueCardCd;
-      reqData.cardNm = res.result.isueCardName;
+      reqData.cardType = res.result.prchsCardCd;
+      reqData.cardNm = res.result.prcchsCardName;
 
       this._autoPrepay(reqData);
     } else {

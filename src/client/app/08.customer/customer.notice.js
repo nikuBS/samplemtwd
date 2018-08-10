@@ -118,7 +118,7 @@ Tw.CustomerNotice.prototype = {
     this.$list.append(this._template({
       list: _.map(res.result.content, function(item) {
         item.type = Tw.FormatHelper.isEmpty(item.ctgNm) ? '' : item.ctgNm;
-        item.date = Tw.FormatHelper.convertNumberDateToFormat(item.rgstDt, '.');
+        item.date = Tw.DateHelper.getShortDateWithFormat(item.rgstDt, 'YY.MM.DD');
         item.itemClass = (item.isTop ? 'impo ' : '') + (item.isNew ? 'new' : '');
         return item;
       })

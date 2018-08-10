@@ -8,6 +8,7 @@ import { NextFunction, Request, Response } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import FormatHelper from '../../../../utils/format.helper';
+import DateHelper from '../../../../utils/date.helper';
 
 class CustomerPreventdamageLatestwarningviewController extends TwViewController {
   constructor() {
@@ -16,7 +17,7 @@ class CustomerPreventdamageLatestwarningviewController extends TwViewController 
 
   private _convertData(data): any {
     return Object.assign(data, {
-      date: FormatHelper.convertNumberDateToFormat(data.auditDtm, '.')
+      date: DateHelper.getShortDateWithFormat(data.auditDtm, 'YY.MM.DD')
     });
   }
 

@@ -48,6 +48,7 @@ Tw.PostcodeMain.prototype = {
     this.$standardAddress = this.$container.find('.fe-standard:first');
     this.$remainAddressWrap = this.$container.find('.fe-remain-address-wrap:first');
     this.$remainAddress = this.$container.find('.fe-remain-address:first');
+    this.$noAddress = this.$container.find('.fe-no-address:first');
     this.$selectDetailAddress = this.$container.find('.fe-go-step3');
     this.$aptLastField = this.$container.find('.fe-apt-last-field');
     this.$etcLastField = this.$container.find('.fe-etc-last-field');
@@ -101,6 +102,7 @@ Tw.PostcodeMain.prototype = {
     this.$standardAddress = this.$step2TabContainer.find('.fe-standard');
     this.$remainAddressWrap = this.$step2TabContainer.find('.fe-remain-address-wrap');
     this.$remainAddress = this.$step2TabContainer.find('.fe-remain-address');
+    this.$noAddress = this.$step2TabContainer.find('.fe-no-address');
 
     this.$step3TabContainer = this.$container.find('#' + this._selectedTabId + '-tab.fe-step3');
     this.$aptLastField = this.$step3TabContainer.find('.fe-apt-last-field');
@@ -181,6 +183,10 @@ Tw.PostcodeMain.prototype = {
     };
     if (this._selectedTabId === 'tab1' || this._selectedTabId === 'tab3') {
       reqData.dongCd = this._gunCode;
+
+      if (this._selectedTabId === 'tab3') {
+        reqData.page = this._nextPage;
+      }
     }
     return reqData;
   },
@@ -311,6 +317,7 @@ Tw.PostcodeMain.prototype = {
     this._nextPage = 0;
 
     this.$container.find('.fe-add-address').remove();
+    this.$noAddress.addClass('none');
     if (!this.$remainAddressWrap.hasClass('none')) {
       this.$remainAddressWrap.addClass('none');
     }
@@ -321,7 +328,12 @@ Tw.PostcodeMain.prototype = {
   },
   _requestMoreDetailList: function () {
     var reqData = this._makeRequestData();
-    this._apiService.request(Tw.API_CMD.BFF_01_0011, reqData)
+    var $apiName = Tw.API_CMD.BFF_01_0011;
+
+    if (this._selectedTabId === 'tab3') {
+      $apiName = Tw.API_CMD.BFF_01_0009;
+    }
+    this._apiService.request($apiName, reqData)
       .done($.proxy(this._getDetailSuccess, this))
       .fail($.proxy(this._getDetailFail, this));
   },
@@ -332,7 +344,7 @@ Tw.PostcodeMain.prototype = {
     } else if (this._selectedTabId === 'tab2') {
       reqData = this._makeNumberRequestData();
     } else {
-      reqData = this._makeOfficeRequestData();
+      reqData = this._makePreRequestData();
     }
     return reqData;
   },
@@ -363,9 +375,6 @@ Tw.PostcodeMain.prototype = {
     }
     return reqData;
   },
-  _makeOfficeRequestData: function () {
-
-  },
   _getMoreDetailList: function (type) {
     this._initDetailAddress(type);
 
@@ -389,21 +398,32 @@ Tw.PostcodeMain.prototype = {
   },
   _getDetailSuccess: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
-      var $result = res.result.bldgAddress;
+      var $result = res.result;
+      if (this._selectedTabId !== 'tab3') {
+        $result = res.result.bldgAddress;
+      }
       this._setAddressList($result);
     }
   },
   _getDetailFail: function () {
-
+    this.$noAddress.removeClass('none');
   },
   _setAddressList: function ($result) {
     var _address = this._getAddress();
     this._setPage($result);
 
     var $content = $result.content;
+    if ($content.length === 0) {
+      this.$noAddress.removeClass('none');
+    }
     for (var i = 0; i < $content.length; i++) {
       var $addressField = this.$standardAddress.clone().removeClass('fe-standard').removeClass('none').addClass('fe-add-address');
-      $addressField.attr({'id': $content[i][_address.id], 'postcode': $content[i].zip, 'ho': $content[i].staMainHouseNumCtt, 'dong': $content[i].ldongNm });
+      $addressField.attr({
+        'id': $content[i][_address.id],
+        'postcode': $content[i].zip,
+        'ho': $content[i].staMainHouseNumCtt,
+        'dong': $content[i].ldongNm
+      });
       $addressField.find('.address1').text($content[i][_address.name]);
       $addressField.find('.address2').text(_address.text + ' ' + $content[i][_address.value]);
       $addressField.find('.address3').text(Tw.POSTCODE_TEXT.ZIP_CODE + ' ' + $content[i].zip);

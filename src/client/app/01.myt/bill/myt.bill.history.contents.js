@@ -52,7 +52,7 @@ Tw.MyTBillHistoryContents.prototype = {
     this.common._setTab(this._tabChangeCallback, this, this.hashList, this.$tabTriggerWrapper);
     this.getLimit = new Tw.MyTBillHistoryCommon.GetLimit();
 
-    this.search = new Tw.MyTBillHistoryCommon.Search(this.$searchElement, {
+    this.search = new Tw.MyTBillHistoryCommon.Search(this.$container, this.$searchElement, {
           defaultMonth: {
             title: Tw.POPUP_TITLE.PERIOD_SELECT,
             separator: 'search-pay-default-month',
@@ -61,6 +61,8 @@ Tw.MyTBillHistoryContents.prototype = {
             })
           }
         },
+        'months',
+        7,
         $.proxy(this._goSearch, this));
 
     this._updateEnvironment();
@@ -90,6 +92,7 @@ Tw.MyTBillHistoryContents.prototype = {
       $monthlyCustomTermSelector: this.$container.find('.widget-box.radio .select-list li input'),
       $monthSelector: this.$container.find('.history-inquiry > .bt-dropdown'),
       $customTermSelector: this.$container.find('.history-inquiry .tube-list input'),
+      $customTermSelectInput: this.$container.find('.history-inquiry .date-selcet input'),
       $customTermStartSelector: this.$container.find('.history-inquiry .date-selcet button').eq(0),
       $customTermEndSelector: this.$container.find('.history-inquiry .date-selcet button').eq(1),
       $searchBtn: this.$container.find('.history-inquiry .contents-btn button')
@@ -283,7 +286,7 @@ Tw.MyTBillHistoryContents.prototype = {
     return choiceData;
   },
 
-  _goSearch: function (startYYYYMMDD, endYYYYMMDD, paymentType) {
+  _goSearch: function (startYYYYMMDD, endYYYYMMDD) {
 
     // console.log(this, this.search, startYYYYMMDD, endYYYYMMDD, paymentType, this.fromYYYYMM, this.currentYYYYMM);
     this.apiOption.fromdate = startYYYYMMDD;
@@ -342,6 +345,7 @@ Tw.MyTBillHistoryContents.prototype = {
   },
 
   _updateMonthlyUI: function () {
+    this.isMonthlySet = true;
     this.$template.$monthlyAverageTotal.html(this.monthlyAverage);
 
     // console.log(this.monthlyList);

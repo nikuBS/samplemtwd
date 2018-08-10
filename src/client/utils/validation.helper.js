@@ -100,6 +100,17 @@ Tw.ValidationHelper = (function () {
     return true;
   }
 
+  /* input 값이 param보다 적은 경우 alert 띄우고 값 변경해주는 function */
+  function checkIsMoreAndSet($standardSelector, $selector, message) {
+    if (parseInt($.trim($standardSelector.attr('id')), 10) < $selector.attr('id')) {
+      Tw.Popup.openAlert(message);
+      $selector.attr('id', $standardSelector.attr('id'));
+      $selector.text($standardSelector.text());
+      return false;
+    }
+    return true;
+  }
+
   /* 개인정보 제공 동의 체크를 하지 않았을 경우 alert 띄우는 function */
   function checkIsAgree($target, message) {
     if (!$target.is(':checked')) {
@@ -140,8 +151,9 @@ Tw.ValidationHelper = (function () {
   }
 
   /* 카드 유효기간 체크하는 function */
-  function checkYear(value, message) {
-    if (parseInt($.trim(value), 10) < new Date().getFullYear()) {
+  function checkYear(year, month, message) {
+    if (parseInt($.trim(year), 10) < new Date().getFullYear() ||
+      (parseInt($.trim(year), 10) === new Date().getFullYear() && parseInt($.trim(month), 10) < new Date().getMonth() + 1)) {
       Tw.Popup.openAlert(message);
       return false;
     }
@@ -179,6 +191,7 @@ Tw.ValidationHelper = (function () {
     checkLength: checkLength,
     checkMoreLength: checkMoreLength,
     checkIsMore: checkIsMore,
+    checkIsMoreAndSet: checkIsMoreAndSet,
     checkIsAgree: checkIsAgree,
     checkIsAvailablePoint: checkIsAvailablePoint,
     checkIsTenUnit: checkIsTenUnit,
