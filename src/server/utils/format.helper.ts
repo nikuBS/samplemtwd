@@ -127,7 +127,7 @@ class FormatHelper {
       formatted.push({ data: min, unit: VOICE_UNIT.MIN });
     }
     const sec = data - (hours * 3600) - (min * 60);
-    if ( sec !== 0 || hours + min <= 0) {
+    if ( sec !== 0 || hours + min <= 0 ) {
       formatted.push({ data: sec, unit: sec > 0 ? VOICE_UNIT.SEC : VOICE_UNIT.MIN });
     }
     return formatted;
@@ -180,6 +180,22 @@ class FormatHelper {
 
   static zip(arr, ...arrs): any {
     return arr.map((val, i) => arrs.reduce((a, _arr) => [...a, _arr[i]], [val]));
+  }
+
+  /**
+   * Object deep copy
+   * @param {*} value The value to recursively clone.
+   * @returns {*} Returns the deep cloned value.
+   */
+  static objectClone(value): any {
+    if ( typeof value === 'object' ) {
+      return Object.keys(value)
+        .map(k => ({ [k]: this.objectClone(value[k]) }))
+        .reduce((a, c) => Object.assign(a, c), {});
+    } else if ( Array.isArray(value) ) {
+      return value.map(this.objectClone);
+    }
+    return value;
   }
 }
 
