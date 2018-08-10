@@ -53,6 +53,7 @@ Tw.PaymentPrepayPay.prototype = {
     this.$container.on('click', '.pay-check-box', $.proxy(this._setAutoInfo, this));
     this.$container.on('click', '.fe-card-type-selector', $.proxy(this._selectCardType, this));
     this.$container.on('click', '.fe-prepay', $.proxy(this._requestPrepay, this));
+    this.$container.on('click', '.fe-cancel-process', $.proxy(this._openCancel, this));
   },
   _onlyNumber: function (event) {
     Tw.InputHelper.inputNumberOnly(event.currentTarget);
@@ -213,6 +214,13 @@ Tw.PaymentPrepayPay.prototype = {
       name = value + Tw.PAYMENT_CARD_TYPE.M;
     }
     return name;
+  },
+  _openCancel: function () {
+    this._popupService.openAlert(Tw.MSG_PAYMENT.PRE_A06, null, $.proxy(this._goBack, this));
+  },
+  _goBack: function () {
+    this._popupService.close();
+    this._history.goBack();
   },
   _go: function (hash) {
     this._history.goHash(hash);
