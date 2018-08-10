@@ -41,7 +41,10 @@ Tw.CustomerPreventdamageLatestwarning.prototype = {
     }
 
     this.$list.append(this._template({
-      list: res.result.content
+      list: _.map(res.result.content, function(item) {
+        item.date = Tw.DateHelper.getShortDateWithFormat(item.rgstDtm, 'YY.MM.DD');
+        return item;
+      })
     }));
 
     if (res.result.last) this.$btnMoreList.remove();

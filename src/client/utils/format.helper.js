@@ -155,20 +155,6 @@ Tw.FormatHelper = (function () {
     return cardYm.substr(0, 4) + '/' + cardYm.substr(4, 2);
   };
 
-  /**
-   * YYYYmmdd to YYYY.mm.dd
-   * @param numberDate
-   * @param dateSeparator
-   * @returns {string}
-   */
-  var convertNumberDateToFormat = function(numberDate, dateSeparator) {
-    return [
-        numberDate.substr(0, 4),
-        numberDate.substr(4, 2),
-        numberDate.substr(6, 2)
-    ].join(dateSeparator);
-  };
-
   function _getDashedCellPhoneNumber(phoneNumber) {
     var str = '';
     if (phoneNumber.length <= 10) {
@@ -252,7 +238,7 @@ Tw.FormatHelper = (function () {
 
   var removeComma = function(str) {
     return str.replace(/,/g, '');
-  }
+  };
 
   return {
     leadingZeros: leadingZeros,
@@ -274,7 +260,6 @@ Tw.FormatHelper = (function () {
     getDashedPhoneNumber: getDashedPhoneNumber,
     convNumFormat: convNumFormat,
     insertColonForTime: insertColonForTime,
-    setDecimalPlace: setDecimalPlace,
-    convertNumberDateToFormat: convertNumberDateToFormat
+    setDecimalPlace: setDecimalPlace
   };
 })();
