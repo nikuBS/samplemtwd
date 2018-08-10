@@ -56,14 +56,16 @@ Tw.MyTBillHistoryContents.prototype = {
           defaultMonth: {
             title: Tw.POPUP_TITLE.PERIOD_SELECT,
             separator: 'search-pay-default-month',
-            data: this._getChoiceDataMonth(7).map(function(o, i) {
-              return { text : o, key : i };
+            data: this._getChoiceDataMonth(7).map(function (o, i) {
+              return {text: o, key: i};
             })
           }
         },
         'months',
         7,
-        $.proxy(this._goSearch, this));
+        $.proxy(this._goSearch, this),
+        this._customTermSelectCallback
+    );
 
     this._updateEnvironment();
     this._getData();
@@ -293,6 +295,50 @@ Tw.MyTBillHistoryContents.prototype = {
     this.apiOption.todate = endYYYYMMDD;
 
     this._getData();
+  },
+
+  _customTermSelectCallback: function (e) {
+    var index = this.$elements.$customTermSelector.index($(e.target));
+    switch (index) {
+      case 0:
+        this.termText = $(e.target).parent().text();
+        this.termSearchKeyword = 'weeks';
+        break;
+      case 1:
+      case 2:
+      case 3:
+      case 4:
+        this.termText = $(e.target).parent().text();
+        this.termSearchKeyword = 'months';
+        break;
+      case 5:
+        this.termText = $(e.target).parent().text();
+        this.termSearchKeyword = 'custom';
+        break;
+      default:
+        break;
+    }
+    switch (index) {
+      case 0:
+      case 1:
+        this.termValue = 1;
+        break;
+      case 2:
+        this.termValue = 3;
+        break;
+      case 3:
+        this.termValue = 5;
+        break;
+      case 4:
+        this.termValue = 7;
+        break;
+      case 5:
+        this.termKeyword = 'custom';
+        break;
+      default:
+        break;
+    }
+    this._updateSearchCustomSubOption(index);
   },
 
   _updateListUI: function () {
