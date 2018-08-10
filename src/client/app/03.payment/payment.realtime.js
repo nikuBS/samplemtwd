@@ -240,7 +240,7 @@ Tw.PaymentRealtime.prototype = {
       this._validation.checkEmpty(this.$cardY.val(), Tw.MSG_PAYMENT.AUTO_A01) &&
       this._validation.checkEmpty(this.$cardM.val(), Tw.MSG_PAYMENT.AUTO_A01) &&
       this._validation.checkEmpty(this.$cardPw.val(), Tw.MSG_PAYMENT.AUTO_A04) &&
-      this._validation.checkYear(this.$cardY.val(), Tw.MSG_PAYMENT.REALTIME_A04) &&
+      this._validation.checkYear(this.$cardY.val(), this.$cardM.val(), Tw.MSG_PAYMENT.REALTIME_A04) &&
       this._validation.checkMonth(this.$cardM.val(), Tw.MSG_PAYMENT.REALTIME_A04) &&
       this._validation.checkIsSelected(this.$cardWrap.find('.select-bank'), Tw.MSG_PAYMENT.REALTIME_A02) &&
       this._validation.checkEmpty(this.$cardWrap.find('.fe-account-number').val(), Tw.MSG_PAYMENT.AUTO_A03));

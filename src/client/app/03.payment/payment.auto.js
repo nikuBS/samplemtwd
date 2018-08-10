@@ -161,7 +161,7 @@ Tw.PaymentAuto.prototype = {
       this._validation.checkEmpty(this.$cardY.val(), Tw.MSG_PAYMENT.AUTO_A01) &&
       this._validation.checkEmpty(this.$cardM.val(), Tw.MSG_PAYMENT.AUTO_A01) &&
       this._validation.checkEmpty(this.$cardPhoneNumber.val(), Tw.MSG_PAYMENT.AUTO_A07) &&
-      this._validation.checkYear(this.$cardY.val(), Tw.MSG_PAYMENT.REALTIME_A04) &&
+      this._validation.checkYear(this.$cardY.val(), this.$cardM.val(), Tw.MSG_PAYMENT.REALTIME_A04) &&
       this._validation.checkMonth(this.$cardM.val(), Tw.MSG_PAYMENT.REALTIME_A04));
   },
   _makeAccountRequestData: function (code) {

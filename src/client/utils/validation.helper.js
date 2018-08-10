@@ -140,8 +140,9 @@ Tw.ValidationHelper = (function () {
   }
 
   /* 카드 유효기간 체크하는 function */
-  function checkYear(value, message) {
-    if (parseInt($.trim(value), 10) < new Date().getFullYear()) {
+  function checkYear(year, month, message) {
+    if (parseInt($.trim(year), 10) < new Date().getFullYear() ||
+      (parseInt($.trim(year), 10) === new Date().getFullYear() && parseInt($.trim(month), 10) < new Date().getMonth() + 1)) {
       Tw.Popup.openAlert(message);
       return false;
     }
