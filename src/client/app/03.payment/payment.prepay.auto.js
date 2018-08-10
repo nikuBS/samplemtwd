@@ -209,7 +209,7 @@ Tw.PaymentPrepayAuto.prototype = {
     return (this._validation.checkEmpty(vars.cardYVal, Tw.MSG_PAYMENT.AUTO_A01) &&
       this._validation.checkEmpty(vars.cardMVal, Tw.MSG_PAYMENT.AUTO_A01) &&
       this._validation.checkLength(vars.cardYVal, 4, Tw.MSG_PAYMENT.REALTIME_A04) &&
-      this._validation.checkYear(vars.cardYVal, Tw.MSG_PAYMENT.REALTIME_A04) &&
+      this._validation.checkYear(vars.cardYVal, vars.cardMVal, Tw.MSG_PAYMENT.REALTIME_A04) &&
       this._validation.checkLength(vars.cardMVal, 2, Tw.MSG_PAYMENT.REALTIME_A04) &&
       this._validation.checkMonth(vars.cardMVal, Tw.MSG_PAYMENT.REALTIME_A04) &&
       this._validation.checkEmpty(vars.cardPasswordVal, Tw.MSG_PAYMENT.AUTO_A04) &&
