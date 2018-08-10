@@ -135,6 +135,7 @@ Tw.PAYMENT_POINT_VALUE = {
 
 Tw.PAYMENT_PREPAY_TITLE = {
   MICRO_PREPAY: '소액결제 선결제',
+  CONTENTS_PREPAY: '콘텐츠이용료 선결제',
   AUTO_PREPAY: '자동 선결제',
   CHANGE_CARD: '카드정보 변경',
   CHANGE_MONEY: '금액정보 변경',

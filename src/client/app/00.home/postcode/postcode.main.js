@@ -48,6 +48,7 @@ Tw.PostcodeMain.prototype = {
     this.$standardAddress = this.$container.find('.fe-standard:first');
     this.$remainAddressWrap = this.$container.find('.fe-remain-address-wrap:first');
     this.$remainAddress = this.$container.find('.fe-remain-address:first');
+    this.$noAddress = this.$container.find('.fe-no-address:first');
     this.$selectDetailAddress = this.$container.find('.fe-go-step3');
     this.$aptLastField = this.$container.find('.fe-apt-last-field');
     this.$etcLastField = this.$container.find('.fe-etc-last-field');
@@ -101,6 +102,7 @@ Tw.PostcodeMain.prototype = {
     this.$standardAddress = this.$step2TabContainer.find('.fe-standard');
     this.$remainAddressWrap = this.$step2TabContainer.find('.fe-remain-address-wrap');
     this.$remainAddress = this.$step2TabContainer.find('.fe-remain-address');
+    this.$noAddress = this.$step2TabContainer.find('.fe-no-address');
 
     this.$step3TabContainer = this.$container.find('#' + this._selectedTabId + '-tab.fe-step3');
     this.$aptLastField = this.$step3TabContainer.find('.fe-apt-last-field');
@@ -311,6 +313,7 @@ Tw.PostcodeMain.prototype = {
     this._nextPage = 0;
 
     this.$container.find('.fe-add-address').remove();
+    this.$noAddress.addClass('none');
     if (!this.$remainAddressWrap.hasClass('none')) {
       this.$remainAddressWrap.addClass('none');
     }
@@ -394,13 +397,16 @@ Tw.PostcodeMain.prototype = {
     }
   },
   _getDetailFail: function () {
-
+    this.$noAddress.removeClass('none');
   },
   _setAddressList: function ($result) {
     var _address = this._getAddress();
     this._setPage($result);
 
     var $content = $result.content;
+    if ($content.length === 0) {
+      this.$noAddress.removeClass('none');
+    }
     for (var i = 0; i < $content.length; i++) {
       var $addressField = this.$standardAddress.clone().removeClass('fe-standard').removeClass('none').addClass('fe-add-address');
       $addressField.attr({'id': $content[i][_address.id], 'postcode': $content[i].zip, 'ho': $content[i].staMainHouseNumCtt, 'dong': $content[i].ldongNm });
