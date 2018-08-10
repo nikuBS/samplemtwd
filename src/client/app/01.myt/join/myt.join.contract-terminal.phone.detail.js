@@ -27,8 +27,8 @@ Tw.MytJoinContractTerminalPhoneDetail = function (rootEl, resData) {
   this.detailListObj = {
     listData: null,
     curLen : 0, //현재 데이터 카운트
-    startCount: 20, // 시작 데이터 카운트
-    addCount: 20, // 추가 데이터 카운트
+    startCount: Tw.DEFAULT_LIST_COUNT, // 시작 데이터 카운트
+    addCount: Tw.DEFAULT_LIST_COUNT, // 추가 데이터 카운트
     viewData: [] // 잘라서 넣는 데이터
   };
 
