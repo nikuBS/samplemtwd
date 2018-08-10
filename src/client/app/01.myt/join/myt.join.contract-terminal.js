@@ -1,11 +1,11 @@
 /**
- * FileName: myt.joinService.contractTerminalInfo.tpocketfi.js
+ * FileName: myt.joinService.contractTerminalInfo.phone.js
  * Author: 김명환 (skt.P130714@partner.sk.com)
  * Date: 2018.07.24
  * Info:
  */
 
-Tw.MytJoinContractTerminalTpocketfi = function (rootEl, resData) {
+Tw.MytJoinContractTerminal = function (rootEl, resData) {
   this.thisMain = this;
   this.resData = resData;
   this.init = this._init;
@@ -25,7 +25,7 @@ Tw.MytJoinContractTerminalTpocketfi = function (rootEl, resData) {
   this._init();
 };
 
-Tw.MytJoinContractTerminalTpocketfi.prototype = {
+Tw.MytJoinContractTerminal.prototype = {
   _init: function () {
     Tw.Logger.info('[Client Init]');
 
@@ -57,7 +57,7 @@ Tw.MytJoinContractTerminalTpocketfi.prototype = {
 
     var svcAgrmtDcId = $(e.target).attr('data-svcAgrmtDcId');
     var svcAgrmtDcCd = $(e.target).attr('data-svcAgrmtDcCd');
-    var tempUrl = '/myt/join/contract-terminal/phone/detail' + '?' + 'svcAgrmtDcId=' + svcAgrmtDcId + '&' + 'svcAgrmtDcCd=' + svcAgrmtDcCd;
+    var tempUrl = '/myt/join/contract-terminal/detail' + '?' + 'svcAgrmtDcId=' + svcAgrmtDcId + '&' + 'svcAgrmtDcCd=' + svcAgrmtDcCd;
     this._goLoad(tempUrl);
     //window.open( tempUrl, '_blank');
 
@@ -93,6 +93,38 @@ Tw.MytJoinContractTerminalTpocketfi.prototype = {
     this._popupService.openAlert(Tw.MSG_MYT.CONTRACT_TERMINAL.OPEN_ALERT.BOON_SUC_TYPE_C.MSG,
       Tw.MSG_MYT.CONTRACT_TERMINAL.OPEN_ALERT.BOON_SUC_TYPE_C.TITLE);
   },
+
+  //--------------------------------------------------------------------------[이벤트 | 팝업 | 청구월 선택]
+  //_selPopOpen : function(event) {
+  //   var $target = $(event.currentTarget);
+  //   var tempArr = this.resData.usedAmountChildInfo.invDtArr;
+  //   var arrOption = [];
+  //   for ( var i=0, len=tempArr.length; i<len; i++ ) {
+  //     arrOption.push({
+  //       'attr' : 'data-info="' + tempArr[i] + '"',
+  //       text : this._getSelClaimDtBtn( tempArr[i] )
+  //     });
+  //   }
+  //   this._popupService.openChoice(Tw.POPUP_TITLE.PERIOD_SELECT, arrOption, 'type1', $.proxy(this._selPopOpenEvt, this, $target));
+  // },
+  // _selPopOpenEvt: function ($target, $layer) {
+  //   $layer.find('.popup-choice-list').on('click', $.proxy(this._selPopOpenEvtExe, this, $target, $layer) );
+  //
+  // },
+  // _selPopOpenEvtExe: function ($target, $layer, event) {
+  //   var curTg = $(event.currentTarget);
+  //   var tg = $target;
+  //   var dataTemp = curTg.find('button').attr('data-info');
+  //   tg.text( curTg.text() );
+  //   tg.attr('data-info', dataTemp );
+  //   //this._popupService.close();
+  //   var paramData = {
+  //     invDt: dataTemp,
+  //     selNum: this.selectDataInfo.selNum,
+  //     childSvcMgmtNum:  this.resData.selectSvcMgmtNum
+  //   };
+  //   this._goLoad('/myt/bill/billguide/subChildBill' + '?' + $.param(paramData));
+  // },
   //--------------------------------------------------------------------------[api]
   // _getUsedAmounts: function(param) {
   //   Tw.Logger.info('[param]', param);
@@ -135,5 +167,6 @@ Tw.MytJoinContractTerminalTpocketfi.prototype = {
     var endDate = moment(str).format('YYYY.MM.DD');
     return startDate + ' ~ ' + endDate;
   }
+
 
 };
