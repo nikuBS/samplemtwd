@@ -1,11 +1,11 @@
 /**
- * FileName: myt.joinService.contractTerminalInfo.tpocketfi.detail.js
+ * FileName: myt.joinService.contractTerminalInfo.phone.detail.js
  * Author: 김명환 (skt.P130714@partner.sk.com)
  * Date: 2018.07.24
  * Info:
  */
 
-Tw.MytJoinContractTerminalTpocketfiDetail = function (rootEl, resData) {
+Tw.MytJoinContractTerminalDetail = function (rootEl, resData) {
   this.thisMain = this;
   this.resData = resData;
   this.init = this._init;
@@ -35,7 +35,7 @@ Tw.MytJoinContractTerminalTpocketfiDetail = function (rootEl, resData) {
   this._init();
 };
 
-Tw.MytJoinContractTerminalTpocketfiDetail.prototype = {
+Tw.MytJoinContractTerminalDetail.prototype = {
   _init: function () {
     Tw.Logger.info('[Client Init]');
     this._getDetailList();
@@ -49,13 +49,14 @@ Tw.MytJoinContractTerminalTpocketfiDetail.prototype = {
   _bindEvent: function () {
     this.$container.on('click', '[data-target="addBtn"]', $.proxy(this._addView, this));
     this.$container.on('click', '[data-target="closeBtn"]', $.proxy(this._goBack, this));
+
   },
   _proData: function() { //데이터 가공
     Tw.Logger.info('[ _proData ]');
     this.detailListObj.listData = $.extend(true, [], this.bffListData); // deep copy array
     this.detailListObj.curLen = this.detailListObj.listData.length;
 
-    _.map(this.detailListObj.listData, function( item ) {
+   _.map(this.detailListObj.listData, function( item ) {
       item.invoDt = Tw.DateHelper.getShortDateNoDot( item.invoDt );
       item.invCnt = Tw.FormatHelper.addComma( item.invCnt );
       item.penEstDcAmt = Tw.FormatHelper.addComma( item.penEstDcAmt );
