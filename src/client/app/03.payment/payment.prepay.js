@@ -166,7 +166,7 @@ Tw.PaymentPrepay.prototype = {
     this._history.goLoad('/payment/prepay/' + this.$title + '/auto/change');
   },
   _confirmCancel: function () {
-    this._popupService.openAlert(Tw.MSG_PAYMENT.PRE_A07, null, $.proxy(this._cancelAutoPrepay, this));
+    this._popupService.openConfirm(Tw.POPUP_TITLE.NOTIFY, Tw.MSG_PAYMENT.PRE_A07, '', null, $.proxy(this._cancelAutoPrepay, this));
   },
   _cancelAutoPrepay: function () {
     this._popupService.close();
