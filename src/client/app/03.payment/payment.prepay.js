@@ -123,13 +123,6 @@ Tw.PaymentPrepay.prototype = {
       this.$goPrepayBtn.removeAttr('disabled').removeClass('bt-gray1').addClass('bt-blue1');
     }
   },
-  _getRemainAmount: function () {
-    var limitAmount = parseInt(this.$limitAmount, 10);
-    var useAmount = parseInt(this.$useAmount, 10);
-    var prepayAmount = parseInt(this.$prepayAmount, 10);
-
-    return limitAmount - useAmount + prepayAmount;
-  },
   _openChangeLimit: function () {
     this._history.goLoad('/myt/bill/history/' + this.$title + '/limit/change');
   },
