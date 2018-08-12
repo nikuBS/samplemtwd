@@ -333,7 +333,7 @@ Tw.MyTBillHistoryCommon.GetLimit.prototype = {
   }
 };
 
-Tw.MyTBillHistoryCommon.Search = function (rootEl, obj, comboUIObj, limitKeyword, limitDate, searchCallback) {
+Tw.MyTBillHistoryCommon.Search = function (rootEl, obj, comboUIObj, limitKeyword, limitDate, searchCallback, customTermSelectCallback) {
   this._dateHelper = Tw.DateHelper;
 
   this.common = new Tw.MyTBillHistoryCommon(rootEl);
@@ -343,6 +343,7 @@ Tw.MyTBillHistoryCommon.Search = function (rootEl, obj, comboUIObj, limitKeyword
   this.searchCallback = searchCallback;
   this.limitKeyword = limitKeyword;
   this.limitDate = limitDate;
+  this._customTermSelectCallback = customTermSelectCallback;
 
   this.hasPaymentType = !!this.$elements.$paymentTypeSelector;
 
@@ -410,7 +411,11 @@ Tw.MyTBillHistoryCommon.Search.prototype = {
     }
     this.$elements.$monthlyCustomTermSelector.on('change', $.proxy(this._changeSearchType, this));
     this.$elements.$monthSelector.on('click', $.proxy(this.defaultMonth._openComboListUI, this.defaultMonth));
-    this.$elements.$customTermSelector.on('change', $.proxy(this._updateCustomTerm, this));
+    if(this._customTermSelectCallback) {
+      this.$elements.$customTermSelector.on('change', $.proxy(this._customTermSelectCallback, this));
+    } else {
+      this.$elements.$customTermSelector.on('change', $.proxy(this._updateCustomTerm, this));
+    }
 
     this.$elements.$searchBtn.on('click', $.proxy(this._searchBtnHandler, this));
     this.$elements.$customTermSelectInput.on('change', $.proxy(this._updateCurrentDateSelect, this));
@@ -455,43 +460,47 @@ Tw.MyTBillHistoryCommon.Search.prototype = {
             this.currentYYMMDD, this.termValue * -1, this.termSearchKeyword, 'YYYYMMDD');
         endYYYYMMDD = this.currentYYMMDD;
       } else {
+        indicatorText = (this.customSearchStart || this.customSearchStartYYYYMMDD_formed) + ' ~ ' +
+            (this.customSearchEnd || this.customSearchEndYYYYMMDD_formed);
+
         startYYYYMMDD = (this.customSearchStart || this.customSearchStartYYYYMMDD_formed).replace(/\./g, '');
         endYYYYMMDD = (this.customSearchEnd || this.customSearchEndYYYYMMDD_formed).replace(/\./g, '');
         var days = Math.abs(this._dateHelper.getDiffByUnit(startYYYYMMDD, endYYYYMMDD, this.limitKeyword));
 
-        indicatorText = (this.customSearchStart || this.customSearchStartYYYYMMDD_formed) + ' ~ ' +
-            (this.customSearchEnd || this.customSearchEndYYYYMMDD_formed);
+        if (endYYYYMMDD > this.currentYYYYMMDD) {
+          this.common._popupService.openAlert(
+              Tw.MSG_MYT.HISTORY_ALERT_A11, Tw.POPUP_TITLE.NOTIFY,
+              $.proxy(this.common._popupService.close, this.common), null);
+          this.$elements.$customTermEndSelector.val(this.customSearchEndYYYYMMDD_input);
+          this.$elements.$customTermEndSelector.text(this.customSearchEndYYYYMMDD_formed);
+          return false;
+        }
 
-        console.log(
-            Tw.MSG_MYT.HISTORY_ALERT_A9.replace(Tw.DATE_FORMAT.YYYYMMDD_TYPE_0, this.customLimitYYYYMMDD_formed), days);
+        if (days > this.limitDate) {
+          if (startYYYYMMDD > endYYYYMMDD) {
+            this.common._popupService.openAlert(
+                Tw.MSG_MYT.HISTORY_ALERT_A8, Tw.POPUP_TITLE.NOTIFY,
+                $.proxy(this.common._popupService.close, this.common), null);
+            this.$elements.$customTermStartSelector.val(this.customSearchStartYYYYMMDD_input);
+            this.$elements.$customTermStartSelector.text(this.customSearchStartYYYYMMDD_formed);
+            return false;
+          }
 
-        // if(days > this.limitDate) {
-        //   // Tw.MSG_MYT.HISTORY_ALERT_A9.replace()
-        //   this.common._popupService.openAlert(
-        //       Tw.MSG_MYT.HISTORY_ALERT_A9, Tw.POPUP_TITLE.NOTIFY,
-        //       $.proxy(this.common._popupService.close, this.common), null);
-        //   return false;
-        // }
-        //
-        // if(startYYYYMMDD > endYYYYMMDD) {
-        //   this.common._popupService.openAlert(
-        //       Tw.MSG_MYT.HISTORY_ALERT_A8, Tw.POPUP_TITLE.NOTIFY,
-        //       $.proxy(this.common._popupService.close, this.common), null);
-        //   return false;
-        // }
-        //
-        // if(endYYYYMMDD > this.currentYYYYMMDD) {
-        //   endYYYYMMDD = this.currentYYYYMMDD;
-        // }
-        return false;
+          var str = Tw.MSG_MYT.HISTORY_ALERT_A9.replace(Tw.DATE_FORMAT.YYYYMMDD_TYPE_0, this.customLimitYYYYMMDD_formed);
+          this.common._popupService.openAlert(
+              str, Tw.POPUP_TITLE.NOTIFY,
+              $.proxy(this.common._popupService.close, this.common), null);
+          this.$elements.$customTermStartSelector.val(this.customSearchStartYYYYMMDD_input);
+          this.$elements.$customTermStartSelector.text(this.customSearchStartYYYYMMDD_formed);
+          this.$elements.$customTermEndSelector.val(this.customSearchEndYYYYMMDD_input);
+          this.$elements.$customTermEndSelector.text(this.customSearchEndYYYYMMDD_formed);
+          return false;
+        }
       }
     }
 
-    // console.log(this.currentYYMMDD, startYYYYMMDD, endYYYYMMDD,
-    // this.termKeyword, this.termSearchKeyword, this.termText, this.termValue, this.defaultMonth.selectedIndex);
-
-    // TODO : update $termOpener text
     this._updateCurrentIndicator(indicatorText);
+    this.$elements.$termOpener.click();
 
     this.searchCallback(startYYYYMMDD, endYYYYMMDD, paymentType);
   },
