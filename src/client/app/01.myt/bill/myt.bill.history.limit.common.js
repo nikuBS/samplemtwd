@@ -94,10 +94,10 @@ Tw.MyTBillHistoryLimitCommon.prototype = {
       this.$limitChangeTrigger.on('click', $.proxy(this._chkChangeLimit, this));
       this.$limitSelector.on('click', $.proxy(this._handleOpenLimitSelect, this));
 
-      if(this.data.code === Tw.API_CODE.CODE_00) {
+      if (this.data.code === Tw.API_CODE.CODE_00) {
         this._setChoiceValueList();
       } else {
-        this.chkCurrentLimit._apiError(this.data, $.proxy(function() {
+        this.chkCurrentLimit._apiError(this.data, $.proxy(function () {
           this._popupService.close();
           this._historyService.goBack();
         }, this));

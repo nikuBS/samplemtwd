@@ -49,7 +49,11 @@
             <% } else if (err.code === 'BIL0034') { %>
             <div class="cont-box">
                 <div class="pay-info">
+                    <% if (svcInfo.svcGr === 'E') { %>
+                    <h3 class="pay-tit"><strong>법인 실사용자 소액결제 부가서비스</strong>를<br />가입하시면 사용 가능한 메뉴입니다.</h3>
+                    <% } else { %>
                     <h3 class="pay-tit"><strong>소액결제<br />부가서비스</strong>미가입자는<br />이용할 수 없습니다.</h3>
+                    <% } %>
                     <p class="pay-cont type2">가까운 지점/대리점에 방문하셔서 가입 가능합니다.<br />(신청자 본인 신분증 지참)</p>
                 </div>
             </div>
@@ -60,12 +64,14 @@
                 </div>
             </div>
             <% } %>
+            <% if (err.code !== 'BIL0030') { %>
             <hr class="cont-sp type1" aria-hidden="true" />
             <div class="cont-box nogaps">
                 <div class="bt-link-box">
                     <a href="/home" class="bt-link-tx">홈으로</a>
                 </div>
             </div>
+            <% } %>
         </div>
     </div>
     <!--// #contents -->

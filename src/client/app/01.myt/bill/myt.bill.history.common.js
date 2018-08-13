@@ -314,11 +314,12 @@ Tw.MyTBillHistoryCommon.GetLimit.prototype = {
       this.usageRequestTitle = 'Done';
       this.usageRequestCounter++;
       this._get_init_usageRequest();
-    } else if (this.usageRequestCounter === 1) {
+    } else if (this.usageRequestCounter === 1 || this.usageRequestCounter === 2) {
       if (res.code === Tw.API_CODE.CODE_00) {
+        console.log('------', res);
         this.callback(res);
       } else {
-        // console.log('[myt/bill/history/limit] Retry');
+        console.log('[myt/bill/history/limit] Retry', res);
         this.usageRequestTitle = 'Retry';
         this.usageRequestCounter++;
         this._get_init_usageRequest();
@@ -411,7 +412,7 @@ Tw.MyTBillHistoryCommon.Search.prototype = {
     }
     this.$elements.$monthlyCustomTermSelector.on('change', $.proxy(this._changeSearchType, this));
     this.$elements.$monthSelector.on('click', $.proxy(this.defaultMonth._openComboListUI, this.defaultMonth));
-    if(this._customTermSelectCallback) {
+    if (this._customTermSelectCallback) {
       this.$elements.$customTermSelector.on('change', $.proxy(this._customTermSelectCallback, this));
     } else {
       this.$elements.$customTermSelector.on('change', $.proxy(this._updateCustomTerm, this));
@@ -450,7 +451,7 @@ Tw.MyTBillHistoryCommon.Search.prototype = {
     if (this.isByMonth) {
       indicatorText = this.defaultMonth.data[this.defaultMonth.selectedIndex].text;
 
-      if(this.defaultMonth.selectedIndex === '0') {
+      if (this.defaultMonth.selectedIndex === '0') {
         startYYYYMMDD = this.currentYYYYMM + '01';
         endYYYYMMDD = this._dateHelper.getEndOfMonth(this.currentYYYYMM, 'YYYYMMDD', 'YYYYMM');
       } else {
@@ -597,7 +598,7 @@ Tw.MyTBillHistoryCommon.Search.prototype = {
     } else {
       this.$elements.$customTermSelectInput.val(this.customSearchEndYYYYMMDD_input);
     }
-    if(Tw.BrowserHelper.isIos) {
+    if (Tw.BrowserHelper.isIos) {
       this.$elements.$customTermSelectInput.focus();
     } else {
       this.$elements.$customTermSelectInput.click();
