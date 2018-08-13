@@ -5,7 +5,7 @@
  */
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import {Request, Response, NextFunction} from 'express';
-import {DATE_FORMAT, CURRENCY_UNIT, MYT_JOIN_TYPE} from '../../../../types/string.type';
+import {DATE_FORMAT, CURRENCY_UNIT, MYT_JOIN_TYPE, MYT_JOIN} from '../../../../types/string.type';
 import {Info, History} from '../../../..//mock/server/join.info.mock';
 import DateHelper from '../../../../utils/date.helper';
 import FormatHelper from '../../../../utils/format.helper';
@@ -60,11 +60,11 @@ class MytJoinJoinInfoController extends TwViewController {
 
     if ( data.history && data.history.length > 0) {
       const history = data.history;
-      const historyData = history[0];
-      Object.assign(data, {
-        chgDt : this.getMarskingDateFormat(historyData.chgDt, DATE_FORMAT.YYYYMMDD_TYPE_0),
-        chgCd : historyData.chgCd
-      });
+      const historyData = history.shift();
+      data.openingDate = this.getMarskingDateFormat(historyData.chgDt, DATE_FORMAT.YYYYMMDD_TYPE_0);
+      data.openingDate = data.openingDate + ' / ' + historyData.chgCd;
+    } else {
+      data.openingDate = MYT_JOIN.OPENING_DATE_STR;
     }
 
     data.apprAmt = FormatHelper.addComma(data.apprAmt);

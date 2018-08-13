@@ -1,0 +1,61 @@
+<div class="form-cell fe-form-contact">
+    <span id="aria-email-phone" class="form-ti">
+        연락가능번호
+        <span class="point-indicate ml4" aria-hidden="true">*</span>
+    </span>
+    <div class="widget mb10">
+        <div class="widget-box radio">
+            <ul class="select-list" role="radiogroup">
+                <li class="radiobox type01 checked" role="radio" aria-checked="true">
+                    <input type="radio" name="radio_<%=type%>_phone" value="C" title="휴대폰"
+                           aria-labelledby="aria-email-phone" checked="">
+                    휴대폰
+                </li>
+                <li class="radiobox type01" role="radio" aria-checked="false">
+                    <input type="radio" name="radio_<%=type%>_phone" value="P" title="일반전화"
+                           aria-labelledby="aria-email-phone">
+                    일반전화
+                </li>
+            </ul>
+        </div>
+    </div>
+    <span class="inputbox mt20">
+        <span class="input">
+        <input required class="fe-input-phone" type="number" placeholder="숫자만 입력"
+               title="휴대폰 번호"
+               aria-labelledby="aria-email-phone"
+               aria-describedby="aria-exp-desc1">
+        </span>
+        <span id="aria-exp-desc1" class="error-txt none">잘못된 형식입니다.</span>
+        <div class="widget fe-wrap-sms">
+            <div class="widget-box check">
+                <div class="checkbox type02" role="checkbox"
+                     aria-checked="false">
+                    <i class="ico"></i>
+                    <input class="fe-inp-chk-sms" type="checkbox" name="checkbox"
+                           value=""
+                           title="답변이 등록되면 SMS 알림을 받습니다.">
+                    <span class="tit-a">답변이 등록되면 SMS 알림을 받습니다.</span>
+                </div>
+            </div>
+        </div>
+    </span>
+</div>
+<div class="form-cell">
+    <span id="aria-email-place" class="form-ti">
+        이메일
+        <span class="point-indicate ml4" aria-hidden="true">*</span>
+    </span>
+    <span class="inputbox">
+        <span class="input">
+            <input required class="fe-input-email" type="text" value=""
+                   placeholder=""
+                   title="이메일"
+                   aria-labelledby="aria-email-place"
+                   aria-describedby="aria-exp-desc2">
+            <!-- error일 경우 aria-describedby="aria-exp-desc2  aria-exp-desc3" 로 변경-->
+        </span>
+        <span id="aria-exp-desc3" class="error-txt none">잘못된 형식입니다.</span>
+        <span class="tx-box"><span id="aria-exp-desc2" class="guide-txt">이메일로 답변이 발송됩니다.</span></span>
+    </span>
+</div>

@@ -71,7 +71,7 @@ Tw.MyTJoinJoinInfoSms.prototype = {
     nums.push(this.$hpNumbers.eq(1).val());
     nums.push(this.$hpNumbers.eq(2).val());
 
-    var result = _.some(nums, function (number) {
+    var result = _.every(nums.slice(0), function (number) {
       if ( number === '' ) {
         rs.msg = Tw.MSG_MYT.SMS_A03;
         return false;
