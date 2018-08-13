@@ -334,8 +334,7 @@ Tw.PaymentPrepayAuto.prototype = {
     this._popupService.openAlert(Tw.MSG_PAYMENT.PRE_A10, null, $.proxy(this._goBack, this));
   },
   _goBack: function () {
-    this._popupService.close();
-    this._history.goBack();
+    this._history.go(-2);
   },
   _go: function (hash) {
     this._history.goHash(hash);
