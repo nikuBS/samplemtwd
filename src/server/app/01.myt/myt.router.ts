@@ -88,6 +88,7 @@ class MytRouter extends TwRouter {
     this.controllers.push({ url: '/bill/history/micro', controller: new MyTBillHistoryMicro() });
     this.controllers.push({ url: '/bill/history/micro/detail', controller: new MyTBillHistoryMicro() });
     this.controllers.push({ url: '/bill/history/micro/password', controller: new MyTBillHistoryMicroPassword() });
+    this.controllers.push({ url: '/bill/history/micro/password/set', controller: new MyTBillHistoryMicroPassword() });
     this.controllers.push({ url: '/bill/history/micro/limit', controller: new MyTBillHistoryLimitCommon() });
     this.controllers.push({ url: '/bill/history/micro/limit/change', controller: new MyTBillHistoryLimitChangeCommon() });
     this.controllers.push({ url: '/bill/history/contents', controller: new MyTBillHistoryContents() });

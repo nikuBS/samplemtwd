@@ -149,12 +149,6 @@ Tw.MyTBillHistoryMicro.prototype = {
   },
 
   _getData: function () {
-    if (this.getUsingPasswordAPI) {
-      this._apiService.request(this.getUsingPasswordAPI, {})
-          .done($.proxy(this._updatePasswordUseState, this))
-          .error($.proxy(this.common._apiError, this.common));
-    }
-
     this._updateListData();
   },
 
@@ -180,7 +174,9 @@ Tw.MyTBillHistoryMicro.prototype = {
     this.isUseNextDaySMS = res.nextDaySMSYn === 'Y';
     this.isUsePayPassword = res.cpmsYn === 'Y';
 
-    this.passRelateURL = (this.isUsePayPassword) ? Tw.URL_PATH.MYT_PAYPASS_SET : Tw.URL_PATH.MYT_PAYPASS_INFO;
+    // this.passRelateURL = (this.isUsePayPassword) ? Tw.URL_PATH.MYT_PAYPASS_CONFIRM : Tw.URL_PATH.MYT_PAYPASS_SET;
+    this.passRelateURL = (this.isUsePayPassword) ? Tw.URL_PATH.MYT_PAYPASS_CONFIRM : Tw.URL_PATH.MYT_PAYPASS_INFO;
+
     this.passRelateTxt = (this.isUsePayPassword) ? Tw.MSG_MYT.HISTORY_TXT_01 : Tw.MSG_MYT.HISTORY_TXT_02;
   },
 
@@ -322,6 +318,15 @@ Tw.MyTBillHistoryMicro.prototype = {
     switch (res.code) {
       case Tw.API_CODE.CODE_00:
         if (!this.blindHistories) {
+
+          // console.log(res);
+
+          if (this.getUsingPasswordAPI) {
+            this._apiService.request(this.getUsingPasswordAPI, {})
+                .done($.proxy(this._updatePasswordUseState, this))
+                .error($.proxy(this.common._apiError, this.common));
+          }
+
           this._apiService.request(this.getBlindDataAPI, {})
               .done($.proxy(this._setData, this))
               .error($.proxy(this.common._apiError, this.common));
@@ -403,6 +408,8 @@ Tw.MyTBillHistoryMicro.prototype = {
     this._getData();
   },
 
+  // 레이어 상세가 아니기 때문에 별도의 리스트 출력후 이벤트 바인딩 콜백 없음
+
   _appendListCallBack: function () {
     // if (this.result.length) {
     //   this.$listWrapper.parent().addClass('nogaps-btm');
@@ -472,8 +479,8 @@ Tw.MyTBillHistoryMicro.prototype = {
     return choiceData;
   },
 
-  _updatePasswordUseState: function () {
-
+  _updatePasswordUseState: function (res) {
+    // console.log(res);
   },
 
   _getTabHash: function () {
