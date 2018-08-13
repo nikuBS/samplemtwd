@@ -265,3 +265,7 @@ export const MYT_JOIN_CONTRACT_TERMINAL = { // 약정할인 및 단말분할상�
     AGREE_NM: '정보없음'
   }
 };
+
+export const MYT_JOIN = {
+  OPENING_DATE_STR : '2007.03.01 이후 신규 가입자에 한하여 확인가능 합니다.'
+};
