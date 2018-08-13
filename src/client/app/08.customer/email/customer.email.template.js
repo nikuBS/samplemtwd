@@ -63,6 +63,22 @@ Tw.CustomerEmailTemplate.prototype = {
     this.$container.on('keyup', '.fe-input-email', $.proxy(this._validateEmail, this));
     this.$container.on('keyup', '.fe-input-phone', $.proxy(this._validatePhone, this));
     this.$container.on('change', '.fe-inp-chk-sms', $.proxy(this._onChangeSMS, this));
+    this.$container.on('click', '.fe-form-contact li', $.proxy(this._onChangeContact, this));
+  },
+
+  _onChangeContact: function (e) {
+    var nCurrentRadioIndex = $(e.currentTarget).index();
+    var $wrapSms = $($('.fe-wrap-sms').get(this.state.tabIndex));
+
+    if ( nCurrentRadioIndex === 0 ) {
+      $wrapSms.show();
+    } else {
+      $wrapSms.hide();
+    }
+
+    if ( $wrapSms.find('input').prop('checked') ) {
+      $wrapSms.find('input').trigger('click');
+    }
   },
 
   _onChangeSMS: function (e) {
