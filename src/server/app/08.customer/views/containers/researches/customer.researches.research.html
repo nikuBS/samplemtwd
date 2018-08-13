@@ -87,9 +87,11 @@
                             </div>
                             <% if (questionIdx === '1') { %>
                                 <% if (research.questionCount === '1') { %>
-                                    <li class="bt-blue1 fe-submit">
-                                        <button <%= question.isNecessary? 'disabled' : '' %>>참여하기</button>
-                                    </li>
+                                    <ul class="bt-slice">
+                                        <li class="bt-blue1 fe-submit">
+                                            <button <%= question.isNecessary? 'disabled' : '' %>>참여하기</button>
+                                        </li>
+                                    </ul>
                                 <% } else { %>
                                 <ul class="bt-slice">
                                     <li class="bt-blue1<%= question.answerType !== '0' ? ' fe-go-next' : '' %>">

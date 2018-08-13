@@ -36,7 +36,8 @@ export const URL = {
   '/myt/bill/guidechange/update-complete': { login: true, id: '', title: '' },
   '/myt/bill/history/micro': { login: true, id: 'MY_02_03_04_01', title: '소액결제 이용내역' }, // 나의 요금 > 소액결제 이용내역
   '/myt/bill/history/micro/detail': { login: true, id: 'MY_02_03_04_01_04', title: '소액결제 이용내역 상세' }, // 나의 요금 > 소액결제 이용내역 상세
-  '/myt/bill/history/micro/password': { login: true, id: 'MY_02_03_04_01_05', title: '소액결제 비밀번호 설정/변경' }, // 나의 요금 > 소액결제 이용내역 > 소액결제 비밀번호 번경
+  '/myt/bill/history/micro/password': { login: true, id: 'MY_02_03_04_01_05', title: '소액결제 비밀번호 설정확인' }, // 나의 요금 > 소액결제 이용내역 > 소액결제 비밀번호 번경
+  '/myt/bill/history/micro/password/set': { login: true, id: 'MY_02_03_04_01_05', title: '소액결제 비밀번호 변경' }, // 나의 요금 > 소액결제 이용내역 > 소액결제 비밀번호 번경
   '/myt/bill/history/micro/limit': { login: true, id: 'MY_02_03_04_01_06', title: '소액결제 한도 확인' }, // 나의 요금 > 소액결제 이용내역 > 소액결제 한도 확인
   '/myt/bill/history/micro/limit/change': { login: true, id: 'MY_02_03_04_01_01', title: '소액결제 한도 변경' }, // 나의 요금 > 소액결제 이용내역 > 소액결제 한도 변경
   '/myt/bill/history/contents': { login: true, id: 'My_02_03_05_01', title: '콘텐츠 이용료 이용내역' },  // 나의 요금 > 콘텐츠 이용료 이용내역

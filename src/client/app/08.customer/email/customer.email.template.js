@@ -260,8 +260,9 @@ Tw.CustomerEmailTemplate.prototype = {
 
       skt_landing.widgets.widget_init('.fe-wrap-service'); //selector string
       skt_landing.components.component_init('.fe-wrap-service');  //selector string
+    }
 
-    } else {
+    if ( this.state.tabIndex === 1 ) {
       if ( this.state.callCategory === 'WIBRO' ) {
         this.$wrap_call.html(this.tpl_call_wibro());
 
@@ -294,6 +295,22 @@ Tw.CustomerEmailTemplate.prototype = {
       skt_landing.widgets.widget_init('.fe-wrap-call'); //selector string
       skt_landing.components.component_init('.fe-wrap-call');  //selector string
     }
+
+    this._setTemplateDefaultValue();
+  },
+
+  _setTemplateDefaultValue: function(){
+    $('.fe-input-phone').val('');
+    $('.fe-input-email').val('');
+    $('.fe-inp-chk-sms').prop('checked', false);
+    $('.fe-inp-chk-sms').parent().removeClass('checked');
+    $('.fe-check-term01').prop('checked', false);
+    $('.fe-check-term01').parent().removeClass('checked');
+    $('.fe-check-term02').prop('checked', false);
+    $('.fe-check-term02').parent().removeClass('checked');
+
+    $('.inputbox').removeClass('error');
+    $('.inputbox').find('.error-txt').addClass('none');
   },
 
   _validateRequired: function () {
@@ -337,7 +354,7 @@ Tw.CustomerEmailTemplate.prototype = {
       Tw.MSG_CUSTOMER.EMAIL_A01,
       null,
       null,
-      $.proxy(this._goCustomerMain, this),
+      $.proxy(this._resetTemplate, this),
       this._popupService.close);
   },
 
@@ -366,9 +383,9 @@ Tw.CustomerEmailTemplate.prototype = {
     }
   },
 
-  _goCustomerMain: function () {
+  _resetTemplate: function () {
+    this._setTemplate();
     this._popupService.close();
-    this._history.goBack();
   }
 };
 

@@ -314,11 +314,12 @@ Tw.MyTBillHistoryCommon.GetLimit.prototype = {
       this.usageRequestTitle = 'Done';
       this.usageRequestCounter++;
       this._get_init_usageRequest();
-    } else if (this.usageRequestCounter === 1) {
+    } else if (this.usageRequestCounter === 1 || this.usageRequestCounter === 2) {
       if (res.code === Tw.API_CODE.CODE_00) {
+        console.log('------', res);
         this.callback(res);
       } else {
-        // console.log('[myt/bill/history/limit] Retry');
+        console.log('[myt/bill/history/limit] Retry', res);
         this.usageRequestTitle = 'Retry';
         this.usageRequestCounter++;
         this._get_init_usageRequest();
@@ -384,7 +385,7 @@ Tw.MyTBillHistoryCommon.Search.prototype = {
         Tw.DATE_FORMAT.YYYYDD_TYPE_1);
     this.currentYYYYMMDD = this._dateHelper.getShortDateWithFormat(new Date(), 'YYYYMMDD');
     this.customSearchStartYYYYMMDD_formed = this._dateHelper.getShortDateWithFormatAddByUnit(
-        this.currentYYYYMMDD, -7, 'days', Tw.DATE_FORMAT.YYYYMMDD_TYPE_0
+        this.currentYYYYMMDD, -10, 'days', Tw.DATE_FORMAT.YYYYMMDD_TYPE_0
     );
     this.customSearchEndYYYYMMDD_formed = this._dateHelper.getShortDateWithFormat(
         this.currentYYYYMMDD, Tw.DATE_FORMAT.YYYYMMDD_TYPE_0
@@ -411,7 +412,7 @@ Tw.MyTBillHistoryCommon.Search.prototype = {
     }
     this.$elements.$monthlyCustomTermSelector.on('change', $.proxy(this._changeSearchType, this));
     this.$elements.$monthSelector.on('click', $.proxy(this.defaultMonth._openComboListUI, this.defaultMonth));
-    if(this._customTermSelectCallback) {
+    if (this._customTermSelectCallback) {
       this.$elements.$customTermSelector.on('change', $.proxy(this._customTermSelectCallback, this));
     } else {
       this.$elements.$customTermSelector.on('change', $.proxy(this._updateCustomTerm, this));
@@ -450,9 +451,14 @@ Tw.MyTBillHistoryCommon.Search.prototype = {
     if (this.isByMonth) {
       indicatorText = this.defaultMonth.data[this.defaultMonth.selectedIndex].text;
 
-
-      startYYYYMMDD = this.currentYYYYMM + '01';
-      endYYYYMMDD = this._dateHelper.getEndOfMonth(this.currentYYYYMM, 'YYYYMMDD', 'YYYYMM');
+      if (this.defaultMonth.selectedIndex === '0') {
+        startYYYYMMDD = this.currentYYYYMM + '01';
+        endYYYYMMDD = this._dateHelper.getEndOfMonth(this.currentYYYYMM, 'YYYYMMDD', 'YYYYMM');
+      } else {
+        startYYYYMMDD = this._dateHelper.getShortDateWithFormat(
+            this.defaultMonth.data[this.defaultMonth.selectedIndex].text, 'YYYYMMDD', Tw.DATE_FORMAT.YYYYDD_TYPE_1);
+        endYYYYMMDD = this._dateHelper.getEndOfMonth(startYYYYMMDD, 'YYYYMMDD');
+      }
     } else {
       if (this.termKeyword !== 'custom') {
         indicatorText = this.termText;
@@ -592,7 +598,12 @@ Tw.MyTBillHistoryCommon.Search.prototype = {
     } else {
       this.$elements.$customTermSelectInput.val(this.customSearchEndYYYYMMDD_input);
     }
-    this.$elements.$customTermSelectInput.focus();
+    if (Tw.BrowserHelper.isIos) {
+      this.$elements.$customTermSelectInput.focus();
+    } else {
+      this.$elements.$customTermSelectInput.click();
+    }
+
   },
 
   _updateSearchCustomSubOption: function (index) {
