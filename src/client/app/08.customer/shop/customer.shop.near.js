@@ -109,7 +109,6 @@ Tw.CustomerShopNear.prototype = {
     } else {
       location = res;
     }
-    console.log(location);
     // init Tmap and show
     this._map = new Tmap.Map({
       div: this.$tmapBox.attr('id'),
