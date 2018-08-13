@@ -384,7 +384,7 @@ Tw.MyTBillHistoryCommon.Search.prototype = {
         Tw.DATE_FORMAT.YYYYDD_TYPE_1);
     this.currentYYYYMMDD = this._dateHelper.getShortDateWithFormat(new Date(), 'YYYYMMDD');
     this.customSearchStartYYYYMMDD_formed = this._dateHelper.getShortDateWithFormatAddByUnit(
-        this.currentYYYYMMDD, -7, 'days', Tw.DATE_FORMAT.YYYYMMDD_TYPE_0
+        this.currentYYYYMMDD, -10, 'days', Tw.DATE_FORMAT.YYYYMMDD_TYPE_0
     );
     this.customSearchEndYYYYMMDD_formed = this._dateHelper.getShortDateWithFormat(
         this.currentYYYYMMDD, Tw.DATE_FORMAT.YYYYMMDD_TYPE_0
@@ -450,9 +450,14 @@ Tw.MyTBillHistoryCommon.Search.prototype = {
     if (this.isByMonth) {
       indicatorText = this.defaultMonth.data[this.defaultMonth.selectedIndex].text;
 
-
-      startYYYYMMDD = this.currentYYYYMM + '01';
-      endYYYYMMDD = this._dateHelper.getEndOfMonth(this.currentYYYYMM, 'YYYYMMDD', 'YYYYMM');
+      if(this.defaultMonth.selectedIndex === '0') {
+        startYYYYMMDD = this.currentYYYYMM + '01';
+        endYYYYMMDD = this._dateHelper.getEndOfMonth(this.currentYYYYMM, 'YYYYMMDD', 'YYYYMM');
+      } else {
+        startYYYYMMDD = this._dateHelper.getShortDateWithFormat(
+            this.defaultMonth.data[this.defaultMonth.selectedIndex].text, 'YYYYMMDD', Tw.DATE_FORMAT.YYYYDD_TYPE_1);
+        endYYYYMMDD = this._dateHelper.getEndOfMonth(startYYYYMMDD, 'YYYYMMDD');
+      }
     } else {
       if (this.termKeyword !== 'custom') {
         indicatorText = this.termText;
@@ -592,7 +597,12 @@ Tw.MyTBillHistoryCommon.Search.prototype = {
     } else {
       this.$elements.$customTermSelectInput.val(this.customSearchEndYYYYMMDD_input);
     }
-    this.$elements.$customTermSelectInput.focus();
+    if(Tw.BrowserHelper.isIos) {
+      this.$elements.$customTermSelectInput.focus();
+    } else {
+      this.$elements.$customTermSelectInput.click();
+    }
+
   },
 
   _updateSearchCustomSubOption: function (index) {

@@ -290,7 +290,8 @@ Tw.MyTBillHistoryContents.prototype = {
 
   _goSearch: function (startYYYYMMDD, endYYYYMMDD) {
 
-    // console.log(this, this.search, startYYYYMMDD, endYYYYMMDD, paymentType, this.fromYYYYMM, this.currentYYYYMM);
+    // console.log(this, this.search, startYYYYMMDD, endYYYYMMDD, this.fromYYYYMM, this.currentYYYYMM);
+
     this.apiOption.fromdate = startYYYYMMDD;
     this.apiOption.todate = endYYYYMMDD;
 
