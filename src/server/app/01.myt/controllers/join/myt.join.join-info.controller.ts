@@ -61,15 +61,8 @@ class MytJoinJoinInfoController extends TwViewController {
     if ( data.history && data.history.length > 0) {
       const history = data.history;
       const historyData = history.shift();
-      let openingDate = '{0} / {1}';
-      openingDate = openingDate.replace('{0}', this.getMarskingDateFormat(historyData.chgDt, DATE_FORMAT.YYYYMMDD_TYPE_0));
-      openingDate = openingDate.replace('{1}', historyData.chgCd);
-
-      data.openingDate = openingDate;
-      /*Object.assign(data, {
-        chgDt : this.getMarskingDateFormat(historyData.chgDt, DATE_FORMAT.YYYYMMDD_TYPE_0),
-        chgCd : historyData.chgCd
-      });*/
+      data.openingDate = this.getMarskingDateFormat(historyData.chgDt, DATE_FORMAT.YYYYMMDD_TYPE_0);
+      data.openingDate = data.openingDate + ' / ' + historyData.chgCd;
     } else {
       data.openingDate = MYT_JOIN.OPENING_DATE_STR;
     }
