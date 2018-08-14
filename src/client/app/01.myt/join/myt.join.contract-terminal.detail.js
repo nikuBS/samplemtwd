@@ -45,6 +45,7 @@ Tw.MytJoinContractTerminalDetail.prototype = {
     this.$tgTpl = $('#fe-contract-terminal-detail');
     this.$tgDetailList = $('[data-target="detailList"]');
     this.$curNum = $('[data-target="curNum"]');
+    this.$addBtnArea = $('[data-target="addBtnArea"]');
   },
   _bindEvent: function () {
     this.$container.on('click', '[data-target="addBtn"]', $.proxy(this._addView, this));
@@ -71,6 +72,12 @@ Tw.MytJoinContractTerminalDetail.prototype = {
     var output = template( { tempData: this.detailListObj.viewData } );
     this.$tgDetailList.append(output);
     this.$curNum.html('( ' + this.detailListObj.curLen + ' )');
+
+    Tw.Logger.info('[ detailListObj.curLen 1 ]', this.detailListObj.curLen);
+    if( this.detailListObj.curLen <= 0 ) {
+      this.$addBtnArea.hide();
+    }
+
   },
   _addView: function() {
     if ( this.detailListObj.curLen <= 0 ) { return; }
@@ -81,6 +88,11 @@ Tw.MytJoinContractTerminalDetail.prototype = {
     var output = template( { tempData: this.detailListObj.viewData } );
     this.$tgDetailList.append(output);
     this.$curNum.html('( ' + this.detailListObj.curLen + ' )');
+
+    Tw.Logger.info('[ detailListObj.curLen 2 ]', this.detailListObj.curLen);
+    if( this.detailListObj.curLen <= 0 ) {
+      this.$addBtnArea.hide();
+    }
   },
   //--------------------------------------------------------------------------[service]
   _dataSplice: function( listData, count ) {

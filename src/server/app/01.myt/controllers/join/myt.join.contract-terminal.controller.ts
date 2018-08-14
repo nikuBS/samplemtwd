@@ -345,10 +345,12 @@ class MytJoinContractTerminal extends TwViewController {
   private _proDate(dataObj: any, start: string, end: string) {
     const startDt = start;
     const endDt = end;
+    this.logger.info(this, '[ _proDate ]', startDt, endDt);
     dataObj.startDt = DateHelper.getShortDateWithFormat(startDt, 'YYYY.MM.DD');
     dataObj.endDt = DateHelper.getShortDateWithFormat(endDt, 'YYYY.MM.DD');
     dataObj.totDt = moment(endDt, 'YYYYMMDD').diff(startDt, 'day');
-    dataObj.curDt = moment(endDt, 'YYYYMMDD').diff(moment().format('YYYYMMDD'), 'day');
+    // dataObj.curDt = moment(endDt, 'YYYYMMDD').diff(moment().format('YYYYMMDD'), 'day');
+    dataObj.curDt = moment(endDt, 'YYYYMMDD').diff(startDt, 'day');
     dataObj.perDt = Math.floor((dataObj.curDt / dataObj.totDt) * 100); // 퍼센트
     dataObj.totMt = moment(endDt, 'YYYYMMDD').diff(startDt, 'month');
     dataObj.remDt = dataObj.totDt - dataObj.curDt; // 잔여일수
