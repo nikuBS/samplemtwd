@@ -29,14 +29,14 @@
     "rxjs": "^5.5.11",
     "slick-carousel": "^1.8.1",
     "underscore": "^1.9.1",
-    "whatap": "^0.2.5",
+    "whatap": "^0.2.6",
     "winston": "^2.4.2"
   },
   "devDependencies": {
     "@types/ejs": "^2.6.0",
     "@types/express": "^4.16.0",
     "@types/jquery": "^3.3.4",
-    "@types/node": "^9.6.21",
+    "@types/node": "^9.6.27",
     "connect-redis": "^3.3.3",
     "express-session": "^1.15.6",
     "express-useragent": "^1.0.12",
