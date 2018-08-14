@@ -18,6 +18,5 @@ Tw.CustomerMain.prototype = {
   },
 
   _bindEvent: function () {
-    // this._apiService.request(Tw.API_CMD.BFF_08_0014, {}).done(function(){});
   }
 };
