@@ -24,10 +24,12 @@ COPY . .
 
 ARG NODE=development
 ENV NODE_ENV ${NODE}
+ENV WHATAP_CONF whatap-${NODE}
 
 # open Application port
 EXPOSE 3000
 
 RUN echo "${NODE_ENV}"
+RUN echo "${WHATAP_CONF}"
 
 CMD ["npm", "run", "server-docker"]

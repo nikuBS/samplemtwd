@@ -51,7 +51,8 @@ Tw.POPUP_TITLE = {
   MYT_LIMIT_MONTH: '매월 한도선택',
   MYT_LIMIT_DAY: '1일 한도선택',
   MYT_LIMIT_ONCE: '1회 한도선택',
-  MYT_SMS : '번호 선택'
+  MYT_SMS: '번호 선택',
+  UPLOAD_FILE: '파일 추가하기'
 };
 
 Tw.POPUP_PROPERTY = {
@@ -328,10 +329,10 @@ Tw.MSG_MYT = {
     ONLY_PWD: '비밀번호는 숫자만 입력 가능합니다.',
     FAIL_PWD: '비밀번호가 일치하지 않습니다. \n 다시 입력해주시기 바랍니다.'
   },
-  JOIN_INFO_A01 : '시작일이 종료일보다 클 수 없습니다.',
-  JOIN_INFO_A02 : '조회 시작일은 {0} 부터 가능합니다.',
-  JOIN_INFO_A03 : '조회 시작일 유효한 일자가 아닙니다.',
-  JOIN_INFO_A04 : '조회 종료일 유효한 일자가 아닙니다.',
+  JOIN_INFO_A01: '시작일이 종료일보다 클 수 없습니다.',
+  JOIN_INFO_A02: '조회 시작일은 {0} 부터 가능합니다.',
+  JOIN_INFO_A03: '조회 시작일 유효한 일자가 아닙니다.',
+  JOIN_INFO_A04: '조회 종료일 유효한 일자가 아닙니다.',
   CONTRACT_TERMINAL: {
     OPEN_ALERT: {
       BSPS: {
@@ -404,9 +405,9 @@ Tw.MSG_MYT = {
   HISTORY_ALERT_A30: '무선콘텐츠 서비스 결제확인 SMS 추가 수신을 받지 않으시겠습니까?',
   HISTORY_ALERT_B01: '1회 한도는 1일 한도를 초과할 수 없습니다.',
   HISTORY_ALERT_B02: '1일 한도는 월 한도를 초과할 수 없습니다.',
-  SMS_A01 : '개인정보 제공 및 활용동의에 체크해주세요.',
-  SMS_A02 : '숫자만 입력 가능합니다.',
-  SMS_A03 : 'SMS 받을 번호를 입력해주세요.'
+  SMS_A01: '개인정보 제공 및 활용동의에 체크해주세요.',
+  SMS_A02: '숫자만 입력 가능합니다.',
+  SMS_A03: 'SMS 받을 번호를 입력해주세요.'
 };
 
 Tw.MSG_RECHARGE = {
@@ -681,7 +682,7 @@ Tw.DATE_FORMAT = {
 
 Tw.URL_PATH = {
   BROADBAND: 'http://www.skbroadband.com',
-  COP_SERVICE : 'http://b2b.tworld.co.kr/cs/counsel/certServiceInfo.bc',
+  COP_SERVICE: 'http://b2b.tworld.co.kr/cs/counsel/certServiceInfo.bc',
   CONTETNS_YOUTUBE_HELP_URL: 'https://support.google.com/youtube/contact/commerce_contact?hl=ko&cfsi=subs_red_2',
   MYT_PAYPASS_CONFIRM: '/myt/bill/history/micro/password',
   MYT_PAYPASS_INFO: '',
@@ -770,9 +771,9 @@ Tw.PAYMENT_CARD_TYPE_LIST = [
 ];
 
 Tw.NO_CONTRACT_TYPE = {
-  USE : '사용',
-  SAVE : '적립',
-  EXTINCTION : '소멸'
+  USE: '사용',
+  SAVE: '적립',
+  EXTINCTION: '소멸'
 };
 
 Tw.MYT_HISTORY_CPSTATE = {
@@ -787,4 +788,10 @@ Tw.MYT_HISTORY_CPSTATE_KOR = {
   A1: '다음 달<br />차단예정'
 }
 
-Tw.HP_NUM_LIST = ['011','016','017','019'];
+Tw.HP_NUM_LIST = ['011', '016', '017', '019'];
+
+Tw.UPLOAD_FILE = {
+  WARNING_A01: '첨부파일 용량은 30MB를 넘을 수 없습니다.',
+  WARNING_A02: '첨부파일은 최대 5개까지 등록할 수 있습니다.',
+  WARNING_A03: 'MS워드, 한글hwp, 이미지 (jpg, bmp, gif,pdf)파일을 첨부할 수 있습니다.',
+}
