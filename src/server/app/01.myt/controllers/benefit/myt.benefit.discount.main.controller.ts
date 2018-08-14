@@ -8,6 +8,7 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import { NextFunction, Request, Response } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
+import FormatHelper from '../../../../utils/format.helper';
 
 class MytBenefitDisCntMainController extends TwViewController {
 
@@ -38,7 +39,11 @@ class MytBenefitDisCntMainController extends TwViewController {
   _getBundleProduct(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_05_0094, {}).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
-        return resp.result;
+        if ( FormatHelper.isEmpty(resp.result) ) {
+          return null;
+        } else {
+          return resp.result;
+        }
       } else {
         return null;
       }
@@ -48,7 +53,11 @@ class MytBenefitDisCntMainController extends TwViewController {
   _getFeeContract(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_05_0106, {}).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
-        return resp.result;
+        if ( FormatHelper.isEmpty(resp.result) ) {
+          return null;
+        } else {
+          return resp.result;
+        }
       } else {
         return null;
       }
@@ -58,7 +67,11 @@ class MytBenefitDisCntMainController extends TwViewController {
   _getSubFundContract(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_05_0107, {}).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
-        return resp.result;
+        if ( FormatHelper.isEmpty(resp.result) ) {
+          return null;
+        } else {
+          return resp.result;
+        }
       } else {
         return null;
       }
@@ -68,7 +81,11 @@ class MytBenefitDisCntMainController extends TwViewController {
   _getSelDiscount(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_05_0108, {}).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
-        return resp.result;
+        if ( FormatHelper.isEmpty(resp.result) ) {
+          return null;
+        } else {
+          return resp.result;
+        }
       } else {
         return null;
       }
@@ -78,7 +95,11 @@ class MytBenefitDisCntMainController extends TwViewController {
   _getLongTerm(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_05_0110, {}).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
-        return resp.result;
+        if ( FormatHelper.isEmpty(resp.result) ) {
+          return null;
+        } else {
+          return resp.result;
+        }
       } else {
         return null;
       }
@@ -88,7 +109,11 @@ class MytBenefitDisCntMainController extends TwViewController {
   _getWelfareCustomer(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_05_0111, {}).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
-        return resp.result;
+        if ( FormatHelper.isEmpty(resp.result) ) {
+          return null;
+        } else {
+          return resp.result;
+        }
       } else {
         return null;
       }
