@@ -316,10 +316,10 @@ Tw.MyTBillHistoryCommon.GetLimit.prototype = {
       this._get_init_usageRequest();
     } else if (this.usageRequestCounter === 1 || this.usageRequestCounter === 2) {
       if (res.code === Tw.API_CODE.CODE_00) {
-        console.log('------', res);
+        // console.log('------', res);
         this.callback(res);
       } else {
-        console.log('[myt/bill/history/limit] Retry', res);
+        // console.log('[myt/bill/history/limit] Retry', res);
         this.usageRequestTitle = 'Retry';
         this.usageRequestCounter++;
         this._get_init_usageRequest();
@@ -448,6 +448,8 @@ Tw.MyTBillHistoryCommon.Search.prototype = {
       paymentType = Tw.PAYMENT_TYPE_CODE[_.last(this.paymentType.searchpaytype.split('-'))];
     }
 
+    // console.log(this.termText, this.termSearchKeyword);
+
     if (this.isByMonth) {
       indicatorText = this.defaultMonth.data[this.defaultMonth.selectedIndex].text;
 
@@ -460,7 +462,7 @@ Tw.MyTBillHistoryCommon.Search.prototype = {
         endYYYYMMDD = this._dateHelper.getEndOfMonth(startYYYYMMDD, 'YYYYMMDD');
       }
     } else {
-      if (this.termKeyword !== 'custom') {
+      if (this.termSearchKeyword !== 'custom') {
         indicatorText = this.termText;
         startYYYYMMDD = this._dateHelper.getShortDateWithFormatAddByUnit(
             this.currentYYMMDD, this.termValue * -1, this.termSearchKeyword, 'YYYYMMDD');
@@ -598,7 +600,7 @@ Tw.MyTBillHistoryCommon.Search.prototype = {
     } else {
       this.$elements.$customTermSelectInput.val(this.customSearchEndYYYYMMDD_input);
     }
-    if (Tw.BrowserHelper.isIos) {
+    if (Tw.BrowserHelper.isIos()) {
       this.$elements.$customTermSelectInput.focus();
     } else {
       this.$elements.$customTermSelectInput.click();

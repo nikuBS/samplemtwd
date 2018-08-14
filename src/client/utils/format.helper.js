@@ -240,6 +240,16 @@ Tw.FormatHelper = (function () {
     return str.replace(/,/g, '');
   };
 
+  var is6digitPassSameNumber = function(str) {
+    var regex = /(\d)\1\1\1\1\1/;
+    return regex.test(str);
+  };
+
+  var is6digitPassSolidNumber = function(str) {
+    var regex = /(012345)|(123456)|(234567)|(345678)|(456789)|(567890)|(678901)|(789012)|(890123)|(901234)|(098765)|(987654)|(876543)|(765432)|(654321)|(543210)|(432109)|(321098)|(210987)|(109876)/;
+    return regex.test(str);
+  };
+
   return {
     leadingZeros: leadingZeros,
     isEmpty: isEmpty,
@@ -260,6 +270,8 @@ Tw.FormatHelper = (function () {
     getDashedPhoneNumber: getDashedPhoneNumber,
     convNumFormat: convNumFormat,
     insertColonForTime: insertColonForTime,
-    setDecimalPlace: setDecimalPlace
+    setDecimalPlace: setDecimalPlace,
+    is6digitPassSameNumber: is6digitPassSameNumber,
+    is6digitPassSolidNumber: is6digitPassSolidNumber
   };
 })();

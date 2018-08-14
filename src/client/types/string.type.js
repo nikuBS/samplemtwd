@@ -405,9 +405,12 @@ Tw.MSG_MYT = {
   HISTORY_ALERT_A30: '무선콘텐츠 서비스 결제확인 SMS 추가 수신을 받지 않으시겠습니까?',
   HISTORY_ALERT_B01: '1회 한도는 1일 한도를 초과할 수 없습니다.',
   HISTORY_ALERT_B02: '1일 한도는 월 한도를 초과할 수 없습니다.',
-  SMS_A01: '개인정보 제공 및 활용동의에 체크해주세요.',
-  SMS_A02: '숫자만 입력 가능합니다.',
-  SMS_A03: 'SMS 받을 번호를 입력해주세요.'
+  HISTORY_ALERT_VC004: '기존 비밀번호와 변경할 비밀번호를 다르게 입력하세요.',
+  HISTORY_ALERT_VC006: '입력하신 기존 비밀번호가 틀립니다. 확인하세요.',
+  HISTORY_ALERT_VC007: '법정생년월일은 비밀번호 설정이 불가능합니다. 다른 번호를 입력해주세요.',
+  SMS_A01 : '개인정보 제공 및 활용동의에 체크해주세요.',
+  SMS_A02 : '숫자만 입력 가능합니다.',
+  SMS_A03 : 'SMS 받을 번호를 입력해주세요.'
 };
 
 Tw.MSG_RECHARGE = {
@@ -684,6 +687,7 @@ Tw.URL_PATH = {
   BROADBAND: 'http://www.skbroadband.com',
   COP_SERVICE: 'http://b2b.tworld.co.kr/cs/counsel/certServiceInfo.bc',
   CONTETNS_YOUTUBE_HELP_URL: 'https://support.google.com/youtube/contact/commerce_contact?hl=ko&cfsi=subs_red_2',
+  MYT_BILL_HISTORY_MICRO: '/myt/bill/history/micro',
   MYT_PAYPASS_CONFIRM: '/myt/bill/history/micro/password',
   MYT_PAYPASS_INFO: '',
   MYT_PAYPASS_SET: '/myt/bill/history/micro/password/set',
