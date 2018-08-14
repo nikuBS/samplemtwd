@@ -17,7 +17,7 @@
     <!-- #contents -->
     <div class="container-wrap">
         <h2 class="blind">내용</h2>
-        <div class="container">
+        <div id="main" class="container">
             <%- include('../../../../common/views/components/header.component.html', { title: '소액결제 선결제하기', svcInfo: svcInfo }); %>
             <div class="cont-box noborder square">
                 <div class="payment-info">
@@ -133,6 +133,9 @@
             </div>
             <% } %>
             <% include ../components/info/payment.prepay.micro.info.component.html %>
+        </div>
+        <div id="complete-cancel" style="display:none;">
+            <% include ../components/prepay/payment.prepay.cancel.complete.component.html %>
         </div>
     </div>
     <!--// #contents -->

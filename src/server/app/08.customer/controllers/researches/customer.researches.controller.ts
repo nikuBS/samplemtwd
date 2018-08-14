@@ -136,7 +136,7 @@ export default class CustomerResearches extends TwViewController {
   }
 
   private getUrlFromHint = (hint: string = '') => {
-    const HINT_REGEX = /^(?:goLink\(\'|")?([/\w\.\?#]+)(?:"|',.+)?$/;
+    const HINT_REGEX = /^(?:goLink\('|")?([/\w\.\?#:]+)(?:"|'.*)?$/;
 
     const matches = hint.match(HINT_REGEX);
     if (matches) {

@@ -68,6 +68,7 @@ Tw.PaymentPrepayAuto.prototype = {
     this.$container.on('click', '.fe-select-prepay-amount', $.proxy(this._selectAmount, this, this._prepayAmountList));
     this.$container.on('click', '.fe-request-auto-prepay', $.proxy(this._requestPrepay, this));
     this.$container.on('click', '.fe-request-change-prepay', $.proxy(this._requestPrepay, this));
+    this.$container.on('click', '.fe-cancel-process', $.proxy(this._openCancel, this));
   },
   _onlyNumber: function (event) {
     Tw.InputHelper.inputNumberOnly(event.currentTarget);
@@ -328,6 +329,12 @@ Tw.PaymentPrepayAuto.prototype = {
       message = Tw.PAYMENT_PREPAY_TITLE.AUTO_CHANGE_COMPLETE;
     }
     return message;
+  },
+  _openCancel: function () {
+    this._popupService.openAlert(Tw.MSG_PAYMENT.PRE_A10, null, $.proxy(this._goBack, this));
+  },
+  _goBack: function () {
+    this._history.go(-2);
   },
   _go: function (hash) {
     this._history.goHash(hash);

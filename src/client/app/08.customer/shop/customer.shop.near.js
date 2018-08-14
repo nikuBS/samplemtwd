@@ -10,6 +10,7 @@ Tw.CustomerShopNear = function (rootEl) {
   this._apiService = Tw.Api;
   this._nativeService = Tw.Native;
   this._popupService = Tw.Popup;
+  this._historyService = new Tw.HistoryService();
 
   this._searchedItemTemplate = Handlebars.compile($('#tpl_search_result_item').html());
 
@@ -63,7 +64,6 @@ Tw.CustomerShopNear.prototype = {
     }
   },
   _onSwitchMapList: function () {
-    console.log('hehe');
     if (this._isMap) {
       this.$mapArea.addClass('none');
       this.$listArea.removeClass('none');
@@ -101,8 +101,14 @@ Tw.CustomerShopNear.prototype = {
       this._storeType = '2';
     }
   },
-  _onCurrentLocation: function (location) {
-    console.log('onLocation');
+  _onCurrentLocation: function (res) {
+    var location;
+    if (!Tw.FormatHelper.isEmpty(res.resultCode) && res.resultCode === 401) {
+      this._historyService.goBack();
+      return;
+    } else {
+      location = res;
+    }
     // init Tmap and show
     this._map = new Tmap.Map({
       div: this.$tmapBox.attr('id'),
@@ -110,7 +116,9 @@ Tw.CustomerShopNear.prototype = {
       height: this.$tmapBox.width() + 'px'
     });
     this._map.setCenter(
-      new Tmap.LonLat(location.longitude, location.latitude).transform('EPSG:4326', 'EPSG:3857'), 15);
+      new Tmap.LonLat(location.longitude, location.latitude).transform('EPSG:4326', 'EPSG:3857'),
+      15
+    );
 
     // Add marker for current location
     var markerLayer = new Tmap.Layer.Markers();
@@ -155,7 +163,7 @@ Tw.CustomerShopNear.prototype = {
       this._onNearShops();
     }, this))
     .fail($.proxy(function (err) {
-      console.log(err);
+      this._popupService.openAlert(err.code + ' ' + err.msg);
     }, this));
   },
   _onNearShops: function () {  // Add near shops' markers

@@ -33,7 +33,8 @@ interface IResultBFF {
 interface IResult {
   type: string;
   title: string;
-  date: string;
+  startDate: string;
+  endDate: string;
   examples: IExample[];
   totalCount: number;
   mot?: string;
@@ -75,7 +76,8 @@ export default class CustomerResearchResult extends TwViewController {
     return {
       type: result.bnnrRsrchTypCd,
       title: result.bnnrRsrchTitleNm,
-      date: result.staDtm,
+      startDate: result.staDtm,
+      endDate: result.endDtm,
       mot: result.motMsgHtmlCtt,
       examples,
       totalCount
