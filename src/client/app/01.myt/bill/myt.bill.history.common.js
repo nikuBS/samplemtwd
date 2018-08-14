@@ -600,7 +600,7 @@ Tw.MyTBillHistoryCommon.Search.prototype = {
     } else {
       this.$elements.$customTermSelectInput.val(this.customSearchEndYYYYMMDD_input);
     }
-    if (Tw.BrowserHelper.isIos) {
+    if (Tw.BrowserHelper.isIos()) {
       this.$elements.$customTermSelectInput.focus();
     } else {
       this.$elements.$customTermSelectInput.click();
