@@ -22,7 +22,6 @@ class MytJoinJoinInfoController extends TwViewController {
     O : ''
   };
 
-
   get svcInfo() {
     return this._svcInfo;
   }
@@ -81,7 +80,6 @@ class MytJoinJoinInfoController extends TwViewController {
     // 가입비 표시[E]
 
     data.isPwdEditHide = FormatHelper.isEmpty(data.pwdStCd);
-
 
     return data;
   }
@@ -179,14 +177,6 @@ class MytJoinJoinInfoController extends TwViewController {
     return data;
   }
 
-  /*private getResult(data: any): any {
-    if (data.code === API_CODE.CODE_00) {
-      return data.result;
-    } else {
-      return data;
-    }
-  }*/
-
   private getJoinInfoData(data: any): any {
     switch (this.getLinetype()) {
       case 'M':  data = this.getMobileResult(data);
@@ -230,7 +220,6 @@ class MytJoinJoinInfoController extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     this.svcInfo = svcInfo;
 
-    // const data = this.getWibroResult( Info.wibro.result );
     Observable.combineLatest(
       this.getAllJoinInfo()
     ).subscribe(([joinInfo]) => {
