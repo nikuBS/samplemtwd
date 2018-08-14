@@ -10,6 +10,7 @@
   ],
   "env": {
     "PORT": 3000,
-    "NODE_ENV": "local"
+    "NODE_ENV": "local",
+    "WHATAP_CONF": "whatap"
   }
 }
