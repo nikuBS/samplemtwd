@@ -6,9 +6,8 @@
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { NextFunction, Request, Response } from 'express';
-import FormatHelper from '../../../../utils/format.helper';
-import {API_CMD} from '../../../../types/api-command.type';
-import {DEFAULT_LIST_COUNT} from '../../../../types/config.type';
+import { API_CMD } from '../../../../types/api-command.type';
+import { DEFAULT_LIST_COUNT } from '../../../../types/config.type';
 
 class CustomerEventController extends TwViewController {
   constructor() {
