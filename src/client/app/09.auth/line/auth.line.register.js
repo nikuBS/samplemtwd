@@ -152,7 +152,7 @@ Tw.AuthLineRegister.prototype = {
     }
   },
   _registerLineList: function (lineList, length) {
-    this._apiService.request(Tw.API_CMD.BFF_03_0005, { svcCtg: Tw.LINE_NAME.ALL, svcMgmtNumArr: lineList })
+    this._apiService.request(Tw.NODE_CMD.CHANGE_LINE, { svcCtg: Tw.LINE_NAME.ALL, svcMgmtNumArr: lineList })
       .done($.proxy(this._successRegisterLineList, this, length))
       .fail($.proxy(this._failRegisterLineList, this));
   },

@@ -167,7 +167,7 @@ class ApiService {
     return this.requestLogin(API_CMD.BFF_03_0008, { token, state }, LOGIN_TYPE.TID);
   }
 
-  public requestSvcPasswordLogin(params: any): Observable<any> {
+  public requestLoginSvcPassword(params: any): Observable<any> {
     return this.requestLogin(API_CMD.BFF_03_0009, params, LOGIN_TYPE.TID);
   }
 
@@ -183,8 +183,8 @@ class ApiService {
     return this.requestLogin(API_CMD.BFF_03_0018, params, LOGIN_TYPE.EASY);
   }
 
-  public requestChangeSvcPassword(params: any): Observable<any> {
-    return this.request(API_CMD.BFF_03_0016, params)
+  public requestUpdateSvcInfo(command, params): Observable<any> {
+    return this.request(command, params)
       .switchMap((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
           return this.request(API_CMD.BFF_01_0005, {});
@@ -202,23 +202,16 @@ class ApiService {
       });
   }
 
+  public requestChangeSvcPassword(params: any): Observable<any> {
+    return this.requestUpdateSvcInfo(API_CMD.BFF_03_0016, params);
+  }
+
   public requestChangeSession(params: any): Observable<any> {
-    return this.request(API_CMD.BFF_01_0004, params)
-      .switchMap((resp) => {
-        if ( resp.code === API_CODE.CODE_00 ) {
-          return this.request(API_CMD.BFF_01_0005, {});
-        } else {
-          throw resp;
-        }
-      }).switchMap((resp) => {
-        if ( resp.code === API_CODE.CODE_00 ) {
-          return this.loginService.setSvcInfo(resp.result);
-        } else {
-          throw resp;
-        }
-      }).map(() => {
-        return { code: API_CODE.CODE_00 };
-      });
+    return this.requestUpdateSvcInfo(API_CMD.BFF_01_0004, params);
+  }
+
+  public requestChangeLine(params: any): Observable<any> {
+    return this.requestUpdateSvcInfo(API_CMD.BFF_03_0005, params);
   }
 }
 

@@ -23,6 +23,18 @@ export const SVC_CD = {
   I: '인터넷'
 };
 
+export const SVC_CDNAME = {
+  M1: 'cellphone',
+  M2: 'pps',
+  M3: 't-pocket-fi',
+  M4: 't-login',
+  M5: 't-wibro',
+  S1: 'internet',
+  S2: 'iptv',
+  S3: 'phone',
+  O1: 'pointcam'
+};
+
 export const UNIT = {
   '110': '원',
   '140': 'KB',

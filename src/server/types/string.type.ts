@@ -270,6 +270,11 @@ export const MYT_JOIN = {
   OPENING_DATE_STR : '2007.03.01 이후 신규 가입자에 한하여 확인가능 합니다.'
 };
 
+export enum MYT_USAGE_TROAMING_SHARE {
+  L_REP = '대표회선',
+  L_CHI = '자회선'
+}
+
 export const MYT_BENEFIT_RECOMMEND = {
   TPAY: {
     typeTextA: 'T멤버십 제휴처 할인 혜택을 받고 있습니다.',
@@ -304,3 +309,4 @@ export const MYT_BENEFIT_RECOMMEND = {
     typeTextB: '통신, 단말, 안심 3대 영역의 프리미엄 혜택을 받으세요.'
   }
 };
+

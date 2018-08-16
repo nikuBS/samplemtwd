@@ -62,10 +62,9 @@ export const URL = {
   '/myt/join/contract-terminal/twibro': { login: true, id: 'MY_01_04_01', title: '약정 할인 및 단말 분할상환 정보' },
   '/myt/join/contract-terminal/tlogin': { login: true, id: 'MY_01_04_02', title: '약정 할인 및 단말 분할상환 정보' },
   '/myt/join/contract-terminal/tlogin/detail': { login: true, id: 'MY_01_04_L01', title: '월별 상세 할인내역' },
-  '/myt/join/product-service#fee-plan': { login: true, id: 'MY_01_01', title: '나의 가입서비스/요금제'},
-  '/myt/join/product-service#additions': { login: true, id: 'MY_01_01_51', title: '나의 가입서비스/부가서비스'},
-  '/myt/join/product-service#combinations': { login: true, id: 'MY_01_01_100', title: '나의 가입서비스/결합상품'},
+  '/myt/join/product-service': { login: true, id: 'MY_01_01', title: '나의 가입서비스/요금제,부가서비스,결합상품'},
   '/myt/benefit/point': { login: true, id: 'MY_04_04', title: '포인트 혜택'},
+  '/myt/join/product-service/fee-alarm': { login: true, id: 'MY_01_01_01', title: '요금제 변경 가능일 알림 서비스' },
 
   // recharge
   '/recharge/refill': { login: true, id: 'DA_01_01_01', title: '리필하기' }, // 리필하기
@@ -138,6 +137,9 @@ export const URL = {
   '/customer/shop/search': { login: false, id: 'CI_02_01', title: '매장 및 AS 센터' }, // 매장 및 AS센터 > 지점/대리점 찾기
   '/customer/researches': { login: true, id: 'CI_09_02', title: '고객의견' }, // 설문조사 리스트
   '/customer/result': { login: false, id: 'CI_09_04', title: '설문조사 결과' }, // 설문조사 결과
+  '/customer/faq/service-info': { login: false, id: 'CI_14_01', title: '서비스 이용안내' }, // 서비스 이용안내
+  '/customer/faq/site-info': { login: false, id: 'CI_15_01', title: '사이트 이용안내' }, // 사이트 이용안내
+  '/customer/faq/site-info/m-customer-center': { login: false, id: 'CI_15_03', title: 'M 고객센터' }, // M 고객센터
   // auth
   '/auth/line': { login: true, id: 'CO_01_05_02', title: '' }, // 회선관리
   '/auth/line/edit': { login: true, id: 'CO_01_05_02_01', title: '' }, // 회선편집

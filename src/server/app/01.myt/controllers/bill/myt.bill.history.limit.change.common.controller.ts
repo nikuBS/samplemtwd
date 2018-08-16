@@ -68,17 +68,11 @@ class MyTBillHistoryMicroLimitChange extends TwViewController {
 
           this.logger.info(this, '[---------------------------]', this.view, response.result, current, resp.code);
 
-
-
-          // if (response.code === API_CODE.CODE_00) {
-            res.render(this.view, {
-              result: response,
-              svcInfo: svcInfo,
-              current: current
-            });
-          // } else {
-          //   this.logger.error(this, response);
-          // }
+          res.render(this.view, {
+            result: response,
+            svcInfo: svcInfo,
+            current: current
+          });
         });
       } else {
         res.render('../../../03.payment/views/containers/payment.prepay.error.html', {
