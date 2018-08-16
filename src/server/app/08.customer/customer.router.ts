@@ -20,6 +20,7 @@ import CustomerEmailController from './controllers/email/customer.email.controll
 import CustomerResearchResult from './controllers/researches/customer.researches.result.controller';
 import CustomerFaqInfoService from './controllers/faq/customer.faq.info.service.controller';
 import CustomerFaqInfoSite from './controllers/faq/customer.faq.info.site.controller';
+import CustomerEventController from './controllers/event/customer.event.controller';
 
 class CustomerRouter extends TwRouter {
   constructor() {
@@ -47,6 +48,7 @@ class CustomerRouter extends TwRouter {
     this.controllers.push({ url: '/faq/service-info(/:serviceId)?', controller: new CustomerFaqInfoService() });
     this.controllers.push({ url: '/faq/site-info', controller: new CustomerFaqInfoSite() });
     this.controllers.push({ url: '/faq/site-info/m-customer-center', controller: new CustomerFaqInfoSite() });
+    this.controllers.push({ url: '/event', controller: new CustomerEventController() });
   }
 }
 

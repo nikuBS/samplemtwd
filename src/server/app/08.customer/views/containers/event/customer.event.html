@@ -1,0 +1,67 @@
+<%#
+* FileName: customer.event.html
+* Author: 공자윤 (jayoon.kong@sk.com)
+* Date: 2018.08.17
+%>
+<% include ../components/start.component.html %>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap">
+    <!-- #header -->
+    <%- include('../../../../common/views/components/header.component.html', { title: '이벤트', svcInfo: svcInfo }); %>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <hr class="cont-sp type1" aria-hidden="true">
+            <!-- .cont-box -->
+            <div class="cont-box nogaps">
+                <!-- .component -->
+                <div class="component">
+                    <div class="component-box tabs">
+                        <div class="tab-area type1"><!-- 타입별 탭형태 변환 -->
+                            <div class="tab-linker">
+                                <ul role="tablist">
+                                    <li role="tab" aria-selected="true" aria-controls="tab1-tab" id="tab1"><a href="">진행중 이벤트</a></li><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
+                                    <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2"><a href="">지난 이벤트</a></li>
+                                    <li role="tab" aria-selected="false" aria-controls="tab3-tab" id="tab3"><a href="">당첨자발표</a></li>
+                                </ul>
+                            </div>
+                            <div class="tab-contents">
+                                <ul>
+                                    <li role="tabpanel" id="tab1-tab" aria-labelledby="tab1">
+                                        <% include ../components/event/customer.event.ing.component.html %>
+                                    </li>
+                                    <li role="tabpanel" id="tab2-tab" aria-labelledby="tab2">
+                                        <% include ../components/event/customer.event.old.component.html %>
+                                    </li>
+                                    <li role="tabpanel" id="tab3-tab" aria-labelledby="tab3">
+                                        <% include ../components/event/customer.event.win.component.html %>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--// .component -->
+            </div>
+            <!--// .cont-box -->
+        </div>
+    </div>
+    <!--// #contents -->
+</div>
+<% include ../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    new Tw.CustomerEventMain($('.wrap'));
+  });
+</script>
+<% include ../components/end.component.html %>
