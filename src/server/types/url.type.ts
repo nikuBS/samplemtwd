@@ -62,9 +62,7 @@ export const URL = {
   '/myt/join/contract-terminal/twibro': { login: true, id: 'MY_01_04_01', title: '약정 할인 및 단말 분할상환 정보' },
   '/myt/join/contract-terminal/tlogin': { login: true, id: 'MY_01_04_02', title: '약정 할인 및 단말 분할상환 정보' },
   '/myt/join/contract-terminal/tlogin/detail': { login: true, id: 'MY_01_04_L01', title: '월별 상세 할인내역' },
-  '/myt/join/product-service#fee-plan': { login: true, id: 'MY_01_01', title: '나의 가입서비스/요금제'},
-  '/myt/join/product-service#additions': { login: true, id: 'MY_01_01_51', title: '나의 가입서비스/부가서비스'},
-  '/myt/join/product-service#combinations': { login: true, id: 'MY_01_01_100', title: '나의 가입서비스/결합상품'},
+  '/myt/join/product-service': { login: true, id: 'MY_01_01', title: '나의 가입서비스/요금제,부가서비스,결합상품'},
   '/myt/benefit/point': { login: true, id: 'MY_04_04', title: '포인트 혜택'},
 
   // recharge
