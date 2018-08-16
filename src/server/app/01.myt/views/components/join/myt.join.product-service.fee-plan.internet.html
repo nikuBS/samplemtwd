@@ -1,3 +1,8 @@
+<%#
+* FileName: myt.join.product-service.fee-plan.internet.html
+* Author: 양지훈 (jihun202@sk.com)
+* Date: 2018.08.16
+%>
 <div class="cont-box">
     <div class="box-contents">
         <button class="title-bt" title="전국민 무한 75 상세페이지로 이동">전국민 무한 75</button>
@@ -36,7 +41,7 @@
         </div>
     </div>
 </div>
-
+<% if (feePlan.tClassProList.length > 0) { %>
 <hr class="cont-sp type1" aria-hidden="true" />
 
 <div class="cont-box">
@@ -88,12 +93,12 @@
         </ul>
     </div>
 </div>
-
+<% } %>
 <hr class="cont-sp type1" aria-hidden="true" />
 
 <div class="cont-box nogaps-hoz">
     <div class="noti-link">
-        <a href="/myt/join/">요금제 변경 가능일 알림 서비스</a>
+        <a href="/myt/join/product-service/fee-alarm">요금제 변경 가능일 알림 서비스</a>
     </div>
 </div>
 

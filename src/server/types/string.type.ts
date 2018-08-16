@@ -269,3 +269,8 @@ export const MYT_JOIN_CONTRACT_TERMINAL = { // 약정할인 및 단말분할상�
 export const MYT_JOIN = {
   OPENING_DATE_STR : '2007.03.01 이후 신규 가입자에 한하여 확인가능 합니다.'
 };
+
+export enum MYT_USAGE_TROAMING_SHARE {
+  L_REP = '대표회선',
+  L_CHI = '자회선'
+}
