@@ -55,41 +55,49 @@ class MytBenefitRecommendController extends TwViewController {
   private _recommendInfo: any = {
     TPAY: {
       state: false,
+      title: MYT_BENEFIT_RECOMMEND.TPAY.title,
       typeTextA: MYT_BENEFIT_RECOMMEND.TPAY.typeTextA,
       typeTextB: MYT_BENEFIT_RECOMMEND.TPAY.typeTextB
     },
     REFILL: {
       state: false,
+      title: MYT_BENEFIT_RECOMMEND.REFILL.title,
       typeTextA: MYT_BENEFIT_RECOMMEND.REFILL.typeTextA,
       typeTextB: MYT_BENEFIT_RECOMMEND.REFILL.typeTextB
     },
     GIFT: {
       state: false,
+      title: MYT_BENEFIT_RECOMMEND.GIFT.title,
       typeTextA: MYT_BENEFIT_RECOMMEND.GIFT.typeTextA,
       typeTextB: MYT_BENEFIT_RECOMMEND.GIFT.typeTextB
     },
     POINT: {
       state: false,
+      title: MYT_BENEFIT_RECOMMEND.POINT.title,
       typeTextA: MYT_BENEFIT_RECOMMEND.POINT.typeTextA,
       typeTextB: MYT_BENEFIT_RECOMMEND.POINT.typeTextB
     },
     PLAN: {
       state: false,
+      title: MYT_BENEFIT_RECOMMEND.PLAN.title,
       typeTextA: MYT_BENEFIT_RECOMMEND.PLAN.typeTextA,
       typeTextB: MYT_BENEFIT_RECOMMEND.PLAN.typeTextB
     },
     OKSP: {
       state: false,
+      title: MYT_BENEFIT_RECOMMEND.OKSP.title,
       typeTextA: MYT_BENEFIT_RECOMMEND.OKSP.typeTextA,
       typeTextB: MYT_BENEFIT_RECOMMEND.OKSP.typeTextB
     },
     OKASP: {
       state: false,
+      title: MYT_BENEFIT_RECOMMEND.OKASP.title,
       typeTextA: MYT_BENEFIT_RECOMMEND.OKASP.typeTextA,
       typeTextB: MYT_BENEFIT_RECOMMEND.OKASP.typeTextB
     },
     TSIGN: {
       state: false,
+      title: MYT_BENEFIT_RECOMMEND.TSIGN.title,
       typeTextA: MYT_BENEFIT_RECOMMEND.TSIGN.typeTextA,
       typeTextB: MYT_BENEFIT_RECOMMEND.TSIGN.typeTextB
     }

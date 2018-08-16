@@ -277,34 +277,42 @@ export enum MYT_USAGE_TROAMING_SHARE {
 
 export const MYT_BENEFIT_RECOMMEND = {
   TPAY: {
+    title: 'T 페이',
     typeTextA: 'T멤버십 제휴처 할인 혜택을 받고 있습니다.',
     typeTextB: 'T멤버십 제휴처 할인과 결제까지 손쉽게 이용하세요.'
   },
   REFILL: {
+    title: '데이터/음성 리필하기',
     typeTextA: 'SKT 가입기간에 따른 데이터 쿠폰 제공 혜택을 받고 있습니다.',
     typeTextB: 'SKT 가입기간에 따라 데이터 쿠폰을 제공해 드립니다.'
   },
   GIFT: {
+    title: 'T끼리 데이터 선물하기',
     typeTextA: '데이터를 선물하고 선물 받을 수 있습니다.',
     typeTextB: 'LTE / 3G 요금제 고객끼리 데이터를 선물하고 선물 받으세요.'
   },
   POINT: {
+    title: 'T나는 쇼핑 포인트',
     typeTextA: '약정할인액의 130%를 11번가 포인트로 제공 받고 있습니다.',
     typeTextB: '약정할인액의 130%를 11번가 포인트로 적립 받으세요.'
   },
   PLAN: {
+    title: '지켜줘서 고마워_현역플랜',
     typeTextA: '현역 국인을 위한 특화 요금제를 이용 중 입니다.',
     typeTextB: '제공안함'
   },
   OKSP: {
+    title: 'oksusu 안심팩',
     typeTextA: 'oksusu 이용 데이터 및 oksusu 포인트 제공 혜택을 받고 있습니다.',
     typeTextB: '제공안함'
   },
   OKASP: {
+    title: 'oksusu & 안심팩',
     typeTextA: 'oksusu 이용 데이터 및 oksusu 포인트 제공 혜택을 받고 있습니다.',
     typeTextB: 'oksusu 전용 데이터 및 포인트 제공 혜택을 받으세요.'
   },
   TSIGN: {
+    title: 'T 시그니처',
     typeTextA: '통신, 단말, 안심 3대 영역의 프리미엄 혜택을 받고 있습니다.',
     typeTextB: '통신, 단말, 안심 3대 영역의 프리미엄 혜택을 받으세요.'
   }
