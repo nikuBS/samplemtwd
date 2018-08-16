@@ -31,8 +31,7 @@ class MytBenefitDisCntMainController extends TwViewController {
       data.longterm = longterm;
       data.welfareCutm = welfareCutm;
 
-      // TODO: 마크업이 나오면 적용필요!
-      // res.render('benefit/myt.benefit.discount.main', { data });
+      res.render('benefit/myt.benefit.discount.main.html', { data });
     });
   }
 
