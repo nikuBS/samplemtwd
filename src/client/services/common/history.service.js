@@ -14,15 +14,17 @@ Tw.HistoryService = function (selector) {
 };
 Tw.HistoryService.prototype = {
   // public
-  init: function (hash, length) {
-    if ( hash !== 'hash' ) {
+  init: function (hash, length, type) {
+    if ( hash === 'hash' ) {
+      this._hashService.initHashNav($.proxy(this.onHashChange, this));
+      if (type === undefined) {
+        this._hashService.detectIsReload();
+      }
+    } else {
       if (length > 0) {
         this._urlHistoryLength = length;
       }
       this.$window.on('pageshow', $.proxy(this.checkIsBack, this));
-    } else {
-      this._hashService.initHashNav($.proxy(this.onHashChange, this));
-      this._hashService.detectIsReload();
     }
   },
   cancelProcess: function () {
