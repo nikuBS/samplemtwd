@@ -1,3 +1,8 @@
+/**
+ * FileName: myt.usage.data-limit.controller.ts
+ * Author: 이정민 (skt.p130713@partner.sk.com)
+ * Date: 2018.07.25
+ */
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
