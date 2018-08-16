@@ -26,19 +26,23 @@
                         <div class="tab-area type1"><!-- 타입별 탭형태 변환 -->
                             <div class="tab-linker">
                                 <ul role="tablist">
-                                    <li role="tab" aria-selected="false" aria-controls="tab1-tab" data-tab="fee-plan"><button>요금제</button></li>
-                                    <li role="tab" aria-selected="false" aria-controls="tab2-tab" data-tab="additions"><button>부가상품</button></li>
-                                    <li role="tab" aria-selected="false" aria-controls="tab3-tab" data-tab="combinations"><button>결합상품</button></li>
+                                    <li role="tab" aria-selected="false" aria-controls="fee-plan-contents" id="fee-plan-tab"><button>요금제</button></li>
+                                    <li role="tab" aria-selected="false" aria-controls="additions-contents" id="additions-tab"><button>부가상품</button></li>
+                                    <li role="tab" aria-selected="false" aria-controls="combinations-contents" id="combinations-tab"><button>결합상품</button></li>
                                 </ul>
                             </div>
-                            <div id="fee-plan" class="tab-contents" style="display: none">
-                                <% include ../../components/join/myt.join.product-service.fee-plan.component.html %>
-                            </div>
-                            <div id="additions" class="tab-contents" style="display: none;">
-                                <% include ../../components/join/myt.join.product-service.additions.component.html %>
-                            </div>
-                            <div id="combinations" class="tab-contents" style="display: none;">
-                                <% include ../../components/join/myt.join.product-service.combinations.component.html %>
+                            <div class="tab-contents">
+                                <ul>
+                                    <li role="tabpanel" id="fee-plan-contents" aria-labelledby="fee-plan-tab">
+                                        <% include ../../components/join/myt.join.product-service.fee-plan.component.html %>
+                                    </li>
+                                    <li role="tabpanel" id="additions-contents" aria-labelledby="additions-tab">
+                                        <% include ../../components/join/myt.join.product-service.additions.component.html %>
+                                    </li>
+                                    <li role="tabpanel" id="combinations-contents" aria-labelledby="combinations-tab">
+                                        <% include ../../components/join/myt.join.product-service.combinations.component.html %>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </div>

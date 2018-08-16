@@ -12,6 +12,7 @@ class MyTBenefitPoint extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+    res.render('benefit/myt.benefit.point.html', {svcInfo: svcInfo});
   }
 }
 
