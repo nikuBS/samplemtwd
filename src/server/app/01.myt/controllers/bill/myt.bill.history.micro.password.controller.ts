@@ -30,10 +30,13 @@ class MyTBillHistoryMicroPassword extends TwViewController {
         const current: any = req.path.split('/').splice(-1)[0];
         this.logger.info(this, current);
 
+        // const cpinStcd = response.resutl.cpinStCd;
+        const cpinStcd = current === 'password' ? 'AC' : 'NC';
+
         res.render('bill/myt.bill.history.micro.password.html', {
           svcInfo: svcInfo,
           svcNum: svcNum,
-          cpinStCd: response.result.cpinStCd,
+          cpinStCd: cpinStcd,
           current: current
         });
       }

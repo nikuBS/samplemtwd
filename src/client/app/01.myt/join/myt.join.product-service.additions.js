@@ -1,10 +1,10 @@
 /**
- * FileName: myt.join.additions.js
+ * FileName: myt.join.product-service.additions.js
  * Author: 박지만 (jiman.park@sk.com)
  * Date: 2018.08.14
  */
 
-Tw.MyTJoinAdditions = function (rootEl) {
+Tw.MyTJoinProductServiceAdditions = function (rootEl) {
   this.$container = rootEl;
   this._popupService = Tw.Popup;
   this._apiService = Tw.Api;
@@ -12,7 +12,7 @@ Tw.MyTJoinAdditions = function (rootEl) {
   this._init();
 };
 
-Tw.MyTJoinAdditions.prototype = {
+Tw.MyTJoinProductServiceAdditions.prototype = {
   _init: function () {
 
   },
