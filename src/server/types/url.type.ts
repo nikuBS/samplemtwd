@@ -65,6 +65,7 @@ export const URL = {
   '/myt/join/product-service#fee-plan': { login: true, id: 'MY_01_01', title: '나의 가입서비스/요금제'},
   '/myt/join/product-service#additions': { login: true, id: 'MY_01_01_51', title: '나의 가입서비스/부가서비스'},
   '/myt/join/product-service#combinations': { login: true, id: 'MY_01_01_100', title: '나의 가입서비스/결합상품'},
+  '/myt/benefit/point': { login: true, id: 'MY_04_04', title: '포인트 혜택'},
 
   // recharge
   '/recharge/refill': { login: true, id: 'DA_01_01_01', title: '리필하기' }, // 리필하기
