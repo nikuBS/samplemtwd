@@ -83,8 +83,6 @@ Tw.PaymentHistoryExcessPayAccount.prototype = {
 
     if (this.apiName) {
       this._apiService.request(this.apiName, this.apiOption).done($.proxy(this._successRegisterAccount, this)).error($.proxy(this._apiError, this));
-    } else {
-      // TODO : history replace
     }
   },
 

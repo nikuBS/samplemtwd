@@ -13,8 +13,6 @@ Tw.MyTBillHistoryMicroPassword = function (rootEl, current, isUsePassword) {
 
   this.isFull = [];
 
-  // console.log(current, isUsePassword);
-
   if (isUsePassword !== 'NC' && isUsePassword !== 'AC') {
     this._apiError({code: isUsePassword});
     return false;
@@ -117,9 +115,6 @@ Tw.MyTBillHistoryMicroPassword.prototype = {
       return false;
     }
 
-    // console.log(Tw.FormatHelper.is6digitPassSameNumber(newPS),
-    // Tw.FormatHelper.is6digitPassSolidNumber(newPS));
-
     if (Tw.FormatHelper.is6digitPassSameNumber(newPS)) {
       this.common._popupService.openAlert(Tw.MSG_MYT.HISTORY_ALERT_A23, Tw.POPUP_TITLE.NOTIFY, null, $.proxy(function () {
         this._resetDefault();
@@ -168,8 +163,6 @@ Tw.MyTBillHistoryMicroPassword.prototype = {
         default:
           break;
       }
-
-      // console.log(res.result);
 
       this.common._popupService.openAlert(message, Tw.POPUP_TITLE.NOTIFY, null, $.proxy(function () {
         this._resetAll();

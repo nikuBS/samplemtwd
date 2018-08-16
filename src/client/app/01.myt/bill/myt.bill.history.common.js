@@ -17,8 +17,6 @@ Tw.MyTBillHistoryCommon = function (rootEl) {
 
 Tw.MyTBillHistoryCommon.prototype = {
   _init: function () {
-    // TODO : 검색 기간 설정 관련 레이어 처리
-    // TODO : 검색 관련 공통 처리
   },
 
   _setTab: function (context, callback, hashList, hashTriggerList) {
@@ -316,10 +314,8 @@ Tw.MyTBillHistoryCommon.GetLimit.prototype = {
       this._get_init_usageRequest();
     } else if (this.usageRequestCounter === 1 || this.usageRequestCounter === 2) {
       if (res.code === Tw.API_CODE.CODE_00) {
-        // console.log('------', res);
         this.callback(res);
       } else {
-        // console.log('[myt/bill/history/limit] Retry', res);
         this.usageRequestTitle = 'Retry';
         this.usageRequestCounter++;
         this._get_init_usageRequest();
@@ -448,8 +444,6 @@ Tw.MyTBillHistoryCommon.Search.prototype = {
       paymentType = Tw.PAYMENT_TYPE_CODE[_.last(this.paymentType.searchpaytype.split('-'))];
     }
 
-    // console.log(this.termText, this.termSearchKeyword);
-
     if (this.isByMonth) {
       indicatorText = this.defaultMonth.data[this.defaultMonth.selectedIndex].text;
 
@@ -474,6 +468,17 @@ Tw.MyTBillHistoryCommon.Search.prototype = {
         startYYYYMMDD = (this.customSearchStart || this.customSearchStartYYYYMMDD_formed).replace(/\./g, '');
         endYYYYMMDD = (this.customSearchEnd || this.customSearchEndYYYYMMDD_formed).replace(/\./g, '');
         var days = Math.abs(this._dateHelper.getDiffByUnit(startYYYYMMDD, endYYYYMMDD, this.limitKeyword));
+
+        if (endYYYYMMDD < startYYYYMMDD) {
+          this.common._popupService.openAlert(
+              Tw.MSG_MYT.HISTORY_ALERT_A8, Tw.POPUP_TITLE.NOTIFY,
+              $.proxy(this.common._popupService.close, this.common), null);
+          this.$elements.$customTermStartSelector.val(this.customSearchStartYYYYMMDD_input);
+          this.$elements.$customTermStartSelector.text(this.customSearchStartYYYYMMDD_formed);
+          this.$elements.$customTermEndSelector.val(this.customSearchEndYYYYMMDD_input);
+          this.$elements.$customTermEndSelector.text(this.customSearchEndYYYYMMDD_formed);
+          return false;
+        }
 
         if (endYYYYMMDD > this.currentYYYYMMDD) {
           this.common._popupService.openAlert(

@@ -159,33 +159,20 @@ Tw.MyTBillHistoryContents.prototype = {
   },
 
   _getData: function () {
-    // console.log('_getData', this.apiName, this.apiOption);
     if (this.apiName) {
       this._apiService.request(this.apiName, this.apiOption)
           .done($.proxy(this._setData, this))
           .error($.proxy(this._apiError, this));
-    } else {
-      // TODO : history replace
     }
   },
 
   _setData: function (res) {
-    // console.log('[setData] ', res);
     if (res.code === Tw.API_CODE.CODE_00) {
 
       this.contentsList = res.result.useConAmtDetailList ? res.result.useConAmtDetailList.reverse() : [];
       if (!this.isMonthlySet) {
         this.monthlyList = res.result.useConAmtMonthList ? res.result.useConAmtMonthList.reverse() : [];
       }
-
-      // this.contentsList.push({
-      //   'payDate': '2018.04.23',
-      //   'payFlag': '구글플레이콘텐츠*',
-      //   'useServiceNm': '구**레**텐*',
-      //   'useServiceCompany': '구글페이 080-234-0051',
-      //   'useCharge': '2,200',
-      //   'deductionCharge': '2,200'
-      // });
 
       this._updateUseData();
 
@@ -225,10 +212,6 @@ Tw.MyTBillHistoryContents.prototype = {
     }
 
     if (!_.isEmpty(this.monthlyList) && !this.isMonthlySet) {
-      // 'invDt': '201802',
-      //  'totUsed': '0.0',월별이용금액
-      //  'totDeduc': '0.0',      공제액
-      //  'totInvamt': '0.0'이용금액 - 공제액
       var monthlyHighest = 0;
       this.monthlyAverage = 0;
       this.monthlyHighestIndex = null;
@@ -289,8 +272,6 @@ Tw.MyTBillHistoryContents.prototype = {
   },
 
   _goSearch: function (startYYYYMMDD, endYYYYMMDD) {
-
-    // console.log(this, this.search, startYYYYMMDD, endYYYYMMDD, this.fromYYYYMM, this.currentYYYYMM);
 
     this.apiOption.fromdate = startYYYYMMDD;
     this.apiOption.todate = endYYYYMMDD;
@@ -395,7 +376,6 @@ Tw.MyTBillHistoryContents.prototype = {
     this.isMonthlySet = true;
     this.$template.$monthlyAverageTotal.html(this.monthlyAverage);
 
-    // console.log(this.monthlyList);
     var monthlyByTableTemplate = Handlebars.compile(this.$template.$monthlyByTable.html());
     var monthlyByGraphTemplate = Handlebars.compile(this.$template.$monthlyByGraph.html());
     var monthlyByTable = monthlyByTableTemplate({listElement: this.monthlyList});
