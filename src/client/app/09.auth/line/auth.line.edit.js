@@ -66,7 +66,7 @@ Tw.AuthLineEdit.prototype = {
   _confirmRegisterPopup: function (svcNumList) {
     this._popupService.close();
     var lineList = svcNumList.join('~');
-    this._apiService.request(Tw.API_CMD.BFF_03_0005, { svcCtg: this._category.toUpperCase(), svcMgmtNumArr: lineList })
+    this._apiService.request(Tw.NODE_CMD.CHANGE_LINE, { svcCtg: this._category.toUpperCase(), svcMgmtNumArr: lineList })
       .done($.proxy(this._successRegisterLineList, this))
       .fail($.proxy(this._failRegisterLineList, this));
   },

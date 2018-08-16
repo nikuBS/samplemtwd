@@ -13,7 +13,7 @@ Tw.AuthLoginDormancy = function (rootEl) {
 Tw.AuthLoginDormancy.prototype = {
   _bindEvent: function () {
     this.$container.on('click', '#btn-activate', function() {
-      Tw.Api.request(Tw.NODE_CMD.USER_LOCK_LOGIN)
+      Tw.Api.request(Tw.NODE_CMD.LOGIN_USER_LOCK)
         .done(function (res) {
           if (res.code === Tw.API_CODE.CODE_00) {
             window.location = '/home';
