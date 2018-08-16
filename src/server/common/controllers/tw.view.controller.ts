@@ -132,7 +132,11 @@ abstract class TwViewController {
         if ( isLogin ) {
           const urlAuth = urlMeta.auth.grades;
           const svcGr = svcInfo.svcGr;
-          if ( urlAuth.indexOf(svcGr) !== -1 ) {
+          if ( svcInfo.totalSvcCnt === '0' ) {
+            this.errorEmptyLine(req, res, next, svcInfo);
+          } else if ( svcInfo.totalSvcCnt !== '0' && svcInfo.expsSvcCnt === '0' ) {
+            this.errorNoRegister(req, res, next, svcInfo);
+          } else if ( urlAuth.indexOf(svcGr) !== -1 ) {
             const params = Object.assign(svcInfo, {
               urlAuth
             });
@@ -167,6 +171,14 @@ abstract class TwViewController {
     };
 
     res.render('error.no-auth.html', { svcInfo, data });
+  }
+
+  private errorNoRegister(req, res, next, svcInfo) {
+    res.render('error.no-register.html', { svcInfo });
+  }
+
+  private errorEmptyLine(req, res, next, svcInfo) {
+    res.render('error.empty-line.html', { svcInfo });
   }
 
   private renderPage(req, res, next, path) {

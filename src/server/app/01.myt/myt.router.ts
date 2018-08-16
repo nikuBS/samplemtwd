@@ -46,6 +46,11 @@ import MyTJoinJoinInfoNoContractController from './controllers/join/myt.join.joi
 import MytJoinJoinInfoSmsController from './controllers/join/myt.join.join-info-sms.controller';
 import MytJoinContractTerminalDetail from './controllers/join/myt.join.contract-terminal.detail.controller';
 
+import MytJoinProductService from './controllers/join/myt.join.product-service.controller';
+
+import MytBenefitDiscount from './controllers/benefit/myt.benefit.discount.main.controller';
+import MytBenefitDiscountDetail from './controllers/benefit/myt.benefit.discount.detail.controller';
+
 
 class MytRouter extends TwRouter {
   constructor() {
@@ -103,6 +108,10 @@ class MytRouter extends TwRouter {
     this.controllers.push({ url: '/join/protect/change', controller: new MytJoinProtectChangeController() });
     this.controllers.push({ url: '/join/join-info/no-contract', controller: new MyTJoinJoinInfoNoContractController() });
     this.controllers.push({ url: '/join/join-info/sms', controller: new MytJoinJoinInfoSmsController() });
+    this.controllers.push({ url: '/join/product-service', controller: new MytJoinProductService() });
+
+    this.controllers.push({ url: '/benefit/discount', controller: new MytBenefitDiscount() });
+    this.controllers.push({ url: '/benefit/discount/detail', controller: new MytBenefitDiscountDetail() });
   }
 }
 

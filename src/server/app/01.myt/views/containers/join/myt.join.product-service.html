@@ -1,0 +1,59 @@
+<%#
+* FileName: myt.join.product-service.html
+* Author: 공자윤 (jayoon.kong@sk.com)
+* Date: 2018.08.13
+%>
+<% include ../../components/start.component.html %>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap">
+    <%- include('../../../../common/views/components/header.component.html', { title: '가입 상품/서비스', svcInfo: svcInfo }) %>
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <div class="cont-box nogaps">
+                <!-- .component -->
+                <div class="component">
+                    <div class="component-box tabs">
+                        <div class="tab-area type1"><!-- 타입별 탭형태 변환 -->
+                            <div class="tab-linker">
+                                <ul role="tablist">
+                                    <li role="tab" aria-selected="false" aria-controls="tab1-tab" data-tab="fee-plan"><button>요금제</button></li>
+                                    <li role="tab" aria-selected="false" aria-controls="tab2-tab" data-tab="additions"><button>부가상품</button></li>
+                                    <li role="tab" aria-selected="false" aria-controls="tab3-tab" data-tab="combinations"><button>결합상품</button></li>
+                                </ul>
+                            </div>
+                            <div id="fee-plan" class="tab-contents" style="display: none">
+                                <% include ../../components/join/myt.join.product-service.fee-plan.component.html %>
+                            </div>
+                            <div id="additions" class="tab-contents" style="display: none;">
+                                <% include ../../components/join/myt.join.product-service.additions.component.html %>
+                            </div>
+                            <div id="combinations" class="tab-contents" style="display: none;">
+                                <% include ../../components/join/myt.join.product-service.combinations.component.html %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--// .component -->
+            </div>
+        </div>
+    </div>
+    <!--// #contents -->
+    <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
+</div>
+<% include ../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    new Tw.MyTJoinProductService($('.wrap'));
+  });
+</script>
+<% include ../../components/end.component.html %>
