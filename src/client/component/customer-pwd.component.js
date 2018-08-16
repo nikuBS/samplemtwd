@@ -66,7 +66,7 @@ Tw.CustomerPwdComponent.prototype = {
   },
   _requestLogin: function () {
     var pwd = this.$pwd.val();
-    var api = this._isPopup ? Tw.NODE_CMD.CHANGE_SESSION : Tw.NODE_CMD.SVC_PASSWORD_LOGIN;
+    var api = this._isPopup ? Tw.NODE_CMD.CHANGE_SESSION : Tw.NODE_CMD.LOGIN_SVC_PASSWORD;
     var data = { svcPwd: pwd};
     if (this._isPopup) {
       data.svcMgmtNum = this._serviceNumber;

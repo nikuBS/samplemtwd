@@ -25,14 +25,15 @@ class ApiRouter {
   private setApi() {
     this.router.get('/environment', this.getEnvironment.bind(this));
     this.router.post('/device', this.setDeviceInfo.bind(this));
-    this.router.post('/change-session', this.changeSession.bind(this));
-    this.router.post('/service-password-sessions/login', this.svcPasswordLogin.bind(this));
-    this.router.post('/login-tid', this.loginTid.bind(this));
+    this.router.post('/user/sessions', this.loginTid.bind(this));   // BFF_03_0008
     this.router.post('/logout-tid', this.logoutTid.bind(this));
-    this.router.post('/user-locks/login', this.setUserLocks.bind(this));
-    this.router.post('/easy-login/aos', this.easyLoginAos.bind(this));
-    this.router.post('/easy-login/ios', this.easyLoginIos.bind(this));
-    this.router.put('/service-passwords', this.changeSvcPassword.bind(this));
+    this.router.post('/user/login/android', this.easyLoginAos.bind(this));    // BFF_03_0017
+    this.router.post('/user/login/ios', this.easyLoginIos.bind(this));        // BFF_03_0018
+    this.router.put('/common/selected-sessions', this.changeSession.bind(this));    // BFF_01_0004
+    this.router.post('/user/service-password-sessions', this.loginSvcPassword.bind(this));    // BFF_03_0009
+    this.router.delete('/user/locks', this.setUserLocks.bind(this));    // BFF_03_0010
+    this.router.put('/core-auth/v1/service-passwords', this.changeSvcPassword.bind(this));    // BFF_03_0016
+    this.router.put('/user/services', this.changeLine.bind(this));    // BFF_03_0005
   }
 
   private getEnvironment(req: Request, res: Response, next: NextFunction) {
@@ -67,10 +68,10 @@ class ApiRouter {
     });
   }
 
-  private svcPasswordLogin(req: Request, res: Response, next: NextFunction) {
+  private loginSvcPassword(req: Request, res: Response, next: NextFunction) {
     const params = req.body;
     this.loginService.setCurrentReq(req, res);
-    this.apiService.requestSvcPasswordLogin(params).subscribe((resp) => {
+    this.apiService.requestLoginSvcPassword(params).subscribe((resp) => {
       res.json(resp);
     }, (error) => {
       res.json(error);
@@ -136,6 +137,16 @@ class ApiRouter {
     }, (error) => {
       res.json(error);
     });
+  }
+
+  public changeLine(req: Request, res: Response, next: NextFunction) {
+    const params = req.body;
+    this.loginService.setCurrentReq(req, res);
+    this.apiService.requestChangeLine(params).subscribe((resp) => {
+      res.json(resp);
+    }, (error) => {
+      res.json(error);
+    })
   }
 }
 

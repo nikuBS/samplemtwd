@@ -30,7 +30,6 @@ Tw.API_CMD = {
   BFF_03_0002: { path: '/user/account-auth-sessions', method: Tw.API_METHOD.POST },
   BFF_03_0003: { path: '/user/accounts', method: Tw.API_METHOD.DELETE },
   BFF_03_0004: { path: '/core-auth/v1/services', method: Tw.API_METHOD.GET },
-  BFF_03_0005: { path: '/user/services', method: Tw.API_METHOD.PUT },
   BFF_03_0006: { path: '/user/nick-names/args-0', method: Tw.API_METHOD.PUT },
   BFF_03_0007: { path: '/user/tid-keys', method: Tw.API_METHOD.GET },
   BFF_03_0009: { path: '/user/service-password-sessions', method: Tw.API_METHOD.POST },
@@ -230,14 +229,15 @@ Tw.API_CMD = {
 Tw.NODE_CMD = {
   GET_ENVIRONMENT: { path: '/environment', method: Tw.API_METHOD.GET },
   SET_DEVICE: { path: '/device', method: Tw.API_METHOD.POST },
-  CHANGE_SESSION: { path: '/change-session', method: Tw.API_METHOD.POST },
-  SVC_PASSWORD_LOGIN: { path: '/service-password-sessions/login', method: Tw.API_METHOD.POST },
-  LOGIN_TID: { path: '/login-tid', method: Tw.API_METHOD.POST },
+  LOGIN_TID: { path: '/user/sessions', method: Tw.API_METHOD.POST },
   LOGOUT_TID: { path: '/logout-tid', method: Tw.API_METHOD.POST },
-  USER_LOCK_LOGIN: { path: '/user-locks/login', method: Tw.API_METHOD.POST },
-  EASY_LOGIN_AOS: { path: '/easy-login/aos', method: Tw.API_METHOD.POST },
-  EASY_LOGIN_IOS: { path: '/easy-login/ios', method: Tw.API_METHOD.POST },
-  CHANGE_SVC_PASSWORD: { path: '/service-passwords', method: Tw.API_METHOD.PUT }
+  EASY_LOGIN_AOS: { path: '/user/login/android', method: Tw.API_METHOD.POST },
+  EASY_LOGIN_IOS: { path: '/user/login/ios', method: Tw.API_METHOD.POST },
+  CHANGE_SESSION: { path: '/common/selected-sessions', method: Tw.API_METHOD.PUT },
+  LOGIN_SVC_PASSWORD: { path: '/user/service-password-sessions', method: Tw.API_METHOD.POST },
+  LOGIN_USER_LOCK: { path: '/user/locks', method: Tw.API_METHOD.DELETE },
+  CHANGE_SVC_PASSWORD: { path: '/core-auth/v1/service-passwords', method: Tw.API_METHOD.PUT },
+  CHANGE_LINE: { path: '/user/services', method: Tw.API_METHOD.PUT }
 };
 
 Tw.TMAP = {

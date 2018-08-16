@@ -80,7 +80,7 @@ Tw.AuthLine.prototype = {
   },
   _requestChangeList: function (svcNumList) {
     var lineList = svcNumList.join('~');
-    this._apiService.request(Tw.API_CMD.BFF_03_0005, { svcCtg: Tw.LINE_NAME.MOBILE, svcMgmtNumArr: lineList })
+    this._apiService.request(Tw.NODE_CMD.CHANGE_LINE, { svcCtg: Tw.LINE_NAME.MOBILE, svcMgmtNumArr: lineList })
       .done($.proxy(this._successRegisterLineList, this))
       .fail($.proxy(this._failRegisterLineList, this));
   },
