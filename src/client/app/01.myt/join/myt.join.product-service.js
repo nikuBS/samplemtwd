@@ -6,6 +6,7 @@
 
 Tw.MyTJoinProductService = function (rootEl) {
   this.$container = rootEl;
+  this._historyService = new Tw.HistoryService();
   this._cachedElement();
   this._bindEvents();
   this._init();
@@ -43,14 +44,13 @@ Tw.MyTJoinProductService.prototype = {
 
   _init: function() {
     if (Tw.FormatHelper.isEmpty(window.location.hash)) {
-      window.location.hash = 'fee-plan';
+      this._historyService.goHash('fee-plan');
     }
 
     var initTabKey = window.location.hash.replace('#', '');
 
-    this.$container.find('[data-tab="' + initTabKey + '"]').attr('aria-selected', 'true');
+    this.$container.find('#' + initTabKey + '-tab').attr('aria-selected', 'true');
     this._callOptions(initTabKey);
-    this._showAndHideTabContents(initTabKey);
   },
 
   _bindEvents: function() {
@@ -58,24 +58,18 @@ Tw.MyTJoinProductService.prototype = {
   },
 
   _switchTabContents: function(e) {
-    var activeTabKey = $(e.currentTarget).data('tab');
+    var activeTabKey = $(e.currentTarget).attr('id').replace('-tab', '');
 
     if (!this._options[activeTabKey].isCall) {
       this._callOptions(activeTabKey);
     }
 
-    window.location.hash = activeTabKey;
-    this._showAndHideTabContents(activeTabKey);
+    this._historyService.goHash(activeTabKey);
   },
 
   _callOptions: function(tabKey) {
     this._options[tabKey].isCall = true;
     this._options[tabKey].callFunction();
-  },
-
-  _showAndHideTabContents: function(tabKey) {
-    this.$container.find('.tab-contents').hide();
-    this.$container.find('#' + tabKey).show();
   }
 
 };
