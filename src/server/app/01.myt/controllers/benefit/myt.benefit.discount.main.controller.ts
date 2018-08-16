@@ -14,7 +14,8 @@ class MytBenefitDisCntMainController extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     const data: any = {
-      svcInfo: svcInfo
+      svcInfo: svcInfo,
+      empty: false
     };
     Observable.combineLatest(
       this._getBundleProduct(),
@@ -24,6 +25,9 @@ class MytBenefitDisCntMainController extends TwViewController {
       this._getLongTerm(),
       this._getWelfareCustomer()
     ).subscribe(([bundlePrdc, feeCotc, fundCotc, selDisCnt, longterm, welfareCutm]) => {
+      if ( !bundlePrdc && !feeCotc && !fundCotc && !selDisCnt && !longterm && !welfareCutm ) {
+        data.empty = true;
+      }
       data.bundlePrdc = bundlePrdc;
       data.feeCotc = feeCotc;
       data.fundCotc = fundCotc;
@@ -31,8 +35,7 @@ class MytBenefitDisCntMainController extends TwViewController {
       data.longterm = longterm;
       data.welfareCutm = welfareCutm;
 
-      // TODO: 마크업이 나오면 적용필요!
-      // res.render('benefit/myt.benefit.discount.main', { data });
+      res.render('benefit/myt.benefit.discount.main.html', { data });
     });
   }
 
