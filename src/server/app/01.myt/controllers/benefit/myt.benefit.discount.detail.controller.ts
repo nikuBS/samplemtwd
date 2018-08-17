@@ -58,6 +58,9 @@ class MytBenefitDisCntDetailController extends TwViewController {
       if ( resp.code === API_CODE.CODE_00 ) {
         if ( !FormatHelper.isEmpty(resp.result) ) {
           data = Object.assign(resp.result, data);
+          if ( data.agreeStartDate ) {
+            data.agreeStartDate = DateHelper.getShortDate(data.agreeStartDate);
+          }
         }
       } else {
         this.logger.warn(this, 'FeeContract: ', JSON.stringify(resp));
@@ -90,6 +93,12 @@ class MytBenefitDisCntDetailController extends TwViewController {
       if ( resp.code === API_CODE.CODE_00 ) {
         if ( !FormatHelper.isEmpty(resp.result) ) {
           data = Object.assign(resp.result, data);
+          if ( data.agreeStartDate ) {
+            data.agreeStartDate = DateHelper.getShortDate(data.agreeStartDate);
+          }
+          if ( data.agreeEndDate ) {
+            data.agreeEndDate = DateHelper.getShortDate(data.agreeEndDate);
+          }
         }
       } else {
         this.logger.warn(this, 'SelDiscount: ', JSON.stringify(resp));

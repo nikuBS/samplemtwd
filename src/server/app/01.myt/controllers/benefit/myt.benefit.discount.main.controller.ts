@@ -83,7 +83,6 @@ class MytBenefitDisCntMainController extends TwViewController {
         if ( FormatHelper.isEmpty(resp.result) ) {
           return null;
         } else {
-
           if ( !resp.result['tsuprtAgrmtYn'] || resp.result['tsuprtAgrmtYn'] === 'N' ) {
             // tfeeAgrmtYn(T 지원금 약정 여부) 값 여부로 대상/비대상 설정
             return null;
@@ -103,7 +102,12 @@ class MytBenefitDisCntMainController extends TwViewController {
         if ( FormatHelper.isEmpty(resp.result) ) {
           return null;
         } else {
-          return resp.result;
+          // 선택약정 25%, 20% 둘다 없는 경우 비대상
+          if ( resp.result['selAgrmtDc25Yn'] === 'N' && resp.result['selAgrmtDc20Yn'] === 'N' ) {
+            return null;
+          } else {
+            return resp.result;
+          }
         }
       } else {
         return null;
