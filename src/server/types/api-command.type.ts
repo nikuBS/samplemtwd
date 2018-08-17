@@ -138,6 +138,8 @@ export const API_CMD = {
   BFF_05_0111: { path: '/core-modification/v1/benefit/wlf-cust-dc', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0128: { path: '/core-product/v1/services/wire/fee-plans', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0129: { path: '/core-product/v1/services/wire/additions', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0133: { path: '/core-product/v1/services/combinations', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0134: { path: '/core-product/v1/services/combinations', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0136: { path: '/core-product/v1/services/wireless/fee-plans', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0137: { path: '/core-product/v1/services/wireless/additions', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
 
@@ -266,7 +268,8 @@ export const API_CMD = {
     path: '/core-bill/v1/useContentsPrepay/useContents-autoPrepay-hist',
     method: API_METHOD.GET,
     server: API_SERVER.BFF,
-    bypass: true },
+    bypass: true
+  },
   BFF_07_0080: {
     path: '/core-bill/v1/useContentsPrepay/useContents-autoPrepay-reqYn',
     method: API_METHOD.GET,
