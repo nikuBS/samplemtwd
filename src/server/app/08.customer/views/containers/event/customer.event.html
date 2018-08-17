@@ -15,7 +15,14 @@
 <!--// #skip_navigation -->
 <div class="wrap">
     <!-- #header -->
-    <%- include('../../../../common/views/components/header.component.html', { title: '이벤트', svcInfo: svcInfo }); %>
+    <div id="header" class="header-wrap">
+        <div class="header">
+            <div class="header-ti align-l">
+                <h1>이벤트</h1>
+            </div>
+            <button class="prev-step fe-common-back"><span class="blind">이전으로</span></button>
+        </div>
+    </div>
     <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap">
@@ -28,11 +35,11 @@
                 <div class="component">
                     <div class="component-box tabs">
                         <div class="tab-area type1"><!-- 타입별 탭형태 변환 -->
-                            <div class="tab-linker">
+                            <div class="tab-linker fe-tab-menu">
                                 <ul role="tablist">
-                                    <li role="tab" aria-selected="true" aria-controls="tab1-tab" id="tab1"><a href="">진행중 이벤트</a></li><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
-                                    <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2"><a href="">지난 이벤트</a></li>
-                                    <li role="tab" aria-selected="false" aria-controls="tab3-tab" id="tab3"><a href="">당첨자발표</a></li>
+                                    <li role="tab" aria-selected="true" aria-controls="tab1-tab" id="tab1"><a>진행중 이벤트</a></li><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
+                                    <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2"><a>지난 이벤트</a></li>
+                                    <li role="tab" aria-selected="false" aria-controls="tab3-tab" id="tab3"><a>당첨자발표</a></li>
                                 </ul>
                             </div>
                             <div class="tab-contents">

@@ -19,6 +19,14 @@ Tw.DateHelper = (function () {
   };
 
   /**
+   * @param date {Date} or {string} : YYYYMMDDhhmmss
+   * @returns {number} : 30
+   */
+  var getNewRemainDate = function (date) {
+    return moment(this.convDateFormat(date)).diff(new Date(), 'day') + 2;
+  };
+
+  /**
    * Convert Date Format (BFF string to Date)
    * @param {string} date
    * @returns {Date}
@@ -190,6 +198,7 @@ Tw.DateHelper = (function () {
 
   return {
     getRemainDate: getRemainDate,
+    getNewRemainDate: getNewRemainDate,
     getShortDate: getShortDate,
     getShortDateNoDot: getShortDateNoDot,
     getShortDateNoYear: getShortDateNoYear,

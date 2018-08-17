@@ -790,7 +790,7 @@ Tw.MYT_HISTORY_CPSTATE = {
 Tw.MYT_HISTORY_CPSTATE_KOR = {
   A0: '차단중',
   A1: '다음 달<br />차단예정'
-}
+};
 
 Tw.HP_NUM_LIST = ['011', '016', '017', '019'];
 
@@ -798,4 +798,9 @@ Tw.UPLOAD_FILE = {
   WARNING_A01: '첨부파일 용량은 30MB를 넘을 수 없습니다.',
   WARNING_A02: '첨부파일은 최대 5개까지 등록할 수 있습니다.',
   WARNING_A03: 'MS워드, 한글hwp, 이미지 (jpg, bmp, gif,pdf)파일을 첨부할 수 있습니다.',
-}
+};
+
+Tw.EVENT_TYPE = {
+  N: '일반형',
+  E: '응모형'
+};
