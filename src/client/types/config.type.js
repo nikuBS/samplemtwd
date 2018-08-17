@@ -1,5 +1,6 @@
 // Common
 Tw.DEFAULT_LIST_COUNT = 20;
+Tw.MAX_FILE_SIZE = 30 * 1024 * 1024;
 
 // Auth
 Tw.MAX_NICKNAME_LEN = 7;

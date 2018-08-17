@@ -21,7 +21,7 @@ class ApiRouter {
     this.router = express.Router();
     const storage = multer.diskStorage({
       destination: (req, file, cb) => {
-        cb(null, __dirname + '/uploads/');
+        cb(null, __dirname + '../../../../uploads/');
       },
       filename: (req, file, cb) => {
         cb(null, new Date().valueOf() + path.extname(file.originalname));
@@ -61,10 +61,11 @@ class ApiRouter {
           result: files.map((file) => {
             return {
               name: file.filename,
-              size: file.size
+              size: file.size,
+              originalName: file.originalname
             };
           })
-        }
+        };
         res.json(resp);
       });
     });
