@@ -4,11 +4,12 @@
  * Date: 2018.08.13
  */
 import { NextFunction, Request, Response } from 'express';
-import { API_CMD } from '../../../../types/api-command.type';
+import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import FormatHelper from '../../../../utils/format.helper';
 import { Observable } from 'rxjs/Observable';
-import { SVC_CDNAME } from '../../../../types/bff.type';
+import { SVC_CDNAME, SVC_CDGROUP } from '../../../../types/bff.type';
+import { Combinations } from '../../../../mock/server/myt.join.product-service.mock';
 import { MYT_COMBINATION_TYPE } from '../../../../types/string.type';
 
 interface ICombination {
@@ -29,30 +30,86 @@ class MytJoinProductServiceController extends TwViewController {
     super();
   }
 
-  private _convertDataFeePlan(data: any): any {
-    if (FormatHelper.isEmpty(data)) {
-      return {
-        tClassProList: []
-      };
+  private _additionsInfo: any;
+  private _combinationsInfo: any;
+
+  /**
+   * @param svcAttrCd
+   * @private
+   */
+  private _getFeePlanApiCode(svcAttrCd): any {
+    if (SVC_CDGROUP.WIRELESS.indexOf(svcAttrCd) !== -1) {
+      return API_CMD.BFF_05_0136;
     }
+
+    if (SVC_CDGROUP.WIRE.indexOf(svcAttrCd) !== -1) {
+      return API_CMD.BFF_05_0128;
+    }
+
+    return null;
+  }
+
+  /**
+   * @param svcAttrCd
+   * @private
+   */
+  private _getFeePlanApiResponse(svcAttrCd): any {
+    const apiCode = this._getFeePlanApiCode(svcAttrCd);
+    if (FormatHelper.isEmpty(apiCode)) {
+      return null;
+    }
+
+    return this.apiService.request(apiCode, {}, {});
+  }
+
+  /**
+   * @param code
+   * @private
+   */
+  private _isSuccess(code): any {
+    return API_CODE.CODE_00 === code;
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    const feePlanWirelessApi: Observable<any> = this.apiService.request(API_CMD.BFF_05_0136, {}, {});
-    const feePlanWireApi: Observable<any> = this.apiService.request(API_CMD.BFF_05_0128, {}, {});
-    // const combinations: ICombinationList = Combinations;
+    const thisMain = this,
+        feePlanApi = this._getFeePlanApiResponse(svcInfo.svcAttrCd);
 
-    Observable.combineLatest(
-      feePlanWireApi,
-      feePlanWirelessApi,
-      this.getCombinations()
-    ).subscribe(([productServiceList, feePlanWirei, combinations]) => {
-      console.log(productServiceList);
-      res.render('join/myt.join.product-service.html', {
-        svcInfo: svcInfo,
-        svcCdName: SVC_CDNAME,
-        feePlan: this._convertDataFeePlan([]),
-        combinations
+    // @todo svcAttrCd Empty 일때 처리
+    if (FormatHelper.isEmpty(feePlanApi)) {
+      return res.redirect('/myt');
+    }
+
+    feePlanApi.subscribe((data) => {
+      if (!this._isSuccess(data.code)) {
+        this.error.render(res, {
+          title: '나의 가입서비스',
+          code: data.code,
+          msg: data.msg,
+          svcInfo: svcInfo
+        });
+      }
+
+      const additionsApi: Observable<any> = this.apiService.request(API_CMD.BFF_05_0128, {}, {});
+      // const combinationsApi: Observable<any> = this.apiService.request(API_CMD.BFF_05_0128, {}, {});
+      const combinations: ICombinationList = Combinations;
+
+      Observable.combineLatest(
+          additionsApi
+      ).subscribe({
+        next([
+         additions
+       ]) {
+          thisMain._additionsInfo = thisMain._isSuccess(additions.code) ? additions.result : null;
+          // thisMain._combinationsInfo = thisMain._isSuccess(combinations.code) ? combinations.result : null;
+        },
+        complete() {
+          res.render('join/myt.join.product-service.html', {
+            svcInfo: svcInfo,
+            svcCdName: SVC_CDNAME,
+            feePlan: null,
+            combinations
+          });
+        }
       });
     });
   }

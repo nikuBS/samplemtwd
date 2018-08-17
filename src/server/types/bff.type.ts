@@ -35,6 +35,11 @@ export const SVC_CDNAME = {
   O1: 'pointcam'
 };
 
+export const SVC_CDGROUP = {
+  WIRELESS: ['M1', 'M2', 'M3', 'M4', 'M5'],
+  WIRE: ['S1', 'S2', 'S3']
+};
+
 export const UNIT = {
   '110': '원',
   '140': 'KB',
