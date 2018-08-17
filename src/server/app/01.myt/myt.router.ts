@@ -52,6 +52,8 @@ import MytJoinProductServiceFeeAlarmController from './controllers/join/myt.join
 import MytBenefitDiscount from './controllers/benefit/myt.benefit.discount.main.controller';
 import MytBenefitDiscountDetail from './controllers/benefit/myt.benefit.discount.detail.controller';
 import MyTBenefitPoint from './controllers/benefit/myt.benefit.point.controller';
+import MytBenefitRecommendController from './controllers/benefit/myt.benefit.recommend.controller';
+import MytBenefitRecommendDetailController from './controllers/benefit/myt.benefit.recommend.detail.controller';
 
 
 class MytRouter extends TwRouter {
@@ -117,6 +119,8 @@ class MytRouter extends TwRouter {
     this.controllers.push({ url: '/benefit/discount', controller: new MytBenefitDiscount() });
     this.controllers.push({ url: '/benefit/discount/detail', controller: new MytBenefitDiscountDetail() });
     this.controllers.push({ url: '/benefit/point', controller: new MyTBenefitPoint() });
+    this.controllers.push({ url: '/benefit/recommend', controller: new MytBenefitRecommendController() });
+    this.controllers.push({ url: '/benefit/recommend/detail', controller: new MytBenefitRecommendDetailController() });
   }
 }
 

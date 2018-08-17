@@ -244,7 +244,9 @@ Tw.NODE_CMD = {
   LOGIN_SVC_PASSWORD: { path: '/user/service-password-sessions', method: Tw.API_METHOD.POST },
   LOGIN_USER_LOCK: { path: '/user/locks', method: Tw.API_METHOD.DELETE },
   CHANGE_SVC_PASSWORD: { path: '/core-auth/v1/service-passwords', method: Tw.API_METHOD.PUT },
-  CHANGE_LINE: { path: '/user/services', method: Tw.API_METHOD.PUT }
+  CHANGE_LINE: { path: '/user/services', method: Tw.API_METHOD.PUT },
+
+  UPLOAD_FILE: { path: '/uploads', method: Tw.API_METHOD.POST }
 };
 
 Tw.TMAP = {
