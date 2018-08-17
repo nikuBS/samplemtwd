@@ -45,8 +45,9 @@ Tw.MytJoinPayClaim.prototype = {
     this._goLoad('/myt/bill/billguide');
   },
   _goSkBroadband: function() {
-    window.open( Tw.URL_PATH.BROADBAND, '_blank');
-    // this._goLoad('http://www.skbroadband.com');
+    // window.open( Tw.URL_PATH.BROADBAND, '_self');
+    // window.open( 'http://www.naver.com');
+    this._goLoad( Tw.URL_PATH.BROADBAND );
   },
   //--------------------------------------------------------------------------[이벤트 | 팝업]
   // _selPopOpen : function(event) {

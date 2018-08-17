@@ -214,7 +214,9 @@ export enum USAGE_PATTERN_CHART {
 export const USAGE_PATTERN_NAME = ['데이터', '음성통화', '문자'];
 
 export const MYT_JOIN_CONTRACT_TERMINAL = { // 약정할인 및 단말분할상환정보
-  FEE_TYPE_A: '',
+  FEE_TYPE_A: {
+    TIT_NM: '요금약정할인24 (730일)'
+  },
   FEE_TYPE_B: {
     TIT_NM: '테블릿 약정할인 12'
   },
