@@ -208,3 +208,8 @@ export enum REQUEST_TYPE {
   C = '변경',
   F = '해지'
 }
+
+export enum PROMOTION_TYPE {
+  N = '일반형',
+  E = '응모형'
+}
