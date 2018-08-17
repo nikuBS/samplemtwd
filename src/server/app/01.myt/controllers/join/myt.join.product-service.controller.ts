@@ -7,7 +7,7 @@ import { NextFunction, Request, Response } from 'express';
 import { API_CMD } from '../../../../types/api-command.type';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import FormatHelper from '../../../../utils/format.helper';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import { SVC_CDNAME } from '../../../../types/bff.type';
 import { Combinations } from '../../../../mock/server/myt.join.product-service.mock';
 import { MYT_COMBINATION_TYPE } from '../../../../types/string.type';
@@ -17,8 +17,9 @@ interface ICombination {
   prodNm: string;  // 상품명
   scrbDt: string;  // 가입 일자
   prodSmryDesc: string;  // 상품 요약 설명
-  items: { icon: string; description: string; }[]
-};
+  items: { icon: string; description: string; }[];
+  hasDetail: boolean;
+}
 
 interface ICombinationList {
   [key: string]: ICombination;
@@ -57,27 +58,31 @@ class MytJoinProductServiceController extends TwViewController {
   }
 
   private getCombinations = (): Observable<ICombinationList> => {
-    return this.apiService.request(API_CMD.BFF_05_0133, {}).map((resp: { code: string, result: { combinationWireMemberList?: any[], combinationWirelessMemberList?: any[] } }) => {
-      const combinations: ICombinationList = {};
-      const wireless = resp.result.combinationWirelessMemberList;
-      const wire = resp.result.combinationWireMemberList;
+    return this.apiService.request(API_CMD.BFF_05_0133, {}).map(
+      (resp: {
+        code: string,
+        result: { combinationWireMemberList?: any[], combinationWirelessMemberList?: any[] }
+      }) => {
+        const combinations: ICombinationList = {};
+        const wireless = resp.result.combinationWirelessMemberList;
+        const wire = resp.result.combinationWireMemberList;
 
-      if (wireless) {
-        for (let i = 0; i < wireless.length; i++) {
-          const item = wireless[i];
-          combinations[item.expsOrder] = this.getProperCombination(item);
+        if (wireless) {
+          for (let i = 0; i < wireless.length; i++) {
+            const item = wireless[i];
+            combinations[item.expsOrder] = this.getProperCombination(item);
+          }
         }
-      }
 
-      if (wire) {
-        for (let i = 0; i < wire.length; i++) {
-          const item = wire[i];
-          combinations[item.expsOrder] = this.getProperCombination(item);
+        if (wire) {
+          for (let i = 0; i < wire.length; i++) {
+            const item = wire[i];
+            combinations[item.expsOrder] = this.getProperCombination(item);
+          }
         }
-      }
 
-      return combinations;
-    });
+        return combinations;
+      });
   }
 
   private getProperCombination = (item: any): ICombination => {
@@ -86,7 +91,8 @@ class MytJoinProductServiceController extends TwViewController {
       prodNm: item.prodNm,
       scrbDt: item.scrbDt,
       prodSmryDesc: item.prodSmryDesc,
-      items: []
+      items: [],
+      hasDetail: true  // 한가족 할인 or TB끼리 TV플러스 : false
     };
 
     switch (item.prodId) {

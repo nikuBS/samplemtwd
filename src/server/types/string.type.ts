@@ -318,4 +318,4 @@ export const MYT_COMBINATION_TYPE = {
   IPTV: 'IPTV',
   TEL: '전화',
   ITEL: '인터넷 전화'
-}
+};

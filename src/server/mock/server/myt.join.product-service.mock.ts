@@ -14,7 +14,8 @@ const Combinations = {
         'icon': 'multi',
         'description': '1~4'
       }
-    ]
+    ],
+    'hasDetail': true
   }
 }
 
