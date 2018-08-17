@@ -194,12 +194,12 @@ export enum RESEARCH_EXAMPLE_TYPE {
   ETC = '기타'
 }
 
-export enum CURRENCY_UNIT  {
+export enum CURRENCY_UNIT {
   WON = '원',
   TEN_THOUSAND = '만원'
 }
 
-export enum MYT_JOIN_TYPE  {
+export enum MYT_JOIN_TYPE {
   PAY = '납부',
   UNPAID = '미청구'
 }
@@ -267,7 +267,7 @@ export const MYT_JOIN_CONTRACT_TERMINAL = { // 약정할인 및 단말분할상�
 };
 
 export const MYT_JOIN = {
-  OPENING_DATE_STR : '2007.03.01 이후 신규 가입자에 한하여 확인가능 합니다.'
+  OPENING_DATE_STR: '2007.03.01 이후 신규 가입자에 한하여 확인가능 합니다.'
 };
 
 export enum MYT_USAGE_TROAMING_SHARE {
@@ -310,3 +310,12 @@ export const MYT_BENEFIT_RECOMMEND = {
   }
 };
 
+export const MYT_COMBINATION_TYPE = {
+  MULTI_ONE: '1~4',
+  MULTI_TWO: '2~4',
+  LINE: '휴대폰',
+  INTERNET: '인터넷',
+  IPTV: 'IPTV',
+  TEL: '전화',
+  ITEL: '인터넷 전화'
+};

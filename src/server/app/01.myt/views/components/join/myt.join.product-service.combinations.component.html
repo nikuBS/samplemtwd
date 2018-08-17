@@ -1,1 +1,79 @@
-combinations
+<%#
+* FileName: myt.join.product-service.combinations.component.html
+* Author: Jiyoung Jo (jiyoungjo@sk.com)
+* Date: 2018.08.16
+%>
+
+
+<!-- .cont-box -->
+<div class="cont-box">				
+    <% if (combinations.length === 0) { %>
+        <div class="plan-recommend pt0">
+            <p class="txt pt0"><span class="ff-hn vbl">T</span>가족이라면?<br /><em>결합상품</em>에 가입해보세요!</p>
+            <div class="btn-wrap">
+                <button class="bt-link-tx">구경하러 가기<span class="ico"></span></button>
+            </div>
+        </div>
+        <div class="cont-list mt30 mb30">
+            <ul class="bullet-dot">
+                <li>휴대폰 월정액 할인</li>
+                <li>데이터 적립/선물</li>
+                <li>인터넷 기본료 기본제공/할인</li>
+                <li>집전화/인터넷전화 기본제공/할인</li>
+                <li>가족간 통화료 할인</li>
+            </ul>
+        </div>
+        <span class="img-w100">
+            <img src="/img/dummy/dmy-MY_01_01_100.jpg" alt="" />
+        </span>	
+    <% } else { %>
+        <div class="plan-list">
+            <ul>
+                <% for (let combIdx in combinations) { %>
+                    <% const combination = combinations[combIdx]; %>
+                    <li>
+                        <div class="type">
+                            <button role="button" class="btn-plan"><%= combination.prodNm %></button>
+                            <button role="button" class="ico-info fe-comb-desc" data-description="<%= combination.prodSmryDesc %>" data-title="<%= combination.prodNm %>"><span class="blind"><%= combination.prodNm %> 상세보기</span></button>
+                        </div>
+                        <div class="date">
+                            <span class="tit">신청일</span>
+                            <span class="num"><%= combination.scrbDt %></span>
+                        </div>
+                        <div class="line-info">
+                            <% for (let i = 0; i < combination.items; i++) { %>
+                                <% if (i === 1) { %>
+                                    <span class="plus">+</span>
+                                <% } else if (i === 2) { %>
+                                    <span class="or">or</span>
+                                <% } %>
+                                
+                                <% var item = combination.items[i]; %>
+                                <span class="txt">
+                                <% if (item.icon === 'multi') { %>
+                                    <i class="ico-<%= item.icon %>"></i><%= item.description %>
+                                <% } else { %>
+                                    <i class="ico-multi"></i><span class="num"><%= item.description %></span>회선
+                                <% } %>
+                                </span>
+                            <% } %>
+                        </div>
+                        <% if (combination.hasDetail) { %>
+                        <div class="link-long last">
+                            <button>결합가족 보기<span class="ico"></span></button>
+                        </div>
+                        <% } %>
+                        <!-- 상품 파트 검토 필요 -->
+                        <!-- <div class="link-long">
+                            <button>결합가족 보기<span class="ico"></span></button>
+                        </div>
+                        <div class="link-long last">
+                            <button>해지하기<span class="ico"></span></button>
+                        </div> -->
+                    </li>
+                <% } %>
+            </ul>
+        </div>
+    <% } %>
+</div>
+<!--// .cont-box -->
