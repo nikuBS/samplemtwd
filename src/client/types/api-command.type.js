@@ -215,6 +215,7 @@ Tw.API_CMD = {
   BFF_08_0045: { path: '/core-modification/v1/email-inquiry/quality-internet', method: Tw.API_METHOD.POST },
 
   // EVENT
+  BFF_09_0001: { path: '/core-membership/v1/event/ing-list', method: Tw.API_METHOD.GET },
   BFF_09_0002: { path: '/core-membership/v1/event/detail', method: Tw.API_METHOD.GET },
   BFF_09_0003: { path: '/core-membership/v1/event/old-list', method: Tw.API_METHOD.GET },
   BFF_09_0004: { path: '/core-membership/v1/event/win-list', method: Tw.API_METHOD.GET },
