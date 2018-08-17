@@ -42,9 +42,7 @@ class MytBenefitDisCntDetailController extends TwViewController {
   _getBundleProduct(data, res) {
     this.apiService.request(API_CMD.BFF_05_0094, {}).subscribe((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
-        if ( FormatHelper.isEmpty(resp.result) ) {
-          data = Object.assign({}, data);
-        } else {
+        if ( !FormatHelper.isEmpty(resp.result) ) {
           data = Object.assign(resp.result, data);
         }
       } else {
@@ -57,9 +55,7 @@ class MytBenefitDisCntDetailController extends TwViewController {
   _getFeeContract(data, res) {
     this.apiService.request(API_CMD.BFF_05_0106, {}).subscribe((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
-        if ( FormatHelper.isEmpty(resp.result) ) {
-          data = Object.assign({}, data);
-        } else {
+        if ( !FormatHelper.isEmpty(resp.result) ) {
           data = Object.assign(resp.result, data);
         }
       } else {
@@ -72,9 +68,7 @@ class MytBenefitDisCntDetailController extends TwViewController {
   _getSubFundContract(data, res) {
     this.apiService.request(API_CMD.BFF_05_0107, {}).subscribe((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
-        if ( FormatHelper.isEmpty(resp.result) ) {
-          data = Object.assign({}, data);
-        } else {
+        if ( !FormatHelper.isEmpty(resp.result) ) {
           data = Object.assign(resp.result, data);
         }
       } else {
@@ -87,9 +81,7 @@ class MytBenefitDisCntDetailController extends TwViewController {
   _getSelDiscount(data, res) {
     this.apiService.request(API_CMD.BFF_05_0108, {}).subscribe((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
-        if ( FormatHelper.isEmpty(resp.result) ) {
-          data = Object.assign({}, data);
-        } else {
+        if ( !FormatHelper.isEmpty(resp.result) ) {
           data = Object.assign(resp.result, data);
         }
       } else {
@@ -102,9 +94,7 @@ class MytBenefitDisCntDetailController extends TwViewController {
   _getLongTerm(data, res) {
     this.apiService.request(API_CMD.BFF_05_0110, {}).subscribe((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
-        if ( FormatHelper.isEmpty(resp.result) ) {
-          data = Object.assign({}, data);
-        } else {
+        if ( !FormatHelper.isEmpty(resp.result) ) {
           data = Object.assign(resp.result, data);
         }
       } else {
@@ -117,9 +107,7 @@ class MytBenefitDisCntDetailController extends TwViewController {
   _getWelfareCustomer(data, res) {
     this.apiService.request(API_CMD.BFF_05_0111, {}).subscribe((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
-        if ( FormatHelper.isEmpty(resp.result) ) {
-          data = Object.assign({}, data);
-        } else {
+        if ( !FormatHelper.isEmpty(resp.result) ) {
           data = Object.assign(resp.result, data);
         }
       } else {

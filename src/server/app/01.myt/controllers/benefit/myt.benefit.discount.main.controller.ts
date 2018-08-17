@@ -45,7 +45,12 @@ class MytBenefitDisCntMainController extends TwViewController {
         if ( FormatHelper.isEmpty(resp.result) ) {
           return null;
         } else {
-          return resp.result;
+          if ( !resp.result['comYn'] || resp.result['comYn'] === 'N' ) {
+            // SKT 결합 상품은 없는 경우에도 성공, comYn 값 여부로 대상/비대상 설정
+            return null;
+          } else {
+            return resp.result;
+          }
         }
       } else {
         return null;
@@ -115,7 +120,12 @@ class MytBenefitDisCntMainController extends TwViewController {
         if ( FormatHelper.isEmpty(resp.result) ) {
           return null;
         } else {
-          return resp.result;
+          if ( !resp.result['useYn'] || resp.result['useYn'] === 'N' ) {
+            // useYn 값 여부로 대상/비대상 설정
+            return null;
+          } else {
+            return resp.result;
+          }
         }
       } else {
         return null;
