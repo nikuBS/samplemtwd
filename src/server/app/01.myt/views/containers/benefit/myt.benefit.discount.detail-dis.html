@@ -1,0 +1,98 @@
+<%#
+* FileName: myt.benefit.discount.detail.html
+* Author: Kim InHwan (skt.P132150@partner.sk.com)
+* Date: 2018.08.14
+* Info:
+%>
+<% include ../../components/start.component.html %>
+<% include ../../components/javascript.component.html %>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap">
+    <!-- #header -->
+    <%- include('../../../../common/views/components/header.component.html', { title: '선택 약정 할인', svcInfo: data.svcInfo }); %>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <div class="cont-box">
+                <div class="inner-block">
+                    <h2 class="title-h2">나의 할인 혜택</h2>
+                    <div class="exp-top">
+                        <span class="tx-exp mb12">선택약정할인 적용기간</span>
+                        <span class="tx-bold">약정시작일 : 2013.10.22<br />약정만료일 : 2015.10.21</span>
+                    </div>
+                    <div class="contents-btn">
+                        <ul class="bt-slice">
+                            <li class="bt-blue1">
+                                <button>나의 선택약정할인 정보 확인</button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="inner-block">
+                    <h2 class="title-h2">휴대폰 지원금을 받지 않으셨다면,<br />선택약정할인으로 혜택 받으세요!</h2>
+                    <div class="benefit-img"><img src="/img/dummy/dmy-circuit04.png" alt=""/></div>
+                    <div class="contents-btn">
+                        <ul class="bt-slice">
+                            <li class="bt-white1">
+                                <button>혜택 자세히보기</button>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="exp-list mt20">
+                        <ul>
+                            <li>
+                                <span class="title">혜택 대상</span>
+                                <ul class="dash-list">
+                                    <li>중고폰 또는 해외에서 직접 구매한 휴대폰</li>
+                                    <li>개통 후 24개월이 지난 휴대폰<br />
+                                        (휴대폰 지원금을 받지 않는 경우)</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <span class="title">할인 혜택</span>
+                                <ul class="dash-list">
+                                    <li class="no-dash">지원금에 상응하는 25% 추가 요금할인을 제공합니다.<br />
+                                        (단, 17년 9월 15일 이전 가입자는 20% 할인)<br />
+                                        신청방식 : (요금제 월정액-24개월 기준 요금약정할인액) X 25%
+                                    </li>
+                                    <!-- 20% 인 경우 처리
+                                    <li class="no-dash">지원금에 상응하는 20% 추가 요금할인을 제공합니다.<br />
+                                        (단, 17년 9월 15일 이전 가입자는 25% 할인)<br />
+                                        신청방식 : (요금제 월정액-24개월 기준 요금약정할인액) X 20%
+                                    </li>-->
+                                </ul>
+                            </li>
+                            <li>
+                                <span class="title">약정기간</span>
+                                <ul class="dash-list">
+                                    <li class="no-dash">1년 또는 2년 중 선택 가능</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!--// #contents -->
+</div>
+<script>
+  $(document).ready(function () {
+    new Tw.MyTBenefitDisCntDetail({
+      $element: $('#protect-change')
+    });
+  });
+</script>
+<% include ../../components/end.component.html %>

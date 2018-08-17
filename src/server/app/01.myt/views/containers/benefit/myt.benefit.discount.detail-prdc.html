@@ -1,0 +1,99 @@
+<%#
+* FileName: myt.benefit.discount.detail.html
+* Author: Kim InHwan (skt.P132150@partner.sk.com)
+* Date: 2018.08.14
+* Info:
+%>
+<% include ../../components/start.component.html %>
+<% include ../../components/javascript.component.html %>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap">
+    <!-- #header -->
+    <%- include('../../../../common/views/components/header.component.html', { title: 'SKT 결합상품', svcInfo: data.svcInfo }); %>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <div class="cont-box">
+                <% if (data.combYn && data.combYn === 'Y') { %>
+                <div class="inner-block">
+                    <h2 class="title-h2">나의 할인 혜택</h2>
+                    <div class="exp-top">
+                        <span class="tx-exp">사용중인 결합 요금상품<br />
+                            <span class="tx-bold">TB끼리 온가족 무료 외 2건</span>
+                        </span>
+                    </div>
+                    <div class="contents-btn">
+                        <ul class="bt-slice">
+                            <li class="bt-blue1">
+                                <button>나의 결합상품 확인</button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <% } else { %>
+                <div class="inner-block">
+                    <h2 class="title-h2">혜택 받는 법</h2>
+                    <div class="exp-top">
+                        <span class="tx-exp">T world 예약 가입 신청 시 구비서류 제출후 서류 심사를 통해 결합 혜택 적용</span>
+                    </div>
+                    <div class="contents-btn">
+                        <ul class="bt-slice">
+                            <li class="bt-blue1">
+                                <button>내게 맞는 결합상품 찾기</button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <% } %>
+                <div class="inner-block">
+                    <h2 class="title-h2">혜택은 더하고 통신비는 절감하는<br /><span class="ff-hn vb">SKT</span> 결합상품</h2>
+                    <div class="benefit-img"><img src="/img/dummy/dmy-circuit04.png" alt=""/></div>
+                    <div class="contents-btn">
+                        <ul class="bt-slice">
+                            <li class="bt-white1">
+                                <button>혜택 자세히보기</button>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="exp-list mt20">
+                        <ul>
+                            <li>
+                                <span class="title">가족형 결합</span>
+                                <ul class="dash-list">
+                                    <li class="no-dash">이동전화 회선수에 따라 전화, 인터넷 무료 제공에 준하는 금액을 할인해 드립니다.</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <span class="title">개인형 결합</span>
+                                <ul class="dash-list">
+                                    <li>이동전화 1회선과 인터넷 또는 TV,전화를 결합하여 초고속 요금을 할인해 드립니다.</li>
+                                    <li>이동전화가 없어도 인터넷에 TV또는 전화와 묶으면 2,000원씩 요금을 할인해 드립니다.</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!--// #contents -->
+</div>
+<script>
+  $(document).ready(function () {
+    new Tw.MyTBenefitDisCntDetail({
+      $element: $('#protect-change')
+    });
+  });
+</script>
+<% include ../../components/end.component.html %>
