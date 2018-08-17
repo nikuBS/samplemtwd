@@ -214,6 +214,12 @@ Tw.API_CMD = {
   BFF_08_0044: { path: '/core-modification/v1/email-inquiry/quality-mobile', method: Tw.API_METHOD.POST },
   BFF_08_0045: { path: '/core-modification/v1/email-inquiry/quality-internet', method: Tw.API_METHOD.POST },
 
+  // EVENT
+  BFF_09_0002: { path: '/core-membership/v1/event/detail', method: Tw.API_METHOD.GET },
+  BFF_09_0003: { path: '/core-membership/v1/event/old-list', method: Tw.API_METHOD.GET },
+  BFF_09_0004: { path: '/core-membership/v1/event/win-list', method: Tw.API_METHOD.GET },
+  BFF_09_0005: { path: '/core-membership/v1/event/win-detail', method: Tw.API_METHOD.GET },
+
   // TEST
   GET: { path: '/posts', method: Tw.API_METHOD.GET },
   GET_PARAM: { path: '/comments', method: Tw.API_METHOD.GET },
