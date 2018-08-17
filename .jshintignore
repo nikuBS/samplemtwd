@@ -1,5 +1,4 @@
 /node_modules/
 /src/client/right-brain/
-/src/client/utils/polyfill.util.js
 /src/client/services/common/hash.service.js
 /src/client/types/string.type.js
