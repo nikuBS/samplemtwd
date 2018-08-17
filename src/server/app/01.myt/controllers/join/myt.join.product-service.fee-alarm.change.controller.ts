@@ -9,6 +9,7 @@ import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
+import { WireLess, WirelessEnableAlarm, WirelessDisableAlarm } from '../../../../mock/server/myt.join.product-service.mock';
 
 class MytJoinProductServiceFeeAlarmChangeController extends TwViewController {
   constructor() {
@@ -31,14 +32,43 @@ class MytJoinProductServiceFeeAlarmChangeController extends TwViewController {
    * @private
    */
   private _convertFeePlanInfo(feePlanInfo): any {
-    return Object.assign(feePlanInfo.feePlanProd, {
-      scrbDt: DateHelper.getShortDateWithFormat(feePlanInfo.feePlanProd.scrbDt, 'YY.MM.DD')
+    return Object.assign(feePlanInfo.useFeePlanPro, {
+      scrbDt: DateHelper.getShortDateWithFormat(feePlanInfo.useFeePlanPro.scrbDt, 'YY.MM.DD')
     });
   }
 
+  /**
+   * @param alarmInfo
+   * @private
+   */
+  private _convertAlarmInfo(alarmInfo): any {
+    return Object.assign(alarmInfo, {
+      notiSchdDt: DateHelper.getShortDateWithFormat(alarmInfo.notiSchdDt, 'YY.MM.DD'),
+      reqDt: DateHelper.getShortDateWithFormat(alarmInfo.reqDt, 'YY.MM.DD')
+    });
+  }
+
+  /**
+   * @todo
+   * @private
+   */
+  private _getMockDataFeePlan(): Observable<any> {
+    return Observable.of(WireLess);
+  }
+
+  /**
+   * @todo
+   * @private
+   */
+  private _getMockDataAlarmStatus(): Observable<any> {
+    return Observable.of(WirelessEnableAlarm);
+  }
+
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    const myCurrentWirelessFeePlanApi: Observable<any> = this.apiService.request(API_CMD.BFF_05_0136, {}, {});
-    const myFeePlanAlarmStatusApi: Observable<any> = this.apiService.request(API_CMD.BFF_05_0125, {}, {});
+    // const myCurrentWirelessFeePlanApi: Observable<any> = this.apiService.request(API_CMD.BFF_05_0136, {}, {});
+    // const myFeePlanAlarmStatusApi: Observable<any> = this.apiService.request(API_CMD.BFF_05_0125, {}, {});
+    const myCurrentWirelessFeePlanApi: Observable<any> = this._getMockDataFeePlan();
+    const myFeePlanAlarmStatusApi: Observable<any> = this._getMockDataAlarmStatus();
     const thisMain = this;
 
     Observable.combineLatest(
@@ -69,7 +99,7 @@ class MytJoinProductServiceFeeAlarmChangeController extends TwViewController {
         res.render('join/myt.join.product-service.fee-alarm.change.html', {
           svcInfo: svcInfo,
           feePlanInfo: thisMain._convertFeePlanInfo(thisMain._feePlanInfo),
-          alarmInfo: thisMain._alarmStatus
+          alarmInfo: thisMain._convertAlarmInfo(thisMain._alarmStatus)
         });
       }
     });

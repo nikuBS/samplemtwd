@@ -9,7 +9,7 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import FormatHelper from '../../../../utils/format.helper';
 import { Observable } from 'rxjs/Observable';
 import { SVC_CDNAME, SVC_CDGROUP } from '../../../../types/bff.type';
-import { Combinations } from '../../../../mock/server/myt.join.product-service.mock';
+import { Combinations, Wire, WireLess } from '../../../../mock/server/myt.join.product-service.mock';
 import { MYT_COMBINATION_TYPE } from '../../../../types/string.type';
 
 interface ICombination {
@@ -50,6 +50,7 @@ class MytJoinProductServiceController extends TwViewController {
   }
 
   /**
+   * @todo
    * @param svcAttrCd
    * @private
    */
@@ -63,6 +64,14 @@ class MytJoinProductServiceController extends TwViewController {
   }
 
   /**
+   * @todo mockData
+   * @private
+   */
+  private _getFeePlanMockResponse(isWire): Observable<any> {
+    return isWire ? Observable.of(Wire) : Observable.of(WireLess);
+  }
+
+  /**
    * @param code
    * @private
    */
@@ -72,7 +81,8 @@ class MytJoinProductServiceController extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     const thisMain = this,
-        feePlanApi = this._getFeePlanApiResponse(svcInfo.svcAttrCd);
+        feePlanApi = this._getFeePlanMockResponse(true);
+        // feePlanApi = this._getFeePlanApiResponse(svcInfo.svcAttrCd);
 
     // @todo svcAttrCd Empty 일때 처리
     if (FormatHelper.isEmpty(feePlanApi)) {
@@ -89,7 +99,10 @@ class MytJoinProductServiceController extends TwViewController {
         });
       }
 
-      const additionsApi: Observable<any> = this.apiService.request(API_CMD.BFF_05_0128, {}, {});
+      const additionsApi: Observable<any> = Observable.of({
+        code: '00',
+        result: {}
+      });
       // const combinationsApi: Observable<any> = this.apiService.request(API_CMD.BFF_05_0128, {}, {});
       const combinations: ICombinationList = Combinations;
 
