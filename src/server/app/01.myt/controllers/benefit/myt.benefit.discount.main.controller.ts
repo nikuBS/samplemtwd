@@ -64,7 +64,12 @@ class MytBenefitDisCntMainController extends TwViewController {
         if ( FormatHelper.isEmpty(resp.result) ) {
           return null;
         } else {
-          return resp.result;
+          if ( !resp.result['tfeeAgrmtYn'] || resp.result['tfeeAgrmtYn'] === 'N' ) {
+            // tfeeAgrmtYn(휴대폰요금약정여부) 값 여부로 대상/비대상 설정
+            return null;
+          } else {
+            return resp.result;
+          }
         }
       } else {
         return null;
@@ -78,7 +83,13 @@ class MytBenefitDisCntMainController extends TwViewController {
         if ( FormatHelper.isEmpty(resp.result) ) {
           return null;
         } else {
-          return resp.result;
+
+          if ( !resp.result['tsuprtAgrmtYn'] || resp.result['tsuprtAgrmtYn'] === 'N' ) {
+            // tfeeAgrmtYn(T 지원금 약정 여부) 값 여부로 대상/비대상 설정
+            return null;
+          } else {
+            return resp.result;
+          }
         }
       } else {
         return null;
