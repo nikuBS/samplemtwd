@@ -8,6 +8,7 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import { NextFunction, Request, Response } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
+import DateHelper from '../../../../utils/date.helper';
 
 class MytBenefitDisCntDetailController extends TwViewController {
 
@@ -70,6 +71,12 @@ class MytBenefitDisCntDetailController extends TwViewController {
       if ( resp.code === API_CODE.CODE_00 ) {
         if ( !FormatHelper.isEmpty(resp.result) ) {
           data = Object.assign(resp.result, data);
+          if ( data.agreeStartDate ) {
+            data.agreeStartDate = DateHelper.getShortDate(data.agreeStartDate);
+          }
+          if ( data.agreeEndDate ) {
+            data.agreeEndDate = DateHelper.getShortDate(data.agreeEndDate);
+          }
         }
       } else {
         this.logger.warn(this, 'FundContract: ', JSON.stringify(resp));
