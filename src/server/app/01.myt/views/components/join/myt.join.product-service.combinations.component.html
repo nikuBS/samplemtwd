@@ -1,1 +1,270 @@
-combinations
+<%#
+* FileName: myt.join.product-service.combinations.component.html
+* Author: Jiyoung Jo (jiyoungjo@sk.com)
+* Date: 2018.08.16
+%>
+
+
+<!-- .cont-box -->
+<div class="cont-box">				
+    <% if (combinations.length === 0) { %>
+        <div class="plan-recommend pt0">
+            <p class="txt pt0"><span class="ff-hn vbl">T</span>가족이라면?<br /><em>결합상품</em>에 가입해보세요!</p>
+            <div class="btn-wrap">
+                <button class="bt-link-tx">구경하러 가기<span class="ico"></span></button>
+            </div>
+        </div>
+        <div class="cont-list mt30 mb30">
+            <ul class="bullet-dot">
+                <li>휴대폰 월정액 할인</li>
+                <li>데이터 적립/선물</li>
+                <li>인터넷 기본료 기본제공/할인</li>
+                <li>집전화/인터넷전화 기본제공/할인</li>
+                <li>가족간 통화료 할인</li>
+            </ul>
+        </div>
+        <span class="img-w100">
+            <img src="/img/dummy/dmy-MY_01_01_100.jpg" alt="" />
+        </span>	
+    <% } else { %>
+        <div class="plan-list">
+            <ul>
+                <li>
+                    <div class="type">
+                        <button role="button" class="btn-plan">가족나눔데이터</button>
+                        <button role="button" class="ico-info"><span class="blind">가족나눔데이터 상세보기</span></button>
+                    </div>
+                    <div class="date">
+                        <span class="tit">신청일</span>
+                        <span class="num">2018.05.23 </span>
+                    </div>
+                    <div class="line-info">
+                        <span class="txt"><i class="ico-line"></i>휴대폰</span>
+                        <span class="plus">+</span>
+                        <span class="txt"><i class="ico-multi"></i><span class="num">1~4</span>회선</span>
+                    </div>
+                    <div class="link-long last">
+                        <button>결합가족 보기<span class="ico"></span></button>
+                    </div>
+                </li>
+
+                <li>
+                    <div class="type">
+                        <button role="button" class="btn-plan">T끼리온가족할인</button>
+                        <button role="button" class="ico-info"><span class="blind">T끼리온가족할인 상세보기</span></button>
+                    </div>
+                    <div class="date">
+                        <span class="tit">신청일</span>
+                        <span class="num">2018.05.23 </span>
+                    </div>
+                    <div class="line-info">
+                        <span class="txt"><i class="ico-line"></i>휴대폰</span>
+                        <span class="plus">+</span>
+                        <span class="txt"><i class="ico-multi"></i><span class="num">1~4</span>회선</span>
+                    </div>
+                    <div class="link-long last">
+                        <button>결합가족 보기<span class="ico"></span></button>
+                    </div>
+                </li>
+
+                <li>
+                    <div class="type">
+                        <button role="button" class="btn-plan">온가족 행복플랜</button>
+                        <button role="button" class="ico-info"><span class="blind">온가족 행복플랜 상세보기</span></button>
+                    </div>
+                    <div class="date">
+                        <span class="tit">신청일</span>
+                        <span class="num">2018.05.23 </span>
+                    </div>
+                    <div class="line-info">
+                        <span class="txt"><i class="ico-line"></i>휴대폰</span>
+                        <span class="plus">+</span>
+                        <span class="txt"><i class="ico-multi"></i><span class="num">1~4</span>회선</span>
+                    </div>
+                    <div class="link-long last">
+                        <button>결합가족 보기<span class="ico"></span></button>
+                    </div>
+                </li>
+
+                <li>
+                    <div class="type">
+                        <span>T가족결합 (착한가족)</span>
+                        <button role="button" class="ico-info"><span class="blind">T가족결합 (착한가족) 상세보기</span></button>
+                    </div>
+                    <div class="date">
+                        <span class="tit">신청일</span>
+                        <span class="num">2018.05.23 </span>
+                    </div>
+                    <div class="line-info">
+                        <span class="txt"><i class="ico-line"></i>휴대폰</span>
+                        <span class="plus">+</span>
+                        <span class="txt"><i class="ico-multi"></i><span class="num">1~4</span>회선</span>
+                    </div>
+                    <div class="link-long last">
+                        <button>결합가족 보기<span class="ico"></span></button>
+                    </div>
+                </li>
+
+                <li>
+                    <div class="type">
+                        <button role="button" class="btn-plan">TB끼리 온가족프리</button>
+                        <button role="button" class="ico-info"><span class="blind">TB끼리 온가족프리 상세보기</span></button>
+                    </div>
+                    <div class="date">
+                        <span class="tit">신청일</span>
+                        <span class="num">2018.05.23 </span>
+                    </div>
+                    <div class="line-info">
+                        <span class="txt"><i class="ico-multi"></i><span class="num">2~4</span>회선</span>
+                        <span class="plus">+</span>
+                        <span class="txt"><i class="ico-int"></i>인터넷</span>
+                    </div>
+                    <div class="link-long last">
+                        <button>결합가족 보기<span class="ico"></span></button>
+                    </div>
+                </li>
+
+                <li>
+                    <div class="type">
+                        <button role="button" class="btn-plan">T+B인터넷 (패밀리형)</button>
+                        <button role="button" class="ico-info"><span class="blind">T+B인터넷 (패밀리형) 상세보기</span></button>
+                    </div>
+                    <div class="date">
+                        <span class="tit">신청일</span>
+                        <span class="num">2018.05.23 </span>
+                    </div>
+                    <div class="line-info">
+                        <span class="txt mr4"><i class="ico-line"></i>T끼리 온가족 할인</span>
+                        <span class="plus">+</span>
+                        <span class="txt"><i class="ico-int"></i>인터넷</span>
+                    </div>
+                    <div class="link-long last">
+                        <button>결합가족 보기<span class="ico"></span></button>
+                    </div>
+                </li>
+
+                <li class="no-btn"><!-- 하단 버튼 없는 경우 -->
+                    <div class="type">
+                        <button role="button" class="btn-plan">한가족할인</button>
+                        <button role="button" class="ico-info"><span class="blind">한가족할인 상세보기</span></button>
+                    </div>
+                    <div class="date">
+                        <span class="tit">신청일</span>
+                        <span class="num">2018.05.23 </span>
+                    </div>
+                    <div class="line-info">
+                        <span class="txt"><i class="ico-line"></i>휴대폰</span>
+                        <span class="plus">+</span>
+                        <span class="txt"><i class="ico-int"></i>인터넷</span>
+                    </div>
+                </li>
+
+                <li>
+                    <div class="type">
+                        <button role="button" class="btn-plan">T+B인터넷 (개인형)</button>
+                        <button role="button" class="ico-info"><span class="blind">T+B인터넷 (개인형) 상세보기</span></button>
+                    </div>
+                    <div class="date">
+                        <span class="tit">신청일</span>
+                        <span class="num">2018.05.23 </span>
+                    </div>
+                    <div class="line-info">
+                        <span class="txt"><i class="ico-line"></i>휴대폰</span>
+                        <span class="plus">+</span>
+                        <span class="txt"><i class="ico-int"></i>인터넷</span>
+                    </div>
+                    <div class="link-long">
+                        <button>결합가족 보기<span class="ico"></span></button>
+                    </div>
+                    <div class="link-long last">
+                        <button>해지하기<span class="ico"></span></button>
+                    </div>
+                </li>
+
+                <li>
+                    <div class="type">
+                        <button role="button" class="btn-plan">T+B전화/인터넷전화 (패밀리형)</button>
+                        <button role="button" class="ico-info"><span class="blind">T+B전화/인터넷전화 (패밀리형) 상세보기</span></button>
+                    </div>
+                    <div class="date">
+                        <span class="tit">신청일</span>
+                        <span class="num">2018.05.23 </span>
+                    </div>
+                    <div class="line-info">
+                        <span class="txt mr4"><i class="ico-line"></i>T끼리 온가족 할인</span>
+                        <span class="plus">+</span>
+                        <span class="txt"><i class="ico-int"></i>인터넷</span>
+                    </div>
+                    <div class="link-long">
+                        <button>결합가족 보기<span class="ico"></span></button>
+                    </div>
+                    <div class="link-long last">
+                        <button>해지하기<span class="ico"></span></button>
+                    </div>
+                </li>
+
+                <li>
+                    <div class="type">
+                        <button role="button" class="btn-plan">TB끼리 온가족무료</button>
+                        <button role="button" class="ico-info"><span class="blind">TB끼리 온가족무료 상세보기</span></button>
+                    </div>
+                    <div class="date">
+                        <span class="tit">신청일</span>
+                        <span class="num">2018.05.23 </span>
+                    </div>
+                    <div class="line-info">
+                        <span class="txt"><i class="ico-multi"></i><span class="num">2~4</span>회선</span>
+                        <span class="plus">+</span>
+                        <span class="txt"><i class="ico-int"></i>인터넷</span>
+                        <span class="or">or</span>
+                        <span class="txt"><i class="ico-tel"></i>전화</span>
+                    </div>
+                    <div class="link-long last">
+                        <button>결합가족 보기<span class="ico"></span></button>
+                    </div>
+                </li>
+
+                <li class="no-btn">
+                    <div class="type">
+                        <button role="button" class="btn-plan">TB끼리 TV플러스</button>
+                        <button role="button" class="ico-info"><span class="blind">TB끼리 TV플러스 상세보기</span></button>
+                    </div>
+                    <div class="date">
+                        <span class="tit">신청일</span>
+                        <span class="num">2018.05.23 </span>
+                    </div>
+                    <div class="line-info">
+                        <span class="txt"><i class="ico-multi"></i><span class="num">2~4</span>회선</span>
+                        <span class="plus">+</span>
+                        <span class="txt"><i class="ico-iptv"></i>IPTV</span>
+                    </div>
+                </li>
+
+                <li>
+                    <div class="type">
+                        <button role="button" class="btn-plan">T+B전화/인터넷전화 (개인형)</button>
+                        <button role="button" class="ico-info"><span class="blind">T+B전화/인터넷전화 (개인형) 상세보기</span></button>
+                    </div>
+                    <div class="date">
+                        <span class="tit">신청일</span>
+                        <span class="num">2018.05.23 </span>
+                    </div>
+                    <div class="line-info">
+                        <span class="txt"><i class="ico-line"></i>휴대폰</span>
+                        <span class="plus">+</span>
+                        <span class="txt"><i class="ico-tel"></i>전화</span>
+                        <span class="or">or</span>
+                        <span class="txt"><i class="ico-itel"></i>인터넷전화</span>
+                    </div>
+                    <div class="link-long">
+                        <button>결합가족 보기<span class="ico"></span></button>
+                    </div>
+                    <div class="link-long last">
+                        <button>해지하기<span class="ico"></span></button>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    <% } %>
+</div>
+<!--// .cont-box -->
