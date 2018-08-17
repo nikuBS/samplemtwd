@@ -142,7 +142,9 @@ export const API_CMD = {
   BFF_05_0134: { path: '/core-product/v1/services/combinations', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0136: { path: '/core-product/v1/services/wireless/fee-plans', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0137: { path: '/core-product/v1/services/wireless/additions', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
-
+  BFF_05_0132: { path: '/core-bill/v1/rainbow-points', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0120: { path: '/core-bill/v1/military-service-points', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_05_0115: { path: '/core-bill/v1/cookiz-ting-points', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   // RECHARGE
   BFF_06_0001: { path: '/core-recharge/v1/refill-coupons', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_06_0002: { path: '/core-recharge/v1/refill-usages', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },

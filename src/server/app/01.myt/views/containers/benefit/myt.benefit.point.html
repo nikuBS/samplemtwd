@@ -30,17 +30,17 @@
                     <ul class="type-in-bt">
                         <li>
                             <span class="title">OK캐쉬백</span>
-                            <span class="tx-cont"><span class="ff-hn tx-bold">1,623</span> 점</span>
+                            <span class="tx-cont"><span class="ff-hn tx-bold"><%= points.OKCashBack %></span> 점</span>
                         </li>
                         <li>
                             <span class="title">T포인트</span>
-                            <span class="tx-cont"><span class="ff-hn tx-bold">9,000</span> 점</span>
+                            <span class="tx-cont"><span class="ff-hn tx-bold"><%= points.T %></span> 점</span>
                         </li>
                         <li>
                             <button class="bt-detail">
                                     <span class="bt-wrap">
                                         <span class="title">레인보우 포인트</span>
-                                        <span class="tx-cont"><span class="ff-hn tx-bold">2,142</span> 점</span>
+                                        <span class="tx-cont"><span class="ff-hn tx-bold"><%= points.Rainbow %></span> 점</span>
                                     </span>
                             </button>
                         </li>
@@ -48,47 +48,53 @@
                     <div class="contents-notice line-top pt30 mt30">
                         <span class="noti-type3">다음달 청구요금을 포인트로<br />미리 납부 예약해보세요.</span>
                     </div>
-                    <button class="bt-link-tx pt18">포인트 납부하기 <span class="ico"></span></button>
+                    <a href="/payment/point" class="bt-link-tx pt18">포인트 납부하기 <span class="ico"></span></a>
                 </div>
 
+                <% if( points.NoContrack > 0) { %>
                 <div class="info-detail-box type2">
                     <ul class="type-in-bt">
                         <li>
                             <button class="bt-detail">
                                     <span class="bt-wrap">
                                         <span class="title">무약정플랜 포인트</span>
-                                        <span class="tx-cont"><span class="ff-hn tx-bold">10,000</span> 점</span>
+                                        <span class="tx-cont"><span class="ff-hn tx-bold"><%= points.NoContrack %></span> 점</span>
                                     </span>
                             </button>
                         </li>
                     </ul>
                 </div>
+                <% } %>
 
+                <% if( points.Military > 0) { %>
                 <div class="info-detail-box type2">
                     <ul class="type-in-bt">
                         <li>
                             <button class="bt-detail">
                                     <span class="bt-wrap">
                                         <span class="title">지켜줘서 고마워<br />현역플랜 포인트</span>
-                                        <span class="tx-cont"><span class="ff-hn tx-bold">10,000</span> 점</span>
+                                        <span class="tx-cont"><span class="ff-hn tx-bold"><%= points.Military %></span> 점</span>
                                     </span>
                             </button>
                         </li>
                     </ul>
                 </div>
+                <% } %>
 
+                <% if( points.Cookiz > 0) { %>
                 <div class="info-detail-box type2">
                     <ul class="type-in-bt">
                         <li>
                             <button class="bt-detail">
                                     <span class="bt-wrap">
                                         <span class="title">쿠키즈팅 포인트</span>
-                                        <span class="tx-cont"><span class="ff-hn tx-bold">10,000</span> 점</span>
+                                        <span class="tx-cont"><span class="ff-hn tx-bold"><%= points.Cookiz %></span> 점</span>
                                     </span>
                             </button>
                         </li>
                     </ul>
                 </div>
+                <% } %>
             </div>
 
         </div>
