@@ -13,36 +13,35 @@ Tw.MyTJoinProductService = function (rootEl) {
 };
 
 Tw.MyTJoinProductService.prototype = {
-
   _options: {
     'fee-plan': {
       isCall: false,
-      callFunction: function() {
+      callFunction: function () {
         new Tw.MyTJoinProductServiceFeePlan(this.$feePlan);
       }
     },
     'additions': {
       isCall: false,
-      callFunction: function() {
+      callFunction: function () {
         new Tw.MyTJoinProductServiceAdditions(this.$additions);
       }
     },
     'combinations': {
       isCall: false,
-      callFunction: function() {
+      callFunction: function () {
         new Tw.MyTJoinProductServiceCombinations(this.$combinations);
       }
     }
   },
 
-  _cachedElement: function() {
+  _cachedElement: function () {
     this.$feePlan = $('#myt-join-fee-plan');
     this.$additions = $('#myt-join-additions');
-    this.$combinations = $('#myt-join-combinations');
+    this.$combinations = this.$container.find('#combinations-contents');
     this.$tabLinker = this.$container.find('.tab-linker');
   },
 
-  _init: function() {
+  _init: function () {
     if (Tw.FormatHelper.isEmpty(window.location.hash)) {
       this._historyService.goHash('fee-plan');
     }
@@ -53,11 +52,11 @@ Tw.MyTJoinProductService.prototype = {
     this._callOptions(initTabKey);
   },
 
-  _bindEvents: function() {
+  _bindEvents: function () {
     this.$tabLinker.on('click', 'li', $.proxy(this._switchTabContents, this));
   },
 
-  _switchTabContents: function(e) {
+  _switchTabContents: function (e) {
     var activeTabKey = $(e.currentTarget).attr('id').replace('-tab', '');
 
     if (!this._options[activeTabKey].isCall) {
@@ -67,9 +66,8 @@ Tw.MyTJoinProductService.prototype = {
     this._historyService.goHash(activeTabKey);
   },
 
-  _callOptions: function(tabKey) {
+  _callOptions: function (tabKey) {
     this._options[tabKey].isCall = true;
-    this._options[tabKey].callFunction();
+    this._options[tabKey].callFunction.apply(this);
   }
-
 };
