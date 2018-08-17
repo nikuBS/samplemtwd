@@ -350,6 +350,13 @@ export const API_CMD = {
   BFF_08_0044: { path: '/core-modification/v1/email-inquiry/quality-mobile', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_08_0045: { path: '/core-modification/v1/email-inquiry/quality-internet', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
 
+  // EVENT
+  BFF_09_0001: { path: '/core-membership/v1/event/ing-list', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_09_0002: { path: '/core-membership/v1/event/detail', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_09_0003: { path: '/core-membership/v1/event/old-list', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_09_0004: { path: '/core-membership/v1/event/win-list', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_09_0005: { path: '/core-membership/v1/event/win-detail', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+
   // TID
   OIDC: { path: '/auth/authorize.do', method: API_METHOD.GET, server: API_SERVER.TID, bypass: false },
   LOGOUT: { path: '/sso/web/v1/ssologout.do', method: API_METHOD.GET, server: API_SERVER.TID, bypass: false },

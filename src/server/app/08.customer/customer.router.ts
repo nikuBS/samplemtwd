@@ -18,8 +18,10 @@ import CustomerMainController from './controllers/main/customer.main.controller'
 import CustomerResearches from './controllers/researches/customer.researches.controller';
 import CustomerEmailController from './controllers/email/customer.email.controller';
 import CustomerResearchResult from './controllers/researches/customer.researches.result.controller';
+import CustomerFaqController from './controllers/faq/customer.faq.controller';
 import CustomerFaqInfoService from './controllers/faq/customer.faq.info.service.controller';
 import CustomerFaqInfoSite from './controllers/faq/customer.faq.info.site.controller';
+import CustomerEventController from './controllers/event/customer.event.controller';
 
 class CustomerRouter extends TwRouter {
   constructor() {
@@ -43,10 +45,12 @@ class CustomerRouter extends TwRouter {
     this.controllers.push({ url: '/voice/:type', controller: new CustomerVoiceController() });
     this.controllers.push({ url: '/researches/result', controller: new CustomerResearchResult() });
     this.controllers.push({ url: '/researches(/:researchId)?', controller: new CustomerResearches() });
+    this.controllers.push({ url: '/faq', controller: new CustomerFaqController() });
     this.controllers.push({ url: '/faq/service-info', controller: new CustomerFaqInfoService() });
     this.controllers.push({ url: '/faq/service-info(/:serviceId)?', controller: new CustomerFaqInfoService() });
     this.controllers.push({ url: '/faq/site-info', controller: new CustomerFaqInfoSite() });
     this.controllers.push({ url: '/faq/site-info/m-customer-center', controller: new CustomerFaqInfoSite() });
+    this.controllers.push({ url: '/event', controller: new CustomerEventController() });
   }
 }
 

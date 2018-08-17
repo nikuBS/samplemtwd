@@ -20,17 +20,39 @@ Tw.ApiService.prototype = {
     });
   },
 
+  requestForm: function (command, data) {
+    Tw.Logger.info('[API REQ Form]', command, data);
+
+    return $.ajax({
+      method: command.method,
+      url: '/api' + command.path,
+      processData: false,
+      contentType: false,
+      cache: false,
+      data: data,
+      enctype: 'multipart/form-data'
+    });
+  },
+
   _makeOptions: function (command, params, headers, pathVariables) {
     var prefix = this._setPrefix(command);
     var data = prefix === '/bypass' ? { parameter: params, pathVariables: pathVariables } : params;
     return {
-      type: command.method,
+      method: command.method,
       url: prefix + command.path,
-      dataType: 'json',
       timeout: 10000,
-      headers: Object.assign({ 'content-type': 'application/json; charset=UTF-8' }, headers),
+      dataType: 'json',
+      headers: this._makeHeaders(command, headers),
       data: command.method === Tw.API_METHOD.GET ? data : JSON.stringify(data)
     };
+  },
+
+  _makeHeaders: function(command, headers) {
+    var contentType = 'application/json; charset=UTF-8';
+    if(!Tw.FormatHelper.isEmpty(command.contentType)) {
+      contentType = command.contentType;
+    }
+    return $.extend(headers, { 'content-type': contentType });
   },
 
   _setPrefix: function (command) {
