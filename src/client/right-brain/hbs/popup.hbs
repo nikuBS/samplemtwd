@@ -17,6 +17,7 @@
                 <div class="inner-contents">{{{contents}}}</div>
             {{/if}}
         </div>
+        {{#if bt_num}}
         <div class="btn-box">
             <ul class="bt-slice item-{{bt_num}}">
             {{#type}}
@@ -26,6 +27,7 @@
             {{/type}}
             </ul>
         </div>
+        {{/if}}
         {{#if contents_b}}
             {{{contents_b}}}
         {{/if}}

@@ -273,6 +273,40 @@
   z-index: 11;
 }
 
+.masking {
+  position: fixed;
+  right: 1.5625rem;
+  bottom: 1.5625rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 1.25rem;
+  -webkit-box-shadow: 0.125rem 0.125rem 0.9375rem rgba(0, 0, 0, 0.2);
+          box-shadow: 0.125rem 0.125rem 0.9375rem rgba(0, 0, 0, 0.2);
+  -webkit-transition: all .5s;
+  transition: all .5s;
+}
+
+.masking button {
+  width: 100%;
+  height: 100%;
+}
+
+.masking button .ico {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: url(/img/ico/ico-masking.png) no-repeat center center;
+  background-size: 2.5rem;
+}
+
+.gnb-wrap + .masking {
+  bottom: 1.5625rem;
+}
+
+.gnb-wrap.on + .masking {
+  bottom: 5rem;
+}
+
 /** 전체 메뉴 **/
 .all-menu {
   position: fixed;
@@ -800,6 +834,10 @@
   padding: 1.625rem;
 }
 
+.cont-box.inborder {
+  border-bottom: 1px solid #e1e1e1;
+}
+
 .cont-ti {
   margin-bottom: 1.5rem;
 }
@@ -828,13 +866,51 @@
   -moz-box-sizing: border-box;
   width: 100%;
   min-height: 100%;
-  padding: 3.6875rem 0 3.375rem;
+  padding: 3.6875rem 0 0;
+  /*rem(59px 0 54px)*/
   background: #fff;
   z-index: 100;
 }
 
 .popup-page.nobg {
   background: #f5f5f5;
+}
+
+.popup-page.layer {
+  padding: 0;
+  top: auto;
+  bottom: -100%;
+  min-height: 0;
+  overflow-y: scroll;
+  -webkit-transition: all 1s;
+  transition: all 1s;
+}
+
+.popup-page.layer .header-wrap .page-header {
+  top: auto;
+  left: auto;
+  right: auto;
+  width: 100%;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.popup-page.layer .popup-closeBtn {
+  position: absolute;
+}
+
+.popup-page.layer .container-wrap {
+  position: relative !important;
+  height: auto;
+}
+
+.popup-page.layer .container-wrap .container {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 3.6875rem 0 0;
+  height: 100%;
+  overflow: hidden;
+  overflow-y: auto;
 }
 
 .popup-page .container-wrap {
@@ -866,6 +942,10 @@
   font-weight: 700;
   line-height: 1.25rem;
   vertical-align: middle;
+}
+
+.popup-page .header-wrap .page-header .header-ti.align-l h1 {
+  text-align: left;
 }
 
 .popup-page .gnb-wrap .page-gnb {
