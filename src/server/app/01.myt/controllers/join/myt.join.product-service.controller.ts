@@ -9,7 +9,6 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import FormatHelper from '../../../../utils/format.helper';
 import { Observable } from 'rxjs/Observable';
 import { SVC_CDNAME } from '../../../../types/bff.type';
-import { Combinations } from '../../../../mock/server/myt.join.product-service.mock';
 import { MYT_COMBINATION_TYPE } from '../../../../types/string.type';
 
 interface ICombination {
@@ -41,12 +40,13 @@ class MytJoinProductServiceController extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     const feePlanWirelessApi: Observable<any> = this.apiService.request(API_CMD.BFF_05_0136, {}, {});
     const feePlanWireApi: Observable<any> = this.apiService.request(API_CMD.BFF_05_0128, {}, {});
-    const combinations: ICombinationList = Combinations;
+    // const combinations: ICombinationList = Combinations;
 
     Observable.combineLatest(
       feePlanWireApi,
-      feePlanWirelessApi
-    ).subscribe(([productServiceList]) => {
+      feePlanWirelessApi,
+      this.getCombinations()
+    ).subscribe(([productServiceList, feePlanWirei, combinations]) => {
       console.log(productServiceList);
       res.render('join/myt.join.product-service.html', {
         svcInfo: svcInfo,
@@ -96,12 +96,39 @@ class MytJoinProductServiceController extends TwViewController {
     };
 
     switch (item.prodId) {
-      case 'TW20000008':
+      case 'TW20000010':   // T끼리온가족할인제도
+      case 'NA00004211': { // T가족결합(착한가족)
         nItem.items.push({
           icon: 'line',
-          description: MYT_COMBINATION_TYPE.MULTI_ONE
-        });
+          description: MYT_COMBINATION_TYPE.LINE
+        }, {
+            icon: 'multi',
+            description: MYT_COMBINATION_TYPE.MULTI_ONE
+          });
         break;
+      }
+
+      case 'TW00000062': {
+        nItem.items.push({
+          icon: 'line',
+          description: MYT_COMBINATION_TYPE.LINE
+        }, {
+            icon: 'int',
+            description: MYT_COMBINATION_TYPE.INTERNET
+          });
+        break;
+      }
+
+      case 'TW00000063': {
+        nItem.items.push({
+          icon: 'line',
+          description: MYT_COMBINATION_TYPE.LINE
+        }, {
+            icon: 'tel',
+            description: MYT_COMBINATION_TYPE.TEL
+          });
+        break;
+      }
     }
 
     return nItem;
