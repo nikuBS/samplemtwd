@@ -10,7 +10,7 @@ Tw.MyTBenefitDisCntDetail = function (params) {
   this.data = params.data;
   this.type = params.type;
   this._history = new Tw.HistoryService(this.$container);
-
+  // set
   this._rendered();
   this._bindEvent();
 };
