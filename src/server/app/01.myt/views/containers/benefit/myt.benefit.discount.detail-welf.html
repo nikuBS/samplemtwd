@@ -25,6 +25,7 @@
         <div class="container">
             <div class="cont-box">
                 <div class="inner-block">
+                <% if (data.useYn && data.useYn === 'Y') { %>
                     <h2 class="title-h2">나의 할인 혜택</h2>
                     <div class="exp-top">
                         <span class="title">요금할인 적용기간</span>
@@ -38,6 +39,22 @@
                             </li>
                         </ul>
                     </div>
+                <% } else { %>
+                <% data.empty = true; %>
+                    <h2 class="title-h2">혜택 받는 법</h2>
+                    <div class="exp-top">
+                			<span class="tx-exp">SKT 지점/대리점, 고객센터 또는 <br />
+							민원24시에서 복지할인 신청 시<br />
+							<span class="tx-bold">서류심사를 통해 할인 혜택 적용</span></span>
+                    </div>
+                    <div class="contents-btn">
+                        <ul class="bt-slice">
+                            <li class="bt-blue1">
+                                <button>가입 가능한 복지요금제 확인</button>
+                            </li>
+                        </ul>
+                    </div>
+                <% } %>
                 </div>
 
                 <div class="inner-block">
@@ -84,9 +101,12 @@
     <!--// #contents -->
 </div>
 <script>
+  var data = '<%- JSON.stringify(data) %>';
   $(document).ready(function () {
     new Tw.MyTBenefitDisCntDetail({
-      $element: $('#protect-change')
+      $element: $('#contents'),
+      type: 'welf',
+      data: JSON.parse(data)
     });
   });
 </script>

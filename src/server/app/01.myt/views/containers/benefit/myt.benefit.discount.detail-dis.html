@@ -25,6 +25,7 @@
         <div class="container">
             <div class="cont-box">
                 <% if ( data.selAgrmtDc25Yn === 'N' && data.selAgrmtDc20Yn === 'N' ) { %>
+                <% data.empty = true; %>
                     <div class="inner-block">
                         <h2 class="title-h2">혜택 받는 법</h2>
                         <div class="exp-top">
@@ -108,9 +109,12 @@
     <!--// #contents -->
 </div>
 <script>
+  var data = '<%- JSON.stringify(data) %>';
   $(document).ready(function () {
     new Tw.MyTBenefitDisCntDetail({
-      $element: $('#protect-change')
+      $element: $('#contents'),
+      type: 'dis',
+      data: JSON.parse(data)
     });
   });
 </script>

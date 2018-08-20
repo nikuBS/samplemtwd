@@ -5,12 +5,9 @@
  */
 
 Tw.MyTBenefitDisCntDetail = function(params) {
-  this._apiService = Tw.Api;
-  this._popupService = Tw.Popup;
-  this._inputHelper = Tw.InputHelper;
-
   this.$container = params.$element;
   this.data = params.data;
+  this._history = new Tw.HistoryService(this.$container);
 
   this._rendered();
   this._bindEvent();
