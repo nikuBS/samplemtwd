@@ -337,3 +337,16 @@ export enum MYT_BENEFIT_POINT_VIEW {
   ADJUSTMENT = 'usage/myt.benefit.point.adjustment.html',
   ERROR = 'error/myt.benefit.point.adjustment.html'
 }
+
+export const CUSTOMER_SERVICE_CODE_MAP = {
+  A: [3280, 3308, 3306, 231, 3319, 212, 220, 217, 3720, 3721, 3723, 3724],
+  A_1: [3305, 3304, 3307, 3321, 3727, 3722],
+  A_2: [3315, 3316, 218],
+  B: ['USIM 잠금해제', '내 USIM으로 SKT 단말기 사용', '내 USIM으로 타사 단말기 사용', 222, 215],
+  B_1: [3320],
+  C: [224, 221, 223, 216, 3719, '보이는 ARS', '음성인식 ARS'],
+  C_1: ['band LTE'],
+  C_2: ['버튼식 ARS'],
+  D: ['타사 USIM으로 SKT 단말기 사용', '목소리 인증'],
+  E: [234, 219, '목소리 등록 문자받기']
+};

@@ -64,7 +64,8 @@ Tw.MyTBillHistoryCommon.prototype = {
   },
 
   _normalizeNumber: function (num) {
-    return num.replace(/(^0+)/, '');
+    return Tw.FormatHelper.normalizeNumber(num);
+    // return num.replace(/(^0+)/, '');
   },
 
   setMenuChanger: function (target) {
