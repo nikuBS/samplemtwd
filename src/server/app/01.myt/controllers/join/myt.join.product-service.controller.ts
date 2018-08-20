@@ -1,3 +1,4 @@
+import { COMBINATION_PRODUCT_OTHER_TYPE } from '../../../../types/bff.type';
 /**
  * FileName: myt.join.product-service.controller.ts
  * Author: 공자윤 (jayoon.kong@sk.com)
@@ -127,7 +128,7 @@ class MytJoinProductServiceController extends TwViewController {
       scrbDt: item.scrbDt,
       prodSmryDesc: item.prodSmryDesc,
       items: [],
-      hasDetail: true  // 한가족 할인 or TB끼리 TV플러스 : false
+      hasDetail: COMBINATION_PRODUCT_OTHER_TYPE.indexOf(item.prodId) < 0  // 한가족 할인 or TB끼리 TV플러스 : false
     };
 
     switch (item.prodId) {

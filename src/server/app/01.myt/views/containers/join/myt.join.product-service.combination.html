@@ -1,0 +1,44 @@
+<%#
+* FileName: myt.join.product-service.combination.html
+* Author: Jiyoung Jo (jiyoungjo@sk.com)
+* Date: 2018.08.20
+%>
+
+<% include ../../components/start.component.html %>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap">
+    <!-- #header -->
+    <div id="header" class="header-wrap">
+        <div class="header">
+            <div class="header-ti align-l">
+                <h1>사용중인 상품</h1>
+            </div>
+            <button class="prev-step fe-common-back"><span class="blind">이전으로</span></button>
+        </div>
+    </div>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <%- include('../../components/join/myt.join.product-service.combination.' + pageId + '.html')  %>
+        </div>
+    </div>
+    <!--// #contents -->
+</div>
+
+<% include ../../components/javascript.component.html %>
+<script>
+    $(document).ready(function () {
+        new Tw.MyTJoinProductServiceCombination($('.wrap'));
+    });
+</script>
+<% include ../../components/end.component.html %>
