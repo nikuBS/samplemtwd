@@ -34,24 +34,24 @@
                     <div class="benefits-list">
                         <ul>
                             <% if (data.bundlePrdc) { %>
-                            <li data-id="fe-bundlePrdc">
-                                <button>
+                            <li>
+                                <button data-id="fe-bundlePrdc">
                                     <span class="tit">SKT 결합상품</span>
                                     <span class="txt">추가 혜택과 통신비 절감 혜택을<br />받고 있습니다.</span>
                                 </button>
                             </li>
                             <% } %>
                             <% if (data.feeCotc) { %>
-                            <li data-id="fe-feeCotc">
-                                <button>
+                            <li>
+                                <button data-id="fe-feeCotc">
                                     <span class="tit">휴대폰 요금약정</span>
                                     <span class="txt">요금할인을 받고 있습니다.</span>
                                 </button>
                             </li>
                             <% } %>
                             <% if (data.fundCotc) { %>
-                            <li data-id="fe-fundCotc">
-                                <button>
+                            <li>
+                                <button data-id="fe-fundCotc">
                                     <span class="tit">T지원금 약정 할인</span>
                                     <span class="txt">휴대폰 지원금을 받고 있습니다.</span>
                                 </button>
@@ -59,15 +59,15 @@
                             <% } %>
                             <% if (data.selDisCnt) { %>
                                 <% if (parseInt(data.selDisCnt.dcInfoRate) === 25) { %>
-                                <li data-id="fe-selDisCnt-25">
-                                    <button>
+                                <li>
+                                    <button data-id="fe-selDisCnt-25">
                                         <span class="tit">선택 약정 할인</span>
                                         <span class="txt">휴대폰 지원금에 상응하는 25% 추가<br />요금할인을 받고 있습니다.</span>
                                     </button>
                                 </li>
                                 <% } else if (parseInt(data.selDisCnt.dcInfoRate) === 20) { %>
-                                <li data-id="fe-selDisCnt-20">
-                                    <button>
+                                <li>
+                                    <button data-id="fe-selDisCnt-20">
                                         <span class="tit">선택 약정 할인</span>
                                         <span class="txt">휴대폰 지원금에 상응하는 20% 추가<br />요금할인을 받고 있습니다.</span>
                                     </button>
@@ -75,16 +75,16 @@
                                 <% } %>
                             <% } %>
                             <% if (data.longterm) { %>
-                            <li data-id="fe-longterm" style="display: none;">
-                                <button>
+                            <li>
+                                <button data-id="fe-longterm">
                                     <span class="tit">장기가입 고객 할인</span>
                                     <span class="txt">국내 통화료 할인을 받고 있습니다.</span>
                                 </button>
                             </li>
                             <% } %>
                             <% if (data.welfareCutm) { %>
-                            <li data-id="fe-welfareCutm" style="display: none;">
-                                <button>
+                            <li>
+                                <button data-id="fe-welfareCutm">
                                     <span class="tit">복지고객 할인</span>
                                     <span class="txt">월정액(기본료) 과 국내음성 및<br />데이터 통화료 할인을 받고 있습니다.</span>
                                 </button>
@@ -92,19 +92,10 @@
                             <% } %>
                         </ul>
                     </div>
-                    <% if (data.longterm || data.welfareCutm) { %>
-                        <% var count = (data.longterm && data.welfareCutm)? 2 : 0;
-                        if (count === 0) {
-                            count = data.longterm ? 1 : (data.welfareCutm ? 1 : 0) ;
-                        } %>
-                        <div data-id="fe-more-btn" class="bt-more-wrap">
-                            <button role="button" class="bt-more" title="">더보기<span>(<%= count %>)</span></button>
-                        </div>
-                    <% } %>
                 <% } %>
             </div>
+            <% if (!data.empty) { %>
             <hr class="cont-sp type1" aria-hidden="true" />
-
             <div class="cont-box nogaps">
                 <div class="recomm-benefits">
                     <h2 class="recomm-tit">이런 할인 혜택은 어떠세요?</h2>
@@ -115,7 +106,7 @@
                                 <div class="slider-box">
                                     <ul class="slider">
                                         <% if (!data.selDisCnt) { %>
-                                        <li>
+                                        <li data-id="fe-selDisCnt-25">
                                             <div class="component">
                                                 <div class="component-box flcardcta">
                                                     <div class="flcard-cont bgc1">
@@ -131,7 +122,7 @@
                                         </li>
                                         <% } %>
                                         <% if (!data.longterm) { %>
-                                        <li>
+                                        <li data-id="fe-longterm">
                                             <div class="component">
                                                 <div class="component-box flcardcta">
                                                     <div class="flcard-cont bgc2">
@@ -147,7 +138,7 @@
                                         </li>
                                         <% } %>
                                         <% if (!data.welfareCutm) { %>
-                                        <li>
+                                        <li data-id="fe-welfareCutm">
                                             <div class="component">
                                                 <div class="component-box flcardcta">
                                                     <div class="flcard-cont bgc3">
@@ -163,7 +154,7 @@
                                         </li>
                                         <% } %>
                                         <% if (!data.bundlePrdc) { %>
-                                        <li>
+                                        <li data-id="fe-bundlePrdc">
                                             <div class="component">
                                                 <div class="component-box flcardcta">
                                                     <div class="flcard-cont bgc4">
@@ -179,7 +170,7 @@
                                         </li>
                                         <% } %>
                                         <% if (!data.feeCotc) { %>
-                                        <li>
+                                        <li data-id="fe-feeCotc">
                                             <div class="component">
                                                 <div class="component-box flcardcta">
                                                     <div class="flcard-cont bgc5">
@@ -234,6 +225,7 @@
                     <!--// .widget -->
                 </div>
             </div>
+            <% } %>
         </div>
     </div>
     <!--// #contents -->

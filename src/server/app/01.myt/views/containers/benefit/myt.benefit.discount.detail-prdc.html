@@ -29,7 +29,13 @@
                     <h2 class="title-h2">나의 할인 혜택</h2>
                     <div class="exp-top">
                         <span class="tx-exp">사용중인 결합 요금상품<br />
-                            <span class="tx-bold">TB끼리 온가족 무료 외 2건</span>
+                            <span class="tx-bold"><%= data.prodNm %>
+                                <% if(parseInt(data.etcCnt) > 1) { %>
+                                 외 <%= (parseInt(data.etcCnt) - 1) %>건
+                                <% } else { %>
+                                 <%= data.etcCnt %>건
+                                <% } %>
+                            </span>
                         </span>
                     </div>
                     <div class="contents-btn">
