@@ -5,7 +5,7 @@ metadata:
   labels:
     app: bff-nodejs-service
 spec:
-  replicas: 1
+  replicas: 1d
   selector:
     matchLabels:
       app: bff-nodejs-service
@@ -27,7 +27,7 @@ spec:
             memory: "1024Mi"
         volumeMounts:
         - name: pv-storage
-          mountPath: /uploads
+          mountPath: /tworld/uploads
       volumes:
       - name: pv-storage
         persistentVolumeClaim:
