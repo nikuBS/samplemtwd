@@ -1,5 +1,5 @@
 /**
- * FileName: myt.joinService.payClaimInfo.iptv.js
+ * FileName: myt.benefit.recommend.js
  * Author: 김명환 (skt.P130714@partner.sk.com)
  * Date: 2018.08.16
  * Info:
