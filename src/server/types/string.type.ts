@@ -319,3 +319,8 @@ export const MYT_COMBINATION_TYPE = {
   TEL: '전화',
   ITEL: '인터넷 전화'
 };
+
+export enum MYT_BENEFIT_POINT_VIEW {
+  ADJUSTMENT = 'usage/myt.benefit.point.adjustment.html',
+  ERROR = 'error/myt.benefit.point.adjustment.html'
+}
