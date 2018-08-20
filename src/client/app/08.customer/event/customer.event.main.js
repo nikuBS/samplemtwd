@@ -8,9 +8,7 @@ Tw.CustomerEventMain = function (rootEl) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
-
   this._history = new Tw.HistoryService(this.$container);
-  // this._history.init('hash');
 
   this._init();
   this._bindEvent();
@@ -19,15 +17,22 @@ Tw.CustomerEventMain = function (rootEl) {
 Tw.CustomerEventMain.prototype = {
   _init: function () {
     this._initVariables();
+
+    var $hash = window.location.hash;
+    if ($hash === '') {
+      this._history.goHash('#main');
+    } else {
+      this._hashInit($hash.replace('#', ''));
+    }
   },
   _initVariables: function () {
-    this.$selectedTabId = 'tab1';
-    this.$selector = this.$container.find('#tab1-tab');
+    this.$tabLinker = this.$container.find('.fe-tab-menu');
+    this._selectedTabId = 'main';
+    this.$selector = this.$container.find('#' + this._selectedTabId + '-tab');
     this.$contentList = this.$selector.find('.fe-content-list');
-    this.$standardNode = this.$contentList.find('li.fe-first');
+    this.$standardNode = this.$contentList.find('li.fe-first:first');
     this.$moreBtn = this.$selector.find('.fe-more-btn');
     this._defaultCnt = Tw.DEFAULT_LIST_COUNT;
-    this._apiName = Tw.API_CMD.BFF_09_0001;
     this._ingPage = 0;
     this._oldPage = 0;
     this._winPage = 0;
@@ -39,27 +44,44 @@ Tw.CustomerEventMain.prototype = {
     this._winTotalCnt = 0;
   },
   _bindEvent: function () {
-    this.$container.on('click', '.fe-tab-menu li', $.proxy(this._onChangeTab, this));
-    this.$selector.on('click', '.fe-more-btn', $.proxy(this._setMoreData, this));
+    this.$tabLinker.on('click', 'li', $.proxy(this._onTabChange, this));
+    this.$contentList.on('click', 'li', $.proxy(this._getDetailEvent, this));
   },
-  _onChangeTab: function (event) {
-    this.$selectedTabId = $(event.currentTarget).attr('id');
-    this.$selector = this.$container.find('#' + this.$selectedTabId + '-tab');
+  _onTabChange: function (event) {
+    var $target = $(event.currentTarget);
+    this._hashInit($target.attr('id'));
+
+    this._history.goHash('#' + this._selectedTabId);
+  },
+  _hashInit: function (id) {
+    this._selectedTabId = id;
+    this.$selector = this.$container.find('#' + this._selectedTabId + '-tab');
     this.$contentList = this.$selector.find('.fe-content-list');
-    this.$standardNode = this.$contentList.find('li.fe-first');
+    this.$standardNode = this.$contentList.find('li.fe-first:first');
     this.$moreBtn = this.$selector.find('.fe-more-btn');
 
+    this._setAriaSelected(id);
+    this._bindChangedEvent();
     this._getApiName();
     this._setList();
   },
+  _setAriaSelected: function (id) {
+    var $target = this.$container.find('#' + id);
+    $target.attr('aria-selected', 'true');
+    $target.siblings().attr('aria-selected', 'false');
+  },
   _getApiName: function () {
-    if (this.$selectedTabId === 'tab1') {
+    if (this._selectedTabId === 'main') {
       this._apiName = Tw.API_CMD.BFF_09_0001;
-    } else if (this.$selectedTabId === 'tab2') {
+    } else if (this._selectedTabId === 'old') {
       this._apiName = Tw.API_CMD.BFF_09_0003;
     } else {
       this._apiName = Tw.API_CMD.BFF_09_0004;
     }
+  },
+  _bindChangedEvent: function () {
+    this.$contentList.on('click', 'li', $.proxy(this._getDetailEvent, this));
+    this.$selector.on('click', '.fe-more-btn', $.proxy(this._setMoreData, this));
   },
   _setList: function () {
     if (!this.$standardNode.hasClass('fe-done')) {
@@ -110,26 +132,27 @@ Tw.CustomerEventMain.prototype = {
         $typeNode.hide();
       }
 
-      if (this._selectedTabId === 'tab1') {
+      if (this._selectedTabId === 'main') {
         $liNode.find('.fe-event-img img').attr({
           'src': $content[i].filePath,
           'alt': $content[i].prCtt
         });
-      } else if (this._selectedTabId === 'tab3') {
+      } else if (this._selectedTabId === 'win') {
         $liNode.find('.fe-event-win-date').text(Tw.DateHelper.getShortDateNoDot($content[i].winDt));
       }
-      this.$selectList.append($liNode);
+      $liNode.on('click', $.proxy(this._getDetailEvent, this, $liNode.attr('id')));
+      this.$contentList.append($liNode);
     }
     var $pageObj = this._getPageObj();
     this._setHiddenMoreBtn($pageObj);
   },
   _getPageObj: function () {
     var obj = {};
-    if (this._selectedTabId === 'tab1') {
+    if (this._selectedTabId === 'main') {
       obj.page = this._ingPage;
       obj.totalPage = this._ingTotalPage;
       obj.totalCnt = this._ingTotalCnt;
-    } else if (this._selectedTabId === 'tab2') {
+    } else if (this._selectedTabId === 'old') {
       obj.page = this._oldPage;
       obj.totalPage = this._oldTotalPage;
       obj.totalCnt = this._oldTotalCnt;
@@ -156,6 +179,24 @@ Tw.CustomerEventMain.prototype = {
       this.$moreBtn.find('.fe-more-length').text('(' + ($pageObj.totalCnt - ($pageObj.page * this._defaultCnt)) + ')');
       this.$moreBtn.show();
     }
+  },
+  _getDetailEvent: function (id) {
+    if (typeof(id) !== 'string') {
+      var event = id;
+      id = $(event.currentTarget).attr('id');
+    }
+    var urlName = this._getDetailUrlName(id);
+    this._history.goLoad(urlName);
+  },
+  _getDetailUrlName: function ($id) {
+    var urlName = '/customer/event';
+    if (this._selectedTabId === 'win') {
+      urlName += '/detail/win';
+    } else {
+      urlName += '/detail';
+    }
+    urlName += '?prNum=' + $id;
+    return urlName;
   }
 };
 
