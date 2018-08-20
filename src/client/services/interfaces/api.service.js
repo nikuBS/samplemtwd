@@ -1,4 +1,5 @@
 Tw.ApiService = function () {
+  this._popupService = new Tw.PopupService();
 };
 
 Tw.ApiService.prototype = {
@@ -38,6 +39,7 @@ Tw.ApiService.prototype = {
   _checkAuth: function (resp) {
     Tw.Logger.info('[API RESP]', resp);
     // TODO 2차 인증 추가
+
     return resp;
   },
 
@@ -54,9 +56,9 @@ Tw.ApiService.prototype = {
     };
   },
 
-  _makeHeaders: function(command, headers) {
+  _makeHeaders: function (command, headers) {
     var contentType = 'application/json; charset=UTF-8';
-    if(!Tw.FormatHelper.isEmpty(command.contentType)) {
+    if ( !Tw.FormatHelper.isEmpty(command.contentType) ) {
       contentType = command.contentType;
     }
     return $.extend(headers, { 'content-type': contentType });
