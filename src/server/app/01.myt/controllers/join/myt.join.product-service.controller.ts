@@ -81,17 +81,25 @@ class MytJoinProductServiceController extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     const thisMain = this,
-        feePlanApi = this._getFeePlanMockResponse(true);
-        // feePlanApi = this._getFeePlanApiResponse(svcInfo.svcAttrCd);
+        feePlanApi = this._getFeePlanMockResponse(true),
+        feePlanApiLiveTest = this._getFeePlanApiResponse(svcInfo.svcAttrCd);
+
+    // @todo remove feePlanApiLiveTest
+    // feePlanApiLiveTest.subscribe((data) => {
+    //   console.log(data);
+    // });
 
     // @todo svcAttrCd Empty 일때 처리
     if (FormatHelper.isEmpty(feePlanApi)) {
-      return res.redirect('/myt');
+      return this.error.render(res, {
+        title: '나의 가입서비스',
+        svcInfo: svcInfo
+      });
     }
 
     feePlanApi.subscribe((data) => {
       if (!this._isSuccess(data.code)) {
-        this.error.render(res, {
+        return this.error.render(res, {
           title: '나의 가입서비스',
           code: data.code,
           msg: data.msg,
