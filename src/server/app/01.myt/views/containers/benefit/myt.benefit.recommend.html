@@ -1,5 +1,5 @@
 <%#
-* FileName: myt.joinService.contractTerminalInfo.twibro.html
+* FileName: myt.benefit.recommend.html
 * Author: 김명환 (skt.P130714@partner.sk.com)
 * Date: 2018.08.16
 * Info:
@@ -8,7 +8,7 @@
 <script id="fe-contract-terminal-detail" type="text/x-handlebars-template">
 
     {{# each tempData }}
-    <li>
+    <li data-target="{{id}}">
         <button>
             <span class="tit">{{title}}</span>
             <span class="txt">{{typeTextA}}</span>
@@ -63,13 +63,13 @@
                         <div class="widget-box slider1">
                             <div class="customer-slider2">
                                 <div class="slider-box">
-                                    <ul class="slider" style="height: 260px;">
+                                    <ul class="slider" style="height: 260px;" data-target="sliderArea">
 
                                         <% for(var i=0; i < recommendKind.typeListB.length; i++) { %>
                                         <% if( recommendInfo[recommendKind.typeListB[i]].id === 'PLAN' || recommendInfo[recommendKind.typeListB[i]].id === 'OKSP' ) { %>
                                             <% continue %>
                                         <% } %>
-                                        <li>
+                                        <li data-target="<%=recommendInfo[recommendKind.typeListB[i]].id %>">
                                             <div class="component">
                                                 <div class="component-box flcardcta">
                                                     <div class="flcard-cont <%=svcFun(i) %>">
@@ -110,9 +110,7 @@
       svcInfo: <%-JSON.stringify(svcInfo) %>,
       resDataInfo: <%-JSON.stringify(resDataInfo) %>,
       recommendKind: <%-JSON.stringify(recommendKind) %>,
-      recommendInfo: <%-JSON.stringify(recommendInfo) %>,
-      errBol: <%-JSON.stringify(errBol) %>,
-      errObj: <%-JSON.stringify(errObj) %>
+      recommendInfo: <%-JSON.stringify(recommendInfo) %>
     });
   });
 </script>

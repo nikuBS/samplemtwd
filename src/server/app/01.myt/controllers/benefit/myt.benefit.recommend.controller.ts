@@ -1,5 +1,5 @@
 /**
- * FileName: myt.joinService.contractTerminalInfo.controller
+ * FileName: myt.benefit.recommend.controller
  * Author: 김명환 (skt.P130714@partner.sk.com)
  * Date: 2018.08.16
  * info :
@@ -16,7 +16,7 @@ import { MYT_BENEFIT_RECOMMEND } from '../../../../types/string.type';
 import FormatHelper from '../../../../utils/format.helper';
 
 
-class MytBenefitRecommendController extends TwViewController {
+class MyTBenefitRecommendController extends TwViewController {
   constructor() {
     super();
   }
@@ -397,4 +397,4 @@ class MytBenefitRecommendController extends TwViewController {
   }
 }
 
-export default MytBenefitRecommendController;
+export default MyTBenefitRecommendController;

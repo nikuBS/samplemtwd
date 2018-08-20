@@ -1,0 +1,87 @@
+<%#
+* FileName: myt.benefit.recommend.detail-tpay.html
+* Author: 김명환 (skt.P130714@partner.sk.com)
+* Date: 2018.08.16
+* Info:
+%>
+<% include ../../components/start.component.html %>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb_area">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+
+<!-- wrap -->
+<div id="fe-wrap" class="wrap" >
+    <!-- header -->
+    <%- include('../../../../../common/views/components/header.component.html', { title: '추천혜택 자세히보기', svcInfo: svcInfo });
+    %>
+    <!-- // header -->
+    <!-- content -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <div class="cont-box">
+                <div class="inner-block">
+                    <h2 class="title-h2">나의 추천 혜택</h2>
+                    <div class="exp-top">
+                        <span class="title">T 페이 이용 중</span>
+                        <span class="tx-exp tx-bold">T 멤버십 제휴처에서 할인</span>
+                        <span class="tx-exp tx-bold">&#43; 결제 통합 이용 가능</span>
+                    </div>
+                    <div class="contents-btn">
+                        <ul class="bt-slice">
+                            <li class="bt-blue1">
+                                <button>이용내역 조회</button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="inner-block">
+                    <h2 class="title-h2">지금까지 이런 페이는 없었다!<br />T페이로 할인과 결제를<br />한번에 즐기세요!</h2>
+                    <div class="benefit-img"><img src="/img/dummy/dmy-circuit04.png" alt=""/></div>
+                    <div class="contents-btn">
+                        <ul class="bt-slice">
+                            <li class="bt-white1">
+                                <button>혜택 자세히보기</button>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="exp-list mt20">
+                        <ul>
+                            <li>
+                                <span class="title">멤버십 할인과 결제를 한번에!</span>
+                                <ul class="dash-list">
+                                    <li>멤버십 / 결제 / 티머니 통합</li>
+                                    <li>신용카드나 계좌등록 없이 T페이 바코드로 결제 시 휴대폰 요금에 청구</li>
+                                    <li>휴대폰을 꺼낼 필요도 없이 손가락 하나 까닥하지 않는 핸즈프리 결제</li>
+                                    <li>T페이 사용처 (매장안내)는 기본, 상세 이용내역과 소액결제 & 컨텐츠 이용료까지 간편조회</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- // content -->
+    <!-- footer -->
+    <%- include('../../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
+    <!-- // footer -->
+</div>
+<% include ../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    new Tw.MytBenefitRecommendDetail( $('#fe-wrap'), {
+      reqQuery: <%-JSON.stringify(reqQuery) %>,
+      svcInfo: <%-JSON.stringify(svcInfo) %>
+    });
+  });
+</script>
+<% include ../../components/end.component.html %>
