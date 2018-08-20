@@ -7,7 +7,8 @@ Tw.ApiService.prototype = {
     var htOptions = this._makeOptions(command, params, headers, pathVariables);
     Tw.Logger.info('[API REQ]', htOptions);
 
-    return $.ajax(htOptions);
+    return $.ajax(htOptions)
+      .then($.proxy(this._checkAuth, this));
   },
 
   requestAjax: function (command, data) {
@@ -32,6 +33,12 @@ Tw.ApiService.prototype = {
       data: data,
       enctype: 'multipart/form-data'
     });
+  },
+
+  _checkAuth: function (resp) {
+    Tw.Logger.info('[API RESP]', resp);
+    // TODO 2차 인증 추가
+    return resp;
   },
 
   _makeOptions: function (command, params, headers, pathVariables) {
