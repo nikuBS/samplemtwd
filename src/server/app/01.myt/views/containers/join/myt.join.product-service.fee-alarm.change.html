@@ -28,7 +28,6 @@
     <div id="contents" class="container-wrap">
         <h2 class="blind">내용</h2>
         <div class="container">
-
             <div class="cont-box">
                 <div class="top-info">
                     <p class="info-text"><em><%= feePlanInfo.prodNm %></em><br />요금 상품을 사용하고 있습니다.</p>
@@ -90,15 +89,15 @@
                     </ul>
                 </div>
                 <% } %>
-                <ul class="bt-slice item-two mt40 fe-btn_action">
+                <ul class="bt-slice item-two mt40">
                     <li class="bt-white2">
-                        <button data-action="back">취소하기</button>
+                        <button class="fe-btn_back">취소하기</button>
                     </li>
                     <li class="bt-red1">
                         <% if (alarmInfo.smsStCd === '01') { %>
-                        <button data-action="delete">해지하기</button>
+                        <button class="fe-btn_delete">해지하기</button>
                         <% } else { %>
-                        <button data-action="put">신청하기</button>
+                        <button class="fe-btn_put">신청하기</button>
                         <% } %>
                     </li>
                 </ul>

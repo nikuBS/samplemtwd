@@ -83,7 +83,7 @@ Tw.CustomerEmailTemplate.prototype = {
 
   _onChangeSMS: function (e) {
     if ( $(e.currentTarget).prop('checked') ) {
-      this._popupService.openAlert(Tw.MSG_CUSTOMER.EMAIL_A02, Tw.BUTTON_LABEL.CONFIRM);
+      this._popupService.openAlert(Tw.MSG_CUSTOMER.EMAIL_A02, Tw.POPUP_TITLE.CONFIRM);
     }
   },
 
@@ -350,7 +350,7 @@ Tw.CustomerEmailTemplate.prototype = {
 
   _onCancelEmail: function () {
     this._popupService.openConfirm(
-      Tw.BUTTON_LABEL.CONFIRM,
+      Tw.POPUP_TITLE.CONFIRM,
       Tw.MSG_CUSTOMER.EMAIL_A01,
       null,
       null,
