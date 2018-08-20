@@ -5,7 +5,7 @@
  */
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { NextFunction, Request, Response } from 'express';
-import { API_CMD, API_CODE } from '../../../../types/api-command.type';
+import { API_CMD } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
@@ -16,100 +16,69 @@ class MytJoinProductServiceFeeAlarmChangeController extends TwViewController {
     super();
   }
 
-  private _feePlanInfo: any;
-  private _alarmStatus: any;
-
   /**
-   * @param code
    * @private
    */
-  private _isSuccess(code): any {
-    return API_CODE.CODE_00 === code;
-  }
-
-  /**
-   * @param feePlanInfo
-   * @private
-   */
-  private _convertFeePlanInfo(feePlanInfo): any {
-    return Object.assign(feePlanInfo.useFeePlanPro, {
-      scrbDt: DateHelper.getShortDateWithFormat(feePlanInfo.useFeePlanPro.scrbDt, 'YY.MM.DD')
-    });
-  }
-
-  /**
-   * @param alarmInfo
-   * @private
-   */
-  private _convertAlarmInfo(alarmInfo): any {
-    console.log(alarmInfo);
-    return Object.assign(alarmInfo, {
-      notiSchdDt: DateHelper.getShortDateWithFormat(alarmInfo.notiSchdDt, 'YY.MM.DD'),
-      reqDt: DateHelper.getShortDateWithFormat(alarmInfo.reqDt, 'YY.MM.DD')
-    });
-  }
-
-  /**
-   * @todo
-   * @private
-   */
-  private _getMockDataFeePlan(): Observable<any> {
-    return Observable.of(WireLess);
-  }
-
-  /**
-   * @todo
-   * @private
-   */
-  private _getMockDataAlarmStatus(): Observable<any> {
-    return Observable.of(WirelessEnableAlarm);
-  }
-
   private _getMyCurrentWirelessFeePlan(): Observable<any> {
-    return this.apiService.request(API_CMD.BFF_05_0136, {})
-      .map((data) => {
-        //
-      });
+    return Observable.of(WireLess);
+    // return this.apiService.request(API_CMD.BFF_05_0136, {});
+  }
+
+  /**
+   * @private
+   */
+  private _getMyFeePlanAlarmStatus(): Observable<any> {
+    return Observable.of(WirelessEnableAlarm);
+    // return this.apiService.request(API_CMD.BFF_05_0125, {});
+  }
+
+  /**
+   * @param feePlan
+   * @private
+   */
+  private _convertFeePlanInfo(feePlan): any {
+    return Object.assign(feePlan, {
+      scrbDt: DateHelper.getShortDateWithFormat(feePlan.scrbDt, 'YYYY.MM.DD')
+    });
+  }
+
+  /**
+   * @param alarmStatus
+   * @private
+   */
+  private _convertAlarmStatusInfo(alarmStatus): any {
+    return Object.assign(alarmStatus, {
+      notiSchdDt: DateHelper.getShortDateWithFormat(alarmStatus.notiSchdDt, 'YYYY.MM.DD'),
+      reqDt: DateHelper.getShortDateWithFormat(alarmStatus.reqDt, 'YYYY.MM.DD')
+    });
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    // const myCurrentWirelessFeePlanApi: Observable<any> = this.apiService.request(API_CMD.BFF_05_0136, {}, {});
-    // const myFeePlanAlarmStatusApi: Observable<any> = this.apiService.request(API_CMD.BFF_05_0125, {}, {});
-    const myCurrentWirelessFeePlanApi: Observable<any> = this._getMockDataFeePlan();
-    const myFeePlanAlarmStatusApi: Observable<any> = this._getMockDataAlarmStatus();
-    const thisMain = this;
-
     Observable.combineLatest(
-      myCurrentWirelessFeePlanApi,
-      myFeePlanAlarmStatusApi
-    ).subscribe({
-      next([
-       feePlan,
-       alarmStatus
-     ]) {
-        thisMain._feePlanInfo = thisMain._isSuccess(feePlan.code) ? feePlan.result : null;
-        thisMain._alarmStatus = thisMain._isSuccess(alarmStatus.code) ? alarmStatus.result : null;
+      this._getMyCurrentWirelessFeePlan(),
+      this._getMyFeePlanAlarmStatus()
+    ).subscribe(([feePlan, alarmStatus]) => {
+      const apiError = this.error.apiError([
+        feePlan, alarmStatus
+      ]);
 
-        const apiError = thisMain.error.apiError([
-            feePlan, alarmStatus
-        ]);
-
-        if (!FormatHelper.isEmpty(apiError)) {
-          return thisMain.error.render(res, {
-            title: '요금제 변경 가능일 알림 서비스',
-            code: apiError.code,
-            msg: apiError.msg,
-            svcInfo: svcInfo
-          });
-        }
-      },
-      complete() {
-        res.render('join/myt.join.product-service.fee-alarm.change.html', {
-          svcInfo: svcInfo,
-          feePlanInfo: thisMain._feePlanInfo,
-          alarmInfo: thisMain._alarmStatus
+      if (!FormatHelper.isEmpty(apiError)) {
+        return this.error.render(res, {
+          title: '요금제 변경 가능일 알림 서비스',
+          code: apiError.code,
+          msg: apiError.msg,
+          svcInfo: svcInfo
         });
       }
+
+      const feePlanInfo = this._convertFeePlanInfo(feePlan.result.useFeePlanPro);
+      const alarmStatusInfo = this._convertAlarmStatusInfo(alarmStatus.result);
+
+      res.render('join/myt.join.product-service.fee-alarm.change.html', {
+        svcInfo: svcInfo,
+        feePlanInfo: feePlanInfo,
+        alarmInfo: alarmStatusInfo
+      });
     });
   }
 }
