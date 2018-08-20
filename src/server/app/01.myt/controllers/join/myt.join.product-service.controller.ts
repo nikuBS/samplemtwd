@@ -11,7 +11,7 @@ import FormatHelper from '../../../../utils/format.helper';
 import { Observable } from 'rxjs/Observable';
 import { SVC_CDNAME, SVC_CDGROUP } from '../../../../types/bff.type';
 import { Combinations, Wire, WireLess } from '../../../../mock/server/myt.join.product-service.mock';
-import { MYT_COMBINATION_TYPE, MYT_COMBINATION_FAMILY } from '../../../../types/string.type';
+import { MYT_COMBINATION_TYPE, MYT_COMBINATION_FAMILY, MYT_FEEPLAN_BENEFIT } from '../../../../types/string.type';
 import DateHelper from '../../../../utils/date.helper';
 
 interface ICombination {
@@ -36,44 +36,72 @@ class MytJoinProductServiceController extends TwViewController {
    * @param svcAttrCd
    * @private
    */
-  private _getFeePlanApiCode(svcAttrCd): any {
+  private _getFeePlanApiInfo(svcAttrCd): any {
     if (SVC_CDGROUP.WIRELESS.indexOf(svcAttrCd) !== -1) {
-      return API_CMD.BFF_05_0136;
+      return {
+        isWire: false,
+        apiCmd: API_CMD.BFF_05_0136
+      };
     }
 
     if (SVC_CDGROUP.WIRE.indexOf(svcAttrCd) !== -1) {
-      return API_CMD.BFF_05_0128;
+      return {
+        isWire: true,
+        apiCmd: API_CMD.BFF_05_0128
+      };
     }
 
     return null;
   }
 
   /**
-   * @param svcAttrCd
+   * @param data
+   * @param isWire
    * @private
    */
-  private _getFeePlan(apiCode): Observable<any> {
-    return Observable.of(Wire);
-    // return Observable.of(WireLess);
-
-    if (FormatHelper.isEmpty(apiCode)) {
-      return Observable.of({});
-    }
-
-    return this.apiService.request(apiCode, {}, {});
+  private _convertFeePlan(data, isWire): Observable<any> {
+    return Object.assign(data.result, (isWire) ? {
+      basFeeAmt: data.result.basFeeAmt > 0 ? FormatHelper.addComma(data.result.basFeeAmt) : 0,
+      isDisplayFeeAmt: (data.result.coClCd !== 'T' && data.result.basFeeAmt > 0),
+      svcScrbDt: DateHelper.getShortDateWithFormat(data.result.svcScrbDt, 'YYYY.MM.DD'),
+      dcBenefits: data.result.dcBenefits.map((item) => {
+        return Object.assign(item, {
+          penText: (item.penYn === 'Y') ? MYT_FEEPLAN_BENEFIT.PEN_Y : MYT_FEEPLAN_BENEFIT.PEN_N,
+          dcStaDt: DateHelper.getShortDateWithFormat(item.dcStaDt, 'YYYY.MM.DD'),
+          dcEndDt: (item.dcEndDt !== '99991231') ? DateHelper.getShortDateWithFormat(item.dcEndDt, 'YYYY.MM.DD') : MYT_FEEPLAN_BENEFIT.ENDLESS,
+          dcVal: FormatHelper.addComma(item.dcVal)
+        });
+      })
+    } : {
+      useFeePlanPro: Object.assign(data.result.useFeePlanPro, {
+        scrbDt: DateHelper.getShortDateWithFormat(data.result.useFeePlanPro.scrbDt, 'YYYY.MM.DD'),
+        basFeeTxt: FormatHelper.addComma(data.result.useFeePlanPro.basFeeTxt)
+      }),
+      tClassProd: Object.assign(data.result.tClassProd, {
+        tClassProdList: data.result.tClassProd.tClassProdList.map((item) => {
+          return Object.assign(item, {
+            scrbDt: DateHelper.getShortDateWithFormat(item.scrbDt, 'YYYY.MM.DD')
+          });
+        })
+      })
+    });
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    const apiCode = this._getFeePlanApiCode(svcInfo.svcAttrCd);
-    if (FormatHelper.isEmpty(apiCode)) {
+    const apiInfo = this._getFeePlanApiInfo(svcInfo.svcAttrCd);
+
+    if (FormatHelper.isEmpty(apiInfo)) {
       return this.error.render(res, {
         title: '나의 가입서비스',
         svcInfo: svcInfo
       });
     }
 
+    const feePlanApi: Observable<any> = apiInfo.isWire ? Observable.of(Wire) : Observable.of(WireLess);
+    // const feePlanApi: Observable<any> = this.apiService.request(apiInfo.apiCmd, {});
+
     Observable.combineLatest(
-      this._getFeePlan(apiCode),
+      feePlanApi,
       this.getCombinations()
     ).subscribe(([feePlan, combinations]) => {
       if (feePlan.code !== API_CODE.CODE_00) {
@@ -88,7 +116,7 @@ class MytJoinProductServiceController extends TwViewController {
       res.render('join/myt.join.product-service.html', {
         svcInfo: svcInfo,
         svcCdName: SVC_CDNAME,
-        feePlan: null,
+        feePlan: this._convertFeePlan(feePlan, apiInfo.isWire),
         combinations
       });
     });

@@ -71,13 +71,13 @@ class MytJoinProductServiceFeeAlarmChangeController extends TwViewController {
         });
       }
 
-      const feePlanInfo = this._convertFeePlanInfo(feePlan.result.useFeePlanPro);
-      const alarmStatusInfo = this._convertAlarmStatusInfo(alarmStatus.result);
+      const feePlanInfo = feePlan.result.useFeePlanPro;
+      const alarmStatusInfo = alarmStatus.result;
 
       res.render('join/myt.join.product-service.fee-alarm.change.html', {
         svcInfo: svcInfo,
-        feePlanInfo: feePlanInfo,
-        alarmInfo: alarmStatusInfo
+        feePlanInfo: this._convertFeePlanInfo(feePlanInfo),
+        alarmInfo: this._convertAlarmStatusInfo(alarmStatusInfo)
       });
     });
   }
