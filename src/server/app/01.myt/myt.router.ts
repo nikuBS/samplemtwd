@@ -48,6 +48,7 @@ import MytJoinContractTerminalDetail from './controllers/join/myt.join.contract-
 
 import MytJoinProductService from './controllers/join/myt.join.product-service.controller';
 import MytJoinProductServiceFeeAlarmController from './controllers/join/myt.join.product-service.fee-alarm.controller';
+import MytJoinProductServiceFeeAlarmChangeController from './controllers/join/myt.join.product-service.fee-alarm.change.controller';
 
 import MytBenefitDiscount from './controllers/benefit/myt.benefit.discount.main.controller';
 import MytBenefitDiscountDetail from './controllers/benefit/myt.benefit.discount.detail.controller';
@@ -118,6 +119,7 @@ class MytRouter extends TwRouter {
 
     this.controllers.push({ url: '/join/product-service', controller: new MytJoinProductService() });
     this.controllers.push({ url: '/join/product-service/fee-alarm', controller: new MytJoinProductServiceFeeAlarmController() });
+    this.controllers.push({ url: '/join/product-service/fee-alarm/change', controller: new MytJoinProductServiceFeeAlarmChangeController() });
 
     this.controllers.push({ url: '/benefit/discount', controller: new MytBenefitDiscount() });
     this.controllers.push({ url: '/benefit/discount/detail', controller: new MytBenefitDiscountDetail() });

@@ -54,42 +54,58 @@ class MytBenefitRecommendController extends TwViewController {
    */
   private _recommendInfo: any = {
     TPAY: {
+      id: 'TPAY',
       state: false,
+      title: MYT_BENEFIT_RECOMMEND.TPAY.title,
       typeTextA: MYT_BENEFIT_RECOMMEND.TPAY.typeTextA,
       typeTextB: MYT_BENEFIT_RECOMMEND.TPAY.typeTextB
     },
     REFILL: {
+      id: 'REFILL',
       state: false,
+      title: MYT_BENEFIT_RECOMMEND.REFILL.title,
       typeTextA: MYT_BENEFIT_RECOMMEND.REFILL.typeTextA,
       typeTextB: MYT_BENEFIT_RECOMMEND.REFILL.typeTextB
     },
     GIFT: {
+      id: 'GIFT',
       state: false,
+      title: MYT_BENEFIT_RECOMMEND.GIFT.title,
       typeTextA: MYT_BENEFIT_RECOMMEND.GIFT.typeTextA,
       typeTextB: MYT_BENEFIT_RECOMMEND.GIFT.typeTextB
     },
     POINT: {
+      id: 'POINT',
       state: false,
+      title: MYT_BENEFIT_RECOMMEND.POINT.title,
       typeTextA: MYT_BENEFIT_RECOMMEND.POINT.typeTextA,
       typeTextB: MYT_BENEFIT_RECOMMEND.POINT.typeTextB
     },
     PLAN: {
+      id: 'PLAN',
       state: false,
+      title: MYT_BENEFIT_RECOMMEND.PLAN.title,
       typeTextA: MYT_BENEFIT_RECOMMEND.PLAN.typeTextA,
       typeTextB: MYT_BENEFIT_RECOMMEND.PLAN.typeTextB
     },
     OKSP: {
+      id: 'OKSP',
       state: false,
+      title: MYT_BENEFIT_RECOMMEND.OKSP.title,
       typeTextA: MYT_BENEFIT_RECOMMEND.OKSP.typeTextA,
       typeTextB: MYT_BENEFIT_RECOMMEND.OKSP.typeTextB
     },
     OKASP: {
+      id: 'OKASP',
       state: false,
+      title: MYT_BENEFIT_RECOMMEND.OKASP.title,
       typeTextA: MYT_BENEFIT_RECOMMEND.OKASP.typeTextA,
       typeTextB: MYT_BENEFIT_RECOMMEND.OKASP.typeTextB
     },
     TSIGN: {
+      id: 'TSIGN',
       state: false,
+      title: MYT_BENEFIT_RECOMMEND.TSIGN.title,
       typeTextA: MYT_BENEFIT_RECOMMEND.TSIGN.typeTextA,
       typeTextB: MYT_BENEFIT_RECOMMEND.TSIGN.typeTextB
     }
@@ -165,15 +181,12 @@ class MytBenefitRecommendController extends TwViewController {
           resDataInfo: thisMain._apiDataObj,
           recommendKind: thisMain._recommendKind,
           recommendInfo: thisMain._recommendInfo,
+          svcFun: thisMain.getClassBgColor,
           errBol: false,
           errObj: null
         });
 
       }, function (err) {
-
-        // if ( err.code === API_MYT_ERROR.BIL0011 ) {
-        //   thisMain._urlTplInfo.pageRenderView = '';
-        // }
 
         thisMain._errInfoInit(err);
         thisMain.renderView(res, thisMain._urlTplInfo.pageRenderView, {
@@ -294,6 +307,12 @@ class MytBenefitRecommendController extends TwViewController {
       this._recommendInfo[typeNm].state = false;
       this._recommendKind.typeListB.push( typeNm );
     }
+  }
+  // -------------------------------------------------------------[service]
+  public getClassBgColor(num: number): string {
+    const tempNum = (num % 7) + 1; // 1, 2, 3, 4, 5, 6, 7
+    const returnClass = 'bgc' + String( tempNum );
+    return returnClass;
   }
 
   // -------------------------------------------------------------[에러 정보 처리]

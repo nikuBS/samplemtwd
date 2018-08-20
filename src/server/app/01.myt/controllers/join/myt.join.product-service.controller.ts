@@ -4,11 +4,12 @@
  * Date: 2018.08.13
  */
 import { NextFunction, Request, Response } from 'express';
-import { API_CMD } from '../../../../types/api-command.type';
+import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import FormatHelper from '../../../../utils/format.helper';
 import { Observable } from 'rxjs/Observable';
-import { SVC_CDNAME } from '../../../../types/bff.type';
+import { SVC_CDNAME, SVC_CDGROUP } from '../../../../types/bff.type';
+import { Combinations, Wire, WireLess } from '../../../../mock/server/myt.join.product-service.mock';
 import { MYT_COMBINATION_TYPE } from '../../../../types/string.type';
 
 interface ICombination {
@@ -29,29 +30,63 @@ class MytJoinProductServiceController extends TwViewController {
     super();
   }
 
-  private _convertDataFeePlan(data: any): any {
-    if (FormatHelper.isEmpty(data)) {
-      return {
-        tClassProList: []
-      };
+  /**
+   * @param svcAttrCd
+   * @private
+   */
+  private _getFeePlanApiCode(svcAttrCd): any {
+    if (SVC_CDGROUP.WIRELESS.indexOf(svcAttrCd) !== -1) {
+      return API_CMD.BFF_05_0136;
     }
+
+    if (SVC_CDGROUP.WIRE.indexOf(svcAttrCd) !== -1) {
+      return API_CMD.BFF_05_0128;
+    }
+
+    return null;
+  }
+
+  /**
+   * @param svcAttrCd
+   * @private
+   */
+  private _getFeePlan(apiCode): Observable<any> {
+    return Observable.of(Wire);
+    // return Observable.of(WireLess);
+
+    if (FormatHelper.isEmpty(apiCode)) {
+      return Observable.of({});
+    }
+
+    return this.apiService.request(apiCode, {}, {});
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    const feePlanWirelessApi: Observable<any> = this.apiService.request(API_CMD.BFF_05_0136, {}, {});
-    const feePlanWireApi: Observable<any> = this.apiService.request(API_CMD.BFF_05_0128, {}, {});
-    // const combinations: ICombinationList = Combinations;
+    const apiCode = this._getFeePlanApiCode(svcInfo.svcAttrCd);
+    if (FormatHelper.isEmpty(apiCode)) {
+      return this.error.render(res, {
+        title: '나의 가입서비스',
+        svcInfo: svcInfo
+      });
+    }
 
     Observable.combineLatest(
-      feePlanWireApi,
-      feePlanWirelessApi,
+      this._getFeePlan(apiCode),
       this.getCombinations()
-    ).subscribe(([productServiceList, feePlanWirei, combinations]) => {
-      console.log(productServiceList);
+    ).subscribe(([feePlan, combinations]) => {
+      if (feePlan.code !== API_CODE.CODE_00) {
+        return this.error.render(res, {
+          title: '나의 가입서비스',
+          code: feePlan.code,
+          msg: feePlan.msg,
+          svcInfo: svcInfo
+        });
+      }
+
       res.render('join/myt.join.product-service.html', {
         svcInfo: svcInfo,
         svcCdName: SVC_CDNAME,
-        feePlan: this._convertDataFeePlan([]),
+        feePlan: null,
         combinations
       });
     });
