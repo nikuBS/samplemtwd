@@ -55,6 +55,7 @@ import MytBenefitDiscountDetail from './controllers/benefit/myt.benefit.discount
 import MyTBenefitPoint from './controllers/benefit/myt.benefit.point.controller';
 import MyTBenefitRainbowPoint from './controllers/benefit/myt.benefit.rainbow-point.controller';
 import MyTBenefitRainbowPointInfo from './controllers/benefit/myt.benefit.rainbow-point-info.controller';
+import MyTBenefitRainbowPointHistory from './controllers/benefit/myt.benefit.rainbow-point-history.controller';
 
 import MytJoinProductServiceCombinationController from './controllers/join/mty.join.product-service.combination.controller';
 
@@ -134,6 +135,7 @@ class MytRouter extends TwRouter {
     this.controllers.push({ url: '/benefit/point', controller: new MyTBenefitPoint() });
     this.controllers.push({ url: '/benefit/rainbow-point', controller: new MyTBenefitRainbowPoint() });
     this.controllers.push({ url: '/benefit/rainbow-point/info', controller: new MyTBenefitRainbowPointInfo() });
+    this.controllers.push({ url: '/benefit/rainbow-point/history', controller: new MyTBenefitRainbowPointHistory() });
     this.controllers.push({ url: '/benefit/recommend', controller: new MyTBenefitRecommendController() });
     this.controllers.push({ url: '/benefit/recommend/detail', controller: new MyTBenefitRecommendDetailController() });
 
