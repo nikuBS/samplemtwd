@@ -31,6 +31,7 @@ class MytJoinProductServiceController extends TwViewController {
   }
 
   private _additionsInfo: any;
+  private _combinationsInfo: any;
 
   /**
    * @param svcAttrCd
@@ -111,22 +112,25 @@ class MytJoinProductServiceController extends TwViewController {
         code: '00',
         result: {}
       });
-      const combinations = this.getCombinations();
+      const combinationsApi = this.getCombinations();
 
       Observable.combineLatest(
-          additionsApi
+          additionsApi,
+          combinationsApi
       ).subscribe({
         next([
-         additions
+         additions,
+         combinations
        ]) {
           thisMain._additionsInfo = thisMain._isSuccess(additions.code) ? additions.result : null;
+          thisMain._combinationsInfo = thisMain._isSuccess(combinations.code) ? combinations.result : null;
         },
         complete() {
           res.render('join/myt.join.product-service.html', {
             svcInfo: svcInfo,
             svcCdName: SVC_CDNAME,
             feePlan: null,
-            combinations
+            combinations: thisMain._combinationsInfo
           });
         }
       });
