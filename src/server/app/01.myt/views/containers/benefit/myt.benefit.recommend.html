@@ -4,6 +4,20 @@
 * Date: 2018.08.16
 * Info:
 %>
+<!-- 템플릿 -->
+<script id="fe-contract-terminal-detail" type="text/x-handlebars-template">
+
+    {{# each tempData }}
+    <li>
+        <button>
+            <span class="tit">{{title}}</span>
+            <span class="txt">{{typeTextA}}</span>
+        </button>
+    </li>
+    {{/each}}
+
+</script>
+<!-- 템플릿 end -->
 <% include ../../components/start.component.html %>
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
@@ -26,23 +40,16 @@
         <h2 class="blind">내용</h2>
         <div class="container">
 
-
             <div class="cont-box nogaps-btm">
                 <h2 class="title-h2">나의 추천 혜택</h2>
                 <div class="benefits-list">
-                    <ul>
-                        <% for(var i=0; i < recommendKind.typeListA.length; i++) { %>
-                        <li>
-                            <button>
-                                <span class="tit"><%=recommendInfo[recommendKind.typeListA[i]].title %></span>
-                                <span class="txt"><%=recommendInfo[recommendKind.typeListA[i]].typeTextA %></span>
-                            </button>
-                        </li>
-                        <% } %>
+                    <ul data-target="detailList">
+
                     </ul>
                 </div>
-                <div class="bt-more-wrap">
-                    <button role="button" class="bt-more" title="">더보기<span>(20)</span></button>
+                <div class="bt-more-wrap" data-target="addBtnArea" >
+                    <button role="button" class="bt-more" title="" data-target="addBtn">
+                        더보기<span data-target="curNum"></span></button>
                 </div>
             </div>
 
@@ -51,23 +58,25 @@
             <div class="cont-box nogaps">
                 <div class="recomm-benefits">
                     <h2 class="recomm-tit">이런 추천 혜택은 어떠세요?</h2>
-
                     <!-- .widget -->
                     <div class="widget">
                         <div class="widget-box slider1">
                             <div class="customer-slider2">
                                 <div class="slider-box">
-                                    <ul class="slider">
+                                    <ul class="slider" style="height: 260px;">
 
                                         <% for(var i=0; i < recommendKind.typeListB.length; i++) { %>
+                                        <% if( recommendInfo[recommendKind.typeListB[i]].id === 'PLAN' || recommendInfo[recommendKind.typeListB[i]].id === 'OKSP' ) { %>
+                                            <% continue %>
+                                        <% } %>
                                         <li>
                                             <div class="component">
                                                 <div class="component-box flcardcta">
-                                                    <div class="flcard-cont bgc1">
+                                                    <div class="flcard-cont <%=svcFun(i) %>">
                                                         <div class="flcard-area">
                                                             <div class="store-card">
                                                                 <p class="card-ti"><em class="tx-bold"><%=recommendInfo[recommendKind.typeListB[i]].title %></em></p>
-                                                                <p class="card-exp"><%=recommendInfo[recommendKind.typeListB[i]].typeTextB %></p>
+                                                                <p class="card-exp"><em class="tx-bold"><%=recommendInfo[recommendKind.typeListB[i]].typeTextB %></em></p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -87,6 +96,7 @@
 
         </div>
     </div>
+
     <!-- // content -->
     <!-- footer -->
     <%- include('../../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
