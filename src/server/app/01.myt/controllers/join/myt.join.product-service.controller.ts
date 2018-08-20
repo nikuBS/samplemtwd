@@ -30,9 +30,6 @@ class MytJoinProductServiceController extends TwViewController {
     super();
   }
 
-  private _additionsInfo: any;
-  private _combinationsInfo: any;
-
   /**
    * @param svcAttrCd
    * @private
@@ -54,10 +51,10 @@ class MytJoinProductServiceController extends TwViewController {
    * @param svcAttrCd
    * @private
    */
-  private _getFeePlanApiResponse(svcAttrCd): any {
+  private _getFeePlanApiResponse(svcAttrCd): Observable<any> {
     const apiCode = this._getFeePlanApiCode(svcAttrCd);
     if (FormatHelper.isEmpty(apiCode)) {
-      return null;
+      return Observable.of({});
     }
 
     return this.apiService.request(apiCode, {}, {});
@@ -80,16 +77,9 @@ class MytJoinProductServiceController extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    const thisMain = this,
-        feePlanApi = this._getFeePlanMockResponse(true),
-        feePlanApiLiveTest = this._getFeePlanApiResponse(svcInfo.svcAttrCd);
+    const feePlanApi = this._getFeePlanMockResponse(true);
+    // const feePlanApi = this._getFeePlanApiResponse(svcInfo.svcAttrCd);
 
-    // @todo remove feePlanApiLiveTest
-    // feePlanApiLiveTest.subscribe((data) => {
-    //   console.log(data);
-    // });
-
-    // @todo svcAttrCd Empty 일때 처리
     if (FormatHelper.isEmpty(feePlanApi)) {
       return this.error.render(res, {
         title: '나의 가입서비스',
@@ -97,42 +87,24 @@ class MytJoinProductServiceController extends TwViewController {
       });
     }
 
-    feePlanApi.subscribe((data) => {
-      if (!this._isSuccess(data.code)) {
+    Observable.combineLatest(
+      feePlanApi,
+      this.getCombinations()
+    ).subscribe(([feePlan, combinations]) => {
+      if (!this._isSuccess(feePlan.code)) {
         return this.error.render(res, {
           title: '나의 가입서비스',
-          code: data.code,
-          msg: data.msg,
+          code: feePlan.code,
+          msg: feePlan.msg,
           svcInfo: svcInfo
         });
       }
 
-      // @todo mockdata
-      const additionsApi: Observable<any> = Observable.of({
-        code: '00',
-        result: {}
-      });
-      const combinationsApi = this.getCombinations();
-
-      Observable.combineLatest(
-          additionsApi,
-          combinationsApi
-      ).subscribe({
-        next([
-         additions,
-         combinations
-       ]) {
-          thisMain._additionsInfo = thisMain._isSuccess(additions.code) ? additions.result : null;
-          thisMain._combinationsInfo = thisMain._isSuccess(combinations.code) ? combinations.result : null;
-        },
-        complete() {
-          res.render('join/myt.join.product-service.html', {
-            svcInfo: svcInfo,
-            svcCdName: SVC_CDNAME,
-            feePlan: null,
-            combinations: thisMain._combinationsInfo
-          });
-        }
+      res.render('join/myt.join.product-service.html', {
+        svcInfo: svcInfo,
+        svcCdName: SVC_CDNAME,
+        feePlan: null,
+        combinations
       });
     });
   }
