@@ -1,0 +1,266 @@
+<!--
+* FileName: myt.benefit.point.adjustment.html
+* Author: 이정민 (skt.p130713@partner.sk.com)
+* Date: 2018.08.14
+-->
+<script id="fe-preview-content-tmpl" type="text/x-handlebars-template">
+    <div class="container">
+        <div class="cont-box">
+            <div class="inner-block">
+                <h2 class="title-h2">합산결과 미리보기</h2>
+                <ul class="payment-wrap mt20">
+                    <li class="payment-detail-box">
+                        <div class="detail-inner">
+                            <div class="po-line-list">
+                                <span class="po-title">포인트를 주는 회선 <span class="po-line">{{ giver.svcNum }}</span></span>
+                                <ul>
+                                    <li>
+                                        <span class="points mr12"><span class="p-color">현재 포인트</span><br /><span class="ff-hn tx-bold">{{ giver.point }}</span> 점</span>
+                                        <span class="ico-circle-arrow"></span>
+                                        <span class="points ml12"><span class="p-color">합산 후 포인트</span><br /><span class="ff-hn tx-bold">{{ giver.remain }}</span> 점</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="payment-detail-box">
+                        <div class="detail-inner">
+                            <div class="po-line-list">
+                                <span class="po-title">포인트를 받는 회선 <span class="po-line">{{ receiver.svcNum }}</span></span>
+                                <ul>
+                                    <li>
+                                        <span class="points mr12"><span class="p-color">현재 포인트</span><br /><span class="ff-hn tx-bold">{{ receiver.point }}</span> 점</span>
+                                        <span class="ico-circle-arrow"></span>
+                                        <span class="points ml12"><span class="p-color">합산 후 포인트</span><br /><span class="ff-hn tx-bold">{{ receiver.remain }}</span> 점</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="contents-btn">
+                <ul class="bt-slice item-two">
+                    <li class="bt-white2">
+                        <button class="fe-close-preview">취소</button>
+                    </li>
+                    <li class="bt-red1">
+                        <button class="fe-submit">합산하기</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</script>
+<script id="fe-complete-content-tmpl" type="text/x-handlebars-template">
+    <div class="container">
+        <div class="cont-box nogaps-top">
+            <div class="msg-present-box">
+                <div class="msg-present-comp type3">
+                    <span class="ico"></span>
+                    <p class="txt">포인트 합산이<br /><span class="tx-bold">정상적으로 처리</span><br />되었습니다.</p>
+                </div>
+                <div class="gift-data-cont">
+                    <p class="point-detail"><span class="point">{{ point }}점</span>{{ date }}</p>
+                    <ul class="t-gift-data">
+                        <li>
+                            <dl>
+                                <dt class="ti-data">포인트를 준 회선</dt>
+                                <dd class="tx-data ff-hn">{{ giverSvcNum }}</dd>
+                            </dl>
+                        </li>
+                        <li>
+                            <dl>
+                                <dt class="ti-data">포인트를 받은 회선</dt>
+                                <dd class="tx-data ff-hn">{{ receiverSvcNum }}</dd>
+                            </dl>
+                        </li>
+                    </ul>
+                    <div class="mt20">
+                        <ul class="bt-slice"><!-- 2018-06-20 버튼 클래스 변경 -->
+                            <li class="bt-blue1">
+                                <button class="fe-close-complete">확인</button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--// .cont-box -->
+    </div>
+</script>
+
+<% include ../../components/start.component.html %>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<!-- wrap -->
+<div id="fe-myt-benefit-point-adjustment" class="wrap" data-line-to-give-svc-mgmt-num="<%= lineToGive.svcMgmtNum %>" data-lines="<%= lines %>">
+    <div id="fe-main" class="fe-section">
+        <!-- #header -->
+        <%- include('../../../../../common/views/components/header.component.html', { title: '포인트 합산', svcInfo: svcInfo }); %>
+        <!--// #header -->
+        <!-- #contents -->
+        <div class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+                <div class="cont-box">
+                    <div class="pay-info">
+                        <h3 class="pay-tit">레인보우 잔여 포인트</h3>
+                        <div class="payment-all type2">
+                            <span><em class="fe-point-to-give" data-point="<%= lineToGive.point %>"><%= lineToGive.showPoint %></em> 점</span>
+                        </div>
+                    </div>
+                    <div class="point-sum-area mt40">
+                        <button class="bt-bluetxt fe-btn-line-to-give" title="포인트 주는 회선 선택" aria-haspopup="true" data-svc-mgmt-num="<%= lineToGive.svcMgmtNum %>"><%= lineToGive.svcNum %> <span class="ico"></span></button><span class="tx-normal pl8">에서</span><br>
+                        <button class="bt-bluetxt fe-btn-line-to-receive" title="포인트 받는 회선 선택" aria-haspopup="true" data-svc-mgmt-num="<%= lineToReceive.svcMgmtNum %>"><%= lineToReceive.svcNum %> <span class="ico"></span></button><span class="tx-normal pl8">으로</span><br>
+                        <span class="input-point">
+                      <input type="text" placeholder="전환하실 포인트" title="전환하실 포인트" class="fe-input-point" onInput="return Tw.InputHelper.inputNumberOnly(this);">
+                      <button href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></button>
+                    </span>
+                        <span class="tx-normal">합산하기</span>
+                    </div>
+                    <ul class="bt-slice">
+                        <li class="bt-blue1">
+                            <button class="fe-btn-preview">합산결과 미리보기</button>
+                        </li>
+                    </ul>
+                </div>
+
+                <hr class="cont-sp type1" aria-hidden="true">
+                <% if (histories.length > 0) { %>
+                <div class="cont-box nogaps-btm">
+                    <h2 class="title-h2">합산 내역</h2>
+                    <div class="payment-select">
+                        <ul class="select-list">
+                            <% for (var i = 0; i < histories.length; i++) { %>
+                            <li>
+                                <span class="title tx-bold"><%= histories[i].showPoint %>점 <span class="num pl8"><%= histories[i].showOpDt %></span></span>
+                                <ul class="tb-layout">
+                                    <li>
+                                        <span class="tit">포인트를 준 회선</span>
+                                        <span class="tx-cont"><span class="ff-hn tx-bold vbl"><%= histories[i].sndrSvcNum %></span></span>
+                                    </li>
+                                    <li>
+                                        <span class="tit">포인트를 받은 회선</span>
+                                        <span class="tx-cont"><span class="ff-hn tx-bold vbl"><%= histories[i].befrSvcNum %></span></span>
+                                    </li>
+                                </ul>
+                            </li>
+                            <% } %>
+                        </ul>
+                    </div>
+                    <div class="paging">
+                        <a href="#" role="button" class="prev"><span class="pg-blind">이전 페이지로 이동</span></a>
+                        <a href="#" role="button">7</a>
+                        <a href="#" role="button">8</a>
+                        <a href="#" role="button" class="active" title="현재페이지">9</a>
+                        <a href="#" role="button">10</a>
+                        <a href="#" role="button">11</a>
+                        <a href="#" role="button" class="next"><span class="pg-blind">다음 페이지로 이동</span></a>
+                        <!-- <a href="#" role="button" class="next"><span class="pg-blind">다음 페이지로 이동</span></a> -->
+                        <!-- 비활성화시 disabled 클래스 추가 -->
+                    </div>
+                </div>
+                <% } else { %>
+                <div class="cont-box nogaps-btm">
+                    <h2 class="title-h2">합산 내역</h2>
+                    <div class="contents-empty type2">
+                        <span class="ico"></span>
+                        <p class="desc">합산 내역이 없습니다.</p>
+                    </div>
+                </div>
+                <% } %>
+
+                <hr class="cont-sp type1" aria-hidden="true">
+
+                <div class="cont-box nogaps-hoz">
+                    <div class="box-confirm">
+                        <!-- .widget -->
+                        <div class="widget">
+                            <div class="widget-box accordion">
+                                <h5 class="tit-a">이용안내</h5>
+                                <div class="acco-cover toggle"><!-- toggle : 한개만 열기 -->
+                                    <div class="bt-whole"><button role="button" aria-pressed="false"><span class="blind">내용 열기</span></button></div>
+                                    <div class="acco-style btn-hold">
+                                        <ul class="acco-list">
+                                            <!-- .on: 열기 -->
+                                            <li class="acco-box">
+                                                <div class="acco-tit"><span class="bullet">1.</span> 레인보우 포인트 합산 가능 회선 <button role="button" aria-pressed="false"></button></div>
+                                                <div class="acco-cont">
+                                                    <ul class="list-dot">
+                                                        <li class="list">동일명의의 레인보우포인트는 가입 후 만 30일 이상 서비스를 유지한 회선에 한해 양수가 가능합니다.
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                            <li class="acco-box">
+                                                <div class="acco-tit"><span class="bullet">2.</span> 포인트 합산은 1점 단위로 합산하실 수 있습니다.</div>
+                                            </li>
+                                            <li class="acco-box">
+                                                <div class="acco-tit"><span class="bullet">3.</span> 회선을 추가하여 다회선을 이용 할 고객은 다회선 이용안내를 확인해 주세요.</div>
+                                                <div class="acco-bt-slice">
+                                                    <ul class="bt-slice">
+                                                        <li class="bt-white2">
+                                                            <button>다회선 이용안내</button>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--// .widget -->
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!--// #contents -->
+        <%- include('../../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }) %>
+    </div>
+    <div id="fe-preview" class="fe-section" style="display: none;">
+        <div class="header-wrap">
+            <div class="header step-page">
+                <div class="header-ti">
+                    <h1>포인트 합산하기</h1>
+                </div>
+                <button class="close-step fe-close-preview"><span class="blind">닫기</span></button>
+            </div>
+        </div>
+        <div class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="fe-content"></div>
+        </div>
+    </div>
+    <div id="fe-complete" class="fe-section" style="display: none;">
+        <div class="header-wrap">
+            <div class="header step-page">
+                <div class="header-ti">
+                    <h1>포인트 합산하기</h1>
+                </div>
+                <button class="close-step fe-close-complete"><span class="blind">닫기</span></button>
+            </div>
+        </div>
+        <div class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="fe-content"></div>
+        </div>
+    </div>
+</div>
+<!-- // wrap -->
+<% include ../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    new Tw.MytBenefitPointAdjustment($('#fe-myt-benefit-point-adjustment'));
+  });
+</script>
+<% include ../../components/end.component.html %>
