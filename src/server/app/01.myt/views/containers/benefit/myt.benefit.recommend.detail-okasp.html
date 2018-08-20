@@ -23,7 +23,62 @@
     <!-- // header -->
     <!-- content -->
     <div id="contents" class="container-wrap">
-        myt.benefit.recommend.detail-okasp
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <div class="cont-box">
+                <div class="inner-block">
+                    <% if( reqQuery.type == 'A') { %>
+                    <h2 class="title-h2">나의 추천 혜택</h2>
+                    <% } %>
+
+                    <% if( reqQuery.type == 'B') { %>
+                    <h2 class="title-h2">혜택 받는 법</h2>
+                    <% } %>
+
+                    <div class="exp-top">
+                        <span class="tx-exp">oksusu &amp; 안심팩 요금제 사용으로<br /><span class="tx-bold">전용 데이터, 안심옵션</span> 및<br /><span class="tx-bold">포인트 혜택</span> 제공</span>
+                    </div>
+                    <div class="contents-btn">
+                        <ul class="bt-slice">
+                            <li class="bt-blue1">
+                                <% if( reqQuery.type == 'A') { %>
+                                <h2 class="title-h2">나의 사용중인 상품 확인</h2>
+                                <% } %>
+
+                                <% if( reqQuery.type == 'B') { %>
+                                <h2 class="title-h2">요금제 변경</h2>
+                                <% } %>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="inner-block">
+                    <h2 class="title-h2">데이터부터 컨텐츠까지~<br />oksusu &amp; 안심 팩이면 한번에 끝!!</h2>
+                    <div class="benefit-img"><img src="/img/dummy/dmy-circuit04.png" alt=""/></div>
+                    <div class="contents-btn">
+                        <ul class="bt-slice">
+                            <li class="bt-white1">
+                                <button>혜택 자세히보기</button>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="exp-list mt20">
+                        <ul>
+                            <li>
+                                <span class="title">부가서비스 혜택</span>
+                                <ul class="dash-list">
+                                    <li>oksusu 전용 데이터 매일 1GB 제공! (심야 50% 할인!)</li>
+                                    <li>안심옵션 기본제공!</li>
+                                    <li>역대급 컨텐츠 혜택! 실시간 TV 및 최신 영화는 물론 유료 컨텐츠도 무료로 즐겨라!</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
     </div>
     <!-- // content -->
     <!-- footer -->

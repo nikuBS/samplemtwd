@@ -27,7 +27,14 @@
         <div class="container">
             <div class="cont-box">
                 <div class="inner-block">
+                    <% if( reqQuery.type == 'A') { %>
                     <h2 class="title-h2">나의 추천 혜택</h2>
+                    <% } %>
+
+                    <% if( reqQuery.type == 'B') { %>
+                    <h2 class="title-h2">혜택 받는 법</h2>
+                    <% } %>
+
                     <div class="exp-top">
                         <span class="title">T 페이 이용 중</span>
                         <span class="tx-exp tx-bold">T 멤버십 제휴처에서 할인</span>
@@ -36,7 +43,12 @@
                     <div class="contents-btn">
                         <ul class="bt-slice">
                             <li class="bt-blue1">
-                                <button>이용내역 조회</button>
+                                <% if( reqQuery.type == 'A') { %>
+                                <button data-target="">이용내역 조회</button>
+                                <% } %>
+                                <% if( reqQuery.type == 'B') { %>
+                                <button data-target="">T 페이 설치</button>
+                                <% } %>
                             </li>
                         </ul>
                     </div>

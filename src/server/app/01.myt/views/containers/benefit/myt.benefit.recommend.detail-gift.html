@@ -23,7 +23,68 @@
     <!-- // header -->
     <!-- content -->
     <div id="contents" class="container-wrap">
-        myt.benefit.recommend.detail-gift
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <div class="cont-box">
+                <div class="inner-block">
+                    <% if( reqQuery.type == 'A') { %>
+                    <h2 class="title-h2">나의 추천 혜택</h2>
+                    <% } %>
+
+                    <% if( reqQuery.type == 'B') { %>
+                    <h2 class="title-h2">혜택 받는 법</h2>
+                    <% } %>
+                    <div class="exp-top">
+                        <span class="title">내가 주고 받은 데이터 용량</span>
+                        <span class="tx-exp tx-bold">선물하기 : 1,000 MB</span>
+                        <span class="tx-exp tx-bold">선물받기 : 1,000 MB</span>
+                    </div>
+                    <div class="contents-btn">
+                        <ul class="bt-slice">
+                            <li class="bt-blue1">
+                                <% if( reqQuery.type == 'A') { %>
+                                <button data-target="">T끼리 데이터 선물하러가기</button>
+                                <% } %>
+                                <% if( reqQuery.type == 'B') { %>
+                                <button data-target="">T끼리 데이터 선물 조르기</button>
+                                <% } %>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="inner-block">
+                    <h2 class="title-h2">LTE / 3G 요금제 이용 고객이라면<br />자신의 데이터를 선물해 보세요!</h2>
+                    <div class="benefit-img"><img src="/img/dummy/dmy-circuit04.png" alt=""/></div>
+                    <div class="contents-btn">
+                        <ul class="bt-slice">
+                            <li class="bt-white1">
+                                <button>혜택 자세히보기</button>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="exp-list mt20">
+                        <ul>
+                            <li>
+                                <span class="title">선물 하는 고객</span>
+                                <ul class="dash-list">
+                                    <li>선물하기 1회 당 최소 100MB ~ 최대 1GB까지 가능(100MB 단위로 용량 선택)</li>
+                                    <li>가입한 요금제에 따라 데이터 기본 제공량의 최대 50%까지 선물가능</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <span class="title">선물 받는 고객</span>
+                                <ul class="dash-list">
+                                    <li>선물 받은 데이터는 해당 월 말까지 사용 가능하며 이월되지 않음</li>
+                                    <li>선물 받은 데이터는 타인에게 재선물하거나 타 회선과 공유할 수 없음</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
     </div>
     <!-- // content -->
     <!-- footer -->
