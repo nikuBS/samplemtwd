@@ -65,6 +65,7 @@ export const URL = {
   '/myt/join/product-service': { login: true, id: 'MY_01_01', title: '나의 가입서비스/요금제,부가서비스,결합상품'},
   '/myt/benefit/point': { login: true, id: 'MY_04_04', title: '포인트 혜택'},
   '/myt/join/product-service/fee-alarm': { login: true, id: 'MY_01_01_01', title: '요금제 변경 가능일 알림 서비스' },
+  '/myt/join/product-service/fee-alarm/change': { login: true, id: 'MY_01_01_02', title: '요금제 변경 가능일 알림 서비스 신청/해지' },
   '/myt/benefit/point/adjustment': { login: true, id: 'MY_04_04_02', title: '포인트합산'},
 
   // recharge

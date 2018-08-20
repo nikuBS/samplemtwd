@@ -6,7 +6,11 @@
 
 Tw.MyTJoinProductServiceFeePlan = function (rootEl) {
   this.$container = rootEl;
+  this._cachedElement();
 };
 
 Tw.MyTJoinProductServiceFeePlan.prototype = {
+
+  _cachedElement: function() {
+  }
 };
