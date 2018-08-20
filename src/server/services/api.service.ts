@@ -59,7 +59,7 @@ class ApiService {
       case API_SERVER.BFF:
         return Object.assign(header, {
           'content-type': 'application/json; charset=UTF-8',
-          'x-user-ip': '127.0.0.1',
+          'x-user-ip': this.loginService.getNodeIp(),
           cookie: this.makeCookie(),
         });
       case API_SERVER.TID:
