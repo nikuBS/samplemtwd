@@ -20,7 +20,7 @@
     <%- include('../../../../common/views/components/header.component.html', { title: 'SKT 결합상품', svcInfo: data.svcInfo }); %>
     <!--// #header -->
     <!-- #contents -->
-    <div id="contents" class="container-wrap">
+    <div id="contents" data-id="detail-prdc" class="container-wrap">
         <h2 class="blind">내용</h2>
         <div class="container">
             <div class="cont-box">
@@ -47,6 +47,7 @@
                     </div>
                 </div>
                 <% } else { %>
+                <% data.empty = true; %>
                 <div class="inner-block">
                     <h2 class="title-h2">혜택 받는 법</h2>
                     <div class="exp-top">
@@ -94,11 +95,15 @@
         </div>
     </div>
     <!--// #contents -->
+    <%- include('../../../../common/views/components/footer.component.html', { svcInfo: data.svcInfo }); %>
 </div>
 <script>
+  var data = '<%- JSON.stringify(data) %>';
   $(document).ready(function () {
     new Tw.MyTBenefitDisCntDetail({
-      $element: $('#protect-change')
+      $element: $('#contents'),
+      type: 'prdc',
+      data: JSON.parse(data)
     });
   });
 </script>

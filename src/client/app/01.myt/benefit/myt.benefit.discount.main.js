@@ -34,7 +34,7 @@ Tw.MyTBenefitDisCntMain.prototype = {
         $target = $(event.target);
         break;
       default:
-        $target = $(event.target).parent('[data-id]');
+        $target = $(event.target).parents('[data-id]');
         break;
     }
     this._pageMove($target.attr('data-id'));
