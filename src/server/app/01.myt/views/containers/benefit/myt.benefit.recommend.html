@@ -4,6 +4,20 @@
 * Date: 2018.08.16
 * Info:
 %>
+<!-- 템플릿 -->
+<script id="fe-contract-terminal-detail" type="text/x-handlebars-template">
+
+    {{# each tempData }}
+    <li>
+        <button>
+            <span class="tit">{{title}}</span>
+            <span class="txt">{{typeTextA}}</span>
+        </button>
+    </li>
+    {{/each}}
+
+</script>
+<!-- 템플릿 end -->
 <% include ../../components/start.component.html %>
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
@@ -26,63 +40,16 @@
         <h2 class="blind">내용</h2>
         <div class="container">
 
-
             <div class="cont-box nogaps-btm">
                 <h2 class="title-h2">나의 추천 혜택</h2>
                 <div class="benefits-list">
-                    <ul>
-                        <li>
-                            <button>
-                                <span class="tit">데이터/음성 리필하기</span>
-                                <span class="txt">SKT가입 기간에 따른 데이터 쿠폰<br />제공 혜택을 받고 있습니다.</span>
-                            </button>
-                        </li>
-                        <li>
-                            <button>
-                                <span class="tit">T끼리 데이터 선물하기</span>
-                                <span class="txt">데이터를 선물하고 <br />선물 받을 수 있습니다.</span>
-                            </button>
-                        </li>
-                        <li>
-                            <button>
-                                <span class="tit">T나는 쇼핑 포인트</span>
-                                <span class="txt">약정할인액의 130%를 11번가<br />포인트로 제공 받고 있습니다.</span>
-                            </button>
-                        </li>
-                        <li>
-                            <button>
-                                <span class="tit">지켜줘서 고마워_현역플랜</span>
-                                <span class="txt">현역 군인을 위한 특화<br />요금제를 이용 중 입니다.</span>
-                            </button>
-                        </li>
-                        <li>
-                            <button>
-                                <span class="tit">oksusu 안심팩</span>
-                                <span class="txt">oksusu 이용 데이터 및 oksusu<br />포인트 제공 혜택을 받고 있습니다.</span>
-                            </button>
-                        </li>
-                        <li>
-                            <button>
-                                <span class="tit">oksusu &amp; 안심팩</span>
-                                <span class="txt">oksusu 이용 데이터 및 oksusu<br />포인트 제공 혜택을 받고 있습니다.</span>
-                            </button>
-                        </li>
-                        <li>
-                            <button>
-                                <span class="tit">T 페이</span>
-                                <span class="txt">T멤버십 제휴처 할인 혜택을<br />받고 있습니다.</span>
-                            </button>
-                        </li>
-                        <li>
-                            <button>
-                                <span class="tit">T 시그니처</span>
-                                <span class="txt">통신, 단말, 안심 3대 영역의<br />프리미엄 혜택을 받고 있습니다.</span>
-                            </button>
-                        </li>
+                    <ul data-target="detailList">
+
                     </ul>
                 </div>
-                <div class="bt-more-wrap">
-                    <button role="button" class="bt-more" title="">더보기<span>(20)</span></button>
+                <div class="bt-more-wrap" data-target="addBtnArea" >
+                    <button role="button" class="bt-more" title="" data-target="addBtn">
+                        더보기<span data-target="curNum"></span></button>
                 </div>
             </div>
 
@@ -96,91 +63,28 @@
                         <div class="widget-box slider1">
                             <div class="customer-slider2">
                                 <div class="slider-box">
-                                    <ul class="slider">
+                                    <ul class="slider" style="height: 260px;">
+
+                                        <% for(var i=0; i < recommendKind.typeListB.length; i++) { %>
+                                        <% if( recommendInfo[recommendKind.typeListB[i]].id === 'PLAN' || recommendInfo[recommendKind.typeListB[i]].id === 'OKSP' ) { %>
+                                            <% continue %>
+                                        <% } %>
                                         <li>
                                             <div class="component">
                                                 <div class="component-box flcardcta">
-                                                    <div class="flcard-cont bgc1">
+                                                    <div class="flcard-cont <%=svcFun(i) %>">
                                                         <div class="flcard-area">
                                                             <div class="store-card">
-                                                                <p class="card-ti"><em class="tx-bold">oksusu &amp;<br />안심팩</em></p>
-                                                                <p class="card-exp"><em class="tx-bold">oksusu 전용 데이터</em> 및<br /><em class="tx-bold">포인트 제공 혜택</em>을 받으세요.</p>
+                                                                <p class="card-ti"><em class="tx-bold"><%=recommendInfo[recommendKind.typeListB[i]].title %></em></p>
+                                                                <p class="card-exp"><em class="tx-bold"><%=recommendInfo[recommendKind.typeListB[i]].typeTextB %></em></p>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </li>
-                                        <li>
-                                            <div class="component">
-                                                <div class="component-box flcardcta">
-                                                    <div class="flcard-cont bgc2">
-                                                        <div class="flcard-area">
-                                                            <div class="store-card">
-                                                                <p class="card-ti"><em class="tx-bold">T 페이</em></p>
-                                                                <p class="card-exp"><em class="tx-bold">T멤버십 제휴처 할인</em>과 <em class="tx-bold">결제까지<br />손쉽게</em> 이용하세요.</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="component">
-                                                <div class="component-box flcardcta">
-                                                    <div class="flcard-cont bgc3">
-                                                        <div class="flcard-area">
-                                                            <div class="store-card">
-                                                                <p class="card-ti"><em class="tx-bold">T 시그니처</em></p>
-                                                                <p class="card-exp"><em class="tx-bold">&acute;통신&acute;&acute;단말&acute;&acute;안심&acute;</em> 3대 영역의<br /><em class="tx-bold">프리미엄 혜택</em>을 받으세요.</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="component">
-                                                <div class="component-box flcardcta">
-                                                    <div class="flcard-cont bgc4">
-                                                        <div class="flcard-area">
-                                                            <div class="store-card">
-                                                                <p class="card-ti"><em class="tx-bold">데이터/음성<br />리필하기</em></p>
-                                                                <p class="card-exp"><em class="tx-bold">SKT 가입기간에 따라<br />데이터 쿠폰을 제공</em>해 드립니다.</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="component">
-                                                <div class="component-box flcardcta">
-                                                    <div class="flcard-cont bgc5">
-                                                        <div class="flcard-area">
-                                                            <div class="store-card">
-                                                                <p class="card-ti"><em class="tx-bold">T나는<br />쇼핑 포인트</em></p>
-                                                                <p class="card-exp"><em class="tx-bold">약정할인액의 130%</em>를 <em class="tx-bold">11번가<br />포인트로 적립</em> 받으세요.</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="component">
-                                                <div class="component-box flcardcta">
-                                                    <div class="flcard-cont bgc6">
-                                                        <div class="flcard-area">
-                                                            <div class="store-card">
-                                                                <p class="card-ti"><em class="tx-bold">T끼리 데이터<br />선물하기</em></p>
-                                                                <p class="card-exp">LTE / 3G 요금제 고객끼리 <em class="tx-bold">데이터를<br />선물하고 선물 받으세요.</em></p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
+                                        <% } %>
+
                                     </ul>
                                 </div>
                             </div>
@@ -192,6 +96,7 @@
 
         </div>
     </div>
+
     <!-- // content -->
     <!-- footer -->
     <%- include('../../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>

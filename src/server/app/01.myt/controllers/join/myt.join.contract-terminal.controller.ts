@@ -186,7 +186,7 @@ class MytJoinContractTerminal extends TwViewController {
          */
         if ( priceList[i].prodId === 'NA00003677' ) {
           priceList[i].typeStr = 'fee_type_A';
-          priceList[i].titNm = priceList[i].disProdNm;
+          priceList[i].titNm = MYT_JOIN_CONTRACT_TERMINAL.FEE_TYPE_A.TIT_NM;
         } else if ( priceList[i].prodId === 'NA00003681' ) {
           priceList[i].typeStr = 'fee_type_B';
           priceList[i].titNm = MYT_JOIN_CONTRACT_TERMINAL.FEE_TYPE_B.TIT_NM;
