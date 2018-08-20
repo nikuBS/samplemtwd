@@ -31,7 +31,6 @@ class MytJoinProductServiceController extends TwViewController {
   }
 
   private _additionsInfo: any;
-  private _combinationsInfo: any;
 
   /**
    * @param svcAttrCd
@@ -107,12 +106,12 @@ class MytJoinProductServiceController extends TwViewController {
         });
       }
 
+      // @todo mockdata
       const additionsApi: Observable<any> = Observable.of({
         code: '00',
         result: {}
       });
-      // const combinationsApi: Observable<any> = this.apiService.request(API_CMD.BFF_05_0128, {}, {});
-      const combinations: ICombinationList = Combinations;
+      const combinations = this.getCombinations();
 
       Observable.combineLatest(
           additionsApi
@@ -121,7 +120,6 @@ class MytJoinProductServiceController extends TwViewController {
          additions
        ]) {
           thisMain._additionsInfo = thisMain._isSuccess(additions.code) ? additions.result : null;
-          // thisMain._combinationsInfo = thisMain._isSuccess(combinations.code) ? combinations.result : null;
         },
         complete() {
           res.render('join/myt.join.product-service.html', {
