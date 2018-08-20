@@ -15,19 +15,25 @@ Tw.MyTJoinProductServiceFeeAlarmChange = function (rootEl) {
 Tw.MyTJoinProductServiceFeeAlarmChange.prototype = {
 
   _cachedElement: function() {
-    this.$btnBack = this.$container.find('.fe-btn_back');
-    this.$btnDelete = this.$container.find('.fe-btn_delete');
-    this.$btnPut = this.$container.find('.fe-btn_put');
+    this.$btnClose = this.$container.find('.fe-btn_close');
+    this.$btnAction = this.$container.find('.fe-btn_action');
   },
 
   _bindEvents: function() {
-    this.$btnBack.on('click', $.proxy(this._closeStep, this));
-    this.$btnDelete.on('click', $.proxy(this._delete, this));
-    this.$btnPut.on('click', $.proxy(this._put, this));
+    this.$btnClose.on('click', $.proxy(this._close, this));
+    this.$btnAction.on('click', 'button', $.proxy(this._procAction, this));
   },
 
-  _closeStep: function() {
+  _close: function() {
     this._historyService.go(-2);
+  },
+
+  _procAction: function(e) {
+    switch ($(e.currentTarget).data('action')) {
+      case 'back': this._historyService.goBack(); break;
+      case 'delete': this._delete(); break;
+      case 'put': this._put(); break;
+    }
   },
 
   _delete: function() {
@@ -36,7 +42,6 @@ Tw.MyTJoinProductServiceFeeAlarmChange.prototype = {
   },
 
   _deletedAlarm: function() {
-    //
   },
 
   _put: function() {

@@ -47,12 +47,13 @@ class MytJoinProductServiceController extends TwViewController {
   }
 
   /**
-   * @todo
    * @param svcAttrCd
    * @private
    */
-  private _getFeePlanApiResponse(svcAttrCd): Observable<any> {
-    const apiCode = this._getFeePlanApiCode(svcAttrCd);
+  private _getFeePlan(apiCode): Observable<any> {
+    return Observable.of(Wire);
+    // return Observable.of(WireLess);
+
     if (FormatHelper.isEmpty(apiCode)) {
       return Observable.of({});
     }
@@ -60,27 +61,9 @@ class MytJoinProductServiceController extends TwViewController {
     return this.apiService.request(apiCode, {}, {});
   }
 
-  /**
-   * @todo mockData
-   * @private
-   */
-  private _getFeePlanMockResponse(isWire): Observable<any> {
-    return isWire ? Observable.of(Wire) : Observable.of(WireLess);
-  }
-
-  /**
-   * @param code
-   * @private
-   */
-  private _isSuccess(code): any {
-    return API_CODE.CODE_00 === code;
-  }
-
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    const feePlanApi = this._getFeePlanMockResponse(true);
-    // const feePlanApi = this._getFeePlanApiResponse(svcInfo.svcAttrCd);
-
-    if (FormatHelper.isEmpty(feePlanApi)) {
+    const apiCode = this._getFeePlanApiCode(svcInfo.svcAttrCd);
+    if (FormatHelper.isEmpty(apiCode)) {
       return this.error.render(res, {
         title: '나의 가입서비스',
         svcInfo: svcInfo
@@ -88,10 +71,10 @@ class MytJoinProductServiceController extends TwViewController {
     }
 
     Observable.combineLatest(
-      feePlanApi,
+      this._getFeePlan(apiCode),
       this.getCombinations()
     ).subscribe(([feePlan, combinations]) => {
-      if (!this._isSuccess(feePlan.code)) {
+      if (feePlan.code !== API_CODE.CODE_00) {
         return this.error.render(res, {
           title: '나의 가입서비스',
           code: feePlan.code,

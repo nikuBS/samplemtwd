@@ -42,6 +42,7 @@ class MytJoinProductServiceFeeAlarmChangeController extends TwViewController {
    * @private
    */
   private _convertAlarmInfo(alarmInfo): any {
+    console.log(alarmInfo);
     return Object.assign(alarmInfo, {
       notiSchdDt: DateHelper.getShortDateWithFormat(alarmInfo.notiSchdDt, 'YY.MM.DD'),
       reqDt: DateHelper.getShortDateWithFormat(alarmInfo.reqDt, 'YY.MM.DD')
@@ -62,6 +63,13 @@ class MytJoinProductServiceFeeAlarmChangeController extends TwViewController {
    */
   private _getMockDataAlarmStatus(): Observable<any> {
     return Observable.of(WirelessEnableAlarm);
+  }
+
+  private _getMyCurrentWirelessFeePlan(): Observable<any> {
+    return this.apiService.request(API_CMD.BFF_05_0136, {})
+      .map((data) => {
+        //
+      });
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
@@ -98,8 +106,8 @@ class MytJoinProductServiceFeeAlarmChangeController extends TwViewController {
       complete() {
         res.render('join/myt.join.product-service.fee-alarm.change.html', {
           svcInfo: svcInfo,
-          feePlanInfo: thisMain._convertFeePlanInfo(thisMain._feePlanInfo),
-          alarmInfo: thisMain._convertAlarmInfo(thisMain._alarmStatus)
+          feePlanInfo: thisMain._feePlanInfo,
+          alarmInfo: thisMain._alarmStatus
         });
       }
     });
