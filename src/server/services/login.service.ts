@@ -114,6 +114,14 @@ class LoginService {
   public getDeviceCookie(): string {
     return this.request.cookies[COOKIE_KEY.DEVICE];
   }
+
+  public getNodeIp(): string {
+    const ip = this.request.headers['x-forwarded-for'] ||
+      this.request.connection.remoteAddress ||
+      this.request.socket.remoteAddress ||
+      (this.request.connection.socket ? this.request.connection.socket.remoteAddress : null);
+    return ip;
+  }
 }
 
 export default LoginService;

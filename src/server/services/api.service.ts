@@ -59,7 +59,7 @@ class ApiService {
       case API_SERVER.BFF:
         return Object.assign(header, {
           'content-type': 'application/json; charset=UTF-8',
-          'x-user-ip': '127.0.0.1',
+          'x-user-ip': this.loginService.getNodeIp(),
           cookie: this.makeCookie(),
         });
       case API_SERVER.TID:
@@ -136,11 +136,11 @@ class ApiService {
   }
 
   private requestLogin(command, params, type): Observable<any> {
-    let loginData = null;
+    let result = null;
     return this.request(command, params)
       .switchMap((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
-          loginData = resp.result;
+          result = resp.result;
           return this.loginService.setSvcInfo({ mbrNm: resp.result.mbrNm });
         } else {
           throw resp;
@@ -155,7 +155,7 @@ class ApiService {
           throw resp;
         }
       }).map(() => {
-        return { code: API_CODE.CODE_00, result: loginData };
+        return { code: API_CODE.CODE_00, result: result };
       });
   }
 
@@ -184,9 +184,11 @@ class ApiService {
   }
 
   public requestUpdateSvcInfo(command, params): Observable<any> {
+    let result = null;
     return this.request(command, params)
       .switchMap((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
+          result = resp.result;
           return this.request(API_CMD.BFF_01_0005, {});
         } else {
           throw resp;
@@ -198,7 +200,7 @@ class ApiService {
           throw resp;
         }
       }).map(() => {
-        return { code: API_CODE.CODE_00 };
+        return { code: API_CODE.CODE_00, result: result };
       });
   }
 
