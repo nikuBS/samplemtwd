@@ -16,7 +16,7 @@ import { MYT_JOIN_CONTRACT_TERMINAL } from '../../../../types/string.type';
 import * as _ from 'underscore';
 
 
-class MytJoinContractTerminal extends TwViewController {
+class MyTJoinContractTerminal extends TwViewController {
   constructor() {
     super();
   }
@@ -427,5 +427,5 @@ class MytJoinContractTerminal extends TwViewController {
 
 }
 
-export default MytJoinContractTerminal;
+export default MyTJoinContractTerminal;
 

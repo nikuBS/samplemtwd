@@ -13,7 +13,7 @@ import DateHelper from '../../../../utils/date.helper';
 import FormatHelper from '../../../../utils/format.helper';
 
 
-class MytJoinContractTerminalDetail extends TwViewController {
+class MyTJoinContractTerminalDetail extends TwViewController {
   constructor() {
     super();
   }
@@ -50,5 +50,5 @@ class MytJoinContractTerminalDetail extends TwViewController {
 
 }
 
-export default MytJoinContractTerminalDetail;
+export default MyTJoinContractTerminalDetail;
 
