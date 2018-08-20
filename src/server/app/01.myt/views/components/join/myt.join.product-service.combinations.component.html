@@ -2,6 +2,7 @@
 * FileName: myt.join.product-service.combinations.component.html
 * Author: Jiyoung Jo (jiyoungjo@sk.com)
 * Date: 2018.08.16
+* MY_01_01_101
 %>
 
 
@@ -60,7 +61,7 @@
                         </div>
                         <% if (combination.hasDetail) { %>
                         <div class="link-long last">
-                            <button>결합가족 보기<span class="ico"></span></button>
+                            <button data-prod-id="<%= combination.prodId%>">결합가족 보기<span class="ico"></span></button>
                         </div>
                         <% } %>
                         <!-- 상품 파트 검토 필요 -->
