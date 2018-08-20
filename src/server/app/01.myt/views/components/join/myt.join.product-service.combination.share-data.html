@@ -3,79 +3,147 @@ d
 * FileName: myt.join.product-service.combination.share-data.html
 * Author: Jiyoung Jo (jiyoungjo@sk.com)
 * Date: 2018.08.20
-* MY_01_01_109
+* MY_01_01_106
 %>
 
-<div class="cont-box nogaps-top">
-        <div class="info-detail type2">
-            <ul>
-                <li>
-                    <span class="title">나눠쓰기 가능 데이터</span>
-                    <span class="tx-cont"><span class="ff-hn tx-bold">1,000</span><span class="ff-hn">MB</span></span>
-                </li>
-            </ul>
+<div class="cont-box">
+    <div class="top-info mb22">
+        <button role="button" class="link-btn tx-normal"><span class="ff-hn vbl">T</span>가족결합(착한가족)</button>  
+    </div>
+    <div class="payment-detail-box">
+        <div class="detail-inner">
+            <div class="detail-list type2">
+                <ul>
+                    <li>
+                        <span class="title">신청일</span>
+                        <span class="tx-cont"><span class="ff-hn vbl"><%= combination.joinDate %></span></span>
+                    </li>
+                    <li>
+                        <span class="title">결합회선</span>
+                        <span class="tx-cont"><span class="ff-hn vbl"><%= combination.count %></span>회선</span>
+                    </li>
+                </ul>
+            </div>
         </div>
-        <div class="payment-select mt30">
-            <h3>받는 분 선택</h3>
-            <div class="pay-breakdown">
-                <h4 class="blind">데이터 나눠쓰기 가족목록</h4>
-                <div class="widget data-sharing">
-                    <div class="widget-box radio">
-                        <ul class="select-list" role="radiogroup">
-                            <li class="radiobox type01 checked" role="radio" aria-checked="true">
-                                <div class="fam-check">
-                                    <input type="radio" name="radio1" value="" title="휴대폰 010-12**-45**" checked="checked">
-                                </div>
-                                <div class="fam-box">
-                                    <div class="member-sort">
-                                        <span class="vm">최*영</span><span class="badge badge-fam-members ml8"></span>
-                                    </div>
-                                    <div class="data-box">
-                                        <span class="data-line-info"><span class="ff-hn">010-12**-45**</span></span>
-                                        <span class="data-line-info"><span class="ff-hn tx-bold">500</span><span class="ff-hn">MB</span><span class="vb"> 받음</span></span>
-                                    </div>
+    </div>
+</div>
+
+<div class="benefits-area">
+    <strong class="benefits-tit">예상 혜택</strong>
+    <!-- .component -->
+    <div class="component">
+        <div class="component-box flcardcta">
+            <div class="flcard-cont">
+                <div class="flcard-area">
+                    <div class="store-card">
+                        <p class="card-ti">결합가족끼리<br /><em class="tx-bold">매월 데이터 선물</em></p>
+                        <div class="txt-extra">(횟수제한 없음)</div>
+                    </div>
+                </div>
+                <span class="ico-ill-benefit"></span>
+            </div>
+        </div>
+    </div>
+    <!--// .component -->
+    <div class="benefits-txt">2~3회선 결합시 500MB, 4~5회선 결합시 1,000MB  가능<br />1회당 100MB~1GB까지 선물 가능 (100MB 단위)</div>
+</div>
+
+<div class="cont-box">
+    <h2 class="title-h2">데이터 나눠쓰세요!</h2>
+    <div class="basic-list pt34">
+        <ul>
+            <li>
+                <span class="title">혜택 받으신 데이터</span>
+                <span class="tx-cont"><span class="ff-hn">1,000 MB</span></span>
+            </li>
+            <li>
+                <span class="title">나눠쓰기 남은 데이터</span>
+                <span class="tx-cont"><span class="ff-hn tx-red"><span class="tx-bold vbl">500</span> MB</span></span>
+            </li>
+        </ul>
+    </div>
+    <div class="contents-btn">
+        <ul class="bt-slice">
+            <li class="bt-white1">
+                <button>데이터 나눠쓰기</button>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<hr class="cont-sp type1" aria-hidden="true" />
+
+<div class="cont-box nogaps">
+    <div class="family-list">
+        <ul>
+            <li>
+                <div class="name">
+                    <span>최*영</span>
+                    <span class="badge badge-fam-members"><span class="blind">가족대표</span></span>
+                    <span class="badge badge-me"><span class="blind">나</span></span>
+                </div>
+                <div class="num">010-12**-56**</div>
+            </li>
+            <li>
+                <div class="name">
+                    <span>최*석 (자녀)</span>
+                </div>
+                <div class="num">010-12**-56**</div>
+            </li>
+            <li>
+                <div class="name">
+                    <span>박*민 (배우자)</span>
+                </div>
+                <div class="num">010-12**-56**</div>
+            </li>
+            <li>
+                <div class="name">
+                    <span>최*진 (형제자매)</span>
+                </div>
+                <div class="num">010-12**-56**</div>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<hr class="cont-sp type1" aria-hidden="true" />
+    
+    <div class="cont-box nogaps-hoz">
+    <div class="box-confirm">
+        <!-- .widget -->
+        <div class="widget">
+            <div class="widget-box accordion">
+                <h3 class="tit-a">이용안내</h3>
+                <div class="acco-cover toggle">
+                    <div class="bt-whole"><button role="button" aria-pressed="false"><span class="blind">내용 열기</span></button></div>
+                    <div class="acco-style">
+                        <ul class="acco-list">
+                            <li class="acco-box">
+                                <div class="acco-tit"><button role="button" aria-pressed="false"><span class="bullet">1.</span> 중복가입 가능 혜택</button></div>
+                                <div class="acco-cont">
+                                    <ul class="list-dot">
+                                        <li class="list">T가족결합(착한가족)은 TB끼리 온가족무료, TB끼리 온가족프리, T끼리온가족할인과 중복 가입이 가능합니다.</li>
+                                        <li class="list">단, T끼리온가족할인에 가입된 고객은 T가족결합(착한가족) 혜택 중 월정액 할인 대상에서 제외됩니다.</li>
+                                        <li class="list">T끼리온가족할인 구성원 중 가입년수만 합산되고 월정액 할인 대상이 아닌 고객도(예시 : 스페셜할인, LTE플러스할인 이용 고객) T가족결합(착한가족)의 월정액 할인 대상에서 제외됩니다.</li>
+                                    </ul>
                                 </div>
                             </li>
-                            <li class="radiobox type01" role="radio" aria-checked="false">
-                                <div class="fam-check">
-                                    <input type="radio" name="radio1" value="" title="휴대폰 010-12**-45**">
-                                </div>
-                                <div class="fam-box">
-                                    <div class="member-sort">
-                                        <span class="vm">최*석(자녀)</span>
-                                    </div>
-                                    <div class="data-box">
-                                        <span class="data-line-info"><span class="ff-hn">010-12**-45**</span></span>
-                                        <span class="data-line-info"><span class="ff-hn tx-bold">100</span><span class="ff-hn">MB</span><span class="vb"> 받음</span></span>
-                                    </div>
+                            <li class="acco-box">
+                                <div class="acco-tit"><button role="button" aria-pressed="false"><span class="bullet">2.</span> 중복 제공 불가 혜택</button></div>
+                                <div class="acco-cont">
+                                    <ul class="list-dot">
+                                        <li class="list">T가족결합(착한가족)에 가입할 경우 장기가입할인 및 레인보우포인트 적립은 제공하지 않습니다.</li>
+                                    </ul>
                                 </div>
                             </li>
-                            <li class="radiobox type01" role="radio" aria-checked="false">
-                                <div class="fam-check">
-                                    <input type="radio" name="radio1" value="" title="휴대폰 010-12**-45**">
-                                </div>
-                                <div class="fam-box">
-                                    <div class="member-sort">
-                                        <span class="vm"> 박*민(배우자)</span>
-                                    </div>
-                                    <div class="data-box">
-                                        <span class="data-line-info"><span class="ff-hn">010-12**-45**</span></span>
-                                        <span class="data-line-info">받은 적 없음</span>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="radiobox type01" role="radio" aria-checked="false">
-                                <div class="fam-check">
-                                    <input type="radio" name="radio1" value="" title="휴대폰 010-12**-45**">
-                                </div>
-                                <div class="fam-box">
-                                    <div class="member-sort">
-                                        <span class="vm"> 최*민(형제자매)</span>
-                                    </div>
-                                    <div class="data-box">
-                                        <span class="data-line-info"><span class="ff-hn">010-12**-45**</span></span>
-                                        <span class="data-line-info">받은 적 없음</span>
-                                    </div>
+                            <li class="acco-box">
+                                <div class="acco-tit"><button role="button" aria-pressed="false"><span class="bullet">3.</span> T가족결합(착한가족) 안내</button></div>
+                                <div class="acco-cont">
+                                    <ul class="list-dot">
+                                        <li class="list">T가족결합(착한가족)의 월정액 할인혜택은 종료되었습니다. (대상자에 한해 24개월간 제공 후 종료)</li>
+                                        <li class="list">T가족결합(착한가족)은 2015년 5월 1일부터 신규/전환 가입이 중단되었습니다.</li>
+                                        <li class="list">기존 가입 고객은 해지 전까지 서비스를 이용할 수 있습니다.</li>
+                                    </ul>
                                 </div>
                             </li>
                         </ul>
@@ -83,43 +151,6 @@ d
                 </div>
             </div>
         </div>
-    </div> 
-
-    <hr class="cont-sp type1" aria-hidden="true" />
-
-    <div class="cont-box nogaps-hoz">
-        <div class="box-confirm">
-            <!-- .widget -->
-            <div class="widget">
-                <div class="widget-box accordion">
-                    <h3 class="tit-a">이용안내</h3>
-                    <div class="acco-cover toggle"><!-- toggle : 한개만 열기 -->
-                        <div class="bt-whole"><button role="button" aria-pressed="false"><span class="blind">내용 열기</span></button></div>
-                        <div class="acco-style">
-                            <ul class="acco-list">
-                                <li class="acco-box">
-                                    <!-- .on: 열기 -->
-                                    <div class="acco-tit"><button role="button" aria-pressed="true">1. T가족결합 데이터 나눠쓰기</button></div>
-                                    <div class="acco-cont">
-                                        <ul class="list-dot">
-                                            <li class="list">데이터는 대표회선에서만 나눠쓰기가 가능합니다.</li>
-                                            <li class="list">T가족결합은 결합회선에 따라 제공되는 데이터량이 달라집니다.<br />(이동전화 2회선~3회선: 500MB 제공 / 4회선~5회선: 1000MB 제공)</li>
-                                            <li class="list">대표 회선에 총 데이터량이 모두 지급됩니다. 단, 해당 데이터는 나눠쓰기 후(본인포함) 이용할 수 있습니다.</li>
-                                            <li class="list">데이터는 100MB 단위로 나누어 가족들에게(본인포함) 나눠쓰기 가능하며, 나눠쓰기 횟수는 제한 없습니다.</li>
-                                            <li class="list">가족끼리 배분한 후 월말까지 미사용한 데이터 또는 배분하지 않은 데이터는 소멸되며, 익월초 신규 데이터가 제공 됩니다. (이월 불가)</li>
-                                            <li class="list">대표회선이 가족에게 배분한 데이터는 선물(나눠쓰기) 불가합니다.</li>
-                                            <li class="list">나눠쓰기 한 데이터는 리필한 데이터와 선물받은 데이터를 모두 소진 후 데이터 소진되며, 나눠쓰기 한 데이터 소진 후 기본제공량이 소진됩니다.</li>
-                                            <li class="list">나눠쓰기 받는 회선은 데이터 기본제공량이 있는 회선만 가능합니다. 단, 가족등록은 기본제공량이 없는 회선(표준요금제 등)도 가능합니다.</li>
-                                            <li class="list">기본제공량이 없는 회선도 대표회선 가능하나, 이 경우 자신에게 나눠쓰기 불가 합니다.</li>
-                                            <li class="list">배분한 데이터는 함께쓰기, 선물하기, 테더링, m-VoIP 이용 불가 합니다.</li>
-                                        </ul>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--// .widget -->
-        </div>
+        <!--// .widget -->
     </div>
+</div>

@@ -8,6 +8,16 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { Request, Response, NextFunction } from 'express';
 import { COMBINATION_PRODUCT_TYPE } from '../../../../types/bff.type';
+import FormatHelper from '../../../../utils/format.helper';
+import DateHelper from '../../../../utils/date.helper';
+
+interface ICombination {
+  joinDate: string;
+  totalYears: number;
+  totalDiscount: string;
+  count: number;
+  status: string;
+}
 
 export default class MytJoinProductServiceCombinationController extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any): void {
@@ -21,7 +31,11 @@ export default class MytJoinProductServiceCombinationController extends TwViewCo
         const pageId = COMBINATION_PRODUCT_TYPE[prodId || ''];
 
         if (pageId) {
-          res.render('join/myt.join.product-service.combination.html', { svcInfo: svcInfo, pageId });
+          res.render('join/myt.join.product-service.combination.html', {
+            svcInfo: svcInfo,
+            pageId,
+            combination: this.getProperCombinationData(resp.result)
+          });
         } else {
           res.render('error.server-error.html', {
             title: '사용중인 상품',
@@ -39,5 +53,16 @@ export default class MytJoinProductServiceCombinationController extends TwViewCo
         });
       }
     });
+  }
+
+  private getProperCombinationData = (combination: any): ICombination => {
+    const group = combination.combinationGroup;
+    return {
+      joinDate: DateHelper.getShortDateNoDot(group.combStaDt),
+      totalYears: group.totUseYy,
+      totalDiscount: FormatHelper.convNumFormat(group.totBasFeeDcTx),
+      count: group.mblSvcCnt,
+      status: group.combSt
+    }
   }
 }

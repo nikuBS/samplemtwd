@@ -15,19 +15,19 @@
                 <ul>
                     <li>
                         <span class="title">신청일</span>
-                        <span class="tx-cont"><span class="ff-hn vbl">2015.09.01</span></span>
+                        <span class="tx-cont"><span class="ff-hn vbl"><%= combination.joinDate %></span></span>
                     </li>
                     <li>
                         <span class="title">총 가입기간</span>
-                        <span class="tx-cont"><span class="ff-hn vbl">30</span> 년</span>
+                        <span class="tx-cont"><span class="ff-hn vbl"><%= combination.totalYears %></span> 년</span>
                     </li>
                     <li>
                         <span class="title">총 할인금액</span>
-                        <span class="tx-cont"><span class="tx-blue"><span class="ff-hn vbl tx-bold">135,030</span> 원</span></span>
+                        <span class="tx-cont"><span class="tx-blue"><span class="ff-hn vbl tx-bold"><%= combination.totalDiscount %></span> 원</span></span>
                     </li>
                     <li>
                         <span class="title">결합회선</span>
-                        <span class="tx-cont"><span class="ff-hn vbl">5</span> 회선</span>
+                        <span class="tx-cont"><span class="ff-hn vbl"><%= combination.count %></span> 회선</span>
                     </li>
                 </ul>
             </div>
