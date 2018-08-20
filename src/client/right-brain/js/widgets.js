@@ -353,12 +353,19 @@ skt_landing.widgets = {
   },
   widget_accordion: function (ta) {
     var widget = ta ? $(ta).find('.widget-box.accordion') : $('.widget-box.accordion');
+
+
     $(widget).each(function(){
       var _this = $(this);
       if(_this.find('> .acco-cover > .bt-whole').length < 1){
         _this.find('.acco-cover').addClass('on');
       }
+      var layer = $('.popup .popup-page.layer');
+      if(layer.length > 0){
+        var layer_top = layer.position();
+        var acco_top = layer.find('.box-confirm .widget-box.accordion').position().top  - 60;
 
+      }
       var accoList = _this.find('> .acco-cover > .acco-style > .acco-list > .acco-box');
       var accoList_leng = accoList.length;
 
@@ -389,22 +396,29 @@ skt_landing.widgets = {
         }
       }
       _this.find('.acco-cover:not(".focuson")')/*.addClass('toggle')*/.find('.acco-box.on').removeClass('on');  // 2018-07-19 default : 모두 닫힘, toggle 여부에 따라 다름
-      _this.find('> .acco-cover > .bt-whole button').on('click',function(){
+      _this.find('> .acco-cover > .bt-whole button').on('click',function(event){
         if(!$(this).closest('.acco-cover').hasClass('on')){
           $(this).attr('aria-pressed', 'true');
+          $('.popup .popup-page.layer').animate({scrollTop:acco_top}, '200');
+          event.stopPropagation();
         }else{
           $(this).attr('aria-pressed', 'false');
         }
         $(this).closest('.acco-cover').toggleClass('on');
       });
-      _this.find('> .acco-cover > .acco-style > .acco-list > .acco-box > .acco-tit button').on('click', function () {
+      _this.find('> .acco-cover > .acco-style > .acco-list > .acco-box > .acco-tit button').on('click', function (event) {
         if(_this.find('> .acco-cover').hasClass('toggle')){
           $(this).closest('.acco-box').siblings().removeClass('on');
           $(this).closest('.acco-box').siblings().find('> .acco-tit button').attr('aria-pressed',false);
         }
         $(this).closest('.acco-box').toggleClass('on');
+
+        var acco_tit_top = ($(this).position().top + acco_top);
+
         if($(this).closest('.acco-box').hasClass('on')){
           $(this).attr('aria-pressed', 'true');
+          $('.popup .popup-page.layer').animate({scrollTop:acco_tit_top}, '200');
+          event.stopPropagation();
         }else{
           $(this).attr('aria-pressed', 'false');
         };
@@ -421,9 +435,11 @@ skt_landing.widgets = {
       for(var i=0,leng=list.length; i<leng;++i){
         setState(btn.eq(i), list.eq(i).hasClass('on'));
       }
-      if($(this).find('> .acco-style').hasClass('none-event')) return;
+      //if($(this).find('> .acco-style').hasClass('none-event')) return;
       box.on('click','> .acco-list > .acco-title button',function(){
-        setState($(this), !$(this).closest('.acco-list').hasClass('on'));
+        if(!$(this).hasClass('none-event')){
+          setState($(this), !$(this).closest('.acco-list').hasClass('on'));
+        }
       });
       function setState(button, state){
         var button = $(button);

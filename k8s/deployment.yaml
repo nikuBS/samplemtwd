@@ -5,7 +5,7 @@ metadata:
   labels:
     app: bff-nodejs-service
 spec:
-  replicas: 1d
+  replicas: 1
   selector:
     matchLabels:
       app: bff-nodejs-service
@@ -32,4 +32,3 @@ spec:
       - name: pv-storage
         persistentVolumeClaim:
           claimName: mtw-dev-nod-pvc
-

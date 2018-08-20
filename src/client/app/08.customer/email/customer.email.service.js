@@ -65,7 +65,7 @@ Tw.CustomerEmailService.prototype = {
   _validateForm: function () {
     var sEmail = $('#tab1-tab .fe-input-email').val().trim();
     if ( !Tw.ValidationHelper.isEmail(sEmail) ) {
-      this._popupService.openAlert(Tw.MSG_CUSTOMER.EMAIL_A03, Tw.BUTTON_LABEL.CONFIRM, function () {
+      this._popupService.openAlert(Tw.MSG_CUSTOMER.EMAIL_A03, Tw.POPUP_TITLE.CONFIRM, function () {
         setTimeout(function () {
           $('#tab1-tab .fe-input-email').focus();
         }, 100);
@@ -78,7 +78,7 @@ Tw.CustomerEmailService.prototype = {
 
     var sPhone = $('#tab1-tab .fe-input-phone').val().trim();
     if ( !Tw.ValidationHelper.isCellPhone(sPhone) ) {
-      this._popupService.openAlert(Tw.MSG_CUSTOMER.EMAIL_A04, Tw.BUTTON_LABEL.CONFIRM, function () {
+      this._popupService.openAlert(Tw.MSG_CUSTOMER.EMAIL_A04, Tw.POPUP_TITLE.CONFIRM, function () {
         setTimeout(function () {
           $('#tab1-tab .fe-input-phone').focus();
         }, 100);

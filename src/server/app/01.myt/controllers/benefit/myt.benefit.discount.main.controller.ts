@@ -121,7 +121,17 @@ class MytBenefitDisCntMainController extends TwViewController {
         if ( FormatHelper.isEmpty(resp.result) ) {
           return null;
         } else {
-          return resp.result;
+          if ( !resp.result['useYn'] || resp.result['useYn'] === 'N' ) {
+            // useYn(장기가입여부판단) 값 여부로 대상/비대상 설정
+            return null;
+          } else {
+            if ( resp.result['longInfoSt'] === 4 ) {
+              // useYn -> Y 이지만 longInfoSt -> 4 인 경우만 장기가입고객 (BFF_명세서 참조내용)
+              return resp.result;
+            } else {
+              return null;
+            }
+          }
         }
       } else {
         return null;
@@ -136,7 +146,7 @@ class MytBenefitDisCntMainController extends TwViewController {
           return null;
         } else {
           if ( !resp.result['useYn'] || resp.result['useYn'] === 'N' ) {
-            // useYn 값 여부로 대상/비대상 설정
+            // useYn(복지고객할인대상자판단) 값 여부로 대상/비대상 설정
             return null;
           } else {
             return resp.result;

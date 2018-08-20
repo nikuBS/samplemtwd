@@ -95,7 +95,7 @@ Tw.CustomerVoice.prototype = {
 
   _openAuthCancel: function () {
     this._popupService.openConfirm(
-      Tw.BUTTON_LABEL.CONFIRM,
+      Tw.POPUP_TITLE.CONFIRM,
       Tw.MSG_CUSTOMER.VOICE_A02,
       null,
       null,
@@ -105,7 +105,7 @@ Tw.CustomerVoice.prototype = {
 
   _openCloseProcess: function () {
     this._popupService.openConfirm(
-      Tw.BUTTON_LABEL.CONFIRM,
+      Tw.POPUP_TITLE.CONFIRM,
       Tw.MSG_CUSTOMER.VOICE_A03,
       null,
       null,
@@ -124,7 +124,7 @@ Tw.CustomerVoice.prototype = {
 
   _goToVoiceSms: function () {
     if ( this.voiceCustomer.hitoriesYn === 'Y' ) {
-      this._popupService.openAlert(Tw.MSG_CUSTOMER.VOICE_A01, Tw.BUTTON_LABEL.CONFIRM, $.proxy(this._popupClose, this));
+      this._popupService.openAlert(Tw.MSG_CUSTOMER.VOICE_A01, Tw.POPUP_TITLE.CONFIRM, $.proxy(this._popupClose, this));
       return false;
     } else {
       this._history.replaceURL('/customer/voice/sms');

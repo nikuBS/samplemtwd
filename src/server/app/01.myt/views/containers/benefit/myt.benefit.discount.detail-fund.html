@@ -24,8 +24,8 @@
         <h2 class="blind">내용</h2>
         <div class="container">
             <div class="cont-box">
-                <% if (data.tsuprtAgrmtYn && data.tsuprtAgrmtYn === 'Y') { %>
                 <div class="inner-block">
+                <% if (data.tsuprtAgrmtYn && data.tsuprtAgrmtYn === 'Y') { %>
                     <h2 class="title-h2">나의 할인 혜택</h2>
                     <div class="exp-top">
                         <span class="tx-exp mb12">T지원약정 적용기간</span>
@@ -38,10 +38,24 @@
                             </li>
                         </ul>
                     </div>
-                </div>
                 <% } else { %>
-
+                <% data.empty = true; %>
+                    <h2 class="title-h2">혜택 받는 법</h2>
+                    <div class="exp-top">
+                                <span class="tx-exp mb12">기기변경, 신규가입 차등 없이<br />
+                                    <span class="tx-bold">단말기와 요금제</span>에 따라<br />
+                                    휴대폰 <span class="tx-bold">구매금액의 일부 할인</span>
+                                </span>
+                    </div>
+                    <div class="contents-btn">
+                        <ul class="bt-slice">
+                            <li class="bt-blue1">
+                                <button>휴대폰 지원금 확인</button>
+                            </li>
+                        </ul>
+                    </div>
                 <% } %>
+                </div>
                 <div class="inner-block">
                     <h2 class="title-h2">대한민국 누구나 할인 받는<br />범국민적 혜택 T지원금약정</h2>
                     <div class="benefit-img"><img src="/img/dummy/dmy-circuit04.png" alt=""/></div>
@@ -82,11 +96,15 @@
         </div>
     </div>
     <!--// #contents -->
+    <%- include('../../../../common/views/components/footer.component.html', { svcInfo: data.svcInfo }); %>
 </div>
 <script>
+  var data = '<%- JSON.stringify(data) %>';
   $(document).ready(function () {
     new Tw.MyTBenefitDisCntDetail({
-      $element: $('#protect-change')
+      $element: $('#contents'),
+      type: 'fund',
+      data: JSON.parse(data)
     });
   });
 </script>
