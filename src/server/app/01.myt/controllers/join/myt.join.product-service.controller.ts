@@ -60,19 +60,23 @@ class MytJoinProductServiceController extends TwViewController {
    * @private
    */
   private _convertFeePlan(data, isWire): Observable<any> {
-    return Object.assign(data.result, (isWire) ? {
-      basFeeAmt: data.result.basFeeAmt > 0 ? FormatHelper.addComma(data.result.basFeeAmt) : 0,
-      isDisplayFeeAmt: (data.result.coClCd !== 'T' && data.result.basFeeAmt > 0),
-      svcScrbDt: DateHelper.getShortDateWithFormat(data.result.svcScrbDt, 'YYYY.MM.DD'),
-      dcBenefits: data.result.dcBenefits.map((item) => {
-        return Object.assign(item, {
-          penText: (item.penYn === 'Y') ? MYT_FEEPLAN_BENEFIT.PEN_Y : MYT_FEEPLAN_BENEFIT.PEN_N,
-          dcStaDt: DateHelper.getShortDateWithFormat(item.dcStaDt, 'YYYY.MM.DD'),
-          dcEndDt: (item.dcEndDt !== '99991231') ? DateHelper.getShortDateWithFormat(item.dcEndDt, 'YYYY.MM.DD') : MYT_FEEPLAN_BENEFIT.ENDLESS,
-          dcVal: FormatHelper.addComma(item.dcVal)
-        });
-      })
-    } : {
+    if (isWire) {
+      return Object.assign(data.result, {
+        basFeeAmt: data.result.basFeeAmt > 0 ? FormatHelper.addComma(data.result.basFeeAmt) : 0,
+        isDisplayFeeAmt: (data.result.coClCd !== 'T' && data.result.basFeeAmt > 0),
+        svcScrbDt: DateHelper.getShortDateWithFormat(data.result.svcScrbDt, 'YYYY.MM.DD'),
+        dcBenefits: data.result.dcBenefits.map((item) => {
+          return Object.assign(item, {
+            penText: (item.penYn === 'Y') ? MYT_FEEPLAN_BENEFIT.PEN_Y : MYT_FEEPLAN_BENEFIT.PEN_N,
+            dcStaDt: DateHelper.getShortDateWithFormat(item.dcStaDt, 'YYYY.MM.DD'),
+            dcEndDt: (item.dcEndDt !== '99991231') ? DateHelper.getShortDateWithFormat(item.dcEndDt, 'YYYY.MM.DD') : MYT_FEEPLAN_BENEFIT.ENDLESS,
+            dcVal: FormatHelper.addComma(item.dcVal)
+          });
+        })
+      });
+    }
+
+    return Object.assign(data.result, {
       useFeePlanPro: Object.assign(data.result.useFeePlanPro, {
         scrbDt: DateHelper.getShortDateWithFormat(data.result.useFeePlanPro.scrbDt, 'YYYY.MM.DD'),
         basFeeTxt: FormatHelper.addComma(data.result.useFeePlanPro.basFeeTxt)
@@ -88,13 +92,14 @@ class MytJoinProductServiceController extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    const apiInfo = this._getFeePlanApiInfo(svcInfo.svcAttrCd);
-
-    if (FormatHelper.isEmpty(apiInfo)) {
-      return this.error.render(res, {
+    const apiInfo = this._getFeePlanApiInfo(svcInfo.svcAttrCd),
+      defaultOptions = {
         title: '나의 가입서비스',
         svcInfo: svcInfo
-      });
+      };
+
+    if (FormatHelper.isEmpty(apiInfo)) {
+      return this.error.render(res, defaultOptions);
     }
 
     const feePlanApi: Observable<any> = apiInfo.isWire ? Observable.of(Wire) : Observable.of(WireLess);
@@ -105,17 +110,16 @@ class MytJoinProductServiceController extends TwViewController {
       this.getCombinations()
     ).subscribe(([feePlan, combinations]) => {
       if (feePlan.code !== API_CODE.CODE_00) {
-        return this.error.render(res, {
-          title: '나의 가입서비스',
+        return this.error.render(res, Object.assign(defaultOptions, {
           code: feePlan.code,
-          msg: feePlan.msg,
-          svcInfo: svcInfo
-        });
+          msg: feePlan.msg
+        }));
       }
 
       res.render('join/myt.join.product-service.html', {
         svcInfo: svcInfo,
         svcCdName: SVC_CDNAME,
+        feeMainTemplate: apiInfo.isWire ? 'wire' : 'wireless',
         feePlan: this._convertFeePlan(feePlan, apiInfo.isWire),
         combinations
       });

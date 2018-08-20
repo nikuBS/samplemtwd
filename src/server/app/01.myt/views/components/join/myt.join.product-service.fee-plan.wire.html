@@ -1,11 +1,11 @@
 <%#
-* FileName: myt.join.product-service.fee-plan.internet.html
+* FileName: myt.join.product-service.fee-plan.wire.html
 * Author: 양지훈 (jihun202@sk.com)
 * Date: 2018.08.16
 %>
 <div class="cont-box">
     <div class="box-contents">
-        <button class="title-bt" title="T스마트 광랜 (다이렉트) 상세페이지로 이동">T스마트 광랜 (다이렉트)</button>
+        <button class="title-bt" title="<%= feePlan.feeProdNm %> 상세페이지로 이동"><%= feePlan.feeProdNm %></button>
         <div class="basic-list pt14">
             <ul>
                 <li>
@@ -51,7 +51,10 @@
                             <li>
                                 <span class="title"><%= feePlan.dcBenefits[i].penText %></span>
                                 <span class="tx-cont">
-                                    <span class="ff-hn vbl"><%= feePlan.dcBenefits[i].dcVal %></span><%= (feePlan.dcBenefits[i].dcCttClCd === '01') ? '원' : '%' %> 할인
+                                    <span class="ff-hn vbl"><%= feePlan.dcBenefits[i].dcVal %></span>
+                                    <% if (['01', '02'].indexOf(feePlan.dcBenefits[i].dcCttClCd) !== -1) { %>
+                                    <%= (feePlan.dcBenefits[i].dcCttClCd === '01') ? '원' : '%' %> 할인
+                                    <% } %>
                                 </span>
                             </li>
                             <li>
@@ -67,32 +70,5 @@
     </div>
 </div>
 <% } %>
-<hr class="cont-sp type1" aria-hidden="true" />
 
-<div class="cont-box nogaps-hoz">
-    <div class="box-confirm">
-        <!-- .widget -->
-        <div class="widget">
-            <div class="widget-box accordion">
-                <h3 class="tit-a">이용안내</h3>
-                <div class="acco-cover toggle">
-                    <div class="bt-whole"><button role="button" aria-pressed="false"><span class="blind">내용 열기</span></button></div>
-                    <div class="acco-style">
-                        <ul class="acco-list">
-                            <li class="acco-box">
-                                <div class="acco-tit"><button role="button" aria-pressed="false"><span class="bullet">1.</span> SK텔레콤을 통해 가입한 상품</button></div>
-                                <div class="acco-cont">
-                                    <ul class="list-dot">
-                                        <li class="list">T world에서는 SK 텔레콤을 통해 가입하신 상품에 대해서 확인하실 수 있습니다.</li>
-                                        <li class="list">SK브로드밴드를 통해 가입하신 상품은 SK브로드밴드 사이트를 이용해주시기 바랍니다.</li>
-                                    </ul>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--// .widget -->
-    </div>
-</div>
+<%- include('../../components/join/myt.join.product-service.fee-plan.' + svcCdName[svcInfo.svcAttrCd] + '.html')  %>
