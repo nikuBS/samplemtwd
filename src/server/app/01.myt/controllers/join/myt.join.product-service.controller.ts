@@ -11,7 +11,8 @@ import FormatHelper from '../../../../utils/format.helper';
 import { Observable } from 'rxjs/Observable';
 import { SVC_CDNAME, SVC_CDGROUP } from '../../../../types/bff.type';
 import { Combinations, Wire, WireLess } from '../../../../mock/server/myt.join.product-service.mock';
-import { MYT_COMBINATION_TYPE } from '../../../../types/string.type';
+import { MYT_COMBINATION_TYPE, MYT_COMBINATION_FAMILY } from '../../../../types/string.type';
+import DateHelper from '../../../../utils/date.helper';
 
 interface ICombination {
   prodId: string;  // 상품 코드
@@ -125,15 +126,19 @@ class MytJoinProductServiceController extends TwViewController {
     const nItem: ICombination = {
       prodId: item.prodId,
       prodNm: item.prodNm,
-      scrbDt: item.scrbDt,
+      scrbDt: DateHelper.getShortDateNoDot(item.scrbDt),
       prodSmryDesc: item.prodSmryDesc,
       items: [],
       hasDetail: COMBINATION_PRODUCT_OTHER_TYPE.indexOf(item.prodId) < 0  // 한가족 할인 or TB끼리 TV플러스 : false
     };
 
     switch (item.prodId) {
-      case 'TW20000010':   // T끼리온가족할인제도
-      case 'NA00004211': { // T가족결합(착한가족)
+      case 'NA00005055':    // 가족나눔데이터
+      case 'NA00002040':
+      case 'TW20000010':    // T끼리온가족할인제도
+      case 'NA00004728':
+      case 'TW20000011':    // 온가족 행복플랜
+      case 'NA00004211': {  // T가족결합(착한가족)
         nItem.items.push({
           icon: 'line',
           description: MYT_COMBINATION_TYPE.LINE
@@ -165,10 +170,83 @@ class MytJoinProductServiceController extends TwViewController {
           });
         break;
       }
+
+      case 'NH00000084':
+      case 'TW20000008': {  // TB끼리 온가족프리
+        nItem.items.push({
+          icon: 'multi',
+          description: MYT_COMBINATION_TYPE.MULTI_TWO
+        }, {
+            icon: 'int',
+            description: MYT_COMBINATION_TYPE.INTERNET
+          });
+        break;
+      }
+
+      case 'NH00000059':
+      case 'TW20000007': {  // TB끼리 온가족무료
+        nItem.items.push({
+          icon: 'line',
+          description: MYT_COMBINATION_TYPE.FAMILY
+        }, {
+            icon: 'tel',
+            description: MYT_COMBINATION_TYPE.TEL
+          }, {
+            icon: 'itel',
+            description: MYT_COMBINATION_TYPE.ITEL
+          });
+        break;
+      }
+
+      case 'NH00000037':
+      case 'NH00000039':
+      case 'TW00000062': {  // T+B인터넷
+        if (item.prodNm.includes(MYT_COMBINATION_FAMILY)) {
+          nItem.items.push({
+            icon: 'line',
+            description: MYT_COMBINATION_TYPE.FAMILY
+          });
+        } else {
+          nItem.items.push({
+            icon: 'line',
+            description: MYT_COMBINATION_TYPE.LINE
+          });
+        }
+        nItem.items.push({
+          icon: 'int',
+          description: MYT_COMBINATION_TYPE.INTERNET
+        });
+        break;
+      }
+
+      case 'NH00000040':
+      case 'NH00000041':
+      case 'TW00000063': {  // T+B인터넷
+        if (item.prodNm.includes(MYT_COMBINATION_FAMILY)) {
+          nItem.items.push({
+            icon: 'line',
+            description: MYT_COMBINATION_TYPE.FAMILY
+          });
+        } else {
+          nItem.items.push({
+            icon: 'line',
+            description: MYT_COMBINATION_TYPE.LINE
+          });
+        }
+        nItem.items.push({
+          icon: 'tel',
+          description: MYT_COMBINATION_TYPE.TEL
+        }, {
+            icon: 'itel',
+            description: MYT_COMBINATION_TYPE.ITEL
+          });
+        break;
+      }
     }
 
     return nItem;
   }
 }
+
 
 export default MytJoinProductServiceController;

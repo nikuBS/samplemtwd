@@ -327,8 +327,11 @@ export const MYT_COMBINATION_TYPE = {
   INTERNET: '인터넷',
   IPTV: 'IPTV',
   TEL: '전화',
-  ITEL: '인터넷 전화'
+  ITEL: '인터넷 전화',
+  FAMILY: 'T끼리 온가족 할인'
 };
+
+export const MYT_COMBINATION_FAMILY = '패밀리';
 
 export enum MYT_BENEFIT_POINT_VIEW {
   ADJUSTMENT = 'usage/myt.benefit.point.adjustment.html',

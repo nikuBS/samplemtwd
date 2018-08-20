@@ -42,7 +42,7 @@
                             <span class="num"><%= combination.scrbDt %></span>
                         </div>
                         <div class="line-info">
-                            <% for (let i = 0; i < combination.items; i++) { %>
+                            <% for (let i = 0; i < combination.items.length; i++) { %>
                                 <% if (i === 1) { %>
                                     <span class="plus">+</span>
                                 <% } else if (i === 2) { %>
@@ -52,9 +52,9 @@
                                 <% var item = combination.items[i]; %>
                                 <span class="txt">
                                 <% if (item.icon === 'multi') { %>
-                                    <i class="ico-<%= item.icon %>"></i><%= item.description %>
-                                <% } else { %>
                                     <i class="ico-multi"></i><span class="num"><%= item.description %></span>회선
+                                <% } else { %>
+                                    <i class="ico-<%= item.icon %>"></i><%= item.description %>
                                 <% } %>
                                 </span>
                             <% } %>
