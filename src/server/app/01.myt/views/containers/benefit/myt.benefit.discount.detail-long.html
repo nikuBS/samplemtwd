@@ -25,9 +25,10 @@
         <div class="container">
             <div class="cont-box">
                 <div class="inner-block">
+                <% if (data.useYn === 'Y') { %>
                     <h2 class="title-h2">나의 할인 혜택</h2>
                     <div class="exp-top">
-                        <span class="tx-exp">가입 기간에 따른 <br /><span class="tx-bold">국내 통화료 10% 할인</span></span>
+                        <span class="tx-exp">가입 기간에 따른 <br /><span class="tx-bold"><%= data.svcEtcCnt %></span></span>
                     </div>
                     <div class="contents-btn">
                         <ul class="bt-slice">
@@ -36,8 +37,20 @@
                             </li>
                         </ul>
                     </div>
+                <% } else { %>
+                    <h2 class="title-h2">혜택 받는 법</h2>
+                    <div class="exp-top">
+                        <span class="tx-exp"><span class="tx-bold">2년 이상, 지속적으로 사용 시 </span><br />별도 신청 없이 장기가입 고객으로 선정</span>
+                    </div>
+                    <div class="contents-btn">
+                        <ul class="bt-slice">
+                            <li class="bt-blue1">
+                                <button>나의 장기가입고객 할인 정보 확인</button>
+                            </li>
+                        </ul>
+                    </div>
+                <% } %>
                 </div>
-
                 <div class="inner-block">
                     <h2 class="title-h2">SKT가입기간 2년 이상 고객님께 <br />5~10%까지 국내 통화료 할인!</h2>
                     <div class="benefit-img"><img src="/img/dummy/dmy-circuit04.png" alt=""/></div>
