@@ -741,51 +741,56 @@ Tw.CUSTOMER_EMAIL = {
   WIBRO: '휴대폰/와이브로',
   SELECT_CATEGORY: '문의사항 선택',
   Q_TYPE01: [
-    { text: '음성통화 불량(HD Voice 포함)' },
-    { text: '영상통화 불량' },
-    { text: '부가서비스 불량' },
-    { text: '데이터(Date) 불량' },
-    { text: '와이브로 품질장애/고장' }
+    {text: '음성통화 불량(HD Voice 포함)'},
+    {text: '영상통화 불량'},
+    {text: '부가서비스 불량'},
+    {text: '데이터(Date) 불량'},
+    {text: '와이브로 품질장애/고장'}
   ],
   Q_TYPE02: [
-    { text: '음성발신불량, 음성수신불량 <br>음성발신/수신 모두 불량' },
-    { text: 'SMS발신불량, SMS수신불량 <br>SMS발신/수신 모두불량' },
-    { text: '인터넷접속불량 <br>특정 APP 분량, 기타' }
+    {text: '음성발신불량, 음성수신불량 <br>음성발신/수신 모두 불량'},
+    {text: 'SMS발신불량, SMS수신불량 <br>SMS발신/수신 모두불량'},
+    {text: '인터넷접속불량 <br>특정 APP 분량, 기타'}
   ],
   Q_TYPE03: [
-    { text: '건물내부(지하층)' },
-    { text: '건물내부(지상층)' },
-    { text: '건물외부' },
-    { text: '위치무관' }
+    {text: '건물내부(지하층)'},
+    {text: '건물내부(지상층)'},
+    {text: '건물외부'},
+    {text: '위치무관'}
   ],
   Q_TYPE04: [
-    { text: '주택, 빌라' },
-    { text: '아파트, 오피스텔' },
-    { text: '사무실, 상가' },
-    { text: '기타' }
+    {text: '주택, 빌라'},
+    {text: '아파트, 오피스텔'},
+    {text: '사무실, 상가'},
+    {text: '기타'}
   ],
   Q_TYPE05: [
-    { text: '사용 중 갑자기' },
-    { text: '며칠 전부터' },
-    { text: '이사/회사 이동 후 부터' }
+    {text: '사용 중 갑자기'},
+    {text: '며칠 전부터'},
+    {text: '이사/회사 이동 후 부터'}
   ]
 };
 
+
+Tw.CUSTOMER_SERVICE_INFO_URL = [
+  ''
+];
+
 Tw.PAYMENT_CARD_TYPE_LIST = [
-  { 'attr': 'id="00"', text: '일시불' },
-  { 'attr': 'id="01"', text: '1개월 할부' },
-  { 'attr': 'id="02"', text: '2개월 할부' },
-  { 'attr': 'id="03"', text: '3개월 할부' },
-  { 'attr': 'id="04"', text: '4개월 할부' },
-  { 'attr': 'id="05"', text: '5개월 할부' },
-  { 'attr': 'id="06"', text: '6개월 할부' },
-  { 'attr': 'id="07"', text: '7개월 할부' },
-  { 'attr': 'id="08"', text: '8개월 할부' },
-  { 'attr': 'id="09"', text: '9개월 할부' },
-  { 'attr': 'id="10"', text: '10개월 할부' },
-  { 'attr': 'id="11"', text: '11개월 할부' },
-  { 'attr': 'id="12"', text: '12개월 할부' },
-  { 'attr': 'id="24"', text: '24개월 할부' }
+  {'attr': 'id="00"', text: '일시불'},
+  {'attr': 'id="01"', text: '1개월 할부'},
+  {'attr': 'id="02"', text: '2개월 할부'},
+  {'attr': 'id="03"', text: '3개월 할부'},
+  {'attr': 'id="04"', text: '4개월 할부'},
+  {'attr': 'id="05"', text: '5개월 할부'},
+  {'attr': 'id="06"', text: '6개월 할부'},
+  {'attr': 'id="07"', text: '7개월 할부'},
+  {'attr': 'id="08"', text: '8개월 할부'},
+  {'attr': 'id="09"', text: '9개월 할부'},
+  {'attr': 'id="10"', text: '10개월 할부'},
+  {'attr': 'id="11"', text: '11개월 할부'},
+  {'attr': 'id="12"', text: '12개월 할부'},
+  {'attr': 'id="24"', text: '24개월 할부'}
 ];
 
 Tw.NO_CONTRACT_TYPE = {

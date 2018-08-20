@@ -48,9 +48,8 @@ class CustomerRouter extends TwRouter {
     this.controllers.push({ url: '/researches/result', controller: new CustomerResearchResult() });
     this.controllers.push({ url: '/researches(/:researchId)?', controller: new CustomerResearches() });
     this.controllers.push({ url: '/faq', controller: new CustomerFaqController() });
-    this.controllers.push({ url: '/faq/service-info', controller: new CustomerFaqInfoService() });
     this.controllers.push({ url: '/faq/service-info(/:serviceId)?', controller: new CustomerFaqInfoService() });
-    this.controllers.push({ url: '/faq/site-info', controller: new CustomerFaqInfoSite() });
+    this.controllers.push({ url: '/faq/site-info(/:serviceId)?', controller: new CustomerFaqInfoSite() });
     this.controllers.push({ url: '/faq/site-info/m-customer-center', controller: new CustomerFaqInfoSite() });
     this.controllers.push({ url: '/event', controller: new CustomerEventController() });
     this.controllers.push({ url: '/event/detail', controller: new CustomerEventDetailController() });

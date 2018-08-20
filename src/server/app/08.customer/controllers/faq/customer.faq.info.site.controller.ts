@@ -20,21 +20,23 @@ class CustomerFaqInfoSite extends TwViewController {
     const paths = req.path.split('/');
     const current = paths[paths.length - 1];
 
-    let viewHTML;
+    const serviceId = req.params.serviceId;
+    const siteLink = [1, 2, 3, 4, 5, 6, 7];
 
     if (current === 'm-customer-center') {
-      viewHTML = 'faq/customer.faq.info.site.m-center.html';
+      res.render('faq/customer.faq.info.site.m-center.html', {
+        svcInfo: svcInfo
+      });
     } else {
-      viewHTML = 'faq/customer.faq.info.site.html';
-    // this.apiService.request(API_CMD.BFF_07_0072, {}).subscribe((resp) => {
-    //
-    //   if (resp.code === API_CODE.CODE_00) {
+      res.render('faq/customer.faq.info.site.html', {
+        svcInfo: svcInfo,
+        siteLink: siteLink
+      });
+      // this.apiService.request(API_CMD.BFF_07_0072, {}).subscribe((resp) => {
+      //
+      //   if (resp.code === API_CODE.CODE_00) {
 
     }
-
-    res.render(viewHTML, {
-      svcInfo: svcInfo
-    });
     // }
     // });
   }

@@ -425,10 +425,10 @@ Tw.MyTBillHistoryMicro.prototype = {
   },
 
   _movePayPasswordPage: function () {
-    // if(!this.passRelateURL) {
-    //   this.common._apiError({code:'SB-ERR', msg:'No Page : Not Sprint#6'});
-    //   return false;
-    // }
+    if(!this.passRelateURL) {
+      this.common._apiError({code:'Error', msg:'No Page : Not Sprint#6'});
+      return false;
+    }
     this.common._goLoad(this.passRelateURL);
   },
 
@@ -475,7 +475,7 @@ Tw.MyTBillHistoryMicro.prototype = {
     return choiceData;
   },
 
-  _updatePasswordUseState: function (res) {
+  _updatePasswordUseState: function () {
 
   },
 
