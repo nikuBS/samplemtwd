@@ -32,6 +32,7 @@ Tw.POPUP_TITLE = {
   NOTIFY: '알림',
   CONFIRM: '확인',
   GUIDE: '안내',
+  SELECT: '선택',
   SELECT_LINE: '회선 선택',
   REQUEST_DELETE: '조르기 삭제안내',
   GIFT_FAMILY_INFO: '데이터 자동 선물 안내',

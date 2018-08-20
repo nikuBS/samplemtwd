@@ -265,7 +265,7 @@ Tw.PostcodeMain.prototype = {
     return $list;
   },
   _openSelector: function ($target, $list) {
-    this._popupService.openChoice(Tw.BUTTON_LABEL.SELECT, $list, 'type1', $.proxy(this._selectPopupCallback, this, $target));
+    this._popupService.openChoice(Tw.POPUP_TITLE.SELECT, $list, 'type1', $.proxy(this._selectPopupCallback, this, $target));
   },
   _selectPopupCallback: function ($target, $layer) {
     $layer.on('click', '.popup-choice-list', $.proxy(this._setSelectedValue, this, $target));
