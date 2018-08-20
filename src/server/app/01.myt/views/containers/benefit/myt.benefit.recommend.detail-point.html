@@ -1,0 +1,42 @@
+<%#
+* FileName: myt.joinService.contractTerminalInfo.twibro.html
+* Author: 김명환 (skt.P130714@partner.sk.com)
+* Date: 2018.08.16
+* Info:
+%>
+<% include ../../components/start.component.html %>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb_area">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+
+<!-- wrap -->
+<div id="fe-wrap" class="wrap" >
+    <!-- header -->
+    <%- include('../../../../../common/views/components/header.component.html', { title: '추천혜택 자세히보기', svcInfo: svcInfo });
+    %>
+    <!-- // header -->
+    <!-- content -->
+    <div id="contents" class="container-wrap">
+        myt.benefit.recommend.detail-point
+    </div>
+    <!-- // content -->
+    <!-- footer -->
+    <%- include('../../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
+    <!-- // footer -->
+</div>
+<% include ../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    new Tw.MytBenefitRecommendDetail( $('#fe-wrap'), {
+      reqQuery: <%-JSON.stringify(reqQuery) %>,
+      svcInfo: <%-JSON.stringify(svcInfo) %>
+    });
+  });
+</script>
+<% include ../../components/end.component.html %>

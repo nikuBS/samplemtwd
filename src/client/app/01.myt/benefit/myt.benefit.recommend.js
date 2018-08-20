@@ -49,7 +49,27 @@ Tw.MytBenefitRecommend.prototype = {
   },
   _bindEvent: function () {
     this.$container.on('click', '[data-target="addBtn"]', $.proxy(this._addView, this));
+    this.$container.on('click', '[data-target="detailList"] li', $.proxy(this._typeAListEvt, this));
+    this.$container.on('click', '[data-target="sliderArea"] li', $.proxy(this._typeBListEvt, this));
 
+  },
+  _typeAListEvt: function(e) {
+    console.info('_typeAListEvt : ', e);
+    var tg = e.currentTarget;
+    var type = 'A';
+    var reId = $(tg).attr('data-target');
+    var url = '/myt/benefit/recommend/detail?' + 'type=' + type + '&' + 'reId=' + reId;
+
+    this._goLoad(url);
+  },
+  _typeBListEvt: function(e) {
+    console.info('_typeBListEvt : ', e);
+    var tg = e.currentTarget;
+    var type = 'B';
+    var reId = $(tg).attr('data-target');
+    var url = '/myt/benefit/recommend/detail?' + 'type=' + type + '&' + 'reId=' + reId;
+
+    this._goLoad(url);
   },
   _proData: function() { //데이터 가공
     Tw.Logger.info('[ _proData ]');
