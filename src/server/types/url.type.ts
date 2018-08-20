@@ -144,7 +144,9 @@ export const URL = {
   '/customer/faq/service-info': { login: false, id: 'CI_14_01', title: '서비스 이용안내' }, // 서비스 이용안내
   '/customer/faq/site-info': { login: false, id: 'CI_15_01', title: '사이트 이용안내' }, // 사이트 이용안내
   '/customer/faq/site-info/m-customer-center': { login: false, id: 'CI_15_03', title: 'M 고객센터' }, // M 고객센터
-  '/customer/event': { login: true, id: 'CI_13_01', title: '이벤트' }, // 이벤트
+  '/customer/event': { login: false, id: 'CI_13_01', title: '이벤트' }, // 이벤트
+  '/customer/event/detail': { login: false, id: 'CI_13_02', title: '이벤트 상세' }, // 이벤트 상세
+  '/customer/event/detail/win': { login: false, id: 'CI_13_06', title: '이벤트 상세' }, // 이벤트 상세 (당첨자)
   // auth
   '/auth/line': { login: true, id: 'CO_01_05_02', title: '' }, // 회선관리
   '/auth/line/edit': { login: true, id: 'CO_01_05_02_01', title: '' }, // 회선편집
