@@ -78,3 +78,29 @@ Tw.PAYMENT_REQUEST_TYPE = {
   C: '변경',
   F: '해지'
 };
+
+Tw.AUTH_CERTIFICATION_TYPE = {
+  PREV: 'P',
+  AFTER: 'A',
+  FAIL: 'F',
+  NOT_USED: 'D'
+};
+
+Tw.AUTH_CERTIFIATION_METHOD = {
+  SK_SMS: 'S',
+  OTHER_SMS: 'T',
+  SMS_PASSWORD: 'Z',
+  SMS_KEYIN: 'J',
+  PUBLIC_AUTH: 'P',
+  FINANCE_AUTH: 'B',
+  IPIN: 'I',
+  EMAIL: 'E',
+  PASSWORD: 'W',
+  BIO: 'F'
+};
+
+Tw.AUTH_CERTIFICATION_NICE = {
+  KT: 'K',
+  LG: 'L',
+  SAVE: 'M'
+};

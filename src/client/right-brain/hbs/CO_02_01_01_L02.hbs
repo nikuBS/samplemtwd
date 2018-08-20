@@ -19,24 +19,30 @@
                         <p class="certifi-ti-big">간편 로그인으로는 이용하실 수<br />없는 서비스 입니다.</p>
                         <p class="certifi-card-ti pt8">서비스를 이용하시려면 아래 인증방법 중 하나를 선택하여 본인확인을 해주세요.</p>
                         <ul class="certifi-card-list mt28">
+                            {{#if data.skSms}}
                             <li>
-                                <button>
+                                <button id="fe-bt-sk">
                                     <span class="ico-certifi-card type1" aria-hidden="true"></span>
                                     <span class="certifi-card-tx"><span class="tx">SK텔레콤<br />SMS 인증</span></span>
                                 </button>
                             </li>
+                            {{/if}}
+                            {{#if data.finance}}
                             <li>
-                                <button>
+                                <button id="fe-bt-finance">
                                     <span class="ico-certifi-card type9" aria-hidden="true"></span>
                                     <span class="certifi-card-tx"><span class="tx">공인인증서<br />인증</span></span>
                                 </button>
                             </li>
+                            {{/if}}
+                            {{#if data.bio}}
                             <li>
-                                <button>
+                                <button id="fe-bt-bio">
                                     <span class="ico-certifi-card type7" aria-hidden="true"></span>
                                     <span class="certifi-card-tx"><span class="tx">지문 인증</span></span>
                                 </button>
                             </li>
+                            {{/if}}
                         </ul>
                     </div>
                 </div>
