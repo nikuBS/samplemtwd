@@ -32,6 +32,7 @@ Tw.POPUP_TITLE = {
   NOTIFY: '알림',
   CONFIRM: '확인',
   GUIDE: '안내',
+  SELECT: '선택',
   SELECT_LINE: '회선 선택',
   REQUEST_DELETE: '조르기 삭제안내',
   GIFT_FAMILY_INFO: '데이터 자동 선물 안내',
@@ -417,7 +418,11 @@ Tw.MSG_MYT = {
     A2: '포인트 합산하기를 종료하시겠습니까?',
     A8: '보유하신 포인트를 초과 하였습니다.',
     A13: '동일회선 간에는 포인트 합산이 불가합니다.',
-  }
+  },
+  FEE_ALARM_ALERT_A01: '서비스를 해지 하시겠습니까?',
+  FEE_ALARM_ALERT_A01_SUCCESS: '해지 처리 완료 되었습니다.',
+  FEE_ALARM_ALERT_A02: '서비스를 신청 하시겠습니까?',
+  FEE_ALARM_ALERT_A02_SUCCESS: '서비스 신청 완료 되었습니다.'
 };
 
 Tw.MSG_RECHARGE = {

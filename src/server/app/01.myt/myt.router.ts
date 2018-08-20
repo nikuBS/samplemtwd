@@ -37,10 +37,14 @@ import MyTBillHistoryLimitCommon from './controllers/bill/myt.bill.history.limit
 import MyTBillHistoryLimitChangeCommon from './controllers/bill/myt.bill.history.limit.change.common.controller';
 import MyTBillHistoryContents from './controllers/bill/myt.bill.history.contents.controller';
 
+
+
+
 import MytJoinProtectChangeController from './controllers/join/myt.join.protect.change.controller';
 import MytJoinJoinInfoController from './controllers/join/myt.join.join-info.controller';
 import MyTJoinJoinInfoNoContractController from './controllers/join/myt.join.join-info.no-contract.controller';
 import MytJoinJoinInfoSmsController from './controllers/join/myt.join.join-info-sms.controller';
+
 
 import MytJoinProductService from './controllers/join/myt.join.product-service.controller';
 import MytJoinProductServiceFeeAlarmController from './controllers/join/myt.join.product-service.fee-alarm.controller';
@@ -49,15 +53,18 @@ import MytJoinProductServiceFeeAlarmChangeController from './controllers/join/my
 import MytBenefitDiscount from './controllers/benefit/myt.benefit.discount.main.controller';
 import MytBenefitDiscountDetail from './controllers/benefit/myt.benefit.discount.detail.controller';
 import MyTBenefitPoint from './controllers/benefit/myt.benefit.point.controller';
+// import MyTBenefitRainbowPoint from './controllers/benefit/myt.benefit.rainbow-point.controller';
+
+
+import MytJoinProductServiceCombinationController from './controllers/join/mty.join.product-service.combination.controller';
 
 import MytBenefitPointAdjustment from './controllers/benefit/myt.benefit.point.adjustment.controller';
 import MytBenefitPointTransfer from './controllers/benefit/myt.benefit.point.transfer.controller';
-import MyTBenefitRecommendDetailController from './controllers/benefit/myt.benefit.recommend.detail.controller';
-import MyTBenefitRecommendController from './controllers/benefit/myt.benefit.recommend.controller';
-
 import MyTJoinPayClaim from './controllers/join/myt.join.pay-claim.controller';
 import MyTJoinContractTerminal from './controllers/join/myt.join.contract-terminal.controller';
 import MyTJoinContractTerminalDetail from './controllers/join/myt.join.contract-terminal.detail.controller';
+import MyTBenefitRecommendController from './controllers/benefit/myt.benefit.recommend.controller';
+import MyTBenefitRecommendDetailController from './controllers/benefit/myt.benefit.recommend.detail.controller';
 
 
 class MytRouter extends TwRouter {
@@ -120,10 +127,12 @@ class MytRouter extends TwRouter {
     this.controllers.push({ url: '/join/product-service', controller: new MytJoinProductService() });
     this.controllers.push({ url: '/join/product-service/fee-alarm', controller: new MytJoinProductServiceFeeAlarmController() });
     this.controllers.push({ url: '/join/product-service/fee-alarm/change', controller: new MytJoinProductServiceFeeAlarmChangeController() });
+    this.controllers.push({ url: '/join/product-service/combination', controller: new MytJoinProductServiceCombinationController() });
 
     this.controllers.push({ url: '/benefit/discount', controller: new MytBenefitDiscount() });
     this.controllers.push({ url: '/benefit/discount/detail', controller: new MytBenefitDiscountDetail() });
     this.controllers.push({ url: '/benefit/point', controller: new MyTBenefitPoint() });
+    // this.controllers.push({ url: '/benefit/rainbow-point', controller: new MyTBenefitRainbowPoint() });
     this.controllers.push({ url: '/benefit/recommend', controller: new MyTBenefitRecommendController() });
     this.controllers.push({ url: '/benefit/recommend/detail', controller: new MyTBenefitRecommendDetailController() });
 

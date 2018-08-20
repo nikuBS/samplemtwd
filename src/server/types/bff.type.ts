@@ -218,3 +218,24 @@ export enum PROMOTION_TYPE {
   N = '일반형',
   E = '응모형'
 }
+
+export const COMBINATION_PRODUCT_TYPE = {
+  'NA00005055': 'share-data',  // 가족나눔데이터
+  'NA00004211': 'good-family',  // T가족결합(착한가족)
+  'NH00000084': 'family-free',
+  'TW20000008': 'family-free',  // TB끼리 온가족프리
+  'NH00000059': 'family-nocharge',
+  'TW20000007': 'family-nocharge',  // TB끼리 온가족무료
+  'NH00000037': 'tb-internet',
+  'NH00000039': 'tb-internet',
+  'TW00000062': 'tb-internet',  // T+B인터넷
+  'NH00000040': 'tb-itel',
+  'NH00000041': 'tb-itel',
+  'TW00000063': 'tb-itel',  // T+B전화/인터넷전화
+  'NA00002040': 'tfamily-discount',
+  'TW20000010': 'tfamily-discount', // T끼리 온가족할인
+  'NA00004728': 'happy-plan',
+  'TW20000011': 'happy-plan',  // 온가족행복플랜
+};
+
+export const COMBINATION_PRODUCT_OTHER_TYPE = ['NH00000103', 'TW00000009', 'NH00000105', 'TW00000016']; // 한가족 할인, TB끼리 TV플러스
