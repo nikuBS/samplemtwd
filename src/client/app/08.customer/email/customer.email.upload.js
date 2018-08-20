@@ -14,6 +14,7 @@ Tw.CustomerEmailUpload = function (rootEl) {
   this._init();
 
   this.$inputFile = null;
+  this.$btUpload = null;
 };
 
 Tw.CustomerEmailUpload.prototype = {
@@ -35,11 +36,11 @@ Tw.CustomerEmailUpload.prototype = {
       hbs: 'file',
       title: Tw.POPUP_TITLE.UPLOAD_FILE,
       inputfile_num: [
-        { 'attr': 'name="file"' },
-        { 'attr': 'name="file"' },
-        { 'attr': 'name="file"' },
-        { 'attr': 'name="file"' },
-        { 'attr': 'name="file"' }
+        { 'attr': 'name="file" accept="image/*, .hwp, .doc, .docx"' },
+        { 'attr': 'name="file" accept="image/*, .hwp, .doc, .docx"' },
+        { 'attr': 'name="file" accept="image/*, .hwp, .doc, .docx"' },
+        { 'attr': 'name="file" accept="image/*, .hwp, .doc, .docx"' },
+        { 'attr': 'name="file" accept="image/*, .hwp, .doc, .docx"' }
       ],
       warning_msg: [
         { 'txt': Tw.UPLOAD_FILE.WARNING_A01, 'point': '' },
@@ -60,7 +61,10 @@ Tw.CustomerEmailUpload.prototype = {
     $popupContainer.on('click', '.fe-upload-multi-cancel', $.proxy(this._cancelUploadMulti, this));
     $popupContainer.on('click', '.fe-upload-multi-confirm', $.proxy(this._confirmUploadMulti, this));
 
+    this.$btUpload = $popupContainer.find('.fe-upload-multi-confirm > button');
     this.$inputFile = $popupContainer.find('input[name=file]');
+    this.$inputFile.on('change', $.proxy(this._onChangeFile, this));
+    this.$btUpload.attr('disabled', true);
   },
   _closeUploadFile: function () {
 
@@ -68,9 +72,33 @@ Tw.CustomerEmailUpload.prototype = {
   _cancelUploadMulti: function () {
     this._popupService.close();
   },
-
+  _onChangeFile: function ($event) {
+    var $currentFile = $event.currentTarget;
+    var file = $currentFile.files;
+    if ( file.length !== 0 ) {
+      if ( !this._validateFile(file[0]) ) {
+        $($currentFile).val('');
+      }
+    }
+    this._checkEnableConfirm();
+  },
+  _validateFile: function (file) {
+    if ( file.size > Tw.MAX_FILE_SIZE ) {
+      this._popupService.openAlert(Tw.MSG_CUSTOMER.EMAIL_A05);
+      return false;
+    }
+    // TODO ADD extension validation
+    // this._popupService.openAlert(Tw.MSG_CUSTOMER.EMAIL_A06);
+    return true;
+  },
+  _checkEnableConfirm: function () {
+    _.map(this.$inputFile, $.proxy(function (file) {
+      if ( file.files.length !== 0 ) {
+        this.$btUpload.attr('disabled', false);
+      }
+    }, this));
+  },
   _confirmUploadMulti: function () {
-    //TODO UPLOAD FILELIST
     var formData = new FormData();
     _.map(this.$inputFile, $.proxy(function (file) {
       if ( file.files.length !== 0 ) {

@@ -24,21 +24,36 @@
         <h2 class="blind">내용</h2>
         <div class="container">
             <div class="cont-box">
-                <div class="inner-block">
-                    <h2 class="title-h2">나의 할인 혜택</h2>
-                    <div class="exp-top">
-                        <span class="tx-exp mb12">선택약정할인 적용기간</span>
-                        <span class="tx-bold">약정시작일 : 2013.10.22<br />약정만료일 : 2015.10.21</span>
+                <% if ( data.selAgrmtDc25Yn === 'N' && data.selAgrmtDc20Yn === 'N' ) { %>
+                    <div class="inner-block">
+                        <h2 class="title-h2">혜택 받는 법</h2>
+                        <div class="exp-top">
+                            <span class="tx-exp mb12">휴대폰 지원금을 받지 않은 경우<br />그에 상응하는 <span class="tx-bold">요금할인 25% 혜택 적용</span></span>
+                        </div>
+                        <div class="contents-btn">
+                            <ul class="bt-slice">
+                                <li class="bt-blue1">
+                                    <button>가입 가능한 요금제 확인</button>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
-                    <div class="contents-btn">
-                        <ul class="bt-slice">
-                            <li class="bt-blue1">
-                                <button>나의 선택약정할인 정보 확인</button>
-                            </li>
-                        </ul>
+                <% } else { %>
+                    <div class="inner-block">
+                        <h2 class="title-h2">나의 할인 혜택</h2>
+                        <div class="exp-top">
+                            <span class="tx-exp mb12">선택약정할인 적용기간</span>
+                            <span class="tx-bold">약정시작일 : <%= data.agreeStartDate %><br />약정만료일 : <%= data.agreeEndDate %></span>
+                        </div>
+                        <div class="contents-btn">
+                            <ul class="bt-slice">
+                                <li class="bt-blue1">
+                                    <button>나의 선택약정할인 정보 확인</button>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
-                </div>
-
+                <% } %>
                 <div class="inner-block">
                     <h2 class="title-h2">휴대폰 지원금을 받지 않으셨다면,<br />선택약정할인으로 혜택 받으세요!</h2>
                     <div class="benefit-img"><img src="/img/dummy/dmy-circuit04.png" alt=""/></div>
@@ -62,15 +77,19 @@
                             <li>
                                 <span class="title">할인 혜택</span>
                                 <ul class="dash-list">
-                                    <li class="no-dash">지원금에 상응하는 25% 추가 요금할인을 제공합니다.<br />
-                                        (단, 17년 9월 15일 이전 가입자는 20% 할인)<br />
-                                        신청방식 : (요금제 월정액-24개월 기준 요금약정할인액) X 25%
+                                    <%
+                                    var rate = '25%';
+                                    if ( data.selAgrmtDc25Yn === 'N' && data.selAgrmtDc20Yn === 'N' ) {
+                                        data.dcInfoRate = '25%';
+                                    }
+                                    if (parseInt(data.dcInfoRate) === 25) {
+                                        rate = '20%';
+                                    }
+                                    %>
+                                    <li class="no-dash">지원금에 상응하는<%= data.dcInfoRate %> 추가 요금할인을 제공합니다.<br />
+                                        (단, 17년 9월 15일 이전 가입자는 <%= rate %> 할인)<br />
+                                        신청방식 : (요금제 월정액-24개월 기준 요금약정할인액) X <%= data.dcInfoRate %>
                                     </li>
-                                    <!-- 20% 인 경우 처리
-                                    <li class="no-dash">지원금에 상응하는 20% 추가 요금할인을 제공합니다.<br />
-                                        (단, 17년 9월 15일 이전 가입자는 25% 할인)<br />
-                                        신청방식 : (요금제 월정액-24개월 기준 요금약정할인액) X 20%
-                                    </li>-->
                                 </ul>
                             </li>
                             <li>

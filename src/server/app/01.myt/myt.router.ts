@@ -55,6 +55,9 @@ import MyTBenefitPoint from './controllers/benefit/myt.benefit.point.controller'
 import MytBenefitRecommendController from './controllers/benefit/myt.benefit.recommend.controller';
 import MytBenefitRecommendDetailController from './controllers/benefit/myt.benefit.recommend.detail.controller';
 
+import MytBenefitPointAdjustment from './controllers/benefit/myt.benefit.point.adjustment.controller';
+import MytBenefitPointTransfer from './controllers/benefit/myt.benefit.point.transfer.controller';
+
 
 class MytRouter extends TwRouter {
   constructor() {
@@ -114,13 +117,16 @@ class MytRouter extends TwRouter {
     this.controllers.push({ url: '/join/join-info/sms', controller: new MytJoinJoinInfoSmsController() });
 
     this.controllers.push({ url: '/join/product-service', controller: new MytJoinProductService() });
-    this.controllers.push({ url: '/join/product-service/fee-alarm', controller: new MytJoinProductServiceFeeAlarmController() })
+    this.controllers.push({ url: '/join/product-service/fee-alarm', controller: new MytJoinProductServiceFeeAlarmController() });
 
     this.controllers.push({ url: '/benefit/discount', controller: new MytBenefitDiscount() });
     this.controllers.push({ url: '/benefit/discount/detail', controller: new MytBenefitDiscountDetail() });
     this.controllers.push({ url: '/benefit/point', controller: new MyTBenefitPoint() });
     this.controllers.push({ url: '/benefit/recommend', controller: new MytBenefitRecommendController() });
     this.controllers.push({ url: '/benefit/recommend/detail', controller: new MytBenefitRecommendDetailController() });
+
+    this.controllers.push({ url: '/benefit/point/adjustment', controller: new MytBenefitPointAdjustment() });
+    this.controllers.push({ url: '/benefit/point/transfer', controller: new MytBenefitPointTransfer() });
   }
 }
 

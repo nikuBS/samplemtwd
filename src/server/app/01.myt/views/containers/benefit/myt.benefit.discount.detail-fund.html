@@ -24,11 +24,12 @@
         <h2 class="blind">내용</h2>
         <div class="container">
             <div class="cont-box">
+                <% if (data.tsuprtAgrmtYn && data.tsuprtAgrmtYn === 'Y') { %>
                 <div class="inner-block">
                     <h2 class="title-h2">나의 할인 혜택</h2>
                     <div class="exp-top">
                         <span class="tx-exp mb12">T지원약정 적용기간</span>
-                        <span class="tx-bold">약정시작일 : 2013.10.22<br />약정만료일 : 2015.10.21</span>
+                        <span class="tx-bold">약정시작일 : <%= data.agreeStartDate %><br />약정만료일 : <%= data.agreeEndDate %></span>
                     </div>
                     <div class="contents-btn">
                         <ul class="bt-slice">
@@ -38,7 +39,9 @@
                         </ul>
                     </div>
                 </div>
+                <% } else { %>
 
+                <% } %>
                 <div class="inner-block">
                     <h2 class="title-h2">대한민국 누구나 할인 받는<br />범국민적 혜택 T지원금약정</h2>
                     <div class="benefit-img"><img src="/img/dummy/dmy-circuit04.png" alt=""/></div>
