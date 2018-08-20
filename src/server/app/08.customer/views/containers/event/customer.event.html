@@ -37,20 +37,20 @@
                         <div class="tab-area type1"><!-- 타입별 탭형태 변환 -->
                             <div class="tab-linker fe-tab-menu">
                                 <ul role="tablist">
-                                    <li role="tab" aria-selected="true" aria-controls="tab1-tab" id="tab1"><a>진행중 이벤트</a></li><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
-                                    <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2"><a>지난 이벤트</a></li>
-                                    <li role="tab" aria-selected="false" aria-controls="tab3-tab" id="tab3"><a>당첨자발표</a></li>
+                                    <li role="tab" aria-selected="true" aria-controls="main-tab" id="main"><a>진행중 이벤트</a></li><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
+                                    <li role="tab" aria-selected="false" aria-controls="old-tab" id="old"><a>지난 이벤트</a></li>
+                                    <li role="tab" aria-selected="false" aria-controls="win-tab" id="win"><a>당첨자발표</a></li>
                                 </ul>
                             </div>
                             <div class="tab-contents">
                                 <ul>
-                                    <li role="tabpanel" id="tab1-tab" aria-labelledby="tab1">
+                                    <li role="tabpanel" id="main-tab" aria-labelledby="main">
                                         <% include ../components/event/customer.event.ing.component.html %>
                                     </li>
-                                    <li role="tabpanel" id="tab2-tab" aria-labelledby="tab2">
+                                    <li role="tabpanel" id="old-tab" aria-labelledby="old">
                                         <% include ../components/event/customer.event.old.component.html %>
                                     </li>
-                                    <li role="tabpanel" id="tab3-tab" aria-labelledby="tab3">
+                                    <li role="tabpanel" id="win-tab" aria-labelledby="win">
                                         <% include ../components/event/customer.event.win.component.html %>
                                     </li>
                                 </ul>
