@@ -1,10 +1,10 @@
 /**
- * FileName: customer.event.main.js
+ * FileName: customer.event.js
  * Author: 공자윤 (jayoon.kong@sk.com)
  * Date: 2018.08.17
  */
 
-Tw.CustomerEventMain = function (rootEl) {
+Tw.CustomerEvent = function (rootEl) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -14,7 +14,7 @@ Tw.CustomerEventMain = function (rootEl) {
   this._bindEvent();
 };
 
-Tw.CustomerEventMain.prototype = {
+Tw.CustomerEvent.prototype = {
   _init: function () {
     this._initVariables();
 
