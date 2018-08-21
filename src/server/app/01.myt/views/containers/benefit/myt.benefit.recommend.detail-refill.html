@@ -29,14 +29,19 @@
                 <div class="inner-block">
                     <% if( reqQuery.type == 'A') { %>
                     <h2 class="title-h2">나의 추천 혜택</h2>
+                    <div class="exp-top">
+                        <span class="tx-exp tx-bold" data-target="refillCpArea"></span>
+                        <span class="tx-exp tx-bold" data-target="LtsCpArea"></span>
+                    </div>
                     <% } %>
 
                     <% if( reqQuery.type == 'B') { %>
                     <h2 class="title-h2">혜택 받는 법</h2>
-                    <% } %>
                     <div class="exp-top">
                         <span class="tx-exp"><span class="tx-bold">SKT 가입기간에 따라</span><br />별도 신청 없이 데이터 쿠폰 제공</span>
                     </div>
+                    <% } %>
+
                     <div class="contents-btn">
                         <ul class="bt-slice">
                             <li class="bt-blue1">
@@ -95,7 +100,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.MytBenefitRecommendDetail( $('#fe-wrap'), {
+    new Tw.MytBenefitRecommendDetailRefill( $('#fe-wrap'), {
       reqQuery: <%-JSON.stringify(reqQuery) %>,
       svcInfo: <%-JSON.stringify(svcInfo) %>
     });

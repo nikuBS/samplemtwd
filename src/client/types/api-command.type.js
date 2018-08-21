@@ -105,7 +105,8 @@ Tw.API_CMD = {
   BFF_05_0087: { path: '/core-bill/v1/micropay-password-changes', method: Tw.API_METHOD.PUT },
   BFF_05_0089: { path: '/core-bill/v1/prepayInfo', method: Tw.API_METHOD.GET },
   BFF_05_0093: { path: '/core-bill/v1/microPay-cphist-request', method: Tw.API_METHOD.GET },
-  BFF_05_0102: { path: '/core-bill/v1/rainbow-point-adjustments', method: Tw.API_METHOD.POST },
+  BFF_05_0096: { path: '/core-product/v1/recommend-benefits', method: Tw.API_METHOD.GET },
+  BFF_05_0120: { path: '/core-bill/v1/military-service-points', method: Tw.API_METHOD.GET },
   BFF_05_0126: { path: '/core-product/v1/fee-plans/change-notices', method: Tw.API_METHOD.POST },
   BFF_05_0127: { path: '/core-product/v1/fee-plans/change-notices', method: Tw.API_METHOD.DELETE },
 
@@ -232,8 +233,6 @@ Tw.API_CMD = {
   BFF_08_0043: { path: '/core-modification/v1/email-inquiry/service-internet', method: Tw.API_METHOD.POST },
   BFF_08_0044: { path: '/core-modification/v1/email-inquiry/quality-mobile', method: Tw.API_METHOD.POST },
   BFF_08_0045: { path: '/core-modification/v1/email-inquiry/quality-internet', method: Tw.API_METHOD.POST },
-  BFF_08_0056: { path: '/core-modification/v1/guide/use-detail', method: Tw.API_METHOD.GET },
-  BFF_08_0057: { path: '/core-modification/v1/guide/site-use', method: Tw.API_METHOD.GET },
 
   // EVENT
   BFF_09_0001: { path: '/core-membership/v1/event/ing-list', method: Tw.API_METHOD.GET },
