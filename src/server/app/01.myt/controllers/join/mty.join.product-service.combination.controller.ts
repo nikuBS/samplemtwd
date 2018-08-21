@@ -10,13 +10,36 @@ import { Request, Response, NextFunction } from 'express';
 import { COMBINATION_PRODUCT_TYPE } from '../../../../types/bff.type';
 import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
+import StringHelper from '../../../../utils/string.helper';
 
 interface ICombination {
   joinDate: string;
-  totalYears: number;
+  totalPeriod: number;
   totalDiscount: string;
   count: number;
   status: string;
+  members: IMember[];
+  wireIndex: number;
+  bProducts: { [key: string]: IBProduct }
+}
+
+interface IMember {
+  name: string;
+  relation: string;
+  isRepresentation: boolean;
+  svcNumber: string;
+  period: number;
+  servicePlan: string;
+  managementId: string;
+  // T끼리 온가족 할인
+  afterDiscount?: string;
+  beforeDiscount?: string;
+  discountAmount?: string;
+  discountRate?: number;
+}
+
+interface IBProduct {
+  period?: number;
 }
 
 export default class MytJoinProductServiceCombinationController extends TwViewController {
@@ -59,10 +82,42 @@ export default class MytJoinProductServiceCombinationController extends TwViewCo
     const group = combination.combinationGroup;
     return {
       joinDate: DateHelper.getShortDateNoDot(group.combStaDt),
-      totalYears: group.totUseYy,
+      totalPeriod: group.totUseYy,
       totalDiscount: FormatHelper.convNumFormat(group.totBasFeeDcTx),
       count: group.mblSvcCnt,
-      status: group.combSt
+      status: group.combSt,
+      members: combination.combinationWirelessMemberList.map(this.getProperMemberData)
+        .concat(combination.combinationWireMemberList.map(this.getProperMemberData)),
+      wireIndex: combination.combinationWirelessMemberList.length,
+      bProducts: this.getBProducts(combination.combinationWireMemberList)
     }
+  }
+
+  private getProperMemberData = (member: any): IMember => {
+    return {
+      name: StringHelper.replaceAt(member.custNm, 1, '*'),
+      relation: member.relClNm,
+      isRepresentation: member.relClCd === "00",
+      svcNumber: StringHelper.maskPhoneNumber(member.svcNum),
+      period: member.useYySum,
+      servicePlan: member.feeProdNm,
+      managementId: member.svcMgmtNum,
+      afterDiscount: member.aftBasFeeAmtTx ? FormatHelper.convNumFormat(member.aftBasFeeAmtTx) : undefined,
+      beforeDiscount: member.basFeeAmtTx ? FormatHelper.convNumFormat(member.aftBasFeeAmtTx) : undefined,
+      discountAmount: member.basFeeDcTx ? FormatHelper.convNumFormat(member.aftBasFeeAmtTx) : undefined,
+      discountRate: member.tcFeeBenf
+    }
+  }
+
+  private getBProducts = (members: any[]): { [key: string]: IBProduct } => {
+    const bProducts: { [key: string]: IBProduct } = {};
+    for (let i = 0; i < members.length; i++) {
+      const member = members[i];
+      bProducts[member['mblSvcMgmtNum']] = {
+        period: member['useYySum']
+      }
+    }
+
+    return bProducts;
   }
 }
