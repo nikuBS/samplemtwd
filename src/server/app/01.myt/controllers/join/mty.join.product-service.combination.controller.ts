@@ -40,7 +40,10 @@ interface IMember {
 }
 
 interface IBProduct {
+  // T끼리 온가족 할인
   period?: number;
+  // TB끼리 온가족 무료
+  wireProduct?: string;
 }
 
 export default class MytJoinProductServiceCombinationController extends TwViewController {
@@ -116,7 +119,8 @@ export default class MytJoinProductServiceCombinationController extends TwViewCo
     for (let i = 0; i < members.length; i++) {
       const member = members[i];
       bProducts[member['mblSvcMgmtNum']] = {
-        period: member['useYySum']
+        period: member['useYySum'],
+        wireProduct: member['svcCdNm']
       }
     }
 
