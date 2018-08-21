@@ -6,13 +6,12 @@
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import {Request, Response, NextFunction} from 'express';
 import {DATE_FORMAT, CURRENCY_UNIT, MYT_JOIN_TYPE, MYT_JOIN} from '../../../../types/string.type';
-import {Info, History} from '../../../..//mock/server/join.info.mock';
 import DateHelper from '../../../../utils/date.helper';
 import FormatHelper from '../../../../utils/format.helper';
 import {API_CMD, API_CODE} from '../../../../types/api-command.type';
 import {Observable} from 'rxjs/Observable';
 
-class MytJoinJoinInfoController extends TwViewController {
+class MyTJoinJoinInfoController extends TwViewController {
   private _svcInfo: any;
 
   private _urlPath = {
@@ -152,11 +151,10 @@ class MytJoinJoinInfoController extends TwViewController {
   private getJoinInfo(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_05_0068, {}).map((response) => {
       return response;
-      // return this.getResult(response);
     });
   }
 
-  // 개통/변경 이력 조회
+  // 개통/변경 이력 조회 (무선)
   private getHistory(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_05_0061, {}).map((response) => {
       if ( response.code === API_CODE.CODE_00 ) {
@@ -227,11 +225,16 @@ class MytJoinJoinInfoController extends TwViewController {
         const data = this.getData(svcInfo, this.getJoinInfoData(joinInfo.result));
         res.render('join/myt.join.join-info.html', data);
       } else {
-        res.send('api error' + joinInfo.code + ' ' + joinInfo.msg);
+        res.render('error.server-error.html', {
+          title: 'error',
+          code: joinInfo.code,
+          msg: joinInfo.msg,
+          svcInfo: svcInfo
+        });
       }
 
     });
   }
 }
 
-export default MytJoinJoinInfoController;
+export default MyTJoinJoinInfoController;

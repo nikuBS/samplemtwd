@@ -1,5 +1,5 @@
 /**
- * FileName: myt.join.join-info-sms.controller.ts
+ * FileName: myt.join.join-info.sms.controller.ts
  * Author: 양정규 (skt.P130715@partner.sk.com)
  * Date: 2018.08.07
  */
@@ -8,7 +8,7 @@ import {Request, Response, NextFunction} from 'express';
 import {API_CMD, API_CODE} from '../../../../types/api-command.type';
 import {Observable} from 'rxjs/Observable';
 
-class MytJoinJoinInfoSmsController extends TwViewController {
+class MyTJoinJoinInfoSmsController extends TwViewController {
   private _svcInfo: any;
 
   get svcInfo() {
@@ -54,4 +54,4 @@ class MytJoinJoinInfoSmsController extends TwViewController {
   }
 }
 
-export default MytJoinJoinInfoSmsController;
+export default MyTJoinJoinInfoSmsController;

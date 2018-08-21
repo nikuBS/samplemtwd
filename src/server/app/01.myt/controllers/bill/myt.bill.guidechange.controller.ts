@@ -10,7 +10,7 @@ import {Observable} from 'rxjs/Observable';
 import {API_CMD, API_CODE} from '../../../../types/api-command.type';
 import {SVC_ATTR} from '../../../../types/bff.type';
 
-class MytBillGuidechange extends TwViewController {
+class MyTBillGuidechange extends TwViewController {
   constructor() {
     super();
   }
@@ -107,4 +107,4 @@ class MytBillGuidechange extends TwViewController {
   }
 }
 
-export default MytBillGuidechange;
+export default MyTBillGuidechange;
