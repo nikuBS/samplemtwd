@@ -15,7 +15,7 @@
 <!--// #skip_navigation -->
 
 <!-- wrap -->
-<div class="wrap" id="#myt-benefit-rainbow-history">
+<div class="wrap" id="myt-benefit-rainbow-history">
     <!-- header -->
     <%- include('../../../../../common/views/components/header.component.html', { title: '이용내역', svcInfo: svcInfo });
     %>
@@ -38,25 +38,25 @@
                             <div class="history-inquiry pt20 mt6">
                                 <div class="widget">
                                     <div class="widget-box tube">
-                                        <ul class="tube-list three" role="radiogroup">
-                                            <li role="radio" aria-checked="false"><input type="radio" name="selectdate1" title="1개월 선택">1개월</li>
-                                            <li role="radio" aria-checked="false"><input type="radio" name="selectdate1" title="3개월 선택">3개월</li>
-                                            <li role="radio" aria-checked="false"><input type="radio" name="selectdate1" title="6개월 선택">6개월</li>
-                                            <li role="radio" aria-checked="false"><input type="radio" name="selectdate1" title="1년 선택">1년</li>
-                                            <li role="radio" aria-checked="false"><input type="radio" name="selectdate1" title="2년 선택">2년</li>
-                                            <li role="radio" aria-checked="true" class="checked"><input type="radio" name="selectdate1" title="3년 선택" checked="checked">3년</li>
+                                        <ul class="tube-list three fe-period" role="radiogroup">
+                                            <li role="radio" aria-checked="false"><input type="radio" name="selectdate1" title="1개월 선택" data-month="1">1개월</li>
+                                            <li role="radio" aria-checked="false"><input type="radio" name="selectdate1" title="3개월 선택" data-month="3">3개월</li>
+                                            <li role="radio" aria-checked="false"><input type="radio" name="selectdate1" title="6개월 선택" data-month="6">6개월</li>
+                                            <li role="radio" aria-checked="false"><input type="radio" name="selectdate1" title="1년 선택" data-month="12">1년</li>
+                                            <li role="radio" aria-checked="false"><input type="radio" name="selectdate1" title="2년 선택" data-month="24">2년</li>
+                                            <li role="radio" aria-checked="true" class="checked"><input type="radio" name="selectdate1" title="3년 선택" checked="checked" data-month="36">3년</li>
                                         </ul>
                                     </div>
                                 </div>
                                 <span class="inputbox date-selcet">
-                                        <span class="date-type"><input type="date" value="2018-05-01" title="시작날짜 선택"/></span>
+                                        <span class="date-type"><input type="date" value="2018-05-01" title="시작날짜 선택" data-type="from"/></span>
                                         <span class="bar">&#8211;</span>
-                                        <span class="date-type"><input type="date" value="2018-05-10" title="마지막날짜 선택"/></span>
+                                        <span class="date-type"><input type="date" value="2018-05-10" title="마지막날짜 선택" data-type="to"/></span>
                                     </span>
                                 <div class="contents-btn mb10">
                                     <ul class="bt-slice">
                                         <li class="bt-blue1">
-                                            <button>조회</button>
+                                            <button data-id="search">조회</button>
                                         </li>
                                     </ul>
                                 </div>
