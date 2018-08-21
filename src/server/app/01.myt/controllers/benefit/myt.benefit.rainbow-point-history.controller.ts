@@ -1,5 +1,5 @@
 /**
- * FileName: myt.benefit.rainbow-point-history.controller.js
+ * FileName: myt.benefit.rainbow-point-history.controller.ts
  * Author: Hyeryoun Lee (skt.P130712@partner.sk.com)
  * Date: 2018. 8. 20.
  */
