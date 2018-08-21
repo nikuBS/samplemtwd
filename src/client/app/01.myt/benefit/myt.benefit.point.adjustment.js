@@ -1,5 +1,5 @@
 /**
- * FileName: myt.benefit.point.js
+ * FileName: myt.benefit.point.adjustment.js
  * Author: 이정민 (skt.p130713@partner.sk.com)
  * Date: 2018. 8. 17.
  */
@@ -52,7 +52,7 @@ Tw.MytBenefitPointAdjustment.prototype = {
     return _.map(lines, function (line) {
       return {
         attr: 'id="' + line.svcMgmtNum + '"',
-        text: line.svcNum
+        text: '<span class="cell-box"><span class="cell">'+line.nickNm+'</span><span class="cell">'+line.svcNum+'</span></span>'
       };
     });
   },
@@ -83,7 +83,20 @@ Tw.MytBenefitPointAdjustment.prototype = {
   },
 
   _onClickBtnSubmit: function() {
-    this._showComplete();
+    this._apiService.request(Tw.API_CMD.BFF_05_0102, {
+      'sndrSvcMgmtNum': this._$btnLineToGive.data('svc-mgmt-num').toString(),
+      'befrSvcMgmtNum': this._$btnLineToReceive.data('svc-mgmt-num').toString(),
+      'point': this._$inputPoint.val()
+    }).done($.proxy(function(resp){
+        if ( resp.code === Tw.API_CODE.CODE_00 ) {
+          this._showComplete();
+        } else {
+          this._popupService.openAlert(resp.msg, resp.code);
+        }
+      }, this))
+      .fail(function(err){
+        this._popupService.openAlert(err.msg, err.code);
+      });
   },
 
   _closePreview: function () {
