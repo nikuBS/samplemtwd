@@ -65,31 +65,45 @@ Tw.CustomerEmailService.prototype = {
   _validateForm: function () {
     var sEmail = $('#tab1-tab .fe-input-email').val().trim();
     if ( !Tw.ValidationHelper.isEmail(sEmail) ) {
-      this._popupService.openAlert(Tw.MSG_CUSTOMER.EMAIL_A03, Tw.POPUP_TITLE.CONFIRM, function () {
-        setTimeout(function () {
-          $('#tab1-tab .fe-input-email').focus();
-        }, 100);
-
-        this._popupService.close();
-      }.bind(this), this._popupService.close);
+      this._popupService.openAlert(
+        Tw.MSG_CUSTOMER.EMAIL_A03,
+        Tw.POPUP_TITLE.CONFIRM,
+        $.proxy(this._onFocusInputEmail, this),
+        this._popupService.close
+      );
 
       return false;
     }
 
     var sPhone = $('#tab1-tab .fe-input-phone').val().trim();
     if ( !Tw.ValidationHelper.isCellPhone(sPhone) ) {
-      this._popupService.openAlert(Tw.MSG_CUSTOMER.EMAIL_A04, Tw.POPUP_TITLE.CONFIRM, function () {
-        setTimeout(function () {
-          $('#tab1-tab .fe-input-phone').focus();
-        }, 100);
-
-        this._popupService.close();
-      }.bind(this), this._popupService.close);
+      this._popupService.openAlert(
+        Tw.MSG_CUSTOMER.EMAIL_A04,
+        Tw.POPUP_TITLE.CONFIRM,
+        $.proxy(this._onFocusInputPhone, this),
+        this._popupService.close
+      );
 
       return false;
     }
 
     return true;
+  },
+
+  _onFocusInputPhone: function () {
+    setTimeout(function () {
+      $('#tab1-tab .fe-input-phone').focus();
+    }, 100);
+
+    this._popupService.close();
+  },
+
+  _onFocusInputEmail: function () {
+    setTimeout(function () {
+      $('#tab1-tab .fe-input-email').focus();
+    }, 100);
+
+    this._popupService.close();
   },
 
   _requestEmailCell: function () {
@@ -172,16 +186,18 @@ Tw.CustomerEmailService.prototype = {
 
     this._apiService.request(Tw.API_CMD.BFF_08_0016, {
       svcDvcClCd: 'M'
-    }).done(function (res) {
-      this.$container.append(this.tpl_direct_popup({
-        listShop: res.result.listShop,
-        listUsed: res.result.listUsed
-      }));
+    }).done($.proxy(this._onSuccessDirectPopup, this));
+  },
 
-      document.body.style.overflow = 'hidden';
-      skt_landing.widgets.widget_init('.popup-page'); //selector string
-      skt_landing.components.component_init('.popup-page');  //selector string
-    }.bind(this));
+  _onSuccessDirectPopup: function (res) {
+    this.$container.append(this.tpl_direct_popup({
+      listShop: res.result.listShop,
+      listUsed: res.result.listUsed
+    }));
+
+    document.body.style.overflow = 'hidden';
+    skt_landing.widgets.widget_init('.popup-page'); //selector string
+    skt_landing.components.component_init('.popup-page');  //selector string
   },
 
   _selectDirectPopupItem: function () {
