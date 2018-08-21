@@ -1,0 +1,15 @@
+<!--
+* FileName: myt.benefit.membership.list.html
+* Author: 양정규 (skt.P130715@partner.sk.com)
+* Date: 2018.08.16
+-->
+<script id="tmplList" type="text/x-handlebars-template">
+    {{#each list}}
+    <li>
+        <button class="fe-loc" data-code="{{CODE}}">
+            <span class="tit">{{TITLE}}</span>
+            <span class="txt">{{{TEXT}}}</span>
+        </button>
+    </li>
+    {{/each}}
+</script>

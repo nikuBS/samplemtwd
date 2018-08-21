@@ -24,6 +24,7 @@ Tw.MyTJoinJoinInfo.prototype = {
     this.$history = this.$container.find('#fe-open-history');
     this.$skbLink = this.$container.find('#fe-skb-link');
     this.$pwdChgBtn = this.$container.find('#pwd-change');
+    this.$contractInfo = this.$container.find('#fe-contract-info');
   },
 
   _bindEvent: function () {
@@ -31,8 +32,9 @@ Tw.MyTJoinJoinInfo.prototype = {
     if ( this.$pwdChgBtn.length > 0 ) {
       this.$pwdChgBtn.on('click', $.proxy(this._openPwdLayer, this));
     }
-    this.$history.click($.proxy(this._openHistoryPop, this));
-    this.$skbLink.click($.proxy(this._openSKbrodbandLink, this));
+    this.$history.on('click', $.proxy(this._openHistoryPop, this));
+    this.$skbLink.on('click', $.proxy(this._openSKbrodbandLink, this));
+    this.$contractInfo.on('click', $.proxy(this._reqBFF_05_0139, this));
   },
 
   // 개통/변경 이력조회 팝업
@@ -46,10 +48,44 @@ Tw.MyTJoinJoinInfo.prototype = {
     });
   },
 
+  // 유선 서비스 이용계약서 조회 요청
+  _reqBFF_05_0139 : function () {
+    this._apiService
+      .request(Tw.API_CMD.BFF_05_0139, {})
+      .done($.proxy(this._openContractInfoPop, this))
+      .fail($.proxy(this._onFail, this));
+  },
+
+  // 이용계약 정보 팝업
+  _openContractInfoPop : function (res) {
+    if (res.code === Tw.API_CODE.CODE_00) {
+      res = res.result;
+
+      res.svsetPrefrDtm = Tw.DateHelper.getShortDateNoDot(res.svsetPrefrDtm);
+      res.isBeforeSvc = !Tw.FormatHelper.isEmpty(res.chgTermSvcTechMthdNm);
+      this._popupService.open({
+        hbs: 'MY_01_02_12_L01',
+        data: res
+      }, $.proxy(this._bindPopEvent, this));
+    } else {
+      this._onFail(res);
+    }
+  },
+
+  _bindPopEvent : function ($layer) {
+    $layer.on('click', '#fe-ok', $.proxy(function(){this._popupService._popupClose();}, this) );
+  },
+
   // SK브로드밴드 링크 클릭
-  _openSKbrodbandLink: function (e) {
-    var $_this = $(e.currentTarget);
-    window.open($_this.data('url'), '_blank');
+  _openSKbrodbandLink: function () {
+    if ( Tw.BrowserHelper.isApp() ) {
+      Tw.Native.send(Tw.NTV_CMD.OPEN_URL, {
+        type: 1,
+        href: Tw.URL_PATH.BROADBAND
+      }, null);
+    } else {
+      window.open( Tw.URL_PATH.BROADBAND, '_blank');
+    }
   },
 
   // 비밀번호변경 클릭
@@ -76,6 +112,10 @@ Tw.MyTJoinJoinInfo.prototype = {
   _onPwdChecked: function () {
     // 로그인 인증 성공 후 화면 이동
     this._historyService.goLoad('/myt/join/protect/change');
+  },
+
+  _onFail: function (err) {
+    this._popupService.openAlert(err.msg + ' : ' + err.code);
   }
 
 };

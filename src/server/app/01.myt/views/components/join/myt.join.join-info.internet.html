@@ -16,7 +16,12 @@
             <li>
                 <dl>
                     <dt>서비스 약정</dt>
-                    <dd><span class="ff-hn"><%= data.svcAgrmtMth%></span><br /><span class="ff-hn">(<%=data.svcPrdStaDt%> ~ <%=data.svcPrdEndDt%>)</span></dd>
+                    <dd>
+                        <span class="ff-hn"><%= data.svcAgrmtMth%></span>
+                        <%if(data.svcPrdStaDt !== '' && data.svcPrdEndDt !== ''){%>
+                        <br /><span class="ff-hn">(<%=data.svcPrdStaDt%> ~ <%=data.svcPrdEndDt%>)</span>
+                        <%}%>
+                    </dd>
                 </dl>
             </li>
             <li>
@@ -28,7 +33,12 @@
             <li>
                 <dl>
                     <dt>세트약정</dt>
-                    <dd><span class="ff-hn"><%= data.setAgrmtMth%></span><br /><span class="ff-hn">(<%= data.setPrdStaDt%> ~ <%= data.setPrdEndDt%>)</span></dd>
+                    <dd>
+                        <span class="ff-hn"><%= data.setAgrmtMth%></span>
+                        <%if(data.setPrdStaDt !== '' && data.setPrdEndDt !== ''){%>
+                        <br /><span class="ff-hn">(<%= data.setPrdStaDt%> ~ <%= data.setPrdEndDt%>)</span>
+                        <%}%>
+                    </dd>
                 </dl>
             </li>
             <li>
@@ -40,7 +50,7 @@
                     <ul class="bt-slice item-two">
                         <li class="bt-white2">
                             <!-- 7차 스프린트에서 진행 -->
-                            <button>이용계약 정보</button>
+                            <button id="fe-contract-info">이용계약 정보</button>
                         </li>
                         <li class="bt-white2">
                             <!-- 6차 스프린트에서 제외. 해당 메뉴 개발 시 진행한다고 함 -->
@@ -55,6 +65,6 @@
         <span class="noti-type3">가입하신 상품관련 신청/변경 및 납부 등의 업무는 SK브로드 밴드 고객센터 (국번없이 106) 또는 웹 사이트를 통해 가능합니다.</span>
     </div>
     <% if(data.coClCd === 'B') {%>
-    <button id="fe-skb-link" class="bt-link-tx pt18" data-url="http://www.skbroadband.com/Main.do">SK브로드밴드 바로가기 <span class="ico"></span></button>
+    <button id="fe-skb-link" class="bt-link-tx pt18">SK브로드밴드 바로가기 <span class="ico"></span></button>
     <%}%>
 </div>
