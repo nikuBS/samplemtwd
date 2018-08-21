@@ -182,5 +182,7 @@ export const URL = {
   '/auth/tid/route': { login: false, id: '', title: '' },
   '/auth/withdrawal/guide': { login: true, id: 'CO_01_05_01_01', title: '회원탈퇴' },
   '/auth/withdrawal/survey': { login: true, id: 'CO_01_05_01_03', title: '회원탈퇴' },
-  '/auth/withdrawal/complete': { login: false, id: 'CO_01_05_01_04_01', title: '회원탈퇴' }
+  '/auth/withdrawal/complete': { login: false, id: 'CO_01_05_01_04_01', title: '회원탈퇴' },
+  // common
+  '/common/error': { login: false, id: '', title: '' }
 };

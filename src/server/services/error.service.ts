@@ -21,7 +21,7 @@ class ErrorService {
       title: options.title || 'Error',
       code: options.code || '',
       msg: options.msg || '',
-      svcInfo: options.svcInfo
+      svcInfo: options.svcInfo || null
     });
   }
 
