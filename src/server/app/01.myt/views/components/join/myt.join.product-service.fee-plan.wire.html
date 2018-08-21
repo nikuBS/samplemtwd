@@ -48,15 +48,15 @@
                                 <span class="title"><%= feePlan.dcBenefits[i].dcOferNm %></span>
                                 <span class="tx-cont"><%= feePlan.dcBenefits[i].dcObjInvItmTypNm %> 대상</span>
                             </li>
+                            <% if (['01', '02'].indexOf(feePlan.dcBenefits[i].dcCttClCd) !== -1) { %>
                             <li>
                                 <span class="title"><%= feePlan.dcBenefits[i].penText %></span>
                                 <span class="tx-cont">
                                     <span class="ff-hn vbl"><%= feePlan.dcBenefits[i].dcVal %></span>
-                                    <% if (['01', '02'].indexOf(feePlan.dcBenefits[i].dcCttClCd) !== -1) { %>
                                     <%= (feePlan.dcBenefits[i].dcCttClCd === '01') ? '원' : '%' %> 할인
-                                    <% } %>
                                 </span>
                             </li>
+                            <% } %>
                             <li>
                                 <span class="title">할인 기간</span>
                                 <span class="tx-cont ff-hn"><%= feePlan.dcBenefits[i].dcStaDt %>~<br /><%= feePlan.dcBenefits[i].dcEndDt %></span>

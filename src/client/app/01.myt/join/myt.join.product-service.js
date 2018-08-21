@@ -35,8 +35,8 @@ Tw.MyTJoinProductService.prototype = {
   },
 
   _cachedElement: function () {
-    this.$feePlan = $('#myt-join-fee-plan');
-    this.$additions = $('#myt-join-additions');
+    this.$feePlan = this.$container.find('#feeplan-contents');
+    this.$additions = this.$container.find('#additions-contents');
     this.$combinations = this.$container.find('#combinations-contents');
     this.$tabLinker = this.$container.find('.tab-linker');
   },
