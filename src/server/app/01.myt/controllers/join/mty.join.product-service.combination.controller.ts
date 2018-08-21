@@ -11,6 +11,7 @@ import { COMBINATION_PRODUCT_TYPE } from '../../../../types/bff.type';
 import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
 import StringHelper from '../../../../utils/string.helper';
+import ValidationHelper from '../../../../utils/validation.helper';
 
 interface ICombination {
   joinDate: string;
@@ -30,6 +31,7 @@ interface IMember {
   isRepresentation: boolean;
   svcNumber: string;
   period: number;
+  months: string;
   servicePlan: string;
   managementId: string;
   // T끼리 온가족 할인
@@ -37,6 +39,9 @@ interface IMember {
   beforeDiscount?: string;
   discountAmount?: string;
   discountRate?: number;
+  // T+B인터넷
+  companyCode?: string;
+  isDiscounting?: boolean;
 }
 
 interface IBProduct {
@@ -88,7 +93,7 @@ export default class MytJoinProductServiceCombinationController extends TwViewCo
       joinDate: DateHelper.getShortDateNoDot(group.combStaDt),
       totalPeriod: group.totUseYy,
       totalDiscount: FormatHelper.convNumFormat(group.totBasFeeDcTx),
-      count: group.mblSvcCnt,
+      count: group.mblSvcCnt + group.wirSvcCnt || 0,
       status: group.combSt,
       members: combination.combinationWirelessMemberList.map(this.getProperMemberData)
         .concat(combination.combinationWireMemberList.map(this.getProperMemberData)),
@@ -100,19 +105,24 @@ export default class MytJoinProductServiceCombinationController extends TwViewCo
 
   private getProperMemberData = (member: any): IMember => {
     return {
-      name: StringHelper.replaceAt(member.custNm, 1, '*'),
+      name: member.custNm,
       relation: member.relClNm,
       isRepresentation: member.relClCd === "00",
-      svcNumber: StringHelper.maskPhoneNumber(member.svcNum),
-      period: member.useYySum,
-      servicePlan: member.feeProdNm,
-      managementId: member.svcMgmtNum,
-      afterDiscount: member.aftBasFeeAmtTx ? FormatHelper.convNumFormat(member.aftBasFeeAmtTx) : undefined,
-      beforeDiscount: member.basFeeAmtTx ? FormatHelper.convNumFormat(member.aftBasFeeAmtTx) : undefined,
-      discountAmount: member.basFeeDcTx ? FormatHelper.convNumFormat(member.aftBasFeeAmtTx) : undefined,
-      discountRate: member.tcFeeBenf
+      svcNumber: ValidationHelper.isCellPhone(member.svcNum) ? StringHelper.phoneStringToDash((member.svcNum) : member.svcNum,
+        period: member.useYySum,
+        months: member.useYearCnt,
+        servicePlan: member.feeProdNm,
+        managementId: member.svcMgmtNum,
+        afterDiscount: member.aftBasFeeAmtTx ? FormatHelper.convNumFormat(member.aftBasFeeAmtTx) : undefined,
+        beforeDiscount: member.basFeeAmtTx ? FormatHelper.convNumFormat(member.aftBasFeeAmtTx) : undefined,
+        discountAmount: member.basFeeDcTx ? FormatHelper.convNumFormat(member.aftBasFeeAmtTx) : undefined,
+        discountRate: member.tcFeeBenf,
+        companyCode: member.coClCd || 'T',
+        isDiscounting: member.famlUseYn ? member.famlUseYn === 'Y' : undefined
     }
   }
+
+  private
 
   private getBProducts = (members: any[]): { [key: string]: IBProduct } => {
     const bProducts: { [key: string]: IBProduct } = {};
