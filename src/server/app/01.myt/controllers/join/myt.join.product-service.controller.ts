@@ -141,7 +141,10 @@ class MytJoinProductServiceController extends TwViewController {
           if (wireless && wireless.length > 0) {
             for (let i = 0; i < wireless.length; i++) {
               const item = wireless[i];
-              combinations[item.expsOrder] = this.getProperCombination(item);
+              const nItem = this.getProperCombination(item);
+              if (nItem) {
+                combinations[item.expsOrder] = nItem;
+              }
             }
           } else {
             return null;
@@ -150,7 +153,10 @@ class MytJoinProductServiceController extends TwViewController {
           if (wire) {
             for (let i = 0; i < wire.length; i++) {
               const item = wire[i];
-              combinations[item.expsOrder] = this.getProperCombination(item);
+              const nItem = this.getProperCombination(item);
+              if (nItem) {
+                combinations[item.expsOrder] = nItem
+              }
             }
           }
 
@@ -160,7 +166,7 @@ class MytJoinProductServiceController extends TwViewController {
       });
   }
 
-  private getProperCombination = (item: any): ICombination => {
+  private getProperCombination = (item: any): ICombination | null => {
     const nItem: ICombination = {
       prodId: item.prodId,
       prodNm: item.prodNm,
@@ -292,7 +298,7 @@ class MytJoinProductServiceController extends TwViewController {
         break;
       }
       case 'NH00000103':
-      case 'TW00000009': {  // TB끼리 TV플러스
+      case 'TW00000009': {  // 한가족할인
         nItem.items.push({
           icon: 'line',
           description: MYT_COMBINATION_TYPE.LINE
@@ -301,6 +307,9 @@ class MytJoinProductServiceController extends TwViewController {
             description: MYT_COMBINATION_TYPE.INTERNET
           });
         break;
+      }
+      default: {
+        return null;
       }
     }
 
