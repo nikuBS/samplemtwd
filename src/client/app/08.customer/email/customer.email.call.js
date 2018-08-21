@@ -183,31 +183,45 @@ Tw.CustomerEmailCall.prototype = {
   _validateForm: function () {
     var sEmail = $('#tab2-tab .fe-input-email').val().trim();
     if ( !Tw.ValidationHelper.isEmail(sEmail) ) {
-      this._popupService.openAlert(Tw.MSG_CUSTOMER.EMAIL_A03, Tw.POPUP_TITLE.CONFIRM, function () {
-        setTimeout(function () {
-          $('#tab2-tab .fe-input-email').focus();
-        }, 100);
-
-        this._popupService.close();
-      }.bind(this), this._popupService.close);
+      this._popupService.openAlert(
+        Tw.MSG_CUSTOMER.EMAIL_A03,
+        Tw.POPUP_TITLE.CONFIRM,
+        $.proxy(this._onFocusInputEmail, this),
+        this._popupService.close
+      );
 
       return false;
     }
 
     var sPhone = $('#tab2-tab .fe-input-phone').val().trim();
     if ( !Tw.ValidationHelper.isCellPhone(sPhone) ) {
-      this._popupService.openAlert(Tw.MSG_CUSTOMER.EMAIL_A04, Tw.POPUP_TITLE.CONFIRM, function () {
-        setTimeout(function () {
-          $('#tab2-tab .fe-input-phone').focus();
-        }, 100);
-
-        this._popupService.close();
-      }.bind(this), this._popupService.close);
+      this._popupService.openAlert(
+        Tw.MSG_CUSTOMER.EMAIL_A04,
+        Tw.POPUP_TITLE.CONFIRM,
+        $.proxy(this._onFocusInputPhone, this),
+        this._popupService.close
+      );
 
       return false;
     }
 
     return true;
+  },
+
+  _onFocusInputPhone: function () {
+    setTimeout(function () {
+      $('#tab2-tab .fe-input-phone').focus();
+    }, 100);
+
+    this._popupService.close();
+  },
+
+  _onFocusInputEmail: function () {
+    setTimeout(function () {
+      $('#tab2-tab .fe-input-email').focus();
+    }, 100);
+
+    this._popupService.close();
   },
 
   _requestQualityWibro: function () {
