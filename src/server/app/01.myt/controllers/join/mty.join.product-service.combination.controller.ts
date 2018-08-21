@@ -20,7 +20,8 @@ interface ICombination {
   status: string;
   members: IMember[];
   wireIndex: number;
-  bProducts: { [key: string]: IBProduct }
+  bProducts: { [key: string]: IBProduct };
+  representationId: string;
 }
 
 interface IMember {
@@ -89,7 +90,8 @@ export default class MytJoinProductServiceCombinationController extends TwViewCo
       members: combination.combinationWirelessMemberList.map(this.getProperMemberData)
         .concat(combination.combinationWireMemberList.map(this.getProperMemberData)),
       wireIndex: combination.combinationWirelessMemberList.length,
-      bProducts: this.getBProducts(combination.combinationWireMemberList)
+      bProducts: this.getBProducts(combination.combinationWireMemberList),
+      representationId: group.svcMgmtNum
     }
   }
 

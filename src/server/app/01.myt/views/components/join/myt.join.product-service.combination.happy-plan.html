@@ -7,7 +7,7 @@
 
 <div class="cont-box">
     <div class="top-info mb22">
-        <button role="button" class="link-btn tx-normal">온가족 행복플랜</button>  
+        <a role="button" class="link-btn tx-normal">온가족 행복플랜</a>  <!-- TODO: 결합상품 상세페이지 이동 필요 -->
     </div>
     <div class="payment-detail-box">
         <div class="detail-inner">
@@ -34,14 +34,17 @@
         <div class="widget-box accordion2">
             <div class="acco-style user-list"><!-- 스타일별 클래스 추가 -->
                 <ul class="acco-box">
+                    <% for (let i = 0; i < combination.members.length; i++) { %>
+                    <% const member = combination.members[i]; %>
+                    <% const isMine = combination.representationId === member.managementId %>
                     <li class="acco-list"><!-- on , off -->
                         <div class="acco-title">
                             <button role="button" aria-pressed="">
-                                <span class="info-line">최*영 
-                                    <span class="badge badge-fam-members"><span class="blind">가족대표</span></span>
-                                    <span class="badge badge-me"><span class="blind">나</span></span>
+                                <span class="info-line"><%= member.name %>
+                                    <% if (member.isRepresentation) { %><span class="badge badge-fam-members"><span class="blind">가족대표</span></span><% } %>
+                                    <% if (isMine) { %><span class="badge badge-me"><span class="blind">나</span></span><% } %>
                                 </span>
-                                <span class="info-line ff-hn">010-12**-56**</span>
+                                <span class="info-line ff-hn"><%= member.svcNumber %></span>
                             </button>
                         </div>
                         <div class="acco-content">
@@ -49,85 +52,17 @@
                                 <ul>
                                     <li>
                                         <span class="title">가족대표와의 관계</span>
-                                        <span class="tx-cont">본인(내번호)</span>
+                                        <span class="tx-cont"><%= member.relation %><%= isMine? '(내번호)' : '' %></span>
                                     </li>
                                     <li>
                                         <span class="title">사용중인 요금제</span>
-                                        <span class="tx-cont"><button class="bt-link-tx underline">band 데이터 59</button></span>
+                                        <span class="tx-cont"><a class="bt-link-tx underline"><%= member.servicePlan %></a></span><!-- TODO: 사용중인 요금제 안내페이지 연결 필요 -->
                                     </li>
                                 </ul>
                             </div>
                         </div>
                     </li>
-
-                    <li class="acco-list"><!-- on , off -->
-                        <div class="acco-title">
-                            <button role="button" aria-pressed="">
-                                <span class="info-line">최*석 (자녀)</span>
-                                <span class="info-line ff-hn">010-12**-56**</span>
-                            </button>
-                        </div>
-                        <div class="acco-content">
-                            <div class="detail-list">
-                                <ul>
-                                    <li>
-                                        <span class="title">가족대표와의 관계</span>
-                                        <span class="tx-cont">자녀</span>
-                                    </li>
-                                    <li>
-                                        <span class="title">사용중인 요금제</span>
-                                        <span class="tx-cont"><button class="bt-link-tx underline">band 데이터 59</button></span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </li>
-
-                    <li class="acco-list"><!-- on , off -->
-                        <div class="acco-title">
-                            <button role="button" aria-pressed="">
-                                <span class="info-line">박*민 (배우자)</span>
-                                <span class="info-line ff-hn">010-12**-56**</span>
-                            </button>
-                        </div>
-                        <div class="acco-content">
-                            <div class="detail-list">
-                                <ul>
-                                    <li>
-                                        <span class="title">가족대표와의 관계</span>
-                                        <span class="tx-cont">배우자</span>
-                                    </li>
-                                    <li>
-                                        <span class="title">사용중인 요금제</span>
-                                        <span class="tx-cont"><button class="bt-link-tx underline">band 데이터 59</button></span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </li>
-
-                    <li class="acco-list"><!-- on , off -->
-                        <div class="acco-title">
-                            <button role="button" aria-pressed="">
-                                <span class="info-line">최*진 (형제자매)</span>
-                                <span class="info-line ff-hn">010-12**-56**</span>
-                            </button>
-                        </div>
-                        <div class="acco-content">
-                            <div class="detail-list">
-                                <ul>
-                                    <li>
-                                        <span class="title">가족대표와의 관계</span>
-                                        <span class="tx-cont">형제자매</span>
-                                    </li>
-                                    <li>
-                                        <span class="title">사용중인 요금제</span>
-                                        <span class="tx-cont"><button class="bt-link-tx underline">band 데이터 59</button></span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </li>
+                    <% } %>
                 </ul>
             </div>
         </div>
