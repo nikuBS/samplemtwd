@@ -22,11 +22,11 @@
                         <div class="sms-confirm-des"><span>고객님 휴대폰으로 전송 받으신 안심인증번호</span>를 입력해 주세요.</div>
                         <dl class="certifi-repre mt14">
                             <dt>휴대폰 번호</dt>
-                            <dd>010-12**-34**</dd>
+                            <dd>{{data.mdn}}</dd>
                         </dl>
                         <ul class="bt-slice">
                             <li class="bt-white1">
-                                <button>인증번호 다시 받기</button>
+                                <button id="fe-bt-cert">인증번호 다시 받기</button>
                             </li>
                         </ul>
                         <div class="box-citation">
@@ -34,7 +34,7 @@
                                 <div class="form-cell division-line">
                                     <span class="inputbox"><!-- 오류일 경우 class error 추가 -->
                                         <span class="input">
-                                            <input type="text" placeholder="인증번호 숫자 4자리" title="휴대폰 인증번호" value="" aria-labelledby="aria-citation-phone" aria-describedby=""/><!-- 오류일 경우 aria-describedby에 aria-sms-exp-desc3 추가 -->
+                                            <input id="fe-input-cert" type="text" placeholder="인증번호 숫자 4자리" title="휴대폰 인증번호" value="" aria-labelledby="aria-citation-phone" aria-describedby=""/><!-- 오류일 경우 aria-describedby에 aria-sms-exp-desc3 추가 -->
                                             <button href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></button>
                                             <span class="ico none"></span><!-- 오류일 경우 class none삭제 -->
                                         </span>
@@ -46,7 +46,7 @@
                     </div>
                     <ul class="bt-slice">
                         <li class="bt-red1">
-                            <button disabled>확인</button>
+                            <button id="fe-bt-confirm" disabled>확인</button>
                         </li>
                     </ul>
                 </div>

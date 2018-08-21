@@ -5,7 +5,7 @@
  */
 
 Tw.CertificationSelect = function () {
-  this._certSkSms = new Tw.CertificationSkSms();
+  this._certSk = new Tw.CertificationSk();
   this._certNice = new Tw.CertificationNice();
   this._certIpin = new Tw.CertificationIpin();
   this._certEmail = new Tw.CertificationEmail();
@@ -21,7 +21,7 @@ Tw.CertificationSelect = function () {
 Tw.CertificationSelect.prototype = {
   open: function (loginType, method) {
     console.log(loginType, method);
-    // this.openSelectPopupTidLogin();
+    this.openSelectPopupTidLogin();
 
   },
   openSelectPopupTidLogin: function () {
@@ -72,7 +72,7 @@ Tw.CertificationSelect.prototype = {
     if ( !Tw.FormatHelper.isEmpty(this._certMethod) ) {
       switch ( this._certMethod ) {
         case Tw.AUTH_CERTIFIATION_METHOD.SK_SMS:
-          this._certSkSms.open();
+          this._certSk.open();
           break;
         case Tw.AUTH_CERTIFIATION_METHOD.OTHER_SMS:
           this._certNice.open(this._niceType);

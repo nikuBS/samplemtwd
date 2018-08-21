@@ -14,6 +14,7 @@ Tw.NTV_CMD = {
   CLEAR_HISTORY: 'clearHistory',
   GET_NETWORK: 'getNetwork',
   GET_IP: 'getIp',
+  GET_CERT: 'getCert',
   LOG: 'log'
 };
 
