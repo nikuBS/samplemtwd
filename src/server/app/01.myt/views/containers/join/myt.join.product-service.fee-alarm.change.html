@@ -35,12 +35,22 @@
                         <span>신청일 <span class="ff-hn vbl"><%= feePlanInfo.scrbDt %></span></span>
                     </div>
                 </div>
+                <% if (alarmInfo.smsStCd !== '01') { %>
+                <ul class="bt-slice item-two mt40">
+                    <li class="bt-white2">
+                        <button class="fe-btn_back">취소하기</button>
+                    </li>
+                    <li class="bt-red1">
+                        <button class="fe-btn_put">신청하기</button>
+                    </li>
+                </ul>
+                <% } %>
             </div>
 
+            <% if (alarmInfo.smsStCd === '01') { %>
             <hr class="cont-sp type1" aria-hidden="true" />
 
             <div class="cont-box">
-                <% if (alarmInfo.smsStCd === '01') { %>
                 <div class="subscribe-info">
                     <h3 class="tit">서비스 신청 정보</h3>
                     <ul>
@@ -88,20 +98,16 @@
                         </li>
                     </ul>
                 </div>
-                <% } %>
                 <ul class="bt-slice item-two mt40">
                     <li class="bt-white2">
                         <button class="fe-btn_back">취소하기</button>
                     </li>
                     <li class="bt-red1">
-                        <% if (alarmInfo.smsStCd === '01') { %>
                         <button class="fe-btn_delete">해지하기</button>
-                        <% } else { %>
-                        <button class="fe-btn_put">신청하기</button>
-                        <% } %>
                     </li>
                 </ul>
             </div>
+            <% } %>
 
             <hr class="cont-sp type1" aria-hidden="true" />
 

@@ -9,7 +9,6 @@ import { API_CMD } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
-import { WireLess, WirelessEnableAlarm, WirelessDisableAlarm } from '../../../../mock/server/myt.join.product-service.mock';
 
 class MytJoinProductServiceFeeAlarmChangeController extends TwViewController {
   constructor() {
@@ -20,16 +19,14 @@ class MytJoinProductServiceFeeAlarmChangeController extends TwViewController {
    * @private
    */
   private _getMyCurrentWirelessFeePlan(): Observable<any> {
-    return Observable.of(WireLess);
-    // return this.apiService.request(API_CMD.BFF_05_0136, {});
+    return this.apiService.request(API_CMD.BFF_05_0136, {});
   }
 
   /**
    * @private
    */
   private _getMyFeePlanAlarmStatus(): Observable<any> {
-    return Observable.of(WirelessEnableAlarm);
-    // return this.apiService.request(API_CMD.BFF_05_0125, {});
+    return this.apiService.request(API_CMD.BFF_05_0125, {});
   }
 
   /**
@@ -71,13 +68,10 @@ class MytJoinProductServiceFeeAlarmChangeController extends TwViewController {
         });
       }
 
-      const feePlanInfo = feePlan.result.useFeePlanPro;
-      const alarmStatusInfo = alarmStatus.result;
-
       res.render('join/myt.join.product-service.fee-alarm.change.html', {
         svcInfo: svcInfo,
-        feePlanInfo: this._convertFeePlanInfo(feePlanInfo),
-        alarmInfo: this._convertAlarmStatusInfo(alarmStatusInfo)
+        feePlanInfo: this._convertFeePlanInfo(feePlan.result.feePlanProd),
+        alarmInfo: this._convertAlarmStatusInfo(alarmStatus.result)
       });
     });
   }
