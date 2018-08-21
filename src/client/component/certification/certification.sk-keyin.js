@@ -1,27 +1,26 @@
 /**
- * FileName: certification.sk-sms.js
+ * FileName: certification.sk-keyin.js
  * Author: Ara Jo (araara.jo@sk.com)
  * Date: 2018.08.20
  */
 
-Tw.CertificationSkSms = function () {
+Tw.CertificationSkKeyin = function () {
   this._apiService = Tw.Api;
-  this._nativeService = Tw.Native;
   this._popupService = Tw.Popup;
 
   this.$btCert = null;
   this.$btConfirm = null;
+  this.$inputMdn = null;
   this.$inputCert = null;
   this.$textValid = null;
   this.$errorConfirm = null;
   this.$errorCert = null;
 
-  this._authURl = null;
-  this._isFirstCert = true;
+  this._authUrl = null;
 };
 
 
-Tw.CertificationSkSms.prototype = {
+Tw.CertificationSkKeyin.prototype = {
   SMS_CERT_ERROR: {
     SMS2001: 'SMS2001',
     SMS2002: 'SMS2002',
@@ -38,46 +37,50 @@ Tw.CertificationSkSms.prototype = {
     SMS2014: 'SMS2014',
     SMS3001: 'SMS3001'
   },
-
-  openSmsPopup: function () {
+  openKeyinPopup: function () {
     this._popupService.open({
-      hbs: 'CO_02_01_02_L01',
-      layer: true,
-      data: {
-        mdn: '010-****-****'
-      }
-    }, $.proxy(this._onOpenSmsPopup, this), $.proxy(this._onCloseSmsPopup, this));
+      hbs: 'CO_02_01_02_01_L01',
+      layer: true
+    }, $.proxy(this._onOpenKeyinPopup, this), $.proxy(this._onCloseKeyjnPopup, this));
+
   },
-  _onOpenSmsPopup: function ($popupContainer) {
+  _onOpenKeyinPopup: function ($popupContainer) {
     this.$btCert = $popupContainer.find('#fe-bt-cert');
     this.$btConfirm = $popupContainer.find('#fe-bt-confirm');
+    this.$inputMdn = $popupContainer.find('#fe-input-mdn');
     this.$inputCert = $popupContainer.find('#fe-input-cert');
-    this.$textValid = $popupContainer.find('#aria-sms-exp-desc2');
     this.$errorCert = $popupContainer.find('#aria-sms-exp-desc1');
+    this.$textValid = $popupContainer.find('#aria-sms-exp-desc2');
     this.$errorConfirm = $popupContainer.find('#aria-sms-exp-desc3');
 
-    this.$btCert.on('click', $.proxy(this._requestSmsCert, this));
-    this.$btConfirm.on('click', $.proxy(this._requestSmsConfirm, this));
+    this.$btCert.on('click', $.proxy(this._requestKeyinCert, this));
+    this.$btConfirm.on('click', $.proxy(this._requestKeyinConfirm, this));
+    this.$inputMdn.on('input', $.proxy(this._onInputMdn, this));
     this.$inputCert.on('input', $.proxy(this._onInputCert, this));
 
-    this._requestSmsCert();
   },
-  _onCloseSmsPopup: function () {
+  _onCloseKeyjnPopup: function () {
 
   },
-  _requestSmsCert: function () {
-    this._nativeService.send(Tw.NTV_CMD.GET_CERT, {}, $.proxy(this._onNativeCert, this));
-
-    this._apiService.request(Tw.API_CMD.BFF_01_0014, { jobCode: 'NFM_TWD_MBIMASK_AUTH' })
-      .done($.proxy(this._successSendSmsCert, this));
+  _onInputMdn: function () {
+    var mdnLength = this.$inputMdn.val().length;
+    if ( mdnLength === Tw.MIN_MDN_LEN || mdnLength === Tw.MAX_MDN_LEN ) {
+      this.$btCert.parent().addClass('disabled');
+      this.$btCert.attr('disabled', false);
+    } else {
+      this.$btCert.parent().removeClass('disabled');
+      this.$btCert.attr('disabled', true);
+    }
   },
-  _successSendSmsCert: function (resp) {
+  _requestKeyinCert: function () {
+    this._apiService.request(Tw.API_CMD.BFF_01_0014, {
+      jobCode: 'NFM_TWD_MBIMASK_AUTH',
+      receiverNum: this.$inputMdn.val()
+    }).done($.proxy(this._successSendKeyinCert, this));
+  },
+  _successSendKeyinCert: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      if ( this._isFirstCert ) {
-        this._isFirstCert = false;
-      } else {
-        this.showValidText();
-      }
+      this.showValidText();
     } else if ( resp.code === this.SMS_CERT_ERROR.SMS2003 ) {
       this.showCertError(Tw.MSG_AUTH.CERT_01);
     } else if ( resp.code === this.SMS_CERT_ERROR.SMS2006 ) {
@@ -85,11 +88,7 @@ Tw.CertificationSkSms.prototype = {
     } else {
       this._popupService.openAlert(resp.code + ' ' + resp.msg);
     }
-  },
-  _onNativeCert: function (resp) {
-    if ( resp.code === Tw.NTV_CODE.CODE_00 ) {
 
-    }
   },
   _onInputCert: function () {
     var inputCert = this.$inputCert.val();
@@ -98,14 +97,15 @@ Tw.CertificationSkSms.prototype = {
       this.$btConfirm.attr('disabled', false);
     }
   },
-  _requestSmsConfirm: function () {
+  _requestKeyinConfirm: function () {
     this._apiService.request(Tw.API_CMD.BFF_01_0015, {
+      receiverNum: this.$inputMdn.val(),
       jobCode: 'NFM_TWD_MBIMASK_AUTH',
       authNum: this.$inputCert.val(),
-      authUrl: ''
-    }).done($.proxy(this._successSmsConfirm, this));
+      authUrl: '/myt'
+    }).done($.proxy(this._successKeyinConfirm, this));
   },
-  _successSmsConfirm: function (resp) {
+  _successKeyinConfirm: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       // TODO success
 
@@ -120,13 +120,18 @@ Tw.CertificationSkSms.prototype = {
   showValidText: function () {
     this.$errorCert.addClass('none');
     this.$textValid.removeClass('none');
-    this.$btCert.attr('aria-describedby', 'aria-sms-exp-desc2');
+    this.$inputMdn.parents('.inputbox').removeClass('error');
+    this.$inputMdn.parents('.inputbox').addClass('validation');
+    this.$inputMdn.attr('aria-describedby', 'aria-sms-exp-desc2');
+
   },
   showCertError: function (message) {
     this.$errorCert.html(message);
     this.$textValid.addClass('none');
     this.$errorCert.removeClass('none');
-    this.$btCert.attr('aria-describedby', 'aria-sms-exp-desc1');
+    this.$inputMdn.parents('.inputbox').removeClass('validation');
+    this.$inputMdn.parents('.inputbox').addClass('error');
+    this.$inputMdn.attr('aria-describedby', 'aria-sms-exp-desc1');
   },
   showConfirmError: function (message) {
     this.$errorConfirm.html(message);
@@ -134,5 +139,6 @@ Tw.CertificationSkSms.prototype = {
     this.$inputCert.parents('.inputbox').addClass('error');
     this.$inputCert.attr('aria-describedby', 'aria-sms-exp-desc3');
   }
+
 
 };
