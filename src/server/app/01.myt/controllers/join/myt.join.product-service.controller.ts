@@ -1,16 +1,17 @@
-import { COMBINATION_PRODUCT_OTHER_TYPE } from '../../../../types/bff.type';
 /**
  * FileName: myt.join.product-service.controller.ts
  * Author: 공자윤 (jayoon.kong@sk.com)
  * Date: 2018.08.13
  */
+
+import { COMBINATION_PRODUCT_OTHER_TYPE } from '../../../../types/bff.type';
 import { NextFunction, Request, Response } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import FormatHelper from '../../../../utils/format.helper';
 import { Observable } from 'rxjs/Observable';
 import { SVC_CDNAME, SVC_CDGROUP } from '../../../../types/bff.type';
-import { Combinations, Wire, WireLess } from '../../../../mock/server/myt.join.product-service.mock';
+import { Wire, WireLess } from '../../../../mock/server/myt.join.product-service.mock';
 import { MYT_COMBINATION_TYPE, MYT_COMBINATION_FAMILY, MYT_FEEPLAN_BENEFIT } from '../../../../types/string.type';
 import DateHelper from '../../../../utils/date.helper';
 
@@ -126,31 +127,36 @@ class MytJoinProductServiceController extends TwViewController {
     });
   }
 
-  private getCombinations = (): Observable<ICombinationList> => {
+  private getCombinations = (): Observable<ICombinationList | null> => {
     return this.apiService.request(API_CMD.BFF_05_0133, {}).map(
       (resp: {
         code: string,
         result: { combinationWireMemberList?: any[], combinationWirelessMemberList?: any[] }
       }) => {
-        const combinations: ICombinationList = {};
-        const wireless = resp.result.combinationWirelessMemberList;
-        const wire = resp.result.combinationWireMemberList;
+        if (resp.code === API_CODE.CODE_00) {
+          const combinations: ICombinationList = {};
+          const wireless = resp.result.combinationWirelessMemberList;
+          const wire = resp.result.combinationWireMemberList;
 
-        if (wireless) {
-          for (let i = 0; i < wireless.length; i++) {
-            const item = wireless[i];
-            combinations[item.expsOrder] = this.getProperCombination(item);
+          if (wireless && wireless.length > 0) {
+            for (let i = 0; i < wireless.length; i++) {
+              const item = wireless[i];
+              combinations[item.expsOrder] = this.getProperCombination(item);
+            }
+          } else {
+            return null;
           }
-        }
 
-        if (wire) {
-          for (let i = 0; i < wire.length; i++) {
-            const item = wire[i];
-            combinations[item.expsOrder] = this.getProperCombination(item);
+          if (wire) {
+            for (let i = 0; i < wire.length; i++) {
+              const item = wire[i];
+              combinations[item.expsOrder] = this.getProperCombination(item);
+            }
           }
-        }
 
-        return combinations;
+          return combinations;
+        }
+        return null;
       });
   }
 
@@ -271,6 +277,28 @@ class MytJoinProductServiceController extends TwViewController {
         }, {
             icon: 'itel',
             description: MYT_COMBINATION_TYPE.ITEL
+          });
+        break;
+      }
+      case 'NH00000105':
+      case 'TW00000016': {  // TB끼리 TV플러스
+        nItem.items.push({
+          icon: 'multi',
+          description: MYT_COMBINATION_TYPE.MULTI_TWO
+        }, {
+            icon: 'iptv',
+            description: MYT_COMBINATION_TYPE.IPTV
+          });
+        break;
+      }
+      case 'NH00000103':
+      case 'TW00000009': {  // TB끼리 TV플러스
+        nItem.items.push({
+          icon: 'line',
+          description: MYT_COMBINATION_TYPE.LINE
+        }, {
+            icon: 'int',
+            description: MYT_COMBINATION_TYPE.INTERNET
           });
         break;
       }
