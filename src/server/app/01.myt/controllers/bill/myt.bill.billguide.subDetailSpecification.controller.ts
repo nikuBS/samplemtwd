@@ -66,7 +66,6 @@ class MyTBillBillguideSubDetailSpecification extends TwViewController {
       chargeRateReqApi = this.apiService.request(API_CMD.BFF_05_0036, {}); // 청구요금
     }
 
-
     const myPlanReqApi: Observable<any> = this.apiService.request(API_CMD.BFF_05_0041, {}); // 나의요금제
     const childrenLineReqApi: Observable<any> = this.apiService.request(API_CMD.BFF_05_0024, {}); // 자녀회선
     const nonPaymenthistoryReqApi: Observable<any> = this.apiService.request(API_CMD.BFF_05_0030, {}); // 미납내역
