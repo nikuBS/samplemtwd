@@ -20,7 +20,7 @@
             <div class="header-ti align-l">
                 <h1>이벤트 상세</h1>
             </div>
-            <button class="prev-step"><span class="blind">이전으로</span></button>
+            <button class="prev-step fe-common-back"><span class="blind">이전으로</span></button>
         </div>
     </div>
     <!--// #header -->
@@ -53,11 +53,6 @@
                             <iframe src="<%= result.winUrl %>" height="<%= result.height %>"></iframe>
                         </div>
                     </div>
-                    <ul class="bt-slice mt30">
-                        <li class="bt-blue1">
-                            <button>당첨자 확인하기</button>
-                        </li>
-                    </ul>
                 </div>
                 <!--// .cont-box -->
             </div>
@@ -67,9 +62,4 @@
     <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
 </div>
 <% include ../../components/javascript.component.html %>
-<script>
-  $(document).ready(function () {
-    new Tw.CustomerEventDetailWin($('.wrap'));
-  });
-</script>
 <% include ../components/end.component.html %>
