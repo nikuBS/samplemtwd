@@ -162,9 +162,10 @@ Tw.MyTBillHistoryMicro.prototype = {
     }
 
     if (this.apiName) {
+
       this._apiService.request(this.apiName, this.apiOption)
           .done($.proxy(dataUpdateMethod, this))
-          .error($.proxy(this.common._apiError, this.common));
+          .fail($.proxy(this.common._apiError, this.common));
     }
   },
 
@@ -321,12 +322,12 @@ Tw.MyTBillHistoryMicro.prototype = {
           if (this.getUsingPasswordAPI) {
             this._apiService.request(this.getUsingPasswordAPI, {})
                 .done($.proxy(this._updatePasswordUseState, this))
-                .error($.proxy(this.common._apiError, this.common));
+                .fail($.proxy(this.common._apiError, this.common));
           }
 
           this._apiService.request(this.getBlindDataAPI, {})
               .done($.proxy(this._setData, this))
-              .error($.proxy(this.common._apiError, this.common));
+              .fail($.proxy(this.common._apiError, this.common));
         } else {
           this._setData();
         }
@@ -448,7 +449,7 @@ Tw.MyTBillHistoryMicro.prototype = {
     this._popupService.close();
     this._apiService.request(this.updateUseMicroPayAPI, {rtnUseYn: this.useMicroPayUseFlag})
         .done($.proxy(this._updateMicroPayUseCallback, this, e))
-        .error($.proxy(this.common._apiError, this.common));
+        .fail($.proxy(this.common._apiError, this.common));
   },
 
   _updateMicroPayUseCallback: function (e, res) {

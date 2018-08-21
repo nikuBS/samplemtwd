@@ -100,7 +100,7 @@ Tw.MyTBillHistoryDetailCommon.prototype = {
 
     this._apiService.request(this.updateUseMicroPayAPI, API_OPTION)
         .done($.proxy(this._autoPaymentProcessSuccess, this))
-        .error($.proxy(this.common._apiError, this.common));
+        .fail($.proxy(this.common._apiError, this.common));
   },
 
   _autoPaymentProcessSuccess: function (res) {

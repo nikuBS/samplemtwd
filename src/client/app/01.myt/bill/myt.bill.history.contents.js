@@ -162,7 +162,7 @@ Tw.MyTBillHistoryContents.prototype = {
     if (this.apiName) {
       this._apiService.request(this.apiName, this.apiOption)
           .done($.proxy(this._setData, this))
-          .error($.proxy(this._apiError, this));
+          .fail($.proxy(this._apiError, this));
     }
   },
 

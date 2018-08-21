@@ -15,16 +15,33 @@
 <!--// #skip_navigation -->
 <div class="wrap">
 
+    <!-- #header -->
+    <div id="header" class="header-wrap">
+        <div class="header">
+            <div class="header-ti align-l">
+                <h1><%=service_category_title%></h1>
+            </div>
+            <button class="prev-step fe-common-back"><span class="blind">이전으로</span></button>
+        </div>
+    </div>
+    <!--// #header -->
 
-    <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+
+        </div>
+    </div>
+    <!--// #contents -->
+
+        <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
 </div>
 
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.CustomerFaqInfoCommon($(document));
+    new Tw.CustomerFaqInfoCommon($(document), '<%=serviceId%>');
   });
-</script>
-<script type="text/x-handlebars-template">
 </script>
 <% include ../../components/end.component.html %>

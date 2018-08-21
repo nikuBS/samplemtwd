@@ -172,7 +172,7 @@ Tw.MyTBillHistoryLimitCommon.prototype = {
       chgOLimit: this.data.onceLimit
     }).done(
         $.proxy(this._handleResponse, this)
-    ).error($.proxy(this.chkCurrentLimit._apiError, this.chkCurrentLimit));
+    ).fail($.proxy(this.chkCurrentLimit._apiError, this.chkCurrentLimit));
   },
 
   _getLimitUpDown: function () {

@@ -344,15 +344,101 @@ export enum MYT_BENEFIT_POINT_VIEW {
   ERROR = 'error/myt.benefit.point.adjustment.html'
 }
 
-export const CUSTOMER_SERVICE_CODE_MAP = {
-  A: [3280, 3308, 3306, 231, 3319, 212, 220, 217, 3720, 3721, 3723, 3724],
-  A_1: [3305, 3304, 3307, 3321, 3727, 3722],
-  A_2: [3315, 3316, 218],
-  B: ['USIM 잠금해제', '내 USIM으로 SKT 단말기 사용', '내 USIM으로 타사 단말기 사용', 222, 215],
-  B_1: [3320],
-  C: [224, 221, 223, 216, 3719, '보이는 ARS', '음성인식 ARS'],
-  C_1: ['band LTE'],
-  C_2: ['버튼식 ARS'],
-  D: ['타사 USIM으로 SKT 단말기 사용', '목소리 인증'],
-  E: [234, 219, '목소리 등록 문자받기']
+export const CUSTOMER_SERVICEINFO_TYPE = {
+  3280: 'A', 3308: 'A', 3306: 'A', 231: 'A', 3319: 'A', 212: 'A', 220: 'A', 217: 'A', 3720: 'A', 3721: 'A', 3723: 'A', 3724: 'A',
+  3305: 'A-1', 3304: 'A-1', 3307: 'A-1', 3321: 'A-1', 3727: 'A-1', 3722: 'A-1',
+  3315: 'A-2', 3316: 'A-2', 218: 'A-2',
+  'USIM 잠금해제': 'B', '내 USIM으로 SKT 단말기 사용': 'B', '내 USIM으로 타사 단말기 사용': 'B',
+  222: 'B', 215: 'B', 3320: 'B-1',
+  224: 'C', 221: 'C', 223: 'C', 216: 'C', 3719: 'C', '보이는 ARS': 'C', '음성인식 ARS': 'C',
+  'band LTE': 'C-1', '버튼식 ARS': 'C-2',
+  '타사 USIM으로 SKT 단말기 사용': 'D', '목소리 인증': 'D',
+  234: 'E', 219: 'E', '목소리 등록 문자받기': 'E'
 };
+
+export const CUSTOMER_SERVICEINFO_CATEGORY = [
+  {
+    title: '휴대폰 가입/변경에 대한 안내',
+    subDepth: [
+      {title: '휴대폰 가입', subDepth: [
+        {title: '휴대폰 가입', serviceId: 3280}, {title: '단말기 자급제도', serviceId: 3305},
+        {title: '번호이동', serviceId: 3304}, {title: '번호 관리 제도', serviceId: 3308}
+      ]},
+      {title: '미성년자 가입', subDepth: [{title: '미성년자 가입', serviceId: 3306}, {title: '미성년자 보호 서비스', serviceId: 3307}]},
+      {title: 'USIM 변경', subDepth: [
+        {title: 'USIM잠금해제', serviceId: ''}, {title: '내 USIM으로 SKT 단말기 사용', serviceId: ''},
+        {title: '내 USIM으로 타사 단말기 사용', serviceId: ''}, {title: '타사 USIM으로 SKT 단말기 사용', serviceId: ''}
+      ]}
+    ]
+  },
+  {
+    title: '휴대폰 요금기준에 대한 안내',
+    subDepth: [
+      {title: '요금 기준', serviceId: 3315},
+      {title: 'LTE 데이터 요금', serviceId: 3316},
+      {title: 'band LTE', serviceId: ''},
+      {title: '데이터 요금', subDepth: [{title: '데이터 요금 안내', serviceId: 231}, {title: '테이터 이용 유의사항', serviceId: 3319}]},
+      {title: '부가세 포함', serviceId: 3320},
+      {title: '영상통화 요금', serviceId: 3321}
+    ]
+  },
+  {
+    title: '다이렉트샵 이용안내',
+    subDepth: [
+      {title: '할인/혜택', subDepth: [
+        {title: '요금약정할인', serviceId: 212},
+        {title: '결합할인', serviceId: 222},
+        {title: '다이렉트샵 혜택', serviceId: 224}
+      ]},
+      {title: '구매', subDepth: [
+        {title: '구매 전 꿀팁', serviceId: 234},
+        {title: '다이렉트샵 구매가이드', serviceId: 219},
+        {title: '가입유형', serviceId: 220},
+        {title: '휴대폰 분할 상환 수수료', serviceId: 221},
+        {title: '구매 유의사항', serviceId: 223}
+
+      ]},
+      {title: '배송/개통', subDepth: [
+        {title: '배송방법', serviceId: 216},
+        {title: '개통방법', serviceId: 217},
+        {title: '반품교환', serviceId: 218}
+      ]}
+    ],
+  },
+  {
+    title: '멤버십/로밍에 대한 안내',
+    subDepth: [
+      {title: '멤버십 이용안내', subDepth: [
+        {title: '멤버십 이용', serviceId: 3719},
+        {title: '초콜릿 이용', serviceId: 3720},
+        {title: '모바일 T 멤버십', serviceId: 3721}
+      ]},
+      {title: '로밍 이용안내', serviceId: 3727}
+    ]
+  },
+  {
+    title: '서비스 정책/제도에 대한 안내',
+    subDepth: [
+      {title: '데이터 리필하기', serviceId: 3722},
+      {title: 'T끼리 데이터 선물하기', subDepth: [
+        {title: 'T끼리 데이터 선물하기', serviceId: 3723},
+        {title: 'T끼리 자동선물 신청', serviceId: 3724}
+      ]},
+      {title: 'T 기본약정 요금정책', serviceId: 215}
+    ]
+  },
+  {
+    title: '목소리인증/ARS상담에 대한 안내',
+    subDepth: [
+      {title: 'ARS상담 이용안내', subDepth: [
+        {title: '버튼식 ARS', serviceId: ''},
+        {title: '보이는 ARS', serviceId: ''},
+        {title: '음성인식 ARS', serviceId: ''}
+      ]},
+      {title: '목소리인증 이용안내', subDepth: [
+        {title: '목소리 인증', serviceId: ''},
+        {title: '목소리 등록 문자받기', serviceId: ''}
+      ]}
+    ]
+  }
+];
