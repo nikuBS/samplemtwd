@@ -22,7 +22,6 @@ Tw.CustomerFaqInfoCommon = function (rootEl) {
 
 Tw.CustomerFaqInfoCommon.prototype = {
   _init: function () {
-    console.log('customer FAQ Info Common');
     if (this.categorySelector) {
       this.choiceData = Tw.CUSTOMER_SERVICE_INFO_CHOICE;
     }
