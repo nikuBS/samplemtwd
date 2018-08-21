@@ -27,12 +27,29 @@ export default class CustomerFaqController extends TwViewController {
         page: 0,
         size: 20
       }).subscribe((resp) => {
-        // TODO: check api and show reulst
-        res.render('faq/customer.faq-no-result.html', {
-          svcInfo: svcInfo,
-          queryString: queryString
-        });
+        if (resp.result.content.length === 0) {
+          res.render('faq/customer.faq.no-result.html', {
+            svcInfo: svcInfo,
+            queryString: queryString
+          });
+        } else {
+          for (let i = 0; i < resp.result.content.length; i++) {
+            resp.result.content[i].answCtt = this.purify(resp.result.content[i].answCtt);
+          }
+          res.render('faq/customer.faq.result.html', {
+            svcInfo: svcInfo,
+            queryString: queryString,
+            totalCount: resp.result.totalElements,
+            contents: resp.result.content,
+            isLast: resp.result.last
+          });
+        }
       });
     }
+  }
+
+  private purify(text: String): String {
+    return text.trim()
+      .replace(/\r\n/g, '<br/>');
   }
 }

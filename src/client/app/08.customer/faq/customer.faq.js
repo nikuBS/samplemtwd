@@ -35,7 +35,6 @@ Tw.CustomerFaq.prototype = {
     return true;
   },
   _onSearchInput: function (evt) {
-    console.log(evt.target.value);
     if (Tw.FormatHelper.isEmpty(evt.target.value.trim())) {
       this.$searchBtn.addClass('none');
     } else {
