@@ -1,0 +1,32 @@
+<%#
+* FileName: customer.event.ing.component.html
+* Author: 공자윤 (jayoon.kong@sk.com)
+* Date: 2018.08.17
+%>
+<div class="cont-box noborder">
+    <div class="event-list-ing">
+        <% if (content) { %>
+        <ul class="fe-content-list" data-page="<%= totalPages %>" data-cnt="<%= totalElements %>">
+            <% for (var i = 0; i < content.length; i++) { %>
+            <li id="<%= content[i].prNum %>" class="fe-first fe-done">
+                <button>
+                    <div class="fe-event-img"><img src="http://www.tworld.co.kr<%= content[i].filePath %>" alt="<%= content[i].prCtt %>"/></div>
+                    <div class="event-txt">
+                        <span class="event-date">
+                            <i>기간</i><span class="fe-event-day"><%= content[i].startDate %> ~ <%= content[i].endDate %></span>
+                        </span>
+                        <em class="fe-dday-wrap">D-<em class="fe-dday"><%= content[i].dday %></em></em>
+                        <% if (content[i].promotionType !== null) { %>
+                        <span class="fe-event-type"><%= content[i].promotionType %></span>
+                        <% } %>
+                    </div>
+                </button>
+            </li>
+            <% } %>
+        </ul>
+        <% } %>
+    </div>
+</div>
+<% if (content.length > 20) { %>
+<button class="bt-more fe-more-btn">더보기<span class="fe-more-length">(<%= content.length - 20 %>)</span></button>
+<% } %>

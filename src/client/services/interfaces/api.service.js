@@ -1,4 +1,5 @@
 Tw.ApiService = function () {
+  this._popupService = new Tw.PopupService();
 };
 
 Tw.ApiService.prototype = {
@@ -7,7 +8,8 @@ Tw.ApiService.prototype = {
     var htOptions = this._makeOptions(command, params, headers, pathVariables);
     Tw.Logger.info('[API REQ]', htOptions);
 
-    return $.ajax(htOptions);
+    return $.ajax(htOptions)
+      .then($.proxy(this._checkAuth, this));
   },
 
   requestAjax: function (command, data) {
@@ -20,17 +22,46 @@ Tw.ApiService.prototype = {
     });
   },
 
+  requestForm: function (command, data) {
+    Tw.Logger.info('[API REQ Form]', command, data);
+
+    return $.ajax({
+      method: command.method,
+      url: '/api' + command.path,
+      processData: false,
+      contentType: false,
+      cache: false,
+      data: data,
+      enctype: 'multipart/form-data'
+    });
+  },
+
+  _checkAuth: function (resp) {
+    Tw.Logger.info('[API RESP]', resp);
+    // TODO 2차 인증 추가
+
+    return resp;
+  },
+
   _makeOptions: function (command, params, headers, pathVariables) {
     var prefix = this._setPrefix(command);
     var data = prefix === '/bypass' ? { parameter: params, pathVariables: pathVariables } : params;
     return {
-      type: command.method,
+      method: command.method,
       url: prefix + command.path,
-      dataType: 'json',
       timeout: 10000,
-      headers: Object.assign({ 'content-type': 'application/json; charset=UTF-8' }, headers),
+      dataType: 'json',
+      headers: this._makeHeaders(command, headers),
       data: command.method === Tw.API_METHOD.GET ? data : JSON.stringify(data)
     };
+  },
+
+  _makeHeaders: function (command, headers) {
+    var contentType = 'application/json; charset=UTF-8';
+    if ( !Tw.FormatHelper.isEmpty(command.contentType) ) {
+      contentType = command.contentType;
+    }
+    return $.extend(headers, { 'content-type': contentType });
   },
 
   _setPrefix: function (command) {

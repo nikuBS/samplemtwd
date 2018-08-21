@@ -104,7 +104,6 @@ Tw.MyTBillHistoryDetailCommon.prototype = {
   },
 
   _autoPaymentProcessSuccess: function (res) {
-    // console.log('[myt/bill/history/micro/detail]', res);
     var alertMsg;
     if (this.query.cpState.substr(0, 1) === 'C') {
       // 차단 신청

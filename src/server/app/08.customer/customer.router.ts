@@ -18,6 +18,13 @@ import CustomerMainController from './controllers/main/customer.main.controller'
 import CustomerResearches from './controllers/researches/customer.researches.controller';
 import CustomerEmailController from './controllers/email/customer.email.controller';
 import CustomerResearchResult from './controllers/researches/customer.researches.result.controller';
+import CustomerFaqController from './controllers/faq/customer.faq.controller';
+import CustomerFaqCategoryController from './controllers/faq/customer.faq.category.controller';
+import CustomerFaqInfoService from './controllers/faq/customer.faq.info.service.controller';
+import CustomerFaqInfoSite from './controllers/faq/customer.faq.info.site.controller';
+import CustomerEventController from './controllers/event/customer.event.controller';
+import CustomerEventDetailController from './controllers/event/customer.event.detail.controller';
+import CustomerEventDetailWinController from './controllers/event/customer.event.detail.win.controller';
 
 class CustomerRouter extends TwRouter {
   constructor() {
@@ -41,6 +48,15 @@ class CustomerRouter extends TwRouter {
     this.controllers.push({ url: '/voice/:type', controller: new CustomerVoiceController() });
     this.controllers.push({ url: '/researches/result', controller: new CustomerResearchResult() });
     this.controllers.push({ url: '/researches(/:researchId)?', controller: new CustomerResearches() });
+    this.controllers.push({ url: '/faq', controller: new CustomerFaqController() });
+    this.controllers.push({ url: '/faq/category', controller: new CustomerFaqCategoryController() });
+    this.controllers.push({ url: '/faq/service-info', controller: new CustomerFaqInfoService() });
+    this.controllers.push({ url: '/faq/service-info(/:serviceId)?', controller: new CustomerFaqInfoService() });
+    this.controllers.push({ url: '/faq/site-info(/:serviceId)?', controller: new CustomerFaqInfoSite() });
+    this.controllers.push({ url: '/faq/site-info/m-customer-center', controller: new CustomerFaqInfoSite() });
+    this.controllers.push({ url: '/event', controller: new CustomerEventController() });
+    this.controllers.push({ url: '/event/detail', controller: new CustomerEventDetailController() });
+    this.controllers.push({ url: '/event/detail/win', controller: new CustomerEventDetailWinController() });
   }
 }
 

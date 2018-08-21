@@ -96,7 +96,7 @@ input[type=text], input[type=file], input[type=password], input[type=number] {
   border: 1px solid #f5f5f5;
   border-radius: 0.25rem;
   background: #f5f5f5;
-  font-size: 0.875rem;
+  font-size: 0.9375rem;
   color: #000;
   font-weight: 400;
   width: 100%;
@@ -106,6 +106,7 @@ input[type=text], input[type=file], input[type=password], input[type=number] {
 .inputbox .input input[type=file]::-webkit-input-placeholder,
 .inputbox .input input[type=password]::-webkit-input-placeholder,
 .inputbox .input input[type=number]::-webkit-input-placeholder {
+  font-size: 0.9375rem;
   color: #8f8f8f;
 }
 
@@ -147,15 +148,6 @@ input[type=text], input[type=file], input[type=password], input[type=number] {
 .inputbox .input input[type=number]:disabled::-webkit-input-placeholder {
   color: #808698;
   font-weight: 300;
-}
-
-@media screen and (max-width: 321px) {
-  .inputbox .input input[type=text]::-webkit-input-placeholder,
-  .inputbox .input input[type=file]::-webkit-input-placeholder,
-  .inputbox .input input[type=password]::-webkit-input-placeholder,
-  .inputbox .input input[type=number]::-webkit-input-placeholder {
-    font-size: 0.75rem;
-  }
 }
 
 .inputbox .input input[type=text][readonly],
@@ -245,6 +237,11 @@ input[type=text], input[type=file], input[type=password], input[type=number] {
   color: #808698;
 }
 
+.inputbox.bt-add .input .bt-dropdown {
+  width: 98%;
+  margin: 0;
+}
+
 .inputbox.bt-add .bt-box {
   display: table-cell;
   width: 16%;
@@ -267,6 +264,16 @@ input[type=text], input[type=file], input[type=password], input[type=number] {
   white-space: nowrap;
 }
 
+.inputbox.bt-add .bt-box.disabled {
+  border: 1px solid #e5e8ee;
+  color: #808698;
+  background: #e5e8ee;
+}
+
+.inputbox.bt-add .bt-box.disabled button {
+  color: #808698;
+}
+
 .inputbox.bt-add .bt-box input[type=file] {
   position: absolute;
   left: 0;
@@ -278,12 +285,104 @@ input[type=text], input[type=file], input[type=password], input[type=number] {
   opacity: 0;
 }
 
+.inputbox.bt-add .bt-box.red1 {
+  border: 1px solid #df3636;
+  background: #df3636;
+}
+
+.inputbox.bt-add .bt-box.red1.disabled {
+  background: #e5e8ee;
+}
+
+.inputbox.bt-add .bt-box.red1.selected {
+  background: #c52424;
+}
+
+.inputbox.bt-add .bt-box.red1 button {
+  color: #fff;
+}
+
+.inputbox.bt-add .bt-box.red1 button:disabled {
+  color: #808698;
+}
+
+.inputbox.bt-add .bt-box.red1 a {
+  color: #fff;
+}
+
+.inputbox.bt-add .bt-box.red1 a.disabled {
+  color: #808698;
+}
+
+.inputbox.bt-add .bt-box.blue1 {
+  border: 1px solid #496093;
+  background: #496093;
+}
+
+.inputbox.bt-add .bt-box.blue1.disabled {
+  background: #e5e8ee;
+}
+
+.inputbox.bt-add .bt-box.blue1.selected {
+  background: #425684;
+}
+
+.inputbox.bt-add .bt-box.blue1 button {
+  color: #fff;
+}
+
+.inputbox.bt-add .bt-box.blue1 button:disabled {
+  color: #808698;
+}
+
+.inputbox.bt-add .bt-box.blue1 a {
+  color: #fff;
+}
+
+.inputbox.bt-add .bt-box.blue1 a.disabled {
+  color: #808698;
+}
+
+.inputbox.bt-add .bt-box.white1 {
+  border: 1px solid #325ec1;
+  background: #fff;
+}
+
+.inputbox.bt-add .bt-box.white1.disabled {
+  border: 1px solid #808698;
+  background: #fff;
+}
+
+.inputbox.bt-add .bt-box.white1.selected {
+  background: #e1e6f0;
+}
+
+.inputbox.bt-add .bt-box.white1 button {
+  color: #325ec1;
+}
+
+.inputbox.bt-add .bt-box.white1 button:disabled {
+  color: #808698;
+}
+
+.inputbox.bt-add .bt-box.white1 a {
+  color: #325ec1;
+}
+
+.inputbox.bt-add .bt-box.white1 a.disabled {
+  color: #808698;
+}
+
 .inputbox.bt-add .tx-box {
   display: table-row;
 }
 
-.inputbox.bt-add.order .tx-box .guide-txt {
+.inputbox.bt-add.w119 .tx-box .guide-txt {
   width: 119%;
+}
+
+.inputbox.bt-add.w163 .tx-box .guide-txt {
+  width: 153%;
 }
 
 .inputbox.bt-add2 {
@@ -321,6 +420,30 @@ input[type=text], input[type=file], input[type=password], input[type=number] {
 
 .inputbox.bt-add2 .tx-box {
   display: table-row;
+}
+
+.inputbox.search .input input {
+  padding-right: 3.125rem;
+}
+
+.inputbox.search .bt-search {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 3.125rem;
+}
+
+.inputbox.search .bt-search:before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -0.78125rem 0 0 -0.78125rem;
+  width: 1.5625rem;
+  height: 1.5625rem;
+  background: url(/img/ico/ico-group.png) no-repeat 0 -59.375rem;
+  background-size: 3.125rem;
 }
 
 .inputbox .guide-byte {
@@ -445,6 +568,43 @@ input[type=text], input[type=file], input[type=password], input[type=number] {
 }
 
 .txfield-combined.focus .combined-information .combined-cell dt, .txfield-combined.focus .combined-information .combined-cell dd {
+  color: #000;
+}
+
+.txfield-combined.edit {
+  border: 1px solid #000;
+  background: #fff;
+}
+
+.txfield-combined.edit .txfield-combined-ti input {
+  color: #000;
+}
+
+.txfield-combined.edit .txfield-combined-tx input {
+  color: #000;
+}
+
+.txfield-combined.edit .txfield-combined-tx textarea {
+  color: #000;
+}
+
+.txfield-combined.edit .txfield-combined-tx textarea.inner-tx {
+  color: #000;
+}
+
+.txfield-combined.edit input {
+  color: #000;
+}
+
+.txfield-combined.edit textarea {
+  color: #000;
+}
+
+.txfield-combined.edit .combined-ti {
+  color: #000;
+}
+
+.txfield-combined.edit .combined-information .combined-cell dt, .txfield-combined.edit .combined-information .combined-cell dd {
   color: #000;
 }
 
@@ -783,7 +943,6 @@ a, input, label, button {
 
 a, a:link, a:visited, a:active, a:hover {
   text-decoration: none;
-  color: inherit;
 }
 
 .bt-link-box {
@@ -802,7 +961,7 @@ a, a:link, a:visited, a:active, a:hover {
   vertical-align: baseline;
 }
 
-.bt-link-tx {
+button.bt-link-tx, a.bt-link-tx {
   position: relative;
   display: inline-block;
   font-size: 0.75rem;
@@ -811,21 +970,21 @@ a, a:link, a:visited, a:active, a:hover {
   vertical-align: baseline;
 }
 
-.bt-link-tx.rect {
+button.bt-link-tx.rect, a.bt-link-tx.rect {
   padding: 0.125rem 0.75rem;
   border-radius: 0.3125rem;
   border: 1px solid #325ec1;
   font-size: 0.75rem;
 }
 
-.bt-link-tx.underline {
+button.bt-link-tx.underline, a.bt-link-tx.underline {
   display: inline-block;
   position: relative;
   font-size: inherit;
   color: #325ec1;
 }
 
-.bt-link-tx.underline:before {
+button.bt-link-tx.underline:before, a.bt-link-tx.underline:before {
   content: "";
   position: absolute;
   top: 100%;
@@ -835,21 +994,21 @@ a, a:link, a:visited, a:active, a:hover {
   background: #425684;
 }
 
-.bt-link-tx.disabled {
+button.bt-link-tx.disabled, a.bt-link-tx.disabled {
   border-color: #cfcfcf;
   color: #757575;
 }
 
-.bt-link-tx.disabled:before {
+button.bt-link-tx.disabled:before, a.bt-link-tx.disabled:before {
   background: #cfcfcf;
 }
 
-.bt-link-tx.disabled .ico {
+button.bt-link-tx.disabled .ico, a.bt-link-tx.disabled .ico {
   background: url(/img/ico/ico-group.png) no-repeat -1.75rem -11.875rem;
   background-size: 2.875rem;
 }
 
-.bt-link-tx .ico {
+button.bt-link-tx .ico, a.bt-link-tx .ico {
   display: inline-block;
   width: 0.6875rem;
   height: 0.6875rem;
@@ -860,13 +1019,13 @@ a, a:link, a:visited, a:active, a:hover {
   background-size: 2.875rem;
 }
 
-.bt-link-tx.white {
+button.bt-link-tx.white, a.bt-link-tx.white {
   border-color: #fff;
   color: #fff;
   font-size: 0.9375rem;
 }
 
-.bt-link-tx.white .ico {
+button.bt-link-tx.white .ico, a.bt-link-tx.white .ico {
   width: 0.9375rem;
   height: 0.9375rem;
   margin-left: 0.625rem;
@@ -1982,6 +2141,16 @@ h1.blind, h2.blind, h3.blind, h4.blind, h5.blind, h6.blind {
   color: #757575;
 }
 
+.box-file-addlist .file-addlist-top .file .bt-box.disabled {
+  border: 1px solid #e5e8ee;
+  color: #808698;
+  background: #e5e8ee;
+}
+
+.box-file-addlist .file-addlist-top .file .bt-box.disabled button {
+  color: #808698;
+}
+
 .box-file-addlist .file-addlist {
   display: table;
   width: 100%;
@@ -1999,7 +2168,6 @@ h1.blind, h2.blind, h3.blind, h4.blind, h5.blind, h6.blind {
 .box-file-addlist .file-addlist li .addlist-cell {
   padding: 1.25rem 0;
   border-bottom: 1px solid #e1e1e1;
-  background: #f4fdff;
   text-align: center;
 }
 
@@ -2020,7 +2188,6 @@ h1.blind, h2.blind, h3.blind, h4.blind, h5.blind, h6.blind {
   display: block;
   font-size: 0.875rem;
   font-weight: 400;
-  color: #225dc8;
 }
 
 .box-file-addlist .file-addlist li .addlist-cell .file-byte {
@@ -2918,7 +3085,12 @@ a.ui-button:active,
 }
 
 .bt-dropdown.no-arrow {
+  padding-right: 0.75rem;
   color: #000;
+}
+
+.bt-dropdown .ico {
+  display: none !important;
 }
 
 .tx-dropdown-box {
@@ -3280,6 +3452,22 @@ a.ui-button:active,
   vertical-align: top;
 }
 
+.badge.badge-fam-members {
+  background-position: 0 -6.25rem;
+  background-size: 4.6875rem;
+  width: 2.875rem;
+  height: 0.9375rem;
+  margin-right: 0.3125rem;
+}
+
+.badge.badge-me {
+  background-position: 0 -7.5rem;
+  background-size: 4.6875rem;
+  width: 1.25rem;
+  height: 0.9375rem;
+  margin-right: 0.3125rem;
+}
+
 .bar-chart-hoz {
   position: relative;
   height: 0.5rem;
@@ -3457,4 +3645,14 @@ a.ui-button:active,
   font-weight: 400;
   color: #757575;
   white-space: nowrap;
+}
+
+/* ico 공통 */
+.ico-gride {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  background: url(/img/ico/ico-group.png) no-repeat -1.875rem -42.5rem;
+  background-size: 3.125rem auto;
+  vertical-align: bottom;
 }

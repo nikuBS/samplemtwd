@@ -104,12 +104,12 @@ Tw.CustomerResearches.prototype = {
 };
 
 var goLink = function (url) {
-  if (!url.includes('http')) {
+  if (url.indexOf('http') === -1) {
     url = 'http://' + url;
   }
 
   if (Tw.BrowserHelper.isApp()) {
-    this._nativeService.send(Tw.NTV_CMD.OPEN_URL, {
+    Tw.Native.send(Tw.NTV_CMD.OPEN_URL, {
       type: Tw.NTV_BROWSER.EXTERNAL,
       href: url
     });

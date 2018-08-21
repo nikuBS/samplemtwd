@@ -181,7 +181,6 @@ Tw.MyTBillHistoryMicro.prototype = {
   },
 
   _filterHistory: function (res, blindRes) {
-    // console.log('[_filterHistory]', res, blindRes);
     if (!_.isEmpty(res)) {
       res = res.reverse();
     }
@@ -319,8 +318,6 @@ Tw.MyTBillHistoryMicro.prototype = {
       case Tw.API_CODE.CODE_00:
         if (!this.blindHistories) {
 
-          // console.log(res);
-
           if (this.getUsingPasswordAPI) {
             this._apiService.request(this.getUsingPasswordAPI, {})
                 .done($.proxy(this._updatePasswordUseState, this))
@@ -401,7 +398,6 @@ Tw.MyTBillHistoryMicro.prototype = {
 
   _goSearch: function (startYYYYMMDD, endYYYYMMDD) {
 
-    // console.log(this, this.search, startYYYYMMDD, endYYYYMMDD, paymentType, this.fromYYYYMM, this.currentYYYYMM);
     this.apiOption.fromdate = startYYYYMMDD;
     this.apiOption.todate = endYYYYMMDD;
 
@@ -429,10 +425,10 @@ Tw.MyTBillHistoryMicro.prototype = {
   },
 
   _movePayPasswordPage: function () {
-    // if(!this.passRelateURL) {
-    //   this.common._apiError({code:'SB-ERR', msg:'No Page : Not Sprint#6'});
-    //   return false;
-    // }
+    if(!this.passRelateURL) {
+      this.common._apiError({code:'Error', msg:'No Page : Not Sprint#6'});
+      return false;
+    }
     this.common._goLoad(this.passRelateURL);
   },
 
@@ -479,8 +475,8 @@ Tw.MyTBillHistoryMicro.prototype = {
     return choiceData;
   },
 
-  _updatePasswordUseState: function (res) {
-    // console.log(res);
+  _updatePasswordUseState: function () {
+
   },
 
   _getTabHash: function () {
@@ -490,7 +486,6 @@ Tw.MyTBillHistoryMicro.prototype = {
   },
 
   _tabChangeCallback: function () {
-    // console.log(this.common.currentTab);
   },
 
   _checkUsageLimitCurrentMonth: function () {

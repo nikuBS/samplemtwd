@@ -30,7 +30,6 @@ import ApiRouter from './common/api.router';
 
 // Application Modules
 import RedisService from './services/redis.service';
-// import Whatap from '../../node_modules/whatap';
 
 class App {
   public app: Application = express();
@@ -56,6 +55,9 @@ class App {
     // development env
     this.app.use(express.static(path.join(__dirname, '/public/cdn')));
     this.app.use('/mock', express.static(path.join(__dirname, '/mock/client')));
+    // this.app.use((req, res, next) => {
+    //   res.status(404).render('error.page-not-found.html', { svcInfo: null });
+    // });
 
     this.setViewPath();
     this.setRoutes();

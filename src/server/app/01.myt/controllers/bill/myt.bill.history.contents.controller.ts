@@ -68,11 +68,6 @@ class MyTBillHistoryContentsController extends TwViewController {
         });
       }
     });
-    // return this.apiService.request().subscribe((response) => {
-
-
-    // });
-
   }
 
 }

@@ -1,0 +1,111 @@
+<%#
+* FileName: myt.benefit.discount.detail.html
+* Author: Kim InHwan (skt.P132150@partner.sk.com)
+* Date: 2018.08.14
+* Info:
+%>
+<% include ../../components/start.component.html %>
+<% include ../../components/javascript.component.html %>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap">
+    <!-- #header -->
+    <%- include('../../../../common/views/components/header.component.html', { title: '휴대폰 요금약정', svcInfo: data.svcInfo }); %>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <div class="cont-box">
+                <% if (data.tfeeAgrmtYn && data.tfeeAgrmtYn === 'Y') { %>
+                <div class="inner-block">
+                    <h2 class="title-h2">나의 할인 혜택</h2>
+                    <div class="exp-top">
+                        <span class="title">사용중인 요금약정 상품</span>
+                        <span class="tx-bold"><%= data.prodNm %><br />신청일 : <%= data.agreeStartDate %></span>
+                    </div>
+                    <div class="contents-btn">
+                        <ul class="bt-slice">
+                            <li class="bt-blue1">
+                                <button>나의 휴대폰 요금약정 정보 확인</button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <% } else { %>
+                <% data.empty = true; %>
+                <div class="inner-block">
+                    <h2 class="title-h2">혜택 받는 법</h2>
+                    <div class="exp-top">
+                			<span class="tx-exp">선택한 <span class="tx-bold">요금제 별 약정할인제도 약정기간</span>에<br />
+                                따라 <span class="tx-bold">최대 24,000원 할인</span></span>
+                    </div>
+                    <div class="contents-btn">
+                        <ul class="bt-slice">
+                            <li class="bt-blue1">
+                                <button>가입 가능한 요금제 확인</button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <% } %>
+                <div class="inner-block">
+                    <h2 class="title-h2">요금제 선택할 때는<br />약정할인제도 함께 가입하세요.</h2>
+                    <div class="benefit-img"><img src="/img/dummy/dmy-circuit04.png" alt=""/></div>
+                    <div class="contents-btn">
+                        <ul class="bt-slice">
+                            <li class="bt-white1">
+                                <button>혜택 자세히보기</button>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="exp-list mt20">
+                        <ul>
+                            <li>
+                                <span class="title">혜택 대상</span>
+                                <ul class="dash-list">
+                                    <li class="no-dash">LTE요금제 또는 3G요금제 사용 고객</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <span class="title">할인 혜택</span>
+                                <ul class="dash-list">
+                                    <li><span class="tx-bold">요금약정할인 12</span></li>
+                                    <li class="no-dash">매월 요금제에 따라 최대 17%~21% 할인</li>
+                                    <li><span class="tx-bold">요금약정할인 24</span></li>
+                                    <li class="no-dash">매월 요금제에 따라 최대 24%~29% 할인</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <span class="title">할인 기간</span>
+                                <ul class="dash-list">
+                                    <li class="no-dash">1년 또는 2년 중 선택 가능</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--// #contents -->
+    <%- include('../../../../common/views/components/footer.component.html', { svcInfo: data.svcInfo }); %>
+</div>
+<script>
+  var data = '<%- JSON.stringify(data) %>';
+  $(document).ready(function () {
+    new Tw.MyTBenefitDisCntDetail({
+      $element: $('#contents'),
+      type: 'fee',
+      data: JSON.parse(data)
+    });
+  });
+</script>
+<% include ../../components/end.component.html %>

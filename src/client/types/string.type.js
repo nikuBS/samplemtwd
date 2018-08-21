@@ -32,6 +32,7 @@ Tw.POPUP_TITLE = {
   NOTIFY: '알림',
   CONFIRM: '확인',
   GUIDE: '안내',
+  SELECT: '선택',
   SELECT_LINE: '회선 선택',
   REQUEST_DELETE: '조르기 삭제안내',
   GIFT_FAMILY_INFO: '데이터 자동 선물 안내',
@@ -410,7 +411,18 @@ Tw.MSG_MYT = {
   HISTORY_ALERT_VC007: '법정생년월일은 비밀번호 설정이 불가능합니다. 다른 번호를 입력해주세요.',
   SMS_A01 : '개인정보 제공 및 활용동의에 체크해주세요.',
   SMS_A02 : '숫자만 입력 가능합니다.',
-  SMS_A03 : 'SMS 받을 번호를 입력해주세요.'
+  SMS_A03 : 'SMS 받을 번호를 입력해주세요.',
+  BENEFIT: {
+    SELECT_TITLE: '회선 선택',
+    A1: '포인트를 입력해 주세요.',
+    A2: '포인트 합산하기를 종료하시겠습니까?',
+    A8: '보유하신 포인트를 초과 하였습니다.',
+    A13: '동일회선 간에는 포인트 합산이 불가합니다.',
+  },
+  FEE_ALARM_ALERT_A01: '서비스를 해지 하시겠습니까?',
+  FEE_ALARM_ALERT_A01_SUCCESS: '해지 처리 완료 되었습니다.',
+  FEE_ALARM_ALERT_A02: '서비스를 신청 하시겠습니까?',
+  FEE_ALARM_ALERT_A02_SUCCESS: '서비스 신청 완료 되었습니다.'
 };
 
 Tw.MSG_RECHARGE = {
@@ -600,6 +612,8 @@ Tw.MSG_CUSTOMER = {
   EMAIL_A02: 'SMS알림 설정 시 \n 답변이 등록되면 입력하신 휴대전화번호로 \n SMS가 발송됩니다.',
   EMAIL_A03: '이메일 주소를 다시 확인해주세요.\n',
   EMAIL_A04: '연락가능번호를 다시 확인해주세요.\n',
+  EMAIL_A05: '첨부파일의 용량이 30MB를 초과하여 등록할 수 없습니다.<br />다시 확인해 주세요.',
+  EMAIL_A06: '첨부하실 수 없는 파일입니다.<br />다시 확인해 주세요.',
   HELPLINE_A01: '예약을 취소하시겠습니까?',
   HELPLINE_A02: '지역을 선택해 주세요.',
   HELPLINE_A03: '진행을 취소하시고 첫 화면으로 이동하시겠습니까?',
@@ -727,51 +741,56 @@ Tw.CUSTOMER_EMAIL = {
   WIBRO: '휴대폰/와이브로',
   SELECT_CATEGORY: '문의사항 선택',
   Q_TYPE01: [
-    { text: '음성통화 불량(HD Voice 포함)' },
-    { text: '영상통화 불량' },
-    { text: '부가서비스 불량' },
-    { text: '데이터(Date) 불량' },
-    { text: '와이브로 품질장애/고장' }
+    {text: '음성통화 불량(HD Voice 포함)'},
+    {text: '영상통화 불량'},
+    {text: '부가서비스 불량'},
+    {text: '데이터(Date) 불량'},
+    {text: '와이브로 품질장애/고장'}
   ],
   Q_TYPE02: [
-    { text: '음성발신불량, 음성수신불량 <br>음성발신/수신 모두 불량' },
-    { text: 'SMS발신불량, SMS수신불량 <br>SMS발신/수신 모두불량' },
-    { text: '인터넷접속불량 <br>특정 APP 분량, 기타' }
+    {text: '음성발신불량, 음성수신불량 <br>음성발신/수신 모두 불량'},
+    {text: 'SMS발신불량, SMS수신불량 <br>SMS발신/수신 모두불량'},
+    {text: '인터넷접속불량 <br>특정 APP 분량, 기타'}
   ],
   Q_TYPE03: [
-    { text: '건물내부(지하층)' },
-    { text: '건물내부(지상층)' },
-    { text: '건물외부' },
-    { text: '위치무관' }
+    {text: '건물내부(지하층)'},
+    {text: '건물내부(지상층)'},
+    {text: '건물외부'},
+    {text: '위치무관'}
   ],
   Q_TYPE04: [
-    { text: '주택, 빌라' },
-    { text: '아파트, 오피스텔' },
-    { text: '사무실, 상가' },
-    { text: '기타' }
+    {text: '주택, 빌라'},
+    {text: '아파트, 오피스텔'},
+    {text: '사무실, 상가'},
+    {text: '기타'}
   ],
   Q_TYPE05: [
-    { text: '사용 중 갑자기' },
-    { text: '며칠 전부터' },
-    { text: '이사/회사 이동 후 부터' }
+    {text: '사용 중 갑자기'},
+    {text: '며칠 전부터'},
+    {text: '이사/회사 이동 후 부터'}
   ]
 };
 
+
+Tw.CUSTOMER_SERVICE_INFO_URL = [
+  ''
+];
+
 Tw.PAYMENT_CARD_TYPE_LIST = [
-  { 'attr': 'id="00"', text: '일시불' },
-  { 'attr': 'id="01"', text: '1개월 할부' },
-  { 'attr': 'id="02"', text: '2개월 할부' },
-  { 'attr': 'id="03"', text: '3개월 할부' },
-  { 'attr': 'id="04"', text: '4개월 할부' },
-  { 'attr': 'id="05"', text: '5개월 할부' },
-  { 'attr': 'id="06"', text: '6개월 할부' },
-  { 'attr': 'id="07"', text: '7개월 할부' },
-  { 'attr': 'id="08"', text: '8개월 할부' },
-  { 'attr': 'id="09"', text: '9개월 할부' },
-  { 'attr': 'id="10"', text: '10개월 할부' },
-  { 'attr': 'id="11"', text: '11개월 할부' },
-  { 'attr': 'id="12"', text: '12개월 할부' },
-  { 'attr': 'id="24"', text: '24개월 할부' }
+  {'attr': 'id="00"', text: '일시불'},
+  {'attr': 'id="01"', text: '1개월 할부'},
+  {'attr': 'id="02"', text: '2개월 할부'},
+  {'attr': 'id="03"', text: '3개월 할부'},
+  {'attr': 'id="04"', text: '4개월 할부'},
+  {'attr': 'id="05"', text: '5개월 할부'},
+  {'attr': 'id="06"', text: '6개월 할부'},
+  {'attr': 'id="07"', text: '7개월 할부'},
+  {'attr': 'id="08"', text: '8개월 할부'},
+  {'attr': 'id="09"', text: '9개월 할부'},
+  {'attr': 'id="10"', text: '10개월 할부'},
+  {'attr': 'id="11"', text: '11개월 할부'},
+  {'attr': 'id="12"', text: '12개월 할부'},
+  {'attr': 'id="24"', text: '24개월 할부'}
 ];
 
 Tw.NO_CONTRACT_TYPE = {
@@ -790,7 +809,7 @@ Tw.MYT_HISTORY_CPSTATE = {
 Tw.MYT_HISTORY_CPSTATE_KOR = {
   A0: '차단중',
   A1: '다음 달<br />차단예정'
-}
+};
 
 Tw.HP_NUM_LIST = ['011', '016', '017', '019'];
 
@@ -798,4 +817,9 @@ Tw.UPLOAD_FILE = {
   WARNING_A01: '첨부파일 용량은 30MB를 넘을 수 없습니다.',
   WARNING_A02: '첨부파일은 최대 5개까지 등록할 수 있습니다.',
   WARNING_A03: 'MS워드, 한글hwp, 이미지 (jpg, bmp, gif,pdf)파일을 첨부할 수 있습니다.',
-}
+};
+
+Tw.EVENT_TYPE = {
+  N: '일반형',
+  E: '응모형'
+};

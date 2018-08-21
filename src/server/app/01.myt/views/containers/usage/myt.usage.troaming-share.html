@@ -32,7 +32,11 @@
         <div class="container">
             <div class="cont-box">
                 <div class="top-info">
-                    <span class="info-text"><%= svcInfo.svcNum %> 번호로 <em><%= usageData.korLengStr %></em>과<br />T로밍을 이용 중이시네요!</span>
+                    <span class="info-text"><%= svcInfo.svcNum %> 번호로
+                        <% if (usageData.hasChildList) { %>
+                        <em><%= usageData.korLengStr %></em>과<br />
+                        <% } %>
+                    T로밍을 이용 중이시네요!</span>
                     <div class="link-box">
                         <button role="button" class="link-btn type2"><%= usageData.roamProdNm %></button>
                         <span class="info-sub">남은 일수
@@ -64,6 +68,7 @@
 
             <hr class="cont-sp type1" aria-hidden="true" />
 
+            <% if (usageData.hasChildList) { %>
             <div class="cont-box">
                 <h2 class="title-h2">T로밍 함께쓰기 사용량 정보</h2>
                 <div class="payment-detail-wrap">
@@ -114,6 +119,7 @@
                     </ul>
                 </div>
             </div>
+            <% } %>
         </div>
     </div>
     <!--// #contents -->

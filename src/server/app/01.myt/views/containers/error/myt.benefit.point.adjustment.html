@@ -1,0 +1,59 @@
+<!--
+* FileName: myt.benefit.point.adjustment.html
+* Author: 이정민 (skt.p130713@partner.sk.com)
+* Date: 2018.08.14
+-->
+<% include ../../components/start.component.html %>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<!-- wrap -->
+<div id="fe-myt-benefit-point-adjustment" class="wrap">
+    <!-- #header -->
+    <%- include('../../../../../common/views/components/header.component.html', { title: '포인트 합산', svcInfo: svcInfo }); %>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+
+        <!-- 복수회선이 아닌 경우 -->
+        <div class="container">
+            <div class="cont-box">
+                <div class="top-info">
+                    <span class="info-text">레인보우 포인트가<br><em>복수회선인 경우만 포인트 조정</em>이<br>가능합니다.</span>
+                </div>
+            </div>
+
+            <hr class="cont-sp type1" aria-hidden="true">
+
+            <div class="cont-box nogaps-btm">
+                <h2 class="title-h2">도와드릴까요?</h2>
+                <div class="link-long-group mt18">
+                    <div class="link-long">
+                        <button>온라인 상담/문의 바로가기<span class="ico"></span></button>
+                    </div>
+                    <div class="link-long">
+                        <button>T월드 고객센터 바로가기<span class="ico"></span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- //복수회선이 아닌 경우 -->
+    </div>
+    <!--// #contents -->
+    <%- include('../../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }) %>
+</div>
+<!-- // wrap -->
+<% include ../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    // new Tw.MytUsageTdatashare($('#fe-myt-usage-tdatashare'));
+  });
+</script>
+<% include ../../components/end.component.html %>

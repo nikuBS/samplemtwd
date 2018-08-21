@@ -1,0 +1,65 @@
+<%#
+* FileName: customer.event.detail.win.component.html
+* Author: 공자윤 (jayoon.kong@sk.com)
+* Date: 2018.08.20
+%>
+<% include ../components/start.component.html %>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap">
+    <!-- #header -->
+    <div id="header" class="header-wrap">
+        <div class="header">
+            <div class="header-ti align-l">
+                <h1>이벤트 상세</h1>
+            </div>
+            <button class="prev-step fe-common-back"><span class="blind">이전으로</span></button>
+        </div>
+    </div>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <!-- .cont-box -->
+            <div class="cont-box nogaps">
+                <div class="cont-box noborder">
+                    <div class="event-info">
+                        <h3 class="event-tit"><%= result.prNm %></h3>
+                        <div class="event-date-box">
+                            <dl class="event-date-list">
+                                <dt class="event-date-tit">기간</dt>
+                                <dd class="event-date"><%= result.startDate %> ~ <%= result.endDate %><span class="event-type">응모형</span></dd></dd>
+                            </dl>
+                            <dl class="event-date-list">
+                                <dt class="event-date-tit">당첨자 발표</dt>
+                                <dd class="event-date"><%= result.winDate %></dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+                <!--// .cont-box -->
+                <!-- .cont-box -->
+                <div class="cont-box">
+                    <div class="event-cont">
+                        <div style="padding:50px 0;background:rgba(255,0,0,.5); color:#fff;text-align:center;">
+                            <iframe src="<%= result.winUrl %>" height="<%= result.height %>"></iframe>
+                        </div>
+                    </div>
+                </div>
+                <!--// .cont-box -->
+            </div>
+        </div>
+    </div>
+    <!--// #contents -->
+    <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
+</div>
+<% include ../../components/javascript.component.html %>
+<% include ../components/end.component.html %>

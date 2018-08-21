@@ -51,8 +51,6 @@ Tw.PaymentHistoryReceiptTax.prototype = {
   _getData: function () {
     if (this.apiName) {
       this._apiService.request(this.apiName, this.apiOption).done($.proxy(this._setData, this)).error($.proxy(this._apiError, this));
-    } else {
-      // TODO : history replace
     }
   },
 

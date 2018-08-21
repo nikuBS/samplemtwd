@@ -1,0 +1,235 @@
+<%#
+* FileName: customer.faq.html (CI_11_01)
+* Author: Hakjoon Sim(hakjoon.simk@sk.com)
+* Date: 2018.08.17
+%>
+
+<% include ../../components/start.component.html %>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap">
+    <%- include('../../../../common/views/components/header.component.html', { title: '자주 찾는 질문', svcInfo: svcInfo}); %>
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <div class="faq-main">
+                <!-- .cont-box -->
+                <div class="cont-box">
+                    <div class="contents-info-list">
+                        <p class="ti-desc tx-regular ff-hn">FAQ</p>
+                    </div>
+                    <div class="inputbox search">
+                        <div class="input">
+                          <input type="text" placeholder="키워드로 질문 검색" title="검색입력창" value="" />
+                          <button href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></button>
+                        </div>
+                        <button class="bt-search none">검색</button>
+                    </div>
+                </div>
+                <!--// .cont-box -->
+
+                <!-- .cont-box -->
+                <div class="cont-box nogaps-btm">
+                    <div class="customer-box">
+                        <ul class="customer-list">
+                            <li class="customer-faq-list2"><a href="/customer/faq/category?code=1100000"><span class="ico"></span><span class="txt">요금상품</span></a></li>
+                            <li class="customer-faq-list1"><a href="/customer/faq/category?code=1200000"><span class="ico"></span><span class="txt">가입·변경·해지</span></a></li>
+                            <li class="customer-faq-list3"><a href="/customer/faq/category?code=1300000"><span class="ico"></span><span class="txt">요금조회·납부</span></a></li>
+                            <li class="customer-faq-list4"><a href="/customer/faq/category?code=1400000"><span class="ico"></span><span class="txt">로밍</span></a></li>
+                            <li class="customer-faq-list8"><a href="/customer/faq/category?code=1500000"><span class="ico"></span><span class="txt">멤버십</span></a></li>
+                            <li class="customer-faq-list6"><a href="/customer/faq/category?code=1600000"><span class="ico"></span><span class="txt">App/부가서비스</span></a></li>
+                            <li class="customer-faq-list9"><a href="/customer/faq/category?code=1700000"><span class="ico"></span><span class="txt">통화품질개선</span></a></li>
+                            <li class="customer-faq-list5"><a href="/customer/faq/category?code=1800000"><span class="ico"></span><span class="txt">다이렉트샵</span></a></li>
+                            <li class="customer-faq-list7"><a href="/customer/faq/category?code=1900000"><span class="ico"></span><span class="txt">T world 이용안내</span></a></li>
+                        </ul>
+                    </div>
+                    <div class="customer-box mt30">
+                        <ul class="customer-link">
+                            <li>
+                                <div class="link-long">
+                                    <a class="fe-external" href="https://www.skt-id.co.kr/serviceInfo/serviceInfo.do" target="_blank">회원가입, 로그인 관련 자주 찾는 질문보기<span class="ico"></span></a>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="link-long">
+                                    <a class="fe-external" href="https://www.sktsmarthome.com/html/costumer-support.html" target="_blank">스마트 홈 관련 자주 찾는 질문보기<span class="ico"></span></a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!--// .cont-box -->
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+                <!-- .cont-box -->
+                <div class="cont-box nogaps-btm">
+                    <div class="contents-info-list">
+                        <p class="ti-desc">이럴 땐 이렇게 하세요!</p>
+                    </div>
+
+                    <div class="customer-howto-box mt50">
+                        <div class="howto-title-box">
+                            <div class="howto-ico-box"><div class="ico ico2"></div></div>
+                            <p class="howto-title">데이터가 부족하세요?</p>
+                        </div>
+                        <div class="howto-list-box">
+                            <ul>
+                                <li><button class="bt-howto">안심하고 마음껏 데이터를 쓸 수 있는 방법!<span class="ico"></span></button></li>
+                                <li><button class="bt-howto">데이터 초과 요금 걱정마세요!<span class="ico"></span></button></li>
+                                <li><button class="bt-howto">데이터를 다 써버렸는데 어떻게 하지?<span class="ico"></span></button></li>
+                                <li><button class="bt-howto">남는 데이터를 친구가족한테 나눠줄 수 있다고?<span class="ico"></span></button></li>
+                                <li><button class="bt-howto">데이터 걱정 없이 TV 실컷 보기<span class="ico"></span></button></li>
+                                <li><button class="bt-howto">나만의 데이터 이용패턴에 맞는 할인 방법!<span class="ico"></span></button></li>
+                                <li><button class="bt-howto">휴대폰 데이터를 태블릿에서도 함께 쓰는 방법!<span class="ico"></span></button></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!--// .cont-box -->
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+                <!-- .cont-box -->
+                <div class="cont-box nogaps-btm">
+                    <div class="customer-howto-box">
+                        <div class="howto-title-box">
+                            <div class="howto-ico-box"><div class="ico ico1"></div></div>
+                            <p class="howto-title">T멤버십 혜택을 즐겨보세요!</p>
+                        </div>
+                        <div class="howto-list-box">
+                            <ul>
+                                <li><button class="bt-howto">알고쓰면 더 편리한 T멤버십</button><span class="ico"></span></li>
+                                <li><button class="bt-howto">T나는 전용쇼핑몰 초콜릿</button><span class="ico"></span></li>
+                                <li><button class="bt-howto">급이 다른 혜택 T나게 쓰는 방법</button><span class="ico"></span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!--// .cont-box -->
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+                <!-- .cont-box -->
+                <div class="cont-box nogaps-btm">
+                    <div class="customer-howto-box">
+                        <div class="howto-title-box">
+                            <div class="howto-ico-box"><div class="ico ico2"></div></div>
+                            <p class="howto-title">해외여행 가세요? <br/>이렇게 로밍 하세요~</p>
+                        </div>
+                        <div class="howto-list-box">
+                            <ul>
+                                <li><button class="bt-howto">내 휴대폰 로밍 서비스 확인하세요</button><span class="ico"></span></li>
+                                <li><button class="bt-howto">데이터 미 사용시 차단해주세요</button><span class="ico"></span></li>
+                                <li><button class="bt-howto">해외여행 중 알아두면 유용한 Tip</button><span class="ico"></span></li>
+                                <li><button class="bt-howto">로밍 전용 요금제로 안심여행 하세요</button><span class="ico"></span></li>
+                                <li><button class="bt-howto">해외여행 다녀와서 챙겨야 할 것</button><span class="ico"></span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!--// .cont-box -->
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+                <!-- .cont-box -->
+                <div class="cont-box nogaps-btm">
+                    <div class="customer-howto-box">
+                        <div class="howto-title-box">
+                            <div class="howto-ico-box"><div class="ico ico2"></div></div>
+                            <p class="howto-title">휴대폰을 분실하셨어요?</p>
+                        </div>
+                        <div class="howto-list-box">
+                            <ul>
+                                <li><button class="bt-howto">휴대폰 분실했다면? 가장 먼저 분실신고 하세요</button><span class="ico"></span></li>
+                                <li><button class="bt-howto">휴대폰을 찾을 수 있는 위치 추적 서비스</button><span class="ico"></span></li>
+                                <li><button class="bt-howto">당장 휴대폰이 필요하다면? 임대폰 or 기기변경</button><span class="ico"></span></li>
+                                <li><button class="bt-howto">분실보험 가입해두었다면 분실보상 받아보세요</button><span class="ico"></span></li>
+                                <li><button class="bt-howto">미리 안심백업 했다면? 데이터 복원할 수 있어요</button><span class="ico"></span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!--// .cont-box -->
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+                <!-- .cont-box -->
+                <div class="cont-box nogaps-btm">
+                    <div class="customer-howto-box">
+                        <div class="howto-title-box">
+                            <div class="howto-ico-box"><div class="ico ico1"></div></div>
+                            <p class="howto-title">엄마아빠, 스마트폰 <br/>이렇게 사용해보세요~</p>
+                        </div>
+                        <div class="howto-list-box">
+                            <ul>
+                                <li><button class="bt-howto">데이터 요금 걱정은 줄이고 이용은 맘 편하게</button><span class="ico"></span></li>
+                                <li><button class="bt-howto">스마트폰 초보 탈출을 위한 이용법</button><span class="ico"></span></li>
+                                <li><button class="bt-howto">스마트폰 센스를 올려주는 활용가이드</button><span class="ico"></span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!--// .cont-box -->
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+                <!-- .cont-box -->
+                <div class="cont-box nogaps-btm">
+                    <div class="customer-howto-box">
+                        <div class="howto-title-box">
+                            <div class="howto-ico-box"><div class="ico ico1"></div></div>
+                            <p class="howto-title">우리 아이 스마트 폰! <br/>이렇게 관리 하세요</p>
+                        </div>
+                        <div class="howto-list-box">
+                            <ul>
+                                <li><button class="bt-howto">똑똑한 엄마들의 자녀요금 관리법</button><span class="ico"></span></li>
+                                <li><button class="bt-howto">바른 휴대폰 사용습관을 위한 실천 가이드</button><span class="ico"></span></li>
+                                <li><button class="bt-howto">아이 안전을 위한 스마트폰 활용방법!</button><span class="ico"></span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!--// .cont-box -->
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+                <!-- .cont-box -->
+                <div class="cont-box nogaps-btm">
+                    <div class="customer-howto-box">
+                        <div class="howto-title-box">
+                            <div class="howto-ico-box"><div class="ico ico1"></div></div>
+                            <p class="howto-title">소중한 개인정보! <br/>이렇게 지키세요</p>
+                        </div>
+                        <div class="howto-list-box">
+                            <ul>
+                                <li><button class="bt-howto">스팸 아직도 받고 있나요? Good bye, 스팸</button><span class="ico"></span></li>
+                                <li><button class="bt-howto">속수무책 당하고만 있나요? 스미싱, 속지 마세요</button><span class="ico"></span></li>
+                                <li><button class="bt-howto">휴대폰명의도용, 대비하면 막을 수 있어요</button><span class="ico"></span></li>
+                                <li><button class="bt-howto">생활 속 예방과 관리로 개인정보 지키세요</button><span class="ico"></span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!--// .cont-box -->
+            </div>
+        </div>
+    </div>
+    <!--// #contents -->
+    <%- include('../../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
+</div>
+<% include ../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    new Tw.CustomerFaq($('.wrap'));
+  });
+</script>
+
+<% include ../../components/end.component.html %>

@@ -1,16 +1,19 @@
+/**
+ * FileName: myt.usage.troaming-share.controller.ts
+ * Author: 이정민 (skt.p130713@partner.sk.com)
+ * Date: 2018.07.25
+ */
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
-import { DATA_UNIT, USER_CNT } from '../../../../types/string.type';
-import MyTUsage from './myt.usage.controller';
+import { DATA_UNIT, MYT_USAGE_TROAMING_SHARE, USER_CNT } from '../../../../types/string.type';
 import MyTUsageGraphbox from './myt.usage.graphbox.controller';
-import { UNIT, UNIT_E } from '../../../../types/bff.type';
+import { UNIT_E } from '../../../../types/bff.type';
 import DateHelper from '../../../../utils/date.helper';
 import moment = require('moment');
 
 class MyTUsageTRoamingShare extends TwViewController {
-  public myTUsage = new MyTUsage();
 
   constructor() {
     super();
@@ -26,45 +29,11 @@ class MyTUsageTRoamingShare extends TwViewController {
         });
       }
     });
-    // const result = this.getResult({
-    //   code: '00',
-    //   msg: '결과메세지',
-    //   result: {
-    //     dispRemainDay: '200',
-    //     roamProdNm: 'T로밍 함께쓰기 3GB1',
-    //     dataSharing: {
-    //       data: {
-    //         total: '3000000',
-    //         remained: '1000000',
-    //         used: '2000000'
-    //       },
-    //       childList: [{
-    //         role: 'Y',
-    //         custNm: '홍*동1',
-    //         svcNum: '010-45**-12**',
-    //         used: '1000'
-    //       }, {
-    //         role: 'N',
-    //         custNm: '홍*동2',
-    //         svcNum: '010-45**-12**',
-    //         used: '2000'
-    //       }, {
-    //         role: 'N',
-    //         custNm: '홍*동3',
-    //         svcNum: '010-45**-12**',
-    //         used: '3000'
-    //       }]
-    //     }
-    //   }
-    // });
-    // res.render('usage/myt.usage.troaming-share.html', {
-    //   usageData: this.parseData(result),
-    //   svcInfo
-    // });
   }
 
   private parseData(result: any): any {
     const childList = result.dataSharing.childList;
+    result.hasChildList = !!childList.length;
     result.dataSharing.data.unit = UNIT_E.DATA;
     MyTUsageGraphbox.convShowData(result.dataSharing.data);
     result.korLengStr = (childList.length < 6) ? USER_CNT[childList.length - 1] : childList.length;
@@ -76,13 +45,6 @@ class MyTUsageTRoamingShare extends TwViewController {
     }
     return result;
   }
-
-  // private getResult(resp: any): any {
-  //   if ( resp.code === API_CODE.CODE_00 ) {
-  //     return resp.result;
-  //   }
-  //   return resp;
-  // }
 
   private getShowRemainDay(min: string): any {
     const endDate = moment().add(min, 'minutes');
@@ -97,7 +59,7 @@ class MyTUsageTRoamingShare extends TwViewController {
   private getShowChildList(childList: any): any {
     // 자회선인데 모회선 포함 전체데이터가 다 내려오는 경우에는 처리가 필요함.
     childList.map((child) => {
-      child.role = (child.role === 'Y') ? '대표회선' : '자회선';
+      child.role = (child.role === 'Y') ? MYT_USAGE_TROAMING_SHARE.L_REP : MYT_USAGE_TROAMING_SHARE.L_CHI;
       child.showUsed = FormatHelper.convDataFormat(child.used, DATA_UNIT.KB);
     });
     return childList;

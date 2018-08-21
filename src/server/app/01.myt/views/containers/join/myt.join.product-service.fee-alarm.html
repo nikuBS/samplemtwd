@@ -1,0 +1,75 @@
+<%#
+* FileName: myt.join.product-service.fee-alarm.html
+* Author: 양지훈 (jihun202@sk.com)
+* Date: 2018.08.16
+%>
+<% include ../../components/start.component.html %>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap">
+    <!-- #header -->
+    <div id="header" class="header-wrap step-page">
+        <div class="header step-page">
+            <div class="header-ti">
+                <h1>요금제 변경 가능일 알림 서비스</h1>
+            </div>
+            <button class="close-step"><span class="blind">닫기</span></button>
+        </div>
+    </div>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <!-- .cont-box -->
+            <div class="cont-box">
+                <ul class="service-info-text">
+                    <li>
+                        <strong>요금제 재변경</strong>
+                        <p>요금제 재변경은 변경일(변경 당일 포함)로 부터 1개월 이내에는 다시 변경 할 수 없습니다. </p>
+                        <ul class="bt-slice">
+                            <li class="bt-white1">
+                                <a href="/myt/join/product-service/fee-alarm/change">서비스 신청/해지하기</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>요금제 적용 시점</strong>
+                        <p>요금제 변경 시 1초당 적용되는 국내통화료는 요금제 변경시점부터 적용되며 기본료 및 기본제공 음성/문자/데이터 혜택은 변경 일로 부터 일할 계산됩니다.</p>
+                        <ul class="bt-slice">
+                            <li class="bt-white1">
+                                <a href="">요금 기준 안내 바로가기</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>통합요금제</strong>
+                        <p>통합요금제로 변경 시 장기 가입 할인 혜택의 경우 월정액 할인에서 국내 통화료 할인으로 변경 되오니 주의하시기 바랍니다.</p>
+                    </li>
+                    <li>
+                        <strong>할부 지원금</strong>
+                        <p>가입 당시 약정한 요금 상품을 변경하실 경우 고객님의 약정잔여기간을 고려하여 할부 지원금 차액이 다음달 청구 요금에 반영(반환 혹은 추가지원)되어 정산됩니다.</p>
+                    </li>
+                </ul>
+
+            </div>
+            <!--// .cont-box -->
+        </div>
+    </div>
+    <!--// #contents -->
+    <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
+</div>
+<% include ../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    new Tw.MyTJoinProductServiceFeeAlarm($('.wrap'));
+  });
+</script>
+<% include ../../components/end.component.html %>

@@ -4,7 +4,7 @@ class StringHelper {
   }
 
   static masking(str: string, mark: string, idxFromEnd: number): string {
-    for ( let i = 1; i <= idxFromEnd; i++ ) {
+    for (let i = 1; i <= idxFromEnd; i++) {
       str = StringHelper.replaceAt(str, str.length - i, mark);
     }
     return str;
@@ -17,6 +17,14 @@ class StringHelper {
    */
   static phoneStringToDash(strCellphoneNum: string): string {
     return strCellphoneNum.replace(/(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/, '$1-$2-$3');
+  }
+
+  static maskPhoneNumber(phone: string) {
+    const phoneArr = (phone.includes('-') ? phone : StringHelper.phoneStringToDash(phone)).split('-');
+    phoneArr[1] = StringHelper.masking(phoneArr[1], '*', 2);
+    phoneArr[2] = StringHelper.masking(phoneArr[2], '*', 2);
+
+    return phoneArr.join('-');
   }
 }
 

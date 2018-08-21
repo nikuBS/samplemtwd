@@ -27,11 +27,6 @@ Tw.RechargeGiftHistory.prototype = {
       console.log(res);
     });
 
-    // TODO : 검색은 확인 버튼 바인딩을 통해 checked input 값을 가져와서 사용.
-    // TODO : 이전 검색 선택 값 어떻게? => 필요한가?
-    // TODO : 탭 변경시 검색값 default?
-    // TODO : 검색 Trigger button innerText 변경
-
     var _search = (function () {
       var terms = [
         this._dateHelper.getShortDateWithFormatAddByUnit(this.dateNow, -1, 'months', 'YYYYMMDD'),
@@ -59,9 +54,6 @@ Tw.RechargeGiftHistory.prototype = {
     }.bind(this))();
 
     Tw.Logger.log('[search]', _search);
-
-    // TODO : 데이터 있는 경우 템플릿 렌더링, 없는 경우 Empty 템플릿
-    // TODO : 데이터 페이지 수로 분할(by current)
     //    this.listTemplete = Handlebars.compile($('#list-template').html());
     //     this.presentEmptyTemplete = Handlebars.compile($('#present-empty-template').html());
     //     this.requestEmptyTemplete = Handlebars.compile($('#request-empty-template').html());

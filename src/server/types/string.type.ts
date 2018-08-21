@@ -194,12 +194,12 @@ export enum RESEARCH_EXAMPLE_TYPE {
   ETC = '기타'
 }
 
-export enum CURRENCY_UNIT  {
+export enum CURRENCY_UNIT {
   WON = '원',
   TEN_THOUSAND = '만원'
 }
 
-export enum MYT_JOIN_TYPE  {
+export enum MYT_JOIN_TYPE {
   PAY = '납부',
   UNPAID = '미청구'
 }
@@ -214,7 +214,9 @@ export enum USAGE_PATTERN_CHART {
 export const USAGE_PATTERN_NAME = ['데이터', '음성통화', '문자'];
 
 export const MYT_JOIN_CONTRACT_TERMINAL = { // 약정할인 및 단말분할상환정보
-  FEE_TYPE_A: '',
+  FEE_TYPE_A: {
+    TIT_NM: '요금약정할인24 (730일)'
+  },
   FEE_TYPE_B: {
     TIT_NM: '테블릿 약정할인 12'
   },
@@ -267,5 +269,90 @@ export const MYT_JOIN_CONTRACT_TERMINAL = { // 약정할인 및 단말분할상�
 };
 
 export const MYT_JOIN = {
-  OPENING_DATE_STR : '2007.03.01 이후 신규 가입자에 한하여 확인가능 합니다.'
+  OPENING_DATE_STR: '2007.03.01 이후 신규 가입자에 한하여 확인가능 합니다.'
+};
+
+export enum MYT_USAGE_TROAMING_SHARE {
+  L_REP = '대표회선',
+  L_CHI = '자회선'
+}
+
+export const MYT_BENEFIT_RECOMMEND = {
+  TPAY: {
+    title: 'T 페이',
+    typeTextA: 'T멤버십 제휴처 할인 혜택을 받고 있습니다.',
+    typeTextB: 'T멤버십 제휴처 할인과 결제까지 손쉽게 이용하세요.'
+  },
+  REFILL: {
+    title: '데이터/음성 리필하기',
+    typeTextA: 'SKT 가입기간에 따른 데이터 쿠폰 제공 혜택을 받고 있습니다.',
+    typeTextB: 'SKT 가입기간에 따라 데이터 쿠폰을 제공해 드립니다.'
+  },
+  GIFT: {
+    title: 'T끼리 데이터 선물하기',
+    typeTextA: '데이터를 선물하고 선물 받을 수 있습니다.',
+    typeTextB: 'LTE / 3G 요금제 고객끼리 데이터를 선물하고 선물 받으세요.'
+  },
+  POINT: {
+    title: 'T나는 쇼핑 포인트',
+    typeTextA: '약정할인액의 130%를 11번가 포인트로 제공 받고 있습니다.',
+    typeTextB: '약정할인액의 130%를 11번가 포인트로 적립 받으세요.'
+  },
+  PLAN: {
+    title: '지켜줘서 고마워_현역플랜',
+    typeTextA: '현역 국인을 위한 특화 요금제를 이용 중 입니다.',
+    typeTextB: '제공안함'
+  },
+  OKSP: {
+    title: 'oksusu 안심팩',
+    typeTextA: 'oksusu 이용 데이터 및 oksusu 포인트 제공 혜택을 받고 있습니다.',
+    typeTextB: '제공안함'
+  },
+  OKASP: {
+    title: 'oksusu & 안심팩',
+    typeTextA: 'oksusu 이용 데이터 및 oksusu 포인트 제공 혜택을 받고 있습니다.',
+    typeTextB: 'oksusu 전용 데이터 및 포인트 제공 혜택을 받으세요.'
+  },
+  TSIGN: {
+    title: 'T 시그니처',
+    typeTextA: '통신, 단말, 안심 3대 영역의 프리미엄 혜택을 받고 있습니다.',
+    typeTextB: '통신, 단말, 안심 3대 영역의 프리미엄 혜택을 받으세요.'
+  }
+};
+
+export const MYT_FEEPLAN_BENEFIT = {
+  PEN_Y: '위약금 대상',
+  PEN_N: '위약금 비대상',
+  ENDLESS: '서비스 해지시 종료'
+};
+
+export const MYT_COMBINATION_TYPE = {
+  MULTI_ONE: '1~4',
+  MULTI_TWO: '2~4',
+  LINE: '휴대폰',
+  INTERNET: '인터넷',
+  IPTV: 'IPTV',
+  TEL: '전화',
+  ITEL: '인터넷 전화',
+  FAMILY: 'T끼리 온가족 할인'
+};
+
+export const MYT_COMBINATION_FAMILY = '패밀리';
+
+export enum MYT_BENEFIT_POINT_VIEW {
+  ADJUSTMENT = 'usage/myt.benefit.point.adjustment.html',
+  ERROR = 'error/myt.benefit.point.adjustment.html'
+}
+
+export const CUSTOMER_SERVICE_CODE_MAP = {
+  A: [3280, 3308, 3306, 231, 3319, 212, 220, 217, 3720, 3721, 3723, 3724],
+  A_1: [3305, 3304, 3307, 3321, 3727, 3722],
+  A_2: [3315, 3316, 218],
+  B: ['USIM 잠금해제', '내 USIM으로 SKT 단말기 사용', '내 USIM으로 타사 단말기 사용', 222, 215],
+  B_1: [3320],
+  C: [224, 221, 223, 216, 3719, '보이는 ARS', '음성인식 ARS'],
+  C_1: ['band LTE'],
+  C_2: ['버튼식 ARS'],
+  D: ['타사 USIM으로 SKT 단말기 사용', '목소리 인증'],
+  E: [234, 219, '목소리 등록 문자받기']
 };

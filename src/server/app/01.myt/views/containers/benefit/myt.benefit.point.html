@@ -1,8 +1,8 @@
-<!--
-* FileName: myt.benefit.point.html.html
+<%#
+* FileName: myt.benefit.point.html
 * Author: Hyeryoun Lee (skt.P130712@partner.sk.com)
 * Date: 2018. 8. 14.
--->
+%>
 <% include ../../components/start.component.html %>
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
@@ -22,7 +22,82 @@
     <!-- // header -->
     <!-- content -->
     <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <div class="cont-box">
+                <h2 class="title-h2">포인트 혜택</h2>
+                <div class="info-detail-box type2">
+                    <ul class="type-in-bt">
+                        <li>
+                            <span class="title">OK캐쉬백</span>
+                            <span class="tx-cont"><span class="ff-hn tx-bold"><%= points.OKCashBack %></span> 점</span>
+                        </li>
+                        <li>
+                            <span class="title">T포인트</span>
+                            <span class="tx-cont"><span class="ff-hn tx-bold"><%= points.T %></span> 점</span>
+                        </li>
+                        <li>
+                            <a href="/myt/benefit/rainbow-point" class="bt-detail">
+                                    <span class="bt-wrap">
+                                        <span class="title">레인보우 포인트</span>
+                                        <span class="tx-cont"><span class="ff-hn tx-bold"><%= points.Rainbow %></span> 점</span>
+                                    </span>
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="contents-notice line-top pt30 mt30">
+                        <span class="noti-type3">다음달 청구요금을 포인트로<br />미리 납부 예약해보세요.</span>
+                    </div>
+                    <a href="/payment/point" class="bt-link-tx pt18">포인트 납부하기 <span class="ico"></span></a>
+                </div>
 
+                <% if( points.NoContrack > 0) { %>
+                <div class="info-detail-box type2">
+                    <ul class="type-in-bt">
+                        <li>
+                            <button class="bt-detail">
+                                    <span class="bt-wrap">
+                                        <span class="title">무약정플랜 포인트</span>
+                                        <span class="tx-cont"><span class="ff-hn tx-bold"><%= points.NoContrack %></span> 점</span>
+                                    </span>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+                <% } %>
+
+                <% if( points.Military > 0) { %>
+                <div class="info-detail-box type2">
+                    <ul class="type-in-bt">
+                        <li>
+                            <button class="bt-detail">
+                                    <span class="bt-wrap">
+                                        <span class="title">지켜줘서 고마워<br />현역플랜 포인트</span>
+                                        <span class="tx-cont"><span class="ff-hn tx-bold"><%= points.Military %></span> 점</span>
+                                    </span>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+                <% } %>
+
+                <% if( points.Cookiz > 0) { %>
+                <div class="info-detail-box type2">
+                    <ul class="type-in-bt">
+                        <li>
+                            <button class="bt-detail">
+                                    <span class="bt-wrap">
+                                        <span class="title">쿠키즈팅 포인트</span>
+                                        <span class="tx-cont"><span class="ff-hn tx-bold"><%= points.Cookiz %></span> 점</span>
+                                    </span>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+                <% } %>
+            </div>
+
+        </div>
     </div>
     <!-- // content -->
     <!-- footer -->
@@ -30,9 +105,4 @@
     <!-- // footer -->
 </div>
 <% include ../../components/javascript.component.html %>
-<script>
-  $(document).ready(function () {
-    var comp = new Tw.MyTBenefitPoint($('#myt-benefit-point'));
-  });
-</script>
 <% include ../../components/end.component.html %>

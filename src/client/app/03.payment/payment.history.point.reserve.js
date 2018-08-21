@@ -121,8 +121,6 @@ Tw.PaymentHistoryPointReserve.prototype = {
           this.apiName,
           this.apiOption
       ).done($.proxy(this._setData, this)).error($.proxy(this._apiError, this));
-    } else {
-      // TODO : history replace
     }
   },
 

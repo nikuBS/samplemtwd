@@ -166,10 +166,6 @@ Tw.MyTBillHistoryLimitCommon.prototype = {
     this._popupService.close();
     var updateAPI_NAME = this._getLimitUpDown() ? this.updateApiNameUP : this.updateApiNameDN;
 
-    // console.log('[/myt/bill/history/limit/change', updateAPI_NAME, 'chgMLimit', this.data.monLimit,
-    //     'chgDLimit', this.data.dayLimit,
-    //     'chgOLimit', this.data.onceLimit);
-
     this._apiService.request(updateAPI_NAME, {
       chgMLimit: this.data.monLimit,
       chgDLimit: this.data.dayLimit,

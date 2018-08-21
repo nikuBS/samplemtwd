@@ -1,0 +1,165 @@
+<%#
+* FileName: myt.join.product-service.combination.tb-itel.html
+* Author: Jiyoung Jo (jiyoungjo@sk.com)
+* Date: 2018.08.20
+* MY_01_01_118
+%>
+
+<div class="cont-box">
+    <div class="top-info mb22">
+        <button role="button" class="link-btn tx-normal"><span class="ff-hn vbl">T+B</span>전화/인터넷전화 (개인형)</button>  
+    </div>
+    <div class="payment-detail-box">
+        <div class="detail-inner">
+            <div class="detail-list type2">
+                <ul>
+                    <li>
+                        <span class="title">신청일</span>
+                        <span class="tx-cont"><span class="ff-hn vbl"><%= combination.joinDate %></span></span>
+                    </li>
+                    <li>
+                        <span class="title">가입상태</span>
+                        <span class="tx-cont"><%= combination.status %></span>
+                    </li>
+                    <li>
+                        <span class="title">가입일</span>
+                        <span class="tx-cont"><span class="ff-hn vbl"><%= combination.joinDate %></span></span>
+                    </li>
+                    <li>
+                        <span class="title">결합회선</span>
+                        <span class="tx-cont"><span class="ff-hn vbl"><%= combination.count %></span>회선</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr class="cont-sp type1" aria-hidden="true" />
+
+<div class="cont-box nogaps">
+    <div class="widget">
+        <div class="widget-box accordion2">
+            <div class="acco-style user-list"><!-- 스타일별 클래스 추가 -->
+                <ul class="acco-box">
+                    <li class="acco-list"><!-- on , off -->
+                        <div class="acco-title">
+                            <button role="button" aria-pressed="">
+                                <span class="info-line">최*영</span><span class="info-line ff-hn">010-12**-56**</span>
+                                <span class="right-item"><span class="ff-hn vbl">T</span>상품</span>
+                            </button>
+                        </div>
+                        <div class="acco-content">
+                            <div class="detail-list">
+                                <ul>
+                                    <li>
+                                        <span class="title">상품</span>
+                                        <span class="tx-cont"><span class="ff-hn vbl">T</span>상품</span>
+                                    </li>
+                                    <li>
+                                        <span class="title">요금제</span>
+                                        <span class="tx-cont"><span class="ff-hn vbl">T</span>끼리 <span class="ff-hn vbl">65</span></span>
+                                    </li>
+                                    <li>
+                                        <span class="title">서비스 제공회사</span>
+                                        <span class="tx-cont"><span class="ff-hn vbl">SK</span>텔레콤</span>
+                                    </li>
+                                    <li>
+                                        <span class="title">사용 개월 수</span>
+                                        <span class="tx-cont">**년**개월</span>
+                                    </li>
+                                    <li>
+                                        <span class="title"><span class="ff-hn vbl">T</span>끼리 온가족 할인</span>
+                                        <span class="tx-cont">할인제도 사용중</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li class="acco-list"><!-- on , off -->
+                        <div class="acco-title">
+                            <button role="button" aria-pressed="">
+                                <span class="info-line">최*석</span><span class="info-line ff-hn">010-12**-56**</span>
+                                <span class="right-item"><span class="ff-hn vbl">B</span>상품</span>
+                            </button>
+                        </div>
+                        <div class="acco-content">
+                            <div class="detail-list">
+                                <ul>
+                                    <li>
+                                        <span class="title">상품</span>
+                                        <span class="tx-cont"><span class="ff-hn vbl">B</span>상품</span>
+                                    </li>
+                                    <li>
+                                        <span class="title">요금제</span>
+                                        <span class="tx-cont">스마트광랜다이렉트<br />(광랜FTTH)</span>
+                                    </li>
+                                    <li>
+                                        <span class="title">서비스 제공회사</span>
+                                        <span class="tx-cont"><span class="ff-hn vbl">SK</span>브로드밴드</span>
+                                    </li>
+                                    <li>
+                                        <span class="title">사용 개월 수</span>
+                                        <span class="tx-cont">**년**개월</span>
+                                    </li>
+                                    <li>
+                                        <span class="title"><span class="ff-hn vbl">T</span>끼리 온가족 할인</span>
+                                        <span class="tx-cont">-</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr class="cont-sp type1" aria-hidden="true" />
+    
+<div class="cont-box nogaps-hoz">
+    <div class="box-confirm">
+        <!-- .widget -->
+        <div class="widget">
+            <div class="widget-box accordion">
+                <h3 class="tit-a">이용안내</h3>
+                <div class="acco-cover toggle">
+                    <div class="bt-whole"><button role="button" aria-pressed="false"><span class="blind">내용 열기</span></button></div>
+                    <div class="acco-style">
+                        <ul class="acco-list">
+                            <li class="acco-box">
+                                <div class="acco-tit"><button role="button" aria-pressed="false"><span class="bullet">1.</span> 본인인증 필요한 경우</button></div>
+                                <div class="acco-cont">
+                                    <ul class="list-dot">
+                                        <li class="list">T+B인터넷 가입/해지 시 본인인증을 위해 SMS인증 또는 공인인증서 인증이 필요합니다.</li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="acco-box">
+                                <div class="acco-tit"><button role="button" aria-pressed="false"><span class="bullet">2.</span> 결합상품 자동 해지되는 경우</button></div>
+                                <div class="acco-cont">
+                                    <ul class="list-dot">
+                                        <li class="list">휴대폰 <em>서비스 해지, 번호이동, 직권해지, 명의변경</em> 시 결합상품이 자동 해지 됩니다.</li>
+                                        <li class="list">초고속 인터넷 <em>서비스 해지, 휴지, 명의 변경</em> 시 결합상품이 자동 해지 됩니다.</li>
+                                        <li class="list"><em>해지 완료 시 SMS</em>등을 통해 안내해 드립니다.</li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="acco-box">
+                                <div class="acco-tit"><button role="button" aria-pressed="false"><span class="bullet">3.</span> 할인 적용되는 경우</button></div>
+                                <div class="acco-cont">
+                                    <ul class="list-dot">
+                                        <li class="list">휴대폰과 초고속 인터넷 모두 매월, 매일 기준 T+B인터넷의 가입유지 여부에 따라 해당 월의 할인이 적용됩니다. (월할기준)</li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--// .widget -->
+    </div>
+</div>

@@ -1,0 +1,287 @@
+<% include ../../components/start.component.html %>
+<%#
+* FileName: customer.faq.info.site.html
+* Author: 이상형 (silion@sk.com)
+* Date: 2018.08.14
+%>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap">
+
+    <!-- #header -->
+    <div id="header" class="header-wrap">
+        <div class="header">
+            <div class="header-ti align-l">
+                <h1>사이트 이용안내</h1>
+            </div>
+            <button class="prev-step fe-common-back"><span class="blind">이전으로</span></button>
+            <button class="search-content"><span class="blind">검색하기</span></button>
+        </div>
+    </div>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <hr class="cont-sp type1" aria-hidden="true" />
+            <!-- .cont-box -->
+            <div class="cont-box nogaps">
+                <!-- .component -->
+                <div class="component">
+                    <div class="component-box tabs">
+                        <div class="tab-area type1"><!-- 타입별 탭형태 변환 -->
+                            <div class="tab-linker">
+                                <ul role="tablist">
+                                    <li role="tab" aria-selected="true" aria-controls="tab1-tab" id="tab1"><a href="#onT" class="fe-replace-history">온라인 T world</a></li><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
+                                    <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2"><a href="#moT" class="fe-replace-history">모바일 T world</a></li>
+                                </ul>
+                            </div>
+                            <div class="tab-contents">
+                                <ul>
+                                    <li role="tabpanel" id="tab1-tab" aria-labelledby="tab1">
+                                        <div class="cont-box inborder">
+                                            <div class="box-suggest">
+                                                <div class="suggest-info">
+                                                    <p class="suggest-ti">온라인 T world 이용안내</p>
+                                                    <ul class="suggest-list nodot">
+                                                        <li>T world 사이트 이용 시의 어려운점을 아래 이용안내를 통해 확인해보세요.</li>
+                                                    </ul>
+                                                </div>
+                                                <div class="box-linktheme">
+                                                    <ul class="linktheme-list">
+                                                        <li>
+                                                            <a href="/customer/faq/site-info/<%=siteLink[0]%>">
+                                                                <span class="cell"><span class="ico-linktheme type1"></span></span>
+                                                                <dl>
+                                                                    <dt class="theme-ti">기타</dt>
+                                                                    <dd class="theme-tx">가려진 정보 확인 방법</dd>
+                                                                </dl>
+                                                                <span class="cell"><span class="ico"></span></span>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="/customer/faq/site-info/<%=siteLink[1]%>">
+                                                                <span class="cell"><span class="ico-linktheme type2"></span></span>
+                                                                <dl>
+                                                                    <dt class="theme-ti">myT</dt>
+                                                                    <dd class="theme-tx">소액결제 현명하게 관리하기</dd>
+                                                                </dl>
+                                                                <span class="cell"><span class="ico"></span></span>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="/customer/faq/site-info/<%=siteLink[2]%>">
+                                                                <span class="cell"><span class="ico-linktheme type3"></span></span>
+                                                                <dl>
+                                                                    <dt class="theme-ti">회원</dt>
+                                                                    <dd class="theme-tx">개인명의 휴대폰/태블릿PC 다회선 등록하기</dd>
+                                                                </dl>
+                                                                <span class="cell"><span class="ico"></span></span>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="/customer/faq/site-info/<%=siteLink[3]%>">
+                                                                <span class="cell"><span class="ico-linktheme type1"></span></span>
+                                                                <dl>
+                                                                    <dt class="theme-ti">회원</dt>
+                                                                    <dd class="theme-tx">T world에 등록된 법인명의 휴대폰번호 삭제방법</dd>
+                                                                </dl>
+                                                                <span class="cell"><span class="ico"></span></span>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="/customer/faq/site-info/<%=siteLink[4]%>">
+                                                                <span class="cell"><span class="ico-linktheme type2"></span></span>
+                                                                <dl>
+                                                                    <dt class="theme-ti">회원</dt>
+                                                                    <dd class="theme-tx">법인명의 태블릿PC 다회선 등록하기</dd>
+                                                                </dl>
+                                                                <span class="cell"><span class="ico"></span></span>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="/customer/faq/site-info/<%=siteLink[5]%>">
+                                                                <span class="cell"><span class="ico-linktheme type3"></span></span>
+                                                                <dl>
+                                                                    <dt class="theme-ti">기타</dt>
+                                                                    <dd class="theme-tx">모두에게 평등한 T world의 웹접근성 안내</dd>
+                                                                </dl>
+                                                                <span class="cell"><span class="ico"></span></span>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="/customer/faq/site-info/<%=siteLink[6]%>">
+                                                                <span class="cell"><span class="ico-linktheme type1"></span></span>
+                                                                <dl>
+                                                                    <dt class="theme-ti">기타</dt>
+                                                                    <dd class="theme-tx">T world의 모든 서비스 메뉴 꼼꼼히 살펴보기!</dd>
+                                                                </dl>
+                                                                <span class="cell"><span class="ico"></span></span>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr class="cont-sp type1" aria-hidden="true" />
+                                        <div class="cont-box nogaps-hoz">
+                                            <div class="box-service-acco">
+                                                <!-- .widget -->
+                                                <div class="widget">
+                                                    <div class="widget-box accordion">
+                                                        <div class="acco-cover toggle focuson"><!-- toggle : 한개만 열기 -->
+                                                            <div class="acco-style">
+                                                                <ul class="acco-list">
+                                                                    <!-- .on: 열기 -->
+                                                                    <li class="acco-box on">
+                                                                        <div class="acco-tit"><button class="pl0" role="button" aria-pressed="true">원하시는 이용안내를 찾지 못하셨나요?</button></div>
+                                                                        <div class="acco-cont">
+                                                                            <div class="service-acco-list">
+                                                                                <dl>
+                                                                                    <dt>이메일 상담</dt>
+                                                                                    <dd>이메일 상담에 문의내용을 남겨주시면, 전문상담원이 친절하게 답변해 드리겠습니다.</dd>
+                                                                                </dl>
+                                                                                <ul class="bt-slice">
+                                                                                    <li class="bt-white1"><a href="/customer/email" title="이메일 상담하기">이메일 상담하기</a></li>
+                                                                                </ul>
+                                                                            </div>
+                                                                            <div class="service-acco-list">
+                                                                                <dl>
+                                                                                    <dt>전화 상담</dt>
+                                                                                    <dd>전화 상담을 원하시는 고객님은 전화상담 예약 서비스를 이용해 주세요.</dd>
+                                                                                </dl>
+                                                                                <ul class="bt-slice">
+                                                                                    <li class="bt-white1"><a href="/customer/helpline" title="전화 상담 예약하기">전화 상담 예약하기</a></li>
+                                                                                </ul>
+                                                                            </div>
+                                                                        </div>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--// .widget -->
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li role="tabpanel" id="tab2-tab" aria-labelledby="tab2">
+                                        <div class="cont-box inborder">
+                                            <div class="box-suggest">
+                                                <div class="suggest-info">
+                                                    <p class="suggest-ti">모바일 T world 이용안내</p>
+                                                    <ul class="suggest-list nodot">
+                                                        <li>스마트폰에서 이용하실 수 있는 모바일 T world, 다운로드 링크, 주요 메뉴에 대하여 안내해드립니다.</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="box-service-notice mt40">
+                                                <div class="service-notice">
+                                                    <p class="ti">모바일 T world 안내</p>
+                                                    <div class="service-notice-img">
+                                                        <img src="/img/dummy/CI_15_02.jpg" alt="모바일 T world 안내 상세정보" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr class="cont-sp type1" aria-hidden="true" />
+                                        <div class="cont-box inborder">
+                                            <div class="box-service-notice">
+                                                <div class="service-notice">
+                                                    <p class="ti">주요메뉴 안내</p>
+                                                    <div class="service-notice-img">
+                                                        <img src="/img/dummy/CI_15_02.jpg" alt="모바일 T world 안내 상세정보" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr class="cont-sp type1" aria-hidden="true" />
+                                        <div class="cont-box inborder">
+                                            <div class="box-suggest">
+                                                <div class="suggest-info">
+                                                    <p class="suggest-ti small">M고객센터</p>
+                                                    <div class="mt16">
+                                                        <span class="suggest-tx mt24">스마트폰을 이용하지 않는 고객님들은<br />M고객센터를 통해 T world의 주요 서비스를<br />이용하실 수 있습니다.</span>
+                                                    </div>
+                                                    <a href="/customer/faq/site-info/m-customer-center" class="bt-link-tx mt20">M고객센터 바로가기<span class="ico"></span></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr class="cont-sp type1" aria-hidden="true" />
+
+                                        <!-- .cont-box -->
+                                        <div class="cont-box nogaps-hoz">
+                                            <div class="box-confirm">
+                                                <!-- .accordion -->
+                                                <div class="widget">
+                                                    <div class="widget-box accordion">
+                                                        <h5 class="tit-a">FAQ</h5>
+                                                        <div class="acco-cover"><!-- toggle : 한개만 열기 -->
+                                                            <div class="bt-whole"><button role="button" aria-pressed="false"><span class="blind">내용 열기</span></button></div>
+                                                            <div class="acco-style acco-faq"><!-- 스타일별 클래스 추가 -->
+                                                                <ul class="acco-list">
+                                                                    <li class="acco-box">
+                                                                        <div class="acco-tit">
+                                                                            <button role="button" aria-pressed="false">[모바일 T world] T world 아이디와 비밀번호를 잃어버렸습니다. 모바일 T world에서 아이디 비밀번호 찾기가 가능한가요?</button>
+                                                                        </div>
+                                                                        <div class="acco-cont">모바일 T world의 로그인 화면에서 ‘아이디찾기’ 또는 ‘비밀번호 재설정’을 탭하시고 본인 명의 휴대폰 인증, 아이핀 인증, 이메일 인증 등 본인인증을 통해 아이디찾기, 비밀번호 재설정을 하실 수 있습니다.</div>
+                                                                    </li>
+                                                                    <li class="acco-box">
+                                                                        <div class="acco-tit">
+                                                                            <button role="button" aria-pressed="false">[모바일 T world] T world 에서 소액결제 이용한도 변경 및 제한 설정하는법을 알려주세요.</button>
+                                                                        </div>
+                                                                        <div class="acco-cont">모바일 T world메인 하단 신청/변경>소액결제내역>소액결제 설정에서 고액결제 이용제한 및 이용한도를 변경할 수 있습니다. 소액결제 이용금액 한도 상향 변경은 월 1회만 가능하십니다.</div>
+                                                                    </li>
+                                                                    <li class="acco-box">
+                                                                        <div class="acco-tit">
+                                                                            <button role="button" aria-pressed="false">[모바일 T world] 위젯은 어떻게 이용하나요? 바탕화면에서 볼 수 있는 항목과 디자인도 선택할 수 있나요?</button>
+                                                                        </div>
+                                                                        <div class="acco-cont">위젯 서비스는 안드로이드 OS 이용고객, 자동 로그인 설정이 On 되어있는 고객만 이용 가능합니다.</div>
+                                                                    </li>
+                                                                </ul>
+                                                                <div class="acco-more-box">
+                                                                    <ul class="bt-slice">
+                                                                        <li class="bt-white2"><button>FAQ 바로가기</button></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--// .accordion -->
+                                            </div>
+
+                                        </div>
+                                        <!--// .cont-box -->
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--// .component -->
+            </div>
+            <!--// .cont-box -->
+        </div>
+    </div>
+    <!--// #contents -->
+
+    <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
+</div>
+
+<% include ../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    new Tw.CustomerFaqInfoCommon($(document));
+  });
+</script>
+<script type="text/x-handlebars-template">
+</script>
+<% include ../../components/end.component.html %>

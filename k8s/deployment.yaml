@@ -27,9 +27,8 @@ spec:
             memory: "1024Mi"
         volumeMounts:
         - name: pv-storage
-          mountPath: /uploads
+          mountPath: /tworld/uploads
       volumes:
       - name: pv-storage
         persistentVolumeClaim:
           claimName: mtw-dev-nod-pvc
-

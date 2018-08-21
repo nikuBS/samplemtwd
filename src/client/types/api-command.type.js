@@ -25,12 +25,27 @@ Tw.API_CMD = {
   BFF_01_0011: { path: '/core-modification/v1/address/buildings', method: Tw.API_METHOD.GET },
   BFF_01_0012: { path: '/core-modification/v1/address/standard', method: Tw.API_METHOD.GET },
   BFF_01_0013: { path: '/core-modification/v1/address/standard', method: Tw.API_METHOD.GET },
+  BFF_01_0015: { path: '/auth/skt/sms-authentication', method: Tw.API_METHOD.PUT },
+  BFF_01_0016: { path: '/core-auth/v1/auth/dca/sms', method: Tw.API_METHOD.POST },
+  BFF_01_0017: { path: '/core-auth/v1/auth/email', method: Tw.API_METHOD.POST },
+  BFF_01_0018: { path: '/auth/email-authentication', method: Tw.API_METHOD.PUT },
+  BFF_01_0019: { path: '/auth/motp/apply', method: Tw.API_METHOD.POST },
+  BFF_01_0020: { path: '/auth/motp/auth', method: Tw.API_METHOD.POST },
+  BFF_01_0021: { path: '/core-auth/v1/auth/motp', method: Tw.API_METHOD.GET },
+  BFF_01_0022: { path: '/auth/nice/ipin/apply', method: Tw.API_METHOD.POST },
+  BFF_01_0023: { path: '/auth/nice/ipin/result', method: Tw.API_METHOD.POST },
+  BFF_01_0024: { path: '/auth/nice/sms/apply', method: Tw.API_METHOD.POST },
+  BFF_01_0025: { path: '/auth/nice/sms', method: Tw.API_METHOD.POST },
+  BFF_01_0026: { path: '/cert/success', method: Tw.API_METHOD.POST },
+  BFF_01_0027: { path: '/pwd-cert-chk', method: Tw.API_METHOD.POST },
+  BFF_01_0028: { path: '/core-auth/v1/auth/skt/sms-finance', method: Tw.API_METHOD.POST },
+  BFF_01_0029: { path: '/core-auth/v1/app-secure', method: Tw.API_METHOD.POST },
+  BFF_01_0030: { path: '/core-auth/v1/server-cert', method: Tw.API_METHOD.POST },
 
   // AUTH
   BFF_03_0002: { path: '/user/account-auth-sessions', method: Tw.API_METHOD.POST },
   BFF_03_0003: { path: '/user/accounts', method: Tw.API_METHOD.DELETE },
   BFF_03_0004: { path: '/core-auth/v1/services', method: Tw.API_METHOD.GET },
-  BFF_03_0005: { path: '/user/services', method: Tw.API_METHOD.PUT },
   BFF_03_0006: { path: '/user/nick-names/args-0', method: Tw.API_METHOD.PUT },
   BFF_03_0007: { path: '/user/tid-keys', method: Tw.API_METHOD.GET },
   BFF_03_0009: { path: '/user/service-password-sessions', method: Tw.API_METHOD.POST },
@@ -90,6 +105,9 @@ Tw.API_CMD = {
   BFF_05_0087: { path: '/core-bill/v1/micropay-password-changes', method: Tw.API_METHOD.PUT },
   BFF_05_0089: { path: '/core-bill/v1/prepayInfo', method: Tw.API_METHOD.GET },
   BFF_05_0093: { path: '/core-bill/v1/microPay-cphist-request', method: Tw.API_METHOD.GET },
+  BFF_05_0102: { path: '/core-bill/v1/rainbow-point-adjustments', method: Tw.API_METHOD.POST },
+  BFF_05_0126: { path: '/core-product/v1/fee-plans/change-notices', method: Tw.API_METHOD.POST },
+  BFF_05_0127: { path: '/core-product/v1/fee-plans/change-notices', method: Tw.API_METHOD.DELETE },
 
   // RECHARGE
   BFF_06_0001: { path: '/core-recharge/v1/refill-coupons', method: Tw.API_METHOD.GET },
@@ -214,6 +232,16 @@ Tw.API_CMD = {
   BFF_08_0043: { path: '/core-modification/v1/email-inquiry/service-internet', method: Tw.API_METHOD.POST },
   BFF_08_0044: { path: '/core-modification/v1/email-inquiry/quality-mobile', method: Tw.API_METHOD.POST },
   BFF_08_0045: { path: '/core-modification/v1/email-inquiry/quality-internet', method: Tw.API_METHOD.POST },
+  BFF_08_0050: { path: '/core-modification/v1/ifaq/iFaqList', method: Tw.API_METHOD.GET },
+  BFF_08_0056: { path: '/core-modification/v1/guide/use-detail', method: Tw.API_METHOD.GET },
+  BFF_08_0057: { path: '/core-modification/v1/guide/site-use', method: Tw.API_METHOD.GET },
+
+  // EVENT
+  BFF_09_0001: { path: '/core-membership/v1/event/ing-list', method: Tw.API_METHOD.GET },
+  BFF_09_0002: { path: '/core-membership/v1/event/detail', method: Tw.API_METHOD.GET },
+  BFF_09_0003: { path: '/core-membership/v1/event/old-list', method: Tw.API_METHOD.GET },
+  BFF_09_0004: { path: '/core-membership/v1/event/win-list', method: Tw.API_METHOD.GET },
+  BFF_09_0005: { path: '/core-membership/v1/event/win-detail', method: Tw.API_METHOD.GET },
 
   // TEST
   GET: { path: '/posts', method: Tw.API_METHOD.GET },
@@ -230,14 +258,17 @@ Tw.API_CMD = {
 Tw.NODE_CMD = {
   GET_ENVIRONMENT: { path: '/environment', method: Tw.API_METHOD.GET },
   SET_DEVICE: { path: '/device', method: Tw.API_METHOD.POST },
-  CHANGE_SESSION: { path: '/change-session', method: Tw.API_METHOD.POST },
-  SVC_PASSWORD_LOGIN: { path: '/service-password-sessions/login', method: Tw.API_METHOD.POST },
-  LOGIN_TID: { path: '/login-tid', method: Tw.API_METHOD.POST },
+  LOGIN_TID: { path: '/user/sessions', method: Tw.API_METHOD.POST },
   LOGOUT_TID: { path: '/logout-tid', method: Tw.API_METHOD.POST },
-  USER_LOCK_LOGIN: { path: '/user-locks/login', method: Tw.API_METHOD.POST },
-  EASY_LOGIN_AOS: { path: '/easy-login/aos', method: Tw.API_METHOD.POST },
-  EASY_LOGIN_IOS: { path: '/easy-login/ios', method: Tw.API_METHOD.POST },
-  CHANGE_SVC_PASSWORD: { path: '/service-passwords', method: Tw.API_METHOD.PUT }
+  EASY_LOGIN_AOS: { path: '/user/login/android', method: Tw.API_METHOD.POST },
+  EASY_LOGIN_IOS: { path: '/user/login/ios', method: Tw.API_METHOD.POST },
+  CHANGE_SESSION: { path: '/common/selected-sessions', method: Tw.API_METHOD.PUT },
+  LOGIN_SVC_PASSWORD: { path: '/user/service-password-sessions', method: Tw.API_METHOD.POST },
+  LOGIN_USER_LOCK: { path: '/user/locks', method: Tw.API_METHOD.DELETE },
+  CHANGE_SVC_PASSWORD: { path: '/core-auth/v1/service-passwords', method: Tw.API_METHOD.PUT },
+  CHANGE_LINE: { path: '/user/services', method: Tw.API_METHOD.PUT },
+
+  UPLOAD_FILE: { path: '/uploads', method: Tw.API_METHOD.POST }
 };
 
 Tw.TMAP = {

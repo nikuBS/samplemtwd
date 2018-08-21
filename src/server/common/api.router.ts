@@ -1,23 +1,34 @@
 import express from 'express';
 import { Router, Request, Response, NextFunction } from 'express';
+import multer from 'multer';
 import { API_CMD, API_CODE } from '../types/api-command.type';
 import LoggerService from '../services/logger.service';
 import ApiService from '../services/api.service';
 import LoginService from '../services/login.service';
-import BrowserHelper from '../utils/browser.helper';
 import { COOKIE_KEY } from '../types/common.type';
-import { CHANNEL_TYPE } from '../types/common.type';
 import { Observable } from '../../../node_modules/rxjs/Observable';
 import 'rxjs/add/observable/combineLatest';
+import * as path from 'path';
 
 class ApiRouter {
   public router: Router;
+  private upload;
   private logger: LoggerService = new LoggerService();
   private apiService: ApiService = new ApiService();
   private loginService: LoginService = new LoginService();
 
   constructor() {
     this.router = express.Router();
+    const storage = multer.diskStorage({
+      destination: (req, file, cb) => {
+        cb(null, __dirname + '../../../../uploads/');
+      },
+      filename: (req, file, cb) => {
+        cb(null, new Date().valueOf() + path.extname(file.originalname));
+      },
+      limits: { fileSize: 5 * 1024 * 1024 }
+    });
+    this.upload = multer({ storage: storage }).array('file');
 
     this.setApi();
   }
@@ -25,14 +36,40 @@ class ApiRouter {
   private setApi() {
     this.router.get('/environment', this.getEnvironment.bind(this));
     this.router.post('/device', this.setDeviceInfo.bind(this));
-    this.router.post('/change-session', this.changeSession.bind(this));
-    this.router.post('/service-password-sessions/login', this.svcPasswordLogin.bind(this));
-    this.router.post('/login-tid', this.loginTid.bind(this));
+    this.router.post('/user/sessions', this.loginTid.bind(this));   // BFF_03_0008
     this.router.post('/logout-tid', this.logoutTid.bind(this));
-    this.router.post('/user-locks/login', this.setUserLocks.bind(this));
-    this.router.post('/easy-login/aos', this.easyLoginAos.bind(this));
-    this.router.post('/easy-login/ios', this.easyLoginIos.bind(this));
-    this.router.put('/service-passwords', this.changeSvcPassword.bind(this));
+    this.router.post('/user/login/android', this.easyLoginAos.bind(this));    // BFF_03_0017
+    this.router.post('/user/login/ios', this.easyLoginIos.bind(this));        // BFF_03_0018
+    this.router.put('/common/selected-sessions', this.changeSession.bind(this));    // BFF_01_0004
+    this.router.post('/user/service-password-sessions', this.loginSvcPassword.bind(this));    // BFF_03_0009
+    this.router.delete('/user/locks', this.setUserLocks.bind(this));    // BFF_03_0010
+    this.router.put('/core-auth/v1/service-passwords', this.changeSvcPassword.bind(this));    // BFF_03_0016
+    this.router.put('/user/services', this.changeLine.bind(this));    // BFF_03_0005
+
+    this.router.post('/uploads', (req, res, next) => {
+      this.upload(req, res, (err) => {
+        if ( err ) {
+          this.logger.error(this, err);
+          res.json({ code: err.errno, msg: err.code });
+          return;
+        }
+        this.logger.info(this, req['files']);
+        const files = req['files'];
+
+        const resp = {
+          code: API_CODE.CODE_00,
+          result: files.map((file) => {
+            return {
+              name: file.filename,
+              size: file.size,
+              originalName: file.originalname
+            };
+          })
+        };
+        res.json(resp);
+      });
+    });
+
   }
 
   private getEnvironment(req: Request, res: Response, next: NextFunction) {
@@ -67,10 +104,10 @@ class ApiRouter {
     });
   }
 
-  private svcPasswordLogin(req: Request, res: Response, next: NextFunction) {
+  private loginSvcPassword(req: Request, res: Response, next: NextFunction) {
     const params = req.body;
     this.loginService.setCurrentReq(req, res);
-    this.apiService.requestSvcPasswordLogin(params).subscribe((resp) => {
+    this.apiService.requestLoginSvcPassword(params).subscribe((resp) => {
       res.json(resp);
     }, (error) => {
       res.json(error);
@@ -136,6 +173,16 @@ class ApiRouter {
     }, (error) => {
       res.json(error);
     });
+  }
+
+  public changeLine(req: Request, res: Response, next: NextFunction) {
+    const params = req.body;
+    this.loginService.setCurrentReq(req, res);
+    this.apiService.requestChangeLine(params).subscribe((resp) => {
+      res.json(resp);
+    }, (error) => {
+      res.json(error);
+    })
   }
 }
 

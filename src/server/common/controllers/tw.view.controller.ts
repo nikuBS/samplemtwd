@@ -3,6 +3,7 @@ import ApiService from '../../services/api.service';
 import LoginService from '../../services/login.service';
 import { API_CMD, API_CODE, API_LOGIN_ERROR, API_SVC_PWD_ERROR } from '../../types/api-command.type';
 import LoggerService from '../../services/logger.service';
+import ErrorService from '../../services/error.service';
 import { URL } from '../../types/url.type';
 import FormatHelper from '../../utils/format.helper';
 import { CHANNEL_TYPE, COOKIE_KEY, LOGIN_TYPE } from '../../types/common.type';
@@ -18,6 +19,7 @@ abstract class TwViewController {
   private readonly _loginService: LoginService;
   private readonly _logger: LoggerService;
   private readonly _redisService: RedisService;
+  private readonly _error: ErrorService;
   private _type: string = '';
 
   constructor() {
@@ -25,6 +27,7 @@ abstract class TwViewController {
     this._loginService = new LoginService();
     this._logger = new LoggerService();
     this._redisService = new RedisService();
+    this._error = new ErrorService();
   }
 
   abstract render(req: Request, res: Response, next: NextFunction, svcInfo?: any, layerType?: string): void;
@@ -39,6 +42,10 @@ abstract class TwViewController {
 
   protected get logger(): LoggerService {
     return this._logger;
+  }
+
+  protected get error(): ErrorService {
+    return this._error;
   }
 
   public initPage(req: any, res: any, next: any): void {

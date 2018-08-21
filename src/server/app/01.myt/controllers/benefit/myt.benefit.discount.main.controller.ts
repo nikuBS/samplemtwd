@@ -14,7 +14,8 @@ class MytBenefitDisCntMainController extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     const data: any = {
-      svcInfo: svcInfo
+      svcInfo: svcInfo,
+      empty: false
     };
     Observable.combineLatest(
       this._getBundleProduct(),
@@ -24,6 +25,9 @@ class MytBenefitDisCntMainController extends TwViewController {
       this._getLongTerm(),
       this._getWelfareCustomer()
     ).subscribe(([bundlePrdc, feeCotc, fundCotc, selDisCnt, longterm, welfareCutm]) => {
+      if ( !bundlePrdc && !feeCotc && !fundCotc && !selDisCnt && !longterm && !welfareCutm ) {
+        data.empty = true;
+      }
       data.bundlePrdc = bundlePrdc;
       data.feeCotc = feeCotc;
       data.fundCotc = fundCotc;
@@ -31,8 +35,7 @@ class MytBenefitDisCntMainController extends TwViewController {
       data.longterm = longterm;
       data.welfareCutm = welfareCutm;
 
-      // TODO: 마크업이 나오면 적용필요!
-      // res.render('benefit/myt.benefit.discount.main', { data });
+      res.render('benefit/myt.benefit.discount.main.html', { data });
     });
   }
 
@@ -42,7 +45,12 @@ class MytBenefitDisCntMainController extends TwViewController {
         if ( FormatHelper.isEmpty(resp.result) ) {
           return null;
         } else {
-          return resp.result;
+          if ( !resp.result['comYn'] || resp.result['comYn'] === 'N' ) {
+            // SKT 결합 상품은 없는 경우에도 성공, comYn 값 여부로 대상/비대상 설정
+            return null;
+          } else {
+            return resp.result;
+          }
         }
       } else {
         return null;
@@ -56,7 +64,12 @@ class MytBenefitDisCntMainController extends TwViewController {
         if ( FormatHelper.isEmpty(resp.result) ) {
           return null;
         } else {
-          return resp.result;
+          if ( !resp.result['tfeeAgrmtYn'] || resp.result['tfeeAgrmtYn'] === 'N' ) {
+            // tfeeAgrmtYn(휴대폰요금약정여부) 값 여부로 대상/비대상 설정
+            return null;
+          } else {
+            return resp.result;
+          }
         }
       } else {
         return null;
@@ -70,7 +83,12 @@ class MytBenefitDisCntMainController extends TwViewController {
         if ( FormatHelper.isEmpty(resp.result) ) {
           return null;
         } else {
-          return resp.result;
+          if ( !resp.result['tsuprtAgrmtYn'] || resp.result['tsuprtAgrmtYn'] === 'N' ) {
+            // tfeeAgrmtYn(T 지원금 약정 여부) 값 여부로 대상/비대상 설정
+            return null;
+          } else {
+            return resp.result;
+          }
         }
       } else {
         return null;
@@ -84,7 +102,12 @@ class MytBenefitDisCntMainController extends TwViewController {
         if ( FormatHelper.isEmpty(resp.result) ) {
           return null;
         } else {
-          return resp.result;
+          // 선택약정 25%, 20% 둘다 없는 경우 비대상
+          if ( resp.result['selAgrmtDc25Yn'] === 'N' && resp.result['selAgrmtDc20Yn'] === 'N' ) {
+            return null;
+          } else {
+            return resp.result;
+          }
         }
       } else {
         return null;
@@ -98,7 +121,17 @@ class MytBenefitDisCntMainController extends TwViewController {
         if ( FormatHelper.isEmpty(resp.result) ) {
           return null;
         } else {
-          return resp.result;
+          if ( !resp.result['useYn'] || resp.result['useYn'] === 'N' ) {
+            // useYn(장기가입여부판단) 값 여부로 대상/비대상 설정
+            return null;
+          } else {
+            if ( resp.result['longInfoSt'] === 4 ) {
+              // useYn -> Y 이지만 longInfoSt -> 4 인 경우만 장기가입고객 (BFF_명세서 참조내용)
+              return resp.result;
+            } else {
+              return null;
+            }
+          }
         }
       } else {
         return null;
@@ -112,7 +145,12 @@ class MytBenefitDisCntMainController extends TwViewController {
         if ( FormatHelper.isEmpty(resp.result) ) {
           return null;
         } else {
-          return resp.result;
+          if ( !resp.result['useYn'] || resp.result['useYn'] === 'N' ) {
+            // useYn(복지고객할인대상자판단) 값 여부로 대상/비대상 설정
+            return null;
+          } else {
+            return resp.result;
+          }
         }
       } else {
         return null;

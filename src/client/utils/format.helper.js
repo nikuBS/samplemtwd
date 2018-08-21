@@ -37,6 +37,10 @@ Tw.FormatHelper = (function () {
     return value;
   };
 
+  var normalizeNumber = function (num) {
+    return num.replace(/(^0+)/, '');
+  };
+
   var setDecimalPlace = function(value, point) {
     return parseFloat(value.toFixed(point));
   };
@@ -272,6 +276,7 @@ Tw.FormatHelper = (function () {
     insertColonForTime: insertColonForTime,
     setDecimalPlace: setDecimalPlace,
     is6digitPassSameNumber: is6digitPassSameNumber,
-    is6digitPassSolidNumber: is6digitPassSolidNumber
+    is6digitPassSolidNumber: is6digitPassSolidNumber,
+    normalizeNumber: normalizeNumber
   };
 })();
