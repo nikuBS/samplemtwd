@@ -156,17 +156,19 @@
                             <% } %>
                         </ul>
                     </div>
+                    <% if (paging.needPaging) { %>
                     <div class="paging">
-                        <a href="#" role="button" class="prev"><span class="pg-blind">이전 페이지로 이동</span></a>
-                        <a href="#" role="button">7</a>
-                        <a href="#" role="button">8</a>
-                        <a href="#" role="button" class="active" title="현재페이지">9</a>
-                        <a href="#" role="button">10</a>
-                        <a href="#" role="button">11</a>
-                        <a href="#" role="button" class="next"><span class="pg-blind">다음 페이지로 이동</span></a>
-                        <!-- <a href="#" role="button" class="next"><span class="pg-blind">다음 페이지로 이동</span></a> -->
-                        <!-- 비활성화시 disabled 클래스 추가 -->
+                        <% if (paging.prevPageIdx) { %>
+                        <a href="<%= paging.uri%>?curPage=<%= paging.prevPageIdx %>" role="button" class="prev"><span class="pg-blind">이전 페이지로 이동</span></a>
+                        <% } %>
+                        <% for ( var i = paging.startNum; i <= paging.endNum; i++) { %>
+                            <a href="<%= paging.uri%>?curPage=<%= i %>" role="button" class="<%= (paging.curPage == i) ? 'active' : '' %>" ><%= i %></a>
+                        <% } %>
+                        <% if (paging.nextPageIdx) { %>
+                        <a href="<%= paging.uri%>?curPage=<%= paging.nextPageIdx %>" role="button" class="next"><span class="pg-blind">다음 페이지로 이동</span></a>
+                        <% } %>
                     </div>
+                    <% } %>
                 </div>
                 <% } else { %>
                 <div class="cont-box nogaps-btm">
