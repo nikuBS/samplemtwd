@@ -28,10 +28,30 @@ class CustomerFaqInfoSite extends TwViewController {
         svcInfo: svcInfo
       });
     } else {
-      res.render('faq/customer.faq.info.site.html', {
-        svcInfo: svcInfo,
-        siteLink: siteLink
-      });
+
+      if (!serviceId) {
+
+        res.render('faq/customer.faq.info.site.html', {
+          svcInfo: svcInfo,
+          siteLink: siteLink
+        });
+      } else {
+        this.apiService.request(API_CMD.BFF_08_0057, {
+
+        }).subscribe((resp) => {
+          if (resp.code === API_CODE.CODE_00) {
+
+          } else {
+            this.logger.error(this, resp);
+            res.render('error.server-error.html', {
+              title: '',
+              code: resp.code,
+              msg: resp.msg,
+              svcInfo: svcInfo
+            });
+          }
+        });
+      }
       // this.apiService.request(API_CMD.BFF_07_0072, {}).subscribe((resp) => {
       //
       //   if (resp.code === API_CODE.CODE_00) {

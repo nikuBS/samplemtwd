@@ -44,14 +44,6 @@ class CustomerFaqInfoService extends TwViewController {
         }
       });
     }
-
-    // this.apiService.request(API_CMD.BFF_07_0072, {}).subscribe((resp) => {
-    //
-    //   if (resp.code === API_CODE.CODE_00) {
-
-
-    // }
-    // });
   }
 
 }
