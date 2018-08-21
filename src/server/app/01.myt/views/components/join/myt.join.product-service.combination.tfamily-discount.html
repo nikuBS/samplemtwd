@@ -7,7 +7,7 @@
 
 <div class="cont-box">
     <div class="top-info mb22">
-        <button role="button" class="link-btn tx-normal"><span class="ff-hn vbl">T</span>끼리온가족할인</button>  
+        <a role="button" class="link-btn tx-normal"><span class="ff-hn vbl">T</span>끼리온가족할인</a> <!-- TODO: 결합상품 상세페이지 이동 필요 -->
     </div>
     <div class="payment-detail-box">
         <div class="detail-inner">
@@ -43,15 +43,16 @@
             <div class="acco-style user-list"><!-- 스타일별 클래스 추가 -->
                 <ul class="acco-box">
                     <% for (let i = 0; i < combination.wireIndex; i++) { %>
-                        <% const member = combination.members[i]; %>
+                    <% const member = combination.members[i]; %>
+                    <% const isMine = combination.representationId === member.managementId %>
                     <li class="acco-list"><!-- on , off -->
                         <div class="acco-title">
                             <button role="button" aria-pressed="">
-                                <span class="info-line"><%= member.name %> <%= i === 0 || !member.relation ? '' : '(' + member.relation + ')' %>
+                                <span class="info-line"><%= member.name %> <%= isMine? '' : '(' + member.relation + ')' %>
                                     <% if (member.isRepresentation) { %>
                                         <span class="badge badge-fam-members"><span class="blind">가족대표</span></span>
                                     <% } %>
-                                    <% if (i === 0) { %>                                   
+                                    <% if (isMine) { %>                                   
                                     <span class="badge badge-me"><span class="blind">나</span></span>
                                     <% } %>
                                 </span>
@@ -66,7 +67,7 @@
                                 <ul>
                                     <li>
                                         <span class="title">가족대표와의 관계</span>
-                                        <span class="tx-cont"><%= member.relation %><%= i === 0? '(내번호)': ''%></span>
+                                        <span class="tx-cont"><%= member.relation %><%= isMine? '(내번호)': ''%></span>
                                     </li>
                                     <li>
                                         <span class="title">휴대폰 가입년수</span>
