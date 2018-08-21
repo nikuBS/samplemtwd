@@ -8811,7 +8811,7 @@ li.payment-detail-box:last-child {
 }
 
 .link-long-group.noborder-bt .link-long:last-child {
-  border: 0px;
+  border: 0;
 }
 
 .link-long-group.noborder-bt .link-long .link-info-1 {
@@ -8867,7 +8867,7 @@ li.payment-detail-box:last-child {
 }
 
 .used-box .msg-account-info {
-  border: 0px;
+  border: 0;
 }
 
 .used-box .account-detail .line {
@@ -8920,13 +8920,13 @@ li.payment-detail-box:last-child {
 }
 
 .cont-box.square .payment-inner {
-  margin-top: 0px;
+  margin-top: 0;
   border-top: 1px solid #e1e1e1;
   padding: 0;
 }
 
 .cont-box.square .payment-inner .bt-slice.item-two button {
-  line-height: 0px;
+  line-height: 0;
   font-size: 0.9375rem;
 }
 
@@ -8992,13 +8992,13 @@ li.payment-detail-box:last-child {
 }
 
 .cont-box.square .payment-detail-box {
-  border: 0px;
+  border: 0;
   margin-bottom: 0;
 }
 
 .cont-box.square .payment-detail-box .detail-inner.top {
   padding-top: 2.5rem;
-  padding-bottom: 0px;
+  padding-bottom: 0;
 }
 
 .cont-box.square .payment-detail-box .detail-inner {
@@ -15285,6 +15285,12 @@ span[class*=char-star][class*=red] {
 /* 김재성 */
 .jsk {
   color: #00f;
+  -webkit-color: red;
+  -khtml-color: red;
+  -moz-color: red;
+  -ms-color: red;
+  -o-color: red;
+  color: red;
 }
 
 /* 최은현 */
