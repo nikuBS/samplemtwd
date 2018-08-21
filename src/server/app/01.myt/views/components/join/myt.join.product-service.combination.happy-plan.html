@@ -40,7 +40,7 @@
                     <li class="acco-list"><!-- on , off -->
                         <div class="acco-title">
                             <button role="button" aria-pressed="">
-                                <span class="info-line"><%= member.name %>
+                                <span class="info-line"><%= member.name %>  <%= member.isRepresentation ? '' : '(' + member.relation + ')' %>
                                     <% if (member.isRepresentation) { %><span class="badge badge-fam-members"><span class="blind">가족대표</span></span><% } %>
                                     <% if (isMine) { %><span class="badge badge-me"><span class="blind">나</span></span><% } %>
                                 </span>

@@ -7,7 +7,7 @@
 
 <div class="cont-box">
     <div class="top-info mb22">
-        <button role="button" class="link-btn tx-normal"><span class="ff-hn vbl">TB</span>끼리 온가족무료</button>  
+        <a role="button" class="link-btn tx-normal"><span class="ff-hn vbl">TB</span>끼리 온가족무료</a>  <!-- TODO: 상세페이지 링크 연결 필요 -->
     </div>
     <div class="payment-detail-box">
         <div class="detail-inner">
@@ -36,6 +36,7 @@
     <!-- .component -->
     <div class="component">
         <div class="component-box flcardcta">
+            <% if (combination.count === 2) { %>
             <!-- 2회선일 경우 -->
             <div class="flcard-cont">
                 <div class="flcard-area">
@@ -46,7 +47,7 @@
                 <span class="ico-ill-benefit"></span>
             </div>
             <!--// 2회선일 경우 -->
-
+            <% } else if (combination.count === 3) { %>
             <!-- 3회선일 경우 -->
             <div class="flcard-cont">
                 <div class="flcard-area">
@@ -57,7 +58,7 @@
                 <span class="ico-ill-benefit"></span>
             </div>
             <!--// 3회선일 경우 -->
-
+            <% } else if (combination.count > 3) { %>
             <!-- 4회선일 경우 -->
             <div class="flcard-cont">
                 <div class="flcard-area">
@@ -68,6 +69,7 @@
                 <span class="ico-ill-benefit"></span>
             </div>
             <!--// 4회선일 경우 -->
+            <% } %>
         </div>
     </div>
     <!--// .component -->
@@ -79,54 +81,36 @@
         <div class="widget-box accordion2">
             <div class="acco-style user-list"><!-- 스타일별 클래스 추가 -->
                 <ul class="acco-box">
+                    <% for (let i = 0; i < combination.wireIndex; i++) { %>
+                    <% const member = combination.members[i]; %>
+                    <% const isMine = combination.representationId === member.managementId %>
                     <li class="acco-list"><!-- on , off -->
                         <div class="acco-title">
                             <button role="button" aria-pressed="">
-                                <span class="info-line">최*영 
-                                    <span class="badge badge-fam-members"><span class="blind">가족대표</span></span>
-                                    <span class="badge badge-me"><span class="blind">나</span></span>
+                                <span class="info-line"><%= member.name %> <%= member.isRepresentation ? '' : '(' + member.relation + ')' %>
+                                    <% if (member.isRepresentation) { %><span class="badge badge-fam-members"><span class="blind">가족대표</span></span><% } %>
+                                    <% if (isMine) { %><span class="badge badge-me"><span class="blind">나</span></span><% } %>
                                 </span>
-                                <span class="info-line ff-hn">010-12**-56**</span>
+                                <span class="info-line ff-hn"><%= member.svcNumber %></span>
                             </button>
                         </div>
                         <div class="acco-content">
                             <div class="detail-list">
+                                <% const bProduct = combination.bProducts[member.managementId]; %>
                                 <ul>
                                     <li>
                                         <span class="title">가족대표와의 관계</span>
-                                        <span class="tx-cont">본인(내번호)</span>
+                                        <span class="tx-cont"><%= member.relation %><%= isMine? '(내번호)': ''%></span>
                                     </li>
                                     <li>
                                         <span class="title">결합유선상품</span>
-                                        <span class="tx-cont">인터넷</span>
+                                        <span class="tx-cont"><%= bProduct? bProduct.wireProduct : '-' %></span>
                                     </li>
                                 </ul>
                             </div>
                         </div>
                     </li>
-
-                    <li class="acco-list"><!-- on , off -->
-                        <div class="acco-title">
-                            <button role="button" aria-pressed="">
-                                <span class="info-line">최*진 (형제자매)</span>
-                                <span class="info-line ff-hn">010-12**-56**</span>
-                            </button>
-                        </div>
-                        <div class="acco-content">
-                            <div class="detail-list">
-                                <ul>
-                                    <li>
-                                        <span class="title">가족대표와의 관계</span>
-                                        <span class="tx-cont">형제자매</span>
-                                    </li>
-                                    <li>
-                                        <span class="title">결합유선상품</span>
-                                        <span class="tx-cont">인터넷</span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </li>
+                    <% } %>
                 </ul>
             </div>
         </div>

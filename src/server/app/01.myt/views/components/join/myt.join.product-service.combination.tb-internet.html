@@ -7,7 +7,7 @@
 
 <div class="cont-box">
     <div class="top-info mb22">
-        <button role="button" class="link-btn tx-normal"><span class="ff-hn vbl">T+B</span>인터넷 (개인형)</button>  
+        <button role="button" class="link-btn tx-normal"><span class="ff-hn vbl"><%= combination.plan %></span></button>  
     </div>
     <div class="payment-detail-box">
         <div class="detail-inner">
@@ -42,11 +42,13 @@
         <div class="widget-box accordion2">
             <div class="acco-style user-list"><!-- 스타일별 클래스 추가 -->
                 <ul class="acco-box">
+                    <% for (let i = 0; i < combination.members.length; i++) { %>
+                    <% const member = combination.members[i]; %>
                     <li class="acco-list"><!-- on , off -->
                         <div class="acco-title">
                             <button role="button" aria-pressed="">
-                                <span class="info-line">최*영</span><span class="info-line ff-hn">010-12**-56**</span>
-                                <span class="right-item"><span class="ff-hn vbl">T</span>상품</span>
+                                <span class="info-line"><%= member.name %></span><span class="info-line ff-hn"><%= member.svcNumber %></span>
+                                <span class="right-item"><span class="ff-hn vbl"><%= member.companyCode %></span>상품</span>
                             </button>
                         </div>
                         <div class="acco-content">
@@ -54,63 +56,29 @@
                                 <ul>
                                     <li>
                                         <span class="title">상품</span>
-                                        <span class="tx-cont"><span class="ff-hn vbl">T</span>상품</span>
+                                        <span class="tx-cont"><span class="ff-hn vbl"><%= member.companyCode %></span>상품</span>
                                     </li>
                                     <li>
                                         <span class="title">요금제</span>
-                                        <span class="tx-cont"><span class="ff-hn vbl">T</span>끼리 <span class="ff-hn vbl">65</span></span>
+                                        <span class="tx-cont"><span class="ff-hn vbl"><%= member.servicePlan %></span></span>
                                     </li>
                                     <li>
                                         <span class="title">서비스 제공회사</span>
-                                        <span class="tx-cont"><span class="ff-hn vbl">SK</span>텔레콤</span>
+                                        <span class="tx-cont"><span class="ff-hn vbl">SK</span><%= member.companyCode === 'B'? '브로드밴드' : '텔레콤' %></span>
                                     </li>
                                     <li>
                                         <span class="title">사용 개월 수</span>
-                                        <span class="tx-cont">-</span>
+                                        <span class="tx-cont"><%= member.companyCode === 'B'? member.months : '-' %></span>
                                     </li>
                                     <li>
                                         <span class="title"><span class="ff-hn vbl">T</span>끼리 온가족 할인</span>
-                                        <span class="tx-cont">할인제도 사용중</span>
+                                        <span class="tx-cont"><%= member.isDiscounting? '할인제도 사용중' : '-' %></span>
                                     </li>
                                 </ul>
                             </div>
                         </div>
                     </li>
-
-                    <li class="acco-list"><!-- on , off -->
-                        <div class="acco-title">
-                            <button role="button" aria-pressed="">
-                                <span class="info-line">최*석</span><span class="info-line ff-hn">010-12**-56**</span>
-                                <span class="right-item"><span class="ff-hn vbl">B</span>상품</span>
-                            </button>
-                        </div>
-                        <div class="acco-content">
-                            <div class="detail-list">
-                                <ul>
-                                    <li>
-                                        <span class="title">상품</span>
-                                        <span class="tx-cont"><span class="ff-hn vbl">B</span>상품</span>
-                                    </li>
-                                    <li>
-                                        <span class="title">요금제</span>
-                                        <span class="tx-cont">스마트광랜다이렉트<br />(광랜FTTH)</span>
-                                    </li>
-                                    <li>
-                                        <span class="title">서비스 제공회사</span>
-                                        <span class="tx-cont"><span class="ff-hn vbl">SK</span>브로드밴드</span>
-                                    </li>
-                                    <li>
-                                        <span class="title">사용 개월 수</span>
-                                        <span class="tx-cont">**년**개월</span>
-                                    </li>
-                                    <li>
-                                        <span class="title"><span class="ff-hn vbl">T</span>끼리 온가족 할인</span>
-                                        <span class="tx-cont">-</span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </li>
+                    <% } %>
                 </ul>
             </div>
         </div>

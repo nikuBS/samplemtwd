@@ -229,9 +229,9 @@ export const COMBINATION_PRODUCT_TYPE = {
   'NH00000037': 'tb-internet',
   'NH00000039': 'tb-internet',
   'TW00000062': 'tb-internet',  // T+B인터넷
-  'NH00000040': 'tb-itel',
-  'NH00000041': 'tb-itel',
-  'TW00000063': 'tb-itel',  // T+B전화/인터넷전화
+  'NH00000040': 'tb-internet',
+  'NH00000041': 'tb-internet',
+  'TW00000063': 'tb-internet',  // T+B전화/인터넷전화
   'NA00002040': 'tfamily-discount',
   'TW20000010': 'tfamily-discount', // T끼리 온가족할인
   'NA00004728': 'happy-plan',
