@@ -148,6 +148,7 @@ export const API_CMD = {
   BFF_05_0092: { path: '/core-modification/v1/wire-network-notification-smsinfo', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0093: { path: '/core-bill/v1/microPay-cphist-request', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0094: { path: '/core-modification/v1/my-discount-benefit/getSKTcombiBenefit', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0096: { path: '/core-product/v1/recommend-benefits', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0101: { path: '/core-bill/v1/rainbow-point-services', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0102: { path: '/core-bill/v1/rainbow-point-adjustments', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_05_0106: { path: '/core-modification/v1/my-discount-benefit/price-agree-info', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
@@ -465,4 +466,5 @@ export const API_GIFT_ERROR = [
   'RCG0013',   // 그 외 기타에러
   'RCG0015',   // 기타 불가
 ];
+
 

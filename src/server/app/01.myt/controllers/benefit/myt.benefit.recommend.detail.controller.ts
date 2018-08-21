@@ -7,7 +7,7 @@
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
 import { Observable } from 'rxjs/Observable';
-import { API_CODE } from '../../../../types/api-command.type';
+import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 
 class MyTBenefitRecommendDetailController extends TwViewController {
   constructor() {
