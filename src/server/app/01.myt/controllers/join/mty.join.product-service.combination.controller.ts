@@ -14,6 +14,7 @@ import StringHelper from '../../../../utils/string.helper';
 import ValidationHelper from '../../../../utils/validation.helper';
 
 interface ICombination {
+  plan: string;
   joinDate: string;
   totalPeriod: number;
   totalDiscount: string;
@@ -90,6 +91,7 @@ export default class MytJoinProductServiceCombinationController extends TwViewCo
   private getProperCombinationData = (combination: any): ICombination => {
     const group = combination.combinationGroup;
     return {
+      plan: group.combProdNm,
       joinDate: DateHelper.getShortDateNoDot(group.combStaDt),
       totalPeriod: group.totUseYy,
       totalDiscount: FormatHelper.convNumFormat(group.totBasFeeDcTx),
@@ -108,17 +110,17 @@ export default class MytJoinProductServiceCombinationController extends TwViewCo
       name: member.custNm,
       relation: member.relClNm,
       isRepresentation: member.relClCd === "00",
-      svcNumber: ValidationHelper.isCellPhone(member.svcNum) ? StringHelper.phoneStringToDash((member.svcNum) : member.svcNum,
-        period: member.useYySum,
-        months: member.useYearCnt,
-        servicePlan: member.feeProdNm,
-        managementId: member.svcMgmtNum,
-        afterDiscount: member.aftBasFeeAmtTx ? FormatHelper.convNumFormat(member.aftBasFeeAmtTx) : undefined,
-        beforeDiscount: member.basFeeAmtTx ? FormatHelper.convNumFormat(member.aftBasFeeAmtTx) : undefined,
-        discountAmount: member.basFeeDcTx ? FormatHelper.convNumFormat(member.aftBasFeeAmtTx) : undefined,
-        discountRate: member.tcFeeBenf,
-        companyCode: member.coClCd || 'T',
-        isDiscounting: member.famlUseYn ? member.famlUseYn === 'Y' : undefined
+      svcNumber: ValidationHelper.isCellPhone(member.svcNum) ? StringHelper.phoneStringToDash(member.svcNum) : member.svcNum,
+      period: member.useYySum,
+      months: member.useYearCnt,
+      servicePlan: member.feeProdNm,
+      managementId: member.svcMgmtNum,
+      afterDiscount: member.aftBasFeeAmtTx ? FormatHelper.convNumFormat(member.aftBasFeeAmtTx) : undefined,
+      beforeDiscount: member.basFeeAmtTx ? FormatHelper.convNumFormat(member.aftBasFeeAmtTx) : undefined,
+      discountAmount: member.basFeeDcTx ? FormatHelper.convNumFormat(member.aftBasFeeAmtTx) : undefined,
+      discountRate: member.tcFeeBenf,
+      companyCode: member.coClCd || 'T',
+      isDiscounting: member.famlUseYn ? member.famlUseYn === 'Y' : undefined
     }
   }
 
