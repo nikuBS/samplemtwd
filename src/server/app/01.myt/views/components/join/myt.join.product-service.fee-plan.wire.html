@@ -51,10 +51,10 @@
                             <li>
                                 <span class="title"><%= feePlan.dcBenefits[i].penText %></span>
                                 <span class="tx-cont">
+                                <% if (['01', '02'].indexOf(feePlan.dcBenefits[i].dcCttClCd) !== -1) { %>
                                     <span class="ff-hn vbl"><%= feePlan.dcBenefits[i].dcVal %></span>
-                                    <% if (['01', '02'].indexOf(feePlan.dcBenefits[i].dcCttClCd) !== -1) { %>
                                     <%= (feePlan.dcBenefits[i].dcCttClCd === '01') ? '원' : '%' %> 할인
-                                    <% } %>
+                                <% } %>
                                 </span>
                             </li>
                             <li>
