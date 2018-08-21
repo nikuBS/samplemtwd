@@ -305,7 +305,7 @@ Tw.MyTBillHistoryCommon.GetLimit.prototype = {
       requestCnt: this.usageRequestCounter
     })
         .done($.proxy(this._pre_checkUsageLimitCurrentMonth, this))
-        .error($.proxy(this.common._apiError, this));
+        .fail($.proxy(this.common._apiError, this));
   },
 
   _pre_checkUsageLimitCurrentMonth: function (res) {

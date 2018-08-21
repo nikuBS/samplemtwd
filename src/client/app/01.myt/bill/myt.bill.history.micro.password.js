@@ -135,7 +135,7 @@ Tw.MyTBillHistoryMicroPassword.prototype = {
       modifyPassword2: confirmPS
     })
         .done($.proxy(this._responseCallback, this))
-        .error($.proxy(this._responseCallback, this));
+        .fail($.proxy(this._responseCallback, this));
   },
 
   _responseCallback: function (res) {

@@ -100,7 +100,7 @@ Tw.PaymentHistoryPointAuto.prototype = {
 
   _getHistoryData: function () {
     if (this.apiName) {
-      this._apiService.request(this.apiName, {}).done($.proxy(this._setHistoryData, this)).error($.proxy(this._apiError, this));
+      this._apiService.request(this.apiName, {}).done($.proxy(this._setHistoryData, this)).fail($.proxy(this._apiError, this));
     }
   },
 

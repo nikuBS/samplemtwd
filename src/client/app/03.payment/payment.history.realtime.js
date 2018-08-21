@@ -61,13 +61,13 @@ Tw.PaymentHistoryRealtime.prototype = {
             }
             this._getData();
           }, this))
-          .error($.proxy(this._apiError, this));
+          .fail($.proxy(this._apiError, this));
     }
   },
 
   _getData: function () {
     if (this.apiName) {
-      this._apiService.request(this.apiName, this.apiOption).done($.proxy(this._setData, this)).error($.proxy(this._apiError, this));
+      this._apiService.request(this.apiName, this.apiOption).done($.proxy(this._setData, this)).fail($.proxy(this._apiError, this));
     }
   },
 
@@ -182,7 +182,7 @@ Tw.PaymentHistoryRealtime.prototype = {
     this.currentIndex = $(e.target).data('list-id');
     var selectedList = this.result[this.currentIndex];
     this._apiService.request(this.api_detailName, selectedList.detailOption).done(
-        $.proxy(this.detailSuccess, this, selectedList)).error($.proxy(this._apiError, this));
+        $.proxy(this.detailSuccess, this, selectedList)).fail($.proxy(this._apiError, this));
   },
 
   detailSuccess: function (oData, res) {

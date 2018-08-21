@@ -82,7 +82,7 @@ Tw.PaymentHistoryExcessPayAccount.prototype = {
     this.apiOption.rfndBankNum = bankNumber;
 
     if (this.apiName) {
-      this._apiService.request(this.apiName, this.apiOption).done($.proxy(this._successRegisterAccount, this)).error($.proxy(this._apiError, this));
+      this._apiService.request(this.apiName, this.apiOption).done($.proxy(this._successRegisterAccount, this)).fail($.proxy(this._apiError, this));
     }
   },
 
