@@ -54,7 +54,7 @@ Tw.MyTBenefitDisCntDetail.prototype = {
         }
         else {
           // 대상 (결합상품목록)
-          this._history.goLoad('/myt/join/product-service');
+          this._history.goLoad('/myt/join/product-service#combinations');
         }
         break;
     }
