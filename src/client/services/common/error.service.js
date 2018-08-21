@@ -18,8 +18,12 @@ Tw.ErrorService.prototype = {
   },
 
   pop: function() {
-    $.when(this._popupService.close())
-      .then(this._popupService.openAlert('[' + this._data.code + '] ' + this._data.msg));
+    var message = this._data.msg;
+    if (!Tw.FormatHelper.isEmpty(this._data.code)) {
+      message = '[' + this._data.code + '] ' + message;
+    }
+
+    this._popupService.openAlert(message);
   },
 
   page: function() {
