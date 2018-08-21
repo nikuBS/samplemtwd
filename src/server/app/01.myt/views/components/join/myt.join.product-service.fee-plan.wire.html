@@ -1,0 +1,74 @@
+<%#
+* FileName: myt.join.product-service.fee-plan.wire.html
+* Author: 양지훈 (jihun202@sk.com)
+* Date: 2018.08.16
+%>
+<div class="cont-box">
+    <div class="box-contents">
+        <button class="title-bt" title="<%= feePlan.feeProdNm %> 상세페이지로 이동"><%= feePlan.feeProdNm %></button>
+        <div class="basic-list pt14">
+            <ul>
+                <li>
+                    <span class="title">신청일</span>
+                    <span class="tx-cont ff-hn"><%= feePlan.svcScrbDt %></span>
+                </li>
+                <% if (feePlan.isDisplayFeeAmt) { %>
+                <li>
+                    <span class="title">월정액(부가세 포함)</span>
+                    <span class="tx-cont"><span class="ff-hn vbl tx-bold"><%= feePlan.basFeeAmt %></span> 원</span>
+                </li>
+                <% } %>
+            </ul>
+        </div>
+        <div class="in-ico-list">
+            <ul>
+                <li class="ico-type5 ff-hn"><%= feePlan.liconImgAltCtt %></li>
+            </ul>
+        </div>
+        <div class="link-long-group pt20">
+            <div class="link-long">
+                <a href="">요금제 변경하기<span class="ico"></span></a>
+            </div>
+        </div>
+    </div>
+</div>
+<% if (feePlan.dcBenefits.length > 0) { %>
+<hr class="cont-sp type1" aria-hidden="true" />
+
+<div class="cont-box">
+    <h2 class="title-h2">무료할인 혜택</h2>
+    <div class="box-list mt20">
+        <ul>
+            <% for (var i in feePlan.dcBenefits) { %>
+            <li>
+                <div class="box-contents">
+                    <div class="basic-list">
+                        <ul>
+                            <li>
+                                <span class="title"><%= feePlan.dcBenefits[i].dcOferNm %></span>
+                                <span class="tx-cont"><%= feePlan.dcBenefits[i].dcObjInvItmTypNm %> 대상</span>
+                            </li>
+                            <li>
+                                <span class="title"><%= feePlan.dcBenefits[i].penText %></span>
+                                <span class="tx-cont">
+                                    <span class="ff-hn vbl"><%= feePlan.dcBenefits[i].dcVal %></span>
+                                    <% if (['01', '02'].indexOf(feePlan.dcBenefits[i].dcCttClCd) !== -1) { %>
+                                    <%= (feePlan.dcBenefits[i].dcCttClCd === '01') ? '원' : '%' %> 할인
+                                    <% } %>
+                                </span>
+                            </li>
+                            <li>
+                                <span class="title">할인 기간</span>
+                                <span class="tx-cont ff-hn"><%= feePlan.dcBenefits[i].dcStaDt %>~<br /><%= feePlan.dcBenefits[i].dcEndDt %></span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </li>
+            <% } %>
+        </ul>
+    </div>
+</div>
+<% } %>
+
+<%- include('../../components/join/myt.join.product-service.fee-plan.' + svcCdName[svcInfo.svcAttrCd] + '.html')  %>

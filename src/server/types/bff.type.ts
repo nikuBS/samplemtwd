@@ -26,12 +26,12 @@ export const SVC_CD = {
 export const SVC_CDNAME = {
   M1: 'cellphone',
   M2: 'pps',
-  M3: 't-pocket-fi',
-  M4: 't-login',
-  M5: 't-wibro',
-  S1: 'internet',
-  S2: 'iptv',
-  S3: 'phone',
+  M3: 't-series',
+  M4: 't-series',
+  M5: 't-series',
+  S1: 'skbroadband',
+  S2: 'skbroadband',
+  S3: 'skbroadband',
   O1: 'pointcam'
 };
 

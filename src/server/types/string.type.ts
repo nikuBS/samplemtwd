@@ -320,6 +320,12 @@ export const MYT_BENEFIT_RECOMMEND = {
   }
 };
 
+export const MYT_FEEPLAN_BENEFIT = {
+  PEN_Y: '위약금 대상',
+  PEN_N: '위약금 비대상',
+  ENDLESS: '서비스 해지시 종료'
+};
+
 export const MYT_COMBINATION_TYPE = {
   MULTI_ONE: '1~4',
   MULTI_TWO: '2~4',
