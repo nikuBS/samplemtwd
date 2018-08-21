@@ -41,13 +41,13 @@ Tw.MyTBenefitRainbowPointHistory.prototype = {
     this.$fromDate.val(strFrom);
   },
 
-  _onClickSearch: function (e) {
+  _onClickSearch: function () {
     var params = {
       fromDt: this.$fromDate.val().replace(/-/g, ''),
       toDt: this.$toDate.val().replace(/-/g, ''),
       page: 1,
       size: 20
-    }
+    };
     this._apiService.request(Tw.API_CMD.BFF_05_0100, params)
       .done($.proxy(this._onHistoryDataReceived, this))
       .fail(function () {
