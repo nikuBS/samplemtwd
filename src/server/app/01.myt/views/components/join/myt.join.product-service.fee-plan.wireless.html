@@ -5,29 +5,29 @@
 %>
 <div class="cont-box">
     <div class="box-contents">
-        <button class="title-bt" title="<%= feePlan.useFeePlanPro.prodNm %> 상세페이지로 이동"><%= feePlan.useFeePlanPro.prodNm %></button>
+        <button class="title-bt" title="<%= feePlan.feePlanProd.prodNm %> 상세페이지로 이동"><%= feePlan.feePlanProd.prodNm %></button>
         <div class="basic-list pt14">
             <ul>
                 <li>
                     <span class="title">신청일</span>
-                    <span class="tx-cont ff-hn"><%= feePlan.useFeePlanPro.scrbDt %></span>
+                    <span class="tx-cont ff-hn"><%= feePlan.feePlanProd.scrbDt %></span>
                 </li>
                 <li>
                     <span class="title">월정액(부가세 포함)</span>
-                    <span class="tx-cont"><span class="ff-hn vbl tx-bold"><%= feePlan.useFeePlanPro.basFeeTxt %></span> 원</span>
+                    <span class="tx-cont"><span class="ff-hn vbl tx-bold"><%= feePlan.feePlanProd.basFeeTxt %></span></span>
                 </li>
             </ul>
         </div>
         <div class="in-ico-list">
             <ul>
-                <% if (feePlan.useFeePlanPro.basDataTxt) { %>
-                <li class="ico-type1 ff-hn"><%= feePlan.useFeePlanPro.basDataTxt %></li>
+                <% if (feePlan.feePlanProd.basDataTxt) { %>
+                <li class="ico-type1 ff-hn"><%= feePlan.feePlanProd.basDataTxt %></li>
                 <% } %>
-                <% if (feePlan.useFeePlanPro.basOfrVcallTmsTxt) { %>
-                <li class="ico-type2"><%= feePlan.useFeePlanPro.basOfrVcallTmsTxt %></li>
+                <% if (feePlan.feePlanProd.basOfrVcallTmsTxt) { %>
+                <li class="ico-type2"><%= feePlan.feePlanProd.basOfrVcallTmsTxt %></li>
                 <% } %>
-                <% if (feePlan.useFeePlanPro.basOfrLtrAmtTxt) { %>
-                <li class="ico-type3"><%= feePlan.useFeePlanPro.basOfrLtrAmtTxt %></li>
+                <% if (feePlan.feePlanProd.basOfrLtrAmtTxt) { %>
+                <li class="ico-type3"><%= feePlan.feePlanProd.basOfrLtrAmtTxt %></li>
                 <% } %>
             </ul>
         </div>
@@ -47,7 +47,7 @@
         </div>
     </div>
 </div>
-<% if (feePlan.tClassProd.tClassProdList.length > 0) { %>
+<% if (feePlan.tClassProd && feePlan.tClassProd.tClassProdList.length > 0) { %>
 <hr class="cont-sp type1" aria-hidden="true" />
 
 <div class="cont-box">

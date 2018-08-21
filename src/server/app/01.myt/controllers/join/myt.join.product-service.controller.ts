@@ -4,14 +4,13 @@
  * Date: 2018.08.13
  */
 
-import { COMBINATION_PRODUCT_OTHER_TYPE } from '../../../../types/bff.type';
+import { COMBINATION_PRODUCT_OTHER_TYPE, UNIT } from '../../../../types/bff.type';
 import { NextFunction, Request, Response } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import FormatHelper from '../../../../utils/format.helper';
 import { Observable } from 'rxjs/Observable';
 import { SVC_CDNAME, SVC_CDGROUP } from '../../../../types/bff.type';
-import { Wire, WireLess } from '../../../../mock/server/myt.join.product-service.mock';
 import { MYT_COMBINATION_TYPE, MYT_COMBINATION_FAMILY, MYT_FEEPLAN_BENEFIT } from '../../../../types/string.type';
 import DateHelper from '../../../../utils/date.helper';
 
@@ -77,18 +76,24 @@ class MytJoinProductServiceController extends TwViewController {
       });
     }
 
+    // @todo change data.result.feePlanProd.unit
+    const unitMockData = '';
+
     return Object.assign(data.result, {
-      useFeePlanPro: Object.assign(data.result.useFeePlanPro, {
-        scrbDt: DateHelper.getShortDateWithFormat(data.result.useFeePlanPro.scrbDt, 'YYYY.MM.DD'),
-        basFeeTxt: FormatHelper.addComma(data.result.useFeePlanPro.basFeeTxt)
+      feePlanProd: Object.assign(data.result.feePlanProd, {
+        scrbDt: DateHelper.getShortDateWithFormat(data.result.feePlanProd.scrbDt, 'YYYY.MM.DD'),
+        basFeeTxt: (!FormatHelper.isEmpty(unitMockData)) ? FormatHelper.addComma(data.result.feePlanProd.basFeeTxt) + UNIT[unitMockData]
+            : data.result.feePlanProd.basFeeTxt
       }),
-      tClassProd: Object.assign(data.result.tClassProd, {
-        tClassProdList: data.result.tClassProd.tClassProdList.map((item) => {
-          return Object.assign(item, {
-            scrbDt: DateHelper.getShortDateWithFormat(item.scrbDt, 'YYYY.MM.DD')
-          });
-        })
-      })
+      tClassProd: {
+        tClassProdList: data.result.tClassProd ? Object.assign(data.result.tClassProd, {
+          tClassProdList: data.result.tClassProd.tClassProdList.map((item) => {
+            return Object.assign(item, {
+              scrbDt: DateHelper.getShortDateWithFormat(item.scrbDt, 'YYYY.MM.DD')
+            });
+          })
+        }) : []
+      }
     });
   }
 
@@ -103,11 +108,8 @@ class MytJoinProductServiceController extends TwViewController {
       return this.error.render(res, defaultOptions);
     }
 
-    const feePlanApi: Observable<any> = apiInfo.isWire ? Observable.of(Wire) : Observable.of(WireLess);
-    // const feePlanApi: Observable<any> = this.apiService.request(apiInfo.apiCmd, {});
-
     Observable.combineLatest(
-      feePlanApi,
+      this.apiService.request(apiInfo.apiCmd, {}),
       this.getCombinations()
     ).subscribe(([feePlan, combinations]) => {
       if (feePlan.code !== API_CODE.CODE_00) {
@@ -155,7 +157,7 @@ class MytJoinProductServiceController extends TwViewController {
               const item = wire[i];
               const nItem = this.getProperCombination(item);
               if (nItem) {
-                combinations[item.expsOrder] = nItem
+                combinations[item.expsOrder] = nItem;
               }
             }
           }
