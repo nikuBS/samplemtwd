@@ -125,6 +125,12 @@ class MytBenefitDisCntDetailController extends TwViewController {
       if ( resp.code === API_CODE.CODE_00 ) {
         if ( !FormatHelper.isEmpty(resp.result) ) {
           data = Object.assign(resp.result, data);
+          if ( data.wlfCustDcList && data.wlfCustDcList.length > 0 ) {
+            data.effStaDt = DateHelper.getShortDate(data.wlfCustDcList[1].effStaDt);
+          }
+          if ( data.agreeEndDate ) {
+            data.effEndDt = DateHelper.getShortDate(data.wlfCustDcList[1].effEndDt);
+          }
         }
       } else {
         this.logger.warn(this, 'WelfareCustomer: ', JSON.stringify(resp));
