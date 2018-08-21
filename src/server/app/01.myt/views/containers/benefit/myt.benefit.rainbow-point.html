@@ -1,8 +1,8 @@
-<!--
+<%#
 * FileName: myt.benefit.rainbow-point.html
 * Author: Hyeryoun Lee (skt.P130712@partner.sk.com)
 * Date: 2018. 8. 14.
--->
+%>
 <% include ../../components/start.component.html %>
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
@@ -17,7 +17,7 @@
 <!-- wrap -->
 <div class="wrap" id="#myt-benefit-rainbow-point">
     <!-- header -->
-    <%- include('../../../../../common/views/components/header.component.html', { title: '레인보우 포인', svcInfo: svcInfo });
+    <%- include('../../../../../common/views/components/header.component.html', { title: '레인보우 포인트', svcInfo: svcInfo });
     %>
     <!-- // header -->
     <!-- content -->
@@ -33,7 +33,7 @@
                         <button class="btn-toggle wrap-bt-table" role="button" aria-pressed="false">
                                 <span class="in-bt-table ico-arrow">
                                     <span class="title">잔여 포인트</span>
-                                    <span class="tx-cont"><span class="tx-bold ff-hn vbl">3,142</span> 점</span>
+                                    <span class="tx-cont"><span class="tx-bold ff-hn vbl"><%= point.usblPoint %></span> 점</span>
                                 </span>
                         </button>
                         <div class="toggler">
@@ -41,15 +41,15 @@
                                 <ul class="in-exp-info">
                                     <li>
                                         <span class="title">총 적립 포인트</span>
-                                        <span class="tx-cont"><span class="ff-hn">3,000</span> 점</span>
+                                        <span class="tx-cont"><span class="ff-hn"><%= point.erndPoint %></span> 점</span>
                                     </li>
                                     <li>
                                         <span class="title">총 사용 포인트</span>
-                                        <span class="tx-cont"><span class="ff-hn">800</span> 점</span>
+                                        <span class="tx-cont"><span class="ff-hn"><%= point.usdPoint %></span> 점</span>
                                     </li>
                                     <li>
                                         <span class="title">총 소멸 포인트</span>
-                                        <span class="tx-cont"><span class="ff-hn">58</span> 점</span>
+                                        <span class="tx-cont"><span class="ff-hn"><%= point.exprdPoint %></span> 점</span>
                                     </li>
                                 </ul>
                             </div>
@@ -60,10 +60,10 @@
                 <div class="contents-btn">
                     <ul class="bt-slice item-two">
                         <li class="bt-white2">
-                            <button>이용내역</button>
+                            <a href="/myt/benefit/rainbow-point/history">이용내역</a>
                         </li>
                         <li class="bt-white2">
-                            <button>혜택 자세히보기</button>
+                            <a href="/myt/benefit/rainbow-point/info">혜택 자세히보기</a>
                         </li>
                     </ul>
                 </div>
