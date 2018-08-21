@@ -15,19 +15,19 @@
                 <ul>
                     <li>
                         <span class="title">신청일</span>
-                        <span class="tx-cont"><span class="ff-hn vbl">2015.09.01</span></span>
+                        <span class="tx-cont"><span class="ff-hn vbl"><%= combination.joinDate %></span></span>
                     </li>
                     <li>
                         <span class="title">총 가입기간</span>
-                        <span class="tx-cont"><span class="ff-hn vbl">30</span> 년</span>
+                        <span class="tx-cont"><span class="ff-hn vbl"><%= combination.totalPeriod %></span> 년</span>
                     </li>
                     <li>
                         <span class="title">총 할인금액</span>
-                        <span class="tx-cont"><span class="tx-blue"><span class="ff-hn vbl tx-bold">135,030</span> 원</span></span>
+                        <span class="tx-cont"><span class="tx-blue"><span class="ff-hn vbl tx-bold"><%= combination.totalDiscount %></span> 원</span></span>
                     </li>
                     <li>
                         <span class="title">결합회선</span>
-                        <span class="tx-cont"><span class="ff-hn vbl">5</span> 회선</span>
+                        <span class="tx-cont"><span class="ff-hn vbl"><%= combination.count %></span> 회선</span>
                     </li>
                 </ul>
             </div>
@@ -42,204 +42,65 @@
         <div class="widget-box accordion2">
             <div class="acco-style user-list"><!-- 스타일별 클래스 추가 -->
                 <ul class="acco-box">
+                    <% for (let i = 0; i < combination.wireIndex; i++) { %>
+                        <% const member = combination.members[i]; %>
                     <li class="acco-list"><!-- on , off -->
                         <div class="acco-title">
                             <button role="button" aria-pressed="">
-                                <span class="info-line">최*영 
-                                    <span class="badge badge-fam-members"><span class="blind">가족대표</span></span>
+                                <span class="info-line"><%= member.name %> <%= i === 0 || !member.relation ? '' : '(' + member.relation + ')' %>
+                                    <% if (member.isRepresentation) { %>
+                                        <span class="badge badge-fam-members"><span class="blind">가족대표</span></span>
+                                    <% } %>
+                                    <% if (i === 0) { %>                                   
                                     <span class="badge badge-me"><span class="blind">나</span></span>
+                                    <% } %>
                                 </span>
-                                <span class="info-line ff-hn">010-12**-56**</span>
+                                <span class="info-line ff-hn"><%= member.svcNumber %></span>
 
-                                <span class="right-item">할인 후<br /><span class="ff-hn tx-bold vbl">41,930</span> 원</span>
+                                <span class="right-item">할인 후<br /><span class="ff-hn tx-bold vbl"><%= member.afterDiscount %></span> 원</span>
                             </button>
                         </div>
                         <div class="acco-content">
                             <div class="detail-list">
+                                <% const bProduct = combination.bProducts[member.managementId]; %>
                                 <ul>
                                     <li>
                                         <span class="title">가족대표와의 관계</span>
-                                        <span class="tx-cont">본인(내번호)</span>
+                                        <span class="tx-cont"><%= member.relation %><%= i === 0? '(내번호)': ''%></span>
                                     </li>
                                     <li>
                                         <span class="title">휴대폰 가입년수</span>
-                                        <span class="tx-cont"><span class="ff-hn vbl">10</span> 년</span>
+                                        <span class="tx-cont"><span class="ff-hn vbl"><%= member.period %></span> 년</span>
                                     </li>
                                     <li>
                                         <span class="title">B가입기간</span>
-                                        <span class="tx-cont">-</span>
+                                        <span class="tx-cont"><%= bProduct? bProduct.period + ' 년' : '-' %></span>
                                     </li>
                                     <li>
                                         <span class="title">월정액할인율</span>
-                                        <span class="tx-cont"><span class="ff-hn vbl">30</span> %</span>
+                                        <span class="tx-cont"><span class="ff-hn vbl"><%= member.discountRate %></span></span>
                                     </li>
                                     <li>
                                         <span class="title">사용중인 요금제</span>
-                                        <span class="tx-cont"><button class="bt-link-tx underline">band 데이터 59</button></span>
+                                        <span class="tx-cont"><a class="bt-link-tx underline"><%= member.servicePlan %></a></span><!-- TODO: 사용중인 요금제 링크 연결 필요 -->
                                     </li>
                                     <li>
                                         <span class="title">할인 전 금액</span>
-                                        <span class="tx-cont"><span class="ff-hn vbl">59,900</span> 원</span>
+                                        <span class="tx-cont"><span class="ff-hn vbl"><%= member.beforeDiscount %></span> 원</span>
                                     </li>
                                     <li>
                                         <span class="title">할인 금액</span>
-                                        <span class="tx-cont"><span class="tx-blue"><span class="ff-hn vbl tx-bold">-17,970</span> 원</span></span>
+                                        <span class="tx-cont"><span class="tx-blue"><span class="ff-hn vbl tx-bold">-<%= member.discountAmount %></span> 원</span></span>
                                     </li>
                                     <li>
                                         <span class="title">할인 후 금액</span>
-                                        <span class="tx-cont"><span class="ff-hn vbl tx-bold">41,930</span> 원</span>
+                                        <span class="tx-cont"><span class="ff-hn vbl tx-bold"><%= member.afterDiscount %></span> 원</span>
                                     </li>
                                 </ul>
                             </div>
                         </div>
                     </li>
-
-                    <li class="acco-list"><!-- on , off -->
-                        <div class="acco-title">
-                            <button role="button" aria-pressed="">
-                                <span class="info-line">최*석 (자녀)</span>
-                                <span class="info-line ff-hn">010-12**-56**</span>
-
-                                <span class="right-item">할인 후<br /><span class="ff-hn tx-bold vbl">1,930</span> 원</span>
-                            </button>
-                        </div>
-                        <div class="acco-content">
-                            <div class="detail-list">
-                                <ul>
-                                    <li>
-                                        <span class="title">가족대표와의 관계</span>
-                                        <span class="tx-cont">자녀</span>
-                                    </li>
-                                    <li>
-                                        <span class="title">휴대폰 가입년수</span>
-                                        <span class="tx-cont"><span class="ff-hn vbl">10</span> 년</span>
-                                    </li>
-                                    <li>
-                                        <span class="title">B가입기간</span>
-                                        <span class="tx-cont">-</span>
-                                    </li>
-                                    <li>
-                                        <span class="title">월정액할인율</span>
-                                        <span class="tx-cont"><span class="ff-hn vbl">30</span> %</span>
-                                    </li>
-                                    <li>
-                                        <span class="title">사용중인 요금제</span>
-                                        <span class="tx-cont"><button class="bt-link-tx underline">band 데이터 59</button></span>
-                                    </li>
-                                    <li>
-                                        <span class="title">할인 전 금액</span>
-                                        <span class="tx-cont"><span class="ff-hn vbl">59,900</span> 원</span>
-                                    </li>
-                                    <li>
-                                        <span class="title">할인 금액</span>
-                                        <span class="tx-cont"><span class="tx-blue"><span class="ff-hn vbl tx-bold">-17,970</span> 원</span></span>
-                                    </li>
-                                    <li>
-                                        <span class="title">할인 후 금액</span>
-                                        <span class="tx-cont"><span class="ff-hn vbl tx-bold">41,930</span> 원</span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </li>
-
-                    <li class="acco-list"><!-- on , off -->
-                        <div class="acco-title">
-                            <button role="button" aria-pressed="">
-                                <span class="info-line">박*민 (배우자)</span>
-                                <span class="info-line ff-hn">010-12**-56**</span>
-
-                                <span class="right-item">할인 후<br /><span class="ff-hn tx-bold vbl">1,930</span> 원</span>
-                            </button>
-                        </div>
-                        <div class="acco-content">
-                            <div class="detail-list">
-                                <ul>
-                                    <li>
-                                        <span class="title">가족대표와의 관계</span>
-                                        <span class="tx-cont">배우자</span>
-                                    </li>
-                                    <li>
-                                        <span class="title">휴대폰 가입년수</span>
-                                        <span class="tx-cont"><span class="ff-hn vbl">10</span> 년</span>
-                                    </li>
-                                    <li>
-                                        <span class="title">B가입기간</span>
-                                        <span class="tx-cont">-</span>
-                                    </li>
-                                    <li>
-                                        <span class="title">월정액할인율</span>
-                                        <span class="tx-cont"><span class="ff-hn vbl">30</span> %</span>
-                                    </li>
-                                    <li>
-                                        <span class="title">사용중인 요금제</span>
-                                        <span class="tx-cont"><button class="bt-link-tx underline">band 데이터 59</button></span>
-                                    </li>
-                                    <li>
-                                        <span class="title">할인 전 금액</span>
-                                        <span class="tx-cont"><span class="ff-hn vbl">59,900</span> 원</span>
-                                    </li>
-                                    <li>
-                                        <span class="title">할인 금액</span>
-                                        <span class="tx-cont"><span class="tx-blue"><span class="ff-hn vbl tx-bold">-17,970</span> 원</span></span>
-                                    </li>
-                                    <li>
-                                        <span class="title">할인 후 금액</span>
-                                        <span class="tx-cont"><span class="ff-hn vbl tx-bold">41,930</span> 원</span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </li>
-
-                    <li class="acco-list"><!-- on , off -->
-                        <div class="acco-title">
-                            <button role="button" aria-pressed="">
-                                <span class="info-line">최*진 (형제자매)</span>
-                                <span class="info-line ff-hn">010-12**-56**</span>
-
-                                <span class="right-item">할인 후<br /><span class="ff-hn tx-bold vbl">41,930</span> 원</span>
-                            </button>
-                        </div>
-                        <div class="acco-content">
-                            <div class="detail-list">
-                                <ul>
-                                    <li>
-                                        <span class="title">가족대표와의 관계</span>
-                                        <span class="tx-cont">형제자매</span>
-                                    </li>
-                                    <li>
-                                        <span class="title">휴대폰 가입년수</span>
-                                        <span class="tx-cont"><span class="ff-hn vbl">10</span> 년</span>
-                                    </li>
-                                    <li>
-                                        <span class="title">B가입기간</span>
-                                        <span class="tx-cont">-</span>
-                                    </li>
-                                    <li>
-                                        <span class="title">월정액할인율</span>
-                                        <span class="tx-cont"><span class="ff-hn vbl">30</span> %</span>
-                                    </li>
-                                    <li>
-                                        <span class="title">사용중인 요금제</span>
-                                        <span class="tx-cont"><button class="bt-link-tx underline">band 데이터 59</button></span>
-                                    </li>
-                                    <li>
-                                        <span class="title">할인 전 금액</span>
-                                        <span class="tx-cont"><span class="ff-hn vbl">59,900</span> 원</span>
-                                    </li>
-                                    <li>
-                                        <span class="title">할인 금액</span>
-                                        <span class="tx-cont"><span class="tx-blue"><span class="ff-hn vbl tx-bold">-17,970</span> 원</span></span>
-                                    </li>
-                                    <li>
-                                        <span class="title">할인 후 금액</span>
-                                        <span class="tx-cont"><span class="ff-hn vbl tx-bold">41,930</span> 원</span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </li>
+                    <% } %>
                 </ul>
             </div>
         </div>

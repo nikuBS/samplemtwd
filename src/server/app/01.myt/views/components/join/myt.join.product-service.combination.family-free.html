@@ -15,15 +15,15 @@
                 <ul>
                     <li>
                         <span class="title">신청일</span>
-                        <span class="tx-cont"><span class="ff-hn vbl">2015.09.01</span></span>
+                        <span class="tx-cont"><span class="ff-hn vbl"><%= combination.joinDate %></span></span>
                     </li>
                     <li>
                         <span class="title">결합회선</span>
-                        <span class="tx-cont"><span class="ff-hn vbl">5</span>회선</span>
+                        <span class="tx-cont"><span class="ff-hn vbl"><%= combination.count %></span>회선</span>
                     </li>
                     <li>
                         <span class="title">가입상태</span>
-                        <span class="tx-cont">결합완료</span>
+                        <span class="tx-cont"><%= combination.status %></span>
                     </li>
                 </ul>
             </div>
