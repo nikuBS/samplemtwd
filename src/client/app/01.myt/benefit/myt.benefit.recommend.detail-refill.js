@@ -61,18 +61,16 @@ Tw.MytBenefitRecommendDetailRefill.prototype = {
     Tw.Logger.info('[_proData]', this.proDataObj);
   },
   _ctrlInit: function() {
+
+    var totCpLen = this.bffListData.length;
+    this._cachedElement();
+    this.$refillCpArea.html('리필 쿠폰 : 총 ' + totCpLen + '매');
+
     if ( !Tw.FormatHelper.isEmpty(this.proDataObj.A10)) {
       Tw.Logger.info('[_ctrlInit isEmpty A10]');
       var refillCpLen = this.proDataObj.A10.length;
       this._cachedElement();
-      this.$refillCpArea.html('리필 쿠폰 : 총 ' + refillCpLen + '매');
-    }
-
-    if ( !Tw.FormatHelper.isEmpty(this.proDataObj.A14)) {
-      Tw.Logger.info('[_ctrlInit isEmpty A14]');
-      var ltsCpLen = this.proDataObj.A14.length;
-      this._cachedElement();
-      this.$LtsCpArea.html('장기가입 쿠폰 : ' + ltsCpLen + '매');
+      this.$LtsCpArea.html('장기가입 쿠폰 : ' + refillCpLen + '매');
     }
 
   },

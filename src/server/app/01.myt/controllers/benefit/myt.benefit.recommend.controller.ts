@@ -125,16 +125,18 @@ class MyTBenefitRecommendController extends TwViewController {
     this.reqQuery = req.query;
     const thisMain = this;
 
-    // const p1 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0058, {}), 'BFF_05_0058');
-    // const p2 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0041, {}), 'BFF_05_0041');
+    const p1 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0096, {}), 'p1');
+    const p2 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_06_0001, {}), 'p2');
+    const p3 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_06_0015, {}), 'p3');
+    const p4 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0120, {}), 'p4');
 
-    const p1_mock = this._getPromiseApiMock(recommend_BFF_05_0096, 'p1');
-    const p2_mock = this._getPromiseApiMock(recommend_BFF_06_0001, 'p2');
-    const p3_mock = this._getPromiseApiMock(recommend_BFF_06_0015, 'p3');
-    const p4_mock = this._getPromiseApiMock(recommend_BFF_05_0120, 'p4');
+    // const p1_mock = this._getPromiseApiMock(recommend_BFF_05_0096, 'p1');
+    // const p2_mock = this._getPromiseApiMock(recommend_BFF_06_0001, 'p2');
+    // const p3_mock = this._getPromiseApiMock(recommend_BFF_06_0015, 'p3');
+    // const p4_mock = this._getPromiseApiMock(recommend_BFF_05_0120, 'p4');
 
 
-    Promise.all([p1_mock, p2_mock, p3_mock, p4_mock]).then(
+    Promise.all([p1, p2, p3, p4]).then(
       function (resArr) {
         console.dir(resArr);
         thisMain.logger.info(thisMain, `[ Promise.all ] : `, resArr);
@@ -143,12 +145,16 @@ class MyTBenefitRecommendController extends TwViewController {
         thisMain._apiDataObj.p2 = resArr[1].result;
 
         if ( !FormatHelper.isEmpty( resArr[2].result ) ) {
-          thisMain._apiDataObj.p3 = resArr[2].result;
+          thisMain._apiDataObj.p3 = resArr[2];
         } else {
           thisMain._apiDataObj.p3 = resArr[2]; // 에러 발생시
         }
 
-        thisMain._apiDataObj.p4 = resArr[3].result;
+        if ( !FormatHelper.isEmpty( resArr[3].result ) ) {
+          thisMain._apiDataObj.p4 = resArr[3];
+        } else {
+          thisMain._apiDataObj.p4 = resArr[3]; // 에러 발생시
+        }
 
         thisMain._beforeInit();
 
@@ -164,17 +170,6 @@ class MyTBenefitRecommendController extends TwViewController {
         /*
         * 실 데이터 사용시
          */
-        // thisMain.renderView(res, thisMain._urlTplInfo.pageRenderView, {
-        //   reqQuery: thisMain.reqQuery,
-        //   svcInfo: thisMain._svcInfo,
-        //   resDataInfo: resArr[0].result,
-        //   errBol: false,
-        //   errObj: null
-        // });
-
-        /*
-        * Mock 데이터 사용시
-         */
         thisMain.renderView(res, thisMain._urlTplInfo.pageRenderView, {
           reqQuery: thisMain.reqQuery,
           svcInfo: thisMain._svcInfo,
@@ -186,17 +181,34 @@ class MyTBenefitRecommendController extends TwViewController {
           errObj: null
         });
 
-      }, function (err) {
+        /*
+        * Mock 데이터 사용시
+         */
+        // thisMain.renderView(res, thisMain._urlTplInfo.pageRenderView, {
+        //   reqQuery: thisMain.reqQuery,
+        //   svcInfo: thisMain._svcInfo,
+        //   resDataInfo: thisMain._apiDataObj,
+        //   recommendKind: thisMain._recommendKind,
+        //   recommendInfo: thisMain._recommendInfo,
+        //   svcFun: thisMain.getClassBgColor,
+        //   errBol: false,
+        //   errObj: null
+        // });
 
-        thisMain._errInfoInit(err);
-        thisMain.renderView(res, thisMain._urlTplInfo.pageRenderView, {
-          reqQuery: thisMain.reqQuery,
-          svcInfo: thisMain._svcInfo,
-          resDataInfo: null,
-          baseFeePlans: null,
-          errBol: true,
-          errObj: thisMain._apiErrInfo
-        });
+      }, function (err) {
+        console.log('[ 에러 ]');
+        console.dir(err);
+
+
+        // thisMain._errInfoInit(err);
+        // thisMain.renderView(res, thisMain._urlTplInfo.pageRenderView, {
+        //   reqQuery: thisMain.reqQuery,
+        //   svcInfo: thisMain._svcInfo,
+        //   resDataInfo: null,
+        //   baseFeePlans: null,
+        //   errBol: true,
+        //   errObj: thisMain._apiErrInfo
+        // });
 
       }); // Promise.all END
 
@@ -210,6 +222,9 @@ class MyTBenefitRecommendController extends TwViewController {
   private _tpayInit() {
     const typeNm = 'TPAY';
     const tempState = this._apiDataObj.p1.tPay;
+    this.logger.info(this, `[ _tpayInit ] : `);
+    // console.log( tempState );
+
     if ( tempState === 'Y') {
       this._recommendInfo[typeNm].state = true;
       this._recommendKind.typeListA.push( typeNm );
@@ -222,6 +237,9 @@ class MyTBenefitRecommendController extends TwViewController {
   private _refillInit() {
     const typeNm = 'REFILL';
     const tempState = this._apiDataObj.p2;
+    this.logger.info(this, `[ _refillInit ] : `);
+    // console.log( tempState );
+
     if ( tempState.length > 0) {
       this._recommendInfo[typeNm].state = true;
       this._recommendKind.typeListA.push( typeNm );
@@ -235,10 +253,10 @@ class MyTBenefitRecommendController extends TwViewController {
     const typeNm = 'GIFT';
     const tempState = this._apiDataObj.p3;
     this.logger.info(this, `[ _giftInit ] : `);
-    console.log( tempState );
+    // console.log( tempState );
 
     if ( tempState.code === API_CODE.CODE_00 ) {
-      if ( tempState.dataGiftCnt > 0 || tempState.familyDataGiftCnt > 0 ) {
+      if ( tempState.result.dataGiftCnt > 0 || tempState.result.familyDataGiftCnt > 0 ) {
         this._recommendInfo[typeNm].state = true;
         this._recommendKind.typeListA.push( typeNm );
       }
@@ -252,6 +270,9 @@ class MyTBenefitRecommendController extends TwViewController {
   private _pointInit() {
     const typeNm = 'POINT';
     const tempState = this._apiDataObj.p1.tShopping;
+    this.logger.info(this, `[ _pointInit ] : `);
+    // console.log( tempState );
+
     if ( tempState === 'Y') {
       this._recommendInfo[typeNm].state = true;
       this._recommendKind.typeListA.push( typeNm );
@@ -264,18 +285,26 @@ class MyTBenefitRecommendController extends TwViewController {
   private _planInit() {
     const typeNm = 'PLAN';
     const tempState = this._apiDataObj.p4;
-    if ( tempState.usblPoint > 0 ) {
+    this.logger.info(this, `[ _planInit ] : `);
+    // console.log( tempState );
+
+
+    if ( tempState.code === API_CODE.CODE_00 ) {
       this._recommendInfo[typeNm].state = true;
       this._recommendKind.typeListA.push( typeNm );
     } else {
       this._recommendInfo[typeNm].state = false;
       this._recommendKind.typeListB.push( typeNm );
     }
+
   }
   // -------------------------------------------------------------[6. OKSP : BFF_05_0096]
   private _okspInit() {
     const typeNm = 'OKSP';
     const tempState = this._apiDataObj.p1.oksusuSafePack;
+    this.logger.info(this, `[ _okspInit ] : `);
+    // console.log( tempState );
+
     if ( tempState === 'Y') {
       this._recommendInfo[typeNm].state = true;
       this._recommendKind.typeListA.push( typeNm );
@@ -288,6 +317,9 @@ class MyTBenefitRecommendController extends TwViewController {
   private _okaspInit() {
     const typeNm = 'OKASP';
     const tempState = this._apiDataObj.p1.oksusuAndSafePack;
+    this.logger.info(this, `[ _okaspInit ] : `);
+    // console.log( tempState );
+
     if ( tempState === 'Y') {
       this._recommendInfo[typeNm].state = true;
       this._recommendKind.typeListA.push( typeNm );
@@ -300,6 +332,9 @@ class MyTBenefitRecommendController extends TwViewController {
   private _tsignInit() {
     const typeNm = 'TSIGN';
     const tempState = this._apiDataObj.p1.tSignature;
+    this.logger.info(this, `[ _tsignInit ] : `);
+    // console.log( tempState );
+
     if ( tempState === 'Y') {
       this._recommendInfo[typeNm].state = true;
       this._recommendKind.typeListA.push( typeNm );
@@ -340,11 +375,47 @@ class MyTBenefitRecommendController extends TwViewController {
         reqObjObservableApi
       ).subscribe((resp) => {
         thisMain.logger.info(thisMain, `[ ${ msg } next ] : `, resp);
-        if ( resp[0].code === API_CODE.CODE_00 ) {
-          resolve(resp[0]);
+
+        if ( msg === 'p3') {
+
+          switch ( resp[0].code ) {
+            case 'RCG0001':
+            case 'RCG0002':
+            case 'RCG0003':
+            case 'RCG0004':
+            case 'RCG0005':
+            case 'RCG0013':
+            case API_CODE.CODE_00:
+              console.log('p3 : 성공');
+              resolve(resp[0]);
+              break;
+            default:
+              console.log('p3 : 실패');
+              reject(resp[0]);
+          }
+        } else if ( msg === 'p4') {
+
+          switch ( resp[0].code ) {
+            case 'BIL0071':
+            case API_CODE.CODE_00:
+              console.log('p4 : 성공');
+              resolve(resp[0]);
+              break;
+            default:
+              console.log('p4 : 실패');
+              reject(resp[0]);
+          }
+
         } else {
-          reject(resp[0]);
+
+          if ( resp[0].code === API_CODE.CODE_00 ) {
+            resolve(resp[0]);
+          } else {
+            reject(resp[0]);
+          }
+
         }
+
       });
     });
 
