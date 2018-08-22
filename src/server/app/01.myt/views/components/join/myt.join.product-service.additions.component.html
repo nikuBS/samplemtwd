@@ -1,3 +1,217 @@
+
+<% if( svcInfo.svcAttrCd.indexOf('M') === 0 ) { %>
+<div class="cont-box">
+    <div class="title-wrap">
+        <h2 class="title-h2">사용중인 부가상품</h2>
+        <div class="right-item mt4">
+            <ul class="tx-list inline">
+                <li>유료 <span class="tx-red ff-hn vbl"><%=additions.paidCount%></span>개</li>
+                <li>무료 <span class="tx-red ff-hn vbl"><%=additions.freeCount%></span>개</li>
+            </ul>
+        </div>
+    </div>
+    <% if (additions.addSvcProdList.length === 0 ) { %>
+    <div class="contents-empty type2">
+        <span class="ico type2"></span>
+        <p class="desc">사용중인 부가상품이 없습니다.</p>
+    </div>
+    <% } else { %>
+    <div class="box-list mt20">
+        <ul>
+            <%additions.addSvcProdList.map((product)=>{%>
+            <li>
+                <div class="box-contents">
+                    <a href="<%=product.goDetailUrl%>" class="title-bt"><%=product.prodNm%></a>
+                    <div class="basic-list pt14">
+                        <ul>
+                            <li>
+                                <span class="title">신청일</span>
+                                <span class="tx-cont ff-hn"><%=product.scrbDt%></span>
+                            </li>
+                            <li>
+                                <span class="title">월정액(부가세 포함)</span>
+                                <% if( !product.isBasFeeNumber ) { %>
+                                <span class="tx-cont"><span class="ff-hn vbl tx-bold"><%=product.basFeeTxt%></span> 원</span>
+                                <% } else { %>
+                                <span class="tx-cont"><%=product.basFeeTxt%></span>
+                                <% } %>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="link-long-group pt20">
+                        <div class="link-long">
+                            <button>설정/변경하기<span class="ico"></span></button>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <%})%>
+        </ul>
+    </div>
+    <% } %>
+</div>
+<hr class="cont-sp type1" aria-hidden="true">
+<div class="cont-box">
+    <div class="title-wrap">
+        <h2 class="title-h2">할인프로그램</h2>
+    </div>
+    <% if (additions.disProdList.length === 0 ) { %>
+    <div class="contents-empty type2">
+        <span class="ico type2"></span>
+        <p class="desc">사용중인 할인프로그램이 없습니다.</p>
+    </div>
+    <% } else { %>
+    <div class="box-list mt20">
+        <ul>
+            <%additions.disProdList.map((product)=>{%>
+            <li>
+                <div class="box-contents">
+                    <a href="<%=product.goDetailUrl%>" class="title-bt"><%=product.prodNm%></a>
+                    <div class="basic-list pt14">
+                        <ul>
+                            <li>
+                                <span class="title">신청일</span>
+                                <span class="tx-cont ff-hn"><%=product.scrbDt%></span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="contents-notice pt24">
+                        <span class="exp-bk-small"><%=product.prodDesc%></span>
+                    </div>
+                    <div class="link-long-group pt20">
+                        <div class="link-long">
+                            <button>설정/변경하기<span class="ico"></span></button>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <%})%>
+        </ul>
+    </div>
+    <% } %>
+</div>
+<hr class="cont-sp type1" aria-hidden="true">
+<div class="cont-box">
+    <div class="title-wrap">
+        <h2 class="title-h2">옵션 요금제</h2>
+    </div>
+    <% if (additions.optProdList.length === 0 ) { %>
+    <div class="contents-empty type2">
+        <span class="ico type2"></span>
+        <p class="desc">사용중인 옵션 요금제가 없습니다.</p>
+    </div>
+    <% } else { %>
+    <div class="box-list mt20">
+        <ul>
+            <%additions.optProdList.map((product)=>{%>
+            <li>
+                <div class="box-contents">
+                    <a href="<%=product.goDetailUrl%>" class="title-bt"><%=product.prodNm%></a>
+                    <div class="basic-list pt14">
+                        <ul>
+                            <li>
+                                <span class="title">신청일</span>
+                                <span class="tx-cont ff-hn"><%=product.scrbDt%></span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="contents-notice pt24">
+                        <span class="exp-bk-small"><%=product.prodDesc%></span>
+                    </div>
+                    <div class="link-long-group pt20">
+                        <div class="link-long">
+                            <button>설정/변경하기<span class="ico"></span></button>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <%})%>
+        </ul>
+    </div>
+    <% } %>
+</div>
+<hr class="cont-sp type1" aria-hidden="true">
+<div class="cont-box">
+    <div class="title-wrap">
+        <h2 class="title-h2">T 로밍 이용현황</h2>
+    </div>
+    <% if (additions.roamingProdList.length === 0 ) { %>
+    <div class="contents-empty type2">
+        <span class="ico type2"></span>
+        <p class="desc">사용중인 T 로밍 상품이 없습니다.</p>
+    </div>
+    <% } else { %>
+    <div class="box-list mt20">
+        <ul>
+            <%additions.roamingProdList.map((product)=>{%>
+            <li>
+                <div class="box-contents">
+                    <a href="<%=product.goDetailUrl%>" class="title-bt"><%=product.prodNm%></a>
+                    <div class="basic-list pt14">
+                        <ul>
+                            <li>
+                                <span class="title">신청일</span>
+                                <span class="tx-cont ff-hn"><%=product.scrbDt%></span>
+                            </li>
+                            <li>
+                                <span class="title">월정액(부가세 포함)</span>
+                                <% if( !product.isBasFeeNumber ) { %>
+                                <span class="tx-cont"><span class="ff-hn vbl tx-bold"><%=product.basFeeTxt%></span> 원</span>
+                                <% } else { %>
+                                <span class="tx-cont"><%=product.basFeeTxt%></span>
+                                <% } %>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="contents-notice pt24">
+                        <span class="exp-bk-small"><%=product.prodDesc%></span>
+                    </div>
+                    <div class="link-long-group pt20">
+                        <div class="link-long">
+                            <button>설정/변경하기<span class="ico"></span></button>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <%})%>
+        </ul>
+    </div>
+    <% } %>
+</div>
+<% } %>
+
+<% if( svcInfo.svcAttrCd.indexOf('S') === 0 ) { %>
+<div class="cont-box">
+    <div class="title-wrap">
+        <h2 class="title-h2">사용중인 부가상품</h2>
+    </div>
+    <div class="contents-empty type2">
+        <span class="ico type2"></span>
+        <p class="desc">사용중인 부가상품이 없습니다.</p>
+    </div>
+</div>
+<hr class="cont-sp type1" aria-hidden="true">
+<div class="cont-box">
+    <div class="title-wrap">
+        <h2 class="title-h2">신청 접수 중인 부가상품</h2>
+    </div>
+    <div class="contents-empty type2">
+        <span class="ico type2"></span>
+        <p class="desc">신청 접수 중인 부가상품이 없습니다.</p>
+    </div>
+</div>
+<hr class="cont-sp type1" aria-hidden="true">
+<div class="cont-box">
+    <div class="title-wrap">
+        <h2 class="title-h2">가입 가능한 부가상품</h2>
+    </div>
+    <div class="contents-empty type2">
+        <span class="ico type2"></span>
+        <p class="desc">가입 가능한 부가상품이 없습니다.</p>
+    </div>
+</div>
+<% } %>
+
 <hr class="cont-sp type1" aria-hidden="true">
 <div class="cont-box nogaps-hoz">
     <div class="box-confirm">
@@ -6,11 +220,15 @@
             <div class="widget-box accordion">
                 <h3 class="tit-a">이용안내</h3>
                 <div class="acco-cover toggle">
-                    <div class="bt-whole"><button role="button" aria-pressed="false"><span class="blind">내용 열기</span></button></div>
+                    <div class="bt-whole">
+                        <button role="button" aria-pressed="false"><span class="blind">내용 열기</span></button>
+                    </div>
                     <div class="acco-style">
                         <ul class="acco-list">
                             <li class="acco-box">
-                                <div class="acco-tit"><button role="button" aria-pressed="false"><span class="bullet">1.</span> 신청 후 설정 방법</button></div>
+                                <div class="acco-tit">
+                                    <button role="button" aria-pressed="false"><span class="bullet">1.</span> 신청 후 설정 방법</button>
+                                </div>
                                 <div class="acco-cont">
                                     <ul class="list-dot">
                                         <li class="list">부가상품 가입 시 설정 없이 사용가능(적용)하며, 일부 서비스는 신청하신 후 별도의 휴대폰 설정이 필요합니다.</li>
@@ -18,7 +236,9 @@
                                 </div>
                             </li>
                             <li class="acco-box">
-                                <div class="acco-tit"><button role="button" aria-pressed="false"><span class="bullet">2.</span> USIM 기변 고객</button></div>
+                                <div class="acco-tit">
+                                    <button role="button" aria-pressed="false"><span class="bullet">2.</span> USIM 기변 고객</button>
+                                </div>
                                 <div class="acco-cont">
                                     <ul class="list-dot">
                                         <li class="list">USIM 기변하신 고객님께서는 사용중인 부가상품 및 옵션요금제 중 사용 불가능한 서비스를 확인 해보시기 바랍니다.</li>
@@ -33,7 +253,9 @@
                                 </div>
                             </li>
                             <li class="acco-box">
-                                <div class="acco-tit"><button role="button" aria-pressed="false"><span class="bullet">3.</span> 실제 청구금액 확인</button></div>
+                                <div class="acco-tit">
+                                    <button role="button" aria-pressed="false"><span class="bullet">3.</span> 실제 청구금액 확인</button>
+                                </div>
                                 <div class="acco-cont">
                                     <ul class="list-dot">
                                         <li class="list">서비스 당 실제 청구되는 금액은 청구요금 에서 확인하세요.</li>
@@ -48,15 +270,21 @@
                                 </div>
                             </li>
                             <li class="acco-box">
-                                <div class="acco-tit"><button role="button" aria-pressed="false"><span class="bullet">4.</span> 부가상품 해지</button></div>
+                                <div class="acco-tit">
+                                    <button role="button" aria-pressed="false"><span class="bullet">4.</span> 부가상품 해지</button>
+                                </div>
                                 <div class="acco-cont">
                                     <ul class="list-dot">
-                                        <li class="list">가입하신 부가상품은 원하시는 경우 언제든지 고객센터&lt;국번없이 1599-0011(유료)/휴대폰114&gt;, 대리점, T world를 통하여 해지하실 수 있습니다. (메시지쿠폰은 제외)</li>
+                                        <li class="list">가입하신 부가상품은 원하시는 경우 언제든지 고객센터&lt;국번없이 1599-0011(유료)/휴대폰114&gt;, 대리점, T world를 통하여
+                                            해지하실 수 있습니다. (메시지쿠폰은 제외)
+                                        </li>
                                     </ul>
                                 </div>
                             </li>
                             <li class="acco-box">
-                                <div class="acco-tit"><button role="button" aria-pressed="false"><span class="bullet">5.</span> 콘텐츠이용료란?</button></div>
+                                <div class="acco-tit">
+                                    <button role="button" aria-pressed="false"><span class="bullet">5.</span> 콘텐츠이용료란?</button>
+                                </div>
                                 <div class="acco-cont">
                                     <ul class="list-dot">
                                         <li class="list">월정액이 무료인 경우 무료 상품으로 구분되며, 일부 상품에 경우 콘텐츠이용료가 추가로 부과될 수 있습니다.</li>
@@ -65,7 +293,9 @@
                                 </div>
                             </li>
                             <li class="acco-box">
-                                <div class="acco-tit"><button role="button" aria-pressed="false"><span class="bullet">6.</span> 요금제 변경 불가능 고객 문의</button></div>
+                                <div class="acco-tit">
+                                    <button role="button" aria-pressed="false"><span class="bullet">6.</span> 요금제 변경 불가능 고객 문의</button>
+                                </div>
                                 <div class="acco-cont">
                                     <ul class="list-dot">
                                         <li class="list">일부 요금제의 경우 T world 상에서 변경이 불가할 수 있습니다.</li>
@@ -74,10 +304,13 @@
                                 </div>
                             </li>
                             <li class="acco-box">
-                                <div class="acco-tit"><button role="button" aria-pressed="false"><span class="bullet">7.</span> 월정액 상세참조인 상품</button></div>
+                                <div class="acco-tit">
+                                    <button role="button" aria-pressed="false"><span class="bullet">7.</span> 월정액 상세참조인 상품</button>
+                                </div>
                                 <div class="acco-cont">
                                     <ul class="list-dot">
-                                        <li class="list">월정액이 상세 참조인 상품은 성격에 따라, 유료로 부과 될 수 있는 상품이니 상품 안내페이지를 확인하시거나 고객센터로 문의해 주시기 바랍니다.</li>
+                                        <li class="list">월정액이 상세 참조인 상품은 성격에 따라, 유료로 부과 될 수 있는 상품이니 상품 안내페이지를 확인하시거나 고객센터로 문의해 주시기 바랍니다.
+                                        </li>
                                     </ul>
                                 </div>
                             </li>
