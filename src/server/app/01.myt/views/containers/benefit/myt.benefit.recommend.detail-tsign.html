@@ -29,15 +29,19 @@
                 <div class="inner-block">
                     <% if( reqQuery.type == 'A') { %>
                     <h2 class="title-h2">나의 추천 혜택</h2>
-                    <% } %>
-
-                    <% if( reqQuery.type == 'B') { %>
-                    <h2 class="title-h2">혜택 받는 법</h2>
-                    <% } %>
                     <div class="exp-top">
                         <span class="tx-exp">T 시그니처 <span class="ff-hn vbl">Master</span> <span class="tx-bold vbl">데이터 35G, 음성 무제한</span></span>
                         <span class="tx-exp">T 시그니처 <span class="ff-hn vbl">Classic</span> <span class="tx-bold vbl">데이터 20G, 음성 무제한</span></span>
                     </div>
+                    <% } %>
+
+                    <% if( reqQuery.type == 'B') { %>
+                    <h2 class="title-h2">혜택 받는 법</h2>
+                    <div class="exp-top">
+                        <span class="tx-exp"><span class="tx-bold vbl">T 시그니처</span> 이용 시<br>사용하는 요금제에 따라 혜택 적용</span>
+                    </div>
+                    <% } %>
+
                     <div class="contents-btn">
                         <ul class="bt-slice">
                             <li class="bt-blue1">
@@ -120,7 +124,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.MytBenefitRecommendDetail( $('#fe-wrap'), {
+    new Tw.MytBenefitRecommendDetailTsign( $('#fe-wrap'), {
       reqQuery: <%-JSON.stringify(reqQuery) %>,
       svcInfo: <%-JSON.stringify(svcInfo) %>
     });

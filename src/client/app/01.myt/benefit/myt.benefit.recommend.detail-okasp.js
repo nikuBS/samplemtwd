@@ -1,10 +1,10 @@
 /**
- * FileName: myt.benefit.recommend.detail-refill.js
+ * FileName: myt.benefit.recommend.detail-okasp.js
  * Author: 김명환 (skt.P130714@partner.sk.com)
  * Date: 2018.08.21
  * Info:
  */
-Tw.MytBenefitRecommendDetailRefill = function (rootEl, resData) {
+Tw.MytBenefitRecommendDetailOkasp = function (rootEl, resData) {
   this.thisMain = this;
   this.resData = resData;
   this.init = this._init;
@@ -22,81 +22,69 @@ Tw.MytBenefitRecommendDetailRefill = function (rootEl, resData) {
   this._history.init('hash');
 
   this.bffListData = null;
-  this.proDataObj = null;
 
   this._init();
 };
 
-Tw.MytBenefitRecommendDetailRefill.prototype = {
+Tw.MytBenefitRecommendDetailOkasp.prototype = {
   _init: function () {
     Tw.Logger.info('[Client Init]');
     Tw.Logger.info('[resData.reqQuery]', this.resData.reqQuery);
 
-    if (this.resData.reqQuery.type === 'A') {
-      this._getDetailList();
-
-    } else {
-
-    }
-
 
   },
   _cachedElement: function () {
-    this.$refillCpArea = $('[data-target="refillCpArea"]');
-    this.$LtsCpArea = $('[data-target="LtsCpArea"]');
+    // this.$sendTotArea = $('[data-target="sendTotArea"]');
+
   },
   _bindEvent: function () {
     // this.$container.on('click', '[data-target="addBtn"]', $.proxy(this._addView, this));
 
   },
   _proData: function() {
-    var refillObj = _.groupBy( this.bffListData, function(item) {
-      if (item.copnOperStCd === 'A10') {
-        return 'A10';
-      } else if( item.copnOperStCd === 'A14' ) {
-        return 'A14';
-      }
-    });
-    this.proDataObj = refillObj;
-    Tw.Logger.info('[_proData]', this.proDataObj);
+
+
   },
   _ctrlInit: function() {
-
-    var totCpLen = this.bffListData.length;
-    this._cachedElement();
-    this.$refillCpArea.html('리필 쿠폰 : 총 ' + totCpLen + '매');
-
-    if ( !Tw.FormatHelper.isEmpty(this.proDataObj.A10)) {
-      Tw.Logger.info('[_ctrlInit isEmpty A10]');
-      var refillCpLen = this.proDataObj.A10.length;
-      this._cachedElement();
-      this.$LtsCpArea.html('장기가입 쿠폰 : ' + refillCpLen + '매');
-    }
 
   },
   //--------------------------------------------------------------------------[service]
 
   //--------------------------------------------------------------------------[api]
   _getDetailList: function() {
-    this._apiService.request(Tw.API_CMD.BFF_06_0001)
+    $.ajax('http://localhost:3000/mock/recommend.BFF_05_00018.json')
       .done($.proxy(function(resp){
-
         if ( resp.code === Tw.API_CODE.CODE_00 ) {
-          Tw.Logger.info('[BFF_06_0001]', resp);
-          this.bffListData = resp.result;
-
-          this._proData();
-          this._ctrlInit();
-
-        } else {
-          this._popupService.openAlert(resp.msg, resp.code);
+            Tw.Logger.info('[BFF_06_0018]', resp);
+            this.bffListData = resp.result;
+            this._proData();
+            this._ctrlInit();
         }
-
       }, this))
-      .fail(function(err){
-        Tw.Logger.info('[err]', err);
-        this._popupService.openAlert(err.msg, err.code);
+      .fail(function(err) {
+        Tw.Logger.info(err);
       });
+
+
+    // this._apiService.request(Tw.API_CMD.BFF_06_0018)
+    //   .done($.proxy(function(resp){
+    //
+    //     if ( resp.code === Tw.API_CODE.CODE_00 ) {
+    //       Tw.Logger.info('[BFF_06_0018]', resp);
+    //       this.bffListData = resp.result;
+    //
+    //       this._proData();
+    //       this._ctrlInit();
+    //
+    //     } else {
+    //       this._popupService.openAlert(resp.msg, resp.code);
+    //     }
+    //
+    //   }, this))
+    //   .fail(function(err){
+    //     Tw.Logger.info('[err]', err);
+    //     this._popupService.openAlert(err.msg, err.code);
+    //   });
   },
   //--------------------------------------------------------------------------[공통]
   _serverErrPopup: function() {

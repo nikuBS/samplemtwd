@@ -29,20 +29,24 @@
                 <div class="inner-block">
                     <% if( reqQuery.type == 'A') { %>
                     <h2 class="title-h2">나의 추천 혜택</h2>
+                    <div class="exp-top">
+                        <span class="tx-exp">월말까지 T나는 쇼핑 포인트 유지 시,<br /><span class="tx-bold">익월 7일에 포인트가 지급</span> 됩니다.</span>
+                    </div>
                     <% } %>
 
                     <% if( reqQuery.type == 'B') { %>
                     <h2 class="title-h2">혜택 받는 법</h2>
+                    <div class="exp-top">
+                        <span class="tx-exp">요금약정 할인제도 가입 후<br><span class="tx-bold">T나는 쇼핑 포인트 신청 시</span>무료 이용<br>(자신 명의 11번가 ID보유)</span>
+                    </div>
                     <% } %>
 
-                    <div class="exp-top">
-                        <span class="tx-exp">월말까지 T나는 쇼핑 포인트 유지 시,<br /><span class="tx-bold">익월 7일에 포인트가 지급</span> 됩니다.</span>
-                    </div>
+
                     <div class="contents-btn">
                         <ul class="bt-slice">
                             <li class="bt-blue1">
                                 <% if( reqQuery.type == 'A') { %>
-                                <button data-target="">11번가 바로가기</button>
+                                <button data-target="goShopping">11번가 바로가기</button>
                                 <% } %>
                                 <% if( reqQuery.type == 'B') { %>
                                 <button data-target="">T나는 쇼핑포인트 신청</button>
@@ -85,7 +89,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.MytBenefitRecommendDetail( $('#fe-wrap'), {
+    new Tw.MytBenefitRecommendDetailPoint( $('#fe-wrap'), {
       reqQuery: <%-JSON.stringify(reqQuery) %>,
       svcInfo: <%-JSON.stringify(svcInfo) %>
     });

@@ -94,39 +94,50 @@ Tw.MytBenefitRecommendDetailGift.prototype = {
 
   //--------------------------------------------------------------------------[api]
   _getDetailList: function() {
-    $.ajax('http://localhost:3000/mock/recommend.BFF_05_00018.json')
-      .done($.proxy(function(resp){
-        if ( resp.code === Tw.API_CODE.CODE_00 ) {
-            Tw.Logger.info('[BFF_06_0018]', resp);
-            this.bffListData = resp.result;
-            this._proData();
-            this._ctrlInit();
-        }
-      }, this))
-      .fail(function(err) {
-        Tw.Logger.info(err);
-      });
-
-
-    // this._apiService.request(Tw.API_CMD.BFF_06_0018)
+    // $.ajax('http://localhost:3000/mock/recommend.BFF_05_00018.json')
     //   .done($.proxy(function(resp){
-    //
     //     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-    //       Tw.Logger.info('[BFF_06_0018]', resp);
-    //       this.bffListData = resp.result;
-    //
-    //       this._proData();
-    //       this._ctrlInit();
-    //
-    //     } else {
-    //       this._popupService.openAlert(resp.msg, resp.code);
+    //         Tw.Logger.info('[BFF_06_0018]', resp);
+    //         this.bffListData = resp.result;
+    //         this._proData();
+    //         this._ctrlInit();
     //     }
-    //
     //   }, this))
-    //   .fail(function(err){
-    //     Tw.Logger.info('[err]', err);
-    //     this._popupService.openAlert(err.msg, err.code);
+    //   .fail(function(err) {
+    //     Tw.Logger.info(err);
     //   });
+
+    Tw.Logger.info('[fromDt]', moment().set('date', 1).format('YYYYMMDD'));
+    Tw.Logger.info('[toDt]', Tw.DateHelper.getCurrentShortDate());
+
+    // var param = {
+    //   fromDt: '20160101',
+    //   toDt: '20180801',
+    //   giftType: '0'
+    // };
+    var param = {
+      fromDt: moment().set('date', 1).format('YYYYMMDD'),
+      toDt: Tw.DateHelper.getCurrentShortDate(),
+      giftType: '0'
+    };
+
+    this._apiService.request(Tw.API_CMD.BFF_06_0018, param)
+      .done($.proxy(function(resp){
+
+        if ( resp.code === Tw.API_CODE.CODE_00 ) {
+          Tw.Logger.info('[BFF_06_0018]', resp);
+          this.bffListData = resp.result;
+          this._proData();
+          this._ctrlInit();
+        } else {
+          this._popupService.openAlert(resp.msg, resp.code);
+        }
+
+      }, this))
+      .fail(function(err){
+        Tw.Logger.info('[err]', err);
+        this._popupService.openAlert(err.msg, err.code);
+      });
   },
   //--------------------------------------------------------------------------[공통]
   _serverErrPopup: function() {

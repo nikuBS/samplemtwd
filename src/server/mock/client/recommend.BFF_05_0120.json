@@ -1,0 +1,10 @@
+{
+  "code": "00",
+  "msg": "",
+  "result": {
+    "usblPoint": "2925",
+    "scrbDt": "20180512",
+    "exprdDays": "5",
+    "remndDays": "85"
+  }
+}

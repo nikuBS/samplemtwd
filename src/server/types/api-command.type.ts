@@ -148,7 +148,7 @@ export const API_CMD = {
   BFF_05_0092: { path: '/core-modification/v1/wire-network-notification-smsinfo', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0093: { path: '/core-bill/v1/microPay-cphist-request', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0094: { path: '/core-modification/v1/my-discount-benefit/getSKTcombiBenefit', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
-  BFF_05_0096: { path: '/core-product/v1/recommend-benefits', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0096: { path: '/core-product/v1/benefit-suggestions', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0098: { path: '/core-membership/v1/card-vip-benefit', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0100: { path: '/core-bill/v1/rainbow-point-histories', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0101: { path: '/core-bill/v1/rainbow-point-services', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
