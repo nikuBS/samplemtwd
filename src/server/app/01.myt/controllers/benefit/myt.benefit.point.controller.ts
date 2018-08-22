@@ -34,21 +34,15 @@ class MyTBenefitPoint extends TwViewController {
       }
 
       if ( ptNoContract.code === API_CODE.CODE_00 ) {
-        points['NoContrack'] = FormatHelper.addComma(ptNoContract.result.usblPoint);
-      } else {
-        points['NoContrack'] = 0;
+        points['NoContract'] = FormatHelper.addComma(ptNoContract.result.usblPoint);
       }
 
       if ( ptMilitary.code === API_CODE.CODE_00 ) {
         points['Military'] = FormatHelper.addComma(ptMilitary.result.usblPoint);
-      } else {
-        points['Military'] = 0;
       }
 
       if ( ptCookiz.code === API_CODE.CODE_00 ) {
         points['Cookiz'] = FormatHelper.addComma(ptCookiz.result.usblPoint);
-      } else {
-        points['Cookiz'] = 0;
       }
 
       res.render('benefit/myt.benefit.point.html', { svcInfo: svcInfo, points: points });
