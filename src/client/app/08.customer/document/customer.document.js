@@ -48,6 +48,7 @@ Tw.CustomerDocument.prototype = {
     this._selectedTabId = $id;
     this.$selector = this.$container.find('#' + this._selectedTabId + '-tab');
     this.$firstNode = this.$selector.find('.fe-standard-node');
+    this.isOpList = false;
     this.isNext = false;
     this.nextIndex = 1;
     this._reqData = {
@@ -93,6 +94,10 @@ Tw.CustomerDocument.prototype = {
     if (index < this.nextIndex) {
       this.isNext = false;
       this.nextIndex = 1;
+
+      if (index < 3) {
+        this.isOpList = false;
+      }
     }
   },
   _resetReqData: function (index) {
@@ -157,6 +162,9 @@ Tw.CustomerDocument.prototype = {
         if (key === 'reqDocList') {
           this._setDocumentList(list);
         } else {
+          if (key === 'opList') {
+            this.isOpList = true;
+          }
           this._setListData($target, list);
         }
       }
@@ -167,7 +175,11 @@ Tw.CustomerDocument.prototype = {
       if (key === 'opList') {
         this._setData($target.prev(), $target, true);
       } else {
-        this._setData($target, $target.next(), true);
+        if (this.isOpList) {
+          this._setData($target.prev(), $target, true);
+        } else {
+          this._setData($target, $target.next(), true);
+        }
       }
       this.isNext = true;
       this.nextIndex = $target.data('index');
