@@ -25,9 +25,10 @@ interface ICombination {
   bProducts: { [key: string]: IBProduct };
   representationId: string;
   isRepresentation: boolean;
-  // 착한가족
+  // 착한가족 & 가족 나눔 데이터
   benefitData?: string;
   remainData?: string;
+  planCode?: string;
 }
 
 interface IMember {
@@ -111,7 +112,8 @@ export default class MytJoinProductServiceCombinationController extends TwViewCo
       isRepresentation: combination.grpRelYn === 'Y',
       benefitData: group.grpOfrPt,
       remainData: group.grpRemainPt,
-    }
+      planCode: group.svcProdGrpCd
+    };
   }
 
   private getProperMemberData = (member: any): IMember => {
@@ -131,10 +133,8 @@ export default class MytJoinProductServiceCombinationController extends TwViewCo
       companyCode: member.coClCd || 'T',
       isDiscounting: member.famlUseYn ? member.famlUseYn === 'Y' : undefined,
       benefitData: member.membOfrPt
-    }
+    };
   }
-
-  private
 
   private getBProducts = (members: any[]): { [key: string]: IBProduct } => {
     const bProducts: { [key: string]: IBProduct } = {};
@@ -143,7 +143,7 @@ export default class MytJoinProductServiceCombinationController extends TwViewCo
       bProducts[member['mblSvcMgmtNum']] = {
         period: member['useYySum'],
         wireProduct: member['svcCdNm']
-      }
+      };
     }
 
     return bProducts;

@@ -221,7 +221,7 @@ export enum PROMOTION_TYPE {
 
 export const COMBINATION_PRODUCT_TYPE = {
   'NA00005055': 'share-data',  // 가족나눔데이터
-  'NA00004211': 'good-family',  // T가족결합(착한가족)
+  'NA00004211': 'share-data',  // T가족결합(착한가족)
   'NH00000084': 'family-free',
   'TW20000008': 'family-free',  // TB끼리 온가족프리
   'NH00000059': 'family-nocharge',

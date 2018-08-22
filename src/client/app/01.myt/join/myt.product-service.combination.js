@@ -7,6 +7,8 @@
 
 Tw.MyTJoinProductServiceCombination = function (rootEl) {
   this.$container = rootEl;
+  this._history = new Tw.HistoryService(rootEl);
+  this._history.init('hash');
 };
 
 Tw.MyTJoinProductServiceCombination.prototype = {
