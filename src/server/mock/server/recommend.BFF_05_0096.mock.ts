@@ -3,7 +3,7 @@ const recommend_BFF_05_0096 = {
   'msg': '',
   'result': {
     'tShopping': 'N',
-    'oksusuSafePack': 'N',
+    'oksusuSafePack': 'Y',
     'oksusuAndSafePack': 'N',
     'tPay': 'N',
     'tSignature': 'N'

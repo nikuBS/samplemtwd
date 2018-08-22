@@ -118,9 +118,27 @@ Tw.CustomerFaqCategory.prototype = {
     }
 
     this.$result.empty();
-    this._loadData(true);
+    if (!selected.isDepth2) {
+      this._depth2code = '0';
+      this._loadDepth2();
+    }
+    this._loadList(true);
   },
-  _loadData: function (isReload) {
+  _loadDepth2: function () {
+    this._apiService.request(Tw.API_CMD.BFF_08_0051, { ifaqGrpCd: this._depth1code })
+      .done($.proxy(function (res) {
+        if (res.code === Tw.API_CODE.CODE_00) {
+          this._depth2obj = res.result.faq1DepthGrp;
+          this.$btnDepth2.text(Tw.POPUP_PROPERTY.ALL);
+        } else {
+          this._popupService.openAlert(res.code + ' ' + res.msg);
+        }
+      }, this))
+      .fail($.proxy(function (err) {
+        this._popupService.openAlert(err.code + ' ' + err.msg);
+      }, this));
+  },
+  _loadList: function (isReload) {
     var code = this._rootCategoryCode;
     var depth = 2;
 
