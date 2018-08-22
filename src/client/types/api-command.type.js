@@ -25,6 +25,7 @@ Tw.API_CMD = {
   BFF_01_0011: { path: '/core-modification/v1/address/buildings', method: Tw.API_METHOD.GET },
   BFF_01_0012: { path: '/core-modification/v1/address/standard', method: Tw.API_METHOD.GET },
   BFF_01_0013: { path: '/core-modification/v1/address/standard', method: Tw.API_METHOD.GET },
+  BFF_01_0014: { path: '/core-auth/v1/auth/skt/sms', method: Tw.API_METHOD.POST },
   BFF_01_0015: { path: '/auth/skt/sms-authentication', method: Tw.API_METHOD.PUT },
   BFF_01_0016: { path: '/core-auth/v1/auth/dca/sms', method: Tw.API_METHOD.POST },
   BFF_01_0017: { path: '/core-auth/v1/auth/email', method: Tw.API_METHOD.POST },
@@ -105,9 +106,16 @@ Tw.API_CMD = {
   BFF_05_0087: { path: '/core-bill/v1/micropay-password-changes', method: Tw.API_METHOD.PUT },
   BFF_05_0089: { path: '/core-bill/v1/prepayInfo', method: Tw.API_METHOD.GET },
   BFF_05_0093: { path: '/core-bill/v1/microPay-cphist-request', method: Tw.API_METHOD.GET },
+  BFF_05_0096: { path: '/core-product/v1/recommend-benefits', method: Tw.API_METHOD.GET },
+  BFF_05_0120: { path: '/core-bill/v1/military-service-points', method: Tw.API_METHOD.GET },
   BFF_05_0102: { path: '/core-bill/v1/rainbow-point-adjustments', method: Tw.API_METHOD.POST },
+  BFF_05_0123: { path: '/core-product/v1/services/unavailableness', method: Tw.API_METHOD.GET },
+  BFF_05_0100: { path: '/core-bill/v1/rainbow-point-histories', method: Tw.API_METHOD.GET },
   BFF_05_0126: { path: '/core-product/v1/fee-plans/change-notices', method: Tw.API_METHOD.POST },
   BFF_05_0127: { path: '/core-product/v1/fee-plans/change-notices', method: Tw.API_METHOD.DELETE },
+  BFF_05_0129: { path: '/core-product/v1/services/wire/additions', method: Tw.API_METHOD.GET },
+  BFF_05_0137: { path: '/core-product/v1/services/wireless/additions', method: Tw.API_METHOD.GET },
+  BFF_05_0139: { path: '/core-modification/v1/myinfo/wire-service-contracts', method: Tw.API_METHOD.GET },
 
   // RECHARGE
   BFF_06_0001: { path: '/core-recharge/v1/refill-coupons', method: Tw.API_METHOD.GET },
@@ -233,15 +241,17 @@ Tw.API_CMD = {
   BFF_08_0044: { path: '/core-modification/v1/email-inquiry/quality-mobile', method: Tw.API_METHOD.POST },
   BFF_08_0045: { path: '/core-modification/v1/email-inquiry/quality-internet', method: Tw.API_METHOD.POST },
   BFF_08_0050: { path: '/core-modification/v1/ifaq/iFaqList', method: Tw.API_METHOD.GET },
+  BFF_08_0052: { path: '/core-modification/v1/ifaq/iFaqList-Cate', method: Tw.API_METHOD.GET },
+  BFF_08_0054: { path: '/core-modification/v1/require-document/reqDocument', method: Tw.API_METHOD.GET },
   BFF_08_0056: { path: '/core-modification/v1/guide/use-detail', method: Tw.API_METHOD.GET },
   BFF_08_0057: { path: '/core-modification/v1/guide/site-use', method: Tw.API_METHOD.GET },
 
   // EVENT
   BFF_09_0001: { path: '/core-membership/v1/event/ing-list', method: Tw.API_METHOD.GET },
-  BFF_09_0002: { path: '/core-membership/v1/event/detail', method: Tw.API_METHOD.GET },
+  BFF_09_0002: { path: '/core-membership/v1/event/detail/args-0', method: Tw.API_METHOD.GET },
   BFF_09_0003: { path: '/core-membership/v1/event/old-list', method: Tw.API_METHOD.GET },
   BFF_09_0004: { path: '/core-membership/v1/event/win-list', method: Tw.API_METHOD.GET },
-  BFF_09_0005: { path: '/core-membership/v1/event/win-detail', method: Tw.API_METHOD.GET },
+  BFF_09_0005: { path: '/core-membership/v1/event/win-detail/args-0', method: Tw.API_METHOD.GET },
 
   // TEST
   GET: { path: '/posts', method: Tw.API_METHOD.GET },
@@ -319,3 +329,4 @@ Tw.API_LOGIN_ERROR = {
   ICAS3228: 'ICAS3228',   // 고객보호비밀번호(대표회선) 입력 필요
   ICAS3235: 'ICAS3235'    // 휴면계정
 };
+

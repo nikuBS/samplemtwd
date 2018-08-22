@@ -4,7 +4,7 @@
  * Date: 2018.08.14
  */
 
-Tw.CustomerFaqInfoCommon = function (rootEl) {
+Tw.CustomerFaqInfoCommon = function (rootEl, serviceId) {
   this.$container = rootEl;
 
   this._apiService = Tw.Api;
@@ -13,6 +13,7 @@ Tw.CustomerFaqInfoCommon = function (rootEl) {
   this._hash = Tw.Hash;
 
   this.current = _.last(this._history.pathname.split('/'));
+  this.serviceId = serviceId;
 
   this._cachedElement();
   this._bindEvent();
@@ -26,6 +27,7 @@ Tw.CustomerFaqInfoCommon.prototype = {
     if (this.categorySelector) {
       this.choiceData = Tw.CUSTOMER_SERVICE_INFO_CHOICE;
     }
+    // console.log(this.serviceId, this.current);
     // if (this.movePageButtonWrapper) {
     //   this.moveUrl = Tw.CUSTOMER_SERVICE_INFO_URL;
     //   this.moveByButtonPageID = [3315, 3316, null, 3320, 3321, 3727, 3722, 215];

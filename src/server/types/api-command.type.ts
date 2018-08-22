@@ -148,6 +148,9 @@ export const API_CMD = {
   BFF_05_0092: { path: '/core-modification/v1/wire-network-notification-smsinfo', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0093: { path: '/core-bill/v1/microPay-cphist-request', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0094: { path: '/core-modification/v1/my-discount-benefit/getSKTcombiBenefit', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0096: { path: '/core-product/v1/recommend-benefits', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0098: { path: '/core-membership/v1/card-vip-benefit', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_05_0100: { path: '/core-bill/v1/rainbow-point-histories', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0101: { path: '/core-bill/v1/rainbow-point-services', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0102: { path: '/core-bill/v1/rainbow-point-adjustments', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_05_0106: { path: '/core-modification/v1/my-discount-benefit/price-agree-info', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
@@ -155,20 +158,22 @@ export const API_CMD = {
   BFF_05_0108: { path: '/core-modification/v1/my-discount-benefit/choice-agree-info', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0110: { path: '/core-modification/v1/benefit/ltrm-scrb', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0111: { path: '/core-modification/v1/benefit/wlf-cust-dc', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0115: { path: '/core-bill/v1/cookiz-ting-points', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_05_0120: { path: '/core-bill/v1/military-service-points', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_05_0123: { path: '/core-product/v1/services/unavailableness', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0124: { path: '/core-membership/v1/my-membership-benefit/check-membership', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0125: { path: '/core-product/v1/fee-plans/change-notices', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0126: { path: '/core-product/v1/fee-plans/change-notices', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_05_0127: { path: '/core-product/v1/fee-plans/change-notices', method: API_METHOD.DELETE, server: API_SERVER.BFF, bypass: true },
   BFF_05_0128: { path: '/core-product/v1/services/wire/fee-plans', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0129: { path: '/core-product/v1/services/wire/additions', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0130: { path: '/core-bill/v1/rainbow-point-adjustments', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0132: { path: '/core-bill/v1/rainbow-points', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0133: { path: '/core-product/v1/services/combinations', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0134: { path: '/core-product/v1/services/combinations', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0136: { path: '/core-product/v1/services/wireless/fee-plans', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
-  BFF_05_0130: { path: '/core-bill/v1/rainbow-point-adjustments', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0137: { path: '/core-product/v1/services/wireless/additions', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
-  BFF_05_0132: { path: '/core-bill/v1/rainbow-points', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
-  BFF_05_0120: { path: '/core-bill/v1/military-service-points', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
-  BFF_05_0115: { path: '/core-bill/v1/cookiz-ting-points', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
-  BFF_05_0100: { path: '/core-bill/v1/rainbow-point-histories', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0139: { path: '/core-modification/v1/myinfo/wire-service-contracts', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   // RECHARGE
   BFF_06_0001: { path: '/core-recharge/v1/refill-coupons', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_06_0002: { path: '/core-recharge/v1/refill-usages', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
@@ -380,17 +385,18 @@ export const API_CMD = {
   BFF_08_0045: { path: '/core-modification/v1/email-inquiry/quality-internet', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_08_0050: { path: '/core-modification/v1/ifaq/iFaqList', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: false },
   BFF_08_0051: { path: '/core-modification/v1/ifaq/iFaq-category-List', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
-  BFF_08_0052: { path: '/core-modification/v1/ifaq/iFaqList-Cate', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_08_0052: { path: '/core-modification/v1/ifaq/iFaqList-Cate', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_08_0053: { path: '/core-modification/v1/guide/content', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_08_0054: { path: '/core-modification/v1/require-document/reqDocument', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_08_0056: { path: '/core-modification/v1/guide/use-detail', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_08_0057: { path: '/core-modification/v1/guide/site-use', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
 
   // EVENT
   BFF_09_0001: { path: '/core-membership/v1/event/ing-list', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
-  BFF_09_0002: { path: '/core-membership/v1/event/detail', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_09_0002: { path: '/core-membership/v1/event/detail/args-0', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_09_0003: { path: '/core-membership/v1/event/old-list', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_09_0004: { path: '/core-membership/v1/event/win-list', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
-  BFF_09_0005: { path: '/core-membership/v1/event/win-detail', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_09_0005: { path: '/core-membership/v1/event/win-detail/args-0', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
 
   // TID
   OIDC: { path: '/auth/authorize.do', method: API_METHOD.GET, server: API_SERVER.TID, bypass: false },
@@ -449,7 +455,9 @@ export const API_MYT_ERROR_CODE = [
 ];
 
 export const API_MYT_ERROR = {
-  BIL0011: 'BIL0011'  // SK브로드밴드 서비스는 사용이 불가능한 메뉴입니다.
+  BIL0011: 'BIL0011',  // SK브로드밴드 서비스는 사용이 불가능한 메뉴입니다.
+  MBR0001 : 'MBR0001', // 타인명의로 카드가 발급되었습니다.
+  MBR0002 : 'MBR0002'  // 발급된 카드정보가 없습니다.
 };
 
 export const API_GIFT_ERROR = [
@@ -465,4 +473,5 @@ export const API_GIFT_ERROR = [
   'RCG0013',   // 그 외 기타에러
   'RCG0015',   // 기타 불가
 ];
+
 

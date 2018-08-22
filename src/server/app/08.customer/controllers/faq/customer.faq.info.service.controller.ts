@@ -28,20 +28,20 @@ class CustomerFaqInfoService extends TwViewController {
         seqNum: serviceId
       }).subscribe((resp) => {
 
-        if (resp.code === API_CODE.CODE_00) {
+        // if (resp.code === API_CODE.CODE_00) {
           res.render('faq/customer.faq.info.service-cases.html', {
             svcInfo: svcInfo,
-            serviceId: serviceId
+            serviceId: serviceId,
+            service_category_title: 'Ansewerless service'
           });
-        } else {
-          this.logger.error(this, resp);
-          res.render('error.server-error.html', {
-            title: '',
-            code: resp.code,
-            msg: resp.msg,
-            svcInfo: svcInfo
-          });
-        }
+        // } else {
+        //   this.logger.error(this, resp);
+        //   res.render('error.server-error.html', {
+        //     code: resp.code,
+        //     msg: resp.msg,
+        //     svcInfo: svcInfo
+        //   });
+        // }
       });
     }
   }

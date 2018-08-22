@@ -19,7 +19,7 @@ import MyTReissueComplete from './controllers/bill/myt.bill.guidechange.reissue-
 import MyTReturnHistory from './controllers/bill/myt.bill.guidechange.returnhistory.controller';
 import MyTBillBillguide from './controllers/bill/myt.bill.billguide.controller';
 import MyTHotBillChild from './controllers/bill/myt.bill.hotbill.child.controller';
-import MytBillGuidechange from './controllers/bill/myt.bill.guidechange.controller';
+import MyTBillGuidechange from './controllers/bill/myt.bill.guidechange.controller';
 import MyTBillGuidechangeChange from './controllers/bill/myt.bill.guidechange.change.controller';
 import MyTBillGuideChangeComplete from './controllers/bill/myt.bill.guidechange.change-complete.controller';
 import MyTBillGuidechangeUpdate from './controllers/bill/myt.bill.guidechange.update.controller';
@@ -41,9 +41,9 @@ import MyTBillHistoryContents from './controllers/bill/myt.bill.history.contents
 
 
 import MytJoinProtectChangeController from './controllers/join/myt.join.protect.change.controller';
-import MytJoinJoinInfoController from './controllers/join/myt.join.join-info.controller';
+import MyTJoinJoinInfoController from './controllers/join/myt.join.join-info.controller';
 import MyTJoinJoinInfoNoContractController from './controllers/join/myt.join.join-info.no-contract.controller';
-import MytJoinJoinInfoSmsController from './controllers/join/myt.join.join-info-sms.controller';
+import MyTJoinJoinInfoSmsController from './controllers/join/myt.join.join-info.sms.controller';
 
 
 import MytJoinProductService from './controllers/join/myt.join.product-service.controller';
@@ -66,6 +66,8 @@ import MyTJoinContractTerminal from './controllers/join/myt.join.contract-termin
 import MyTJoinContractTerminalDetail from './controllers/join/myt.join.contract-terminal.detail.controller';
 import MyTBenefitRecommendController from './controllers/benefit/myt.benefit.recommend.controller';
 import MyTBenefitRecommendDetailController from './controllers/benefit/myt.benefit.recommend.detail.controller';
+import MyTBenefitMembershipController from './controllers/benefit/myt.benefit.membership.controller';
+import MyTBenefitMembershipDetailController from './controllers/benefit/myt.benefit.membership.detail.controller';
 
 
 class MytRouter extends TwRouter {
@@ -100,7 +102,7 @@ class MytRouter extends TwRouter {
     this.controllers.push({ url: '/bill/billguide/subDonationBill', controller: new MyTBillBillguideSubDonationBill() });
 
     this.controllers.push({ url: '/bill/hotbill/child', controller: new MyTHotBillChild() });
-    this.controllers.push({ url: '/bill/guidechange', controller: new MytBillGuidechange() });
+    this.controllers.push({ url: '/bill/guidechange', controller: new MyTBillGuidechange() });
     this.controllers.push({ url: '/bill/guidechange/change', controller: new MyTBillGuidechangeChange() });
     this.controllers.push({ url: '/bill/guidechange/change-complete', controller: new MyTBillGuideChangeComplete() });
     this.controllers.push({ url: '/bill/guidechange/update', controller: new MyTBillGuidechangeUpdate() });
@@ -120,10 +122,10 @@ class MytRouter extends TwRouter {
     this.controllers.push({ url: '/join/pay-claim', controller: new MyTJoinPayClaim() });
     this.controllers.push({ url: '/join/contract-terminal', controller: new MyTJoinContractTerminal() });
     this.controllers.push({ url: '/join/contract-terminal/detail', controller: new MyTJoinContractTerminalDetail() });
-    this.controllers.push({ url: '/join/join-info', controller: new MytJoinJoinInfoController() });
+    this.controllers.push({ url: '/join/join-info', controller: new MyTJoinJoinInfoController() });
     this.controllers.push({ url: '/join/protect/change', controller: new MytJoinProtectChangeController() });
     this.controllers.push({ url: '/join/join-info/no-contract', controller: new MyTJoinJoinInfoNoContractController() });
-    this.controllers.push({ url: '/join/join-info/sms', controller: new MytJoinJoinInfoSmsController() });
+    this.controllers.push({ url: '/join/join-info/sms', controller: new MyTJoinJoinInfoSmsController() });
 
     this.controllers.push({ url: '/join/product-service', controller: new MytJoinProductService() });
     this.controllers.push({ url: '/join/product-service/fee-alarm', controller: new MytJoinProductServiceFeeAlarmController() });
@@ -141,6 +143,8 @@ class MytRouter extends TwRouter {
 
     this.controllers.push({ url: '/benefit/point/adjustment', controller: new MytBenefitPointAdjustment() });
     this.controllers.push({ url: '/benefit/point/transfer', controller: new MytBenefitPointTransfer() });
+    this.controllers.push({ url: '/benefit/membership', controller: new MyTBenefitMembershipController() });
+    this.controllers.push({ url: '/benefit/membership/detail', controller: new MyTBenefitMembershipDetailController() });
   }
 }
 

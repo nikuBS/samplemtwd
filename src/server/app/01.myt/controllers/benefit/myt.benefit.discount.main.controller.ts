@@ -45,7 +45,7 @@ class MytBenefitDisCntMainController extends TwViewController {
         if ( FormatHelper.isEmpty(resp.result) ) {
           return null;
         } else {
-          if ( !resp.result['comYn'] || resp.result['comYn'] === 'N' ) {
+          if ( !resp.result['combYn'] || resp.result['combYn'] === 'N' ) {
             // SKT 결합 상품은 없는 경우에도 성공, comYn 값 여부로 대상/비대상 설정
             return null;
           } else {

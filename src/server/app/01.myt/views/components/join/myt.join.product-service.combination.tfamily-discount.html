@@ -5,174 +5,191 @@
 * MY_01_01_104
 %>
 
-<div class="cont-box">
-    <div class="top-info mb22">
-        <button role="button" class="link-btn tx-normal"><span class="ff-hn vbl">T</span>끼리온가족할인</button>  
-    </div>
-    <div class="payment-detail-box">
-        <div class="detail-inner">
-            <div class="detail-list type2">
-                <ul>
-                    <li>
-                        <span class="title">신청일</span>
-                        <span class="tx-cont"><span class="ff-hn vbl"><%= combination.joinDate %></span></span>
-                    </li>
-                    <li>
-                        <span class="title">총 가입기간</span>
-                        <span class="tx-cont"><span class="ff-hn vbl"><%= combination.totalPeriod %></span> 년</span>
-                    </li>
-                    <li>
-                        <span class="title">총 할인금액</span>
-                        <span class="tx-cont"><span class="tx-blue"><span class="ff-hn vbl tx-bold"><%= combination.totalDiscount %></span> 원</span></span>
-                    </li>
-                    <li>
-                        <span class="title">결합회선</span>
-                        <span class="tx-cont"><span class="ff-hn vbl"><%= combination.count %></span> 회선</span>
-                    </li>
-                </ul>
-            </div>
+<!-- #header -->
+<div id="header" class="header-wrap">
+    <div class="header">
+        <div class="header-ti align-l">
+            <h1>사용중인 상품</h1>
         </div>
+        <button class="prev-step fe-common-back"><span class="blind">이전으로</span></button>
     </div>
 </div>
-
-<hr class="cont-sp type1" aria-hidden="true" />
-
-<div class="cont-box nogaps">
-    <div class="widget">
-        <div class="widget-box accordion2">
-            <div class="acco-style user-list"><!-- 스타일별 클래스 추가 -->
-                <ul class="acco-box">
-                    <% for (let i = 0; i < combination.wireIndex; i++) { %>
-                        <% const member = combination.members[i]; %>
-                    <li class="acco-list"><!-- on , off -->
-                        <div class="acco-title">
-                            <button role="button" aria-pressed="">
-                                <span class="info-line"><%= member.name %> <%= i === 0 || !member.relation ? '' : '(' + member.relation + ')' %>
-                                    <% if (member.isRepresentation) { %>
-                                        <span class="badge badge-fam-members"><span class="blind">가족대표</span></span>
-                                    <% } %>
-                                    <% if (i === 0) { %>                                   
-                                    <span class="badge badge-me"><span class="blind">나</span></span>
-                                    <% } %>
-                                </span>
-                                <span class="info-line ff-hn"><%= member.svcNumber %></span>
-
-                                <span class="right-item">할인 후<br /><span class="ff-hn tx-bold vbl"><%= member.afterDiscount %></span> 원</span>
-                            </button>
-                        </div>
-                        <div class="acco-content">
-                            <div class="detail-list">
-                                <% const bProduct = combination.bProducts[member.managementId]; %>
-                                <ul>
-                                    <li>
-                                        <span class="title">가족대표와의 관계</span>
-                                        <span class="tx-cont"><%= member.relation %><%= i === 0? '(내번호)': ''%></span>
-                                    </li>
-                                    <li>
-                                        <span class="title">휴대폰 가입년수</span>
-                                        <span class="tx-cont"><span class="ff-hn vbl"><%= member.period %></span> 년</span>
-                                    </li>
-                                    <li>
-                                        <span class="title">B가입기간</span>
-                                        <span class="tx-cont"><%= bProduct? bProduct.period + ' 년' : '-' %></span>
-                                    </li>
-                                    <li>
-                                        <span class="title">월정액할인율</span>
-                                        <span class="tx-cont"><span class="ff-hn vbl"><%= member.discountRate %></span></span>
-                                    </li>
-                                    <li>
-                                        <span class="title">사용중인 요금제</span>
-                                        <span class="tx-cont"><a class="bt-link-tx underline"><%= member.servicePlan %></a></span><!-- TODO: 사용중인 요금제 링크 연결 필요 -->
-                                    </li>
-                                    <li>
-                                        <span class="title">할인 전 금액</span>
-                                        <span class="tx-cont"><span class="ff-hn vbl"><%= member.beforeDiscount %></span> 원</span>
-                                    </li>
-                                    <li>
-                                        <span class="title">할인 금액</span>
-                                        <span class="tx-cont"><span class="tx-blue"><span class="ff-hn vbl tx-bold">-<%= member.discountAmount %></span> 원</span></span>
-                                    </li>
-                                    <li>
-                                        <span class="title">할인 후 금액</span>
-                                        <span class="tx-cont"><span class="ff-hn vbl tx-bold"><%= member.afterDiscount %></span> 원</span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </li>
-                    <% } %>
-                </ul>
+<!--// #header -->
+<!-- #contents -->
+<div id="contents" class="container-wrap">
+    <h2 class="blind">내용</h2>
+    <div class="container">
+        <div class="cont-box">
+            <div class="top-info mb22">
+                <a role="button" class="link-btn tx-normal"><span class="ff-hn vbl">T</span>끼리온가족할인</a> <!-- TODO: 결합상품 상세페이지 이동 필요 -->
             </div>
-        </div>
-    </div>
-</div>
-
-<hr class="cont-sp type1" aria-hidden="true" />
-    
-<div class="cont-box nogaps-hoz">
-    <div class="box-confirm">
-        <!-- .widget -->
-        <div class="widget">
-            <div class="widget-box accordion">
-                <h3 class="tit-a">이용안내</h3>
-                <div class="acco-cover toggle">
-                    <div class="bt-whole"><button role="button" aria-pressed="false"><span class="blind">내용 열기</span></button></div>
-                    <div class="acco-style">
-                        <ul class="acco-list">
-                            <li class="acco-box">
-                                <div class="acco-tit"><button role="button" aria-pressed="false"><span class="bullet">1.</span> band 데이터 요금제</button></div>
-                                <div class="acco-cont">
-                                    <ul class="list-dot">
-                                        <li class="list">band 데이터 요금제는 가족 합산년수 20년 이상 10%, 30년 이상 30% 할인 적용됩니다.</li>
-                                    </ul>
-                                </div>
+            <div class="payment-detail-box">
+                <div class="detail-inner">
+                    <div class="detail-list type2">
+                        <ul>
+                            <li>
+                                <span class="title">신청일</span>
+                                <span class="tx-cont"><span class="ff-hn vbl"><%= combination.joinDate %></span></span>
                             </li>
-                            <li class="acco-box">
-                                <div class="acco-tit"><button role="button" aria-pressed="false"><span class="bullet">2.</span> 실제 할인 금액</button></div>
-                                <div class="acco-cont">
-                                    <ul class="list-dot">
-                                        <li class="list">실제 청구 시에는 월말 사용중인 요금제를 기준으로 적용하므로, 실제할인금액과는 상이할 수 있습니다.</li>
-                                    </ul>
-                                </div>
+                            <li>
+                                <span class="title">총 가입기간</span>
+                                <span class="tx-cont"><span class="ff-hn vbl"><%= combination.totalPeriod %></span> 년</span>
                             </li>
-                            <li class="acco-box">
-                                <div class="acco-tit"><button role="button" aria-pressed="false"><span class="bullet">3.</span> 통화료 내역 제외</button></div>
-                                <div class="acco-cont">
-                                    <ul class="list-dot">
-                                        <li class="list">통화료는 월 중 계속 변동하므로 상기 내역에는 제외되어 있습니다.</li>
-                                    </ul>
-                                </div>
+                            <li>
+                                <span class="title">총 할인금액</span>
+                                <span class="tx-cont"><span class="tx-blue"><span class="ff-hn vbl tx-bold"><%= combination.totalDiscount %></span> 원</span></span>
                             </li>
-                            <li class="acco-box">
-                                <div class="acco-tit"><button role="button" aria-pressed="false"><span class="bullet">4.</span> 더블할인 혜택 이용 고객</button></div>
-                                <div class="acco-cont">
-                                    <ul class="list-dot">
-                                        <li class="list">무료음성 또는 무료문자요금제 이용고객이 더블할인 동시 이용고객일 경우 T끼리온가족할인혜택은 제공되지 않으며, 더블할인 혜택만 제공됩니다.</li>
-                                    </ul>
-                                </div>
-                            </li>
-                            <li class="acco-box">
-                                <div class="acco-tit"><button role="button" aria-pressed="false"><span class="bullet">5.</span> 가입연수 산정</button></div>
-                                <div class="acco-cont">
-                                    <ul class="list-dot">
-                                        <li class="list">휴대폰 가입년수 산정 시 약정할인혜택 이용 기간은 제외합니다.</li>
-                                    </ul>
-                                </div>
-                            </li>
-                            <li class="acco-box">
-                                <div class="acco-tit"><button role="button" aria-pressed="false"><span class="bullet">5.</span> 가족그룹의 해지</button></div>
-                                <div class="acco-cont">
-                                    <ul class="list-dot">
-                                        <li class="list">대표회선 또는 2명으로 구성된 가족그룹의 회선 해지 시 T끼리온가족할인이 자동으로 해지됩니다.</li>
-                                        <li class="list">대표회선 또는 2명으로 구성된 가족그룹의 회선 해지는 SMS 인증 또는 공인인증서 인증 후 가능합니다.</li>
-                                    </ul>
-                                </div>
+                            <li>
+                                <span class="title">결합회선</span>
+                                <span class="tx-cont"><span class="ff-hn vbl"><%= combination.count %></span> 회선</span>
                             </li>
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
-        <!--// .widget -->
+
+        <hr class="cont-sp type1" aria-hidden="true" />
+
+        <div class="cont-box nogaps">
+            <div class="widget">
+                <div class="widget-box accordion2">
+                    <div class="acco-style user-list"><!-- 스타일별 클래스 추가 -->
+                        <ul class="acco-box">
+                            <% for (let i = 0; i < combination.wireIndex; i++) { %>
+                            <% const member = combination.members[i]; %>
+                            <% const isMine = combination.representationId === member.managementId %>
+                            <li class="acco-list"><!-- on , off -->
+                                <div class="acco-title">
+                                    <button role="button" aria-pressed="">
+                                        <span class="info-line"><%= member.name %> <%= member.isRepresentation ? '' : '(' + member.relation + ')' %>
+                                            <% if (member.isRepresentation) { %>
+                                                <span class="badge badge-fam-members"><span class="blind">가족대표</span></span>
+                                            <% } %>
+                                            <% if (isMine) { %>                                   
+                                            <span class="badge badge-me"><span class="blind">나</span></span>
+                                            <% } %>
+                                        </span>
+                                        <span class="info-line ff-hn"><%= member.svcNumber %></span>
+
+                                        <span class="right-item">할인 후<br /><span class="ff-hn tx-bold vbl"><%= member.afterDiscount %></span> 원</span>
+                                    </button>
+                                </div>
+                                <div class="acco-content">
+                                    <div class="detail-list">
+                                        <% const bProduct = combination.bProducts[member.managementId]; %>
+                                        <ul>
+                                            <li>
+                                                <span class="title">가족대표와의 관계</span>
+                                                <span class="tx-cont"><%= member.relation %><%= isMine? '(내번호)': ''%></span>
+                                            </li>
+                                            <li>
+                                                <span class="title">휴대폰 가입년수</span>
+                                                <span class="tx-cont"><span class="ff-hn vbl"><%= member.period %></span> 년</span>
+                                            </li>
+                                            <li>
+                                                <span class="title">B가입기간</span>
+                                                <span class="tx-cont"><%= bProduct? bProduct.period + ' 년' : '-' %></span>
+                                            </li>
+                                            <li>
+                                                <span class="title">월정액할인율</span>
+                                                <span class="tx-cont"><span class="ff-hn vbl"><%= member.discountRate %></span></span>
+                                            </li>
+                                            <li>
+                                                <span class="title">사용중인 요금제</span>
+                                                <span class="tx-cont"><a class="bt-link-tx underline"><%= member.servicePlan %></a></span><!-- TODO: 사용중인 요금제 링크 연결 필요 -->
+                                            </li>
+                                            <li>
+                                                <span class="title">할인 전 금액</span>
+                                                <span class="tx-cont"><span class="ff-hn vbl"><%= member.beforeDiscount %></span> 원</span>
+                                            </li>
+                                            <li>
+                                                <span class="title">할인 금액</span>
+                                                <span class="tx-cont"><span class="tx-blue"><span class="ff-hn vbl tx-bold">-<%= member.discountAmount %></span> 원</span></span>
+                                            </li>
+                                            <li>
+                                                <span class="title">할인 후 금액</span>
+                                                <span class="tx-cont"><span class="ff-hn vbl tx-bold"><%= member.afterDiscount %></span> 원</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+                            <% } %>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr class="cont-sp type1" aria-hidden="true" />
+            
+        <div class="cont-box nogaps-hoz">
+            <div class="box-confirm">
+                <!-- .widget -->
+                <div class="widget">
+                    <div class="widget-box accordion">
+                        <h3 class="tit-a">이용안내</h3>
+                        <div class="acco-cover toggle">
+                            <div class="bt-whole"><button role="button" aria-pressed="false"><span class="blind">내용 열기</span></button></div>
+                            <div class="acco-style">
+                                <ul class="acco-list">
+                                    <li class="acco-box">
+                                        <div class="acco-tit"><button role="button" aria-pressed="false"><span class="bullet">1.</span> band 데이터 요금제</button></div>
+                                        <div class="acco-cont">
+                                            <ul class="list-dot">
+                                                <li class="list">band 데이터 요금제는 가족 합산년수 20년 이상 10%, 30년 이상 30% 할인 적용됩니다.</li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li class="acco-box">
+                                        <div class="acco-tit"><button role="button" aria-pressed="false"><span class="bullet">2.</span> 실제 할인 금액</button></div>
+                                        <div class="acco-cont">
+                                            <ul class="list-dot">
+                                                <li class="list">실제 청구 시에는 월말 사용중인 요금제를 기준으로 적용하므로, 실제할인금액과는 상이할 수 있습니다.</li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li class="acco-box">
+                                        <div class="acco-tit"><button role="button" aria-pressed="false"><span class="bullet">3.</span> 통화료 내역 제외</button></div>
+                                        <div class="acco-cont">
+                                            <ul class="list-dot">
+                                                <li class="list">통화료는 월 중 계속 변동하므로 상기 내역에는 제외되어 있습니다.</li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li class="acco-box">
+                                        <div class="acco-tit"><button role="button" aria-pressed="false"><span class="bullet">4.</span> 더블할인 혜택 이용 고객</button></div>
+                                        <div class="acco-cont">
+                                            <ul class="list-dot">
+                                                <li class="list">무료음성 또는 무료문자요금제 이용고객이 더블할인 동시 이용고객일 경우 T끼리온가족할인혜택은 제공되지 않으며, 더블할인 혜택만 제공됩니다.</li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li class="acco-box">
+                                        <div class="acco-tit"><button role="button" aria-pressed="false"><span class="bullet">5.</span> 가입연수 산정</button></div>
+                                        <div class="acco-cont">
+                                            <ul class="list-dot">
+                                                <li class="list">휴대폰 가입년수 산정 시 약정할인혜택 이용 기간은 제외합니다.</li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li class="acco-box">
+                                        <div class="acco-tit"><button role="button" aria-pressed="false"><span class="bullet">5.</span> 가족그룹의 해지</button></div>
+                                        <div class="acco-cont">
+                                            <ul class="list-dot">
+                                                <li class="list">대표회선 또는 2명으로 구성된 가족그룹의 회선 해지 시 T끼리온가족할인이 자동으로 해지됩니다.</li>
+                                                <li class="list">대표회선 또는 2명으로 구성된 가족그룹의 회선 해지는 SMS 인증 또는 공인인증서 인증 후 가능합니다.</li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--// .widget -->
+            </div>
+        </div>
     </div>
 </div>

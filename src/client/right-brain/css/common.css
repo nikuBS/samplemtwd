@@ -181,14 +181,17 @@ input[type=text], input[type=file], input[type=password], input[type=number] {
   font-size: 0.75rem;
 }
 
-.inputbox.validation .input input[type=text],
-.inputbox.validation .input input[type=password],
-.inputbox.validation .input input[type=number] {
-  border-color: #325ec1;
-  background-color: #fff;
+.inputbox.validation .input {
+  /*input[type=text],
+            input[type=password],
+            input[type=number] {
+                border-color: map_get($point, subnavy4);
+                background-color:map_get($basic, white);
+            }*/
 }
 
 .inputbox.validation .input .ico {
+  display: none;
   background-position: 0 -26.5625rem;
 }
 
@@ -208,6 +211,7 @@ input[type=text], input[type=file], input[type=password], input[type=number] {
 }
 
 .inputbox.error .input .ico {
+  display: none;
   background-position: 1.5625rem -26.5625rem;
 }
 
@@ -381,7 +385,23 @@ input[type=text], input[type=file], input[type=password], input[type=number] {
   width: 119%;
 }
 
+.inputbox.bt-add.w119 .tx-box .error-txt {
+  width: 119%;
+}
+
+.inputbox.bt-add.w119 .tx-box .validation-txt {
+  width: 119%;
+}
+
 .inputbox.bt-add.w163 .tx-box .guide-txt {
+  width: 153%;
+}
+
+.inputbox.bt-add.w163 .tx-box .error-txt {
+  width: 153%;
+}
+
+.inputbox.bt-add.w163 .tx-box .validation-txt {
   width: 153%;
 }
 

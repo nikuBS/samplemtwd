@@ -125,11 +125,15 @@ class MytBenefitDisCntDetailController extends TwViewController {
       if ( resp.code === API_CODE.CODE_00 ) {
         if ( !FormatHelper.isEmpty(resp.result) ) {
           data = Object.assign(resp.result, data);
-          if ( data.wlfCustDcList && data.wlfCustDcList.length > 0 ) {
-            data.effStaDt = DateHelper.getShortDate(data.wlfCustDcList[1].effStaDt);
-          }
-          if ( data.agreeEndDate ) {
-            data.effEndDt = DateHelper.getShortDate(data.wlfCustDcList[1].effEndDt);
+          const weList = data.wlfCustDcList;
+          if ( weList && weList.length > 0 ) {
+            const item = weList.filter((value) => {
+              if ( value.wlfDcNm === '요금' ) {
+                return value;
+              }
+            })[0];
+            data.effStaDt = DateHelper.getShortDate(item.effStaDt);
+            data.effEndDt = DateHelper.getShortDate(item.effEndDt);
           }
         }
       } else {

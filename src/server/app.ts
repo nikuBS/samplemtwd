@@ -25,6 +25,7 @@ import DirectRouter from './app/07.direct/direct.router';
 import CustomerRouter from './app/08.customer/customer.router';
 import AuthRouter from './app/09.auth/auth.router';
 import SearchRouter from './app/search/search.router';
+import CommonRouter from './app/common/common.router';
 import BypassRouter from './common/bypass.router';
 import ApiRouter from './common/api.router';
 
@@ -94,6 +95,7 @@ class App {
     this.app.use('/customer', new AppRouter(CustomerRouter.instance.controllers).router);
     this.app.use('/auth', new AppRouter(AuthRouter.instance.controllers).router);
     this.app.use('/search', new AppRouter(SearchRouter.instance.controllers).router);
+    this.app.use('/common', new AppRouter(CommonRouter.instance.controllers).router);
   }
 
   private setViewPath() {

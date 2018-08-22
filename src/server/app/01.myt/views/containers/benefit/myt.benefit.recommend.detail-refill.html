@@ -23,7 +23,74 @@
     <!-- // header -->
     <!-- content -->
     <div id="contents" class="container-wrap">
-        myt.benefit.recommend.detail-refill
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <div class="cont-box">
+                <div class="inner-block">
+                    <% if( reqQuery.type == 'A') { %>
+                    <h2 class="title-h2">나의 추천 혜택</h2>
+                    <div class="exp-top">
+                        <span class="tx-exp tx-bold" data-target="refillCpArea"></span>
+                        <span class="tx-exp tx-bold" data-target="LtsCpArea"></span>
+                    </div>
+                    <% } %>
+
+                    <% if( reqQuery.type == 'B') { %>
+                    <h2 class="title-h2">혜택 받는 법</h2>
+                    <div class="exp-top">
+                        <span class="tx-exp"><span class="tx-bold">SKT 가입기간에 따라</span><br />별도 신청 없이 데이터 쿠폰 제공</span>
+                    </div>
+                    <% } %>
+
+                    <div class="contents-btn">
+                        <ul class="bt-slice">
+                            <li class="bt-blue1">
+                                <% if( reqQuery.type == 'A') { %>
+                                <button data-target="">리필쿠폰 사용하러 가기</button>
+                                <% } %>
+                                <% if( reqQuery.type == 'B') { %>
+                                <button data-target="">T데이터 쿠폰 구매</button>
+                                <% } %>
+
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="inner-block">
+                    <h2 class="title-h2">SKT가입기간 2년 이상 고객님께<br />기본제공 데이터 2배 무료 제공!</h2>
+                    <div class="benefit-img"><img src="/img/dummy/dmy-circuit04.png" alt=""/></div>
+                    <div class="contents-btn">
+                        <ul class="bt-slice">
+                            <li class="bt-white1">
+                                <button>혜택 자세히보기</button>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="exp-list mt20">
+                        <ul>
+                            <li>
+                                <span class="title">가입기간이 길수록 늘어나는 리필혜택</span>
+                                <ul class="dash-list">
+                                    <li>2년 이상 ~3년 미만 : <span class="tx-bold vbl">4</span>회</li>
+                                    <li>3년 이상 ~4년 미만 : <span class="tx-bold vbl">5</span>회</li>
+                                    <li>4년 이상 : <span class="tx-bold vbl">6</span>회</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <span class="title">1년 단위 혜택 갱신</span>
+                                <span class="one-depth-line">데이터 리필 혜택은 1년 단위로 가입년수 갱신 시점마다 새롭게 제공됩니다. (1년 내 정지기간 제외/갱신일자 확인필요)</span>
+                            </li>
+                            <li>
+                                <span class="title">리필하기 서비스 이용</span>
+                                <span class="one-depth-line">데이터 리필하기 서비스 이용은 데이터 리필 또는 음성 리필에 상관없이 월 1회 이용 가능합니다. (단, 음성 선택 시 20%)</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
     </div>
     <!-- // content -->
     <!-- footer -->
@@ -33,7 +100,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.MytBenefitRecommendDetail( $('#fe-wrap'), {
+    new Tw.MytBenefitRecommendDetailRefill( $('#fe-wrap'), {
       reqQuery: <%-JSON.stringify(reqQuery) %>,
       svcInfo: <%-JSON.stringify(svcInfo) %>
     });

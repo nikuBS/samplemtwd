@@ -120,7 +120,7 @@ Tw.PaymentHistoryPointReserve.prototype = {
       this._apiService.request(
           this.apiName,
           this.apiOption
-      ).done($.proxy(this._setData, this)).error($.proxy(this._apiError, this));
+      ).done($.proxy(this._setData, this)).fail($.proxy(this._apiError, this));
     }
   },
 
@@ -260,7 +260,7 @@ Tw.PaymentHistoryPointReserve.prototype = {
   },
 
   _reserveCancel: function (option) {
-    this._apiService.request(this.apiReserveCancelName, option).done($.proxy(this._reserveCancelHandler, this)).error($.proxy(function () {
+    this._apiService.request(this.apiReserveCancelName, option).done($.proxy(this._reserveCancelHandler, this)).fail($.proxy(function () {
           this._apiError();
           this._popupService.close();
         }, this

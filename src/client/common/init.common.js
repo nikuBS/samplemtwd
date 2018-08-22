@@ -15,6 +15,7 @@ Tw.Init.prototype = {
     Tw.Native = new Tw.NativeService();
     Tw.Popup = new Tw.PopupService();
     Tw.Api = new Tw.ApiService();
+    Tw.Error = new Tw.ErrorService();
 
     this._apiService = Tw.Api;
     this._nativeService = Tw.Native;

@@ -1,16 +1,16 @@
-import { COMBINATION_PRODUCT_OTHER_TYPE } from '../../../../types/bff.type';
 /**
  * FileName: myt.join.product-service.controller.ts
  * Author: 공자윤 (jayoon.kong@sk.com)
  * Date: 2018.08.13
  */
+
+import { COMBINATION_PRODUCT_OTHER_TYPE, UNIT } from '../../../../types/bff.type';
 import { NextFunction, Request, Response } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import FormatHelper from '../../../../utils/format.helper';
 import { Observable } from 'rxjs/Observable';
 import { SVC_CDNAME, SVC_CDGROUP } from '../../../../types/bff.type';
-import { Combinations, Wire, WireLess } from '../../../../mock/server/myt.join.product-service.mock';
 import { MYT_COMBINATION_TYPE, MYT_COMBINATION_FAMILY, MYT_FEEPLAN_BENEFIT } from '../../../../types/string.type';
 import DateHelper from '../../../../utils/date.helper';
 
@@ -77,17 +77,20 @@ class MytJoinProductServiceController extends TwViewController {
     }
 
     return Object.assign(data.result, {
-      useFeePlanPro: Object.assign(data.result.useFeePlanPro, {
-        scrbDt: DateHelper.getShortDateWithFormat(data.result.useFeePlanPro.scrbDt, 'YYYY.MM.DD'),
-        basFeeTxt: FormatHelper.addComma(data.result.useFeePlanPro.basFeeTxt)
+      feePlanProd: Object.assign(data.result.feePlanProd, {
+        scrbDt: DateHelper.getShortDateWithFormat(data.result.feePlanProd.scrbDt, 'YYYY.MM.DD'),
+        basFeeTxt: isNaN(parseInt(data.result.feePlanProd.basFeeTxt, 10)) ? data.result.feePlanProd.basFeeTxt
+            : FormatHelper.addComma(data.result.feePlanProd.basFeeTxt) + UNIT['110']
       }),
-      tClassProd: Object.assign(data.result.tClassProd, {
-        tClassProdList: data.result.tClassProd.tClassProdList.map((item) => {
-          return Object.assign(item, {
-            scrbDt: DateHelper.getShortDateWithFormat(item.scrbDt, 'YYYY.MM.DD')
-          });
-        })
-      })
+      tClassProd: {
+        tClassProdList: data.result.tClassProd ? Object.assign(data.result.tClassProd, {
+          tClassProdList: data.result.tClassProd.tClassProdList.map((item) => {
+            return Object.assign(item, {
+              scrbDt: DateHelper.getShortDateWithFormat(item.scrbDt, 'YYYY.MM.DD')
+            });
+          })
+        }) : []
+      }
     });
   }
 
@@ -102,11 +105,8 @@ class MytJoinProductServiceController extends TwViewController {
       return this.error.render(res, defaultOptions);
     }
 
-    const feePlanApi: Observable<any> = apiInfo.isWire ? Observable.of(Wire) : Observable.of(WireLess);
-    // const feePlanApi: Observable<any> = this.apiService.request(apiInfo.apiCmd, {});
-
     Observable.combineLatest(
-      feePlanApi,
+      this.apiService.request(apiInfo.apiCmd, {}),
       this.getCombinations()
     ).subscribe(([feePlan, combinations]) => {
       if (feePlan.code !== API_CODE.CODE_00) {
@@ -126,35 +126,46 @@ class MytJoinProductServiceController extends TwViewController {
     });
   }
 
-  private getCombinations = (): Observable<ICombinationList> => {
+  private getCombinations = (): Observable<ICombinationList | null> => {
     return this.apiService.request(API_CMD.BFF_05_0133, {}).map(
       (resp: {
         code: string,
         result: { combinationWireMemberList?: any[], combinationWirelessMemberList?: any[] }
       }) => {
-        const combinations: ICombinationList = {};
-        const wireless = resp.result.combinationWirelessMemberList;
-        const wire = resp.result.combinationWireMemberList;
+        if (resp.code === API_CODE.CODE_00) {
+          const combinations: ICombinationList = {};
+          const wireless = resp.result.combinationWirelessMemberList;
+          const wire = resp.result.combinationWireMemberList;
 
-        if (wireless) {
-          for (let i = 0; i < wireless.length; i++) {
-            const item = wireless[i];
-            combinations[item.expsOrder] = this.getProperCombination(item);
+          if (wireless && wireless.length > 0) {
+            for (let i = 0; i < wireless.length; i++) {
+              const item = wireless[i];
+              const nItem = this.getProperCombination(item);
+              if (nItem) {
+                combinations[item.expsOrder] = nItem;
+              }
+            }
+          } else {
+            return null;
           }
-        }
 
-        if (wire) {
-          for (let i = 0; i < wire.length; i++) {
-            const item = wire[i];
-            combinations[item.expsOrder] = this.getProperCombination(item);
+          if (wire) {
+            for (let i = 0; i < wire.length; i++) {
+              const item = wire[i];
+              const nItem = this.getProperCombination(item);
+              if (nItem) {
+                combinations[item.expsOrder] = nItem;
+              }
+            }
           }
-        }
 
-        return combinations;
+          return combinations;
+        }
+        return null;
       });
   }
 
-  private getProperCombination = (item: any): ICombination => {
+  private getProperCombination = (item: any): ICombination | null => {
     const nItem: ICombination = {
       prodId: item.prodId,
       prodNm: item.prodNm,
@@ -273,6 +284,31 @@ class MytJoinProductServiceController extends TwViewController {
             description: MYT_COMBINATION_TYPE.ITEL
           });
         break;
+      }
+      case 'NH00000105':
+      case 'TW00000016': {  // TB끼리 TV플러스
+        nItem.items.push({
+          icon: 'multi',
+          description: MYT_COMBINATION_TYPE.MULTI_TWO
+        }, {
+            icon: 'iptv',
+            description: MYT_COMBINATION_TYPE.IPTV
+          });
+        break;
+      }
+      case 'NH00000103':
+      case 'TW00000009': {  // 한가족할인
+        nItem.items.push({
+          icon: 'line',
+          description: MYT_COMBINATION_TYPE.LINE
+        }, {
+            icon: 'int',
+            description: MYT_COMBINATION_TYPE.INTERNET
+          });
+        break;
+      }
+      default: {
+        return null;
       }
     }
 

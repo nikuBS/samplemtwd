@@ -14,8 +14,15 @@ Tw.MoreViewComponent.prototype = {
     if ( !data ) {
       return;
     }
-    var list = data.list;
-    var cnt = data.cnt || Tw.DEFAULT_LIST_COUNT;
+    var list = [];
+    var cnt = Tw.DEFAULT_LIST_COUNT;
+
+    if (Array.isArray(data)){
+      list = data;
+    } else {
+      list = data.list;
+      cnt = data.cnt || Tw.DEFAULT_LIST_COUNT;
+    }
     this._moreList = _.chunk(list, cnt);
   },
 

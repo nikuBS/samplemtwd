@@ -56,7 +56,7 @@ Tw.PaymentHistoryAutoUnitedWithdrawal.prototype = {
 
   _getData: function () {
     if (this.apiName) {
-      this._apiService.request(this.apiName, this.apiOption).done($.proxy(this._setData, this)).error($.proxy(this._apiError, this));
+      this._apiService.request(this.apiName, this.apiOption).done($.proxy(this._setData, this)).fail($.proxy(this._apiError, this));
     }
   },
 
@@ -129,7 +129,7 @@ Tw.PaymentHistoryAutoUnitedWithdrawal.prototype = {
   sendRequestStop: function (value) {
     this._apiService.request(this.stopWithdrawapApiName, {
       rfndBankNum: value
-    }).done($.proxy(this.stopWithdrawalSucess, this)).error($.proxy(this._apiError, this));
+    }).done($.proxy(this.stopWithdrawalSucess, this)).fail($.proxy(this._apiError, this));
   },
 
   stopWithdrawalSucess: function (res) {

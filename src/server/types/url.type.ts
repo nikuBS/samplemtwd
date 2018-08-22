@@ -29,7 +29,7 @@ export const URL = {
   '/myt/bill/billguide/subRoamingBill': { login: true, id: '', title: '' },
   '/myt/bill/billguide/subDonationBill': { login: true, id: '', title: '' },
   '/myt/bill/hotbill/child': { login: true, id: 'MY_03_01_01_01' }, // 실시간 사용요금 자녀회선
-  '/myt/bill/guidechange': { login: true, id: '', title: '' },
+  '/myt/bill/guidechange': { login: true, id: 'MY_03_03_01', title: '요금 안내서 변경 및 재발행' },
   '/myt/bill/guidechange/change': { login: true, id: '', title: '' },
   '/myt/bill/guidechange/change-complete': { login: true, id: '', title: '' },
   '/myt/bill/guidechange/update': { login: true, id: '', title: '' },
@@ -45,9 +45,9 @@ export const URL = {
   '/myt/bill/history/contents/limit/change': { login: true, id: 'My_02_03_05_01_01', title: '콘텐츠 이용 한도 변경' },  // 나의 요금 > 콘텐츠 이용료 이용내역 > 콘텐츠 이용 한도 변경
   '/myt/bill/history/contents/detail': { login: true, id: 'MY_02_03_05_01_03', title: '콘텐츠 이용료 이용내역 상세' },  // 나의 요금 > 콘텐츠 이용료 이용내역 상세
   '/myt/join/protect/change': { login: true, id: 'MY_01_02_08', title: '고객보호 비밀번호 설정' },
-  '/myt/join/join-info': { login: true, id: 'MY_01_02', title: '' }, // 가입정보
-  '/myt/join/join-info/no-contract': { login: true, id: 'MY_01_02_10', title: '' }, // 무약정 플랜 포인트 내역
-  '/myt/join/join-info/sms': { login: true, id: 'MY_01_02_02_L01', title: '망 작업 안내 SMS 알림 신청' }, // 망 작업 안내 SMS 알림 신청
+  '/myt/join/join-info': { login: true, id: 'MY_01_02', title: '가입정보' },
+  '/myt/join/join-info/no-contract': { login: true, id: 'MY_01_02_10', title: '무약정 플랜 포인트 내역' },
+  '/myt/join/join-info/sms': { login: true, id: 'MY_01_02_02_L01', title: '망 작업 안내 SMS 알림 신청' },
   '/myt/join/pay-claim/phone': { login: true, id: 'MY_01_05', title: '납부/청구정보' },
   '/myt/join/pay-claim/iptv': { login: true, id: 'MY_01_05_01', title: '납부/청구정보' },
   '/myt/join/pay-claim/iptvSk': { login: true, id: 'MY_01_05_02', title: '납부/청구정보' },
@@ -70,6 +70,8 @@ export const URL = {
   '/myt/join/product-service/fee-alarm': { login: true, id: 'MY_01_01_01', title: '요금제 변경 가능일 알림 서비스' },
   '/myt/join/product-service/fee-alarm/change': { login: true, id: 'MY_01_01_02', title: '요금제 변경 가능일 알림 서비스 신청/해지' },
   '/myt/benefit/point/adjustment': { login: true, id: 'MY_04_04_02', title: '포인트합산'},
+  '/myt/benefit/membership': { login: true, id: 'MY_04_02', title: '멤버십 혜택'},
+  '/myt/benefit/membership/detail': { login: true, id: 'MY_04_02_01_01', title: '멤버십 혜택 상세'},
 
   // recharge
   '/recharge/refill': { login: true, id: 'DA_01_01_01', title: '리필하기' }, // 리필하기
@@ -147,6 +149,7 @@ export const URL = {
   '/customer/faq/service-info': { login: false, id: 'CI_14_01', title: '서비스 이용안내' }, // 서비스 이용안내
   '/customer/faq/site-info': { login: false, id: 'CI_15_01', title: '사이트 이용안내' }, // 사이트 이용안내
   '/customer/faq/site-info/m-customer-center': { login: false, id: 'CI_15_03', title: 'M 고객센터' }, // M 고객센터
+  '/customer/document': { login: false, id: 'CI_12_01', title: '구비서류' }, // 구비서류
   '/customer/event': { login: false, id: 'CI_13_01', title: '이벤트' }, // 이벤트
   '/customer/event/detail': { login: false, id: 'CI_13_02', title: '이벤트 상세' }, // 이벤트 상세
   '/customer/event/detail/win': { login: false, id: 'CI_13_06', title: '이벤트 상세' }, // 이벤트 상세 (당첨자)
@@ -182,5 +185,7 @@ export const URL = {
   '/auth/tid/route': { login: false, id: '', title: '' },
   '/auth/withdrawal/guide': { login: true, id: 'CO_01_05_01_01', title: '회원탈퇴' },
   '/auth/withdrawal/survey': { login: true, id: 'CO_01_05_01_03', title: '회원탈퇴' },
-  '/auth/withdrawal/complete': { login: false, id: 'CO_01_05_01_04_01', title: '회원탈퇴' }
+  '/auth/withdrawal/complete': { login: false, id: 'CO_01_05_01_04_01', title: '회원탈퇴' },
+  // common
+  '/common/error': { login: false, id: '', title: '' }
 };

@@ -39,17 +39,17 @@ class CustomerFaqInfoSite extends TwViewController {
         this.apiService.request(API_CMD.BFF_08_0057, {
 
         }).subscribe((resp) => {
-          if (resp.code === API_CODE.CODE_00) {
+          // if (resp.code === API_CODE.CODE_00) {
 
-          } else {
-            this.logger.error(this, resp);
-            res.render('error.server-error.html', {
-              title: '',
-              code: resp.code,
-              msg: resp.msg,
-              svcInfo: svcInfo
-            });
-          }
+
+          // } else {
+          //   this.logger.error(this, resp);
+          //   res.render('error.server-error.html', {
+          //     code: resp.code,
+          //     msg: resp.msg,
+          //     svcInfo: svcInfo
+          //   });
+          // }
         });
       }
       // this.apiService.request(API_CMD.BFF_07_0072, {}).subscribe((resp) => {

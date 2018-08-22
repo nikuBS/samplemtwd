@@ -418,6 +418,61 @@ Tw.MSG_MYT = {
     A2: '포인트 합산하기를 종료하시겠습니까?',
     A8: '보유하신 포인트를 초과 하였습니다.',
     A13: '동일회선 간에는 포인트 합산이 불가합니다.',
+    MEMBERSHIP : {
+      LIST : [
+        {
+          TITLE : 'T멤버십 VIP 혜택',
+          TEXT : '멤버십 VIP 등급으로<br/>영화예매/쇼핑/생활/공연 등의<br/>다양한 혜택을 받고 있습니다',
+          CODE : 'VIP'
+
+        },
+        {
+          TITLE : 'T클래스',
+          TEXT : '통신비 절감, 포인트 적립, 분실보험,<br/>멤버십 UP 혜택을 받고 있습니다.',
+          CODE : 'T_CLASS'
+        },
+        {
+          TITLE : '멤버십몰 초콜릿',
+          TEXT : '초콜릿몰을 파격적 할인가로<br/>이용 가능합니다.',
+          CODE : 'CHOCOLATE'
+        },
+        {
+          TITLE : '멜론 프리/스트리밍 클럽',
+          TEXT : '멜론 프리/스트리밍 클럽 월정액<br/>30%할인 혜택을 받고 있습니다.',
+          CODE : 'MELON'
+        },
+        {
+          TITLE : '11번가 11% 할인',
+          TEXT : '11번가 최대 11% 할인 혜택을<br/>받고 있습니다.',
+          CODE : '11ST'
+        },
+        {
+          TITLE : '데이터 Free',
+          TEXT : '데이터 Free 앱 이용 시 데이터 이용료<br/>0원 혜택을 받고 있습니다.',
+          CODE : 'FREE'
+        },
+        {
+          TITLE : 'T플 전용 혜택',
+          TEXT : '영화/TV/음악/게임 반값, 기타<br/>컨텐츠 할인 혜택을 받고 있습니다.',
+          CODE : 'TPLE'
+        },
+        {
+          TITLE : '커플 전용 혜택',
+          TEXT : '영화/커피/공영 1+1 혜택을<br/>받고 있습니다.',
+          CODE : 'COUPLE'
+        },
+        {
+          TITLE : 'T멤버십 (Leaders Club) 전용 혜택',
+          TEXT : 'Carlife 무료 가입 및 B tv 유선<br/>할인 혜택을 받고 있습니다.',
+          CODE : 'LEADERS'
+        },
+        {
+          TITLE : '데이터PLUS T멤버십',
+          TEXT : 'T멤버십 제휴처 이용 시 데이터 쿠폰<br/>발급 혜택을 받고 있습니다.',
+          CODE : 'PLUS'
+        }
+      ]
+    }
   },
   FEE_ALARM_ALERT_A01: '서비스를 해지 하시겠습니까?',
   FEE_ALARM_ALERT_A01_SUCCESS: '해지 처리 완료 되었습니다.',
@@ -601,7 +656,11 @@ Tw.MSG_AUTH = {
   EASY_LOGIN_L52: '제한시간 내 인증번호를 보낼 수 있는 횟수가 넘었습니다. 잠시 후 다시 시도해 주세요.',
   EASY_LOGIN_L61: '인증번호를 입력해 주세요.',
   EASY_LOGIN_L62: '인증번호가 일치하지 않습니다. <br />다시 한번 확인 후 입력해 주세요.',
-  EASY_LOGIN_L63: '인증번호 입력 시간이 초과했습니다. <br />인증번호 받기 버튼을 눌러 새로운 인증번호를 받은 후 이용해주세요.'
+  EASY_LOGIN_L63: '인증번호 입력 시간이 초과했습니다. <br />인증번호 받기 버튼을 눌러 새로운 인증번호를 받은 후 이용해주세요.',
+  CERT_01: '재전송 제한시간(1분)이 지난 후에 이용해 주세요.',
+  CERT_02: '제한시간 내 인증번호를 보낼 수 있는 횟수가 넘었습니다.',
+  CERT_03: '인증번호가 일치하지 않습니다.',
+  CERT_04: '인증번호가 일치하지 않습니다.'
 };
 
 Tw.MSG_CUSTOMER = {
@@ -701,6 +760,9 @@ Tw.URL_PATH = {
   BROADBAND: 'http://www.skbroadband.com',
   COP_SERVICE: 'http://b2b.tworld.co.kr/cs/counsel/certServiceInfo.bc',
   CONTETNS_YOUTUBE_HELP_URL: 'https://support.google.com/youtube/contact/commerce_contact?hl=ko&cfsi=subs_red_2',
+  CHOCOLATE_MALL : 'http://tmembership.tworld.co.kr/web/html/chocolate/main/ChocoHomeMain.jsp?sel=1',
+  '11ST' : 'http://www.11st.co.kr/html/main.html',
+  DATA_FREE : 'http://www.sktmembership.co.kr/web/html/data/dataFree.jsp',
   MYT_BILL_HISTORY_MICRO: '/myt/bill/history/micro',
   MYT_PAYPASS_CONFIRM: '/myt/bill/history/micro/password',
   MYT_PAYPASS_INFO: '',

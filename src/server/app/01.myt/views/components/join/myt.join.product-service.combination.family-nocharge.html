@@ -5,186 +5,186 @@
 * MY_01_01_116
 %>
 
-<div class="cont-box">
-    <div class="top-info mb22">
-        <button role="button" class="link-btn tx-normal"><span class="ff-hn vbl">TB</span>끼리 온가족무료</button>  
-    </div>
-    <div class="payment-detail-box">
-        <div class="detail-inner">
-            <div class="detail-list type2">
-                <ul>
-                    <li>
-                        <span class="title">신청일</span>
-                        <span class="tx-cont"><span class="ff-hn vbl"><%= combination.joinDate %></span></span>
-                    </li>
-                    <li>
-                        <span class="title">결합회선</span>
-                        <span class="tx-cont"><span class="ff-hn vbl"><%= combination.count %></span> 회선</span>
-                    </li>
-                    <li>
-                        <span class="title">가입상태</span>
-                        <span class="tx-cont"><%= combination.status %></span>
-                    </li>
-                </ul>
-            </div>
+<!-- #header -->
+<div id="header" class="header-wrap">
+    <div class="header">
+        <div class="header-ti align-l">
+            <h1>사용중인 상품</h1>
         </div>
+        <button class="prev-step fe-common-back"><span class="blind">이전으로</span></button>
     </div>
 </div>
-
-<div class="benefits-area">
-    <strong class="benefits-tit">예상 혜택</strong>
-    <!-- .component -->
-    <div class="component">
-        <div class="component-box flcardcta">
-            <!-- 2회선일 경우 -->
-            <div class="flcard-cont">
-                <div class="flcard-area">
-                    <div class="store-card">
-                        <p class="card-ti"><em class="tx-bold">집전화 무료</em> 또는<br /><em class="tx-bold">초고속 인터넷 할인</em></p>
-                    </div>
-                </div>
-                <span class="ico-ill-benefit"></span>
+<!--// #header -->
+<!-- #contents -->
+<div id="contents" class="container-wrap">
+    <h2 class="blind">내용</h2>
+    <div class="container">
+        <div class="cont-box">
+            <div class="top-info mb22">
+                <a role="button" class="link-btn tx-normal"><span class="ff-hn vbl">TB</span>끼리 온가족무료</a>  <!-- TODO: 상세페이지 링크 연결 필요 -->
             </div>
-            <!--// 2회선일 경우 -->
-
-            <!-- 3회선일 경우 -->
-            <div class="flcard-cont">
-                <div class="flcard-area">
-                    <div class="store-card">
-                        <p class="card-ti"><em class="tx-bold">초고속 인터넷 할인</em></p>
-                    </div>
-                </div>
-                <span class="ico-ill-benefit"></span>
-            </div>
-            <!--// 3회선일 경우 -->
-
-            <!-- 4회선일 경우 -->
-            <div class="flcard-cont">
-                <div class="flcard-area">
-                    <div class="store-card">
-                        <p class="card-ti"><em class="tx-bold">집전화 + 초고속<br />인터넷 할인</em></p>
-                    </div>
-                </div>
-                <span class="ico-ill-benefit"></span>
-            </div>
-            <!--// 4회선일 경우 -->
-        </div>
-    </div>
-    <!--// .component -->
-    <div class="benefits-txt">결합회선 중 정지된 회선이 있을 경우(30일 이상)<br />제외되어 혜택이 다를 수 있습니다.</div>
-</div>
-
-<div class="cont-box nogaps">
-    <div class="widget">
-        <div class="widget-box accordion2">
-            <div class="acco-style user-list"><!-- 스타일별 클래스 추가 -->
-                <ul class="acco-box">
-                    <li class="acco-list"><!-- on , off -->
-                        <div class="acco-title">
-                            <button role="button" aria-pressed="">
-                                <span class="info-line">최*영 
-                                    <span class="badge badge-fam-members"><span class="blind">가족대표</span></span>
-                                    <span class="badge badge-me"><span class="blind">나</span></span>
-                                </span>
-                                <span class="info-line ff-hn">010-12**-56**</span>
-                            </button>
-                        </div>
-                        <div class="acco-content">
-                            <div class="detail-list">
-                                <ul>
-                                    <li>
-                                        <span class="title">가족대표와의 관계</span>
-                                        <span class="tx-cont">본인(내번호)</span>
-                                    </li>
-                                    <li>
-                                        <span class="title">결합유선상품</span>
-                                        <span class="tx-cont">인터넷</span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </li>
-
-                    <li class="acco-list"><!-- on , off -->
-                        <div class="acco-title">
-                            <button role="button" aria-pressed="">
-                                <span class="info-line">최*진 (형제자매)</span>
-                                <span class="info-line ff-hn">010-12**-56**</span>
-                            </button>
-                        </div>
-                        <div class="acco-content">
-                            <div class="detail-list">
-                                <ul>
-                                    <li>
-                                        <span class="title">가족대표와의 관계</span>
-                                        <span class="tx-cont">형제자매</span>
-                                    </li>
-                                    <li>
-                                        <span class="title">결합유선상품</span>
-                                        <span class="tx-cont">인터넷</span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</div>
-
-<hr class="cont-sp type1" aria-hidden="true" />
-    
-<div class="cont-box nogaps-hoz">
-    <div class="box-confirm">
-        <!-- .widget -->
-        <div class="widget">
-            <div class="widget-box accordion">
-                <h3 class="tit-a">이용안내</h3>
-                <div class="acco-cover toggle">
-                    <div class="bt-whole"><button role="button" aria-pressed="false"><span class="blind">내용 열기</span></button></div>
-                    <div class="acco-style">
-                        <ul class="acco-list">
-                            <li class="acco-box">
-                                <div class="acco-tit"><button role="button" aria-pressed="false"><span class="bullet">1.</span> TB끼리 온가족무료 해지 할 경우</button></div>
-                                <div class="acco-cont">
-                                    <ul class="list-dot">
-                                        <li class="list">TB끼리 온가족무료 해지 시, 고객님께 제공되는 <em>할인혜택이 중단 또는 축소</em> 될 수 있습니다.</li>
-                                        <li class="list">고객님께서 해지를 원하시면 자세한 안내를 위해 SK텔레콤 지점/ 대리점이나 고객센터를 이용해주십시오.</li>
-                                        <li class="list">고객센터는 휴대폰으로 국번 없이 <em>114</em>(무료) / 유선전화로 국번 없이 <em>1599-0011</em>(유료) / 상담시간은 평일 <em>09:00~18:00</em> 입니다.</li>
-                                    </ul>
-                                </div>
+            <div class="payment-detail-box">
+                <div class="detail-inner">
+                    <div class="detail-list type2">
+                        <ul>
+                            <li>
+                                <span class="title">신청일</span>
+                                <span class="tx-cont"><span class="ff-hn vbl"><%= combination.joinDate %></span></span>
                             </li>
-                            <li class="acco-box">
-                                <div class="acco-tit"><button role="button" aria-pressed="false"><span class="bullet">2.</span> 결합상품 자동 해지되는 경우</button></div>
-                                <div class="acco-cont">
-                                    <ul class="list-dot">
-                                        <li class="list">휴대폰 <em>서비스 해지, 번호이동, 직권해지, 명의 변경</em> 시 결합상품이 자동 해지 됩니다.</li>
-                                        <li class="list"><em>인터넷 서비스 해지, 휴지, 명의 변경</em> 시 결합상품이 자동 해지 됩니다.</li>
-                                    </ul>
-                                </div>
+                            <li>
+                                <span class="title">결합회선</span>
+                                <span class="tx-cont"><span class="ff-hn vbl"><%= combination.count %></span> 회선</span>
                             </li>
-                            <li class="acco-box">
-                                <div class="acco-tit"><button role="button" aria-pressed="false"><span class="bullet">3.</span> 결합혜택 제공되는 경우</button></div>
-                                <div class="acco-cont">
-                                    <ul class="list-dot">
-                                        <li class="list">이동전화의 회선 수에 따라 무료로 제공되는 인터넷(스마트다이렉트), 집전화(무료250요금)를 <em>결합해야만 혜택이 제공</em>됩니다.</li>
-                                    </ul>
-                                </div>
-                            </li>
-                            <li class="acco-box">
-                                <div class="acco-tit"><button role="button" aria-pressed="false"><span class="bullet">4.</span> 할인 적용되는 경우</button></div>
-                                <div class="acco-cont">
-                                    <ul class="list-dot">
-                                        <li class="list">할인은 월말 <em>가족그룹 유지고객에 한해</em> 일괄로 적용됩니다.</li>
-                                    </ul>
-                                </div>
+                            <li>
+                                <span class="title">가입상태</span>
+                                <span class="tx-cont"><%= combination.status %></span>
                             </li>
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
-        <!--// .widget -->
+
+        <div class="benefits-area">
+            <strong class="benefits-tit">예상 혜택</strong>
+            <!-- .component -->
+            <div class="component">
+                <div class="component-box flcardcta">
+                    <% if (combination.count === 2) { %>
+                    <!-- 2회선일 경우 -->
+                    <div class="flcard-cont">
+                        <div class="flcard-area">
+                            <div class="store-card">
+                                <p class="card-ti"><em class="tx-bold">집전화 무료</em> 또는<br /><em class="tx-bold">초고속 인터넷 할인</em></p>
+                            </div>
+                        </div>
+                        <span class="ico-ill-benefit"></span>
+                    </div>
+                    <!--// 2회선일 경우 -->
+                    <% } else if (combination.count === 3) { %>
+                    <!-- 3회선일 경우 -->
+                    <div class="flcard-cont">
+                        <div class="flcard-area">
+                            <div class="store-card">
+                                <p class="card-ti"><em class="tx-bold">초고속 인터넷 할인</em></p>
+                            </div>
+                        </div>
+                        <span class="ico-ill-benefit"></span>
+                    </div>
+                    <!--// 3회선일 경우 -->
+                    <% } else if (combination.count > 3) { %>
+                    <!-- 4회선일 경우 -->
+                    <div class="flcard-cont">
+                        <div class="flcard-area">
+                            <div class="store-card">
+                                <p class="card-ti"><em class="tx-bold">집전화 + 초고속<br />인터넷 할인</em></p>
+                            </div>
+                        </div>
+                        <span class="ico-ill-benefit"></span>
+                    </div>
+                    <!--// 4회선일 경우 -->
+                    <% } %>
+                </div>
+            </div>
+            <!--// .component -->
+            <div class="benefits-txt">결합회선 중 정지된 회선이 있을 경우(30일 이상)<br />제외되어 혜택이 다를 수 있습니다.</div>
+        </div>
+
+        <div class="cont-box nogaps">
+            <div class="widget">
+                <div class="widget-box accordion2">
+                    <div class="acco-style user-list"><!-- 스타일별 클래스 추가 -->
+                        <ul class="acco-box">
+                            <% for (let i = 0; i < combination.wireIndex; i++) { %>
+                            <% const member = combination.members[i]; %>
+                            <% const isMine = combination.representationId === member.managementId %>
+                            <li class="acco-list"><!-- on , off -->
+                                <div class="acco-title">
+                                    <button role="button" aria-pressed="">
+                                        <span class="info-line"><%= member.name %> <%= member.isRepresentation ? '' : '(' + member.relation + ')' %>
+                                            <% if (member.isRepresentation) { %><span class="badge badge-fam-members"><span class="blind">가족대표</span></span><% } %>
+                                            <% if (isMine) { %><span class="badge badge-me"><span class="blind">나</span></span><% } %>
+                                        </span>
+                                        <span class="info-line ff-hn"><%= member.svcNumber %></span>
+                                    </button>
+                                </div>
+                                <div class="acco-content">
+                                    <div class="detail-list">
+                                        <% const bProduct = combination.bProducts[member.managementId]; %>
+                                        <ul>
+                                            <li>
+                                                <span class="title">가족대표와의 관계</span>
+                                                <span class="tx-cont"><%= member.relation %><%= isMine? '(내번호)': ''%></span>
+                                            </li>
+                                            <li>
+                                                <span class="title">결합유선상품</span>
+                                                <span class="tx-cont"><%= bProduct? bProduct.wireProduct : '-' %></span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+                            <% } %>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr class="cont-sp type1" aria-hidden="true" />
+            
+        <div class="cont-box nogaps-hoz">
+            <div class="box-confirm">
+                <!-- .widget -->
+                <div class="widget">
+                    <div class="widget-box accordion">
+                        <h3 class="tit-a">이용안내</h3>
+                        <div class="acco-cover toggle">
+                            <div class="bt-whole"><button role="button" aria-pressed="false"><span class="blind">내용 열기</span></button></div>
+                            <div class="acco-style">
+                                <ul class="acco-list">
+                                    <li class="acco-box">
+                                        <div class="acco-tit"><button role="button" aria-pressed="false"><span class="bullet">1.</span> TB끼리 온가족무료 해지 할 경우</button></div>
+                                        <div class="acco-cont">
+                                            <ul class="list-dot">
+                                                <li class="list">TB끼리 온가족무료 해지 시, 고객님께 제공되는 <em>할인혜택이 중단 또는 축소</em> 될 수 있습니다.</li>
+                                                <li class="list">고객님께서 해지를 원하시면 자세한 안내를 위해 SK텔레콤 지점/ 대리점이나 고객센터를 이용해주십시오.</li>
+                                                <li class="list">고객센터는 휴대폰으로 국번 없이 <em>114</em>(무료) / 유선전화로 국번 없이 <em>1599-0011</em>(유료) / 상담시간은 평일 <em>09:00~18:00</em> 입니다.</li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li class="acco-box">
+                                        <div class="acco-tit"><button role="button" aria-pressed="false"><span class="bullet">2.</span> 결합상품 자동 해지되는 경우</button></div>
+                                        <div class="acco-cont">
+                                            <ul class="list-dot">
+                                                <li class="list">휴대폰 <em>서비스 해지, 번호이동, 직권해지, 명의 변경</em> 시 결합상품이 자동 해지 됩니다.</li>
+                                                <li class="list"><em>인터넷 서비스 해지, 휴지, 명의 변경</em> 시 결합상품이 자동 해지 됩니다.</li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li class="acco-box">
+                                        <div class="acco-tit"><button role="button" aria-pressed="false"><span class="bullet">3.</span> 결합혜택 제공되는 경우</button></div>
+                                        <div class="acco-cont">
+                                            <ul class="list-dot">
+                                                <li class="list">이동전화의 회선 수에 따라 무료로 제공되는 인터넷(스마트다이렉트), 집전화(무료250요금)를 <em>결합해야만 혜택이 제공</em>됩니다.</li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li class="acco-box">
+                                        <div class="acco-tit"><button role="button" aria-pressed="false"><span class="bullet">4.</span> 할인 적용되는 경우</button></div>
+                                        <div class="acco-cont">
+                                            <ul class="list-dot">
+                                                <li class="list">할인은 월말 <em>가족그룹 유지고객에 한해</em> 일괄로 적용됩니다.</li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--// .widget -->
+            </div>
+        </div>
     </div>
 </div>

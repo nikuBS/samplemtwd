@@ -17,13 +17,13 @@ Tw.MyTJoinProductServiceFeeAlarmChange.prototype = {
 
   _data: {
     key: null,
-    put: {
-      API_CMD: Tw.API_CMD.BFF_05_0126,
+    del: {
+      API_CMD: Tw.API_CMD.BFF_05_0127,
       CONFIRM_ALERT: Tw.MSG_MYT.FEE_ALARM_ALERT_A01,
       SUCCESS_ALERT: Tw.MSG_MYT.FEE_ALARM_ALERT_A01_SUCCESS
     },
-    del: {
-      API_CMD: Tw.API_CMD.BFF_05_0127,
+    put: {
+      API_CMD: Tw.API_CMD.BFF_05_0126,
       CONFIRM_ALERT: Tw.MSG_MYT.FEE_ALARM_ALERT_A02,
       SUCCESS_ALERT: Tw.MSG_MYT.FEE_ALARM_ALERT_A02_SUCCESS
     }
@@ -64,7 +64,7 @@ Tw.MyTJoinProductServiceFeeAlarmChange.prototype = {
 
   _procResult: function(res) {
     if (res.code !== Tw.API_CODE.CODE_00) {
-      return this._apiError(res);
+      return Tw.Error(res.code, res.msg).pop();
     }
 
     this._popupService.openAlert(this._data[this._data.key].SUCCESS_ALERT, Tw.POPUP_TITLE.NOTIFY, null, $.proxy(this._reload, this));
@@ -72,11 +72,6 @@ Tw.MyTJoinProductServiceFeeAlarmChange.prototype = {
 
   _reload: function() {
     this._historyService.reload();
-  },
-
-  _apiError: function (res) {
-    this._popupService.openAlert(res.code + ' ' + res.msg);
-    return false;
   }
 
 };

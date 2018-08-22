@@ -23,7 +23,59 @@
     <!-- // header -->
     <!-- content -->
     <div id="contents" class="container-wrap">
-        myt.benefit.recommend.detail-point
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <div class="cont-box">
+                <div class="inner-block">
+                    <% if( reqQuery.type == 'A') { %>
+                    <h2 class="title-h2">나의 추천 혜택</h2>
+                    <% } %>
+
+                    <% if( reqQuery.type == 'B') { %>
+                    <h2 class="title-h2">혜택 받는 법</h2>
+                    <% } %>
+
+                    <div class="exp-top">
+                        <span class="tx-exp">월말까지 T나는 쇼핑 포인트 유지 시,<br /><span class="tx-bold">익월 7일에 포인트가 지급</span> 됩니다.</span>
+                    </div>
+                    <div class="contents-btn">
+                        <ul class="bt-slice">
+                            <li class="bt-blue1">
+                                <% if( reqQuery.type == 'A') { %>
+                                <button data-target="">11번가 바로가기</button>
+                                <% } %>
+                                <% if( reqQuery.type == 'B') { %>
+                                <button data-target="">T나는 쇼핑포인트 신청</button>
+                                <% } %>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="inner-block">
+                    <h2 class="title-h2">SK 텔레콤과 11번가가 드리는<br />특별한 쇼핑 혜택!</h2>
+                    <div class="benefit-img"><img src="/img/dummy/dmy-circuit04.png" alt=""/></div>
+                    <div class="contents-btn">
+                        <ul class="bt-slice">
+                            <li class="bt-white1">
+                                <button>혜택 자세히보기</button>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="exp-list mt20">
+                        <ul>
+                            <li>요금 약정 할인 금액의 130%를,<br />11번가 포인트로 대신 제공하는 옵션 상품</li>
+                            <li>별도 이용료 없이 무료 신청</li>
+                            <li>
+                                <span class="title">이용예시</span>
+                                <span class="one-depth-line">전국민 무한 75요금제와 요금약정할인 가입고객이 'T나는 쇼핑 포인트'' 신청 시, 요금 할인 금액 18,750원의 130%에 해당하는 24,375 포인트를 대신 제공</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
     </div>
     <!-- // content -->
     <!-- footer -->
