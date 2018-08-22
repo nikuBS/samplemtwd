@@ -242,15 +242,16 @@ Tw.API_CMD = {
   BFF_08_0045: { path: '/core-modification/v1/email-inquiry/quality-internet', method: Tw.API_METHOD.POST },
   BFF_08_0050: { path: '/core-modification/v1/ifaq/iFaqList', method: Tw.API_METHOD.GET },
   BFF_08_0052: { path: '/core-modification/v1/ifaq/iFaqList-Cate', method: Tw.API_METHOD.GET },
+  BFF_08_0054: { path: '/core-modification/v1/require-document/reqDocument', method: Tw.API_METHOD.GET },
   BFF_08_0056: { path: '/core-modification/v1/guide/use-detail', method: Tw.API_METHOD.GET },
   BFF_08_0057: { path: '/core-modification/v1/guide/site-use', method: Tw.API_METHOD.GET },
 
   // EVENT
   BFF_09_0001: { path: '/core-membership/v1/event/ing-list', method: Tw.API_METHOD.GET },
-  BFF_09_0002: { path: '/core-membership/v1/event/detail', method: Tw.API_METHOD.GET },
+  BFF_09_0002: { path: '/core-membership/v1/event/detail/args-0', method: Tw.API_METHOD.GET },
   BFF_09_0003: { path: '/core-membership/v1/event/old-list', method: Tw.API_METHOD.GET },
   BFF_09_0004: { path: '/core-membership/v1/event/win-list', method: Tw.API_METHOD.GET },
-  BFF_09_0005: { path: '/core-membership/v1/event/win-detail', method: Tw.API_METHOD.GET },
+  BFF_09_0005: { path: '/core-membership/v1/event/win-detail/args-0', method: Tw.API_METHOD.GET },
 
   // TEST
   GET: { path: '/posts', method: Tw.API_METHOD.GET },

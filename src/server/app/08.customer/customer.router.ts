@@ -25,6 +25,7 @@ import CustomerFaqInfoSite from './controllers/faq/customer.faq.info.site.contro
 import CustomerEventController from './controllers/event/customer.event.controller';
 import CustomerEventDetailController from './controllers/event/customer.event.detail.controller';
 import CustomerEventDetailWinController from './controllers/event/customer.event.detail.win.controller';
+import CustomerDocumentController from './controllers/document/customer.document.controller';
 
 class CustomerRouter extends TwRouter {
   constructor() {
@@ -54,6 +55,7 @@ class CustomerRouter extends TwRouter {
     this.controllers.push({ url: '/faq/service-info(/:serviceId)?', controller: new CustomerFaqInfoService() });
     this.controllers.push({ url: '/faq/site-info(/:serviceId)?', controller: new CustomerFaqInfoSite() });
     this.controllers.push({ url: '/faq/site-info/m-customer-center', controller: new CustomerFaqInfoSite() });
+    this.controllers.push({ url: '/document', controller: new CustomerDocumentController() });
     this.controllers.push({ url: '/event', controller: new CustomerEventController() });
     this.controllers.push({ url: '/event/detail', controller: new CustomerEventDetailController() });
     this.controllers.push({ url: '/event/detail/win', controller: new CustomerEventDetailWinController() });
