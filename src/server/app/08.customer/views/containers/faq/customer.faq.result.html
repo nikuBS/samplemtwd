@@ -27,7 +27,7 @@
                       <input type="text" placeholder="키워드로 질문 검색" title="검색입력창" value="<%= queryString %>" />
                       <button href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></button>
                     </div>
-                    <button class="bt-search">검색</button>
+                    <button class="bt-search"><span class="blind">검색</span></button>
                 </div>
             </div>
             <!--// .cont-box -->
@@ -40,7 +40,7 @@
                     <div class="widget-box accordion2">
                         <div class="acco-style acco-faq"><!-- 스타일별 클래스 추가 -->
                             <ul class="acco-box fe-result">
-                                <% for (var i = 0; i < contents.length; i++) { %>
+                                <% for (let i = 0; i < contents.length; i++) { %>
                                 <li class="acco-list <%= i === 0 ? 'on' : undefined %>">
                                     <div class="acco-title"><!-- impo : 중요 -->
                                         <button role="button" aria-pressed="false">
