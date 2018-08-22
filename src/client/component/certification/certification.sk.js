@@ -15,6 +15,6 @@ Tw.CertificationSk.prototype = {
   open: function () {
     // this._certSms.openSmsPopup();
     // this._certKeyin.openKeyinPopup();
-    // this._certMotp.openMotpPopup();
+    this._certMotp.openMotpPopup();
   }
 };
