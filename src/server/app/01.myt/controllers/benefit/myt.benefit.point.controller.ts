@@ -18,34 +18,37 @@ class MyTBenefitPoint extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     this.getPointsData().subscribe(([ptOKCashAndT, ptRainbow, ptNoContract, ptMilitary, ptCookiz]) => {
-      const points = {};
-      if ( ptOKCashAndT.code === API_CODE.CODE_00 ) {
+
+      if ( ptOKCashAndT.code !== API_CODE.CODE_00 ||
+        ptRainbow.code !== API_CODE.CODE_00 ||
+        ptNoContract.code !== API_CODE.CODE_00 ||
+        (ptMilitary.code !== API_CODE.CODE_00 && ptMilitary.code !== 'BIL0071') ||
+        (ptCookiz.code !== API_CODE.CODE_00 && ptCookiz.code !== 'BIL0070')
+      ) {
+        return this.error.render(res, {});
+      } else {
+        const points = {};
         points['OKCashBack'] = FormatHelper.addComma(ptOKCashAndT.result.availPt);
         points['T'] = FormatHelper.addComma(ptOKCashAndT.result.availTPt);
-      } else {
-        points['OKCashBack'] = 0;
-        points['T'] = 0;
-      }
-
-      if ( ptRainbow.code === API_CODE.CODE_00 ) {
         points['Rainbow'] = FormatHelper.addComma(ptRainbow.result.usblPoint);
-      } else {
-        points['Rainbow'] = 0;
-      }
 
-      if ( ptNoContract.code === API_CODE.CODE_00 ) {
-        points['NoContract'] = FormatHelper.addComma(ptNoContract.result.usblPoint);
-      }
+        // 포인트 없을 때 비노출
+        if ( parseInt(ptNoContract.result.usablePt, 10) > 0 ) {
+          points['NoContract'] = FormatHelper.addComma(ptNoContract.result.usablePt);
+        }
 
-      if ( ptMilitary.code === API_CODE.CODE_00 ) {
-        points['Military'] = FormatHelper.addComma(ptMilitary.result.usblPoint);
-      }
+        // 포인트 없을 때 비노출
+        if ( ptMilitary.code !== 'BIL0071' && parseInt(ptMilitary.result.usblPoint, 10) > 0 ) {
+          points['Military'] = FormatHelper.addComma(ptMilitary.result.usblPoint);
+        }
 
-      if ( ptCookiz.code === API_CODE.CODE_00 ) {
-        points['Cookiz'] = FormatHelper.addComma(ptCookiz.result.usblPoint);
+        // 포인트 없을 때 비노출
+        if ( ptCookiz.code !== 'BIL0070' && parseInt(ptCookiz.result.usblPoint, 10) > 0 ) {
+          points['Cookiz'] = FormatHelper.addComma(ptCookiz.result.usblPoint);
+        }
+        const showPointPayment = parseInt(points['OKCashBack'] + points['T'] + points['Rainbow'], 10) > 0;
+        res.render('benefit/myt.benefit.point.html', { svcInfo: svcInfo, points: points, showPointPayment });
       }
-
-      res.render('benefit/myt.benefit.point.html', { svcInfo: svcInfo, points: points });
     });
   }
 

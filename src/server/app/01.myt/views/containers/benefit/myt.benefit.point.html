@@ -45,10 +45,12 @@
                             </a>
                         </li>
                     </ul>
+                    <% if( showPointPayment ) { %>
                     <div class="contents-notice line-top pt30 mt30">
                         <span class="noti-type3">다음달 청구요금을 포인트로<br />미리 납부 예약해보세요.</span>
                     </div>
                     <a href="/payment/point" class="bt-link-tx pt18">포인트 납부하기 <span class="ico"></span></a>
+                    <% } %>
                 </div>
 
                 <% if( locals.points.NoContract ) { %>
@@ -58,7 +60,7 @@
                             <button class="bt-detail">
                                     <span class="bt-wrap">
                                         <span class="title">무약정플랜 포인트</span>
-                                        <span class="tx-cont"><span class="ff-hn tx-bold"><%= points.NoContrack %></span> 점</span>
+                                        <span class="tx-cont"><span class="ff-hn tx-bold"><%= points.NoContract %></span> 점</span>
                                     </span>
                             </button>
                         </li>
