@@ -52,8 +52,6 @@ class MyTBenefitMembershipController extends TwViewController {
       observer.complete();
     });
   }
-
-
 }
 
 export default MyTBenefitMembershipController;
