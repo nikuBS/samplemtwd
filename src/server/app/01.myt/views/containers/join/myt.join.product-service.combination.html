@@ -15,24 +15,7 @@
 </div>
 <!--// #skip_navigation -->
 <div class="wrap">
-    <!-- #header -->
-    <div id="header" class="header-wrap">
-        <div class="header">
-            <div class="header-ti align-l">
-                <h1>사용중인 상품</h1>
-            </div>
-            <button class="prev-step fe-common-back"><span class="blind">이전으로</span></button>
-        </div>
-    </div>
-    <!--// #header -->
-    <!-- #contents -->
-    <div id="contents" class="container-wrap">
-        <h2 class="blind">내용</h2>
-        <div class="container">
-            <%- include('../../components/join/myt.join.product-service.combination.' + pageId + '.html')  %>
-        </div>
-    </div>
-    <!--// #contents -->
+    <%- include('../../components/join/myt.join.product-service.combination.' + pageId + '.html')  %>
 </div>
 
 <% include ../../components/javascript.component.html %>
