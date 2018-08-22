@@ -10,7 +10,7 @@
             <% for (var i = 0; i < content.length; i++) { %>
             <li id="<%= content[i].prNum %>" class="fe-first fe-done">
                 <button>
-                    <div class="fe-event-img"><img src="http://www.tworld.co.kr<%= content[i].filePath %>" alt="<%= content[i].prCtt %>"/></div>
+                    <div class="fe-event-img"><img src="<%= content[i].filePath %>" alt="<%= content[i].prCtt %>"/></div>
                     <div class="event-txt">
                         <span class="event-date">
                             <i>기간</i><span class="fe-event-day"><%= content[i].startDate %> ~ <%= content[i].endDate %></span>

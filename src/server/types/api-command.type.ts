@@ -387,15 +387,16 @@ export const API_CMD = {
   BFF_08_0051: { path: '/core-modification/v1/ifaq/iFaq-category-List', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_08_0052: { path: '/core-modification/v1/ifaq/iFaqList-Cate', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_08_0053: { path: '/core-modification/v1/guide/content', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_08_0054: { path: '/core-modification/v1/require-document/reqDocument', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_08_0056: { path: '/core-modification/v1/guide/use-detail', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_08_0057: { path: '/core-modification/v1/guide/site-use', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
 
   // EVENT
   BFF_09_0001: { path: '/core-membership/v1/event/ing-list', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
-  BFF_09_0002: { path: '/core-membership/v1/event/detail', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_09_0002: { path: '/core-membership/v1/event/detail/args-0', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_09_0003: { path: '/core-membership/v1/event/old-list', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_09_0004: { path: '/core-membership/v1/event/win-list', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
-  BFF_09_0005: { path: '/core-membership/v1/event/win-detail', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_09_0005: { path: '/core-membership/v1/event/win-detail/args-0', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
 
   // TID
   OIDC: { path: '/auth/authorize.do', method: API_METHOD.GET, server: API_SERVER.TID, bypass: false },

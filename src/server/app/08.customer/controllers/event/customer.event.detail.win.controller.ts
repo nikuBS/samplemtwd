@@ -19,7 +19,7 @@ class CustomerEventDetailWinController extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo?: any): void {
     const id = req.query['prNum'];
 
-    this.apiService.request(API_CMD.BFF_09_0005, { prNum: id }).subscribe((resp) => {
+    this.apiService.request(API_CMD.BFF_09_0005, {}, {}, id).subscribe((resp) => {
       if (resp.code === API_CODE.CODE_00) {
         res.render('event/customer.event.detail.win.html', {
           result: this.parseData(resp.result),
