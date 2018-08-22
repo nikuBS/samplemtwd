@@ -7,7 +7,7 @@
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import {Request, Response, NextFunction} from 'express';
 import FormatHelper from '../../../../utils/format.helper';
-import { API_CMD } from '../../../../types/api-command.type';
+import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 
 export default class CustomerFaqController extends TwViewController {
   constructor() {
@@ -27,23 +27,29 @@ export default class CustomerFaqController extends TwViewController {
         page: 0,
         size: 20
       }).subscribe((resp) => {
-        if (resp.result.content.length === 0) {
-          res.render('faq/customer.faq.no-result.html', {
-            svcInfo: svcInfo,
-            queryString: queryString
-          });
-        } else {
-          for (let i = 0; i < resp.result.content.length; i++) {
-            resp.result.content[i].answCtt = this.purify(resp.result.content[i].answCtt);
+        if (resp.code === API_CODE.CODE_00) {
+          if (resp.result.content.length === 0) {
+            res.render('faq/customer.faq.no-result.html', {
+              svcInfo: svcInfo,
+              queryString: queryString
+            });
+          } else {
+            for (let i = 0; i < resp.result.content.length; i++) {
+              resp.result.content[i].answCtt = this.purify(resp.result.content[i].answCtt);
+            }
+            res.render('faq/customer.faq.result.html', {
+              svcInfo: svcInfo,
+              queryString: queryString,
+              totalCount: resp.result.totalElements,
+              contents: resp.result.content,
+              isLast: resp.result.last
+            });
           }
-          res.render('faq/customer.faq.result.html', {
-            svcInfo: svcInfo,
-            queryString: queryString,
-            totalCount: resp.result.totalElements,
-            contents: resp.result.content,
-            isLast: resp.result.last
-          });
+        } else {
+          this.logger.warn('[FAQ search]', resp);
         }
+      }, (err) => {
+        this.logger.error('[FAQ search]', err);
       });
     }
   }
