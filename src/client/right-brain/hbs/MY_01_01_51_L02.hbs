@@ -20,30 +20,34 @@
                 <div class="account-wrap mt40">
                     <div class="payment-wrap">
                         <h5 class="payment-tit">사용 불가 서비스</h5>
+                        {{#each data.list}}
                         <div class="point-wrap">
                             <div class="point-box">
                                 <ul>
                                     <li>
                                         <dl class="type2">
                                             <dt>서비스명</dt>
-                                            <dd>T렌탈보험 i 프리미엄</dd>
+                                            <!--<dd>T렌탈보험 i 프리미엄</dd>-->
+                                            <dd>{{prodNm}}</dd>
                                         </dl>
                                     </li>
                                     <li>
                                         <dl class="type2">
                                             <dt>월정액/비고</dt>
-                                            <dd><span class="ff-hn vb">7,100</span>원</dd>
+                                            <!--<dd><span class="ff-hn vb">7,100</span>원</dd>-->
+                                            <dd><span class="ff-hn vb">{{prodAmt}}</span>원</dd>
                                         </dl>
                                     </li>
                                 </ul>
                             </div>
                         </div>
+                        {{/each}}
                     </div>
                 </div>
                 <div class="contents-btn">
                     <ul class="bt-slice">
                         <li class="bt-blue1">
-                            <button>확인</button>
+                            <button class="fe-confirm-unavailable">확인</button>
                         </li>
                     </ul> 
                 </div>

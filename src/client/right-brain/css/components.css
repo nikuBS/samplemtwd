@@ -6242,899 +6242,6 @@
   display: none;
 }
 
-/* 임지선 */
-/* DA_02_01_01, DA_02_01_01_case */
-/* DA_02_03_02, DA_02_04_02*/
-.contents-empty {
-  padding: 7.5rem 0 7.5rem;
-  position: relative;
-}
-
-.contents-empty .desc {
-  font-size: 0.9375rem;
-  color: #8f8f8f;
-  text-align: center;
-  padding-top: 6.875rem;
-  font-weight: 400;
-}
-
-.contents-empty .desc.type2 {
-  font-size: 1.25rem;
-  font-weight: 300;
-  color: #000;
-}
-
-.contents-empty .subdesc {
-  font-size: 0.8125rem;
-  font-weight: 400;
-  color: #757575;
-  text-align: center;
-}
-
-.contents-empty .ico {
-  display: block;
-  width: 5rem;
-  height: 5rem;
-  position: absolute;
-  left: 50%;
-  top: 7.5rem;
-  -webkit-transform: translateX(-50%);
-          transform: translateX(-50%);
-  background-image: url(/img/ico/ico-illustration.png);
-  background-position: -3.0625rem -47.75rem;
-  background-size: 55.8125rem;
-}
-
-.contents-empty .ico.type2 {
-  background-position: -16.25rem -41.25rem;
-  background-size: 62.5rem;
-}
-
-.contents-empty.type2 {
-  padding: 2.5rem 0 2.5rem;
-}
-
-.contents-empty.type2 .ico {
-  top: 2.5rem;
-}
-
-.contents-empty.type2 .desc {
-  padding-top: 6.6875rem;
-}
-
-.contents-empty.type3 {
-  padding: 0 0 3.125rem;
-}
-
-.contents-empty.type3 .ico {
-  top: 0;
-}
-
-.contents-empty.type3 .desc {
-  padding-top: 6.25rem;
-}
-
-/* MY_03_01_01 */
-.use-family .link-long {
-  border-bottom: none;
-}
-
-.use-family .link-long > .ico {
-  right: -0.5625rem;
-}
-
-.use-family .link-long a {
-  font-size: 1rem;
-}
-
-.payment-all .term {
-  font-size: 0.9375rem;
-  margin-top: 0.3125rem;
-  font-weight: 400;
-  letter-spacing: 0;
-}
-
-/* MY_03_01_01_01 */
-.payment-info.family {
-  position: relative;
-}
-
-.payment-info.family .tit {
-  font-size: 1.25rem;
-}
-
-.payment-info.family .tit .num {
-  font-family: "Helvetica Neue", Roboto, sans-serif;
-  font-size: 1.375rem;
-  vertical-align: baseline;
-  letter-spacing: 0;
-}
-
-.payment-info.family .payment-info-phone {
-  margin-top: 0.9375rem;
-}
-
-.payment-info.family .child-phonenum {
-  font-size: 0.875rem;
-}
-
-.payment-info.family .device-info {
-  font-size: 0.875rem;
-  position: absolute;
-  right: 0;
-  bottom: 0;
-}
-
-/* PA_06_01 */
-.payment-detail-wrap .info-txt {
-  font-size: 0.875rem;
-  margin: 1.875rem 0 0.9375rem 0;
-  font-weight: 400;
-}
-
-.payment-detail-wrap .bt-more {
-  border-top: 1px solid #efefef;
-  margin-top: 2.5rem;
-  font-size: 0.9375rem;
-}
-
-.payment-detail-box {
-  border-radius: 0.25rem;
-  border: 1px solid #e1e1e1;
-  display: table;
-  width: 100%;
-  margin-bottom: 0.625rem;
-  /* .payment-detail-box.type2 */
-}
-
-.payment-detail-box.type2 {
-  border: none;
-  margin-bottom: 0;
-}
-
-.payment-detail-box.type2 .detail-inner {
-  padding: 2.25rem 0 1.875rem;
-}
-
-.payment-detail-box.type2 .detail-list ul li {
-  padding: 1.25rem 0 1.25rem;
-  border-bottom: 1px solid #efefef;
-}
-
-.payment-detail-box.type2 .detail-list ul li:last-of-type {
-  border-bottom: none;
-  padding-bottom: 0;
-}
-
-.payment-detail-box.type2 .detail-list ul li .fw-light {
-  font-weight: 300;
-  vertical-align: baseline;
-}
-
-.payment-detail-box .detail-inner {
-  padding: 1.875rem 1.125rem;
-}
-
-.payment-detail-box .detail-inner .detail-list ul li {
-  display: table;
-  width: 100%;
-  padding-top: 1.25rem;
-}
-
-.payment-detail-box .detail-inner .detail-list ul li .title, .payment-detail-box .detail-inner .detail-list ul li .tx-cont {
-  display: table-cell;
-  font-weight: 400;
-  vertical-align: top;
-}
-
-.payment-detail-box .detail-inner .detail-list ul li .title span, .payment-detail-box .detail-inner .detail-list ul li .tx-cont span {
-  vertical-align: baseline;
-}
-
-.payment-detail-box .detail-inner .detail-list ul li .title {
-  width: 40%;
-  font-size: 0.9375rem;
-}
-
-.payment-detail-box .detail-inner .detail-list ul li .multi-line {
-  display: table-cell;
-  vertical-align: middle;
-}
-
-.payment-detail-box .detail-inner .detail-list ul li .tx-cont {
-  width: 60%;
-  font-size: 1rem;
-  text-align: right;
-}
-
-.payment-detail-box .detail-inner .detail-list ul li .tx-cont.long {
-  word-break: break-all;
-}
-
-.payment-detail-box .detail-inner .detail-list ul li .tx-cont .card-sort {
-  display: block;
-}
-
-.payment-detail-box .detail-inner .detail-list ul li .tx-cont .bt-link-tx {
-  margin-top: 0.625rem;
-  font-size: 0.8125rem;
-}
-
-.payment-detail-box .detail-inner .detail-list ul li .tx-cont em {
-  font-weight: 700;
-}
-
-.payment-detail-box .detail-inner .detail-list ul li .tx-cont em.char {
-  font-family: "Helvetica Neue", Roboto, sans-serif;
-  padding-right: 0.25rem;
-  letter-spacing: 0;
-}
-
-.payment-detail-box .detail-inner .detail-list ul li .inner-top {
-  display: table;
-  width: 100%;
-}
-
-.payment-detail-box .detail-inner .detail-list ul li .inner-row ul li {
-  display: table;
-  width: 100%;
-  padding-top: 0.625rem;
-}
-
-.payment-detail-box .detail-inner .detail-list ul li .inner-row ul li .title, .payment-detail-box .detail-inner .detail-list ul li .inner-row ul li .tx-cont {
-  display: table-cell;
-  font-size: 0.8125rem;
-  color: #757575;
-}
-
-.payment-detail-box .detail-inner .detail-list ul li .num {
-  font-family: "Helvetica Neue", Roboto, sans-serif;
-  letter-spacing: 0;
-}
-
-.payment-detail-box .detail-inner .detail-list ul li:first-of-type {
-  padding-top: 0;
-}
-
-.payment-detail-box .detail-inner .detail-list.type2 ul li .title {
-  width: 30%;
-  color: #757575;
-  font-size: 0.875rem;
-}
-
-.payment-detail-box .detail-inner .detail-list.type2 ul li .tx-cont {
-  width: 70%;
-  font-size: 0.9375rem;
-}
-
-.payment-detail-box .detail-inner .detail-list.type2 ul li .tx-cont .divice-sort {
-  display: block;
-  font-weight: 300;
-}
-
-.payment-detail-box .detail-inner .detail-list.type3 ul li .title {
-  color: #757575;
-  font-size: 0.8125rem;
-}
-
-.payment-detail-box .detail-inner .detail-list.type3 ul li .tx-cont {
-  font-size: 0.8125rem;
-}
-
-.payment-detail-box .detail-inner .detail-list.type3 ul li .tx-cont .divice-sort {
-  display: block;
-  font-weight: 300;
-}
-
-.payment-detail-box .detail-inner .detail-list.type3 ul li .tx-result {
-  font-size: 0.8125rem;
-}
-
-.payment-detail-box .detail-inner .detail-list.type3 ul li .tx-result .tx-red {
-  font-weight: 700;
-  vertical-align: baseline;
-}
-
-.payment-detail-box .detail-inner .detail-list.type3 ul li .blue-btn, .payment-detail-box .detail-inner .detail-list.type3 ul li .red-btn {
-  font-size: 0.8125rem;
-}
-
-.payment-detail-box .pay-state {
-  padding-bottom: 2.1875rem;
-  text-align: right;
-  font-size: 0.9375rem;
-  font-weight: 700;
-}
-
-.payment-detail-box .pay-state .payment-com {
-  color: #325ec1;
-}
-
-.payment-detail-box .pay-state .cancel-com {
-  color: #e80a0a;
-}
-
-.payment-detail-box .pay-state .gray-com {
-  color: #757575;
-}
-
-.payment-detail-box .detail-btn {
-  border-top: 1px solid #e1e1e1;
-}
-
-.payment-detail-box .detail-btn button {
-  width: 100%;
-  height: 2.8125rem;
-  font-size: 0.9375rem;
-  color: #757575;
-}
-
-.payment-detail-box .detail-btn button.point-color {
-  color: #325ec1;
-}
-
-.payment-detail-box .detail-btn.item-two {
-  overflow: hidden;
-}
-
-.payment-detail-box .detail-btn.item-two button {
-  width: 50%;
-  float: left;
-}
-
-.payment-detail-box .detail-btn.item-two button:last-of-type {
-  border-left: 1px solid #e1e1e1;
-}
-
-li.payment-detail-box:last-child {
-  margin-bottom: 0;
-}
-
-.blue-btn {
-  display: inline-block;
-  margin-top: 0;
-  padding-bottom: 0.125rem;
-  color: #325ec1;
-  border-bottom: 1px solid #325ec1;
-  font-size: 0.875rem;
-  text-decoration: none;
-}
-
-.red-btn {
-  display: inline-block;
-  margin-top: 0;
-  padding-bottom: 0.125rem;
-  color: #ea002c;
-  border-bottom: 1px solid #ea002c;
-  font-size: 0.875rem;
-  text-decoration: none;
-}
-
-.acco-payment-wrap .payment-detail-wrap {
-  padding: 1.25rem 1.625rem 1.25rem;
-}
-
-.acco-payment-wrap .acco-title > button {
-  padding: 1.25rem 1.625rem;
-  font-size: 0.9375rem;
-}
-
-.acco-payment-wrap .acco-inner-btn-more .bt-more {
-  background: #f1f1f1;
-  display: block;
-  padding: 0.9375rem;
-  font-size: 0.9375rem;
-  color: #757575;
-  text-align: center;
-  border-top: 1px solid #f5f5f5;
-  border-bottom: 1px solid #e1e6f0;
-}
-
-.acco-payment-wrap .acco-inner-btn-more .bt-more > span {
-  font-family: "Helvetica Neue", Roboto, sans-serif;
-  letter-spacing: 0;
-  vertical-align: baseline;
-}
-
-.acco-payment-wrap .accordion2 .acco-style .acco-list .acco-title button:after {
-  right: 1.25rem;
-}
-
-.acco-payment-wrap .contents-empty {
-  padding: 4.375rem 0;
-}
-
-.acco-payment-wrap .contents-empty .ico {
-  top: 4.375rem;
-}
-
-/* MY_03_03_20 ~ MY_03_03_27 */
-.modify-type-wrap {
-  padding-bottom: 1.875rem;
-}
-
-.modify-type-wrap .modify-type-box {
-  border: 1px solid #e1e1e1;
-  border-radius: 0.1875rem;
-  overflow: hidden;
-  position: relative;
-  margin: 3.75rem 0 0.625rem;
-}
-
-.modify-type-wrap .modify-type-box > span {
-  display: block;
-  padding: 0.9375rem 0.9375rem 1.5625rem;
-}
-
-.modify-type-wrap .modify-type-box .modify-before {
-  color: #6d7286;
-  background: #dfe2ea;
-}
-
-.modify-type-wrap .modify-type-box .modify-after {
-  font-weight: 700;
-  font-size: 0.9375rem;
-  background: #fff;
-}
-
-.modify-type-wrap .modify-type-box .ico-arrow {
-  padding: 0;
-  position: absolute;
-  right: 1.125rem;
-  top: 50%;
-  -webkit-transform: translateY(-50%);
-          transform: translateY(-50%);
-  width: 2rem;
-  height: 2rem;
-  background-image: url(/img/ico/ico-group3.png);
-  background-repeat: no-repeat;
-  background-position: -0.5625rem -31.8125rem;
-  background-size: 3.125rem;
-}
-
-.modify-type-wrap .modify-info-txt {
-  color: #646464;
-  font-size: 0.75rem;
-  margin-bottom: 0.625rem;
-}
-
-.modify-type-wrap > .address {
-  padding: 1.25rem 0 0.75rem;
-}
-
-.modify-type-wrap > .address .contents-tit {
-  font-size: 0.8125rem;
-}
-
-/* MY_03_03_56 */
-.change-plan .txt-type {
-  font-weight: 700;
-  font-size: 1.5rem;
-}
-
-.change-plan .widget-box.tube .tube-list li .date {
-  display: block;
-}
-
-.change-plan .reissue-tit {
-  font-size: 0.875rem;
-  margin-bottom: 0.8125rem;
-}
-
-.change-plan .bt-slice {
-  margin-top: 2.5rem;
-}
-
-/* MY_03_02_01_01 */
-.sub-desc.mih {
-  min-height: 14.375rem;
-}
-
-/* MY_03_02_02 */
-.link-long-group .link-group-tit {
-  font-size: 1.25rem;
-  font-weight: 300;
-  margin-bottom: 1.25rem;
-}
-
-.link-long-group .link-long {
-  border-color: #e1e1e1;
-}
-
-.link-long-group .link-long a {
-  overflow: hidden;
-  font-size: 0.875rem;
-}
-
-.link-long-group .link-long a .link-info {
-  display: inline-block;
-  font-size: 0.875rem;
-  float: left;
-  width: 50%;
-}
-
-.link-long-group .link-long a .link-info .num {
-  color: #325ec1;
-  font-family: "Helvetica Neue", Roboto, sans-serif;
-  letter-spacing: 0;
-  margin-left: 0.3125rem;
-  font-size: 1rem;
-}
-
-.link-long-group .link-long a .link-info-2 {
-  font-size: 0.9375rem;
-  text-align: right;
-  padding-right: 14%;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-}
-
-.link-long-group .link-long:last-of-type {
-  border-bottom: none;
-}
-
-.list-dot-wrap .list-dot > .list {
-  box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  position: relative;
-  padding: 0.5625rem 0 0.5625rem 0.75rem;
-  font-size: 0.875rem;
-  color: #000;
-}
-
-.list-dot-wrap .list-dot > .list:before {
-  content: "";
-  position: absolute;
-  top: 0.9375rem;
-  left: 0;
-  padding: 0.125rem;
-  background: #7b7b7b;
-  border-radius: 100%;
-}
-
-.list-dot-wrap .list-dot > .list em {
-  /*color:map_get($point, skred);*/
-  font-weight: 700;
-}
-
-.list-dot-wrap .list-dot:first-child > .list:first-child {
-  padding-top: 0;
-}
-
-.list-dot-wrap .list-dot:first-child > .list:first-child:before {
-  top: 0.375rem;
-}
-
-.contents-empty-pd80 {
-  padding: 5rem 0 5rem;
-}
-
-.contents-empty-pd80 .ico {
-  top: 5rem;
-}
-
-/* MY_03_02_02_08 */
-.payment-summary-wrap {
-  padding: 1.75rem 1.625rem 1.125rem;
-  border-bottom: 1px solid #e1e1e1;
-}
-
-.payment-summary-wrap .tit {
-  font-size: 1.25rem;
-}
-
-.payment-summary {
-  overflow: hidden;
-}
-
-.payment-summary .type {
-  float: right;
-}
-
-.payment-summary .total {
-  float: left;
-}
-
-.payment-summary .total .numb {
-  font-family: "Helvetica Neue", Roboto, sans-serif;
-  letter-spacing: 0;
-}
-
-.payment-summary > ul {
-  font-size: 0.9375rem;
-}
-
-.payment-summary > ul > li {
-  margin-top: 1.875rem;
-}
-
-.payment-summary > ul > li strong {
-  display: inline-block;
-  margin-bottom: 0.625rem;
-}
-
-.payment-summary > ul p > span {
-  color: #757575;
-  font-size: 0.75rem;
-}
-
-.payment-summary > ul .list-dot-wrap .list-dot > .list {
-  padding-bottom: 0;
-}
-
-/* MY_03_02_02_02 */
-.payment-inquiry .payment-info.family {
-  padding: 1.75rem 0 1.75rem;
-  border-bottom: 1px solid #e1e1e1;
-}
-
-.payment-inquiry .payment-info.family .num {
-  font-weight: 700;
-}
-
-.payment-inquiry .payment-info.family .term {
-  font-size: 0.9375rem;
-  margin-top: 1.25rem;
-}
-
-/* 더보기 버튼 */
-.bt-full-more {
-  background: #fafafa;
-  border-top: 1px solid #f5f5f5;
-  height: 2.8125rem;
-}
-
-.bt-full-more button {
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  font-size: 0.9375rem;
-  color: #757575;
-}
-
-.bt-full-more button span {
-  vertical-align: top;
-}
-
-.bt-full-wrap.pd-ver {
-  padding: 2.5rem 0 0rem;
-}
-
-.bt-full-wrap.pd-ver .bt-full-more {
-  border-bottom: 1px solid #efefef;
-}
-
-/* 화살표링크가 하나일 때
-.link-long-group {
-	&.type-solo {
-		.link-long {
-			border-bottom:1px solid map_get($basic, gray17);
-		}
-	}
-}
-*/
-/* switch box-block type2 (DA_05_01 상속) */
-.box-block.type2 dl dt {
-  padding-top: 1.875rem;
-}
-
-.box-block.type2 dl .box-block-list1 ul {
-  border-top: none;
-  margin-top: 0;
-}
-
-.box-block.type2 dl .box-block-list1 ul li span:first-of-type {
-  padding-left: 0;
-  color: #000;
-}
-
-.box-block.type2 dl .box-block-list1 ul li span:last-of-type {
-  padding-right: 0;
-}
-
-.box-block .box-block-list p {
-  font-size: 0.75rem;
-  color: #757575;
-  padding: 1.25rem 0 1.875rem;
-}
-
-.payment-detail-box.type3 dt.detail-list-title {
-  overflow: hidden;
-  padding-bottom: 0.9375rem;
-  border-bottom: 1px solid #efefef;
-  margin-bottom: 1.25rem;
-}
-
-.payment-detail-box.type3 dt.detail-list-title span em {
-  font-family: "Helvetica Neue", Roboto, sans-serif;
-  padding-right: 0.25rem;
-  font-weight: 700;
-  letter-spacing: 0;
-}
-
-.payment-detail-box.type3 dt.detail-list-title span:first-of-type {
-  float: left;
-  font-size: 0.9375rem;
-}
-
-.payment-detail-box.type3 dt.detail-list-title span:last-of-type {
-  float: right;
-}
-
-.payment-detail-box.type3 .detail-list ul li {
-  padding: 0.625rem 0;
-  border-bottom: none;
-}
-
-.payment-detail-box.type3 .detail-list ul li .tx-cont em {
-  font-family: "Helvetica Neue", Roboto, sans-serif;
-  padding-right: 0.25rem;
-  font-weight: 700;
-  letter-spacing: 0;
-}
-
-.cont-btm-info.bdt {
-  border-top: 1px solid #efefef;
-  padding-top: 1.125rem;
-}
-
-.cont-btm-info .tx-desc {
-  font-size: 0.75rem;
-  color: #757575;
-  margin: 0.75rem 0 1.25rem;
-}
-
-.top-info.type2 {
-  overflow: hidden;
-}
-
-.top-info.type2 .info-text {
-  float: left;
-}
-
-.top-info.type2 .subinfo-text {
-  font-size: 0.8125rem;
-  color: #757575;
-  float: right;
-}
-
-.cont-list .bullet-dot li {
-  padding-left: 0.6875rem;
-  font-size: 0.8125rem;
-  position: relative;
-  margin-bottom: 0.875rem;
-  color: #757575;
-}
-
-.cont-list .bullet-dot li:before {
-  content: '';
-  border-radius: 50%;
-  position: absolute;
-  left: 0;
-  top: 0.4375rem;
-  display: inline-block;
-  width: 0.1875rem;
-  height: 0.1875rem;
-  background: #757575;
-}
-
-.img-w100 img {
-  width: 100%;
-}
-
-.msg-present-box .msg-present-comp.type2 .ico {
-  width: 7.5rem;
-  height: 7.5rem;
-  margin-left: -3.75rem;
-  background-image: url(/img/ico/ico-group-500.png);
-  background-size: 15.625rem 31.25rem;
-  background-position: 0 -23.4375rem;
-}
-
-.msg-present-box .msg-present-comp.type3 .ico {
-  width: 7.5rem;
-  height: 7.5rem;
-  margin-left: -3.75rem;
-  background-image: url(/img/ico/ico-group-500.png);
-  background-size: 15.625rem 31.25rem;
-  background-position: 0 -7.8125rem;
-}
-
-.gift-data-cont .gift-data-info {
-  font-size: 0.75rem;
-  color: #757575;
-  border-top: 1px solid #e1e1e1;
-  padding-top: 0.75rem;
-}
-
-.gift-data-cont .point-detail {
-  border-bottom: 1px solid #e1e1e1;
-  padding-bottom: 1.125rem;
-}
-
-.gift-data-cont .point-detail .point {
-  font-weight: 700;
-  padding-right: 0.75rem;
-  vertical-align: baseline;
-}
-
-.popup-choice .popup-choice-list a.disabled, .popup-choice .popup-choice-list button.disabled {
-  border-color: #e5e8ee;
-  background-color: #e5e8ee;
-  color: #808698;
-}
-
-.point-sum-area {
-  border-top: 1px solid #efefef;
-  padding: 2.0625rem 0 2.5rem;
-}
-
-.point-sum-area .bt-bluetxt {
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: #325ec1;
-}
-
-.point-sum-area .bt-bluetxt .ico {
-  background: url(/img/ico/ico-group2.png) no-repeat;
-  background-position: -0.5rem -6.875rem;
-  background-size: 3.125rem;
-  display: inline-block;
-  width: 0.625rem;
-  height: 0.375rem;
-  margin-left: 0.4375rem;
-}
-
-.point-sum-area .input-point input {
-  font-size: 1.25rem;
-  font-weight: 700;
-  width: 7.8125rem;
-  border-bottom: 0.125rem solid #325ec1;
-}
-
-.point-sum-area .input-point input::-webkit-input-placeholder {
-  color: #325ec1;
-  font-size: inherit;
-  letter-spacing: -0.1875rem;
-}
-
-.point-sum-area .input-point input:-ms-input-placeholder {
-  color: #325ec1;
-  font-size: inherit;
-  letter-spacing: -0.1875rem;
-}
-
-.point-sum-area .input-point input::-ms-input-placeholder {
-  color: #325ec1;
-  font-size: inherit;
-  letter-spacing: -0.1875rem;
-}
-
-.point-sum-area .input-point input::placeholder {
-  color: #325ec1;
-  font-size: inherit;
-  letter-spacing: -0.1875rem;
-}
-
-.desc-point {
-  font-size: 0.75rem;
-  color: #757575;
-  margin-top: 1.9375rem;
-}
-
-.cont-list-tit {
-  font-size: 0.9375rem;
-  font-weight: 700;
-  margin-bottom: 1.125rem;
-  display: block;
-}
-
-.recommend-p {
-  font-size: 0.875rem;
-  margin-bottom: 1.875rem;
-}
-
 /* 김연주 */
 /* 데이터 결과 화면 */
 .msg-present-box .msg-present-comp {
@@ -7774,7 +6881,7 @@ li.payment-detail-box:last-child {
         display:table-cell;
         width:50%;
         text-align:right;
-        
+
         span {
           margin-right:rem(2px);
           font-family:$ff-number;
@@ -8678,6 +7785,898 @@ li.payment-detail-box:last-child {
   font-size: 0.75rem;
   font-weight: 400;
   color: #757575;
+}
+
+/* DA_02_01_01, DA_02_01_01_case */
+/* DA_02_03_02, DA_02_04_02*/
+.contents-empty {
+  padding: 7.5rem 0 7.5rem;
+  position: relative;
+}
+
+.contents-empty .desc {
+  font-size: 0.9375rem;
+  color: #8f8f8f;
+  text-align: center;
+  padding-top: 6.875rem;
+  font-weight: 400;
+}
+
+.contents-empty .desc.type2 {
+  font-size: 1.25rem;
+  font-weight: 300;
+  color: #000;
+}
+
+.contents-empty .subdesc {
+  font-size: 0.8125rem;
+  font-weight: 400;
+  color: #757575;
+  text-align: center;
+}
+
+.contents-empty .ico {
+  display: block;
+  width: 5rem;
+  height: 5rem;
+  position: absolute;
+  left: 50%;
+  top: 7.5rem;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+  background-image: url(/img/ico/ico-illustration.png);
+  background-position: -3.0625rem -47.75rem;
+  background-size: 55.8125rem;
+}
+
+.contents-empty .ico.type2 {
+  background-position: -16.25rem -41.25rem;
+  background-size: 62.5rem;
+}
+
+.contents-empty.type2 {
+  padding: 2.5rem 0 2.5rem;
+}
+
+.contents-empty.type2 .ico {
+  top: 2.5rem;
+}
+
+.contents-empty.type2 .desc {
+  padding-top: 6.6875rem;
+}
+
+.contents-empty.type3 {
+  padding: 0 0 3.125rem;
+}
+
+.contents-empty.type3 .ico {
+  top: 0;
+}
+
+.contents-empty.type3 .desc {
+  padding-top: 6.25rem;
+}
+
+/* MY_03_01_01 */
+.use-family .link-long {
+  border-bottom: none;
+}
+
+.use-family .link-long > .ico {
+  right: -0.5625rem;
+}
+
+.use-family .link-long a {
+  font-size: 1rem;
+}
+
+.payment-all .term {
+  font-size: 0.9375rem;
+  margin-top: 0.3125rem;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+/* MY_03_01_01_01 */
+.payment-info.family {
+  position: relative;
+}
+
+.payment-info.family .tit {
+  font-size: 1.25rem;
+}
+
+.payment-info.family .tit .num {
+  font-family: "Helvetica Neue", Roboto, sans-serif;
+  font-size: 1.375rem;
+  vertical-align: baseline;
+  letter-spacing: 0;
+}
+
+.payment-info.family .payment-info-phone {
+  margin-top: 0.9375rem;
+}
+
+.payment-info.family .child-phonenum {
+  font-size: 0.875rem;
+}
+
+.payment-info.family .device-info {
+  font-size: 0.875rem;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+
+/* PA_06_01 */
+.payment-detail-wrap .info-txt {
+  font-size: 0.875rem;
+  margin: 1.875rem 0 0.9375rem 0;
+  font-weight: 400;
+}
+
+.payment-detail-wrap .bt-more {
+  border-top: 1px solid #efefef;
+  margin-top: 2.5rem;
+  font-size: 0.9375rem;
+}
+
+.payment-detail-box {
+  border-radius: 0.25rem;
+  border: 1px solid #e1e1e1;
+  display: table;
+  width: 100%;
+  margin-bottom: 0.625rem;
+  /* .payment-detail-box.type2 */
+}
+
+.payment-detail-box.type2 {
+  border: none;
+  margin-bottom: 0;
+}
+
+.payment-detail-box.type2 .detail-inner {
+  padding: 2.25rem 0 1.875rem;
+}
+
+.payment-detail-box.type2 .detail-list ul li {
+  padding: 1.25rem 0 1.25rem;
+  border-bottom: 1px solid #efefef;
+}
+
+.payment-detail-box.type2 .detail-list ul li:last-of-type {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.payment-detail-box.type2 .detail-list ul li .fw-light {
+  font-weight: 300;
+  vertical-align: baseline;
+}
+
+.payment-detail-box .detail-inner {
+  padding: 1.875rem 1.125rem;
+}
+
+.payment-detail-box .detail-inner .detail-list ul li {
+  display: table;
+  width: 100%;
+  padding-top: 1.25rem;
+}
+
+.payment-detail-box .detail-inner .detail-list ul li .title, .payment-detail-box .detail-inner .detail-list ul li .tx-cont {
+  display: table-cell;
+  font-weight: 400;
+  vertical-align: top;
+}
+
+.payment-detail-box .detail-inner .detail-list ul li .title span, .payment-detail-box .detail-inner .detail-list ul li .tx-cont span {
+  vertical-align: baseline;
+}
+
+.payment-detail-box .detail-inner .detail-list ul li .title {
+  width: 40%;
+  font-size: 0.9375rem;
+}
+
+.payment-detail-box .detail-inner .detail-list ul li .multi-line {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.payment-detail-box .detail-inner .detail-list ul li .tx-cont {
+  width: 60%;
+  font-size: 1rem;
+  text-align: right;
+}
+
+.payment-detail-box .detail-inner .detail-list ul li .tx-cont.long {
+  word-break: break-all;
+}
+
+.payment-detail-box .detail-inner .detail-list ul li .tx-cont .card-sort {
+  display: block;
+}
+
+.payment-detail-box .detail-inner .detail-list ul li .tx-cont .bt-link-tx {
+  margin-top: 0.625rem;
+  font-size: 0.8125rem;
+}
+
+.payment-detail-box .detail-inner .detail-list ul li .tx-cont em {
+  font-weight: 700;
+}
+
+.payment-detail-box .detail-inner .detail-list ul li .tx-cont em.char {
+  font-family: "Helvetica Neue", Roboto, sans-serif;
+  padding-right: 0.25rem;
+  letter-spacing: 0;
+}
+
+.payment-detail-box .detail-inner .detail-list ul li .inner-top {
+  display: table;
+  width: 100%;
+}
+
+.payment-detail-box .detail-inner .detail-list ul li .inner-row ul li {
+  display: table;
+  width: 100%;
+  padding-top: 0.625rem;
+}
+
+.payment-detail-box .detail-inner .detail-list ul li .inner-row ul li .title, .payment-detail-box .detail-inner .detail-list ul li .inner-row ul li .tx-cont {
+  display: table-cell;
+  font-size: 0.8125rem;
+  color: #757575;
+}
+
+.payment-detail-box .detail-inner .detail-list ul li .num {
+  font-family: "Helvetica Neue", Roboto, sans-serif;
+  letter-spacing: 0;
+}
+
+.payment-detail-box .detail-inner .detail-list ul li:first-of-type {
+  padding-top: 0;
+}
+
+.payment-detail-box .detail-inner .detail-list.type2 ul li .title {
+  width: 30%;
+  color: #757575;
+  font-size: 0.875rem;
+}
+
+.payment-detail-box .detail-inner .detail-list.type2 ul li .tx-cont {
+  width: 70%;
+  font-size: 0.9375rem;
+}
+
+.payment-detail-box .detail-inner .detail-list.type2 ul li .tx-cont .divice-sort {
+  display: block;
+  font-weight: 300;
+}
+
+.payment-detail-box .detail-inner .detail-list.type3 ul li .title {
+  color: #757575;
+  font-size: 0.8125rem;
+}
+
+.payment-detail-box .detail-inner .detail-list.type3 ul li .tx-cont {
+  font-size: 0.8125rem;
+}
+
+.payment-detail-box .detail-inner .detail-list.type3 ul li .tx-cont .divice-sort {
+  display: block;
+  font-weight: 300;
+}
+
+.payment-detail-box .detail-inner .detail-list.type3 ul li .tx-result {
+  font-size: 0.8125rem;
+}
+
+.payment-detail-box .detail-inner .detail-list.type3 ul li .tx-result .tx-red {
+  font-weight: 700;
+  vertical-align: baseline;
+}
+
+.payment-detail-box .detail-inner .detail-list.type3 ul li .blue-btn, .payment-detail-box .detail-inner .detail-list.type3 ul li .red-btn {
+  font-size: 0.8125rem;
+}
+
+.payment-detail-box .pay-state {
+  padding-bottom: 2.1875rem;
+  text-align: right;
+  font-size: 0.9375rem;
+  font-weight: 700;
+}
+
+.payment-detail-box .pay-state .payment-com {
+  color: #325ec1;
+}
+
+.payment-detail-box .pay-state .cancel-com {
+  color: #e80a0a;
+}
+
+.payment-detail-box .pay-state .gray-com {
+  color: #757575;
+}
+
+.payment-detail-box .detail-btn {
+  border-top: 1px solid #e1e1e1;
+}
+
+.payment-detail-box .detail-btn button {
+  width: 100%;
+  height: 2.8125rem;
+  font-size: 0.9375rem;
+  color: #757575;
+}
+
+.payment-detail-box .detail-btn button.point-color {
+  color: #325ec1;
+}
+
+.payment-detail-box .detail-btn.item-two {
+  overflow: hidden;
+}
+
+.payment-detail-box .detail-btn.item-two button {
+  width: 50%;
+  float: left;
+}
+
+.payment-detail-box .detail-btn.item-two button:last-of-type {
+  border-left: 1px solid #e1e1e1;
+}
+
+li.payment-detail-box:last-child {
+  margin-bottom: 0;
+}
+
+.blue-btn {
+  display: inline-block;
+  margin-top: 0;
+  padding-bottom: 0.125rem;
+  color: #325ec1;
+  border-bottom: 1px solid #325ec1;
+  font-size: 0.875rem;
+  text-decoration: none;
+}
+
+.red-btn {
+  display: inline-block;
+  margin-top: 0;
+  padding-bottom: 0.125rem;
+  color: #ea002c;
+  border-bottom: 1px solid #ea002c;
+  font-size: 0.875rem;
+  text-decoration: none;
+}
+
+.acco-payment-wrap .payment-detail-wrap {
+  padding: 1.25rem 1.625rem 1.25rem;
+}
+
+.acco-payment-wrap .acco-title > button {
+  padding: 1.25rem 1.625rem;
+  font-size: 0.9375rem;
+}
+
+.acco-payment-wrap .acco-inner-btn-more .bt-more {
+  background: #f1f1f1;
+  display: block;
+  padding: 0.9375rem;
+  font-size: 0.9375rem;
+  color: #757575;
+  text-align: center;
+  border-top: 1px solid #f5f5f5;
+  border-bottom: 1px solid #e1e6f0;
+}
+
+.acco-payment-wrap .acco-inner-btn-more .bt-more > span {
+  font-family: "Helvetica Neue", Roboto, sans-serif;
+  letter-spacing: 0;
+  vertical-align: baseline;
+}
+
+.acco-payment-wrap .accordion2 .acco-style .acco-list .acco-title button:after {
+  right: 1.25rem;
+}
+
+.acco-payment-wrap .contents-empty {
+  padding: 4.375rem 0;
+}
+
+.acco-payment-wrap .contents-empty .ico {
+  top: 4.375rem;
+}
+
+/* MY_03_03_20 ~ MY_03_03_27 */
+.modify-type-wrap {
+  padding-bottom: 1.875rem;
+}
+
+.modify-type-wrap .modify-type-box {
+  border: 1px solid #e1e1e1;
+  border-radius: 0.1875rem;
+  overflow: hidden;
+  position: relative;
+  margin: 3.75rem 0 0.625rem;
+}
+
+.modify-type-wrap .modify-type-box > span {
+  display: block;
+  padding: 0.9375rem 0.9375rem 1.5625rem;
+}
+
+.modify-type-wrap .modify-type-box .modify-before {
+  color: #6d7286;
+  background: #dfe2ea;
+}
+
+.modify-type-wrap .modify-type-box .modify-after {
+  font-weight: 700;
+  font-size: 0.9375rem;
+  background: #fff;
+}
+
+.modify-type-wrap .modify-type-box .ico-arrow {
+  padding: 0;
+  position: absolute;
+  right: 1.125rem;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  width: 2rem;
+  height: 2rem;
+  background-image: url(/img/ico/ico-group3.png);
+  background-repeat: no-repeat;
+  background-position: -0.5625rem -31.8125rem;
+  background-size: 3.125rem;
+}
+
+.modify-type-wrap .modify-info-txt {
+  color: #646464;
+  font-size: 0.75rem;
+  margin-bottom: 0.625rem;
+}
+
+.modify-type-wrap > .address {
+  padding: 1.25rem 0 0.75rem;
+}
+
+.modify-type-wrap > .address .contents-tit {
+  font-size: 0.8125rem;
+}
+
+/* MY_03_03_56 */
+.change-plan .txt-type {
+  font-weight: 700;
+  font-size: 1.5rem;
+}
+
+.change-plan .widget-box.tube .tube-list li .date {
+  display: block;
+}
+
+.change-plan .reissue-tit {
+  font-size: 0.875rem;
+  margin-bottom: 0.8125rem;
+}
+
+.change-plan .bt-slice {
+  margin-top: 2.5rem;
+}
+
+/* MY_03_02_01_01 */
+.sub-desc.mih {
+  min-height: 14.375rem;
+}
+
+/* MY_03_02_02 */
+.link-long-group .link-group-tit {
+  font-size: 1.25rem;
+  font-weight: 300;
+  margin-bottom: 1.25rem;
+}
+
+.link-long-group .link-long {
+  border-color: #e1e1e1;
+}
+
+.link-long-group .link-long a {
+  overflow: hidden;
+  font-size: 0.875rem;
+}
+
+.link-long-group .link-long a .link-info {
+  display: inline-block;
+  font-size: 0.875rem;
+  float: left;
+  width: 50%;
+}
+
+.link-long-group .link-long a .link-info .num {
+  color: #325ec1;
+  font-family: "Helvetica Neue", Roboto, sans-serif;
+  letter-spacing: 0;
+  margin-left: 0.3125rem;
+  font-size: 1rem;
+}
+
+.link-long-group .link-long a .link-info-2 {
+  font-size: 0.9375rem;
+  text-align: right;
+  padding-right: 14%;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.link-long-group .link-long:last-of-type {
+  border-bottom: none;
+}
+
+.list-dot-wrap .list-dot > .list {
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  position: relative;
+  padding: 0.5625rem 0 0.5625rem 0.75rem;
+  font-size: 0.875rem;
+  color: #000;
+}
+
+.list-dot-wrap .list-dot > .list:before {
+  content: "";
+  position: absolute;
+  top: 0.9375rem;
+  left: 0;
+  padding: 0.125rem;
+  background: #7b7b7b;
+  border-radius: 100%;
+}
+
+.list-dot-wrap .list-dot > .list em {
+  /*color:map_get($point, skred);*/
+  font-weight: 700;
+}
+
+.list-dot-wrap .list-dot:first-child > .list:first-child {
+  padding-top: 0;
+}
+
+.list-dot-wrap .list-dot:first-child > .list:first-child:before {
+  top: 0.375rem;
+}
+
+.contents-empty-pd80 {
+  padding: 5rem 0 5rem;
+}
+
+.contents-empty-pd80 .ico {
+  top: 5rem;
+}
+
+/* MY_03_02_02_08 */
+.payment-summary-wrap {
+  padding: 1.75rem 1.625rem 1.125rem;
+  border-bottom: 1px solid #e1e1e1;
+}
+
+.payment-summary-wrap .tit {
+  font-size: 1.25rem;
+}
+
+.payment-summary {
+  overflow: hidden;
+}
+
+.payment-summary .type {
+  float: right;
+}
+
+.payment-summary .total {
+  float: left;
+}
+
+.payment-summary .total .numb {
+  font-family: "Helvetica Neue", Roboto, sans-serif;
+  letter-spacing: 0;
+}
+
+.payment-summary > ul {
+  font-size: 0.9375rem;
+}
+
+.payment-summary > ul > li {
+  margin-top: 1.875rem;
+}
+
+.payment-summary > ul > li strong {
+  display: inline-block;
+  margin-bottom: 0.625rem;
+}
+
+.payment-summary > ul p > span {
+  color: #757575;
+  font-size: 0.75rem;
+}
+
+.payment-summary > ul .list-dot-wrap .list-dot > .list {
+  padding-bottom: 0;
+}
+
+/* MY_03_02_02_02 */
+.payment-inquiry .payment-info.family {
+  padding: 1.75rem 0 1.75rem;
+  border-bottom: 1px solid #e1e1e1;
+}
+
+.payment-inquiry .payment-info.family .num {
+  font-weight: 700;
+}
+
+.payment-inquiry .payment-info.family .term {
+  font-size: 0.9375rem;
+  margin-top: 1.25rem;
+}
+
+/* 더보기 버튼 */
+.bt-full-more {
+  background: #fafafa;
+  border-top: 1px solid #f5f5f5;
+  height: 2.8125rem;
+}
+
+.bt-full-more button {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  font-size: 0.9375rem;
+  color: #757575;
+}
+
+.bt-full-more button span {
+  vertical-align: top;
+}
+
+.bt-full-wrap.pd-ver {
+  padding: 2.5rem 0 0rem;
+}
+
+.bt-full-wrap.pd-ver .bt-full-more {
+  border-bottom: 1px solid #efefef;
+}
+
+/* 화살표링크가 하나일 때
+.link-long-group {
+    &.type-solo {
+        .link-long {
+            border-bottom:1px solid map_get($basic, gray17);
+        }
+    }
+}
+*/
+/* switch box-block type2 (DA_05_01 상속) */
+.box-block.type2 dl dt {
+  padding-top: 1.875rem;
+}
+
+.box-block.type2 dl .box-block-list1 ul {
+  border-top: none;
+  margin-top: 0;
+}
+
+.box-block.type2 dl .box-block-list1 ul li span:first-of-type {
+  padding-left: 0;
+  color: #000;
+}
+
+.box-block.type2 dl .box-block-list1 ul li span:last-of-type {
+  padding-right: 0;
+}
+
+.box-block .box-block-list p {
+  font-size: 0.75rem;
+  color: #757575;
+  padding: 1.25rem 0 1.875rem;
+}
+
+.payment-detail-box.type3 dt.detail-list-title {
+  overflow: hidden;
+  padding-bottom: 0.9375rem;
+  border-bottom: 1px solid #efefef;
+  margin-bottom: 1.25rem;
+}
+
+.payment-detail-box.type3 dt.detail-list-title span em {
+  font-family: "Helvetica Neue", Roboto, sans-serif;
+  padding-right: 0.25rem;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+.payment-detail-box.type3 dt.detail-list-title span:first-of-type {
+  float: left;
+  font-size: 0.9375rem;
+}
+
+.payment-detail-box.type3 dt.detail-list-title span:last-of-type {
+  float: right;
+}
+
+.payment-detail-box.type3 .detail-list ul li {
+  padding: 0.625rem 0;
+  border-bottom: none;
+}
+
+.payment-detail-box.type3 .detail-list ul li .tx-cont em {
+  font-family: "Helvetica Neue", Roboto, sans-serif;
+  padding-right: 0.25rem;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+.cont-btm-info.bdt {
+  border-top: 1px solid #efefef;
+  padding-top: 1.125rem;
+}
+
+.cont-btm-info .tx-desc {
+  font-size: 0.75rem;
+  color: #757575;
+  margin: 0.75rem 0 1.25rem;
+}
+
+.top-info.type2 {
+  overflow: hidden;
+}
+
+.top-info.type2 .info-text {
+  float: left;
+}
+
+.top-info.type2 .subinfo-text {
+  font-size: 0.8125rem;
+  color: #757575;
+  float: right;
+}
+
+.cont-list .bullet-dot li {
+  padding-left: 0.6875rem;
+  font-size: 0.8125rem;
+  position: relative;
+  margin-bottom: 0.875rem;
+  color: #757575;
+}
+
+.cont-list .bullet-dot li:before {
+  content: '';
+  border-radius: 50%;
+  position: absolute;
+  left: 0;
+  top: 0.4375rem;
+  display: inline-block;
+  width: 0.1875rem;
+  height: 0.1875rem;
+  background: #757575;
+}
+
+.img-w100 img {
+  width: 100%;
+}
+
+.msg-present-box .msg-present-comp.type2 .ico {
+  width: 7.5rem;
+  height: 7.5rem;
+  margin-left: -3.75rem;
+  background-image: url(/img/ico/ico-group-500.png);
+  background-size: 15.625rem 31.25rem;
+  background-position: 0 -23.4375rem;
+}
+
+.msg-present-box .msg-present-comp.type3 .ico {
+  width: 7.5rem;
+  height: 7.5rem;
+  margin-left: -3.75rem;
+  background-image: url(/img/ico/ico-group-500.png);
+  background-size: 15.625rem 31.25rem;
+  background-position: 0 -7.8125rem;
+}
+
+.gift-data-cont .gift-data-info {
+  font-size: 0.75rem;
+  color: #757575;
+  border-top: 1px solid #e1e1e1;
+  padding-top: 0.75rem;
+}
+
+.gift-data-cont .point-detail {
+  border-bottom: 1px solid #e1e1e1;
+  padding-bottom: 1.125rem;
+}
+
+.gift-data-cont .point-detail .point {
+  font-weight: 700;
+  padding-right: 0.75rem;
+  vertical-align: baseline;
+}
+
+.popup-choice .popup-choice-list a.disabled, .popup-choice .popup-choice-list button.disabled {
+  border-color: #e5e8ee;
+  background-color: #e5e8ee;
+  color: #808698;
+}
+
+.point-sum-area {
+  border-top: 1px solid #efefef;
+  padding: 2.0625rem 0 2.5rem;
+}
+
+.point-sum-area .bt-bluetxt {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #325ec1;
+}
+
+.point-sum-area .bt-bluetxt .ico {
+  background: url(/img/ico/ico-group2.png) no-repeat;
+  background-position: -0.5rem -6.875rem;
+  background-size: 3.125rem;
+  display: inline-block;
+  width: 0.625rem;
+  height: 0.375rem;
+  margin-left: 0.4375rem;
+}
+
+.point-sum-area .input-point input {
+  font-size: 1.25rem;
+  font-weight: 700;
+  width: 7.8125rem;
+  border-bottom: 0.125rem solid #325ec1;
+}
+
+.point-sum-area .input-point input::-webkit-input-placeholder {
+  color: #325ec1;
+  font-size: inherit;
+  letter-spacing: -0.1875rem;
+}
+
+.point-sum-area .input-point input:-ms-input-placeholder {
+  color: #325ec1;
+  font-size: inherit;
+  letter-spacing: -0.1875rem;
+}
+
+.point-sum-area .input-point input::-ms-input-placeholder {
+  color: #325ec1;
+  font-size: inherit;
+  letter-spacing: -0.1875rem;
+}
+
+.point-sum-area .input-point input::placeholder {
+  color: #325ec1;
+  font-size: inherit;
+  letter-spacing: -0.1875rem;
+}
+
+.desc-point {
+  font-size: 0.75rem;
+  color: #757575;
+  margin-top: 1.9375rem;
+}
+
+.cont-list-tit {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  margin-bottom: 1.125rem;
+  display: block;
+}
+
+.recommend-p {
+  font-size: 0.875rem;
+  margin-bottom: 1.875rem;
 }
 
 /* 김정기 */
@@ -10596,6 +10595,23 @@ span[class*=char-star][class*=red] {
 
 .sms-confirm-box .box-citation .citation-form .form-cell .widget-box.radio {
   margin-top: 1.25rem;
+}
+
+.sms-confirm-box .email-confirm-out {
+  display: block;
+  overflow: hidden;
+  margin-top: 0.4375rem;
+  font-size: 0.75rem;
+  line-height: 1.125rem;
+}
+
+.sms-confirm-box .email-confirm-out span, .sms-confirm-box .email-confirm-out em {
+  display: inline-block;
+  vertical-align: baseline;
+}
+
+.sms-confirm-box .email-confirm-out .bt-link-tx {
+  float: right;
 }
 
 /* CI 11_05 style */
@@ -13243,7 +13259,7 @@ span[class*=char-star][class*=red] {
   font-weight: 700;
 }
 
-.box-block dl dd a, .box-block dl dd button {
+.box-block dl dd a {
   float: right;
   border-bottom: 1px solid #df3636;
   font-size: 0.875rem;
@@ -13324,7 +13340,7 @@ span[class*=char-star][class*=red] {
   color: #000;
 }
 
-.box-block .box-block-list1 > a, .box-block .box-block-list1 button {
+.box-block .box-block-list1 > a {
   position: relative;
   margin: -0.75rem 0.625rem 2.5rem 0;
   z-index: 1;
@@ -15285,12 +15301,6 @@ span[class*=char-star][class*=red] {
 /* 김재성 */
 .jsk {
   color: #00f;
-  -webkit-color: red;
-  -khtml-color: red;
-  -moz-color: red;
-  -ms-color: red;
-  -o-color: red;
-  color: red;
 }
 
 /* 최은현 */
