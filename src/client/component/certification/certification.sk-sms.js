@@ -76,7 +76,8 @@ Tw.CertificationSkSms.prototype = {
       if ( this._isFirstCert ) {
         this._isFirstCert = false;
       } else {
-        this.showValidText();
+        // this.showValidText();
+        this.showCertError(Tw.MSG_AUTH.CERT_01);
       }
     } else if ( resp.code === this.SMS_CERT_ERROR.SMS2003 ) {
       this.showCertError(Tw.MSG_AUTH.CERT_01);
@@ -120,12 +121,16 @@ Tw.CertificationSkSms.prototype = {
   showValidText: function () {
     this.$errorCert.addClass('none');
     this.$textValid.removeClass('none');
+    this.$btCert.parents('.inputbox').removeClass('error');
+    this.$btCert.parents('.inputbox').addClass('validation');
     this.$btCert.attr('aria-describedby', 'aria-sms-exp-desc2');
   },
   showCertError: function (message) {
     this.$errorCert.html(message);
     this.$textValid.addClass('none');
     this.$errorCert.removeClass('none');
+    this.$btCert.parents('.inputbox').removeClass('validation');
+    this.$btCert.parents('.inputbox').addClass('error');
     this.$btCert.attr('aria-describedby', 'aria-sms-exp-desc1');
   },
   showConfirmError: function (message) {

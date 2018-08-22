@@ -23,7 +23,14 @@ Tw.CertificationSkMotp = function () {
 Tw.CertificationSkMotp.prototype = {
   MOTP_ERROR: {
     ATH1232: 'ATH1232',   // 단말기정보가 없습니다.
-    ATH1233: 'ATH1233'    // 모바일T 안심인증할 수 없는 단말기 모델입니다.
+    ATH1233: 'ATH1233',    // 모바일T 안심인증할 수 없는 단말기 모델입니다.
+
+    ATH1221: 'ATH1221',
+    ATH1222: 'ATH1222',
+    ATH1223: 'ATH1223',
+    ATH1224: 'ATH1224',
+    ATH1228: 'ATH1228',
+    ATG1231: 'ATG1231'
   },
   openMotpPopup: function () {
     this._popupService.open({
@@ -39,10 +46,10 @@ Tw.CertificationSkMotp.prototype = {
     this.$btConfirm = $popupContainer.find('#fe-bt-confirm');
     this.$inputCert = $popupContainer.find('#fe-input-cert');
     this.$textValid = $popupContainer.find('#aria-sms-exp-desc2');
-    this.$errorCert = $popupContainer.find('#todo');
+    this.$errorCert = $popupContainer.find('#aria-sms-exp-desc1');
     this.$errorConfirm = $popupContainer.find('#aria-sms-exp-desc3');
 
-    this.$btCert.on('click', $.proxy(this._requestSmsCert, this));
+    this.$btCert.on('click', $.proxy(this._requestMotpCert, this));
     this.$btConfirm.on('click', $.proxy(this._requestMotpConfirm, this));
     this.$inputCert.on('input', $.proxy(this._onInputCert, this));
 
@@ -65,7 +72,8 @@ Tw.CertificationSkMotp.prototype = {
     } else if ( resp.code === this.MOTP_ERROR.ATH1233 ) {
 
     } else {
-      this._popupService.openAlert(resp.code + ' ' + resp.msg);
+      // this._popupService.openAlert(resp.code + ' ' + resp.msg);
+      this.showCertError('test error');
     }
   },
   _onInputCert: function () {
@@ -77,6 +85,10 @@ Tw.CertificationSkMotp.prototype = {
 
   },
   _requestMotpConfirm: function() {
+    this._apiService.request(Tw.API_CMD.BFF_01_0020, {
+      authNum: this.$inputCert.val(),
+      authUrl: this._authUrl
+    }).done($.proxy(this._successMotpConfirm, this));
 
   },
   _successMotpConfirm: function (resp) {
@@ -87,12 +99,16 @@ Tw.CertificationSkMotp.prototype = {
   showValidText: function () {
     this.$errorCert.addClass('none');
     this.$textValid.removeClass('none');
+    this.$btCert.parents('.inputbox').removeClass('error');
+    this.$btCert.parents('.inputbox').addClass('validation');
     this.$btCert.attr('aria-describedby', 'aria-sms-exp-desc2');
   },
   showCertError: function (message) {
     this.$errorCert.html(message);
     this.$textValid.addClass('none');
     this.$errorCert.removeClass('none');
+    this.$btCert.parents('.inputbox').removeClass('validation');
+    this.$btCert.parents('.inputbox').addClass('error');
     this.$btCert.attr('aria-describedby', 'aria-sms-exp-desc1');
   },
   showConfirmError: function (message) {
