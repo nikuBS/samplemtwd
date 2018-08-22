@@ -12,7 +12,20 @@ Tw.UrlHelper = (function () {
     return params;
   };
 
+  // 앱 / 일반에서 링크 열기
+  var openUrl = function (url) {
+    if ( Tw.BrowserHelper.isApp() ) {
+      Tw.Native.send(Tw.NTV_CMD.OPEN_URL, {
+        type: 1,
+        href: url
+      }, null);
+    } else {
+      window.open( url, '_blank');
+    }
+  };
+
   return {
-    getQueryParams: getQueryParams
+    getQueryParams: getQueryParams,
+    openUrl : openUrl
   };
 })();
