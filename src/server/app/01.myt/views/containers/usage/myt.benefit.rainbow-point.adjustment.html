@@ -1,5 +1,5 @@
 <!--
-* FileName: myt.benefit.point.adjustment.html
+* FileName: myt.benefit.rainbow-point.adjustment.html
 * Author: 이정민 (skt.p130713@partner.sk.com)
 * Date: 2018.08.14
 -->
@@ -118,8 +118,14 @@
                         </div>
                     </div>
                     <div class="point-sum-area mt40">
-                        <button class="bt-bluetxt fe-btn-line-to-give" title="포인트 주는 회선 선택" aria-haspopup="true" data-svc-mgmt-num="<%= lineToGive.svcMgmtNum %>"><%= lineToGive.svcNum %> <span class="ico"></span></button><span class="tx-normal pl8">에서</span><br>
-                        <button class="bt-bluetxt fe-btn-line-to-receive" title="포인트 받는 회선 선택" aria-haspopup="true" data-svc-mgmt-num="<%= lineToReceive.svcMgmtNum %>"><%= lineToReceive.svcNum %> <span class="ico"></span></button><span class="tx-normal pl8">으로</span><br>
+                        <button class="bt-bluetxt fe-btn-line-to-give" title="포인트 주는 회선 선택" aria-haspopup="true" data-svc-mgmt-num="<%= lineToGive.svcMgmtNum %>">
+                            <span class="fe-svc-num"><%= lineToGive.svcNum %></span>
+                            <span class="ico"></span>
+                        </button><span class="tx-normal pl8">에서</span><br>
+                        <button class="bt-bluetxt fe-btn-line-to-receive" title="포인트 받는 회선 선택" aria-haspopup="true" data-svc-mgmt-num="<%= lineToReceive.svcMgmtNum %>">
+                            <span class="fe-svc-num"><%= lineToReceive.svcNum %></span>
+                            <span class="ico"></span>
+                        </button><span class="tx-normal pl8">으로</span><br>
                         <span class="input-point">
                       <input type="text" placeholder="전환하실 포인트" title="전환하실 포인트" class="fe-input-point" onInput="return Tw.InputHelper.inputNumberOnly(this);">
                       <button href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></button>

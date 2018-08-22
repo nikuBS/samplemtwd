@@ -239,3 +239,8 @@ export const COMBINATION_PRODUCT_TYPE = {
 };
 
 export const COMBINATION_PRODUCT_OTHER_TYPE = ['NH00000103', 'TW00000009', 'NH00000105', 'TW00000016']; // 한가족 할인, TB끼리 TV플러스
+
+export enum RAINBOW_POINT_REL_CD {
+  C = 'C',
+  P = 'P'
+}

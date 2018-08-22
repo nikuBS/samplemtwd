@@ -1,39 +1,72 @@
 /**
- * FileName: myt.benefit.point.adjustment.controller.ts
+ * FileName: myt.benefit.rainbow-point.adjustment.controller.ts
  * Author: 이정민 (skt.p130713@partner.sk.com)
  * Date: 2018.08.14
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { NextFunction, Request, Response } from 'express';
-import { MYT_BENEFIT_POINT_VIEW } from '../../../../types/string.type';
+import { MYT_BENEFIT_RAINBOW_POINT } from '../../../../types/string.type';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import DateHelper from '../../../../utils/date.helper';
 import FormatHelper from '../../../../utils/format.helper';
 import { Observable } from 'rxjs/Observable';
 
-class MytBenefitPointAdjustmentController extends TwViewController {
-  private static ITEM_LENGTH_PER_PAGE: number = 20;
-  private static PAGE_SET_LENGTH: number = 5;
+class MytBenefitRainbowPointCommon {
+  public static ITEM_LENGTH_PER_PAGE: number = 20;
+  public static PAGE_SET_LENGTH: number = 5;
 
+  public static getPaging(uri: string, itemLengthPerPage: number, pagesetLength: number, curPage: number, total: number): any {
+    const startNum = (Math.floor((curPage - 1) / pagesetLength) * pagesetLength) + 1;
+    const totalPage = Math.ceil((total / itemLengthPerPage));
+    const totalPageset = Math.ceil(totalPage / pagesetLength);
+    const currentPageset = Math.floor((curPage - 1) / pagesetLength) + 1;
+    const endNum = currentPageset < totalPageset ? startNum + pagesetLength - 1 : totalPage;
+    const prevPageIdx = currentPageset > 0 ? ((currentPageset - 1) * pagesetLength) : null;
+    const nextPageIdx = totalPageset > currentPageset ? (currentPageset * pagesetLength) + 1 : null;
+    const needPaging = total > itemLengthPerPage;
+    return {
+      needPaging,
+      uri,
+      startNum,
+      endNum,
+      curPage,
+      total,
+      prevPageIdx,
+      nextPageIdx
+    };
+  }
+
+  public static getResult(resp: any): any {
+    return resp.result;
+  }
+
+}
+
+class MytBenefitRainbowPointAdjustmentController extends TwViewController {
+  public static VIEW = {
+    DEFAULT: 'usage/myt.benefit.rainbow-point.adjustment.html',
+    ERROR: 'error/myt.benefit.rainbow-point.adjustment.html'
+  };
+  
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     const curPage = req.query.curPage || 1;
     Observable.combineLatest(
       this.reqRainbowPointServices(),
       this.reqRainbowPointAdjustments(curPage)
     ).subscribe(([rainbowPointServices, rainbowPointAdjustments]) => {
-      if (rainbowPointServices.code !== API_CODE.CODE_00) {
+      if ( rainbowPointServices.code !== API_CODE.CODE_00 ) {
         res.render('error.server-error.html', {
-          title: rainbowPointServices.code,
+          title: MYT_BENEFIT_RAINBOW_POINT.TITLE.ADJUSTMENT,
           code: rainbowPointServices.code,
           msg: rainbowPointServices.msg,
           svcInfo: svcInfo
         });
         return;
       }
-      if (rainbowPointAdjustments.code !== API_CODE.CODE_00) {
+      if ( rainbowPointAdjustments.code !== API_CODE.CODE_00 ) {
         res.render('error.server-error.html', {
-          title: rainbowPointAdjustments.code,
+          title: MYT_BENEFIT_RAINBOW_POINT.TITLE.ADJUSTMENT,
           code: rainbowPointAdjustments.code,
           msg: rainbowPointAdjustments.msg,
           svcInfo: svcInfo
@@ -43,15 +76,13 @@ class MytBenefitPointAdjustmentController extends TwViewController {
 
       const lines = this.getLineWithRainbowPoint(rainbowPointServices);
       const historyResult = this.getRainbowPointHistories(rainbowPointAdjustments);
-      const paging = this.getPaging('/myt/benefit/point/adjustment', MytBenefitPointAdjustmentController.ITEM_LENGTH_PER_PAGE,
-        MytBenefitPointAdjustmentController.PAGE_SET_LENGTH, curPage, historyResult.totRecCnt);
-      // console.log('~~~~~~~~~~~`svcInfo', svcInfo);
-      // console.log('~~~~~~~~~~~`lines', lines);
-      // console.log('~~~~~~~~~~~`historyResult', historyResult);
+      const paging = MytBenefitRainbowPointCommon.getPaging('/myt/benefit/rainbow-point/adjustment',
+        MytBenefitRainbowPointCommon.ITEM_LENGTH_PER_PAGE,
+        MytBenefitRainbowPointCommon.PAGE_SET_LENGTH, curPage, historyResult.totRecCnt);
 
       // 단일 회선인 경우 에러 처리
       if ( lines.length < 2 ) {
-        res.render(MYT_BENEFIT_POINT_VIEW.ERROR, {
+        res.render(MytBenefitRainbowPointAdjustmentController.VIEW.ERROR, {
           svcInfo
         });
         return;
@@ -63,11 +94,8 @@ class MytBenefitPointAdjustmentController extends TwViewController {
         return line.svcMgmtNum !== svcInfo.svcMgmtNum;
       });
       const lineToReceive = lineToReceives[0];
-      // console.log('~~~~~~~~~~~`lineToGive', lineToGive);
-      // console.log('~~~~~~~~~~~`lineToReceive', lineToReceive);
-      // console.log('~~~~~~~~~~~`paging', paging);
 
-      res.render(MYT_BENEFIT_POINT_VIEW.ADJUSTMENT, {
+      res.render(MytBenefitRainbowPointAdjustmentController.VIEW.DEFAULT, {
         svcInfo,
         lineToGive,
         lineToReceive,
@@ -77,7 +105,7 @@ class MytBenefitPointAdjustmentController extends TwViewController {
       });
     }, (resp) => {
       res.render('error.server-error.html', {
-        title: resp.code,
+        title: MYT_BENEFIT_RAINBOW_POINT.TITLE.ADJUSTMENT,
         code: resp.code,
         msg: resp.msg,
         svcInfo: svcInfo
@@ -123,7 +151,7 @@ class MytBenefitPointAdjustmentController extends TwViewController {
 
   private reqRainbowPointAdjustments(page: number): Observable<any> {
     return this.apiService.request(API_CMD.BFF_05_0130, {
-      size: MytBenefitPointAdjustmentController.ITEM_LENGTH_PER_PAGE,
+      size: MytBenefitRainbowPointCommon.ITEM_LENGTH_PER_PAGE,
       page
     });
     // return Observable.create((observer) => {
@@ -184,7 +212,7 @@ class MytBenefitPointAdjustmentController extends TwViewController {
   }
 
   private getLineWithRainbowPoint(resp: any): any {
-    const lines = this.getResult(resp);
+    const lines = MytBenefitRainbowPointCommon.getResult(resp);
     lines.map((line) => {
       line.showPoint = FormatHelper.addComma(line.point);
     });
@@ -192,7 +220,7 @@ class MytBenefitPointAdjustmentController extends TwViewController {
   }
 
   private getRainbowPointHistories(resp: any): any {
-    const result = this.getResult(resp);
+    const result = MytBenefitRainbowPointCommon.getResult(resp);
     const histories = result.history;
     histories.map((history) => {
       history.showPoint = FormatHelper.addComma(history.point);
@@ -201,31 +229,9 @@ class MytBenefitPointAdjustmentController extends TwViewController {
     return result;
   }
 
-  private getResult(resp: any): any {
-    return resp.result;
-  }
-
-  private getPaging(uri: string, itemLengthPerPage: number, pagesetLength: number, curPage: number, total: number): any {
-    const startNum = (Math.floor((curPage - 1) / pagesetLength) * pagesetLength) + 1;
-    const totalPage = Math.ceil((total / itemLengthPerPage));
-    const totalPageset = Math.ceil(totalPage / pagesetLength);
-    const currentPageset = Math.floor((curPage - 1) / pagesetLength) + 1;
-    const endNum = currentPageset < totalPageset ? startNum + pagesetLength - 1 : totalPage;
-    const prevPageIdx = currentPageset > 0 ? ((currentPageset - 1) * pagesetLength) : null;
-    const nextPageIdx = totalPageset > currentPageset ? (currentPageset * pagesetLength) + 1 : null;
-    const needPaging = total > itemLengthPerPage;
-    return {
-      needPaging,
-      uri,
-      startNum,
-      endNum,
-      curPage,
-      total,
-      prevPageIdx,
-      nextPageIdx
-    };
-  }
-
 }
 
-export default MytBenefitPointAdjustmentController;
+export {
+  MytBenefitRainbowPointAdjustmentController,
+  MytBenefitRainbowPointCommon
+};

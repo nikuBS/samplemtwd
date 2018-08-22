@@ -1,0 +1,169 @@
+<!--
+* FileName: myt.benefit.rainbow-point.transfer.html
+* Author: 이정민 (skt.p130713@partner.sk.com)
+* Date: 2018.08.14
+-->
+<% include ../../components/start.component.html %>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<!-- wrap -->
+<div id="fe-myt-benefit-point-transfer" class="wrap" data-lines-to-give="<%= linesToGive %>" data-lines-to-receive="<%= linesToReceive %>">
+    <!-- #header -->
+    <%- include('../../../../../common/views/components/header.component.html', { title: '대리인 간 양도', svcInfo: svcInfo }); %>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+
+            <div class="cont-box">
+                <div class="pay-info">
+                    <h3 class="pay-tit">레인보우 잔여 포인트</h3>
+                    <div class="payment-all type2">
+                        <span><em class="fe-point-to-give" data-point-to-give="<%= lineToGive.point %>"><%= lineToGive.showPoint %></em> 점</span>
+                    </div>
+                    <p class="desc-point">양도/양수 후 포인트 합계는 현재 포인트 합계와 <br /> 동일해야 합니다.</p>
+                </div>
+                <div class="point-sum-area mt24">
+                    <button class="bt-bluetxt" title="포인트 주는 회선 선택" aria-haspopup="true" data-svc-mgmt-num="<%= lineToGive.svcMgmtNum %>">
+                        <span class="fe-svc-num"><%= lineToGive.svcNum %></span>
+                        <span class="ico"></span>
+                    </button><span class="tx-normal pl8">에서</span><br />
+                    <button class="bt-bluetxt" title="포인트 받는 회선 선택" aria-haspopup="true" data-svc-mgmt-num="<%= lineToReceive.svcMgmtNum %>">
+                        <span class="fe-svc-num"><%= lineToReceive.svcNum %></span>
+                    <span class="ico"></span>
+                    </button><span class="tx-normal pl8">으로</span><br />
+                    <span class="input-point">
+						  <input type="text" placeholder="양도하실 포인트" title="양도하실 포인트" class="fe-input-point" onInput="return Tw.InputHelper.inputNumberOnly(this);" />
+						  <button class="cancel"><span class="blind">삭제</span></button>
+						</span>
+                    <span class="tx-normal">양도 하기</span>
+                </div>
+                <ul class="bt-slice">
+                    <li class="bt-blue1">
+                        <button class="fe-btn-preview">양도 결과 미리보기</button>
+                    </li>
+                </ul>
+            </div>
+
+            <hr class="cont-sp type1" aria-hidden="true" />
+            <% if (histories.length > 0) { %>
+            <div class="cont-box nogaps-btm">
+                <h2 class="title-h2">양도/양수 내역</h2>
+                <div class="payment-select">
+                    <ul class="select-list">
+                        <% for (var i = 0; i < histories.length; i++) { %>
+                        <li>
+                            <span class="title tx-bold"><%= histories[i].showPoint %>점 <span class="num pl8"><%= histories[i].showOpDt %></span></span>
+                            <ul class="tb-layout">
+                                <li>
+                                    <span class="tit">포인트를 준 회선</span>
+                                    <span class="tx-cont"><span class="ff-hn tx-bold vbl"><%= histories[i].sndrSvcNum %></span></span>
+                                </li>
+                                <li>
+                                    <span class="tit">포인트를 받은 회선</span>
+                                    <span class="tx-cont"><span class="ff-hn tx-bold vbl"><%= histories[i].befrSvcNum %></span></span>
+                                </li>
+                            </ul>
+                            <% if (histories[i].cancelYn === 'Y') { %>
+                                <button class="bt-cancel">취소</button>
+                            <% } %>
+                        </li>
+                        <% } %>
+                    </ul>
+                </div>
+                <% if (paging.needPaging) { %>
+                <div class="paging">
+                    <% if (paging.prevPageIdx) { %>
+                    <a href="<%= paging.uri%>?curPage=<%= paging.prevPageIdx %>" role="button" class="prev"><span class="pg-blind">이전 페이지로 이동</span></a>
+                    <% } %>
+                    <% for ( var i = paging.startNum; i <= paging.endNum; i++) { %>
+                    <a href="<%= paging.uri%>?curPage=<%= i %>" role="button" class="<%= (paging.curPage == i) ? 'active' : '' %>" ><%= i %></a>
+                    <% } %>
+                    <% if (paging.nextPageIdx) { %>
+                    <a href="<%= paging.uri%>?curPage=<%= paging.nextPageIdx %>" role="button" class="next"><span class="pg-blind">다음 페이지로 이동</span></a>
+                    <% } %>
+                </div>
+                <% } %>
+            </div>
+            <% } else { %>
+            <div class="cont-box nogaps-btm">
+                <h2 class="title-h2">양도/양수 내역</h2>
+                <div class="contents-empty type2">
+                    <span class="ico"></span>
+                    <p class="desc">양도/양수 내역이 없습니다.</p>
+                </div>
+            </div>
+            <% } %>
+
+
+            <hr class="cont-sp type1" aria-hidden="true" />
+
+            <div class="cont-box nogaps-hoz">
+                <div class="box-confirm">
+                    <!-- .widget -->
+                    <div class="widget">
+                        <div class="widget-box accordion">
+                            <h3 class="tit-a">이용안내</h3>
+                            <div class="acco-cover toggle"><!-- toggle : 한개만 열기 -->
+                                <div class="bt-whole"><button role="button" aria-pressed="false"><span class="blind">내용 열기</span></button></div>
+                                <div class="acco-style btn-hold">
+                                    <ul class="acco-list">
+                                        <!-- .on: 열기 -->
+                                        <li class="acco-box">
+                                            <div class="acco-tit"><span class="bullet">1.</span> 청소년-법정 대리인간 포인트 양도/양수가 가능한 청소년의 기준 <button role="button" aria-pressed="false"></button></div>
+                                            <div class="acco-cont">
+                                                <ul class="list-dot">
+                                                    <li class="list">청소년의 경우 약관에서 명시한 요금제 사용자인 동시에 만 19세 이하 청소년 요금제 사용자에 한합니다. <br />(예, 팅100/500, 팅별조절, 팅문자프리미엄, 아이키즈, 팅주니어표준, 자녀안심, 팅문자무제한, 팅문자씨네마팩, 팅씨네마팩 등 청소년만 가입 가능한 요금제)
+
+                                                    </li>
+                                                    <li class="list">
+                                                        청소년 요금제 사용자의 경우 만 19세를 초과하는 경우(일자기준, 19번째 생일 초과 시)법정 대리인의 법적 효력이 상실하므로 양도가 불가합니다.
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li class="acco-box">
+                                            <div class="acco-tit"><span class="bullet">2.</span> 양도받은 포인트인 경우 재 양도가 불가합니다.</div>
+                                        </li>
+                                        <li class="acco-box">
+                                            <div class="acco-tit"><span class="bullet">3.</span> 청소년, 법정대리인 간 양도 시 법정대리인 등록이 우선 되어야 양도 처리 가능합니다.</div>
+                                        </li>
+                                        <li class="acco-box">
+                                            <div class="acco-tit"><span class="bullet">4.</span> 회선을 추가하여 다회선을 이용 하실 고객은 다회선 이용안내를 확인해 주세요.</div>
+                                            <div class="acco-bt-slice">
+                                                <ul class="bt-slice">
+                                                    <li class="bt-white2">
+                                                        <button>다회선 이용안내</button>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--// .widget -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--// #contents -->
+    <%- include('../../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }) %>
+</div>
+<!-- // wrap -->
+<% include ../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    new Tw.MytBenefitPointTransfer($('#fe-myt-benefit-point-transfer'));
+  });
+</script>
+<% include ../../components/end.component.html %>

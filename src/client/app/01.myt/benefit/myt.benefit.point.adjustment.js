@@ -157,7 +157,7 @@ Tw.MytBenefitPointAdjustment.prototype = {
   },
 
   _changeLine: function (line, $target) {
-    $target.text(line.svcNum);
+    $target.find('.fe-svc-num').text(line.svcNum);
     $target.data('svc-mgmt-num', line.svcMgmtNum);
   },
 
