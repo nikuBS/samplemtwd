@@ -29,15 +29,18 @@
                 <div class="inner-block">
                     <% if( reqQuery.type == 'A') { %>
                     <h2 class="title-h2">나의 추천 혜택</h2>
+                    <div class="exp-top">
+                        <span class="tx-exp">oksusu &amp; 안심팩 요금제 사용으로<br /><span class="tx-bold">전용 데이터, 안심옵션</span> 및<br /><span class="tx-bold">포인트 혜택</span> 제공</span>
+                    </div>
                     <% } %>
 
                     <% if( reqQuery.type == 'B') { %>
                     <h2 class="title-h2">혜택 받는 법</h2>
+                    <div class="exp-top">
+                        <span class="tx-exp">oksusu &amp; 안심팩 요금제 사용으로<br><span class="tx-bold">전용 데이터, 안심옵션</span> 및<br><span class="tx-bold">포인트 혜택</span> 제공</span>
+                    </div>
                     <% } %>
 
-                    <div class="exp-top">
-                        <span class="tx-exp">oksusu &amp; 안심팩 요금제 사용으로<br /><span class="tx-bold">전용 데이터, 안심옵션</span> 및<br /><span class="tx-bold">포인트 혜택</span> 제공</span>
-                    </div>
                     <div class="contents-btn">
                         <ul class="bt-slice">
                             <li class="bt-blue1">
@@ -88,7 +91,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.MytBenefitRecommendDetail( $('#fe-wrap'), {
+    new Tw.MytBenefitRecommendDetailOkasp( $('#fe-wrap'), {
       reqQuery: <%-JSON.stringify(reqQuery) %>,
       svcInfo: <%-JSON.stringify(svcInfo) %>
     });
