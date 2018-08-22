@@ -76,14 +76,11 @@ class MytJoinProductServiceController extends TwViewController {
       });
     }
 
-    // @todo change data.result.feePlanProd.unit
-    const unitMockData = '';
-
     return Object.assign(data.result, {
       feePlanProd: Object.assign(data.result.feePlanProd, {
         scrbDt: DateHelper.getShortDateWithFormat(data.result.feePlanProd.scrbDt, 'YYYY.MM.DD'),
-        basFeeTxt: (!FormatHelper.isEmpty(unitMockData)) ? FormatHelper.addComma(data.result.feePlanProd.basFeeTxt) + UNIT[unitMockData]
-            : data.result.feePlanProd.basFeeTxt
+        basFeeTxt: isNaN(parseInt(data.result.feePlanProd.basFeeTxt, 10)) ? data.result.feePlanProd.basFeeTxt
+            : FormatHelper.addComma(data.result.feePlanProd.basFeeTxt) + UNIT['110']
       }),
       tClassProd: {
         tClassProdList: data.result.tClassProd ? Object.assign(data.result.tClassProd, {

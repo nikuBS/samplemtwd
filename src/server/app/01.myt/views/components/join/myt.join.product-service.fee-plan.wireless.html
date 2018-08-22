@@ -20,13 +20,13 @@
         </div>
         <div class="in-ico-list">
             <ul>
-                <% if (feePlan.feePlanProd.basDataTxt) { %>
+                <% if (feePlan.feePlanProd.basDataTxt && feePlan.feePlanProd.basDataTxt !== '-') { %>
                 <li class="ico-type1 ff-hn"><%= feePlan.feePlanProd.basDataTxt %></li>
                 <% } %>
-                <% if (feePlan.feePlanProd.basOfrVcallTmsTxt) { %>
+                <% if (feePlan.feePlanProd.basOfrVcallTmsTxt && feePlan.feePlanProd.basOfrVcallTmsTxt !== '-') { %>
                 <li class="ico-type2"><%= feePlan.feePlanProd.basOfrVcallTmsTxt %></li>
                 <% } %>
-                <% if (feePlan.feePlanProd.basOfrLtrAmtTxt) { %>
+                <% if (feePlan.feePlanProd.basOfrLtrAmtTxt && feePlan.feePlanProd.basOfrLtrAmtTxt !== '-') { %>
                 <li class="ico-type3"><%= feePlan.feePlanProd.basOfrLtrAmtTxt %></li>
                 <% } %>
             </ul>
