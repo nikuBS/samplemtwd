@@ -24,6 +24,10 @@ interface ICombination {
   wireIndex: number;
   bProducts: { [key: string]: IBProduct };
   representationId: string;
+  isRepresentation: boolean;
+  // 착한가족
+  benefitData?: string;
+  remainData?: string;
 }
 
 interface IMember {
@@ -43,6 +47,8 @@ interface IMember {
   // T+B인터넷
   companyCode?: string;
   isDiscounting?: boolean;
+  // 착한가족
+  benefitData?: number;
 }
 
 interface IBProduct {
@@ -101,7 +107,10 @@ export default class MytJoinProductServiceCombinationController extends TwViewCo
         .concat(combination.combinationWireMemberList.map(this.getProperMemberData)),
       wireIndex: combination.combinationWirelessMemberList.length,
       bProducts: this.getBProducts(combination.combinationWireMemberList),
-      representationId: group.svcMgmtNum
+      representationId: group.svcMgmtNum,
+      isRepresentation: combination.grpRelYn === 'Y',
+      benefitData: group.grpOfrPt,
+      remainData: group.grpRemainPt,
     }
   }
 
@@ -109,7 +118,7 @@ export default class MytJoinProductServiceCombinationController extends TwViewCo
     return {
       name: member.custNm,
       relation: member.relClNm,
-      isRepresentation: member.relClCd === "00",
+      isRepresentation: member.relClCd === '00',
       svcNumber: ValidationHelper.isCellPhone(member.svcNum) ? StringHelper.phoneStringToDash(member.svcNum) : member.svcNum,
       period: member.useYySum,
       months: member.useYearCnt,
@@ -120,7 +129,8 @@ export default class MytJoinProductServiceCombinationController extends TwViewCo
       discountAmount: member.basFeeDcTx ? FormatHelper.convNumFormat(member.aftBasFeeAmtTx) : undefined,
       discountRate: member.tcFeeBenf,
       companyCode: member.coClCd || 'T',
-      isDiscounting: member.famlUseYn ? member.famlUseYn === 'Y' : undefined
+      isDiscounting: member.famlUseYn ? member.famlUseYn === 'Y' : undefined,
+      benefitData: member.membOfrPt
     }
   }
 

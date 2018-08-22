@@ -53,21 +53,27 @@
         <ul>
             <li>
                 <span class="title">혜택 받으신 데이터</span>
-                <span class="tx-cont"><span class="ff-hn">1,000 MB</span></span>
+                <span class="tx-cont"><span class="ff-hn"><%= combination.benefitData %> MB</span></span>
             </li>
             <li>
                 <span class="title">나눠쓰기 남은 데이터</span>
-                <span class="tx-cont"><span class="ff-hn tx-red"><span class="tx-bold vbl">500</span> MB</span></span>
+                <span class="tx-cont"><span class="ff-hn tx-red"><span class="tx-bold vbl"><%= combination.remainData %></span> MB</span></span>
             </li>
         </ul>
     </div>
+    <% if (combination.isRepresentation) { %>
     <div class="contents-btn">
         <ul class="bt-slice">
             <li class="bt-white1">
-                <button>데이터 나눠쓰기</button>
+                <button>데이터 나눠쓰기</button><!-- TODO: 나눠쓰기 step -->
             </li>
         </ul>
     </div>
+    <% } else { %>
+    <div class="contents-notice line-top mt20">
+        <span class="noti-ico">데이터가 필요하시면 가족대표에게 요청해보세요</span>
+    </div>
+    <% } %>
 </div>
 
 <hr class="cont-sp type1" aria-hidden="true" />
@@ -75,32 +81,18 @@
 <div class="cont-box nogaps">
     <div class="family-list">
         <ul>
+            <% for (let i = 0; i < combination.members.length; i++) { %>
+            <% const member = combination.members[i]; %>
+            <% const isMine = combination.representationId === member.managementId %>
             <li>
                 <div class="name">
-                    <span>최*영</span>
-                    <span class="badge badge-fam-members"><span class="blind">가족대표</span></span>
-                    <span class="badge badge-me"><span class="blind">나</span></span>
+                    <span><%= member.name %> <%= member.isRepresentation ? '' : '(' + member.relation + ')' %></span>
+                    <% if (member.isRepresentation) { %><span class="badge badge-fam-members"><span class="blind">가족대표</span></span><% } %>
+                    <% if (isMine) { %><span class="badge badge-me"><span class="blind">나</span></span><% } %>
                 </div>
-                <div class="num">010-12**-56**</div>
+                <div class="num"><%= member.svcNumber %></div>
             </li>
-            <li>
-                <div class="name">
-                    <span>최*석 (자녀)</span>
-                </div>
-                <div class="num">010-12**-56**</div>
-            </li>
-            <li>
-                <div class="name">
-                    <span>박*민 (배우자)</span>
-                </div>
-                <div class="num">010-12**-56**</div>
-            </li>
-            <li>
-                <div class="name">
-                    <span>최*진 (형제자매)</span>
-                </div>
-                <div class="num">010-12**-56**</div>
-            </li>
+            <% } %>
         </ul>
     </div>
 </div>
