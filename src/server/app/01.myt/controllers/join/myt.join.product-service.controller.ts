@@ -80,7 +80,7 @@ class MytJoinProductServiceController extends TwViewController {
       feePlanProd: Object.assign(data.result.feePlanProd, {
         scrbDt: DateHelper.getShortDateWithFormat(data.result.feePlanProd.scrbDt, 'YYYY.MM.DD'),
         basFeeTxt: isNaN(parseInt(data.result.feePlanProd.basFeeTxt, 10)) ? data.result.feePlanProd.basFeeTxt
-            : FormatHelper.addComma(data.result.feePlanProd.basFeeTxt) + UNIT['110']
+          : FormatHelper.addComma(data.result.feePlanProd.basFeeTxt) + UNIT['110']
       }),
       tClassProd: {
         tClassProdList: data.result.tClassProd ? Object.assign(data.result.tClassProd, {
@@ -327,6 +327,61 @@ class MytJoinProductServiceController extends TwViewController {
   }
 
   private convertAddtions = () => {
+    // const additions_s = {
+    //   'code': '00',
+    //   'msg': '',
+    //   'result': {
+    //     'reserveds': [
+    //       {
+    //         'prodId': 'NI00000266',
+    //         'prodNm': 'T_PC원스톱',
+    //         'payFreeYn': 'N',
+    //         'basFeeAmt': 3300,
+    //         'prodLinkYn': 'Y',
+    //         'scrbDt': '20171107'
+    //       }
+    //     ],
+    //     'pays': [
+    //       {
+    //         'prodId': 'NI00000266',
+    //         'prodNm': 'T_PC원스톱',
+    //         'payFreeYn': 'N',
+    //         'basFeeAmt': 3300,
+    //         'prodLinkYn': 'Y',
+    //         'scrbDt': '20171107'
+    //       }
+    //     ],
+    //     'frees': [
+    //       {
+    //         'prodId': 'NI00000266',
+    //         'prodNm': 'T_PC원스톱',
+    //         'payFreeYn': 'N',
+    //         'basFeeAmt': 3300,
+    //         'prodLinkYn': 'Y',
+    //         'scrbDt': '20171107'
+    //       }
+    //     ],
+    //
+    //     'joinables': [
+    //       {
+    //         'prodId': 'NI00000258',
+    //         'prodNm': 'T_가디언SW',
+    //         'payFreeYn': 'N',
+    //         'basFeeAmt': 0,
+    //         'prodLinkYn': 'Y'
+    //       },
+    //       {
+    //         'prodId': 'NI00000259',
+    //         'prodNm': 'T_파워IP',
+    //         'payFreeYn': 'N',
+    //         'basFeeAmt': 38500,
+    //         'prodLinkYn': 'Y'
+    //       }
+    //     ]
+    //
+    //   }
+    // };
+
     const additions = {
       'code': '00',
       'msg': '',
@@ -419,10 +474,10 @@ class MytJoinProductServiceController extends TwViewController {
     const result = additions.result;
 
     Object.keys(result).forEach(key => {
-      result['paidCount'] = 0;
-      result['freeCount'] = 0;
-
       result[key] = result[key].map((product) => {
+        result['paidCount'] = 0;
+        result['freeCount'] = 0;
+
         if ( product.payFreeYn === 'Y' ) {
           result['freeCount'] = result['freeCount'] + 1;
         } else {
@@ -431,8 +486,11 @@ class MytJoinProductServiceController extends TwViewController {
 
         return Object.assign(product, {
           scrbDt: DateHelper.getShortDateNoDot(product.scrbDt),
-          basFeeTxt: isNaN(parseInt(product.basFeeTxt, 10)) ? product.basFeeTxt : FormatHelper.addComma(product.basFeeTxt),
-          isBasFeeNumber : isNaN(parseInt(product.basFeeTxt, 10))
+          basFeeTxt: product.basFeeTxt ? isNaN(parseInt(product.basFeeTxt.toString(), 10)) ?
+            product.basFeeTxt.toString() : FormatHelper.addComma(product.basFeeTxt.toString()) : '',
+          basFeeAmt: product.basFeeAmt ? isNaN(parseInt(product.basFeeAmt.toString(), 10)) ?
+            product.basFeeAmt.toString() : FormatHelper.addComma(product.basFeeAmt.toString()) : '',
+          isBasFeeNumber: isNaN(parseInt(product.basFeeTxt, 10))
         });
       });
     });
