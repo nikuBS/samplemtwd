@@ -15,12 +15,23 @@ Tw.CertificationEmail = function () {
   this.$textValid = null;
   this.$errorConfirm = null;
   this.$errorCert = null;
+  this.$blockEmail = null;
+  this.$btCheckEmail = null;
 
   this._authURl = null;
 };
 
 
 Tw.CertificationEmail.prototype = {
+  ERROR_EMAIL_CERT: {
+    ATH8000: 'ATH8000',
+    ATH8001: 'ATH8001',
+    ATH8002: 'ATH8002',
+    ATH8003: 'ATH8003',
+    ATH8004: 'ATH8004',
+    ATH8005: 'ATH8005'
+  },
+
   open: function () {
     this._popupService.open({
       hbs: 'CO_02_01_L01',
@@ -35,37 +46,44 @@ Tw.CertificationEmail.prototype = {
     this.$textValid = $popupContainer.find('#aria-sms-exp-desc2');
     this.$errorCert = $popupContainer.find('#aria-sms-exp-desc1');
     this.$errorConfirm = $popupContainer.find('#aria-sms-exp-desc3');
+    this.$blockEmail = $popupContainer.find('#fe-block-check-email');
+    this.$btCheckEmail = $popupContainer.find('#fe-bt-check-email');
 
     this.$btCert.on('click', $.proxy(this._requestEmailCert, this));
     this.$btConfirm.on('click', $.proxy(this._requestEmailConfirm, this));
     this.$inputEmail.on('input', $.proxy(this._onInputEmail, this));
     this.$inputCert.on('input', $.proxy(this._onInputCert, this));
+    this.$btCheckEmail.on('click', $.proxy(this._checkEmail, this));
 
   },
   _onCloseEmailPopup: function () {
 
   },
   _onInputEmail: function () {
-    this.showValidText();
     var emailLength = this.$inputEmail.val().length;
     if ( emailLength > 0 ) {
       this.$btCert.parent().removeClass('disabled');
-      this.$btCert.attr('disabled', true);
+      this.$btCert.attr('disabled', false);
     } else {
       this.$btCert.parent().addClass('disabled');
-      this.$btCert.attr('disabled', false);
+      this.$btCert.attr('disabled', true);
     }
   },
   _requestEmailCert: function () {
     this._apiService.request(Tw.API_CMD.BFF_01_0017, {
-      certCode: '',
-      emailAddress: ''
+      certCode: 'TWD_SECOND_AUTH',
+      emailAddress: this.$inputEmail.val()
     }, $.proxy(this._successSendEmailCert, this));
 
   },
   _successSendEmailCert: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-
+      this.showValidText();
+      this.showEmailBlock(new Date());
+    } else if ( resp.code = this.ERROR_EMAIL_CERT.ATH8001 ) {
+      this.showCertError(Tw.MSG_AUTH.CERT_05);
+    } else {
+      this._popupService.openAlert(resp.code + ' ' + resp.msg);
     }
   },
   _onInputCert: function () {
@@ -79,15 +97,21 @@ Tw.CertificationEmail.prototype = {
   _requestEmailConfirm: function () {
     this._apiService.reqiest(Tw.API_CMD.BFF_01_0018, {
       certCode: '',
-      emailAddress: '',
-      authNum: '',
+      emailAddress: this.$inputEmail.val(),
+      authNum: this.$inputCert.val(),
       authUrl: this._authUrl,
-      authTerm: ''
+      authTerm: 1000
     }, $.proxy(this._successEmailConfirm, this));
   },
   _successEmailConfirm: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
 
+    } else if ( resp.code === this.ERROR_EMAIL_CERT.ATH8004 ) {
+      this.showConfirmError(Tw.MSG_AUTH.CERT_03);
+    } else if ( resp.code === this.ERROR_EMAIL_CERT.ATH8005 ) {
+      this.showConfirmError(Tw.MSG_AUTH.CERT_04);
+    } else {
+      this._popupService.openAlert(resp.code + ' ' + resp.msg);
     }
   },
   showValidText: function () {
@@ -110,6 +134,13 @@ Tw.CertificationEmail.prototype = {
     this.$errorConfirm.removeClass('none');
     this.$inputCert.parents('.inputbox').addClass('error');
     this.$inputCert.attr('aria-describedby', 'aria-sms-exp-desc3');
+  },
+  showEmailBlock: function (time) {
+    this.$blockEmail.removeClass('none');
+    this.$blockEmail.find('.out-time').html(Tw.DateHelper.getShortDateAndTime(time));
+  },
+  _checkEmail: function () {
+
   }
 
 };
