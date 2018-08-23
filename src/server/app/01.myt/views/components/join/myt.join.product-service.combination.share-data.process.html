@@ -2,7 +2,8 @@
 <div id="header" class="header-wrap">
     <div class="header step-page">
         <div class="header-ti">
-            <h1>T가족결합 데이터 나눠쓰기</h1>
+            <h1>
+                <%= combination.plan + isGoodFamily? ' 데이터' : '' %> 나눠쓰기</h1>
         </div>
         <button class="close-step">
             <span class="blind">닫기</span>
@@ -13,14 +14,14 @@
 <!-- #contents -->
 <div id="contents" class="container-wrap">
     <h2 class="blind">내용</h2>
-    <div class="container">
+    <div class="container" id='fe-share-container' data-plan-id="<%= combination.planId %>" data-plan-code="<%= combination.planCode %>" data-representation-id="<%= combination.representationId %>" data-line-count="<%= combination.count %>">
         <div class="cont-box nogaps-top">
             <div class="info-detail type2">
                 <ul>
                     <li>
                         <span class="title">나눠쓰기 가능 데이터</span>
                         <span class="tx-cont">
-                            <span class="ff-hn tx-bold">1,000</span>
+                            <span class="ff-hn tx-bold fe-remain-data"><%= combination.remainData %></span>
                             <span class="ff-hn">MB</span>
                         </span>
                     </li>
@@ -33,82 +34,54 @@
                     <div class="widget data-sharing">
                         <div class="widget-box radio">
                             <ul class="select-list" role="radiogroup">
-                                <li class="radiobox type01 checked" role="radio" aria-checked="true">
-                                    <div class="fam-check">
-                                        <input type="radio" name="radio1" value="" title="휴대폰 010-12**-45**" checked="checked">
-                                    </div>
-                                    <div class="fam-box">
-                                        <div class="member-sort">
-                                            <span class="vm">최*영</span>
-                                            <span class="badge badge-fam-members ml8"></span>
+                                <% for (let i = 0; i < combination.members.length; i++) { %>
+                                    <% const member = combination.members[i]; %>
+                                    <li class="radiobox type01" role="radio">
+                                        <div class="fam-check">
+                                            <input type="radio" name="radio1" value="" title="휴대폰 <%= member.svcNumber %>" data-management-id="<%= member.managementId %>" data-member-name="<%= member.name %>">
                                         </div>
-                                        <div class="data-box">
-                                            <span class="data-line-info">
-                                                <span class="ff-hn">010-12**-45**</span>
-                                            </span>
-                                            <span class="data-line-info">
-                                                <span class="ff-hn tx-bold">500</span>
-                                                <span class="ff-hn">MB</span>
-                                                <span class="vb"> 받음</span>
-                                            </span>
+                                        <div class="fam-box">
+                                            <div class="member-sort">
+                                                <span class="vm"><%= member.name %> <%= member.isRepresentation ? '' : '(' + member.relation + ')' %></span>
+                                                <% if (member.isRepresentation) { %><span class="badge badge-fam-members ml8"></span><% } %>
+                                            </div>
+                                            <div class="data-box">
+                                                <span class="data-line-info">
+                                                    <span class="ff-hn"><%= member.svcNumber %></span>
+                                                </span>
+                                                <% if (member.benefitData > 0) { %>
+                                                <span class="data-line-info">
+                                                    <span class="ff-hn tx-bold"><%= member.benefitData %></span>
+                                                    <span class="ff-hn">MB</span>
+                                                    <span class="vb"> 받음</span>
+                                                </span>
+                                                <% } else { %>
+                                                    <span class="data-line-info">받은 적 없음</span>
+                                                <% } %>
+                                            </div>
                                         </div>
-                                    </div>
-                                </li>
-                                <li class="radiobox type01" role="radio" aria-checked="false">
-                                    <div class="fam-check">
-                                        <input type="radio" name="radio1" value="" title="휴대폰 010-12**-45**">
-                                    </div>
-                                    <div class="fam-box">
-                                        <div class="member-sort">
-                                            <span class="vm">최*석(자녀)</span>
-                                        </div>
-                                        <div class="data-box">
-                                            <span class="data-line-info">
-                                                <span class="ff-hn">010-12**-45**</span>
-                                            </span>
-                                            <span class="data-line-info">
-                                                <span class="ff-hn tx-bold">100</span>
-                                                <span class="ff-hn">MB</span>
-                                                <span class="vb"> 받음</span>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="radiobox type01" role="radio" aria-checked="false">
-                                    <div class="fam-check">
-                                        <input type="radio" name="radio1" value="" title="휴대폰 010-12**-45**">
-                                    </div>
-                                    <div class="fam-box">
-                                        <div class="member-sort">
-                                            <span class="vm"> 박*민(배우자)</span>
-                                        </div>
-                                        <div class="data-box">
-                                            <span class="data-line-info">
-                                                <span class="ff-hn">010-12**-45**</span>
-                                            </span>
-                                            <span class="data-line-info">받은 적 없음</span>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="radiobox type01" role="radio" aria-checked="false">
-                                    <div class="fam-check">
-                                        <input type="radio" name="radio1" value="" title="휴대폰 010-12**-45**">
-                                    </div>
-                                    <div class="fam-box">
-                                        <div class="member-sort">
-                                            <span class="vm"> 최*민(형제자매)</span>
-                                        </div>
-                                        <div class="data-box">
-                                            <span class="data-line-info">
-                                                <span class="ff-hn">010-12**-45**</span>
-                                            </span>
-                                            <span class="data-line-info">받은 적 없음</span>
-                                        </div>
-                                    </div>
-                                </li>
+                                    </li>
+                                <% } %>
                             </ul>
                         </div>
                     </div>
+                </div>
+            </div>
+            
+            <div id="fe-amount-area" class="none">
+                <div class="account-wrap">
+                    <h3 class="account-tit">나눠쓰기 할 데이터량</h3>
+                    <button class="ff-hn bt-dropdown big" title="데이터 용량" aria-haspopup="true">100MB<span class="ico"></span></button>
+                </div>
+                <div class="contents-btn">
+                    <ul class="bt-slice item-two">
+                        <li class="bt-white2">
+                            <button>취소하기</button>
+                        </li>
+                        <li class="bt-red1">
+                            <button>데이터 보내기</button>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -130,30 +103,50 @@
                             </div>
                             <div class="acco-style">
                                 <ul class="acco-list">
-                                    <li class="acco-box">
-                                        <!-- .on: 열기 -->
-                                        <div class="acco-tit">
-                                            <button role="button" aria-pressed="true">1. T가족결합 데이터 나눠쓰기</button>
-                                        </div>
-                                        <div class="acco-cont">
-                                            <ul class="list-dot">
-                                                <li class="list">데이터는 대표회선에서만 나눠쓰기가 가능합니다.</li>
-                                                <li class="list">T가족결합은 결합회선에 따라 제공되는 데이터량이 달라집니다.
-                                                    <br />(이동전화 2회선~3회선: 500MB 제공 / 4회선~5회선: 1000MB 제공)</li>
-                                                <li class="list">대표 회선에 총 데이터량이 모두 지급됩니다. 단, 해당 데이터는 나눠쓰기 후(본인포함) 이용할 수 있습니다.</li>
-                                                <li class="list">데이터는 100MB 단위로 나누어 가족들에게(본인포함) 나눠쓰기 가능하며, 나눠쓰기 횟수는 제한 없습니다.</li>
-                                                <li class="list">가족끼리 배분한 후 월말까지 미사용한 데이터 또는 배분하지 않은 데이터는 소멸되며, 익월초 신규 데이터가 제공 됩니다. (이월 불가)
-                                                </li>
-                                                <li class="list">대표회선이 가족에게 배분한 데이터는 선물(나눠쓰기) 불가합니다.</li>
-                                                <li class="list">나눠쓰기 한 데이터는 리필한 데이터와 선물받은 데이터를 모두 소진 후 데이터 소진되며, 나눠쓰기 한 데이터 소진 후 기본제공량이 소진됩니다.
-                                                </li>
-                                                <li class="list">나눠쓰기 받는 회선은 데이터 기본제공량이 있는 회선만 가능합니다. 단, 가족등록은 기본제공량이 없는 회선(표준요금제 등)도 가능합니다.
-                                                </li>
-                                                <li class="list">기본제공량이 없는 회선도 대표회선 가능하나, 이 경우 자신에게 나눠쓰기 불가 합니다.</li>
-                                                <li class="list">배분한 데이터는 함께쓰기, 선물하기, 테더링, m-VoIP 이용 불가 합니다.</li>
-                                            </ul>
-                                        </div>
-                                    </li>
+                                    <% if (isGoodFamily) { %>
+                                        <li class="acco-box">
+                                            <!-- .on: 열기 -->
+                                            <div class="acco-tit">
+                                                <button role="button" aria-pressed="true">1. T가족결합 데이터 나눠쓰기</button>
+                                            </div>
+                                            <div class="acco-cont">
+                                                <ul class="list-dot">
+                                                    <li class="list">데이터는 대표회선에서만 나눠쓰기가 가능합니다.</li>
+                                                    <li class="list">T가족결합은 결합회선에 따라 제공되는 데이터량이 달라집니다.
+                                                        <br />(이동전화 2회선~3회선: 500MB 제공 / 4회선~5회선: 1000MB 제공)</li>
+                                                    <li class="list">대표 회선에 총 데이터량이 모두 지급됩니다. 단, 해당 데이터는 나눠쓰기 후(본인포함) 이용할 수 있습니다.</li>
+                                                    <li class="list">데이터는 100MB 단위로 나누어 가족들에게(본인포함) 나눠쓰기 가능하며, 나눠쓰기 횟수는 제한 없습니다.</li>
+                                                    <li class="list">가족끼리 배분한 후 월말까지 미사용한 데이터 또는 배분하지 않은 데이터는 소멸되며, 익월초 신규 데이터가 제공 됩니다. (이월 불가)
+                                                    </li>
+                                                    <li class="list">대표회선이 가족에게 배분한 데이터는 선물(나눠쓰기) 불가합니다.</li>
+                                                    <li class="list">나눠쓰기 한 데이터는 리필한 데이터와 선물받은 데이터를 모두 소진 후 데이터 소진되며, 나눠쓰기 한 데이터 소진 후 기본제공량이 소진됩니다.
+                                                    </li>
+                                                    <li class="list">나눠쓰기 받는 회선은 데이터 기본제공량이 있는 회선만 가능합니다. 단, 가족등록은 기본제공량이 없는 회선(표준요금제 등)도 가능합니다.
+                                                    </li>
+                                                    <li class="list">기본제공량이 없는 회선도 대표회선 가능하나, 이 경우 자신에게 나눠쓰기 불가 합니다.</li>
+                                                    <li class="list">배분한 데이터는 함께쓰기, 선물하기, 테더링, m-VoIP 이용 불가 합니다.</li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                    <% } else { %>
+                                        <li class="acco-box">
+                                            <!-- .on: 열기 -->
+                                            <div class="acco-tit"><button role="button" aria-pressed="true">1. 데이터 나눠쓰기 유의사항</button></div>
+                                            <div class="acco-cont">
+                                                <ul class="list-dot">
+                                                    <li class="list">가족나눔데이터는 결합회선에 따라 제공되는 데이터량이 달라집니다. (이동전화 2회선~3회선: 500MB제공 / 4회선~5회선: 1000MB 제공)</li>
+                                                    <li class="list">대표 회선에 총 데이터량이 모두 지급됩니다. 단, 해당 데이터는 나눠쓰기 후(본인포함) 이용할 수 있습니다.</li>
+                                                    <li class="list">데이터는 100MB 단위로 나누어 가족들에게(본인포함) 나눠쓰기 가능하며, 나눠쓰기 횟수는 제한 없습니다.</li>
+                                                    <li class="list">가족끼리 배분한 후 월말까지 미사용한 데이터 또는 배분하지 않은 데이터는 소멸되며, 익월초 신규 데이터가 제공 됩니다. (이월 불가)</li>
+                                                    <li class="list">대표회선이 가족에게 배분한 데이터는 선물(나눠쓰기) 불가합니다.</li>
+                                                    <li class="list">나눠쓰기 한 데이터는 리필한 데이터와 선물받은 데이터를 모두 소진 후 데이터 소진되며, 나눠쓰기 한 데이터 소진 후 기본제공량이 소진됩니다.</li>
+                                                    <li class="list">나눠쓰기 받는 회선은 데이터 기본제공량이 있는 회선만 가능합니다. 단, 가족등록은 기본제공량이 없는 회선(표준요금제 등)도 가능합니다.</li>
+                                                    <li class="list">기본제공량이 없는 회선도 대표회선 가능하나, 이 경우 자신에게 나눠쓰기 불가 합니다.</li>
+                                                    <li class="list">배분한 데이터는 함께쓰기, 선물하기, 테더링, m-VoIP 이용 불가 합니다.</li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                    <% } %>
                                 </ul>
                             </div>
                         </div>

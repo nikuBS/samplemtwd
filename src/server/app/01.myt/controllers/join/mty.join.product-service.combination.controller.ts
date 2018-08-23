@@ -29,6 +29,7 @@ interface ICombination {
   benefitData?: string;
   remainData?: string;
   planCode?: string;
+  planId?: string;
 }
 
 interface IMember {
@@ -98,7 +99,7 @@ export default class MytJoinProductServiceCombinationController extends TwViewCo
   private getProperCombinationData = (combination: any): ICombination => {
     const group = combination.combinationGroup;
     return {
-      plan: group.combProdNm,
+      plan: group.combProdNm || group.svcProdGrpNm,
       joinDate: DateHelper.getShortDateNoDot(group.combStaDt),
       totalPeriod: group.totUseYy,
       totalDiscount: FormatHelper.convNumFormat(group.totBasFeeDcTx),
@@ -112,7 +113,8 @@ export default class MytJoinProductServiceCombinationController extends TwViewCo
       isRepresentation: combination.grpRelYn === 'Y',
       benefitData: group.grpOfrPt,
       remainData: group.grpRemainPt,
-      planCode: group.svcProdGrpCd
+      planCode: group.svcProdGrpCd,
+      planId: group.svcProdGrpId
     };
   }
 
