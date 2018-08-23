@@ -176,9 +176,7 @@ class MyTBenefitRecommendController extends TwViewController {
           resDataInfo: thisMain._apiDataObj,
           recommendKind: thisMain._recommendKind,
           recommendInfo: thisMain._recommendInfo,
-          svcFun: thisMain.getClassBgColor,
-          errBol: false,
-          errObj: null
+          svcFun: thisMain.getClassBgColor
         });
 
         /*
@@ -190,9 +188,7 @@ class MyTBenefitRecommendController extends TwViewController {
         //   resDataInfo: thisMain._apiDataObj,
         //   recommendKind: thisMain._recommendKind,
         //   recommendInfo: thisMain._recommendInfo,
-        //   svcFun: thisMain.getClassBgColor,
-        //   errBol: false,
-        //   errObj: null
+        //   svcFun: thisMain.getClassBgColor
         // });
 
       }, function (err) {
