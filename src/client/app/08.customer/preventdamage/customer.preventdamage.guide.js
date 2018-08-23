@@ -97,7 +97,7 @@ Tw.CustomerPreventdamageGuide.prototype = {
 
   _openOutlink: function(href) {
     this._popupService.close();
-    window.open(href);
+    Tw.CommonHelper.openUrl(href);
   }
 
 };

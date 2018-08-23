@@ -30,15 +30,7 @@ Tw.CustomerPreventdamageRelatesite.prototype = {
 
   _open: function(href) {
     this._popupService.close();
-
-    if (Tw.BrowserHelper.isApp()) {
-      return this._nativeService.send(Tw.NTV_CMD.OPEN_URL, {
-        type: Tw.NTV_BROWSER.EXTERNAL,
-        href: href
-      });
-    }
-
-    window.open(href);
+    Tw.CommonHelper.openUrl(href);
   }
 
 };
