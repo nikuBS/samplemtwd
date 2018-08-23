@@ -51,6 +51,9 @@ interface IMember {
   isDiscounting?: boolean;
   // 착한가족
   benefitData?: number;
+  // TB끼리 온가족 프리
+  selectedBenefit?: string;
+  freeLineNumber?: string;
 }
 
 interface IBProduct {
@@ -80,8 +83,6 @@ export default class MytJoinProductServiceCombinationController extends TwViewCo
         } else {
           res.render('error.server-error.html', {
             title: '사용중인 상품',
-            code: resp.code,
-            msg: resp.msg,
             svcInfo
           });
         }
@@ -134,7 +135,9 @@ export default class MytJoinProductServiceCombinationController extends TwViewCo
       discountRate: member.tcFeeBenf,
       companyCode: member.coClCd || 'T',
       isDiscounting: member.famlUseYn ? member.famlUseYn === 'Y' : undefined,
-      benefitData: member.membOfrPt
+      benefitData: member.membOfrPt,
+      selectedBenefit: member.dataBenf,
+      freeLineNumber: member.asgnNum
     };
   }
 

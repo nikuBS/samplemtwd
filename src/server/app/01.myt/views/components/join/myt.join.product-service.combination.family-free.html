@@ -53,77 +53,40 @@
                     <div class="customer-slider2">
                         <div class="slider-box">
                             <ul class="slider">
-                                <li>
-                                    <div class="component">
-                                        <div class="component-box flcardcta">
-                                            <div class="flcard-cont">
-                                                <div class="flcard-area">
-                                                    <div class="store-card">
-                                                        <p class="card-ti">휴대폰 월정액<br/><em class="tx-bold">3,300원 할인</em></p>
+                                <% const benefitLength = combination.wireIndex > 3 ? 5 : combination.wireIndex + 2 %>
+                                <% for (let i = 0; i < benefitLength; i++) { %>
+                                    <li>
+                                        <div class="component">
+                                            <div class="component-box flcardcta">
+                                                <div class="flcard-cont">
+                                                    <div class="flcard-area">
+                                                        <div class="store-card">
+                                                            <% switch (i) {
+                                                                case 0: %>
+                                                                    <p class="card-ti">휴대폰 월정액<br/><em class="tx-bold">3,300원 할인</em></p>
+                                                                <% break;
+                                                                case 1: %>
+                                                                    <p class="card-sti">둘중 무료 제공</p>
+                                                                    <p class="card-ti"><em class="tx-bold">LTE안심옵션</em> 또는<br/>데이터 <em class="tx-bold">500MB</em></p>
+                                                                <% break;
+                                                                case 2: %>
+                                                                    <p class="card-ti">초고속 인터넷 요금<br/><em class="tx-bold"><%= combination.count + 2%>천원</em> 할인</p>
+                                                                <% break;
+                                                                case 3: %>
+                                                                    <p class="card-ti">가족간<br/><em class="tx-bold">음성/문자 무료</em></p>
+                                                                <% break;
+                                                                case 4: %>
+                                                                    <p class="card-ti">친구랑(망내 지정 1회선)<br/><em class="tx-bold">음성/문자 무료</em></p>
+                                                                <% break; %>
+                                                            <% } %>
+                                                        </div>
                                                     </div>
+                                                    <span class="ico-ill-benefit"></span>
                                                 </div>
-                                                <span class="ico-ill-benefit"></span>
                                             </div>
                                         </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="component">
-                                        <div class="component-box flcardcta">
-                                            <div class="flcard-cont">
-                                                <div class="flcard-area">
-                                                    <div class="store-card">
-                                                        <p class="card-sti">둘중 무료 제공</p>
-                                                        <p class="card-ti"><em class="tx-bold">LTE안심옵션</em> 또는<br/>데이터 <em class="tx-bold">500MB</em></p>
-                                                    </div>
-                                                </div>
-                                                <span class="ico-ill-benefit"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="component">
-                                        <div class="component-box flcardcta">
-                                            <div class="flcard-cont">
-                                                <div class="flcard-area">
-                                                    <div class="store-card">
-                                                        <p class="card-ti">초고속 인터넷 요금<br/><em class="tx-bold">6천원</em> 할인</p>
-                                                    </div>
-                                                </div>
-                                                <span class="ico-ill-benefit"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="component">
-                                        <div class="component-box flcardcta">
-                                            <div class="flcard-cont">
-                                                <div class="flcard-area">
-                                                    <div class="store-card">
-                                                        <p class="card-ti">가족간<br/><em class="tx-bold">음성/문자 무료</em></p>
-                                                    </div>
-                                                </div>
-                                                <span class="ico-ill-benefit"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="component">
-                                        <div class="component-box flcardcta">
-                                            <div class="flcard-cont">
-                                                <div class="flcard-area">
-                                                    <div class="store-card">
-                                                        <p class="card-ti">친구랑(망내 지정 1회선)<br/><em class="tx-bold">음성/문자 무료</em></p>
-                                                    </div>
-                                                </div>
-                                                <span class="ico-ill-benefit"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
+                                    </li>
+                                <% } %>
                             </ul>
                         </div>
                     </div>
@@ -140,139 +103,63 @@
                 <div class="widget-box accordion2">
                     <div class="acco-style user-list"><!-- 스타일별 클래스 추가 -->
                         <ul class="acco-box">
-                            <li class="acco-list"><!-- on , off -->
-                                <div class="acco-title">
-                                    <button role="button" aria-pressed="">
-                                        <span class="info-line">최*영 
-                                            <span class="badge badge-fam-members"><span class="blind">가족대표</span></span>
-                                            <span class="badge badge-me"><span class="blind">나</span></span>
-                                        </span>
-                                        <span class="info-line ff-hn">010-12**-56**</span>
-                                        <span class="right-item">LTE안심옵션<br />무료</span>
-                                    </button>
-                                </div>
-                                <div class="acco-content">
-                                    <div class="detail-list">
-                                        <ul>
-                                            <li>
-                                                <span class="title">관계</span>
-                                                <span class="tx-cont multi">본인(내번호)<br /><button class="bt-link-tx underline">해지</button></span>
-                                            </li>
-                                            <li>
-                                                <span class="title">B인터넷 가입여부</span>
-                                                <span class="tx-cont">인터넷</span>
-                                            </li>
-                                            <li>
-                                                <span class="title">혜택1</span>
-                                                <span class="tx-cont multi">데이터 옵션<br /><button class="bt-link-tx underline">변경</button></span>
-                                            </li>
-                                            <li>
-                                                <span class="title">혜택2</span>
-                                                <span class="tx-cont multi"><span class="ff-hn vbl">010-1245-6789</span> <br /><button class="bt-link-tx underline">변경</button></span>
-                                            </li>
-                                        </ul>
+                            <% for (let i = 0; i < combination.count; i++) { %>
+                                <% const member = combination.members[i]; %>
+                                <% const isMine = combination.representationId === member.managementId %>
+                                <li class="acco-list"><!-- on , off -->
+                                    <div class="acco-title">
+                                        <button role="button" aria-pressed="">
+                                            <span class="info-line"><%= member.name %> <%= member.isRepresentation || !member.relation ? '' : '(' + member.relation + ')' %>
+                                                <% if (member.isRepresentation) { %><span class="badge badge-fam-members"><span class="blind">가족대표</span></span><% } %>
+                                                <% if (isMine) { %><span class="badge badge-me"><span class="blind">나</span></span><% } %>
+                                            </span>
+                                            <span class="info-line ff-hn"><%= member.svcNumber %></span>
+                                            <span class="right-item">
+                                                <% if (member.selectedBenefit) { %>
+                                                    <%= member.selectedBenefit === '2053-DAT1G'? '데이터500M' : 'LTE안심옵션' %><br />무료
+                                                <% } %>
+                                            </span>
+                                        </button>
                                     </div>
-                                </div>
-                            </li>
-
-                            <li class="acco-list">
-                                <div class="acco-title">
-                                    <button role="button" aria-pressed="">
-                                        <span class="info-line">최*석 (자녀)</span>
-                                        <span class="info-line ff-hn">010-12**-56**</span>
-
-                                        <span class="right-item">데이터500M<br />무료</span>
-                                    </button>
-                                </div>
-                                <div class="acco-content">
-                                    <div class="detail-list">
-                                        <ul>
-                                            <li>
-                                                <span class="title">관계</span>
-                                                <span class="tx-cont multi">자녀<br /><button class="bt-link-tx underline">해지</button></span>
-                                            </li>
-                                            <li>
-                                                <span class="title">B인터넷 가입여부</span>
-                                                <span class="tx-cont">인터넷</span>
-                                            </li>
-                                            <li>
-                                                <span class="title">혜택1</span>
-                                                <span class="tx-cont multi">데이터 옵션<br /><button class="bt-link-tx underline">변경</button></span>
-                                            </li>
-                                            <li>
-                                                <span class="title">혜택2</span>
-                                                <span class="tx-cont multi"><span class="ff-hn vbl">010-1245-6789</span> <br /><button class="bt-link-tx underline">변경</button></span>
-                                            </li>
-                                        </ul>
+                                    <div class="acco-content">
+                                        <div class="detail-list">
+                                            <% const bProduct = combination.bProducts[member.managementId]; %>
+                                            <ul>
+                                                <li>
+                                                    <span class="title">관계</span>
+                                                    <span class="tx-cont multi">
+                                                        <%= member.relation? member.relation : '-' %><%= isMine? '(내번호)': ''%><br />
+                                                        <% if (isMine || combination.isRepresentation) { %>
+                                                            <button class="bt-link-tx underline">해지</button>
+                                                        <% } %>
+                                                    </span>
+                                                </li>
+                                                <li>
+                                                    <span class="title">B인터넷 가입여부</span>
+                                                    <span class="tx-cont"><%= bProduct? bProduct.wireProduct : '-' %></span>
+                                                </li>
+                                                <li>
+                                                    <span class="title">혜택1</span>
+                                                    <span class="tx-cont multi"><%= member.selectedBenefit ? '데이터 옵션' : '-' %><br />
+                                                        <% if (member.selectedBenefit && isMine || combination.isRepresentation) { %>
+                                                            <button class="bt-link-tx underline fe-benefit1">변경</button>
+                                                        <% } %>
+                                                    </span>
+                                                </li>
+                                                <li>
+                                                    <span class="title">혜택2</span>
+                                                    <span class="tx-cont multi">
+                                                        <span class="ff-hn vbl"><%= member.freeLineNumber? member.freeLineNumber : '-' %></span> <br />
+                                                        <% if (member.freeLineNumber && isMine || combination.isRepresentation) { %>
+                                                            <button class="bt-link-tx underline fe-benefit2">변경</button>
+                                                        <% } %>
+                                                    </span>
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </div>
-                                </div>
-                            </li>
-
-                            <li class="acco-list">
-                                <div class="acco-title">
-                                    <button role="button" aria-pressed="">
-                                        <span class="info-line">박*민 (배우자)</span>
-                                        <span class="info-line ff-hn">010-12**-56**</span>
-
-                                        <span class="right-item">LTE안심옵션<br />무료</span>
-                                    </button>
-                                </div>
-                                <div class="acco-content">
-                                    <div class="detail-list">
-                                        <ul>
-                                            <li>
-                                                <span class="title">관계</span>
-                                                <span class="tx-cont multi">배우자<br /><button class="bt-link-tx underline">해지</button></span>
-                                            </li>
-                                            <li>
-                                                <span class="title">B인터넷 가입여부</span>
-                                                <span class="tx-cont">인터넷</span>
-                                            </li>
-                                            <li>
-                                                <span class="title">혜택1</span>
-                                                <span class="tx-cont multi">데이터 옵션<br /><button class="bt-link-tx underline">변경</button></span>
-                                            </li>
-                                            <li>
-                                                <span class="title">혜택2</span>
-                                                <span class="tx-cont multi"><span class="ff-hn vbl">010-1245-6789</span> <br /><button class="bt-link-tx underline">변경</button></span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </li>
-
-                            <li class="acco-list">
-                                <div class="acco-title">
-                                    <button role="button" aria-pressed="">
-                                        <span class="info-line">최*진 (형제자매)</span>
-                                        <span class="info-line ff-hn">010-12**-56**</span>
-
-                                        <span class="right-item">데이터500M<br />무료</span>
-                                    </button>
-                                </div>
-                                <div class="acco-content">
-                                    <div class="detail-list">
-                                        <ul>
-                                            <li>
-                                                <span class="title">관계</span>
-                                                <span class="tx-cont multi">형제자매<br /><button class="bt-link-tx underline">해지</button></span>
-                                            </li>
-                                            <li>
-                                                <span class="title">B인터넷 가입여부</span>
-                                                <span class="tx-cont">인터넷</span>
-                                            </li>
-                                            <li>
-                                                <span class="title">혜택1</span>
-                                                <span class="tx-cont multi">데이터 옵션<br /><button class="bt-link-tx underline">변경</button></span>
-                                            </li>
-                                            <li>
-                                                <span class="title">혜택2</span>
-                                                <span class="tx-cont multi"><span class="ff-hn vbl">010-1245-6789</span> <br /><button class="bt-link-tx underline">변경</button></span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </li>
+                                </li>
+                            <% } %>
                         </ul>
                     </div>
                 </div>
