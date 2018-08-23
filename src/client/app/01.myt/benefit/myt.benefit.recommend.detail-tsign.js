@@ -59,10 +59,13 @@ Tw.MytBenefitRecommendDetailTsign.prototype = {
             this.bffListData = resp.result;
             this._proData();
             this._ctrlInit();
+        } else {
+          Tw.Error(resp.code, resp.msg).pop();
         }
       }, this))
       .fail(function(err) {
-        Tw.Logger.info(err);
+        Tw.Logger.info('[err]', err);
+        Tw.Error(err.code, err.msg).pop();
       });
 
 

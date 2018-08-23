@@ -85,13 +85,13 @@ Tw.MytBenefitRecommendDetailPoint.prototype = {
           this._ctrlInit();
 
         } else {
-          this._popupService.openAlert(resp.msg, resp.code);
+          Tw.Error(resp.code, resp.msg).pop();
         }
 
       }, this))
       .fail(function(err){
         Tw.Logger.info('[err]', err);
-        this._popupService.openAlert(err.msg, err.code);
+        Tw.Error(err.code, err.msg).pop();
       });
   },
   //--------------------------------------------------------------------------[공통]
