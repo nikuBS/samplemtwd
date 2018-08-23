@@ -22,10 +22,12 @@ Tw.CustomerEmailUpload.prototype = {
   },
 
   _cachedElement: function () {
+    this.tpl_file_item = Handlebars.compile($('#tpl_file_item').text());
   },
 
   _bindEvent: function () {
     this.$container.on('click', '.fe-upload-file', $.proxy(this._showUploadPopup, this));
+    this.$container.on('click', '.fe-delete-file', $.proxy(this._removeFile, this));
   },
 
   _showUploadPopup: function (e) {
@@ -57,6 +59,7 @@ Tw.CustomerEmailUpload.prototype = {
       }]
     }, $.proxy(this._openUploadFile, this), $.proxy(this._closeUploadFile, this));
   },
+
   _openUploadFile: function ($popupContainer) {
     $popupContainer.on('click', '.fe-upload-multi-cancel', $.proxy(this._cancelUploadMulti, this));
     $popupContainer.on('click', '.fe-upload-multi-confirm', $.proxy(this._confirmUploadMulti, this));
@@ -66,12 +69,15 @@ Tw.CustomerEmailUpload.prototype = {
     this.$inputFile.on('change', $.proxy(this._onChangeFile, this));
     this.$btUpload.attr('disabled', true);
   },
+
   _closeUploadFile: function () {
 
   },
+
   _cancelUploadMulti: function () {
     this._popupService.close();
   },
+
   _onChangeFile: function ($event) {
     var $currentFile = $event.currentTarget;
     var file = $currentFile.files;
@@ -91,6 +97,7 @@ Tw.CustomerEmailUpload.prototype = {
     // this._popupService.openAlert(Tw.MSG_CUSTOMER.EMAIL_A06);
     return true;
   },
+
   _checkEnableConfirm: function () {
     _.map(this.$inputFile, $.proxy(function (file) {
       if ( file.files.length !== 0 ) {
@@ -98,6 +105,7 @@ Tw.CustomerEmailUpload.prototype = {
       }
     }, this));
   },
+
   _confirmUploadMulti: function () {
     var formData = new FormData();
     _.map(this.$inputFile, $.proxy(function (file) {
@@ -110,11 +118,34 @@ Tw.CustomerEmailUpload.prototype = {
       .done($.proxy(this._successUploadFile, this))
       .fail($.proxy(this._failUploadFile, this));
   },
-  _successUploadFile: function (resp) {
-    console.log('response', resp);
+
+  _successUploadFile: function (response) {
+    var fileList = response.result.map(function (file) {
+      return {
+        originalName: file.originalName,
+        convertData: Tw.FormatHelper.customDataFormat(file.size, Tw.DATA_UNIT.KB, Tw.DATA_UNIT.GB)
+      };
+    })
+
+    $('.file-addlist').html(this.tpl_file_item({ list: fileList }));
     this._popupService.close();
   },
+
   _failUploadFile: function (err) {
     console.log(err);
+  },
+
+  _removeFile: function (e) {
+    $(e.currentTarget).closest('li').remove();
+  },
+
+  _disableUploadButton: function () {
+    var nMaxFileListSize = 5;
+
+    if ( $('.file-addlist').find('li').size() >= nMaxFileListSize ) {
+      $('.fe-upload-file').prop('disabled', true);
+    } else {
+      $('.fe-upload-file').prop('disabled', false);
+    }
   }
 };
