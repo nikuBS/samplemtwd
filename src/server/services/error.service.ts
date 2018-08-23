@@ -1,6 +1,13 @@
 import { Response } from 'express';
 import { API_CODE } from '../types/api-command.type';
 
+interface ErrorOptions {
+  title?: string;
+  code?: any;
+  msg?: any;
+  svcInfo: any;
+}
+
 class ErrorService {
   static instance;
 
@@ -16,7 +23,7 @@ class ErrorService {
    * @param res
    * @param options
    */
-  public render(res: Response, options) {
+  public render(res: Response, options: ErrorOptions): any {
     return res.render('error.server-error.html', {
       title: options.title || 'Error',
       code: options.code || '',
