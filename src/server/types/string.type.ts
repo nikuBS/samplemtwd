@@ -339,10 +339,16 @@ export const MYT_COMBINATION_TYPE = {
 
 export const MYT_COMBINATION_FAMILY = '패밀리';
 
-export enum MYT_BENEFIT_POINT_VIEW {
-  ADJUSTMENT = 'usage/myt.benefit.point.adjustment.html',
-  ERROR = 'error/myt.benefit.point.adjustment.html'
-}
+export const MYT_BENEFIT_RAINBOW_POINT = {
+  TITLE: {
+    ADJUSTMENT: '포인트 합산',
+    TRANSFER: '대리인 간 양도',
+  },
+  REL_NM: {
+    C: '청소년',
+    P: '법정대리인'
+  }
+};
 
 export const CUSTOMER_SERVICEINFO_TYPE = {
   3280: 'A', 3308: 'A', 3306: 'A', 231: 'A', 3319: 'A', 212: 'A', 220: 'A', 217: 'A', 3720: 'A', 3721: 'A', 3723: 'A', 3724: 'A',

@@ -109,6 +109,8 @@ Tw.API_CMD = {
   BFF_05_0096: { path: '/core-product/v1/benefit-suggestions', method: Tw.API_METHOD.GET },
   BFF_05_0120: { path: '/core-bill/v1/military-service-points', method: Tw.API_METHOD.GET },
   BFF_05_0102: { path: '/core-bill/v1/rainbow-point-adjustments', method: Tw.API_METHOD.POST },
+  BFF_05_0104: { path: '/core-bill/v1/rainbow-point-transfers', method: Tw.API_METHOD.POST },
+  BFF_05_0105: { path: '/core-bill/v1/rainbow-point-transfers/args-0', method: Tw.API_METHOD.DELETE },
   BFF_05_0123: { path: '/core-product/v1/services/unavailableness', method: Tw.API_METHOD.GET },
   BFF_05_0100: { path: '/core-bill/v1/rainbow-point-histories', method: Tw.API_METHOD.GET },
   BFF_05_0126: { path: '/core-product/v1/fee-plans/change-notices', method: Tw.API_METHOD.POST },
