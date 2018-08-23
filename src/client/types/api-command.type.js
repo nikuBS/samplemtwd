@@ -289,8 +289,13 @@ Tw.TMAP = {
   APP_KEY: 'ecfeceac-3660-4618-bc3b-37a11f952441'
 };
 
+Tw.IPIN_URL = 'https://cert.vno.co.kr/ipin.cb';
+Tw.NICE_URL = 'https://nice.checkplus.co.kr/CheckPlusSafeModel/checkplus.cb';
+
 Tw.AJAX_CMD = {
-  GET_TMAP_REGION: { path: '/geofencing/regions', method: Tw.API_METHOD.GET, url: Tw.TMAP.REGION_URL }
+  GET_TMAP_REGION: { path: '/geofencing/regions', method: Tw.API_METHOD.GET, url: Tw.TMAP.REGION_URL },
+  OPEN_NICE_AUTH: { path: '', method: Tw.API_METHOD.POST, url: Tw.NICE_URL, contentType: 'application/x-www-form-urlencoded' },
+  OPEN_IPIN_AUTH: { path: '', method: Tw.API_METHOD.POST, url: Tw.IPIN_URL, contentType: 'application/x-www-form-urlencoded' }
 };
 
 Tw.API_CODE = {
