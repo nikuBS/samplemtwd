@@ -4,14 +4,14 @@
  * Date: 2018. 8. 17.
  */
 
-Tw.MytBenefitRainbowPointCommon = function (rootEl) {
+Tw.MyTBenefitRainbowPointCommon = function (rootEl) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService();
 };
 
-Tw.MytBenefitRainbowPointCommon.prototype = {
+Tw.MyTBenefitRainbowPointCommon.prototype = {
   _changeLineToReceive: function () {
   },
   _getPreviewData: function () {
@@ -168,21 +168,21 @@ Tw.MytBenefitRainbowPointCommon.prototype = {
   }
 };
 
-Tw.MytBenefitRainbowPointAdjustment = function () {
-  Tw.MytBenefitRainbowPointCommon.apply(this, arguments);
+Tw.MyTBenefitRainbowPointAdjustment = function () {
+  Tw.MyTBenefitRainbowPointCommon.apply(this, arguments);
   this._cachedElement();
   this._bindEvent();
   this._init();
   this._rendered();
 };
-Tw.MytBenefitRainbowPointAdjustment.prototype = $.extend({}, Tw.MytBenefitRainbowPointCommon.prototype, {
+Tw.MyTBenefitRainbowPointAdjustment.prototype = $.extend({}, Tw.MyTBenefitRainbowPointCommon.prototype, {
   _cachedElement: function () {
-    Tw.MytBenefitRainbowPointCommon.prototype._cachedElement.apply(this, arguments);
+    Tw.MyTBenefitRainbowPointCommon.prototype._cachedElement.apply(this, arguments);
     this._$pointToGive = this.$container.find('.fe-point-to-give');
   },
 
   _bindEvent: function () {
-    Tw.MytBenefitRainbowPointCommon.prototype._bindEvent.apply(this, arguments);
+    Tw.MyTBenefitRainbowPointCommon.prototype._bindEvent.apply(this, arguments);
     this.$container.on('click', '.fe-btn-line-to-give', $.proxy(this._onClickBtnLineToGive, this));
   },
 
@@ -291,5 +291,5 @@ Tw.MytBenefitRainbowPointAdjustment.prototype = $.extend({}, Tw.MytBenefitRainbo
   }
 
 });
-Tw.MytBenefitRainbowPointAdjustment.prototype.constructor = Tw.MytBenefitRainbowPointAdjustment;
+Tw.MyTBenefitRainbowPointAdjustment.prototype.constructor = Tw.MyTBenefitRainbowPointAdjustment;
 

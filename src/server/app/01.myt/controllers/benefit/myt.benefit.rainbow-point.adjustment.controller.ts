@@ -12,7 +12,7 @@ import DateHelper from '../../../../utils/date.helper';
 import FormatHelper from '../../../../utils/format.helper';
 import { Observable } from 'rxjs/Observable';
 
-class MytBenefitRainbowPointCommon {
+class MyTBenefitRainbowPointCommon {
   public static ITEM_LENGTH_PER_PAGE: number = 20;
   public static PAGE_SET_LENGTH: number = 5;
 
@@ -43,7 +43,7 @@ class MytBenefitRainbowPointCommon {
 
 }
 
-class MytBenefitRainbowPointAdjustmentController extends TwViewController {
+class MyTBenefitRainbowPointAdjustmentController extends TwViewController {
   public static VIEW = {
     DEFAULT: 'usage/myt.benefit.rainbow-point.adjustment.html',
     ERROR: 'error/myt.benefit.rainbow-point.adjustment.html'
@@ -70,13 +70,13 @@ class MytBenefitRainbowPointAdjustmentController extends TwViewController {
 
       const lines = this.getLineWithRainbowPoint(rainbowPointServices);
       const historyResult = this.getRainbowPointHistories(rainbowPointAdjustments);
-      const paging = MytBenefitRainbowPointCommon.getPaging('/myt/benefit/rainbow-point/adjustment',
-        MytBenefitRainbowPointCommon.ITEM_LENGTH_PER_PAGE,
-        MytBenefitRainbowPointCommon.PAGE_SET_LENGTH, curPage, historyResult.totRecCnt);
+      const paging = MyTBenefitRainbowPointCommon.getPaging('/myt/benefit/rainbow-point/adjustment',
+        MyTBenefitRainbowPointCommon.ITEM_LENGTH_PER_PAGE,
+        MyTBenefitRainbowPointCommon.PAGE_SET_LENGTH, curPage, historyResult.totRecCnt);
 
       // 단일 회선인 경우 에러 처리
       if ( lines.length < 2 ) {
-        return res.render(MytBenefitRainbowPointAdjustmentController.VIEW.ERROR, {
+        return res.render(MyTBenefitRainbowPointAdjustmentController.VIEW.ERROR, {
           svcInfo
         });
       }
@@ -88,7 +88,7 @@ class MytBenefitRainbowPointAdjustmentController extends TwViewController {
       });
       const lineToReceive = lineToReceives[0];
 
-      res.render(MytBenefitRainbowPointAdjustmentController.VIEW.DEFAULT, {
+      res.render(MyTBenefitRainbowPointAdjustmentController.VIEW.DEFAULT, {
         svcInfo,
         lineToGive,
         lineToReceive,
@@ -145,7 +145,7 @@ class MytBenefitRainbowPointAdjustmentController extends TwViewController {
 
   private reqRainbowPointAdjustments(page: number): Observable<any> {
     return this.apiService.request(API_CMD.BFF_05_0130, {
-      size: MytBenefitRainbowPointCommon.ITEM_LENGTH_PER_PAGE,
+      size: MyTBenefitRainbowPointCommon.ITEM_LENGTH_PER_PAGE,
       page
     });
     // return Observable.create((observer) => {
@@ -206,7 +206,7 @@ class MytBenefitRainbowPointAdjustmentController extends TwViewController {
   }
 
   private getLineWithRainbowPoint(resp: any): any {
-    const lines = MytBenefitRainbowPointCommon.getResult(resp);
+    const lines = MyTBenefitRainbowPointCommon.getResult(resp);
     lines.map((line) => {
       line.showPoint = FormatHelper.addComma(line.point);
     });
@@ -214,7 +214,7 @@ class MytBenefitRainbowPointAdjustmentController extends TwViewController {
   }
 
   private getRainbowPointHistories(resp: any): any {
-    const result = MytBenefitRainbowPointCommon.getResult(resp);
+    const result = MyTBenefitRainbowPointCommon.getResult(resp);
     const histories = result.history;
     histories.map((history) => {
       history.showPoint = FormatHelper.addComma(history.point);
@@ -226,6 +226,6 @@ class MytBenefitRainbowPointAdjustmentController extends TwViewController {
 }
 
 export {
-  MytBenefitRainbowPointAdjustmentController,
-  MytBenefitRainbowPointCommon
+  MyTBenefitRainbowPointAdjustmentController,
+  MyTBenefitRainbowPointCommon
 };

@@ -11,10 +11,10 @@ import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import DateHelper from '../../../../utils/date.helper';
 import FormatHelper from '../../../../utils/format.helper';
 import { Observable } from 'rxjs/Observable';
-import { MytBenefitRainbowPointCommon } from './myt.benefit.rainbow-point.adjustment.controller';
+import { MyTBenefitRainbowPointCommon } from './myt.benefit.rainbow-point.adjustment.controller';
 import { RAINBOW_POINT_REL_CD } from '../../../../types/bff.type';
 
-class MytBenefitRainbowPointTransferController extends TwViewController {
+class MyTBenefitRainbowPointTransferController extends TwViewController {
   public static VIEW = {
     DEFAULT: 'usage/myt.benefit.rainbow-point.transfer.html',
     ERROR: 'error/myt.benefit.rainbow-point.transfer.html'
@@ -41,13 +41,13 @@ class MytBenefitRainbowPointTransferController extends TwViewController {
 
       const lines = this.getLineWithRainbowPoint(rainbowPointFamilies);
       const historyResult = this.getRainbowPointHistories(rainbowPointTransfers);
-      const paging = MytBenefitRainbowPointCommon.getPaging('/myt/benefit/rainbow-point/transfer',
-        MytBenefitRainbowPointCommon.ITEM_LENGTH_PER_PAGE,
-        MytBenefitRainbowPointCommon.PAGE_SET_LENGTH, curPage, historyResult.totRecCnt);
+      const paging = MyTBenefitRainbowPointCommon.getPaging('/myt/benefit/rainbow-point/transfer',
+        MyTBenefitRainbowPointCommon.ITEM_LENGTH_PER_PAGE,
+        MyTBenefitRainbowPointCommon.PAGE_SET_LENGTH, curPage, historyResult.totRecCnt);
 
       // 법정대리인 정보가 없는 경우 에러 처리
       if ( FormatHelper.isEmpty(lines) ) {
-        return res.render(MytBenefitRainbowPointTransferController.VIEW.ERROR, {
+        return res.render(MyTBenefitRainbowPointTransferController.VIEW.ERROR, {
           svcInfo
         });
       }
@@ -55,7 +55,7 @@ class MytBenefitRainbowPointTransferController extends TwViewController {
       const linesToReceive = this.getLinesToReceive(svcInfo.svcMgmtNum, lines);
       const lineToReceive = linesToReceive[0];
 
-      res.render(MytBenefitRainbowPointTransferController.VIEW.DEFAULT, {
+      res.render(MyTBenefitRainbowPointTransferController.VIEW.DEFAULT, {
         svcInfo,
         lineToGive,
         lineToReceive,
@@ -80,13 +80,13 @@ class MytBenefitRainbowPointTransferController extends TwViewController {
 
   private reqRainbowPointTransfers(page: number): Observable<any> {
     return this.apiService.request(API_CMD.BFF_05_0131, {
-      size: MytBenefitRainbowPointCommon.ITEM_LENGTH_PER_PAGE,
+      size: MyTBenefitRainbowPointCommon.ITEM_LENGTH_PER_PAGE,
       page
     });
   }
 
   private getLineWithRainbowPoint(resp: any): any {
-    const lines = MytBenefitRainbowPointCommon.getResult(resp);
+    const lines = MyTBenefitRainbowPointCommon.getResult(resp);
     lines.map((line) => {
       line.showPoint = FormatHelper.addComma(line.point);
       line.showRelNm = line.relCd === RAINBOW_POINT_REL_CD.P ? MYT_BENEFIT_RAINBOW_POINT.REL_NM.P : '';
@@ -95,7 +95,7 @@ class MytBenefitRainbowPointTransferController extends TwViewController {
   }
 
   private getRainbowPointHistories(resp: any): any {
-    const result = MytBenefitRainbowPointCommon.getResult(resp);
+    const result = MyTBenefitRainbowPointCommon.getResult(resp);
     const histories = result.history;
     histories.map((history) => {
       history.showPoint = FormatHelper.addComma(history.point);
@@ -125,4 +125,4 @@ class MytBenefitRainbowPointTransferController extends TwViewController {
 
 }
 
-export default MytBenefitRainbowPointTransferController;
+export default MyTBenefitRainbowPointTransferController;

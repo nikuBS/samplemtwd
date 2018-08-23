@@ -59,8 +59,8 @@ import MyTBenefitRainbowPointHistory from './controllers/benefit/myt.benefit.rai
 
 import MytJoinProductServiceCombinationController from './controllers/join/mty.join.product-service.combination.controller';
 
-import { MytBenefitRainbowPointAdjustmentController } from './controllers/benefit/myt.benefit.rainbow-point.adjustment.controller';
-import MytBenefitRainbowPointTransferController from './controllers/benefit/myt.benefit.rainbow-point.transfer.controller';
+import { MyTBenefitRainbowPointAdjustmentController } from './controllers/benefit/myt.benefit.rainbow-point.adjustment.controller';
+import MyTBenefitRainbowPointTransferController from './controllers/benefit/myt.benefit.rainbow-point.transfer.controller';
 import MyTJoinPayClaim from './controllers/join/myt.join.pay-claim.controller';
 import MyTJoinContractTerminal from './controllers/join/myt.join.contract-terminal.controller';
 import MyTJoinContractTerminalDetail from './controllers/join/myt.join.contract-terminal.detail.controller';
@@ -143,8 +143,8 @@ class MytRouter extends TwRouter {
 
     this.controllers.push({ url: '/benefit/membership', controller: new MyTBenefitMembershipController() });
     this.controllers.push({ url: '/benefit/membership/detail', controller: new MyTBenefitMembershipDetailController() });
-    this.controllers.push({ url: '/benefit/rainbow-point/adjustment', controller: new MytBenefitRainbowPointAdjustmentController() });
-    this.controllers.push({ url: '/benefit/rainbow-point/transfer', controller: new MytBenefitRainbowPointTransferController() });
+    this.controllers.push({ url: '/benefit/rainbow-point/adjustment', controller: new MyTBenefitRainbowPointAdjustmentController() });
+    this.controllers.push({ url: '/benefit/rainbow-point/transfer', controller: new MyTBenefitRainbowPointTransferController() });
   }
 }
 

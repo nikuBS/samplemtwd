@@ -4,16 +4,16 @@
  * Date: 2018. 8. 17.
  */
 
-Tw.MytBenefitRainbowPointTransfer = function () {
-  Tw.MytBenefitRainbowPointCommon.apply(this, arguments);
+Tw.MyTBenefitRainbowPointTransfer = function () {
+  Tw.MyTBenefitRainbowPointCommon.apply(this, arguments);
   this._cachedElement();
   this._bindEvent();
   this._init();
   this._rendered();
 };
-Tw.MytBenefitRainbowPointTransfer.prototype = $.extend({}, Tw.MytBenefitRainbowPointCommon.prototype, {
+Tw.MyTBenefitRainbowPointTransfer.prototype = $.extend({}, Tw.MyTBenefitRainbowPointCommon.prototype, {
   _bindEvent: function () {
-    Tw.MytBenefitRainbowPointCommon.prototype._bindEvent.apply(this, arguments);
+    Tw.MyTBenefitRainbowPointCommon.prototype._bindEvent.apply(this, arguments);
     this.$container.on('click', '.bt-cancel', $.proxy(this._onClickBtnCancel, this));
   },
 
@@ -108,4 +108,4 @@ Tw.MytBenefitRainbowPointTransfer.prototype = $.extend({}, Tw.MytBenefitRainbowP
   }
 
 });
-Tw.MytBenefitRainbowPointTransfer.prototype.constructor = Tw.MytBenefitRainbowPointTransfer;
+Tw.MyTBenefitRainbowPointTransfer.prototype.constructor = Tw.MyTBenefitRainbowPointTransfer;
