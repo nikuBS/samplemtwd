@@ -56,7 +56,10 @@ Tw.MyTJoinProductServiceCombination.prototype = {
   _handleSelectMember: function (e) {
     var $target = $(e.currentTarget);
     var $input = $target.find('input');
-    this._targetMember = $input.data('management-id');
+    this._beneficiary = {
+      id: $input.data('management-id'),
+      name: $input.data('member-name')
+    }
 
     this.$amountArea.removeClass('none');
   },
@@ -71,6 +74,8 @@ Tw.MyTJoinProductServiceCombination.prototype = {
     if (resp.code === Tw.API_CODE.CODE_00) {
       this._remainAmount = this._remainAmount - this._shareAmount;
       this.$container.find('.fe-remain-data').text(this._remainAmount);
+      this.$container.find('.fe-beneficiary-name').text(this._beneficiary.name);
+      this.$container.find('.fe-benefit-data').text(this._shareAmount);
       this._history.goHash('complete');
     } else {
       Tw.Error(resp.code, resp.msg).pop();
@@ -79,12 +84,12 @@ Tw.MyTJoinProductServiceCombination.prototype = {
 
   _getRequestData: function () {
     return {
-      ofrrSvcMgmtNum: this._representationId.toString(),
-      ofrrSvcProdGrpCd: this._planCode.toString(),
+      ofrrSvcMgmtNum: this._representationId,
+      ofrrSvcProdGrpCd: this._planCode,
       ofrrSvcProdGrpId: this._planId,
-      befrSvcMgmtNum: this._targetMember.toString(),
-      reqQty: this._shareAmount.toString(),
-      remainPt: (this._remainAmount - this._shareAmount).toString()
+      befrSvcMgmtNum: this._beneficiary.id,
+      reqQty: this._shareAmount,
+      remainPt: (this._remainAmount - this._shareAmount)
     }
   },
 

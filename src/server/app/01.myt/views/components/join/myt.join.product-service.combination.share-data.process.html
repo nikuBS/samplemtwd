@@ -38,11 +38,11 @@
                                     <% const member = combination.members[i]; %>
                                     <li class="radiobox type01" role="radio">
                                         <div class="fam-check">
-                                            <input type="radio" name="radio1" value="" title="휴대폰 <%= member.svcNumber %>" data-management-id="<%= member.managementId %>">
+                                            <input type="radio" name="radio1" value="" title="휴대폰 <%= member.svcNumber %>" data-management-id="<%= member.managementId %>" data-member-name="<%= member.name %>">
                                         </div>
                                         <div class="fam-box">
                                             <div class="member-sort">
-                                                <span class="vm"><%= member.name %>  <%= member.isRepresentation ? '' : '(' + member.relation + ')' %></span>
+                                                <span class="vm"><%= member.name %> <%= member.isRepresentation ? '' : '(' + member.relation + ')' %></span>
                                                 <% if (member.isRepresentation) { %><span class="badge badge-fam-members ml8"></span><% } %>
                                             </div>
                                             <div class="data-box">
