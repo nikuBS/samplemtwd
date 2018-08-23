@@ -65,10 +65,13 @@ Tw.RechargeRefillGift.prototype = {
   },
 
   _onContact: function (resp) {
-    var params = resp;
-    var phoneNumber = params.phoneNumber.replace(/-/gi, '');
-    this._$inputPhone.val(phoneNumber);
-    this._setDisableStatus();
+    if(resp.resultCode === Tw.NTV_CODE.CODE_00) {
+      var params = resp.params;
+      var phoneNumber = params.phoneNumber.replace(/-/gi, '');
+      this._$inputPhone.val(phoneNumber);
+      this._setDisableStatus();
+    }
+
   },
 
   _sendSuccess: function (resp) {

@@ -60,9 +60,11 @@ Tw.RechargeTingProcess.prototype = {
   },
 
   _onContact: function (resp) {
-    var params = resp;
-    var phoneNumber = params.phoneNumber.replace(/-/gi, '');
-    this.$container.find('.inp_phone').val(phoneNumber);
+    if(resp.resultCode === Tw.NTV_CMD.CODE_00) {
+      var params = resp.params;
+      var phoneNumber = params.phoneNumber.replace(/-/gi, '');
+      this.$container.find('.inp_phone').val(phoneNumber);
+    }
   },
 
   _setProvider: function (response) {

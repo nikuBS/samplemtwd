@@ -49,8 +49,11 @@ Tw.Init.prototype = {
 
   _setDeviceInfo: function (resp) {
     Tw.Logger.info('[Device Info]', resp);
-    this._apiService.request(Tw.NODE_CMD.SET_DEVICE, resp)
-      .done($.proxy(this._successSetDivice, this));
+    if(resp.resultCode === Tw.NTV_CODE.CODE_00) {
+
+      this._apiService.request(Tw.NODE_CMD.SET_DEVICE, resp.params)
+        .done($.proxy(this._successSetDivice, this));
+    }
   },
   _successSetDivice: function (resp) {
     console.log(resp);

@@ -75,11 +75,7 @@ Tw.NativeService.prototype = {
       var fn = _.find(this._callbackList, function (data) {
         return data.randomCode === resp.randomCode;
       }).callback;
-      if (resp.resultCode === 0) {
-        fn(resp.params);
-      } else {
-        fn(resp);
-      }
+      fn(resp);
     }
   },
 
@@ -88,8 +84,8 @@ Tw.NativeService.prototype = {
   },
 
   _onEasyLogin: function (resp) {
-    if(resp.resultCode === Tw.NTV_CODE.CODE_00) {
-      if(Tw.BrowserHelper.isAndroid()) {
+    if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
+      if ( Tw.BrowserHelper.isAndroid() ) {
         window.location.href = '/auth/login/easy-aos?mdn=' + resp.params.mdn;
       } else {
         window.location.href = '/auth/login/easy-ios';
