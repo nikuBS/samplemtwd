@@ -17,22 +17,28 @@ Tw.CustomerPreventdamageRelatesite.prototype = {
 
   _bindEvent: function() {
     if (Tw.BrowserHelper.isApp()) {
-      this.$container.on('click', '.fe-outlink', $.proxy(this._openOutlink, this));
+      this.$container.on('click', '.fe-outlink', $.proxy(this._confirm, this));
     }
   },
 
-  _openOutlink: function(e) {
-    this._popupService.openAlert('3G/LTE망 사용시 데이터 요금이 발생됩니다.', null, $.proxy(function() {
-      this._popupService.close();
-
-      Tw.BrowserHelper.isApp() ? this._nativeService.send(Tw.NTV_CMD.OPEN_URL, {
-        type: Tw.NTV_BROWSER.EXTERNAL,
-        href: $(e.currentTarget).attr('href')
-      }) : window.open($(e.currentTarget).attr('href'));
-    }, this));
+  _confirm: function(e) {
+    this._popupService.openAlert(Tw.MSG_COMMON.DATA_CONFIRM, null, $.proxy(this._open, this, $(e.currentTarget).attr('href')));
 
     e.preventDefault();
     e.stopPropagation();
+  },
+
+  _open: function(href) {
+    this._popupService.close();
+
+    if (Tw.BrowserHelper.isApp()) {
+      return this._nativeService.send(Tw.NTV_CMD.OPEN_URL, {
+        type: Tw.NTV_BROWSER.EXTERNAL,
+        href: href
+      });
+    }
+
+    window.open(href);
   }
 
 };

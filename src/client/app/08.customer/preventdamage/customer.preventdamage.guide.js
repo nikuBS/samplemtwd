@@ -27,7 +27,7 @@ Tw.CustomerPreventdamageGuide.prototype = {
     this.$btnListMore.on('click', $.proxy(this._showListMore, this));
 
     if (Tw.BrowserHelper.isApp()) {
-      this.$container.on('click', '.fe-outlink', $.proxy(this._openOutlink, this));
+      this.$container.on('click', '.fe-outlink', $.proxy(this._openOutlinkConfirm, this));
     }
   },
 
@@ -53,14 +53,15 @@ Tw.CustomerPreventdamageGuide.prototype = {
         style_class: 'bt-red1 fe-btn-apply-category',
         txt: Tw.BUTTON_LABEL.CONFIRM
       }]
-    }, $.proxy(this._categoryPopupBindEvent, this),
-      $.proxy(function() {
-        if (this.$container.data('category') === this._category) {
-          return;
-        }
+    }, $.proxy(this._categoryPopupBindEvent, this), $.proxy(this._goCategory, this));
+  },
 
-        this._history.goLoad('/customer/prevent-damage/guide?category=' + this._category);
-      }, this));
+  _goCategory: function() {
+    if (this.$container.data('category') === this._category) {
+      return;
+    }
+
+    this._history.goLoad('/customer/prevent-damage/guide?category=' + this._category);
   },
 
   _categoryPopupBindEvent: function($layer) {
@@ -87,14 +88,16 @@ Tw.CustomerPreventdamageGuide.prototype = {
     }
   },
 
-  _openOutlink: function(e) {
-    this._popupService.openAlert('3G/LTE망 사용시 데이터 요금이 발생됩니다.', null, $.proxy(function() {
-      this._popupService.close();
-      window.open($(e.currentTarget).attr('href'));
-    }, this));
+  _openOutlinkConfirm: function(e) {
+    this._popupService.openAlert(Tw.MSG_COMMON.DATA_CONFIRM, null, $.proxy(this._openOutlink, this, $(e.currentTarget).attr('href')));
 
     e.preventDefault();
     e.stopPropagation();
+  },
+
+  _openOutlink: function(href) {
+    this._popupService.close();
+    window.open(href);
   }
 
 };

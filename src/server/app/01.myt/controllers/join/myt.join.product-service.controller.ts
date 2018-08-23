@@ -4,7 +4,7 @@
  * Date: 2018.08.13
  */
 
-import { COMBINATION_PRODUCT_OTHER_TYPE, UNIT } from '../../../../types/bff.type';
+import { COMBINATION_PRODUCT_OTHER_TYPE, UNIT, VOICE_UNIT } from '../../../../types/bff.type';
 import { NextFunction, Request, Response } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -80,10 +80,13 @@ class MytJoinProductServiceController extends TwViewController {
       feePlanProd: Object.assign(data.result.feePlanProd, {
         scrbDt: DateHelper.getShortDateWithFormat(data.result.feePlanProd.scrbDt, 'YYYY.MM.DD'),
         basFeeTxt: isNaN(parseInt(data.result.feePlanProd.basFeeTxt, 10)) ? data.result.feePlanProd.basFeeTxt
-          : FormatHelper.addComma(data.result.feePlanProd.basFeeTxt) + UNIT['110']
+          : FormatHelper.addComma(data.result.feePlanProd.basFeeTxt) + UNIT['110'],
+        basOfrVcallTmsTxt: (data.result.feePlanProd.basOfrVcallTmsTxt !== '0' + VOICE_UNIT.MIN) ? data.result.feePlanProd.basOfrVcallTmsTxt : null,
+        basOfrLtrAmtTxt: (data.result.feePlanProd.basOfrLtrAmtTxt !== '0' + UNIT['310']) ? data.result.feePlanProd.basOfrLtrAmtTxt : null
       }),
       tClassProd: {
-        tClassProdList: data.result.tClassProd ? Object.assign(data.result.tClassProd, {
+        tClassProdList: data.result.tClassProd && data.result.tClassProd.tClassProdList
+            ? Object.assign(data.result.tClassProd.tClassProdList, {
           tClassProdList: data.result.tClassProd.tClassProdList.map((item) => {
             return Object.assign(item, {
               scrbDt: DateHelper.getShortDateWithFormat(item.scrbDt, 'YYYY.MM.DD')
