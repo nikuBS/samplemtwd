@@ -146,6 +146,7 @@ export const URL = {
   '/customer/result': { login: false, id: 'CI_09_04', title: '설문조사 결과' }, // 설문조사 결과
   '/customer/faq': { login: false, id: 'CI_11_01', title: '자주 찾는 질문' }, // 자주 찾는 질문
   '/customer/faq/category': { login: false, id: 'CI_11_02', title: '자주 찾는 질문/Category' }, // 자주 찾는 질문(Category: 요금상품, 가입/변경/해지 ....)
+  '/customer/faq/doitlikethis': { login: false, id: 'CI_11_05', title: '이럴 땐 이렇게 하세요' }, // 이럴 땐 이렇게 하세요 상세
   '/customer/faq/service-info': { login: false, id: 'CI_14_01', title: '서비스 이용안내' }, // 서비스 이용안내
   '/customer/faq/site-info': { login: false, id: 'CI_15_01', title: '사이트 이용안내' }, // 사이트 이용안내
   '/customer/faq/site-info/m-customer-center': { login: false, id: 'CI_15_03', title: 'M 고객센터' }, // M 고객센터

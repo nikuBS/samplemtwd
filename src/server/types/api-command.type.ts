@@ -367,7 +367,7 @@ export const API_CMD = {
   BFF_08_0023: { path: '/core-modification/v1/survey/surveyCustList', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_08_0024: { path: '/core-modification/v1/survey/surveyViewResult', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_08_0025: { path: '/core-modification/v1/survey/surveyMainBanner', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
-  BFF_08_0026: { path: '/core-modification/v1/guide/categories', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_08_0026: { path: '/core-modification/v1/guide/categories', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_08_0028: { path: '/core-modification/v1/notice-tworld-main', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_08_0029: { path: '/core-modification/v1/notice-tworld', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_08_0031: { path: '/core-modification/v1/notice-membership', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
