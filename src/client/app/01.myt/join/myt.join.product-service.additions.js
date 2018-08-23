@@ -17,20 +17,43 @@ Tw.MyTJoinProductServiceAdditions = function (rootEl) {
 
 Tw.MyTJoinProductServiceAdditions.prototype = {
   _init: function () {
-
+    this._apiService.request(Tw.API_CMD.BFF_05_0123, {})
+      .done($.proxy(this._onLoadUnavailableUsimService, this));
   },
 
   _cachedElement: function () {
+    this.$wrap = $('.wrap');
+  },
+
+  _bindEvent: function () {
+    this.$wrap.on('click', '.fe-confirm-unavailable', $.proxy(this._closePopup, this));
     this.$container.on('click', '.fe-unavailable-service', $.proxy(this._showPopupUnavailableService, this));
     this.$container.on('click', '.fe-go-bill-guide', $.proxy(this._goBillGuide, this));
   },
 
-  _bindEvent: function () {
-
+  _showPopupUnavailableService: function () {
+    if ( this.unAvailableServiceList.length === 0 ) {
+      this._popupService.open({
+        hbs: 'MY_01_01_51_L02_case',
+        layer: true
+      });
+    } else {
+      this._popupService.open({
+        hbs: 'MY_01_01_51_L02',
+        layer: true,
+        data: { list: this.unAvailableServiceList }
+      });
+    }
   },
 
-  _showPopupUnavailableService: function () {
+  _onLoadUnavailableUsimService: function (res) {
+    if ( res.result ) {
+      this.unAvailableServiceList = res.result.unavailableServiceList;
+    }
+  },
 
+  _closePopup: function () {
+    this._popupService.close();
   },
 
   _goBillGuide: function () {

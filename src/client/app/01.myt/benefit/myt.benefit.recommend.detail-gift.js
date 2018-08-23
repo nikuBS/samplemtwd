@@ -130,13 +130,14 @@ Tw.MytBenefitRecommendDetailGift.prototype = {
           this._proData();
           this._ctrlInit();
         } else {
-          this._popupService.openAlert(resp.msg, resp.code);
+          Tw.Error(resp.code, resp.msg).pop();
+          //this._popupService.openAlert(resp.msg, resp.code);
         }
 
       }, this))
       .fail(function(err){
         Tw.Logger.info('[err]', err);
-        this._popupService.openAlert(err.msg, err.code);
+        Tw.Error(err.code, err.msg).pop();
       });
   },
   //--------------------------------------------------------------------------[공통]

@@ -138,14 +138,6 @@ Tw.MytBenefitRecommend.prototype = {
     //   svcAgrmtDcCd: 'AA'
     // };
 
-    // $.ajax('http://localhost:3000/mock/contract-terminal.detail.BFF_05_00076.json')
-    //   .done(function(resp){
-    //     Tw.Logger.info(resp);
-    //   })
-    //   .fail(function(err) {
-    //     Tw.Logger.info(err);
-    //   });
-
     this._apiService.request(Tw.API_CMD.BFF_05_0076, param)
       .done($.proxy(function(resp){
 
@@ -157,13 +149,14 @@ Tw.MytBenefitRecommend.prototype = {
           this._ctrlInit();
 
         } else {
-          this._popupService.openAlert(resp.msg, resp.code);
+          Tw.Error(resp.code, resp.msg).pop();
+          // this._popupService.openAlert(resp.msg, resp.code);
         }
 
       }, this))
       .fail(function(err){
         Tw.Logger.info('[err]', err);
-        this._popupService.openAlert(err.msg, err.code);
+        Tw.Error(err.code, err.msg).pop();
       });
   },
 

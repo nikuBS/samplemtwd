@@ -72,10 +72,13 @@ Tw.MytBenefitRecommendDetailPlan.prototype = {
           this.bffListData = resp.result;
           this._proData();
           this._ctrlInit();
+        } else {
+          Tw.Error(resp.code, resp.msg).pop();
         }
       }, this))
       .fail(function(err) {
-        Tw.Logger.info(err);
+        Tw.Logger.info('[err]', err);
+        Tw.Error(err.code, err.msg).pop();
       });
 
     // this._apiService.request(Tw.API_CMD.BFF_06_0001)

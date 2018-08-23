@@ -16,6 +16,7 @@ Tw.ApiService.prototype = {
     Tw.Logger.info('[API REQ ajax]', command, data);
 
     return $.ajax({
+      headers: this._makeHeaders(command),
       method: command.method,
       url: command.url + command.path,
       data: command.method === Tw.API_METHOD.GET ? data : JSON.stringify(data)
