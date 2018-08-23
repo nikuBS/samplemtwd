@@ -27,7 +27,7 @@ class AuthTidLogout extends TwViewController {
       if ( key.code === API_CODE.CODE_00 ) {
         const params = {
           client_id: key.result.clientId,
-          redirect_uri: EnvHelper.getEnvironment('TID_REDIRECT') +
+          redirect_uri: EnvHelper.getEnvironment('DOMAIN') +
             '/auth/logout/route?target=' + target,
           client_type: TID.CLIENT_TYPE,
         };

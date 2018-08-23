@@ -18,7 +18,7 @@ Tw.CertificationEmail = function () {
   this.$blockEmail = null;
   this.$btCheckEmail = null;
 
-  this._authURl = null;
+  this._authURl = '/myt';
 };
 
 
@@ -97,7 +97,7 @@ Tw.CertificationEmail.prototype = {
   _requestEmailConfirm: function () {
     this._apiService.request(Tw.API_CMD.BFF_01_0018, {
       certCode: Tw.EMAIL_CERT_CODE.SECOND_AUTH,
-      emailAddress: this.$inputEmail.val(),
+      email: this.$inputEmail.val(),
       authNum: this.$inputCert.val(),
       authUrl: this._authUrl,
       authTerm: 1000

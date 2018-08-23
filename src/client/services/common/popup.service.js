@@ -140,9 +140,9 @@ Tw.PopupService.prototype = {
 
   },
   close: function () {
-    // Tw.Logger.log('[Popup] Call Close', location.hash);
+    Tw.Logger.log('[Popup] Call Close', location.hash);
     if ( /popup/.test(location.hash) ) {
-      // Tw.Logger.log('[Popup] history back');
+      Tw.Logger.log('[Popup] history back');
       history.back();
     }
   }

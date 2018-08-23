@@ -31,6 +31,8 @@ import AuthTidRoute from './controllers/tid/auth.tid.route';
 import AuthLoginEasyAos from './controllers/login/auth.login.easy-aos.controller';
 import AuthLoginEasyIos from './controllers/login/auth.login.easy-ios.controller';
 import AuthLoginEasyFail from './controllers/login/auth.login.easy-fail.controller';
+import AuthCertNice from './controllers/cert/auth.cert.nice.controller';
+import AuthCertIpin from './controllers/cert/auth.cert.ipin.controller';
 
 class AuthRouter extends TwRouter {
   constructor() {
@@ -75,6 +77,9 @@ class AuthRouter extends TwRouter {
     this.controllers.push({ url: '/withdrawal/guide', controller: new AuthWithdrawalGuide() });
     this.controllers.push({ url: '/withdrawal/survey', controller: new AuthWithdrawalSurvey() });
     this.controllers.push({ url: '/withdrawal/complete', controller: new AuthWithdrawalComplete() });
+    // cert
+    this.controllers.push({ url: '/cert/nice', controller: new AuthCertNice() });
+    this.controllers.push({ url: '/cert/ipin', controller: new AuthCertIpin() });
   }
 }
 
