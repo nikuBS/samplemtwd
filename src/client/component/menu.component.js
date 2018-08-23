@@ -61,8 +61,10 @@ Tw.MenuComponent.prototype = {
     this._goLoad(Tw.NTV_CMD.LOGOUT, '/auth/tid/logout', $.proxy(this._onNativeLogout, this));
   },
   _onNativeLogin: function (resp) {
-    this._apiService.request(Tw.NODE_CMD.LOGIN_TID, resp)
-      .done($.proxy(this._successLogin, this));
+    if(resp.resultCode === Tw.NTV_CODE.CODE_00) {
+      this._apiService.request(Tw.NODE_CMD.LOGIN_TID, resp.params)
+        .done($.proxy(this._successLogin, this));
+    }
   },
   _successLogin: function (resp) {
     Tw.Logger.info('[Login Resp]', resp);
