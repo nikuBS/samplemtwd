@@ -11,6 +11,7 @@ import CustomerPreventdamageLatestwarningviewController from './controllers/prev
 import CustomerShopDetailController from './controllers/shop/customer.shop.detail.controller';
 import CustomerShopNearController from './controllers/shop/customer.shop.near.controller';
 import CustomerShopRepairController from './controllers/shop/customer.shop.repair.controller';
+import CustomerShopRepairDetailController from './controllers/shop/customer.shop.repair-detail.controller';
 import CustomerShopRepairManufacturerController from './controllers/shop/customer.shop.repair-manufacturer.controller';
 import CustomerShopSearchController from './controllers/shop/customer.shop.search.controller';
 import CustomerVoiceController from './controllers/voice/customer.voice.controller';
@@ -45,6 +46,7 @@ class CustomerRouter extends TwRouter {
     this.controllers.push({ url: '/shop/detail', controller: new CustomerShopDetailController });
     this.controllers.push({ url: '/shop/near', controller: new CustomerShopNearController });
     this.controllers.push({ url: '/shop/repair', controller: new CustomerShopRepairController });
+    this.controllers.push({ url: '/shop/repair-detail', controller: new CustomerShopRepairDetailController });
     this.controllers.push({ url: '/shop/repair-manufacturer', controller: new CustomerShopRepairManufacturerController });
     this.controllers.push({ url: '/shop/search', controller: new CustomerShopSearchController() });
     this.controllers.push({ url: '/voice/:type', controller: new CustomerVoiceController() });
