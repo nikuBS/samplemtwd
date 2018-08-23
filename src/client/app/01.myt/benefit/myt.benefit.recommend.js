@@ -98,7 +98,7 @@ Tw.MytBenefitRecommend.prototype = {
       this.$addBtnArea.hide();
     }
     if( this.detailListObj.viewData.length <= 0 ) {
-      this.$tgDetailList.html( Tw.MSG_MYT.BENEFIT.RECOMMEND.RECOMMEND_NONE );
+      this.$tgDetailList.text( Tw.MSG_MYT.BENEFIT.RECOMMEND.RECOMMEND_NONE );
     }
 
 
