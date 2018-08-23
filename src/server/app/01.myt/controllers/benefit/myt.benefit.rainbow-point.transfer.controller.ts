@@ -20,34 +20,23 @@ class MytBenefitRainbowPointTransferController extends TwViewController {
     ERROR: 'error/myt.benefit.rainbow-point.transfer.html'
   };
 
-  private LINE_TYPE = {
-    GIVE: 1,
-    RECEIVE: 2
-  };
-
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     const curPage = req.query.curPage || 1;
     Observable.combineLatest(
       this.reqRainbowPointFamilies(),
       this.reqRainbowPointTransfers(curPage)
     ).subscribe(([rainbowPointFamilies, rainbowPointTransfers]) => {
-      if ( rainbowPointFamilies.code !== API_CODE.CODE_00 ) {
-        res.render('error.server-error.html', {
+      const apiError = this.error.apiError([
+        rainbowPointFamilies, rainbowPointFamilies
+      ]);
+
+      if (!FormatHelper.isEmpty(apiError)) {
+        return res.render('error.server-error.html', {
           title: MYT_BENEFIT_RAINBOW_POINT.TITLE.TRANSFER,
-          code: rainbowPointFamilies.code,
-          msg: rainbowPointFamilies.msg,
+          code: apiError.code,
+          msg: apiError.msg,
           svcInfo: svcInfo
         });
-        return;
-      }
-      if ( rainbowPointTransfers.code !== API_CODE.CODE_00 ) {
-        res.render('error.server-error.html', {
-          title: MYT_BENEFIT_RAINBOW_POINT.TITLE.TRANSFER,
-          code: rainbowPointTransfers.code,
-          msg: rainbowPointTransfers.msg,
-          svcInfo: svcInfo
-        });
-        return;
       }
 
       const lines = this.getLineWithRainbowPoint(rainbowPointFamilies);
@@ -58,30 +47,25 @@ class MytBenefitRainbowPointTransferController extends TwViewController {
 
       // 법정대리인 정보가 없는 경우 에러 처리
       if ( FormatHelper.isEmpty(lines) ) {
-        res.render(MytBenefitRainbowPointTransferController.VIEW.ERROR, {
+        return res.render(MytBenefitRainbowPointTransferController.VIEW.ERROR, {
           svcInfo
         });
-        return;
       }
-      const linesToGive = this.getLines(svcInfo.svcMgmtNum, lines, this.LINE_TYPE.GIVE);
-      const linesToReceive = this.getLines(svcInfo.svcMgmtNum, lines, this.LINE_TYPE.RECEIVE);
-      const lineToGive = linesToGive[0];
+      const lineToGive = this.getLineWithSvcMgmtNum(svcInfo.svcMgmtNum, lines);
+      const linesToReceive = this.getLinesToReceive(svcInfo.svcMgmtNum, lines);
       const lineToReceive = linesToReceive[0];
-
-      console.log('~~~~~~~~linesToGive', linesToGive);
-      console.log('~~~~~~~~linesToReceive', linesToReceive);
 
       res.render(MytBenefitRainbowPointTransferController.VIEW.DEFAULT, {
         svcInfo,
         lineToGive,
         lineToReceive,
-        linesToGive: JSON.stringify(linesToGive),
-        linesToReceive: JSON.stringify(linesToReceive),
+        lineToGiveData: JSON.stringify(lineToGive),
+        linesToReceiveData: JSON.stringify(linesToReceive),
         histories: historyResult.history,
         paging
       });
     }, (resp) => {
-      res.render('error.server-error.html', {
+      return res.render('error.server-error.html', {
         title: MYT_BENEFIT_RAINBOW_POINT.TITLE.TRANSFER,
         code: resp.code,
         msg: resp.msg,
@@ -105,6 +89,7 @@ class MytBenefitRainbowPointTransferController extends TwViewController {
     const lines = MytBenefitRainbowPointCommon.getResult(resp);
     lines.map((line) => {
       line.showPoint = FormatHelper.addComma(line.point);
+      line.showRelNm = line.relCd === RAINBOW_POINT_REL_CD.P ? MYT_BENEFIT_RAINBOW_POINT.REL_NM.P : '';
     });
     return lines;
   }
@@ -119,26 +104,22 @@ class MytBenefitRainbowPointTransferController extends TwViewController {
     return result;
   }
 
-  private getLines(svcMgmtNum: string, lines: any, _lineType: number): any {
-    const isChild = this.isChild(svcMgmtNum, lines);
-    let lineType;
-    switch ( _lineType ) {
-      case this.LINE_TYPE.GIVE:
-        lineType = (isChild) ? RAINBOW_POINT_REL_CD.C : RAINBOW_POINT_REL_CD.P;
-        break;
-      case this.LINE_TYPE.RECEIVE:
-        lineType = (isChild) ? RAINBOW_POINT_REL_CD.P : RAINBOW_POINT_REL_CD.C;
-        break;
-    }
-    return lines.filter((line) => {
-      return line.relCd === lineType;
+  private getLineWithSvcMgmtNum(svcMgmtNum: string, lines: any): any {
+    return lines.find((line) => {
+      return line.svcMgmtNum === svcMgmtNum;
     });
   }
 
-  private isChild(svcMgmtNum: string, lines: any): any {
-    const selectedLine = lines.find((line) => {
-      return line.svcMgmtNum === svcMgmtNum;
+  private getLinesToReceive(svcMgmtNum: string, lines: any): any {
+    const isChildLine = this.isChildLine(svcMgmtNum, lines);
+    const receiveLineRelCd = isChildLine ? RAINBOW_POINT_REL_CD.P : RAINBOW_POINT_REL_CD.C;
+    return lines.filter((line) => {
+      return line.relCd === receiveLineRelCd;
     });
+  }
+
+  private isChildLine(svcMgmtNum: string, lines: any): any {
+    const selectedLine = this.getLineWithSvcMgmtNum(svcMgmtNum, lines);
     return selectedLine.relCd === RAINBOW_POINT_REL_CD.C;
   }
 

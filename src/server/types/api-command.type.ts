@@ -154,6 +154,8 @@ export const API_CMD = {
   BFF_05_0101: { path: '/core-bill/v1/rainbow-point-services', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0102: { path: '/core-bill/v1/rainbow-point-adjustments', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_05_0103: { path: '/core-bill/v1/rainbow-point-families', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_05_0104: { path: '/core-bill/v1/rainbow-point-transfers', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0105: { path: '/core-bill/v1/rainbow-point-transfers/args-0', method: API_METHOD.DELETE, server: API_SERVER.BFF, bypass: true },
   BFF_05_0106: { path: '/core-modification/v1/my-discount-benefit/price-agree-info', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0107: { path: '/core-modification/v1/my-discount-benefit/support-agree-info', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0108: { path: '/core-modification/v1/my-discount-benefit/choice-agree-info', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },

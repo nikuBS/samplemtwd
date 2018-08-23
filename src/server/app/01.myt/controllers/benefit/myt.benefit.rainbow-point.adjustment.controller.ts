@@ -48,30 +48,24 @@ class MytBenefitRainbowPointAdjustmentController extends TwViewController {
     DEFAULT: 'usage/myt.benefit.rainbow-point.adjustment.html',
     ERROR: 'error/myt.benefit.rainbow-point.adjustment.html'
   };
-  
+
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     const curPage = req.query.curPage || 1;
     Observable.combineLatest(
       this.reqRainbowPointServices(),
       this.reqRainbowPointAdjustments(curPage)
     ).subscribe(([rainbowPointServices, rainbowPointAdjustments]) => {
-      if ( rainbowPointServices.code !== API_CODE.CODE_00 ) {
-        res.render('error.server-error.html', {
+      const apiError = this.error.apiError([
+        rainbowPointServices, rainbowPointAdjustments
+      ]);
+
+      if (!FormatHelper.isEmpty(apiError)) {
+        return res.render('error.server-error.html', {
           title: MYT_BENEFIT_RAINBOW_POINT.TITLE.ADJUSTMENT,
-          code: rainbowPointServices.code,
-          msg: rainbowPointServices.msg,
+          code: apiError.code,
+          msg: apiError.msg,
           svcInfo: svcInfo
         });
-        return;
-      }
-      if ( rainbowPointAdjustments.code !== API_CODE.CODE_00 ) {
-        res.render('error.server-error.html', {
-          title: MYT_BENEFIT_RAINBOW_POINT.TITLE.ADJUSTMENT,
-          code: rainbowPointAdjustments.code,
-          msg: rainbowPointAdjustments.msg,
-          svcInfo: svcInfo
-        });
-        return;
       }
 
       const lines = this.getLineWithRainbowPoint(rainbowPointServices);
@@ -82,10 +76,9 @@ class MytBenefitRainbowPointAdjustmentController extends TwViewController {
 
       // 단일 회선인 경우 에러 처리
       if ( lines.length < 2 ) {
-        res.render(MytBenefitRainbowPointAdjustmentController.VIEW.ERROR, {
+        return res.render(MytBenefitRainbowPointAdjustmentController.VIEW.ERROR, {
           svcInfo
         });
-        return;
       }
       const lineToGive = lines.find(function (line) {
         return line.svcMgmtNum === svcInfo.svcMgmtNum;
@@ -99,12 +92,13 @@ class MytBenefitRainbowPointAdjustmentController extends TwViewController {
         svcInfo,
         lineToGive,
         lineToReceive,
-        lines: JSON.stringify(lines),
+        lineToGiveData: JSON.stringify(lineToGive),
+        linesData: JSON.stringify(lines),
         histories: historyResult.history,
         paging
       });
     }, (resp) => {
-      res.render('error.server-error.html', {
+      return res.render('error.server-error.html', {
         title: MYT_BENEFIT_RAINBOW_POINT.TITLE.ADJUSTMENT,
         code: resp.code,
         msg: resp.msg,

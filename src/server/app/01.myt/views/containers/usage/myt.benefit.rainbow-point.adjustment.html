@@ -101,7 +101,7 @@
 </div>
 <!--// #skip_navigation -->
 <!-- wrap -->
-<div id="fe-myt-benefit-point-adjustment" class="wrap" data-line-to-give-svc-mgmt-num="<%= lineToGive.svcMgmtNum %>" data-lines="<%= lines %>">
+<div id="fe-myt-benefit-point-adjustment" class="wrap" data-line-to-give="<%= lineToGiveData %>" data-lines="<%= linesData %>">
     <div id="fe-main" class="fe-section">
         <!-- #header -->
         <%- include('../../../../../common/views/components/header.component.html', { title: '포인트 합산', svcInfo: svcInfo }); %>
@@ -268,7 +268,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.MytBenefitPointAdjustment($('#fe-myt-benefit-point-adjustment'));
+    new Tw.MytBenefitRainbowPointAdjustment($('#fe-myt-benefit-point-adjustment'));
   });
 </script>
 <% include ../../components/end.component.html %>

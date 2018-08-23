@@ -343,6 +343,10 @@ export const MYT_BENEFIT_RAINBOW_POINT = {
   TITLE: {
     ADJUSTMENT: '포인트 합산',
     TRANSFER: '대리인 간 양도',
+  },
+  REL_NM: {
+    C: '청소년',
+    P: '법정대리인'
   }
 };
 
