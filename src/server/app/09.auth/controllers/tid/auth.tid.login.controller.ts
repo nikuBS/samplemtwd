@@ -25,7 +25,7 @@ class AuthTidLogin extends TwViewController {
           state: resp.result.state,
           nonce: resp.result.nonce,
           service_type: TID_SVC_TYPE.LOGIN,
-          redirect_uri: EnvHelper.getEnvironment('TID_REDIRECT') +
+          redirect_uri: EnvHelper.getEnvironment('DOMAIN') +
           '/auth/login/route?target=/home=' + resp.result.state,
           client_type: TID.CLIENT_TYPE,
           scope: TID.SCOPE,

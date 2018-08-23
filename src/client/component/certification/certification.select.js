@@ -6,27 +6,31 @@
 
 Tw.CertificationSelect = function () {
   this._certSk = new Tw.CertificationSk();
-  this._certNice = new Tw.CertificationNice();
-  this._certIpin = new Tw.CertificationIpin();
   this._certEmail = new Tw.CertificationEmail();
   this._certPassword = new Tw.CertificationPassword();
+  this._historyService = new Tw.HistoryService();
 
   this._popupService = Tw.Popup;
 
   this._certMethod = null;
   this._niceType = null;
+  this._authUrl = '/myt';
+  this._resultUrl = '/home';
 };
 
 
 Tw.CertificationSelect.prototype = {
   open: function (loginType, method) {
     console.log(loginType, method);
-    this.openSelectPopupTidLogin();
-
+    if(loginType === 'T') {
+      this.openSelectPopup('CO_02_01_01_L01');
+    } else {
+      this.openSelectPopup('CO_02_01_01_L02');
+    }
   },
-  openSelectPopupTidLogin: function () {
+  openSelectPopup: function (popupType) {
     this._popupService.open({
-      hbs: 'CO_02_01_01_L01',
+      hbs: popupType,
       layer: true,
       data: {
         skSms: true,
@@ -37,21 +41,9 @@ Tw.CertificationSelect.prototype = {
         password: true,
         finance: true
       }
-    }, $.proxy(this._onOpenSelectPopupTidLogin, this), $.proxy(this._onCloseSelectPopup, this));
+    }, $.proxy(this._onOpenSelectPopup, this), $.proxy(this._onCloseSelectPopup, this));
   },
-  openSelectPopupEasyLogin: function () {
-    this._popupService.open({
-      hbs: 'CO_02_01_01_L02',
-      layer: true,
-      data: {
-        skSms: true,
-        bio: false,
-        finance: true
-      }
-    }, $.proxy(this._onOpenSelectPopupEasyLogin, this), $.proxy(this._onCloseSelectPopup, this));
-
-  },
-  _onOpenSelectPopupTidLogin: function ($popupContainer) {
+  _onOpenSelectPopup: function ($popupContainer) {
     $popupContainer.on('click', '#fe-bt-sk', $.proxy(this._onClickSkSms, this));
     $popupContainer.on('click', '#fe-bt-kt', $.proxy(this._onClickKtSms, this));
     $popupContainer.on('click', '#fe-bt-lg', $.proxy(this._onClickLgSms, this));
@@ -63,11 +55,6 @@ Tw.CertificationSelect.prototype = {
     $popupContainer.on('click', '#fe-bt-finance', $.proxy(this._onClickSkFinance, this));
 
   },
-  _onOpenSelectPopupEasyLogin: function ($popupContainer) {
-    $popupContainer.on('click', '#fe-bt-sk', $.proxy(this._onClickSkSms, this));
-    $popupContainer.on('click', '#fe-bt-bio', $.proxy(this._onClickBio, this));
-    $popupContainer.on('click', '#fe-bt-finance', $.proxy(this._onClickSkFinance, this));
-  },
   _onCloseSelectPopup: function () {
     if ( !Tw.FormatHelper.isEmpty(this._certMethod) ) {
       switch ( this._certMethod ) {
@@ -75,10 +62,10 @@ Tw.CertificationSelect.prototype = {
           this._certSk.open();
           break;
         case Tw.AUTH_CERTIFIATION_METHOD.OTHER_SMS:
-          this._certNice.open(this._niceType);
+          this._historyService.goLoad('/auth/cert/nice?authUrl=' + this._authUrl + '&resultUrl=' + this._resultUrl + '&niceType=' + this._niceType);
           break;
         case Tw.AUTH_CERTIFIATION_METHOD.IPIN:
-          this._certIpin.open();
+          this._historyService.goLoad('/auth/cert/ipin?authUrl=' + this._authUrl + '&resultUrl=' + this._resultUrl);
           break;
         case Tw.AUTH_CERTIFIATION_METHOD.EMAIL:
           this._certEmail.open();

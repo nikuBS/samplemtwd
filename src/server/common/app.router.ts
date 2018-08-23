@@ -15,6 +15,7 @@ class AppRouter {
 
     routerMaps.map((routerMap: IRouterMap) => {
       this.router.get(routerMap.url, routerMap.controller.initPage.bind(routerMap.controller));
+      this.router.post(routerMap.url, routerMap.controller.certPage.bind(routerMap.controller));
     });
   }
 }

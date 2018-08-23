@@ -25,7 +25,7 @@ class AuthTidFindPw extends TwViewController {
           state: resp.result.state,
           nonce: resp.result.nonce,
           service_type: TID_SVC_TYPE.FIND_PW,
-          redirect_uri: EnvHelper.getEnvironment('TID_REDIRECT') + '/auth/tid/route',
+          redirect_uri: EnvHelper.getEnvironment('DOMAIN') + '/auth/tid/route',
           client_type: TID.CLIENT_TYPE,
           scope: TID.SCOPE,
           response_type: TID.RESP_TYPE

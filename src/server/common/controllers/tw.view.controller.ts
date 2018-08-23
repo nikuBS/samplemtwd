@@ -48,6 +48,42 @@ abstract class TwViewController {
     return this._error;
   }
 
+  public certPage(req: any, res: any, next: any): void {
+    this.logger.debug(this, '[CertPage]', req.body)
+    if ( !FormatHelper.isEmpty(req.body.enc_data) ) {
+      this.confirmIpinCert(req, res, next, req.body.enc_data);
+    } else if ( !FormatHelper.isEmpty(req.body.EncodeData) ) {
+      this.confirmNiceCert(req, res, next, req.body.EncodeData);
+    } else {
+      this.initPage(req, res, next);
+    }
+  }
+
+  private confirmIpinCert(req, res, next, encData) {
+    this.apiService.request(API_CMD.BFF_01_0023, {
+      enc_data: encData
+    }).subscribe((resp) => {
+      this.handleCertResult(req, res, next, resp.code);
+    });
+  }
+
+  private confirmNiceCert(req, res, next, encData) {
+    this.apiService.request(API_CMD.BFF_01_0025, {
+      encodeData: encData
+    }).subscribe((resp) => {
+      this.handleCertResult(req, res, next, resp.code);
+    });
+  }
+
+  private handleCertResult(req, res, next, respCode) {
+    if ( respCode === API_CODE.CODE_00 ) {
+      // TODO save cert
+      this.initPage(req, res, next);
+    } else {
+      // TODO go error page
+    }
+  }
+
   public initPage(req: any, res: any, next: any): void {
     const path = req.baseUrl + (req.path !== '/' ? req.path : '');
     const tokenId = req.query.id_token;
