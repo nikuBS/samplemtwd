@@ -5,11 +5,11 @@
  */
 
 import { NextFunction, Request, Response } from 'express';
-import TwViewController from '../../../common/controllers/tw.view.controller';
-import { API_CMD, API_CODE } from '../../../types/api-command.type';
-import { CUSTOMER_NOTICE_CATEGORY } from '../../../types/string.type';
-import FormatHelper from '../../../utils/format.helper';
-import DateHelper from '../../../utils/date.helper';
+import TwViewController from '../../../../common/controllers/tw.view.controller';
+import { API_CMD, API_CODE } from '../../../../types/api-command.type';
+import { CUSTOMER_NOTICE_CATEGORY } from '../../../../types/string.type';
+import FormatHelper from '../../../../utils/format.helper';
+import DateHelper from '../../../../utils/date.helper';
 
 const categorySwitchingData = {
   tworld: {
@@ -77,7 +77,7 @@ class CustomerNoticeController extends TwViewController {
           return res.redirect('/customer');
         }
 
-        res.render('customer.notice.html', {
+        res.render('notice/customer.notice.html', {
           category: category,
           categoryLabel: categorySwitchingData[category].LABEL,
           svcInfo: svcInfo,

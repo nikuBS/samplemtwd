@@ -3,7 +3,7 @@
 * Author: 양지훈 (jihun202@sk.com)
 * Date: 2018.07.23
 %>
-<% include ../components/start.component.html %>
+<% include ../../components/start.component.html %>
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
     <ul>
@@ -14,7 +14,7 @@
 </div>
 <!--// #skip_navigation -->
 <div class="wrap" data-category="<%= category %>">
-    <%- include('../../../../common/views/components/header.component.html', { title: '공지사항', svcInfo: svcInfo }) %>
+    <%- include('../../../../../common/views/components/header.component.html', { title: '공지사항', svcInfo: svcInfo }) %>
     <!-- #contents -->
     <div id="contents" class="container-wrap">
         <h2 class="blind">내용</h2>
@@ -59,9 +59,9 @@
         </div>
     </div>
     <!--// #contents -->
-    <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }) %>
+    <%- include('../../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }) %>
 </div>
-<% include ../components/javascript.component.html %>
+<% include ../../components/javascript.component.html %>
 <script type="text/template" id="tpl_notice_list_item">
     {{#list}}
     <li class="acco-list">
@@ -83,4 +83,4 @@
     var comp = new Tw.CustomerNotice($('.wrap'));
   });
 </script>
-<% include ../components/end.component.html %>
+<% include ../../components/end.component.html %>
