@@ -82,14 +82,15 @@ Tw.CustomerNotice.prototype = {
         style_class: 'bt-red1 fe-btn-apply-category',
         txt: Tw.BUTTON_LABEL.CONFIRM
       }]
-    }, $.proxy(this._categoryPopupBindEvent, this),
-      $.proxy(function() {
-        if (this.$container.data('category') === this._category) {
-          return;
-        }
+    }, $.proxy(this._categoryPopupBindEvent, this), $.proxy(this._goCategory, this));
+  },
 
-        this._history.goLoad('/customer/notice?category=' + this._category);
-      }, this));
+  _goCategory: function() {
+    if (this.$container.data('category') === this._category) {
+      return;
+    }
+
+    this._history.goLoad('/customer/notice?category=' + this._category);
   },
 
   _categoryPopupBindEvent: function($layer) {

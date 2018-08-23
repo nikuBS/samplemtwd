@@ -158,7 +158,8 @@ Tw.PAYMENT_STRD_MSG = {
 };
 
 Tw.MSG_COMMON = {
-  SERVER_ERROR: '통신 오류입니다. 잠시 후 다시 시도해 주세요.'
+  SERVER_ERROR: '통신 오류입니다. 잠시 후 다시 시도해 주세요.',
+  DATA_CONFIRM: '3G/LTE망 사용시 데이터 요금이 발생됩니다.'
 };
 
 Tw.MSG_HOME = {};
