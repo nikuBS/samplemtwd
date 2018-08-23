@@ -140,6 +140,7 @@ export const URL = {
   '/customer/shop/detail': { login: false, id: 'CI_02_04', title: '매장정보' }, // 매장 및 AS센터 > 매장정보
   '/customer/shop/near': { login: false, id: 'CI_02_05', title: '내 위치와 가까운 매장' }, // 매장 및 AS센터 > 내 위치와 가까운 매장 검색
   '/customer/shop/repair': { login: false, id: 'CI_03_01', title: '매장 및 AS 센터' }, // 매장 및 AS센터 > 지역 별 AS센터
+  '/customer/shop/repair-detail': { login: false, id: 'CI_03_03', title: 'AS센터 정보' }, // 매장 및 AS센터 > AS센터 자세히
   '/customer/shop/repair-manufacturer': { login: false, id: 'CI_03_02', title: '매장 및 AS 센터' }, // 매장 및 AS센터 > 제조사 별 AS센터
   '/customer/shop/search': { login: false, id: 'CI_02_01', title: '매장 및 AS 센터' }, // 매장 및 AS센터 > 지점/대리점 찾기
   '/customer/researches': { login: true, id: 'CI_09_02', title: '고객의견' }, // 설문조사 리스트

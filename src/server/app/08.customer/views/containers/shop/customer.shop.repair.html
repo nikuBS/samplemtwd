@@ -81,78 +81,64 @@
                 <div class="box-store-result">
                     <div class="store-result-list">
                         <p class="result-spot-ti">서울</p>
+                        <% for (let i = 0; i < region1.length; i++) { %>
                         <div>
                             <button>
                                 <dl>
-                                    <dt>구로AS센터</dt>
-                                    <dd>서울 구로구 경인로 53길 15<br />(구로동 1585) SK텔레콤 고객센터 1층</dd>
+                                    <dt><%= region1[i].locName %></dt>
+                                    <dd><%= region1[i].searchAddr %></dd>
+                                    <dd><%= region1[i].jibunAddr %></dd>
                                 </dl>
                             </button>
-                            <button class="bt-spot"><span role="img" class="blind">매장으로 지도보기</span></button>
+                            <a href="/customer/shop/repair-detail?code=<%= region1[i].locCode %>" class="bt-spot"><span role="img" class="blind">매장으로 지도보기</span></a>
                         </div>
-                        <div>
-                            <button>
-                                <dl>
-                                    <dt>종로 AS센터(구 명동센터)</dt>
-                                    <dd>서울 종로구 종로12길 18<br />(관철동 19-4 우석빌딩) 2층</dd>
-                                </dl>
-                            </button>
-                            <button class="bt-spot"><span role="img" class="blind">매장으로 지도보기</span></button>
-                        </div>
+                        <% } %>
                     </div>
                     <div class="store-result-list">
                         <p class="result-spot-ti">경기</p>
+                        <% for (let i = 0; i < region2.length; i++) { %>
                         <div>
                             <button>
-                                <dl>
-                                    <dt>인천AS센터</dt>
-                                    <dd>인천 남동구 성말로 17<br />(구월동 1462) 인천AS센터</dd>
-                                </dl>
+                                 <dl>
+                                     <dt><%= region2[i].locName %></dt>
+                                     <dd><%= region2[i].searchAddr %></dd>
+                                     <dd><%= region2[i].jibunAddr %></dd>
+                                 </dl>
+
                             </button>
-                            <button class="bt-spot"><span role="img" class="blind">매장으로 지도보기</span></button>
+                            <a href="/customer/shop/repair-detail?code=<%= region2[i].locCode %>" class="bt-spot"><span role="img" class="blind">매장으로 지도보기</span></a>
                         </div>
+                        <% } %>
                     </div>
                     <div class="store-result-list">
                         <p class="result-spot-ti">경상</p>
+                        <% for (let i = 0; i < region4.length; i++) { %>
                         <div>
                             <button>
                                 <dl>
-                                    <dt>대구AS센터</dt>
-                                    <dd>대구 중구 달구벌대로 2171<br />(삼덕동 2가 187-1) 1층 SK텔레콤</dd>
+                                    <dt><%= region4[i].locName %></dt>
+                                    <dd><%= region4[i].searchAddr %></dd>
+                                    <dd><%= region4[i].jibunAddr %></dd>
                                 </dl>
                             </button>
-                            <button class="bt-spot"><span role="img" class="blind">매장으로 지도보기</span></button>
+                            <a href="/customer/shop/repair-detail?code=<%= region4[i].locCode %>" class="bt-spot"><span role="img" class="blind">매장으로 지도보기</span></a>
                         </div>
-                        <div>
-                            <button>
-                                <dl>
-                                    <dt>부산AS센터</dt>
-                                    <dd>부산 부산진구 심천대로 258<br />(부암동 52-6) SK텔레콤 부산AS센터 </dd>
-                                </dl>
-                            </button>
-                            <button class="bt-spot"><span role="img" class="blind">매장으로 지도보기</span></button>
-                        </div>
+                        <% } %>
                     </div>
                     <div class="store-result-list">
                         <p class="result-spot-ti">전라충청</p>
+                        <% for (let i = 0; i < region5.length; i++) { %>
                         <div>
                             <button>
                                 <dl>
-                                    <dt>광주AS센터</dt>
-                                    <dd>광주 광산구 임방울대로 342<br />(수완동 1424) 남서대리점 수완프리미엄점내 위치</dd>
+                                    <dt><%= region5[i].locName %></dt>
+                                    <dd><%= region5[i].searchAddr %></dd>
+                                    <dd><%= region5[i].jibunAddr %></dd>
                                 </dl>
                             </button>
-                            <button class="bt-spot"><span role="img" class="blind">매장으로 지도보기</span></button>
+                            <a href="/customer/shop/repair-detail?code=<%= region5[i].locCode %>" class="bt-spot"><span role="img" class="blind">매장으로 지도보기</span></a>
                         </div>
-                        <div>
-                            <button>
-                                <dl>
-                                    <dt>대전AS센터</dt>
-                                    <dd>대전 서구 문정로 41<br />(탄방동 594 SKT대전신사옥)2층 </dd>
-                                </dl>
-                            </button>
-                            <button class="bt-spot"><span role="img" class="blind">매장으로 지도보기</span></button>
-                        </div>
+                        <% } %>
                     </div>
                 </div>
             </div>
