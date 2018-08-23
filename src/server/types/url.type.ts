@@ -69,7 +69,8 @@ export const URL = {
   '/myt/benefit/rainbow-point/info': { login: true, id: 'MY_04_04_01_02', title: '혜택 자세히보기'}, // 레인보우 포인트 > 혜택 자세히보기'
   '/myt/join/product-service/fee-alarm': { login: true, id: 'MY_01_01_01', title: '요금제 변경 가능일 알림 서비스' },
   '/myt/join/product-service/fee-alarm/change': { login: true, id: 'MY_01_01_02', title: '요금제 변경 가능일 알림 서비스 신청/해지' },
-  '/myt/benefit/point/adjustment': { login: true, id: 'MY_04_04_02', title: '포인트합산'},
+  '/myt/benefit/rainbow-point/adjustment': { login: true, id: 'MY_04_04_02', title: '포인트합산'},
+  '/myt/benefit/rainbow-point/transfer': { login: true, id: 'MY_04_04_03', title: '대리인 간 양도'},
   '/myt/benefit/membership': { login: true, id: 'MY_04_02', title: '멤버십 혜택'},
   '/myt/benefit/membership/detail': { login: true, id: 'MY_04_02_01_01', title: '멤버십 혜택 상세'},
 
