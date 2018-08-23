@@ -474,7 +474,10 @@ Tw.MSG_MYT = {
       ]
     },
     RECOMMEND: {
-      RECOMMEND_NONE: '받고있는 혜택이 없습니다.'
+      RECOMMEND_NONE: '받고있는 혜택이 없습니다.',
+      A10_CP_NM: '장기가입 쿠폰',
+      A20_CP_NM: '리필 쿠폰',
+      CP_UNIT: '매'
     }
   },
   FEE_ALARM_ALERT_A01: '서비스를 해지 하시겠습니까?',
