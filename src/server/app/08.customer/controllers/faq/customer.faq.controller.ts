@@ -8,6 +8,7 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import {Request, Response, NextFunction} from 'express';
 import FormatHelper from '../../../../utils/format.helper';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
+import { Observable } from 'rxjs/Observable';
 
 export default class CustomerFaqController extends TwViewController {
   constructor() {
@@ -18,8 +19,11 @@ export default class CustomerFaqController extends TwViewController {
     const queryString = req.query.search;
 
     if (FormatHelper.isEmpty(queryString)) {
-      res.render('faq/customer.faq.html', {
-        svcInfo: svcInfo
+      this.getDoItLikeThisList().subscribe((result) => {
+        res.render('faq/customer.faq.html', {
+          svcInfo: svcInfo,
+          doItList: result
+        });
       });
     } else {
       this.apiService.request(API_CMD.BFF_08_0050, {
@@ -52,6 +56,14 @@ export default class CustomerFaqController extends TwViewController {
         this.logger.error('[FAQ search]', err);
       });
     }
+  }
+
+  private getDoItLikeThisList(): Observable<any> {
+    return this.apiService.request(API_CMD.BFF_08_0026, {}).map((res) => {
+      if (res.code === API_CODE.CODE_00) {
+        return res.result;
+      }
+    });
   }
 
   private purify(text: String): String {

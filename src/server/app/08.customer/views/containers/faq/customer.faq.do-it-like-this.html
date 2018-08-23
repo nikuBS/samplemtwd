@@ -1,0 +1,22 @@
+<%#
+* FileName: customer.faq.do-it-like-this.html (CI_11_05)
+* Author: Hakjoon Sim(hakjoon.simk@sk.com)
+* Date: 2018.08.23
+%>
+
+<% include ../../components/start.component.html %>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap">
+    <%- include('../../../../common/views/components/header.component.html', { title: '이럴 땐 이렇게 하세요', svcInfo: svcInfo}); %>
+    <%- content %>
+</div>
+<% include ../../components/javascript.component.html %>
+<% include ../../components/end.component.html %>
