@@ -61,15 +61,7 @@ Tw.MytBenefitRecommendDetailPoint.prototype = {
   },
   //--------------------------------------------------------------------------[service]
   _goShopping: function() {
-
-    if ( Tw.BrowserHelper.isApp() ) {
-      Tw.Native.send(Tw.NTV_CMD.OPEN_URL, {
-        type: 1,
-        href: 'http://www.11st.co.kr'
-      }, null);
-    } else {
-      window.open( 'http://www.11st.co.kr', '_blank');
-    }
+    Tw.CommonHelper.openUrl('http://www.11st.co.kr');
 
   },
   //--------------------------------------------------------------------------[api]

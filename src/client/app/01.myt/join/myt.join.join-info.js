@@ -78,14 +78,7 @@ Tw.MyTJoinJoinInfo.prototype = {
 
   // SK브로드밴드 링크 클릭
   _openSKbrodbandLink: function () {
-    if ( Tw.BrowserHelper.isApp() ) {
-      Tw.Native.send(Tw.NTV_CMD.OPEN_URL, {
-        type: 1,
-        href: Tw.URL_PATH.BROADBAND
-      }, null);
-    } else {
-      window.open( Tw.URL_PATH.BROADBAND, '_blank');
-    }
+    Tw.CommonHelper.openUrl(Tw.URL_PATH.BROADBAND);
   },
 
   // 비밀번호변경 클릭
