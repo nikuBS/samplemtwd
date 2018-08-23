@@ -25,7 +25,7 @@ class MyTBenefitPoint extends TwViewController {
         (ptMilitary.code !== API_CODE.CODE_00 && ptMilitary.code !== 'BIL0071') ||
         (ptCookiz.code !== API_CODE.CODE_00 && ptCookiz.code !== 'BIL0070')
       ) {
-        return this.error.render(res, {});
+        return this.error.render(res, {svcInfo});
       } else {
         const points = {};
         points['OKCashBack'] = FormatHelper.addComma(ptOKCashAndT.result.availPt);
