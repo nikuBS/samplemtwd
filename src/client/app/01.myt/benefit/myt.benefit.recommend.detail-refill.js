@@ -56,8 +56,8 @@ Tw.MytBenefitRecommendDetailRefill.prototype = {
       } else {
         return 'A20';
       }
-
     });
+
     this.proDataObj = refillObj;
     Tw.Logger.info('[_proData]', this.proDataObj);
   },
@@ -80,6 +80,9 @@ Tw.MytBenefitRecommendDetailRefill.prototype = {
       var cpLenA20 = this.proDataObj.A20.length;
       this._cachedElement();
       this.$LtsCpArea.html('리필 쿠폰 : ' + cpLenA20 + '매');
+    } else {
+      this._cachedElement();
+      this.$refillCpArea.html('리필 쿠폰 : ' + 0 + '매');
     }
 
   },

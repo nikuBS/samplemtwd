@@ -472,6 +472,9 @@ Tw.MSG_MYT = {
           CODE : 'PLUS'
         }
       ]
+    },
+    RECOMMEND: {
+      RECOMMEND_NONE: '받고있는 혜택이 없습니다.'
     }
   },
   FEE_ALARM_ALERT_A01: '서비스를 해지 하시겠습니까?',
