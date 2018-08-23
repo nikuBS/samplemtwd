@@ -71,16 +71,16 @@ Tw.CertificationEmail.prototype = {
   },
   _requestEmailCert: function () {
     this._apiService.request(Tw.API_CMD.BFF_01_0017, {
-      certCode: 'TWD_SECOND_AUTH',
-      emailAddress: this.$inputEmail.val()
-    }, $.proxy(this._successSendEmailCert, this));
+      certCode: Tw.EMAIL_CERT_CODE.SECOND_AUTH,
+      email: this.$inputEmail.val()
+    }).done($.proxy(this._successSendEmailCert, this));
 
   },
   _successSendEmailCert: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this.showValidText();
       this.showEmailBlock(new Date());
-    } else if ( resp.code = this.ERROR_EMAIL_CERT.ATH8001 ) {
+    } else if ( resp.code === this.ERROR_EMAIL_CERT.ATH8001 ) {
       this.showCertError(Tw.MSG_AUTH.CERT_05);
     } else {
       this._popupService.openAlert(resp.code + ' ' + resp.msg);
@@ -95,13 +95,13 @@ Tw.CertificationEmail.prototype = {
 
   },
   _requestEmailConfirm: function () {
-    this._apiService.reqiest(Tw.API_CMD.BFF_01_0018, {
-      certCode: '',
+    this._apiService.request(Tw.API_CMD.BFF_01_0018, {
+      certCode: Tw.EMAIL_CERT_CODE.SECOND_AUTH,
       emailAddress: this.$inputEmail.val(),
       authNum: this.$inputCert.val(),
       authUrl: this._authUrl,
       authTerm: 1000
-    }, $.proxy(this._successEmailConfirm, this));
+    }).done($.proxy(this._successEmailConfirm, this));
   },
   _successEmailConfirm: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {

@@ -16,7 +16,7 @@ Tw.HomeMain = function (rootEl, lineRegisterLayer) {
   this._clearHistory();
 
   this._cert = new Tw.CertificationSelect();
-  this._cert.open();
+  // this._cert.open();
 
   // For dev (Determine if api service issue or bff issue)
   // this._testApi();
