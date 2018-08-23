@@ -12,6 +12,13 @@ class MytJoinProductServiceFeeAlarmController extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+    if (['M1', 'M2'].indexOf(svcInfo.svcAttrCd) === -1) {
+      return this.error.render(res, {
+        title: '요금제 변경 가능일 알림 서비스',
+        svcInfo: svcInfo
+      });
+    }
+
     res.render('join/myt.join.product-service.fee-alarm.html', {
       svcInfo: svcInfo
     });

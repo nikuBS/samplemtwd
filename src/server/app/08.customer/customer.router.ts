@@ -1,6 +1,6 @@
 import TwRouter from '../../common/route/tw.router';
 import CustomerHelpline from './controllers/helpline/customer.helpline.controller';
-import CustomerNoticeController from './controllers/customer.notice.controller';
+import CustomerNoticeController from './controllers/notice/customer.notice.controller';
 import CustomerPreventdamageMainController from './controllers/preventdamage/customer.preventdamage.main.controller';
 import CustomerPreventdamageGuideController from './controllers/preventdamage/customer.preventdamage.guide.controller';
 import CustomerPreventdamageGuideviewController from './controllers/preventdamage/customer.preventdamage.guideview.controller';
