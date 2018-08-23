@@ -199,16 +199,12 @@ class MyTBenefitRecommendController extends TwViewController {
         console.log('[ 에러 ]');
         console.dir(err);
 
-
-        // thisMain._errInfoInit(err);
-        // thisMain.renderView(res, thisMain._urlTplInfo.pageRenderView, {
-        //   reqQuery: thisMain.reqQuery,
-        //   svcInfo: thisMain._svcInfo,
-        //   resDataInfo: null,
-        //   baseFeePlans: null,
-        //   errBol: true,
-        //   errObj: thisMain._apiErrInfo
-        // });
+        return thisMain.error.render(res, {
+          title: 'title',
+          code: err.code,
+          msg: err.msg,
+          svcInfo: svcInfo
+        });
 
       }); // Promise.all END
 
