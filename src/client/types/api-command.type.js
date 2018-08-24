@@ -294,7 +294,7 @@ Tw.TMAP = {
 };
 
 Tw.AJAX_CMD = {
-  GET_TMAP_REGION: { path: '/geofencing/regions', method: Tw.API_METHOD.GET, url: Tw.TMAP.REGION_URL },
+  GET_TMAP_REGION: { path: '/geofencing/regions', method: Tw.API_METHOD.GET, url: Tw.TMAP.REGION_URL }
 };
 
 Tw.API_CODE = {

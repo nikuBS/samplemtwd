@@ -40,10 +40,18 @@ Tw.MyTJoinProductServiceCombination.prototype = {
     this.$container.on('click', '.fe-go-main', $.proxy(this._goMain, this));
     this.$container.on('click', '.fe-go-share', $.proxy(this._goShareStep, this));
     this.$container.on('click', '.select-list > li', $.proxy(this._handleSelectMember, this));
+    this.$amountBtn.on('click', $.proxy(this._openSelectAmountPopup, this));
     this.$main.on('click', '.bt-red1', $.proxy(this._submitShareData, this));
     this.$main.on('click', '.fe-benefit1', $.proxy(this._goFirstBenefit, this));
+    this.$main.on('click', '.fe-benefit2', $.proxy(this._goSecondBenefit, this));
     this.$benefitFirst.on('click', '.bt-red1', $.proxy(this._handleChangeFirstBenefit, this));
-    this.$amountBtn.click($.proxy(this._openSelectAmountPopup, this));
+
+    if (this.$benefitSecond) {
+      this.$benefitSecond.on('click', '.bt-red1', $.proxy(this._handleChangeSecondBenefit, this));
+      this.$phoneInput.on('click', $.proxy(this._removeDash, this));
+      this.$phoneInput.on('focusout', $.proxy(this._setPhoneNumber, this));
+      this.$phoneInput.on('keypress', $.proxy(this._typeOnlyNumber, this));
+    }
   },
 
   _cachedElement: function () {
@@ -52,6 +60,10 @@ Tw.MyTJoinProductServiceCombination.prototype = {
     this.$main = this.$container.find('#main');
     this.$benefitFirst = this.$container.find('#benefit-1st');
     this.$benefitSecond = this.$container.find('#benefit-2nd');
+
+    if (this.$benefitSecond) {
+      this.$phoneInput = this.$benefitSecond.find('.inputbox input');
+    }
   },
 
   _goShareStep: function () {
@@ -68,7 +80,7 @@ Tw.MyTJoinProductServiceCombination.prototype = {
     this._beneficiary = {
       id: $input.data('management-id'),
       name: $input.data('member-name')
-    }
+    };
 
     this.$amountArea.removeClass('none');
   },
@@ -99,7 +111,7 @@ Tw.MyTJoinProductServiceCombination.prototype = {
       befrSvcMgmtNum: this._beneficiary.id,
       reqQty: this._shareAmount,
       remainPt: (this._remainAmount - this._shareAmount)
-    }
+    };
   },
 
   _fail: function (err) {
@@ -163,7 +175,8 @@ Tw.MyTJoinProductServiceCombination.prototype = {
   },
 
   _handleChangeFirstBenefit: function () {
-    var nSelectedBenefit = this.$benefitFirst.find('ul.tube-list li.checked').index() === 1 ? this.BENEFIT_FIRST.DATA_FREE : this.BENEFIT_FIRST.SAFE_LTE;
+    var nSelectedBenefit = this.$benefitFirst.find('ul.tube-list li.checked').index() === 1 ?
+      this.BENEFIT_FIRST.DATA_FREE : this.BENEFIT_FIRST.SAFE_LTE;
 
     if (this._selectedBenefit === nSelectedBenefit) {
       this._popupService.openAlert(Tw.MSG_MYT.JOIN_COMBINATION_A09);
@@ -173,6 +186,41 @@ Tw.MyTJoinProductServiceCombination.prototype = {
         benefitVal: nSelectedBenefit
       }).done($.proxy(this._successChageBenefit, this)).fail($.proxy(this._fail, this));
     }
+  },
+
+  _goSecondBenefit: function (e) {
+    var $target = $(e.target);
+    var $infoArea = $target.parents('li.acco-list');
+
+    this.$benefitSecond.find('span.fe-name').text($infoArea.find('.info-line .fe-name').text());
+    this.$benefitSecond.find('span.data-number').text($infoArea.find('.info-line.ff-hn').text());
+
+    this._freeLineNumber = $infoArea.find('.ff-hn.vbl').text();
+
+    this._history.goHash('benefit-2nd');
+  },
+
+  _handleChangeSecondBenefit: function () {
+    var nFreeLineNumber = this.$phoneInput.val().replace(/-/g, '');
+
+    if (this._freeLineNumber === nFreeLineNumber) {
+      this._openNotifyAlert(Tw.MSG_MYT.JOIN_COMBINATION_A10, this.$phoneInput); // TODO: 가족등록번호와 일치할 경우 추가 A11
+    } else if (nFreeLineNumber.length < 10 || nFreeLineNumber.length > 11) {
+      this._openNotifyAlert(Tw.MSG_MYT.JOIN_COMBINATION_A07, this.$phoneInput);
+    } else if (!Tw.ValidationHelper.isCellPhone(nFreeLineNumber)) {
+      this._openNotifyAlert(Tw.MSG_MYT.JOIN_COMBINATION_A08, this.$phoneInput);
+    } else {
+      this._apiService.request(Tw.API_CMD.BFF_05_0135, {
+        chgOpCd: 5,
+        benefitVal: nFreeLineNumber
+      }).done($.proxy(this._successChageBenefit, this)).fail($.proxy(this._fail, this));
+    }
+  },
+
+  _openNotifyAlert: function (content, $input) {
+    this._popupService.openAlert(content, Tw.POPUP_TITLE.NOTIFY, '', $.proxy(function () {
+      $input.focus();
+    }, this));
   },
 
   _successChageBenefit: function (resp) {
@@ -193,5 +241,21 @@ Tw.MyTJoinProductServiceCombination.prototype = {
     this._shareAmount = Number(value.replace(UNIT, ''));
     this.$amountBtn.text(value);
     this._popupService.close();
+  },
+
+  _setPhoneNumber: function () {
+    this.$phoneInput.val(Tw.FormatHelper.getDashedCellPhoneNumber(this.$phoneInput.val()));
+  },
+
+  _removeDash: function () {
+    this.$phoneInput.val((this.$phoneInput.val() || '').replace(/-/g, ''));
+  },
+
+  _typeOnlyNumber: function (e) {
+    var currentValue = e.target.value;
+
+    if (currentValue.length > 10 || !/[0-9]/.test(e.key)) {
+      e.preventDefault();
+    }
   }
 };

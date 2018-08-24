@@ -9,7 +9,7 @@ Tw.ValidationHelper = (function () {
    */
   function isCellPhone(str) {
     var phone = str.split('-').join('');
-    return Tw.ValidationHelper.regExpTest(/^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/, phone);
+    return Tw.ValidationHelper.regExpTest(/(^01[1|6|7|8|9]-?[0-9]{3,4}|^010-?[0-9]{4})-?([0-9]{4})$/, phone);
   }
 
   /**
@@ -25,7 +25,7 @@ Tw.ValidationHelper = (function () {
    * @returns {Boolean}
    */
   function isRepresentNumber(str) {
-    if(str.length > 7 && str.length < 10)
+    if (str.length > 7 && str.length < 10)
       return regExpTest(/(\d{4})-?(\d{4})/, str);
     else
       return false;
