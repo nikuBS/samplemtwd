@@ -92,28 +92,12 @@ Tw.CustomerResearches.prototype = {
 
   _goHint: function (e) {
     var url = e.target.getAttribute('data-hint-url');
-    if (Tw.BrowserHelper.isApp()) {
-      this._nativeService.send(Tw.NTV_CMD.OPEN_URL, {
-        type: Tw.NTV_BROWSER.EXTERNAL,
-        href: url
-      });
-    } else {
-      window.open(url);
-    }
+    Tw.CommonHelper.openUrl(url);
   }
 };
 
+/* jshint unused: false */
 var goLink = function (url) {
-  if (url.indexOf('http') === -1) {
-    url = 'http://' + url;
-  }
-
-  if (Tw.BrowserHelper.isApp()) {
-    Tw.Native.send(Tw.NTV_CMD.OPEN_URL, {
-      type: Tw.NTV_BROWSER.EXTERNAL,
-      href: url
-    });
-  } else {
-    window.open(url);
-  }
+  Tw.CommonHelper.openUrl(url);
 };
+/* jshint unused: false */
