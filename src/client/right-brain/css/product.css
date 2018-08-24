@@ -1,1004 +1,168 @@
 @charset "UTF-8";
 /* 임지선 */
-/* 김태균 */
-.data-wrap {
-  padding-bottom: 1.5625rem;
-  border-bottom: 1px solid  #777777;
-}
-
-.data-wrap .data-selection {
-  margin: 0.625rem 0 0 0;
-  font-size: 0.8125rem;
-  line-height: 1.2;
-}
-
-.data-wrap .data-box-inner {
-  margin-top: 1.5625rem;
-}
-
-.data-wrap .data-box-inner .data-size {
-  margin: 0.9375rem 0;
-  text-align: center;
-}
-
-.data-wrap .data-comment {
-  font-size: 0.6875rem;
-  color: #757575;
-}
-
-.data-wrap.border-bottom-none {
-  border-bottom: none;
-}
-
-.widget.show-price-plan {
-  padding: 0 1.625rem 1.125rem;
-}
-
-.msg-send-box {
-  padding: 1.25rem 1.625rem;
-}
-
-.msg-send-box .msg-name {
-  font-size: 1.25rem;
-}
-
-.msg-send-box .tx-tel {
+/* 공통 */
+.accordion .acco-product-tit-eng {
+  font-size: 0.9375rem;
   font-family: "Helvetica Neue", Roboto, sans-serif;
-}
-
-.msg-send-box .msg-txt {
-  padding: 1.25rem 0;
-}
-
-.msg-send-box .msg-txt textarea.txt-bg {
-  border-radius: 0.25rem;
-  background-color: #f5f5f5;
-  border: none;
-  color: #8f8f8f;
-}
-
-.pay-info {
-  position: relative;
-}
-
-.pay-info .pay-tit {
-  font-size: 1.25rem;
-}
-
-.pay-info .pay-cont {
-  margin-top: 1.5625rem;
-  font-size: 0.875rem;
-}
-
-.pay-info .widget-box.check .pay-check-box {
-  position: absolute;
-  right: 0;
-  top: 0.25rem;
-  font-size: 0.75rem;
-  padding-right: 1.875rem;
-}
-
-.pay-info .widget-box.check .pay-check-box.checkbox.type01:before {
-  content: none;
-}
-
-.pay-info .widget-box.check .pay-check-box.checkbox.type01:after {
-  content: "";
-  position: absolute;
-  right: 0;
-  top: 0;
-  width: 1.25rem;
-  height: 1.25rem;
-  background: url(/img/form/ico-checkbox-style01.png) no-repeat 0 0;
-  background-size: 2.5rem;
-}
-
-.pay-info .widget-box.check .pay-check-box.checkbox.type01.checked:after {
-  background-position: 0 -1.25rem;
-}
-
-.account-wrap {
-  margin-top: 1.875rem;
-}
-
-.account-wrap .due-date {
-  font-size: 0.875rem;
-  margin-bottom: 1rem;
-}
-
-.account-wrap .due-date .date {
-  display: inline-block;
-  margin-left: 0.625rem;
-  font-family: "Helvetica Neue", Roboto, sans-serif;
+  font-weight: 700;
   letter-spacing: 0;
 }
 
-.account-wrap .card-tbl {
-  display: table;
+.widget.product-option-list .radiobox {
   width: 100%;
+  margin-bottom: 0.5625rem;
 }
 
-.account-wrap .card-tbl .input input.no-bg-color:disabled {
-  background: #fff;
-  border-color: #d6dde5;
-  color: #000;
+.widget.product-option-list .radiobox:before {
+  position: absolute;
+  top: 50%;
+  margin-top: -0.625rem;
+  left: 1.3125rem;
 }
 
-.account-wrap .card-tbl .input.card-cell {
-  display: table-cell;
-  vertical-align: middle;
+.widget.product-option-list .product-option-list-con {
+  overflow: hidden;
+  padding: 1.875rem 1.3125rem;
+  border: 1px solid #e1e1e1;
+  border-radius: 0.1875rem;
 }
 
-.account-wrap .card-tbl .input.card-cell:first-child {
-  position: relative;
-  width: 25%;
+.widget.product-option-list .product-option-list-con .product-name {
+  padding-left: 2.5rem;
+  max-width: 10rem;
 }
 
-.account-wrap .card-tbl .input.card-cell:nth-of-type(2) {
-  padding-right: 0.625rem;
-  padding-left: 0.625rem;
-}
-
-.account-wrap .card-tbl .input.card-cell:last-child {
-  width: 100%;
-}
-
-.account-wrap .card-tbl .input.card-cell .c-month {
-  width: 25%;
-}
-
-.account-wrap:first-child {
-  margin-top: 2.5rem;
-}
-
-.account-wrap .account-tit {
-  margin-bottom: 0.75rem;
-  font-size: 0.8125rem;
+.widget.product-option-list .product-option-list-con .product-name dt {
+  font-size: 0.9375rem;
   font-weight: 700;
 }
 
-.account-wrap .point-box {
-  position: relative;
-  padding: 1.875rem 1.125rem;
-  border: 1px solid #e1e1e1;
-  border-radius: 0.3125rem;
-  font-size: 0.9375rem;
+.widget.product-option-list .product-option-list-con .product-name dd {
+  font-size: 0.875rem;
+  color: #757575;
 }
 
-.account-wrap .point-box ul li {
+.widget.product-option-list .product-option-list-con .ico {
+  display: inline-block;
+  width: 3.75rem;
+  height: 3.75rem;
+  background: url(/img/ico/ico-product-illustration.png) no-repeat;
+  background-size: 62.5rem;
+  background-position: -4.375rem -4.375rem;
+  position: absolute;
+  top: 50%;
+  margin-top: -1.875rem;
+  right: 1.3125rem;
+}
+
+.bt-dropdown.product-type {
+  background: transparent;
+  border: none;
+}
+
+/* //공통 */
+/* font */
+.product-tit {
+  font-size: 1.25rem;
   margin-bottom: 1.25rem;
 }
 
-.account-wrap .point-box ul li dl {
-  display: table;
-  width: 100%;
+.product-info {
+  font-size: 0.75rem;
+  color: #757575;
 }
 
-.account-wrap .point-box ul li dl dt {
-  display: table-cell;
-  width: 30%;
+.product-plan-wrap .tit-wrap .sub-tit {
   font-weight: 400;
+  font-size: 0.875rem;
 }
 
-.account-wrap .point-box ul li dl dd {
-  display: table-cell;
-  width: 70%;
-  text-align: right;
-  font-weight: 400;
-}
-
-.account-wrap .point-box ul li dl dd em.number {
-  font-family: "Helvetica Neue", Roboto, sans-serif;
+.product-plan-wrap .tit-wrap .tit {
   font-weight: 700;
+  font-size: 1.875rem;
+  position: relative;
+  display: inline-block;
 }
 
-.account-wrap .point-box ul li:last-child {
-  margin-bottom: 0;
+.product-plan-wrap .tit-wrap .tit .ico {
+  position: absolute;
+  top: 0.375rem;
+  right: -1.8125rem;
+  display: inline-block;
+  width: 1.8125rem;
+  height: 0.9375rem;
+  background: url(/img/ico/badge-product.png) no-repeat;
+  background-size: 1.8125rem;
 }
 
-.account-wrap .bt-link-tx.mg-ver {
-  margin-top: 0.75rem;
+.product-plan-wrap .tit-wrap .tit .ico.lte {
+  background-position: 0 0;
+}
+
+.product-plan-wrap .plan-detail {
+  margin-top: 2.9375rem;
+}
+
+.product-plan-wrap .plan-detail .detail-list li {
+  font-size: 1.0625rem;
+  position: relative;
+  padding: 0.8125rem 0;
+}
+
+.product-plan-wrap .plan-detail .detail-list li .small-txt {
+  font-size: 0.75rem;
+  color: #757575;
+  display: block;
   margin-bottom: 0.625rem;
 }
 
-.account-wrap .bt-slice {
-  margin-top: 2.5rem;
-}
-
-.account-detail {
-  display: table;
-  width: 100%;
-}
-
-.account-detail .select-name .bt-dropdown {
-  width: 100%;
-  padding: 0.5rem 2.25rem 0.5rem 0.75rem;
-  font-size: 0.9375rem;
-  vertical-align: middle;
-}
-
-.account-detail .select-name .bt-dropdown.wd-shrink {
-  width: auto;
-}
-
-.account-detail .select-name-table {
-  display: table-cell;
-}
-
-.account-detail .select-name-table .bt-dropdown {
-  width: auto;
-  padding: 0.5rem 2.25rem 0.5rem 0.75rem;
-  font-size: 0.9375rem;
-  vertical-align: middle;
-}
-
-.account-detail .select-name-table .bt-dropdown.wd-shrink {
-  width: 95%;
-}
-
-.account-detail .input-context-cell {
-  display: table-cell;
-}
-
-.account-detail .input-context {
-  margin-top: 0.625rem;
-}
-
-.widget.title-long .tit-a {
-  font-size: 0.9375rem;
-}
-
-.widget.title-long .acco-list .acco-box .acco-tit.pd-right button {
-  padding-right: 1.125rem;
-}
-
-.widget.title-long .acco-list .acco-box .acco-tit.pd-right button.no-arrow:after {
-  content: none;
-}
-
-.point-wrap .point-box {
-  position: relative;
-  padding: 1.875rem 1.125rem;
-  border: 1px solid #e1e1e1;
-  border-radius: 0.3125rem;
-}
-
-.point-wrap .point-box ul li {
-  margin-bottom: 1.25rem;
-}
-
-.point-wrap .point-box ul li .unavailable {
-  display: block;
-  color: #8f8f8f;
-  font-size: 0.9375rem;
-  font-weight: 400;
-  text-align: center;
-}
-
-.point-wrap .point-box ul li dl {
-  display: table;
-  width: 100%;
-}
-
-.point-wrap .point-box ul li dl dt {
-  display: table-cell;
-  width: 40%;
-  font-size: 0.9375rem;
-}
-
-.point-wrap .point-box ul li dl dd {
-  display: table-cell;
-  width: 60%;
-  text-align: right;
-  font-size: 1rem;
-}
-
-.point-wrap .point-box ul li dl dd em.number {
-  font-family: "Helvetica Neue", Roboto, sans-serif;
-  font-weight: 700;
-}
-
-.point-wrap .point-box ul li:last-child {
-  margin-bottom: 0;
-}
-
-.payment-wrap .payment-tit {
-  margin-bottom: 1.25rem;
-  font-size: 0.9375rem;
-  font-weight: 700;
-}
-
-.payment-wrap .payment-tit .fw-normal {
-  font-weight: 400;
-}
-
-.payment-inner {
-  margin-top: 1.5rem;
-}
-
-.payment-inner .noti-type2.fs-larger {
-  font-size: 0.8125rem;
-}
-
-.select-way .widget-box.radio {
-  margin-top: 3rem;
-}
-
-.select-way .widget-box.radio.line-bottom {
-  padding-bottom: 0.9375rem;
-  border-bottom: 1px solid #e1e1e1;
-}
-
-.select-way .widget-box.radio li {
-  display: inline-block;
-  margin-right: 1.875rem;
-  font-size: 0.875rem;
-}
-
-.select-way .widget-box.radio li:last-child {
-  margin-right: 0;
-}
-
-.point-info .before-info {
-  margin-bottom: 1rem;
-  font-size: 1.25rem;
-}
-
-.point-info .before-info .change-color {
-  color: #df3636;
-}
-
-/* MY T요금 / 나의요금_요금안내서 변경 및 재발행 /요금안내서반송내역*/
-.payment-detail-wrap .search-number {
-  font-size: 0.875rem;
-}
-
-.payment-detail-wrap .result-number {
-  margin-top: 1.875rem;
-  margin-bottom: 0.75rem;
-  text-align: right;
-  font-size: 0.8125rem;
-}
-
-.payment-detail-wrap .result-number .p-color {
-  color: #e84d45;
-}
-
-.payment-detail-wrap .ff-smaller {
-  font-size: 0.875rem;
-}
-
-.bill-box {
-  margin-bottom: 1.25rem;
-  font-size: 1.25rem;
-}
-
-/* 요금납부 / 포인트요금납부 */
-.point-payment {
-  display: table;
-  width: 100%;
-  padding-bottom: 1.25rem;
-  border-bottom: 1px solid #e1e1e1;
-}
-
-.point-payment .p-comapany {
-  display: table-cell;
-  width: 40%;
-  font-size: 1rem;
-}
-
-.point-payment .p-result {
-  display: table-cell;
-  width: 60%;
-  text-align: right;
-  font-size: 1.25rem;
-}
-
-.point-payment .p-result .num {
-  font-family: "Helvetica Neue", Roboto, sans-serif;
-  font-weight: 700;
-}
-
-.bt-link-wrap {
-  margin: 1.25rem 0;
-}
-
-.pop-agree {
-  margin-top: 0.625rem;
-  padding-top: 1.125rem;
-  border-top: 1px solid #e1e1e1;
-}
-
-.pop-agree-2 {
-  margin-top: 1.875rem;
-  padding-top: 1.125rem;
-  border-top: 1px solid #e1e1e1;
-}
-
-.agree-list.type-03 {
-  padding-top: 0.625rem;
-}
-
-.agree-list.type-03 .agree-cont .agree-cont-defined {
-  font-size: 0.875rem;
-  line-height: 1.375rem;
-}
-
-/* MY T */
-.top-info .note-comment {
-  margin-top: 1.25rem;
-  color: #757575;
-  font-size: 0.8125rem;
-}
-
-.top-info .note-comment-2 {
-  margin-top: 1.5625rem;
-  font-size: 0.875rem;
-  color: #757575;
-}
-
-.top-info .note-comment-3 {
-  margin-top: 0.75rem;
-  font-size: 0.75rem;
-  color: #757575;
-}
-
-.top-info .info-img {
-  margin-top: 2.5rem;
-  margin-bottom: 1.875rem;
-}
-
-.top-info .info-img img {
-  width: 100%;
-}
-
-.my-counsel .tit {
-  font-size: 1.25rem;
-}
-
-.my-counsel .link-list {
-  margin: 1.25rem 0 0.4375rem;
-}
-
-.my-counsel .link-list li {
-  border-top: 1px solid #e1e1e1;
-  position: relative;
-}
-
-.my-counsel .link-list li button, .my-counsel .link-list li a {
-  display: block;
-  width: 100%;
-  padding: 1.375rem 0;
-  font-size: 0.875rem;
-  color: #000;
-  text-align: left;
-  line-height: 1;
-}
-
-.my-counsel .link-list li:first-of-type {
-  border-top: none;
-}
-
-.my-counsel .link-list li:after {
-  content: '';
-  position: absolute;
-  right: 0.25rem;
-  top: 1.4375rem;
-  display: block;
-  width: 0.5rem;
-  height: 0.8125rem;
-  background: url(/img/ico/ico-group.png) no-repeat -2.125rem -17.5625rem;
-  background-size: 3.125rem auto;
-}
-
-.payment-detail-box .detail-inner .detail-list .data-name {
-  font-size: 0.9375rem;
-  font-weight: 700;
-}
-
-.payment-detail-box .detail-inner .detail-list .data-number {
-  font-size: 1rem;
-  font-weight: 700;
-  font-family: "Helvetica Neue", Roboto, sans-serif;
-  letter-spacing: 0;
-}
-
-.payment-detail-box .detail-inner .detail-list ul li .tx-cont .fs-type {
-  font-weight: 700;
-  font-family: "Helvetica Neue", Roboto, sans-serif;
-  letter-spacing: 0;
-}
-
-.payment-detail-box .detail-inner .detail-list ul li .tx-cont .ff-type {
-  font-family: "Helvetica Neue", Roboto, sans-serif;
-  letter-spacing: 0;
-}
-
-.payment-detail-box .detail-inner .detail-list ul li .tx-cont .bt-dropdown.size3 {
-  display: inline-block;
-  min-width: 6.25rem;
-  width: auto;
-  height: 1.875rem;
-  padding: 0 1.125rem 0 0.5rem;
-  font-size: 0.8125rem;
-  line-height: 1.0625rem;
-  letter-spacing: 0;
-}
-
-.payment-detail-box .detail-inner .detail-list ul li .tx-cont .bt-dropdown.size3:after {
-  right: 0.25rem;
-}
-
-.contents-notice.type2 .noti-type4 {
-  font-size: 0.9375rem;
-}
-
-.contents-notice.type2 .noti-type4.f-bold {
-  font-weight: 700;
-}
-
-.account-wrap .contents-notice {
-  margin-bottom: 1.25rem;
-}
-
-.account-wrap .contents-notice .noti-type4 {
-  font-size: 0.875rem;
-}
-
-.my-limit {
-  margin-bottom: 1.125rem;
-  font-size: 1.25rem;
-}
-
-.notice-wrap .notice-title {
-  font-size: 0.9375rem;
-  font-weight: 700;
-  padding-bottom: 1.25rem;
-  border-bottom: 1px solid #e1e1e1;
-}
-
-.contents-notice.type2 .noti-type2.larger {
-  margin-top: 1.5rem;
-  font-size: 0.875rem;
-  color: #000;
-}
-
-.contents-notice.type2 .noti-type2.larger:first-child {
-  margin-top: 0;
-}
-
-.notice-star {
-  color: #757575;
-  font-size: 0.8125rem;
-}
-
-.notice-star:before {
-  content: '※';
-  display: inline-block;
-  margin-right: 0.1875rem;
-}
-
-.header-wrap .header .bt-dropdown.size2 {
-  display: block;
-  min-width: 6.125rem;
-  width: auto;
-  height: 1.5rem;
-  padding: 0 1.125rem 0 0.5rem;
-  font-size: 0.75rem;
-  line-height: 1.0625rem;
-  letter-spacing: 0;
-}
-
-.header-wrap .header .bt-dropdown.size2:after {
-  right: 0.25rem;
-}
-
-.payment-comment-box {
-  font-size: 0.75rem;
-  color: #757575;
-}
-
-.payment-comment-box .payment-comment-list {
-  margin-top: 0.3125rem;
-}
-
-.payment-comment-box .payment-comment-list li {
-  margin-top: 0.1875rem;
-}
-
-.payment-comment-box .payment-comment-list li:before {
-  content: '-';
-  display: inline-block;
-  margin-right: 0.5rem;
-}
-
-.bt-contents-guide {
-  text-align: center;
-}
-
-.bt-contents-guide .bt-guide {
-  padding: 1.25rem 0;
-  color: #325ec1;
-  font-size: 0.9375rem;
-}
-
-.show-data-box {
-  position: relative;
-}
-
-.show-data-box .avarage-fee {
-  position: absolute;
-  top: 0.1875rem;
-  right: 0;
-  text-align: right;
-  font-size: 0.9375rem;
-}
-
-.show-data-box .avarage-fee .ff-strong {
-  display: inline-block;
-  margin-left: 0.3125rem;
-  color: #e80a0a;
-  font-weight: 700;
-  font-family: "Helvetica Neue", Roboto, sans-serif;
-  vertical-align: baseline;
-}
-
-.history-list .mark {
-  font-size: 0.75rem;
-  color: #757575;
-}
-
-.history-list .mark .mark-name {
-  display: inline-block;
-  margin-right: 0.625rem;
-}
-
-.history-list .mark .circle {
-  display: inline-block;
-  width: 0.625rem;
-  height: 0.625rem;
-  margin-right: 0.375rem;
-  border-radius: 50%;
-}
-
-.history-list .mark .c-default {
-  background-color: #d6dbe5;
-}
-
-.history-list .mark .c-orange {
-  background-color: #f65d00;
-  background: url(/img/chart/bg-pattern1.png) repeat;
-  background-size: 0.5rem 0.5rem;
-}
-
-.history-list .monthly-bar-chart .bar-box {
-  padding-top: 1.25rem;
-}
-
-.history-list .monthly-bar-chart .bar-box .monthly-data {
-  display: table;
-  width: 100%;
-  margin-bottom: 0.375rem;
-}
-
-.history-list .monthly-bar-chart .bar-box .monthly-data .in-item {
-  display: table-cell;
-  color: #757575;
-  font-size: 0.875rem;
-  vertical-align: middle;
-}
-
-.history-list .monthly-bar-chart .bar-box .monthly-data .in-item:last-of-type {
-  color: #000;
-  text-align: right;
-}
-
-.cellular-chart-wrap li {
-  margin-top: 1.875rem;
-}
-
-.cellular-chart-wrap li .chart-title {
-  font-size: 1.25rem;
-  text-align: left;
-}
-
-.cellular-chart-wrap li .chart-usage {
-  display: table;
-  width: 100%;
-  margin-top: 0.25rem;
-}
-
-.cellular-chart-wrap li .chart-usage .average {
-  display: table-cell;
-  width: 30%;
-  font-size: 0.875rem;
-  color: #757575;
-}
-
-.cellular-chart-wrap li .chart-usage .result {
-  display: table-cell;
-  width: 70%;
-  font-size: 1.25rem;
-  text-align: right;
-}
-
-.cellular-chart-wrap li .chart-usage .result span {
-  font-family: "Helvetica Neue", Roboto, sans-serif;
-  font-weight: 700;
-  vertical-align: baseline;
-}
-
-/* 7차 MyT */
-.info-detail.type2 ul li:first-of-type {
-  border-bottom: 1px solid #e1e1e1;
-}
-
-.info-detail.type2 ul li:first-of-type .title {
-  font-size: 1rem;
-}
-
-.info-detail.type2 ul li:first-of-type .tx-cont {
-  font-size: 1.25rem;
-}
-
-.data-sharing {
-  position: relative;
-}
-
-.data-sharing .radiobox.type01:before {
+.product-plan-wrap .plan-detail .detail-list li .ico {
   position: absolute;
   top: 50%;
-  left: 1.375rem;
-  margin-top: -0.625rem;
-  vertical-align: middle;
-}
-
-.data-sharing .fam-box {
-  padding-left: 2.625rem;
-  vertical-align: middle;
-}
-
-.data-sharing .fam-box .member-sort {
-  font-size: 0.9375rem;
-  font-weight: 700;
-}
-
-.data-sharing .fam-box .data-box {
-  display: table;
-  width: 100%;
-}
-
-.data-sharing .fam-box .data-box .data-line-info {
-  display: table-cell;
-  width: 50%;
-}
-
-.data-sharing .fam-box .data-box .data-line-info:last-child {
-  text-align: right;
-}
-
-.inner-block .tx-top {
-  margin-top: 1.5rem;
-  line-height: 1.3125rem;
-}
-
-.inner-block .tx-top .tx-ctx {
-  display: block;
-  color: #757575;
-}
-
-.inner-block .tx-top .tx-ctx.fs-type1 {
-  font-size: 0.8125rem;
-}
-
-.inner-block .tx-top .tx-ctx.fs-type2 {
-  margin-top: 1.25rem;
-  font-size: 0.75rem;
-}
-
-.inner-block .tx-top .tx-ctx .em-color {
-  color: #e80a0a;
-}
-
-.inner-block .exp-list.type2 ul li {
-  font-size: 0.875rem;
-  font-weight: 400;
-  color: #000;
-  line-height: 1.6;
-}
-
-.inner-block .exp-list.type2 ul li .dash-list.type2 li {
-  padding-left: 1.625rem;
-}
-
-.inner-block .exp-list.type2 ul li .dash-list.type2 li:before {
-  position: absolute;
-  left: 0.875rem;
-}
-
-.inner-block .exp-list.type2 ul li .dash-list.type3 li {
-  font-size: 0.8125rem;
-}
-
-.inner-block .exp-list.type2 ul li.color-type {
-  color: #000;
-}
-
-.inner-block .exp-list.type2 ul li .title.type2 {
-  color: #000;
-  font-weight: 400;
-}
-
-.inner-block .exp-list.type2 ul li.no-dash::before {
-  content: none;
-}
-
-.inner-block .exp-list.type2 .inform-tit {
-  display: block;
-  margin-bottom: 1.25rem;
-  font-size: 0.875rem;
-  font-weight: 700;
-}
-
-.inner-block .mypoint-wrap .mypoint-tit {
-  font-size: 0.875rem;
-  font-weight: 700;
-}
-
-.inner-block .mypoint-wrap .payment-detail-box .detail-list.list-type {
-  margin-bottom: 1.875rem;
-}
-
-.inner-block .mypoint-wrap .payment-detail-box .detail-list.list-type:last-child {
-  margin-bottom: 0;
-}
-
-.inner-block .mypoint-wrap .payment-detail-box .detail-list.list-type .detail-tit {
-  font-size: 0.8125rem;
-  font-weight: 700;
-}
-
-.inner-block .mypoint-wrap .payment-detail-box .detail-list.list-type .detail-ctx {
-  display: block;
-  margin-top: 0.9375rem;
-  font-size: 0.8125rem;
-}
-
-.inner-block .contents-btn.f-larger ul li button {
-  font-size: 0.9375rem;
-}
-
-.no-number .accordion .acco-style.btn-hold .acco-list .acco-box .acco-tit {
-  padding: 1.1875rem 0;
-}
-
-.no-number .accordion .acco-list .acco-box.on > .acco-cont > .list-dot > li .ex-txt li {
-  margin-top: 1rem;
-  color: #757575;
-  font-size: 0.8125rem;
-}
-
-.no-number .accordion .acco-list .acco-box.on > .acco-cont > .list-dot > li:last-child .ex-txt.color-type li {
-  margin-top: 1rem;
-  color: #000;
-  font-size: 0.8125rem;
-}
-
-.payment-detail-box .detail-inner .benefit-point-list ul li {
-  margin-bottom: 1.875rem;
-  font-size: 0.8125rem;
-}
-
-.payment-detail-box .detail-inner .benefit-point-list ul li:first-of-type {
-  padding-top: 0;
-}
-
-.payment-detail-box .detail-inner .benefit-point-list ul li:last-child {
-  margin-bottom: 0;
-}
-
-.payment-detail-box .detail-inner .benefit-point-list ul li .comment {
-  font-size: 0.75rem;
-  color: #757575;
-}
-
-.payment-detail-box .detail-inner .po-line-list {
-  font-size: 0.9375rem;
-}
-
-.payment-detail-box .detail-inner .po-line-list .po-title {
-  display: block;
-  font-weight: 700;
-}
-
-.payment-detail-box .detail-inner .po-line-list .po-line {
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  right: 0;
   display: inline-block;
-  margin-left: 0.625rem;
-  font-weight: 700;
-  font-family: "Helvetica Neue", Roboto, sans-serif;
-  letter-spacing: 0;
-  vertical-align: baseline;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: url(/img/ico/ico-product-80.png) no-repeat;
+  background-size: 2.5rem;
 }
 
-.payment-detail-box .detail-inner .po-line-list .user-data .user-1 {
-  display: inline-block;
+.product-plan-wrap .plan-detail .detail-list li .ico.data {
+  background-position: -0.125rem -0.625rem;
+  height: 1.25rem;
 }
 
-.payment-detail-box .detail-inner .po-line-list .user-data .user-1:after {
-  content: "";
-  display: inline-block;
-  width: 1px;
-  height: 0.625rem;
-  margin: 0 0.3125rem 0 0.625rem;
-  background-color: #e1e1e1;
+.product-plan-wrap .plan-detail .detail-list li .ico.share {
+  background-position: -0.3125rem -2.8125rem;
+  height: 1.9375rem;
 }
 
-.payment-detail-box .detail-inner .po-line-list .user-data .user-2 {
-  display: inline-block;
-  margin-right: 0.625rem;
+.product-plan-wrap .plan-detail .detail-list li .ico.insu {
+  background-position: -0.25rem -5.125rem;
+  height: 2.1875rem;
 }
 
-.payment-detail-box .detail-inner .po-line-list .user-data .user-3 {
-  display: inline-block;
-  font-family: "Helvetica Neue", Roboto, sans-serif;
-  letter-spacing: 0;
-  vertical-align: baseline;
+.product-plan-wrap .plan-detail .btn-wrap {
+  margin-top: 1.625rem;
 }
 
-.payment-detail-box .detail-inner .po-line-list li {
-  margin-top: 1.875rem;
+/* 김태균 */
+.msg-present-box .msg-present-comp.product-pdex0203 .ico {
+  width: 7.5rem;
+  height: 7.5rem;
+  margin-left: -3.75rem;
+  background-image: url(/img/product/PD_ex_02_03.png);
+  background-size: 7.5rem 7.5rem;
+  background-position: 0 0;
 }
 
-.payment-detail-box .detail-inner .po-line-list li .points {
-  display: inline-block;
-}
-
-.payment-detail-box .detail-inner .po-line-list li .points .p-color {
-  font-size: 0.875rem;
-  color: #757575;
-}
-
-.payment-detail-box .detail-inner .po-line-list li .ico-circle-arrow {
-  display: inline-block;
-  width: 3.125rem;
-  height: 3.125rem;
-  background: url(/img/ico/ico-group-100.png) no-repeat -3.125rem -15.625rem;
-  background-size: 6.25rem;
-}
-
-.history-list .basic-type.title-type {
-  border-top: none;
-}
-
-.history-list .basic-type.title-type li .in-item {
-  padding: 0.5rem;
-}
-
-.history-list .basic-type.inner-type li .in-item {
-  font-size: 0.8125rem;
-  text-align: center;
-}
-
-.popup-choice .popup-choice-list a .cell-box,
-.popup-choice .popup-choice-list button .cell-box {
-  width: 100%;
-}
-
-.popup-choice .popup-choice-list a .cell-box .cell,
-.popup-choice .popup-choice-list button .cell-box .cell {
-  display: inline-block;
-  width: 50%;
-}
-
-.popup-choice .popup-choice-list a .cell-box .cell:first-child,
-.popup-choice .popup-choice-list button .cell-box .cell:first-child {
-  text-align: left;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.popup-choice .popup-choice-list a .cell-box .cell:last-child,
-.popup-choice .popup-choice-list button .cell-box .cell:last-child {
-  text-align: right;
+.msg-present-box .msg-present-comp.product-pdex0206 .ico {
+  width: 7.5rem;
+  height: 7.5rem;
+  margin-left: -3.75rem;
+  background-image: url(/img/product/PD_ex_02_06.png);
+  background-size: 7.5rem 7.5rem;
+  background-position: 0 0;
 }

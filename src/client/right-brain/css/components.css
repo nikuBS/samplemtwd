@@ -5687,6 +5687,7 @@
 .info-detail-box ul.type-in-bt li a.bt-detail .bt-wrap .title,
 .info-detail-box ul.type-in-bt li a.bt-detail .bt-wrap .tx-cont {
   display: table-cell;
+  color: #000;
 }
 
 .info-detail-box ul.type-in-bt li button.bt-detail:after,
@@ -8677,6 +8678,42 @@ li.payment-detail-box:last-child {
 .recommend-p {
   font-size: 0.875rem;
   margin-bottom: 1.875rem;
+}
+
+.certify-tit h1 {
+  padding: 0 1.625rem;
+  font-weight: 700;
+  font-size: 0.9375rem;
+}
+
+.certify-wrap {
+  padding: 2.5rem 0;
+  text-align: center;
+  border-bottom: 1px solid #e1e1e1;
+}
+
+.certify-wrap .txt {
+  font-size: 0.8125rem;
+  font-weight: 400;
+}
+
+.certify-wrap .cert-number {
+  padding: 0.9375rem 0 0.4375rem;
+  line-height: 60px;
+  font-size: 3rem;
+  font-weight: 400;
+  font-family: "Helvetica Neue", Roboto, sans-serif;
+}
+
+.certify-wrap .left-time {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #df3636;
+}
+
+.certify-wrap .left-time span {
+  vertical-align: baseline;
+  font-family: "Helvetica Neue", Roboto, sans-serif;
 }
 
 /* 김정기 */
@@ -15300,7 +15337,7 @@ span[class*=char-star][class*=red] {
 
 /* 김재성 */
 .jsk {
-  color: #00f;
+  color: red;
 }
 
 /* 최은현 */
