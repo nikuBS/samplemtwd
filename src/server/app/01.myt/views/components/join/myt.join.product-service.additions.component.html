@@ -1,4 +1,4 @@
-<% if( svcInfo.svcAttrCd.indexOf('M') === 0 ) { %>
+<% if( svcInfo.svcAttrCd.indexOf('M') === 0 && additions) { %>
 <div class="cont-box">
     <div class="title-wrap">
         <h2 class="title-h2">사용중인 부가상품</h2>
@@ -179,7 +179,7 @@
 </div>
 <% } %>
 
-<% if( svcInfo.svcAttrCd.indexOf('S') === 0 ) { %>
+<% if( svcInfo.svcAttrCd.indexOf('S') === 0 && additions) { %>
 <div class="cont-box">
     <% if (additions.pays.length === 0 && additions.frees.length === 0) { %>
     <div class="title-wrap">
