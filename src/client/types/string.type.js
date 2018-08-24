@@ -488,7 +488,16 @@ Tw.MSG_MYT = {
   FEE_ALARM_ALERT_A01: '서비스를 해지 하시겠습니까?',
   FEE_ALARM_ALERT_A01_SUCCESS: '해지 처리 완료 되었습니다.',
   FEE_ALARM_ALERT_A02: '서비스를 신청 하시겠습니까?',
-  FEE_ALARM_ALERT_A02_SUCCESS: '서비스 신청 완료 되었습니다.'
+  FEE_ALARM_ALERT_A02_SUCCESS: '서비스 신청 완료 되었습니다.',
+  JOIN_COMBINATION_A03: '고객님께서는 TB끼리 온가족프리 대표회선입니다. 해지시 T끼리 온가족프리 그룹이 자동 해지 됩니다. 해지하시겠습니까?',
+  JOIN_COMBINATION_A04: '고객님께서는 TB끼리 온가족프리 인터넷 가입회선입니다. 해지시 T끼리 온가족프리 그룹이 자동 해지됩니다. 해지하시겠습니까?',
+  JOIN_COMBINATION_A05: '온가족프리 결합이 해지되었습니다.',
+  JOIN_COMBINATION_A06: '변경되었습니다.',
+  JOIN_COMBINATION_A07: '휴대폰번호 자릿수를 확인해주세요. (10~11자리)',
+  JOIN_COMBINATION_A08: '휴대폰번호가 올바르지 않습니다. 다시 확인해주세요.',
+  JOIN_COMBINATION_A09: '기존과 동일한 혜택입니다. 다시 선택해 주세요.',
+  JOIN_COMBINATION_A10: '기존과 동일한 혜택입니다. 다시 입력해 주세요.',
+  JOIN_COMBINATION_A11: '입력하신 번호가 가족등록 번호입니다. 다시 입력해주세요.',
 };
 
 Tw.MSG_RECHARGE = {

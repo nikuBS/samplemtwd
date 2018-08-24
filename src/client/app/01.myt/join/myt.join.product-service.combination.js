@@ -19,6 +19,10 @@ Tw.MyTJoinProductServiceCombination = function (rootEl) {
 
 Tw.MyTJoinProductServiceCombination.prototype = {
   DEFAULT_SHARE_AMOUNT: 100,
+  BENEFIT_FIRST: {
+    SAFE_LTE: '2053-LTESF',
+    DATA_FREE: '2053-DAT1G'
+  },
   _init: function () {
     var $shareContainer = this.$container.find('#fe-share-container');
 
@@ -33,16 +37,21 @@ Tw.MyTJoinProductServiceCombination.prototype = {
   },
 
   _bindEvent: function () {
-    this.$container.on('click', '.bt-blue1', $.proxy(this._goMain, this));
-    this.$container.on('click', '.bt-white1', $.proxy(this._goShareStep, this));
+    this.$container.on('click', '.fe-go-main', $.proxy(this._goMain, this));
+    this.$container.on('click', '.fe-go-share', $.proxy(this._goShareStep, this));
     this.$container.on('click', '.select-list > li', $.proxy(this._handleSelectMember, this));
-    this.$container.on('click', '.bt-red1', $.proxy(this._submitShareData, this));
+    this.$main.on('click', '.bt-red1', $.proxy(this._submitShareData, this));
+    this.$main.on('click', '.fe-benefit1', $.proxy(this._goFirstBenefit, this));
+    this.$benefitFirst.on('click', '.bt-red1', $.proxy(this._handleChangeFirstBenefit, this));
     this.$amountBtn.click($.proxy(this._openSelectAmountPopup, this));
   },
 
   _cachedElement: function () {
     this.$amountArea = this.$container.find('#fe-amount-area');
     this.$amountBtn = this.$container.find('.bt-dropdown');
+    this.$main = this.$container.find('#main');
+    this.$benefitFirst = this.$container.find('#benefit-1st');
+    this.$benefitSecond = this.$container.find('#benefit-2nd');
   },
 
   _goShareStep: function () {
@@ -93,8 +102,8 @@ Tw.MyTJoinProductServiceCombination.prototype = {
     }
   },
 
-  _fail: function () {
-    Tw.Error(resp.code, resp.msg).pop();
+  _fail: function (err) {
+    Tw.Error(err.code, err.msg).pop();
   },
 
   _openSelectAmountPopup: function () {
@@ -135,6 +144,43 @@ Tw.MyTJoinProductServiceCombination.prototype = {
 
   _bindSelectAmount: function ($layer) {
     $layer.on('click', '.popup-choice-list > button', $.proxy(this._handleSelectAmount, this, $layer));
+  },
+
+  _goFirstBenefit: function (e) {
+    var $target = $(e.target);
+    var $infoArea = $target.parents('li.acco-list');
+
+    this.$benefitFirst.find('span.fe-name').text($infoArea.find('.info-line .fe-name').text());
+    this.$benefitFirst.find('span.data-number').text($infoArea.find('.info-line.ff-hn').text());
+
+    this._selectedBenefit = $infoArea.find('.right-item').data('selected-benefit');
+    var benefitLi = $(this.$benefitFirst.find('ul.tube-list > li')[this._selectedBenefit === this.BENEFIT_FIRST.DATA_FREE ? 1 : 0]);
+    benefitLi.addClass('checked');
+    benefitLi.attr('aria-checked', 'true');
+    benefitLi.find('input').attr('checked', 'checked');
+
+    this._history.goHash('benefit-1st');
+  },
+
+  _handleChangeFirstBenefit: function () {
+    var nSelectedBenefit = this.$benefitFirst.find('ul.tube-list li.checked').index() === 1 ? this.BENEFIT_FIRST.DATA_FREE : this.BENEFIT_FIRST.SAFE_LTE;
+
+    if (this._selectedBenefit === nSelectedBenefit) {
+      this._popupService.openAlert(Tw.MSG_MYT.JOIN_COMBINATION_A09);
+    } else {
+      this._apiService.request(Tw.API_CMD.BFF_05_0135, {
+        chgOpCd: 6,
+        benefitVal: nSelectedBenefit
+      }).done($.proxy(this._successChageBenefit, this)).fail($.proxy(this._fail, this));
+    }
+  },
+
+  _successChageBenefit: function (resp) {
+    if (resp.code === Tw.API_CODE.CODE_00) {
+      this._popupService.openAlert(Tw.MSG_MYT.JOIN_COMBINATION_A06);
+    } else {
+      Tw.Error(resp.code, resp.msg).pop();
+    }
   },
 
   _handleSelectAmount: function ($layer, e) {
