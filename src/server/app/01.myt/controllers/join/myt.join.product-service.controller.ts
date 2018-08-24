@@ -127,7 +127,7 @@ class MytJoinProductServiceController extends TwViewController {
         feeMainTemplate: apiInfo.isWire ? 'wire' : 'wireless',
         feePlan: this._convertFeePlan(feePlan, apiInfo.isWire),
         combinations,
-        additions: this.convertAddtions()
+        additions: this.convertAddtions(additions)
       });
     });
   }
@@ -330,7 +330,7 @@ class MytJoinProductServiceController extends TwViewController {
     }
   }
 
-  private convertAddtions = () => {
+  private convertAddtions = (additions) => {
     // const additions_s = {
     //   'code': '00',
     //   'msg': '',
@@ -386,7 +386,7 @@ class MytJoinProductServiceController extends TwViewController {
     //   }
     // };
 
-    const additions = {
+    const mock_additions = {
       'code': '00',
       'msg': '',
       'result': {
@@ -475,31 +475,33 @@ class MytJoinProductServiceController extends TwViewController {
       }
     };
 
-    const result = additions.result;
+    const result = mock_additions.result;
 
-    Object.keys(result).forEach(key => {
-      result[key] = result[key].map((product) => {
+    try {
+      Object.keys(result).forEach(key => {
         result['paidCount'] = 0;
         result['freeCount'] = 0;
 
-        if ( product.payFreeYn === 'Y' ) {
-          result['freeCount'] = result['freeCount'] + 1;
-        } else {
-          result['paidCount'] = result['paidCount'] + 1;
-        }
+        result[key] = result[key].map((product) => {
+          if ( product.payFreeYn === 'Y' ) {
+            result['freeCount'] = result['freeCount'] + 1;
+          } else {
+            result['paidCount'] = result['paidCount'] + 1;
+          }
 
-        return Object.assign(product, {
-          scrbDt: DateHelper.getShortDateNoDot(product.scrbDt),
-          basFeeTxt: product.basFeeTxt ? isNaN(parseInt(product.basFeeTxt.toString(), 10)) ?
-            product.basFeeTxt.toString() : FormatHelper.addComma(product.basFeeTxt.toString()) : '',
-          basFeeAmt: product.basFeeAmt ? isNaN(parseInt(product.basFeeAmt.toString(), 10)) ?
-            product.basFeeAmt.toString() : FormatHelper.addComma(product.basFeeAmt.toString()) : '',
-          isBasFeeNumber: isNaN(parseInt(product.basFeeTxt, 10))
+          return Object.assign(product, {
+            scrbDt: DateHelper.getShortDateNoDot(product.scrbDt),
+            basFeeTxt: product.basFeeTxt ? isNaN(parseInt(product.basFeeTxt.toString(), 10)) ?
+              product.basFeeTxt.toString() : FormatHelper.addComma(product.basFeeTxt.toString()) : '',
+            isBasFeeNumber: isNaN(parseInt(product.basFeeTxt, 10))
+          });
         });
       });
-    });
 
-    return result;
+      return result;
+    } catch ( e ) {
+      return null;
+    }
   }
 }
 
