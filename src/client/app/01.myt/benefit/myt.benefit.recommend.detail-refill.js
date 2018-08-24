@@ -53,32 +53,36 @@ Tw.MytBenefitRecommendDetailRefill.prototype = {
     var refillObj = _.groupBy( this.bffListData, function(item) {
       if (item.copnOperStCd === 'A10') {
         return 'A10';
-      } else if( item.copnOperStCd === 'A20' || item.copnOperStCd === 'A14' ) {
+      } else {
         return 'A20';
       }
-
     });
+
     this.proDataObj = refillObj;
     Tw.Logger.info('[_proData]', this.proDataObj);
   },
   _ctrlInit: function() {
 
-    // var totCpLen = this.bffListData.length;
-    // this._cachedElement();
-    // this.$refillCpArea.html('리필 쿠폰 : 총 ' + totCpLen + '매');
+    /*
+    * copnOperStCd 코드가 A10 인경우 쿠폰의 갯수를 "장기가입쿠폰" 총갯수로 표기한다.
+    * copnOperStCd 코드가 A10 아닌경우의 쿠폰의 갯수를 "리필쿠폰" 총갯수로 표기한다.
+     */
 
     if ( !Tw.FormatHelper.isEmpty(this.proDataObj.A10)) {
       Tw.Logger.info('[_ctrlInit isEmpty A10]');
       var cpLenA10 = this.proDataObj.A10.length;
       this._cachedElement();
-      this.$LtsCpArea.html('장기가입 쿠폰 : ' + cpLenA10 + '매');
+      this.$LtsCpArea.html(Tw.MSG_MYT.BENEFIT.RECOMMEND.A10_CP_NM + ' : ' + cpLenA10 + Tw.MSG_MYT.BENEFIT.RECOMMEND.CP_UNIT );
     }
 
     if ( !Tw.FormatHelper.isEmpty(this.proDataObj.A20)) {
       Tw.Logger.info('[_ctrlInit isEmpty A20]');
       var cpLenA20 = this.proDataObj.A20.length;
       this._cachedElement();
-      this.$LtsCpArea.html('리필 쿠폰 : ' + cpLenA20 + '매');
+      this.$LtsCpArea.html(Tw.MSG_MYT.BENEFIT.RECOMMEND.A20_CP_NM + ' : ' + cpLenA20 + Tw.MSG_MYT.BENEFIT.RECOMMEND.CP_UNIT );
+    } else {
+      this._cachedElement();
+      this.$refillCpArea.html(Tw.MSG_MYT.BENEFIT.RECOMMEND.A20_CP_NM + ' : ' + 0 + Tw.MSG_MYT.BENEFIT.RECOMMEND.CP_UNIT );
     }
 
   },

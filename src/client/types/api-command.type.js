@@ -109,12 +109,15 @@ Tw.API_CMD = {
   BFF_05_0096: { path: '/core-product/v1/benefit-suggestions', method: Tw.API_METHOD.GET },
   BFF_05_0120: { path: '/core-bill/v1/military-service-points', method: Tw.API_METHOD.GET },
   BFF_05_0102: { path: '/core-bill/v1/rainbow-point-adjustments', method: Tw.API_METHOD.POST },
+  BFF_05_0104: { path: '/core-bill/v1/rainbow-point-transfers', method: Tw.API_METHOD.POST },
+  BFF_05_0105: { path: '/core-bill/v1/rainbow-point-transfers/args-0', method: Tw.API_METHOD.DELETE },
   BFF_05_0123: { path: '/core-product/v1/services/unavailableness', method: Tw.API_METHOD.GET },
   BFF_05_0100: { path: '/core-bill/v1/rainbow-point-histories', method: Tw.API_METHOD.GET },
   BFF_05_0126: { path: '/core-product/v1/fee-plans/change-notices', method: Tw.API_METHOD.POST },
   BFF_05_0127: { path: '/core-product/v1/fee-plans/change-notices', method: Tw.API_METHOD.DELETE },
   BFF_05_0129: { path: '/core-product/v1/services/wire/additions', method: Tw.API_METHOD.GET },
   BFF_05_0137: { path: '/core-product/v1/services/wireless/additions', method: Tw.API_METHOD.GET },
+  BFF_05_0138: { path: '/core-product/v1/services/combinations/data-sharings', method: Tw.API_METHOD.PUT },
   BFF_05_0139: { path: '/core-modification/v1/myinfo/wire-service-contracts', method: Tw.API_METHOD.GET },
 
   // RECHARGE
@@ -289,13 +292,8 @@ Tw.TMAP = {
   APP_KEY: 'ecfeceac-3660-4618-bc3b-37a11f952441'
 };
 
-Tw.IPIN_URL = 'https://cert.vno.co.kr/ipin.cb';
-Tw.NICE_URL = 'https://nice.checkplus.co.kr/CheckPlusSafeModel/checkplus.cb';
-
 Tw.AJAX_CMD = {
   GET_TMAP_REGION: { path: '/geofencing/regions', method: Tw.API_METHOD.GET, url: Tw.TMAP.REGION_URL },
-  OPEN_NICE_AUTH: { path: '', method: Tw.API_METHOD.POST, url: Tw.NICE_URL, contentType: 'application/x-www-form-urlencoded' },
-  OPEN_IPIN_AUTH: { path: '', method: Tw.API_METHOD.POST, url: Tw.IPIN_URL, contentType: 'application/x-www-form-urlencoded' }
 };
 
 Tw.API_CODE = {

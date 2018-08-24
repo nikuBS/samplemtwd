@@ -351,12 +351,12 @@
                 <div class="addlist-cell">
                     <div class="widget">
                         <div class="widget-box file">
-                                                                        <span class="inputbox bt-add">
-                                                                            <span class="bt-box">
-                                                                                파일첨부
-                                                                                <input class="file" type="file" value="파일첨부">
-                                                                            </span>
-                                                                        </span>
+                            <span class="inputbox bt-add">
+                                <span class="bt-box">
+                                    파일첨부
+                                    <input class="file" type="file" value="파일첨부">
+                                </span>
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -504,6 +504,23 @@
         <button class="popup-closeBtn fe-direct-close"><span class="blind">팝업 페이지 닫기</span></button>
         <!--// .popup-closeBtn -->
     </div>
+</script>
+
+<script id="tpl_file_item" type="text/x-handlebars-template">
+    {{#each list}}
+    <li>
+        <div class="addlist-cell">
+            <span class="ico-file-img" aria-hidden="true"><span class="blind">이미지파일</span></span>
+        </div>
+        <div class="addlist-cell">
+            <span class="file-name">{{originalName}}</span>
+            <span class="file-byte">{{convertData.data}} MB</span>
+        </div>
+        <div class="addlist-cell">
+            <button class="bt-file-del fe-delete-file"><span class="blind">첨부파일 삭제</span></button>
+        </div>
+    </li>
+    {{/each}}
 </script>
 
 <script>

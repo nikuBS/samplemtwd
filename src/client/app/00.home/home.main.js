@@ -16,7 +16,9 @@ Tw.HomeMain = function (rootEl, lineRegisterLayer) {
   this._clearHistory();
 
   this._cert = new Tw.CertificationSelect();
-  // this._cert.open();
+  // setTimeout($.proxy(function () {
+  //   this._cert.open();
+  // }, this), 0);
 
   // For dev (Determine if api service issue or bff issue)
   // this._testApi();

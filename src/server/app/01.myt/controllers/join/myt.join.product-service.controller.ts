@@ -4,7 +4,7 @@
  * Date: 2018.08.13
  */
 
-import { COMBINATION_PRODUCT_OTHER_TYPE, UNIT } from '../../../../types/bff.type';
+import { COMBINATION_PRODUCT_OTHER_TYPE, UNIT, VOICE_UNIT } from '../../../../types/bff.type';
 import { NextFunction, Request, Response } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -69,8 +69,9 @@ class MytJoinProductServiceController extends TwViewController {
           return Object.assign(item, {
             penText: (item.penYn === 'Y') ? MYT_FEEPLAN_BENEFIT.PEN_Y : MYT_FEEPLAN_BENEFIT.PEN_N,
             dcStaDt: DateHelper.getShortDateWithFormat(item.dcStaDt, 'YYYY.MM.DD'),
-            dcEndDt: (item.dcEndDt !== '99991231') ? DateHelper.getShortDateWithFormat(item.dcEndDt, 'YYYY.MM.DD') : MYT_FEEPLAN_BENEFIT.ENDLESS,
-            dcVal: FormatHelper.addComma(item.dcVal)
+            dcEndDt: (item.dcEndDt !== '99991231') ? DateHelper.getShortDateWithFormat(item.dcEndDt, 'YYYY.MM.DD')
+              : MYT_FEEPLAN_BENEFIT.ENDLESS,
+            dcVal: FormatHelper.addComma(item.dcVal.toString())
           });
         })
       });
@@ -80,10 +81,13 @@ class MytJoinProductServiceController extends TwViewController {
       feePlanProd: Object.assign(data.result.feePlanProd, {
         scrbDt: DateHelper.getShortDateWithFormat(data.result.feePlanProd.scrbDt, 'YYYY.MM.DD'),
         basFeeTxt: isNaN(parseInt(data.result.feePlanProd.basFeeTxt, 10)) ? data.result.feePlanProd.basFeeTxt
-            : FormatHelper.addComma(data.result.feePlanProd.basFeeTxt) + UNIT['110']
+          : FormatHelper.addComma(data.result.feePlanProd.basFeeTxt) + UNIT['110'],
+        basOfrVcallTmsTxt: (data.result.feePlanProd.basOfrVcallTmsTxt !== '0' + VOICE_UNIT.MIN) ? data.result.feePlanProd.basOfrVcallTmsTxt : null,
+        basOfrLtrAmtTxt: (data.result.feePlanProd.basOfrLtrAmtTxt !== '0' + UNIT['310']) ? data.result.feePlanProd.basOfrLtrAmtTxt : null
       }),
       tClassProd: {
-        tClassProdList: data.result.tClassProd ? Object.assign(data.result.tClassProd, {
+        tClassProdList: data.result.tClassProd && data.result.tClassProd.tClassProdList
+            ? Object.assign(data.result.tClassProd.tClassProdList, {
           tClassProdList: data.result.tClassProd.tClassProdList.map((item) => {
             return Object.assign(item, {
               scrbDt: DateHelper.getShortDateWithFormat(item.scrbDt, 'YYYY.MM.DD')
@@ -123,7 +127,7 @@ class MytJoinProductServiceController extends TwViewController {
         feeMainTemplate: apiInfo.isWire ? 'wire' : 'wireless',
         feePlan: this._convertFeePlan(feePlan, apiInfo.isWire),
         combinations,
-        additions: this.convertAddtions()
+        additions: this.convertAddtions(additions)
       });
     });
   }
@@ -326,8 +330,63 @@ class MytJoinProductServiceController extends TwViewController {
     }
   }
 
-  private convertAddtions = () => {
-    const additions = {
+  private convertAddtions = (additions) => {
+    // const additions_s = {
+    //   'code': '00',
+    //   'msg': '',
+    //   'result': {
+    //     'reserveds': [
+    //       {
+    //         'prodId': 'NI00000266',
+    //         'prodNm': 'T_PC원스톱',
+    //         'payFreeYn': 'N',
+    //         'basFeeAmt': 3300,
+    //         'prodLinkYn': 'Y',
+    //         'scrbDt': '20171107'
+    //       }
+    //     ],
+    //     'pays': [
+    //       {
+    //         'prodId': 'NI00000266',
+    //         'prodNm': 'T_PC원스톱',
+    //         'payFreeYn': 'N',
+    //         'basFeeAmt': 3300,
+    //         'prodLinkYn': 'Y',
+    //         'scrbDt': '20171107'
+    //       }
+    //     ],
+    //     'frees': [
+    //       {
+    //         'prodId': 'NI00000266',
+    //         'prodNm': 'T_PC원스톱',
+    //         'payFreeYn': 'N',
+    //         'basFeeAmt': 3300,
+    //         'prodLinkYn': 'Y',
+    //         'scrbDt': '20171107'
+    //       }
+    //     ],
+    //
+    //     'joinables': [
+    //       {
+    //         'prodId': 'NI00000258',
+    //         'prodNm': 'T_가디언SW',
+    //         'payFreeYn': 'N',
+    //         'basFeeAmt': 0,
+    //         'prodLinkYn': 'Y'
+    //       },
+    //       {
+    //         'prodId': 'NI00000259',
+    //         'prodNm': 'T_파워IP',
+    //         'payFreeYn': 'N',
+    //         'basFeeAmt': 38500,
+    //         'prodLinkYn': 'Y'
+    //       }
+    //     ]
+    //
+    //   }
+    // };
+
+    const mock_additions = {
       'code': '00',
       'msg': '',
       'result': {
@@ -416,28 +475,33 @@ class MytJoinProductServiceController extends TwViewController {
       }
     };
 
-    const result = additions.result;
+    const result = mock_additions.result;
 
-    Object.keys(result).forEach(key => {
-      result['paidCount'] = 0;
-      result['freeCount'] = 0;
+    try {
+      Object.keys(result).forEach(key => {
+        result['paidCount'] = 0;
+        result['freeCount'] = 0;
 
-      result[key] = result[key].map((product) => {
-        if ( product.payFreeYn === 'Y' ) {
-          result['freeCount'] = result['freeCount'] + 1;
-        } else {
-          result['paidCount'] = result['paidCount'] + 1;
-        }
+        result[key] = result[key].map((product) => {
+          if ( product.payFreeYn === 'Y' ) {
+            result['freeCount'] = result['freeCount'] + 1;
+          } else {
+            result['paidCount'] = result['paidCount'] + 1;
+          }
 
-        return Object.assign(product, {
-          scrbDt: DateHelper.getShortDateNoDot(product.scrbDt),
-          basFeeTxt: isNaN(parseInt(product.basFeeTxt, 10)) ? product.basFeeTxt : FormatHelper.addComma(product.basFeeTxt),
-          isBasFeeNumber : isNaN(parseInt(product.basFeeTxt, 10))
+          return Object.assign(product, {
+            scrbDt: DateHelper.getShortDateNoDot(product.scrbDt),
+            basFeeTxt: product.basFeeTxt ? isNaN(parseInt(product.basFeeTxt.toString(), 10)) ?
+              product.basFeeTxt.toString() : FormatHelper.addComma(product.basFeeTxt.toString()) : '',
+            isBasFeeNumber: isNaN(parseInt(product.basFeeTxt, 10))
+          });
         });
       });
-    });
 
-    return result;
+      return result;
+    } catch ( e ) {
+      return null;
+    }
   }
 }
 

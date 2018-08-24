@@ -53,7 +53,8 @@ Tw.POPUP_TITLE = {
   MYT_LIMIT_DAY: '1일 한도선택',
   MYT_LIMIT_ONCE: '1회 한도선택',
   MYT_SMS: '번호 선택',
-  UPLOAD_FILE: '파일 추가하기'
+  UPLOAD_FILE: '파일 추가하기',
+  SHARE_DATA_AMOUNT: '나눠쓰기 할 데이터량',
 };
 
 Tw.POPUP_PROPERTY = {
@@ -157,7 +158,8 @@ Tw.PAYMENT_STRD_MSG = {
 };
 
 Tw.MSG_COMMON = {
-  SERVER_ERROR: '통신 오류입니다. 잠시 후 다시 시도해 주세요.'
+  SERVER_ERROR: '통신 오류입니다. 잠시 후 다시 시도해 주세요.',
+  DATA_CONFIRM: '3G/LTE망 사용시 데이터 요금이 발생됩니다.'
 };
 
 Tw.MSG_HOME = {};
@@ -166,8 +168,8 @@ Tw.MSG_MYT = {
   USAGE_TING_M03: {
     TITLE: '통화가능 금액이란?',
     CONTENTS: '팅요금상품 가입 시 선택하신 상한금액에서 기본료를 제외한 나머지 금액입니다.\n' +
-    '예) 팅 100요금상품의 경우, 상한 2만원 선택 시 통화 가능 금액은 7,500원입니다.\n' +
-    '상한(20,000원) – 기본료(12,500원) = 7,500원\n'
+      '예) 팅 100요금상품의 경우, 상한 2만원 선택 시 통화 가능 금액은 7,500원입니다.\n' +
+      '상한(20,000원) – 기본료(12,500원) = 7,500원\n'
   },
   BILL_GUIDE_REISSUE_00: ' 요금안내서 재발행',
   BILL_GUIDE_REISSUE_01: ' 요금안내서 재발행을 신청하시겠습니까?',
@@ -409,69 +411,78 @@ Tw.MSG_MYT = {
   HISTORY_ALERT_VC004: '기존 비밀번호와 변경할 비밀번호를 다르게 입력하세요.',
   HISTORY_ALERT_VC006: '입력하신 기존 비밀번호가 틀립니다. 확인하세요.',
   HISTORY_ALERT_VC007: '법정생년월일은 비밀번호 설정이 불가능합니다. 다른 번호를 입력해주세요.',
-  SMS_A01 : '개인정보 제공 및 활용동의에 체크해주세요.',
-  SMS_A02 : '숫자만 입력 가능합니다.',
-  SMS_A03 : 'SMS 받을 번호를 입력해주세요.',
+  SMS_A01: '개인정보 제공 및 활용동의에 체크해주세요.',
+  SMS_A02: '숫자만 입력 가능합니다.',
+  SMS_A03: 'SMS 받을 번호를 입력해주세요.',
   BENEFIT: {
     SELECT_TITLE: '회선 선택',
     A1: '포인트를 입력해 주세요.',
     A2: '포인트 합산하기를 종료하시겠습니까?',
+    A3: '포인트 양도하기를 종료하시겠습니까?',
+    A4: '포인트 양도를 취소하시겠습니까?',
     A8: '보유하신 포인트를 초과 하였습니다.',
     A13: '동일회선 간에는 포인트 합산이 불가합니다.',
-    MEMBERSHIP : {
-      LIST : [
+    A14: '동일회선 간에는 포인트 양도가 불가합니다.',
+    MEMBERSHIP: {
+      LIST: [
         {
-          TITLE : 'T멤버십 VIP 혜택',
-          TEXT : '멤버십 VIP 등급으로<br/>영화예매/쇼핑/생활/공연 등의<br/>다양한 혜택을 받고 있습니다',
-          CODE : 'VIP'
+          TITLE: 'T멤버십 VIP 혜택',
+          TEXT: '멤버십 VIP 등급으로<br/>영화예매/쇼핑/생활/공연 등의<br/>다양한 혜택을 받고 있습니다',
+          CODE: 'VIP'
 
         },
         {
-          TITLE : 'T클래스',
-          TEXT : '통신비 절감, 포인트 적립, 분실보험,<br/>멤버십 UP 혜택을 받고 있습니다.',
-          CODE : 'T_CLASS'
+          TITLE: 'T클래스',
+          TEXT: '통신비 절감, 포인트 적립, 분실보험,<br/>멤버십 UP 혜택을 받고 있습니다.',
+          CODE: 'T_CLASS'
         },
         {
-          TITLE : '멤버십몰 초콜릿',
-          TEXT : '초콜릿몰을 파격적 할인가로<br/>이용 가능합니다.',
-          CODE : 'CHOCOLATE'
+          TITLE: '멤버십몰 초콜릿',
+          TEXT: '초콜릿몰을 파격적 할인가로<br/>이용 가능합니다.',
+          CODE: 'CHOCOLATE'
         },
         {
-          TITLE : '멜론 프리/스트리밍 클럽',
-          TEXT : '멜론 프리/스트리밍 클럽 월정액<br/>30%할인 혜택을 받고 있습니다.',
-          CODE : 'MELON'
+          TITLE: '멜론 프리/스트리밍 클럽',
+          TEXT: '멜론 프리/스트리밍 클럽 월정액<br/>30%할인 혜택을 받고 있습니다.',
+          CODE: 'MELON'
         },
         {
-          TITLE : '11번가 11% 할인',
-          TEXT : '11번가 최대 11% 할인 혜택을<br/>받고 있습니다.',
-          CODE : '11ST'
+          TITLE: '11번가 11% 할인',
+          TEXT: '11번가 최대 11% 할인 혜택을<br/>받고 있습니다.',
+          CODE: '11ST'
         },
         {
-          TITLE : '데이터 Free',
-          TEXT : '데이터 Free 앱 이용 시 데이터 이용료<br/>0원 혜택을 받고 있습니다.',
-          CODE : 'FREE'
+          TITLE: '데이터 Free',
+          TEXT: '데이터 Free 앱 이용 시 데이터 이용료<br/>0원 혜택을 받고 있습니다.',
+          CODE: 'FREE'
         },
         {
-          TITLE : 'T플 전용 혜택',
-          TEXT : '영화/TV/음악/게임 반값, 기타<br/>컨텐츠 할인 혜택을 받고 있습니다.',
-          CODE : 'TPLE'
+          TITLE: 'T플 전용 혜택',
+          TEXT: '영화/TV/음악/게임 반값, 기타<br/>컨텐츠 할인 혜택을 받고 있습니다.',
+          CODE: 'TPLE'
         },
         {
-          TITLE : '커플 전용 혜택',
-          TEXT : '영화/커피/공영 1+1 혜택을<br/>받고 있습니다.',
-          CODE : 'COUPLE'
+          TITLE: '커플 전용 혜택',
+          TEXT: '영화/커피/공영 1+1 혜택을<br/>받고 있습니다.',
+          CODE: 'COUPLE'
         },
         {
-          TITLE : 'T멤버십 (Leaders Club) 전용 혜택',
-          TEXT : 'Carlife 무료 가입 및 B tv 유선<br/>할인 혜택을 받고 있습니다.',
-          CODE : 'LEADERS'
+          TITLE: 'T멤버십 (Leaders Club) 전용 혜택',
+          TEXT: 'Carlife 무료 가입 및 B tv 유선<br/>할인 혜택을 받고 있습니다.',
+          CODE: 'LEADERS'
         },
         {
-          TITLE : '데이터PLUS T멤버십',
-          TEXT : 'T멤버십 제휴처 이용 시 데이터 쿠폰<br/>발급 혜택을 받고 있습니다.',
-          CODE : 'PLUS'
+          TITLE: '데이터PLUS T멤버십',
+          TEXT: 'T멤버십 제휴처 이용 시 데이터 쿠폰<br/>발급 혜택을 받고 있습니다.',
+          CODE: 'PLUS'
         }
       ]
+    },
+    RECOMMEND: {
+      RECOMMEND_NONE: '받고있는 혜택이 없습니다.',
+      A10_CP_NM: '장기가입 쿠폰',
+      A20_CP_NM: '리필 쿠폰',
+      CP_UNIT: '매'
     }
   },
   FEE_ALARM_ALERT_A01: '서비스를 해지 하시겠습니까?',
@@ -761,9 +772,9 @@ Tw.URL_PATH = {
   BROADBAND: 'http://www.skbroadband.com',
   COP_SERVICE: 'http://b2b.tworld.co.kr/cs/counsel/certServiceInfo.bc',
   CONTETNS_YOUTUBE_HELP_URL: 'https://support.google.com/youtube/contact/commerce_contact?hl=ko&cfsi=subs_red_2',
-  CHOCOLATE_MALL : 'http://tmembership.tworld.co.kr/web/html/chocolate/main/ChocoHomeMain.jsp?sel=1',
-  '11ST' : 'http://www.11st.co.kr/html/main.html',
-  DATA_FREE : 'http://www.sktmembership.co.kr/web/html/data/dataFree.jsp',
+  CHOCOLATE_MALL: 'http://tmembership.tworld.co.kr/web/html/chocolate/main/ChocoHomeMain.jsp?sel=1',
+  '11ST': 'http://www.11st.co.kr/html/main.html',
+  DATA_FREE: 'http://www.sktmembership.co.kr/web/html/data/dataFree.jsp',
   MYT_BILL_HISTORY_MICRO: '/myt/bill/history/micro',
   MYT_PAYPASS_CONFIRM: '/myt/bill/history/micro/password',
   MYT_PAYPASS_INFO: '',
@@ -804,33 +815,33 @@ Tw.CUSTOMER_EMAIL = {
   WIBRO: '휴대폰/와이브로',
   SELECT_CATEGORY: '문의사항 선택',
   Q_TYPE01: [
-    {text: '음성통화 불량(HD Voice 포함)'},
-    {text: '영상통화 불량'},
-    {text: '부가서비스 불량'},
-    {text: '데이터(Date) 불량'},
-    {text: '와이브로 품질장애/고장'}
+    { text: '음성통화 불량(HD Voice 포함)' },
+    { text: '영상통화 불량' },
+    { text: '부가서비스 불량' },
+    { text: '데이터(Date) 불량' },
+    { text: '와이브로 품질장애/고장' }
   ],
   Q_TYPE02: [
-    {text: '음성발신불량, 음성수신불량 <br>음성발신/수신 모두 불량'},
-    {text: 'SMS발신불량, SMS수신불량 <br>SMS발신/수신 모두불량'},
-    {text: '인터넷접속불량 <br>특정 APP 분량, 기타'}
+    { text: '음성발신불량, 음성수신불량 <br>음성발신/수신 모두 불량' },
+    { text: 'SMS발신불량, SMS수신불량 <br>SMS발신/수신 모두불량' },
+    { text: '인터넷접속불량 <br>특정 APP 분량, 기타' }
   ],
   Q_TYPE03: [
-    {text: '건물내부(지하층)'},
-    {text: '건물내부(지상층)'},
-    {text: '건물외부'},
-    {text: '위치무관'}
+    { text: '건물내부(지하층)' },
+    { text: '건물내부(지상층)' },
+    { text: '건물외부' },
+    { text: '위치무관' }
   ],
   Q_TYPE04: [
-    {text: '주택, 빌라'},
-    {text: '아파트, 오피스텔'},
-    {text: '사무실, 상가'},
-    {text: '기타'}
+    { text: '주택, 빌라' },
+    { text: '아파트, 오피스텔' },
+    { text: '사무실, 상가' },
+    { text: '기타' }
   ],
   Q_TYPE05: [
-    {text: '사용 중 갑자기'},
-    {text: '며칠 전부터'},
-    {text: '이사/회사 이동 후 부터'}
+    { text: '사용 중 갑자기' },
+    { text: '며칠 전부터' },
+    { text: '이사/회사 이동 후 부터' }
   ]
 };
 
@@ -840,20 +851,20 @@ Tw.CUSTOMER_SERVICE_INFO_URL = [
 ];
 
 Tw.PAYMENT_CARD_TYPE_LIST = [
-  {'attr': 'id="00"', text: '일시불'},
-  {'attr': 'id="01"', text: '1개월 할부'},
-  {'attr': 'id="02"', text: '2개월 할부'},
-  {'attr': 'id="03"', text: '3개월 할부'},
-  {'attr': 'id="04"', text: '4개월 할부'},
-  {'attr': 'id="05"', text: '5개월 할부'},
-  {'attr': 'id="06"', text: '6개월 할부'},
-  {'attr': 'id="07"', text: '7개월 할부'},
-  {'attr': 'id="08"', text: '8개월 할부'},
-  {'attr': 'id="09"', text: '9개월 할부'},
-  {'attr': 'id="10"', text: '10개월 할부'},
-  {'attr': 'id="11"', text: '11개월 할부'},
-  {'attr': 'id="12"', text: '12개월 할부'},
-  {'attr': 'id="24"', text: '24개월 할부'}
+  { 'attr': 'id="00"', text: '일시불' },
+  { 'attr': 'id="01"', text: '1개월 할부' },
+  { 'attr': 'id="02"', text: '2개월 할부' },
+  { 'attr': 'id="03"', text: '3개월 할부' },
+  { 'attr': 'id="04"', text: '4개월 할부' },
+  { 'attr': 'id="05"', text: '5개월 할부' },
+  { 'attr': 'id="06"', text: '6개월 할부' },
+  { 'attr': 'id="07"', text: '7개월 할부' },
+  { 'attr': 'id="08"', text: '8개월 할부' },
+  { 'attr': 'id="09"', text: '9개월 할부' },
+  { 'attr': 'id="10"', text: '10개월 할부' },
+  { 'attr': 'id="11"', text: '11개월 할부' },
+  { 'attr': 'id="12"', text: '12개월 할부' },
+  { 'attr': 'id="24"', text: '24개월 할부' }
 ];
 
 Tw.NO_CONTRACT_TYPE = {

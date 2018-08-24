@@ -1,6 +1,6 @@
 import TwRouter from '../../common/route/tw.router';
 import CustomerHelpline from './controllers/helpline/customer.helpline.controller';
-import CustomerNoticeController from './controllers/customer.notice.controller';
+import CustomerNoticeController from './controllers/notice/customer.notice.controller';
 import CustomerPreventdamageMainController from './controllers/preventdamage/customer.preventdamage.main.controller';
 import CustomerPreventdamageGuideController from './controllers/preventdamage/customer.preventdamage.guide.controller';
 import CustomerPreventdamageGuideviewController from './controllers/preventdamage/customer.preventdamage.guideview.controller';
@@ -11,6 +11,7 @@ import CustomerPreventdamageLatestwarningviewController from './controllers/prev
 import CustomerShopDetailController from './controllers/shop/customer.shop.detail.controller';
 import CustomerShopNearController from './controllers/shop/customer.shop.near.controller';
 import CustomerShopRepairController from './controllers/shop/customer.shop.repair.controller';
+import CustomerShopRepairDetailController from './controllers/shop/customer.shop.repair-detail.controller';
 import CustomerShopRepairManufacturerController from './controllers/shop/customer.shop.repair-manufacturer.controller';
 import CustomerShopSearchController from './controllers/shop/customer.shop.search.controller';
 import CustomerVoiceController from './controllers/voice/customer.voice.controller';
@@ -20,6 +21,7 @@ import CustomerEmailController from './controllers/email/customer.email.controll
 import CustomerResearchResult from './controllers/researches/customer.researches.result.controller';
 import CustomerFaqController from './controllers/faq/customer.faq.controller';
 import CustomerFaqCategoryController from './controllers/faq/customer.faq.category.controller';
+import CustomerFaqDoItLikeThisController from './controllers/faq/customer.faq.do-it-like-this.controller';
 import CustomerFaqInfoService from './controllers/faq/customer.faq.info.service.controller';
 import CustomerFaqInfoSite from './controllers/faq/customer.faq.info.site.controller';
 import CustomerEventController from './controllers/event/customer.event.controller';
@@ -44,6 +46,7 @@ class CustomerRouter extends TwRouter {
     this.controllers.push({ url: '/shop/detail', controller: new CustomerShopDetailController });
     this.controllers.push({ url: '/shop/near', controller: new CustomerShopNearController });
     this.controllers.push({ url: '/shop/repair', controller: new CustomerShopRepairController });
+    this.controllers.push({ url: '/shop/repair-detail', controller: new CustomerShopRepairDetailController });
     this.controllers.push({ url: '/shop/repair-manufacturer', controller: new CustomerShopRepairManufacturerController });
     this.controllers.push({ url: '/shop/search', controller: new CustomerShopSearchController() });
     this.controllers.push({ url: '/voice/:type', controller: new CustomerVoiceController() });
@@ -51,6 +54,7 @@ class CustomerRouter extends TwRouter {
     this.controllers.push({ url: '/researches(/:researchId)?', controller: new CustomerResearches() });
     this.controllers.push({ url: '/faq', controller: new CustomerFaqController() });
     this.controllers.push({ url: '/faq/category', controller: new CustomerFaqCategoryController() });
+    this.controllers.push({ url: '/faq/doitlikethis', controller: new CustomerFaqDoItLikeThisController() });
     this.controllers.push({ url: '/faq/service-info', controller: new CustomerFaqInfoService() });
     this.controllers.push({ url: '/faq/service-info(/:serviceId)?', controller: new CustomerFaqInfoService() });
     this.controllers.push({ url: '/faq/site-info(/:serviceId)?', controller: new CustomerFaqInfoSite() });

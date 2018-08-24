@@ -69,7 +69,8 @@ export const URL = {
   '/myt/benefit/rainbow-point/info': { login: true, id: 'MY_04_04_01_02', title: '혜택 자세히보기'}, // 레인보우 포인트 > 혜택 자세히보기'
   '/myt/join/product-service/fee-alarm': { login: true, id: 'MY_01_01_01', title: '요금제 변경 가능일 알림 서비스' },
   '/myt/join/product-service/fee-alarm/change': { login: true, id: 'MY_01_01_02', title: '요금제 변경 가능일 알림 서비스 신청/해지' },
-  '/myt/benefit/point/adjustment': { login: true, id: 'MY_04_04_02', title: '포인트합산'},
+  '/myt/benefit/rainbow-point/adjustment': { login: true, id: 'MY_04_04_02', title: '포인트합산'},
+  '/myt/benefit/rainbow-point/transfer': { login: true, id: 'MY_04_04_03', title: '대리인 간 양도'},
   '/myt/benefit/membership': { login: true, id: 'MY_04_02', title: '멤버십 혜택'},
   '/myt/benefit/membership/detail': { login: true, id: 'MY_04_02_01_01', title: '멤버십 혜택 상세'},
 
@@ -140,12 +141,14 @@ export const URL = {
   '/customer/shop/detail': { login: false, id: 'CI_02_04', title: '매장정보' }, // 매장 및 AS센터 > 매장정보
   '/customer/shop/near': { login: false, id: 'CI_02_05', title: '내 위치와 가까운 매장' }, // 매장 및 AS센터 > 내 위치와 가까운 매장 검색
   '/customer/shop/repair': { login: false, id: 'CI_03_01', title: '매장 및 AS 센터' }, // 매장 및 AS센터 > 지역 별 AS센터
+  '/customer/shop/repair-detail': { login: false, id: 'CI_03_03', title: 'AS센터 정보' }, // 매장 및 AS센터 > AS센터 자세히
   '/customer/shop/repair-manufacturer': { login: false, id: 'CI_03_02', title: '매장 및 AS 센터' }, // 매장 및 AS센터 > 제조사 별 AS센터
   '/customer/shop/search': { login: false, id: 'CI_02_01', title: '매장 및 AS 센터' }, // 매장 및 AS센터 > 지점/대리점 찾기
   '/customer/researches': { login: true, id: 'CI_09_02', title: '고객의견' }, // 설문조사 리스트
   '/customer/result': { login: false, id: 'CI_09_04', title: '설문조사 결과' }, // 설문조사 결과
   '/customer/faq': { login: false, id: 'CI_11_01', title: '자주 찾는 질문' }, // 자주 찾는 질문
   '/customer/faq/category': { login: false, id: 'CI_11_02', title: '자주 찾는 질문/Category' }, // 자주 찾는 질문(Category: 요금상품, 가입/변경/해지 ....)
+  '/customer/faq/doitlikethis': { login: false, id: 'CI_11_05', title: '이럴 땐 이렇게 하세요' }, // 이럴 땐 이렇게 하세요 상세
   '/customer/faq/service-info': { login: false, id: 'CI_14_01', title: '서비스 이용안내' }, // 서비스 이용안내
   '/customer/faq/site-info': { login: false, id: 'CI_15_01', title: '사이트 이용안내' }, // 사이트 이용안내
   '/customer/faq/site-info/m-customer-center': { login: false, id: 'CI_15_03', title: 'M 고객센터' }, // M 고객센터

@@ -26,7 +26,7 @@ Tw.MytBenefitMembershipDetail.prototype = {
   // 초콜릿몰 / 11번가 / DATA FREE 링크
   _goUrl : function (e) {
     var $this = $(e.currentTarget);
-    Tw.UrlHelper.openUrl( Tw.URL_PATH[$this.data('urlName')] );
+    Tw.CommonHelper.openUrl( Tw.URL_PATH[$this.data('urlName')] );
   }
 
 

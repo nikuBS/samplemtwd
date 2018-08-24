@@ -57,9 +57,12 @@ Tw.RechargeGiftProcess.prototype = {
   },
 
   _onContact: function (resp) {
-    var params = resp;
-    var phoneNumber = params.phoneNumber.replace(/-/gi, '');
-    this.$input_phone.val(phoneNumber);
+    if(resp.resultCode === Tw.NTV_CMD.CODE_00) {
+      var params = resp.params;
+      var phoneNumber = params.phoneNumber.replace(/-/gi, '');
+      this.$input_phone.val(phoneNumber);
+    }
+
   },
 
   _sendTextPopEvt: function () {

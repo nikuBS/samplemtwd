@@ -1,0 +1,32 @@
+<%#
+* FileName: myt.benefit.point.page.html
+* Author: Hyeryoun Lee (skt.P130712@partner.sk.com)
+* Date: 2018. 8. 23.
+%>
+<script id="fe-points-list" type="text/x-handlebars-template">
+    <div class="payment-select">
+        <ul class="select-list">
+            {{#each items}}
+            <li>
+                <span class="title tx-bold">{{opClCd}} <span class="num pl8">{{opDt}}</span></span>
+                <ul class="tb-layout">
+                    <li>
+                        <span class="tit">{{opDtl}}<br /></span>
+                        <span class="tx-cont"><span class="ff-hn tx-bold vbl">{{point}}</span> 점</span>
+                    </li>
+                </ul>
+            </li>
+            {{/each}}
+        </ul>
+    </div>
+    {{#if page }}
+    <div class="paging">
+        <a href="#" role="button" class="prev {{#if page.prev}}disabled{{/if}}"><span class="pg-blind">이전 페이지로 이동</span></a>
+        {{#for page.from page.to 1}}
+        <a href="#{{this}}" role="button" >{{this}}</a>
+        {{/for}}
+        <a href="#" role="button" class="next {{#if page.next}}disabled{{/if}}"><span class="pg-blind">다음 페이지로 이동</span></a>
+        <!-- 비활성화시 disabled 클래스 추가 -->
+    </div>
+    {{/if }}
+</script>
