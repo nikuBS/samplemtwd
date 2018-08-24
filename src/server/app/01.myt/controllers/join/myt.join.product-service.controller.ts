@@ -69,8 +69,9 @@ class MytJoinProductServiceController extends TwViewController {
           return Object.assign(item, {
             penText: (item.penYn === 'Y') ? MYT_FEEPLAN_BENEFIT.PEN_Y : MYT_FEEPLAN_BENEFIT.PEN_N,
             dcStaDt: DateHelper.getShortDateWithFormat(item.dcStaDt, 'YYYY.MM.DD'),
-            dcEndDt: (item.dcEndDt !== '99991231') ? DateHelper.getShortDateWithFormat(item.dcEndDt, 'YYYY.MM.DD') : MYT_FEEPLAN_BENEFIT.ENDLESS,
-            dcVal: FormatHelper.addComma(item.dcVal)
+            dcEndDt: (item.dcEndDt !== '99991231') ? DateHelper.getShortDateWithFormat(item.dcEndDt, 'YYYY.MM.DD')
+              : MYT_FEEPLAN_BENEFIT.ENDLESS,
+            dcVal: FormatHelper.addComma(item.dcVal.toString())
           });
         })
       });
