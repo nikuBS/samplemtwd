@@ -30,8 +30,8 @@
     <% } else { %>
         <div class="plan-list">
             <ul>
-                <% for (let combIdx in combinations) { %>
-                    <% const combination = combinations[combIdx]; %>
+                <% for (let i = 0; i < combinations.length; i++) { %>
+                    <% const combination = combinations[i]; %>
                     <li>
                         <div class="type">
                             <button role="button" class="btn-plan"><%= combination.prodNm %></button>
