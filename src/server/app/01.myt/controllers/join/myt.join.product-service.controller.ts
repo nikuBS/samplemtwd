@@ -23,10 +23,6 @@ interface ICombination {
   hasDetail: boolean;
 }
 
-interface ICombinationList {
-  [key: string]: ICombination;
-}
-
 class MytJoinProductServiceController extends TwViewController {
   constructor() {
     super();
@@ -87,13 +83,13 @@ class MytJoinProductServiceController extends TwViewController {
       }),
       tClassProd: {
         tClassProdList: data.result.tClassProd && data.result.tClassProd.tClassProdList
-            ? Object.assign(data.result.tClassProd.tClassProdList, {
-          tClassProdList: data.result.tClassProd.tClassProdList.map((item) => {
-            return Object.assign(item, {
-              scrbDt: DateHelper.getShortDateWithFormat(item.scrbDt, 'YYYY.MM.DD')
-            });
-          })
-        }) : []
+          ? Object.assign(data.result.tClassProd.tClassProdList, {
+            tClassProdList: data.result.tClassProd.tClassProdList.map((item) => {
+              return Object.assign(item, {
+                scrbDt: DateHelper.getShortDateWithFormat(item.scrbDt, 'YYYY.MM.DD')
+              });
+            })
+          }) : []
       }
     });
   }
@@ -132,23 +128,22 @@ class MytJoinProductServiceController extends TwViewController {
     });
   }
 
-  private getCombinations = (): Observable<ICombinationList | null> => {
+  private getCombinations = (): Observable<ICombination[] | null> => {
     return this.apiService.request(API_CMD.BFF_05_0133, {}).map(
       (resp: {
         code: string,
         result: { combinationWireMemberList?: any[], combinationWirelessMemberList?: any[] }
       }) => {
         if ( resp.code === API_CODE.CODE_00 ) {
-          const combinations: ICombinationList = {};
+          const combinations: ICombination[] = [];
           const wireless = resp.result.combinationWirelessMemberList;
           const wire = resp.result.combinationWireMemberList;
 
           if ( wireless && wireless.length > 0 ) {
             for ( let i = 0; i < wireless.length; i++ ) {
-              const item = wireless[i];
-              const nItem = this.getProperCombination(item);
-              if ( nItem ) {
-                combinations[item.expsOrder] = nItem;
+              const item = this.getProperCombination(wireless[i]);
+              if ( item ) {
+                combinations.push(item);
               }
             }
           } else {
@@ -157,11 +152,9 @@ class MytJoinProductServiceController extends TwViewController {
 
           if ( wire ) {
             for ( let i = 0; i < wire.length; i++ ) {
-              const item = wire[i];
-              const nItem = this.getProperCombination(item);
-
-              if ( nItem ) {
-                combinations[item.expsOrder] = nItem;
+              const item = this.getProperCombination(wire[i]);
+              if ( item ) {
+                combinations.push(item);
               }
             }
           }
@@ -193,9 +186,9 @@ class MytJoinProductServiceController extends TwViewController {
           icon: 'line',
           description: MYT_COMBINATION_TYPE.LINE
         }, {
-          icon: 'multi',
-          description: MYT_COMBINATION_TYPE.MULTI_ONE
-        });
+            icon: 'multi',
+            description: MYT_COMBINATION_TYPE.MULTI_ONE
+          });
         break;
       }
 
@@ -204,9 +197,9 @@ class MytJoinProductServiceController extends TwViewController {
           icon: 'line',
           description: MYT_COMBINATION_TYPE.LINE
         }, {
-          icon: 'int',
-          description: MYT_COMBINATION_TYPE.INTERNET
-        });
+            icon: 'int',
+            description: MYT_COMBINATION_TYPE.INTERNET
+          });
         break;
       }
 
@@ -215,9 +208,9 @@ class MytJoinProductServiceController extends TwViewController {
           icon: 'line',
           description: MYT_COMBINATION_TYPE.LINE
         }, {
-          icon: 'tel',
-          description: MYT_COMBINATION_TYPE.TEL
-        });
+            icon: 'tel',
+            description: MYT_COMBINATION_TYPE.TEL
+          });
         break;
       }
 
@@ -227,9 +220,9 @@ class MytJoinProductServiceController extends TwViewController {
           icon: 'multi',
           description: MYT_COMBINATION_TYPE.MULTI_TWO
         }, {
-          icon: 'int',
-          description: MYT_COMBINATION_TYPE.INTERNET
-        });
+            icon: 'int',
+            description: MYT_COMBINATION_TYPE.INTERNET
+          });
         break;
       }
 
@@ -239,12 +232,12 @@ class MytJoinProductServiceController extends TwViewController {
           icon: 'line',
           description: MYT_COMBINATION_TYPE.FAMILY
         }, {
-          icon: 'tel',
-          description: MYT_COMBINATION_TYPE.TEL
-        }, {
-          icon: 'itel',
-          description: MYT_COMBINATION_TYPE.ITEL
-        });
+            icon: 'tel',
+            description: MYT_COMBINATION_TYPE.TEL
+          }, {
+            icon: 'itel',
+            description: MYT_COMBINATION_TYPE.ITEL
+          });
         break;
       }
 
@@ -287,9 +280,9 @@ class MytJoinProductServiceController extends TwViewController {
           icon: 'tel',
           description: MYT_COMBINATION_TYPE.TEL
         }, {
-          icon: 'itel',
-          description: MYT_COMBINATION_TYPE.ITEL
-        });
+            icon: 'itel',
+            description: MYT_COMBINATION_TYPE.ITEL
+          });
         break;
       }
       case 'NH00000105':
@@ -298,9 +291,9 @@ class MytJoinProductServiceController extends TwViewController {
           icon: 'multi',
           description: MYT_COMBINATION_TYPE.MULTI_TWO
         }, {
-          icon: 'iptv',
-          description: MYT_COMBINATION_TYPE.IPTV
-        });
+            icon: 'iptv',
+            description: MYT_COMBINATION_TYPE.IPTV
+          });
         break;
       }
       case 'NH00000103':
@@ -309,9 +302,9 @@ class MytJoinProductServiceController extends TwViewController {
           icon: 'line',
           description: MYT_COMBINATION_TYPE.LINE
         }, {
-          icon: 'int',
-          description: MYT_COMBINATION_TYPE.INTERNET
-        });
+            icon: 'int',
+            description: MYT_COMBINATION_TYPE.INTERNET
+          });
         break;
       }
       default: {
