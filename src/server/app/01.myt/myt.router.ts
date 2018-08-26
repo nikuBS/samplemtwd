@@ -57,7 +57,7 @@ import MyTBenefitRainbowPoint from './controllers/benefit/myt.benefit.rainbow-po
 import MyTBenefitRainbowPointInfo from './controllers/benefit/myt.benefit.rainbow-point-info.controller';
 import MyTBenefitRainbowPointHistory from './controllers/benefit/myt.benefit.rainbow-point-history.controller';
 
-import MytJoinProductServiceCombinationController from './controllers/join/mty.join.product-service.combination.controller';
+import MytJoinProductServiceCombinationController from './controllers/join/myt.join.product-service.combination.controller';
 
 import { MyTBenefitRainbowPointAdjustmentController } from './controllers/benefit/myt.benefit.rainbow-point.adjustment.controller';
 import MyTBenefitRainbowPointTransferController from './controllers/benefit/myt.benefit.rainbow-point.transfer.controller';
