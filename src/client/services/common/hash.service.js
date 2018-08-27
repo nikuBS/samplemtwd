@@ -19,6 +19,7 @@ Tw.HashService.prototype = {
     }
 
     this._checkHash(callback);
+    return this._currentHashNav;
   },
   _checkHash: function () {
     var hash = window.location.hash.replace(/^#/i, '');
