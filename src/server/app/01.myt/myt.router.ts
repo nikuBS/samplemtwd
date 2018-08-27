@@ -40,7 +40,7 @@ import MyTBillHistoryContents from './controllers/bill/myt.bill.history.contents
 
 
 
-import MytJoinProtectChangeController from './controllers/join/myt.join.protect.change.controller';
+import MyTJoinProtectChangeController from './controllers/join/myt.join.protect.change.controller';
 import MyTJoinJoinInfoController from './controllers/join/myt.join.join-info.controller';
 import MyTJoinJoinInfoNoContractController from './controllers/join/myt.join.join-info.no-contract.controller';
 import MyTJoinJoinInfoSmsController from './controllers/join/myt.join.join-info.sms.controller';
@@ -123,7 +123,7 @@ class MytRouter extends TwRouter {
     this.controllers.push({ url: '/join/contract-terminal', controller: new MyTJoinContractTerminal() });
     this.controllers.push({ url: '/join/contract-terminal/detail', controller: new MyTJoinContractTerminalDetail() });
     this.controllers.push({ url: '/join/join-info', controller: new MyTJoinJoinInfoController() });
-    this.controllers.push({ url: '/join/protect/change', controller: new MytJoinProtectChangeController() });
+    this.controllers.push({ url: '/join/protect/change', controller: new MyTJoinProtectChangeController() });
     this.controllers.push({ url: '/join/join-info/no-contract', controller: new MyTJoinJoinInfoNoContractController() });
     this.controllers.push({ url: '/join/join-info/sms', controller: new MyTJoinJoinInfoSmsController() });
 
