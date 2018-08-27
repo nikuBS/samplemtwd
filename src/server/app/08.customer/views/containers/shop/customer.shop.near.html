@@ -94,6 +94,14 @@
   {{/list}}
 </script>
 
+<script type="text/template" id="tpl_area_item">
+    {{#list}}
+    <li role="radio" aria-checked="false">
+        <input type="radio" name="senddata" title="">{{districtName}}</li>
+    </li>
+    {{/list}}
+  </script>
+
 <script>
   $(document).ready(function () {
     new Tw.CustomerShopNear($('.wrap'));

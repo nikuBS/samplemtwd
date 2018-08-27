@@ -131,18 +131,18 @@ Tw.CustomerShopSearch.prototype = {
     this._historyService.goLoad('/customer/shop/detail?code=' + evt.currentTarget.value);
   },
   _onMore: function () {
-    var cmd = Tw.API_CMD.BFF_08_0004B;
+    var cmd = Tw.API_CMD.BFF_08_0004;
     var params = { currentPage: this._pageCount };
     switch (this._currentTab) {
       case 1:
         params.searchText = this.$inputName.val();
         break;
       case 2:
-        cmd = Tw.API_CMD.BFF_08_0005B;
+        cmd = Tw.API_CMD.BFF_08_0005;
         params.searchText = this.$inputAddress.val();
         break;
       case 3:
-        cmd = Tw.API_CMD.BFF_08_0006B;
+        cmd = Tw.API_CMD.BFF_08_0006;
         params.searchText = this.$inputTube.val();
         break;
       default:
