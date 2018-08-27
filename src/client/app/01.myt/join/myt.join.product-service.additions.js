@@ -32,7 +32,7 @@ Tw.MyTJoinProductServiceAdditions.prototype = {
   },
 
   _showPopupUnavailableService: function () {
-    if ( this.unAvailableServiceList.length === 0 ) {
+    if ( !this.unAvailableServiceList || this.unAvailableServiceList.length === 0 ) {
       this._popupService.open({
         hbs: 'MY_01_01_51_L02_case',
         layer: true
