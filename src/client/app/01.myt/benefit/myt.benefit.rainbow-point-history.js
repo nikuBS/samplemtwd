@@ -10,7 +10,7 @@ Tw.MyTBenefitRainbowPointHistory = function (rootEl) {
   this._popupService = Tw.Popup;
   this._hashService = Tw.Hash;
 
-  this.LIST_SIZE = 5; //리스트 아이템 노출 최대수
+  this.LIST_SIZE = 20; //리스트 아이템 노출 최대수
 
   this._cachedElement();
   this._bindEvent();
@@ -25,7 +25,7 @@ Tw.MyTBenefitRainbowPointHistory.prototype = {
     var selectedPeriod = $(':input:radio[name=selectdate1]:checked').attr('data-month');
     this._setPeriod(selectedPeriod);
 
-
+    this._currentPage = 0;
     this._pageWidget = new Tw.MytBenefitPointPage('fe-points-list');
     this._requestHistoryData(hash || 1);
   },
@@ -49,10 +49,10 @@ Tw.MyTBenefitRainbowPointHistory.prototype = {
 
   _bindEvent: function () {
     this.$container.on('change', '.fe-period input', $.proxy(this._onChangePeriod, this));
-    this.$container.on('click', 'button[data-id="search"]', $.proxy(this._requestHistoryData, this, 1));
+    this.$container.on('click', 'button[data-id="search"]', $.proxy(this._requestHistoryData, this, null));
 
-    this.$listWrapper.find('a.prev').on('click', $.proxy(this._onClickPrev, this));
-    this.$listWrapper.find('a.next').on('click', $.proxy(this._onClickNext, this));
+    this.$listWrapper.on('click', 'a.prev:not(.disabled)', $.proxy(this._onClickPrev, this));
+    this.$listWrapper.on('click', 'a.next:not(.disabled)', $.proxy(this._onClickNext, this));
   },
 
   _onChangePeriod: function (e) {
@@ -68,16 +68,21 @@ Tw.MyTBenefitRainbowPointHistory.prototype = {
   },
 
   _requestHistoryData: function (page) {
-    var params = {
-      fromDt: this.$fromDate.val().replace(/-/g, ''),
-      toDt: this.$toDate.val().replace(/-/g, ''),
-      page: page || 1,
-      size: this.LIST_SIZE
-    };
-    this._apiService.request(Tw.API_CMD.BFF_05_0100, params)
-      .done($.proxy(this._onHistoryDataReceived, this, page))
-      .fail(function () {
-      });
+    if (page !== this._currentPage) {
+      if(!page){
+        page = 1;
+      }
+      var params = {
+        fromDt: this.$fromDate.val().replace(/-/g, ''),
+        toDt: this.$toDate.val().replace(/-/g, ''),
+        page: page || 1,
+        size: this.LIST_SIZE
+      };
+      this._apiService.request(Tw.API_CMD.BFF_05_0100, params)
+        .done($.proxy(this._onHistoryDataReceived, this, page))
+        .fail(function () {
+        });
+    }
   },
 
   _onHistoryDataReceived: function (page, resp) {
@@ -94,7 +99,7 @@ Tw.MyTBenefitRainbowPointHistory.prototype = {
         this.$listWrapper.empty();
         this.$sectionNoItem.show();
       } else {
-        this._currentPage = page;
+        this._currentPage = parseInt(page);
         this._totalPage = Math.ceil(resp.result.totRecCnt / this.LIST_SIZE);
         this._renderList(this._currentPage, resp.result.history);
       }
