@@ -912,3 +912,7 @@ Tw.POINT_TYPE = {
   COOKIZ: '쿠키즈',
   MILITARY: '현역플랜'
 };
+
+Tw.TMAP_STRING = {
+  POI_SEARCH_POSTFIX: '청'
+};

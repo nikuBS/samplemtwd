@@ -24,6 +24,9 @@ Tw.CustomerShopNear = function (rootEl) {
   this._nearShops = null;
 
   this._areas = [];
+  this._selectedLarea = '';
+  this._selectedLareaName = '';
+  this._selectedMarea = '';
 
   this._listShownCount = 0;
 
@@ -50,6 +53,7 @@ Tw.CustomerShopNear.prototype = {
       $.proxy(this._onSwitchMapList, this));
     this.$container.on('click', '.bt-map', $.proxy(this._onLocationClicked, this));
     this.$btnMore.on('click', $.proxy(this._onMore, this));
+    this.$container.on('click', '.fe-shop-detail', $.proxy(this._onListClicked, this));
   },
   _init: function () {
     this.$container.find('.bt-view-list').css('z-index', 1000);
@@ -111,7 +115,7 @@ Tw.CustomerShopNear.prototype = {
       this._historyService.goBack();
       return;
     } else {
-      location = res;
+      location = Tw.FormatHelper.isEmpty(res.params) ? res : res.params;
     }
     // init Tmap and show
     if (Tw.FormatHelper.isEmpty(this._map)) {
@@ -127,15 +131,20 @@ Tw.CustomerShopNear.prototype = {
     );
 
     // Add marker for current location
-    var markerLayer = new Tmap.Layer.Markers();
-    this._map.addLayer(markerLayer);
+    // var markerLayer = new Tmap.Layer.Markers();
+    if (Tw.FormatHelper.isEmpty(this._currentMarker)) {
+      this._currentMarker = new Tmap.Layer.Markers();
+      this._map.addLayer(this._currentMarker);
+    } else {
+      this._currentMarker.clearMarkers();
+    }
     var size = new Tmap.Size(24, 38);
     var offset = new Tmap.Pixel(-(size.w / 2), -(size.h));
     var lonlat = new Tmap.LonLat(location.longitude, location.latitude)
       .transform('EPSG:4326', 'EPSG:3857');
     var icon = new Tmap.Icon(Tw.TMAP.COMPASS, size, offset);
     var marker = new Tmap.Marker(lonlat, icon);
-    markerLayer.addMarker(marker);
+    this._currentMarker.addMarker(marker);
 
     // Retrieve current region
     this._apiService.requestAjax(Tw.AJAX_CMD.GET_TMAP_REGION, {
@@ -147,7 +156,7 @@ Tw.CustomerShopNear.prototype = {
       reqCoordType: 'WGS84GEO',
       reqLon: location.longitude,
       reqLat: location.latitude,
-      appKey : Tw.TMAP.APP_KEY
+      appKey: Tw.TMAP.APP_KEY
     }).done($.proxy(function (res) {
       var regions = res.searchRegionsInfo[0].regionInfo.description.split(' ');
       if (regions.length === 2) {
@@ -176,26 +185,39 @@ Tw.CustomerShopNear.prototype = {
     var size = new Tmap.Size(24, 38);
     var offset = new Tmap.Pixel(-(size.w / 2), -(size.h));
 
-    this._markerLayer1 = new Tmap.Layer.Markers();
-    this._markerLayer2 = new Tmap.Layer.Markers();
-    this._map.addLayer(this._markerLayer1);
-    this._map.addLayer(this._markerLayer2);
-    var shops = this._nearShops;
+    if (Tw.FormatHelper.isEmpty(this._markerLayer1)) {
+      this._markerLayer1 = new Tmap.Layer.Markers();
+      this._markerLayer2 = new Tmap.Layer.Markers();
+      this._map.addLayer(this._markerLayer1);
+      this._map.addLayer(this._markerLayer2);
+    } else {
+      this._markerLayer1.clearMarkers();
+      this._markerLayer2.clearMarkers();
+    }
 
+    var shops = this._nearShops;
     for (var i = 0; i < shops.length; i++) {
       var lonlat = new Tmap.LonLat(shops[i].geoX, shops[i].geoY)
         .transform('EPSG:4326', 'EPSG:3857');
       var icon = new Tmap.Icon(Tw.TMAP.PIN, size, offset);
-      var marker = new Tmap.Marker(lonlat, icon);
+      var label = new Tmap.Label(shops[i].locCode);
+      var marker = new Tmap.Markers(lonlat, icon, label);
       if (shops[i].storeType === '1') {
         this._markerLayer1.addMarker(marker);
       } else {
         this._markerLayer2.addMarker(marker);
       }
+      marker.events.register('touchstart', marker, this._onMarkerClicked);
     }
 
     this.$resultCount.text(this.$resultCount.text().replace(/\d*/, shops.length));
     this._onMore();
+  },
+  _onMarkerClicked: function () {
+    window.location.href = '/customer/shop/detail?code=' + this.popup.contentHTML;
+  },
+  _onListClicked: function (evt) {
+    this._historyService.goLoad('/customer/shop/detail?code=' + evt.currentTarget.value);
   },
   _onMore: function () {
     var shops = this._nearShops;
@@ -252,10 +274,12 @@ Tw.CustomerShopNear.prototype = {
           })
         }]
       }, $.proxy(function (root) {
+        root.find('input[value="' + $btDropdown.val() + '"]').click();
         root.on('click', '.bt-red1', $.proxy(function () {
           this._popupService.close();
-          var $selected = root.find('input[checked="checked"]');
+          var $selected = root.find('.checked input');
           $btDropdown.text($selected.attr('title'));
+          $btDropdown.val($selected.val());
           this._onLargeAreaChanged($selected.val(), $areaList);
         }, this));
       }, this));
@@ -266,21 +290,40 @@ Tw.CustomerShopNear.prototype = {
     }, this));
 
     container.on('click', '.bt-red1', $.proxy(function () {
+      this._selectedLarea = $btDropdown.val();
+      this._selectedLareaName = $btDropdown.text();
+      this._selectedMarea = $areaList.find('input[checked="checked"]').val();
+
       this._popupService.close();
-      var addr = $btDropdown.text().trim() + ' ' + $areaList.find('.checked').text().trim();
-      this._apiService.requestAjax(Tw.AJAX_CMD.GET_TMAP_ADDR_GEO, {
+
+      this._apiService.requestAjax(Tw.AJAX_CMD.GET_TMAP_POI, {
         version: 1,
-        fullAddr: addr,
+        searchKeyword: $areaList.find('.checked').text().trim() + Tw.TMAP_STRING.POI_SEARCH_POSTFIX,
+        areaLLCode: this._selectedLarea,
+        // areaLMCode: $areaList.find('input[checked="checked"]').val(),
         appKey: Tw.TMAP.APP_KEY
       }).done($.proxy(function (res) {
         this._onCurrentLocation({
-          longitude: res.coordinateInfo.coordinate[0].lon,
-          latitude: res.coordinateInfo.coordinate[0].lat
+          longitude: res.searchPoiInfo.pois.poi[0].frontLon,
+          latitude: res.searchPoiInfo.pois.poi[0].frontLat
         });
       }, this)).fail(function (err) {
-        Tw.Error(err.code, err.msg).pop();
+        Tw.Error(err.status, err.statusText).pop();
       });
     }, this));
+
+    if (!Tw.FormatHelper.isEmpty(this._areas)) {
+      if (!Tw.FormatHelper.isEmpty(this._selectedLarea)) {
+        $btDropdown.text(this._selectedLareaName);
+        $btDropdown.val(this._selectedLarea);
+      } else {
+        $btDropdown.text(this._areas[0].districtName);
+        $btDropdown.val(this._areas[0].largeCd);
+      }
+
+      this._onLargeAreaChanged($btDropdown.val(), $areaList);
+      return;
+    }
 
     this._apiService.requestAjax(Tw.AJAX_CMD.GET_TMAP_AREASCODE, {
       version: 1,
@@ -292,6 +335,8 @@ Tw.CustomerShopNear.prototype = {
       appKey: Tw.TMAP.APP_KEY
     }).done($.proxy(function (res) {
       this._areas = res.areaCodeInfo.poiAreaCodes;
+      $btDropdown.text(this._areas[0].districtName);
+      $btDropdown.val(this._areas[0].largeCd);
       this._onLargeAreaChanged(this._areas[0].largeCd, $areaList);
     }, this)).fail($.proxy(function (err) {
       this._popupService.openAlert(err.code + ' ' + err.msg);
@@ -301,7 +346,7 @@ Tw.CustomerShopNear.prototype = {
     $areaList.empty();
     $areaList.append(this._areaItemTemplate({
       list: _.filter(this._areas, function (item) {
-        return item.areaDepth === 'M' && item.largeCd === code;
+        return item.areaDepth === 'M' && item.largeCd === code && !item.districtName.includes(' ');
       }).sort(function (a, b) {
         if (a.districtName > b.districtName) return 1;
         if (a. districtName < b.districtName) return -1;
@@ -310,6 +355,10 @@ Tw.CustomerShopNear.prototype = {
     }));
     skt_landing.widgets.widget_init('.container-wrap');
     skt_landing.components.component_init('.container-wrap');
-    $areaList.find('li:first').click();
+    if (Tw.FormatHelper.isEmpty(this._selectedMarea)) {
+      $areaList.find('li:first').click();
+    } else {
+      $areaList.find('input[value="' + this._selectedMarea + '"]').click();
+    }
   }
 };
