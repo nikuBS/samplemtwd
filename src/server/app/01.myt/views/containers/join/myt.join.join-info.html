@@ -39,6 +39,15 @@
                     <div class="link-long">
                         <a href="/myt/join/pay-claim">납부/청구정보<span class="ico"></span></a>
                     </div>
+                    <% if( svcInfo.lineType === 'S' ) {%>
+                    <div class="contents-btn mt40 pb20">
+                        <ul class="bt-slice">
+                            <li class="bt-white1">
+                                <button>우리동네 망 작업 알림 받기</button>
+                            </li>
+                        </ul>
+                    </div>
+                    <% } %>
                 </div>
 
                 <% if(data.lineType === 'S') { %>

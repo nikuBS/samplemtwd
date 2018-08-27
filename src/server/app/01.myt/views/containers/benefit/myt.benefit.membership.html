@@ -79,7 +79,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    var membership = new Tw.MytBenefitMembership($('.wrap'), '<%-JSON.stringify(data)%>');
+    new Tw.MyTBenefitMembership($('.wrap'), '<%-JSON.stringify(data)%>');
   });
 </script>
 <% include ../../components/end.component.html %>
