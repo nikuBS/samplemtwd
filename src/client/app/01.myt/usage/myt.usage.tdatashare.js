@@ -4,7 +4,7 @@
  * Date: 2018.07.27
  */
 
-Tw.MytUsageTdatashare = function (rootEl) {
+Tw.MyTUsageTdatashare = function (rootEl) {
   this.$container = rootEl;
   this.$window = window;
   this._apiService = Tw.Api;
@@ -17,7 +17,7 @@ Tw.MytUsageTdatashare = function (rootEl) {
   this._init();
 };
 
-Tw.MytUsageTdatashare.prototype = {
+Tw.MyTUsageTdatashare.prototype = {
   _assign: function () {
     this._$childItemTmpl = $('#fe-child-item');
     this._$childListWrap = this.$container.find('.fe-child-list');

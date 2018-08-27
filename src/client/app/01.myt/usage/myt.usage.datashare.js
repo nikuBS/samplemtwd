@@ -1,4 +1,10 @@
-Tw.MytUsageDataShare = function (rootEl) {
+/**
+ * FileName: myt.usage.datashare.js
+ * Author: 이정민 (skt.p130713@partner.sk.com)
+ * Date: 2018.07.27
+ */
+
+Tw.MyTUsageDataShare = function (rootEl) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -6,7 +12,7 @@ Tw.MytUsageDataShare = function (rootEl) {
   this._bindEvent();
 };
 
-Tw.MytUsageDataShare.prototype = {
+Tw.MyTUsageDataShare.prototype = {
   _bindEvent: function () {
     this.$container.on('click', '.fe-btn-used-data', $.proxy(this._onClickBtnUsedData, this));
   },
