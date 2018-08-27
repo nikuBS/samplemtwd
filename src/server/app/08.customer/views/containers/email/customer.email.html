@@ -37,23 +37,7 @@
                     <div class="component-box tabs">
                         <div class="tab-area type1"><!-- 타입별 탭형태 변환 -->
                             <div class="tab-linker">
-                                <ul role="tablist">
-                                    <% if ( status === 'quality' ) { %>
-                                    <li role="tab" aria-selected="false" aria-controls="tab1-tab">
-                                        <a>서비스 관련 문의</a>
-                                    </li>
-                                    <li role="tab" aria-selected="true" aria-controls="tab2-tab">
-                                        <a>통화품질 상담</a>
-                                    </li>
-                                    <% } else {%>
-                                    <li role="tab" aria-selected="true" aria-controls="tab1-tab">
-                                        <a>서비스 관련 문의</a>
-                                    </li>
-                                    <li role="tab" aria-selected="false" aria-controls="tab2-tab">
-                                        <a>통화품질 상담</a>
-                                    </li>
-                                    <% } %>
-                                </ul>
+                                <% include ../components/email/customer.email.tab.html %>
                             </div>
                             <div class="tab-contents">
                                 <ul>
@@ -61,11 +45,7 @@
                                         <% include ../components/email/customer.email.service-default.html %>
                                     </li>
                                     <li role="tabpanel" id="tab2-tab" aria-labelledby="tab2" aria-selected="true">
-                                        <% if (status === 'quality' && category === 'wibro' ) { %>
-                                        <% include ../components/email/customer.email.quality-wibro.html %>
-                                        <% } else {%>
                                         <% include ../components/email/customer.email.quality-default.html %>
-                                        <% } %>
                                     </li>
                                 </ul>
                             </div>
@@ -73,13 +53,12 @@
                     </div>
                 </div>
             </div>
-            <!--// .cont-box -->
 
+            <!--// .cont-box -->
             <hr class="cont-sp type1" aria-hidden="true">
             <% include ../components/email/customer.email.terms.html %>
 
             <!--// .cont-box -->
-
             <hr class="cont-sp type1" aria-hidden="true">
             <% include ../components/email/customer.email.info.html %>
         </div>
@@ -90,7 +69,10 @@
 
 <script id="tpl_service_cell" type="text/x-handlebars-template">
     <div class="form-cell">
-        <span class="form-ti">문의하실 회선과 내용을 작성해주세요<span class="point-indicate ml4" aria-hidden="true">*</span></span>
+        <span class="form-ti">
+            문의하실 회선과 내용을 작성해주세요
+            <span class="point-indicate ml4" aria-hidden="true">*</span>
+        </span>
         <div class="mb10">
             <button class="bt-dropdown big fe-service-line" title="전화번호 선택" aria-haspopup="true" aria-labelledby="aria-email-qacont"
                     data-svcMgmtNum="<%=svcInfo.svcMgmtNum%>"><%=svcInfo.svcNum%>
@@ -129,23 +111,7 @@
     <div class="mb10">
         <button class="bt-dropdown big fe-btn-device" title="기종 선택" aria-haspopup="true">기종</button>
     </div>
-    <div class="widget">
-        <div class="widget-box tfCombined">
-            <div class="txfield-combined">
-                <div class="txfield-combined-ti">
-                    <input required class="input-focus fe-inquiry-title" type="text" placeholder="제목을 입력해주세요." title="이메일 문의 제목" value=""
-                           maxlength="20"
-                           aria-labelledby="aria-email-qacont">
-                    <span class="byte"><span class="byte-current">0</span>/<span class="byte-total">20</span>자</span>
-                </div>
-                <div class="txfield-combined-tx">
-                    <textarea required class="input-focus fe-inquiry-content" cols="20" rows="3" placeholder="내용을 입력해주세요." maxlength="12000"
-                              aria-labelledby="aria-email-qacont"></textarea>
-                    <span class="byte"><span class="byte-current">0</span>/<span class="byte-total">12,000</span>자</span>
-                </div>
-            </div>
-        </div>
-    </div>
+    <% include ../components/email/customer.email.basic-form.html %>
 </script>
 
 <script id="tpl_service_direct_type2" type="text/x-handlebars-template">
@@ -160,22 +126,7 @@
         </span>
         <span class="tx-box"><span id="aria-exp-desc1" class="guide-txt">배송, 교환/반품 관련 문의 시 주문번호를 선택해 주시면 보다 정확한 답변이 가능합니다.</span></span>
     </span>
-    <div class="widget">
-        <div class="widget-box tfCombined">
-            <div class="txfield-combined">
-                <div class="txfield-combined-ti">
-                    <input class="input-focus fe-inquiry-title" type="text" placeholder="제목을 입력해주세요." title="이메일 문의 제목" value="" maxlength="20"
-                           aria-labelledby="aria-email-qacont">
-                    <span class="byte"><span class="byte-current">0</span>/<span class="byte-total">20</span>자</span>
-                </div>
-                <div class="txfield-combined-tx">
-                    <textarea class="input-focus fe-inquiry-content" cols="20" rows="3" placeholder="내용을 입력해주세요." maxlength="12000"
-                              aria-labelledby="aria-email-qacont"></textarea>
-                    <span class="byte"><span class="byte-current">0</span>/<span class="byte-total">12,000</span>자</span>
-                </div>
-            </div>
-        </div>
-    </div>
+    <% include ../components/email/customer.email.basic-form.html %>
 </script>
 
 <script id="tpl_service_chocolate" type="text/x-handlebars-template">
@@ -325,25 +276,7 @@
                         data-svcMgmtNum="{{lineList.0.svcMgmtNum}}">{{lineList.0.addr}}
                 </button>
             </div>
-            <div class="widget">
-                <div class="widget-box tfCombined">
-                    <div class="txfield-combined">
-                        <div class="txfield-combined-ti">
-                            <input required class="input-focus fe-inquiry-title" type="text" placeholder="제목을 입력해주세요." title="이메일 문의 제목"
-                                   value=""
-                                   maxlength="20"
-                                   aria-labelledby="aria-email-qacont">
-                            <span class="byte"><span class="byte-current">0</span>/<span class="byte-total">20</span>자</span>
-                        </div>
-                        <div class="txfield-combined-tx">
-                            <textarea required class="input-focus fe-inquiry-content" cols="20" rows="3" placeholder="내용을 입력해주세요."
-                                      aria-labelledby="aria-email-qacont"
-                                      maxlength="12000"></textarea>
-                            <span class="byte"><span class="byte-current">0</span>/<span class="byte-total">12,000</span>자</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <% include ../components/email/customer.email.basic-form.html %>
         </div>
         <div class="box-file-addlist">
             <div class="file-addlist-top">
@@ -376,135 +309,7 @@
     8. 상세현상 : {{param11}}
 </script>
 
-<script id="tpl_direct_popup" type="text/x-handlebars-template">
-    <div class="popup-page fe-direct-result">
-        <!-- .no-btn 하단에 버튼이 없을 경우 -->
-        <!-- #header -->
-        <div class="header-wrap" aria-hidden="true" tabindex="-1">
-            <div class="page-header">
-                <div class="header-ti">
-                    <h1>주문번호 조회</h1>
-                </div>
-            </div>
-        </div>
-        <!--// #header -->
-        <!-- #contents -->
-        <div class="container-wrap" aria-hidden="true" tabindex="-1">
-            <h2 class="blind">내용</h2>
-            <div class="container">
-                <div class="cont-box nogaps-btm">
-                    <div class="order-lookup-wrap">
-                        <p>주문관련 문의의 경우, <br>고객님이 주문하신 상품이 있는 경우에 한해 <br>문의가 가능하며, 주문번호를 입력해 주셔야 합니다.</p>
-                        <div class="order-radio">
-                            <div class="widget">
-                                <div class="widget-box radio">
-                                    <ul class="select-list fe-direct-tab" role="radiogroup">
-                                        <li class="radiobox type01 checked" role="radio" aria-checked="true">
-                                            <input type="radio" name="radio_direct" value="" title="쇼핑내역" checked="checked">
-                                            <span class="txt">쇼핑내역</span>
-                                        </li>
-                                        <li class="radiobox type01" role="radio" aria-checked="false">
-                                            <input type="radio" name="radio_direct" value="" title="외신단말/중고기기">
-                                            <span class="txt">외신단말/중고기기</span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="direct_tab1">
-                                {{#if listShop}}
-                                <div class="order-lookup-cont">
-                                    <div class="order-lookup-list">
-                                        <div class="widget">
-                                            <div class="widget-box radio">
-                                                <ul class="select-list fe-direct-popup-content" role="radiogroup">
-                                                    {{#each listShop}}
-                                                    <li class="radiobox type01 checked" role="radio" aria-checked="true">
-                                                        <!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-                                                        <input type="radio" name="delivery" value="{{ordNo}}" title="주문 현황">
-                                                        <!-- 체크상태일 경우 checked="checked" -->
-                                                        <div class="order-lookup-cell">
-                                                            <span class="order-ti">주문번호 (주문일자)</span>
-                                                            <span class="order-number">{{ordNo}} ({{ordDate}})</span>
-                                                            <!-- .delivery1 : 주문접수, .delivery2 : 주문취소, .delivery3 : 배송중, .delivery4 : 배송완료 -->
-                                                        </div>
-                                                        <div class="order-lookup-cell">
-                                                            <span class="order-tx">{{ordProdNm}}</span>
-                                                            <span class="img-order-delivery"><img src="{{ordProdUrl}}"
-                                                                                                  alt="IPHONE6S+_16GR"></span>
-                                                        </div>
-                                                    </li>
-                                                    {{/each}}
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                {{else}}
-                                <div class="empty-cont mt50 mb40">
-                                    <span class="ico"></span>
-                                    <p class="desc">주문하신 내역이 없습니다.</p>
-                                </div>
-                                {{/if}}
-                            </div>
-                            <div class="direct_tab2" style="display: none">
-                                {{#if listUsed}}
-                                <div class="order-lookup-cont">
-                                    <div class="order-lookup-list">
-                                        <div class="widget">
-                                            <div class="widget-box radio">
-                                                <ul class="select-list fe-direct-popup-content" role="radiogroup">
-                                                    {{#each listUsed}}
-                                                    <li class="radiobox type01 checked" role="radio" aria-checked="true">
-                                                        <!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-                                                        <input type="radio" name="delivery" value="{{ordNo}}" title="주문 현황">
-                                                        <!-- 체크상태일 경우 checked="checked" -->
-                                                        <div class="order-lookup-cell">
-                                                            <span class="order-ti">주문번호 (주문일자)</span>
-                                                            <span class="order-number">{{ordNo}} ({{ordDate}})</span>
-                                                            <!-- .delivery1 : 주문접수, .delivery2 : 주문취소, .delivery3 : 배송중, .delivery4 : 배송완료 -->
-                                                        </div>
-                                                        <div class="order-lookup-cell">
-                                                            <span class="order-tx">{{ordProdNm}}</span>
-                                                            <span class="img-order-delivery"><img src="{{ordProdUrl}}"
-                                                                                                  alt="IPHONE6S+_16GR"></span>
-                                                        </div>
-                                                    </li>
-                                                    {{/each}}
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                {{else}}
-                                <div class="empty-cont mt50 mb40">
-                                    <span class="ico"></span>
-                                    <p class="desc">주문하신 내역이 없습니다.</p>
-                                </div>
-                                {{/if}}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="cont-box bb0">
-                    <ul class="bt-slice item-two mt10">
-                        <li class="bt-white2 fe-direct-close">
-                            <button>취소</button>
-                        </li>
-                        <li class="bt-red1 fe-direct-confirm">
-                            <button disabled>완료</button>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <!--// #contents -->
-        <!-- .popup-closeBtn -->
-        <button class="popup-closeBtn fe-direct-close"><span class="blind">팝업 페이지 닫기</span></button>
-        <!--// .popup-closeBtn -->
-    </div>
-</script>
+<% include ../components/email/customer.email.direct-popup.html %>
 
 <script id="tpl_file_item" type="text/x-handlebars-template">
     {{#each list}}
