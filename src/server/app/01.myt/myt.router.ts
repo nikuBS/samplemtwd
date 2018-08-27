@@ -50,8 +50,8 @@ import MytJoinProductService from './controllers/join/myt.join.product-service.c
 import MytJoinProductServiceFeeAlarmController from './controllers/join/myt.join.product-service.fee-alarm.controller';
 import MytJoinProductServiceFeeAlarmChangeController from './controllers/join/myt.join.product-service.fee-alarm.change.controller';
 
-import MytBenefitDiscount from './controllers/benefit/myt.benefit.discount.main.controller';
-import MytBenefitDiscountDetail from './controllers/benefit/myt.benefit.discount.detail.controller';
+import MyTBenefitDiscount from './controllers/benefit/myt.benefit.discount.main.controller';
+import MyTBenefitDiscountDetail from './controllers/benefit/myt.benefit.discount.detail.controller';
 import MyTBenefitPoint from './controllers/benefit/myt.benefit.point.controller';
 import MyTBenefitRainbowPoint from './controllers/benefit/myt.benefit.rainbow-point.controller';
 import MyTBenefitRainbowPointInfo from './controllers/benefit/myt.benefit.rainbow-point-info.controller';
@@ -132,8 +132,8 @@ class MytRouter extends TwRouter {
     this.controllers.push({ url: '/join/product-service/fee-alarm/change', controller: new MytJoinProductServiceFeeAlarmChangeController() });
     this.controllers.push({ url: '/join/product-service/combination', controller: new MytJoinProductServiceCombinationController() });
 
-    this.controllers.push({ url: '/benefit/discount', controller: new MytBenefitDiscount() });
-    this.controllers.push({ url: '/benefit/discount/detail', controller: new MytBenefitDiscountDetail() });
+    this.controllers.push({ url: '/benefit/discount', controller: new MyTBenefitDiscount() });
+    this.controllers.push({ url: '/benefit/discount/detail', controller: new MyTBenefitDiscountDetail() });
     this.controllers.push({ url: '/benefit/point', controller: new MyTBenefitPoint() });
     this.controllers.push({ url: '/benefit/rainbow-point', controller: new MyTBenefitRainbowPoint() });
     this.controllers.push({ url: '/benefit/rainbow-point/info', controller: new MyTBenefitRainbowPointInfo() });

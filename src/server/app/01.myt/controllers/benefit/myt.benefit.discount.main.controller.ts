@@ -10,7 +10,7 @@ import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 import FormatHelper from '../../../../utils/format.helper';
 
-class MytBenefitDisCntMainController extends TwViewController {
+class MyTBenefitDisCntMainController extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     const data: any = {
@@ -156,4 +156,4 @@ class MytBenefitDisCntMainController extends TwViewController {
 
 }
 
-export default MytBenefitDisCntMainController;
+export default MyTBenefitDisCntMainController;
