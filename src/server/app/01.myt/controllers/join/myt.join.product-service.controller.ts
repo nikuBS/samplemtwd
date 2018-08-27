@@ -58,7 +58,7 @@ class MytJoinProductServiceController extends TwViewController {
   private _convertFeePlan(data, isWire): Observable<any> {
     if ( isWire ) {
       return Object.assign(data.result, {
-        basFeeAmt: data.result.basFeeAmt > 0 ? FormatHelper.addComma(data.result.basFeeAmt) : 0,
+        basFeeAmt: data.result.basFeeAmt > 0 ? FormatHelper.addComma(data.result.basFeeAmt.toString()) : 0,
         isDisplayFeeAmt: (data.result.coClCd !== 'T' && data.result.basFeeAmt > 0),
         svcScrbDt: DateHelper.getShortDateWithFormat(data.result.svcScrbDt, 'YYYY.MM.DD'),
         dcBenefits: data.result.dcBenefits.map((item) => {
