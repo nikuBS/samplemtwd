@@ -10,7 +10,7 @@ import { Observable } from 'rxjs/Observable';
 import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
 
-class MytJoinProductServiceFeeAlarmChangeController extends TwViewController {
+class MyTJoinProductServiceFeeAlarmChangeController extends TwViewController {
   constructor() {
     super();
   }
@@ -84,4 +84,4 @@ class MytJoinProductServiceFeeAlarmChangeController extends TwViewController {
   }
 }
 
-export default MytJoinProductServiceFeeAlarmChangeController;
+export default MyTJoinProductServiceFeeAlarmChangeController;
