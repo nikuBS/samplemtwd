@@ -1,6 +1,6 @@
 /**
  * FileName: myt.bill.guidechange.controller.ts
- * Author: Jung kyu yang (skt.P130715@partner.sk.com)
+ * Author: 양정규 (skt.P130715@partner.sk.com)
  * Date: 2018.07.05
  */
 import TwViewController from '../../../../common/controllers/tw.view.controller';

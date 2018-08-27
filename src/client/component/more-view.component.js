@@ -14,16 +14,57 @@ Tw.MoreViewComponent.prototype = {
     if ( !data ) {
       return;
     }
-    var list = [];
-    var cnt = Tw.DEFAULT_LIST_COUNT;
 
-    if (Array.isArray(data)){
-      list = data;
+    this._data = $.extend({
+      list : [],
+      cnt : Tw.DEFAULT_LIST_COUNT,
+      btnMore : {},
+      callBack : {}
+    }, data);
+
+    this._moreList = _.chunk(this._data.list, this._data.cnt);
+    this._moreViewEvent();
+  },
+
+  // 더보기 버튼 이벤트 유무
+  _hasMoreEvent : function () {
+    var _data = this._data;
+    var format = Tw.FormatHelper;
+    if ( format.isEmpty(_data) || format.isEmpty(_data.callBack) ) {
+      return false;
     } else {
-      list = data.list;
-      cnt = data.cnt || Tw.DEFAULT_LIST_COUNT;
+      if ( format.isEmpty(_data.btnMore) ) {
+        _data.btnMore = $('.wrap').find('.bt-more');
+      }
+      return true;
     }
-    this._moreList = _.chunk(list, cnt);
+  },
+
+  // 더보기 클릭 이벤트
+  _moreViewEvent : function () {
+    if ( !this._hasMoreEvent() ) {
+      return;
+    }
+    this._data.btnMore.click($.proxy(this.onMoreView,this));
+  },
+
+  // 더보기
+  onMoreView : function () {
+    if( !this._hasMoreEvent() ){
+      return;
+    }
+    var moreData = this.pop();
+    var _data = this._data;
+
+    if ( moreData.list.length > 0 ) {
+      _data.callBack(moreData);
+    }
+    if ( moreData.nextCnt > 0 ) {
+      _data.btnMore.find('span').text( '(0)'.replace('0',moreData.nextCnt) );
+      _data.btnMore.removeClass('none');
+    } else {
+      _data.btnMore.addClass('none');
+    }
   },
 
   // _MORE_CNT 만큼의 리스트 와 다음 리스트의 잔여 카운트를 리턴한다.

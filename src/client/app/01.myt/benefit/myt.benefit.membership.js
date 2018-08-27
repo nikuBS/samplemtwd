@@ -3,14 +3,14 @@
  * Author: 양정규 (skt.P130715@partner.sk.com)
  * Date: 2018. 8. 16.
  */
-Tw.MytBenefitMembership = function (rootEl, data) {
+Tw.MyTBenefitMembership = function (rootEl, data) {
   this.$container = rootEl;
   this._moreViewSvc = new Tw.MoreViewComponent();
   this._data = JSON.parse(data);
   this._init();
 };
 
-Tw.MytBenefitMembership.prototype = {
+Tw.MyTBenefitMembership.prototype = {
   _init : function() {
     this._initVariables();
     this._bindEvent();
@@ -20,13 +20,11 @@ Tw.MytBenefitMembership.prototype = {
 
   _initVariables: function () {
     this._benefitList = this.$container.find('.benefits-list > ul');
-    this._btMore = this.$container.find('.bt-more');
     this._TxtMoreCnt = this.$container.find('#fe-more-cnt');
     this._recommBenefits = this.$container.find('.recomm-benefits');
   },
 
   _bindEvent: function () {
-    this._btMore.on('click', $.proxy(this._onMoreView, this));
     this.$container.on('click','.fe-loc', $.proxy(this._onUseBenefits, this));
     this.$container.on('click','.fe-available-bene', $.proxy(this._onAvailableBenefits, this));
   },
@@ -46,7 +44,7 @@ Tw.MytBenefitMembership.prototype = {
     location.href = '/myt/benefit/membership/detail?' + param;
   },
 
-  // 받고있는 혜택 리스트
+  // 받고있는 혜택 리스트 초기 설정
   _initBenefitList : function () {
     this._benefitList.empty();
     var data = this._data;
@@ -75,8 +73,12 @@ Tw.MytBenefitMembership.prototype = {
       }
     });
 
-    this._moreViewSvc.init(list);
-    this._onMoreView();
+    this._moreViewSvc.init({
+      list : list,
+      callBack : $.proxy(this._renderList,this)
+    });
+
+    this._moreViewSvc.onMoreView();
   },
 
   // 받을 수 있는 혜택
@@ -88,23 +90,12 @@ Tw.MytBenefitMembership.prototype = {
     }
   },
 
+  // 받고 있는 혜택 리스트 추가
   _renderList : function (res) {
     var source = $('#tmplList').html();
     var template = Handlebars.compile(source);
-    var output = template({list : res});
+    var output = template({list : res.list});
     this._benefitList.append(output);
-  },
-
-  // 더보기 클릭
-  _onMoreView : function () {
-    var moreData = this._moreViewSvc.pop();
-    this._renderList( moreData.list );
-    if ( moreData.nextCnt > 0 ) {
-      this._TxtMoreCnt.text( '(0)'.replace('0',moreData.nextCnt) );
-      this._btMore.removeClass('none');
-    } else {
-      this._btMore.addClass('none');
-    }
   },
 
   // 받을 수 있는 혜택 클릭 ( 상세 페이지로 이동 )

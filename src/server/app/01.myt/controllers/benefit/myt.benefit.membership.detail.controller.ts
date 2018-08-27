@@ -57,8 +57,7 @@ class MyTBenefitMembershipDetailController extends TwViewController {
       data = data.result || {};
       res.render('benefit/myt.benefit.membership.detail.html', this.getData(req, svcInfo, data) );
     } else {
-      res.render('error.server-error.html', {
-        title: 'error',
+      this.error.render(res, {
         code: data.code,
         msg: data.msg,
         svcInfo: svcInfo
