@@ -40,8 +40,9 @@ Tw.MyTJoinProductServiceCombination.prototype = {
     this.$container.on('click', '.fe-go-main', $.proxy(this._goMain, this));
     this.$container.on('click', '.fe-go-share', $.proxy(this._goShareStep, this));
     this.$container.on('click', '.select-list > li', $.proxy(this._handleSelectMember, this));
+    this.$container.on('click', '#share .bt-red1', $.proxy(this._submitShareData, this));
+    this.$container.on('click', '#complete .bt-white1', $.proxy(this._goShareStep, this));
     this.$amountBtn.on('click', $.proxy(this._openSelectAmountPopup, this));
-    this.$main.on('click', '.bt-red1', $.proxy(this._submitShareData, this));
     this.$main.on('click', '.fe-benefit1', $.proxy(this._goFirstBenefit, this));
     this.$main.on('click', '.fe-benefit2', $.proxy(this._goSecondBenefit, this));
     this.$benefitFirst.on('click', '.bt-red1', $.proxy(this._handleChangeFirstBenefit, this));
@@ -67,11 +68,15 @@ Tw.MyTJoinProductServiceCombination.prototype = {
   },
 
   _goShareStep: function () {
-    this._history.goHash('share');
+    if (!this.$amountArea.hasClass('none')) {
+      this.$amountArea.addClass('none');
+      this.$container.find('#share .select-list > li[aria-checked=true]').removeClass('checked');
+    }
+    this._history.replaceURL('#share');
   },
 
   _goMain: function () {
-    this._history.goHash('');
+    this._history.goLoad('/myt/join/product-service/combination' + location.search);
   },
 
   _handleSelectMember: function (e) {
@@ -95,9 +100,14 @@ Tw.MyTJoinProductServiceCombination.prototype = {
     if (resp.code === Tw.API_CODE.CODE_00) {
       this._remainAmount = this._remainAmount - this._shareAmount;
       this.$container.find('.fe-remain-data').text(this._remainAmount);
+
+      if (this._remainAmount < 100) {
+        this.$container.find('#complete .bt-white1').addClass('none');
+      }
+
       this.$container.find('.fe-beneficiary-name').text(this._beneficiary.name);
       this.$container.find('.fe-benefit-data').text(this._shareAmount);
-      this._history.goHash('complete');
+      this._history.replaceURL('complete');
     } else {
       Tw.Error(resp.code, resp.msg).pop();
     }
@@ -171,7 +181,7 @@ Tw.MyTJoinProductServiceCombination.prototype = {
     benefitLi.attr('aria-checked', 'true');
     benefitLi.find('input').attr('checked', 'checked');
 
-    this._history.goHash('benefit-1st');
+    this._history.replaceURL('#benefit-1st');
   },
 
   _handleChangeFirstBenefit: function () {
@@ -197,7 +207,7 @@ Tw.MyTJoinProductServiceCombination.prototype = {
 
     this._freeLineNumber = $infoArea.find('.ff-hn.vbl').text();
 
-    this._history.goHash('benefit-2nd');
+    this._history.replaceURL('benefit-2nd');
   },
 
   _handleChangeSecondBenefit: function () {
