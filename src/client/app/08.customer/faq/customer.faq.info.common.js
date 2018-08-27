@@ -96,16 +96,17 @@ Tw.CustomerFaqInfoCommon.prototype = {
     var selectedInput = $(e.currentTarget);
 
     this._popupService.close();
+
     if(!selectedInput.data('current') && !selectedInput.data('pageId')) {
       return false;
     } else {
       // console.log(selectedInput.data('current'), selectedInput.data('pageId'));
       // pageId = pageId + '?category=' + category + '&subCategory=' + subCategory + '&contentsIndex=' + current;
-      this._moveServiceInfoURL(
-          selectedInput.data('pageId') + '?category=' + target.data('category') +
+      var moveURL = selectedInput.data('pageId') + '?category=' + target.data('category') +
           '&subCategory=' + target.data('subCategory') +
-          '&contentsIndex=' + selectedInput.data('current')
-      );
+          '&contentsIndex=' + selectedInput.data('current');
+
+      window.setTimeout($.proxy(this._moveServiceInfoURL, this, moveURL), 100);
     }
   },
 
