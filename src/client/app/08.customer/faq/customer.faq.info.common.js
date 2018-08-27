@@ -4,7 +4,7 @@
  * Date: 2018.08.14
  */
 
-Tw.CustomerFaqInfoCommon = function (rootEl, serviceId) {
+Tw.CustomerFaqInfoCommon = function (rootEl, serviceId, selectData, selectedIndex) {
   this.$container = rootEl;
 
   this._apiService = Tw.Api;
@@ -14,6 +14,8 @@ Tw.CustomerFaqInfoCommon = function (rootEl, serviceId) {
 
   this.current = _.last(this._history.pathname.split('/'));
   this.serviceId = serviceId;
+  this._selectData = selectData ? JSON.parse(selectData) : {};
+  this._selectedIndex = parseInt(selectedIndex, 10);
 
   this._cachedElement();
   this._bindEvent();
@@ -23,58 +25,135 @@ Tw.CustomerFaqInfoCommon = function (rootEl, serviceId) {
 
 Tw.CustomerFaqInfoCommon.prototype = {
   _init: function () {
-
-    if (this.categorySelector) {
-      this.choiceData = Tw.CUSTOMER_SERVICE_INFO_CHOICE;
+    if (this._selectData.title) {
+      this.$selectOpenTrigger.eq(0).text(this._selectData.subDepth[this._selectedIndex].title);
+      this.$selectOpenTrigger.eq(0).data('current', this._selectedIndex);
+      this.$selectOpenTrigger.eq(0).data('pageId', this.serviceId);
     }
-    // console.log(this.serviceId, this.current);
-    // if (this.movePageButtonWrapper) {
-    //   this.moveUrl = Tw.CUSTOMER_SERVICE_INFO_URL;
-    //   this.moveByButtonPageID = [3315, 3316, null, 3320, 3321, 3727, 3722, 215];
-    // }
   },
 
   _cachedElement: function () {
-    this.categorySelector = $('.service-guide-sel');
-    this.categorySelectorBtn = this.categorySelector.find('.bt-dropdown');
-    // this.movePageButtonWrapper = $('.service-guide-link');
+    this.$selectOpenTrigger = this.$container.find('.bt-dropdown.big');
+    this.$linkMoveTirgger = this.$container.find('.bt-box');
   },
 
   _bindEvent: function () {
-    if (this.categorySelector) {
-      this.categorySelector.on('click', '.bt-dropdown', $.proxy(this._openServiceInfoSelector, this));
-      this.categorySelector.on('click', '.bt-box button', $.proxy(this._moveServiceInfoDetail, this));
+    this.$selectOpenTrigger.on('click', $.proxy(this._selectOpenHandler, this));
+    if (this.$linkMoveTirgger.length && this._isServiceInfoMain()) {
+      this.$linkMoveTirgger.on('click', $.proxy(this._moveSelectedHandler, this));
     }
-    // if (this.movePageButtonWrapper) {
-    //   this.movePageButtonWrapper.on('click', 'button', $.proxy(this._movePageByLink, this));
-    // }
   },
 
-  _openServiceInfoSelector: function (e) {
-    var trigger = $(e.target);
-    var index = this.categorySelectorBtn.index(trigger);
+  _selectOpenHandler: function (e) {
+    var selectedMoveButton = $(e.target).closest('span').siblings('.bt-box'),
+        index              = this.$selectOpenTrigger.index(e.currentTarget),
+        dataSet            = null,
+        trigger            = $(e.target),
+        handler            = null;
+
+    if (selectedMoveButton.length && this._isServiceInfoMain()) {
+      dataSet = Tw.POPUP_TPL.CUSTOMER_SERVICE_INFO_CHOICE;
+      handler = this._setMoveURL;
+    } else {
+      if (!this._selectData.title) {
+        // 사이트 이용안내 TypeA 케이스
+        dataSet = Tw.POPUP_TPL.CUSTOMER_SITE_INFO_TYPEA_CHOICE;
+        handler = this._changeContent;
+      } else {
+        dataSet = this._setCaseSelectorByData(this._selectData);
+        handler = this._moveURL;
+      }
+    }
 
     this._popupService.open({
       hbs: 'select',
-      title: Tw.POPUP_TPL.CUSTOMER_SERVICE_INFO_CHOICE[index].title,
-      multiplex: false,
-      close_bt: true,
-      select: [Tw.POPUP_TPL.CUSTOMER_SERVICE_INFO_CHOICE[index]],
+      title: dataSet[index].title,
+      select: [dataSet[index]],
       bt_num: 'one',
       type: [{
         style_class: 'bt-red1',
         txt: Tw.BUTTON_LABEL.CONFIRM
       }]
-    }, $.proxy(this._choiceOpenHandler, this, trigger, index, this._setMoveUrl));
+    }, $.proxy(this._choiceOpenHandler, this, trigger, handler));
   },
 
-  _choiceOpenHandler: function (target, index, handler, e) {
-    var inputs = $(e).find('input[type=radio]'),
+  _setCaseSelectorByData: function (data) {
+
+    _.map(data.subDepth, $.proxy(function(o, k) {
+      o.text = o.title;
+      o.checked = false;
+      o.value = o.serviceId;
+
+      if (k === this._selectedIndex) {
+       o.checked = true;
+      }
+    }, this));
+    data.options = data.subDepth;
+    return [data];
+  },
+
+  _moveURL: function (target, e) {
+    var selectedInput = $(e.currentTarget);
+
+    this._popupService.close();
+    if(!selectedInput.data('current') && !selectedInput.data('pageId')) {
+      return false;
+    } else {
+      // console.log(selectedInput.data('current'), selectedInput.data('pageId'));
+      // pageId = pageId + '?category=' + category + '&subCategory=' + subCategory + '&contentsIndex=' + current;
+      this._moveServiceInfoURL(
+          selectedInput.data('pageId') + '?category=' + target.data('category') +
+          '&subCategory=' + target.data('subCategory') +
+          '&contentsIndex=' + selectedInput.data('current')
+      );
+    }
+  },
+
+  _setMoveURL: function (target, e) {
+    this._popupService.close();
+    target.text($(e.currentTarget).data('text'));
+    target.data('id', $(e.currentTarget).data('pageId'));
+    target.data('current', $(e.currentTarget).data('current'));
+  },
+
+  _changeContent: function (target, e) {
+    this._popupService.close();
+    target.text($(e.currentTarget).data('text'));
+    target.data('current', $(e.currentTarget).data('current'));
+  },
+
+  _moveSelectedHandler: function (e) {
+    var index       = this.$linkMoveTirgger.index(e.currentTarget),
+        target      = $(this.$selectOpenTrigger[index]),
+        pageId      = target.data('id'),
+        category    = target.data('category'),
+        subCategory = target.data('subCategory'),
+        current     = target.data('current') || 0;
+
+    if (!pageId) {
+      pageId = Tw.POPUP_TPL.CUSTOMER_SERVICE_INFO_CHOICE[index].options[0].value;
+    }
+
+    pageId = pageId + '?category=' + category + '&subCategory=' + subCategory + '&contentsIndex=' + current;
+
+    this._moveServiceInfoURL(pageId);
+  },
+
+  _isServiceInfoMain: function (current) {
+    return (current || this.current) === 'service-info';
+  },
+
+  _isSiteInfoMain: function (current) {
+    return (current || this.current) === 'site-info';
+  },
+
+  _choiceOpenHandler: function (target, handler, e) {
+    var inputs     = $(e).find('input[type=radio]'),
         confirmBtn = $(e).find('.bt-red1');
 
     $(inputs.get(target.data('current') || 0)).attr('checked', 'checked');
 
-    inputs.on('change', function(e) {
+    inputs.on('change', function (e) {
       confirmBtn.data('current', inputs.index(e.target));
       confirmBtn.data('pageId', $(e.target).val());
       confirmBtn.data('text', $(e.target).parent().text().trim());
@@ -83,31 +162,32 @@ Tw.CustomerFaqInfoCommon.prototype = {
     confirmBtn.on('click', $.proxy(handler, this, target));
   },
 
-  _setMoveUrl: function (target, e) {
-    this._popupService.close();
-    target.text($(e.currentTarget).data('text'));
-    target.data('id', $(e.currentTarget).data('pageId'));
-    target.data('current', $(e.currentTarget).data('current'));
-  },
-
   _moveServiceInfoDetail: function (e) {
-    var pageId = $(e.target).parent().siblings().find('.bt-dropdown').data('id');
-    if(!pageId) {
+    var target = $(e.target).parent().siblings().find('.bt-dropdown');
+    var pageId      = target.data('id'),
+        category    = target.data('category'),
+        subCategory = target.data('subCategory');
+
+    if (!pageId) {
       var index = this.categorySelector.index($(e.target).parents('.service-guide-sel'));
       pageId = Tw.POPUP_TPL.CUSTOMER_SERVICE_INFO_CHOICE[index].options[0].value;
     }
-    // console.log(pageId, e, Tw.POPUP_TPL.CUSTOMER_SERVICE_INFO_CHOICE);
+    pageId = pageId + '?category=' + category + '&subCategory=' + subCategory;
+
     this._moveServiceInfoURL(pageId);
   },
 
-  // _movePageByLink: function (e) {
-  //   var index = this.movePageButtonWrapper.index($(e.currentTarget).parent());
-  //   this._moveServiceInfoURL(this.moveByButtonPageID[index]);
-  // },
+  _moveServiceInfoURL: function (pageQuery) {
+    // pageQuery에 pageID가 넘어오기 때문에 pageID 삭제 처리
+    var paths = this._history.pathname.split('/');
 
-  _moveServiceInfoURL: function(pageId) {
-    if (pageId) {
-      this._history.goLoad('/customer/faq/service-info/' + pageId);
+    if (!this._isServiceInfoMain() && !this._isSiteInfoMain()) {
+      paths.splice(-1);
+    }
+    paths = paths.join('/');
+
+    if (pageQuery) {
+      this._history.goLoad(paths + '/' + pageQuery);
     } else {
       return false;
     }

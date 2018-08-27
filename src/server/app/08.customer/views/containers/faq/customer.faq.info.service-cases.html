@@ -19,17 +19,126 @@
     <div id="header" class="header-wrap">
         <div class="header">
             <div class="header-ti align-l">
-                <h1><%=service_category_title%></h1>
+                <h1><%=serviceCategoryTitle%></h1>
             </div>
             <button class="prev-step fe-common-back"><span class="blind">이전으로</span></button>
         </div>
     </div>
     <!--// #header -->
-
     <!-- #contents -->
     <div id="contents" class="container-wrap">
         <h2 class="blind">내용</h2>
         <div class="container">
+            <% if(hasSelector) { %>
+            <!-- .cont-box -->
+            <div class="cont-box">
+                <div class="box-suggest">
+                    <div class="suggest-info">
+                        <p class="suggest-ti"><%=resp.result.cntsTitle%></p>
+                        <div class="mt16">
+                            <button class="bt-dropdown big" title="안내 서비스 선택" aria-haspopup="true" data-category="<%=category%>" data-sub-category="<%=subCategory%>"><span class="ico"></span></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--// .cont-box -->
+            <% } %>
+            <%# -resp.result.cntsCmmnt%>
+
+            <!-- #adminContainer -->
+            <div id="adminContainer" class="admin-edit-box">
+                <!-- .cont-box -->
+                <div class="cont-box">
+                    <!-- .widget -->
+                    <div class="widget">
+                        <div class="widget-box accordion">
+                            <h5 class="tit-a">안내 유형을 선택하세요.</h5>
+                            <div class="acco-cover toggle focuson"><!-- toggle : 한개만 열기 -->
+                                <div class="acco-style">
+                                    <ul class="acco-list">
+                                        <!-- .on: 열기 -->
+                                        <li class="acco-box on">
+                                            <div class="acco-tit"><button class="pl0" role="button" aria-pressed="false">서비스별 요금 안내</button></div>
+                                            <div class="acco-cont">
+                                                <ul class="list-dot">
+                                                    <li class="list">미성년자(자녀)가 사용한 이동통신요금을 법정 대리인(부모)에게 SMS로 알려드리는 서비스입니다.
+                                                        <ul class="inner-group type5">
+                                                            <li class="inner-list">
+                                                                <dl>
+                                                                    <dt class="inner-tit">서비스 신청 대상</dt>
+                                                                    <dd class="inner-cont">20세 미만 미성년 고객</dd>
+                                                                </dl>
+                                                            </li>
+                                                            <li class="inner-list">
+                                                                <dl>
+                                                                    <dt class="inner-tit">통보 대상 요금</dt>
+                                                                    <dd class="inner-cont">미성년자 명의 회선의 국내통화료, DATA통화료, DATA정보료, 소액결재 (단, Ting요금상품의 경우 한도 관리되는 요금 항목은 통보대상에서 제외)</dd>
+                                                                </dl>
+                                                            </li>
+                                                            <li class="inner-list">
+                                                                <dl>
+                                                                    <dt class="inner-tit">Ting요금상품</dt>
+                                                                    <dd class="inner-cont">DATA정보료 + 기본제공 통화 소진 후 추가로 과금되는 금액</dd>
+                                                                </dl>
+                                                            </li>
+                                                            <li class="inner-list">
+                                                                <dl>
+                                                                    <dt class="inner-tit">일반요금상품</dt>
+                                                                    <dd class="inner-cont">국내통화료 + DATA 통화료 + DATA 정보료 + 소액결제</dd>
+                                                                </dl>
+                                                            </li>
+                                                        </ul>
+                                                        <ul class="inner-group type3"><!-- * 일 경우 -->
+                                                            <li class="inner-list"><span class="bullet">*</span>통보 서비스 항목의 합산 요금이 5천원/ 1만원/ 2만원/ 4만원/ 6만원/ 8만원/ 10만원/ 15만원 초과시 각각 SMS 통보</li>
+                                                            <li class="inner-list">팅요금상품 사용 고객의 경우 후불 충전 시 해당 내역 SMS 통보</li>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li class="acco-box">
+                                            <div class="acco-tit"><button class="pl0" role="button" aria-pressed="false">기본요금상품 기본료/기본제공혜택</button></div>
+                                            <div class="acco-cont">
+                                                <ul class="list-dot">
+                                                    <li class="list">내용 미수급</li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li class="acco-box">
+                                            <div class="acco-tit"><button class="pl0" role="button" aria-pressed="false">옵션요금상품 월정액/기본제공혜택</button></div>
+                                            <div class="acco-cont">
+                                                <ul class="list-dot">
+                                                    <li class="list">내용 미수급</li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li class="acco-box">
+                                            <div class="acco-tit"><button class="pl0" role="button" aria-pressed="false">기본제공/기본할인 혜택 기준</button></div>
+                                            <div class="acco-cont">
+                                                <ul class="list-dot">
+                                                    <li class="list">내용 미수급</li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li class="acco-box">
+                                            <div class="acco-tit"><button class="pl0" role="button" aria-pressed="false">요금상품별 Class 혜택 기준</button></div>
+                                            <div class="acco-cont">
+                                                <ul class="list-dot">
+                                                    <li class="list">내용 미수급</li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--// .widget -->
+                </div>
+                <!--// .cont-box -->
+            </div>
+            <!--// #adminContainer -->
+
 
         </div>
     </div>
@@ -39,9 +148,17 @@
 </div>
 
 <% include ../../components/javascript.component.html %>
+<% if (!subDepth) { %>
 <script>
   $(document).ready(function () {
-    new Tw.CustomerFaqInfoCommon($(document), '<%=serviceId%>');
+    new Tw.CustomerFaqInfoCommon($(document));
   });
 </script>
+<% } else { %>
+<script>
+  $(document).ready(function () {
+    new Tw.CustomerFaqInfoCommon($(document), '<%=serviceId%>', '<%-JSON.stringify(subDepth)%>', '<%=contentsIndex%>');
+  });
+</script>
+<% } %>
 <% include ../../components/end.component.html %>
