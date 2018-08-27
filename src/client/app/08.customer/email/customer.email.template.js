@@ -54,7 +54,7 @@ Tw.CustomerEmailTemplate.prototype = {
     this.$container.on('click', '[data-category-id]', $.proxy(this._selectServiceCategory, this));
     this.$container.on('click', '.fe-btn-select-service-category', $.proxy(this._showServiceCategoryPopup, this));
     this.$container.on('click', '.fe-btn-select-service', $.proxy(this._showServicePopup, this));
-    this.$container.on('click', '.fe-btn-select-call', $.proxy(this._showCallPopup, this));
+    this.$container.on('click', '.fe-btn-select-call', $.proxy(this._showQualityPopup, this));
     this.$container.on('click', '.fe-email-cancel', $.proxy(this._onCancelEmail, this));
     this.$container.on('input', '.fe-inquiry-title', $.proxy(this._onCountTitle, this));
     this.$container.on('input', '.fe-inquiry-content', $.proxy(this._onCountContent, this));
@@ -167,16 +167,18 @@ Tw.CustomerEmailTemplate.prototype = {
   },
 
   _showServiceCategoryPopup: function () {
-    var list = _.map(this.serviceCategoryList[this.state.serviceType], function (item) {
-      return { attr: 'data-category-id=' + item.ofrCtgSeq, text: item.ctgNm };
-    });
+    if ( !!this.state.serviceType ) {
+      var list = _.map(this.serviceCategoryList[this.state.serviceType], function (item) {
+        return { attr: 'data-category-id=' + item.ofrCtgSeq, text: item.ctgNm };
+      });
 
-    this._popupService.openChoice(
-      Tw.POPUP_TITLE.SELECT_SERVICE, list, '', null, this._popupService.close
-    );
+      this._popupService.openChoice(
+        Tw.POPUP_TITLE.SELECT_SERVICE, list, '', null, this._popupService.close
+      );
+    }
   },
 
-  _showCallPopup: function () {
+  _showQualityPopup: function () {
     var list = [];
 
     if ( this.state.lineList.S.length !== 0 ) {
@@ -299,7 +301,7 @@ Tw.CustomerEmailTemplate.prototype = {
     this._setTemplateDefaultValue();
   },
 
-  _setTemplateDefaultValue: function(){
+  _setTemplateDefaultValue: function () {
     $('.fe-input-phone').val('');
     $('.fe-input-email').val('');
     $('.fe-inp-chk-sms').prop('checked', false);

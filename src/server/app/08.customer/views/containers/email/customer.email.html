@@ -78,26 +78,9 @@
                     data-svcMgmtNum="<%=svcInfo.svcMgmtNum%>"><%=svcInfo.svcNum%>
             </button>
         </div>
-        <div class="widget">
-            <div class="widget-box tfCombined">
-                <div class="txfield-combined">
-                    <div class="txfield-combined-ti">
-                        <input required class="input-focus fe-inquiry-title" type="text" placeholder="제목을 입력해주세요." title="이메일 문의 제목"
-                               value=""
-                               maxlength="20"
-                               aria-labelledby="aria-email-qacont">
-                        <span class="byte"><span class="byte-current">0</span>/<span class="byte-total">20</span>자</span>
-                    </div>
-                    <div class="txfield-combined-tx">
-                        <textarea required class="input-focus fe-inquiry-content" cols="20" rows="3" placeholder="내용을 입력해주세요."
-                                  aria-labelledby="aria-email-qacont"
-                                  maxlength="12000"></textarea>
-                        <span class="byte"><span class="byte-current">0</span>/<span class="byte-total">12,000</span>자</span>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <% include ../components/email/customer.email.basic-form.html %>
     </div>
+    <% include ../components/email/customer.email.upload.html %>
 </script>
 
 <script id="tpl_service_direct_type1" type="text/x-handlebars-template">
@@ -269,8 +252,7 @@
             </div>
         </div>
         <div class="form-cell">
-            <span id="aria-email-qacont" class="form-ti">문의하실 설치 주소와 현상을 선택 후 내용을<br>기재해 주세요<span class="point-indicate ml4"
-                                                                                                  aria-hidden="true">*</span></span>
+            <span id="aria-email-qacont" class="form-ti">문의하실 설치 주소와 현상을 선택 후 내용을<br>기재해 주세요<span class="point-indicate ml4" aria-hidden="true">*</span></span>
             <div class="mb30">
                 <button class="bt-dropdown big no-arrow selected fe-wibro-svcmgmt" title="회선정보 선택" aria-haspopup="false"
                         data-svcMgmtNum="{{lineList.0.svcMgmtNum}}">{{lineList.0.addr}}
@@ -278,23 +260,7 @@
             </div>
             <% include ../components/email/customer.email.basic-form.html %>
         </div>
-        <div class="box-file-addlist">
-            <div class="file-addlist-top">
-                <div class="addlist-cell"><p class="ti">최대 5개 이미지를 등록할 수<br>있습니다.</p></div>
-                <div class="addlist-cell">
-                    <div class="widget">
-                        <div class="widget-box file">
-                            <span class="inputbox bt-add">
-                                <span class="bt-box">
-                                    파일첨부
-                                    <input class="file" type="file" value="파일첨부">
-                                </span>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <% include ../components/email/customer.email.upload.html %>
     </div>
 </script>
 
@@ -313,7 +279,7 @@
 
 <script id="tpl_file_item" type="text/x-handlebars-template">
     {{#each list}}
-    <li>
+    <li data-upload-file={{name}}>
         <div class="addlist-cell">
             <span class="ico-file-img" aria-hidden="true"><span class="blind">이미지파일</span></span>
         </div>
@@ -333,7 +299,7 @@
     var oEmailTemplate = new Tw.CustomerEmailTemplate($('.wrap'));
     var oEmailService = new Tw.CustomerEmailService($('.wrap'), oEmailTemplate);
     var oEmailCall = new Tw.CustomerEmailCall($('.wrap'), oEmailTemplate);
-    var oEmailUpload = new Tw.CustomerEmailUpload($('.wrap'));
+    var oEmailUpload = new Tw.CustomerEmailUpload($('.wrap'), oEmailTemplate);
   });
 </script>
 

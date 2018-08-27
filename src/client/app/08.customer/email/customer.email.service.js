@@ -107,6 +107,8 @@ Tw.CustomerEmailService.prototype = {
   },
 
   _requestEmailCell: function () {
+    var atchFileNameArr = $('#tab1-tab .file-addlist li');
+
     var params = {
       selSvcMgmtNum: $('.fe-service-line').data('svcmgmtnum'),
       cntcNumClCd: $('[name=radio_service_phone]:checked').val(),
@@ -118,7 +120,8 @@ Tw.CustomerEmailService.prototype = {
       email: this.$input_email.val(),
       subject: $('#tab1-tab .fe-inquiry-title').val(),
       content: $('#tab1-tab .fe-inquiry-content').val(),
-      smsRcvYn: this.$input_sms.prop('checked') ? 'Y' : 'N'
+      smsRcvYn: this.$input_sms.prop('checked') ? 'Y' : 'N',
+      atchFileNameArr: atchFileNameArr.size() === 0 ? [] : _.map(atchFileNameArr, function (file) {return $(file).data('upload-file');})
     };
 
     this._apiService.request(Tw.API_CMD.BFF_08_0042, params)
