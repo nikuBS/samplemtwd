@@ -143,7 +143,7 @@
                                                     </li>
                                                     <li>
                                                         <span class="title">혜택1</span>
-                                                        <span class="tx-cont multi"><%= member.selectedBenefit ? '데이터 옵션' : '-' %><br />
+                                                        <span class="tx-cont multi"><%= member.selectedBenefit ? member.selectedBenefit === '2053-DAT1G'? '데이터500M무료' : 'LTE안심옵션' : '-' %><br />
                                                             <% if (member.selectedBenefit && isMine || combination.isRepresentation) { %>
                                                                 <button class="bt-link-tx underline fe-benefit1">변경</button>
                                                             <% } %>
