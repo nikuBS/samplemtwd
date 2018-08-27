@@ -1,4 +1,10 @@
-Tw.MytUsageBandDataSharings = function (rootEl) {
+/**
+ * FileName: myt.usage.band-data-sharings.js
+ * Author: 이정민 (skt.p130713@partner.sk.com)
+ * Date: 2018.07.27
+ */
+
+Tw.MyTUsageBandDataSharings = function (rootEl) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -6,7 +12,7 @@ Tw.MytUsageBandDataSharings = function (rootEl) {
   this._bindEvent();
 };
 
-Tw.MytUsageBandDataSharings.prototype = {
+Tw.MyTUsageBandDataSharings.prototype = {
   _bindEvent: function () {
     this.$container.on('click', '.fe-btn-used-data', $.proxy(this._onClickBtnUsedData, this));
   },

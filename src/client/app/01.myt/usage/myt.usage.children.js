@@ -1,4 +1,10 @@
-Tw.MytUsageChildren = function (rootEl) {
+/**
+ * FileName: myt.usage.children.js
+ * Author: 이정민 (skt.p130713@partner.sk.com)
+ * Date: 2018.07.27
+ */
+
+Tw.MyTUsageChildren = function (rootEl) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -9,7 +15,7 @@ Tw.MytUsageChildren = function (rootEl) {
   this._init();
 };
 
-Tw.MytUsageChildren.prototype = {
+Tw.MyTUsageChildren.prototype = {
   _cachedElement: function () {
     // this.$btDropdown = this.$container.find('.bt-dropdown');
   },

@@ -4,7 +4,7 @@
  * Date: 2018.07.27
  */
 
-Tw.MytUsageTdatashareClose = function (rootEl) {
+Tw.MyTUsageTdatashareClose = function (rootEl) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -15,7 +15,7 @@ Tw.MytUsageTdatashareClose = function (rootEl) {
   this._init();
 };
 
-Tw.MytUsageTdatashareClose.prototype = {
+Tw.MyTUsageTdatashareClose.prototype = {
   _assign: function () {
     this._$main = this.$container.find('#fe-main');
     this._$complete = this.$container.find('#fe-complete');
