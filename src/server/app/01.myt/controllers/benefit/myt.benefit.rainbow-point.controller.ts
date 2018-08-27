@@ -20,7 +20,7 @@ class MyTBenefitRainbowPoint extends TwViewController {
     ).subscribe(([ptRainbow]) => {
         if ( ptRainbow.code === API_CODE.CODE_00 ) {
           this._parseData(ptRainbow.result);
-          res.render('benefit/myt.benefit.rainbow-point.html', { svcInfo: svcInfo, point: ptRainbow.result});
+          res.render('benefit/myt.benefit.rainbow-point.html', { svcInfo: svcInfo, point: ptRainbow.result });
         } else {
           res.render('error.server-error.html', {
             title: '이벤트',
@@ -33,7 +33,7 @@ class MyTBenefitRainbowPoint extends TwViewController {
     );
   }
 
-  _parseData(data){
+  _parseData(data: any) {
     data.usblPoint = FormatHelper.addComma(data.usblPoint);
     data.erndPoint = FormatHelper.addComma(data.erndPoint);
     data.usdPoint = FormatHelper.addComma(data.usdPoint);
