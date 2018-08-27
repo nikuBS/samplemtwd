@@ -4,10 +4,11 @@
  * Date: 2018.08.14
  */
 
-Tw.CustomerEmailUpload = function (rootEl) {
+Tw.CustomerEmailUpload = function (rootEl, oEmailTemplate) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
+  this._oEmailTemplate = oEmailTemplate;
 
   this._cachedElement();
   this._bindEvent();
@@ -18,8 +19,7 @@ Tw.CustomerEmailUpload = function (rootEl) {
 };
 
 Tw.CustomerEmailUpload.prototype = {
-  _init: function () {
-  },
+  _init: function () {},
 
   _cachedElement: function () {
     this.tpl_file_item = Handlebars.compile($('#tpl_file_item').text());
@@ -122,12 +122,20 @@ Tw.CustomerEmailUpload.prototype = {
   _successUploadFile: function (response) {
     var fileList = response.result.map(function (file) {
       return {
+        name: file.name,
         originalName: file.originalName,
         convertData: Tw.FormatHelper.customDataFormat(file.size, Tw.DATA_UNIT.KB, Tw.DATA_UNIT.GB)
       };
-    })
+    });
 
-    $('.file-addlist').html(this.tpl_file_item({ list: fileList }));
+    if ( this._oEmailTemplate.state.tabIndex === 0 ) {
+      $('#tab1-tab .file-addlist').html(this.tpl_file_item({ list: fileList }));
+    }
+
+    if ( this._oEmailTemplate.state.tabIndex === 1 ) {
+      $('#tab2-tab .file-addlist').html(this.tpl_file_item({ list: fileList }));
+    }
+
     this._popupService.close();
   },
 
