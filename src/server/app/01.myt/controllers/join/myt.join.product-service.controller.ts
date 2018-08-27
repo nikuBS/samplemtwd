@@ -23,11 +23,7 @@ interface ICombination {
   hasDetail: boolean;
 }
 
-interface ICombinationList {
-  [key: string]: ICombination;
-}
-
-class MytJoinProductServiceController extends TwViewController {
+class MyTJoinProductServiceController extends TwViewController {
   constructor() {
     super();
   }
@@ -62,7 +58,7 @@ class MytJoinProductServiceController extends TwViewController {
   private _convertFeePlan(data, isWire): Observable<any> {
     if ( isWire ) {
       return Object.assign(data.result, {
-        basFeeAmt: data.result.basFeeAmt > 0 ? FormatHelper.addComma(data.result.basFeeAmt) : 0,
+        basFeeAmt: data.result.basFeeAmt > 0 ? FormatHelper.addComma(data.result.basFeeAmt.toString()) : 0,
         isDisplayFeeAmt: (data.result.coClCd !== 'T' && data.result.basFeeAmt > 0),
         svcScrbDt: DateHelper.getShortDateWithFormat(data.result.svcScrbDt, 'YYYY.MM.DD'),
         dcBenefits: data.result.dcBenefits.map((item) => {
@@ -87,13 +83,13 @@ class MytJoinProductServiceController extends TwViewController {
       }),
       tClassProd: {
         tClassProdList: data.result.tClassProd && data.result.tClassProd.tClassProdList
-            ? Object.assign(data.result.tClassProd.tClassProdList, {
-          tClassProdList: data.result.tClassProd.tClassProdList.map((item) => {
-            return Object.assign(item, {
-              scrbDt: DateHelper.getShortDateWithFormat(item.scrbDt, 'YYYY.MM.DD')
-            });
-          })
-        }) : []
+          ? Object.assign(data.result.tClassProd.tClassProdList, {
+            tClassProdList: data.result.tClassProd.tClassProdList.map((item) => {
+              return Object.assign(item, {
+                scrbDt: DateHelper.getShortDateWithFormat(item.scrbDt, 'YYYY.MM.DD')
+              });
+            })
+          }) : []
       }
     });
   }
@@ -112,7 +108,7 @@ class MytJoinProductServiceController extends TwViewController {
     Observable.combineLatest(
       this.apiService.request(apiInfo.apiCmd, {}),
       this.getCombinations(),
-      this.getAddictions(svcInfo)
+      this.getAdditions(svcInfo)
     ).subscribe(([feePlan, combinations, additions]) => {
       if ( feePlan.code !== API_CODE.CODE_00 ) {
         return this.error.render(res, Object.assign(defaultOptions, {
@@ -121,34 +117,35 @@ class MytJoinProductServiceController extends TwViewController {
         }));
       }
 
+      const addition = this.convertAddtions(additions);
+
       res.render('join/myt.join.product-service.html', {
         svcInfo: svcInfo,
         svcCdName: SVC_CDNAME,
         feeMainTemplate: apiInfo.isWire ? 'wire' : 'wireless',
         feePlan: this._convertFeePlan(feePlan, apiInfo.isWire),
         combinations,
-        additions: this.convertAddtions(additions)
+        additions: addition
       });
     });
   }
 
-  private getCombinations = (): Observable<ICombinationList | null> => {
+  private getCombinations = (): Observable<ICombination[] | null> => {
     return this.apiService.request(API_CMD.BFF_05_0133, {}).map(
       (resp: {
         code: string,
         result: { combinationWireMemberList?: any[], combinationWirelessMemberList?: any[] }
       }) => {
         if ( resp.code === API_CODE.CODE_00 ) {
-          const combinations: ICombinationList = {};
+          const combinations: ICombination[] = [];
           const wireless = resp.result.combinationWirelessMemberList;
           const wire = resp.result.combinationWireMemberList;
 
           if ( wireless && wireless.length > 0 ) {
             for ( let i = 0; i < wireless.length; i++ ) {
-              const item = wireless[i];
-              const nItem = this.getProperCombination(item);
-              if ( nItem ) {
-                combinations[item.expsOrder] = nItem;
+              const item = this.getProperCombination(wireless[i]);
+              if ( item ) {
+                combinations.push(item);
               }
             }
           } else {
@@ -157,11 +154,9 @@ class MytJoinProductServiceController extends TwViewController {
 
           if ( wire ) {
             for ( let i = 0; i < wire.length; i++ ) {
-              const item = wire[i];
-              const nItem = this.getProperCombination(item);
-
-              if ( nItem ) {
-                combinations[item.expsOrder] = nItem;
+              const item = this.getProperCombination(wire[i]);
+              if ( item ) {
+                combinations.push(item);
               }
             }
           }
@@ -193,9 +188,9 @@ class MytJoinProductServiceController extends TwViewController {
           icon: 'line',
           description: MYT_COMBINATION_TYPE.LINE
         }, {
-          icon: 'multi',
-          description: MYT_COMBINATION_TYPE.MULTI_ONE
-        });
+            icon: 'multi',
+            description: MYT_COMBINATION_TYPE.MULTI_ONE
+          });
         break;
       }
 
@@ -204,9 +199,9 @@ class MytJoinProductServiceController extends TwViewController {
           icon: 'line',
           description: MYT_COMBINATION_TYPE.LINE
         }, {
-          icon: 'int',
-          description: MYT_COMBINATION_TYPE.INTERNET
-        });
+            icon: 'int',
+            description: MYT_COMBINATION_TYPE.INTERNET
+          });
         break;
       }
 
@@ -215,9 +210,9 @@ class MytJoinProductServiceController extends TwViewController {
           icon: 'line',
           description: MYT_COMBINATION_TYPE.LINE
         }, {
-          icon: 'tel',
-          description: MYT_COMBINATION_TYPE.TEL
-        });
+            icon: 'tel',
+            description: MYT_COMBINATION_TYPE.TEL
+          });
         break;
       }
 
@@ -227,9 +222,9 @@ class MytJoinProductServiceController extends TwViewController {
           icon: 'multi',
           description: MYT_COMBINATION_TYPE.MULTI_TWO
         }, {
-          icon: 'int',
-          description: MYT_COMBINATION_TYPE.INTERNET
-        });
+            icon: 'int',
+            description: MYT_COMBINATION_TYPE.INTERNET
+          });
         break;
       }
 
@@ -239,12 +234,12 @@ class MytJoinProductServiceController extends TwViewController {
           icon: 'line',
           description: MYT_COMBINATION_TYPE.FAMILY
         }, {
-          icon: 'tel',
-          description: MYT_COMBINATION_TYPE.TEL
-        }, {
-          icon: 'itel',
-          description: MYT_COMBINATION_TYPE.ITEL
-        });
+            icon: 'tel',
+            description: MYT_COMBINATION_TYPE.TEL
+          }, {
+            icon: 'itel',
+            description: MYT_COMBINATION_TYPE.ITEL
+          });
         break;
       }
 
@@ -287,9 +282,9 @@ class MytJoinProductServiceController extends TwViewController {
           icon: 'tel',
           description: MYT_COMBINATION_TYPE.TEL
         }, {
-          icon: 'itel',
-          description: MYT_COMBINATION_TYPE.ITEL
-        });
+            icon: 'itel',
+            description: MYT_COMBINATION_TYPE.ITEL
+          });
         break;
       }
       case 'NH00000105':
@@ -298,9 +293,9 @@ class MytJoinProductServiceController extends TwViewController {
           icon: 'multi',
           description: MYT_COMBINATION_TYPE.MULTI_TWO
         }, {
-          icon: 'iptv',
-          description: MYT_COMBINATION_TYPE.IPTV
-        });
+            icon: 'iptv',
+            description: MYT_COMBINATION_TYPE.IPTV
+          });
         break;
       }
       case 'NH00000103':
@@ -309,9 +304,9 @@ class MytJoinProductServiceController extends TwViewController {
           icon: 'line',
           description: MYT_COMBINATION_TYPE.LINE
         }, {
-          icon: 'int',
-          description: MYT_COMBINATION_TYPE.INTERNET
-        });
+            icon: 'int',
+            description: MYT_COMBINATION_TYPE.INTERNET
+          });
         break;
       }
       default: {
@@ -322,7 +317,7 @@ class MytJoinProductServiceController extends TwViewController {
     return nItem;
   }
 
-  private getAddictions = (svcInfo): Observable<any> => {
+  private getAdditions = (svcInfo): Observable<any> => {
     if ( svcInfo.svcAttrCd.indexOf('M') === 0 ) {
       return this.apiService.request(API_CMD.BFF_05_0137, {});
     } else {
@@ -331,151 +326,7 @@ class MytJoinProductServiceController extends TwViewController {
   }
 
   private convertAddtions = (additions) => {
-    // const additions_s = {
-    //   'code': '00',
-    //   'msg': '',
-    //   'result': {
-    //     'reserveds': [
-    //       {
-    //         'prodId': 'NI00000266',
-    //         'prodNm': 'T_PC원스톱',
-    //         'payFreeYn': 'N',
-    //         'basFeeAmt': 3300,
-    //         'prodLinkYn': 'Y',
-    //         'scrbDt': '20171107'
-    //       }
-    //     ],
-    //     'pays': [
-    //       {
-    //         'prodId': 'NI00000266',
-    //         'prodNm': 'T_PC원스톱',
-    //         'payFreeYn': 'N',
-    //         'basFeeAmt': 3300,
-    //         'prodLinkYn': 'Y',
-    //         'scrbDt': '20171107'
-    //       }
-    //     ],
-    //     'frees': [
-    //       {
-    //         'prodId': 'NI00000266',
-    //         'prodNm': 'T_PC원스톱',
-    //         'payFreeYn': 'N',
-    //         'basFeeAmt': 3300,
-    //         'prodLinkYn': 'Y',
-    //         'scrbDt': '20171107'
-    //       }
-    //     ],
-    //
-    //     'joinables': [
-    //       {
-    //         'prodId': 'NI00000258',
-    //         'prodNm': 'T_가디언SW',
-    //         'payFreeYn': 'N',
-    //         'basFeeAmt': 0,
-    //         'prodLinkYn': 'Y'
-    //       },
-    //       {
-    //         'prodId': 'NI00000259',
-    //         'prodNm': 'T_파워IP',
-    //         'payFreeYn': 'N',
-    //         'basFeeAmt': 38500,
-    //         'prodLinkYn': 'Y'
-    //       }
-    //     ]
-    //
-    //   }
-    // };
-
-    const mock_additions = {
-      'code': '00',
-      'msg': '',
-      'result': {
-        'addSvcProdList': [
-          {
-            'prodId': 'NA00004073',
-            'prodNm': '넘버플러스II',
-            'basFeeTxt': '3850',
-            'scrbDt': '20170915',
-            'goDetailUrl': '',
-            'goSetUrl': '/normal.do?serviceId=S_ADD_0071&viewId=V_CENT1025&prod_id=NA00004073',
-            'goTermUrl': '',
-            'payFreeYn': 'N'
-          },
-          {
-            'prodId': 'NA00004196',
-            'prodNm': 'T안심콜 라이트',
-            'basFeeTxt': '8000',
-            'scrbDt': '20140120',
-            'goDetailUrl': '',
-            'goSetUrl': '',
-            'goTermUrl': '',
-            'payFreeYn': 'N'
-          }
-        ], 'disProdList': [
-          {
-            'prodId': 'NA00004430',
-            'prodNm': '요금약정할인제도',
-            'scrbDt': '20161024',
-            'prodDesc': '특정 요금제를 일정 기간 이용하는 고객에게 매월 요금 할인을 제공하는 제도',
-            'goDetailUrl': '',
-            'goSetUrl': '',
-            'goTermUrl': '',
-            'payFreeYn': 'Y'
-          },
-          {
-            'prodId': 'NA00004196',
-            'prodNm': '함께쓰기 그룹(모)',
-            'scrbDt': '20140120',
-            'prodDesc': '이동전화 모회선 데이터 공유',
-            'goDetailUrl': '',
-            'goSetUrl': '',
-            'goTermUrl': '',
-            'payFreeYn': 'N'
-          }
-        ],
-        'optProdList': [
-          {
-            'prodId': 'NA00004430',
-            'prodNm': '선택약정할인제도',
-            'basFeeTxt': '상세참조',
-            'scrbDt': '20161024',
-            'prodDesc': '단말 지원금 미선택 고객에게 요금할인 혜택 제공',
-            'goDetailUrl': '',
-            'goSetUrl': '',
-            'goTermUrl': '',
-            'payFreeYn': 'Y'
-          }
-        ],
-        'roamingProdList': [
-          {
-            'prodId': 'NA00004863',
-            'prodNm': 'T로밍 함께쓰기 3GB',
-            'basFeeTxt': '무료, 상세참조, 1,000원',
-            'scrbDt': '20130225',
-            'prodDesc': '스마트폰 도난,분실, 파손 고객에게 단말기 보상 지원금 혜택을 제공하는 보험연계상품',
-            'prodDispYn': 'Y',
-            'goDetailUrl': '',
-            'goSetUrl': '',
-            'goTermUrl': '',
-            'payFreeYn': 'Y'
-          },
-          {
-            'prodId': 'NA00004707',
-            'prodNm': 'T로밍 함께쓰기 10GB',
-            'basFeeTxt': '무료, 상세참조, 1,000원',
-            'scrbDt': '20130225',
-            'prodDesc': '요금약정할인 금액의 최대 120%를 적립할 수 있는 Okcashbag 상품',
-            'prodDispYn': 'Y',
-            'goDetailUrl': '',
-            'goSetUrl': '',
-            'goTermUrl': '',
-            'payFreeYn': 'Y'
-          }
-        ]
-      }
-    };
-
-    const result = mock_additions.result;
+    const result = additions.result;
 
     try {
       Object.keys(result).forEach(key => {
@@ -505,4 +356,4 @@ class MytJoinProductServiceController extends TwViewController {
   }
 }
 
-export default MytJoinProductServiceController;
+export default MyTJoinProductServiceController;

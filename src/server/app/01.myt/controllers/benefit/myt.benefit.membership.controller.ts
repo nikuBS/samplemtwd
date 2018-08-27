@@ -25,8 +25,7 @@ class MyTBenefitMembershipController extends TwViewController {
     } else if ( data.code === API_MYT_ERROR.MBR0001 || data.code === API_MYT_ERROR.MBR0002 ) {
       res.render('benefit/myt.benefit.membership-no.html', this.getData(svcInfo, data) );
     } else {
-      res.render('error.server-error.html', {
-        title: 'error',
+      this.error.render(res, {
         code: data.code,
         msg: data.msg,
         svcInfo: svcInfo

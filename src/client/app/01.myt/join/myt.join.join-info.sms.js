@@ -122,7 +122,7 @@ Tw.MyTJoinJoinInfoSms.prototype = {
   },
 
   _onFail : function (err) {
-    this._popupService.openAlert(err.msg + ' : ' + err.code);
+    Tw.Error(err.code,err.msg).pop();
   }
 
 };

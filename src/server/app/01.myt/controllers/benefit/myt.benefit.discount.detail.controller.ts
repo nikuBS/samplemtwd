@@ -10,7 +10,7 @@ import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
 
-class MytBenefitDisCntDetailController extends TwViewController {
+class MyTBenefitDisCntDetailController extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     const data = {
@@ -145,4 +145,4 @@ class MytBenefitDisCntDetailController extends TwViewController {
 
 }
 
-export default MytBenefitDisCntDetailController;
+export default MyTBenefitDisCntDetailController;

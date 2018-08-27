@@ -22,7 +22,7 @@ Tw.POPUP_TPL = {
     {
       title: '미성년자 가입',
       options: [
-        { title:'', checked: false, value: '3396', text: '미성년자 가입'},
+        { title:'', checked: false, value: '3306', text: '미성년자 가입'},
         { title:'', checked: false, value: '3307', text: '미성년자 보호 서비스'}]
     },
     {
@@ -72,5 +72,12 @@ Tw.POPUP_TPL = {
         { title:'', checked: false, value: '', text: '목소리 인증'},
         { title:'', checked: false, value: '', text: '목소리 등록 문자받기'}]
     }
-  ]
+  ],
+  CUSTOMER_SITE_INFO_TYPEA_CHOICE: [{
+    title: '가려진 정보',
+    options: [
+      { title: '고객님의 정보를 가리는 이유', check: false, value: 'A', text: '고객님의 정보를 가리는 이유' },
+      { title: '가려진 정보를 보는 방법', check: false, value: 'B', text: '가려진 정보를 보는 방법' }
+    ]
+  }]
 };

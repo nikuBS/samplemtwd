@@ -27,7 +27,6 @@ Tw.CustomerDocument.prototype = {
   _bindEvent: function () {
     this.$tabLinker = this.$container.find('.tab-linker');
     this.$tabLinker.on('click', 'li', $.proxy(this._onTabChange, this));
-    this.$selectList.on('change', $.proxy(this._onRadioButtonChange, this));
   },
   _onTabChange: function (event) {
     var $target = $(event.currentTarget);
@@ -48,26 +47,18 @@ Tw.CustomerDocument.prototype = {
     this._selectedTabId = $id;
     this.$selector = this.$container.find('#' + this._selectedTabId + '-tab');
     this.$firstNode = this.$selector.find('.fe-standard-node');
+    this.$selectList = this.$selector.find('.select-list:first');
     this.isOpList = false;
     this.isNext = false;
     this.nextIndex = 1;
     this._reqData = {
       sysCd: this.$selector.data('value')
     };
+    this._setChangeEvent(this.$selectList);
   },
   _showAndHide: function () {
     this.$docInfo.show();
     this.$docResult.hide();
-  },
-  _onRadioButtonChange: function (event) {
-    var $target = $(event.target);
-    var $parentTarget = $target.parents('.acco-list');
-    var idx = $parentTarget.data('index');
-    var $nextTarget = $parentTarget.next();
-
-    this._setTitle($parentTarget, $target);
-    this._resetChildren($parentTarget, idx);
-    this._setData($parentTarget, $nextTarget);
   },
   _setTitle: function ($parentTarget, $target) {
     var $titleNode = $parentTarget.find('.acco-title');
@@ -201,6 +192,7 @@ Tw.CustomerDocument.prototype = {
       $liNode.removeClass('fe-standard-node none');
       $target.find('.select-list').append($liNode);
     }
+    this._setChangeEvent($target.find('.select-list'));
     this._openList($target);
   },
   _setDocumentList: function (list) {
@@ -209,6 +201,20 @@ Tw.CustomerDocument.prototype = {
     }
     this.$docResult.show();
     this.$docInfo.hide();
+  },
+  _setChangeEvent: function ($target) {
+    $target.off('click');
+    $target.on('click', 'li', $.proxy(this._onRadioButtonClick, this));
+  },
+  _onRadioButtonClick: function (event) {
+    var $target = $(event.currentTarget).find('input');
+    var $parentTarget = $target.parents('.acco-list');
+    var idx = $parentTarget.data('index');
+    var $nextTarget = $parentTarget.next();
+
+    this._setTitle($parentTarget, $target);
+    this._resetChildren($parentTarget, idx);
+    this._setData($parentTarget, $nextTarget);
   },
   _closeList: function ($target) {
     $target.removeClass('on');

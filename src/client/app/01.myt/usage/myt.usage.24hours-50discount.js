@@ -1,11 +1,17 @@
-Tw.MytUsage24Hours50Discount = function (rootEl) {
+/**
+ * FileName: myt.usage.24hours-50discount.js
+ * Author: 이정민 (skt.p130713@partner.sk.com)
+ * Date: 2018.07.27
+ */
+
+Tw.MyTUsage24Hours50Discount = function (rootEl) {
   this.$container = rootEl;
   this._popupService = Tw.Popup;
 
   this._bindEvent();
 };
 
-Tw.MytUsage24Hours50Discount.prototype = {
+Tw.MyTUsage24Hours50Discount.prototype = {
   _bindEvent: function () {
     this.$container.on('click', '.fe-btn-detail-date', $.proxy(this._onClickBtnDetailDate, this));
   },

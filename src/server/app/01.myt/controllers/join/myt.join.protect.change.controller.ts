@@ -9,7 +9,7 @@ import { NextFunction, Request, Response } from 'express';
 import { SVC_ATTR } from '../../../../types/bff.type';
 
 
-class MytJSProtectChangeController extends TwViewController {
+class MyTJSProtectChangeController extends TwViewController {
   private _svcInfo: object = {};
   private _isNew: boolean = false;
 
@@ -58,5 +58,5 @@ class MytJSProtectChangeController extends TwViewController {
   }
 }
 
-export default MytJSProtectChangeController;
+export default MyTJSProtectChangeController;
 

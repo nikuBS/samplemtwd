@@ -19,7 +19,13 @@
     <div id="header" class="header-wrap">
         <div class="header">
             <div class="header-ti align-l">
+                <% if(!type) { %>
                 <h1>사이트 이용안내</h1>
+                <% } else if(type === '0') { %>
+                <h1>온라인 T world 이용안내</h1>
+                <% } else { %>
+                <h1>모바일 T world 이용안내</h1>
+                <% } %>
             </div>
             <button class="prev-step fe-common-back"><span class="blind">이전으로</span></button>
             <button class="search-content"><span class="blind">검색하기</span></button>
@@ -30,6 +36,7 @@
     <div id="contents" class="container-wrap">
         <h2 class="blind">내용</h2>
         <div class="container">
+            <% if (!serviceId) { %><%# serviceId값 없는 경우 : 목록 페이지 %>
             <hr class="cont-sp type1" aria-hidden="true" />
             <!-- .cont-box -->
             <div class="cont-box nogaps">
@@ -57,7 +64,7 @@
                                                 <div class="box-linktheme">
                                                     <ul class="linktheme-list">
                                                         <li>
-                                                            <a href="/customer/faq/site-info/<%=siteLink[0]%>">
+                                                            <a href="/customer/faq/site-info/<%=siteLink[0]%>?type=0">
                                                                 <span class="cell"><span class="ico-linktheme type1"></span></span>
                                                                 <dl>
                                                                     <dt class="theme-ti">기타</dt>
@@ -67,7 +74,7 @@
                                                             </a>
                                                         </li>
                                                         <li>
-                                                            <a href="/customer/faq/site-info/<%=siteLink[1]%>">
+                                                            <a href="/customer/faq/site-info/<%=siteLink[1]%>?type=0">
                                                                 <span class="cell"><span class="ico-linktheme type2"></span></span>
                                                                 <dl>
                                                                     <dt class="theme-ti">myT</dt>
@@ -77,7 +84,7 @@
                                                             </a>
                                                         </li>
                                                         <li>
-                                                            <a href="/customer/faq/site-info/<%=siteLink[2]%>">
+                                                            <a href="/customer/faq/site-info/<%=siteLink[2]%>?type=0">
                                                                 <span class="cell"><span class="ico-linktheme type3"></span></span>
                                                                 <dl>
                                                                     <dt class="theme-ti">회원</dt>
@@ -87,7 +94,7 @@
                                                             </a>
                                                         </li>
                                                         <li>
-                                                            <a href="/customer/faq/site-info/<%=siteLink[3]%>">
+                                                            <a href="/customer/faq/site-info/<%=siteLink[3]%>?type=0">
                                                                 <span class="cell"><span class="ico-linktheme type1"></span></span>
                                                                 <dl>
                                                                     <dt class="theme-ti">회원</dt>
@@ -97,7 +104,7 @@
                                                             </a>
                                                         </li>
                                                         <li>
-                                                            <a href="/customer/faq/site-info/<%=siteLink[4]%>">
+                                                            <a href="/customer/faq/site-info/<%=siteLink[4]%>?type=0">
                                                                 <span class="cell"><span class="ico-linktheme type2"></span></span>
                                                                 <dl>
                                                                     <dt class="theme-ti">회원</dt>
@@ -107,7 +114,7 @@
                                                             </a>
                                                         </li>
                                                         <li>
-                                                            <a href="/customer/faq/site-info/<%=siteLink[5]%>">
+                                                            <a href="/customer/faq/site-info/<%=siteLink[5]%>?type=0">
                                                                 <span class="cell"><span class="ico-linktheme type3"></span></span>
                                                                 <dl>
                                                                     <dt class="theme-ti">기타</dt>
@@ -117,7 +124,7 @@
                                                             </a>
                                                         </li>
                                                         <li>
-                                                            <a href="/customer/faq/site-info/<%=siteLink[6]%>">
+                                                            <a href="/customer/faq/site-info/<%=siteLink[6]%>?type=0">
                                                                 <span class="cell"><span class="ico-linktheme type1"></span></span>
                                                                 <dl>
                                                                     <dt class="theme-ti">기타</dt>
@@ -269,6 +276,47 @@
                 <!--// .component -->
             </div>
             <!--// .cont-box -->
+            <% } else { %><%# serviceId값 없는 경우 : 상세 페이지 %>
+            <% if(!isTypeA) { %>
+            <div class="cont-box">
+                <div class="box-suggest">
+                    <div class="suggest-info">
+                        <p class="suggest-ti"><%=currentService.cntsTitle%></p>
+                    </div>
+                </div>
+                <div class="box-service-notice mt50">
+                <%# -currentService.cntsCmmnt%>
+                <div class="service-notice">
+                    <div class="service-notice-img mt20">
+                        <img src="<%=currentService.thmbImgUrl%>" alt="<%=currentService.thmbImgAlt%>">
+                    </div>
+                </div>
+            </div>
+            </div>
+            <% } else { %>
+            <div class="cont-box">
+                <div class="box-suggest">
+                    <div class="suggest-info">
+                        <p class="suggest-ti"><%=currentService.cntsTitle%></p>
+                        <ul class="suggest-list nodot">
+                            <li>가려진 정보란, 고객님의 소중한 정보가 *또는 <span class="ico-gride" role="img" aria-label="격자무늬"><span class="blind">격자무늬</span></span>으로 가려져 보이는 것입니다.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <hr class="cont-sp type1" aria-hidden="true">
+            <div class="cont-box">
+                <div class="box-service-notice">
+                    <div class="service-notice">
+                        <button class="bt-dropdown big" title="가려진 정보">고객님의 정보를 가리는 이유<span class="ico"></span></button>
+                        <div class="service-notice-img mt20">
+                            <img src="<%=currentService.thmbImgUrl%>" alt="<%=currentService.thmbImgAlt%>">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <% } %>
+            <% } %>
         </div>
     </div>
     <!--// #contents -->
@@ -279,7 +327,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.CustomerFaqInfoCommon($(document));
+    new Tw.CustomerFaqInfoCommon($(document), '<%=serviceId%>');
   });
 </script>
 <script type="text/x-handlebars-template">

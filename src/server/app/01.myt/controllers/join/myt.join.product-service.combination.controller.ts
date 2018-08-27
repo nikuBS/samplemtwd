@@ -51,6 +51,9 @@ interface IMember {
   isDiscounting?: boolean;
   // 착한가족
   benefitData?: number;
+  // TB끼리 온가족 프리
+  selectedBenefit?: string;
+  freeLineNumber?: string;
 }
 
 interface IBProduct {
@@ -60,7 +63,7 @@ interface IBProduct {
   wireProduct?: string;
 }
 
-export default class MytJoinProductServiceCombinationController extends TwViewController {
+export default class MyTJoinProductServiceCombinationController extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any): void {
     const prodId = req.query.prodId || '';
 
@@ -80,8 +83,6 @@ export default class MytJoinProductServiceCombinationController extends TwViewCo
         } else {
           res.render('error.server-error.html', {
             title: '사용중인 상품',
-            code: resp.code,
-            msg: resp.msg,
             svcInfo
           });
         }
@@ -129,12 +130,14 @@ export default class MytJoinProductServiceCombinationController extends TwViewCo
       servicePlan: member.feeProdNm,
       managementId: member.svcMgmtNum,
       afterDiscount: member.aftBasFeeAmtTx ? FormatHelper.convNumFormat(member.aftBasFeeAmtTx) : undefined,
-      beforeDiscount: member.basFeeAmtTx ? FormatHelper.convNumFormat(member.aftBasFeeAmtTx) : undefined,
-      discountAmount: member.basFeeDcTx ? FormatHelper.convNumFormat(member.aftBasFeeAmtTx) : undefined,
+      beforeDiscount: member.basFeeAmtTx ? FormatHelper.convNumFormat(member.basFeeAmtTx) : undefined,
+      discountAmount: member.basFeeDcTx ? FormatHelper.convNumFormat(member.basFeeDcTx) : undefined,
       discountRate: member.tcFeeBenf,
       companyCode: member.coClCd || 'T',
       isDiscounting: member.famlUseYn ? member.famlUseYn === 'Y' : undefined,
-      benefitData: member.membOfrPt
+      benefitData: member.membOfrPt,
+      selectedBenefit: member.dataBenf,
+      freeLineNumber: member.asgnNum
     };
   }
 

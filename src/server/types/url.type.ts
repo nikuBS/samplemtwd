@@ -73,6 +73,11 @@ export const URL = {
   '/myt/benefit/rainbow-point/transfer': { login: true, id: 'MY_04_04_03', title: '대리인 간 양도'},
   '/myt/benefit/membership': { login: true, id: 'MY_04_02', title: '멤버십 혜택'},
   '/myt/benefit/membership/detail': { login: true, id: 'MY_04_02_01_01', title: '멤버십 혜택 상세'},
+  '/myt/benefit/recommend': { login: true, id: 'MY_04_03', title: '추천 혜택'},
+  '/myt/benefit/recommend/detail': { login: true, id: 'MY_04_03_01_01', title: '추천 혜택 상세'},
+  '/myt/benefit/discount': { login: true, id: 'MY_04_01', title: '할인 혜택'},
+  '/myt/benefit/discount/detail': { login: true, id: 'MY_04_01_01_01', title: '할인 혜택 상세'},
+
 
   // recharge
   '/recharge/refill': { login: true, id: 'DA_01_01_01', title: '리필하기' }, // 리필하기

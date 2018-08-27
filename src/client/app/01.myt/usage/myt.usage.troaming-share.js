@@ -1,10 +1,16 @@
-Tw.MytUsageTroamingShare = function (rootEl) {
+/**
+ * FileName: myt.usage.troaming-share.js
+ * Author: 이정민 (skt.p130713@partner.sk.com)
+ * Date: 2018.07.27
+ */
+
+Tw.MyTUsageTroamingShare = function (rootEl) {
   this.$container = rootEl;
 
   this._bindEvent();
 };
 
-Tw.MytUsageTroamingShare.prototype = {
+Tw.MyTUsageTroamingShare.prototype = {
   _bindEvent: function () {
     this.$container.on('change', '.fe-unit-switch', $.proxy(this._setDataByUnit, this));
   },

@@ -90,7 +90,8 @@ input[type=text], input[type=file], input[type=password], input[type=number] {
 .inputbox .input input[type=text],
 .inputbox .input input[type=file],
 .inputbox .input input[type=password],
-.inputbox .input input[type=number] {
+.inputbox .input input[type=number],
+.inputbox .input input[type=tel] {
   padding: 0 0.625rem;
   height: 2.375rem;
   border: 1px solid #f5f5f5;
@@ -105,7 +106,8 @@ input[type=text], input[type=file], input[type=password], input[type=number] {
 .inputbox .input input[type=text]::-webkit-input-placeholder,
 .inputbox .input input[type=file]::-webkit-input-placeholder,
 .inputbox .input input[type=password]::-webkit-input-placeholder,
-.inputbox .input input[type=number]::-webkit-input-placeholder {
+.inputbox .input input[type=number]::-webkit-input-placeholder,
+.inputbox .input input[type=tel]::-webkit-input-placeholder {
   font-size: 0.9375rem;
   color: #8f8f8f;
 }
@@ -113,7 +115,8 @@ input[type=text], input[type=file], input[type=password], input[type=number] {
 .inputbox .input input[type=text].place-small::-webkit-input-placeholder,
 .inputbox .input input[type=file].place-small::-webkit-input-placeholder,
 .inputbox .input input[type=password].place-small::-webkit-input-placeholder,
-.inputbox .input input[type=number].place-small::-webkit-input-placeholder {
+.inputbox .input input[type=number].place-small::-webkit-input-placeholder,
+.inputbox .input input[type=tel].place-small::-webkit-input-placeholder {
   font-size: 0.6875rem;
   letter-spacing: -1px;
 }
@@ -121,7 +124,8 @@ input[type=text], input[type=file], input[type=password], input[type=number] {
 .inputbox .input input[type=text]:focus,
 .inputbox .input input[type=file]:focus,
 .inputbox .input input[type=password]:focus,
-.inputbox .input input[type=number]:focus {
+.inputbox .input input[type=number]:focus,
+.inputbox .input input[type=tel]:focus {
   border-color: #7b7b7b;
   background: none;
 }
@@ -129,14 +133,16 @@ input[type=text], input[type=file], input[type=password], input[type=number] {
 .inputbox .input input[type=text]:focus::-webkit-input-placeholder,
 .inputbox .input input[type=file]:focus::-webkit-input-placeholder,
 .inputbox .input input[type=password]:focus::-webkit-input-placeholder,
-.inputbox .input input[type=number]:focus::-webkit-input-placeholder {
+.inputbox .input input[type=number]:focus::-webkit-input-placeholder,
+.inputbox .input input[type=tel]:focus::-webkit-input-placeholder {
   color: transparent;
 }
 
 .inputbox .input input[type=text]:disabled,
 .inputbox .input input[type=file]:disabled,
 .inputbox .input input[type=password]:disabled,
-.inputbox .input input[type=number]:disabled {
+.inputbox .input input[type=number]:disabled,
+.inputbox .input input[type=tel]:disabled {
   background-color: #e5e8ee;
   border-color: #e5e8ee;
   font-weight: 300;
@@ -145,7 +151,8 @@ input[type=text], input[type=file], input[type=password], input[type=number] {
 .inputbox .input input[type=text]:disabled::-webkit-input-placeholder,
 .inputbox .input input[type=file]:disabled::-webkit-input-placeholder,
 .inputbox .input input[type=password]:disabled::-webkit-input-placeholder,
-.inputbox .input input[type=number]:disabled::-webkit-input-placeholder {
+.inputbox .input input[type=number]:disabled::-webkit-input-placeholder,
+.inputbox .input input[type=tel]:disabled::-webkit-input-placeholder {
   color: #808698;
   font-weight: 300;
 }

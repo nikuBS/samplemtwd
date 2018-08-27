@@ -352,10 +352,10 @@ export const MYT_BENEFIT_RAINBOW_POINT = {
 
 export const CUSTOMER_SERVICEINFO_TYPE = {
   3280: 'A', 3308: 'A', 3306: 'A', 231: 'A', 3319: 'A', 212: 'A', 220: 'A', 217: 'A', 3720: 'A', 3721: 'A', 3723: 'A', 3724: 'A',
-  3305: 'A-1', 3304: 'A-1', 3307: 'A-1', 3321: 'A-1', 3727: 'A-1', 3722: 'A-1',
-  3315: 'A-2', 3316: 'A-2', 218: 'A-2',
+  3315: 'A-1', 3316: 'A-1', 3321: 'A-1', 3727: 'A-1', 3722: 'A-1',
+  218: 'A-2',
   'USIM 잠금해제': 'B', '내 USIM으로 SKT 단말기 사용': 'B', '내 USIM으로 타사 단말기 사용': 'B',
-  222: 'B', 215: 'B', 3320: 'B-1',
+  222: 'B', 215: 'B', 3305: 'B', 3304: 'B', 3307: 'B', 3320: 'B-1',
   224: 'C', 221: 'C', 223: 'C', 216: 'C', 3719: 'C', '보이는 ARS': 'C', '음성인식 ARS': 'C',
   'band LTE': 'C-1', '버튼식 ARS': 'C-2',
   '타사 USIM으로 SKT 단말기 사용': 'D', '목소리 인증': 'D',
@@ -446,5 +446,16 @@ export const CUSTOMER_SERVICEINFO_CATEGORY = [
         {title: '목소리 등록 문자받기', serviceId: ''}
       ]}
     ]
+  },
+  {
+    title: '주요 용어',
+    subDepth: [
+      {title: 'USIM 관련 용어', serviceId: ''},
+      {title: '기변(기기변경) 관련 용어', serviceId: ''},
+      {title: '단말기 관련 용어', serviceId: ''},
+      {title: '서비스 관련 기타 용어', serviceId: ''}
+    ]
   }
 ];
+
+export const CUSTOMER_SITEINFO_TYPE = [3324, 3326, 3327, 213, 3328, 3329, 3330];

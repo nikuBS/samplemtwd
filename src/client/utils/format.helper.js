@@ -41,12 +41,12 @@ Tw.FormatHelper = (function () {
     return num.replace(/(^0+)/, '');
   };
 
-  var setDecimalPlace = function(value, point) {
+  var setDecimalPlace = function (value, point) {
     return parseFloat(value.toFixed(point));
   };
 
   var convNumFormat = function (number) {
-    if ( number < 1 ) {
+    if (number < 1) {
       return setDecimalPlace(number, 2);
     }
     if (number > 0 && number < 100 && number % 1 !== 0) {
@@ -159,21 +159,24 @@ Tw.FormatHelper = (function () {
     return cardYm.substr(0, 4) + '/' + cardYm.substr(4, 2);
   };
 
-  function _getDashedCellPhoneNumber(phoneNumber) {
+  function getDashedCellPhoneNumber(phoneNumber) {
     var str = '';
-    if (phoneNumber.length <= 10) {
-      str += phoneNumber.substr(0, 3);
-      str += '-';
-      str += phoneNumber.substr(3, 3);
-      str += '-';
-      str += phoneNumber.substr(6);
-    } else {
-      str += phoneNumber.substr(0, 3);
-      str += '-';
-      str += phoneNumber.substr(3, 4);
-      str += '-';
-      str += phoneNumber.substr(7);
+    var remainLen = phoneNumber.length;
+    var startIdx = 0;
+    var DEFAULT_COUNT = remainLen <= 10 && !/^010/.test(phoneNumber) ? 3 : 4;
+    var digit = DEFAULT_COUNT;
+
+    while (remainLen !== 0) {
+      digit = str ? remainLen >= DEFAULT_COUNT ? DEFAULT_COUNT : remainLen : 3;
+      str += phoneNumber.substr(startIdx, digit);
+
+      if (remainLen > DEFAULT_COUNT) {
+        str += '-';
+      }
+      remainLen -= digit;
+      startIdx += digit;
     }
+
     return str;
   }
 
@@ -225,14 +228,14 @@ Tw.FormatHelper = (function () {
       tmpArr[2] = Tw.StringHelper.masking(tmpArr[2], MASKING_MARK, 2);
       return tmpArr.join('-');
     };
-    return getMaskingPhoneNumber(_getDashedCellPhoneNumber(phoneNumber));
+    return getMaskingPhoneNumber(getDashedCellPhoneNumber(phoneNumber));
   }
 
   function getDashedPhoneNumber(phoneNumber) {
     if (Tw.ValidationHelper.isTelephone(phoneNumber)) {
       return _getDashedTelephoneNumber(phoneNumber);
     } else if (Tw.ValidationHelper.isCellPhone(phoneNumber)) {
-      return _getDashedCellPhoneNumber(phoneNumber);
+      return getDashedCellPhoneNumber(phoneNumber);
     } else if (Tw.ValidationHelper.isRepresentNumber(phoneNumber)) {
       return _getDashedRepresentPhoneNumber(phoneNumber);
     }
@@ -240,16 +243,16 @@ Tw.FormatHelper = (function () {
     return phoneNumber;
   }
 
-  var removeComma = function(str) {
+  var removeComma = function (str) {
     return str.replace(/,/g, '');
   };
 
-  var is6digitPassSameNumber = function(str) {
+  var is6digitPassSameNumber = function (str) {
     var regex = /(\d)\1\1\1\1\1/;
     return regex.test(str);
   };
 
-  var is6digitPassSolidNumber = function(str) {
+  var is6digitPassSolidNumber = function (str) {
     var regex = /(012345)|(123456)|(234567)|(345678)|(456789)|(567890)|(678901)|(789012)|(890123)|(901234)|(098765)|(987654)|(876543)|(765432)|(654321)|(543210)|(432109)|(321098)|(210987)|(109876)/;
     return regex.test(str);
   };
@@ -272,6 +275,7 @@ Tw.FormatHelper = (function () {
     makeCardYymm: makeCardYymm,
     getFormattedPhoneNumber: getFormattedPhoneNumber,
     getDashedPhoneNumber: getDashedPhoneNumber,
+    getDashedCellPhoneNumber: getDashedCellPhoneNumber,
     convNumFormat: convNumFormat,
     insertColonForTime: insertColonForTime,
     setDecimalPlace: setDecimalPlace,

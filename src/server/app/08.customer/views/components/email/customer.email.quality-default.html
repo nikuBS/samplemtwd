@@ -1,3 +1,7 @@
+<% if (status === 'quality' && category === 'wibro' ) { %>
+    <% include ../components/email/customer.email.quality-wibro.html %>
+<% } else { %>
+
 <div class="email-question-top">
     <p class="tx-dropdown-box">
         <button class="tx-dropdown blue fe-btn-select-call" title="이메일 문의" aria-haspopup="true">서비스
@@ -31,9 +35,9 @@
                             </div>
                             <div class="txfield-combined-tx">
                                 <textarea class="input-focus fe-inquiry-content" cols="20" rows="3"
-                                                                                  placeholder="내용을 입력해주세요."
-                                                                                  aria-labelledby="aria-email-qacont"
-                                                                                  maxlength="12000"></textarea>
+                                          placeholder="내용을 입력해주세요."
+                                          aria-labelledby="aria-email-qacont"
+                                          maxlength="12000"></textarea>
                                 <span class="byte"><span class="byte-current">0</span>/<span
                                     class="byte-total">12,000</span>자</span>
                             </div>
@@ -62,3 +66,4 @@
         </div>
     </div>
 </div>
+<% } %>
