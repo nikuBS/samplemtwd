@@ -76,6 +76,7 @@ export const URL = {
   '/myt/benefit/recommend': { login: true, id: 'MY_04_03', title: '추천 혜택'},
   '/myt/benefit/recommend/detail': { login: true, id: 'MY_04_03_01_01', title: '추천 혜택 상세'},
 
+
   // recharge
   '/recharge/refill': { login: true, id: 'DA_01_01_01', title: '리필하기' }, // 리필하기
   '/recharge/refill/history': { login: true, id: 'DA_01_02_01', title: '리필내역' }, // 리필 히스토리
