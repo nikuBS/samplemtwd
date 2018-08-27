@@ -50,9 +50,11 @@ Tw.MyTBenefitRainbowPointHistory.prototype = {
   _bindEvent: function () {
     this.$container.on('change', '.fe-period input', $.proxy(this._onChangePeriod, this));
     this.$container.on('click', 'button[data-id="search"]', $.proxy(this._requestHistoryData, this, null));
+    this.$container.on('click', '#fe-expiring-points', $.proxy(this._openExpiringPointPopup, this))
 
     this.$listWrapper.on('click', 'a.prev:not(.disabled)', $.proxy(this._onClickPrev, this));
     this.$listWrapper.on('click', 'a.next:not(.disabled)', $.proxy(this._onClickNext, this));
+
   },
 
   _onChangePeriod: function (e) {
@@ -68,8 +70,8 @@ Tw.MyTBenefitRainbowPointHistory.prototype = {
   },
 
   _requestHistoryData: function (page) {
-    if (page !== this._currentPage) {
-      if(!page){
+    if ( page !== this._currentPage ) {
+      if ( !page ) {
         page = 1;
       }
       var params = {
@@ -122,5 +124,12 @@ Tw.MyTBenefitRainbowPointHistory.prototype = {
   _onClickNext: function (e) {
     e.preventDefault();
     window.location.hash = this._currentPage + 1;
+  },
+
+  _openExpiringPointPopup: function (e) {
+    e.preventDefault();
+    this._popupService.open({
+      hbs: 'MY_04_04_01_L02'
+    });
   }
 };
