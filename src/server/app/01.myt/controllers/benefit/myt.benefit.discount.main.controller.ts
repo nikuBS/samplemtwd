@@ -125,12 +125,8 @@ class MytBenefitDisCntMainController extends TwViewController {
             // useYn(장기가입여부판단) 값 여부로 대상/비대상 설정
             return null;
           } else {
-            if ( resp.result['longInfoSt'] === 4 ) {
-              // useYn -> Y 이지만 longInfoSt -> 4 인 경우만 장기가입고객 (BFF_명세서 참조내용)
-              return resp.result;
-            } else {
-              return null;
-            }
+            // longInfoSt 값은 보지 않고 useYn으로 비교
+            return resp.result;
           }
         }
       } else {
