@@ -43,99 +43,746 @@
             </div>
             <!--// .cont-box -->
             <% } %>
-            <%# -resp.result.cntsCmmnt%>
 
             <!-- #adminContainer -->
             <div id="adminContainer" class="admin-edit-box">
+                <%-resp.result.cntsCmmnt%>
+                <%#
                 <!-- .cont-box -->
                 <div class="cont-box">
-                    <!-- .widget -->
-                    <div class="widget">
-                        <div class="widget-box accordion">
-                            <h5 class="tit-a">안내 유형을 선택하세요.</h5>
-                            <div class="acco-cover toggle focuson"><!-- toggle : 한개만 열기 -->
-                                <div class="acco-style">
-                                    <ul class="acco-list">
-                                        <!-- .on: 열기 -->
-                                        <li class="acco-box on">
-                                            <div class="acco-tit"><button class="pl0" role="button" aria-pressed="false">서비스별 요금 안내</button></div>
-                                            <div class="acco-cont">
-                                                <ul class="list-dot">
-                                                    <li class="list">미성년자(자녀)가 사용한 이동통신요금을 법정 대리인(부모)에게 SMS로 알려드리는 서비스입니다.
-                                                        <ul class="inner-group type5">
-                                                            <li class="inner-list">
-                                                                <dl>
-                                                                    <dt class="inner-tit">서비스 신청 대상</dt>
-                                                                    <dd class="inner-cont">20세 미만 미성년 고객</dd>
-                                                                </dl>
-                                                            </li>
-                                                            <li class="inner-list">
-                                                                <dl>
-                                                                    <dt class="inner-tit">통보 대상 요금</dt>
-                                                                    <dd class="inner-cont">미성년자 명의 회선의 국내통화료, DATA통화료, DATA정보료, 소액결재 (단, Ting요금상품의 경우 한도 관리되는 요금 항목은 통보대상에서 제외)</dd>
-                                                                </dl>
-                                                            </li>
-                                                            <li class="inner-list">
-                                                                <dl>
-                                                                    <dt class="inner-tit">Ting요금상품</dt>
-                                                                    <dd class="inner-cont">DATA정보료 + 기본제공 통화 소진 후 추가로 과금되는 금액</dd>
-                                                                </dl>
-                                                            </li>
-                                                            <li class="inner-list">
-                                                                <dl>
-                                                                    <dt class="inner-tit">일반요금상품</dt>
-                                                                    <dd class="inner-cont">국내통화료 + DATA 통화료 + DATA 정보료 + 소액결제</dd>
-                                                                </dl>
-                                                            </li>
-                                                        </ul>
-                                                        <ul class="inner-group type3"><!-- * 일 경우 -->
-                                                            <li class="inner-list"><span class="bullet">*</span>통보 서비스 항목의 합산 요금이 5천원/ 1만원/ 2만원/ 4만원/ 6만원/ 8만원/ 10만원/ 15만원 초과시 각각 SMS 통보</li>
-                                                            <li class="inner-list">팅요금상품 사용 고객의 경우 후불 충전 시 해당 내역 SMS 통보</li>
-                                                        </ul>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </li>
-                                        <li class="acco-box">
-                                            <div class="acco-tit"><button class="pl0" role="button" aria-pressed="false">기본요금상품 기본료/기본제공혜택</button></div>
-                                            <div class="acco-cont">
-                                                <ul class="list-dot">
-                                                    <li class="list">내용 미수급</li>
-                                                </ul>
-                                            </div>
-                                        </li>
-                                        <li class="acco-box">
-                                            <div class="acco-tit"><button class="pl0" role="button" aria-pressed="false">옵션요금상품 월정액/기본제공혜택</button></div>
-                                            <div class="acco-cont">
-                                                <ul class="list-dot">
-                                                    <li class="list">내용 미수급</li>
-                                                </ul>
-                                            </div>
-                                        </li>
-                                        <li class="acco-box">
-                                            <div class="acco-tit"><button class="pl0" role="button" aria-pressed="false">기본제공/기본할인 혜택 기준</button></div>
-                                            <div class="acco-cont">
-                                                <ul class="list-dot">
-                                                    <li class="list">내용 미수급</li>
-                                                </ul>
-                                            </div>
-                                        </li>
-                                        <li class="acco-box">
-                                            <div class="acco-tit"><button class="pl0" role="button" aria-pressed="false">요금상품별 Class 혜택 기준</button></div>
-                                            <div class="acco-cont">
-                                                <ul class="list-dot">
-                                                    <li class="list">내용 미수급</li>
-                                                </ul>
-                                            </div>
-                                        </li>
-                                    </ul>
+                    <div class="box-guide-acco">
+                        <!-- .widget -->
+                        <div class="widget">
+                            <div class="widget-box accordion">
+                                <h5 class="tit-a">안내 유형을 선택하세요.</h5>
+                                <div class="acco-cover toggle focuson"><!-- toggle : 한개만 열기 -->
+                                    <div class="acco-style">
+                                        <ul class="acco-list">
+                                            <!-- .on: 열기 -->
+                                            <li class="acco-box">
+                                                <div class="acco-tit"><button class="pl0" role="button" aria-pressed="false">단말기 자급제도 안내</button></div>
+                                                <div class="acco-cont">
+                                                    <ul class="service-guide-list">
+                                                        <li class="list">
+                                                            <div class="service-guide-block">
+                                                                <em class="service-guide-ti">단말기 자급제도 OMD(Open Market Device)란?</em>
+                                                                <p class="service-guide-tx">이동통신사 대리점/판매점 외 제조사의 유통점, 가전제품 매장, 대형마트 등 다양한 채널을 통해 휴대폰만 따로 구입 한 후, 사용하고자 하는 이동전화에 가입하여 사용 할 수 있는 제도입니다.</p>
+                                                            </div>
+                                                            <div class="service-guide-block">
+                                                                <em class="service-guide-ti">자급단말기 구입 시 꼭 확인하세요!</em>
+                                                                <ul class="inner-group type3">
+                                                                    <li class="inner-list">
+                                                                        <span class="dot"></span><p class="service-guide-tx">이용 가능 여부 확인</p>
+                                                                        <span class="service-guide-sub">희망하는 이동통신사에 서비스 이용이 가능한 휴대폰인지 확인해야 합니다.</span>
+                                                                        <ul class="inner-group type3"><!-- * 일 경우 -->
+                                                                            <li class="inner-list"><span class="bullet">*</span><span class="vb tx-bold">OMD 단말(해외 수입 및 국내 자급제) 이용 가능 여부 확인</span><br/>OMD 단말은 SK텔레콤의 정식 품질 검증을 거치지 않았기 때문에, 일부 서비스 이용에 제약이 있을 수 있습니다. OMD 단말 구입 전 당사 네트워크 주파수를 지원하는 모델인지 확인 하세요.</li>
+                                                                        </ul>
+                                                                    </li>
+                                                                </ul>
+                                                                <ul class="inner-group type5">
+                                                                    <li class="inner-list1">
+                                                                        <dl>
+                                                                            <dt class="inner-tit">3G(WCDMA)/LTE 단말 이용 가능 서비스</dt>
+                                                                        </dl>
+                                                                    </li>
+                                                                    <li class="inner-list1 tb-cell mt10">
+                                                                        <span class="dash" aria-hidden="true">-</span>
+                                                                        <dl>
+                                                                            <dt>음성, SMS/MMS, Data 등</dt>
+                                                                        </dl>
+                                                                    </li>
+                                                                    <li class="inner-list1 mt10">
+                                                                        <div class="in-bullet">
+                                                                            <span class="bullet">*</span>Data의 정상 이용을 위해 APN 설정값 확인 필요<br/>(하단 'OMD 단말 OS별 모바일 네트워크 기본 설정' 참고)
+                                                                            <p class="mt6">일부 부가서비스는 이용 불가</p>
+                                                                        </div>
+                                                                    </li>
+                                                                </ul>
+                                                                <ul class="inner-group type5">
+                                                                    <li class="inner-list1">
+                                                                        <dl>
+                                                                            <dt class="inner-tit">2G(CDMA) 단말 이용 가능 서비스</dt>
+                                                                        </dl>
+                                                                    </li>
+                                                                    <li class="inner-list1 tb-cell mt10">
+                                                                        <span class="dash" aria-hidden="true">-</span>
+                                                                        <dl>
+                                                                            <dt>음성, SMS</dt>
+                                                                        </dl>
+                                                                    </li>
+                                                                    <li class="inner-list1 mt10">
+                                                                        <div class="in-bullet">
+                                                                            <span class="bullet">*</span>2G 단말은 해외와 국내망 환경 차이가 크기 때문에 지역에 따라 음성, SMS 수발신 이용이 정상적으로 되지 않을 수 있음
+                                                                            <p class="mt6">2G 단말은 지점/대리점 통해 단말 등록 후 이용 가능</p>
+                                                                        </div>
+                                                                    </li>
+                                                                </ul>
+                                                                <ul class="inner-group type5">
+                                                                    <li class="inner-list1">
+                                                                        <dl>
+                                                                            <dt class="inner-tit">3G(WCDMA)/LTE 단말 MMS 제공관련</dt>
+                                                                        </dl>
+                                                                    </li>
+                                                                    <li class="inner-list1 tb-cell mt10">
+                                                                        <span class="dash" aria-hidden="true">-</span>
+                                                                        <dl>
+                                                                            <dt>OMA MMS 규격을 지원하는 단말은 MMS를 이용할 수 있음</dt>
+                                                                        </dl>
+                                                                    </li>
+                                                                    <li class="inner-list1 tb-cell mt10">
+                                                                        <span class="dash" aria-hidden="true">-</span>
+                                                                        <dl>
+                                                                            <dt>MMS 관련 단말 설정 필요 (하단 'OMD 단말 OS별 모바일 네트워크 기본 설정' 참고)</dt>
+                                                                        </dl>
+                                                                    </li>
+                                                                </ul>
+                                                                <ul class="inner-group type5">
+                                                                    <li class="inner-list1">
+                                                                        <dl>
+                                                                            <dt class="inner-tit">2G(CDMA) 단말 MMS 제공관련</dt>
+                                                                        </dl>
+                                                                    </li>
+                                                                    <li class="inner-list1 tb-cell mt10">
+                                                                        <span class="dash" aria-hidden="true">-</span>
+                                                                        <dl>
+                                                                            <dt>MMS는 기술적으로 지원할 수 없음</dt>
+                                                                        </dl>
+                                                                    </li>
+                                                                </ul>
+                                                                <ul class="inner-group type5">
+                                                                    <li class="inner-list1">
+                                                                        <dl>
+                                                                            <dt class="inner-tit">3G(WCDMA)/LTE 단말 주파수</dt>
+                                                                        </dl>
+                                                                    </li>
+                                                                    <li class="inner-list1 tb-cell mt10">
+                                                                        <span class="dash" aria-hidden="true">-</span>
+                                                                        <dl>
+                                                                            <dt>3G(WCDMA) : 2.1GHz</dt>
+                                                                        </dl>
+                                                                    </li>
+                                                                    <li class="inner-list1 tb-cell mt10">
+                                                                        <span class="dash" aria-hidden="true">-</span>
+                                                                        <dl>
+                                                                            <dt>LTE : 850MHz, 1.8GHz, 2.1GHz</dt>
+                                                                        </dl>
+                                                                    </li>
+                                                                </ul>
+                                                                <ul class="inner-group type5">
+                                                                    <li class="inner-list1">
+                                                                        <dl>
+                                                                            <dt class="inner-tit">2G(CDMA) 단말 주파수</dt>
+                                                                        </dl>
+                                                                    </li>
+                                                                    <li class="inner-list1 tb-cell mt10">
+                                                                        <span class="dash" aria-hidden="true">-</span>
+                                                                        <dl>
+                                                                            <dt>2G(CDMA)단말 - 800MHz</dt>
+                                                                        </dl>
+                                                                    </li>
+                                                                </ul>
+                                                                <ul class="inner-group type3"><!-- * 일 경우 -->
+                                                                    <li class="inner-list">
+                                                                        <span class="bullet">*</span><span class="vb tx-bold">단말 유형별 APN</span><br />
+                                                                        LTE 스마트폰 : lte.sktelecom.com<br />
+                                                                        LTE 태블릿 : ltetab.sktelecom.com<br />
+                                                                        LTE 모뎀 : lte-internet.sktelecom.com<br />
+                                                                        3G 스마트폰/태블릿 : web.sktelecom.com<br />
+                                                                        3G 모뎀 : internet.sktelecom.com<br />
+                                                                        위의 APN값은 해당 단말 유형 코드별 APN이며, 세부 사항은 대리점/지점/고객센터 등을 통해 확인하세요.<br />
+                                                                        태블릿/모뎀 등의 단말은 대리점/지점에서 해당 단말에 맞는 코드로 개통이 되어야 해당 요금상품 사용 및 USIM 기변이 가능합니다.
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                            <div class="service-guide-block">
+                                                                <em class="service-guide-ti">분실 · 도난 여부 확인</em>
+                                                                <p class="service-guide-tx">이동통신사를 통해 분실/도난 신고된 단말은 KAIT의 통합관리센터에 등록되어 통신 서비스 이용이 차단됩니다.</p>
+                                                                <ul class="inner-group type3 mb14"><!-- * 일 경우 -->
+                                                                    <li class="inner-list"><span class="bullet">*</span>단말 분실/도난 신고 등록 시점에 IMEI정보 통합관리센터(CEIR)에 실시간 분실/도난 등록이 되고, 이후 이동통신사 개통 처리시 분실/도난 단말기로 체크되어 개통이 불가합니다.</li>
+                                                                </ul>
+                                                                <p class="service-guide-tx">OMD단말, 중고 휴대폰 등 구입 시 분실 · 도난 여부를 확인해야 합니다.</p>
+                                                                <ul class="inner-group mt10 mb14">
+                                                                    <li class="inner-list1 tb-cell gray">
+                                                                        <span class="dash" aria-hidden="true">-</span>
+                                                                        <dl>
+                                                                            <dt>단말기 국제 고유 식별번호(IMEI) 또는 모델명&amp;일련번호로 조회 가능</dt>
+                                                                        </dl>
+                                                                    </li>
+                                                                    <li class="inner-list1 tb-cell gray mt8">
+                                                                        <span class="dash" aria-hidden="true">-</span>
+                                                                        <dl>
+                                                                            <dt><button class="bt-link-tx underline">http://단말기자급제.한국/</button> 또는<br /><button class="bt-link-tx underline">http://www.checkimei.kr</button>에서 확인 가능</dt>
+                                                                        </dl>
+                                                                    </li>
+                                                                </ul>
+                                                                <p class="service-guide-tx">분실/도난 신고 여부에 따라, 다음과 같은 메시지가 보여집니다.</p>
+                                                                <ul class="inner-group mt10 mb14">
+                                                                    <li class="inner-list1 tb-cell gray">
+                                                                        <span class="dash" aria-hidden="true">-</span>
+                                                                        <dl>
+                                                                            <dt>분실/도난 단말 : "분실·도난으로 신고된 단말기입니다. XXX 통신사(고객센터 0000-0000)로 문의하기 바랍니다."</dt>
+                                                                        </dl>
+                                                                    </li>
+                                                                    <li class="inner-list1 tb-cell gray mt8">
+                                                                        <span class="dash" aria-hidden="true">-</span>
+                                                                        <dl>
+                                                                            <dt>유통 불가 단말 : "사용이 제한되어 있는 단말기입니다. XXX 통신사(고객센터 0000-0000)로 문의하기 바랍니다."</dt>
+                                                                        </dl>
+                                                                    </li>
+                                                                    <li class="inner-list1 tb-cell gray mt8">
+                                                                        <span class="dash" aria-hidden="true">-</span>
+                                                                        <dl>
+                                                                            <dt>정상 폰 : "분실·도난으로 신고된 단말기가 아닙니다."</dt>
+                                                                        </dl>
+                                                                    </li>
+                                                                </ul>
+                                                                <p class="service-guide-tx">분실신고 된 단말기 습득 처리는 분실 신고된 통신사에서만 처리 가능합니다.</p>
+                                                            </div>
+                                                            <div class="service-guide-block">
+                                                                <em class="service-guide-ti">단말기식별번호(IMEI) 확인</em>
+                                                                <p class="service-guide-tx">OMD 단말의 등록 및 사용을 위해서는 휴대폰 단말기 식별번호(IMEI)가 필요합니다. 휴대폰 내부 설정 메뉴 및 휴대폰 뒷면 표기 등을 통해 확인 가능합니다.<br />(해당 부분에서 확인 불가 시 휴대폰 제조사 통해 확인)</p>
+                                                                <ul class="inner-group type3 mb14"><!-- * 일 경우 -->
+                                                                    <li class="inner-list"><span class="bullet">*</span>타사 출시 단말기 : OMD 단말 외에 타사 출시 단말도 SK텔레콤에서 이용 가능합니다.</li>
+                                                                </ul>
+                                                                <ul class="inner-group type5">
+                                                                    <li class="inner-list1">
+                                                                        <dl>
+                                                                            <dt class="inner-tit">3G(WCDMA)/LTE 단말 이용 가능 서비스</dt>
+                                                                        </dl>
+                                                                    </li>
+                                                                    <li class="inner-list1 mt10">
+                                                                        <dl>
+                                                                            <dt>음성, SMS/MMS, Data 서비스 이용 가능<br />('12.5월 이후 출시 스마트폰)</dt>
+                                                                            <dd class="inner-cont">
+                                                                                <div class="in-bullet">
+                                                                                    <span class="bullet">*</span>단, 국내 제조사의 3G 일반 피쳐폰과 '12.5월 이전 출시 스마트 폰의 MMS는 각 이동통신사별 고유 규격 탑재로 호환되지 않음
+                                                                                    <p class="mt6">LGU+의 단말기는 기술 방식이 달라 이용할 수 없음</p>
+                                                                                </div>
+                                                                            </dd>
+                                                                        </dl>
+                                                                    </li>
+                                                                </ul>
+                                                                <ul class="inner-group type5">
+                                                                    <li class="inner-list1">
+                                                                        <dl>
+                                                                            <dt class="inner-tit">LTE 단말기</dt>
+                                                                        </dl>
+                                                                    </li>
+                                                                    <li class="inner-list1 mt10">
+                                                                        <dl>
+                                                                            <dt>음성, SMS/MMS, Data 서비스 이용 가능<br />('14.7월 이후 출시 스마트폰)</dt>
+                                                                            <dd class="inner-cont">
+                                                                                <div class="in-bullet">
+                                                                                    <span class="bullet">*</span>'13.11.21 이후 출시 LTE 스마트폰은 Data만 이용 가능
+                                                                                    <p class="mt6">각 제조사별 최초 적용 단말은 상이함</p>
+                                                                                </div>
+                                                                            </dd>
+                                                                        </dl>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                            <li class="acco-box">
+                                                <div class="acco-tit"><button class="pl0" role="button" aria-pressed="false">서비스 가입절차 안내</button></div>
+                                                <div class="acco-cont">
+                                                    <ul class="service-guide-list">
+                                                        <li class="list">
+                                                            <div class="service-guide-block">
+                                                                <em class="service-guide-ti">SKT 신규 가입 안내</em>
+                                                                <p class="service-guide-tx">SK텔레콤 공식 대리점/지점에서 OMD단말의 개통이 가능합니다.</p>
+                                                                <p class="service-guide-tx mt10">단말 구매처 및 제조사를 통해 단말 정보(3G/4G 여부, 지원 주파수 대역, 단말 유형(스마트폰/태블릿/모뎀 등))를 확인하시어, 대리점/지점 방문 개통 시 직원에게 알려주시기 바랍니다.</p>
+                                                                <p class="service-guide-tx mt10">매장 직원으로부터 단말 이용 시 주의사항(단말에 따른 품질 저하, 서비스 제한 가능성 등)에 대한 설명을 듣고, ‘OMD 단말 가입 확인서’를 반드시 작성하시기 바랍니다.</p>
+                                                                <ul class="inner-group type3"><!-- * 일 경우 -->
+                                                                    <li class="inner-list"><span class="bullet">*</span>태블릿/모뎀 등 특수단말은 대리점/지점 방문을 통해서 전용 요금상품 가입/개통이 가능합니다.</li>
+                                                                </ul>
+                                                            </div>
+                                                            <div class="service-guide-block">
+                                                                <em class="service-guide-ti">USIM 기변 안내 (SKT 기존고객 대상)</em>
+                                                                <p class="service-guide-tx">단말기에 USIM 장착하기 → 단말기 전원 켜기 → 약 1분 후 전원을 다시 껐다 켜기</p>
+                                                                <ul class="inner-group type3"><!-- * 일 경우 -->
+                                                                    <li class="inner-list"><span class="bullet">*</span>전원을 On/Off하는 이유는 타사 단말 확인(1회) 및 KAIT 통합관리센터에서 분실/도난 단말 여부 확인(1회) 목적입니다. 타사 단말의 경우에는 전원 On/Off를 2회 실시해야 합니다.</li>
+                                                                </ul>
+                                                                <p class="service-guide-tx mt10">USIM 기변 시에는 통신사가 고객님의 단말 세부정보를 확인할 수 없으므로, 사용중인 요금상품과 APN셋팅에 따라 3G/LTE 서비스가 제공됩니다.</p>
+                                                                <p class="service-guide-tx mt10">일반 3G 휴대폰이 아닌 경우(LTE, 블랙베리, 태블릿 PC, 모뎀 등) 공식 대리점/지점에 방문 후, 단말에 적합한 모델로 변경하시면 됩니다.</p>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                            <li class="acco-box">
+                                                <div class="acco-tit"><button class="pl0" role="button" aria-pressed="false">DATA/WIFI/영상통화 이용안내</button></div>
+                                                <div class="acco-cont">
+                                                    <ul class="service-guide-list">
+                                                        <li class="list">
+                                                            <div class="service-guide-block">
+                                                                <em class="service-guide-ti">DATA 이용안내</em>
+                                                                <p class="service-guide-tx">기본적으로 DATA서비스가 제공되고 있으나, 일부 단말의 경우 DATA접속이 불가할 수 있습니다. DATA접속이 안될 경우 단말의 모바일 네트워크설정(APN설정) 확인이 필요합니다.<br />(참고 "OMD 단말 OS별 모바일 네트워크 기본 설정")</p>
+                                                            </div>
+                                                            <div class="service-guide-block">
+                                                                <em class="service-guide-ti">OMD 단말 T wifi 사용 설정 안내</em>
+                                                                <p class="service-guide-tx">T wifi zone_secure는 MAC Address 등록없이 아래와 같은 단말 설정만으로 사용가능합니다.</p>
+                                                                <ul class="inner-group type5">
+                                                                    <li class="inner-list1">
+                                                                        <dl>
+                                                                            <dt class="inner-tit">Android OS (구글계열) 단말<br/>T wifi zone_secure 사용 설정</dt>
+                                                                            <dd class="inner-cont">
+                                                                                <span class="tx">설정 &gt; Wi-Fi &gt; "T wifi zone_secure" 선택 &gt; 팝업창에서 EAP 방식에서 "AKA" 혹은 "SIM"선택 &gt; 확인 혹은 연결 선택</span>
+                                                                                <span class="tx mt8">EAP 방식에 "AKA" 혹은 "SIM" 항목이 없을 경우 3번 MAC Address 등록 후 T wifi zone 사용 가능합니다.</span>
+                                                                                <div class="inner-img mt10">
+                                                                                    <img src="/img/etc/service-guide-CI-14-13.jpg" alt="T wifi zone_secure 사용 설정" />
+                                                                                </div>
+                                                                            </dd>
+                                                                        </dl>
+                                                                    </li>
+                                                                </ul>
+                                                                <ul class="inner-group type5">
+                                                                    <li class="inner-list1">
+                                                                        <dl>
+                                                                            <dt class="inner-tit">애플 iOS 기기<br />(iOS 7 이상을 사용하는 아이폰/아이패드)<br />T wifi zone_secure 사용 설정</dt>
+                                                                            <dd class="inner-cont">
+                                                                                <span class="tx">개통 후 SKT USIM을 단말에 장착하면 T wifi zone_secure 자동 접속이 가능합니다.</span>
+                                                                                <span class="tx mt8">자동접속이 되지 않을 경우 단말기의 바탕화면 &gt; 설정 &gt; 일반 &gt; 재설정 &gt; 네트워크 설정 재설정 으로 네트워크 설정을 초기화해주세요.</span>
+                                                                            </dd>
+                                                                        </dl>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                            <div class="service-guide-block">
+                                                                <em class="service-guide-ti">영상통화 이용안내</em>
+                                                                <p class="service-guide-tx">SKT에서 영상통화서비스를 제공하는 스마트폰은 단말 제조사의 SKT IMS(IP Multimedia Subsystem)망과의 연동기능 개발 및 SKT의 테스트를 완료 한 후 서비스를 제공하고 있습니다.</p>
+                                                                <p class="service-guide-tx mt10">영상통화 기능이 있는 OMD 단말이라도, 당사 및 국내 규격에 맞춰 개발이 된 단말만 영상통화 이용이 가능합니다. (영상통화 이용 가능한 코드로의 변경은 대리점/지점 통해 변경 가능. 국내 제조사의 일부 자급제 단말만 이용 가능)</p>
+                                                                <p class="service-guide-tx mt10">영상통화가 가능한 단말이라도 SKT IMS망과의 연동 기능 개발 및 안정성 테스트를 거치지 않아 기능이 동작하지 않거나 오동작이 있을 수 있습니다.</p>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                            <li class="acco-box">
+                                                <div class="acco-tit"><button class="pl0" role="button" aria-pressed="false">OMD단말 기본 설정 안내</button></div>
+                                                <div class="acco-cont">
+                                                    <ul class="service-guide-list">
+                                                        <li class="list">
+                                                            <div class="service-guide-block">
+                                                                <em class="service-guide-ti">OS별 모바일 네트워크 기본 설정</em>
+                                                                <ul class="inner-group type5">
+                                                                    <li class="inner-list1">
+                                                                        <dl>
+                                                                            <dt class="inner-tit">Android OS (구글계열) LTE단말</dt>
+                                                                            <dd class="inner-cont">
+                                                                                <span class="tx">메뉴 &gt; 설정 &gt; 무선 및 네트워크 &gt; 모바일 네트워크 &gt; APN(액세스 포인트 이름) &gt; 메뉴버튼 &gt; 새 APN에 아래 각 항목 입력(다른 경로: 메뉴 &gt; 설정 &gt; 무선제어 &gt; 모바일 네트워크 설정 &gt; APN &gt; 하단의 새 APN에 아래 각항목 입력)</span>
+                                                                            </dd>
+                                                                        </dl>
+                                                                    </li>
+                                                                    <li class="inner-list1 tb-cell mt10">
+                                                                        <span class="dash" aria-hidden="true">-</span>
+                                                                        <dl>
+                                                                            <dt>이름 : SKT LTE</dt>
+                                                                        </dl>
+                                                                    </li>
+                                                                    <li class="inner-list1 tb-cell mt10">
+                                                                        <span class="dash" aria-hidden="true">-</span>
+                                                                        <dl>
+                                                                            <dt>APN : lte.sktelecom.com (단, LTE 단말이지만, 3G 요금상품을 사용하는 고객은 web.sktelecom.com)</dt>
+                                                                        </dl>
+                                                                    </li>
+                                                                    <li class="inner-list1 tb-cell mt10">
+                                                                        <span class="dash" aria-hidden="true">-</span>
+                                                                        <dl>
+                                                                            <dt>MMSC :<br />http://omms.nate.com:9082/oma_mms</dt>
+                                                                        </dl>
+                                                                    </li>
+                                                                    <li class="inner-list1 tb-cell mt10">
+                                                                        <span class="dash" aria-hidden="true">-</span>
+                                                                        <dl>
+                                                                            <dt>MMS 프록시 : lteoma.nate.com</dt>
+                                                                        </dl>
+                                                                    </li>
+                                                                    <li class="inner-list1 tb-cell mt10">
+                                                                        <span class="dash" aria-hidden="true">-</span>
+                                                                        <dl>
+                                                                            <dt>MMS 포트 : 9093</dt>
+                                                                        </dl>
+                                                                    </li>
+                                                                    <li class="inner-list1 tb-cell mt10">
+                                                                        <span class="dash" aria-hidden="true">-</span>
+                                                                        <dl>
+                                                                            <dt>APN type : 미입력(설정 안함){단, 삼성 아이스크림 샌드위치 (ICS) OS 단말의 경우, "internet+MMS"로 안내}</dt>
+                                                                        </dl>
+                                                                    </li>
+                                                                    <li class="inner-list1 tb-cell mt10">
+                                                                        <span class="dash" aria-hidden="true">-</span>
+                                                                        <dl>
+                                                                            <dt>MCC : 450</dt>
+                                                                        </dl>
+                                                                    </li>
+                                                                    <li class="inner-list1 tb-cell mt10">
+                                                                        <span class="dash" aria-hidden="true">-</span>
+                                                                        <dl>
+                                                                            <dt>MNC : 05</dt>
+                                                                        </dl>
+                                                                    </li>
+                                                                </ul>
+                                                                <ul class="inner-group type5">
+                                                                    <li class="inner-list1">
+                                                                        <dl>
+                                                                            <dt class="inner-tit">Android OS (구글계열) 3G 단말</dt>
+                                                                            <dd class="inner-cont">
+                                                                                <span class="tx">메뉴 &gt; 설정 &gt; 무선 및 네트워크 &gt; 모바일 네트워크 &gt; APN(액세스 포인트 이름) &gt; 메뉴버튼 &gt; 새 APN에 아래 각 항목 입력 (다른 경로: 메뉴 &gt; 설정 &gt; 무선제어 &gt; 모바일 네트워크 설정 &gt; APN &gt; 하단의 새 APN에 아래 각 항목 입력)</span>
+                                                                            </dd>
+                                                                        </dl>
+                                                                    </li>
+                                                                    <li class="inner-list1 tb-cell mt10">
+                                                                        <span class="dash" aria-hidden="true">-</span>
+                                                                        <dl>
+                                                                            <dt>이름 : SKT 3G</dt>
+                                                                        </dl>
+                                                                    </li>
+                                                                    <li class="inner-list1 tb-cell mt10">
+                                                                        <span class="dash" aria-hidden="true">-</span>
+                                                                        <dl>
+                                                                            <dt>APN : web.sktelecom.com</dt>
+                                                                        </dl>
+                                                                    </li>
+                                                                    <li class="inner-list1 tb-cell mt10">
+                                                                        <span class="dash" aria-hidden="true">-</span>
+                                                                        <dl>
+                                                                            <dt>MMSC :<br />http://omms.nate.com:9082/oma_mms</dt>
+                                                                        </dl>
+                                                                    </li>
+                                                                    <li class="inner-list1 tb-cell mt10">
+                                                                        <span class="dash" aria-hidden="true">-</span>
+                                                                        <dl>
+                                                                            <dt>MMS 프록시 : smart.nate.com</dt>
+                                                                        </dl>
+                                                                    </li>
+                                                                    <li class="inner-list1 tb-cell mt10">
+                                                                        <span class="dash" aria-hidden="true">-</span>
+                                                                        <dl>
+                                                                            <dt>MMS 포트 : 9093</dt>
+                                                                        </dl>
+                                                                    </li>
+                                                                    <li class="inner-list1 tb-cell mt10">
+                                                                        <span class="dash" aria-hidden="true">-</span>
+                                                                        <dl>
+                                                                            <dt>APN type : 미입력(설정 안함){단, 삼성 아이스크림 샌드위치 (ICS) OS 단말의 경우, "internet+MMS"로 안내}</dt>
+                                                                        </dl>
+                                                                    </li>
+                                                                    <li class="inner-list1 tb-cell mt10">
+                                                                        <span class="dash" aria-hidden="true">-</span>
+                                                                        <dl>
+                                                                            <dt>MCC : 450</dt>
+                                                                        </dl>
+                                                                    </li>
+                                                                    <li class="inner-list1 tb-cell mt10">
+                                                                        <span class="dash" aria-hidden="true">-</span>
+                                                                        <dl>
+                                                                            <dt>MNC : 05</dt>
+                                                                        </dl>
+                                                                    </li>
+                                                                    <li class="inner-list1 mt10">
+                                                                        <div class="in-bullet">
+                                                                            <span class="bullet">*</span>APN 설정 후 3G 데이터를 잡지 못할 경우 재부팅 (3~4번)
+                                                                            <p class="mt6">위 항목 중 단말메뉴상에 없는 항목은 입력하지 않음</p>
+                                                                            <p class="mt6">접속 경로는 단말모델마다 조금씩 다를 수 있으므로 제조사로 확인필요</p>
+                                                                        </div>
+                                                                    </li>
+                                                                </ul>
+                                                                <ul class="inner-group type5">
+                                                                    <li class="inner-list1">
+                                                                        <dl>
+                                                                            <dt class="inner-tit">iOS (아이폰 계열) 아이폰3G/ 아이폰3Gs/ 아이폰4/ 아이폰4s/ 아이패드/ 아이패드2/ 뉴 아이패드</dt>
+                                                                            <dd class="inner-cont">
+                                                                                <span class="tx">iOS4이하 버전인 OMD(개인수입) / KT 출시 모델(아이폰4s 제외)</span>
+                                                                                <span class="tx gray mt8">전산개통 후 SKT USIM을 단말에 장착하면 설정값을 자동으로 받아오며 SKT 3G가 자동세팅 됨</span>
+                                                                            </dd>
+                                                                        </dl>
+                                                                    </li>
+                                                                    <li class="inner-list1 mt10">
+                                                                        <div class="in-bullet">
+                                                                            <span class="bullet">*</span>3G세팅 실패할 경우 단말을 리셋한 다음 아이튠즈와 연결 시 네트워크 or 망 정보를 받아오시겠습니까"라고 확인되면 ’예’ 또는 ’설정업데이트’를 선택하면 SKT 3G가 자동 셋팅 (리셋(재설정)방법: 단말기의 바탕화면 &gt; 설정 &gt; 일반 &gt; 재설정 &gt; 모든 콘텐츠 및 설정 지우기)
+                                                                        </div>
+                                                                    </li>
+                                                                    <li class="inner-list1 mt10">
+                                                                        <dl>
+                                                                            <dd class="inner-cont">
+                                                                                <span class="tx">iOS4이하 버전인 OMD(개인수입)/<br />KT 출시 모델(아이폰4s 제외)</span>
+                                                                                <span class="tx gray mt8">MMS사용을 위한 세팅방법(아이패드 제외)<br />(자동설정되지 않을 경우) 설정 &gt; 일반 &gt; 네트워크 &gt; 셀룰러 데이터 네트워크 &gt; MMS에서 아래 각 항목 입력 (반드시 소문자로 입력 후 재부팅)</span>
+                                                                            </dd>
+                                                                        </dl>
+                                                                    </li>
+                                                                    <li class="inner-list1 tb-cell mt10">
+                                                                        <span class="dash" aria-hidden="true">-</span>
+                                                                        <dl>
+                                                                            <dt>APN : web.sktelecom.com</dt>
+                                                                        </dl>
+                                                                    </li>
+                                                                    <li class="inner-list1 tb-cell mt10">
+                                                                        <span class="dash" aria-hidden="true">-</span>
+                                                                        <dl>
+                                                                            <dt>MMSC :<br />http://omms.nate.com:9082/oma_mms</dt>
+                                                                        </dl>
+                                                                    </li>
+                                                                    <li class="inner-list1 tb-cell mt10">
+                                                                        <span class="dash" aria-hidden="true">-</span>
+                                                                        <dl>
+                                                                            <dt>MMS프록시 : smart.nate.com:9093</dt>
+                                                                        </dl>
+                                                                    </li>
+                                                                    <li class="inner-list1 tb-cell mt10">
+                                                                        <span class="dash" aria-hidden="true">-</span>
+                                                                        <dl>
+                                                                            <dt>MMS 최대크기 : 1048576</dt>
+                                                                        </dl>
+                                                                    </li>
+                                                                </ul>
+                                                                <ul class="inner-group type5">
+                                                                    <li class="inner-list1">
+                                                                        <dl>
+                                                                            <dt class="inner-tit">iOS (아이폰 계열) 아이폰5, 아이패드 레티나, 아이패드 미니</dt>
+                                                                            <dd class="inner-cont">
+                                                                                <span class="tx gray">아래 설정을 모두 해야 함</span>
+                                                                                <span class="tx mt8">데이터 이용을 위한 세팅 방법(자동설정되지 않을 경우)</span>
+                                                                                <span class="tx gray mt8">설정 &gt; 일반 &gt; 네트워크 &gt; 셀룰러 데이터 네트워크 &gt; 셀룰러 데이터 항목에서 APN에 lte.sktelecom.com 입력</span>
+                                                                                <span class="tx mt8">MMS사용을 위한 세팅방법</span>
+                                                                                <span class="tx gray mt8">설정 &gt; 일반 &gt; 네트워크 &gt; 셀룰러 데이터 네트워크 &gt; MMS에서 아래 각 항목 입력 (반드시 소문자로 입력 후 재부팅)</span>
+                                                                            </dd>
+                                                                        </dl>
+                                                                    </li>
+                                                                    <li class="inner-list1 tb-cell mt10">
+                                                                        <span class="dash" aria-hidden="true">-</span>
+                                                                        <dl>
+                                                                            <dt>APN : lte.sktelecom.com</dt>
+                                                                        </dl>
+                                                                    </li>
+                                                                    <li class="inner-list1 tb-cell mt10">
+                                                                        <span class="dash" aria-hidden="true">-</span>
+                                                                        <dl>
+                                                                            <dt>MMSC :<br />http://omms.nate.com:9082/oma_mms</dt>
+                                                                        </dl>
+                                                                    </li>
+                                                                    <li class="inner-list1 tb-cell mt10">
+                                                                        <span class="dash" aria-hidden="true">-</span>
+                                                                        <dl>
+                                                                            <dt>MMS프록시 : smart.nate.com:9093</dt>
+                                                                        </dl>
+                                                                    </li>
+                                                                    <li class="inner-list1 tb-cell mt10">
+                                                                        <span class="dash" aria-hidden="true">-</span>
+                                                                        <dl>
+                                                                            <dt>MMS 최대크기 : 1048576</dt>
+                                                                        </dl>
+                                                                    </li>
+                                                                </ul>
+                                                                <ul class="inner-group type5">
+                                                                    <li class="inner-list1">
+                                                                        <dl>
+                                                                            <dt class="inner-tit">블랙베리 (Blackberry) Storm9500, Storm9520, Pearl 3G, Bold9000, Bold9700 , Bold9780, Torch9800, Tour9630, Bold9650</dt>
+                                                                            <dd class="inner-cont">
+                                                                                <span class="tx">아래 단말 경로로 진입하여 ‘SKT MMS서비스북’에서 상세 항목이 확인되어야만 MMS를 사용할 수 있음</span>
+                                                                                <span class="tx mt8">‘SKT MMS서비스북’은 BIS서비스에 가입되어 있는 경우만 확인할 수 있음 (SKT MMS서비스북을 수신한 후 BIS서비스 해지할 수도 있음)</span>
+                                                                            </dd>
+                                                                        </dl>
+                                                                    </li>
+                                                                    <li class="inner-list1 mt10">
+                                                                        <div class="in-bullet">
+                                                                            <span class="bullet">*</span>단말기에서 옵션 &gt; 고급 옵션 &gt; 서비스북에서<br />"MMS Client [MMS]",<br />"MMS Transport[WPTCP]" 있는지 확인
+                                                                            <p class="mt6">MMS Client[MMS]에서<br />MMS Transport[WPTCP]를 선택하고<br />web.sktelecom.com이 보이는지 확인</p>
+                                                                            <p class="mt6">통화 &gt; 옵션 &gt; 스마트 다이얼링에서 국가코드를 한국(+82)로 설정 후 이용</p>
+                                                                        </div>
+                                                                    </li>
+                                                                </ul>
+                                                                <ul class="inner-group type5">
+                                                                    <li class="inner-list1">
+                                                                        <dl>
+                                                                            <dt class="inner-tit">Nokia DATA 설정</dt>
+                                                                            <dd class="inner-cont">
+                                                                                <span class="tx">설정 &gt; 연결 &gt; 설정 &gt; 대상 &gt; 옵션 &gt; 새 대상</span>
+                                                                                <span class="tx mt8">대상이름에 "SKT 3G"입력 후 아무 아이콘 선택 SKT 3G를 선택 후 &gt; 옵션 &gt; 새 엑세스 지점</span>
+                                                                                <span class="tx mt8">"사용 가능한 엑세스 지점을 자동으로 확인하시겠습니까?"에서 "아니오" 선택</span>
+                                                                                <span class="tx mt8">"패킷데이터" 선택 후 "패킷 데이터 엑세스 지점이름에 "web.sktelecom.com" 입력 후 "OK" 선택</span>
+                                                                            </dd>
+                                                                        </dl>
+                                                                    </li>
+                                                                </ul>
+                                                                <ul class="inner-group type5">
+                                                                    <li class="inner-list1">
+                                                                        <dl>
+                                                                            <dt class="inner-tit">Nokia MMS 세팅</dt>
+                                                                            <dd class="inner-cont">
+                                                                                <span class="tx">설정 &gt; 연결 &gt; 설정 &gt; 대상 &gt; 옵션 &gt; 새 대상</span>
+                                                                                <span class="tx mt8">대상이름에 "SKT MMS"입력 후 아무 아이콘 선택</span>
+                                                                                <span class="tx mt8">SKT 3G를 선택 후 &gt; 옵션 &gt; 새 엑세스 지점</span>
+                                                                                <span class="tx mt8">"사용 가능한 엑세스 지점을 자동으로 확인하시겠습니까?"에서 "아니오" 선택</span>
+                                                                                <span class="tx mt8">"패킷데이터" 선택 후 "패킨 데이터 엑세스 지점 이름에 "web.sktelecom.com" 입력 후 "OK" 선택</span>
+                                                                                <span class="tx mt8">홈페이지 정보 수정 :<br />http://omms.nate.com:9082/oma_mms<br />입력 후 &gt; 옵션을 누름</span>
+                                                                                <span class="tx mt8">프록시 서버 주소 : smart.nate.com</span>
+                                                                                <span class="tx mt8">프록시 포트 번호 : 9093</span>
+                                                                                <span class="tx mt8">MMS APN 생성 후 메뉴 &gt; 메뉴 &gt; 옵션 &gt; 설정 &gt; 멀티미디어 메시지 &gt; 사용 엑세스 지점에서 web.sktelecom.com 을 선택</span>
+                                                                            </dd>
+                                                                        </dl>
+                                                                    </li>
+                                                                </ul>
+                                                                <ul class="inner-group type5">
+                                                                    <li class="inner-list1">
+                                                                        <dl>
+                                                                            <dt class="inner-tit">Windows Mobile<br />(Window 7 이전 버전) DATA 설정</dt>
+                                                                            <dd class="inner-cont">
+                                                                                <span class="tx">Start &gt; Setting &gt; Wireless Controls &gt; 오른쪽 하단의 "Menu" &gt; Connections &gt; My ISP "Add a new modem connection"</span>
+                                                                            </dd>
+                                                                        </dl>
+                                                                    </li>
+                                                                    <li class="inner-list1 tb-cell mt10">
+                                                                        <span class="dash" aria-hidden="true">-</span>
+                                                                        <dl>
+                                                                            <dt>Enter a name for the connections :<br />[ KT 3G ] 입력</dt>
+                                                                        </dl>
+                                                                    </li>
+                                                                    <li class="inner-list1 tb-cell mt10">
+                                                                        <span class="dash" aria-hidden="true">-</span>
+                                                                        <dl>
+                                                                            <dt>Select a modem :<br />[ Cellular Line(GPRS) ]선택 후 "Next"</dt>
+                                                                        </dl>
+                                                                    </li>
+                                                                    <li class="inner-list1 tb-cell mt10">
+                                                                        <span class="dash" aria-hidden="true">-</span>
+                                                                        <dl>
+                                                                            <dt>Access point name :<br />[ web.sktelecom.com ] 입력 후 "Next"</dt>
+                                                                        </dl>
+                                                                    </li>
+                                                                    <li class="inner-list1 tb-cell mt10">
+                                                                        <span class="dash" aria-hidden="true">-</span>
+                                                                        <dl>
+                                                                            <dt>User name/Password/Domain :<br />아무것도 입력하지 않고 "Finish</dt>
+                                                                        </dl>
+                                                                    </li>
+                                                                </ul>
+                                                                <ul class="inner-group type5">
+                                                                    <li class="inner-list1">
+                                                                        <dl>
+                                                                            <dt class="inner-tit">Windows Mobile<br />(Window 7 이전 버전) MMS 사용</dt>
+                                                                            <dd class="inner-cont">
+                                                                                <span class="tx">Start &gt; HTC Messages &gt; 오른 쪽 하단의 "Menu" &gt; Settings &gt; Options &gt; 오른 쪽 하단의 "Menu" &gt; MMS Server &gt; Sample MMSC</span>
+                                                                            </dd>
+                                                                        </dl>
+                                                                    </li>
+                                                                    <li class="inner-list1 mt10">
+                                                                        <div class="in-bullet">
+                                                                            <span class="bullet">*</span>Add해서 추가하는 경우 새로 만든 서버를 기본으로 설정함
+                                                                        </div>
+                                                                    </li>
+                                                                    <li class="inner-list1 tb-cell mt10">
+                                                                        <span class="dash" aria-hidden="true">-</span>
+                                                                        <dl>
+                                                                            <dt>Sever name : 원하는 이름 입력 (예 : SKT MMSC)</dt>
+                                                                        </dl>
+                                                                    </li>
+                                                                    <li class="inner-list1 tb-cell mt10">
+                                                                        <span class="dash" aria-hidden="true">-</span>
+                                                                        <dl>
+                                                                            <dt>IP Address : [ 220.103.230.150 ]</dt>
+                                                                        </dl>
+                                                                    </li>
+                                                                    <li class="inner-list1 tb-cell mt10">
+                                                                        <span class="dash" aria-hidden="true">-</span>
+                                                                        <dl>
+                                                                            <dt>Port number : [ 9093 ]</dt>
+                                                                        </dl>
+                                                                    </li>
+                                                                    <li class="inner-list1 tb-cell mt10">
+                                                                        <span class="dash" aria-hidden="true">-</span>
+                                                                        <dl>
+                                                                            <dt>Server address :<br />[ http://omms.nate.com:9082/oma_mms ]</dt>
+                                                                        </dl>
+                                                                    </li>
+                                                                    <li class="inner-list1 tb-cell mt10">
+                                                                        <span class="dash" aria-hidden="true">-</span>
+                                                                        <dl>
+                                                                            <dt>Connect via : [ My ISP ]</dt>
+                                                                        </dl>
+                                                                    </li>
+                                                                    <li class="inner-list1 tb-cell mt10">
+                                                                        <span class="dash" aria-hidden="true">-</span>
+                                                                        <dl>
+                                                                            <dt>Send Limit : [ 1024K ]</dt>
+                                                                        </dl>
+                                                                    </li>
+                                                                    <li class="inner-list1 tb-cell mt10">
+                                                                        <span class="dash" aria-hidden="true">-</span>
+                                                                        <dl>
+                                                                            <dt>WAP version : [ WAP 2.0 ]</dt>
+                                                                        </dl>
+                                                                    </li>
+                                                                    <li class="inner-list1 tb-cell mt10">
+                                                                        <span class="dash" aria-hidden="true">-</span>
+                                                                        <dl>
+                                                                            <dt>상기 설정 후 Wireless controls에서<br />"Data connection"을 "On"을 선택</dt>
+                                                                        </dl>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        <!--// .widget -->
                     </div>
-                    <!--// .widget -->
                 </div>
                 <!--// .cont-box -->
+
+                <hr class="cont-sp type1" aria-hidden="true" />
+
+                <!-- .cont-box -->
+                <div class="cont-box nogaps-hoz">
+                    <div class="box-confirm">
+                        <!-- .accordion -->
+                        <div class="widget">
+                            <div class="widget-box accordion">
+                                <h5 class="tit-a">FAQ</h5>
+                                <div class="acco-cover"><!-- toggle : 한개만 열기 -->
+                                    <div class="bt-whole"><button role="button" aria-pressed="false"><span class="blind">내용 열기</span></button></div>
+                                    <div class="acco-style acco-faq"><!-- 스타일별 클래스 추가 -->
+                                        <ul class="acco-list">
+                                            <li class="acco-box">
+                                                <div class="acco-tit">
+                                                    <button role="button" aria-pressed="false">[미성년자가입] 미성년자가입안내 법정대리인 명의로 미선년자가 사용하는 휴대폰도 신청가능한가요?</button>
+                                                </div>
+                                                <div class="acco-cont">미성년자 명의로 된 휴대폰만 신청 가능합니다.</div>
+                                            </li>
+                                            <li class="acco-box">
+                                                <div class="acco-tit">
+                                                    <button role="button" aria-pressed="false">[미성년자가입] 서비스는 어떻게 가입/해지할 수 있나요?</button>
+                                                </div>
+                                                <div class="acco-cont">고객센터, 지점, 대리점을 통해 신청/해지하실 수 있습니다. <br/>본인 또는 법정대리인(부모)이 가입할 수 있으며, 해지시에는 법정대리인(부보)만 신청가능합니다.</div>
+                                            </li>
+                                            <li class="acco-box">
+                                                <div class="acco-tit">
+                                                    <button role="button" aria-pressed="false">[미성년자가입] 무선 인터넷 차단 서비스를 이용할 수 있는 고객이 정해져 있나요?</button>
+                                                </div>
+                                                <div class="acco-cont">무선인터넷 차단 서비스는 자제력이 부족한 청소년들이 한도에 포함되지 않는 데이터 정보료가 과다하게 발생하는 것을 방지하기 위한 서비스로 한도요금제(팅)과 복지요금제 고객만 이용할 수 있습니다.</div>
+                                            </li>
+                                        </ul>
+                                        <div class="acco-more-box">
+                                            <ul class="bt-slice">
+                                                <li class="bt-white2"><button>FAQ 바로가기</button></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--// .accordion -->
+                    </div>
+                </div>
+                <!--// .cont-box -->
+                %>
             </div>
             <!--// #adminContainer -->
 
