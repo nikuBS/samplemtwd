@@ -1,16 +1,17 @@
+<%=JSON.stringify(status)%>
 <ul role="tablist">
-    <% if ( status === 'service' || status === '') { %>
-    <li role="tab" aria-selected="true" aria-controls="tab1-tab">
-        <a>서비스 관련 문의</a>
-    </li>
-    <li role="tab" aria-selected="false" aria-controls="tab2-tab">
-        <a>통화품질 상담</a>
-    </li>
-    <% } else {%>
+    <% if ( status === 'quality' ) { %>
     <li role="tab" aria-selected="false" aria-controls="tab1-tab">
         <a>서비스 관련 문의</a>
     </li>
     <li role="tab" aria-selected="true" aria-controls="tab2-tab">
+        <a>통화품질 상담</a>
+    </li>
+    <% } else {%>
+    <li role="tab" aria-selected="true" aria-controls="tab1-tab">
+        <a>서비스 관련 문의</a>
+    </li>
+    <li role="tab" aria-selected="false" aria-controls="tab2-tab">
         <a>통화품질 상담</a>
     </li>
     <% } %>
