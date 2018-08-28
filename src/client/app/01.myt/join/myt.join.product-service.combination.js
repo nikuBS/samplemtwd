@@ -207,7 +207,7 @@ Tw.MyTJoinProductServiceCombination.prototype = {
 
     this._freeLineNumber = $infoArea.find('.ff-hn.vbl').text();
 
-    this._history.replaceURL('benefit-2nd');
+    this._history.replaceURL('#benefit-2nd');
   },
 
   _handleChangeSecondBenefit: function () {
