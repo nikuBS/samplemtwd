@@ -17,8 +17,8 @@
         <p class="page-desc2"><em>*</em>표시는 필수 입력 항목입니다.</p>
         <div class="email-form">
             <div class="form-cell fe-wrap-service">
-                                                        <span class="form-ti">문의하실 내용을 작성해주세요<span class="point-indicate ml4"
-                                                                                                   aria-hidden="true">*</span></span>
+            <span class="form-ti">문의하실 내용을 작성해주세요
+                <span class="point-indicate ml4" aria-hidden="true">*</span></span>
                 <div class="widget">
                     <div class="widget-box tfCombined">
                         <div class="txfield-combined">
@@ -31,17 +31,16 @@
                                     class="byte-total">20</span>자</span>
                             </div>
                             <div class="txfield-combined-tx">
-                                                                        <textarea class="input-focus fe-inquiry-content" cols="20" rows="3"
-                                                                                  placeholder="내용을 입력해주세요."
-                                                                                  aria-labelledby="aria-email-qacont"
-                                                                                  maxlength="12000"></textarea>
+                                <textarea class="input-focus fe-inquiry-content" cols="20" rows="3"
+                                          placeholder="내용을 입력해주세요."
+                                          aria-labelledby="aria-email-qacont"
+                                          maxlength="12000"></textarea>
                                 <span class="byte"><span class="byte-current">0</span>/<span
                                     class="byte-total">12,000</span>자</span>
                             </div>
                         </div>
                     </div>
                 </div>
-                <% include ../components/email/customer.email.upload.html %>
             </div>
             <%- include('../components/email/customer.email.contact.html', {type: 'service'}); %>
         </div>
