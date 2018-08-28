@@ -220,7 +220,7 @@ class MyTJoinProductServiceController extends TwViewController {
       case 'TW20000008': {  // TB끼리 온가족프리
         nItem.items.push({
           icon: 'multi',
-          description: MYT_COMBINATION_TYPE.MULTI_TWO
+          description: MYT_COMBINATION_TYPE.MULTI_ONE
         }, {
             icon: 'int',
             description: MYT_COMBINATION_TYPE.INTERNET
@@ -310,7 +310,7 @@ class MyTJoinProductServiceController extends TwViewController {
         break;
       }
       default: {
-        return null;
+        return null;  // TODO: 온가족 플랜, NEW 온가족 플랜 등 추가 필요(현재 기획 없음)
       }
     }
 
