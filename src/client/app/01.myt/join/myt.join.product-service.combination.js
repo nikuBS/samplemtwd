@@ -254,11 +254,13 @@ Tw.MyTJoinProductServiceCombination.prototype = {
   },
 
   _setPhoneNumber: function () {
+    this.$phoneInput.attr('type', 'text');
     this.$phoneInput.val(Tw.FormatHelper.getDashedCellPhoneNumber(this.$phoneInput.val()));
   },
 
   _removeDash: function () {
     this.$phoneInput.val((this.$phoneInput.val() || '').replace(/-/g, ''));
+    this.$phoneInput.attr('type', 'number');
   },
 
   _typeOnlyNumber: function (e) {
