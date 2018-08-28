@@ -45,11 +45,11 @@ class MyTBenefitDisCntMainController extends TwViewController {
         if ( FormatHelper.isEmpty(resp.result) ) {
           return null;
         } else {
-          if ( !resp.result['combYn'] || resp.result['combYn'] === 'N' ) {
+          if ( resp.result['combYn'] && resp.result['combYn'] === 'Y' ) {
             // SKT 결합 상품은 없는 경우에도 성공, comYn 값 여부로 대상/비대상 설정
-            return null;
-          } else {
             return resp.result;
+          } else {
+            return null;
           }
         }
       } else {
@@ -64,11 +64,11 @@ class MyTBenefitDisCntMainController extends TwViewController {
         if ( FormatHelper.isEmpty(resp.result) ) {
           return null;
         } else {
-          if ( !resp.result['tfeeAgrmtYn'] || resp.result['tfeeAgrmtYn'] === 'N' ) {
+          if ( resp.result['tfeeAgrmtYn'] && resp.result['tfeeAgrmtYn'] === 'Y' ) {
             // tfeeAgrmtYn(휴대폰요금약정여부) 값 여부로 대상/비대상 설정
-            return null;
-          } else {
             return resp.result;
+          } else {
+            return null;
           }
         }
       } else {
@@ -83,11 +83,11 @@ class MyTBenefitDisCntMainController extends TwViewController {
         if ( FormatHelper.isEmpty(resp.result) ) {
           return null;
         } else {
-          if ( !resp.result['tsuprtAgrmtYn'] || resp.result['tsuprtAgrmtYn'] === 'N' ) {
-            // tfeeAgrmtYn(T 지원금 약정 여부) 값 여부로 대상/비대상 설정
-            return null;
-          } else {
+          if ( resp.result['tsuprtAgrmtYn'] && resp.result['tsuprtAgrmtYn'] === 'Y' ) {
+            // tsuprtAgrmtYn(T 지원금 약정 여부) 값 여부로 대상/비대상 설정
             return resp.result;
+          } else {
+            return null;
           }
         }
       } else {
@@ -102,11 +102,11 @@ class MyTBenefitDisCntMainController extends TwViewController {
         if ( FormatHelper.isEmpty(resp.result) ) {
           return null;
         } else {
-          // 선택약정 25%, 20% 둘다 없는 경우 비대상
-          if ( resp.result['selAgrmtDc25Yn'] === 'N' && resp.result['selAgrmtDc20Yn'] === 'N' ) {
-            return null;
-          } else {
+          if ( resp.result['selAgrmtDc25Yn'] === 'Y' || resp.result['selAgrmtDc20Yn'] === 'Y' ) {
             return resp.result;
+          } else {
+            // 선택약정 25%, 20% 둘다 없는 경우 비대상
+            return null;
           }
         }
       } else {
@@ -121,12 +121,12 @@ class MyTBenefitDisCntMainController extends TwViewController {
         if ( FormatHelper.isEmpty(resp.result) ) {
           return null;
         } else {
-          if ( !resp.result['useYn'] || resp.result['useYn'] === 'N' ) {
-            // useYn(장기가입여부판단) 값 여부로 대상/비대상 설정
-            return null;
-          } else {
+          if ( resp.result['useYn'] && resp.result['useYn'] === 'Y' ) {
             // longInfoSt 값은 보지 않고 useYn으로 비교
             return resp.result;
+          } else {
+            // useYn(장기가입여부판단) 값 여부로 대상/비대상 설정
+            return null;
           }
         }
       } else {
@@ -141,11 +141,11 @@ class MyTBenefitDisCntMainController extends TwViewController {
         if ( FormatHelper.isEmpty(resp.result) ) {
           return null;
         } else {
-          if ( !resp.result['useYn'] || resp.result['useYn'] === 'N' ) {
+          if ( resp.result['useYn'] && resp.result['useYn'] === 'Y' ) {
+            return resp.result;
+          } else {
             // useYn(복지고객할인대상자판단) 값 여부로 대상/비대상 설정
             return null;
-          } else {
-            return resp.result;
           }
         }
       } else {
