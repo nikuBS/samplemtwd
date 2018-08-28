@@ -285,19 +285,16 @@
                     </div>
                 </div>
                 <div class="box-service-notice mt50">
-                <%# -currentService.cntsCmmnt%>
-                <div class="service-notice">
-                    <div class="service-notice-img mt20">
-                        <img src="<%=currentService.thmbImgUrl%>" alt="<%=currentService.thmbImgAlt%>">
-                    </div>
+                    <%-currentService.cntsCmmnt%>
                 </div>
             </div>
-            </div>
             <% } else { %>
+            <%-currentService.cntsCmmnt%>
+            <%#
             <div class="cont-box">
                 <div class="box-suggest">
                     <div class="suggest-info">
-                        <p class="suggest-ti"><%=currentService.cntsTitle%></p>
+                        <p class="suggest-ti"></p>
                         <ul class="suggest-list nodot">
                             <li>가려진 정보란, 고객님의 소중한 정보가 *또는 <span class="ico-gride" role="img" aria-label="격자무늬"><span class="blind">격자무늬</span></span>으로 가려져 보이는 것입니다.</li>
                         </ul>
@@ -306,15 +303,9 @@
             </div>
             <hr class="cont-sp type1" aria-hidden="true">
             <div class="cont-box">
-                <div class="box-service-notice">
-                    <div class="service-notice">
-                        <button class="bt-dropdown big" title="가려진 정보">고객님의 정보를 가리는 이유<span class="ico"></span></button>
-                        <div class="service-notice-img mt20">
-                            <img src="<%=currentService.thmbImgUrl%>" alt="<%=currentService.thmbImgAlt%>">
-                        </div>
-                    </div>
-                </div>
+
             </div>
+            %>
             <% } %>
             <% } %>
         </div>

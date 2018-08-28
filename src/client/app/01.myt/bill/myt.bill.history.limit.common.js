@@ -10,6 +10,10 @@ Tw.MyTBillHistoryLimitCommon = function (rootEl, type, data) {
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService();
 
+  this.API_CODE = {
+      CODE_F806: 'F806'       // 소액결제 한도변경 월 1회 이상 시도
+  };
+
   this.chkCurrentLimit = new Tw.MyTBillHistoryCommon.GetLimit();
 
   this.type = type;
@@ -190,7 +194,7 @@ Tw.MyTBillHistoryLimitCommon.prototype = {
           Tw.MSG_MYT.HISTORY_ALERT_A14,
           Tw.POPUP_TITLE.NOTIFY,
           $.proxy(this._confirmCallback, this), null);
-    } else if (res.code === Tw.API_CODE.CODE_F806) {
+    } else if (res.code === this.API_CODE.CODE_F806) {
       this._popupService.openAlert(
           Tw.MSG_MYT.HISTORY_ALERT_A17,
           Tw.POPUP_TITLE.NOTIFY,

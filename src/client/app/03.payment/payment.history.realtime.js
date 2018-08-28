@@ -4,6 +4,13 @@
  * Date: 2018.07.04
  */
 Tw.PaymentHistoryRealtime = function (rootEl) {
+  this.API_ERROR_CODE = {
+    CODE_BIL0018: 'BIL0018',  // 개인 사업자 번호 조회 불가
+    CODE_BIL0030: 'BIL0030',  // 휴대폰 결제 이용동의 후 사용 가능한 메뉴입니다
+    CODE_BIL0031: 'BIL0031',  // 미성년자는 이용할 수 없습니다
+    CODE_BIL0034: 'BIL0034'  // 소액결제 부가서비스 미가입자는 이용할 수 없습니다
+  };
+  
   this.$container = rootEl;
 
   this._apiService = Tw.Api;
@@ -54,7 +61,7 @@ Tw.PaymentHistoryRealtime.prototype = {
     if (this.api_getCtzBizNum) {
       this._apiService.request(this.api_getCtzBizNum)
           .done($.proxy(function (res) {
-            if (res.code !== Tw.API_CODE.CODE_BIL0018) {
+            if (res.code !== this.API_ERROR_CODE.CODE_BIL0018) {
               this.isCompany = true;
             } else {
               this.isPersonal = true;
