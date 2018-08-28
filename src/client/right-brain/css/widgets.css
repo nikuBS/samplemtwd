@@ -193,7 +193,7 @@
 }
 
 .accordion .tit-a {
-  font-size: 0.875rem;
+  font-size: 0.9375rem;
   font-weight: 700;
 }
 
@@ -432,15 +432,30 @@
   margin-bottom: 0.3125rem;
 }
 
+.accordion .inner-group .gray {
+  color: #757575 !important;
+}
+
 .accordion .inner-group .inner-list {
   position: relative;
-  margin: 0.6875rem 0 0;
+  margin: 0.625rem 0 0;
 }
 
 .accordion .inner-group .inner-list .bullet {
   position: absolute;
   top: 0;
   left: 0;
+}
+
+.accordion .inner-group .inner-list .dot {
+  position: absolute;
+  top: 0.5rem;
+  left: 0;
+  display: inline-block;
+  width: 0.1875rem;
+  height: 0.1875rem;
+  border-radius: 0.1875rem;
+  background: #8f8f8f;
 }
 
 .accordion .inner-group.type1 .inner-list {
@@ -503,6 +518,126 @@
 
 .accordion .inner-group.type5 .inner-list .inner-cont {
   margin: 0.5rem 0 0;
+}
+
+.accordion .inner-group .inner-list1 {
+  margin: 1.5625rem 0 0;
+  font-size: 0.8125rem;
+  color: #000;
+}
+
+.accordion .inner-group .inner-list1.tb-cell > * {
+  display: table-cell;
+}
+
+.accordion .inner-group .inner-list1 .dash {
+  padding: 0 0.625rem 0 0;
+  vertical-align: top;
+}
+
+.accordion .inner-group .inner-list1 .in-bullet {
+  position: relative;
+  padding: 0 0 0 0.625rem;
+  color: #757575;
+  line-height: 1.25rem;
+  font-size: 0.8125rem;
+}
+
+.accordion .inner-group .inner-list1 .in-bullet .bullet {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.accordion .inner-group .inner-list1:first-child {
+  margin: 0;
+}
+
+.accordion .inner-group .inner-list1 .inner-tit {
+  font-weight: 700;
+}
+
+.accordion .inner-group .inner-list1 .inner-cont {
+  margin: 0.5rem 0 0;
+  line-height: 0.8125rem;
+}
+
+.accordion .inner-group .inner-list1 .inner-cont .inner-img img {
+  width: 100%;
+}
+
+.accordion .inner-group .inner-list1 .inner-cont .tx {
+  display: block;
+  color: #000;
+  line-height: 1.25rem;
+}
+
+.accordion .inner-group .inner-list1 .inner-cont .date {
+  position: relative;
+  color: #757575;
+  line-height: 1.25rem;
+}
+
+.accordion .inner-group .inner-list1 .inner-cont .cont {
+  position: relative;
+  color: #757575;
+  font-weight: 700;
+}
+
+.accordion .inner-group .inner-list2 {
+  margin: 1.5625rem 0 0;
+  font-size: 0.8125rem;
+}
+
+.accordion .inner-group .inner-list2:first-child {
+  margin: 0;
+}
+
+.accordion .inner-group .inner-list2 .inner-tit {
+  margin: 0 0 1.25rem 0;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: #000;
+}
+
+.accordion .inner-group .inner-list2 .inner-cont ul {
+  padding: 1.5625rem 0 1.5625rem 0;
+  border-bottom: 1px solid #eee;
+}
+
+.accordion .inner-group .inner-list2 .inner-cont ul:first-of-type {
+  padding: 0 0 1.5625rem 0;
+}
+
+.accordion .inner-group .inner-list2 .inner-cont ul:last-of-type {
+  padding: 1.5625rem 0 0 0;
+  border: none;
+}
+
+.accordion .inner-group .inner-list2 .inner-cont ul li {
+  margin: 0 0 0.9375rem 0;
+}
+
+.accordion .inner-group .inner-list2 .inner-cont ul li:last-of-type {
+  margin: 0;
+}
+
+.accordion .inner-group .inner-list2 .inner-cont ul li dl {
+  overflow: hidden;
+}
+
+.accordion .inner-group .inner-list2 .inner-cont ul li dl dt {
+  float: left;
+  font-size: 0.8125rem;
+  color: #757575;
+}
+
+.accordion .inner-group .inner-list2 .inner-cont ul li dl dd {
+  float: right;
+  margin: 0 0.125rem 0 0;
+  text-align: right;
+  font-size: 0.875rem;
+  color: #000;
 }
 
 .accordion .acco-cont > .inner-group > .inner-list:first-child {

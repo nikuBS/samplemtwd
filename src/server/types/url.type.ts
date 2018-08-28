@@ -162,6 +162,7 @@ export const URL = {
   '/customer/event/detail': { login: false, id: 'CI_13_02', title: '이벤트 상세' }, // 이벤트 상세
   '/customer/event/detail/win': { login: false, id: 'CI_13_06', title: '이벤트 상세' }, // 이벤트 상세 (당첨자)
   // auth
+  '/auth/cert/motp': { login: false, id: 'CO_02_01_02_L02_L01', title: '모바일T안심인증' },
   '/auth/line': { login: true, id: 'CO_01_05_02', title: '' }, // 회선관리
   '/auth/line/edit': { login: true, id: 'CO_01_05_02_01', title: '' }, // 회선편집
   '/auth/line/register/corporation': { login: true, id: 'CO_01_05_02_03', title: '' }, // 법인회선등록
