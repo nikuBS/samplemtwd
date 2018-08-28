@@ -134,7 +134,7 @@
                     <div class="account-form">
                         <div class="inputbox input-context">
                             <span class="input">
-                                <input type="text" class="fe-only-number fe-card-number" placeholder="숫자만 입력" title="카드번호 숫자만 입력" value="<%= autoPrepayInfo.cardCdNm %> <%= autoPrepayInfo.cardNum %>" disabled>
+                                <input type="text" inputmode="numeric" min="0" pattern="[0-9]*" class="fe-only-number fe-card-number" placeholder="숫자만 입력" title="카드번호 숫자만 입력" value="<%= autoPrepayInfo.cardCdNm %> <%= autoPrepayInfo.cardNum %>" disabled>
                                 <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
                             </span>
                         </div>
@@ -144,12 +144,12 @@
                     <h4 class="account-tit">유효기간</h4>
                     <div class="inputbox card-tbl">
                         <span class="input card-cell">
-                            <input type="number" class="fe-only-number fe-card-y" maxlength="4" placeholder="YYYY" title="카드유효기간 년">
+                            <input type="number" inputmode="numeric" min="0" pattern="[0-9]*" class="fe-only-number fe-card-y" maxlength="4" placeholder="YYYY" title="카드유효기간 년">
                             <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
                         </span>
                         <span class="input card-cell">/</span>
                         <span class="input card-cell">
-                            <input type="number" class="fe-only-number fe-card-m" maxlength="2" class="c-month" placeholder="MM" title="카드유효기간 월">
+                            <input type="number" inputmode="numeric" min="0" pattern="[0-9]*" class="fe-only-number fe-card-m" maxlength="2" class="c-month" placeholder="MM" title="카드유효기간 월">
                             <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
                         </span>
                     </div>

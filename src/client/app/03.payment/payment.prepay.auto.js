@@ -88,7 +88,12 @@ Tw.PaymentPrepayAuto.prototype = {
 
       var cardName = this.$container.find('.fe-auto-cardname').text();
       var cardNum = this.$container.find('.fe-auto-cardnum').text();
-      $cardNumber.attr({ 'type': 'text', 'disabled': 'disabled' }).val(cardName + ' ' + cardNum);
+      $cardNumber
+        .attr({ 'type': 'text', 'disabled': 'disabled' })
+        .removeAttr('inputmode')
+        .removeAttr('min')
+        .removeAttr('pattern')
+        .val(cardName + ' ' + cardNum);
     } else if ($target.hasClass('fe-card')) {
       this.$changeType = 'C';
 
@@ -98,7 +103,14 @@ Tw.PaymentPrepayAuto.prototype = {
       if (this._autoCardNumber !== null) {
         this.$changeCheckbox.show();
       }
-      $cardNumber.attr('type', 'number').removeAttr('disabled');
+      $cardNumber
+        .attr({
+          'type': 'number',
+          'inputmode': 'numeric',
+          'min': '0',
+          'pattern': '[0-9]*'
+        })
+        .removeAttr('disabled');
     } else {
       this.$changeType = 'T';
 
@@ -108,7 +120,14 @@ Tw.PaymentPrepayAuto.prototype = {
       if (this._autoCardNumber !== null) {
         this.$changeCheckbox.show();
       }
-      $cardNumber.attr('type', 'number').removeAttr('disabled');
+      $cardNumber
+        .attr({
+          'type': 'number',
+          'inputmode': 'numeric',
+          'min': '0',
+          'pattern': '[0-9]*'
+        })
+        .removeAttr('disabled');
     }
   },
   _openStandardAmountInfo: function () {
@@ -132,9 +151,18 @@ Tw.PaymentPrepayAuto.prototype = {
         'cardcode': this._autoCardCode,
         'cardname': this._autoCardName
       });
+      this.$cardNumber.removeAttr('inputmode');
+      this.$cardNumber.removeAttr('min');
+      this.$cardNumber.removeAttr('pattern');
       this.$cardNumber.val(this._autoCardNumber);
     } else {
-      this.$cardNumber.attr('type', 'number');
+      this.$cardNumber
+        .attr({
+          'type': 'number',
+          'inputmode': 'numeric',
+          'min': '0',
+          'pattern': '[0-9]*'
+        });
       this.$cardNumber.val('').removeAttr('disabled').removeAttr('cardcode').removeAttr('cardname');
     }
   },
