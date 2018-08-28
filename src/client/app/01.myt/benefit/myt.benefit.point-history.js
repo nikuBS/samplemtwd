@@ -1,15 +1,16 @@
 /**
- * FileName: myt.benefit.rainbow-point-history.js
+ * FileName: myt.benefit.point-history.js
  * Author: Hyeryoun Lee (skt.P130712@partner.sk.com)
  * Date: 2018. 8. 14.
  */
-Tw.MyTBenefitRainbowPointHistory = function (rootEl) {
+Tw.MyTBenefitPointHistory = function (rootEl, type) {
   this.$container = rootEl;
   this._apiService = new Tw.ApiService();
   this._dateHelper = Tw.DateHelper;
   this._popupService = Tw.Popup;
   this._hashService = Tw.Hash;
   this._formatHelper = Tw.FormatHelper;
+  this._pointType = type;
 
   this.LIST_SIZE = 20; //리스트 아이템 노출 최대수
 
@@ -18,7 +19,7 @@ Tw.MyTBenefitRainbowPointHistory = function (rootEl) {
   this._init();
 };
 
-Tw.MyTBenefitRainbowPointHistory.prototype = {
+Tw.MyTBenefitPointHistory.prototype = {
   _init: function () {
     var hash = this._hashService.initHashNav($.proxy(this._onHashChange, this));
 
@@ -72,16 +73,16 @@ Tw.MyTBenefitRainbowPointHistory.prototype = {
 
   _requestHistoryData: function (page) {
     if ( page !== this._currentPage ) {
-      if ( !page ) {
-        page = 1;
-      }
+      page = page || 1;
       var params = {
         fromDt: this.$fromDate.val().replace(/-/g, ''),
         toDt: this.$toDate.val().replace(/-/g, ''),
-        page: page || 1,
+        page: page,
         size: this.LIST_SIZE
       };
-      this._apiService.request(Tw.API_CMD.BFF_05_0100, params)
+
+      var API = this._pointType === Tw.POINT_TYPE.RAINBOW ? Tw.API_CMD.BFF_05_0100 : Tw.API_CMD.BFF_05_0122;
+      this._apiService.request(API, params)
         .done($.proxy(this._onHistoryDataReceived, this, page))
         .fail(function () {
         });
@@ -95,8 +96,10 @@ Tw.MyTBenefitRainbowPointHistory.prototype = {
 
     this.$btPeriod.text((this.$fromDate.val() + ' ~ ' + this.$toDate.val()).replace(/-/g, '.'));
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      this.$usedPoint.text(this._formatHelper.addComma(resp.result.usdPoint));
-      this.$earnPoint.text(this._formatHelper.addComma(resp.result.erndPoint));
+      if(this._pointType === Tw.POINT_TYPE.RAINBOW) {
+        this.$usedPoint.text(this._formatHelper.addComma(resp.result.usdPoint));
+        this.$earnPoint.text(this._formatHelper.addComma(resp.result.erndPoint));
+      }
 
       if ( resp.result.history.length < 1 ) {
         this.$listWrapper.empty();
@@ -149,8 +152,21 @@ Tw.MyTBenefitRainbowPointHistory.prototype = {
 
   _openExpiringPointPopup: function (e) {
     e.preventDefault();
-    this._popupService.open({
-      hbs: 'MY_04_04_01_L02'
-    });
+    this._apiService.request(Tw.API_CMD.BFF_05_0132, {})
+      .done($.proxy(function (resp) {
+
+        this._exprdPoint = this._formatHelper.addComma(resp.result.exprdPoint);
+        this._popupService.open({
+          hbs: 'MY_04_04_01_L02',
+          data: {
+            exprdPoint: this._exprdPoint,
+            currentMonth: this._dateHelper.getCurrentDateTime('MM'),
+            currentYear: this._dateHelper.getCurrentDateTime('YYYY')
+          }
+        });
+
+      }, this))
+      .fail(function () {
+      });
   }
 };
