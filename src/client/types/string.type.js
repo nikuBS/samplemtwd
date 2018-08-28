@@ -906,3 +906,9 @@ Tw.EVENT_TYPE = {
   N: '일반형',
   E: '응모형'
 };
+
+Tw.POINT_TYPE = {
+  RAINBOW: '레인보우',
+  COOKIZ: '쿠키즈',
+  MILITARY: '현역플랜'
+};
