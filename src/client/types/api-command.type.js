@@ -295,6 +295,7 @@ Tw.AJAX_CMD = {
   GET_TMAP_REGION: { path: '/geofencing/regions', method: Tw.API_METHOD.GET, url: Tw.TMAP.URL },
   GET_TMAP_AREASCODE: { path: '/poi/areascode', method: Tw.API_METHOD.GET, url: Tw.TMAP.URL },
   GET_TMAP_ADDR_GEO: { path: '/geo/fullAddrGeo', method: Tw.API_METHOD.GET, url: Tw.TMAP.URL },
+  GET_TMAP_POI: { path: '/pois', method: Tw.API_METHOD.GET, url: Tw.TMAP.URL },
   OPEN_NICE_AUTH: { path: '', method: Tw.API_METHOD.POST, url: Tw.NICE_URL, contentType: 'application/x-www-form-urlencoded' },
   OPEN_IPIN_AUTH: { path: '', method: Tw.API_METHOD.POST, url: Tw.IPIN_URL, contentType: 'application/x-www-form-urlencoded' }
 };
