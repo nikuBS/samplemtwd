@@ -27,7 +27,7 @@ class MyTBenefitRainbowPointTransferController extends TwViewController {
       this.reqRainbowPointTransfers(curPage)
     ).subscribe(([rainbowPointFamilies, rainbowPointTransfers]) => {
       const apiError = this.error.apiError([
-        rainbowPointFamilies, rainbowPointFamilies
+        rainbowPointFamilies, rainbowPointTransfers
       ]);
 
       if (!FormatHelper.isEmpty(apiError)) {
