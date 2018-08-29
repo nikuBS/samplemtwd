@@ -10,7 +10,7 @@ import { SVC_CD, SVC_ATTR } from '../../../types/bff.type';
 import DateHelper from '../../../utils/date.helper';
 import FormatHelper from '../../../utils/format.helper';
 
-class PaymentRealtimeController extends TwViewController {
+class PaymentRealtime extends TwViewController {
   constructor() {
     super();
   }
@@ -69,4 +69,4 @@ class PaymentRealtimeController extends TwViewController {
   }
 }
 
-export default PaymentRealtimeController;
+export default PaymentRealtime;

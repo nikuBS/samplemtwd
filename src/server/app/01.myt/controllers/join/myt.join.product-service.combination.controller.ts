@@ -63,7 +63,7 @@ interface IBProduct {
   wireProduct?: string;
 }
 
-export default class MyTJoinProductServiceCombinationController extends TwViewController {
+export default class MyTJoinProductServiceCombination extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any): void {
     const prodId = req.query.prodId || '';
 

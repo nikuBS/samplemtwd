@@ -10,7 +10,7 @@ import DateHelper from '../../../utils/date.helper';
 import FormatHelper from '../../../utils/format.helper';
 import {PAYMENT_OPTION, PAYMENT_OPTION_TEXT, SVC_ATTR} from '../../../types/bff.type';
 
-class PaymentAutoController extends TwViewController {
+class PaymentAuto extends TwViewController {
   constructor() {
     super();
   }
@@ -65,4 +65,4 @@ class PaymentAutoController extends TwViewController {
   }
 }
 
-export default PaymentAutoController;
+export default PaymentAuto;

@@ -8,7 +8,7 @@ import {Request, Response, NextFunction} from 'express';
 import {API_CMD, API_CODE} from '../../../../types/api-command.type';
 import {Observable} from 'rxjs/Observable';
 
-class MyTJoinJoinInfoSmsController extends TwViewController {
+class MyTJoinJoinInfoSms extends TwViewController {
   private _svcInfo: any;
 
   get svcInfo() {
@@ -54,4 +54,4 @@ class MyTJoinJoinInfoSmsController extends TwViewController {
   }
 }
 
-export default MyTJoinJoinInfoSmsController;
+export default MyTJoinJoinInfoSms;

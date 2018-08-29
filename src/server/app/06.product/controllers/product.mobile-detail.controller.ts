@@ -1,6 +1,6 @@
 import TwViewController from '../../../common/controllers/tw.view.controller';
 
-class ProductMobileDetailController extends TwViewController {
+class ProductMobileDetail extends TwViewController {
   constructor() {
     super();
   }
@@ -14,4 +14,4 @@ class ProductMobileDetailController extends TwViewController {
 
 }
 
-export default ProductMobileDetailController;
+export default ProductMobileDetail;

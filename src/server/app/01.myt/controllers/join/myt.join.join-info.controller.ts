@@ -11,7 +11,7 @@ import FormatHelper from '../../../../utils/format.helper';
 import {API_CMD, API_CODE} from '../../../../types/api-command.type';
 import {Observable} from 'rxjs/Observable';
 
-class MyTJoinJoinInfoController extends TwViewController {
+class MyTJoinJoinInfo extends TwViewController {
   private _svcInfo: any;
 
   private _urlPath = {
@@ -237,4 +237,4 @@ class MyTJoinJoinInfoController extends TwViewController {
   }
 }
 
-export default MyTJoinJoinInfoController;
+export default MyTJoinJoinInfo;

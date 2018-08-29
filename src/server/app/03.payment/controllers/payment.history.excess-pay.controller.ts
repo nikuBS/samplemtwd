@@ -9,7 +9,7 @@ import {Request, Response, NextFunction} from 'express';
 import {API_CMD} from '../../../types/api-command.type';
 
 
-class PaymentHistoryExcessPayController extends TwViewController {
+class PaymentHistoryExcessPay extends TwViewController {
 
   constructor() {
     super();
@@ -33,4 +33,4 @@ class PaymentHistoryExcessPayController extends TwViewController {
 }
 
 
-export default PaymentHistoryExcessPayController;
+export default PaymentHistoryExcessPay;

@@ -14,7 +14,7 @@ import { Observable } from 'rxjs/Observable';
 import { MyTBenefitRainbowPointCommon } from './myt.benefit.rainbow-point.adjustment.controller';
 import { RAINBOW_POINT_REL_CD } from '../../../../types/bff.type';
 
-class MyTBenefitRainbowPointTransferController extends TwViewController {
+class MyTBenefitRainbowPointTransfer extends TwViewController {
   public static VIEW = {
     DEFAULT: 'usage/myt.benefit.rainbow-point.transfer.html',
     ERROR: 'error/myt.benefit.rainbow-point.transfer.html'
@@ -47,7 +47,7 @@ class MyTBenefitRainbowPointTransferController extends TwViewController {
 
       // 법정대리인 정보가 없는 경우 에러 처리
       if ( FormatHelper.isEmpty(lines) ) {
-        return res.render(MyTBenefitRainbowPointTransferController.VIEW.ERROR, {
+        return res.render(MyTBenefitRainbowPointTransfer.VIEW.ERROR, {
           svcInfo
         });
       }
@@ -55,7 +55,7 @@ class MyTBenefitRainbowPointTransferController extends TwViewController {
       const linesToReceive = this.getLinesToReceive(svcInfo.svcMgmtNum, lines);
       const lineToReceive = linesToReceive[0];
 
-      res.render(MyTBenefitRainbowPointTransferController.VIEW.DEFAULT, {
+      res.render(MyTBenefitRainbowPointTransfer.VIEW.DEFAULT, {
         svcInfo,
         lineToGive,
         lineToReceive,
@@ -125,4 +125,4 @@ class MyTBenefitRainbowPointTransferController extends TwViewController {
 
 }
 
-export default MyTBenefitRainbowPointTransferController;
+export default MyTBenefitRainbowPointTransfer;

@@ -1,7 +1,7 @@
 import TwViewController from '../../../common/controllers/tw.view.controller';
 import {NextFunction, Request, Response} from 'express';
 
-class CommonErrorController extends TwViewController {
+class CommonError extends TwViewController {
   constructor() {
     super();
   }
@@ -18,4 +18,4 @@ class CommonErrorController extends TwViewController {
   }
 }
 
-export default CommonErrorController;
+export default CommonError;
