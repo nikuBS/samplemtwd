@@ -25,7 +25,7 @@ Tw.API_CMD = {
   BFF_01_0011: { path: '/core-modification/v1/address/buildings', method: Tw.API_METHOD.GET },
   BFF_01_0012: { path: '/core-modification/v1/address/standard', method: Tw.API_METHOD.GET },
   BFF_01_0013: { path: '/core-modification/v1/address/standard', method: Tw.API_METHOD.GET },
-  BFF_01_0014: { path: '/core-auth/v1/auth/skt/sms', method: Tw.API_METHOD.POST },
+  BFF_01_0014: { path: '/core-auth/v1/auth-sms', method: Tw.API_METHOD.POST },
   BFF_01_0015: { path: '/auth/skt/sms-authentication', method: Tw.API_METHOD.PUT },
   BFF_01_0016: { path: '/core-auth/v1/auth/dca/sms', method: Tw.API_METHOD.POST },
   BFF_01_0017: { path: '/core-auth/v1/auth/email', method: Tw.API_METHOD.POST },

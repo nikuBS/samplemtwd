@@ -37,14 +37,13 @@ Tw.CustomerVoice.prototype = {
   _onSuccessVoiceStatus: function (res) {
     this.voiceCustomer = res.result;
 
-    _.map(this.voiceCustomer.svcInfo, function (svcInfo) {
-      var maskNumber = $('.fe-select-line').text();
-      var svcNumMask = Tw.FormatHelper.conTelFormatWithDash(svcInfo.svcNumMask);
-
-      if ( maskNumber === svcNumMask ) {
-        this.currentLine = svcInfo;
+    _.map(this.voiceCustomer.svcInfo, $.proxy(function (svcInfo) {
+      var svcMgmtNum = $('.fe-select-line').data('svcmgmtnum').toString();
+      // var svcNumMask = Tw.FormatHelper.conTelFormatWithDash(svcInfo.svcNumMask);
+      if ( svcMgmtNum === svcInfo.svcMgmtNum ) {
+        this.currentLine = { svcMgmtNum: svcMgmtNum };
       }
-    });
+    }, this));
   },
 
   _checkTerms: function (e) {
@@ -55,7 +54,7 @@ Tw.CustomerVoice.prototype = {
     var htOptions = _.map(this.voiceCustomer.svcInfo, function (svcInfo) {
       var maskNumber = Tw.FormatHelper.conTelFormatWithDash(svcInfo.svcNumMask);
       return {
-        checked: maskNumber === $('.fe-select-line').text() ? true : false,
+        checked: maskNumber === $('.fe-select-line').text(),
         value: svcInfo.svcMgmtNum,
         text: maskNumber
       };

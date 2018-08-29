@@ -4,14 +4,15 @@ export interface ISvcInfo {
   svcGr: string;            // 서비스 등급
   svcAttrCd: string;        // 서비스 속석
   repSvcYn: string;         // 기준회선 여부
+  pwdStCd: string;          // 고객보호비밀번호상태
   nickNm: string;           // 닉네임
   addr: string;             // 주소
-  eqpMdlNm: string;         // 펫네임 or 단말모델명
-  svcScrbDt: string;       // 가입일
-  svcLastUpdDtm: string;    // 최종변경일
-  mbrNm: string;            // 고객명
+  actRepYn: string;         // 청구대표서비스여부
+  smsYn: string;            // SMS 착신가능여부
+  motpYn: string;           // MOTP 사용가능 여부
   totalSvcCnt: string;      // 전체 회선수
   expsSvcCnt: string;       // 등록된 회선수
+  mbrNm: string;            // 고객명
   loginType: string;        // 로그인 형태  E: 간편로그인 T: TID 로그인
 }
 
@@ -21,14 +22,15 @@ export class SvcInfoModel implements ISvcInfo {
   svcGr: string = '';
   svcAttrCd: string = '';
   repSvcYn: string = '';
+  pwdStCd: string = '';
   nickNm: string = '';
   addr: string = '';
-  eqpMdlNm: string = '';
-  svcScrbDt: string = '';
-  svcLastUpdDtm: string = '';
-  mbrNm: string = '';
+  actRepYn: string = '';
+  smsYn: string = '';
+  motpYn: string = '';
   totalSvcCnt: string = '';
   expsSvcCnt: string = '';
+  mbrNm: string = '';
   loginType: string = '';
 
   constructor(object) {
@@ -37,14 +39,15 @@ export class SvcInfoModel implements ISvcInfo {
     this.svcGr = object.svcGr || this.svcGr;
     this.svcAttrCd = object.svcAttrCd || this.svcAttrCd;
     this.repSvcYn = object.repSvcYn || this.repSvcYn;
+    this.pwdStCd = object.pwdStCd || this.pwdStCd;
     this.nickNm = object.nickNm || this.nickNm;
     this.addr = object.addr || this.addr;
-    this.eqpMdlNm = object.eqpMdlNm || this.eqpMdlNm;
-    this.svcScrbDt = object.svcScrbDt || this.svcScrbDt;
-    this.svcLastUpdDtm = object.svcLastUpdDtm || this.svcLastUpdDtm;
-    this.mbrNm = object.mbrNm || this.mbrNm;
+    this.actRepYn = object.actRepYn || this.actRepYn;
+    this.smsYn = object.smsYn || this.smsYn;
+    this.motpYn = object.motpYn || this.motpYn;
     this.totalSvcCnt = object.totalSvcCnt || this.totalSvcCnt;
     this.expsSvcCnt = object.expsSvcCnt || this.expsSvcCnt;
+    this.mbrNm = object.mbrNm || this.mbrNm;
     this.loginType = object.loginType || this.loginType;
   }
 }
