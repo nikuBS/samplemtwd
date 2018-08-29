@@ -43,7 +43,7 @@ class MyTBenefitRainbowPointCommon {
 
 }
 
-class MyTBenefitRainbowPointAdjustmentController extends TwViewController {
+class MyTBenefitRainbowPointAdjustment extends TwViewController {
   public static VIEW = {
     DEFAULT: 'usage/myt.benefit.rainbow-point.adjustment.html',
     ERROR: 'error/myt.benefit.rainbow-point.adjustment.html'
@@ -76,7 +76,7 @@ class MyTBenefitRainbowPointAdjustmentController extends TwViewController {
 
       // 단일 회선인 경우 에러 처리
       if ( lines.length < 2 ) {
-        return res.render(MyTBenefitRainbowPointAdjustmentController.VIEW.ERROR, {
+        return res.render(MyTBenefitRainbowPointAdjustment.VIEW.ERROR, {
           svcInfo
         });
       }
@@ -88,7 +88,7 @@ class MyTBenefitRainbowPointAdjustmentController extends TwViewController {
       });
       const lineToReceive = lineToReceives[0];
 
-      res.render(MyTBenefitRainbowPointAdjustmentController.VIEW.DEFAULT, {
+      res.render(MyTBenefitRainbowPointAdjustment.VIEW.DEFAULT, {
         svcInfo,
         lineToGive,
         lineToReceive,
@@ -226,6 +226,6 @@ class MyTBenefitRainbowPointAdjustmentController extends TwViewController {
 }
 
 export {
-  MyTBenefitRainbowPointAdjustmentController,
+  MyTBenefitRainbowPointAdjustment,
   MyTBenefitRainbowPointCommon
 };

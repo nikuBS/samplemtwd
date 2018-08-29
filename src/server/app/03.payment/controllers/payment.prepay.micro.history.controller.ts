@@ -10,7 +10,7 @@ import FormatHelper from '../../../utils/format.helper';
 import DateHelper from '../../../utils/date.helper';
 import { PREPAY_TITLE } from '../../../types/bff.type';
 
-class PaymentPrepayMicroHistoryController extends TwViewController {
+class PaymentPrepayMicroHistory extends TwViewController {
   constructor() {
     super();
   }
@@ -47,4 +47,4 @@ class PaymentPrepayMicroHistoryController extends TwViewController {
   }
 }
 
-export default PaymentPrepayMicroHistoryController;
+export default PaymentPrepayMicroHistory;

@@ -16,7 +16,7 @@ import { MYT_BENEFIT_RECOMMEND } from '../../../../types/string.type';
 import FormatHelper from '../../../../utils/format.helper';
 
 
-class MyTBenefitRecommendController extends TwViewController {
+class MyTBenefitRecommend extends TwViewController {
   constructor() {
     super();
   }
@@ -460,4 +460,4 @@ class MyTBenefitRecommendController extends TwViewController {
   }
 }
 
-export default MyTBenefitRecommendController;
+export default MyTBenefitRecommend;

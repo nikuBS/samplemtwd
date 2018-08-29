@@ -9,7 +9,7 @@ import {Observable} from '../../../../../../node_modules/rxjs/Observable';
 import {API_CMD, API_CODE, API_MYT_ERROR} from '../../../../types/api-command.type';
 import {MyTMembershipData} from '../../../../mock/server/myt.benefit.membership.mock';
 
-class MyTBenefitMembershipController extends TwViewController {
+class MyTBenefitMembership extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     Observable.combineLatest(
@@ -53,4 +53,4 @@ class MyTBenefitMembershipController extends TwViewController {
   }
 }
 
-export default MyTBenefitMembershipController;
+export default MyTBenefitMembership;

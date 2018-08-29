@@ -9,7 +9,7 @@ import { Request, Response, NextFunction } from 'express';
 import { Observable } from 'rxjs/Observable';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 
-class MyTBenefitRecommendDetailController extends TwViewController {
+class MyTBenefitRecommendDetail extends TwViewController {
   constructor() {
     super();
   }
@@ -114,4 +114,4 @@ class MyTBenefitRecommendDetailController extends TwViewController {
   }
 }
 
-export default MyTBenefitRecommendDetailController;
+export default MyTBenefitRecommendDetail;

@@ -10,7 +10,7 @@ import {API_CMD, API_CODE} from '../../../../types/api-command.type';
 import {MytVipData} from '../../../../mock/server/myt.benefit.membership.mock';
 import FormatHelper from '../../../../utils/format.helper';
 
-class MyTBenefitMembershipDetailController extends TwViewController {
+class MyTBenefitMembershipDetail extends TwViewController {
 
   private _code: any;
 
@@ -104,4 +104,4 @@ class MyTBenefitMembershipDetailController extends TwViewController {
   }
 }
 
-export default MyTBenefitMembershipDetailController;
+export default MyTBenefitMembershipDetail;
