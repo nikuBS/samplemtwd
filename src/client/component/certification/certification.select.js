@@ -6,7 +6,6 @@
 
 Tw.CertificationSelect = function () {
   this._certSk = new Tw.CertificationSk();
-  this._certMotp = new Tw.CertificationSkMotp();
   this._certEmail = new Tw.CertificationEmail();
   this._certPassword = new Tw.CertificationPassword();
   this._historyService = new Tw.HistoryService();
@@ -28,7 +27,6 @@ Tw.CertificationSelect = function () {
 
 Tw.CertificationSelect.prototype = {
   open: function (certInfo, resultUrl, command, deferred, callback) {
-    console.log(certInfo);
     this._authUrl = certInfo.url;
     this._svcInfo = certInfo.svcInfo;
     this._urlMeta = certInfo.urlMeta;
@@ -37,14 +35,13 @@ Tw.CertificationSelect.prototype = {
     this._deferred = deferred;
     this._callback = callback;
 
-    if(certInfo.svcInfo.loginType === Tw.AUTH_LOGIN_TYPE.TID) {
+    if ( certInfo.svcInfo.loginType === Tw.AUTH_LOGIN_TYPE.TID ) {
       this.openSelectPopup('CO_02_01_01_L01', this._urlMeta.auth.cert.methods);
     } else {
       this.openSelectPopup('CO_02_01_01_L02', this._urlMeta.auth.cert.methods);
     }
   },
   openSelectPopup: function (popupType, methods) {
-    console.log(methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SK_MOTP), Tw.BrowserHelper.isAndroid());
     this._popupService.open({
       hbs: popupType,
       layer: true,
@@ -81,10 +78,12 @@ Tw.CertificationSelect.prototype = {
     if ( !Tw.FormatHelper.isEmpty(this._certMethod) ) {
       switch ( this._certMethod ) {
         case Tw.AUTH_CERTIFICATION_METHOD.SK_SMS:
-          this._certSk.open(this._svcInfo, this._urlMeta, this._authUrl, this._command, this._deferred, this._callback);
+          this._certSk.open(
+            this._svcInfo, this._urlMeta, this._authUrl, this._command, this._deferred, this._callback, Tw.AUTH_CERTIFICATION_METHOD.SK_SMS);
           break;
         case Tw.AUTH_CERTIFICATION_METHOD.SK_MOTP:
-          this._certMotp.open(this._svcInfo, this._urlMeta, this._authUrl, this._command, this._deferred, this._callback);
+          this._certSk.open(
+            this._svcInfo, this._urlMeta, this._authUrl, this._command, this._deferred, this._callback, Tw.AUTH_CERTIFICATION_METHOD.SK_MOTP);
           break;
         case Tw.AUTH_CERTIFICATION_METHOD.OTHER_SMS:
           this._historyService.goLoad('/auth/cert/nice?authUrl=' + this._authUrl + '&resultUrl=' + this._resultUrl + '&niceType=' + this._niceType);
@@ -159,5 +158,5 @@ Tw.CertificationSelect.prototype = {
   _onClickSmsPw: function () {
     this._certMethod = Tw.AUTH_CERTIFICATION_METHOD.SMS_PASSWORD;
     this._popupService.close();
-  },
+  }
 };

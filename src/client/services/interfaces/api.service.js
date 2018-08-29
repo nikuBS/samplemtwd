@@ -59,7 +59,7 @@ Tw.ApiService.prototype = {
   },
 
   _completeCert: function (resp, deferred, requestInfo) {
-    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+    if ( !Tw.FormatHelper.isEmpty(resp) && resp.code === Tw.API_CODE.CODE_00 ) {
       this._setCert(requestInfo, deferred);
       // deferred.resolve({ code: Tw.API_CODE.CERT_SUCCESS });
     } else {
@@ -71,12 +71,13 @@ Tw.ApiService.prototype = {
       .done($.proxy(this._successSetCert, this, requestInfo, deferred));
   },
   _successSetCert: function (requestInfo, deferred, resp) {
-    console.log('successSetCert', requestInfo, resp);
-    this.request(requestInfo.command, requestInfo.params )
-      .done($.proxy(this._successRequestAfterCert, this, deferred));
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      this.request(requestInfo.command, requestInfo.params)
+        .done($.proxy(this._successRequestAfterCert, this, deferred));
+    }
   },
   _successRequestAfterCert: function (deferred, resp) {
-    console.log(resp);
+    deferred.resolve(resp);
   },
 
   _makeOptions: function (command, params, headers, pathVariables) {

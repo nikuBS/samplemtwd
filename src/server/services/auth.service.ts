@@ -114,7 +114,7 @@ class AuthService {
   }
 
   private setCertRequest(urlMeta, url): Observable<any> {
-    const selectedUserCert = this.loginService.getSelectedUserCert()
+    const selectedUserCert = this.loginService.getSelectedUserCert();
     let changedUserCert = {};
     if ( FormatHelper.isEmpty(selectedUserCert) ) {
       changedUserCert = { request: url };

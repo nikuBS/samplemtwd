@@ -34,7 +34,7 @@ export const API_CMD = {
   BFF_01_0011: { path: '/core-modification/v1/address/buildings', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_01_0012: { path: '/core-modification/v1/address/standard', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_01_0013: { path: '/core-modification/v1/address/standard', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
-  BFF_01_0014: { path: '/core-auth/v1/auth/skt/sms', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_01_0014: { path: '/core-auth/v1/auth-sms', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_01_0015: { path: '/auth/skt/sms-authentication', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
   BFF_01_0016: { path: '/core-auth/v1/auth/dca/sms', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_01_0017: { path: '/core-auth/v1/auth/email', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
