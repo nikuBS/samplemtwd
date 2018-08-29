@@ -117,6 +117,13 @@ class MyTJoinProductService extends TwViewController {
         }));
       }
 
+      if ( additions.code !== API_CODE.CODE_00 ) {
+        return this.error.render(res, Object.assign(defaultOptions, {
+          code: additions.code,
+          msg: additions.msg
+        }));
+      }
+
       const addition = this.convertAdditions(additions);
 
       res.render('join/myt.join.product-service.html', {
