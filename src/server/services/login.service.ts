@@ -3,7 +3,7 @@ import LoggerService from './logger.service';
 import { SvcInfoModel } from '../models/svc-info.model';
 import { Observable } from 'rxjs/Observable';
 import { COOKIE_KEY } from '../types/common.type';
-import BrowserHelper from '../utils/browser.helper';
+import { UserCertModel } from '../models/user-cert.model';
 
 class LoginService {
   static instance;
@@ -78,6 +78,36 @@ class LoginService {
         observer.complete();
       });
 
+    });
+  }
+
+  public getUserCert(): any {
+    if ( !FormatHelper.isEmpty(this.request.session) && !FormatHelper.isEmpty(this.request.session.userCert) ) {
+      return this.request.session.userCert;
+    }
+    return null;
+  }
+
+  public getSelectedUserCert(): any {
+    const userCert = this.getUserCert();
+    if ( !FormatHelper.isEmpty(userCert) ) {
+      return userCert[this.request.session.svcInfo.svcMgmtNum];
+    }
+    return null;
+  }
+
+  public setUserCert(userCert: any): Observable<any> {
+    return Observable.create((observer) => {
+      const svcMgmtNum = this.request.session.svcInfo.svcMgmtNum;
+      if ( FormatHelper.isEmpty(this.request.session.userCert) ) {
+        this.request.session.userCert = {};
+      }
+      this.request.session.userCert[svcMgmtNum] = new UserCertModel(userCert);
+      this.request.session.save(() => {
+        this.logger.debug(this, '[setUserCert]', this.request.session);
+        observer.next(this.request.session.userCert);
+        observer.complete();
+      });
     });
   }
 

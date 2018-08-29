@@ -87,10 +87,12 @@ Tw.CustomerVoice.prototype = {
     this._apiService.request(Tw.API_CMD.BFF_08_0034, this.currentLine).done($.proxy(this._onSuccessSMS, this));
   },
 
-  _onSuccessSMS: function () {
-    $('.sended-info-num').text($('.fe-select-line').text());
+  _onSuccessSMS: function (resp) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      $('.sended-info-num').text($('.fe-select-line').text());
 
-    this._history.replaceURL('/customer/voice/sms#complete');
+      this._history.replaceURL('/customer/voice/sms#complete');
+    }
   },
 
   _openAuthCancel: function () {

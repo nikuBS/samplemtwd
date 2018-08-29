@@ -16,7 +16,12 @@ Tw.CertificationSkKeyin = function () {
   this.$errorConfirm = null;
   this.$errorCert = null;
 
+  this._urlMeta = null;
   this._authUrl = null;
+  this._command = null;
+  this._deferred = null;
+  this._callback = null;
+  this._certResult = null;
 };
 
 
@@ -37,7 +42,13 @@ Tw.CertificationSkKeyin.prototype = {
     SMS2014: 'SMS2014',
     SMS3001: 'SMS3001'
   },
-  openKeyinPopup: function () {
+  openKeyinPopup: function (svcInfo, urlMeta, authUrl, command, deferred, callback) {
+    this._urlMeta = urlMeta;
+    this._authUrl = authUrl;
+    this._command = command;
+    this._deferred = deferred;
+    this._callback = callback;
+
     this._popupService.open({
       hbs: 'CO_02_01_02_01_L01',
       layer: true
@@ -60,7 +71,7 @@ Tw.CertificationSkKeyin.prototype = {
 
   },
   _onCloseKeyjnPopup: function () {
-
+    this._callback(this._certResult, this._deferred, this._command);
   },
   _onInputMdn: function () {
     var mdnLength = this.$inputMdn.val().length;
@@ -102,13 +113,14 @@ Tw.CertificationSkKeyin.prototype = {
       receiverNum: this.$inputMdn.val(),
       jobCode: 'NFM_TWD_MBIMASK_AUTH',
       authNum: this.$inputCert.val(),
-      authUrl: '/myt'
+      authUrl: this._authUrl
     }).done($.proxy(this._successKeyinConfirm, this));
   },
   _successKeyinConfirm: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       // TODO success
-
+      this._certResult = resp;
+      this._popupService.close();
     } else if ( resp.code === this.SMS_CERT_ERROR.SMS2007 ) {
       this.showConfirmError(Tw.MSG_AUTH.CERT_03);
     } else if ( resp.code === this.SMS_CERT_ERROR.SMS2008 ) {

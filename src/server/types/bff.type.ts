@@ -244,3 +244,40 @@ export enum RAINBOW_POINT_REL_CD {
   C = 'C',
   P = 'P'
 }
+
+export enum LOGIN_TYPE {
+  TID = 'T',
+  EASY = 'S'
+}
+
+export enum AUTH_CERTIFICATION_TYPE {
+  PREV = 'P',
+  AFTER = 'A',
+  FAIL = 'F',
+  NOT_USED = 'D'
+
+}
+
+export enum AUTH_CERTIFICATION_METHOD {
+  SK_SMS = 'S',
+  OTHER_SMS = 'T',
+  SMS_PASSWORD = 'Z',
+  SMS_KEYIN = 'J',
+  PUBLIC_AUTH = 'P',
+  FINANCE_AUTH = 'B',
+  IPIN = 'I',
+  EMAIL = 'E',
+  PASSWORD = 'W',
+  BIO = 'F',
+  SAVE = 'A',
+  SK_MOTP = 'M'
+}
+
+export enum AUTH_CERTIFICATION_SCOPE {
+  REQUEST = 'R',
+  PAGE = 'P',
+  GROUP = 'G',
+  SESSION = 'S',
+  CHILD = 'C'
+}
+

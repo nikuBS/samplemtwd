@@ -1,15 +1,18 @@
 import express from 'express';
 import { Router, Request, Response, NextFunction } from 'express';
-import { API_CMD, API_METHOD } from '../types/api-command.type';
+import { API_CMD, API_CODE, API_METHOD } from '../types/api-command.type';
 import ApiService from '../services/api.service';
 import FormatHelper from '../utils/format.helper';
 import LoginService from '../services/login.service';
+import AuthService from '../services/auth.service';
 
 
 class BypassRouter {
   public router: Router;
+
   private apiService;
   private loginService: LoginService = new LoginService();
+  private authService: AuthService = new AuthService();
 
   constructor() {
     this.router = express.Router();
@@ -37,19 +40,32 @@ class BypassRouter {
   }
 
   private setGetApi(cmd) {
-    this.router.get(cmd.path, this.sendRequest.bind(this, cmd));
+    this.router.get(cmd.path, this.checkApi.bind(this, cmd));
   }
 
   private setPostApi(cmd) {
-    this.router.post(cmd.path, this.sendRequest.bind(this, cmd));
+    this.router.post(cmd.path, this.checkApi.bind(this, cmd));
   }
 
   private setPutApi(cmd) {
-    this.router.put(cmd.path, this.sendRequest.bind(this, cmd));
+    this.router.put(cmd.path, this.checkApi.bind(this, cmd));
   }
 
   private setDeleteApi(cmd) {
-    this.router.delete(cmd.path, this.sendRequest.bind(this, cmd));
+    this.router.delete(cmd.path, this.checkApi.bind(this, cmd));
+  }
+
+  private checkApi(cmd: any, req: Request, res: Response, next: NextFunction) {
+    this.authService.getUrlMeta(req).subscribe((resp) => {
+      if ( resp['cert'] ) {
+        return res.json({
+          code: API_CODE.CODE_03,
+          result: resp
+        });
+      } else {
+        this.sendRequest(cmd, req, res, next);
+      }
+    });
   }
 
   private sendRequest(cmd: any, req: Request, res: Response, next: NextFunction) {

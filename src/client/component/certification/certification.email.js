@@ -18,7 +18,11 @@ Tw.CertificationEmail = function () {
   this.$blockEmail = null;
   this.$btCheckEmail = null;
 
-  this._authURl = '/myt';
+  this._authUrl = null;
+  this._command = null;
+  this._deferred = null;
+  this._callback = null;
+  this._certResult = null;
 };
 
 
@@ -32,7 +36,12 @@ Tw.CertificationEmail.prototype = {
     ATH8005: 'ATH8005'
   },
 
-  open: function () {
+  open: function (svcInfo, urlMeta, authUrl, command, deferred, callback) {
+    this._authUrl = authUrl;
+    this._command = command;
+    this._deferred = deferred;
+    this._callback = callback;
+
     this._popupService.open({
       hbs: 'CO_02_01_L01',
       layer: true
@@ -57,7 +66,7 @@ Tw.CertificationEmail.prototype = {
 
   },
   _onCloseEmailPopup: function () {
-
+    this._callback(this._certResult, this._deferred, this._command);
   },
   _onInputEmail: function () {
     var emailLength = this.$inputEmail.val().length;
@@ -105,7 +114,8 @@ Tw.CertificationEmail.prototype = {
   },
   _successEmailConfirm: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-
+      this._certResult = resp;
+      this._popupService.close();
     } else if ( resp.code === this.ERROR_EMAIL_CERT.ATH8004 ) {
       this.showConfirmError(Tw.MSG_AUTH.CERT_03);
     } else if ( resp.code === this.ERROR_EMAIL_CERT.ATH8005 ) {
