@@ -2,7 +2,6 @@
  * FileName: myt.usage.pattern.detail.controller.ts
  * Author: Kim InHwan (skt.P132150@partner.sk.com)
  * Date: 2018.08.03
- *
  */
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { NextFunction, Request, Response } from 'express';

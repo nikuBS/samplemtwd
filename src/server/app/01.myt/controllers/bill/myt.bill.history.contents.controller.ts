@@ -12,7 +12,7 @@ import {MYT_PAY_HISTORY_TITL} from '../../../../types/bff.type';
 import FormatHelper from '../../../../utils/format.helper';
 import {DATE_FORMAT, MYT_BILL_HISTORY_STR} from '../../../../types/string.type';
 
-class MyTBillHistoryContentsController extends TwViewController {
+class MyTBillHistoryContents extends TwViewController {
 
   constructor() {
     super();
@@ -73,4 +73,4 @@ class MyTBillHistoryContentsController extends TwViewController {
 }
 
 
-export default MyTBillHistoryContentsController;
+export default MyTBillHistoryContents;

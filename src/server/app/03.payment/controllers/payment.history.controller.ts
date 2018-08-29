@@ -1,5 +1,5 @@
 /**
- * FileName: recharge.gift.history.controller.ts
+ * FileName: payment.history.controller.ts
  * Author: 이상형 (silion@sk.com)
  * Date: 2018.07.02
  */

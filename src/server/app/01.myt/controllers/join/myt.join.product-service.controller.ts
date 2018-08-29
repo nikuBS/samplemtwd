@@ -23,7 +23,7 @@ interface ICombination {
   hasDetail: boolean;
 }
 
-class MyTJoinProductServiceController extends TwViewController {
+class MyTJoinProductService extends TwViewController {
   constructor() {
     super();
   }
@@ -356,4 +356,4 @@ class MyTJoinProductServiceController extends TwViewController {
   }
 }
 
-export default MyTJoinProductServiceController;
+export default MyTJoinProductService;

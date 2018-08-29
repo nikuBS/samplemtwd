@@ -1,5 +1,5 @@
 /**
- * FileName: payment.history.receipt.cash.ts
+ * FileName: payment.history.receipt.cash.controller.ts
  * Author: 이상형 (silion@sk.com)
  * Date: 2018.07.05
  */
