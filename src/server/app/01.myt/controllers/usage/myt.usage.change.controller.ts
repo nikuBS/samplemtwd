@@ -1,3 +1,8 @@
+/**
+ * FileName: myt.usage.change.controller.ts
+ * Author: 박지만 (jiman.park@sk.com)
+ * Date: 2018.05.29
+ */
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
 import { API_CMD } from '../../../../types/api-command.type';

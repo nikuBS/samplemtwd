@@ -1,5 +1,5 @@
 /**
- * FileName: myt.joinService.contractTerminalInfo.phone.detail.controller
+ * FileName: myt.joinService.contract-terminal.detail.controller.ts
  * Author: 김명환 (skt.P130714@partner.sk.com)
  * Date: 2018.07.24
  */

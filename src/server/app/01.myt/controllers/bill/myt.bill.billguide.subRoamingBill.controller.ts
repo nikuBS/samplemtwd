@@ -1,5 +1,5 @@
 /**
- * FileName: myt.bill.billguide.subRoamingBill.controller
+ * FileName: myt.bill.billguide.subRoamingBill.controller.ts
  * Author: 이정민 (skt.p130713@partner.sk.com)
  * Date: 2018.07.19
  */

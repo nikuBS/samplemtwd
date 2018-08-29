@@ -1,5 +1,5 @@
 /**
- * FileName: myt.bill.billguide.subCallBill.controller
+ * FileName: myt.bill.billguide.subCallBill.controller.ts
  * Author: 김명환 (skt.P130714@partner.sk.com)
  * Date: 2018.07.05
  */

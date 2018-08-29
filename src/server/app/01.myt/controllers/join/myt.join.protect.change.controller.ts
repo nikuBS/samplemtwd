@@ -1,8 +1,7 @@
 /**
- * FileName: myt.joinService.protect.change.controller.ts
+ * FileName: myt.join.protect.change.controller.ts
  * Author: Kim InHwan (skt.P132150@partner.sk.com)
  * Date: 2018.07.25
- *
  */
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { NextFunction, Request, Response } from 'express';

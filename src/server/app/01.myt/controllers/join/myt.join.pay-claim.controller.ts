@@ -1,5 +1,5 @@
 /**
- * FileName: myt.joinService.payClaimInfo.controller
+ * FileName: myt.join.pay-claim.controller.ts
  * Author: 김명환 (skt.P130714@partner.sk.com)
  * Date: 2018.07.24
  * info: 페이지 진입

@@ -1,5 +1,5 @@
 /**
- * FileName: payment.history.point.reserve.ts
+ * FileName: payment.history.point.reserve.controller.ts
  * Author: 이상형 (silion@sk.com)
  * Date: 2018.07.04
  */
