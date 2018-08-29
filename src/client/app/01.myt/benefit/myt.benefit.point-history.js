@@ -52,7 +52,7 @@ Tw.MyTBenefitPointHistory.prototype = {
   _bindEvent: function () {
     this.$container.on('change', '.fe-period input', $.proxy(this._onChangePeriod, this));
     this.$container.on('click', 'button[data-id="search"]', $.proxy(this._requestHistoryData, this, null));
-    this.$container.on('click', '#fe-expiring-points', $.proxy(this._openExpiringPointPopup, this))
+    this.$container.on('click', '#fe-expiring-points', $.proxy(this._openExpiringPointPopup, this));
 
     this.$listWrapper.on('click', 'a.prev:not(.disabled)', $.proxy(this._onClickPrev, this));
     this.$listWrapper.on('click', 'a.next:not(.disabled)', $.proxy(this._onClickNext, this));
@@ -105,7 +105,7 @@ Tw.MyTBenefitPointHistory.prototype = {
         this.$listWrapper.empty();
         this.$sectionNoItem.show();
       } else {
-        this._currentPage = parseInt(page);
+        this._currentPage = parseInt(page, 10);
         this._totalPage = Math.ceil(resp.result.totRecCnt / this.LIST_SIZE);
         this._parseData(resp.result);
         this._renderList(this._currentPage, resp.result.history);

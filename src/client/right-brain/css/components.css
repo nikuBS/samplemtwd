@@ -13277,6 +13277,10 @@ span[class*=char-star][class*=red] {
   border-bottom: 0;
 }
 
+.box-service-qa .service-qa-block.none-point dl dt, .box-service-qa .service-qa-block.none-point dl dd {
+  padding-left: 0;
+}
+
 .box-service-qa .service-qa-block dl dt, .box-service-qa .service-qa-block dl dd {
   position: relative;
   padding-left: 1.625rem;
@@ -13309,6 +13313,9 @@ span[class*=char-star][class*=red] {
 }
 
 .box-service-qa .service-qa-block .service-qa-img {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  padding-left: 0.625rem;
   margin-top: 0.875rem;
 }
 
@@ -15439,8 +15446,9 @@ span[class*=char-star][class*=red] {
 }
 
 /* 김재성 */
+/* 캐릭터셋 나와라 */
 .jsk {
-  color: #00f;
+  color: red;
 }
 
 /* 최은현 */
