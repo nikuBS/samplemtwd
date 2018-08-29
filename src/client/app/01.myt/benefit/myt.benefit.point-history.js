@@ -72,22 +72,56 @@ Tw.MyTBenefitPointHistory.prototype = {
   },
 
   _requestHistoryData: function (page) {
-    if ( page !== this._currentPage ) {
-      page = page || 1;
-      var params = {
-        fromDt: this.$fromDate.val().replace(/-/g, ''),
-        toDt: this.$toDate.val().replace(/-/g, ''),
-        page: page,
-        size: this.LIST_SIZE
-      };
+    if(this._checkInputValicatioin()) {
+      if ( page !== this._currentPage ) {
+        page = page || 1;
+        var params = {
+          fromDt: this.$fromDate.val().replace(/-/g, ''),
+          toDt: this.$toDate.val().replace(/-/g, ''),
+          page: page,
+          size: this.LIST_SIZE
+        };
 
-      var API = this._pointType === Tw.POINT_TYPE.RAINBOW ? Tw.API_CMD.BFF_05_0100 : Tw.API_CMD.BFF_05_0122;
-      this._apiService.request(API, params)
-        .done($.proxy(this._onHistoryDataReceived, this, page))
-        .fail(function () {
-        });
+        var API = this._pointType === Tw.POINT_TYPE.RAINBOW ? Tw.API_CMD.BFF_05_0100 : Tw.API_CMD.BFF_05_0122;
+        this._apiService.request(API, params)
+          .done($.proxy(this._onHistoryDataReceived, this, page))
+          .fail(function () {
+          });
+      }
     }
   },
+
+  _checkInputValicatioin: function(){
+    var sdate = this.$fromDate.val();
+    var edate = this.$toDate.val();
+
+    // 시작일이 유효한 일자가 아닐경우
+    if(_.isEmpty(sdate)){
+      this._popupService.openAlert(Tw.MSG_MYT.JOIN_INFO_A03, Tw.POPUP_TITLE.NOTIFY, $.proxy(this._invalidDate, this, this.$fromDate));
+      return false;
+    }
+    // 죵료일이 유효한 일자가 아닐경우
+    if(_.isEmpty(edate)){
+      this._popupService.openAlert(Tw.MSG_MYT.JOIN_INFO_A04, Tw.POPUP_TITLE.NOTIFY, $.proxy(this._invalidDate, this, this.$toDate));
+      return false;
+    }
+    // 시작일이 종료일보다 클 경우
+    var diff = this._dateHelper.getDiffByUnit(sdate, edate, 'days');
+    if ( diff > 0 ) {
+      this._popupService.openAlert(Tw.MSG_MYT.JOIN_INFO_A01, Tw.POPUP_TITLE.NOTIFY, $.proxy(this._invalidDate, this, this.$fromDate));
+      return false;
+    }
+    return true;
+  },
+
+  _invalidDate : function ($selector) {
+    this._popupService.close();
+    // 포커스 이동
+    setTimeout(function(){
+      $selector.trigger('click');
+    },500);
+  },
+
 
   _onHistoryDataReceived: function (page, resp) {
     if ( this.$detailSearch.css('display') !== 'none' ) {
