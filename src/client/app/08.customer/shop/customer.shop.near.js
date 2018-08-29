@@ -27,6 +27,7 @@ Tw.CustomerShopNear = function (rootEl) {
   this._selectedLarea = '';
   this._selectedLareaName = '';
   this._selectedMarea = '';
+  this._initialGu = '';
 
   this._listShownCount = 0;
 
@@ -158,6 +159,9 @@ Tw.CustomerShopNear.prototype = {
       reqLat: location.latitude,
       appKey: Tw.TMAP.APP_KEY
     }).done($.proxy(function (res) {
+      this._initialGu = res.searchRegionsInfo[0].regionInfo.properties.guName.split(' ')[0].trim();
+      console.log('hakjoon', this._initialGu);
+
       var regions = res.searchRegionsInfo[0].regionInfo.description.split(' ');
       if (regions.length === 2) {
         this.$region1.text(regions[0]);
@@ -280,6 +284,7 @@ Tw.CustomerShopNear.prototype = {
           var $selected = root.find('.checked input');
           $btDropdown.text($selected.attr('title'));
           $btDropdown.val($selected.val());
+          this._selectedMarea = '';
           this._onLargeAreaChanged($selected.val(), $areaList);
         }, this));
       }, this));
@@ -335,9 +340,36 @@ Tw.CustomerShopNear.prototype = {
       appKey: Tw.TMAP.APP_KEY
     }).done($.proxy(function (res) {
       this._areas = res.areaCodeInfo.poiAreaCodes;
-      $btDropdown.text(this._areas[0].districtName);
-      $btDropdown.val(this._areas[0].largeCd);
-      this._onLargeAreaChanged(this._areas[0].largeCd, $areaList);
+      var districtName = '';
+      var largeCd = '';
+      if (!Tw.FormatHelper.isEmpty(this._initialGu)) {
+        var matchedMiddle = _.filter(this._areas, $.proxy(function (item) {
+          return this._initialGu === item.districtName;
+        }, this));
+        var matched = _.filter(this._areas, function (item) {
+          return item.areaDepth === 'L' && item.largeCd === matchedMiddle[0].largeCd;
+        });
+
+        if (!Tw.FormatHelper.isEmpty(matched)) {
+          this._selectedLarea = matched[0].largeCd;
+          this._selectedLareaName = matched[0].districtName;
+          this._selectedMarea = matchedMiddle[0].middleCd;
+        }
+
+        if (!Tw.FormatHelper.isEmpty(matched)) {
+          districtName = matched[0].districtName;
+          largeCd = matched[0].largeCd;
+        } else {
+          districtName = this._areas[0].districtName;
+          largeCd = this._areas[0].largeCd;
+        }
+      } else {
+        districtName = this._areas[0].districtName;
+        largeCd = this._areas[0].largeCd;
+      }
+      $btDropdown.text(districtName);
+      $btDropdown.val(largeCd);
+      this._onLargeAreaChanged(largeCd, $areaList);
     }, this)).fail($.proxy(function (err) {
       this._popupService.openAlert(err.code + ' ' + err.msg);
     }, this));
