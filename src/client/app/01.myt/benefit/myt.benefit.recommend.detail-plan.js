@@ -65,41 +65,41 @@ Tw.MytBenefitRecommendDetailPlan.prototype = {
 
   //--------------------------------------------------------------------------[api]
   _getDetailList: function() {
-    $.ajax('http://localhost:3000/mock/recommend.BFF_05_0120.json')
+    // $.ajax('http://localhost:3000/mock/recommend.BFF_05_0120.json')
+    //   .done($.proxy(function(resp){
+    //     if ( resp.code === Tw.API_CODE.CODE_00 ) {
+    //       Tw.Logger.info('[BFF_06_00120]', resp);
+    //       this.bffListData = resp.result;
+    //       this._proData();
+    //       this._ctrlInit();
+    //     } else {
+    //       Tw.Error(resp.code, resp.msg).pop();
+    //     }
+    //   }, this))
+    //   .fail(function(err) {
+    //     Tw.Logger.info('[err]', err);
+    //     Tw.Error(err.code, err.msg).pop();
+    //   });
+
+    this._apiService.request(Tw.API_CMD.BFF_05_0120)
       .done($.proxy(function(resp){
+
         if ( resp.code === Tw.API_CODE.CODE_00 ) {
-          Tw.Logger.info('[BFF_06_00120]', resp);
+          Tw.Logger.info('[BFF_05_0120]', resp);
           this.bffListData = resp.result;
+
           this._proData();
           this._ctrlInit();
+
         } else {
           Tw.Error(resp.code, resp.msg).pop();
         }
+
       }, this))
-      .fail(function(err) {
+      .fail(function(err){
         Tw.Logger.info('[err]', err);
         Tw.Error(err.code, err.msg).pop();
       });
-
-    // this._apiService.request(Tw.API_CMD.BFF_06_0001)
-    //   .done($.proxy(function(resp){
-    //
-    //     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-    //       Tw.Logger.info('[BFF_06_0001]', resp);
-    //       this.bffListData = resp.result;
-    //
-    //       this._proData();
-    //       this._ctrlInit();
-    //
-    //     } else {
-    //       this._popupService.openAlert(resp.msg, resp.code);
-    //     }
-    //
-    //   }, this))
-    //   .fail(function(err){
-    //     Tw.Logger.info('[err]', err);
-    //     this._popupService.openAlert(err.msg, err.code);
-    //   });
   },
   //--------------------------------------------------------------------------[공통]
   _serverErrPopup: function() {
