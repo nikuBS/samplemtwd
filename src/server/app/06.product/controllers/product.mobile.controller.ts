@@ -3,7 +3,7 @@ import ProductMobileModel from '../models/product.mobile.model';
 import { Request, Response, NextFunction } from 'express';
 import { API_CMD } from '../../../types/api-command.type';
 
-class ProductMobileController extends TwViewController {
+class ProductMobile extends TwViewController {
   constructor() {
     super();
   }
@@ -13,4 +13,4 @@ class ProductMobileController extends TwViewController {
   }
 }
 
-export default ProductMobileController;
+export default ProductMobile;

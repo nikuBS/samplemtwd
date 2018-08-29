@@ -10,7 +10,7 @@ import { Observable } from '../../../../../../node_modules/rxjs/Observable';
 import { API_CMD } from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
 
-class CustomerShopDetailController extends TwViewController {
+class CustomerShopDetail extends TwViewController {
   constructor() {
     super();
   }
@@ -48,4 +48,4 @@ class CustomerShopDetailController extends TwViewController {
   }
 }
 
-export default CustomerShopDetailController;
+export default CustomerShopDetail;

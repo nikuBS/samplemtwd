@@ -7,7 +7,7 @@
 import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 
-class CustomerPreventdamageUsefulserviceController extends TwViewController {
+class CustomerPreventdamageUsefulservice extends TwViewController {
   constructor() {
     super();
   }
@@ -19,4 +19,4 @@ class CustomerPreventdamageUsefulserviceController extends TwViewController {
   }
 }
 
-export default CustomerPreventdamageUsefulserviceController;
+export default CustomerPreventdamageUsefulservice;

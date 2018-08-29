@@ -3018,9 +3018,9 @@ a.ui-button:active,
   width: 100%;
   height: 2.5rem;
   padding: 0 2.25rem 0 0.75rem;
-  font-size: 0.8125rem;
+  font-size: 0.9375rem;
   line-height: 2.375rem;
-  font-weight: 700;
+  font-weight: 400;
 }
 
 .bt-dropdown.regular {

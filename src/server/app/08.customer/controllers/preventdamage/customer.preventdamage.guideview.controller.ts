@@ -14,7 +14,7 @@ const categoryData = {
   latest: []  // TODO 최신 이용자 피해예방 정보 추가시 사용
 };
 
-class CustomerPreventdamageGuideviewController extends TwViewController {
+class CustomerPreventdamageGuideview extends TwViewController {
   constructor() {
     super();
   }
@@ -43,4 +43,4 @@ class CustomerPreventdamageGuideviewController extends TwViewController {
   }
 }
 
-export default CustomerPreventdamageGuideviewController;
+export default CustomerPreventdamageGuideview;

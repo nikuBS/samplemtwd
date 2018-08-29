@@ -7,7 +7,7 @@
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { NextFunction, Request, Response } from 'express';
 
-class CustomerShopRepairManufacturerController extends TwViewController {
+class CustomerShopRepairManufacturer extends TwViewController {
   constructor() {
     super();
   }
@@ -17,5 +17,5 @@ class CustomerShopRepairManufacturerController extends TwViewController {
   }
 }
 
-export default CustomerShopRepairManufacturerController;
+export default CustomerShopRepairManufacturer;
 

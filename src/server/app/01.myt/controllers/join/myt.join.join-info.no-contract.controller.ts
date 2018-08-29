@@ -6,7 +6,7 @@
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import {Request, Response, NextFunction} from 'express';
 
-class MyTJoinJoinInfoNoContractController extends TwViewController {
+class MyTJoinJoinInfoNoContract extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     res.render('join/myt.join.join-info.no-contract.html', this.getData(svcInfo, {}));
@@ -21,4 +21,4 @@ class MyTJoinJoinInfoNoContractController extends TwViewController {
   }
 }
 
-export default MyTJoinJoinInfoNoContractController;
+export default MyTJoinJoinInfoNoContract;

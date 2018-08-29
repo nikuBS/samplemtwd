@@ -10,7 +10,7 @@ import {API_CMD} from '../../../types/api-command.type';
 import {MSG_STR} from '../../../types/string.type';
 
 
-class PaymentHistoryPointAutoController extends TwViewController {
+class PaymentHistoryPointAuto extends TwViewController {
 
   constructor() {
     super();
@@ -39,4 +39,4 @@ class PaymentHistoryPointAutoController extends TwViewController {
 
 }
 
-export default PaymentHistoryPointAutoController;
+export default PaymentHistoryPointAuto;

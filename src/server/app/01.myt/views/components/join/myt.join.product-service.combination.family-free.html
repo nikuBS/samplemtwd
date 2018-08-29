@@ -54,7 +54,7 @@
                         <div class="customer-slider2">
                             <div class="slider-box">
                                 <ul class="slider">
-                                    <% const benefitLength = combination.wireIndex > 3 ? 5 : combination.wireIndex + 2 %>
+                                    <% const benefitLength = combination.wireIndex > 2 ? 5 : combination.wireIndex + 2 %>
                                     <% for (let i = 0; i < benefitLength; i++) { %>
                                         <li>
                                             <div class="component">
@@ -75,7 +75,7 @@
                                                                     <% break;
                                                                     case 3: %>
                                                                         <p class="card-ti">가족간<br/><em class="tx-bold">음성/문자 무료</em></p>
-                                                                    <% break;
+                                                                    <% break; 
                                                                     case 4: %>
                                                                         <p class="card-ti">친구랑(망내 지정 1회선)<br/><em class="tx-bold">음성/문자 무료</em></p>
                                                                     <% break; %>
@@ -143,7 +143,7 @@
                                                     </li>
                                                     <li>
                                                         <span class="title">혜택1</span>
-                                                        <span class="tx-cont multi"><%= member.selectedBenefit ? member.selectedBenefit === '2053-DAT1G'? '데이터500M무료' : 'LTE안심옵션' : '-' %><br />
+                                                        <span class="tx-cont multi"><%= member.selectedBenefit ? member.selectedBenefit === '2053-DAT1G'? '데이터500M 무료' : 'LTE안심옵션 무료' : '-' %><br />
                                                             <% if (member.selectedBenefit && isMine || combination.isRepresentation) { %>
                                                                 <button class="bt-link-tx underline fe-benefit1">변경</button>
                                                             <% } %>
@@ -153,7 +153,7 @@
                                                         <span class="title">혜택2</span>
                                                         <span class="tx-cont multi">
                                                             <span class="ff-hn vbl"><%= member.freeLineNumber? member.freeLineNumber : '-' %></span> <br />
-                                                            <% if (combination.wireIndex > 3 && isMine || combination.isRepresentation) { %>
+                                                            <% if (combination.wireIndex > 2 && isMine || combination.isRepresentation) { %>
                                                                 <button class="bt-link-tx underline fe-benefit2">변경</button>
                                                             <% } %>
                                                         </span>
@@ -293,7 +293,7 @@
     </div>
     <!--// #contents -->
 </div>
-<% if (combination.wireIndex > 3) { %>
+<% if (combination.wireIndex > 2) { %>
 <div id="benefit-2nd">
     <!-- #header -->
     <div id="header" class="header-wrap">
@@ -325,7 +325,7 @@
                     <h3 class="account-tit">혜택2 선택 (휴대폰 번호)</h3>
                     <span class="inputbox">
                         <span class="input">
-                            <input type="text" pattern="[0-9]" placeholder="숫자만 입력" title="숫자만 입력">
+                            <input type="number" inputmode="numeric" min="0" pattern="[0-9]*" placeholder="숫자만 입력" title="숫자만 입력">
                             <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
                         </span>
                     </span>

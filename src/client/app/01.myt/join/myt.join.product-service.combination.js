@@ -207,7 +207,7 @@ Tw.MyTJoinProductServiceCombination.prototype = {
 
     this._freeLineNumber = $infoArea.find('.ff-hn.vbl').text();
 
-    this._history.replaceURL('benefit-2nd');
+    this._history.replaceURL('#benefit-2nd');
   },
 
   _handleChangeSecondBenefit: function () {
@@ -254,11 +254,13 @@ Tw.MyTJoinProductServiceCombination.prototype = {
   },
 
   _setPhoneNumber: function () {
+    this.$phoneInput.attr('type', 'text');
     this.$phoneInput.val(Tw.FormatHelper.getDashedCellPhoneNumber(this.$phoneInput.val()));
   },
 
   _removeDash: function () {
     this.$phoneInput.val((this.$phoneInput.val() || '').replace(/-/g, ''));
+    this.$phoneInput.attr('type', 'number');
   },
 
   _typeOnlyNumber: function (e) {

@@ -10,7 +10,7 @@ import FormatHelper from '../../../utils/format.helper';
 import { AUTO_CHARGE_CODE, PREPAY_TITLE } from '../../../types/bff.type';
 import DateHelper from '../../../utils/date.helper';
 
-class PaymentPrepayMicroController extends TwViewController {
+class PaymentPrepayMicro extends TwViewController {
   constructor() {
     super();
   }
@@ -46,4 +46,4 @@ class PaymentPrepayMicroController extends TwViewController {
   }
 }
 
-export default PaymentPrepayMicroController;
+export default PaymentPrepayMicro;

@@ -9,7 +9,7 @@ import {Request, Response, NextFunction} from 'express';
 import {API_CMD} from '../../../types/api-command.type';
 
 
-class PaymentHistoryAutoUnitedWithdrawalController extends TwViewController {
+class PaymentHistoryAutoUnitedWithdrawal extends TwViewController {
 
   constructor() {
     super();
@@ -25,4 +25,4 @@ class PaymentHistoryAutoUnitedWithdrawalController extends TwViewController {
 }
 
 
-export default PaymentHistoryAutoUnitedWithdrawalController;
+export default PaymentHistoryAutoUnitedWithdrawal;

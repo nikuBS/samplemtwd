@@ -50,8 +50,8 @@ Tw.DateHelper = (function () {
    * @param date {Date} or {string} : YYYYMMDD
    * @returns {string} : 2018.06.01 12:00:00
    */
-  var getCurrentDateTime = function () {
-    return moment().format('YYYY.MM.DD hh:mm:ss');
+  var getCurrentDateTime = function (format) {
+    return moment().format(format || 'YYYY.MM.DD hh:mm:ss');
   };
 
   /**

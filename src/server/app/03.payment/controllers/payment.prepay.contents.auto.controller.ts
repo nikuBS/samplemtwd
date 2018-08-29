@@ -10,7 +10,7 @@ import FormatHelper from '../../../utils/format.helper';
 import { PREPAY_TITLE } from '../../../types/bff.type';
 import { Observable } from 'rxjs/Observable';
 
-class PaymentPrepayContentsAutoController extends TwViewController {
+class PaymentPrepayContentsAuto extends TwViewController {
   constructor() {
     super();
   }
@@ -61,4 +61,4 @@ class PaymentPrepayContentsAutoController extends TwViewController {
   }
 }
 
-export default PaymentPrepayContentsAutoController;
+export default PaymentPrepayContentsAuto;

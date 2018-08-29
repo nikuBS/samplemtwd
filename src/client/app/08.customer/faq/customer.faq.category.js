@@ -39,7 +39,7 @@ Tw.CustomerFaqCategory.prototype = {
   },
   _bindEvents: function () {
     this.$container.on('click', '.bt-dropdown', $.proxy(this._onDropDown, this));
-    this.$btnMore.on('click', $.proxy(this._loadData, this, false));
+    this.$btnMore.on('click', $.proxy(this._loadList, this, false));
   },
   _onDropDown: function (evt) {
     var selectList = {

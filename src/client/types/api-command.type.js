@@ -33,10 +33,6 @@ Tw.API_CMD = {
   BFF_01_0019: { path: '/auth/motp/apply', method: Tw.API_METHOD.POST },
   BFF_01_0020: { path: '/auth/motp/auth', method: Tw.API_METHOD.POST },
   BFF_01_0021: { path: '/core-auth/v1/auth/motp', method: Tw.API_METHOD.GET },
-  BFF_01_0022: { path: '/auth/nice/ipin/apply', method: Tw.API_METHOD.POST },
-  BFF_01_0023: { path: '/auth/nice/ipin/result', method: Tw.API_METHOD.POST },
-  BFF_01_0024: { path: '/auth/nice/sms/apply', method: Tw.API_METHOD.POST },
-  BFF_01_0025: { path: '/auth/nice/sms', method: Tw.API_METHOD.POST },
   BFF_01_0026: { path: '/cert/success', method: Tw.API_METHOD.POST },
   BFF_01_0027: { path: '/pwd-cert-chk', method: Tw.API_METHOD.POST },
   BFF_01_0028: { path: '/core-auth/v1/auth/skt/sms-finance', method: Tw.API_METHOD.POST },
@@ -113,9 +109,12 @@ Tw.API_CMD = {
   BFF_05_0105: { path: '/core-bill/v1/rainbow-point-transfers/args-0', method: Tw.API_METHOD.DELETE },
   BFF_05_0123: { path: '/core-product/v1/services/unavailableness', method: Tw.API_METHOD.GET },
   BFF_05_0100: { path: '/core-bill/v1/rainbow-point-histories', method: Tw.API_METHOD.GET },
+  BFF_05_0121: { path: '/core-bill/v1/military-service-point-histories', method: Tw.API_METHOD.GET },
+  BFF_05_0122: { path: '/core-bill/v1/cookiz-ting-point-histories', method: Tw.API_METHOD.GET },
   BFF_05_0126: { path: '/core-product/v1/fee-plans/change-notices', method: Tw.API_METHOD.POST },
   BFF_05_0127: { path: '/core-product/v1/fee-plans/change-notices', method: Tw.API_METHOD.DELETE },
   BFF_05_0129: { path: '/core-product/v1/services/wire/additions', method: Tw.API_METHOD.GET },
+  BFF_05_0132: { path: '/core-bill/v1/rainbow-points', method: Tw.API_METHOD.GET },
   BFF_05_0135: { path: '/core-product/v1/services/combinations/data-benefits', method: Tw.API_METHOD.PUT },
   BFF_05_0137: { path: '/core-product/v1/services/wireless/additions', method: Tw.API_METHOD.GET },
   BFF_05_0138: { path: '/core-product/v1/services/combinations/data-sharings', method: Tw.API_METHOD.PUT },
@@ -297,6 +296,7 @@ Tw.AJAX_CMD = {
   GET_TMAP_REGION: { path: '/geofencing/regions', method: Tw.API_METHOD.GET, url: Tw.TMAP.URL },
   GET_TMAP_AREASCODE: { path: '/poi/areascode', method: Tw.API_METHOD.GET, url: Tw.TMAP.URL },
   GET_TMAP_ADDR_GEO: { path: '/geo/fullAddrGeo', method: Tw.API_METHOD.GET, url: Tw.TMAP.URL },
+  GET_TMAP_POI: { path: '/pois', method: Tw.API_METHOD.GET, url: Tw.TMAP.URL },
   OPEN_NICE_AUTH: { path: '', method: Tw.API_METHOD.POST, url: Tw.NICE_URL, contentType: 'application/x-www-form-urlencoded' },
   OPEN_IPIN_AUTH: { path: '', method: Tw.API_METHOD.POST, url: Tw.IPIN_URL, contentType: 'application/x-www-form-urlencoded' }
 };
@@ -312,13 +312,8 @@ Tw.API_CODE = {
   CODE_07: 'RDT0007',    // 고객 비밀번호 재설정 필요
   CODE_08: 'RDT0008',    // 고객 비밀번호 초기화상
   CODE_99: 'RDT0099',    // Circuit Open
-  CODE_BIL0018: 'BIL0018',  // 개인 사업자 번호 조회 불가
-  CODE_BIL0030: 'BIL0030',  // 휴대폰 결제 이용동의 후 사용 가능한 메뉴입니다
-  CODE_BIL0031: 'BIL0031',  // 미성년자는 이용할 수 없습니다
-  CODE_BIL0034: 'BIL0034',  // 소액결제 부가서비스 미가입자는 이용할 수 없습니다
   CODE_200: '200',
-  CODE_400: '400',
-  CODE_F806: 'F806'       // 소액결제 한도변경 월 1회 이상 시도
+  CODE_400: '400'
 };
 
 Tw.API_SVC_PWD_ERROR = {

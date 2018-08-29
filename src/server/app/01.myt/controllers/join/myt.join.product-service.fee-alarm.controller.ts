@@ -6,7 +6,7 @@
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { NextFunction, Request, Response } from 'express';
 
-class MyTJoinProductServiceFeeAlarmController extends TwViewController {
+class MyTJoinProductServiceFeeAlarm extends TwViewController {
   constructor() {
     super();
   }
@@ -25,4 +25,4 @@ class MyTJoinProductServiceFeeAlarmController extends TwViewController {
   }
 }
 
-export default MyTJoinProductServiceFeeAlarmController;
+export default MyTJoinProductServiceFeeAlarm;

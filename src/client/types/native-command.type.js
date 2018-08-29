@@ -16,6 +16,7 @@ Tw.NTV_CMD = {
   GET_NETWORK: 'getNetwork',
   GET_IP: 'getIp',
   GET_CERT: 'getCert',
+  EXIT: 'exit',
   LOG: 'log'
 };
 

@@ -11,7 +11,7 @@ import DateHelper from '../../../utils/date.helper';
 import { Observable } from 'rxjs/Observable';
 import { PREPAY_TITLE, REQUEST_TYPE } from '../../../types/bff.type';
 
-class PaymentPrepayContentsAutoHistoryController extends TwViewController {
+class PaymentPrepayContentsAutoHistory extends TwViewController {
   constructor() {
     super();
   }
@@ -69,4 +69,4 @@ class PaymentPrepayContentsAutoHistoryController extends TwViewController {
   }
 }
 
-export default PaymentPrepayContentsAutoHistoryController;
+export default PaymentPrepayContentsAutoHistory;

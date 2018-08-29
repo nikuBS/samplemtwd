@@ -50,11 +50,6 @@ Tw.PaymentPrepay.prototype = {
   },
   _getRemainLimit: function () {
     this._getPreRemainLimit();
-    /*
-    $.ajax('/mock/payment.remain-limit.json')
-      .done($.proxy(this._getRemainLimitSuccess, this))
-      .fail($.proxy(this._getRemainLimitFail, this));
-    */
   },
   _getPreRemainLimit: function () {
     var $api = Tw.API_CMD.BFF_07_0073;

@@ -7,7 +7,7 @@
 Tw.MytBenefitPointPage = function (tmplId, pageSize) {
   this.templateId = tmplId;
   this.template = null;
-  this.NUM_OF_PAGES = pageSize || 20;//페이지 번호 노출 최대수
+  this.NUM_OF_PAGES = pageSize || 5;//페이지 번호 노출 최대수
 
   Handlebars.registerHelper('for', function (from, to, incr, block) {
     var accum = '';

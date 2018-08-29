@@ -25,14 +25,8 @@ Tw.CustomerFaq.prototype = {
     this.$container.on('click', '.fe-external', $.proxy(this._onLinks, this));
   },
   _onLinks: function (evt) {
-    if (Tw.BrowserHelper.isApp()) {
-      this._nativeService.send(Tw.NTV_CMD.OPEN_URL, {
-        type: Tw.NTV_BROWSER.EXTERNAL,
-        url: evt.target.href
-      });
-      return false;
-    }
-    return true;
+    Tw.CommonHelper.openUrl(evt.target.href);
+    return false;
   },
   _onSearchInput: function (evt) {
     if (Tw.FormatHelper.isEmpty(evt.target.value.trim())) {

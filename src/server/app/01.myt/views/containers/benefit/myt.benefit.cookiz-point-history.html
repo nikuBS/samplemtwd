@@ -1,0 +1,134 @@
+<%#
+* FileName: myt.benefit.cookiz-point-history.html
+* Author: Hyeryoun Lee (skt.P130712@partner.sk.com)
+* Date: 2018. 8. 28.
+%>
+<% include ../../components/benefit/myt.benefit.point.page.html %>
+<% include ../../components/start.component.html %>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb_area">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+
+<!-- wrap -->
+<div class="wrap" id="myt-benefit-cookiz">
+    <!-- header -->
+    <%- include('../../../../../common/views/components/header.component.html', { title: '쿠키즈팅 포인트', svcInfo: svcInfo });
+    %>
+    <!-- // header -->
+    <!-- content -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <div class="cont-box">
+                <h2 class="title-h2">쿠키즈팅 포인트</h2>
+
+                <!-- .widget -->
+                <div class="widget mt40">
+                    <div class="widget-box toggle">
+                        <button class="btn-toggle wrap-bt-table" role="button" aria-pressed="false">
+                                <span class="in-bt-table ico-arrow">
+                                    <span class="title">잔여 포인트</span>
+                                    <span class="tx-cont"><span class="tx-bold ff-hn vbl"></span><%= point.usblPoint %> 점</span>
+                                </span>
+                        </button>
+                        <div class="toggler">
+                            <div class="info-detail-box mt10">
+                                <ul class="in-exp-info">
+                                    <li>
+                                        <span class="title">총 적립 포인트</span>
+                                        <span class="tx-cont"><span class="ff-hn"></span><%= point.erndPoint %> 점</span>
+                                    </li>
+                                    <li>
+                                        <span class="title">총 사용 포인트</span>
+                                        <span class="tx-cont"><span class="ff-hn"></span><%= point.usdPoint %> 점</span>
+                                    </li>
+                                    <li>
+                                        <span class="title">총 소멸 포인트</span>
+                                        <span class="tx-cont"><span class="ff-hn"></span><%= point.exprdPoint %> 점</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- //.widget -->
+                <div class="contents-notice line-top mt20">
+                    <span class="noti-type3">쿠키즈 워치/주말엔 팅 요금제를 유지하는 동안 매월 3천점의 포인트가 12개월/24개월간 매월 적립됩니다.</span>
+                </div>
+            </div>
+
+            <hr class="cont-sp type1" aria-hidden="true" />
+
+            <div class="cont-box"><!-- 2018-08-21 수정 .nogaps-btm 클래스 삭제 -->
+                <h2 class="title-h2">이용내역</h2>
+                <!-- .widget -->
+                <div class="widget mt30">
+                    <div class="widget-box toggle">
+                        <div class="list-top">
+                            <div class="select-left">
+                                <button class="btn-toggle bt-detail" role="button" aria-pressed="false" title="상세검색 영역" id="fe-bt-period"><span class="ico"></span></button>
+                            </div>
+                        </div>
+                        <div class="toggler" id="fe-detail-search">
+                            <div class="history-inquiry pt20 mt6">
+                                <div class="widget">
+                                    <div class="widget-box tube">
+                                        <ul class="tube-list three fe-period" role="radiogroup">
+                                            <li role="radio" aria-checked="false"><input type="radio" name="selectdate1" title="1개월 선택" data-month="1">1개월</li>
+                                            <li role="radio" aria-checked="false"><input type="radio" name="selectdate1" title="3개월 선택" checked="checked" data-month="3">3개월</li>
+                                            <li role="radio" aria-checked="false"><input type="radio" name="selectdate1" title="6개월 선택" data-month="6">6개월</li>
+                                            <li role="radio" aria-checked="false"><input type="radio" name="selectdate1" title="1년 선택" data-month="12">1년</li>
+                                            <li role="radio" aria-checked="false"><input type="radio" name="selectdate1" title="2년 선택" data-month="24">2년</li>
+                                            <li role="radio" aria-checked="true" class="checked"><input type="radio" name="selectdate1" title="3년 선택" data-month="36">3년</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <span class="inputbox date-selcet">
+                                        <span class="date-type"><input type="date" value="2018-05-01" title="시작날짜 선택" data-type="from"/></span>
+                                        <span class="bar">&#8211;</span>
+                                        <span class="date-type"><input type="date" value="2018-05-10" title="마지막날짜 선택" data-type="to"/></span>
+                                    </span>
+                                <div class="contents-btn mb10">
+                                    <ul class="bt-slice">
+                                        <li class="bt-blue1">
+                                            <button data-id="search">조회</button>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- //.widget -->
+                <div class="payment-select fe-no-point" style="display: none;">
+                    <div class="contents-empty">
+                        <span class="ico"></span>
+                        <p class="desc">사용/적립 내역이 없습니다.</p>
+                    </div>
+                </div>
+
+                <div class="payment-select" id="fe-points-list-wrapper">
+                    <!-- list -->
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+    <!-- // content -->
+    <!-- footer -->
+    <%- include('../../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
+    <!-- // footer -->
+</div>
+<% include ../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    var comp = new Tw.MyTBenefitPointHistory($('#myt-benefit-cookiz'), Tw.POINT_TYPE.COOKIZ);
+  });
+</script>
+<% include ../../components/end.component.html %>

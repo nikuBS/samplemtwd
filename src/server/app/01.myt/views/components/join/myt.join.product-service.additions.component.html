@@ -194,8 +194,8 @@
         <h2 class="title-h2">사용중인 부가상품</h2>
         <div class="right-item mt4">
             <ul class="tx-list inline">
-                <li>유료 <span class="tx-red ff-hn vbl"><%=additions.paidCount%></span>개</li>
-                <li>무료 <span class="tx-red ff-hn vbl"><%=additions.freeCount%></span>개</li>
+                <li>유료 <span class="tx-red ff-hn vbl"><%=additions.pays.length%></span>개</li>
+                <li>무료 <span class="tx-red ff-hn vbl"><%=additions.frees.length%></span>개</li>
             </ul>
         </div>
     </div>
@@ -213,7 +213,11 @@
                             </li>
                             <li>
                                 <span class="title">월정액(부가세 포함)</span>
-                                <span class="tx-cont"><span class="ff-hn vbl tx-bold"><%=product.basFeeAmt%></span> 원</span>
+                                <% if ( !product.isBasFeeNumber ) { %>
+                                <span class="tx-cont"><span class="ff-hn vbl tx-bold"><%=product.basFeeTxt%></span> 원</span>
+                                <% } else { %>
+                                <span class="tx-cont"><%=product.basFeeTxt%></span>
+                                <% } %>
                             </li>
                         </ul>
                     </div>
@@ -240,7 +244,11 @@
                             </li>
                             <li>
                                 <span class="title">월정액(부가세 포함)</span>
-                                <span class="tx-cont"><span class="ff-hn vbl tx-bold"><%=product.basFeeAmt%></span> 원</span>
+                                <% if ( !product.isBasFeeNumber ) { %>
+                                <span class="tx-cont"><span class="ff-hn vbl tx-bold"><%=product.basFeeTxt%></span> 원</span>
+                                <% } else { %>
+                                <span class="tx-cont"><%=product.basFeeTxt%></span>
+                                <% } %>
                             </li>
                         </ul>
                     </div>
@@ -280,7 +288,11 @@
                         <ul>
                             <li>
                                 <span class="title">월정액(부가세 포함)</span>
-                                <span class="tx-cont"><span class="ff-hn vbl tx-bold"><%=product.basFeeAmt%></span> 원</span>
+                                <% if ( !product.isBasFeeNumber ) { %>
+                                <span class="tx-cont"><span class="ff-hn vbl tx-bold"><%=product.basFeeTxt%></span> 원</span>
+                                <% } else { %>
+                                <span class="tx-cont"><%=product.basFeeTxt%></span>
+                                <% } %>
                             </li>
                         </ul>
                     </div>
@@ -320,7 +332,11 @@
                         <ul>
                             <li>
                                 <span class="title">월정액(부가세 포함)</span>
-                                <span class="tx-cont"><span class="ff-hn vbl tx-bold"><%=product.basFeeAmt%></span> 원</span>
+                                <% if ( !product.isBasFeeNumber ) { %>
+                                <span class="tx-cont"><span class="ff-hn vbl tx-bold"><%=product.basFeeTxt%></span> 원</span>
+                                <% } else { %>
+                                <span class="tx-cont"><%=product.basFeeTxt%></span>
+                                <% } %>
                             </li>
                         </ul>
                     </div>

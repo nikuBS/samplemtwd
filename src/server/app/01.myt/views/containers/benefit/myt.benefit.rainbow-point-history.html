@@ -32,7 +32,7 @@
                     <div class="widget-box toggle">
                         <div class="list-top">
                             <div class="select-left">
-                                <button class="btn-toggle bt-detail" role="button" aria-pressed="false" title="상세검색 영역" id="fe-bt-period">2018.05.01 ~ 2018.05.10<span class="ico"></span></button>
+                                <button class="btn-toggle bt-detail" role="button" aria-pressed="false" title="상세검색 영역" id="fe-bt-period"><span class="ico"></span></button>
                             </div>
                         </div>
                         <div class="toggler" id="fe-detail-search">
@@ -72,11 +72,11 @@
                     <ul>
                         <li>
                             <span class="title">적립 포인트</span>
-                            <span class="tx-cont"><span class="ff-hn tx-bold vbl" id="fe-earn-point">42,000</span> 점</span>
+                            <span class="tx-cont"><span class="ff-hn tx-bold vbl" id="fe-earn-point"></span> 점</span>
                         </li>
                         <li>
                             <span class="title">사용 포인트</span>
-                            <span class="tx-cont"><span class="ff-hn tx-bold vbl" id="fe-used-point">30,000</span> 점</span>
+                            <span class="tx-cont"><span class="ff-hn tx-bold vbl" id="fe-used-point"></span> 점</span>
                         </li>
                     </ul>
                 </div>
@@ -113,7 +113,7 @@
                                 <div class="acco-style btn-hold">
                                     <ul class="acco-list">
                                         <li class="acco-box">
-                                            <div class="acco-tit"><span class="bullet">1.</span> 소멸예정포인트 정보와 포인트 소멸일자를 확인해 보세요.<div class="acco-link"><a class="bt-link-tx" href="">소멸예정 포인트 안내보기<span class="ico"></span></a></div></div>
+                                            <div class="acco-tit"><span class="bullet">1.</span> 소멸예정포인트 정보와 포인트 소멸일자를 확인해 보세요.<div class="acco-link"><a id="fe-expiring-points" class="bt-link-tx" href="">소멸예정 포인트 안내보기<span class="ico"></span></a></div></div>
                                         </li>
                                     </ul>
                                 </div>
@@ -134,7 +134,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    var comp = new Tw.MyTBenefitRainbowPointHistory($('#myt-benefit-rainbow-history'));
+    var comp = new Tw.MyTBenefitPointHistory($('#myt-benefit-rainbow-history'), Tw.POINT_TYPE.RAINBOW);
   });
 </script>
 <% include ../../components/end.component.html %>

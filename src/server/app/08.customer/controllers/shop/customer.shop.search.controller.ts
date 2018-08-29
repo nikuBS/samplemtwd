@@ -11,7 +11,7 @@ import { Observable } from '../../../../../../node_modules/rxjs/Observable';
 import { API_CMD } from '../../../../types/api-command.type';
 import { CUSTOMER_SEARCH_OPTIONS } from '../../../../types/string.type';
 
-class CustomerShopSearchController extends TwViewController {
+class CustomerShopSearch extends TwViewController {
   constructor() {
     super();
   }
@@ -110,4 +110,4 @@ class CustomerShopSearchController extends TwViewController {
   }
 }
 
-export default CustomerShopSearchController;
+export default CustomerShopSearch;

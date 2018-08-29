@@ -68,9 +68,18 @@ Tw.PaymentPrepayPay.prototype = {
         'cardcode': this._autoCardCode,
         'cardname': this._autoCardName
       });
+      this.$cardNumber.removeAttr('inputmode');
+      this.$cardNumber.removeAttr('min');
+      this.$cardNumber.removeAttr('pattern');
       this.$cardNumber.val(this._autoCardNumber);
     } else {
-      this.$cardNumber.attr('type', 'number');
+      this.$cardNumber
+        .attr({
+          'type': 'number',
+          'inputmode': 'numeric',
+          'min': '0',
+          'pattern': '[0-9]*'
+        });
       this.$cardNumber.val('').removeAttr('disabled').removeAttr('cardcode').removeAttr('cardname');
     }
   },

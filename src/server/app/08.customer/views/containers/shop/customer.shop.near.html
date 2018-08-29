@@ -97,7 +97,8 @@
 <script type="text/template" id="tpl_area_item">
     {{#list}}
     <li role="radio" aria-checked="false">
-        <input type="radio" name="senddata" title="">{{districtName}}</li>
+        <input type="radio" name="senddata" title="{{districtName}}" value="{{middleCd}}">
+        {{districtName}}
     </li>
     {{/list}}
   </script>
