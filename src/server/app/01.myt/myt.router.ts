@@ -57,6 +57,7 @@ import MyTBenefitRainbowPoint from './controllers/benefit/myt.benefit.rainbow-po
 import MyTBenefitRainbowPointInfo from './controllers/benefit/myt.benefit.rainbow-point-info.controller';
 import MyTBenefitRainbowPointHistory from './controllers/benefit/myt.benefit.rainbow-point-history.controller';
 import MyTBenefitCookizPointHistory from './controllers/benefit/myt.benefit.cookiz-point-history.controller';
+import MyTBenefitMilitaryPointHistory from './controllers/benefit/myt.benefit.military-point-history.controller';
 
 import MyTJoinProductServiceCombinationController from './controllers/join/myt.join.product-service.combination.controller';
 
@@ -140,6 +141,8 @@ class MytRouter extends TwRouter {
     this.controllers.push({ url: '/benefit/rainbow-point/info', controller: new MyTBenefitRainbowPointInfo() });
     this.controllers.push({ url: '/benefit/rainbow-point/history', controller: new MyTBenefitRainbowPointHistory() });
     this.controllers.push({ url: '/benefit/cookiz-point', controller: new MyTBenefitCookizPointHistory() });
+    this.controllers.push({ url: '/benefit/military-point', controller: new MyTBenefitMilitaryPointHistory() });
+
     this.controllers.push({ url: '/benefit/recommend', controller: new MyTBenefitRecommendController() });
     this.controllers.push({ url: '/benefit/recommend/detail', controller: new MyTBenefitRecommendDetailController() });
 

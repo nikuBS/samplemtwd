@@ -164,6 +164,7 @@ export const API_CMD = {
   BFF_05_0111: { path: '/core-modification/v1/benefit/wlf-cust-dc', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0115: { path: '/core-bill/v1/cookiz-ting-points', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0120: { path: '/core-bill/v1/military-service-points', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_05_0121: { path: '/core-bill/v1/military-service-point-histories', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0123: { path: '/core-product/v1/services/unavailableness', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0124: { path: '/core-membership/v1/my-membership-benefit/check-membership', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0125: { path: '/core-product/v1/fee-plans/change-notices', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },

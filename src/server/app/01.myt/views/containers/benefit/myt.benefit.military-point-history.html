@@ -1,0 +1,77 @@
+<%#
+* FileName: myt.benefit.military-point-history.html
+* Author: Hyeryoun Lee (skt.P130712@partner.sk.com)
+* Date: 2018. 8. 28.
+%>
+<% include ../../components/benefit/myt.benefit.point.page.html %>
+<% include ../../components/start.component.html %>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb_area">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+
+<!-- wrap -->
+<div class="wrap" id="myt-benefit-military">
+    <!-- header -->
+    <%- include('../../../../../common/views/components/header.component.html', { title: '현역플랜 포인트', svcInfo: svcInfo });
+    %>
+    <!-- // header -->
+    <!-- content -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <div class="cont-box">
+                <h2 class="title-h2">지켜줘서 고마워 현역플랜<br />포인트</h2>
+
+                <div class="wrap-bt-table mt34">
+                        <span class="in-bt-table">
+                            <span class="title">잔여 포인트</span>
+                            <span class="tx-cont"><span class="tx-bold ff-hn vbl"><%= point.usblPoint %></span> 점</span>
+                        </span>
+                </div>
+
+                <div class="contents-btn">
+                    <ul class="bt-slice">
+                        <li class="bt-white2">
+                            <a href="http://www.tworld.co.kr/normal.do?serviceId=S_PROD2001&viewId=V_PROD2001&prod_id=NA00004968
+">혜택 자세히보기</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <hr class="cont-sp type1" aria-hidden="true" />
+
+            <div class="cont-box"><!-- 2018-08-21 수정 .nogaps-btm 클래스 삭제 -->
+                <h2 class="title-h2">이용내역</h2>
+                <div class="payment-select fe-no-point" style="display: none;">
+                    <div class="contents-empty">
+                        <span class="ico"></span>
+                        <p class="desc">사용/적립 내역이 없습니다.</p>
+                    </div>
+                </div>
+
+                <div class="payment-select" id="fe-points-list-wrapper">
+                    <!-- list -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- // content -->
+<!-- footer -->
+<%- include('../../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
+<!-- // footer -->
+</div>
+<% include ../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    var comp = new Tw.MyTBenefitMilitaryPointHistory($('#myt-benefit-military'));
+  });
+</script>
+<% include ../../components/end.component.html %>

@@ -109,6 +109,7 @@ Tw.API_CMD = {
   BFF_05_0105: { path: '/core-bill/v1/rainbow-point-transfers/args-0', method: Tw.API_METHOD.DELETE },
   BFF_05_0123: { path: '/core-product/v1/services/unavailableness', method: Tw.API_METHOD.GET },
   BFF_05_0100: { path: '/core-bill/v1/rainbow-point-histories', method: Tw.API_METHOD.GET },
+  BFF_05_0121: { path: '/core-bill/v1/military-service-point-histories', method: Tw.API_METHOD.GET },
   BFF_05_0122: { path: '/core-bill/v1/cookiz-ting-point-histories', method: Tw.API_METHOD.GET },
   BFF_05_0126: { path: '/core-product/v1/fee-plans/change-notices', method: Tw.API_METHOD.POST },
   BFF_05_0127: { path: '/core-product/v1/fee-plans/change-notices', method: Tw.API_METHOD.DELETE },
