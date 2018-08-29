@@ -7,7 +7,7 @@
 import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 
-class CustomerVoiceController extends TwViewController {
+class CustomerVoice extends TwViewController {
   constructor() {
     super();
   }
@@ -23,4 +23,4 @@ class CustomerVoiceController extends TwViewController {
   }
 }
 
-export default CustomerVoiceController;
+export default CustomerVoice;

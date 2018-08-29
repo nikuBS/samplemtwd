@@ -8,7 +8,7 @@ import { NextFunction, Request, Response } from 'express';
 import { CUSTOMER_PREVENTDAMAGE_RELATE_ORG, CUSTOMER_PREVENTDAMAGE_REPORT_ORG } from '../../../../types/outlink.type';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 
-class CustomerPreventdamageRelatesiteController extends TwViewController {
+class CustomerPreventdamageRelatesite extends TwViewController {
   constructor() {
     super();
   }
@@ -22,4 +22,4 @@ class CustomerPreventdamageRelatesiteController extends TwViewController {
   }
 }
 
-export default CustomerPreventdamageRelatesiteController;
+export default CustomerPreventdamageRelatesite;

@@ -25,7 +25,7 @@ const categorySwithingData = {
   }
 };
 
-class CustomerPreventdamageGuideController extends TwViewController {
+class CustomerPreventdamageGuide extends TwViewController {
   constructor() {
     super();
   }
@@ -46,4 +46,4 @@ class CustomerPreventdamageGuideController extends TwViewController {
   }
 }
 
-export default CustomerPreventdamageGuideController;
+export default CustomerPreventdamageGuide;

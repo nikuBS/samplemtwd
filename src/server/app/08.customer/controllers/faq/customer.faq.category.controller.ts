@@ -9,7 +9,7 @@ import {Request, Response, NextFunction} from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 
-export default class CustomerFaqCategoryController extends TwViewController {
+export default class CustomerFaqCategory extends TwViewController {
   constructor() {
     super();
   }
