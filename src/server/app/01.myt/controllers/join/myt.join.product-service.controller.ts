@@ -117,7 +117,14 @@ class MyTJoinProductService extends TwViewController {
         }));
       }
 
-      const addition = this.convertAddtions(additions);
+      if ( additions.code !== API_CODE.CODE_00 ) {
+        return this.error.render(res, Object.assign(defaultOptions, {
+          code: additions.code,
+          msg: additions.msg
+        }));
+      }
+
+      const addition = this.convertAdditions(additions);
 
       res.render('join/myt.join.product-service.html', {
         svcInfo: svcInfo,
@@ -188,9 +195,9 @@ class MyTJoinProductService extends TwViewController {
           icon: 'line',
           description: MYT_COMBINATION_TYPE.LINE
         }, {
-            icon: 'multi',
-            description: MYT_COMBINATION_TYPE.MULTI_ONE
-          });
+          icon: 'multi',
+          description: MYT_COMBINATION_TYPE.MULTI_ONE
+        });
         break;
       }
 
@@ -199,9 +206,9 @@ class MyTJoinProductService extends TwViewController {
           icon: 'line',
           description: MYT_COMBINATION_TYPE.LINE
         }, {
-            icon: 'int',
-            description: MYT_COMBINATION_TYPE.INTERNET
-          });
+          icon: 'int',
+          description: MYT_COMBINATION_TYPE.INTERNET
+        });
         break;
       }
 
@@ -210,9 +217,9 @@ class MyTJoinProductService extends TwViewController {
           icon: 'line',
           description: MYT_COMBINATION_TYPE.LINE
         }, {
-            icon: 'tel',
-            description: MYT_COMBINATION_TYPE.TEL
-          });
+          icon: 'tel',
+          description: MYT_COMBINATION_TYPE.TEL
+        });
         break;
       }
 
@@ -222,9 +229,9 @@ class MyTJoinProductService extends TwViewController {
           icon: 'multi',
           description: MYT_COMBINATION_TYPE.MULTI_ONE
         }, {
-            icon: 'int',
-            description: MYT_COMBINATION_TYPE.INTERNET
-          });
+          icon: 'int',
+          description: MYT_COMBINATION_TYPE.INTERNET
+        });
         break;
       }
 
@@ -234,12 +241,12 @@ class MyTJoinProductService extends TwViewController {
           icon: 'line',
           description: MYT_COMBINATION_TYPE.FAMILY
         }, {
-            icon: 'tel',
-            description: MYT_COMBINATION_TYPE.TEL
-          }, {
-            icon: 'itel',
-            description: MYT_COMBINATION_TYPE.ITEL
-          });
+          icon: 'tel',
+          description: MYT_COMBINATION_TYPE.TEL
+        }, {
+          icon: 'itel',
+          description: MYT_COMBINATION_TYPE.ITEL
+        });
         break;
       }
 
@@ -282,9 +289,9 @@ class MyTJoinProductService extends TwViewController {
           icon: 'tel',
           description: MYT_COMBINATION_TYPE.TEL
         }, {
-            icon: 'itel',
-            description: MYT_COMBINATION_TYPE.ITEL
-          });
+          icon: 'itel',
+          description: MYT_COMBINATION_TYPE.ITEL
+        });
         break;
       }
       case 'NH00000105':
@@ -293,9 +300,9 @@ class MyTJoinProductService extends TwViewController {
           icon: 'multi',
           description: MYT_COMBINATION_TYPE.MULTI_TWO
         }, {
-            icon: 'iptv',
-            description: MYT_COMBINATION_TYPE.IPTV
-          });
+          icon: 'iptv',
+          description: MYT_COMBINATION_TYPE.IPTV
+        });
         break;
       }
       case 'NH00000103':
@@ -304,9 +311,9 @@ class MyTJoinProductService extends TwViewController {
           icon: 'line',
           description: MYT_COMBINATION_TYPE.LINE
         }, {
-            icon: 'int',
-            description: MYT_COMBINATION_TYPE.INTERNET
-          });
+          icon: 'int',
+          description: MYT_COMBINATION_TYPE.INTERNET
+        });
         break;
       }
       default: {
@@ -325,28 +332,35 @@ class MyTJoinProductService extends TwViewController {
     }
   }
 
-  private convertAddtions = (additions) => {
-    const result = additions.result;
+  private convertAdditions = (additions) => {
+    if ( Object.keys(additions.result).length === 0 ) {
+      return null;
+    }
+
+    let result = additions.result;
 
     try {
-      Object.keys(result).forEach(key => {
-        result['paidCount'] = 0;
-        result['freeCount'] = 0;
+      Object.keys(additions.result).map(key => {
+        let paidCount = 0;
+        let freeCount = 0;
 
         result[key] = result[key].map((product) => {
           if ( product.payFreeYn === 'Y' ) {
-            result['freeCount'] = result['freeCount'] + 1;
+            freeCount = freeCount + 1;
           } else {
-            result['paidCount'] = result['paidCount'] + 1;
+            paidCount = paidCount + 1;
           }
+
+          const isBasFeeNumber = !!isNaN(parseInt(product.basFeeTxt, 10));
 
           return Object.assign(product, {
             scrbDt: DateHelper.getShortDateNoDot(product.scrbDt),
-            basFeeTxt: product.basFeeTxt ? isNaN(parseInt(product.basFeeTxt.toString(), 10)) ?
-              product.basFeeTxt.toString() : FormatHelper.addComma(product.basFeeTxt.toString()) : '',
-            isBasFeeNumber: isNaN(parseInt(product.basFeeTxt, 10))
+            basFeeTxt: product.basFeeTxt ? isBasFeeNumber ? product.basFeeTxt.toString() : FormatHelper.addComma(product.basFeeTxt) : '',
+            isBasFeeNumber: isBasFeeNumber
           });
         });
+
+        result = Object.assign(result, { [key + 'Count']: { freeCount, paidCount } });
       });
 
       return result;
