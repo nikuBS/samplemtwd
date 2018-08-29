@@ -9,7 +9,7 @@ import { NextFunction, Request, Response } from 'express';
 import { Observable } from 'rxjs/Observable';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 
-class CustomerShopRepairController extends TwViewController {
+class CustomerShopRepair extends TwViewController {
   constructor() {
     super();
   }
@@ -48,4 +48,4 @@ class CustomerShopRepairController extends TwViewController {
   }
 }
 
-export default CustomerShopRepairController;
+export default CustomerShopRepair;

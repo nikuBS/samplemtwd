@@ -13,7 +13,7 @@ import FormatHelper from '../../../../utils/format.helper';
 import { PROMOTION_TYPE } from '../../../../types/bff.type';
 import { HEAD_TITLE } from '../../../../types/title.type';
 
-class CustomerEventController extends TwViewController {
+class CustomerEvent extends TwViewController {
   constructor() {
     super();
   }
@@ -56,4 +56,4 @@ class CustomerEventController extends TwViewController {
   }
 }
 
-export default CustomerEventController;
+export default CustomerEvent;

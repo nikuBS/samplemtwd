@@ -10,7 +10,7 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
 
-class CustomerPreventdamageLatestwarningController extends TwViewController {
+class CustomerPreventdamageLatestwarning extends TwViewController {
   constructor() {
     super();
   }
@@ -57,4 +57,4 @@ class CustomerPreventdamageLatestwarningController extends TwViewController {
   }
 }
 
-export default CustomerPreventdamageLatestwarningController;
+export default CustomerPreventdamageLatestwarning;

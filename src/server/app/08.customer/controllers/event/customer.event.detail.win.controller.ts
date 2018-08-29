@@ -11,7 +11,7 @@ import DateHelper from '../../../../utils/date.helper';
 import FormatHelper from '../../../../utils/format.helper';
 import { HEAD_TITLE } from '../../../../types/title.type';
 
-class CustomerEventDetailWinController extends TwViewController {
+class CustomerEventDetailWin extends TwViewController {
   constructor() {
     super();
   }
@@ -47,4 +47,4 @@ class CustomerEventDetailWinController extends TwViewController {
   }
 }
 
-export default CustomerEventDetailWinController;
+export default CustomerEventDetailWin;

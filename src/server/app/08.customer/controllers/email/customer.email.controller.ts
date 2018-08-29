@@ -8,7 +8,7 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import { NextFunction, Request, Response } from 'express';
 import FormatHelper from '../../../../utils/format.helper';
 
-class CustomerEmailController extends TwViewController {
+class CustomerEmail extends TwViewController {
   constructor() {
     super();
   }
@@ -35,4 +35,4 @@ class CustomerEmailController extends TwViewController {
   }
 }
 
-export default CustomerEmailController;
+export default CustomerEmail;

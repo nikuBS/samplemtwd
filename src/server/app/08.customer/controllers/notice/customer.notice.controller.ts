@@ -30,7 +30,7 @@ const categorySwitchingData = {
   }
 };
 
-class CustomerNoticeController extends TwViewController {
+class CustomerNotice extends TwViewController {
   constructor() {
     super();
   }
@@ -87,4 +87,4 @@ class CustomerNoticeController extends TwViewController {
   }
 }
 
-export default CustomerNoticeController;
+export default CustomerNotice;

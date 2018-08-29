@@ -10,7 +10,7 @@ import BrowserHelper from '../../../../utils/browser.helper';
 import { API_CMD } from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
 
-class CustomerPreventdamageMainController extends TwViewController {
+class CustomerPreventdamageMain extends TwViewController {
   constructor() {
     super();
   }
@@ -35,4 +35,4 @@ class CustomerPreventdamageMainController extends TwViewController {
   }
 }
 
-export default CustomerPreventdamageMainController;
+export default CustomerPreventdamageMain;

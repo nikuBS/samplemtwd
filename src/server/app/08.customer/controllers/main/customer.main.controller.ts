@@ -9,7 +9,7 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import { API_CMD } from '../../../../types/api-command.type';
 import { combineLatest } from 'rxjs/observable/combineLatest';
 
-class CustomerMainController extends TwViewController {
+class CustomerMain extends TwViewController {
   constructor() {
     super();
   }
@@ -42,4 +42,4 @@ class CustomerMainController extends TwViewController {
   }
 }
 
-export default CustomerMainController;
+export default CustomerMain;

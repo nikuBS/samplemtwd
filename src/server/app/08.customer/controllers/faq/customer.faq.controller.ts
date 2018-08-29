@@ -10,7 +10,7 @@ import FormatHelper from '../../../../utils/format.helper';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 
-export default class CustomerFaqController extends TwViewController {
+export default class CustomerFaq extends TwViewController {
   constructor() {
     super();
   }

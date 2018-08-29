@@ -15,7 +15,7 @@ import FormatHelper from '../../../../utils/format.helper';
 import {Observable} from 'rxjs/Observable';
 import {combineLatest} from 'rxjs/observable/combineLatest';
 
-class CustomerDocumentController extends TwViewController {
+class CustomerDocument extends TwViewController {
   constructor() {
     super();
   }
@@ -69,4 +69,4 @@ class CustomerDocumentController extends TwViewController {
   }
 }
 
-export default CustomerDocumentController;
+export default CustomerDocument;
