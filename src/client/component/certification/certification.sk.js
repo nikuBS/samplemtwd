@@ -7,14 +7,12 @@
 Tw.CertificationSk = function () {
   this._certSms = new Tw.CertificationSkSms();
   this._certKeyin = new Tw.CertificationSkKeyin();
-  this._certMotp = new Tw.CertificationSkMotp();
 };
 
 
 Tw.CertificationSk.prototype = {
-  open: function () {
-    // this._certSms.openSmsPopup();
-    // this._certKeyin.openKeyinPopup();
-    this._certMotp.openMotpPopup();
+  open: function (svcInfo, urlMeta, authUrl, command, deferred, callback) {
+    this._certSms.openSmsPopup(svcInfo, urlMeta, authUrl, command, deferred, callback);
+    // this._certKeyin.openKeyinPopup(svcInfo, urlMeta, authUrl, deferred, callback);
   }
 };

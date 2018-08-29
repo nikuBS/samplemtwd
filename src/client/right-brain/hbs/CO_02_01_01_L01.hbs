@@ -22,6 +22,14 @@
                             <li>
                                 <button id="fe-bt-sk">
                                     <span class="ico-certifi-card type1" aria-hidden="true"></span>
+                                    <span class="certifi-card-tx"><span class="tx">휴대폰 인증</span></span>
+                                </button>
+                            </li>
+                            {{/if}}
+                            {{#if data.skMotp}}
+                            <li>
+                                <button id="fe-bt-motp">
+                                    <span class="ico-certifi-card type1" aria-hidden="true"></span>
                                     <span class="certifi-card-tx"><span class="tx">SK텔레콤<br />SMS 인증</span></span>
                                 </button>
                             </li>
@@ -39,6 +47,8 @@
                                     <span class="certifi-card-tx"><span class="tx">LG U+ 인증</span></span>
                                 </button>
                             </li>
+                            {{/if}}
+                            {{#if data.save}}
                             <li>
                                 <button id="fe-bt-save">
                                     <span class="ico-certifi-card type4" aria-hidden="true"></span>
@@ -86,12 +96,14 @@
                                 </button>
                             </li>
                             {{/if}}
+                            {{#if data.smsPassword}}
                             <li>
-                                <button>
+                                <button id="fe-bt-smspw">
                                     <span class="ico-certifi-card typ10" aria-hidden="true"></span>
                                     <span class="certifi-card-tx"><span class="tx">비밀번호<br />+ 휴대폰 SMS 인증</span></span>
                                 </button>
                             </li>
+                            {{/if}}
                         </ul>
                     </div>
                 </div>

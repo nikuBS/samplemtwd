@@ -10,9 +10,4 @@ export const COOKIE_KEY = {
   SESSION: 'SESSION'
 };
 
-export enum LOGIN_TYPE {
-  TID = 'T',
-  EASY = 'E'
-};
-
 export const REDIS_URL_META = 'NodeUrlMeta:';

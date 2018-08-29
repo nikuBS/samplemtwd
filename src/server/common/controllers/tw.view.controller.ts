@@ -6,12 +6,12 @@ import LoggerService from '../../services/logger.service';
 import ErrorService from '../../services/error.service';
 import { URL } from '../../types/url.type';
 import FormatHelper from '../../utils/format.helper';
-import { CHANNEL_TYPE, COOKIE_KEY, LOGIN_TYPE } from '../../types/common.type';
+import { CHANNEL_TYPE, COOKIE_KEY} from '../../types/common.type';
 import BrowserHelper from '../../utils/browser.helper';
 import { Observable } from 'rxjs/Observable';
 import RedisService from '../../services/redis.service';
 import { REDIS_URL_META } from '../../types/common.type';
-import { SVC_ATTR } from '../../types/bff.type';
+import { LOGIN_TYPE, SVC_ATTR } from '../../types/bff.type';
 
 
 abstract class TwViewController {

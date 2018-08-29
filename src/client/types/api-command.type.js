@@ -282,7 +282,8 @@ Tw.NODE_CMD = {
   CHANGE_SVC_PASSWORD: { path: '/core-auth/v1/service-passwords', method: Tw.API_METHOD.PUT },
   CHANGE_LINE: { path: '/user/services', method: Tw.API_METHOD.PUT },
 
-  UPLOAD_FILE: { path: '/uploads', method: Tw.API_METHOD.POST }
+  UPLOAD_FILE: { path: '/uploads', method: Tw.API_METHOD.POST },
+  SET_CERT: { path: '/cert', method: Tw.API_METHOD.POST }
 };
 
 Tw.TMAP = {
@@ -297,8 +298,18 @@ Tw.AJAX_CMD = {
   GET_TMAP_AREASCODE: { path: '/poi/areascode', method: Tw.API_METHOD.GET, url: Tw.TMAP.URL },
   GET_TMAP_ADDR_GEO: { path: '/geo/fullAddrGeo', method: Tw.API_METHOD.GET, url: Tw.TMAP.URL },
   GET_TMAP_POI: { path: '/pois', method: Tw.API_METHOD.GET, url: Tw.TMAP.URL },
-  OPEN_NICE_AUTH: { path: '', method: Tw.API_METHOD.POST, url: Tw.NICE_URL, contentType: 'application/x-www-form-urlencoded' },
-  OPEN_IPIN_AUTH: { path: '', method: Tw.API_METHOD.POST, url: Tw.IPIN_URL, contentType: 'application/x-www-form-urlencoded' }
+  OPEN_NICE_AUTH: {
+    path: '',
+    method: Tw.API_METHOD.POST,
+    url: Tw.NICE_URL,
+    contentType: 'application/x-www-form-urlencoded'
+  },
+  OPEN_IPIN_AUTH: {
+    path: '',
+    method: Tw.API_METHOD.POST,
+    url: Tw.IPIN_URL,
+    contentType: 'application/x-www-form-urlencoded'
+  }
 };
 
 Tw.API_CODE = {
@@ -308,9 +319,10 @@ Tw.API_CODE = {
   CODE_03: 'RDT0003',    // 2차 인증
   CODE_04: 'RDT0004',    // 로그인 필요
   CODE_05: 'RDT0005',    // 접근 불가 (권한)
-  CODE_06: 'RDT0006',    // 고객 비밀번호 인증 필요
-  CODE_07: 'RDT0007',    // 고객 비밀번호 재설정 필요
-  CODE_08: 'RDT0008',    // 고객 비밀번호 초기화상
+
+  CERT_SUCCESS: 'TWM0001',
+  CERT_FAIL: 'TWM0002',
+
   CODE_99: 'RDT0099',    // Circuit Open
   CODE_200: '200',
   CODE_400: '400'

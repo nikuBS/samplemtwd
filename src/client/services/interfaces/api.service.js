@@ -9,7 +9,7 @@ Tw.ApiService.prototype = {
     Tw.Logger.info('[API REQ]', htOptions);
 
     return $.ajax(htOptions)
-      .then($.proxy(this._checkAuth, this));
+      .then($.proxy(this._checkAuth, this, command, params));
   },
 
   requestAjax: function (command, data) {
@@ -37,11 +37,46 @@ Tw.ApiService.prototype = {
     });
   },
 
-  _checkAuth: function (resp) {
+  _checkAuth: function (command, params, resp) {
     Tw.Logger.info('[API RESP]', resp);
     // TODO 2차 인증 추가
+    var deferred = $.Deferred();
 
-    return resp;
+    if ( resp.code === Tw.API_CODE.CODE_03 ) {
+      this._cert = new Tw.CertificationSelect();
+      setTimeout($.proxy(function () {
+        var requestInfo = {
+          command: command,
+          params: params
+        };
+        // url, svcInfo, urlMeta, callbackFunction, deferred...
+        this._cert.open(resp.result, window.location.pathname, requestInfo, deferred, $.proxy(this._completeCert, this));
+      }, this), 0);
+      return deferred.promise();
+    } else {
+      return resp;
+    }
+  },
+
+  _completeCert: function (resp, deferred, requestInfo) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      this._setCert(requestInfo, deferred);
+      // deferred.resolve({ code: Tw.API_CODE.CERT_SUCCESS });
+    } else {
+      deferred.resolve({ code: Tw.API_CODE.CERT_FAIL });
+    }
+  },
+  _setCert: function (requestInfo, deferred) {
+    this.request(Tw.NODE_CMD.SET_CERT, { url: '/bypass' + requestInfo.command.path })
+      .done($.proxy(this._successSetCert, this, requestInfo, deferred));
+  },
+  _successSetCert: function (requestInfo, deferred, resp) {
+    console.log('successSetCert', requestInfo, resp);
+    this.request(requestInfo.command, requestInfo.params )
+      .done($.proxy(this._successRequestAfterCert, this, deferred));
+  },
+  _successRequestAfterCert: function (deferred, resp) {
+    console.log(resp);
   },
 
   _makeOptions: function (command, params, headers, pathVariables) {
