@@ -46,6 +46,7 @@ Tw.MytBenefitRecommend.prototype = {
     this.$tgDetailList = $('[data-target="detailList"]');
     this.$curNum = $('[data-target="curNum"]');
     this.$addBtnArea = $('[data-target="addBtnArea"]');
+    this.$contentsEmpty = $('[data-target="contentsEmpty"]');
   },
   _bindEvent: function () {
     this.$container.on('click', '[data-target="addBtn"]', $.proxy(this._addView, this));
@@ -98,7 +99,8 @@ Tw.MytBenefitRecommend.prototype = {
       this.$addBtnArea.hide();
     }
     if( this.detailListObj.viewData.length <= 0 ) {
-      this.$tgDetailList.text( Tw.MSG_MYT.BENEFIT.RECOMMEND.RECOMMEND_NONE );
+      // this.$tgDetailList.text( Tw.MSG_MYT.BENEFIT.RECOMMEND.RECOMMEND_NONE );
+      this.$contentsEmpty.show();
     }
 
 
