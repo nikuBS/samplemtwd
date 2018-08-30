@@ -177,6 +177,8 @@ Tw.CustomerFaqCategory.prototype = {
   _onDataReceived: function (result) {
     if (result.last) {
       this.$btnMore.addClass('none');
+    } else {
+      this.$btnMore.removeClass('none');
     }
 
     this.$result.append(this._faqItemTemplate({
