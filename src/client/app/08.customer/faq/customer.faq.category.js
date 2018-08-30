@@ -166,7 +166,7 @@ Tw.CustomerFaqCategory.prototype = {
         if (!isReload) {
           this._currentPage++;
         }
-        this._onDataReceived(res.result, isReload);
+        this._onDataReceived(res.result);
       } else {
         this._popupService.openAlert(res.code + ' ' + res.msg);
       }
@@ -174,7 +174,7 @@ Tw.CustomerFaqCategory.prototype = {
       this._popupService.openAlert(err.code + ' ' + err.msg);
     }, this));
   },
-  _onDataReceived: function (result, isReload) {
+  _onDataReceived: function (result) {
     if (result.last) {
       this.$btnMore.addClass('none');
     }
@@ -182,9 +182,5 @@ Tw.CustomerFaqCategory.prototype = {
     this.$result.append(this._faqItemTemplate({
       list: result.content
     }));
-
-    if (isReload) {
-      this.$result.find('li').first().addClass('on');
-    }
   }
 };
