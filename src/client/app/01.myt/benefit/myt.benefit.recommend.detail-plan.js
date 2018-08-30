@@ -61,6 +61,18 @@ Tw.MytBenefitRecommendDetailPlan.prototype = {
     this.$planArea.find('[data-target="tg_3"]').html('가입일 : ' + this.proDataObj.scrbDt);
 
   },
+  _planInfoView: function(resp) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      Tw.Logger.info('[BFF_05_0120]', resp);
+      this.bffListData = resp.result;
+
+      this._proData();
+      this._ctrlInit();
+
+    } else {
+      Tw.Error(resp.code, resp.msg).pop();
+    }
+  },
   //--------------------------------------------------------------------------[service]
 
   //--------------------------------------------------------------------------[api]
@@ -82,20 +94,7 @@ Tw.MytBenefitRecommendDetailPlan.prototype = {
     //   });
 
     this._apiService.request(Tw.API_CMD.BFF_05_0120)
-      .done($.proxy(function(resp){
-
-        if ( resp.code === Tw.API_CODE.CODE_00 ) {
-          Tw.Logger.info('[BFF_05_0120]', resp);
-          this.bffListData = resp.result;
-
-          this._proData();
-          this._ctrlInit();
-
-        } else {
-          Tw.Error(resp.code, resp.msg).pop();
-        }
-
-      }, this))
+      .done($.proxy(this._planInfoView, this))
       .fail(function(err){
         Tw.Logger.info('[err]', err);
         Tw.Error(err.code, err.msg).pop();
