@@ -48,8 +48,6 @@ Tw.CustomerDocument.prototype = {
     this.$selector = this.$container.find('#' + this._selectedTabId + '-tab');
     this.$firstNode = this.$selector.find('.fe-standard-node');
     this.$selectList = this.$selector.find('.select-list:first');
-    this.isOpList = false;
-    this.isNext = false;
     this.nextIndex = 1;
     this._reqData = {
       sysCd: this.$selector.data('value')
@@ -83,12 +81,7 @@ Tw.CustomerDocument.prototype = {
   },
   _resetOption: function (index) {
     if (index < this.nextIndex) {
-      this.isNext = false;
       this.nextIndex = 1;
-
-      if (index < 3) {
-        this.isOpList = false;
-      }
     }
   },
   _resetReqData: function (index) {
@@ -102,14 +95,10 @@ Tw.CustomerDocument.prototype = {
     var idx = $parentTarget.data('index');
     var id = this.$selector.find('.acco-list[data-index="' + idx + '"] .acco-title').attr('id');
 
-    if (isEmpty || this.isNext) {
-      idx = this._getIndex(isEmpty, idx);
-      if (isEmpty) {
-        id = 'NONE';
-      }
-    } else {
-      idx = idx - 1;
+    if (isEmpty) {
+      id = 'NONE';
     }
+    idx = idx - 1;
 
     if (!isNaN(idx)) {
       this._makeRequestData(idx, id);
@@ -117,17 +106,6 @@ Tw.CustomerDocument.prototype = {
         .done($.proxy(this._getSuccess, this, $nextTarget))
         .fail($.proxy(this._getFail, this));
     }
-  },
-  _getIndex: function (isEmpty, idx) {
-    if (!isEmpty && this.isNext) {
-      idx = idx + 1;
-    }
-
-    var isMobileTab = this._selectedTabId === 'tab1';
-    if (!(isEmpty && isMobileTab)) {
-      idx = idx - 1;
-    }
-    return idx;
   },
   _makeRequestData: function (idx, id) {
     if (this._paramList[idx] !== undefined) {
@@ -148,37 +126,19 @@ Tw.CustomerDocument.prototype = {
     for(var key in result) {
       var list = result[key];
       if (Tw.FormatHelper.isEmpty(list)) {
-        this._setCallOption($target, key);
+        this._setCallOption($target);
       } else {
         if (key === 'reqDocList') {
           this._setDocumentList(list);
         } else {
-          if (key === 'opList') {
-            this.isOpList = true;
-          }
           this._setListData($target, list);
         }
       }
     }
   },
-  _setCallOption: function ($target, key) {
-    if (this._selectedTabId === 'tab1' && (key === 'opList' || key === 'custList')) {
-      if (key === 'opList') {
-        this._setData($target.prev(), $target, true);
-      } else {
-        if (this.isOpList) {
-          this._setData($target.prev(), $target, true);
-        } else {
-          this._setData($target, $target.next(), true);
-        }
-      }
-      this.isNext = true;
-      this.nextIndex = $target.data('index');
-    } else {
-      this.isNext = false;
-      this.nextIndex = 1;
-      this._setData($target, $target.next(), true);
-    }
+  _setCallOption: function ($target) {
+    this.nextIndex = 1;
+    this._setData($target, $target.next(), true);
   },
   _setListData: function ($target, list) {
     for (var i = 0; i < list.length; i++) {

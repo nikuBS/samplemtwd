@@ -26,7 +26,9 @@ Tw.CustomerFaqInfoCommon = function (rootEl, serviceId, selectData, selectedInde
 Tw.CustomerFaqInfoCommon.prototype = {
   _init: function () {
     if (this._selectData.title) {
-      this.$selectOpenTrigger.eq(0).text(this._selectData.subDepth[this._selectedIndex].title);
+      if (this._selectData.subDepth) {
+        this.$selectOpenTrigger.eq(0).text(this._selectData.subDepth[this._selectedIndex].title);
+      }
       this.$selectOpenTrigger.eq(0).data('current', this._selectedIndex);
       this.$selectOpenTrigger.eq(0).data('pageId', this.serviceId);
     }
@@ -35,6 +37,9 @@ Tw.CustomerFaqInfoCommon.prototype = {
   _cachedElement: function () {
     this.$selectOpenTrigger = this.$container.find('.bt-dropdown.big');
     this.$linkMoveTirgger = this.$container.find('.bt-box');
+
+    this.$typeAdefault = this.$container.find('.howtoview1');
+    this.$typeAnext = this.$container.find('.howtoview2');
   },
 
   _bindEvent: function () {
@@ -57,6 +62,7 @@ Tw.CustomerFaqInfoCommon.prototype = {
     } else {
       if (!this._selectData.title) {
         // 사이트 이용안내 TypeA 케이스
+        this.typeAcurrent = this.typeAcurrent || 0;
         dataSet = Tw.POPUP_TPL.CUSTOMER_SITE_INFO_TYPEA_CHOICE;
         handler = this._changeContent;
       } else {
@@ -121,6 +127,15 @@ Tw.CustomerFaqInfoCommon.prototype = {
     this._popupService.close();
     target.text($(e.currentTarget).data('text'));
     target.data('current', $(e.currentTarget).data('current'));
+    if (!this.typeAcurrent) {
+      this.typeAcurrent = 1;
+      this.$typeAdefault.hide();
+      this.$typeAnext.show();
+    } else {
+      this.typeAcurrent = 0;
+      this.$typeAdefault.show();
+      this.$typeAnext.hide();
+    }
   },
 
   _moveSelectedHandler: function (e) {
