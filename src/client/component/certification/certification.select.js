@@ -8,8 +8,8 @@ Tw.CertificationSelect = function () {
   this._certSk = new Tw.CertificationSk();
   this._certEmail = new Tw.CertificationEmail();
   this._certPassword = new Tw.CertificationPassword();
-  this._historyService = new Tw.HistoryService();
 
+  this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
 
   this._certMethod = null;
@@ -22,6 +22,8 @@ Tw.CertificationSelect = function () {
   this._command = null;
   this._deferred = null;
   this._callback = null;
+
+  window.onPopupCallback = $.proxy(this._onPopupCallback, this);
 };
 
 
@@ -30,7 +32,7 @@ Tw.CertificationSelect.prototype = {
     this._authUrl = certInfo.url;
     this._svcInfo = certInfo.svcInfo;
     this._urlMeta = certInfo.urlMeta;
-    this._resultUrl = resultUrl;
+    this._resultUrl = '/auth/cert/complete';
     this._command = command;
     this._deferred = deferred;
     this._callback = callback;
@@ -47,7 +49,7 @@ Tw.CertificationSelect.prototype = {
       layer: true,
       data: {
         skSms: methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SK_SMS) !== -1,
-        skMotp: methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SK_MOTP) !== -1 && Tw.BrowserHelper.isAndroid(),
+        skMotp: methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SK_MOTP) !== -1 && (Tw.BrowserHelper.isAndroid() && !Tw.BrowserHelper.isApp()),
         otherSms: methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.OTHER_SMS) !== -1,
         save: methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SAVE) !== -1,
         ipin: methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.IPIN) !== -1,
@@ -86,10 +88,10 @@ Tw.CertificationSelect.prototype = {
             this._svcInfo, this._urlMeta, this._authUrl, this._command, this._deferred, this._callback, Tw.AUTH_CERTIFICATION_METHOD.SK_MOTP);
           break;
         case Tw.AUTH_CERTIFICATION_METHOD.OTHER_SMS:
-          this._historyService.goLoad('/auth/cert/nice?authUrl=' + this._authUrl + '&resultUrl=' + this._resultUrl + '&niceType=' + this._niceType);
+          this._openCertBrowser('/auth/cert/nice?authUrl=' + this._authUrl + '&resultUrl=' + this._resultUrl + '&niceType=' + this._niceType);
           break;
         case Tw.AUTH_CERTIFICATION_METHOD.IPIN:
-          this._historyService.goLoad('/auth/cert/ipin?authUrl=' + this._authUrl + '&resultUrl=' + this._resultUrl);
+          this._openCertBrowser('/auth/cert/ipin?authUrl=' + this._authUrl + '&resultUrl=' + this._resultUrl);
           break;
         case Tw.AUTH_CERTIFICATION_METHOD.EMAIL:
           this._certEmail.open(this._svcInfo, this._urlMeta, this._authUrl, this._command, this._deferred, this._callback);
@@ -110,6 +112,16 @@ Tw.CertificationSelect.prototype = {
           this._popupService.openAlert('Not Supported');
           break;
       }
+    }
+  },
+  _openCertBrowser: function (path) {
+    this._apiService.request(Tw.NODE_CMD.GET_DOMAIN, {})
+      .done($.proxy(this._successGetDomain, this, path));
+  },
+  _successGetDomain: function (path, resp) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      Tw.CommonHelper.openUrlInApp(resp.result.domain + path, 'status=1,toolbar=1');
+      // Tw.CommonHelper.openUrlInApp('http://150.28.69.23:3000' + path, 'status=1,toolbar=1');
     }
   },
   _onClickSkSms: function () {
@@ -158,5 +170,9 @@ Tw.CertificationSelect.prototype = {
   _onClickSmsPw: function () {
     this._certMethod = Tw.AUTH_CERTIFICATION_METHOD.SMS_PASSWORD;
     this._popupService.close();
+  },
+  _onPopupCallback: function (resp) {
+    console.log('_onPopupCallback' + resp);
+    this._callback({ code: Tw.API_CODE.CODE_00 }, this._deferred, this._command);
   }
 };

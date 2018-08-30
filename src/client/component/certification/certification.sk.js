@@ -17,11 +17,11 @@ Tw.CertificationSk.prototype = {
       if ( svcInfo.smsYn === 'Y' ) {
         this._certSms.openSmsPopup(svcInfo, urlMeta, authUrl, command, deferred, callback);
       } else {
-        this._certKeyin.openKeyinPopup(svcInfo, urlMeta, authUrl, deferred, callback);
+        this._certKeyin.openKeyinPopup(svcInfo, urlMeta, authUrl, command, deferred, callback);
       }
     } else {
       if ( svcInfo.motpYn === 'Y' ) {
-        this._certMotp.openMotpPopup(svcInfo, urlMeta, authUrl, deferred, callback);
+        this._certMotp.openMotpPopup(svcInfo, urlMeta, authUrl, command, deferred, callback);
       } else if ( svcInfo.smsYn === 'Y' ) {
         this._certSms.openSmsPopup(svcInfo, urlMeta, authUrl, command, deferred, callback);
       } else {

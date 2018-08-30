@@ -48,7 +48,7 @@ Tw.MytJoinPayClaim.prototype = {
     // window.open( Tw.URL_PATH.BROADBAND, '_blank');
     // window.open( 'http://www.naver.com');
     // this._goLoad( Tw.URL_PATH.BROADBAND );
-    Tw.CommonHelper.openUrl(Tw.URL_PATH.BROADBAND);
+    Tw.CommonHelper.openUrlExternal(Tw.URL_PATH.BROADBAND);
   },
   //--------------------------------------------------------------------------[이벤트 | 팝업]
   // _selPopOpen : function(event) {

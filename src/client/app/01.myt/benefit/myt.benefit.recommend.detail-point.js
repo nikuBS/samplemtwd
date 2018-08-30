@@ -61,7 +61,7 @@ Tw.MytBenefitRecommendDetailPoint.prototype = {
   },
   //--------------------------------------------------------------------------[service]
   _goShopping: function() {
-    Tw.CommonHelper.openUrl('http://www.11st.co.kr');
+    Tw.CommonHelper.openUrlExternal('http://www.11st.co.kr');
 
   },
   //--------------------------------------------------------------------------[api]

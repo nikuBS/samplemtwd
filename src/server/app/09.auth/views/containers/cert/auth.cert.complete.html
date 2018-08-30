@@ -1,0 +1,15 @@
+<%#
+* FileName: auth.cert.ipin.html
+* Author: Ara Jo (araara.jo@sk.com)
+* Date: 2018.08.23
+%>
+<% include ../../components/start.component.html %>
+
+<% include ../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    window.opener.onPopupCallback('complete');
+    window.close();
+  });
+</script>
+<% include ../../components/end.component.html %>

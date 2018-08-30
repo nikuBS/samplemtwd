@@ -20,6 +20,7 @@ class AuthCertIpin extends TwViewController {
     this.apiService.request(API_CMD.BFF_01_0022, {
       authUrl,
       resultUrl: EnvHelper.getEnvironment('DOMAIN') + resultUrl
+      // resultUrl: 'http://150.28.69.23:3000' + resultUrl
     }).subscribe((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
         res.render('cert/auth.cert.ipin.html', { data: resp.result });

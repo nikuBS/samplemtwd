@@ -146,11 +146,14 @@ class LoginService {
   }
 
   public getNodeIp(): string {
-    const ip = this.request.headers['x-forwarded-for'] ||
-      this.request.connection.remoteAddress ||
-      this.request.socket.remoteAddress ||
-      (this.request.connection.socket ? this.request.connection.socket.remoteAddress : null);
-    return ip;
+    if ( !FormatHelper.isEmpty(this.request) ) {
+      const ip = this.request.headers['x-forwarded-for'] ||
+        this.request.connection.remoteAddress ||
+        this.request.socket.remoteAddress ||
+        (this.request.connection.socket ? this.request.connection.socket.remoteAddress : '');
+      return ip;
+    }
+    return '';
   }
 }
 

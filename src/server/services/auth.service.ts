@@ -35,7 +35,6 @@ class AuthService {
         svcInfo: this.loginService.getSvcInfo(),
         urlMeta: resp
       };
-      console.log(params);
       return params;
     });
   }
@@ -68,7 +67,7 @@ class AuthService {
       return true;
     } else {
       if ( userCert.request === url ) {
-        this.setCertUrl(urlMeta, '');
+        this.setCertUrl(urlMeta, '').subscribe();
         return false;
       } else {
         return true;
