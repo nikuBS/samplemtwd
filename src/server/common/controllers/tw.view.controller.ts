@@ -11,7 +11,7 @@ import BrowserHelper from '../../utils/browser.helper';
 import { Observable } from 'rxjs/Observable';
 import RedisService from '../../services/redis.service';
 import { REDIS_URL_META } from '../../types/common.type';
-import { LOGIN_TYPE, SVC_ATTR } from '../../types/bff.type';
+import { LOGIN_TYPE, SVC_ATTR, LINE_NAME } from '../../types/bff.type';
 
 
 abstract class TwViewController {
@@ -209,7 +209,7 @@ abstract class TwViewController {
 
   private errorAuth(req, res, next, svcInfo) {
     const data = {
-      showSvc: svcInfo.svcAttrCd.indexOf('S') === -1 ? svcInfo.svcNum : svcInfo.addr,
+      showSvc: svcInfo.svcAttrCd.indexOf(LINE_NAME.INTERNET_PHONE_IPTV) === -1 ? svcInfo.svcNum : svcInfo.addr,
       showAttr: SVC_ATTR[svcInfo.svcAttrCd]
     };
 

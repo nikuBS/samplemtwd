@@ -10,6 +10,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/combineLatest';
 import * as path from 'path';
 import AuthService from '../services/auth.service';
+import EnvHelper from '../utils/env.helper';
 
 class ApiRouter {
   public router: Router;
@@ -37,6 +38,7 @@ class ApiRouter {
 
   private setApi() {
     this.router.get('/environment', this.getEnvironment.bind(this));
+    this.router.get('/domain', this.getDomain.bind(this));
     this.router.post('/device', this.setDeviceInfo.bind(this));
     this.router.post('/user/sessions', this.loginTid.bind(this));   // BFF_03_0008
     this.router.post('/logout-tid', this.logoutTid.bind(this));
@@ -56,6 +58,16 @@ class ApiRouter {
       code: API_CODE.CODE_00,
       result: {
         environment: process.env.NODE_ENV
+      }
+    };
+    res.json(resp);
+  }
+
+  private getDomain(req: Request, res: Response, next: NextFunction) {
+    const resp = {
+      code: API_CODE.CODE_00,
+      result: {
+        domain: EnvHelper.getEnvironment('DOMAIN')
       }
     };
     res.json(resp);

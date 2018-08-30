@@ -30,7 +30,7 @@ Tw.CustomerPreventdamageRelatesite.prototype = {
 
   _open: function(href) {
     this._popupService.close();
-    Tw.CommonHelper.openUrl(href);
+    Tw.CommonHelper.openUrlExternal(href);
   }
 
 };

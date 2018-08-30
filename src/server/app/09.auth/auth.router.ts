@@ -34,6 +34,7 @@ import AuthLoginEasyFail from './controllers/login/auth.login.easy-fail.controll
 import AuthCertNice from './controllers/cert/auth.cert.nice.controller';
 import AuthCertIpin from './controllers/cert/auth.cert.ipin.controller';
 import AuthCertMotp from './controllers/cert/auth.cert.motp.controller';
+import AuthCertComplete from './controllers/cert/auth.cert.complete.controller';
 
 class AuthRouter extends TwRouter {
   constructor() {
@@ -82,6 +83,7 @@ class AuthRouter extends TwRouter {
     this.controllers.push({ url: '/cert/motp', controller: new AuthCertMotp() });
     this.controllers.push({ url: '/cert/nice', controller: new AuthCertNice() });
     this.controllers.push({ url: '/cert/ipin', controller: new AuthCertIpin() });
+    this.controllers.push({ url: '/cert/complete', controller: new AuthCertComplete() });
   }
 }
 

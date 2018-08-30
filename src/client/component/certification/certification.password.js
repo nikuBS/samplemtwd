@@ -9,12 +9,20 @@ Tw.CertificationPassword = function () {
   this._nativeService = Tw.Native;
   this._popupService = Tw.Popup;
 
-  this._authUrl = '/myt';
+  this._authUrl = null;
+  this._command = null;
+  this._deferred = null;
+  this._callback = null;
 };
 
 
 Tw.CertificationPassword.prototype = {
-  open: function () {
+  open: function (svcInfo, urlMeta, authUrl, command, deferred, callback ) {
+    this._authUrl = authUrl;
+    this._command = command;
+    this._deferred = deferred;
+    this._callback = callback;
+
     this._nativeService.send(Tw.NTV_CMD.CERT_PW, {}, $.proxy(this._onCertResult, this));
   },
   _onCertResult: function (resp) {
@@ -30,7 +38,7 @@ Tw.CertificationPassword.prototype = {
   },
   _successConfirmPasswordCert: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-
+      this._callback({ code: Tw.API_CODE.CODE_00 }, this._deferred, this._command);
     } else {
       this._popupService.openAlert(resp.code + ' ' + resp.msg);
     }

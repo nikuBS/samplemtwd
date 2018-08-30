@@ -15,7 +15,6 @@ Tw.AuthLineNickname = function () {
 
 Tw.AuthLineNickname.prototype = {
   openNickname: function (svcMgmtNum, closeCallback) {
-    console.log('svc', svcMgmtNum, closeCallback);
     this._closeCallback = closeCallback;
     this._popupService.openConfirm(Tw.POPUP_TITLE.CHANGE_NICKNAME, '', Tw.POPUP_TPL.CHANGE_NICKNAME,
       $.proxy(this._onOpenNickname, this), $.proxy(this._confirmNickname, this, svcMgmtNum));
