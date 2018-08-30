@@ -97,12 +97,18 @@ Tw.MyTJoinProductServiceCombination.prototype = {
   },
 
   _successShareData: function (resp) {
+    var $beneficiary = $(this.$container.find('#share .select-list > li[aria-checked=true] .data-line-info')[1]);
     if (resp.code === Tw.API_CODE.CODE_00) {
       this._remainAmount = this._remainAmount - this._shareAmount;
       this.$container.find('.fe-remain-data').text(this._remainAmount);
 
       if (this._remainAmount < 100) {
         this.$container.find('#complete .bt-white1').addClass('none');
+        this.$container.find('#complete .gift-data-info').remove();
+      } else if ($beneficiary) {
+        $beneficiary.children().removeClass('none');
+        $beneficiary.find('.fe-no-data').addClass('none');
+        $beneficiary.find('.tx-bold').text(Number($beneficiary.find('.tx-bold').text() || 0) + this._shareAmount);
       }
 
       this.$container.find('.fe-beneficiary-name').text(this._beneficiary.name);
@@ -214,7 +220,7 @@ Tw.MyTJoinProductServiceCombination.prototype = {
     var nFreeLineNumber = this.$phoneInput.val().replace(/-/g, '');
 
     if (this._freeLineNumber === nFreeLineNumber) {
-      this._openNotifyAlert(Tw.MSG_MYT.JOIN_COMBINATION_A10, this.$phoneInput); // TODO: 가족등록번호와 일치할 경우 추가 A11
+      this._openNotifyAlert(Tw.MSG_MYT.JOIN_COMBINATION_A10, this.$phoneInput);
     } else if (nFreeLineNumber.length < 10 || nFreeLineNumber.length > 11) {
       this._openNotifyAlert(Tw.MSG_MYT.JOIN_COMBINATION_A07, this.$phoneInput);
     } else if (!Tw.ValidationHelper.isCellPhone(nFreeLineNumber)) {
