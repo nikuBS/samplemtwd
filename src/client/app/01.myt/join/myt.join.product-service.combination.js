@@ -107,7 +107,7 @@ Tw.MyTJoinProductServiceCombination.prototype = {
 
       this.$container.find('.fe-beneficiary-name').text(this._beneficiary.name);
       this.$container.find('.fe-benefit-data').text(this._shareAmount);
-      this._history.replaceURL('complete');
+      this._history.replaceURL('#complete');
     } else {
       Tw.Error(resp.code, resp.msg).pop();
     }
