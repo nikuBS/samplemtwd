@@ -37,14 +37,13 @@ Tw.CustomerVoice.prototype = {
   _onSuccessVoiceStatus: function (res) {
     this.voiceCustomer = res.result;
 
-    _.map(this.voiceCustomer.svcInfo, function (svcInfo) {
-      var maskNumber = $('.fe-select-line').text();
-      var svcNumMask = Tw.FormatHelper.conTelFormatWithDash(svcInfo.svcNumMask);
-
-      if ( maskNumber === svcNumMask ) {
-        this.currentLine = svcInfo;
+    _.map(this.voiceCustomer.svcInfo, $.proxy(function (svcInfo) {
+      var svcMgmtNum = $('.fe-select-line').data('svcmgmtnum').toString();
+      // var svcNumMask = Tw.FormatHelper.conTelFormatWithDash(svcInfo.svcNumMask);
+      if ( svcMgmtNum === svcInfo.svcMgmtNum ) {
+        this.currentLine = { svcMgmtNum: svcMgmtNum };
       }
-    });
+    }, this));
   },
 
   _checkTerms: function (e) {
@@ -55,7 +54,7 @@ Tw.CustomerVoice.prototype = {
     var htOptions = _.map(this.voiceCustomer.svcInfo, function (svcInfo) {
       var maskNumber = Tw.FormatHelper.conTelFormatWithDash(svcInfo.svcNumMask);
       return {
-        checked: maskNumber === $('.fe-select-line').text() ? true : false,
+        checked: maskNumber === $('.fe-select-line').text(),
         value: svcInfo.svcMgmtNum,
         text: maskNumber
       };
@@ -87,10 +86,12 @@ Tw.CustomerVoice.prototype = {
     this._apiService.request(Tw.API_CMD.BFF_08_0034, this.currentLine).done($.proxy(this._onSuccessSMS, this));
   },
 
-  _onSuccessSMS: function () {
-    $('.sended-info-num').text($('.fe-select-line').text());
+  _onSuccessSMS: function (resp) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      $('.sended-info-num').text($('.fe-select-line').text());
 
-    this._history.replaceURL('/customer/voice/sms#complete');
+      this._history.replaceURL('/customer/voice/sms#complete');
+    }
   },
 
   _openAuthCancel: function () {

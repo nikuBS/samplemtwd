@@ -1,5 +1,5 @@
 /**
- * FileName: myt.usage.ting.js
+ * FileName: myt.usage.ting.controller.ts
  * Author: Hyeryoun Lee (skt.P130712@partner.sk.com)
  * Date: 2018.08.02
  */

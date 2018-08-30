@@ -1,8 +1,8 @@
-/*
-* FileName: mty.join.product-service.combination.controller.ts
-* Author: Jiyoung Jo (jiyoungjo@sk.com)
-* Date: 2018.08.20
-*/
+/**
+ * FileName: mty.join.product-service.combination.controller.ts
+ * Author: Jiyoung Jo (jiyoungjo@sk.com)
+ * Date: 2018.08.20
+ */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';

@@ -34,7 +34,7 @@ export const API_CMD = {
   BFF_01_0011: { path: '/core-modification/v1/address/buildings', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_01_0012: { path: '/core-modification/v1/address/standard', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_01_0013: { path: '/core-modification/v1/address/standard', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
-  BFF_01_0014: { path: '/core-auth/v1/auth/skt/sms', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_01_0014: { path: '/core-auth/v1/auth-sms', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_01_0015: { path: '/auth/skt/sms-authentication', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
   BFF_01_0016: { path: '/core-auth/v1/auth/dca/sms', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_01_0017: { path: '/core-auth/v1/auth/email', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
@@ -51,6 +51,10 @@ export const API_CMD = {
   BFF_01_0028: { path: '/core-auth/v1/auth/skt/sms-finance', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_01_0029: { path: '/core-auth/v1/app-secure', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_01_0030: { path: '/core-auth/v1/server-cert', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_01_0031: { path: '/fido/registration-request', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_01_0032: { path: '/fido/registration-response', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_01_0033: { path: '/fido/authentication-request', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_01_0034: { path: '/fido/authentication-response', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true},
   // AUTH
   BFF_03_0001: { path: '/test-login', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: false },
   BFF_03_0002: { path: '/user/account-auth-sessions', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
@@ -428,9 +432,7 @@ export const API_CODE = {
   CODE_03: 'RDT0003',    // 2차 인증
   CODE_04: 'RDT0004',    // 로그인 필요
   CODE_05: 'RDT0005',    // 접근 불가 (권한)
-  // CODE_06: 'RDT0006',    // 고객 비밀번호 인증 필요
-  // CODE_07: 'RDT0007',    // 고객 비밀번호 재설정 필요
-  // CODE_08: 'RDT0008',    // 고객 비밀번호 초기화상
+
   CODE_99: 'RDT0099',    // Circuit Open
   CODE_200: '200',
   CODE_400: '400'

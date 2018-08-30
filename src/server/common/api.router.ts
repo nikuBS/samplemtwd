@@ -6,9 +6,10 @@ import LoggerService from '../services/logger.service';
 import ApiService from '../services/api.service';
 import LoginService from '../services/login.service';
 import { COOKIE_KEY } from '../types/common.type';
-import { Observable } from '../../../node_modules/rxjs/Observable';
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/combineLatest';
 import * as path from 'path';
+import AuthService from '../services/auth.service';
 
 class ApiRouter {
   public router: Router;
@@ -16,6 +17,7 @@ class ApiRouter {
   private logger: LoggerService = new LoggerService();
   private apiService: ApiService = new ApiService();
   private loginService: LoginService = new LoginService();
+  private authService: AuthService = new AuthService();
 
   constructor() {
     this.router = express.Router();
@@ -45,31 +47,8 @@ class ApiRouter {
     this.router.delete('/user/locks', this.setUserLocks.bind(this));    // BFF_03_0010
     this.router.put('/core-auth/v1/service-passwords', this.changeSvcPassword.bind(this));    // BFF_03_0016
     this.router.put('/user/services', this.changeLine.bind(this));    // BFF_03_0005
-
-    this.router.post('/uploads', (req, res, next) => {
-      this.upload(req, res, (err) => {
-        if ( err ) {
-          this.logger.error(this, err);
-          res.json({ code: err.errno, msg: err.code });
-          return;
-        }
-        this.logger.info(this, req['files']);
-        const files = req['files'];
-
-        const resp = {
-          code: API_CODE.CODE_00,
-          result: files.map((file) => {
-            return {
-              name: file.filename,
-              size: file.size,
-              originalName: file.originalname
-            };
-          })
-        };
-        res.json(resp);
-      });
-    });
-
+    this.router.post('/uploads', this.uploadFile.bind(this));
+    this.router.post('/cert', this.setCert.bind(this));
   }
 
   private getEnvironment(req: Request, res: Response, next: NextFunction) {
@@ -91,6 +70,37 @@ class ApiRouter {
       code: API_CODE.CODE_00
     };
     res.json(resp);
+  }
+
+  private uploadFile(req: Request, res: Response, next: NextFunction) {
+    this.upload(req, res, (err) => {
+      if ( err ) {
+        this.logger.error(this, err);
+        res.json({ code: err.errno, msg: err.code });
+        return;
+      }
+      this.logger.info(this, req['files']);
+      const files = req['files'];
+
+      const resp = {
+        code: API_CODE.CODE_00,
+        result: files.map((file) => {
+          return {
+            name: file.filename,
+            size: file.size,
+            originalName: file.originalname
+          };
+        })
+      };
+      res.json(resp);
+    });
+  }
+
+  private setCert(req: Request, res: Response, next: NextFunction) {
+    const params = req.body;
+    this.authService.setCert(req, params).subscribe((resp) => {
+      res.json(resp);
+    });
   }
 
   private changeSession(req: Request, res: Response, next: NextFunction) {

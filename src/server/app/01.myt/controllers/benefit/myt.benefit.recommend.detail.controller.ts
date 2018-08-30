@@ -1,5 +1,5 @@
 /**
- * FileName: myt.benefit.recommend.detail.controller
+ * FileName: myt.benefit.recommend.detail.controller.ts
  * Author: 김명환 (skt.P130714@partner.sk.com)
  * Date: 2018.08.16
  * info :

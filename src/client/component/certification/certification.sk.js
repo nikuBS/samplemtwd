@@ -12,9 +12,21 @@ Tw.CertificationSk = function () {
 
 
 Tw.CertificationSk.prototype = {
-  open: function () {
-    // this._certSms.openSmsPopup();
-    // this._certKeyin.openKeyinPopup();
-    this._certMotp.openMotpPopup();
+  open: function (svcInfo, urlMeta, authUrl, command, deferred, callback, type) {
+    if ( type === Tw.AUTH_CERTIFICATION_METHOD.SK_SMS ) {
+      if ( svcInfo.smsYn === 'Y' ) {
+        this._certSms.openSmsPopup(svcInfo, urlMeta, authUrl, command, deferred, callback);
+      } else {
+        this._certKeyin.openKeyinPopup(svcInfo, urlMeta, authUrl, deferred, callback);
+      }
+    } else {
+      if ( svcInfo.motpYn === 'Y' ) {
+        this._certMotp.openMotpPopup(svcInfo, urlMeta, authUrl, deferred, callback);
+      } else if ( svcInfo.smsYn === 'Y' ) {
+        this._certSms.openSmsPopup(svcInfo, urlMeta, authUrl, command, deferred, callback);
+      } else {
+        this._certKeyin.openKeyinPopup(svcInfo, urlMeta, authUrl, command, deferred, callback);
+      }
+    }
   }
 };

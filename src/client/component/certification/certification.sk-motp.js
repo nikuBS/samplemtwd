@@ -15,7 +15,12 @@ Tw.CertificationSkMotp = function () {
   this.$errorConfirm = null;
   this.$errorCert = null;
 
+  this._urlMeta = null;
   this._authUrl = null;
+  this._command = null;
+  this._deferred = null;
+  this._callback = null;
+  this._certResult = null;
   this._isFirstCert = true;
 };
 
@@ -24,6 +29,8 @@ Tw.CertificationSkMotp.prototype = {
   MOTP_ERROR: {
     ATH1232: 'ATH1232',   // 단말기정보가 없습니다.
     ATH1233: 'ATH1233',    // 모바일T 안심인증할 수 없는 단말기 모델입니다.
+    ATH1234: 'ATH1234',
+    ATH1235: 'ATH1235',
 
     ATH1221: 'ATH1221',
     ATH1222: 'ATH1222',
@@ -32,12 +39,18 @@ Tw.CertificationSkMotp.prototype = {
     ATH1228: 'ATH1228',
     ATG1231: 'ATG1231'
   },
-  openMotpPopup: function () {
+  openMotpPopup: function (svcInfo, urlMeta, authUrl, command, deferred, callback) {
+    this._urlMeta = urlMeta;
+    this._authUrl = authUrl;
+    this._command = command;
+    this._deferred = deferred;
+    this._callback = callback;
+
     this._popupService.open({
       hbs: 'CO_02_01_02_L02',
       layer: true,
       data: {
-        mdn: '000-0000-0000'
+        mdn: svcInfo.svcNum
       }
     }, $.proxy(this._onOpenMotpPopup, this), $.proxy(this._onCloseMotpPopup, this));
   },
@@ -56,10 +69,11 @@ Tw.CertificationSkMotp.prototype = {
     this._requestMotpCert();
   },
   _onCloseMotpPopup: function () {
+    this._callback(this._certResult, this._deferred, this._command);
 
   },
   _requestMotpCert: function () {
-    this._apiService.request(Tw.API_CMD.BFF_01_0019, { authUrl: '/core-modification/v1/voice-certification' })
+    this._apiService.request(Tw.API_CMD.BFF_01_0019, { authUrl: this._authUrl })
       .done($.proxy(this._successMotpCert, this));
   },
   _successMotpCert: function (resp) {
@@ -69,11 +83,12 @@ Tw.CertificationSkMotp.prototype = {
       } else {
         this.showValidText();
       }
-    } else if ( resp.code === this.MOTP_ERROR.ATH1233 ) {
-
+    } else if ( resp.code === this.MOTP_ERROR.ATH1234 ) {
+      this.showCertError(Tw.MSG_AUTH.CERT_01);
+    } else if ( resp.code === this.MOTP_ERROR.ATH1235 ) {
+      this.showCertError(Tw.MSG_AUTH.CERT_02);
     } else {
-      // this._popupService.openAlert(resp.code + ' ' + resp.msg);
-      this.showCertError('test error');
+      this._popupService.openAlert(resp.code + ' ' + resp.msg);
     }
   },
   _onInputCert: function () {
@@ -84,7 +99,7 @@ Tw.CertificationSkMotp.prototype = {
     }
 
   },
-  _requestMotpConfirm: function() {
+  _requestMotpConfirm: function () {
     this._apiService.request(Tw.API_CMD.BFF_01_0020, {
       authNum: this.$inputCert.val(),
       authUrl: this._authUrl
@@ -92,8 +107,11 @@ Tw.CertificationSkMotp.prototype = {
 
   },
   _successMotpConfirm: function (resp) {
-    if( resp.code === Tw.API_CODE.CODE_00) {
-
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      this._certResult = resp;
+      this._popupService.close();
+    } else {
+      this._popupService.openAlert(resp.code + ' ' + resp.msg);
     }
   },
   showValidText: function () {

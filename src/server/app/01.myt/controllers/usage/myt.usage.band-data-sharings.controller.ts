@@ -12,7 +12,7 @@ import MyTUsage from './myt.usage.controller';
 import DateHelper from '../../../../utils/date.helper';
 import { DATA_UNIT, USER_CNT } from '../../../../types/string.type';
 
-class MyTUsageBandDataSharingsController extends TwViewController {
+class MyTUsageBandDataSharings extends TwViewController {
   public myTUsage = new MyTUsage();
 
   constructor() {
@@ -64,4 +64,4 @@ class MyTUsageBandDataSharingsController extends TwViewController {
   }
 }
 
-export default MyTUsageBandDataSharingsController;
+export default MyTUsageBandDataSharings;

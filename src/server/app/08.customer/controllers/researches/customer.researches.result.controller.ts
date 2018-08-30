@@ -1,4 +1,4 @@
-/*
+/**
  * FileName: customer.researches.result.controller.ts
  * Author: Jiyoung Jo (jiyoungjo@sk.com)
  * Date: 2018.08.01

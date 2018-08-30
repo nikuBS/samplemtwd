@@ -1,3 +1,9 @@
+/**
+ * FileName: common.error.controller.ts
+ * Author: 양지훈 (jihun202@sk.com)
+ * Date: 2018.08.21
+ */
+
 import TwViewController from '../../../common/controllers/tw.view.controller';
 import {NextFunction, Request, Response} from 'express';
 

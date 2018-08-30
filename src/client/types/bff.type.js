@@ -79,6 +79,11 @@ Tw.PAYMENT_REQUEST_TYPE = {
   F: '해지'
 };
 
+Tw.AUTH_LOGIN_TYPE = {
+  TID: 'T',
+  EASY: 'S'
+};
+
 Tw.AUTH_CERTIFICATION_TYPE = {
   PREV: 'P',
   AFTER: 'A',
@@ -86,7 +91,7 @@ Tw.AUTH_CERTIFICATION_TYPE = {
   NOT_USED: 'D'
 };
 
-Tw.AUTH_CERTIFIATION_METHOD = {
+Tw.AUTH_CERTIFICATION_METHOD = {
   SK_SMS: 'S',
   OTHER_SMS: 'T',
   SMS_PASSWORD: 'Z',
@@ -96,7 +101,17 @@ Tw.AUTH_CERTIFIATION_METHOD = {
   IPIN: 'I',
   EMAIL: 'E',
   PASSWORD: 'W',
-  BIO: 'F'
+  BIO: 'F',
+  SAVE: 'A',
+  SK_MOTP: 'M'
+};
+
+Tw.AUTH_CERTIFICATION_SCOPE = {
+  REQUEST: 'R',
+  PAGE: 'P',
+  GROUP: 'G',
+  SESSION: 'S',
+  CHILD: 'C'
 };
 
 Tw.AUTH_CERTIFICATION_NICE = {

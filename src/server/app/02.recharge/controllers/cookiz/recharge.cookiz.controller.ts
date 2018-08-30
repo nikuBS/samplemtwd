@@ -1,3 +1,8 @@
+/**
+ * FileName: recharge.cookiz.controller.ts
+ * Author: 박지만 (jiman.park@sk.com)
+ * Date: 2018.06.29
+ */
 import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
