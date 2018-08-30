@@ -78,7 +78,7 @@ Tw.MyTJoinJoinInfo.prototype = {
 
   // SK브로드밴드 링크 클릭
   _openSKbrodbandLink: function () {
-    Tw.CommonHelper.openUrl(Tw.URL_PATH.BROADBAND);
+    Tw.CommonHelper.openUrlExternalExternal(Tw.URL_PATH.BROADBAND);
   },
 
   // 비밀번호변경 클릭

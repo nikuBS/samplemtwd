@@ -25,7 +25,7 @@ Tw.CustomerFaq.prototype = {
     this.$container.on('click', '.fe-external', $.proxy(this._onLinks, this));
   },
   _onLinks: function (evt) {
-    Tw.CommonHelper.openUrl(evt.target.href);
+    Tw.CommonHelper.openUrlExternal(evt.target.href);
     return false;
   },
   _onSearchInput: function (evt) {

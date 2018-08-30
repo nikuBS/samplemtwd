@@ -62,21 +62,21 @@ export const URL = {
   '/myt/join/contract-terminal/twibro': { login: true, id: 'MY_01_04_01', title: '약정 할인 및 단말 분할상환 정보' },
   '/myt/join/contract-terminal/tlogin': { login: true, id: 'MY_01_04_02', title: '약정 할인 및 단말 분할상환 정보' },
   '/myt/join/contract-terminal/tlogin/detail': { login: true, id: 'MY_01_04_L01', title: '월별 상세 할인내역' },
-  '/myt/join/product-service': { login: true, id: 'MY_01_01', title: '나의 가입서비스/요금제,부가서비스,결합상품'},
-  '/myt/benefit/point': { login: true, id: 'MY_04_04', title: '포인트 혜택'},
-  '/myt/benefit/rainbow-point': { login: true, id: 'MY_04_04_01', title: '레인보우 포인트'},
-  '/myt/benefit/rainbow-point/history': { login: true, id: 'MY_04_04_01_01', title: '이용내역'}, // 레인보우 포인트 > 이용내역
-  '/myt/benefit/rainbow-point/info': { login: true, id: 'MY_04_04_01_02', title: '혜택 자세히보기'}, // 레인보우 포인트 > 혜택 자세히보기'
+  '/myt/join/product-service': { login: true, id: 'MY_01_01', title: '나의 가입서비스/요금제,부가서비스,결합상품' },
+  '/myt/benefit/point': { login: true, id: 'MY_04_04', title: '포인트 혜택' },
+  '/myt/benefit/rainbow-point': { login: true, id: 'MY_04_04_01', title: '레인보우 포인트' },
+  '/myt/benefit/rainbow-point/history': { login: true, id: 'MY_04_04_01_01', title: '이용내역' }, // 레인보우 포인트 > 이용내역
+  '/myt/benefit/rainbow-point/info': { login: true, id: 'MY_04_04_01_02', title: '혜택 자세히보기' }, // 레인보우 포인트 > 혜택 자세히보기'
   '/myt/join/product-service/fee-alarm': { login: true, id: 'MY_01_01_01', title: '요금제 변경 가능일 알림 서비스' },
   '/myt/join/product-service/fee-alarm/change': { login: true, id: 'MY_01_01_02', title: '요금제 변경 가능일 알림 서비스 신청/해지' },
-  '/myt/benefit/rainbow-point/adjustment': { login: true, id: 'MY_04_04_02', title: '포인트합산'},
-  '/myt/benefit/rainbow-point/transfer': { login: true, id: 'MY_04_04_03', title: '대리인 간 양도'},
-  '/myt/benefit/membership': { login: true, id: 'MY_04_02', title: '멤버십 혜택'},
-  '/myt/benefit/membership/detail': { login: true, id: 'MY_04_02_01_01', title: '멤버십 혜택 상세'},
-  '/myt/benefit/recommend': { login: true, id: 'MY_04_03', title: '추천 혜택'},
-  '/myt/benefit/recommend/detail': { login: true, id: 'MY_04_03_01_01', title: '추천 혜택 상세'},
-  '/myt/benefit/discount': { login: true, id: 'MY_04_01', title: '할인 혜택'},
-  '/myt/benefit/discount/detail': { login: true, id: 'MY_04_01_01_01', title: '할인 혜택 상세'},
+  '/myt/benefit/rainbow-point/adjustment': { login: true, id: 'MY_04_04_02', title: '포인트합산' },
+  '/myt/benefit/rainbow-point/transfer': { login: true, id: 'MY_04_04_03', title: '대리인 간 양도' },
+  '/myt/benefit/membership': { login: true, id: 'MY_04_02', title: '멤버십 혜택' },
+  '/myt/benefit/membership/detail': { login: true, id: 'MY_04_02_01_01', title: '멤버십 혜택 상세' },
+  '/myt/benefit/recommend': { login: true, id: 'MY_04_03', title: '추천 혜택' },
+  '/myt/benefit/recommend/detail': { login: true, id: 'MY_04_03_01_01', title: '추천 혜택 상세' },
+  '/myt/benefit/discount': { login: true, id: 'MY_04_01', title: '할인 혜택' },
+  '/myt/benefit/discount/detail': { login: true, id: 'MY_04_01_01_01', title: '할인 혜택 상세' },
 
 
   // recharge
@@ -163,6 +163,9 @@ export const URL = {
   '/customer/event/detail/win': { login: false, id: 'CI_13_06', title: '이벤트 상세' }, // 이벤트 상세 (당첨자)
   // auth
   '/auth/cert/motp': { login: false, id: 'CO_02_01_02_L02_L01', title: '모바일T안심인증' },
+  '/auth/cert/nice': { login: true, id: '', title: '' },
+  '/auth/cert/ipin': { login: true, id: '', title: '' },
+  '/auth/cert/complete': { login: true, id: '', title: '' },
   '/auth/line': { login: true, id: 'CO_01_05_02', title: '' }, // 회선관리
   '/auth/line/edit': { login: true, id: 'CO_01_05_02_01', title: '' }, // 회선편집
   '/auth/line/register/corporation': { login: true, id: 'CO_01_05_02_03', title: '' }, // 법인회선등록

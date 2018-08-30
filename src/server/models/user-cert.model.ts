@@ -21,8 +21,8 @@ export class UserCertModel {
     this.group = object.group || this.group;
     this.page = object.page || this.page;
     this.request = object.request || this.request;
-    this.child = object.request || this.child;
-    this.passwordAuth = object.request || this.passwordAuth;
+    this.child = object.child || this.child;
+    this.passwordAuth = object.passwordAuth || this.passwordAuth;
     this.product = object.product || this.product;
     this.certAuthKey = object.certAuthKey || this.certAuthKey;
   }

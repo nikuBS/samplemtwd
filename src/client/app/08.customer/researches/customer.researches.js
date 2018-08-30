@@ -92,12 +92,12 @@ Tw.CustomerResearches.prototype = {
 
   _goHint: function (e) {
     var url = e.target.getAttribute('data-hint-url');
-    Tw.CommonHelper.openUrl(url);
+    Tw.CommonHelper.openUrlExternal(url);
   }
 };
 
 /* jshint unused: false */
 var goLink = function (url) {
-  Tw.CommonHelper.openUrl(url);
+  Tw.CommonHelper.openUrlExternal(url);
 };
 /* jshint unused: false */
