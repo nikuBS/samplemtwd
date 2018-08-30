@@ -49,15 +49,14 @@
                                                 <span class="data-line-info">
                                                     <span class="ff-hn"><%= member.svcNumber %></span>
                                                 </span>
-                                                <% if (member.benefitData > 0) { %>
                                                 <span class="data-line-info">
-                                                    <span class="ff-hn tx-bold"><%= member.benefitData %></span>
-                                                    <span class="ff-hn">MB</span>
-                                                    <span class="vb"> 받음</span>
+                                                    <span class="<%= member.benefitData === 0 ? 'none': '' %>">
+                                                        <span class="ff-hn tx-bold"><%= member.benefitData %></span>
+                                                        <span class="ff-hn">MB</span>
+                                                        <span class="vb"> 받음</span>
+                                                    </span>
+                                                    <span class="fe-no-data"><%= member.benefitData === 0? '받은 적 없음' : '' %></span>
                                                 </span>
-                                                <% } else { %>
-                                                    <span class="data-line-info">받은 적 없음</span>
-                                                <% } %>
                                             </div>
                                         </div>
                                     </li>
