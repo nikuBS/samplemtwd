@@ -200,6 +200,9 @@ class FormatHelper {
 
   /**
    *  group by Array
+   *  @param {Array} arr
+   *  @param {String} key
+   *  @return return the object.
    */
   static groupByArray(arr, key): any {
     const mapped = {};
@@ -210,7 +213,7 @@ class FormatHelper {
       }
       mapped[actualKey].push(item);
     });
-    return Object.keys(mapped).map(item => mapped[item]);
+    return mapped;
   }
 }
 
