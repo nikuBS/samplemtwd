@@ -14,15 +14,15 @@ Tw.CertificationSk = function () {
 Tw.CertificationSk.prototype = {
   open: function (svcInfo, urlMeta, authUrl, command, deferred, callback, type) {
     if ( type === Tw.AUTH_CERTIFICATION_METHOD.SK_SMS ) {
-      if ( svcInfo.smsYn === 'Y' ) {
+      if ( svcInfo.smsUsableYn === 'Y' ) {
         this._certSms.openSmsPopup(svcInfo, urlMeta, authUrl, command, deferred, callback);
       } else {
         this._certKeyin.openKeyinPopup(svcInfo, urlMeta, authUrl, command, deferred, callback);
       }
     } else {
-      if ( svcInfo.motpYn === 'Y' ) {
+      if ( svcInfo.motpUsableYn === 'Y' ) {
         this._certMotp.openMotpPopup(svcInfo, urlMeta, authUrl, command, deferred, callback);
-      } else if ( svcInfo.smsYn === 'Y' ) {
+      } else if ( svcInfo.smsUsableYn === 'Y' ) {
         this._certSms.openSmsPopup(svcInfo, urlMeta, authUrl, command, deferred, callback);
       } else {
         this._certKeyin.openKeyinPopup(svcInfo, urlMeta, authUrl, command, deferred, callback);
