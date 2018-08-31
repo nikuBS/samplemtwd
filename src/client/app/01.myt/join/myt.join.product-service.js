@@ -43,7 +43,7 @@ Tw.MyTJoinProductService.prototype = {
 
   _init: function () {
     if (Tw.FormatHelper.isEmpty(window.location.hash)) {
-      this._historyService.goHash('fee-plan');
+      this._historyService.replaceURL('#fee-plan');
     }
 
     var initTabKey = window.location.hash.replace('#', '');
@@ -63,7 +63,7 @@ Tw.MyTJoinProductService.prototype = {
       this._callOptions(activeTabKey);
     }
 
-    this._historyService.goHash(activeTabKey);
+    this._historyService.replaceURL('#' + activeTabKey);
   },
 
   _callOptions: function (tabKey) {

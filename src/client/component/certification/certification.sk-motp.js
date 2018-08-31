@@ -65,6 +65,7 @@ Tw.CertificationSkMotp.prototype = {
     this.$btCert.on('click', $.proxy(this._requestMotpCert, this));
     this.$btConfirm.on('click', $.proxy(this._requestMotpConfirm, this));
     this.$inputCert.on('input', $.proxy(this._onInputCert, this));
+    $popupContainer.on('click', '#fe-bt-noti-sms', $.proxy(this._onClickNotiSms, this));
 
     this._requestMotpCert();
   },
@@ -134,6 +135,15 @@ Tw.CertificationSkMotp.prototype = {
     this.$errorConfirm.removeClass('none');
     this.$inputCert.parents('.inputbox').addClass('error');
     this.$inputCert.attr('aria-describedby', 'aria-sms-exp-desc3');
+  },
+  _onClickNotiSms: function () {
+    this._apiService.request(Tw.API_CMD.BFF_01_0016, { jobCode: 'NFM_TWD_SAFESMS_INFO' })
+      .done($.proxy(this._successNotiSms, this));
+  },
+  _successNotiSms: function (resp) {
+    if(resp.code !== Tw.API_CODE.CODE_00) {
+      this._popupService.openAlert(resp.code + ' ' + resp.msg);
+    }
   }
 
 };
