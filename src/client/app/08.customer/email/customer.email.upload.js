@@ -19,7 +19,8 @@ Tw.CustomerEmailUpload = function (rootEl, oEmailTemplate) {
 };
 
 Tw.CustomerEmailUpload.prototype = {
-  _init: function () {},
+  _init: function () {
+  },
 
   _cachedElement: function () {
     this.tpl_file_item = Handlebars.compile($('#tpl_file_item').text());
@@ -120,6 +121,9 @@ Tw.CustomerEmailUpload.prototype = {
   },
 
   _successUploadFile: function (response) {
+    Tw.Logger.log('[ FILE UPLOAD ] ::');
+    Tw.Logger.log(response);
+
     var fileList = response.result.map(function (file) {
       return {
         name: file.name,
