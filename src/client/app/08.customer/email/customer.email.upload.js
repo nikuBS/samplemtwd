@@ -124,20 +124,21 @@ Tw.CustomerEmailUpload.prototype = {
     Tw.Logger.log('[ FILE UPLOAD ] ::');
     Tw.Logger.log(response);
 
-    var fileList = response.result.map(function (file) {
-      return {
-        name: file.name,
-        originalName: file.originalName,
-        convertData: Tw.FormatHelper.customDataFormat(file.size, Tw.DATA_UNIT.KB, Tw.DATA_UNIT.GB)
-      };
-    });
+    if ( response.code === Tw.API_CODE.CODE_00 ) {
+      var fileList = response.result.map(function (file) {
+        return {
+          name: file.name,
+          originalName: file.originalName,
+          convertData: Tw.FormatHelper.customDataFormat(file.size, Tw.DATA_UNIT.KB, Tw.DATA_UNIT.GB)
+        };
+      });
 
-    if ( this._oEmailTemplate.state.tabIndex === 0 ) {
-      $('#tab1-tab .file-addlist').html(this.tpl_file_item({ list: fileList }));
-    }
-
-    if ( this._oEmailTemplate.state.tabIndex === 1 ) {
-      $('#tab2-tab .file-addlist').html(this.tpl_file_item({ list: fileList }));
+      if ( this._oEmailTemplate.state.tabIndex === 0 ) {
+        $('#tab1-tab .file-addlist').html(this.tpl_file_item({ list: fileList }));
+      }
+      if ( this._oEmailTemplate.state.tabIndex === 1 ) {
+        $('#tab2-tab .file-addlist').html(this.tpl_file_item({ list: fileList }));
+      }
     }
 
     this._popupService.close();
