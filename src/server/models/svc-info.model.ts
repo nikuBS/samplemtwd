@@ -6,10 +6,12 @@ export interface ISvcInfo {
   repSvcYn: string;         // 기준회선 여부
   pwdStCd: string;          // 고객보호비밀번호상태
   nickNm: string;           // 닉네임
+  prodId: string;           // 기본요금제ID
+  prodNm: string;           // 기본요금제명
   addr: string;             // 주소
   actRepYn: string;         // 청구대표서비스여부
-  smsYn: string;            // SMS 착신가능여부
-  motpYn: string;           // MOTP 사용가능 여부
+  smsUsableYn: string;      // SMS 착신가능여부
+  motpUsableYn: string;     // MOTP 사용가능 여부
   totalSvcCnt: string;      // 전체 회선수
   expsSvcCnt: string;       // 등록된 회선수
   mbrNm: string;            // 고객명
@@ -24,10 +26,12 @@ export class SvcInfoModel implements ISvcInfo {
   repSvcYn: string = '';
   pwdStCd: string = '';
   nickNm: string = '';
+  prodId: string = '';
+  prodNm: string = '';
   addr: string = '';
   actRepYn: string = '';
-  smsYn: string = '';
-  motpYn: string = '';
+  smsUsableYn: string = '';
+  motpUsableYn: string = '';
   totalSvcCnt: string = '';
   expsSvcCnt: string = '';
   mbrNm: string = '';
@@ -41,10 +45,12 @@ export class SvcInfoModel implements ISvcInfo {
     this.repSvcYn = object.repSvcYn || this.repSvcYn;
     this.pwdStCd = object.pwdStCd || this.pwdStCd;
     this.nickNm = object.nickNm || this.nickNm;
+    this.prodId = object.prodId || this.prodId;
+    this.prodNm = object.prodNm || this.prodNm;
     this.addr = object.addr || this.addr;
     this.actRepYn = object.actRepYn || this.actRepYn;
-    this.smsYn = object.smsYn || this.smsYn;
-    this.motpYn = object.motpYn || this.motpYn;
+    this.smsUsableYn = object.smsUsableYn || this.smsUsableYn;
+    this.motpUsableYn = object.motpUsableYn || this.motpUsableYn;
     this.totalSvcCnt = object.totalSvcCnt || this.totalSvcCnt;
     this.expsSvcCnt = object.expsSvcCnt || this.expsSvcCnt;
     this.mbrNm = object.mbrNm || this.mbrNm;
