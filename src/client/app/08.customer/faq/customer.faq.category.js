@@ -121,8 +121,9 @@ Tw.CustomerFaqCategory.prototype = {
     if (!selected.isDepth2) {
       this._depth2code = '0';
       this._loadDepth2();
+    } else {
+      this._loadList(true);
     }
-    this._loadList(true);
   },
   _loadDepth2: function () {
     this._apiService.request(Tw.API_CMD.BFF_08_0051, { ifaqGrpCd: this._depth1code })
@@ -130,6 +131,7 @@ Tw.CustomerFaqCategory.prototype = {
         if (res.code === Tw.API_CODE.CODE_00) {
           this._depth2obj = res.result.faq1DepthGrp;
           this.$btnDepth2.text(Tw.POPUP_PROPERTY.ALL);
+          this._loadList(true);
         } else {
           this._popupService.openAlert(res.code + ' ' + res.msg);
         }
@@ -150,6 +152,9 @@ Tw.CustomerFaqCategory.prototype = {
     } else {
       if (this._depth2code === '0') {
         code = this._depth1code;
+        if (Tw.FormatHelper.isEmpty(this._depth2obj)) {
+          depth = 3;
+        }
       } else {
         code = this._depth2code;
         depth = 3;

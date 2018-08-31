@@ -8,6 +8,7 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import {Request, Response, NextFunction} from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
+import FormatHelper from '../../../../utils/format.helper';
 
 export default class CustomerFaqCategory extends TwViewController {
   constructor() {
@@ -33,28 +34,60 @@ export default class CustomerFaqCategory extends TwViewController {
     this.checkIf2Depth(code).subscribe((depthChecked) => {
       data.depth1 = depthChecked.depth1;
       if (depthChecked.is2depth) {
-        Observable.combineLatest(
-          this.get2depth(depthChecked.depth1[0].ifaqGrpCd),
-          this.getFaqList(depthChecked.depth1[0].ifaqGrpCd)
-        ).subscribe((resp) => {
-          data.is2depth = true;
-          data.depth2 = resp[0];
-          data.list = resp[1].list;
-          data.isLast = resp[1].isLast;
-          res.render(htmlPath, data);
-        }, (err) => {
-        });
+        data.is2depth = true;
+        this.get2depth(depthChecked.depth1[0].ifaqGrpCd).subscribe(
+          (depth2) => {
+            data.depth2 = depth2;
+            let depthCode = 2;
+            if (FormatHelper.isEmpty(depth2)) {
+              depthCode = 3;
+            }
 
+            this.getFaqList(depthChecked.depth1[0].ifaqGrpCd, depthCode).subscribe(
+              (faqList) => {
+                data.list = faqList.list;
+                data.isLast = faqList.isLast;
+                res.render(htmlPath, data);
+              },
+              (err) => {
+                this.error.render(res, {
+                  title: data.title,
+                  code: err.code,
+                  msg: err.msg,
+                  svcInfo: svcInfo
+                });
+              });
+          },
+          (err) => {
+            this.error.render(res, {
+              title: data.title,
+              code: err.code,
+              msg: err.msg,
+              svcInfo: svcInfo
+            });
+          });
       } else {
-        this.getFaqList(code).subscribe((faqList) => {
+        this.getFaqList(code, 2).subscribe((faqList) => {
           data.list = faqList.list;
           data.isLast = faqList.isLast;
           res.render(htmlPath, data);
         }, (err) => {
+          this.error.render(res, {
+            title: data.title,
+            code: err.code,
+            msg: err.msg,
+            svcInfo: svcInfo
+          });
         });
 
       }
     }, (err) => {
+      this.error.render(res, {
+        title: data.title,
+        code: err.code,
+        msg: err.msg,
+        svcInfo: svcInfo
+      });
     });
   }
 
@@ -80,10 +113,10 @@ export default class CustomerFaqCategory extends TwViewController {
       });
   }
 
-  private getFaqList(groupCode: String): Observable<any> {
+  private getFaqList(groupCode: String, depthCode: number): Observable<any> {
     return this.apiService.request(API_CMD.BFF_08_0052, {
       faqDepthGrpCd: groupCode,
-      faqDepthCd: 2,
+      faqDepthCd: depthCode,
       page: 0,
       size: 20
     }).map((res) => {
