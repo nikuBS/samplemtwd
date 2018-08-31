@@ -140,7 +140,7 @@ Tw.MyTBillHistoryMicro.prototype = {
     this.$usageLimitCheckTrigger.on('click', $.proxy(this._checkUsageLimitCurrentMonth, this));
     this.$limitChangeBtn.on('click', $.proxy(this.common._goLoad, this.common, Tw.URL_PATH.MYT_PAY_MICRO_LIMIT_CHANGE));
     this.$limitDetailBtn.on('click', $.proxy(this.common._goLoad, this.common, Tw.URL_PATH.MYT_PAY_MICRO_LIMIT_DETAIL));
-    this.$microPayUseSwitchInput.on('click', $.proxy(this._changeMicroPayUse, this));
+    this.$microPayUseSwitch.on('click', $.proxy(this._changeMicroPayUse, this));
     this.$payPasswordChkBtn.on('click', $.proxy(this._movePayPasswordPage, this));
 
     // this.$searchElement.$paymentTypeSelector.on('click', $.proxy(this._selectPayType, this));

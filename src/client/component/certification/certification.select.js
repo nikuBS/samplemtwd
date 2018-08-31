@@ -8,6 +8,7 @@ Tw.CertificationSelect = function () {
   this._certSk = new Tw.CertificationSk();
   this._certEmail = new Tw.CertificationEmail();
   this._certPassword = new Tw.CertificationPassword();
+  this._certSmsPw = new Tw.CertificationSmsPassword();
 
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -28,7 +29,7 @@ Tw.CertificationSelect = function () {
 
 
 Tw.CertificationSelect.prototype = {
-  open: function (certInfo, resultUrl, command, deferred, callback) {
+  open: function (certInfo, command, deferred, callback) {
     this._authUrl = certInfo.url;
     this._svcInfo = certInfo.svcInfo;
     this._urlMeta = certInfo.urlMeta;
@@ -58,7 +59,6 @@ Tw.CertificationSelect.prototype = {
         password: methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.PASSWORD) !== -1,
         finance: methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.FINANCE_AUTH) !== -1,
         smsPassword: methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SMS_PASSWORD) !== -1
-
       }
     }, $.proxy(this._onOpenSelectPopup, this), $.proxy(this._onCloseSelectPopup, this));
   },
@@ -106,7 +106,7 @@ Tw.CertificationSelect.prototype = {
           this._popupService.openAlert('Not Supported (Bio)');
           break;
         case Tw.AUTH_CERTIFICATION_METHOD.SMS_PASSWORD:
-          this._popupService.openAlert('Not Supported (SMS Password)');
+          this._certSmsPw.open(this._svcInfo, this._urlMeta, this._authUrl, this._command, this._deferred, this._callback);
           break;
         default:
           this._popupService.openAlert('Not Supported');

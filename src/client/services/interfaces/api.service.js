@@ -39,7 +39,6 @@ Tw.ApiService.prototype = {
 
   _checkAuth: function (command, params, resp) {
     Tw.Logger.info('[API RESP]', resp);
-    // TODO 2차 인증 추가
     var deferred = $.Deferred();
 
     if ( resp.code === Tw.API_CODE.CODE_03 ) {
@@ -50,7 +49,7 @@ Tw.ApiService.prototype = {
           params: params
         };
         // url, svcInfo, urlMeta, callbackFunction, deferred...
-        this._cert.open(resp.result, window.location.pathname, requestInfo, deferred, $.proxy(this._completeCert, this));
+        this._cert.open(resp.result, requestInfo, deferred, $.proxy(this._completeCert, this));
       }, this), 0);
       return deferred.promise();
     } else {

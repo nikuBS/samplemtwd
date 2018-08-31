@@ -22,6 +22,8 @@ Tw.CertificationSkKeyin = function () {
   this._deferred = null;
   this._callback = null;
   this._certResult = null;
+
+  this._corpPwdAuthYn = false;
 };
 
 
@@ -91,7 +93,12 @@ Tw.CertificationSkKeyin.prototype = {
   },
   _successSendKeyinCert: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      this.showValidText();
+      if(resp.result.corpPwdAuthYn === 'Y') {
+        // 법인 본인확인 비밀번호 입력
+        this._openCorpPasswordCert();
+      } else {
+        this.showValidText();
+      }
     } else if ( resp.code === this.SMS_CERT_ERROR.SMS2003 ) {
       this.showCertError(Tw.MSG_AUTH.CERT_01);
     } else if ( resp.code === this.SMS_CERT_ERROR.SMS2006 ) {
@@ -100,6 +107,18 @@ Tw.CertificationSkKeyin.prototype = {
       this._popupService.openAlert(resp.code + ' ' + resp.msg);
     }
 
+  },
+  _openCorpPasswordCert: function () {
+    this._popupService.open({
+      hbs: 'CO_02_01_02_01_L01_L01',
+      layer: true
+    }, $.proxy(this._onOpenCorpPasswordCert, this));
+  },
+  _onOpenCorpPasswordCert: function($popupContainer) {
+    $popupContainer.on('click', '#fe-bt-complete', $.proxy(this._onClickCorpPwComplete, this));
+  },
+  _onClickCorpPwComplete: function () {
+    this._popupService.close();
   },
   _onInputCert: function () {
     var inputCert = this.$inputCert.val();
@@ -118,7 +137,6 @@ Tw.CertificationSkKeyin.prototype = {
   },
   _successKeyinConfirm: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      // TODO success
       this._certResult = resp;
       this._popupService.close();
     } else if ( resp.code === this.SMS_CERT_ERROR.SMS2007 ) {
