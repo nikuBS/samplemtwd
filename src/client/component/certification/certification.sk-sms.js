@@ -99,8 +99,9 @@ Tw.CertificationSkSms.prototype = {
     }
   },
   _onNativeCert: function (resp) {
-    if ( resp.code === Tw.NTV_CODE.CODE_00 ) {
-
+    if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
+      this.$inputCert.val(resp.params.cert);
+      this.$inputCert.trigger('input');
     }
   },
   _onInputCert: function () {
@@ -108,6 +109,8 @@ Tw.CertificationSkSms.prototype = {
     if ( inputCert.length >= Tw.DEFAULT_CERT_LEN ) {
       this.$inputCert.val(inputCert.slice(0, Tw.DEFAULT_CERT_LEN));
       this.$btConfirm.attr('disabled', false);
+    } else {
+      this.$btConfirm.attr('disabled', true);
     }
   },
   _requestSmsConfirm: function () {
