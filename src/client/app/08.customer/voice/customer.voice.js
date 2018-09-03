@@ -19,10 +19,12 @@ Tw.CustomerVoice = function (rootEl) {
 
 Tw.CustomerVoice.prototype = {
   currentLine: { svcMgmtNum: '' },
+  historiesYn: 'Y',
+  voiceCustomer: {},
 
   _init: function () {
-    this._apiService.request(Tw.API_CMD.BFF_08_0009, {})
-      .done($.proxy(this._onSuccessVoiceStatus, this));
+    this._apiService.request(Tw.API_CMD.BFF_01_0002, {})
+      .done($.proxy(this._onSuccessLine, this));
   },
 
   _cachedElement: function () {
@@ -40,9 +42,18 @@ Tw.CustomerVoice.prototype = {
     this.$container.on('click', '.fe-btn-auth-cancel', $.proxy(this._openAuthCancel, this));
   },
 
+  _onSuccessLine: function (res) {
+    if ( res.code === Tw.API_CODE.CODE_00 ) {
+      this.voiceCustomer.svcInfo = res.result.M;
+
+      this._apiService.request(Tw.API_CMD.BFF_08_0009, {})
+        .done($.proxy(this._onSuccessVoiceStatus, this));
+    }
+  },
+
   _onSuccessVoiceStatus: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      this.voiceCustomer = res.result;
+      this.historiesYn = res.result.hitoriesYn;
       _.map(this.voiceCustomer.svcInfo, $.proxy(this._setCurrentLine, this));
     }
   },
@@ -53,7 +64,7 @@ Tw.CustomerVoice.prototype = {
 
       if ( svcMgmtNum === svcInfo.svcMgmtNum ) {
         this.currentLine = { svcMgmtNum: svcMgmtNum };
-        this.$select_line.text(Tw.FormatHelper.conTelFormatWithDash(svcInfo.svcNumMask));
+        this.$select_line.text(Tw.FormatHelper.conTelFormatWithDash(svcInfo.svcNum));
       }
     }
   },
@@ -64,7 +75,8 @@ Tw.CustomerVoice.prototype = {
 
   _openSelectLine: function () {
     var fnMapIterator = function (svcInfo) {
-      var maskNumber = Tw.FormatHelper.conTelFormatWithDash(svcInfo.svcNumMask);
+
+      var maskNumber = Tw.FormatHelper.conTelFormatWithDash(svcInfo.svcNum);
 
       return {
         checked: maskNumber === this.$select_line.text(),
@@ -139,7 +151,7 @@ Tw.CustomerVoice.prototype = {
   },
 
   _goToVoiceSms: function () {
-    if ( this.voiceCustomer.hitoriesYn === 'Y' ) {
+    if ( this.historiesYn === 'Y' ) {
       this._popupService.openAlert(Tw.MSG_CUSTOMER.VOICE_A01, Tw.POPUP_TITLE.CONFIRM, $.proxy(this._popupClose, this));
       return false;
     } else {
