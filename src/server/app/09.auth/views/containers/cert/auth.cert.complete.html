@@ -1,5 +1,5 @@
 <%#
-* FileName: auth.cert.ipin.html
+* FileName: auth.cert.complete.html
 * Author: Ara Jo (araara.jo@sk.com)
 * Date: 2018.08.23
 %>
@@ -8,8 +8,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    window.opener.onPopupCallback('complete');
-    window.close();
+    new Tw.AuthCertComplete();
   });
 </script>
 <% include ../../components/end.component.html %>

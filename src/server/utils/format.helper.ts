@@ -197,6 +197,24 @@ class FormatHelper {
     }
     return value;
   }
+
+  /**
+   *  group by Array
+   *  @param {Array} arr
+   *  @param {String} key
+   *  @return return the object.
+   */
+  static groupByArray(arr, key): any {
+    const mapped = {};
+    arr.forEach(item => {
+      const actualKey = item[key];
+      if ( !mapped.hasOwnProperty(actualKey) ) {
+        mapped[actualKey] = [];
+      }
+      mapped[actualKey].push(item);
+    });
+    return mapped;
+  }
 }
 
 export default FormatHelper;

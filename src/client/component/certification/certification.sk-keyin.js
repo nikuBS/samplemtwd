@@ -86,6 +86,8 @@ Tw.CertificationSkKeyin.prototype = {
     }
   },
   _requestKeyinCert: function () {
+    this._nativeService.send(Tw.NTV_CMD.GET_CERT, {}, $.proxy(this._onNativeCert, this));
+
     this._apiService.request(Tw.API_CMD.BFF_01_0014, {
       jobCode: 'NFM_TWD_MBIMASK_AUTH',
       receiverNum: this.$inputMdn.val()
@@ -93,7 +95,7 @@ Tw.CertificationSkKeyin.prototype = {
   },
   _successSendKeyinCert: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      if(resp.result.corpPwdAuthYn === 'Y') {
+      if ( resp.result.corpPwdAuthYn === 'Y' ) {
         // 법인 본인확인 비밀번호 입력
         this._openCorpPasswordCert();
       } else {
@@ -108,13 +110,19 @@ Tw.CertificationSkKeyin.prototype = {
     }
 
   },
+  _onNativeCert: function (resp) {
+    if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
+      this.$inputCert.text(resp.params.cert);
+      this.$inputCert.trigger('input');
+    }
+  },
   _openCorpPasswordCert: function () {
     this._popupService.open({
       hbs: 'CO_02_01_02_01_L01_L01',
       layer: true
     }, $.proxy(this._onOpenCorpPasswordCert, this));
   },
-  _onOpenCorpPasswordCert: function($popupContainer) {
+  _onOpenCorpPasswordCert: function ($popupContainer) {
     $popupContainer.on('click', '#fe-bt-complete', $.proxy(this._onClickCorpPwComplete, this));
   },
   _onClickCorpPwComplete: function () {
@@ -125,6 +133,8 @@ Tw.CertificationSkKeyin.prototype = {
     if ( inputCert.length >= Tw.DEFAULT_CERT_LEN ) {
       this.$inputCert.val(inputCert.slice(0, Tw.DEFAULT_CERT_LEN));
       this.$btConfirm.attr('disabled', false);
+    } else {
+      this.$btConfirm.attr('disabled', true);
     }
   },
   _requestKeyinConfirm: function () {

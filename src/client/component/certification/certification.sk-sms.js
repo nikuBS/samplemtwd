@@ -87,8 +87,7 @@ Tw.CertificationSkSms.prototype = {
       if ( this._isFirstCert ) {
         this._isFirstCert = false;
       } else {
-        // this.showValidText();
-        this.showCertError(Tw.MSG_AUTH.CERT_01);
+        this.showValidText();
       }
     } else if ( resp.code === this.SMS_CERT_ERROR.SMS2003 ) {
       this.showCertError(Tw.MSG_AUTH.CERT_01);
@@ -99,8 +98,9 @@ Tw.CertificationSkSms.prototype = {
     }
   },
   _onNativeCert: function (resp) {
-    if ( resp.code === Tw.NTV_CODE.CODE_00 ) {
-
+    if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
+      this.$inputCert.val(resp.params.cert);
+      this.$inputCert.trigger('input');
     }
   },
   _onInputCert: function () {
@@ -108,6 +108,8 @@ Tw.CertificationSkSms.prototype = {
     if ( inputCert.length >= Tw.DEFAULT_CERT_LEN ) {
       this.$inputCert.val(inputCert.slice(0, Tw.DEFAULT_CERT_LEN));
       this.$btConfirm.attr('disabled', false);
+    } else {
+      this.$btConfirm.attr('disabled', true);
     }
   },
   _requestSmsConfirm: function () {

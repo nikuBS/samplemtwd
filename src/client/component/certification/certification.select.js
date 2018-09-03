@@ -25,6 +25,7 @@ Tw.CertificationSelect = function () {
   this._callback = null;
 
   window.onPopupCallback = $.proxy(this._onPopupCallback, this);
+  window.onCloseInApp = $.proxy(this._onPopupCallback, this);
 };
 
 
@@ -172,7 +173,6 @@ Tw.CertificationSelect.prototype = {
     this._popupService.close();
   },
   _onPopupCallback: function (resp) {
-    console.log('_onPopupCallback' + resp);
     this._callback({ code: Tw.API_CODE.CODE_00 }, this._deferred, this._command);
   }
 };
