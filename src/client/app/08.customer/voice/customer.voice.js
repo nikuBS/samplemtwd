@@ -143,11 +143,14 @@ Tw.CustomerVoice.prototype = {
   },
 
   _goToVoiceSms: function () {
-    if ( this.historiesYn === 'Y' ) {
-      this._popupService.openAlert(Tw.MSG_CUSTOMER.VOICE_A01, Tw.POPUP_TITLE.CONFIRM, $.proxy(this._popupClose, this));
-      return false;
-    } else {
-      this._history.replaceURL('/customer/voice/sms');
-    }
+    // TODO: remove comment tag after testing is completed.
+    // if ( this.historiesYn === 'Y' ) {
+    //   this._popupService.openAlert(Tw.MSG_CUSTOMER.VOICE_A01, Tw.POPUP_TITLE.CONFIRM, $.proxy(this._popupClose, this));
+    //   return false;
+    // } else {
+    //   this._history.replaceURL('/customer/voice/sms');
+    // }
+
+    this._history.replaceURL('/customer/voice/sms');
   }
 };
