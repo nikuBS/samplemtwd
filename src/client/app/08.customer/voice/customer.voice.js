@@ -18,7 +18,6 @@ Tw.CustomerVoice = function (rootEl) {
 };
 
 Tw.CustomerVoice.prototype = {
-  currentLine: { svcMgmtNum: '' },
   historiesYn: 'Y',
   voiceCustomer: {},
 
@@ -54,18 +53,6 @@ Tw.CustomerVoice.prototype = {
   _onSuccessVoiceStatus: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       this.historiesYn = res.result.hitoriesYn;
-      _.map(this.voiceCustomer.svcInfo, $.proxy(this._setCurrentLine, this));
-    }
-  },
-
-  _setCurrentLine: function (svcInfo) {
-    if ( this.$select_line.data('svcmgmtnum') ) {
-      var svcMgmtNum = this.$select_line.data('svcmgmtnum').toString();
-
-      if ( svcMgmtNum === svcInfo.svcMgmtNum ) {
-        this.currentLine = { svcMgmtNum: svcMgmtNum };
-        this.$select_line.text(Tw.FormatHelper.conTelFormatWithDash(svcInfo.svcNum));
-      }
     }
   },
 
@@ -75,7 +62,6 @@ Tw.CustomerVoice.prototype = {
 
   _openSelectLine: function () {
     var fnMapIterator = function (svcInfo) {
-
       var maskNumber = Tw.FormatHelper.conTelFormatWithDash(svcInfo.svcNum);
 
       return {
@@ -101,16 +87,22 @@ Tw.CustomerVoice.prototype = {
 
   _selectLine: function () {
     var $checkedLine = $('.popup').find('input:checked');
-    this.currentLine = { svcMgmtNum: $checkedLine.val() };
 
     var nSelectMaskNumber = $('.popup').find('li.checked').text().trim();
     this.$select_line.text(nSelectMaskNumber);
+    this.$select_line.attr('data-svcmgmtnum', $checkedLine.val());
 
     this._popupClose();
   },
 
   _openAuthConfirm: function () {
-    this._apiService.request(Tw.API_CMD.BFF_08_0034, this.currentLine).done($.proxy(this._onSuccessSMS, this));
+    var currentServiceNumber = this.$select_line.data('svcmgmtnum');
+
+    if ( currentServiceNumber ) {
+      this._apiService.request(Tw.API_CMD.BFF_08_0034, currentServiceNumber).done($.proxy(this._onSuccessSMS, this));
+    } else {
+      this._popupService.openAlert(Tw.MSG_RECHARGE.REFILL_GIFT_03, Tw.POPUP_TITLE.CONFIRM, $.proxy(this._popupClose, this));
+    }
   },
 
   _onSuccessSMS: function (resp) {
