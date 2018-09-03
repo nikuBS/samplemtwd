@@ -1,4 +1,3 @@
-
 <% if( svcInfo.svcAttrCd.indexOf('M') === 0 && additions) { %>
     <% if ( additions.addSvcProdList ) { %>
     <div class="cont-box">
@@ -187,6 +186,70 @@
     </div>
     <% } %>
     <hr class="cont-sp type1" aria-hidden="true">
+    <% if ( svcInfo.svcAttrCd.indexOf('M2') === 0 || svcInfo.svcAttrCd.indexOf('M3') === 0 ) { %>
+    <div class="cont-box nogaps-hoz">
+        <div class="box-confirm">
+            <!-- .widget -->
+            <div class="widget">
+                <div class="widget-box accordion">
+                    <h3 class="tit-a">이용안내</h3>
+                    <div class="acco-cover toggle on">
+                        <div class="bt-whole"><button role="button" aria-pressed="true"><span class="blind">내용 열기</span></button></div>
+                        <div class="acco-style">
+                            <ul class="acco-list">
+                                <li class="acco-box">
+                                    <div class="acco-tit"><button role="button" aria-pressed="false"><span class="bullet">1.</span> 요금제 변경 불가능 고객 문의</button></div>
+                                    <div class="acco-cont">
+                                        <ul class="list-dot">
+                                            <li class="list">일부 요금제의 경우 T world 상에서 변경이 불가할 수 있습니다.</li>
+                                            <li class="list">특수 고객의 경우 요금제 변경이 불가능 하므로, 고객센터 국번없이 1599-0011(유료)/휴대폰 114로 문의해 주시기 바랍니다.</li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="acco-box">
+                                    <div class="acco-tit"><button role="button" aria-pressed="false"><span class="bullet">2.</span> 월정액 상세참조인 상품</button></div>
+                                    <div class="acco-cont">
+                                        <ul class="list-dot">
+                                            <li class="list">월정액이 상세 참조인 상품은 성격에 따라, 유료로 부과 될 수 있는 상품이니 상품 안내페이지를 확인하시거나 고객센터로 문의해 주시기 바랍니다.</li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--// .widget -->
+        </div>
+    </div>
+    <% } else if (svcInfo.svcAttrCd.indexOf('M4') === 0) { %>
+    <div class="cont-box nogaps-hoz">
+        <div class="box-confirm">
+            <!-- .widget -->
+            <div class="widget">
+                <div class="widget-box accordion">
+                    <h3 class="tit-a">이용안내</h3>
+                    <div class="acco-cover toggle">
+                        <div class="bt-whole"><button role="button" aria-pressed="true"><span class="blind">내용 열기</span></button></div>
+                        <div class="acco-style">
+                            <ul class="acco-list">
+                                <li class="acco-box">
+                                    <div class="acco-tit"><button role="button" aria-pressed="false"><span class="bullet">1.</span> 부가상품 해지</button></div>
+                                    <div class="acco-cont">
+                                        <ul class="list-dot">
+                                            <li class="list">가입하신 부가상품은 원하시는 경우 언제든지 고객센터&lt;국번없이 1599-0011(유료)/휴대폰114&gt;, 대리점, T world를 통하여 해지하실 수 있습니다.</li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--// .widget -->
+        </div>
+    </div>
+    <% } else { %>
     <div class="cont-box nogaps-hoz">
         <div class="box-confirm">
             <!-- .widget -->
@@ -296,6 +359,7 @@
             <!--// .widget -->
         </div>
     </div>
+    <% } %>
 <% } %>
 
 <% if( svcInfo.svcAttrCd.indexOf('S') === 0 && additions) { %>
