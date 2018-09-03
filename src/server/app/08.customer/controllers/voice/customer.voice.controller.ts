@@ -14,19 +14,19 @@ class CustomerVoice extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo?: any, layerType?: string): void {
-    svcInfo = this.convertData(svcInfo);
+    const convertSvcInfo = this.convertData(svcInfo);
 
     if ( req.params.type === 'info' ) {
-      res.render('voice/customer.voice.info.html', { svcInfo: svcInfo });
+      res.render('voice/customer.voice.info.html', { svcInfo: convertSvcInfo });
     }
 
     if ( req.params.type === 'sms' ) {
-      res.render('voice/customer.voice.sms.html', { svcInfo: svcInfo });
+      res.render('voice/customer.voice.sms.html', { svcInfo: convertSvcInfo });
     }
   }
 
   convertData(svcInfo) {
-    return Object.assign(svcInfo, { svcNum: FormatHelper.conTelFormatWithDash(svcInfo.svcNum) });
+    return Object.assign({}, svcInfo, { svcNum: FormatHelper.conTelFormatWithDash(svcInfo.svcNum) });
   }
 }
 
