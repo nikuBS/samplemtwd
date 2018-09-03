@@ -110,6 +110,8 @@ class ApiRouter {
 
   private setCert(req: Request, res: Response, next: NextFunction) {
     const params = req.body;
+    this.logger.info(this, '[set cert]', params);
+    this.loginService.setCurrentReq(req, res);
     this.authService.setCert(req, params).subscribe((resp) => {
       res.json(resp);
     });
