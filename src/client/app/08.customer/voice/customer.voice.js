@@ -19,7 +19,7 @@ Tw.CustomerVoice = function (rootEl) {
 
 Tw.CustomerVoice.prototype = {
   historiesYn: 'Y',
-  voiceCustomer: {},
+  userLineList: [],
 
   _init: function () {
     this._apiService.request(Tw.API_CMD.BFF_01_0002, {})
@@ -43,7 +43,7 @@ Tw.CustomerVoice.prototype = {
 
   _onSuccessLine: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      this.voiceCustomer.svcInfo = res.result.M;
+      this.userLineList = res.result.M;
 
       this._apiService.request(Tw.API_CMD.BFF_08_0009, {})
         .done($.proxy(this._onSuccessVoiceStatus, this));
@@ -71,7 +71,7 @@ Tw.CustomerVoice.prototype = {
       };
     };
 
-    var htOptions = _.map(this.voiceCustomer.svcInfo, $.proxy(fnMapIterator, this));
+    var htOptions = _.map(this.userLineList, $.proxy(fnMapIterator, this));
 
     this._popupService.open({
       hbs: 'select',
@@ -99,7 +99,7 @@ Tw.CustomerVoice.prototype = {
     var currentServiceNumber = this.$select_line.data('svcmgmtnum');
 
     if ( currentServiceNumber ) {
-      this._apiService.request(Tw.API_CMD.BFF_08_0034, currentServiceNumber).done($.proxy(this._onSuccessSMS, this));
+      this._apiService.request(Tw.API_CMD.BFF_08_0034, { svcMgmtNum: currentServiceNumber }).done($.proxy(this._onSuccessSMS, this));
     } else {
       this._popupService.openAlert(Tw.MSG_RECHARGE.REFILL_GIFT_03, Tw.POPUP_TITLE.CONFIRM, $.proxy(this._popupClose, this));
     }
