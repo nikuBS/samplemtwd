@@ -87,8 +87,7 @@ Tw.CertificationSkSms.prototype = {
       if ( this._isFirstCert ) {
         this._isFirstCert = false;
       } else {
-        // this.showValidText();
-        this.showCertError(Tw.MSG_AUTH.CERT_01);
+        this.showValidText();
       }
     } else if ( resp.code === this.SMS_CERT_ERROR.SMS2003 ) {
       this.showCertError(Tw.MSG_AUTH.CERT_01);
