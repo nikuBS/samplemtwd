@@ -94,8 +94,13 @@ Tw.CustomerEmailUpload.prototype = {
       this._popupService.openAlert(Tw.MSG_CUSTOMER.EMAIL_A05);
       return false;
     }
-    // TODO ADD extension validation
-    // this._popupService.openAlert(Tw.MSG_CUSTOMER.EMAIL_A06);
+
+    // file suffix validation.
+    if ( !/(.gif|.bmp|.jpg|.jpeg|.png|.doc|.pdf|.hwp|.docx)$/ig.test(file.name) ) {
+      this._popupService.openAlert(Tw.MSG_CUSTOMER.EMAIL_A06);
+      return false;
+    }
+
     return true;
   },
 
