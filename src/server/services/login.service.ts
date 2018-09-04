@@ -40,6 +40,7 @@ class LoginService {
 
 
   public getSvcInfo(): any {
+    this.logger.debug(this, '[getSvcInfo]', this.request.session);
     if ( !FormatHelper.isEmpty(this.request.session) && !FormatHelper.isEmpty(this.request.session.svcInfo) ) {
       this.logger.debug(this, '[getSvcInfo]', this.request.session.svcInfo);
       return this.request.session.svcInfo;
@@ -84,6 +85,7 @@ class LoginService {
   }
 
   public getUserCert(): any {
+    this.logger.debug(this, '[getUserCert]', this.request.session);
     if ( !FormatHelper.isEmpty(this.request.session) && !FormatHelper.isEmpty(this.request.session.userCert) ) {
       this.logger.debug(this, '[getUserCert]', this.request.session.userCert);
       return this.request.session.userCert;
