@@ -7,6 +7,7 @@
 Tw.CertificationSkKeyin = function () {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
+  this._nativeService = Tw.Native;
 
   this.$btCert = null;
   this.$btConfirm = null;

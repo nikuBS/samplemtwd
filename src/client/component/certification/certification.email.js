@@ -7,6 +7,7 @@
 Tw.CertificationEmail = function () {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
+  this._nativeService = Tw.Native;
 
   this.$btCert = null;
   this.$btConfirm = null;
@@ -63,6 +64,8 @@ Tw.CertificationEmail.prototype = {
     this.$inputEmail.on('input', $.proxy(this._onInputEmail, this));
     this.$inputCert.on('input', $.proxy(this._onInputCert, this));
     this.$btCheckEmail.on('click', $.proxy(this._checkEmail, this));
+
+    $popupContainer.on('click', '#fe-bt-account-external', $.proxy(this._onClickBtAccountExternal, this));
 
   },
   _onCloseEmailPopup: function () {
@@ -151,6 +154,15 @@ Tw.CertificationEmail.prototype = {
   },
   _checkEmail: function () {
 
+  },
+  _onClickBtAccountExternal: function () {
+    if ( Tw.BrowserHelper.isApp() ) {
+      this._nativeService.send(Tw.NTV_CMD.ACCOUNT, {}, $.proxy(this._onNativeAccount, this));
+    } else {
+      window.open('/auth/tid/account', '_blank');
+    }
+  },
+  _onNativeAccount: function () {
+    this._nativeService.send(Tw.NTV_CMD.LOG, { type: Tw.NTV_LOG_T.DEBUG, message: '_onNativeAccount' });
   }
-
 };
