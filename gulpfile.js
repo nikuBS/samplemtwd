@@ -4,7 +4,8 @@ var gulp       = require('gulp'),
     concat     = require('gulp-concat'),
     webserver  = require('gulp-webserver'),
     livereload = require('gulp-livereload'),
-    rename     = require('gulp-rename');
+    rename     = require('gulp-rename'),
+    base64     = require('gulp-base64');
 
 
 var appNames = ['home', 'myt', 'recharge', 'payment', 'management', 'membership', 'product', 'direct', 'customer', 'auth']; // search
@@ -110,13 +111,21 @@ gulp.task('js-rb-sprint3', function () {
 });
 
 gulp.task('css-rb', function () {
-  return gulp.src('src/client/right-brain/css/style.min.css')
+  return gulp.src(['src/client/right-brain/css/**/*.css', '!src/client/right-brain/css/**/*.min.css'])
+    .pipe(base64({
+      baseDir: 'src/client/right-brain/',
+      extensions: ['svg', 'png', /\.jpg#datauri$/i],
+      maxImageSize: 10 * 1024 * 1024, // bytes
+      debug: true
+    }))
+    .pipe(concat('style.min.css'))
+    // .pipe(uglify())
     .pipe(gulp.dest(dist + 'css'));
 });
 
 gulp.task('img', function () {
-  return gulp.src('src/client/right-brain/img/**/*')
-    .pipe(gulp.dest(dist + 'img'));
+  return gulp.src('src/client/right-brain/img/dummy/**/*')
+    .pipe(gulp.dest(dist + 'img/dummy'));
 });
 
 gulp.task('hbs', function () {
