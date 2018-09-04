@@ -153,6 +153,11 @@ Tw.CertificationEmail.prototype = {
     this.$blockEmail.find('.out-time').html(Tw.DateHelper.getShortDateAndTime(time));
   },
   _checkEmail: function () {
+    var email = this.$inputEmail.val();
+    if(email.indexOf('@')) {
+      var url = email.split('@')[1];
+      Tw.CommonHelper.openUrlExternal(url);
+    }
 
   },
   _onClickBtAccountExternal: function () {
