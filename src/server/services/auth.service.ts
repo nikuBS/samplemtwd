@@ -63,6 +63,7 @@ class AuthService {
 
   private checkRequest(urlMeta, url): boolean {
     const userCert = this.loginService.getSelectedUserCert();
+    this.logger.debug(this, '[checkRequest]', url, userCert);
     if ( FormatHelper.isEmpty(userCert) ) {
       return true;
     } else {
@@ -92,6 +93,7 @@ class AuthService {
   }
 
   private setCertUrl(urlMeta, url): Observable<any> {
+    this.logger.debug(this, '[setCertUrl]', url, urlMeta);
     if ( !FormatHelper.isEmpty(urlMeta) && !FormatHelper.isEmpty(urlMeta.auth) && !FormatHelper.isEmpty(urlMeta.auth.cert) ) {
       const cert = urlMeta.auth.cert;
       switch ( cert.scope ) {
