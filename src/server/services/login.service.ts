@@ -41,6 +41,7 @@ class LoginService {
 
   public getSvcInfo(): any {
     if ( !FormatHelper.isEmpty(this.request.session) && !FormatHelper.isEmpty(this.request.session.svcInfo) ) {
+      this.logger.debug(this, '[getSvcInfo]', this.request.session.svcInfo);
       return this.request.session.svcInfo;
     }
     return null;
@@ -64,6 +65,7 @@ class LoginService {
 
   public getServerSession(): string {
     if ( !FormatHelper.isEmpty(this.request.session) && !FormatHelper.isEmpty(this.request.session.serverSession) ) {
+      this.logger.debug(this, '[getServerSession]', this.request.session.serverSession);
       return this.request.session.serverSession;
     }
     return '';
@@ -83,6 +85,7 @@ class LoginService {
 
   public getUserCert(): any {
     if ( !FormatHelper.isEmpty(this.request.session) && !FormatHelper.isEmpty(this.request.session.userCert) ) {
+      this.logger.debug(this, '[getUserCert]', this.request.session.userCert);
       return this.request.session.userCert;
     }
     return null;
