@@ -56,6 +56,7 @@ class BypassRouter {
   }
 
   private checkApi(cmd: any, req: Request, res: Response, next: NextFunction) {
+    this.loginService.setCurrentReq(req, res);
     this.authService.getUrlMeta(req).subscribe((resp) => {
       if ( resp['cert'] ) {
         return res.json({
@@ -77,7 +78,6 @@ class BypassRouter {
     const parameter = FormatHelper.isEmpty(params.parameter) ? {} : params.parameter;
     const pathVariables = FormatHelper.isEmpty(params.pathVariables) ? [] : params.pathVariables;
 
-    this.loginService.setCurrentReq(req, res);
     this.apiService.request(cmd, parameter, headers, ...(pathVariables))
       .subscribe((data) => {
         return res.json(data);
