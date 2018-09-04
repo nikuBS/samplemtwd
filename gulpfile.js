@@ -51,7 +51,7 @@ gulp.task('js-util', function () {
     'src/client/common/**/*.js'])
     .pipe(concat('util.js'))
     .pipe(gulp.dest(dist + 'js'))
-    .pipe(uglify())
+    // .pipe(uglify())
     .on('error', function (err) {
       gutil.log(gutil.colors.red('[Error]'), err.toString());
     })
