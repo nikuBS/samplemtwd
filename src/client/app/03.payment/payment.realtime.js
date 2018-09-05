@@ -54,6 +54,7 @@ Tw.PaymentRealtime.prototype = {
     };
     this._apiService.request(Tw.API_CMD.BFF_07_0023, reqData)
       .done($.proxy(function (resp) {
+        console.log(resp);
       }, this));
   },
 

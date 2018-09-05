@@ -40,12 +40,17 @@ Tw.CertificationSelect.prototype = {
     this._callback = callback;
 
     var methods = this._urlMeta.auth.cert.methods;
-    if ( methods.indexOf(',') === -1 && methods.length > 0) {
-      this._certMethod = methods;
-      // TODO: App only
-      this.openCertPopup();
+    var loginType = this._svcInfo.loginType;
+    if ( loginType === Tw.AUTH_LOGIN_TYPE.EASY ) {
+      this.openSelectPopup(loginType, methods);
     } else {
-      this.openSelectPopup(certInfo.svcInfo.loginType, methods);
+      if ( methods.indexOf(',') === -1 && methods.length > 0 ) {
+        this._certMethod = methods;
+        // TODO: App only
+        this.openCertPopup();
+      } else {
+        this.openSelectPopup(certInfo.svcInfo.loginType, methods);
+      }
     }
   },
   openSelectPopup: function (loginType, methods) {
@@ -91,16 +96,32 @@ Tw.CertificationSelect.prototype = {
           this._certPassword.open(this._svcInfo, this._urlMeta, this._authUrl, this._command, this._deferred, this._callback);
           break;
         case Tw.AUTH_CERTIFICATION_METHOD.PUBLIC_AUTH:
-          this._popupService.openAlert('Not Supported (Public auth)');
+          if ( Tw.BrowserHelper.isApp() ) {
+            this._popupService.openAlert('Not Supported (Public auth)');
+          } else {
+            this._popupService.openAlert('App only');
+          }
           break;
         case Tw.AUTH_CERTIFICATION_METHOD.BIO:
-          this._popupService.openAlert('Not Supported (Bio)');
+          if ( Tw.BrowserHelper.isApp() ) {
+            this._popupService.openAlert('Not Supported (Bio)');
+          } else {
+            this._popupService.openAlert('App only');
+          }
           break;
         case Tw.AUTH_CERTIFICATION_METHOD.SMS_PASSWORD:
-          this._certSmsPw.open(this._svcInfo, this._urlMeta, this._authUrl, this._command, this._deferred, this._callback);
+          if ( Tw.BrowserHelper.isApp() ) {
+            this._certSmsPw.open(this._svcInfo, this._urlMeta, this._authUrl, this._command, this._deferred, this._callback);
+          } else {
+            this._popupService.openAlert('App only');
+          }
           break;
         case Tw.AUTH_CERTIFICATION_METHOD.FINANCE_AUTH:
-          this._popupService.openAlert('Not Supported (Finance auth)');
+          if ( Tw.BrowserHelper.isApp() ) {
+            this._popupService.openAlert('Not Supported (Finance auth)');
+          } else {
+            this._popupService.openAlert('App only');
+          }
           break;
         default:
           this._popupService.openAlert('Not Supported');
