@@ -9,7 +9,10 @@ Tw.CommonHelper = (function () {
         href: url
       }, null);
     } else {
-      window.open(url, '_blank', option);
+      var windowPopup = window.open(url, '_blank', option);
+      if(Tw.FormatHelper.isEmpty(windowPopup)) {
+        Tw.Popup.openAlert('Pop-up blocked');
+      }
     }
   };
   // 앱 / 일반에서 링크 열기

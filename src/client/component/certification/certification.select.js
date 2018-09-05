@@ -39,13 +39,17 @@ Tw.CertificationSelect.prototype = {
     this._deferred = deferred;
     this._callback = callback;
 
-    if ( certInfo.svcInfo.loginType === Tw.AUTH_LOGIN_TYPE.TID ) {
-      this.openSelectPopup('CO_02_01_01_L01', this._urlMeta.auth.cert.methods);
+    var methods = this._urlMeta.auth.cert.methods;
+    if ( methods.indexOf(',') === -1 && methods.length > 0) {
+      this._certMethod = methods;
+      // TODO: App only
+      this.openCertPopup();
     } else {
-      this.openSelectPopup('CO_02_01_01_L02', this._urlMeta.auth.cert.methods);
+      this.openSelectPopup(certInfo.svcInfo.loginType, methods);
     }
   },
-  openSelectPopup: function (popupType, methods) {
+  openSelectPopup: function (loginType, methods) {
+    var popupType = loginType === Tw.AUTH_LOGIN_TYPE.TID ? 'CO_02_01_01_L01' : 'CO_02_01_01_L02';
     this._popupService.open({
       hbs: popupType,
       layer: true,
@@ -56,28 +60,14 @@ Tw.CertificationSelect.prototype = {
         save: methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SAVE) !== -1,
         ipin: methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.IPIN) !== -1,
         email: methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.EMAIL) !== -1,
-        bio: methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.BIO) !== -1,
-        password: methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.PASSWORD) !== -1,
-        finance: methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.FINANCE_AUTH) !== -1,
-        smsPassword: methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SMS_PASSWORD) !== -1
+        bio: methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.BIO) !== -1 && Tw.BrowserHelper.isApp(),
+        password: methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.PASSWORD) !== -1 && Tw.BrowserHelper.isApp(),
+        finance: methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.PUBLIC_AUTH) !== -1 && Tw.BrowserHelper.isApp(),
+        smsPassword: methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SMS_PASSWORD) !== -1 && Tw.BrowserHelper.isApp()
       }
     }, $.proxy(this._onOpenSelectPopup, this), $.proxy(this._onCloseSelectPopup, this));
   },
-  _onOpenSelectPopup: function ($popupContainer) {
-    $popupContainer.on('click', '#fe-bt-sk', $.proxy(this._onClickSkSms, this));
-    $popupContainer.on('click', '#fe-bt-motp', $.proxy(this._onClickMotp, this));
-    $popupContainer.on('click', '#fe-bt-kt', $.proxy(this._onClickKtSms, this));
-    $popupContainer.on('click', '#fe-bt-lg', $.proxy(this._onClickLgSms, this));
-    $popupContainer.on('click', '#fe-bt-save', $.proxy(this._onClickSaveSms, this));
-    $popupContainer.on('click', '#fe-bt-ipin', $.proxy(this._onClickIpin, this));
-    $popupContainer.on('click', '#fe-bt-email', $.proxy(this._onClickEmail, this));
-    $popupContainer.on('click', '#fe-bt-bio', $.proxy(this._onClickBio, this));
-    $popupContainer.on('click', '#fe-bt-password', $.proxy(this._onClickSkPassword, this));
-    $popupContainer.on('click', '#fe-bt-finance', $.proxy(this._onClickSkFinance, this));
-    $popupContainer.on('click', '#fe-bt-smspw', $.proxy(this._onClickSmsPw, this));
-
-  },
-  _onCloseSelectPopup: function () {
+  openCertPopup: function () {
     if ( !Tw.FormatHelper.isEmpty(this._certMethod) ) {
       switch ( this._certMethod ) {
         case Tw.AUTH_CERTIFICATION_METHOD.SK_SMS:
@@ -100,8 +90,8 @@ Tw.CertificationSelect.prototype = {
         case Tw.AUTH_CERTIFICATION_METHOD.PASSWORD:
           this._certPassword.open(this._svcInfo, this._urlMeta, this._authUrl, this._command, this._deferred, this._callback);
           break;
-        case Tw.AUTH_CERTIFICATION_METHOD.FINANCE_AUTH:
-          this._popupService.openAlert('Not Supported (Finance)');
+        case Tw.AUTH_CERTIFICATION_METHOD.PUBLIC_AUTH:
+          this._popupService.openAlert('Not Supported (Public auth)');
           break;
         case Tw.AUTH_CERTIFICATION_METHOD.BIO:
           this._popupService.openAlert('Not Supported (Bio)');
@@ -109,11 +99,30 @@ Tw.CertificationSelect.prototype = {
         case Tw.AUTH_CERTIFICATION_METHOD.SMS_PASSWORD:
           this._certSmsPw.open(this._svcInfo, this._urlMeta, this._authUrl, this._command, this._deferred, this._callback);
           break;
+        case Tw.AUTH_CERTIFICATION_METHOD.FINANCE_AUTH:
+          this._popupService.openAlert('Not Supported (Finance auth)');
+          break;
         default:
           this._popupService.openAlert('Not Supported');
           break;
       }
     }
+  },
+  _onOpenSelectPopup: function ($popupContainer) {
+    $popupContainer.on('click', '#fe-bt-sk', $.proxy(this._onClickSkSms, this));
+    $popupContainer.on('click', '#fe-bt-motp', $.proxy(this._onClickMotp, this));
+    $popupContainer.on('click', '#fe-bt-kt', $.proxy(this._onClickKtSms, this));
+    $popupContainer.on('click', '#fe-bt-lg', $.proxy(this._onClickLgSms, this));
+    $popupContainer.on('click', '#fe-bt-save', $.proxy(this._onClickSaveSms, this));
+    $popupContainer.on('click', '#fe-bt-ipin', $.proxy(this._onClickIpin, this));
+    $popupContainer.on('click', '#fe-bt-email', $.proxy(this._onClickEmail, this));
+    $popupContainer.on('click', '#fe-bt-bio', $.proxy(this._onClickBio, this));
+    $popupContainer.on('click', '#fe-bt-password', $.proxy(this._onClickSkPassword, this));
+    $popupContainer.on('click', '#fe-bt-finance', $.proxy(this._onClickSkFinance, this));
+    $popupContainer.on('click', '#fe-bt-smspw', $.proxy(this._onClickSmsPw, this));
+  },
+  _onCloseSelectPopup: function () {
+    this.openCertPopup();
   },
   _openCertBrowser: function (path) {
     this._apiService.request(Tw.NODE_CMD.GET_DOMAIN, {})
