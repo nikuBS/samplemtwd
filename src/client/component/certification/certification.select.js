@@ -42,6 +42,7 @@ Tw.CertificationSelect.prototype = {
     var methods = this._urlMeta.auth.cert.methods;
     if ( methods.indexOf(',') === -1 && methods.length > 0) {
       this._certMethod = methods;
+      // TODO: App only
       this.openCertPopup();
     } else {
       this.openSelectPopup(certInfo.svcInfo.loginType, methods);
@@ -59,10 +60,10 @@ Tw.CertificationSelect.prototype = {
         save: methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SAVE) !== -1,
         ipin: methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.IPIN) !== -1,
         email: methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.EMAIL) !== -1,
-        bio: methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.BIO) !== -1,
-        password: methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.PASSWORD) !== -1,
-        finance: methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.PUBLIC_AUTH) !== -1,
-        smsPassword: methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SMS_PASSWORD) !== -1
+        bio: methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.BIO) !== -1 && Tw.BrowserHelper.isApp(),
+        password: methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.PASSWORD) !== -1 && Tw.BrowserHelper.isApp(),
+        finance: methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.PUBLIC_AUTH) !== -1 && Tw.BrowserHelper.isApp(),
+        smsPassword: methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SMS_PASSWORD) !== -1 && Tw.BrowserHelper.isApp()
       }
     }, $.proxy(this._onOpenSelectPopup, this), $.proxy(this._onCloseSelectPopup, this));
   },
