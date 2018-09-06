@@ -24,7 +24,7 @@ Tw.MyTBillHotBill = function (rootEl) {
 
 Tw.MyTBillHotBill.prototype = {
   _cachedElement: function () {
-    this.$billMenu = this.$container.find('fe-billAccordion');
+    this.$billMenu = this.$container.find('#fe-billAccordion');
     this.$amount = this.$container.find('.payment-all em');
     this.$period = this.$container.find('.payment-all > .term');
     this.$memberInfo = this.$container.find('.use-family');
@@ -161,7 +161,7 @@ Tw.MyTBillHotBill.prototype = {
     var template = Handlebars.compile(source);
     var output = template({ billItems: group });
     this.$billMenu.append(output);
-    skt_landing.widgets.widget_accordion2();
+    skt_landing.widgets.widget_accordion2(this.$billMenu);
   },
 
   _showChildrenChoice: function (e) {
