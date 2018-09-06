@@ -1,4 +1,6 @@
 // for APM
+import HomeRouter from './app/01.home/home.router';
+
 const WhatapAgent = require('whatap').NodeAgent;
 
 // Node Modules
@@ -14,23 +16,25 @@ import environment from './config/environment.config';
 
 // Route Modules
 import AppRouter from './common/app.router';
-import HomeRouter from './app/00.home/home.router';
-import MytRouter from './app/01.myt/myt.router';
-import RechargeRouter from './app/02.recharge/recharge.router';
-import PaymentRouter from './app/03.payment/payment.router';
-import ManagementRouter from './app/04.management/management.router';
-import MembershipRouter from './app/05.membership/membership.router';
-import ProductRouter from './app/06.product/product.router';
-import DirectRouter from './app/07.direct/direct.router';
-import CustomerRouter from './app/08.customer/customer.router';
-import AuthRouter from './app/09.auth/auth.router';
-import SearchRouter from './app/search/search.router';
-import CommonRouter from './app/common/common.router';
+import { default as OldHomeRouter } from './app/900.home/home.router';
+import { default as OldMytRouter } from './app/901.myt/myt.router';
+import { default as OldRechargeRouter } from './app/902.recharge/recharge.router';
+import { default as OldPaymentRouter } from './app/903.payment/payment.router';
+import { default as OldCustomerRouter } from './app/904.customer/customer.router';
+import { default as OldAuthRouter } from './app/905.auth/auth.router';
+import { default as OldCommonRouter } from './app/909.common/common.router';
 import BypassRouter from './common/bypass.router';
 import ApiRouter from './common/api.router';
 
 // Application Modules
 import RedisService from './services/redis.service';
+import MyTDataRouter from './app/02.myt/data/myt.data.router';
+import MyTFareRouter from './app/02.myt/fare/myt.fare.router';
+import MyTJoinRouter from './app/02.myt/join/myt.join.router';
+import ProductRouter from './app/03.product/product.router';
+import BenefitRouter from './app/04.benefit/benefit.router';
+import CustomerRouter from './app/05.customer/customer.router';
+import AuthRouter from './app/06.auth/auth.router';
 
 class App {
   public app: Application = express();
@@ -84,33 +88,42 @@ class App {
   }
 
   private setRoutes() {
+    this.app.use('/home', new AppRouter(OldHomeRouter.instance.controllers).router);
+    this.app.use('/myt', new AppRouter(OldMytRouter.instance.controllers).router);
+    this.app.use('/recharge', new AppRouter(OldRechargeRouter.instance.controllers).router);
+    this.app.use('/payment', new AppRouter(OldPaymentRouter.instance.controllers).router);
+    this.app.use('/customer', new AppRouter(OldCustomerRouter.instance.controllers).router);
+    this.app.use('/auth', new AppRouter(OldAuthRouter.instance.controllers).router);
+    this.app.use('/common', new AppRouter(OldCommonRouter.instance.controllers).router);
+
     this.app.use('/home', new AppRouter(HomeRouter.instance.controllers).router);
-    this.app.use('/myt', new AppRouter(MytRouter.instance.controllers).router);
-    this.app.use('/recharge', new AppRouter(RechargeRouter.instance.controllers).router);
-    this.app.use('/payment', new AppRouter(PaymentRouter.instance.controllers).router);
-    this.app.use('/management', new AppRouter(ManagementRouter.instance.controllers).router);
-    this.app.use('/membership', new AppRouter(MembershipRouter.instance.controllers).router);
+    this.app.use('/myt/data', new AppRouter(MyTDataRouter.instance.controllers).router);
+    this.app.use('/myt/fare', new AppRouter(MyTFareRouter.instance.controllers).router);
+    this.app.use('/myt/join', new AppRouter(MyTJoinRouter.instance.controllers).router);
     this.app.use('/product', new AppRouter(ProductRouter.instance.controllers).router);
-    this.app.use('/direct', new AppRouter(DirectRouter.instance.controllers).router);
+    this.app.use('/benefit', new AppRouter(BenefitRouter.instance.controllers).router);
     this.app.use('/customer', new AppRouter(CustomerRouter.instance.controllers).router);
     this.app.use('/auth', new AppRouter(AuthRouter.instance.controllers).router);
-    this.app.use('/search', new AppRouter(SearchRouter.instance.controllers).router);
-    this.app.use('/common', new AppRouter(CommonRouter.instance.controllers).router);
+
   }
 
   private setViewPath() {
     this.app.set('views', [
-      path.join(__dirname, 'app/00.home/views/containers'),
-      path.join(__dirname, 'app/01.myt/views/containers'),
-      path.join(__dirname, 'app/02.recharge/views/containers'),
-      path.join(__dirname, 'app/03.payment/views/containers'),
-      path.join(__dirname, 'app/04.management/views/containers'),
-      path.join(__dirname, 'app/05.membership/views/containers'),
-      path.join(__dirname, 'app/06.product/views/containers'),
-      path.join(__dirname, 'app/07.direct/views/containers'),
-      path.join(__dirname, 'app/08.customer/views/containers'),
-      path.join(__dirname, 'app/09.auth/views/containers'),
-      path.join(__dirname, 'app/search/views/containers'),
+      path.join(__dirname, 'app/01.home/views/containers'),
+      path.join(__dirname, 'app/02.myt/data/views/containers'),
+      path.join(__dirname, 'app/02.myt/fare/views/containers'),
+      path.join(__dirname, 'app/02.myt/join/views/containers'),
+      path.join(__dirname, 'app/03.product/views/containers'),
+      path.join(__dirname, 'app/04.benefit/views/containers'),
+      path.join(__dirname, 'app/05.customer/views/containers'),
+      path.join(__dirname, 'app/06.auth/views/containers'),
+
+      path.join(__dirname, 'app/900.home/views/containers'),
+      path.join(__dirname, 'app/901.myt/views/containers'),
+      path.join(__dirname, 'app/902.recharge/views/containers'),
+      path.join(__dirname, 'app/903.payment/views/containers'),
+      path.join(__dirname, 'app/904.customer/views/containers'),
+      path.join(__dirname, 'app/905.auth/views/containers'),
       path.join(__dirname, 'common/views/containers')
 
     ]);

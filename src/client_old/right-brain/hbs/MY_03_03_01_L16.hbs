@@ -1,0 +1,51 @@
+<div class="popup-page">
+    <!-- #header -->
+    <div class="header-wrap">
+        <div class="page-header">
+            <div class="header-ti">
+                <h1>통합대표 회선안내 </h1>
+            </div>
+        </div>
+    </div>
+    <!--// #header -->
+    <!-- .container-wrap -->
+    <div class="container-wrap hidden-x">
+        <h2 class="blind">내용</h2>
+        <div class="container"><!--2018-07-11 수정-->
+            <div class="cont-box noborder">
+                <div class="commend-bill-info">
+                    <p class="bill-tit">
+                        {{svcNum}}
+                        <strong class="num">{{data.svcNum}}</strong>에 통합되어<br />요금이 안내되는 회선은 총<strong class="num">{{data.svcCnt}}</strong>개 입니다.
+                    </p>
+                    <div class="contents-info-list">
+                        <ul class="bill-history">
+                            {{#each data.list}}
+                            <li>
+                                <div class="info-user">
+                                    <span class="info-title">{{svcType}}</span>
+                                </div>
+                                <div class="info-data">
+                                    <span class="info-title num">
+                                        {{#if isCeo}}
+                                        <span class="badge badge-allpay"><span class="blind">통합대표</span></span>
+                                        {{/if}}
+                                        {{svcNum}}
+                                    </span>
+                                    {{#if haveAddr}}
+                                    <span class="info-sub">{{dtlAddr}}</span>
+                                    {{/if}}
+                                </div>
+                            </li>
+                            {{/each}}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <!--// #contents -->
+    </div>
+    <!-- .popup-closeBtn -->
+    <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button>
+    <!--// .popup-closeBtn -->
+</div>

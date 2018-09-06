@@ -12,7 +12,7 @@ class ErrorService {
   static instance;
 
   constructor() {
-    if (ErrorService.instance) {
+    if ( ErrorService.instance ) {
       return ErrorService.instance;
     }
 
@@ -39,7 +39,7 @@ class ErrorService {
     let errorResult: any = null;
 
     apiArray.forEach((api) => {
-      if (API_CODE.CODE_00 === api.code) {
+      if ( API_CODE.CODE_00 === api.code ) {
         return true;
       }
 
