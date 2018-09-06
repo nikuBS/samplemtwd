@@ -5,8 +5,8 @@ Tw.FormatHelper = (function () {
   };
 
   var isEmpty = function (value) {
-    if (value === '' || value == null || value === undefined ||
-      (value != null && typeof value === 'object' && !Object.keys(value).length)) {
+    if ( value === '' || value == null || value === undefined ||
+      (value != null && typeof value === 'object' && !Object.keys(value).length) ) {
       return true;
     }
     return false;
@@ -30,7 +30,7 @@ Tw.FormatHelper = (function () {
   };
 
   var removeZero = function (value) {
-    if (value.indexOf('.') !== -1) {
+    if ( value.indexOf('.') !== -1 ) {
       return value.replace(/(0+$)/, '');
     }
 
@@ -46,16 +46,16 @@ Tw.FormatHelper = (function () {
   };
 
   var convNumFormat = function (number) {
-    if (number < 1) {
+    if ( number < 1 ) {
       return setDecimalPlace(number, 2);
     }
-    if (number > 0 && number < 100 && number % 1 !== 0) {
+    if ( number > 0 && number < 100 && number % 1 !== 0 ) {
       return removeZero(number.toFixed(2));
     }
-    if (number >= 100 && number < 1000 && number % 1 !== 0) {
+    if ( number >= 100 && number < 1000 && number % 1 !== 0 ) {
       return removeZero(number.toFixed(1));
     }
-    if (number > 1000) {
+    if ( number > 1000 ) {
       return addComma(number.toFixed(0));
     }
 
@@ -84,12 +84,12 @@ Tw.FormatHelper = (function () {
 
     var i = 0;
     data = +data;
-    if (sub > 0) {
-      for (i = 0; i < sub; i++) {
+    if ( sub > 0 ) {
+      for ( i = 0; i < sub; i++ ) {
         data = data / 1024;
       }
     } else {
-      for (i = 0; i < sub * -1; i++) {
+      for ( i = 0; i < sub * -1; i++ ) {
         data = data * 1024;
       }
     }
@@ -107,14 +107,14 @@ Tw.FormatHelper = (function () {
     });
 
     data = +data;
-    if (!isFinite(data)) {
+    if ( !isFinite(data) ) {
       return {
         data: data,
         unit: curUnit
       };
     }
 
-    while (data >= 1024) {
+    while ( data >= 1024 ) {
       data /= 1024;
       unitIdx++;
     }
@@ -159,18 +159,18 @@ Tw.FormatHelper = (function () {
     return cardYm.substr(0, 4) + '/' + cardYm.substr(4, 2);
   };
 
-  function getDashedCellPhoneNumber(phoneNumber) {
+  var getDashedCellPhoneNumber = function (phoneNumber) {
     var str = '';
     var remainLen = phoneNumber.length;
     var startIdx = 0;
     var DEFAULT_COUNT = remainLen <= 10 && !/^010/.test(phoneNumber) ? 3 : 4;
     var digit = DEFAULT_COUNT;
 
-    while (remainLen !== 0) {
+    while ( remainLen !== 0 ) {
       digit = str ? remainLen >= DEFAULT_COUNT ? DEFAULT_COUNT : remainLen : 3;
       str += phoneNumber.substr(startIdx, digit);
 
-      if (remainLen > DEFAULT_COUNT) {
+      if ( remainLen > DEFAULT_COUNT ) {
         str += '-';
       }
       remainLen -= digit;
@@ -178,16 +178,16 @@ Tw.FormatHelper = (function () {
     }
 
     return str;
-  }
+  };
 
-  function _getDashedTelephoneNumber(phoneNumber) {
+  var _getDashedTelephoneNumber = function (phoneNumber) {
     var str = '';
     var centerIdx = -1;
-    if (/^02/.test(phoneNumber)) {
+    if ( /^02/.test(phoneNumber) ) {
       str += phoneNumber.substring(0, 2);
       str += '-';
 
-      if (phoneNumber.length === 9) {
+      if ( phoneNumber.length === 9 ) {
         centerIdx = 5;
       } else {
         centerIdx = 6;
@@ -199,7 +199,7 @@ Tw.FormatHelper = (function () {
       str += phoneNumber.substring(0, 3);
       str += '-';
 
-      if (phoneNumber.length === 10) {
+      if ( phoneNumber.length === 10 ) {
         centerIdx = 5;
       } else {
         centerIdx = 7;
@@ -210,17 +210,17 @@ Tw.FormatHelper = (function () {
     }
 
     return str;
-  }
+  };
 
-  function _getDashedRepresentPhoneNumber(phoneNumber) {
+  var _getDashedRepresentPhoneNumber = function (phoneNumber) {
     var str = '';
     str += phoneNumber.substring(0, 3);
     str += '-';
     str += phoneNumber.substring(4);
     return str;
-  }
+  };
 
-  function getFormattedPhoneNumber(phoneNumber) {
+  var getFormattedPhoneNumber = function (phoneNumber) {
     var getMaskingPhoneNumber = function (mpn) {
       var tmpArr = mpn.split('-');
       var MASKING_MARK = '*';
@@ -229,19 +229,19 @@ Tw.FormatHelper = (function () {
       return tmpArr.join('-');
     };
     return getMaskingPhoneNumber(getDashedCellPhoneNumber(phoneNumber));
-  }
+  };
 
-  function getDashedPhoneNumber(phoneNumber) {
-    if (Tw.ValidationHelper.isTelephone(phoneNumber)) {
+  var getDashedPhoneNumber = function (phoneNumber) {
+    if ( Tw.ValidationHelper.isTelephone(phoneNumber) ) {
       return _getDashedTelephoneNumber(phoneNumber);
-    } else if (Tw.ValidationHelper.isCellPhone(phoneNumber)) {
+    } else if ( Tw.ValidationHelper.isCellPhone(phoneNumber) ) {
       return getDashedCellPhoneNumber(phoneNumber);
-    } else if (Tw.ValidationHelper.isRepresentNumber(phoneNumber)) {
+    } else if ( Tw.ValidationHelper.isRepresentNumber(phoneNumber) ) {
       return _getDashedRepresentPhoneNumber(phoneNumber);
     }
 
     return phoneNumber;
-  }
+  };
 
   var removeComma = function (str) {
     return str.replace(/,/g, '');
@@ -255,6 +255,15 @@ Tw.FormatHelper = (function () {
   var is6digitPassSolidNumber = function (str) {
     var regex = /(012345)|(123456)|(234567)|(345678)|(456789)|(567890)|(678901)|(789012)|(890123)|(901234)|(098765)|(987654)|(876543)|(765432)|(654321)|(543210)|(432109)|(321098)|(210987)|(109876)/;
     return regex.test(str);
+  };
+
+  var removeElement = function (arrayList, element) {
+    var index = arrayList.findIndex(function (item) {
+      return item === element;
+    });
+    if ( index !== -1 ) {
+      arrayList.splice(index, 1);
+    }
   };
 
   return {
@@ -281,6 +290,7 @@ Tw.FormatHelper = (function () {
     setDecimalPlace: setDecimalPlace,
     is6digitPassSameNumber: is6digitPassSameNumber,
     is6digitPassSolidNumber: is6digitPassSolidNumber,
-    normalizeNumber: normalizeNumber
+    normalizeNumber: normalizeNumber,
+    removeElement: removeElement
   };
 })();
