@@ -58,6 +58,9 @@
     "ts-node": "^6.0.5",
     "tslint": "^5.9.1",
     "tslint-config-standard": "^7.0.0",
-    "typescript": "^2.9.1"
+    "typescript": "^2.9.1",
+    "webpack": "^4.17.2",
+    "webpack-manifest-plugin": "^2.0.3",
+    "webpack-node-externals": "^1.7.2"
   }
 }

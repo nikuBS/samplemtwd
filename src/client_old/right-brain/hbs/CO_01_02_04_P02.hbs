@@ -1,0 +1,115 @@
+<div class="popup-page nobg"><!-- .no-btn 하단에 버튼이 없을 경우 -->
+    <!-- #header -->
+    <div class="header-wrap">
+        <div class="page-header">
+            <div class="header-ti">
+                <h1>T world 이용 회선 등록 안내</h1>
+            </div>
+        </div>
+    </div>
+    <!--// #header -->
+    <!-- .container-wrap -->
+    <div class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <!-- .cont-box -->
+            <div class="cont-box">
+                <div class="box-suggest">
+                    <div class="suggest-info">
+                        <p class="suggest-ti">아직 T world 이용 회선으로<br /><em class="tx-bold">등록되지 않은 회선이 100개</em><br />있습니다.</p>
+                        <ul class="suggest-list">
+                            <li>회선을 선택하시면, T world에서 요금 조회 및 납부 등의 업무 처리 뿐만 아니라 고객님만을 위한 특별한 혜택도 보실 수 있습니다.</li>
+                            <li>선택하신 회선들은 <span class="tx-point">회원정보&gt;회선관리</span> 메뉴에서 보실 수 있습니다.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!--// .cont-box -->
+
+            <hr class="cont-sp type1" aria-hidden="true"/>
+
+            <!-- .cont-box -->
+            <div class="cont-box">
+                <div class="box-mlinesel">
+                    <div class="mlinesel-top">
+                        <p class="ti">이용하실 회선 선택</p>
+                        <div class="widget">
+                            <div class="widget-box check">
+                                <div class="checkbox type02 all_chk" role="checkbox" aria-checked="false">
+                                    <input  id="all-check" type="checkbox" name="checkbox" value="" title="체크박스"/>
+                                    <span class="tit-a">전체</span>
+                                    <i class="ico"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mlinesel-cont">
+                        <div class="mlinesel-list">
+                            <div class="widget">
+                                <div class="widget-box check">
+                                    <ul class="select-list" role="group">
+                                        {{#if data.m}}
+                                            {{#each data.m}}
+                                                {{#if isShow}}
+                                                <li class="checkbox type01" role="checkbox" aria-checked="false" data-svcMgmtNum="{{svcMgmtNum}}" data-showName="{{ showName }}" data-svcNum="{{ svcNum }}">
+                                                    <input class="child-check" type="checkbox" name="checkbox" value="" title="체크박스"/>
+                                                    <dl class="mline-detail">
+                                                        <dt>{{ showSvcAttrCd }}</dt>
+                                                        <dd class="device">갤럭*****</dd>
+                                                        <dd class="ph">{{ svcNum }}</dd>
+                                                    </dl>
+                                                </li>
+                                                {{/if}}
+                                            {{/each}}
+                                        {{/if}}
+                                        {{#if data.s}}
+                                            {{#each data.s}}
+                                                {{#if isShow}}
+                                                <li class="checkbox type01" role="checkbox" aria-checked="false" data-svcMgmtNum="{{svcMgmtNum}}" data-showName="{{ showName }}" data-svcNum="{{ svcNum }}">
+                                                    <input class="child-check" type="checkbox" name="checkbox" value="값4" title="체크박스"/>
+                                                    <dl class="mline-detail">
+                                                        <dt>{{ showSvcAttrCd }}</dt>
+                                                        <dd class="ph">{{ addr }}</dd>
+                                                    </dl>
+                                                </li>
+                                                {{/if}}
+                                            {{/each}}
+                                        {{/if}}
+                                        {{#if data.o}}
+                                            {{#each data.o}}
+                                                {{#if isShow}}
+                                                <li class="checkbox type01" role="checkbox" aria-checked="false" data-svcMgmtNum="{{svcMgmtNum}}" data-showName="{{ showName }}" data-svcNum="{{ svcNum }}">
+                                                    <input class="child-check" type="checkbox" name="checkbox" value="값4" title="체크박스"/>
+                                                    <dl class="mline-detail">
+                                                        <dt>{{ showSvcAttrCd }}</dt>
+                                                        <dd class="ph">{{ svcNum }}</dd>
+                                                    </dl>
+                                                </li>
+                                                {{/if}}
+                                            {{/each}}
+                                        {{/if}}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--// .cont-box -->
+            <div class="footer-wrap fixed">
+                <div class="page-gnb">
+                    <div class="bt-popup">
+                        <div class="bt-indiv bt-red1">
+                            <button class="indiv-small" disabled>선택 취소</button>
+                            <button class="indiv-big" disabled>선택 회선 등록</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--// .container-wrap -->
+    <!-- .popup-closeBtn -->
+    <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button>
+    <!--// .popup-closeBtn -->
+</div>

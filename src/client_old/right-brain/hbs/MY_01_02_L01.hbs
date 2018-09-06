@@ -1,0 +1,91 @@
+<div class="popup-page bg-none">
+    <!-- .no-btn 하단에 버튼이 없을 경우 -->
+    <!-- #header -->
+    <div class="header-wrap">
+        <div class="page-header">
+            <div class="header-ti">
+                <h1>개통 / 변경이력 조회</h1>
+            </div>
+        </div>
+    </div>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <div class="cont-box">
+                {{#each data.list}}
+                <div class="payment-detail-box mb20">
+                    <div class="detail-inner">
+                        <div class="detail-list type1">
+                            <ul>
+                                <li>
+                                    <span class="title">일자</span>
+                                    <span class="tx-cont"><span class="ff-type">{{chgDt}}</span></span>
+                                </li>
+                                <li>
+                                    <span class="title">처리업무</span>
+                                    <span class="tx-cont">{{chgCd}}</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                {{/each}}
+            </div>
+            
+            <hr class="cont-sp type1" aria-hidden="true" />
+
+            <div class="cont-box nogaps-hoz">
+                <div class="box-confirm">
+                    <!-- .widget -->
+                    <div class="widget">
+                        <div class="widget-box accordion">
+                            <h3 class="tit-a">이용안내</h3>
+                            <div class="acco-cover toggle"><!-- toggle : 한개만 열기 -->
+                                <div class="bt-whole"><button role="button" aria-pressed="false"><span class="blind">내용 열기</span></button></div>
+                                <div class="acco-style">
+                                    <ul class="acco-list">
+                                        <li class="acco-box">
+                                            <!-- .on: 열기 -->
+                                            <div class="acco-tit"><button role="button" aria-pressed="true">1. 개통/변경이력 조회란?</button></div>
+                                            <div class="acco-cont">
+                                                <ul class="list-dot">
+                                                    <li class="list">개통이력 및 개통 후 변경 이력이 제공됩니다.</li>
+                                                    <li class="list">개통/변경이력 조회는 2007년 3월 1일 이후 이력부터 확인 가능합니다.</li>
+                                                    <li class="list">2007년 3월 1일 이전 가입 고객은 SK텔레콤 지점/대리점에서 확인 가능합니다</li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li class="acco-box">
+                                            <div class="acco-tit"><button role="button" aria-pressed="false">2. 기기변경 이력</button></div>
+                                            <div class="acco-cont">
+                                                <ul class="list-dot">
+                                                    <li class="list">기기변경 이력은 최종 기기변경 이력만 노출됩니다.</li>
+                                                    <li class="list">단, 최종 기기변경이 USIM 기기변경일 경우에는 기기변경 이력이 노출되지 않습니다.</li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li class="acco-box">
+                                            <div class="acco-tit"><button role="button" aria-pressed="false">3. 장기가입 고객 선정 기준일 정보</button></div>
+                                            <div class="acco-cont">
+                                                <ul class="list-dot">
+                                                    <li class="list">장기가입 고객할인 선정 기준일에 대한 정보는 나의 혜택 조회 메뉴에서 확인하실 수 있습니다.</li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--// .widget -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--// #contents -->
+    <!-- .popup-closeBtn -->
+    <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button>
+    <!--// .popup-closeBtn -->
+</div>

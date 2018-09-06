@@ -1,0 +1,39 @@
+<div class="popup-page bg-none">
+    <!-- .no-btn 하단에 버튼이 없을 경우 -->
+    <!-- #header -->
+    <div class="header-wrap">
+        <div class="page-header">
+            <div class="header-ti">
+                <h1>전월요금보기</h1>
+            </div>
+        </div>
+    </div>
+    <!--// #header -->
+    <!-- #contents -->
+    <div class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <!-- content 영역 -->
+            <div class="cont-box nogaps-top">
+				<div class="box-inquiry-info">
+					<span class="inquiry-info-stxt">{{data.svcNum}}</span>
+					<span class="inquiry-info-txt"><strong>{{data.svcType}} 전월 요금</strong> 입니다.</span>
+				</div>
+            </div>
+            <!--// content 영역 -->
+			<hr class="cont-sp type1" aria-hidden="true"/>
+			<!-- content 영역 -->
+            <div class="cont-box nogaps-hoz noborder">
+				<div class="contents-empty type2">
+					<span class="ico"></span>
+					<p class="desc">전월 사용하신 요금이 없습니다.</p>
+				</div>
+            </div>
+            <!--// content 영역 -->
+        </div>
+    </div>
+    <!--// #contents -->
+    <!-- .popup-closeBtn -->
+    <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button>
+    <!--// .popup-closeBtn -->
+</div>
