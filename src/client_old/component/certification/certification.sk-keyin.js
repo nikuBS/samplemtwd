@@ -87,7 +87,7 @@ Tw.CertificationSkKeyin.prototype = {
     }
   },
   _requestKeyinCert: function () {
-    this._nativeService.send(Tw.NTV_CMD.GET_CERT, {}, $.proxy(this._onNativeCert, this));
+    this._nativeService.send(Tw.NTV_CMD.GET_CERT_NUMBER, {}, $.proxy(this._onNativeCert, this));
 
     this._apiService.request(Tw.API_CMD.BFF_01_0014, {
       jobCode: 'NFM_TWD_MBIMASK_AUTH',

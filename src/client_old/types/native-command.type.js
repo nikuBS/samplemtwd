@@ -16,7 +16,10 @@ Tw.NTV_CMD = {
   CLEAR_HISTORY: 'clearHistory',
   GET_NETWORK: 'getNetwork',
   GET_IP: 'getIp',
-  GET_CERT: 'getCert',
+  GET_CERT_NUMBER: 'getCertNumber',
+  IMPORT_CERT: 'importCert',
+  MANAGE_CERT: 'manageCert',
+  AUTH_CERT: 'authCert',
   EXIT: 'exit',
   LOG: 'log'
 };

@@ -42,6 +42,8 @@ Tw.API_CMD = {
   BFF_01_0032: { path: '/fido/registration-response', method: Tw.API_METHOD.POST },
   BFF_01_0033: { path: '/fido/authentication-request', method: Tw.API_METHOD.POST },
   BFF_01_0034: { path: '/fido/authentication-response', method: Tw.API_METHOD.POST },
+  BFF_01_0035: { path: '/cert/app', method: Tw.API_METHOD.POST },
+  BFF_01_0036: { paht: '/cert/info', method: Tw.API_METHOD.POST },
 
   // AUTH
   BFF_03_0002: { path: '/user/account-auth-sessions', method: Tw.API_METHOD.POST },

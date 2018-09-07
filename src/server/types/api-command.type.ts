@@ -55,6 +55,8 @@ export const API_CMD = {
   BFF_01_0032: { path: '/fido/registration-response', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_01_0033: { path: '/fido/authentication-request', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_01_0034: { path: '/fido/authentication-response', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true},
+  BFF_01_0035: { path: '/cert/app', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_01_0036: { path: '/cert/info', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   // AUTH
   BFF_03_0001: { path: '/test-login', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: false },
   BFF_03_0002: { path: '/user/account-auth-sessions', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
