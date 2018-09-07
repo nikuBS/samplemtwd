@@ -9,6 +9,7 @@ Tw.CertificationSelect = function () {
   this._certEmail = new Tw.CertificationEmail();
   this._certPassword = new Tw.CertificationPassword();
   this._certSmsPw = new Tw.CertificationSmsPassword();
+  this._certFinance = new Tw.CertificationFinance();
 
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -74,7 +75,8 @@ Tw.CertificationSelect.prototype = {
         email: methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.EMAIL) !== -1,
         bio: methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.BIO) !== -1,
         password: methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.PASSWORD) !== -1,
-        finance: methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.PUBLIC_AUTH) !== -1,
+        // finance: methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.PUBLIC_AUTH) !== -1,
+        finance: true,
         smsPassword: methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SMS_PASSWORD) !== -1
       }
     }, $.proxy(this._onOpenSelectPopup, this), $.proxy(this._onCloseSelectPopup, this));
@@ -105,7 +107,8 @@ Tw.CertificationSelect.prototype = {
         this._certPassword.open(this._svcInfo, this._urlMeta, this._authUrl, this._command, this._deferred, this._callback);
         break;
       case Tw.AUTH_CERTIFICATION_METHOD.PUBLIC_AUTH:
-        this._popupService.openAlert('Not Supported (Public auth)');
+        // this._popupService.openAlert('Not Supported (Public auth)');
+        this._certFinance.open(this._svcInfo, this._urlMeta, this._authUrl, this._command, this._deferred, this._callback);
         break;
       case Tw.AUTH_CERTIFICATION_METHOD.BIO:
         this._popupService.openAlert('Not Supported (Bio)');
