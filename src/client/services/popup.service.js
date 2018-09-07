@@ -1,138 +1,123 @@
-class PopupService {
-  _init () {
-    this._hashService.initHashNav($.proxy(this._onHashChange, this));
+Tw.ApiService = function () {
+  this._popupService = new Tw.PopupService();
+};
 
-  }
-  _onHashChange (hash) {
-    var lastHash = this._prevHashList[this._prevHashList.length - 1];
-    // Tw.Logger.log('[Popup] Hash Change', '#' + hash.base, lastHash);
-    if ( !Tw.FormatHelper.isEmpty(lastHash) && ('#' + hash.base) === lastHash.curHash ) {
-      var closeCallback = lastHash.closeCallback;
-      this._prevHashList.pop();
-      Tw.Logger.info('[Popup Close]');
-      this._popupClose(closeCallback);
-    }
-  }
-  _onOpenPopup () {
-    var $popups = $('.popup, .popup-page');
-    var $currentPopup = $($popups[$popups.length - 1]);
-    Tw.Logger.info('[Popup Open]');
-    this._bindEvent($currentPopup);
-    if ( !Tw.FormatHelper.isEmpty(this._openCallback) ) {
-      this._sendOpenCallback($currentPopup);
-    }
-  }
-  _popupClose (closeCallback) {
-    this._confirmCallback = null;
-    if ( !Tw.FormatHelper.isEmpty(closeCallback) ) {
-      closeCallback();
-    }
-    skt_landing.action.popup.close();
-  }
-  _addHash (closeCallback) {
-    var curHash = location.hash || '#';
-    // Tw.Logger.log('[Popup] Add Hash', curHash);
-    this._prevHashList.push({
-      curHash: curHash,
-      closeCallback: closeCallback
+Tw.ApiService.prototype = {
+  request: function (command, params, headers) {
+    var pathVariables = this._getPathVariables(arguments);
+    var htOptions = this._makeOptions(command, params, headers, pathVariables);
+    Tw.Logger.info('[API REQ]', htOptions);
+
+    return $.ajax(htOptions)
+      .then($.proxy(this._checkAuth, this, command, params));
+  },
+
+  requestAjax: function (command, data) {
+    Tw.Logger.info('[API REQ ajax]', command, data);
+
+    return $.ajax({
+      headers: this._makeHeaders(command),
+      method: command.method,
+      url: command.url + command.path,
+      data: command.method === Tw.API_METHOD.GET ? data : JSON.stringify(data)
     });
-    // location.hash = 'popup' + this._prevHashList.length;
-    history.pushState(this._popupObj, 'popup', '#popup' + this._prevHashList.length);
-  }
-  _bindEvent ($container) {
-    $container.on('click', '.popup-closeBtn', $.proxy(this.close, this));
-    $container.on('click', '.tw-popup-closeBtn', $.proxy(this.close, this));
-    $container.on('click', '.tw-popup-confirm', $.proxy(this._confirm, this));
-  }
-  _confirm () {
-    if ( !Tw.FormatHelper.isEmpty(this._confirmCallback) ) {
-      this._sendConfirmCallback();
+  },
+
+  requestForm: function (command, data) {
+    Tw.Logger.info('[API REQ Form]', command, data);
+
+    return $.ajax({
+      method: command.method,
+      url: '/api' + command.path,
+      processData: false,
+      contentType: false,
+      cache: false,
+      data: data,
+      enctype: 'multipart/form-data'
+    });
+  },
+
+  _checkAuth: function (command, params, resp) {
+    Tw.Logger.info('[API RESP]', resp);
+    var deferred = $.Deferred();
+
+    if ( resp.code === Tw.API_CODE.CODE_03 ) {
+      this._cert = new Tw.CertificationSelect();
+      setTimeout($.proxy(function () {
+        var requestInfo = {
+          command: command,
+          params: params
+        };
+        // url, svcInfo, urlMeta, callbackFunction, deferred...
+        this._cert.open(resp.result, requestInfo, deferred, $.proxy(this._completeCert, this));
+      }, this), 0);
+      return deferred.promise();
     } else {
-      this.close();
+      return resp;
     }
-  }
-  _setConfirmCallback (callback) {
-    if ( !Tw.FormatHelper.isEmpty(callback) ) {
-      this._confirmCallback = callback;
-    }
-  }
-  _setOpenCallback (callback) {
-    if ( !Tw.FormatHelper.isEmpty(callback) ) {
-      this._openCallback = callback;
-    }
-  }
-  _sendConfirmCallback () {
-    this._confirmCallback();
-  }
-  _sendOpenCallback ($container) {
-    this._openCallback($container);
-    this._openCallback = null;
-  }
-  _open (option) {
-    skt_landing.action.popup.open(option, $.proxy(this._onOpenPopup, this));
-  }
-  open (option, openCallback, closeCallback) {
-    this._setOpenCallback(openCallback);
-    this._addHash(closeCallback);
-    this._open(option);
-  }
-  openAlert (message, title, confirmCallback, closeCallback) {
-    var option = {
-      title: title || Tw.POPUP_TITLE.NOTIFY,
-      close_bt: true,
-      title2: message,
-      bt_num: 'one',
-      type: [{
-        style_class: 'bt-red1 tw-popup-confirm',
-        txt: Tw.BUTTON_LABEL.CONFIRM
-      }]
-    };
-    this._setConfirmCallback(confirmCallback);
-    this._addHash(closeCallback);
-    this._open(option);
-  }
-  openConfirm (title, message, contents, openCallback, confirmCallback, closeCallback) {
-    var option = {
-      title: title,
-      close_bt: true,
-      title2: message,
-      contents: contents || '',
-      bt_num: 'two',
-      type: [{
-        style_class: 'bt-white1 tw-popup-closeBtn',
-        txt: Tw.BUTTON_LABEL.CANCEL
-      }, {
-        style_class: 'bt-red1 tw-popup-confirm',
-        txt: Tw.BUTTON_LABEL.CONFIRM
-      }]
-    };
-    this._setOpenCallback(openCallback);
-    this._setConfirmCallback(confirmCallback);
-    this._addHash(closeCallback);
-    this._open(option);
-  }
-  openChoice (title, list, type, openCallback, closeCallback) {
-    var option = {
-      hbs: 'choice',
-      title: title,
-      close_bt: true,
-      list_type: type || 'type1',
-      list: list
-    };
-    this._setOpenCallback(openCallback);
-    this._addHash(closeCallback);
-    this._open(option);
-  }
-  openSelect () {
+  },
 
-  }
-  close () {
-    Tw.Logger.log('[Popup] Call Close', location.hash);
-    if ( /popup/.test(location.hash) ) {
-      Tw.Logger.log('[Popup] history back');
-      history.back();
+  _completeCert: function (resp, deferred, requestInfo) {
+    if ( !Tw.FormatHelper.isEmpty(resp) && resp.code === Tw.API_CODE.CODE_00 ) {
+      this._setCert(requestInfo, deferred);
+      // deferred.resolve({ code: Tw.API_CODE.CERT_SUCCESS });
+    } else {
+      deferred.resolve({ code: Tw.API_CODE.CERT_FAIL });
     }
-  }
-}
+  },
+  _setCert: function (requestInfo, deferred) {
+    this.request(Tw.NODE_CMD.SET_CERT, { url: '/bypass' + requestInfo.command.path })
+      .done($.proxy(this._successSetCert, this, requestInfo, deferred));
+  },
+  _successSetCert: function (requestInfo, deferred, resp) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      this.request(requestInfo.command, requestInfo.params)
+        .done($.proxy(this._successRequestAfterCert, this, deferred));
+    }
+  },
+  _successRequestAfterCert: function (deferred, resp) {
+    deferred.resolve(resp);
+  },
 
-export default PopupService;
+  _makeOptions: function (command, params, headers, pathVariables) {
+    var prefix = this._setPrefix(command);
+    var data = prefix === '/bypass' ? { parameter: params, pathVariables: pathVariables } : params;
+    return {
+      method: command.method,
+      url: prefix + command.path,
+      timeout: 10000,
+      dataType: 'json',
+      headers: this._makeHeaders(command, headers),
+      data: command.method === Tw.API_METHOD.GET ? data : JSON.stringify(data)
+    };
+  },
+
+  _makeHeaders: function (command, headers) {
+    var contentType = 'application/json; charset=UTF-8';
+    if ( !Tw.FormatHelper.isEmpty(command.contentType) ) {
+      contentType = command.contentType;
+    }
+    return $.extend(headers, { 'content-type': contentType });
+  },
+
+  _setPrefix: function (command) {
+    if ( !Tw.FormatHelper.isEmpty(_.findKey(Tw.API_CMD, command)) ) {
+      return '/bypass';
+    } else if ( !Tw.FormatHelper.isEmpty(_.findKey(Tw.NODE_CMD, command)) ) {
+      return '/api';
+    } else {
+      return '';
+    }
+  },
+
+  _getPathVariables: function (args) {
+    var arrArgs = Array.prototype.slice.call(args);
+    var argsLen = arrArgs.length;
+    if ( argsLen > 3 ) {
+      return arrArgs.slice(3, argsLen);
+    }
+    return [];
+  }
+};
+
+export default Tw.ApiService;
