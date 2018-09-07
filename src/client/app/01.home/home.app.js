@@ -1,8 +1,11 @@
-import PopupService from "../../services/popup.service";
+import ApiService from '../../services/popup.service';
 
-class HomeApp {
-  constructor() {
-    var popupService = new PopupService();
-    popupService.openAlert('test');
-  }
-}
+Tw.HomeMain = function () {
+  var popupService = new ApiService();
+  popupService.openAlert('test');
+};
+Tw.HomeMain.prototype = {
+
+};
+
+export default Tw.HomeMain;

@@ -6,6 +6,7 @@
     "start": "npm run client-dev | npm run server-dev",
     "client-dev": "gulp",
     "client-deploy": "gulp build",
+    "client-build": "rm -rf dist/; webpack",
     "client-lint": "jshint src/client",
     "server-dev": "nodemon -e ts -w ./src/server -x npm run server-watch:dev",
     "server-watch:dev": "ts-node ./src/server/bin/www.ts",
@@ -60,6 +61,7 @@
     "tslint-config-standard": "^7.0.0",
     "typescript": "^2.9.1",
     "webpack": "^4.17.2",
+    "webpack-cli": "^3.1.0",
     "webpack-manifest-plugin": "^2.0.3",
     "webpack-node-externals": "^1.7.2"
   }
