@@ -1,0 +1,97 @@
+<div class="popup-page">
+    <!-- .no-btn 하단에 버튼이 없을 경우 -->
+    <!-- #header -->
+    <div class="header-wrap">
+        <div class="page-header">
+            <div class="header-ti">
+                <h1>자동납부 상세내역</h1>
+            </div>
+        </div>
+    </div>
+    <!--// #header -->
+    <!-- #contents -->
+    <div class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+          <!-- content 영역 -->
+          <div class="cont-box noborder">
+            <div>
+              <div class="payment-detail-box">
+                <div class="detail-inner">
+                  <div class="detail-list">
+                    <ul>
+                      <li>
+                        <span class="title">납부일자</span>
+                        <span class="tx-cont">{{data.reqDate}}</span>
+                      </li>
+                      <li>
+                        <div class="inner-top">
+                          <span class="title">납부금액</span>
+                          <span class="tx-cont">
+                          <strong>{{data.drwAmt}}</strong> 원</span>
+                        </div>
+                        <div class="inner-row">
+                          <ul>
+                            <li>
+                              <span class="title">청구금액</span>
+                              <span class="tx-cont">{{data.drwReqAmt}} 원</span>
+                            </li>
+                            <li>
+                              <span class="title">청구년월 <br /> (사용기간)</span>
+                              <span class="tx-cont">{{data.drwYm}} <br /> ({{data.startDate}} ~ {{data.endDate}})</span>
+                            </li>
+                          </ul>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="inner-top">
+                          <span class="title">납부방법</span>
+                          <span class="tx-cont">신용카드</span>
+                        </div>
+                        <div class="inner-row">
+                          <ul>
+                            <li>
+                              <span class="title">카드사명</span>
+                              <span class="tx-cont">{{data.bankCardCoCdNm}}</span>
+                            </li>
+                            <li>
+                              <span class="title">카드번호</span>
+                              <span class="tx-cont">{{data.bankCardNum}}</span>
+                            </li>
+                          </ul>
+                        </div>
+                      </li>
+
+                      <li>
+                        <span class="title">사유</span>
+                        <span class="tx-cont">{{data.drwErrCdNm}}</span>
+                      </li>
+                      <li>
+                        <span class="title">구분</span>
+                        <span class="tx-cont">{{data.type}}</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+            <!--// content 영역 -->
+            <div class="footer-wrap btn-area-msg">
+                <div class="page-gnb">
+                    <div class="bt-popup">
+                        <ul class="bt-slice">
+                            <li class="bt-blue1">
+                                <button>닫기</button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--// #contents -->
+    <!-- .popup-closeBtn -->
+    <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button>
+    <!--// .popup-closeBtn -->
+</div>

@@ -1,0 +1,101 @@
+<div class="popup-page">
+    <!-- .no-btn 하단에 버튼이 없을 경우 -->
+    <!-- #header -->
+    <div class="header-wrap">
+        <div class="page-header">
+            <div class="header-ti">
+                <h1>세금계산서 재발행 팩스 전송</h1>
+            </div>
+        </div>
+    </div>
+    <!--// #header -->
+    <!-- #contents -->
+    <div class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <!-- content 영역 -->
+            <div class="cont-box nogaps-top">
+                <div class="payment-detail-wrap">
+                    <p class="info-txt">세금계산서 재발행 내역확인</p>
+                    <div class="payment-detail-box">
+                        <div class="detail-inner">
+                            <div class="detail-list">
+                                <ul>
+                                    <li>
+                                        <span class="title">발행일자</span>
+                                        <span class="tx-cont">{{data.receiptDate}}</span>
+                                    </li>
+                                    <li>
+                                        <div class="inner-top">
+                                            <span class="title">고객/사업자명</span>
+                                            <span class="tx-cont">{{data.customerName}}</span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <span class="title">사업자 번호</span>
+                                        <span class="tx-cont">{{data.companyNumber}}</span>
+                                    </li>
+                                    <li>
+                                        <div class="inner-top">
+                                            <span class="title">납부금액</span>
+                                            <span class="tx-cont">{{data.receiptedAmount}} 원</span>
+                                        </div>
+                                        <div class="inner-row">
+                                            <ul>
+                                                <li>
+                                                    <span class="title">공급가액</span>
+                                                    <span class="tx-cont">{{data.priceAmount}} 원</span>
+                                                </li>
+                                                <li>
+                                                    <span class="title">부가세액</span>
+                                                    <span class="tx-cont">{{data.taxAmount}} 원</span>
+                                                </li>
+                                                <li>
+                                                    <span class="title">합계금액</span>
+                                                    <span class="tx-cont">{{data.totalAmount}} 원</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--// content 영역 -->
+
+            <hr class="cont-sp type1" aria-hidden="true" />
+
+            <div class="cont-box nogaps-top noborder">
+                <div class="payment-detail-wrap">
+                    <p id="exp-label1" class="info-txt">세금계산서 재발행 팩스번호를 입력해주세요</p>
+                    <div class="inputbox">
+                        <span class="input">
+                          <input type="number" placeholder="팩스번호를 입력해 주세요!(숫자만 입력)" title="팩스번호를 입력해 주세요!(숫자만 입력)" value="" aria-labelledby="exp-label1">
+                          <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-wrap btn-area-msg">
+                <div class="page-gnb">
+                    <div class="bt-popup">
+                        <ul class="bt-slice item-two">
+                            <li class="bt-white2">
+                                <button>취소</button>
+                            </li>
+                            <li class="bt-red1">
+                                <button>팩스 전송하기</button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--// #contents -->
+    <!-- .popup-closeBtn -->
+    <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button>
+    <!--// .popup-closeBtn -->
+</div>
