@@ -12,7 +12,7 @@ Tw.CertificationFinance = function () {
 
 
 Tw.CertificationFinance.prototype = {
-  open: function (urlMeta, authUrl, command, deferred, callback) {
+  open: function (svcInfo, urlMeta, authUrl, command, deferred, callback) {
     this._requestAppMessage(authUrl);
 
   },
@@ -24,6 +24,8 @@ Tw.CertificationFinance.prototype = {
   _successAppMessage: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._openFinanceCert(resp.result.appMsg);
+    } else {
+      this._openFinanceCert('');
     }
   },
   _openFinanceCert: function (message) {

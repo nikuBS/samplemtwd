@@ -75,8 +75,8 @@ Tw.CertificationSelect.prototype = {
         email: methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.EMAIL) !== -1,
         bio: methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.BIO) !== -1,
         password: methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.PASSWORD) !== -1,
-        // finance: methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.PUBLIC_AUTH) !== -1,
-        finance: true,
+        // publicCert: methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.PUBLIC_AUTH) !== -1,
+        publicCert: true,
         smsPassword: methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SMS_PASSWORD) !== -1
       }
     }, $.proxy(this._onOpenSelectPopup, this), $.proxy(this._onCloseSelectPopup, this));
@@ -116,9 +116,6 @@ Tw.CertificationSelect.prototype = {
       case Tw.AUTH_CERTIFICATION_METHOD.SMS_PASSWORD:
         this._certSmsPw.open(this._svcInfo, this._urlMeta, this._authUrl, this._command, this._deferred, this._callback);
         break;
-      case Tw.AUTH_CERTIFICATION_METHOD.FINANCE_AUTH:
-        this._popupService.openAlert('Not Supported (Finance auth)');
-        break;
       default:
         this._popupService.openAlert('Not Supported');
         break;
@@ -134,11 +131,11 @@ Tw.CertificationSelect.prototype = {
     $popupContainer.on('click', '#fe-bt-email', $.proxy(this._onClickEmail, this));
     $popupContainer.on('click', '#fe-bt-bio', $.proxy(this._onClickBio, this));
     $popupContainer.on('click', '#fe-bt-password', $.proxy(this._onClickSkPassword, this));
-    $popupContainer.on('click', '#fe-bt-finance', $.proxy(this._onClickSkFinance, this));
+    $popupContainer.on('click', '#fe-bt-public', $.proxy(this._onClickSkPublic, this));
     $popupContainer.on('click', '#fe-bt-smspw', $.proxy(this._onClickSmsPw, this));
   },
   _onCloseSelectPopup: function () {
-    this.openCertPopup();
+    this._openCertPopup();
   },
   _openCertBrowser: function (path) {
     this._apiService.request(Tw.NODE_CMD.GET_DOMAIN, {})
@@ -189,8 +186,8 @@ Tw.CertificationSelect.prototype = {
     this._certMethod = Tw.AUTH_CERTIFICATION_METHOD.PASSWORD;
     this._popupService.close();
   },
-  _onClickSkFinance: function () {
-    this._certMethod = Tw.AUTH_CERTIFICATION_METHOD.FINANCE_AUTH;
+  _onClickSkPublic: function () {
+    this._certMethod = Tw.AUTH_CERTIFICATION_METHOD.PUBLIC_AUTH;
     this._popupService.close();
   },
   _onClickSmsPw: function () {
