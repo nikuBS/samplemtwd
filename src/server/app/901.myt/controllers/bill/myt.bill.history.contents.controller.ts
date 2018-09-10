@@ -54,14 +54,14 @@ class MyTBillHistoryContents extends TwViewController {
           });
 
         } else if (isQueryEmpty && current === 'detail') {
-          res.render('../../../03.payment/views/containers/payment.prepay.error.html', {
+          res.render('../../../903.payment/views/containers/payment.prepay.error.html', {
             svcInfo: svcInfo,
             title: MYT_BILL_HISTORY_STR.PAGE_TITLE.ILLEGIAL_ACCESS
           });
         }
 
       } else {
-        res.render('../../../03.payment/views/containers/payment.prepay.error.html', {
+        res.render('../../../903.payment/views/containers/payment.prepay.error.html', {
           err: resp,
           svcInfo: svcInfo,
           title: MYT_PAY_HISTORY_TITL.CONTENTS

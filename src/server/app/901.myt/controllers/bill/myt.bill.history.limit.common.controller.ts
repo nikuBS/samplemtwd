@@ -44,7 +44,7 @@ class MyTBillHistoryMicroLimit extends TwViewController {
         });
       } else {
 
-        res.render('../../../03.payment/views/containers/payment.prepay.error.html', {
+        res.render('../../../903.payment/views/containers/payment.prepay.error.html', {
           err: resp,
           svcInfo: svcInfo,
           title: MYT_PAY_HISTORY_TITL.MICRO

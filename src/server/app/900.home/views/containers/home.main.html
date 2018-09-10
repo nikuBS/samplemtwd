@@ -548,7 +548,7 @@
 <% } %>
 <% } %>
 <% include ../components/javascript.component.html %>
-<script src="<%= CDN %>/js/auth.min.js"></script>
+<script src="<%= CDN %>/js/<%= authold %>"></script>
 <script>
   $(document).ready(function () {
     var lineMarketingLayer = new Tw.AuthLineMarketing();
