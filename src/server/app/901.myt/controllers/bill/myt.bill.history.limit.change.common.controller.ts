@@ -75,7 +75,7 @@ class MyTBillHistoryMicroLimitChange extends TwViewController {
           });
         });
       } else {
-        res.render('../../../03.payment/views/containers/payment.prepay.error.html', {
+        res.render('../../../903.payment/views/containers/payment.prepay.error.html', {
           err: resp,
           svcInfo: svcInfo,
           title: errorTitle
