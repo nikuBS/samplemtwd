@@ -11,6 +11,7 @@ import ejs from 'ejs';
 import cookie from 'cookie-parser';
 
 import environment from './config/environment.config';
+
 const manifest = require('./config/manifest.json');
 
 // Route Modules
@@ -69,6 +70,7 @@ class App {
     this.setApis();
     this.setBypass();
     this.setGlobalVariables();
+    this.setClientMap();
   }
 
   private setApis() {
@@ -82,12 +84,20 @@ class App {
   private setGlobalVariables() {
     const env = environment[String(process.env.NODE_ENV)];
 
-    Object.keys(manifest).map((key) => {
-      this.app.locals[key.split('.')[0]] = manifest[key];
-    });
-
     Object.keys(env).map((key) => {
       this.app.locals[key] = env[key];
+    });
+  }
+
+  private setClientMap() {
+    Object.keys(manifest).map((key) => {
+      if ( key.indexOf('.') !== -1 ) {
+        let appName = key.split('.')[0];
+        if ( appName.indexOf('-') !== -1 ) {
+          appName = appName.replace('-', '');
+        }
+        this.app.locals[appName] = manifest[key];
+      }
     });
   }
 
