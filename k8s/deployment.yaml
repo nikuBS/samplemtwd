@@ -34,3 +34,13 @@ spec:
       - hostPath:
           path: /home/disk                            # Host Node의 실제 fs 경로 ( 고정)
         name: pv-storage
+      livenessProbe:
+        httpGet:
+          path: /health
+        initialDelaySeconds: 100
+        periodSeconds: 3
+      readinessProbe:
+        httpGet:
+          path: /health
+        initialDelaySeconds: 100
+        periodSeconds: 3
