@@ -290,7 +290,8 @@ Tw.NODE_CMD = {
   CHANGE_LINE: { path: '/user/services', method: Tw.API_METHOD.PUT },
 
   UPLOAD_FILE: { path: '/uploads', method: Tw.API_METHOD.POST },
-  SET_CERT: { path: '/cert', method: Tw.API_METHOD.POST }
+  SET_CERT: { path: '/cert', method: Tw.API_METHOD.POST },
+  GET_SVC_INFO: { path: '/svcInfo', method: Tw.API_METHOD.GET }
 };
 
 Tw.TMAP = {

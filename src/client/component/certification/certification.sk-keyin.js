@@ -17,7 +17,6 @@ Tw.CertificationSkKeyin = function () {
   this.$errorConfirm = null;
   this.$errorCert = null;
 
-  this._urlMeta = null;
   this._authUrl = null;
   this._command = null;
   this._deferred = null;
@@ -45,8 +44,7 @@ Tw.CertificationSkKeyin.prototype = {
     SMS2014: 'SMS2014',
     SMS3001: 'SMS3001'
   },
-  openKeyinPopup: function (svcInfo, urlMeta, authUrl, command, deferred, callback) {
-    this._urlMeta = urlMeta;
+  openKeyinPopup: function (svcInfo, authUrl, command, deferred, callback) {
     this._authUrl = authUrl;
     this._command = command;
     this._deferred = deferred;

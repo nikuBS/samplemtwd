@@ -15,7 +15,6 @@ Tw.CertificationSkMotp = function () {
   this.$errorConfirm = null;
   this.$errorCert = null;
 
-  this._urlMeta = null;
   this._authUrl = null;
   this._command = null;
   this._deferred = null;
@@ -39,8 +38,7 @@ Tw.CertificationSkMotp.prototype = {
     ATH1228: 'ATH1228',
     ATG1231: 'ATG1231'
   },
-  openMotpPopup: function (svcInfo, urlMeta, authUrl, command, deferred, callback) {
-    this._urlMeta = urlMeta;
+  openMotpPopup: function (svcInfo, authUrl, command, deferred, callback) {
     this._authUrl = authUrl;
     this._command = command;
     this._deferred = deferred;
