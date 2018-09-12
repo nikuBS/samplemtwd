@@ -80,7 +80,7 @@ Tw.CertificationSelect.prototype = {
         publicCert: true,
         smsPassword: methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SMS_PASSWORD) !== -1
       }
-    }, $.proxy(this._onOpenSelectPopup, this), $.proxy(this._onCloseSelectPopup, this));
+    }, $.proxy(this._onOpenSelectPopup, this), $.proxy(this._onCloseSelectPopup, this), 'certSelect');
   },
   _openCertPopup: function (method) {
     if ( !Tw.FormatHelper.isEmpty(method) ) {
@@ -138,7 +138,9 @@ Tw.CertificationSelect.prototype = {
     $popupContainer.on('click', '#fe-bt-smspw', $.proxy(this._onClickSmsPw, this));
   },
   _onCloseSelectPopup: function () {
-    this._openCertPopup();
+    if(!Tw.FormatHelper.isEmpty(this._certMethod)) {
+      this._openCertPopup();
+    }
   },
   _openCertBrowser: function (path) {
     this._apiService.request(Tw.NODE_CMD.GET_DOMAIN, {})

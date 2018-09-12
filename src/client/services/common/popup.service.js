@@ -42,15 +42,22 @@ Tw.PopupService.prototype = {
     }
     skt_landing.action.popup.close();
   },
-  _addHash: function (closeCallback) {
+  _addHash: function (closeCallback, hashName) {
     var curHash = location.hash || '#';
     // Tw.Logger.log('[Popup] Add Hash', curHash);
     this._prevHashList.push({
       curHash: curHash,
       closeCallback: closeCallback
     });
+
+    if(Tw.FormatHelper.isEmpty(hashName)) {
+      hashName = '#popup' + this._prevHashList.length;
+    } else {
+      hashName = '#' + hashName + '_P';
+    }
+
     // location.hash = 'popup' + this._prevHashList.length;
-    history.pushState(this._popupObj, 'popup', '#popup' + this._prevHashList.length);
+    history.pushState(this._popupObj, 'popup', hashName);
   },
   _bindEvent: function ($container) {
     $container.on('click', '.popup-closeBtn', $.proxy(this.close, this));
@@ -84,9 +91,9 @@ Tw.PopupService.prototype = {
   _open: function (option) {
     skt_landing.action.popup.open(option, $.proxy(this._onOpenPopup, this));
   },
-  open: function (option, openCallback, closeCallback) {
+  open: function (option, openCallback, closeCallback, hashName) {
     this._setOpenCallback(openCallback);
-    this._addHash(closeCallback);
+    this._addHash(closeCallback, hashName);
     this._open(option);
   },
   openAlert: function (message, title, confirmCallback, closeCallback) {
@@ -141,7 +148,7 @@ Tw.PopupService.prototype = {
   },
   close: function () {
     Tw.Logger.log('[Popup] Call Close', location.hash);
-    if ( /popup/.test(location.hash) ) {
+    if ( /_P/.test(location.hash) || /popup/.test(location.hash) ) {
       Tw.Logger.log('[Popup] history back');
       history.back();
     }
