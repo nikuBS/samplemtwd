@@ -13,7 +13,7 @@ class MytFareBillGuide extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, layerType: string) {
-    res.render('/bill/myt-fare.bill.guide.html', { svcInfo: svcInfo });
+    res.render('bill/myt-fare.bill.guide.html', { svcInfo: svcInfo });
   }
 
 }
