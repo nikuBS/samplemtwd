@@ -1,9 +1,8 @@
 /**
- * FileName: myt-fare.guide.js
+ * FileName: myt-fare.bill.guide.js
  * Author: Kim Myoung-Hwan (skt.P130714@partner.sk.com)
  * Date: 2018.09.12
  */
-
 Tw.MyTFareGuide = function (rootEl) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
@@ -16,7 +15,7 @@ Tw.MyTFareGuide = function (rootEl) {
 
 Tw.MyTFareGuide.prototype = {
   _init: function () {
-    this._getRemainDataInfo();
+
   },
 
   _getReceiveUserInfo: function () {

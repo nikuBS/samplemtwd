@@ -4,13 +4,12 @@
 * Date: 2018.09.12
 %>
 
-<% include ../components/start.component.html %>
-<p> Home </p>
-<% include ../components/javascript.component.html %>
-<h1>요금안내서</h1>
+<% include ../../components/start.component.html %>
+<% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    var MyTFareGuide = new Tw.MyTFareGuide();
+    var oMyTFareGuide = new Tw.MyTFareGuide();
+    console.info('[요금안내서 ready]', oMyTFareGuide);
   });
 </script>
-<% include ../components/end.component.html %>
+<% include ../../components/end.component.html %>
