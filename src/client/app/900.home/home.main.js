@@ -30,6 +30,19 @@ Tw.HomeMain.prototype = {
     this.$giftCard = this.$container.find('#gift-card');
 
     this._openPopup();
+
+    // var commands = [];
+    // commands.push({command: Tw.NODE_CMD.GET_DOMAIN, params: {}});
+    // commands.push({command: Tw.NODE_CMD.GET_SVC_INFO, params: {}});
+    // commands.push({command: Tw.NODE_CMD.GET_ENVIRONMENT, params: {}});
+    //
+    // this._apiService.requestArray(commands)
+    //   .done(function (res1, res2, res3) {
+    //     console.log(res1);
+    //     console.log(res2);
+    //     console.log(res3);
+    //   });
+
   },
   _bindEvent: function () {
     this.$container.on('click', '#refill-product', $.proxy(this._openRefillProduct, this));

@@ -12,6 +12,12 @@ Tw.ApiService.prototype = {
       .then($.proxy(this._checkAuth, this, command, params));
   },
 
+  requestArray: function (requests) {
+    return $.when.apply($, _.map(requests, $.proxy(function(request) {
+      return this.request(request.command, request.params, request.headers);
+    }, this)));
+  },
+
   requestAjax: function (command, data) {
     Tw.Logger.info('[API REQ ajax]', command, data);
 
