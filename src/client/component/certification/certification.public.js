@@ -1,17 +1,17 @@
 /**
- * FileName: certification.finance.js
+ * FileName: certification.public.js
  * Author: Ara Jo (araara.jo@sk.com)
  * Date: 2018.08.20
  */
 
-Tw.CertificationFinance = function () {
+Tw.CertificationPublic = function () {
   this._nativeService = Tw.Native;
   this._apiService = Tw.Api;
 
 };
 
 
-Tw.CertificationFinance.prototype = {
+Tw.CertificationPublic.prototype = {
   open: function (svcInfo, urlMeta, authUrl, command, deferred, callback) {
     this._requestAppMessage(authUrl);
 
@@ -23,17 +23,17 @@ Tw.CertificationFinance.prototype = {
   },
   _successAppMessage: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      this._openFinanceCert(resp.result.appMsg);
+      this._openPublicCert(resp.result.appMsg);
     } else {
-      this._openFinanceCert('');
+      this._openPublicCert('');
     }
   },
-  _openFinanceCert: function (message) {
+  _openPublicCert: function (message) {
     this._nativeService.send(Tw.NTV_CMD.AUTH_CERT, {
       message: message
-    }, $.proxy(this._onFinanceCert, this));
+    }, $.proxy(this._onPublicCert, this));
   },
-  _onFinanceCert: function (resp) {
+  _onPublicCert: function (resp) {
     console.log(resp);
   }
 };

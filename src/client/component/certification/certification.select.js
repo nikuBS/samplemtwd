@@ -9,7 +9,7 @@ Tw.CertificationSelect = function () {
   this._certEmail = new Tw.CertificationEmail();
   this._certPassword = new Tw.CertificationPassword();
   this._certSmsPw = new Tw.CertificationSmsPassword();
-  this._certFinance = new Tw.CertificationFinance();
+  this._certPublic = new Tw.CertificationPublic();
 
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -42,6 +42,7 @@ Tw.CertificationSelect.prototype = {
 
     var methods = this._urlMeta.auth.cert.methods;
     var loginType = this._svcInfo.loginType;
+
     if ( loginType === Tw.AUTH_LOGIN_TYPE.EASY ) {
       this._openSelectPopup(loginType, methods);
     } else {
@@ -88,11 +89,11 @@ Tw.CertificationSelect.prototype = {
     switch ( this._certMethod ) {
       case Tw.AUTH_CERTIFICATION_METHOD.SK_SMS:
         this._certSk.open(
-          this._svcInfo, this._urlMeta, this._authUrl, this._command, this._deferred, this._callback, Tw.AUTH_CERTIFICATION_METHOD.SK_SMS);
+          this._svcInfo, this._authUrl, this._command, this._deferred, this._callback, Tw.AUTH_CERTIFICATION_METHOD.SK_SMS);
         break;
       case Tw.AUTH_CERTIFICATION_METHOD.SK_MOTP:
         this._certSk.open(
-          this._svcInfo, this._urlMeta, this._authUrl, this._command, this._deferred, this._callback, Tw.AUTH_CERTIFICATION_METHOD.SK_MOTP);
+          this._svcInfo, this._authUrl, this._command, this._deferred, this._callback, Tw.AUTH_CERTIFICATION_METHOD.SK_MOTP);
         break;
       case Tw.AUTH_CERTIFICATION_METHOD.OTHER_SMS:
         this._openCertBrowser('/auth/cert/nice?authUrl=' + this._authUrl + '&resultUrl=' + this._resultUrl + '&niceType=' + this._niceType);
@@ -101,20 +102,22 @@ Tw.CertificationSelect.prototype = {
         this._openCertBrowser('/auth/cert/ipin?authUrl=' + this._authUrl + '&resultUrl=' + this._resultUrl);
         break;
       case Tw.AUTH_CERTIFICATION_METHOD.EMAIL:
-        this._certEmail.open(this._svcInfo, this._urlMeta, this._authUrl, this._command, this._deferred, this._callback);
+        this._certEmail.open(this._svcInfo, this._authUrl, this._command, this._deferred, this._callback);
         break;
       case Tw.AUTH_CERTIFICATION_METHOD.PASSWORD:
-        this._certPassword.open(this._svcInfo, this._urlMeta, this._authUrl, this._command, this._deferred, this._callback);
+        this._certPassword.open(this._svcInfo, this._authUrl, this._command, this._deferred, this._callback);
         break;
       case Tw.AUTH_CERTIFICATION_METHOD.PUBLIC_AUTH:
-        // this._popupService.openAlert('Not Supported (Public auth)');
-        this._certFinance.open(this._svcInfo, this._urlMeta, this._authUrl, this._command, this._deferred, this._callback);
+        this._certPublic.open(this._svcInfo, this._urlMeta, this._authUrl, this._command, this._deferred, this._callback);
         break;
       case Tw.AUTH_CERTIFICATION_METHOD.BIO:
         this._popupService.openAlert('Not Supported (Bio)');
         break;
       case Tw.AUTH_CERTIFICATION_METHOD.SMS_PASSWORD:
-        this._certSmsPw.open(this._svcInfo, this._urlMeta, this._authUrl, this._command, this._deferred, this._callback);
+        this._certSmsPw.open(this._svcInfo, this._authUrl, this._command, this._deferred, this._callback);
+        break;
+      case Tw.AUTH_CERTIFICATION_METHOD.FINANCE_AUTH:
+        this._openCertBrowser('/auth/cert/finance/identification?authUrl=' + this._authUrl + '&resultUrl=' + this._resultUrl);
         break;
       default:
         this._popupService.openAlert('Not Supported');

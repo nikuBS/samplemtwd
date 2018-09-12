@@ -51,6 +51,7 @@ class ApiRouter {
     this.router.put('/user/services', this.changeLine.bind(this));    // BFF_03_0005
     this.router.post('/uploads', this.uploadFile.bind(this));
     this.router.post('/cert', this.setCert.bind(this));
+    this.router.get('/svcInfo', this.getSvcInfo.bind(this));
   }
 
   private getEnvironment(req: Request, res: Response, next: NextFunction) {
@@ -114,6 +115,15 @@ class ApiRouter {
     this.loginService.setCurrentReq(req, res);
     this.authService.setCert(req, params).subscribe((resp) => {
       res.json(resp);
+    });
+  }
+
+  private getSvcInfo(req: Request, res: Response, next: NextFunction) {
+    this.logger.info(this, '[get svcInfo]');
+    this.loginService.setCurrentReq(req, res);
+    res.json({
+      code: API_CODE.CODE_00,
+      result: this.loginService.getSvcInfo()
     });
   }
 
@@ -206,7 +216,7 @@ class ApiRouter {
       res.json(resp);
     }, (error) => {
       res.json(error);
-    })
+    });
   }
 }
 
