@@ -291,6 +291,7 @@ Tw.NODE_CMD = {
 
   UPLOAD_FILE: { path: '/uploads', method: Tw.API_METHOD.POST },
   SET_CERT: { path: '/cert', method: Tw.API_METHOD.POST },
+  GET_SERVER_SERSSION: { path: '/serverSession', method: Tw.API_METHOD.GET },
   GET_SVC_INFO: { path: '/svcInfo', method: Tw.API_METHOD.GET }
 };
 
