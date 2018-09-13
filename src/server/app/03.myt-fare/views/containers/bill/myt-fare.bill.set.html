@@ -1,0 +1,35 @@
+<%#
+* FileName: myt-fare.bill.set.html
+* Author: 양정규 (skt.P130715@partner.sk.com)
+* Date: 2018.09.12
+%>
+
+<% include ../../components/start.component.html %>
+<p> 안내서 설정 </p>
+
+<div>메인 안내서 명 : <%= billType.title %></div>
+<br>
+<div>함께 받는 안내서 명 : <%= billType.join %></div>
+<div>이메일 주소 : <%= data.invEmailAddr %></div>
+<br>
+<div>선택 옵션 설정 :</div>
+<% if ( 'Y' === data.scurBillYn ) { %>
+<div>Bill Letter보안강화</div>
+<% } %>
+<% if ( 'Y' === data.phonNumPrtClCd ) { %>
+<div>휴대폰 번호 전체 표시</div>
+<% } %>
+<% if ( 'Y' === data.scurMailYn && 'Y' === data.infoInvDtlDispChkYn && 'Y' === data.infoInvDtlDispYn ) { %>
+<div>콘텐츠 이용 상세내역 표시</div>
+<% } %>
+<% if ( 'Y' === data.kidsYn && 'Y' === data.ccurNotiYn) {%>
+<div>법정 대리인 함께 수령</div>
+<% } %>
+
+<% include ../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    new Tw.MyTFareBillSet($('div'));
+  });
+</script>
+<% include ../../components/end.component.html %>
