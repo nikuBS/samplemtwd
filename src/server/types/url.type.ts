@@ -16,6 +16,7 @@ export const URL = {
   '/myt/usage/ting': { login: true, id: 'MY_02_02_01_04_09', title: '팅요금상품 사용량 조회' },
   '/myt/usage/pattern': { login: true, id: 'MY_02_02_02_03_01', title: '최근 사용패턴' },
   '/myt/usage/pattern/detail': { login: true, id: 'MY_02_02_02_01_03', title: '최근 사용패턴' },
+  '/myt/fare/bill/set': { login: false, id: '', title: '요금 안내서 설정' }, // 요금 안내서 설정
   '/myt/bill/hotbill': { login: true, id: 'MY_03_01_01', title: '' }, // 실시간 사용요금
   '/myt/bill/guidechange/reissue': { login: true, id: '', title: '요금안내서 재발행' },
   '/myt/bill/guidechange/reissue/complete': { login: true, id: '', title: '요금안내서 재발행' },
