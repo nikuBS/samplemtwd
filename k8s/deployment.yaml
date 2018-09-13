@@ -31,11 +31,13 @@ spec:
         livenessProbe:
           httpGet:
             path: /health
+            port: 3000
           initialDelaySeconds: 100
           periodSeconds: 3
         readinessProbe:
           httpGet:
             path: /health
+            port: 3000
           initialDelaySeconds: 100
           periodSeconds: 3
       nodeSelector:
