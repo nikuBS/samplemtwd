@@ -37,6 +37,7 @@ class ApiRouter {
   }
 
   private setApi() {
+    this.router.get('/health', this.checkHealth.bind(this));
     this.router.get('/environment', this.getEnvironment.bind(this));
     this.router.get('/domain', this.getDomain.bind(this));
     this.router.post('/device', this.setDeviceInfo.bind(this));
@@ -53,6 +54,13 @@ class ApiRouter {
     this.router.post('/cert', this.setCert.bind(this));
     this.router.get('/svcInfo', this.getSvcInfo.bind(this));
     this.router.get('/serverSession', this.getServerSession.bind(this));
+  }
+
+  private checkHealth(req: Request, res: Response, next: NextFunction) {
+    res.json({
+      description: '',
+      status: 'UP'
+    });
   }
 
   private getEnvironment(req: Request, res: Response, next: NextFunction) {
