@@ -29,7 +29,7 @@ Tw.NativeService.prototype = {
     window.onBack = $.proxy(this._onBack, this);
     window.onInit = $.proxy(this._onInitApp, this);
     window.onEasyLogin = $.proxy(this._onEasyLogin, this);
-    window.requestSerssion = $.proxy(this._requestSession, this);
+    window.requestSession = $.proxy(this._requestSession, this);
   },
 
   _setParameter: function (command, params, callback) {
