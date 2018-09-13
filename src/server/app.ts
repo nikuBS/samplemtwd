@@ -33,6 +33,7 @@ import CustomerRouter from './app/07.customer/customer.router';
 import AuthRouter from './app/08.auth/auth.router';
 import BypassRouter from './common/bypass.router';
 import ApiRouter from './common/api.router';
+import NativeRouter from './common/native.router';
 
 // Application Modules
 import RedisService from './services/redis.service';
@@ -69,6 +70,7 @@ class App {
     this.setRoutes();
     this.setApis();
     this.setBypass();
+    this.setNative();
     this.setGlobalVariables();
     this.setClientMap();
   }
@@ -79,6 +81,10 @@ class App {
 
   private setBypass() {
     this.app.use('/bypass', new BypassRouter().router);
+  }
+
+  private setNative() {
+    this.app.use('/native', new NativeRouter().router);
   }
 
   private setGlobalVariables() {
