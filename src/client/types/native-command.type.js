@@ -20,6 +20,7 @@ Tw.NTV_CMD = {
   IMPORT_CERT: 'importCert',
   MANAGE_CERT: 'manageCert',
   AUTH_CERT: 'authCert',
+  SERVER_SESSION: 'serverSession',
   EXIT: 'exit',
   LOG: 'log'
 };

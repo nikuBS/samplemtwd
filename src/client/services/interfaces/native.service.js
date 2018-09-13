@@ -29,6 +29,7 @@ Tw.NativeService.prototype = {
     window.onBack = $.proxy(this._onBack, this);
     window.onInit = $.proxy(this._onInitApp, this);
     window.onEasyLogin = $.proxy(this._onEasyLogin, this);
+    window.requestSerssion = $.proxy(this._requestSession, this);
   },
 
   _setParameter: function (command, params, callback) {
@@ -93,6 +94,17 @@ Tw.NativeService.prototype = {
     } else {
       this._popupService.openAlert(Tw.MSG_AUTH.EASY_LOGIN_FAIL);
     }
+  },
+
+  _requestSession: function () {
+    this._apiService.request(Tw.NODE_CMD.GET_SERVER_SERSSION, {})
+      .done($.proxy(function (resp) {
+        if ( resp.code === Tw.API_CODE.CODE_00 ) {
+          this.send(Tw.NTV_CMD.SERVER_SESSION, {
+            session: resp.result
+          });
+        }
+      }, this));
   }
 
 };

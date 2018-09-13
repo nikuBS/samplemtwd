@@ -52,6 +52,7 @@ class ApiRouter {
     this.router.post('/uploads', this.uploadFile.bind(this));
     this.router.post('/cert', this.setCert.bind(this));
     this.router.get('/svcInfo', this.getSvcInfo.bind(this));
+    this.router.get('/serverSession', this.getServerSession.bind(this));
   }
 
   private getEnvironment(req: Request, res: Response, next: NextFunction) {
@@ -115,6 +116,15 @@ class ApiRouter {
     this.loginService.setCurrentReq(req, res);
     this.authService.setCert(req, params).subscribe((resp) => {
       res.json(resp);
+    });
+  }
+
+  private getServerSession(req: Request, res: Response, next: NextFunction) {
+    this.logger.info(this, '[get serverSession]');
+    this.loginService.setCurrentReq(req, res);
+    res.json({
+      code: API_CODE.CODE_00,
+      result: this.loginService.getServerSession()
     });
   }
 
