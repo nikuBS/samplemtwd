@@ -96,12 +96,13 @@ Tw.NativeService.prototype = {
     }
   },
 
-  _requestSession: function () {
+  _requestSession: function (randomCode) {
     this._apiService.request(Tw.NODE_CMD.GET_SERVER_SERSSION, {})
       .done($.proxy(function (resp) {
         if ( resp.code === Tw.API_CODE.CODE_00 ) {
           this.send(Tw.NTV_CMD.SERVER_SESSION, {
-            session: resp.result
+            session: resp.result,
+            randomCode: randomCode
           });
         }
       }, this));

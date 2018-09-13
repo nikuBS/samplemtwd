@@ -74,13 +74,14 @@ class LoginService {
 
   public setServerSession(serverSession: string): Observable<any> {
     return Observable.create((observer) => {
-      this.request.session.serverSession = serverSession;
-      this.request.session.save(() => {
-        this.logger.debug(this, '[setServerSession]', this.request.session);
-        observer.next(this.request.session.serverSession);
-        observer.complete();
-      });
-
+      if ( !FormatHelper.isEmpty(this.request) && !FormatHelper.isEmpty(this.request.session) ) {
+        this.request.session.serverSession = serverSession;
+        this.request.session.save(() => {
+          this.logger.debug(this, '[setServerSession]', this.request.session);
+          observer.next(this.request.session.serverSession);
+          observer.complete();
+        });
+      }
     });
   }
 
