@@ -17,13 +17,14 @@ Tw.ErrorService.prototype = {
     return this;
   },
 
-  pop: function() {
+  pop: function(confirmCallback, closeCallback) {
     var message = this._data.msg;
+
     if (!Tw.FormatHelper.isEmpty(this._data.code)) {
       message = '[' + this._data.code + '] ' + message;
     }
 
-    this._popupService.openAlert(message);
+    this._popupService.openAlert(message, null, confirmCallback, closeCallback);
   },
 
   page: function() {
