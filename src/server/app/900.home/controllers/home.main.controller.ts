@@ -21,39 +21,19 @@ class HomeMain extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any, layerType: string) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any) {
     // this.testApi();
     const remainDate = DateHelper.getRemainDate();
 
-    if ( FormatHelper.isEmpty(svcInfo)) {
-      const data = {
-        svcInfo: null,
-        remainDate: null,
-        usageData: null,
-        refillData: null,
-        giftData: null,
-        layerType: null
-      };
-      res.render('home.main.html', data);
-    } else {
-      Observable.combineLatest(
-        this.getUsageData(),
-        this.getRefillData(),
-        this.getGiftData()
-      ).subscribe(([usageData, refillData, giftData]) => {
-        const data = {
-          svcInfo,
-          remainDate,
-          usageData,
-          refillData,
-          giftData,
-          layerType
-        };
-        res.render('home.main.html', data);
-      });
-    }
-
-
+    const data = {
+      svcInfo: svcInfo,
+      remainDate: null,
+      usageData: null,
+      refillData: null,
+      giftData: null,
+      layerType: null
+    };
+    res.render('home.main.html', data);
   }
 
   private testApi() {
