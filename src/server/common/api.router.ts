@@ -53,6 +53,7 @@ class ApiRouter {
     this.router.post('/uploads', this.uploadFile.bind(this));
     this.router.post('/cert', this.setCert.bind(this));
     this.router.get('/svcInfo', this.getSvcInfo.bind(this));
+    this.router.get('/allSvcInfo', this.getAllSvcInfo.bind(this));
     this.router.get('/serverSession', this.getServerSession.bind(this));
   }
 
@@ -142,6 +143,15 @@ class ApiRouter {
     res.json({
       code: API_CODE.CODE_00,
       result: this.loginService.getSvcInfo()
+    });
+  }
+
+  private getAllSvcInfo(req: Request, res: Response, next: NextFunction) {
+    this.logger.info(this, '[get allSvcInfo]');
+    this.loginService.setCurrentReq(req, res);
+    res.json({
+      code: API_CODE.CODE_00,
+      result: this.loginService.getAllSvcInfo()
     });
   }
 

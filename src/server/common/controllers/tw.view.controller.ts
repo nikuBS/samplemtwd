@@ -155,7 +155,7 @@ abstract class TwViewController {
     return this._loginService.setChannel(channel);
   }
 
-  private getAuth(req, res, next, path, svcInfo) {
+  private getAuth(req, res, next, path, svcInfo, allSvc) {
     const isLogin = !FormatHelper.isEmpty(svcInfo);
     this._redisService.getData(REDIS_URL_META + path).subscribe((resp) => {
       const urlMeta = resp;
@@ -163,12 +163,12 @@ abstract class TwViewController {
       if ( FormatHelper.isEmpty(urlMeta) ) {
         // TODO do not register
         if ( isLogin ) {
-          this.render(req, res, next, svcInfo);
+          this.render(req, res, next, svcInfo, allSvc);
         } else {
           if ( URL[path].login ) {
             res.send('need login');
           } else {
-            this.render(req, res, next, svcInfo);
+            this.render(req, res, next, svcInfo, allSvc);
           }
         }
       } else {
@@ -183,9 +183,9 @@ abstract class TwViewController {
             const params = Object.assign(svcInfo, {
               urlAuth
             });
-            this.render(req, res, next, params);
+            this.render(req, res, next, params, allSvc);
           } else if ( this._type === 'dev' ) {
-            this.render(req, res, next, svcInfo);
+            this.render(req, res, next, svcInfo, allSvc);
           } else {
             const loginType = svcInfo.loginType;
             if ( loginType === LOGIN_TYPE.EASY ) {
@@ -199,7 +199,7 @@ abstract class TwViewController {
           if ( urlMeta.auth.loginYn === 'Y' ) {
             res.send('need login');
           } else {
-            this.render(req, res, next, svcInfo);
+            this.render(req, res, next, svcInfo, allSvc);
           }
         }
       }
@@ -227,7 +227,8 @@ abstract class TwViewController {
   private renderPage(req, res, next, path) {
     // TODO noticeTpyCd
     const svcInfo = this._loginService.getSvcInfo();
-    this.getAuth(req, res, next, path, svcInfo);
+    const allSvc = this._loginService.getAllSvcInfo();
+    this.getAuth(req, res, next, path, svcInfo, allSvc);
   }
 
   private failLogin(req, res, next, errorCode) {

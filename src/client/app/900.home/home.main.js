@@ -42,6 +42,14 @@ Tw.HomeMain.prototype = {
     //     console.log(res2);
     //     console.log(res3);
     //   });
+    this._apiService.request(Tw.NODE_CMD.GET_SVC_INFO, {})
+      .done(function (resp) {
+        console.log(resp);
+      });
+    this._apiService.request(Tw.NODE_CMD.GET_ALL_SVC, {})
+      .done(function (resp) {
+        console.log(resp);
+      });
 
   },
   _bindEvent: function () {
