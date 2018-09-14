@@ -10,7 +10,7 @@ import {API_CMD, API_CODE} from '../../../../types/api-command.type';
 import { DEFAULT_LIST_COUNT } from '../../../../types/config.type';
 import DateHelper from '../../../../utils/date.helper';
 import FormatHelper from '../../../../utils/format.helper';
-import { PROMOTION_TYPE } from '../../../../types/bff.type';
+import { PROMOTION_TYPE } from '../../../../types/bff.old.type';
 import { HEAD_TITLE } from '../../../../types/title.type';
 
 class CustomerEvent extends TwViewController {

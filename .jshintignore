@@ -1,4 +1,4 @@
 /node_modules/
 /src/client/right-brain/
 /src/client/services/common/hash.service.js
-/src/client/types/string.type.js
+/src/client/types/string.old.type.js

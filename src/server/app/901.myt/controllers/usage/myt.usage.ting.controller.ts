@@ -6,7 +6,7 @@
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
-import { TING_TITLE } from '../../../../types/bff.type';
+import { TING_TITLE } from '../../../../types/bff.old.type';
 import FormatHelper from '../../../../utils/format.helper';
 import { Observable } from 'rxjs/Observable';
 import MyTUsageGraphbox from './myt.usage.graphbox.controller';

@@ -7,7 +7,7 @@
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import {Request, Response, NextFunction} from 'express';
 import {API_CMD, API_CODE} from '../../../../types/api-command.type';
-import {MYT_PAY_HISTORY_TITL} from '../../../../types/bff.type';
+import {MYT_PAY_HISTORY_TITL} from '../../../../types/bff.old.type';
 import FormatHelper from '../../../../utils/format.helper';
 
 
@@ -75,7 +75,7 @@ class MyTBillHistoryMicroLimitChange extends TwViewController {
           });
         });
       } else {
-        res.render('../../../03.payment/views/containers/payment.prepay.error.html', {
+        res.render('../../../903.payment/views/containers/payment.prepay.error.html', {
           err: resp,
           svcInfo: svcInfo,
           title: errorTitle

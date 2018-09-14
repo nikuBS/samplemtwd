@@ -64,6 +64,26 @@ class LoginService {
     });
   }
 
+  public getAllSvcInfo(): any {
+    this.logger.debug(this, '[getAllSvcInfo]', this.request.session);
+    if ( !FormatHelper.isEmpty(this.request.session) && !FormatHelper.isEmpty(this.request.session.allSvcInfo) ) {
+      this.logger.debug(this, '[getAllSvcInfo]', this.request.session.allSvcInfo);
+      return this.request.session.allSvcInfo;
+    }
+    return null;
+  }
+
+  public setAllSvcInfo(allSvcInfo: any): Observable<any> {
+    return Observable.create((observer) => {
+      this.request.session.allSvcInfo = allSvcInfo;
+      this.request.session.save(() => {
+        this.logger.debug(this, '[setAllSvcInfo]', this.request.session.allSvcInfo);
+        observer.next(this.request.session.allSvcInfo);
+        observer.complete();
+      });
+    });
+  }
+
   public getServerSession(): string {
     if ( !FormatHelper.isEmpty(this.request.session) && !FormatHelper.isEmpty(this.request.session.serverSession) ) {
       this.logger.debug(this, '[getServerSession]', this.request.session.serverSession);
@@ -74,13 +94,14 @@ class LoginService {
 
   public setServerSession(serverSession: string): Observable<any> {
     return Observable.create((observer) => {
-      this.request.session.serverSession = serverSession;
-      this.request.session.save(() => {
-        this.logger.debug(this, '[setServerSession]', this.request.session);
-        observer.next(this.request.session.serverSession);
-        observer.complete();
-      });
-
+      if ( !FormatHelper.isEmpty(this.request) && !FormatHelper.isEmpty(this.request.session) ) {
+        this.request.session.serverSession = serverSession;
+        this.request.session.save(() => {
+          this.logger.debug(this, '[setServerSession]', this.request.session);
+          observer.next(this.request.session.serverSession);
+          observer.complete();
+        });
+      }
     });
   }
 

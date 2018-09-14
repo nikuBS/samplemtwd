@@ -8,7 +8,7 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import { Request, Response, NextFunction } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
-import { LINE_NAME, SVC_ATTR } from '../../../../types/bff.type';
+import { LINE_NAME, SVC_ATTR } from '../../../../types/bff.old.type';
 import DateHelper from '../../../../utils/date.helper';
 import { DEFAULT_LIST_COUNT } from '../../../../types/config.type';
 

@@ -37,6 +37,7 @@ class ApiRouter {
   }
 
   private setApi() {
+    this.router.get('/health', this.checkHealth.bind(this));
     this.router.get('/environment', this.getEnvironment.bind(this));
     this.router.get('/domain', this.getDomain.bind(this));
     this.router.post('/device', this.setDeviceInfo.bind(this));
@@ -51,6 +52,16 @@ class ApiRouter {
     this.router.put('/user/services', this.changeLine.bind(this));    // BFF_03_0005
     this.router.post('/uploads', this.uploadFile.bind(this));
     this.router.post('/cert', this.setCert.bind(this));
+    this.router.get('/svcInfo', this.getSvcInfo.bind(this));
+    this.router.get('/allSvcInfo', this.getAllSvcInfo.bind(this));
+    this.router.get('/serverSession', this.getServerSession.bind(this));
+  }
+
+  private checkHealth(req: Request, res: Response, next: NextFunction) {
+    res.json({
+      description: '',
+      status: 'UP'
+    });
   }
 
   private getEnvironment(req: Request, res: Response, next: NextFunction) {
@@ -114,6 +125,33 @@ class ApiRouter {
     this.loginService.setCurrentReq(req, res);
     this.authService.setCert(req, params).subscribe((resp) => {
       res.json(resp);
+    });
+  }
+
+  private getServerSession(req: Request, res: Response, next: NextFunction) {
+    this.logger.info(this, '[get serverSession]');
+    this.loginService.setCurrentReq(req, res);
+    res.json({
+      code: API_CODE.CODE_00,
+      result: this.loginService.getServerSession()
+    });
+  }
+
+  private getSvcInfo(req: Request, res: Response, next: NextFunction) {
+    this.logger.info(this, '[get svcInfo]');
+    this.loginService.setCurrentReq(req, res);
+    res.json({
+      code: API_CODE.CODE_00,
+      result: this.loginService.getSvcInfo()
+    });
+  }
+
+  private getAllSvcInfo(req: Request, res: Response, next: NextFunction) {
+    this.logger.info(this, '[get allSvcInfo]');
+    this.loginService.setCurrentReq(req, res);
+    res.json({
+      code: API_CODE.CODE_00,
+      result: this.loginService.getAllSvcInfo()
     });
   }
 
@@ -206,7 +244,7 @@ class ApiRouter {
       res.json(resp);
     }, (error) => {
       res.json(error);
-    })
+    });
   }
 }
 

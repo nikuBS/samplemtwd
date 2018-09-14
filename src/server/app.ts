@@ -1,6 +1,4 @@
 // for APM
-import HomeRouter from './app/01.home/home.router';
-
 const WhatapAgent = require('whatap').NodeAgent;
 
 // Node Modules
@@ -14,6 +12,8 @@ import cookie from 'cookie-parser';
 
 import environment from './config/environment.config';
 
+const manifest = require('./config/manifest.json');
+
 // Route Modules
 import AppRouter from './common/app.router';
 import { default as OldHomeRouter } from './app/900.home/home.router';
@@ -23,18 +23,20 @@ import { default as OldPaymentRouter } from './app/903.payment/payment.router';
 import { default as OldCustomerRouter } from './app/904.customer/customer.router';
 import { default as OldAuthRouter } from './app/905.auth/auth.router';
 import { default as OldCommonRouter } from './app/909.common/common.router';
+import HomeRouter from './app/01.home/home.router';
+import MytDataRouter from './app/02.myt-data/myt-data.router';
+import MytFareRouter from './app/03.myt-fare/myt-fare.router';
+import MytJoinRouter from './app/04.myt-join/myt-join.router';
+import ProductRouter from './app/05.product/product.router';
+import BenefitRouter from './app/06.benefit/benefit.router';
+import CustomerRouter from './app/07.customer/customer.router';
+import AuthRouter from './app/08.auth/auth.router';
 import BypassRouter from './common/bypass.router';
 import ApiRouter from './common/api.router';
+import NativeRouter from './common/native.router';
 
 // Application Modules
 import RedisService from './services/redis.service';
-import MyTDataRouter from './app/02.myt/data/myt.data.router';
-import MyTFareRouter from './app/02.myt/fare/myt.fare.router';
-import MyTJoinRouter from './app/02.myt/join/myt.join.router';
-import ProductRouter from './app/03.product/product.router';
-import BenefitRouter from './app/04.benefit/benefit.router';
-import CustomerRouter from './app/05.customer/customer.router';
-import AuthRouter from './app/06.auth/auth.router';
 
 class App {
   public app: Application = express();
@@ -68,7 +70,9 @@ class App {
     this.setRoutes();
     this.setApis();
     this.setBypass();
+    this.setNative();
     this.setGlobalVariables();
+    this.setClientMap();
   }
 
   private setApis() {
@@ -79,11 +83,27 @@ class App {
     this.app.use('/bypass', new BypassRouter().router);
   }
 
+  private setNative() {
+    this.app.use('/native', new NativeRouter().router);
+  }
+
   private setGlobalVariables() {
     const env = environment[String(process.env.NODE_ENV)];
 
     Object.keys(env).map((key) => {
       this.app.locals[key] = env[key];
+    });
+  }
+
+  private setClientMap() {
+    Object.keys(manifest).map((key) => {
+      if ( key.indexOf('.') !== -1 ) {
+        let appName = key.split('.')[0];
+        if ( appName.indexOf('-') !== -1 ) {
+          appName = appName.replace('-', '');
+        }
+        this.app.locals[appName] = manifest[key];
+      }
     });
   }
 
@@ -97,9 +117,9 @@ class App {
     this.app.use('/common', new AppRouter(OldCommonRouter.instance.controllers).router);
 
     this.app.use('/home', new AppRouter(HomeRouter.instance.controllers).router);
-    this.app.use('/myt/data', new AppRouter(MyTDataRouter.instance.controllers).router);
-    this.app.use('/myt/fare', new AppRouter(MyTFareRouter.instance.controllers).router);
-    this.app.use('/myt/join', new AppRouter(MyTJoinRouter.instance.controllers).router);
+    this.app.use('/myt/data', new AppRouter(MytDataRouter.instance.controllers).router);
+    this.app.use('/myt/fare', new AppRouter(MytFareRouter.instance.controllers).router);
+    this.app.use('/myt/join', new AppRouter(MytJoinRouter.instance.controllers).router);
     this.app.use('/product', new AppRouter(ProductRouter.instance.controllers).router);
     this.app.use('/benefit', new AppRouter(BenefitRouter.instance.controllers).router);
     this.app.use('/customer', new AppRouter(CustomerRouter.instance.controllers).router);
@@ -110,13 +130,13 @@ class App {
   private setViewPath() {
     this.app.set('views', [
       path.join(__dirname, 'app/01.home/views/containers'),
-      path.join(__dirname, 'app/02.myt/data/views/containers'),
-      path.join(__dirname, 'app/02.myt/fare/views/containers'),
-      path.join(__dirname, 'app/02.myt/join/views/containers'),
-      path.join(__dirname, 'app/03.product/views/containers'),
-      path.join(__dirname, 'app/04.benefit/views/containers'),
-      path.join(__dirname, 'app/05.customer/views/containers'),
-      path.join(__dirname, 'app/06.auth/views/containers'),
+      path.join(__dirname, 'app/02.myt-data/views/containers'),
+      path.join(__dirname, 'app/03.myt-fare/views/containers'),
+      path.join(__dirname, 'app/04.myt-join/views/containers'),
+      path.join(__dirname, 'app/05.product/views/containers'),
+      path.join(__dirname, 'app/06.benefit/views/containers'),
+      path.join(__dirname, 'app/07.customer/views/containers'),
+      path.join(__dirname, 'app/08.auth/views/containers'),
 
       path.join(__dirname, 'app/900.home/views/containers'),
       path.join(__dirname, 'app/901.myt/views/containers'),

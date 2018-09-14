@@ -1,0 +1,30 @@
+<%#
+* FileName: myt-data.usage.html
+* Author: 이정민 (skt.p130713@partner.sk.com)
+* Date: 2018.09.13
+%>
+
+<% include ../../components/start.component.html %>
+<div id="myt-data-usage">
+    <div id="data">
+        데이터
+        <div>
+            <div id="tdata-share">T데이터 셰어링</div>
+            <div id="troaming-share">T로밍 함께 쓰기 잔여량</div>
+            <div id="data-limit">데이터 한도 요금제 잔여량</div>
+            <div id="ting">팅 요금상품 잔여량</div>
+            <div id="discount">24시간 데이터 50% 할인 사용량</div>
+            <div id="band-data-share">내폰끼리 결합 사용량</div>
+        </div>
+    </div>
+    <div id="voice">음성/영상</div>
+    <div id="sms">문자</div>
+    <div id="etc">기타</div>
+</div>
+<% include ../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    new Tw.MyTDataUsage($('#myt-data-usage'));
+  });
+</script>
+<% include ../../components/end.component.html %>

@@ -9,7 +9,7 @@ import { Request, Response, NextFunction } from 'express';
 import { API_CMD, API_CODE, API_GIFT_ERROR } from '../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 import FormatHelper from '../../../utils/format.helper';
-import { UNIT, UNIT_E } from '../../../types/bff.type';
+import { UNIT, UNIT_E } from '../../../types/bff.old.type';
 import DateHelper from '../../../utils/date.helper';
 import 'rxjs/add/observable/combineLatest';
 import 'rxjs/add/operator/map';
@@ -21,39 +21,19 @@ class HomeMain extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any, layerType: string) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any) {
     // this.testApi();
     const remainDate = DateHelper.getRemainDate();
 
-    if ( FormatHelper.isEmpty(svcInfo)) {
-      const data = {
-        svcInfo: null,
-        remainDate: null,
-        usageData: null,
-        refillData: null,
-        giftData: null,
-        layerType: null
-      };
-      res.render('home.main.html', data);
-    } else {
-      Observable.combineLatest(
-        this.getUsageData(),
-        this.getRefillData(),
-        this.getGiftData()
-      ).subscribe(([usageData, refillData, giftData]) => {
-        const data = {
-          svcInfo,
-          remainDate,
-          usageData,
-          refillData,
-          giftData,
-          layerType
-        };
-        res.render('home.main.html', data);
-      });
-    }
-
-
+    const data = {
+      svcInfo: svcInfo,
+      remainDate: null,
+      usageData: null,
+      refillData: null,
+      giftData: null,
+      layerType: null
+    };
+    res.render('home.main.html', data);
   }
 
   private testApi() {

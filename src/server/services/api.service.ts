@@ -8,8 +8,8 @@ import FormatHelper from '../utils/format.helper';
 import EnvHelper from '../utils/env.helper';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/map';
-import { COOKIE_KEY} from '../types/common.type';
-import { LOGIN_TYPE } from '../types/bff.type';
+import { COOKIE_KEY } from '../types/common.type';
+import { LOGIN_TYPE } from '../types/bff.old.type';
 
 class ApiService {
   static instance;
@@ -61,7 +61,7 @@ class ApiService {
         return Object.assign(header, {
           'content-type': 'application/json; charset=UTF-8',
           'x-user-ip': this.loginService.getNodeIp(),
-          cookie: this.makeCookie(),
+          cookie: FormatHelper.isEmpty(header.cookie) ? this.makeCookie() : header.cookie,
         });
       case API_SERVER.TID:
         return Object.assign(header, {
@@ -155,7 +155,16 @@ class ApiService {
         } else {
           throw resp;
         }
-      }).map(() => {
+      })
+      .switchMap((resp) => this.request(API_CMD.BFF_01_0002, {}))
+      .switchMap((resp) => {
+        if ( resp.code === API_CODE.CODE_00 ) {
+          return this.loginService.setAllSvcInfo(resp.result);
+        } else {
+          throw resp;
+        }
+      })
+      .map((resp) => {
         return { code: API_CODE.CODE_00, result: result };
       });
   }

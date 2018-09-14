@@ -35,6 +35,8 @@ import AuthCertNice from './controllers/cert/auth.cert.nice.controller';
 import AuthCertIpin from './controllers/cert/auth.cert.ipin.controller';
 import AuthCertMotp from './controllers/cert/auth.cert.motp.controller';
 import AuthCertComplete from './controllers/cert/auth.cert.complete.controller';
+import AuthCertFinanceIdentification from './controllers/cert/auth.cert.finance-identification.controller';
+import AuthCertFinancePublic from './controllers/cert/auth.cert.finance-public.controller';
 
 class AuthRouter extends TwRouter {
   constructor() {
@@ -84,6 +86,8 @@ class AuthRouter extends TwRouter {
     this.controllers.push({ url: '/cert/nice', controller: new AuthCertNice() });
     this.controllers.push({ url: '/cert/ipin', controller: new AuthCertIpin() });
     this.controllers.push({ url: '/cert/complete', controller: new AuthCertComplete() });
+    this.controllers.push({ url: '/cert/finance/identification', controller: new AuthCertFinanceIdentification() });
+    this.controllers.push({ url: '/cert/finance/public', controller: new AuthCertFinancePublic() });
   }
 }
 

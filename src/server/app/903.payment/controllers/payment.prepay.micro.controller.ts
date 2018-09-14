@@ -7,7 +7,7 @@ import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../../common/controllers/tw.view.controller';
 import { API_CMD, API_CODE } from '../../../types/api-command.type';
 import FormatHelper from '../../../utils/format.helper';
-import { AUTO_CHARGE_CODE, PREPAY_TITLE } from '../../../types/bff.type';
+import { AUTO_CHARGE_CODE, PREPAY_TITLE } from '../../../types/bff.old.type';
 import DateHelper from '../../../utils/date.helper';
 
 class PaymentPrepayMicro extends TwViewController {

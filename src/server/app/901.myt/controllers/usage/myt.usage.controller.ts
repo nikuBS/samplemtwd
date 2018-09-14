@@ -8,7 +8,7 @@ import { Request, Response, NextFunction } from 'express';
 import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
-import { MYT_VIEW } from '../../../../types/string.type';
+import { MYT_VIEW } from '../../../../types/string.old.type';
 import { Observable } from 'rxjs/Observable';
 import MyTUsageGraphbox from './myt.usage.graphbox.controller';
 
