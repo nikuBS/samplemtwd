@@ -1,6 +1,6 @@
 import LoginService from './login.service';
 import RedisService from './redis.service';
-import { AUTH_CERTIFICATION_SCOPE } from '../types/bff.type';
+import { AUTH_CERTIFICATION_SCOPE } from '../types/bff.old.type';
 import FormatHelper from '../utils/format.helper';
 import { REDIS_URL_META } from '../types/common.type';
 import { Observable } from 'rxjs/Observable';

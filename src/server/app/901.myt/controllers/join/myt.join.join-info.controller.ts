@@ -5,7 +5,7 @@
  */
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import {Request, Response, NextFunction} from 'express';
-import {DATE_FORMAT, CURRENCY_UNIT, MYT_JOIN_TYPE, MYT_JOIN} from '../../../../types/string.type';
+import {DATE_FORMAT, CURRENCY_UNIT, MYT_JOIN_TYPE, MYT_JOIN} from '../../../../types/string.old.type';
 import DateHelper from '../../../../utils/date.helper';
 import FormatHelper from '../../../../utils/format.helper';
 import {API_CMD, API_CODE} from '../../../../types/api-command.type';

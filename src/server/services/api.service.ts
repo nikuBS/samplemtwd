@@ -9,7 +9,7 @@ import EnvHelper from '../utils/env.helper';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/map';
 import { COOKIE_KEY } from '../types/common.type';
-import { LOGIN_TYPE } from '../types/bff.type';
+import { LOGIN_TYPE } from '../types/bff.old.type';
 
 class ApiService {
   static instance;

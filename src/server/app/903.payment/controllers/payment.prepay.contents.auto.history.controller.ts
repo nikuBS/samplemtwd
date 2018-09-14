@@ -9,7 +9,7 @@ import { API_CMD, API_CODE } from '../../../types/api-command.type';
 import FormatHelper from '../../../utils/format.helper';
 import DateHelper from '../../../utils/date.helper';
 import { Observable } from 'rxjs/Observable';
-import { PREPAY_TITLE, REQUEST_TYPE } from '../../../types/bff.type';
+import { PREPAY_TITLE, REQUEST_TYPE } from '../../../types/bff.old.type';
 
 class PaymentPrepayContentsAutoHistory extends TwViewController {
   constructor() {

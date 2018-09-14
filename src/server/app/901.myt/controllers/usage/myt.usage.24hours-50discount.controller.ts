@@ -5,13 +5,13 @@
  */
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
-import { UNIT } from '../../../../types/bff.type';
+import { UNIT } from '../../../../types/bff.old.type';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import DateHelper from '../../../../utils/date.helper';
 import FormatHelper from '../../../../utils/format.helper';
 import { Observable } from 'rxjs/Observable';
 import MyTUsage from './myt.usage.controller';
-import { DATA_UNIT } from '../../../../types/string.type';
+import { DATA_UNIT } from '../../../../types/string.old.type';
 import moment = require('moment');
 
 class MyTUsage24hour50discount extends TwViewController {

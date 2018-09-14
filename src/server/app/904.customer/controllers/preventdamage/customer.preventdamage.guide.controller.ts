@@ -6,7 +6,7 @@
 
 import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
-import { CUSTOMER_PREVENTDAMAGE_GUIDE } from '../../../../types/string.type';
+import { CUSTOMER_PREVENTDAMAGE_GUIDE } from '../../../../types/string.old.type';
 import { CUSTOMER_PREVENTDAMAGE_GUIDE_VIDEO, CUSTOMER_PREVENTDAMAGE_GUIDE_LATEST } from '../../../../types/outlink.type';
 import { CUSTOMER_PREVENTDAMAGE_GUIDE_WEBTOON } from '../../../../types/static.type';
 

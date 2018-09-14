@@ -7,7 +7,7 @@
 import TwViewController from '../../../common/controllers/tw.view.controller';
 import {Request, Response, NextFunction} from 'express';
 import {API_CMD} from '../../../types/api-command.type';
-import {MSG_STR} from '../../../types/string.type';
+import {MSG_STR} from '../../../types/string.old.type';
 
 
 class PaymentHistoryPointReserve extends TwViewController {

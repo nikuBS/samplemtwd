@@ -6,13 +6,13 @@
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { NextFunction, Request, Response } from 'express';
-import { MYT_BENEFIT_RAINBOW_POINT } from '../../../../types/string.type';
+import { MYT_BENEFIT_RAINBOW_POINT } from '../../../../types/string.old.type';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import DateHelper from '../../../../utils/date.helper';
 import FormatHelper from '../../../../utils/format.helper';
 import { Observable } from 'rxjs/Observable';
 import { MyTBenefitRainbowPointCommon } from './myt.benefit.rainbow-point.adjustment.controller';
-import { RAINBOW_POINT_REL_CD } from '../../../../types/bff.type';
+import { RAINBOW_POINT_REL_CD } from '../../../../types/bff.old.type';
 
 class MyTBenefitRainbowPointTransfer extends TwViewController {
   public static VIEW = {

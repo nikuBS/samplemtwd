@@ -8,8 +8,8 @@ import { Request, Response, NextFunction } from 'express';
 import { API_CMD, API_CODE } from '../../../types/api-command.type';
 import FormatHelper from '../../../utils/format.helper';
 import { Observable } from 'rxjs/Observable';
-import { SELECT_POINT } from '../../../types/string.type';
-import { PAYMENT_OPTION_TEXT, REQUEST_VALUE, SVC_ATTR } from '../../../types/bff.type';
+import { SELECT_POINT } from '../../../types/string.old.type';
+import { PAYMENT_OPTION_TEXT, REQUEST_VALUE, SVC_ATTR } from '../../../types/bff.old.type';
 import StringHelper from '../../../utils/string.helper';
 import DateHelper from '../../../utils/date.helper';
 

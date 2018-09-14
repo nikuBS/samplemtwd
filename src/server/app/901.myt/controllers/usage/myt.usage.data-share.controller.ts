@@ -7,9 +7,9 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import { Request, Response, NextFunction } from 'express';
 import DateHelper from '../../../../utils/date.helper';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
-import { DATA_UNIT, USER_CNT } from '../../../../types/string.type';
+import { DATA_UNIT, USER_CNT } from '../../../../types/string.old.type';
 import FormatHelper from '../../../../utils/format.helper';
-import { UNIT } from '../../../../types/bff.type';
+import { UNIT } from '../../../../types/bff.old.type';
 import MyTUsageGraphbox from './myt.usage.graphbox.controller';
 import { Observable } from 'rxjs/Observable';
 

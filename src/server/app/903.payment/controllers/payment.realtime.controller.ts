@@ -6,7 +6,7 @@
 import TwViewController from '../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
 import { API_CODE, API_CMD } from '../../../types/api-command.type';
-import { SVC_CD, SVC_ATTR } from '../../../types/bff.type';
+import { SVC_CD, SVC_ATTR } from '../../../types/bff.old.type';
 import DateHelper from '../../../utils/date.helper';
 import FormatHelper from '../../../utils/format.helper';
 

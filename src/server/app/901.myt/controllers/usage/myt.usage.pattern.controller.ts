@@ -6,7 +6,7 @@
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { NextFunction, Request, Response } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
-import { USAGE_PATTERN_CHART, USAGE_PATTERN_NAME } from '../../../../types/string.type';
+import { USAGE_PATTERN_CHART, USAGE_PATTERN_NAME } from '../../../../types/string.old.type';
 import DateHelper from '../../../../utils/date.helper';
 import FormatHelper from '../../../../utils/format.helper';
 import { Observable } from 'rxjs/Observable';

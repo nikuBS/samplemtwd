@@ -5,7 +5,7 @@
  */
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { NextFunction, Request, Response } from 'express';
-import {MYT_REISSUE_REQ_CODE, MYT_REISSUE_REQ_LOCAL_CODE, MYT_REISSUE_TYPE} from '../../../../types/string.type';
+import {MYT_REISSUE_REQ_CODE, MYT_REISSUE_REQ_LOCAL_CODE, MYT_REISSUE_TYPE} from '../../../../types/string.old.type';
 import DateHelper from '../../../../utils/date.helper';
 
 
