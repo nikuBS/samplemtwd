@@ -7,7 +7,7 @@
 import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
-import { CUSTOMER_NOTICE_CATEGORY } from '../../../../types/string.type';
+import { CUSTOMER_NOTICE_CATEGORY } from '../../../../types/string.old.type';
 import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
 

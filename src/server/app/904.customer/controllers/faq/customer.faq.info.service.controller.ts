@@ -8,7 +8,7 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import {Request, Response, NextFunction} from 'express';
 
 import {API_CMD, API_CODE} from '../../../../types/api-command.type';
-import {CUSTOMER_SERVICEINFO_TYPE, CUSTOMER_SERVICEINFO_CATEGORY} from '../../../../types/string.type';
+import {CUSTOMER_SERVICEINFO_TYPE, CUSTOMER_SERVICEINFO_CATEGORY} from '../../../../types/string.old.type';
 
 class CustomerFaqInfoService extends TwViewController {
 

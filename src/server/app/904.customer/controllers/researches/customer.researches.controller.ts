@@ -7,7 +7,7 @@
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
 import DateHelper from '../../../../utils/date.helper';
-import { RESEARCH_EXAMPLE_TYPE } from '../../../../types/string.type';
+import { RESEARCH_EXAMPLE_TYPE } from '../../../../types/string.old.type';
 import { API_CMD } from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
 

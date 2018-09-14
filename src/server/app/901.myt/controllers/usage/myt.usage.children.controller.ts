@@ -8,7 +8,7 @@ import { Request, Response, NextFunction } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 import DateHelper from '../../../../utils/date.helper';
-import { MYT_VIEW } from '../../../../types/string.type';
+import { MYT_VIEW } from '../../../../types/string.old.type';
 import MyTUsage from './myt.usage.controller';
 
 class MyTUsageChildren extends TwViewController {

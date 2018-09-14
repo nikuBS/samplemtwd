@@ -10,7 +10,7 @@ import FormatHelper from '../../../../utils/format.helper';
 import { Observable } from 'rxjs/Observable';
 import MyTUsage from './myt.usage.controller';
 import DateHelper from '../../../../utils/date.helper';
-import { DATA_UNIT, USER_CNT } from '../../../../types/string.type';
+import { DATA_UNIT, USER_CNT } from '../../../../types/string.old.type';
 
 class MyTUsageBandDataSharings extends TwViewController {
   public myTUsage = new MyTUsage();

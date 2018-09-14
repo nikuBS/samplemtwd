@@ -7,7 +7,7 @@
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
 import { API_CMD } from '../../../../types/api-command.type';
-import { RESEARCH_EXAMPLE_TYPE } from '../../../../types/string.type';
+import { RESEARCH_EXAMPLE_TYPE } from '../../../../types/string.old.type';
 
 interface IResultBFF {
   bnnrRsrchId: string; // 리서치 ID, '0132',

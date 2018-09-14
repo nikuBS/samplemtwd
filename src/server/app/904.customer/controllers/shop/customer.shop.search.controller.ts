@@ -9,7 +9,7 @@ import { NextFunction, Request, Response } from 'express';
 import FormatHelper from '../../../../utils/format.helper';
 import { Observable } from '../../../../../../node_modules/rxjs/Observable';
 import { API_CMD } from '../../../../types/api-command.type';
-import { CUSTOMER_SEARCH_OPTIONS } from '../../../../types/string.type';
+import { CUSTOMER_SEARCH_OPTIONS } from '../../../../types/string.old.type';
 
 class CustomerShopSearch extends TwViewController {
   constructor() {

@@ -12,7 +12,7 @@ import recommend_BFF_05_0096 from '../../../../mock/server/recommend.BFF_05_0096
 import recommend_BFF_06_0015 from '../../../../mock/server/recommend.BFF_06_0015.mock';
 import recommend_BFF_05_0120 from '../../../../mock/server/recommend.BFF_05_0120.mock';
 import recommend_BFF_06_0001 from '../../../../mock/server/recommend.BFF_06_0001.mock';
-import { MYT_BENEFIT_RECOMMEND } from '../../../../types/string.type';
+import { MYT_BENEFIT_RECOMMEND } from '../../../../types/string.old.type';
 import FormatHelper from '../../../../utils/format.helper';
 
 

@@ -4,14 +4,14 @@ import LoginService from '../../services/login.service';
 import { API_CMD, API_CODE, API_LOGIN_ERROR, API_SVC_PWD_ERROR } from '../../types/api-command.type';
 import LoggerService from '../../services/logger.service';
 import ErrorService from '../../services/error.service';
-import { URL } from '../../types/url.type';
+import { URL } from '../../types/url.old.type';
 import FormatHelper from '../../utils/format.helper';
 import { CHANNEL_TYPE, COOKIE_KEY} from '../../types/common.type';
 import BrowserHelper from '../../utils/browser.helper';
 import { Observable } from 'rxjs/Observable';
 import RedisService from '../../services/redis.service';
 import { REDIS_URL_META } from '../../types/common.type';
-import { LOGIN_TYPE, SVC_ATTR, LINE_NAME } from '../../types/bff.type';
+import { LOGIN_TYPE, SVC_ATTR, LINE_NAME } from '../../types/bff.old.type';
 
 
 abstract class TwViewController {

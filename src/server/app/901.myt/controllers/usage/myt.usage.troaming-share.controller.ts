@@ -7,9 +7,9 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import { Request, Response, NextFunction } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
-import { DATA_UNIT, MYT_USAGE_TROAMING_SHARE, USER_CNT } from '../../../../types/string.type';
+import { DATA_UNIT, MYT_USAGE_TROAMING_SHARE, USER_CNT } from '../../../../types/string.old.type';
 import MyTUsageGraphbox from './myt.usage.graphbox.controller';
-import { UNIT_E } from '../../../../types/bff.type';
+import { UNIT_E } from '../../../../types/bff.old.type';
 import DateHelper from '../../../../utils/date.helper';
 import moment = require('moment');
 

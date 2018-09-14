@@ -6,7 +6,7 @@
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { NextFunction, Request, Response } from 'express';
-import { MYT_BENEFIT_RAINBOW_POINT } from '../../../../types/string.type';
+import { MYT_BENEFIT_RAINBOW_POINT } from '../../../../types/string.old.type';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import DateHelper from '../../../../utils/date.helper';
 import FormatHelper from '../../../../utils/format.helper';

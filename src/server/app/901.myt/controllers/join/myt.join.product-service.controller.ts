@@ -4,14 +4,14 @@
  * Date: 2018.08.13
  */
 
-import { COMBINATION_PRODUCT_OTHER_TYPE, UNIT, VOICE_UNIT } from '../../../../types/bff.type';
+import { COMBINATION_PRODUCT_OTHER_TYPE, UNIT, VOICE_UNIT } from '../../../../types/bff.old.type';
 import { NextFunction, Request, Response } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import FormatHelper from '../../../../utils/format.helper';
 import { Observable } from 'rxjs/Observable';
-import { SVC_CDNAME, SVC_CDGROUP } from '../../../../types/bff.type';
-import { MYT_COMBINATION_TYPE, MYT_COMBINATION_FAMILY, MYT_FEEPLAN_BENEFIT } from '../../../../types/string.type';
+import { SVC_CDNAME, SVC_CDGROUP } from '../../../../types/bff.old.type';
+import { MYT_COMBINATION_TYPE, MYT_COMBINATION_FAMILY, MYT_FEEPLAN_BENEFIT } from '../../../../types/string.old.type';
 import DateHelper from '../../../../utils/date.helper';
 
 interface ICombination {

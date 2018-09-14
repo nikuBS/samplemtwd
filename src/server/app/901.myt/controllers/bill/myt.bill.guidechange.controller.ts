@@ -5,10 +5,10 @@
  */
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import {Request, Response, NextFunction} from 'express';
-import {MYT_GUIDE_CHANGE_INIT_INFO} from '../../../../types/string.type';
+import {MYT_GUIDE_CHANGE_INIT_INFO} from '../../../../types/string.old.type';
 import {Observable} from 'rxjs/Observable';
 import {API_CMD, API_CODE} from '../../../../types/api-command.type';
-import {SVC_ATTR} from '../../../../types/bff.type';
+import {SVC_ATTR} from '../../../../types/bff.old.type';
 
 class MyTBillGuidechange extends TwViewController {
   constructor() {

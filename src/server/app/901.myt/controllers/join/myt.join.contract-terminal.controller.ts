@@ -12,7 +12,7 @@ import StringHelper from '../../../../utils/string.helper';
 import moment = require('moment');
 import DateHelper from '../../../../utils/date.helper';
 import FormatHelper from '../../../../utils/format.helper';
-import { MYT_JOIN_CONTRACT_TERMINAL } from '../../../../types/string.type';
+import { MYT_JOIN_CONTRACT_TERMINAL } from '../../../../types/string.old.type';
 import * as _ from 'underscore';
 
 
