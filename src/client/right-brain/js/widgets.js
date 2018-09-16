@@ -12,6 +12,7 @@ skt_landing.widgets = {
     for (var com_name in widget_list) {
       widget_list[com_name](ta);
     }
+    skt_landing.widgets.widget_deltype();
   },
   widget_tube: function (ta) {
     var widget = ta ? $(ta).find('.widget-box.tube') : $('.widget-box.tube');
@@ -74,6 +75,28 @@ skt_landing.widgets = {
       target.attr('checked',true).prop('checked',true);
     }
   },
+  widget_deltype: function(){
+    $('.input').each(function(){
+      var bt = $(this).find('.cancel'),
+          field = bt.prev();
+      if(field.val() == ''){
+        bt.hide();
+      }else{
+        bt.show();
+      }
+      bt.on('click',function(){
+        field.val('').focus();
+        bt.hide();
+      });
+      field.on('change keyup',function(){
+        if($(this).val() == ''){
+          bt.hide();
+        }else{
+          bt.show();
+        }
+      });
+    });
+  },
   widget_step: function () {
     $('.step-list li').each(function(){
       if(!$(this).hasClass('on')){
@@ -85,6 +108,20 @@ skt_landing.widgets = {
     var input = ta ? $(ta).find('.radiobox :radio') : $('.radiobox :radio');
     input.each(function () {
       var box = $(this).closest('.radiobox');
+      if($(this).closest('.radio-slide').length > 0){
+        var radioSlide = $(this).closest('.radio-slide'),
+            radioItems = radioSlide.find('.radiobox'),
+            itemsW = 0;
+        for(var i=0, leng=radioItems.length; i<leng; ++i){
+          itemsW += radioItems.eq(i).outerWidth(true);
+        }
+        if(itemsW <= skt_landing.util.win_info.get_winW()){
+          radioSlide.find('.select-list').css('width','100%');
+        }else if(itemsW > skt_landing.util.win_info.get_winW()){
+          radioSlide.find('.select-list').css('width',itemsW);
+        }
+      }
+      
       $(this).is(':checked') ? box.addClass('checked').attr('aria-checked',true) : box.removeClass('checked').attr('aria-checked',false);
       $(this).is(':disabled') ? box.addClass('disabled').attr('aria-disabled',true) : box.removeClass('disabled');
       $(this).on('change', function () {
@@ -99,7 +136,7 @@ skt_landing.widgets = {
       }).on('focusout', function () {
         box.removeClass('focus');
       });
-
+      
       box.on('click',function(e){
         if(e.target.tagName.toLowerCase() == 'input' && e.target != e.currentTarget) return ;
         $(this).find('input').trigger('change');

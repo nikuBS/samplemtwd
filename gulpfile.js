@@ -200,6 +200,12 @@ gulp.task('hbs', function () {
     .pipe(gulp.dest(dist + 'hbs'));
 });
 
+gulp.task('font', function () {
+  return gulp.src('src/client/right-brain/font/**/*')
+    .pipe(gulp.dest(dist_tmp + 'font'))
+    .pipe(gulp.dest(dist + 'font'));
+});
+
 gulp.task('resource', function () {
   return gulp.src('src/client/right-brain/resource/**/*')
     .pipe(gulp.dest(dist_tmp + 'resource'))
@@ -235,7 +241,7 @@ gulp.task('js-app', appNames.map(function (app) {
 }));
 gulp.task('js', ['js-util', 'js-old-app', 'js-app']);
 gulp.task('vendor', ['js-vendor', 'css-vendor']);
-gulp.task('rb', ['js-rb', 'css-rb', 'img', 'hbs']);
+gulp.task('rb', ['js-rb', 'css-rb', 'img', 'hbs', 'font']);
 
 gulp.task('task', ['vendor', 'js', 'rb', 'resource']);
 gulp.task('run', ['server', 'watch']);
