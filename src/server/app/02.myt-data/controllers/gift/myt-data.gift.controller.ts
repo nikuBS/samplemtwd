@@ -14,10 +14,22 @@ class MytDataGift extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    res.render('gift/myt-data.gift.html', {
+    const page = req.params.page;
+    const responseData = {
       svcInfo: svcInfo,
       isApp: BrowserHelper.isApp(req)
-    });
+    };
+
+    switch ( page ) {
+      case 'sms':
+        res.render('gift/myt-data.gift.sms.html', responseData);
+        break;
+      case 'complete':
+        res.render('gift/myt-data.gift.complete.html', responseData);
+        break;
+      default:
+        res.render('gift/myt-data.gift.html', responseData);
+    }
   }
 }
 

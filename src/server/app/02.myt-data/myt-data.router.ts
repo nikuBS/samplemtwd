@@ -11,10 +11,10 @@ class MytDataRouter extends TwRouter {
     super();
     this.controllers.push({ url: '/', controller: new MyTSubMain() });
     this.controllers.push({ url: '/usage', controller: new MyTDataUsage() });
-    this.controllers.push({ url: '/gift', controller: new MytDataGift() });
-    this.controllers.push({ url: '/ting', controller: new MytDataTing() });
-    this.controllers.push({ url: '/limit', controller: new MytDataLimit() });
-    this.controllers.push({ url: '/cookiz', controller: new MytDataCookiz() });
+    this.controllers.push({ url: '/gift(/:page)?', controller: new MytDataGift() });
+    this.controllers.push({ url: '/ting(/:page)?', controller: new MytDataTing() });
+    this.controllers.push({ url: '/limit(/:page)?', controller: new MytDataLimit() });
+    this.controllers.push({ url: '/cookiz(/:page)?', controller: new MytDataCookiz() });
   }
 }
 
