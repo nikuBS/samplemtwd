@@ -26,21 +26,8 @@ Tw.MyTDataGift.prototype = {
   },
 
   _bindEvent: function () {
-    this.$inputImmediatelyGift.on('keyup', function () {
-      this.$inputImmediatelyGift.val(this._convertDashNumber(this.$inputImmediatelyGift.val()));
-    }.bind(this));
+    this.$inputImmediatelyGift.on('keyup', $.proxy(this._onKeyUpImmediatelyGiftNumber, this));
     this.$btnNativeContactList.on('click', $.proxy(this._onClickBtnAddr, this));
-  },
-
-  _onClickBtnAddr: function () {
-    this._nativeService.send(Tw.NTV_CMD.GET_CONTACT, {}, $.proxy(this._onContact, this));
-  },
-
-  _onContact: function (response) {
-    if(response.resultCode === Tw.NTV_CODE.CODE_00) {
-      var params = response.params;
-      this.$inputImmediatelyGift.val(this._convertDashNumber(params.phoneNumber));
-    }
   },
 
   _getRemainDataInfo: function () {
@@ -51,6 +38,21 @@ Tw.MyTDataGift.prototype = {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
 
     }
+  },
+
+  _onClickBtnAddr: function () {
+    this._nativeService.send(Tw.NTV_CMD.GET_CONTACT, {}, $.proxy(this._onContact, this));
+  },
+
+  _onContact: function (response) {
+    if ( response.resultCode === Tw.NTV_CODE.CODE_00 ) {
+      var params = response.params;
+      this.$inputImmediatelyGift.val(this._convertDashNumber(params.phoneNumber));
+    }
+  },
+
+  _onKeyUpImmediatelyGiftNumber: function () {
+    this.$inputImmediatelyGift.val(this._convertDashNumber(this.$inputImmediatelyGift.val()));
   },
 
   _getReceiveUserInfo: function () {
