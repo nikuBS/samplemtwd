@@ -40,6 +40,10 @@ abstract class TwViewController {
     return this._loginService;
   }
 
+  protected get redisService(): RedisService {
+    return this._redisService;
+  }
+
   protected get logger(): LoggerService {
     return this._logger;
   }
