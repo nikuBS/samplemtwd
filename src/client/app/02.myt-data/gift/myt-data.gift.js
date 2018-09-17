@@ -8,15 +8,39 @@ Tw.MyTDataGift = function (rootEl) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
+  this._nativeService = Tw.Native;
 
-  // this._cachedElement();
-  // this._bindEvent();
+  this._cachedElement();
+  this._bindEvent();
   this._init();
 };
 
 Tw.MyTDataGift.prototype = {
   _init: function () {
     this._getRemainDataInfo();
+  },
+
+  _cachedElement: function () {
+    this.$btnNativeContactList = $('.fe-btn_native_contact');
+    this.$inputImmediatelyGift = $('.fe-input_immediately_gift');
+  },
+
+  _bindEvent: function () {
+    this.$inputImmediatelyGift.on('keyup', function () {
+      this.$inputImmediatelyGift.val(this._convertDashNumber(this.$inputImmediatelyGift.val()));
+    }.bind(this));
+    this.$btnNativeContactList.on('click', $.proxy(this._onClickBtnAddr, this));
+  },
+
+  _onClickBtnAddr: function () {
+    this._nativeService.send(Tw.NTV_CMD.GET_CONTACT, {}, $.proxy(this._onContact, this));
+  },
+
+  _onContact: function (response) {
+    if(response.resultCode === Tw.NTV_CODE.CODE_00) {
+      var params = response.params;
+      this.$inputImmediatelyGift.val(this._convertDashNumber(params.phoneNumber));
+    }
   },
 
   _getRemainDataInfo: function () {
@@ -37,6 +61,10 @@ Tw.MyTDataGift.prototype = {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
 
     }
+  },
+
+  _convertDashNumber: function (sTelNumber) {
+    return Tw.StringHelper.phoneStringToDash(sTelNumber);
   },
 
   _requestSendingData: function () {

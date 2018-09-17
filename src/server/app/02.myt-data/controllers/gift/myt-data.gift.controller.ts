@@ -6,6 +6,7 @@
 
 import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
+import BrowserHelper from '../../../../utils/browser.helper';
 
 class MytDataGift extends TwViewController {
   constructor() {
@@ -13,7 +14,10 @@ class MytDataGift extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    res.render('gift/myt-data.gift.html');
+    res.render('gift/myt-data.gift.html', {
+      svcInfo: svcInfo,
+      isApp: BrowserHelper.isApp(req)
+    });
   }
 }
 
