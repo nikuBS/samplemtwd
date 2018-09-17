@@ -27,8 +27,10 @@ Tw.PopupService.prototype = {
     }
   },
   _onOpenPopup: function () {
-    var $popups = $('.popup, .popup-page');
+    var $popups = $('.popup');
+    console.log('popups', $popups);
     var $currentPopup = $($popups[$popups.length - 1]);
+    console.log('current', $currentPopup);
     Tw.Logger.info('[Popup Open]');
     this._bindEvent($currentPopup);
     if ( !Tw.FormatHelper.isEmpty(this._openCallback) ) {
@@ -145,6 +147,85 @@ Tw.PopupService.prototype = {
   },
   openSelect: function () {
 
+  },
+  openTypeA: function (title, contents, icoType, openCallback, closeCallback) {
+    var option = {
+      ico: icoType || 'type2',
+      title: title,
+      contents: contents,
+      bt: [{
+        style_class: 'bt-blue1 tw-popup-closeBtn',
+        txt: Tw.BUTTON_LABEL.CLOSE
+      }]
+    };
+    this._setOpenCallback(openCallback);
+    this._addHash(closeCallback);
+    this._open(option);
+  },
+  openOneBtTypeB: function (title, contents, linkList, icoType, openCallback, closeCallback) {
+    var option = {
+      ico: icoType || 'type3',
+      title: title,
+      contents: contents,
+      link_list: linkList,
+      bt: [{
+        style_class: 'bt-blue1 tw-popup-closeBtn',
+        txt: Tw.BUTTON_LABEL.CLOSE
+      }]
+    };
+    this._setOpenCallback(openCallback);
+    this._addHash(closeCallback);
+    this._open(option);
+  },
+  openTwoBtTypeB: function (title, contents, linkList, btName, icoType, openCallback, confirmCallback, closeCallback) {
+    var option = {
+      ico: icoType || 'type3',
+      title: title,
+      contents: contents,
+      link_list: linkList,
+      bt: [{
+        style_class: 'bt-blue1 tw-popup-confirm',
+        txt: btName || Tw.BUTTON_LABEL.CONFIRM
+      }, {
+        style_class: 'bt-white2 tw-popup-closeBtn',
+        txt: Tw.BUTTON_LABEL.CLOSE
+      }]
+    };
+    this._setOpenCallback(openCallback);
+    this._setConfirmCallback(confirmCallback);
+    this._addHash(closeCallback);
+    this._open(option);
+  },
+  openTypeC: function (title, noticeList, icoType, openCallback, closeCallback) {
+    var option = {
+      ico: icoType || 'type4',
+      title: title,
+      title_type: 'sub-c',
+      notice_has: 'notice_has',
+      notice_list: noticeList,
+      bt: [{
+        style_class: 'bt-white2 tw-popup-closeBtn',
+        txt: Tw.BUTTON_LABEL.CLOSE
+      }]
+    };
+    this._setOpenCallback(openCallback);
+    this._addHash(closeCallback);
+    this._open(option);
+  },
+  openTypeD: function (title, contents, btName, icoType, openCallback, confirmCallback, closeCallback) {
+    var option = {
+      ico: icoType || 'type2',
+      title: title,
+      contents: contents,
+      bt: [{
+        style_class: 'bt-red1 tw-popup-confirm',
+        txt: btName || Tw.BUTTON_LABEL.CONFIRM
+      }]
+    };
+    this._setOpenCallback(openCallback);
+    this._setConfirmCallback(confirmCallback);
+    this._addHash(closeCallback);
+    this._open(option);
   },
   toast: function (message) {
     skt_landing.action.popup.toast({
