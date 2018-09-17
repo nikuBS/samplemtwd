@@ -21,10 +21,12 @@ skt_landing.components = {
       var _this = $(this),
           tabList = _this.find('.tab-linker'),
           tabCont = _this.find('.tab-contents');
+      initLinkSlide(tabList);
       tabListOnChk();
       tabList.find('button, a').on('click',function(){
         $(this).closest('li').attr('aria-selected', 'true').siblings().attr('aria-selected', 'false');
         tabListOnChk();
+        initLinkSlide(tabList);
       });
 
       function tabListOnChk(){
@@ -35,6 +37,19 @@ skt_landing.components = {
         if(tabListIdx != -1){
           tabCont.children('ul').children('li').eq(tabListIdx).attr('aria-selected', 'true').siblings().attr('aria-selected', 'false');
         }
+      }
+      function initLinkSlide(tabList){
+        var items = tabList.find('li');
+        var itemsW = parseInt(items.closest('ul').css('padding-left'))*2;
+        for(var i=0,leng=items.length; i<leng; ++i){
+          itemsW += items.eq(i).outerWidth(true);
+        }
+        if(skt_landing.util.win_info.get_winW() > itemsW){
+          items.closest('ul').css('width','100%');
+        }else{
+          items.closest('ul').css('width',itemsW);
+        }
+        
       }
     });
   },

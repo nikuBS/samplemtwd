@@ -146,6 +146,12 @@ Tw.PopupService.prototype = {
   openSelect: function () {
 
   },
+  toast: function (message) {
+    skt_landing.action.popup.toast({
+      text: message,
+      second: 5
+    });
+  },
   close: function () {
     Tw.Logger.log('[Popup] Call Close', location.hash);
     if ( /_P/.test(location.hash) || /popup/.test(location.hash) ) {
