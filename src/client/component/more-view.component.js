@@ -16,14 +16,19 @@ Tw.MoreViewComponent.prototype = {
     }
 
     this._data = $.extend({
-      list : [],
-      cnt : Tw.DEFAULT_LIST_COUNT,
-      btnMore : {},
-      callBack : {}
+      list : [],  // 더보기 리스트
+      cnt : Tw.DEFAULT_LIST_COUNT,  // 보여줄 리스트 갯수 ( 기본 20개 )
+      btnMore : {}, // 더보기 버튼 셀럭터
+      callBack : {},  // 더보기 버튼 클릭 시 수행할 함수
+      isOnMoreView : false  // 더보기 수행여부
     }, data);
 
     this._moreList = _.chunk(this._data.list, this._data.cnt);
     this._moreViewEvent();
+
+    if (this._data.isOnMoreView) {
+      this.onMoreView();
+    }
   },
 
   // 더보기 버튼 이벤트 유무
