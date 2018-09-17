@@ -21,9 +21,10 @@ class MyTDataUsage extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     Observable.combineLatest(
-      this.apiService.request(API_CMD.BFF_05_0001, {})
+      this.apiService.request(API_CMD.BFF_05_0001, {}),
+      this.apiService.request(API_CMD.BFF_05_0002, {})
       // this.getUsageData()
-    ).subscribe(([usageData]) => {
+    ).subscribe(([usageData, balanceAddOns]) => {
         if ( usageData.code === API_CODE.CODE_00 ) {
           const fomattedData = this.parseUsageData(usageData.result, svcInfo);
           let strDate;
@@ -33,7 +34,7 @@ class MyTDataUsage extends TwViewController {
             const today = DateHelper.getCurrentDate();
             strDate = `${DateHelper.getShortDateWithFormat(today, 'YYYY.MM.01')} ~ ${DateHelper.getShortDate(today)}`;
           }
-          const options = { usageData: fomattedData, svcInfo: svcInfo, remainDate: strDate };
+          const options = { usageData: fomattedData, svcInfo: svcInfo, remainDate: strDate, balanceAddOns };
           console.log('~~~~~~~~~~~options', options);
           res.render('usage/myt-data.usage.html', options);
         } else {

@@ -1,5 +1,5 @@
 export enum MYT_VIEW {
-  ERROR = 'myt-data.usage.error.html'
+  ERROR = 'usage/myt-data.usage.error.html'
 }
 
 export enum SKIP_NAME {
