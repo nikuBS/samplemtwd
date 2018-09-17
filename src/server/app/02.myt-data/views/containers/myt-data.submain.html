@@ -39,13 +39,16 @@
             <!-- .cont-box -->
             <div class="cont-box nogaps noborder">
                 <ul class="link-long-list">
+                    <% if(data.refill) { %>
                     <li data-id="refill">
                         <div class="link-long">
                             <button>나의 리필 쿠폰
-                                <span class="tx-sub">2장<span class="ico"></span></span>
+                                <span class="tx-sub"><%= data.refill.length %>장<span class="ico"></span></span>
                             </button>
                         </div>
                     </li>
+                    <% } %>
+                    <% if(data.isBenefit) { %>
                     <li data-id="benefit">
                         <div class="link-long">
                             <button>데이터 혜택<span class="ico"></span></button>
@@ -56,6 +59,7 @@
                             <button>데이터 활용하기<span class="ico"></span></button>
                         </div>
                     </li>
+                    <% } %>
                 </ul>
             </div>
             <!-- //.cont-box -->

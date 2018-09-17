@@ -1,7 +1,7 @@
 /*
  * FileName:
  * Author: Kim InHwan (skt.P132150@partner.sk.com)
- * Date: 2018.09.
+ * Date: 2018.09.14
  *
  */
 
@@ -15,7 +15,7 @@ class MytDataSubmainController extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any) {
     const data: any = {
       svcInfo: svcInfo,
       isBenefit: false,
@@ -34,10 +34,14 @@ class MytDataSubmainController extends TwViewController {
       this._getRefillPresentBreakdown(),
       this._getRefillUsedBreakdown(),
       this._getUsagePatternSevice()
-    ).subscribe(([/*remnant,*/ present, refill, /*prepay,*/]) => {
+    ).subscribe(([/*remnant,*/ present, refill, dcBkd, tpBkd, etcBkd, refpBkd, refuBkd, pattern]) => {
       if ( svcInfo.svcAttrCd === 'M2' || svcInfo.svcAttrCd === 'M3' /* || remnant.data === 0 기본 DATA 제공량이 없는 경우*/ ) {
         // 즉시충전 버튼
         data.immCharge = true;
+      }
+      if ( svcInfo.svcAttrCd === 'M1' || svcInfo.svcAttrCd === 'M2' || svcInfo.svcAttrCd === 'M3' ) {
+        // 휴대폰, T-pocketFI, T-Login  경우 노출
+        data.isBenefit = true;
       }
       if ( present && (present.familyMemberYn === 'Y' || present.goodFamilyMemberYn === 'Y') ) {
         data.present = true;
@@ -45,9 +49,23 @@ class MytDataSubmainController extends TwViewController {
       if ( refill && refill.length > 0 ) {
         data.refill = refill;
       }
-      if ( svcInfo.svcAttrCd === 'M1' || svcInfo.svcAttrCd === 'M2' || svcInfo.svcAttrCd === 'M3' ) {
-        // 휴대폰, T-pocketFI, T-Login  경우 노출
-        data.isBenefit = true;
+      if ( dcBkd && dcBkd.length > 0 ) {
+        data.dcBkd = dcBkd;
+      }
+      if ( tpBkd && tpBkd.length > 0 ) {
+        data.tpBkd = tpBkd;
+      }
+      if ( etcBkd && etcBkd.length > 0 ) {
+        data.etcBkd = etcBkd;
+      }
+      if ( refpBkd && refpBkd.length > 0 ) {
+        data.refpBkd = refpBkd;
+      }
+      if ( refuBkd && refuBkd.length > 0 ) {
+        data.refpBkd = refuBkd;
+      }
+      if ( pattern && pattern.length > 0 ) {
+        data.refpBkd = pattern;
       }
 
       res.render('myt-data.submain.html', { data });
