@@ -1,0 +1,22 @@
+<%#
+* FileName: myt-fare.bill.guide.html
+* Author: Kim Myoung-Hwan (skt.P130714@partner.sk.com)
+* Date: 2018.09.12
+%>
+
+<% include ../../components/start.component.html %>
+<% include ../../components/javascript.component.html %>
+
+<div id="fe-wrap">
+    <h1>요금안내서-기업솔루션(포인트캠)</h1>
+</div>
+
+<script>
+  $(document).ready(function () {
+    var oMyTFareGuide = new Tw.MyTFareGuide( $('#fe-wrap'), {
+      reqQuery: <%-JSON.stringify(reqQuery) %>,
+      svcInfo: <%-JSON.stringify(svcInfo) %>
+  } );
+  });
+</script>
+<% include ../../components/end.component.html %>

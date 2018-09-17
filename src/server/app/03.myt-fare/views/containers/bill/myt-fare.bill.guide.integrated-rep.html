@@ -1,0 +1,132 @@
+<%#
+* FileName: myt-fare.bill.guide.integrated-rep.html
+* Author: Kim Myoung-Hwan (skt.P130714@partner.sk.com)
+* Date: 2018.09.12
+%>
+
+<% include ../../components/start.component.html %>
+<% include ../../components/javascript.component.html %>
+<script id="entry-template" type="text/x-handlebars-template">
+    <table>
+        <thead>
+        <th>아이디</th>
+        <th>라벨</th>
+        <th>총합</th>
+        </thead>
+        <tbody>
+        {{# each resData}}
+        <tr>
+            <td>{{id}}</td>
+            <td>{{label}}</td>
+            <td>{{totPrice}}</td>
+        </tr>
+        {{/each}}
+        </tbody>
+    </table>
+    <br><br>
+
+    {{!-- 주석 : svcMgmtNum --}}
+    {{# each resData as |rootItem rootIndex|}}
+    <div class="payment-summary-wrap">
+        <h3 class="tit">
+            이동전화
+            <span class="pay-summary-num">{{rootItem.label}}</span>
+        </h3>
+        <div class="payment-summary">
+                <span class="total">
+                    <span class="blind"></span>
+                    <strong class="num">{{rootItem.totPrice}}</strong>
+                </span>
+        </div>
+    </div>
+
+    <div class="widget">
+        <div class="widget-box accordion2">
+            <div class="acco-style payment-list">
+                <ul class="acco-box">
+                    {{!-- 주석 : billItmLclNm --}}
+                    {{# each rootItem.children as |largeItem largeIndex|}}
+                    <li class="acco-list">
+                        <div class="acco-title">
+                            <button class="" role="button" aria-pressed="true">
+                                <span class="pt-tit">{{largeItem.label}}</span>
+                                <span class="pt-price">
+                                        <span class="num">{{largeItem.totPrice}}</span>
+                                    </span>
+                            </button>
+                        </div>
+                        <div class="acco-content">
+                            <ul class="payment-detail-depth1">
+                                {{!-- 주석 billItmSclNm --}}
+                                {{# each largeItem.children as |midItem midIndex|}}
+                                <li class="">
+                                    <dl class="pdt-wrap">
+                                        <dt class="pdt-tit">{{midItem.label}}</dt>
+                                        <dd class="pdt-price discount">{{midItem.totPrice}}</dd>
+                                    </dl>
+                                    <ul class="payment-detail-depth2">
+                                        {{!-- 주석 --}}
+                                        {{# each midItem.children as |smaItem smaIndex|}}
+                                        <li class="">
+                                            <dl class="pdt-wrap">
+                                                <dt class="pdt-tit">{{smaItem.billItmNm}}</dt>
+                                                <dd class="pdt-price discount">{{smaItem.invAmt}}</dd>
+                                            </dl>
+                                        </li>
+                                        {{/each}}
+                                    </ul>
+                                </li>
+                                {{/each}}
+                            </ul>
+                        </div>
+                    </li>
+                    {{/each}}
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    {{/each}}
+
+</script>
+
+<div id="fe-wrap">
+    <h1>요금안내서-통합청구(대표)</h1>
+    <div>
+        <button data-target="lineChangeBtn">회선 변경하기 버튼</button>
+    </div>
+    <div>
+        청구요금 날짜 : <%-commDataInfo.selClaimDt %>
+    </div>
+    <div>
+        사용기간 : <%-commDataInfo.selStaDt %> ~ <%-commDataInfo.selEndDt %>
+    </div>
+    <div>
+        <%-commDataInfo.selClaimDtM %>월 사용 요금은
+        <%-billpayInfo.useAmtTot %>원이고
+        <%-commDataInfo.discount %>원을 할인 받으셧습니다.
+    </div>
+    <div>
+        <h3>리스트 내용</h3>
+        <div data-target="hbDetailListArea"></div>
+    </div>
+
+</div>
+<style>
+    .accordion2 .acco-style .acco-list .acco-content {
+        display: block;
+    }
+</style>
+
+<script>
+  $(document).ready(function () {
+    var oMyTFareGuide = new Tw.MyTFareBillGuideIntegratedRep( $('#fe-wrap'), {
+      reqQuery: <%-JSON.stringify(reqQuery) %>,
+      svcInfo: <%-JSON.stringify(svcInfo) %>,
+      billpayInfo : <%-JSON.stringify(billpayInfo) %>,
+      commDataInfo : <%-JSON.stringify(commDataInfo) %>,
+      intBillLineInfo : <%-JSON.stringify(intBillLineInfo) %>
+  } );
+  });
+</script>
+<% include ../../components/end.component.html %>
