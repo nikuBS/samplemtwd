@@ -26,6 +26,6 @@ Tw.MyTFareGuide.prototype = {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
 
     }
-  },
+  }
 
 };
