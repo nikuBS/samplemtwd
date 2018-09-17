@@ -20,50 +20,72 @@
     <%- include('../../../../../common/views/components/header.component.html', { title: '실시간 사용량', svcInfo: svcInfo }); %>
     <!--// #header -->
     <!-- #contents -->
-    <div id="contents" class="container-wrap">
-        <h2 class="blind">내용</h2>
-        <div class="container">
-            <div class="cont-box">
-                <div class="top-info">
-                    <% if (usageData.code === 'BLN0001') { %>
-                    <span class="info-text">
-                            안정적인 실시간 조회를 위해<br /><em>조회 횟수를 제한</em>하고 있습니다. <br />
-                            잠시 후 다시 이용해주시기 바랍니다.
-                        </span>
-                    <div class="note-comment">
-                        <span>(2시간 동안 최대 12회 조회 가능)</span>
-                    </div>
-                    <% } else if (usageData.code === 'BLN0003') { %>
-                    <span class="info-text"><em>정지 이력</em>이 있어 사용량조회<br />서비스가 제공되지 않습니다.</span>
-                    <div class="note-comment">
-                        <span>자세한 문의는 고객센터를 이용해주시기 바랍니다.</span>
-                    </div>
-                    <% } else if (usageData.code === 'BLN0002' || usageData.code === 'BLN0004') { %>
-                    <span class="info-text">해당 서비스는<br /><em>실시간 사용량 조회 대상</em>이 아닙니다.</span>
-                    <div class="note-comment">
-                        <span>자세한 문의는 고객센터를 이용해주시기 바랍니다.</span>
-                    </div>
-                    <% } else { %>
-                    <div><%= usageData.msg %></div>
-                    <% } %>
+
+    <div class="popup">
+        <div class="popup-info" role="alertdialog" aria-labelledby="alertHeading" aria-describedby="alertText">
+            <% if (usageData.code === 'BLN0001') { %>
+            <div class="popup-header">
+                <span class="ico type1"></span>
+                <h5 class="popup-title ">
+                    잠시 후 다시 이용해주세요
+                </h5>
+            </div>
+            <div class="popup-contents ">
+                <div class="inner-contents">
+                    <p class="">
+                        안정적인 실시간 조회를 위해 <br />
+                        조회 횟수를 제한하고 있습니다. <br />
+                        (2시간 동안 최대 12회 조회 가능)
+                    </p>
                 </div>
             </div>
-
-            <hr class="cont-sp type1" aria-hidden="true" />
-
-            <div class="cont-box nogaps-btm">
-                <h2 class="title-h2">도와드릴까요?</h2>
-                <div class="link-long-group mt18">
-                    <div class="link-long">
-                        <button>온라인 상담/문의 바로가기<span class="ico"></span></button>
-                    </div>
-                    <div class="link-long">
-                        <button>T월드 고객센터 바로가기<span class="ico"></span></button>
-                    </div>
+            <% } else if (usageData.code === 'BLN0003') { %>
+            <div class="popup-header">
+                <span class="ico type1"></span>
+                <h5 class="popup-title ">
+                    잔여량 조회 서비스가 <br />
+                    제공되지 않습니다.
+                </h5>
+            </div>
+            <div class="popup-contents ">
+                <div class="inner-contents">
+                    <p class="">
+                        정지 이력이 있어 잔여량 조회 서비스가 <br />
+                        제공되지 않습니다. 자세한 문의는<br />
+                        고객센터를 이용해주시기 바랍니다.
+                    </p>
                 </div>
+                <ul class="link-list">
+                    <li><a href="/customer/email">이메일로 문의하기</a></li>
+                </ul>
+            </div>
+            <% } else if (usageData.code === 'BLN0002' || usageData.code === 'BLN0004') { %>
+            <div class="popup-header">
+                <span class="ico type1"></span>
+                <h5 class="popup-title ">
+                    해당 서비스는<br />
+                    실시간 사용량 조회 대상이 아닙니다.
+                </h5>
+            </div>
+            <% } else { %>
+            <div class="popup-header">
+                <span class="ico type1"></span>
+                <h5 class="popup-title ">
+                    <%= usageData.msg %>
+                </h5>
+            </div>
+            <% } %>
+            <div class="btn-box">
+                <ul class="bt-slice">
+                    <li class="bt-blue1">
+                        <button class="fe-common-back">닫기</button>
+                    </li>
+                </ul>
             </div>
         </div>
+        <div class="popup-blind"></div>
     </div>
+
     <!--// #contents -->
     <!-- footer -->
     <%- include('../../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }) %>
