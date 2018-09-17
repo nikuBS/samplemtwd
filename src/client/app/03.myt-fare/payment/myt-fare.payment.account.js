@@ -1,3 +1,9 @@
+/**
+ * FileName: myt-fare.payment.account.js
+ * Author: Jayoon Kong (jayoon.kong@sk.com)
+ * Date: 2018.09.17
+ */
+
 Tw.MyTFarePaymentAccount = function (rootEl) {
   this.$container = rootEl;
   this._init();
