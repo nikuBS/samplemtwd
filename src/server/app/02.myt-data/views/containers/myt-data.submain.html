@@ -274,8 +274,12 @@
 
 <% include ../components/javascript.component.html %>
 <script>
-  $(document).ready(function () {
-    new Tw.MyTDataUsage($('#myt-data-usage'));
-  });
+    // client 작업 중
+    $(document).ready(function () {
+      new Tw.MyTDataSubMain({
+        $element: $('[data-id=submain-container]')
+      });
+    });
+
 </script>
 <% include ../../components/end.component.html %>
