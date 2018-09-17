@@ -98,37 +98,34 @@ Tw.PopupService.prototype = {
     this._addHash(closeCallback, hashName);
     this._open(option);
   },
-  openAlert: function (message, title, confirmCallback, closeCallback) {
+  openAlert: function (contents, title, confirmCallback, closeCallback) {
     var option = {
       title: title || Tw.POPUP_TITLE.NOTIFY,
-      close_bt: true,
-      title2: message,
-      bt_num: 'one',
-      type: [{
-        style_class: 'bt-red1 tw-popup-confirm',
-        txt: Tw.BUTTON_LABEL.CONFIRM
+      title_type: 'sub-c',
+      contents: contents,
+      bt: [{
+        style_class: 'bt-blue1 tw-popup-closeBtn',
+        txt: Tw.BUTTON_LABEL.CLOSE
       }]
     };
     this._setConfirmCallback(confirmCallback);
     this._addHash(closeCallback);
     this._open(option);
   },
-  openConfirm: function (title, message, contents, openCallback, confirmCallback, closeCallback) {
+  openConfirm: function (contents, title, confirmCallback, closeCallback) {
     var option = {
-      title: title,
-      close_bt: true,
-      title2: message,
-      contents: contents || '',
-      bt_num: 'two',
-      type: [{
-        style_class: 'bt-white1 tw-popup-closeBtn',
+      title: title || Tw.POPUP_TITLE.NOTIFY,
+      title_type: 'sub',
+      cont_align: 'tl',
+      contents: contents,
+      bt_b: [{
+        style_class: 'pos-left tw-popup-closeBtn',
         txt: Tw.BUTTON_LABEL.CANCEL
       }, {
-        style_class: 'bt-red1 tw-popup-confirm',
+        style_class: 'bt-blue1 pos-right tw-popup-confirm',
         txt: Tw.BUTTON_LABEL.CONFIRM
       }]
     };
-    this._setOpenCallback(openCallback);
     this._setConfirmCallback(confirmCallback);
     this._addHash(closeCallback);
     this._open(option);
@@ -219,6 +216,25 @@ Tw.PopupService.prototype = {
       contents: contents,
       bt: [{
         style_class: 'bt-red1 tw-popup-confirm',
+        txt: btName || Tw.BUTTON_LABEL.CONFIRM
+      }]
+    };
+    this._setOpenCallback(openCallback);
+    this._setConfirmCallback(confirmCallback);
+    this._addHash(closeCallback);
+    this._open(option);
+  },
+  openModalTypeA: function (title, contents, btName, openCallback, confirmCallback, closeCallback) {
+    var option = {
+      title: title,
+      title_type: 'sub',
+      cont_align: 'tl',
+      contents: contents,
+      bt_b: [{
+        style_class: 'pos-left tw-popup-closeBtn',
+        txt: Tw.BUTTON_LABEL.CANCEL
+      }, {
+        style_class: 'bt-red1 pos-right tw-popup-confirm',
         txt: btName || Tw.BUTTON_LABEL.CONFIRM
       }]
     };
