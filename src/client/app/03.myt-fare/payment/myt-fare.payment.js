@@ -24,7 +24,23 @@ Tw.MyTFarePayment.prototype = {
   _openPaymentOption: function (isTarget) {
     this._popupService.open({
       hbs: 'actionsheet_link_b_type',// hbs의 파일명
-      layer: true
+      layer: true,
+      title: '납부 방법 선택',
+      data:[
+        {
+          'list':[
+            {'value':'<button class="fe-auto">자동납부</button>', 'text1':'신청'}
+          ]
+        },
+        {
+          'type':'요금 납부',
+          'list':[
+            {'value':'<button class="fe-account">계좌이체 납부</button>'},
+            {'value':'<button class="fe-card">체크/신용카드 납부</button>'},
+            {'value':'<button class="fe-point">OK캐쉬백/T포인트 납부</button>'}
+          ]
+        }
+      ]
     }, $.proxy(this._bindEvent, this, isTarget));
   },
   _bindEvent: function (isTarget, $layer) {
