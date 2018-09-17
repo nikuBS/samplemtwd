@@ -1,0 +1,73 @@
+<%#
+* FileName: myt-data.usage.error.html
+* Author: 이정민 (skt.p130713@partner.sk.com)
+* Date: 2018.09.17
+%>
+
+<% include ../../components/start.component.html %>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb_area">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<!-- wrap -->
+<div class="wrap">
+    <!-- #header -->
+    <%- include('../../../../../common/views/components/header.component.html', { title: '실시간 사용량', svcInfo: svcInfo }); %>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <div class="cont-box">
+                <div class="top-info">
+                    <% if (usageData.code === 'BLN0001') { %>
+                    <span class="info-text">
+                            안정적인 실시간 조회를 위해<br /><em>조회 횟수를 제한</em>하고 있습니다. <br />
+                            잠시 후 다시 이용해주시기 바랍니다.
+                        </span>
+                    <div class="note-comment">
+                        <span>(2시간 동안 최대 12회 조회 가능)</span>
+                    </div>
+                    <% } else if (usageData.code === 'BLN0003') { %>
+                    <span class="info-text"><em>정지 이력</em>이 있어 사용량조회<br />서비스가 제공되지 않습니다.</span>
+                    <div class="note-comment">
+                        <span>자세한 문의는 고객센터를 이용해주시기 바랍니다.</span>
+                    </div>
+                    <% } else if (usageData.code === 'BLN0002' || usageData.code === 'BLN0004') { %>
+                    <span class="info-text">해당 서비스는<br /><em>실시간 사용량 조회 대상</em>이 아닙니다.</span>
+                    <div class="note-comment">
+                        <span>자세한 문의는 고객센터를 이용해주시기 바랍니다.</span>
+                    </div>
+                    <% } else { %>
+                    <div><%= usageData.msg %></div>
+                    <% } %>
+                </div>
+            </div>
+
+            <hr class="cont-sp type1" aria-hidden="true" />
+
+            <div class="cont-box nogaps-btm">
+                <h2 class="title-h2">도와드릴까요?</h2>
+                <div class="link-long-group mt18">
+                    <div class="link-long">
+                        <button>온라인 상담/문의 바로가기<span class="ico"></span></button>
+                    </div>
+                    <div class="link-long">
+                        <button>T월드 고객센터 바로가기<span class="ico"></span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--// #contents -->
+    <!-- footer -->
+    <%- include('../../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }) %>
+    <!-- // footer -->
+</div>
+<% include ../../components/javascript.component.html %>
+<% include ../../components/end.component.html %>
