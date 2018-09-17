@@ -1,0 +1,23 @@
+<%#
+* FileName: myt-fare.bill.set.return-history.html
+* Author: 양정규 (skt.P130715@partner.sk.com)
+* Date: 2018.09.14
+%>
+
+<% include ../../components/start.component.html %>
+<% include ../../components/bill/myt-fare.bill.set.return-history.components.html %>
+<p> 요금 안내서 반송내역 </p>
+<br/>
+<div class="wrap">
+    <div id="fe-return-history"></div>
+    <button class="bt-more">더보기<span>(0)</span></button>
+
+</div>
+
+<% include ../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    new Tw.MyTFareBillSetReturnHistory($('.wrap'));
+  });
+</script>
+<% include ../../components/end.component.html %>

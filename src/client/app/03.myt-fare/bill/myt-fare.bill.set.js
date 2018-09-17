@@ -10,6 +10,8 @@ Tw.MyTFareBillSet = function (rootEl) {
 
 Tw.MyTFareBillSet.prototype = {
   _init : function() {
+    this._initVariables();
+    this._bindEvent();
 
   },
   _initVariables: function () {
@@ -17,5 +19,10 @@ Tw.MyTFareBillSet.prototype = {
   },
   _bindEvent: function () {
 
+  },
+
+  // API Fail
+  _onFail: function (err) {
+    Tw.Error(err.code,err.msg).pop();
   }
 };

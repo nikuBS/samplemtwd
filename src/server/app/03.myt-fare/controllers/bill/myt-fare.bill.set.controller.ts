@@ -7,7 +7,7 @@ import {NextFunction, Request, Response} from 'express';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import {Observable} from 'rxjs/Observable';
 import {API_CMD, API_CODE} from '../../../../types/api-command.type';
-import {MYT_FARE_BILL_TYPE} from '../../../../types/string.old.type';
+import {MYT_FARE_BILL_TYPE} from '../../../../types/string.type';
 import {MyTBillSetData} from '../../../../mock/server/myt.fare.bill.set.mock';
 
 class MyTFareBillSet extends TwViewController {
@@ -25,7 +25,7 @@ class MyTFareBillSet extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, layerType: string) {
     this.svcInfo = svcInfo;
     Observable.combineLatest(
-      this.mockReqBillType()
+      this.reqBillType()
     ).subscribe(([resBillType]) => {
       if ( resBillType.code === API_CODE.CODE_00) {
         const data = this.getData(resBillType.result, svcInfo);
