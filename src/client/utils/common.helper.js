@@ -1,5 +1,5 @@
 Tw.CommonHelper = (function () {
-  var openUrl = function(url, browserType, option) {
+  var openUrl = function (url, browserType, option) {
     if ( url.indexOf('http') === -1 ) {
       url = 'http://' + url;
     }
@@ -10,7 +10,7 @@ Tw.CommonHelper = (function () {
       }, null);
     } else {
       var windowPopup = window.open(url, '_blank', option);
-      if(Tw.FormatHelper.isEmpty(windowPopup)) {
+      if ( Tw.FormatHelper.isEmpty(windowPopup) ) {
         Tw.Popup.openAlert('Pop-up blocked');
       }
     }
@@ -24,8 +24,38 @@ Tw.CommonHelper = (function () {
     openUrl(url, Tw.NTV_BROWSER.INAPP, option);
   };
 
+  var toast = function (message) {
+    if(Tw.BrowserHelper.isApp()) {
+      Tw.Native.send(Tw.NTV_CMD.TOAST, {
+        message: message
+      });
+    } else {
+      Tw.Popup.toast(message);
+    }
+  };
+
+  var toggle = function (selector) {
+    if ( selector.hasClass('on') ) {
+      selector.removeClass('on');
+    } else {
+      selector.addClass('on');
+    }
+  };
+
+  var setLocalStorage = function (key, value) {
+    localStorage.setItem(key, value);
+  };
+
+  var getLocalStorage = function (key) {
+    return localStorage.getItem(key);
+  };
+
   return {
     openUrlExternal: openUrlExternal,
-    openUrlInApp: openUrlInApp
+    openUrlInApp: openUrlInApp,
+    toggle: toggle,
+    toast: toast,
+    setLocalStorage: setLocalStorage,
+    getLocalStorage: getLocalStorage
   };
 })();
