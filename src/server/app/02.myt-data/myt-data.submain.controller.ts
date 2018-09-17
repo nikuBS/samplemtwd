@@ -36,6 +36,7 @@ class MytDataSubmainController extends TwViewController {
       this._getUsagePatternSevice()
     ).subscribe(([/*remnant,*/ present, refill, /*prepay,*/]) => {
       if ( svcInfo.svcAttrCd === 'M2' || svcInfo.svcAttrCd === 'M3' /* || remnant.data === 0 기본 DATA 제공량이 없는 경우*/ ) {
+        // 즉시충전 버튼
         data.immCharge = true;
       }
       if ( present && (present.familyMemberYn === 'Y' || present.goodFamilyMemberYn === 'Y') ) {
@@ -48,9 +49,9 @@ class MytDataSubmainController extends TwViewController {
         // 휴대폰, T-pocketFI, T-Login  경우 노출
         data.isBenefit = true;
       }
-    });
 
-    res.render('usage/myt-data.submain.html', { svcInfo: svcInfo });
+      res.render('myt-data.submain.html', { data });
+    });
   }
 
   /**
