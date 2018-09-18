@@ -233,6 +233,25 @@ class MyTFareBillGuide extends TwViewController {
       thisMain._intBillLineInfo = resArr[1].result;
       thisMain._childLineInfo = resArr[2].result;
 
+      const subPromiseList = [];
+
+      if ( thisMain._childLineInfo.length > 0 ) {
+        let subPromiseItem;
+        for ( let i = 0; i < thisMain._childLineInfo.length; i++ ) {
+          subPromiseItem = thisMain._getPromiseApi(thisMain.apiService.request(API_CMD.BFF_05_0047, {
+            childSvcMgmtNum: thisMain._childLineInfo[i].svcMgmtNum
+          }), 'sub_p1');
+          console.log('[자녀회선 프로미스]');
+          console.dir( subPromiseItem );
+
+        }
+
+      }
+
+      const sub_p1 = thisMain._getPromiseApi(thisMain.apiService.request(API_CMD.BFF_05_0047, {
+
+      }), 'sub_p1'); // 자녀 사용요금 조회
+
       dataInit();
 
       thisMain.logger.info(thisMain, '[_urlTplInfo.combineRepresentPage] : ', thisMain._urlTplInfo.combineRepresentPage);
