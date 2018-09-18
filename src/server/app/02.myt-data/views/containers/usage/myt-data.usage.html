@@ -33,6 +33,8 @@
             <% if (usageData.data && usageData.data.length > 0) { %>
             <%- include('../../components/usage/myt-data.usage.graphbox.html', { type: 'data', typeStr: '데이터', items: usageData.data }); %>
             <% } %>
+
+            <% if (svcInfo.svcAttrCd === 'M1') { %>
             <div>
                 <div id="tdata-share">T데이터 셰어링</div>
                 <div id="troaming-share">T로밍 함께 쓰기 잔여량</div>
@@ -41,6 +43,7 @@
                 <div id="discount">24시간 데이터 50% 할인 사용량</div>
                 <div id="band-data-share">내폰끼리 결합 사용량</div>
             </div>
+            <% } %>
             <% if (usageData.voice && usageData.voice.length > 0) { %>
             <%- include('../../components/usage/myt-data.usage.graphbox.html', { type: 'voice', typeStr: '음성/영상', items: usageData.voice }); %>
             <% } %>
@@ -52,7 +55,33 @@
             <% if (usageData.etc && usageData.etc.length > 0) { %>
             <%- include('../../components/usage/myt-data.usage.graphbox.html', { type: 'etc', typeStr: '기타', items: usageData.etc }); %>
             <% } %>
-        </div>
+
+
+            <% if (svcInfo.svcAttrCd === 'M2') { %>
+            <!-- 유효기간 -->
+            <div class="data-type">
+                <h4 class="tit">유효기간</h4>
+            </div>
+            <div class="cont-box nogaps-hoz">
+                <ul class="validitylist-wrap">
+                    <li class="validitylist-li">
+                        <h5 class="title">발신기간</h5>
+                        <p class="date"><span class="vbl"><%= ppsInfo.showObEndDt %></span> 까지</p>
+                    </li>
+                    <li class="validitylist-li">
+                        <h5 class="title">수신기간</h5>
+                        <p class="date"><span class="vbl"><%= ppsInfo.showInbEndDt %></span> 까지</p>
+                    </li>
+                    <li class="validitylist-li">
+                        <h5 class="title">번호 유지기간</h5>
+                        <p class="date"><span class="vbl"><%= ppsInfo.showNumEndDt %></span> 까지</p>
+                    </li>
+                </ul>
+            </div>
+            <!-- //유효기간 -->
+            <% } %>
+
+    </div>
     </div>
     <!--// #contents -->
 </div>
