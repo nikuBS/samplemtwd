@@ -1236,8 +1236,12 @@ li.checkbox.type01 {
   background-position: 0 -1.25rem;
 }
 
+.radio-slide .select-list .radiobox.disabled {
+  background-color: #d1d1d1;
+}
+
 .radio-slide .select-list .radiobox.disabled .radio-txt {
-  color: #c2c2c2;
+  color: #999;
 }
 
 .radio-slide .select-list .radiobox.disabled:before {

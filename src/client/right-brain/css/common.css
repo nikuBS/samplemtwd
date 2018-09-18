@@ -3242,11 +3242,11 @@ a.ui-button:active,
 }
 
 .bt-slice > li.bt-white2 button.selected {
-  background: #ebebeb;
+  background: #f5f5f5;
 }
 
 .bt-slice > li.bt-white2 button:hover {
-  background: #ebebeb;
+  background: #f5f5f5;
 }
 
 .bt-slice > li.bt-white2 button:disabled {
@@ -3262,11 +3262,11 @@ a.ui-button:active,
 }
 
 .bt-slice > li.bt-white2 a.selected {
-  background: #ebebeb;
+  background: #f5f5f5;
 }
 
 .bt-slice > li.bt-white2 a:hover {
-  background: #ebebeb;
+  background: #f5f5f5;
 }
 
 .bt-slice > li.bt-white2 a:disabled {

@@ -20,7 +20,7 @@
                 <!-- .cont-box -->
                 <div class="cont-box nogaps">
                     <div class="box-chk-link">
-                        <p class="link-long-ti first">{{type}}</p>
+                        {{#if type}}<p class="link-long-ti">{{type}}</p>{{/if}}
                         <ul class="chk-link-list">
                            {{#each list}}
                             <li>
