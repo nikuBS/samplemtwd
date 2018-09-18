@@ -8,6 +8,7 @@ Tw.MyTFarePayment = function (rootEl) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
+  this._historyService = new Tw.HistoryService(rootEl);
 
   this._init();
 };
@@ -26,33 +27,40 @@ Tw.MyTFarePayment.prototype = {
       hbs:'actionsheet_link_b_type',// hbs의 파일명
       layer:true,
       title:Tw.POPUP_TITLE.SELECT_PAYMENT_OPTION,
-      data:Tw.FARE_PAYMENT_LAYER_DATA
+      data:Tw.POPUP_TPL.FARE_PAYMENT_LAYER_DATA
     }, $.proxy(this._bindEvent, this, isTarget));
   },
   _bindEvent: function (isTarget, $layer) {
     if (isTarget) {
-      $layer.find('button.fe-auto').show();
-      $layer.on('click', 'button.fe-auto', $.proxy(this._goAuto, this));
+      $layer.find('.fe-auto').parents('div.cont-box').show();
+      $layer.on('click', '.fe-auto', $.proxy(this._goAuto, this));
+    } else {
+      $layer.find('.fe-auto').parents('div.cont-box').hide();
     }
-    $layer.on('click', 'button.fe-account', $.proxy(this._goAccount, this));
-    $layer.on('click', 'button.fe-card', $.proxy(this._goCard, this));
-    $layer.on('click', 'button.fe-point', $.proxy(this._goPoint, this));
-    $layer.on('click', 'button.fe-sms', $.proxy(this._goSms, this));
+    $layer.on('click', '.fe-account', $.proxy(this._goAccount, this));
+    $layer.on('click', '.fe-card', $.proxy(this._goCard, this));
+    $layer.on('click', '.fe-point', $.proxy(this._goPoint, this));
+    $layer.on('click', '.fe-sms', $.proxy(this._goSms, this));
   },
   _goAuto: function () {
-    new Tw.MyTFarePaymentAuto();
+    this._popupService.close();
+    this._historyService.goLoad('/myt/fare/payment/auto');
   },
   _goAccount: function () {
-    new Tw.MyTFarePaymentAccount();
+    this._popupService.close();
+    this._historyService.goLoad('/myt/fare/payment/account');
   },
   _goCard: function () {
-    new Tw.MyTFarePaymentCard();
+    this._popupService.close();
+    this._historyService.goLoad('/myt/fare/payment/card');
   },
   _goPoint: function () {
-    new Tw.MyTFarePaymentPoint();
+    this._popupService.close();
+    this._historyService.goLoad('/myt/fare/payment/point');
   },
   _goSms: function () {
-    new Tw.MyTFarePaymentSms();
+    this._popupService.close();
+    this._historyService.goLoad('/myt/fare/payment/sms');
   },
   _success: function (res) {
     var isTarget = false;
