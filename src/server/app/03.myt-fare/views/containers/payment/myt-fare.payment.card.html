@@ -22,7 +22,7 @@
             <div class="header-ti align-l">
                 <h1>Payment Card</h1>
             </div>
-            <button class="prev-step"></button>
+            <button class="prev-step fe-common-back"></button>
         </div>
     </div>
     <!--// #header -->
@@ -38,7 +38,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.MyTFarePaymentCard('.wrap');
+    new Tw.MyTFarePaymentCard($('.wrap'));
   });
 </script>
 <% include ../../components/end.component.html %>
