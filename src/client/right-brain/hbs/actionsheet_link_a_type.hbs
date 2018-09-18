@@ -1,11 +1,10 @@
 <div class="popup">
-    <div class="popup-page nobg layer">
-        <!-- .no-btn 하단에 버튼이 없을 경우 -->
+    <div class="popup-page nobg layer"><!-- .no-btn 하단에 버튼이 없을 경우 -->
         <!-- #header -->
         <div class="header-wrap">
             <div class="page-header">
                 <div class="header-ti align-l">
-                    <h1>Title</h1>
+                    <h1>{{title}}</h1>
                 </div>
             </div>
         </div>
@@ -14,56 +13,29 @@
         <div class="container-wrap">
             <h2 class="blind">내용</h2>
             <div class="container">
+                {{#each data}}
                 <!-- .cont-box -->
                 <div class="cont-box nogaps noborder">
-                    <p class="link-long-ti first">Type</p>
+                    {{#if type}}<p class="link-long-ti">{{type}}</p>{{/if}}
                     <ul class="link-long-list">
+                        {{#each list}}
                         <li>
                             <div class="link-long">
-                                <button>Link Name
-                                    <span class="ico"></span>
+                                <button>{{value}}
+                                    {{#if explain}}
+                                    <p class="tx-explain">{{explain}}</p>
+                                    {{/if}}
+                                    <span class="tx-sub">
+                                        <span class="ico"></span>
+                                    </span>
                                 </button>
                             </div>
                         </li>
-                        <li>
-                            <div class="link-long">
-                                <button>Link Name
-                                    <p class="tx-explain">Sub Copy</p>
-                                    <span class="ico"></span>
-                                </button>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="link-long">
-                                <button>Link Name
-                                    <span class="ico"></span>
-                                </button>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="link-long">
-                                <button>Link Name
-                                    <span class="ico"></span>
-                                </button>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="link-long">
-                                <button>Link Name
-                                    <span class="ico"></span>
-                                </button>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="link-long">
-                                <button>Link Name
-                                    <span class="ico"></span>
-                                </button>
-                            </div>
-                        </li>
+                        {{/each}}
                     </ul>
                 </div>
                 <!--// .cont-box -->
+                {{/each}}
             </div>
         </div>
         <!--// .container-wrap -->
