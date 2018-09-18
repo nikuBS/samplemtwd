@@ -15,7 +15,7 @@ Tw.MyTFarePayment = function (rootEl) {
 
 Tw.MyTFarePayment.prototype = {
   _init: function () {
-    this.$container.on('click', '#fe-open-payment-layer', $.proxy(this._getAutoPayment, this));
+    this._getAutoPayment();
   },
   _getAutoPayment: function () {
     this._apiService.request(Tw.API_CMD.BFF_05_0058, {})
