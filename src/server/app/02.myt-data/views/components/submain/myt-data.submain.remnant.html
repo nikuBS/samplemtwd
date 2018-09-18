@@ -4,7 +4,8 @@
 * Date: 2018.09.17
 %>
 
-<!-- .cont-box -->
+<% if (data.svcInfo.svcAttrCd === 'M1') { %>
+<!-- Phone -->
 <div class="cont-box nogaps-top">
     <div class="dc-use">
         <dl class="real-remaining">
@@ -45,143 +46,40 @@
                             </span>
         </div>
     </div>
-    <ul class="bt-slice item-two">
-        <li class="bt-white2">
+    <% var twoItem = data.immCharge && data.present; %>
+    <% if(data.immCharge || data.present) { %>
+    <ul class="bt-slice <% twoItem? 'item-two': '' %>">
+        <% if(data.immCharge) { %>
+        <li class="bt-white2" data-id="immCharge">
             <button>즉시 충전</button>
         </li>
-        <li class="bt-white2">
+        <% } %>
+        <% if(data.present) { %>
+        <li class="bt-white2" data-id="present">
             <button>T끼리 데이터 선물</button>
         </li>
+        <% } %>
     </ul>
-</div>
-<!--// .cont-box -->
-<hr class="cont-sp type1" aria-hidden="true"/>
-<!-- .cont-box -->
-<div class="cont-box">
-    <div class="dc-use">
-        <dl class="real-remaining">
-            <dt>실시간 잔여량
-                <button class="ico"></button>
-            </dt>
-            <dd>
-                <div class="remaining-amount"><span class="num ff-tg-black">4</span><span
-                    class="unit ff-tg-medium">시간</span> <span class="num ff-tg-black">50</span><span
-                    class="unit ff-tg-medium">분</span></div>
-                <ul class="remaining-list">
-                    <li class="only">SKT 고객간 음성</li>
-                </ul>
-                <ul class="remaining-tm">
-                    <li>
-                        <dl>
-                            <dt><span class="badge badge-msg" role="img" aria-label="문자"></span></dt>
-                            <dd>38건 남음</dd>
-                        </dl>
-                    </li>
-                </ul>
-            </dd>
-        </dl>
-        <div class="graph-area-type1">
-            <span class="graph-max" aria-hidden="true">5시간</span>
-            <span class="graph-min" aria-hidden="true">0시간</span>
-            <span class="graph-bar1" style="height:40%;"><!--최소 9%, 최대 91%-->
-                                <span class="bar"></span>
-                            </span>
-            <span class="graph-bar2" style="height:60%;"><!--최소 9%, 최대 91%-->
-                                <span class="bar"></span>
-                            </span>
+    <% } %>
+
+    <!-- if(T가족모아옵션) { -->
+    <div class="box-data-family-banner mt20">
+        <div class="info-data-family-banner">
+            <dl class="data-family-list">
+                <dt>나의 T가족모아 데이터<button class="ico"></button></dt>
+                <dd><em class="data">10.6</em><em class="unit">GB</em><span class="tx">남음</span></dd>
+            </dl>
+            <span class="ico-data-family"></span>
+            <span class="data-family-limit">자유사용</span>
         </div>
     </div>
-    <ul class="bt-slice">
-        <li class="bt-white2">
-            <button>즉시 충전</button>
-        </li>
-    </ul>
+    <!-- } -->
+    <!-- .cont-box -->
 </div>
-<!--// .cont-box -->
+<!-- Phone -->
+<% } else if (data.svcInfo.svcAttrCd === 'M2') { %>
+<!-- PPS -->
 <hr class="cont-sp type1" aria-hidden="true"/>
-<!-- .cont-box -->
-<div class="cont-box">
-    <div class="dc-use">
-        <dl class="real-remaining">
-            <dt>실시간 잔여량
-                <button class="ico"></button>
-            </dt>
-            <dd>
-                <div class="remaining-amount"><span class="num ff-tg-black">0</span><span
-                    class="unit ff-tg-medium">분</span></div>
-                <ul class="remaining-list">
-                    <li class="only">SKT 고객간 음성</li>
-                </ul>
-                <ul class="remaining-tm">
-                    <li>
-                        <dl>
-                            <dt><span class="badge badge-msg" role="img" aria-label="문자"></span></dt>
-                            <dd>38건 남음</dd>
-                        </dl>
-                    </li>
-                </ul>
-            </dd>
-        </dl>
-        <div class="graph-area-type1">
-            <span class="graph-max" aria-hidden="true">60 GB</span>
-            <span class="graph-min" aria-hidden="true">0 GB</span>
-            <span class="graph-bar1" style="height:30%;"><!--최소 9%, 최대 91%-->
-                                <span class="bar"></span>
-                            </span>
-            <span class="graph-bar2" style="height:70%;"><!--최소 9%, 최대 91%-->
-                                <span class="bar"></span>
-                            </span>
-        </div>
-    </div>
-    <ul class="bt-slice">
-        <li class="bt-white2">
-            <button>즉시 충전</button>
-        </li>
-    </ul>
-</div>
-<!--// .cont-box -->
-<hr class="cont-sp type1" aria-hidden="true"/>
-<!-- .cont-box -->
-<div class="cont-box">
-    <div class="dc-use">
-        <dl class="real-remaining">
-            <dt>실시간 잔여량
-                <button class="ico"></button>
-            </dt>
-            <dd>
-                <div class="remaining-amount"><span class="endless ff-tg-medium">무제한</span></div>
-                <ul class="remaining-list">
-                    <li class="only caution">12.3GB 사용</li>
-                </ul>
-                <ul class="remaining-tm">
-                    <li>
-                        <dl>
-                            <dt><span class="badge badge-tel" role="img" aria-label="통화"></span></dt>
-                            <dd>4시간 50분 남음 (SKT 고객간)</dd>
-                        </dl>
-                    </li>
-                    <li>
-                        <dl>
-                            <dt><span class="badge badge-msg" role="img" aria-label="문자"></span></dt>
-                            <dd>38건 남음</dd>
-                        </dl>
-                    </li>
-                </ul>
-            </dd>
-        </dl>
-    </div>
-    <ul class="bt-slice item-two">
-        <li class="bt-white2">
-            <button>즉시 충전</button>
-        </li>
-        <li class="bt-white2">
-            <button>T끼리 데이터 선물</button>
-        </li>
-    </ul>
-</div>
-<!--// .cont-box -->
-<hr class="cont-sp type1" aria-hidden="true"/>
-<!-- .cont-box -->
 <div class="cont-box">
     <div class="dc-use">
         <dl class="real-remaining">
@@ -204,48 +102,30 @@
             </dd>
         </dl>
     </div>
-    <ul class="bt-slice">
-        <li class="bt-white2">
-            <button>즉시 충전</button>
-        </li>
-    </ul>
 </div>
-<!--// .cont-box -->
+<!-- PPS -->
+<% } else if (data.svcInfo.svcAttrCd === 'M3' || data.svcInfo.svcAttrCd === 'M4') { %>
+<!-- T-PocketFi & T-Login -->
 <hr class="cont-sp type1" aria-hidden="true"/>
-<!-- .cont-box -->
-<div class="cont-box">
+<div class="cont-box nogaps-top">
     <div class="dc-use small">
         <dl class="real-remaining">
-            <dt>실시간 잔여량
-                <button class="ico"></button>
-            </dt>
+            <dt>실시간 잔여량<button class="ico"></button></dt>
             <dd>
-                <div class="remaining-amount"><span class="num ff-tg-black">35</span><span
-                    class="unit ff-tg-medium">건</span></div>
-                <ul class="remaining-list">
-                    <li class="only">문자</li>
-                </ul>
+                <div class="remaining-amount"><span class="num ff-tg-black">79.0</span><span class="dingbat gb"><span class="blind">GB</span></span></div>
             </dd>
         </dl>
+        <div class="graph-area-type1">
+            <span class="graph-max" aria-hidden="true">79 GB</span>
+            <span class="graph-min" aria-hidden="true">0 GB</span>
+            <span class="graph-bar1" style="height:9%;"><!--최소 9%, 최대 91%-->
+                                <span class="bar"></span>
+                            </span>
+            <span class="graph-bar2" style="height:91%;"><!--최소 9%, 최대 91%-->
+                                <span class="bar"></span>
+                            </span>
+        </div>
     </div>
 </div>
-<!--// .cont-box -->
-<hr class="cont-sp type1" aria-hidden="true"/>
-<!-- .cont-box -->
-<div class="cont-box">
-    <div class="dc-use small">
-        <dl class="real-remaining">
-            <dt>실시간 잔여량
-                <button class="ico"></button>
-            </dt>
-            <dd>
-                <div class="remaining-amount"><span class="num ff-tg-black">41,000</span><span
-                    class="unit ff-tg-medium">원</span></div>
-                <ul class="remaining-list">
-                    <li class="only">월정액 일 350원</li>
-                </ul>
-            </dd>
-        </dl>
-    </div>
-</div>
-<!--// .cont-box -->
+<!-- T-PocketFi & T-Login -->
+<% } %>
