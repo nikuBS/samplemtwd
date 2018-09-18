@@ -30,6 +30,7 @@
     <div id="contents" class="container-wrap">
         <h2 class="blind">내용</h2>
         <div class="container">
+            <button id="fe-open-payment-layer">요금납부</button>
         </div>
     </div>
     <!--// #contents -->
@@ -38,7 +39,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.MyTFarePayment('.wrap');
+    new Tw.MyTFarePayment($('.wrap'));
   });
 </script>
 <% include ../../components/end.component.html %>
