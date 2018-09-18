@@ -10,6 +10,7 @@ import TwViewController from '../../common/controllers/tw.view.controller';
 import { Observable } from 'rxjs/Observable';
 import { API_CMD, API_CODE } from '../../types/api-command.type';
 import FormatHelper from '../../utils/format.helper';
+import DateHelper from '../../utils/date.helper';
 
 class MytDataSubmainController extends TwViewController {
   constructor() {
@@ -75,10 +76,16 @@ class MytDataSubmainController extends TwViewController {
       }
       if ( refpBkd && refpBkd.length > 0 ) {
         // 리필쿠폰 선물 내역
+        refpBkd.map((item) => {
+          item['opDt'] = item.copnOpDt;
+        });
         breakdownList.push(refpBkd);
       }
       if ( refuBkd && refuBkd.length > 0 ) {
         // 리필쿠폰 사용이력조회
+        refuBkd.map((item) => {
+          item['opDt'] = item.copnUseDt;
+        });
         breakdownList.push(refuBkd);
       }
 
@@ -93,7 +100,7 @@ class MytDataSubmainController extends TwViewController {
   }
 
   sortBreakdownItems(items): any {
-    const group = FormatHelper.groupByArray(items, '');
+    const group = FormatHelper.groupByArray(items, 'opDt');
   }
 
   /**
@@ -135,9 +142,16 @@ class MytDataSubmainController extends TwViewController {
     });
   }
 
-  // T 끼리 선물하기 선물내역
+  // T 끼리 선물하기 선물내역 (1년기준)
   _getDataPresentBreakdown() {
-    return this.apiService.request(API_CMD.BFF_06_0018, {}).map((resp) => {
+    const curDate = new Date();
+    const beforeDate = new Date();
+    beforeDate.setTime(curDate.getTime() - (365 * 24 * 60 * 60 * 1000));
+    return this.apiService.request(API_CMD.BFF_06_0018, {
+      fromDt: DateHelper.getCurrentShortDate(curDate),
+      toDt: DateHelper.getCurrentShortDate(beforeDate),
+      type: '0' // 0: all, 1: send, 2: receive
+    }).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
         return resp.result;
       } else {
