@@ -24,37 +24,60 @@ class ProductDetail extends TwViewController {
     super();
   }
 
+  private _prodId;
+
   /**
-   * @param prodId
    * @param key
    * @private
    */
-  private _getApi (prodId, key): Observable<any> {
-    return this.apiService.request(productApiCmd[key], {}, {}, prodId);
+  private _getApi (key: string): Observable<any> {
+    return this.apiService.request(productApiCmd[key], {}, {}, this._prodId);
+  }
+
+  /**
+   * @param key
+   * @private
+   */
+  private _getRedis (key: string): Observable<any> {
+    return this.redisService.getData(key + ':' + this._prodId);
+  }
+
+  /**
+   * @param smryVslYn
+   * @private
+   */
+  private _isSummaryVisual (smryVslYn): boolean {
+    return smryVslYn === 'Y';
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, layerType: string) {
-    const prodId = req.params.prodId;
+    this._prodId = req.params.prodId;
 
-    if (FormatHelper.isEmpty(prodId)) {
+    if (FormatHelper.isEmpty(this._prodId)) {
       return this.error.render(res, {
-        title: '상품 상세',
+        title: '상품 상세 정보',
         svcInfo: svcInfo
       });
     }
 
     Observable.combineLatest(
-      this._getApi(prodId, 'basic'),
-      this._getApi(prodId, 'summary'),
-      this._getApi(prodId, 'relatetags'),
-      this._getApi(prodId, 'contents'),
-      this._getApi(prodId, 'series'),
-      this._getApi(prodId, 'recommands'),
-    ).subscribe(([basicInfo, summary, relateTags, contents, series, recommends]) => {
+      this._getApi('basic'),
+      this._getApi('summary'),
+      this._getApi('relatetags'),
+      this._getApi('contents'),
+      this._getApi('series'),
+      this._getApi('recommands'),
+      this._getRedis('ProductLedgerBanner'),
+      this._getRedis('ProductLedgerContents'),
+      this._getRedis('ProductLedgerSummary')
+    ).subscribe(([
+      basicInfo, summary, relateTags, contents, series, recommends, bannerByRedis, contentsByRedis, summaryByRedis
+    ]) => {
       const apiError = this.error.apiError([basicInfo, summary, relateTags, contents, series, recommends]);
+
       if (!FormatHelper.isEmpty(apiError)) {
         return this.error.render(res, {
-          title: '상품 상세',
+          title: '상품 상세 정보',
           svcInfo: svcInfo,
           msg: apiError.msg,
           code: apiError.code
@@ -63,11 +86,13 @@ class ProductDetail extends TwViewController {
 
       res.render('product.detail.html', {
         basicInfo: basicInfo.result,
-        summary: summary.result,
+        summary: this._isSummaryVisual(basicInfo.result.smryVslYn) ? summaryByRedis : summary.result,
         relateTags: relateTags.result,
         contents: contents.result,
+        contentsVisual: contentsByRedis,
         series: series.result,
-        recommends: recommends.result
+        recommends: recommends.result,
+        banner: bannerByRedis
       });
     });
   }
