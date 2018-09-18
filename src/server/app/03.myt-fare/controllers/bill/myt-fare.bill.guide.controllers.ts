@@ -14,6 +14,8 @@ import DateHelper from '../../../../utils/date.helper';
 import FormatHelper from '../../../../utils/format.helper';
 import bill_guide_BFF_05_0036 from '../../../../mock/server/bill.guide.BFF_05_0036.mock';
 import bill_guide_BFF_05_0049 from '../../../../mock/server/bill.guide.BFF_05_0049.mock';
+import bill_guide_BFF_05_0024 from '../../../../mock/server/bill.guide.BFF_05_0024.mock';
+import { MYT_FARE_BILL_GUIDE } from '../../../../types/string.type';
 
 class MyTFareBillGuide extends TwViewController {
   constructor() {
@@ -24,7 +26,7 @@ class MyTFareBillGuide extends TwViewController {
   private _billpayInfo: any = {}; // 청구요금조회 | BFF_05_0036
   private _useFeeInfo: any = {}; // 사용요금조회 | BFF_05_0047
   private _intBillLineInfo: any = {}; // 통합청구등록회선조회 | BFF_05_0049
-
+  private _childLineInfo: any = {}; // 자녀회선 조회 | BFF_05_0024
   private _ppsInfoLookupInfo: any; // PPS 요금안내서 정보조회
 
   // 공통데이터
@@ -203,10 +205,12 @@ class MyTFareBillGuide extends TwViewController {
       p1 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0036, {}), 'p1');
     }
     const p2 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0049, {}), 'p2'); // 통합청구등록회선조회
+    const p3 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0024, {}), 'p3'); // 자녀회선조회
      */
 
     p1 = this._getPromiseApiMock(bill_guide_BFF_05_0036, 'p1');
     const p2 = this._getPromiseApiMock(bill_guide_BFF_05_0049, 'p2');
+    const p3 = this._getPromiseApiMock(bill_guide_BFF_05_0024, 'p3');
 
     const dataInit = function () {
       thisMain._commDataInfo.selClaimDt = (thisMain._billpayInfo) ? thisMain.getSelClaimDt(String(thisMain._billpayInfo.invDt)) : null;
@@ -223,10 +227,12 @@ class MyTFareBillGuide extends TwViewController {
 
     };
 
-    Promise.all([p1, p2]).then(function(resArr) {
+    Promise.all([p1, p2, p3]).then(function(resArr) {
 
       thisMain._billpayInfo = resArr[0].result;
       thisMain._intBillLineInfo = resArr[1].result;
+      thisMain._childLineInfo = resArr[2].result;
+
       dataInit();
 
       thisMain.logger.info(thisMain, '[_urlTplInfo.combineRepresentPage] : ', thisMain._urlTplInfo.combineRepresentPage);
@@ -236,7 +242,8 @@ class MyTFareBillGuide extends TwViewController {
         svcInfo: svcInfo,
         billpayInfo: thisMain._billpayInfo,
         commDataInfo: thisMain._commDataInfo,
-        intBillLineInfo: thisMain._intBillLineInfo
+        intBillLineInfo: thisMain._intBillLineInfo,
+        childLineInfo: thisMain._childLineInfo
       });
     }, function(err) {
       thisMain.logger.info(thisMain, `[ Promise.all > error ] : `, err);
@@ -304,7 +311,7 @@ class MyTFareBillGuide extends TwViewController {
   }
 
   public getSelClaimDt(date: string): any { // 청구 년월 구하기
-    return this._commDataInfo.selClaimDt = moment(date).add(1, 'days').format('YYYY년 MM월');
+    return this._commDataInfo.selClaimDt = moment(date).add(1, 'days').format( MYT_FARE_BILL_GUIDE.DATE_FORMAT.YYYYMM_TYPE );
   }
 
   public getSelClaimDtM(date: string): any { // 청구 년월 구하기
@@ -314,10 +321,10 @@ class MyTFareBillGuide extends TwViewController {
   public intBillLineFun() {
     const thisMain = this;
     const svcTotList = thisMain._intBillLineInfo.slice();
-    svcTotList.unshift({ svcType: '서비스 전체' } );
+    svcTotList.unshift({ svcType: MYT_FARE_BILL_GUIDE.FIRST_SVCTYPE } );
 
     svcTotList.map( function (item, idx, arr) {
-      if (idx !== 0 && item.svcType === '휴대폰') {
+      if ( idx !== 0 && item.svcType === MYT_FARE_BILL_GUIDE.PHONE_SVCTYPE ) {
         item.label = thisMain.phoneStrToDash( item.svcNum );
       } else {
         item.label = item.dtlAddr;
@@ -333,7 +340,7 @@ class MyTFareBillGuide extends TwViewController {
     let dtList = thisMain._billpayInfo.invDtArr.slice();
 
     dtList = dtList.map(function (item, idx, arr) {
-      item = moment(item).add(1, 'days').format('YYYY년 MM월');
+      item = moment(item).add(1, 'days').format( MYT_FARE_BILL_GUIDE.DATE_FORMAT.YYYYMM_TYPE );
       return item;
     });
 
