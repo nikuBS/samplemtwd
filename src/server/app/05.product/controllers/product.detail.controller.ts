@@ -50,6 +50,26 @@ class ProductDetail extends TwViewController {
     return smryVslYn === 'Y';
   }
 
+  /**
+   * @param contentsVslCd
+   * @param contentsInfo
+   * @param contentsByRedis
+   * @private
+   */
+  private _parseContents (contentsVslCd, contentsInfo, contentsByRedis): any {
+    let result = contentsInfo.result;
+
+    if (contentsVslCd === 'A') {
+      result = { visual: contentsByRedis.contents };
+    }
+
+    if (contentsVslCd === 'E') {
+      result = Object.assign(contentsInfo.result, { visual: contentsByRedis.contents });
+    }
+
+    return result;
+  }
+
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, layerType: string) {
     this._prodId = req.params.prodId;
 
@@ -71,9 +91,10 @@ class ProductDetail extends TwViewController {
       this._getRedis('ProductLedgerContents'),
       this._getRedis('ProductLedgerSummary')
     ).subscribe(([
-      basicInfo, summary, relateTags, contents, series, recommends, bannerByRedis, contentsByRedis, summaryByRedis
+      basicInfo, summaryInfo, relateTagsInfo, contentsInfo, seriesInfo,
+       recommendsInfo, bannerByRedis, contentsByRedis, summaryByRedis
     ]) => {
-      const apiError = this.error.apiError([basicInfo, summary, relateTags, contents, series, recommends]);
+      const apiError = this.error.apiError([basicInfo, summaryInfo, relateTagsInfo, contentsInfo, seriesInfo, recommendsInfo]);
 
       if (!FormatHelper.isEmpty(apiError)) {
         return this.error.render(res, {
@@ -86,12 +107,12 @@ class ProductDetail extends TwViewController {
 
       res.render('product.detail.html', {
         basicInfo: basicInfo.result,
-        summary: this._isSummaryVisual(basicInfo.result.smryVslYn) ? summaryByRedis : summary.result,
-        relateTags: relateTags.result,
-        contents: contents.result,
+        summary: this._isSummaryVisual(basicInfo.result.smryVslYn) ? summaryByRedis : summaryInfo.result,
+        contents: this._parseContents(basicInfo.contentsVslCd, contentsInfo, contentsByRedis),
+        relateTags: relateTagsInfo.result,
         contentsVisual: contentsByRedis,
-        series: series.result,
-        recommends: recommends.result,
+        series: seriesInfo.result,
+        recommends: recommendsInfo.result,
         banner: bannerByRedis
       });
     });
