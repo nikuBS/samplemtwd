@@ -98,14 +98,48 @@
     <div>
         청구요금 날짜 : <%-commDataInfo.selClaimDt %>
     </div>
+    <div>사용요금 : <%-commDataInfo.useAmtTot %> 원</div>
+    <div>검색조건 : <span><%-commDataInfo.intBillLineList[0].svcType %></span></div>
     <div>
         사용기간 : <%-commDataInfo.selStaDt %> ~ <%-commDataInfo.selEndDt %>
     </div>
     <div>
         <%-commDataInfo.selClaimDtM %>월 사용 요금은
-        <%-billpayInfo.useAmtTot %>원이고
+        <%-commDataInfo.useAmtTot %>원이고
         <%-commDataInfo.discount %>원을 할인 받으셧습니다.
     </div>
+    <br><br>
+    <div>
+        <h3>기간 리스트</h3>
+
+        <% for(var i=0; i < commDataInfo.conditionChangeDtList.length; i++) { %>
+        <p>
+            <span data-value="<%- billpayInfo.invDtArr[i] %>"><%- commDataInfo.conditionChangeDtList[i] %></span>
+        </p>
+        <% } %>
+
+    </div>
+    <br><br>
+    <div>
+        <h3>회선 리스트</h3>
+        <% for(var i=0; i < commDataInfo.intBillLineList.length; i++) { %>
+
+        <% if( i == 0) { %>
+        <p>
+            <span><%- commDataInfo.intBillLineList[i].svcType %></span>&nbsp;
+        </p>
+        <% } else {%>
+        <p>
+            <span><%- commDataInfo.intBillLineList[i].svcType %></span>&nbsp;
+            <span>(<%- commDataInfo.intBillLineList[i].label %>)</span>
+        </p>
+        <% } %>
+
+        <% } %>
+
+    </div>
+
+    <br><br><br><br>
     <div>
         <h3>리스트 내용</h3>
         <div data-target="hbDetailListArea"></div>
