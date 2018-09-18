@@ -15,14 +15,14 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div class="wrap">
+<div class="wrap step">
     <!-- #header -->
     <div id="header" class="header-wrap">
         <div class="header">
             <div class="header-ti align-l">
-                <h1>Payment Account</h1>
+                <h1>계좌이체 납부</h1>
             </div>
-            <button class="prev-step fe-common-back"></button>
+            <button class="prev-step fe-common-back">취소</button>
         </div>
     </div>
     <!--// #header -->
@@ -30,6 +30,13 @@
     <div id="contents" class="container-wrap">
         <h2 class="blind">내용</h2>
         <div class="container">
+            <% include ../../components/payment/myt-fare.payment.common.component.html %>
+            <h2>예금주명</h2>
+            <h1><%= svcInfo.mbrNm %></h1>
+            <h2>계좌정보</h2>
+            <% if (autoInfo.isAuto) { %>
+            <h1><%= autoInfo.bankName %> <%= autoInfo.bankCardNum %></h1>
+            <% } %>
         </div>
     </div>
     <!--// #contents -->
