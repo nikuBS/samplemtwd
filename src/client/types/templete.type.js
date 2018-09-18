@@ -79,5 +79,27 @@ Tw.POPUP_TPL = {
       { title: '고객님의 정보를 가리는 이유', check: false, value: 'A', text: '고객님의 정보를 가리는 이유' },
       { title: '가려진 정보를 보는 방법', check: false, value: 'B', text: '가려진 정보를 보는 방법' }
     ]
-  }]
+  }],
+  FARE_PAYMENT_LAYER_DATA: [
+    {
+      'list':[
+        {'value':'<button class="fe-auto">자동납부</button>', 'text1':'신청'}
+      ]
+    },
+    {
+      'type':'요금 납부',
+      'list':[
+        {'value':'<button class="fe-account">계좌이체 납부</button>'},
+        {'value':'<button class="fe-card">체크/신용카드 납부</button>'},
+        {'value':'<button class="fe-point">OK캐쉬백/T포인트 납부</button>'}
+      ]
+    },
+    {
+      'list':[
+        {'value':'<button class="fe-sms">입금전용계좌 SMS 신청</button>',
+          'explain':'입금전용계좌 정보를 SMS로 전송합니다.\n' +
+          '자동납부 인출 중이 아닌 경우에만 이용 가능합니다.\n'}
+      ]
+    }
+  ]
 };

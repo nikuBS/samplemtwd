@@ -23,8 +23,10 @@ Tw.MyTFarePayment.prototype = {
   },
   _openPaymentOption: function (isTarget) {
     this._popupService.open({
-      hbs: 'actionsheet_link_b_type',// hbs의 파일명
-      layer: true
+      hbs:'actionsheet_link_b_type',// hbs의 파일명
+      layer:true,
+      title:Tw.POPUP_TITLE.SELECT_PAYMENT_OPTION,
+      data:Tw.FARE_PAYMENT_LAYER_DATA
     }, $.proxy(this._bindEvent, this, isTarget));
   },
   _bindEvent: function (isTarget, $layer) {
