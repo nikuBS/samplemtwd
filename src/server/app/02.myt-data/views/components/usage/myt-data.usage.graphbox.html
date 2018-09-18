@@ -15,7 +15,12 @@
     <ul class="graphlist-wrap">
         <% for (var i = 0; i < items.length; i++) { %>
         <li class="graphbox-li <%= (items[i].isRemainUnlimited) ? 'unlimited' : '' %> <%= (items[i].isRunout) ? 'runout' : '' %>">
-            <h5 class="graphbox-title"><%= items[i].skipName %></h5>
+            <h5 class="graphbox-title">
+                <%= items[i].skipName %>
+                <% if (items[i].isVisibleDayBtn) { %>
+                <span class="bt-link-wrap"><button class="bt-link-tx underline" href="">당일 사용량 조회</button></span>
+                <% } %>
+            </h5>
             <div class="amountdata-num">
                 <div class="date-info">
                     <p class="data-title">남음<span class="blind">(데이터량)</span></p>
