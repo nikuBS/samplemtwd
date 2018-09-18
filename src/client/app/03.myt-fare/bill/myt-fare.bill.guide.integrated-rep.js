@@ -54,9 +54,20 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
 
   //청구요금 상세조회 : BFF_05_0036 청구요금 조회
   _getBillsDetailInfo: function () {
+    /*
+    * 실 데이터
     return this._apiService.request(Tw.API_CMD.BFF_05_0036, {
       detailYn: 'Y'
     }).done($.proxy(this._getBillsDetailInfoInit, this));
+    */
+
+    // Tw.Logger.info('클라이언트 목데이터');
+    $.ajax('http://localhost:3000/mock/bill.guide.BFF_05_00036_detail.json')
+      .done($.proxy(this._getBillsDetailInfoInit, this))
+      .fail(function(err) {
+        Tw.Logger.info(err);
+      });
+
   },
   _getBillsDetailInfoInit: function (res) {
     var thisMain = this;

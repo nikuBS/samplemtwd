@@ -14,3 +14,10 @@ export const MYT_FARE_BILL_TYPE = {
   '1' : '기타(우편)',
   'X' : '선택안함'
 };
+export const MYT_FARE_BILL_GUIDE = {
+  DATE_FORMAT: {
+    YYYYMM_TYPE: 'YYYY년 MM월'
+  },
+  FIRST_SVCTYPE: '서비스 전체',
+  PHONE_SVCTYPE: '휴대폰'
+};
