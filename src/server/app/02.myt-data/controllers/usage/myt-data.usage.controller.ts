@@ -7,15 +7,13 @@
 import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
-import DateHelper from '../../../../utils/date.helper';
 import { Observable } from 'rxjs/Observable';
 import MyTUsageGraphbox from './myt-data.usage.graphbox.controller';
 import FormatHelper from '../../../../utils/format.helper';
 import { T_O_PLAN_BASE_DATA, T_O_PLAN_SHARE_DATA } from '../../../../types/bff.type';
 
-const MYT_USAGE_VIEW = {
+const VIEW = {
   DEFAULT: 'usage/myt-data.usage.html',
-  CHILD: 'usage/myt-data.usage.child.html',
   ERROR: 'usage/myt-data.usage.error.html'
 };
 
@@ -25,38 +23,15 @@ class MyTDataUsage extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    const childSvcMgmtNum = req.query.childSvcMgmtNum;
-    const reqArr = new Array();
-    const usageDataParams = {};
-    if ( childSvcMgmtNum ) {
-      usageDataParams['childSvcMgmtNum'] = childSvcMgmtNum;
-    }
-    reqArr[0] = this.apiService.request(API_CMD.BFF_05_0001, usageDataParams);
-    if ( !childSvcMgmtNum ) {
-      reqArr[1] = this.apiService.request(API_CMD.BFF_05_0002, {});
-    }
-    Observable.combineLatest(reqArr).subscribe(([usageData, balanceAddOns]) => {
+    Observable.combineLatest(
+      this.apiService.request(API_CMD.BFF_05_0001, {}),
+      this.apiService.request(API_CMD.BFF_05_0002, {})
+      ).subscribe(([usageData, balanceAddOns]) => {
         if ( usageData.code === API_CODE.CODE_00 ) {
           const fomattedData = this.parseUsageData(usageData.result, svcInfo);
-          let strDate;
-          if ( svcInfo.svcAttrCd !== 'S3' ) {
-            strDate = DateHelper.getRemainDate();
-          } else {
-            const today = DateHelper.getCurrentDate();
-            strDate = `${DateHelper.getShortDateWithFormat(today, 'YYYY.MM.01')} ~ ${DateHelper.getShortDate(today)}`;
-          }
-          let view = '';
-          const options = { usageData: fomattedData, svcInfo: svcInfo, remainDate: strDate, childSvcMgmtNum };
-          if ( childSvcMgmtNum ) {
-            view = MYT_USAGE_VIEW.CHILD;
-          } else {
-            view = MYT_USAGE_VIEW.DEFAULT;
-            options['balanceAddOns'] = balanceAddOns;
-          }
-          console.log('~~~~~~~~~~~options', options);
-          res.render(view, options);
+          res.render(VIEW.DEFAULT, { usageData: fomattedData, svcInfo: svcInfo });
         } else {
-          res.render(MYT_USAGE_VIEW.ERROR, { usageData: usageData, svcInfo: svcInfo });
+          res.render(VIEW.ERROR, { usageData: usageData, svcInfo: svcInfo });
         }
       }
     );
