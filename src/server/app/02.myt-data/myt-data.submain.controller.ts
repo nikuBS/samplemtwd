@@ -9,6 +9,7 @@ import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../common/controllers/tw.view.controller';
 import { Observable } from 'rxjs/Observable';
 import { API_CMD, API_CODE } from '../../types/api-command.type';
+import FormatHelper from '../../utils/format.helper';
 
 class MytDataSubmainController extends TwViewController {
   constructor() {
@@ -30,46 +31,69 @@ class MytDataSubmainController extends TwViewController {
       this._getDataChargeBreakdown(),
       this._getDataPresentBreakdown(),
       this._getTingPresentBreakdown(),
-      this._getEtcBreakdown(),
+      this._getEtcChargeBreakdown(),
       this._getRefillPresentBreakdown(),
       this._getRefillUsedBreakdown(),
       this._getUsagePatternSevice()
-    ).subscribe(([/*remnant,*/ present, refill, dcBkd, tpBkd, etcBkd, refpBkd, refuBkd, pattern]) => {
-      if ( svcInfo.svcAttrCd === 'M2' || svcInfo.svcAttrCd === 'M3' /* || remnant.data === 0 기본 DATA 제공량이 없는 경우*/ ) {
-        // 즉시충전 버튼
+    ).subscribe(([/*remnant,*/ present, refill, dcBkd, dpBkd, tpBkd, etcBkd, refpBkd, refuBkd, pattern]) => {
+      if ( svcInfo.svcAttrCd === 'M3' || svcInfo.svcAttrCd === 'M4' /* || remnant.data === 0 기본 DATA 제공량이 없는 경우*/ ) {
+        // T-pocketFi or T-Login
+        // 즉시충전버튼 영역
         data.immCharge = true;
       }
-      if ( svcInfo.svcAttrCd === 'M1' || svcInfo.svcAttrCd === 'M2' || svcInfo.svcAttrCd === 'M3' ) {
-        // 휴대폰, T-pocketFI, T-Login  경우 노출
+      if ( svcInfo.svcAttrCd === 'M1' || svcInfo.svcAttrCd === 'M3' || svcInfo.svcAttrCd === 'M4' ) {
+        // 데이터혜택/활용하기 영역
+        // 휴대폰, T-pocketFi, T-Login  경우 노출
         data.isBenefit = true;
       }
       if ( present && (present.familyMemberYn === 'Y' || present.goodFamilyMemberYn === 'Y') ) {
+        // T끼리 데이터선물버튼 영역
         data.present = true;
       }
       if ( refill && refill.length > 0 ) {
+        // 리필쿠폰
         data.refill = refill;
       }
+
+      // 최근 충전 및 선물 내역
+      const breakdownList: any = [];
       if ( dcBkd && dcBkd.length > 0 ) {
-        data.dcBkd = dcBkd;
+        // 데이터한도요금제 충전내역
+        breakdownList.push(dcBkd);
+      }
+      if ( dpBkd && dpBkd.length > 0 ) {
+        // T끼리 선물하기 내역
+        breakdownList.push(dpBkd);
       }
       if ( tpBkd && tpBkd.length > 0 ) {
-        data.tpBkd = tpBkd;
+        // 팅요금 선물하기 내역
+        breakdownList.push(tpBkd);
       }
       if ( etcBkd && etcBkd.length > 0 ) {
-        data.etcBkd = etcBkd;
+        // 팅/쿠키즈/안심요금 충전 내역
+        breakdownList.push(etcBkd);
       }
       if ( refpBkd && refpBkd.length > 0 ) {
-        data.refpBkd = refpBkd;
+        // 리필쿠폰 선물 내역
+        breakdownList.push(refpBkd);
       }
       if ( refuBkd && refuBkd.length > 0 ) {
-        data.refpBkd = refuBkd;
+        // 리필쿠폰 사용이력조회
+        breakdownList.push(refuBkd);
       }
-      if ( pattern && pattern.length > 0 ) {
-        data.refpBkd = pattern;
+
+      data.breakdownList = this.sortBreakdownItems(breakdownList);
+      // 최근 데이터/음성/문자 사용량
+      if ( pattern ) {
+        data.pattern = pattern;
       }
 
       res.render('myt-data.submain.html', { data });
     });
+  }
+
+  sortBreakdownItems(items): any {
+    const group = FormatHelper.groupByArray(items, '');
   }
 
   /**
@@ -148,7 +172,7 @@ class MytDataSubmainController extends TwViewController {
   }
 
   // 팅/쿠키즈/안심음성 충전내역
-  _getEtcBreakdown() {
+  _getEtcChargeBreakdown() {
     return this.apiService.request(API_CMD.BFF_06_0032, {}).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
         return resp.result;
@@ -173,7 +197,9 @@ class MytDataSubmainController extends TwViewController {
 
   // 리필쿠폰 선물내역
   _getRefillPresentBreakdown() {
-    return this.apiService.request(API_CMD.BFF_06_0003, {}).map((resp) => {
+    return this.apiService.request(API_CMD.BFF_06_0003, {
+      type: '0' // 받은내역, 보낸내역 동시 조회
+    }).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
         return resp.result;
       } else {
