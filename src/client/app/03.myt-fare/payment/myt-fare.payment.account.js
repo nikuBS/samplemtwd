@@ -11,6 +11,9 @@ Tw.MyTFarePaymentAccount = function (rootEl) {
 
 Tw.MyTFarePaymentAccount.prototype = {
   _init: function () {
-    console.log('call account');
+    this._bindEvent();
+  },
+  _bindEvent: function () {
+
   }
 };

@@ -13,3 +13,22 @@ export const T_O_PLAN_SHARE_DATA = [
   'DD3CU', // 라지
   'DD4D5' // O플랜 통합공유 데이터 라지
 ];
+
+export enum SVC_ATTR_NAME {
+  'M1' = '휴대폰',
+  'M2' = '선불폰',
+  'M3' = 'T pocket Wifi',
+  'M4' = 'T Login',
+  'M5' = 'T Wibro',
+  'S1' = '인터넷',
+  'S2' = 'IPTV',
+  'S3' = '집전화',
+  'O1' = '포인트캠'
+}
+
+export enum MYT_FARE_PAYMENT_TYPE {
+  BANK = '01',
+  CARD = '02',
+  GIRO = '03',
+  VIRTUAL = '04'
+}
