@@ -27,10 +27,8 @@ Tw.PopupService.prototype = {
     }
   },
   _onOpenPopup: function () {
-    var $popups = $('.popup');
-    console.log('popups', $popups);
+    var $popups = $('.tw-popup');
     var $currentPopup = $($popups[$popups.length - 1]);
-    console.log('current', $currentPopup);
     Tw.Logger.info('[Popup Open]');
     this._bindEvent($currentPopup);
     if ( !Tw.FormatHelper.isEmpty(this._openCallback) ) {
