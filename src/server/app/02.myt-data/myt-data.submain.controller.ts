@@ -22,7 +22,9 @@ class MytDataSubmainController extends TwViewController {
       svcInfo: svcInfo,
       isBenefit: false,
       immCharge: false,
-      present: false
+      present: false,
+      // 다른 회선 항목
+      otherLines: this.convertOtherLines(allSvc)
     };
     Observable.combineLatest(
       // this._getRemnantData(),
@@ -60,24 +62,64 @@ class MytDataSubmainController extends TwViewController {
       const breakdownList: any = [];
       if ( dcBkd && dcBkd.length > 0 ) {
         // 데이터한도요금제 충전내역
+        dcBkd.map((item) => {
+          item['class'] = (item.opTypCd === '2' || item.opTypCd === '4') ? 'send' : 'receive';
+          item['u_title'] = item.opTypNm;
+          item['u_sub'] = item.opOrgNm;
+          item['d_title'] = item.amt;
+          item['d_sub'] = DateHelper.getShortDate(item.opDt);
+          item['unit'] = '원';
+        });
         breakdownList.push(FormatHelper.groupByArray(dcBkd, 'opDt'));
       }
       if ( dpBkd && dpBkd.length > 0 ) {
         // T끼리 선물하기 내역
+        // type: 1 send, 2 receive
+        dpBkd.map((item) => {
+          item['class'] = (item.type === '1' ? 'send' : 'receive');
+          item['u_title'] = item.custNm;
+          item['u_sub'] = item.svcNum;
+          item['d_title'] = item.dataQty;
+          item['d_sub'] = DateHelper.getShortDate(item.opDt);
+          item['unit'] = 'MB';
+        });
         breakdownList.push(FormatHelper.groupByArray(dpBkd, 'opDt'));
       }
       if ( tpBkd && tpBkd.length > 0 ) {
         // 팅요금 선물하기 내역
+        // opTypCd: 1 send, 2 receive
+        tpBkd.map((item) => {
+          item['class'] = (item.opTypCd === '1' ? 'send' : 'receive');
+          item['u_title'] = item.custNm;
+          item['u_sub'] = item.svcNum;
+          item['d_title'] = item.amt;
+          item['d_sub'] = DateHelper.getShortDate(item.opDt);
+          item['unit'] = '원';
+        });
         breakdownList.push(FormatHelper.groupByArray(tpBkd, 'opDt'));
       }
       if ( etcBkd && etcBkd.length > 0 ) {
         // 팅/쿠키즈/안심요금 충전 내역
+        etcBkd.map((item) => {
+          item['class'] = (item.opTypCd === '2' || item.opTypCd === '4') ? 'send' : 'receive';
+          item['u_title'] = item.opTypNm;
+          item['u_sub'] = '';
+          item['d_title'] = item.amt;
+          item['d_sub'] = DateHelper.getShortDate(item.opDt);
+          item['unit'] = '원';
+        });
         breakdownList.push(FormatHelper.groupByArray(etcBkd, 'opDt'));
       }
       if ( refpBkd && refpBkd.length > 0 ) {
         // 리필쿠폰 선물 내역
         refpBkd.map((item) => {
           item['opDt'] = item.copnOpDt;
+          item['class'] = (item.type === '1' ? 'send' : 'receive');
+          item['u_title'] = item.copnNm;
+          item['u_sub'] = item.svcNum;
+          item['d_title'] = ''; // API response 값에 정의되어있지 않음
+          item['d_sub'] = DateHelper.getShortDate(item.copnOpDt);
+          item['unit'] = '';
         });
         breakdownList.push(FormatHelper.groupByArray(refpBkd, 'opDt'));
       }
@@ -85,6 +127,12 @@ class MytDataSubmainController extends TwViewController {
         // 리필쿠폰 사용이력조회
         refuBkd.map((item) => {
           item['opDt'] = item.copnUseDt;
+          item['class'] = (item.type === '1' ? 'send' : 'receive');
+          item['u_title'] = item.copnNm;
+          item['u_sub'] = '';
+          item['d_title'] = item.copnDtlClNm; // API response 값에 정의되어있지 않음
+          item['d_sub'] = DateHelper.getShortDate(item.copnUseDt);
+          item['unit'] = '';
         });
         breakdownList.push(FormatHelper.groupByArray(refuBkd, 'opDt'));
       }
@@ -100,6 +148,17 @@ class MytDataSubmainController extends TwViewController {
     });
   }
 
+  convertOtherLines(items): any {
+    const nOthers: any = Object.assign([], items['M'], items['O'], items['S']);
+    const list: any = [];
+    nOthers.filter((item) => {
+      if ( item.repSvcYn === 'N' ) {
+        list.push(item);
+      }
+    });
+    return list;
+  }
+
   sortBreakdownItems(items): any {
     const returnVal: any = [];
     let group: any = [];
@@ -107,10 +166,10 @@ class MytDataSubmainController extends TwViewController {
       group = Object.assign(group, Object.keys(val));
     });
     group.reverse(); // 최근으로 정렬하기 위함
-    group = group.slice(0, 3);
-
-    const filter = items.filter((item) => {
-      for ( const key of item ) {
+    group = group.slice(0, 3); // 최근 기준 3개
+    items.filter((item) => {
+      const keys = Object.keys(item);
+      for ( const key of keys ) {
         group.map((gp) => {
           if ( gp === key ) {
             returnVal.push(item[key]);
@@ -118,7 +177,7 @@ class MytDataSubmainController extends TwViewController {
         });
       }
     });
-    return filter.reverse();
+    return returnVal.reverse();
   }
 
   /**

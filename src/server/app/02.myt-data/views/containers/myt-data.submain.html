@@ -104,7 +104,13 @@
             <% if (data.breakdownList) { %>
                 <div class="cont-box nogaps">
                     <p class="list-comp-title">최근 충전/선물 내역<button class="bt">더보기</button></p>
-                    <%- include('../components/submain/myt-data.submain.breakdown.html', data) %>
+                    <div class="contents-info-list">
+                        <ul class="result-history">
+                            <% for (var i=0; i < data.breakdownList.length; i++) { %>
+                            <%- include('../components/submain/myt-data.submain.breakdown.html', { data: data.breakdownList[i]  }); %>
+                            <% } %>
+                        </ul>
+                    </div>
                 </div>
             <% } %>
             <!-- 사용량 -->
@@ -113,9 +119,11 @@
                 <%- include('../components/submain/myt-data.submain.usage-pattern.html', data) %>
             <% } %>
 
-            <hr class="cont-sp type1" aria-hidden="true"/>
-            <!-- .cont-box -->
-            <%- include('../components/submain/myt-data.submain.remnant-sub.html', data) %>
+            <% if (data.otherLines.length > 0 ) { %>
+                <hr class="cont-sp type1" aria-hidden="true"/>
+                <!-- .cont-box -->
+                <%- include('../components/submain/myt-data.submain.remnant-sub.html', data) %>
+            <% } %>
             <!-- .cont-box -->
 
             <div class="cont-box nogaps noborder">
