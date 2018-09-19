@@ -6,6 +6,7 @@
 
 import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
+import BrowserHelper from '../../../../utils/browser.helper';
 
 class MytDataTing extends TwViewController {
   constructor() {
@@ -13,7 +14,19 @@ class MytDataTing extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    res.render('ting/myt-data.ting.html');
+    const page = req.params.page;
+    const responseData = {
+      svcInfo: svcInfo,
+      isApp: BrowserHelper.isApp(req)
+    };
+
+    switch ( page ) {
+      case 'complete':
+        res.render('ting/myt-data.ting.complete.html');
+        break;
+      default:
+        res.render('ting/myt-data.ting.html', responseData);
+    }
   }
 }
 
