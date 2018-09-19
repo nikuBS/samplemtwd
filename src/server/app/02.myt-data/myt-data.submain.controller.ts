@@ -27,6 +27,7 @@ class MytDataSubmainController extends TwViewController {
       otherLines: this.convertOtherLines(allSvc)
     };
     Observable.combineLatest(
+      this._getChildrenLines(),
       // this._getRemnantData(),
       this._getDataPresent(),
       this._getRefillCoupon(),
@@ -38,7 +39,10 @@ class MytDataSubmainController extends TwViewController {
       this._getRefillPresentBreakdown(),
       this._getRefillUsedBreakdown(),
       this._getUsagePatternSevice()
-    ).subscribe(([/*remnant,*/ present, refill, dcBkd, dpBkd, tpBkd, etcBkd, refpBkd, refuBkd, pattern]) => {
+    ).subscribe(([/*remnant,*/child, present, refill, dcBkd, dpBkd, tpBkd, etcBkd, refpBkd, refuBkd, pattern]) => {
+      if (child && child.length > 0) {
+        data.otherLines = Object.assign(this.convertChildLines(child), data.otherLines);
+      }
       if ( svcInfo.svcAttrCd === 'M3' || svcInfo.svcAttrCd === 'M4' /* || remnant.data === 0 기본 DATA 제공량이 없는 경우*/ ) {
         // T-pocketFi or T-Login
         // 즉시충전버튼 영역
@@ -148,6 +152,21 @@ class MytDataSubmainController extends TwViewController {
     });
   }
 
+  convertChildLines(items): any {
+    const list: any = [];
+    items.filter((item) => {
+      list.push({
+        child: true,
+        nickNm: item.mdlName,
+        svcNum: item.svcNum,
+        svcMgmtNum: item.svcMgmtNum,
+        data: '', // TODO: 개발이 되지 않은 항목 추후 작업 필요
+        unit: '' // TODO: 개발이 되지 않은 항목 추후 작업 필요
+      });
+    });
+    return list;
+  }
+
   convertOtherLines(items): any {
     const nOthers: any = Object.assign([], items['M'], items['O'], items['S']);
     const list: any = [];
@@ -178,6 +197,18 @@ class MytDataSubmainController extends TwViewController {
       }
     });
     return returnVal.reverse();
+  }
+
+  // 자녀회선목록 조회
+  _getChildrenLines(): Observable<any> {
+    return this.apiService.request(API_CMD.BFF_05_0024, {}).map((resp) => {
+      if ( resp.code === API_CODE.CODE_00 ) {
+        return resp.result;
+      } else {
+        // error
+        return null;
+      }
+    });
   }
 
   /**
