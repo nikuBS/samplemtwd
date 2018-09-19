@@ -898,6 +898,20 @@ body.bg-gray {
   background-color: transparent;
 }
 
+.cont-box.graph-back {
+  position: relative;
+}
+
+.cont-box.graph-back:after {
+  content: '';
+  position: absolute;
+  right: 0;
+  width: 28%;
+  top: 0;
+  bottom: 0;
+  background: #ebf5fe;
+}
+
 .cont-box .sub-title0 {
   padding: 0.875rem 1rem 1.0625rem 1rem;
   font-size: 0.8125rem;
@@ -1373,13 +1387,17 @@ body.bg-gray {
   margin-right: 0;
 }
 
+.sms-confirm-box {
+  padding: 1.625rem 0.875rem 0;
+}
+
 .sms-confirm-box + .sms-confirm-box {
   padding-top: 1.625rem;
   border-top: 1px solid #e1e1e1;
 }
 
 .sms-confirm-box .sms-confirm-des {
-  font-size: 0.8125rem;
+  font-size: 0.75rem;
   font-weight: 400;
 }
 
@@ -1416,7 +1434,7 @@ body.bg-gray {
 
 /* 고객센터 인증 */
 .certifi-ti-big {
-  font-size: 1.25rem;
+  font-size: 0.75rem;
 }
 
 .ico-certifi-list {
@@ -1431,8 +1449,45 @@ body.bg-gray {
   display: inline-block;
   width: 2.75rem;
   height: 2.75rem;
-  background: url(/img/ico/ico-group-100.png) no-repeat 0 -12.5rem;
+  background-image: url(/img/ico/ico-group-100.png);
+  background-repeat: no-repeat;
   background-size: 6.25rem;
+}
+
+.ico-certifi-card.type1 {
+  background-position: -0.25rem -50.125rem;
+}
+
+.ico-certifi-card.type2 {
+  background-position: -3.25rem -50.125rem;
+}
+
+.ico-certifi-card.type3 {
+  background-position: -0.25rem -53.25rem;
+}
+
+.ico-certifi-card.type4 {
+  background-position: -3.375rem -53.25rem;
+}
+
+.ico-certifi-card.type5 {
+  background-position: -0.25rem -56.375rem;
+}
+
+.ico-certifi-card.type6 {
+  background-position: -3.375rem -56.375rem;
+}
+
+.ico-certifi-card.type7 {
+  background-position: -0.25rem -59.375rem;
+}
+
+.ico-certifi-card.type8 {
+  background-position: -3.375rem -59.375rem;
+}
+
+.ico-certifi-card.type9 {
+  background-position: -0.25rem -62.5rem;
 }
 
 .certifi-repre {
@@ -1466,8 +1521,9 @@ body.bg-gray {
 }
 
 .box-certifi-card .certifi-card-ti {
-  font-size: 0.8125rem;
+  font-size: 0.75rem;
   font-weight: 400;
+  color: #666;
 }
 
 .box-certifi-card .certifi-card-ti em, .box-certifi-card .certifi-card-ti span {
@@ -1480,20 +1536,15 @@ body.bg-gray {
 
 .box-certifi-card .certifi-card-list li {
   display: inline-block;
-  width: 31%;
   height: 6.5625rem;
-  margin-right: 2.3%;
-  margin-bottom: 2.3%;
+  margin-right: 1%;
+  margin-bottom: 1%;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   padding: 0.625rem 0;
   border-radius: 0.3125rem;
-  border: 1px solid #325ec1;
   text-align: center;
-}
-
-.box-certifi-card .certifi-card-list li:nth-child(3) {
-  margin-right: 0;
+  background: #fff;
 }
 
 .box-certifi-card .certifi-card-list li .certifi-card-tx {
@@ -1508,7 +1559,28 @@ body.bg-gray {
   font-size: 0.75rem;
   line-height: 0.875rem;
   font-weight: 400;
-  color: #325ec1;
+  color: #000;
+}
+
+.box-certifi-card .certifi-card-list.one li {
+  width: 100%;
+  margin-right: 0;
+}
+
+.box-certifi-card .certifi-card-list.two li {
+  width: 49%;
+}
+
+.box-certifi-card .certifi-card-list.two li:nth-child(2n) {
+  margin-right: 0;
+}
+
+.box-certifi-card .certifi-card-list.three li {
+  width: 32.5%;
+}
+
+.box-certifi-card .certifi-card-list.three li:nth-child(3n) {
+  margin-right: 0;
 }
 
 .box-certifi-list .certifi-sel-list {

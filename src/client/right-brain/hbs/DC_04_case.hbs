@@ -1,4 +1,4 @@
-<div class="popup">
+<div class="popup tw-popup">
     <div class="popup-page nobg layer"><!-- .no-btn 하단에 버튼이 없을 경우 -->
         <!-- #header -->
         <div class="header-wrap">
@@ -17,6 +17,7 @@
                 <!-- .cont-box -->
                 <div class="cont-box nogaps">
                     <div class="box-chk-link">
+                        {{#if type}}<p class="link-long-ti">{{type}}</p>{{/if}}
                         <ul class="chk-link-list">
                            {{#each list}}
                             <li>

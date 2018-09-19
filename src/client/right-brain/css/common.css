@@ -131,6 +131,69 @@ input[type=text], input[type=file], input[type=password], input[type=number] {
   display: block;
 }
 
+.inputbox .bt-box {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  margin: 0 0 0 0.625rem;
+  text-align: center;
+  font-size: 0.875rem;
+  font-weight: 400;
+  white-space: nowrap;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.inputbox .bt-box button {
+  border-radius: 0.3125rem;
+  padding: 0 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: #3b98e6;
+  white-space: nowrap;
+  background: #ebf5fe;
+}
+
+.inputbox .bt-box.disabled button.disabled {
+  color: #646464;
+  background: #b2b2b2;
+}
+
+.inputbox .bt-box.disabled a.disabled {
+  color: #646464;
+  background: #b2b2b2;
+}
+
+.inputbox .bt-box.selected button {
+  background: #9cc9f5;
+}
+
+.inputbox .bt-box.selected a {
+  background: #9cc9f5;
+}
+
+.inputbox .bt-box input[type=file] {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+}
+
+.inputbox .tx-box {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+}
+
 .inputbox .input {
   display: block;
   position: relative;
@@ -211,7 +274,7 @@ input[type=text], input[type=file], input[type=password], input[type=number] {
 .inputbox .input input[type=number][readonly],
 .inputbox .input input[type=file][readonly] {
   background-color: #fff;
-  border-color: #3b98e6;
+  border-color: #d1d1d1;
 }
 
 .inputbox .input input[type=text][readonly] .cancel,
@@ -322,180 +385,6 @@ input[type=text], input[type=file], input[type=password], input[type=number] {
 .inputbox.bt-add .input .bt-dropdown {
   width: 98%;
   margin: 0;
-}
-
-.inputbox.bt-add .bt-box {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
-  margin: 0 0 0 0.625rem;
-  border: 1px solid #d1d1d1;
-  border-radius: 0.3125rem;
-  background: #fff;
-  text-align: center;
-  font-size: 0.875rem;
-  font-weight: 400;
-  color: #757575;
-  white-space: nowrap;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-}
-
-.inputbox.bt-add .bt-box button {
-  padding: 0 0.5rem;
-  font-size: 0.875rem;
-  font-weight: 400;
-  color: #757575;
-  white-space: nowrap;
-}
-
-.inputbox.bt-add .bt-box.disabled {
-  border: 1px solid #e5e8ee;
-  color: #808698;
-  background: #e5e8ee;
-}
-
-.inputbox.bt-add .bt-box.disabled button {
-  color: #808698;
-}
-
-.inputbox.bt-add .bt-box input[type=file] {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-}
-
-.inputbox.bt-add .bt-box.red1 {
-  border: 1px solid #e22f26;
-  background: #e22f26;
-}
-
-.inputbox.bt-add .bt-box.red1.disabled {
-  background: #e5e8ee;
-}
-
-.inputbox.bt-add .bt-box.red1.selected {
-  background: #ff866e;
-}
-
-.inputbox.bt-add .bt-box.red1 button {
-  color: #fff;
-}
-
-.inputbox.bt-add .bt-box.red1 button:disabled {
-  color: #808698;
-}
-
-.inputbox.bt-add .bt-box.red1 a {
-  color: #fff;
-}
-
-.inputbox.bt-add .bt-box.red1 a.disabled {
-  color: #808698;
-}
-
-.inputbox.bt-add .bt-box.blue1 {
-  background: #3b98e6;
-}
-
-.inputbox.bt-add .bt-box.blue1.disabled {
-  background: #ebf5fe;
-}
-
-.inputbox.bt-add .bt-box.blue1.selected {
-  background: #ebf5fe;
-}
-
-.inputbox.bt-add .bt-box.blue1 button {
-  color: #fff;
-}
-
-.inputbox.bt-add .bt-box.blue1 button:disabled {
-  color: #808698;
-}
-
-.inputbox.bt-add .bt-box.blue1 a {
-  color: #fff;
-}
-
-.inputbox.bt-add .bt-box.blue1 a.disabled {
-  color: #808698;
-}
-
-.inputbox.bt-add .bt-box.white1 {
-  border: 1px solid #3b98e6;
-  background: #fff;
-}
-
-.inputbox.bt-add .bt-box.white1.disabled {
-  border: 1px solid #808698;
-  background: #fff;
-}
-
-.inputbox.bt-add .bt-box.white1.selected {
-  background: #3b98e6;
-}
-
-.inputbox.bt-add .bt-box.white1 button {
-  color: #3b98e6;
-}
-
-.inputbox.bt-add .bt-box.white1 button:disabled {
-  color: #808698;
-}
-
-.inputbox.bt-add .bt-box.white1 a {
-  color: #3b98e6;
-}
-
-.inputbox.bt-add .bt-box.white1 a.disabled {
-  color: #808698;
-}
-
-.inputbox.bt-add .bt-box.skyblue1 {
-  border: 1px solid #ebf5fe;
-  background: #ebf5fe;
-}
-
-.inputbox.bt-add .bt-box.skyblue1.disabled {
-  border: 1px solid #b2b2b2;
-  background: #b2b2b2;
-}
-
-.inputbox.bt-add .bt-box.skyblue1.selected {
-  background: #9cc9f5;
-}
-
-.inputbox.bt-add .bt-box.skyblue1 button {
-  color: #3b98e6;
-}
-
-.inputbox.bt-add .bt-box.skyblue1 button.disabled {
-  color: #646464;
-}
-
-.inputbox.bt-add .bt-box.skyblue1 a {
-  color: #3b98e6;
-}
-
-.inputbox.bt-add .bt-box.skyblue1 a.disabled {
-  color: #646464;
-}
-
-.inputbox.bt-add .tx-box {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  width: 100%;
 }
 
 .inputbox.bt-add2 {
@@ -3427,6 +3316,7 @@ a.ui-button:active,
   border-radius: 0.3125rem;
   text-align: left;
   font-weight: 400;
+  background-color: #f5f5f5;
 }
 
 .bt-dropdown.big {
@@ -4155,20 +4045,19 @@ a.ui-button:active,
   width: 16%;
   height: 100%;
   padding: 0 0.5rem;
-  border: 1px solid #d1d1d1;
   border-radius: 0.3125rem;
-  background: #fff;
   text-align: center;
   font-size: 0.875rem;
   font-weight: 400;
-  color: #757575;
+  color: #3b98e6;
   white-space: nowrap;
+  background: #ebf5fe;
 }
 
 .address-wrap.inputbox .bt-box button {
   font-size: 0.875rem;
   font-weight: 400;
-  color: #757575;
+  color: #3b98e6;
   white-space: nowrap;
 }
 
