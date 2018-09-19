@@ -75,3 +75,10 @@ export const VOICE_UNIT = {
   MIN: '분',
   SEC: '초'
 };
+
+export enum MYT_FARE_PAYMENT_TITLE {
+  ACCOUNT = '계좌이체',
+  CARD = '체크/신용카드',
+  OKCASHBAG = 'OK캐쉬백',
+  TPOINT = 'T포인트'
+}

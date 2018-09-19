@@ -11,7 +11,7 @@ import {API_CMD, API_CODE} from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
 import {MYT_FARE_PAYMENT_NAME} from '../../../../types/string.type';
-import {MYT_FARE_PAYMENT_TYPE, SVC_ATTR_NAME} from '../../../../types/bff.type';
+import {MYT_FARE_PAYMENT_TITLE, MYT_FARE_PAYMENT_TYPE, SVC_ATTR_NAME} from '../../../../types/bff.type';
 
 class MytFarePaymentAccount extends TwViewController {
   constructor() {
@@ -27,6 +27,7 @@ class MytFarePaymentAccount extends TwViewController {
         res.render('payment/myt-fare.payment.account.html', {
           unpaidList: this.parseData(unpaidList.result, svcInfo),
           autoInfo: this.parseInfo(autoInfo),
+          title: MYT_FARE_PAYMENT_TITLE.ACCOUNT,
           svcInfo: svcInfo
         });
       } else {
