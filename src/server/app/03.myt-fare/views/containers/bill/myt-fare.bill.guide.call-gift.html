@@ -1,0 +1,22 @@
+<%#
+* FileName: myt-fare.bill.guide.call-gift.html
+* Author: Kim Myoung-Hwan (skt.P130714@partner.sk.com)
+* Date: 2018.09.19
+%>
+
+<% include ../../components/start.component.html %>
+<% include ../../components/javascript.component.html %>
+
+<div id="fe-wrap">
+    <h1>요금안내서-콜기프트</h1>
+</div>
+
+<script>
+  $(document).ready(function () {
+    var oMyTFareGuide = new Tw.MyTFareBillGuideCallGift( $('#fe-wrap'), {
+      reqQuery: <%-JSON.stringify(reqQuery) %>,
+      svcInfo: <%-JSON.stringify(svcInfo) %>
+  } );
+  });
+</script>
+<% include ../../components/end.component.html %>
