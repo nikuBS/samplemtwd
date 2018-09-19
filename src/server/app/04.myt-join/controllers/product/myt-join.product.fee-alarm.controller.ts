@@ -1,12 +1,12 @@
 /**
- * FileName: myt.join.product-service.fee-alarm.controller.ts
+ * FileName: myt-join.product.fee-alarm.controller.ts
  * Author: 양지훈 (jihun202@sk.com)
- * Date: 2018.08.16
+ * Date: 2018.09.19
  */
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { NextFunction, Request, Response } from 'express';
 
-class MyTJoinProductServiceFeeAlarm extends TwViewController {
+class MyTJoinProductFeeAlarm extends TwViewController {
   constructor() {
     super();
   }
@@ -19,10 +19,10 @@ class MyTJoinProductServiceFeeAlarm extends TwViewController {
       });
     }
 
-    res.render('join/myt.join.product-service.fee-alarm.html', {
+    res.render('product/myt-join.product-service.fee-alarm.html', {
       svcInfo: svcInfo
     });
   }
 }
 
-export default MyTJoinProductServiceFeeAlarm;
+export default MyTJoinProductFeeAlarm;

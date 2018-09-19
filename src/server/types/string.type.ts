@@ -27,3 +27,8 @@ export enum MYT_FARE_PAYMENT_NAME {
   BANK = '은행'
 }
 
+export const MYT_FEEPLAN_BENEFIT = {
+  PEN_Y: '위약금 대상',
+  PEN_N: '위약금 비대상',
+  ENDLESS: '서비스 해지시 종료'
+};
