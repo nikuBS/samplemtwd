@@ -16,7 +16,7 @@ Tw.MyTDataCookiz = function (rootEl) {
 
 Tw.MyTDataCookiz.prototype = {
   _init: function () {
-    this._getRemainDataInfo();
+    // this._getRemainDataInfo();
   },
 
   _getRemainDataInfo: function () {
