@@ -1,0 +1,23 @@
+<%#
+* FileName: myt-fare.payment.select.line.component.html
+* Author: Jayoon Kong (jayoon.kong@sk.com)
+* Date: 2018.09.19
+%>
+
+<div class="fe-select-line-wrap">
+    <h1>함께 납부 가능한 회선</h1> <span class="fe-common-back">x</span>
+    <% if (unpaidList) { %>
+    <ul>
+        <% for (var i = 0; i < unpaidList.length; i++) { %>
+        <li id="<%= i %>">
+            <span class="fe-layer-svc-name"><%= unpaidList[i].svcName %></span> <span class="fe-layer-svc-num"><%= unpaidList[i].svcNum %></span>
+            <span class="fe-layer-inv-dt"><%= unpaidList[i].invYearMonth %></span>
+            <span class="fe-layer-amount" data-value="<%= unpaidList[i].intMoney %>"><%= unpaidList[i].invMoney %></span>원
+            <button class="fe-layer-select<% if (unpaidList.defaultIndex === i) { %> checked<% } %>"
+            <% if (unpaidList.defaultIndex === i) { %> style="color:red;" <% } %>>체크</button>
+        </li>
+        <% } %>
+    </ul>
+    <% } %>
+    <button class="fe-layer-done">선택완료</button>
+</div>

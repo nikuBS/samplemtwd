@@ -30,13 +30,18 @@
     <div id="contents" class="container-wrap">
         <h2 class="blind">내용</h2>
         <div class="container">
-            <% include ../../components/payment/myt-fare.payment.common.component.html %>
-            <h2>예금주명</h2>
-            <h1><%= svcInfo.mbrNm %></h1>
-            <h2>계좌정보</h2>
-            <% if (autoInfo.isAuto) { %>
-            <h1><%= autoInfo.bankName %> <%= autoInfo.bankCardNum %></h1>
-            <% } %>
+            <div id="main">
+                <% include ../../components/payment/myt-fare.payment.common.component.html %>
+                <h2>예금주명</h2>
+                <h1><%= svcInfo.mbrNm %></h1>
+                <h2>계좌정보</h2>
+                <% if (autoInfo.isAuto) { %>
+                <h1><%= autoInfo.bankName %> <%= autoInfo.bankCardNum %></h1>
+                <% } %>
+            </div>
+            <div id="select-line" style="display:none;">
+                <% include ../../components/payment/myt-fare.payment.select.line.component.html %>
+            </div>
         </div>
     </div>
     <!--// #contents -->

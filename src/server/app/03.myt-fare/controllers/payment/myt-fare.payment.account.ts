@@ -58,7 +58,8 @@ class MytFarePaymentAccount extends TwViewController {
       list.invDt = '';
       list.map((data, index) => {
         data.invYearMonth = DateHelper.getShortDateWithFormat(data.invDt, 'YYYY.MM');
-        data.invMoney = FormatHelper.addComma(this.removeZero(data.invAmt));
+        data.intMoney = this.removeZero(data.invAmt);
+        data.invMoney = FormatHelper.addComma(data.intMoney);
         data.svcName = SVC_ATTR_NAME['M1'];
         if (svcInfo.svcMgmtNum === data.svcMgmtNum && data.invDt > list.invDt) {
           list.invDt = data.invDt;
