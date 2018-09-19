@@ -26,9 +26,52 @@ export enum SVC_ATTR_NAME {
   'O1' = '포인트캠'
 }
 
+export const SVC_CD = {
+  C: '휴대폰',
+  S: 'PPS',
+  F: 'TPocket-FI',
+  L: 'Tlogin',
+  W: 'WiBro',
+  P: '집전화',
+  T: 'IPTV',
+  I: '인터넷'
+};
+
+export const SVC_CDNAME = {
+  M1: 'cellphone',
+  M2: 'pps',
+  M3: 't-series',
+  M4: 't-series',
+  M5: 't-series',
+  S1: 'skbroadband',
+  S2: 'skbroadband',
+  S3: 'skbroadband',
+  O1: 'pointcam'
+};
+
+export const SVC_CDGROUP = {
+  WIRELESS: ['M1', 'M2', 'M3', 'M4', 'M5'],
+  WIRE: ['S1', 'S2', 'S3']
+};
+
 export enum MYT_FARE_PAYMENT_TYPE {
   BANK = '01',
   CARD = '02',
   GIRO = '03',
   VIRTUAL = '04'
 }
+
+export const UNIT = {
+  '110': '원',
+  '140': 'KB',
+  '240': '초',
+  '910': '초',
+  '310': '건',
+  '320': '건'
+};
+
+export const VOICE_UNIT = {
+  HOURS: '시간',
+  MIN: '분',
+  SEC: '초'
+};
