@@ -1,0 +1,18 @@
+<%#
+* FileName: myt-fare.payment.check.component.html
+* Author: Jayoon Kong (jayoon.kong@sk.com)
+* Date: 2018.09.19
+%>
+
+<div>
+    <h1>납부내역 확인</h1> <span class="fe-common-back">x</span>
+    <h2>납부를 완료하시겠습니까?</h2>
+    <h1><%= title %></h1>
+    <h1 class="fe-payment-option-name"></h1>
+    <h1 class="fe-payment-option-number"></h1><h1 class="fe-payment-amount"><% if (title === '계좌이체' || title === '체크/신용카드') { %>원<% } else { %>점<% } %></h1>
+    <ul class="fe-selected-line">
+        <h3>청구회선</h3>
+    </ul>
+
+    <button class="fe-pay-complete">납부완료</button>
+</div>
