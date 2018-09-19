@@ -60,36 +60,37 @@ class MytDataSubmainController extends TwViewController {
       const breakdownList: any = [];
       if ( dcBkd && dcBkd.length > 0 ) {
         // 데이터한도요금제 충전내역
-        breakdownList.push(dcBkd);
+        breakdownList.push(FormatHelper.groupByArray(dcBkd, 'opDt'));
       }
       if ( dpBkd && dpBkd.length > 0 ) {
         // T끼리 선물하기 내역
-        breakdownList.push(dpBkd);
+        breakdownList.push(FormatHelper.groupByArray(dpBkd, 'opDt'));
       }
       if ( tpBkd && tpBkd.length > 0 ) {
         // 팅요금 선물하기 내역
-        breakdownList.push(tpBkd);
+        breakdownList.push(FormatHelper.groupByArray(tpBkd, 'opDt'));
       }
       if ( etcBkd && etcBkd.length > 0 ) {
         // 팅/쿠키즈/안심요금 충전 내역
-        breakdownList.push(etcBkd);
+        breakdownList.push(FormatHelper.groupByArray(etcBkd, 'opDt'));
       }
       if ( refpBkd && refpBkd.length > 0 ) {
         // 리필쿠폰 선물 내역
         refpBkd.map((item) => {
           item['opDt'] = item.copnOpDt;
         });
-        breakdownList.push(refpBkd);
+        breakdownList.push(FormatHelper.groupByArray(refpBkd, 'opDt'));
       }
       if ( refuBkd && refuBkd.length > 0 ) {
         // 리필쿠폰 사용이력조회
         refuBkd.map((item) => {
           item['opDt'] = item.copnUseDt;
         });
-        breakdownList.push(refuBkd);
+        breakdownList.push(FormatHelper.groupByArray(refuBkd, 'opDt'));
       }
-
-      data.breakdownList = this.sortBreakdownItems(breakdownList);
+      if ( breakdownList.length > 0 ) {
+        data.breakdownList = this.sortBreakdownItems(breakdownList);
+      }
       // 최근 데이터/음성/문자 사용량
       if ( pattern ) {
         data.pattern = pattern;
@@ -100,7 +101,24 @@ class MytDataSubmainController extends TwViewController {
   }
 
   sortBreakdownItems(items): any {
-    const group = FormatHelper.groupByArray(items, 'opDt');
+    const returnVal: any = [];
+    let group: any = [];
+    items.forEach((val) => {
+      group = Object.assign(group, Object.keys(val));
+    });
+    group.reverse(); // 최근으로 정렬하기 위함
+    group = group.slice(0, 3);
+
+    const filter = items.filter((item) => {
+      for ( const key of item ) {
+        group.map((gp) => {
+          if ( gp === key ) {
+            returnVal.push(item[key]);
+          }
+        });
+      }
+    });
+    return filter.reverse();
   }
 
   /**
