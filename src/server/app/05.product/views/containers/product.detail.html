@@ -5,7 +5,13 @@
 %>
 
 <% include ../components/start.component.html %>
-<p></p>
+<!-- TBD -->
+<ul>
+    <% for(var i in basicInfo.linkBtnList) { %>
+    <li><button type="button" class="fe-btn_setting" style="border:1px solid #000" data-typcd="<%= basicInfo.linkBtnList[i].btnTypCd %>"><%= basicInfo.linkBtnList[i].btnNm %></button></li>
+    <% } %>
+</ul>
+<!-- // -->
 <% include ../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
