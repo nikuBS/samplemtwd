@@ -36,12 +36,12 @@
 
             <% if (svcInfo.svcAttrCd === 'M1') { %>
             <div>
-                <div id="tdata-share">T데이터 셰어링</div>
-                <div id="troaming-share">T로밍 함께 쓰기 잔여량</div>
-                <div id="data-limit">데이터 한도 요금제 잔여량</div>
-                <div id="ting">팅 요금상품 잔여량</div>
-                <div id="discount">24시간 데이터 50% 할인 사용량</div>
-                <div id="band-data-share">내폰끼리 결합 사용량</div>
+                <div id="fe-tdata-share">T데이터 셰어링</div>
+                <div id="fe-troaming-share">T로밍 함께 쓰기 잔여량</div>
+                <div id="fe-data-limit">데이터 한도 요금제 잔여량</div>
+                <div id="fe-ting">팅 요금상품 잔여량</div>
+                <div id="fe-discount">24시간 데이터 50% 할인 사용량</div>
+                <div id="fe-band-data-share">내폰끼리 결합 사용량</div>
             </div>
             <% } %>
             <% if (usageData.voice && usageData.voice.length > 0) { %>
@@ -85,11 +85,15 @@
     </div>
     <!--// #contents -->
 </div>
+<%- include('../../components/usage/myt-data.usage.data-share.html'); %>
+
 <!--// #skip_navigation -->
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
     new Tw.MyTDataUsage($('#myt-data-usage'));
+    // var myTDataUsageDataShare = new Tw.MyTDataUsageDataShare($('#fe-data-share'));
+    // myTDataUsageDataShare.open();
   });
 </script>
 <% include ../../components/end.component.html %>
