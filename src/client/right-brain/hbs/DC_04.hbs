@@ -1,11 +1,10 @@
-<div class="popup">
-    <div class="popup-page nobg layer">
-        <!-- .no-btn 하단에 버튼이 없을 경우 -->
+<div class="popup tw-popup">
+    <div class="popup-page nobg layer"><!-- .no-btn 하단에 버튼이 없을 경우 -->
         <!-- #header -->
         <div class="header-wrap">
             <div class="page-header">
                 <div class="header-ti align-l">
-                    <h1>충전방법 선택</h1>
+                    <h1>{{title}}</h1>
                 </div>
             </div>
         </div>
@@ -14,84 +13,38 @@
         <div class="container-wrap">
             <h2 class="blind">내용</h2>
             <div class="container">
+                {{#each data}}
+                {{#if @index}}
+                <hr class="cont-sp type1" aria-hidden="true"/>
+                {{/if}}
                 <!-- .cont-box -->
                 <div class="cont-box nogaps noborder">
-                    <p class="link-long-ti first">나의 보유 쿠폰 사용</p>
+                    {{#if type}}<p class="link-long-ti">{{type}}</p>{{/if}}
                     <ul class="link-long-list">
-                        <li>
+                        {{#each list}}
+                        <li class="{{option}}">
                             <div class="link-long">
-                                <button>나의 리필 쿠폰
-                                    <span class="tx-sub">2장
-                                        <span class="ico"></span>
-                                    </span>
-                                </button>
-                            </div>
-                        </li>
-                    </ul>
-                    <hr class="cont-sp type1" aria-hidden="true"/>
-                    <p class="link-long-ti">선불 쿠폰 구매/충전</p>
-                    <ul class="link-long-list">
-                        <li>
-                            <div class="link-long">
-                                <button>T 데이터 쿠폰
+                                <button>{{value}}
+                                    {{#if explain}}
+                                    <p class="tx-explain">{{explain}}</p>
+                                    {{/if}}
                                     <span class="tx-sub">
+                                        {{#if text1}}<span class="normal">{{text1}}</span>{{/if}}
+                                        {{#if text2}}
+                                            {{text2}}
+                                            <span class="bar">{{bar}}</span>
+                                            <span class="point">{{point}}</span>
+                                        {{/if}}
                                         <span class="ico"></span>
                                     </span>
                                 </button>
                             </div>
                         </li>
-                        <li>
-                            <div class="link-long">
-                                <button>T 쿠폰
-                                    <span class="tx-sub">
-                                        <span class="ico"></span>
-                                    </span>
-                                </button>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="link-long">
-                                <button>제주도 프리 쿠폰
-                                    <span class="tx-sub">
-                                        <span class="ico"></span>
-                                    </span>
-                                </button>
-                            </div>
-                        </li>
-                    </ul>
-                    <hr class="cont-sp type1" aria-hidden="true"/>
-                    <p class="link-long-ti">요금 충전</p>
-                    <ul class="link-long-list">
-                        <li>
-                            <div class="link-long">
-                                <button>데이터 한도 요금제
-                                    <span class="tx-sub">
-                                        <span class="ico"></span>
-                                    </span>
-                                </button>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="link-long">
-                                <button>팅 쿠키즈 안심 음성 요금
-                                    <span class="tx-sub">
-                                        <span class="ico"></span>
-                                    </span>
-                                </button>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="link-long">
-                                <button>팅요금제 충전 선물
-                                    <span class="tx-sub">
-                                        <span class="ico"></span>
-                                    </span>
-                                </button>
-                            </div>
-                        </li>
+                        {{/each}}
                     </ul>
                 </div>
                 <!--// .cont-box -->
+                {{/each}}
             </div>
         </div>
         <!--// .container-wrap -->

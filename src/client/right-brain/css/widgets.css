@@ -1253,6 +1253,11 @@ li.checkbox.type01 {
   height: 5.375rem;
 }
 
+.radio-slide.big .select-list .radiobox {
+  width: 10.125rem;
+  height: 5.375rem;
+}
+
 /* switch */
 .btn-switch.focus .switch-style {
   outline: -webkit-focus-ring-color auto 5px;

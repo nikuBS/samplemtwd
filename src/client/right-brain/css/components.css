@@ -2498,6 +2498,33 @@
   height: 1.75rem;
 }
 
+.plan-line-wrap {
+  padding-bottom: 1.8125rem;
+}
+
+.plan-line-wrap .plan-number {
+  display: block;
+  color: #666;
+  font-size: 0.8125rem;
+  letter-spacing: 0;
+}
+
+.plan-line-wrap .badge.badge-fam {
+  vertical-align: middle;
+}
+
+.graphlist-wrap .graphbox-li .graphbox-title {
+  position: relative;
+  color: #b2b2b2;
+}
+
+.graphlist-wrap .graphbox-li .graphbox-title .bt-link-wrap .bt-link-tx.underline {
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 0.75rem;
+}
+
 /* 김예리 */
 .inp-tx-wrap {
   padding-bottom: 5.625rem;
@@ -2585,6 +2612,7 @@
   background: #f5f5f5;
   display: table;
   width: 100%;
+  position: relative;
 }
 
 .info-wrap .title {
@@ -2597,6 +2625,17 @@
   font-size: 0.8125rem;
   display: table-cell;
   text-align: right;
+}
+
+.info-wrap .detail-view {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  margin-top: -0.375rem;
+  width: 0.5rem;
+  height: 0.75rem;
+  background: url(/img/ico/ico-group2.png) no-repeat -0.5625rem -3.5625rem;
+  background-size: 3.125rem auto;
 }
 
 .contents-empty {
@@ -2617,6 +2656,96 @@
   padding-top: 1.25rem;
   font-size: 0.9375rem;
   color: #666;
+}
+
+.charge-guide-wrap {
+  position: relative;
+}
+
+.charge-guide-wrap .tit {
+  display: block;
+  padding: 0.625rem 0 0.75rem;
+  font-family: "TgothicMedium", Roboto, sans-serif;
+  font-size: 0.75rem;
+}
+
+.charge-guide-wrap .tit .charge-txt {
+  padding-right: 0.3125rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  font-family: "TgothicBlack", Roboto, sans-serif;
+  line-height: 1;
+  vertical-align: sub;
+}
+
+.charge-guide-wrap .sub-disc01 {
+  overflow: hidden;
+  display: block;
+  font-size: 0.8125rem;
+}
+
+.charge-guide-wrap .sub-disc01 .elem {
+  float: left;
+  padding: 0 0.625rem;
+  position: relative;
+}
+
+.charge-guide-wrap .sub-disc01 .elem:before {
+  content: '';
+  width: 0.0625rem;
+  height: 0.5625rem;
+  background: #d1d1d1;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  margin-top: -0.25rem;
+}
+
+.charge-guide-wrap .sub-disc01 .elem:first-of-type {
+  padding-left: 0;
+}
+
+.charge-guide-wrap .sub-disc01 .elem:first-of-type:before {
+  display: none;
+}
+
+.charge-guide-wrap .sub-disc02 {
+  font-size: 0.9375rem;
+}
+
+.charge-guide-wrap .bt-alone {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.basic-list ul li {
+  display: table;
+  width: 100%;
+  padding-top: 0.9375rem;
+}
+
+.basic-list ul li .title, .basic-list ul li .tx-cont {
+  display: table-cell;
+  vertical-align: top;
+}
+
+.basic-list ul li .title {
+  font-size: 0.875rem;
+}
+
+.basic-list ul li .tx-cont {
+  font-size: 0.9375rem;
+  text-align: right;
+}
+
+.basic-list ul li:first-of-type {
+  padding-top: 0;
+}
+
+.basic-list.bg-type {
+  padding: 1.25rem 0.9375rem;
+  background: #ebf5fe;
 }
 
 /* 김연주 */
@@ -2670,7 +2799,8 @@
 
 .plan-title {
   overflow: hidden;
-  padding: 1rem 0 1.8125rem;
+  padding: 1rem 0 0.9375rem;
+  position: relative;
 }
 
 .plan-title .tit {
@@ -2681,12 +2811,16 @@
 }
 
 .plan-title .bt-alone {
-  float: right;
+  position: absolute;
+  right: 0;
+  top: 1rem;
 }
 
 .data-type {
+  position: relative;
   overflow: hidden;
   padding: 0.875rem 1rem;
+  background: #f5f5f5;
   font-size: 0.8125rem;
 }
 
@@ -2696,11 +2830,12 @@
 
 .data-type .tit-box .info-view-ic {
   vertical-align: top;
-  margin-top: -0.1875rem;
+  margin-top: -0.25rem;
 }
 
 .data-type .tit {
   float: left;
+  font-size: 0.8125rem;
   color: #212121;
 }
 
@@ -2711,6 +2846,17 @@
 
 .data-type .num em {
   font-weight: 700;
+}
+
+.data-type .detail-view {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  margin-top: -0.375rem;
+  width: 0.5rem;
+  height: 0.75rem;
+  background: url(/img/ico/ico-group2.png) no-repeat -0.5625rem -3.5625rem;
+  background-size: 3.125rem auto;
 }
 
 .share-info {
@@ -2727,7 +2873,7 @@
 
 .share-info .data .info-view-ic {
   vertical-align: top;
-  margin-top: -0.1875rem;
+  margin-top: -0.25rem;
 }
 
 .share-info .btn-share {
@@ -2903,6 +3049,83 @@
   color: #999;
 }
 
+.popup-page.fixed-btn {
+  padding-bottom: 3.75rem;
+}
+
+.popup-page.fixed-btn .container-wrap .container {
+  padding-bottom: 0;
+}
+
+.popup-page.fixed-btn .bt-slice {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  z-index: 25;
+}
+
+.check-payment .tit {
+  font-size: 1.125rem;
+  font-weight: 300;
+}
+
+.check-payment .sub-tit {
+  font-size: 0.8125rem;
+}
+
+.check-payment .num {
+  font-family: "TgothicMedium", Roboto, sans-serif;
+  font-size: 0.9375rem;
+}
+
+.check-payment .num .str {
+  margin-right: 0.3125rem;
+  font-family: "TgothicBlack", Roboto, sans-serif;
+  font-size: 1.875rem;
+  vertical-align: baseline;
+}
+
+.check-payment .credit .ctit {
+  font-size: 0.8125rem;
+}
+
+.check-payment .credit .cnum {
+  margin-left: 0.625rem;
+  font-size: 0.8125rem;
+  color: #666;
+}
+
+.detail-account li {
+  border-top: 1px solid #e1e1e1;
+}
+
+.detail-account li:first-child {
+  border-top: 0;
+}
+
+.detail-account li dl {
+  display: table;
+  width: 100%;
+}
+
+.detail-account li dl dt {
+  display: table-cell;
+  width: 50%;
+  height: 3.25rem;
+  vertical-align: middle;
+  color: #666;
+  font-size: 0.875rem;
+}
+
+.detail-account li dl dd {
+  display: table-cell;
+  width: 50%;
+  height: 3.25rem;
+  text-align: right;
+  vertical-align: middle;
+  font-size: 0.9375rem;
+}
+
 /* 전동엽 */
 .refill-coupon-box .coupon-list .coupon-paper {
   display: table;
@@ -3058,6 +3281,137 @@
 
 .toast-popup .toast-layer.on {
   bottom: 1.5rem;
+}
+
+.plan-pay-title {
+  overflow: hidden;
+  padding: 1rem 0 1.8125rem;
+}
+
+.plan-pay-title .tit {
+  float: left;
+}
+
+.plan-pay-title .tit .pay-name {
+  display: block;
+  font-size: 0.8125rem;
+  line-height: 1rem;
+  color: #666;
+}
+
+.plan-pay-title .tit .pay-line {
+  display: block;
+  margin-top: 0.5rem;
+  font-size: 0.8125rem;
+  line-height: 1.1875rem;
+  color: #000;
+}
+
+.plan-pay-title .tit .pay-fee {
+  display: block;
+  font-size: 0.9375rem;
+  line-height: 1.875rem;
+  font-weight: 500;
+}
+
+.plan-pay-title .tit .pay-fee span {
+  display: inline-block;
+  margin-top: 0.9375rem;
+  font-size: 1.875rem;
+  line-height: 1.875rem;
+  font-family: "TgothicBlack", Roboto, sans-serif;
+  vertical-align: baseline;
+}
+
+.plan-pay-title .bt-alone {
+  float: right;
+}
+
+.user-info-form .form-label {
+  margin-bottom: 0.75rem;
+}
+
+.user-info-form .form-label:nth-of-type(n+2) {
+  margin-top: 0.9375rem;
+}
+
+.check-account-radio .radiobox {
+  display: block;
+  position: relative;
+  padding: 0.625rem 1.1875rem 1.1875rem;
+  border: 1px solid #e1e1e1;
+}
+
+.check-account-radio .radiobox:first-child {
+  border-radius: 0.25rem 0.25rem 0 0;
+}
+
+.check-account-radio .radiobox:last-child {
+  border-radius: 0 0 0.25rem 0.25rem;
+}
+
+.check-account-radio .radiobox .check-title {
+  display: block;
+  font-size: 0.875rem;
+  color: #000;
+  padding-right: 1.5625rem;
+}
+
+.check-account-radio .radiobox .check-title:after {
+  content: "";
+  position: absolute;
+  top: 0.625rem;
+  right: 0.625rem;
+  width: 1.5625rem;
+  height: 1.5625rem;
+  background: url(/img/ico/ico-group.png) no-repeat -1.5625rem -70.3125rem;
+  background-size: 3.125rem;
+}
+
+.check-account-radio .radiobox .account-info {
+  display: none;
+  margin: 1.25rem 0 0;
+  text-align: center;
+}
+
+.check-account-radio .radiobox .account-info .account-bank {
+  font-size: fs-18;
+}
+
+.check-account-radio .radiobox .account-info .account-number {
+  font-size: fs-18;
+  color: #666;
+}
+
+.check-account-radio .radiobox.checked {
+  border-color: #3b98e6;
+}
+
+.check-account-radio .radiobox.checked .check-title:after {
+  background-position: 0 -70.3125rem;
+}
+
+.check-account-radio .radiobox.checked .account-info {
+  display: block;
+}
+
+.refund-account-box .refund-account-check .widget {
+  display: inline-block;
+  vertical-align: baseline;
+}
+
+.refund-account-box .refund-account-check .widget .select-list .checkbox {
+  font-size: 0.875rem;
+  line-height: 1.5625rem;
+}
+
+.refund-account-box .refund-account-check .widget .select-list .checkbox:before {
+  margin-right: 0.3125rem;
+}
+
+.refund-account-box .refund-account-check .info-view-ic {
+  display: inline-block;
+  vertical-align: bottom;
 }
 
 /* 김세정 */
@@ -3990,6 +4344,84 @@
   height: 1px;
   background: repeating-linear-gradient(90deg, #ddd, #ddd 2%, #fff 2%, #fff 3%);
   z-index: 1;
+}
+
+.graph-area-type3 {
+  position: relative;
+  margin: 2.5rem 0 0 0;
+  width: 100%;
+  height: 13.75rem;
+}
+
+.graph-area-type3 .chart-box {
+  width: 75%;
+  height: 12.5rem;
+  overflow-x: scroll;
+  overflow-y: hidden;
+}
+
+.graph-area-type3 .chart-box ul {
+  height: 11.875rem;
+  width: 200%;
+  overflow: hidden;
+}
+
+.graph-area-type3 .chart-box ul .graph_list {
+  float: left;
+  position: relative;
+  width: 16.66%;
+  height: 100%;
+}
+
+.graph-area-type3 .chart-box ul .graph_list dl .graph_tit {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+}
+
+.graph-area-type3 .chart-box ul .graph_list dl .graph_tit button {
+  border-bottom: 1px solid #000;
+  color: #000;
+  font-size: 0.8125rem;
+}
+
+.graph-area-type3 .chart-box ul .graph_list dl dd {
+  text-align: center;
+}
+
+.graph-area-type3 .chart-box ul .graph_list dl dd .box {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 1.625rem;
+  bottom: 1.625rem;
+}
+
+.graph-area-type3 .chart-box ul .graph_list dl dd .box .bar {
+  position: absolute;
+  left: 50%;
+  right: 0;
+  bottom: 0;
+  margin: 0 0 0 -0.25rem;
+  width: 0.5rem;
+  background: #3b98e6;
+}
+
+.graph-area-type3 .chart-box ul .graph_list dl dd .box .bar.point {
+  background: url(/img/chart/pattern1.gif) repeat 0 0;
+  background-size: 0.5rem;
+}
+
+.graph-area-type3 .chart-box ul .graph_list dl dd .box .txt {
+  display: block;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 50%;
+  color: #3b98e6;
+  font-size: 0.75rem;
+  text-align: center;
 }
 
 /* 유준형 */
