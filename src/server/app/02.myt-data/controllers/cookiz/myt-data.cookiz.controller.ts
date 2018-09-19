@@ -7,8 +7,11 @@
 import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import BrowserHelper from '../../../../utils/browser.helper';
+import { API_CMD, API_CODE } from '../../../../types/api-command.type';
+import { Observable } from 'rxjs/Observable';
+import FormatHelper from '../../../../utils/format.helper';
 
-class MytDataCookiz extends TwViewController {
+class MyTDataCookiz extends TwViewController {
   constructor() {
     super();
   }
@@ -25,9 +28,32 @@ class MytDataCookiz extends TwViewController {
         res.render('cookiz/myt-data.cookiz.complete.html', responseData);
         break;
       default:
-        res.render('cookiz/myt-data.cookiz.html', responseData);
+        Observable.combineLatest(
+          this.getSubscriptionInfo()
+        ).subscribe(([subscriptions]) => {
+          const response = Object.assign(
+            responseData,
+            { subscriptions: subscriptions }
+          );
+          res.render('cookiz/myt-data.cookiz.html', response);
+        });
     }
+  }
+
+  private getSubscriptionInfo() {
+    return this.apiService.request(API_CMD.BFF_06_0028, {})
+      .map((resp) => {
+        if ( resp.code === API_CODE.CODE_00 ) {
+          const result = Object.assign(resp.result, { regularTopUpAmt: FormatHelper.numberWithCommas(resp.result.regularTopUpAmt) });
+          // {currentTopUpLimit: "4000", regularTopUpYn: "Y", regularTopUpAmt: "1000"}
+
+
+          return result;
+        } else {
+          return null;
+        }
+      });
   }
 }
 
-export default MytDataCookiz;
+export default MyTDataCookiz;

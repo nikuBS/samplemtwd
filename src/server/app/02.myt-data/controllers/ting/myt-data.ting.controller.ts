@@ -8,7 +8,7 @@ import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import BrowserHelper from '../../../../utils/browser.helper';
 
-class MytDataTing extends TwViewController {
+class MyTDataTing extends TwViewController {
   constructor() {
     super();
   }
@@ -30,4 +30,4 @@ class MytDataTing extends TwViewController {
   }
 }
 
-export default MytDataTing;
+export default MyTDataTing;
