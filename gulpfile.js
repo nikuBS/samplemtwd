@@ -261,7 +261,12 @@ gulp.task('js-rb', function () {
 });
 
 gulp.task('css-rb', function () {
-  return gulp.src(['src/client/right-brain/css/**/*.css', '!src/client/right-brain/css/**/*.min.css'])
+  return gulp.src([
+    'src/client/right-brain/css/**/common.css',
+    'src/client/right-brain/css/**/layout.css',
+    'src/client/right-brain/css/**/widgets.css',
+    'src/client/right-brain/css/**/components.css',
+    '!src/client/right-brain/css/**/*.min.css'])
   // .pipe(base64({
   //   baseDir: 'src/client/right-brain/',
   //   extensions: ['svg', 'png', /\.jpg#datauri$/i],
