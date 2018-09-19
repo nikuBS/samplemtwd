@@ -10,6 +10,7 @@ import TwViewController from '../../common/controllers/tw.view.controller';
 import { Observable } from 'rxjs/Observable';
 import { API_CMD, API_CODE } from '../../types/api-command.type';
 import FormatHelper from '../../utils/format.helper';
+import DateHelper from '../../utils/date.helper';
 
 class MytDataSubmainController extends TwViewController {
   constructor() {
@@ -21,7 +22,9 @@ class MytDataSubmainController extends TwViewController {
       svcInfo: svcInfo,
       isBenefit: false,
       immCharge: false,
-      present: false
+      present: false,
+      // 다른 회선 항목
+      otherLines: this.convertOtherLines(allSvc)
     };
     Observable.combineLatest(
       // this._getRemnantData(),
@@ -59,30 +62,83 @@ class MytDataSubmainController extends TwViewController {
       const breakdownList: any = [];
       if ( dcBkd && dcBkd.length > 0 ) {
         // 데이터한도요금제 충전내역
-        breakdownList.push(dcBkd);
+        dcBkd.map((item) => {
+          item['class'] = (item.opTypCd === '2' || item.opTypCd === '4') ? 'send' : 'receive';
+          item['u_title'] = item.opTypNm;
+          item['u_sub'] = item.opOrgNm;
+          item['d_title'] = item.amt;
+          item['d_sub'] = DateHelper.getShortDate(item.opDt);
+          item['unit'] = '원';
+        });
+        breakdownList.push(FormatHelper.groupByArray(dcBkd, 'opDt'));
       }
       if ( dpBkd && dpBkd.length > 0 ) {
         // T끼리 선물하기 내역
-        breakdownList.push(dpBkd);
+        // type: 1 send, 2 receive
+        dpBkd.map((item) => {
+          item['class'] = (item.type === '1' ? 'send' : 'receive');
+          item['u_title'] = item.custNm;
+          item['u_sub'] = item.svcNum;
+          item['d_title'] = item.dataQty;
+          item['d_sub'] = DateHelper.getShortDate(item.opDt);
+          item['unit'] = 'MB';
+        });
+        breakdownList.push(FormatHelper.groupByArray(dpBkd, 'opDt'));
       }
       if ( tpBkd && tpBkd.length > 0 ) {
         // 팅요금 선물하기 내역
-        breakdownList.push(tpBkd);
+        // opTypCd: 1 send, 2 receive
+        tpBkd.map((item) => {
+          item['class'] = (item.opTypCd === '1' ? 'send' : 'receive');
+          item['u_title'] = item.custNm;
+          item['u_sub'] = item.svcNum;
+          item['d_title'] = item.amt;
+          item['d_sub'] = DateHelper.getShortDate(item.opDt);
+          item['unit'] = '원';
+        });
+        breakdownList.push(FormatHelper.groupByArray(tpBkd, 'opDt'));
       }
       if ( etcBkd && etcBkd.length > 0 ) {
         // 팅/쿠키즈/안심요금 충전 내역
-        breakdownList.push(etcBkd);
+        etcBkd.map((item) => {
+          item['class'] = (item.opTypCd === '2' || item.opTypCd === '4') ? 'send' : 'receive';
+          item['u_title'] = item.opTypNm;
+          item['u_sub'] = '';
+          item['d_title'] = item.amt;
+          item['d_sub'] = DateHelper.getShortDate(item.opDt);
+          item['unit'] = '원';
+        });
+        breakdownList.push(FormatHelper.groupByArray(etcBkd, 'opDt'));
       }
       if ( refpBkd && refpBkd.length > 0 ) {
         // 리필쿠폰 선물 내역
-        breakdownList.push(refpBkd);
+        refpBkd.map((item) => {
+          item['opDt'] = item.copnOpDt;
+          item['class'] = (item.type === '1' ? 'send' : 'receive');
+          item['u_title'] = item.copnNm;
+          item['u_sub'] = item.svcNum;
+          item['d_title'] = ''; // API response 값에 정의되어있지 않음
+          item['d_sub'] = DateHelper.getShortDate(item.copnOpDt);
+          item['unit'] = '';
+        });
+        breakdownList.push(FormatHelper.groupByArray(refpBkd, 'opDt'));
       }
       if ( refuBkd && refuBkd.length > 0 ) {
         // 리필쿠폰 사용이력조회
-        breakdownList.push(refuBkd);
+        refuBkd.map((item) => {
+          item['opDt'] = item.copnUseDt;
+          item['class'] = (item.type === '1' ? 'send' : 'receive');
+          item['u_title'] = item.copnNm;
+          item['u_sub'] = '';
+          item['d_title'] = item.copnDtlClNm; // API response 값에 정의되어있지 않음
+          item['d_sub'] = DateHelper.getShortDate(item.copnUseDt);
+          item['unit'] = '';
+        });
+        breakdownList.push(FormatHelper.groupByArray(refuBkd, 'opDt'));
       }
-
-      data.breakdownList = this.sortBreakdownItems(breakdownList);
+      if ( breakdownList.length > 0 ) {
+        data.breakdownList = this.sortBreakdownItems(breakdownList);
+      }
       // 최근 데이터/음성/문자 사용량
       if ( pattern ) {
         data.pattern = pattern;
@@ -92,8 +148,36 @@ class MytDataSubmainController extends TwViewController {
     });
   }
 
+  convertOtherLines(items): any {
+    const nOthers: any = Object.assign([], items['M'], items['O'], items['S']);
+    const list: any = [];
+    nOthers.filter((item) => {
+      if ( item.repSvcYn === 'N' ) {
+        list.push(item);
+      }
+    });
+    return list;
+  }
+
   sortBreakdownItems(items): any {
-    const group = FormatHelper.groupByArray(items, '');
+    const returnVal: any = [];
+    let group: any = [];
+    items.forEach((val) => {
+      group = Object.assign(group, Object.keys(val));
+    });
+    group.reverse(); // 최근으로 정렬하기 위함
+    group = group.slice(0, 3); // 최근 기준 3개
+    items.filter((item) => {
+      const keys = Object.keys(item);
+      for ( const key of keys ) {
+        group.map((gp) => {
+          if ( gp === key ) {
+            returnVal.push(item[key]);
+          }
+        });
+      }
+    });
+    return returnVal.reverse();
   }
 
   /**
@@ -135,9 +219,16 @@ class MytDataSubmainController extends TwViewController {
     });
   }
 
-  // T 끼리 선물하기 선물내역
+  // T 끼리 선물하기 선물내역 (1년기준)
   _getDataPresentBreakdown() {
-    return this.apiService.request(API_CMD.BFF_06_0018, {}).map((resp) => {
+    const curDate = new Date();
+    const beforeDate = new Date();
+    beforeDate.setTime(curDate.getTime() - (365 * 24 * 60 * 60 * 1000));
+    return this.apiService.request(API_CMD.BFF_06_0018, {
+      fromDt: DateHelper.getCurrentShortDate(curDate),
+      toDt: DateHelper.getCurrentShortDate(beforeDate),
+      type: '0' // 0: all, 1: send, 2: receive
+    }).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
         return resp.result;
       } else {
