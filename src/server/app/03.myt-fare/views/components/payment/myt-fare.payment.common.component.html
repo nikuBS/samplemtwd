@@ -1,11 +1,17 @@
+<%#
+* FileName: myt-fare.payment.common.component.html
+* Author: Jayoon Kong (jayoon.kong@sk.com)
+* Date: 2018.09.19
+%>
+
 <div>
     <% if (unpaidList) { %>
     <% for (var i = 0; i < unpaidList.length; i++) { %>
     <% if (unpaidList.defaultIndex === i) { %>
     <span class="fe-svc-name"><%= unpaidList[i].svcName %></span> <span class="fe-svc-num"><%= unpaidList[i].svcNum %></span>
     <% if (svcInfo.totalSvcCnt > 1) { %><span class="fe-multi-line">외 <span class="fe-line-cnt"><%= unpaidList.cnt - 1 %></span>개 회선</span><% } %>
-    <h2><span class="fe-amount"><%= unpaidList[i].invMoney %></span>원</h2>
-    <% if (unpaidList.cnt > 1) { %><button class="fe-change-line">회선 변경</button><% } %>
+    <h2><span class="fe-amount" data-value="<%= unpaidList[i].intMoney %>"><%= unpaidList[i].invMoney %></span>원</h2>
+    <% if (unpaidList.cnt > 1) { %><button class="fe-select-line">회선 변경</button><% } %>
     <% } %>
     <% } %>
     <% } %>

@@ -11,6 +11,7 @@ Tw.MyTFarePaymentAccount = function (rootEl) {
 
 Tw.MyTFarePaymentAccount.prototype = {
   _init: function () {
+    var common = new Tw.MyTFarePaymentCommon(this.$container);
     this._bindEvent();
   },
   _bindEvent: function () {
