@@ -24,16 +24,16 @@
                         {{#each list}}
                         <li class="{{option}}">
                             <div class="link-long">
-                                <button>{{value}}
+                                <button>{{{value}}}
                                     {{#if explain}}
-                                    <p class="tx-explain">{{explain}}</p>
+                                    <p class="tx-explain">{{{explain}}}</p>
                                     {{/if}}
                                     <span class="tx-sub">
-                                        {{#if text1}}<span class="normal">{{text1}}</span>{{/if}}
+                                        {{#if text1}}<span class="normal">{{{text1}}}</span>{{/if}}
                                         {{#if text2}}
-                                            {{text2}}
+                                            {{{text2}}}
                                             <span class="bar">{{bar}}</span>
-                                            <span class="point">{{point}}</span>
+                                            <span class="point">{{{point}}}</span>
                                         {{/if}}
                                         <span class="ico"></span>
                                     </span>

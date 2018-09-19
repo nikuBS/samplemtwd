@@ -632,7 +632,7 @@ skt_landing.action = {
       }else{
         popup_info.wrap = true;
       }
-      
+
       $.get(hbsURL+'toast.hbs', function (text) {
         var tmpl = Handlebars.compile(text);
         var html = tmpl(popup_info);

@@ -23,7 +23,7 @@ body.bg-gray {
   padding-bottom: 3.75rem;
 }
 
-.wrap.step .bt-slice {
+.wrap.step .container > .bt-slice {
   position: fixed;
   left: 0;
   bottom: 0;
@@ -49,6 +49,18 @@ body.bg-gray {
   background: #fff;
   z-index: 2;
   padding: 5.375rem 0 0 0;
+}
+
+.wrap.complete .container-wrap .container {
+  padding-top: 0;
+}
+
+.wrap.agreement {
+  position: relative;
+  background: #fff;
+  z-index: 2;
+  /*padding:rem(25px 0 0 0);*/
+  padding-bottom: 0;
 }
 
 .wrap.blank-type1 {
@@ -189,7 +201,8 @@ body.bg-gray {
 }
 
 .header-wrap .header {
-  padding: 1.25rem 0;
+  min-height: 1.25rem;
+  padding: 1.25rem 0 1.25rem;
   /*
             display:block;
             overflow:hidden;
@@ -232,6 +245,7 @@ body.bg-gray {
 }
 
 .header-wrap .header .header-ti h1 {
+  overflow: hidden;
   margin: 0 3.125rem;
   color: #e22f26;
   font-size: 1.125rem;
@@ -239,7 +253,6 @@ body.bg-gray {
   line-height: 1.25rem;
   vertical-align: top;
   text-align: center;
-  overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -273,6 +286,9 @@ body.bg-gray {
   padding: 0 1.375rem 0 0.5rem;
   width: auto;
   font-size: 0.75rem;
+  font-weight: 400;
+  font-family: "TgothicMedium", Roboto, sans-serif;
+  background: #fff;
 }
 
 .header-wrap .header .prev-step {
@@ -977,6 +993,15 @@ body.bg-gray {
   height: 0.125rem;
 }
 
+.cont-sp.type3 {
+  height: 1.875rem;
+}
+
+/*@media all and(max-width:320px){
+    .cont-box{
+        padding:rem(20px 20px);
+    }
+}*/
 /* 공통 팝업페이지 구조 */
 .popup-page {
   position: absolute;
@@ -1096,6 +1121,7 @@ body.bg-gray {
 .popup-page .container-wrap {
   height: 100%;
   overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .popup-page .container-wrap.bg-type1 {
@@ -1103,7 +1129,7 @@ body.bg-gray {
 }
 
 .popup-page .container-wrap .container {
-  padding: 0 0 3.75rem 0;
+  padding: 0;
 }
 
 .popup-page.no-btn {
@@ -1338,8 +1364,505 @@ body.bg-gray {
   width: 100%;
 }
 
+/*app download box*/
+.box-app-download {
+  position: relative;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 1.25rem 1rem;
+  overflow: hidden;
+  background: #fbfbfb;
+}
+
+.box-app-download .img-app-ico {
+  display: inline-block;
+  float: left;
+  width: 2.0625rem;
+  height: 2.0625rem;
+}
+
+.box-app-download .img-app-ico img {
+  width: 100%;
+}
+
+.box-app-download .tx-app-des {
+  display: inline-block;
+  float: left;
+  margin-left: 1rem;
+}
+
+.box-app-download .tx-app-des span {
+  display: block;
+}
+
+.box-app-download .tx-app-des .app-des-name {
+  font-size: 0.75rem;
+  line-height: 0.875rem;
+  color: #212121;
+}
+
+.box-app-download .tx-app-des .app-des-ver {
+  margin-top: 0.25rem;
+  font-size: 0.75rem;
+  line-height: 0.875rem;
+  color: #212121;
+  font-weight: 700;
+}
+
+.box-app-download .ico {
+  display: block;
+  position: absolute;
+  right: 1rem;
+  top: 1.5rem;
+  width: 1.5625rem;
+  height: 1.5625rem;
+  background-image: url(/img/ico/ico-group.png);
+  background-repeat: no-repeat;
+  background-position: 0 -17.1875rem;
+  background-size: 3.125rem;
+}
+
+/* 상단 안내 공통 */
+.box-suggest {
+  position: relative;
+}
+
+.box-suggest.type2 {
+  margin: 1.875rem 0 0;
+}
+
+.box-suggest .suggest-info .suggest-line {
+  border-top: 1px solid #e1e1e1;
+}
+
+.box-suggest .suggest-info .suggest-ti {
+  font-size: 1.5rem;
+  line-height: 1.75rem;
+}
+
+.box-suggest .suggest-info .suggest-ti.small {
+  font-size: 0.8125rem;
+  font-weight: 700;
+}
+
+.box-suggest .suggest-info .suggest-tx {
+  font-size: 1.125rem;
+  line-height: 1.375rem;
+}
+
+.box-suggest .suggest-info .suggest-sub {
+  display: block;
+  font-size: 0.8125rem;
+  font-weight: 400;
+}
+
+.box-suggest .suggest-info .suggest-sub2 {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: #757575;
+}
+
+.box-suggest .suggest-info .suggest-btn-info {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: #757575;
+}
+
+.box-suggest .suggest-info .suggest-btn-info button, .box-suggest .suggest-info .suggest-btn-info a {
+  display: inline-block;
+  margin-left: 0.375rem;
+  width: 0.9375rem;
+  height: 0.9375rem;
+  background: url(/img/ico/ico-group.png) no-repeat -0.3125rem -45.625rem;
+  background-size: 3.125rem auto;
+  vertical-align: middle;
+}
+
+.box-suggest .suggest-info .sugget-caption dt {
+  font-size: 0.8125rem;
+  font-weight: 700;
+}
+
+.box-suggest .suggest-info .sugget-caption dd {
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: #757575;
+}
+
+.box-suggest .suggest-info .bt-link-tx {
+  margin-top: 1.5625rem;
+}
+
+.box-suggest .suggest-info .suggest-list {
+  margin-top: 0.75rem;
+}
+
+.box-suggest .suggest-info .suggest-list li {
+  position: relative;
+  padding-left: 0.6875rem;
+  margin-bottom: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: #757575;
+}
+
+.box-suggest .suggest-info .suggest-list li:last-of-type {
+  margin: 0;
+}
+
+.box-suggest .suggest-info .suggest-list li:before {
+  content: '';
+  display: inline-block;
+  width: 0.1875rem;
+  height: 0.1875rem;
+  position: absolute;
+  top: 0.375rem;
+  left: 0;
+  border-radius: 100%;
+  background: #757575;
+}
+
+.box-suggest .suggest-info .suggest-list li a {
+  color: #425684;
+  vertical-align: top;
+  border-bottom: 1px solid #425684;
+  letter-spacing: 0;
+}
+
+.box-suggest .suggest-info .suggest-list li .tx-point {
+  vertical-align: baseline;
+}
+
+.box-suggest .suggest-info .suggest-list.nodot li {
+  padding-left: 0;
+}
+
+.box-suggest .suggest-info .suggest-list.nodot li:before {
+  display: none;
+}
+
+.box-suggest .suggest-info .suggest-numbering li {
+  position: relative;
+  padding-left: 0.875rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+.box-suggest .suggest-info .suggest-numbering li .number {
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.box-suggest .suggest-info .suggest-numbering li .tx-point {
+  vertical-align: baseline;
+}
+
+.box-suggest .suggest-info .suggest-bt {
+  margin-top: 2.1875rem;
+}
+
+.box-suggest .suggest-info .suggest-bt .tx-notice {
+  margin-bottom: 0.9375rem;
+  font-size: 0.8125rem;
+  font-weight: 400;
+}
+
+.box-suggest .suggest-info .suggest-error {
+  margin-top: 0.3125rem;
+  font-size: 0.8125rem;
+  vertical-align: top;
+}
+
+.box-suggest .suggest-info .suggest-error .tx-error {
+  font-size: 0.8125rem;
+  font-weight: 400;
+  vertical-align: top;
+}
+
+.box-suggest .suggest-info .suggest-error .tx-error .code {
+  vertical-align: top;
+}
+
+.box-suggest .suggest-info .suggest-circuit {
+  margin-top: 1.875rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid #e1e1e1;
+}
+
+.box-suggest .suggest-info .suggest-circuit .circuit-ti {
+  font-size: 0.75rem;
+  font-weight: 400;
+}
+
+.box-suggest .suggest-info .suggest-circuit .circuit-tx {
+  font-size: 1.25rem;
+  font-weight: 400;
+}
+
+.box-suggest .suggest-info .suggest-circuit .circuit-tx .badge {
+  margin-top: 0.5rem;
+  vertical-align: top;
+}
+
+.box-suggest .suggest-info .sugget-form.type1 {
+  margin-top: 1.0625rem;
+}
+
+.box-suggest .suggest-info .sugget-form.type2 {
+  margin-top: 1.875rem;
+}
+
+.box-suggest .suggest-info .sugget-form .form-ti {
+  display: block;
+  margin-bottom: 0.625rem;
+  font-size: 0.8125rem;
+  font-weight: 700;
+}
+
+.box-suggest .suggest-info .sugget-form .bt-link-tx {
+  margin-top: 0.9375rem;
+}
+
+.box-suggest .suggest-info .suggest-dot li {
+  position: relative;
+  margin: 0.625rem 0 0;
+  padding: 0 0 0 0.75rem;
+  font-size: 0.8125rem;
+  font-weight: 400;
+  color: #666;
+}
+
+.box-suggest .suggest-info .suggest-dot li .type2 {
+  color: #474747;
+}
+
+.box-suggest .suggest-info .suggest-dot li:first-child {
+  margin-top: 0;
+}
+
+.box-suggest .suggest-info .suggest-dot li:before {
+  content: "";
+  position: absolute;
+  top: 0.4375rem;
+  left: 0;
+  width: 0.1875rem;
+  height: 0.1875rem;
+  border-radius: 100%;
+  background: #757575;
+}
+
+.box-suggest .suggest-info .suggest-dot li .tx-point {
+  vertical-align: baseline;
+  color: #e22f26;
+  font-weight: 700;
+}
+
+.box-suggest .link-tuberound {
+  margin-top: 2.5rem;
+}
+
+.box-suggest .link-tuberound .tuberound-list li {
+  display: table;
+  width: 100%;
+  margin-bottom: 0.625rem;
+}
+
+.box-suggest .link-tuberound .tuberound-list li:last-of-type {
+  margin-bottom: 0;
+}
+
+.box-suggest .link-tuberound .tuberound-list li a {
+  display: table-cell;
+  border: 1px solid;
+  padding: 0.625rem;
+  border-radius: 0.3125rem;
+  vertical-align: middle;
+}
+
+.box-suggest .link-tuberound .tuberound-list li a .ico {
+  display: inline-block;
+  margin-right: 0.625rem;
+  width: 3.125rem;
+  height: 3.125rem;
+  vertical-align: middle;
+  background: url(/img/ico/ico-group-100.png) no-repeat 0 0;
+  background-size: 6.25rem;
+}
+
+.box-suggest .link-tuberound .tuberound-list li a .ico.ico-person1 {
+  background-position: 0 -6.25rem;
+}
+
+.box-suggest .link-tuberound .tuberound-list li a .ico.ico-person2 {
+  background-position: 0 -9.375rem;
+}
+
+.box-suggest .link-tuberound .tuberound-list li a .tx {
+  display: inline-block;
+  vertical-align: middle;
+  font-weight: 400;
+  font-size: 0.9375rem;
+}
+
+.box-suggest .box-linktheme {
+  margin-top: 1.5625rem;
+}
+
+.certify-tit {
+  padding: 0 1rem;
+  vertical-align: baseline;
+}
+
+.certify-tit h1 {
+  font-size: 1.125rem;
+  font-weight: 400;
+  color: #e22f26;
+  vertical-align: baseline;
+}
+
+.certify-wrap .txt {
+  margin: 0.875rem 0 0.75rem;
+  font-size: 0.8125rem;
+  font-weight: 400;
+  color: #212121;
+}
+
+.certify-wrap .certify-info {
+  padding: 1.5625rem 0;
+  border-radius: 0.3125rem;
+  text-align: center;
+  background: #fff;
+}
+
+.certify-wrap .certify-info .cert-number {
+  line-height: 2.125rem;
+  font-size: 2rem;
+  font-family: "TgothicBlack", Roboto, sans-serif;
+}
+
+.certify-wrap .left-time {
+  margin-top: 0.375rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #3b98e6;
+}
+
+.certify-wrap .left-time span {
+  vertical-align: baseline;
+  font-family: "Helvetica Neue", Roboto, sans-serif;
+}
+
+.contents-notice {
+  padding-top: 0.375rem;
+  font-size: 0.6875rem;
+  font-weight: 400;
+}
+
+.contents-notice strong {
+  display: inline-block;
+}
+
+.contents-notice .exp-bk {
+  font-size: 0.9375rem;
+}
+
+.contents-notice .exp-bk-small {
+  font-size: 0.8125rem;
+}
+
+.contents-notice .noti-type1 {
+  color: #757575;
+}
+
+.contents-notice .noti-type2 {
+  position: relative;
+  display: block;
+  margin-top: 0.5rem;
+  padding-left: 0.8125rem;
+  font-size: 0.8125rem;
+  line-height: 1.0625rem;
+  color: #666;
+}
+
+.contents-notice .noti-type2:before {
+  content: '';
+  width: 0.1875rem;
+  height: 0.1875rem;
+  position: absolute;
+  left: 0;
+  top: 0.4375rem;
+  background: #757575;
+  border-radius: 50%;
+}
+
+.contents-notice .noti-type2:first-of-type {
+  margin-top: 0rem;
+}
+
+.contents-notice .noti-type3 {
+  position: relative;
+  display: block;
+  margin-top: 0.625rem;
+  font-size: 0.75rem;
+  color: #757575;
+  line-height: 1.1875rem;
+}
+
+.contents-notice .noti-type3:first-of-type {
+  margin-top: 0rem;
+}
+
+.contents-notice .noti-ico {
+  font-size: 0.8125rem;
+  color: #757575;
+}
+
+.contents-notice .noti-ico:before {
+  content: '';
+  display: inline-block;
+  width: 0.8125rem;
+  height: 0.6875rem;
+  background: url(/img/ico/ico-group.png) no-repeat -1.9375rem -45.75rem;
+  background-size: 3.125rem auto;
+  vertical-align: baseline;
+  margin-right: 0.3125rem;
+}
+
+.contents-notice.type1 {
+  padding-top: 1.125rem;
+}
+
+.contents-notice.type2 {
+  padding-top: 1.25rem;
+}
+
+.contents-notice.type3 {
+  padding-top: 0;
+}
+
+.contents-notice.type4 .noti-type1, .contents-notice.type4 .noti-type2 {
+  font-size: 0.8125rem;
+  margin-top: 0.3125rem;
+}
+
+.contents-notice.line-top {
+  border-top: 1px solid #e1e1e1;
+  padding-top: 0.625rem;
+}
+
+.contents-notice.line-none {
+  border-top: none !important;
+  padding-top: 1.25rem;
+}
+
 .box-citation {
-  padding: 0.625rem 0 2.625rem;
+  padding: 0.625rem 0 0;
 }
 
 .box-citation .citation-ti {
@@ -1365,8 +1888,7 @@ body.bg-gray {
 .box-citation .citation-form .form-cell .form-ti {
   display: block;
   margin-bottom: 0.625rem;
-  font-size: 0.8125rem;
-  font-weight: 700;
+  font-size: 0.9375rem;
 }
 
 .box-citation .citation-form .form-cell:last-of-type {
@@ -1379,7 +1901,7 @@ body.bg-gray {
 
 .box-citation .citation-form .form-cell .widget-box.radio .radiobox {
   margin-right: 1.5625rem;
-  font-size: 0.875rem;
+  font-size: 1.125rem;
   font-weight: 400;
 }
 
@@ -1387,8 +1909,16 @@ body.bg-gray {
   margin-right: 0;
 }
 
-.sms-confirm-box {
+.popup-page.layer .sms-confirm-box {
   padding: 1.625rem 0.875rem 0;
+}
+
+.popup-page.layer .sms-confirm-box .sms-confirm-des {
+  font-size: 0.75rem;
+}
+
+.sms-confirm-box {
+  min-height: 12.5rem;
 }
 
 .sms-confirm-box + .sms-confirm-box {
@@ -1397,13 +1927,17 @@ body.bg-gray {
 }
 
 .sms-confirm-box .sms-confirm-des {
-  font-size: 0.75rem;
+  font-size: 0.9375rem;
   font-weight: 400;
 }
 
 .sms-confirm-box .sms-confirm-des span {
   font-weight: 700;
   vertical-align: baseline;
+}
+
+.sms-confirm-box .box-citation .citation-form .form-cell {
+  margin-bottom: 1.25rem;
 }
 
 .sms-confirm-box .box-citation .citation-form .form-cell.division-line {
@@ -1415,21 +1949,54 @@ body.bg-gray {
   margin-top: 1.25rem;
 }
 
-.sms-confirm-box .email-confirm-out {
+.sms-confirm-box .email-confirm-out a, .sms-confirm-box .email-confirm-out button {
   display: block;
   overflow: hidden;
-  margin-top: 0.4375rem;
-  font-size: 0.75rem;
-  line-height: 1.125rem;
+  width: 100%;
+  border-bottom: 1px solid #e1e1e1;
+  padding: 1.125rem 0 0.9375rem;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  font-size: 0.9375rem;
+  line-height: 1.0625rem;
+  color: #000;
+  text-align: left;
+}
+
+.sms-confirm-box .email-confirm-out a:active {
+  color: #000;
+}
+
+.sms-confirm-box .email-confirm-out a:hover {
+  color: #000;
+}
+
+.sms-confirm-box .email-confirm-out a:focus {
+  color: #000;
 }
 
 .sms-confirm-box .email-confirm-out span, .sms-confirm-box .email-confirm-out em {
   display: inline-block;
-  vertical-align: baseline;
+  vertical-align: top;
 }
 
-.sms-confirm-box .email-confirm-out .bt-link-tx {
+.sms-confirm-box .email-confirm-out .ti {
+  position: relative;
   float: right;
+  font-size: 0.75rem;
+  line-height: 1.0625rem;
+  font-weight: 700;
+}
+
+.sms-confirm-box .email-confirm-out .ti .ico {
+  display: inline-block;
+  width: 1.5625rem;
+  height: 1.5625rem;
+  margin-top: -0.25rem;
+  background-image: url(/img/ico/ico-group.png);
+  background-repeat: no-repeat;
+  background-position: 0 -17.1875rem;
+  background-size: 3.125rem;
 }
 
 /* 고객센터 인증 */
@@ -2545,8 +3112,6 @@ body.bg-gray {
 .box-email-form .email-form .form-cell .form-ti {
   display: block;
   margin-bottom: 0.625rem;
-  font-size: 0.8125rem;
-  font-weight: 700;
 }
 
 .box-email-form .email-form .form-cell:last-of-type {

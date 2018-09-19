@@ -79,7 +79,7 @@ skt_landing.widgets = {
     $('.input').each(function(){
       var bt = $(this).find('.cancel'),
           field = bt.prev();
-      if(field.val() == ''){
+      if(field.val() == '' || field.attr('readonly')){
         bt.hide();
       }else{
         bt.show();
