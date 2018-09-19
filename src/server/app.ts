@@ -24,9 +24,9 @@ import { default as OldCustomerRouter } from './app/904.customer/customer.router
 import { default as OldAuthRouter } from './app/905.auth/auth.router';
 import { default as OldCommonRouter } from './app/909.common/common.router';
 import HomeRouter from './app/01.home/home.router';
-import MytDataRouter from './app/02.myt-data/myt-data.router';
-import MytFareRouter from './app/03.myt-fare/myt-fare.router';
-import MytJoinRouter from './app/04.myt-join/myt-join.router';
+import MyTDataRouter from './app/02.myt-data/myt-data.router';
+import MyTFareRouter from './app/03.myt-fare/myt-fare.router';
+import MyTJoinRouter from './app/04.myt-join/myt-join.router';
 import ProductRouter from './app/05.product/product.router';
 import BenefitRouter from './app/06.benefit/benefit.router';
 import CustomerRouter from './app/07.customer/customer.router';
@@ -117,9 +117,9 @@ class App {
     this.app.use('/common', new AppRouter(OldCommonRouter.instance.controllers).router);
 
     this.app.use('/home', new AppRouter(HomeRouter.instance.controllers).router);
-    this.app.use('/myt/data', new AppRouter(MytDataRouter.instance.controllers).router);
-    this.app.use('/myt/fare', new AppRouter(MytFareRouter.instance.controllers).router);
-    this.app.use('/myt/join', new AppRouter(MytJoinRouter.instance.controllers).router);
+    this.app.use('/myt/data', new AppRouter(MyTDataRouter.instance.controllers).router);
+    this.app.use('/myt/fare', new AppRouter(MyTFareRouter.instance.controllers).router);
+    this.app.use('/myt/join', new AppRouter(MyTJoinRouter.instance.controllers).router);
     this.app.use('/product', new AppRouter(ProductRouter.instance.controllers).router);
     this.app.use('/benefit', new AppRouter(BenefitRouter.instance.controllers).router);
     this.app.use('/customer', new AppRouter(CustomerRouter.instance.controllers).router);
