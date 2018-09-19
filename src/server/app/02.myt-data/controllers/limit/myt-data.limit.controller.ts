@@ -7,7 +7,7 @@
 import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 
-class MytDataLimit extends TwViewController {
+class MyTDataLimit extends TwViewController {
   constructor() {
     super();
   }
@@ -17,4 +17,4 @@ class MytDataLimit extends TwViewController {
   }
 }
 
-export default MytDataLimit;
+export default MyTDataLimit;
