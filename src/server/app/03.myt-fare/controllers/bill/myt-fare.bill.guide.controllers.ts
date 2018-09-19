@@ -93,8 +93,8 @@ class MyTFareBillGuide extends TwViewController {
     * A5. 통합청구회선 대표 | this._billpayInfo.repSvcYn === 'Y'
     * A6. 통합청구회선 대표아님 |
      */
-    // const promiseTypeChk = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0036, {}), 'promiseTypeChk');
-    const promiseTypeChk = this._getPromiseApiMock(bill_guide_BFF_05_0036, 'promiseTypeChk');
+     const promiseTypeChk = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0036, {}), 'promiseTypeChk');
+    // const promiseTypeChk = this._getPromiseApiMock(bill_guide_BFF_05_0036, 'promiseTypeChk');
 
     switch ( svcInfo.svcAttrCd ) {
       case 'M2' :
@@ -199,6 +199,7 @@ class MyTFareBillGuide extends TwViewController {
     let p1;
     /*
     * 실 데이터
+    */
     if ( this.reqQuery.invDt ) {
       p1 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0036, { invDt: this.reqQuery.invDt }), 'p1');
     } else {
@@ -206,11 +207,12 @@ class MyTFareBillGuide extends TwViewController {
     }
     const p2 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0049, {}), 'p2'); // 통합청구등록회선조회
     const p3 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0024, {}), 'p3'); // 자녀회선조회
-     */
 
+    /*
     p1 = this._getPromiseApiMock(bill_guide_BFF_05_0036, 'p1');
     const p2 = this._getPromiseApiMock(bill_guide_BFF_05_0049, 'p2');
     const p3 = this._getPromiseApiMock(bill_guide_BFF_05_0024, 'p3');
+    */
 
     const dataInit = function () {
       thisMain._commDataInfo.selClaimDt = (thisMain._billpayInfo) ? thisMain.getSelClaimDt(String(thisMain._billpayInfo.invDt)) : null;
@@ -233,24 +235,26 @@ class MyTFareBillGuide extends TwViewController {
       thisMain._intBillLineInfo = resArr[1].result;
       thisMain._childLineInfo = resArr[2].result;
 
+      /*
+      * 자녀회선 요금 조회
       const subPromiseList = [];
 
       if ( thisMain._childLineInfo.length > 0 ) {
-        let subPromiseItem;
         for ( let i = 0; i < thisMain._childLineInfo.length; i++ ) {
-          subPromiseItem = thisMain._getPromiseApi(thisMain.apiService.request(API_CMD.BFF_05_0047, {
+          const subPromiseItem = thisMain._getPromiseApi(thisMain.apiService.request(API_CMD.BFF_05_0047, {
             childSvcMgmtNum: thisMain._childLineInfo[i].svcMgmtNum
           }), 'sub_p1');
           console.log('[자녀회선 프로미스]');
           console.dir( subPromiseItem );
-
+          // @ts-ignore
+          subPromiseList.push( subPromiseItem );
         }
-
+        Promise.all( subPromiseList ).then( function(subRes) {
+          console.log('[자녀회선 요금 조회 완료]');
+          console.dir( subRes );
+        });
       }
-
-      const sub_p1 = thisMain._getPromiseApi(thisMain.apiService.request(API_CMD.BFF_05_0047, {
-
-      }), 'sub_p1'); // 자녀 사용요금 조회
+      */
 
       dataInit();
 

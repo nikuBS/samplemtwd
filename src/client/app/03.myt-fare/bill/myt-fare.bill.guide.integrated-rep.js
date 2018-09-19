@@ -26,10 +26,15 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
     this._bindEvent();
 
     this._getBillsDetailInfo();
+    this._getChildBillInfo();
   },
   _cachedElement: function () {
+
+    this.$entryTplBill = $('#entryTplBill');
+    this.$entryTplChild = $('#entryTplChild');
     this.$lineChangeBtn = $('[data-target="lineChangeBtn"]');
     this.$hbDetailListArea = $('[data-target="hbDetailListArea"]');
+    this.$hbChildListArea = $('[data-target="hbChildListArea"]');
 
   },
   _bindEvent: function () {
@@ -40,16 +45,44 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
     this._putChangeSession('7016983918');
   },
   //--------------------------------------------------------------------------[API]
-  //회선 변경
-  _putChangeSession: function(smn) {
-    this._apiService.request(Tw.NODE_CMD.CHANGE_SESSION, {
-      svcMgmtNum: smn
-    }).done($.proxy(this._putChangeSessionInit, this));
-  },
-  _putChangeSessionInit: function(res) {
-    if ( res.code === Tw.API_CODE.CODE_00 ) {
-      this._history.reload();
+  _getChildBillInfo: function() {
+    var thisMain = this;
+    var childTotNum = this.resData.childLineInfo.length;
+    var targetApi = Tw.API_CMD.BFF_05_0047;
+    var commands = [];
+
+    for ( var i=0; i<childTotNum; i++ ) {
+      commands.push({command: targetApi, params: { childSvcMgmtNum: this.resData.childLineInfo[i].svcMgmtNum }});
     }
+
+    this._apiService.requestArray(commands)
+      .done(function () {
+        var childLineInfo = thisMain.resData.childLineInfo;
+
+        _.each( arguments, function( element, index, list ) {
+          // Tw.Logger.info('[element, index, list]', element, index, list);
+          childLineInfo[ index ].detailInfo = element.result;
+        });
+
+        thisMain._getChildBillInfoInit();
+
+      });
+
+  },
+
+  _getChildBillInfoInit: function() {
+    var thisMain = this;
+    var childListData = $.extend(true, {}, thisMain.resData.childLineInfo);
+
+    childListData = _.map( childListData, function (item) {
+      item.detailInfo.useAmtTot = Tw.FormatHelper.addComma(item.detailInfo.useAmtTot);
+      return item;
+    });
+
+    Tw.Logger.info('childListData', childListData);
+
+    this._svcHbDetailList(childListData, this.$hbChildListArea, this.$entryTplChild);
+
   },
 
   //청구요금 상세조회 : BFF_05_0036 청구요금 조회
@@ -92,7 +125,7 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
       } );
 
       console.info('[ rootNodes ] : ', rootNodes);
-      this._svcHbDetailList(rootNodes, this.$hbDetailListArea, $("#entry-template"));
+      this._svcHbDetailList(rootNodes, this.$hbDetailListArea, this.$entryTplBill);
 
     }
   },

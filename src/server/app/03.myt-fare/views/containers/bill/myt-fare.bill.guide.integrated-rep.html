@@ -6,7 +6,20 @@
 
 <% include ../../components/start.component.html %>
 <% include ../../components/javascript.component.html %>
-<script id="entry-template" type="text/x-handlebars-template">
+<script id="entryTplChild" type="text/x-handlebars-template">
+    <div>
+        {{!-- 주석 : 자녀사용요금 --}}
+        {{# each resData as |rootItem rootIndex|}}
+        <div>
+            <p>단말기 이름 : {{rootItem.childEqpMdNm}}</p>
+            <p>단말기 번호 : {{rootItem.svcNum}}</p>
+            <p>단말기 요금 : {{rootItem.detailInfo.useAmtTot}}</p>
+        </div><br>
+        {{/each}}
+    </div>
+
+</script>
+<script id="entryTplBill" type="text/x-handlebars-template">
     <table>
         <thead>
         <th>아이디</th>
@@ -138,9 +151,13 @@
         <% } %>
 
     </div>
+
+    <br><br>
     <div>
         <h3>자녀회선 사용요금</h3>
-        <div></div>
+        <div data-target="hbChildListArea">
+
+        </div>
     </div>
 
     <br><br><br><br>
