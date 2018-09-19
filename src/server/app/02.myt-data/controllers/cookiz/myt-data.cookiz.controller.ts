@@ -21,6 +21,9 @@ class MytDataCookiz extends TwViewController {
     };
 
     switch ( page ) {
+      case 'complete':
+        res.render('cookiz/myt-data.cookiz.complete.html', responseData);
+        break;
       default:
         res.render('cookiz/myt-data.cookiz.html', responseData);
     }

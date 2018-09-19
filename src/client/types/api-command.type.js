@@ -162,7 +162,7 @@ Tw.API_CMD = {
   BFF_06_0025: { path: '/core-recharge/v1/ting-gift-requests', method: Tw.API_METHOD.POST },
   BFF_06_0026: { path: '/core-recharge/v1/ting-gifts', method: Tw.API_METHOD.GET },
   BFF_06_0027: { path: '/core-recharge/v1/ting-gift-blocks', method: Tw.API_METHOD.GET },
-  BFF_06_0028: { path: '/core-recharge/v1/ting-services', method: Tw.API_METHOD.GET },
+  BFF_06_0028: { path: '/core-recharge/v1/ting-subscriptions', method: Tw.API_METHOD.GET },
   BFF_06_0029: { path: '/core-recharge/v1/ting-top-ups', method: Tw.API_METHOD.POST },
   BFF_06_0030: { path: '/core-recharge/v1/regular-ting-top-ups', method: Tw.API_METHOD.POST },
   BFF_06_0031: { path: '/core-recharge/v1/regular-ting-top-ups', method: Tw.API_METHOD.DELETE },
