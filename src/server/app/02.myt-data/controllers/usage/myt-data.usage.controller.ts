@@ -24,7 +24,7 @@ class MyTDataUsage extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    console.log('~~~~~~~~~~`svcInfo', svcInfo);
+    // console.log('~~~~~~~~~~`svcInfo', svcInfo);
     // svcInfo.svcAttrCd = 'M2';
 
     const reqArr = new Array();
@@ -103,7 +103,7 @@ class MyTDataUsage extends TwViewController {
         });
       }
     });
-    console.log('~~~~~~~~~~~~~~~~~~~~~~~~usageData', usageData);
+    // console.log('~~~~~~~~~~~~~~~~~~~~~~~~usageData', usageData);
     return usageData;
   }
 
