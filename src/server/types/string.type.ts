@@ -32,3 +32,22 @@ export const MYT_FEEPLAN_BENEFIT = {
   PEN_N: '위약금 비대상',
   ENDLESS: '서비스 해지시 종료'
 };
+
+export const MYT_T_DATA_GIFT_TYPE = {
+  G1: '일반',
+  GC: '자동',
+  GD: '1+1'
+};
+
+export enum DATA_UNIT {
+  KB = 'KB',
+  MB = 'MB',
+  GB = 'GB',
+  TB = 'TB',
+  PB = 'PB'
+}
+
+export enum CURRENCY_UNIT {
+  WON = '원',
+  TEN_THOUSAND = '만원'
+}

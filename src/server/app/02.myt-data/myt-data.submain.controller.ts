@@ -11,6 +11,7 @@ import { Observable } from 'rxjs/Observable';
 import { API_CMD, API_CODE } from '../../types/api-command.type';
 import FormatHelper from '../../utils/format.helper';
 import DateHelper from '../../utils/date.helper';
+import { MYT_T_DATA_GIFT_TYPE, DATA_UNIT, CURRENCY_UNIT } from '../../types/string.type';
 
 class MytDataSubmainController extends TwViewController {
   constructor() {
@@ -40,7 +41,7 @@ class MytDataSubmainController extends TwViewController {
       this._getRefillUsedBreakdown(),
       this._getUsagePatternSevice()
     ).subscribe(([/*remnant,*/child, present, refill, dcBkd, dpBkd, tpBkd, etcBkd, refpBkd, refuBkd, pattern]) => {
-      if (child && child.length > 0) {
+      if ( child && child.length > 0 ) {
         data.otherLines = Object.assign(this.convertChildLines(child), data.otherLines);
       }
       if ( svcInfo.svcAttrCd === 'M3' || svcInfo.svcAttrCd === 'M4' /* || remnant.data === 0 기본 DATA 제공량이 없는 경우*/ ) {
@@ -72,7 +73,7 @@ class MytDataSubmainController extends TwViewController {
           item['u_sub'] = item.opOrgNm;
           item['d_title'] = item.amt;
           item['d_sub'] = DateHelper.getShortDate(item.opDt);
-          item['unit'] = '원';
+          item['unit'] = CURRENCY_UNIT.WON;
         });
         breakdownList.push(FormatHelper.groupByArray(dcBkd, 'opDt'));
       }
@@ -82,10 +83,10 @@ class MytDataSubmainController extends TwViewController {
         dpBkd.map((item) => {
           item['class'] = (item.type === '1' ? 'send' : 'receive');
           item['u_title'] = item.custNm;
-          item['u_sub'] = item.svcNum;
+          item['u_sub'] = MYT_T_DATA_GIFT_TYPE[item.giftType] + ' | ' + item.svcNum;
           item['d_title'] = item.dataQty;
           item['d_sub'] = DateHelper.getShortDate(item.opDt);
-          item['unit'] = 'MB';
+          item['unit'] = DATA_UNIT.MB;
         });
         breakdownList.push(FormatHelper.groupByArray(dpBkd, 'opDt'));
       }
@@ -94,11 +95,11 @@ class MytDataSubmainController extends TwViewController {
         // opTypCd: 1 send, 2 receive
         tpBkd.map((item) => {
           item['class'] = (item.opTypCd === '1' ? 'send' : 'receive');
-          item['u_title'] = item.custNm;
-          item['u_sub'] = item.svcNum;
+          item['u_title'] = item.opTypNm;
+          item['u_sub'] =  item.custNm + ' | ' + item.svcNum;
           item['d_title'] = item.amt;
           item['d_sub'] = DateHelper.getShortDate(item.opDt);
-          item['unit'] = '원';
+          item['unit'] = CURRENCY_UNIT.WON;
         });
         breakdownList.push(FormatHelper.groupByArray(tpBkd, 'opDt'));
       }
@@ -110,7 +111,7 @@ class MytDataSubmainController extends TwViewController {
           item['u_sub'] = '';
           item['d_title'] = item.amt;
           item['d_sub'] = DateHelper.getShortDate(item.opDt);
-          item['unit'] = '원';
+          item['unit'] = CURRENCY_UNIT.WON;
         });
         breakdownList.push(FormatHelper.groupByArray(etcBkd, 'opDt'));
       }
@@ -119,8 +120,8 @@ class MytDataSubmainController extends TwViewController {
         refpBkd.map((item) => {
           item['opDt'] = item.copnOpDt;
           item['class'] = (item.type === '1' ? 'send' : 'receive');
-          item['u_title'] = item.copnNm;
-          item['u_sub'] = item.svcNum;
+          item['u_title'] = item.opTypNm;
+          item['u_sub'] = item.copnNm + ' | ' + item.svcNum;
           item['d_title'] = ''; // API response 값에 정의되어있지 않음
           item['d_sub'] = DateHelper.getShortDate(item.copnOpDt);
           item['unit'] = '';
@@ -157,7 +158,7 @@ class MytDataSubmainController extends TwViewController {
     items.filter((item) => {
       list.push({
         child: true,
-        nickNm: item.mdlName,
+        nickNm: item.childEqpMdNm, // item.mdlName 서버데이터 확인후 변경
         svcNum: item.svcNum,
         svcMgmtNum: item.svcMgmtNum,
         data: '', // TODO: 개발이 되지 않은 항목 추후 작업 필요
