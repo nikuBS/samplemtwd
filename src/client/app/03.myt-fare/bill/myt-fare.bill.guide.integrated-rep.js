@@ -76,6 +76,7 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
 
     childListData = _.map( childListData, function (item) {
       item.detailInfo.useAmtTot = Tw.FormatHelper.addComma(item.detailInfo.useAmtTot);
+      item.svcNum = thisMain._phoneStrToDash(item.svcNum);
       return item;
     });
 
@@ -175,6 +176,9 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
     str = String(str);
     // return str.replace(/[^\d]+/g, '');
     return str.replace(/,/g, '');
+  },
+  _phoneStrToDash: function (str) {
+    return str.replace(/(^02.{0}|^01.{1}|[0-9]{3})([0-9\*]+)([[0-9\*]{4})/, '$1-$2-$3');
   }
 
 };
