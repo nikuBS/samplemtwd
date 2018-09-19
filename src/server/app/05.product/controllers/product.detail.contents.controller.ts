@@ -8,19 +8,31 @@ import TwViewController from '../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
 import FormatHelper from '../../../utils/format.helper';
 import { API_CMD } from '../../../types/api-command.type';
-
-interface IContents {
-  svcBriefHtmlCtt?: string; // 서비스 개요
-  useFeeBenfHtmlDesc?: string;  // 이용 요금 혜택
-  chnlScrbTermDesc?: string;  // 채널별 가입해지
-  scrbTermAttdmHtmlDesc?: string; // 가입해지유의사항
-  faqCtt?: string;  // FAQ
-  prodUseMthdHtmlDesc?: string;  // 상품 이용방법
-}
+import { Observable } from 'rxjs/Observable';
 
 class ProductDetailContents extends TwViewController {
   constructor() {
     super();
+  }
+
+  /**
+   * @param contentsVslCd
+   * @param contentsInfo
+   * @param contentsByRedis
+   * @private
+   */
+  private _parseContents (contentsVslCd, contentsInfo, contentsByRedis): any {
+    let result = contentsInfo.result;
+
+    if (contentsVslCd === 'A') {
+      result = { visual: contentsByRedis.contents };
+    }
+
+    if (contentsVslCd === 'E') {
+      result = Object.assign(contentsInfo.result, { visual: contentsByRedis.contents });
+    }
+
+    return result;
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, layerType: string) {
@@ -33,33 +45,16 @@ class ProductDetailContents extends TwViewController {
       });
     }
 
-    this.apiService.request(API_CMD.BFF_10_0004, {}, {}, prodId)
-      .subscribe((resp) => {
-        const apiError = this.error.apiError([resp]);
-
-        if (!FormatHelper.isEmpty(apiError)) {
-          return this.error.render(res, {
-            svcInfo: svcInfo,
-            title: '상품 상세보기',
-            code: apiError.code,
-            msg: apiError.msg
-          });
-        }
-
-        const contents: IContents = {
-          svcBriefHtmlCtt: resp.result.svcBriefHtmlCtt,
-          useFeeBenfHtmlDesc: resp.result.useFeeBenfHtmlDesc,
-          chnlScrbTermDesc: resp.result.chnlScrbTermDesc,
-          scrbTermAttdmHtmlDesc: resp.result.scrbTermAttdmHtmlDesc,
-          faqCtt: resp.result.faqCtt,
-          prodUseMthdHtmlDesc: resp.result.prodUseMthdHtmlDesc
-        };
-
-        res.render('product.detail.contents.html', {
-          svcInfo: svcInfo,
-          contents: contents
-        });
+    Observable.combineLatest(
+      this.apiService.request(API_CMD.BFF_10_0001, {}, {}, prodId),
+      this.apiService.request(API_CMD.BFF_10_0004, {}, {}, prodId),
+      this.redisService.getData('ProductLedgerContents:' + prodId)
+    ).subscribe(([ basicInfo, contentsInfo, contentsByRedis ]) => {
+      res.render('product.detail.contents.html', {
+        svcInfo: svcInfo,
+        contents: this._parseContents(basicInfo.contentsVslCd, contentsInfo, contentsByRedis)
       });
+    });
   }
 }
 
