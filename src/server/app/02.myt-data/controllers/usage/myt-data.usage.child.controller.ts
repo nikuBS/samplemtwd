@@ -25,18 +25,29 @@ class MyTDataUsageChild extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     const self = this;
     const childSvcMgmtNum = req.params.childSvcMgmtNum;
-    const childProdNm = req.query.childProdNm; // 요금제명
-    const childSvcNum = req.query.childSvcNum; // 회선정보
-    Observable.combineLatest(this.apiService.request(API_CMD.BFF_05_0001, {
+    const childUsageReq: Observable<any> = this.apiService.request(API_CMD.BFF_05_0001, {
       childSvcMgmtNum: childSvcMgmtNum
-    })).subscribe(([usageData]) => {
-        if ( usageData.code === API_CODE.CODE_00 ) {
-          const fomattedData = self.myTDataUsage.parseUsageData(usageData.result, svcInfo);
-          fomattedData['childProdNm'] = childProdNm;
-          fomattedData['childSvcNum'] = childSvcNum;
+    });
+    const childrenReq: Observable<any> = this.apiService.request(API_CMD.BFF_05_0010, {});
+    const baseFeePlanReq: Observable<any> = this.apiService.request(API_CMD.BFF_05_0041, {
+      childSvcMgmtNum: childSvcMgmtNum
+    });
+    Observable.combineLatest(childUsageReq, childrenReq, baseFeePlanReq).subscribe(([usageDataResp, childrenResp, baseFeePlanResp]) => {
+        if (  usageDataResp.code === API_CODE.CODE_00 &&
+              childrenResp.code === API_CODE.CODE_00 &&
+              baseFeePlanResp.code === API_CODE.CODE_00 ) {
+          const usageData = usageDataResp.result;
+          const children = childrenResp.result;
+          const baseFeePlan = baseFeePlanResp.result;
+          const fomattedData = self.myTDataUsage.parseUsageData(usageData, svcInfo);
+          const child = children.find((_child) => {
+            return _child.svcMgmtNum === childSvcMgmtNum;
+          });
+          fomattedData['childSvcNum'] = child.svcNum;
+          fomattedData['childProdNm'] = baseFeePlan.prodName;
           res.render(VIEW.DEFAULT, { usageData: fomattedData, svcInfo: svcInfo });
         } else {
-          res.render(VIEW.ERROR, { usageData: usageData, svcInfo: svcInfo });
+          res.render(VIEW.ERROR, { usageData: usageDataResp, svcInfo: svcInfo });
         }
       }
     );
