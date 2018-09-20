@@ -35,7 +35,12 @@ class MyTDataCookiz extends TwViewController {
             responseData,
             { subscriptions: subscriptions }
           );
-          res.render('cookiz/myt-data.cookiz.html', response);
+
+          if ( subscriptions ) {
+            res.render('cookiz/myt-data.cookiz.html', response);
+          } else {
+            res.render('cookiz/myt-data.cookiz.error.html', response);
+          }
         });
     }
   }
@@ -44,8 +49,7 @@ class MyTDataCookiz extends TwViewController {
     return this.apiService.request(API_CMD.BFF_06_0028, {})
       .map((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
-          const result = Object.assign(resp.result, { regularTopUpAmt: FormatHelper.numberWithCommas(resp.result.regularTopUpAmt) });
-          return result;
+          return Object.assign(resp.result, { regularTopUpAmt: FormatHelper.numberWithCommas(resp.result.regularTopUpAmt) });
         } else {
           return null;
         }

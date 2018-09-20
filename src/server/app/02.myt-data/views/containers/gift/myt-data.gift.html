@@ -5,7 +5,6 @@
 %>
 
 <% include ../../components/start.component.html %>
-
 <body class="bg-white">
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
@@ -23,7 +22,7 @@
             <div class="header-ti align-l">
                 <h1>T끼리 데이터 선물</h1>
             </div>
-            <button class="prev-step">취소</button>
+            <button class="prev-step fe-common-back">취소</button>
         </div>
     </div>
     <!--// #header -->
@@ -38,11 +37,15 @@
                         <div class="tab-area type1"><!-- 타입별 탭형태 변환 -->
                             <div class="tab-linker">
                                 <ul role="tablist" style="width: 100%;">
-                                    <li role="tab" aria-selected="true" aria-controls="tab1-tab" id="tab1"><a>바로 선물</a></li>
-                                    <!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
-                                    <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2">
-                                        <a>자동 선물<span class="count">0</span></a>
+                                    <li role="tab" aria-selected="true" aria-controls="tab1-tab" id="tab1">
+                                        <a>바로 선물</a>
                                     </li>
+                                    <!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
+                                    <% if ( autoList ) { %>
+                                    <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2">
+                                        <a>자동 선물<span class="count"><%-autoList.length%></span></a>
+                                    </li>
+                                    <% } %>
                                 </ul>
                             </div>
                             <div class="tab-contents">
@@ -69,7 +72,8 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    var oMyTDataGift = new Tw.MyTDataGift();
+    var oMyTDataGiftImmediately = new Tw.MyTDataGiftImmediately($('#tab1-tab'));
+    var oMyTDataGiftAuto = new Tw.MyTDataGiftAuto($('#tab2-tab'));
   });
 </script>
 <% include ../../components/end.component.html %>

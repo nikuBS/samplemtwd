@@ -31,20 +31,20 @@ Tw.MyTDataLimit.prototype = {
 
   _onToggleBlockImmediately: function () {
     $('#tab1-tab').find('.cont-box').each(function (nIndex, elItem) {
-      if ( $(elItem).is(':visible') ) {
-        $(elItem).hide();
-      } else {
+      if ( $(elItem).css('display') === 'none' ) {
         $(elItem).show();
+      } else {
+        $(elItem).hide();
       }
     });
   },
 
   _onToggleBlockMonthly: function () {
     $('#tab2-tab').find('.cont-box').each(function (nIndex, elItem) {
-      if ( $(elItem).is(':visible') ) {
-        $(elItem).hide();
-      } else {
+      if ( $(elItem).css('display') === 'none' ) {
         $(elItem).show();
+      } else {
+        $(elItem).hide();
       }
     });
   },
