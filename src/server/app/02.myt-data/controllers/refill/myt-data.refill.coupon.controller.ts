@@ -9,6 +9,8 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import { Observable } from 'rxjs/Observable';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import DateHelper from '../../../../utils/date.helper';
+import FormatHelper from '../../../../utils/format.helper';
+import { DATA_UNIT } from '../../../../types/string.old.type';
 
 interface Coupon {
   copnIsueNum: string;
@@ -18,13 +20,103 @@ interface Coupon {
   copnOperStCd: string;
   copnIsueDt: string;
 }
+interface Option {
+  dataVoiceClCd: string;
+  copnDtlClCd: string;
+  copnDtlClNm: string;
+  ofrRt: string;
+  qttText?: string;
+}
 
-export default class MytDataRefillCoupon extends TwViewController {
+interface Product {
+  basOfrDataQtyCtt: string;
+  basOfrVcallTmsCtt: string;
+  basOfrCharCntCtt: string;
+  basFeeInfo: string;
+}
+
+export default class MyTDataRefillCoupon extends TwViewController {
   constructor() {
     super();
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+    const page = req.params.page;
+
+    switch (page) {
+      case 'complete':
+        const category = req.query.category;
+        this.renderCouponComplete(res, category);
+        break;
+      case 'use':
+        const couponNo = req.query.no;
+        const couponName = req.query.name;
+        const couponPeriod = req.query.period;
+        const tab = req.query.tab;
+        this.renderCouponUse(res, svcInfo, tab, couponNo, couponName, couponPeriod);
+        break;
+      default:
+        this.renderCouponList(res, svcInfo);
+    }
+  }
+
+  private renderCouponUse(res: Response, svcInfo: any, tab: string, no: string, name: string,
+                          period: string): void {
+
+    const error = (code, msg) => {
+      this.showError(res, svcInfo, '리필 쿠폰 사용', code, msg);
+    };
+
+    this.getCouponUsageOptions().subscribe(
+      (resp) => {
+        if (resp.code === API_CODE.CODE_00) {
+          this.apiService.request(API_CMD.BFF_10_0002, {}, {}, svcInfo.prodId).subscribe(
+            (productInfo) => {
+              if (productInfo.code === API_CODE.CODE_00) {
+                const purifiedOptions =
+                  this.purifyCouponOptions(resp.result.option, productInfo.result);
+                res.render('refill/myt-data.refill.coupon-use.html', {
+                  no: no,
+                  name: name,
+                  period: period,
+                  tab: tab,
+                  options: purifiedOptions
+                });
+              } else {
+                error(productInfo.code, productInfo.msg);
+              }
+            },
+            (err) => {
+              error(err.code, err.msg);
+            });
+        } else {
+          error(resp.code, resp.msg);
+        }
+      },
+      (err) => {
+        error(err.code, err.msg);
+      }
+    );
+  }
+
+  private renderCouponComplete(res: Response, category: string): void {
+    switch (category) {
+      case 'data':
+        res.render('refill/myt-data.refill.coupon-complete-data.html');
+        break;
+      case 'voice':
+        res.render('refill/myt-data.refill.coupon-complete-voice.html');
+        break;
+      case 'gift':
+        // TODO: display gift detail
+        res.render('refill/myt-data.refill.coupon-complete-gift.html');
+        break;
+      default:
+        break;
+    }
+  }
+
+  private renderCouponList(res: Response, svcInfo: any): void {
     this.getUsableCouponList().subscribe(
       (resp) => {
         if (resp.code === API_CODE.CODE_00) {
@@ -34,16 +126,20 @@ export default class MytDataRefillCoupon extends TwViewController {
             list: resp.result
           });
         } else {
-          this.showError(res, svcInfo, resp.code, resp.msg);
+          this.showError(res, svcInfo, '나의 리필쿠폰', resp.code, resp.msg);
         }
       },
       (err) => {
-        this.showError(res, svcInfo, err.code, err.msg);
+        this.showError(res, svcInfo, '나의 리필쿠폰', err.code, err.msg);
       });
   }
 
   private getUsableCouponList(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_06_0001, {});
+  }
+
+  private getCouponUsageOptions(): Observable<any> {
+    return this.apiService.request(API_CMD.BFF_06_0009, {});
   }
 
   private purifyCouponData(data: Array<Coupon>): Array<Coupon> {
@@ -54,10 +150,24 @@ export default class MytDataRefillCoupon extends TwViewController {
     });
   }
 
-  private showError(res: Response, svcInfo: any, code: string, msg: string): void {
+  private purifyCouponOptions(options: Array<Option>, productInfo: Product): Array<Option> {
+    return options.map((option) => {
+      if (option.dataVoiceClCd === 'D') {
+        const converted = FormatHelper.convDataFormat(productInfo.basOfrDataQtyCtt, DATA_UNIT.GB);
+        option.qttText = converted.data + ' ' + converted.unit;
+      } else {
+        let calculated = parseInt(productInfo.basOfrVcallTmsCtt, 10) * 0.2;
+        calculated = Math.round(calculated);
+        option.qttText = calculated + ' 분';
+      }
+      return option;
+    });
+  }
+
+  private showError(res: Response, svcInfo: any, title: string, code: string, msg: string): void {
     this.error.render(res, {
       svcInfo: svcInfo,
-      title: '나의 리필쿠폰',
+      title: title,
       code: code,
       msg: msg
     });

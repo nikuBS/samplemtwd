@@ -16,3 +16,8 @@ Tw.PERIOD_UNIT = {
   HOURS: '시간',
   MINUTES: '분'
 };
+
+Tw.REFILL_COUPON_CONFIRM = {
+  TITLE: '리필 하시겠습니까?',
+  CONTENTS: '리필 음성/데이터량은 이번 달까지만 사용 가능합니다.'
+};
