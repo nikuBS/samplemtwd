@@ -18,6 +18,7 @@ Tw.MyTDataTing = function (rootEl) {
 
 Tw.MyTDataTing.prototype = {
   _init: function () {
+    this._getRemainDataInfo();
   },
 
   _cachedElement: function () {
@@ -31,6 +32,35 @@ Tw.MyTDataTing.prototype = {
     this.$btn_send_gift.on('click', $.proxy(this._getReceiveUserInfo, this));
     this.$btn_native_contact_list.on('click', $.proxy(this._onClickBtnAddr, this));
     this.$input_ting_receiver.on('keyup', $.proxy(this._onKeyUpTingGiftNumber, this));
+  },
+
+  _getRemainDataInfo: function () {
+    this._apiService.request(Tw.API_CMD.BFF_06_0020, {}).done($.proxy(this._onSuccessRemainDataInfo, this));
+  },
+
+  _onSuccessRemainDataInfo: function (res) {
+    if ( res.code === Tw.API_CODE.CODE_00 ) {
+      this._setAmountUI(Number(res.result.transferableAmt));
+    } else {
+      Tw.Error(res.code, res.msg).pop();
+    }
+  },
+
+  _setAmountUI: function (nLimitMount) {
+    var fnCheckedUI = function (nIndex, elInput) {
+      var $input = $(elInput);
+
+      if ( Number($input.val()) > nLimitMount ) {
+        $input.prop('disabled', true);
+        $input.parent().addClass('disabled');
+      }
+
+      if ( Number($input.val()) === nLimitMount ) {
+        $input.click();
+      }
+    };
+
+    this.$wrap_amount_select_list.find('input').each(fnCheckedUI);
   },
 
   _onClickBtnAddr: function () {

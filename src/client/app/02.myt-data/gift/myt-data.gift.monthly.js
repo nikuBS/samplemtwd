@@ -1,10 +1,10 @@
 /**
- * FileName: myt-data.gift.auto.js
+ * FileName: myt-data.gift.monthly.js
  * Author: Jiman Park (jiman.park@sk.com)
  * Date: 2018.09.10
  */
 
-Tw.MyTDataGiftAuto = function (rootEl) {
+Tw.MyTDataGiftMonthly = function (rootEl) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -16,7 +16,7 @@ Tw.MyTDataGiftAuto = function (rootEl) {
   this._init();
 };
 
-Tw.MyTDataGiftAuto.prototype = {
+Tw.MyTDataGiftMonthly.prototype = {
   _init: function () {
     // this._apiService.request(Tw.API_CMD.BFF_06_0006, {}).done($.proxy(this._onSuccessGiftAutoList, this));
   },
