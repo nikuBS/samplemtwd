@@ -8,11 +8,14 @@ Tw.CertificationPublic = function () {
   this._nativeService = Tw.Native;
   this._apiService = Tw.Api;
 
+  this._authUrl = null;
+
 };
 
 
 Tw.CertificationPublic.prototype = {
   open: function (svcInfo, urlMeta, authUrl, command, deferred, callback) {
+    this._authUrl = authUrl;
     this._requestAppMessage(authUrl);
 
   },
@@ -30,7 +33,8 @@ Tw.CertificationPublic.prototype = {
   },
   _openPublicCert: function (message) {
     this._nativeService.send(Tw.NTV_CMD.AUTH_CERT, {
-      message: message
+      message: message,
+      authUrl: this._authUrl
     }, $.proxy(this._onPublicCert, this));
   },
   _onPublicCert: function (resp) {
