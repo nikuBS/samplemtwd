@@ -9,8 +9,8 @@ Tw.MyTDataLimit = function (rootEl) {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
 
-  // this._cachedElement();
-  // this._bindEvent();
+  this._cachedElement();
+  this._bindEvent();
   this._init();
 };
 
@@ -19,24 +19,43 @@ Tw.MyTDataLimit.prototype = {
     this._getRemainDataInfo();
   },
 
+  _cachedElement: function () {
+    this.$input_block_monthly = this.$container.find('#input_block_monthly');
+    this.$input_block_immediately = this.$container.find('#input_block_immediately');
+  },
+
+  _bindEvent: function () {
+    this.$input_block_monthly.on('change', $.proxy(this._onToggleBlockMonthly, this));
+    this.$input_block_immediately.on('change', $.proxy(this._onToggleBlockImmediately, this));
+  },
+
+  _onToggleBlockImmediately: function () {
+    $('#tab1-tab').find('.cont-box').each(function (nIndex, elItem) {
+      if ( $(elItem).css('display') === 'none' ) {
+        $(elItem).show();
+      } else {
+        $(elItem).hide();
+      }
+    });
+  },
+
+  _onToggleBlockMonthly: function () {
+    $('#tab2-tab').find('.cont-box').each(function (nIndex, elItem) {
+      if ( $(elItem).css('display') === 'none' ) {
+        $(elItem).show();
+      } else {
+        $(elItem).hide();
+      }
+    });
+  },
+
   _getRemainDataInfo: function () {
     this._apiService.request(Tw.API_CMD.BFF_06_0034, {}).done($.proxy(this._onSuccessRemainDataInfo, this));
   },
 
   _onSuccessRemainDataInfo: function (res) {
-    debugger;
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      // exceptions ProductId NA00001464, NA00001465
-    }
-  },
-
-  _getReceiveUserInfo: function () {
-    this._apiService.request(Tw.API_CMD.BFF_06_0019, {}).done($.proxy(this._onSuccessReceiveUserInfo, this));
-  },
-
-  _onSuccessReceiveUserInfo: function (res) {
-    if ( res.code === Tw.API_CODE.CODE_00 ) {
-
+      console.log(res);
     }
   },
 

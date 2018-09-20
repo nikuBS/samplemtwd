@@ -14,51 +14,47 @@
     </div>
 </div>
 <div class="cont-box nogaps inborder">
+    <% if ( autoList || autoList.length != 0 ) { %>
     <div class="list-comp-thumnail">
         <p class="list-comp-title">자동선물 신청된 결합가족</p>
         <ul class="comp-box">
+            <% autoList.map (item => { %>
             <li class="list-box">
-                <div class="list-ico"><span class="ico type1">티</span></div>
+                <div class="list-ico"><span class="ico type1"><%=item.custName.split('')[0]%></span></div>
                 <p class="list-text">
-                    <span class="mtext">티*드님에게 1GB 선물</span>
-                    <span class="stext gray">010-12**-24**</span>
+                    <span class="mtext"><%=item.custName%>님에게 <%=item.dataQty%>MB 선물</span>
+                    <span class="stext gray"><%=item.svcNum%></span>
                 </p>
                 <div class="list-btn">
                     <div class="bt-alone">
-                        <button class="bt-line-gray1">해지</button>
+                        <button data-sernum="<%=item.serNum%>" class="bt-line-gray1 fe-btn_unsubscribe">해지</button>
                     </div>
                 </div>
             </li>
+            <% }) %>
         </ul>
     </div>
+    <% } %>
+    <% if ( autoList && autoList.length >= 2 ) { %>
+    <p class="tx-situation">결합 가족 2회선을 이미 신청하셨습니다.<br>대상자를 변경하시려면 <em class="point">해지 후 신청</em>해주세요.</p>
+    <% } else { %>
+    <button class="bt-more-add"><span class="ico"></span><span class="tx">지정번호 추가하기</span></button>
+    <% } %>
 </div>
 <hr class="cont-sp type1" aria-hidden="true">
-<div class="cont-box">
+<div class="cont-box" style="display: none">
     <h4 class="tabcon-title0">자동선물 신청 번호</h4>
     <div class="recently-tel-box">
         <div class="inputbox bt-add">
-                                                            <span class="input">
-                                                                <input type="text" placeholder="숫자만 입력" title="input" value="" aria-labelledby="aria-exp-label1" aria-describedby="aria-exp-desc1">
-                                                                <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
-                                                            </span>
+            <span class="input">
+                <input type="text" class="fe-input_auto_gift" placeholder="숫자만 입력" title="input" value=""
+                       maxlength="13" aria-labelledby="aria-exp-label1" aria-describedby="aria-exp-desc1">
+                <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
+            </span>
             <span class="bt-box skyblue1">
-                                                                <button type="button">주소록</button>
-                                                            </span>
+                <button type="button" class="fe-btn_auto_contact">주소록</button>
+            </span>
         </div>
-        <ul class="recently-tel"><!-- show : on 클래스 추가  -->
-            <li>
-                <button class="tel-select">010-1234-1234</button>
-                <button class="del-bt">삭제</button>
-            </li>
-            <li>
-                <button class="tel-select">010-1234-1234</button>
-                <button class="del-bt">삭제</button>
-            </li>
-            <li>
-                <button class="tel-select">010-1234-1234</button>
-                <button class="del-bt">삭제</button>
-            </li>
-        </ul>
     </div>
     <h4 class="tabcon-title0 mt30">
         자동선물할 데이터 량
@@ -68,72 +64,77 @@
     <div class="widget">
         <div class="widget-box radio">
             <div class="radio-slide small">
-                <ul class="select-list" role="radiogroup" style="width: 100%;">
+                <ul class="select-list fe-auto_select_list" role="radiogroup" style="width: 100%;">
                     <li class="radiobox disabled" role="radio" aria-checked="false" aria-disabled="true">
-                        <input type="radio" name="radio2" value="" title="값1" disabled=""><!-- 체크상태일 경우 checked="checked" -->
+                        <input type="radio" name="radio2" value="2048" title="값1" disabled=""><!-- 체크상태일 경우 checked="checked" -->
                         <span class="radio-txt">
                                                                             <span>2.0</span><span class="unit">GB</span>
                                                                         </span>
                     </li>
                     <li class="radiobox checked" role="radio" aria-checked="true">
-                        <input type="radio" name="radio2" value="" title="값2" checked=""><!-- 체크상태일 경우 checked="false" -->
+                        <input type="radio" name="radio2" value="1024" title="값2" checked=""><!-- 체크상태일 경우 checked="false" -->
                         <span class="radio-txt">
                                                                             <span>1.0</span><span class="unit">GB</span>
                                                                         </span>
                     </li>
                     <li class="radiobox" role="radio" aria-checked="false">
-                        <input type="radio" name="radio2" value="" title="값3"><!-- 비활성화상태일 경우 disabled="disabled" -->
+                        <input type="radio" name="radio2" value="900" title="값3"><!-- 비활성화상태일 경우 disabled="disabled" -->
                         <span class="radio-txt">
                                                                             <span>900</span><span class="unit">MB</span>
                                                                         </span>
                     </li>
                     <li class="radiobox" role="radio" aria-checked="false">
-                        <input type="radio" name="radio2" value="" title="값4"><!-- 체크된 비활성화 상태일 경우 체크상태와 비활성화 상태를 전부 적용 -->
+                        <input type="radio" name="radio2" value="800" title="값4"><!-- 체크된 비활성화 상태일 경우 체크상태와 비활성화 상태를 전부 적용 -->
                         <span class="radio-txt">
                                                                             <span>800</span><span class="unit">MB</span>
                                                                         </span>
                     </li>
                     <li class="radiobox" role="radio" aria-checked="false">
-                        <input type="radio" name="radio2" value="" title="값4"><!-- 체크된 비활성화 상태일 경우 체크상태와 비활성화 상태를 전부 적용 -->
+                        <input type="radio" name="radio2" value="700" title="값4"><!-- 체크된 비활성화 상태일 경우 체크상태와 비활성화 상태를 전부 적용 -->
                         <span class="radio-txt">
                                                                             <span>700</span><span class="unit">MB</span>
                                                                         </span>
                     </li>
                     <li class="radiobox" role="radio" aria-checked="false">
-                        <input type="radio" name="radio2" value="" title="값4"><!-- 체크된 비활성화 상태일 경우 체크상태와 비활성화 상태를 전부 적용 -->
+                        <input type="radio" name="radio2" value="600" title="값4"><!-- 체크된 비활성화 상태일 경우 체크상태와 비활성화 상태를 전부 적용 -->
                         <span class="radio-txt">
                                                                             <span>600</span><span class="unit">MB</span>
                                                                         </span>
                     </li>
                     <li class="radiobox" role="radio" aria-checked="false">
-                        <input type="radio" name="radio2" value="" title="값4"><!-- 체크된 비활성화 상태일 경우 체크상태와 비활성화 상태를 전부 적용 -->
+                        <input type="radio" name="radio2" value="500" title="값4"><!-- 체크된 비활성화 상태일 경우 체크상태와 비활성화 상태를 전부 적용 -->
                         <span class="radio-txt">
                                                                             <span>500</span><span class="unit">MB</span>
                                                                         </span>
                     </li>
                     <li class="radiobox" role="radio" aria-checked="false">
-                        <input type="radio" name="radio2" value="" title="값4"><!-- 체크된 비활성화 상태일 경우 체크상태와 비활성화 상태를 전부 적용 -->
+                        <input type="radio" name="radio2" value="400" title="값4"><!-- 체크된 비활성화 상태일 경우 체크상태와 비활성화 상태를 전부 적용 -->
                         <span class="radio-txt">
                                                                             <span>400</span><span class="unit">MB</span>
                                                                         </span>
                     </li>
                     <li class="radiobox" role="radio" aria-checked="false">
-                        <input type="radio" name="radio2" value="" title="값4"><!-- 체크된 비활성화 상태일 경우 체크상태와 비활성화 상태를 전부 적용 -->
+                        <input type="radio" name="radio2" value="300" title="값4"><!-- 체크된 비활성화 상태일 경우 체크상태와 비활성화 상태를 전부 적용 -->
                         <span class="radio-txt">
                                                                             <span>300</span><span class="unit">MB</span>
                                                                         </span>
                     </li>
                     <li class="radiobox" role="radio" aria-checked="false">
-                        <input type="radio" name="radio2" value="" title="값4"><!-- 체크된 비활성화 상태일 경우 체크상태와 비활성화 상태를 전부 적용 -->
+                        <input type="radio" name="radio2" value="200" title="값4"><!-- 체크된 비활성화 상태일 경우 체크상태와 비활성화 상태를 전부 적용 -->
                         <span class="radio-txt">
                                                                             <span>200</span><span class="unit">MB</span>
                                                                         </span>
                     </li>
                     <li class="radiobox" role="radio" aria-checked="false">
-                        <input type="radio" name="radio2" value="" title="값4"><!-- 체크된 비활성화 상태일 경우 체크상태와 비활성화 상태를 전부 적용 -->
+                        <input type="radio" name="radio2" value="100" title="값4"><!-- 체크된 비활성화 상태일 경우 체크상태와 비활성화 상태를 전부 적용 -->
                         <span class="radio-txt">
                                                                             <span>100</span><span class="unit">MB</span>
                                                                         </span>
+                    </li>
+                </ul>
+                <ul class="bt-slice full">
+                    <li class="bt-red1">
+                        <button class="fe-btn_send_auto_gift" disabled>자동선물하기</button>
                     </li>
                 </ul>
             </div>

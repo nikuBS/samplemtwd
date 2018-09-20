@@ -5,7 +5,6 @@
 %>
 
 <% include ../../components/start.component.html %>
-
 <body class="bg-white">
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
@@ -35,25 +34,25 @@
             <div class="cont-box nogaps noborder">
                 <h3 class="sub-title0">To. 김*진<span class="add-info">010-12**-56**</span></h3>
                 <div class="cont-box">
-                    <textarea class="type-msg" rows="15" cols="30" maxlength="80" placeholder="메시지로 마음을 표현해 보세요.(80자 이내)"></textarea>
+                    <textarea class="type-msg fe-sms_textarea" rows="15" cols="30" maxlength="80" placeholder="메시지로 마음을 표현해 보세요.(80자 이내)"></textarea>
                 </div>
             </div>
             <!--// .cont-box -->
             <ul class="bt-slice full">
                 <li class="bt-red1">
-                    <button>보내기</button>
+                    <button disabled>보내기</button>
                 </li>
             </ul>
         </div>
     </div>
     <!--// #contents -->
 </div>
-</body>
-
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
     // var oMyTDataGift = new Tw.MyTDataGift();
   });
 </script>
+
+</body>
 <% include ../../components/end.component.html %>
