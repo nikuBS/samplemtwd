@@ -45,7 +45,7 @@ Tw.CertificationSkMotp.prototype = {
     this._callback = callback;
 
     this._popupService.open({
-      hbs: 'CO_02_01_02_L02',
+      hbs: 'CO_02_01_02_03',
       layer: true,
       data: {
         mdn: svcInfo.svcNum
@@ -63,7 +63,6 @@ Tw.CertificationSkMotp.prototype = {
     this.$btCert.on('click', $.proxy(this._requestMotpCert, this));
     this.$btConfirm.on('click', $.proxy(this._requestMotpConfirm, this));
     this.$inputCert.on('input', $.proxy(this._onInputCert, this));
-    $popupContainer.on('click', '#fe-bt-noti-sms', $.proxy(this._onClickNotiSms, this));
 
     this._requestMotpCert();
   },
@@ -83,9 +82,11 @@ Tw.CertificationSkMotp.prototype = {
         this.showValidText();
       }
     } else if ( resp.code === this.MOTP_ERROR.ATH1234 ) {
-      this.showCertError(Tw.MSG_AUTH.CERT_01);
+      // this.showCertError(Tw.MSG_AUTH.CERT_01);
+      this._openMotpHelp();
     } else if ( resp.code === this.MOTP_ERROR.ATH1235 ) {
-      this.showCertError(Tw.MSG_AUTH.CERT_02);
+      // this.showCertError(Tw.MSG_AUTH.CERT_02);
+      this._openMotpHelp();
     } else {
       this._popupService.openAlert(resp.code + ' ' + resp.msg);
     }
@@ -133,6 +134,15 @@ Tw.CertificationSkMotp.prototype = {
     this.$errorConfirm.removeClass('none');
     this.$inputCert.parents('.inputbox').addClass('error');
     this.$inputCert.attr('aria-describedby', 'aria-sms-exp-desc3');
+  },
+  _openMotpHelp: function () {
+    this._popupService.open({
+      hbs: 'CO_02_01_02_03_01',
+      layer: true
+    }, $.proxy(this._onOpenMotpHelp, this));
+  },
+  _onOpenMotpHelp: function ($popupContainer) {
+    $popupContainer.on('click', '#fe-bt-noti-sms', $.proxy(this._onClickNotiSms, this));
   },
   _onClickNotiSms: function () {
     this._apiService.request(Tw.API_CMD.BFF_01_0016, { jobCode: 'NFM_TWD_SAFESMS_INFO' })

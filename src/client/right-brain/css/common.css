@@ -3,21 +3,21 @@
   font-family: 'TgothicLight';
   font-style: normal;
   font-weight: 300;
-  src: url(/font/TgothicLight.otf) format("opentype"), url(/font/TgothicLight.ttf) format("truetype");
+  src: url(/font/TgothicLight.otf) format("opentype"), url(/font/TgothicLight.woff2) format("woff2"), url(/font/TgothicLight.woff) format("woff"), url(/font/TgothicLight.ttf) format("truetype"), url(/font/TgothicLight.eot?#iefix) format("embedded-opentype");
 }
 
 @font-face {
   font-family: 'TgothicMedium';
   font-style: normal;
   font-weight: 500;
-  src: url(/font/TgothicMedium.otf) format("opentype"), url(/font/TgothicMedium.ttf) format("truetype");
+  src: url(/font/TgothicMedium.otf) format("opentype"), url(/font/TgothicMedium.woff2) format("woff2"), url(/font/TgothicMedium.woff) format("woff"), url(/font/TgothicMedium.ttf) format("truetype"), url(/font/TgothicMedium.eot?#iefix) format("embedded-opentype");
 }
 
 @font-face {
   font-family: 'TgothicBlack';
   font-style: normal;
   font-weight: 900;
-  src: url(/font/TgothicBlack.otf) format("opentype"), url(/font/TgothicBlack.ttf) format("truetype");
+  src: url(/font/TgothicBlack.otf) format("opentype"), url(/font/TgothicBlack.woff2) format("woff2"), url(/font/TgothicBlack.woff) format("woff"), url(/font/TgothicBlack.ttf) format("truetype"), url(/font/TgothicBlack.eot?#iefix) format("embedded-opentype");
 }
 
 /*Default set*/
@@ -3375,6 +3375,40 @@ a.ui-button:active,
   font-weight: 400;
 }
 
+.bt-dropdown.big:after {
+  content: "";
+  position: absolute;
+  top: 1.0625rem;
+  right: 0.9375rem;
+  display: inline-block;
+  width: 0.75rem;
+  height: 0.4375rem;
+  margin: 0;
+  background: url(/img/ico/ico-group.png) no-repeat -1.9375rem -59.875rem;
+  background-size: 3.125rem;
+}
+
+.bt-dropdown.big:disabled {
+  background: #e5e8ee;
+  color: #808698;
+  /* disable 디자인 미정으로 임시처리 */
+}
+
+.bt-dropdown.big:disabled:after {
+  content: "";
+  position: absolute;
+  top: 1.0625rem;
+  right: 0.9375rem;
+  display: inline-block;
+  width: 0.75rem;
+  height: 0.4375rem;
+  margin: 0;
+  background: url(/img/ico/ico-group.png) no-repeat -1.9375rem -59.875rem;
+  background-size: 3.125rem;
+  -webkit-transform: rotate(180deg);
+          transform: rotate(180deg);
+}
+
 .bt-dropdown.regular {
   display: block;
   min-width: 7rem;
@@ -4113,6 +4147,52 @@ a.ui-button:active,
   font-weight: 400;
   color: #3b98e6;
   white-space: nowrap;
+}
+
+.nickname-wrap {
+  display: table;
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+.nickname-wrap.inputbox .input {
+  display: table-cell;
+  height: 0.625rem;
+}
+
+.nickname-wrap.inputbox .input input {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  height: 2.5rem;
+  background: transparent;
+  border-color: #c5c3c1;
+}
+
+.nickname-wrap.inputbox .space {
+  display: table-cell;
+  width: 2%;
+}
+
+.nickname-wrap.inputbox .bt-box {
+  display: table-cell;
+  width: 16%;
+  height: 100%;
+  padding: 0 0.5rem;
+  border-radius: 0.3125rem;
+  text-align: center;
+  font-size: 0.875rem;
+  font-weight: 400;
+  white-space: nowrap;
+  background: #fff;
+  border: 1px solid #dfdfdf;
+}
+
+.nickname-wrap.inputbox .bt-box button {
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: #666;
+  white-space: nowrap;
+  background: #fff;
 }
 
 /* ico 공통 */

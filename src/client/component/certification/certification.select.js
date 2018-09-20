@@ -42,6 +42,7 @@ Tw.CertificationSelect.prototype = {
 
     var methods = this._urlMeta.auth.cert.methods;
     var loginType = this._svcInfo.loginType;
+    var methodCnt = 0;
 
     if ( loginType === Tw.AUTH_LOGIN_TYPE.EASY ) {
       this._openSelectPopup(loginType, methods);
@@ -52,33 +53,55 @@ Tw.CertificationSelect.prototype = {
         Tw.FormatHelper.removeElement(methods, Tw.AUTH_CERTIFICATION_METHOD.PASSWORD);
         Tw.FormatHelper.removeElement(methods, Tw.AUTH_CERTIFICATION_METHOD.PUBLIC_AUTH);
         Tw.FormatHelper.removeElement(methods, Tw.AUTH_CERTIFICATION_METHOD.SMS_PASSWORD);
+        if( Tw.BrowserHelper.isAndroid() ) {
+          Tw.FormatHelper.removeElement(methods, Tw.AUTH_CERTIFICATION_METHOD.SK_MOTP);
+        }
+        methodCnt = methods.length;
         methods = methods.join(',');
       }
+      if(methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SMS_KEYIN) !== -1) {
+        methodCnt--;
+      }
+      if(methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.OTHER_SMS) !== -1) {
+        methodCnt++;
+      }
+
       if ( methods.indexOf(',') === -1 && methods.length > 0 ) {
         this._openCertPopup(methods);
       } else {
-        this._openSelectPopup(certInfo.svcInfo.loginType, methods);
+        this._openSelectPopup(certInfo.svcInfo.loginType, methods, methodCnt);
       }
     }
   },
 
-  _openSelectPopup: function (loginType, methods) {
-    var popupType = loginType === Tw.AUTH_LOGIN_TYPE.TID ? 'CO_02_01_01_L01' : 'CO_02_01_01_L02';
+  _openSelectPopup: function (loginType, methods, methodCnt) {
+    console.log('methodCnt', methods, methodCnt, loginType);
+    var popupType = loginType === Tw.AUTH_LOGIN_TYPE.TID ? 'CO_02_01_01_01' : 'CO_02_01_01_02';
     this._popupService.open({
       hbs: popupType,
       layer: true,
       data: {
+        cntClass: methodCnt === 1 ? 'one' : methodCnt === 2 ? 'two' : 'three',
         skSms: methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SK_SMS) !== -1,
-        skMotp: methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SK_MOTP) !== -1 && (Tw.BrowserHelper.isAndroid() && !Tw.BrowserHelper.isApp()),
-        otherSms: methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.OTHER_SMS) !== -1,
-        save: methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SAVE) !== -1,
-        ipin: methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.IPIN) !== -1,
-        email: methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.EMAIL) !== -1,
-        bio: methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.BIO) !== -1,
-        password: methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.PASSWORD) !== -1,
+        // skMotp: methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SK_MOTP) !== -1,
+        skMotp: true,
+        // otherSms: methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.OTHER_SMS) !== -1,
+        otherSms: true,
+        // save: methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SAVE) !== -1,
+        save: true,
+        // ipin: methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.IPIN) !== -1,
+        ipin: true,
+        // email: methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.EMAIL) !== -1,
+        email: true,
+        // bio: methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.BIO) !== -1,
+        bio: true,
+        // password: methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.PASSWORD) !== -1,
+        password: true,
         // publicCert: methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.PUBLIC_AUTH) !== -1,
         publicCert: true,
-        smsPassword: methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SMS_PASSWORD) !== -1
+        // publicCert: true,
+        // smsPassword: methods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SMS_PASSWORD) !== -1,
+        smsPassword: true
       }
     }, $.proxy(this._onOpenSelectPopup, this), $.proxy(this._onCloseSelectPopup, this), 'certSelect');
   },
