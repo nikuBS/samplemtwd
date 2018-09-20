@@ -207,15 +207,17 @@ Tw.MyTDataSubMain.prototype = {
 
   // 다른 회선 잔여량 상세
   _onOtherLinesItemDetail: function (event) {
-    var $target = $(event.target),
+    var $target = $(event.target).parents('[data-svc-mgmt-num]'),
         mgmtNum = $target.attr('data-svc-mgmt-num'),
-        url     = '/myt/data/ddddd',
-        isChild = $target.is('.badge');
+        isChild = ($target.find('.badge').length > 0);
     if ( isChild ) {
       // 자녀회선
-      url = '/myt/data/childddddddd';
+      this._historyService.goLoad('/myt/data/usage/child/' + mgmtNum);
     }
-    this._historyService.goLoad(url + mgmtNum);
+    else {
+      // TODO: 팝업 호출(회선변경)
+      this._popupService.openAlert('TBD');
+    }
   },
 
   // 다른 회선 더보기
