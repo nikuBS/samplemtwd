@@ -1,5 +1,5 @@
 /**
- * FileName: myt-fare.bill.guide.integrated-rep.js
+ * FileName: myt-fare.bill.guide.call-gift.js
  * Author: Kim Myoung-Hwan (skt.P130714@partner.sk.com)
  * Date: 2018.09.12
  */
@@ -15,6 +15,8 @@ Tw.MyTFareBillGuideCallGift = function (rootEl, resData) {
   this._history.init('hash');
 
   this._init();
+
+  this.selectMonthVal = null;
 };
 
 Tw.MyTFareBillGuideCallGift.prototype = {
@@ -25,80 +27,70 @@ Tw.MyTFareBillGuideCallGift.prototype = {
 
   },
   _cachedElement: function () {
-    // this.$entryTplBill = $('#entryTplBill');
-    // this.$lineChangeBtn = $('[data-target="lineChangeBtn"]');
+    this.$entryTpl = $('#entryTpl');
+    this.$callGiftInfoArea = $('[data-target="callGiftInfoArea"]');
+    this.$defaultTxt= $('[data-target="defaultTxt"]');
   },
   _bindEvent: function () {
-    // this.$container.on('click', '[data-target="lineChangeBtn"]', $.proxy(this._lineChangeEvt, this));
+    this.$container.on('click', '[data-target="monBtn"]', $.proxy(this._monthBtnEvt, this));
   },
   //--------------------------------------------------------------------------[EVENT]
-  _lineChangeEvt: function() {
-    // this._putChangeSession('7016983918');
+  _monthBtnEvt: function(e) {
+    this.$defaultTxt.hide();
+    // Tw.Logger.info('[버튼 클릭]', e);
+    this.selectMonthVal = $(e.currentTarget).attr('data-value');
+
+    var param = {
+      startDt : this._getPeriod(this.selectMonthVal, 'YYYYMMDD').startDt,
+      endDt: this._getPeriod(this.selectMonthVal, 'YYYYMMDD').endDt,
+    };
+    Tw.Logger.info('[버튼 클릭 > param]', param);
+    this._getCallGiftInfo( param );
   },
   //--------------------------------------------------------------------------[API]
-  _getChildBillInfo: function() {
-    var thisMain = this;
-    var childTotNum = this.resData.childLineInfo.length;
-    var targetApi = Tw.API_CMD.BFF_05_0047;
-    var commands = [];
-
-    for ( var i=0; i<childTotNum; i++ ) {
-      commands.push({command: targetApi, params: { childSvcMgmtNum: this.resData.childLineInfo[i].svcMgmtNum }});
-    }
-
-    this._apiService.requestArray(commands)
-      .done(function () {
-        var childLineInfo = thisMain.resData.childLineInfo;
-
-        _.each( arguments, function( element, index, list ) {
-          // Tw.Logger.info('[element, index, list]', element, index, list);
-          childLineInfo[ index ].detailInfo = element.result;
-        });
-
-        thisMain._getChildBillInfoInit();
-
-      });
-
+  _getCallGiftInfo: function(param) {
+    return this._apiService.request(Tw.API_CMD.BFF_05_0045, param).done($.proxy(this._getCallGiftInfoInit, this));
   },
 
-  _getChildBillInfoInit: function() {
-    var thisMain = this;
-    var childListData = $.extend(true, {}, thisMain.resData.childLineInfo);
-
-    childListData = _.map( childListData, function (item) {
-      item.detailInfo.useAmtTot = Tw.FormatHelper.addComma(item.detailInfo.useAmtTot);
-      item.svcNum = thisMain._phoneStrToDash(item.svcNum);
-      return item;
-    });
-
-    Tw.Logger.info('childListData', childListData);
-
-    this._svcHbDetailList(childListData, this.$hbChildListArea, this.$entryTplChild);
-
-  },
-
-  _getBillsDetailInfo: function () {
-    /*
-    * 실 데이터
-    return this._apiService.request(Tw.API_CMD.BFF_05_0036, {
-      detailYn: 'Y'
-    }).done($.proxy(this._getBillsDetailInfoInit, this));
-    */
-
-    // Tw.Logger.info('클라이언트 목데이터');
-    $.ajax('http://localhost:3000/mock/bill.guide.BFF_05_00036_detail.json')
-      .done($.proxy(this._getBillsDetailInfoInit, this))
-      .fail(function(err) {
-        Tw.Logger.info(err);
-      });
-
-  },
-  _getBillsDetailInfoInit: function (res) {
-    var thisMain = this;
+  _getCallGiftInfoInit: function(res) {
+    Tw.Logger.info('[콜기프트]', res);
     if ( res.code === Tw.API_CODE.CODE_00 ) {
+
+      this.$callGiftInfoArea.empty();
+
+      if ( res.result.callData === '0분 0초' ) {
+        Tw.Logger.info('[콜기프트 > 이용내역이 없습니다. ]', res.result.callData);
+
+      } else {
+
+      }
+
+      var resData = {
+        callData: res.result.callData,
+        startDt: this._getPeriod(this.selectMonthVal, 'YYYY.MM.DD').startDt,
+        endDt: this._getPeriod(this.selectMonthVal, 'YYYY.MM.DD').endDt
+      };
+
+      this._svcHbDetailList(resData, this.$callGiftInfoArea, this.$entryTpl);
     }
+
   },
+
   //--------------------------------------------------------------------------[SVC]
+  _getPeriod: function( periodStr, formatStr ) {
+    var periodStr = String(periodStr); // 기간 : 1, 2, 3, 6 (개월)
+    var defaultSubtractNum = 1;
+    var subtractNum = Number(periodStr);
+    var startDt = moment().subtract(subtractNum, 'months').startOf('month').format(formatStr);
+    var endDt = moment().subtract(defaultSubtractNum, 'months').endOf('month').format(formatStr);
+
+    return {
+      startDt: startDt,
+      endDt: endDt
+    }
+
+  },
+
   _svcHbDetailList: function( resData, $jqTg, $hbTg ) {
     var jqTg = $jqTg;
     var hbTg = $hbTg;

@@ -6,9 +6,33 @@
 
 <% include ../../components/start.component.html %>
 <% include ../../components/javascript.component.html %>
-
+<script id="entryTpl" type="text/x-handlebars-template">
+    <div>
+        {{!-- 주석 : 콜기프트 --}}
+        <div>
+            <p>시간 : {{resData.callData}}</p>
+            <p>기간 : {{resData.startDt}} ~ {{resData.endDt}}</p>
+        </div><br>
+    </div>
+</script>
 <div id="fe-wrap">
     <h1>요금안내서-콜기프트</h1>
+    <div>
+        <button data-target="monBtn" data-value="1">1개월</button>
+        <br>
+        <button data-target="monBtn" data-value="2">2개월</button>
+        <br>
+        <button data-target="monBtn" data-value="3">3개월</button>
+        <br>
+        <button data-target="monBtn" data-value="6">6개월</button>
+        <br>
+
+        <p data-target="defaultTxt">원하시는 기간을 선택해주세요.</p>
+        <div data-target="callGiftInfoArea">
+
+        </div>
+    </div>
+
 </div>
 
 <script>
