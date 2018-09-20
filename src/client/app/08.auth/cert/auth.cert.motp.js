@@ -13,6 +13,7 @@ Tw.AuthCertMotp = function (rootEl) {
   this._apiService = Tw.Api;
   this._nativeService = Tw.Native;
   this._popupService = Tw.Popup;
+  this._historyService = new Tw.HistoryService();
 
   this._timer = null;
   this._remainTime = 0;
@@ -22,7 +23,7 @@ Tw.AuthCertMotp = function (rootEl) {
 
 Tw.AuthCertMotp.prototype = {
   _bindEvent: function () {
-    this.$container.on('click', '#bt-exit', $.proxy(this._exitApp, this));
+    this.$container.on('click', '#fe-bt-exit', $.proxy(this._exitApp, this));
 
     this.$txtCert = this.$container.find('#txt-cert');
     this.$txtMin = this.$container.find('#txt-min');
@@ -43,7 +44,7 @@ Tw.AuthCertMotp.prototype = {
       this.$txtCert.text(resp.result.otpAuthNum);
       this._remainTime = resp.result.secondsToRemain;
     } else {
-      this._popupService.openAlert(resp.code + ' ' + resp.msg);
+      this._historyService.replaceURL('/auth/cert/motp/fail');
     }
   },
   _setTimer: function() {
@@ -62,6 +63,9 @@ Tw.AuthCertMotp.prototype = {
     clearInterval(this._timer);
   },
   _exitApp: function () {
+    this._popupService.openConfirm(Tw.MSG_AUTH.EXIT, null, $.proxy(this._sendExit, this));
+  },
+  _sendExit: function () {
     this._nativeService.send(Tw.NTV_CMD.EXIT, {});
   }
 

@@ -2,6 +2,7 @@
 * FileName: auth.cert.motp.html
 * Author: Ara Jo (araara.jo@sk.com)
 * Date: 2018.08.28
+* CO_02_01_02_03_02_01
 %>
 <% include ../../components/start.component.html %>
 <body>
@@ -14,7 +15,7 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div class="wrap step">
+<div id="authCertMotp" class="wrap step">
     <!-- #header -->
     <div id="header" class="header-wrap">
         <div class="header">
@@ -34,7 +35,7 @@
                     <p class="txt">안심인증번호가 발급되었습니다.</p>
                     <div class="certify-info">
                         <p id="txt-cert" class="cert-number"></p>
-                        <p class="left-time">남은 시간 <span id="txt-min"></span>분 <span id="txt-sec"</span>초</p>
+                        <p class="left-time">남은 시간 <span id="txt-min"></span>분 <span id="txt-sec"></span>초</p>
                     </div>
                 </div>
                 <ul class="contents-notice type1">
@@ -45,7 +46,7 @@
             <!--// .cont-box -->
             <ul class="bt-slice full">
                 <li class="bt-red1">
-                    <button id="bt-exit">닫기</button>
+                    <button id="fe-bt-exit">닫기</button>
                 </li>
             </ul>
         </div>
