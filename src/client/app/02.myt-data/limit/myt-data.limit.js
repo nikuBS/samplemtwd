@@ -16,15 +16,15 @@ Tw.MyTDataLimit = function (rootEl) {
 
 Tw.MyTDataLimit.prototype = {
   _init: function () {
-
     this._getRemainDataInfo();
   },
 
   _getRemainDataInfo: function () {
-    this._apiService.request(Tw.API_CMD.BFF_06_0014, {}).done($.proxy(this._onSuccessRemainDataInfo, this));
+    this._apiService.request(Tw.API_CMD.BFF_06_0034, {}).done($.proxy(this._onSuccessRemainDataInfo, this));
   },
 
   _onSuccessRemainDataInfo: function (res) {
+    debugger;
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       // exceptions ProductId NA00001464, NA00001465
     }
