@@ -5,17 +5,44 @@
 %>
 
 <% include ../components/start.component.html %>
+<body>
 <!-- TBD -->
-<ul>
-    <% for(var i in basicInfo.linkBtnList) { %>
-    <li><button type="button" class="fe-btn_setting" style="border:1px solid #000" data-typcd="<%= basicInfo.linkBtnList[i].btnTypCd %>"><%= basicInfo.linkBtnList[i].btnNm %></button></li>
-    <% } %>
-</ul>
+<div class="wrap">
+  <div id="contents" class="container-wrap">
+    <div class="container" data-prod_id="<%= basicInfo.prodId %>" data-current_prod_id="<%= svcInfo.prodId %>">
+      <ul>
+        <% for(var i in basicInfo.linkBtnList) { %>
+        <li>
+          <button type="button" class="fe-btn_common" style="border:1px solid #000" data-typcd="<%= basicInfo.linkBtnList[i].btnTypCd %>">
+            <%= basicInfo.linkBtnList[i].btnNm %>
+          </button>
+        </li>
+        <% } %>
+        <li>
+          <button type="button" class="fe-btn_common" style="border:1px solid #000" data-typcd="setting">
+            설정
+          </button>
+        </li>
+        <li>
+          <button type="button" class="fe-btn_common" style="border:1px solid #000" data-typcd="SC">
+            가입
+          </button>
+        </li>
+      </ul>
+      <ul style="display: none" class="fe-btn_setting_list">
+        <li data-typcd="SE" data-typcd2="A">설정1</li>
+        <li data-typcd="SE" data-typcd2="B">설정2</li>
+        <li data-typcd="SE" data-typcd2="C">설정3</li>
+      </ul>
+    </div>
+  </div>
+</div>
 <!-- // -->
 <% include ../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.ProductDetail();
+    new Tw.ProductDetail($('.container'));
   });
 </script>
+</body>
 <% include ../components/end.component.html %>

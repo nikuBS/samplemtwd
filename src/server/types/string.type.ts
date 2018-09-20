@@ -1,3 +1,11 @@
+export enum DATA_UNIT {
+  KB = 'KB',
+  MB = 'MB',
+  GB = 'GB',
+  TB = 'TB',
+  PB = 'PB'
+}
+
 export enum SKIP_NAME {
   UNLIMIT = '무제한',
   DEFAULT = '기본제공량',
@@ -39,15 +47,20 @@ export const MYT_T_DATA_GIFT_TYPE = {
   GD: '1+1'
 };
 
-export enum DATA_UNIT {
-  KB = 'KB',
-  MB = 'MB',
-  GB = 'GB',
-  TB = 'TB',
-  PB = 'PB'
-}
-
 export enum CURRENCY_UNIT {
   WON = '원',
   TEN_THOUSAND = '만원'
+}
+
+export enum PRODUCT_DETAIL_SUMMARY_TYPE {
+  PLM_0 = '상세참조',
+  PLM_1 = '기본제공금액 조절사용',
+  PLM_2 = '없음',
+  PLM_3 = '기본제공',
+  PLM_4 = '무제한',
+  PLM_5 = 'SKT 지정회선 무제한',
+  PLM_6 = 'SKT 고객간 무제한',
+  PLM_7 = '이동전화 무제한',
+  PLM_8 = '집전화·이동전화 무제한',
+  PLM_9 = '무료'
 }

@@ -1,5 +1,5 @@
-import { DATA_UNIT } from '../types/string.old.type';
-import { VOICE_UNIT } from '../types/bff.old.type';
+import { DATA_UNIT } from '../types/string.type';
+import { VOICE_UNIT } from '../types/bff.type';
 
 class FormatHelper {
   static leadingZeros(number: number, length: number): string {

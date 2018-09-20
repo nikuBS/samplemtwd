@@ -9,6 +9,8 @@ import { Request, Response, NextFunction } from 'express';
 import FormatHelper from '../../../utils/format.helper';
 import { Observable } from 'rxjs/Observable';
 import { API_CMD } from '../../../types/api-command.type';
+import { PLM_PARSING_CASE, UNIT, VOICE_UNIT } from '../../../types/bff.type';
+import { DATA_UNIT, PRODUCT_DETAIL_SUMMARY_TYPE } from '../../../types/string.type';
 
 const productApiCmd = {
   'basic': API_CMD.BFF_10_0001,
@@ -28,10 +30,16 @@ class ProductDetail extends TwViewController {
 
   /**
    * @param key
+   * @param currentProdId
    * @private
    */
-  private _getApi (key: string): Observable<any> {
-    return this.apiService.request(productApiCmd[key], {}, {}, this._prodId);
+  private _getApi (key: string, currentProdId?: any): Observable<any> {
+    let params = {};
+    if (key === 'basic') {
+      params = { pageType: this._prodId === currentProdId ? 'SP' : 'P' };
+    }
+
+    return this.apiService.request(productApiCmd[key], params, {}, this._prodId);
   }
 
   /**
@@ -43,6 +51,29 @@ class ProductDetail extends TwViewController {
   }
 
   /**
+   * @param basicInfo
+   * @private
+   */
+  private _parseBasicInfo (basicInfo): any {
+    const settingBtnList: any = [],
+      linkBtnList: any = [];
+
+    basicInfo.linkBtnList.forEach((item) => {
+      if (item.btnTypCd !== 'SE') {
+        linkBtnList.push(item);
+        return true;
+      }
+
+      settingBtnList.push(item);
+    });
+
+    return Object.assign(basicInfo, {
+      linkBtnList: settingBtnList.length < 2 ? basicInfo.linkBtnList : linkBtnList,
+      settingBtnList: settingBtnList.length > 1 ? settingBtnList : []
+    });
+  }
+
+  /**
    * @param smryVslYn
    * @private
    */
@@ -51,12 +82,134 @@ class ProductDetail extends TwViewController {
   }
 
   /**
+   * @param summaryInfo
+   * @private
+   */
+  private _parseSummaryInfo (summaryInfo): any {
+    return {
+      basOfrDataQtyCtt: this._parseBasOfrDataQtyCtt(summaryInfo.basOfrDataQtyCtt),
+      basOfrVcallTmsCtt: this._parseBasOfrVcallTmsCtt(summaryInfo.basOfrVcallTmsCtt),
+      basOfrCharCntCtt: this._parseBasOfrCharCntCtt(summaryInfo.basOfrCharCntCtt),
+      basFeeInfo: this._parsingSummaryBasFeeInfo(summaryInfo.basFeeInfo, summaryInfo.freeYn)
+    };
+  }
+
+  /**
+   * @param basOfrDataQtyCtt
+   * @private
+   */
+  private _parseBasOfrDataQtyCtt (basOfrDataQtyCtt): any {
+    if (PLM_PARSING_CASE.DATA_CASE_0.indexOf(this._prodId) !== -1) {
+      return PRODUCT_DETAIL_SUMMARY_TYPE.PLM_0;
+    }
+
+    if (PLM_PARSING_CASE.DATA_CASE_1.indexOf(this._prodId) !== -1) {
+      return PRODUCT_DETAIL_SUMMARY_TYPE.PLM_1;
+    }
+
+    if (FormatHelper.isEmpty(basOfrDataQtyCtt) || basOfrDataQtyCtt === '0') {
+      return PRODUCT_DETAIL_SUMMARY_TYPE.PLM_2;
+    }
+
+    if (isNaN(parseInt(basOfrDataQtyCtt, 10))) {
+      return basOfrDataQtyCtt;
+    }
+
+    return FormatHelper.convDataFormat(basOfrDataQtyCtt, DATA_UNIT.GB);
+  }
+
+  /**
+   * @param basOfrVcallTmsCtt
+   * @private
+   */
+  private _parseBasOfrVcallTmsCtt (basOfrVcallTmsCtt): any {
+    if (PLM_PARSING_CASE.VOICE_CASE_1.indexOf(basOfrVcallTmsCtt) !== -1) {
+      return PRODUCT_DETAIL_SUMMARY_TYPE.PLM_4;
+    }
+
+    if (PLM_PARSING_CASE.VOICE_CASE_2.indexOf(basOfrVcallTmsCtt) !== -1) {
+      return PRODUCT_DETAIL_SUMMARY_TYPE.PLM_5;
+    }
+
+    if (PLM_PARSING_CASE.VOICE_CASE_3.indexOf(basOfrVcallTmsCtt) !== -1) {
+      return PRODUCT_DETAIL_SUMMARY_TYPE.PLM_6;
+    }
+
+    if (PLM_PARSING_CASE.VOICE_CASE_4.indexOf(basOfrVcallTmsCtt) !== -1) {
+      return PRODUCT_DETAIL_SUMMARY_TYPE.PLM_7;
+    }
+
+    if (PLM_PARSING_CASE.VOICE_CASE_5.indexOf(basOfrVcallTmsCtt) !== -1) {
+      return PRODUCT_DETAIL_SUMMARY_TYPE.PLM_8;
+    }
+
+    if (FormatHelper.isEmpty(basOfrVcallTmsCtt) && PLM_PARSING_CASE.VOICE_CASE_0.indexOf(this._prodId) !== -1) {
+      return PRODUCT_DETAIL_SUMMARY_TYPE.PLM_0;
+    }
+
+    if (FormatHelper.isEmpty(basOfrVcallTmsCtt)) {
+      return PRODUCT_DETAIL_SUMMARY_TYPE.PLM_2;
+    }
+
+    if (isNaN(parseInt(basOfrVcallTmsCtt, 10))) {
+      return basOfrVcallTmsCtt;
+    }
+
+    return FormatHelper.addComma(basOfrVcallTmsCtt) + VOICE_UNIT.MIN;
+  }
+
+  /**
+   * @param basOfrCharCntCtt
+   * @private
+   */
+  private _parseBasOfrCharCntCtt (basOfrCharCntCtt): any {
+    if (PLM_PARSING_CASE.SMS_CASE_0.indexOf(this._prodId) !== -1) {
+      return PRODUCT_DETAIL_SUMMARY_TYPE.PLM_0;
+    }
+
+    if (PLM_PARSING_CASE.SMS_CASE_1.indexOf(basOfrCharCntCtt) !== -1) {
+      return PRODUCT_DETAIL_SUMMARY_TYPE.PLM_3;
+    }
+
+    if (FormatHelper.isEmpty(basOfrCharCntCtt) || basOfrCharCntCtt === '0') {
+      return PRODUCT_DETAIL_SUMMARY_TYPE.PLM_2;
+    }
+
+    if (isNaN(parseInt(basOfrCharCntCtt, 10))) {
+      return basOfrCharCntCtt;
+    }
+
+    return FormatHelper.addComma(basOfrCharCntCtt) + UNIT['310'];
+  }
+
+  /**
+   * @param basFeeInfo
+   * @param freeYn
+   * @private
+   */
+  private _parsingSummaryBasFeeInfo (basFeeInfo, freeYn): any {
+    if (PLM_PARSING_CASE.PRICE_0.indexOf(this._prodId) !== -1 || freeYn !== 'Y' && basFeeInfo === '0') {
+      return PRODUCT_DETAIL_SUMMARY_TYPE.PLM_0;
+    }
+
+    if (freeYn === 'Y') {
+      return PRODUCT_DETAIL_SUMMARY_TYPE.PLM_9;
+    }
+
+    if (isNaN(parseInt(basFeeInfo, 10))) {
+      return basFeeInfo;
+    }
+
+    return FormatHelper.addComma(basFeeInfo) + UNIT['110'];
+  }
+
+  /**
    * @param contentsVslCd
    * @param contentsInfo
    * @param contentsByRedis
    * @private
    */
-  private _parseContents (contentsVslCd, contentsInfo, contentsByRedis): any {
+  private _parseContentsInfo (contentsVslCd, contentsInfo, contentsByRedis): any {
     let result = contentsInfo.result;
 
     if (contentsVslCd === 'A') {
@@ -81,7 +234,7 @@ class ProductDetail extends TwViewController {
     }
 
     Observable.combineLatest(
-      this._getApi('basic'),
+      this._getApi('basic', svcInfo.prodId),
       this._getApi('summary'),
       this._getApi('relatetags'),
       this._getApi('contents'),
@@ -105,15 +258,23 @@ class ProductDetail extends TwViewController {
         });
       }
 
+      if (basicInfo.prodStCd === 'G1000') {
+        return this.error.render(res, {
+          title: '상품 상세 정보',
+          svcInfo: svcInfo
+        });
+      }
+
       res.render('product.detail.html', {
-        basicInfo: basicInfo.result,
-        summary: this._isSummaryVisual(basicInfo.result.smryVslYn) ? summaryByRedis : summaryInfo.result,
-        contents: this._parseContents(basicInfo.contentsVslCd, contentsInfo, contentsByRedis),
+        basicInfo: this._parseBasicInfo(basicInfo.result),
+        summary: this._isSummaryVisual(basicInfo.result.smryVslYn) ? summaryByRedis : this._parseSummaryInfo(summaryInfo.result),
+        contents: this._parseContentsInfo(basicInfo.contentsVslCd, contentsInfo, contentsByRedis),
         relateTags: relateTagsInfo.result,
         contentsVisual: contentsByRedis,
         series: seriesInfo.result,
         recommends: recommendsInfo.result,
-        banner: bannerByRedis
+        banner: bannerByRedis,
+        svcInfo: svcInfo
       });
     });
   }

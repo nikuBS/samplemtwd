@@ -1,6 +1,6 @@
 /**
  * FileName: myt-join.product.fee-alarm.controller.ts
- * Author: 양지훈 (jihun202@sk.com)
+ * Author: Ji Hun Yang (jihun202@sk.com)
  * Date: 2018.09.19
  */
 import TwViewController from '../../../../common/controllers/tw.view.controller';
