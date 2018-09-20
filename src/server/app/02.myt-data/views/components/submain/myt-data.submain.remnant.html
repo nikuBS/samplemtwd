@@ -47,7 +47,7 @@
 </div>
 <% var twoItem = data.immCharge && data.present; %>
 <% if(data.immCharge || data.present) { %>
-<ul class="bt-slice <% twoItem? 'item-two': '' %>">
+<ul class="bt-slice <%= twoItem? 'item-two': '' %>">
     <% if(data.immCharge) { %>
     <li class="bt-white2" data-id="immCharge">
         <button>즉시 충전</button>
