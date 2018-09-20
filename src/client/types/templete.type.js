@@ -101,7 +101,31 @@ Tw.POPUP_TPL = {
           '자동납부 인출 중이 아닌 경우에만 이용 가능합니다.'}
       ]
     }
-  ]
+  ],
+  IMMEDIATELY_CHARGE_DATA: {
+    TITLE: '충전방법 선택',
+    REFILL: {
+      TYPE: '나의 보유 쿠폰 사용',
+      VALUE: '나의 리필 쿠폰',
+      UNIT: '장'
+    },
+    PREPAY: {
+      'type': '선불 쿠폰 구매/충전',
+      'list': [
+        { 'value': 'T 데이터 쿠폰' },
+        { 'value': 'T 쿠폰' },
+        { 'value': '제주도 프리 쿠폰' }
+      ]
+    },
+    CHARGE: {
+      TYPE: '요금 충전',
+      VALUE: {
+        LIMIT: '데이터 한도 요금제',
+        ETC: '팅 쿠키즈 안심 음성 요금',
+        TING: '팅요금제 충전 선물'
+      }
+    }
+  }
 };
 
 Tw.MYT_DATA = {
