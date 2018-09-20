@@ -35,7 +35,12 @@ class MyTDataLimit extends TwViewController {
             { limitUserInfo: limitUserInfo },
             responseData
           );
-          res.render('limit/myt-data.limit.html', response);
+
+          if ( limitUserInfo ) {
+            res.render('limit/myt-data.limit.html', response);
+          } else {
+            res.render('limit/myt-data.limit.error.html', response);
+          }
         });
     }
   }
@@ -44,9 +49,7 @@ class MyTDataLimit extends TwViewController {
     return this.apiService.request(API_CMD.BFF_06_0034, {})
       .map((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
-          const result = resp.result;
-
-          return result;
+          return resp.result;
         } else {
           return null;
         }
