@@ -4,8 +4,11 @@
  * Date: 2018.09.18
  */
 
-Tw.MytDataRefillCoupon = function (rootEl, coupons) {
+Tw.MyTDataRefillCoupon = function (rootEl, coupons) {
   this.$container = rootEl;
+
+  this._historyService = new Tw.HistoryService();
+
   this._couponList = JSON.parse(coupons);
   this._couponShowed = 20;  // default showing list count is 20
   this._couponItemTeplate = Handlebars.compile($('#tpl_coupon_item').html());
@@ -14,13 +17,14 @@ Tw.MytDataRefillCoupon = function (rootEl, coupons) {
   this._bindEvent();
 };
 
-Tw.MytDataRefillCoupon.prototype = {
+Tw.MyTDataRefillCoupon.prototype = {
   _cacheElements: function () {
     this.$couponContainer = this.$container.find('.coupon-list');
     this.$btnDiv = this.$container.find('.bt-more');
   },
   _bindEvent: function () {
     this.$container.on('click', '.fe-btn-more', $.proxy(this._onMore, this));
+    this.$container.on('click', '.fe-btn-refill, .fe-btn-gift', $.proxy(this._onSubmit, this));
   },
   _onMore: function () {
     var data = this._couponList.slice(this._couponShowed, this._couponShowed + 20);
@@ -32,5 +36,14 @@ Tw.MytDataRefillCoupon.prototype = {
     if (this._couponShowed === this._couponList.length) {
       this.$btnDiv.addClass('none');
     }
+  },
+  _onSubmit: function (evt) {
+    var no = evt.currentTarget.id;
+    var name = evt.currentTarget.title.split('::')[0];
+    var period = evt.currentTarget.title.split('::')[1];
+    var tab = evt.currentTarget.className.includes('refill') ? 'refill' : 'gift';
+    this._historyService.goLoad(
+      '/myt/data/refill/coupon/use?tab=' + tab +'&no=' + no + '&name=' + name + '&period=' + period
+    );
   }
 };

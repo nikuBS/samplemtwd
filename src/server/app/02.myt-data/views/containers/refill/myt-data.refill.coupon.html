@@ -37,9 +37,9 @@
                                         <dd aria-describedby="aria-coupon-expiration-date1"><%= list[i].usePsblStaDt %>~<%= list[i].usePsblEndDt %></dd>
                                     </dl>
                                     <ul class="coupon-btn">
-                                        <li><button>리필하기</button></li>
+                                        <li><button class="fe-btn-refill" id="<%= list[i].copnIsueNum %>" title="<%= list[i].copnNm%>::<%= list[i].usePsblStaDt %>~<%= list[i].usePsblEndDt %>">리필하기</button></li>
                                         <% if (list[i].copnOperStCd !== 'A20') { %>
-                                        <li><button>선물하기</button></li>
+                                        <li><button class="fe-btn-gift" id="<%= list[i].copnIsueNum %>" title="<%= list[i].copnNm%>::<%= list[i].usePsblStaDt %>~<%= list[i].usePsblEndDt %>">선물하기</button></li>
                                         <% } %>
                                     </ul>
                                 </div>
@@ -89,7 +89,7 @@
 </script>
 <script>
   $(document).ready(function () {
-    new Tw.MytDataRefillCoupon($('.wrap'), '<%- JSON.stringify(list) %>');
+    new Tw.MyTDataRefillCoupon($('.wrap'), '<%- JSON.stringify(list) %>');
   });
 </script>
 <% include ../../components/end.component.html %>
