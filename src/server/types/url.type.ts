@@ -11,6 +11,7 @@ export const URL = {
 
   // Product
   '/product/detail': { login: true, id: 'MP_02_02', title: '상품 상세 정보' },
-  '/product/detail/contents': { login: true, id: 'MP_02_02_06', title: '상품 상세 정보 보기' }
+  '/product/detail/contents': { login: true, id: 'MP_02_02_06', title: '상품 상세 정보 보기' },
 
+  '/bill/set/change': { login: true, id: 'MF_04_02', title: '요금안내서 변경' }
 };

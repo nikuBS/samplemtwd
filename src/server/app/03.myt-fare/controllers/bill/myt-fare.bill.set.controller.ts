@@ -38,12 +38,13 @@ class MyTFareBillSet extends TwViewController {
 
   private getData(data: any, svcInfo: any): any {
 
-    const billType = this.getBillTypeName(data);
+    // const billType = this.getBillTypeName(data);
+    this.makeBillInfo(data);
+    this.makeAnotherBillList(data);
 
     return {
       svcInfo,
-      data,
-      billType
+      data
     };
   }
 
@@ -93,30 +94,73 @@ class MyTFareBillSet extends TwViewController {
     });
   }
 
-  // 안내서 유형 이름 만들기
-  private getBillTypeName(data: any): any {
-    const curBillType = data.curBillType;
-    const billType = {
-      title : MYT_FARE_BILL_TYPE[curBillType],
-      join : MYT_FARE_BILL_TYPE.X
-    };
-    // 요금안내서명 세팅
-    // Bill Letter 를 포함한 복합 안내서 일경우
-    if ( ['Q', 'I', 'K'].some( e => e === curBillType ) ) {
-      billType.title = MYT_FARE_BILL_TYPE.H; // Bill Letter
-      // Q ( Bill Letter + 문자 )
-      if ( 'Q' === curBillType ) {
-        billType.join = MYT_FARE_BILL_TYPE.B;
-      } else if ( ['I', 'K'].some( e => e === curBillType ) ) { // Bill Letter + 이메일
-        billType.join = MYT_FARE_BILL_TYPE['2'];
-      }
-    } else if ( 'A' === curBillType ) { // 문자 + 이메일
-      billType.title = MYT_FARE_BILL_TYPE.B; // 문자
-      billType.join = MYT_FARE_BILL_TYPE['2']; // 이메일
+  /*
+    안내서 유형 설정
+    무선회선을 기본으로 하여, 유선일 경우 무선 유형으로 변경해준다.
+    최종적으로 안내서 변경 요청시 다시 유선 코드로 변경해서 보낸다.
+  */
+  private convertCd(data: any): void {
+    if ( 'M' === this.getLinetype() ) {
+      return;
     }
 
-    return billType;
+    let curBillType = data.curBillType;
+
+    // Bill Letter
+    switch (curBillType) {
+      case 'J' : curBillType = 'H'; break;  // Bill Letter
+      case 'K' : curBillType = 'I'; break;  // Bill Letter + 이메일
+
+      default : break;
+    }
   }
+
+  private pushBillInfo(billData: any, billType): void {
+    billData.push({
+      cd : billType,
+      nm : MYT_FARE_BILL_TYPE[billType]
+    });
+  }
+
+  // 안내서 유형 정보 세팅
+  private makeBillInfo(data: any): void {
+    this.convertCd(data);
+    const curBillType = data.curBillType;
+    const billArr = new Array();
+    this.pushBillInfo(billArr, curBillType);
+    switch (curBillType) {
+      // Bill Letter + 문자
+      case 'Q' :
+        this.pushBillInfo(billArr, 'B');
+        break;
+      // Bill Letter + 이메일 or 문자 + 이메일
+      case 'I' :
+      // 문자 + 이메일
+      case 'A' :
+        this.pushBillInfo(billArr, '2');
+        break;
+      default :
+        this.pushBillInfo(billArr, 'X');
+        break;
+    }
+
+    data.billInfo = billArr;
+  }
+
+  // 하단 > "다른 요금안내서로 받기" 리스트
+  private makeAnotherBillList(data: any): void {
+    const billList = new Array();
+
+    'P,H,B,2,1'.split(',').forEach( (cd) => {
+      // 현재 안내서는 빼기
+      if ( cd !== data.curBillType ) {
+        this.pushBillInfo(billList, cd);
+      }
+    });
+
+    data.billList = billList;
+  }
+
 
 }
 

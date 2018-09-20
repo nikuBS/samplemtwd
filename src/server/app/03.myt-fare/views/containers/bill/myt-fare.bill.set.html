@@ -5,28 +5,125 @@
 %>
 
 <% include ../../components/start.component.html %>
-<p> 안내서 설정 </p>
-<br/>
-<a href="/myt/fare/bill/set/return-history">반송내역</a>
-<br/>
-<div>메인 안내서 명 : <%= billType.title %></div>
-<br>
-<div>함께 받는 안내서 명 : <%= billType.join %></div>
-<div>이메일 주소 : <%= data.invEmailAddr %></div>
-<br>
-<div>선택 옵션 설정 :</div>
-<% if ( 'Y' === data.scurBillYn ) { %>
-<div>Bill Letter보안강화</div>
-<% } %>
-<% if ( 'Y' === data.phonNumPrtClCd ) { %>
-<div>휴대폰 번호 전체 표시</div>
-<% } %>
-<% if ( 'Y' === data.scurMailYn && 'Y' === data.infoInvDtlDispChkYn && 'Y' === data.infoInvDtlDispYn ) { %>
-<div>콘텐츠 이용 상세내역 표시</div>
-<% } %>
-<% if ( 'Y' === data.kidsYn && 'Y' === data.ccurNotiYn) {%>
-<div>법정 대리인 함께 수령</div>
-<% } %>
+<body>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap">
+    <!-- #header -->
+    <div id="header" class="header-wrap">
+        <div class="header">
+            <div class="header-ti align-l">
+                <h1>요금안내서 설정</h1>
+            </div>
+            <button class="prev-step"><span class="blind">이전으로</span>
+            </button><button class="bt-dropdown small" title="회선 선택" aria-haspopup="true">010-87**-13**<span class="ico"></span></button>
+        </div>
+    </div>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <div class="ti-caption-gray bdt datail-veiw">
+                <span class="tit">뉴 T끼리 맞춤형 (100분+6GB)</span>
+                <button class="detail-view"><span class="blind">자세히</span></button>
+            </div>
+            <!-- .cont-box -->
+            <div class="cont-box now-fee-box">
+                <p class="tit">
+                    현재 요금안내서<br/>
+                    <strong><%= data.billInfo[0].nm %></strong>
+                </p>
+                <!--우편인 경우만 안보임-->
+                <% if( '1' !== data.curBillType ) {%>
+                <dl class="info-tx0">
+                    <dt>함께 받는 요금안내서</dt>
+                    <dd><strong><%= data.billInfo[1].nm  %></strong></dd>
+                </dl>
+                <%} if ( 'P' !== data.curBillType ) { %>
+                <!--T world 확인은 [설정한 옵션] 없음-->
+                <div class="cont-box nogaps pt22">
+                    <dl class="info-tx1">
+                        <dt>설정한 옵션</dt>
+                        <dd>
+                            <%- data.scurBillYn === 'Y' ? 'Bill Letter 보안강화<br/>':'' %>
+                            <%- data.phonNumPrtClCd === 'Y' ? '휴대폰 번호 전체 표시<br/>':'' %>
+                            <%- data.infoInvDtlDispYn === 'Y' ? '콘텐츠 이용 상세내역 표시<br/>':'' %>
+                            <%- data.ccurNotiYn === 'Y' ? '법정대리인 함께 수령':'' %>
+                        </dd>
+                    </dl>
+                </div>
+                <%} if( !('P' === data.curBillType && 'N' === data.isusimchk ) || 'B' !== data.curBillType ) {%>
+                <!--"정보변경" 없는 유형 : T world 확인(SMS 수신불가 단말), 문자-->
+                <div class="bt-alone"><button class="bt-bg-blue1">정보변경</button></div>
+                <%}%>
+                <ul class="bt-slice item-two pt40">
+                    <li class="bt-blue1">
+                        <a href="/myt/fare/bill/set/return-history">반송내역</a>
+                    </li>
+                    <!--T world 확인은 재발행 기능 없음-->
+                    <% if ( 'P' !== data.curBillType ) { %>
+                    <li class="bt-blue1">
+                        <button>재발행</button>
+                    </li>
+                    <%}%>
+                </ul>
+            </div>
+            <!--// .cont-box -->
+            <hr class="cont-sp type1" />
+            <!-- .cont-box -->
+            <div class="cont-box pb0">
+                <p class="con-tit0 pb6">다른 요금안내서로 받기</p>
+                <p class="con-txt0 pb12">T world 계정 또는 Bill Letter로 받아보시면 종이 안내서보다 <br/>빠르고 안전하게 보관하실 수 있습니다.</p>
+                <ul class="link-long-list nopd">
+                    <% data.billList.forEach( (bill) => { %>
+                    <li>
+                        <div class="link-long lower-h">
+                            <a href="/myt/fare/bill/set/change">
+                                <span class="ico-thum2"></span><%= bill.nm %>
+                                <span class="tx-sub">
+                                    <span class="ico"></span>
+                                </span>
+                            </a>
+                        </div>
+                    </li>
+                    <%})%>
+                </ul>
+            </div>
+            <!--// .cont-box -->
+            <hr class="cont-sp type1" />
+            <!-- .cont-box -->
+            <p class="fee-banner0">
+                <%
+                    let billLetterInfo = {
+                        title : '이번달 Bill Letter가 도착했습니다~',
+                        msg : '월별 청구 금액과 상세 내역 등을 언제든지 편리하게 확인하세요.'
+                    };
+                    if ( 'H' !== data.curBillType ) {
+                        billLetterInfo.title = 'Bill Letter를 알고 계세요? ';
+                        billLetterInfo.msg = '쌓여가는 요금안내서,<br/> Bill Letter 앱으로 한 번에 관리하세요.';
+                    }
+                %>
+                <a href="">
+                    <span class="tit"><%= billLetterInfo.title%></span>
+                    <span class="tx0"><%- billLetterInfo.msg%></span>
+                    <span class="ic-img"></span>
+                </a>
+            </p>
+
+            <!--// .cont-box -->
+        </div>
+    </div>
+    <!--// #contents -->
+</div>
+</body>
 
 <% include ../../components/javascript.component.html %>
 <script>

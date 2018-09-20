@@ -7,6 +7,7 @@ import MytFarePaymentAccount from './controllers/payment/myt-fare.payment.accoun
 import MytFarePaymentCard from './controllers/payment/myt-fare.payment.card';
 import MytFarePaymentPoint from './controllers/payment/myt-fare.payment.point';
 import MytFarePaymentSms from './controllers/payment/myt-fare.payment.sms';
+import MyTFareBillSetChange from './controllers/bill/myt-fare.bill.set.change.controller';
 
 class MytFareRouter extends TwRouter {
   constructor() {
@@ -20,6 +21,7 @@ class MytFareRouter extends TwRouter {
     this.controllers.push({ url: '/payment/point', controller: new MytFarePaymentPoint() });
     this.controllers.push({ url: '/payment/sms', controller: new MytFarePaymentSms() });
     this.controllers.push({ url: '/bill/set/return-history', controller: new MyTFareBillSetReturnHistory() });
+    this.controllers.push({ url: '/bill/set/change', controller: new MyTFareBillSetChange() });
   }
 }
 
