@@ -1909,6 +1909,33 @@ body.bg-gray {
   margin-right: 0;
 }
 
+.box-citation.n-type {
+  padding: 0;
+}
+
+.box-citation.n-type .citation-form {
+  margin-top: 0;
+}
+
+.box-citation.n-type .citation-form .form-cell .form-ti {
+  margin-bottom: 0.75rem;
+}
+
+.box-citation.n-type .inputbox .guide-txt {
+  position: relative;
+  padding: 0 0 0 0.5rem;
+  margin: 1rem 0 0 0;
+}
+
+.box-citation.n-type .inputbox .guide-txt:before {
+  content: "*";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: #666;
+  font-size: 0.75rem;
+}
+
 .popup-page.layer .sms-confirm-box {
   padding: 1.625rem 0.875rem 0;
 }
@@ -2006,10 +2033,32 @@ body.bg-gray {
 
 .ico-certifi-list {
   display: inline-block;
-  width: 3.125rem;
-  height: 3.125rem;
-  background: url(/img/ico/ico-group-100.png) no-repeat 0 -12.5rem;
+  width: 2rem;
+  height: 2rem;
+  background-image: url(/img/ico/ico-group-100.png);
+  background-repeat: no-repeat;
   background-size: 6.25rem;
+  background-position: -0.625rem -72.5rem;
+}
+
+.ico-certifi-list.type1 {
+  background-position: -0.625rem -72.5rem;
+}
+
+.ico-certifi-list.type2 {
+  background-position: -3.75rem -72.5rem;
+}
+
+.ico-certifi-list.type3 {
+  background-position: -0.625rem -75.625rem;
+}
+
+.ico-certifi-list.type4 {
+  background-position: -3.75rem -75.625rem;
+}
+
+.ico-certifi-list.type5 {
+  background-position: -0.625rem -78.75rem;
 }
 
 .ico-certifi-card {
@@ -2055,6 +2104,14 @@ body.bg-gray {
 
 .ico-certifi-card.type9 {
   background-position: -0.25rem -62.5rem;
+}
+
+.ico-certifi-card.type10 {
+  background-position: -3.375rem -62.5rem;
+}
+
+.ico-certifi-card.type11 {
+  background-position: -3.25rem -37.5rem;
 }
 
 .certifi-repre {
@@ -2151,14 +2208,12 @@ body.bg-gray {
 }
 
 .box-certifi-list .certifi-sel-list {
-  border: 1px solid #d1d1d1;
   border-radius: 0.3125rem;
 }
 
 .box-certifi-list .certifi-sel-list li {
-  display: table;
-  width: 100%;
-  padding: 0.5625rem 1.5rem;
+  position: relative;
+  padding: 1.25rem 1rem;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   border-bottom: 1px solid #d1d1d1;
@@ -2174,31 +2229,54 @@ body.bg-gray {
 
 .box-certifi-list .certifi-sel-list li > button, .box-certifi-list .certifi-sel-list li > a {
   position: relative;
-  display: table-row;
+  display: block;
+  width: 100%;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
 
 .box-certifi-list .certifi-sel-list li .list-cell {
-  display: table-cell;
+  display: block;
   vertical-align: middle;
   text-align: left;
 }
 
-.box-certifi-list .certifi-sel-list li .list-cell:first-of-type {
-  padding-right: 0.625rem;
+.box-certifi-list .certifi-sel-list li .list-cell:nth-of-type(1) {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.box-certifi-list .certifi-sel-list li .list-cell:nth-of-type(2) {
+  padding: 0 2.5rem 0 2.875rem;
 }
 
 .box-certifi-list .certifi-sel-list li .list-cell .list-ti {
   display: block;
   font-weight: 400;
   font-size: 0.9375rem;
-  color: #757575;
+  color: #000;
 }
 
 .box-certifi-list .certifi-sel-list li .list-cell .list-tx {
   display: block;
   font-weight: 400;
   font-size: 0.75rem;
-  color: #757575;
+  color: #666;
+}
+
+.box-certifi-list .certifi-sel-list li .ico {
+  display: block;
+  position: absolute;
+  right: -0.5rem;
+  top: 50%;
+  width: 1.5625rem;
+  height: 1.5625rem;
+  margin-top: -0.75rem;
+  background-image: url(/img/ico/ico-group.png);
+  background-repeat: no-repeat;
+  background-position: -1.5625rem -67.1875rem;
+  background-size: 3.125rem;
 }
 
 .box-notice-caption {
