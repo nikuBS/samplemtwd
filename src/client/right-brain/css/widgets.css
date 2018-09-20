@@ -1479,7 +1479,7 @@ li.checkbox.type01 {
   padding: 0 1px 1px 0;
   font-size: 0;
   border-radius: 0.25rem;
-  background: #e5e8ee;
+  background: #d1d1d1;
 }
 
 .widget-box.tube .tube-list li {
@@ -1491,7 +1491,7 @@ li.checkbox.type01 {
   width: calc(20% - 1px);
   padding: 0.75rem 0;
   /*border:1px solid map_get($basic, gray9);*/
-  font-size: 0.75rem;
+  font-size: 0.875rem;
   text-align: center;
   vertical-align: middle;
   background: #fff;
@@ -1509,17 +1509,17 @@ li.checkbox.type01 {
 
 .widget-box.tube .tube-list li.disabled {
   z-index: 1;
-  background: #e5e8ee;
-  -webkit-box-shadow: 0 0 0 1px #e5e8ee;
-          box-shadow: 0 0 0 1px #e5e8ee;
+  background: #e1e1e1;
+  -webkit-box-shadow: 0 0 0 1px #e1e1e1;
+          box-shadow: 0 0 0 1px #e1e1e1;
   color: #808698;
 }
 
 .widget-box.tube .tube-list li.checked {
   z-index: 2;
-  background: #325ec1;
-  -webkit-box-shadow: 0 0 0 1px #325ec1;
-          box-shadow: 0 0 0 1px #325ec1;
+  background: #e22f26;
+  -webkit-box-shadow: 0 0 0 1px #e22f26;
+          box-shadow: 0 0 0 1px #e22f26;
   color: #fff;
   font-weight: 400;
 }

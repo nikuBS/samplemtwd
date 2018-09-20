@@ -21,12 +21,13 @@
 }
 
 /*Default set*/
-html, body, form, div, p, h1, h2, h3, h4, h5, h6, dl, dt, dd, ul, ol, li, fieldset, a, button, input, textarea, table, th, td, figure, hr {
+html, body, form, div, p, h1, h2, h3, h4, h5, h6, dl, dt, dd, ul, ol, li, fieldset, a, button, input, textarea, table, th, td, figure, hr, i, b {
   margin: 0;
   padding: 0;
   font-weight: 400;
   -webkit-text-size-adjust: none;
   font-family: "Apple SD Gothic Neo", "애플 SD 산돌고딕 Neo", "Helvetica Neue", "Noto Sans", "Noto Sans CJK", 'Droid Sans', Roboto, sans-serif;
+  font-style: normal;
 }
 
 body {
@@ -158,14 +159,14 @@ input[type=text], input[type=file], input[type=password], input[type=number] {
   background: #ebf5fe;
 }
 
-.inputbox .bt-box.disabled button.disabled {
-  color: #646464;
-  background: #b2b2b2;
+.inputbox .bt-box.disabled button:disabled {
+  color: #fff;
+  background: #d1d1d1;
 }
 
 .inputbox .bt-box.disabled a.disabled {
   color: #646464;
-  background: #b2b2b2;
+  background: #d1d1d1;
 }
 
 .inputbox .bt-box.selected button {
@@ -315,7 +316,7 @@ input[type=text], input[type=file], input[type=password], input[type=number] {
 .inputbox .guide-txt {
   display: block;
   margin: 0.375rem 0 0;
-  color: #757575;
+  color: #666;
   font-size: 0.75rem;
 }
 
@@ -336,16 +337,18 @@ input[type=text], input[type=file], input[type=password], input[type=number] {
 .inputbox.validation .validation-txt {
   display: block;
   margin: 0.375rem 0 0;
-  color: #000;
+  color: #3b98e6;
   font-size: 0.75rem;
 }
 
-.inputbox.error .input input[type=text],
-.inputbox.error .input input[type=password],
-.inputbox.error .input input[type=number] {
-  border-color: #f44333;
-  background-color: #fff;
-  color: #f44333;
+.inputbox.error .input {
+  /*input[type=text],
+            input[type=password],
+            input[type=number] {
+                border-color:$skorange;
+                background-color:$white1;
+                color:$skorange;
+            }*/
 }
 
 .inputbox.error .input .ico {
@@ -356,7 +359,7 @@ input[type=text], input[type=file], input[type=password], input[type=number] {
 .inputbox.error .error-txt {
   display: block;
   margin: 0.375rem 0 0;
-  color: #f44333;
+  color: #e84f01;
   font-size: 0.75rem;
 }
 
@@ -385,6 +388,24 @@ input[type=text], input[type=file], input[type=password], input[type=number] {
 .inputbox.bt-add .input .bt-dropdown {
   width: 98%;
   margin: 0;
+}
+
+.inputbox.bt-add.full .input {
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 100%;
+          flex: 0 0 100%;
+}
+
+.inputbox.bt-add.full .bt-box {
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 100%;
+          flex: 0 0 100%;
+  height: 2.375rem;
+  margin: 0.625rem 0 0;
+}
+
+.inputbox.bt-add.full .bt-box button {
+  width: 100%;
 }
 
 .inputbox.bt-add2 {
@@ -989,7 +1010,7 @@ button.bt-link-tx.underline, a.bt-link-tx.underline {
   display: inline-block;
   position: relative;
   font-size: inherit;
-  color: #325ec1;
+  color: #3b98e6;
 }
 
 button.bt-link-tx.underline:before, a.bt-link-tx.underline:before {
@@ -999,7 +1020,7 @@ button.bt-link-tx.underline:before, a.bt-link-tx.underline:before {
   left: 0;
   right: 0;
   height: 1px;
-  background: #425684;
+  background: #3b98e6;
 }
 
 button.bt-link-tx.disabled, a.bt-link-tx.disabled {
@@ -1090,6 +1111,10 @@ button.bt-link-tx.white .ico, a.bt-link-tx.white .ico {
   border-bottom: 1px solid #e1e1e1;
 }
 
+.link-long-list.nopd {
+  padding: 0;
+}
+
 .link-long {
   position: relative;
   border-bottom: 1px solid #e1e1e1;
@@ -1124,7 +1149,7 @@ button.bt-link-tx.white .ico, a.bt-link-tx.white .ico {
   position: absolute;
   top: 1.125rem;
   right: -0.5rem;
-  font-size: 0.875rem;
+  font-size: 0.9375rem;
   line-height: 1rem;
   font-weight: 700;
   vertical-align: baseline;
@@ -1140,6 +1165,13 @@ button.bt-link-tx.white .ico, a.bt-link-tx.white .ico {
 
 .link-long a .tx-sub .point, .link-long button .tx-sub .point {
   color: #e22f26;
+  font-weight: 400;
+  display: inline-block;
+  vertical-align: baseline;
+}
+
+.link-long a .tx-sub .point1, .link-long button .tx-sub .point1 {
+  color: #3b98e6;
   font-weight: 400;
   display: inline-block;
   vertical-align: baseline;
@@ -1180,6 +1212,16 @@ button.bt-link-tx.white .ico, a.bt-link-tx.white .ico {
   background-position: -0.125rem -17.375rem;
 }
 
+.link-long a .ico-thum2, .link-long button .ico-thum2 {
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-right: 0.625rem;
+  background-image: url(/img/ico/ico-group2.png);
+  background-size: 3.125rem;
+  background-position: 0 -20.3125rem;
+}
+
 .link-long a .bold, .link-long button .bold {
   font-weight: 700;
   vertical-align: top;
@@ -1191,6 +1233,10 @@ button.bt-link-tx.white .ico, a.bt-link-tx.white .ico {
 
 .link-long a.disabled .ico, .link-long button.disabled .ico {
   background-position: -1.5625rem -17.1875rem;
+}
+
+.link-long.lower-h a, .link-long.lower-h button {
+  padding: 0.875rem 0;
 }
 
 .box-chk-link .chk-link-list {
@@ -2845,6 +2891,10 @@ a.ui-button:active,
   text-align: center;
 }
 
+.bt-slice.full.item-two li {
+  padding: 0;
+}
+
 .bt-slice.align-r li button, .bt-slice.align-r li a {
   padding: 0 2.0625rem;
   text-align: right;
@@ -3165,43 +3215,39 @@ a.ui-button:active,
 }
 
 .bt-slice > li.bt-gray1 button {
-  border: 1px solid #f5f5f5;
-  color: #757575;
-  background: #f5f5f5;
+  color: #fff;
+  background: #626262;
 }
 
 .bt-slice > li.bt-gray1 button.selected {
-  background: #efefef;
+  background: #626262;
 }
 
 .bt-slice > li.bt-gray1 button:hover {
-  background: #efefef;
+  background: #626262;
 }
 
 .bt-slice > li.bt-gray1 button:disabled {
-  border: 1px solid #e1e1e1;
-  color: #808698;
-  background: #e1e1e1;
+  color: #fff;
+  background: #d1d1d1;
 }
 
 .bt-slice > li.bt-gray1 a {
-  border: 1px solid #f5f5f5;
-  color: #757575;
-  background: #f5f5f5;
+  color: #fff;
+  background: #626262;
 }
 
 .bt-slice > li.bt-gray1 a.selected {
-  background: #efefef;
+  background: #626262;
 }
 
 .bt-slice > li.bt-gray1 a:hover {
-  background: #efefef;
+  background: #626262;
 }
 
 .bt-slice > li.bt-gray1 a:disabled {
-  border: 1px solid #e1e1e1;
-  color: #808698;
-  background: #e1e1e1;
+  color: #fff;
+  background: #d1d1d1;
 }
 
 .bt-slice.last {
@@ -3834,9 +3880,9 @@ a.ui-button:active,
 .badge.badge-other {
   background-position: -2.1875rem -1.25rem;
   background-size: 4.6875rem;
-  width: 1.8125rem;
-  height: 0.9375rem;
-  margin: 0.125rem 0.5rem 0 0.5rem;
+  width: 1.75rem;
+  height: 0.875rem;
+  margin: 0.1875rem 0.5rem 0 0.5rem;
   vertical-align: top;
 }
 
@@ -3895,6 +3941,14 @@ a.ui-button:active,
   width: 1.875rem;
   height: 1rem;
   margin-right: 0.3125rem;
+}
+
+.badge.badge-merge {
+  background-position: 0 -16.25rem;
+  background-size: 4.6875rem;
+  width: 1.875rem;
+  height: 1rem;
+  margin-left: 0.3125rem;
 }
 
 .bar-chart-hoz {
