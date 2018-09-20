@@ -9,3 +9,9 @@ Tw.POPUP_TITLE = {
   SELECT_BANK: '은행선택',
   SELECT_PAYMENT_OPTION: '납부 방법 선택'
 };
+
+Tw.PERIOD_UNIT = {
+  DAYS: '일',
+  HOURS: '시간',
+  MINUTES: '분'
+};
