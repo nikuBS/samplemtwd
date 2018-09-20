@@ -53,16 +53,26 @@ Tw.MyTFarePaymentBankList.prototype = {
   },
   _setBankList: function (res) {
     var bankList = res.result.payovrBankList;
+    var formatList = [];
     for (var i = 0; i < bankList.length; i++) {
       var bankObj = {
-        attr: 'class="hbs-bank-name" id=' + bankList[i].bankCardCoCd,
-        text: bankList[i].bankCardCoNm
+        option: 'hbs-bank-name',
+        attr: 'id=' + bankList[i].bankCardCoCd,
+        value: bankList[i].bankCardCoNm
       };
-      this.$bankList.push(bankObj);
+      formatList.push(bankObj);
     }
+    this.$bankList.push({
+      'list': formatList
+    });
     this._openBank();
   },
   _openBank: function () {
-    this._popupService.openChoice(Tw.POPUP_TITLE.SELECT_BANK, this.$bankList, '', $.proxy(this._onOpenList, this));
+    this._popupService.open({
+      hbs:'actionsheet_select_a_type',
+      layer:true,
+      title:Tw.POPUP_TITLE.SELECT_BANK,
+      data:this.$bankList
+    }, $.proxy(this._onOpenList, this));
   }
 };
