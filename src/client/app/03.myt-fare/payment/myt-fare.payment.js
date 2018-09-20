@@ -24,7 +24,7 @@ Tw.MyTFarePayment.prototype = {
   },
   _openPaymentOption: function (isTarget) {
     this._popupService.open({
-      hbs:'actionsheet_link_b_type',// hbs의 파일명
+      hbs:'popup-action2',// hbs의 파일명
       layer:true,
       title:Tw.POPUP_TITLE.SELECT_PAYMENT_OPTION,
       data:Tw.POPUP_TPL.FARE_PAYMENT_LAYER_DATA
