@@ -103,3 +103,18 @@ Tw.POPUP_TPL = {
     }
   ]
 };
+
+Tw.MYT_DATA = {
+  SUBMAIN: {
+    MORE_LINE_TEMP: '<li data-svc-mgmt-num="{{svcMgmtNum}}"><button>' +
+      '<div class="lineinfo-user"><span class="info-title">{{nickNm}}' +
+      '{{#if data.child}}' +
+      '<span class="badge badge-fam"><span class="blind">자녀회선</span></span>' +
+      '{{/if}}' +
+      '</span><span class="info-sub">{{svcNum}}</span>' +
+      '</div><div class="lineinfo-data">' +
+      '<span class="info-title">{{data.data}}' +
+      '<span class="unit ml4">{{data.unit}}</span>' +
+      '</span><span class="ico"></span></div></button></li>'
+  }
+};
