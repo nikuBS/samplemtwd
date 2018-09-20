@@ -4,20 +4,61 @@
 * Date: 2018.09.19
 %>
 
-<div class="fe-select-line-wrap">
-    <h1>함께 납부 가능한 회선</h1> <span class="fe-common-back">x</span>
-    <% if (unpaidList) { %>
-    <ul>
-        <% for (var i = 0; i < unpaidList.length; i++) { %>
-        <li id="<%= i %>">
-            <span class="fe-layer-svc-name"><%= unpaidList[i].svcName %></span> <span class="fe-layer-svc-num"><%= unpaidList[i].svcNum %></span>
-            <span class="fe-layer-inv-dt"><%= unpaidList[i].invYearMonth %></span>
-            <span class="fe-layer-amount" data-value="<%= unpaidList[i].intMoney %>"><%= unpaidList[i].invMoney %></span>원
-            <button class="fe-layer-select<% if (unpaidList.defaultIndex === i) { %> checked<% } %>"
-            <% if (unpaidList.defaultIndex === i) { %> style="color:red;" <% } %>>체크</button>
-        </li>
-        <% } %>
-    </ul>
-    <% } %>
-    <button class="fe-layer-done">선택완료</button>
+<!-- #header -->
+<div id="header" class="header-wrap">
+    <div class="header popup-page tw-popup fixed-btn">
+        <div class="header-ti align-l">
+            <h1>함께 납부 가능한 회선</h1>
+        </div>
+        <button class="popup-closeBtn fe-common-back"><span class="blind">팝업 페이지 닫기</span></button>
+    </div>
 </div>
+<!--// #header -->
+<div class="container">
+    <!-- .cont-box -->
+    <div class="cont-box nogaps">
+        <!-- .list-comp-input -->
+        <div class="with-payment-line">
+            <div class="list-comp-input">
+                <div class="widget">
+                    <div class="widget-box check">
+                        <% if (unpaidList) { %>
+                        <ul class="select-list" role="group">
+                            <% for (var i = 0; i < unpaidList.length; i++) { %>
+                            <li id="<%= i %>"
+                                class="fe-layer-select checkbox type01-big <% if (unpaidList.defaultIndex === i) { %> checked <% } %>"
+                                data-svc-mgmt-num="<%= unpaidList[i].svcMgmtNum %>"
+                                data-bill-acnt-num="<%= unpaidList[i].billAcntNum %>"
+                                role="checkbox"
+                                aria-checked="<% if (unpaidList.defaultIndex === i) { %><%=true%><% } else { %><%=false%><% } %>"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                                <input type="checkbox" name="checkbox" value="" title="값1" aria-labelledby="aria-comp-checkbox1"
+                                <% if (unpaidList.defaultIndex === i) { %> checked <% } %> /><!-- 체크상태일 경우 checked="checked" -->
+                                <div class="comp-list-layout" id="aria-comp-checkbox1" aria-hidden="true">
+                                    <p class="layout-text">
+                                        <span class="mtext fe-layer-svc-info"><%= unpaidList[i].svcName %> <%= unpaidList[i].svcNum %></span>
+                                        <span class="stext fe-layer-amount" data-value="<%= unpaidList[i].intMoney %>"><span><%= unpaidList[i].invMoney %></span> 원</span>
+                                        <span class="dtext fe-layer-inv-dt" data-value="<%= unpaidList[i].invDt %>"><%= unpaidList[i].invYearMonth %></span>
+                                    </p>
+                                    <!--<span class="tx-data">37.6 GB</span>-->
+                                </div>
+                            </li>
+                            <% } %>
+                        </ul>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--// .list-comp-input -->
+    </div>
+    <!--// .cont-box -->
+
+    <ul class="bt-slice full">
+        <li class="bt-red1">
+            <button class="fe-layer-done">선택완료</button>
+        </li>
+    </ul>
+</div>
+<!-- .popup-closeBtn -->
+<button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button>
+<!--// .popup-closeBtn -->

@@ -6,7 +6,10 @@
 
 Tw.MyTFarePaymentCommon = function (rootEl) {
   this.$container = rootEl;
+  this.$originNode = this.$container.find('.fe-origin');
+  this.$appendTarget = this.$container.find('.fe-selected-line');
   this.$layer = this.$container.find('#select-line');
+
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService(rootEl);
 
@@ -24,13 +27,12 @@ Tw.MyTFarePaymentCommon.prototype = {
     this._amount = this.$container.find('.fe-amount').data('value');
   },
   _initNode: function () {
-    var $target = this.$layer.find('.checked').parents('li');
-    var $cloneTarget = this.$container.find('.fe-selected-line');
-    this._cloneNode($target, $cloneTarget);
+    var $target = this.$layer.find('.checked');
+    this._cloneNode($target);
   },
   _bindEvent: function () {
     this.$container.on('click', '.fe-select-line', $.proxy(this._openSelectLine, this));
-    this.$layer.on('click', '.fe-layer-select', $.proxy(this._onCheck, this));
+    this.$layer.on('change', '.fe-layer-select', $.proxy(this._onCheck, this));
     this.$layer.on('click', '.fe-layer-done', $.proxy(this._onClickDoneBtn, this));
   },
   _openSelectLine: function () {
@@ -38,28 +40,30 @@ Tw.MyTFarePaymentCommon.prototype = {
   },
   _onCheck: function (event) {
     var $target = $(event.currentTarget);
-    var $parentTarget = $target.parents('li');
-    var $cloneTarget = this.$container.find('.fe-selected-line');
 
     if ($target.hasClass('checked')) {
-      $target.removeClass('checked');
-      $target.css('color', 'black');
-
-      $cloneTarget.find('#' + $parentTarget.attr('id')).remove();
-      this._amount -= $parentTarget.find('.fe-layer-amount').data('value');
+      this._cloneNode($target);
+      this._amount += $target.find('.fe-layer-amount').data('value');
 
     } else {
-      $target.addClass('checked');
-      $target.css('color', 'red');
-
-      this._cloneNode($parentTarget, $cloneTarget);
-      this._amount += $parentTarget.find('.fe-layer-amount').data('value');
+      this.$appendTarget.find('#clone' + $target.attr('id')).remove();
+      this._amount -= $target.find('.fe-layer-amount').data('value');
     }
   },
-  _cloneNode: function ($target, $cloneTarget) {
-    var $clone = $target.clone();
-    $clone.find('.fe-layer-select').remove();
-    $clone.appendTo($cloneTarget);
+  _cloneNode: function ($target) {
+    var $clone = this.$originNode.clone();
+    $clone.removeClass('fe-origin none');
+    $clone.attr({
+      'id': 'clone' + $target.attr('id'),
+      'data-bill-acnt-num': $target.attr('data-bill-acnt-num'),
+      'data-svc-mgmt-num': $target.attr('data-svc-mgmt-num')
+    });
+
+    $clone.find('.fe-svc-info').text($target.find('.fe-layer-svc-info').text());
+    $clone.find('.fe-date').attr('data-value', $target.find('.fe-layer-inv-dt').data('value'))
+      .text($target.find('.fe-layer-inv-dt').text());
+    $clone.find('.fe-fee').text($target.find('.fe-layer-amount span').text());
+    $clone.appendTo(this.$appendTarget);
   },
   _onClickDoneBtn: function () {
     if (this._amount === 0) {
@@ -74,5 +78,19 @@ Tw.MyTFarePaymentCommon.prototype = {
   },
   getAmount: function () {
     return this._amount;
+  },
+  getBillList: function () {
+    var billList = [];
+    this.$appendTarget.find('li').not('.fe-origin').each(function () {
+      var $this = $(this);
+      var obj = {
+        invDt: $this.find('.fe-date').data('value').toString(),
+        billSvcMgmtNum: $this.attr('data-svc-mgmt-num'),
+        billAcntNum: $this.attr('data-bill-acnt-num'),
+        payAmt: $this.find('.fe-fee').text().replace(',', '')
+      };
+      billList.push(obj);
+    });
+    return billList;
   }
 };

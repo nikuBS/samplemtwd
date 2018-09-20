@@ -83,7 +83,7 @@ Tw.POPUP_TPL = {
   FARE_PAYMENT_LAYER_DATA: [
     {
       'list':[
-        {'value':'자동납부', 'option':'fe-auto', 'text1':'신청'}
+        {'value':'자동납부', 'option':'fe-auto', 'text2':'신청'}
       ]
     },
     {
