@@ -22,9 +22,12 @@
     <!-- #contents -->
     <div id="contents" class="container-wrap">
         <h2 class="blind">내용</h2>
-        <div class="container">
+        <div class="container" data-id="submain-container">
             <!-- .cont-box -->
+            <hr class="cont-sp type1" aria-hidden="true"/>
+            <div class="cont-box <% data.svcInfo.svcAttrCd === 'M2'? '' : 'nogaps-top' %>" data-id="remnant-container">
             <%- include('../components/submain/myt-data.submain.remnant.html', data) %>
+            </div>
             <!--// .cont-box -->
             <!-- .cont-box -->
             <div class="cont-box nogaps noborder">
@@ -55,7 +58,7 @@
             <!-- //.cont-box -->
 
             <!-- .coupon-genre-box -->
-            <div class="coupon-genre-box">
+            <div class="coupon-genre-box" data-id="prepay-container">
                 <!-- .widget -->
                 <div class="widget">
                     <div class="widget-box slider1">
@@ -102,7 +105,7 @@
             <!--// .coupon-genre-box -->
             <!-- 충전/선물 내역 -->
             <% if (data.breakdownList) { %>
-                <div class="cont-box nogaps">
+                <div class="cont-box nogaps" data-id="bd-container">
                     <p class="list-comp-title">최근 충전/선물 내역<button class="bt">더보기</button></p>
                     <div class="contents-info-list">
                         <ul class="result-history">
@@ -122,7 +125,7 @@
             <% if (data.otherLines.length > 0) { %>
                 <hr class="cont-sp type1" aria-hidden="true"/>
                 <!-- .cont-box -->
-                <div class="cont-box nogaps">
+                <div class="cont-box nogaps" data-id="other-lines">
                     <p class="list-comp-title">다른 회선 잔여량 정보</p>
                     <ul class="list-comp-lineinfo">
                         <% var length = (data.otherLines.length > 20 ? 20 : data.otherLines.length); %>
@@ -168,9 +171,11 @@
 </body>
 <script>
     // client 작업 중
+    var data = '<%- JSON.stringify(data) %>';
     $(document).ready(function () {
       new Tw.MyTDataSubMain({
-        $element: $('[data-id=submain-container]')
+        $element: $('[data-id=submain-container]'),
+        data: JSON.parse(data)
       });
     });
 

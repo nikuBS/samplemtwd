@@ -6,125 +6,122 @@
 
 <% if (data.svcInfo.svcAttrCd === 'M1') { %>
 <!-- Phone -->
-<div class="cont-box nogaps-top">
-    <div class="dc-use">
-        <dl class="real-remaining">
-            <dt>실시간 잔여량
+<div class="dc-use">
+    <dl class="real-remaining">
+        <dt>실시간 잔여량
+            <button class="ico" data-id="remnant-detail"></button>
+        </dt>
+        <dd>
+            <div class="remaining-amount"><span class="num ff-tg-black">36.8</span><span class="dingbat gb"><span
+                class="blind">GB</span></span></div>
+            <ul class="remaining-list">
+                <li>멜론 익스트리밍 2.1GB 남음</li>
+                <li>멜론 익스트리밍 2.1GB 남음</li>
+            </ul>
+            <ul class="remaining-tm">
+                <li>
+                    <dl>
+                        <dt><span class="badge badge-tel" role="img" aria-label="통화"></span></dt>
+                        <dd>4시간 50분 남음 (SKT 고객간)</dd>
+                    </dl>
+                </li>
+                <li>
+                    <dl>
+                        <dt><span class="badge badge-msg" role="img" aria-label="문자"></span></dt>
+                        <dd>38건 남음</dd>
+                    </dl>
+                </li>
+            </ul>
+        </dd>
+    </dl>
+    <div class="graph-area-type1">
+        <span class="graph-max" aria-hidden="true">60 GB</span>
+        <span class="graph-min" aria-hidden="true">0 GB</span>
+        <span class="graph-bar1" style="height:91%;"><!--최소 9%, 최대 91%-->
+                                <span class="bar"></span>
+                            </span>
+        <span class="graph-bar2" style="height:9%;"><!--최소 9%, 최대 91%-->
+                                <span class="bar"></span>
+                            </span>
+    </div>
+</div>
+<% var twoItem = data.immCharge && data.present; %>
+<% if(data.immCharge || data.present) { %>
+<ul class="bt-slice <%= twoItem? 'item-two': '' %>">
+    <% if(data.immCharge) { %>
+    <li class="bt-white2" data-id="immCharge">
+        <button>즉시 충전</button>
+    </li>
+    <% } %>
+    <% if(data.present) { %>
+    <li class="bt-white2" data-id="present">
+        <button>T끼리 데이터 선물</button>
+    </li>
+    <% } %>
+</ul>
+<% } %>
+
+<!-- if(T가족모아옵션) { -->
+<div class="box-data-family-banner mt20">
+    <div class="info-data-family-banner">
+        <dl class="data-family-list">
+            <dt>나의 T가족모아 데이터
                 <button class="ico"></button>
             </dt>
-            <dd>
-                <div class="remaining-amount"><span class="num ff-tg-black">36.8</span><span class="dingbat gb"><span
-                    class="blind">GB</span></span></div>
-                <ul class="remaining-list">
-                    <li>멜론 익스트리밍 2.1GB 남음</li>
-                    <li>멜론 익스트리밍 2.1GB 남음</li>
-                </ul>
-                <ul class="remaining-tm">
-                    <li>
-                        <dl>
-                            <dt><span class="badge badge-tel" role="img" aria-label="통화"></span></dt>
-                            <dd>4시간 50분 남음 (SKT 고객간)</dd>
-                        </dl>
-                    </li>
-                    <li>
-                        <dl>
-                            <dt><span class="badge badge-msg" role="img" aria-label="문자"></span></dt>
-                            <dd>38건 남음</dd>
-                        </dl>
-                    </li>
-                </ul>
-            </dd>
+            <dd><em class="data">10.6</em><em class="unit">GB</em><span class="tx">남음</span></dd>
         </dl>
-        <div class="graph-area-type1">
-            <span class="graph-max" aria-hidden="true">60 GB</span>
-            <span class="graph-min" aria-hidden="true">0 GB</span>
-            <span class="graph-bar1" style="height:91%;"><!--최소 9%, 최대 91%-->
-                                <span class="bar"></span>
-                            </span>
-            <span class="graph-bar2" style="height:9%;"><!--최소 9%, 최대 91%-->
-                                <span class="bar"></span>
-                            </span>
-        </div>
+        <span class="ico-data-family"></span>
+        <span class="data-family-limit">자유사용</span>
     </div>
-    <% var twoItem = data.immCharge && data.present; %>
-    <% if(data.immCharge || data.present) { %>
-    <ul class="bt-slice <% twoItem? 'item-two': '' %>">
-        <% if(data.immCharge) { %>
-        <li class="bt-white2" data-id="immCharge">
-            <button>즉시 충전</button>
-        </li>
-        <% } %>
-        <% if(data.present) { %>
-        <li class="bt-white2" data-id="present">
-            <button>T끼리 데이터 선물</button>
-        </li>
-        <% } %>
-    </ul>
-    <% } %>
-
-    <!-- if(T가족모아옵션) { -->
-    <div class="box-data-family-banner mt20">
-        <div class="info-data-family-banner">
-            <dl class="data-family-list">
-                <dt>나의 T가족모아 데이터<button class="ico"></button></dt>
-                <dd><em class="data">10.6</em><em class="unit">GB</em><span class="tx">남음</span></dd>
-            </dl>
-            <span class="ico-data-family"></span>
-            <span class="data-family-limit">자유사용</span>
-        </div>
-    </div>
-    <!-- } -->
-    <!-- .cont-box -->
 </div>
+<!-- } -->
+<!-- .cont-box -->
 <!-- Phone -->
 <% } else if (data.svcInfo.svcAttrCd === 'M2') { %>
 <!-- PPS -->
-<hr class="cont-sp type1" aria-hidden="true"/>
-<div class="cont-box">
-    <div class="dc-use">
-        <dl class="real-remaining">
-            <dt>실시간 잔여량
-                <button class="ico"></button>
-            </dt>
-            <dd>
-                <div class="remaining-amount"><span class="endless ff-tg-medium">무제한</span></div>
-                <ul class="remaining-list">
-                    <li class="only">SKT 고객간 음성</li>
-                </ul>
-                <ul class="remaining-tm">
-                    <li>
-                        <dl>
-                            <dt><span class="badge badge-msg" role="img" aria-label="문자"></span></dt>
-                            <dd>무제한</dd>
-                        </dl>
-                    </li>
-                </ul>
-            </dd>
-        </dl>
-    </div>
+<div class="dc-use">
+    <dl class="real-remaining">
+        <dt>실시간 잔여량
+            <button class="ico" data-id="remnant-detail"></button>
+        </dt>
+        <dd>
+            <div class="remaining-amount"><span class="endless ff-tg-medium">무제한</span></div>
+            <ul class="remaining-list">
+                <li class="only">SKT 고객간 음성</li>
+            </ul>
+            <ul class="remaining-tm">
+                <li>
+                    <dl>
+                        <dt><span class="badge badge-msg" role="img" aria-label="문자"></span></dt>
+                        <dd>무제한</dd>
+                    </dl>
+                </li>
+            </ul>
+        </dd>
+    </dl>
 </div>
 <!-- PPS -->
 <% } else if (data.svcInfo.svcAttrCd === 'M3' || data.svcInfo.svcAttrCd === 'M4') { %>
 <!-- T-PocketFi & T-Login -->
-<hr class="cont-sp type1" aria-hidden="true"/>
-<div class="cont-box nogaps-top">
-    <div class="dc-use small">
-        <dl class="real-remaining">
-            <dt>실시간 잔여량<button class="ico"></button></dt>
-            <dd>
-                <div class="remaining-amount"><span class="num ff-tg-black">79.0</span><span class="dingbat gb"><span class="blind">GB</span></span></div>
-            </dd>
-        </dl>
-        <div class="graph-area-type1">
-            <span class="graph-max" aria-hidden="true">79 GB</span>
-            <span class="graph-min" aria-hidden="true">0 GB</span>
-            <span class="graph-bar1" style="height:9%;"><!--최소 9%, 최대 91%-->
+<div class="dc-use small">
+    <dl class="real-remaining">
+        <dt>실시간 잔여량
+            <button class="ico" data-id="remnant-detail"></button>
+        </dt>
+        <dd>
+            <div class="remaining-amount"><span class="num ff-tg-black">79.0</span><span class="dingbat gb"><span
+                class="blind">GB</span></span></div>
+        </dd>
+    </dl>
+    <div class="graph-area-type1">
+        <span class="graph-max" aria-hidden="true">79 GB</span>
+        <span class="graph-min" aria-hidden="true">0 GB</span>
+        <span class="graph-bar1" style="height:9%;"><!--최소 9%, 최대 91%-->
                                 <span class="bar"></span>
                             </span>
-            <span class="graph-bar2" style="height:91%;"><!--최소 9%, 최대 91%-->
+        <span class="graph-bar2" style="height:91%;"><!--최소 9%, 최대 91%-->
                                 <span class="bar"></span>
                             </span>
-        </div>
     </div>
 </div>
 <!-- T-PocketFi & T-Login -->
