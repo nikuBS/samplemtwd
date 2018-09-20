@@ -51,9 +51,9 @@ Tw.CertificationSkKeyin.prototype = {
     this._callback = callback;
 
     this._popupService.open({
-      hbs: 'CO_02_01_02_01_L01',
+      hbs: 'CO_02_01_02_02_01',
       layer: true
-    }, $.proxy(this._onOpenKeyinPopup, this), $.proxy(this._onCloseKeyjnPopup, this));
+    }, $.proxy(this._onOpenKeyinPopup, this), $.proxy(this._onCloseKeyinPopup, this));
 
   },
   _onOpenKeyinPopup: function ($popupContainer) {
@@ -71,16 +71,16 @@ Tw.CertificationSkKeyin.prototype = {
     this.$inputCert.on('input', $.proxy(this._onInputCert, this));
 
   },
-  _onCloseKeyjnPopup: function () {
+  _onCloseKeyinPopup: function () {
     this._callback(this._certResult, this._deferred, this._command);
   },
   _onInputMdn: function () {
     var mdnLength = this.$inputMdn.val().length;
     if ( mdnLength === Tw.MIN_MDN_LEN || mdnLength === Tw.MAX_MDN_LEN ) {
-      this.$btCert.parent().addClass('disabled');
+      this.$btCert.parent().removeClass('disabled');
       this.$btCert.attr('disabled', false);
     } else {
-      this.$btCert.parent().removeClass('disabled');
+      this.$btCert.parent().addClass('disabled');
       this.$btCert.attr('disabled', true);
     }
   },
@@ -117,7 +117,7 @@ Tw.CertificationSkKeyin.prototype = {
   },
   _openCorpPasswordCert: function () {
     this._popupService.open({
-      hbs: 'CO_02_01_02_01_L01_L01',
+      hbs: 'CO_02_01_02_02_01_01',
       layer: true
     }, $.proxy(this._onOpenCorpPasswordCert, this));
   },

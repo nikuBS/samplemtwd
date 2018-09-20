@@ -40,7 +40,7 @@ Tw.PaymentRealtime.prototype = {
     this.$pointPw = this.$container.find('.fe-point-pw');
     this.$pointBox = this.$container.find('.point-box');
 
-    // this._test();
+    this._test();
     this._init();
   },
   _test: function () {
