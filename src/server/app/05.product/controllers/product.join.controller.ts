@@ -12,8 +12,12 @@ class ProductDetail extends TwViewController {
     super();
   }
 
+  private _prodId;
+
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, layerType: string) {
-    res.render('product.detail.html');
+    this._prodId = req.params.prodId;
+
+    res.render('product.join.html');
   }
 }
 

@@ -272,6 +272,9 @@ Tw.API_CMD = {
   BFF_09_0004: { path: '/core-membership/v1/event/win-list', method: Tw.API_METHOD.GET },
   BFF_09_0005: { path: '/core-membership/v1/event/win-detail/args-0', method: Tw.API_METHOD.GET },
 
+  // PRODUCT
+  BFF_10_0007: { path: '/core-product/v1/mobiles/fee-plans/args-0/joins/prechecks', method: Tw.API_METHOD.GET },
+
   // TEST
   GET: { path: '/posts', method: Tw.API_METHOD.GET },
   GET_PARAM: { path: '/comments', method: Tw.API_METHOD.GET },
