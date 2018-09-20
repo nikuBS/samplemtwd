@@ -861,20 +861,24 @@ Tw.CUSTOMER_SERVICE_INFO_URL = [
 ];
 
 Tw.PAYMENT_CARD_TYPE_LIST = [
-  { 'attr': 'id="00"', text: '일시불' },
-  { 'attr': 'id="01"', text: '1개월 할부' },
-  { 'attr': 'id="02"', text: '2개월 할부' },
-  { 'attr': 'id="03"', text: '3개월 할부' },
-  { 'attr': 'id="04"', text: '4개월 할부' },
-  { 'attr': 'id="05"', text: '5개월 할부' },
-  { 'attr': 'id="06"', text: '6개월 할부' },
-  { 'attr': 'id="07"', text: '7개월 할부' },
-  { 'attr': 'id="08"', text: '8개월 할부' },
-  { 'attr': 'id="09"', text: '9개월 할부' },
-  { 'attr': 'id="10"', text: '10개월 할부' },
-  { 'attr': 'id="11"', text: '11개월 할부' },
-  { 'attr': 'id="12"', text: '12개월 할부' },
-  { 'attr': 'id="24"', text: '24개월 할부' }
+  {
+    'list': [
+      {'option': 'hbs-card-type', 'attr': 'id="00"', value: '일시불'},
+      {'option': 'hbs-card-type', 'attr': 'id="01"', value: '1개월 할부'},
+      {'option': 'hbs-card-type', 'attr': 'id="02"', value: '2개월 할부'},
+      {'option': 'hbs-card-type', 'attr': 'id="03"', value: '3개월 할부'},
+      {'option': 'hbs-card-type', 'attr': 'id="04"', value: '4개월 할부'},
+      {'option': 'hbs-card-type', 'attr': 'id="05"', value: '5개월 할부'},
+      {'option': 'hbs-card-type', 'attr': 'id="06"', value: '6개월 할부'},
+      {'option': 'hbs-card-type', 'attr': 'id="07"', value: '7개월 할부'},
+      {'option': 'hbs-card-type', 'attr': 'id="08"', value: '8개월 할부'},
+      {'option': 'hbs-card-type', 'attr': 'id="09"', value: '9개월 할부'},
+      {'option': 'hbs-card-type', 'attr': 'id="10"', value: '10개월 할부'},
+      {'option': 'hbs-card-type', 'attr': 'id="11"', value: '11개월 할부'},
+      {'option': 'hbs-card-type', 'attr': 'id="12"', value: '12개월 할부'},
+      {'option': 'hbs-card-type', 'attr': 'id="24"', value: '24개월 할부'}
+    ]
+  }
 ];
 
 Tw.NO_CONTRACT_TYPE = {
