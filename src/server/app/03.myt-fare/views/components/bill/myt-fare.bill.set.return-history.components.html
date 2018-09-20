@@ -6,30 +6,37 @@
 
 <script id="tmplMore" type="text/x-handlebars-template">
     {{#each list}}
-    <div style="margin-bottom: 10px;">
-        <div>{{undlvRgstDt}}</div> <!--반송 등록일-->
-        <div style="border:5px solid gray;">
-            <p>{{billTyp}}</p> <!-- 발행형태 -->
-            <hr>
-            <ul>
-                <li>
-                    <span>반송사유</span>
-                    <span>{{undlvRsn}}</span>
-                </li>
-                <li>
-                    <span>청구인</span>
-                    <span>{{custNm}}</span>
-                </li>
-                <li>
-                    <span>안내서 청구일</span>
-                    <span>{{invDt}}</span>
-                </li>
-                <li>
-                    <span>안내서 발송일</span>
-                    <span>{{sndDt}}</span>
-                </li>
-            </ul>
-        </div>
+    <p class="history-year-tx">{{undlvRgstDt}}</p>
+    <div class="list-comp-history">
+        <ul class="comp-box info-type last-border">
+            <li class="list-box">
+                <ul class="list-con">
+                    <li>
+                        <p class="list-text disb">
+                            <span class="mtext">{{billTyp}}</span>
+                        </p>
+                        <div class="list-info">
+                            <dl>
+                                <dt>반송사유</dt>
+                                <dd>{{undlvRsn}}</dd>
+                            </dl>
+                            <dl>
+                                <dt>청구인</dt>
+                                <dd>{{custNm}}</dd>
+                            </dl>
+                            <dl>
+                                <dt>안내서 청구일</dt>
+                                <dd>{{invDt}}</dd>
+                            </dl>
+                            <dl>
+                                <dt>안내서 발송일</dt>
+                                <dd>{{sndDt}}</dd>
+                            </dl>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+        </ul>
     </div>
     {{/each}}
 </script>

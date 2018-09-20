@@ -14,11 +14,12 @@ Tw.MyTFareBillSetReturnHistory.prototype = {
     this._initVariables();
     this._bindEvent();
 
-    this._reqReturnHistory();
-    // this._reqMock();
+    // this._reqReturnHistory();
+    this._reqMock();
   },
   _initVariables: function () {
     this.returnHistory = this.$container.find('#fe-return-history');
+    this._totalCount =  this.$container.find('#fe-total-cnt');
   },
   _bindEvent: function () {
 
@@ -54,17 +55,18 @@ Tw.MyTFareBillSetReturnHistory.prototype = {
   _successReturnHistory : function (res) {
     // 발행내역 없는 경우
     if ( res.code === 'ZINVN8319' ) {
-      $.proxy(this._onFail, this, res);
+      // this._onFail(res);
       return;
     } else if ( res.code !== Tw.API_CODE.CODE_00 ) { // 결과가 성공이 아닐경우
-      $.proxy(this._onFail, this, res);
+      this._onFail(res);
       return;
     } else if (res.result.returnInfoList.length < 1) { // 리스트가 없을때
-      $.proxy(this._onFail, this, res);
+      return;
     }
 
+    this._totalCount.text(res.result.returnInfoList.length);
     this._parseData(res.result.returnInfoList);
-
+    this.returnHistory.empty();
     this._moreViewSvc.init({
       list : res.result.returnInfoList,
       callBack : $.proxy(this._renderList,this),
