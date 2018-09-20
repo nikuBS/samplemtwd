@@ -49,23 +49,21 @@ Tw.MyTDataCookiz.prototype = {
   },
 
   _setAmountUI: function (nLimitMount) {
-    this.$wrap_immediately_select_list.find('input').each(function (nIndex, elInput) {
+    var fnCheckedUI = function (nIndex, elInput) {
       var $input = $(elInput);
 
       if ( Number($input.val()) > nLimitMount ) {
         $input.prop('disabled', true);
         $input.parent().addClass('disabled');
       }
-    });
 
-    this.$wrap_monthly_select_list.find('input').each(function (nIndex, elInput) {
-      var $input = $(elInput);
-
-      if ( Number($input.val()) > nLimitMount ) {
-        $input.prop('disabled', true);
-        $input.parent().addClass('disabled');
+      if ( Number($input.val()) === nLimitMount ) {
+        $input.click();
       }
-    });
+    }
+
+    this.$wrap_monthly_select_list.find('input').each(fnCheckedUI);
+    this.$wrap_immediately_select_list.find('input').each(fnCheckedUI);
   },
 
   _onCancelMonthlyRecharge: function () {

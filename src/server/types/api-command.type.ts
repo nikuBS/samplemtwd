@@ -223,7 +223,7 @@ export const API_CMD = {
   BFF_06_0031: { path: '/core-recharge/v1/regular-ting-top-ups', method: API_METHOD.DELETE, server: API_SERVER.BFF, bypass: true },
   BFF_06_0032: { path: '/core-recharge/v1/ting-top-ups', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_06_0033: { path: '/core-recharge/v1/ting-permissions', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
-  BFF_06_0034: { path: '/core-recharge/v1/data-limitation-services', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_06_0034: { path: '/core-recharge/v1/data-limitation-subscriptions', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_06_0035: { path: '/core-recharge/v1/regular-data-top-ups', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_06_0036: { path: '/core-recharge/v1/data-top-ups', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_06_0037: { path: '/core-recharge/v1/regular-data-top-ups', method: API_METHOD.DELETE, server: API_SERVER.BFF, bypass: true },

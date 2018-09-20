@@ -45,9 +45,6 @@ class MyTDataCookiz extends TwViewController {
       .map((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
           const result = Object.assign(resp.result, { regularTopUpAmt: FormatHelper.numberWithCommas(resp.result.regularTopUpAmt) });
-          // {currentTopUpLimit: "4000", regularTopUpYn: "Y", regularTopUpAmt: "1000"}
-
-
           return result;
         } else {
           return null;

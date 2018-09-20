@@ -168,7 +168,7 @@ Tw.API_CMD = {
   BFF_06_0031: { path: '/core-recharge/v1/regular-ting-top-ups', method: Tw.API_METHOD.DELETE },
   BFF_06_0032: { path: '/core-recharge/v1/ting-top-ups', method: Tw.API_METHOD.GET },
   BFF_06_0033: { path: '/core-recharge/v1/ting-permissions', method: Tw.API_METHOD.GET },
-  BFF_06_0034: { path: '/core-recharge/v1/data-limitation-services', method: Tw.API_METHOD.GET },
+  BFF_06_0034: { path: '/core-recharge/v1/data-limitation-subscriptions', method: Tw.API_METHOD.GET },
   BFF_06_0035: { path: '/core-recharge/v1/regular-data-top-ups', method: Tw.API_METHOD.POST },
   BFF_06_0036: { path: '/core-recharge/v1/data-top-ups', method: Tw.API_METHOD.POST },
   BFF_06_0037: { path: '/core-recharge/v1/regular-data-top-ups', method: Tw.API_METHOD.DELETE },
