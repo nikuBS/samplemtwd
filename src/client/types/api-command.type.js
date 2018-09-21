@@ -38,12 +38,14 @@ Tw.API_CMD = {
   BFF_01_0028: { path: '/core-auth/v1/auth/skt/sms-finance', method: Tw.API_METHOD.POST },
   BFF_01_0029: { path: '/core-auth/v1/app-secure', method: Tw.API_METHOD.POST },
   BFF_01_0030: { path: '/core-auth/v1/server-cert', method: Tw.API_METHOD.POST },
-  BFF_01_0031: { path: '/fido/registration-request', method: Tw.API_METHOD.POST },
-  BFF_01_0032: { path: '/fido/registration-response', method: Tw.API_METHOD.POST },
-  BFF_01_0033: { path: '/fido/authentication-request', method: Tw.API_METHOD.POST },
-  BFF_01_0034: { path: '/fido/authentication-response', method: Tw.API_METHOD.POST },
+  BFF_01_0031: { path: '/registrationrequestfromfc', method: Tw.API_METHOD.POST },
+  BFF_01_0032: { path: '/registrationresponsefromfc', method: Tw.API_METHOD.POST },
+  BFF_01_0033: { path: '/authenticationrequestfromfc', method: Tw.API_METHOD.POST },
+  BFF_01_0034: { path: '/authenticationresponsefromfc', method: Tw.API_METHOD.POST },
   BFF_01_0035: { path: '/cert/app', method: Tw.API_METHOD.POST },
   BFF_01_0036: { paht: '/cert/info', method: Tw.API_METHOD.POST },
+  BFF_01_0037: { path: '/core-auth/v1/auth-sms-corporation', method: Tw.API_METHOD.POST },
+  BFF_01_0038: { path: '/deregistrationrequestfromfc', method: Tw.API_METHOD.POST },
 
   // AUTH
   BFF_03_0002: { path: '/user/account-auth-sessions', method: Tw.API_METHOD.POST },
