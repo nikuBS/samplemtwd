@@ -22,6 +22,8 @@ Tw.MyTDataLimit.prototype = {
   _cachedElement: function () {
     this.$input_block_monthly = this.$container.find('#input_block_monthly');
     this.$input_block_immediately = this.$container.find('#input_block_immediately');
+    this.$wrap_monthly_select_list = $('.fe-limit_monthly_select_list');
+    this.$wrap_immediately_select_list = $('.fe-limit_immediately_select_list');
   },
 
   _bindEvent: function () {
@@ -30,23 +32,19 @@ Tw.MyTDataLimit.prototype = {
   },
 
   _onToggleBlockImmediately: function () {
-    $('#tab1-tab').find('.cont-box').each(function (nIndex, elItem) {
-      if ( $(elItem).css('display') === 'none' ) {
-        $(elItem).show();
-      } else {
-        $(elItem).hide();
-      }
-    });
+    $('#tab1-tab').find('.cont-box').each(this._toggleDisplay);
   },
 
   _onToggleBlockMonthly: function () {
-    $('#tab2-tab').find('.cont-box').each(function (nIndex, elItem) {
-      if ( $(elItem).css('display') === 'none' ) {
-        $(elItem).show();
-      } else {
-        $(elItem).hide();
-      }
-    });
+    $('#tab2-tab').find('.cont-box').each(this._toggleDisplay);
+  },
+
+  _toggleDisplay: function (nIndex, elItem) {
+    if ( $(elItem).css('display') === 'none' ) {
+      $(elItem).show();
+    } else {
+      $(elItem).hide();
+    }
   },
 
   _getRemainDataInfo: function () {
@@ -55,8 +53,28 @@ Tw.MyTDataLimit.prototype = {
 
   _onSuccessRemainDataInfo: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      console.log(res);
+      this._setAmountUI(Number(res.result.currentTopUpLimit));
+    } else {
+      Tw.Error(res.code, res.msg).pop();
     }
+  },
+
+  _setAmountUI: function (nLimitMount) {
+    var fnCheckedUI = function (nIndex, elInput) {
+      var $input = $(elInput);
+
+      if ( Number($input.val()) > nLimitMount ) {
+        $input.prop('disabled', true);
+        $input.parent().addClass('disabled');
+      }
+
+      if ( Number($input.val()) === nLimitMount ) {
+        $input.click();
+      }
+    };
+
+    this.$wrap_monthly_select_list.find('input').each(fnCheckedUI);
+    this.$wrap_immediately_select_list.find('input').each(fnCheckedUI);
   },
 
   _requestSendingData: function () {
@@ -70,6 +88,8 @@ Tw.MyTDataLimit.prototype = {
 
   _onSuccessSendingData: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
+
+    }else{
 
     }
   }

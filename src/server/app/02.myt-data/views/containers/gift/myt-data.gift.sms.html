@@ -22,7 +22,7 @@
             <div class="header-ti align-l">
                 <h1>문자 보내기</h1>
             </div>
-            <button class="prev-step">취소</button>
+            <button class="prev-step fe-common-back">취소</button>
         </div>
     </div>
     <!--// #header -->
@@ -32,15 +32,15 @@
         <div class="container">
             <!-- .cont-box -->
             <div class="cont-box nogaps noborder">
-                <h3 class="sub-title0">To. 김*진<span class="add-info">010-12**-56**</span></h3>
+                <h3 class="sub-title0">To. <span class="add-name"><!--김*진--></span><span class="add-info"><!--010-12**-45**--></span></h3>
                 <div class="cont-box">
-                    <textarea class="type-msg fe-sms_textarea" rows="15" cols="30" maxlength="80" placeholder="메시지로 마음을 표현해 보세요.(80자 이내)"></textarea>
+                    <textarea id="fe-sms_textarea" class="type-msg" rows="15" cols="30" maxlength="80" placeholder="메시지로 마음을 표현해 보세요.(80자 이내)"></textarea>
                 </div>
             </div>
             <!--// .cont-box -->
             <ul class="bt-slice full">
                 <li class="bt-red1">
-                    <button disabled>보내기</button>
+                    <button id="fe-send_gift_sms" disabled>보내기</button>
                 </li>
             </ul>
         </div>
@@ -50,7 +50,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    // var oMyTDataGift = new Tw.MyTDataGift();
+    var oMyTDataGiftSms = new Tw.MyTDataGiftSms($('.container-wrap'));
   });
 </script>
 
