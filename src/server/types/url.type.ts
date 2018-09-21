@@ -10,6 +10,7 @@ export const URL = {
   '/myt/join/product/fee-alarm/change': { login: true, id: 'MS_05_01_01', title: '요금제 변경 가능일 알림 서비스' },
   
   // MyT-data
+  '/myt/data': { login: true, id: 'DC', title: '데이터/통화 관리' },
   '/myt/data/recharge/history': { login: true, id: 'DC_07', title: '최근 충전/선물 내역' },
 
   // Product
