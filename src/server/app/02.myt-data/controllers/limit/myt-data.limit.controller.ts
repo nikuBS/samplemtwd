@@ -24,14 +24,13 @@ class MyTDataLimit extends TwViewController {
 
     switch ( page ) {
       case 'complete':
-        res.render('gift/myt-data.gift.complete.html', responseData);
+        res.render('limit/myt-data.limit.complete.html', responseData);
         break;
       default:
         Observable.combineLatest(
           this.getLimitUserInfo()
         ).subscribe(([limitUserInfo]) => {
           const response = Object.assign(
-            {},
             { limitUserInfo: limitUserInfo },
             responseData
           );
@@ -46,14 +45,13 @@ class MyTDataLimit extends TwViewController {
   }
 
   private getLimitUserInfo() {
-    return this.apiService.request(API_CMD.BFF_06_0034, {})
-      .map((resp) => {
-        if ( resp.code === API_CODE.CODE_00 ) {
-          return resp.result;
-        } else {
-          return null;
-        }
-      });
+    return this.apiService.request(API_CMD.BFF_06_0034, {}).map((resp) => {
+      if ( resp.code === API_CODE.CODE_00 ) {
+        return resp.result;
+      } else {
+        return null;
+      }
+    });
   }
 }
 

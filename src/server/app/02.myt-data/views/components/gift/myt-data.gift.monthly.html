@@ -1,5 +1,5 @@
 <%#
-* FileName: myt-data.gift.auto.html
+* FileName: myt-data.gift.monthly.html
 * Author: Jiman Park (jiman.park@sk.com)
 * Date: 2018.09.06
 %>
@@ -38,10 +38,9 @@
     <% if ( autoList && autoList.length >= 2 ) { %>
     <p class="tx-situation">결합 가족 2회선을 이미 신청하셨습니다.<br>대상자를 변경하시려면 <em class="point">해지 후 신청</em>해주세요.</p>
     <% } else { %>
-    <button class="bt-more-add"><span class="ico"></span><span class="tx">지정번호 추가하기</span></button>
+    <button class="bt-more-add fe-btn_more_add"><span class="ico"></span><span class="tx">지정번호 추가하기</span></button>
     <% } %>
 </div>
-<hr class="cont-sp type1" aria-hidden="true">
 <div class="cont-box" style="display: none">
     <h4 class="tabcon-title0">자동선물 신청 번호</h4>
     <div class="recently-tel-box">
@@ -51,14 +50,16 @@
                        maxlength="13" aria-labelledby="aria-exp-label1" aria-describedby="aria-exp-desc1">
                 <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
             </span>
+            <% if ( isApp ) { %>
             <span class="bt-box skyblue1">
                 <button type="button" class="fe-btn_auto_contact">주소록</button>
             </span>
+            <% } %>
         </div>
     </div>
     <h4 class="tabcon-title0 mt30">
         자동선물할 데이터 량
-        <span class="title0-sub-tx0">31.2GB 남음</span>
+        <!--<span class="title0-sub-tx0">31.2GB 남음</span>-->
     </h4>
     <!-- .widget -->
     <div class="widget">
@@ -132,14 +133,15 @@
                                                                         </span>
                     </li>
                 </ul>
-                <ul class="bt-slice full">
-                    <li class="bt-red1">
-                        <button class="fe-btn_send_auto_gift" disabled>자동선물하기</button>
-                    </li>
-                </ul>
+
             </div>
         </div>
     </div>
     <!--// .widget -->
     <p class="tabcon-tx0 pt14">* 1.0GB는 고객님이 가장 많이 선택하는 데이터 량입니다.</p>
+    <ul class="bt-slice full">
+        <li class="bt-red1">
+            <button class="fe-btn_send_auto_gift" disabled>자동선물하기</button>
+        </li>
+    </ul>
 </div>

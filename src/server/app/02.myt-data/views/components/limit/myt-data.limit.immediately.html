@@ -4,76 +4,83 @@
 * Date: 2018.09.19
 %>
 
-<div class="cont-box bgnone" style="display: <%= ( limitUserInfo.blockYn === 'Y' || limitUserInfo.dataLimitedTmthYn === 'Y') ? 'block' : 'none' %>">
+<div class="cont-box bgnone"
+     style="display: <%= ( limitUserInfo.blockYn === 'Y' || limitUserInfo.dataLimitedTmthYn === 'Y') ? 'block' : 'none' %>">
     <p class="tabcon-tx0">데이터 <strong>차단 해제 상태</strong>입니다.<br>충전없이 데이터 사용이 가능합니다.</p>
 </div>
-<div class="cont-box" style="display: <%= ( limitUserInfo.blockYn === 'Y' || limitUserInfo.dataLimitedTmthYn === 'Y') ? 'none' : 'block' %>">
-<p class="tabcon-title0">충전 금액</p>
-<div class="widget">
-    <div class="widget-box radio">
-        <div class="radio-slide">
-            <ul class="select-list fe-cookiz_monthly_select_list" role="radiogroup"
-                style="width: 100%;">
-                <li class="radiobox disabled" role="radio" aria-checked="false"
-                    aria-disabled="true">
-                    <input type="radio" name="radio2" value="20000" title="값1" disabled="">
-                    <!-- 체크상태일 경우 checked="checked" -->
-                    <span class="radio-txt">
+<div class="cont-box"
+     style="display: <%= ( limitUserInfo.blockYn === 'Y' || limitUserInfo.dataLimitedTmthYn === 'Y') ? 'none' : 'block' %>">
+    <p class="tabcon-title0">충전 금액</p>
+    <div class="widget">
+        <div class="widget-box radio">
+            <div class="radio-slide">
+                <ul class="select-list fe-limit_immediately_select_list" role="radiogroup"
+                    style="width: 100%;">
+                    <li class="radiobox" role="radio" aria-checked="false"
+                        aria-disabled="true">
+                        <input type="radio" name="radio2" value="20000" title="값1">
+                        <!-- 체크상태일 경우 checked="checked" -->
+                        <span class="radio-txt">
                                                 <span>20,000</span><span class="unit">원</span>
                                             </span>
-                </li>
-                <li class="radiobox" role="radio" aria-checked="true">
-                    <input type="radio" name="radio2" value="15000" title="값2">
-                    <!-- 체크상태일 경우 checked="false" -->
-                    <span class="radio-txt">
+                    </li>
+                    <li class="radiobox" role="radio" aria-checked="true">
+                        <input type="radio" name="radio2" value="15000" title="값2">
+                        <!-- 체크상태일 경우 checked="false" -->
+                        <span class="radio-txt">
                                                 <span>15,000</span><span class="unit">원</span>
                                             </span>
-                </li>
-                <li class="radiobox" role="radio" aria-checked="false">
-                    <input type="radio" name="radio2" value="10000" title="값3">
-                    <!-- 비활성화상태일 경우 disabled="disabled" -->
-                    <span class="radio-txt">
+                    </li>
+                    <li class="radiobox" role="radio" aria-checked="false">
+                        <input type="radio" name="radio2" value="10000" title="값3">
+                        <!-- 비활성화상태일 경우 disabled="disabled" -->
+                        <span class="radio-txt">
                                                 <span>10,000</span><span class="unit">원</span>
                                             </span>
-                </li>
-                <li class="radiobox" role="radio" aria-checked="false">
-                    <input type="radio" name="radio2" value="5000" title="값4">
-                    <!-- 체크된 비활성화 상태일 경우 체크상태와 비활성화 상태를 전부 적용 -->
-                    <span class="radio-txt">
+                    </li>
+                    <li class="radiobox" role="radio" aria-checked="false">
+                        <input type="radio" name="radio2" value="5000" title="값4">
+                        <!-- 체크된 비활성화 상태일 경우 체크상태와 비활성화 상태를 전부 적용 -->
+                        <span class="radio-txt">
                                                 <span>5,000</span><span class="unit">원</span>
                                             </span>
-                </li>
-                <li class="radiobox" role="radio" aria-checked="false">
-                    <input type="radio" name="radio2" value="4000" title="값4">
-                    <!-- 체크된 비활성화 상태일 경우 체크상태와 비활성화 상태를 전부 적용 -->
-                    <span class="radio-txt">
+                    </li>
+                    <li class="radiobox" role="radio" aria-checked="false">
+                        <input type="radio" name="radio2" value="4000" title="값4">
+                        <!-- 체크된 비활성화 상태일 경우 체크상태와 비활성화 상태를 전부 적용 -->
+                        <span class="radio-txt">
                                                 <span>4,000</span><span class="unit">원</span>
                                             </span>
-                </li>
-                <li class="radiobox" role="radio" aria-checked="false">
-                    <input type="radio" name="radio2" value="3000" title="값4">
-                    <!-- 체크된 비활성화 상태일 경우 체크상태와 비활성화 상태를 전부 적용 -->
-                    <span class="radio-txt">
+                    </li>
+                    <li class="radiobox" role="radio" aria-checked="false">
+                        <input type="radio" name="radio2" value="3000" title="값4">
+                        <!-- 체크된 비활성화 상태일 경우 체크상태와 비활성화 상태를 전부 적용 -->
+                        <span class="radio-txt">
                                                 <span>3,000</span><span class="unit">원</span>
                                             </span>
-                </li>
-                <li class="radiobox" role="radio" aria-checked="false">
-                    <input type="radio" name="radio2" value="2000" title="값4">
-                    <!-- 체크된 비활성화 상태일 경우 체크상태와 비활성화 상태를 전부 적용 -->
-                    <span class="radio-txt">
+                    </li>
+                    <li class="radiobox" role="radio" aria-checked="false">
+                        <input type="radio" name="radio2" value="2000" title="값4">
+                        <!-- 체크된 비활성화 상태일 경우 체크상태와 비활성화 상태를 전부 적용 -->
+                        <span class="radio-txt">
                                                 <span>2,000</span><span class="unit">원</span>
                                             </span>
-                </li>
-                <li class="radiobox" role="radio" aria-checked="false">
-                    <input type="radio" name="radio2" value="1000" title="값4">
-                    <!-- 체크된 비활성화 상태일 경우 체크상태와 비활성화 상태를 전부 적용 -->
-                    <span class="radio-txt">
+                    </li>
+                    <li class="radiobox" role="radio" aria-checked="false">
+                        <input type="radio" name="radio2" value="1000" title="값4">
+                        <!-- 체크된 비활성화 상태일 경우 체크상태와 비활성화 상태를 전부 적용 -->
+                        <span class="radio-txt">
                                                 <span>1,000</span><span class="unit">원</span>
                                             </span>
-                </li>
-            </ul>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 </div>
-</div>
 
+<ul class="bt-slice full" style="display: <%= ( limitUserInfo.blockYn === 'Y' || limitUserInfo.dataLimitedTmthYn === 'Y') ? 'none' : 'block' %>">
+    <li class="bt-red1">
+        <button class="fe-immediately_recharge">충전하기</button>
+    </li>
+</ul>

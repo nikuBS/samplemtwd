@@ -70,8 +70,7 @@ Tw.MyTDataGiftImmediately.prototype = {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
 
     } else {
-
-      // Tw.Error(res.code, res.msg).pop();
+      Tw.Error(res.code, res.msg).pop();
     }
   },
 
