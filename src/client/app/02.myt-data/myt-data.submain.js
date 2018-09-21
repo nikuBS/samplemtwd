@@ -100,6 +100,9 @@ Tw.MyTDataSubMain.prototype = {
     if ( this.data.immCharge ) {
       this._immediatelyChargeRequest();
     }
+    if ( this.data.pattern ) {
+      setTimeout($.proxy(this._initPatternChart, this), 300);
+    }
   },
 
   __getPatternMonth: function (value) {
@@ -206,10 +209,6 @@ Tw.MyTDataSubMain.prototype = {
         }
         else {
           this.immChargeData.limit = null;
-        }
-        // api request 마무리 이후 widget 생성
-        if ( this.data.pattern ) {
-          setTimeout($.proxy(this._initPatternChart, this), 300);
         }
         this.loadingView(false);
       }, this));
