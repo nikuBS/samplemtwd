@@ -79,7 +79,7 @@
     </div>
 </div>
 
-<ul class="bt-slice full">
+<ul class="bt-slice full" style="display: <%= ( limitUserInfo.blockYn === 'Y' || limitUserInfo.dataLimitedTmthYn === 'Y') ? 'none' : 'block' %>">
     <li class="bt-red1">
         <button class="fe-immediately_recharge">충전하기</button>
     </li>

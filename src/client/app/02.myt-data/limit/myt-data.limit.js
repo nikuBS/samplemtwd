@@ -42,9 +42,11 @@ Tw.MyTDataLimit.prototype = {
     if ( isChecked ) {
       this._apiService.request(Tw.API_CMD.BFF_06_0038, {})
         .done($.proxy(this._onSuccessBlockImmediately, this));
+      this.$btn_immediately_recharge.closest('ul').show();
     } else {
       this._apiService.request(Tw.API_CMD.BFF_06_0039, {})
         .done($.proxy(this._onSuccessBlockImmediately, this));
+      this.$btn_immediately_recharge.closest('ul').hide();
     }
 
     $('#tab1-tab').find('.cont-box').each(this._toggleDisplay);
@@ -62,9 +64,11 @@ Tw.MyTDataLimit.prototype = {
     if ( isChecked ) {
       this._apiService.request(Tw.API_CMD.BFF_06_0040, {})
         .done($.proxy(this._onSuccessBlockMonthly, this));
+      this.$btn_monthly_recharge.closest('ul').show();
     } else {
       this._apiService.request(Tw.API_CMD.BFF_06_0041, {})
         .done($.proxy(this._onSuccessBlockMonthly, this));
+      this.$btn_monthly_recharge.closest('ul').hide();
     }
 
     $('#tab2-tab').find('.cont-box').each(this._toggleDisplay);
