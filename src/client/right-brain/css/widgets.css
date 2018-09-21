@@ -156,6 +156,10 @@
   padding: 1.25rem 0;
 }
 
+.box-confirm.nobtm {
+  padding-bottom: 0;
+}
+
 .accordion {
   position: relative;
 }
@@ -193,18 +197,31 @@
 }
 
 .accordion .tit-a {
+  padding: 0 1rem;
   font-size: 0.9375rem;
   font-weight: 700;
 }
 
 .accordion .acco-list {
   display: none;
-  padding: 1.0625rem 0 0;
+  padding: 0.75rem 0 0;
 }
 
 .accordion .acco-list .acco-box {
-  padding: 0 0.1875rem;
-  border-top: 1px solid #e5e8ee;
+  position: relative;
+}
+
+.accordion .acco-list .acco-box:after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 1rem;
+  right: 1rem;
+  border-bottom: 1px solid #e1e1e1;
+}
+
+.accordion .acco-list .acco-box:last-child:after {
+  display: none;
 }
 
 .accordion .acco-list .acco-box .acco-tit {
@@ -223,7 +240,8 @@
   display: block;
   position: relative;
   width: 100%;
-  padding: 1.1875rem 1.875rem 0.9375rem 1.25rem;
+  /*padding:rem(19px 30px 15px 20px);*/
+  padding: 1.375rem 2.5rem 1.375rem 1rem;
   font-size: 0.9375rem;
   text-align: left;
 }
@@ -240,7 +258,7 @@
   content: "";
   position: absolute;
   top: 50%;
-  right: 0;
+  right: 1rem;
   margin: -0.78125rem 0 0;
   width: 1.5625rem;
   height: 1.5625rem;
@@ -255,11 +273,16 @@
   visibility: hidden;
 }
 
-.accordion .acco-list .acco-box.on > .acco-tit button:after {
+.accordion .acco-list .acco-box.on:after, .accordion .acco-list .acco-box.imp-view:after {
+  left: 0;
+  right: 0;
+}
+
+.accordion .acco-list .acco-box.on > .acco-tit button:after, .accordion .acco-list .acco-box.imp-view > .acco-tit button:after {
   background-position: 0 -21.875rem;
 }
 
-.accordion .acco-list .acco-box.on > .acco-cont {
+.accordion .acco-list .acco-box.on > .acco-cont, .accordion .acco-list .acco-box.imp-view > .acco-cont {
   display: block;
   height: auto;
   overflow: auto;
@@ -267,48 +290,17 @@
   padding: 1.125rem 0 2.375rem;
 }
 
-.accordion .acco-list .acco-box.on > .acco-cont .bt-slice {
+.accordion .acco-list .acco-box.on > .acco-cont .bt-slice, .accordion .acco-list .acco-box.imp-view > .acco-cont .bt-slice {
   margin-top: 0.5rem;
 }
 
-.accordion .acco-list .acco-box.on > .acco-cont > .list-dot > li:last-child .ex-txt {
+.accordion .acco-list .acco-box.on > .acco-cont > .list-dot > li:last-child .ex-txt, .accordion .acco-list .acco-box.imp-view > .acco-cont > .list-dot > li:last-child .ex-txt {
   margin-bottom: 0;
 }
 
-.accordion .acco-list .acco-box.on > .acco-tit + .acco-cont {
-  padding: 0.5rem 0 2.375rem;
-}
-
-.accordion .acco-list .acco-box.on:last-of-type > .acco-cont {
-  padding-bottom: 0;
-}
-
-.accordion .acco-list .acco-box.imp-view > .acco-tit button:after {
-  background-position: 0 -21.875rem;
-}
-
-.accordion .acco-list .acco-box.imp-view > .acco-cont {
-  display: block;
-  height: auto;
-  overflow: auto;
-  visibility: visible;
-  padding: 1.125rem 0 2.375rem;
-}
-
-.accordion .acco-list .acco-box.imp-view > .acco-cont .bt-slice {
-  margin-top: 0.5rem;
-}
-
-.accordion .acco-list .acco-box.imp-view > .acco-cont > .list-dot > li:last-child .ex-txt {
-  margin-bottom: 0;
-}
-
-.accordion .acco-list .acco-box.imp-view > .acco-tit + .acco-cont {
-  padding: 0.5rem 0 2.375rem;
-}
-
-.accordion .acco-list .acco-box.imp-view:last-of-type > .acco-cont {
-  padding-bottom: 0;
+.accordion .acco-list .acco-box.on > .acco-tit + .acco-cont, .accordion .acco-list .acco-box.imp-view > .acco-tit + .acco-cont {
+  padding: 1.6875rem 1rem;
+  background-color: #f0eeeb;
 }
 
 .accordion .acco-style.btn-hold .acco-list .acco-box .acco-tit {
@@ -390,7 +382,7 @@
 
 .accordion .list-dot > .list {
   position: relative;
-  padding: 0.5625rem 0 0.5625rem 0.75rem;
+  padding: 1.125rem 0 0 0.75rem;
   font-size: 0.875rem;
   color: #000;
   box-sizing: border-box;
@@ -401,7 +393,7 @@
 .accordion .list-dot > .list:before {
   content: "";
   position: absolute;
-  top: 0.9375rem;
+  top: 1.5rem;
   left: 0;
   padding: 0.125rem;
   background: #7b7b7b;

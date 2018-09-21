@@ -121,7 +121,7 @@ skt_landing.widgets = {
           radioSlide.find('.select-list').css('width',itemsW);
         }
       }
-      
+
       $(this).is(':checked') ? box.addClass('checked').attr('aria-checked',true) : box.removeClass('checked').attr('aria-checked',false);
       $(this).is(':disabled') ? box.addClass('disabled').attr('aria-disabled',true) : box.removeClass('disabled');
       $(this).on('change', function () {
@@ -136,7 +136,7 @@ skt_landing.widgets = {
       }).on('focusout', function () {
         box.removeClass('focus');
       });
-      
+
       box.on('click',function(e){
         if(e.target.tagName.toLowerCase() == 'input' && e.target != e.currentTarget) return ;
         $(this).find('input').trigger('change');
@@ -397,12 +397,12 @@ skt_landing.widgets = {
       if(_this.find('> .acco-cover > .bt-whole').length < 1){
         _this.find('.acco-cover').addClass('on');
       }
-      var layer = $('.popup .popup-page.layer');
+      /*var layer = $('.popup .popup-page.layer');
       if(layer.length > 0){
         var layer_top = layer.position();
         var acco_top = layer.find('.box-confirm .widget-box.accordion').position().top  - 60;
 
-      }
+      }*/
       var accoList = _this.find('> .acco-cover > .acco-style > .acco-list > .acco-box');
       var accoList_leng = accoList.length;
 
@@ -436,25 +436,25 @@ skt_landing.widgets = {
       _this.find('> .acco-cover > .bt-whole button').on('click',function(event){
         if(!$(this).closest('.acco-cover').hasClass('on')){
           $(this).attr('aria-pressed', 'true');
-          $('.popup .popup-page.layer').animate({scrollTop:acco_top}, '200');
+          //$('.popup .popup-page.layer').animate({scrollTop:acco_top}, '200');
           event.stopPropagation();
         }else{
           $(this).attr('aria-pressed', 'false');
         }
         $(this).closest('.acco-cover').toggleClass('on');
       });
-      _this.find('> .acco-cover > .acco-style > .acco-list > .acco-box > .acco-tit button').on('click', function (event) {
+      _this.find('> .acco-cover > .acco-style > .acco-list > .acco-box:not(".none-event") > .acco-tit button').on('click', function (event) {
         if(_this.find('> .acco-cover').hasClass('toggle')){
           $(this).closest('.acco-box').siblings().removeClass('on');
           $(this).closest('.acco-box').siblings().find('> .acco-tit button').attr('aria-pressed',false);
         }
         $(this).closest('.acco-box').toggleClass('on');
 
-        var acco_tit_top = ($(this).position().top + acco_top);
+        //var acco_tit_top = ($(this).position().top + acco_top);
 
         if($(this).closest('.acco-box').hasClass('on')){
           $(this).attr('aria-pressed', 'true');
-          $('.popup .popup-page.layer').animate({scrollTop:acco_tit_top}, '200');
+          //$('.popup .popup-page.layer').animate({scrollTop:acco_tit_top}, '200');
           event.stopPropagation();
         }else{
           $(this).attr('aria-pressed', 'false');

@@ -1,6 +1,7 @@
 $(document).on('ready', function () {
   $('html').addClass('device_'+skt_landing.util.win_info.get_device());
   skt_landing.action.all_menu();
+  skt_landing.action.top_btn();
 });
 $(window).on('resize', function () {
 
@@ -371,15 +372,14 @@ skt_landing.action = {
     target.eq(idx).attr('tabindex',0).focus(); //포커스
   },
   top_btn: function () {
-    if (skt_landing.util.win_info.get_scrollT() > 0) {
-      $('.btn-top').show().on('click', function () {
-        $('body').stop().animate({
-          'scrollTop': 0
+    $('.bt-top button').on('click', function () {
+      $('html').stop().animate({
+        'scrollTop': 0
+      }, {
+          queue: false,
+          duration: 500
         });
-      });
-    } else {
-      $('.btn-top').hide().off('click');
-    }
+    });
   },
   ran_id_create:function(){
     var d = new Date().getTime(),
@@ -697,16 +697,16 @@ skt_landing.dev = {
     };
     options = $.extend(defaults, options);
     $target.sortable(options).disableSelection();
-   $target.on('touchstart touchend touchmove','.ui-state-default .bt-active',function(e){
+   $target.on('touchstart touchend touchmove','.ui-state-default .bt-active button',function(e){
      e.stopPropagation();
    });
-   $target.parent().on('click', '.connectedSortable .bt-active', function(){
+   $target.parent().on('click', '.connectedSortable .bt-active button', function(){
      if($(this).closest('.connectedSortable').hasClass('enabled')){
-       $(this).parent().appendTo('#sortable-disabled');
-       $(this).find('.blind').text('회선 활성화 하기');
+       $(this).closest('.ui-state-default').appendTo('#sortable-disabled');
+       $(this).text('추가');
      }else{
-       $(this).parent().prependTo('#sortable-enabled');
-       $(this).find('.blind').text('회선 삭제 하기');
+       $(this).closest('.ui-state-default').prependTo('#sortable-enabled');
+       $(this).text('삭제');
      }
    });
    $target.on('touchstart touchend touchmove','.bt-sort',function(e){

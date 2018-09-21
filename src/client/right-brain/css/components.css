@@ -3302,6 +3302,7 @@
   margin-top: -0.25rem;
   background: url(/img/ico/ico-group.png) no-repeat -1.875rem -22.4375rem;
   background-size: 3.125rem auto;
+  right: 0;
 }
 
 .statement-detail .accordion .acco-list .acco-box.on .acco-tit button:after {
@@ -3343,6 +3344,11 @@
 
 .statement-detail .accordion .acco-list .acco-box.noborder {
   border-top: none;
+}
+
+.statement-detail .accordion .acco-list .acco-box:after {
+  left: 0;
+  right: 0;
 }
 
 .tx-red {
@@ -3544,7 +3550,7 @@
   vertical-align: -0.0625rem;
 }
 
-.history-list ul li button {
+.history-list ul li button, .history-list ul li a {
   display: block;
   width: 100%;
   text-align: left;
@@ -3552,17 +3558,17 @@
   position: relative;
 }
 
-.history-list ul li button .li-elem {
+.history-list ul li button .li-elem, .history-list ul li a .li-elem {
   border-top: 1px solid #e1e1e1;
   padding-left: 0;
   padding-right: 1.875rem;
 }
 
-.history-list ul li button:first-of-type .li-elem {
+.history-list ul li button:first-of-type .li-elem, .history-list ul li a:first-of-type .li-elem {
   border-top: none;
 }
 
-.history-list ul li button:after {
+.history-list ul li button:after, .history-list ul li a:after {
   content: '';
   position: absolute;
   right: 1rem;
@@ -4237,6 +4243,39 @@
   line-height: 1.375rem;
 }
 
+.detail-info-list li {
+  border-top: 1px solid #e1e1e1;
+}
+
+.detail-info-list li:first-child {
+  border-top: 0;
+}
+
+.detail-info-list li dl {
+  display: table;
+  width: 100%;
+}
+
+.detail-info-list li dt {
+  display: table-cell;
+  width: 40%;
+  padding: 0.9375rem 0;
+  font-size: 0.875rem;
+  color: #666;
+}
+
+.detail-info-list li dd {
+  display: table-cell;
+  width: 60%;
+  padding: 0.9375rem 0;
+  text-align: right;
+  font-size: 0.9375rem;
+}
+
+.detail-info-list li dd .bt-link-tx {
+  font-size: 0.75rem;
+}
+
 /* 전동엽 */
 .refill-coupon-box .coupon-list .coupon-paper {
   display: table;
@@ -4801,6 +4840,7 @@
   color: #000;
   letter-spacing: -0.1875rem;
   line-height: 2.25rem;
+  font-weight: 300;
 }
 
 .agreement-title span strong {
@@ -5004,6 +5044,501 @@
 
 .box-authority .authority-info .authority-list.nodot li:before {
   display: none;
+}
+
+.setting-nickname-box {
+  position: relative;
+  min-height: 8.125rem;
+  padding: 1.875rem;
+}
+
+.setting-nickname-box .setting-nickname-title {
+  display: block;
+  font-size: 0.9375rem;
+}
+
+.setting-nickname-box .error-txt {
+  display: none;
+}
+
+.setting-nickname-box .inputbox {
+  margin: 0.9375rem 0 0;
+}
+
+.setting-nickname-box .inputbox .guide-txt {
+  float: none;
+  width: 100%;
+  margin: 1.125rem 0 0;
+  font-size: 0.75rem;
+  color: #666;
+}
+
+.setting-nickname-box .inputbox .guide-byte .byte {
+  float: none;
+  position: absolute;
+  right: 0;
+  bottom: 100%;
+  width: auto;
+  margin: 0 0 0.9375rem;
+  font-size: 0.75rem;
+  color: #666;
+}
+
+.setting-nickname-box .inputbox .guide-byte .byte .byte-current {
+  font-weight: 700;
+  color: #000;
+}
+
+/* 회선관리 */
+.sortlist .ui-state-default {
+  position: relative;
+  display: table;
+  width: 100%;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 0 1rem;
+  border: none;
+  background: #fff;
+  zoom: 1;
+}
+
+.sortlist .ui-state-default:after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 1rem;
+  right: 1rem;
+  border-bottom: 1px solid #e1e1e1;
+}
+
+.sortlist .ui-state-default:last-child:after {
+  display: none;
+}
+
+.sortlist .ui-state-default.ui-sortable-helper {
+  background-color: rgba(255, 255, 255, 0.87);
+}
+
+.sortlist .ui-state-default.ui-sortable-helper:after {
+  display: none;
+}
+
+.sortlist .ui-state-default .bt-active {
+  display: table-cell;
+  width: 3.25rem;
+  vertical-align: middle;
+}
+
+.sortlist .ui-state-default .bt-active button, .sortlist .ui-state-default .bt-active a {
+  display: block;
+  margin: 0 auto;
+  width: 3.25rem;
+  padding: 0 0.8125rem;
+  font-size: 0.8125rem;
+  line-height: 1.625rem;
+  border-radius: 1.25rem;
+  border: 1px solid #cfcfcf;
+  color: #000;
+  background: #fff;
+}
+
+.sortlist .ui-state-default .bt-active button.selected, .sortlist .ui-state-default .bt-active a.selected {
+  background: #f5f5f5;
+}
+
+.sortlist .ui-state-default .bt-active button:hover, .sortlist .ui-state-default .bt-active a:hover {
+  background: #f5f5f5;
+}
+
+.sortlist .ui-state-default .bt-active button:disabled, .sortlist .ui-state-default .bt-active a:disabled {
+  border: 1px solid #9e9e9e;
+  color: #9e9e9e;
+  background: #fff;
+}
+
+.sortlist .ui-state-default .state-box {
+  display: table-cell;
+  padding: 1.25rem 2.75rem 1.25rem 1.6875rem;
+  vertical-align: middle;
+}
+
+.sortlist .ui-state-default .state-box .ti {
+  font-size: 1.125rem;
+}
+
+.sortlist .ui-state-default .state-box .ph {
+  margin: 0.375rem 0;
+  font-size: 0.8125rem;
+  color: #666;
+}
+
+.sortlist .ui-state-default .ico-move {
+  display: table-cell;
+  width: 2.5rem;
+  text-align: right;
+  overflow: hidden;
+}
+
+.sortlist .ui-state-default .ico-move .ico {
+  display: inline-block;
+  margin: 0 auto;
+  width: 1.25rem;
+  height: 1.25rem;
+  background: url(/img/ico/ico-group.png) no-repeat -0.125rem -39.25rem;
+  background-size: 3.125rem;
+}
+
+.sortlist .ui-state-default .state-bt {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0.3125rem;
+  width: 2.75rem;
+  height: 100%;
+}
+
+.sortlist .ui-state-default .state-bt .bt-sort {
+  position: absolute;
+  display: block;
+  left: 0.625rem;
+  width: 1.25rem;
+  height: 1.25rem;
+  background-image: url(/img/ico/ico-group.png);
+  background-repeat: no-repeat;
+  background-size: 3.125rem;
+}
+
+.sortlist .ui-state-default .state-bt .bt-sort:before {
+  content: "";
+  display: inline-block;
+  position: absolute;
+  width: 2.25rem;
+  height: 1.875rem;
+}
+
+.sortlist .ui-state-default .state-bt .bt-sort.up {
+  top: 1.125rem;
+  background-position: -0.125rem -37.6875rem;
+}
+
+.sortlist .ui-state-default .state-bt .bt-sort.up:before {
+  top: -0.625rem;
+  left: -0.625rem;
+}
+
+.sortlist .ui-state-default .state-bt .bt-sort.down {
+  bottom: 1.125rem;
+  background-position: -1.6875rem -37.6875rem;
+}
+
+.sortlist .ui-state-default .state-bt .bt-sort.down:before {
+  top: 0;
+  left: -0.625rem;
+}
+
+.sortlist #sortable-enabled {
+  position: relative;
+  padding-bottom: 1.25rem;
+}
+
+.sortlist #sortable-enabled .ui-state-default .bt-active {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.sortlist #sortable-enabled .ui-state-default .bt-active button, .sortlist #sortable-enabled .ui-state-default .bt-active a {
+  display: block;
+  margin: 0 auto;
+  width: 3.25rem;
+  padding: 0 0.8125rem;
+  font-size: 0.8125rem;
+  line-height: 1.625rem;
+  border-radius: 1.25rem;
+  border: 1px solid #cfcfcf;
+  color: #000;
+  background: #fff;
+}
+
+.sortlist #sortable-enabled .ui-state-default .bt-active button.selected, .sortlist #sortable-enabled .ui-state-default .bt-active a.selected {
+  background: #f5f5f5;
+}
+
+.sortlist #sortable-enabled .ui-state-default .bt-active button:hover, .sortlist #sortable-enabled .ui-state-default .bt-active a:hover {
+  background: #f5f5f5;
+}
+
+.sortlist #sortable-enabled .ui-state-default .bt-active button:disabled, .sortlist #sortable-enabled .ui-state-default .bt-active a:disabled {
+  border: 1px solid #9e9e9e;
+  color: #9e9e9e;
+  background: #fff;
+}
+
+.sortlist #sortable-disabled .ui-state-default .state-box {
+  padding-left: 0;
+}
+
+.sortlist #sortable-disabled .ui-state-default .bt-active button, .sortlist #sortable-disabled .ui-state-default .bt-active a {
+  color: #3b98e6;
+  background-color: #ebf5fe;
+  border-color: #ebf5fe;
+}
+
+.sortlist #sortable-disabled .ui-state-default .ico-move {
+  display: none;
+}
+
+.sortlist #sortable-disabled .ui-state-default .state-bt {
+  display: none;
+}
+
+.mline-list .mline-manage-top {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  /*border-bottom:1px solid map_get($basic, gray9);*/
+}
+
+.mline-list .mline-tit-wrap {
+  display: block;
+  padding: 1rem;
+}
+
+.mline-list .mline-tit-wrap .mline-tit {
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
+  font-weight: 700;
+  vertical-align: baseline;
+}
+
+.mline-list .mline-tit-wrap .mline-num {
+  display: inline-block;
+  margin-left: 0.125rem;
+  font-size: 1rem;
+  line-height: 1.25rem;
+  font-weight: 700;
+  vertical-align: baseline;
+}
+
+.mline-list .mline-tit-wrap .mline-num .num {
+  vertical-align: top;
+  font-family: "Helvetica Neue", Roboto, sans-serif;
+}
+
+.mline-list .ico-like {
+  position: relative;
+  top: auto;
+  right: auto;
+  display: inline-block;
+  overflow: hidden;
+  margin-top: 0.125rem;
+  width: 0.75rem;
+  height: 0.75rem;
+  margin-left: 0.25rem;
+  vertical-align: top;
+  background: url(/img/ico/ico-group.png) no-repeat -0.3125rem -27.8125rem;
+  background-size: 2.625rem;
+}
+
+.mline-list .mline-manage-cont .list-edit-bt .list-edit-guide {
+  float: right;
+}
+
+.mline-list .mline-manage-sort {
+  /*padding:rem(0 26px 20px);*/
+}
+
+.mline-list .mline-manage-sort .mline-manage-ti {
+  padding: 1.125rem 1rem 0.375rem;
+  font-size: 0.8125rem;
+  font-weight: 300;
+}
+
+.mline-list .mline-manage-sort .mline-manage-ti .mline-num {
+  color: #325ec1;
+  vertical-align: top;
+}
+
+.mline-list .mline-manage-sort .mline-manage-ti .mline-num.red {
+  color: #e22f26;
+}
+
+.mline-list .mline-manage-sort .mline-manage-ti .mline-num.blue {
+  color: #3b98e6;
+}
+
+.mline-list .mline-manage-sort .mline-manage-ti .mline-num .num {
+  display: inline-block;
+  margin-left: 0.1875rem;
+  vertical-align: top;
+  font-weight: 700;
+}
+
+.mline-list .mline-btzone {
+  padding: 0.9375rem 0;
+  margin: 0 1.625rem;
+  overflow: hidden;
+}
+
+.mline-list .mline-btzone .bt-mline {
+  font-size: 0.875rem;
+  font-weight: 400;
+  float: right;
+}
+
+.mline-list .mline-btzone .bt-mline.complete {
+  border-bottom: 1px solid;
+}
+
+.mline-list .mline-btzone .bt-mline.edit {
+  border-bottom: 1px solid;
+}
+
+.mline-list .acco-list .acco-title {
+  padding: 0 1.625rem;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  border-bottom: 1px solid #e1e1e1;
+}
+
+.mline-list .acco-list .acco-title button {
+  position: relative;
+}
+
+.mline-list .acco-list .acco-title button:after {
+  display: inline-block;
+  right: 1.25rem;
+}
+
+.mline-list .acco-list .acco-content .acco-cover {
+  padding: 0;
+  margin: 0 1.625rem;
+}
+
+.mline-list .acco-list .acco-content .acco-cover[aria-disabled="true"] .acco-box {
+  border: 1px solid #e5e8ee;
+  background: #e5e8ee;
+  color: #808698;
+}
+
+.mline-list .acco-list .acco-content .acco-cover .acco-list .acco-box {
+  margin-bottom: 0.5rem;
+  padding: 0;
+  border: 1px solid #e5e8ee;
+  border-radius: 0.3125rem;
+}
+
+.mline-list .acco-list .acco-content .acco-cover .acco-list .acco-box .acco-tit .mline-acc-top .ti {
+  font-size: 0.75rem;
+  font-weight: 400;
+}
+
+.mline-list .acco-list .acco-content .acco-cover .acco-list .acco-box .acco-tit .mline-acc-top .ph {
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.mline-list .acco-list .acco-content .acco-cover .acco-list .acco-box .acco-tit button {
+  top: 0.625rem;
+  right: 0.625rem;
+  margin: 0;
+}
+
+.mline-list .acco-list .acco-content .acco-cover .acco-list .acco-box .acco-cont {
+  margin-top: 0.625rem;
+  padding: 0;
+}
+
+.mline-list .acco-list .acco-content .acco-cover .acco-list .acco-box .acco-cont .mline-info {
+  margin: 0 0 1.25rem;
+  padding: 0 1.25rem;
+  font-size: 0;
+}
+
+.mline-list .acco-list .acco-content .acco-cover .acco-list .acco-box .acco-cont .mline-info .mline-detail {
+  margin-top: 1.5625rem;
+}
+
+.mline-list .acco-list .acco-content .acco-cover .acco-list .acco-box .acco-cont .mline-info .mline-detail dt {
+  display: inline-block;
+  padding: 0.1875rem 0;
+  width: 30%;
+  font-size: 0.8125rem;
+  font-weight: 400;
+  vertical-align: top;
+  color: #757575;
+}
+
+.mline-list .acco-list .acco-content .acco-cover .acco-list .acco-box .acco-cont .mline-info .mline-detail dd {
+  display: inline-block;
+  padding: 0.1875rem 0;
+  width: 70%;
+  font-size: 0.8125rem;
+  font-weight: 400;
+  text-align: right;
+  vertical-align: top;
+  color: #757575;
+}
+
+.mline-list .acco-list .acco-content .acco-cover .acco-list .acco-box .acco-cont .mline-info .mline-nickname {
+  margin-top: 1.5625rem;
+}
+
+.mline-list .acco-list .acco-content .acco-cover .acco-list .acco-box .acco-cont .mline-info .mline-nickname .inputbox .input {
+  width: 65%;
+}
+
+.mline-list .acco-list .acco-content .acco-cover .acco-list .acco-box .acco-cont .mline-info .mline-nickname .inputbox .bt-box {
+  width: 35%;
+}
+
+.mline-list .acco-list .acco-content .acco-cover .acco-list .acco-box .acco-cont .mline-chk {
+  padding: 0.625rem 1.25rem;
+  border-top: 1px solid #efefef;
+  background: #fbfbfb;
+}
+
+.mline-list .acco-list .acco-content .acco-cover .acco-list .acco-box .acco-cont .mline-chk .checkbox.type01 {
+  font-size: 0.875rem;
+  font-weight: 400;
+}
+
+.mline-list .acco-list .acco-content .acco-cover .acco-list .acco-box.on .acco-tit {
+  padding-bottom: 0;
+}
+
+.mline-list .acco-list .widget:last-of-type .acco-cover .acco-list .acco-box {
+  margin-bottom: 1.375rem;
+}
+
+.mline-list .bt-more {
+  background: #fbfbfb;
+  display: block;
+  padding: 0.9375rem;
+  font-size: 0.9375rem;
+  font-weight: 300;
+  color: #757575;
+  text-align: center;
+  border-top: 1px solid #efefef;
+  border-bottom: 1px solid #e1e1e1;
+}
+
+.mline-list .bt-more > span {
+  font-family: "Helvetica Neue", Roboto, sans-serif;
+  vertical-align: baseline;
+}
+
+.list-edit-guide {
+  font-size: 0.8125rem;
+  line-height: 1.375rem;
+  color: #5e6266;
+}
+
+.list-edit-guide .ico {
+  display: inline-block;
+  width: 1.375rem;
+  height: 1.375rem;
+  background: url(/img/ico/ico-group.png) no-repeat -1.6875rem -39.25rem;
+  background-size: 3.125rem;
+  vertical-align: middle;
 }
 
 /* 김세정 */
@@ -6441,7 +6976,7 @@
 }
 
 .line-change .line-group {
-  margin: 0 0 1.25rem 0;
+  margin: 0 0 0.75rem 0;
   font-size: 0.75rem;
   color: #666;
 }
@@ -6449,7 +6984,7 @@
 .line-change .select-list li {
   position: relative;
   display: block;
-  margin: 0 0 1.25rem 0;
+  margin: 0 0 0.9375rem 0;
 }
 
 .line-change .select-list li:last-of-type {
@@ -6477,9 +7012,11 @@
 
 .line-change .select-list li .line {
   display: block;
+  margin-top: 0.125rem;
   line-height: 0.75rem;
   font-size: 0.75rem;
   color: #666;
+  letter-spacing: 0;
 }
 
 .line-change .select-list li.checked .txt {
@@ -7661,6 +8198,7 @@
 }
 
 .payment-detail-btm-info {
+  display: block;
   color: #666;
   font-size: 0.75rem;
   padding: 1.25rem 1rem 0 1.9375rem;
@@ -7673,6 +8211,15 @@
   left: 1rem;
   top: 1.1875rem;
   position: absolute;
+}
+
+.payment-detail-btm-info.type-star {
+  padding: 1.25rem 0 0 0.625rem;
+}
+
+.payment-detail-btm-info.type-star:before {
+  content: '*';
+  left: 0;
 }
 
 .payment-switch-wrap .msg-wrap {
@@ -7751,6 +8298,7 @@
 }
 
 .cont-tit-wrap .tit-small {
+  display: block;
   font-size: 0.8125rem;
 }
 
@@ -7763,6 +8311,7 @@
 }
 
 .cont-tit-wrap .tit-big {
+  display: block;
   font-size: 1.5rem;
 }
 
@@ -7821,6 +8370,45 @@
 .basic-select-list ul li .tx-cont {
   display: table-cell;
   width: 78%;
+}
+
+.cont-use-detail li button dt .sv-case {
+  position: relative;
+  padding-right: 0.6875rem;
+  margin-right: 0.625rem;
+}
+
+.cont-use-detail li button dt .sv-case:after {
+  content: '';
+  width: 1px;
+  height: 0.5625rem;
+  background: #e1e1e1;
+  position: absolute;
+  top: 0.1875rem;
+  right: 0;
+}
+
+.statement-detail.type2 .acco-list {
+  padding-top: 0;
+}
+
+.statement-detail.type2 .acco-box:first-of-type {
+  border-top: none;
+}
+
+.cont-msg-big {
+  font-size: 1.5rem;
+  color: #666;
+  font-weight: 300;
+}
+
+.cont-loading-area {
+  text-align: center;
+  padding: 2rem 0;
+}
+
+.cont-loading-area > img {
+  width: 2.75rem;
 }
 
 /* 김재성 */
