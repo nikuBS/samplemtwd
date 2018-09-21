@@ -1,0 +1,98 @@
+<%#
+* FileName: myt-data.usage.refill.history.html
+* Author: Jiyoung Jo (jiyoungjo@sk.com)
+* Date: 2018.09.20
+%>
+
+
+<% include ../../components/start.component.html %>
+<body>
+  <!-- #skip_navigation -->
+  <div id="skipNav" class="skip_navi">
+      <ul>
+          <li><a href="#gnb">메뉴 바로가기</a></li>
+          <li><a href="#contents">본문 바로가기</a></li>
+          <li><a href="#footer">푸터 바로가기</a></li>
+      </ul>
+  </div>
+  <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- #header -->
+        <div id="header" class="header-wrap">
+            <div class="header">
+                <div class="header-ti align-l">
+                    <h1>최근 충전/선물 내역</h1>
+                </div>
+                <button class="prev-step fe-common-back"><span class="blind">이전으로</span></button>
+                <button class="bt-dropdown small" title="회선 선택" aria-haspopup="true">010-87**-13**<span class="ico"></span></button>
+            </div>
+        </div>
+        <!--// #header -->
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+                <div class="cont-box nogaps noborder">
+                    <div class="sub-top-box0">
+                      <button class="bt-dropdown big wd-auto" title="데이터 용량" aria-haspopup="true">전체<span class="ico"></span></button>
+                      <p class="total-num-tx">총<strong><%= chargeData.count %></strong>건</p>
+                    </div>
+                </div>
+                <!-- .cont-box -->
+                <div class="cont-box nogaps noborder">
+                    <div class="list-comp-history">
+                      <ul class="comp-box">
+                          <% let displayCount = 0, dIdx = 0; %>
+                          <% const keys = Object.keys(chargeData.data).reverse(); %>
+                          <% while (displayCount < 20 && dIdx < keys.length) { %>
+                              <% const value = chargeData.data[keys[dIdx]]; %>
+                              <li class="list-box">
+                                  <p class="list-date">
+                                    <span class="date-tx"><%= value.data[0].date %></span>
+                                  </p>
+                                  <ul class="list-con">
+                                    <% for (let iIdx = 0; iIdx < value.data.length; iIdx++) { %>
+                                      <% const item = value.data[iIdx]; %>
+                                      <li>
+                                        <p class="list-text">
+                                          <span class="mtext"><i class="badge badge-<%= item.badge.icon %>"><span class="blind"><%= item.badge.text %></span></i> <%= item.typeName %></span>
+                                          <span class="stext gray"><%= item.bottom %></span>
+                                        </p>
+                                        <% if (item.right) { %>
+                                        <div class="list-data">
+                                          <p class="data-tx blue-tx"><%= item.right.amount %><span><%= item.right.unit %></span></p>
+                                          <% if (item.refundable) { %>
+                                            <div class="bt-alone"><button class="bt-line-gray1">취소</button></div>
+                                          <% } else if (item.refunded) { %>
+                                            <p class="state-tx">취소</p>
+                                          <% } else if (item.fixed) { %>
+                                            <p class="state-tx">자동</p>
+                                          <% } %>
+                                        </div>
+                                        <% } %>
+                                      </li>
+                                    <% } %>
+                                  </ul>
+                              </li>
+                              <% displayCount += value.count; %>
+                              <% dIdx++; %>
+                          <% } %>
+                      </ul>
+                    </div>
+                </div>
+                <!--// .cont-box -->
+                <% if (chargeData.count > 20) { %>
+                  <div class="bt-more"><button>더보기</button></div>  
+                <% } %>
+            </div>
+        </div>
+        <!--// #contents -->
+    </div>
+<% include ../../components/javascript.component.html %>
+<script>
+  $(document).ready(function() {
+    new Tw.MyTDataRechargeHistory($('.wrap'), <%- JSON.stringify(chargeData) %>);
+  })
+</script>
+<% include ../../components/end.component.html %>
+</body>

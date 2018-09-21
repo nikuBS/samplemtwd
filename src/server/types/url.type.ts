@@ -8,8 +8,9 @@ export const URL = {
   '/myt/join/product/combinations': { login: true, id: 'MS_05', title: '나의 결합상품' },
   '/myt/join/product/fee-alarm': { login: true, id: 'MS_05_01', title: '요금제 변경 가능일 알림' },
   '/myt/join/product/fee-alarm/change': { login: true, id: 'MS_05_01_01', title: '요금제 변경 가능일 알림 서비스' },
-
+  
   // MyT-data
+  '/myt/data/recharge/history': { login: true, id: 'DC_07', title: '최근 충전/선물 내역' },
 
   // Product
   '/product/detail': { login: true, id: 'MP_02_02', title: '상품 상세 정보' },
