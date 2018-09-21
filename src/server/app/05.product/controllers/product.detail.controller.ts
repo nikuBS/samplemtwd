@@ -9,8 +9,8 @@ import { Request, Response, NextFunction } from 'express';
 import FormatHelper from '../../../utils/format.helper';
 import { Observable } from 'rxjs/Observable';
 import { API_CMD } from '../../../types/api-command.type';
-import { PLM_PARSING_CASE, UNIT, VOICE_UNIT } from '../../../types/bff.type';
-import { DATA_UNIT, PRODUCT_DETAIL_SUMMARY_TYPE } from '../../../types/string.type';
+import { UNIT, VOICE_UNIT } from '../../../types/bff.type';
+import { DATA_UNIT } from '../../../types/string.type';
 
 const productApiCmd = {
   'basic': API_CMD.BFF_10_0001,
@@ -90,7 +90,7 @@ class ProductDetail extends TwViewController {
       basOfrDataQtyCtt: this._parseBasOfrDataQtyCtt(summaryInfo.basOfrDataQtyCtt),
       basOfrVcallTmsCtt: this._parseBasOfrVcallTmsCtt(summaryInfo.basOfrVcallTmsCtt),
       basOfrCharCntCtt: this._parseBasOfrCharCntCtt(summaryInfo.basOfrCharCntCtt),
-      basFeeInfo: this._parsingSummaryBasFeeInfo(summaryInfo.basFeeInfo, summaryInfo.freeYn)
+      basFeeInfo: this._parsingSummaryBasFeeInfo(summaryInfo.basFeeInfo)
     };
   }
 
@@ -99,18 +99,6 @@ class ProductDetail extends TwViewController {
    * @private
    */
   private _parseBasOfrDataQtyCtt (basOfrDataQtyCtt): any {
-    if (PLM_PARSING_CASE.DATA_CASE_0.indexOf(this._prodId) !== -1) {
-      return PRODUCT_DETAIL_SUMMARY_TYPE.PLM_0;
-    }
-
-    if (PLM_PARSING_CASE.DATA_CASE_1.indexOf(this._prodId) !== -1) {
-      return PRODUCT_DETAIL_SUMMARY_TYPE.PLM_1;
-    }
-
-    if (FormatHelper.isEmpty(basOfrDataQtyCtt) || basOfrDataQtyCtt === '0') {
-      return PRODUCT_DETAIL_SUMMARY_TYPE.PLM_2;
-    }
-
     if (isNaN(parseInt(basOfrDataQtyCtt, 10))) {
       return basOfrDataQtyCtt;
     }
@@ -123,34 +111,6 @@ class ProductDetail extends TwViewController {
    * @private
    */
   private _parseBasOfrVcallTmsCtt (basOfrVcallTmsCtt): any {
-    if (PLM_PARSING_CASE.VOICE_CASE_1.indexOf(basOfrVcallTmsCtt) !== -1) {
-      return PRODUCT_DETAIL_SUMMARY_TYPE.PLM_4;
-    }
-
-    if (PLM_PARSING_CASE.VOICE_CASE_2.indexOf(basOfrVcallTmsCtt) !== -1) {
-      return PRODUCT_DETAIL_SUMMARY_TYPE.PLM_5;
-    }
-
-    if (PLM_PARSING_CASE.VOICE_CASE_3.indexOf(basOfrVcallTmsCtt) !== -1) {
-      return PRODUCT_DETAIL_SUMMARY_TYPE.PLM_6;
-    }
-
-    if (PLM_PARSING_CASE.VOICE_CASE_4.indexOf(basOfrVcallTmsCtt) !== -1) {
-      return PRODUCT_DETAIL_SUMMARY_TYPE.PLM_7;
-    }
-
-    if (PLM_PARSING_CASE.VOICE_CASE_5.indexOf(basOfrVcallTmsCtt) !== -1) {
-      return PRODUCT_DETAIL_SUMMARY_TYPE.PLM_8;
-    }
-
-    if (FormatHelper.isEmpty(basOfrVcallTmsCtt) && PLM_PARSING_CASE.VOICE_CASE_0.indexOf(this._prodId) !== -1) {
-      return PRODUCT_DETAIL_SUMMARY_TYPE.PLM_0;
-    }
-
-    if (FormatHelper.isEmpty(basOfrVcallTmsCtt)) {
-      return PRODUCT_DETAIL_SUMMARY_TYPE.PLM_2;
-    }
-
     if (isNaN(parseInt(basOfrVcallTmsCtt, 10))) {
       return basOfrVcallTmsCtt;
     }
@@ -163,18 +123,6 @@ class ProductDetail extends TwViewController {
    * @private
    */
   private _parseBasOfrCharCntCtt (basOfrCharCntCtt): any {
-    if (PLM_PARSING_CASE.SMS_CASE_0.indexOf(this._prodId) !== -1) {
-      return PRODUCT_DETAIL_SUMMARY_TYPE.PLM_0;
-    }
-
-    if (PLM_PARSING_CASE.SMS_CASE_1.indexOf(basOfrCharCntCtt) !== -1) {
-      return PRODUCT_DETAIL_SUMMARY_TYPE.PLM_3;
-    }
-
-    if (FormatHelper.isEmpty(basOfrCharCntCtt) || basOfrCharCntCtt === '0') {
-      return PRODUCT_DETAIL_SUMMARY_TYPE.PLM_2;
-    }
-
     if (isNaN(parseInt(basOfrCharCntCtt, 10))) {
       return basOfrCharCntCtt;
     }
@@ -184,18 +132,9 @@ class ProductDetail extends TwViewController {
 
   /**
    * @param basFeeInfo
-   * @param freeYn
    * @private
    */
-  private _parsingSummaryBasFeeInfo (basFeeInfo, freeYn): any {
-    if (PLM_PARSING_CASE.PRICE_0.indexOf(this._prodId) !== -1 || freeYn !== 'Y' && basFeeInfo === '0') {
-      return PRODUCT_DETAIL_SUMMARY_TYPE.PLM_0;
-    }
-
-    if (freeYn === 'Y') {
-      return PRODUCT_DETAIL_SUMMARY_TYPE.PLM_9;
-    }
-
+  private _parsingSummaryBasFeeInfo (basFeeInfo): any {
     if (isNaN(parseInt(basFeeInfo, 10))) {
       return basFeeInfo;
     }
