@@ -997,6 +997,11 @@ body.bg-gray {
   height: 1.875rem;
 }
 
+.cont-sp.type4 {
+  height: 0.625rem;
+  border-top: 1px solid #e1e1e1;
+}
+
 /*@media all and(max-width:320px){
     .cont-box{
         padding:rem(20px 20px);
@@ -1082,6 +1087,10 @@ body.bg-gray {
   overflow-y: auto;
 }
 
+.popup-page.layer .container-wrap .container .cont-sp.type1 {
+  height: 0.375rem;
+}
+
 .popup-page.layer .container-wrap .container .link-long-ti {
   padding-left: 1.875rem;
   padding-right: 1.875rem;
@@ -1108,6 +1117,7 @@ body.bg-gray {
 
 .popup-page.layer .container-wrap .container .link-long a .tx-sub, .popup-page.layer .container-wrap .container .link-long button .tx-sub {
   top: 0.5625rem;
+  font-size: 0.875rem;
 }
 
 .popup-page.layer .container-wrap .container .link-long a .tx-sub .ico, .popup-page.layer .container-wrap .container .link-long button .tx-sub .ico {
@@ -1461,6 +1471,13 @@ body.bg-gray {
   font-size: 0.75rem;
   font-weight: 400;
   color: #757575;
+}
+
+.box-suggest .suggest-info .suggest-sub3 {
+  display: block;
+  font-size: 0.8125rem;
+  font-weight: 400;
+  color: #666;
 }
 
 .box-suggest .suggest-info .suggest-btn-info {

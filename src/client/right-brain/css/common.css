@@ -1063,6 +1063,14 @@ button.bt-link-tx.white .ico, a.bt-link-tx.white .ico {
   opacity: .6;
 }
 
+button.bt-link-tx.red, a.bt-link-tx.red {
+  color: #e22f26;
+}
+
+button.bt-link-tx.red:before, a.bt-link-tx.red:before {
+  background-color: #e22f26;
+}
+
 .link-long-ti {
   padding: 1.25rem 1rem 0;
   font-size: 0.75rem;
@@ -3983,6 +3991,14 @@ a.ui-button:active,
   width: 1.875rem;
   height: 1rem;
   margin-left: 0.3125rem;
+}
+
+.badge.badge-claim {
+  background-position: 0 -17.5rem;
+  background-size: 4.6875rem;
+  width: 2.875rem;
+  height: 0.9375rem;
+  margin-right: 0.3125rem;
 }
 
 .bar-chart-hoz {
