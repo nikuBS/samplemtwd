@@ -1,0 +1,50 @@
+<%#
+* FileName: myt-data.usage.refill.history.list.html
+* Author: Jiyoung Jo (jiyoungjo@sk.com)
+* Date: 2018.09.20
+%>
+
+
+<script id="fe-tmpl-charge-items" type="text/x-handlebars-template">
+    {{#each items}}
+        <li>
+            <p class="list-text">
+              <span class="mtext"><i class="badge badge-{{badge.icon}}"><span class="blind">{{badge.text}}</span></i> {{typeName}}</span>
+              <span class="stext gray">{{bottom}}</span>
+            </p>
+            {{#if right}}
+            <div class="list-data">
+                <p class="data-tx blue-tx">{{right.amount}}<span>{{right.unit}}</span></p>
+                {{#if refundable}}
+                <div class="bt-alone"><button class="bt-line-gray1">취소</button></div>
+                {{/if}}
+                {{#if refunded}}
+                <p class="state-tx">취소</p>
+                {{/if}}
+                {{#if fixed}}
+                <p class="state-tx">자동</p>
+                {{/if}}
+            </div>
+            {{/if}}
+        </li>
+    {{/each}}
+</script>
+
+<script id="fe-tmpl-charge-day" type="text/x-handlebars-template">
+    <li class="list-box">
+        <p class="list-date">
+          <span class="date-tx">{{date}}</span>
+        </p>
+        <ul class="list-con">
+            {{>chargeItems items=items}}
+        </ul>
+    </li>
+</script>
+
+<script id="fe-tmpl-charge-year" type="text/x-handlebars-template">
+    <li class="list-box">
+        <div class="data-select-wrap">
+            <span class="data-tit">{{year}}</span>
+        </div>
+    </li>
+</script>

@@ -13,7 +13,9 @@ import DateHelper from '../../../../utils/date.helper';
 import { 
   DATA_GIFTS, LIMIT_CHARGES, TING_CHARGES, TING_GIFTS, REFILL_USAGES, REFILL_GIFTS 
 } from '../../../../mock/server/myt-data.recharge.history.mock';
-import { MYT_DATA_CHARGE_TYPES as BadgeTexts, MYT_DATA_CHARGE_TYPE_NAMES as TypeNames, UNIT } from '../../../../types/string.type';
+import { 
+  MYT_DATA_CHARGE_TYPES as BadgeTexts, MYT_DATA_CHARGE_TYPE_NAMES as TypeNames, UNIT
+} from '../../../../types/string.type';
 import FormatHelper from '../../../../utils/format.helper';
 
 enum RechargeTypes { DATA_GIFT, LIMIT_CHARGE, TING_CHARGE, TING_GIFT, REFILL_USAGE, REFILL_GIFT }
@@ -77,7 +79,7 @@ export default class MyTDataRechargeHistory extends TwViewController {
       result[key].data.push({
         type: RechargeTypes.DATA_GIFT,
         typeName: TypeNames.DATA_GIFT,
-        date: DateHelper.getShortDateNoDot(key),
+        date: DateHelper.getShortDateNoYear(key),
         fixed: item.giftType === 'GC',
         badge: {
           icon: BadgeTypes.GIFT,
@@ -113,7 +115,7 @@ export default class MyTDataRechargeHistory extends TwViewController {
       result[key].data.push({
         type: RechargeTypes.LIMIT_CHARGE,
         typeName: TypeNames.LIMIT_CHARGE,
-        date: DateHelper.getShortDateNoDot(key),
+        date: DateHelper.getShortDateNoYear(key),
         refundable: item.opTypCd === '1' && this.toDt === key,
         badge: {
           icon: BadgeTypes.CHARGE,
@@ -147,7 +149,7 @@ export default class MyTDataRechargeHistory extends TwViewController {
       result[key].data.push({
         type: RechargeTypes.TING_CHARGE,
         typeName: TypeNames.TING_CHARGE,
-        date: DateHelper.getShortDateNoDot(key),
+        date: DateHelper.getShortDateNoYear(key),
         right: {
           amount: '+ ' + FormatHelper.addComma(item.amt),
           unit: UNIT.WON
@@ -180,7 +182,7 @@ export default class MyTDataRechargeHistory extends TwViewController {
       result[key].data.push({
         type: RechargeTypes.TING_GIFT,
         typeName: TypeNames.TING_GIFT,
-        date: DateHelper.getShortDateNoDot(key),
+        date: DateHelper.getShortDateNoYear(key),
         right: {
           amount: '- ' + FormatHelper.addComma(item.amt),
           unit: UNIT.WON
@@ -212,7 +214,7 @@ export default class MyTDataRechargeHistory extends TwViewController {
       result[key].data.push({
         type: RechargeTypes.REFILL_USAGE,
         typeName: TypeNames.REFILL_USAGE,
-        date: DateHelper.getShortDateNoDot(key),
+        date: DateHelper.getShortDateNoYear(key),
         badge: {
           icon: BadgeTypes.CHARGE,
           text: BadgeTexts.CHARGE
@@ -242,7 +244,7 @@ export default class MyTDataRechargeHistory extends TwViewController {
       result[key].data.push({
         type: RechargeTypes.REFILL_GIFT,
         typeName: TypeNames.REFILL_GIFT,
-        date: DateHelper.getShortDateNoDot(key),
+        date: DateHelper.getShortDateNoYear(key),
         badge: {
           icon: BadgeTypes.GIFT,
           text: BadgeTexts.GIFT
@@ -257,9 +259,12 @@ export default class MyTDataRechargeHistory extends TwViewController {
 
   private mergeCharges = (...args: IChargeData[]): { data: IChargeData, count: number } => {
     const result: { data: IChargeData, count: number } = { data: {}, count: 0 };
+
     for (let i = 0; i < args.length; i++) {
       const data = args[i];
       for (const key of Object.keys(data)) {
+        const itemYear = DateHelper.getShortDateWithFormat(key, 'YYYY');
+
         if (!result.data[key]) {
           result.data[key] = { data: [], count: 0 };
         }

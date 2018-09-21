@@ -15,7 +15,7 @@ class MytDataRouter extends TwRouter {
     this.controllers.push({ url: '/', controller: new MyTSubMain() });
     this.controllers.push({ url: '/usage', controller: new MyTDataUsage() });
     this.controllers.push({ url: '/usage/child(/:childSvcMgmtNum)?', controller: new MyTDataUsageChild() });
-    this.controllers.push({ url: '/usage/refill/history', controller: new MyTDataRechargeHistory() });
+    this.controllers.push({ url: '/recharge/history', controller: new MyTDataRechargeHistory() });
     this.controllers.push({ url: '/gift(/:page)?', controller: new MyTDataGift() });
     this.controllers.push({ url: '/ting(/:page)?', controller: new MyTDataTing() });
     this.controllers.push({ url: '/limit(/:page)?', controller: new MyTDataLimit() });
