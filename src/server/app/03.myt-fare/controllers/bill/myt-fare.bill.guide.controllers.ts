@@ -200,8 +200,11 @@ class MyTFareBillGuide extends TwViewController {
     /*
     * 실 데이터
     */
-    if ( this.reqQuery.invDt ) {
-      p1 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0036, { invDt: this.reqQuery.invDt }), 'p1');
+    if ( this.reqQuery.line ) {
+      p1 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0047, {
+        invDt: this.reqQuery.date,
+        sSvcMgmtNum: this.reqQuery.line
+      }), 'p1');
     } else {
       p1 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0036, {}), 'p1');
     }
@@ -218,10 +221,10 @@ class MyTFareBillGuide extends TwViewController {
       thisMain._commDataInfo.selClaimDt = (thisMain._billpayInfo) ? thisMain.getSelClaimDt(String(thisMain._billpayInfo.invDt)) : null;
       thisMain._commDataInfo.selClaimDtM = (thisMain._billpayInfo) ? thisMain.getSelClaimDtM(String(thisMain._billpayInfo.invDt)) : null;
       thisMain._commDataInfo.selStaDt = (thisMain._billpayInfo) ? thisMain.getSelStaDt(String(thisMain._billpayInfo.invDt)) : null;
-      thisMain._commDataInfo.selEndDt = (thisMain._billpayInfo) ? DateHelper.getShortDateNoDot(String(thisMain._billpayInfo.invDt)) : null;
+      thisMain._commDataInfo.selEndDt = (thisMain._billpayInfo) ? thisMain.getSelEndDt(String(thisMain._billpayInfo.invDt)) : null;
       thisMain._commDataInfo.discount =
         (thisMain._billpayInfo) ? FormatHelper.addComma(String(Math.abs(Number(thisMain._billpayInfo.deduckTotInvAmt)))) : 0;
-      thisMain._commDataInfo.joinSvcList = (thisMain._billpayInfo) ? (thisMain._billpayInfo.paidAmtSvcCdList) : null;
+      thisMain._commDataInfo.joinSvcList = (!thisMain.reqQuery.line) ? thisMain.paidAmtSvcCdListFun() : null;
       thisMain._commDataInfo.useAmtTot = (thisMain._billpayInfo) ? FormatHelper.addComma(thisMain._billpayInfo.useAmtTot) : null;
 
       thisMain._commDataInfo.intBillLineList = (thisMain._intBillLineInfo) ? thisMain.intBillLineFun() : null;
@@ -234,27 +237,6 @@ class MyTFareBillGuide extends TwViewController {
       thisMain._billpayInfo = resArr[0].result;
       thisMain._intBillLineInfo = resArr[1].result;
       thisMain._childLineInfo = resArr[2].result;
-
-      /*
-      * 자녀회선 요금 조회
-      const subPromiseList = [];
-
-      if ( thisMain._childLineInfo.length > 0 ) {
-        for ( let i = 0; i < thisMain._childLineInfo.length; i++ ) {
-          const subPromiseItem = thisMain._getPromiseApi(thisMain.apiService.request(API_CMD.BFF_05_0047, {
-            childSvcMgmtNum: thisMain._childLineInfo[i].svcMgmtNum
-          }), 'sub_p1');
-          console.log('[자녀회선 프로미스]');
-          console.dir( subPromiseItem );
-          // @ts-ignore
-          subPromiseList.push( subPromiseItem );
-        }
-        Promise.all( subPromiseList ).then( function(subRes) {
-          console.log('[자녀회선 요금 조회 완료]');
-          console.dir( subRes );
-        });
-      }
-      */
 
       dataInit();
 
@@ -330,7 +312,11 @@ class MyTFareBillGuide extends TwViewController {
 
   // -------------------------------------------------------------[SVC]
   public getSelStaDt(date: string): any { // 월 시작일 구하기
-    return this._commDataInfo.selStaDt = moment(date).format('YYYY.MM') + '.01';
+    return this._commDataInfo.selStaDt = moment(date).startOf('month').format('YYYY.MM.DD');
+  }
+
+  public getSelEndDt(date: string): any { // 월 끝나는 일 구하기
+    return this._commDataInfo.selEndDt = moment(date).endOf('month').format('MM.DD');
   }
 
   public getSelClaimDt(date: string): any { // 청구 년월 구하기
@@ -368,6 +354,24 @@ class MyTFareBillGuide extends TwViewController {
     });
 
     return dtList;
+  }
+
+  public paidAmtSvcCdListFun() {
+    const thisMain = this;
+    console.log('에러 확인 > thisMain._billpayInfo.paidAmtSvcCdList');
+    console.dir(thisMain._billpayInfo.paidAmtSvcCdList);
+    let paidAmtSvcCdList = thisMain._billpayInfo.paidAmtSvcCdList.slice();
+    paidAmtSvcCdList = paidAmtSvcCdList.map(function (item, idx, arr) {
+      item.amt = FormatHelper.addComma(item.amt);
+
+      if ( item.svcNm === MYT_FARE_BILL_GUIDE.PHONE_TYPE_0) {
+        item.svcNm = MYT_FARE_BILL_GUIDE.PHONE_TYPE_1;
+      }
+
+      return item;
+    });
+    return paidAmtSvcCdList;
+
   }
 
 

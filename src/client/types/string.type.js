@@ -12,6 +12,7 @@ Tw.POPUP_TITLE = {
   SELECT_CARD_TYPE: '일시불'
 };
 
+
 Tw.PERIOD_UNIT = {
   DAYS: '일',
   HOURS: '시간',
@@ -34,3 +35,14 @@ Tw.REMNANT_OTHER_LINE = {
   BTNAME: '변경하기',
   TOAST: '기준회선이 변경되었습니다.'
 };
+
+Tw.MYT_FARE_BILL_GUIDE = {
+  DATE_FORMAT: {
+    YYYYMM_TYPE: 'YYYY년 MM월'
+  },
+  FIRST_SVCTYPE: '서비스 전체',
+  PHONE_SVCTYPE: '휴대폰',
+  PHONE_TYPE_0: '이동전화',
+  PHONE_TYPE_1: '휴대폰'
+};
+
