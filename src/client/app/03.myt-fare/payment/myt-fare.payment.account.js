@@ -6,11 +6,6 @@
 
 Tw.MyTFarePaymentAccount = function (rootEl) {
   this.$container = rootEl;
-  this.$selectBank = this.$container.find('.fe-select-bank');
-  this.$refundBank = this.$container.find('.fe-select-refund-bank');
-  this.$accountNumber = this.$container.find('.fe-account-number');
-  this.$refundNumber = this.$container.find('.fe-refund-account-number');
-  this.$refundBox = this.$container.find('.check-account-radio');
 
   this._paymentCommon = new Tw.MyTFarePaymentCommon(this.$container);
   this._bankList = new Tw.MyTFarePaymentBankList(this.$container);
@@ -25,10 +20,19 @@ Tw.MyTFarePaymentAccount = function (rootEl) {
 
 Tw.MyTFarePaymentAccount.prototype = {
   _init: function () {
+    this._initVariables();
     this._bindEvent();
+  },
+  _initVariables: function () {
+    this.$selectBank = this.$container.find('.fe-select-bank');
+    this.$refundBank = this.$container.find('.fe-select-refund-bank');
+    this.$accountNumber = this.$container.find('.fe-account-number');
+    this.$refundNumber = this.$container.find('.fe-refund-account-number');
+    this.$refundBox = this.$container.find('.check-account-radio');
   },
   _bindEvent: function () {
     this.$container.on('change', '.refund-account-check-btn', $.proxy(this._showAndHideAccount, this));
+    this.$container.on('click', '.fe-refund-info', $.proxy(this._openRefundInfo, this));
     this.$container.on('click', '.select-bank', $.proxy(this._selectBank, this));
     this.$container.on('click', '.fe-check-pay', $.proxy(this._checkPay, this));
     this.$container.on('click', '.fe-pay', $.proxy(this._pay, this));
@@ -40,6 +44,9 @@ Tw.MyTFarePaymentAccount.prototype = {
     } else {
       this.$refundBox.hide();
     }
+  },
+  _openRefundInfo: function () {
+    this._popupService.openAlert(Tw.REFUND_ACCOUNT_INFO.CONTENTS, Tw.REFUND_ACCOUNT_INFO.TITLE, Tw.BUTTON_LABEL.CONFIRM);
   },
   _selectBank: function (event) {
     this._bankList.init(event);

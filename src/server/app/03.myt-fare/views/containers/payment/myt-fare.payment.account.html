@@ -15,7 +15,7 @@
         </ul>
     </div>
     <!--// #skip_navigation -->
-    <div class="wrap step">
+    <div id="myt-fare-payment-account" class="wrap step">
         <!-- #contents -->
         <div id="contents" class="container-wrap">
             <h2 class="blind">내용</h2>
@@ -111,7 +111,7 @@
                                         </li>
                                     </ul>
                                 </div>
-                            </div><button class="info-view-ic">정보보기</button>
+                            </div><button class="info-view-ic fe-refund-info">정보보기</button>
                         </div>
                         <div class="check-account-radio mt28" style="display:none;">
                             <% if (autoInfo.isAuto) { %>
@@ -179,7 +179,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.MyTFarePaymentAccount($('.wrap'));
+    new Tw.MyTFarePaymentAccount($('#myt-fare-payment-account'));
   });
 </script>
 <% include ../../components/end.component.html %>
