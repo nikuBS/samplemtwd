@@ -11,8 +11,8 @@ export const URL = {
 
   // MyT-data
   '/myt/data': { login: true, id: 'DC', title: '데이터/통화 관리' },
-  '/myt/data/refill/coupon': { login: true, id: 'DC_05', title: '나의 리필쿠폰'},
-  '/myt/data/refill/coupon/use': { login: true, id: 'DC_05_01', title: '리필 쿠폰 사용'},
+  '/myt/data/recharge/coupon': { login: true, id: 'DC_05', title: '나의 리필쿠폰'},
+  '/myt/data/recharge/coupon/use': { login: true, id: 'DC_05_01', title: '리필 쿠폰 사용'},
   '/myt/data/recharge/history': { login: true, id: 'DC_07', title: '최근 충전/선물 내역' },
 
   // Product
