@@ -13,12 +13,26 @@ Tw.MyTDataSubMain = function (params) {
   this._historyService.init('hash');
   this.data = params.data;
   this.immChargeData = {}; // 초기화
+  this.loadingView(true);
   this._rendered();
   this._bindEvent();
   this._initialize();
 };
 
 Tw.MyTDataSubMain.prototype = {
+
+  loadingView: function(value) {
+    if(value) {
+      skt_landing.action.loading.on({
+        ta: '[data-id=wrapper]', co: 'grey', size: true
+      });
+    }
+    else {
+      skt_landing.action.loading.off({
+        ta: '[data-id=wrapper]'
+      });
+    }
+  },
 
   _rendered: function () {
     // 실시간잔여 상세
@@ -120,6 +134,7 @@ Tw.MyTDataSubMain.prototype = {
         else {
           this.immChargeData.limit = null;
         }
+        this.loadingView(false);
       }, this));
   },
 
@@ -198,8 +213,7 @@ Tw.MyTDataSubMain.prototype = {
 
   // 충전/선물내역 상세
   _onBreakdownListDetail: function () {
-    // TODO: 경로 확인 후 업데이트 예정
-    this._historyService.goLoad('');
+    this._historyService.goLoad('/myt/data/recharge/history');
   },
 
   // 다른 회선 잔여량 상세
