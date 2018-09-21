@@ -57,20 +57,6 @@ export enum CURRENCY_UNIT {
   WON = '원',
   TEN_THOUSAND = '만원'
 }
-
-export enum PRODUCT_DETAIL_SUMMARY_TYPE {
-  PLM_0 = '상세참조',
-  PLM_1 = '기본제공금액 조절사용',
-  PLM_2 = '없음',
-  PLM_3 = '기본제공',
-  PLM_4 = '무제한',
-  PLM_5 = 'SKT 지정회선 무제한',
-  PLM_6 = 'SKT 고객간 무제한',
-  PLM_7 = '이동전화 무제한',
-  PLM_8 = '집전화·이동전화 무제한',
-  PLM_9 = '무료'
-}
-
 export enum MYT_DATA_CHARGE_TYPES {
   GIFT = '선물',
   CHARGE = '충전'
