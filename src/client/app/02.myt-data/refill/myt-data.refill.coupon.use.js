@@ -118,6 +118,28 @@ Tw.MyTDataRefillCouponUse.prototype = {
   },
   _success: function (type, res) {
     if (res.code !== Tw.API_CODE.CODE_00) {
+      if (res.code === Tw.API_CODE.NOT_FAMILY) {
+        this._popupService.open({
+          ico: 'type1',
+          title: Tw.POPUP_TITLE.NOT_FAMILY,
+          contents: Tw.POPUP_CONTENTS.REFILL_COUPON_FAMILY,
+          link_list: [{
+            style_class: 'fe-link-more-detail',
+            txt: Tw.POPUP_CONTENTS.MORE_DETAIL
+          }],
+          bt: [{
+            style_class: 'bt-blue1 fe-btn-close',
+            txt: Tw.BUTTON_LABEL.CLOSE
+          }]
+        },
+        $.proxy(function ($container) {
+          $container.on('click', '.fe-btn-close', $.proxy(function () {
+            this._popupService.close();
+          }, this));
+          // TODO: 더 알아보기 link 설정, SB에 추후 추가 예정으로.....
+        }, this));
+        return;
+      }
       Tw.Error(res.code, res.msg).pop();
       return;
     }

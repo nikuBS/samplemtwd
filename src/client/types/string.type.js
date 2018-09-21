@@ -9,7 +9,13 @@ Tw.POPUP_TITLE = {
   SELECT_BANK: '은행선택',
   SELECT: '선택',
   SELECT_PAYMENT_OPTION: '납부 방법 선택',
-  SELECT_CARD_TYPE: '일시불'
+  SELECT_CARD_TYPE: '일시불',
+  NOT_FAMILY: '리필쿠폰 선물 가능한 가족이 아닙니다.'
+};
+
+Tw.POPUP_CONTENTS = {
+  MORE_DETAIL: '더 알아보기',
+  REFILL_COUPON_FAMILY: 'SKT 결합상품으로 묶으시면 리필쿠폰 선물이 가능합니다.'
 };
 
 Tw.PERIOD_UNIT = {
