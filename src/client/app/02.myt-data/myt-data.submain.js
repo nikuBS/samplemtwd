@@ -184,18 +184,16 @@ Tw.MyTDataSubMain.prototype = {
   // 데이터 혜텍
   _onDataBenefitDetail: function () {
     this._popupService.openAlert('TBD');
-    //this._historyService.goLoad('/myt/data/refill/coupon'); (TBD)
   },
 
   // 데이터활용하기
   _onDataUsefulDetail: function () {
     this._popupService.openAlert('TBD');
-    //this._historyService.goLoad('/myt/data/refill/coupon'); (TBD)
   },
 
   // 리필쿠폰
   _onRefillDetail: function () {
-    this._historyService.goLoad('/myt/data/refill/coupon');
+    this._historyService.goLoad('/myt/data/recharge/coupon');
   },
 
   // 충전/선물내역 상세
