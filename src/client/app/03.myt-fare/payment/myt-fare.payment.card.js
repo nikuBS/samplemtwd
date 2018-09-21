@@ -50,7 +50,7 @@ Tw.MyTFarePaymentCard.prototype = {
     }
   },
   _openRefundInfo: function () {
-    this._popupService.openAlert(Tw.REFUND_ACCOUNT_INFO.CONTENTS, Tw.REFUND_ACCOUNT_INFO.TITLE);
+    this._popupService.openAlert(Tw.REFUND_ACCOUNT_INFO.CONTENTS, Tw.REFUND_ACCOUNT_INFO.TITLE, Tw.BUTTON_LABEL.CONFIRM);
   },
   _selectCardType: function (event) {
     var $target = $(event.currentTarget);
@@ -97,7 +97,6 @@ Tw.MyTFarePaymentCard.prototype = {
   },
   _pay: function () {
     var reqData = this._makeRequestData();
-    console.log(reqData);
     this._apiService.request(Tw.API_CMD.BFF_07_0025, reqData)
       .done($.proxy(this._paySuccess, this))
       .fail($.proxy(this._payFail, this));
