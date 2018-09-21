@@ -349,9 +349,12 @@ Tw.MyTDataSubMain.prototype = {
   },
 
   _onImmDetailRefill: function () {
-    this._historyService.goLoad('/myt/data/refill/coupon');
+    this._historyService.goLoad('/myt/data/recharge/coupon');
   },
 
+  _onPrepayCoupon: function() {
+    this._popupService.openAlert('TBD');
+  },
 
   // DC_O4 팝업 호출 후
   _onImmediatelyPopupOpened: function ($container) {
@@ -370,6 +373,11 @@ Tw.MyTDataSubMain.prototype = {
           break;
         case 'refill':
           item.on('click', $.proxy(this._onImmDetailRefill, this));
+          break;
+        case 'data_coupon':
+        case 't_coupon':
+        case 'jeju_coupon':
+          item.on('click', $.proxy(this._onPrepayCoupon, this));
           break;
       }
     }
