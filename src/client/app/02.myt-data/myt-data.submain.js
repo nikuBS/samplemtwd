@@ -48,7 +48,7 @@ Tw.MyTDataSubMain.prototype = {
       this.$otherLines = this.$container.find('[data-id=other-lines] li');
       if ( this.data.otherLines.length > 20 ) {
         this.$otherLinesMoreBtn = this.$otherLines.find('.bt-more button');
-        this.$moreTempleate = Handlebars.compile(Tw.MYT_DATA.SUBMAIN.MORE_LINE_TEMP);
+        this.$moreTempleate = Handlebars.compile(Tw.MYT_DATA_TPL.SUBMAIN.MORE_LINE_TEMP);
       }
     }
   },
@@ -178,25 +178,22 @@ Tw.MyTDataSubMain.prototype = {
   },
 
   _onTPresentDetail: function () {
-    // TODO: 경로 확인 후 업데이트 예정
     this._historyService.goLoad('/myt/data/gift');
   },
 
   // 데이터 혜텍
   _onDataBenefitDetail: function () {
     this._popupService.openAlert('TBD');
-    //this._historyService.goLoad('/myt/data/refill/coupon'); (TBD)
   },
 
   // 데이터활용하기
   _onDataUsefulDetail: function () {
     this._popupService.openAlert('TBD');
-    //this._historyService.goLoad('/myt/data/refill/coupon'); (TBD)
   },
 
   // 리필쿠폰
   _onRefillDetail: function () {
-    this._historyService.goLoad('/myt/data/refill/coupon');
+    this._historyService.goLoad('/myt/data/recharge/coupon');
   },
 
   // 충전/선물내역 상세
@@ -209,14 +206,20 @@ Tw.MyTDataSubMain.prototype = {
   _onOtherLinesItemDetail: function (event) {
     var $target = $(event.target).parents('[data-svc-mgmt-num]'),
         mgmtNum = $target.attr('data-svc-mgmt-num'),
+        number  = $target.attr('data-num'),
+        name    = $target.attr('data-name'),
         isChild = ($target.find('.badge').length > 0);
     if ( isChild ) {
       // 자녀회선
       this._historyService.goLoad('/myt/data/usage/child/' + mgmtNum);
     }
     else {
-      // TODO: 팝업 호출(회선변경)
-      this._popupService.openAlert('TBD');
+      var defaultLineInfo = this.data.svcInfo.svcNum + ' ' + this.data.svcInfo.nickNm;
+      var selectLineInfo = number + ' ' + name;
+      this.changeLineMgmtNum = mgmtNum;
+      this._popupService.openModalTypeA(Tw.REMNANT_OTHER_LINE.TITLE,
+        defaultLineInfo + Tw.MYT_DATA_TPL.SUBMAIN.SP_TEMP + selectLineInfo,
+        Tw.REMNANT_OTHER_LINE.BTNAME, null, $.proxy(this._onChangeLineConfirmed, this), null);
     }
   },
 
@@ -233,7 +236,16 @@ Tw.MyTDataSubMain.prototype = {
     }
   },
 
-  // 팝업내 아이템 선택시 이동
+  // 다른 회선 팝업에서 변경하기 눌렀을 경우
+  _onChangeLineConfirmed: function () {
+    // 회선변경 API 호출
+    // TODO: 선택회선변경에 대한 class 분리예정, 완료되면 적용!!
+    this._apiService.request(Tw.NODE_CMD.CHANGE_SESSION, {
+      svcMgmtNum: this.changeLineMgmtNum
+    }).done($.proxy(this._onChangeSessionSuccess, this));
+  },
+
+  // DC_04 팝업내 아이템 선택시 이동
   _onImmDetailLimit: function () {
     this._historyService.goLoad('/myt/data/limit');
   },
@@ -247,9 +259,9 @@ Tw.MyTDataSubMain.prototype = {
   },
 
   _onImmDetailRefill: function () {
-    // TODO: 경로 확인 후 업데이트 예정
-    this._historyService.goLoad('');
+    this._historyService.goLoad('/myt/data/refill/coupon');
   },
+
 
   // DC_O4 팝업 호출 후
   _onImmediatelyPopupOpened: function ($container) {
@@ -273,7 +285,18 @@ Tw.MyTDataSubMain.prototype = {
     }
   },
 
+  // DC_04 팝업 close 이후 처리 부분 - 만약 사용될 경우가 없다면 제거예정
   _onImmediatelyPopupClosed: function () {
+  },
 
+  // 회선 변경 후 처리
+  _onChangeSessionSuccess: function (resp) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      this._popupService.close();
+      this._popupService.toast(Tw.REMNANT_OTHER_LINE.TOAST);
+      setTimeout($.proxy(function() {
+        this._historyService.reload();
+      }, this), 500);
+    }
   }
 };

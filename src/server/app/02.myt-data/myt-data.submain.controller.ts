@@ -22,10 +22,10 @@ class MytDataSubmainController extends TwViewController {
     const data: any = {
       svcInfo: svcInfo,
       isBenefit: false,
-      immCharge: false,
+      immCharge: true,
       present: false,
       // 다른 회선 항목
-      otherLines: this.convertOtherLines(allSvc)
+      otherLines: this.convertOtherLines(svcInfo, allSvc)
     };
     Observable.combineLatest(
       this._getChildrenLines(),
@@ -44,10 +44,10 @@ class MytDataSubmainController extends TwViewController {
       if ( child && child.length > 0 ) {
         data.otherLines = Object.assign(this.convertChildLines(child), data.otherLines);
       }
-      if ( svcInfo.svcAttrCd === 'M3' || svcInfo.svcAttrCd === 'M4' /* || remnant.data === 0 기본 DATA 제공량이 없는 경우*/ ) {
-        // T-pocketFi or T-Login
+      if ( svcInfo.svcAttrCd === 'M3' || svcInfo.svcAttrCd === 'M4' /* 기본 DATA 제공량이 없는 경우*/ ) {
+        // 비노출 조건 T-pocketFi or T-Login 인 경우와 기본제공량이 없는경우
         // 즉시충전버튼 영역
-        data.immCharge = true;
+        data.immCharge = false;
       }
       if ( svcInfo.svcAttrCd === 'M1' || svcInfo.svcAttrCd === 'M3' || svcInfo.svcAttrCd === 'M4' ) {
         // 데이터혜택/활용하기 영역
@@ -168,12 +168,12 @@ class MytDataSubmainController extends TwViewController {
     return list;
   }
 
-  convertOtherLines(items): any {
+  convertOtherLines(target, items): any {
     // 다른 회선은 휴대폰만 해당;
     const nOthers: any = Object.assign([], items['M']/*, items['O'], items['S']*/);
     const list: any = [];
     nOthers.filter((item) => {
-      if ( item.svcAttrCd === 'M1' && item.repSvcYn === 'N' ) {
+      if ( target.svcMgmtNum !== item.svcMgmtNum ) {
         list.push(item);
       }
     });

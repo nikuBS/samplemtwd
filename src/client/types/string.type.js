@@ -28,3 +28,9 @@ Tw.REFUND_ACCOUNT_INFO = {
   CONTENTS: '이중납부가 되는 경우 환불계좌로 자동 환불 처리해 드립니다.' + '<br/>' +
     '본인명의의 계좌로만 신청 가능합니다.'
 };
+
+Tw.REMNANT_OTHER_LINE = {
+  TITLE: '기준회선을 변경하시겠습니까?',
+  BTNAME: '변경하기',
+  TOAST: '기준회선이 변경되었습니다.'
+};
