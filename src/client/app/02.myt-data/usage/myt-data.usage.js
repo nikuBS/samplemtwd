@@ -28,13 +28,17 @@ Tw.MyTDataUsage.prototype = {
 
     // 24시간 데이터 50% 할인 사용량 - 실시간 사용 요금 바로가기 버튼 - 실시간 사용 요금으로 이동
     this.$container.on('click', '#cont-discount .bt-slice button', function(){
-      location.href = 'myt/bill/hotbill';
+      location.href = '/myt/bill/hotbill';
     });
 
     // 데이터 한도 요금제 - 충전 가능 금액 확인 버튼 - 데이터 한도 요금제로 이동
     this.$container.on('click', '#cont-data-limit .bt-slice button', function(){
       location.href = '/myt/data/limit';
     });
+
+    // 내폰끼리 결합 상세 조회
+    this.$container.on('click', '#list-band-data-share .datatogether-li .bt-bg-blue1', $.proxy(this._requestBandDetail, this));
+
   },
 
   /**
@@ -73,6 +77,7 @@ Tw.MyTDataUsage.prototype = {
 
         for(var i = 0; i < reqList.length; i++){
           var resp = arguments[i];
+
           if( !resp || resp.code !== Tw.API_CODE.CODE_00 || !resp.result){
             this._showErrorAlert(resp.code, resp.msg);
             continue;
@@ -124,10 +129,10 @@ Tw.MyTDataUsage.prototype = {
 
     // 사용 중인 요금상품 + 기본제공량
     fmtData = Tw.FormatHelper.convDataFormat(data.opmdBasic, Tw.DATA_UNIT.KB);
-    $('#head-tdata-share .tit').text(data.prodNm + ' ' + fmtData.data + fmtData.unit);
+    $('#head-tdata-share .tit span').text(fmtData.data + fmtData.unit);
 
     // 총데이터 사용량
-    fmtData = Tw.FormatHelper.convDataFormat(data.totShar, Tw.DATA_UNIT.KB);
+    fmtData = Tw.FormatHelper.convDataFormat(data.totUsed, Tw.DATA_UNIT.KB);
     $('#head-tdata-share .num em').text(fmtData.data);
     $('#head-tdata-share .num span').text(fmtData.unit);
 
@@ -155,23 +160,23 @@ Tw.MyTDataUsage.prototype = {
     $('#cont-troaming-share .graphbox-title').text(data.roamProdNm);
     // 잔여량
     fmtData = Tw.FormatHelper.convDataFormat(data.dataSharing.data.remained, Tw.DATA_UNIT.KB);
-    $('#cont-troaming-share .data-state:eq(0) .str span:eq(0)').text(fmtData.data);
-    $('#cont-troaming-share .data-state:eq(0) .str span:eq(1)').text(fmtData.unit);
+    $('#cont-troaming-share .data-state:eq(0) span:eq(0)').text(fmtData.data);
+    $('#cont-troaming-share .data-state:eq(0) span:eq(1)').text(fmtData.unit);
     // 사용량
     fmtData = Tw.FormatHelper.convDataFormat(data.dataSharing.data.used, Tw.DATA_UNIT.KB);
-    $('#cont-troaming-share .data-state:eq(1) .str span:eq(0)').text(fmtData.data);
-    $('#cont-troaming-share .data-state:eq(1) .str span:eq(1)').text(fmtData.unit);
+    $('#cont-troaming-share .data-state:eq(1) span:eq(0)').text(fmtData.data);
+    $('#cont-troaming-share .data-state:eq(1) span:eq(1)').text(fmtData.unit);
 
     // 그래프 표시
-    var per = data.dataSharing.data.used / data.dataSharing.data.total * 100;
-    $('#cont-troaming-share .data-bar .red').css('width', per + '%');
+    var per = parseInt(data.dataSharing.data.remained) / parseInt(data.dataSharing.data.total) * 100;
+    $('#cont-troaming-share .data-bar').width(per + '%');
     // 잔여일시
     var times = this.minToDayHourMin(data.dispRemainDay);
     var strTimes = times.days > 0 ? times.days + Tw.PERIOD_UNIT.DAYS : '';
     strTimes = strTimes + times.hours + Tw.PERIOD_UNIT.HOURS + times.minutes + Tw.PERIOD_UNIT.MINUTES;
     $('#cont-troaming-share .chargedate-box span').text(strTimes);
 
-    var childHtml = this._dataToHtml(data.childList, '#fe-troaming-share-child-item');
+    var childHtml = this._dataToHtml(data.dataSharing.childList, '#fe-troaming-share-child-item');
     $('#list-troaming-share').append(childHtml);
 
   },
@@ -186,9 +191,11 @@ Tw.MyTDataUsage.prototype = {
     //console.log(data);
 
     // 충전금액
-    $('#cont-data-limit .subtit').text('충전금액 : ' + data.total);
+    var tot = Tw.FormatHelper.addComma(data.total) || 0;
+    $('#cont-data-limit .subtit span').text(tot);
     // 잔여량
-    $('#cont-data-limit .remain .str').text(data.remained);
+    var remained = Tw.FormatHelper.addComma(data.remained) || 0;
+    $('#cont-data-limit .remain .str').text(remained);
   },
 
   /**
@@ -224,12 +231,12 @@ Tw.MyTDataUsage.prototype = {
     // 사용량
     var fmtData = Tw.FormatHelper.convDataFormat(data.used, Tw.DATA_UNIT.KB);
     $('#cont-discount .remain span:eq(0)').text(fmtData.data);
-    $('#cont-discount .remain span:eq(1)').text(fmtData.data);
+    $('#cont-discount .remain span:eq(1)').text(fmtData.unit);
 
   },
 
   /**
-   * 내폰끼리 결합 사용량
+   * 내폰끼리 결합 사용량 몰고 result handler
    * @param data
    * @private
    */
@@ -242,8 +249,34 @@ Tw.MyTDataUsage.prototype = {
     $('#head-band-data-share .num em').text(fmtData.data);
     $('#head-band-data-share .num span').text(fmtData.unit);
 
-    var childHtml = this._dataToHtml(data.childList, '#fe-band-data-share');
+    var childHtml = this._dataToHtml(data.childList, '#fe-band-data-share-li');
     $('#list-band-data-share').append(childHtml);
+
+  },
+
+  /**
+   * 내폰끼리 결합 사용량 상세 조회
+   * @private
+   */
+  _requestBandDetail : function () {
+
+    var $btnContainer = $(event.target).parent();
+    var svcNum = $btnContainer.attr('data-child-svcnum');
+
+    this._apiService.request(Tw.API_CMD.BFF_05_0009, {cSvcMgmtNum : svcNum})
+      .done($.proxy(function (resp) {
+
+        if( !resp || resp.code !== Tw.API_CODE.CODE_00 || !resp.result){
+          this._showErrorAlert(resp.code, resp.msg);
+          return ;
+        }
+
+        var tmpl = Handlebars.compile($('#fe-band-data-share-li-detail').html());
+        var html = tmpl( resp.result );
+
+        $btnContainer.html(html);
+      }, this))
+      .fail($.proxy(this._requestFail, this));
 
   },
 
@@ -261,6 +294,13 @@ Tw.MyTDataUsage.prototype = {
     Handlebars.registerHelper('dateFormat', function (strDate){
       return Tw.DateHelper.getShortDateNoDot(strDate);
     });
+    Handlebars.registerHelper('dashPhoneNum', function (phoneNum){
+      return Tw.FormatHelper.getDashedPhoneNumber(phoneNum);
+    });
+    Handlebars.registerHelper('numComma', function (amt){
+      return Tw.FormatHelper.addComma(amt+'');
+    });
+
   },
 
   /**

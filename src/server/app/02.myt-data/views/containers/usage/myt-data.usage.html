@@ -41,7 +41,7 @@
                 <div id="fe-tdata-share">
                     <div class="data-type" id="head-tdata-share">
                         <div class="tit-box">
-                            <h4 class="tit">T데이터셰어링</h4>
+                            <h4 class="tit">T데이터 셰어링 <span></span></h4>
                             <button aria-haspopup="true" class="info-view-ic">정보보기</button>
                         </div>
                         <p class="num">총 사용 <em>0</em> <span>GB</span></p>
@@ -54,7 +54,7 @@
                             <li>
                                 <div class="line-info">
                                     <p class="line-num"><span class="blind">T데이터셰어링 USIM번호</span>{{ usimNum }}</p>
-                                    <p class="state">{{ svcStNm }}<span class="sep"></span><span class="blind">서비스등록일</span>{{ svcScrbDt }}</p>
+                                    <p class="state">{{ svcStNm }}<span class="sep"></span><span class="blind">서비스등록일</span>{{ dateFormat svcScrbDt }}</p>
                                 </div>
                                 <div class="used-data">
                                     <p class="num"><span class="str">{{ byteFormat useAmt }}</span>{{ byteUnit useAmt}}</p>
@@ -105,7 +105,7 @@
                         <script id="fe-troaming-share-child-item" type="text/x-handlebars-template">
                             <li>
                                 <div class="line-info">
-                                    <p class="line-num">{{ svcNum }}</p>
+                                    <p class="line-num">{{ dashPhoneNum svcNum }}</p>
                                     <p class="state">설정일<span class="sep"></span><span class="blind">서비스등록일</span>{{ dateFormat auditDtm }}</p>
                                 </div>
                                 <div class="used-data">
@@ -133,7 +133,7 @@
                             <li>
                                 <div class="line-name">
                                     <h5 class="tit">기본 데이터 충전</h5>
-                                    <p class="subtit">충전 금액</p>
+                                    <p class="subtit">충전 금액 <span></span>원</p>
                                 </div>
                                 <div class="remain">
                                     <p class="num"><span class="str">0</span>원</p>
@@ -171,7 +171,7 @@
                                     <p class="subtit">{{ skipName }}</p>
                                 </div>
                                 <div class="remain">
-                                    <p class="num"><span class="str">{{ remained }}</span>원</p>
+                                    <p class="num"><span class="str">{{ numComma remained }}</span>원</p>
                                 </div>
                             </li>
                         </script>
@@ -196,7 +196,7 @@
                             <li>
                                 <div class="line-name">
                                     <h5 class="tit">할인된 데이터</h5>
-                                    <p class="subtit"><span class="blind">사용기간</span><span>0000.00.00 00:00 ~ 0000.00.00 00:00</span></p>
+                                    <p class="subtit"><span class="blind">사용기간</span><span></span></p>
                                 </div>
                                 <div class="remain">
                                     <p class="num"><span class="str">0</span><span>MB</span></p>
@@ -230,26 +230,28 @@
                         <ul class="datatogetherlist-wrap" id="list-band-data-share">
                         </ul>
 
-                        <script id="fe-band-data-share" type="text/x-handlebars-template">
+                        <script id="fe-band-data-share-li" type="text/x-handlebars-template">
                             <li class="datatogether-li">
                                 <div class="datatogether-li-info">
                                     <p class="datatogether-li-info-title">{{ feeProdNm }}</p>
                                     <div class="datatogether-li-info-datenum">
-                                        <div class="date">{{ svcNum }}</div>
+                                        <div class="date">{{ dashPhoneNum svcNum }}</div>
                                         <div class="day-num">설정일 <span class="vbl">{{ dateFormat auditDtm }}</span></div>
                                     </div>
                                 </div>
                                 <div class="datatogether-li-state">
-                                    <div class="bt-alone"><button class="bt-bg-blue1">조회</button></div>
+                                    <div class="bt-alone" data-child-svcnum="{{ svcMgmtNum }}"><button class="bt-bg-blue1">조회</button></div>
                                 </div>
                             </li>
                         </script>
-                        <script id="fe-band-data-share-detail" type="text/x-handlebars-template">
+                        <script id="fe-band-data-share-li-detail" type="text/x-handlebars-template">
                             <div class="type">
                                 <span class="str">{{ byteFormat used }}</span> {{ byteUnit used }}
                             </div>
                             <div class="state">사용</div>
                         </script>
+
+
                     </div>
                     <!--// .cont-box -->
                 </div>
