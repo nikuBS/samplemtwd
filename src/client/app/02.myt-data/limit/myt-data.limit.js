@@ -8,6 +8,7 @@ Tw.MyTDataLimit = function (rootEl) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
+  this._historyService = new Tw.HistoryService();
 
   this._cachedElement();
   this._bindEvent();
@@ -20,23 +21,59 @@ Tw.MyTDataLimit.prototype = {
   },
 
   _cachedElement: function () {
-    this.$input_block_monthly = this.$container.find('#input_block_monthly');
-    this.$input_block_immediately = this.$container.find('#input_block_immediately');
+    this.$btn_monthly_recharge = $('.fe-monthly_recharge');
+    this.$btn_immediately_recharge = $('.fe-immediately_recharge');
     this.$wrap_monthly_select_list = $('.fe-limit_monthly_select_list');
+    this.$input_block_monthly = this.$container.find('#input_block_monthly');
     this.$wrap_immediately_select_list = $('.fe-limit_immediately_select_list');
+    this.$input_block_immediately = this.$container.find('#input_block_immediately');
   },
 
   _bindEvent: function () {
     this.$input_block_monthly.on('change', $.proxy(this._onToggleBlockMonthly, this));
     this.$input_block_immediately.on('change', $.proxy(this._onToggleBlockImmediately, this));
+    this.$btn_immediately_recharge.on('click', $.proxy(this._requestLimitRechargeImmediately, this));
+    this.$btn_monthly_recharge.on('click', $.proxy(this._requestLimitRechargeMonthly, this));
   },
 
-  _onToggleBlockImmediately: function () {
+  _onToggleBlockImmediately: function (e) {
+    var isChecked = $(e.currentTarget).attr('checked');
+
+    if ( isChecked ) {
+      this._apiService.request(Tw.API_CMD.BFF_06_0038, {})
+        .done($.proxy(this._onSuccessBlockImmediately, this));
+    } else {
+      this._apiService.request(Tw.API_CMD.BFF_06_0039, {})
+        .done($.proxy(this._onSuccessBlockImmediately, this));
+    }
+
     $('#tab1-tab').find('.cont-box').each(this._toggleDisplay);
   },
 
-  _onToggleBlockMonthly: function () {
+  _onSuccessBlockImmediately: function (res) {
+    if ( res.code !== Tw.API_CODE.CODE_00 ) {
+      Tw.Error(res.code, res.msg).pop();
+    }
+  },
+
+  _onToggleBlockMonthly: function (e) {
+    var isChecked = $(e.currentTarget).attr('checked');
+
+    if ( isChecked ) {
+      this._apiService.request(Tw.API_CMD.BFF_06_0040, {})
+        .done($.proxy(this._onSuccessBlockMonthly, this));
+    } else {
+      this._apiService.request(Tw.API_CMD.BFF_06_0041, {})
+        .done($.proxy(this._onSuccessBlockMonthly, this));
+    }
+
     $('#tab2-tab').find('.cont-box').each(this._toggleDisplay);
+  },
+
+  _onSuccessBlockMonthly: function (res) {
+    if ( res.code !== Tw.API_CODE.CODE_00 ) {
+      Tw.Error(res.code, res.msg).pop();
+    }
   },
 
   _toggleDisplay: function (nIndex, elItem) {
@@ -73,24 +110,42 @@ Tw.MyTDataLimit.prototype = {
       }
     };
 
-    this.$wrap_monthly_select_list.find('input').each(fnCheckedUI);
-    this.$wrap_immediately_select_list.find('input').each(fnCheckedUI);
+    var elWrapMonthly = this.$wrap_monthly_select_list.find('input').each(fnCheckedUI);
+    elWrapMonthly.not(':disabled').get(0).click();
+
+    var elWrapImmediately = this.$wrap_immediately_select_list.find('input').each(fnCheckedUI);
+    elWrapImmediately.not(':disabled').get(0).click();
   },
 
-  _requestSendingData: function () {
+  _requestLimitRechargeImmediately: function () {
     var htParams = {
-      befrSvcNum: '',
-      dataQty: ''
+      amt: this.$wrap_immediately_select_list.find('.checked input').val()
     };
 
-    this._apiService.request(Tw.API_CMD.BFF_06_0016, htParams).done($.proxy(this._onSuccessSendingData, this));
+    this._apiService.request(Tw.API_CMD.BFF_06_0036, htParams).done($.proxy(this._onSuccessLimitRechargeImmediately, this));
   },
 
-  _onSuccessSendingData: function (res) {
+  _requestLimitRechargeMonthly: function () {
+    var htParams = {
+      amt: this.$wrap_monthly_select_list.find('.checked input').val()
+    };
+
+    this._apiService.request(Tw.API_CMD.BFF_06_0035, htParams).done($.proxy(this._onSuccessLimitRechargeMonthly, this));
+  },
+
+  _onSuccessLimitRechargeImmediately: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
+      this._historyService.replaceURL('/myt/data/limit/complete');
+    } else {
+      Tw.Error(res.code, res.msg).pop();
+    }
+  },
 
-    }else{
-
+  _onSuccessLimitRechargeMonthly: function (res) {
+    if ( res.code === Tw.API_CODE.CODE_00 ) {
+      this._historyService.replaceURL('/myt/data/limit/complete');
+    } else {
+      Tw.Error(res.code, res.msg).pop();
     }
   }
 };
