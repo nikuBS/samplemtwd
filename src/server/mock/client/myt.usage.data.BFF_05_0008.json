@@ -1,0 +1,19 @@
+{
+  "code": "00",
+  "msg": "0008 결과메세지",
+
+  "result": {
+
+    "skipId": "공제항목ID",
+
+    "skipName": "공제항목명",
+    "total": "기본제공량",
+    "used": "900000",
+    "remained": "잔여량",
+    "unit": "",
+
+    "couponDate": "201404011410"
+
+  }
+}
+
