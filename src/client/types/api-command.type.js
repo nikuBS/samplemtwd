@@ -349,7 +349,9 @@ Tw.API_CODE = {
 
   CODE_99: 'RDT0099',    // Circuit Open
   CODE_200: '200',
-  CODE_400: '400'
+  CODE_400: '400',
+
+  NOT_FAMILY: 'ZORDE4011' // 쿠폰 선물 가능한 가족그룹 아님
 };
 
 Tw.API_SVC_PWD_ERROR = {

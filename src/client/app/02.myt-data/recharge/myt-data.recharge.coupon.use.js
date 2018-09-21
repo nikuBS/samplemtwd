@@ -1,10 +1,10 @@
 /**
- * FileName: myt-data.refill.coupon.use.js
+ * FileName: myt-data.recharge.coupon.use.js
  * Author: Hakjoon Sim (hakjoon.sim@sk.com)
  * Date: 2018.09.19
  */
 
-Tw.MyTDataRefillCouponUse = function (rootEl, couponNo) {
+Tw.MyTDataRechargeCouponUse = function (rootEl, couponNo) {
   this.$container = rootEl;
 
   this._couponNo = couponNo;
@@ -22,7 +22,7 @@ Tw.MyTDataRefillCouponUse = function (rootEl, couponNo) {
   this._init();
 };
 
-Tw.MyTDataRefillCouponUse.prototype = {
+Tw.MyTDataRechargeCouponUse.prototype = {
   _cacheElements: function () {
     this.$btnUse = this.$container.find('.fe-btn-use');
     this.$numberInput = this.$container.find('input[type=text]');
@@ -118,19 +118,41 @@ Tw.MyTDataRefillCouponUse.prototype = {
   },
   _success: function (type, res) {
     if (res.code !== Tw.API_CODE.CODE_00) {
+      if (res.code === Tw.API_CODE.NOT_FAMILY) {
+        this._popupService.open({
+          ico: 'type1',
+          title: Tw.POPUP_TITLE.NOT_FAMILY,
+          contents: Tw.POPUP_CONTENTS.REFILL_COUPON_FAMILY,
+          link_list: [{
+            style_class: 'fe-link-more-detail',
+            txt: Tw.POPUP_CONTENTS.MORE_DETAIL
+          }],
+          bt: [{
+            style_class: 'bt-blue1 fe-btn-close',
+            txt: Tw.BUTTON_LABEL.CLOSE
+          }]
+        },
+        $.proxy(function ($container) {
+          $container.on('click', '.fe-btn-close', $.proxy(function () {
+            this._popupService.close();
+          }, this));
+          // TODO: 더 알아보기 link 설정, SB에 추후 추가 예정으로.....
+        }, this));
+        return;
+      }
       Tw.Error(res.code, res.msg).pop();
       return;
     }
 
     switch (type) {
       case 'data':
-        this._historyService.goLoad('/myt/data/refill/coupon/complete?category=data');
+        this._historyService.goLoad('/myt/data/recharge/coupon/complete?category=data');
         break;
       case 'voice':
-        this._historyService.goLoad('/myt/data/refill/coupon/complete?category=voice');
+        this._historyService.goLoad('/myt/data/recharge/coupon/complete?category=voice');
         break;
       case 'gift':
-        this._historyService.goLoad('/myt/data/refill/coupon/complete?category=gift');
+        this._historyService.goLoad('/myt/data/recharge/coupon/complete?category=gift');
         break;
       default:
         break;

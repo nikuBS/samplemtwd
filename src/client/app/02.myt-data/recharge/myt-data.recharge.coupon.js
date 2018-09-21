@@ -1,10 +1,10 @@
 /**
- * FileName: myt-data.refill.coupon.js
+ * FileName: myt-data.recharge.coupon.js
  * Author: Hakjoon Sim (hakjoon.sim@sk.com)
  * Date: 2018.09.18
  */
 
-Tw.MyTDataRefillCoupon = function (rootEl, coupons) {
+Tw.MyTDataRechargeCoupon = function (rootEl, coupons) {
   this.$container = rootEl;
 
   this._historyService = new Tw.HistoryService();
@@ -17,7 +17,7 @@ Tw.MyTDataRefillCoupon = function (rootEl, coupons) {
   this._bindEvent();
 };
 
-Tw.MyTDataRefillCoupon.prototype = {
+Tw.MyTDataRechargeCoupon.prototype = {
   _cacheElements: function () {
     this.$couponContainer = this.$container.find('.coupon-list');
     this.$btnDiv = this.$container.find('.bt-more');
@@ -43,7 +43,7 @@ Tw.MyTDataRefillCoupon.prototype = {
     var period = evt.currentTarget.title.split('::')[1];
     var tab = evt.currentTarget.className.includes('refill') ? 'refill' : 'gift';
     this._historyService.goLoad(
-      '/myt/data/refill/coupon/use?tab=' + tab +'&no=' + no + '&name=' + name + '&period=' + period
+      '/myt/data/recharge/coupon/use?tab=' + tab +'&no=' + no + '&name=' + name + '&period=' + period
     );
   }
 };

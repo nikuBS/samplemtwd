@@ -1,5 +1,5 @@
 /**
- * FileName: myt-data.refill.coupon.controller.ts
+ * FileName: myt-data.recharge.coupon.controller.ts
  * Author: Hakjoon Sim (hakjoon.sim@sk.com)
  * Date: 2018.09.17
  */
@@ -10,7 +10,7 @@ import { Observable } from 'rxjs/Observable';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import DateHelper from '../../../../utils/date.helper';
 import FormatHelper from '../../../../utils/format.helper';
-import { DATA_UNIT } from '../../../../types/string.old.type';
+import { DATA_UNIT, TIME_UNIT } from '../../../../types/string.type';
 
 interface Coupon {
   copnIsueNum: string;
@@ -35,7 +35,7 @@ interface Product {
   basFeeInfo: string;
 }
 
-export default class MyTDataRefillCoupon extends TwViewController {
+export default class MyTDataRechargeCoupon extends TwViewController {
   constructor() {
     super();
   }
@@ -75,7 +75,7 @@ export default class MyTDataRefillCoupon extends TwViewController {
               if (productInfo.code === API_CODE.CODE_00) {
                 const purifiedOptions =
                   this.purifyCouponOptions(resp.result.option, productInfo.result);
-                res.render('refill/myt-data.refill.coupon-use.html', {
+                res.render('recharge/myt-data.recharge.coupon-use.html', {
                   no: no,
                   name: name,
                   period: period,
@@ -102,14 +102,14 @@ export default class MyTDataRefillCoupon extends TwViewController {
   private renderCouponComplete(res: Response, category: string): void {
     switch (category) {
       case 'data':
-        res.render('refill/myt-data.refill.coupon-complete-data.html');
+        res.render('recharge/myt-data.recharge.coupon-complete-data.html');
         break;
       case 'voice':
-        res.render('refill/myt-data.refill.coupon-complete-voice.html');
+        res.render('recharge/myt-data.recharge.coupon-complete-voice.html');
         break;
       case 'gift':
         // TODO: display gift detail
-        res.render('refill/myt-data.refill.coupon-complete-gift.html');
+        res.render('recharge/myt-data.recharge.coupon-complete-gift.html');
         break;
       default:
         break;
@@ -121,7 +121,7 @@ export default class MyTDataRefillCoupon extends TwViewController {
       (resp) => {
         if (resp.code === API_CODE.CODE_00) {
           resp.result = this.purifyCouponData(resp.result);
-          res.render('refill/myt-data.refill.coupon.html', {
+          res.render('recharge/myt-data.recharge.coupon.html', {
             svcInfo: svcInfo,
             list: resp.result
           });
@@ -158,7 +158,7 @@ export default class MyTDataRefillCoupon extends TwViewController {
       } else {
         let calculated = parseInt(productInfo.basOfrVcallTmsCtt, 10) * 0.2;
         calculated = Math.round(calculated);
-        option.qttText = calculated + ' 분';
+        option.qttText = calculated + ' ' + TIME_UNIT.MINUTE;
       }
       return option;
     });

@@ -1,5 +1,5 @@
 <%#
-* FileName: myt-data.refill.coupon-use.html (DC_05_01)
+* FileName: myt-data.recharge.coupon-use.html (DC_05_01)
 * Author: Hakjoon Sim (hakjoon.sim@sk.com)
 * Date: 2018.09.19
 %>
@@ -22,7 +22,7 @@
                 <div class="header-ti align-l">
                     <h1>리필 쿠폰 사용</h1>
                 </div>
-                <a href="/myt/data/refill/coupon" class="prev-step">취소</a>
+                <a href="/myt/data/recharge/coupon" class="prev-step">취소</a>
             </div>
         </div>
         <!--// #header -->
@@ -42,7 +42,7 @@
                                     <span class="stext gray">유효기간  <%= period %></span>
                                 </p>
                                 <div class="list-btn">
-                                    <div class="bt-alone"><a href="/myt/data/refill/coupon" class="bt-line-gray1">다시 선택</a></div>
+                                    <div class="bt-alone"><a href="/myt/data/recharge/coupon" class="bt-line-gray1">다시 선택</a></div>
                                 </div>
                             </div>
                         </div>
@@ -130,7 +130,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.MyTDataRefillCouponUse($('.wrap'), '<%= no %>');
+    new Tw.MyTDataRechargeCouponUse($('.wrap'), '<%= no %>');
   });
 </script>
 <% include ../../components/end.component.html %>
