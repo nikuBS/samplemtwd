@@ -21,8 +21,8 @@ Tw.MyTDataSubMain = function (params) {
 
 Tw.MyTDataSubMain.prototype = {
 
-  loadingView: function(value) {
-    if(value) {
+  loadingView: function (value) {
+    if ( value ) {
       skt_landing.action.loading.on({
         ta: '[data-id=wrapper]', co: 'grey', size: true
       });
@@ -54,7 +54,9 @@ Tw.MyTDataSubMain.prototype = {
       this.$dataBenefitBtn = this.$container.find('[data-id=benefit]');
       this.$dataUsefulBtn = this.$container.find('[data-id=useful]');
     }
-
+    if ( this.data.pattern ) {
+      this.$patternChart = this.$container.find('[data-id=pattern_chart]');
+    }
     if ( this.data.breakdownList ) {
       this.$breakdownDetail = this.$container.find('[data-id=bd-container] .bt');
     }
@@ -100,6 +102,77 @@ Tw.MyTDataSubMain.prototype = {
     }
   },
 
+  __getPatternMonth: function (value) {
+    return value.slice(value.length - 2, value.length) + Tw.PERIOD_UNIT.MONTH;
+  },
+
+  __convertData: function (value) {
+    return (value / 1024 / 1024).toFixed(2);
+  },
+
+  __secToMS: function (seconds) {
+    var time = parseInt(seconds, 10);
+    var h_min = (time / 3600) * 60;
+    var min = Math.round(h_min + ((time % 3600) / 60));
+    var sec = time % 60;
+
+    return min + ':' + sec;
+  },
+
+  // chart create
+  _initPatternChart: function () {
+    if ( this.data.pattern.data.length > 0 || this.data.pattern.voice.length > 0 ) {
+      var unit = '', data, chart_data;
+      if ( this.data.pattern.data.length > 0 ) {
+        unit = 'GB';
+        data = this.data.pattern.data;
+        chart_data = {
+          co: '#3b98e6',// 색상
+          da_arr: [
+            {
+              na:this.__getPatternMonth(data[2].invMth) ,// 각 항목 타이틀
+              data: [this.__convertData(parseInt(data[2].totalUsage, 10))]// 배열 평균값으로 전달
+            }, {
+              na:this.__getPatternMonth(data[1].invMth) ,
+              data: [this.__convertData(parseInt(data[1].totalUsage, 10))]
+            }, {
+              na:this.__getPatternMonth(data[0].invMth) ,
+              data: [this.__convertData(parseInt(data[0].totalUsage, 10))]
+            }
+          ]
+        };
+      }
+      else if ( this.data.pattern.voice.length > 0 ) {
+        unit = 'time';
+        data = this.data.pattern.voice;
+        chart_data = {
+          co: '#3b98e6',// 색상
+          da_arr: [
+            {
+              na:this.__getPatternMonth(data[2].invMth) ,// 각 항목 타이틀
+              data: [this.__secToMS(parseInt(data[2].totalUsage, 10))]// 배열 평균값으로 전달
+            }, {
+              na:this.__getPatternMonth(data[1].invMth) ,
+              data: [this.__secToMS(parseInt(data[1].totalUsage, 10))]
+            }, {
+              na:this.__getPatternMonth(data[0].invMth) ,
+              data: [this.__secToMS(parseInt(data[0].totalUsage, 10))]
+            }
+          ]
+        };
+      }
+
+      this.$patternChart.chart({
+        type: 'bar', //bar
+        container: 'pattern', //클래스명 String
+        unit: unit, //x축 이름
+        guide_num: 1, //가이드 갯수
+        decimal: 2, //소숫점자리
+        data: chart_data //데이터 obj
+      });
+    }
+  },
+
   // api request
   _immediatelyChargeRequest: function () {
     var apiList = [
@@ -133,6 +206,10 @@ Tw.MyTDataSubMain.prototype = {
         }
         else {
           this.immChargeData.limit = null;
+        }
+        // api request 마무리 이후 widget 생성
+        if ( this.data.pattern ) {
+          setTimeout($.proxy(this._initPatternChart, this), 300);
         }
         this.loadingView(false);
       }, this));
@@ -308,9 +385,9 @@ Tw.MyTDataSubMain.prototype = {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._popupService.close();
       this._popupService.toast(Tw.REMNANT_OTHER_LINE.TOAST);
-      setTimeout($.proxy(function() {
+      setTimeout($.proxy(function () {
         this._historyService.reload();
-      }, this), 500);
+      }, this), 300);
     }
   }
 };

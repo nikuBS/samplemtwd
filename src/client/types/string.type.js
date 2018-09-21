@@ -21,7 +21,8 @@ Tw.POPUP_CONTENTS = {
 Tw.PERIOD_UNIT = {
   DAYS: '일',
   HOURS: '시간',
-  MINUTES: '분'
+  MINUTES: '분',
+  MONTH: '월'
 };
 
 Tw.REFILL_COUPON_CONFIRM = {
