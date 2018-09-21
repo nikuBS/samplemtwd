@@ -37,7 +37,7 @@
             <% if (svcInfo.svcAttrCd === 'M1') { %>
             <div>
 
-                <% //if (balanceAddOns && balanceAddOns.sharingService.tdataSharing === 'Y') { %>
+                <% if (balanceAddOns && balanceAddOns.sharingService.tdataSharing === 'Y') { %>
                 <div id="fe-tdata-share">
                     <div class="data-type" id="head-tdata-share">
                         <div class="tit-box">
@@ -68,7 +68,7 @@
                     </div>
                     <!--// .cont-box -->
                 </div>
-                <% //} %>
+                <% } %>
 
                 <% if (balanceAddOns && balanceAddOns.sharingService.troamingSharing === 'Y') { %>
                 <div id="fe-troaming-share">
