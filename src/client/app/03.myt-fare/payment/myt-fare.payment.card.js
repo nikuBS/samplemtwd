@@ -35,6 +35,7 @@ Tw.MyTFarePaymentCard.prototype = {
   },
   _bindEvent: function () {
     this.$container.on('change', '.refund-account-check-btn', $.proxy(this._showAndHideAccount, this));
+    this.$container.on('click', '.fe-refund-info', $.proxy(this._openRefundInfo, this));
     this.$container.on('click', '.fe-select-card-type', $.proxy(this._selectCardType, this));
     this.$container.on('click', '.select-bank', $.proxy(this._selectBank, this));
     this.$container.on('click', '.fe-check-pay', $.proxy(this._checkPay, this));
@@ -48,13 +49,16 @@ Tw.MyTFarePaymentCard.prototype = {
       this.$refundBox.hide();
     }
   },
+  _openRefundInfo: function () {
+    this._popupService.openAlert(Tw.REFUND_ACCOUNT_INFO.CONTENTS, Tw.REFUND_ACCOUNT_INFO.TITLE);
+  },
   _selectCardType: function (event) {
     var $target = $(event.currentTarget);
     this._popupService.open({
       hbs:'actionsheet_select_a_type',
       layer:true,
       title:Tw.POPUP_TITLE.SELECT_CARD_TYPE,
-      data:Tw.PAYMENT_CARD_TYPE_LIST
+      data:Tw.POPUP_TPL.FARE_PAYMENT_CARD_TYPE_LIST
     }, $.proxy(this._selectPopupCallback, this, $target));
   },
   _selectPopupCallback: function ($target, $layer) {
