@@ -294,8 +294,11 @@ Tw.MyTDataSubMain.prototype = {
   // 회선 변경 후 처리
   _onChangeSessionSuccess: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      this._popupService.toast(Tw.REMNANT_OTHER_LINE.TOAST);
       this._popupService.close();
+      this._popupService.toast(Tw.REMNANT_OTHER_LINE.TOAST);
+      setTimeout($.proxy(function() {
+        this._historyService.reload();
+      }, this), 500);
     }
   }
 };

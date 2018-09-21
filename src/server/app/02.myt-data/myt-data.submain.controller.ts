@@ -25,7 +25,7 @@ class MytDataSubmainController extends TwViewController {
       immCharge: false,
       present: false,
       // 다른 회선 항목
-      otherLines: this.convertOtherLines(allSvc)
+      otherLines: this.convertOtherLines(svcInfo, allSvc)
     };
     Observable.combineLatest(
       this._getChildrenLines(),
@@ -168,12 +168,12 @@ class MytDataSubmainController extends TwViewController {
     return list;
   }
 
-  convertOtherLines(items): any {
+  convertOtherLines(target, items): any {
     // 다른 회선은 휴대폰만 해당;
     const nOthers: any = Object.assign([], items['M']/*, items['O'], items['S']*/);
     const list: any = [];
     nOthers.filter((item) => {
-      if ( item.svcAttrCd === 'M1' && item.repSvcYn === 'N' ) {
+      if ( target.svcMgmtNum !== item.svcMgmtNum ) {
         list.push(item);
       }
     });
