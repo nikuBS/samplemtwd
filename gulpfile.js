@@ -323,6 +323,12 @@ gulp.task('manifest', function () {
     .pipe(gulp.dest(config));
 });
 
+gulp.task('cab', function () {
+  return gulp.src('src/client/right-brain/cab/**/*')
+    .pipe(gulp.dest(dist_tmp + 'cab'))
+    .pipe(gulp.dest(dist + 'cab'));
+});
+
 gulp.task('post-clean', function () {
   return gulp.src(dist + 'tmp')
     .pipe(clean());
@@ -350,7 +356,7 @@ gulp.task('js-client', ['js-util-client', 'js-app-client']);
 gulp.task('vendor', ['js-vendor', 'css-vendor']);
 gulp.task('rb', ['js-rb', 'css-rb', 'img', 'hbs', 'font']);
 
-gulp.task('task', ['vendor', 'js', 'rb', 'resource']);
+gulp.task('task', ['vendor', 'js', 'rb', 'resource', 'cab']);
 gulp.task('run', ['server', 'watch']);
 
 gulp.task('default', shell.task([

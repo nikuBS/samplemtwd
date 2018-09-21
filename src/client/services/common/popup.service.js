@@ -96,14 +96,14 @@ Tw.PopupService.prototype = {
     this._addHash(closeCallback, hashName);
     this._open(option);
   },
-  openAlert: function (contents, title, closeCallback) {
+  openAlert: function (contents, title, btName, closeCallback) {
     var option = {
       title: title || Tw.POPUP_TITLE.NOTIFY,
       title_type: 'sub-c',
       contents: contents,
       bt: [{
         style_class: 'bt-blue1 tw-popup-closeBtn',
-        txt: Tw.BUTTON_LABEL.CLOSE
+        txt: btName || Tw.BUTTON_LABEL.CLOSE
       }]
     };
     this._addHash(closeCallback);
