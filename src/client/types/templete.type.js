@@ -112,9 +112,9 @@ Tw.POPUP_TPL = {
     PREPAY: {
       'type': '선불 쿠폰 구매/충전',
       'list': [
-        { 'value': 'T 데이터 쿠폰' },
-        { 'value': 'T 쿠폰' },
-        { 'value': '제주도 프리 쿠폰' }
+        { 'option': 'data_coupon','value': 'T 데이터 쿠폰' },
+        { 'option': 't_coupon','value': 'T 쿠폰' },
+        { 'option': 'jeju_coupon','value': '제주도 프리 쿠폰' }
       ]
     },
     CHARGE: {
