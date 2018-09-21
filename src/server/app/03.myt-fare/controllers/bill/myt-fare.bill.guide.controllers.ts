@@ -93,8 +93,8 @@ class MyTFareBillGuide extends TwViewController {
     * A5. 통합청구회선 대표 | this._billpayInfo.repSvcYn === 'Y'
     * A6. 통합청구회선 대표아님 |
      */
-    // const promiseTypeChk = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0036, {}), 'promiseTypeChk');
-    const promiseTypeChk = this._getPromiseApiMock(bill_guide_BFF_05_0036, 'promiseTypeChk');
+     const promiseTypeChk = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0036, {}), 'promiseTypeChk');
+    // const promiseTypeChk = this._getPromiseApiMock(bill_guide_BFF_05_0036, 'promiseTypeChk');
 
     switch ( svcInfo.svcAttrCd ) {
       case 'M2' :
@@ -199,27 +199,32 @@ class MyTFareBillGuide extends TwViewController {
     let p1;
     /*
     * 실 데이터
-    if ( this.reqQuery.invDt ) {
-      p1 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0036, { invDt: this.reqQuery.invDt }), 'p1');
+    */
+    if ( this.reqQuery.line ) {
+      p1 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0047, {
+        invDt: this.reqQuery.date,
+        sSvcMgmtNum: this.reqQuery.line
+      }), 'p1');
     } else {
       p1 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0036, {}), 'p1');
     }
     const p2 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0049, {}), 'p2'); // 통합청구등록회선조회
     const p3 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0024, {}), 'p3'); // 자녀회선조회
-     */
 
+    /*
     p1 = this._getPromiseApiMock(bill_guide_BFF_05_0036, 'p1');
     const p2 = this._getPromiseApiMock(bill_guide_BFF_05_0049, 'p2');
     const p3 = this._getPromiseApiMock(bill_guide_BFF_05_0024, 'p3');
+    */
 
     const dataInit = function () {
       thisMain._commDataInfo.selClaimDt = (thisMain._billpayInfo) ? thisMain.getSelClaimDt(String(thisMain._billpayInfo.invDt)) : null;
       thisMain._commDataInfo.selClaimDtM = (thisMain._billpayInfo) ? thisMain.getSelClaimDtM(String(thisMain._billpayInfo.invDt)) : null;
       thisMain._commDataInfo.selStaDt = (thisMain._billpayInfo) ? thisMain.getSelStaDt(String(thisMain._billpayInfo.invDt)) : null;
-      thisMain._commDataInfo.selEndDt = (thisMain._billpayInfo) ? DateHelper.getShortDateNoDot(String(thisMain._billpayInfo.invDt)) : null;
+      thisMain._commDataInfo.selEndDt = (thisMain._billpayInfo) ? thisMain.getSelEndDt(String(thisMain._billpayInfo.invDt)) : null;
       thisMain._commDataInfo.discount =
         (thisMain._billpayInfo) ? FormatHelper.addComma(String(Math.abs(Number(thisMain._billpayInfo.deduckTotInvAmt)))) : 0;
-      thisMain._commDataInfo.joinSvcList = (thisMain._billpayInfo) ? (thisMain._billpayInfo.paidAmtSvcCdList) : null;
+      thisMain._commDataInfo.joinSvcList = (!thisMain.reqQuery.line) ? thisMain.paidAmtSvcCdListFun() : null;
       thisMain._commDataInfo.useAmtTot = (thisMain._billpayInfo) ? FormatHelper.addComma(thisMain._billpayInfo.useAmtTot) : null;
 
       thisMain._commDataInfo.intBillLineList = (thisMain._intBillLineInfo) ? thisMain.intBillLineFun() : null;
@@ -307,7 +312,11 @@ class MyTFareBillGuide extends TwViewController {
 
   // -------------------------------------------------------------[SVC]
   public getSelStaDt(date: string): any { // 월 시작일 구하기
-    return this._commDataInfo.selStaDt = moment(date).format('YYYY.MM') + '.01';
+    return this._commDataInfo.selStaDt = moment(date).startOf('month').format('YYYY.MM.DD');
+  }
+
+  public getSelEndDt(date: string): any { // 월 끝나는 일 구하기
+    return this._commDataInfo.selEndDt = moment(date).endOf('month').format('MM.DD');
   }
 
   public getSelClaimDt(date: string): any { // 청구 년월 구하기
@@ -345,6 +354,24 @@ class MyTFareBillGuide extends TwViewController {
     });
 
     return dtList;
+  }
+
+  public paidAmtSvcCdListFun() {
+    const thisMain = this;
+    console.log('에러 확인 > thisMain._billpayInfo.paidAmtSvcCdList');
+    console.dir(thisMain._billpayInfo.paidAmtSvcCdList);
+    let paidAmtSvcCdList = thisMain._billpayInfo.paidAmtSvcCdList.slice();
+    paidAmtSvcCdList = paidAmtSvcCdList.map(function (item, idx, arr) {
+      item.amt = FormatHelper.addComma(item.amt);
+
+      if ( item.svcNm === MYT_FARE_BILL_GUIDE.PHONE_TYPE_0) {
+        item.svcNm = MYT_FARE_BILL_GUIDE.PHONE_TYPE_1;
+      }
+
+      return item;
+    });
+    return paidAmtSvcCdList;
+
   }
 
 

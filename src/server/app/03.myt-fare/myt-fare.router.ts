@@ -9,12 +9,19 @@ import MytFarePaymentPoint from './controllers/payment/myt-fare.payment.point';
 import MytFarePaymentSms from './controllers/payment/myt-fare.payment.sms';
 import MytFareHotbill from './controllers/bill/myt-fare.bill.hotbill.controller';
 import MyTFareBillSetChange from './controllers/bill/myt-fare.bill.set.change.controller';
+import MyTFareBillGuideCallGift from './controllers/bill/myt-fare.bill.guide.call-gift.controllers';
+import MyTFareBillGuideRoaming from './controllers/bill/myt-fare.bill.guide.roaming.controllers';
+import MyTFareBillGuideDonation from './controllers/bill/myt-fare.bill.guide.donation.controllers';
+
 
 class MytFareRouter extends TwRouter {
   constructor() {
     super();
     // this.controllers.push({ url: '/', controller: new HomeMain() });
     this.controllers.push({ url: '/bill/guide', controller: new MyTFareBillGuide() });
+    this.controllers.push({ url: '/bill/guide/call-gift', controller: new MyTFareBillGuideCallGift() });
+    this.controllers.push({ url: '/bill/guide/roaming', controller: new MyTFareBillGuideRoaming() });
+    this.controllers.push({ url: '/bill/guide/donation', controller: new MyTFareBillGuideDonation() });
     this.controllers.push({ url: '/bill/set', controller: new MyTFareBillSet() });
     this.controllers.push({ url: '/payment/auto', controller: new MyTFarePaymentAuto() });
     this.controllers.push({ url: '/payment/account', controller: new MytFarePaymentAccount() });

@@ -34,7 +34,9 @@ export const MYT_FARE_BILL_GUIDE = {
     YYYYMM_TYPE: 'YYYY년 MM월'
   },
   FIRST_SVCTYPE: '서비스 전체',
-  PHONE_SVCTYPE: '휴대폰'
+  PHONE_SVCTYPE: '휴대폰',
+  PHONE_TYPE_0: '이동전화',
+  PHONE_TYPE_1: '휴대폰'
 };
 
 export enum MYT_FARE_PAYMENT_NAME {

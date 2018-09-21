@@ -6,151 +6,374 @@
 
 <% include ../../components/start.component.html %>
 <% include ../../components/javascript.component.html %>
-<script id="entry-template" type="text/x-handlebars-template">
-    <table>
-        <thead>
-        <th>아이디</th>
-        <th>라벨</th>
-        <th>총합</th>
-        </thead>
-        <tbody>
-        {{# each resData}}
-        <tr>
-            <td>{{id}}</td>
-            <td>{{label}}</td>
-            <td>{{totPrice}}</td>
-        </tr>
+
+<script id="fe-entryTplPaidAmtSvcCdList" type="text/x-handlebars-template">
+    <div>
+        {{!-- 주석 : 유형별 서비스 사용요금 --}}
+        {{# each resData as |rootItem rootIndex|}}
+        <li>
+            <span class="title">{{rootItem.svcNm}}</span>
+            <span class="tx-cont">{{rootItem.amt}} 원</span>
+        </li>
         {{/each}}
-        </tbody>
-    </table>
-    <br><br>
-
-    {{!-- 주석 : svcMgmtNum --}}
-    {{# each resData as |rootItem rootIndex|}}
-    <div class="payment-summary-wrap">
-        <h3 class="tit">
-            이동전화
-            <span class="pay-summary-num">{{rootItem.label}}</span>
-        </h3>
-        <div class="payment-summary">
-                <span class="total">
-                    <span class="blind"></span>
-                    <strong class="num">{{rootItem.totPrice}}</strong>
-                </span>
-        </div>
     </div>
+</script>
 
-    <div class="widget">
-        <div class="widget-box accordion2">
-            <div class="acco-style payment-list">
-                <ul class="acco-box">
-                    {{!-- 주석 : billItmLclNm --}}
-                    {{# each rootItem.children as |largeItem largeIndex|}}
-                    <li class="acco-list">
-                        <div class="acco-title">
-                            <button class="" role="button" aria-pressed="true">
-                                <span class="pt-tit">{{largeItem.label}}</span>
-                                <span class="pt-price">
-                                        <span class="num">{{largeItem.totPrice}}</span>
-                                    </span>
-                            </button>
+<script id="fe-entryTplChild" type="text/x-handlebars-template">
+    <div>
+        {{!-- 주석 : 자녀사용요금 --}}
+        {{# each resData as |rootItem rootIndex|}}
+
+        <li>
+            <button>
+                <div class="lineinfo-user">
+                    <span class="info-title">{{rootItem.prodNm}}<span class="badge badge-fam"><span class="blind">자녀회선</span></span></span>
+                    <span class="info-sub">{{rootItem.svcNum}}</span>
+                </div>
+                <div class="lineinfo-data">
+                    <span class="info-title">{{rootItem.detailInfo.useAmtTot}}<span class="unit ml4">원</span></span>
+                    <span class="ico"></span>
+                </div>
+            </button>
+        </li>
+
+        {{/each}}
+    </div>
+</script>
+
+<script id="fe-entryTplUseBill" type="text/x-handlebars-template">
+
+    <!-- .cont-box -->
+    <div class="cont-box nogaps-btm">
+        <div class="statement-cont">
+            <h3 class="title">{{resData.useSvcType.svcType}}</h3>
+            <div class="statement-detail">
+                <!-- .widget -->
+                <div class="widget">
+                    <div class="widget-box accordion">
+                        <div class="acco-cover"><!-- toggle : 한개만 열기 -->
+                            <div class="acco-style">
+                                <ul class="acco-list">
+
+                                    {{!-- 주석 : billItmLclNm --}}
+                                    {{# each resData.useBill as |largeItem largeIndex|}}
+
+                                    <li class="acco-box noborder">
+
+                                        <div class="acco-tit">
+                                            <button role="button" aria-pressed="false">
+                                                <div class="in-title">
+                                                    <span class="tit">{{largeItem.id}}</span>
+                                                    <span class="tx-cont">{{largeItem.totPrice}} 원</span>
+                                                </div>
+                                            </button>
+                                        </div>
+                                        <div class="acco-cont">
+
+                                            <div class="in-cont">
+                                                <div class="basic-list">
+                                                    <ul>
+
+                                                        {{!-- 주석 billItmSclNm --}}
+                                                        {{# each largeItem.children as |midItem midIndex|}}
+
+                                                        <li>
+                                                            <div class="inner-top">
+                                                                <span class="title">{{midItem.id}}</span>
+                                                                <span class="tx-cont">{{midItem.totPrice}} 원</span>
+                                                            </div>
+                                                            <div class="inner-row">
+                                                                <ul>
+
+                                                                    {{!-- 주석 --}}
+                                                                    {{# each midItem.children as |smaItem smaIndex|}}
+                                                                    <li>
+                                                                        <span class="title">{{smaItem.billItmNm}}</span>
+                                                                        <span class="tx-cont">{{smaItem.invAmt}} 원</span>
+                                                                    </li>
+                                                                    {{/each}}
+
+                                                                </ul>
+                                                            </div>
+                                                        </li>
+                                                        {{/each}}
+
+                                                    </ul>
+
+                                                    <div class="noti-words">
+                                                        <span class="words01" id="aria-footnote-01">
+						                                    				<span class="badge badge-other ml0"><span class="blind">타사</span></span>당사에서 청구 대행하는 타사 요금
+						                                    			</span>
+                                                        <span class="words02 mt10" id="aria-footnote-02">
+						                                    				<span class="required-mark"><span class="blind">필수표시</span></span> 부가가치세 제외 대상 표시
+						                                    			</span>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    {{/each}}
+                                </ul>
+                            </div>
                         </div>
-                        <div class="acco-content">
-                            <ul class="payment-detail-depth1">
-                                {{!-- 주석 billItmSclNm --}}
-                                {{# each largeItem.children as |midItem midIndex|}}
-                                <li class="">
-                                    <dl class="pdt-wrap">
-                                        <dt class="pdt-tit">{{midItem.label}}</dt>
-                                        <dd class="pdt-price discount">{{midItem.totPrice}}</dd>
-                                    </dl>
-                                    <ul class="payment-detail-depth2">
-                                        {{!-- 주석 --}}
-                                        {{# each midItem.children as |smaItem smaIndex|}}
-                                        <li class="">
-                                            <dl class="pdt-wrap">
-                                                <dt class="pdt-tit">{{smaItem.billItmNm}}</dt>
-                                                <dd class="pdt-price discount">{{smaItem.invAmt}}</dd>
-                                            </dl>
-                                        </li>
-                                        {{/each}}
-                                    </ul>
-                                </li>
-                                {{/each}}
-                            </ul>
-                        </div>
-                    </li>
-                    {{/each}}
-                </ul>
+                    </div>
+                </div>
+                <!--// .widget -->
             </div>
         </div>
     </div>
+    <!--// .cont-box -->
 
+</script>
+
+<script id="fe-entryTplBill" type="text/x-handlebars-template">
+    {{!-- 주석 : svcMgmtNum --}}
+    {{# each resData as |rootItem rootIndex|}}
+    <!-- .cont-box -->
+    <div class="cont-box nogaps-btm">
+        <div class="statement-cont">
+            <div class="single-list">
+                <span class="title"><span class="in-tx">{{rootItem.label}} {{rootItem.svcInfoNm}}</span><a class="bt-link-tx underline" href="">뉴 T끼리 맞춤형 (100분+6GB)</a></span>
+                <span class="num"><em>{{rootItem.totPrice}}</em> 원</span>
+            </div>
+            <div class="statement-detail">
+                <!-- .widget -->
+                <div class="widget">
+                    <div class="widget-box accordion">
+                        <div class="acco-cover"><!-- toggle : 한개만 열기 -->
+                            <div class="acco-style">
+
+                                <ul class="acco-list">
+
+                                    {{!-- 주석 : billItmLclNm --}}
+                                    {{# each rootItem.children as |largeItem largeIndex|}}
+
+                                    <li class="acco-box">
+                                        <div class="acco-tit">
+                                            <button role="button" aria-pressed="false">
+                                                <div class="in-title">
+                                                    <span class="tit">{{largeItem.id}}</span>
+                                                    <span class="tx-cont">{{largeItem.totPrice}} 원</span>
+                                                </div>
+                                            </button>
+                                        </div>
+                                        <div class="acco-cont">
+                                            <div class="in-cont">
+
+                                                <div class="basic-list">
+                                                    <ul>
+
+                                                        {{!-- 주석 billItmSclNm --}}
+                                                        {{# each largeItem.children as |midItem midIndex|}}
+                                                        <li>
+                                                            <div class="inner-top">
+                                                                <span class="title">{{midItem.id}}</span>
+                                                                <span class="tx-cont">{{midItem.totPrice}} 원</span>
+                                                            </div>
+                                                            <div class="inner-row">
+                                                                <ul>
+
+                                                                    {{!-- 주석 --}}
+                                                                    {{# each midItem.children as |smaItem smaIndex|}}
+                                                                    <li>
+                                                                        <span class="title">{{smaItem.billItmNm}}</span>
+                                                                        <span class="tx-cont">{{smaItem.invAmt}} 원</span>
+                                                                    </li>
+                                                                    {{/each}}
+
+                                                                </ul>
+                                                            </div>
+                                                        </li>
+                                                        {{/each}}
+
+                                                    </ul>
+                                                    <div class="noti-words">
+                                                                            <span class="words01" id="aria-footnote-01">
+                                                                                <span class="badge badge-other ml0"><span class="blind">타사</span></span>당사에서 청구 대행하는 타사 요금
+                                                                            </span>
+                                                        <span class="words02 mt10" id="aria-footnote-02">
+                                                                                <span class="required-mark"><span class="blind">필수표시</span></span> 부가가치세 제외 대상 표시
+                                                                            </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    {{/each}}
+
+                                </ul>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--// .widget -->
+            </div>
+        </div>
+    </div>
+    <!--// .cont-box -->
+    <hr class="cont-sp type1" aria-hidden="true"/>
     {{/each}}
 
 </script>
 
-<div id="fe-wrap">
-    <h1>요금안내서-통합청구(대표)</h1>
-    <div>
-        <button data-target="lineChangeBtn">회선 변경하기 버튼</button>
-    </div>
-    <div>
-        청구요금 날짜 : <%-commDataInfo.selClaimDt %>
-    </div>
-    <div>사용요금 : <%-commDataInfo.useAmtTot %> 원</div>
-    <div>검색조건 : <span><%-commDataInfo.intBillLineList[0].svcType %></span></div>
-    <div>
-        사용기간 : <%-commDataInfo.selStaDt %> ~ <%-commDataInfo.selEndDt %>
-    </div>
-    <div>
-        <%-commDataInfo.selClaimDtM %>월 사용 요금은
-        <%-commDataInfo.useAmtTot %>원이고
-        <%-commDataInfo.discount %>원을 할인 받으셧습니다.
-    </div>
-    <br><br>
-    <div>
-        <h3>기간 리스트</h3>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
 
-        <% for(var i=0; i < commDataInfo.conditionChangeDtList.length; i++) { %>
-        <p>
-            <span data-value="<%- billpayInfo.invDtArr[i] %>"><%- commDataInfo.conditionChangeDtList[i] %></span>
-        </p>
-        <% } %>
-
+<div id="fe-wrap" class="wrap">
+    <!-- #header -->
+    <div id="header" class="header-wrap">
+        <div class="header">
+            <div class="header-ti align-l">
+                <h1>요금안내서</h1>
+            </div>
+            <button class="prev-step"><span class="blind">이전으로</span></button>
+            <button class="bt-dropdown small" title="회선 선택" aria-haspopup="true">010-87**-13**<span class="ico"></span></button>
+        </div>
     </div>
-    <br><br>
-    <div>
-        <h3>회선 리스트</h3>
-        <% for(var i=0; i < commDataInfo.intBillLineList.length; i++) { %>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <div class="ti-caption-gray"><!-- 2018-09-19 클래스명 변경 -->
+                <h3 class="tit"><%= svcInfo.prodNm %></h3>
+                <button class="detail-view"><span class="blind">자세히보기</span></button>
+            </div>
+            <!-- .cont-box -->
+            <div class="cont-box">
+                <div class="charge-guide-wrap">
+                    <div class="charge-cont">
+								<span class="sub-disc01">
+									<span class="elem"><%=commDataInfo.selClaimDt %></span>
+									<span class="elem ellipsis" data-target="searchNmSvcType" ><%=commDataInfo.intBillLineList[0].svcType %></span>
+								</span>
+                        <span class="tit"><span class="charge-txt"><%=commDataInfo.useAmtTot %></span>원</span>
+                        <span class="sub-disc01">사용기간 : <%=commDataInfo.selStaDt %> ~ <%=commDataInfo.selEndDt %></span>
+                    </div>
 
-        <% if( i == 0) { %>
-        <p>
-            <span><%- commDataInfo.intBillLineList[i].svcType %></span>&nbsp;
-        </p>
-        <% } else {%>
-        <p>
-            <span><%- commDataInfo.intBillLineList[i].svcType %></span>&nbsp;
-            <span>(<%- commDataInfo.intBillLineList[i].label %>)</span>
-        </p>
-        <% } %>
+                    <div class="bt-alone"><button class="bt-bg-blue1" data-target="conditionChangeBtn">조건 변경</button></div>
 
-        <% } %>
+                    <div class="charge-cont pt38">
+                        <span class="sub-disc02">이번 달에는 <span class="tx-bold vbl">요금할인을 <%=commDataInfo.discount %>원</span> 받으셨어요.<br />SK텔레콤과 함께 해주셔서 감사합니다.</span>
+                        <div class="basic-list bg-type mt14" data-target="wrapHbPaidAmtSvcCdListArea">
+                            <ul data-target="hbPaidAmtSvcCdListArea">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--// .cont-box -->
 
+            <hr class="cont-sp type1" aria-hidden="true"/>
+
+            <div data-target="hbDetailListArea">
+
+            </div>
+
+            <hr class="cont-sp type1" aria-hidden="true"/>
+
+            <!-- .cont-box -->
+            <div class="cont-box">
+                <ul class="bt-slice item-two">
+                    <li class="bt-blue1">
+                        <button>요금 납부</button>
+                    </li>
+                    <li class="bt-blue1">
+                        <button>납부 내역 조회</button>
+                    </li>
+                </ul>
+            </div>
+            <!--// .cont-box -->
+
+            <div class="ti-caption-gray"><!-- 2018-09-19 클래스명 변경 -->
+                <h4 class="tit">자녀 회선 사용요금</h4>
+            </div>
+            <!-- .cont-box -->
+            <div class="cont-box nogaps">
+                <ul class="list-comp-lineinfo" data-target="hbChildListArea">
+
+                    <!--<li>-->
+                        <!--<button>-->
+                            <!--<div class="lineinfo-user">-->
+                                <!--<span class="info-title">갤럭시 S7<span class="badge badge-fam"><span class="blind">자녀회선</span></span></span>-->
+                                <!--<span class="info-sub">010-46**-10**</span>-->
+                            <!--</div>-->
+                            <!--<div class="lineinfo-data">-->
+                                <!--<span class="info-title">23,367<span class="unit ml4">원</span></span>-->
+                                <!--<span class="ico"></span>-->
+                            <!--</div>-->
+                        <!--</button>-->
+                    <!--</li>-->
+
+                </ul>
+            </div>
+            <!--// .cont-box -->
+
+            <hr class="cont-sp type1" aria-hidden="true"/>
+
+            <!-- .cont-box -->
+            <div class="cont-box nogaps">
+                <ul class="link-long-list">
+                    <li>
+                        <div class="link-long">
+                            <button>콜기프트 사용요금
+                                <span class="tx-sub">
+	                                        <span class="ico"></span>
+	                                    </span>
+                            </button>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="link-long">
+                            <button>
+                                로밍 사용요금
+                                <span class="tx-sub">
+	                                        <span class="ico"></span>
+	                                    </span>
+                            </button>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="link-long">
+                            <button>
+                                기부금/후원금
+                                <span class="tx-sub">
+	                                        <span class="ico"></span>
+	                                    </span>
+                            </button>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <!--// .cont-box -->
+
+            <hr class="cont-sp type1" aria-hidden="true"/>
+
+            <!-- TBD -->
+            <img src="/img/dummy/DC_02_TBD2.jpg" alt="이용안내 노출 영역" style="width:100%;vertical-align:top;"/>
+
+            <hr class="cont-sp type1" aria-hidden="true"/>
+
+            <!-- TBD -->
+            <img src="/img/dummy/DC_02_TBD3.jpg" alt="페이지 바로가기 노출 영역" style="width:100%;vertical-align:top;"/>
+
+
+        </div>
     </div>
-
-    <br><br><br><br>
-    <div>
-        <h3>리스트 내용</h3>
-        <div data-target="hbDetailListArea"></div>
-    </div>
+    <!--// #contents -->
 
 </div>
-<style>
-    .accordion2 .acco-style .acco-list .acco-content {
-        display: block;
-    }
-</style>
 
 <script>
   $(document).ready(function () {
