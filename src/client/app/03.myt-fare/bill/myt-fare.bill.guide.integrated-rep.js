@@ -286,8 +286,8 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
     // Tw.Logger.info('[ _searchNmSvcTypeFun ]', selectSvcType);
     var textVal = '';
 
-    if ( selectSvcType.svcType === '휴대폰') {
-      textVal = '휴대폰(' + selectSvcType.label + ')'
+    if ( selectSvcType.svcType === Tw.MYT_FARE_BILL_GUIDE.PHONE_TYPE_1) {
+      textVal = Tw.MYT_FARE_BILL_GUIDE.PHONE_TYPE_1 +'(' + selectSvcType.label + ')'
     } else {
       textVal = selectSvcType.svcType + '(' + selectSvcType.dtlAddr + ')';
     }

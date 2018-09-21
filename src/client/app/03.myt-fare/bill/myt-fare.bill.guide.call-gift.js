@@ -106,7 +106,7 @@ Tw.MyTFareBillGuideCallGift.prototype = {
 
   _comComma: function (str) {
     str = String(str);
-    return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+    return Tw.FormatHelper.addComma(str);
   },
   _comUnComma: function (str) {
     str = String(str);
