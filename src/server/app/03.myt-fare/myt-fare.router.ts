@@ -9,7 +9,9 @@ import MytFarePaymentPoint from './controllers/payment/myt-fare.payment.point';
 import MytFarePaymentSms from './controllers/payment/myt-fare.payment.sms';
 import MytFareHotbill from './controllers/bill/myt-fare.bill.hotbill.controller';
 import MyTFareBillSetChange from './controllers/bill/myt-fare.bill.set.change.controller';
-
+import MyTFareBillGuideCallGift from './controllers/bill/myt-fare.bill.guide.call-gift.controllers';
+import MyTFareBillGuideRoaming from './controllers/bill/myt-fare.bill.guide.roaming.controllers';
+import MyTFareBillGuideDonation from './controllers/bill/myt-fare.bill.guide.donation.controllers';
 
 
 class MytFareRouter extends TwRouter {
