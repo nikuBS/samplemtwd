@@ -45,12 +45,12 @@ Tw.MyTFarePaymentAccount.prototype = {
     this._bankList.init(event);
   },
   _checkPay: function () {
-    if (this._isAccountValid()) {
+    if (this._isValid()) {
       this._historyService.goHash('#check');
       this._setData();
     }
   },
-  _isAccountValid: function () {
+  _isValid: function () {
     return (this._validation.checkIsSelected(this.$selectBank, Tw.MSG_PAYMENT.REALTIME_A02) &&
       this._validation.checkEmpty(this.$accountNumber.val(), Tw.MSG_PAYMENT.AUTO_A03) &&
       this._validation.checkIsSelected(this.$refundBank, Tw.MSG_PAYMENT.REALTIME_A02) &&
