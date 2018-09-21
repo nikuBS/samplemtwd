@@ -57,6 +57,12 @@ export enum CURRENCY_UNIT {
   WON = '원',
   TEN_THOUSAND = '만원'
 }
+
+export enum TIME_UNIT {
+  TIME = '시간',
+  MINUTE = '분',
+  SECOND = '초'
+}
 export enum MYT_DATA_CHARGE_TYPES {
   GIFT = '선물',
   CHARGE = '충전'

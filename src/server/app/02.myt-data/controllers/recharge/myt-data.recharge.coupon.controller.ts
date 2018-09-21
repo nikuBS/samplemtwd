@@ -10,7 +10,7 @@ import { Observable } from 'rxjs/Observable';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import DateHelper from '../../../../utils/date.helper';
 import FormatHelper from '../../../../utils/format.helper';
-import { DATA_UNIT } from '../../../../types/string.type';
+import { DATA_UNIT, TIME_UNIT } from '../../../../types/string.type';
 
 interface Coupon {
   copnIsueNum: string;
@@ -158,7 +158,7 @@ export default class MyTDataRechargeCoupon extends TwViewController {
       } else {
         let calculated = parseInt(productInfo.basOfrVcallTmsCtt, 10) * 0.2;
         calculated = Math.round(calculated);
-        option.qttText = calculated + ' 분';
+        option.qttText = calculated + ' ' + TIME_UNIT.MINUTE;
       }
       return option;
     });
