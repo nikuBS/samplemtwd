@@ -15,7 +15,7 @@
         </ul>
     </div>
     <!--// #skip_navigation -->
-    <div class="wrap step">
+    <div id="myt-fare-payment-account" class="wrap step">
         <!-- #contents -->
         <div id="contents" class="container-wrap">
             <h2 class="blind">내용</h2>
@@ -179,7 +179,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.MyTFarePaymentAccount($('.wrap'));
+    new Tw.MyTFarePaymentAccount($('#myt-fare-payment-account'));
   });
 </script>
 <% include ../../components/end.component.html %>

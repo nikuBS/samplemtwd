@@ -25,6 +25,7 @@ Tw.MyTFarePaymentCard.prototype = {
   },
   _initVariables: function () {
     this.$cardNumber = this.$container.find('.fe-card-number');
+    this.$cardTypeSelector = this.$container.find('.fe-select-card-type');
     this.$cardY = this.$container.find('.fe-card-y');
     this.$cardM = this.$container.find('.fe-card-m');
     this.$cardPw = this.$container.find('.fe-card-pw');
@@ -61,7 +62,7 @@ Tw.MyTFarePaymentCard.prototype = {
   },
   _setSelectedValue: function ($target, event) {
     var $selectedValue = $(event.currentTarget);
-    $target.attr('id', $selectedValue.find('button').attr('id'));
+    $target.attr('id', $selectedValue.attr('id'));
     $target.text($selectedValue.text());
     this._popupService.close();
   },
@@ -70,7 +71,6 @@ Tw.MyTFarePaymentCard.prototype = {
   },
   _checkPay: function () {
     if (this._isValid()) {
-      this._historyService.goHash('#check');
       this._getCardCode();
     }
   },
@@ -91,6 +91,13 @@ Tw.MyTFarePaymentCard.prototype = {
     this.$container.find('.fe-payment-refund').attr('id', this.$refundBank.attr('id'))
       .text(this.$refundBank.text() + ' ' + this.$refundNumber.val());
   },
+  _pay: function () {
+    var reqData = this._makeRequestData();
+    console.log(reqData);
+    this._apiService.request(Tw.API_CMD.BFF_07_0025, reqData)
+      .done($.proxy(this._paySuccess, this))
+      .fail($.proxy(this._payFail, this));
+  },
   _makeRequestData: function () {
     var reqData = {
       payovrBankCd: this.$container.find('.fe-payment-refund').attr('id'),
@@ -105,6 +112,17 @@ Tw.MyTFarePaymentCard.prototype = {
     };
     return reqData;
   },
+  _paySuccess: function (res) {
+    if (res.code === Tw.API_CODE.CODE_00) {
+      this._historyService.setHistory();
+      this._historyService.goHash('#complete');
+    } else {
+      this._payFail(res.error);
+    }
+  },
+  _payFail: function (err) {
+    this._popupService.openAlert(err.message, err.code);
+  },
   _getCardCode: function () {
     this._apiService.request(Tw.API_CMD.BFF_07_0024, { cardNum: $.trim(this.$cardNumber.val()).substr(0, 6) })
       .done($.proxy(this._getSuccess, this))
@@ -115,6 +133,7 @@ Tw.MyTFarePaymentCard.prototype = {
       var cardCode = res.result.prchsCardCd;
       var cardName = res.result.prchsCardName;
 
+      this._historyService.goHash('#check');
       this._setData(cardCode, cardName);
     } else {
       this._getFail(res.error);

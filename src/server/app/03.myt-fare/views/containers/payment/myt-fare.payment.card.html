@@ -15,7 +15,7 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div class="wrap step">
+<div id="myt-fare-payment-card" class="wrap step">
     <!-- #contents -->
     <div id="contents" class="container-wrap">
         <h2 class="blind">내용</h2>
@@ -50,7 +50,7 @@
                     </div>
                     <div class="info-form-box">
                         <p class="form-label" id="aria-exp-label2">납부형태</p>
-                        <button class="bt-dropdown big fe-select-card-type" title="납부 형태 선택" aria-haspopup="true">일시불<span class="ico"></span></button>
+                        <button id="00" class="bt-dropdown big fe-select-card-type" title="납부 형태 선택" aria-haspopup="true">일시불<span class="ico"></span></button>
                     </div>
                     <div class="info-form-box">
                         <p class="form-label" id="aria-exp-label3">카드번호</p>
@@ -173,7 +173,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.MyTFarePaymentCard($('.wrap'));
+    new Tw.MyTFarePaymentCard($('#myt-fare-payment-card'));
   });
 </script>
 <% include ../../components/end.component.html %>
