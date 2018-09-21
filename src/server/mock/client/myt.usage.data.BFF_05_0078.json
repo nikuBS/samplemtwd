@@ -1,0 +1,26 @@
+{
+  "code": "00",
+  "msg": "0078 결과메세지",
+  "result":
+
+  {
+    "data" :
+    {
+      "used" : "300000"
+    },
+
+    "childList": [
+      {
+        "svcMgmtNum" : "722xxxxxx",
+        "svcNum": "01012345678",
+        "feeProdId": "NA000xxx",
+        "feeProdNm": "LTE함께쓰기",
+        "auditDtm": "20141010"
+      }
+    ]
+  }
+
+}
+
+
+
