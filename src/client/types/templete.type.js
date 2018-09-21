@@ -148,8 +148,9 @@ Tw.POPUP_TPL = {
   ]
 };
 
-Tw.MYT_DATA = {
+Tw.MYT_DATA_TPL = {
   SUBMAIN: {
+    SP_TEMP: '<br> ↓ <br>',
     MORE_LINE_TEMP: '<li data-svc-mgmt-num="{{svcMgmtNum}}"><button>' +
       '<div class="lineinfo-user"><span class="info-title">{{nickNm}}' +
       '{{#if data.child}}' +
