@@ -18,7 +18,7 @@ import {
 } from '../../../../types/string.type';
 import FormatHelper from '../../../../utils/format.helper';
 
-enum RechargeTypes { DATA_GIFT, LIMIT_CHARGE, TING_CHARGE, TING_GIFT, REFILL_USAGE, REFILL_GIFT }
+enum RechargeTypes { DATA_GIFT = 1, LIMIT_CHARGE, TING_CHARGE, TING_GIFT, REFILL_USAGE, REFILL_GIFT }
 
 interface ICharge {
   type: RechargeTypes;
@@ -263,8 +263,6 @@ export default class MyTDataRechargeHistory extends TwViewController {
     for (let i = 0; i < args.length; i++) {
       const data = args[i];
       for (const key of Object.keys(data)) {
-        const itemYear = DateHelper.getShortDateWithFormat(key, 'YYYY');
-
         if (!result.data[key]) {
           result.data[key] = { data: [], count: 0 };
         }
