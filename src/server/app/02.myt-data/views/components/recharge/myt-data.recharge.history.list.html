@@ -14,7 +14,7 @@
             </p>
             {{#if right}}
             <div class="list-data">
-                <p class="data-tx blue-tx">{{right.amount}}<span>{{right.unit}}</span></p>
+                <p class="data-tx {{right.color}}-tx">{{right.amount}}<span>{{right.unit}}</span></p>
                 {{#if refundable}}
                 <div class="bt-alone"><button class="bt-line-gray1">취소</button></div>
                 {{/if}}

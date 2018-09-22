@@ -67,7 +67,7 @@
                                         </p>
                                         <% if (item.right) { %>
                                         <div class="list-data">
-                                          <p class="data-tx blue-tx"><%= item.right.amount %><span><%= item.right.unit %></span></p>
+                                          <p class="data-tx <%= item.right.color %>-tx"><%= item.right.amount %><span><%= item.right.unit %></span></p>
                                           <% if (item.refundable) { %>
                                             <div class="bt-alone"><button class="bt-line-gray1">취소</button></div>
                                           <% } else if (item.refunded) { %>
