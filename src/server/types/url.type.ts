@@ -19,5 +19,10 @@ export const URL = {
   '/product/detail': { login: true, id: 'MP_02_02', title: '상품 상세 정보' },
   '/product/detail/contents': { login: true, id: 'MP_02_02_06', title: '상품 상세 정보 보기' },
 
-  '/bill/set/change': { login: true, id: 'MF_04_02', title: '요금안내서 변경' }
+  '/bill/set/change': { login: true, id: 'MF_04_02', title: '요금안내서 변경' },
+
+  '/bill/guide': { login: true, id: 'MF_02_01', title: '요금안내서' },
+  '/bill/guide/call-gift': { login: true, id: 'MF_02_01_02', title: '요금안내서 콜기프트 사용요금 조회' },
+  '/bill/guide/roaming': { login: true, id: 'MF_02_01_03', title: '요금안내서 로밍 사용요금 조회' },
+  '/bill/guide/donation': { login: true, id: 'MF_02_01_04', title: '요금안내서 기부금/후원금 사용요금 조회' }
 };
