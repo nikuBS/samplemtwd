@@ -22,18 +22,26 @@ Tw.MyTDataGiftMonthly.prototype = {
   },
 
   _cachedElement: function () {
+    this.$btn_add_contact = this.$container.find('.fe-btn_add_contact');
     this.$input_auto_gift = this.$container.find('.fe-input_auto_gift');
     this.$btn_auto_contact = this.$container.find('.fe-btn_auto_contact');
     this.$btn_send_auto_gift = this.$container.find('.fe-btn_send_auto_gift');
+    this.$btn_wrap_add_contact = this.$container.find('.fe-wrap_add_contact');
     this.$wrap_auto_select_list = this.$container.find('.fe-auto_select_list');
     this.$btn_unsubscribe_auto_gift = this.$container.find('.fe-btn_unsubscribe');
   },
 
   _bindEvent: function () {
+    this.$btn_add_contact.on('click', $.proxy(this._showAddUI, this));
     this.$btn_auto_contact.on('click', $.proxy(this._onClickBtnAddr, this));
     this.$btn_send_auto_gift.on('click', $.proxy(this._subscribeAutoGift, this));
     this.$input_auto_gift.on('keyup', $.proxy(this._onKeyUpAutoGiftNumber, this));
     this.$btn_unsubscribe_auto_gift.on('click', $.proxy(this._unSubscribeAutoGift, this));
+  },
+
+  _showAddUI: function () {
+    this.$btn_add_contact.hide();
+    this.$btn_wrap_add_contact.show();
   },
 
   _onKeyUpAutoGiftNumber: function () {
@@ -48,6 +56,7 @@ Tw.MyTDataGiftMonthly.prototype = {
   _onContact: function (response) {
     if ( response.resultCode === Tw.NTV_CODE.CODE_00 ) {
       var params = response.params;
+
       this.$inputImmediatelyGift.val(this._convertDashNumber(params.phoneNumber));
     }
   },
@@ -55,7 +64,8 @@ Tw.MyTDataGiftMonthly.prototype = {
   _unSubscribeAutoGift: function (e) {
     var elTarget = $(e.currentTarget);
     var serNum = elTarget.data('sernum');
-    // this._apiService.request(Tw.API_CMD.BFF_06_0005, { serNum: serNum }).done($.proxy(this._onSuccessAutoGiftList, this));
+    this._apiService.request(Tw.API_CMD.BFF_06_0005, { serNum: serNum })
+      .done($.proxy(this._onSuccessUnsubscribeAutoGift, this));
   },
 
   _subscribeAutoGift: function () {
@@ -70,7 +80,15 @@ Tw.MyTDataGiftMonthly.prototype = {
 
   _onSuccessAutoGift: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      // this._historyService.replaceURL('/myt/data/gift/complete');
+      this._historyService.replaceURL('/myt/data/gift/complete');
+    } else {
+      Tw.Error(res.code, res.msg).pop();
+    }
+  },
+
+  _onSuccessUnsubscribeAutoGift: function (res){
+    if ( res.code === Tw.API_CODE.CODE_00 ) {
+      this._historyService.reload();
     } else {
       Tw.Error(res.code, res.msg).pop();
     }
