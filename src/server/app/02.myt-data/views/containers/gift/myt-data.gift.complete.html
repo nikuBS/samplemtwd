@@ -22,30 +22,26 @@
         <div class="container">
             <h1 class="complete-title">
                 <img src="/img/dummy/dmy-complete.jpg" alt="">
-                <span><strong>500MB 선물</strong> 완료</span>
+                <span><strong class="data_qty">500MB</strong><strong> 선물</strong> 완료</span>
             </h1>
             <div class="complete-info">
                 <dl>
                     <dt>받으시는 분</dt>
-                    <dd><strong class="name">홍길동</strong><br>010-1234-5678</dd>
-                </dl>
-                <dl>
-                    <dt>잔여 데이터</dt>
-                    <dd>31.2GB <span class="total-data">/ 42GB</span></dd>
-                </dl>
-                <dl>
-                    <dt>선물하기 남은 횟수</dt>
-                    <dd>T끼리 1회</dd>
+                    <dd>
+                        <strong class="name"></strong>
+                        <br>
+                        <span class="phone"></span>
+                    </dd>
                 </dl>
             </div>
             <div class="complete-btn-box pt40">
                 <ul class="bt-slice">
                     <li class="bt-blue1">
-                        <button>선물내역 보기</button>
+                        <button class="fe-btn_gift_history">선물내역 보기</button>
                     </li>
                 </ul>
                 <div class="bt-link-box">
-                    <button class="bt-link-tx">문자로 알리기</button>
+                    <button class="bt-link-tx fe-btn_go_sms">문자로 알리기</button>
                 </div>
             </div>
             <button class="complete-closeBtn"><span class="blind">페이지 닫기</span></button>
@@ -57,7 +53,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    var oMyTDataGiftComplete = new Tw.MyTDataGiftComplete();
+    var oMyTDataGiftComplete = new Tw.MyTDataGiftComplete($('.container-wrap'));
   });
 </script>
 </body>

@@ -18,10 +18,17 @@ Tw.MyTDataGiftSms = function (rootEl) {
 
 Tw.MyTDataGiftSms.prototype = {
   _init: function () {
-    var htQueryParams = Tw.UrlHelper.getQueryParams();
-    if ( htQueryParams ) {
-      this.phoneNumber = htQueryParams.to;
-      this._getReceiveUserInfo(this.phoneNumber);
+    this.paramData = Tw.UrlHelper.getQueryParams();
+    this._setReceiverInfo();
+  },
+
+  _setReceiverInfo: function () {
+    if ( this.paramData.custName ) {
+      $('.add-name').text(this.paramData.custName);
+    }
+
+    if ( this.paramData.befrSvcNum ) {
+      $('.add-info').text(Tw.FormatHelper.getFormattedPhoneNumber(this.paramData.befrSvcNum));
     }
   },
 
@@ -35,21 +42,6 @@ Tw.MyTDataGiftSms.prototype = {
     this.$btn_send_sms.on('click', $.proxy(this._onClickSendSMS, this));
   },
 
-  _getReceiveUserInfo: function (befrSvcNum) {
-    this._apiService.request(Tw.API_CMD.BFF_06_0019, {
-      befrSvcNum: befrSvcNum
-    }).done($.proxy(this._onSuccessReceiveUserInfo, this));
-  },
-
-  _onSuccessReceiveUserInfo: function (res) {
-    if ( res.code === Tw.API_CODE.CODE_00 ) {
-      $('.add-info').text(Tw.FormatHelper.getFormattedPhoneNumber(this.phoneNumber));
-      $('.add-name').text(res.result.custName);
-    } else {
-      Tw.Error(res.code, res.msg).pop();
-    }
-  },
-
   _onChangeTextArea: function (e) {
     if ( $(e.currentTarget).val().length !== 0 ) {
       this.$btn_send_sms.prop('disabled', false);
@@ -60,7 +52,7 @@ Tw.MyTDataGiftSms.prototype = {
 
   _onClickSendSMS: function () {
     this._apiService.request(Tw.API_CMD.BFF_06_0017, {
-      befrSvcNum: this.phoneNumber,
+      befrSvcNum: this.paramData.befrSvcNum,
       msg: this.$textarea_sms.val()
     }).done($.proxy(this._onSuccessRequestSms, this));
   },
