@@ -24,7 +24,7 @@
                     <h1>최근 충전/선물 내역</h1>
                 </div>
                 <button class="prev-step fe-common-back"><span class="blind">이전으로</span></button>
-                <button class="bt-dropdown small" title="회선 선택" aria-haspopup="true">010-87**-13**<span class="ico"></span></button>
+                <button class="bt-dropdown small" title="회선 선택" aria-haspopup="true"><%= svcInfo.svcNum %><span class="ico"></span></button>
             </div>
         </div>
         <!--// #header -->
@@ -43,9 +43,16 @@
                     <div class="list-comp-history">
                       <ul class="comp-box">
                           <% let displayCount = 0, dIdx = 0; %>
-                          <% const keys = Object.keys(chargeData.data).reverse(); %>
-                          <% while (displayCount < 20 && dIdx < keys.length) { %>
+                          <% const keys = Object.keys(chargeData.data).reverse(), DEFAULT_LIST_COUNT = 20; %>
+                          <% while (displayCount < DEFAULT_LIST_COUNT && dIdx < keys.length) { %>
                               <% const value = chargeData.data[keys[dIdx]]; %>
+                              <% if (value.count === 0) { %>
+                                <li class="list-box">
+                                    <div class="data-select-wrap">
+                                        <span class="data-tit"><%= keys[dIdx] %></span>
+                                    </div>
+                                </li>
+                              <% } else { %>
                               <li class="list-box">
                                   <p class="list-date">
                                     <span class="date-tx"><%= value.data[0].date %></span>
@@ -60,7 +67,7 @@
                                         </p>
                                         <% if (item.right) { %>
                                         <div class="list-data">
-                                          <p class="data-tx blue-tx"><%= item.right.amount %><span><%= item.right.unit %></span></p>
+                                          <p class="data-tx <%= item.right.color %>-tx"><%= item.right.amount %><span><%= item.right.unit %></span></p>
                                           <% if (item.refundable) { %>
                                             <div class="bt-alone"><button class="bt-line-gray1">취소</button></div>
                                           <% } else if (item.refunded) { %>
@@ -74,6 +81,7 @@
                                     <% } %>
                                   </ul>
                               </li>
+                              <% } %>
                               <% displayCount += value.count; %>
                               <% dIdx++; %>
                           <% } %>
@@ -81,18 +89,19 @@
                     </div>
                 </div>
                 <!--// .cont-box -->
-                <% if (chargeData.count > 20) { %>
-                  <div class="bt-more"><button>더보기</button></div>  
+                <% if (chargeData.count > DEFAULT_LIST_COUNT) { %>
+                  <div class="bt-more"><button>더보기 (<%= chargeData.count - displayCount %>)</button></div>  
                 <% } %>
             </div>
         </div>
         <!--// #contents -->
     </div>
+<%- include ../../components/recharge/myt-data.recharge.history.list.html %>
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function() {
-    new Tw.MyTDataRechargeHistory($('.wrap'), <%- JSON.stringify(chargeData) %>);
-  })
+    new Tw.MyTDataRechargeHistory($('.wrap'), <%- JSON.stringify({ ...chargeData, nextIdx: dIdx, displayCount }) %>);
+  });
 </script>
 <% include ../../components/end.component.html %>
 </body>

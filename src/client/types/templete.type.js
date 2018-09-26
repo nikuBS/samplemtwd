@@ -163,3 +163,12 @@ Tw.MYT_DATA_TPL = {
       '</span><span class="ico"></span></div></button></li>'
   }
 };
+
+Tw.MYT_DATA_CHARGE_TYPE_LIST = [
+  {'value':'전체'},
+  {'value':'T끼리 데이터 선물'},
+  {'value':'데이터 한도 충전'},
+  {'value':'팅/쿠키즈/안심요금'},
+  {'value':'팅 요금 선물'},
+  {'value':'데이터 음성 리필'}
+]
