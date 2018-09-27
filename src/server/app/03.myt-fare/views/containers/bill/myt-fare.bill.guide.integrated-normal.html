@@ -7,8 +7,234 @@
 <% include ../../components/start.component.html %>
 <% include ../../components/javascript.component.html %>
 
-<div id="fe-wrap">
-    <h1>요금안내서-통합청구(일반)</h1>
+<script id="fe-entryTplChild" type="text/x-handlebars-template">
+    <div>
+        {{!-- 주석 : 자녀사용요금 --}}
+        {{# each resData as |rootItem rootIndex|}}
+
+        <li>
+            <button>
+                <div class="lineinfo-user">
+                    <span class="info-title">{{rootItem.prodNm}}<span class="badge badge-fam"><span class="blind">자녀회선</span></span></span>
+                    <span class="info-sub">{{rootItem.svcNum}}</span>
+                </div>
+                <div class="lineinfo-data">
+                    <span class="info-title">{{rootItem.detailInfo.useAmtTot}}<span class="unit ml4">원</span></span>
+                    <span class="ico"></span>
+                </div>
+            </button>
+        </li>
+
+        {{/each}}
+    </div>
+</script>
+
+<script id="fe-entryTplUseBill" type="text/x-handlebars-template">
+
+    <!-- .cont-box -->
+    <div class="cont-box nogaps-btm">
+        <div class="statement-cont">
+            <h3 class="title">{{resData.useSvcType.svcType}}</h3>
+            <div class="statement-detail">
+                <!-- .widget -->
+                <div class="widget">
+                    <div class="widget-box accordion">
+                        <div class="acco-cover"><!-- toggle : 한개만 열기 -->
+                            <div class="acco-style">
+                                <ul class="acco-list">
+
+                                    {{!-- 주석 : billItmLclNm --}}
+                                    {{# each resData.useBill as |largeItem largeIndex|}}
+
+                                    <li class="acco-box noborder">
+
+                                        <div class="acco-tit">
+                                            <button role="button" aria-pressed="false">
+                                                <div class="in-title">
+                                                    <span class="tit">{{largeItem.id}}</span>
+                                                    <span class="tx-cont">{{largeItem.totPrice}} 원</span>
+                                                </div>
+                                            </button>
+                                        </div>
+                                        <div class="acco-cont">
+
+                                            <div class="in-cont">
+                                                <div class="basic-list">
+                                                    <ul>
+
+                                                        {{!-- 주석 billItmSclNm --}}
+                                                        {{# each largeItem.children as |midItem midIndex|}}
+
+                                                        <li>
+                                                            <div class="inner-top">
+                                                                <span class="title">{{midItem.id}}</span>
+                                                                <span class="tx-cont">{{midItem.totPrice}} 원</span>
+                                                            </div>
+                                                            <div class="inner-row">
+                                                                <ul>
+
+                                                                    {{!-- 주석 --}}
+                                                                    {{# each midItem.children as |smaItem smaIndex|}}
+                                                                    <li>
+                                                                        <span class="title">{{smaItem.billItmNm}}</span>
+                                                                        <span class="tx-cont">{{smaItem.invAmt}} 원</span>
+                                                                    </li>
+                                                                    {{/each}}
+
+                                                                </ul>
+                                                            </div>
+                                                        </li>
+                                                        {{/each}}
+
+                                                    </ul>
+
+                                                    <div class="noti-words">
+                                                        <span class="words01" id="aria-footnote-01">
+						                                    				<span class="badge badge-other ml0"><span class="blind">타사</span></span>당사에서 청구 대행하는 타사 요금
+						                                    			</span>
+                                                        <span class="words02 mt10" id="aria-footnote-02">
+						                                    				<span class="required-mark"><span class="blind">필수표시</span></span> 부가가치세 제외 대상 표시
+						                                    			</span>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    {{/each}}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--// .widget -->
+            </div>
+        </div>
+    </div>
+    <!--// .cont-box -->
+
+</script>
+
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+
+<div id="fe-wrap" class="wrap">
+    <!-- #header -->
+    <div id="header" class="header-wrap">
+        <div class="header">
+            <div class="header-ti align-l">
+                <h1>요금안내서-통합청구(일반)</h1>
+            </div>
+            <button class="prev-step"><span class="blind">이전으로</span></button>
+            <button class="bt-dropdown small" title="회선 선택" aria-haspopup="true">010-87**-13**<span class="ico"></span></button>
+        </div>
+    </div>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <div class="ti-caption-gray"><!-- 2018-09-19 클래스명 변경 -->
+                <h3 class="tit"><%= svcInfo.prodNm %></h3>
+                <button class="detail-view"><span class="blind">자세히보기</span></button>
+            </div>
+            <!-- .cont-box -->
+            <div class="cont-box">
+                <div class="charge-guide-wrap">
+                    <div class="charge-cont">
+								<span class="sub-disc01">
+									<span class="elem"><%=commDataInfo.selClaimDt %></span>
+								</span>
+                        <span class="tit02"><span class="tx-bold vbl"><%=commDataInfo.repSvcNm %></span>에<br />통합청구되었습니다.</span>
+                        <span class="sub-disc01">사용기간 : <%=commDataInfo.selStaDt %> ~ <%=commDataInfo.selEndDt %></span>
+                    </div>
+
+                    <div class="bt-alone"><button class="bt-bg-blue1" data-target="conditionChangeBtn">조건 변경</button></div>
+
+                    <div class="charge-cont pt38">
+                        <span class="sub-disc02">이번 달에는 <span class="tx-bold vbl">요금할인을 <%=commDataInfo.discount %>원</span> 받으셨어요.<br />SK텔레콤과 함께 해주셔서 감사합니다.</span>
+                    </div>
+                </div>
+            </div>
+            <!--// .cont-box -->
+
+            <hr class="cont-sp type1" aria-hidden="true"/>
+
+            <div data-target="hbDetailListArea">
+
+            </div>
+
+            <div class="ti-caption-gray"><!-- 2018-09-19 클래스명 변경 -->
+                <h4 class="tit">자녀 회선 사용요금</h4>
+            </div>
+            <!-- .cont-box -->
+            <div class="cont-box nogaps">
+                <ul class="list-comp-lineinfo" data-target="hbChildListArea">
+
+                </ul>
+            </div>
+            <!--// .cont-box -->
+
+            <hr class="cont-sp type1" aria-hidden="true"/>
+
+            <!-- .cont-box -->
+            <div class="cont-box nogaps">
+                <ul class="link-long-list">
+                    <li>
+                        <div class="link-long">
+                            <button>콜기프트 사용요금
+                                <span class="tx-sub">
+	                                        <span class="ico"></span>
+	                                    </span>
+                            </button>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="link-long">
+                            <button>
+                                로밍 사용요금
+                                <span class="tx-sub">
+	                                        <span class="ico"></span>
+	                                    </span>
+                            </button>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="link-long">
+                            <button>
+                                기부금/후원금
+                                <span class="tx-sub">
+	                                        <span class="ico"></span>
+	                                    </span>
+                            </button>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <!--// .cont-box -->
+
+            <hr class="cont-sp type1" aria-hidden="true"/>
+
+            <!-- TBD -->
+            <img src="/img/dummy/DC_02_TBD2.jpg" alt="이용안내 노출 영역" style="width:100%;vertical-align:top;"/>
+
+            <hr class="cont-sp type1" aria-hidden="true"/>
+
+            <!-- TBD -->
+            <img src="/img/dummy/DC_02_TBD3.jpg" alt="페이지 바로가기 노출 영역" style="width:100%;vertical-align:top;"/>
+
+
+        </div>
+    </div>
+    <!--// #contents -->
 </div>
 
 <script>
@@ -16,7 +242,10 @@
     var oMyTFareGuide = new Tw.MyTFareBillGuideIntegratedNormal( $('#fe-wrap'), {
       reqQuery: <%-JSON.stringify(reqQuery) %>,
       svcInfo: <%-JSON.stringify(svcInfo) %>,
-      useFeeInfo : <%-JSON.stringify(useFeeInfo) %>
+      billpayInfo : <%-JSON.stringify(billpayInfo) %>,
+      commDataInfo : <%-JSON.stringify(commDataInfo) %>,
+      intBillLineInfo : <%-JSON.stringify(intBillLineInfo) %>,
+      childLineInfo : <%-JSON.stringify(childLineInfo) %>
   } );
   });
 </script>

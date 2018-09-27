@@ -23,8 +23,8 @@ class MyTFareBillGuide extends TwViewController {
   }
 
   public reqQuery: any;  // 쿼리스트링
-  private _billpayInfo: any = {}; // 청구요금조회 | BFF_05_0036
-  private _useFeeInfo: any = {}; // 사용요금조회 | BFF_05_0047
+  private _billpayInfo: any = {}; // 청구요금조회 | BFF_05_0036 , 사용요금조회 | BFF_05_0047
+  // private _useFeeInfo: any = {}; // 사용요금조회 | BFF_05_0047
   private _intBillLineInfo: any = {}; // 통합청구등록회선조회 | BFF_05_0049
   private _childLineInfo: any = {}; // 자녀회선 조회 | BFF_05_0024
   private _ppsInfoLookupInfo: any; // PPS 요금안내서 정보조회
@@ -41,6 +41,7 @@ class MyTFareBillGuide extends TwViewController {
 
     intBillLineList: '', // 조건변경 > 회선
     conditionChangeDtList: '', // 조건변경 > 기간
+    repSvcNm: '', // 대표서비스회선정보
 
     prodNm: '', // pps 요금제
     prodAmt: '', // pps 잔액
@@ -182,7 +183,8 @@ class MyTFareBillGuide extends TwViewController {
         break;
       case 'A5' :
         this.logger.info(this, '[ 통합청구회선-대표 controllerInit ] A5 : ', this._typeChk);
-        this.combineRepresentCircuit(res, svcInfo);
+        // this.combineRepresentCircuit(res, svcInfo);
+        this.combineCommonCircuit(res, svcInfo);
         break;
       case 'A6' :
         this.logger.info(this, '[ 통합청구회선-일반 controllerInit ] A6 : ', this._typeChk);
@@ -196,6 +198,8 @@ class MyTFareBillGuide extends TwViewController {
   // 통합청구(대표)
   private combineRepresentCircuit(res, svcInfo) {
     const thisMain = this;
+    this.reqQuery.line = (this.reqQuery.line) ? this.reqQuery.line : '';
+    this.reqQuery.date = (this.reqQuery.date) ? this.reqQuery.date : '';
     let p1;
     /*
     * 실 데이터
@@ -206,7 +210,9 @@ class MyTFareBillGuide extends TwViewController {
         sSvcMgmtNum: this.reqQuery.line
       }), 'p1');
     } else {
-      p1 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0036, {}), 'p1');
+      p1 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0036, {
+        invDt: this.reqQuery.date
+      }), 'p1');
     }
     const p2 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0049, {}), 'p2'); // 통합청구등록회선조회
     const p3 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0024, {}), 'p3'); // 자녀회선조회
@@ -261,19 +267,40 @@ class MyTFareBillGuide extends TwViewController {
     });
 
   }
+
   // 통합청구(일반)
   private combineCommonCircuit(res, svcInfo) {
     const thisMain = this;
+    this.reqQuery.date = (this.reqQuery.date) ? this.reqQuery.date : '';
 
-    const p1 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0047, {}), 'p1');
+    const p1 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0047, {
+      invDt: this.reqQuery.date
+    }), 'p1');
+    const p2 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0049, {}), 'p2'); // 통합청구등록회선조회
+    const p3 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0024, {}), 'p3'); // 자녀회선조회
 
     const dataInit = function () {
+      thisMain._commDataInfo.selClaimDt = (thisMain._billpayInfo) ? thisMain.getSelClaimDt(String(thisMain._billpayInfo.invDt)) : null;
+      thisMain._commDataInfo.selClaimDtM = (thisMain._billpayInfo) ? thisMain.getSelClaimDtM(String(thisMain._billpayInfo.invDt)) : null;
+      thisMain._commDataInfo.selStaDt = (thisMain._billpayInfo) ? thisMain.getSelStaDt(String(thisMain._billpayInfo.invDt)) : null;
+      thisMain._commDataInfo.selEndDt = (thisMain._billpayInfo) ? thisMain.getSelEndDt(String(thisMain._billpayInfo.invDt)) : null;
+      thisMain._commDataInfo.discount =
+        (thisMain._billpayInfo) ? FormatHelper.addComma(String(Math.abs(Number(thisMain._billpayInfo.deduckTotInvAmt)))) : 0;
+      thisMain._commDataInfo.useAmtTot = (thisMain._billpayInfo) ? FormatHelper.addComma(thisMain._billpayInfo.useAmtTot) : null;
+
+      thisMain._commDataInfo.intBillLineList = (thisMain._intBillLineInfo) ? thisMain.intBillLineFun() : null;
+      thisMain._commDataInfo.conditionChangeDtList = (thisMain._billpayInfo.invDtArr ) ? thisMain.conditionChangeDtListFun() : null;
+
+      thisMain._commDataInfo.repSvcNm = (thisMain._billpayInfo) ? thisMain.phoneStrToDash( thisMain._billpayInfo.repSvcNm ) : null;
+
 
     };
 
-    Promise.all([p1]).then(function(resArr) {
+    Promise.all([p1, p2, p3]).then(function(resArr) {
 
-      thisMain._useFeeInfo = resArr[0].result;
+      thisMain._billpayInfo = resArr[0].result;
+      thisMain._intBillLineInfo = resArr[1].result;
+      thisMain._childLineInfo = resArr[2].result;
 
       dataInit();
 
@@ -281,7 +308,10 @@ class MyTFareBillGuide extends TwViewController {
       thisMain.renderView(res, thisMain._urlTplInfo.combineCommonPage, {
         reqQuery: thisMain.reqQuery,
         svcInfo: svcInfo,
-        useFeeInfo: thisMain._useFeeInfo
+        billpayInfo: thisMain._billpayInfo,
+        commDataInfo: thisMain._commDataInfo,
+        intBillLineInfo: thisMain._intBillLineInfo,
+        childLineInfo: thisMain._childLineInfo
       });
     }, function(err) {
       thisMain.logger.info(thisMain, `[ Promise.all > error ] : `, err);
@@ -293,7 +323,8 @@ class MyTFareBillGuide extends TwViewController {
       });
     });
   }
-  // 개별청구(일반)
+
+  // 개별청구
   private individualCircuit(res, svcInfo) {
     const thisMain = this;
   }
