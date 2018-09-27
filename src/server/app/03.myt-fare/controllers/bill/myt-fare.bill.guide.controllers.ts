@@ -184,7 +184,6 @@ class MyTFareBillGuide extends TwViewController {
       case 'A5' :
         this.logger.info(this, '[ 통합청구회선-대표 controllerInit ] A5 : ', this._typeChk);
         this.combineRepresentCircuit(res, svcInfo);
-        // this.combineCommonCircuit(res, svcInfo);
         break;
       case 'A6' :
         this.logger.info(this, '[ 통합청구회선-일반 controllerInit ] A6 : ', this._typeChk);
@@ -327,6 +326,54 @@ class MyTFareBillGuide extends TwViewController {
   // 개별청구
   private individualCircuit(res, svcInfo) {
     const thisMain = this;
+    this.reqQuery.date = (this.reqQuery.date) ? this.reqQuery.date : '';
+
+    const p1 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0036, {
+      invDt: this.reqQuery.date
+    }), 'p1');
+    const p2 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0049, {}), 'p2'); // 통합청구등록회선조회
+    const p3 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0024, {}), 'p3'); // 자녀회선조회
+
+    const dataInit = function () {
+      thisMain._commDataInfo.selClaimDt = (thisMain._billpayInfo) ? thisMain.getSelClaimDt(String(thisMain._billpayInfo.invDt)) : null;
+      thisMain._commDataInfo.selClaimDtM = (thisMain._billpayInfo) ? thisMain.getSelClaimDtM(String(thisMain._billpayInfo.invDt)) : null;
+      thisMain._commDataInfo.selStaDt = (thisMain._billpayInfo) ? thisMain.getSelStaDt(String(thisMain._billpayInfo.invDt)) : null;
+      thisMain._commDataInfo.selEndDt = (thisMain._billpayInfo) ? thisMain.getSelEndDt(String(thisMain._billpayInfo.invDt)) : null;
+      thisMain._commDataInfo.discount =
+        (thisMain._billpayInfo) ? FormatHelper.addComma(String(Math.abs(Number(thisMain._billpayInfo.deduckTotInvAmt)))) : 0;
+      thisMain._commDataInfo.useAmtTot = (thisMain._billpayInfo) ? FormatHelper.addComma(thisMain._billpayInfo.useAmtTot) : null;
+
+      thisMain._commDataInfo.intBillLineList = (thisMain._intBillLineInfo) ? thisMain.intBillLineFun() : null;
+      thisMain._commDataInfo.conditionChangeDtList = (thisMain._billpayInfo.invDtArr ) ? thisMain.conditionChangeDtListFun() : null;
+
+    };
+
+    Promise.all([p1, p2, p3]).then(function(resArr) {
+
+      thisMain._billpayInfo = resArr[0].result;
+      thisMain._intBillLineInfo = resArr[1].result;
+      thisMain._childLineInfo = resArr[2].result;
+
+      dataInit();
+
+      thisMain.logger.info(thisMain, '[_urlTplInfo.individualPage] : ', thisMain._urlTplInfo.individualPage);
+      thisMain.renderView(res, thisMain._urlTplInfo.individualPage, {
+        reqQuery: thisMain.reqQuery,
+        svcInfo: svcInfo,
+        billpayInfo: thisMain._billpayInfo,
+        commDataInfo: thisMain._commDataInfo,
+        intBillLineInfo: thisMain._intBillLineInfo,
+        childLineInfo: thisMain._childLineInfo
+      });
+    }, function(err) {
+      thisMain.logger.info(thisMain, `[ Promise.all > error ] : `, err);
+      return thisMain.error.render(res, {
+        title: 'title',
+        code: err.code,
+        msg: err.msg,
+        svcInfo: svcInfo
+      });
+    });
   }
   // PPS 선불폰
   private prepaidCircuit(res, svcInfo) {
