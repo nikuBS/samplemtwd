@@ -17,7 +17,7 @@ import {
   REFILL_USAGES,
   REFILL_GIFTS
 } from '../../../../mock/server/myt-data.recharge.history.mock';
-import { MYT_DATA_CHARGE_TYPES as BadgeTexts, MYT_DATA_CHARGE_TYPE_NAMES as TypeNames, UNIT } from '../../../../types/string.type';
+import { MYT_DATA_CHARGE_TYPE_NAMES as TypeNames, UNIT } from '../../../../types/string.type';
 import FormatHelper from '../../../../utils/format.helper';
 
 enum RechargeTypes {
@@ -33,10 +33,7 @@ interface ICharge {
   type: RechargeTypes;
   typeName: TypeNames;
   date: string;
-  badge: {
-    icon: BadgeTypes;
-    text: BadgeTexts;
-  };
+  badge: BadgeTypes;
   bottom?: string;
   right?: {
     amount: number | string;
@@ -96,10 +93,7 @@ export default class MyTDataRechargeHistory extends TwViewController {
         typeName: TypeNames.DATA_GIFT,
         date: DateHelper.getShortDateNoYear(key),
         fixed: item.giftType === 'GC',
-        badge: {
-          icon: BadgeTypes.GIFT,
-          text: BadgeTexts.GIFT
-        },
+        badge: BadgeTypes.GIFT,
         right:
           amount > 1000
             ? {
@@ -136,10 +130,7 @@ export default class MyTDataRechargeHistory extends TwViewController {
         typeName: TypeNames.LIMIT_CHARGE,
         date: DateHelper.getShortDateNoYear(key),
         refundable: item.opTypCd === '1' && this.toDt === key,
-        badge: {
-          icon: BadgeTypes.CHARGE,
-          text: BadgeTexts.CHARGE
-        },
+        badge: BadgeTypes.CHARGE,
         right: {
           amount: '+ ' + FormatHelper.addComma(item.amt),
           unit: UNIT.WON,
@@ -175,10 +166,7 @@ export default class MyTDataRechargeHistory extends TwViewController {
           unit: UNIT.WON,
           color: item.opTypCd === '2' || item.opTypCd === '4' ? 'gray' : 'blue'
         },
-        badge: {
-          icon: BadgeTypes.CHARGE,
-          text: BadgeTexts.CHARGE
-        },
+        badge: BadgeTypes.CHARGE,
         refundable: item.refundableYn === 'Y',
         refunded: item.opTypCd === '2' || item.opTypCd === '4'
       });
@@ -209,10 +197,7 @@ export default class MyTDataRechargeHistory extends TwViewController {
           unit: UNIT.WON,
           color: 'red'
         },
-        badge: {
-          icon: BadgeTypes.GIFT,
-          text: BadgeTexts.GIFT
-        },
+        badge: BadgeTypes.GIFT,
         refunded: item.opTypCd === '2' || item.opTypCd === '4'
       });
       result[key].count++;
@@ -237,10 +222,7 @@ export default class MyTDataRechargeHistory extends TwViewController {
         type: RechargeTypes.REFILL_USAGE,
         typeName: TypeNames.REFILL_USAGE,
         date: DateHelper.getShortDateNoYear(key),
-        badge: {
-          icon: BadgeTypes.CHARGE,
-          text: BadgeTexts.CHARGE
-        },
+        badge: BadgeTypes.CHARGE,
         right: {
           amount: item.copnDtlClNm,
           color: 'blue'
@@ -268,10 +250,7 @@ export default class MyTDataRechargeHistory extends TwViewController {
         type: RechargeTypes.REFILL_GIFT,
         typeName: TypeNames.REFILL_GIFT,
         date: DateHelper.getShortDateNoYear(key),
-        badge: {
-          icon: BadgeTypes.GIFT,
-          text: BadgeTexts.GIFT
-        },
+        badge: BadgeTypes.GIFT,
         bottom: item.svcNum
       });
       result[key].count++;
