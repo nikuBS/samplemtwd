@@ -320,6 +320,14 @@ input[type=text], input[type=file], input[type=password], input[type=number] {
   font-size: 0.75rem;
 }
 
+.inputbox.readonly.placeholder .input input {
+  color: #8f8f8f;
+}
+
+.inputbox.readonly .input input {
+  color: #000;
+}
+
 .inputbox.validation .input {
   /*input[type=text],
             input[type=password],
