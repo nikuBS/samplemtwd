@@ -307,7 +307,8 @@ Tw.NODE_CMD = {
   SET_CERT: { path: '/cert', method: Tw.API_METHOD.POST },
   GET_SERVER_SERSSION: { path: '/serverSession', method: Tw.API_METHOD.GET },
   GET_SVC_INFO: { path: '/svcInfo', method: Tw.API_METHOD.GET },
-  GET_ALL_SVC: { path: '/allSvcInfo', method: Tw.API_METHOD.GET }
+  GET_ALL_SVC: { path: '/allSvcInfo', method: Tw.API_METHOD.GET },
+  GET_CHILD_INFO: { path: '/childInfo', method: Tw.API_METHOD.GET }
 };
 
 Tw.TMAP = {

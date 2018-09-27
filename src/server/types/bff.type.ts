@@ -15,15 +15,15 @@ export const T_O_PLAN_SHARE_DATA = [
 ];
 
 export enum SVC_ATTR_NAME {
-  'M1' = '휴대폰',
-  'M2' = '선불폰',
-  'M3' = 'T pocket Wifi',
-  'M4' = 'T Login',
-  'M5' = 'T Wibro',
-  'S1' = '인터넷',
-  'S2' = 'IPTV',
-  'S3' = '집전화',
-  'O1' = '포인트캠'
+  M1 = '휴대폰',
+  M2 = '선불폰',
+  M3 = 'T pocket Wifi',
+  M4 = 'T Login',
+  M5 = 'T Wibro',
+  S1 = '인터넷',
+  S2 = 'IPTV',
+  S3 = '집전화',
+  O1 = '포인트캠'
 }
 
 export const SVC_CD = {
@@ -48,6 +48,18 @@ export const SVC_CDNAME = {
   S3: 'skbroadband',
   O1: 'pointcam'
 };
+
+export const SVC_CATEGORY = {
+  M: '모바일',
+  S: '인터넷/집전화/IPTV',
+  O: '보안솔루션'
+};
+
+export enum LINE_NAME {
+  MOBILE = 'M',
+  INTERNET_PHONE_IPTV = 'S',
+  SECURITY = 'O'
+}
 
 export const SVC_CDGROUP = {
   WIRELESS: ['M1', 'M2', 'M3', 'M4', 'M5'],

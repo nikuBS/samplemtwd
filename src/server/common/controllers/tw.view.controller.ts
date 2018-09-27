@@ -6,7 +6,7 @@ import LoggerService from '../../services/logger.service';
 import ErrorService from '../../services/error.service';
 import { URL } from '../../types/url.old.type';
 import FormatHelper from '../../utils/format.helper';
-import { CHANNEL_TYPE, COOKIE_KEY} from '../../types/common.type';
+import { CHANNEL_TYPE, COOKIE_KEY } from '../../types/common.type';
 import BrowserHelper from '../../utils/browser.helper';
 import { Observable } from 'rxjs/Observable';
 import RedisService from '../../services/redis.service';
@@ -30,7 +30,7 @@ abstract class TwViewController {
     this._error = new ErrorService();
   }
 
-  abstract render(req: Request, res: Response, next: NextFunction, svcInfo?: any, layerType?: string): void;
+  abstract render(req: Request, res: Response, next: NextFunction, svcInfo?: any, allSvc?: any, childInfo?: any): void;
 
   protected get apiService(): ApiService {
     return this._apiService;
@@ -159,7 +159,7 @@ abstract class TwViewController {
     return this._loginService.setChannel(channel);
   }
 
-  private getAuth(req, res, next, path, svcInfo, allSvc) {
+  private getAuth(req, res, next, path, svcInfo, allSvc, childInfo) {
     const isLogin = !FormatHelper.isEmpty(svcInfo);
     this._redisService.getData(REDIS_URL_META + path).subscribe((resp) => {
       const urlMeta = resp;
@@ -167,12 +167,12 @@ abstract class TwViewController {
       if ( FormatHelper.isEmpty(urlMeta) ) {
         // TODO do not register
         if ( isLogin ) {
-          this.render(req, res, next, svcInfo, allSvc);
+          this.render(req, res, next, svcInfo, allSvc, childInfo);
         } else {
           if ( URL[path].login ) {
             res.send('need login');
           } else {
-            this.render(req, res, next, svcInfo, allSvc);
+            this.render(req, res, next, svcInfo, allSvc, childInfo);
           }
         }
       } else {
@@ -187,9 +187,9 @@ abstract class TwViewController {
             const params = Object.assign(svcInfo, {
               urlAuth
             });
-            this.render(req, res, next, params, allSvc);
+            this.render(req, res, next, params, allSvc, childInfo);
           } else if ( this._type === 'dev' ) {
-            this.render(req, res, next, svcInfo, allSvc);
+            this.render(req, res, next, svcInfo, allSvc, childInfo);
           } else {
             const loginType = svcInfo.loginType;
             if ( loginType === LOGIN_TYPE.EASY ) {
@@ -203,7 +203,7 @@ abstract class TwViewController {
           if ( urlMeta.auth.loginYn === 'Y' ) {
             res.send('need login');
           } else {
-            this.render(req, res, next, svcInfo, allSvc);
+            this.render(req, res, next, svcInfo, allSvc, childInfo);
           }
         }
       }
@@ -232,7 +232,8 @@ abstract class TwViewController {
     // TODO noticeTpyCd
     const svcInfo = this._loginService.getSvcInfo();
     const allSvc = this._loginService.getAllSvcInfo();
-    this.getAuth(req, res, next, path, svcInfo, allSvc);
+    const childInfo = this._loginService.getChildInfo();
+    this.getAuth(req, res, next, path, svcInfo, allSvc, childInfo);
   }
 
   private failLogin(req, res, next, errorCode) {
