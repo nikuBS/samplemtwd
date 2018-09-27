@@ -42,7 +42,6 @@ Tw.MyTDataCookiz.prototype = {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       var result = res.result;
       this._setAmountUI(Number(result.currentTopUpLimit));
-      // res.result.currentTopUpLimit
     } else {
       Tw.Error(res.code, res.msg).pop();
     }
