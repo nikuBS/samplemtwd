@@ -21,29 +21,36 @@ Tw.MyTFareBillGuideCallGift = function (rootEl, resData) {
 
 Tw.MyTFareBillGuideCallGift.prototype = {
   _init: function () {
-
     this._cachedElement();
     this._bindEvent();
 
   },
   _cachedElement: function () {
-    this.$entryTpl = $('#entryTpl');
+    this.$entryTpl = $('#fe-entryTpl');
     this.$callGiftInfoArea = $('[data-target="callGiftInfoArea"]');
     this.$defaultTxt= $('[data-target="defaultTxt"]');
+
+
+    this.$dateSelect= $('[data-target="dateSelect"]');
+    this.$dataResult= $('[data-target="dataResult"]');
+    this.$noData= $('[data-target="noData"]');
   },
   _bindEvent: function () {
     this.$container.on('click', '[data-target="monBtn"]', $.proxy(this._monthBtnEvt, this));
   },
   //--------------------------------------------------------------------------[EVENT]
   _monthBtnEvt: function(e) {
-    this.$defaultTxt.hide();
     // Tw.Logger.info('[버튼 클릭]', e);
-    this.selectMonthVal = $(e.currentTarget).attr('data-value');
+    var $target = $(e.currentTarget);
+    this.selectMonthVal = $target.attr('data-value');
+
+    Tw.Logger.info('[선택 값]', this.selectMonthVal);
 
     var param = {
       startDt : this._getPeriod(this.selectMonthVal, 'YYYYMMDD').startDt,
       endDt: this._getPeriod(this.selectMonthVal, 'YYYYMMDD').endDt,
     };
+
     Tw.Logger.info('[버튼 클릭 > param]', param);
     this._getCallGiftInfo( param );
   },
@@ -54,9 +61,12 @@ Tw.MyTFareBillGuideCallGift.prototype = {
 
   _getCallGiftInfoInit: function(res) {
     Tw.Logger.info('[콜기프트]', res);
+
     if ( res.code === Tw.API_CODE.CODE_00 ) {
 
-      this.$callGiftInfoArea.empty();
+      this.$dataResult.empty();
+      this.$dateSelect.hide();
+      this.$dataResult.show();
 
       if ( res.result.callData === '0분 0초' ) {
         Tw.Logger.info('[콜기프트 > 이용내역이 없습니다. ]', res.result.callData);
@@ -71,7 +81,7 @@ Tw.MyTFareBillGuideCallGift.prototype = {
         endDt: this._getPeriod(this.selectMonthVal, 'YYYY.MM.DD').endDt
       };
 
-      this._svcHbDetailList(resData, this.$callGiftInfoArea, this.$entryTpl);
+      this._svcHbDetailList(resData, this.$dataResult, this.$entryTpl);
     }
 
   },
@@ -103,7 +113,6 @@ Tw.MyTFareBillGuideCallGift.prototype = {
     jqTg.append(html);
   },
   //--------------------------------------------------------------------------[COM]
-
   _comComma: function (str) {
     str = String(str);
     return Tw.FormatHelper.addComma(str);
@@ -114,7 +123,18 @@ Tw.MyTFareBillGuideCallGift.prototype = {
     return str.replace(/,/g, '');
   },
   _phoneStrToDash: function (str) {
+    var str = String(str);
     return str.replace(/(^02.{0}|^01.{1}|[0-9]{3})([0-9\*]+)([[0-9\*]{4})/, '$1-$2-$3');
+  },
+  _goBack: function () {
+    this._history.go(-1);
+  },
+  _goLoad: function (url) {
+    location.href = url;
+  },
+  _go: function (hash) {
+    this._history.setHistory();
+    window.location.hash = hash;
   }
 
 };

@@ -20,23 +20,10 @@ class MyTFareBillGuideRoaming extends TwViewController {
   }
 
   public reqQuery: any;  // 쿼리스트링
-  private _billpayInfo: any = {}; // 청구요금조회 | BFF_05_0036
-
-  // 공통데이터
-  private _commDataInfo: any = {
-
-  };
-
-  // 노출조건
-  private _showConditionInfo: any = {
-
-  };
 
   private _urlTplInfo: any = {
-    default: 'bill/myt-fare.bill.guide.integrated-rep.html',
+    default: 'bill/myt-fare.bill.guide.roaming.html',
   };
-
-  private _typeChk: any = null; // 화면구분
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, layerType: string) {
     const thisMain = this;
@@ -50,7 +37,6 @@ class MyTFareBillGuideRoaming extends TwViewController {
     });
 
   }
-
 
   // -------------------------------------------------------------[SVC]
 
