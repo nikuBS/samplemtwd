@@ -183,8 +183,8 @@ class MyTFareBillGuide extends TwViewController {
         break;
       case 'A5' :
         this.logger.info(this, '[ 통합청구회선-대표 controllerInit ] A5 : ', this._typeChk);
-        // this.combineRepresentCircuit(res, svcInfo);
-        this.combineCommonCircuit(res, svcInfo);
+        this.combineRepresentCircuit(res, svcInfo);
+        // this.combineCommonCircuit(res, svcInfo);
         break;
       case 'A6' :
         this.logger.info(this, '[ 통합청구회선-일반 controllerInit ] A6 : ', this._typeChk);
