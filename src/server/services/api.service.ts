@@ -164,6 +164,14 @@ class ApiService {
           throw resp;
         }
       })
+      .switchMap((resp) => this.request(API_CMD.BFF_01_0040, {}))
+      .switchMap((resp) => {
+        if(resp.code === API_CODE.CODE_00) {
+          return this.loginService.setChildInfo(resp.result);
+        } else {
+          throw resp;
+        }
+      })
       .map((resp) => {
         return { code: API_CODE.CODE_00, result: result };
       });

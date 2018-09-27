@@ -65,7 +65,6 @@ class LoginService {
   }
 
   public getAllSvcInfo(): any {
-    this.logger.debug(this, '[getAllSvcInfo]', this.request.session);
     if ( !FormatHelper.isEmpty(this.request.session) && !FormatHelper.isEmpty(this.request.session.allSvcInfo) ) {
       this.logger.debug(this, '[getAllSvcInfo]', this.request.session.allSvcInfo);
       return this.request.session.allSvcInfo;
@@ -79,6 +78,25 @@ class LoginService {
       this.request.session.save(() => {
         this.logger.debug(this, '[setAllSvcInfo]', this.request.session.allSvcInfo);
         observer.next(this.request.session.allSvcInfo);
+        observer.complete();
+      });
+    });
+  }
+
+  public getChildInfo(): any {
+    if ( !FormatHelper.isEmpty(this.request.session) && !FormatHelper.isEmpty(this.request.session.childInfo) ) {
+      this.logger.debug(this, '[getChildInfo]', this.request.session.childInfo);
+      return this.request.session.childInfo;
+    }
+    return null;
+  }
+
+  public setChildInfo(childInfo: any): Observable<any> {
+    return Observable.create((observer) => {
+      this.request.session.childInfo = childInfo;
+      this.request.session.save(() => {
+        this.logger.debug(this, '[setChildInfo]', this.request.session.childInfo);
+        observer.next(this.request.session.childInfo);
         observer.complete();
       });
     });
