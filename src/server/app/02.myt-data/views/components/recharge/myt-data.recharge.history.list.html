@@ -9,7 +9,7 @@
     {{#each items}}
         <li>
             <p class="list-text">
-              <span class="mtext"><i class="badge badge-{{badge}}"><span class="blind">{{badge === 'gift' ? '선물' : '충전'}}</span></i> {{typeName}}</span>
+              <span class="mtext"><i class="badge badge-{{badge.icon}}"><span class="blind">{{badge.text}}</span></i> {{typeName}}</span>
               <span class="stext gray">{{bottom}}</span>
             </p>
             {{#if right}}

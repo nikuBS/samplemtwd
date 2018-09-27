@@ -54,3 +54,4 @@ Tw.MYT_FARE_BILL_GUIDE = {
   PHONE_TYPE_1: '휴대폰'
 };
 
+Tw.MYT_DATA_CANCLABLE_CHARGE_ALERT = '충전 취소는 고객센터 [국번 없이 1599-0011(유료) / 휴대폰 114]를 통해 당일에 한해 가능합니다.';

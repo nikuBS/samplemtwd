@@ -62,7 +62,7 @@
                                       <% const item = value.data[iIdx]; %>
                                       <li>
                                         <p class="list-text">
-                                          <span class="mtext"><i class="badge badge-<%= item.badge %>"><span class="blind"><%= item.badge === 'gift' ? '선물' : '충전' %></span></i> <%= item.typeName %></span>
+                                          <span class="mtext"><i class="badge badge-<%= item.badge.icon %>"><span class="blind"><%= item.badge.text %></span></i> <%= item.typeName %></span>
                                           <span class="stext gray"><%= item.bottom %></span>
                                         </p>
                                         <% if (item.right) { %>

@@ -46,6 +46,7 @@ Tw.MyTDataRechargeHistory.prototype = {
   _bindEvent: function () {
     this.$container.on('click', '.bt-more', $.proxy(this._handleLoadMore, this));
     this.$container.on('click', '.bt-dropdown.wd-auto', $.proxy(this._handleChangeCondition, this));
+    this.$container.on('click', 'button.bt-line-gray1', $.proxy(this._openCanclableChargeAlert, this));
   },
 
   _handleLoadMore: function() {
@@ -152,5 +153,9 @@ Tw.MyTDataRechargeHistory.prototype = {
 
   _filterData: function (item) {
     return item.type === this._selectedIdx;
+  },
+
+  _openCanclableChargeAlert: function () {
+    this._popupService.openAlert(Tw.MYT_DATA_CANCLABLE_CHARGE_ALERT);
   }
 };

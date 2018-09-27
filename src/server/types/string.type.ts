@@ -74,3 +74,8 @@ export enum MYT_DATA_CHARGE_TYPE_NAMES {
   REFILL_USAGE = '리필 쿠폰 사용',
   REFILL_GIFT = '리필 쿠폰 선물'
 }
+
+export enum MYT_DATA_CHARGE_BADGE_TYPES {
+  GIFT = '선물',
+  CHARGE = '충전'
+}
