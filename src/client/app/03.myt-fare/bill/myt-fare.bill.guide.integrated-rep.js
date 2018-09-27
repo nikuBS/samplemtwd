@@ -364,6 +364,6 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
   _go: function (hash) {
     this._history.setHistory();
     window.location.hash = hash;
-  },
+  }
 
 };

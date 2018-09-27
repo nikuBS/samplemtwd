@@ -120,7 +120,7 @@ export const API_CMD = {
   BFF_05_0047: { path: '/core-bill/v1/bill-pay/used-amounts', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0048: { path: '/core-bill/v1/bill-types-reissue-request/', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_05_0022: { path: '/core-bill/v1/hotbills', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
-  BFF_05_0024: { path: '/core-bill/v1/child/children', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0024: { path: '/core-auth/v1/children', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0025: { path: '/core-bill/v1/bill-types-list/', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0035: { path: '/core-bill/v1/hotbill/fee/hotbill-request', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0049: { path: '/core-bill/v1/integrated-services', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
