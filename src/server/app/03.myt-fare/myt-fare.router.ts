@@ -1,4 +1,5 @@
 import TwRouter from '../../common/route/tw.router';
+import MyTFareSubMain from './myt-fare.submain.controller';
 import MyTFareBillGuide from './controllers/bill/myt-fare.bill.guide.controllers';
 import MyTFareBillSet from './controllers/bill/myt-fare.bill.set.controller';
 import MyTFareBillSetReturnHistory from './controllers/bill/myt-fare.bill.set.return-history.controller';
@@ -17,7 +18,7 @@ import MyTFareBillGuideDonation from './controllers/bill/myt-fare.bill.guide.don
 class MytFareRouter extends TwRouter {
   constructor() {
     super();
-    // this.controllers.push({ url: '/', controller: new HomeMain() });
+    this.controllers.push({ url: '/', controller: new MyTFareSubMain() });
     this.controllers.push({ url: '/bill/guide', controller: new MyTFareBillGuide() });
     this.controllers.push({ url: '/bill/guide/call-gift', controller: new MyTFareBillGuideCallGift() });
     this.controllers.push({ url: '/bill/guide/roaming', controller: new MyTFareBillGuideRoaming() });

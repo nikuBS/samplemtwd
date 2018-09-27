@@ -1,5 +1,5 @@
 import TwRouter from '../../common/route/tw.router';
-import MyTSubMain from './myt-data.submain.controller';
+import MyTDataSubMain from './myt-data.submain.controller';
 import MyTDataUsage from './controllers/usage/myt-data.usage.controller';
 import MyTDataRechargeCoupon from './controllers/recharge/myt-data.recharge.coupon.controller';
 import MyTDataUsageChild from './controllers/usage/myt-data.usage.child.controller';
@@ -12,7 +12,7 @@ import MyTDataRechargeHistory from './controllers/recharge/myt-data.recharge.his
 class MytDataRouter extends TwRouter {
   constructor() {
     super();
-    this.controllers.push({ url: '/', controller: new MyTSubMain() });
+    this.controllers.push({ url: '/', controller: new MyTDataSubMain() });
     this.controllers.push({ url: '/usage', controller: new MyTDataUsage() });
     this.controllers.push({ url: '/usage/child(/:childSvcMgmtNum)?', controller: new MyTDataUsageChild() });
     this.controllers.push({ url: '/recharge/history', controller: new MyTDataRechargeHistory() });
