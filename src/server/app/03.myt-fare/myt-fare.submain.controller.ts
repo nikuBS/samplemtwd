@@ -8,6 +8,8 @@
 import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../common/controllers/tw.view.controller';
 import { Observable } from 'rxjs/Observable';
+import FormatHelper from '../../utils/format.helper';
+import DateHelper from '../../utils/date.helper';
 import { API_CMD, API_CODE } from '../../types/api-command.type';
 
 class MytFareSubmainController extends TwViewController {
@@ -19,18 +21,54 @@ class MytFareSubmainController extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any) {
     const data: any = {
       svcInfo: svcInfo,
+      isMicroPayment: false,
+      isNotAutoPayment: true,
       // 다른 회선 항목
       otherLines: this.convertOtherLines(svcInfo, allSvc)
     };
     Observable.combineLatest(
       this._getClaimPays(),
       this._getNonPayment(),
-      this._getPaymentInfo()
-    ).subscribe(([claim, nonpayment, paymentInfo]) => {
+      this._getPaymentInfo(),
+      this._getTotalPayment()
+    ).subscribe(([claim, nonpayment, paymentInfo, totalPayment]) => {
+      // 소액결제/콘텐츠 - 휴대폰이면서 미성년자가 아닌경우
+      if ( svcInfo.svcAttrCd === 'M1' ) {
+        data.isMicroPayment = true;
+      }
+      // 청구요금
+      if ( claim ) {
+        data.claim = claim;
+        data.claimMonth = DateHelper.getShortKoreanMonth(claim.invDt);
+        // 사용요금
+        const usedAmt = parseInt(claim.useAmtTot, 10);
+        data.claimUseAmt = FormatHelper.addComma(usedAmt.toString());
+        // 할인요금
+        const disAmt = Math.abs(claim.deduckTotInvAmt);
+        data.claimDisAmt = FormatHelper.addComma(disAmt.toString());
+        // Total
+        data.claimPay = FormatHelper.addComma((usedAmt - disAmt).toString());
+      }
+      // 미납내역
+      if ( nonpayment ) {
+        data.nonpayment = nonpayment;
+      }
+      // 납부/청구 정보
+      if ( paymentInfo ) {
+        data.paymentInfo = paymentInfo;
+        // 자동납부인 경우
+        if ( paymentInfo.payMthdCd === '01' || paymentInfo.payMthdCd === '02' || paymentInfo.payMthdCd === 'G1' ) {
+          // 은행자동납부, 카드자동납부, 은행지로자동납부
+          data.isNotAutoPayment = false;
+        }
+      }
 
+      if ( totalPayment ) {
+        data.totalPayment = totalPayment;
+      }
+
+      res.render('myt-fare.submain.html', { data });
     });
-
-    res.render('myt-fare.submain.html', { data });
   }
 
   convertOtherLines(target, items): any {
@@ -75,8 +113,22 @@ class MytFareSubmainController extends TwViewController {
   }
 
   _getPaymentInfo() {
-    return this.apiService.request(API_CMD.BFF_05_0030, {}).map((resp) => {
+    return this.apiService.request(API_CMD.BFF_05_0058, {}).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
+        return resp.result;
+      } else {
+        // error
+        return null;
+      }
+    });
+  }
+
+  _getTotalPayment() {
+    return this.apiService.request(API_CMD.BFF_07_0030, {}).map((resp) => {
+      if ( resp.code === API_CODE.CODE_00 ) {
+        if ( resp.result.paymentRecord.length === 0 ) {
+          return null;
+        }
         return resp.result;
       } else {
         // error
