@@ -180,6 +180,14 @@ Tw.API_CMD = {
   BFF_06_0041: { path: '/core-recharge/v1/regular-data-limitations', method: Tw.API_METHOD.POST },
   BFF_06_0042: { path: '/core-recharge/v1/data-top-ups', method: Tw.API_METHOD.GET },
   BFF_06_0043: { path: '/core-recharge/v1/data-limitations', method: Tw.API_METHOD.GET },
+  BFF_06_0044: { path: '/core-recharge/v1/share-pots/donation-used', method: Tw.API_METHOD.GET },
+  BFF_06_0045: { path: '/core-recharge/v1/share-pots/donation', method: Tw.API_METHOD.GET },
+  BFF_06_0046: { path: '/core-recharge/v1/share-pots/donation', method: Tw.API_METHOD.POST },
+  BFF_06_0047: { path: '/core-recharge/v1/share-pots/auto-donation', method: Tw.API_METHOD.GET },
+  BFF_06_0050: { path: '/core-recharge/v1/share-pots/auto-donation', method: Tw.API_METHOD.POST },
+  BFF_06_0051: { path: '/core-recharge/v1/share-pots/donation-limited', method: Tw.API_METHOD.GET },
+  BFF_06_0052: { path: '/core-recharge/v1/share-pots/limit-setup', method: Tw.API_METHOD.GET },
+  BFF_06_0053: { path: '/core-recharge/v1/share-pots/limit-setup', method: Tw.API_METHOD.POST },
 
   // PAYMENT
   BFF_07_0004: { path: '/core-bill/v1/cash-receipts-issue-history', method: Tw.API_METHOD.GET },
