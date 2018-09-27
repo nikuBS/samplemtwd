@@ -30,7 +30,7 @@ Tw.MyTDataGiftImmediately.prototype = {
 
   _bindEvent: function () {
     this.$btnNativeContactList.on('click', $.proxy(this._onClickBtnAddr, this));
-    this.$btnRequestSendingData.on('click', $.proxy(this._requestSendingData, this));
+    this.$btnRequestSendingData.on('click', $.proxy(this._getReceiveUserInfo, this));
     this.$inputImmediatelyGift.on('keyup', $.proxy(this._onKeyUpImmediatelyGiftNumber, this));
   },
 
@@ -63,12 +63,15 @@ Tw.MyTDataGiftImmediately.prototype = {
   },
 
   _getReceiveUserInfo: function () {
-    this._apiService.request(Tw.API_CMD.BFF_06_0019, {}).done($.proxy(this._onSuccessReceiveUserInfo, this));
+    this.befrSvcNum = this.$inputImmediatelyGift.val().match(/\d+/g).join('');
+
+    this._apiService.request(Tw.API_CMD.BFF_06_0019, { befrSvcNum: this.befrSvcNum }).done($.proxy(this._onSuccessReceiveUserInfo, this));
   },
 
   _onSuccessReceiveUserInfo: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-
+      this.paramsData = $.extend({}, this.paramsData, res.result);
+      this._requestSendingData();
     } else {
       Tw.Error(res.code, res.msg).pop();
     }
@@ -84,14 +87,15 @@ Tw.MyTDataGiftImmediately.prototype = {
       dataQty: this.$wrap_data_select_list.find('li.checked input').val()
     };
 
+    this.paramsData = $.extend({}, this.paramsData, htParams);
+
     this._apiService.request(Tw.API_CMD.BFF_06_0016, htParams)
       .done($.proxy(this._onSuccessSendingData, this));
-    // this._historyService.replaceURL('/myt/data/gift/complete');
   },
 
   _onSuccessSendingData: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      debugger;
+      this._historyService.replaceURL('/myt/data/gift/complete?' + $.param(this.paramsData));
     } else {
       Tw.Error(res.code, res.msg).pop();
     }

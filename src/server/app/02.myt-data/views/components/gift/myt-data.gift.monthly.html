@@ -14,7 +14,7 @@
     </div>
 </div>
 <div class="cont-box nogaps inborder">
-    <% if ( autoList || autoList.length != 0 ) { %>
+    <% if ( autoList ) { %>
     <div class="list-comp-thumnail">
         <p class="list-comp-title">자동선물 신청된 결합가족</p>
         <ul class="comp-box">
@@ -38,10 +38,10 @@
     <% if ( autoList && autoList.length >= 2 ) { %>
     <p class="tx-situation">결합 가족 2회선을 이미 신청하셨습니다.<br>대상자를 변경하시려면 <em class="point">해지 후 신청</em>해주세요.</p>
     <% } else { %>
-    <button class="bt-more-add fe-btn_more_add"><span class="ico"></span><span class="tx">지정번호 추가하기</span></button>
+    <button class="bt-more-add fe-btn_add_contact"><span class="ico"></span><span class="tx">지정번호 추가하기</span></button>
     <% } %>
 </div>
-<div class="cont-box" style="display: none">
+<div class="cont-box fe-wrap_add_contact" style="display: none">
     <h4 class="tabcon-title0">자동선물 신청 번호</h4>
     <div class="recently-tel-box">
         <div class="inputbox bt-add">

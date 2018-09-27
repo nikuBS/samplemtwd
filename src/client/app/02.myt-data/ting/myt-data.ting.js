@@ -86,6 +86,7 @@ Tw.MyTDataTing.prototype = {
 
   _getReceiveUserInfo: function () {
     var befrSvcNum = this.$input_ting_receiver.val().match(/\d+/g).join('');
+
     this._apiService.request(Tw.API_CMD.BFF_06_0022, { chrgSvcNum: befrSvcNum })
       .done($.proxy(this._onSuccessReceiveUserInfo, this));
   },

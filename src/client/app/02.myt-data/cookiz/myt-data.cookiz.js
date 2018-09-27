@@ -60,7 +60,7 @@ Tw.MyTDataCookiz.prototype = {
       if ( Number($input.val()) === nLimitMount ) {
         $input.click();
       }
-    }
+    };
 
     this.$wrap_monthly_select_list.find('input').each(fnCheckedUI);
     this.$wrap_immediately_select_list.find('input').each(fnCheckedUI);
