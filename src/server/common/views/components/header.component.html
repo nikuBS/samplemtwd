@@ -6,7 +6,7 @@
         </div>
         <button class="prev-step fe-common-back"><span class="blind">이전으로</span></button>
 
-
+        <% if (line) { %>
         <% if (svcInfo) { %>
         <% if (svcInfo.totalSvcCnt === '0') { %>
         <ul class="bt-slice item-free header-bt">
@@ -32,6 +32,7 @@
                 <button class="fe-bt-login" title="로그인">로그인</button>
             </li>
         </ul>
+        <% } %>
         <% } %>
     </div>
 </div>

@@ -42,7 +42,7 @@ class AuthRouter extends TwRouter {
   constructor() {
     super();
     // line
-    this.controllers.push({ url: '/line', controller: new AuthLine() });
+    // this.controllers.push({ url: '/line', controller: new AuthLine() });
     this.controllers.push({ url: '/line/edit', controller: new AuthLineEdit() });
     this.controllers.push({ url: '/line/register/corporation', controller: new AuthLineCopRegister() });
     this.controllers.push({ url: '/line/register/empty', controller: new AuthLineEmptyRegister() });

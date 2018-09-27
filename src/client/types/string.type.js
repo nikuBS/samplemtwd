@@ -16,7 +16,9 @@ Tw.POPUP_TITLE = {
 
 Tw.POPUP_CONTENTS = {
   MORE_DETAIL: '더 알아보기',
-  REFILL_COUPON_FAMILY: 'SKT 결합상품으로 묶으시면 리필쿠폰 선물이 가능합니다.'
+  REFILL_COUPON_FAMILY: 'SKT 결합상품으로 묶으시면 리필쿠폰 선물이 가능합니다.',
+  AUTH_L01: '선택하신 회선을 첫 번째 순서로 지정하시겠습니까?',
+  AUTH_L02: '첫 번째 순서가 변경 되었습니다.'
 };
 
 
