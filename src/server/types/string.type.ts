@@ -147,8 +147,10 @@ export const MYT_STRING_KOR_TERM = {
   day: '일'
 };
 
+
 export const MYT_FARE_HISTORY_MICRO_TYPE = {
   NORMAL: '일반결제',
   PACK: '묶음결제',
   AUTO: '자동결제'
 };
+
