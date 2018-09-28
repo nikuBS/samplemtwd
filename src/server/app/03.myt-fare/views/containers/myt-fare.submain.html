@@ -60,13 +60,15 @@
             <!-- .cont-box -->
             <div class="cont-box nogaps">
                 <p class="list-comp-title">다른 회선 요금 조회</p>
-                <ul class="list-comp-lineinfo">
+                <ul class="list-comp-lineinfo" data-id="other-line">
                     <li>
                         <button>
                             <div class="lineinfo-user d-table">
                                 <div class="ico"><i></i></div>
                                 <div class="cont">
-                                    <span class="info-title">갤럭시 노트9<span class="badge badge-merge"><span class="blind">통합</span></span></span>
+                                    <span class="info-title">갤럭시 노트9
+                                        <span class="badge badge-merge"><span class="blind">통합</span></span>
+                                    </span>
                                     <span class="info-sub">010-46**-10**</span>
                                 </div>
                             </div>
@@ -136,54 +138,6 @@
         </div>
     </div>
     <!--// #contents -->
-    <script>
-      var chart_data = {
-        co:'#3b98e6',//색상
-        da_arr:[
-          {
-            na:'3월',//각 항목 타이틀
-            class:'link1',
-            data:[3000],//배열 평균값으로 전달
-            sale:[2700],//퍼센트로 처리
-          },{
-            na:'4월',
-            class:'link2',
-            data:[12100],
-            sale:[5000],
-          },{
-            na:'5월',
-            class:'link3',
-            data:[52100],
-            sale:[20050],
-          },
-          {
-            na:'6월',
-            class:'link4',
-            data:[82500],
-            sale:[30000],
-          },{
-            na:'7월',
-            class:'link5',
-            data:[0],
-            sale:[0],
-          },{
-            na:'8월',
-            class:'link6',
-            data:[72500],
-            sale:[10000],
-          }
-        ]
-      };
-      $(document).on('ready',function(){
-        $('body').chart({
-          type:'bar2', //bar
-          container: 'chart4', //클래스명 String
-          unit:'원', //x축 이름
-          decimal:'won', //소숫점자리
-          data:chart_data //데이터 obj
-        });
-      });
-    </script>
 </div>
 <% include ../components/javascript.component.html %>
 </body>
@@ -191,7 +145,7 @@
     // client 작업 중
     var data = '<%- JSON.stringify(data) %>';
     $(document).ready(function () {
-      new Tw.MyTDataSubMain({
+      new Tw.MyTFareSubMain({
         $element: $('[data-id=submain-container]'),
         data: JSON.parse(data)
       });

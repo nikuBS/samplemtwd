@@ -8,3 +8,7 @@ Tw.TING_TITLE = {
   'CH': '충전금액',
   'PR': '선물충전금액'
 };
+
+Tw.MYT_FARE_SUB_MAIN = {
+  NO_BILL_REQUEST_EXIST: 'ZINVN8888'
+};
