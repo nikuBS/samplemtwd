@@ -24,8 +24,8 @@
         <div class="container">
             <!-- .cont-box -->
             <h2 class="blind">내용</h2>
-            <% if (lineList.m) { %>
-            <% if (lineList.m.length > 0) { %>
+            <% if (lineList.M) { %>
+            <% if (lineList.M.length > 0) { %>
             <hr class="cont-sp type1" aria-hidden="true"/>
             <!-- .cont-box -->
             <div class="cont-box nogaps">
@@ -34,15 +34,15 @@
                     <!-- .widget -->
                     <div class="widget-box accordion">
                         <h3 class="tit-a">
-                            <button role="button" aria-pressed="">모바일<span class="num ff-tg-bolder"><%= lineList.m.length %></span></button>
+                            <button role="button" aria-pressed="">모바일<span class="num ff-tg-bolder"><%= lineList.M.length %></span></button>
                         </h3>
-                        <div class="acco-cover toggle <%= showParam.m %>"><!-- toggle : 한개만 열기 -->
+                        <div class="acco-cover toggle fe-line-cover <%= showParam.m %>"><!-- toggle : 한개만 열기 -->
                             <div class="bt-whole"><button role="button" aria-pressed="false"><span class="blind">내용 열기</span></button></div>
                             <div class="list-edit-bt"><a a href="/auth/line/edit?category=m" class="edit">편집</a></div>
                             <div class="acco-style">
                                 <ul class="acco-list fe-line-list">
-                                    <% lineList.m.map((line, index) => { %>
-                                    <li class="acco-box fe-line <% if(line.repSvcYn === 'Y') { %> pin <% } %> <%if(line.expsYn === 'N') { %> none-event <% } %>"  data-svcMgmtNum="<%= line.svcMgmtNum%>">
+                                    <% lineList.M.map((line, index) => { %>
+                                    <li class="acco-box fe-line <% if(line.repSvcYn === 'Y') { %> pin <% } %> <%if(line.expsYn === 'N') { %> none-event <% } %> <% if(index >= showParam.defaultCnt) { %> none <% } %>"  data-svcMgmtNum="<%= line.svcMgmtNum%>">
                                         <div class="acco-tit"><button role="button" aria-pressed="false"><span class="ico"></span><span class="txt fe-show-name"><%= line.showName %></span><span class="line"><%= line.svcNum %></span></button></div>
                                         <div class="acco-cont">
                                             <div class="line-change-cont">
@@ -80,7 +80,7 @@
                                     <% }) %>
                                 </ul>
                             </div>
-                            <% if (lineList.m.length > showParam.defaultCnt) { %>
+                            <% if (lineList.M.length > showParam.defaultCnt) { %>
                             <div class="bt-more">
                                 <button class="fe-bt-more" role="button" title="">더보기</button>
                             </div>
@@ -94,8 +94,8 @@
             <!--// .cont-box -->
             <% } %>
             <% } %>
-            <% if (lineList.s) { %>
-            <% if (lineList.s.length > 0) { %>
+            <% if (lineList.S) { %>
+            <% if (lineList.S.length > 0) { %>
             <hr class="cont-sp type1" aria-hidden="true"/>
             <!-- .cont-box -->
             <div class="cont-box nogaps">
@@ -104,15 +104,15 @@
                     <!-- .widget -->
                     <div class="widget-box accordion">
                         <h3 class="tit-a">
-                            <button role="button" aria-pressed="">인터넷/IPTV/집전화<span class="num ff-tg-bolder"><%= lineList.s.length %></span></button>
+                            <button role="button" aria-pressed="">인터넷/IPTV/집전화<span class="num ff-tg-bolder"><%= lineList.S.length %></span></button>
                         </h3>
-                        <div class="acco-cover toggle <%= showParam.s %>"><!-- toggle : 한개만 열기 -->
+                        <div class="acco-cover toggle fe-line-cover <%= showParam.s %>"><!-- toggle : 한개만 열기 -->
                             <div class="bt-whole"><button role="button" aria-pressed="false"><span class="blind">내용 열기</span></button></div>
                             <div class="list-edit-bt"><a a href="/auth/line/edit?category=s" class="edit">편집</a></div>
                             <div class="acco-style">
                                 <ul class="acco-list">
-                                    <% lineList.s.map((line, index) => { %>
-                                    <li class="acco-box fe-line <%if(line.expsYn === 'N') { %> none-event <% } %>"  data-svcMgmtNum="<%= line.svcMgmtNum%>">
+                                    <% lineList.S.map((line, index) => { %>
+                                    <li class="acco-box fe-line <%if(line.expsYn === 'N') { %> none-event <% } %> <% if(index >= showParam.defaultCnt) { %> none <% } %>"  data-svcMgmtNum="<%= line.svcMgmtNum%>">
                                         <div class="acco-tit"><button role="button" aria-pressed="false"><span class="ico"></span><span class="txt fe-show-name"><%= line.showName %></span><span class="line"><%= line.addr %></span></button></div>
                                         <div class="acco-cont">
                                             <div class="line-change-cont">
@@ -147,7 +147,7 @@
                                     <% }) %>
                                 </ul>
                             </div>
-                            <% if (lineList.s.length > showParam.defaultCnt) { %>
+                            <% if (lineList.S.length > showParam.defaultCnt) { %>
                             <div class="bt-more">
                                 <button class="fe-bt-more" role="button" title="">더보기</button>
                             </div>
@@ -161,8 +161,8 @@
             <!--// .cont-box -->
             <% } %>
             <% } %>
-            <% if (lineList.o) { %>
-            <% if (lineList.o.length > 0) { %>
+            <% if (lineList.O) { %>
+            <% if (lineList.O.length > 0) { %>
             <hr class="cont-sp type1" aria-hidden="true"/>
             <!-- .cont-box -->
             <div class="cont-box nogaps">
@@ -171,15 +171,15 @@
                     <!-- .widget -->
                     <div class="widget-box accordion">
                         <h3 class="tit-a">
-                            <button role="button" aria-pressed="">보안솔루션<span class="num ff-tg-bolder"><%= lineList.o.length %></span></button>
+                            <button role="button" aria-pressed="">보안솔루션<span class="num ff-tg-bolder"><%= lineList.O.length %></span></button>
                         </h3>
-                        <div class="acco-cover toggle <%= showParam.o %>"><!-- toggle : 한개만 열기 -->
+                        <div class="acco-cover toggle fe-line-cover <%= showParam.o %>"><!-- toggle : 한개만 열기 -->
                             <div class="bt-whole"><button role="button" aria-pressed="false"><span class="blind">내용 열기</span></button></div>
                             <div class="list-edit-bt"><a a href="/auth/line/edit?category=o" class="edit">편집</a></div>
                             <div class="acco-style">
                                 <ul class="acco-list">
-                                    <% lineList.o.map((line, index) => { %>
-                                    <li class="acco-box fe-line <%if(line.expsYn === 'N') { %> none-event <% } %>"  data-svcMgmtNum="<%= line.svcMgmtNum%>">
+                                    <% lineList.O.map((line, index) => { %>
+                                    <li class="acco-box fe-line <%if(line.expsYn === 'N') { %> none-event <% } %> <% if(index >= showParam.defaultCnt) { %> none <% } %>"  data-svcMgmtNum="<%= line.svcMgmtNum%>">
                                         <div class="acco-tit"><button role="button" aria-pressed="false"><span class="ico"></span><span class="txt fe-show-name"><%= line.showName %></span><span class="line"><%= line.svcNum %></span></button></div>
                                         <div class="acco-cont">
                                             <div class="line-change-cont">
@@ -214,7 +214,7 @@
                                     <% }) %>
                                 </ul>
                             </div>
-                            <% if (lineList.o.length > showParam.defaultCnt) { %>
+                            <% if (lineList.O.length > showParam.defaultCnt) { %>
                             <div class="bt-more">
                                 <button class="fe-bt-more" role="button" title="">더보기</button>
                             </div>

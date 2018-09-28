@@ -17,8 +17,7 @@ Tw.POPUP_TITLE = {
 Tw.POPUP_CONTENTS = {
   MORE_DETAIL: '더 알아보기',
   REFILL_COUPON_FAMILY: 'SKT 결합상품으로 묶으시면 리필쿠폰 선물이 가능합니다.',
-  AUTH_L01: '선택하신 회선을 첫 번째 순서로 지정하시겠습니까?',
-  AUTH_L02: '첫 번째 순서가 변경 되었습니다.'
+
 };
 
 
@@ -58,3 +57,44 @@ Tw.MYT_FARE_BILL_GUIDE = {
 };
 
 Tw.MYT_DATA_CANCLABLE_CHARGE_ALERT = '충전 취소는 고객센터 [국번 없이 1599-0011(유료) / 휴대폰 114]를 통해 당일에 한해 가능합니다.';
+
+Tw.ALERT_MSG_COMMON = {
+
+};
+
+Tw.ALERT_MSG_HOME = {
+
+};
+
+Tw.ALERT_MSG_MYT_DATA = {
+
+};
+
+Tw.ALERT_MSG_MYT_FARE = {
+
+};
+
+Tw.ALERT_MSG_MYT_JOIN = {
+
+};
+
+Tw.ALERT_MSG_PRODUCT = {
+
+};
+
+Tw.ALERT_MSG_BENEFIT = {
+
+};
+
+Tw.ALERT_MSG_CUSTOMER = {
+
+};
+
+Tw.ALERT_MSG_AUTH = {
+  L01: '선택하신 회선을 첫 번째 순서로 지정하시겠습니까?',
+  L02: '첫 번째 순서가 변경 되었습니다.',
+  L05: 'SK텔레콤 이동전화번호가 아니거나 입력하신 정보가 일치하지 않습니다. 다시 입력해 주세요.',
+  L06: '이미 다른 계정에 등록된 회선 입니다.',
+  L07: '이미 등록된 회선 입니다.'
+
+};

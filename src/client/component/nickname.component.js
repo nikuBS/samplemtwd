@@ -14,21 +14,22 @@ Tw.NicknameComponent = function () {
   this.$nicknameLength = null;
 
   this._closeCallback = null;
-  this._SvcMgmtNum = null;
+  this._svcMgmtNum = null;
   this._isChanged = false;
 };
 
 Tw.NicknameComponent.prototype = {
   openNickname: function (nickname, svcMgmtNum, closeCallback) {
     this._closeCallback = closeCallback;
-    this._SvcMgmtNum = svcMgmtNum;
+    this._svcMgmtNum = svcMgmtNum;
     this._popupService.open({
       hbs: 'CO_01_05_02_01',
       layer: true
-    }, $.proxy(this._onOpenNickname, this, nickname), $.proxy(this._onClosekNickname, this));
+    }, $.proxy(this._onOpenNickname, this, nickname), $.proxy(this._onCloseNickname, this));
 
   },
   _onOpenNickname: function (nickname, $popup) {
+    console.log($popup);
     this.$nicknameInput = $popup.find('#fe-input-nickname');
     this.$nicknameConfirm = $popup.find('#fe-bt-confirm');
     this.$nicknameError = $popup.find('#aria-exp-desc1');
@@ -39,14 +40,15 @@ Tw.NicknameComponent.prototype = {
     this.$nicknameInput.on('input', $.proxy(this._onKeyupNickname, this));
     this.$nicknameConfirm.on('click', $.proxy(this._onClickConfirmNickname, this));
   },
-  _onClosekNickname: function () {
-    if(this._isChanged) {
+  _onCloseNickname: function () {
+    if ( this._isChanged ) {
       this._closeCallback(this.$nicknameInput.val());
       this._closeCallback = null;
     }
 
   },
-  _onClickConfirmNickname: function () {
+  _onClickConfirmNickname: function ($event) {
+    $event.stopPropagation();
     var inputValue = this.$nicknameInput.val();
     if ( inputValue.length === 0 ) {
       return;
@@ -74,11 +76,16 @@ Tw.NicknameComponent.prototype = {
     }
   },
   _changeNickname: function (nickname) {
-    var params = {
-      nickNm: nickname
-    };
-    this._apiService.request(Tw.API_CMD.BFF_03_0006, params, {}, this._SvcMgmtNum)
-      .done($.proxy(this._successChangeNickname, this, nickname));
+    if ( !Tw.FormatHelper.isEmpty(this._svcMgmtNum) ) {
+      var params = {
+        nickNm: nickname
+      };
+      this._apiService.request(Tw.API_CMD.BFF_03_0006, params, {}, this._svcMgmtNum)
+        .done($.proxy(this._successChangeNickname, this, nickname));
+    } else {
+      this._isChanged = true;
+      this._popupService.close();
+    }
   },
   _successChangeNickname: function (nickname, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {

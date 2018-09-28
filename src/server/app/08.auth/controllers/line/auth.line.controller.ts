@@ -11,6 +11,7 @@ import FormatHelper from '../../../../utils/format.helper';
 import { LINE_NAME, SVC_ATTR_NAME } from '../../../../types/bff.type';
 import DateHelper from '../../../../utils/date.helper';
 import { DEFAULT_LIST_COUNT } from '../../../../types/config.type';
+import AUTH_LINE from '../../../../mock/server/auth.line.mock';
 
 class AuthLine extends TwViewController {
   constructor() {
@@ -22,7 +23,6 @@ class AuthLine extends TwViewController {
       if ( resp.code === API_CODE.CODE_00 ) {
         const list = resp.result;
         const lineInfo = this.parseLineList(list);
-        console.log('line', lineInfo);
         res.render('line/auth.line.html', Object.assign(lineInfo, {
           svcInfo
         }));
@@ -37,7 +37,7 @@ class AuthLine extends TwViewController {
     let totalCount = 0;
     const list: string[] = [];
     category.map((line) => {
-      const curLine = lineList[LINE_NAME[line].toLowerCase()];
+      const curLine = lineList[LINE_NAME[line]];
       if ( !FormatHelper.isEmpty(curLine) ) {
         this.convLineData(curLine);
         list.push(LINE_NAME[line].toLowerCase());
@@ -51,6 +51,7 @@ class AuthLine extends TwViewController {
 
   private convLineData(lineData) {
     FormatHelper.sortObjArrAsc(lineData, 'expsSeq');
+
     lineData.map((line) => {
       line.showSvcAttrCd = SVC_ATTR_NAME[line.svcAttrCd];
       line.showSvcScrbDtm = DateHelper.getShortDateNoDot(line.svcScrbDt);
