@@ -1,0 +1,56 @@
+<%#
+* FileName: myt-fare.submain.claim-pay.html
+* Author: 김인환 (skt.p132150@partner.sk.com)
+* Date: 2018.09.27
+%>
+
+<div class="cont-box">
+    <div class="mf-use">
+        <div class="mf-box">
+            <p class="param-tit">고객님, 변함없이 <br/>저희와 함께해 주셔서 <br/>감사합니다.<span class="ico"></span></p>
+            <% if(data.svcInfo.svcAttrCd === 'M2') { %>
+            <p class="param-cont"><em class="tx-bold">선불폰을 사용중</em>이십니다.</p>
+            <% } else { %>
+            <dl class="cost-payment">
+                <dt><%= data.claimMonth %> 청구요금</dt>
+                <dd>
+                    <div class="payment-amount"><span class="num ff-tg-black"><%= data.claimPay %></span>
+                        <span class="ff-tg-medium">원</span></div>
+                </dd>
+            </dl>
+            <ul class="sale-use">
+                <li class="use-payment">
+                    <div class="ico"><i></i></div>
+                    <dl>
+                        <dt>사용요금</dt>
+                        <dd><span class="num ff-tg-black"><%= data.claimUseAmt %></span><span class="ff-tg-medium">원</span></dd>
+                    </dl>
+                </li>
+                <li class="sale-payment">
+                    <div class="ico"><i></i></div>
+                    <dl>
+                        <dt>할인요금</dt>
+                        <dd><span class="num ff-tg-black">-<%= data.claimDisAmt %></span><span class="ff-tg-medium">원</span></dd>
+                    </dl>
+                </li>
+            </ul>
+            <% } %>
+        </div>
+    </div>
+    <ul class="bt-slice <% data.isNotAutoPayment? 'item-two': '' %>">
+        <% if(data.svcInfo.svcAttrCd === 'M2') { %>
+        <li class="bt-white2">
+            <button data-id="used-brkd">사용내역 확인</button>
+        </li>
+        <% } else { %>
+            <% if (data.isNotAutoPayment) { %>
+            <li class="bt-white2">
+                <button data-id="bill-pym">요금 납부</button>
+            </li>
+            <% } %>
+            <li class="bt-white2">
+                <button data-id="bill-report">요금안내서</button>
+            </li>
+        <% } %>
+    </ul>
+</div>
