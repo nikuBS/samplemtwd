@@ -59,13 +59,9 @@ Tw.MyTFareBillGuideCallGift.prototype = {
     return this._apiService.request(Tw.API_CMD.BFF_05_0045, param).done($.proxy(this._getCallGiftInfoInit, this));
   },
   _getCallGiftInfoInit: function(res) {
-    // Tw.Logger.info('[콜기프트]', res);
 
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-
       var resObj = this._svcToTimeObj( res.result.callData );
-      // Tw.Logger.info('[ resObj ]', resObj);
-
       this.$dateSelect.hide();
 
       if ( resObj.totalSec === 0 ) {

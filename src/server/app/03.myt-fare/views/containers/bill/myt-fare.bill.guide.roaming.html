@@ -6,7 +6,11 @@
 
 <% include ../../components/start.component.html %>
 <% include ../../components/javascript.component.html %>
-
+<script id="fe-entryTpl" type="text/x-handlebars-template">
+    {{!-- 주석 : 로밍 --}}
+    <p class="tit">{{resData.startDt}} ~ {{resData.endDt}}</p>
+    <p class="data"><em>{{resData.totalNum}}</em><span>원</span></p>
+</script>
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
     <ul>
@@ -37,20 +41,28 @@
                     <div class="widget">
                         <div class="widget-box tube">
                             <ul class="tube-list three" role="radiogroup">
-                                <li role="radio" aria-checked="false"><input type="radio" name="senddata" title="전일">전일</li>
-                                <li role="radio" aria-checked="false"><input type="radio" name="senddata" title="1주일">1주일</li>
-                                <li role="radio" aria-checked="false"><input type="radio" name="senddata" title="3주일">3주일</li>
-                                <li role="radio" aria-checked="false"><input type="radio" name="senddata" title="1개월">1개월</li>
-                                <li role="radio" aria-checked="false"><input type="radio" name="senddata" title="3개월">3개월</li>
-                                <li class="checked" role="radio" aria-checked="true"><input type="radio" name="senddata" checked title="6개월">6개월</li>
+                                <li class="" role="radio" aria-checked="false" data-target="dateBtn" data-value="0" ><input type="radio" name="senddata" title="전일">전일</li>
+                                <li class="" role="radio" aria-checked="false" data-target="dateBtn" data-value="1" ><input type="radio" name="senddata" title="1주일">1주일</li>
+                                <li class="" role="radio" aria-checked="false" data-target="dateBtn" data-value="2" ><input type="radio" name="senddata" title="3주일">3주일</li>
+                                <li class="" role="radio" aria-checked="false" data-target="dateBtn" data-value="3" ><input type="radio" name="senddata" title="1개월">1개월</li>
+                                <li class="" role="radio" aria-checked="false" data-target="dateBtn" data-value="4" ><input type="radio" name="senddata" title="3개월">3개월</li>
+                                <li class="" role="radio" aria-checked="false" data-target="dateBtn" data-value="5" ><input type="radio" name="senddata" title="6개월">6개월</li>
                             </ul>
                         </div>
                     </div>
 
-                    <div class="data-result mt20">
-                        <p class="tit">2018.06.01 ~ 2018.06.23</p>
-                        <p class="data"><em>144,750</em><span>원</span></p>
+                    <div class="date-select" data-target="dateSelect">
+                        <span>원하시는 기간을 선택해주세요.</span>
                     </div>
+
+                    <div class="data-result mt20" data-target="dataResult" style="display: none;" >
+
+                    </div>
+
+                    <div class="no-data" data-target="noData" style="display: none;" >
+                        <span>이용내역이 없습니다.</span>
+                    </div>
+
                 </div>
                 <!--// .cont-box -->
 
@@ -63,7 +75,7 @@
         </div>
         <!--// .container-wrap -->
         <!-- .popup-closeBtn -->
-        <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button>
+        <button class="popup-closeBtn" data-target="popupCloseBt"><span class="blind">팝업 페이지 닫기</span></button>
         <!--// .popup-closeBtn -->
     </div>
     <!--// .popup hbs -->
