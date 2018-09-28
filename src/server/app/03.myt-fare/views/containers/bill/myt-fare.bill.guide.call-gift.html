@@ -9,12 +9,8 @@
 <script id="fe-entryTpl" type="text/x-handlebars-template">
 
     {{!-- 주석 : 콜기프트 --}}
-    <!--<div>-->
-        <!--<p>시간 : {{resData.callData}}</p>-->
-        <!--<p>기간 : {{resData.startDt}} ~ {{resData.endDt}}</p>-->
-    <!--</div><br>-->
     <p class="tit">{{resData.startDt}} ~ {{resData.endDt}}</p>
-    <p class="data"><em>10</em><span>시간</span> <em>50</em><span>분</span> <em>20</em><span>초</span></p>
+    <p class="data"><em>{{resData.hh}}</em><span>시간</span> <em>{{resData.mm}}</em><span>분</span> <em>{{resData.ss}}</em><span>초</span></p>
 
 
 </script>
@@ -83,7 +79,7 @@
         </div>
         <!--// .container-wrap -->
         <!-- .popup-closeBtn -->
-        <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button>
+        <button class="popup-closeBtn" data-target="popupCloseBt"><span class="blind">팝업 페이지 닫기</span></button>
         <!--// .popup-closeBtn -->
     </div>
     <!--// .popup hbs -->

@@ -16,7 +16,6 @@ Tw.MyTFareBillGuideCallGift = function (rootEl, resData) {
 
   this._init();
 
-  this.selectMonthVal = null;
 };
 
 Tw.MyTFareBillGuideCallGift.prototype = {
@@ -27,9 +26,6 @@ Tw.MyTFareBillGuideCallGift.prototype = {
   },
   _cachedElement: function () {
     this.$entryTpl = $('#fe-entryTpl');
-    this.$callGiftInfoArea = $('[data-target="callGiftInfoArea"]');
-    this.$defaultTxt= $('[data-target="defaultTxt"]');
-
 
     this.$dateSelect= $('[data-target="dateSelect"]');
     this.$dataResult= $('[data-target="dataResult"]');
@@ -37,6 +33,7 @@ Tw.MyTFareBillGuideCallGift.prototype = {
   },
   _bindEvent: function () {
     this.$container.on('click', '[data-target="monBtn"]', $.proxy(this._monthBtnEvt, this));
+    this.$container.on('click', '[data-target="popupCloseBt"]', $.proxy(this._popupCloseBtEvt, this));
   },
   //--------------------------------------------------------------------------[EVENT]
   _monthBtnEvt: function(e) {
@@ -44,39 +41,46 @@ Tw.MyTFareBillGuideCallGift.prototype = {
     var $target = $(e.currentTarget);
     this.selectMonthVal = $target.attr('data-value');
 
-    Tw.Logger.info('[선택 값]', this.selectMonthVal);
+    // Tw.Logger.info('[선택 값]', this.selectMonthVal);
 
     var param = {
       startDt : this._getPeriod(this.selectMonthVal, 'YYYYMMDD').startDt,
       endDt: this._getPeriod(this.selectMonthVal, 'YYYYMMDD').endDt,
     };
 
-    Tw.Logger.info('[버튼 클릭 > param]', param);
+    // Tw.Logger.info('[버튼 클릭 > param]', param);
     this._getCallGiftInfo( param );
+  },
+  _popupCloseBtEvt: function() {
+    this._goLoad('/myt/fare/bill/guide');
   },
   //--------------------------------------------------------------------------[API]
   _getCallGiftInfo: function(param) {
     return this._apiService.request(Tw.API_CMD.BFF_05_0045, param).done($.proxy(this._getCallGiftInfoInit, this));
   },
-
   _getCallGiftInfoInit: function(res) {
-    Tw.Logger.info('[콜기프트]', res);
+    // Tw.Logger.info('[콜기프트]', res);
 
     if ( res.code === Tw.API_CODE.CODE_00 ) {
 
-      this.$dataResult.empty();
+      var resObj = this._svcToTimeObj( res.result.callData );
+      // Tw.Logger.info('[ resObj ]', resObj);
+
       this.$dateSelect.hide();
-      this.$dataResult.show();
 
-      if ( res.result.callData === '0분 0초' ) {
-        Tw.Logger.info('[콜기프트 > 이용내역이 없습니다. ]', res.result.callData);
-
+      if ( resObj.totalSec === 0 ) {
+        // Tw.Logger.info('[콜기프트 > 이용내역이 없습니다. ]', resObj.totalSec);
+        this.$dataResult.hide();
+        this.$noData.show();
       } else {
-
+        this.$dataResult.show();
+        this.$noData.hide();
       }
 
       var resData = {
-        callData: res.result.callData,
+        hh: resObj.hh,
+        mm: resObj.mm,
+        ss: resObj.ss,
         startDt: this._getPeriod(this.selectMonthVal, 'YYYY.MM.DD').startDt,
         endDt: this._getPeriod(this.selectMonthVal, 'YYYY.MM.DD').endDt
       };
@@ -98,7 +102,6 @@ Tw.MyTFareBillGuideCallGift.prototype = {
       startDt: startDt,
       endDt: endDt
     }
-
   },
 
   _svcHbDetailList: function( resData, $jqTg, $hbTg ) {
@@ -112,7 +115,40 @@ Tw.MyTFareBillGuideCallGift.prototype = {
     var html = template(data);
     jqTg.append(html);
   },
+
+  _svcToTimeObj: function(str) {
+    var total_s_val = this._toSecond(str);
+    return this._toHHMMSS(total_s_val);
+  },
   //--------------------------------------------------------------------------[COM]
+  _toSecond: function(str) {
+    var strl = str;
+    var m_loc = strl.indexOf('분'); // 분
+    var s_loc = strl.indexOf('초'); // 초
+    var m_val = Number( strl.slice(0, m_loc).trim() );
+    var s_val = Number( strl.slice(m_loc + 1, s_loc).trim() );
+    var total_s_val = (m_val * 60) + s_val; // 초로 변환
+
+    return total_s_val
+  },
+  _toHHMMSS: function(num) {
+    var myNum = parseInt(num, 10);
+    var hour = Math.floor(myNum / 3600);
+    var minute = Math.floor( (myNum - (hour * 3600)) / 60 );
+    var second = myNum - (hour * 3600) - (minute * 60);
+
+    if (hour < 10) { hour = '0' + hour; }
+    if (minute < 10) { minute = '0' + minute; }
+    if (second < 10) { second = '0' + second; }
+
+    return {
+      totalSec: myNum,
+      hh: hour,
+      mm: minute,
+      ss: second,
+      hhmmss: hour + ':' + minute + ':' + second
+    };
+  },
   _comComma: function (str) {
     str = String(str);
     return Tw.FormatHelper.addComma(str);
