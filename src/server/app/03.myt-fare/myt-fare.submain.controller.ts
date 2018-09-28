@@ -30,8 +30,10 @@ class MytFareSubmainController extends TwViewController {
       this._getClaimPays(),
       this._getNonPayment(),
       this._getPaymentInfo(),
-      this._getTotalPayment()
-    ).subscribe(([claim, nonpayment, paymentInfo, totalPayment]) => {
+      this._getTotalPayment(),
+      this._getTaxInvoice(),
+      this._getContribution()
+    ).subscribe(([claim, nonpayment, paymentInfo, totalPayment, taxInvoice, contribution]) => {
       // 소액결제/콘텐츠 - 휴대폰이면서 미성년자가 아닌경우
       if ( svcInfo.svcAttrCd === 'M1' ) {
         data.isMicroPayment = true;
@@ -62,9 +64,17 @@ class MytFareSubmainController extends TwViewController {
           data.isNotAutoPayment = false;
         }
       }
-
+      // 최근납부내역
       if ( totalPayment ) {
         data.totalPayment = totalPayment;
+      }
+      // 세금계산서
+      if ( taxInvoice ) {
+        data.taxInvoice = taxInvoice;
+      }
+      // 기부금/후원금
+      if ( contribution ) {
+        data.contribution = contribution;
       }
 
       res.render('myt-fare.submain.html', { data });
@@ -127,6 +137,32 @@ class MytFareSubmainController extends TwViewController {
     return this.apiService.request(API_CMD.BFF_07_0030, {}).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
         if ( resp.result.paymentRecord.length === 0 ) {
+          return null;
+        }
+        return resp.result;
+      } else {
+        // error
+        return null;
+      }
+    });
+  }
+
+  _getTaxInvoice() {
+    return this.apiService.request(API_CMD.BFF_07_0017, {}).map((resp) => {
+      if ( resp.code === API_CODE.CODE_00 ) {
+        return resp.result;
+      } else {
+        // error
+        return null;
+      }
+    });
+
+  }
+
+  _getContribution() {
+    return this.apiService.request(API_CMD.BFF_07_0038, {}).map((resp) => {
+      if ( resp.code === API_CODE.CODE_00 ) {
+        if ( resp.result.totalCount === 0 ) {
           return null;
         }
         return resp.result;
