@@ -18,7 +18,7 @@ class MytDataSubmainController extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, child: any) {
     const data: any = {
       svcInfo: svcInfo,
       isBenefit: false,
@@ -28,7 +28,7 @@ class MytDataSubmainController extends TwViewController {
       otherLines: this.convertOtherLines(svcInfo, allSvc)
     };
     Observable.combineLatest(
-      this._getChildrenLines(),
+      // this._getChildrenLines(),
       // this._getRemnantData(),
       this._getDataPresent(),
       this._getRefillCoupon(),
@@ -40,7 +40,7 @@ class MytDataSubmainController extends TwViewController {
       this._getRefillPresentBreakdown(),
       this._getRefillUsedBreakdown(),
       this._getUsagePatternSevice()
-    ).subscribe(([/*remnant,*/child, present, refill, dcBkd, dpBkd, tpBkd, etcBkd, refpBkd, refuBkd, pattern]) => {
+    ).subscribe(([/*remnant,*/ present, refill, dcBkd, dpBkd, tpBkd, etcBkd, refpBkd, refuBkd, pattern]) => {
       if ( child && child.length > 0 ) {
         data.otherLines = Object.assign(this.convertChildLines(child), data.otherLines);
       }
