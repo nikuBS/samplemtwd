@@ -36,6 +36,45 @@ Tw.MyTFareSubMain.prototype = {
   },
 
   _rendered: function () {
+    if ( this.data.svcInfo.svcAttrCd === 'M2' ) {
+      // 사용내역확인버튼
+      this.$usedBrkd = this.$container.find('button[data-id=used-brkd]');
+    }
+    else {
+      // 요금안내서버튼
+      this.$billReport = this.$container.find('button[data-id=bill-report]');
+      if( this.data.isNotAutoPayment) {
+        // 요금납부버튼
+        this.$billPym = this.$container.find('button[data-id=bill-pym]');
+      }
+    }
+    // 실시간요금버튼
+    this.$realTimePay = this.$container.find('button[data-id=realtime-pay]');
+    if (this.data.nopayment) {
+      // 미납요금버튼
+      this.$nonPayment = this.$container.find('button[data-id=non-payment]');
+    }
+    if (this.data.paymentInfo) {
+      // 요금안내서설정버튼
+      this.$billType = this.$container.find('button[data-id=bill-type]');
+      // 납부방법버튼
+      this.$payMthd = this.$container.find('button[data-id=pay-mthd]');
+    }
+
+    if(this.data.isMicroPayment) {
+      // 소액결제
+      this.$microBill = this.$container.find('button[data-id=micro-bill]');
+      // 콘텐츠 이용료
+      this.$contentBill = this.$container.find('button[data-id=content-bill]');
+    }
+    if (this.data.totalPayment && this.data.totalPayment.length > 0) {
+      // 최근납부내역상세
+      this.$paymentDetail = this.$container.find('button[data-id=payment-detail]');
+    }
+    // 최근요금내역
+    this.$billChart = this.$container.find('[data-id=bill-chart]');
+    // 다른회선 요금 조회
+    this.$otherLines = this.$container.find('[data-id=other-line]');
   },
 
   _bindEvent: function () {
@@ -143,7 +182,7 @@ Tw.MyTFareSubMain.prototype = {
     Tw.Error(resp.code, resp.msg).pop();
   },
 
-  __resetTimer: function() {
+  __resetTimer: function () {
     clearTimeout(this._resTimerID);
     this._requestCount = -1;
     this._resTimerID = null;

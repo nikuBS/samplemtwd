@@ -29,7 +29,7 @@
             <!-- 상세항목 -->
             <%- include('../components/submain/myt-fare.submain.payment-detail.html', data) %>
             <!-- 소액결제 콘텐츠이용 -->
-            <% if(data.isMicroPayment) { %>
+            <% if (data.isMicroPayment) { %>
             <%- include('../components/submain/myt-fare.submain.micro-payment.html', data) %>
             <% } %>
 
@@ -37,7 +37,9 @@
             <hr class="cont-sp type1" aria-hidden="true"/>
             <!-- .cont-box -->
             <div class="cont-box nogaps">
-                <p class="list-comp-title">최근 납부 내역<button class="ico"></button></p>
+                <p class="list-comp-title">최근 납부 내역
+                    <button class="ico" data-id="payment-detail"></button>
+                </p>
                 <ul class="list-comp-lineinfo type2">
                     <% for(var i=0; i < data.totalPayment.length; i++) { %>
                     <%- include('../components/submain/myt-fare.submain.total-payment.html', data.totalPayment[i]) %>
@@ -58,9 +60,9 @@
 
             <hr class="cont-sp type1" aria-hidden="true"/>
             <!-- .cont-box -->
-            <div class="cont-box nogaps">
+            <div class="cont-box nogaps" data-id="other-line">
                 <p class="list-comp-title">다른 회선 요금 조회</p>
-                <ul class="list-comp-lineinfo" data-id="other-line">
+                <ul class="list-comp-lineinfo">
                     <li>
                         <button>
                             <div class="lineinfo-user d-table">
