@@ -98,7 +98,7 @@ Tw.MyTFareSubMain.prototype = {
     this._claimPaymentRequest();
   },
 
-  // 최근요금내역조회
+  // 최근청구요금내역조회-1
   _claimPaymentRequest: function () {
     var claimDtArray = this.data.claim.invDtArr;
     if ( claimDtArray.length > 0 ) {
@@ -115,10 +115,11 @@ Tw.MyTFareSubMain.prototype = {
         .fail($.proxy(this._errorRequest, this));
     }
     else {
-
+      this._responseClaimPayment();
     }
   },
 
+  // 최근청구요금내역조회-2
   _responseClaimPayment: function () {
     if ( arguments.length > 0 ) {
       var chart_data = {
@@ -142,29 +143,56 @@ Tw.MyTFareSubMain.prototype = {
       if ( chart_data.da_arr.length > 0 ) {
         this._initPatternChart(chart_data);
       }
-      setTimeout($.proxy(this._otherLineBills, this), 300);
-      this.loadingView(false);
+    }
+    setTimeout($.proxy(this._otherLineBills, this), 300);
+  },
+
+  // 다른회선청구요금 조회-1
+  _otherLineBills: function () {
+    // TODO: 서버쪽 과 기획쪽 확인 후 수정 필요
+    var invDt = this.data.claim.invDt;
+    var otherLineLength = this.data.otherLines.length;
+    if ( false/*otherLineLength > 0*/ ) {
+      var requestCommand = [];
+      for ( var idx = 0; idx < otherLineLength; idx++ ) {
+        requestCommand.push({
+          command: Tw.API_CMD.BFF_05_0036,
+          params: { invDt: invDt },
+          headers: { svcMgmtNum: this.data.otherLines[idx].svcMgmtNum }
+        });
+      }
+      this._apiService.requestArray(requestCommand)
+        .done($.proxy(this._responseOtherLineBills, this))
+        .fail($.proxy(this._errorRequest, this));
+    }
+    else {
+      this._responseOtherLineBills();
     }
   },
 
-  // 다른 회선 요금 조회
-  _otherLineBills: function () {
-
+  // 다른회선청구요금 조회-2
+  _responseOtherLineBills: function () {
+    if ( arguments.length > 0 ) {
+      // TODO: 서버, 기획쪽 확인 후 작업필요
+    }
+    setTimeout($.proxy(this._realTimeBillRequest, this), 300);
   },
 
-  // 실시간 사용요금 요청
+
+  // 실시간 사용요금 요청-1
   _realTimeBillRequest: function () {
     this._resTimerID = setTimeout($.proxy(this._getBillResponse, this), 2500);
   },
 
+  // 실시간 사용요금 요청-2
   _getBillResponse: function () {
     this._apiService
-      .request(Tw.API_CMD.BFF_05_0022, { count: this._requestCount++ })
+      .request(Tw.API_CMD.BFF_05_0022, { count: ++this._requestCount })
       .done($.proxy(this._onReceivedBillData, this))
       .fail($.proxy(this._onErrorReceivedBillData, this));
   },
 
-
+  // 실시간 사용요금 요청-3
   _onReceivedBillData: function (resp) {
     if ( resp.result && resp.code === Tw.API_CODE.CODE_00 ) {
       if ( _.isEmpty(resp.result) ) {
@@ -175,7 +203,9 @@ Tw.MyTFareSubMain.prototype = {
           this.__resetTimer();
         }
         // 당월 기준으로 실시간 요금 노출
-        // var realtimeBillInfo = resp.result.hotBillInfo[0];
+        var realtimeBillInfo = resp.result.hotBillInfo[0];
+        this.$realTimePay.find('i').html(realtimeBillInfo.totOpenBal2);
+        this.loadingView(false);
       }
     }
     else if ( resp.code === Tw.MYT_FARE_SUB_MAIN.NO_BILL_REQUEST_EXIST ) {

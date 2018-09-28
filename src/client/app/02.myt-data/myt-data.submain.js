@@ -64,7 +64,7 @@ Tw.MyTDataSubMain.prototype = {
       this.$otherLines = this.$container.find('[data-id=other-lines] li');
       if ( this.data.otherLines.length > 20 ) {
         this.$otherLinesMoreBtn = this.$otherLines.find('.bt-more button');
-        this.$moreTempleate = Handlebars.compile(Tw.MYT_DATA_TPL.SUBMAIN.MORE_LINE_TEMP);
+        this.$moreTempleate = Handlebars.compile(Tw.MYT_TPL.DATA_SUBMAIN.MORE_LINE_TEMP);
       }
     }
   },
@@ -308,7 +308,7 @@ Tw.MyTDataSubMain.prototype = {
       var selectLineInfo = number + ' ' + name;
       this.changeLineMgmtNum = mgmtNum;
       this._popupService.openModalTypeA(Tw.REMNANT_OTHER_LINE.TITLE,
-        defaultLineInfo + Tw.MYT_DATA_TPL.SUBMAIN.SP_TEMP + selectLineInfo,
+        defaultLineInfo + Tw.MYT_TPL.DATA_SUBMAIN.SP_TEMP + selectLineInfo,
         Tw.REMNANT_OTHER_LINE.BTNAME, null, $.proxy(this._onChangeLineConfirmed, this), null);
     }
   },
