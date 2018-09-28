@@ -41,49 +41,48 @@
                 <!-- .cont-box -->
                 <div class="cont-box nogaps noborder">
                     <div class="list-comp-history">
-                      <ul class="comp-box">
-                          <% let displayCount = 0, dIdx = 0; %>
-                          <% const keys = Object.keys(chargeData.data).reverse(), DEFAULT_LIST_COUNT = 20; %>
-                          <% while (displayCount < DEFAULT_LIST_COUNT && dIdx < keys.length) { %>
-                              <% const value = chargeData.data[keys[dIdx]]; %>
-                              <% if (value.count === 0) { %>
+                        <ul class="comp-box">
+                            <% let displayCount = 0, dIdx = 0, iIdx, displayedYear = (new Date()).getFullYear().toString(); %>
+                            <% const keys = Object.keys(chargeData.data).reverse(), DEFAULT_LIST_COUNT = 20; %>
+                            <% for (;dIdx < keys.length; dIdx++) { %>
+                                <% const key = keys[dIdx], items = chargeData.data[key], itemYear = key.substring(0, 4); %>
+                                <% if (itemYear !== displayedYear) { %>
+                                    <li class="year-tx" data-year="<%= itemYear %>"><%= itemYear %></li>
+                                <% displayedYear = itemYear;
+                                } %>
                                 <li class="list-box">
-                                    <div class="data-select-wrap">
-                                        <span class="data-tit"><%= keys[dIdx] %></span>
-                                    </div>
-                                </li>
-                              <% } else { %>
-                              <li class="list-box">
-                                  <p class="list-date">
-                                    <span class="date-tx"><%= value.data[0].date %></span>
-                                  </p>
-                                  <ul class="list-con">
-                                    <% for (let iIdx = 0; iIdx < value.data.length; iIdx++) { %>
-                                      <% const item = value.data[iIdx]; %>
-                                      <li>
-                                        <p class="list-text">
-                                          <span class="mtext"><i class="badge badge-<%= item.badge.icon %>"><span class="blind"><%= item.badge.text %></span></i> <%= item.typeName %></span>
-                                          <span class="stext gray"><%= item.bottom %></span>
-                                        </p>
-                                        <% if (item.right) { %>
-                                        <div class="list-data">
-                                          <p class="data-tx <%= item.right.color %>-tx"><%= item.right.amount %><span><%= item.right.unit %></span></p>
-                                          <% if (item.refundable) { %>
-                                            <div class="bt-alone"><button class="bt-line-gray1">취소</button></div>
-                                          <% } else if (item.refunded) { %>
-                                            <p class="state-tx">취소</p>
-                                          <% } else if (item.fixed) { %>
-                                            <p class="state-tx">자동</p>
-                                          <% } %>
-                                        </div>
+                                    <p class="list-date">
+                                        <span class="date-tx"><%= items[0].date %></span>
+                                    </p>
+                                    <ul class="list-con">
+                                        <% for (iIdx = 0; iIdx < items.length && displayCount < DEFAULT_LIST_COUNT; iIdx++) { %>
+                                            <% const item = items[iIdx]; %>
+                                            <li>
+                                                <p class="list-text">
+                                                    <span class="stext-b"><i class="badge badge-<%= item.badge.icon %>"><span class="blind"><%= item.badge.text %></span></i> <%= item.typeName %></span>
+                                                    <span class="stext">
+                                                        <% for (let i = 0; item.bottom && i < item.bottom.length; i++) { %>
+                                                        <span class="gray-tx"><%= item.bottom[i] %></span>
+                                                        <% } %>
+                                                    </span>
+                                                </p>
+                                                <% if (item.right) { %>
+                                                <div class="list-data">
+                                                    <p class="data-tx ff-tg-black <%= item.right.color %>-tx"><%= item.right.amount %><span class="ff-tg-medium"><%= item.right.unit %></span></p>
+                                                    <% if (item.refundable) { %>
+                                                        <button class="bt-link-tx underline red">취소</button>
+                                                    <% } %>
+                                                </div>
+                                                <% } %>
+                                            </li>
+                                            <% displayCount ++; %>
                                         <% } %>
-                                      </li>
-                                    <% } %>
-                                  </ul>
-                              </li>
-                              <% } %>
-                              <% displayCount += value.count; %>
-                              <% dIdx++; %>
+                                    </ul>
+                                </li>
+                                <% if (displayCount === DEFAULT_LIST_COUNT) { 
+                                    iIdx = items.length === iIdx ? 0 : iIdx;
+                                    break;
+                                } %>                               
                           <% } %>
                       </ul>
                     </div>
@@ -100,7 +99,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function() {
-    new Tw.MyTDataRechargeHistory($('.wrap'), <%- JSON.stringify({ ...chargeData, nextIdx: dIdx, displayCount }) %>);
+    new Tw.MyTDataRechargeHistory($('.wrap'), <%- JSON.stringify({ ...chargeData, dayIdx: dIdx, itemIdx: iIdx, displayCount }) %>);
   });
 </script>
 <% include ../../components/end.component.html %>

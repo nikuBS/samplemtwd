@@ -18,21 +18,21 @@ Tw.MyTDataRechargeHistory = function (rootEl, histories) {
 Tw.MyTDataRechargeHistory.prototype = {
   DEFAULT_LIST_COUNT: 20,
   _init: function () {
-    this._displayYear = Tw.DateHelper.getShortDateWithFormat(new Date(), 'YYYY');
+    this._displayedYear = this.$container.find('li.year-tx').last().data('year').toString();
+    this._days = Object.keys(this._histories.data).reverse();
     this._displayCount = this._histories.displayCount;
-    this._nextIdx = this._histories.nextIdx;
+    this._dayIdx = this._histories.dayIdx;
+    this._itemIdx = this._histories.itemIdx;
     this._selectedIdx = 0;
-
+  
     this._displayData = {
       0: {
         data: this._histories.data,
         count: this._histories.count
       }
     }
-
-    this._days = Object.keys(this._histories.data).reverse();
-
-
+      
+    this._itemsTmpl = Handlebars.compile($('#fe-tmpl-charge-items').html());
     this._dayTmpl = Handlebars.compile($('#fe-tmpl-charge-day').html());
     this._yearTmpl = Handlebars.compile($('#fe-tmpl-charge-year').html());
     Handlebars.registerPartial('chargeItems', $('#fe-tmpl-charge-items').html());
@@ -46,37 +46,52 @@ Tw.MyTDataRechargeHistory.prototype = {
   _bindEvent: function () {
     this.$container.on('click', '.bt-more', $.proxy(this._handleLoadMore, this));
     this.$container.on('click', '.bt-dropdown.wd-auto', $.proxy(this._handleChangeCondition, this));
-    this.$container.on('click', 'button.bt-line-gray1', $.proxy(this._openCanclableChargeAlert, this));
+    this.$container.on('click', 'button.bt-link-tx', $.proxy(this._openCanclableChargeAlert, this));
   },
 
   _handleLoadMore: function() {
-    var contents = '', displayCount = 0, idx = this._nextIdx;
-    var key = '', items = {};
+    var contents = '', displayCount = 0, idx = this._dayIdx;
+    var selectedData = this._displayData[this._selectedIdx].data;
+    var key = this._days[idx], items = selectedData[key];
     var itemYear = '';
 
-    while (displayCount < this.DEFAULT_LIST_COUNT && idx < this._days.length) {
-      key = this._days[idx];
-      items = this._displayData[this._selectedIdx].data[key];
-      itemYear = Tw.DateHelper.getShortDateWithFormat(key, 'YYYY');
+    if (this._itemIdx > 0) {
+      if ((items.length - this._itemIdx) > this.DEFAULT_LIST_COUNT) {
+        items = selectedData[key].slice(this._itemIdx, this.DEFAULT_LIST_COUNT);
+        this._itemIdx = items.length;
+      } else {
+        this._itemIdx = 0;
+      }
 
-      if (this._displayYear !== itemYear) {
+      this.$container.find('ul.list-con').last().append(this._itemsTmpl({ items: items }));
+      displayCount += items.length;
+      idx++;
+    }
+
+    while (idx < this._days.length && displayCount < this.DEFAULT_LIST_COUNT) {
+      key = this._days[idx];
+      items = selectedData[key].slice(this._itemIdx, this.DEFAULT_LIST_COUNT);
+      itemYear = key.substring(0, 4);
+
+      if (this._displayedYear !== itemYear) {
         contents += this._yearTmpl({ year: itemYear });
-        this._displayYear = itemYear;
+        this._displayedYear = itemYear;
       }
 
       contents += this._dayTmpl({
-        items: items.data,
-        date: items.data[0].date
+        items: items,
+        date: items[0].date
       });
 
-      displayCount += items.count;
+      displayCount += items.length;
+      this._itemIdx = items.length < (selectedData[key].length - this._itemIdx) ? items.length : 0;
       idx++;
     }
 
     this.$days.append(contents);
 
     this._displayCount += displayCount;
-    this._nextIdx = idx;
+    this._dayIdx = idx;
 
     var leftCount = this._displayData[this._selectedIdx] - this._displayCount;
     
@@ -122,17 +137,14 @@ Tw.MyTDataRechargeHistory.prototype = {
     var nData = { data: {}, count: 0 }, items = [];
     this._selectedIdx = selectedIdx;
     this._displayCount = 0;
-    this._nextIdx = 0;
+    this._dayIdx = 0;
 
     if (!this._displayData[selectedIdx]) {
       for (var date in this._histories.data) {
-        items = this._histories.data[date].data.filter($.proxy(this._filterData, this));
+        items = this._histories.data[date].filter($.proxy(this._filterData, this));
         
         if (items.length > 0) {
-          nData.data[date] = {
-            data: items,
-            count: items.length
-          }
+          nData.data[date] = items,
           nData.count += items.length;
         }
       }
@@ -156,6 +168,6 @@ Tw.MyTDataRechargeHistory.prototype = {
   },
 
   _openCanclableChargeAlert: function () {
-    this._popupService.openAlert(Tw.MYT_DATA_CANCLABLE_CHARGE_ALERT);
+    this._popupService.openAlert(Tw.ALERT_MSG_MYT_DATA.RECHARGE_CANCLE);
   }
 };
