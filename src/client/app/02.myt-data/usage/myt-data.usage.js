@@ -2,6 +2,7 @@ Tw.MyTDataUsage = function (rootEl, options) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
+  this._historyService = new Tw.HistoryService();
   this._options = options;
 
   this._bindEvent();
@@ -27,14 +28,14 @@ Tw.MyTDataUsage.prototype = {
       Tw.MSG_MYT.DISCOUNT.M01_TITLE, Tw.MSG_MYT.DISCOUNT.M01_CONTENTS));
 
     // 24시간 데이터 50% 할인 사용량 - 실시간 사용 요금 바로가기 버튼 - 실시간 사용 요금으로 이동
-    this.$container.on('click', '#cont-discount .bt-slice button', function(){
-      location.href = '/myt/bill/hotbill';
-    });
+    this.$container.on('click', '#cont-discount .bt-slice button', $.proxy(function(){
+      this._historyService.goLoad('/myt/bill/hotbill');
+    }, this));
 
     // 데이터 한도 요금제 - 충전 가능 금액 확인 버튼 - 데이터 한도 요금제로 이동
-    this.$container.on('click', '#cont-data-limit .bt-slice button', function(){
-      location.href = '/myt/data/limit';
-    });
+    this.$container.on('click', '#cont-data-limit .bt-slice button', $.proxy(function(){
+      this._historyService.goLoad('/myt/data/limit');
+    }, this));
 
     // 내폰끼리 결합 상세 조회
     this.$container.on('click', '#list-band-data-share .datatogether-li .bt-bg-blue1', $.proxy(this._requestBandDetail, this));
@@ -72,6 +73,8 @@ Tw.MyTDataUsage.prototype = {
       return ;
     }
 
+    //skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
+
     this._apiService.requestArray(reqList)
       .done($.proxy(function () {
 
@@ -105,6 +108,7 @@ Tw.MyTDataUsage.prototype = {
             default : break;
           }
         }
+        //skt_landing.action.loading.off({ ta: '.container' });
 
       }, this))
       .fail($.proxy(this._requestFail, this));
@@ -112,6 +116,7 @@ Tw.MyTDataUsage.prototype = {
   },
 
   _requestFail: function (resp) {
+    //skt_landing.action.loading.off({ ta: '.container' });
     this._showErrorAlert(resp.code, resp.msg);
   },
 
@@ -128,8 +133,10 @@ Tw.MyTDataUsage.prototype = {
     var fmtData = {data:'', unit:''};
 
     // 사용 중인 요금상품 + 기본제공량
-    fmtData = Tw.FormatHelper.convDataFormat(data.opmdBasic, Tw.DATA_UNIT.KB);
-    $('#head-tdata-share .tit span').text(fmtData.data + fmtData.unit);
+    if(parseInt(data.opmdBasic) !== '-1'){
+      fmtData = Tw.FormatHelper.convDataFormat(data.opmdBasic, Tw.DATA_UNIT.KB);
+      $('#head-tdata-share .tit span').text(fmtData.data + fmtData.unit);
+    }
 
     // 총데이터 사용량
     fmtData = Tw.FormatHelper.convDataFormat(data.totUsed, Tw.DATA_UNIT.KB);
@@ -236,7 +243,7 @@ Tw.MyTDataUsage.prototype = {
   },
 
   /**
-   * 내폰끼리 결합 사용량 몰고 result handler
+   * 내폰끼리 결합 사용량 목록 result handler
    * @param data
    * @private
    */
