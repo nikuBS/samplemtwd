@@ -42,13 +42,23 @@ Tw.AuthLine.prototype = {
   },
   _onClickMore: function ($event) {
     var $btMore = $($event.currentTarget);
-    $btMore.siblings('.widget').removeClass('none');
-    $btMore.hide();
+    var $list = $btMore.parents('.fe-line-cover').find('.fe-line');
+    var $hideList = $list.filter('.none');
+    var $showList = $hideList.filter(function (index) {
+      return index < Tw.DEFAULT_LIST_COUNT;
+    });
+
+    $showList.removeClass('none');
+    $showList.addClass('block');
+
+    if ( $hideList.length - $showList.length <= 0 ) {
+      $btMore.hide();
+    }
   },
 
   _onChangeFirst: function ($event) {
     var $currentTarget = $($event.currentTarget);
-    this._popupService.openConfirm(Tw.POPUP_TITLE.NOTIFY, Tw.POPUP_CONTENTS.AUTH_L01, null, null,
+    this._popupService.openConfirm(Tw.ALERT_MSG_AUTH.L01, Tw.POPUP_TITLE.NOTIFY,
       $.proxy(this._confirmNotifyPopup, this), $.proxy(this._closeNotifyPopup, this, $currentTarget));
   },
   _confirmNotifyPopup: function () {
@@ -59,7 +69,7 @@ Tw.AuthLine.prototype = {
     if ( this._changeList ) {
       var currentSvcMgmtNum = $currentTarget.parents('.fe-line').data('svcmgmtnum');
       var $remainList = $currentTarget.parents('.fe-line-list').find('.fe-line')
-        .filter('.none-event').filter('[data-svcmgmtnum!=' + currentSvcMgmtNum + ']');
+        .not('.none-event').filter('[data-svcmgmtnum!=' + currentSvcMgmtNum + ']');
       var changeList = [currentSvcMgmtNum];
       _.map($remainList, $.proxy(function (remainLine) {
         changeList.push($(remainLine).data('svcmgmtnum'));
