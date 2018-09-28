@@ -168,6 +168,6 @@ Tw.MyTDataRechargeHistory.prototype = {
   },
 
   _openCanclableChargeAlert: function () {
-    this._popupService.openAlert(Tw.MYT_DATA_CANCLABLE_CHARGE_ALERT);
+    this._popupService.openAlert(Tw.ALERT_MSG_MYT_DATA.RECHARGE_CANCLE);
   }
 };
