@@ -316,7 +316,7 @@ export const API_CMD = {
     path: '/core-bill/v1/microPrepay/microPrepay-hist-requests',
     method: API_METHOD.GET,
     server: API_SERVER.BFF,
-    bypass: false
+    bypass: true
   },
   BFF_07_0072: {
     path: '/core-bill/v1/microPrepay/microPrepay-auto-prepay-Yn',
@@ -333,7 +333,7 @@ export const API_CMD = {
     path: '/core-bill/v1/useContentsPrepay/useContentsPrepay-hist-requests',
     method: API_METHOD.GET,
     server: API_SERVER.BFF,
-    bypass: false
+    bypass: true
   },
   BFF_07_0079: {
     path: '/core-bill/v1/useContentsPrepay/useContents-autoPrepay-hist',

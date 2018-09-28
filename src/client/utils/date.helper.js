@@ -183,9 +183,9 @@ Tw.DateHelper = (function () {
    */
   var getAddDay = function (date) {
     return moment(convDateFormat(date))
-      .add(1, 'days')
-      .subtract(1, 'minutes')
-      .format('YYYY.MM.DD hh:mm');
+        .add(1, 'days')
+        .subtract(1, 'minutes')
+        .format('YYYY.MM.DD hh:mm');
   };
 
   /**
@@ -208,7 +208,7 @@ Tw.DateHelper = (function () {
 
   var getEndOfMonth = function (date, format, currentFormat) {
     var days = moment(date, currentFormat).daysInMonth();
-    return moment(date, currentFormat).add(days - 1, 'days').format(format);
+    return moment(date.slice(0, 6) + days, currentFormat).format(format);
   };
 
   /**
