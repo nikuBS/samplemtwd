@@ -30,6 +30,11 @@ import MyTFarePaymentHistory from './controllers/history/myt-fare.payment.histor
 import MyTFareBillHistory from './controllers/history/myt-fare.bill-history.controller';
 import MyTFareOverpayRefund from './controllers/history/myt-fare.overpay-refund.controller';
 
+import MyTFareHistory from './controllers/history/myt-fare.history.controller';
+import MyTFarePaymentHistory from './controllers/history/myt-fare.payment.history.controller';
+import MyTFareBillHistory from './controllers/history/myt-fare.bill-history.controller';
+import MyTFareOverpayRefund from './controllers/history/myt-fare.overpay-refund.controller';
+
 class MytFareRouter extends TwRouter {
   constructor() {
     super();
