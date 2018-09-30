@@ -8,6 +8,7 @@ import MyTDataGift from './controllers/gift/myt-data.gift.controller';
 import MyTDataLimit from './controllers/limit/myt-data.limit.controller';
 import MyTDataCookiz from './controllers/cookiz/myt-data.cookiz.controller';
 import MyTDataRechargeHistory from './controllers/recharge/myt-data.recharge.history.controller';
+import MyTDataFamily from './controllers/family/myt-data.family.controller';
 
 class MytDataRouter extends TwRouter {
   constructor() {
@@ -20,6 +21,7 @@ class MytDataRouter extends TwRouter {
     this.controllers.push({ url: '/ting(/:page)?', controller: new MyTDataTing() });
     this.controllers.push({ url: '/limit(/:page)?', controller: new MyTDataLimit() });
     this.controllers.push({ url: '/cookiz(/:page)?', controller: new MyTDataCookiz() });
+    this.controllers.push({ url: '/family(/:page)?', controller: new MyTDataFamily() });
     this.controllers.push({ url: '/recharge/coupon(/:page)?', controller: new MyTDataRechargeCoupon() });
   }
 }
