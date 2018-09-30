@@ -148,8 +148,8 @@ Tw.POPUP_TPL = {
   ]
 };
 
-Tw.MYT_DATA_TPL = {
-  SUBMAIN: {
+Tw.MYT_TPL = {
+  DATA_SUBMAIN: {
     SP_TEMP: '<br> ↓ <br>',
     MORE_LINE_TEMP: '<li data-svc-mgmt-num="{{svcMgmtNum}}"><button>' +
       '<div class="lineinfo-user"><span class="info-title">{{nickNm}}' +
@@ -161,6 +161,21 @@ Tw.MYT_DATA_TPL = {
       '<span class="info-title">{{data.data}}' +
       '<span class="unit ml4">{{data.unit}}</span>' +
       '</span><span class="ico"></span></div></button></li>'
+  },
+  FARE_SUBMAIN: {
+    MORE_LINE_TEMP: '<li data-svc-mgmt-num="{{svcMgmtNum}}"data-name="{{nickNm}}" data-num="{{svcNum}}">' +
+      '<button><div class="lineinfo-user d-table"><div class="ico"><i></i></div><div class="cont">' +
+      '{{#if !data.merge}}' +
+      '<span class="ico"></span>' +
+      '{{/if}}' +
+      '<span class="info-title">{{nickNm}}'+
+      '{{ if (data.merge) { }}' +
+      '<span class="badge badge-merge"><span class="blind">통합</span></span>' +
+      '{{ } }}' +
+      '</span>' +
+      '<span class="info-sub">{{= data.svcNum }}</span></div></div><div class="lineinfo-data">' +
+      '<span class="info-title">{{= data.money }} 원</span><span class="ico"></span></div>' +
+      '</button></li>'
   }
 };
 
@@ -171,4 +186,4 @@ Tw.MYT_DATA_CHARGE_TYPE_LIST = [
   {'value':'팅/쿠키즈/안심요금'},
   {'value':'팅 요금 선물'},
   {'value':'데이터 음성 리필'}
-]
+];
