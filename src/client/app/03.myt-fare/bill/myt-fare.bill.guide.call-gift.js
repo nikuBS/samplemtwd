@@ -113,8 +113,10 @@ Tw.MyTFareBillGuideCallGift.prototype = {
   },
 
   _svcToTimeObj: function(str) {
-    var total_s_val = this._toSecond(str);
-    return this._toHHMMSS(total_s_val);
+    // var total_s_val = this._toSecond(str);
+    // return this._toHHMMSS(total_s_val);
+
+    return this._toHHMMSS(str);
   },
   //--------------------------------------------------------------------------[COM]
   _toSecond: function(str) {
@@ -128,7 +130,10 @@ Tw.MyTFareBillGuideCallGift.prototype = {
     return total_s_val
   },
   _toHHMMSS: function(num) {
+    console.info('[초]', num);
     var myNum = parseInt(num, 10);
+    console.info('[초 변환]', myNum);
+
     var hour = Math.floor(myNum / 3600);
     var minute = Math.floor( (myNum - (hour * 3600)) / 60 );
     var second = myNum - (hour * 3600) - (minute * 60);

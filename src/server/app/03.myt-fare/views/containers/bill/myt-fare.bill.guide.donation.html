@@ -7,6 +7,28 @@
 <% include ../../components/start.component.html %>
 <% include ../../components/javascript.component.html %>
 
+
+<script id="fe-entryTplList" type="text/x-handlebars-template">
+    {{!-- 주석 : 기부금/후원금 리스트 --}}
+    {{# each resData as |rootItem rootIndex|}}
+    <li>
+        <div class="lineinfo-user">
+        <span class="info-title">{{rootItem.sponCoNmInfo}}</span>
+        <span class="info-sub">{{rootItem.billTcDt}}</span>
+        </div>
+        <div class="lineinfo-data">
+        <span class="info-title"><span class="num ff-tg-black">{{rootItem.sponAmt}}</span><span class="ff-tg-medium">원</span></span>
+        </div>
+    </li>
+    {{/each}}
+</script>
+
+<script id="fe-entryTpl" type="text/x-handlebars-template">
+    {{!-- 주석 : 기부금/후원금 --}}
+    <p class="tit">{{resData.startDt}} ~ {{resData.endDt}}</p>
+    <p class="data"><em>{{resData.totalNum}}</em><span>원</span></p>
+</script>
+
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
     <ul>
@@ -37,20 +59,28 @@
                     <div class="widget">
                         <div class="widget-box tube">
                             <ul class="tube-list three" role="radiogroup">
-                                <li role="radio" aria-checked="false"><input type="radio" name="senddata" title="전일">전일</li>
-                                <li role="radio" aria-checked="false"><input type="radio" name="senddata" title="1주일">1주일</li>
-                                <li role="radio" aria-checked="false"><input type="radio" name="senddata" title="3주일">3주일</li>
-                                <li role="radio" aria-checked="false"><input type="radio" name="senddata" title="1개월">1개월</li>
-                                <li role="radio" aria-checked="false"><input type="radio" name="senddata" title="3개월">3개월</li>
-                                <li class="checked" role="radio" aria-checked="true"><input type="radio" name="senddata" checked title="6개월">6개월</li>
+                                <li class="" role="radio" aria-checked="false" data-target="dateBtn" data-value="0" ><input type="radio" name="senddata" title="전일">전일</li>
+                                <li class="" role="radio" aria-checked="false" data-target="dateBtn" data-value="1" ><input type="radio" name="senddata" title="1주일">1주일</li>
+                                <li class="" role="radio" aria-checked="false" data-target="dateBtn" data-value="2" ><input type="radio" name="senddata" title="3주일">3주일</li>
+                                <li class="" role="radio" aria-checked="false" data-target="dateBtn" data-value="3" ><input type="radio" name="senddata" title="1개월">1개월</li>
+                                <li class="" role="radio" aria-checked="false" data-target="dateBtn" data-value="4" ><input type="radio" name="senddata" title="3개월">3개월</li>
+                                <li class="" role="radio" aria-checked="false" data-target="dateBtn" data-value="5" ><input type="radio" name="senddata" title="6개월">6개월</li>
                             </ul>
                         </div>
                     </div>
 
-                    <div class="data-result mt20">
-                        <p class="tit">2018.06.01 ~ 2018.06.23</p>
-                        <p class="data"><em>144,750</em><span>원</span></p>
+                    <div class="date-select" data-target="dateSelect">
+                        <span>원하시는 기간을 선택해주세요.</span>
                     </div>
+
+                    <div class="data-result mt20" data-target="dataResult" style="display: none;" >
+
+                    </div>
+
+                    <div class="no-data" data-target="noData" style="display: none;" >
+                        <span>이용내역이 없습니다.</span>
+                    </div>
+
                 </div>
                 <!--// .cont-box -->
 
@@ -58,37 +88,11 @@
 
                 <!-- .cont-box -->
                 <div class="cont-box nogaps">
-                    <ul class="list-comp-lineinfo type3 no-bt">
-                        <li>
-                            <div class="lineinfo-user">
-                                <span class="info-title">사회복지공동모금회 연중이웃돕기</span>
-                                <span class="info-sub">2018.06.28</span>
-                            </div>
-                            <div class="lineinfo-data">
-                                <span class="info-title"><span class="num ff-tg-black">1,110,000,148</span><span class="ff-tg-medium">원</span></span>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="lineinfo-user">
-                                <span class="info-title">사회복지공동모금회</span>
-                                <span class="info-sub">2018.06.28</span>
-                            </div>
-                            <div class="lineinfo-data">
-                                <span class="info-title"><span class="num ff-tg-black">21,148</span><span class="ff-tg-medium">원</span></span>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="lineinfo-user">
-                                <span class="info-title">연중이웃돕기</span>
-                                <span class="info-sub">2018.06.28</span>
-                            </div>
-                            <div class="lineinfo-data">
-                                <span class="info-title"><span class="num ff-tg-black">4,148</span><span class="ff-tg-medium">원</span></span>
-                            </div>
-                        </li>
+                    <ul class="list-comp-lineinfo type3 no-bt" data-target="detailList" >
+
                     </ul>
-                    <div class="bt-more">
-                        <button>더보기</button>
+                    <div class="bt-more" data-target="addBtnArea" style="display: none;">
+                        <button data-target="addBtn">더보기 <span data-target="curNum"></span></button>
                     </div>
                 </div>
                 <!--// .cont-box -->
@@ -104,7 +108,7 @@
         </div>
         <!--// .container-wrap -->
         <!-- .popup-closeBtn -->
-        <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button>
+        <button class="popup-closeBtn" data-target="popupCloseBt"><span class="blind">팝업 페이지 닫기</span></button>
         <!--// .popup-closeBtn -->
     </div>
     <!--// .popup hbs -->
