@@ -55,21 +55,30 @@ class ProductDetail extends TwViewController {
    * @private
    */
   private _parseBasicInfo (basicInfo): any {
-    const settingBtnList: any = [],
-      linkBtnList: any = [];
+    const joinBtnList: any = [],
+      settingBtnList: any = [],
+      termBtnList: any = [];
 
     basicInfo.linkBtnList.forEach((item) => {
-      if (item.btnTypCd !== 'SE') {
-        linkBtnList.push(item);
+      if (item.btnTypCd === 'SC') {
+        joinBtnList.push(item);
         return true;
       }
 
-      settingBtnList.push(item);
+      if (item.btnTypCd === 'SE') {
+        settingBtnList.push(item);
+        return true;
+      }
+
+      termBtnList.push(item);
     });
 
     return Object.assign(basicInfo, {
-      linkBtnList: settingBtnList.length < 2 ? basicInfo.linkBtnList : linkBtnList,
-      settingBtnList: settingBtnList.length > 1 ? settingBtnList : []
+      linkBtnList: {
+        join: joinBtnList,
+        setting: settingBtnList,
+        terminate: termBtnList
+      }
     });
   }
 

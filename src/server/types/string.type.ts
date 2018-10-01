@@ -81,3 +81,10 @@ export enum MYT_DATA_CHARGE_TYPES {
   FIXED = '자동',
   CANCLE = '취소'
 }
+
+export enum PRODUCT_INFINITY_BENEFIT {
+  NA00006114 = 'T 로밍 Onepass 월 1회/ 1개월 + 마티나 라운지 이용권 1회/ 3개월',
+  NA00006115 = '무료영화예매 2회 / 1개월',
+  NA00006116 = '스마트 워치 월정액 100% 할인',
+  NA00006117 = '인피니티 클럽 이용료 100%할인'
+}
