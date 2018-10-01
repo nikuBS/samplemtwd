@@ -1,0 +1,80 @@
+<!-- .popup hbs -->
+<div class="popup-page nobg tw-popup fixed-btn"><!-- .no-btn 하단에 버튼이 없을 경우 -->
+    <!-- #header -->
+    <div class="header-wrap">
+        <div class="page-header">
+            <div class="header-ti">
+                <h1>회선 등록</h1>
+            </div>
+        </div>
+    </div>
+    <!--// #header -->
+    <!-- .container-wrap -->
+    <div class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <!-- .cont-box -->
+            <div class="cont-box">
+                <div class="box-suggest">
+                    <div class="suggest-info">
+                        {{#if new_customer}}
+                        <p class="suggest-ti">T world의 회원이 되신 것을 <em class="tx-bold">환영합니다.</em></p>
+                        {{else}}
+                        <p class="suggest-ti">등록되지 않은 회선이<br/><em class="tx-bold">{{list_length}}개</em> 있습니다.</p>
+                        {{/if}}
+                        <ul class="suggest-list mt32">
+                            <li>아래 가입 회선 중, T world에서 이용하실 회선을 선택해주세요.</li>
+                            <li>선택하신 회선은 ‘회원정보 > 회선관리’ 메뉴에서 보실 수 있습니다.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!--// .cont-box -->
+
+            <div class="ti-caption-gray"><!-- 2018-09-19 클래스명 변경 -->
+                <h3 class="tit">이용할 회선 선택</h3>
+            </div>
+            <!-- .cont-box -->
+            <div class="cont-box nogaps">
+                <div class="list-comp-input">
+                    <div class="widget">
+                        <div class="widget-box check">
+                            <ul class="select-list" role="group">
+                                <li class="checkbox all type01-big" role="checkbox" aria-checked="false"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" --> <!-- .all : 전체선택용 스타일 -->
+                                    <input id="fe-check-all" type="checkbox" name="checkbox" value="" title="값1" aria-labelledby="aria-comp-checkbox1" /><!-- 체크상태일 경우 checked="checked" -->
+                                    <div class="comp-list-layout" id="aria-comp-checkbox1" aria-hidden="true">
+                                        <p class="layout-text">
+                                            <span class="mtext">전체 회선 선택</span>
+                                        </p>
+                                    </div>
+                                </li>
+                                {{#each data}}
+                                <li class="checkbox type01-big fe-item {{#if isRegister}}checked none{{/if}}" role="checkbox" aria-checked="{{isRegister}}" data-svcMgmtNum="{{svcMgmtNum}}" data-showName="{{showName}}" data-svcNum="{{svcNum}}"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                                    <input type="checkbox" class="fe-check-child {{#if isRegister}}none{{/if}}" name="checkbox" value="" title="값1" aria-labelledby="aria-comp-checkbox3" {{#if isRegister}}checked{{/if}}/><!-- 체크상태일 경우 checked="checked" -->
+                                    <div class="comp-list-layout" id="aria-comp-checkbox3" aria-hidden="true">
+                                        <p class="layout-text">
+                                            <span class="mtext">{{showName}}</span>
+                                            <span class="stext"><span class="info">{{#if showAddr}}{{addr}}{{else}}{{svcNum}}{{/if}}</span>{{#if showPet}}<span class="info">{{eqpMdlNm}}</span>{{/if}}</span>
+                                        </p>
+                                    </div>
+                                </li>
+                                {{/each}}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--// .cont-box -->
+            <ul class="bt-slice full">
+                <li class="bt-red1">
+                    <button id="fe-bt-complete" disabled>선택 회선 등록</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!--// .container-wrap -->
+    <!-- .popup-closeBtn -->
+    <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button>
+    <!--// .popup-closeBtn -->
+</div>
+<!--// .popup hbs -->

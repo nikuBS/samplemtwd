@@ -50,7 +50,7 @@ Tw.PopupService.prototype = {
       closeCallback: closeCallback
     });
 
-    if(Tw.FormatHelper.isEmpty(hashName)) {
+    if ( Tw.FormatHelper.isEmpty(hashName) ) {
       hashName = '#popup' + this._prevHashList.length;
     } else {
       hashName = '#' + hashName + '_P';
