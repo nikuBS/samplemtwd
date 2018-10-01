@@ -18,7 +18,7 @@
 <!--// #skip_navigation -->
 <div class="wrap">
     <!-- #header -->
-    <%- include('../../../common/views/components/header.component.html', { title: '나의 요금', svcInfo: data.svcInfo, line: false }); %>
+    <%- include('../../../common/views/components/header.component.html', { title: '나의 요금', svcInfo: data.svcInfo, line: true }); %>
     <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap" data-id="wrapper">
@@ -61,49 +61,15 @@
             <%- include('../components/submain/myt-fare.submain.contribution.html', data) %>
             <% } %>
             <hr class="cont-sp type1" aria-hidden="true"/>
+            <% if (data.otherLines.length > 0) { %>
             <!-- .cont-box -->
             <div class="cont-box nogaps" data-id="other-line">
                 <p class="list-comp-title">다른 회선 요금 조회</p>
                 <ul class="list-comp-lineinfo">
-                    <li>
-                        <button>
-                            <div class="lineinfo-user d-table">
-                                <div class="ico"><i></i></div>
-                                <div class="cont">
-                                    <span class="info-title">갤럭시 노트9
-                                        <span class="badge badge-merge"><span class="blind">통합</span></span>
-                                    </span>
-                                    <span class="info-sub">010-46**-10**</span>
-                                </div>
-                            </div>
-                            <div class="lineinfo-data">
-                                <span class="info-title">23,367 원</span>
-                                <span class="ico"></span>
-                            </div>
-                        </button>
-                    </li>
-                    <li>
-                        <button>
-                            <div class="lineinfo-user d-table">
-                                <div class="ico"><i></i></div>
-                                <div class="cont"><span class="ico"></span>
-                                    <span class="info-title">갤럭시 S7</span>
-                                    <span class="info-sub">010-46**-10**</span>
-                                </div>
-                            </div>
-                            <div class="lineinfo-data">
-                                <span class="info-title">35,647 원</span>
-                                <span class="ico"></span>
-                            </div>
-                        </button>
-                    </li>
                 </ul>
-                <div class="bt-more">
-                    <button>더보기</button>
-                </div>
             </div>
             <!-- .cont-box -->
-
+            <% } %>
             <div class="cont-box nogaps noborder">
                 <ul class="link-long-list nobg">
                     <li>

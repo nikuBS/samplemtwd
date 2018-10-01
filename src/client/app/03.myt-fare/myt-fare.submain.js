@@ -13,6 +13,7 @@ Tw.MyTFareSubMain = function (params) {
   this._historyService.init('hash');
   this._requestCount = -1;
   this._resTimerID = null;
+  this._svcMgmtNumList = [];
   this.data = params.data;
   this.loadingView(true);
   this._rendered();
@@ -72,8 +73,11 @@ Tw.MyTFareSubMain.prototype = {
     }
     // 최근요금내역
     this.$billChart = this.$container.find('[data-id=bill-chart]');
-    // 다른회선 요금 조회
-    this.$otherLines = this.$container.find('[data-id=other-line]');
+    if ( this.data.otherLines.length > 0 ) {
+      // 다른회선 요금 조회
+      this.$otherLines = this.$container.find('[data-id=other-line]');
+      this.$moreTempleate = Handlebars.compile(Tw.MYT_TPL.FARE_SUBMAIN.MORE_LINE_TEMP);
+    }
     // 세금계산서
     if ( this.data.taxInvoice ) {
       this.$taxInv = this.$container.find('[data-id=taxinv]');
@@ -142,8 +146,20 @@ Tw.MyTFareSubMain.prototype = {
     });
     // chart 생성 후 event bind 처리
     this.$billChart.on('click', 'button.chart_link', $.proxy(this._onClickedBillReport, this));
-
   },
+
+  // 다른회선내역 리스트
+  _initOtherLineList: function (list) {
+    if ( list.length > 0 ) {
+      for ( var i = 0; i < list.length; i++ ) {
+        var $ul = this.$otherLines.find('ul');
+        var result = this.$moreTempleate(list[i]);
+        $ul.append(result);
+      }
+    }
+    setTimeout($.proxy(this._realTimeBillRequest, this), 300);
+  },
+
   _initialize: function () {
     // 1. 최근요금내역
     // 2. 다른회선요금조회
@@ -202,16 +218,18 @@ Tw.MyTFareSubMain.prototype = {
 
   // 다른회선청구요금 조회-1
   _otherLineBills: function () {
-    // TODO: 서버쪽 과 기획쪽 확인 후 수정 필요
-    var invDt = this.data.claim.invDt;
+    // TODO: 클라이언트에서 header 값 내용 전달 시 반영안되는 문제 확인필요!!!
     var otherLineLength = this.data.otherLines.length;
-    if ( false/*otherLineLength > 0*/ ) {
+    if ( otherLineLength > 0 ) {
       var requestCommand = [];
       for ( var idx = 0; idx < otherLineLength; idx++ ) {
+        this._svcMgmtNumList.push(this.data.otherLines[idx].svcMgmtNum);
         requestCommand.push({
           command: Tw.API_CMD.BFF_05_0036,
-          params: { invDt: invDt },
-          headers: { svcMgmtNum: this.data.otherLines[idx].svcMgmtNum }
+          // 서버 명세가 변경됨 svcMgmtNum -> T-svcMgmtNum
+          headers: {
+            'T-svcMgmtNum': this.data.otherLines[idx].svcMgmtNum
+          }
         });
       }
       this._apiService.requestArray(requestCommand)
@@ -225,10 +243,34 @@ Tw.MyTFareSubMain.prototype = {
 
   // 다른회선청구요금 조회-2
   _responseOtherLineBills: function () {
+    var combinList = [];
+    var individualList = [];
     if ( arguments.length > 0 ) {
-      // TODO: 서버, 기획쪽 확인 후 작업필요
+      for ( var idx = 0; idx < arguments.length; idx++ ) {
+        if ( arguments[idx].code === Tw.API_CODE.CODE_00 ) {
+          var item = arguments[idx].result;
+          // deduckTotInvAmt 값이 ' - '로 되어있어 더한다.
+          var amt = parseInt(item.useAmtTot, 10) + parseInt(item.deduckTotInvAmt, 10);
+          var isCombine = (item.paidAmtMonthSvcCnt > 1); // 통합청구여부
+          var repSvc = (item.repSvcYn === 'Y'); // 대표청구여부
+          var selectLine = this.__selectOtherLine(this._svcMgmtNumList[idx]);
+          var data = _.extend({
+            combine: isCombine,
+            repSvc: repSvc,
+            amt: Tw.FormatHelper.addComma(amt.toString())
+          }, selectLine);
+          if ( isCombine ) {
+            combinList.push(data);
+          }
+          else {
+            individualList.push(data);
+          }
+        }
+      }
     }
-    setTimeout($.proxy(this._realTimeBillRequest, this), 300);
+    this._svcMgmtNumList = [];
+    // 통합청구리스트, 개별청구리스트
+    this._initOtherLineList(combinList.concat(individualList));
   },
 
 
@@ -333,7 +375,6 @@ Tw.MyTFareSubMain.prototype = {
 
   },
 
-
   // 요금안내서 이동(chart)
   _onClickedBillReport: function (event) {
     var $target = $(event.target);
@@ -362,8 +403,12 @@ Tw.MyTFareSubMain.prototype = {
     this._requestCount = -1;
     this._resTimerID = null;
   },
-
-  __getPatternMonth: function (value) {
-    return value.slice(value.length - 2, value.length) + Tw.PERIOD_UNIT.MONTH;
+  __selectOtherLine: function (number) {
+    var select = _.find(this.data.otherLines, function(item) {
+      if(item.svcMgmtNum === number) {
+        return item;
+      }
+    });
+    return select;
   }
 };

@@ -13,12 +13,14 @@ import MyTFareBillSetChange from './controllers/bill/myt-fare.bill.set.change.co
 import MyTFareBillGuideCallGift from './controllers/bill/myt-fare.bill.guide.call-gift.controllers';
 import MyTFareBillGuideRoaming from './controllers/bill/myt-fare.bill.guide.roaming.controllers';
 import MyTFareBillGuideDonation from './controllers/bill/myt-fare.bill.guide.donation.controllers';
+import MyTFareSubMainNonPayment from './controllers/submain/myt-fare.submain.non-paymt';
 
 
 class MytFareRouter extends TwRouter {
   constructor() {
     super();
     this.controllers.push({ url: '/', controller: new MyTFareSubMain() });
+    this.controllers.push({ url: '/nonpayment', controller: new MyTFareSubMainNonPayment() });
     this.controllers.push({ url: '/bill/guide', controller: new MyTFareBillGuide() });
     this.controllers.push({ url: '/bill/guide/call-gift', controller: new MyTFareBillGuideCallGift() });
     this.controllers.push({ url: '/bill/guide/roaming', controller: new MyTFareBillGuideRoaming() });
