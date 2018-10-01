@@ -16,10 +16,20 @@ Tw.POPUP_TITLE = {
 
 Tw.POPUP_CONTENTS = {
   MORE_DETAIL: '더 알아보기',
-  REFILL_COUPON_FAMILY: 'SKT 결합상품으로 묶으시면 리필쿠폰 선물이 가능합니다.',
-
+  REFILL_COUPON_FAMILY: 'SKT 결합상품으로 묶으시면 리필쿠폰 선물이 가능합니다.'
 };
 
+Tw.CHART_TYPE = {
+  BAR: 'bar',
+  BAR_1: 'bar1',
+  BAR_2: 'bar2'
+};
+
+Tw.CHART_UNIT = {
+  WON:'원',
+  GB: 'GB',
+  TIME: 'time'
+};
 
 Tw.PERIOD_UNIT = {
   DAYS: '일',
@@ -57,7 +67,7 @@ Tw.MYT_FARE_BILL_GUIDE = {
 };
 
 Tw.ALERT_MSG_COMMON = {
-
+  SERVER_ERROR: '통신 오류입니다. 잠시 후 다시 시도해 주세요.'
 };
 
 Tw.ALERT_MSG_HOME = {

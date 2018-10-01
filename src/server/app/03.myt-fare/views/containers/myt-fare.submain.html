@@ -57,7 +57,9 @@
                 </div>
             </div>
             <!--// .cont-box -->
-
+            <% if (data.taxInvoice || data.contribution) { %>
+            <%- include('../components/submain/myt-fare.submain.contribution.html', data) %>
+            <% } %>
             <hr class="cont-sp type1" aria-hidden="true"/>
             <!-- .cont-box -->
             <div class="cont-box nogaps" data-id="other-line">
