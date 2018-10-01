@@ -142,7 +142,8 @@ class ApiService {
       .switchMap((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
           result = resp.result;
-          return this.loginService.setSvcInfo({ mbrNm: resp.result.mbrNm });
+          console.log(result);
+          return this.loginService.setSvcInfo({ mbrNm: resp.result.mbrNm, noticeType: resp.result.noticeTypCd });
         } else {
           throw resp;
         }

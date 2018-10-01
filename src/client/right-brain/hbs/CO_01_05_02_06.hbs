@@ -39,7 +39,7 @@
                                 <ul class="select-list" role="group">
                                     <li>
                                         <div class="checkbox type01 {{#if data.agr201Yn}}checked{{/if}}" role="checkbox" aria-checked="{{data.agr201Yn}}"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-                                            <input type="checkbox" class="fe-child-check" name="checkbox" value="{{data.agr201Yn}}" title="값1" aria-labelledby="aria-comp-checkbox1" checked="{{data.agr201Yn}}" disabled="!{{data.agr201Yn}}"/><!-- 체크상태일 경우 checked="checked" -->
+                                            <input type="checkbox" class="fe-check-child" name="checkbox" value="{{data.agr201Yn}}" title="값1" aria-labelledby="aria-comp-checkbox1" {{#if data.agr201Yn}}checked{{/if}} disabled="!{{data.agr201Yn}}"/><!-- 체크상태일 경우 checked="checked" -->
                                             <div class="comp-list-layout" id="aria-comp-checkbox1" aria-hidden="true">
                                                 <p class="layout-text">
                                                     <span class="mtext">고객 혜택 제공을 위한 개인정보 수집·이용 동의</span>
@@ -50,7 +50,7 @@
                                     </li>
                                     <li>
                                         <div class="checkbox type01 {{#if data.agr203Yn}}checked{{/if}}" role="checkbox" aria-checked="{{data.agr203Yn}}"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                            <input type="checkbox" class="fe-child-check" name="checkbox" value="{{data.agr203Yn}}" title="값2" aria-labelledby="aria-comp-checkbox2" checked="{{data.agr203Yn}}" disabled="!{{data.agr201Yn}}"/><!-- 체크상태일 경우 checked="false" -->
+                                            <input type="checkbox" class="fe-check-child" name="checkbox" value="{{data.agr203Yn}}" title="값2" aria-labelledby="aria-comp-checkbox2" {{#if data.agr203Yn}}checked{{/if}} disabled="!{{data.agr201Yn}}"/><!-- 체크상태일 경우 checked="false" -->
                                             <div class="comp-list-layout" id="aria-comp-checkbox2" aria-hidden="true">
                                                 <p class="layout-text">
                                                     <span class="mtext">광고성 정보 수신 동의 선택</span>

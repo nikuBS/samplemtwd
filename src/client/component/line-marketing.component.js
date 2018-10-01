@@ -41,7 +41,7 @@ Tw.LineMarketingComponent.prototype = {
     }, $.proxy(this._onOpenMarketingOfferPopup, this), $.proxy(this._closeOpenMarketingOfferPopup, this), 'marketing');
   },
   _onOpenMarketingOfferPopup: function ($layer) {
-    this.$childChecks = $layer.find('.fe-child-check');
+    this.$childChecks = $layer.find('.fe-check-child');
     this.$btnAgree = $layer.find('#fe-bt-complete');
 
     this.$childChecks.on('change', $.proxy(this._onClickChildCheck, this));
@@ -68,7 +68,7 @@ Tw.LineMarketingComponent.prototype = {
   },
   _closeOpenMarketingOfferPopup: function () {
     if ( this._complete ) {
-      this._openCompleteMarketingPopup();
+      // this._openCompleteMarketingPopup();
     }
   },
   _successAgreeMarketing: function (resp) {

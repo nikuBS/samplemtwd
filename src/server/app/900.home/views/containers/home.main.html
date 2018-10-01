@@ -14,7 +14,7 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div id="home" class="wrap" data-layerType="<%= layerType %>">
+<div id="home" class="wrap" data-layerType="<%= noticeType %>">
     <h1 class="blind">SKT</h1>
     <%- include('../../../../common/views/components/header.component.html', { title: 'home', svcInfo: svcInfo, line: true }); %>
     <!-- #header
@@ -548,12 +548,9 @@
 <% } %>
 <% } %>
 <% include ../components/javascript.component.html %>
-<script src="<%= CDN %>/js/<%= authold %>"></script>
 <script>
   $(document).ready(function () {
-    var lineMarketingLayer = new Tw.AuthLineMarketing();
-    var lineRegisterLayer = new Tw.AuthLineRegister(lineMarketingLayer);
-    new Tw.HomeMain($('#home'), lineRegisterLayer);
+    new Tw.HomeMain($('#home'));
   });
 </script>
 <% include ../components/end.component.html %>

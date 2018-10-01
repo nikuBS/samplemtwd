@@ -31,7 +31,7 @@ class HomeMain extends TwViewController {
       usageData: null,
       refillData: null,
       giftData: null,
-      layerType: null
+      noticeType: null
     };
     res.render('home.main.html', data);
   }

@@ -5,6 +5,7 @@ import AuthCertPublicExport from './controllers/cert/auth.cert.public-export.con
 import AuthLine from './controllers/line/auth.line.controller';
 import AuthLineEdit from './controllers/line/auth.line.edit.controller';
 import AuthLineCopRegister from './controllers/line/auth.line.cop-register.controller';
+import AuthLineEmptyRegister from './controllers/line/auth.line.empty-register.controller';
 
 class AuthRouter extends TwRouter {
   constructor() {
@@ -17,6 +18,7 @@ class AuthRouter extends TwRouter {
     this.controllers.push({ url: '/line', controller: new AuthLine() });
     this.controllers.push({ url: '/line/edit', controller: new AuthLineEdit() });
     this.controllers.push({ url: '/line/register/corporation', controller: new AuthLineCopRegister() });
+    this.controllers.push({ url: '/line/register/empty', controller: new AuthLineEmptyRegister() });
 
   }
 }

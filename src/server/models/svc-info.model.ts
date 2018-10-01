@@ -16,6 +16,7 @@ export interface ISvcInfo {
   expsSvcCnt: string;       // 등록된 회선수
   mbrNm: string;            // 고객명
   loginType: string;        // 로그인 형태  E: 간편로그인 T: TID 로그인
+  noticeType: string;
 }
 
 export class SvcInfoModel implements ISvcInfo {
@@ -36,6 +37,7 @@ export class SvcInfoModel implements ISvcInfo {
   expsSvcCnt: string = '';
   mbrNm: string = '';
   loginType: string = '';
+  noticeType: string = '';
 
   constructor(object) {
     this.svcMgmtNum = object.svcMgmtNum || this.svcMgmtNum;
@@ -55,5 +57,6 @@ export class SvcInfoModel implements ISvcInfo {
     this.expsSvcCnt = object.expsSvcCnt || this.expsSvcCnt;
     this.mbrNm = object.mbrNm || this.mbrNm;
     this.loginType = object.loginType || this.loginType;
+    this.noticeType = object.noticeType || this.noticeType;
   }
 }
