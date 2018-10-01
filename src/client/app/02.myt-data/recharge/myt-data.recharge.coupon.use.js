@@ -152,7 +152,9 @@ Tw.MyTDataRechargeCouponUse.prototype = {
         this._historyService.goLoad('/myt/data/recharge/coupon/complete?category=voice');
         break;
       case 'gift':
-        this._historyService.goLoad('/myt/data/recharge/coupon/complete?category=gift');
+        var number = Tw.FormatHelper.getFormattedPhoneNumber(this.$numberInput.val());
+        this._historyService.goLoad(
+          '/myt/data/recharge/coupon/complete?category=gift&number=' + number);
         break;
       default:
         break;

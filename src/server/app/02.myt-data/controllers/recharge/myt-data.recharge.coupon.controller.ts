@@ -26,6 +26,7 @@ interface Option {
   copnDtlClNm: string;
   ofrRt: string;
   qttText?: string;
+  isTplan?: boolean;
 }
 
 interface Product {
@@ -36,6 +37,19 @@ interface Product {
 }
 
 export default class MyTDataRechargeCoupon extends TwViewController {
+  private planType: Map<string, number> = new Map([
+    ['NA00004098', 0],
+    ['NA00004099', 0],
+    ['NA00004100', 0],
+    ['NA00004101', 0],
+    ['NA00004145', 0],
+    ['NA00004102', 0],
+    ['NA00004705', 0],
+    ['NA00005957', 15],
+    ['NA00005958', 20],
+    ['NA00006155', 15]
+  ]);
+
   constructor() {
     super();
   }
@@ -46,7 +60,7 @@ export default class MyTDataRechargeCoupon extends TwViewController {
     switch (page) {
       case 'complete':
         const category = req.query.category;
-        this.renderCouponComplete(res, category);
+        this.renderCouponComplete(req, res, svcInfo, category);
         break;
       case 'use':
         const couponNo = req.query.no;
@@ -74,7 +88,7 @@ export default class MyTDataRechargeCoupon extends TwViewController {
             (productInfo) => {
               if (productInfo.code === API_CODE.CODE_00) {
                 const purifiedOptions =
-                  this.purifyCouponOptions(resp.result.option, productInfo.result);
+                  this.purifyCouponOptions(resp.result.option, productInfo.result, svcInfo.prodId);
                 res.render('recharge/myt-data.recharge.coupon-use.html', {
                   no: no,
                   name: name,
@@ -99,7 +113,7 @@ export default class MyTDataRechargeCoupon extends TwViewController {
     );
   }
 
-  private renderCouponComplete(res: Response, category: string): void {
+  private renderCouponComplete(req: Request, res: Response, svcInfo: any, category: string): void {
     switch (category) {
       case 'data':
         res.render('recharge/myt-data.recharge.coupon-complete-data.html');
@@ -108,8 +122,22 @@ export default class MyTDataRechargeCoupon extends TwViewController {
         res.render('recharge/myt-data.recharge.coupon-complete-voice.html');
         break;
       case 'gift':
-        // TODO: display gift detail
-        res.render('recharge/myt-data.recharge.coupon-complete-gift.html');
+        const number = req.query.number;
+        this.getUsableCouponList().subscribe(
+          (resp) => {
+            if (resp.code === API_CODE.CODE_00) {
+              res.render('recharge/myt-data.recharge.coupon-complete-gift.html', {
+                coupons: resp.result.length,
+                number: number
+              });
+            } else {
+              this.showError(res, svcInfo, '리필 쿠폰 사용', resp.code, resp.msg);
+            }
+          },
+          (err) => {
+            this.showError(res, svcInfo, '리필 쿠폰 사용', err.code, err.msg);
+          }
+        );
         break;
       default:
         break;
@@ -150,8 +178,20 @@ export default class MyTDataRechargeCoupon extends TwViewController {
     });
   }
 
-  private purifyCouponOptions(options: Array<Option>, productInfo: Product): Array<Option> {
+  private purifyCouponOptions(options: Array<Option>, productInfo: Product,
+                              plan: string): Array<Option> {
     return options.map((option) => {
+      if (this.planType.has(plan)) {
+        if (this.planType.get(plan) === 0) {
+          option.qttText = '0';
+          return option;
+        } else if (option.dataVoiceClCd === 'D') {
+          const converted = FormatHelper.convDataFormat(this.planType.get(plan), DATA_UNIT.GB);
+          option.qttText = converted.data + ' ' + converted.unit;
+          option.isTplan = true;
+          return option;
+        }
+      }
       if (option.dataVoiceClCd === 'D') {
         const converted = FormatHelper.convDataFormat(productInfo.basOfrDataQtyCtt, DATA_UNIT.GB);
         option.qttText = converted.data + ' ' + converted.unit;
