@@ -9,7 +9,9 @@ Tw.POPUP_TITLE = {
   SELECT_BANK: '은행선택',
   SELECT: '선택',
   SELECT_PAYMENT_OPTION: '납부 방법 선택',
-  SELECT_CARD_TYPE: '일시불',
+  SELECT_CARD_TYPE: '납부형태 선택',
+  SELECT_POINT: '납부포인트 선택',
+  SELECT_ACCOUNT: '계좌번호 선택',
   NOT_FAMILY: '리필쿠폰 선물 가능한 가족이 아닙니다.',
   SELECT_CHARGE_TYPE: '충전/선물 유형'
 };
@@ -107,4 +109,22 @@ Tw.ALERT_MSG_AUTH = {
   L06: '이미 다른 계정에 등록된 회선 입니다.',
   L07: '이미 등록된 회선 입니다.'
 
+};
+
+Tw.URL_PATH = {
+  OKCASHBAG: 'https://member.okcashbag.com/mb/ocb/searchPass/searchPass/MOCB/687474703A2F2F6d2e6f6b636173686261672e636f6d2F696e6465782e6d6f63623F6c6f67696e3D59',
+  BROADBAND: 'http://www.skbroadband.com',
+  COP_SERVICE: 'http://b2b.tworld.co.kr/cs/counsel/certServiceInfo.bc',
+  CONTETNS_YOUTUBE_HELP_URL: 'https://support.google.com/youtube/contact/commerce_contact?hl=ko&cfsi=subs_red_2',
+  CHOCOLATE_MALL: 'http://tmembership.tworld.co.kr/web/html/chocolate/main/ChocoHomeMain.jsp?sel=1',
+  '11ST': 'http://www.11st.co.kr/html/main.html',
+  DATA_FREE: 'http://www.sktmembership.co.kr/web/html/data/dataFree.jsp',
+  MYT_BILL_HISTORY_MICRO: '/myt/bill/history/micro',
+  MYT_PAYPASS_CONFIRM: '/myt/bill/history/micro/password',
+  MYT_PAYPASS_INFO: '',
+  MYT_PAYPASS_SET: '/myt/bill/history/micro/password/set',
+  MYT_PAY_MICRO_LIMIT_CHANGE: '/myt/bill/history/micro/limit/change',
+  MYT_PAY_MICRO_LIMIT_DETAIL: '/myt/bill/history/micro/limit',
+  MYT_PAY_CONTENTS_LIMIT_CHANGE: '/myt/bill/history/contents/limit/change',
+  MYT_PAY_CONTENTS_LIMIT_DETAIL: '/myt/bill/history/contents/limit'
 };

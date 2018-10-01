@@ -145,6 +145,14 @@ Tw.POPUP_TPL = {
         {'option': 'hbs-card-type', 'attr': 'id="24"', value: '24개월 할부'}
       ]
     }
+  ],
+  FARE_PAYMENT_POINT_LIST: [
+    {
+      'list': [
+        {'option': 'point-type', 'attr': 'id="10" data-code="CPT"', value: 'OK캐쉬백'},
+        {'option': 'point-type', 'attr': 'id="11" data-code="TPT"', value: 'T포인트'}
+      ]
+    }
   ]
 };
 

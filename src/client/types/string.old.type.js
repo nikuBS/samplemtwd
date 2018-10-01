@@ -779,6 +779,7 @@ Tw.DATE_FORMAT = {
 };
 
 Tw.URL_PATH = {
+  OKCASHBAG: 'https://member.okcashbag.com/mb/ocb/searchPass/searchPass/MOCB/687474703A2F2F6d2e6f6b636173686261672e636f6d2F696e6465782e6d6f63623F6c6f67696e3D59',
   BROADBAND: 'http://www.skbroadband.com',
   COP_SERVICE: 'http://b2b.tworld.co.kr/cs/counsel/certServiceInfo.bc',
   CONTETNS_YOUTUBE_HELP_URL: 'https://support.google.com/youtube/contact/commerce_contact?hl=ko&cfsi=subs_red_2',

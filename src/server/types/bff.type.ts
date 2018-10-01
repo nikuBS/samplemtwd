@@ -92,5 +92,6 @@ export enum MYT_FARE_PAYMENT_TITLE {
   ACCOUNT = '계좌이체',
   CARD = '체크/신용카드',
   OKCASHBAG = 'OK캐쉬백',
-  TPOINT = 'T포인트'
+  TPOINT = 'T포인트',
+  SMS = '입금전용계좌 SMS 신청'
 }

@@ -260,7 +260,7 @@ export const API_CMD = {
   BFF_07_0024: { path: '/core-bill/v1/bill-pay/cardnum-validation', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_07_0025: { path: '/core-bill/v1/bill-pay/settle-pay-card', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_07_0026: { path: '/core-bill/v1/bill-pay/settle-vbs', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
-  BFF_07_0027: { path: '/core-bill/v1/bill-pay/settle-vb-sms/args-0', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_07_0027: { path: '/core-bill/v1/bill-pay/settle-vb-sms', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_07_0028: { path: '/core-bill/v1/bill-pay/avail-point-search', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_07_0029: { path: '/core-bill/v1/bill-pay/pay-ocb-tpoint-proc', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_07_0030: { path: '/core-bill/v1/payment/total-payment', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
@@ -372,6 +372,7 @@ export const API_CMD = {
     server: API_SERVER.BFF,
     bypass: false
   },
+  BFF_07_0087: { path: '/core-bill/v1/ocb-point-pay', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
 
   // CUSTOMER
   BFF_08_0001: { path: '/core-modification/v1/counsel-time-check', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },

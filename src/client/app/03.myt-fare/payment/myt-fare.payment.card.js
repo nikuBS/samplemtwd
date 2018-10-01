@@ -15,6 +15,7 @@ Tw.MyTFarePaymentCard = function (rootEl) {
   this._validation = Tw.ValidationHelper;
   this._historyService = new Tw.HistoryService(rootEl);
 
+  this._historyService.init('hash');
   this._init();
 };
 
@@ -35,6 +36,8 @@ Tw.MyTFarePaymentCard.prototype = {
   },
   _bindEvent: function () {
     this.$container.on('change', '.refund-account-check-btn', $.proxy(this._showAndHideAccount, this));
+    this.$container.on('keyup', '.required-input-field', $.proxy(this._checkIsAbled, this));
+    this.$container.on('click', '.cancel', $.proxy(this._checkIsAbled, this));
     this.$container.on('click', '.fe-refund-info', $.proxy(this._openRefundInfo, this));
     this.$container.on('click', '.fe-select-card-type', $.proxy(this._selectCardType, this));
     this.$container.on('click', '.select-bank', $.proxy(this._selectBank, this));
@@ -68,10 +71,20 @@ Tw.MyTFarePaymentCard.prototype = {
     var $selectedValue = $(event.currentTarget);
     $target.attr('id', $selectedValue.attr('id'));
     $target.text($selectedValue.text());
+
     this._popupService.close();
   },
   _selectBank: function (event) {
-    this._bankList.init(event);
+    this._bankList.init(event, $.proxy(this._checkIsAbled, this));
+  },
+  _checkIsAbled: function () {
+    if (this.$refundBank.attr('id') !== undefined && this.$cardNumber.val() !== '' &&
+      this.$cardY.val() !== '' && this.$cardM.val() !== '' && this.$cardPw.val() !== '' &&
+      this.$refundNumber.val() !== '') {
+      this.$container.find('.fe-check-pay').removeAttr('disabled');
+    } else {
+      this.$container.find('.fe-check-pay').attr('disabled', 'disabled');
+    }
   },
   _checkPay: function () {
     if (this._isValid()) {
