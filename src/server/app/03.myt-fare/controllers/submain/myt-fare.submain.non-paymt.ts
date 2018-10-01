@@ -1,5 +1,5 @@
 /*
- * FileName: myt-fare.payment.over.ts
+ * FileName: myt-fare.non-payment.ts
  * Author: Kim InHwan (skt.P132150@partner.sk.com)
  * Date: 2018.10.01
  *
