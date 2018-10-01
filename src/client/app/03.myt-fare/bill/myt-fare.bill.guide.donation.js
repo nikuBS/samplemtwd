@@ -14,8 +14,6 @@ Tw.MyTFareBillGuideDonation = function (rootEl, resData) {
   this._history = new Tw.HistoryService(this.$container);
   this._history.init('hash');
 
-  this._init();
-
   this.bffListData = null; //원본 리스트 데이터
   this.detailListObj = {
     listData: null,
@@ -24,6 +22,8 @@ Tw.MyTFareBillGuideDonation = function (rootEl, resData) {
     addCount: 2, // 추가 데이터 카운트
     viewData: [] // 잘라서 넣는 데이터
   };
+
+  this._init();
 
 };
 

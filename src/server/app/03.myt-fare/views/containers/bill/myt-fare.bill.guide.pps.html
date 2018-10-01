@@ -7,15 +7,186 @@
 <% include ../../components/start.component.html %>
 <% include ../../components/javascript.component.html %>
 
-<div id="fe-wrap">
-    <h1>요금안내서-PPS(선불폰)</h1>
+
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
 </div>
+<!--// #skip_navigation -->
+<div id="fe-wrap" class="wrap">
+    <!-- #header -->
+    <div id="header" class="header-wrap">
+        <div class="header">
+            <div class="header-ti align-l">
+                <h1>요금안내서-PPS(선불폰)</h1>
+            </div>
+            <button class="prev-step"><span class="blind">이전으로</span></button>
+            <button class="bt-dropdown small" title="회선 선택" aria-haspopup="true">010-87**-13**<span class="ico"></span></button>
+        </div>
+    </div>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <div class="ti-caption-gray"><!-- 2018-09-19 클래스명 변경 -->
+                <h3 class="tit"><%=svcInfo.prodNm %></h3>
+                <button class="detail-view"><span class="blind">자세히보기</span></button>
+            </div>
+            <!-- .cont-box -->
+            <div class="cont-box">
+                <div class="charge-guide-wrap">
+                    <div class="charge-cont">
+                        <% if (commDataInfo.ppsType === 'A') { %>
+                        <span class="tit02 pt0">데이터량이<br /><span class="tx-bold vbl"><%=commDataInfo.ppsProdAmt%> MB</span> 남았습니다.</span>
+                        <% } %>
+                        <% if (commDataInfo.ppsType === 'B') { %>
+                        <span class="tit02 pt0">카드잔액<br /><span class="tx-bold vbl"><%=commDataInfo.ppsProdAmt%> 원</span> 남았습니다.</span>
+                        <% } %>
+                        <% if (commDataInfo.ppsType === 'C') { %>
+                        <span class="tit02 pt0">카드잔액<br /><span class="tx-bold vbl"><%=commDataInfo.ppsProdAmt%> 원</span> 남았습니다.</span>
+                        <% } %>
+
+                    </div>
+                    <span class="sub-disc01"><%=commDataInfo.ppsCurDate %></span>
+
+                    <div class="charge-cont">
+                        <div class="basic-list bg-type mt26">
+                            <ul>
+                                <li>
+                                    <span class="title">발신/사용기간</span>
+                                    <span class="tx-cont"><%=commDataInfo.ppsObEndDt %> 까지<br />발신가능</span>
+                                </li>
+                                <li>
+                                    <span class="title">수신/데이터유지기간</span>
+                                    <span class="tx-cont"><%=commDataInfo.ppsInbEndDt %> 까지<br />수신가능</span>
+                                </li>
+                                <li>
+                                    <span class="title">번호유지기간</span>
+                                    <span class="tx-cont"><%=commDataInfo.ppsNumEndDt %> 까지<br />번호유지</span>
+                                </li>
+                                <% if (commDataInfo.ppsType === 'C') { %>
+                                <li>
+                                    <span class="title">잔여데이터</span>
+                                    <span class="tx-cont tx-red"><%=commDataInfo.ppsRemained %>MB</span>
+                                </li>
+                                <% } %>
+                            </ul>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+            <!--// .cont-box -->
+
+            <div class="ti-caption-gray"><!-- 2018-09-19 클래스명 변경 -->
+                <h4 class="tit">사용내역 확인</h4>
+            </div>
+            <!-- .cont-box -->
+            <div class="cont-box">
+
+                <% if (commDataInfo.ppsType === 'C') { %>
+                <div class="check-style">
+                    <div class="widget">
+                        <div class="widget-box radio">
+                            <ul class="select-list" role="radiogroup">
+                                <li class="radiobox type01 checked" role="radio" aria-checked="true"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                                    <input type="radio" name="radio1" value="" title="음성" checked /><!-- 체크상태일 경우 checked="checked" -->
+                                    음성
+                                </li>
+                                <li class="radiobox type01" role="radio" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+                                    <input type="radio" name="radio1" value="" title="데이터" /><!-- 체크상태일 경우 checked="false" -->
+                                    데이터
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <% } %>
+
+                <div class="inputbox date-selcet">
+                            <span class="date-type">
+                            	<button class="bt-date" title="시작날짜 선택" aria-haspopup="true"
+                                        data-value="<%=commDataInfo.ppsStartDateVal %>" data-target="startDtBtn" ><%=commDataInfo.ppsStartDateTxt %></button>
+                            </span>
+                    <span class="bar">~</span>
+                    <span class="date-type">
+                            	<button class="bt-date" title="마지막날짜 선택" aria-haspopup="true"
+                                        data-value="<%=commDataInfo.ppsEndDateVal %>" data-target="endDtBtn"><%=commDataInfo.ppsEndDateTxt %></button>
+                            </span>
+                </div>
+                <ul class="bt-slice mt30">
+                    <li class="bt-blue1">
+                        <button data-target="searchBtn">조회하기</button>
+                    </li>
+                </ul>
+            </div>
+            <!--// .cont-box -->
+
+            <hr class="cont-sp type1" aria-hidden="true"/>
+
+            <!-- .cont-box -->
+            <div class="cont-box nogaps" data-target="">
+                <ul class="list-comp-lineinfo type3 no-bt">
+                    <li>
+                        <div class="lineinfo-user">
+                            <span class="info-title">국내음성통화</span>
+                            <span class="info-sub">2018.06.28</span>
+                        </div>
+                        <div class="lineinfo-data">
+                            <span class="info-title"><span class="num ff-tg-black">148</span><span class="ff-tg-medium">원</span></span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="lineinfo-user">
+                            <span class="info-title">국내음성통화</span>
+                            <span class="info-sub">2018.06.28</span>
+                        </div>
+                        <div class="lineinfo-data">
+                            <span class="info-title"><span class="num ff-tg-black">12,148</span><span class="ff-tg-medium">원</span></span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="lineinfo-user">
+                            <span class="info-title">국내음성통화</span>
+                            <span class="info-sub">2018.06.28</span>
+                        </div>
+                        <div class="lineinfo-data">
+                            <span class="info-title"><span class="num ff-tg-black">4,148</span><span class="ff-tg-medium">원</span></span>
+                        </div>
+                    </li>
+                </ul>
+                <div class="bt-more">
+                    <button>더보기</button>
+                </div>
+            </div>
+            <!--// .cont-box -->
+
+            <div class="bt-top">
+                <button><span class="blind">최상단으로 가기</span></button>
+            </div>
+
+            <!-- TBD -->
+            <img src="/img/dummy/DC_02_TBD2.jpg" alt="이용안내 노출 영역" style="width:100%;"/>
+
+        </div>
+    </div>
+    <!--// #contents -->
+</div>
+
 
 <script>
   $(document).ready(function () {
     var oMyTFareGuide = new Tw.MyTFareBillGuidePps( $('#fe-wrap'), {
       reqQuery: <%-JSON.stringify(reqQuery) %>,
-      svcInfo: <%-JSON.stringify(svcInfo) %>
+      svcInfo: <%-JSON.stringify(svcInfo) %>,
+      ppsInfo: <%-JSON.stringify(ppsInfo) %>,
+      commDataInfo: <%-JSON.stringify(commDataInfo) %>
   } );
   });
 </script>
