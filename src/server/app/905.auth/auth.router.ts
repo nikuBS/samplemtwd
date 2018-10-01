@@ -10,12 +10,8 @@ import AuthMemberManagement from './controllers/member/auth.member.management.co
 import AuthWithdrawalGuide from './controllers/withdrawal/auth.withdrawal.guide.controller';
 import AuthWithdrawalSurvey from './controllers/withdrawal/auth.withdrawal.survey.controller';
 import AuthWithdrawalComplete from './controllers/withdrawal/auth.withdrawal.complete.controller';
-import AuthLine from './controllers/line/auth.line.controller';
 import AuthTidAccountInfo from './controllers/tid/auth.tid.account-info.controller';
 import AuthTidGuide from './controllers/tid/auth.tid.guide.controller';
-import AuthLineEdit from './controllers/line/auth.line.edit.controller';
-import AuthLineCopRegister from './controllers/line/auth.line.cop-register.controller';
-import AuthLineEmptyRegister from './controllers/line/auth.line.empty-register.controller';
 import AuthTidChangePw from './controllers/tid/auth.tid.change-pw.controller';
 import AuthTidFindId from './controllers/tid/auth.tid.find-id.controller';
 import AuthTidFindPw from './controllers/tid/auth.tid.find-pw.controller';
@@ -41,11 +37,6 @@ import AuthCertFinancePublic from './controllers/cert/auth.cert.finance-public.c
 class AuthRouter extends TwRouter {
   constructor() {
     super();
-    // line
-    // this.controllers.push({ url: '/line', controller: new AuthLine() });
-    this.controllers.push({ url: '/line/edit', controller: new AuthLineEdit() });
-    this.controllers.push({ url: '/line/register/corporation', controller: new AuthLineCopRegister() });
-    this.controllers.push({ url: '/line/register/empty', controller: new AuthLineEmptyRegister() });
     // login
     this.controllers.push({ url: '/login/exceed-fail', controller: new AuthLoginExceedFail() });
     this.controllers.push({ url: '/login/fail', controller: new AuthLoginFail() });

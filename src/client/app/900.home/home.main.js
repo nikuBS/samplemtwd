@@ -58,10 +58,10 @@ Tw.HomeMain.prototype = {
   },
   _openPopup: function () {
     var layerType = this.$container.data('layertype');
-    console.log('layerType', layerType);
-    // if ( !Tw.FormatHelper.isEmpty(layerType) ) {
+    console.log('layerType : ', layerType);
+    if ( !Tw.FormatHelper.isEmpty(layerType) ) {
       this._lineRegisterLayer.openRegisterLinePopup(layerType);
-    // }
+    }
   },
 
   // 리필하기

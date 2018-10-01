@@ -59,9 +59,9 @@ Tw.AuthLineEdit.prototype = {
     this._popupService.openAlert(Tw.ALERT_MSG_AUTH.L03);
   },
   _openRegisterPopup: function (svcNumList) {
-    this._popupService.openConfirm(Tw.ALERT_MSG_AUTH.L04, Tw.POPUP_TITLE.NOTIFY, $.proxy(this._confirmRegisterPopup, this, svcNumList));
+    this._popupService.openConfirm(Tw.ALERT_MSG_AUTH.L04, Tw.POPUP_TITLE.NOTIFY, $.proxy(this._onConfirmRegisterPopup, this, svcNumList));
   },
-  _confirmRegisterPopup: function (svcNumList) {
+  _onConfirmRegisterPopup: function (svcNumList) {
     this._popupService.close();
     var lineList = svcNumList.join('~');
     this._apiService.request(Tw.NODE_CMD.CHANGE_LINE, { svcCtg: this._category, svcMgmtNumArr: lineList })
@@ -70,6 +70,7 @@ Tw.AuthLineEdit.prototype = {
   _successRegisterLineList: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._marketingSvc = resp.result.offerSvcMgmtNum;
+      Tw.CommonHelper.setLocalStorage(Tw.LSTORE_KEY.LINE_REFRESH, 'Y');
       this._checkRepSvc(resp.result);
     } else {
       Tw.Error(resp.code, resp.msg).page();
@@ -77,12 +78,12 @@ Tw.AuthLineEdit.prototype = {
   },
   _checkRepSvc: function (result) {
     if ( result.repSvcChgYn === 'Y' ) {
-      this._popupService.openAlert(Tw.ALERT_MSG_AUTH.L02, null, null, $.proxy(this._closeChangeRepSvc, this));
+      this._popupService.openAlert(Tw.ALERT_MSG_AUTH.L02, null, null, $.proxy(this._onCloseChangeRepSvc, this));
     } else {
       this._checkMarketingOffer();
     }
   },
-  _closeChangeRepSvc: function () {
+  _onCloseChangeRepSvc: function () {
     this._checkMarketingOffer();
   },
   _checkMarketingOffer: function () {
@@ -94,7 +95,7 @@ Tw.AuthLineEdit.prototype = {
         .done($.proxy(this._successGetMarketingOffer, this, $target.data('showname'), $target.data('svcnum')));
 
     } else {
-      this._historyService.goBack();
+      this._closeMarketingOfferPopup();
     }
   },
   _successGetMarketingOffer: function (showName, svcNum, resp) {
@@ -105,10 +106,10 @@ Tw.AuthLineEdit.prototype = {
       if ( resp.result.agr201Yn !== 'Y' && resp.result.agr203Yn !== 'Y' ) {
         setTimeout($.proxy(function () {
           this.lineMarketingLayer.openMarketingOffer(this._marketingSvc,
-            showName, svcNum, resp.result.agr201Yn, resp.result.agr203Yn, $.proxy(this._closeMarketingOfferPopup, this));
+            showName, svcNum, resp.result.agr201Yn, resp.result.agr203Yn, $.proxy(this._onCloseMarketingOfferPopup, this));
         }, this), 0);
       } else {
-        this._historyService.goBack();
+        this._closeMarketingOfferPopup();
       }
     } else {
       Tw.Error(resp.code, resp.msg).page();
@@ -116,6 +117,9 @@ Tw.AuthLineEdit.prototype = {
   },
   _closeMarketingOfferPopup: function () {
     this._historyService.goBack();
+  },
+  _onCloseMarketingOfferPopup: function () {
+    this._closeMarketingOfferPopup();
   }
 
 };

@@ -15,7 +15,7 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div class="wrap">
+<div id="authLineEmptyRegister" class="wrap">
     <!-- #header -->
     <%- include('../../../../common/views/components/header.component.html', { title: '회선관리', svcInfo: svcInfo, line: false }) %>
     <!--// #header -->
@@ -32,7 +32,7 @@
                         <div class="suggest-bt">
                             <ul class="bt-slice">
                                 <li class="bt-blue1">
-                                    <button>SK텔레콤의 혜택 보러가기</button>
+                                    <button>SK텔레콤의 혜택 보러가기</button> <!-- T멤버십 혜택 -->
                                 </li>
                             </ul>
                         </div>
@@ -103,7 +103,7 @@
                                                 <ul class="list-dot">
                                                     <li class="list">만약 법인명의 회선을 가지고 계시다면 아래 버튼을 통해 직접 등록을 하셔야 합니다.</li>
                                                     <li class="list">법인 본인확인 비밀번호 서비스에 가입하시면 법인명의 이동전화를 개인명의 이동전화와 동일한 수준으로 Tworld를 이용하실 수 있으십니다.
-                                                        <div class="acco-link mt32"><a class="bt-link-tx underline red" href="">법인 명의 회선 등록하기</a></div>
+                                                        <div class="acco-link mt32"><a href="/auth/line/register/corporation" class="bt-link-tx underline red">법인 명의 회선 등록하기</a></div>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -115,7 +115,7 @@
                                                     <li class="list">법인 본인확인 비밀번호 서비스에 가입하시면 법인 명의 이동전화를 T world 안에서 개인명의 이동전화처럼 사용할 수 있으십니다.</li>
                                                     <li class="list">아래 버튼을 통해 좀 더 자세한 내용을 확인하실 수 있습니다.</li>
                                                     <li class="list">단, T world 지점/대리점에 직접 방문하셔야 서비스 가입이 가능합니다.
-                                                        <div class="acco-link mt32"><a class="bt-link-tx underline red" href="">가입방법 자세히 보기</a></div>
+                                                        <div class="acco-link mt32"><button id="fe-bt-cop-password" class="bt-link-tx underline red" href="">가입방법 자세히 보기</button></div>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -137,6 +137,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
+    new Tw.AuthLineEmptyRegister($('#authLineEmptyRegister'));
   });
 </script>
 <% include ../../components/end.component.html %>
