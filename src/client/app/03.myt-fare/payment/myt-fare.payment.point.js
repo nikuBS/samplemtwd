@@ -73,12 +73,7 @@ Tw.MyTFarePaymentPoint.prototype = {
       this.$pointBox.show();
       this.$getPointBtn.hide();
     } else {
-      // this._getFail(res);
-      this._popupService.close();
-      // this._setPointInfo(res.result);
-
-      this.$pointBox.show();
-      this.$getPointBtn.hide();
+      this._getFail(res);
     }
   },
   _getFail: function (err) {
@@ -141,15 +136,13 @@ Tw.MyTFarePaymentPoint.prototype = {
       this._validation.checkEmpty(this.$pointPw.val(), Tw.MSG_PAYMENT.AUTO_A04));
   },
   _setData: function () {
-    console.log(this.$pointSelector.attr('id'), this.$pointSelector.attr('data-code'), this.$pointSelector.text());
     this.$container.find('.fe-check-title').text(this.$pointSelector.text());
     this.$container.find('.fe-payment-option-name').attr('data-code', this.$pointSelector.attr('data-code')).text(this._pointCardNumber);
     this.$container.find('.fe-payment-amount').text(Tw.FormatHelper.addComma(this.$point.val().toString()));
   },
   _pay: function () {
     var reqData = this._makeRequestData();
-    console.log(reqData);
-    this._apiService.request(Tw.API_CMD.BFF_07_0045, reqData)
+    this._apiService.request(Tw.API_CMD.BFF_07_0087, reqData)
       .done($.proxy(this._paySuccess, this))
       .fail($.proxy(this._payFail, this));
   },
@@ -157,8 +150,10 @@ Tw.MyTFarePaymentPoint.prototype = {
     var reqData = {
       ocbCcno: this._pointCardNumber,
       ptClCd: this.$container.find('.fe-payment-option-name').attr('data-code'),
-      reqAmt: $.trim(this.$point.val().toString().replace(',', '')),
-      ocbPwd: $.trim(this.$pointPw.val().toString())
+      point: $.trim(this.$point.val().toString().replace(',', '')),
+      pwd: $.trim(this.$pointPw.val().toString()),
+      count: this._paymentCommon.getBillList().length,
+      contents: this._paymentCommon.getBillList()
     };
     return reqData;
   },
@@ -167,10 +162,10 @@ Tw.MyTFarePaymentPoint.prototype = {
       this._historyService.setHistory();
       this._historyService.goHash('#complete');
     } else {
-      this._payFail(res.error);
+      this._payFail(res);
     }
   },
   _payFail: function (err) {
-    this._popupService.openAlert(err.message, err.code);
+    this._popupService.openAlert(err.msg, err.code);
   }
 };

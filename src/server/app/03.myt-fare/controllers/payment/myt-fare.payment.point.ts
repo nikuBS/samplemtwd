@@ -16,8 +16,9 @@ class MytFarePaymentPoint extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, layerType: string) {
     Observable.combineLatest(
-      this.getUnpaidList()
-    ).subscribe(([unpaidList]) => {
+      this.getUnpaidList(),
+      this.getPoint()
+    ).subscribe(([unpaidList, point]) => {
       if (unpaidList.code === API_CODE.CODE_00) {
         res.render('payment/myt-fare.payment.point.html', {
           unpaidList: this.parseData(unpaidList.result, svcInfo),
@@ -36,6 +37,12 @@ class MytFarePaymentPoint extends TwViewController {
 
   private getUnpaidList(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_07_0021, {}).map((res) => {
+      return res;
+    });
+  }
+
+  private getPoint(): Observable<any> {
+    return this.apiService.request(API_CMD.BFF_07_0041, {}).map((res) => {
       return res;
     });
   }

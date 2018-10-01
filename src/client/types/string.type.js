@@ -11,6 +11,7 @@ Tw.POPUP_TITLE = {
   SELECT_PAYMENT_OPTION: '납부 방법 선택',
   SELECT_CARD_TYPE: '납부형태 선택',
   SELECT_POINT: '납부포인트 선택',
+  SELECT_ACCOUNT: '계좌번호 선택',
   NOT_FAMILY: '리필쿠폰 선물 가능한 가족이 아닙니다.',
   SELECT_CHARGE_TYPE: '충전/선물 유형'
 };

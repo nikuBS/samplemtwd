@@ -202,7 +202,7 @@ Tw.API_CMD = {
   BFF_07_0024: { path: '/core-bill/v1/bill-pay/cardnum-validation', method: Tw.API_METHOD.GET },
   BFF_07_0025: { path: '/core-bill/v1/bill-pay/settle-pay-card', method: Tw.API_METHOD.POST },
   BFF_07_0026: { path: '/core-bill/v1/bill-pay/settle-vbs', method: Tw.API_METHOD.GET },
-  BFF_07_0027: { path: '/core-bill/v1/bill-pay/settle-vb-sms/args-0', method: Tw.API_METHOD.POST },
+  BFF_07_0027: { path: '/core-bill/v1/bill-pay/settle-vb-sms', method: Tw.API_METHOD.POST },
   BFF_07_0028: { path: '/core-bill/v1/bill-pay/avail-point-search', method: Tw.API_METHOD.GET },
   BFF_07_0029: { path: '/core-bill/v1/bill-pay/pay-ocb-tpoint-proc', method: Tw.API_METHOD.POST },
   BFF_07_0030: { path: '/core-bill/v1/payment/total-payment', method: Tw.API_METHOD.GET },
@@ -237,6 +237,7 @@ Tw.API_CMD = {
   BFF_07_0082: { path: '/core-bill/v1/useContentsPrepay/useContentsPrepay-process', method: Tw.API_METHOD.POST },
   BFF_07_0083: { path: '/core-bill/v1/useContentsPrepay/useContents-autoPrepay-process', method: Tw.API_METHOD.POST },
   BFF_07_0084: { path: '/core-bill/v1/useContentsPrepay/useContents-autoPrepay-delete', method: Tw.API_METHOD.POST },
+  BFF_07_0087: { path: '/core-bill/v1/ocb-point-pay', method: Tw.API_METHOD.POST },
 
   //CUSTOMER
   BFF_08_0001: { path: '/core-modification/v1/counsel-time-check', method: Tw.API_METHOD.GET },
