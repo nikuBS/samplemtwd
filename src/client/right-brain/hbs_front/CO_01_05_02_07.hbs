@@ -1,0 +1,39 @@
+<div class="wrap agreement popup tw-popup">
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <div class="container">
+            <div class="cont-box nogaps-ver">
+                <h1 class="agreement-title">
+                    <img src="/img/dummy/dmy-agreement.jpg" alt="" />
+                    <span>다음과 같이 동의여부가 <br/><strong>선택되었습니다.</strong></span>
+                </h1>
+                <div class="agreement-info">
+                    <dl>
+                        <dt>고객 혜택 제공을 위한 <br/>개인정보 수집 &middot; 이용 동의 (선택)</dt>
+                        {{#if data.agr201Yn}}
+                        <dd><strong>동의</strong></dd>
+                        {{else}}
+                        <dd>미동의</dd>
+                        {{/if}}
+                    </dl>
+                    <dl>
+                        <dt>광고성 정보 수신 동의 (선택)</dt>
+                        {{#if data.agr203Yn}}
+                        <dd><strong>동의</strong></dd>
+                        {{else}}
+                        <dd>미동의</dd>
+                        {{/if}}
+                    </dl>
+
+                    <span class="agreement-refer">* 본 수신동의를 철회하고자 할 경우 <br/>1504번을 통해 본인 인증 후 철회할 수 있습니다.</span>
+                </div>
+            </div>
+            <div class="cont-box nogaps noborder">
+                <div class="explanation-box">
+                    <p>고객님의 가입정보, 모바일 사용 패턴 등을 바탕으로 최적화된 광고, 커머스(상거래) 정보 등 다양한 혜택을 추천 받으실 수 있는 서비스입니다.</p>
+                </div>
+            </div>
+            <button class="popup-closeBtn"><span class="blind">페이지 닫기</span></button>
+        </div>
+    </div>
+</div>

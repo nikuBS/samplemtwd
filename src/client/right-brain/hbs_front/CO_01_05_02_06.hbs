@@ -1,0 +1,78 @@
+<div class="popup tw-popup">
+    <div class="popup-page nobg">
+        <!-- #header -->
+        <div id="header" class="header-wrap">
+            <div class="page-header">
+                <div class="header-ti align-l">
+                    <h1>SKT 이동전화 광고 정보 수신동의</h1>
+                </div>
+                <!--<button class="prev-step popup-closeBtn">취소</button>-->
+            </div>
+        </div>
+        <!--// #header -->
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+                <!-- .cont-box -->
+                <div class="cont-box nogaps noborder topborder">
+                    <div class="explanation-box">
+                        <p>고객님의 가입정보, 모바일 사용 패턴 등을 바탕으로<br/>
+                            최적화된 광고, 커머스(상거래) 정보 등<br/>
+                            다양한 혜택을 추천 받으실 수 있는 서비스입니다.</p>
+                    </div>
+                </div>
+                <!--// .cont-box -->
+                <!-- .cont-box -->
+                <div class="cont-box nogaps">
+                    <div class="cont-box pb8">
+                        <p class="con-tit0">가입동의 휴대폰 정보</p>
+                        <div class="data-result mt12">
+                            <p class="tit">{{data.showName}}</p>
+                            <p class="data"><em>{{data.svcNum}}</em></p>
+                        </div>
+                    </div>
+                    <!-- .list-comp-input -->
+                    <div class="list-comp-input-agree">
+                        <div class="widget">
+                            <div class="widget-box check">
+                                <ul class="select-list" role="group">
+                                    <li>
+                                        <div class="checkbox type01 {{#if data.agr201Yn}}checked{{/if}}" role="checkbox" aria-checked="{{data.agr201Yn}}"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                                            <input type="checkbox" class="fe-child-check" name="checkbox" value="{{data.agr201Yn}}" title="값1" aria-labelledby="aria-comp-checkbox1" checked="{{data.agr201Yn}}" disabled="!{{data.agr201Yn}}"/><!-- 체크상태일 경우 checked="checked" -->
+                                            <div class="comp-list-layout" id="aria-comp-checkbox1" aria-hidden="true">
+                                                <p class="layout-text">
+                                                    <span class="mtext">고객 혜택 제공을 위한 개인정보 수집·이용 동의</span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <button class="agree-view"><span class="blind">자세히 보기</span></button>
+                                    </li>
+                                    <li>
+                                        <div class="checkbox type01 {{#if data.agr203Yn}}checked{{/if}}" role="checkbox" aria-checked="{{data.agr203Yn}}"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+                                            <input type="checkbox" class="fe-child-check" name="checkbox" value="{{data.agr203Yn}}" title="값2" aria-labelledby="aria-comp-checkbox2" checked="{{data.agr203Yn}}" disabled="!{{data.agr201Yn}}"/><!-- 체크상태일 경우 checked="false" -->
+                                            <div class="comp-list-layout" id="aria-comp-checkbox2" aria-hidden="true">
+                                                <p class="layout-text">
+                                                    <span class="mtext">광고성 정보 수신 동의 선택</span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <button class="agree-view"><span class="blind">자세히 보기</span></button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!--// .list-comp-input -->
+                </div>
+                <!--// .cont-box -->
+                <ul class="bt-slice full">
+                    <li class="bt-red1">
+                        <button id="fe-bt-complete" disabled="disabled">다음</button>
+                    </li>
+                </ul>
+            </div>
+            <button class="popup-closeBtn">취소</button>
+        </div>
+    </div>
+</div>

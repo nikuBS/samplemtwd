@@ -10,6 +10,8 @@ import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { SVC_CATEGORY, SVC_ATTR_NAME } from '../../../../types/bff.type';
 import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
+import AUTH_LINE from '../../../../mock/server/auth.line.mock';
+
 class AuthLineEdit extends TwViewController {
   private category = '';
   constructor() {
@@ -23,7 +25,7 @@ class AuthLineEdit extends TwViewController {
         const lineList = this.parseLineList(resp.result);
         res.render('line/auth.line.edit.html', Object.assign(lineList, {
           category: this.category,
-          lineCategory: SVC_CATEGORY[this.category.toUpperCase()],
+          lineCategory: SVC_CATEGORY[this.category],
           svcInfo
         }));
       } else {

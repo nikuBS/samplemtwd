@@ -25,7 +25,7 @@ Tw.NicknameComponent.prototype = {
     this._popupService.open({
       hbs: 'CO_01_05_02_01',
       layer: true
-    }, $.proxy(this._onOpenNickname, this, nickname), $.proxy(this._onCloseNickname, this));
+    }, $.proxy(this._onOpenNickname, this, nickname), $.proxy(this._onCloseNickname, this), 'nickname');
 
   },
   _onOpenNickname: function (nickname, $popup) {
