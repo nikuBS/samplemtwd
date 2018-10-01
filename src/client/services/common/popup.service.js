@@ -103,7 +103,7 @@ Tw.PopupService.prototype = {
       contents: contents,
       bt: [{
         style_class: 'bt-blue1 tw-popup-closeBtn',
-        txt: btName || Tw.BUTTON_LABEL.CLOSE
+        txt: btName || Tw.BUTTON_LABEL.CONFIRM
       }]
     };
     this._addHash(closeCallback);
