@@ -1,0 +1,60 @@
+<%#
+* FileName: myt-fare.payment.check.component.html
+* Author: Jayoon Kong (jayoon.kong@sk.com)
+* Date: 2018.09.19
+%>
+
+<!-- #header -->
+<div id="header" class="header-wrap">
+    <div class="header popup-page tw-popup fixed-btn">
+        <div class="header-ti align-l">
+            <h1>납부내역 확인</h1>
+        </div>
+        <button class="popup-closeBtn fe-common-back"><span class="blind">팝업 페이지 닫기</span></button>
+    </div>
+</div>
+<!--// #header -->
+<div class="container">
+    <!-- .cont-box -->
+    <div class="cont-box">
+        <div class="check-payment">
+            <strong class="tit">납부를 <br />완료 하시겠습니까?</strong>
+            <p class="sub-tit fe-check-title"><%= title %></p>
+            <p class="num"><span class="str fe-payment-amount"></span><% if (title === '계좌이체' || title === '체크/신용카드') { %>원<% } else { %>점<% } %></p>
+            <p class="credit"><span class="ctit fe-payment-option-name"></span><span class="cnum fe-payment-option-number"></span></p>
+        </div>
+        <dl class="refund-pament-account mt36">
+            <dt>환불계좌</dt>
+            <dd class="fe-payment-refund"></dd>
+        </dl>
+    </div>
+    <!--// .cont-box -->
+
+    <div class="ti-caption-gray"><!-- 2018-09-19 클래스명 변경 -->
+        <h3 class="tit">청구회선</h3>
+    </div>
+
+    <!-- .cont-box -->
+    <div class="cont-box nogaps">
+        <div class="detail-account-line">
+            <ul class="fe-selected-line">
+                <li class="fe-origin none">
+                    <dl>
+                        <dt><span class="fe-svc-info"></span> <span class="date fe-date"></span></dt>
+                        <dd><span class="fe-fee"></span>원</dd>
+                    </dl>
+                </li>
+            </ul>
+        </div>
+        <div class="bt-more none">
+            <button>더보기</button>
+        </div>
+    </div>
+    <!--// .cont-box -->
+
+    <ul class="bt-slice full">
+        <li class="bt-red1">
+            <button class="fe-pay">납부 완료</button>
+        </li>
+    </ul>
+</div>

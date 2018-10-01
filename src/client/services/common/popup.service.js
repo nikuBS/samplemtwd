@@ -27,7 +27,7 @@ Tw.PopupService.prototype = {
     }
   },
   _onOpenPopup: function () {
-    var $popups = $('.popup, .popup-page');
+    var $popups = $('.tw-popup');
     var $currentPopup = $($popups[$popups.length - 1]);
     Tw.Logger.info('[Popup Open]');
     this._bindEvent($currentPopup);
@@ -96,37 +96,33 @@ Tw.PopupService.prototype = {
     this._addHash(closeCallback, hashName);
     this._open(option);
   },
-  openAlert: function (message, title, confirmCallback, closeCallback) {
+  openAlert: function (contents, title, btName, closeCallback) {
     var option = {
       title: title || Tw.POPUP_TITLE.NOTIFY,
-      close_bt: true,
-      title2: message,
-      bt_num: 'one',
-      type: [{
-        style_class: 'bt-red1 tw-popup-confirm',
-        txt: Tw.BUTTON_LABEL.CONFIRM
+      title_type: 'sub-c',
+      contents: contents,
+      bt: [{
+        style_class: 'bt-blue1 tw-popup-closeBtn',
+        txt: btName || Tw.BUTTON_LABEL.CONFIRM
       }]
     };
-    this._setConfirmCallback(confirmCallback);
     this._addHash(closeCallback);
     this._open(option);
   },
-  openConfirm: function (title, message, contents, openCallback, confirmCallback, closeCallback) {
+  openConfirm: function (contents, title, confirmCallback, closeCallback) {
     var option = {
-      title: title,
-      close_bt: true,
-      title2: message,
-      contents: contents || '',
-      bt_num: 'two',
-      type: [{
-        style_class: 'bt-white1 tw-popup-closeBtn',
+      title: title || Tw.POPUP_TITLE.NOTIFY,
+      title_type: 'sub',
+      cont_align: 'tl',
+      contents: contents,
+      bt_b: [{
+        style_class: 'pos-left tw-popup-closeBtn',
         txt: Tw.BUTTON_LABEL.CANCEL
       }, {
-        style_class: 'bt-red1 tw-popup-confirm',
+        style_class: 'bt-blue1 pos-right tw-popup-confirm',
         txt: Tw.BUTTON_LABEL.CONFIRM
       }]
     };
-    this._setOpenCallback(openCallback);
     this._setConfirmCallback(confirmCallback);
     this._addHash(closeCallback);
     this._open(option);
@@ -145,6 +141,129 @@ Tw.PopupService.prototype = {
   },
   openSelect: function () {
 
+  },
+  openTypeA: function (title, contents, icoType, openCallback, closeCallback) {
+    var option = {
+      ico: icoType || 'type2',
+      title: title || Tw.POPUP_TITLE.NOTIFY,
+      contents: contents,
+      bt: [{
+        style_class: 'bt-blue1 tw-popup-closeBtn',
+        txt: Tw.BUTTON_LABEL.CLOSE
+      }]
+    };
+    this._setOpenCallback(openCallback);
+    this._addHash(closeCallback);
+    this._open(option);
+  },
+  openOneBtTypeB: function (title, contents, linkList, icoType, openCallback, closeCallback) {
+    var option = {
+      ico: icoType || 'type3',
+      title: title || Tw.POPUP_TITLE.NOTIFY,
+      contents: contents,
+      link_list: linkList,
+      bt: [{
+        style_class: 'bt-blue1 tw-popup-closeBtn',
+        txt: Tw.BUTTON_LABEL.CLOSE
+      }]
+    };
+    this._setOpenCallback(openCallback);
+    this._addHash(closeCallback);
+    this._open(option);
+  },
+  openTwoBtTypeB: function (title, contents, linkList, btName, icoType, openCallback, confirmCallback, closeCallback) {
+    var option = {
+      ico: icoType || 'type3',
+      title: title || Tw.POPUP_TITLE.NOTIFY,
+      contents: contents,
+      link_list: linkList,
+      bt: [{
+        style_class: 'bt-blue1 tw-popup-confirm',
+        txt: btName || Tw.BUTTON_LABEL.CONFIRM
+      }, {
+        style_class: 'bt-white2 tw-popup-closeBtn',
+        txt: Tw.BUTTON_LABEL.CLOSE
+      }]
+    };
+    this._setOpenCallback(openCallback);
+    this._setConfirmCallback(confirmCallback);
+    this._addHash(closeCallback);
+    this._open(option);
+  },
+  openTypeC: function (title, noticeList, icoType, openCallback, closeCallback) {
+    var option = {
+      ico: icoType || 'type4',
+      title: title || Tw.POPUP_TITLE.NOTIFY,
+      title_type: 'sub-c',
+      notice_has: 'notice_has',
+      notice_list: noticeList,
+      bt: [{
+        style_class: 'bt-white2 tw-popup-closeBtn',
+        txt: Tw.BUTTON_LABEL.CLOSE
+      }]
+    };
+    this._setOpenCallback(openCallback);
+    this._addHash(closeCallback);
+    this._open(option);
+  },
+  openTypeD: function (title, contents, btName, icoType, openCallback, confirmCallback, closeCallback) {
+    var option = {
+      ico: icoType || 'type2',
+      title: title || Tw.POPUP_TITLE.NOTIFY,
+      contents: contents,
+      bt: [{
+        style_class: 'bt-red1 tw-popup-confirm',
+        txt: btName || Tw.BUTTON_LABEL.CONFIRM
+      }]
+    };
+    this._setOpenCallback(openCallback);
+    this._setConfirmCallback(confirmCallback);
+    this._addHash(closeCallback);
+    this._open(option);
+  },
+  openModalTypeA: function (title, contents, btName, openCallback, confirmCallback, closeCallback) {
+    var option = {
+      title: title || Tw.POPUP_TITLE.NOTIFY,
+      title_type: 'sub-c',
+      cont_align: 'tc',
+      contents: contents,
+      bt_b: [{
+        style_class: 'pos-left tw-popup-closeBtn',
+        txt: Tw.BUTTON_LABEL.CANCEL
+      }, {
+        style_class: 'bt-red1 pos-right tw-popup-confirm',
+        txt: btName || Tw.BUTTON_LABEL.CONFIRM
+      }]
+    };
+    this._setOpenCallback(openCallback);
+    this._setConfirmCallback(confirmCallback);
+    this._addHash(closeCallback);
+    this._open(option);
+  },
+  openModalTypeALeftAlign: function (title, contents, btName, openCallback, confirmCallback, closeCallback) {
+    var option = {
+      title: title || Tw.POPUP_TITLE.NOTIFY,
+      title_type: 'sub',
+      cont_align: 'tl',
+      contents: contents,
+      bt_b: [{
+        style_class: 'pos-left tw-popup-closeBtn',
+        txt: Tw.BUTTON_LABEL.CANCEL
+      }, {
+        style_class: 'bt-red1 pos-right tw-popup-confirm',
+        txt: btName || Tw.BUTTON_LABEL.CONFIRM
+      }]
+    };
+    this._setOpenCallback(openCallback);
+    this._setConfirmCallback(confirmCallback);
+    this._addHash(closeCallback);
+    this._open(option);
+  },
+  toast: function (message) {
+    skt_landing.action.popup.toast({
+      text: message,
+      second: 5
+    });
   },
   close: function () {
     Tw.Logger.log('[Popup] Call Close', location.hash);

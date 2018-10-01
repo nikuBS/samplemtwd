@@ -1,0 +1,157 @@
+<%#
+* FileName: myt-fare.submain.html
+* Author: 김인환 (skt.p132150@partner.sk.com)
+* Date: 2018.09.27
+%>
+
+<% include ../components/start.component.html %>
+<body>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+
+<!--// #skip_navigation -->
+<div class="wrap">
+    <!-- #header -->
+    <%- include('../../../common/views/components/header.component.html', { title: '나의 요금', svcInfo: data.svcInfo, line: false }); %>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap" data-id="wrapper">
+        <h2 class="blind">내용</h2>
+        <div class="container" data-id="submain-container">
+            <!-- 청구요금 -->
+            <%- include('../components/submain/myt-fare.submain.claim-pay.html', data) %>
+            <!-- 상세항목 -->
+            <%- include('../components/submain/myt-fare.submain.payment-detail.html', data) %>
+            <!-- 소액결제 콘텐츠이용 -->
+            <% if (data.isMicroPayment) { %>
+            <%- include('../components/submain/myt-fare.submain.micro-payment.html', data) %>
+            <% } %>
+
+            <% if (data.totalPayment && data.totalPayment.length > 0) { %>
+            <hr class="cont-sp type1" aria-hidden="true"/>
+            <!-- .cont-box -->
+            <div class="cont-box nogaps">
+                <p class="list-comp-title">최근 납부 내역
+                    <button class="ico" data-id="payment-detail"></button>
+                </p>
+                <ul class="list-comp-lineinfo type2">
+                    <% for(var i=0; i < data.totalPayment.length; i++) { %>
+                    <%- include('../components/submain/myt-fare.submain.total-payment.html', data.totalPayment[i]) %>
+                    <% } %>
+                </ul>
+            </div>
+            <!--// .cont-box -->
+            <% } %>
+
+            <hr class="cont-sp type1" aria-hidden="true"/>
+            <!-- .cont-box -->
+            <div class="cont-box graph-back" data-id="bill-chart">
+                <h3>최근 요금 내역</h3>
+                <div class="graph-area-type3 chart4">
+                </div>
+            </div>
+            <!--// .cont-box -->
+
+            <hr class="cont-sp type1" aria-hidden="true"/>
+            <!-- .cont-box -->
+            <div class="cont-box nogaps" data-id="other-line">
+                <p class="list-comp-title">다른 회선 요금 조회</p>
+                <ul class="list-comp-lineinfo">
+                    <li>
+                        <button>
+                            <div class="lineinfo-user d-table">
+                                <div class="ico"><i></i></div>
+                                <div class="cont">
+                                    <span class="info-title">갤럭시 노트9
+                                        <span class="badge badge-merge"><span class="blind">통합</span></span>
+                                    </span>
+                                    <span class="info-sub">010-46**-10**</span>
+                                </div>
+                            </div>
+                            <div class="lineinfo-data">
+                                <span class="info-title">23,367 원</span>
+                                <span class="ico"></span>
+                            </div>
+                        </button>
+                    </li>
+                    <li>
+                        <button>
+                            <div class="lineinfo-user d-table">
+                                <div class="ico"><i></i></div>
+                                <div class="cont"><span class="ico"></span>
+                                    <span class="info-title">갤럭시 S7</span>
+                                    <span class="info-sub">010-46**-10**</span>
+                                </div>
+                            </div>
+                            <div class="lineinfo-data">
+                                <span class="info-title">35,647 원</span>
+                                <span class="ico"></span>
+                            </div>
+                        </button>
+                    </li>
+                </ul>
+                <div class="bt-more">
+                    <button>더보기</button>
+                </div>
+            </div>
+            <!-- .cont-box -->
+
+            <div class="cont-box nogaps noborder">
+                <ul class="link-long-list nobg">
+                    <li>
+                        <div class="link-long">
+                            <button>
+                                <span class="ico-thum"></span>요금제
+                                <span class="tx-sub">
+                                        <span class="ico"></span>
+                                    </span>
+                            </button>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="link-long">
+                            <button>
+                                <span class="ico-thum"></span>데이터 부가서비스
+                                <span class="tx-sub">
+                                        <span class="ico"></span>
+                                    </span>
+                            </button>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="link-long">
+                            <button>
+                                <span class="ico-thum"></span>가족 공유 데이터
+                                <span class="tx-sub">
+                                        <span class="ico"></span>
+                                    </span>
+                            </button>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <!-- //.cont-box -->
+        </div>
+    </div>
+    <!--// #contents -->
+</div>
+<% include ../components/javascript.component.html %>
+</body>
+<script>
+    // client 작업 중
+    var data = '<%- JSON.stringify(data) %>';
+    $(document).ready(function () {
+      new Tw.MyTFareSubMain({
+        $element: $('[data-id=submain-container]'),
+        data: JSON.parse(data)
+      });
+    });
+
+</script>
+<% include ../components/end.component.html %>

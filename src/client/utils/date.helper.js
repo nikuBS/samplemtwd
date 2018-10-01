@@ -32,7 +32,7 @@ Tw.DateHelper = (function () {
    * @returns {Date}
    */
   var convDateFormat = function (date) {
-    if (!(date instanceof Date)) {
+    if ( !(date instanceof Date) ) {
       return moment(date, 'YYYYMMDDhhmmss').toDate();
     }
     return date;
@@ -85,11 +85,11 @@ Tw.DateHelper = (function () {
   var getPastShortDate = function (period) {
     var matches = period.replace(/\s/g, '').match(/(\d*)(.*)/);
 
-    if (matches.length !== 3)
+    if ( matches.length !== 3 )
       return null;
 
     var unit = '';
-    switch (matches[2]) {
+    switch ( matches[2] ) {
       case Tw.DATE_UNIT.YEAR:
         unit = 'years';
         break;
@@ -178,6 +178,14 @@ Tw.DateHelper = (function () {
     return moment(date, currentFormat).add(days - 1, 'days').format(format);
   };
 
+  /**
+   * @param date {Date} or {string} : YYYYMMDD
+   * @returns {string} : 12월
+   */
+  var getShortKoreanMonth = function (date) {
+    return moment(convDateFormat(date)).format('MM월');
+  };
+
 
   moment.locale('ko', {
     weekdaysMin: Tw.WEEKDAYS
@@ -216,7 +224,8 @@ Tw.DateHelper = (function () {
     getShortDateWithFormat: getShortDateWithFormat,
     getShortDateWithFormatAddByUnit: getShortDateWithFormatAddByUnit,
     getDayOfWeek: getDayOfWeek,
-    getDiffByUnit : getDiffByUnit,
-    isValid : isValid
+    getDiffByUnit: getDiffByUnit,
+    getShortKoreanMonth: getShortKoreanMonth,
+    isValid: isValid
   };
 })();

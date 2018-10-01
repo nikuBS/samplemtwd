@@ -7,7 +7,8 @@ export const COOKIE_KEY = {
   CHANNEL: 'TWM_CHANNEL',
   TWM_LOGIN: 'TWM_LOGIN',
   TWM: 'TWM',
-  SESSION: 'SESSION'
+  SESSION: 'SESSION',
+  APP_API: 'APP_API'
 };
 
 export const REDIS_URL_META = 'NodeUrlMeta:';

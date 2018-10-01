@@ -1,10 +1,11 @@
+// BFF_05_0025 : 안내서유형조회
 export const MyTBillSetData = {
   'code': '00',
   'msg': 'success',
   'result': {
-    'isusimchk': 'N',
+    'isusimchk': 'Y',
     'nreqGuidSmsSndYn': 'Y',
-    'curBillType': '2',
+    'curBillType': 'H',
     'scurBillYn': 'Y',
     'invEmailAddr': 'idkw****************',
     'intPhonDtlIsueYn': '',

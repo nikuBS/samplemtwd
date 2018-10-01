@@ -1,0 +1,73 @@
+<%#
+* FileName: myt-data.usage.graphbox.html
+* Author: 이정민 (skt.p130713@partner.sk.com)
+* Date: 2018.09.17
+%>
+
+<div class="data-type">
+    <h4 class="tit"><%= typeStr %></h4>
+    <% if (type === 'data') { %>
+    <p class="num">총 데이터 잔여량 <em>36.7</em> GB</p>
+    <% } %>
+</div>
+
+<div class="cont-box nogaps-hoz">
+    <ul class="graphlist-wrap">
+        <% for (var i = 0; i < items.length; i++) { %>
+        <li class="graphbox-li <%= (items[i].isRemainUnlimited) ? 'unlimited' : '' %> <%= (items[i].isRunout) ? 'runout' : '' %>">
+            <h5 class="graphbox-title">
+                <%= items[i].skipName %>
+                <% if (items[i].isVisibleDayBtn) { %>
+                <span class="bt-link-wrap"><button class="bt-link-tx underline" href="">당일 사용량 조회</button></span>
+                <% } %>
+            </h5>
+            <div class="amountdata-num">
+                <div class="date-info">
+                    <p class="data-title">남음<span class="blind">(데이터량)</span></p>
+                    <p class="data-state">
+                        <% if(items[i].isRemainUnlimited) { %>
+                        <span class="str"><%= items[i].remained %></span>
+                        <% } else { %>
+                            <% for (var j = 0; j < items[i].showRemaineds.length; j++) { %>
+                                <span class="str"><%= items[i].showRemaineds[j].data %></span><%= items[i].showRemaineds[j].unit %>
+                            <% } %>
+                        <% } %>
+                    </p>
+                </div>
+                <div class="date-info">
+                    <p class="data-title">
+                        <% if (items[i].isDailyUsed) { %>
+                            오늘
+                        <% } %>
+                        사용
+                    <span class="blind">(데이터량)</span></p>
+                    <p class="data-state">
+                        <% if (items[i].isUsedUnlimited) { %>
+                        <span class="str">0</span>
+                        <% } else { %>
+                            <% for (var j = 0; j < items[i].showUseds.length; j++) { %>
+                                <span class="str"><%= items[i].showUseds[j].data %></span><%= items[i].showUseds[j].unit %>
+                            <% } %>
+                        <% } %>
+                    </p>
+                </div>
+            </div>
+            <div class="bar-chart-hoz">
+                <span class="data-bar <%= items[i].barClass %>" style="width:<%= items[i].remainedRatio %>%;"></span>
+            </div>
+            <% if (items[i].couponDate !== '') { %>
+            <p class="chargedate-box">쿠폰등록일 <span><%= items[i].couponDate  %></span></p>
+            <% } %>
+            <% if (items[i].sharedData) { %>
+                <div class="share-info mt20">
+                    <p class="data">
+                        공유 <%= items[i].sharedData.showRemained.data %><%= items[i].sharedData.showRemained.unit %> 가능
+                        <!--<button aria-haspopup="true" class="info-view-ic">정보보기</button>-->
+                    </p>
+                    <!--<button class="btn-share">15GB 공유 중</button>-->
+                </div>
+            <% } %>
+        </li>
+        <% } %>
+    </ul>
+</div>

@@ -65,12 +65,9 @@ Tw.LineComponent.prototype = {
   },
   _openListPopup: function (lineData) {
     this._popupService.open({
-      hbs: 'dropdown',
+      hbs: 'CO_회선변경_ActionSheet',
+      layer: true,
       group: lineData,
-      bt_more: {
-        show: this._index > Tw.DEFAULT_LIST_COUNT,
-        txt: this._index - Tw.DEFAULT_LIST_COUNT
-      },
       bt_txt: Tw.BUTTON_LABEL.LINE
     }, $.proxy(this._onOpenListPopup, this), $.proxy(this._onCloseListPopup, this));
   },

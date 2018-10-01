@@ -1,0 +1,136 @@
+<%#
+* FileName: myt-data.recharge.coupon-use.html (DC_05_01)
+* Author: Hakjoon Sim (hakjoon.sim@sk.com)
+* Date: 2018.09.19
+%>
+
+<% include ../../components/start.component.html %>
+<body class="bg-white">
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#gnb">메뉴 바로가기</a></li>
+            <li><a href="#contents">본문 바로가기</a></li>
+            <li><a href="#footer">푸터 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap step">
+        <!-- #header -->
+        <div id="header" class="header-wrap">
+            <div class="header">
+                <div class="header-ti align-l">
+                    <h1>리필 쿠폰 사용</h1>
+                </div>
+                <a href="/myt/data/recharge/coupon" class="prev-step">취소</a>
+            </div>
+        </div>
+        <!--// #header -->
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+                <!-- .cont-box -->
+                <div class="cont-box nogaps">
+                    <h3 class="sub-title0">사용할 쿠폰 선택</h3>
+                    <div class="list-comp-thumnail refill-coupon-top">
+                        <div class="comp-box">
+                            <div class="list-box">
+                                <div class="list-ico"><span class="ico type4"></span></div>
+                                <p class="list-text">
+                                    <span class="mtext"><%= name %></span>
+                                    <span class="stext gray">유효기간  <%= period %></span>
+                                </p>
+                                <div class="list-btn">
+                                    <div class="bt-alone"><a href="/myt/data/recharge/coupon" class="bt-line-gray1">다시 선택</a></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--// .cont-box -->
+                <hr class="cont-sp type1" />
+                <!-- .cont-box -->
+                <div class="cont-box nogaps noborder">
+                    <div class="component">
+                        <div class="component-box tabs">
+                            <div class="tab-area type1"><!-- 타입별 탭형태 변환 -->
+                                <div class="tab-linker">
+                                    <ul role="tablist">
+                                        <li role="tab" aria-selected="<%= tab === 'refill' ? true : false %>" aria-controls="tab1-tab" id="tab1"><a href="#refill" class="fe-replace-history">나에게 리필하기</a></li><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
+                                        <li role="tab" aria-selected="<%= tab === 'gift' ? true : false %>" aria-controls="tab2-tab" id="tab2"><a href="#gift" class="fe-replace-history">가족에게 선물하기</a></li>
+                                    </ul>
+                                </div>
+                                <div class="tab-contents">
+                                    <ul>
+                                        <li role="tabpanel" id="tab1-tab" aria-labelledby="tab1">
+                                            <!-- .cont-box -->
+                                            <div class="cont-box nogaps">
+                                                <!-- .list-comp-input -->
+                                                <div class="list-comp-input">
+                                                    <div class="widget">
+                                                        <div class="widget-box radio">
+                                                            <ul class="select-list" role="group">
+                                                                <% for (let i = 0; i < options.length; i++) { %>
+                                                                <li class="radiobox type01 checked" role="radio" aria-checked="false"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                                                                    <input type="radio" name="radio" value="<%= options[i].ofrRt %>::<%= options[i].copnDtlClCd %>" title="값1" aria-labelledby="aria-comp-radio1" /><!-- 체크상태일 경우 checked="checked" -->
+                                                                    <div class="comp-list-layout" id="aria-comp-radio1" aria-hidden="true">
+                                                                        <p class="layout-text">
+                                                                            <span class="mtext"><%= options[i].copnDtlClNm %></span>
+                                                                            <% if (options[i].dataVoiceClCd === 'D') { %>
+                                                                            <span class="stext">T플랜 라지/패밀리/DATA인피니티의 경우에는 별도의 기준을 적용합니다.</span>
+                                                                            <% } %>
+                                                                        </p>
+                                                                        <span class="tx-data"><%= options[i].qttText %></span>
+                                                                    </div>
+                                                                </li>
+                                                                <% } %>
+                                                            </ul>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--// .list-comp-input -->
+                                            </div>
+                                            <!--// .cont-box -->
+                                        </li>
+                                        <li role="tabpanel" id="tab2-tab" aria-labelledby="tab2">
+                                            <div class="cont-box inborder">
+                                                <p class="tabcon-title0">받는 분 번호</p>
+                                                <div class="recently-tel-box">
+                                                    <div class="inputbox bt-add">
+                                                        <span class="input">
+                                                            <input type="text" placeholder="숫자만 입력" title="input" value="" aria-labelledby="aria-exp-label1" aria-describedby="aria-exp-desc1">
+                                                            <button class="cancel"><span class="blind">삭제</span></button>
+                                                        </span>
+                                                        <span class="bt-box fe-cancel-btn-box">
+                                                            <button type="button" class="fe-btn-contacts">주소록</button>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--// .cont-box -->
+                <ul class="bt-slice full">
+                    <li class="bt-red1">
+                        <button class="fe-btn-use" disabled>사용하기</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!--// #contents -->
+    </div>
+</body>
+<% include ../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    new Tw.MyTDataRechargeCouponUse($('.wrap'), '<%= no %>');
+  });
+</script>
+<% include ../../components/end.component.html %>

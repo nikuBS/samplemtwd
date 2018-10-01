@@ -50,7 +50,7 @@ Tw.CertificationSkSms.prototype = {
     this._callback = callback;
 
     this._popupService.open({
-      hbs: 'CO_02_01_02_L01',
+      hbs: 'CO_02_01_02_01',
       layer: true,
       data: {
         mdn: svcInfo.svcNum

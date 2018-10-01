@@ -1,0 +1,17 @@
+<%#
+* FileName: myt-data.submain.html
+* Author: 김인환 (skt.p132150@partner.sk.com)
+* Date: 2018.09.17
+%>
+
+<!-- .cont-box -->
+<hr class="cont-sp type1" aria-hidden="true"/>
+<div class="cont-box" data-id="pattern_chart">
+    <% if (data.pattern && data.pattern.data.length > 0 ) { %>
+    <h3>최근 데이터 사용량</h3>
+    <% } else if (data.pattern && data.pattern.voice.length > 0) { %>
+    <h3>최근 음성 사용량</h3>
+    <% } %>
+    <div class="graph-area-type2 pattern">
+    </div>
+</div>

@@ -25,7 +25,7 @@ class AuthLineEdit extends TwViewController {
         const lineList = this.parseLineList(resp.result);
         res.render('line/auth.line.edit.html', Object.assign(lineList, {
           category: this.category,
-          lineCategory: SVC_CATEGORY[this.category.toUpperCase()],
+          lineCategory: SVC_CATEGORY[this.category],
           svcInfo
         }));
       } else {

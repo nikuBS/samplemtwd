@@ -79,5 +79,111 @@ Tw.POPUP_TPL = {
       { title: '고객님의 정보를 가리는 이유', check: false, value: 'A', text: '고객님의 정보를 가리는 이유' },
       { title: '가려진 정보를 보는 방법', check: false, value: 'B', text: '가려진 정보를 보는 방법' }
     ]
-  }]
+  }],
+  FARE_PAYMENT_LAYER_DATA: [
+    {
+      'list':[
+        {'value':'자동납부', 'option':'fe-auto', 'text2':'신청'}
+      ]
+    },
+    {
+      'type':'요금 납부',
+      'list':[
+        {'value':'계좌이체 납부', 'option':'fe-account'},
+        {'value':'체크/신용카드 납부', 'option':'fe-card'},
+        {'value':'OK캐쉬백/T포인트 납부', 'option':'fe-point'}
+      ]
+    },
+    {
+      'list':[
+        {'value':'입금전용계좌 SMS 신청', 'option':'fe-sms',
+          'explain':'입금전용계좌 정보를 SMS로 전송합니다.' + '<br/>' +
+          '자동납부 인출 중이 아닌 경우에만 이용 가능합니다.'}
+      ]
+    }
+  ],
+  IMMEDIATELY_CHARGE_DATA: {
+    TITLE: '충전방법 선택',
+    REFILL: {
+      TYPE: '나의 보유 쿠폰 사용',
+      VALUE: '나의 리필 쿠폰',
+      UNIT: '장'
+    },
+    PREPAY: {
+      'type': '선불 쿠폰 구매/충전',
+      'list': [
+        { 'option': 'data_coupon','value': 'T 데이터 쿠폰' },
+        { 'option': 't_coupon','value': 'T 쿠폰' },
+        { 'option': 'jeju_coupon','value': '제주도 프리 쿠폰' }
+      ]
+    },
+    CHARGE: {
+      TYPE: '요금 충전',
+      VALUE: {
+        LIMIT: '데이터 한도 요금제',
+        ETC: '팅 쿠키즈 안심 음성 요금',
+        TING: '팅요금제 충전 선물'
+      }
+    }
+  },
+  FARE_PAYMENT_CARD_TYPE_LIST: [
+    {
+      'list': [
+        {'option': 'hbs-card-type', 'attr': 'id="00"', value: '일시불'},
+        {'option': 'hbs-card-type', 'attr': 'id="01"', value: '1개월 할부'},
+        {'option': 'hbs-card-type', 'attr': 'id="02"', value: '2개월 할부'},
+        {'option': 'hbs-card-type', 'attr': 'id="03"', value: '3개월 할부'},
+        {'option': 'hbs-card-type', 'attr': 'id="04"', value: '4개월 할부'},
+        {'option': 'hbs-card-type', 'attr': 'id="05"', value: '5개월 할부'},
+        {'option': 'hbs-card-type', 'attr': 'id="06"', value: '6개월 할부'},
+        {'option': 'hbs-card-type', 'attr': 'id="07"', value: '7개월 할부'},
+        {'option': 'hbs-card-type', 'attr': 'id="08"', value: '8개월 할부'},
+        {'option': 'hbs-card-type', 'attr': 'id="09"', value: '9개월 할부'},
+        {'option': 'hbs-card-type', 'attr': 'id="10"', value: '10개월 할부'},
+        {'option': 'hbs-card-type', 'attr': 'id="11"', value: '11개월 할부'},
+        {'option': 'hbs-card-type', 'attr': 'id="12"', value: '12개월 할부'},
+        {'option': 'hbs-card-type', 'attr': 'id="24"', value: '24개월 할부'}
+      ]
+    }
+  ]
 };
+
+Tw.MYT_TPL = {
+  DATA_SUBMAIN: {
+    SP_TEMP: '<br> ↓ <br>',
+    MORE_LINE_TEMP: '<li data-svc-mgmt-num="{{svcMgmtNum}}"><button>' +
+      '<div class="lineinfo-user"><span class="info-title">{{nickNm}}' +
+      '{{#if data.child}}' +
+      '<span class="badge badge-fam"><span class="blind">자녀회선</span></span>' +
+      '{{/if}}' +
+      '</span><span class="info-sub">{{svcNum}}</span>' +
+      '</div><div class="lineinfo-data">' +
+      '<span class="info-title">{{data.data}}' +
+      '<span class="unit ml4">{{data.unit}}</span>' +
+      '</span><span class="ico"></span></div></button></li>'
+  },
+  FARE_SUBMAIN: {
+    MORE_LINE_TEMP: '<li data-svc-mgmt-num="{{svcMgmtNum}}"data-name="{{nickNm}}" data-num="{{svcNum}}">' +
+      '<button><div class="lineinfo-user d-table"><div class="ico"><i></i></div><div class="cont">' +
+      '{{#if !data.merge}}' +
+      '<span class="ico"></span>' +
+      '{{/if}}' +
+      '<span class="info-title">{{nickNm}}'+
+      '{{ if (data.merge) { }}' +
+      '<span class="badge badge-merge"><span class="blind">통합</span></span>' +
+      '{{ } }}' +
+      '</span>' +
+      '<span class="info-sub">{{= data.svcNum }}</span></div></div><div class="lineinfo-data">' +
+      '<span class="info-title">{{= data.money }} 원</span><span class="ico"></span></div>' +
+      '</button></li>'
+  }
+};
+
+Tw.MYT_DATA_CHARGE_TYPE_LIST = [
+  {'value':'전체'},
+  {'value':'T끼리 데이터 선물'},
+  {'value':'데이터 한도 충전'},
+  {'value':'팅/쿠키즈/안심요금'},
+  {'value':'팅 요금 선물'},
+  {'value':'데이터 음성 리필'}
+];

@@ -11,7 +11,6 @@ class RedisService {
   private redisOption = Object.assign(this.envRedis, {
     prefix: 'session:'
   });
-  private client;
 
   constructor() {
   }
@@ -26,21 +25,26 @@ class RedisService {
   });
 
   public setData(key, value) {
-    this.client.set(key, value);
+    const client = redis.createClient(this.envRedis);
+
+    client.set(key, value);
+    client.end(true);
   }
 
   public getData(key): Observable<any> {
-    this.client = redis.createClient(this.envRedis);
+    const client = redis.createClient(this.envRedis);
+
     return Observable.create((observer) => {
-      this.client.get(key, (err, reply) => {
+      client.get(key, (err, reply) => {
         let result;
+
         try {
           result = JSON.parse(reply);
         } catch (e) {
           result = null;
         }
 
-        this.client.end(true);
+        client.end(true);
         observer.next(result);
         observer.complete();
       });

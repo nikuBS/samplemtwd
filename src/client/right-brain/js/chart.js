@@ -1,313 +1,194 @@
 $.fn.chart = function(option){
   var chart_data = {caption:'표제목',tf_txt:'평균값',td_txt:'각항목값',da_arr:[]};
   $.extend(chart_data,option.data);
-  var ani_arr = [],
-      ani_arr1 = [],//bar타입만 사용
-      co_pattern = [],
-      pa_idx = 0,
-      pat = [],
-      max = [],
-      inter = null;
   var container = document.getElementsByClassName(option.container)[0],
-    ww = container.clientWidth,
-    pding = parseInt(window.getComputedStyle(document.getElementsByClassName(option.container)[0]).getPropertyValue("padding-left"))*2,
-    _gap = 50,
-    graph_unit = option.h*.25,
-    chart_gap = Math.floor((ww-pding)/(chart_data.da_arr.length)),
-    canvas = container.getElementsByTagName('canvas')[0],
-    can = canvas.getContext('2d');
-  canvas.width = ww-pding;
-  canvas.height = option.h;
-  canvas.style.letterSpacing = '.03rem';
-  canvas.setAttribute('aria-hidden',true);
-  var chart_length = chart_data.da_arr.length;
-  for(var i = 0; i < chart_length; ++i){//애니메이션 초기값 설정
-    if(option.type == 'basic' || option.type == 'basic_1'){
-      ani_arr[i] = unit_count(option.max*.5);
-      //ani_arr[i] = unit_count(option.max);
-      max[i] = sum_aver(chart_data.da_arr[i].data,{'decimal':option.decimal});
-    }else if(option.type == 'bar'){
-      var pattern_legnth = chart_data.co_p.length;
-      ani_arr1[i] = unit_count(option.max*.5);
-      ani_arr[i] = unit_count(option.max*.5);
-      //ani_arr[i] = unit_count(option.max);
-      max[i] = sum(chart_data.da_arr[i].data);
-    }else if(option.type == 'bar_1'){
-      ani_arr[i] = unit_count(option.max*.5);
-      max[i] = sum(chart_data.da_arr[i].data);
+      chart_length = chart_data.da_arr.length,
+      max = [];
+  
+  for(var i = 0; i < chart_length; ++i){
+    if(option.unit == 'time'){
+      max[i] = operation_minutes(chart_data.da_arr[i].data[0]);
     }else{
-      var total = sum_aver_total(chart_data.da_arr),
-        _sum = sum_aver(chart_data.da_arr[i].data,{'decimal':option.decimal}),
-        per = Math.PI*2*_sum/total;
-      if(i == 0){
-        ani_arr[i] = {start:0,end:per,progress:0};
-      }else{
-        ani_arr[i] = {start:ani_arr[i-1].end,end:ani_arr[i-1].end+per,progress:ani_arr[i-1].end};
-      }
+      max[i] = chart_data.da_arr[i].data;
     }
   }
-  for(var i = 0; i<pattern_legnth; ++i){
-    if(chart_data.co_p[i].indexOf('img') > 0){
-      co_pattern[i] = new Image();
-      co_pattern[i].src = chart_data.co_p[i];
-      pa_idx++;
-      co_pattern[i].addEventListener('load',function(){
-        co_pattern[pa_idx] = can.createPattern(co_pattern[pa_idx],'repeat');
-      });
-    }else{
-      co_pattern[i] = chart_data.co_p[i];
-    }
-  }
-  inter = setInterval(ani,10);
   
   max.sort(function(a,b){
     return b - a;
   });
-  
-  option.max = max[0];
-  option.min = max[max.length-1];
-  create_tag(chart_data,chart_length);
-  function ani(){
-    can.fillStyle = '#fff';
-    can.fillRect(0,0,ww,option.h);
-    guide_line();
-    can.setLineDash([]);
-    switch(option.type){
-      case 'circle':
-        var total = sum_aver_total(chart_data.da_arr);
-        for(var i = 0; i < chart_length; ++i){
-          var _sum = sum_aver(chart_data.da_arr[i].data,{'decimal':option.decimal});
-          ani_arr[i].progress += (ani_arr[i].end-ani_arr[i].progress)*option.spd;
-          can.beginPath();
-          can.fillStyle = co_pattern[i];
-          can.moveTo((ww-pding)*.5,option.h*.5);
-          can.arc((ww-pding)*.5,option.h*.5,option.h*.3,ani_arr[i].start,ani_arr[i].progress,false);
-          can.fill();
-          can.closePath();
-          can.beginPath();
-          can.fillStyle = chart_data.da_arr[i].co;
-          can.textAlign = 'center';
-          can.textBaseline = 'middle'; 
-          can.font = '1.25rem Arial';
-          can.fillText(_sum,Math.cos(ani_arr[i].progress)*(option.h*.4)+(ww-pding)*.5,Math.sin(ani_arr[i].progress)*(option.h*.4)+option.h*.5-20);
-          can.font = '1rem Arial';
-          can.fillText(chart_data.da_arr[i].na,Math.cos(ani_arr[i].progress)*(option.h*.4)+(ww-pding)*.5,Math.sin(ani_arr[i].progress)*(option.h*.4)+option.h*.5);
+  max = max[0];
+  if(option.type == 'bar'){
+    var chart_ul = make_tag('ul','chart_ul',container);
+    for(var i = 0; i <= chart_length; ++i){
+      var el = make_tag('li','graph-list',chart_ul);
+      el.style.width = 100/(chart_length+1)+'%';
+      var el_dl = make_tag('dl','chart-dl',el),
+          el_dt = make_tag('dt','graph-tit',el_dl),
+          el_dd = make_tag('dd','chart-dd',el_dl),
+          box = make_tag('span','box',el_dd),
+          bar = make_tag('span','bar',box),
+          txt = make_tag('span','txt',box);
+      var count,count_txt,average_count,average_txt;
+      if(i == chart_length){
+        if(option.unit == 'time'){
+          average_txt = operation_time(sum_aver(chart_data.da_arr));
+          average_count = sum_aver(chart_data.da_arr);
+        }else{
+          average_txt = sum_aver(chart_data.da_arr,option.decimal)+option.unit;
+          average_count = sum_aver(chart_data.da_arr,option.decimal);
         }
-        break;
-      case 'bar':
-        for(var i = 0; i < chart_length; ++i){
-          var _sum = sum_data1(chart_data.da_arr[i].data),
-              _sum1 = sum(chart_data.da_arr[i].data,true),
-              _sum2 = sum_data1(chart_data.da_arr[i].sale_data),
-              _sum3 = sum(chart_data.da_arr[i].sale_data,true);
-          ani_arr[i] += (unit_count(_sum)-ani_arr[i])*option.spd;
-          ani_arr1[i] += (unit_count(_sum2)-ani_arr1[i])*option.spd;
-          for(var j = 0; j<pattern_legnth; ++j){
-            var num_gap = 0,
-              target = null,
-              num_txt = '0',
-              txt_co = '';
-            if(j == 0){
-              num_gap = -15;
-              target = ani_arr[i];
-              num_txt = _sum1;
-              txt_co = chart_data.txt_co;
-            }else{
-              num_gap = 15;
-              target = ani_arr1[i];
-              if(_sum3 != 0) num_txt = '- '+_sum3;
-              txt_co = chart_data.sale_co;
-            }
-            if(num_txt != '0'){
-              can.beginPath();
-              can.strokeStyle = co_pattern[j];
-              can.lineWidth = 8;
-              can.lineCap = 'round';
-              can.moveTo(chart_gap*i+_gap+num_gap,unit_count(option.max));
-              can.lineTo(chart_gap*i+_gap+num_gap,target);
-              can.stroke();
-            }
-            can.font = '0.5625rem Arial';
-            can.fillStyle = txt_co;
-            can.textBaseline = 'middle';
-            can.textAlign = 'center';
-            can.fillText(num_txt,chart_gap*i+_gap+num_gap,target-15);     
-          }
-          can.beginPath();
-          can.fillStyle = chart_data.txt_co;
-          can.font = '0.8125rem Arial';
-          can.fillText(chart_data.da_arr[i].na,chart_gap*i+_gap,unit_count(option.max)+_gap*.25);
+        el_dt.innerHTML = '평균';
+        txt.innerHTML = average_txt;
+        txt.style.bottom = (average_count/max)*100+5+'%';
+        bar.style.height = (average_count/max)*100+'%';
+        bar.setAttribute('class','bar point');
+      }else{
+        if(option.unit == 'time'){
+          count_txt = operation_time(operation_minutes(chart_data.da_arr[i].data[0]));
+          count = operation_minutes(chart_data.da_arr[i].data[0]);
+        }else{
+          count_txt = chart_data.da_arr[i].data+option.unit;
+          count = chart_data.da_arr[i].data;
         }
-        break;
-      case 'bar_1':
-        for(var i = 0; i < chart_length; ++i){
-          var _sum = sum_data1(chart_data.da_arr[i].data),
-              _sum1 = sum(chart_data.da_arr[i].data,true);
-          ani_arr[i] += (unit_count(_sum)-ani_arr[i])*option.spd;
-          
-          if(_sum1 != '0'){
-            can.beginPath();
-            can.strokeStyle = chart_data.co_p[0];
-            can.lineWidth = 8;
-            can.lineCap = 'round';
-            can.moveTo(chart_gap*i+_gap,unit_count(option.max));
-            can.lineTo(chart_gap*i+_gap,ani_arr[i]);
-            can.stroke();
-          }
-          can.font = '0.5625rem Arial';
-          can.fillStyle = '#000';
-          can.textBaseline = 'middle';
-          can.textAlign = 'center';
-          can.fillText(_sum1+' 원',chart_gap*i+_gap,ani_arr[i]-15);     
-          
-          can.beginPath();
-          can.fillStyle = chart_data.txt_co;
-          can.font = '0.8125rem Arial';
-          can.fillText(chart_data.da_arr[i].na,chart_gap*i+_gap,unit_count(option.max)+15);
+        el_dt.innerHTML = chart_data.da_arr[i].na;
+        txt.innerHTML = count_txt;
+        if(count_txt == '0GB' || count_txt == '0초'){
+          txt.setAttribute('class', 'txt blind');
         }
-        break;
-      case 'basic':
-        
-      default:
-        for(var i = 0; i < chart_length; ++i){
-          var _sum = sum_aver(chart_data.da_arr[i].data,{'decimal':option.decimal});
-          ani_arr[i] += (unit_count(option.max-_sum)-ani_arr[i])*option.spd;
-          can.beginPath();
-          can.strokeStyle = '#ddd';
-          can.moveTo(chart_gap*i+_gap,unit_count(0));
-          can.lineTo(chart_gap*i+_gap,unit_count(option.max));
-          can.stroke();
-          can.closePath();
-          
-          can.beginPath();
-          can.fillStyle = '#fff';
-          can.strokeStyle = chart_data.line_co;
-          can.moveTo(chart_gap*i+_gap,ani_arr[i]);
-          can.lineTo(chart_gap*(i+1)+_gap,ani_arr[i+1]);
-          can.stroke();
-          can.closePath();
-          can.beginPath();
-          can.arc(chart_gap*i+_gap,ani_arr[i],5,0,Math.PI*2,true);
-          can.fill();
-          can.stroke();
-          
-          can.fillStyle = chart_data.txt_co;
-          can.beginPath();
-          can.textAlign = 'center';
-          can.textBaseline = 'middle';
-          can.font = '0.625rem Arial';
-          if(option.type == 'basic_1'){
-            can.fillText(operation_time(_sum),chart_gap*i+_gap,unit_count(0)-_gap*.25);
-          }else{
-            can.fillText(_sum,chart_gap*i+_gap,unit_count(0)-_gap*.25);
-          }
-          can.font = '0.8125rem Arial';
-          can.fillText(chart_data.da_arr[i].na,chart_gap*i+_gap,unit_count(option.max)+_gap*.25);
-        }
-        break;
-    }
-    setTimeout(function(){
-      clearInterval(inter);
-      switch(option.type){
-        case 'circle':
-          for(var i = 0; i < chart_length; ++i){
-            can.beginPath();
-            can.fillStyle = pat[i];
-            can.moveTo((ww-pding)*.5,option.h*.5);
-            can.arc((ww-pding)*.5,option.h*.5,option.h*.3,ani_arr[i].start,ani_arr[i].end,false);
-            can.fill();
-            can.closePath();
-          }
-          break;
-        case 'bar':
-          /*
-          for(var i = 0; i < chart_length; ++i){
-            var _sum = sum_aver(chart_data.da_arr[i].data,{'decimal':option.decimal});
-            can.beginPath();
-            can.strokeStyle = co_pattern[i];
-            can.lineWidth = 25;
-            can.moveTo(chart_gap*i+chart_gap+_gap*.5,option.h-_gap*.5-1);
-            can.lineTo(chart_gap*i+chart_gap+_gap*.5,unit_count(option.max-_sum));
-            can.stroke();
-            can.closePath();
-          }
-          */
-          break;
-        case 'basic':
-          
-        default:
-          /*for(var i = 0; i < chart_length; ++i){
-            var _sum = sum_aver(chart_data.da_arr[i].data,{'decimal':option.decimal});
-            can.beginPath();
-            can.strokeStyle = '#000';
-            can.strokeStyle = chart_data.da_arr[i].co;
-            can.arc(chart_gap*i+chart_gap+_gap*.5,unit_count(option.max-_sum),5,0,Math.PI*2,true);
-            can.fillStyle = chart_data.da_arr[i].co;
-            can.fill();
-            can.beginPath();
-            can.moveTo(chart_gap*i+chart_gap+_gap*.5,option.h-_gap*.5);
-            can.lineTo(chart_gap*i+chart_gap+_gap*.5,unit_count(option.max-_sum));
-            can.strokeStyle = chart_data.da_arr[i].co;
-            can.stroke();
-            can.closePath();
-          }*/
-          break;
+        txt.style.bottom = (count/max)*100+5+'%';
+        bar.style.height = (count/max)*100+'%';
       }
-    },1000);
+    }
+    var line_box = make_tag('span','line-box',container),
+        line = make_tag('span','line',line_box);
+    line.style.bottom = (average_count/max)*100+'%';
+  }else if(option.type == 'bar2'){
+    var scroll_gap = 0;
+    var chart_left = make_tag('div','chart-left',container),
+        chart_right = make_tag('div','chart-right',container),
+        chart_list_box = make_tag('div','chart-list-box',chart_left),
+        chart_average_box = make_tag('div','chart-average-box',chart_right),
+        chart_ul = make_tag('ul','chart-ul',chart_list_box);
+    for(var i = chart_length-1; i >= 0; --i){
+      var el = make_tag('li','graph-list',chart_ul);
+      var el_dl = make_tag('dl','chart-dl',el),
+          el_dt = make_tag('dt','graph-tit',el_dl),
+          link_bt = make_tag('button','link-bt',el_dt),
+          el_dd = make_tag('dd','chart-dd',el_dl),
+          box = make_tag('span','box',el_dd),
+          bar = make_tag('span','bar',box),
+          txt = make_tag('span','txt',box);
+      if(option.sale){
+        var bar1 = make_tag('span','bar',box);
+        sale = chart_data.da_arr[i].sale;
+        bar1.style.height = (sale/max)*100+'%';
+        bar1.setAttribute('class','bar pos-second point1');
+      }else{
+        chart_left.setAttribute('class','chart-left none-sale');
+        chart_right.setAttribute('class','chart-right none-sale');
+      }
+      link_bt.setAttribute('class',chart_data.da_arr[i].class);
+      count_txt = add_comma(chart_data.da_arr[i].data)+option.unit;
+      count = chart_data.da_arr[i].data;
+      link_bt.innerHTML = chart_data.da_arr[i].na;
+      txt.innerHTML = count_txt;
+      if(count_txt == '0원'){
+        txt.setAttribute('class', 'txt blind');
+      }
+      txt.style.bottom = (count/max)*100+5+'%';
+      bar.style.height = (count/max)*100+'%';   
+    }
+    scroll_gap = el.clientWidth;
+    var average_txt = sum_aver(chart_data.da_arr,option.decimal)+option.unit,
+        average_count = sum_aver(chart_data.da_arr,0),
+        sale_count = sum_aver(chart_data.da_arr,0,true);
+    var re_dl = make_tag('dl','chart-dl',chart_average_box),
+        re_dt = make_tag('dt','graph-tit',re_dl),
+        re_dd = make_tag('dd','chart-dd',re_dl),
+        re_box = make_tag('span','box',re_dd),
+        re_bar = make_tag('span','bar',re_box),
+        re_txt = make_tag('span','txt',re_box);
+        re_dt.innerHTML = '평균';
+    if(option.sale){
+      var re_bar1 = make_tag('span','bar',re_box);
+      re_bar1.style.height = (sale_count/max)*100+'%';
+      re_bar1.setAttribute('class','bar pos-second point1');
+    }
+    re_txt.innerHTML = average_txt;
+    re_txt.style.bottom = (average_count/max)*100+5+'%';
+    re_bar.style.height = (average_count/max)*100+'%';
+    re_bar.setAttribute('class','bar point2');
+
+    var rec_box = make_tag('div','rec-box',chart_left),
+        rec_ul = make_tag('ul','rec-ul',rec_box),
+        arrow_box = make_tag('ul','arrow-box',container);
+    for(var i = 0; i < 2; ++i){
+      var rec_li = make_tag('li','rec-li',rec_ul),
+          arrow_li = make_tag('li','arrow-li',arrow_box);
+      if(i == 0){
+        make_rec('','청구',rec_li);
+        arrow_bt = make_tag('button','arrow-prev',arrow_li);
+        arrow_bt.innerHTML = 'Prev';
+        arrow_bt.addEventListener('click',function(){
+          scroll_move($(container).find($('.chart-list-box')),scroll_gap,true);
+        });
+      }else{
+        if(option.sale){
+          make_rec('point1','할인',rec_li);
+        }
+        arrow_bt = make_tag('button','arrow-next',arrow_li);
+        arrow_bt.innerHTML = 'Next';
+        arrow_bt.addEventListener('click',function(){
+          scroll_move($(container).find($('.chart-list-box')),scroll_gap,false);
+        });
+      }
+    }
   }
-  function sum(arr,won){//각 배열합
+  function scroll_move(ta,num,dir){
+    var sc = ta.scrollLeft(),
+        spd = dir ? -num : num;
+    //sc = sc*(sc%num);
+    ta.stop().animate({
+      scrollLeft:sc + spd
+    },{
+      queue:false,
+      duration:300
+    });
+  }
+  function make_tag(tag,name,parent){
+    var _tag = document.createElement(tag);
+    parent.appendChild(_tag);
+    _tag.setAttribute('class',name);
+    return _tag;
+  }
+  function make_rec(cl,txt,container){
+    var bar = make_tag('span','bar',container),
+        sp = make_tag('span','txt',container);
+    bar.setAttribute('class','bar '+cl);
+    sp.innerHTML = txt;
+  }
+  function sum_aver(arr,decimal,sale){//각 배열합 평균
     var num = 0,
       total = arr.length;
     for(var i = 0; i < total; ++i){
-      if(option.type == 'basic_1'){
-        num += operation_minutes(arr[i]);
+      if(sale){
+        num += arr[i].sale*1;
       }else{
-        num += arr[i];
+        if(option.unit == 'time'){
+          num += operation_minutes(arr[i].data[0]);
+        }else{
+          num += arr[i].data*1;
+        }
       }
     }
-    if(won){
-      return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    }else{
-      return num;
-    }
-  }
-  function sum_aver(arr,obj){//각 배열합 평균
-    var num = 0,
-      total = arr.length,
-      _obj = obj;
-    for(var i = 0; i < total; ++i){
-      if(option.type == 'basic_1'){
-        num += operation_minutes(arr[i]);
-      }else{
-        num += arr[i];
-      }
-    }
-    if(_obj.decimal){
-      return Math.round((num/total)*Math.pow(10,_obj.decimal))/Math.pow(10,_obj.decimal);
+    if(decimal == 'won'){
+      return add_comma(Math.round((num/total)));
+    }else if(typeof decimal == Number){
+      return Math.round((num/total)*Math.pow(10,decimal))/Math.pow(10,decimal);
     }else{
       return Math.round((num/total));
     }
   }
-  function sum_aver_total(arr){//각 배열합 평균 합
-    var total = arr.length,
-      total_num = 0;
-    for(var i = 0; i < total; ++i){
-      total_num += sum_aver(arr[i].data,{'decimal':option.decimal});
-    }
-    return total_num;
-  }
-  function sum_data1(arr){
-    var num = 0,
-      total = arr.length;
-    for(var i = 0; i < total; ++i){
-      num += arr[i];
-    }
-    return Math.round((1-(num/option.max))*option.max);
-  }
-  /*function total_Average(decimal){
-    var total = chart_data.da_arr.length;
-    return Math.round((sum_aver_total(chart_data.da_arrchart_data.da_arr)/total)*Math.pow(10,decimal))/Math.pow(10,decimal);
-  }*/
   function operation_minutes(num){
     return (num.split(':')[0]*1*60)+num.split(':')[1]*1;
   }
@@ -320,154 +201,8 @@ $.fn.chart = function(option){
       return min+'분 '+sec+'초';
     }
   }
-  function unit_count(num){
-    var num1 = 0,
-        count = 0;
-    if(option.h < 200){
-      num1 = .5;
-    }else if(option.h < 250){
-      num1 = .6;
-    }else{
-      num1 = .65;
-    }
-    if(option.type == 'bar_1'){
-      count = (option.h*(num1+.15))*(num/option.max)+graph_unit*(1.1-num1); 
-    }else{
-      count = (option.h*num1)*(num/option.max)+graph_unit*.5;    
-    }
-    return count;
-  }
-  function guide_line(){
-    can.fillStyle = chart_data.txt_co;    
-    can.font = '1rem Arial';
-    if(option.type == 'basic' || option.type == 'basic_1'){
-      can.beginPath();
-      can.strokeStyle = '#eee';
-      can.moveTo(0,option.h-20);
-      can.lineTo(ww-pding,option.h-20);
-      can.stroke();
-      can.closePath();
-      for(var i = 0; i < option.guide_num; ++i){
-        can.beginPath();
-        can.strokeStyle ='#bbb';
-        can.setLineDash([4, 4]);
-        can.moveTo(0,unit_count((option.max-option.min)*.5));
-        can.lineTo(ww-pding,unit_count((option.max-option.min)*.5));
-        //can.moveTo(0,Math.round(option.h/(option.guide_num+1))*(i+1)*.75);
-        //can.lineTo(ww-pding,Math.round(option.h/(option.guide_num+1))*(i+1)*.75);
-        
-        
-        //can.moveTo(chart_gap*i+_gap+num_gap,unit_count(option.min));
-        //can.lineTo(chart_gap*i+_gap+num_gap,target);
-        
-        can.stroke();
-        can.closePath();
-      }
-      /*
-      //y_name 생략
-      can.textAlign = 'left';
-      can.textBaseline = 'top';
-      can.font = '0.875rem Arial';
-      can.fillText(option.y_name,0,0);
-      can.fillStyle = '#000';
-      can.textAlign = 'right';
-      can.font = 'bold 1.25rem Arial';
-      if(option.type == 'basic_1'){
-        can.fillText(operation_time(total_Average(option.decimal)),ww-pding-1,0);
-      }else{
-        can.fillText(total_Average(option.decimal),ww-pding-1,0);
-      }
-      */
-      
-      can.fillStyle = chart_data.txt_co;
-      can.font = '0.75rem Arial';
-      can.textBaseline = 'bottom';
-      can.textAlign = 'left';
-      can.fillText('--- 3개월 평균',0,option.h);
-      can.textAlign = 'right';
-      can.fillText(option.x_name,ww-pding-1,option.h);
-      
-    }else if(option.type == 'bar'){
-      can.beginPath();
-      can.lineWidth = 1;
-      can.strokeStyle = '#eee';
-      can.moveTo(0,option.h*.9);
-      can.lineTo(ww-pding,option.h*.9);
-      can.stroke();
-      can.closePath();
-      
-      for(var i = 0; i < pattern_legnth; ++i){
-        can.beginPath();
-        can.fillStyle = co_pattern[i];
-        can.arc(70*i+5,option.h-7,5,0,Math.PI*2,true);
-        can.fill();
-        can.closePath();
-        can.textBaseline = 'bottom';
-        can.textAlign = 'left';
-        if(i == 0){
-          var bar_txt = '사용';
-        }else{
-          var bar_txt = '할인';
-        }
-        can.fillStyle = chart_data.txt_co;
-        can.font = '0.75rem Arial';
-        can.fillText(bar_txt,70*i+15,option.h);
-      }
-      
-      can.fillStyle = chart_data.txt_co;
-      can.font = '0.75rem Arial';
-      can.textBaseline = 'bottom';
-      can.textAlign = 'right';
-      can.fillText(option.x_name,ww-pding-1,option.h);
-    }else if(option.type == 'circle'){
-      var total = sum_aver_total(chart_data.da_arr);
-      can.textAlign = 'right';
-      can.textBaseline = 'middle'; 
-      can.fillText('총 '+total+'건',ww-pding-_gap*.35,unit_count(option.max));
-    }
-  }
-  function create_tag(chart_data,chart_length){
-    var table_container = document.getElementsByClassName(option.container)[0];
-    if(table_container.getElementsByTagName('table')[0]){
-      table_container.removeChild(table_container.getElementsByTagName('table')[0]);
-    }
-    var t_table = document.createElement('table'),
-      t_caption = document.createElement('caption'),
-      t_thead = document.createElement('thead'),
-      t_tfoot = document.createElement('tfoot'),
-      t_tbody = document.createElement('tbody');
-    document.getElementsByClassName(option.container)[0].appendChild(t_table);
-    t_table.appendChild(t_caption);
-    t_table.appendChild(t_thead);
-    t_table.appendChild(t_tfoot);
-    t_table.appendChild(t_tbody);
-    t_table.setAttribute('class','blind');
-    t_caption.innerHTML = chart_data.caption;
-    var tth = t_thead.appendChild(document.createElement('tr')),
-      ttf = t_tfoot.appendChild(document.createElement('tr')),
-      ttb = t_tbody.appendChild(document.createElement('tr'));
-    for(var i = 0; i < chart_length+1; ++i){
-      var th = tth.appendChild(document.createElement('th'));
-      if(i == 0){
-        var tf = ttf.appendChild(document.createElement('th')),
-        td = ttb.appendChild(document.createElement('th'));
-      }else{
-        var tf = ttf.appendChild(document.createElement('td')),
-        td = ttb.appendChild(document.createElement('td'));
-      }
-
-      if(i == 0){
-        th.innerHTML = '';
-        tf.innerHTML = chart_data.tf_txt;
-        tf.setAttribute('scope','row');
-        td.innerHTML = chart_data.td_txt;
-        td.setAttribute('scope','row');
-      }else{
-        th.innerHTML = chart_data.da_arr[i-1].na;
-        th.setAttribute('scope','col');
-        tf.innerHTML = sum_aver(chart_data.da_arr[i-1].data,{'decimal':option.decimal});
-        td.innerHTML = chart_data.da_arr[i-1].data;
-      }
-    }
+  function add_comma(num) {
+    var regexp = /\B(?=(\d{3})+(?!\d))/g;
+    return num.toString().replace(regexp, ',');
   }
 }

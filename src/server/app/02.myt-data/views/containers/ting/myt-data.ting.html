@@ -1,0 +1,133 @@
+<%#
+* FileName: myt-data.ting.html
+* Author: Jiman Park (jiman.park@sk.com)
+* Date: 2018.09.13
+%>
+
+<% include ../../components/start.component.html %>
+<body class="bg-white">
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap step">
+    <!-- #header -->
+    <div id="header" class="header-wrap">
+        <div class="header">
+            <div class="header-ti align-l">
+                <h1>팅요금제 충전 선물</h1>
+            </div>
+            <button class="prev-step fe-common-back">취소</button>
+        </div>
+    </div>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <!-- .cont-box -->
+            <div class="cont-box noborder">
+                <h4 class="tabcon-title0">받는 분 번호</h4>
+                <div class="recently-tel-box">
+                    <div class="inputbox bt-add canceling mb26">
+                        <span class="input">
+                            <input type="text" class="fe-input_ting_receiver" placeholder="숫자만 입력" title="input" value=""
+                                   aria-labelledby="aria-exp-label1"
+                                   aria-describedby="aria-exp-desc1" maxlength="13">
+                            <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
+                        </span>
+                        <% if ( isApp ) { %>
+                        <span class="bt-box skyblue1">
+                            <button type="button" class="fe-btn_native_contact">주소록</button>
+                        </span>
+                        <% } %>
+                    </div>
+                </div>
+                <h4 class="tabcon-title0">충전 금액</h4>
+                <div class="widget">
+                    <div class="widget-box radio">
+                        <div class="radio-slide">
+                            <ul class="select-list fe-ting_amount_select_list" role="radiogroup" style="width: 100%;">
+                                <li class="radiobox disabled" role="radio" aria-checked="false" aria-disabled="true">
+                                    <input type="radio" name="radio4" value="20000" title="값1" disabled="">
+                                    <!-- 체크상태일 경우 checked="checked" -->
+                                    <span class="radio-txt">
+												<span>20,000</span><span class="unit">원</span>
+											</span>
+                                </li>
+                                <li class="radiobox" role="radio" aria-checked="true">
+                                    <input type="radio" name="radio4" value="15000" title="값2">
+                                    <!-- 체크상태일 경우 checked="false" -->
+                                    <span class="radio-txt">
+												<span>15,000</span><span class="unit">원</span>
+											</span>
+                                </li>
+                                <li class="radiobox" role="radio" aria-checked="false">
+                                    <input type="radio" name="radio4" value="10000" title="값3"><!-- 비활성화상태일 경우 disabled="disabled" -->
+                                    <span class="radio-txt">
+												<span>10,000</span><span class="unit">원</span>
+											</span>
+                                </li>
+                                <li class="radiobox" role="radio" aria-checked="false">
+                                    <input type="radio" name="radio4" value="5000" title="값4"><!-- 체크된 비활성화 상태일 경우 체크상태와 비활성화 상태를 전부 적용 -->
+                                    <span class="radio-txt">
+												<span>5,000</span><span class="unit">원</span>
+											</span>
+                                </li>
+                                <li class="radiobox" role="radio" aria-checked="false">
+                                    <input type="radio" name="radio4" value="4000" title="값4"><!-- 체크된 비활성화 상태일 경우 체크상태와 비활성화 상태를 전부 적용 -->
+                                    <span class="radio-txt">
+												<span>4,000</span><span class="unit">원</span>
+											</span>
+                                </li>
+                                <li class="radiobox" role="radio" aria-checked="false">
+                                    <input type="radio" name="radio4" value="3000" title="값4"><!-- 체크된 비활성화 상태일 경우 체크상태와 비활성화 상태를 전부 적용 -->
+                                    <span class="radio-txt">
+												<span>3,000</span><span class="unit">원</span>
+											</span>
+                                </li>
+                                <li class="radiobox" role="radio" aria-checked="false">
+                                    <input type="radio" name="radio4" value="2000" title="값4"><!-- 체크된 비활성화 상태일 경우 체크상태와 비활성화 상태를 전부 적용 -->
+                                    <span class="radio-txt">
+												<span>2,000</span><span class="unit">원</span>
+											</span>
+                                </li>
+                                <li class="radiobox" role="radio" aria-checked="false">
+                                    <input type="radio" name="radio4" value="1000" title="값4"><!-- 체크된 비활성화 상태일 경우 체크상태와 비활성화 상태를 전부 적용 -->
+                                    <span class="radio-txt">
+												<span>1,000</span><span class="unit">원</span>
+											</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--// .cont-box -->
+            <div class="bt-fixed-area">
+                <ul class="bt-slice full">
+                    <li class="bt-red1">
+                        <button class="fe-btn_ting_send" disabled>선물하기</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--// #contents -->
+</div>
+
+<% include ../../components/javascript.component.html %>
+
+<script>
+  $(document).ready(function () {
+    var oMyTDataTing = new Tw.MyTDataTing();
+  });
+</script>
+
+</body>
+<% include ../../components/end.component.html %>

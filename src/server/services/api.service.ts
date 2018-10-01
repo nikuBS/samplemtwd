@@ -52,7 +52,7 @@ class ApiService {
   }
 
   private makeHeader(command: any, header: any, params): any {
-    if ( !header ) {
+    if ( FormatHelper.isEmpty(header) ) {
       header = {};
     }
 
@@ -61,7 +61,7 @@ class ApiService {
         return Object.assign(header, {
           'content-type': 'application/json; charset=UTF-8',
           'x-user-ip': this.loginService.getNodeIp(),
-          cookie: FormatHelper.isEmpty(header.cookie) ? this.makeCookie() : header.cookie,
+          cookie: (FormatHelper.isEmpty(header.cookie) || (header.cookie).indexOf(COOKIE_KEY.APP_API) === -1) ? this.makeCookie() : header.cookie,
         });
       case API_SERVER.TID:
         return Object.assign(header, {
@@ -160,6 +160,14 @@ class ApiService {
       .switchMap((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
           return this.loginService.setAllSvcInfo(resp.result);
+        } else {
+          throw resp;
+        }
+      })
+      .switchMap((resp) => this.request(API_CMD.BFF_01_0040, {}))
+      .switchMap((resp) => {
+        if(resp.code === API_CODE.CODE_00) {
+          return this.loginService.setChildInfo(resp.result);
         } else {
           throw resp;
         }

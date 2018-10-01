@@ -1,0 +1,42 @@
+<%#
+* FileName: myt-fare.bill.set.return-history.components.html
+* Author: 양정규 (skt.P130715@partner.sk.com)
+* Date: 2018.09.14
+%>
+
+<script id="tmplMore" type="text/x-handlebars-template">
+    {{#each list}}
+    <p class="history-year-tx">{{undlvRgstDt}}</p>
+    <div class="list-comp-history">
+        <ul class="comp-box info-type last-border">
+            <li class="list-box">
+                <ul class="list-con">
+                    <li>
+                        <p class="list-text disb">
+                            <span class="mtext">{{billTyp}}</span>
+                        </p>
+                        <div class="list-info">
+                            <dl>
+                                <dt>반송사유</dt>
+                                <dd>{{undlvRsn}}</dd>
+                            </dl>
+                            <dl>
+                                <dt>청구인</dt>
+                                <dd>{{custNm}}</dd>
+                            </dl>
+                            <dl>
+                                <dt>안내서 청구일</dt>
+                                <dd>{{invDt}}</dd>
+                            </dl>
+                            <dl>
+                                <dt>안내서 발송일</dt>
+                                <dd>{{sndDt}}</dd>
+                            </dl>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    {{/each}}
+</script>

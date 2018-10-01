@@ -10,7 +10,11 @@ var gulp       = require('gulp'),
     sort       = require('gulp-sort'),
     extend     = require('gulp-extend'),
     shell      = require('gulp-shell'),
-    clean      = require('gulp-clean');
+    clean      = require('gulp-clean'),
+    remoteSrc  = require('gulp-remote-src'),
+    jeditor    = require('gulp-json-editor'),
+    options    = require('gulp-options'),
+    file       = require('gulp-file');
 
 
 var oldAppNames = ['home', 'myt', 'recharge', 'payment', 'customer', 'auth'];
@@ -19,7 +23,57 @@ var appNames = ['common', 'home', 'myt-data', 'myt-fare', 'myt-join', 'product',
 var dist_tmp = 'src/server/public/cdn/';
 var dist = 'dist/';
 
-var env = 'src/server/config';
+var config = 'src/server/config';
+// var manifestFile = 'manifest-' + new Date().getTime() + '.json';
+var manifestFile = 'manifest.json';
+var lastManifest = '';
+var manifest = {};
+var env = options.get('env') || 'local';
+
+var cdn = {
+  local: 'http://localhost:3001/',
+  development: 'http://61.250.20.69/',
+  qa: 'http://61.250.20.69/',
+  prod: 'http://61.250.20.69/'
+};
+
+gulp.task('get-manifest-list', function () {
+  return remoteSrc('manifest-list.json', {
+    base: cdn[env]
+  })
+    .on('error', function (err) {
+      gutil.log(gutil.colors.red('[Error]'), err.toString());
+      gulp.start('create-manifest-list');
+    })
+    .pipe(jeditor(function (json) {
+      lastManifest = json[json.length - 1];
+      json.push(manifest);
+      return json;
+    }))
+    .pipe(rename('test.json'))
+    .pipe(gulp.dest(dist))
+    .pipe(gulp.dest(dist_tmp));
+});
+
+gulp.task('create-manifest-list', function () {
+  var manifestList = [manifest];
+  return file('manifest-list.json', JSON.stringify(manifestList))
+    .pipe(gulp.dest(dist))
+    .pipe(gulp.dest(dist_tmp));
+});
+
+gulp.task('get-manifest', function () {
+  return remoteSrc('manifest.json', {
+    base: cdn[env]
+  })
+    .on('error', function (err) {
+      gutil.log(gutil.colors.red('[Error]'), err.toString());
+    })
+    .pipe(jeditor(function (json) {
+      manifest = json;
+    }));
+});
+
 
 gulp.task('pre-clean', function () {
   return gulp.src(dist)
@@ -85,6 +139,32 @@ gulp.task('js-util', function () {
     .pipe(gulp.dest('.'));
 });
 
+gulp.task('js-util-client', function () {
+  return gulp.src([
+    'src/client/configs/**/*.js',
+    'src/client/types/**/*.js',
+    'src/client/polyfill/**/*.js',
+    'src/client/plugins/**/*.js',
+    'src/client/utils/**/*.js',
+    'src/client/services/**/*.js',
+    'src/client/component/**/*.js',
+    'src/client/common/**/*.js'])
+    .pipe(concat('util.js'))
+    .pipe(gulp.dest(dist_tmp + 'js'))
+    .pipe(gulp.dest(dist + 'js'))
+    .pipe(uglify())
+    .on('error', function (err) {
+      gutil.log(gutil.colors.red('[Error]'), err.toString());
+    })
+    .pipe(rename(manifest['util.min.js']))
+    .on('error', function (err) {
+      gutil.log(gutil.colors.red('[Error]'), err.toString());
+      console.log(manifest);
+    })
+    .pipe(gulp.dest(dist_tmp + 'js'))
+    .pipe(gulp.dest(dist + 'js'));
+});
+
 oldAppNames.map(function (app, index) {
   gulp.task('js-old' + app, function () {
     return gulp.src('src/client/app/90' + index + '.' + app + '/**/*.js')
@@ -129,6 +209,23 @@ appNames.map(function (app, index) {
   });
 });
 
+appNames.map(function (app, index) {
+  gulp.task('js-' + app + '-client', function () {
+    return gulp.src('src/client/app/0' + index + '.' + app + '/**/*.js')
+      .pipe(sort())
+      .pipe(concat(app + '.js'))
+      .pipe(gulp.dest(dist_tmp + 'js'))
+      .pipe(gulp.dest(dist + 'js'))
+      .pipe(uglify())
+      .on('error', function (err) {
+        gutil.log(gutil.colors.red('[Error]'), err.toString());
+      })
+      .pipe(rename(manifest[app + '.min.js']))
+      .pipe(gulp.dest(dist_tmp + 'js'))
+      .pipe(gulp.dest(dist + 'js'));
+  });
+});
+
 gulp.task('css-vendor', function () {
   return gulp.src([
     'node_modules/slick-carousel/slick/slick.css'])
@@ -164,7 +261,12 @@ gulp.task('js-rb', function () {
 });
 
 gulp.task('css-rb', function () {
-  return gulp.src(['src/client/right-brain/css/**/*.css', '!src/client/right-brain/css/**/*.min.css'])
+  return gulp.src([
+    'src/client/right-brain/css/**/common.css',
+    'src/client/right-brain/css/**/layout.css',
+    'src/client/right-brain/css/**/widgets.css',
+    'src/client/right-brain/css/**/components.css',
+    '!src/client/right-brain/css/**/*.min.css'])
   // .pipe(base64({
   //   baseDir: 'src/client/right-brain/',
   //   extensions: ['svg', 'png', /\.jpg#datauri$/i],
@@ -172,6 +274,7 @@ gulp.task('css-rb', function () {
   //   debug: true
   // }))
     .pipe(concat('style.css'))
+    // .pipe(imagehash())
     // .pipe(uglify())
     .pipe(gulp.dest(dist_tmp + 'css'))
     .pipe(gulp.dest(dist + 'css'))
@@ -200,6 +303,12 @@ gulp.task('hbs', function () {
     .pipe(gulp.dest(dist + 'hbs'));
 });
 
+gulp.task('font', function () {
+  return gulp.src('src/client/right-brain/font/**/*')
+    .pipe(gulp.dest(dist_tmp + 'font'))
+    .pipe(gulp.dest(dist + 'font'));
+});
+
 gulp.task('resource', function () {
   return gulp.src('src/client/right-brain/resource/**/*')
     .pipe(gulp.dest(dist_tmp + 'resource'))
@@ -208,10 +317,16 @@ gulp.task('resource', function () {
 
 gulp.task('manifest', function () {
   return gulp.src([dist + 'tmp/*.json'])
-    .pipe(extend('manifest.json'))
+    .pipe(extend(manifestFile))
     .pipe(gulp.dest(dist_tmp))
     .pipe(gulp.dest(dist))
-    .pipe(gulp.dest(env));
+    .pipe(gulp.dest(config));
+});
+
+gulp.task('cab', function () {
+  return gulp.src('src/client/right-brain/cab/**/*')
+    .pipe(gulp.dest(dist_tmp + 'cab'))
+    .pipe(gulp.dest(dist + 'cab'));
 });
 
 gulp.task('post-clean', function () {
@@ -222,7 +337,7 @@ gulp.task('post-clean', function () {
 gulp.task('watch', function () {
   livereload.listen();
   gulp.watch('src/client/**/*.hbs', ['hbs']);
-  gulp.watch('src/client/**/*.js', ['js', 'js-rb']);
+  gulp.watch('src/client/**/*.js', ['client-build']);
   gulp.watch('src/client/**/*.css', ['css-vendor', 'css-rb']);
   gulp.watch('dist/**').on('change', livereload.changed);
 });
@@ -233,11 +348,15 @@ gulp.task('js-old-app', oldAppNames.map(function (app) {
 gulp.task('js-app', appNames.map(function (app) {
   return 'js-' + app;
 }));
+gulp.task('js-app-client', appNames.map(function (app) {
+  return 'js-' + app + '-client';
+}));
 gulp.task('js', ['js-util', 'js-old-app', 'js-app']);
+gulp.task('js-client', ['js-util-client', 'js-app-client']);
 gulp.task('vendor', ['js-vendor', 'css-vendor']);
-gulp.task('rb', ['js-rb', 'css-rb', 'img', 'hbs']);
+gulp.task('rb', ['js-rb', 'css-rb', 'img', 'hbs', 'font']);
 
-gulp.task('task', ['vendor', 'js', 'rb', 'resource']);
+gulp.task('task', ['vendor', 'js', 'rb', 'resource', 'cab']);
 gulp.task('run', ['server', 'watch']);
 
 gulp.task('default', shell.task([
@@ -256,3 +375,7 @@ gulp.task('build', shell.task([
   'gulp manifest',
   'gulp post-clean'
 ]));
+
+gulp.task('client-build', ['get-manifest'], function () {
+  gulp.start('js-client');
+});

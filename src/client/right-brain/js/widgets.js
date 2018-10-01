@@ -12,6 +12,7 @@ skt_landing.widgets = {
     for (var com_name in widget_list) {
       widget_list[com_name](ta);
     }
+    skt_landing.widgets.widget_deltype();
   },
   widget_tube: function (ta) {
     var widget = ta ? $(ta).find('.widget-box.tube') : $('.widget-box.tube');
@@ -74,6 +75,28 @@ skt_landing.widgets = {
       target.attr('checked',true).prop('checked',true);
     }
   },
+  widget_deltype: function(){
+    $('.input').each(function(){
+      var bt = $(this).find('.cancel'),
+          field = bt.prev();
+      if(field.val() == '' || field.attr('readonly')){
+        bt.hide();
+      }else{
+        bt.show();
+      }
+      bt.on('click',function(){
+        field.val('').focus();
+        bt.hide();
+      });
+      field.on('change keyup',function(){
+        if($(this).val() == ''){
+          bt.hide();
+        }else{
+          bt.show();
+        }
+      });
+    });
+  },
   widget_step: function () {
     $('.step-list li').each(function(){
       if(!$(this).hasClass('on')){
@@ -85,6 +108,20 @@ skt_landing.widgets = {
     var input = ta ? $(ta).find('.radiobox :radio') : $('.radiobox :radio');
     input.each(function () {
       var box = $(this).closest('.radiobox');
+      if($(this).closest('.radio-slide').length > 0){
+        var radioSlide = $(this).closest('.radio-slide'),
+            radioItems = radioSlide.find('.radiobox'),
+            itemsW = 0;
+        for(var i=0, leng=radioItems.length; i<leng; ++i){
+          itemsW += radioItems.eq(i).outerWidth(true);
+        }
+        if(itemsW <= skt_landing.util.win_info.get_winW()){
+          radioSlide.find('.select-list').css('width','100%');
+        }else if(itemsW > skt_landing.util.win_info.get_winW()){
+          radioSlide.find('.select-list').css('width',itemsW);
+        }
+      }
+
       $(this).is(':checked') ? box.addClass('checked').attr('aria-checked',true) : box.removeClass('checked').attr('aria-checked',false);
       $(this).is(':disabled') ? box.addClass('disabled').attr('aria-disabled',true) : box.removeClass('disabled');
       $(this).on('change', function () {
@@ -360,12 +397,12 @@ skt_landing.widgets = {
       if(_this.find('> .acco-cover > .bt-whole').length < 1){
         _this.find('.acco-cover').addClass('on');
       }
-      var layer = $('.popup .popup-page.layer');
+      /*var layer = $('.popup .popup-page.layer');
       if(layer.length > 0){
         var layer_top = layer.position();
         var acco_top = layer.find('.box-confirm .widget-box.accordion').position().top  - 60;
 
-      }
+      }*/
       var accoList = _this.find('> .acco-cover > .acco-style > .acco-list > .acco-box');
       var accoList_leng = accoList.length;
 
@@ -399,25 +436,25 @@ skt_landing.widgets = {
       _this.find('> .acco-cover > .bt-whole button').on('click',function(event){
         if(!$(this).closest('.acco-cover').hasClass('on')){
           $(this).attr('aria-pressed', 'true');
-          $('.popup .popup-page.layer').animate({scrollTop:acco_top}, '200');
+          //$('.popup .popup-page.layer').animate({scrollTop:acco_top}, '200');
           event.stopPropagation();
         }else{
           $(this).attr('aria-pressed', 'false');
         }
         $(this).closest('.acco-cover').toggleClass('on');
       });
-      _this.find('> .acco-cover > .acco-style > .acco-list > .acco-box > .acco-tit button').on('click', function (event) {
+      _this.find('> .acco-cover > .acco-style > .acco-list > .acco-box:not(".none-event") > .acco-tit button').on('click', function (event) {
         if(_this.find('> .acco-cover').hasClass('toggle')){
           $(this).closest('.acco-box').siblings().removeClass('on');
           $(this).closest('.acco-box').siblings().find('> .acco-tit button').attr('aria-pressed',false);
         }
         $(this).closest('.acco-box').toggleClass('on');
 
-        var acco_tit_top = ($(this).position().top + acco_top);
+        //var acco_tit_top = ($(this).position().top + acco_top);
 
         if($(this).closest('.acco-box').hasClass('on')){
           $(this).attr('aria-pressed', 'true');
-          $('.popup .popup-page.layer').animate({scrollTop:acco_tit_top}, '200');
+          //$('.popup .popup-page.layer').animate({scrollTop:acco_tit_top}, '200');
           event.stopPropagation();
         }else{
           $(this).attr('aria-pressed', 'false');

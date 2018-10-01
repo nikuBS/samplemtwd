@@ -1,0 +1,44 @@
+<%#
+* FileName: myt-data.usage.refill.history.list.html
+* Author: Jiyoung Jo (jiyoungjo@sk.com)
+* Date: 2018.09.20
+%>
+
+
+<script id="fe-tmpl-charge-items" type="text/x-handlebars-template">
+    {{#each items}}        
+        <li>
+            <p class="list-text">
+                <span class="stext-b"><i class="badge badge-{{badge.icon}}"><span class="blind">{{badge.text}}</span></i> {{typeName}}</span>
+                <span class="stext">
+                    {{#each bottom}}
+                    <span class="gray-tx">{{this}}</span>
+                    {{/each}}
+                </span>
+            </p>
+            {{#if right}}
+            <div class="list-data">
+                <p class="data-tx ff-tg-black {{right.color}}-tx">{{right.amount}}<span class="ff-tg-medium">{{right.unit}}</span></p>
+                {{#if refundable}}
+                    <button class="bt-link-tx underline red">취소</button>
+                {{/if}}
+            </div>
+            {{/if}}
+        </li>
+    {{/each}}
+</script>
+
+<script id="fe-tmpl-charge-day" type="text/x-handlebars-template">
+    <li class="list-box">
+        <p class="list-date">
+            <span class="date-tx">{{date}}</span>
+        </p>
+        <ul class="list-con">
+            {{>chargeItems items=items}}
+        </ul>
+    </li>
+</script>
+
+<script id="fe-tmpl-charge-year" type="text/x-handlebars-template">
+    <li class="year-tx" data-year="{{year}}">{{year}}</li>
+</script>
