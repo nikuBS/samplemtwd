@@ -25,12 +25,18 @@ Tw.MyTFarePaymentPoint.prototype = {
     this.$pointSelector = this.$container.find('.fe-select-point');
     this.$point = this.$container.find('.fe-point');
     this.$pointPw = this.$container.find('.fe-point-pw');
-    this.$getPointBtn = this.$container.find('.fe-get-point');
+    this.$getPointBtn = this.$container.find('.fe-get-point-wrapper');
     this.$pointBox = this.$container.find('.fe-point-box');
-    this.$pointCardNumber = null;
+    this._pointCardNumber = null;
+
+    this.$container.find('.refund-pament-account').hide();
   },
   _bindEvent: function () {
     this.$container.on('click', '.fe-get-point', $.proxy(this._openGetPoint, this));
+    this.$container.on('keyup', '.required-input-field', $.proxy(this._checkIsAbled, this));
+    this.$container.on('click', '.cancel', $.proxy(this._checkIsAbled, this));
+    this.$container.on('click', '.fe-select-point', $.proxy(this._selectPoint, this));
+    this.$container.on('click', '.fe-find-password', $.proxy(this._goCashbagSite, this));
     this.$container.on('click', '.fe-check-pay', $.proxy(this._checkPay, this));
     this.$container.on('click', '.fe-pay', $.proxy(this._pay, this));
   },
@@ -40,11 +46,22 @@ Tw.MyTFarePaymentPoint.prototype = {
     }, $.proxy(this._setPoint, this));
   },
   _setPoint: function ($layer) {
-    this.$pointCardNumber = $layer.find('.fe-point-card-number').val();
-    $layer.on('click', '.fe-get', $.proxy(this._getPoint, this));
+    $layer.on('keyup', '.fe-point-card-number', $.proxy(this._checkIsLayerAbled, this, $layer));
+    $layer.on('change', '.fe-cashbag-agree', $.proxy(this._checkIsLayerAbled, this, $layer));
+    $layer.on('click', '.cancel', $.proxy(this._checkIsLayerAbled, this, $layer));
+    $layer.on('click', '.fe-get', $.proxy(this._getPoint, this, $layer));
   },
-  _getPoint: function () {
-    this._apiService.request(Tw.API_CMD.BFF_07_0043, { 'ocbCcno': this.$pointCardNumber })
+  _checkIsLayerAbled: function ($layer) {
+    if ($layer.find('.fe-point-card-number').val() !== '' &&
+      $layer.find('.fe-cashbag-agree').hasClass('checked')) {
+      $layer.find('.fe-get').removeAttr('disabled');
+    } else {
+      $layer.find('.fe-get').attr('disabled', 'disabled');
+    }
+  },
+  _getPoint: function ($layer) {
+    this._pointCardNumber = $.trim($layer.find('.fe-point-card-number').val());
+    this._apiService.request(Tw.API_CMD.BFF_07_0043, { 'ocbCcno': this._pointCardNumber })
       .done($.proxy(this._getSuccess, this))
       .fail($.proxy(this._getFail, this));
   },
@@ -56,15 +73,52 @@ Tw.MyTFarePaymentPoint.prototype = {
       this.$pointBox.show();
       this.$getPointBtn.hide();
     } else {
-      this._getFail(res);
+      // this._getFail(res);
+      this._popupService.close();
+      // this._setPointInfo(res.result);
+
+      this.$pointBox.show();
+      this.$getPointBtn.hide();
     }
   },
   _getFail: function (err) {
     this._popupService.openAlert(err.msg, err.code);
   },
   _setPointInfo: function (result) {
-    this.$container.find('.fe-cashbag-point').text(result.availPt);
-    this.$container.find('.fe-t-point').text(result.availTPt);
+    this.$container.find('.fe-cashbag-point').attr('id', result.availPt).text(Tw.FormatHelper.addComma(result.availPt.toString()));
+    this.$container.find('.fe-t-point').attr('id', result.availTPt).text(Tw.FormatHelper.addComma(result.availTPt.toString()));
+  },
+  _checkIsAbled: function () {
+    if (this.$point.val() !== '' && this.$pointPw.val() !== '') {
+      this.$container.find('.fe-check-pay').removeAttr('disabled');
+    } else {
+      this.$container.find('.fe-check-pay').attr('disabled', 'disabled');
+    }
+  },
+  _selectPoint: function (event) {
+    var $target = $(event.currentTarget);
+    this._popupService.open({
+      hbs:'actionsheet_select_a_type',
+      layer:true,
+      title:Tw.POPUP_TITLE.SELECT_POINT,
+      data:Tw.POPUP_TPL.FARE_PAYMENT_POINT_LIST
+    }, $.proxy(this._selectPopupCallback, this, $target));
+  },
+  _selectPopupCallback: function ($target, $layer) {
+    $layer.on('click', '.point-type', $.proxy(this._setSelectedValue, this, $target));
+  },
+  _setSelectedValue: function ($target, event) {
+    var $selectedValue = $(event.currentTarget);
+    $target.attr({
+      'id': $selectedValue.attr('id'),
+      'data-code': $selectedValue.attr('data-code')
+    });
+    $target.text($selectedValue.text());
+
+    this._popupService.close();
+  },
+  _goCashbagSite: function () {
+    Tw.CommonHelper.openUrlExternal(Tw.URL_PATH.OKCASHBAG);
   },
   _checkPay: function () {
     if (this._isValid()) {
@@ -78,8 +132,7 @@ Tw.MyTFarePaymentPoint.prototype = {
     if ( $isSelectedPoint === Tw.PAYMENT_POINT_VALUE.T_POINT ) {
       className = '.fe-t-point';
     }
-    return (this._isGetPoint() &&
-      this._validation.checkEmpty(this.$point.val(), Tw.MSG_PAYMENT.POINT_A07) &&
+    return (this._validation.checkEmpty(this.$point.val(), Tw.MSG_PAYMENT.POINT_A07) &&
       this._validation.checkIsAvailablePoint(this.$point.val(),
         parseInt(this.$pointBox.find(className).attr('id'), 10),
         Tw.MSG_PAYMENT.REALTIME_A12) &&
@@ -87,34 +140,25 @@ Tw.MyTFarePaymentPoint.prototype = {
       this._validation.checkIsTenUnit(this.$point.val(), Tw.MSG_PAYMENT.POINT_A06) &&
       this._validation.checkEmpty(this.$pointPw.val(), Tw.MSG_PAYMENT.AUTO_A04));
   },
-  _isGetPoint: function () {
-    if ( this.$pointBox.hasClass('none') ) {
-      this._popupService.openAlert(Tw.MSG_PAYMENT.REALTIME_A11);
-      return false;
-    }
-    return true;
-  },
   _setData: function () {
-    this.$container.find('.fe-payment-option-name').attr('id', this.$selectBank.attr('id')).text(this.$selectBank.text());
-    this.$container.find('.fe-payment-option-number').text(this.$accountNumber.val());
-    this.$container.find('.fe-payment-amount').text(Tw.FormatHelper.addComma(this._paymentCommon.getAmount().toString()));
-    this.$container.find('.fe-payment-refund').attr('id', this.$refundBank.attr('id'))
-      .text(this.$refundBank.text() + ' ' + this.$refundNumber.val());
+    console.log(this.$pointSelector.attr('id'), this.$pointSelector.attr('data-code'), this.$pointSelector.text());
+    this.$container.find('.fe-check-title').text(this.$pointSelector.text());
+    this.$container.find('.fe-payment-option-name').attr('data-code', this.$pointSelector.attr('data-code')).text(this._pointCardNumber);
+    this.$container.find('.fe-payment-amount').text(Tw.FormatHelper.addComma(this.$point.val().toString()));
   },
   _pay: function () {
     var reqData = this._makeRequestData();
-    this._apiService.request(Tw.API_CMD.BFF_07_0023, reqData)
+    console.log(reqData);
+    this._apiService.request(Tw.API_CMD.BFF_07_0045, reqData)
       .done($.proxy(this._paySuccess, this))
       .fail($.proxy(this._payFail, this));
   },
   _makeRequestData: function () {
     var reqData = {
-      payovrBankCd: this.$container.find('.fe-payment-refund').attr('id'),
-      payovrBankNum: $.trim(this.$refundNumber.val()),
-      payovrCustNm: $.trim(this.$container.find('.fe-name').val()),
-      bankOrCardCode: this.$selectBank.attr('id'),
-      bankOrCardAccn: $.trim(this.$accountNumber.val()),
-      unpaidBillList: this._paymentCommon.getBillList()
+      ocbCcno: this._pointCardNumber,
+      ptClCd: this.$container.find('.fe-payment-option-name').attr('data-code'),
+      reqAmt: $.trim(this.$point.val().toString().replace(',', '')),
+      ocbPwd: $.trim(this.$pointPw.val().toString())
     };
     return reqData;
   },

@@ -15,8 +15,11 @@ Tw.MyTFarePaymentBankList = function (rootEl) {
 };
 
 Tw.MyTFarePaymentBankList.prototype = {
-  init: function (event) {
+  init: function (event, callback) {
     this.$currentTarget = $(event.currentTarget);
+    if (callback !== undefined) {
+      this._callbackFunction = callback;
+    }
 
     if (this._isNotExistBankList()) {
       this._getBankList();
@@ -33,7 +36,13 @@ Tw.MyTFarePaymentBankList.prototype = {
     var $target = $(event.currentTarget);
     $selectedBank.attr('id', $target.attr('id'));
     $selectedBank.text($target.text());
+
     this._popupService.close();
+
+    if (this._callbackFunction !== undefined) {
+      var callbackFunction = this._callbackFunction;
+      callbackFunction();
+    }
   },
   _isNotExistBankList: function () {
     return Tw.FormatHelper.isEmpty(this.$bankList);
