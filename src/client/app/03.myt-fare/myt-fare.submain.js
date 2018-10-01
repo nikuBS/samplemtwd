@@ -60,7 +60,6 @@ Tw.MyTFareSubMain.prototype = {
       // 납부방법버튼
       this.$payMthd = this.$container.find('button[data-id=pay-mthd]');
     }
-
     if ( this.data.isMicroPayment ) {
       // 소액결제
       this.$microBill = this.$container.find('button[data-id=micro-bill]');
@@ -75,21 +74,75 @@ Tw.MyTFareSubMain.prototype = {
     this.$billChart = this.$container.find('[data-id=bill-chart]');
     // 다른회선 요금 조회
     this.$otherLines = this.$container.find('[data-id=other-line]');
+    // 세금계산서
+    if ( this.data.taxInvoice ) {
+      this.$taxInv = this.$container.find('[data-id=taxinv]');
+    }
+    // 기부금/후원금
+    if ( this.data.contribution ) {
+      this.$contribution = this.$container.find('[data-id=contbt]');
+    }
   },
 
   _bindEvent: function () {
-
+    if ( this.data.svcInfo.svcAttrCd === 'M2' ) {
+      // 사용내역확인버튼
+      this.$usedBrkd.on('click', $.proxy(this._onClickedSelBillGuide, this));
+    }
+    else {
+      // 요금안내서버튼
+      this.$billReport.on('click', $.proxy(this._onClickedSelBillGuide, this));
+      if ( this.data.isNotAutoPayment ) {
+        // 요금납부버튼
+        this.$billPym.on('click', $.proxy(this._onClickedBillPym, this));
+      }
+    }
+    // 실시간요금버튼
+    this.$realTimePay.on('click', $.proxy(this._onClickedRealTimePay, this));
+    if ( this.data.nopayment ) {
+      // 미납요금버튼
+      this.$nonPayment.on('click', $.proxy(this._onClickedNonPayment, this));
+    }
+    if ( this.data.paymentInfo ) {
+      // 요금안내서설정버튼
+      this.$billType.on('click', $.proxy(this._onClickedSetBillReport, this));
+      // 납부방법버튼
+      this.$payMthd.on('click', $.proxy(this._onClickedPayMthd, this));
+    }
+    if ( this.data.isMicroPayment ) {
+      // 소액결제
+      this.$microBill.on('click', $.proxy(this._onClickedMicroBill, this));
+      // 콘텐츠 이용료
+      this.$contentBill.on('click', $.proxy(this._onClickedContentBill, this));
+    }
+    if ( this.data.totalPayment && this.data.totalPayment.length > 0 ) {
+      // 최근납부내역상세
+      this.$paymentDetail.on('click', $.proxy(this._onClickedPaymentDetail, this));
+    }
+    // 다른회선 요금 조회
+    this.$otherLines.on('click', 'li', $.proxy(this._onClickedOtherLine, this));
+    // 세금계산서
+    if ( this.data.taxInvoice ) {
+      this.$taxInv.on('click', $.proxy(this._onClickedTaxInvoice, this));
+    }
+    // 기부금/후원금
+    if ( this.data.contribution ) {
+      this.$contribution.on('click', $.proxy(this._onClickedContribution, this));
+    }
   },
 
   // chart create
   _initPatternChart: function (data) {
     this.$billChart.chart({
-      type: 'bar2', //bar
+      type: Tw.CHART_TYPE.BAR_2, //bar
       container: 'chart4', //클래스명 String
-      unit: '원', //x축 이름
+      unit: Tw.CHART_UNIT.WON, //x축 이름
       decimal: 'won', //소숫점자리
       data: data //데이터 obj
     });
+    // chart 생성 후 event bind 처리
+    this.$billChart.on('click', 'button.chart_link', $.proxy(this._onClickedBillReport, this));
+
   },
   _initialize: function () {
     // 1. 최근요금내역
@@ -218,6 +271,76 @@ Tw.MyTFareSubMain.prototype = {
     }
   },
 
+  // 요금안내서 이동(main)
+  _onClickedSelBillGuide: function (/*event*/) {
+    // 1. 통합청구, 2. 개별청구, 3. 보안솔루션
+    // 선불폰, 사용요
+    this._historyService.goLoad('/myt/fare/bill/guide');
+  },
+
+  // 요금납부 이동
+  _onClickedBillPym: function (/*event*/) {
+    // 작업 완료되면 추가
+  },
+
+  // 실시간요금 이동
+  _onClickedRealTimePay: function (/*event*/) {
+    this._historyService.goLoad('/myt/fare/bill/hotbill');
+  },
+
+  // 미납요금버튼
+  _onClickedNonPayment: function (/*event*/) {
+
+  },
+
+  // 요금안내서 설정 이동
+  _onClickedSetBillReport: function (/*event*/) {
+    this._historyService.goLoad('/myt/fare/bill/set');
+  },
+
+  // 납부방법 이동
+  _onClickedPayMthd: function (/*event*/) {
+    // 작업 완료되면 추가
+  },
+
+  // 소액결제 이동
+  _onClickedMicroBill: function (/*event*/) {
+
+  },
+
+  // 콘텐츠이용료 이동
+  _onClickedContentBill: function (/*event*/) {
+
+  },
+
+  // 최근납부내역 이동
+  _onClickedPaymentDetail: function (/*event*/) {
+
+  },
+
+  // 다른회선조회
+  _onClickedOtherLine: function (/*event*/) {
+    // 통합, 개별인 경우만 동작
+  },
+
+  // 세금계산서 이동
+  _onClickedTaxInvoice: function (/*event*/) {
+
+  },
+
+  // 기부금/후원금
+  _onClickedContribution: function (/*event*/) {
+
+  },
+
+
+  // 요금안내서 이동(chart)
+  _onClickedBillReport: function (event) {
+    var $target = $(event.target);
+    var month = $target.text().replace('월', '');
+    this._historyService.goLoad('url' + month);
+  },
+
   _onErrorReceivedBillData: function (resp) {
     this.__resetTimer();
     this._errorRequest(resp);
@@ -225,6 +348,12 @@ Tw.MyTFareSubMain.prototype = {
 
   _errorRequest: function (resp) {
     this.loadingView(false);
+    if ( !resp ) {
+      resp = {
+        code: '',
+        msg: Tw.ALERT_MSG_COMMON.SERVER_ERROR
+      };
+    }
     Tw.Error(resp.code, resp.msg).pop();
   },
 

@@ -127,7 +127,7 @@ Tw.MyTDataSubMain.prototype = {
     if ( this.data.pattern.data.length > 0 || this.data.pattern.voice.length > 0 ) {
       var unit = '', data, chart_data;
       if ( this.data.pattern.data.length > 0 ) {
-        unit = 'GB';
+        unit = Tw.CHART_UNIT.GB;
         data = this.data.pattern.data;
         chart_data = {
           co: '#3b98e6',// 색상
@@ -146,7 +146,7 @@ Tw.MyTDataSubMain.prototype = {
         };
       }
       else if ( this.data.pattern.voice.length > 0 ) {
-        unit = 'time';
+        unit = Tw.CHART_UNIT.TIME;
         data = this.data.pattern.voice;
         chart_data = {
           co: '#3b98e6',// 색상
@@ -166,7 +166,7 @@ Tw.MyTDataSubMain.prototype = {
       }
 
       this.$patternChart.chart({
-        type: 'bar', //bar
+        type: Tw.CHART_TYPE.BAR, //bar
         container: 'pattern', //클래스명 String
         unit: unit, //x축 이름
         guide_num: 1, //가이드 갯수
