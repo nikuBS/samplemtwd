@@ -27,6 +27,7 @@ Tw.MyTDataLimit.prototype = {
     this.$input_block_monthly = this.$container.find('#input_block_monthly');
     this.$wrap_immediately_select_list = $('.fe-limit_immediately_select_list');
     this.$input_block_immediately = this.$container.find('#input_block_immediately');
+    this.$btn_cancel_monthly_recharge = this.$container.find('.fe-cancel_limit_monthly');
   },
 
   _bindEvent: function () {
@@ -34,6 +35,7 @@ Tw.MyTDataLimit.prototype = {
     this.$input_block_immediately.on('change', $.proxy(this._onToggleBlockImmediately, this));
     this.$btn_immediately_recharge.on('click', $.proxy(this._requestLimitRechargeImmediately, this));
     this.$btn_monthly_recharge.on('click', $.proxy(this._requestLimitRechargeMonthly, this));
+    this.$btn_cancel_monthly_recharge.on('click', $.proxy(this._cancelMonthlyRecharge, this));
   },
 
   _onToggleBlockImmediately: function (e) {
@@ -148,6 +150,18 @@ Tw.MyTDataLimit.prototype = {
   _onSuccessLimitRechargeMonthly: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       this._historyService.replaceURL('/myt/data/limit/complete');
+    } else {
+      Tw.Error(res.code, res.msg).pop();
+    }
+  },
+
+  _cancelMonthlyRecharge: function () {
+    this._apiService.request(Tw.API_CMD.BFF_06_0037, {}).done($.proxy(this._onSuccessCancelMonthlyRecharge, this));
+  },
+
+  _onSuccessCancelMonthlyRecharge: function (res) {
+    if ( res.code === Tw.API_CODE.CODE_00 ) {
+      this._historyService.reload();
     } else {
       Tw.Error(res.code, res.msg).pop();
     }

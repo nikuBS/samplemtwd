@@ -9,6 +9,7 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import BrowserHelper from '../../../../utils/browser.helper';
 import { Observable } from 'rxjs/Observable';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
+import FormatHelper from '../../../../utils/format.helper';
 
 class MyTDataLimit extends TwViewController {
   constructor() {
@@ -47,7 +48,8 @@ class MyTDataLimit extends TwViewController {
   private getLimitUserInfo() {
     return this.apiService.request(API_CMD.BFF_06_0034, {}).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
-        return resp.result;
+
+        return Object.assign(resp.result, { regularTopUpAmt: FormatHelper.numberWithCommas(resp.result.regularTopUpAmt) });
       } else {
         return null;
       }
