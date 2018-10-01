@@ -1,5 +1,5 @@
 /*
- * FileName: myt-fare.non-payment.ts
+ * FileName: myt-fare.submain.non-payment.ts
  * Author: Kim InHwan (skt.P132150@partner.sk.com)
  * Date: 2018.10.01
  *
@@ -14,8 +14,7 @@ class MyTFarePaymentOver extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, layerType: string) {
-    // 미납요금
-    res.render('payment/myt-fare.payment.over.html');
+    // 미납요금    res.render('payment/myt-fare.payment.over.html');
   }
 }
 
