@@ -1,7 +1,7 @@
 /**
  * FileName: myt-data.family.controller.ts
  * Author: 박지만 (jiman.park@sk.com)
- * Date: 2018.09.28
+ * Date: 2018.10.01
  */
 
 import { NextFunction, Request, Response } from 'express';
@@ -23,10 +23,37 @@ class MyTDataFamily extends TwViewController {
     };
 
     switch ( page ) {
+      case 'complete':
+        res.render('family/myt-data.family.complete.html', responseData);
+        break;
+      case 'config':
+        res.render('family/myt-data.family.config.html', responseData);
+        break;
       default:
-        res.render('family/myt-data.family.main.html', responseData);
+        const response = Object.assign(responseData, this.getFamilyInfo());
+        res.render('family/myt-data.family.main.html', response);
     }
   }
+
+  private getFamilyInfo() {
+    const mock = {
+      code: '00',
+      msg: '',
+      result: {
+        svcNum: '01062919433',
+        svcMgmtNum: '1451646217',
+        repYn: 'Y',
+        custNm: '한정남',
+        freeProdId: 'NA00005958',
+        freeProdNm: '패밀리',
+        usedAmt: '0',
+        ownerYn: 'Y'
+      }
+    };
+
+    return mock;
+  }
+
 }
 
 export default MyTDataFamily;
