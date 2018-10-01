@@ -444,6 +444,10 @@ export const API_CMD = {
     path: '/core-product/v1/mobiles/fee-plans/args-0/joins/installment-agreements',
     method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true
   },
+  BFF_10_0015: {
+    path: '/core-product/v1/mobiles/fee-plans/args-0/tplan-benefits',
+    method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true
+  },
 
   // TID
   OIDC: { path: '/auth/authorize.do', method: API_METHOD.GET, server: API_SERVER.TID, bypass: false },

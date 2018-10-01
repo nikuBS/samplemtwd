@@ -1,7 +1,8 @@
 Tw.BUTTON_LABEL = {
   CONFIRM: '확인',
   CANCEL: '취소',
-  CLOSE: '닫기'
+  CLOSE: '닫기',
+  MORE: '더보기'
 };
 
 Tw.POPUP_TITLE = {
@@ -127,4 +128,18 @@ Tw.URL_PATH = {
   MYT_PAY_MICRO_LIMIT_DETAIL: '/myt/bill/history/micro/limit',
   MYT_PAY_CONTENTS_LIMIT_CHANGE: '/myt/bill/history/contents/limit/change',
   MYT_PAY_CONTENTS_LIMIT_DETAIL: '/myt/bill/history/contents/limit'
+};
+
+Tw.PRODUCT_INFINITY_CATEGORY = {
+  NA00006114: '여행',
+  NA00006115: '영화',
+  NA00006116: '스마트워치',
+  NA00006117: '클럽'
+};
+
+Tw.PRODUCT_INFINITY_CATEGORY_DESC = {
+  NA00006114: 'T 로밍 Onepass 월 1회/ 1개월 + 마티나 라운지 이용권 1회/ 3개월',
+  NA00006115: '무료영화예매 2회 / 1개월',
+  NA00006116: '스마트 워치 월정액 100% 할인',
+  NA00006117: '인피니티 클럽 이용료 100%할인'
 };

@@ -6,14 +6,33 @@
 
 import TwViewController from '../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
+import FormatHelper from '../../../utils/format.helper';
 
 class ProductDetail extends TwViewController {
   constructor() {
     super();
   }
 
+  private _prodId;
+
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, layerType: string) {
-    res.render('product.detail.html');
+    this._prodId = req.params.prodId;
+
+    if (FormatHelper.isEmpty(this._prodId)) {
+      return this.error.render(res, {
+        title: '상품 설정',
+        svcInfo: svcInfo
+      });
+    }
+
+    // this.redisService.getData('ProductSettingInfo:' + this._prodId)
+    //   .subscribe((productSettingInfo) => {
+    //
+    //   });
+
+    res.render('product.setting.html', {
+      svcInfo: svcInfo
+    });
   }
 }
 
