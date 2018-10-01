@@ -49,7 +49,7 @@ Tw.MyTDataGiftComplete.prototype = {
   },
 
   _goToSms: function () {
-    this._historyService.replaceURL('/myt/data/gift/sms');
+    this._historyService.replaceURL('/myt/data/gift/sms?' + $.param(this.paramData));
   },
 
   _goToHistory: function () {

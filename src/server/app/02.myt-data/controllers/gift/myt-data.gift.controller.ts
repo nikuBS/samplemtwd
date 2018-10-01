@@ -39,6 +39,7 @@ class MyTDataGift extends TwViewController {
             { autoList: autoList },
             responseData
           );
+
           res.render('gift/myt-data.gift.html', response);
         });
     }
@@ -49,7 +50,6 @@ class MyTDataGift extends TwViewController {
       .map((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
           let result = resp.result;
-
           result = result.map(item => {
             item.svcNum = FormatHelper.conTelFormatWithDash(item.svcNum);
             return item;

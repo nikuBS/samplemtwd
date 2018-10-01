@@ -89,8 +89,11 @@ Tw.MyTDataGiftImmediately.prototype = {
 
     this.paramsData = $.extend({}, this.paramsData, htParams);
 
-    this._apiService.request(Tw.API_CMD.BFF_06_0016, htParams)
-      .done($.proxy(this._onSuccessSendingData, this));
+    this._historyService.replaceURL('/myt/data/gift/complete?' + $.param(this.paramsData));
+
+    // TODO: Implemented API TEST
+    // this._apiService.request(Tw.API_CMD.BFF_06_0016, htParams)
+    //   .done($.proxy(this._onSuccessSendingData, this));
   },
 
   _onSuccessSendingData: function (res) {
