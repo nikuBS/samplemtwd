@@ -13,6 +13,7 @@ Tw.MyTFarePaymentPoint = function (rootEl) {
   this._validation = Tw.ValidationHelper;
   this._historyService = new Tw.HistoryService(rootEl);
 
+  this._historyService.init('hash');
   this._init();
 };
 
