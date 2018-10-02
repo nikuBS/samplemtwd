@@ -8,6 +8,7 @@ Tw.MyTFarePaymentOption = function (rootEl) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
+  this._commonHelper = Tw.CommonHelper;
   this._historyService = new Tw.HistoryService(rootEl);
 
   this._historyService.init('hash');
@@ -32,7 +33,7 @@ Tw.MyTFarePaymentOption.prototype = {
       }
 
       if (!this._isBackOrReload() && message !== '') {
-        Tw.CommonHelper.toast(message);
+        this._commonHelper.toast(message);
       }
     }
   },
@@ -111,6 +112,39 @@ Tw.MyTFarePaymentOption.prototype = {
     console.log($selectBox.find('.checked').attr('id'));
   },
   _changePaymentDate: function () {
+    this._popupService.open({
+      hbs:'actionsheet_select_a_type',
+      layer:true,
+      title:Tw.POPUP_TITLE.CHANGE_PAYMENT_DATE,
+      data:Tw.POPUP_TPL.FARE_PAYMENT_BANK_DATE
+    }, $.proxy(this._selectDatePopupCallback, this));
+  },
+  _selectDatePopupCallback: function ($layer) {
+    $layer.on('click', '.date', $.proxy(this._setSelectedDate, this));
+  },
+  _setSelectedDate: function (event) {
+    var $selectedValue = $(event.currentTarget);
+    var code = $selectedValue.attr('id');
+    var date = $selectedValue.text();
+
+    this._apiService.request(Tw.API_CMD.BFF_07_0065, { payCyclCd: code })
+      .done($.proxy(this._changeSuccess, this, date))
+      .fail($.proxy(this._changeFail, this));
+
+    this._popupService.close();
+  },
+  _changeSuccess: function (date, res) {
+    if (res.code === Tw.API_CODE.CODE_00) {
+      this.$container.find('.fe-pay-date').text(date);
+      this.$container.find('.fe-change-date').hide();
+
+      this._commonHelper.toast(Tw.ALERT_MSG_MYT_FARE.COMPLETE_CHANGE_DATE);
+    } else {
+      this._changeFail(res);
+    }
+  },
+  _changeFail: function (err) {
+    this._popupService.openAlert(err.msg, err.code);
   },
   _changeAddress: function () {
   },

@@ -78,7 +78,7 @@ Tw.MyTFarePaymentAuto.prototype = {
       hbs:'actionsheet_select_a_type',
       layer:true,
       title:title,
-      data:Tw.POPUP_TPL.FARE_PAYMENT_DATE
+      data:Tw.POPUP_TPL.FARE_PAYMENT_CARD_DATE
     }, $.proxy(this._selectPopupCallback, this, $target));
   },
   _getTitle: function () {

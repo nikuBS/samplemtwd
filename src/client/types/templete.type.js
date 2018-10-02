@@ -154,7 +154,16 @@ Tw.POPUP_TPL = {
       ]
     }
   ],
-  FARE_PAYMENT_DATE: [
+  FARE_PAYMENT_BANK_DATE: [
+    {
+      'list': [
+        {'option': 'date', 'attr': 'id="0"', value: '15일'},
+        {'option': 'date', 'attr': 'id="3"', value: '21일'},
+        {'option': 'date', 'attr': 'id="1"', value: '23일'}
+      ]
+    }
+  ],
+  FARE_PAYMENT_CARD_DATE: [
     {
       'list': [
         {'option': 'date', 'attr': 'id="1"', value: '11일'},

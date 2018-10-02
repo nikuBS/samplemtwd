@@ -108,7 +108,8 @@ Tw.ALERT_MSG_MYT_DATA = {
 Tw.ALERT_MSG_MYT_FARE = {
   COMPLETE_NEW: '신청이 완료되었습니다.',
   COMPLETE_CHANGE: '변경이 완료되었습니다.',
-  COMPLETE_CANCEL: '해지가 완료되었습니다.'
+  COMPLETE_CANCEL: '해지가 완료되었습니다.',
+  COMPLETE_CHANGE_DATE: '요금납부일 변경이 완료되었습니다.'
 };
 
 Tw.ALERT_MSG_MYT_JOIN = {
