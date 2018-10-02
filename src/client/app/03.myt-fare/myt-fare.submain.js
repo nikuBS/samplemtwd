@@ -220,6 +220,8 @@ Tw.MyTFareSubMain.prototype = {
       this._responseUsageFee();
     }
   },
+
+  // 사용요금내역조회-2
   _responseUsageFee: function () {
     if ( arguments.length > 0 ) {
       var chart_data = {
@@ -244,8 +246,6 @@ Tw.MyTFareSubMain.prototype = {
     // 실시간요금
     setTimeout($.proxy(this._realTimeBillRequest, this), 300);
   },
-
-  // 사용요금내역조회-2
 
   // 최근청구요금내역조회-1
   _claimPaymentRequest: function () {
