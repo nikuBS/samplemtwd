@@ -20,38 +20,124 @@ Tw.MyTFareBillGuidePps = function (rootEl, resData) {
     startDt: null, // start date
     endDt: null, // end date
     startRangeNum: 6,
-    endRangeNum: 3,
+    endRangeNum: 2,
     selectList: null
   };
 
   this.bffListData = null; //원본 리스트 데이터
-  this.detailListObj = {
+  this.detailListObj = [{
     listData: null,
     curLen : 0, //현재 데이터 카운트
-    startCount: 2, // 시작 데이터 카운트
-    addCount: 2, // 추가 데이터 카운트
-    viewData: [] // 잘라서 넣는 데이터
-  };
+    startCount: 20, // 시작 데이터 카운트
+    addCount: 20, // 추가 데이터 카운트
+    viewData: [], // 잘라서 넣는 데이터
+    searchType: '' // 검색 타입 : 음성 or 데이터
+  }];
 
   this._init();
 };
 
 Tw.MyTFareBillGuidePps.prototype = {
   _init: function () {
+    this._registerHelper();
     this._cachedElement();
     this._bindEvent();
     this._dateInit();
+
+  },
+  _registerHelper: function() {
+    Handlebars.registerHelper('if_eq', function (v1, v2, options) {
+      if ( v1 === v2 ) {
+        return options.fn(this);
+      }
+      return options.inverse(this);
+    });
   },
   _cachedElement: function () {
+    this.$entryTplList = $('#fe-entryTplList');
+
     this.$startDtBtn = $('[data-target="startDtBtn"]'); // 조회 기간 선택(시작)
     this.$endDtBtn = $('[data-target="endDtBtn"]'); // 조회 기간 선택(끝)
+
+    this.$detailList = $('[data-target="detailList"]'); // 리스트 영역
+    this.$addBtn = $('[data-target="addBtn"]'); // 더보기 버튼
+    this.$curNum = $('[data-target="curNum"]'); // curNum
+
+    this.$addBtnArea = $('[data-target="addBtnArea"]'); // 더보기 버튼 영
+
+    this.$searchType = $('[data-target="searchType"]');
 
   },
   _bindEvent: function () {
     this.$container.on('click', '[data-target="startDtBtn"]', $.proxy(this._startDtBtnEvt, this));
     this.$container.on('click', '[data-target="endDtBtn"]', $.proxy(this._endDtBtnEvt, this));
     this.$container.on('click', '[data-target="searchBtn"]', $.proxy(this._searchBtnEvt, this));
+    this.$container.on('click', '[data-target="addBtn"]', $.proxy(this._addView, this));
 
+  },
+
+  _proData: function() { //데이터 가공
+    var thisMain = this;
+    Tw.Logger.info('[ _proData ]');
+    this.detailListObj[0].listData = $.extend(true, [], this.bffListData); // deep copy array
+    this.detailListObj[0].curLen = this.detailListObj[0].listData.length;
+
+    _.map(this.detailListObj[0].listData, function( item ) {
+      item.usedDt = moment(item.usedDt, "YYYYMMDD").format('YYYY.MM.DD');
+
+      // 0보다 작을 경우 데이터 이외 사용 항목(음성/sms/충전 등)
+      if (Number(item.used) < 0) {
+        item.used = '-';
+      } else {
+        item.used = (Number(item.used) / 1024).toFixed();
+        item.used = thisMain._comComma( item.used );
+      }
+
+      item.rate = thisMain._comComma( item.rate );
+      return item;
+    });
+    Tw.Logger.info('[ _proData end ]', this.detailListObj[0]);
+  },
+  _ctrlInit: function() {
+    this._cachedElement();
+
+    /*
+    * A. 데이터 요금제 : searchType => typeData
+    * B. 음성 요금제 : searchType => typeVoice
+    * C. 음성 + 데이터 요금제 : 라디오버튼의 선택에따라 typeData or typeVoice
+     */
+    if ( resData.commDataInfo.ppsType === 'A') {
+      this.detailListObj[0].searchType = 'typeData';
+    } else if ( resData.commDataInfo.ppsType === 'B') {
+      this.detailListObj[0].searchType = 'typeVoice';
+    } else if ( resData.commDataInfo.ppsType === 'C') {
+      var searchType = this.$searchType.find('input[name="radio1"]:checked').val();
+      this.detailListObj[0].searchType = searchType;
+    }
+
+    this._dataSplice( this.detailListObj[0].listData, this.detailListObj[0].startCount );
+    this._svcHbDetailList(this.detailListObj, this.$detailList, this.$entryTplList);
+
+    this.$curNum.html('( ' + this.detailListObj[0].curLen + ' )');
+
+    if( this.detailListObj[0].curLen <= 0 ) {
+      this.$addBtnArea.hide();
+    }
+
+  },
+  _addView: function() {
+    if ( this.detailListObj[0].curLen <= 0 ) { return; }
+
+    this._cachedElement();
+    this._dataSplice( this.detailListObj[0].listData, this.detailListObj[0].addCount );
+    this._svcHbDetailList(this.detailListObj, this.$detailList, this.$entryTplList);
+
+    this.$curNum.html('( ' + this.detailListObj[0].curLen + ' )');
+
+    Tw.Logger.info('[ detailListObj.curLen 2 ]', this.detailListObj[0].curLen);
+    if( this.detailListObj[0].curLen <= 0 ) {
+      this.$addBtnArea.hide();
+    }
   },
   //--------------------------------------------------------------------------[EVENT]
   _startDtBtnEvt: function(event) {
@@ -177,9 +263,40 @@ Tw.MyTFareBillGuidePps.prototype = {
 
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       Tw.Logger.info('[res] ', res);
+      var dataArr = res.result;
+      /*
+      * 상세 내역 리스트
+      */
+      this.$addBtnArea.show();
+      this.$detailList.empty();
+      this._listDataInit(dataArr); // 데이터 초기화
+      this._proData(); // 데이터 가공
+      this._ctrlInit(); // 데이터 뿌려주기
+
+
     }
   },
   //--------------------------------------------------------------------------[SVC]
+  _listDataInit: function(dataArr) {
+    /*
+    * 데이터 초기화
+     */
+    this.bffListData = dataArr;
+    this.detailListObj[0].listData = null;
+    this.detailListObj[0].curLen = 0;
+    this.detailListObj[0].viewData = [];
+    this.detailListObj[0].searchType = '';
+
+  },
+  _dataSplice: function( listData, count ) {
+    var tempListData = listData;
+    var tempCount = count;
+    var spliceData = tempListData.splice(0, tempCount);
+    this.detailListObj[0].viewData = spliceData;
+    this.detailListObj[0].curLen = this.detailListObj[0].listData.length;
+    Tw.Logger.info('[ _dataSplice end ]', this.detailListObj[0]);
+  },
+
   _dateInit: function() {
     this.selDateObj.curDt = moment().format('YYYYMM'); // 현재
     this.selDateObj.defaultDt = moment().subtract('1', 'months').format('YYYYMM'); // 기준
@@ -207,17 +324,6 @@ Tw.MyTFareBillGuidePps.prototype = {
 
 
   },
-  _setStartList: function( str ) {
-    var defaultNum = Number(str);
-    console.info('_getStartList :', defaultNum);
-
-  },
-
-
-
-
-
-
 
   _svcHbDetailList: function( resData, $jqTg, $hbTg ) {
     var jqTg = $jqTg;
