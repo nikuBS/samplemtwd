@@ -40,17 +40,9 @@
 </div>
 <!--// #skip_navigation -->
 <div id="fe-wrap" class="wrap">
-    <!-- #header -->
-    <div id="header" class="header-wrap">
-        <div class="header">
-            <div class="header-ti align-l">
-                <h1>요금안내서-PPS(선불폰)</h1>
-            </div>
-            <button class="prev-step"><span class="blind">이전으로</span></button>
-            <button class="bt-dropdown small" title="회선 선택" aria-haspopup="true">010-87**-13**<span class="ico"></span></button>
-        </div>
-    </div>
-    <!--// #header -->
+
+    <%- include('../../../../common/views/components/header.component.html', { title: '요금안내서', svcInfo: svcInfo, line: true }) %>
+
     <!-- #contents -->
     <div id="contents" class="container-wrap">
         <h2 class="blind">내용</h2>
