@@ -8,9 +8,8 @@ import TwViewController from '../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
 import FormatHelper from '../../../utils/format.helper';
 import { UNIT } from '../../../types/bff.type';
-import { PRODUCT_TYPE } from '../../../types/string.type';
 import product_redis_ProductLedgerSummary from '../../../mock/server/product.additions-terminate-success.mock';
-import { Observable } from 'rxjs/Observable';
+import {Observable} from 'rxjs/Observable';
 
 class ProductAdditionsTerminateSuccess extends TwViewController {
   constructor() {
@@ -34,12 +33,10 @@ class ProductAdditionsTerminateSuccess extends TwViewController {
    * @private
    */
   private _getSimpleProdInfo(prodSummaryInfo): any {
-    const baseFeeInfo = isNaN(parseInt(prodSummaryInfo.basFeeInfo, 10)) ? prodSummaryInfo.basFeeInfo
-      : FormatHelper.addComma(prodSummaryInfo.basFeeInfo) + UNIT['110'];
-
     return {
       prodNm: prodSummaryInfo.prodNm,
-      basFeeInfo: baseFeeInfo !== PRODUCT_TYPE.FEE_INFO_ETC ? baseFeeInfo : null
+      basFeeInfo: isNaN(parseInt(prodSummaryInfo.basFeeInfo, 10)) ? prodSummaryInfo.basFeeInfo
+        : FormatHelper.addComma(prodSummaryInfo.basFeeInfo) + UNIT['110']
     };
   }
 

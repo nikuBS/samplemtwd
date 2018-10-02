@@ -1,4 +1,5 @@
 export const URL = {
+
   // Common
   '/common/settings/menu': { login: false, id: 'ST_01_01', title: '설정' },
   '/common/settings/business-info': { login: false, id: 'ST_01_08', title: '사업자 정보' },
@@ -25,7 +26,6 @@ export const URL = {
   '/myt/bill/guide/roaming': { login: true, id: 'MF_02_01_03', title: '요금안내서 로밍 사용요금 조회' },
   '/myt/bill/guide/donation': { login: true, id: 'MF_02_01_04', title: '요금안내서 기부금/후원금 사용요금 조회' },
   '/myt/join/info/discount': { login: true, id: 'MS_09', title: '약정할인 및 단말 분할상환 정보' },
-  'myt/data/recharge/history': { login: true, id: 'DC_07', title: '최근 충전/선물 내역' },
 
   // MyT-data
   '/myt/data': { login: true, id: 'DC', title: '데이터/통화 관리' },
@@ -41,9 +41,8 @@ export const URL = {
   '/myt/data/recharge/history': { login: true, id: 'DC_07', title: '최근 충전/선물 내역' },
 
   // Product
-  '/product': { login: false, id: 'MP', title: '모바일 요금제' },
-  '/product/addition': { login: false, id: 'MV', title: '부가서비스' },
   '/product/detail': { login: true, id: 'MP_02_02', title: '상품 상세 정보' },
   '/product/detail/contents': { login: true, id: 'MP_02_02_06', title: '상품 상세 정보 보기' },
   '/product/additions-terminate': { login: true, id: 'MV_01_02_03', title: '부가상품 해지' },
+
 };
