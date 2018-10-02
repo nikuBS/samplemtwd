@@ -193,6 +193,9 @@ export const API_CMD = {
   BFF_05_0137: { path: '/core-product/v1/services/wireless/additions', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0138: { path: '/core-product/v1/services/combinations/data-sharings', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
   BFF_05_0139: { path: '/core-modification/v1/myinfo/wire-service-contracts', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0146: { path: '/core-bill/v1/bill-address', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_05_0147: { path: '/core-bill/v1/bill-address-change', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
+
   // RECHARGE
   BFF_06_0001: { path: '/core-recharge/v1/refill-coupons', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_06_0002: { path: '/core-recharge/v1/refill-usages', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
