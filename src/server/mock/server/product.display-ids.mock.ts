@@ -36,6 +36,3 @@ export const PRODUCT_CURRENT_SETTING = {
   TR_03_01_03: ['NA00004883'],  // 개시일 + 시간 + 종료일 조회
   MV_02_02_05: ['NA00005872'],  // 휴대폰 결제안심통보 조회
 };
-
-// 해지 - 가입유도 팝업
-export const PRODUCT_TERMINATE_INVITE_JOIN = ['NA00004350', 'NA00005638', 'NA00003202', 'NA00000291', 'NA00001890', 'NA00000290'];
