@@ -8,13 +8,13 @@
 <!-- .cont-box -->
 <div class="cont-box nogaps noborder">
     <ul class="link-long-list">
-        <% if (data.nopayment) { %>
+        <% if (data.unPaidTotSum) { %>
         <li>
             <div class="link-long">
                 <button data-id="non-payment">미납요금
                     <span class="tx-sub">
                         <span class="point1">
-                            <i class="tx-bold"><%= data.nopayment.unPaidTotSum %></i> 원
+                            <i class="tx-bold"><%= data.unPaidTotSum %></i> 원
                         </span>
                         <span class="ico"></span>
                     </span>

@@ -88,7 +88,7 @@ class MytFareSubmainController extends TwViewController {
       // 미납내역
       if ( nonpayment ) {
         data.nonpayment = nonpayment;
-        data.nonpayment.unPaidTotSum = FormatHelper.addComma(nonpayment.unPaidTotSum);
+        data.unPaidTotSum = FormatHelper.addComma(nonpayment.unPaidTotSum);
       }
       // 납부/청구 정보
       if ( paymentInfo ) {

@@ -412,7 +412,7 @@ Tw.MyTFareSubMain.prototype = {
 
   // 미납요금버튼
   _onClickedNonPayment: function (/*event*/) {
-
+    this._historyService.goLoad('myt/fare/nopayment');
   },
 
   // 요금안내서 설정 이동
