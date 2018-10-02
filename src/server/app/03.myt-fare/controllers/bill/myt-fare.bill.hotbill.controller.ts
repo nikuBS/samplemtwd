@@ -21,10 +21,37 @@ class MyTFareBillHotbill extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo?: any, allSvc?: any, childInfo?: any) {
-    this._getServiceInfo(res, svcInfo);
+    const svcs = this._getServiceInfo(svcInfo);
+    if ( !_.isEmpty(svcs) ) {
+      const bills: any[] = [];
+      Observable.from(svcs)
+        .pipe(
+          mergeMap(svc => this._requestHotbillInfo(svc))
+        ).subscribe(
+        data => {
+          if ( data ) {
+            data.svc.svcNum = FormatHelper.conTelFormatWithDash(data.svc.svcNum);
+            bills.push({ svc: data.svc, bill: data.resp.result.hotBillInfo[0].totOpenBal2 });
+          }
+        },
+        err => {
+          console.log(err);
+        },
+        () => {
+          res.render('bill/myt-fare.bill.hotbill.html', {
+            svcInfo: svcInfo,
+            lines: bills
+          });
+        });
+    } else {
+      res.render('bill/myt-fare.bill.hotbill.html', {
+        svcInfo: svcInfo,
+        lines: []
+      });
+    }
   }
 
-  private _getServiceInfo(res, svcInfo) {
+  private _getServiceInfo(svcInfo): any[] {
     let svcs = this.loginService.getChildInfo().map(svc => {
       svc.child = true;
       return svc;
@@ -34,42 +61,12 @@ class MyTFareBillHotbill extends TwViewController {
       svcs = svcs.concat(otherSvc[LINE_NAME.MOBILE].filter(svc => ['M1', 'M3'].indexOf(svc.svcAttrCd) > -1));
       _.reject(svcs, { svcMgmtNum: svcInfo['svcMgmtNum'] });
     }
-
-    if ( !_.isEmpty(svcs) ) {
-      svcs.map(svc => {
-        svc.svcNum = FormatHelper.conTelFormatWithDash(svc.svcNum);
-      });
-
-      const bills: any[] = [];
-      Observable.from(svcs)
-        .pipe(
-          mergeMap(svc => this._requestHotbillInfo(svc))
-        ).subscribe(
-        data => {
-          if ( data ) {
-            bills.push({ svc: data.svc, bill: data.resp.result.hotBillInfo[0].totOpenBal2 });
-          }
-        },
-        err => {
-          console.log(err);
-        },
-        () => {
-          res.render( 'bill/myt-fare.bill.hotbill.html', {
-            svcInfo: svcInfo,
-            lines: bills
-          });
-        });
-    } else {
-      res.render( 'bill/myt-fare.bill.hotbill.html', {
-        svcInfo: svcInfo,
-        lines: []
-      });
-    }
+    return _.map(svcs, _.clone);
   }
 
   private _requestHotbillInfo(svc): Observable<any> {
     const self = this;
-    const params = { count: 0};
+    const params = { count: 0 };
     const headers: {} = {};
     if ( svc['child'] ) {
       params['childSvcMgmtNum'] = svc['svcMgmtNum'];
