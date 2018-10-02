@@ -37,16 +37,22 @@ Tw.MyTFareSubMain.prototype = {
   },
 
   _rendered: function () {
-    if ( this.data.svcInfo.svcAttrCd === 'M2' ) {
-      // 사용내역확인버튼
-      this.$usedBrkd = this.$container.find('button[data-id=used-brkd]');
+    if ( this.data.type === 'UF' ) {
+      // 사용요금자세히보기
+      this.$usedDetail = this.$container.find('button[data-id=used-detail]');
     }
     else {
-      // 요금안내서버튼
-      this.$billReport = this.$container.find('button[data-id=bill-report]');
-      if ( this.data.isNotAutoPayment ) {
-        // 요금납부버튼
-        this.$billPym = this.$container.find('button[data-id=bill-pym]');
+      if ( this.data.svcInfo.svcAttrCd === 'M2' ) {
+        // 사용내역확인버튼
+        this.$usedBrkd = this.$container.find('button[data-id=used-brkd]');
+      }
+      else {
+        // 요금안내서버튼
+        this.$billReport = this.$container.find('button[data-id=bill-report]');
+        if ( this.data.isNotAutoPayment ) {
+          // 요금납부버튼
+          this.$billPym = this.$container.find('button[data-id=bill-pym]');
+        }
       }
     }
     // 실시간요금버튼
@@ -56,14 +62,19 @@ Tw.MyTFareSubMain.prototype = {
       this.$nonPayment = this.$container.find('button[data-id=non-payment]');
     }
     if ( this.data.paymentInfo ) {
-      // 요금안내서설정버튼
-      this.$billType = this.$container.find('button[data-id=bill-type]');
+      // 청구요금화면인 경우
+      if ( this.data.type !== 'UF' ) {
+        // 요금안내서설정버튼
+        this.$billType = this.$container.find('button[data-id=bill-type]');
+      }
       // 납부방법버튼
       this.$payMthd = this.$container.find('button[data-id=pay-mthd]');
     }
-    if ( this.data.isMicroPayment ) {
+    if ( this.data.isMicroPrepay ) {
       // 소액결제
       this.$microBill = this.$container.find('button[data-id=micro-bill]');
+    }
+    if ( this.data.isContentPrepay ) {
       // 콘텐츠 이용료
       this.$contentBill = this.$container.find('button[data-id=content-bill]');
     }
@@ -73,7 +84,7 @@ Tw.MyTFareSubMain.prototype = {
     }
     // 최근요금내역
     this.$billChart = this.$container.find('[data-id=bill-chart]');
-    if ( this.data.otherLines.length > 0 ) {
+    if ( this.data.type !== 'UF' && this.data.otherLines.length > 0 ) {
       // 다른회선 요금 조회
       this.$otherLines = this.$container.find('[data-id=other-line]');
       this.$moreTempleate = Handlebars.compile(Tw.MYT_TPL.FARE_SUBMAIN.MORE_LINE_TEMP);
@@ -89,16 +100,22 @@ Tw.MyTFareSubMain.prototype = {
   },
 
   _bindEvent: function () {
-    if ( this.data.svcInfo.svcAttrCd === 'M2' ) {
-      // 사용내역확인버튼
-      this.$usedBrkd.on('click', $.proxy(this._onClickedSelBillGuide, this));
+    if ( this.data.type === 'UF' ) {
+      // 사용요금자세히보기
+      this.$usedDetail.on('click', $.proxy(this._onClickedSelBillGuide, this));
     }
     else {
-      // 요금안내서버튼
-      this.$billReport.on('click', $.proxy(this._onClickedSelBillGuide, this));
-      if ( this.data.isNotAutoPayment ) {
-        // 요금납부버튼
-        this.$billPym.on('click', $.proxy(this._onClickedBillPym, this));
+      if ( this.data.svcInfo.svcAttrCd === 'M2' ) {
+        // 사용내역확인버튼
+        this.$usedBrkd.on('click', $.proxy(this._onClickedSelBillGuide, this));
+      }
+      else {
+        // 요금안내서버튼
+        this.$billReport.on('click', $.proxy(this._onClickedSelBillGuide, this));
+        if ( this.data.isNotAutoPayment ) {
+          // 요금납부버튼
+          this.$billPym.on('click', $.proxy(this._onClickedBillPym, this));
+        }
       }
     }
     // 실시간요금버튼
@@ -108,8 +125,11 @@ Tw.MyTFareSubMain.prototype = {
       this.$nonPayment.on('click', $.proxy(this._onClickedNonPayment, this));
     }
     if ( this.data.paymentInfo ) {
-      // 요금안내서설정버튼
-      this.$billType.on('click', $.proxy(this._onClickedSetBillReport, this));
+      // 청구요금화면인 경우
+      if ( this.data.type !== 'UF' ) {
+        // 요금안내서설정버튼
+        this.$billType.on('click', $.proxy(this._onClickedSetBillReport, this));
+      }
       // 납부방법버튼
       this.$payMthd.on('click', $.proxy(this._onClickedPayMthd, this));
     }
@@ -124,7 +144,9 @@ Tw.MyTFareSubMain.prototype = {
       this.$paymentDetail.on('click', $.proxy(this._onClickedPaymentDetail, this));
     }
     // 다른회선 요금 조회
-    this.$otherLines.on('click', 'li', $.proxy(this._onClickedOtherLine, this));
+    if ( this.data.type !== 'UF' && this.data.otherLines.length > 0 ) {
+      this.$otherLines.on('click', $.proxy(this._onClickedOtherLine, this));
+    }
     // 세금계산서
     if ( this.data.taxInvoice ) {
       this.$taxInv.on('click', $.proxy(this._onClickedTaxInvoice, this));
@@ -161,11 +183,69 @@ Tw.MyTFareSubMain.prototype = {
   },
 
   _initialize: function () {
-    // 1. 최근요금내역
-    // 2. 다른회선요금조회
-    // 3. 실시간 요금조회
-    this._claimPaymentRequest();
+    /**
+     * /청구요금인 경우
+     * 1. 최근요금내역
+     * 2. 다른회선요금조회
+     * 3. 실시간 요금조회
+     * 사용요금인 경우
+     * 1. 사용요금내역
+     * 2. 실시간 요금조회
+     **/
+    if ( this.data.type === 'UF' ) {
+      this._usageFeeRequest();
+    }
+    else {
+      this._claimPaymentRequest();
+    }
   },
+
+  // 사용요금내역조회-1
+  _usageFeeRequest: function () {
+    var usageDtArray = this.data.usage.invDtArr;
+    if ( usageDtArray.length > 0 ) {
+      var requestCommand = [];
+      for ( var index = 0; index < usageDtArray.length; index++ ) {
+        requestCommand.push({
+          command: Tw.API_CMD.BFF_05_0047, params: {
+            invDt: usageDtArray[index]
+          }
+        });
+      }
+      this._apiService.requestArray(requestCommand)
+        .done($.proxy(this._responseUsageFee, this))
+        .fail($.proxy(this._errorRequest, this));
+    }
+    else {
+      this._responseUsageFee();
+    }
+  },
+  _responseUsageFee: function () {
+    if ( arguments.length > 0 ) {
+      var chart_data = {
+        co: '#3b98e6', //색상
+        da_arr: []
+      };
+      for ( var idx = arguments.length - 1; idx > -1; idx-- ) {
+        if ( arguments[idx].code === Tw.API_CODE.CODE_00 ) {
+          var item = arguments[idx].result;
+          var amt = parseInt(item.useAmtTot, 10);
+          chart_data.da_arr.push({
+            'na': Tw.DateHelper.getShortKoreanMonth(item.invDt), // 날짜
+            'class': 'chart_link item' + idx,
+            'data': [amt] // 사용금액
+          });
+        }
+      }
+      if ( chart_data.da_arr.length > 0 ) {
+        this._initPatternChart(chart_data);
+      }
+    }
+    // 실시간요금
+    setTimeout($.proxy(this._realTimeBillRequest, this), 300);
+  },
+
+  // 사용요금내역조회-2
 
   // 최근청구요금내역조회-1
   _claimPaymentRequest: function () {
@@ -316,7 +396,7 @@ Tw.MyTFareSubMain.prototype = {
   // 요금안내서 이동(main)
   _onClickedSelBillGuide: function (/*event*/) {
     // 1. 통합청구, 2. 개별청구, 3. 보안솔루션
-    // 선불폰, 사용요
+    // 선불폰, 사용요금
     this._historyService.goLoad('/myt/fare/bill/guide');
   },
 
@@ -332,7 +412,7 @@ Tw.MyTFareSubMain.prototype = {
 
   // 미납요금버튼
   _onClickedNonPayment: function (/*event*/) {
-
+    this._historyService.goLoad('myt/fare/nopayment');
   },
 
   // 요금안내서 설정 이동
@@ -342,37 +422,51 @@ Tw.MyTFareSubMain.prototype = {
 
   // 납부방법 이동
   _onClickedPayMthd: function (/*event*/) {
-    // 작업 완료되면 추가
+    // TODO: 화면완료되면 추가예정
   },
 
   // 소액결제 이동
   _onClickedMicroBill: function (/*event*/) {
-
+    // TODO: 화면완료되면 추가예정
   },
 
   // 콘텐츠이용료 이동
   _onClickedContentBill: function (/*event*/) {
-
+    // TODO: 화면완료되면 추가예정
   },
 
   // 최근납부내역 이동
   _onClickedPaymentDetail: function (/*event*/) {
-
+    // TODO: 화면완료되면 추가예정
   },
 
   // 다른회선조회
-  _onClickedOtherLine: function (/*event*/) {
-    // 통합, 개별인 경우만 동작
+  _onClickedOtherLine: function (event) {
+    // 통합, 개별이면서 대표인 경우만 동작
+    var $target = $(event.target).parents('[data-svc-mgmt-num]'),
+        mgmtNum = $target.attr('data-svc-mgmt-num'),
+        number  = $target.attr('data-num'),
+        name    = $target.attr('data-name'),
+        repSvc  = ($target.attr('data-rep-svc') === 'true');
+    if ( repSvc ) {
+      // 기준회선변경
+      var defaultLineInfo = this.data.svcInfo.svcNum + ' ' + this.data.svcInfo.nickNm;
+      var selectLineInfo = number + ' ' + name;
+      this.changeLineMgmtNum = mgmtNum;
+      this._popupService.openModalTypeA(Tw.REMNANT_OTHER_LINE.TITLE,
+        defaultLineInfo + Tw.MYT_TPL.DATA_SUBMAIN.SP_TEMP + selectLineInfo,
+        Tw.REMNANT_OTHER_LINE.BTNAME, null, $.proxy(this._onChangeLineConfirmed, this), null);
+    }
   },
 
   // 세금계산서 이동
   _onClickedTaxInvoice: function (/*event*/) {
-
+    // TODO: 화면완료되면 추가예정
   },
 
   // 기부금/후원금
   _onClickedContribution: function (/*event*/) {
-
+    // TODO: 화면완료되면 추가예정
   },
 
   // 요금안내서 이동(chart)
@@ -385,6 +479,26 @@ Tw.MyTFareSubMain.prototype = {
   _onErrorReceivedBillData: function (resp) {
     this.__resetTimer();
     this._errorRequest(resp);
+  },
+
+  // 다른 회선 팝업에서 변경하기 눌렀을 경우
+  _onChangeLineConfirmed: function () {
+    // 회선변경 API 호출
+    // TODO: 선택회선변경에 대한 class 분리예정, 완료되면 적용!!
+    this._apiService.request(Tw.NODE_CMD.CHANGE_SESSION, {
+      svcMgmtNum: this.changeLineMgmtNum
+    }).done($.proxy(this._onChangeSessionSuccess, this));
+  },
+
+  // 회선 변경 후 처리
+  _onChangeSessionSuccess: function (resp) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      this._popupService.close();
+      this._popupService.toast(Tw.REMNANT_OTHER_LINE.TOAST);
+      setTimeout($.proxy(function () {
+        this._historyService.reload();
+      }, this), 300);
+    }
   },
 
   _errorRequest: function (resp) {
@@ -403,9 +517,10 @@ Tw.MyTFareSubMain.prototype = {
     this._requestCount = -1;
     this._resTimerID = null;
   },
+
   __selectOtherLine: function (number) {
-    var select = _.find(this.data.otherLines, function(item) {
-      if(item.svcMgmtNum === number) {
+    var select = _.find(this.data.otherLines, function (item) {
+      if ( item.svcMgmtNum === number ) {
         return item;
       }
     });

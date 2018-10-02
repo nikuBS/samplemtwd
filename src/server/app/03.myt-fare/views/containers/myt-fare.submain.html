@@ -29,7 +29,7 @@
             <!-- 상세항목 -->
             <%- include('../components/submain/myt-fare.submain.payment-detail.html', data) %>
             <!-- 소액결제 콘텐츠이용 -->
-            <% if (data.isMicroPayment) { %>
+            <% if (data.isMicroPrepay || data.isContentPrepay) { %>
             <%- include('../components/submain/myt-fare.submain.micro-payment.html', data) %>
             <% } %>
 
@@ -61,7 +61,7 @@
             <%- include('../components/submain/myt-fare.submain.contribution.html', data) %>
             <% } %>
             <hr class="cont-sp type1" aria-hidden="true"/>
-            <% if (data.otherLines.length > 0) { %>
+            <% if (data.type !== 'UF' && data.otherLines.length > 0) { %>
             <!-- .cont-box -->
             <div class="cont-box nogaps" data-id="other-line">
                 <p class="list-comp-title">다른 회선 요금 조회</p>

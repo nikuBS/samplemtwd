@@ -159,7 +159,8 @@ Tw.POPUP_TPL = {
 Tw.MYT_TPL = {
   DATA_SUBMAIN: {
     SP_TEMP: '<br> ↓ <br>',
-    MORE_LINE_TEMP: '<li data-svc-mgmt-num="{{svcMgmtNum}}"><button>' +
+    MORE_LINE_TEMP: '<li data-svc-mgmt-num="{{svcMgmtNum}}"' +
+      'data-name="{{nickNm}}" data-num="{{svcNum}}"><button>' +
       '<div class="lineinfo-user"><span class="info-title">{{nickNm}}' +
       '{{#if data.child}}' +
       '<span class="badge badge-fam"><span class="blind">자녀회선</span></span>' +
@@ -171,7 +172,8 @@ Tw.MYT_TPL = {
       '</span><span class="ico"></span></div></button></li>'
   },
   FARE_SUBMAIN: {
-    MORE_LINE_TEMP: '<li data-svc-mgmt-num="{{svcMgmtNum}}"data-name="{{nickNm}}" data-num="{{svcNum}}">' +
+    MORE_LINE_TEMP: '<li data-svc-mgmt-num="{{svcMgmtNum}}" data-rep-svc="{{repSvc}}"' +
+      'data-name="{{nickNm}}" data-num="{{svcNum}}">' +
       '<button><div class="lineinfo-user d-table"><div class="ico"><i></i></div><div class="cont">' +
       '{{#if combine}}' +
       '{{else}}'+ '<span class="ico"></span>' +

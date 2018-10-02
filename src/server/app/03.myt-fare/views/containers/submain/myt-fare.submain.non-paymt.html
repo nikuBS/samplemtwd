@@ -17,6 +17,7 @@
 <!--// #skip_navigation -->
 <div class="wrap">
     <!-- #header -->
+    <%- include('../../../../common/views/components/header.component.html', { title: '미납요금', svcInfo: data.svcInfo, line: false }); %>
     <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap">
@@ -27,28 +28,32 @@
                 <div class="unpaid-charges">
                     <dl class="total-box">
                         <dt>미납요금</dt>
-                        <dd><span class="num ff-tg-black">119,090</span><span class="ff-tg-medium">원</span></dd>
+                        <dd><span class="num ff-tg-black"><%= data.unPaidTotSum %></span>
+                            <span class="ff-tg-medium">원</span></dd>
                     </dl>
+                    <% if (data.unPaidAmtList.length > 0) { %>
                     <ul class="point-box">
-                        <li>
-                            <dl>
-                                <dt>2018년 4월</dt>
-                                <dd>40,000원</dd>
-                            </dl>
-                        </li>
-                        <li>
-                            <dl>
-                                <dt>2018년 5월</dt>
-                                <dd>40,000원</dd>
-                            </dl>
-                        </li>
+                        <% for (var i=0; i < data.unPaidAmtList.length; i++) { %>
+                        <%- include('../components/submain/myt-fare.submain.non-plist.html', data.unPaidAmtList[i]) %>
+                        <% } %>
                     </ul>
+                    <% } %>
                 </div>
-                <ul class="bt-slice">
+                <% var itemTwo = data.possibleDay && data.suspension; %>
+                <% if (data.possibleDay || data.suspension) { %>
+                <ul class="bt-slice <%= itemTwo? 'item-two':''; %>">
+                    <% if (data.possibleDay) { %>
+                    <li class="bt-white2">
+                        <button>납부가능일 선택</button>
+                    </li>
+                    <% } %>
+                    <% if (data.possibleDay) { %>
                     <li class="bt-white2">
                         <button>이용정지 해제</button>
                     </li>
+                    <% } %>
                 </ul>
+                <% } %>
             </div>
             <!--// .cont-box -->
             <div class="cont-box bgnone noborder">
@@ -57,6 +62,10 @@
                         <ul class="suggest-dot type2">
                             <li>2대이상의 회선을 통합청구신청 하신 고객님은 합산된 청구요금이 보여집니다.</li>
                             <li>고객님은 현재 미납된 요금이 있습니다.<br/>이용에 불편이 없도록 납부바랍니다.</li>
+                            <% if (data.possibleDay) { %>
+                            <li>즉시요금 납부가 어려우시면 &lsquo;납부 가능일 입력&rsquo;을 선택하여 주세요.</li>
+                            <li>고객님의 이용정지 예정일은 <%= data.suspStaDt %> 입니다.</li>
+                            <% } %>
                         </ul>
                     </div>
                 </div>
