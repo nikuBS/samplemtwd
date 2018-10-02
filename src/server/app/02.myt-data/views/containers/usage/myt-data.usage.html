@@ -53,12 +53,12 @@
                         <script id="fe-tdata-share-child-item" type="text/x-handlebars-template">
                             <li>
                                 <div class="line-info">
-                                    <p class="line-num"><span class="blind">T데이터셰어링 USIM번호</span>{{ usimNum }}</p>
+                                    <p class="line-num"><span class="blind">T데이터셰어링 USIM번호</span>{{ usimFormat usimNum }}</p>
                                     <p class="state">{{ svcStNm }}<span class="sep"></span><span class="blind">서비스등록일</span>{{ dateFormat svcScrbDt }}</p>
                                 </div>
                                 <div class="used-data">
                                     <p class="num"><span class="str">{{ byteFormat useAmt }}</span>{{ byteUnit useAmt}}</p>
-                                    <p class="txt">{{ svcSt }}</p>
+                                    <p class="txt">사용</p>
                                 </div>
                             </li>
                         </script>
@@ -172,6 +172,7 @@
                                 </div>
                                 <div class="remain">
                                     <p class="num"><span class="str">{{ numComma remained }}</span>원</p>
+                                    <p class="txt">남음</p>
                                 </div>
                             </li>
                         </script>
