@@ -18,7 +18,6 @@ Tw.MyTDataGiftMonthly = function (rootEl) {
 
 Tw.MyTDataGiftMonthly.prototype = {
   _init: function () {
-    // this._apiService.request(Tw.API_CMD.BFF_06_0006, {}).done($.proxy(this._onSuccessGiftAutoList, this));
   },
 
   _cachedElement: function () {
@@ -34,7 +33,7 @@ Tw.MyTDataGiftMonthly.prototype = {
   _bindEvent: function () {
     this.$btn_add_contact.on('click', $.proxy(this._showAddUI, this));
     this.$btn_auto_contact.on('click', $.proxy(this._onClickBtnAddr, this));
-    this.$btn_send_auto_gift.on('click', $.proxy(this._subscribeAutoGift, this));
+    this.$btn_send_auto_gift.on('click', $.proxy(this._getReceiveUserInfo, this));
     this.$input_auto_gift.on('keyup', $.proxy(this._onKeyUpAutoGiftNumber, this));
     this.$btn_unsubscribe_auto_gift.on('click', $.proxy(this._unSubscribeAutoGift, this));
   },
@@ -77,19 +76,36 @@ Tw.MyTDataGiftMonthly.prototype = {
       .done($.proxy(this._onSuccessUnsubscribeAutoGift, this));
   },
 
+  _getReceiveUserInfo: function () {
+    this.befrSvcNum = this.$input_auto_gift.val().match(/\d+/g).join('');
+
+    this._apiService.request(Tw.API_CMD.BFF_06_0019, { befrSvcNum: this.befrSvcNum }).done($.proxy(this._onSuccessReceiveUserInfo, this));
+  },
+
+  _onSuccessReceiveUserInfo: function (res) {
+    if ( res.code === Tw.API_CODE.CODE_00 ) {
+      this.paramData = $.extend({}, this.paramData, res.result);
+      this._subscribeAutoGift();
+    } else {
+      Tw.Error(res.code, res.msg).pop();
+    }
+  },
+
   _subscribeAutoGift: function () {
-    var params = {
+    var htParams = {
       befrSvcNum: this.$input_auto_gift.val().match(/\d+/g).join(''),
       dataQty: this.$wrap_auto_select_list.find('li.checked input').val()
     };
 
-    this._apiService.request(Tw.API_CMD.BFF_06_0004, params)
+    this.paramData = $.extend({}, this.paramData, htParams);
+
+    this._apiService.request(Tw.API_CMD.BFF_06_0004, htParams)
       .done($.proxy(this._onSuccessAutoGift, this));
   },
 
   _onSuccessAutoGift: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      this._historyService.replaceURL('/myt/data/gift/complete');
+      this._historyService.replaceURL('/myt/data/gift/auto-complete?' + $.param(this.paramData));
     } else {
       Tw.Error(res.code, res.msg).pop();
     }

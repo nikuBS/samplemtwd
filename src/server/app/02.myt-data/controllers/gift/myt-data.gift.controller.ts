@@ -27,6 +27,9 @@ class MyTDataGift extends TwViewController {
       case 'sms':
         res.render('gift/myt-data.gift.sms.html', responseData);
         break;
+      case 'auto-complete':
+        res.render('gift/myt-data.gift.auto-complete.html', responseData);
+        break;
       case 'complete':
         res.render('gift/myt-data.gift.complete.html', responseData);
         break;
