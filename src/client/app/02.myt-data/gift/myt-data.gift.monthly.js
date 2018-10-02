@@ -64,6 +64,15 @@ Tw.MyTDataGiftMonthly.prototype = {
   _unSubscribeAutoGift: function (e) {
     var elTarget = $(e.currentTarget);
     var serNum = elTarget.data('sernum');
+
+    this._popupService.openConfirm(
+      Tw.ALERT_MSG_MYT_DATA.UNSUBSCRIBE_MONTHLY_GIFT,
+      null,
+      $.proxy(this._requestUnsubscribeAutoGift, this, serNum)
+    );
+  },
+
+  _requestUnsubscribeAutoGift: function (serNum) {
     this._apiService.request(Tw.API_CMD.BFF_06_0005, { serNum: serNum })
       .done($.proxy(this._onSuccessUnsubscribeAutoGift, this));
   },
@@ -86,7 +95,7 @@ Tw.MyTDataGiftMonthly.prototype = {
     }
   },
 
-  _onSuccessUnsubscribeAutoGift: function (res){
+  _onSuccessUnsubscribeAutoGift: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       this._historyService.reload();
     } else {
