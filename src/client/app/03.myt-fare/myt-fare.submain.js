@@ -221,7 +221,6 @@ Tw.MyTFareSubMain.prototype = {
     }
   },
   _responseUsageFee: function() {
-    // TODO:
     if ( arguments.length > 0 ) {
       var chart_data = {
         co: '#3b98e6', //색상
