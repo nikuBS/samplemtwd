@@ -40,11 +40,10 @@ Tw.MyTFareHotBill = function (rootEl) {
           this.lines = children.result;
         }
         if ( svcs.code === Tw.API_CODE.CODE_00 ) {
-          if ( svcs['M'] ) {
-
-          }
-          this.lines = this.lines.concat(svcs.result[Tw.LINE_NAME.MOBILE].filter(svc => ['M1', 'M3'].indexOf(svc.svcAttrCd) > -1));
-          _.reject(this.lines, { svcMgmtNum: svcInfo['svcMgmtNum'] });
+          this.lines = this.lines.concat(svcs.result[Tw.LINE_NAME.MOBILE].filter(function (svc) {
+            return ['M1', 'M3'].indexOf(svc.svcAttrCd) > -1;
+          }));
+          _.reject(this.lines, { svcMgmtNum: svcInfo.svcMgmtNum });
         }
       }));
   }
