@@ -2,7 +2,8 @@ Tw.BUTTON_LABEL = {
   CONFIRM: '확인',
   CANCEL: '취소',
   CLOSE: '닫기',
-  MORE: '더보기'
+  MORE: '더보기',
+  LINE: '회선관리'
 };
 
 Tw.POPUP_TITLE = {

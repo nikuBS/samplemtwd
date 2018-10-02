@@ -251,6 +251,7 @@ class ApiRouter {
     const params = req.body;
     this.loginService.setCurrentReq(req, res);
     this.apiService.requestChangeLine(params).subscribe((resp) => {
+      console.log('response');
       res.json(resp);
     }, (error) => {
       res.json(error);
