@@ -133,9 +133,11 @@ Tw.MyTFareSubMain.prototype = {
       // 납부방법버튼
       this.$payMthd.on('click', $.proxy(this._onClickedPayMthd, this));
     }
-    if ( this.data.isMicroPayment ) {
+    if ( this.data.isMicroPrepay ) {
       // 소액결제
       this.$microBill.on('click', $.proxy(this._onClickedMicroBill, this));
+    }
+    if ( this.data.isContentPrepay ) {
       // 콘텐츠 이용료
       this.$contentBill.on('click', $.proxy(this._onClickedContentBill, this));
     }
@@ -427,38 +429,48 @@ Tw.MyTFareSubMain.prototype = {
 
   // 소액결제 이동
   _onClickedMicroBill: function (/*event*/) {
-    // TODO: 화면완료되면 추가예정
-    var code = this.data.microPay.code;
+    var code = this.data.microPay.code, title = '';
     switch(code) {
       case Tw.API_ADD_SVC_ERROR.BIL0030:
-        break;
-      case Tw.API_ADD_SVC_ERROR.BIL0031:
+        title = Tw.ALERT_MSG_MYT_FARE.ADD_SVC.BIL0030;
         break;
       case Tw.API_ADD_SVC_ERROR.BIL0033:
+        title = Tw.ALERT_MSG_MYT_FARE.ADD_SVC.BIL0033;
         break;
       case Tw.API_ADD_SVC_ERROR.BIL0034:
+        title = Tw.ALERT_MSG_MYT_FARE.ADD_SVC.BIL0033;
         break;
+    }
+    if (_.isEmpty(title)) {
+      // TODO: layer popup 완료 후 변경 필요
+      this._popupService.openAlert('', title, Tw.BUTTON_LABEL.CLOSE);
+    }
+    else {
+      // TODO: 화면완료되면 추가예정 MF_06
     }
   },
 
   // 콘텐츠이용료 이동
   _onClickedContentBill: function (/*event*/) {
-    // TODO: 화면완료되면 추가예정
-    var code = this.data.contentPay.code;
+    var code = this.data.contentPay.code, title = '';
     switch(code) {
       case Tw.API_ADD_SVC_ERROR.BIL0030:
-        break;
-      case Tw.API_ADD_SVC_ERROR.BIL0031:
+        title = Tw.ALERT_MSG_MYT_FARE.ADD_SVC.BIL0030;
         break;
       case Tw.API_ADD_SVC_ERROR.BIL0033:
+        title = Tw.ALERT_MSG_MYT_FARE.ADD_SVC.BIL0033;
         break;
       case Tw.API_ADD_SVC_ERROR.BIL0034:
+        title = Tw.ALERT_MSG_MYT_FARE.ADD_SVC.BIL0033;
         break;
     }
-    this._popupService.open({
-      hbs: 'layer_b_type_case1',
-      title: '휴대폰 결제 이용동의 후 사용 가능합니다.'
-    });
+    if (_.isEmpty(title)) {
+      // TODO: layer popup 완료 후 변경 필요
+      this._popupService.openAlert('', title, Tw.BUTTON_LABEL.CLOSE);
+    }
+    else {
+      // TODO: 화면완료되면 추가예정 MF_07
+    }
   },
 
   // 최근납부내역 이동

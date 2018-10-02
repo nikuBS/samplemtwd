@@ -109,7 +109,12 @@ Tw.ALERT_MSG_MYT_FARE = {
   COMPLETE_NEW: '신청이 완료되었습니다.',
   COMPLETE_CHANGE: '변경이 완료되었습니다.',
   COMPLETE_CANCEL: '해지가 완료되었습니다.',
-  COMPLETE_CHANGE_DATE: '요금납부일 변경이 완료되었습니다.'
+  COMPLETE_CHANGE_DATE: '요금납부일 변경이 완료되었습니다.',
+  ADD_SVC: {
+    BIL0030: '휴대폰 결제 이용동의 후 사용 가능합니다.',
+    BIL0033: '휴대폰 결제 차단 고객은 사용이 제한된 메뉴입니다.',
+    BIL0034: '법인실사용자 소액결제 부가서비스 가입 후 사용 가능합니다.'
+  }
 };
 
 Tw.ALERT_MSG_MYT_JOIN = {

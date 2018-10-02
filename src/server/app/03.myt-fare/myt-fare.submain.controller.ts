@@ -68,7 +68,7 @@ class MytFareSubmainController extends TwViewController {
       if ( contentPay ) {
         data.contentPay = contentPay;
         // 휴대폰이면서 미성년자가 아닌경우
-        if ( data.microPay.code !== API_ADD_SVC_ERROR.BIL0031 && svcInfo.svcAttrCd === 'M1' ) {
+        if ( data.contentPay.code !== API_ADD_SVC_ERROR.BIL0031 && svcInfo.svcAttrCd === 'M1' ) {
           data.isContentPrepay = true;
         }
       }
