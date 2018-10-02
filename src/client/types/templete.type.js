@@ -173,16 +173,16 @@ Tw.MYT_TPL = {
   FARE_SUBMAIN: {
     MORE_LINE_TEMP: '<li data-svc-mgmt-num="{{svcMgmtNum}}"data-name="{{nickNm}}" data-num="{{svcNum}}">' +
       '<button><div class="lineinfo-user d-table"><div class="ico"><i></i></div><div class="cont">' +
-      '{{#if !data.merge}}' +
-      '<span class="ico"></span>' +
+      '{{#if combine}}' +
+      '{{else}}'+ '<span class="ico"></span>' +
       '{{/if}}' +
       '<span class="info-title">{{nickNm}}'+
-      '{{ if (data.merge) { }}' +
+      '{{#if combine}}' +
       '<span class="badge badge-merge"><span class="blind">통합</span></span>' +
-      '{{ } }}' +
+      '{{/if}}' +
       '</span>' +
-      '<span class="info-sub">{{= data.svcNum }}</span></div></div><div class="lineinfo-data">' +
-      '<span class="info-title">{{= data.money }} 원</span><span class="ico"></span></div>' +
+      '<span class="info-sub">{{svcNum}}</span></div></div><div class="lineinfo-data">' +
+      '<span class="info-title">{{amt}} 원</span><span class="ico"></span></div>' +
       '</button></li>'
   }
 };

@@ -30,7 +30,12 @@
                     <div class="ico"><i></i></div>
                     <dl>
                         <dt>할인요금</dt>
-                        <dd><span class="num ff-tg-black">-<%= data.claimDisAmt %></span><span class="ff-tg-medium">원</span></dd>
+                        <dd>
+                            <span class="num ff-tg-black">
+                            <%= data.claimDisAmt === '0'? data.claimDisAmt : '-' + data.claimDisAmt %>
+                            </span>
+                            <span class="ff-tg-medium">원</span>
+                        </dd>
                     </dl>
                 </li>
             </ul>
