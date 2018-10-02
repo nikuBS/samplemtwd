@@ -33,27 +33,29 @@
                 </button>
             </div>
         </li>
-        <% if(data.paymentInfo) { %>
-        <li>
-            <div class="link-long">
-                <button data-id="bill-type">요금안내서 설정
-                    <span class="tx-sub">
-                        <span class="normal"><%= data.paymentInfo.billTypeNm %></span>
-                        <span class="ico"></span>
-                    </span>
-                </button>
-            </div>
-        </li>
-        <li>
-            <div class="link-long">
-                <button data-id="pay-mthd">납부 방법
-                    <span class="tx-sub">
-                        <span class="normal"><%= data.paymentInfo.payMthdNm %></span>
-                        <span class="ico"></span>
-                    </span>
-                </button>
-            </div>
-        </li>
+        <% if (data.paymentInfo) { %>
+            <% if (data.type !== 'UF') { %>
+            <li>
+                <div class="link-long">
+                    <button data-id="bill-type">요금안내서 설정
+                        <span class="tx-sub">
+                            <span class="normal"><%= data.paymentInfo.billTypeNm %></span>
+                            <span class="ico"></span>
+                        </span>
+                    </button>
+                </div>
+            </li>
+            <% } %>
+            <li>
+                <div class="link-long">
+                    <button data-id="pay-mthd">납부 방법
+                        <span class="tx-sub">
+                            <span class="normal"><%= data.paymentInfo.payMthdNm %></span>
+                            <span class="ico"></span>
+                        </span>
+                    </button>
+                </div>
+            </li>
         <% } %>
     </ul>
 </div>

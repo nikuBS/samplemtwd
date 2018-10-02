@@ -6,14 +6,19 @@
 
 <hr class="cont-sp type1" aria-hidden="true"/>
 <!-- .cont-box -->
+<% var itemTwo = data.isMicroPrepay && data.isContentPrepay; %>
 <div class="cont-box noborder">
-    <ul class="bt-slice item-two">
+    <ul class="bt-slice <% itemTwo? 'item-two':'' %>">
+        <% if (data.isMicroPrePay) { %>
         <li class="bt-blue1" data-id="micro-bill">
             <button>소액결제</button>
         </li>
+        <% } %>
+        <% if (data.isContentPrepay) { %>
         <li class="bt-blue1" data-id="content-bill">
             <button>콘텐츠 이용료</button>
         </li>
+        <% } %>
     </ul>
 </div>
 <!-- //.cont-box -->

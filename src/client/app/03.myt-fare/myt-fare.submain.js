@@ -73,7 +73,7 @@ Tw.MyTFareSubMain.prototype = {
     }
     // 최근요금내역
     this.$billChart = this.$container.find('[data-id=bill-chart]');
-    if ( this.data.otherLines.length > 0 ) {
+    if ( this.data.type !== 'UF' && this.data.otherLines.length > 0 ) {
       // 다른회선 요금 조회
       this.$otherLines = this.$container.find('[data-id=other-line]');
       this.$moreTempleate = Handlebars.compile(Tw.MYT_TPL.FARE_SUBMAIN.MORE_LINE_TEMP);
@@ -124,7 +124,9 @@ Tw.MyTFareSubMain.prototype = {
       this.$paymentDetail.on('click', $.proxy(this._onClickedPaymentDetail, this));
     }
     // 다른회선 요금 조회
-    this.$otherLines.on('click', 'li', $.proxy(this._onClickedOtherLine, this));
+    if ( this.data.type !== 'UF' && this.data.otherLines.length > 0 ) {
+      this.$otherLines.on('click', 'li', $.proxy(this._onClickedOtherLine, this));
+    }
     // 세금계산서
     if ( this.data.taxInvoice ) {
       this.$taxInv.on('click', $.proxy(this._onClickedTaxInvoice, this));
@@ -404,8 +406,8 @@ Tw.MyTFareSubMain.prototype = {
     this._resTimerID = null;
   },
   __selectOtherLine: function (number) {
-    var select = _.find(this.data.otherLines, function(item) {
-      if(item.svcMgmtNum === number) {
+    var select = _.find(this.data.otherLines, function (item) {
+      if ( item.svcMgmtNum === number ) {
         return item;
       }
     });
