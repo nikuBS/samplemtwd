@@ -88,3 +88,17 @@ export enum PRODUCT_INFINITY_BENEFIT {
   NA00006116 = '스마트 워치 월정액 100% 할인',
   NA00006117 = '인피니티 클럽 이용료 100%할인'
 }
+
+export const MYT_FARE_BILL_REISSUE_TYPE = {
+  'P' : 'T world',
+  'H' : 'Bill Letter',
+  'B' : '문자',
+  '2' : '이메일',
+  'I' : 'Bill Letter+이메일',
+  'A' : '문자+이메일',
+  '1' : '우편',
+  'Q' : 'Bill Letter+문자',
+  // 유선
+  'J' : 'Bill Letter',
+  'K' : 'Bill Letter+이메일'
+};

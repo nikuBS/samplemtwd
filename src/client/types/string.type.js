@@ -70,6 +70,20 @@ Tw.MYT_FARE_BILL_GUIDE = {
   POP_TITLE_TYPE_0: '조건 변경'
 };
 
+Tw.MYT_FARE_BILL_REISSUE_TYPE_CD = {
+  'P' : 'P', // T world
+  'H' : 'H', // Bill Letter
+  'B' : 'B', // 문자
+  '2' : '2', // 이메일
+  'I' : 'I', // Bill Letter+이메일
+  'A' : 'A', // 문자+이메일
+  '1' : '1', // 우편
+  'Q' : 'Q', // Bill Letter+문자
+  // 유선
+  'J' : 'J', // Bill Letter
+  'K' : 'K'  // Bill Letter+이메일
+};
+
 Tw.ALERT_MSG_COMMON = {
   SERVER_ERROR: '통신 오류입니다. 잠시 후 다시 시도해 주세요.'
 };
