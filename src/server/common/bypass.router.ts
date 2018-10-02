@@ -71,10 +71,11 @@ class BypassRouter {
 
   private sendRequest(cmd: any, req: Request, res: Response, next: NextFunction) {
     const params = cmd.method === API_METHOD.GET ? req.query : req.body;
-    const headers = {
-      cookie: req.headers.cookie,
-      'user-agent': req.headers['user-agent']
-    };
+    // const headers = {
+    //   cookie: req.headers.cookie,
+    //   'user-agent': req.headers['user-agent']
+    // };
+    const headers = req.headers;
     const parameter = FormatHelper.isEmpty(params.parameter) ? {} : params.parameter;
     const pathVariables = FormatHelper.isEmpty(params.pathVariables) ? [] : params.pathVariables;
 
