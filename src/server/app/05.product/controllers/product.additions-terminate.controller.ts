@@ -46,11 +46,20 @@ class ProductAdditionsTerminate extends TwViewController {
       });
     }
 
-    this._getApi().subscribe((resp) => {
-      if (resp.code !== API_CODE.CODE_00) {
+    Observable.combineLatest(
+      this._getApi(),
+      this.redisService.getData(prodId + 'TERM')
+    ).subscribe(([ prodInfo, terminateRedisInfo ]) => {
+      if (prodInfo.code !== API_CODE.CODE_00) {
         return this.error.render(res, {
-          code: resp.code,
-          msg: resp.msg,
+          code: prodInfo.code,
+          msg: prodInfo.msg,
+          svcInfo: svcInfo
+        });
+      }
+
+      if (FormatHelper.isEmpty(terminateRedisInfo)) {
+        return this.error.render(res, {
           svcInfo: svcInfo
         });
       }
@@ -58,7 +67,8 @@ class ProductAdditionsTerminate extends TwViewController {
       res.render('product.additions-terminate.html', {
         prodId: prodId,
         svcInfo: svcInfo,
-        prodInfo: this._parseProdInfo(resp.result)
+        prodInfo: this._parseProdInfo(prodInfo.result),
+        terminateApiCode: terminateRedisInfo.apiCode
       });
     });
   }

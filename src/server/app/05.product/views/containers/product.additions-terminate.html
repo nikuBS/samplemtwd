@@ -8,7 +8,7 @@
 <body>
 <div class="wrap">
   <div id="contents" class="container-wrap">
-    <div class="container" data-prod_id="<%= prodId %>">
+    <div class="container">
       <p>
         <button type="button" class="fe-btn_terminate">해지하기</button>
       </p>
@@ -19,7 +19,7 @@
 <% include ../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.ProductAdditionsTerminate($('.container'));
+    new Tw.ProductAdditionsTerminate($('.container'), '<%= prodId %>', '<%= terminateApiCode %>');
   });
 </script>
 <% include ../components/end.component.html %>

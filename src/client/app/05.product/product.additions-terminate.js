@@ -4,9 +4,10 @@
  * Date: 2018.10.01
  */
 
-Tw.ProductAdditionsTerminate = function(rootEl) {
+Tw.ProductAdditionsTerminate = function(rootEl, prodId, terminateApiCode) {
   this.$container = rootEl;
-  this._prodId = this.$container.data('prod_id');
+  this._prodId = prodId;
+  this._terminateApiCode = terminateApiCode;
   this._historyService = new Tw.HistoryService();
   this._popupService = new Tw.PopupService();
   this._apiService = Tw.Api;
@@ -33,7 +34,8 @@ Tw.ProductAdditionsTerminate.prototype = {
 
   _procTerminate: function() {
     // @todo 해지 클릭시 인증 Step 추가 해야함.
-    this._apiService.request(Tw.API_CMD.BFF_10_0022, {}, {}, this._prodId).done($.proxy(this._goSuccessPage, this));
+    this._apiService.request(Tw.API_CMD[this._terminateApiCode], {}, {}, this._prodId)
+      .done($.proxy(this._goSuccessPage, this));
   },
 
   _goSuccessPage: function(resp) {
