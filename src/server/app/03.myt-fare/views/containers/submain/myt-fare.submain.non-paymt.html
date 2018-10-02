@@ -31,7 +31,7 @@
                         <dd><span class="num ff-tg-black"><%= data.unPaidTotSum %></span>
                             <span class="ff-tg-medium">원</span></dd>
                     </dl>
-                    <% if (data.unPaidAmtList.length > 0) { %>
+                    <% if (data.unPaidAmtList && data.unPaidAmtList.length > 0) { %>
                     <ul class="point-box">
                         <% for (var i=0; i < data.unPaidAmtList.length; i++) { %>
                         <%- include('../components/submain/myt-fare.submain.non-plist.html', data.unPaidAmtList[i]) %>

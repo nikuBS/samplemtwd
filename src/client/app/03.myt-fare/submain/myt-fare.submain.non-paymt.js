@@ -12,7 +12,6 @@ Tw.MyTFareSubMainNonPayment = function (params) {
   this.data = params.data;
   this._rendered();
   this._bindEvent();
-  this._initialize();
 };
 
 Tw.MyTFareSubMainNonPayment.prototype = {

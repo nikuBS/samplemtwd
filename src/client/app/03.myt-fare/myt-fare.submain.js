@@ -428,11 +428,37 @@ Tw.MyTFareSubMain.prototype = {
   // 소액결제 이동
   _onClickedMicroBill: function (/*event*/) {
     // TODO: 화면완료되면 추가예정
+    var code = this.data.microPay.code;
+    switch(code) {
+      case Tw.API_ADD_SVC_ERROR.BIL0030:
+        break;
+      case Tw.API_ADD_SVC_ERROR.BIL0031:
+        break;
+      case Tw.API_ADD_SVC_ERROR.BIL0033:
+        break;
+      case Tw.API_ADD_SVC_ERROR.BIL0034:
+        break;
+    }
   },
 
   // 콘텐츠이용료 이동
   _onClickedContentBill: function (/*event*/) {
     // TODO: 화면완료되면 추가예정
+    var code = this.data.contentPay.code;
+    switch(code) {
+      case Tw.API_ADD_SVC_ERROR.BIL0030:
+        break;
+      case Tw.API_ADD_SVC_ERROR.BIL0031:
+        break;
+      case Tw.API_ADD_SVC_ERROR.BIL0033:
+        break;
+      case Tw.API_ADD_SVC_ERROR.BIL0034:
+        break;
+    }
+    this._popupService.open({
+      hbs: 'layer_b_type_case1',
+      title: '휴대폰 결제 이용동의 후 사용 가능합니다.'
+    });
   },
 
   // 최근납부내역 이동
