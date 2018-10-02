@@ -6,7 +6,7 @@
 <% include ../../components/start.component.html %>
 <% include ../../components/javascript.component.html %>
 
-<!-- #skip_navigation -->MyTFareBillHotBill
+<!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
     <ul>
         <li><a href="#gnb">메뉴 바로가기</a></li>
@@ -16,7 +16,7 @@
 </div>
 <div id="fe-myt-fare-hotbill" class="wrap">
     <!-- #header -->
-    <%- include('../../../../../common/views/components/header.component.html', { title: '실시간 사용요금', svcInfo: svcInfo }); %>
+    <%- include('../../../../../common/views/components/header.component.html', { title: '실시간 사용요금', svcInfo: svcInfo, line:true }); %>
     <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap">
@@ -293,42 +293,24 @@
             <!-- .cont-box -->
             <div class="cont-box nogaps">
                 <ul class="list-comp-lineinfo">
+                    <% for (let i = 0; i < lines.length; i++) { %>
                     <li>
                         <button>
                             <div class="lineinfo-user">
-                                <span class="info-title">갤럭시 S9<span class="badge badge-fam"><span class="blind">자녀회선</span></span></span>
-                                <span class="info-sub">010-46**-10**</span>
+                                <span class="info-title"><%= lines[i].svc.eqpMdlNm %>
+                                    <% if (lines[i].svc.child) { %>
+                                    <span class="badge badge-fam"><span class="blind">자녀회선</span></span>
+                                    <% } %>
+                                </span>
+                                <span class="info-sub"><%= lines[i].svc.svcNum %></span>
                             </div>
                             <div class="lineinfo-data">
-                                <span class="info-title">23,367<span class="unit ml4">원</span></span>
+                                <span class="info-title"><%= lines[i].bill %><span class="unit ml4">원</span></span>
                                 <span class="ico"></span>
                             </div>
                         </button>
                     </li>
-                    <li>
-                        <button>
-                            <div class="lineinfo-user">
-                                <span class="info-title">T Pocket Fi</span>
-                                <span class="info-sub">010-46**-10**</span>
-                            </div>
-                            <div class="lineinfo-data">
-                                <span class="info-title">35,674<span class="unit ml4">원</span></span>
-                                <span class="ico"></span>
-                            </div>
-                        </button>
-                    </li>
-                    <li>
-                        <button>
-                            <div class="lineinfo-user">
-                                <span class="info-title">갤럭시 S9</span>
-                                <span class="info-sub">010-46**-10**</span>
-                            </div>
-                            <div class="lineinfo-data">
-                                <span class="info-title">25,100<span class="unit ml4">원</span></span>
-                                <span class="ico"></span>
-                            </div>
-                        </button>
-                    </li>
+                    <% } %>
                 </ul>
             </div>
             <!--// .cont-box -->
