@@ -7,18 +7,20 @@
 import TwViewController from '../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
 
-class ProductDetail extends TwViewController {
+class ProductJoin extends TwViewController {
   constructor() {
     super();
   }
 
   private _prodId;
+  private _step;
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, layerType: string) {
     this._prodId = req.params.prodId;
+    this._step = req.body.step || 1;
 
     res.render('product.join.html');
   }
 }
 
-export default ProductDetail;
+export default ProductJoin;
