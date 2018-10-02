@@ -1,0 +1,92 @@
+<%#
+* FileName: myt-fare.bill.hotbill.billgroup
+* Author: Hyeryoun Lee (skt.P130712@partner.sk.com)
+* Date: 2018. 10. 2.
+%>
+<script id="tmplBillGroup" type="text/x-handlebars-template">
+<div class="widget">
+    <div class="widget-box accordion">
+        <div class="acco-cover"><!-- toggle : 한개만 열기 -->
+            <div class="acco-style">
+                <ul class="acco-list">
+                    {{#each billItems}}
+                    <li class="acco-box">
+                        <div class="acco-tit">
+                            <button role="button" aria-pressed="false">
+                                <div class="in-title">
+                                    <span class="tit">{{@key}}</span>
+                                    <span class="tx-cont">{{this.total}} 원</span>
+                                </div>
+                            </button>
+                        </div>
+                        <div class="acco-cont">
+                            <div class="in-cont">
+                                <div class="basic-list">
+                                    <ul>
+                                        {{#each this}}
+                                        {{#isBill @key}}
+                                        <li>
+                                            <div class="inner-top">
+                                                <span class="title" role="note" aria-labelledby="aria-footnote-02">{{@key}}
+                                                        {{#if noVAT}}
+                                                         <span class="required-mark"><span class="blind">필수표시</span></span>
+                                                        {{else}}
+                                                        {{#if is3rdParty}}
+                                                        <span class="badge badge-other"><span class="blind">타사</span></span>
+                                                        {{/if}}
+                                                        {{/if}}
+                                                </span>
+                                                {{#if discount}}
+                                                <span class="tx-cont tx-red">{{this.total}} 원</span>
+                                                {{else}}
+                                                <span class="tx-cont">{{this.total}} 원</span>
+                                                {{/if}}
+                                            </div>
+                                            <div class="inner-row">
+                                                <ul>
+                                                    {{#items}}
+                                                    <li>
+                                                        <span class="title" role="note" aria-labelledby="aria-footnote-02">{{name}}
+                                                            {{#if noVAT}}
+                                                             <span class="required-mark"><span class="blind">필수표시</span></span>
+                                                            {{else}}
+                                                            {{#if is3rdParty}}
+                                                            <span class="badge badge-other"><span class="blind">타사</span></span>
+                                                            {{/if}}
+                                                            {{/if}}
+                                                        </span>
+
+                                                        {{#if discount}}
+                                                        <span class="tx-cont tx-red">{{amount}} 원</span>
+                                                        {{else}}
+                                                        <span class="tx-cont">{{amount}} 원</span>
+                                                        {{/if}}
+                                                    </li>
+                                                    {{/items}}
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        {{/isBill}}
+                                        {{/each}}
+                                    </ul>
+                                    {{#if showDesc}}
+                                    <div class="noti-words">
+						                <span class="words01" id="aria-footnote-01">
+						                     <span class="badge badge-other ml0"><span class="blind">타사</span></span>당사에서 청구 대행하는 타사 요금
+						                </span>
+                                        <span class="words02 mt10" id="aria-footnote-02">
+						                      <span class="required-mark"><span class="blind">필수표시</span></span> 부가가치세 제외 대상 표시
+						                </span>
+                                    </div>
+                                    {{/if}}
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    {{/each}}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+</script>

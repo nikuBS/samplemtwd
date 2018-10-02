@@ -21,42 +21,55 @@ class MyTFareBillHotbill extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo?: any, allSvc?: any, childInfo?: any) {
-    const svcs = this._getServiceInfo(svcInfo);
-    if ( !_.isEmpty(svcs) ) {
-      const bills: any[] = [];
-      Observable.from(svcs)
-        .pipe(
-          mergeMap(svc => this._requestHotbillInfo(svc))
-        ).subscribe(
-        data => {
-          if ( data ) {
-            data.svc.svcNum = FormatHelper.conTelFormatWithDash(data.svc.svcNum);
-            bills.push({ svc: data.svc, bill: data.resp.result.hotBillInfo[0].totOpenBal2 });
-          }
-        },
-        err => {
-          console.log(err);
-        },
-        () => {
-          res.render('bill/myt-fare.bill.hotbill.html', {
-            svcInfo: svcInfo,
-            lines: bills
-          });
-        });
-    } else {
+    // 2일부터 조회 가능
+    if ( new Date().getDate() === 1 ) {
       res.render('bill/myt-fare.bill.hotbill.html', {
         svcInfo: svcInfo,
-        lines: []
+        lines: [],
+        billAvailable : false
       });
+    } else {
+      const svcs = this._getServiceInfo(svcInfo);
+      if ( !_.isEmpty(svcs) ) {
+        const bills: any[] = [];
+        Observable.from(svcs)
+          .pipe(
+            mergeMap(svc => this._requestHotbillInfo(svc))
+          ).subscribe(
+          data => {
+            if ( data ) {
+              data.svc.svcNum = FormatHelper.conTelFormatWithDash(data.svc.svcNum);
+              data.svc.bill = data.resp.result.hotBillInfo[0].totOpenBal2;
+            }
+          },
+          err => {
+            console.log(err);
+          },
+          () => {
+            res.render('bill/myt-fare.bill.hotbill.html', {
+              svcInfo: svcInfo,
+              lines: svcs,
+              billAvailable: true
+            });
+          });
+      } else {
+        res.render('bill/myt-fare.bill.hotbill.html', {
+          svcInfo: svcInfo,
+          lines: [],
+          billAvailable: true
+        });
+      }
     }
   }
 
   private _getServiceInfo(svcInfo): any[] {
-    let svcs = this.loginService.getChildInfo().map(svc => {
+    let svcs = this.loginService.getChildInfo() || [];
+    svcs.map(svc => {
       svc.child = true;
       return svc;
     });
-    const otherSvc = this.loginService.getAllSvcInfo();
+
+    const otherSvc = this.loginService.getAllSvcInfo() || [];
     if ( otherSvc && otherSvc[LINE_NAME.MOBILE] ) {
       svcs = svcs.concat(otherSvc[LINE_NAME.MOBILE].filter(svc => ['M1', 'M3'].indexOf(svc.svcAttrCd) > -1));
       _.reject(svcs, { svcMgmtNum: svcInfo['svcMgmtNum'] });
