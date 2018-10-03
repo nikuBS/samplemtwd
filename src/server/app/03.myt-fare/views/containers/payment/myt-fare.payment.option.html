@@ -1,0 +1,187 @@
+<%#
+* FileName: myt-fare.payment.option.html
+* Author: Jayoon Kong (jayoon.kong@sk.com)
+* Date: 2018.10.02
+%>
+
+<% include ../../components/start.component.html %>
+<body class="bg-white">
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#gnb">메뉴 바로가기</a></li>
+            <li><a href="#contents">본문 바로가기</a></li>
+            <li><a href="#footer">푸터 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div id="myt-fare-payment-option" class="wrap step">
+        <!-- #header -->
+        <%- include('../../../../../common/views/components/header.component.html', { title: '납부방법', svcInfo: svcInfo, line:true }); %>
+        <!--// #header -->
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+                <!-- .cont-box -->
+                <% if (paymentOption.isAuto) { %>
+                <div class="cont-box">
+                    <div class="cont-tit-wrap">
+                        <span class="tit-small"><%= addrInfo.payNm %></span>
+                        <span class="tit-big"><%= paymentOption.bankCardName %> <em><%= paymentOption.bankCardNum %></em></span>
+                    </div>
+                    <ul class="bt-slice item-two mt30">
+                        <li class="bt-blue1">
+                            <button class="fe-auto">변경</button>
+                        </li>
+                        <li class="bt-blue1">
+                            <button class="fe-cancel">해지</button>
+                        </li>
+                    </ul>
+                </div>
+                <% } else { %>
+                <div class="cont-box">
+                    <div class="tit-wrap">
+                        <h3 class="tit"><%= addrInfo.payNm %></h3>
+                        <div class="bt-alone"><button class="bt-bg-blue1 fe-auto">자동납부 신청</button></div>
+                    </div>
+                </div>
+                <% } %>
+                <!--// .cont-box -->
+                <div data-acnt-num="<%= paymentOption.acntNum %>"
+                     data-payer-num-cl-cd="<%= paymentOption.payerNumClCd %>"
+                     data-ser-num="<%= paymentOption.serNum %>"
+                     data-auth-req-ser-num="<%= paymentOption.authReqSerNum %>"
+                     data-rltm-ser-num="<%= paymentOption.rltmSerNum %>"
+                     class="ti-caption-gray fe-info">
+                    <h3 class="tit">상세정보</h3>
+                    <% if (!paymentOption.isAuto) { %><button class="detail-view2 fe-change-address">연락처 및 주소변경</button><% } %>
+                </div>
+                <!-- .cont-box -->
+                <div class="cont-box nogaps-hoz">
+                    <% if (paymentOption.payMthdCd === '01') { %>
+                    <ul class="detail-info-list fe-auto-info" data-fst-drw-schd-dt="<%= paymentOption.fstDrwSchdDt %>">
+                        <li>
+                            <dl>
+                                <dt>최초 승인예정일</dt>
+                                <dd>
+                                    <p class="value"><%= paymentOption.fstDrwSchdDate %></p>
+                                </dd>
+                            </dl>
+                        </li>
+                        <li>
+                            <dl>
+                                <dt>요금납부일</dt>
+                                <dd>
+                                    <p class="value">매월 <span class="fe-pay-date"><%= paymentOption.payCyclNm %></span>일</p>
+                                    <% if (paymentOption.chgYn === 'Y') { %>
+                                    <button class="bt-link-tx underline fe-change-date" title="요금 납부일 변경">변경</button>
+                                    <% } %>
+                                </dd>
+                            </dl>
+                        </li>
+                        <li>
+                            <dl>
+                                <dt>연락처</dt>
+                                <dd>
+                                    <p class="value"><%= svcInfo.phoneNum %></p>
+                                </dd>
+                            </dl>
+                        </li>
+                        <li>
+                            <dl>
+                                <dt>예금주명</dt>
+                                <dd>
+                                    <p class="value"><%= paymentOption.dpstCardOwnrNm %></p>
+                                </dd>
+                            </dl>
+                        </li>
+                    </ul>
+                    <% } else if (paymentOption.payMthdCd === '02') { %>
+                    <ul class="detail-info-list">
+                        <li>
+                            <dl>
+                                <dt>최초 승인예정일</dt>
+                                <dd>
+                                    <p class="value"><%= paymentOption.fstDrwSchdDate %></p>
+                                </dd>
+                            </dl>
+                        </li>
+                        <li>
+                            <dl>
+                                <dt>인출(승인)일</dt>
+                                <dd>
+                                    <p class="value">영업일/<br />카드사에 따라 다름</p>
+                                </dd>
+                            </dl>
+                        </li>
+                        <li>
+                            <dl>
+                                <dt>카드유효기간</dt>
+                                <dd>
+                                    <p class="value"><%= paymentOption.cardYm %></p>
+                                </dd>
+                            </dl>
+                        </li>
+                        <li>
+                            <dl>
+                                <dt>연락처</dt>
+                                <dd>
+                                    <p class="value"><%= svcInfo.phoneNum %></p>
+                                </dd>
+                            </dl>
+                        </li>
+                    </ul>
+                    <% } else { %>
+                    <ul class="detail-info-list">
+                        <% if (paymentOption.payMthdCd === '04') { %>
+                        <li>
+                            <dl>
+                                <dt>입금전용계좌</dt>
+                                <dd>
+                                    <p class="value"><%= addrInfo.account %></p>
+                                </dd>
+                            </dl>
+                        </li>
+                        <% } %>
+                        <li>
+                            <dl>
+                                <dt>예금주명</dt>
+                                <dd>
+                                    <p class="value"><%= addrInfo.custNm %></p>
+                                </dd>
+                            </dl>
+                        </li>
+                        <li>
+                            <dl>
+                                <dt>연락처</dt>
+                                <dd>
+                                    <p class="value"><%= addrInfo.phoneNum %></p>
+                                </dd>
+                            </dl>
+                        </li>
+                        <li>
+                            <dl>
+                                <dt>주소</dt>
+                                <dd>
+                                    <p class="value"><%= addrInfo.addr %></p>
+                                </dd>
+                            </dl>
+                        </li>
+                    </ul>
+                    <% } %>
+                </div>
+                <!--// .cont-box -->
+                <hr class="cont-sp type1" aria-hidden="true"/>
+            </div>
+        </div>
+        <!--// #contents -->
+    </div>
+</body>
+<% include ../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    new Tw.MyTFarePaymentOption($('#myt-fare-payment-option'));
+  });
+</script>
+<% include ../../components/end.component.html %>

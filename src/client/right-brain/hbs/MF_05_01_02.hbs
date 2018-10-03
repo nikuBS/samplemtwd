@@ -1,0 +1,87 @@
+<div class="popup tw-popup">
+    <div class="popup-page nobg"><!-- .half 화면에서 50%로 보여질때 -->
+        <!-- #header -->
+        <div class="header-wrap">
+            <div class="page-header">
+                <div class="header-ti align-l">
+                    <h1>자동납부 해지</h1>
+                </div>
+                <!-- .popup-closeBtn -->
+                <button class="popup-closeBtn fe-common-back"></button>
+                <!--// .popup-closeBtn -->
+            </div>
+        </div>
+        <!--// #header -->
+        <!-- .container-wrap -->
+        <div class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+
+                <div class="cont-box nogaps">
+                    <div class="form-data-tit-wrap ml16">
+                        <strong class="tit">해지 시, 납부방법</strong>
+                    </div>
+                    <div class="list-comp-input">
+                        <div class="widget">
+                            <div class="widget-box radio">
+                                <ul class="select-list fe-select-payment-option" role="group">
+                                    <li id="03" class="radiobox type01 checked" role="radio" aria-checked="true"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                                        <input type="radio" name="radio" value="" title="지로 납부" aria-labelledby="aria-comp-radio1" checked="checked" /><!-- 체크상태일 경우 checked="checked" -->
+                                        <div class="comp-list-layout" id="aria-comp-radio1" aria-hidden="true">
+                                            <p class="layout-text">
+                                                <span class="mtext ellipsis">지로 납부</span>
+                                            </p>
+                                        </div>
+                                    </li>
+                                    <li id="04" class="radiobox type01" role="radio" aria-checked="false"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                                        <input type="radio" name="radio" value="" title="입금전용계좌 납부" aria-labelledby="aria-comp-radio2" /><!-- 체크상태일 경우 checked="checked" -->
+                                        <div class="comp-list-layout" id="aria-comp-radio2" aria-hidden="true">
+                                            <p class="layout-text">
+                                                <span class="mtext ellipsis">입금전용계좌 납부</span>
+                                            </p>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+                <!-- .cont-box -->
+                <div class="cont-box nogaps-top">
+                    <div class="checkbox-solid">
+                        <div class="widget">
+                            <div class="widget-box check">
+                                <ul class="select-list fe-send-sms-yn" role="group">
+                                    <li class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                                        <input type="checkbox" name="checkbox" value="" title="문자 발송여부"><!-- 체크상태일 경우 checked="checked" -->
+                                        문자 발송여부
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <button aria-haspopup="true" class="info-view-ic fe-sms-info">문자 발송여부 정보보기</button>
+                    </div>
+                    <ul class="form-data-list mt16 fe-account-box" style="display:none;">
+                        <li>
+                            <label class="tit">입금전용계좌 은행</label>
+                            <button class="bt-dropdown big fe-account-selector" title="입금전용계좌 은행선택" aria-haspopup="true">은행선택<span class="ico"></span></button>
+                        </li>
+                    </ul>
+                </div>
+                <!--// .cont-box -->
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+                <ul class="bt-slice full">
+                    <li class="bt-red1">
+                        <button class="fe-go-cancel">해지하기</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!--// .container-wrap -->
+    </div>
+    <div class="popup-blind"></div>
+</div>

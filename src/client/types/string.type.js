@@ -14,6 +14,8 @@ Tw.POPUP_TITLE = {
   SELECT_CARD_TYPE: '납부형태 선택',
   SELECT_POINT: '납부포인트 선택',
   SELECT_ACCOUNT: '계좌번호 선택',
+  SELECT_PAYMENT_DATE: '요금납부일 선택',
+  CHANGE_PAYMENT_DATE: '요금납부일 변경',
   NOT_FAMILY: '리필쿠폰 선물 가능한 가족이 아닙니다.',
   SELECT_CHARGE_TYPE: '충전/선물 유형'
 };
@@ -51,6 +53,12 @@ Tw.REFUND_ACCOUNT_INFO = {
   TITLE: '환불계좌란',
   CONTENTS: '이중납부가 되는 경우 환불계좌로 자동 환불 처리해 드립니다.' + '<br/>' +
     '본인명의의 계좌로만 신청 가능합니다.'
+};
+
+Tw.SMS_INFO = {
+  TITLE: '문자 발송여부란',
+  CONTENTS: '지로납부 및 입금전용계좌납부 고객에게 입금전용계좌 SMS서비스를 제공합니다.' + '<br/><br/>' +
+    '문자 발송여부와 입금전용계좌 은행을 선택해 주세요.'
 };
 
 Tw.REMNANT_OTHER_LINE = {
@@ -98,7 +106,10 @@ Tw.ALERT_MSG_MYT_DATA = {
 };
 
 Tw.ALERT_MSG_MYT_FARE = {
-
+  COMPLETE_NEW: '신청이 완료되었습니다.',
+  COMPLETE_CHANGE: '변경이 완료되었습니다.',
+  COMPLETE_CANCEL: '해지가 완료되었습니다.',
+  COMPLETE_CHANGE_DATE: '요금납부일 변경이 완료되었습니다.'
 };
 
 Tw.ALERT_MSG_MYT_JOIN = {

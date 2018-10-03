@@ -15,6 +15,7 @@ import MyTFareBillGuideCallGift from './controllers/bill/myt-fare.bill.guide.cal
 import MyTFareBillGuideRoaming from './controllers/bill/myt-fare.bill.guide.roaming.controllers';
 import MyTFareBillGuideDonation from './controllers/bill/myt-fare.bill.guide.donation.controllers';
 import MyTFareSubMainNonPayment from './controllers/submain/myt-fare.submain.non-paymt';
+import MytFarePaymentOption from './controllers/payment/myt-fare.payment.option';
 
 
 class MytFareRouter extends TwRouter {
@@ -28,6 +29,7 @@ class MytFareRouter extends TwRouter {
     this.controllers.push({ url: '/bill/guide/donation', controller: new MyTFareBillGuideDonation() });
     this.controllers.push({ url: '/bill/set', controller: new MyTFareBillSet() });
     this.controllers.push({ url: '/bill/set/reissue', controller: new MyTFareBillSetReissue() });
+    this.controllers.push({ url: '/payment/option', controller: new MytFarePaymentOption() });
     this.controllers.push({ url: '/payment/auto', controller: new MyTFarePaymentAuto() });
     this.controllers.push({ url: '/payment/account', controller: new MytFarePaymentAccount() });
     this.controllers.push({ url: '/payment/card', controller: new MytFarePaymentCard() });
