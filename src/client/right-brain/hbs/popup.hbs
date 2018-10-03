@@ -1,6 +1,12 @@
 <div class="popup tw-popup">
     <div class="popup-info" role="alertdialog" {{#if title}}aria-labelledby="alertHeading"{{/if}} aria-describedby="alertText">
         <div class="popup-header">
+            {{#if msgheader}}
+            <div class="msgheader {{msgheaderbg}}">
+                <strong>{{{msgtit}}}</strong>
+                <p>{{{msgtxt}}}</p>
+            </div>
+            {{/if}}
             {{#if ico}}
             <span class="ico {{ico}}"></span>
             {{/if}}
