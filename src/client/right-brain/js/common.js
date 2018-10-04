@@ -1,6 +1,5 @@
 $(document).on('ready', function () {
   $('html').addClass('device_'+skt_landing.util.win_info.get_device());
-  skt_landing.action.all_menu();
   skt_landing.action.top_btn();
 });
 $(window).on('resize', function () {
@@ -88,13 +87,21 @@ skt_landing.util = {
       }
       return browser_name;
     }
+  },
+  get_zindex:function(){
+    return parseInt($('.tw-popup').last().css('z-index'));
+  },
+  set_zindex:function(inc){
+    if($('.tw-popup').length > 1){
+      inc = inc ? inc : 100;
+      var prevTarget = $('.tw-popup').last().prev(),
+          currentTarget = $('.tw-popup').last();
+      currentTarget.css('z-index',parseInt(prevTarget.css('z-index'))+inc);
+    }
   }
 };
 skt_landing.action = {
-  scroll_top:0,
-  scroll_current:0,
   scroll_gap: [],
-  scroll_gnb_timer: null,
   fix_scroll: function () {
     var popups = $('.wrap > .popup,.wrap > .popup-page'),
         fix_target = $('.wrap > .popup,.wrap > .popup-page').length > 1 ? popups.eq(popups.length-2).find('.container-wrap') : $('#contents'),
@@ -128,38 +135,6 @@ skt_landing.action = {
     $('#header').css({
       'transform': 'translate(0 ,' + this.scroll_gap + 'px)'
     });*/
-  },
-  all_menu : function(){
-    var all_btn = $('.depth-view');
-    if(all_btn.length < 1) return;
-    all_btn.on('click', function(){
-      if(!$('.depth-view-box').hasClass('open')){
-        $(this).addClass('on');
-        $('.depth-view-box').addClass('open');
-        $('.header-wrap').addClass('fixed');
-        $('body').append('<div class="popup-blind"></div>');
-        skt_landing.action.fix_scroll();
-      }else{
-        $(this).removeClass('on');
-        $('.depth-view-box').removeClass('open');
-        $('.header-wrap').removeClass('fixed');
-        $('.popup-blind').remove();
-        skt_landing.action.auto_scroll();
-      }
-    });
-  },
-  gnb_action : function(){
-    skt_landing.action.scroll_top = skt_landing.util.win_info.get_scrollT();
-    if(skt_landing.action.scroll_top > skt_landing.action.scroll_current && !(skt_landing.action.scroll_top + skt_landing.util.win_info.get_winH() >= $('body').height()-5) && (skt_landing.action.scroll_top > 0)){
-      $('.gnb-wrap').removeClass('on');
-      clearTimeout(this.scroll_gnb_timer);
-      this.scroll_gnb_timer = setTimeout(function(){
-        $('.gnb-wrap').addClass('on');
-      },1500);
-    }else{
-      $('.gnb-wrap').addClass('on');
-    }
-    skt_landing.action.scroll_current = skt_landing.util.win_info.get_scrollT();
   },
   gnb_menu : {
     open: function(callback){
@@ -333,52 +308,28 @@ skt_landing.action = {
     }
     this.scroll_gap.pop();
   },
-  anchor: function () {
-    $('.anchor').each(function (idx) {
-      $(this).off('click').on('click', function () {
-        var ta = $(this).data('target'), //data-target
-          scroll_ta = $('.' + ta).offset().top,
-          gab = 0;
-        $('html,body').stop().animate({
-          'scrollTop': scroll_ta
-        }, {
-          queue: false,
-          duration: 500
-        });
-      });
-    });
-  },
-  toggleon: function (ta) {
-    ta.on('click', function (e) {
-      e.stopPropagation();
-      if (ta.find('a').length > 0) {
-        if (!$(this).find('a').hasClass('on')) {
-          $(this).find('a').addClass('on');
-        } else {
-          $(this).find('a').removeClass('on');
-        }
-      } else {
-        if (!$(this).hasClass('on')) {
-          $(this).addClass('on');
-        } else {
-          $(this).removeClass('on');
-        }
-      }
-    });
-  },
   setFocus: function(target, idx){  // target : selector(string) | jquery selector
     var target = $(target),
         idx = idx ? idx : 0;
     target.eq(idx).attr('tabindex',0).focus(); //포커스
   },
   top_btn: function () {
-    $('.bt-top button').on('click', function () {
-      $('html').stop().animate({
-        'scrollTop': 0
-      }, {
-          queue: false,
-          duration: 500
+    $('.bt-top button').on('touchstart click', function () {
+      if ($(this).parents().hasClass('popup-page')) {
+        $('.container-wrap').stop().animate({
+          'scrollTop': 0
+        }, {
+            queue: false,
+            duration: 500
         });
+      } else {
+        $('html').stop().animate({
+          'scrollTop': 0
+        }, {
+            queue: false,
+            duration: 500
+        });
+      }
     });
   },
   ran_id_create:function(){
@@ -494,10 +445,8 @@ skt_landing.action = {
       $.get(hbsURL+popup_info.hbs+'.hbs', function (text) {
         var tmpl = Handlebars.compile(text);
         var html = tmpl(popup_info);
-        /*if ($('.popup').length > 0) {
-          _this.close();
-        }*/
         $('.wrap').append(html);
+        skt_landing.util.set_zindex();
       }).done(function () {
         skt_landing.action.fix_scroll();
         if(callback_open){
@@ -505,10 +454,6 @@ skt_landing.action = {
         }
         var popups = $('.wrap > .popup,.wrap > .popup-page'),
             createdTarget = popups.last();
-        if(popups.length > 1){
-          var getIdx = parseInt(popups.eq(popups.length - 2).css('z-index'));
-          createdTarget.css('z-index',getIdx+100);
-        }
         if(popup_info.hbs == 'dropdown'){
           createdTarget.addClass('dropdown');
           createdTarget.find('.popup-contents').css('max-height',$(window).height()*0.65);
@@ -516,75 +461,22 @@ skt_landing.action = {
         createdTarget.find('.popup-blind').on('click',function(e){
           e.stopPropagation();
         });
-        _this.cancel();
         _this.scroll_chk();
         if(createdTarget.hasClass('popup-page')){
           skt_landing.widgets.widget_init('.popup-page');
-          skt_landing.components.component_init('.popup-page');
         }else{
           skt_landing.widgets.widget_init('.popup');
-          skt_landing.components.component_init('.popup');
         }
         if(popup_info.layer){
           var win_h = skt_landing.util.win_info.get_winH(),
               layer = $('.popup .popup-page.layer'),
               layer_h = layer.height();
-          /*if(win_h*.5 < layer_h && !layer.hasClass('half')){
-            layer.css('height',layer.height());
-          }else{
-            layer.css('height','50%');
-          }*/
           layer.css({
             'height':layer_h,
             'bottom':0
           });
         }
       });
-      //skt_landing.action.popup.open({'title':'타이틀','contents':'팝업입니다.','type':[{style_class:'btn-submit',href:'#submit',txt:'확인'},{style_class:'btn-modify',href:'#modify',txt:'수정'},{style_class:'btn-cancel',href:'#cancel',txt:'취소'}]});
-    },
-    /* 2018-06-19 삭제 */
-    /*searchChange: function (popup_info) {
-      skt_landing.action.fix_scroll();
-      var _this = this;
-      $.get(hbsURL+'popup-searchChange.hbs', function (text) {
-        var tmpl = Handlebars.compile(text);
-        var html = tmpl(popup_info);
-        if ($('.popup').length > 0) {
-          _this.close();
-        }
-        $('body').append(html);
-      }).done(function () {
-        $('.popup-closeBtn').off('click').on('click', function () {
-          _this.close();
-        });
-        _this.cancel();
-        skt_landing.widgets.widget_init('.popup');
-      });
-    },*/
-    share: function (popup_info) {
-      var _this = this;
-      skt_landing.action.fix_scroll();
-      $.get(hbsURL+'popup-share.hbs', function (text) {
-        var tmpl = Handlebars.compile(text);
-        var html = tmpl(popup_info);
-        if ($('.popup').size() > 0) {
-          _this.close();
-        }
-        $('body').append(html);
-      }).done(function () {
-        $('.popup-closeBtn').off('click').on('click', function () {
-          _this.close();
-        });
-        $('.popup-sns li a, .popup-sns li button').off('click').on('click', _this.sns);
-        $('.btn-copy-url').off('click').on('click', function () {
-          _this.close();
-          _this.sns_url_copy();
-        });
-      });
-    },
-    change: function (popup_info) {
-      this.close();
-      this.open(popup_info);
     },
     close_layer : function(callback){
       var layer = $('.popup .popup-page.layer');
@@ -604,12 +496,6 @@ skt_landing.action = {
         popups.eq(popups.length-1).empty().remove();
       }
       skt_landing.action.auto_scroll();
-    },
-    cancel: function () {
-      var _this = this;
-      $('.btn-cancel').off('click').on('click', function () {
-        _this.close(this);
-      });
     },
     scroll_chk: function () {
       var pop_h = $('.wrap > .popup,.wrap > .popup-page').last().find('.popup-contents').height();
@@ -656,33 +542,6 @@ skt_landing.action = {
       });
     }
   },
-  text_toggle: function (ta, txt_leng) {
-    if ($('.text-toggle').length > 0) {
-      var ta_ = ta.find('span'),
-        txt_html = ta_.html(),
-        txt_text = ta_.text(),
-        txt = '';
-      txt = txt_text.substr(0, txt_leng);
-      ta_.empty().html(txt + '...');
-      $('.btn-des').off('click').on('click', function () {
-        if ($(this).hasClass('compress')) {
-          $(this).text('더보기');
-          $(this).removeClass('compress');
-          ta_.empty().html(txt + '...');
-        } else {
-          $(this).text('닫기');
-          $(this).addClass('compress');
-          ta_.empty().html(txt_html);
-        }
-      });
-    }
-  },
-  iscroll:function(selector, height){
-    if(!height){
-      height = '100%';
-    }
-    // 2018-06-15
-  }
 };
 skt_landing.dev = {
   sortableInit: function(selector, options){

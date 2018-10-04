@@ -1,25 +1,39 @@
 <!-- #header -->
 <div id="header" class="header-wrap">
     <div class="header">
+        <% if (!locals.option) { %>
         <div class="header-ti align-l">
-            <h1><%= title %></h1>
+            <h1><%- title %></h1>
         </div>
         <button class="prev-step fe-common-back"><span class="blind">이전으로</span></button>
+        <% } else { %>
+        <% if (!option.home) { %>
+        <div class="header-ti align-l">
+            <h1><%- title %></h1>
+        </div>
+        <% } else { %>
+        <div class="header-ti home">
+            <h1><%- title %></h1>
+        </div>
+        <% } %>
 
-        <% if (line) { %>
+        <% if ( !option.back ) { %>
+        <button class="prev-step fe-common-back"><span class="blind">이전으로</span></button>
+        <% } else { %>
+        <% if ( option.back === 'step' ) { %>
+        <button class="prev-step fe-common-back">취소</button>
+        <% } else if (option.back === 'popup' ) { %>
+
+        <% } %>
+        <% } %>
+        <% } %>
+
+        <% if (locals.option && locals.option.line) { %>
         <% if (svcInfo) { %>
         <% if (svcInfo.totalSvcCnt === '0') { %>
-        <ul class="bt-slice item-free header-bt">
-            <li class="bt-blue1">
-                <button id="fe-bt-signup" title="신규가입">신규가입</button>
-            </li>
-        </ul>
+        <button class="bt-user-status">신규 개통</button>
         <% } else if (svcInfo.totalSvcCnt !== '0' && svcInfo.expsSvcCnt === '0') { %>
-        <ul class="bt-slice item-free header-bt">
-            <li class="bt-blue1">
-                <a href="/auth/line" title="회선 등록">회선 등록</a>
-            </li>
-        </ul>
+        <button class="bt-user-status">회선 등록</button>
         <% } else { %>
         <button id="fe-bt-line" class="bt-dropdown small <% if(svcInfo.expsSvcCnt === '1') { %>no-arrow<% } %>" title="회선 선택" aria-haspopup="true" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-urlAuth="<%= svcInfo.urlAuth %>">
             <%= svcInfo.svcNum %>
@@ -27,11 +41,7 @@
         </button><!--팝업 호출된후 disabled부여-->
         <% } %>
         <% } else { %>
-        <ul class="bt-slice item-free header-bt">
-            <li class="bt-blue1">
-                <button class="fe-bt-login" title="로그인">로그인</button>
-            </li>
-        </ul>
+        <button class="bt-user-status">로그인</button>-->
         <% } %>
         <% } %>
     </div>

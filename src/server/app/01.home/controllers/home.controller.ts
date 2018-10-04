@@ -1,5 +1,5 @@
 /**
- * FileName: home.main.controller.ts
+ * FileName: home.controller.ts
  * Author: Ara Jo (araara.jo@sk.com)
  * Date: 2018.09.06
  */
@@ -12,8 +12,8 @@ class Home extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any, layerType: string) {
-    res.render('home.html');
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any) {
+    res.render('home.html', { svcInfo });
   }
 }
 

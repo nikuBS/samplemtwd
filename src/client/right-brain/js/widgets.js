@@ -3,16 +3,29 @@ $(document).on('ready', function () {
 });
 skt_landing.widgets = {
   widget_init: function(ta){ // string : selector
+    
+    /* 위젯 구간 */
     widget_list = {};
-    ta = ta ? $(ta+' .widget') : $('.widget');
-    ta.each(function (idx) {
+    var widget_ta = ta ? $(ta+' .widget') : $('.widget');
+    widget_ta.each(function (idx) {
       var com = $(this).find('>.widget-box').attr('class').replace(/widget-box /, '');
       widget_list['widget_' + com] = skt_landing.widgets['widget_' + com];
     });
     for (var com_name in widget_list) {
-      widget_list[com_name](ta);
+      widget_list[com_name](widget_ta);
     }
     skt_landing.widgets.widget_deltype();
+    
+    /* 컴포넌트 실행 */
+    component_list = {};
+    var component_ta = ta ? $(ta+' .component') : $('.component');
+    component_ta.each(function (idx) {
+      var com = $(this).find('.component-box').attr('class').replace(/component-box /, '');
+      component_list['component_' + com] = skt_landing.widgets['component_' + com];
+    });
+    for (var com_name in component_list) {
+      component_list[com_name](component_ta);
+    }  
   },
   widget_tube: function (ta) {
     var widget = ta ? $(ta).find('.widget-box.tube') : $('.widget-box.tube');
@@ -173,7 +186,6 @@ skt_landing.widgets = {
     input.each(function(){
       var file = $(this).find('.file'),
           vfile = $(this).find('.fileview');
-      console.log(vfile)
       if(vfile){
         file.on('change',function(){
           vfile.val($(this).val());
@@ -226,7 +238,6 @@ skt_landing.widgets = {
       var $slick = _this.slick('getSlick');
       var $slides = $slick.$slides;
       var slideIndex = $slick.slickCurrentSlide();
-      console.log(_this);
       $slides.on('click', function () {
         var $this = $(this);
         slideIndex = $slides.index($this);
@@ -240,41 +251,26 @@ skt_landing.widgets = {
       });
     });
   },
-  widget_slider2: function () {
-    /*$('.slider2').each(function (idx) {
-      var swiper,
-        tagClass = 'slide-number' + idx,
-        _this = $(this).find('.slider-box').addClass(tagClass);
-      _this.find('.page-total .total').text(_this.find('.swiper-slide').length);
-      swiper = new Swiper('.slider2 .' + tagClass, {
-        pagination: '.swiper-pagination',
-        paginationClickable: true,
-        freeMode: true
-      });
-    });*/
-  },
-  widget_slider3: function (ta) {
-    var widget = ta ? $(ta).find('.slider3') : $('.slider3');
+  widget_slider2: function (ta) {
+    var widget = ta ? $(ta).find('.slider2') : $('.slider2');
     $(widget).each(function(){
       var _this = $(this).find('.slider');
       _this.slick({
-        dots: true,
-        arrows: true,
-        infinite: false,
-        speed : 300,
-        slidesToShow: 3,
-        slidesToScroll: 3,
+        dots: false,
+        arrows: false,
+        infinite: true,
+        speed : 700,
         centerMode: false,
         focusOnSelect: false,
-    customPaging: function(slider, i) {
-      return $('<span />').text(i + 1);
-    },
+        vertical:true,
+        verticalSwiping:true,
+        autoplay:true,
+        autoplaySpeed:5000
       });
+
       var $slick = _this.slick('getSlick');
       var $slides = $slick.$slides;
       var slideIndex = $slick.slickCurrentSlide();
-
-      //슬라이더의 요소를 클릭시 요소에 대한 색상변환
       $slides.on('click', function () {
         var $this = $(this);
         slideIndex = $slides.index($this);
@@ -285,106 +281,6 @@ skt_landing.widgets = {
         setTimeout(function () {
           $slides.eq(slideIndex).triggerHandler('click');
         }, 0);
-      });
-      //@180709: 수정 - 끝
-    });
-  },
-  widget_slider4: function (ta) {
-    var widget = ta ? $(ta).find('.slider4') : $('.slider4');
-    $(widget).each(function(){
-      var _this = $(this).find('.slider');
-      _this.slick({
-        dots: false,
-        arrows: false,
-        infinite: false,
-        slidesToShow: 1,
-        centerMode: false,
-        variableWidth: false,
-        focusOnSelect: true,
-        focusOnChange: true,
-        responsive: [{
-          settings:{
-            centerPadding:0
-          }
-        }]
-      });
-      _this.on('init',function(){
-        var totalBox = $(this).closest(widget).find('.page-total'),
-            slick = _this.prop('slick');
-        totalBox.find('.current').text(slick.currentSlide+1);
-        totalBox.find('.total').text(slick.slideCount);
-      })
-        .trigger('init')
-        .on('beforeChange',function(event, slick, currentSlide, nextSlide){
-        var totalBox = $(this).closest(widget).find('.page-total');
-        totalBox.find('.current').text(nextSlide+1);
-        totalBox.find('.total').text(slick.slideCount);
-      });
-    });
-
-
-
-      /*onAfterChange: function(){
-            var currentSlide = $('.regular').slick('slickCurrentSlide');
-          $('.current').text(currentSlide);
-      }*/
-
-    /*$('.slider4').each(function (idx) {
-      var swiper,
-        tagClass = 'slide-number' + idx,
-        _this = $(this).find('.slider-box').addClass(tagClass);
-      _this.next().find('.total').text(_this.find('.swiper-slide').length);
-      swiper = new Swiper('.slider4 .' + tagClass, {
-        onInit: function (params) {
-          _this.next().find('.current').text(params.activeIndex + 1);
-        },
-        onSlideChangeStart: function (params) {
-          _this.next().find('.current').text(params.activeIndex + 1);
-        }
-      });
-    });*/
-  },
-  widget_slider5: function (ta) {
-    var widget = ta ? $(ta).find('.slider5') : $('.slider5');
-    $(widget).each(function(){
-      var _this = $(this).find('.slider');
-      _this.slick({
-        dots: false,
-        arrows: false,
-        infinite: false,
-        slidesToShow: 1,
-        centerMode: false,
-        variableWidth: false,
-        focusOnSelect: true,
-        focusOnChange: true,
-        responsive: [{
-          settings:{
-            centerPadding:0
-          }
-        }]
-      });
-      _this.on('init',function(){
-        var totalBox = $(this).closest(widget).find('.page-total'),
-            slick = _this.prop('slick');
-        totalBox.find('.current').text(slick.currentSlide+1);
-        totalBox.find('.total').text(slick.slideCount);
-        /*if($(this).find('.bt-select-arrow')){
-          skt_landing.action.toggleon($('.bt-select-arrow'));
-          $(this).find('.coupon-cont').on('click',function(){
-            $(this).find('.bt-select-arrow').click();
-          });
-        }*/
-        //var  slickCont = $(this).find('.slick-slide');
-        //slickCont.each(function(){
-        //  $(this).replaceWith($('<li>').append($(this).contents()));
-        //});
-        //$(this).replaceWith($('<ul>').append($(this).contents()));
-      })
-        .trigger('init')
-        .on('beforeChange',function(event, slick, currentSlide, nextSlide){
-        var totalBox = $(this).closest(widget).find('.page-total');
-        totalBox.find('.current').text(nextSlide+1);
-        totalBox.find('.total').text(slick.slideCount);
       });
     });
   },
@@ -397,28 +293,8 @@ skt_landing.widgets = {
       if(_this.find('> .acco-cover > .bt-whole').length < 1){
         _this.find('.acco-cover').addClass('on');
       }
-      /*var layer = $('.popup .popup-page.layer');
-      if(layer.length > 0){
-        var layer_top = layer.position();
-        var acco_top = layer.find('.box-confirm .widget-box.accordion').position().top  - 60;
-
-      }*/
       var accoList = _this.find('> .acco-cover > .acco-style > .acco-list > .acco-box');
       var accoList_leng = accoList.length;
-
-      /* 2018-07-17 한줄일경우 보여주는 스크립트 삭제 */
-      /*for(var i=0; i<accoList_leng; ++i){
-        var forTarget = accoList.eq(i).find('> .acco-cont').children();
-        forTarget = forTarget.children().length > 0 ? forTarget.children() : forTarget;
-        var targetLineHeight = parseInt(forTarget.css('line-height')) ? parseInt(forTarget.css('line-height')) : 0,
-            targetHeight = forTarget.height() ? forTarget.height() : 0;
-        if(targetHeight > targetLineHeight || forTarget.length > 1){
-          accoList.eq(i).find('> .acco-tit button').addClass('show-button');
-        }else{
-          accoList.eq(i).addClass('imp-view').find('> .acco-tit button').addClass('hide-button');
-        }
-      }*/
-
       if($(this).find('> .acco-cover > .acco-style').hasClass('none-event')) return ; // 이벤트를 적용하지 않을 경우
 
       var setOnList = _this.find('> .acco-cover > .acco-style > .acco-list > .acco-box');
@@ -450,11 +326,8 @@ skt_landing.widgets = {
         }
         $(this).closest('.acco-box').toggleClass('on');
 
-        //var acco_tit_top = ($(this).position().top + acco_top);
-
         if($(this).closest('.acco-box').hasClass('on')){
           $(this).attr('aria-pressed', 'true');
-          //$('.popup .popup-page.layer').animate({scrollTop:acco_tit_top}, '200');
           event.stopPropagation();
         }else{
           $(this).attr('aria-pressed', 'false');
@@ -472,7 +345,6 @@ skt_landing.widgets = {
       for(var i=0,leng=list.length; i<leng;++i){
         setState(btn.eq(i), list.eq(i).hasClass('on'));
       }
-      //if($(this).find('> .acco-style').hasClass('none-event')) return;
       box.on('click','> .acco-list > .acco-title button',function(){
         if(!$(this).hasClass('none-event')){
           setState($(this), !$(this).closest('.acco-list').hasClass('on'));
@@ -510,8 +382,16 @@ skt_landing.widgets = {
       });
     });
     function checkSwitch(target, state){
-      target = $(target);
-      state = typeof state == 'boolean' ? state : target.closest('.btn-switch').hasClass('on');
+      var target = $(target),
+          state = typeof state == 'boolean' ? state : target.closest('.btn-switch').hasClass('on');
+      if(target.attr('disabled')){
+        target.closest('.switch-style').attr('aria-disabled', true);
+        target.closest('.btn-switch').addClass('disabled');
+        return ;
+      }else{
+        target.closest('.switch-style').attr('aria-disabled', false);
+        target.closest('.btn-switch').removeClass('disabled');
+      }
       if (state) {
         target.closest('.btn-switch').removeClass('on');
         target.closest('.switch-style').attr('aria-checked',false);
@@ -521,6 +401,7 @@ skt_landing.widgets = {
         target.closest('.switch-style').attr('aria-checked',true);
         target.attr('checked',true);
       }
+
     }
   },
   widget_switch2: function (ta) {
@@ -548,138 +429,8 @@ skt_landing.widgets = {
       });
     });
   },
-  /*widget_draglist : function(ta){
-    var widget = ta ? $(ta).find('.draglist') : $('.draglist');
-    $(widget).each(function(){
-      var _this = $(this);
-      _this.find('.edit-bt').on('click',function(){
-        init(_this);
-      });
-    });
-    function init(ta){
-      var posY = 0,
-          gap = 0,
-          container = ta,
-          item_length = container.find('.drag-list li').length,
-          pos_arr = [],
-          target = null,
-          set_list = [];
-      container.find('.drag-list li')
-        .on('touchstart', fn_dragstart)
-        .on('touchmove', fn_dragmove)
-        .on('touchend', fn_dragend);
-      pos_arr = get_list_posY(container);
-      container.find('.drag-list li').each(function(idx){
-        set_list.push(idx);
-      });
-      container.find('.bt-updown').on('touchstart touchmove touchend',function(e){
-        e.stopPropagation();
-      });
-      container.find('.drag-list .up-bt').on('click',fn_btup);
-      container.find('.drag-list .down-bt').on('click',fn_btdown);
-      container.find('.drag-list .toggle-bt').on('click',fn_btdel);
-      container.find('.dimmed-list .toggle-bt').on('click',fn_btlive);
-      function fn_dragstart(e){
-        e.preventDefault();
-        e.stopPropagation();
-        $(this).addClass('on');
-        target = $(this);
-        var event = e.originalEvent.touches[0];
-        posY = event.pageY;
-        gap =  posY - $(this).offset().top;
-        pos_arr = get_list_posY(container);
-      }
-      function fn_dragmove(e){
-        e.preventDefault();
-        var event = e.originalEvent.touches[0];
-        posY = event.pageY - gap;
-        $(this).css({
-          top:posY
-        });
-        var current = current_item(pos_arr,posY);
-        if(current == 'first'){
-          container.find('.drag-list li:first').addClass('current').siblings('li').removeClass('current');
-        }else if(current == 'last'){
-          container.find('.drag-list li:last').addClass('current').siblings('li').removeClass('current');
-        }else{
-          container.find('.drag-list li:eq('+current+')').addClass('current').siblings('li').removeClass('current');
-        }
-      }
-      function fn_dragend(e){
-        e.preventDefault();
-        $(this).removeClass('on');
-        $(this).css({
-          top:''
-        });
-        var current = current_item(pos_arr,posY);
-        if(current == 'first'){
-          container.find('.drag-list li:first').before(target);
-        }else if(current == 'last'){
-          container.find('.drag-list li:last').after(target);
-        }else{
-          container.find('.drag-list li:eq('+current+')').before(target);
-        }
-        container.find('.drag-list li').removeClass('current');
-      }
-      function fn_btup(){
-        var prev_container = $(this).closest('li').prev();
-        $(this).closest('li').insertBefore(prev_container);
-        pos_arr = get_list_posY(container);
-      }
-      function fn_btdown(){
-        var next_container = $(this).closest('li').next();
-        $(this).closest('li').insertAfter(next_container);
-        pos_arr = get_list_posY(container);
-      }
-      function fn_btdel(){
-        var self_container = $(this).closest('li'),
-            container = $(this).closest('.drag-list').next();
-        $(this).find('span').text('보존');
-        $(this).closest('li').off('touchstart touchend touchmove').appendTo(container);
-        self_container.find('.toggle-bt').off('click').on('click',fn_btlive);
-        pos_arr = get_list_posY(container);
-      }
-      function fn_btlive(){
-        var self_container = $(this).closest('li'),
-            container = $(this).closest('.dimmed-list').prev();
-        $(this).find('span').text('삭제');
-        $(this).closest('li')
-          .on('touchstart', fn_dragstart)
-          .on('touchmove', fn_dragmove)
-          .on('touchend', fn_dragend)
-          .appendTo(container);
-        self_container.find('.up-bt').on('click',fn_btup);
-        self_container.find('.down-bt').on('click',fn_btdown);
-        self_container.find('.toggle-bt').off('click').on('click',fn_btdel);
-      }
-    }
-    function current_item(pos_arr,posY){
-      var current_count;
-      for(var pos in pos_arr){
-        if (posY < pos_arr[0]) {
-          current_count = 'first';
-          return current_count;
-        } else if (posY > pos_arr[pos_arr.length - 1]) {
-          current_count = 'last';
-          return current_count;
-        } else {
-          if(pos_arr[pos] > posY){
-            current_count = pos;
-            return current_count;
-          }
-        }
-      }
-    }
-    function get_list_posY(con_box) {
-      var arr = [];
-      con_box.find('.drag-list li').each(function (idx) {
-        arr[idx] = $(this).offset().top;
-      });
-      return arr;
-    }
-  },*/
   widget_toggle: function(ta){
-    var widget = ta ? $(ta).find('.btn-toggle') : $('.btn-toggle');
+    var widget = ta ? $(ta).find('.bt-toggle') : $('.bt-toggle');
     $(widget).on('click', function(){
         var _this = $(this);
         var toggler = _this.closest('.toggle').find('.toggler');
@@ -692,6 +443,41 @@ skt_landing.widgets = {
           _this.attr('aria-pressed', 'false');
           _this.removeClass('open');
         }
+    });
+  },
+  component_tabs: function (ta) {
+    var tabArr = ta ? $(ta).find('.tabs .tab-area') : $('.tabs .tab-area');
+    tabArr.each(function () {
+      var _this = $(this),
+          tabList = _this.find('.tab-linker'),
+          tabCont = _this.find('.tab-contents');
+      initLinkSlide(tabList);
+      tabListOnChk();
+      tabList.find('button, a').on('click',function(){
+        $(this).closest('li').attr('aria-selected', 'true').siblings().attr('aria-selected', 'false');
+        tabListOnChk();
+        initLinkSlide(tabList);
+      });
+
+      function tabListOnChk(){
+        var tabListIdx = tabList.find('li[aria-selected="true"]').index();
+        if(tabListIdx != -1){
+          tabCont.children('ul').children('li').eq(tabListIdx).attr('aria-selected', 'true').siblings().attr('aria-selected', 'false');
+        }
+      }
+      function initLinkSlide(tabList){
+        var items = tabList.find('li');
+        var itemsW = parseInt(items.closest('ul').css('padding-left'))*2;
+        for(var i=0,leng=items.length; i<leng; ++i){
+          itemsW += items.eq(i).outerWidth(true);
+        }
+        if(skt_landing.util.win_info.get_winW() > itemsW){
+          items.closest('ul').css('width','100%');
+        }else{
+          items.closest('ul').css('width',itemsW);
+        }
+        
+      }
     });
   }
 }
