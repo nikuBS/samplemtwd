@@ -17,14 +17,8 @@
 <!--// #skip_navigation -->
 <div class="wrap step">
     <!-- #header -->
-    <div id="header" class="header-wrap">
-        <div class="header">
-            <div class="header-ti align-l">
-                <h1>데이터 한도 요금제</h1>
-            </div>
-            <button class="prev-step fe-common-back">취소</button>
-        </div>
-    </div>
+    <%- include('../../../../common/views/components/header.component.html',
+    { title: '데이터 한도 요금제', svcInfo: svcInfo, option: { back: 'step' } }); %>
     <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap">
