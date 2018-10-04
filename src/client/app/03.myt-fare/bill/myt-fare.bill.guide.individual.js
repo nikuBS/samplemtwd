@@ -50,8 +50,18 @@ Tw.MyTFareBillGuideIndividual.prototype = {
     this.$container.on('click', '[data-target="roamingBtn"]', $.proxy(this._roamingBtnEvt, this)); // 로밍 사용요금
     this.$container.on('click', '[data-target="donationBtn"]', $.proxy(this._donationBtnEvt, this)); // 기부금/후원금 사용요금
 
+    this.$container.on('click', '[data-target="feePayBtn"]', $.proxy(this._feePayBtnEvt, this)); // 요금납부
+    this.$container.on('click', '[data-target="payListBtn"]', $.proxy(this._payListBtnEvt, this)); // 납부내역조회
+
+
   },
   //--------------------------------------------------------------------------[EVENT]
+  _feePayBtnEvt: function() {
+    Tw.Logger.info('[요금납부]');
+  },
+  _payListBtnEvt: function() {
+    Tw.Logger.info('[납부내역조회]');
+  },
   _callGiftBtnEvt: function() {
     this._goLoad('/myt/fare/bill/guide/call-gift');
   },

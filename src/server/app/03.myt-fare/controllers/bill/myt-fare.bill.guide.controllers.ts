@@ -26,6 +26,7 @@ class MyTFareBillGuide extends TwViewController {
   private _billpayInfo: any = {}; // 청구요금조회 | BFF_05_0036 , 사용요금조회 | BFF_05_0047
   // private _useFeeInfo: any = {}; // 사용요금조회 | BFF_05_0047
   private _intBillLineInfo: any = {}; // 통합청구등록회선조회 | BFF_05_0049
+  private _unpaidBillsInfo: any = {}; // 미납내역 조회 | BFF_05_0030
   private _childLineInfo: any = {}; // 자녀회선 조회 | BFF_05_0024
   private _ppsInfo: any; // PPS 요금안내서 정보조회
 
@@ -69,10 +70,12 @@ class MyTFareBillGuide extends TwViewController {
   // 노출조건
   private _showConditionInfo: any = {
     autopayYn: null, // 자동납부신청
+    nonPaymentYn: null, // 납부전
+    selectNonPaymentYn: null, // 선택한 월에  납부완료 Y or N
+
     childYn: null, // 자녀회선
     phoneYn: null, // 선택회선이 휴대폰
     chargeTtYn: null, // 요금제: "T끼리 T내는 요금" prodId : "NA00001901"
-    defaultYn: null, // 납부전
     paymentBtnYn: null, // 납부가능일 버튼
     suspensionYn: null // 이용정지해제 버튼
   };
@@ -102,8 +105,8 @@ class MyTFareBillGuide extends TwViewController {
     * A5. 통합청구회선 대표 | this._billpayInfo.repSvcYn === 'Y'
     * A6. 통합청구회선 대표아님 |
      */
-     const promiseTypeChk = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0036, {}), 'promiseTypeChk');
-    // const promiseTypeChk = this._getPromiseApiMock(bill_guide_BFF_05_0036, 'promiseTypeChk');
+     // const promiseTypeChk = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0036, {}), 'promiseTypeChk');
+    const promiseTypeChk = this._getPromiseApiMock(bill_guide_BFF_05_0036, 'promiseTypeChk');
 
     switch ( svcInfo.svcAttrCd ) {
       case 'M2' :
@@ -222,7 +225,7 @@ class MyTFareBillGuide extends TwViewController {
       }), 'p1');
     }
     const p2 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0049, {}), 'p2'); // 통합청구등록회선조회
-
+    const p3 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0030, {}), 'p3'); // 미납내역조회
     /*
     p1 = this._getPromiseApiMock(bill_guide_BFF_05_0036, 'p1');
     const p2 = this._getPromiseApiMock(bill_guide_BFF_05_0049, 'p2');
@@ -242,12 +245,17 @@ class MyTFareBillGuide extends TwViewController {
       thisMain._commDataInfo.intBillLineList = (thisMain._intBillLineInfo) ? thisMain.intBillLineFun() : null;
       thisMain._commDataInfo.conditionChangeDtList = (thisMain._billpayInfo.invDtArr ) ? thisMain.conditionChangeDtListFun() : null;
 
+      thisMain._showConditionInfo.autopayYn = (thisMain._billpayInfo) ? thisMain._billpayInfo.autopayYn : null;
+      thisMain._showConditionInfo.nonPaymentYn = (thisMain._unpaidBillsInfo.unPaidAmtMonthInfoList.length === 0) ? 'N' : 'Y';
+
+      thisMain._showConditionInfo.selectNonPaymentYn = thisMain.getSelectNonPayment();
     };
 
-    Promise.all([p1, p2]).then(function(resArr) {
+    Promise.all([p1, p2, p3]).then(function(resArr) {
 
       thisMain._billpayInfo = resArr[0].result;
       thisMain._intBillLineInfo = resArr[1].result;
+      thisMain._unpaidBillsInfo = resArr[2].result;
       thisMain._childLineInfo = childInfo;
 
       dataInit();
@@ -260,7 +268,9 @@ class MyTFareBillGuide extends TwViewController {
         billpayInfo: thisMain._billpayInfo,
         commDataInfo: thisMain._commDataInfo,
         intBillLineInfo: thisMain._intBillLineInfo,
-        childLineInfo: thisMain._childLineInfo
+        childLineInfo: thisMain._childLineInfo,
+        showConditionInfo: thisMain._showConditionInfo,
+        unpaidBillsInfo: thisMain._unpaidBillsInfo
       });
     }, function(err) {
       thisMain.logger.info(thisMain, `[ Promise.all > error ] : `, err);
@@ -338,6 +348,7 @@ class MyTFareBillGuide extends TwViewController {
       invDt: this.reqQuery.date
     }), 'p1');
     const p2 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0049, {}), 'p2'); // 통합청구등록회선조회
+    const p3 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0030, {}), 'p3'); // 미납내역조회
 
     const dataInit = function () {
       thisMain._commDataInfo.selClaimDt = (thisMain._billpayInfo) ? thisMain.getSelClaimDt(String(thisMain._billpayInfo.invDt)) : null;
@@ -351,12 +362,16 @@ class MyTFareBillGuide extends TwViewController {
       thisMain._commDataInfo.intBillLineList = (thisMain._intBillLineInfo) ? thisMain.intBillLineFun() : null;
       thisMain._commDataInfo.conditionChangeDtList = (thisMain._billpayInfo.invDtArr ) ? thisMain.conditionChangeDtListFun() : null;
 
+      thisMain._showConditionInfo.autopayYn = (thisMain._billpayInfo) ? thisMain._billpayInfo.autopayYn : null;
+      thisMain._showConditionInfo.nonPaymentYn = (thisMain._unpaidBillsInfo.unPaidAmtMonthInfoList.length === 0) ? 'N' : 'Y';
+
     };
 
     Promise.all([p1, p2]).then(function(resArr) {
 
       thisMain._billpayInfo = resArr[0].result;
       thisMain._intBillLineInfo = resArr[1].result;
+      thisMain._unpaidBillsInfo = resArr[2].result;
       thisMain._childLineInfo = childInfo;
 
       dataInit();
@@ -368,7 +383,9 @@ class MyTFareBillGuide extends TwViewController {
         billpayInfo: thisMain._billpayInfo,
         commDataInfo: thisMain._commDataInfo,
         intBillLineInfo: thisMain._intBillLineInfo,
-        childLineInfo: thisMain._childLineInfo
+        childLineInfo: thisMain._childLineInfo,
+        showConditionInfo: thisMain._showConditionInfo,
+        unpaidBillsInfo: thisMain._unpaidBillsInfo
       });
     }, function(err) {
       thisMain.logger.info(thisMain, `[ Promise.all > error ] : `, err);
@@ -445,6 +462,50 @@ class MyTFareBillGuide extends TwViewController {
   }
 
   // -------------------------------------------------------------[SVC]
+  public getSelectNonPayment(): any {
+    const thisMain = this;
+    // const unPaidAmtMonthInfoList = thisMain._unpaidBillsInfo.unPaidAmtMonthInfoList;
+    const queryDate = thisMain.reqQuery.date;
+
+    // if ( unPaidAmtMonthInfoList.length ) {
+    //   return 'N';
+    // }
+
+    let dateVal;
+    if ( queryDate ) {
+      dateVal = queryDate;
+    } else {
+      dateVal = thisMain._billpayInfo.invDt;
+    }
+
+    /*
+    * test
+     */
+    const unPaidAmtMonthInfoList = [
+      {unPaidInvDt: '20180831', unPaidAmt: '890090'},
+      {unPaidInvDt: '20180731', unPaidAmt: '790090'},
+      {unPaidInvDt: '20180631', unPaidAmt: '690090'},
+      {unPaidInvDt: '20180531', unPaidAmt: '590090'}
+    ];
+    dateVal = '20180731';
+
+
+    let result;
+    result = unPaidAmtMonthInfoList.filter( function(item) {
+      return item.unPaidInvDt === dateVal;
+    });
+
+    this.logger.info(this, '[ 필터 > result ] : ', result);
+
+    if ( result.length > 0 ) {
+      result = 'Y';
+    } else {
+      result = 'N';
+    }
+
+    return result;
+  }
+
   public getCurDate(): any {
     return moment().format('YYYY.MM.DD hh:mm');
   }

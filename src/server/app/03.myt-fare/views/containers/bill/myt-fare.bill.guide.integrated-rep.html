@@ -257,7 +257,14 @@
                     <div class="bt-alone"><button class="bt-bg-blue1" data-target="conditionChangeBtn">조건 변경</button></div>
 
                     <div class="charge-cont pt38">
-                        <span class="sub-disc02">이번 달에는 <span class="tx-bold vbl">요금할인을 <%=commDataInfo.discount %>원</span> 받으셨어요.<br />SK텔레콤과 함께 해주셔서 감사합니다.</span>
+                        <span class="sub-disc02">
+                            <% if(commDataInfo.discount != 0 ){ %>
+                            이번 달에는 <span class="tx-bold vbl">요금할인을 <%=commDataInfo.discount %>원</span> 받으셨어요.<br />
+                            <% } %>
+
+                            SK텔레콤과 함께 해주셔서 감사합니다.
+
+                        </span>
                         <div class="basic-list bg-type mt14" data-target="wrapHbPaidAmtSvcCdListArea">
                             <ul data-target="hbPaidAmtSvcCdListArea">
                             </ul>
@@ -278,11 +285,13 @@
             <!-- .cont-box -->
             <div class="cont-box">
                 <ul class="bt-slice item-two">
+                    <% if(showConditionInfo.autopayYn == 'N' && showConditionInfo.selectNonPaymentYn == 'Y' ){ %>
                     <li class="bt-blue1">
-                        <button>요금 납부</button>
+                        <button data-target="feePayBtn">요금 납부</button>
                     </li>
+                    <% } %>
                     <li class="bt-blue1">
-                        <button>납부 내역 조회</button>
+                        <button data-target="payListBtn">납부 내역 조회</button>
                     </li>
                 </ul>
             </div>
@@ -369,7 +378,9 @@
       billpayInfo : <%-JSON.stringify(billpayInfo) %>,
       commDataInfo : <%-JSON.stringify(commDataInfo) %>,
       intBillLineInfo : <%-JSON.stringify(intBillLineInfo) %>,
-      childLineInfo : <%-JSON.stringify(childLineInfo) %>
+      childLineInfo : <%-JSON.stringify(childLineInfo) %>,
+      showConditionInfo : <%-JSON.stringify(showConditionInfo) %>,
+      unpaidBillsInfo : <%-JSON.stringify(unpaidBillsInfo) %>
   } );
   });
 </script>
