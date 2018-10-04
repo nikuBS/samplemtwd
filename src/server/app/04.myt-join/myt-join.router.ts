@@ -4,6 +4,7 @@ import MyTJoinProductAdditions from './controllers/product/myt-join.product.addi
 import MyTJoinProductCombinations from './controllers/product/myt-join.product.combinations.controller';
 import MyTJoinProductFeeAlarm from './controllers/product/myt-join.product.fee-alarm.controller';
 import MyTJoinProductFeeAlarmChange from './controllers/product/myt-join.product.fee-alarm.change.controller';
+import MyTJoinProtectChange from './controllers/protect/myt-join.protect.change.controller';
 
 class MyTJoinRouter extends TwRouter {
   constructor() {
@@ -13,6 +14,8 @@ class MyTJoinRouter extends TwRouter {
     this.controllers.push({ url: '/product/combinations', controller: new MyTJoinProductCombinations() });
     this.controllers.push({ url: '/product/fee-alarm', controller: new MyTJoinProductFeeAlarm() });
     this.controllers.push({ url: '/product/fee-alarm/change', controller: new MyTJoinProductFeeAlarmChange() });
+
+    this.controllers.push({ url: '/protect/change', controller: new MyTJoinProtectChange() });
   }
 }
 

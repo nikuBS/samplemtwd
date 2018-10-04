@@ -141,7 +141,10 @@ Tw.ALERT_MSG_MYT_FARE = {
 };
 
 Tw.ALERT_MSG_MYT_JOIN = {
-
+  ALERT_2_A61 : { TITLE : '알림' , MSG : '비밀번호를 확인해주세요.' },
+  ALERT_2_A62 : { TITLE : '알림' , MSG : '고객보호 비밀번호가 변경되었습니다.' },
+  ALERT_2_A63 : { TITLE : '알림' , MSG : '비밀번호가 일치하지 않습니다.' },
+  ALERT_2_A64 : { TITLE : '알림' , MSG : '고객보호 비밀번호 설정이 완료 되었습니다.' }
 };
 
 Tw.ALERT_MSG_PRODUCT = {
