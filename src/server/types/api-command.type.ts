@@ -82,7 +82,11 @@ export const API_CMD = {
   BFF_03_0018: { path: '/user/login/ios', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: false },
   BFF_03_0019: { path: '/core-auth/v1/users/args-0/otp', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_03_0020: { path: '/core-auth/v1/passwords-check', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
-
+  // Home T-Notify
+  BFF_04_0001: { path: '/core-membership/v1/card/home', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_04_0002: { path: '/core-product/v1/t-notice/prod-chg-hst', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_04_0003: { path: '/core-auth/v1/t-noti-stat', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_04_0004: { path: '/v1/change-trx-rcv-yn', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: false },
   // MYT
   BFF_05_0001: { path: '/my-t/balances', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0002: { path: '/my-t/balance-add-ons', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },

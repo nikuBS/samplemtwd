@@ -26,6 +26,18 @@ export enum SVC_ATTR_NAME {
   O1 = '포인트캠'
 }
 
+export enum SVC_ATTR_E {
+  MOBILE_PHONE = 'M1',
+  PPS = 'M2',
+  T_POCKET_FI = 'M3',
+  T_LOGIN = 'M4',
+  T_WIBRO = 'M5',
+  INTERNET = 'S1',
+  IPTV = 'S2',
+  TELEPHONE = 'S3',
+  POINT_CAM = 'O1'
+}
+
 export const SVC_CD = {
   C: '휴대폰',
   S: 'PPS',
