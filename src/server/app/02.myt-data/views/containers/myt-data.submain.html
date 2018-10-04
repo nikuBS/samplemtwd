@@ -17,7 +17,8 @@
 <!--// #skip_navigation -->
 <div class="wrap">
     <!-- #header -->
-    <%- include('../../../common/views/components/header.component.html', { title: '데이터/통화 관리', svcInfo: data.svcInfo, line: false }); %>
+    <%- include('../../../common/views/components/header.component.html', {
+    title: '데이터/통화 관리', svcInfo: data.svcInfo }); %>
     <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap" data-id="wrapper">
@@ -169,14 +170,12 @@
 <% include ../components/javascript.component.html %>
 </body>
 <script>
-    // client 작업 중
-    // var data = '<%- JSON.stringify(data) %>';
-    // $(document).ready(function () {
-    //   new Tw.MyTFareSubMain({
-    //     $element: $('[data-id=submain-container]'),
-    //     data: JSON.parse(data)
-    //   });
-    // });
-
+    var data = '<%- JSON.stringify(data) %>';
+    $(document).ready(function () {
+      new Tw.MyTDataSubMain({
+        $element: $('[data-id=submain-container]'),
+        data: JSON.parse(data)
+      });
+    });
 </script>
 <% include ../components/end.component.html %>

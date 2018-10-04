@@ -18,7 +18,8 @@
 <!--// #skip_navigation -->
 <div class="wrap">
     <!-- #header -->
-    <%- include('../../../common/views/components/header.component.html', { title: '나의 요금', svcInfo: data.svcInfo, line: true }); %>
+    <%- include('../../../common/views/components/header.component.html', {
+            title: '나의 요금', svcInfo: data.svcInfo, option: { line: true } }); %>
     <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap" data-id="wrapper">

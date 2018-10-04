@@ -44,6 +44,8 @@ Tw.PERIOD_UNIT = {
   MONTH: '월'
 };
 
+Tw.WEEKDAYS = ['월', '화', '수', '목', '금', '토', '일'];
+
 Tw.REFILL_COUPON_CONFIRM = {
   TITLE: '리필 하시겠습니까?',
   CONTENTS: '리필 음성/데이터량은 이번 달까지만 사용 가능합니다.'
@@ -65,6 +67,27 @@ Tw.REMNANT_OTHER_LINE = {
   TITLE: '기준회선을 변경하시겠습니까?',
   BTNAME: '변경하기',
   TOAST: '기준회선이 변경되었습니다.'
+};
+
+Tw.NON_PAYMENT = {
+  POSSIBLE_DATE: {
+    SUCCESS: {
+      Y: 'Y',
+      R: 'R'
+    },
+    ERROR: {
+      R: '이미 납부가능일이 등록되어있습니다.'
+    },
+    TOAST: '납부가능일이 선택되었습니다.'
+  },
+  SUSPENSION: {
+    TITLE: '지금 정지해제를 하시겠습니까?',
+    CONTENT_1: '고객님의 미납요금 ',
+    CONTENT_2: '원이 내일까지 납부 확인되지 않으면 다시 이용이 정지됩니다.' + '<br/><br/>'+
+      '자동납부고객님은 이중인출의 우려가 있으니 통장의 잔고를 비워주시기 바랍니다',
+    BTNAME: '',
+    TOAST: '이용정지가 해제되었습니다.'
+  }
 };
 
 Tw.MYT_FARE_BILL_GUIDE = {
