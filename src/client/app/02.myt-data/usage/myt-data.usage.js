@@ -22,7 +22,7 @@ Tw.MyTDataUsage.prototype = {
       Tw.MSG_MYT.TDATA_SHARE.M01_TITLE, Tw.MSG_MYT.TDATA_SHARE.M01_CONTENTS));
 
     this.$container.on('click', '#head-ting .info-view-ic', $.proxy(this.showGuidePopup, this,
-      Tw.MSG_MYT.TDATA_SHARE.M01_TITLE, Tw.MSG_MYT.TDATA_SHARE.M01_CONTENTS));
+      Tw.MSG_MYT.USAGE_TING_M03.TITLE, Tw.MSG_MYT.USAGE_TING_M03.CONTENTS));
 
     this.$container.on('click', '#head-discount .info-view-ic', $.proxy(this.showGuidePopup, this,
       Tw.MSG_MYT.DISCOUNT.M01_TITLE, Tw.MSG_MYT.DISCOUNT.M01_CONTENTS));
@@ -133,13 +133,13 @@ Tw.MyTDataUsage.prototype = {
     var fmtData = {data:'', unit:''};
 
     // 사용 중인 요금상품 + 기본제공량
-    if(parseInt(data.opmdBasic) !== '-1'){
+    if(data.opmdBasic !== '-1'){
       fmtData = Tw.FormatHelper.convDataFormat(data.opmdBasic, Tw.DATA_UNIT.KB);
       $('#head-tdata-share .tit span').text(fmtData.data + fmtData.unit);
     }
 
     // 총데이터 사용량
-    fmtData = Tw.FormatHelper.convDataFormat(data.totUsed, Tw.DATA_UNIT.KB);
+    fmtData = Tw.FormatHelper.convDataFormat(data.totShar, Tw.DATA_UNIT.KB);
     $('#head-tdata-share .num em').text(fmtData.data);
     $('#head-tdata-share .num span').text(fmtData.unit);
 
@@ -298,16 +298,10 @@ Tw.MyTDataUsage.prototype = {
     Handlebars.registerHelper('byteUnit', function (amt){
       return Tw.FormatHelper.convDataFormat(amt, Tw.DATA_UNIT.KB).unit;
     });
-    Handlebars.registerHelper('dateFormat', function (strDate){
-      return Tw.DateHelper.getShortDateNoDot(strDate);
-    });
-    Handlebars.registerHelper('dashPhoneNum', function (phoneNum){
-      return Tw.FormatHelper.getDashedPhoneNumber(phoneNum);
-    });
-    Handlebars.registerHelper('numComma', function (amt){
-      return Tw.FormatHelper.addComma(amt+'');
-    });
-
+    Handlebars.registerHelper('dateFormat', Tw.DateHelper.getShortDateNoDot);
+    Handlebars.registerHelper('dashPhoneNum', Tw.FormatHelper.getFormattedPhoneNumber);
+    Handlebars.registerHelper('numComma', Tw.FormatHelper.addComma);
+    Handlebars.registerHelper('usimFormat', this.convUnimFormat);
   },
 
   /**
@@ -365,7 +359,18 @@ Tw.MyTDataUsage.prototype = {
       hours: diffDuration.hours(),
       minutes: diffDuration.minutes()
     }
-  }
+  },
 
+  /**
+   * usim format
+   * @param v(string)
+   * @returns 'xxxx-xxxx-xxxx-xx'(string) format
+   */
+  convUnimFormat : function (v) {
+    if( !v || v.replace(/-/g).trim().length < 14 ) return v || '';
+    var ret = v.replace(/-/g).trim();
+    ret = ret.substr(0, 4) + '-' + ret.substr(4, 4) + '-' + ret.substr(8, 4) + '-' + ret.substr(12, 2);
+    return ret;
+  }
 
 };
