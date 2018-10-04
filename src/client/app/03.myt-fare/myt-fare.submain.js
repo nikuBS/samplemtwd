@@ -9,6 +9,7 @@ Tw.MyTFareSubMain = function (params) {
   this.$container = params.$element;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
+  this._lineService = new Tw.LineComponent();
   this._historyService = new Tw.HistoryService(this.$container);
   this._historyService.init('hash');
   this._requestCount = -1;
@@ -26,12 +27,12 @@ Tw.MyTFareSubMain.prototype = {
   loadingView: function (value) {
     if ( value ) {
       skt_landing.action.loading.on({
-        ta: '[data-id=wrapper]', co: 'grey', size: true
+        ta: '.wrap', co: 'grey', size: true
       });
     }
     else {
       skt_landing.action.loading.off({
-        ta: '[data-id=wrapper]'
+        ta: '.wrap'
       });
     }
   },
@@ -251,8 +252,8 @@ Tw.MyTFareSubMain.prototype = {
 
   // 최근청구요금내역조회-1
   _claimPaymentRequest: function () {
-    var claimDtArray = this.data.claim.invDtArr;
-    if ( claimDtArray.length > 0 ) {
+    var claimDtArray = this.data.claim && this.data.claim.invDtArr;
+    if ( claimDtArray && claimDtArray.length > 0 ) {
       var requestCommand = [];
       for ( var index = 0; index < claimDtArray.length; index++ ) {
         requestCommand.push({
@@ -475,7 +476,7 @@ Tw.MyTFareSubMain.prototype = {
 
   // 최근납부내역 이동
   _onClickedPaymentDetail: function (/*event*/) {
-    // TODO: 화면완료되면 추가예정
+    this._historyService.goLoad('/myt/fare/history');
   },
 
   // 다른회선조회
@@ -521,22 +522,7 @@ Tw.MyTFareSubMain.prototype = {
 
   // 다른 회선 팝업에서 변경하기 눌렀을 경우
   _onChangeLineConfirmed: function () {
-    // 회선변경 API 호출
-    // TODO: 선택회선변경에 대한 class 분리예정, 완료되면 적용!!
-    this._apiService.request(Tw.NODE_CMD.CHANGE_SESSION, {
-      svcMgmtNum: this.changeLineMgmtNum
-    }).done($.proxy(this._onChangeSessionSuccess, this));
-  },
-
-  // 회선 변경 후 처리
-  _onChangeSessionSuccess: function (resp) {
-    if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      this._popupService.close();
-      this._popupService.toast(Tw.REMNANT_OTHER_LINE.TOAST);
-      setTimeout($.proxy(function () {
-        this._historyService.reload();
-      }, this), 300);
-    }
+    this._lineService.changeLine(this.changeLineMgmtNum);
   },
 
   _errorRequest: function (resp) {

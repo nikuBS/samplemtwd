@@ -42,7 +42,8 @@
                     <button class="ico" data-id="payment-detail"></button>
                 </p>
                 <ul class="list-comp-lineinfo type2">
-                    <% for(var i=0; i < data.totalPayment.length; i++) { %>
+                    <% var totPlength = data.totalPayment.length > 3 ? 3 : data.totalPayment.length; %>
+                    <% for(var i=0; i < totPlength; i++) { %>
                     <%- include('../components/submain/myt-fare.submain.total-payment.html', data.totalPayment[i]) %>
                     <% } %>
                 </ul>

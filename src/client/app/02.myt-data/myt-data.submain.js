@@ -24,12 +24,12 @@ Tw.MyTDataSubMain.prototype = {
   loadingView: function (value) {
     if ( value ) {
       skt_landing.action.loading.on({
-        ta: '[data-id=wrapper]', co: 'grey', size: true
+        ta: '.wrap', co: 'grey', size: true
       });
     }
     else {
       skt_landing.action.loading.off({
-        ta: '[data-id=wrapper]'
+        ta: '.wrap'
       });
     }
   },
