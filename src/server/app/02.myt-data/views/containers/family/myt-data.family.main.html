@@ -56,11 +56,17 @@
                             </li>
                         </ul>
                     </div>
+                    <% if ( svcInfo.repSvcYn === 'Y' ) { %>
                     <ul class="bt-slice mt20">
                         <li class="bt-white2">
                             <a href="/myt/data/family/setting">공유 데이터 설정하기</a>
                         </li>
                     </ul>
+                    <% } else { %>
+                    <div class="msg-family-member">
+                        <p><span class="ico"></span><%=familyInfo.mbrList.length-1%>명이 열심히 공유하고 있어요!</p>
+                    </div>
+                    <% } %>
                 </div>
             </div>
             <!--// .cont-box -->
