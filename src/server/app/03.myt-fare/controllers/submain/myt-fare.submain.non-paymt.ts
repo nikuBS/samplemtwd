@@ -11,8 +11,7 @@ import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
-import { PossibleDay, autopaySchedule_01, autopaySchedule_02, autopaySchedule_03 }
-      from '../../../../mock/server/myt.fare.nonpaymt.mock';
+import { autopaySchedule_01, autopaySchedule_02, autopaySchedule_03, PossibleDay, PaySuspension } from '../../../../mock/server/myt.fare.nonpaymt.mock';
 
 class MyTFarePaymentOver extends TwViewController {
   constructor() {
@@ -31,8 +30,9 @@ class MyTFarePaymentOver extends TwViewController {
       this._createMockPossibleDay(),
       this._createMockAutopaySd_01(),
       this._createMockAutopaySd_02(),
-      this._createMockAutopaySd_03()
-    ).subscribe(([nonpayment, possibleDay, claimDate, suspension, pd1, cm1, cm2, cm3]) => {
+      this._createMockAutopaySd_03(),
+      this._createMockSuspension()
+    ).subscribe(([nonpayment, possibleDay, claimDate, suspension, pd1, cm1, cm2, cm3, sp1]) => {
       if ( nonpayment ) {
         data.unPaidAmtList = nonpayment.unPaidAmtMonthInfoList;
         data.unPaidTotSum = FormatHelper.addComma(nonpayment.unPaidTotSum);
@@ -56,6 +56,9 @@ class MyTFarePaymentOver extends TwViewController {
 
       if ( suspension ) {
         data.suspension = suspension;
+      } else {
+        // FIXME:납부 이용정지해제 관련 테스트계정확인 후 mock data 삭제
+        data.suspension = sp1.result;
       }
       res.render('submain/myt-fare.submain.non-paymt.html', { data });
     });
@@ -149,6 +152,13 @@ class MyTFarePaymentOver extends TwViewController {
   _createMockAutopaySd_03(): Observable<any> {
     return Observable.create((obs) => {
       obs.next(autopaySchedule_03);
+      obs.complete();
+    });
+  }
+
+  _createMockSuspension(): Observable<any> {
+    return Observable.create((obs) => {
+      obs.next(PaySuspension);
       obs.complete();
     });
   }
