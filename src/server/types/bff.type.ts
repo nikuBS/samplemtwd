@@ -82,6 +82,15 @@ export const UNIT = {
   '320': '건'
 };
 
+export enum UNIT_E {
+  FEE = '110',
+  DATA = '140',
+  VOICE = '240',
+  VOICE_2 = '910',
+  SMS = '310',
+  SMS_2 = '320'
+}
+
 export const VOICE_UNIT = {
   HOURS: '시간',
   MIN: '분',

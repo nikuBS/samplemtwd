@@ -13,9 +13,7 @@ Tw.LineComponent = function () {
   this._customerPwd = new Tw.CustomerPwdComponent();
 
   this.$btLine = null;
-  this.$list = null;
   this.$remainCnt = null;
-  this.$btMore = null;
 
   this._selectedMgmt = '';
   this._index = 0;
@@ -41,14 +39,15 @@ Tw.LineComponent.prototype = {
     this.$btLine.on('click', $.proxy(this._onClickLine, this));
   },
   _onClickLine: function ($event) {
-    var curBtn = $($event.currentTarget);
-    if ( !curBtn.hasClass('no-arrow') ) {
-      if ( !curBtn.hasClass('disabled') ) {
-        this._getLineList();
-      } else {
-        this._closePopup();
-      }
-    }
+    // var curBtn = $($event.currentTarget);
+    // if ( !curBtn.hasClass('no-arrow') ) {
+    //   if ( !curBtn.hasClass('disabled') ) {
+    //     this._getLineList();
+    //   } else {
+    //     this._closePopup();
+    //   }
+    // }
+    this._getLineList();
   },
   _getLineList: function () {
     if ( Tw.FormatHelper.isEmpty(this._lineList) ) {
@@ -78,18 +77,16 @@ Tw.LineComponent.prototype = {
     }, $.proxy(this._onOpenListPopup, this), $.proxy(this._onCloseListPopup, this), 'line');
   },
   _onOpenListPopup: function ($popupContainer) {
-    this.$btLine.addClass('disabled');
+    // this.$btLine.addClass('disabled');
 
     // $popupContainer.on('click', '.popup-blind', $.proxy(this._closePopup, this));
     $popupContainer.on('click', '.fe-item', $.proxy(this._onSelectLine, this));
     $popupContainer.on('click', '#fe-bt-line', $.proxy(this._onClickLineButton, this));
 
-    this.$list = $popupContainer.find('.radiobox', '.type02');
     this.$remainCnt = $popupContainer.find('.fe-remain-cnt');
-    this.$btMore = $popupContainer.find('.bt-more');
   },
   _onCloseListPopup: function () {
-    this.$btLine.removeClass('disabled');
+    // this.$btLine.removeClass('disabled');
     if ( this._goAuthLine ) {
       this._historyService.goLoad('/auth/line');
     } else if ( this._changeLine ) {
