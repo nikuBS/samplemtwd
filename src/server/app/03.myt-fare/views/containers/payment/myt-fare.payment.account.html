@@ -21,14 +21,8 @@
             <h2 class="blind">내용</h2>
             <div id="main" class="container">
                 <!-- #header -->
-                <div id="header" class="header-wrap">
-                    <div class="header">
-                        <div class="header-ti align-l">
-                            <h1>계좌이체 납부</h1>
-                        </div>
-                        <button class="prev-step fe-common-back">취소</button>
-                    </div>
-                </div>
+                <%- include('../../../../../common/views/components/header.component.html',
+                { title: '계좌이체 납부', svcInfo: svcInfo, option:{ back: 'step' } }); %>
                 <!--// #header -->
                 <!-- .cont-box -->
                 <div class="cont-box">
