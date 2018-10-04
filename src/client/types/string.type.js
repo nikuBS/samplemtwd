@@ -170,3 +170,5 @@ Tw.PRODUCT_INFINITY_CATEGORY_DESC = {
   NA00006116: '스마트 워치 월정액 100% 할인',
   NA00006117: '인피니티 클럽 이용료 100%할인'
 };
+
+Tw.HOTBILL_UNPAID_TITLE = '미납요금';

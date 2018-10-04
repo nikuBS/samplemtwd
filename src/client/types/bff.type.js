@@ -17,3 +17,9 @@ Tw.PAYMENT_POINT_VALUE = {
   OK_CASHBAG: '10',
   T_POINT: '11'
 };
+
+Tw.LINE_NAME = {
+  MOBILE: 'M',
+  INTERNET_PHONE_IPTV: 'S',
+  SECURITY: 'O'
+};
