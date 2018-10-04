@@ -17,7 +17,8 @@
 <!--// #skip_navigation -->
 <div class="wrap">
     <!-- #header -->
-    <%- include('../../../../common/views/components/header.component.html', { title: '미납요금', svcInfo: data.svcInfo, line: false }); %>
+    <%- include('../../../../common/views/components/header.component.html', {
+    title: '미납요금', svcInfo: data.svcInfo, options: { line: false } }); %>
     <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap">
