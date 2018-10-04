@@ -321,7 +321,7 @@ Tw.NODE_CMD = {
   GET_SVC_INFO: { path: '/svcInfo', method: Tw.API_METHOD.GET },
   GET_ALL_SVC: { path: '/allSvcInfo', method: Tw.API_METHOD.GET },
   GET_CHILD_INFO: { path: '/childInfo', method: Tw.API_METHOD.GET },
-  GET_VERSION: { path: 'version', method: Tw.API_METHOD.GET }
+  GET_VERSION: { path: '/version', method: Tw.API_METHOD.GET }
 };
 
 Tw.TMAP = {

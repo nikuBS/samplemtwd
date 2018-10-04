@@ -160,7 +160,6 @@ Tw.CustomerShopNear.prototype = {
       appKey: Tw.TMAP.APP_KEY
     }).done($.proxy(function (res) {
       this._initialGu = res.searchRegionsInfo[0].regionInfo.properties.guName.split(' ')[0].trim();
-      console.log('hakjoon', this._initialGu);
 
       var regions = res.searchRegionsInfo[0].regionInfo.description.split(' ');
       if (regions.length === 2) {
