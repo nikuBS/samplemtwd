@@ -125,7 +125,7 @@ class MytRouter extends TwRouter {
     this.controllers.push({ url: '/join/contract-terminal', controller: new MyTJoinContractTerminal() });
     this.controllers.push({ url: '/join/contract-terminal/detail', controller: new MyTJoinContractTerminalDetail() });
     this.controllers.push({ url: '/join/join-info', controller: new MyTJoinJoinInfo() });
-    this.controllers.push({ url: '/join/protect/change', controller: new MyTJSProtectChange() });
+    // this.controllers.push({ url: '/join/protect/change', controller: new MyTJSProtectChange() });
     this.controllers.push({ url: '/join/join-info/no-contract', controller: new MyTJoinJoinInfoNoContract() });
     this.controllers.push({ url: '/join/join-info/sms', controller: new MyTJoinJoinInfoSms() });
 
