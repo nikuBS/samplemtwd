@@ -46,7 +46,7 @@ Tw.MyTFareHotBill.prototype = {
   _getBillResponse: function (child) {
     var params = { count: this._requestCount++ };
     if ( child ) {
-      params['childSvcMgmtNum'] = child['svcMgmtNum'];
+      params.childSvcMgmtNum = child.svcMgmtNum;
     }
     this._apiService
       .request(Tw.API_CMD.BFF_05_0022, params)
@@ -59,7 +59,7 @@ Tw.MyTFareHotBill.prototype = {
     this._requestCount = 0;
     var params = { count: this._requestCount++ };
     if ( child ) {
-      params['childSvcMgmtNum'] = child['svcMgmtNum'];
+      params.childSvcMgmtNum = child.svcMgmtNum;
     }
     this._apiService
       .request(Tw.API_CMD.BFF_05_0022, params)
@@ -140,11 +140,11 @@ Tw.MyTFareHotBill.prototype = {
           if ( svcs.code === Tw.API_CODE.CODE_00 ) {
             var otherLines = svcs.result[Tw.LINE_NAME.MOBILE].filter(function (svc) {
               return (['M1', 'M3'].indexOf(svc.svcAttrCd) > -1 && svc.svcMgmtNum !== svcInfo.result.svcMgmtNum);
-            })
+            });
             this.lines = this.lines.concat(_.clone(otherLines));
           }
           this._svcInfo = _.clone(svcInfo.result);
-          var targetSvc = this.lines[idx]
+          var targetSvc = this.lines[idx];
           if ( targetSvc.child ) {
             this._onClickChild(targetSvc);
           } else {
@@ -152,7 +152,7 @@ Tw.MyTFareHotBill.prototype = {
           }
         }, this));
     } else {
-      var targetSvc = this.lines[idx]
+      var targetSvc = this.lines[idx];
       if ( targetSvc.child ) {
         this._onClickChild(targetSvc);
       } else {
