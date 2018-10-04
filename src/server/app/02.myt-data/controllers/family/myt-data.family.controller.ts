@@ -26,28 +26,34 @@ class MyTDataFamily extends TwViewController {
       case 'complete':
         res.render('family/myt-data.family.complete.html', responseData);
         break;
-      case 'config':
-        res.render('family/myt-data.family.config.html', responseData);
+      case 'setting':
+        res.render('family/myt-data.family.setting.html', responseData);
         break;
       default:
-        const response = Object.assign(responseData, this.getFamilyInfo());
+        const response = Object.assign(responseData, this.getRemainDataInfo());
         res.render('family/myt-data.family.main.html', response);
     }
   }
 
-  private getFamilyInfo() {
+  private getRemainDataInfo() {
     const mock = {
       code: '00',
       msg: '',
       result: {
-        svcNum: '01062919433',
-        svcMgmtNum: '1451646217',
-        repYn: 'Y',
-        custNm: '한정남',
-        freeProdId: 'NA00005958',
-        freeProdNm: '패밀리',
-        usedAmt: '0',
-        ownerYn: 'Y'
+        total: '2048',
+        used: '400',
+        remained: '1648',
+        mbrList: [ {
+          svcNum: '01094**04**',
+          svcMgmtNum: '7226057315',
+          custNm: '조*희',
+          repYn: 'Y',
+          prodId: 'NA00005959',
+          prodNm: 'Data 인피니티',
+          used: '0',
+          limitedYn: 'N',
+          limitation: ''
+        } ]
       }
     };
 

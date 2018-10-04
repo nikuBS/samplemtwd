@@ -17,14 +17,8 @@
 <!--// #skip_navigation -->
 <div class="wrap">
     <!-- #header -->
-    <div id="header" class="header-wrap">
-        <div class="header">
-            <div class="header-ti align-l">
-                <h1>T가족모아 데이터</h1>
-            </div>
-            <button class="prev-step fe-common-back"><span class="blind">이전으로</span>
-        </div>
-    </div>
+    <%- include('../../../../common/views/components/header.component.html',
+    { title: 'T가족모아 데이터', svcInfo: svcInfo, option: { line: true } }); %>
     <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap">
@@ -60,7 +54,7 @@
                     </div>
                     <ul class="bt-slice mt20">
                         <li class="bt-white2">
-                            <button>공유 데이터 설정하기</button>
+                            <a href="/myt/data/family/setting">공유 데이터 설정하기</a>
                         </li>
                     </ul>
                 </div>
@@ -458,8 +452,8 @@
         </div>
     </div>
     <!--// #contents -->
+    <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
 </div>
-
 
 <% include ../../components/javascript.component.html %>
 

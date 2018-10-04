@@ -1,7 +1,7 @@
 <%#
-* FileName: myt-data.limit.html
+* FileName: myt-data.family.config.html
 * Author: Jiman Park (jiman.park@sk.com)
-* Date: 2018.09.13
+* Date: 2018.10.01
 %>
 
 <% include ../../components/start.component.html %>
@@ -15,18 +15,15 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div class="wrap step">
+<div class="wrap step blank-type1">
     <!-- #header -->
     <%- include('../../../../common/views/components/header.component.html',
-    { title: '데이터 한도 요금제', svcInfo: svcInfo, option: { back: 'step' } }); %>
+    { title: 'T가족모아 공유 데이터 설정', svcInfo: svcInfo, option: { back: 'step' } }); %>
     <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap">
         <h2 class="blind">내용</h2>
         <div class="container">
-            <% include ../../components/limit/myt-data.limit.tab.html %>
-            <!--// .cont-box -->
-            <hr class="cont-sp type1">
             <!-- .cont-box -->
             <div class="cont-box nogaps noborder">
                 <div class="component">
@@ -34,17 +31,18 @@
                         <div class="tab-area type1"><!-- 타입별 탭형태 변환 -->
                             <div class="tab-linker">
                                 <ul role="tablist" style="width: 100%;">
-                                    <li role="tab" aria-selected="true" aria-controls="tab1-tab" id="tab1"><a>당월 충전</a></li><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
-                                    <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2"><a>매월 자동 충전</a></li>
+                                    <li role="tab" aria-selected="true" aria-controls="tab1-tab" id="tab1"><a>바로 공유</a></li>
+                                    <!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
+                                    <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2"><a>매월 자동 공유 미리 설정</a></li>
                                 </ul>
                             </div>
                             <div class="tab-contents">
                                 <ul>
                                     <li role="tabpanel" id="tab1-tab" aria-labelledby="tab1" aria-selected="true">
-                                        <% include ../../components/limit/myt-data.limit.immediately.html %>
+                                        <% include ../../components/family/myt-data.family.setting-immediately.html %>
                                     </li>
                                     <li role="tabpanel" id="tab2-tab" aria-labelledby="tab2" aria-selected="false">
-                                        <% include ../../components/limit/myt-data.limit.monthly.html %>
+                                        <% include ../../components/family/myt-data.family.setting-monthly.html %>
                                     </li>
                                 </ul>
                             </div>
@@ -52,18 +50,20 @@
                     </div>
                 </div>
             </div>
+            <!--// .cont-box -->
         </div>
     </div>
-
     <!--// #contents -->
 </div>
+
 <% include ../../components/javascript.component.html %>
 
 <script>
   $(document).ready(function () {
-    var oMyTDataLimit = new Tw.MyTDataLimit($('.container-wrap'));
+
   });
 </script>
 
-<% include ../../components/end.component.html %>
+
 </body>
+<% include ../../components/end.component.html %>
