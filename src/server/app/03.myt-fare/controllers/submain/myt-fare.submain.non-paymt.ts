@@ -11,6 +11,8 @@ import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
+import { PossibleDay, autopaySchedule_01, autopaySchedule_02, autopaySchedule_03 }
+      from '../../../../mock/server/myt.fare.nonpaymt.mock';
 
 class MyTFarePaymentOver extends TwViewController {
   constructor() {
@@ -25,8 +27,12 @@ class MyTFarePaymentOver extends TwViewController {
       this._getNonPayment(),
       this._getPaymentPday(),
       this._getPaymentClaimDate(),
-      this._getSuspension()
-    ).subscribe(([nonpayment, possibleDay, claimDate, suspension]) => {
+      this._getSuspension(),
+      this._createMockPossibleDay(),
+      this._createMockAutopaySd_01(),
+      this._createMockAutopaySd_02(),
+      this._createMockAutopaySd_03()
+    ).subscribe(([nonpayment, possibleDay, claimDate, suspension, pd1, cm1, cm2, cm3]) => {
       if ( nonpayment ) {
         data.unPaidAmtList = nonpayment.unPaidAmtMonthInfoList;
         data.unPaidTotSum = FormatHelper.addComma(nonpayment.unPaidTotSum);
@@ -34,10 +40,20 @@ class MyTFarePaymentOver extends TwViewController {
       if ( possibleDay ) {
         data.possibleDay = possibleDay;
         data.suspStaDt = DateHelper.getShortKoreanMonth(possibleDay.suspStaDt);
+      } else {
+        // FIXME:납부가능일 관련 테스트계정확인 후 mock data 삭제
+        data.possibleDay = pd1.result;
+        data.suspStaDt = DateHelper.getShortKoreanMonth(pd1.result.suspStaDt);
       }
       if ( claimDate ) {
         data.claimDate = claimDate;
+      } else {
+        // FIXME:납부가능일 관련 테스트계정확인 후 mock data 삭제
+        data.claimDate = cm2.result;
+        data.claimDate2 = cm1.result;
+        data.claimDate3 = cm3.result;
       }
+
       if ( suspension ) {
         data.suspension = suspension;
       }
@@ -106,6 +122,34 @@ class MyTFarePaymentOver extends TwViewController {
         // error
         return null;
       }
+    });
+  }
+
+  _createMockPossibleDay(): Observable<any> {
+    return Observable.create((obs) => {
+      obs.next(PossibleDay);
+      obs.complete();
+    });
+  }
+
+  _createMockAutopaySd_01(): Observable<any> {
+    return Observable.create((obs) => {
+      obs.next(autopaySchedule_01);
+      obs.complete();
+    });
+  }
+
+  _createMockAutopaySd_02(): Observable<any> {
+    return Observable.create((obs) => {
+      obs.next(autopaySchedule_02);
+      obs.complete();
+    });
+  }
+
+  _createMockAutopaySd_03(): Observable<any> {
+    return Observable.create((obs) => {
+      obs.next(autopaySchedule_03);
+      obs.complete();
     });
   }
 }

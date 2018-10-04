@@ -57,7 +57,7 @@ Tw.MyTFareSubMain.prototype = {
     }
     // 실시간요금버튼
     this.$realTimePay = this.$container.find('button[data-id=realtime-pay]');
-    if ( this.data.nopayment ) {
+    if ( this.data.nonpayment ) {
       // 미납요금버튼
       this.$nonPayment = this.$container.find('button[data-id=non-payment]');
     }
@@ -120,7 +120,7 @@ Tw.MyTFareSubMain.prototype = {
     }
     // 실시간요금버튼
     this.$realTimePay.on('click', $.proxy(this._onClickedRealTimePay, this));
-    if ( this.data.nopayment ) {
+    if ( this.data.nonpayment ) {
       // 미납요금버튼
       this.$nonPayment.on('click', $.proxy(this._onClickedNonPayment, this));
     }
@@ -414,7 +414,7 @@ Tw.MyTFareSubMain.prototype = {
 
   // 미납요금버튼
   _onClickedNonPayment: function (/*event*/) {
-    this._historyService.goLoad('myt/fare/nopayment');
+    this._historyService.goLoad('/myt/fare/nonpayment');
   },
 
   // 요금안내서 설정 이동

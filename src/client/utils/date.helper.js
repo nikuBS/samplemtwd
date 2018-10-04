@@ -179,6 +179,22 @@ Tw.DateHelper = (function () {
   };
 
   /**
+   * @param date {Date} or {string} : YYYYMMDDhhmmss
+   * @returns {string} : 2018년 12월 31일
+   */
+  var getFullKoreanDate = function (date) {
+    return moment(convDateFormat(date)).format('YYYY년 MM월 DD일');
+  };
+
+  /**
+   * @param date {Date} or {string} : YYYYMMDDhhmmss
+   * @returns {string} : 18년 12월 31일
+   */
+  var getShortKoreanDate = function (date) {
+    return moment(convDateFormat(date)).format('YY년 MM월 DD일');
+  };
+
+  /**
    * @param date {Date} or {string} : YYYYMMDD
    * @returns {string} : 12월
    */
@@ -225,6 +241,8 @@ Tw.DateHelper = (function () {
     getShortDateWithFormatAddByUnit: getShortDateWithFormatAddByUnit,
     getDayOfWeek: getDayOfWeek,
     getDiffByUnit: getDiffByUnit,
+    getFullKoreanDate: getFullKoreanDate,
+    getShortKoreanDate: getShortKoreanDate,
     getShortKoreanMonth: getShortKoreanMonth,
     isValid: isValid
   };
