@@ -22,22 +22,19 @@ class MyTDataUsageChild extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, children: any) {
     const self = this;
     const childSvcMgmtNum = req.params.childSvcMgmtNum;
     const childUsageReq: Observable<any> = this.apiService.request(API_CMD.BFF_05_0001, {
       childSvcMgmtNum: childSvcMgmtNum
     });
-    const childrenReq: Observable<any> = this.apiService.request(API_CMD.BFF_05_0010, {});
     const baseFeePlanReq: Observable<any> = this.apiService.request(API_CMD.BFF_05_0041, {
       childSvcMgmtNum: childSvcMgmtNum
     });
-    Observable.combineLatest(childUsageReq, childrenReq, baseFeePlanReq).subscribe(([usageDataResp, childrenResp, baseFeePlanResp]) => {
-        if (  usageDataResp.code === API_CODE.CODE_00 &&
-              childrenResp.code === API_CODE.CODE_00 &&
-              baseFeePlanResp.code === API_CODE.CODE_00 ) {
+    Observable.combineLatest(childUsageReq, baseFeePlanReq).subscribe(([usageDataResp, baseFeePlanResp]) => {
+        if ( usageDataResp.code === API_CODE.CODE_00 &&
+          baseFeePlanResp.code === API_CODE.CODE_00 ) {
           const usageData = usageDataResp.result;
-          const children = childrenResp.result;
           const baseFeePlan = baseFeePlanResp.result;
           const fomattedData = self.myTDataUsage.parseUsageData(usageData, svcInfo);
           const child = children.find((_child) => {
