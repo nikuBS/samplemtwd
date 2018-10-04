@@ -57,10 +57,12 @@ Tw.MyTFareBillGuideIndividual.prototype = {
   },
   //--------------------------------------------------------------------------[EVENT]
   _feePayBtnEvt: function() {
-    Tw.Logger.info('[요금납부]');
+    Tw.Logger.info('[요금납부]', Tw.MyTFarePayment);
+    this.myTFarePayment = new Tw.MyTFarePayment(this.$container);
   },
   _payListBtnEvt: function() {
     Tw.Logger.info('[납부내역조회]');
+    this._goLoad('/myt/fare/history');
   },
   _callGiftBtnEvt: function() {
     this._goLoad('/myt/fare/bill/guide/call-gift');

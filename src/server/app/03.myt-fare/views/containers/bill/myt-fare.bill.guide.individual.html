@@ -140,6 +140,15 @@
             <!-- .cont-box -->
             <div class="cont-box">
                 <div class="charge-guide-wrap">
+
+                    <% if( billpayInfo.useAmtTot == 0 ){ %>
+                    <div class="charge-cont" data-target="">
+								<span class="sub-disc01">
+									<span class="elem"><%=commDataInfo.selClaimDt %></span>
+								</span>
+                        <span class="tit03">이번달에 사용하신<br /><span class="tx-bold">요금이 없습니다.</span></span>
+                    </div>
+                    <% } else { %>
                     <div class="charge-cont">
 								<span class="sub-disc01">
 									<span class="elem"><%=commDataInfo.selClaimDt %></span>
@@ -147,6 +156,7 @@
                         <span class="tit"><span class="charge-txt"><%=commDataInfo.useAmtTot %></span>원</span>
                         <span class="sub-disc01">사용기간 : <%=commDataInfo.selStaDt %> ~ <%=commDataInfo.selEndDt %></span>
                     </div>
+                    <% } %>
 
                     <div class="bt-alone"><button class="bt-bg-blue1" data-target="conditionChangeBtn">조건 변경</button></div>
 

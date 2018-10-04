@@ -105,8 +105,8 @@ class MyTFareBillGuide extends TwViewController {
     * A5. 통합청구회선 대표 | this._billpayInfo.repSvcYn === 'Y'
     * A6. 통합청구회선 대표아님 |
      */
-     // const promiseTypeChk = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0036, {}), 'promiseTypeChk');
-    const promiseTypeChk = this._getPromiseApiMock(bill_guide_BFF_05_0036, 'promiseTypeChk');
+     const promiseTypeChk = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0036, {}), 'promiseTypeChk');
+    // const promiseTypeChk = this._getPromiseApiMock(bill_guide_BFF_05_0036, 'promiseTypeChk');
 
     switch ( svcInfo.svcAttrCd ) {
       case 'M2' :
@@ -224,6 +224,7 @@ class MyTFareBillGuide extends TwViewController {
         invDt: this.reqQuery.date
       }), 'p1');
     }
+
     const p2 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0049, {}), 'p2'); // 통합청구등록회선조회
     const p3 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0030, {}), 'p3'); // 미납내역조회
     /*
@@ -464,12 +465,12 @@ class MyTFareBillGuide extends TwViewController {
   // -------------------------------------------------------------[SVC]
   public getSelectNonPayment(): any {
     const thisMain = this;
-    // const unPaidAmtMonthInfoList = thisMain._unpaidBillsInfo.unPaidAmtMonthInfoList;
+    const unPaidAmtMonthInfoList = thisMain._unpaidBillsInfo.unPaidAmtMonthInfoList;
     const queryDate = thisMain.reqQuery.date;
 
-    // if ( unPaidAmtMonthInfoList.length ) {
-    //   return 'N';
-    // }
+    if ( unPaidAmtMonthInfoList.length ) {
+      return 'N';
+    }
 
     let dateVal;
     if ( queryDate ) {
@@ -481,13 +482,13 @@ class MyTFareBillGuide extends TwViewController {
     /*
     * test
      */
-    const unPaidAmtMonthInfoList = [
-      {unPaidInvDt: '20180831', unPaidAmt: '890090'},
-      {unPaidInvDt: '20180731', unPaidAmt: '790090'},
-      {unPaidInvDt: '20180631', unPaidAmt: '690090'},
-      {unPaidInvDt: '20180531', unPaidAmt: '590090'}
-    ];
-    dateVal = '20180731';
+    // const unPaidAmtMonthInfoList = [
+    //   {unPaidInvDt: '20180831', unPaidAmt: '890090'},
+    //   {unPaidInvDt: '20180731', unPaidAmt: '790090'},
+    //   {unPaidInvDt: '20180631', unPaidAmt: '690090'},
+    //   {unPaidInvDt: '20180531', unPaidAmt: '590090'}
+    // ];
+    // dateVal = '20180731';
 
 
     let result;

@@ -78,67 +78,13 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
     this.$container.on('click', '[data-target="payListBtn"]', $.proxy(this._payListBtnEvt, this)); // 납부내역조회
   },
   //--------------------------------------------------------------------------[EVENT]
-  _feePayBtnEvt: function(event) {
-    Tw.Logger.info('[요금납부]');
-    var $target = $(event.currentTarget);
-    var hbsName = 'popup-action2';
-    var data = [
-      {
-        'list': [
-          { 'value': '자동납부', 'text2': '신청' }
-        ]
-      },
-      {
-        'type': '요금 납부',
-        'list': [
-          { 'value': '계좌이체 납부' },
-          { 'value': '체크/신용카드 납부' },
-          { 'value': 'OK캐쉬백/T포인트 납부' }
-        ]
-      },
-      {
-        'list': [
-          { 'value': '입금전용계좌 SMS신청', 'explain': '입근전용계좌 정보를 SMS로 전송합니다. <br/>자동납부 인출 중이 아닌 경우에만 이용 가능합니다.' }
-        ]
-      }
-    ];
-
-    var hashName = 'feePay';
-
-    // 데이터 초기화
-    // var invDtArr = this.resData.billpayInfo.invDtArr; // data-value
-    // var conditionChangeDtList = this.resData.commDataInfo.conditionChangeDtList; // value
-    // var listData = _.map(invDtArr, function (item, idx) {
-    //   return {
-    //     value: conditionChangeDtList[idx],
-    //     option: '',
-    //     attr: 'data-value="' + invDtArr[idx] + '", data-target="selectBtn"'
-    //   }
-    // });
-    // data[0].list = listData;
-
-    this._popupService.open({
-        hbs: hbsName,
-        layer: true,
-        data: data,
-        title: Tw.MYT_FARE_BILL_GUIDE.POP_TITLE_TYPE_1
-      },
-      $.proxy(this._feePayBtnEvtInit, this, $target),
-      $.proxy(this._feePayBtnEvtClose, this, $target),
-      hashName);
+  _feePayBtnEvt: function() {
+    Tw.Logger.info('[요금납부]', Tw.MyTFarePayment);
+    this.myTFarePayment = new Tw.MyTFarePayment(this.$container);
   },
-  _feePayBtnEvtInit: function($target, $layer) {
-    Tw.Logger.info('[팝업 오픈 : popup-action2]', $layer);
-    // $layer.on('click', '[data-target="selectBtn"]', $.proxy(this._setSelectedValue, this, $target));
-  },
-  _feePayBtnEvtClose: function($target, $layer) {
-    Tw.Logger.info('[팝업 닫기 : popup-action2]');
-    // this._popupService.close();
-  },
-
-
   _payListBtnEvt: function() {
     Tw.Logger.info('[납부내역조회]');
+    this._goLoad('/myt/fare/history');
   },
   _callGiftBtnEvt: function() {
     this._goLoad('/myt/fare/bill/guide/call-gift');
