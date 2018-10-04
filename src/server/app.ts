@@ -22,6 +22,7 @@ import { default as OldPaymentRouter } from './app/903.payment/payment.router';
 import { default as OldCustomerRouter } from './app/904.customer/customer.router';
 import { default as OldAuthRouter } from './app/905.auth/auth.router';
 import { default as OldCommonRouter } from './app/909.common/common.router';
+import CommonRouter from './app/00.common/common.router';
 import HomeRouter from './app/01.home/home.router';
 import MyTDataRouter from './app/02.myt-data/myt-data.router';
 import MyTFareRouter from './app/03.myt-fare/myt-fare.router';
@@ -112,8 +113,8 @@ class App {
     this.app.use('/payment', new AppRouter(OldPaymentRouter.instance.controllers).router);
     this.app.use('/customer', new AppRouter(OldCustomerRouter.instance.controllers).router);
     this.app.use('/auth', new AppRouter(OldAuthRouter.instance.controllers).router);
-    this.app.use('/common', new AppRouter(OldCommonRouter.instance.controllers).router);
 
+    this.app.use('/common', new AppRouter(CommonRouter.instance.controllers).router);
     this.app.use('/home', new AppRouter(HomeRouter.instance.controllers).router);
     this.app.use('/myt/data', new AppRouter(MyTDataRouter.instance.controllers).router);
     this.app.use('/myt/fare', new AppRouter(MyTFareRouter.instance.controllers).router);
@@ -127,6 +128,7 @@ class App {
 
   private setViewPath() {
     this.app.set('views', [
+      path.join(__dirname, 'app/00.common/views/containers'),
       path.join(__dirname, 'app/01.home/views/containers'),
       path.join(__dirname, 'app/02.myt-data/views/containers'),
       path.join(__dirname, 'app/03.myt-fare/views/containers'),
