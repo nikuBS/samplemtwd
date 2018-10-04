@@ -170,14 +170,12 @@
 <% include ../components/javascript.component.html %>
 </body>
 <script>
-    // client 작업 중
-    // var data = '<%- JSON.stringify(data) %>';
-    // $(document).ready(function () {
-    //   new Tw.MyTFareSubMain({
-    //     $element: $('[data-id=submain-container]'),
-    //     data: JSON.parse(data)
-    //   });
-    // });
-
+    var data = '<%- JSON.stringify(data) %>';
+    $(document).ready(function () {
+      new Tw.MyTDataSubMain({
+        $element: $('[data-id=submain-container]'),
+        data: JSON.parse(data)
+      });
+    });
 </script>
 <% include ../components/end.component.html %>
