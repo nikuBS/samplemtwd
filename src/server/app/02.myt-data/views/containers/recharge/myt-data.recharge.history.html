@@ -18,15 +18,7 @@
   <!--// #skip_navigation -->
     <div class="wrap">
         <!-- #header -->
-        <div id="header" class="header-wrap">
-            <div class="header">
-                <div class="header-ti align-l">
-                    <h1>최근 충전/선물 내역</h1>
-                </div>
-                <button class="prev-step fe-common-back"><span class="blind">이전으로</span></button>
-                <button class="bt-dropdown small" title="회선 선택" aria-haspopup="true"><%= svcInfo.svcNum %><span class="ico"></span></button>
-            </div>
-        </div>
+        <%- include('../../../../common/views/components/header.component.html', { title: '최근 충전/선물 내역', svcInfo: svcInfo, option: { line: true } }); %>
         <!--// #header -->
         <!-- #contents -->
         <div id="contents" class="container-wrap">
@@ -68,7 +60,7 @@
                                                 </p>
                                                 <% if (item.right) { %>
                                                 <div class="list-data">
-                                                    <p class="data-tx ff-tg-black <%= item.right.color %>-tx"><%= item.right.amount %><span class="ff-tg-medium"><%= item.right.unit %></span></p>
+                                                    <p class="data-tx ff-tg-black <%= item.right.color %>-tx"><span class="ff-tg-medium"><%= item.right.type %></span><%= item.right.amount %><span class="ff-tg-medium"><%= item.right.unit %></span></p>
                                                     <% if (item.refundable) { %>
                                                         <button class="bt-link-tx underline red">취소</button>
                                                     <% } %>
