@@ -1,5 +1,5 @@
 <%#
-* FileName: myt-data.family.config.html
+* FileName: myt-data.family.setting.html
 * Author: Jiman Park (jiman.park@sk.com)
 * Date: 2018.10.01
 %>
@@ -60,10 +60,10 @@
 
 <script>
   $(document).ready(function () {
-
+    var oMyTDataFamilySettingImmediately = new Tw.MyTDataFamilySettingImmediately($('#tab1-tab'));
+    var oMyTDataFamilySettingMonthly = new Tw.MyTDataFamilySettingMonthly($('#tab2-tab'));
   });
 </script>
-
 
 </body>
 <% include ../../components/end.component.html %>

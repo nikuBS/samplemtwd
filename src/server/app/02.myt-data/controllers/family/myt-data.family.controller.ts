@@ -9,6 +9,7 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import BrowserHelper from '../../../../utils/browser.helper';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
+import { DATA_UNIT } from '../../../../types/string.old.type';
 
 class MyTDataFamily extends TwViewController {
   constructor() {
@@ -30,20 +31,20 @@ class MyTDataFamily extends TwViewController {
         res.render('family/myt-data.family.setting.html', responseData);
         break;
       default:
-        const response = Object.assign(responseData, this.getRemainDataInfo());
+        const response = Object.assign(responseData, { familyInfo: this.getRemainDataInfo() });
         res.render('family/myt-data.family.main.html', response);
     }
   }
 
   private getRemainDataInfo() {
-    const mock = {
+    const data = {
       code: '00',
       msg: '',
       result: {
         total: '2048',
         used: '400',
         remained: '1648',
-        mbrList: [ {
+        mbrList: [{
           svcNum: '01094**04**',
           svcMgmtNum: '7226057315',
           custNm: '조*희',
@@ -53,13 +54,34 @@ class MyTDataFamily extends TwViewController {
           used: '0',
           limitedYn: 'N',
           limitation: ''
-        } ]
+        }, {
+          svcNum: '01012**34**',
+          svcMgmtNum: '7226057315',
+          custNm: '박*수',
+          repYn: 'N',
+          prodId: 'NA00005959',
+          prodNm: 'ting 요금제',
+          used: '0',
+          limitedYn: 'Y',
+          limitation: '300'
+        }]
       }
     };
 
-    return mock;
+    let result = data.result;
+
+    result = Object.assign(result, {
+      total: this.convertTFamilyDataSet(result.total),
+      used: this.convertTFamilyDataSet(result.used),
+      remained: this.convertTFamilyDataSet(result.remained)
+    });
+
+    return result;
   }
 
+  private convertTFamilyDataSet(sQty) {
+    return FormatHelper.convDataFormat(sQty, DATA_UNIT.MB);
+  }
 }
 
 export default MyTDataFamily;
