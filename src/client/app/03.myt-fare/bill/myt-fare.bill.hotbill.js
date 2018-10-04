@@ -31,7 +31,7 @@ Tw.MyTFareHotBill = function (rootEl) {
 
 Tw.MyTFareHotBill.prototype = {
   _cachedElement: function () {
-    this.$billMenu = this.$container.find('#fe-billAccordion');
+    this.$billMenu = this.$container.find('#fe-bill-menu');
     this.$amount = this.$container.find('#fe-total');
     this.$period = this.$container.find('#fe-period');
     this.$unpaid = this.$container.find('#fe-unpaid-bill');
@@ -43,27 +43,32 @@ Tw.MyTFareHotBill.prototype = {
     this.$lineButton.on('click', $.proxy(this._onClickLine, this));
   },
 
-  _getBillResponse: function () {
-    console.log(this._requestCount);
+  _getBillResponse: function (child) {
+    var params = { count: this._requestCount++ };
+    if ( child ) {
+      params.childSvcMgmtNum = child.svcMgmtNum;
+    }
     this._apiService
-      .request(Tw.API_CMD.BFF_05_0022, { count: this._requestCount++ })
-      .done($.proxy(this._onReceivedBillData, this))
+      .request(Tw.API_CMD.BFF_05_0022, params)
+      .done($.proxy(this._onReceivedBillData, this, child))
       .fail($.proxy(this._onErrorReceivedBillData, this));
   },
 
-  _sendBillRequest: function () {
+  _sendBillRequest: function (child) {
     skt_landing.action.loading.on({ ta: '.loading' });
     this._requestCount = 0;
+    var params = { count: this._requestCount++ };
+    if ( child ) {
+      params.childSvcMgmtNum = child.svcMgmtNum;
+    }
     this._apiService
-      .request(Tw.API_CMD.BFF_05_0022, {
-        count: this._requestCount++
-      })
-      .done($.proxy(this._getBillResponse, this))
+      .request(Tw.API_CMD.BFF_05_0022, params)
+      .done($.proxy(this._getBillResponse, this, child))
       .fail($.proxy(this._onErrorReceivedBillData, this));
   },
 
 
-  _onReceivedBillData: function (resp) {
+  _onReceivedBillData: function (child, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       if ( !resp.result || !resp.result.hotBillInfo ) {
         this._getBillResponse();
@@ -72,22 +77,26 @@ Tw.MyTFareHotBill.prototype = {
       // this._svcAttrCd = this.$container.find('.info-type').attr('data-type');
       // this._svcNum = this.$container.find('.info-type').attr('data-num');
       var billData = resp.result.hotBillInfo[0];
-      if ( this._billInfoAvailable ) {
-        this.$amount.text(billData.totOpenBal2);
-        this.$period.text(this.$period.text() + resp.result.term);
-        var fieldInfo = {
-          lcl: 'billItmLclNm',
-          scl: 'billItmSclNm',
-          name: 'billItmNm',
-          value: 'invAmt2'
-        };
-        var group = Tw.MyTFareHotBill.arrayToGroup(billData.record1, fieldInfo);
-        if ( group[Tw.HOTBILL_UNPAID_TITLE] ) {
-          this.$unpaid.show();
-          this.$unpaidAmount.text(group[Tw.HOTBILL_UNPAID_TITLE].total);
-          delete group[Tw.HOTBILL_UNPAID_TITLE];
+      if ( !child ) {
+        if ( this._billInfoAvailable ) {
+          this.$amount.text(billData.totOpenBal2);
+          this.$period.text(this.$period.text() + resp.result.term);
+          var fieldInfo = {
+            lcl: 'billItmLclNm',
+            scl: 'billItmSclNm',
+            name: 'billItmNm',
+            value: 'invAmt2'
+          };
+          var group = Tw.MyTFareHotBill.arrayToGroup(billData.record1, fieldInfo);
+          if ( group[Tw.HOTBILL_UNPAID_TITLE] ) {
+            this.$unpaid.show();
+            this.$unpaidAmount.text(group[Tw.HOTBILL_UNPAID_TITLE].total);
+            delete group[Tw.HOTBILL_UNPAID_TITLE];
+          }
+          this._renderBillGroup(group);
         }
-        this._renderBillGroup(group);
+      } else {
+        this._openChildbBill(resp, child);
       }
     } else {
       if ( resp.code === Tw.MyTFareHotBill.CODE.ERROR.NO_BILL_REQUEST_EXIST ) {
@@ -129,31 +138,40 @@ Tw.MyTFareHotBill.prototype = {
             this.lines = _.clone(children.result);
           }
           if ( svcs.code === Tw.API_CODE.CODE_00 ) {
-            let otherLines = svcs.result[Tw.LINE_NAME.MOBILE].filter(function (svc) {
+            var otherLines = svcs.result[Tw.LINE_NAME.MOBILE].filter(function (svc) {
               return (['M1', 'M3'].indexOf(svc.svcAttrCd) > -1 && svc.svcMgmtNum !== svcInfo.result.svcMgmtNum);
-            })
+            });
             this.lines = this.lines.concat(_.clone(otherLines));
           }
           this._svcInfo = _.clone(svcInfo.result);
-          var targetSvc = this.lines[idx]
+          var targetSvc = this.lines[idx];
           if ( targetSvc.child ) {
-            this._openChildbBill();
+            this._onClickChild(targetSvc);
           } else {
             this._confirmSwitchLine(targetSvc);
           }
         }, this));
     } else {
-      var targetSvc = this.lines[idx]
+      var targetSvc = this.lines[idx];
       if ( targetSvc.child ) {
-        this._openChildbBill();
+        this._onClickChild(targetSvc);
       } else {
         this._confirmSwitchLine(targetSvc);
       }
     }
   },
 
-  _openChildbBill: function () {
+  _onClickChild: function (target) {
+    this._sendBillRequest(target);
+  },
 
+  _openChildbBill: function (child, billData) {
+    // var billData = resp.result.hotBillInfo[0];
+    // var group = Tw.MyTFareHotBill.arrayToGroup(billData.record1, fieldInfo);
+    this._popupService.open({
+      hbs: 'MF_03_01',
+      data: { svcInfo: child }
+    });
   },
 
   _confirmSwitchLine: function (target) {
