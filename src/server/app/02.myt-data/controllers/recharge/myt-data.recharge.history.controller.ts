@@ -93,12 +93,12 @@ export default class MyTDataRechargeHistory extends TwViewController {
               ? {
                   amount: (amount / 1000).toFixed(1),
                   unit: UNIT.GB,
-                  color: 'red'
+                  color: item.type === '1' ? 'red' : 'blue'
                 }
               : {
                   amount: amount,
                   unit: UNIT.MB,
-                  color: 'red'
+                  color: item.type === '1' ? 'red' : 'blue'
                 },
           bottom: item.giftType === 'GC' ? [item.svcNum, ChargeTypeNames.FIXED] : [item.svcNum]
         });
@@ -172,7 +172,7 @@ export default class MyTDataRechargeHistory extends TwViewController {
             text: ChargeTypeNames.CHARGE
           },
           refundable: item.refundableYn === 'Y',
-          bottom: item.opTypCd === '2' || item.opTypCd === '4' ? [ChargeTypeNames.CANCLE] : undefined
+          bottom: item.opTypCd === '2' || item.opTypCd === '4' ? [item.opTypNm, ChargeTypeNames.CANCLE] : [item.opTypNm]
         });
 
         return nData;
@@ -200,13 +200,13 @@ export default class MyTDataRechargeHistory extends TwViewController {
           right: {
             amount: FormatHelper.addComma(item.amt),
             unit: UNIT.WON,
-            color: 'red'
+            color: item.opTypCd === '1' ? 'red' : 'blue'
           },
           badge: {
             icon: BadgeTypes.GIFT,
             text: ChargeTypeNames.GIFT
           },
-          bottom: item.opTypCd === '2' || item.opTypCd === '4' ? [ChargeTypeNames.CANCLE] : undefined
+          bottom: item.opTypCd === '2' || item.opTypCd === '4' ? [item.opTypNm, ChargeTypeNames.CANCLE] : [item.opTypNm]
         });
 
         return nData;
@@ -227,6 +227,23 @@ export default class MyTDataRechargeHistory extends TwViewController {
           nData[key] = [];
         }
 
+        let subIdx = 0;
+
+        switch (item.copnDtlClCd) {
+          case 'AAA21': // 망내음성 20%
+          case 'AAA22': // 망외음성 20%
+            subIdx = 5;
+            break;
+          case 'AAA10': // 데이터 100%
+          case 'AAA30': // 데이터 무제한
+            subIdx = 4;
+            break;
+          case 'AAA20': // 음성 20%
+          case 'AAA40': // 음성 무제한
+            subIdx = 3;
+            break;
+        }
+
         nData[key].push({
           type: RechargeTypes.REFILL_USAGE,
           typeName: TypeNames.REFILL_USAGE,
@@ -236,7 +253,8 @@ export default class MyTDataRechargeHistory extends TwViewController {
             text: ChargeTypeNames.CHARGE
           },
           right: {
-            amount: item.copnDtlClNm,
+            type: item.copnDtlClNm.substring(0, subIdx),
+            amount: item.copnDtlClNm.substring(subIdx),
             color: 'blue'
           }
         });
