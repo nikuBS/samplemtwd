@@ -56,6 +56,7 @@ class ApiRouter {
     this.router.get('/allSvcInfo', this.getAllSvcInfo.bind(this));
     this.router.get('/childInfo', this.getChildInfo.bind(this));
     this.router.get('/serverSession', this.getServerSession.bind(this));
+    this.router.get('/version', this.getVersion.bind(this));
   }
 
   private checkHealth(req: Request, res: Response, next: NextFunction) {
@@ -80,6 +81,16 @@ class ApiRouter {
       code: API_CODE.CODE_00,
       result: {
         domain: EnvHelper.getEnvironment('DOMAIN')
+      }
+    };
+    res.json(resp);
+  }
+
+  private getVersion(req: Request, res: Response, next: NextFunction) {
+    const resp = {
+      code: API_CODE.CODE_00,
+      result: {
+        latestVersion: ''
       }
     };
     res.json(resp);
