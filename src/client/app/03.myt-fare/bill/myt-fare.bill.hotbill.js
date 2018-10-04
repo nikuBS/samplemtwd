@@ -9,8 +9,8 @@ Tw.MyTFareHotBill = function (rootEl) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
-  this._history = new Tw.HistoryService();
-  this._history.init();
+  this._historyService = new Tw.HistoryService();
+  this._historyService.init();
 
   this._cachedElement();
   this._bindEvent();
@@ -26,26 +26,6 @@ Tw.MyTFareHotBill = function (rootEl) {
       .done($.proxy(this._successRegisterLineList, this));
     this._apiService.request(Tw.NODE_CMD.GET_ALL_SVC, {})
       .done($.proxy(this._successRegisterLineList, this));
-
-
-    var APIs = [
-      { command: Tw.NODE_CMD.GET_CHILD_INFO, params: {} },
-      { command: Tw.NODE_CMD.GET_ALL_SVC, params: {} },
-      { command: Tw.NODE_CMD.GET_SVC_INFO, params: {} }
-    ];
-    this.lines = [];
-    this._apiService.requestArray(APIs)
-      .done($.proxy(function (children, svcs, svcInfo) {
-        if ( children.code === Tw.API_CODE.CODE_00 ) {
-          this.lines = children.result;
-        }
-        if ( svcs.code === Tw.API_CODE.CODE_00 ) {
-          this.lines = this.lines.concat(svcs.result[Tw.LINE_NAME.MOBILE].filter(function (svc) {
-            return ['M1', 'M3'].indexOf(svc.svcAttrCd) > -1;
-          }));
-          _.reject(this.lines, { svcMgmtNum: svcInfo.svcMgmtNum });
-        }
-      }));
   }
 };
 
@@ -56,9 +36,11 @@ Tw.MyTFareHotBill.prototype = {
     this.$period = this.$container.find('#fe-period');
     this.$unpaid = this.$container.find('#fe-unpaid-bill');
     this.$unpaidAmount = this.$container.find('#fe-unpaid-amount');
+    this.$lineButton = this.$container.find('.list-comp-lineinfo button');
   },
 
   _bindEvent: function () {
+    this.$lineButton.on('click', $.proxy(this._onClickLine, this));
   },
 
   _getBillResponse: function () {
@@ -129,6 +111,71 @@ Tw.MyTFareHotBill.prototype = {
 
   _onErrorReceivedBillData: function (resp) {
     Tw.Error(resp.code, resp.msg).pop();
+  },
+
+  _onClickLine: function (e) {
+    var idx = e.currentTarget.getAttribute('data-idx');
+
+    if ( !this.lines ) {
+      var APIs = [
+        { command: Tw.NODE_CMD.GET_CHILD_INFO, params: {} },
+        { command: Tw.NODE_CMD.GET_ALL_SVC, params: {} },
+        { command: Tw.NODE_CMD.GET_SVC_INFO, params: {} }
+      ];
+      this.lines = [];
+      this._apiService.requestArray(APIs)
+        .done($.proxy(function (children, svcs, svcInfo) {
+          if ( children.code === Tw.API_CODE.CODE_00 ) {
+            this.lines = _.clone(children.result);
+          }
+          if ( svcs.code === Tw.API_CODE.CODE_00 ) {
+            let otherLines = svcs.result[Tw.LINE_NAME.MOBILE].filter(function (svc) {
+              return (['M1', 'M3'].indexOf(svc.svcAttrCd) > -1 && svc.svcMgmtNum !== svcInfo.result.svcMgmtNum);
+            })
+            this.lines = this.lines.concat(_.clone(otherLines));
+          }
+          this._svcInfo = _.clone(svcInfo.result);
+          var targetSvc = this.lines[idx]
+          if ( targetSvc.child ) {
+            this._openChildbBill();
+          } else {
+            this._confirmSwitchLine(targetSvc);
+          }
+        }, this));
+    } else {
+      var targetSvc = this.lines[idx]
+      if ( targetSvc.child ) {
+        this._openChildbBill();
+      } else {
+        this._confirmSwitchLine(targetSvc);
+      }
+    }
+  },
+
+  _openChildbBill: function () {
+
+  },
+
+  _confirmSwitchLine: function (target) {
+    var defaultLineInfo = this._svcInfo.svcNum + ' ' + this._svcInfo.nickNm;
+    var selectLineInfo = target.svcNum + ' ' + target.nickNm;
+    this.changeLineMgmtNum = target.svcMgmtNum;
+    this._popupService.openModalTypeA(Tw.REMNANT_OTHER_LINE.TITLE,
+      defaultLineInfo + Tw.MYT_TPL.DATA_SUBMAIN.SP_TEMP + selectLineInfo,
+      Tw.REMNANT_OTHER_LINE.BTNAME, null, $.proxy(this._requestSwitchLine, this, target), Tw.Popup.close);
+  },
+
+  _requestSwitchLine: function (target) {
+    this._apiService.request(Tw.NODE_CMD.CHANGE_SESSION, { svcMgmtNum: target.svcMgmtNum })
+      .done($.proxy(this._onChangeSessionSuccess, this));
+  },
+
+  _onChangeSessionSuccess: function (resp) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      setTimeout($.proxy(function () {
+        this._historyService.reload();
+      }, this), 300);
+    }
   }
 };
 

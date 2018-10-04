@@ -87,7 +87,7 @@
                 <ul class="list-comp-lineinfo">
                     <% for (let i = 0; i < lines.length; i++) { %>
                     <li>
-                        <button>
+                        <button data-idx=<%= i %>>
                             <div class="lineinfo-user">
                                 <span class="info-title"><%= lines[i].eqpMdlNm %>
                                     <% if (lines[i].child) { %>
