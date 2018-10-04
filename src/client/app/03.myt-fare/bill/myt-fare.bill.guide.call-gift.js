@@ -88,11 +88,12 @@ Tw.MyTFareBillGuideCallGift.prototype = {
 
   //--------------------------------------------------------------------------[SVC]
   _getPeriod: function( periodStr, formatStr ) {
-    var periodStr = String(periodStr); // 기간 : 1, 2, 3, 6 (개월)
     var defaultSubtractNum = 1;
     var subtractNum = Number(periodStr);
-    var startDt = moment().subtract(subtractNum, 'months').startOf('month').format(formatStr);
-    var endDt = moment().subtract(defaultSubtractNum, 'months').endOf('month').format(formatStr);
+    // var startDt = moment().subtract(subtractNum, 'months').startOf('month').format(formatStr);
+    // var endDt = moment().subtract(defaultSubtractNum, 'months').endOf('month').format(formatStr);
+    var startDt = moment().subtract( defaultSubtractNum + subtractNum, 'months').format(formatStr);
+    var endDt = moment().subtract(defaultSubtractNum, 'months').subtract(defaultSubtractNum, 'days').format(formatStr);
 
     return {
       startDt: startDt,

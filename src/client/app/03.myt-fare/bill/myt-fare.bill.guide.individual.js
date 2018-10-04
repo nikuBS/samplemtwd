@@ -46,8 +46,22 @@ Tw.MyTFareBillGuideIndividual.prototype = {
   _bindEvent: function () {
     this.$container.on('click', '[data-target="conditionChangeBtn"]', $.proxy(this._conditionChangeEvt, this));
 
+    this.$container.on('click', '[data-target="callGiftBtn"]', $.proxy(this._callGiftBtnEvt, this)); // 콜기프트 사용요금
+    this.$container.on('click', '[data-target="roamingBtn"]', $.proxy(this._roamingBtnEvt, this)); // 로밍 사용요금
+    this.$container.on('click', '[data-target="donationBtn"]', $.proxy(this._donationBtnEvt, this)); // 기부금/후원금 사용요금
+
   },
   //--------------------------------------------------------------------------[EVENT]
+  _callGiftBtnEvt: function() {
+    this._goLoad('/myt/fare/bill/guide/call-gift');
+  },
+  _roamingBtnEvt: function() {
+    this._goLoad('/myt/fare/bill/guide/roaming');
+  },
+  _donationBtnEvt: function() {
+    this._goLoad('/myt/fare/bill/guide/donation');
+  },
+
   _conditionChangeEvt: function(event) {
     var $target = $(event.currentTarget);
     var hbsName = 'actionsheet_select_a_type';

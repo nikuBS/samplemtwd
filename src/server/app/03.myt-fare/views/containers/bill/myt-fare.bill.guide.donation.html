@@ -41,15 +41,9 @@
 <div id="fe-wrap" class="wrap">
     <!-- .popup hbs -->
     <div class="popup-page nobg tw-popup fixed-btn"><!-- .fixed-btn 하단에 고정된 버튼이 있는 경우 -->
-        <!-- #header -->
-        <div class="header-wrap">
-            <div class="page-header">
-                <div class="header-ti">
-                    <h1>기부금/후원금 상세조회</h1>
-                </div>
-            </div>
-        </div>
-        <!--// #header -->
+
+        <%- include('../../../../common/views/components/header.component.html', { title: '기부금/후원금 상세조회', svcInfo: svcInfo, line: false }) %>
+
         <!-- .container-wrap -->
         <div class="container-wrap">
             <h2 class="blind">내용</h2>

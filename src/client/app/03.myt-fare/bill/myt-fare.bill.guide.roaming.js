@@ -42,13 +42,14 @@ Tw.MyTFareBillGuideRoaming.prototype = {
 
     this.selectVal = $target.attr('data-value');
 
-    // var param = {
-    //   startDt : this._getPeriod(this.selectVal, 'YYYYMMDD').startDt,
-    //   endDt: this._getPeriod(this.selectVal, 'YYYYMMDD').endDt,
-    // };
-    // this._getRoamingInfo( param );
+    var param = {
+      startDt : this._getPeriod(this.selectVal, 'YYYYMMDD').startDt,
+      endDt: this._getPeriod(this.selectVal, 'YYYYMMDD').endDt,
+    };
+    console.info('[param]', param);
 
-    this._getRoamingInfo();
+    this._getRoamingInfo( param );
+
   },
   _popupCloseBtEvt: function() {
     this._goLoad('/myt/fare/bill/guide');
@@ -60,13 +61,13 @@ Tw.MyTFareBillGuideRoaming.prototype = {
     $.ajax('http://localhost:3000/mock/myt.bill.billguide.roaming.BFF_05_0044.json')
       .done(function(resp){
         Tw.Logger.info(resp);
-        thisMain._getRoamingInfoInit(resp);
+        thisMain._getRoamingInfoInit(resp, param);
       })
       .fail(function(err) {
         Tw.Logger.info(err);
       });
   },
-  _getRoamingInfoInit: function(res) {
+  _getRoamingInfoInit: function(res, param) {
 
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       var dataArr = res.result.roamingList;
@@ -79,8 +80,8 @@ Tw.MyTFareBillGuideRoaming.prototype = {
       Tw.Logger.info('[totalNum]', totalNum);
 
         var resData = {
-          startDt: '2018.09.27',
-          endDt: '2018.09.28',
+          startDt: moment(param.startDt).format('YYYY.MM.DD'),
+          endDt: moment(param.endDt).format('YYYY.MM.DD'),
           totalNum: this._comComma(totalNum)
         };
 
@@ -140,12 +141,12 @@ Tw.MyTFareBillGuideRoaming.prototype = {
     var threeMonth; // 3개월
     var sixMonth;   // 6개월
 
-    dayBefore = moment().subtract(1, 'days').format(formatStr);
-    oneWeek = moment().subtract(1, 'weeks').format(formatStr);
-    threeWeek = moment().subtract(3, 'weeks').format(formatStr);
-    oneMonth = moment().subtract(1, 'months').format(formatStr);
-    threeMonth = moment().subtract(3, 'months').format(formatStr);
-    sixMonth = moment().subtract(6, 'months').format(formatStr);
+    dayBefore =   moment().subtract(1, 'months').subtract(1, 'days').format(formatStr);
+    oneWeek =     moment().subtract(1, 'months').subtract(1, 'weeks').format(formatStr);
+    threeWeek =   moment().subtract(1, 'months').subtract(3, 'weeks').format(formatStr);
+    oneMonth =    moment().subtract(1, 'months').subtract(1, 'months').format(formatStr);
+    threeMonth =  moment().subtract(1, 'months').subtract(3, 'months').format(formatStr);
+    sixMonth =    moment().subtract(1, 'months').subtract(6, 'months').format(formatStr);
 
     dateArray[0] = dayBefore;
     dateArray[1] = oneWeek;
@@ -157,35 +158,28 @@ Tw.MyTFareBillGuideRoaming.prototype = {
     console.info( '[ 선택한 날짜 ]', dateArray[selectVal] );
 
     var startDt = dateArray[selectVal];
-    var endDt = moment().subtract(1, 'days').format(formatStr);
+    var endDt = moment().subtract(1, 'months').subtract(1, 'days').format(formatStr);
 
-    switch( selectVal ) {
-      case 0:
-        Tw.Logger.info('[전일]', 0);
-        break;
-      case 1:
-        Tw.Logger.info('[1주일]', 1);
-        break;
-      case 2:
-        Tw.Logger.info('[3주일]', 2);
-        break;
-      case 3:
-        Tw.Logger.info('[1개월]', 3);
-        break;
-      case 4:
-        Tw.Logger.info('[3개월]', 4);
-        break;
-      case 5:
-        Tw.Logger.info('[6개월]', 5);
-        break;
-
-    }
-
-    // var periodStr = String(periodStr); // 기간 : 1, 2, 3, 6 (개월)
-    // var defaultSubtractNum = 1;
-    // var subtractNum = Number(periodStr);
-    // var startDt = moment().subtract(subtractNum, 'months').startOf('month').format(formatStr);
-    // var endDt = moment().subtract(defaultSubtractNum, 'months').endOf('month').format(formatStr);
+    // switch( selectVal ) {
+    //   case 0:
+    //     Tw.Logger.info('[전일]', 0);
+    //     break;
+    //   case 1:
+    //     Tw.Logger.info('[1주일]', 1);
+    //     break;
+    //   case 2:
+    //     Tw.Logger.info('[3주일]', 2);
+    //     break;
+    //   case 3:
+    //     Tw.Logger.info('[1개월]', 3);
+    //     break;
+    //   case 4:
+    //     Tw.Logger.info('[3개월]', 4);
+    //     break;
+    //   case 5:
+    //     Tw.Logger.info('[6개월]', 5);
+    //     break;
+    // }
 
     return {
       startDt: startDt,
