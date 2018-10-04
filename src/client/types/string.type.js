@@ -63,6 +63,12 @@ Tw.SMS_INFO = {
     '문자 발송여부와 입금전용계좌 은행을 선택해 주세요.'
 };
 
+Tw.AUTO_PAY_INFO = {
+  TITLE: '자동 선결제란',
+  CONTENTS: '자동 선결제 신청 시 설정된 금액이 자동으로 선결제됩니다.' + '<br/><br/>' +
+  '잔여한도 걱정없이 소액결제를 이용하세요.'
+};
+
 Tw.REMNANT_OTHER_LINE = {
   TITLE: '기준회선을 변경하시겠습니까?',
   BTNAME: '변경하기',
@@ -138,7 +144,12 @@ Tw.ALERT_MSG_MYT_FARE = {
     BIL0030: '휴대폰 결제 이용동의 후 사용 가능합니다.',
     BIL0033: '휴대폰 결제 차단 고객은 사용이 제한된 메뉴입니다.',
     BIL0034: '법인실사용자 소액결제 부가서비스 가입 후 사용 가능합니다.'
-  }
+  },
+  MICRO: '소액결제',
+  CONTENTS: '콘텐츠이용료',
+  USABLE: '사용',
+  MSG_ALLOWED: '이 혀용되었습니다.',
+  MSG_PROHIBITED: '이 차단되었습니다.'
 };
 
 Tw.ALERT_MSG_MYT_JOIN = {

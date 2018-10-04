@@ -124,3 +124,8 @@ export enum MYT_FARE_PAYMENT_NAME {
   NEW = '신청하기',
   CHANGE = '변경하기'
 }
+
+export enum MYT_FARE_MICRO_NAME {
+  NC = '신청',
+  AC = '변경'
+}
