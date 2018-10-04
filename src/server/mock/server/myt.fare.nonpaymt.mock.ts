@@ -210,3 +210,17 @@ export const autopaySchedule_03 = {
     ]
   }
 };
+
+export const PaySuspension = {
+  'code': '00',
+  'msg': 'success',
+  'result': {
+    'useObjYn': 'Y',
+    'maxConnDt': '20180731',
+    'evtNum': 'C101807019',
+    'colMgmtTypCd': null,
+    'colExeActCd': null,
+    'colAmt': '000000000039500',
+    'tmthColAmt': '2525100'
+  }
+};

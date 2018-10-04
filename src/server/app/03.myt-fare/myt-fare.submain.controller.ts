@@ -101,7 +101,7 @@ class MytFareSubmainController extends TwViewController {
       }
       // 최근납부내역
       if ( totalPayment ) {
-        data.totalPayment = totalPayment;
+        data.totalPayment = totalPayment.paymentRecord;
       }
       // 세금계산서
       if ( taxInvoice ) {

@@ -19,11 +19,11 @@ Tw.MyTFareSubMainNonPayment.prototype = {
   _rendered: function () {
     if ( this.data.possibleDay ) {
       // 납부가능일 선택
-      this.$day = this.$container.find('[data-id=day]');
+      this.$day = this.$container.find('button[data-id=day]');
     }
     if ( this.data.suspension ) {
       // 이용정지 해제
-      this.$susp = this.$container.find('[data-id=susp]');
+      this.$susp = this.$container.find('button[data-id=susp]');
     }
   },
 
@@ -100,7 +100,6 @@ Tw.MyTFareSubMainNonPayment.prototype = {
 
   // 납부가능일 이동
   _onClickedDay: function () {
-    // TODO: 화면작업 후 처리
     var claimList = this._setClaimList();
     var paymentList = this._setPaymentList();
     this._popupService.open({
@@ -150,12 +149,16 @@ Tw.MyTFareSubMainNonPayment.prototype = {
   _onSuccessPdayInput: function(resp) {
     if(resp.code === Tw.API_CODE.CODE_00) {
       var result = resp.result;
-      if(result.success === Tw.NON_PAYMENT.POSSIBLE_DATE.SUCCESS.Y) {
+      if(result.success === Tw.NON_PAYMENT.SUCCESS.Y) {
         this._popupService.close();
-        this._popupService.toast(Tw.NON_PAYMENT.POSSIBLE_DATE.TOAST);
+        this._popupService.toast(Tw.NON_PAYMENT.TOAST.P);
+        // 납부가능일이 선택되어 선택버튼이 서버데이터도 변경되어 노출이 되면 안된다.
+        setTimeout($.proxy(function () {
+          this._historyService.reload();
+        }, this), 300);
       }
-      else if (result.success === Tw.NON_PAYMENT.POSSIBLE_DATE.SUCCESS.R) {
-        this._popupService.openAlert(Tw.NON_PAYMENT.POSSIBLE_DATE.ERROR.R);
+      else if (result.success === Tw.NON_PAYMENT.SUCCESS.R) {
+        this._popupService.openAlert(Tw.NON_PAYMENT.ERROR.P_R);
       }
       else {
         Tw.Logger.warn('Server Error..');
@@ -172,8 +175,9 @@ Tw.MyTFareSubMainNonPayment.prototype = {
 
   // 이용정지해제 팝업 호출
   _onClickedSuspension: function () {
+    var colAmt = parseInt(this.data.suspension.colAmt, 10);
     this._popupService.openModalTypeA(Tw.NON_PAYMENT.SUSPENSION.TITLE,
-      Tw.NON_PAYMENT.SUSPENSION.CONTENT_1 + (this.data.suspension.colAmt || '') + Tw.NON_PAYMENT.SUSPENSION.CONTENT_2,
+      Tw.NON_PAYMENT.SUSPENSION.CONTENT_1 + colAmt + Tw.NON_PAYMENT.SUSPENSION.CONTENT_2,
       Tw.NON_PAYMENT.SUSPENSION.BTNAME, null, $.proxy(this._onSuspensionConfirmed, this), null);
   },
 
@@ -188,11 +192,27 @@ Tw.MyTFareSubMainNonPayment.prototype = {
   },
 
   // 이용정지해제 완료 후 처리
-  _onSuccessSuspesionCancel: function () {
+  _onSuccessSuspesionCancel: function (resp) {
+    // close를 먼저 호출하여 처리
     this._popupService.close();
-    this._popupService.toast(Tw.NON_PAYMENT.SUSPENSION.TOAST);
-    setTimeout($.proxy(function () {
-      this._historyService.reload();
-    }, this), 300);
+    if(resp.result === Tw.API_CODE.CODE_00) {
+      var result = resp.result;
+      if(result.success === Tw.NON_PAYMENT.SUCCESS.Y) {
+        this._popupService.toast(Tw.NON_PAYMENT.TOAST.S);
+        // 이용정지해제가 완료되어 이용정지해제버튼이 서버데이터도 변경되어 노출이 되면 안된다.
+        setTimeout($.proxy(function () {
+          this._historyService.reload();
+        }, this), 300);
+      }
+      else if(result.success === Tw.NON_PAYMENT.SUCCESS.R) {
+        this._popupService.openAlert(Tw.NON_PAYMENT.ERROR.S_R);
+      }
+      else {
+        Tw.Logger.warn('Server Error..');
+      }
+    }
+    else {
+      Tw.Logger.warn('Disable suspension failure');
+    }
   }
 };
