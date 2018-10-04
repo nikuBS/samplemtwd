@@ -16,7 +16,6 @@ const manifest = require('./config/manifest.json');
 
 // Route Modules
 import AppRouter from './common/app.router';
-import { default as OldHomeRouter } from './app/900.home/home.router';
 import { default as OldMytRouter } from './app/901.myt/myt.router';
 import { default as OldRechargeRouter } from './app/902.recharge/recharge.router';
 import { default as OldPaymentRouter } from './app/903.payment/payment.router';
@@ -108,7 +107,6 @@ class App {
   }
 
   private setRoutes() {
-    this.app.use('/home', new AppRouter(OldHomeRouter.instance.controllers).router);
     this.app.use('/myt', new AppRouter(OldMytRouter.instance.controllers).router);
     this.app.use('/recharge', new AppRouter(OldRechargeRouter.instance.controllers).router);
     this.app.use('/payment', new AppRouter(OldPaymentRouter.instance.controllers).router);
@@ -138,7 +136,6 @@ class App {
       path.join(__dirname, 'app/07.customer/views/containers'),
       path.join(__dirname, 'app/08.auth/views/containers'),
 
-      path.join(__dirname, 'app/900.home/views/containers'),
       path.join(__dirname, 'app/901.myt/views/containers'),
       path.join(__dirname, 'app/902.recharge/views/containers'),
       path.join(__dirname, 'app/903.payment/views/containers'),

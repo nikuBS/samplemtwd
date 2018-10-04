@@ -1,20 +1,20 @@
 /**
- * FileName: home.controller.ts
+ * FileName: menu.controller.ts
  * Author: Ara Jo (araara.jo@sk.com)
- * Date: 2018.09.06
+ * Date: 2018.10.04
  */
 
 import TwViewController from '../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
 
-class Home extends TwViewController {
+class Menu extends TwViewController {
   constructor() {
     super();
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any) {
-    res.render('home.html', { svcInfo });
+    res.render('menu.html', { svcInfo });
   }
 }
 
-export default Home;
+export default Menu;
