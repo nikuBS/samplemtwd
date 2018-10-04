@@ -26,7 +26,7 @@ class MyTFareBillHotbill extends TwViewController {
       res.render('bill/myt-fare.bill.hotbill.html', {
         svcInfo: svcInfo,
         lines: [],
-        billAvailable : false
+        billAvailable: false
       });
     } else {
       const svcs = this._getServiceInfo(svcInfo);
@@ -71,8 +71,9 @@ class MyTFareBillHotbill extends TwViewController {
 
     const otherSvc = this.loginService.getAllSvcInfo() || [];
     if ( otherSvc && otherSvc[LINE_NAME.MOBILE] ) {
-      svcs = svcs.concat(otherSvc[LINE_NAME.MOBILE].filter(svc => ['M1', 'M3'].indexOf(svc.svcAttrCd) > -1));
-      _.reject(svcs, { svcMgmtNum: svcInfo['svcMgmtNum'] });
+      svcs = svcs.concat(otherSvc[LINE_NAME.MOBILE]
+        .filter(svc => (['M1', 'M3'].indexOf(svc.svcAttrCd) > -1 &&
+          svc.svcMgmtNum !== svcInfo['svcMgmtNum'])));
     }
     return _.map(svcs, _.clone);
   }
