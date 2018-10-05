@@ -18,7 +18,8 @@
 </div>
 <div id="fe-myt-fare-hotbill" class="wrap">
     <!-- #header -->
-    <%- include('../../../../../common/views/components/header.component.html', { title: '실시간 사용요금', svcInfo: svcInfo, line:true }); %>
+    <%- include('../../../../../common/views/components/header.component.html',
+        { title: '실시간 사용요금', svcInfo: svcInfo, option: { line: true }  }); %>
     <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap">
@@ -53,7 +54,7 @@
             <!-- .cont-box -->
             <div class="cont-box nogaps-hoz">
                 <div class="statement-cont">
-                    <div class="statement-detail type2" id="fe-bill-menu">
+                    <div class="statement-detail type2" data-role="fe-bill-menu">
                         <!-- .widget -->
                         <!--// .widget -->
                     </div>
