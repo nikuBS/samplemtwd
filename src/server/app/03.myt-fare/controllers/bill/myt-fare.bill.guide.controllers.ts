@@ -368,7 +368,7 @@ class MyTFareBillGuide extends TwViewController {
 
     };
 
-    Promise.all([p1, p2]).then(function(resArr) {
+    Promise.all([p1, p2, p3]).then(function(resArr) {
 
       thisMain._billpayInfo = resArr[0].result;
       thisMain._intBillLineInfo = resArr[1].result;
