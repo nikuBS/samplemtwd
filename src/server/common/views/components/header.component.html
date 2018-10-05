@@ -33,7 +33,7 @@
         <% if (svcInfo.totalSvcCnt === '0') { %>
         <button class="bt-user-status">신규 개통</button>
         <% } else if (svcInfo.totalSvcCnt !== '0' && svcInfo.expsSvcCnt === '0') { %>
-        <button class="bt-user-status">회선 등록</button>
+        <a class="bt-user-status" href="/auth/line">회선 등록</a>
         <% } else { %>
         <button id="fe-bt-line" class="bt-dropdown small" title="회선 선택" aria-haspopup="true" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-urlAuth="<%= svcInfo.urlAuth %>">
             <%= svcInfo.svcNum %>
@@ -41,7 +41,7 @@
         </button><!--팝업 호출된후 disabled부여-->
         <% } %>
         <% } else { %>
-        <button class="bt-user-status">로그인</button>-->
+        <button class="bt-user-status fe-bt-login">로그인</button>
         <% } %>
         <% } %>
     </div>
