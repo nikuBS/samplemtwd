@@ -4,8 +4,8 @@
  * Date: 2018.07.24
  */
 Tw.MyTJoinProtectPwdChange = function ($element, isNew) {
-  this.STEP1 = 1; // 비밀번호 확인 단계(기존 비번 있는 경우)
-  this.STEP2 = 2; // 비밀번호 변경/설정 단계
+  this._HASH_STEP_CHECK = '#contents-check';
+  this._HASH_STEP_CHANGE = '#contents-change';
   this.type = {
     SET: '20',
     CHANGE: '30'
@@ -16,12 +16,15 @@ Tw.MyTJoinProtectPwdChange = function ($element, isNew) {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._inputHelper = Tw.InputHelper;
-  this._historyService = new Tw.HistoryService();
-  if( this._new ){
-    this.step = this.STEP2;
-  }else {
-    this.step = this.STEP1;
+  this._historyService = new Tw.HistoryService($element);
+  this._historyService.init('hash');
+  this._pwdchked = false; // password check 했는지
+
+  if( !this._new ){
     this._pwdCheckService = new Tw.MyTJoinProtectCheckPwdService();
+    this._historyService.goHash(this._HASH_STEP_CHECK);
+  } else {
+    this._historyService.goHash(this._HASH_STEP_CHANGE);
   }
   this._bindEvent();
 };
@@ -29,18 +32,16 @@ Tw.MyTJoinProtectPwdChange = function ($element, isNew) {
 Tw.MyTJoinProtectPwdChange.prototype = {
   //element event bind
   _bindEvent: function () {
-    $('input:password').on('keyup', $.proxy(this._onKeyUp, this));
-    $('input:password').on('input', $.proxy(this._onPwdInput, this));
+    $('input:password')
+      .on('keyup', $.proxy(this._onKeyUp, this))
+      .on('input', $.proxy(this._onPwdInput, this));
     $('.cancel').on('click', $.proxy(this._delBtnClicked, this));
 
     // 기존 비번 체크
-    this.$container.on('click', '#btn-check', $.proxy(this._onCheckPwdBtnClicked, this));
+    $('#btn-check').on('click', $.proxy(this._onCheckPwdBtnClicked, this));
     // 변경 혹은 설정
-    this.$container.on('click', '#btn-change', $.proxy(this._onOkClicked, this));
-
+    $('#btn-change').on('click', $.proxy(this._onOkClicked, this));
   },
-
-
 
   /**
    * step1. 기존 비밀번호 확인
@@ -50,12 +51,14 @@ Tw.MyTJoinProtectPwdChange.prototype = {
     var pwd = this._validatePwdInput('#pwd-input1');
     if(!pwd) return;
 
+    skt_landing.action.loading.on({ ta: this.$container, co: 'grey', size: true });
+
     this._pwdCheckService.check(
       pwd,
       $.proxy(this._onCheckPwdSuccess, this),
       $.proxy(this._onCheckPwdFail, this)
     );
-    this._resetPwdInput('#pwd-input1 input');
+    this._resetPwdInput('#pwd-input1');
   },
 
   /**
@@ -64,15 +67,18 @@ Tw.MyTJoinProtectPwdChange.prototype = {
    * @private
    */
   _onCheckPwdSuccess : function (res){
+    this._pwdchked = true;
     // step2 ui로 변경
-    $(".pwd-step1").hide();
-    $(".pwd-step2").show();
-    this.step = this.STEP2;
+    this._historyService.setHistory(event);
+    this._historyService.goHash(this._HASH_STEP_CHANGE);
+
     this._resetPwdInput('input:password');
+    skt_landing.action.loading.off({ ta: this.$container });
   },
 
   _onCheckPwdFail : function(res, errCnt, unexpectedError){
     $('#pwd-input1').parents('.inputbox').addClass('error');
+    skt_landing.action.loading.off({ ta: this.$container });
   },
 
   /**
@@ -94,8 +100,13 @@ Tw.MyTJoinProtectPwdChange.prototype = {
     this._onPwdInput();
   },
 
-
+  /**
+   * input password 키 입력시
+   * @param event
+   * @private
+   */
   _onKeyUp: function (event) {
+
     // 숫자 외 다른 문자를 입력한 경우
     var value = event.target.value;
     if ( Tw.InputHelper.validateNumber(value) ) {
@@ -105,16 +116,27 @@ Tw.MyTJoinProtectPwdChange.prototype = {
     }
   },
 
+  /**
+   * input password 입력 이벤트 처리
+   *  - 확인,변경,설정 버튼 활성/비활성
+   * @param event
+   * @private
+   */
   _onPwdInput: function (event){
 
-    // 확인,변경,설정 버튼 활성/비활성
-    if( this.step === this.STEP1 ){
+    if( location.hash === '' || location.hash === this._HASH_STEP_CHECK ){
+
       var pwd1 = $('#pwd-input1').val();
       $('#btn-check').prop('disabled', (pwd1.length < 6));
 
-    } else if( this.step === this.STEP2 ){
-      var pwd1 = $('#pwd-input1').val();
-      var pwd2 = $('#pwd-input2').val();
+    } else if( location.hash === this._HASH_STEP_CHANGE ){
+      if( !this._new && !this._pwdchked ){  // 변경이고, 기존비번이 확인되지 않은 경우 버튼 비활성
+        $('#btn-change').prop('disabled', true);
+        return;
+      }
+
+      var pwd1 = $('#pwd-input2').val();
+      var pwd2 = $('#pwd-input3').val();
       $('#btn-change').prop('disabled', (pwd1.length < 6 || pwd2.length < 6));
     }
 
@@ -136,14 +158,12 @@ Tw.MyTJoinProtectPwdChange.prototype = {
     // 비밀번호 입력란에 아무것도 없을 때
     if ( pwd.length === 0 ) {
       this._popupService.openAlert(Tw.MSG_PAYMENT.AUTO_A04, Tw.POPUP_TITLE.NOTIFY);
-      $input.focus();
       return null;
     }
     // 1차 6자리 이상인지 확인 (6자리 미만인 경우 알림)
     if ( pwd.length < 6 ) {
       // 숫자만 입력가능하기때문에 length 로 비교
       this._popupService.openAlert(Tw.MSG_MYT.JOIN_SERVICE.EMPTY_PWD, Tw.POPUP_TITLE.NOTIFY);
-      $input.focus();
       return null;
     }
     return pwd;
@@ -155,13 +175,22 @@ Tw.MyTJoinProtectPwdChange.prototype = {
    */
   _onOkClicked: function (/*event*/) {
 
-    var orgPwd = this._validatePwdInput('#pwd-input1');
-    var checkPwd = this._validatePwdInput('#pwd-input2');
+    // 변경인 경우 비번인증에 성공하지 않았다면 다시 check 화면으로 돌아간다.
+    if( !this._new && !this._pwdchked ){
+      this._historyService.setHistory(event);
+      this._historyService.goHash(this._HASH_STEP_CHECK);
+      return;
+    }
+
+    var orgPwd = this._validatePwdInput('#pwd-input2');
+    var checkPwd = this._validatePwdInput('#pwd-input3');
 
     if( !orgPwd || !checkPwd ) return;
 
     // 비밀번호 입력과 확인이 다른 경우
     if ( orgPwd !== checkPwd ) {
+      $('#pwd-input2').parents('.inputbox').addClass('error');
+      $('#pwd-input3').parents('.inputbox').addClass('error');
       this._popupService.openAlert(Tw.MSG_MYT.JOIN_SERVICE.FAIL_PWD, Tw.POPUP_TITLE.NOTIFY);
       return;
     }
@@ -179,13 +208,19 @@ Tw.MyTJoinProtectPwdChange.prototype = {
       // 변경인 경우
       data.svcPwd = pwd; // 변경
     }
+
+    skt_landing.action.loading.on({ ta: this.$container, co: 'grey', size: true });
     this._apiService
       .request(api, data)
       .done($.proxy(this._onApiSuccess, this))
       .fail($.proxy(this._onApiError, this));
   },
 
-
+  /**
+   * 변경/설정 처리 완료시
+   * @param params
+   * @private
+   */
   _onApiSuccess: function (params) {
     Tw.Logger.info(params);
     if ( params.code === Tw.API_CODE.CODE_00 ) {
@@ -198,6 +233,7 @@ Tw.MyTJoinProtectPwdChange.prototype = {
       //var errMsg = params.code + ' ' + (params.msg || params.error && params.error.msg);
       //this._popupService.openAlert(errMsg, Tw.POPUP_TITLE.NOTIFY);
       Tw.Error(params.code, params.msg).pop();
+      skt_landing.action.loading.off({ ta: this.$container });
     }
   },
 
@@ -207,6 +243,7 @@ Tw.MyTJoinProtectPwdChange.prototype = {
     //var errMsg = params.code + ' ' + (params.msg || params.error && params.error.msg);
     //this._popupService.openAlert(errMsg, Tw.POPUP_TITLE.NOTIFY);
     Tw.Error(params.code, params.msg).pop();
+    skt_landing.action.loading.off({ ta: this.$container });
   }
 
 

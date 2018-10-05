@@ -43,6 +43,7 @@ Tw.MyTJoinProtectCheckPwdService.prototype = {
       .done($.proxy(this._onLoginReuestDone, this))
       .fail(function (err) {
         Tw.Logger.error('auth.login.service.pwd Fail', err);
+        Tw.Error(err.status, err.statusText).pop();
       });
   },
   _onLoginReuestDone: function (res) {
@@ -88,8 +89,10 @@ Tw.MyTJoinProtectCheckPwdService.prototype = {
   },
 
   _defaultErrorHandler : function(res, unexpectedError){
-    var errorMsg = unexpectedError ? res.code + ' ' + res.msg : Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A61;
-    this._popupService.openAlert(errorMsg);
+    //var errorMsg = unexpectedError ? res.code + ' ' + res.msg : Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A61;
+    //this._popupService.openAlert(errorMsg);
+    var errorMsg = unexpectedError ? res.msg : Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A61;
+    Tw.Error(res.code, errorMsg).pop();
   }
 
 };
