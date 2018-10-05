@@ -20,8 +20,18 @@ Tw.MyTDataFamilySettingImmediately.prototype = {
   },
 
   _cachedElement: function () {
+    this.$wrap_immediately_qty = this.$container.find('.fe-immediately_qty');
+    this.$input_immediately_qty = this.$container.find('.fe-input_immediately_qty');
   },
 
   _bindEvent: function () {
+    this.$wrap_immediately_qty.on('click', 'button', $.proxy(this._setAmountData, this));
+  },
+
+  _setAmountData: function (e) {
+    var $elQty = $(e.currentTarget);
+    var dataQty = $elQty.data('value');
+
+    this.$input_immediately_qty.val(dataQty);
   }
 };

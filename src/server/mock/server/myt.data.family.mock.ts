@@ -29,8 +29,28 @@ const BFF_06_0044_familyInfo = {
   }
 };
 
-const oMockMytDataFamily = {
-  BFF_06_0044_familyInfo
-}
+const BFF_06_0045_ImmediatelyInfo = {
+  code: '00',
+  msg: 'success',
+  result: {
+    dataQty: '30',
+    reqCnt: '1',
+    nextReqYn: 'Y'
+  }
+};
 
-export default oMockMytDataFamily;
+const BFF_06_0047_MonthlyInfo = {
+  code: '00',
+  msg: 'success',
+  result: {
+    shrblData: '20',
+    regularShrYn: 'Y',
+    regularShrData: '20'
+  }
+};
+
+export {
+  BFF_06_0044_familyInfo,
+  BFF_06_0045_ImmediatelyInfo,
+  BFF_06_0047_MonthlyInfo
+};
