@@ -9,6 +9,7 @@ Tw.BUTTON_LABEL = {
 Tw.POPUP_TITLE = {
   NOTIFY: '알림',
   SELECT_BANK: '은행선택',
+  SELECT_AMOUNT: '금액 선택',
   SELECT: '선택',
   SELECT_PAYMENT_OPTION: '납부 방법 선택',
   SELECT_CARD_TYPE: '납부형태 선택',
@@ -67,6 +68,14 @@ Tw.AUTO_PAY_INFO = {
   TITLE: '자동 선결제란',
   CONTENTS: '자동 선결제 신청 시 설정된 금액이 자동으로 선결제됩니다.' + '<br/><br/>' +
   '잔여한도 걱정없이 소액결제를 이용하세요.'
+};
+
+Tw.AMOUNT_INFO = {
+  TITLE: '금액정보란',
+  MICRO_CONTENTS: '기준금액 및 선결제 금액은 이용한도의 최대 90%금액까지 설정이 가능합니다.' + '<br/><br/>' +
+  '소액결제 이용금액이 고객님께서 설정한 [기준금액] 초과 시점에 [선결제 금액] 만큼 자동 결제됩니다.',
+  CONTENTS_CONTENTS: '기준금액 및 선결제 금액은 이용한도의 최대 90%금액까지 설정이 가능합니다.' + '<br/><br/>' +
+  '콘텐츠이용료 이용금액이 고객님께서 설정한 [기준금액] 초과 시점에 [선결제 금액] 만큼 자동 결제됩니다.'
 };
 
 Tw.REMNANT_OTHER_LINE = {

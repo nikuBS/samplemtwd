@@ -11,7 +11,7 @@ import {API_CMD, API_CODE} from '../../../../types/api-command.type';
 import {PAYMENT_OPTION} from '../../../../types/bff.old.type';
 import {MYT_FARE_PAYMENT_TITLE, MYT_FARE_PAYMENT_NAME} from '../../../../types/bff.type';
 
-class MytFarePaymentAuto extends TwViewController {
+class MyTFarePaymentAuto extends TwViewController {
   constructor() {
     super();
   }
@@ -65,4 +65,4 @@ class MytFarePaymentAuto extends TwViewController {
   }
 }
 
-export default MytFarePaymentAuto;
+export default MyTFarePaymentAuto;

@@ -1,10 +1,10 @@
 /**
- * FileName: myt-fare.payment.micro.contents.pay.js
+ * FileName: myt-fare.payment.prepay.pay.js
  * Author: Jayoon Kong (jayoon.kong@sk.com)
  * Date: 2018.10.04
  */
 
-Tw.MyTFarePaymentMicroContentsPay = function (rootEl, title, amount, name) {
+Tw.MyTFarePaymentPrepayPay = function (rootEl, title, amount, name) {
   this.$container = rootEl;
   this.$title = title;
   this._maxAmount = amount;
@@ -20,7 +20,7 @@ Tw.MyTFarePaymentMicroContentsPay = function (rootEl, title, amount, name) {
   this._init();
 };
 
-Tw.MyTFarePaymentMicroContentsPay.prototype = {
+Tw.MyTFarePaymentPrepayPay.prototype = {
   _init: function () {
     this._setInitValue();
     this._initVariables();
@@ -55,10 +55,10 @@ Tw.MyTFarePaymentMicroContentsPay.prototype = {
   _selectCardType: function (event) {
     var $target = $(event.currentTarget);
     this._popupService.open({
-      hbs:'actionsheet_select_a_type',
-      layer:true,
-      title:Tw.POPUP_TITLE.SELECT_CARD_TYPE,
-      data:Tw.POPUP_TPL.FARE_PAYMENT_CARD_TYPE_LIST
+      hbs: 'actionsheet_select_a_type',
+      layer: true,
+      title: Tw.POPUP_TITLE.SELECT_CARD_TYPE,
+      data: Tw.POPUP_TPL.FARE_PAYMENT_CARD_TYPE_LIST
     }, $.proxy(this._selectPopupCallback, this, $target));
   },
   _selectPopupCallback: function ($target, $layer) {
