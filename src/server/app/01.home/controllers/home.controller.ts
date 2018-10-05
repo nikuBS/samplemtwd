@@ -9,7 +9,7 @@ import { NextFunction, Request, Response } from 'express';
 import { Observable } from 'rxjs/Observable';
 import { API_CMD, API_CODE } from '../../../types/api-command.type';
 import FormatHelper from '../../../utils/format.helper';
-import { LINE_NAME, SVC_ATTR_E, UNIT, UNIT_E } from '../../../types/bff.type';
+import { HOME_SEGMENT, HOME_SEGMENT_ORDER, LINE_NAME, SVC_ATTR_E, UNIT, UNIT_E, HOME_SMART_CARD } from '../../../types/bff.type';
 
 class Home extends TwViewController {
   constructor() {
@@ -21,11 +21,13 @@ class Home extends TwViewController {
     const homeData = {
       usageData: null,
       membershipData: null,
-      billData: null
+      billData: null,
     };
+    let smartCard = [];
 
     if ( svcType.login ) {
       if ( svcType.mobile ) {
+        smartCard = this.getSmartCardOrder(svcInfo.svcMgmtNum);
         Observable.combineLatest(
           this.getUsageData(),
           this.getMembershipData()
@@ -44,7 +46,18 @@ class Home extends TwViewController {
       }
     }
 
-    res.render('home.html', { svcInfo, svcType, homeData });
+    res.render('home.html', { svcInfo, svcType, homeData, smartCard });
+  }
+
+  private getSmartCardOrder(svcMgmtNum): any {
+    const orderNum = +svcMgmtNum % 6;
+    const order = HOME_SEGMENT_ORDER[HOME_SEGMENT[orderNum]];
+    return order.map((segment) => {
+      return {
+        no: segment,
+        title: HOME_SMART_CARD[segment]
+      };
+    });
   }
 
   private getSvcType(svcInfo): any {
