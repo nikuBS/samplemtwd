@@ -28,134 +28,82 @@
             <h2 class="blind">내용</h2>
 
             <div class="ti-caption-gray">
-                <h3 class="tit">요금 약정 할인</h4>
+                <h4 class="tit">요금 약정 할인</h4>
             </div>
 
-            <!-- 요금약정할인 제도 -->
-            <div class="cont-box">
+            <% for(var i=0; i < commDataInfo.feeInfo.length; i++) { %>
 
-                <div class="contract-dc-wrap">
-                    <div class="dc-tit-wrap">
-                        <h4 class="dc-tit">요금약정할인 제도(730일)</h4>
-                        <div class="bt-alone"><button class="bt-bg-blue1" title="요금약정할인 제도(730일) 혜택 보기">혜택 보기</button></div>
-                    </div>
 
-                    <div class="contract-dc-list">
-                        <ul>
-                            <li>
-                                <dl>
-                                    <dt>
-                                        <strong class="tit">전월 기준 할인 금액 합계</strong>
-                                        <button aria-haspopup="true" class="info-view-ic" title="전월 기준 할인 금액 합계 정보보기">정보보기</button>
-                                    </dt>
-                                    <dd>
-                                        <span class="val-type1"><span class="str">-196,451</span>원</span>
-                                    </dd>
-                                </dl>
-                            </li>
-                            <li>
-                                <dl>
-                                    <dt>
-                                        <strong class="tit">약정 시작/종료일</strong>
-                                        <button aria-haspopup="true" class="info-view-ic" title="약정 시작/종료일 정보보기">정보보기</button>
-                                    </dt>
-                                    <dd>
-                                        <span class="val-type2">2018.05.23 ~ 2019.05.23</span>
-                                    </dd>
-                                </dl>
-                            </li>
-                        </ul>
-                        <div class="amountdata-num">
-                            <div class="date-info">
-                                <p class="data-title">잔여<span class="blind">(잔여일수)</span></p>
-                                <p class="data-state"><span class="str">30</span>일</p>
-                            </div>
-                            <div class="date-info">
-                                <p class="data-title">전체<span class="blind">(전체일수)</span></p>
-                                <p class="data-state"><span class="str">365</span>일</p>
-                            </div>
-                        </div>
-                        <div class="bar-chart-hoz">
-                            <span class="data-bar red" style="width:70%"></span>
-                        </div>
-                    </div>
-                    <ul class="bt-slice">
-                        <li class="bt-white2">
-                            <button>상세 할인 내역 보기</button>
-                        </li>
-                    </ul>
-                </div>
+                <% if ( commDataInfo.feeInfo[i].typeStr == 'fee_type_A' ) {%> <%#요금약정할인24 (730) : NA00003677 | fee_type_A %>
 
-                <div class="extra-txt">
-                    <p>스페셜약정할인, LTE플러스약정할인 프로그램이 ‘요금약정할인’으로 통합변경 되었습니다. 이용에 착오 없으시기 바랍니다.</p>
-                </div>
+                    <% include ../../components/info/myt-join.info.discount.fee-type-a.html %>
 
-            </div>
-            <!--// 요금약정할인 제도 -->
+                <% } else if ( commDataInfo.feeInfo[i].typeStr == 'fee_type_B' ) { %> <%#테블릿 약정할인 12 (뉴태블릿약정) : NA00003681 | fee_type_B %>
+
+                    <% include ../../components/info/myt-join.info.discount.fee-type-b.html %>
+
+                <% } else if ( commDataInfo.feeInfo[i].typeStr == 'fee_type_C' ) { %> <%#태블릿약정(구태블릿약정) : tablet 객체로 구분 | fee_type_C %>
+
+                    <% include ../../components/info/myt-join.info.discount.fee-type-c.html %>
+
+                <% } else if ( commDataInfo.feeInfo[i].typeStr == 'fee_type_D' ) { %> <%#와이브로약정할인 | fee_noType %>
+
+                    <% include ../../components/info/myt-join.info.discount.fee-type-d.html %>
+
+                <% } else if ( commDataInfo.feeInfo[i].typeStr == 'fee_noType' ) { %> <%#해단분류에 포함되지않는 경우 | fee_noType %>
+
+                    <% include ../../components/info/myt-join.info.discount.fee-no-type.html %>
+
+                <% } %>
 
             <hr class="cont-sp type1" aria-hidden="true"/>
 
-            <!-- 선택 약정 할인 제도 -->
-            <div class="cont-box">
+            <% } %> <%# for End %>
 
-                <div class="contract-dc-wrap">
-                    <div class="dc-tit-wrap">
-                        <h4 class="dc-tit">선택 약정 할인 제도</h4>
-                        <div class="bt-alone"><button class="bt-bg-blue1" title="선택 약정 할인 제도 혜택 보기">혜택 보기</button></div>
-                    </div>
 
-                    <div class="contract-dc-list">
-                        <ul>
-                            <li>
-                                <dl>
-                                    <dt>
-                                        <strong class="tit">전월 기준 할인 금액 합계</strong>
-                                        <button aria-haspopup="true" class="info-view-ic" title="전월 기준 할인 금액 합계 정보보기">정보보기</button>
-                                    </dt>
-                                    <dd>
-                                        <span class="val-type1"><span class="str">-196,451</span>원</span>
-                                    </dd>
-                                </dl>
-                            </li>
-                            <li>
-                                <dl>
-                                    <dt>
-                                        <strong class="tit">약정 시작/종료일</strong>
-                                        <button aria-haspopup="true" class="info-view-ic" title="약정 시작/종료일 정보보기">정보보기</button>
-                                    </dt>
-                                    <dd>
-                                        <span class="val-type2">2018.05.23 ~ 2019.05.23</span>
-                                    </dd>
-                                </dl>
-                            </li>
-                        </ul>
-                        <div class="amountdata-num">
-                            <div class="date-info">
-                                <p class="data-title">잔여<span class="blind">(잔여일수)</span></p>
-                                <p class="data-state"><span class="str">30</span>일</p>
-                            </div>
-                            <div class="date-info">
-                                <p class="data-title">전체<span class="blind">(전체일수)</span></p>
-                                <p class="data-state"><span class="str">365</span>일</p>
-                            </div>
-                        </div>
-                        <div class="bar-chart-hoz">
-                            <span class="data-bar red" style="width:70%"></span>
-                        </div>
-                    </div>
-                    <ul class="bt-slice">
-                        <li class="bt-white2">
-                            <button>상세 할인 내역 보기</button>
-                        </li>
-                    </ul>
-                </div>
 
-            </div>
-            <!--// 선택 약정 할인 제도 -->
+
+
 
             <div class="ti-caption-gray">
-                <h3 class="tit">단말기 (약정할인)</h4>
+                <h4 class="tit">단말기 (약정할인)</h4>
             </div>
+
+            <% for(var i=0; i < commDataInfo.terminalInfo.length; i++) { %>
+
+
+                <% if ( commDataInfo.terminalInfo[i].typeStr == 'join_type_A' ) {%> <%# 가입 / T기본약정 | join_type_A %>
+
+
+                <% } else if ( commDataInfo.terminalInfo[i].typeStr == 'join_type_B' ) { %> <%# 가입 / T지원금약정 | join_type_B %>
+
+
+                <% } else if ( commDataInfo.terminalInfo[i].typeStr == 'join_type_C' ) { %> <%# 가입 / T약정할부지원 | join_type_C %>
+
+
+                <% } else if ( commDataInfo.terminalInfo[i].typeStr == 'join_type_D' ) { %> <%# 가입 / 약정위약금2 | join_type_D %>
+
+
+                <% } else if ( commDataInfo.terminalInfo[i].typeStr == 'suc_type_A' ) { %> <%# 승계 / T할부지원 | suc_type_A %>
+
+
+                <% } else if ( commDataInfo.terminalInfo[i].typeStr == 'suc_type_B' ) { %> <%# 승계 / T기본약정 | suc_type_B %>
+
+
+                <% } else if ( commDataInfo.terminalInfo[i].typeStr == 'suc_type_C' ) { %> <%# 승계 / 약정위약금2 | suc_type_C %>
+
+
+                <% } else if ( commDataInfo.terminalInfo[i].typeStr == 'suc_type_D' ) { %> <%# 승계 / T지원금약정 | suc_type_D %>
+
+
+                <% } else { %>
+
+
+                <% } %>
+
+
+            <% } %> <%# for End %>
+
 
             <!-- T지원금 약정 -->
             <div class="cont-box">
@@ -214,63 +162,27 @@
 
             <hr class="cont-sp type1" aria-hidden="true"/>
 
-            <!-- 약정 위약금2 -->
-            <div class="cont-box">
 
-                <div class="contract-dc-wrap">
-                    <div class="dc-tit-wrap">
-                        <h4 class="dc-tit">약정 위약금2</h4>
-                        <button aria-haspopup="true" class="info-view-ic" title="약정 위약금2 정보보기">정보보기</button>
-                    </div>
 
-                    <div class="contract-dc-list">
-                        <ul>
-                            <li>
-                                <dl class="ex-txt"><!-- 하단에 설명 텍스트가 있는 경우 ex-txt 클래스 추가 -->
-                                    <dt>
-                                        <strong class="tit">지원 약정금액</strong>
-                                    </dt>
-                                    <dd>
-                                        <span class="val-type3"><span class="str">124,000</span>원</span>
-                                    </dd>
-                                    <dd class="ex-txt">
-                                        <p>해지 하시는 경우 약정위약금은 <em>65,470</em>원 입니다.</p>
-                                    </dd>
-                                </dl>
-                            </li>
-                            <li>
-                                <dl>
-                                    <dt>
-                                        <strong class="tit">약정 시작/종료일</strong>
-                                    </dt>
-                                    <dd>
-                                        <span class="val-type3">2018.05.23 ~ 2019.05.23</span>
-                                    </dd>
-                                </dl>
-                            </li>
-                        </ul>
-                        <div class="amountdata-num">
-                            <div class="date-info">
-                                <p class="data-title">잔여<span class="blind">(잔여일수)</span></p>
-                                <p class="data-state"><span class="str">98</span>일</p>
-                            </div>
-                            <div class="date-info">
-                                <p class="data-title">전체<span class="blind">(전체개월수)</span></p>
-                                <p class="data-state"><span class="str">24</span>개월</p>
-                            </div>
-                        </div>
-                        <div class="bar-chart-hoz">
-                            <span class="data-bar red" style="width:30%"></span>
-                        </div>
-                    </div>
-                </div>
 
-            </div>
-            <!--// 약정 위약금2 -->
+
+
+
+
+
+
 
             <div class="ti-caption-gray">
-                <h3 class="tit">단말기 분할상환 정보</h4>
+                <h4 class="tit">단말기 분할상환 정보</h4>
             </div>
+
+            <% for(var i=0; i < commDataInfo.repaymentInfo.length; i++) { %>
+
+
+
+            <% } %> <%# for End %>
+
+
 
             <!-- IPHONE6S_64G -->
             <div class="cont-box">
@@ -333,66 +245,6 @@
             <!--// IPHONE6S_64G -->
 
             <hr class="cont-sp type1" aria-hidden="true"/>
-
-            <!-- 갤럭시 S II_32GB -->
-            <div class="cont-box">
-
-                <div class="contract-dc-wrap">
-                    <div class="dc-tit-wrap">
-                        <h4 class="dc-tit">갤럭시 S II_32GB</h4>
-                    </div>
-
-                    <div class="contract-dc-list type2"><!-- 하단 분할상환 시작일에만 라인이 있는 경우 type2 클래스 추가 -->
-                        <ul>
-                            <li>
-                                <dl>
-                                    <dt>
-                                        <strong class="tit">총 분할상환 청구금액</strong>
-                                    </dt>
-                                    <dd>
-                                        <span class="val-type3"><span class="str">850,000</span>원</span>
-                                    </dd>
-                                </dl>
-                            </li>
-                            <li>
-                                <dl>
-                                    <dt>
-                                        <strong class="tit">잔여 분할상환 청구 금액</strong>
-                                    </dt>
-                                    <dd>
-                                        <span class="val-type4"><span class="str">457,000</span>원</span>
-                                    </dd>
-                                </dl>
-                            </li>
-                            <li>
-                                <dl>
-                                    <dt>
-                                        <strong class="tit">분할상환 시작일</strong>
-                                    </dt>
-                                    <dd>
-                                        <span class="val-type2">2018.05.23</span>
-                                    </dd>
-                                </dl>
-                            </li>
-                        </ul>
-                        <div class="amountdata-num">
-                            <div class="date-info">
-                                <p class="data-title">잔여<span class="blind">(잔여일수)</span></p>
-                                <p class="data-state"><span class="str">30</span>일</p>
-                            </div>
-                            <div class="date-info">
-                                <p class="data-title">전체<span class="blind">(전체일수)</span></p>
-                                <p class="data-state"><span class="str">365</span>일</p>
-                            </div>
-                        </div>
-                        <div class="bar-chart-hoz">
-                            <span class="data-bar red" style="width:30%"></span>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-            <!--// 갤럭시 S II_32GB -->
 
         </div>
     </div>
