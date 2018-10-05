@@ -203,5 +203,6 @@ export const URL = {
   // common
   '/common/settings/menu': { login: false, id: 'ST_01_01', title: '설정' },
   '/common/settings/privacy': { login: false, id: 'ST_01_07', title: '개인정보처리방침' },
+  '/common/settings/business-info': { login: false, id: 'ST_01_08', title: '사업자 정보' },
   '/common/error': { login: false, id: '', title: '' }
 };
