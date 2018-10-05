@@ -14,9 +14,12 @@ export const URL = {
   '/myt/join/product/combinations': { login: true, id: 'MS_05', title: '나의 결합상품' },
   '/myt/join/product/fee-alarm': { login: true, id: 'MS_05_01', title: '요금제 변경 가능일 알림' },
   '/myt/join/product/fee-alarm/change': { login: true, id: 'MS_05_01_01', title: '요금제 변경 가능일 알림 서비스' },
+  '/myt/join/info/discount/month': { login: true, id: 'MS_09_01', title: '월별 상세 할인 내역' },
 
   // MyT-data
   '/myt/data': { login: true, id: 'DC', title: '데이터/통화 관리' },
+  '/myt/data/usage': { login: true, id: 'DC_01_01', title: '실시간 데이터 잔여량' },
+  '/myt/data/usage/child': { login: true, id: 'DC_08_01', title: '자녀 실시간 잔여량' },
   '/myt/data/family': { login: true, id: 'DC_02', title: 'T가족모아 데이터' },
   '/myt/data/gift': { login: true, id: 'DC_03_01', title: 'T끼리 데이터 선물하기' },
   '/myt/data/ting': { login: true, id: 'DC_04_03', title: '팅요금제 충전 선물' },
