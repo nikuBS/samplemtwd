@@ -446,7 +446,7 @@ Tw.MyTFareSubMain.prototype = {
       this._popupService.openAlert('', title, Tw.BUTTON_LABEL.CLOSE);
     }
     else {
-      // TODO: 화면완료되면 추가예정 MF_06
+      this._historyService.goLoad('/myt/fare/payment/micro');
     }
   },
 
