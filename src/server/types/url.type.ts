@@ -21,7 +21,7 @@ export const URL = {
   '/myt/bill/guide/roaming': { login: true, id: 'MF_02_01_03', title: '요금안내서 로밍 사용요금 조회' },
   '/myt/bill/guide/donation': { login: true, id: 'MF_02_01_04', title: '요금안내서 기부금/후원금 사용요금 조회' },
   '/myt/join/info/discount': { login: true, id: 'MS_09', title: '약정할인 및 단말 분할상환 정보' },
-  
+
   // MyT-data
   '/myt/data': { login: true, id: 'DC', title: '데이터/통화 관리' },
   '/myt/data/usage': { login: true, id: 'DC_01_01', title: '실시간 데이터 잔여량' },
