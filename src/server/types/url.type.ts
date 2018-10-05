@@ -33,6 +33,7 @@ export const URL = {
   '/product/detail': { login: true, id: 'MP_02_02', title: '상품 상세 정보' },
   '/product/detail/contents': { login: true, id: 'MP_02_02_06', title: '상품 상세 정보 보기' },
 
+  '/bill/set/reissue': { login: true, id: 'MF_04_01', title: '요금안내서 재발행' },
   '/bill/set/change': { login: true, id: 'MF_04_02', title: '요금안내서 변경' },
 
   '/bill/guide': { login: true, id: 'MF_02_01', title: '요금안내서' },
