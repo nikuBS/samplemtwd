@@ -479,5 +479,42 @@ skt_landing.widgets = {
         
       }
     });
-  }
+  },
+  widget_toggle01: function(ta) {
+    var widget = ta ? $(ta).find('.toggle01') : $('.toggle01');
+    $(widget).each(function(){
+      var _this = $(this);
+      var _item = _this.find('> .representcharge-list > li');
+          
+      widget.on('click','> .representcharge-list > li > .representcharge-info',function(){
+        if ( $(this).attr('aria-pressed') === 'true' ) {
+          $(this).closest('li').removeClass('current');
+          $(this).attr('aria-pressed','false');
+        } else {
+          $(this).closest('li').addClass('current');
+          $(this).attr('aria-pressed','true');
+        }
+      });
+    });
+  },
+  widget_toggle02: function(ta) {
+    var widget = ta ? $(ta).find('.toggle02') : $('.toggle02');
+    $(widget).each(function(){
+      var _this = $(this);
+      var _list = _this.find('> .suggest-tag-list');
+      var _btn  = _this.find('.suggest-tag-morewrap button');
+
+      widget.on('click','> .suggest-tag-morewrap button',function(){
+        if ( _btn.attr('aria-pressed') === 'true' ) {
+          $(_list).removeClass('openlist-wrap');
+          $(_btn).removeClass('openbtn');
+          $(_btn).attr('aria-pressed', 'false');
+        } else {
+          $(_list).addClass('openlist-wrap');
+          $(_btn).addClass('openbtn');
+          $(_btn).attr('aria-pressed', 'true');
+        }
+      });
+    });
+  },
 }

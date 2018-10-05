@@ -2526,10 +2526,9 @@ a.ui-button:active,
   .bt-dropdown.big {
     display: block;
     width: 100%;
-    height: 2.5rem;
-    padding: 0 2.25rem 0 0.75rem;
+    min-height: 2.5rem;
+    padding: 0.625rem 2.25rem 0.5625rem 0.75rem;
     font-size: 0.9375rem;
-    line-height: 2.375rem;
     font-weight: 400; }
     .bt-dropdown.big:after {
       content: "";
@@ -2562,7 +2561,7 @@ a.ui-button:active,
   .bt-dropdown.sbig {
     display: block;
     width: 100%;
-    height: 1.25rem;
+    min-height: 1.25rem;
     padding: 0 2.25rem 0 0;
     font-size: 1.25rem;
     line-height: 1.25rem;
@@ -2605,12 +2604,14 @@ a.ui-button:active,
   .bt-dropdown.small {
     display: block;
     width: 6.375rem;
-    height: 1.1875rem;
+    min-height: 1.1875rem;
     padding: 0 1.125rem 0 0.5rem;
     font-size: 0.625rem;
     line-height: 1.0625rem; }
     .bt-dropdown.small:after {
-      right: 0.25rem; }
+      top: 0.1875rem;
+      right: 0.25rem;
+      margin: 0; }
   .bt-dropdown.transparent {
     position: absolute;
     left: 0;

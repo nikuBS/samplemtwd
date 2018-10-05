@@ -445,10 +445,10 @@ skt_landing.action = {
       $.get(hbsURL+popup_info.hbs+'.hbs', function (text) {
         var tmpl = Handlebars.compile(text);
         var html = tmpl(popup_info);
+        skt_landing.action.fix_scroll();
         $('.wrap').append(html);
         skt_landing.util.set_zindex();
       }).done(function () {
-        skt_landing.action.fix_scroll();
         if(callback_open){
           callback_open();
         }

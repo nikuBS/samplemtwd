@@ -65,7 +65,6 @@ body.bg-gray {
 
 #gnb {
   position: fixed;
-  height: 4.0625rem;
   bottom: -4.0625rem;
   left: 0;
   width: 100%;
@@ -78,30 +77,41 @@ body.bg-gray {
   #gnb.on {
     bottom: 0; }
   #gnb .gnb-list {
-    overflow: hidden; }
+    overflow: hidden;
+    padding: 0 2rem;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between; }
     #gnb .gnb-list li {
-      float: left;
-      width: 25%; }
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      /*width:rem(44px);*/ }
       #gnb .gnb-list li .bt-gnb {
         display: block;
-        padding: 0.625rem 0 0.6875rem;
+        padding: 0.25rem 0;
         width: 100%;
         text-align: center; }
         #gnb .gnb-list li .bt-gnb .ico {
           display: inline-block;
-          width: 1.875rem;
-          height: 1.875rem;
+          width: 2.75rem;
+          height: 2.75rem;
           background-image: url(/img/ico/ico-gnb.png);
           background-repeat: no-repeat;
-          background-size: 5.625rem; }
+          background-size: 5.5rem; }
           #gnb .gnb-list li .bt-gnb .ico.home {
-            background-position: -0.4375rem -0.4375rem; }
-          #gnb .gnb-list li .bt-gnb .ico.myt {
-            background-position: -0.4375rem -3.125rem; }
-          #gnb .gnb-list li .bt-gnb .ico.tchannel {
-            background-position: -0.4375rem -6.0625rem; }
+            background-position: 0 0; }
+          #gnb .gnb-list li .bt-gnb .ico.alarm {
+            background-position: 0 -2.75rem; }
+          #gnb .gnb-list li .bt-gnb .ico.search {
+            background-position: 0 -5.5rem; }
           #gnb .gnb-list li .bt-gnb .ico.all {
-            background-position: -0.625rem -8.875rem; }
+            background-position: 0 -8.25rem; }
         #gnb .gnb-list li .bt-gnb .gnb-tx {
           display: block;
           color: #555;
@@ -113,13 +123,13 @@ body.bg-gray {
             letter-spacing: 0;
             vertical-align: top; }
         #gnb .gnb-list li .bt-gnb.on .ico.home {
-          background-position: -3.25rem -0.4375rem; }
-        #gnb .gnb-list li .bt-gnb.on .ico.myt {
-          background-position: -3.25rem -3.125rem; }
-        #gnb .gnb-list li .bt-gnb.on .ico.tchannel {
-          background-position: -3.25rem -6.0625rem; }
+          background-position: -2.75rem 0; }
+        #gnb .gnb-list li .bt-gnb.on .ico.alarm {
+          background-position: -2.75rem -2.75rem; }
+        #gnb .gnb-list li .bt-gnb.on .ico.search {
+          background-position: -2.75rem -5.5rem; }
         #gnb .gnb-list li .bt-gnb.on .ico.all {
-          background-position: -3.4375rem -8.75rem; }
+          background-position: -2.75rem -8.25rem; }
         #gnb .gnb-list li .bt-gnb.on .gnb-tx {
           color: #e22f26; }
 
