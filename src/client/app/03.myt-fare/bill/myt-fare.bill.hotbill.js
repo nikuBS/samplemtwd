@@ -4,7 +4,6 @@
  * Date: 2018. 9. 20.
  */
 Tw.MyTFareHotBill = function (rootEl) {
-  this.SVC_TYPE = { MOBILE: 'M1', TPOCKET: 'M3' };
   this._children = null;
   this.$container = rootEl;
   this._apiService = Tw.Api;
@@ -21,17 +20,11 @@ Tw.MyTFareHotBill = function (rootEl) {
     Handlebars.registerHelper('isBill', function (val, options) {
       return (Tw.MyTFareHotBill.NO_BILL_FIELDS.indexOf(val) < 0) ? options.fn(this) : options.inverse(this);
     });
-
-    this._apiService.request(Tw.NODE_CMD.GET_CHILD_INFO, {})
-      .done($.proxy(this._successRegisterLineList, this));
-    this._apiService.request(Tw.NODE_CMD.GET_ALL_SVC, {})
-      .done($.proxy(this._successRegisterLineList, this));
   }
 };
 
 Tw.MyTFareHotBill.prototype = {
   _cachedElement: function () {
-    this.$billMenu = this.$container.find('#fe-bill-menu');
     this.$amount = this.$container.find('#fe-total');
     this.$period = this.$container.find('#fe-period');
     this.$unpaid = this.$container.find('#fe-unpaid-bill');
@@ -74,8 +67,6 @@ Tw.MyTFareHotBill.prototype = {
         this._getBillResponse();
         return;
       }
-      // this._svcAttrCd = this.$container.find('.info-type').attr('data-type');
-      // this._svcNum = this.$container.find('.info-type').attr('data-num');
       var billData = resp.result.hotBillInfo[0];
       if ( !child ) {
         if ( this._billInfoAvailable ) {
@@ -93,10 +84,10 @@ Tw.MyTFareHotBill.prototype = {
             this.$unpaidAmount.text(group[Tw.HOTBILL_UNPAID_TITLE].total);
             delete group[Tw.HOTBILL_UNPAID_TITLE];
           }
-          this._renderBillGroup(group);
+          this._renderBillGroup(group, false, this.$container);
         }
       } else {
-        this._openChildbBill(resp, child);
+        this._openChildbBill(child, resp);
       }
     } else {
       if ( resp.code === Tw.MyTFareHotBill.CODE.ERROR.NO_BILL_REQUEST_EXIST ) {
@@ -109,13 +100,16 @@ Tw.MyTFareHotBill.prototype = {
     skt_landing.action.loading.off({ ta: '.loading' });
   },
 
-  _renderBillGroup: function (group) {
+  _renderBillGroup: function (group, child, wrapper) {
     var source = $('#tmplBillGroup').html();
     var template = Handlebars.compile(source);
     var output = template({ billItems: group });
-    this.$billMenu.empty();
-    this.$billMenu.append(output);
-    skt_landing.widgets.widget_accordion();
+    var $menu = wrapper.find('[data-role="fe-bill-menu"]');
+    $menu.empty();
+    $menu.append(output);
+    if ( !child ) {
+      skt_landing.widgets.widget_accordion(wrapper);
+    }
   },
 
   _onErrorReceivedBillData: function (resp) {
@@ -143,6 +137,9 @@ Tw.MyTFareHotBill.prototype = {
             });
             this.lines = this.lines.concat(_.clone(otherLines));
           }
+          this.lines.map(function (line) {
+            line.svcNum = Tw.FormatHelper.conTelFormatWithDash(line.svcNum);
+          });
           this._svcInfo = _.clone(svcInfo.result);
           var targetSvc = this.lines[idx];
           if ( targetSvc.child ) {
@@ -165,13 +162,23 @@ Tw.MyTFareHotBill.prototype = {
     this._sendBillRequest(target);
   },
 
-  _openChildbBill: function (child, billData) {
-    // var billData = resp.result.hotBillInfo[0];
-    // var group = Tw.MyTFareHotBill.arrayToGroup(billData.record1, fieldInfo);
+  _openChildbBill: function (child, resp) {
+    var billData = resp.result.hotBillInfo[0];
+    var fieldInfo = {
+      lcl: 'billItmLclNm',
+      scl: 'billItmSclNm',
+      name: 'billItmNm',
+      value: 'invAmt2'
+    };
+    var group = Tw.MyTFareHotBill.arrayToGroup(billData.record1, fieldInfo);
     this._popupService.open({
       hbs: 'MF_03_01',
-      data: { svcInfo: child }
-    });
+      data: {
+        svcInfo: child,
+        period: resp.result.term,
+        total: billData.totOpenBal2
+      }
+    }, $.proxy(this._renderBillGroup, this, group, true));
   },
 
   _confirmSwitchLine: function (target) {
@@ -184,12 +191,15 @@ Tw.MyTFareHotBill.prototype = {
   },
 
   _requestSwitchLine: function (target) {
-    this._apiService.request(Tw.NODE_CMD.CHANGE_SESSION, { svcMgmtNum: target.svcMgmtNum })
-      .done($.proxy(this._onChangeSessionSuccess, this));
+    var lineComponent = new Tw.LineComponent();
+    lineComponent.changeLine(target.svcMgmtNum);
+
   },
 
   _onChangeSessionSuccess: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      this._popupService.close();
+      this._popupService.toast(Tw.REMNANT_OTHER_LINE.TOAST);
       setTimeout($.proxy(function () {
         this._historyService.reload();
       }, this), 300);
@@ -244,9 +254,9 @@ Tw.MyTFareHotBill.arrayToGroup = function (data, fieldInfo) {
     var bill_item = {
       name: item[fieldInfo.name].replace(/[*#]/g, ''),
       amount: Tw.StringHelper.commaSeparatedString(item[fieldInfo.value]),
-      noVAT: item[fieldInfo.name].indexOf('*') > -1 ? true : false,
-      is3rdParty: item[fieldInfo.name].indexOf('#') > -1 ? true : false,
-      discount: amount < 0 ? true : false
+      noVAT: item[fieldInfo.name].indexOf('*') > -1,
+      is3rdParty: item[fieldInfo.name].indexOf('#') > -1,
+      discount: amount < 0
     };
     group[groupL][groupS].items.push($.extend({}, bill_item));
     bill_item.amount = item[fieldInfo.value];
@@ -255,15 +265,14 @@ Tw.MyTFareHotBill.arrayToGroup = function (data, fieldInfo) {
   //아이템 이름과 소분류가 같은 경우 2depth 보여주지 않음
   $.each(group, function (key1, itemL) {
     $.each(itemL, function (key2, itemS) {
-      // if ( self.NO_BILL_FIELDS.indexOf(key2) < 0 ) {
       if ( groupInfoFields.indexOf(key2) < 0 ) {
         if ( itemS.items.length === 1 && itemS.items[0].name === key2 ) {
           delete itemS.items[0];
         }
-        itemS.discount = itemS.total < 0 ? true : false;
+        itemS.discount = itemS.total < 0;
         itemS.total = Tw.StringHelper.commaSeparatedString(itemS.total);
       }
-      itemL.discount = itemL.total < 0 ? true : false;
+      itemL.discount = itemL.total < 0;
       itemL.total = Tw.StringHelper.commaSeparatedString(itemL.total);
     });
   });

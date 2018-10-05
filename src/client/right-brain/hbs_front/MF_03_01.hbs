@@ -27,8 +27,8 @@
 								<span class="sub-disc01">
 									<span class="elem">{{ data.svcInfo.svcNum }}<span class="badge badge-fam"><span class="blind">자녀회선</span></span></span>
 								</span>
-                            <span class="tit"><span class="charge-txt">119,090</span>원</span>
-                            <span class="sub-disc01">사용기간 : 2018.7.1~2018.7.15</span>
+                            <span class="tit"><span class="charge-txt">{{data.total}}</span>원</span>
+                            <span class="sub-disc01">사용기간 : {{data.period}}</span>
                         </div>
                     </div>
                 </div>
@@ -39,7 +39,7 @@
                 <!-- .cont-box -->
                 <div class="cont-box nogaps-hoz">
                     <div class="statement-cont">
-                        <div class="statement-detail type2" id="fe-child-bill-menu">
+                        <div class="statement-detail type2" data-role="fe-bill-menu">
                             <!-- .widget -->
                             <!--// .widget -->
                         </div>
