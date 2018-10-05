@@ -7,6 +7,7 @@ export const URL = {
   // MyT
   '/myt/fare/bill/set': { login: true, id: 'MF_04', title: '요금 안내서 설정' },
   '/myt/fare/bill/set/return-history': { login: true, id: 'MF_04_04', title: '요금안내서 반송내역' },
+  '/myt/fare/bill/hotbill': { login: true, id: 'MF_03', title: '실시간 사용요금' },
   '/myt/join/product/fee-plan': { login: true, id: 'MS_05', title: '나의 요금제' },
   '/myt/join/product/additions': { login: true, id: 'MS_05', title: '나의 부가상품' },
   '/myt/join/product/combinations': { login: true, id: 'MS_05', title: '나의 결합상품' },
