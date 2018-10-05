@@ -174,7 +174,7 @@
             <!--// .cont-box -->
 
 
-            <!-- .cont-box 주오메뉴 바로가기 -->
+            <!-- .cont-box 주요메뉴 바로가기 -->
             <% if (svcType.login && svcInfo.expsSvcCnt !== '0') { %>
             <div class="cont-box">
                 <div class="main-quick-menu">
@@ -225,7 +225,7 @@
             </div>
             <!--// .cont-box -->
 
-            <!-- .cont-box 주오메뉴 바로가기 -->
+            <!-- .cont-box 주요메뉴 바로가기 -->
             <% if (!(svcInfo && svcInfo.expsSvcCnt !== '0')) { %>
             <div class="cont-box">
                 <div class="main-quick-menu">
@@ -288,12 +288,14 @@
 
             <!-- .cont-box 스마트 카드 01 -->
             <% if (svcType.login && svcType.mobile) { %>
-            <div class="cont-box bgnone noborder nogaps-hoz fe-smart-01">
+            <div class="cont-box bgnone noborder nogaps-hoz fe-smart-0 <%= smartCard[0].no %>">
                 <div class="cont-card-ti"><!-- 링크가 있을 경우 구조 -->
                     <button>
-                        <span class="card-ti-txt"></span>
-                        <span class="ico"></span>
+                        <span class="card-ti-txt"><%= smartCard[0].title %></span>
+                        <span class="ico fe-smart-link"></span>
                     </button>
+                </div>
+                <div class="fe-smart-content">
                 </div>
             </div>
             <% } %>
@@ -452,23 +454,27 @@
 
             <!-- .cont-box 스마트 카드 02 -->
             <% if (svcType.login && svcType.mobile) { %>
-            <div class="cont-box bgnone noborder nogaps-hoz fe-smart-01">
+            <div class="cont-box bgnone noborder nogaps-hoz fe-smart-1 fe-smart-<%= smartCard[1].no %>">
                 <div class="cont-card-ti"><!-- 링크가 있을 경우 구조 -->
                     <button>
-                        <span class="card-ti-txt"></span>
-                        <span class="ico"></span>
+                        <span class="card-ti-txt"><%= smartCard[1].title %></span>
+                        <span class="ico fe-smart-link"></span>
                     </button>
+                </div>
+                <div class="fe-smart-content">
                 </div>
             </div>
             <!--// .cont-box -->
 
             <!-- .cont-box 스마트 카드 03 -->
-            <div class="cont-box bgnone noborder nogaps-hoz fe-smart-01">
+            <div class="cont-box bgnone noborder nogaps-hoz fe-smart-2 fe-smart-<%= smartCard[2].no %>">
                 <div class="cont-card-ti"><!-- 링크가 있을 경우 구조 -->
                     <button>
-                        <span class="card-ti-txt"></span>
-                        <span class="ico"></span>
+                        <span class="card-ti-txt"><%= smartCard[2].title %></span>
+                        <span class="ico fe-smart-link"></span>
                     </button>
+                </div>
+                <div class="fe-smart-content">
                 </div>
             </div>
             <!--// .cont-box -->
@@ -476,14 +482,20 @@
             <!-- 오퍼링카드 -->
 
             <!-- .cont-box 스마트 카드 -->
-            <div class="cont-box bgnone noborder nogaps-hoz fe-smart-01">
+            <% smartCard.map((card, index) => { %>
+            <% if (index > 2) { %>
+            <div class="cont-box bgnone noborder nogaps-hoz fe-smart-<%= index %> fe-smart-<%= smartCard[index].no %>">
                 <div class="cont-card-ti"><!-- 링크가 있을 경우 구조 -->
                     <button>
-                        <span class="card-ti-txt"></span>
-                        <span class="ico"></span>
+                        <span class="card-ti-txt"><%= smartCard[index].title %></span>
+                        <span class="ico fe-smart-link"></span>
                     </button>
                 </div>
+                <div class="fe-smart-content">
+                </div>
             </div>
+            <% } %>
+            <% }) %>
             <% } %>
             <!--// .cont-box -->
 

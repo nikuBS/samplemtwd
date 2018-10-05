@@ -129,3 +129,38 @@ export enum MYT_FARE_MICRO_NAME {
   NC = '신청',
   AC = '변경'
 }
+
+export enum HOME_SMART_CARD {
+  H01 = '자녀 사용량 조회',
+  H02 = '요금 안내서',
+  H03 = '미납요금',
+  H04 = '이용정지',
+  H05 = 'T멤버십 혜택',
+  H06 = '콘텐츠 이용내역',
+  H07 = '소액결제 내역',
+  H08 = '컬러링 설정',
+  H09 = '단말 분할 상환 정보',
+  H10 = '선물하기',
+  H11 = '충전하기',
+  H12 = '자동 업무처리',
+  H13 = '다이렉트샵',
+  H14 = 'T로밍',
+  H15 = '요금제 변경',
+  H16 = '부가 서비스 신청/변경'
+}
+
+export const HOME_SEGMENT = [
+  'default', 'refill', 'gift', 'inquiry', 'payment', 'membership'
+];
+
+export const HOME_SEGMENT_ORDER = {
+  default: ['H02', 'H06', 'H07', 'H10', 'H11'],
+  refill: ['H11', 'H10', 'H02', 'H07', 'H06'],
+  gift: ['H10', 'H11', 'H02', 'H07', '06'],
+  inquiry: ['H02', 'H11', 'H10', 'H07', 'H06'],
+  payment: ['H02', 'H07', 'H11', 'H10', 'H06'],
+  membership: ['H11', 'H10', 'H02', 'H07', 'H06']
+};
+
+
+

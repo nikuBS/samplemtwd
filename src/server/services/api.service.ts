@@ -154,7 +154,7 @@ class ApiService {
           resp.result.loginType = type;
           return this.loginService.setSvcInfo(resp.result);
         } else {
-          throw resp;
+          return this.loginService.setSvcInfo(null);
         }
       })
       .switchMap((resp) => this.request(API_CMD.BFF_01_0002, {}))
@@ -162,15 +162,15 @@ class ApiService {
         if ( resp.code === API_CODE.CODE_00 ) {
           return this.loginService.setAllSvcInfo(resp.result);
         } else {
-          throw resp;
+          return this.loginService.setAllSvcInfo(null);
         }
       })
       .switchMap((resp) => this.request(API_CMD.BFF_01_0040, {}))
       .switchMap((resp) => {
-        if(resp.code === API_CODE.CODE_00) {
+        if ( resp.code === API_CODE.CODE_00 ) {
           return this.loginService.setChildInfo(resp.result);
         } else {
-          throw resp;
+          return this.loginService.setChildInfo(null);
         }
       })
       .map((resp) => {
