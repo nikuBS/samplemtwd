@@ -10,7 +10,7 @@ import BrowserHelper from '../../../../utils/browser.helper';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
 import { DATA_UNIT } from '../../../../types/string.old.type';
-import oMockMytDataFamily from '../../../../mock/server/myt.data.family.mock';
+import { BFF_06_0044_familyInfo, BFF_06_0045_ImmediatelyInfo, BFF_06_0047_MonthlyInfo } from '../../../../mock/server/myt.data.family.mock';
 
 class MyTDataFamily extends TwViewController {
   constructor() {
@@ -19,7 +19,7 @@ class MyTDataFamily extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     const page = req.params.page;
-    const responseData = {
+    let responseData = {
       svcInfo: svcInfo,
       isApp: BrowserHelper.isApp(req)
     };
@@ -29,16 +29,27 @@ class MyTDataFamily extends TwViewController {
         res.render('family/myt-data.family.complete.html', responseData);
         break;
       case 'setting':
+        responseData = Object.assign(
+          responseData,
+          { immediatelyInfo: this.getImmediatelyInfo() },
+          { monthlyInfo: this.getMonthlyInfo() }
+        );
+
         res.render('family/myt-data.family.setting.html', responseData);
         break;
       default:
-        const response = Object.assign(responseData, { familyInfo: this.getRemainDataInfo() });
-        res.render('family/myt-data.family.main.html', response);
+        responseData = Object.assign(
+          {},
+          responseData,
+          { familyInfo: this.getRemainDataInfo() }
+        );
+
+        res.render('family/myt-data.family.main.html', responseData);
     }
   }
 
   private getRemainDataInfo() {
-    let result = oMockMytDataFamily.BFF_06_0044_familyInfo.result;
+    let result = Object.assign({}, BFF_06_0044_familyInfo.result);
 
     result = Object.assign(result, {
       total: this.convertTFamilyDataSet(result.total),
@@ -47,6 +58,14 @@ class MyTDataFamily extends TwViewController {
     });
 
     return result;
+  }
+
+  private getImmediatelyInfo() {
+    return BFF_06_0045_ImmediatelyInfo.result;
+  }
+
+  private getMonthlyInfo() {
+    return BFF_06_0047_MonthlyInfo.result;
   }
 
   private convertTFamilyDataSet(sQty) {
