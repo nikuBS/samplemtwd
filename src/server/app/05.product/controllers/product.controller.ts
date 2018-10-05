@@ -1,20 +1,19 @@
 /**
- * FileName: home.main.controller.ts
- * Author: Ara Jo (araara.jo@sk.com)
+ * FileName: product.controller.ts
+ * Author: Jiyoung Jo (jiyoungjo@sk.com)
  * Date: 2018.09.06
  */
 
 import TwViewController from '../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
+import { API_CMD } from '../../../types/api-command.type';
 
-class Home extends TwViewController {
+export default class Product extends TwViewController {
   constructor() {
     super();
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, layerType: string) {
-    res.render('main.home.html');
+    res.render('product.html');
   }
 }
-
-export default Home;
