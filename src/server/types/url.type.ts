@@ -2,6 +2,7 @@ export const URL = {
 
   // Common
   '/common/settings/menu': { login: false, id: 'ST_01_01', title: '설정' },
+  '/common/settings/privacy': { login: false, id: 'ST_01_07', title: '개인정보처리방침' },
 
   // MyT
   '/myt/fare/bill/set': { login: true, id: 'MF_04', title: '요금 안내서 설정' },
