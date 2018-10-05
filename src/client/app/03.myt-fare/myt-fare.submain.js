@@ -301,7 +301,6 @@ Tw.MyTFareSubMain.prototype = {
 
   // 다른회선청구요금 조회-1
   _otherLineBills: function () {
-    // TODO: 클라이언트에서 header 값 내용 전달 시 반영안되는 문제 확인필요!!!
     var otherLineLength = this.data.otherLines.length;
     if ( otherLineLength > 0 ) {
       var requestCommand = [];
@@ -405,7 +404,7 @@ Tw.MyTFareSubMain.prototype = {
 
   // 요금납부 이동
   _onClickedBillPym: function (/*event*/) {
-    // 작업 완료되면 추가
+    new Tw.MyTFarePayment(this.$container);
   },
 
   // 실시간요금 이동
@@ -500,12 +499,13 @@ Tw.MyTFareSubMain.prototype = {
 
   // 세금계산서 이동
   _onClickedTaxInvoice: function (/*event*/) {
-    // TODO: 화면완료되면 추가예정
+    // SB 상 납부내역상세로 진입하도록 정의되어있음
+    this._historyService.goLoad('/myt/fare/history');
   },
 
   // 기부금/후원금
   _onClickedContribution: function (/*event*/) {
-    // TODO: 화면완료되면 추가예정
+    this._historyService.goLoad('/myt/fare/bill/guide/donation');
   },
 
   // 요금안내서 이동(chart)

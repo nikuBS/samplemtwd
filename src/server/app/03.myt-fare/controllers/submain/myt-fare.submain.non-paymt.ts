@@ -11,7 +11,7 @@ import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
-import { autopaySchedule_01, autopaySchedule_02, autopaySchedule_03, PossibleDay, PaySuspension } from '../../../../mock/server/myt.fare.nonpaymt.mock';
+import { AutoPaySd_01, AutoPaySd_02, AutoPaySd_03, PaySuspension, PossibleDay } from '../../../../mock/server/myt.fare.nonpaymt.mock';
 
 class MyTFarePaymentOver extends TwViewController {
   constructor() {
@@ -137,21 +137,21 @@ class MyTFarePaymentOver extends TwViewController {
 
   _createMockAutopaySd_01(): Observable<any> {
     return Observable.create((obs) => {
-      obs.next(autopaySchedule_01);
+      obs.next(AutoPaySd_01);
       obs.complete();
     });
   }
 
   _createMockAutopaySd_02(): Observable<any> {
     return Observable.create((obs) => {
-      obs.next(autopaySchedule_02);
+      obs.next(AutoPaySd_02);
       obs.complete();
     });
   }
 
   _createMockAutopaySd_03(): Observable<any> {
     return Observable.create((obs) => {
-      obs.next(autopaySchedule_03);
+      obs.next(AutoPaySd_03);
       obs.complete();
     });
   }

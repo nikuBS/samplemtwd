@@ -37,7 +37,7 @@ export const PossibleDay = {
 };
 
 // 카드인 경우
-export const autopaySchedule_01 = {
+export const AutoPaySd_01 = {
   'code': '00',
   'msg': 'success',
   'result': {
@@ -88,7 +88,7 @@ export const autopaySchedule_01 = {
 };
 
 // 은행 - 데일리 인출 은행
-export const autopaySchedule_02 = {
+export const AutoPaySd_02 = {
   'code': '00',
   'msg': 'success',
   'result': {
@@ -134,7 +134,7 @@ export const autopaySchedule_02 = {
 };
 
 // 은행 - 금결원 인출 은행
-export const autopaySchedule_03 = {
+export const AutoPaySd_03 = {
   'code': '00',
   'msg': 'success',
   'result': {
