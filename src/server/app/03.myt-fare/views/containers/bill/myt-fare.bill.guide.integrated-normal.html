@@ -152,7 +152,12 @@
                     <div class="bt-alone"><button class="bt-bg-blue1" data-target="conditionChangeBtn">조건 변경</button></div>
 
                     <div class="charge-cont pt38">
-                        <span class="sub-disc02">이번 달에는 <span class="tx-bold vbl">요금할인을 <%=commDataInfo.discount %>원</span> 받으셨어요.<br />SK텔레콤과 함께 해주셔서 감사합니다.</span>
+                        <span class="sub-disc02">
+                            <% if(commDataInfo.discount != 0 ){ %>
+                            이번 달에는 <span class="tx-bold vbl">요금할인을 <%=commDataInfo.discount %>원</span> 받으셨어요.<br />
+                            <% } %>
+
+                            SK텔레콤과 함께 해주셔서 감사합니다.</span>
                     </div>
                 </div>
             </div>

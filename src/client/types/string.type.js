@@ -105,7 +105,8 @@ Tw.MYT_FARE_BILL_GUIDE = {
   PHONE_SVCTYPE: '휴대폰',
   PHONE_TYPE_0: '이동전화',
   PHONE_TYPE_1: '휴대폰',
-  POP_TITLE_TYPE_0: '조건 변경'
+  POP_TITLE_TYPE_0: '조건 변경',
+  POP_TITLE_TYPE_1: '납부 방법 선택'
 };
 
 Tw.MYT_FARE_BILL_REISSUE_TYPE_CD = {
