@@ -9,6 +9,7 @@ Tw.MyTDataSubMain = function (params) {
   this.$container = params.$element;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
+  this._lineService = new Tw.LineComponent();
   this._historyService = new Tw.HistoryService(this.$container);
   this._historyService.init('hash');
   this.data = params.data;
@@ -329,10 +330,11 @@ Tw.MyTDataSubMain.prototype = {
   // 다른 회선 팝업에서 변경하기 눌렀을 경우
   _onChangeLineConfirmed: function () {
     // 회선변경 API 호출
-    // TODO: 선택회선변경에 대한 class 분리예정, 완료되면 적용!!
-    this._apiService.request(Tw.NODE_CMD.CHANGE_SESSION, {
-      svcMgmtNum: this.changeLineMgmtNum
-    }).done($.proxy(this._onChangeSessionSuccess, this));
+    this._lineService.changeLine(this.changeLineMgmtNum);
+    // TODO: TOAST 기능을 사용하려면 아래 부분 사용
+    // this._apiService.request(Tw.NODE_CMD.CHANGE_SESSION, {
+    //   svcMgmtNum: this.changeLineMgmtNum
+    // }).done($.proxy(this._onChangeSessionSuccess, this));
   },
 
   // DC_04 팝업내 아이템 선택시 이동
