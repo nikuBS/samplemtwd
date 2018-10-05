@@ -202,5 +202,6 @@ export const URL = {
   '/auth/withdrawal/complete': { login: false, id: 'CO_01_05_01_04_01', title: '회원탈퇴' },
   // common
   '/common/settings/menu': { login: false, id: 'ST_01_01', title: '설정' },
+  '/common/settings/privacy': { login: false, id: 'ST_01_07', title: '개인정보처리방침' },
   '/common/error': { login: false, id: '', title: '' }
 };
