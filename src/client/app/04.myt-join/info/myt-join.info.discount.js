@@ -34,7 +34,7 @@ Tw.MyTJoinInfoDiscount.prototype = {
 
   },
   //--------------------------------------------------------------------------[EVENT]
-  _monthBtnEvt: function(e) {
+  _monthBtnEvt: function (e) {
     // Tw.Logger.info('[버튼 클릭]', e);
     var $target = $(e.currentTarget);
     this.selectMonthVal = $target.attr('data-value');
@@ -42,24 +42,24 @@ Tw.MyTJoinInfoDiscount.prototype = {
     // Tw.Logger.info('[선택 값]', this.selectMonthVal);
 
     var param = {
-      startDt : this._getPeriod(this.selectMonthVal, 'YYYYMMDD').startDt,
-      endDt: this._getPeriod(this.selectMonthVal, 'YYYYMMDD').endDt,
+      startDt: this._getPeriod(this.selectMonthVal, 'YYYYMMDD').startDt,
+      endDt: this._getPeriod(this.selectMonthVal, 'YYYYMMDD').endDt
     };
 
     // Tw.Logger.info('[버튼 클릭 > param]', param);
-    this._getCallGiftInfo( param );
+    this._getCallGiftInfo(param);
   },
-  _popupCloseBtEvt: function() {
+  _popupCloseBtEvt: function () {
     this._goLoad('/myt/fare/bill/guide');
   },
   //--------------------------------------------------------------------------[API]
-  _getCallGiftInfo: function(param) {
+  _getCallGiftInfo: function (param) {
     return this._apiService.request(Tw.API_CMD.BFF_05_0045, param).done($.proxy(this._getCallGiftInfoInit, this));
   },
-  _getCallGiftInfoInit: function(res) {
+  _getCallGiftInfoInit: function (res) {
 
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      var resObj = this._svcToTimeObj( res.result.callData );
+      var resObj = this._svcToTimeObj(res.result.callData);
       this.$dateSelect.hide();
 
       if ( resObj.totalSec === 0 ) {
@@ -86,13 +86,13 @@ Tw.MyTJoinInfoDiscount.prototype = {
 
   //--------------------------------------------------------------------------[SVC]
 
-  _svcHbDetailList: function( resData, $jqTg, $hbTg ) {
+  _svcHbDetailList: function (resData, $jqTg, $hbTg) {
     var jqTg = $jqTg;
     var hbTg = $hbTg;
     var source = hbTg.html();
     var template = Handlebars.compile(source);
     var data = {
-      resData : resData
+      resData: resData
     };
     var html = template(data);
     jqTg.append(html);
@@ -109,8 +109,8 @@ Tw.MyTJoinInfoDiscount.prototype = {
     return str.replace(/,/g, '');
   },
   _phoneStrToDash: function (str) {
-    var str = String(str);
-    return str.replace(/(^02.{0}|^01.{1}|[0-9]{3})([0-9\*]+)([[0-9\*]{4})/, '$1-$2-$3');
+    var strVal = String(str);
+    return strVal.replace(/(^02.{0}|^01.{1}|[0-9]{3})([0-9\*]+)([[0-9\*]{4})/, '$1-$2-$3');
   },
   _goBack: function () {
     this._history.go(-1);
