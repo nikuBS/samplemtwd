@@ -17,7 +17,8 @@
 <!--// #skip_navigation -->
 <div class="wrap">
     <!-- #header -->
-    <%- include('../../../../common/views/components/header.component.html', { title: '미납요금', svcInfo: data.svcInfo}); %>
+    <%- include('../../../../common/views/components/header.component.html', { title: '미납요금', svcInfo: data.svcInfo});
+    %>
     <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap">
@@ -27,9 +28,15 @@
             <div class="cont-box">
                 <div class="unpaid-charges">
                     <dl class="total-box">
+                        <% if (data.unPaidTotSum) { %>
                         <dt>미납요금</dt>
-                        <dd><span class="num ff-tg-black"><%= data.unPaidTotSum %></span>
-                            <span class="ff-tg-medium">원</span></dd>
+                        <dd>
+                            <span class="num ff-tg-black"><%= data.unPaidTotSum %></span>
+                            <span class="ff-tg-medium">원</span>
+                        </dd>
+                        <% } else { %>
+                        <dt>미납요금이 없습니다.</dt>
+                        <% } %>
                     </dl>
                     <% if (data.unPaidAmtList && data.unPaidAmtList.length > 0) { %>
                     <ul class="point-box">
