@@ -31,7 +31,11 @@
                         <dl class="real-remaining">
                             <dt>T가족모아 남은 데이터</dt>
                             <dd>
-                                <div class="remaining-amount"><span class="num ff-tg-black">20</span><span class="dingbat gb"><span class="blind">GB</span></span></div>
+                                <% if ( familyInfo.remained.unit === 'GB' ) { %>
+                                <div class="remaining-amount"><span class="num ff-tg-black"><%=familyInfo.remained.data%></span><span class="dingbat gb"><span class="blind">GB</span></span></div>
+                                <% } else { %>
+                                <div class="remaining-amount"><span class="num ff-tg-black"><%=familyInfo.remained.data%></span><span class="dingbat mb"><span class="blind">MB</span></span></div>
+                                <% } %>
                             </dd>
                         </dl>
                         <span class="ico"></span>
@@ -41,414 +45,35 @@
                             <li>
                                 <dl>
                                     <dt>총 공유 데이터</dt>
-                                    <dd><span class="">30 GB</span></dd>
+                                    <dd><span class=""><%=familyInfo.total.data%> <%=familyInfo.total.unit%></span></dd>
                                 </dl>
                             </li>
                             <li>
                                 <dl>
-                                    <dt>총 공유 데이터</dt>
-                                    <dd><span class="">30 GB</span></dd>
+                                    <dt>총 이용 데이터</dt>
+                                    <dd><span class=""><%=familyInfo.used.data%> <%=familyInfo.used.unit%></span></dd>
                                 </dl>
                             </li>
                         </ul>
                     </div>
+                    <% if ( svcInfo.repSvcYn === 'Y' ) { %>
                     <ul class="bt-slice mt20">
                         <li class="bt-white2">
                             <a href="/myt/data/family/setting">공유 데이터 설정하기</a>
                         </li>
                     </ul>
+                    <% } else { %>
+                    <div class="msg-family-member">
+                        <p><span class="ico"></span><%=familyInfo.mbrList.length-1%>명이 열심히 공유하고 있어요!</p>
+                    </div>
+                    <% } %>
                 </div>
             </div>
             <!--// .cont-box -->
 
             <hr class="cont-sp type1" aria-hidden="true">
 
-            <!-- .cont-box -->
-            <div class="cont-box nogaps-hoz">
-                <!-- .widget -->
-                <div class="widget">
-                    <div class="widget-box accordion2">
-                        <div class="acco-style data-famliy-group-list">
-                            <ul class="acco-box">
-
-                                <!-- 한도설정 CASE1 -->
-                                <li class="acco-list"><!-- on , off -->
-                                    <div class="acco-title">
-                                        <button role="button" aria-pressed="false">
-                                            <div class="list-wrap">
-                                                <div class="list-ico">
-                                                    <span class="ico-round">최</span>
-                                                </div>
-                                                <div class="list-info">
-                                                    <div>
-                                                        <em class="me">최*영</em>
-                                                        <span class="badge badge-fam-members2"></span><!-- 뱃지-가족대표 -->
-                                                    </div>
-                                                    <div class="num">010-12**-24**</div>
-                                                </div>
-                                                <div class="list-data">
-                                                    <span class="vol">400</span> MB<br>
-                                                    <span class="state">이용</span>
-                                                </div>
-                                                <div class="list-arrow">
-                                                    <span class="ico-arrow"></span>
-                                                </div>
-                                            </div>
-                                        </button>
-                                    </div>
-                                    <div class="acco-content">
-                                        <div class="data-info-list toggle-inner-list">
-                                            <ul>
-                                                <li>
-                                                    <dl>
-                                                        <dt>요금제</dt>
-                                                        <dd>패밀리</dd>
-                                                    </dl>
-                                                </li>
-                                                <li>
-                                                    <dl>
-                                                        <dt>가족에게 공유한 데이터 </dt>
-                                                        <dd>10 GB</dd>
-                                                    </dl>
-                                                </li>
-                                                <li>
-                                                    <dl class="set-limit-data">
-                                                        <dt>T가족모아 데이터 이용한도</dt>
-                                                        <dd>
-                                                            <!-- .widget -->
-                                                            <div class="widget mt12">
-                                                                <div class="widget-box radio">
-                                                                    <div class="radiobox-line">
-                                                                        <ul class="" role="radiogroup">
-                                                                            <li class="">
-                                                                                <div class="custom-radio-wrap checked" role="radio"><!-- 체크상태일 경우 class="checked" 추가 -->
-                                                                                    <div class="custom-radio" role="radio">
-                                                                                        <input type="radio" name="radio" value="" title="자유사용" checked=""><!-- 체크상태일 경우 -->
-                                                                                        <label class="custom-radio-label">자유사용</label>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </li>
-                                                                            <li class="">
-                                                                                <div class="custom-radio-wrap" role="radio">
-                                                                                    <div class="custom-radio" role="radio">
-                                                                                        <input type="radio" name="radio" value="" title="한도설정" disabled=""><!-- 비활성화상태일 경우 -->
-                                                                                        <label class="custom-radio-label">한도설정</label>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </li>
-                                                                        </ul>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <!--// .widget -->
-                                                        </dd>
-                                                    </dl>
-                                                </li>
-                                            </ul>
-                                            <div class="toggle-inner-btn">
-                                                <button disabled="">변경완료</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <!--// 한도설정 CASE1 -->
-
-                                <!-- 한도설정 CASE2-1 -->
-                                <li class="acco-list"><!-- on , off -->
-                                    <div class="acco-title">
-                                        <button role="button" aria-pressed="false">
-                                            <div class="list-wrap">
-                                                <div class="list-ico">
-                                                    <span class="ico-round">최</span>
-                                                </div>
-                                                <div class="list-info">
-                                                    <div>
-                                                        <em class="me">최*영</em>
-                                                        <span class="badge badge-me2"></span><!-- 뱃지-나 -->
-                                                    </div>
-                                                    <div class="num">010-12**-24**</div>
-                                                </div>
-                                                <div class="list-data">
-                                                    <span class="vol">0</span> MB<br>
-                                                    <span class="state">이용</span>
-                                                </div>
-                                                <div class="list-arrow">
-                                                    <span class="ico-arrow"></span>
-                                                </div>
-                                            </div>
-                                        </button>
-                                    </div>
-                                    <div class="acco-content">
-                                        <div class="data-info-list toggle-inner-list">
-                                            <ul>
-                                                <li>
-                                                    <dl>
-                                                        <dt>요금제</dt>
-                                                        <dd>패밀리</dd>
-                                                    </dl>
-                                                </li>
-                                                <li>
-                                                    <dl>
-                                                        <dt>가족에게 공유한 데이터 </dt>
-                                                        <dd>10 GB</dd>
-                                                    </dl>
-                                                </li>
-                                                <li>
-                                                    <dl class="set-limit-data">
-                                                        <dt>T가족모아 데이터 이용한도</dt>
-                                                        <dd>
-                                                            <!-- .widget -->
-                                                            <div class="widget mt12">
-                                                                <div class="widget-box radio">
-                                                                    <div class="radiobox-line">
-                                                                        <ul class="" role="radiogroup">
-                                                                            <li class="">
-                                                                                <div class="custom-radio-wrap" role="radio">
-                                                                                    <div class="custom-radio" role="radio">
-                                                                                        <input type="radio" name="radio" value="" title="자유사용" disabled=""><!-- 비활성화상태일 경우 -->
-                                                                                        <label class="custom-radio-label">자유사용</label>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </li>
-                                                                            <li class="">
-                                                                                <div class="custom-radio-wrap checked" role="radio"><!-- 체크상태일 경우 class="checked" 추가 -->
-                                                                                    <div class="custom-radio" role="radio">
-                                                                                        <input type="radio" name="radio" value="" title="한도설정" checked=""><!-- 체크상태일 경우 -->
-                                                                                        <label class="custom-radio-label">한도설정</label>
-                                                                                    </div>
-                                                                                    <div class="set-limit-data-input">
-                                                                                        <div class="inputbox bt-add">
-																								<span class="input">
-																									<input type="number" placeholder="숫자만 입력" title="input" aria-labelledby="aria-exp-label1" aria-describedby="aria-exp-desc1">
-																									<button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
-																								</span>
-                                                                                            <span class="txt-area">GB</span>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <p class="set-limit-data-info">
-                                                                                        정해주신 한도 안에서 T가족모아 데이터를 <br>
-                                                                                        이용할 수 있습니다. <br>
-                                                                                        0GB로 입력하시면 T가족모아를 이용할 수 없습니다.
-                                                                                    </p>
-                                                                                </div>
-                                                                            </li>
-                                                                        </ul>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <!--// .widget -->
-                                                        </dd>
-                                                    </dl>
-                                                </li>
-                                            </ul>
-                                            <div class="toggle-inner-btn">
-                                                <button disabled="">변경완료</button> <!-- 한도설정 input에 숫자 입력 시 버튼 활성화 됨. disabled 제거 -->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <!--// 한도설정 CASE2-1 -->
-
-                                <!-- 한도설정 CASE2-1 -->
-                                <li class="acco-list"><!-- on , off -->
-                                    <div class="acco-title">
-                                        <button role="button" aria-pressed="false">
-                                            <div class="list-wrap">
-                                                <div class="list-ico">
-                                                    <span class="ico-round">최</span>
-                                                </div>
-                                                <div class="list-info">
-                                                    <div>
-                                                        <em class="me">최*영</em>
-                                                        <span class="badge badge-me2"></span><!-- 뱃지-나 -->
-                                                    </div>
-                                                    <div class="num">010-12**-24**</div>
-                                                </div>
-                                                <div class="list-data">
-                                                    <span class="vol">0</span> MB<br>
-                                                    <span class="state">이용</span>
-                                                </div>
-                                                <div class="list-arrow">
-                                                    <span class="ico-arrow"></span>
-                                                </div>
-                                            </div>
-                                        </button>
-                                    </div>
-                                    <div class="acco-content">
-                                        <div class="data-info-list toggle-inner-list">
-                                            <ul>
-                                                <li>
-                                                    <dl>
-                                                        <dt>요금제</dt>
-                                                        <dd>패밀리</dd>
-                                                    </dl>
-                                                </li>
-                                                <li>
-                                                    <dl>
-                                                        <dt>가족에게 공유한 데이터 </dt>
-                                                        <dd>10 GB</dd>
-                                                    </dl>
-                                                </li>
-                                                <li>
-                                                    <dl class="set-limit-data">
-                                                        <dt>T가족모아 데이터 이용한도</dt>
-                                                        <dd>
-                                                            <!-- .widget -->
-                                                            <div class="widget mt12">
-                                                                <div class="widget-box radio">
-                                                                    <div class="radiobox-line">
-                                                                        <ul class="" role="radiogroup">
-                                                                            <li class="">
-                                                                                <div class="custom-radio-wrap" role="radio">
-                                                                                    <div class="custom-radio" role="radio">
-                                                                                        <input type="radio" name="radio" value="" title="자유사용" disabled=""><!-- 비활성화상태일 경우 -->
-                                                                                        <label class="custom-radio-label">자유사용</label>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </li>
-                                                                            <li class="">
-                                                                                <div class="custom-radio-wrap checked" role="radio"><!-- 체크상태일 경우 class="checked" 추가 -->
-                                                                                    <div class="custom-radio" role="radio">
-                                                                                        <input type="radio" name="radio" value="" title="한도설정" checked=""><!-- 체크상태일 경우 -->
-                                                                                        <label class="custom-radio-label">한도설정</label>
-                                                                                    </div>
-                                                                                    <div class="set-limit-data-input">
-                                                                                        <div class="inputbox bt-add">
-																								<span class="input">
-																									<input type="number" placeholder="숫자만 입력" title="input" aria-labelledby="aria-exp-label1" aria-describedby="aria-exp-desc1" value="400">
-																									<button class="cancel" style="display: inline-block;"><span class="blind">삭제</span></button>
-																								</span>
-                                                                                            <span class="txt-area">GB</span>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <p class="set-limit-data-info">
-                                                                                        정해주신 한도 안에서 T가족모아 데이터를 <br>
-                                                                                        이용할 수 있습니다. <br>
-                                                                                        0GB로 입력하시면 T가족모아를 이용할 수 없습니다.
-                                                                                    </p>
-                                                                                </div>
-                                                                            </li>
-                                                                        </ul>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <!--// .widget -->
-                                                        </dd>
-                                                    </dl>
-                                                </li>
-                                            </ul>
-                                            <div class="toggle-inner-btn">
-                                                <button>변경완료</button> <!-- 한도설정 input에 숫자 입력 시 버튼 활성화 됨. disabled 제거 -->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <!--// 한도설정 CASE2-1 -->
-
-                                <!-- 한도설정 CASE3 (Data 인피니티 요금제 사용중일 경우 이용한도 항목 비노출) -->
-                                <li class="acco-list"><!-- on , off -->
-                                    <div class="acco-title">
-                                        <button role="button" aria-pressed="false">
-                                            <div class="list-wrap">
-                                                <div class="list-ico">
-                                                    <span class="ico-round">최</span>
-                                                </div>
-                                                <div class="list-info">
-                                                    <div>
-                                                        <em class="me">최*영</em>
-                                                    </div>
-                                                    <div class="num">010-12**-24**</div>
-                                                </div>
-                                                <div class="list-data">
-                                                    <span class="vol">무제한</span><br>
-                                                    <span class="state">(Data 인피니티)</span>
-                                                </div>
-                                                <div class="list-arrow">
-                                                    <span class="ico-arrow"></span>
-                                                </div>
-                                            </div>
-                                        </button>
-                                    </div>
-                                    <div class="acco-content">
-                                        <div class="data-info-list toggle-inner-list">
-                                            <ul>
-                                                <li>
-                                                    <dl>
-                                                        <dt>요금제</dt>
-                                                        <dd>패밀리</dd>
-                                                    </dl>
-                                                </li>
-                                                <li>
-                                                    <dl>
-                                                        <dt>가족에게 공유한 데이터 </dt>
-                                                        <dd>10 GB</dd>
-                                                    </dl>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </li>
-                                <!--// 한도설정 CASE3 -->
-
-                                <!-- 한도설정 CASE4 (그룹원 (한도변경 불가)) -->
-                                <li class="acco-list"><!-- on , off -->
-                                    <div class="acco-title">
-                                        <button role="button" aria-pressed="false">
-                                            <div class="list-wrap">
-                                                <div class="list-ico">
-                                                    <span class="ico-round">최</span>
-                                                </div>
-                                                <div class="list-info">
-                                                    <div>
-                                                        <em class="me">최*영</em>
-                                                    </div>
-                                                    <div class="num">010-12**-24**</div>
-                                                </div>
-                                                <div class="list-data">
-                                                    <span class="vol">무제한</span><br>
-                                                    <span class="state">(Data 인피니티)</span>
-                                                </div>
-                                                <div class="list-arrow">
-                                                    <span class="ico-arrow"></span>
-                                                </div>
-                                            </div>
-                                        </button>
-                                    </div>
-                                    <div class="acco-content">
-                                        <div class="data-info-list toggle-inner-list">
-                                            <ul>
-                                                <li>
-                                                    <dl>
-                                                        <dt>요금제</dt>
-                                                        <dd>패밀리</dd>
-                                                    </dl>
-                                                </li>
-                                                <li>
-                                                    <dl>
-                                                        <dt>가족에게 공유한 데이터 </dt>
-                                                        <dd>10 GB</dd>
-                                                    </dl>
-                                                </li>
-                                                <li>
-                                                    <dl>
-                                                        <dt>T가족모아 데이터 이용한도</dt>
-                                                        <dd>이용불가</dd>
-                                                    </dl>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </li>
-                                <!--// 한도설정 CASE4 -->
-
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <!-- //.widget -->
-
-            </div>
-            <!--// .cont-box -->
+            <% include ../../components/family/myt-data.family.main-list.html %>
         </div>
     </div>
     <!--// #contents -->
@@ -459,7 +84,7 @@
 
 <script>
   $(document).ready(function () {
-    new Tw.MyTDataFamilyMain($('.container-wrap'));
+    var oMyTDataFamilyMain = new Tw.MyTDataFamilyMain($('.container-wrap'));
   });
 </script>
 

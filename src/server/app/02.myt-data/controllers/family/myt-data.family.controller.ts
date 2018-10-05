@@ -9,6 +9,8 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import BrowserHelper from '../../../../utils/browser.helper';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
+import { DATA_UNIT } from '../../../../types/string.old.type';
+import oMockMytDataFamily from '../../../../mock/server/myt.data.family.mock';
 
 class MyTDataFamily extends TwViewController {
   constructor() {
@@ -30,36 +32,26 @@ class MyTDataFamily extends TwViewController {
         res.render('family/myt-data.family.setting.html', responseData);
         break;
       default:
-        const response = Object.assign(responseData, this.getRemainDataInfo());
+        const response = Object.assign(responseData, { familyInfo: this.getRemainDataInfo() });
         res.render('family/myt-data.family.main.html', response);
     }
   }
 
   private getRemainDataInfo() {
-    const mock = {
-      code: '00',
-      msg: '',
-      result: {
-        total: '2048',
-        used: '400',
-        remained: '1648',
-        mbrList: [ {
-          svcNum: '01094**04**',
-          svcMgmtNum: '7226057315',
-          custNm: '조*희',
-          repYn: 'Y',
-          prodId: 'NA00005959',
-          prodNm: 'Data 인피니티',
-          used: '0',
-          limitedYn: 'N',
-          limitation: ''
-        } ]
-      }
-    };
+    let result = oMockMytDataFamily.BFF_06_0044_familyInfo.result;
 
-    return mock;
+    result = Object.assign(result, {
+      total: this.convertTFamilyDataSet(result.total),
+      used: this.convertTFamilyDataSet(result.used),
+      remained: this.convertTFamilyDataSet(result.remained)
+    });
+
+    return result;
   }
 
+  private convertTFamilyDataSet(sQty) {
+    return FormatHelper.convDataFormat(sQty, DATA_UNIT.MB);
+  }
 }
 
 export default MyTDataFamily;

@@ -14,8 +14,13 @@ export const URL = {
 
   // MyT-data
   '/myt/data': { login: true, id: 'DC', title: '데이터/통화 관리' },
-  '/myt/data/recharge/coupon': { login: true, id: 'DC_05', title: '나의 리필쿠폰'},
-  '/myt/data/recharge/coupon/use': { login: true, id: 'DC_05_01', title: '리필 쿠폰 사용'},
+  '/myt/data/family': { login: true, id: 'DC_02', title: 'T가족모아 데이터' },
+  '/myt/data/gift': { login: true, id: 'DC_03_01', title: 'T끼리 데이터 선물하기' },
+  '/myt/data/ting': { login: true, id: 'DC_04_03', title: '팅요금제 충전 선물' },
+  '/myt/data/cookiz': { login: true, id: 'DC_04_02', title: '팅/쿠키즈/안심음성 요' },
+  '/myt/data/limit': { login: true, id: 'DC_04_01', title: '데이터 한도 요금제' },
+  '/myt/data/recharge/coupon': { login: true, id: 'DC_05', title: '나의 리필쿠폰' },
+  '/myt/data/recharge/coupon/use': { login: true, id: 'DC_05_01', title: '리필 쿠폰 사용' },
   '/myt/data/recharge/history': { login: true, id: 'DC_07', title: '최근 충전/선물 내역' },
 
   // Product

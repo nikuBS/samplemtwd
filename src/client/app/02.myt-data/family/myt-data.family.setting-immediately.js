@@ -1,10 +1,10 @@
 /**
- * FileName: myt-data.family.main.js
+ * FileName: myt-data.family.setting-immediately.js
  * Author: Jiman Park (jiman.park@sk.com)
- * Date: 2018.10.01
+ * Date: 2018.10.04
  */
 
-Tw.MyTDataFamilyMain = function (rootEl) {
+Tw.MyTDataFamilySettingImmediately = function (rootEl) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -15,7 +15,7 @@ Tw.MyTDataFamilyMain = function (rootEl) {
   this._init();
 };
 
-Tw.MyTDataFamilyMain.prototype = {
+Tw.MyTDataFamilySettingImmediately.prototype = {
   _init: function () {
   },
 
