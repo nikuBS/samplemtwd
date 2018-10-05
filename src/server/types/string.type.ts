@@ -102,3 +102,7 @@ export const MYT_FARE_BILL_REISSUE_TYPE = {
   'J' : 'Bill Letter',
   'K' : 'Bill Letter+이메일'
 };
+
+export const MYT_INFO_DISCOUNT_MONTH = {
+  TITLE: '월별 상세 할인 내역'
+};
