@@ -181,5 +181,10 @@ export const HOME_SEGMENT_ORDER = {
   membership: ['H11', 'H10', 'H02', 'H07', 'H06']
 };
 
-
+export enum MEMBERSHIP_GROUP {
+  V = 'VIP',
+  G = 'Gold',
+  S = 'Silver',
+  O = '일반'
+}
 

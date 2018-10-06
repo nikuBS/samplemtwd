@@ -15,19 +15,7 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div class="wrap">
-    <!-- #header -->
-    <%- include('../../../../common/views/components/header.component.html', { title: '전체메', svcInfo: svcInfo, option: { back: 'none' } }) %>
-    <!--// #header -->
-    <!-- #contents -->
-    <div id="contents" class="container-wrap">
-        <h2 class="blind">내용</h2>
-        <div class="container">
-
-        </div>
-    </div>
-    <!--// #contents -->
-
+<div id="mainMenu" class="wrap">
     <!-- .popup hbs -->
     <div class="popup-page nobg no-btn tw-popup"><!-- .no-btn 하단에 버튼이 없을 경우 -->
         <!-- #header -->
@@ -44,9 +32,17 @@
             <h2 class="blind">내용</h2>
             <div class="container">
                 <!-- .cont-box -->
+                <% if (svcInfo && svcInfo.expsSvcCnt !== '0') { %>
                 <div class="cont-box">
                     <div class="all-menu-tit">
-                        <h3 class="ff-tg-black">010-12**-34**</h3>
+                        <% if(svcInfo.expsSvcCnt === '1') { %>
+                        <h3 class="ff-tg-black"><%= svcInfo.svcNum %></h3>
+                        <% } else { %>
+                        <h3 class="inline">
+                            <button id="fe-bt-line" class="bt-dropdown sbig" title="데이터 용량" aria-haspopup="true" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>"><span class="ff-tg-black"><%= svcInfo.svcNum %></span><span class="ico"></span></button>
+                        </h3>
+                        <% } %>
+
                         <ul class="bt-slice item-two">
                             <li class="bt-white2">
                                 <button>보관함<span class="num">2</span></button>
@@ -57,6 +53,7 @@
                         </ul>
                     </div>
                 </div>
+                <% } %>
                 <!--// .cont-box -->
                 <!-- .cont-box -->
                 <div class="cont-box nogaps">
@@ -69,7 +66,35 @@
                                     <ul class="acco-list">
                                         <!-- .on: 열기 -->
                                         <li class="acco-box">
-                                            <div class="acco-tit"><a href="/myt/data">데이터·통화 관리<span class="detail">83 GB / 57 분</span></a>
+                                            <div class="acco-tit">
+                                                <a href="/myt/data">데이터·통화 관리
+                                                    <% if (svcInfo && svcInfo.expsSvcCnt && menuData.usageData) { %>
+                                                    <span class="detail">
+                                                        <% if (menuData.usageData.data) { %>
+                                                        <% if (menuData.usageData.data.isUnlimit) { %>
+                                                        무제한
+                                                        <% } else { %>
+                                                        <%= menuData.usageData.data.showRemained.data %> <%= menuData.usageData.data.showRemained.unit %>
+                                                        <% } %>
+                                                        <% } %>
+                                                        <% if (menuData.usageData.data && menuData.usageData.voice) { %>
+                                                        /
+                                                        <% } %>
+                                                        <% if (menuData.usageData.voice) { %>
+                                                        <% if (menuData.usageData.voice.isUnlimit) { %>
+                                                        무제한
+                                                        <% } else { %>
+                                                        <% if (menuData.usageData.voice.showRemained.hours !== 0) { %>
+                                                        <%= menuData.usageData.voice.showRemained.hours %> 시간
+                                                        <% } %>
+                                                        <% if (menuData.usageData.voice.showRemained.min !== 0) { %>
+                                                        <%= menuData.usageData.voice.showRemained.min %> 분
+                                                        <% } %>
+                                                        <% } %>
+                                                        <% } %>
+                                                    </span>
+                                                    <% } %>
+                                                </a>
                                                 <button role="button" aria-pressed="false"></button></div>
                                             <div class="acco-cont">
                                                 <ul class="all-menu-sub">
@@ -81,7 +106,12 @@
                                             </div>
                                         </li>
                                         <li class="acco-box">
-                                            <div class="acco-tit"><a href="/myt/fare">나의 요금<span class="detail">54,630 원</span></a>
+                                            <div class="acco-tit">
+                                                <a href="/myt/fare">나의 요금
+                                                    <% if (svcInfo && svcInfo.expsSvcCnt && menuData.billData) { %>
+                                                    <span class="detail"><%= menuData.billData %> 원</span>
+                                                    <% } %>
+                                                </a>
                                                 <button role="button" aria-pressed="false"></button></div>
                                             <div class="acco-cont">
                                                 <ul class="all-menu-sub">
@@ -95,7 +125,13 @@
                                             </div>
                                         </li>
                                         <li class="acco-box">
-                                            <div class="acco-tit"><a href="/myt/fare">나의 가입 정보<span class="detail">총 1개의 회선</span></a><button role="button" aria-pressed="false"></button></div>
+                                            <div class="acco-tit">
+                                                <a href="/myt/fare">나의 가입 정보
+                                                    <% if (svcInfo && svcInfo.expsSvcCnt) { %>
+                                                    <span class="detail">총 <%= svcInfo.expsSvcCnt %>개의 회선</span>
+                                                    <% } %>
+                                                </a>
+                                                <button role="button" aria-pressed="false"></button></div>
                                             <div class="acco-cont">
                                                 <ul class="all-menu-sub">
                                                     <li><button>나의 요금제</button></li>
@@ -115,7 +151,13 @@
                                     <ul class="acco-list">
                                         <!-- .on: 열기 -->
                                         <li class="acco-box">
-                                            <div class="acco-tit">T멤버십<span class="detail">Gold</span><button role="button" aria-pressed="false"></button></div>
+                                            <div class="acco-tit">
+                                                T멤버십
+                                                <% if (svcInfo && svcInfo.expsSvcCnt && menuData.membershipData) { %>
+                                                <span class="detail"><%= menuData.membershipData.showGroup %></span>
+                                                <% } %>
+                                                <button role="button" aria-pressed="false"></button>
+                                            </div>
                                             <div class="acco-cont">
                                                 <ul class="all-menu-sub">
                                                     <li><button>멤버십 이용 안내</button></li>
@@ -312,6 +354,7 @@
 <% include ../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
+    new Tw.MainMenu($('#mainMenu'));
   });
 </script>
 <% include ../components/end.component.html %>

@@ -50,7 +50,7 @@ export const API_CMD = {
   BFF_01_0027: { path: '/pwd-cert-chk', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_01_0028: { path: '/core-auth/v1/auth/skt/sms-finance', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_01_0029: { path: '/auth/secure/client-key', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true, native: true },
-  BFF_01_0030: { path: '/auth/secure/server-key', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true, native: true },
+  BFF_01_0030: { path: '/auth/secure/server-key', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true, native: true },
   BFF_01_0031: { path: '/registrationrequestfromfc', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true, native: true },
   BFF_01_0032: { path: '/registrationresponsefromfc', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true, native: true },
   BFF_01_0033: { path: '/authenticationrequestfromfc', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true, native: true },
