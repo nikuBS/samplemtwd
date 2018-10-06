@@ -1,14 +1,20 @@
+/**
+ * FileName: main.t-notify.controller.ts
+ * Author: Ara Jo (araara.jo@sk.com)
+ * Date: 2018.10.04
+ */
+
 import TwViewController from '../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
 
-class Search extends TwViewController {
+class MainTNotify extends TwViewController {
   constructor() {
     super();
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any) {
-    res.render('search.html', { svcInfo });
+    res.render('main.t-notify.html');
   }
 }
 
-export default Search;
+export default MainTNotify;

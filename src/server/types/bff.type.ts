@@ -149,6 +149,25 @@ export enum HOME_SMART_CARD {
   H16 = '부가 서비스 신청/변경'
 }
 
+export enum HOME_SMART_CARD_E {
+  CHILD = 'H01',
+  BILL = 'H02',
+  NON_PAYMENT = 'H03',
+  SUSPENSION = 'H04',
+  MEMBERSHIP = 'H05',
+  CONTENT = 'H06',
+  MICRO_PAY = 'H07',
+  COLORING = 'H08',
+  DEVICE = 'H09',
+  GIFT = 'H10',
+  RECHARGE = 'H11',
+  AUTO = 'H12',
+  DIRECT = 'H13',
+  ROAMING = 'H14',
+  PRODUCT = 'H15',
+  ADDITIONAL = 'H16'
+}
+
 export const HOME_SEGMENT = [
   'default', 'refill', 'gift', 'inquiry', 'payment', 'membership'
 ];

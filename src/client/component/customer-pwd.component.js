@@ -149,7 +149,7 @@ Tw.CustomerPwdComponent.prototype = {
       this._isCloseCallbackNeeded = true;
       this._popupService.close();
     } else {
-      this._historyService.goLoad('/home');
+      this._historyService.goLoad('/main/home');
     }
   },
   _showFail: function () {

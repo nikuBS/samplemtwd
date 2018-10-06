@@ -16,7 +16,7 @@ Tw.AuthLoginDormancy.prototype = {
       Tw.Api.request(Tw.NODE_CMD.LOGIN_USER_LOCK)
         .done(function (res) {
           if (res.code === Tw.API_CODE.CODE_00) {
-            window.location = '/home';
+            window.location = '/main/home';
           } else if (res.code === Tw.API_LOGIN_ERROR.ICAS3228) {  // Need service password
             window.location = '/auth/login/customer-pwd';
           } else {

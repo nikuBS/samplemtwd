@@ -1,5 +1,5 @@
 /**
- * FileName: customer.shop-search.controller.ts (CI_02_01)
+ * FileName: customer.shop-main.search.controller.ts (CI_02_01)
  * Author: Hakjoon Sim(hakjoon.sim@sk.com)
  * Date: 2018.07.25
  */

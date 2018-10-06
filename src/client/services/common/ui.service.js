@@ -35,7 +35,7 @@ Tw.UIService.prototype = {
           // if ( Tw.BrowserHelper.isApp() ) {
             document.location.reload();
           // }
-          if ( /\/home/.test(location.href) ) {
+          if ( /\/main\/home/.test(location.href) ) {
             Tw.UIService.setLocalStorage(Tw.LSTORE_KEY.LINE_REFRESH, 'N');
           }
         }
