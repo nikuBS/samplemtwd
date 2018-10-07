@@ -12,7 +12,7 @@ import {PAYMENT_OPTION, SVC_ATTR} from '../../../../types/bff.old.type';
 import {Observable} from 'rxjs/Observable';
 import StringHelper from '../../../../utils/string.helper';
 
-class MytFarePaymentOption extends TwViewController {
+class MyTFarePaymentOption extends TwViewController {
   constructor() {
     super();
   }
@@ -84,4 +84,4 @@ class MytFarePaymentOption extends TwViewController {
   }
 }
 
-export default MytFarePaymentOption;
+export default MyTFarePaymentOption;

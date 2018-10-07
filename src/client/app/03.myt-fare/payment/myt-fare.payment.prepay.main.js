@@ -1,10 +1,10 @@
 /**
- * FileName: myt.fare.payment.micro.contents.js
+ * FileName: myt.fare.payment.prepay.main.js
  * Author: Jayoon Kong (jayoon.kong@sk.com)
  * Date: 2018.10.04
  */
 
-Tw.MyTFarePaymentMicroContents = function (rootEl, title) {
+Tw.MyTFarePaymentPrepayMain = function (rootEl, title) {
   this.$container = rootEl;
   this.$title = title;
 
@@ -12,13 +12,13 @@ Tw.MyTFarePaymentMicroContents = function (rootEl, title) {
   this._popupService = Tw.Popup;
   this._commonHelper = Tw.CommonHelper;
 
-  this._history = new Tw.HistoryService(rootEl);
+  this._historyService = new Tw.HistoryService(rootEl);
 
   this._initVariables();
   this._bindEvent();
 };
 
-Tw.MyTFarePaymentMicroContents.prototype = {
+Tw.MyTFarePaymentPrepayMain.prototype = {
   _initVariables: function () {
     this._maxAmount = this.$container.find('.fe-max-amount').attr('id');
     this._name = this.$container.find('.fe-name').text();
@@ -26,6 +26,7 @@ Tw.MyTFarePaymentMicroContents.prototype = {
   _bindEvent: function () {
     this.$container.on('click', '.fe-prepay', $.proxy(this._prepay, this));
     this.$container.on('click', '.fe-auto-prepay', $.proxy(this._autoPrepay, this));
+    this.$container.on('click', '.fe-auto-prepay-change', $.proxy(this._autoPrepayChange, this));
     this.$container.on('click', '.fe-auto-pay-info', $.proxy(this._openAutoPayInfo, this));
     this.$container.on('change', '.fe-set-use', $.proxy(this._changeUseStatus, this));
   },
@@ -35,15 +36,13 @@ Tw.MyTFarePaymentMicroContents.prototype = {
     }, $.proxy(this._goPrepay, this));
   },
   _goPrepay: function ($layer) {
-    new Tw.MyTFarePaymentMicroContentsPay($layer, this.$title, this._maxAmount, this._name);
+    new Tw.MyTFarePaymentPrepayPay($layer, this.$title, this._maxAmount, this._name);
   },
   _autoPrepay: function () {
-    this._popupService.open({
-      'hbs': 'MF_06_03'
-    }, $.proxy(this._goAutoPrepay, this));
+    this._historyService.goLoad('/myt/fare/payment/' + this.$title + '/auto');
   },
-  _goAutoPrepay: function ($layer) {
-    new Tw.MyTFarePaymentMicroContentsPay($layer, this.$title, this._maxAmount, this._name);
+  _autoPrepayChange: function () {
+    this._historyService.goLoad('/myt/fare/payment/' + this.$title + '/auto/change');
   },
   _openAutoPayInfo: function () {
     this._popupService.openAlert(Tw.AUTO_PAY_INFO.CONTENTS, Tw.AUTO_PAY_INFO.TITLE, Tw.BUTTON_LABEL.CONFIRM);
@@ -78,9 +77,9 @@ Tw.MyTFarePaymentMicroContents.prototype = {
     }
 
     if (tx === Tw.ALERT_MSG_MYT_FARE.USABLE) {
-      message += ' ' + Tw.ALERT_MSG_MYT_FARE.MSG_ALLOWED
+      message += ' ' + Tw.ALERT_MSG_MYT_FARE.MSG_ALLOWED;
     } else {
-      message += ' ' + Tw.ALERT_MSG_MYT_FARE.MSG_PROHIBITED
+      message += ' ' + Tw.ALERT_MSG_MYT_FARE.MSG_PROHIBITED;
     }
 
     return message;

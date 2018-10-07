@@ -13,7 +13,7 @@ import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
 import {MYT_FARE_PAYMENT_NAME} from '../../../../types/string.type';
 
-class MytFarePaymentCard extends TwViewController {
+class MyTFarePaymentCard extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, layerType: string) {
     Observable.combineLatest(
@@ -95,4 +95,4 @@ class MytFarePaymentCard extends TwViewController {
 
 }
 
-export default MytFarePaymentCard;
+export default MyTFarePaymentCard;

@@ -12,7 +12,7 @@ import FormatHelper from '../../../../utils/format.helper';
 import {API_CMD, API_CODE} from '../../../../types/api-command.type';
 import {Observable} from 'rxjs/Observable';
 
-class MytFarePaymentSms extends TwViewController {
+class MyTFarePaymentSms extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, layerType: string) {
     Observable.combineLatest(
@@ -89,4 +89,4 @@ class MytFarePaymentSms extends TwViewController {
 
 }
 
-export default MytFarePaymentSms;
+export default MyTFarePaymentSms;

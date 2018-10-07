@@ -13,7 +13,7 @@ import DateHelper from '../../../../utils/date.helper';
 import {MYT_FARE_PAYMENT_NAME} from '../../../../types/string.type';
 import {MYT_FARE_PAYMENT_TITLE, MYT_FARE_PAYMENT_TYPE, SVC_ATTR_NAME} from '../../../../types/bff.type';
 
-class MytFarePaymentAccount extends TwViewController {
+class MyTFarePaymentAccount extends TwViewController {
   constructor() {
     super();
   }
@@ -98,4 +98,4 @@ class MytFarePaymentAccount extends TwViewController {
 
 }
 
-export default MytFarePaymentAccount;
+export default MyTFarePaymentAccount;

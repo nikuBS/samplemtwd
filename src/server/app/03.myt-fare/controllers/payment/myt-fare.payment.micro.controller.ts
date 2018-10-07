@@ -12,7 +12,7 @@ import DateHelper from '../../../../utils/date.helper';
 import {Observable} from 'rxjs/Observable';
 import {MYT_FARE_MICRO_NAME} from '../../../../types/bff.type';
 
-class MytFarePaymentMicro extends TwViewController {
+class MyTFarePaymentMicro extends TwViewController {
   constructor() {
     super();
   }
@@ -61,7 +61,7 @@ class MytFarePaymentMicro extends TwViewController {
       });
   }
 
-  private getRemainLimit(gubun: string, requestCnt: string): Observable<any> {
+  private getRemainLimit(gubun: string, requestCnt: any): Observable<any> {
     return this.apiService.request(API_CMD.BFF_07_0073, { gubun: gubun, requestCnt: requestCnt });
   }
 
@@ -132,4 +132,4 @@ class MytFarePaymentMicro extends TwViewController {
   }
 }
 
-export default MytFarePaymentMicro;
+export default MyTFarePaymentMicro;

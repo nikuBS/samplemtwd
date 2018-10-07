@@ -12,7 +12,7 @@ import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
 import {MYT_FARE_PAYMENT_TITLE, SVC_ATTR_NAME} from '../../../../types/bff.type';
 
-class MytFarePaymentPoint extends TwViewController {
+class MyTFarePaymentPoint extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, layerType: string) {
     Observable.combineLatest(
@@ -82,4 +82,4 @@ class MytFarePaymentPoint extends TwViewController {
 
 }
 
-export default MytFarePaymentPoint;
+export default MyTFarePaymentPoint;
