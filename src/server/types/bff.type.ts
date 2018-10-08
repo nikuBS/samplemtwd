@@ -130,6 +130,11 @@ export enum MYT_FARE_MICRO_NAME {
   AC = '변경'
 }
 
+export enum MYT_FARE_BILL_CO_TYPE {
+  TWORLD = 'T',
+  BROADBAND = 'B'
+}
+
 export enum HOME_SMART_CARD {
   H01 = '자녀 사용량 조회',
   H02 = '요금 안내서',

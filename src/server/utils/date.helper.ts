@@ -128,6 +128,16 @@ class DateHelper {
 
   /**
    * @param date {Date} or {string} : YYYYMMDDhhmmss
+   * @returns {string} : 2018.06.01 (first date of this month)
+   */
+  static getShortFirstDateNoNot(date: any): string {
+    const curDate = this.convDateFormat(date);
+    const firstDate = new Date(curDate.setDate(1));
+    return moment(firstDate).format('YYYY.MM.DD');
+  }
+
+  /**
+   * @param date {Date} or {string} : YYYYMMDDhhmmss
    * @returns {string} : 06.01
    */
   static getShortDateNoYear(date: any): string {
