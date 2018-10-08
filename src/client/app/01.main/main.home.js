@@ -48,18 +48,15 @@ Tw.MainHome.prototype = {
   },
   _cachedSmartCardTemplate: function () {
 
-    // var tmpl = Handlebars.compile($('#fe-band-data-share-li-detail').html());
-    // var html = tmpl( resp.result );
-    //
-    // $btnContainer.html(html);
   },
   _getBillData: function (element) {
-    this._apiService.request(Tw.API_CMD.BFF_05_0036, {})
-      .done($.proxy(this._successBillData, this, element))
+    this._apiService.requestArray([
+      { command: Tw.API_CMD.BFF_05_0036, params: {} },
+      { command: Tw.API_CMD.BFF_05_0047, params: {} }
+    ]).done($.proxy(this._successBillData, this, element))
       .fail($.proxy(this._failBillData, this));
   },
-  _successBillData: function (element, resp) {
-
+  _successBillData: function (element, resp1, resp2) {
   },
   _failBillData: function () {
 
@@ -94,7 +91,6 @@ Tw.MainHome.prototype = {
       .fail($.proxy(this._failGiftData, this));
   },
   _successGiftData: function (element, resp) {
-    console.log(element, resp);
   },
   _failGiftData: function () {
 

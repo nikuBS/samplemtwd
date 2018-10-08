@@ -17,7 +17,8 @@ import {
   SVC_ATTR_E,
   SVC_ATTR_NAME,
   UNIT,
-  UNIT_E
+  UNIT_E,
+  MYT_FARE_BILL_CO_TYPE
 } from '../../../types/bff.type';
 import DateHelper from '../../../utils/date.helper';
 
@@ -125,17 +126,48 @@ class MainHome extends TwViewController {
 
   private getBillData(): Observable<any> {
     let billData = {};
-    return this.apiService.request(API_CMD.BFF_05_0036, { invDt: ['201810']}).map((resp) => {
-      if ( resp.code === API_CODE.CODE_00 ) {
-        billData = this.parseBillData(resp.result);
-      }
+    return Observable.combineLatest(
+      this.getCharge(),
+      this.getUsed(),
+      (charge, used) => {
+        return { charge, used };
+      }).map((resp) => {
+      billData = this.parseBillData(resp);
+      console.log(billData);
       return billData;
     });
   }
 
-  private parseBillData(billData): any {
+  private getCharge(): any {
+    return this.apiService.request(API_CMD.BFF_05_0036, { invDt: ['201810'] }).map((resp) => {
+      if ( resp.code === API_CODE.CODE_00 ) {
+        return resp.result;
+      }
+      return null;
+    });
+  }
 
-    return billData;
+  private getUsed(): any {
+    return this.apiService.request(API_CMD.BFF_05_0047, { invDt: ['201810'] }).map((resp) => {
+      if ( resp.code === API_CODE.CODE_00 ) {
+        return resp.result;
+      }
+      return null;
+    });
+  }
+
+  private parseBillData(billData): any {
+    if ( billData.charge.coClCd === MYT_FARE_BILL_CO_TYPE.BROADBAND ) {
+      return {
+        coClCd: billData.charge.coClCd,
+        chargeAmtTot: billData.charge.useAmtTot,
+        usedAmtTot: billData.used.useAmtTot,
+        deduckTot: billData.charge.deduckTotInvAmt,
+        invEndDt: DateHelper.getShortDateNoDot(billData.charge.invDt + '000000'),
+        invStartDt: DateHelper.getShortFirstDateNoNot(billData.charge.invDt + '000000')
+      };
+    }
+    return {};
   }
 
   private getWireServiceInfo(): Observable<any> {
