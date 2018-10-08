@@ -82,7 +82,7 @@ Tw.RechargeGift.prototype = {
   showRemainData: function (e) {
     var $wrap_remain_data = $(e.currentTarget).closest('.gift-box-info-list');
 
-    // this._apiService.request(Tw.API_CMD.BFF_06_0014, { reqCnt: 3 })
+    // this._apiService.request(Tw.API_CMD.BFF_06_0014, { reqCnt: Tw.IFT_REMAIN_RETRY })
     //   .done(function (res) {
     //   }.bind(this));
 
