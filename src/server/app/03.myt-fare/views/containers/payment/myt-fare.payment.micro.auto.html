@@ -33,15 +33,15 @@
                     </div>
                     <ul class="form-data-list">
                         <li class="type2">
-                            <label class="tit">선결제 금액</label>
-                            <button id="<%= autoPrepayInfo.cmbAutoChrgAmt %>" class="bt-dropdown big fe-prepay-amount" title="선결제 금액" aria-haspopup="true">
-                                <%= autoPrepayInfo.comboChargeAmount %>만원<span class="ico"></span>
-                            </button>
-                        </li>
-                        <li class="type2">
                             <label class="tit">기준 금액</label>
                             <button id="<%= autoPrepayInfo.cmbAutoChrgStrdAmt %>" class="bt-dropdown big fe-standard-amount" title="기준 금액" aria-haspopup="true">
                                 <%= autoPrepayInfo.comboStandardAmount %>만원<span class="ico"></span>
+                            </button>
+                        </li>
+                        <li class="type2">
+                            <label class="tit">선결제 금액</label>
+                            <button id="<%= autoPrepayInfo.cmbAutoChrgAmt %>" class="bt-dropdown big fe-prepay-amount" title="선결제 금액" aria-haspopup="true">
+                                <%= autoPrepayInfo.comboChargeAmount %>만원<span class="ico"></span>
                             </button>
                         </li>
                         <li class="mt20">
@@ -117,7 +117,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.MyTFarePaymentPrepayAuto($('#myt-fare-payment-micro-auto'), 'MICRO');
+    new Tw.MyTFarePaymentPrepayAuto($('#myt-fare-payment-micro-auto'), 'MICRO', 'auto');
   });
 </script>
 <% include ../../components/end.component.html %>

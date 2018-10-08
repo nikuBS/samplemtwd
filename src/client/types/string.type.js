@@ -79,6 +79,12 @@ Tw.AUTO_PAY_INFO = {
   '잔여한도 걱정없이 소액결제를 이용하세요.'
 };
 
+Tw.AUTO_PAY_CANCEL = {
+  TITLE: '자동 선결제를' + '<br/>' + '해지하시겠습니까?',
+  CONTENTS: '자동 선결제가' + '<br/>' + '즉각 해지됩니다.',
+  BTN_NAME: '해지하기'
+};
+
 Tw.AMOUNT_INFO = {
   TITLE: '금액정보란',
   MICRO_CONTENTS: '기준금액 및 선결제 금액은 이용한도의 최대 90%금액까지 설정이 가능합니다.' + '<br/><br/>' +
@@ -238,7 +244,8 @@ Tw.INFO = {
     },
     DISCOUNT: {
       DC_01_01_TITLE: '50% 할인제공 대상 데이터는',
-      DC_01_01_CONTENTS: '기본요금상품 및 무료로 제공되는 데이터 제공량에 한합니다. <br />대상 데이터 : 각 요금상품 별 데이터 기본 제공량, T끼리 데이터 선물하기 및 데이터 리필하기 서비스로 받은 데이터 제공량, 눝 데이터 생성하기, T가족혜택 데이터 생성하기'
+      DC_01_01_CONTENTS: '기본요금상품 및 무료로 제공되는 데이터 제공량에 한합니다. <br />' +
+      '대상 데이터 : 각 요금상품 별 데이터 기본 제공량, T끼리 데이터 선물하기 및 데이터 리필하기 서비스로 받은 데이터 제공량, 눝 데이터 생성하기, T가족혜택 데이터 생성하기'
     },
     USAGE_TING: {
       DC_01_01_TITLE: '통화가능 금액이란?',
@@ -247,10 +254,11 @@ Tw.INFO = {
         '상한(20,000원) – 기본료(12,500원) = 7,500원\n'
     }
   }
-},
+};
 
 Tw.URL_PATH = {
-  OKCASHBAG: 'https://member.okcashbag.com/mb/ocb/searchPass/searchPass/MOCB/687474703A2F2F6d2e6f6b636173686261672e636f6d2F696e6465782e6d6f63623F6c6f67696e3D59',
+  OKCASHBAG: 'https://member.okcashbag.com/mb/ocb/searchPass/searchPass/' + '' +
+  'MOCB/687474703A2F2F6d2e6f6b636173686261672e636f6d2F696e6465782e6d6f63623F6c6f67696e3D59',
   BROADBAND: 'http://www.skbroadband.com',
   COP_SERVICE: 'http://b2b.tworld.co.kr/cs/counsel/certServiceInfo.bc',
   CONTETNS_YOUTUBE_HELP_URL: 'https://support.google.com/youtube/contact/commerce_contact?hl=ko&cfsi=subs_red_2',
