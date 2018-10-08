@@ -10,6 +10,7 @@ Tw.MainHome = function (rootEl, smartCard) {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._nativeSrevice = Tw.Native;
+  this._historyService = new Tw.HistoryService();
 
   this._smartCardOrder = JSON.parse(smartCard);
 
@@ -24,6 +25,16 @@ Tw.MainHome = function (rootEl, smartCard) {
 };
 
 Tw.MainHome.prototype = {
+  GIFT_ERROR_CODE: {
+    GFT0001: 'GFT0001',   // 제공자 선물하기 불가 상태
+    GFT0002: 'GFT0002',   // 제공자 선물하기 불가 요금제
+    GFT0003: 'GFT0003',   // 제공자 당월 선물가능 횟수 초과
+    GFT0004: 'GFT0004',   // 제공자 당월 선물가능 용량 미달
+    GFT0005: 'GFT0005',   // 제공자가 미성년자이면 선물하기 불가
+    GFT0013: 'GFT0013'    // 기
+  },
+
+
   _cachedElement: function () {
     this.$elBarcode = this.$container.find('#fe-membership-barcode');
     this.$elBarcode.JsBarcode(this.$elBarcode.data('cardnum'));
@@ -83,16 +94,70 @@ Tw.MainHome.prototype = {
   _failMicroPayData: function () {
 
   },
-  _getGiftData: function (element) {
+  _getGiftData: function (element, index) {
+    // skt_landing.action.loading.on({ ta: '.fe-smart-' + index, co: 'grey', size: true });
     this._apiService.requestArray([
       { command: Tw.API_CMD.BFF_06_0015, params: {} },
-      { command: Tw.API_CMD.BFF_06_0014, params: {} }
+      { command: Tw.API_CMD.BFF_06_0014, params: { reqCnt: Tw.GIFT_REMAIN_RETRY } }
     ]).done($.proxy(this._successGiftData, this, element))
       .fail($.proxy(this._failGiftData, this));
   },
-  _successGiftData: function (element, resp) {
+  _successGiftData: function (element, sender, remain) {
+    var $giftTemp = $('#fe-smart-gift');
+    this.tplGiftCard = Handlebars.compile($giftTemp.html());
+    element.html(this.tplGiftCard(this._parseGiftData(sender, remain)));
+
+    $('.fe-bt-go-gift').click($.proxy(this._onClickBtGift, this, sender));
   },
   _failGiftData: function () {
+
+  },
+  _parseGiftData: function (sender, remain) {
+    var result = {
+      blockUsage: false,
+      blockProduct: false,
+      enableGiftBt: true
+    };
+
+    if ( new Date().getDate() === Tw.GIFT_BLOCK_USAGE ) {
+      result.blockUsage = true;
+      return result;
+    }
+    this._parseSenderData(sender, remain, result);
+
+    return result;
+  },
+
+  _parseSenderData: function (sender, remain, result) {
+    if ( sender.code === Tw.API_CODE.CODE_00 ) {
+      this._parseRemainData(remain, result);
+      result.dataGiftCnt = sender.result.dataGiftCnt;
+      result.familyDataGiftCnt = sender.result.familyDataGiftCnt;
+      result.familyMemberYn = sender.result.familyMemberYn === 'Y';
+      result.goodFamilyMemberYn = sender.result.goodFamilyMemberYn === 'Y';
+      result.enableGiftBt = !(sender.result.dataGiftCnt === '0' && sender.result.familyDataGiftCnt === '0');
+    } else if ( sender.code === this.GIFT_ERROR_CODE.GFT0002 ) {
+      result.blockProduct = true;
+    } else {
+      Tw.Error(sender.code, sender.msg).pop();
+    }
+  },
+  _parseRemainData: function (remain, result) {
+    if ( remain.code === Tw.API_CODE.CODE_00 ) {
+      result.dataRemQty = remain.result.dataRemQty;
+    } else {
+      result.dataRemQty = '32.2';
+      // Tw.Error(remain.code, remain.msg).pop();
+    }
+  },
+  _onClickBtGift: function (sender) {
+    if ( sender.code === Tw.API_CODE.CODE_00 ) {
+      if ( sender.result.dataGiftCnt > 0 ) {
+        this._historyService.goLoad('/myt/data/gift');
+      } else if (sender.result.familyDataGiftCnt > 0) {
+        this._historyService.goLoad('/myt/data/gift#auto');
+      }
+    }
 
   },
   _getRechargeData: function (element) {
@@ -148,7 +213,7 @@ Tw.MainHome.prototype = {
         this._getMicroPayData(this.$elArrSmartCard[index]);
         break;
       case Tw.HOME_SMART_CARD_E.GIFT:
-        this._getGiftData(this.$elArrSmartCard[index]);
+        this._getGiftData(this.$elArrSmartCard[index], index);
         break;
       case Tw.HOME_SMART_CARD_E.RECHARGE:
         this._getRechargeData(this.$elArrSmartCard[index]);
