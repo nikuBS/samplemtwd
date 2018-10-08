@@ -1,7 +1,7 @@
 # Node.js app Docker file
 
 # Linux dependencies
-FROM mycluster.icp:8500/default/nodejs8-centos:0.1
+FROM mtwd.icp.skt.com:8500/infra/nodejs8-centos:0.1
 #FROM node:carbon
 
 WORKDIR /tworld
