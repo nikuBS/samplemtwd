@@ -32,12 +32,12 @@
                             <div class="tab-linker">
                                 <ul role="tablist" style="width: 100%;">
                                     <li role="tab" aria-selected="true" aria-controls="tab1-tab" id="tab1">
-                                        <a>바로 선물</a>
+                                        <a class="fe-replace-history" href="">바로 선물</a>
                                     </li>
                                     <!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
                                     <% if ( autoList ) { %>
                                     <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2">
-                                        <a>자동 선물<span class="count"><%-autoList.length%></span></a>
+                                        <a class="fe-replace-history" href="#auto">자동 선물<span class="count"><%-autoList.length%></span></a>
                                     </li>
                                     <% } %>
                                 </ul>
@@ -68,6 +68,7 @@
   $(document).ready(function () {
     var oMyTDataGiftImmediately = new Tw.MyTDataGiftImmediately($('#tab1-tab'));
     var oMyTDataGiftMonthly = new Tw.MyTDataGiftMonthly($('#tab2-tab'));
+    new Tw.MyTDataGift($('.wrap'));
   });
 </script>
 <% include ../../components/end.component.html %>
