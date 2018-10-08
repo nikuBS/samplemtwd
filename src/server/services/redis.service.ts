@@ -40,7 +40,7 @@ class RedisService {
 
         try {
           result = JSON.parse(reply);
-        } catch (e) {
+        } catch ( e ) {
           result = null;
         }
 
