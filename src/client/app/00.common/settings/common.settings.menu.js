@@ -24,6 +24,7 @@ Tw.CommonSettingsMenu = function (rootEl) {
 Tw.CommonSettingsMenu.prototype = {
   _cacheElements: function () {
     this.$versionText = this.$container.find('#fe-version');
+    this.$updateBox = this.$container.find('#fe-update-box');
   },
   _init: function () {
     Tw.DeviceInfo.getDeviceInfo().done($.proxy(this._onDeviceVersion, this));
@@ -42,9 +43,9 @@ Tw.CommonSettingsMenu.prototype = {
     if (res.code === Tw.API_CODE.CODE_00) {
       var latestVersion = res.result.latestVersion;
       if (latestVersion > this._currentVersion) {
-        // TODO: show update button
+        this.$updateBox.removeClass('none');
       } else {
-        // TODO: show it's the latest version
+        this.$versionText.text(Tw.SETTINGS_MENU.LATEST + ' ' + this.$versionText.text());
       }
     }
   },
