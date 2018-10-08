@@ -7,7 +7,6 @@ import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
-import { PREPAY_TITLE } from '../../../../types/bff.old.type';
 import { Observable } from 'rxjs/Observable';
 
 class MyTFarePaymentMicroAuto extends TwViewController {
@@ -20,7 +19,6 @@ class MyTFarePaymentMicroAuto extends TwViewController {
       if (resp.code === API_CODE.CODE_00) {
         res.render('payment/myt-fare.payment.micro.auto.html', {
           autoPrepayInfo: this.parseData(resp.result),
-          title: PREPAY_TITLE.MICRO,
           svcInfo: svcInfo
         });
       } else {

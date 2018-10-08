@@ -8,8 +8,7 @@ import {NextFunction, Request, Response} from 'express';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import {Observable} from 'rxjs/Observable';
 import {API_CMD, API_CODE} from '../../../../types/api-command.type';
-import {PAYMENT_OPTION} from '../../../../types/bff.old.type';
-import {MYT_FARE_PAYMENT_TITLE, MYT_FARE_PAYMENT_NAME} from '../../../../types/bff.type';
+import {MYT_FARE_PAYMENT_TITLE, MYT_FARE_PAYMENT_NAME, MYT_FARE_PAYMENT_TYPE} from '../../../../types/bff.type';
 
 class MyTFarePaymentAuto extends TwViewController {
   constructor() {
@@ -45,13 +44,13 @@ class MyTFarePaymentAuto extends TwViewController {
     result.payCode = '1';
     result.payDate = '11';
 
-    if (result.payMthdCd === PAYMENT_OPTION.BANK || result.payMthdCd === PAYMENT_OPTION.CARD) {
+    if (result.payMthdCd === MYT_FARE_PAYMENT_TYPE.BANK || result.payMthdCd === MYT_FARE_PAYMENT_TYPE.CARD) {
       result.title = MYT_FARE_PAYMENT_TITLE.AUTO_CHANGE;
       result.buttonName = MYT_FARE_PAYMENT_NAME.CHANGE;
       result.type = 'change';
       result.isAuto = true;
 
-      if (result.payMthdCd === PAYMENT_OPTION.CARD && result.payCyclNm !== undefined) {
+      if (result.payMthdCd === MYT_FARE_PAYMENT_TYPE.CARD && result.payCyclNm !== undefined) {
         result.payCode = result.payCyclCd;
         result.payDate = result.payCyclNm;
       }
