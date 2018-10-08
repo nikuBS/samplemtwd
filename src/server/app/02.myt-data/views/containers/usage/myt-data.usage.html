@@ -25,7 +25,7 @@
             <div class="cont-box nogaps-hoz">
                 <div class="plan-title">
                     <h3 class="tit"><%= svcInfo.prodNm %></h3>
-                    <div class="bt-alone"><button class="bt-bg-blue1">나의 요금제</button></div>
+                    <div class="bt-alone"><a href="/myt/join/product-service" class="bt-bg-blue1">나의 요금제</a></div>
                 </div>
             </div>
             <!--// .cont-box -->
@@ -301,7 +301,6 @@
     </div>
     <!--// #contents -->
 </div>
-<%- include('../../components/usage/myt-data.usage.data-share.html'); %>
 
 <!--// #skip_navigation -->
 <% include ../../components/javascript.component.html %>
@@ -316,8 +315,6 @@
       dataDiscount : '<%= usageData.dataDiscount %>',
       bandDataSharing : '<%= balanceAddOns.sharingService.bandDataSharing %>'
     });
-    // var myTDataUsageDataShare = new Tw.MyTDataUsageDataShare($('#fe-data-share'));
-    // myTDataUsageDataShare.open();
   });
 </script>
 <% include ../../components/end.component.html %>

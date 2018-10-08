@@ -8,6 +8,7 @@ Tw.MyTDataUsageDataShare = function (rootEl) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
+  this._historyService = new Tw.HistoryService();
   this._children = [];
   this._cachedElement();
   this._bindEvent();
@@ -22,6 +23,9 @@ Tw.MyTDataUsageDataShare.prototype = {
     this._apiService.request(Tw.API_CMD.BFF_05_0004)
       .done($.proxy(this._reqChildrenDone, this))
       .fail($.proxy(this._reqChildrenFail, this));
+  },
+  close: function () {
+    this.$container.hide();
   },
   _cachedElement: function () {
     this._$dataChildTmpl = this.$container.find('#fe-child-tmpl');
@@ -80,6 +84,7 @@ Tw.MyTDataUsageDataShare.prototype = {
 
   },
   _onClickBtnClose: function () {
-    this.$container.hide();
+    this._historyService.goBack();
+    this.close();
   }
 };

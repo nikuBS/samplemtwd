@@ -6,8 +6,10 @@
 
 <div class="data-type">
     <h4 class="tit"><%= typeStr %></h4>
-    <% if (type === 'data') { %>
-    <p class="num">총 데이터 잔여량 <em>36.7</em> GB</p>
+    <% if (type === 'data' && items[0]) { %>
+    <p class="num">총 데이터 잔여량
+        <em><%= items[0].showRemained.data %></em> <%= items[0].showRemained.unit %>
+    </p>
     <% } %>
 </div>
 
@@ -61,10 +63,10 @@
             <% if (items[i].sharedData) { %>
                 <div class="share-info mt20">
                     <p class="data">
-                        공유 <%= items[i].sharedData.showRemained.data %><%= items[i].sharedData.showRemained.unit %> 가능
+                        공유 <%= items[i].sharedData.showTotal.data %><%= items[i].sharedData.showTotal.unit %> 가능
                         <!--<button aria-haspopup="true" class="info-view-ic">정보보기</button>-->
                     </p>
-                    <!--<button class="btn-share">15GB 공유 중</button>-->
+                    <button class="btn-share fe-btn-share"><%= items[i].sharedData.showUsed.data %><%= items[i].sharedData.showUsed.unit %> 공유 중</button>
                 </div>
             <% } %>
         </li>

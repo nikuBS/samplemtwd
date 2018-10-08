@@ -40,6 +40,12 @@ Tw.MyTDataUsage.prototype = {
     // 내폰끼리 결합 상세 조회
     this.$container.on('click', '#list-band-data-share .datatogether-li .bt-bg-blue1', $.proxy(this._requestBandDetail, this));
 
+
+    // 내폰끼리 결합 상세 조회
+    this.$container.on('click', '.fe-btn-share', $.proxy(function() {
+      this._historyService.goLoad('/myt/data/usage/total-sharing-data');
+    }, this));
+
   },
 
   /**
