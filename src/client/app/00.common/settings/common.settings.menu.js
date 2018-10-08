@@ -31,6 +31,7 @@ Tw.CommonSettingsMenu.prototype = {
   },
   _bindEvents: function () {
     this.$container.on('click', '#fe-go-certificates', $.proxy(this._onCertificates, this));
+    this.$container.on('click', '#fe-btn-update', $.proxy(this._onUpdate, this));
   },
   _onDeviceVersion: function (res) {
     this._currentVersion = res.appVersion;
@@ -47,6 +48,21 @@ Tw.CommonSettingsMenu.prototype = {
       } else {
         this.$versionText.text(Tw.SETTINGS_MENU.LATEST + ' ' + this.$versionText.text());
       }
+    }
+  },
+  _onUpdate: function () {
+    var url = '';
+    if (Tw.BrowserHelper.isAndroid()) {
+      url = 'market://details?id=com.sktelecom.minit';
+    } else if (Tw.BrowserHelper.isIos()) {
+      url = 'https://itunes.apple.com/kr/app/%EB%AA%A8%EB%B0%94%EC%9D%BCtworld/id428872117?mt=8';
+    }
+
+    if (!Tw.FormatHelper.isEmpty(url)) {
+      this._nativeService.send(Tw.NTV_CMD.OPEN_URL, {
+        type: Tw.NTV_BROWSER.EXTERNAL,
+        url: url
+      });
     }
   },
   _onCertificates: function () {
