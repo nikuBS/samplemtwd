@@ -3,7 +3,8 @@ Tw.BUTTON_LABEL = {
   CANCEL: '취소',
   CLOSE: '닫기',
   MORE: '더보기',
-  LINE: '회선관리'
+  LINE: '회선관리',
+  CHANGE : '변경하기'
 };
 
 Tw.POPUP_TITLE = {
@@ -132,6 +133,29 @@ Tw.MYT_FARE_BILL_REISSUE_TYPE_CD = {
   'K' : 'K'  // Bill Letter+이메일
 };
 
+Tw.MYT_FARE_BILL_SET = {
+  A41 : {
+    TITLE : '요금안내서 유형을 변경하시겠습니까?',
+    CONTENTS : '기존에 신청하신 요금안내서는 자동 해지 됩니다.'
+  },
+  A42 : {
+    TITLE : '요금안내서 정보를 변경하시겠습니까?',
+    CONTENTS : '변경하기를 누르시면 변경하신 정보가 즉시 적용 됩니다.'
+  },
+  A43 : {
+    TITLE : '요금안내서 유형을 변경하시겠습니까?',
+    CONTENTS : '고객님의 이메일로 신청확인 메일이 발송되오니 확인해 주시기 바랍니다.'
+  },
+  A44 : {
+    TITLE : '신청 불가',
+    CONTENTS : '선택하신 청구월에 대한 청구서가 이미 재발행 신청 되었습니다.'
+  },
+  A45 : {
+    TITLE : '요금안내서 재발행을 <br/> 신청하시겠습니까?',
+    CONTENTS : '선택하신 청구월에 대한 청구서가 재발행 됩니다.'
+  }
+};
+
 Tw.ALERT_MSG_COMMON = {
   SERVER_ERROR: '통신 오류입니다. 잠시 후 다시 시도해 주세요.'
 };
@@ -159,7 +183,13 @@ Tw.ALERT_MSG_MYT_FARE = {
   CONTENTS: '콘텐츠이용료',
   USABLE: '사용',
   MSG_ALLOWED: '이 혀용되었습니다.',
-  MSG_PROHIBITED: '이 차단되었습니다.'
+  MSG_PROHIBITED: '이 차단되었습니다.',
+  V18 : '휴대폰번호 자릿수를 확인해주세요. (10~11자리)',
+  V21 : '이메일 주소가 올바르지 않습니다.',
+  V41 : '법정대리인 휴대폰번호를 입력해주세요.',
+  V42 : '이메일 주소를 입력해주세요.',
+  V43 : '우편 주소를 입력해주세요.',
+  V44 : '휴대폰 번호가 올바르지 않습니다.'
 };
 
 Tw.ALERT_MSG_MYT_JOIN = {
