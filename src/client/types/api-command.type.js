@@ -136,6 +136,9 @@ Tw.API_CMD = {
   BFF_05_0137: { path: '/core-product/v1/services/wireless/additions', method: Tw.API_METHOD.GET },
   BFF_05_0138: { path: '/core-product/v1/services/combinations/data-sharings', method: Tw.API_METHOD.PUT },
   BFF_05_0139: { path: '/core-modification/v1/myinfo/wire-service-contracts', method: Tw.API_METHOD.GET },
+  BFF_05_0149: { path: '/core-modification/v1/phone-pause-states', method: Tw.API_METHOD.GET },
+  BFF_05_0155: { path: '/my-t/myinfo/discount-infos', method: Tw.API_METHOD.GET },
+  BFF_05_0161: { path: '/core-product/v1/services/wireless/additions/cnt', method: Tw.API_METHOD.GET },
 
   // RECHARGE
   BFF_06_0001: { path: '/core-recharge/v1/refill-coupons', method: Tw.API_METHOD.GET },
