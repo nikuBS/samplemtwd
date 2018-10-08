@@ -26,7 +26,9 @@ Tw.MyTFareBillGuideIndividual.prototype = {
     this._bindEvent();
     this._hbRegisterHelper();
 
-    this._getChildBillInfo();
+    if ( this.resData.childLineInfo ) {
+      this._getChildBillInfo();
+    }
     this._getUseBillsInfo();
 
   },
