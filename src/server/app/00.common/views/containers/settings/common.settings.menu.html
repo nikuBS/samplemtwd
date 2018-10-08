@@ -24,7 +24,7 @@
                 <hr class="cont-sp type1" aria-hidden="true"/>
                 <div class="cont-box nogaps">
                     <ul class="link-long-list">
-                        <% if (isApp && isLogin) { %>
+                        <% if (isLogin) { %>
                         <li>
                             <div class="link-long">
                                 <button>위치정보 이용동의 설정
@@ -43,6 +43,9 @@
                                 </a>
                             </div>
                         </li>
+                        <% } %>
+                        <% if (isApp && isLogin) { %>
+                        <li>
                         <li>
                             <div class="link-long">
                                 <button>위젯
