@@ -20,6 +20,7 @@ import MyTFarePaymentMicro from './controllers/payment/myt-fare.payment.micro.co
 import MyTFarePaymentMicroAuto from './controllers/payment/myt-fare.payment.micro.auto.controller';
 import MyTFarePaymentMicroAutoChange from './controllers/payment/myt-fare.payment.micro.auto.change.controller';
 import MyTFareBillSetComplete from './controllers/bill/myt-fare.bill.set.complete.controller';
+import MyTFarePaymentMicroAutoInfo from './controllers/payment/myt-fare.payment.micro.auto.info.controller';
 
 class MytFareRouter extends TwRouter {
   constructor() {
@@ -40,6 +41,7 @@ class MytFareRouter extends TwRouter {
     this.controllers.push({ url: '/payment/sms', controller: new MyTFarePaymentSms() });
     this.controllers.push({ url: '/payment/micro', controller: new MyTFarePaymentMicro() });
     this.controllers.push({ url: '/payment/micro/auto', controller: new MyTFarePaymentMicroAuto() });
+    this.controllers.push({ url: '/payment/micro/auto/info', controller: new MyTFarePaymentMicroAutoInfo() });
     this.controllers.push({ url: '/payment/micro/auto/change', controller: new MyTFarePaymentMicroAutoChange() });
     this.controllers.push({ url: '/bill/set/return-history', controller: new MyTFareBillSetReturnHistory() });
     this.controllers.push({ url: '/bill/set/change', controller: new MyTFareBillSetChange() });

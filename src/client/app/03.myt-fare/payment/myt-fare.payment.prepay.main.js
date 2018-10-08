@@ -26,7 +26,7 @@ Tw.MyTFarePaymentPrepayMain.prototype = {
   _bindEvent: function () {
     this.$container.on('click', '.fe-prepay', $.proxy(this._prepay, this));
     this.$container.on('click', '.fe-auto-prepay', $.proxy(this._autoPrepay, this));
-    this.$container.on('click', '.fe-auto-prepay-change', $.proxy(this._autoPrepayChange, this));
+    this.$container.on('click', '.fe-auto-prepay-change', $.proxy(this._autoPrepayInfo, this));
     this.$container.on('click', '.fe-auto-pay-info', $.proxy(this._openAutoPayInfo, this));
     this.$container.on('change', '.fe-set-use', $.proxy(this._changeUseStatus, this));
   },
@@ -41,8 +41,8 @@ Tw.MyTFarePaymentPrepayMain.prototype = {
   _autoPrepay: function () {
     this._historyService.goLoad('/myt/fare/payment/' + this.$title + '/auto');
   },
-  _autoPrepayChange: function () {
-    this._historyService.goLoad('/myt/fare/payment/' + this.$title + '/auto/change');
+  _autoPrepayInfo: function () {
+    this._historyService.goLoad('/myt/fare/payment/' + this.$title + '/auto/info');
   },
   _openAutoPayInfo: function () {
     this._popupService.openAlert(Tw.AUTO_PAY_INFO.CONTENTS, Tw.AUTO_PAY_INFO.TITLE, Tw.BUTTON_LABEL.CONFIRM);

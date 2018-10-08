@@ -119,6 +119,12 @@ export enum MYT_FARE_BILL_CO_TYPE {
   BROADBAND = 'B'
 }
 
+export enum MYT_FARE_PREPAY_NAME {
+  R = '신규',
+  F = '해지',
+  C = '변경'
+}
+
 export enum HOME_SMART_CARD {
   H01 = '자녀 사용량 조회',
   H02 = '요금 안내서',

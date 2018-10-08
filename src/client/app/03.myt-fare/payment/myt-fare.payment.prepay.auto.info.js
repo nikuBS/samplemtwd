@@ -4,13 +4,13 @@
  * Date: 2018.10.05
  */
 
-Tw.MyTFarePaymentPrepayAutoInfo = function (rootEl, title, type) {
+Tw.MyTFarePaymentPrepayAutoInfo = function (rootEl, title) {
   this.$container = rootEl;
   this.$title = title;
-  this.$type = type;
 
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
+  this._historyService = new Tw.HistoryService(rootEl);
 
   this._init();
   this._bindEvent();
@@ -22,7 +22,7 @@ Tw.MyTFarePaymentPrepayAutoInfo.prototype = {
     this.$selectList.find('li').each($.proxy(this._setEventEachData, this));
   },
   _initVariables: function () {
-    this.$selectList = this.$container.find('.fe-select-list');
+    this.$selectList = this.$container.find('.fe-history-list');
     this.$standardNode = this.$selectList.find('li:first');
     this.$moreBtn = this.$container.find('.fe-more-btn');
 
@@ -32,7 +32,44 @@ Tw.MyTFarePaymentPrepayAutoInfo.prototype = {
     this._totalPage = Math.ceil(this._totalCnt / this._defaultCnt);
   },
   _bindEvent: function () {
+    this.$container.on('click', '.fe-auto-change', $.proxy(this._changeAutoPrepay, this));
+    this.$container.on('click', '.fe-auto-cancel', $.proxy(this._cancelAutoPrepay, this));
     this.$container.on('click', '.fe-more-btn', $.proxy(this._setMoreData, this));
+  },
+  _changeAutoPrepay: function () {
+    this._historyService.goLoad('/myt/fare/payment/' + this.$title + '/auto/change');
+  },
+  _cancelAutoPrepay: function () {
+    this._popupService.openModalTypeA(Tw.AUTO_PAY_CANCEL.TITLE, Tw.AUTO_PAY_CANCEL.CONTENTS, Tw.AUTO_PAY_CANCEL.BTN_NAME, null,
+      $.proxy(this._cancel, this));
+  },
+  _cancel: function () {
+    var $api = this._getCancelApiName();
+
+    this._apiService.request($api, {})
+      .done($.proxy(this._cancelSuccess, this))
+      .fail($.proxy(this._cancelFail, this));
+
+    this._popupService.close();
+  },
+  _getCancelApiName: function () {
+    var $apiName = '';
+    if (this.$title === 'micro') {
+      $apiName = Tw.API_CMD.BFF_07_0077;
+    } else {
+      $apiName = Tw.API_CMD.BFF_07_0084;
+    }
+    return $apiName;
+  },
+  _cancelSuccess: function (res) {
+    if (res.code === Tw.API_CODE.CODE_00) {
+      this._historyService.goLoad('/myt/fare/payment/' + this.$title);
+    } else {
+      this._cancelFail(res);
+    }
+  },
+  _cancelFail: function (err) {
+    this._popupService.openAlert(err.msg, err.code);
   },
   _setEventEachData: function (idx, target) {
     var $target = $(target);
@@ -43,22 +80,24 @@ Tw.MyTFarePaymentPrepayAutoInfo.prototype = {
   _setMoreData: function () {
     if (this._page < this._totalPage) {
       this._page++;
-
-      if (this.$type === 'auto') {
-        this._setAutoMoreData();
-      } else {
-        this.$selectList.find('li').each($.proxy(this._showMoreData, this));
-      }
+      this._setAutoMoreData();
     }
   },
   _setAutoMoreData: function () {
-    var $api = Tw.API_CMD.BFF_07_0075;
-    if (this.$title === 'contents') {
-      $api = Tw.API_CMD.BFF_07_0079;
-    }
+    var $api = this._getHistoryApiName();
+
     this._apiService.request($api, { pageNo: this._page, listSize: this._defaultCnt })
       .done($.proxy(this._getSuccess, this))
       .fail($.proxy(this._getFail, this));
+  },
+  _getHistoryApiName: function () {
+    var $apiName = '';
+    if (this.$title === 'micro') {
+      $apiName = Tw.API_CMD.BFF_07_0075;
+    } else {
+      $apiName = Tw.API_CMD.BFF_07_0079;
+    }
+    return $apiName;
   },
   _getSuccess: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
@@ -78,17 +117,29 @@ Tw.MyTFarePaymentPrepayAutoInfo.prototype = {
     }
   },
   _setData: function ($record) {
+    var cardName = '';
+    var cardNum = '';
+
+    if (this.$title === 'micro') {
+      cardName = 'cardNm';
+      cardNum = 'cardNumH';
+    } else {
+      cardName = 'prchsCardNm';
+      cardNum = 'cardNum';
+    }
+
     for (var i = 0; i < $record.length; i++) {
       var $liNode = this.$standardNode.clone();
-      $liNode.find('.fe-date').html(Tw.PAYMENT_REQUEST_TYPE[$record[i].autoChrgReqClCd] + '<br />' +
-        Tw.DateHelper.getFullDateAndTime($record[i].operDtm));
-      $liNode.find('.fe-card-info').html($record[i].prchsCardNm + '<br />' +
-        $record[i].cardNum);
-      $liNode.find('.fe-auto-chrg-amt').text(Tw.FormatHelper.addComma($record[i].autoChrgAmt));
-      $liNode.find('.fe-auto-chrg-strd-amt').text(Tw.FormatHelper.addComma($record[i].autoChrgStrdAmt));
+      $liNode.find('.fe-type').text(Tw.PAYMENT_REQUEST_TYPE[$record[i].autoChrgReqClCd]);
+      $liNode.find('.fe-date').text(Tw.DateHelper.getFullDateAndTime($record[i].operDtm));
 
       if ($record[i].autoChrgReqClDd === 'F') {
-        $liNode.find('.fe-cancel-noti').removeClass('none');
+        $liNode.find('.fe-detail').remove();
+      } else {
+        $liNode.find('.fe-card-info').html($record[i][cardName] + '<br />' +
+          $record[i][cardNum]);
+        $liNode.find('.fe-auto-chrg-amt').text(Tw.FormatHelper.addComma($record[i].autoChrgAmt));
+        $liNode.find('.fe-auto-chrg-strd-amt').text(Tw.FormatHelper.addComma($record[i].autoChrgStrdAmt));
       }
       this.$selectList.append($liNode);
     }
@@ -96,15 +147,6 @@ Tw.MyTFarePaymentPrepayAutoInfo.prototype = {
   },
   _getFail: function (err) {
     this._popupService.openAlert(err.code + ' ' + err.msg);
-  },
-  _showMoreData: function (idx, target) {
-    var $target = $(target);
-    if ($target.hasClass('none')) {
-      if (idx < this._page * this._defaultCnt) {
-        $target.removeClass('none');
-      }
-    }
-    this._setHiddenMoreBtn();
   },
   _setHiddenMoreBtn: function () {
     if (this._page === this._totalPage) {

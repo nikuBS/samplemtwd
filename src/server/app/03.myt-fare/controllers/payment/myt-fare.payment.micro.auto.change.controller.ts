@@ -17,55 +17,33 @@ class MyTFarePaymentMicroAutoChange extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    Observable.combineLatest(
-      this.getAutoCardInfo(),
-      this.getAutoPrepayHistory()
-    ).subscribe(([ autoCardInfo, autoPrepay ]) => {
-      if (autoCardInfo.code === API_CODE.CODE_00 && autoPrepay.code === API_CODE.CODE_00) {
-        res.render('payment/myt-fare.payment.micro.auto.html', {
-          autoCardInfo: this.parseCardInfo(autoCardInfo.result),
-          autoPrepay: this.parsePrepayData(autoPrepay.result),
+    this.getAutoPrepayInfo().subscribe((resp) => {
+      if (resp.code === API_CODE.CODE_00) {
+        res.render('payment/myt-fare.payment.micro.auto.change.html', {
+          autoPrepayInfo: this.parseData(resp.result),
+          title: PREPAY_TITLE.MICRO,
           svcInfo: svcInfo
         });
       } else {
-        res.render('payment.prepay.error.html', { err: autoPrepay, svcInfo: svcInfo, title: PREPAY_TITLE.AUTO_PREPAY_HISTORY });
+        this.error.render(res, {
+          code: resp.code,
+          msg: resp.msg,
+          svcInfo: svcInfo
+        });
       }
     });
   }
 
-  private getAutoCardInfo(): Observable<any> {
-    return this.apiService.request(API_CMD.BFF_07_0072, {}).map((res) => {
-      return res;
-    });
+  private getAutoPrepayInfo(): Observable<any> {
+    return this.apiService.request(API_CMD.BFF_07_0086, {});
   }
 
-  private getAutoPrepayHistory(): Observable<any> {
-    return this.apiService.request(API_CMD.BFF_07_0075, { pageNo: 1, listSize: 20 }).map((res) => {
-      return res;
-    });
-  }
-
-  private parseCardInfo(result: any): any {
+  private parseData(result: any): any {
     if (!FormatHelper.isEmpty(result)) {
-      result.autoChargeAmount = FormatHelper.addComma(result.autoChrgAmt);
-      result.autoChargeStandardAmount = FormatHelper.addComma(result.autoChrgStrdAmt);
+      result.comboStandardAmount = result.cmbAutoChrgStrdAmt / 10000;
+      result.comboChargeAmount = result.cmbAutoChrgAmt / 10000;
     }
     return result;
-  }
-
-  private parsePrepayData(result: any): any {
-    const record = result.microPrepayReqRecord;
-    if (!FormatHelper.isEmpty(record)) {
-      record.map((data) => {
-        data.name = REQUEST_TYPE[data.autoChrgReqClCd];
-        data.date = DateHelper.getFullDateAndTime(data.operDtm);
-        data.autoChrgStrdAmount = FormatHelper.addComma(data.autoChrgStrdAmt);
-        data.autoChrgAmount = FormatHelper.addComma(data.autoChrgAmt);
-      });
-    }
-    record.code = API_CODE.CODE_00;
-    record.totalCnt = result.totalCnt;
-    return record;
   }
 }
 
