@@ -11,9 +11,6 @@ import BrowserHelper from '../../../../utils/browser.helper';
 export default class CommonSettingsCertificates extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    res.render('settings/common.settings.certificates.html', {
-      svcInfo: svcInfo,
-      isApp: BrowserHelper.isApp(req)
-    });
+    res.render('settings/common.settings.certificates.html', { svcInfo: svcInfo });
   }
 }

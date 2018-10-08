@@ -29,7 +29,7 @@ Tw.CommonSettingsMenu.prototype = {
     Tw.DeviceInfo.getDeviceInfo().done($.proxy(this._onDeviceVersion, this));
   },
   _bindEvents: function () {
-
+    this.$container.on('click', '#fe-go-certificates', $.proxy(this._onCertificates, this));
   },
   _onDeviceVersion: function (res) {
     this._currentVersion = res.appVersion;
@@ -47,5 +47,9 @@ Tw.CommonSettingsMenu.prototype = {
         // TODO: show it's the latest version
       }
     }
+  },
+  _onCertificates: function () {
+    this._nativeService.send(Tw.NTV_CMD.GO_CERT, {});
+    return false;
   }
 };
