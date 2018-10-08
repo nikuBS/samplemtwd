@@ -11,6 +11,7 @@ export const URL = {
   '/myt/fare/bill/set/return-history': { login: true, id: 'MF_04_04', title: '요금안내서 반송내역' },
   '/myt/fare//bill/set/reissue': { login: true, id: 'MF_04_01', title: '요금안내서 재발행' },
   '/myt/fare//bill/set/change': { login: true, id: 'MF_04_02', title: '요금안내서 변경' },
+  '/myt/fare//bill/set/complete': { login: true, id: 'GR_01', title: '안내서 설정 완료' },
   '/myt/fare/bill/hotbill': { login: true, id: 'MF_03', title: '실시간 사용요금' },
   '/myt/join/product/fee-plan': { login: true, id: 'MS_05', title: '나의 요금제' },
   '/myt/join/product/additions': { login: true, id: 'MS_05', title: '나의 부가상품' },
