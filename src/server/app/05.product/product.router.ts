@@ -7,12 +7,14 @@ import ProductDetailContents from './controllers/product.detail.contents.control
 import ProductBenefitUsageHistory from './controllers/product.benefit-usage-history.controller';
 import ProductCurrentSetting from './controllers/product.current-setting.controller';
 import Product from './controllers/product.controller';
+import ProductAddition from './controllers/product.addition.controller';
 
 class ProductRouter extends TwRouter {
   constructor() {
     super();
 
     this.controllers.push({ url: '/', controller: new Product() });
+    this.controllers.push({ url: '/addition', controller: new ProductAddition() });
     this.controllers.push({ url: '/detail/:prodId', controller: new ProductDetail() });
     this.controllers.push({ url: '/detail/contents/:prodId', controller: new ProductDetailContents() });
     this.controllers.push({ url: '/join/:prodId', controller: new ProductJoin() });

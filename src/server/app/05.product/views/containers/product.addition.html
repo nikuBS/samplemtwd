@@ -1,0 +1,344 @@
+<%#
+* FileName: product.addition.html
+* Author: Jiyoung Jo (jiyoungjo@sk.com)
+* Date: 2018.10.08
+%>
+
+
+<% include ../components/start.component.html %>
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#gnb">메뉴 바로가기</a></li>
+            <li><a href="#contents">본문 바로가기</a></li>
+            <li><a href="#footer">푸터 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- #header -->
+        <%- include('../../../common/views/components/header.component.html', { title: '부가서비스', svcInfo, option: { line: true } }); %>
+        <!--// #header -->
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+                <!-- 사용중인 상품 -->
+                <div class="cont-box gaps-style01">
+                   <div class="submain-myfeeproducts-wrap">
+                        <!-- <a href="#" class="submain-myfeeproducts">
+                            <h3 class="title">사용중인 상품</h3>
+                            <p class="text">band 데이터 퍼펙트S</p>
+                        </a> -->
+                       <button type="button" class="submain-myfeeproducts">
+                           <h3 class="title">사용중인 상품</h3>
+                           <p class="text"><span class="tx-bold"><%= productData.myAdditions.recentlyJoinsProdNm %></span> 외 <%= productData.myAdditions.addProdCnt %>건</p>
+                       </button>
+                   </div>
+                </div>
+                <!--//사용중인 상품 -->
+
+                <!-- 스와이프 -->
+                <div class="cont-box nogaps noborder">
+                    <div class="main-slide-banner dot-btm slide-pagingtype">
+                        <!-- .widget -->
+                        <div class="widget">
+                            <div class="widget-box slider1">
+                                <div class="slider-box">
+                                    <ul class="slider">
+                                        <% for (let i = 0; i < productData.banners.length; i++) { %>
+                                            <% const banner = productData.banners[i]; %>
+                                            <li>
+                                                <% if (banner.bnnrTypCd === 'H') { %>
+                                                    <button>
+                                                    <%- banner.bnnrHtmlCtt %>
+                                                    </button>
+                                                <% } else if (banner.bnnrTypCd === 'I') { %>
+                                                    <a href="<%= banner.twdViewUrl %>">
+                                                        <img src="<%= banner.imgId %>" alt="<%= banner.imgAltVal %>">
+                                                    </a>
+                                                <% } %>
+                                            </li>
+                                        <% } %>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!--// .widget -->
+                    </div>
+                </div>
+                <!-- //스와이프 -->
+
+                <!--상품 퀵메뉴-->
+                <ul class="product-quickmenu"><!-- TODO: 필터 적용된 리스트 이동 필요 -->
+                    <li>
+                        <button class="link">
+                            <i class="ico type-data"></i>
+                            <p class="title">데이터</p>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="link">
+                            <i class="ico type-benefits"></i>
+                            <p class="title">혜택/편의</p>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="link">
+                            <i class="ico type-insurance"></i>
+                            <p class="title">안심/보험</p>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="link">
+                            <i class="ico type-message"></i>
+                            <p class="title">통화/메시지</p>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="link">
+                            <i class="ico type-contents"></i>
+                            <p class="title">컨텐츠 이용</p>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="link">
+                            <i class="ico type-payment"></i>
+                            <p class="title">인증/결제</p>
+                        </button>
+                    </li>
+                </ul>
+                <!--//상품 퀵메뉴-->
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+                <!-- SKT의 대표 부가상품 -->
+                <div class="cont-box">
+                    <div class="plan-title">
+                         <h3 class="tit"><%= productData.bestAdditions.expsTitNm %></h3>
+                         <div class="bt-alone mt4"><button type="button" class="bt-bg-blue1">전체 부가상품</button></div> <!-- TODO: 전체 부가상품 리스트 이동 필요 -->
+                    </div>
+
+                    <ul class="recommendedrate-list">
+                        <% const bestAdditions = productData.bestAdditions.prodList; %>
+                        <% const bestLen = Math.min(bestAdditions.length, 7); %>
+                        <% for (let i = 0; i < bestLen; i++) { %>
+                            <% const addition = bestAdditions[i]; %>
+                            <li class="type01">
+                                <a type="button" class="product-infolink" href="/product/detail/<%= addition.prodId %>">
+                                    <div class="products-titleinfo">
+                                        <h5 class="title"><%= addition.prodNm %></h5>
+                                        <p class="info">
+                                            <% if (/^[0-9,]+$/.test(addition.basFeeInfo)) { %>
+                                                월<span class="money"><%= addition.basFeeInfo %></span>원
+                                            <% } else { %>
+                                                <span class="money"><%= addition.basFeeInfo %></span></p>
+                                            <% } %>
+                                    </div>
+                                    <div class="taglist-wrap">
+                                        <% for (let j = 0; j < addition.prodFltList.length; j++) { %>
+                                            <span class="tag-text">#<%= addition.prodFltList[j].prodFltNm %></span>
+                                        <% } %>
+                                    </div>
+                                    <p class="products-detailinfo"><%= addition.prodSmryDesc %></p>
+                                  </a>
+                            </li>
+                        <% } %>
+                    </ul>
+                </div>
+                <!-- //SKT의 대표 부가상품 -->
+
+                <!-- 스와이프 -->
+                <div class="cont-box nogaps noborder">
+                    <div class="main-slide-banner dot-btm slide-pagingtype">
+                        <!-- .widget -->
+                        <div class="widget">
+                            <div class="widget-box slider1">
+                                <div class="slider-box">
+                                    <ul class="slider">
+                                        <% for (let i = 0; i < productData.additionBanners.length; i++) { %>
+                                            <% const banner = productData.additionBanners[i]; %>
+                                            <li>
+                                                <a class="linkclick" href="<%= banner.twdViewUrl %>">
+                                                    <img src="<%= banner.imgUrl %>" alt="<%= banner.imgAltVal %>">
+                                                    <p class="linkclick-text"><%= banner.bnnrNm %></p>
+                                                </a>
+                                            </li>
+                                        <% } %>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!--// .widget -->
+                    </div>
+                </div>
+                <!-- //스와이프 -->
+
+                <!-- 부가상품 추천 -->
+                <div class="cont-box">
+                    <div class="plan-title">
+                        <h3 class="tit"><span class="tx-normal"><%= productData.recommendedAdditions.expsTitNm %></span></h3>
+                    </div>
+
+                    <ul class="recommendedrate-list">
+                        <% const recommendedAdditions = productData.recommendedAdditions.prodList; %>
+                        <% const recommendLen = Math.min(recommendedAdditions.length, 5); %>
+                        <% for (let i = 0; i < recommendLen; i++) { %>
+                            <% const addition = recommendedAdditions[i]; %>
+                            <li class="type01">
+                                <a type="button" class="product-infolink" href="/product/detail/<%= addition.prodId %>">
+                                    <div class="products-titleinfo">
+                                        <h5 class="title"><%= addition.prodNm %></h5>
+                                        <p class="info">
+                                        <% if (/^[0-9,]+$/.test(addition.basFeeInfo)) { %>
+                                            월<span class="money"><%= addition.basFeeInfo %></span>원
+                                        <% } else { %>
+                                            <span class="money"><%= addition.basFeeInfo %></span></p>
+                                        <% } %>
+                                        </p>
+                                    </div>
+                                    <div class="taglist-wrap">
+                                        <% for (let j = 0; j < addition.prodFltList.length; j++) { %>
+                                        <span class="tag-text">#<%= addition.prodFltList[j].prodFltNm %></span>
+                                        <% } %>
+                                    </div>
+                                    <p class="products-detailinfo"><%= addition.prodSmryDesc %></p>
+                                </a>
+                            </li>
+                        <% } %>
+                    </ul>
+                </div>
+                <!-- //부가상품 추천 -->
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+                <!-- 추천태그 -->
+                <div class="cont-box nogaps-btm widget">
+                    <h3 class="suggest-tag-title">#추천태그</h3>
+                    <div class="widget-box toggle02">
+                        <ul class="suggest-tag-list">
+                            <% const recommendedTags = productData.recommendedTags.tagList %>
+                            <% for (let i = 0; i < recommendedTags.length; i++) { %>
+                                <!-- <li><a href="#" class="link">#여행 갈 때 좋은 요금제</a></li> -->
+                                <li><button type="button" class="link">#<%= recommendedTags[i].tagNm %></button></li> <!-- TODO: 해당 태그 걸린 리스트 페이지로 이동 필요 -->
+                            <% } %>
+                        </ul>
+                        <div class="suggest-tag-morewrap">
+                            <button role="button" aria-pressed="false" class="suggest-tag-more">
+                                <span class="more">더보기</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!--//추천태그 -->
+
+                <!-- 다른상품 더보기 -->
+                <div class="cont-box nogaps-ver">
+                    <h3 class="moreitems-title">다른상품 더보기</h3>
+                    <div class="moreitems-wrap">
+                        <ul class="moreitems-list">
+                            <li>
+                                <button class="link link-type01">모바일<br>부가상품</button>
+                                <!-- <a href="#" class="link link-type01">모바일<br>부가상품</a> -->
+                            </li>
+                            <li>
+                                <button class="link link-type02">혜택과 할인</button>
+                                <!-- <a href="#" class="link link-type02">혜택과 할인</a></li> -->
+                            </li>
+                            <li>
+                                <button class="link link-type03">T 로밍</button>
+                                <!-- <a href="#" class="link link-type03">T 로밍</a> -->
+                            </li>
+                            <li>
+                                <button class="link link-type04">인터넷/전화/<br>IPTV</button>
+                                <!-- <a href="#" class="link link-type04">인터넷/전화/<br>IPTV</a> -->
+                            </li>
+                            <li>
+                                <button class="link link-type05">NUGU 서비스</button>
+                                <!-- <a href="#" class="link link-type05">NUGU 서비스</a> -->
+                            </li>
+                            <li>
+                                <button class="link link-type06">스마트홈<br>서비스</button>
+                                <!-- <a href="#" class="link link-type06">스마트홈<br>서비스</a> -->
+                            </li>
+                            <li>
+                                <button class="link link-type07">보안솔루션<br>서비스</button>
+                                <!-- <a href="#" class="link link-type07">보안솔루션<br>서비스</a> -->
+                            </li>
+                            <li>
+                                <button class="link link-type08">T apps<br>서비스</button>
+                                <!-- <a href="#" class="link link-type08">T apps<br>서비스</a> -->
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!--//다른상품 더보기 -->
+
+                <!-- 하단 link영역 -->
+                <div class="cont-box nogaps noborder">
+                    <ul class="link-long-list nobg">
+                        <li>
+                            <div class="link-long">
+                                <button>
+                                    <span class="ico-thum"></span>인기 컬러링
+                                    <span class="tx-sub">
+                                        <span class="ico"></span>
+                                    </span>
+                                </button>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="link-long">
+                                <button>
+                                    <span class="ico-thum"></span>선택약정 할인제도
+                                    <span class="tx-sub">
+                                        <span class="ico"></span>
+                                    </span>
+                                </button>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="link-long">
+                                <button>
+                                    <span class="ico-thum"></span>친구찾기
+                                    <span class="tx-sub">
+                                        <span class="ico"></span>
+                                    </span>
+                                </button>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="link-long">
+                                <button>
+                                    <span class="ico-thum"></span>최신 LTE폰
+                                    <span class="tx-sub">
+                                        <span class="ico"></span>
+                                    </span>
+                                </button>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="link-long">
+                                <button>
+                                    <span class="ico-thum"></span>결합상품
+                                    <span class="tx-sub">
+                                        <span class="ico"></span>
+                                    </span>
+                                </button>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <!-- //하단 link영역 -->
+
+            </div>
+        </div>
+        <!--// #contents -->
+    </div>
+</body>
+<% include ../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {});
+</script>
+<% include ../components/end.component.html %>
