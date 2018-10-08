@@ -12,3 +12,4 @@ export const COOKIE_KEY = {
 };
 
 export const REDIS_URL_META = 'NodeUrlMeta:';
+export const REDIS_APP_VERSION = 'AppVersion';

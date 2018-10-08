@@ -4,7 +4,7 @@ const environment = {
     CDN: '',
     REDIS: {
       host: '211.188.180.73',
-      port: 32200,
+      port: 31200,
       db: 15
     },
     TEMP_CDN: 'http://tstore.rbipt.com/skt',

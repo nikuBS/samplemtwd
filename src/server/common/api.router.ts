@@ -5,12 +5,14 @@ import { API_CMD, API_CODE } from '../types/api-command.type';
 import LoggerService from '../services/logger.service';
 import ApiService from '../services/api.service';
 import LoginService from '../services/login.service';
-import { COOKIE_KEY } from '../types/common.type';
+import { COOKIE_KEY, REDIS_APP_VERSION } from '../types/common.type';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/combineLatest';
 import * as path from 'path';
 import AuthService from '../services/auth.service';
 import EnvHelper from '../utils/env.helper';
+import RedisService from '../services/redis.service';
+import FormatHelper from '../utils/format.helper';
 
 class ApiRouter {
   public router: Router;
@@ -19,6 +21,7 @@ class ApiRouter {
   private apiService: ApiService = new ApiService();
   private loginService: LoginService = new LoginService();
   private authService: AuthService = new AuthService();
+  private redisService: RedisService = new RedisService();
 
   constructor() {
     this.router = express.Router();
@@ -57,6 +60,8 @@ class ApiRouter {
     this.router.get('/childInfo', this.getChildInfo.bind(this));
     this.router.get('/serverSession', this.getServerSession.bind(this));
     this.router.get('/version', this.getVersion.bind(this));
+    this.router.get('/splash', this.getSplash.bind(this));
+    this.router.get('/notice', this.getNotice.bind(this));
   }
 
   private checkHealth(req: Request, res: Response, next: NextFunction) {
@@ -83,17 +88,68 @@ class ApiRouter {
         domain: EnvHelper.getEnvironment('DOMAIN')
       }
     };
+
     res.json(resp);
   }
 
   private getVersion(req: Request, res: Response, next: NextFunction) {
-    const resp = {
-      code: API_CODE.CODE_00,
-      result: {
-        latestVersion: ''
-      }
-    };
-    res.json(resp);
+    this.redisService.getData(REDIS_APP_VERSION + ':appLoad')
+      .subscribe((result) => {
+        const resp = {
+          code: API_CODE.CODE_00,
+          result: {
+            version: null
+          }
+        };
+
+        if ( !FormatHelper.isEmpty(result) ) {
+          resp.result = result.ver;
+        } else {
+          resp.code = API_CODE.CODE_404;
+        }
+
+        res.json(resp);
+      });
+  }
+
+  private getSplash(req: Request, res: Response, next: NextFunction) {
+    this.redisService.getData(REDIS_APP_VERSION + ':appLoad')
+      .subscribe((result) => {
+        const resp = {
+          code: API_CODE.CODE_00,
+          result: {
+            version: null
+          }
+        };
+
+        if ( !FormatHelper.isEmpty(result) ) {
+          resp.result = result.splash;
+        } else {
+          resp.code = API_CODE.CODE_404;
+        }
+
+        res.json(resp);
+      });
+  }
+
+  private getNotice(req: Request, res: Response, next: NextFunction) {
+    this.redisService.getData(REDIS_APP_VERSION + ':appLoad')
+      .subscribe((result) => {
+        const resp = {
+          code: API_CODE.CODE_00,
+          result: {
+            version: null
+          }
+        };
+
+        if ( !FormatHelper.isEmpty(result) ) {
+          resp.result = result.notice;
+        } else {
+          resp.code = API_CODE.CODE_404;
+        }
+
+        res.json(resp);
+      });
   }
 
   private setDeviceInfo(req: Request, res: Response, next: NextFunction) {
