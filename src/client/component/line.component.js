@@ -33,20 +33,14 @@ Tw.LineComponent.prototype = {
   },
   _bindEvent: function () {
     this.$btLine = this.$container.find('#fe-bt-line');
-    this._selectedMgmt = this.$btLine.data('svcmgmtnum');
-    this._urlAuth = this.$btLine.data('urlauth');
+    var selectedMgmt = this.$btLine.data('svcmgmtnum');
+    var urlAuth = this.$btLine.data('svcmgmtnum');
 
-    this.$btLine.on('click', $.proxy(this._onClickLine, this));
+    this.$btLine.on('click', $.proxy(this.onClickLine, this, selectedMgmt, urlAuth));
   },
-  _onClickLine: function ($event) {
-    // var curBtn = $($event.currentTarget);
-    // if ( !curBtn.hasClass('no-arrow') ) {
-    //   if ( !curBtn.hasClass('disabled') ) {
-    //     this._getLineList();
-    //   } else {
-    //     this._closePopup();
-    //   }
-    // }
+  onClickLine: function (selectedMgmt, urlAuth) {
+    this._selectedMgmt = selectedMgmt;
+    this._urlAuth = urlAuth;
     this._getLineList();
   },
   _getLineList: function () {
@@ -69,6 +63,7 @@ Tw.LineComponent.prototype = {
     }
   },
   _openListPopup: function (lineData) {
+
     this._popupService.open({
       hbs: 'CO_line_ActionSheet',
       layer: true,
@@ -119,6 +114,7 @@ Tw.LineComponent.prototype = {
   },
   _convLineData: function (lineData, category) {
     var result = [];
+    console.log(this._selectedMgmt);
     Tw.FormatHelper.sortObjArrAsc(lineData, 'expsSeq');
     _.map(lineData, $.proxy(function (line) {
       var selected = this._selectedMgmt.toString() === line.svcMgmtNum ? 'checked ' : '';

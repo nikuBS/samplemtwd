@@ -23,7 +23,7 @@ import { default as OldCustomerRouter } from './app/904.customer/customer.router
 import { default as OldAuthRouter } from './app/905.auth/auth.router';
 import { default as OldCommonRouter } from './app/909.common/common.router';
 import CommonRouter from './app/00.common/common.router';
-import HomeRouter from './app/01.home/home.router';
+import MainRouter from './app/01.main/main.router';
 import MyTDataRouter from './app/02.myt-data/myt-data.router';
 import MyTFareRouter from './app/03.myt-fare/myt-fare.router';
 import MyTJoinRouter from './app/04.myt-join/myt-join.router';
@@ -115,7 +115,7 @@ class App {
     this.app.use('/auth', new AppRouter(OldAuthRouter.instance.controllers).router);
 
     this.app.use('/common', new AppRouter(CommonRouter.instance.controllers).router);
-    this.app.use('/home', new AppRouter(HomeRouter.instance.controllers).router);
+    this.app.use('/main', new AppRouter(MainRouter.instance.controllers).router);
     this.app.use('/myt/data', new AppRouter(MyTDataRouter.instance.controllers).router);
     this.app.use('/myt/fare', new AppRouter(MyTFareRouter.instance.controllers).router);
     this.app.use('/myt/join', new AppRouter(MyTJoinRouter.instance.controllers).router);
@@ -129,7 +129,7 @@ class App {
   private setViewPath() {
     this.app.set('views', [
       path.join(__dirname, 'app/00.common/views/containers'),
-      path.join(__dirname, 'app/01.home/views/containers'),
+      path.join(__dirname, 'app/01.main/views/containers'),
       path.join(__dirname, 'app/02.myt-data/views/containers'),
       path.join(__dirname, 'app/03.myt-fare/views/containers'),
       path.join(__dirname, 'app/04.myt-join/views/containers'),

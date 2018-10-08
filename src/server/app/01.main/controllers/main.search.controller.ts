@@ -1,14 +1,14 @@
 import TwViewController from '../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
 
-class Search extends TwViewController {
+class MainSearch extends TwViewController {
   constructor() {
     super();
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any) {
-    res.render('search.html', { svcInfo });
+    res.render('main.search.html', { svcInfo });
   }
 }
 
-export default Search;
+export default MainSearch;

@@ -13,7 +13,7 @@ class Home extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, layerType: string) {
-    res.render('home.html');
+    res.render('main.home.html');
   }
 }
 

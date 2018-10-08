@@ -231,8 +231,38 @@ class ApiService {
     return this.requestUpdateSvcInfo(API_CMD.BFF_01_0004, params);
   }
 
+  public requestUpdateAllSvcInfo(command, params): Observable<any> {
+    let result = null;
+    return this.request(command, params)
+      .switchMap((resp) => {
+        if ( resp.code === API_CODE.CODE_00 ) {
+          result = resp.result;
+          return this.request(API_CMD.BFF_01_0005, {});
+        } else {
+          throw resp;
+        }
+      })
+      .switchMap((resp) => {
+        if ( resp.code === API_CODE.CODE_00 ) {
+          return this.loginService.setSvcInfo(resp.result);
+        } else {
+          return this.loginService.setSvcInfo(null);
+        }
+      })
+      .switchMap((resp) => this.request(API_CMD.BFF_01_0002, {}))
+      .switchMap((resp) => {
+        if ( resp.code === API_CODE.CODE_00 ) {
+          return this.loginService.setAllSvcInfo(resp.result);
+        } else {
+          return this.loginService.setAllSvcInfo(null);
+        }
+      }).map(() => {
+        return { code: API_CODE.CODE_00, result: result };
+      });
+  }
+
   public requestChangeLine(params: any): Observable<any> {
-    return this.requestUpdateSvcInfo(API_CMD.BFF_03_0005, params);
+    return this.requestUpdateAllSvcInfo(API_CMD.BFF_03_0005, params);
   }
 }
 

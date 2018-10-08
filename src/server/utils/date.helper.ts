@@ -1,8 +1,24 @@
 import moment from 'moment';
+import FormatHelper from './format.helper';
 
 moment.locale('ko'); // set 'ko' timezone
 
 class DateHelper {
+  /**
+   * Convert Date Format (BFF string to Date)
+   * @param {string} date
+   * @returns {Date}
+   */
+  static convDateFormat(date: any): Date {
+    if ( !date ) {
+      return new Date();
+    }
+    if ( !(date instanceof Date) ) {
+      return moment(date, 'YYYYMMDDhhmmss').toDate();
+    }
+    return date;
+  }
+
   static getCurrentDate(): any {
     return new Date();
   }
@@ -22,11 +38,19 @@ class DateHelper {
   }
 
   /**
-   * @param date {Date} or {string} : YYYYMMDD
+   * @param date {Date} or {string} : YYYYMMDDhhmmss
    * @returns {string} : 20180601
    */
-  static getCurrentShortDate(date: any): string {
+  static getCurrentShortDate(date?: any): string {
     return moment(this.convDateFormat(date)).format('YYYYMMDD');
+  }
+
+  /**
+   * @param date {Date} or {string} : YYYYMMDDhhmmss
+   * @returns {string} : 201806
+   */
+  static getYearMonth(date) {
+    return moment(this.convDateFormat(date)).format('YYYYMM');
   }
 
   /**
@@ -73,9 +97,10 @@ class DateHelper {
    * @param date {Date} or {string} : YYYYMMDD
    * @returns {string} : 12월
    */
-  static getShortKoreanMonth(date: any): string  {
+  static getShortKoreanMonth(date: any): string {
     return moment(this.convDateFormat(date)).format('MM월');
   }
+
 
   /**
    * @param date {Date} or {string} : YYYYMMDDhhmmss
@@ -134,18 +159,6 @@ class DateHelper {
       .add(1, 'days')
       .subtract(1, 'minutes')
       .format('YYYY.MM.DD hh:mm');
-  }
-
-  /**
-   * Convert Date Format (BFF string to Date)
-   * @param {string} date
-   * @returns {Date}
-   */
-  static convDateFormat(date: any): Date {
-    if (!(date instanceof Date)) {
-      return moment(date, 'YYYYMMDDhhmmss').toDate();
-    }
-    return date;
   }
 
   /**

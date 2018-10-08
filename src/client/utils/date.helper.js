@@ -1,4 +1,23 @@
 Tw.DateHelper = (function () {
+  moment.locale('ko', {
+    weekdaysMin: Tw.WEEKDAYS
+  });
+
+  /**
+   * Convert Date Format (BFF string to Date)
+   * @param {string} date
+   * @returns {Date}
+   */
+  var convDateFormat = function (date) {
+    if ( !date ) {
+      return new Date();
+    }
+    if ( !(date instanceof Date) ) {
+      return moment(date, 'YYYYMMDDhhmmss').toDate();
+    }
+    return date;
+  };
+
   var getDate = function () {
     var date = new Date();
     return date;
@@ -27,24 +46,20 @@ Tw.DateHelper = (function () {
   };
 
   /**
-   * Convert Date Format (BFF string to Date)
-   * @param {string} date
-   * @returns {Date}
-   */
-  var convDateFormat = function (date) {
-    if ( !(date instanceof Date) ) {
-      return moment(date, 'YYYYMMDDhhmmss').toDate();
-    }
-    return date;
-  };
-
-  /**
    * @param date {Date} or {string} : YYYYMMDD
    * @returns {string} : 20180601
    */
-  var getCurrentShortDate = function () {
-    return moment().format('YYYYMMDD');
+  var getCurrentShortDate = function (date) {
+    return moment(this.convDateFormat(date)).format('YYYYMMDD');
   };
+
+  /**
+   * @param date {Date} or {string} : YYYYMMDDhhmmss
+   * @returns {string} : 201806
+   */
+  var getYearMonth = function (date) {
+    return moment(this.convDateFormat(date)).format('YYYYMM');
+  }
 
   /**
    * @param date {Date} or {string} : YYYYMMDD
@@ -202,11 +217,6 @@ Tw.DateHelper = (function () {
     return moment(convDateFormat(date)).format('MM월');
   };
 
-
-  moment.locale('ko', {
-    weekdaysMin: Tw.WEEKDAYS
-  });
-
   var getDayOfWeek = function (date) {
     return moment(convDateFormat(date)).format('dd');
   };
@@ -231,6 +241,7 @@ Tw.DateHelper = (function () {
     getAddDay: getAddDay,
     convDateFormat: convDateFormat,
     getCurrentShortDate: getCurrentShortDate,
+    getYearMonth: getYearMonth,
     getCurrentDateTime: getCurrentDateTime,
     getCurrentMonth: getCurrentMonth,
     getPastYearShortDate: getPastYearShortDate,

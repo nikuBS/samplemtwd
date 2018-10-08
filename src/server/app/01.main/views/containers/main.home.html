@@ -15,7 +15,7 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div class="wrap">
+<div id="mainHome" class="wrap">
     <%- include('../../../../common/views/components/header.component.html', { title: '<a class="logo" href=""><img src="/img/common/logo-tworld.png" alt="Tworld" /></a>', svcInfo: svcInfo, option: { line: true, back: 'none', home: true } }) %>
     <!--// #header -->
     <!-- #contents -->
@@ -25,9 +25,13 @@
             <!-- .cont-box -->
             <div class="cont-box noborder">
                 <div class="main-login-ti">
-                    <% if (svcInfo) { %>
+                    <% if (svcType.login) { %>
                     <% if (svcInfo.expsSvcCnt !== '0') { %>
+                    <% if (svcType.mobile) { %>
                     <p class="login-ment"><%= svcInfo.mbrNm %> 님, 안녕하세요.<br />사랑하는 가족에게 데이터를 선물해보세요.</p>
+                    <% } else { %>
+                    <p class="login-ment"><%= svcInfo.mbrNm %> 님, 안녕하세요.</p>
+                    <% } %>
                     <% } else { %>
                     <p class="login-ment"><%= svcInfo.mbrNm %> 님, 안녕하세요.</p>
                     <p class="login-ment-sub">SKT의 가족이 되어 <br/><em>특별한 혜택과 서비스를 이용</em>해보세요.</p>
@@ -40,22 +44,30 @@
                         <div class="user-plan-info1">
                             <dl>
                                 <dt class="blind">회선 이름</dt>
-                                <dd>부모님 집</dd>
+                                <dd><%= svcInfo.showName %></dd>
                             </dl>
                             <dl>
                                 <dt class="blind">회선 정보</dt>
-                                <dd>인천 연********</dd>
+                                <dd><%= svcInfo.showSvc %></dd>
                             </dl>
                         </div>
                         <div class="user-plan-info2">
                             <dl>
                                 <dt>요금제</dt>
-                                <dd>T login 프리미엄(8G)</dd>
+                                <dd><%= svcInfo.prodNm %></dd>
                             </dl>
+                            <% if (svcType.svcCategory === 'S') { %>
                             <dl>
                                 <dt>약정기간</dt>
                                 <dd>2017.03.04~2019.03.04</dd>
                             </dl>
+                            <% } %>
+                            <% if (svcInfo.svcAttrCd === 'M2') { %>
+                            <dl>
+                                <dt>번호유지 기간</dt>
+                                <dd><%= homeData.ppsInfo.numEndDt %>까지</dd>
+                            </dl>
+                            <% } %>
                         </div>
                     </div>
                     <% } %>
@@ -64,45 +76,159 @@
             <!--// .cont-box -->
 
             <!-- .cont-box 실시간 잔여량 -->
-            <% if (svcType.login && svcInfo.expsSvcCnt !== '0' && svcType.svcCategory !== 'S') { %>
+            <% if (svcType.login && svcInfo.expsSvcCnt !== '0' && svcType.svcCategory === 'M') { %>
             <div class="cont-box pt10">
                 <!-- .th-use case : TH1 -->
                 <div class="th-use">
                     <dl class="real-remaining">
-                        <dt>실시간 잔여량<button class="ico"></button></dt>
+                        <% if (homeData.usageData.code === '00') { %>
+                        <dt>실시간 잔여량<a class="ico" href="/myt/data/usage"></a></dt>
                         <dd>
-                            <div class="remaining-amount"><span class="num ff-tg-black">36.8</span><span class="dingbat gb"><span class="blind">GB</span></span></div>
+                            <% if (homeData.usageData.first === 'data') { %>
+                            <div class="remaining-amount">
+                                <% if(homeData.usageData.data.isUnlimit) { %>
+                                <span class="num ff-tg-black">무제한</span>
+                                <% } else { %>
+                                <span class="num ff-tg-black"><%= homeData.usageData.data.showRemained.data %></span>
+                                <span class="dingbat gb"><span class="blind"><%= homeData.usageData.data.showRemained.unit %></span></span>
+                                <% } %>
+                            </div>
                             <div class="graph-area-type4">
-                                <span class="graph-max">60 GB</span>
-                                <span class="graph-min">12.3 GB 사용</span>
-                                <span class="graph-bar1" style="width:50%;">
+                                <% if(homeData.usageData.data.isUnlimit) { %>
+                                <span class="graph-max">무제한</span>
+                                <% } else { %>
+                                <span class="graph-max"><%= homeData.usageData.data.showTotal.data %> <%= homeData.usageData.data.showTotal.unit %></span>
+                                <% } %>
+                                <span class="graph-min"><%= homeData.usageData.data.showUsed.data %> <%= homeData.usageData.data.showUsed.unit %> 사용</span>
+                                <span class="graph-bar1" style="width:<%= homeData.usageData.data.remainedRatio %>%;">
                                         <span class="bar"></span>
                                     </span>
                                 <span class="graph-bar2">
                                         <span class="bar"></span>
                                     </span>
                             </div>
+                            <% } else if (homeData.usageData.first === 'voice') { %>
+                            <div class="remaining-amount">
+                                <% if(homeData.usageData.voice.isUnlimit) { %>
+                                <span class="num ff-tg-black">무제한</span>
+                                <% } else { %>
+                                <% if (homeData.usageData.voice.showRemained.hours !== 0) { %>
+                                <span class="num ff-tg-black"><%= homeData.usageData.voice.showRemained.hours %></span><span class="unit">시간</span>
+                                <% } %>
+                                <% if (homeData.usageData.voice.showRemained.min !== 0) { %>
+                                <span class="num ff-tg-black"><%= homeData.usageData.voice.showRemained.min %></span><span class="unit">분</span>
+                                <% } %>
+                                <% } %>
+                            </div>
+                            <div class="graph-area-type4">
+                                <span class="graph-max">
+                                    <% if(homeData.usageData.voice.isUnlimit) { %>
+                                    무제한
+                                    <% } else { %>
+                                    <% if (homeData.usageData.voice.showTotal.hours !== 0) { %>
+                                    <%= homeData.usageData.voice.showTotal.hours %> 시간
+                                    <% } %>
+                                    <% if (homeData.usageData.voice.showTotal.min !== 0) { %>
+                                    <%= homeData.usageData.voice.showTotal.min %> 분
+                                    <% } %>
+                                    <% if (homeData.usageData.voice.showTotal.sec !== 0) { %>
+                                    <%= homeData.usageData.voice.showTotal.sec %> 초
+                                    <% } %>
+                                    <% } %>
+
+                                </span>
+                                <span class="graph-min">
+                                    <% if (homeData.usageData.voice.showUsed.hours !== 0) { %>
+                                    <%= homeData.usageData.voice.showUsed.hours %> 시간
+                                    <% } %>
+                                    <% if (homeData.usageData.voice.showUsed.min !== 0) { %>
+                                    <%= homeData.usageData.voice.showUsed.min %> 분
+                                    <% } %>
+                                    <% if (homeData.usageData.voice.showUsed.sec !== 0) { %>
+                                    <%= homeData.usageData.voice.showUsed.sec %> 초
+                                    <% } %>
+                                    사용
+                                </span>
+                                <span class="graph-bar1" style="width:<%= homeData.usageData.data.remainedRatio %>%;">
+                                        <span class="bar"></span>
+                                    </span>
+                                <span class="graph-bar2">
+                                        <span class="bar"></span>
+                                    </span>
+                            </div>
+                            <% } %>
                             <ul class="remaining-tm">
-                                <li class="allline">
-                                    <dl>
-                                        <dt><span class="ico tm-music"></span></dt>
-                                        <dd>멜론 익스트리밍 2.1GB 남음</dd>
-                                    </dl>
-                                </li>
+                                <!--<li class="allline">-->
+                                    <!--<dl>-->
+                                        <!--<dt><span class="ico tm-music"></span></dt>-->
+                                        <!--<dd>멜론 익스트리밍 2.1GB 남음</dd>-->
+                                    <!--</dl>-->
+                                <!--</li>-->
+                                <% if(homeData.usageData.first !== 'voice' && homeData.usageData.voice) { %>
                                 <li>
                                     <dl>
                                         <dt><span class="ico tm-tel"></span></dt>
-                                        <dd>4시간 50분 남음</dd>
+                                        <% if(homeData.usageData.voice.isUnlimit) { %>
+                                        <dd> 무제한 </dd>
+                                        <% } else { %>
+                                        <dd>
+                                            <% if (homeData.usageData.voice.showRemained.hours !== 0) { %>
+                                            <%= homeData.usageData.voice.showRemained.hours %> 시간
+                                            <% } %>
+                                            <% if (homeData.usageData.voice.showRemained.min !== 0) { %>
+                                            <%= homeData.usageData.voice.showRemained.min %> 분
+                                            <% } %>
+                                            <% if (homeData.usageData.voice.showRemained.sec !== 0) { %>
+                                            <%= homeData.usageData.voice.showRemained.sec %> 초
+                                            <% } %>
+                                            남음
+                                        </dd>
+                                        <% } %>
                                     </dl>
                                 </li>
+                                <% } %>
+                                <% if(homeData.usageData.sms) { %>
                                 <li>
                                     <dl>
                                         <dt><span class="ico tm-msg"></span></dt>
-                                        <dd>38건 남음</dd>
+                                        <% if(homeData.usageData.sms.isUnlimit) { %>
+                                        <dd> 무제한 </dd>
+                                        <% } else { %>
+                                        <dd><%= homeData.usageData.sms.remained %>건 남음</dd>
+                                        <% } %>
                                     </dl>
                                 </li>
+                                <% } %>
                             </ul>
                         </dd>
+                        <% } else if (homeData.usageData.code === 'BLN0001') { %>
+                        <dt>실시간 잔여량</dt>
+                        <dd>
+                            <div class="real-remaining-notice">
+                                <p class="remaining-notice-txt">잠시 후 다시 이용해주세요.</p>
+                                <p class="remaining-notice-sub">안정적인 실시간 조회를 <br/>위해 조회 횟수를 제한하고 있습니다. <br/>(2시간 동안 최대 12회 조회 가능)</p>
+                                <span class="ico"></span>
+                            </div>
+                        </dd>
+                        <% } else if (homeData.usageData.code === 'BLN0003') { %>
+                        <dt>실시간 잔여량</dt>
+                        <dd>
+                            <div class="real-remaining-notice">
+                                <p class="remaining-notice-txt">잔여량 조회 서비스가 <br/>제공되지 않습니다.</p>
+                                <p class="remaining-notice-sub">정지 이력이 있어 잔여량 조회 서비스가 제공되지 않습니다. <br/> 자세한 문의는 고객센터를 <br/>이용해주시기 바랍니다.</p>
+                                <a class="bt-link-tx underline mt16" href="">이메일로 문의하기</a>
+                                <span class="ico"></span>
+                            </div>
+                        </dd>
+                        <% } else if (homeData.usageData.code === 'BLN0002' || homeData.usageData.code === 'BLN0004') { %>
+                        <dt>실시간 잔여량</dt>
+                        <dd>
+                        </dd>
+                        <% } else { %>
+                        <dt>실시간 잔여량</dt>
+                        <dd>
+                        </dd>
+                        <% } %>
                     </dl>
                 </div>
                 <!--// .th-use case : TH1 -->
@@ -112,7 +238,7 @@
                         <button>즉시 충전</button>
                     </li>
                     <li class="bt-white2">
-                        <button>T끼리 데이터 선물</button>
+                        <a href="/myt/data/gift">T끼리 데이터 선물</a>
                     </li>
                 </ul>
             </div>
@@ -152,6 +278,11 @@
             <% } %>
             <!--// .cont-box -->
 
+            <!-- .cont-box -->
+            <% if (svcType.login && svcType.svcCategory === 'O' ) { %>
+            <% } %>
+            <!--// .cont-box -->
+
             <!-- .cont-box 멤버십 바코드 -->
             <% if (svcType.login && svcType.mobile) { %>
             <div class="cont-box">
@@ -161,11 +292,12 @@
                             <span class="badge badge-vip"></span><span class="txt">T멤버십</span>
                         </dt>
                         <dd>
-                            <span class="benefit-cont"><em class="ff-tg-black">42,000</em><span class="ff-tg-medium">원 사용</span></span>
+                            <span class="benefit-cont"><em class="ff-tg-black"><%= homeData.membershipData.showUsedAmount %></em><span class="ff-tg-medium">원 사용</span></span>
                         </dd>
                     </dl>
                     <div class="barcode-img">
-                        <img src="/img/dummy/barcode2.jpg" alt="2497 4150 4581 3416"/>
+                        <img id="fe-membership-barcode" data-cardNum="<%= homeData.membershipData.mbrCardNum %>"/>
+                        <!--<img src="/img/dummy/barcode2.jpg" alt="2497 4150 4581 3416"/>-->
                     </div>
                 </div>
             </div>
@@ -288,7 +420,7 @@
 
             <!-- .cont-box 스마트 카드 01 -->
             <% if (svcType.login && svcType.mobile) { %>
-            <div class="cont-box bgnone noborder nogaps-hoz fe-smart-0 <%= smartCard[0].no %>">
+            <div class="cont-box bgnone noborder nogaps-hoz fe-smart-0 fe-smart-<%= smartCard[0].no %>" data-smartCard="<%= smartCard[0].no %>">
                 <div class="cont-card-ti"><!-- 링크가 있을 경우 구조 -->
                     <button>
                         <span class="card-ti-txt"><%= smartCard[0].title %></span>
@@ -454,7 +586,7 @@
 
             <!-- .cont-box 스마트 카드 02 -->
             <% if (svcType.login && svcType.mobile) { %>
-            <div class="cont-box bgnone noborder nogaps-hoz fe-smart-1 fe-smart-<%= smartCard[1].no %>">
+            <div class="cont-box bgnone noborder nogaps-hoz fe-smart-1 fe-smart-<%= smartCard[1].no %>" data-smartCard="<%= smartCard[1].no %>">
                 <div class="cont-card-ti"><!-- 링크가 있을 경우 구조 -->
                     <button>
                         <span class="card-ti-txt"><%= smartCard[1].title %></span>
@@ -467,7 +599,7 @@
             <!--// .cont-box -->
 
             <!-- .cont-box 스마트 카드 03 -->
-            <div class="cont-box bgnone noborder nogaps-hoz fe-smart-2 fe-smart-<%= smartCard[2].no %>">
+            <div class="cont-box bgnone noborder nogaps-hoz fe-smart-2 fe-smart-<%= smartCard[2].no %>" data-smartCard="<%= smartCard[2].no %>">
                 <div class="cont-card-ti"><!-- 링크가 있을 경우 구조 -->
                     <button>
                         <span class="card-ti-txt"><%= smartCard[2].title %></span>
@@ -484,7 +616,7 @@
             <!-- .cont-box 스마트 카드 -->
             <% smartCard.map((card, index) => { %>
             <% if (index > 2) { %>
-            <div class="cont-box bgnone noborder nogaps-hoz fe-smart-<%= index %> fe-smart-<%= smartCard[index].no %>">
+            <div class="cont-box bgnone noborder nogaps-hoz fe-smart-<%= index %> fe-smart-<%= smartCard[index].no %>" data-smartCard="<%= smartCard[index].no %>">
                 <div class="cont-card-ti"><!-- 링크가 있을 경우 구조 -->
                     <button>
                         <span class="card-ti-txt"><%= smartCard[index].title %></span>
@@ -550,9 +682,14 @@
 </div>
 </body>
 <% include ../components/javascript.component.html %>
+<% include ../components/smart-card/bill.component.html %>
+<% include ../components/smart-card/contents.component.html %>
+<% include ../components/smart-card/gift.component.html %>
+<% include ../components/smart-card/micro-pay.component.html %>
+<% include ../components/smart-card/recharge.component.html %>
 <script>
   $(document).ready(function () {
-    Tw.Home();
+    new Tw.MainHome($('#mainHome'), '<%-JSON.stringify(smartCard) %>');
   });
 </script>
 <% include ../components/end.component.html %>

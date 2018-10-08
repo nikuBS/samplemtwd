@@ -368,6 +368,6 @@ Tw.RechargeGiftProcess.prototype = {
   },
 
   goHome: function () {
-    location.replace('/home');
+    location.replace('/main/home');
   }
 };
