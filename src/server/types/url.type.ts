@@ -6,6 +6,7 @@ export const URL = {
   '/common/settings/privacy': { login: false, id: 'ST_01_07', title: '개인정보처리방침' },
   '/common/settings/certificates': { login: false, id: 'ST_01_06', title: '공인인증센터' },
   '/common/settings/notifications': { login: true, id: 'ST_01_05', title: 'T알림 설정' },
+  '/common/settings/terms': { login: false, id: 'GU_02', title: '이용약관' },
 
   // MyT
   '/myt/fare/bill/set': { login: true, id: 'MF_04', title: '요금 안내서 설정' },
