@@ -19,13 +19,13 @@ Tw.MyTDataUsage.prototype = {
   _bindEvent: function () {
 
     this.$container.on('click', '#head-tdata-share .info-view-ic', $.proxy(this.showGuidePopup, this,
-      Tw.MSG_MYT.TDATA_SHARE.M01_TITLE, Tw.MSG_MYT.TDATA_SHARE.M01_CONTENTS));
+      Tw.INFO.MYT.TDATA_SHARE.DC_01_01_TITLE, Tw.INFO.MYT.TDATA_SHARE.DC_01_01_CONTENTS));
 
     this.$container.on('click', '#head-ting .info-view-ic', $.proxy(this.showGuidePopup, this,
-      Tw.MSG_MYT.USAGE_TING_M03.TITLE, Tw.MSG_MYT.USAGE_TING_M03.CONTENTS));
+      Tw.INFO.MYT.USAGE_TING.DC_01_01_TITLE, Tw.INFO.MYT.USAGE_TING.DC_01_01_CONTENTS));
 
     this.$container.on('click', '#head-discount .info-view-ic', $.proxy(this.showGuidePopup, this,
-      Tw.MSG_MYT.DISCOUNT.M01_TITLE, Tw.MSG_MYT.DISCOUNT.M01_CONTENTS));
+      Tw.INFO.MYT.DISCOUNT.DC_01_01_TITLE, Tw.INFO.MYT.DISCOUNT.DC_01_01_CONTENTS));
 
     // 24시간 데이터 50% 할인 사용량 - 실시간 사용 요금 바로가기 버튼 - 실시간 사용 요금으로 이동
     this.$container.on('click', '#cont-discount .bt-slice button', $.proxy(function(){

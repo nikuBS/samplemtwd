@@ -1,3 +1,11 @@
+Tw.DATA_UNIT = {
+  KB: 'KB',
+  MB: 'MB',
+  GB: 'GB',
+  TB: 'TB',
+  PB: 'PB'
+};
+
 Tw.BUTTON_LABEL = {
   CONFIRM: '확인',
   CANCEL: '취소',
@@ -191,6 +199,25 @@ Tw.ALERT_MSG_AUTH = {
   L07: '이미 등록된 회선 입니다.'
 
 };
+
+Tw.INFO = {
+  MYT : {
+    TDATA_SHARE: {
+      DC_01_01_TITLE: 'T데이터셰어링 기본제공 데이터 사용량',
+      DC_01_01_CONTENTS: '올인원 요금제 등 기본으로 데이터를 제공하는 요금제를 이용하는 고객님 중 제한된 USIM의 데이터 정보만 노출합니다.'
+    },
+    DISCOUNT: {
+      DC_01_01_TITLE: '50% 할인제공 대상 데이터는',
+      DC_01_01_CONTENTS: '기본요금상품 및 무료로 제공되는 데이터 제공량에 한합니다. <br />대상 데이터 : 각 요금상품 별 데이터 기본 제공량, T끼리 데이터 선물하기 및 데이터 리필하기 서비스로 받은 데이터 제공량, 눝 데이터 생성하기, T가족혜택 데이터 생성하기'
+    },
+    USAGE_TING: {
+      DC_01_01_TITLE: '통화가능 금액이란?',
+      DC_01_01_CONTENTS: '팅요금상품 가입 시 선택하신 상한금액에서 기본료를 제외한 나머지 금액입니다.\n' +
+        '예) 팅 100요금상품의 경우, 상한 2만원 선택 시 통화 가능 금액은 7,500원입니다.\n' +
+        '상한(20,000원) – 기본료(12,500원) = 7,500원\n'
+    }
+  }
+},
 
 Tw.URL_PATH = {
   OKCASHBAG: 'https://member.okcashbag.com/mb/ocb/searchPass/searchPass/MOCB/687474703A2F2F6d2e6f6b636173686261672e636f6d2F696e6465782e6d6f63623F6c6f67696e3D59',
