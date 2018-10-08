@@ -578,6 +578,10 @@ class MyTFareBillGuide extends TwViewController {
 
       return item;
     });
+
+    console.log('에러 확인 2 > thisMain._billpayInfo.paidAmtSvcCdList');
+    console.dir( paidAmtSvcCdList );
+
     return paidAmtSvcCdList;
 
   }
