@@ -1,7 +1,7 @@
 /**
  * FileName: myt.join.protect.change.js
- * Author: Kim Inhwan (skt.P132150@partner.sk.com)
- * Date: 2018.07.24
+ * Author: Lee Gyu-gwang (skt.P134910@partner.sk.com)
+ * Date: 2018.09.28
  */
 Tw.MyTJoinProtectPwdChange = function ($element, isNew) {
   this._HASH_STEP_CHECK = '#contents-check';
@@ -18,7 +18,7 @@ Tw.MyTJoinProtectPwdChange = function ($element, isNew) {
   this._inputHelper = Tw.InputHelper;
   this._historyService = new Tw.HistoryService($element);
   this._historyService.init('hash');
-  this._pwdchked = false; // password check 했는지
+  this._chkedpwd = null; // checked password
 
   if( !this._new ){
     this._pwdCheckService = new Tw.MyTJoinProtectCheckPwdService();
@@ -48,13 +48,13 @@ Tw.MyTJoinProtectPwdChange.prototype = {
    * @private
    */
   _onCheckPwdBtnClicked : function (){
-    var pwd = this._validatePwdInput('#pwd-input1');
-    if(!pwd) return;
+    this._chkedpwd = this._validatePwdInput('#pwd-input1');
+    if(!this._chkedpwd) return;
 
     skt_landing.action.loading.on({ ta: this.$container, co: 'grey', size: true });
 
     this._pwdCheckService.check(
-      pwd,
+      this._chkedpwd,
       $.proxy(this._onCheckPwdSuccess, this),
       $.proxy(this._onCheckPwdFail, this)
     );
@@ -67,7 +67,7 @@ Tw.MyTJoinProtectPwdChange.prototype = {
    * @private
    */
   _onCheckPwdSuccess : function (res){
-    this._pwdchked = true;
+
     // step2 ui로 변경
     this._historyService.setHistory(event);
     this._historyService.goHash(this._HASH_STEP_CHANGE);
@@ -130,7 +130,7 @@ Tw.MyTJoinProtectPwdChange.prototype = {
       $('#btn-check').prop('disabled', (pwd1.length < 6));
 
     } else if( location.hash === this._HASH_STEP_CHANGE ){
-      if( !this._new && !this._pwdchked ){  // 변경이고, 기존비번이 확인되지 않은 경우 버튼 비활성
+      if( !this._new && !this._chkedpwd ){  // 변경이고, 기존비번이 확인되지 않은 경우 버튼 비활성
         $('#btn-change').prop('disabled', true);
         return;
       }
@@ -176,7 +176,7 @@ Tw.MyTJoinProtectPwdChange.prototype = {
   _onOkClicked: function (/*event*/) {
 
     // 변경인 경우 비번인증에 성공하지 않았다면 다시 check 화면으로 돌아간다.
-    if( !this._new && !this._pwdchked ){
+    if( !this._new && !this._chkedpwd ){
       this._historyService.setHistory(event);
       this._historyService.goHash(this._HASH_STEP_CHECK);
       return;
@@ -206,7 +206,7 @@ Tw.MyTJoinProtectPwdChange.prototype = {
     };
     if ( !this._new ) {
       // 변경인 경우
-      data.svcPwd = pwd; // 변경
+      data.svcPwd = this._chkedpwd; // 변경
     }
 
     skt_landing.action.loading.on({ ta: this.$container, co: 'grey', size: true });
