@@ -458,6 +458,15 @@ export const API_CMD = {
     path: '/core-product/v1/mobiles/fee-plans/args-0/tplan-benefits',
     method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true
   },
+  BFF_10_0024: { path: '/core-product/v1/submain/banners', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_10_0025: { path: '/core-product/v1/submain/my-filters', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_10_0026: { path: '/core-product/v1/submain/grpprods', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_10_0027: { path: '/core-product/v1/submain/sprateprods', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_10_0028: { path: '/core-product/v1/submain/addsprateprods', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_10_0029: { path: '/core-product/v1/submain/rcmndtags', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_10_0030: { path: '/core-product/v1/submain/popraddbnnr', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_10_0031: { path: '/core-product/v1/submain/products', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_10_0032: { path: '/core-product/v1/submain/filters', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
 
   // TID
   OIDC: { path: '/auth/authorize.do', method: API_METHOD.GET, server: API_SERVER.TID, bypass: false },
