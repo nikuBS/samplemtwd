@@ -5,33 +5,25 @@
  * 나의요금 > 요금 안내서 설정 > 안내서 변경
  */
 import {NextFunction, Request, Response} from 'express';
-import TwViewController from '../../../../common/controllers/tw.view.controller';
 import {Observable} from 'rxjs/Observable';
-import {API_CMD, API_CODE} from '../../../../types/api-command.type';
-import {MyTBillSetData} from '../../../../mock/server/myt.fare.bill.set.mock';
+import {API_CODE} from '../../../../types/api-command.type';
+import MyTFareBillSetCommon from './myt-fare.bill.set.common.controller';
+import {MYT_FARE_BILL_TYPE} from '../../../../types/string.type';
 
-class MyTFareBillSetChange extends TwViewController {
-
-  private _svcInfo: any;
-  constructor() {
-    super();
-  }
-  get svcInfo() {
-    return this._svcInfo;
-  }
-  set svcInfo( __svcInfo: any ) {
-    this._svcInfo = __svcInfo;
-  }
+class MyTFareBillSetChange extends MyTFareBillSetCommon {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, layerType: string) {
-    // res.render('bill/myt-fare.bill.set.change.html', {svcInfo});
 
     this.svcInfo = svcInfo;
     Observable.combineLatest(
-      this.mockReqBillType()
+      // this.mockReqBillType()
+      this.reqBillType()
     ).subscribe(([resBillType]) => {
       if ( resBillType.code === API_CODE.CODE_00) {
-        const data = this.getData(resBillType.result, svcInfo);
+        let data = resBillType.result;
+        data.query = req.query;
+        data = this.getData(data, svcInfo);
+
         res.render( 'bill/myt-fare.bill.set.change.html', data );
       } else {
         this.fail(res, resBillType, svcInfo);
@@ -40,75 +32,84 @@ class MyTFareBillSetChange extends TwViewController {
   }
 
   private getData(data: any, svcInfo: any): any {
-    Object.assign(data, this.createBillType(data));
+    this.makeBillInfo(data);
+    this.makeTogetherBill(data);
+    this.parseData(data);
+    this.makeHpParam(data);
+
+    // 변경할 요금 안내서 유형
+    data.changeBillInfo = {
+      cd : data.query.billType,
+      nm : MYT_FARE_BILL_TYPE[data.query.billType]
+    };
+    data.lineType = this.getLinetype();
+
     return {
       svcInfo,
       data
     };
   }
 
-  private createBillType (data: any): any {
-    const curBillType = data.curBillType;
-    const _data = {
-      isMulti : false,
-      billTypeTxt : ''
+  // 함께 받을 요금 안내서 만들기
+  private makeTogetherBill(data: any): void {
+    const billType = data.query.billType;
+    // 기타(우편) 함께 받는 요금 안내서 없음
+    if ( billType === '1' ) {
+      return;
+    }
+
+    const billArr = new Array();
+    const lineType = this.getLinetype();
+    this.pushBillInfo(billArr, 'X');
+
+    // T world, Bill Letter
+    if ( ['P', 'H'].some( o => o === billType ) ) {
+      // 무선 일 때만
+      if ( 'M' === lineType ) {
+        // 단독 USIM 체크가 Y 일때 (= SMS 수신 가능일때)
+        if ( 'Y' === data.isusimchk ) {
+          this.pushBillInfo(billArr, 'B');
+        }
+      }
+    }
+    // 문자 , Bill Letter
+    if ( ['B', 'H'].some( o => o === billType ) ) {
+      this.pushBillInfo(billArr, '2');
+    }
+
+    if ( billArr.length > 1) {
+      data.togetherList = billArr;
+    }
+  }
+
+  // 핸드폰 번호 입력 파라미터 만들기
+  private makeHpParam(data: any): void {
+    const lineType = this.getLinetype();
+    const param = {
+      name : '',
+      value : ''
     };
-    if ( 'P' === curBillType ) {
-      _data.billTypeTxt = 'tWorld';
-    } else if ( ['H', 'J', 'Q', 'I', 'K'].some( e => e === curBillType ) ) {
-      _data.billTypeTxt = 'billLetter';
-    } else if ( ['B', 'A'].some( e => e === curBillType ) ) {
-      _data.billTypeTxt = 'sms';
+    // 이메일 안내서
+    if (data.query.billType === '1') {
+      param.name = 'cntcNum1';
+      param.value = data.cntcNum1;
+    } else if ( lineType === 'S' ) { // 유선회선일 때
+      // 빌레터
+      if (data.query.billType === 'H') {
+        param.name = 'wireSmtBillSvcNum';
+        param.value = data.wireSmtBillSvcNum;
+      } else if (data.query.billType === 'B') { // 문자
+        param.name = 'wsmsBillSndNum';
+        param.value = data.wsmsBillSndNum;
+      }
     }
-    _data.isMulti = _data.billTypeTxt !== '' ? true : false;
 
-    return _data;
-  }
-
-  // 현재 회선 타입
-  private getLinetype(): any {
-    switch (this.svcInfo.svcAttrCd) {
-      case 'M1':  // 휴대폰
-      case 'M3':  // T pocket FI
-      case 'M4':  // T Login
-        return 'M'; // 모바일
-
-      case 'M5':  // T Wibro
-        return 'W'; // T Wibro
-
-      case 'S1' :
-      case 'S2' :
-      case 'S3' :
-        return 'S'; // 인터넷/집전화/IPTV
-
-      case 'O1' :
-        return 'O'; // 보안 솔루션
-
-      default :
-        return 'X'; // 현재 회선은 권한 없음.
-    }
-  }
-
-  // 안내서 유형 조회
-  private reqBillType(): Observable<any> {
-    return this.apiService.request(API_CMD.BFF_05_0025, {});
-  }
-
-  // 안내서 유형 조회 목업
-  private mockReqBillType(): Observable<any> {
-    return Observable.create((observer) => {
-      observer.next(MyTBillSetData);
-      observer.complete();
-    });
-  }
-
-  // API Response fail
-  private fail(res: Response, data: any, svcInfo: any): void {
-    this.error.render(res, {
-      code: data.code,
-      msg: data.msg,
-      svcInfo: svcInfo
-    });
+    data.hpParam = param;
+    // 법정 대리인 휴대폰 번호
+    data.deputyHpParam = {
+      name : 'ccurNotiSvcNum',
+      value : data.ccurNotiSvcNum
+    };
   }
 }
 

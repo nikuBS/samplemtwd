@@ -8,6 +8,7 @@ Tw.MyTFareBillSetReIssue = function (rootEl, options) {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._options = options;
+  this.$window = window;
   this._cachedElement();
   this._bindEvent();
 };
@@ -146,7 +147,7 @@ Tw.MyTFareBillSetReIssue.prototype = {
   },
 
   _goToComplete: function () {
-    // TODO: 완료 페이지 처리
+    this.$window.location.href = '/myt/fare/bill/set/complete?type=2';
   }
 
 };
