@@ -10,6 +10,7 @@ import CommonSettingsNotifications from './controllers/settings/common.settings.
 import CommonSettingsPrivacy from './controllers/settings/common.settings.privacy.controller';
 import CommonSettingsBusinessInfo from './controllers/settings/common.settings.business-info.controller';
 import CommonSettingsCertificates from './controllers/settings/common.settings.certificates.controller';
+import CommonSettingsTerms from './controllers/settings/common.settings.terms.controller';
 import CommonError from './controllers/common.error.controller';
 
 export default class CommonRouter extends TwRouter {
@@ -26,6 +27,7 @@ export default class CommonRouter extends TwRouter {
     this.controllers.push(
       { url: '/settings/certificates', controller: new CommonSettingsCertificates() }
     );
+    this.controllers.push({ url: '/settings/terms', controller: new CommonSettingsTerms() });
 
     this.controllers.push({ url: '/error', controller: new CommonError() });
   }
