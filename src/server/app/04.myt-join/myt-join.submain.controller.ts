@@ -40,7 +40,6 @@ class MyTJoinSubmainController extends TwViewController {
       // 다른 회선 항목
       otherLines: this.convertOtherLines(svcInfo, allSvc)
     };
-    const requestList: any = [];
     this.__setType(svcInfo);
     // 비밀번호 조회 시 최초 설정이 안되어있는 경우와 등록이 된 경우로 구분
     if ( svcInfo.pwdStCd && (svcInfo.pwdStCd === '10' || svcInfo.pwdStCd === '60') ) {
