@@ -23,19 +23,19 @@ class MytJoinInfoDiscount extends TwViewController {
   public reqQuery: any;
   private _svcInfo: any;
 
-  // 공통데이터
-  private _commDataInfo: any = {
-    feeInfo: [],
-    terminalInfo: [],
-    repaymentInfo: []
-  };
-
   // 데이터
   private _resDataInfo: any = {};
 
+  // 공통데이터
+  private _commDataInfo: any = {
+    feeInfo: [], // 요금 약정 할인
+    terminalInfo: [], // 단말기(약정할인)
+    repaymentInfo: [] // 단말기 분할상환 정보
+  };
+
   // default: 'info/myt-join.info.discount.html'
   private _urlTplInfo: any = {
-    pageRenderView: ''
+    pageRenderView: 'info/myt-join.info.discount.html',
   };
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, layerType: string) {
@@ -45,7 +45,7 @@ class MytJoinInfoDiscount extends TwViewController {
     this.logger.info(this, '[ svcInfo ] : ', svcInfo);
     this.logger.info(this, '[ reqQuery ] : ', req.query);
 
-    this._typeInit();
+    // this._typeInit();
 
     const p1 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0063, {}), 'p1');
 
@@ -127,8 +127,6 @@ class MytJoinInfoDiscount extends TwViewController {
     this._commDataInfo.terminalInfo = [];
     this._commDataInfo.repaymentInfo = [];
 
-    // console.dir(thisMain._resDataInfo);
-
     const priceList = thisMain._resDataInfo.priceList;
     const tablet = thisMain._resDataInfo.tablet;
     const wibro = thisMain._resDataInfo.wibro;
@@ -149,16 +147,18 @@ class MytJoinInfoDiscount extends TwViewController {
     this.logger.info(this, '[ _.size(installmentList) ]', _.size(installmentList));
 
     // -------------------------------------------------------------[1. 요금약정할인 정보]
+    /*
+    * 상품코드 분류(priceList.prodId)
+    * 요금약정할인24 (730) : NA00003677 | fee_type_A
+    * 테블릿 약정할인 12 (뉴태블릿약정) : NA00003681 | fee_type_B
+    * 태블릿약정(구태블릿약정) : tablet 객체로 구분 | fee_type_C
+    * 와이브로약정할인 : wibro 객체로 구분 | fee_type_D
+    * 해당분류에 포함되지않는 경우 | fee_noType // 와이브로 약정
+    */
+
     if ( _.size(priceList) > 0 ) {
       for ( let i = 0; i < priceList.length; i++ ) {
 
-        /*
-        * 상품코드 분류(priceList.prodId)
-        * 요금약정할인24 (730) : NA00003677 | fee_type_A
-        * 테블릿 약정할인 12 (뉴태블릿약정) : NA00003681 | fee_type_B
-        * 태블릿약정(구태블릿약정) : tablet 객체로 구분 | fee_type_C
-        * 해당분류에 포함되지않는 경우 | fee_noType // 와이브로 약정
-         */
         if ( priceList[i].prodId === 'NA00003677' ) {
           priceList[i].typeStr = 'fee_type_A';
           priceList[i].titNm = MYT_JOIN_CONTRACT_TERMINAL.FEE_TYPE_A.TIT_NM;
@@ -175,6 +175,7 @@ class MytJoinInfoDiscount extends TwViewController {
         thisMain._commDataInfo.feeInfo.push(priceList[i]);
       }
     }
+    // 태블릿약정(구태블릿약정)
     if ( _.size(tablet) > 0 ) {
       tablet.titNm = MYT_JOIN_CONTRACT_TERMINAL.FEE_TYPE_C.TIT_NM;
       tablet.typeStr = 'fee_type_C';
@@ -184,9 +185,10 @@ class MytJoinInfoDiscount extends TwViewController {
       thisMain._proDate(tablet, tablet.agrmtDcStaDt, tablet.agrmtDcEndDt);
       thisMain._commDataInfo.feeInfo.push(tablet);
     }
+    // 와이브로약정할인
     if ( _.size(wibro) > 0 ) {
       wibro.titNm = MYT_JOIN_CONTRACT_TERMINAL.FEE_NOTYPE.TIT_NM; // 와이브로 약정
-      wibro.typeStr = 'fee_noType';
+      wibro.typeStr = 'fee_type_D';
       wibro.salePay = FormatHelper.addComma(wibro.agrmtDcAmt);
       thisMain._proDate(wibro, wibro.agrmtDcStaDt, wibro.agrmtDcEndDt);
       thisMain._commDataInfo.feeInfo.push(wibro);

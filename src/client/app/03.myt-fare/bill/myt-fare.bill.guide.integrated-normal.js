@@ -30,8 +30,8 @@ Tw.MyTFareBillGuideIntegratedNormal.prototype = {
     this._getUseBillsInfo();
 
   },
-  _hbRegisterHelper: function() {
-    Handlebars.registerHelper('index_of', function(context, ndx) {
+  _hbRegisterHelper: function () {
+    Handlebars.registerHelper('index_of', function (context, ndx) {
       return context[ndx];
     });
   },
@@ -52,16 +52,16 @@ Tw.MyTFareBillGuideIntegratedNormal.prototype = {
 
   },
   //--------------------------------------------------------------------------[EVENT]
-  _callGiftBtnEvt: function() {
+  _callGiftBtnEvt: function () {
     this._goLoad('/myt/fare/bill/guide/call-gift');
   },
-  _roamingBtnEvt: function() {
+  _roamingBtnEvt: function () {
     this._goLoad('/myt/fare/bill/guide/roaming');
   },
-  _donationBtnEvt: function() {
+  _donationBtnEvt: function () {
     this._goLoad('/myt/fare/bill/guide/donation');
   },
-  _conditionChangeEvt: function(event) {
+  _conditionChangeEvt: function (event) {
     var $target = $(event.currentTarget);
     var hbsName = 'actionsheet_select_a_type';
     var data = [{
@@ -77,7 +77,7 @@ Tw.MyTFareBillGuideIntegratedNormal.prototype = {
         value: conditionChangeDtList[idx],
         option: '',
         attr: 'data-value="' + invDtArr[idx] + '", data-target="selectBtn"'
-      }
+      };
     });
     data[0].list = listData;
 
@@ -91,7 +91,7 @@ Tw.MyTFareBillGuideIntegratedNormal.prototype = {
       $.proxy(this._conditionChangeEvtClose, this, $target),
       hashName);
   },
-  _conditionChangeEvtInit: function($target, $layer) {
+  _conditionChangeEvtInit: function ($target, $layer) {
     $layer.on('click', '[data-target="selectBtn"]', $.proxy(this._setSelectedValue, this, $target));
     Tw.Logger.info('[팝업 오픈 : actionsheet_select_a_type]', $layer);
 
@@ -109,33 +109,33 @@ Tw.MyTFareBillGuideIntegratedNormal.prototype = {
     Tw.Logger.info('[선택 : ]', this.paramDate);
     this._conditionChangeEvtClose();
   },
-  _conditionChangeEvtClose: function($target, $layer) {
+  _conditionChangeEvtClose: function () {
     Tw.Logger.info('[팝업 닫기 : actionsheet_select_a_type]');
     var param = {
       date: this.paramDate
     };
-    this._goLoad('/myt/fare/bill/guide?'+ $.param(param));
+    this._goLoad('/myt/fare/bill/guide?' + $.param(param));
     // this._popupService.close();
   },
   //--------------------------------------------------------------------------[API]
-  _getChildBillInfo: function() {
+  _getChildBillInfo: function () {
     var thisMain = this;
     var childTotNum = this.resData.childLineInfo.length;
     var targetApi = Tw.API_CMD.BFF_05_0047;
     var commands = [];
 
-    for ( var i=0; i<childTotNum; i++ ) {
-      commands.push({command: targetApi, params: { childSvcMgmtNum: this.resData.childLineInfo[i].svcMgmtNum }});
+    for ( var i = 0; i < childTotNum; i++ ) {
+      commands.push({ command: targetApi, params: { childSvcMgmtNum: this.resData.childLineInfo[i].svcMgmtNum } });
     }
 
     this._apiService.requestArray(commands)
       .done(function () {
         var childLineInfo = thisMain.resData.childLineInfo;
 
-        _.each( arguments, function( element, index, list ) {
+        _.each(arguments, function (element, index) {
           // Tw.Logger.info('[element, index, list]', element, index, list);
-          if ( childLineInfo[ index ].svcMgmtNum === element.result.svcMgmtNum) {
-            childLineInfo[ index ].detailInfo = element.result;
+          if ( childLineInfo[index].svcMgmtNum === element.result.svcMgmtNum ) {
+            childLineInfo[index].detailInfo = element.result;
           }
 
         });
@@ -144,11 +144,11 @@ Tw.MyTFareBillGuideIntegratedNormal.prototype = {
 
       });
   },
-  _getChildBillInfoInit: function() {
+  _getChildBillInfoInit: function () {
     var thisMain = this;
     var childListData = $.extend(true, {}, thisMain.resData.childLineInfo);
 
-    childListData = _.map( childListData, function (item) {
+    childListData = _.map(childListData, function (item) {
       item.detailInfo.useAmtTot = Tw.FormatHelper.addComma(item.detailInfo.useAmtTot);
       item.svcNum = thisMain._phoneStrToDash(item.svcNum);
       return item;
@@ -173,7 +173,7 @@ Tw.MyTFareBillGuideIntegratedNormal.prototype = {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       var useAmtDetailInfo = $.extend(true, {}, res.result.useAmtDetailInfo);
 
-      useAmtDetailInfo = _.map(useAmtDetailInfo, function(item, idx, arr) {
+      useAmtDetailInfo = _.map(useAmtDetailInfo, function (item) {
         item.invAmt = Tw.FormatHelper.addComma(item.invAmt);
         return item;
       });
@@ -185,64 +185,64 @@ Tw.MyTFareBillGuideIntegratedNormal.prototype = {
       rootNodes.useSvcType = this._useSvcTypeFun();
       rootNodes.useBill = thisMain._comTraverse(resData, groupKeyArr[0], priceKey);
 
-      _.map(rootNodes.useBill, function(val, key, list) {
+      _.map(rootNodes.useBill, function (val) {
         val.children = thisMain._comTraverse(val.children, groupKeyArr[1], priceKey);
-      } );
+      });
 
       Tw.Logger.info('[ rootNodes ] : ', rootNodes);
       this._svcHbDetailList(rootNodes, this.$hbDetailListArea, this.$entryTplUseBill);
 
       //위젯 아코디언 초기화
-      skt_landing.widgets.widget_accordion( $('.widget') );
+      skt_landing.widgets.widget_accordion($('.widget'));
 
     }
   },
   //--------------------------------------------------------------------------[SVC]
-  _useSvcTypeFun: function() {
+  _useSvcTypeFun: function () {
     var svcTypeList = this.resData.commDataInfo.intBillLineList;
     var svcMgmtNum = this.resData.svcInfo.svcMgmtNum;
-    var selectSvcType = _.find(svcTypeList, function(item) {
-      return item.svcMgmtNum == svcMgmtNum;
+    var selectSvcType = _.find(svcTypeList, function (item) {
+      return item.svcMgmtNum === svcMgmtNum;
     });
     console.info('[ selectSvcType ] : ', selectSvcType);
     return selectSvcType;
 
   },
-  _svcHbDetailList: function( resData, $jqTg, $hbTg ) {
+  _svcHbDetailList: function (resData, $jqTg, $hbTg) {
     var jqTg = $jqTg;
     var hbTg = $hbTg;
     var source = hbTg.html();
     var template = Handlebars.compile(source);
     var data = {
-      resData : resData
+      resData: resData
     };
     var html = template(data);
     jqTg.append(html);
   },
 
   //--------------------------------------------------------------------------[COM]
-  _comTraverse: function( $data, $groupKey, $priceKey ) {
+  _comTraverse: function ($data, $groupKey, $priceKey) {
     var thisMain = this;
     var tempData = _.groupBy($data, $groupKey);
     var tempKey = _.keys(tempData);
-    var tempCom = _.map(tempKey, function(val, key, list) {
+    var tempCom = _.map(tempKey, function (val) {
 
       var childItemArr = tempData[val];
 
       var tempSum = 0;
       //토탈 계산
-      for(var i=0; i < childItemArr.length; i++) {
+      for ( var i = 0; i < childItemArr.length; i++ ) {
         tempSum += Number(thisMain._comUnComma(childItemArr[i][$priceKey]));
       }
       tempSum = thisMain._comComma(tempSum);
 
       return {
-        id:val,
-        label:tempData[val][0].svcNm,
-        svcInfoNm:tempData[val][0].svcInfoNm,
+        id: val,
+        label: tempData[val][0].svcNm,
+        svcInfoNm: tempData[val][0].svcInfoNm,
         children: tempData[val],
         totPrice: tempSum
-      }
+      };
     });
 
     return tempCom;
@@ -257,8 +257,8 @@ Tw.MyTFareBillGuideIntegratedNormal.prototype = {
     return str.replace(/,/g, '');
   },
   _phoneStrToDash: function (str) {
-    var str = String(str);
-    return str.replace(/(^02.{0}|^01.{1}|[0-9]{3})([0-9\*]+)([[0-9\*]{4})/, '$1-$2-$3');
+    var strVal = String(str);
+    return strVal.replace(/(^02.{0}|^01.{1}|[0-9]{3})([0-9\*]+)([[0-9\*]{4})/, '$1-$2-$3');
   },
   _goBack: function () {
     this._history.go(-1);
