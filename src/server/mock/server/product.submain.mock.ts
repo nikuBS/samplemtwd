@@ -139,7 +139,18 @@ const PRODUCT_RECOMMENDED_PLANS = {
   }
 };
 
-const PRODUCT_INDIVIDUAL_ADDITIONALS = {
+const PRODUCT_MY_ADDITIONAL = {
+  code: '00',
+  msg: '',
+  result: {
+    addProductJoinsInfo: {
+      recentlyJoinsProdNm: 'Oksusu 기본월정액',
+      addProdCnt: 3
+    }
+  }
+};
+
+const PRODUCT_BEST_ADDITIONS = {
   code: '00',
   msg: 'success',
   result: {
@@ -164,7 +175,7 @@ const PRODUCT_INDIVIDUAL_ADDITIONALS = {
   }
 };
 
-const PRODUCT_RECOMMENDED_ADDITIONALS = {
+const PRODUCT_RECOMMENDED_ADDITIONS = {
   code: '00',
   msg: 'success',
   result: {
@@ -232,22 +243,33 @@ const PRODUCT_RECOMMENDED_TAGS = {
   }
 };
 
-const PRODUCT_ADDITIONAL_BANNER = {
+const PRODUCT_ADDITIONAL_BANNERS = {
   code: '00',
   msg: 'success',
   result: {
     bnnrList: [
       //배너 목록
       {
-        bnnrId: '', //배너ID
-        bnnrNm: '', //배너명
-        imgUrl: '', //이미지 FULL URL
-        imgAltVal: '', //이미지ALT값
-        anchTagInfo: '', //앵커태그정보
-        linkTypCd: '', //링크유형코드
-        linkTypNm: '', //링크유형명
-        twdViewUrl: '', //TWORLD화면URL
-        oferStcCd: '' //오퍼통계코드
+        bnnrId: '1', //배너ID
+        bnnrNm: '모일수록 줄어드는 데이터 걱정!', //배너명
+        imgUrl: '/img/dummy/img_product_main01.png',
+        imgAltVal: '더미',
+        anchTagInfo: '더미',
+        linkTypCd: 'S',
+        linkTypNm: 'T world',
+        twdViewUrl: 'http://www.tworld.co.kr',
+        oferStcCd: 'MAPROBMA_A00A0093'
+      },
+      {
+        bnnrId: '2', //배너ID
+        bnnrNm: '모일수록 줄어드는 데이터 걱정!', //배너명
+        imgUrl: '/img/dummy/img_product_main02.png',
+        imgAltVal: '더미',
+        anchTagInfo: '더미',
+        linkTypCd: 'S',
+        linkTypNm: 'T world',
+        twdViewUrl: 'http://www.tworld.co.kr',
+        oferStcCd: 'MAPROBMA_A00A0093'
       }
     ]
   }
@@ -322,11 +344,12 @@ export {
   PRODUCT_PROMOTION_BANNERS,
   PRODUCT_MY_FILTERS,
   PRODUCT_PLAN_GROUPS,
-  PRODUCT_RECOMMENDED_PLANS,
-  PRODUCT_INDIVIDUAL_ADDITIONALS,
-  PRODUCT_RECOMMENDED_ADDITIONALS,
-  PRODUCT_RECOMMENDED_TAGS,
-  PRODUCT_ADDITIONAL_BANNER,
   PRODUCT_LIST_PLANS,
-  PRODUCT_SEARCH_FILTERS
+  PRODUCT_RECOMMENDED_PLANS,
+  PRODUCT_RECOMMENDED_TAGS,
+  PRODUCT_SEARCH_FILTERS,
+  PRODUCT_MY_ADDITIONAL,
+  PRODUCT_BEST_ADDITIONS,
+  PRODUCT_RECOMMENDED_ADDITIONS,
+  PRODUCT_ADDITIONAL_BANNERS
 };

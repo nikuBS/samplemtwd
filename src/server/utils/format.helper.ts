@@ -219,6 +219,21 @@ class FormatHelper {
     });
     return mapped;
   }
+
+  /**
+   *  format fee contents
+   *  @param {String | number} value
+   *  @return {String}
+   */
+  static getFeeContents(value: string | number): string {
+    const sValue = String(value);
+
+    if (/^[0-9]+$/.test(sValue)) {
+      return FormatHelper.addComma(sValue);
+    }
+
+    return sValue;
+  }
 }
 
 export default FormatHelper;
