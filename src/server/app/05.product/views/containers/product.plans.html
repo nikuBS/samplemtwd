@@ -1,0 +1,157 @@
+<%#
+* FileName: product.plans.html
+* Author: Jiyoung Jo (jiyoungjo@sk.com)
+* Date: 2018.10.08
+* ID: MP_02
+%>
+
+<% include ../components/start.component.html %>
+<body>
+  <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#gnb">메뉴 바로가기</a></li>
+            <li><a href="#contents">본문 바로가기</a></li>
+            <li><a href="#footer">푸터 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- #header -->
+        <%- include('../../../common/views/components/header.component.html', { title: '모바일 요금제', svcInfo, option: { line: true } }); %>
+        <!--// #header -->
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+                <!-- 사용중인 상품 -->
+                <% if (svcInfo) { %>
+                <div class="cont-box noborder gaps-style01">
+                    <div class="submain-myfeeproducts-wrap">
+                        <!-- <a href="#" class="submain-myfeeproducts">
+                            <h3 class="title">사용중인 상품</h3>
+                            <p class="text">band 데이터 퍼펙트S</p>
+                        </a> -->
+                        <a href="/product/detail/<%= svcInfo.prodId %>" class="submain-myfeeproducts">
+                            <h3 class="title">사용중인 상품</h3>
+                            <p class="text"><%= svcInfo.prodNm %></p>
+                        </a>
+                    </div>
+                </div>
+                <% } %>
+                <!--//사용중인 상품 -->
+
+                <div class="ti-caption-gray">
+                    <button class="bt-select" title="정렬 선택" aria-haspopup="true">추천순</button>
+                    <div class="num">
+                        <button class="bt-select" title="조건 선택" aria-haspopup="true">
+                            <% const filters = plans.searchOption.searchFltIds; %>
+                            <% for (let i = 0; i < Math.min(2, filters.length); i++) { %>
+                                <% if (i > 0) { %>, <% } %>
+                                #<span class="vbl tx-bold"><%= filters[i]%></span> <!-- TODO: name 값으로 수정 필요 -->
+                            <% } %>
+                            <% if (filters.length > 2) { %> 외 <%= filters.length - 2 %>건 <% } %>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 이런 요금제는 어떠세요? -->
+                <div class="cont-box nogaps-hoz">
+                    <ul class="recommendedrate-list">
+                        <% const products = plans.products; %>
+                        <% for (let i = 0; i < products.length; i++) { %>
+                            <% const plan = products[i]; %>
+                            <li class="type01">
+                                <a href="/product/detail/<%= plan.prodId %>" class="product-infolink">
+                                    <div class="products-titleinfo">
+                                        <h5 class="title"><%= plan.prodNm %></h5>
+                                        <% if (/^[0-9,]+$/.test(plan.basFeeAmt)) { %>
+                                        <p class="info">월<span class="money"><%= plan.basFeeAmt %></span>원</p>
+                                        <% } else { %>
+                                        <p class="info"><span class="money"><%= plan.basFeeAmt %></span></p>
+                                        <% } %>
+                                    </div>
+                                    <div class="taglist-wrap">
+                                        <% for (let j = 0; j < plan.filters.length; j++) { %>
+                                            <button class="tag-text">#<%= plan.filters[j].prodFltNm %></button>
+                                        <% } %>
+                                    </div>
+                                    <dl class="products-additionalinfo">
+                                        <dt>데이터</dt>
+                                        <dd><span class="point"><%= plan.basOfrDataQtyCtt %></span></dd>
+                                        <dt>음성</dt>
+                                        <dd><%= plan.basOfrVcallTmsCtt %></dd>
+                                        <dt>문자</dt>
+                                        <dd><%= plan.basOfrCharCntCtt %></dd>
+                                    </dl>
+                                </a>
+                            </li>
+                        <% } %>
+                    </ul>
+                    <% if (plans.productCount > products.length) { %>
+                    <div class="bt-more gap-style">
+                        <button data-last-plan="<%= products[products.length - 1].prodId %>">
+                            더보기(<%= plans.productCount - products.length %>)
+                        </button>
+                    </div>
+                    <% } %>
+                </div>
+                <!-- //이런 요금제는 어떠세요? -->
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+                <!-- 다른상품 더보기 -->
+                <div class="cont-box nogaps-ver"> <!-- TODO: 링크 이동 필요 -->
+                    <h3 class="moreitems-title">다른상품 더보기</h3>
+                    <div class="moreitems-wrap">
+                        <ul class="moreitems-list">
+                            <li>
+                                <a href="/product/addition" class="link link-type01">모바일<br>부가상품</a>
+                            </li>
+                            <li>
+                                <button class="link link-type02">혜택과 할인</button>
+                                <!-- <a href="#" class="link link-type02">혜택과 할인</a></li> -->
+                            </li>
+                            <li>
+                                <button class="link link-type03">T 로밍</button>
+                                <!-- <a href="#" class="link link-type03">T 로밍</a> -->
+                            </li>
+                            <li>
+                                <button class="link link-type04">인터넷/전화/<br>IPTV</button>
+                                <!-- <a href="#" class="link link-type04">인터넷/전화/<br>IPTV</a> -->
+                            </li>
+                            <li>
+                                <button class="link link-type05">NUGU 서비스</button>
+                                <!-- <a href="#" class="link link-type05">NUGU 서비스</a> -->
+                            </li>
+                            <li>
+                                <button class="link link-type06">스마트홈<br>서비스</button>
+                                <!-- <a href="#" class="link link-type06">스마트홈<br>서비스</a> -->
+                            </li>
+                            <li>
+                                <button class="link link-type07">보안솔루션<br>서비스</button>
+                                <!-- <a href="#" class="link link-type07">보안솔루션<br>서비스</a> -->
+                            </li>
+                            <li>
+                                <button class="link link-type08">T apps<br>서비스</button>
+                                <!-- <a href="#" class="link link-type08">T apps<br>서비스</a> -->
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!--//다른상품 더보기 -->
+
+            </div>
+        </div>
+        <!--// #contents -->
+    </div>
+</body>
+
+<% include ../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+      new Tw.ProductPlans($('.wrap'), <%- JSON.stringify(params) %>);
+  });
+</script>
+<% include ../components/product.plans.component.html %>
+<% include ../components/end.component.html %>

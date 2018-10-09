@@ -223,7 +223,7 @@ class FormatHelper {
   /**
    *  format fee contents
    *  @param {String | number} value
-   *  @return {String}
+   *  @return {String} : if value contains only number, return value added comma
    */
   static getFeeContents(value: string | number): string {
     const sValue = String(value);
