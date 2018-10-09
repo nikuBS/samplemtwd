@@ -21,6 +21,7 @@ import {
   MYT_FARE_BILL_CO_TYPE
 } from '../../../types/bff.type';
 import DateHelper from '../../../utils/date.helper';
+import { REDIS_APP_VERSION } from '../../../types/common.type';
 
 class MainHome extends TwViewController {
   constructor() {
@@ -33,7 +34,8 @@ class MainHome extends TwViewController {
       usageData: null,
       membershipData: null,
       billData: null,
-      ppsInfo: null
+      ppsInfo: null,
+      joinInfo: null
     };
     let smartCard = [];
 
@@ -43,34 +45,42 @@ class MainHome extends TwViewController {
         smartCard = this.getSmartCardOrder(svcInfo.svcMgmtNum);
         Observable.combineLatest(
           this.getUsageData(),
-          this.getMembershipData()
-        ).subscribe(([usageData, membershipData]) => {
+          this.getMembershipData(),
+          this.getNotice()
+        ).subscribe(([usageData, membershipData, notice]) => {
           homeData.usageData = usageData;
           homeData.membershipData = membershipData;
-          res.render('main.home.html', { svcInfo, svcType, homeData, smartCard });
+          console.log(notice);
+          res.render('main.home.html', { svcInfo, svcType, homeData, smartCard, notice });
         });
       } else if ( svcType.svcCategory === LINE_NAME.INTERNET_PHONE_IPTV ) {
         Observable.combineLatest(
           this.getBillData(),
-          this.getWireServiceInfo()
-        ).subscribe(([billData, wireService]) => {
+          this.getJoinInfo(),
+          this.getNotice()
+        ).subscribe(([billData, joinInfo, notice]) => {
           homeData.billData = billData;
-          res.render('main.home.html', { svcInfo, svcType, homeData, smartCard });
+          homeData.joinInfo = joinInfo;
+          res.render('main.home.html', { svcInfo, svcType, homeData, smartCard, notice });
         });
       } else {
         if ( svcInfo.svcAttrCd === SVC_ATTR_E.PPS ) {
           Observable.combineLatest(
             this.getUsageData(),
-            this.getPPSInfo()
-          ).subscribe(([usageData, ppsInfo]) => {
+            this.getPPSInfo(),
+            this.getNotice()
+          ).subscribe(([usageData, ppsInfo, notice]) => {
             homeData.usageData = usageData;
             homeData.ppsInfo = ppsInfo;
-            res.render('main.home.html', { svcInfo, svcType, homeData, smartCard });
+            res.render('main.home.html', { svcInfo, svcType, homeData, smartCard, notice });
           });
         } else {
-          this.getUsageData().subscribe((resp) => {
-            homeData.usageData = resp;
-            res.render('main.home.html', { svcInfo, svcType, homeData, smartCard });
+          Observable.combineLatest(
+            this.getUsageData(),
+            this.getNotice()
+          ).subscribe(([usageData, notice]) => {
+            homeData.usageData = usageData;
+            res.render('main.home.html', { svcInfo, svcType, homeData, smartCard, notice });
           });
         }
       }
@@ -109,6 +119,17 @@ class MainHome extends TwViewController {
     return svcType;
   }
 
+  private getNotice(): Observable<any> {
+    return this.redisService.getData(REDIS_APP_VERSION)
+      .map((result) => {
+        console.log('result', result);
+        if ( !FormatHelper.isEmpty((result)) ) {
+          return result.notice;
+        }
+        return null;
+      });
+  }
+
   private getMembershipData(): Observable<any> {
     let membershipData = {};
     return this.apiService.request(API_CMD.BFF_04_0001, {}).map((resp) => {
@@ -125,7 +146,7 @@ class MainHome extends TwViewController {
   }
 
   private getBillData(): Observable<any> {
-    let billData = {};
+    let billData = null;
     return Observable.combineLatest(
       this.getCharge(),
       this.getUsed(),
@@ -133,13 +154,12 @@ class MainHome extends TwViewController {
         return { charge, used };
       }).map((resp) => {
       billData = this.parseBillData(resp);
-      console.log(billData);
       return billData;
     });
   }
 
   private getCharge(): any {
-    return this.apiService.request(API_CMD.BFF_05_0036, { invDt: ['201810'] }).map((resp) => {
+    return this.apiService.request(API_CMD.BFF_05_0036, {}).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
         return resp.result;
       }
@@ -148,7 +168,7 @@ class MainHome extends TwViewController {
   }
 
   private getUsed(): any {
-    return this.apiService.request(API_CMD.BFF_05_0047, { invDt: ['201810'] }).map((resp) => {
+    return this.apiService.request(API_CMD.BFF_05_0047, {}).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
         return resp.result;
       }
@@ -157,27 +177,40 @@ class MainHome extends TwViewController {
   }
 
   private parseBillData(billData): any {
-    if ( billData.charge.coClCd === MYT_FARE_BILL_CO_TYPE.BROADBAND ) {
+    if ( !FormatHelper.isEmpty(billData.charge) && !FormatHelper.isEmpty(billData.used) &&
+      billData.charge.coClCd !== MYT_FARE_BILL_CO_TYPE.BROADBAND ) {
       return {
         coClCd: billData.charge.coClCd,
         chargeAmtTot: billData.charge.useAmtTot,
         usedAmtTot: billData.used.useAmtTot,
         deduckTot: billData.charge.deduckTotInvAmt,
-        invEndDt: DateHelper.getShortDateNoDot(billData.charge.invDt + '000000'),
-        invStartDt: DateHelper.getShortFirstDateNoNot(billData.charge.invDt + '000000')
+        invEndDt: DateHelper.getShortDateNoDot(billData.charge.invDt),
+        invStartDt: DateHelper.getShortFirstDateNoNot(billData.charge.invDt),
+        invMonth: DateHelper.getShortKoreanMonth(billData.charge.invDt)
       };
     }
-    return {};
+    return null;
   }
 
-  private getWireServiceInfo(): Observable<any> {
-    return this.apiService.request(API_CMD.BFF_05_0139, {}).map((resp) => {
+  private getJoinInfo(): Observable<any> {
+    let joinInfo = null;
+    return this.apiService.request(API_CMD.BFF_05_0068, {}).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
-
+        joinInfo = this.parseJoinInfo(resp.result);
       }
-
-      return resp.result;
+      return joinInfo;
     });
+  }
+
+  private parseJoinInfo(joinInfo): any {
+    return {
+      showSet: !(FormatHelper.isEmpty(joinInfo.setPrdStaDt) && FormatHelper.isEmpty(joinInfo.setPrdEndDt)),
+      showSvc: !(FormatHelper.isEmpty(joinInfo.svcPrdStaDt) && FormatHelper.isEmpty(joinInfo.svcPrdEndDt)),
+      setPrdStaDt: DateHelper.getShortDateNoDot(joinInfo.setPrdStaDt),
+      setPrdEndDt: DateHelper.getShortDateNoDot(joinInfo.setPrdEndDt),
+      svcPrdStaDt: DateHelper.getShortDateNoDot(joinInfo.svcPrdStaDt),
+      svcPrdEndDt: DateHelper.getShortDateNoDot(joinInfo.svcPrdEndDt)
+    };
   }
 
   private getPPSInfo(): Observable<any> {
@@ -186,7 +219,7 @@ class MainHome extends TwViewController {
     };
     return this.apiService.request(API_CMD.BFF_05_0013, {}).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
-        ppsInfo.numEndDt = DateHelper.getShortDateNoDot(resp.result.numEndDt + '000000');
+        ppsInfo.numEndDt = DateHelper.getShortDateNoDot(resp.result.numEndDt);
       }
       return ppsInfo;
     });

@@ -68,6 +68,10 @@ Tw.MainHome.prototype = {
       .fail($.proxy(this._failBillData, this));
   },
   _successBillData: function (element, resp1, resp2) {
+    console.log('bill', resp1, resp2);
+    var $billTemp = $('#fe-smart-bill');
+    var tplBillCard = Handlebars.compile($billTemp.html());
+    element.html(tplBillCard({}));
   },
   _failBillData: function () {
 
@@ -78,10 +82,38 @@ Tw.MainHome.prototype = {
       .fail($.proxy(this._failContentData, this));
   },
   _successContentData: function (element, resp) {
-
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      var $contentsTemp = $('#fe-smart-contents');
+      var tplContentsCard = Handlebars.compile($contentsTemp.html());
+      element.html(tplContentsCard(this._parseContentsData(resp.result)));
+    } else {
+      Tw.Error(resp.code, resp.msg).pop();
+    }
   },
   _failContentData: function () {
 
+  },
+  _parseContentsData: function (contents) {
+    if ( contents.useConAmtDetailList.length > 0 ) {
+      return {
+        showContents: true,
+        invEndDt: Tw.DateHelper.getShortDateNoDot(contents.toDt),
+        invStartDt: Tw.DateHelper.getShortDateNoDot(contents.fromDt),
+        invMonth: Tw.DateHelper.getShortKoreanMonth(contents.fromdate),
+        usedAmtTot: Tw.FormatHelper.addComma(contents.invDtTotalAmtCharge),
+        detailList: _.map(contents.useConAmtDetailList, $.proxy(function (detail, index) {
+          return {
+            showDetail: index < 3,
+            charge: Tw.FormatHelper.addComma(detail.useCharge),
+            name: detail.useServiceNm,
+            payTime: Tw.DateHelper.getFullDateAndTime(detail.payTime)
+          };
+        }, this))
+      };
+    }
+    return {
+      showContents: false
+    };
   },
   _getMicroPayData: function (element) {
     this._apiService.request(Tw.API_CMD.BFF_05_0079, {})
@@ -89,10 +121,18 @@ Tw.MainHome.prototype = {
       .fail($.proxy(this._failMicroPayData, this));
   },
   _successMicroPayData: function (element, resp) {
-
+    console.log('micro', resp);
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      var $microTemp = $('#fe-smart-micro-pay');
+      var tplMicroCard = Handlebars.compile($microTemp.html());
+      element.html(tplMicroCard(this._parseMicroData(resp.result)));
+    }
   },
   _failMicroPayData: function () {
 
+  },
+  _parseMicroData: function () {
+    return {};
   },
   _getGiftData: function (element, index) {
     // skt_landing.action.loading.on({ ta: '.fe-smart-' + index, co: 'grey', size: true });
@@ -104,10 +144,10 @@ Tw.MainHome.prototype = {
   },
   _successGiftData: function (element, sender, remain) {
     var $giftTemp = $('#fe-smart-gift');
-    this.tplGiftCard = Handlebars.compile($giftTemp.html());
-    element.html(this.tplGiftCard(this._parseGiftData(sender, remain)));
+    var tplGiftCard = Handlebars.compile($giftTemp.html());
+    element.html(tplGiftCard(this._parseGiftData(sender, remain)));
 
-    $('.fe-bt-go-gift').click($.proxy(this._onClickBtGift, this, sender));
+    $('.fe-bt-go-gift').on('click', $.proxy(this._onClickBtGift, this, sender));
   },
   _failGiftData: function () {
 
@@ -154,20 +194,35 @@ Tw.MainHome.prototype = {
     if ( sender.code === Tw.API_CODE.CODE_00 ) {
       if ( sender.result.dataGiftCnt > 0 ) {
         this._historyService.goLoad('/myt/data/gift');
-      } else if (sender.result.familyDataGiftCnt > 0) {
+      } else if ( sender.result.familyDataGiftCnt > 0 ) {
         this._historyService.goLoad('/myt/data/gift#auto');
       }
     }
 
   },
   _getRechargeData: function (element) {
+    this._apiService.request(Tw.API_CMD.BFF_06_0001, {})
+      .done($.proxy(this._successRechargeData, this, element))
+      .fail($.proxy(this._failRrchargeData, this));
 
   },
   _successRechargeData: function (element, resp) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      var refillCoupons = resp.result.length;
+      var $rechargeTemp = $('#fe-smart-recharge');
+      var tplRechargeCard = Handlebars.compile($rechargeTemp.html());
+      element.html(tplRechargeCard({ refillCoupons: refillCoupons }));
+      $('.fe-bt-go-recharge').on('click', $.proxy(this._onClickBtRecharge, this));
+    } else {
+      Tw.Error(resp.code, resp.msg).pop();
+    }
 
   },
   _failRrchargeData: function () {
 
+  },
+  _onClickBtRecharge: function () {
+    // TODO: 충전하기 레이어
   },
 
   _elementScrolled: function (element) {

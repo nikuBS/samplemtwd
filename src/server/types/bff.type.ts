@@ -183,3 +183,25 @@ export enum MEMBERSHIP_GROUP {
   O = '일반'
 }
 
+export enum T_NOTIFY_TYPE {
+  GIFT = 'GIFT',
+  PROD = 'PROD',
+  ADD = 'ADD',
+  OPTION = 'OPTION'
+}
+
+export enum PROD_CODE_E {
+  DEFAULT = '1',
+  OPTION = '2',
+  ADD = '3'
+}
+
+export enum PROD_SCRB_CODE {
+  A = '가입',
+  I = '해지'
+}
+
+export enum PROD_SCRB_E {
+  REGISTER = 'A',
+  TERMINATE = 'I'
+}

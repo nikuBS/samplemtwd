@@ -73,8 +73,16 @@ Tw.DateHelper = (function () {
    * @param none
    * @returns {string} : 12
    */
-  var getCurrentMonth = function () {
-    return moment().format('M');
+  var getCurrentMonth = function (date) {
+    return moment(this.convDateFormat(date)).format('M');
+  };
+
+  /**
+   * @param date {Date} or {string} : YYYYMMDDhhmmss or none
+   * @returns {string} : 2018
+   */
+  var getCurrentYear = function (date) {
+    return moment(this.convDateFormat(date)).format('YYYY');
   };
 
   /**
@@ -227,6 +235,14 @@ Tw.DateHelper = (function () {
     return moment(convDateFormat(date)).format('MM월');
   };
 
+  /**
+   * @param date {Date} or {string} : YYYYMMDDhhmmss
+   * @param {string} : 10월 9일 화요일
+   */
+  var getKoreanDateWithDay = function (date) {
+    return moment(this.convDateFormat(date)).format('MMM Do dddd');
+  }
+
   var getDayOfWeek = function (date) {
     return moment(convDateFormat(date)).format('dd');
   };
@@ -255,6 +271,7 @@ Tw.DateHelper = (function () {
     getYearMonth: getYearMonth,
     getCurrentDateTime: getCurrentDateTime,
     getCurrentMonth: getCurrentMonth,
+    getCurrentYear: getCurrentYear,
     getPastYearShortDate: getPastYearShortDate,
     getNextYearShortDate: getNextYearShortDate,
     getEndOfMonth: getEndOfMonth,
@@ -266,6 +283,7 @@ Tw.DateHelper = (function () {
     getFullKoreanDate: getFullKoreanDate,
     getShortKoreanDate: getShortKoreanDate,
     getShortKoreanMonth: getShortKoreanMonth,
+    getKoreanDateWithDay: getKoreanDateWithDay,
     isValid: isValid
   };
 })();

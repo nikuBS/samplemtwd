@@ -93,7 +93,7 @@ class ApiRouter {
   }
 
   private getVersion(req: Request, res: Response, next: NextFunction) {
-    this.redisService.getData(REDIS_APP_VERSION + ':appLoad')
+    this.redisService.getData(REDIS_APP_VERSION)
       .subscribe((result) => {
         const resp = {
           code: API_CODE.CODE_00,
@@ -113,7 +113,7 @@ class ApiRouter {
   }
 
   private getSplash(req: Request, res: Response, next: NextFunction) {
-    this.redisService.getData(REDIS_APP_VERSION + ':appLoad')
+    this.redisService.getData(REDIS_APP_VERSION)
       .subscribe((result) => {
         const resp = {
           code: API_CODE.CODE_00,
@@ -133,7 +133,7 @@ class ApiRouter {
   }
 
   private getNotice(req: Request, res: Response, next: NextFunction) {
-    this.redisService.getData(REDIS_APP_VERSION + ':appLoad')
+    this.redisService.getData(REDIS_APP_VERSION)
       .subscribe((result) => {
         const resp = {
           code: API_CODE.CODE_00,

@@ -1,5 +1,4 @@
 import moment from 'moment';
-import FormatHelper from './format.helper';
 
 moment.locale('ko'); // set 'ko' timezone
 
@@ -10,7 +9,7 @@ class DateHelper {
    * @returns {Date}
    */
   static convDateFormat(date: any): Date {
-    if ( !date ) {
+    if ( date  === undefined ) {
       return new Date();
     }
     if ( !(date instanceof Date) ) {
@@ -59,15 +58,23 @@ class DateHelper {
    */
   static getCurrentDateTime = function (format) {
     return moment().format(format || 'YYYY.MM.DD hh:mm:ss');
-  };
+  }
 
   /**
-   * @param none
+   * @param date {Date} or {string} : YYYYMMDDhhmmss or none
    * @returns {string} : 12
    */
-  static getCurrentMonth = function () {
-    return moment().format('M');
-  };
+  static getCurrentMonth(date?: any): string {
+    return moment(this.convDateFormat(date)).format('M');
+  }
+
+  /**
+   * @param date {Date} or {string} : YYYYMMDDhhmmss or none
+   * @returns {string} : 2018
+   */
+  static getCurrentYear(date?: any): string {
+    return moment(this.convDateFormat(date)).format('YYYY');
+  }
 
   /**
    * @param date {Date} or {string} : YYYYMMDD
@@ -94,13 +101,28 @@ class DateHelper {
   }
 
   /**
-   * @param date {Date} or {string} : YYYYMMDD
+   * @param date {Date} or {string} : YYYYMMDDhhmmss
    * @returns {string} : 12월
    */
   static getShortKoreanMonth(date: any): string {
     return moment(this.convDateFormat(date)).format('MM월');
   }
 
+  /**
+   * @param date {Date} or {string} : YYYYMMDDhhmmss
+   * @param {string} : 10월 9일 화요일
+   */
+  static getKoreanDateWithDay(date: any): string {
+    return moment(this.convDateFormat(date)).format('MMM Do dddd');
+  }
+
+  /**
+   * @param date {Date} or {string} : YYYYMMDDhhmmss
+   * @param {string} : 오전 10시 9분
+   */
+  static getKoreanTime(date: any): string {
+    return moment(this.convDateFormat(date)).format('a h시 m분');
+  }
 
   /**
    * @param date {Date} or {string} : YYYYMMDDhhmmss
