@@ -14,10 +14,10 @@ const environment = {
     TMAP: 'https://api2.sktelecom.com/tmap/js?version=1&format=javascript&appKey=ecfeceac-3660-4618-bc3b-37a11f952441'
   },
   development: {
-    BFF_SERVER: 'http://bff-spring.mtw-stg-bff.svc.cluster.local',
+    BFF_SERVER: 'http://bff-spring',
     CDN: '',
     REDIS: {
-      host: 'stg-backing-redis-mobile-ibm-redis-ha-dev-master-svc.mtw-stg-rdf.svc.cluster.local',
+      host: 'stg-backing-redis-node-ibm-redis-ha-dev-master-svc',
       port: 6379,
       db: 15
     },
@@ -28,10 +28,10 @@ const environment = {
     TMAP: 'https://api2.sktelecom.com/tmap/js?version=1&format=javascript&appKey=ecfeceac-3660-4618-bc3b-37a11f952441'
   },
   staging: {
-    BFF_SERVER: 'http://bff-spring.mtw-stg-bff.svc.cluster.local',
+    BFF_SERVER: 'http://bff-spring',
     CDN: '',
     REDIS: {
-      host: 'stg-backing-redis-mobile-ibm-redis-ha-dev-master-svc.mtw-stg-rdf.svc.cluster.local',
+      host: 'stg-backing-redis-node-ibm-redis-ha-dev-master-svc',
       port: 6379,
       db: 15
     },
