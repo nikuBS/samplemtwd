@@ -517,4 +517,20 @@ skt_landing.widgets = {
       });
     });
   },
+  widget_horizontal: function(ta){
+    var widget = $(ta).find('.horizontal');
+    $(widget).each(function(){
+      var belt = $(this).find('.horizontal-list'),
+          items = belt.find('> li'),
+          itemsW = 0;
+      for(var i=0; items.length > i; ++i){
+        itemsW += items.eq(i).outerWidth(true);
+      }
+      if(itemsW <= skt_landing.util.win_info.get_winW()){
+        belt.css('width','100%');
+      }else if(itemsW > skt_landing.util.win_info.get_winW()){
+        belt.css('width', itemsW);
+      }
+    });
+  },
 }
