@@ -2190,7 +2190,7 @@ a.ui-button:active,
 .skip_navi, .skip-navi {
   width: 100%;
   position: absolute;
-  top: 0; }
+  top: -36px; }
 
 .skip_navi a, .skip-navi a {
   width: 100%;
@@ -2207,7 +2207,8 @@ a.ui-button:active,
 
 .skip_navi a:hover, .skip_navi a:active, .skip_navi a:focus,
 .skip-navi a:hover, .skip-navi a:active, .skip-navi a:focus {
-  z-index: 100000; }
+  z-index: 100000;
+  top: 36px; }
 
 .btn-box {
   position: relative; }

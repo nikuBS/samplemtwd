@@ -764,6 +764,17 @@ body.bg-gray {
     background: url(/img/ico/ico-group.png) no-repeat 0 -9.375rem;
     background-size: 3.125rem;
     z-index: 30; }
+  .popup-page .prev-step {
+    position: absolute;
+    left: auto;
+    right: 1rem;
+    top: 1.1875rem;
+    width: 1.5625rem;
+    height: 1.5625rem;
+    background: none;
+    font-size: 0.8125rem;
+    color: #000;
+    z-index: 30; }
   .popup-page.coupon-type {
     padding: 0;
     background: #fff; }
@@ -822,6 +833,22 @@ body.bg-gray {
     .popup-page.coupon-type .popup-closeBtn {
       top: auto;
       bottom: 1.25rem; }
+  .popup-page.fixed-bottom {
+    padding-bottom: 3.75rem; }
+    .popup-page.fixed-bottom.h30 {
+      padding-bottom: 1.875rem; }
+    .popup-page.fixed-bottom.h60 {
+      padding-bottom: 3.75rem; }
+    .popup-page.fixed-bottom.h90 {
+      padding-bottom: 5.625rem; }
+    .popup-page.fixed-bottom.h120 {
+      padding-bottom: 7.5rem; }
+    .popup-page.fixed-bottom.h150 {
+      padding-bottom: 9.375rem; }
+    .popup-page.fixed-bottom.h180 {
+      padding-bottom: 11.25rem; }
+    .popup-page.fixed-bottom.h210 {
+      padding-bottom: 13.125rem; }
 
 /* 페이지 사이즈 100% */
 .fixed-wrap {
