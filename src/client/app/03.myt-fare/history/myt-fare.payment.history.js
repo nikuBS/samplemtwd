@@ -23,9 +23,29 @@ Tw.MyTFarePaymentHistory.prototype = {
   },
   _cachedElement: function () {
     this.$actionSheetTrigger = this.$container.find('#fe-type-trigger');
+
+    this.$openAutoPaymentLayerTrigger = this.$container.find('#fe-go-refund-quit');
+    this.$moveRefundListTrigger = this.$container.find('#fe-go-refund-list');
   },
   _bindEvent: function () {
     this.$actionSheetTrigger.on('click', $.proxy(this._typeActionSheetOpen, this));
+
+    this.$openAutoPaymentLayerTrigger.on('click', $.proxy(this._openAutoPaymentLayer, this));
+    this.$moveRefundListTrigger.on('click', $.proxy(this._moveRefundList, this));
+  },
+
+  _openAutoPaymentLayer: function() {
+    this._popupService.open(
+        {
+          hbs: 'MF_08_03'
+        },
+        $.proxy(function() { console.log(1918181191919); }, this)
+    );
+    console.log(198181818181818);
+  },
+
+  _moveRefundList: function() {
+    console.log(181818181818181818);
   },
 
   _getAllData: function () {

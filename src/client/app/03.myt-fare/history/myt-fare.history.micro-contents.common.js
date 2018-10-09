@@ -126,6 +126,9 @@ Tw.MyTFareHistoryMicroContents.prototype = {
   },
 
   _renderMicroPayContentsList: function () {
+
+    this.$template.$domListWrapper.html('');
+
     this.$microPayTotalCounter.text(this.currentMonthData ? this.currentMonthData.length : 0);
 
     this.boardListWithTemplate._init({result: this.currentMonthData}, this.$template.$domListWrapper, {
