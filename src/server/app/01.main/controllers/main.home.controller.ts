@@ -84,6 +84,10 @@ class MainHome extends TwViewController {
           });
         }
       }
+    } else {
+      this.getNotice().subscribe((notice) => {
+        res.render('main.home.html', { svcInfo, svcType, homeData, smartCard, notice });
+      });
     }
   }
 
