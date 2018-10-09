@@ -1,0 +1,130 @@
+<%#
+* FileName: myt-fare.micro.block.history.html
+* Author: Lee Sanghyoung (silion@sk.com)
+* Date: 2018.09.17
+%>
+<% include ../../components/start.component.html %>
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#gnb">메뉴 바로가기</a></li>
+            <li><a href="#contents">본문 바로가기</a></li>
+            <li><a href="#footer">푸터 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+
+    <div class="wrap">
+        <%- include('../../../../../common/views/components/header.component.html', { title: '자동결제 차단내역', svcInfo: svcInfo, line: false}); %>
+
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+                <div class="cont-box nogaps">
+                    <div class="payment-switch-wrap">
+                        <div class="msg-wrap">
+                            <p class="msg">차단 및 해제 시 다음달 1일에 적용 됩니다.</p>
+                            <span class="counts">총 <em><%=data.length%></em> 건</span>
+                        </div>
+                        <div class="payment-switch-list">
+                            <ul>
+                                <% for(var k = 0; k < data.length; k++) { %>
+                                <li data-fe-cpcode="<%=data[k].cpCode%>" data-fe-tysvc="<%=data[k].tySvc%>" data-fe-idpg="<%=data[k].idpg%>">
+                                    <div class="use-info-wrap">
+                                        <span class="name1"><%=data[k].cpNm%></span><br />
+                                        <span class="name2"><%=data[k].pgNm%></span><span class="date"><%=data[k].requestDate%></span><br />
+                                        <span class="due-date">
+                                            <%# if() { %>
+                                            <%=data[k].applyDate%> 차단 예정
+                                            <%# } else if() { %>
+                                            <%=data[k].applyDate%> 해제 예정
+                                            <%# } %>
+                                        </span>
+                                    </div>
+                                    <div class="switch-wrap">
+                                            <span class="widget">
+                                                <span class="widget-box switch">
+                                                    <% if(!data[k].isBlocked) { %>
+                                                    <span class="btn-switch type1">
+                                                        <span class="switch-style" role="checkbox" aria-checked="false">
+                                                            <span class="on-tx">해제</span>
+                                                            <input type="checkbox" title="지정일부터 차단 예정" />
+                                                            <span class="off-tx">차단</span>
+                                                        </span>
+                                                    </span>
+                                                    <% } else { %>
+                                                    <span class="btn-switch type1 on">
+                                                        <span class="switch-style" role="checkbox" aria-checked="false">
+                                                            <span class="on-tx">해제</span>
+                                                            <input type="checkbox" title="지정일부터 해제 예정" />
+                                                            <span class="off-tx">차단</span>
+                                                        </span>
+                                                    </span>
+                                                    <% } %>
+                                                </span>
+                                            </span>
+                                    </div>
+                                </li>
+                                <% } %>
+                                <%#
+                                <li>
+                                    <div class="use-info-wrap">
+                                        <span class="name1">쿠팡</span><br />
+                                        <span class="name2">다날</span><span class="date">2018.5.23</span><br />
+                                        <span class="due-date">2018.6.1 해제 예정</span>
+                                    </div>
+                                    <div class="switch-wrap">
+                                            <span class="widget">
+                                                <span class="widget-box switch">
+                                                    <span class="btn-switch type1 on">
+                                                        <span class="switch-style" role="checkbox" aria-checked="false">
+                                                            <span class="on-tx">해제</span>
+                                                            <input type="checkbox" title="지정일부터 해제 예정" />
+                                                            <span class="off-tx">차단</span>
+                                                        </span>
+                                                    </span>
+                                                </span>
+                                            </span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="use-info-wrap">
+                                        <span class="name1">㈜벅스뮤직</span><br />
+                                        <span class="name2">다날</span><span class="date">2018.5.23</span><br />
+                                    </div>
+                                    <div class="switch-wrap">
+                                            <span class="widget">
+                                                <span class="widget-box switch">
+                                                    <span class="btn-switch type1">
+                                                        <span class="switch-style" role="checkbox" aria-checked="false">
+                                                            <span class="on-tx">해제</span>
+                                                            <input type="checkbox" title="지정일부터 차단 예정" />
+                                                            <span class="off-tx">차단</span>
+                                                        </span>
+                                                    </span>
+                                                </span>
+                                            </span>
+                                    </div>
+                                </li>
+                                %>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+                <!-- TBD -->
+                <img src="/img/dummy/DC_02_TBD2.jpg" alt="이용안내 노출 영역" style="width:100%;vertical-align: top;">
+            </div>
+        </div>
+    </div>
+    <% include ../../components/javascript.component.html %>
+    <script>
+      $(document).ready(function () {
+        new Tw.MyTFareMicroHistory($(document));
+      });
+    </script>
+</body>
+<% include ../../components/end.component.html %>

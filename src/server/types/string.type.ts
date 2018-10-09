@@ -130,4 +130,25 @@ export const MYT_INFO_DISCOUNT_MONTH = {
 
 export enum PRODUCT_TYPE {
   FEE_INFO_ETC = '상세참조'
-}
+};
+
+export const MYT_FARE_PAYMENT_HISTORY_TYPE = {
+  all: '전체',
+  direct: '즉시 납부',
+  auto: '자동 납부',
+  autoAll: '자동 납부 통합 인출',
+  microPrepay: '소액결제 선결제',
+  contentPrepay: '콘텐츠 이용료 선결제'
+};
+
+export const MYT_STRING_KOR_TERM = {
+  year: '년',
+  month: '월',
+  day: '일'
+};
+
+export const MYT_FARE_HISTORY_MICRO_TYPE = {
+  NORMAL: '일반결제',
+  PACK: '묶음결제',
+  AUTO: '자동결제'
+};

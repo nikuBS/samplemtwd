@@ -199,7 +199,7 @@ class DateHelper {
    * @returns {Date} : YYMMDD, YYYYMMDD, YY.MM.DD
    */
   static getShortDateWithFormat(date: any, format: string, currentFormat?: any): any {
-    return moment(date, currentFormat).format(format);
+    return moment(this.convDateFormat(date), currentFormat).format(format);
   }
 
   /**
@@ -211,9 +211,9 @@ class DateHelper {
     return moment(date).add(amount, unit).format(format);
   }
 
-  static getEndOfMonth(date: any, format: string, currentFormat: string): string {
+  static getEndOfMonth(date: any, format: string, currentFormat?: string): string {
     const days = moment(date, currentFormat).daysInMonth();
-    return moment(date, currentFormat).add(days - 1, 'days').format(format);
+    return moment(date.slice(0, 6) + days, currentFormat).format(format);
   }
 
   /**

@@ -26,6 +26,8 @@ Tw.POPUP_TITLE = {
   SELECT_ACCOUNT: '계좌번호 선택',
   SELECT_PAYMENT_DATE: '요금납부일 선택',
   CHANGE_PAYMENT_DATE: '요금납부일 변경',
+  SELECT_PAYMENT_TYPE: '납부 유형',
+  // SELECT_CARD_TYPE: '일시불',
   NOT_FAMILY: '리필쿠폰 선물 가능한 가족이 아닙니다.',
   SELECT_CHARGE_TYPE: '충전/선물 유형'
 };
@@ -47,11 +49,17 @@ Tw.CHART_UNIT = {
   TIME: 'time'
 };
 
+Tw.TOAST_TEXT = {
+  MYT_FARE_HISTORY_AUTOPAYMENT_BLOCK: '차단 신청이 완료되었습니다.',
+  MTY_FARE_HISTORY_AUTOPAYMENT_UNBLOCK: '헤제 신청이 완료되었습니다.'
+};
+
 Tw.PERIOD_UNIT = {
   DAYS: '일',
   HOURS: '시간',
   MINUTES: '분',
-  MONTH: '월'
+  MONTH: '월',
+  YEAR: '년'
 };
 
 Tw.WEEKDAYS = ['월', '화', '수', '목', '금', '토', '일'];
@@ -235,7 +243,24 @@ Tw.ALERT_MSG_AUTH = {
   L05: 'SK텔레콤 이동전화번호가 아니거나 입력하신 정보가 일치하지 않습니다. 다시 입력해 주세요.',
   L06: '이미 다른 계정에 등록된 회선 입니다.',
   L07: '이미 등록된 회선 입니다.'
+};
 
+Tw.MYT_DATA_CANCLABLE_CHARGE_ALERT = '충전 취소는 고객센터 [국번 없이 1599-0011(유료) / 휴대폰 114]를 통해 당일에 한해 가능합니다.';
+
+Tw.MYT_FARE_HISTORY_MICRO_TYPE = {
+  Y: '무선',
+  N: 'Web'
+};
+
+Tw.MYT_FARE_HISTORY_MICRO_BLOCK_TYPE = {
+  A0: '차단중',
+  A1: '다음 달 차단예정',
+  C1: '다음 달 해제예정'
+};
+
+Tw.MYT_FARE_HISTORY_MICRO_BLOCK_TOAST = {
+  BLOCK: '차단 신청이 완료되었습니다.',
+  REVOCATION: '해제 신청이 완료되었습니다.'
 };
 
 Tw.INFO = {

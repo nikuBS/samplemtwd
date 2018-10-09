@@ -1,0 +1,103 @@
+<%#
+* FileName: myt-fare.payment.history.html
+* Author: Lee Sanghyoung (silion@sk.com)
+* Date: 2018.09.17
+%>
+
+<% include ../../components/start.component.html %>
+<body>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+
+<div class="wrap">
+    <%- include('../../../../../common/views/components/header.component.html', { title: '상세 내역', svcInfo: svcInfo, line: false}); %>
+
+
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+
+            <!-- payment-detail-wrap -->
+            <div class="payment-detail-wrap">
+                <div class="payment-detail-box">
+                    <div class="detail-inner">
+                        <div class="detail-list">
+                            <ul>
+                                <li>
+                                    <div>
+                                        <span class="title">사용처</span>
+                                        <span class="tx-cont" id="fe-detail-cp-name"></span>
+                                    </div>
+                                    <div>
+                                        <ul class="inner-list">
+                                            <li>
+                                                <span class="title">서비스명</span>
+                                                <span class="tx-cont" id="fe-detail-service-name"></span>
+                                            </li>
+                                            <% if(!isContents) { %>
+                                            <li>
+                                                <span class="title">결제대행업체</span>
+                                                <span class="tx-cont" id="fe-detail-pg-name"></span>
+                                            </li>
+                                            <% } %>
+                                            <li>
+                                                <span class="title">구분</span>
+                                                <span class="tx-cont" id="fe-detail-usage-type"></span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li>
+                                    <span class="title">금액</span>
+                                    <span class="tx-cont"> <em id="fe-detail-charge"></em><span class="tx-regular">원</span></span>
+                                </li>
+                                <% if(isContents) { %>
+                                <li>
+                                    <span class="title">공제액</span>
+                                    <span class="tx-cont"> <em id="fe-detail-deduction-charge"></em><span class="tx-regular">원</span></span>
+                                </li>
+                                <% } %>
+                                <li>
+                                    <span class="title">일시</span>
+                                    <span class="tx-cont" id="fe-detail-date"></span>
+                                </li>
+                                <% if(!isContents) { %>
+                                <li>
+                                    <span class="title">구분<br /><span id="fe-detail-micro-payment-block-state" class="state"></span></span>
+                                    <span class="tx-cont"><em id="fe-detail-micro-payment-type"></em><br />
+                                        <button class="red-btn" id="fe-detail-btn-block-auto-payment">차단하기</button>
+                                        <a href="/myt/fare/history/micro-payment/block" id="fe-detail-link-move-block-list" class="red-btn">차단내역</a>
+                                    </span>
+                                </li>
+                                <% } %>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--// payment-detail-wrap -->
+            <p class="payment-detail-btm-info">
+                고객정보 보호를 위해 서비스 명의 일부가 *로 표시되며, *로 가려진 정보는 사용처에서 확인 하실 수 있습니다.
+            </p>
+
+
+        </div>
+
+    </div>
+</div>
+
+<% include ../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    new Tw.MyTFareHistoryMicroContents($(document));
+  });
+</script>
+<% include ../../components/end.component.html %>
