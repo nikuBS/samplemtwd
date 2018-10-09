@@ -10,7 +10,7 @@ class DateHelper {
    * @returns {Date}
    */
   static convDateFormat(date: any): Date {
-    if ( !date ) {
+    if ( date  === undefined ) {
       return new Date();
     }
     if ( !(date instanceof Date) ) {
@@ -94,7 +94,7 @@ class DateHelper {
   }
 
   /**
-   * @param date {Date} or {string} : YYYYMMDD
+   * @param date {Date} or {string} : YYYYMMDDhhmmss
    * @returns {string} : 12월
    */
   static getShortKoreanMonth(date: any): string {

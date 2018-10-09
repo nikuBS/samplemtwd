@@ -57,10 +57,12 @@
                                 <dd><%= svcInfo.prodNm %></dd>
                             </dl>
                             <% if (svcType.svcCategory === 'S') { %>
+                            <% if (homeData.joinInfo && homeData.joinInfo.showSvc) { %>
                             <dl>
                                 <dt>약정기간</dt>
-                                <dd>2017.03.04~2019.03.04</dd>
+                                <dd><%= homeData.joinInfo.svcPrdStaDt %>~<%= homeData.joinInfo.svcPrdEndDt %></dd>
                             </dl>
+                            <% } %>
                             <% } %>
                             <% if (svcInfo.svcAttrCd === 'M2') { %>
                             <dl>
@@ -251,10 +253,11 @@
             <div class="cont-box pt10 pb0">
                 <!-- .th-use case : TH2_04 -->
                 <div class="th-use mb0">
+                    <% if (homeData.billData) { %>
                     <dl class="real-remaining">
-                        <dt>요금안내서<button class="ico"></button></dt>
+                        <dt>요금안내서<a href="/myt/fare/bill/guide" class="ico"></a></dt>
                         <dd>
-                            <p class="remaining-group"><em class="tx-bold">8월 청구요금</em><i class="badge badge-all-service ml6">서비스 전체</i></p>
+                            <p class="remaining-group"><em class="tx-bold"><%= homeData.billData.invMonth %> 청구요금</em><i class="badge badge-all-service ml6">서비스 전체</i></p>
                             <div class="remaining-amount"><span class="num ff-tg-black">82,500</span><span class="unit">원</span></div>
                             <div class="remaining-period">사용기간<span class="tx-period">2018.07.01~2018.07.31</span></div>
                         </dd>
@@ -271,6 +274,19 @@
                             </dl>
                         </div>
                     </div>
+                    <% } else { %>
+                    <dl class="real-remaining">
+                        <dt>요금안내서<a href="/myt/fare/bill/guide" class="ico"></a></dt>
+                        <dd>
+                            <span class="remaining-comment">SK 텔레콤의 가족이<br />되어주셔서 <em class="tx-bold">감사합니다.</em></span>
+                        </dd>
+                    </dl>
+                    <div class="fee-info-box pb0">
+                        <div class="fee-card-info1 noborder">
+                            <p class="tx">요금안내서가 도착하면 이곳에서 알려드려요.</p>
+                        </div>
+                    </div>
+                    <% } %>
                 </div>
                 <!--// .th-use case : TH2_04 -->
             </div>
@@ -421,13 +437,13 @@
             <!-- .cont-box 스마트 카드 01 -->
             <% if (svcType.login && svcType.mobile) { %>
             <div class="cont-box bgnone noborder nogaps-hoz fe-smart-0 fe-smart-<%= smartCard[0].no %>" data-smartCard="<%= smartCard[0].no %>">
-                <div class="cont-card-ti"><!-- 링크가 있을 경우 구조 -->
-                    <button>
-                        <span class="card-ti-txt"><%= smartCard[0].title %></span>
-                        <span class="ico fe-smart-link"></span>
-                    </button>
-                </div>
-                <div class="fe-smart-content">
+                <div class="shadow-box mt30 empty">
+                    <div class="cont-card-ti"><!-- 링크가 있을 경우 구조 -->
+                        <button>
+                            <span class="card-ti-txt"><%= smartCard[0].title %></span>
+                            <span class="ico fe-smart-link"></span>
+                        </button>
+                    </div>
                 </div>
             </div>
             <% } %>
@@ -587,26 +603,26 @@
             <!-- .cont-box 스마트 카드 02 -->
             <% if (svcType.login && svcType.mobile) { %>
             <div class="cont-box bgnone noborder nogaps-hoz fe-smart-1 fe-smart-<%= smartCard[1].no %>" data-smartCard="<%= smartCard[1].no %>">
-                <div class="cont-card-ti"><!-- 링크가 있을 경우 구조 -->
-                    <button>
-                        <span class="card-ti-txt"><%= smartCard[1].title %></span>
-                        <span class="ico fe-smart-link"></span>
-                    </button>
-                </div>
-                <div class="fe-smart-content">
+                <div class="shadow-box mt30 empty">
+                    <div class="cont-card-ti"><!-- 링크가 있을 경우 구조 -->
+                        <button>
+                            <span class="card-ti-txt"><%= smartCard[1].title %></span>
+                            <span class="ico fe-smart-link"></span>
+                        </button>
+                    </div>
                 </div>
             </div>
             <!--// .cont-box -->
 
             <!-- .cont-box 스마트 카드 03 -->
             <div class="cont-box bgnone noborder nogaps-hoz fe-smart-2 fe-smart-<%= smartCard[2].no %>" data-smartCard="<%= smartCard[2].no %>">
-                <div class="cont-card-ti"><!-- 링크가 있을 경우 구조 -->
-                    <button>
-                        <span class="card-ti-txt"><%= smartCard[2].title %></span>
-                        <span class="ico fe-smart-link"></span>
-                    </button>
-                </div>
-                <div class="fe-smart-content">
+                <div class="shadow-box mt30 empty">
+                    <div class="cont-card-ti"><!-- 링크가 있을 경우 구조 -->
+                        <button>
+                            <span class="card-ti-txt"><%= smartCard[2].title %></span>
+                            <span class="ico fe-smart-link"></span>
+                        </button>
+                    </div>
                 </div>
             </div>
             <!--// .cont-box -->
@@ -617,13 +633,13 @@
             <% smartCard.map((card, index) => { %>
             <% if (index > 2) { %>
             <div class="cont-box bgnone noborder nogaps-hoz fe-smart-<%= index %> fe-smart-<%= smartCard[index].no %>" data-smartCard="<%= smartCard[index].no %>">
-                <div class="cont-card-ti"><!-- 링크가 있을 경우 구조 -->
-                    <button>
-                        <span class="card-ti-txt"><%= smartCard[index].title %></span>
-                        <span class="ico fe-smart-link"></span>
-                    </button>
-                </div>
-                <div class="fe-smart-content">
+                <div class="shadow-box mt30 empty">
+                    <div class="cont-card-ti"><!-- 링크가 있을 경우 구조 -->
+                        <button>
+                            <span class="card-ti-txt"><%= smartCard[index].title %></span>
+                            <span class="ico fe-smart-link"></span>
+                        </button>
+                    </div>
                 </div>
             </div>
             <% } %>
@@ -682,11 +698,13 @@
 </div>
 </body>
 <% include ../components/javascript.component.html %>
+<% if (svcType.login && svcType.mobile) { %>
 <% include ../components/smart-card/bill.component.html %>
 <% include ../components/smart-card/contents.component.html %>
 <% include ../components/smart-card/gift.component.html %>
 <% include ../components/smart-card/micro-pay.component.html %>
-<% include ../components/smart-card/recharge.component.html %>
+<%- include('../components/smart-card/recharge.component.html', { usageData: homeData.usageData }); %>
+<% } %>
 <script>
   $(document).ready(function () {
     new Tw.MainHome($('#mainHome'), '<%-JSON.stringify(smartCard) %>');
