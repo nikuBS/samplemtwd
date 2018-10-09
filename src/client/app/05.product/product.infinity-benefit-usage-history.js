@@ -1,10 +1,10 @@
 /**
- * FileName: product.benefit-usage-history.js
+ * FileName: product.infinity-benefit-usage-history.js
  * Author: Jihun Yang (jihun202@sk.com)
  * Date: 2018.10.01
  */
 
-Tw.ProductBenefitUsageHistory = function(rootEl) {
+Tw.ProductInfinityBenefitUsageHistory = function(rootEl) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = new Tw.PopupService();
@@ -13,7 +13,7 @@ Tw.ProductBenefitUsageHistory = function(rootEl) {
   this._initTemplate();
 };
 
-Tw.ProductBenefitUsageHistory.prototype = {
+Tw.ProductInfinityBenefitUsageHistory.prototype = {
 
   _template: [],
   _prodId: 'NA00006114',

@@ -202,6 +202,7 @@ export const API_CMD = {
   BFF_05_0149: { path: '/core-modification/v1/phone-pause-states', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0155: { path: '/my-t/myinfo/discount-infos', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0161: { path: '/core-product/v1/services/wireless/additions/cnt', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0166: { path: '/core-product/v1/submain/additions/joininfos', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
 
   // RECHARGE
   BFF_06_0001: { path: '/core-recharge/v1/refill-coupons', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
@@ -315,7 +316,7 @@ export const API_CMD = {
     path: '/core-bill/v1/microPrepay/microPrepay-hist-requests',
     method: API_METHOD.GET,
     server: API_SERVER.BFF,
-    bypass: false
+    bypass: true
   },
   BFF_07_0072: {
     path: '/core-bill/v1/microPrepay/microPrepay-auto-prepay-Yn',
@@ -332,7 +333,7 @@ export const API_CMD = {
     path: '/core-bill/v1/useContentsPrepay/useContentsPrepay-hist-requests',
     method: API_METHOD.GET,
     server: API_SERVER.BFF,
-    bypass: false
+    bypass: true
   },
   BFF_07_0079: {
     path: '/core-bill/v1/useContentsPrepay/useContents-autoPrepay-hist',
@@ -456,6 +457,10 @@ export const API_CMD = {
   },
   BFF_10_0015: {
     path: '/core-product/v1/mobiles/fee-plans/args-0/tplan-benefits',
+    method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true
+  },
+  BFF_10_0017: {
+    path: '/core-product/v1/mobiles/additions/args-0/preinfos',
     method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true
   },
   BFF_10_0024: { path: '/core-product/v1/submain/banners', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },

@@ -1,0 +1,25 @@
+<%#
+* FileName: product.additions-terminate.html
+* Author: Ji Hun Yang (jihun202@sk.com)
+* Date: 2018.09.11
+%>
+
+<% include ../components/start.component.html %>
+<body>
+<div class="wrap">
+  <div id="contents" class="container-wrap">
+    <div class="container">
+      <p>
+        <button type="button" class="fe-btn_terminate">해지하기</button>
+      </p>
+    </div>
+  </div>
+</div>
+</body>
+<% include ../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    new Tw.ProductAdditionsTerminate($('.container'), '<%= prodId %>', '<%= terminateApiCode %>');
+  });
+</script>
+<% include ../components/end.component.html %>

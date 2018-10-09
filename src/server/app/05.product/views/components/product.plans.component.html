@@ -1,0 +1,35 @@
+<%#
+* FileName: product.plans.component.html
+* Author: Jiyoung Jo (jiyoungjo@sk.com)
+* Date: 2018.10.09
+%>
+
+<script id="fe-templ-plans" type="text/x-handlebars-template">
+    {{#each items}}
+        <li class="type01">
+            <a href="/product/detail/{{prodId}}" class="product-infolink">
+                <div class="products-titleinfo">
+                    <h5 class="title">{{prodNm}}</h5>
+                    {{#if isMonthly}}
+                    <p class="info">월<span class="money">{{basFeeAmt}}</span>원</p>
+                    {{else}}
+                    <p class="info"><span class="money">{{basFeeAmt}}</span></p>
+                    {{/if}}
+                </div>
+                <div class="taglist-wrap">
+                    {{#each filters}}
+                        <button class="tag-text">#{{prodFltNm}}</button>
+                    {{/each}}
+                </div>
+                <dl class="products-additionalinfo">
+                    <dt>데이터</dt>
+                    <dd><span class="point">{{basOfrDataQtyCtt}}</span></dd>
+                    <dt>음성</dt>
+                    <dd>{{basOfrVcallTmsCtt}}</dd>
+                    <dt>문자</dt>
+                    <dd>{{basOfrCharCntCtt}}</dd>
+                </dl>
+            </a>
+        </li>
+    {{/each}}
+</script>

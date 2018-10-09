@@ -14,9 +14,7 @@ import { DATA_UNIT } from '../../../types/string.type';
 
 const productApiCmd = {
   'basic': API_CMD.BFF_10_0001,
-  'summary': API_CMD.BFF_10_0002,
   'relatetags': API_CMD.BFF_10_0003,
-  'contents': API_CMD.BFF_10_0004,
   'series': API_CMD.BFF_10_0005,
   'recommands': API_CMD.BFF_10_0006
 };
@@ -43,11 +41,11 @@ class ProductDetail extends TwViewController {
   }
 
   /**
-   * @param key
    * @private
    */
-  private _getRedis (key: string): Observable<any> {
-    return this.redisService.getData(key + ':' + this._prodId);
+  private _getRedis (): Observable<any> {
+    this.logger.info(this, '[REDIS] ProductLedger:' + this._prodId);
+    return this.redisService.getData('ProductLedger:' + this._prodId);
   }
 
   /**
@@ -82,19 +80,26 @@ class ProductDetail extends TwViewController {
     });
   }
 
-  /**
-   * @param smryVslYn
-   * @private
-   */
-  private _isSummaryVisual (smryVslYn): boolean {
-    return smryVslYn === 'Y';
+  private _parseRedisInfo (prodRedisInfo, smryVslYn): any {
+    if (FormatHelper.isEmpty(prodRedisInfo)) {
+      return {};
+    }
+
+    return Object.assign(prodRedisInfo, {
+      summary: Object.assign(prodRedisInfo.summary, this._parseSummaryInfo(smryVslYn, prodRedisInfo.summary))
+    });
   }
 
   /**
+   * @param smryVslYn
    * @param summaryInfo
    * @private
    */
-  private _parseSummaryInfo (summaryInfo): any {
+  private _parseSummaryInfo (smryVslYn, summaryInfo): any {
+    if (smryVslYn === 'Y') {
+      return {};
+    }
+
     return {
       basOfrDataQtyCtt: this._parseBasOfrDataQtyCtt(summaryInfo.basOfrDataQtyCtt),
       basOfrVcallTmsCtt: this._parseBasOfrVcallTmsCtt(summaryInfo.basOfrVcallTmsCtt),
@@ -148,27 +153,7 @@ class ProductDetail extends TwViewController {
       return basFeeInfo;
     }
 
-    return FormatHelper.addComma(basFeeInfo) + UNIT['110'];
-  }
-
-  /**
-   * @param contentsVslCd
-   * @param contentsInfo
-   * @param contentsByRedis
-   * @private
-   */
-  private _parseContentsInfo (contentsVslCd, contentsInfo, contentsByRedis): any {
-    let result = contentsInfo.result;
-
-    if (contentsVslCd === 'A') {
-      result = { visual: contentsByRedis.contents };
-    }
-
-    if (contentsVslCd === 'E') {
-      result = Object.assign(contentsInfo.result, { visual: contentsByRedis.contents });
-    }
-
-    return result;
+    return FormatHelper.addComma(basFeeInfo);
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, layerType: string) {
@@ -183,19 +168,14 @@ class ProductDetail extends TwViewController {
 
     Observable.combineLatest(
       this._getApi('basic', svcInfo.prodId),
-      this._getApi('summary'),
       this._getApi('relatetags'),
-      this._getApi('contents'),
       this._getApi('series'),
       this._getApi('recommands'),
-      this._getRedis('ProductLedgerBanner'),
-      this._getRedis('ProductLedgerContents'),
-      this._getRedis('ProductLedgerSummary')
+      this._getRedis()
     ).subscribe(([
-      basicInfo, summaryInfo, relateTagsInfo, contentsInfo, seriesInfo,
-       recommendsInfo, bannerByRedis, contentsByRedis, summaryByRedis
+      basicInfo, relateTagsInfo, seriesInfo, recommendsInfo, prodRedisInfo
     ]) => {
-      const apiError = this.error.apiError([basicInfo, summaryInfo, relateTagsInfo, contentsInfo, seriesInfo, recommendsInfo]);
+      const apiError = this.error.apiError([ basicInfo, relateTagsInfo, seriesInfo, recommendsInfo ]);
 
       if (!FormatHelper.isEmpty(apiError)) {
         return this.error.render(res, {
@@ -215,13 +195,10 @@ class ProductDetail extends TwViewController {
 
       res.render('product.detail.html', {
         basicInfo: this._parseBasicInfo(basicInfo.result),
-        summary: this._isSummaryVisual(basicInfo.result.smryVslYn) ? summaryByRedis : this._parseSummaryInfo(summaryInfo.result),
-        contents: this._parseContentsInfo(basicInfo.contentsVslCd, contentsInfo, contentsByRedis),
+        prodRedisInfo: this._parseRedisInfo(prodRedisInfo, basicInfo.smryVslYn),
         relateTags: relateTagsInfo.result,
-        contentsVisual: contentsByRedis,
         series: seriesInfo.result,
         recommends: recommendsInfo.result,
-        banner: bannerByRedis,
         svcInfo: svcInfo
       });
     });
