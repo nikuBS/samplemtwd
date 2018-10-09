@@ -27,12 +27,12 @@ Tw.ProductDetail.prototype = {
   },
 
   _cachedElement: function() {
-    this.$btnCommon = this.$container.find('.fe-btn_common');
-    this.$btnSettingList = this.$container.find('.fe-btn_setting_list li');
+    this.$btnList = this.$container.find('.fe-btn_list');
+    this.$btnSettingList = this.$container.find('.fe-btn_setting_list');
   },
 
   _bindEvent: function() {
-    this.$btnCommon.on('click', $.proxy(this._procCommonBtn, this));
+    this.$btnList.on('click', 'button', $.proxy(this._goBtnLink, this));
   },
 
   _getJoinTermCd: function(typcd) {
@@ -47,8 +47,10 @@ Tw.ProductDetail.prototype = {
     return null;
   },
 
-  _procCommonBtn: function(e) {
-    var typcd = $(e.currentTarget).data('typcd'),
+  _goBtnLink: function(e) {
+    var $btn = $(e.currentTarget),
+      typcd = $btn.data('typcd'),
+      btnLink = $btn.data('url'),
       joinTermCd = this._getJoinTermCd(typcd);
 
     if (typcd === 'setting') {
@@ -56,7 +58,7 @@ Tw.ProductDetail.prototype = {
     }
 
     if (typcd === 'SE') {
-      return this._historyService.goLoad('/product/setting');
+      return this._historyService.goLoad(btnLink);
     }
 
     if (Tw.FormatHelper.isEmpty(joinTermCd)) {
@@ -66,7 +68,7 @@ Tw.ProductDetail.prototype = {
     this._apiService.request(Tw.API_CMD.BFF_10_0007, {
       joinTermCd: joinTermCd
     }, null, this.prodId)
-      .done($.proxy(this._procAdvanceCheck, this, typcd));
+      .done($.proxy(this._procAdvanceCheck, this, btnLink));
   },
 
   _openSettingPop: function() {
@@ -88,16 +90,12 @@ Tw.ProductDetail.prototype = {
     this._historyService.goLoad($(e.currentTarget).data('url'));
   },
 
-  _procAdvanceCheck: function(typcd, resp) {
+  _procAdvanceCheck: function(btnLink, resp) {
     if (resp.code !== Tw.API_CODE.CODE_00) {
       return Tw.Error(null, resp.msg).pop();
     }
 
-    if (typcd === 'SC') {
-      return this._historyService.goLoad('/product/join/' + this.prodId);
-    }
-
-    this._historyService.goLoad('/product/terminate/' + this.prodId);
+    this._historyService.goLoad(btnLink);
   }
 
 };

@@ -1,0 +1,61 @@
+<%#
+* FileName: myt-join.info.fee-type-b.html
+* Author: Kim Myoung-Hwan (skt.P130714@partner.sk.com)
+* Date: 2018.10.05
+* info: 테블릿 약정할인 12 (뉴태블릿약정)
+%>
+<!-- 테블릿 약정할인 12 -->
+<div class="cont-box">
+
+    <div class="contract-dc-wrap">
+        <div class="dc-tit-wrap">
+            <h4 class="dc-tit"><%=commDataInfo.feeInfo[i].titNm %></h4>
+            <div class="bt-alone"><button class="bt-bg-blue1" title="테블릿 약정할인 12 혜택 보기">혜택 보기</button></div>
+        </div>
+
+        <div class="contract-dc-list">
+            <ul>
+                <li>
+                    <dl>
+                        <dt>
+                            <strong class="tit">기 할인 받은 금액</strong>
+                        </dt>
+                        <dd>
+                            <span class="val-type1"><span class="str"><%=commDataInfo.feeInfo[i].salePay%></span>원</span>
+                        </dd>
+                    </dl>
+                </li>
+                <li>
+                    <dl>
+                        <dt>
+                            <strong class="tit">약정 시작/종료일</strong>
+                        </dt>
+                        <dd>
+                            <span class="val-type2"><%=commDataInfo.feeInfo[i].startDt%> ~ <%=commDataInfo.feeInfo[i].endDt%></span>
+                        </dd>
+                    </dl>
+                </li>
+            </ul>
+            <div class="amountdata-num">
+                <div class="date-info">
+                    <p class="data-title">잔여<span class="blind">(잔여일수)</span></p>
+                    <p class="data-state"><span class="str"><%=commDataInfo.feeInfo[i].curDt%></span>일</p>
+                </div>
+                <div class="date-info">
+                    <p class="data-title">전체<span class="blind">(전체일수)</span></p>
+                    <p class="data-state"><span class="str"><%=commDataInfo.feeInfo[i].totDt%></span>일</p>
+                </div>
+            </div>
+            <div class="bar-chart-hoz">
+                <span class="data-bar red" style="width: <%=commDataInfo.feeInfo[i].perDt%>%"></span>
+            </div>
+        </div>
+        <ul class="bt-slice">
+            <li class="bt-white2">
+                <button>상세 할인 내역 보기</button>
+            </li>
+        </ul>
+    </div>
+
+</div>
+<!--// 테블릿 약정할인 12 -->

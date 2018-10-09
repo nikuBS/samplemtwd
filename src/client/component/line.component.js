@@ -13,15 +13,14 @@ Tw.LineComponent = function () {
   this._customerPwd = new Tw.CustomerPwdComponent();
 
   this.$btLine = null;
-  this.$list = null;
   this.$remainCnt = null;
-  this.$btMore = null;
 
   this._selectedMgmt = '';
   this._index = 0;
   this._goAuthLine = false;
   this._lineList = null;
   this._urlAuth = null;
+  this._changeLine = false;
   this._bindEvent();
   Tw.Logger.info('[Line] init complete', this._urlAuth);
 };
@@ -34,60 +33,58 @@ Tw.LineComponent.prototype = {
   },
   _bindEvent: function () {
     this.$btLine = this.$container.find('#fe-bt-line');
-    this._selectedMgmt = this.$btLine.data('svcmgmtnum');
-    this._urlAuth = this.$btLine.data('urlauth');
+    var selectedMgmt = this.$btLine.data('svcmgmtnum');
+    var urlAuth = this.$btLine.data('svcmgmtnum');
 
-    this.$btLine.on('click', $.proxy(this._onClickLine, this));
+    this.$btLine.on('click', $.proxy(this.onClickLine, this, selectedMgmt, urlAuth));
   },
-  _onClickLine: function ($event) {
-    var curBtn = $($event.currentTarget);
-    if ( !curBtn.hasClass('no-arrow') ) {
-      if ( !curBtn.hasClass('disabled') ) {
-        this._getLineList();
-      } else {
-        this._closePopup();
-      }
-    }
+  onClickLine: function (selectedMgmt, urlAuth) {
+    this._selectedMgmt = selectedMgmt;
+    this._urlAuth = urlAuth;
+    this._getLineList();
   },
   _getLineList: function () {
-    this._apiService.request(Tw.API_CMD.BFF_01_0002, {})
-      .done($.proxy(this._successGetLineList, this));
-    // $.ajax('/mock/auth.line.json')
-    //   .done($.proxy(this._successGetLineList, this));
+    if ( Tw.FormatHelper.isEmpty(this._lineList) ) {
+      this._apiService.request(Tw.NODE_CMD.GET_ALL_SVC, {})
+        .done($.proxy(this._successGetLineList, this));
+      // $.ajax('/mock/auth.line.json')
+      //   .done($.proxy(this._successGetLineList, this));
+    } else {
+      this._openListPopup(this._lineList);
+    }
+
   },
   _successGetLineList: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._lineList = this._parseLineList(resp.result);
       this._openListPopup(this._lineList);
     } else {
-      this._popupService.openAlert(resp.code + ' ' + resp.msg);
+      Tw.Error(resp.code, resp.msg).page();
     }
   },
   _openListPopup: function (lineData) {
+
     this._popupService.open({
-      hbs: 'CO_회선변경_ActionSheet',
+      hbs: 'CO_line_ActionSheet',
       layer: true,
       group: lineData,
       bt_txt: Tw.BUTTON_LABEL.LINE
-    }, $.proxy(this._onOpenListPopup, this), $.proxy(this._onCloseListPopup, this));
+    }, $.proxy(this._onOpenListPopup, this), $.proxy(this._onCloseListPopup, this), 'line');
   },
   _onOpenListPopup: function ($popupContainer) {
-    this.$btLine.addClass('disabled');
+    // this.$btLine.addClass('disabled');
 
     // $popupContainer.on('click', '.popup-blind', $.proxy(this._closePopup, this));
-    $popupContainer.on('change', '.fe-radio-list', $.proxy(this._onSelectLine, this));
-    $popupContainer.on('click', '.fe-btn-txt', $.proxy(this._onClickTxtButton, this));
-    $popupContainer.on('click', '.bt-more', $.proxy(this._onClickMore, this));
+    $popupContainer.on('click', '.fe-item', $.proxy(this._onSelectLine, this));
+    $popupContainer.on('click', '#fe-bt-line', $.proxy(this._onClickLineButton, this));
 
-    this.$list = $popupContainer.find('.radiobox', '.type02');
     this.$remainCnt = $popupContainer.find('.fe-remain-cnt');
-    this.$btMore = $popupContainer.find('.bt-more');
   },
   _onCloseListPopup: function () {
-    this.$btLine.removeClass('disabled');
+    // this.$btLine.removeClass('disabled');
     if ( this._goAuthLine ) {
       this._historyService.goLoad('/auth/line');
-    } else {
+    } else if ( this._changeLine ) {
       this._historyService.reload();
     }
   },
@@ -117,14 +114,14 @@ Tw.LineComponent.prototype = {
   },
   _convLineData: function (lineData, category) {
     var result = [];
+    console.log(this._selectedMgmt);
     Tw.FormatHelper.sortObjArrAsc(lineData, 'expsSeq');
     _.map(lineData, $.proxy(function (line) {
       var selected = this._selectedMgmt.toString() === line.svcMgmtNum ? 'checked ' : '';
       result.push({
-        display: this._index < Tw.DEFAULT_LIST_COUNT ? 'block' : 'none',
         index: this._index++,
         txt: Tw.FormatHelper.isEmpty(line.nickNm) ? Tw.SVC_ATTR[line.svcAttrCd] : line.nickNm,
-        option: selected + (this._urlAuth.indexOf(line.svcGr) === -1 ? 'disabled' : ''),   // TODO: Add authority
+        option: selected, // + (this._urlAuth.indexOf(line.svcGr) === -1 ? 'disabled' : ''),   // TODO: Add authority
         integration: line.actRepYn === 'Y',
         representation: line.repSvcYn === 'Y',
         line: Tw.LINE_NAME[category] === 'S' ? line.addr : line.svcNum,
@@ -134,13 +131,17 @@ Tw.LineComponent.prototype = {
     return result;
   },
   _onSelectLine: function ($event) {
-    var $selectedLine = $($event.currentTarget).parent();
+    var $selectedLine = $($event.currentTarget);
     var svcMgmtNum = $selectedLine.data('svcmgmtnum');
     var mdn = $selectedLine.data('mdn');
+    this.changeLine(svcMgmtNum, mdn);
+
+  },
+  changeLine: function (svcMgmtNum, mdn) {
     this._apiService.request(Tw.NODE_CMD.CHANGE_SESSION, { svcMgmtNum: svcMgmtNum })
       .done($.proxy(this._successChangeLine, this, svcMgmtNum, mdn));
   },
-  _onClickTxtButton: function () {
+  _onClickLineButton: function () {
     this._closePopup();
     this._goAuthLine = true;
   },
@@ -153,30 +154,31 @@ Tw.LineComponent.prototype = {
       // 고객보호 비밀번호 설정 페이지
       this._popupService.openAlert(resp.code + ' ' + resp.msg);
     } else {
-      this._historyService.goLoad('/auth/login/fail?errorCode=' + resp.code);
-      // this._popupService.openAlert(resp.code + ' ' + resp.msg);
+      // this._historyService.goLoad('/auth/login/fail?errorCode=' + resp.code);
+      this._popupService.openAlert(resp.code + ' ' + resp.msg);
     }
   },
-  _onClickMore: function () {
-    var $hideList = this.$list.filter('.none');
-    var $showList = $hideList.filter(function (index) {
-      return index < Tw.DEFAULT_LIST_COUNT;
-    });
-    var $service = $showList.parents('.dropdown-group');
-    var remainCnt = $hideList.length - $showList.length;
-
-    $service.removeClass('none');
-    $service.addClass('block');
-    $showList.removeClass('none');
-    $showList.addClass('block');
-
-    this.$remainCnt.html(remainCnt);
-    if ( remainCnt === 0 ) {
-      this.$btMore.hide();
-    }
-  },
+  // _onClickMore: function () {
+  //   var $hideList = this.$list.filter('.none');
+  //   var $showList = $hideList.filter(function (index) {
+  //     return index < Tw.DEFAULT_LIST_COUNT;
+  //   });
+  //   var $service = $showList.parents('.dropdown-group');
+  //   var remainCnt = $hideList.length - $showList.length;
+  //
+  //   $service.removeClass('none');
+  //   $service.addClass('block');
+  //   $showList.removeClass('none');
+  //   $showList.addClass('block');
+  //
+  //   this.$remainCnt.html(remainCnt);
+  //   if ( remainCnt === 0 ) {
+  //     this.$btMore.hide();
+  //   }
+  // },
   _completeLogin: function () {
-    Tw.UIService.setLocalStorage(Tw.LSTORE_KEY.LINE_REFRESH, 'Y');
+    this._changeLine = true;
+    Tw.CommonHelper.setLocalStorage(Tw.LSTORE_KEY.LINE_REFRESH, 'Y');
     this._closePopup();
   },
   _completeCustomerLogin: function () {

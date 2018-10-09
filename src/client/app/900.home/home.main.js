@@ -4,12 +4,12 @@
  * Date: 2018.06.22
  */
 
-Tw.HomeMain = function (rootEl, lineRegisterLayer) {
+Tw.HomeMain = function (rootEl) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._nativeSrevice = Tw.Native;
-  this._lineRegisterLayer = lineRegisterLayer;
+  this._lineRegisterLayer = new Tw.LineRegisterComponent();
 
   this._init();
   this._bindEvent();
@@ -42,14 +42,10 @@ Tw.HomeMain.prototype = {
     //     console.log(res2);
     //     console.log(res3);
     //   });
-    this._apiService.request(Tw.NODE_CMD.GET_SVC_INFO, {})
-      .done(function (resp) {
-        console.log(resp);
-      });
-    this._apiService.request(Tw.NODE_CMD.GET_ALL_SVC, {})
-      .done(function (resp) {
-        console.log(resp);
-      });
+    // this._apiService.request(Tw.NODE_CMD.GET_SVC_INFO, {})
+    //   .done(function (resp) {
+    //     console.log(resp);
+    //   });
 
   },
   _bindEvent: function () {
@@ -62,9 +58,10 @@ Tw.HomeMain.prototype = {
   },
   _openPopup: function () {
     var layerType = this.$container.data('layertype');
-    console.log(layerType);
-
-    this._lineRegisterLayer.openRegisterLinePopup(layerType);
+    console.log('layerType : ', layerType);
+    if ( !Tw.FormatHelper.isEmpty(layerType) ) {
+      this._lineRegisterLayer.openRegisterLinePopup(layerType);
+    }
   },
 
   // 리필하기

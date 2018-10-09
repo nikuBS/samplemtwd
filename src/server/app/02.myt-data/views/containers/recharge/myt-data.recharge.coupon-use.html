@@ -17,14 +17,8 @@
     <!--// #skip_navigation -->
     <div class="wrap step">
         <!-- #header -->
-        <div id="header" class="header-wrap">
-            <div class="header">
-                <div class="header-ti align-l">
-                    <h1>리필 쿠폰 사용</h1>
-                </div>
-                <a href="/myt/data/recharge/coupon" class="prev-step">취소</a>
-            </div>
-        </div>
+        <%- include('../../../../common/views/components/header.component.html',
+        { title: '리필 쿠폰 사용', svcInfo: svcInfo, option: { back: 'step' } }); %>
         <!--// #header -->
         <!-- #contents -->
         <div id="contents" class="container-wrap">
@@ -77,11 +71,13 @@
                                                                     <div class="comp-list-layout" id="aria-comp-radio1" aria-hidden="true">
                                                                         <p class="layout-text">
                                                                             <span class="mtext"><%= options[i].copnDtlClNm %></span>
-                                                                            <% if (options[i].dataVoiceClCd === 'D') { %>
+                                                                            <% if (options[i].dataVoiceClCd === 'D' && options[i].isTplan) { %>
                                                                             <span class="stext">T플랜 라지/패밀리/DATA인피니티의 경우에는 별도의 기준을 적용합니다.</span>
                                                                             <% } %>
                                                                         </p>
+                                                                        <% if (options[i].qttText !== '0') { %>
                                                                         <span class="tx-data"><%= options[i].qttText %></span>
+                                                                        <% } %>
                                                                     </div>
                                                                 </li>
                                                                 <% } %>

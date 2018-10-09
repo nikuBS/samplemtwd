@@ -19,7 +19,7 @@ $(window).load(function (){
   if ($('footer').length){
     footer();
   }
-  /* /home/home.html */
+  /* /home/main.home.html */
   if ($('.slick-type01').length) {
     $('.slick-type01 .belt').slick({
       dots: false,

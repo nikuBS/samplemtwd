@@ -18,7 +18,7 @@ var gulp       = require('gulp'),
 
 
 var oldAppNames = ['home', 'myt', 'recharge', 'payment', 'customer', 'auth'];
-var appNames = ['common', 'home', 'myt-data', 'myt-fare', 'myt-join', 'product', 'benefit', 'customer', 'auth'];
+var appNames = ['common', 'main', 'myt-data', 'myt-fare', 'myt-join', 'product', 'benefit', 'customer', 'auth'];
 // for docker (dev env)
 var dist_tmp = 'src/server/public/cdn/';
 var dist = 'dist/';
@@ -103,7 +103,8 @@ gulp.task('js-vendor', function () {
     'node_modules/underscore/underscore-min.js',
     'node_modules/handlebars/dist/handlebars.min.js',
     'node_modules/slick-carousel/slick/slick.min.js',
-    'node_modules/moment/min/moment.min.js'])
+    'node_modules/moment/min/moment.min.js',
+    'node_modules/jsbarcode/dist/jsBarcode.all.min.js'])
     .on('error', function (err) {
       gutil.log(gutil.colors.red('[Error]'), err.toString());
     })

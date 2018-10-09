@@ -28,6 +28,8 @@ class MyTDataLimit extends TwViewController {
         res.render('limit/myt-data.limit.complete.html', responseData);
         break;
       default:
+        console.log('*******************************************************************************************************');
+
         Observable.combineLatest(
           this.getLimitUserInfo()
         ).subscribe(([limitUserInfo]) => {
@@ -45,16 +47,21 @@ class MyTDataLimit extends TwViewController {
     }
   }
 
-  private getLimitUserInfo() {
-    return this.apiService.request(API_CMD.BFF_06_0034, {}).map((resp) => {
-      if ( resp.code === API_CODE.CODE_00 ) {
+  getLimitUserInfo = () => this.apiService.request(API_CMD.BFF_06_0034, {}).map((resp) => {
 
-        return Object.assign(resp.result, { regularTopUpAmt: FormatHelper.numberWithCommas(resp.result.regularTopUpAmt) });
-      } else {
-        return null;
-      }
-    });
-  }
+    if ( resp.code === API_CODE.CODE_00 ) {
+      const response = Object.assign(
+        {},
+        resp.result,
+        {
+          regularTopUpAmt: resp.result.regularTopUpAmt ? FormatHelper.numberWithCommas(resp.result.regularTopUpAmt) : ''
+        });
+
+      return response;
+    } else {
+      return null;
+    }
+  })
 }
 
 export default MyTDataLimit;

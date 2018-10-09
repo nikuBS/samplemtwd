@@ -29,6 +29,27 @@ export enum UNIT {
   MB = 'MB'
 }
 
+export const MYT_DATA_USAGE = {
+  T_O_PLAN_BASE_DATA: {
+    DD3EA: '인피니티',
+    DD3DZ: '패밀리',
+    DD3DO: '라지',
+    DD3DG: '미디엄',
+    DD3D8: '스몰',
+    DD4D1: '라지',
+  },
+  T_O_PLAN_SHARE_DATA: {
+    DD3CX: '인피니티',
+    DD3CV: '패밀리',
+    DD3CU: '라지',
+    DD4D5: '라지',
+  }
+};
+
+export const MYT_DATA_USAGE_TOTAL_SHARING_DATA = {
+  TITLE: '통합공유 데이터'
+};
+
 export const MYT_FARE_BILL_GUIDE = {
   DATE_FORMAT: {
     YYYYMM_TYPE: 'YYYY년 MM월'
@@ -81,3 +102,28 @@ export enum MYT_DATA_CHARGE_TYPES {
   FIXED = '자동',
   CANCLE = '취소'
 }
+
+export enum PRODUCT_INFINITY_BENEFIT {
+  NA00006114 = 'T 로밍 Onepass 월 1회/ 1개월 + 마티나 라운지 이용권 1회/ 3개월',
+  NA00006115 = '무료영화예매 2회 / 1개월',
+  NA00006116 = '스마트 워치 월정액 100% 할인',
+  NA00006117 = '인피니티 클럽 이용료 100%할인'
+}
+
+export const MYT_FARE_BILL_REISSUE_TYPE = {
+  'P' : 'T world',
+  'H' : 'Bill Letter',
+  'B' : '문자',
+  '2' : '이메일',
+  'I' : 'Bill Letter+이메일',
+  'A' : '문자+이메일',
+  '1' : '우편',
+  'Q' : 'Bill Letter+문자',
+  // 유선
+  'J' : 'Bill Letter',
+  'K' : 'Bill Letter+이메일'
+};
+
+export const MYT_INFO_DISCOUNT_MONTH = {
+  TITLE: '월별 상세 할인 내역'
+};

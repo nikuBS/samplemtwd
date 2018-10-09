@@ -21,14 +21,8 @@
             <h2 class="blind">내용</h2>
             <div id="main" class="container">
                 <!-- #header -->
-                <div id="header" class="header-wrap">
-                    <div class="header">
-                        <div class="header-ti align-l">
-                            <h1>체크/신용카드 납부</h1>
-                        </div>
-                        <button class="prev-step fe-common-back">취소</button>
-                    </div>
-                </div>
+                <%- include('../../../../../common/views/components/header.component.html',
+                { title: '체크/신용카드 납부', svcInfo: svcInfo, option:{ back: 'step' } }); %>
                 <!--// #header -->
                 <!-- .cont-box -->
                 <div class="cont-box">
@@ -57,7 +51,7 @@
                             <span class="inputbox">
                                 <span class="input">
                                   <input type="number" inputmode="numeric" min="0" pattern="[0-9]*" placeholder="숫자만 입력"
-                                         title="input" value="" aria-labelledby="aria-exp-label3" class="fe-card-number">
+                                         title="input" value="" aria-labelledby="aria-exp-label3" class="fe-card-number required-input-field">
                                   <button class="cancel"><span class="blind">삭제</span></button>
                                 </span>
                             </span>
@@ -67,13 +61,13 @@
                             <div class="input-wrap-half">
                                 <span class="inputbox">
                                     <span class="input">
-                                        <input type="number" inputmode="numeric" min="0" pattern="[0-9]*" class="fe-card-y" placeholder="YYYY" title="유효 년" maxlength="4">
+                                        <input type="number" inputmode="numeric" min="0" pattern="[0-9]*" class="fe-card-y required-input-field" placeholder="YYYY" title="유효 년" maxlength="4">
                                         <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
                                     </span>
                                 </span>
                                 <span class="inputbox">
                                     <span class="input">
-                                        <input type="number" inputmode="numeric" min="0" pattern="[0-9]*" class="fe-card-m" placeholder="MM" title="유효 월" maxlength="2">
+                                        <input type="number" inputmode="numeric" min="0" pattern="[0-9]*" class="fe-card-m required-input-field" placeholder="MM" title="유효 월" maxlength="2">
                                         <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
                                     </span>
                                 </span>
@@ -83,7 +77,7 @@
                             <p class="form-label" id="aria-exp-label4">비밀번호</p>
                             <span class="inputbox">
                                 <span class="input">
-                                  <input type="password" class="fe-card-pw" placeholder="앞 2자리" title="비밀번호 입력란" value="" aria-labelledby="aria-exp-label4" maxlength="2">
+                                  <input type="password" class="fe-card-pw required-input-field" placeholder="앞 2자리" title="비밀번호 입력란" value="" aria-labelledby="aria-exp-label4" maxlength="2">
                                   <button class="cancel"><span class="blind">삭제</span></button>
                                 </span>
                             </span>
@@ -142,7 +136,7 @@
                             <span class="inputbox mt6">
                                 <span class="input">
                                     <input type="number" inputmode="numeric" min="0" pattern="[0-9]*" placeholder="계좌번호(숫자만 입력)"
-                                           title="input" value="" aria-labelledby="aria-exp-label1" class="fe-refund-account-number">
+                                           title="input" value="" aria-labelledby="aria-exp-label1" class="fe-refund-account-number required-input-field">
                                     <button class="cancel"><span class="blind">삭제</span></button>
                                 </span>
                             </span>
@@ -153,7 +147,7 @@
                 <!--// .cont-box -->
                 <ul class="bt-slice full">
                     <li class="bt-red1">
-                        <button class="fe-check-pay">납부하기</button>
+                        <button class="fe-check-pay" disabled>납부하기</button>
                     </li>
                 </ul>
             </div>

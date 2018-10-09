@@ -9,6 +9,7 @@ Tw.MyTDataSubMain = function (params) {
   this.$container = params.$element;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
+  this._lineService = new Tw.LineComponent();
   this._historyService = new Tw.HistoryService(this.$container);
   this._historyService.init('hash');
   this.data = params.data;
@@ -24,12 +25,12 @@ Tw.MyTDataSubMain.prototype = {
   loadingView: function (value) {
     if ( value ) {
       skt_landing.action.loading.on({
-        ta: '[data-id=wrapper]', co: 'grey', size: true
+        ta: '.wrap', co: 'grey', size: true
       });
     }
     else {
       skt_landing.action.loading.off({
-        ta: '[data-id=wrapper]'
+        ta: '.wrap'
       });
     }
   },
@@ -127,7 +128,7 @@ Tw.MyTDataSubMain.prototype = {
     if ( this.data.pattern.data.length > 0 || this.data.pattern.voice.length > 0 ) {
       var unit = '', data, chart_data;
       if ( this.data.pattern.data.length > 0 ) {
-        unit = 'GB';
+        unit = Tw.CHART_UNIT.GB;
         data = this.data.pattern.data;
         chart_data = {
           co: '#3b98e6',// 색상
@@ -146,7 +147,7 @@ Tw.MyTDataSubMain.prototype = {
         };
       }
       else if ( this.data.pattern.voice.length > 0 ) {
-        unit = 'time';
+        unit = Tw.CHART_UNIT.TIME;
         data = this.data.pattern.voice;
         chart_data = {
           co: '#3b98e6',// 색상
@@ -166,7 +167,7 @@ Tw.MyTDataSubMain.prototype = {
       }
 
       this.$patternChart.chart({
-        type: 'bar', //bar
+        type: Tw.CHART_TYPE.BAR, //bar
         container: 'pattern', //클래스명 String
         unit: unit, //x축 이름
         guide_num: 1, //가이드 갯수
@@ -329,10 +330,11 @@ Tw.MyTDataSubMain.prototype = {
   // 다른 회선 팝업에서 변경하기 눌렀을 경우
   _onChangeLineConfirmed: function () {
     // 회선변경 API 호출
-    // TODO: 선택회선변경에 대한 class 분리예정, 완료되면 적용!!
-    this._apiService.request(Tw.NODE_CMD.CHANGE_SESSION, {
-      svcMgmtNum: this.changeLineMgmtNum
-    }).done($.proxy(this._onChangeSessionSuccess, this));
+    this._lineService.changeLine(this.changeLineMgmtNum);
+    // TODO: TOAST 기능을 사용하려면 아래 부분 사용
+    // this._apiService.request(Tw.NODE_CMD.CHANGE_SESSION, {
+    //   svcMgmtNum: this.changeLineMgmtNum
+    // }).done($.proxy(this._onChangeSessionSuccess, this));
   },
 
   // DC_04 팝업내 아이템 선택시 이동

@@ -142,7 +142,8 @@ class ApiService {
       .switchMap((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
           result = resp.result;
-          return this.loginService.setSvcInfo({ mbrNm: resp.result.mbrNm });
+          console.log(result);
+          return this.loginService.setSvcInfo({ mbrNm: resp.result.mbrNm, noticeType: resp.result.noticeTypCd });
         } else {
           throw resp;
         }
@@ -153,7 +154,7 @@ class ApiService {
           resp.result.loginType = type;
           return this.loginService.setSvcInfo(resp.result);
         } else {
-          throw resp;
+          return this.loginService.setSvcInfo(null);
         }
       })
       .switchMap((resp) => this.request(API_CMD.BFF_01_0002, {}))
@@ -161,15 +162,15 @@ class ApiService {
         if ( resp.code === API_CODE.CODE_00 ) {
           return this.loginService.setAllSvcInfo(resp.result);
         } else {
-          throw resp;
+          return this.loginService.setAllSvcInfo(null);
         }
       })
       .switchMap((resp) => this.request(API_CMD.BFF_01_0040, {}))
       .switchMap((resp) => {
-        if(resp.code === API_CODE.CODE_00) {
+        if ( resp.code === API_CODE.CODE_00 ) {
           return this.loginService.setChildInfo(resp.result);
         } else {
-          throw resp;
+          return this.loginService.setChildInfo(null);
         }
       })
       .map((resp) => {
@@ -230,8 +231,38 @@ class ApiService {
     return this.requestUpdateSvcInfo(API_CMD.BFF_01_0004, params);
   }
 
+  public requestUpdateAllSvcInfo(command, params): Observable<any> {
+    let result = null;
+    return this.request(command, params)
+      .switchMap((resp) => {
+        if ( resp.code === API_CODE.CODE_00 ) {
+          result = resp.result;
+          return this.request(API_CMD.BFF_01_0005, {});
+        } else {
+          throw resp;
+        }
+      })
+      .switchMap((resp) => {
+        if ( resp.code === API_CODE.CODE_00 ) {
+          return this.loginService.setSvcInfo(resp.result);
+        } else {
+          return this.loginService.setSvcInfo(null);
+        }
+      })
+      .switchMap((resp) => this.request(API_CMD.BFF_01_0002, {}))
+      .switchMap((resp) => {
+        if ( resp.code === API_CODE.CODE_00 ) {
+          return this.loginService.setAllSvcInfo(resp.result);
+        } else {
+          return this.loginService.setAllSvcInfo(null);
+        }
+      }).map(() => {
+        return { code: API_CODE.CODE_00, result: result };
+      });
+  }
+
   public requestChangeLine(params: any): Observable<any> {
-    return this.requestUpdateSvcInfo(API_CMD.BFF_03_0005, params);
+    return this.requestUpdateAllSvcInfo(API_CMD.BFF_03_0005, params);
   }
 }
 

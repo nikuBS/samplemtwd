@@ -1,0 +1,156 @@
+<%#
+* FileName: common.settings.terms.html (GU_02)
+* Author: Hakjoon Sim (hakjoon.sim@sk.com)
+* Date: 2018.10.08
+%>
+
+<% include ../../components/start.component.html %>
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#gnb">메뉴 바로가기</a></li>
+            <li><a href="#contents">본문 바로가기</a></li>
+            <li><a href="#footer">푸터 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+    <%- include('../../../../common/views/components/header.component.html', { title: '이용약관' }); %>
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+                <div class="cont-box nogaps noborder">
+                    <!-- .component -->
+                    <div class="component">
+                        <div class="component-box tabs">
+                            <div class="tab-area type1"><!-- 타입별 탭형태 변환 -->
+                                <div class="tab-linker">
+                                    <ul role="tablist">
+                                        <li role="tab" aria-selected="true" aria-controls="tab1-tab" id="tab1"><a href="">SK텔레콤 이용약관</a></li><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
+                                        <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2"><a href="">T world 웹회원 이용약관</a></li>
+                                    </ul>
+                                </div>
+                                <div class="tab-contents">
+                                    <ul>
+                                        <li role="tabpanel" id="tab1-tab" aria-labelledby="tab1">
+                                            <hr class="cont-sp type1" aria-hidden="true"/>
+                                            <div class="cont-box nogaps inborder">
+                                                <ul class="link-long-list">
+                                                    <li>
+                                                        <div class="link-long">
+                                                            <button>이동전화 이용약관
+                                                                <span class="tx-sub">
+                                                                    <span class="ico"></span>
+                                                                </span>
+                                                            </button>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="link-long">
+                                                            <button>WCDMA 이용약관
+                                                                <span class="tx-sub">
+                                                                    <span class="ico"></span>
+                                                                </span>
+                                                            </button>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="link-long">
+                                                            <button>재판매 이용약관
+                                                                <span class="tx-sub">
+                                                                    <span class="ico"></span>
+                                                                </span>
+                                                            </button>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="link-long">
+                                                            <button>결합상품 이용약관
+                                                                <span class="tx-sub">
+                                                                    <span class="ico"></span>
+                                                                </span>
+                                                            </button>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="link-long">
+                                                            <button>WiBro 이용약관
+                                                                <span class="tx-sub">
+                                                                    <span class="ico"></span>
+                                                                </span>
+                                                            </button>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="link-long">
+                                                            <button>위치기반서비스 이용약관
+                                                                <span class="tx-sub">
+                                                                    <span class="ico"></span>
+                                                                </span>
+                                                            </button>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="link-long">
+                                                            <button>위치정보사업 이용약관
+                                                                <span class="tx-sub">
+                                                                    <span class="ico"></span>
+                                                                </span>
+                                                            </button>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="link-long">
+                                                            <button>통신과금서비스 이용약관
+                                                                <span class="tx-sub">
+                                                                    <span class="ico"></span>
+                                                                </span>
+                                                            </button>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                                <div class="bt-more">
+                                                    <button>더보기</button>
+                                                </div>
+                                            </div>
+
+                                        </li>
+                                        <li role="tabpanel" id="tab2-tab" aria-labelledby="tab2">
+                                            <hr class="cont-sp type1" aria-hidden="true"/>
+                                            <div class="cont-box">
+                                                <ul class="bt-slice">
+                                                    <li class="bt-white2">
+                                                        <button>이용약관 확인</button>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <hr class="cont-sp type1" aria-hidden="true"/>
+                                            <div class="cont-box nogaps noborder">
+                                                <img src="/img/dummy/dmy-asis.png" alt="현행정보 유지(AS-IS 정보 그대로 불러와 노출)" style="display:block;width:100%;">
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--// .component -->
+            </div>
+           <div class="bt-top">
+                <button><span class="blind">최상단으로 가기</span></button>
+            </div>
+        </div>
+        <!--// #contents -->
+        <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
+    </div>
+</body>
+<% include ../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    // new Tw.CommonSettingsTerms($('.wrap'));
+  });
+</script>
+<% include ../../components/end.component.html %>

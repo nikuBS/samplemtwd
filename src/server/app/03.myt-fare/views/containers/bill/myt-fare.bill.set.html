@@ -17,15 +17,7 @@
 <!--// #skip_navigation -->
 <div class="wrap">
     <!-- #header -->
-    <div id="header" class="header-wrap">
-        <div class="header">
-            <div class="header-ti align-l">
-                <h1>요금안내서 설정</h1>
-            </div>
-            <button class="prev-step"><span class="blind">이전으로</span>
-            </button><button class="bt-dropdown small" title="회선 선택" aria-haspopup="true">010-87**-13**<span class="ico"></span></button>
-        </div>
-    </div>
+    <%- include('../../../../../common/views/components/header.component.html', { title: '요금안내서 설정', svcInfo: svcInfo, option: { line: true } }); %>
     <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap">
@@ -47,9 +39,38 @@
                     <dt>함께 받는 요금안내서</dt>
                     <dd><strong><%= data.billInfo[1].nm  %></strong></dd>
                 </dl>
-                <%} if ( 'P' !== data.curBillType ) { %>
-                <!--T world 확인은 [설정한 옵션] 없음-->
+                <%}%>
+
                 <div class="cont-box nogaps pt22">
+                    <%if ( '1' === data.billInfo[0].cd ) {%>
+                    <dl class="info-tx1">
+                        <dt>우편 주소</dt>
+                        <dd>[<%= data.zip%>] <%= data.basAddr + ' '+ data.dtlAddr%></dd>
+                    </dl>
+                    <div class="info-line">
+                        <dl class="info-tx1">
+                            <dt>우편물 발송주기</dt>
+                            <dd>
+                                <%
+                                    let jugi = {
+                                        '1' : '매월',
+                                        '2' : '격월',
+                                        '3' : '분기',
+                                        '4' : '반기'
+                                    };
+                                %>
+                                <%=jugi[data.billSndCyclCd]%>
+                            </dd>
+                        </dl>
+                        <dl class="info-tx1">
+                            <dt>휴대폰번호</dt>
+                            <dd><%=data.cntcNum1%></dd>
+                        </dl>
+                    </div>
+                    <%}%>
+
+                    <!--T world 확인은 [설정한 옵션] 없음-->
+                    <% if ( 'P' !== data.curBillType ) { %>
                     <dl class="info-tx1">
                         <dt>설정한 옵션</dt>
                         <dd>
@@ -59,10 +80,14 @@
                             <%- data.ccurNotiYn === 'Y' ? '법정대리인 함께 수령':'' %>
                         </dd>
                     </dl>
+                    <%}%>
                 </div>
-                <%} if( !('P' === data.curBillType && 'N' === data.isusimchk ) || 'B' !== data.curBillType ) {%>
+
+                <%if( !('P' === data.curBillType && 'N' === data.isusimchk ) || 'B' !== data.curBillType ) {%>
                 <!--"정보변경" 없는 유형 : T world 확인(SMS 수신불가 단말), 문자-->
-                <div class="bt-alone"><button class="bt-bg-blue1">정보변경</button></div>
+                <div class="bt-alone">
+                    <a class="bt-bg-blue1" href="/myt/fare/bill/set/change?billType=<%=data.billInfo[0].cd%>&subBillType=<%=data.billInfo[1].cd%>&isChangeInfo=Y">정보변경</a>
+                </div>
                 <%}%>
                 <ul class="bt-slice item-two pt40">
                     <li class="bt-blue1">
@@ -71,7 +96,8 @@
                     <!--T world 확인은 재발행 기능 없음-->
                     <% if ( 'P' !== data.curBillType ) { %>
                     <li class="bt-blue1">
-                        <button>재발행</button>
+                        <!--<button>재발행</button>-->
+                        <a href="/myt/fare/bill/set/reissue">재발행</a>
                     </li>
                     <%}%>
                 </ul>
@@ -86,7 +112,7 @@
                     <% data.billList.forEach( (bill) => { %>
                     <li>
                         <div class="link-long lower-h">
-                            <a href="/myt/fare/bill/set/change">
+                            <a href="/myt/fare/bill/set/change?billType=<%=bill.cd%>&subBillType=X">
                                 <span class="ico-thum2"></span><%= bill.nm %>
                                 <span class="tx-sub">
                                     <span class="ico"></span>

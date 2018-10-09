@@ -32,6 +32,9 @@ class MyTUsageGraphbox {
     }
     // 통합공유데이터가 있는 경우
     if ( data.sharedData ) {
+      // data.showUsed = this.convFormat(data.used, data.unit);
+      data.showTotal = this.convFormat(data.total, data.unit);
+      data.sharedData.showTotal = this.convFormat(data.sharedData.total, data.unit);
       data.sharedData.showRemained = this.convFormat(data.sharedData.remained, data.unit);
       data.sharedData.showUsed = this.convFormat(data.sharedData.used, data.unit);
     }

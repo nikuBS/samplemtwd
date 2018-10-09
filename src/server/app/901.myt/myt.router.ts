@@ -17,28 +17,19 @@ import MyTHotBill from './controllers/bill/myt.bill.hotbill.controller';
 import MyTReissue from './controllers/bill/myt.bill.guidechange.reissue.controller';
 import MyTReissueComplete from './controllers/bill/myt.bill.guidechange.reissue-complete.controller';
 import MyTReturnHistory from './controllers/bill/myt.bill.guidechange.returnhistory.controller';
-import MyTBillBillguide from './controllers/bill/myt.bill.billguide.controller';
+
 import MyTHotBillChild from './controllers/bill/myt.bill.hotbill.child.controller';
 import MyTBillGuidechange from './controllers/bill/myt.bill.guidechange.controller';
 import MyTBillGuidechangeChange from './controllers/bill/myt.bill.guidechange.change.controller';
 import MyTBillGuideChangeComplete from './controllers/bill/myt.bill.guidechange.change-complete.controller';
 import MyTBillGuidechangeUpdate from './controllers/bill/myt.bill.guidechange.update.controller';
 import MyTBillGuidechangeUpdateComplete from './controllers/bill/myt.bill.guidechange.update-complete.controller';
-import MyTBillBillguideSubDetailSpecification from './controllers/bill/myt.bill.billguide.subDetailSpecification.controller';
-import MyTBillBillguideSubSelPayment from './controllers/bill/myt.bill.billguide.subSelPayment.controller';
-import MyTBillBillguideSubSusRelease from './controllers/bill/myt.bill.billguide.subSusRelease.controller';
-import MyTBillBillguideSubChildBill from './controllers/bill/myt.bill.billguide.subChildBill.controller';
-import MyTBillBillguideSubCallBill from './controllers/bill/myt.bill.billguide.subCallBill.controller';
-import MyTBillBillguideSubRoamingBill from './controllers/bill/myt.bill.billguide.subRoamingBill.controller';
-import MyTBillBillguideSubDonationBill from './controllers/bill/myt.bill.billguide.subDonationBill.controller';
+
 import MyTBillHistoryMicro from './controllers/bill/myt.bill.history.micro.controller';
 import MyTBillHistoryMicroPassword from './controllers/bill/myt.bill.history.micro.password.controller';
 import MyTBillHistoryLimitCommon from './controllers/bill/myt.bill.history.limit.common.controller';
 import MyTBillHistoryLimitChangeCommon from './controllers/bill/myt.bill.history.limit.change.common.controller';
 import MyTBillHistoryContents from './controllers/bill/myt.bill.history.contents.controller';
-
-
-
 
 import MyTJSProtectChange from './controllers/join/myt.join.protect.change.controller';
 import MyTJoinJoinInfo from './controllers/join/myt.join.join-info.controller';
@@ -94,14 +85,14 @@ class MytRouter extends TwRouter {
     this.controllers.push({ url: '/bill/guidechange/reissue/complete', controller: new MyTReissueComplete() });
     this.controllers.push({ url: '/bill/billguide/returnhistory', controller: new MyTReturnHistory() });
 
-    this.controllers.push({ url: '/bill/billguide', controller: new MyTBillBillguide() });
-    this.controllers.push({ url: '/bill/billguide/subDetailSpecification', controller: new MyTBillBillguideSubDetailSpecification() });
-    this.controllers.push({ url: '/bill/billguide/subSelPayment', controller: new MyTBillBillguideSubSelPayment() });
-    this.controllers.push({ url: '/bill/billguide/subSusRelease', controller: new MyTBillBillguideSubSusRelease() });
-    this.controllers.push({ url: '/bill/billguide/subChildBill', controller: new MyTBillBillguideSubChildBill() });
-    this.controllers.push({ url: '/bill/billguide/subCallBill', controller: new MyTBillBillguideSubCallBill() });
-    this.controllers.push({ url: '/bill/billguide/subRoamingBill', controller: new MyTBillBillguideSubRoamingBill() });
-    this.controllers.push({ url: '/bill/billguide/subDonationBill', controller: new MyTBillBillguideSubDonationBill() });
+    // this.controllers.push({ url: '/bill/billguide', controller: new MyTBillBillguide() });
+    // this.controllers.push({ url: '/bill/billguide/subDetailSpecification', controller: new MyTBillBillguideSubDetailSpecification() });
+    // this.controllers.push({ url: '/bill/billguide/subSelPayment', controller: new MyTBillBillguideSubSelPayment() });
+    // this.controllers.push({ url: '/bill/billguide/subSusRelease', controller: new MyTBillBillguideSubSusRelease() });
+    // this.controllers.push({ url: '/bill/billguide/subChildBill', controller: new MyTBillBillguideSubChildBill() });
+    // this.controllers.push({ url: '/bill/billguide/subCallBill', controller: new MyTBillBillguideSubCallBill() });
+    // this.controllers.push({ url: '/bill/billguide/subRoamingBill', controller: new MyTBillBillguideSubRoamingBill() });
+    // this.controllers.push({ url: '/bill/billguide/subDonationBill', controller: new MyTBillBillguideSubDonationBill() });
 
     this.controllers.push({ url: '/bill/hotbill/child', controller: new MyTHotBillChild() });
     this.controllers.push({ url: '/bill/guidechange', controller: new MyTBillGuidechange() });
@@ -125,7 +116,7 @@ class MytRouter extends TwRouter {
     this.controllers.push({ url: '/join/contract-terminal', controller: new MyTJoinContractTerminal() });
     this.controllers.push({ url: '/join/contract-terminal/detail', controller: new MyTJoinContractTerminalDetail() });
     this.controllers.push({ url: '/join/join-info', controller: new MyTJoinJoinInfo() });
-    this.controllers.push({ url: '/join/protect/change', controller: new MyTJSProtectChange() });
+    // this.controllers.push({ url: '/join/protect/change', controller: new MyTJSProtectChange() });
     this.controllers.push({ url: '/join/join-info/no-contract', controller: new MyTJoinJoinInfoNoContract() });
     this.controllers.push({ url: '/join/join-info/sms', controller: new MyTJoinJoinInfoSms() });
 

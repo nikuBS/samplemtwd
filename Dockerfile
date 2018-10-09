@@ -1,7 +1,7 @@
 # Node.js app Docker file
-
+ARG DOCKER_REGISTRY
 # Linux dependencies
-FROM mycluster.icp:8500/default/nodejs8-centos:0.1
+FROM ${DOCKER_REGISTRY}/infra/nodejs8-centos:0.1
 #FROM node:carbon
 
 WORKDIR /tworld
@@ -9,9 +9,9 @@ WORKDIR /tworld
 COPY package*.json ./
 
 # set npm proxy & registry
-RUN npm config set proxy http://devops.tworld.co.kr:80
-RUN npm config set https-proxy http://devops.tworld.co.kr:80
-RUN npm config set registry http://devops.tworld.co.kr/myrepo/content/groups/npm-group/
+RUN npm config set proxy http://devops.sktelecom.com:80
+RUN npm config set https-proxy http://devops.sktelecom.com:80
+RUN npm config set registry http://devops.sktelecom.com/myrepo/content/groups/npm-group/
 RUN npm config set strict-ssl false
 
 # npm & pm2 install

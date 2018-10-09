@@ -64,12 +64,24 @@ Tw.StringHelper = (function () {
     }
   };
 
+  var stringf = function() {
+    var src = arguments[0];
+
+    for (var i = 1; i < arguments.length; i++) {
+      var regEx = new RegExp('\\{' + (i - 1) + '\\}', 'gm');
+      src = src.replace(regEx, arguments[i]);
+    }
+
+    return src;
+  };
+
   return {
     replaceAt: replaceAt,
     masking: masking,
     commaSeparatedString: commaSeparatedString,
     replaceDateNotaionWithDot: replaceDateNotaionWithDot,
     parseCommaedStringToInt: parseCommaedStringToInt,
-    phoneStringToDash: phoneStringToDash
+    phoneStringToDash: phoneStringToDash,
+    stringf : stringf
   };
 })();

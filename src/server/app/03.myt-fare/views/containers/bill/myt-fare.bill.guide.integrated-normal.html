@@ -127,17 +127,9 @@
 <!--// #skip_navigation -->
 
 <div id="fe-wrap" class="wrap">
-    <!-- #header -->
-    <div id="header" class="header-wrap">
-        <div class="header">
-            <div class="header-ti align-l">
-                <h1>요금안내서-통합청구(일반)</h1>
-            </div>
-            <button class="prev-step"><span class="blind">이전으로</span></button>
-            <button class="bt-dropdown small" title="회선 선택" aria-haspopup="true">010-87**-13**<span class="ico"></span></button>
-        </div>
-    </div>
-    <!--// #header -->
+
+    <%- include('../../../../common/views/components/header.component.html', { title: '요금안내서', svcInfo: svcInfo, option: { line:true } }) %>
+
     <!-- #contents -->
     <div id="contents" class="container-wrap">
         <h2 class="blind">내용</h2>
@@ -160,7 +152,12 @@
                     <div class="bt-alone"><button class="bt-bg-blue1" data-target="conditionChangeBtn">조건 변경</button></div>
 
                     <div class="charge-cont pt38">
-                        <span class="sub-disc02">이번 달에는 <span class="tx-bold vbl">요금할인을 <%=commDataInfo.discount %>원</span> 받으셨어요.<br />SK텔레콤과 함께 해주셔서 감사합니다.</span>
+                        <span class="sub-disc02">
+                            <% if(commDataInfo.discount != 0 ){ %>
+                            이번 달에는 <span class="tx-bold vbl">요금할인을 <%=commDataInfo.discount %>원</span> 받으셨어요.<br />
+                            <% } %>
+
+                            SK텔레콤과 함께 해주셔서 감사합니다.</span>
                     </div>
                 </div>
             </div>
@@ -190,30 +187,24 @@
                 <ul class="link-long-list">
                     <li>
                         <div class="link-long">
-                            <button>콜기프트 사용요금
-                                <span class="tx-sub">
-	                                        <span class="ico"></span>
-	                                    </span>
+                            <button data-target="callGiftBtn">콜기프트 사용요금
+                                <span class="tx-sub"><span class="ico"></span></span>
                             </button>
                         </div>
                     </li>
                     <li>
                         <div class="link-long">
-                            <button>
+                            <button data-target="roamingBtn">
                                 로밍 사용요금
-                                <span class="tx-sub">
-	                                        <span class="ico"></span>
-	                                    </span>
+                                <span class="tx-sub"><span class="ico"></span></span>
                             </button>
                         </div>
                     </li>
                     <li>
                         <div class="link-long">
-                            <button>
+                            <button data-target="donationBtn">
                                 기부금/후원금
-                                <span class="tx-sub">
-	                                        <span class="ico"></span>
-	                                    </span>
+                                <span class="tx-sub"><span class="ico"></span></span>
                             </button>
                         </div>
                     </li>

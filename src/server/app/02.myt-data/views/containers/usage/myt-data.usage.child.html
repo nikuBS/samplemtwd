@@ -16,13 +16,7 @@
 <div id="myt-data-usage" class="wrap">
     <div class="popup-page nobg"><!-- .no-btn 하단에 버튼이 없을 경우 -->
         <!-- #header -->
-        <div class="header-wrap">
-            <div class="page-header">
-                <div class="header-ti">
-                    <h1>자녀 실시간 잔여량</h1>
-                </div>
-            </div>
-        </div>
+        <%- include('../../../../../common/views/components/header.component.html', { title: '자녀 실시간 잔여량', svcInfo: svcInfo, option: { back: 'popup' } }); %>
         <!--// #header -->
         <!-- .container-wrap -->
         <div class="container-wrap">

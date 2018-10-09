@@ -17,11 +17,11 @@ Tw.HistoryService.prototype = {
   init: function (hash, length, type) {
     if ( hash === 'hash' ) {
       this._hashService.initHashNav($.proxy(this.onHashChange, this));
-      if (type === undefined) {
+      if ( type === undefined ) {
         this._hashService.detectIsReload();
       }
     } else {
-      if (length > 0) {
+      if ( length > 0 ) {
         this._urlHistoryLength = length;
       }
       this.$window.on('pageshow', $.proxy(this.checkIsBack, this));
@@ -43,6 +43,7 @@ Tw.HistoryService.prototype = {
     Tw.UIService.setLocalStorage(this.storageName, 'done');
   },
   reload: function () {
+    window.scrollTo(0, 0);
     window.location.reload();
   },
   goLoad: function (url) {

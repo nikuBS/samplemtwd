@@ -30,10 +30,12 @@ Tw.UIService.prototype = {
           document.location.reload();
         }
 
-        if ( Tw.UIService.getLocalStorage(Tw.LSTORE_KEY.LINE_REFRESH) === 'Y') {
+        if ( Tw.UIService.getLocalStorage(Tw.LSTORE_KEY.LINE_REFRESH) === 'Y' ) {
           Tw.Logger.info('[Line Refresh]', document.referrer);
-          document.location.reload();
-          if ( /\/home/.test(location.href) ) {
+          // if ( Tw.BrowserHelper.isApp() ) {
+            document.location.reload();
+          // }
+          if ( /\/main\/home/.test(location.href) ) {
             Tw.UIService.setLocalStorage(Tw.LSTORE_KEY.LINE_REFRESH, 'N');
           }
         }

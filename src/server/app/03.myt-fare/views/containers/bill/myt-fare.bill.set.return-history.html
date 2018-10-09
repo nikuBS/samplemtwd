@@ -18,15 +18,7 @@
 <!--// #skip_navigation -->
 <div class="wrap">
     <!-- #header -->
-    <div id="header" class="header-wrap">
-        <div class="header">
-            <div class="header-ti align-l">
-                <h1>요금안내서 반송내역</h1>
-            </div>
-            <button class="prev-step"><span class="blind">이전으로</span>
-            </button>
-        </div>
-    </div>
+    <%- include('../../../../../common/views/components/header.component.html', { title: '요금안내서 반송내역', svcInfo: svcInfo }); %>
     <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap">

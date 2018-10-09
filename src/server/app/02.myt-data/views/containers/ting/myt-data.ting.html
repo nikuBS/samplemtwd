@@ -17,14 +17,8 @@
 <!--// #skip_navigation -->
 <div class="wrap step">
     <!-- #header -->
-    <div id="header" class="header-wrap">
-        <div class="header">
-            <div class="header-ti align-l">
-                <h1>팅요금제 충전 선물</h1>
-            </div>
-            <button class="prev-step fe-common-back">취소</button>
-        </div>
-    </div>
+    <%- include('../../../../common/views/components/header.component.html',
+    { title: '팅요금제 충전 선물', svcInfo: svcInfo, option: { back: 'step' } }); %>
     <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap">
@@ -53,14 +47,14 @@
                     <div class="widget-box radio">
                         <div class="radio-slide">
                             <ul class="select-list fe-ting_amount_select_list" role="radiogroup" style="width: 100%;">
-                                <li class="radiobox disabled" role="radio" aria-checked="false" aria-disabled="true">
-                                    <input type="radio" name="radio4" value="20000" title="값1" disabled="">
+                                <li class="radiobox disabled" role="radio" aria-checked="false">
+                                    <input type="radio" name="radio4" value="20000" title="값1">
                                     <!-- 체크상태일 경우 checked="checked" -->
                                     <span class="radio-txt">
 												<span>20,000</span><span class="unit">원</span>
 											</span>
                                 </li>
-                                <li class="radiobox" role="radio" aria-checked="true">
+                                <li class="radiobox" role="radio" aria-checked="false">
                                     <input type="radio" name="radio4" value="15000" title="값2">
                                     <!-- 체크상태일 경우 checked="false" -->
                                     <span class="radio-txt">

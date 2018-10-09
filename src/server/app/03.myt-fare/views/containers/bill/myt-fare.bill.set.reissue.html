@@ -1,0 +1,160 @@
+<!--
+* FileName: myt-fare.bill.set.reissue.html
+* Author: 이정민 (skt.p130713@partner.sk.com)
+* Date: 2018.10.01
+-->
+<% include ../../components/start.component.html %>
+<body>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div id="fe-myt-fare-bill-set-reissue" class="wrap step">
+    <!-- #header -->
+    <%- include('../../../../../common/views/components/header.component.html', { title: '요금안내서 재발행',  option : {back:'step'} }); %>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <!-- .cont-box -->
+
+            <!--요금서가 두개인 경우 처리-->
+            <% if (data.billIsueTyps && data.billIsueTyps.length > 1) { %>
+            <div class="cont-box">
+                <p class="con-tit0 pb12">재발행 할 요금안내서</p>
+                <div class="widget">
+                    <div class="widget-box radio">
+                        <div class="radio-slide big">
+                            <ul class="select-list fe-bill-isue-typs" role="radiogroup">
+                                <li class="radiobox checked" role="radio"aria-checked="true">
+                                    <input type="radio" name="radio1" value="<%= data.billIsueTyps[0] %>" title="<%= data.billIsueTypNms[0] %>" checked />
+                                    <span class="radio-txt">
+												<span><%= data.billIsueTypNms[0] %></span>
+											</span>
+                                </li>
+                                <li class="radiobox" role="radio">
+                                    <input type="radio" name="radio1" value="<%= data.billIsueTyps[1] %>" title="<%= data.billIsueTypNms[1] %>"/>
+                                    <span class="radio-txt">
+												<span><%= data.billIsueTypNms[1] %></span>
+											</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <% } %>
+
+            <!-- 휴대폰인 경우 재발행 시점 표시-->
+            <% if (data.type === '01') { %>
+            <div class="cont-box">
+                <p class="con-tit0 pb12">재발행 시점</p>
+                <div class="widget">
+                    <div class="widget-box radio">
+                        <div class="radio-slide big">
+                            <ul class="select-list fe-bill-isue-typ-cds" role="radiogroup">
+                                <li class="radiobox" role="radio">
+                                    <input type="radio" name="radio4" value="" title="값1" checked />
+                                    <span class="radio-txt">
+												<span>청구시점</span>
+											</span>
+                                </li>
+                                <li class="radiobox" role="radio">
+                                    <input type="radio" name="radio4" value="" title="값2"/>
+                                    <span class="radio-txt">
+												<span>현재시점</span>
+											</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <% } %>
+
+            <% if (data.halfYear && data.halfYear.length > 0 ) { %>
+            <div class="cont-box nogaps pt20">
+                <p class="con-tit0 pl16 pb6">재발행 월</p>
+                <p class="con-txt0 pl16 pb14">이번 달부터 최근 6개월까지 선택이 가능합니다.</p>
+                <div class="list-comp-input">
+                    <div class="widget">
+                        <div class="widget-box radio">
+                            <ul class="select-list fe-inv-yms" role="group">
+                                <% for (var i = 0; i < data.halfYear.length; i++) { %>
+                                <li class="radiobox type01-big mid-top <%= (i === 0 ? 'checked': '') %>" role="radio" aria-checked="<%= (i === 0 ? 'true': 'false') %>">
+                                    <input type="radio" name="radio" value="<%= data.halfYear[i].type3 %>" title="<%= data.halfYear[i].type1 %>" aria-labelledby="aria-comp-radio1" <%= (i === 0 ? 'checked="checked"': '') %> />
+                                    <div class="comp-list-layout" id="aria-comp-radio1" aria-hidden="true">
+                                        <p class="layout-text">
+                                            <span class="mtext"><%= data.halfYear[i].type1 %></span>
+                                        </p>
+                                    </div>
+                                </li>
+                                <% } %>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--// .cont-box -->
+            <hr class="cont-sp type1" />
+            <% } %>
+
+            <!-- 유선인 경우 재발행 사유 표시-->
+            <% if (data.type === '02' && data.reasons && data.reasons.length > 0) { %>
+            <div class="cont-box nogaps pt20">
+                <p class="con-tit0 pl16 pb14">재발행 사유</p>
+                <div class="list-comp-input">
+                    <div class="widget">
+                        <div class="widget-box radio">
+                            <ul class="select-list fe-reisu-rsn-cd" role="group">
+                                <% for (var i = 0; i < data.reasons.length; i++) { %>
+                                <li class="radiobox type01-big mid-top <%= (i === 0 ? 'checked': '') %>" role="radio" aria-checked="<%= (i === 0 ? 'true': 'false') %>">
+                                    <input type="radio" name="radio2" value="<%= data.reasons[i].commCdVal %>" title="값11" aria-labelledby="aria-comp-radio11" <%= (i === 0 ? 'checked="checked"': '') %> />
+                                    <div class="comp-list-layout" id="aria-comp-radio11" aria-hidden="true">
+                                        <p class="layout-text">
+                                            <span class="mtext"><%= data.reasons[i].commCdValNm %></span>
+                                        </p>
+                                    </div>
+                                </li>
+                                <% } %>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <% } %>
+
+            <!-- .cont-box -->
+            <div class="cont-box noborder">
+                이용안내 노출 영역
+            </div>
+            <!--// .cont-box -->
+            <ul class="bt-slice full">
+                <li class="bt-red1">
+                    <button class="fe-btn-submit">신청하기</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!--// #contents -->
+</div>
+</body>
+
+<% include ../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    new Tw.MyTFareBillSetReIssue($('#fe-myt-fare-bill-set-reissue'), {
+      billIsueTypCd: '<%= data.billIsueTypCd %>',
+      billIsueTypNm: '<%= data.billIsueTypNm %>',
+      billIsueTyps: '<%= data.billIsueTyps %>',
+      type: '<%= data.type %>'
+    });
+  });
+</script>
+<% include ../../components/end.component.html %>

@@ -1,10 +1,10 @@
 const environment = {
   local: {
     BFF_SERVER: 'http://211.188.180.73:31020',
-    CDN: 'http://localhost:3001',
+    CDN: '',
     REDIS: {
       host: '211.188.180.73',
-      port: 32200,
+      port: 31200,
       db: 15
     },
     TEMP_CDN: 'http://tstore.rbipt.com/skt',
@@ -27,7 +27,7 @@ const environment = {
     DOMAIN: 'http://icp-dev.tworld.co.kr',
     TMAP: 'https://api2.sktelecom.com/tmap/js?version=1&format=javascript&appKey=ecfeceac-3660-4618-bc3b-37a11f952441'
   },
-  qa: {
+  staging: {
     BFF_SERVER: 'http://bff-spring.mtw-stg-bff.svc.cluster.local',
     CDN: '',
     REDIS: {

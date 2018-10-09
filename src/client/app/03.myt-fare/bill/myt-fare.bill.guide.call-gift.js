@@ -27,16 +27,16 @@ Tw.MyTFareBillGuideCallGift.prototype = {
   _cachedElement: function () {
     this.$entryTpl = $('#fe-entryTpl');
 
-    this.$dateSelect= $('[data-target="dateSelect"]');
-    this.$dataResult= $('[data-target="dataResult"]');
-    this.$noData= $('[data-target="noData"]');
+    this.$dateSelect = $('[data-target="dateSelect"]');
+    this.$dataResult = $('[data-target="dataResult"]');
+    this.$noData = $('[data-target="noData"]');
   },
   _bindEvent: function () {
     this.$container.on('click', '[data-target="monBtn"]', $.proxy(this._monthBtnEvt, this));
     this.$container.on('click', '[data-target="popupCloseBt"]', $.proxy(this._popupCloseBtEvt, this));
   },
   //--------------------------------------------------------------------------[EVENT]
-  _monthBtnEvt: function(e) {
+  _monthBtnEvt: function (e) {
     // Tw.Logger.info('[버튼 클릭]', e);
     var $target = $(e.currentTarget);
     this.selectMonthVal = $target.attr('data-value');
@@ -44,24 +44,24 @@ Tw.MyTFareBillGuideCallGift.prototype = {
     // Tw.Logger.info('[선택 값]', this.selectMonthVal);
 
     var param = {
-      startDt : this._getPeriod(this.selectMonthVal, 'YYYYMMDD').startDt,
-      endDt: this._getPeriod(this.selectMonthVal, 'YYYYMMDD').endDt,
+      startDt: this._getPeriod(this.selectMonthVal, 'YYYYMMDD').startDt,
+      endDt: this._getPeriod(this.selectMonthVal, 'YYYYMMDD').endDt
     };
 
     // Tw.Logger.info('[버튼 클릭 > param]', param);
-    this._getCallGiftInfo( param );
+    this._getCallGiftInfo(param);
   },
-  _popupCloseBtEvt: function() {
+  _popupCloseBtEvt: function () {
     this._goLoad('/myt/fare/bill/guide');
   },
   //--------------------------------------------------------------------------[API]
-  _getCallGiftInfo: function(param) {
+  _getCallGiftInfo: function (param) {
     return this._apiService.request(Tw.API_CMD.BFF_05_0045, param).done($.proxy(this._getCallGiftInfoInit, this));
   },
-  _getCallGiftInfoInit: function(res) {
+  _getCallGiftInfoInit: function (res) {
 
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      var resObj = this._svcToTimeObj( res.result.callData );
+      var resObj = this._svcToTimeObj(res.result.callData);
       this.$dateSelect.hide();
 
       if ( resObj.totalSec === 0 ) {
@@ -87,60 +87,67 @@ Tw.MyTFareBillGuideCallGift.prototype = {
   },
 
   //--------------------------------------------------------------------------[SVC]
-  _getPeriod: function( periodStr, formatStr ) {
-    var periodStr = String(periodStr); // 기간 : 1, 2, 3, 6 (개월)
+  _getPeriod: function (periodStr, formatStr) {
     var defaultSubtractNum = 1;
     var subtractNum = Number(periodStr);
-    var startDt = moment().subtract(subtractNum, 'months').startOf('month').format(formatStr);
-    var endDt = moment().subtract(defaultSubtractNum, 'months').endOf('month').format(formatStr);
+    // var startDt = moment().subtract(subtractNum, 'months').startOf('month').format(formatStr);
+    // var endDt = moment().subtract(defaultSubtractNum, 'months').endOf('month').format(formatStr);
+    var startDt = moment().subtract(defaultSubtractNum + subtractNum, 'months').format(formatStr);
+    var endDt = moment().subtract(defaultSubtractNum, 'months').subtract(defaultSubtractNum, 'days').format(formatStr);
 
     return {
       startDt: startDt,
       endDt: endDt
-    }
+    };
   },
 
-  _svcHbDetailList: function( resData, $jqTg, $hbTg ) {
+  _svcHbDetailList: function (resData, $jqTg, $hbTg) {
     var jqTg = $jqTg;
     var hbTg = $hbTg;
     var source = hbTg.html();
     var template = Handlebars.compile(source);
     var data = {
-      resData : resData
+      resData: resData
     };
     var html = template(data);
     jqTg.append(html);
   },
 
-  _svcToTimeObj: function(str) {
+  _svcToTimeObj: function (str) {
     // var total_s_val = this._toSecond(str);
     // return this._toHHMMSS(total_s_val);
 
     return this._toHHMMSS(str);
   },
   //--------------------------------------------------------------------------[COM]
-  _toSecond: function(str) {
+  _toSecond: function (str) {
     var strl = str;
     var m_loc = strl.indexOf('분'); // 분
     var s_loc = strl.indexOf('초'); // 초
-    var m_val = Number( strl.slice(0, m_loc).trim() );
-    var s_val = Number( strl.slice(m_loc + 1, s_loc).trim() );
+    var m_val = Number(strl.slice(0, m_loc).trim());
+    var s_val = Number(strl.slice(m_loc + 1, s_loc).trim());
     var total_s_val = (m_val * 60) + s_val; // 초로 변환
 
-    return total_s_val
+    return total_s_val;
   },
-  _toHHMMSS: function(num) {
+  _toHHMMSS: function (num) {
     console.info('[초]', num);
     var myNum = parseInt(num, 10);
     console.info('[초 변환]', myNum);
 
     var hour = Math.floor(myNum / 3600);
-    var minute = Math.floor( (myNum - (hour * 3600)) / 60 );
+    var minute = Math.floor((myNum - (hour * 3600)) / 60);
     var second = myNum - (hour * 3600) - (minute * 60);
 
-    if (hour < 10) { hour = '0' + hour; }
-    if (minute < 10) { minute = '0' + minute; }
-    if (second < 10) { second = '0' + second; }
+    if ( hour < 10 ) {
+      hour = '0' + hour;
+    }
+    if ( minute < 10 ) {
+      minute = '0' + minute;
+    }
+    if ( second < 10 ) {
+      second = '0' + second;
+    }
 
     return {
       totalSec: myNum,
@@ -160,8 +167,8 @@ Tw.MyTFareBillGuideCallGift.prototype = {
     return str.replace(/,/g, '');
   },
   _phoneStrToDash: function (str) {
-    var str = String(str);
-    return str.replace(/(^02.{0}|^01.{1}|[0-9]{3})([0-9\*]+)([[0-9\*]{4})/, '$1-$2-$3');
+    var strVal = String(str);
+    return strVal.replace(/(^02.{0}|^01.{1}|[0-9]{3})([0-9\*]+)([[0-9\*]{4})/, '$1-$2-$3');
   },
   _goBack: function () {
     this._history.go(-1);

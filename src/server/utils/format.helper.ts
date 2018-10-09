@@ -98,6 +98,10 @@ class FormatHelper {
     return value;
   }
 
+  static normalizeNumber(num: string): string {
+    return num.replace(/(^0+)/, '');
+  }
+
   static addComma(value: string): string {
     if ( FormatHelper.isEmpty(value) ) {
       return '';

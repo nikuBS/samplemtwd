@@ -44,12 +44,15 @@ Tw.Init.prototype = {
   },
 
   _getDeviceInfo: function () {
+    Tw.DeviceInfo = new Tw.DeviceService();
     this._nativeService.send(Tw.NTV_CMD.GET_DEVICE, {}, $.proxy(this._setDeviceInfo, this));
   },
 
   _setDeviceInfo: function (resp) {
     Tw.Logger.info('[Device Info]', resp);
     if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
+
+      Tw.DeviceInfo.setDeviceInfo(resp.params);
 
       this._apiService.request(Tw.NODE_CMD.SET_DEVICE, resp.params)
         .done($.proxy(this._successSetDevice, this));

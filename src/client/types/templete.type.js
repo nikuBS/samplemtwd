@@ -145,13 +145,40 @@ Tw.POPUP_TPL = {
         {'option': 'hbs-card-type', 'attr': 'id="24"', value: '24개월 할부'}
       ]
     }
+  ],
+  FARE_PAYMENT_POINT_LIST: [
+    {
+      'list': [
+        {'option': 'point-type', 'attr': 'id="10" data-code="CPT"', value: 'OK캐쉬백'},
+        {'option': 'point-type', 'attr': 'id="11" data-code="TPT"', value: 'T포인트'}
+      ]
+    }
+  ],
+  FARE_PAYMENT_BANK_DATE: [
+    {
+      'list': [
+        {'option': 'date', 'attr': 'id="0"', value: '15일'},
+        {'option': 'date', 'attr': 'id="3"', value: '21일'},
+        {'option': 'date', 'attr': 'id="1"', value: '23일'}
+      ]
+    }
+  ],
+  FARE_PAYMENT_CARD_DATE: [
+    {
+      'list': [
+        {'option': 'date', 'attr': 'id="1"', value: '11일'},
+        {'option': 'date', 'attr': 'id="2"', value: '18일'},
+        {'option': 'date', 'attr': 'id="3"', value: '26일'}
+      ]
+    }
   ]
 };
 
 Tw.MYT_TPL = {
   DATA_SUBMAIN: {
     SP_TEMP: '<br> ↓ <br>',
-    MORE_LINE_TEMP: '<li data-svc-mgmt-num="{{svcMgmtNum}}"><button>' +
+    MORE_LINE_TEMP: '<li data-svc-mgmt-num="{{svcMgmtNum}}"' +
+      'data-name="{{nickNm}}" data-num="{{svcNum}}"><button>' +
       '<div class="lineinfo-user"><span class="info-title">{{nickNm}}' +
       '{{#if data.child}}' +
       '<span class="badge badge-fam"><span class="blind">자녀회선</span></span>' +
@@ -163,18 +190,19 @@ Tw.MYT_TPL = {
       '</span><span class="ico"></span></div></button></li>'
   },
   FARE_SUBMAIN: {
-    MORE_LINE_TEMP: '<li data-svc-mgmt-num="{{svcMgmtNum}}"data-name="{{nickNm}}" data-num="{{svcNum}}">' +
+    MORE_LINE_TEMP: '<li data-svc-mgmt-num="{{svcMgmtNum}}" data-rep-svc="{{repSvc}}"' +
+      'data-name="{{nickNm}}" data-num="{{svcNum}}">' +
       '<button><div class="lineinfo-user d-table"><div class="ico"><i></i></div><div class="cont">' +
-      '{{#if !data.merge}}' +
-      '<span class="ico"></span>' +
+      '{{#if combine}}' +
+      '{{else}}'+ '<span class="ico"></span>' +
       '{{/if}}' +
       '<span class="info-title">{{nickNm}}'+
-      '{{ if (data.merge) { }}' +
+      '{{#if combine}}' +
       '<span class="badge badge-merge"><span class="blind">통합</span></span>' +
-      '{{ } }}' +
+      '{{/if}}' +
       '</span>' +
-      '<span class="info-sub">{{= data.svcNum }}</span></div></div><div class="lineinfo-data">' +
-      '<span class="info-title">{{= data.money }} 원</span><span class="ico"></span></div>' +
+      '<span class="info-sub">{{svcNum}}</span></div></div><div class="lineinfo-data">' +
+      '<span class="info-title">{{amt}} 원</span><span class="ico"></span></div>' +
       '</button></li>'
   }
 };

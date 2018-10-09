@@ -1,6 +1,7 @@
 export const URL = {
   // home
-  '/home': { login: false, id: '', title: 'home' },
+  '/main/home': { login: false, id: '', title: 'home' },
+  '/main/menu': { login: false, id: '', title: 'menu' },
   // myt
   '/myt': { login: true, id: '', title: '' },
   '/myt/usage/change': { login: true, id: '', title: '' },
@@ -201,5 +202,11 @@ export const URL = {
   '/auth/withdrawal/survey': { login: true, id: 'CO_01_05_01_03', title: '회원탈퇴' },
   '/auth/withdrawal/complete': { login: false, id: 'CO_01_05_01_04_01', title: '회원탈퇴' },
   // common
+  '/common/settings/menu': { login: false, id: 'ST_01_01', title: '설정' },
+  '/common/settings/privacy': { login: false, id: 'ST_01_07', title: '개인정보처리방침' },
+  '/common/settings/business-info': { login: false, id: 'ST_01_08', title: '사업자 정보' },
+  '/common/settings/certificates': { login: false, id: 'ST_01_06', title: '공인인증센터' },
+  '/common/settings/notifications': { login: true, id: 'ST_01_05', title: 'T알림 설정' },
+  '/common/settings/terms': { login: false, id: 'GU_02', title: '이용약관' },
   '/common/error': { login: false, id: '', title: '' }
 };

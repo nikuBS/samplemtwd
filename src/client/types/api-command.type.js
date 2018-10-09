@@ -76,11 +76,10 @@ Tw.API_CMD = {
   BFF_05_0009: { path: '/core-balance/v1/data-sharings/child', method: Tw.API_METHOD.GET },
   BFF_05_0010: { path: '/core-balance/v1/children', method: Tw.API_METHOD.GET },
   BFF_05_0011: { path: '/core-balance/v1/tdata-sharings/args-0', method: Tw.API_METHOD.DELETE },
-  BFF_05_0014: { path: '/core-bill/v1/pps-histories', method: Tw.API_METHOD.GET },
-  BFF_05_0048: { path: '/core-bill/v1/bill-types-reissue-request/', method: Tw.API_METHOD.POST },
+  BFF_05_0014: { path: '/core-balance/v1/pps-histories', method: Tw.API_METHOD.GET },
   BFF_05_0022: { path: '/core-bill/v1/hotbills', method: Tw.API_METHOD.GET },
   BFF_05_0024: { path: '/core-bill/v1/child/children', method: Tw.API_METHOD.GET },
-  BFF_05_0027: { path: '/core-bill/v1/bill-types-change', method: Tw.API_METHOD.POST },
+  BFF_05_0027: { path: '/core-bill/v1/bill-types', method: Tw.API_METHOD.PUT },
   BFF_05_0031: { path: '/core-bill/v1/bill-pay/payment-possible-day', method: Tw.API_METHOD.GET },
   BFF_05_0032: { path: '/core-bill/v1/bill-pay/payment-possible-day-input', method: Tw.API_METHOD.POST },
   BFF_05_0033: { path: '/core-bill/v1/bill-pay/autopay-schedule', method: Tw.API_METHOD.GET },
@@ -93,6 +92,7 @@ Tw.API_CMD = {
   BFF_05_0044: { path: '/core-bill/v1/bill-pay/roaming', method: Tw.API_METHOD.GET },
   BFF_05_0045: { path: '/core-bill/v1/bill-pay/call-gift', method: Tw.API_METHOD.GET },
   BFF_05_0047: { path: '/core-bill/v1/bill-pay/used-amounts', method: Tw.API_METHOD.GET },
+  BFF_05_0048: { path: '/core-bill/v1/bill-reissue', method: Tw.API_METHOD.POST },
   BFF_05_0050: { path: '/core-bill/v1/wire-bill-types', method: Tw.API_METHOD.PUT },
   BFF_05_0052: { path: '/core-bill/v1/wire-bill-reissue', method: Tw.API_METHOD.POST },
   BFF_05_0058: { path: '/core-bill/v1/accounts', method: Tw.API_METHOD.GET },
@@ -135,6 +135,9 @@ Tw.API_CMD = {
   BFF_05_0137: { path: '/core-product/v1/services/wireless/additions', method: Tw.API_METHOD.GET },
   BFF_05_0138: { path: '/core-product/v1/services/combinations/data-sharings', method: Tw.API_METHOD.PUT },
   BFF_05_0139: { path: '/core-modification/v1/myinfo/wire-service-contracts', method: Tw.API_METHOD.GET },
+  BFF_05_0149: { path: '/core-modification/v1/phone-pause-states', method: Tw.API_METHOD.GET },
+  BFF_05_0155: { path: '/my-t/myinfo/discount-infos', method: Tw.API_METHOD.GET },
+  BFF_05_0161: { path: '/core-product/v1/services/wireless/additions/cnt', method: Tw.API_METHOD.GET },
 
   // RECHARGE
   BFF_06_0001: { path: '/core-recharge/v1/refill-coupons', method: Tw.API_METHOD.GET },
@@ -202,7 +205,7 @@ Tw.API_CMD = {
   BFF_07_0024: { path: '/core-bill/v1/bill-pay/cardnum-validation', method: Tw.API_METHOD.GET },
   BFF_07_0025: { path: '/core-bill/v1/bill-pay/settle-pay-card', method: Tw.API_METHOD.POST },
   BFF_07_0026: { path: '/core-bill/v1/bill-pay/settle-vbs', method: Tw.API_METHOD.GET },
-  BFF_07_0027: { path: '/core-bill/v1/bill-pay/settle-vb-sms/args-0', method: Tw.API_METHOD.POST },
+  BFF_07_0027: { path: '/core-bill/v1/bill-pay/settle-vb-sms', method: Tw.API_METHOD.POST },
   BFF_07_0028: { path: '/core-bill/v1/bill-pay/avail-point-search', method: Tw.API_METHOD.GET },
   BFF_07_0029: { path: '/core-bill/v1/bill-pay/pay-ocb-tpoint-proc', method: Tw.API_METHOD.POST },
   BFF_07_0030: { path: '/core-bill/v1/payment/total-payment', method: Tw.API_METHOD.GET },
@@ -226,7 +229,7 @@ Tw.API_CMD = {
   BFF_07_0061: { path: '/core-bill/v1/auto-payments', method: Tw.API_METHOD.POST },
   BFF_07_0062: { path: '/core-bill/v1/auto-payments', method: Tw.API_METHOD.PUT },
   BFF_07_0063: { path: '/core-bill/v1/auto-payments', method: Tw.API_METHOD.DELETE },
-  BFF_07_0065: { path: '/core-bill/v1/autopay/pay-cycl-chg/args-0', method: Tw.API_METHOD.PUT },
+  BFF_07_0065: { path: '/core-bill/v1/autopay/pay-cycl-chg', method: Tw.API_METHOD.PUT },
   BFF_07_0068: { path: '/core-bill/v1/autopay/card-info/args-0', method: Tw.API_METHOD.GET },
   BFF_07_0073: { path: '/core-bill/v1/microPrepay/microPrepay-requests', method: Tw.API_METHOD.GET },
   BFF_07_0074: { path: '/core-bill/v1/microPrepay/microPrepay-process', method: Tw.API_METHOD.POST },
@@ -237,6 +240,7 @@ Tw.API_CMD = {
   BFF_07_0082: { path: '/core-bill/v1/useContentsPrepay/useContentsPrepay-process', method: Tw.API_METHOD.POST },
   BFF_07_0083: { path: '/core-bill/v1/useContentsPrepay/useContents-autoPrepay-process', method: Tw.API_METHOD.POST },
   BFF_07_0084: { path: '/core-bill/v1/useContentsPrepay/useContents-autoPrepay-delete', method: Tw.API_METHOD.POST },
+  BFF_07_0087: { path: '/core-bill/v1/ocb-point-pay', method: Tw.API_METHOD.POST },
 
   //CUSTOMER
   BFF_08_0001: { path: '/core-modification/v1/counsel-time-check', method: Tw.API_METHOD.GET },
@@ -285,6 +289,7 @@ Tw.API_CMD = {
 
   // PRODUCT
   BFF_10_0007: { path: '/core-product/v1/mobiles/fee-plans/args-0/joins/prechecks', method: Tw.API_METHOD.GET },
+  BFF_10_0015: { path: '/core-product/v1/mobiles/fee-plans/args-0/tplan-benefits', method: Tw.API_METHOD.GET },
 
   // TEST
   GET: { path: '/posts', method: Tw.API_METHOD.GET },
@@ -317,7 +322,10 @@ Tw.NODE_CMD = {
   GET_SERVER_SERSSION: { path: '/serverSession', method: Tw.API_METHOD.GET },
   GET_SVC_INFO: { path: '/svcInfo', method: Tw.API_METHOD.GET },
   GET_ALL_SVC: { path: '/allSvcInfo', method: Tw.API_METHOD.GET },
-  GET_CHILD_INFO: { path: '/childInfo', method: Tw.API_METHOD.GET }
+  GET_CHILD_INFO: { path: '/childInfo', method: Tw.API_METHOD.GET },
+  GET_VERSION: { path: '/version', method: Tw.API_METHOD.GET },
+  GET_SPLASH: { path: '/splash', method: Tw.API_METHOD.GET },
+  GET_NOTICE: { path: '/notice', method: Tw.API_METHOD.GET }
 };
 
 Tw.TMAP = {
@@ -382,3 +390,10 @@ Tw.API_LOGIN_ERROR = {
   ICAS3235: 'ICAS3235'    // 휴면계정
 };
 
+Tw.API_ADD_SVC_ERROR = {
+  // 부가서비스(소액결제, 콘텐츠이용)
+  BIL0030: 'BIL0030', // 휴대폰 결제 이용동의 후 사용 가능한 메뉴입니다
+  BIL0031: 'BIL0031', // 미성년자는 이용할 수 없습니다
+  BIL0033: 'BIL0033', // 휴대폰 결제 차단 고객은 사용이 제한된 메뉴입니다
+  BIL0034: 'BIL0034' // 소액결제 부가서비스 미가입자는 이용할 수 없습니다
+};

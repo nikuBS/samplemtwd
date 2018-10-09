@@ -10,13 +10,59 @@ import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 import MyTUsageGraphbox from './myt-data.usage.graphbox.controller';
 import FormatHelper from '../../../../utils/format.helper';
-import { T_O_PLAN_BASE_DATA, T_O_PLAN_SHARE_DATA } from '../../../../types/bff.type';
 import DateHelper from '../../../../utils/date.helper';
+import { MYT_DATA_USAGE } from '../../../../types/string.type';
 
 const VIEW = {
   DEFAULT: 'usage/myt-data.usage.html',
   ERROR: 'usage/myt-data.usage.error.html'
 };
+
+const T_O_PLAN_BASE_DATA = [
+  {
+    'skipId': 'DD3EA',
+    'prodNm': MYT_DATA_USAGE.T_O_PLAN_BASE_DATA.DD3EA
+  },
+  {
+    'skipId': 'DD3DZ',
+    'prodNm': MYT_DATA_USAGE.T_O_PLAN_BASE_DATA.DD3DZ
+  },
+  {
+    'skipId': 'DD3DO',
+    'prodNm': MYT_DATA_USAGE.T_O_PLAN_BASE_DATA.DD3DO
+  },
+  {
+    'skipId': 'DD3DG',
+    'prodNm': MYT_DATA_USAGE.T_O_PLAN_BASE_DATA.DD3DG
+  },
+  {
+    'skipId': 'DD3D8',
+    'prodNm': MYT_DATA_USAGE.T_O_PLAN_BASE_DATA.DD3D8
+  },
+  {
+    'skipId': 'DD4D1',
+    'prodNm': MYT_DATA_USAGE.T_O_PLAN_BASE_DATA.DD4D1
+  }
+];
+
+const T_O_PLAN_SHARE_DATA = [
+  {
+    'skipId': 'DD3CX',
+    'prodNm': MYT_DATA_USAGE.T_O_PLAN_SHARE_DATA.DD3CX
+  },
+  {
+    'skipId': 'DD3CV',
+    'prodNm': MYT_DATA_USAGE.T_O_PLAN_SHARE_DATA.DD3CV
+  },
+  {
+    'skipId': 'DD3CU',
+    'prodNm': MYT_DATA_USAGE.T_O_PLAN_SHARE_DATA.DD3CU
+  },
+  {
+    'skipId': 'DD4D5',
+    'prodNm': MYT_DATA_USAGE.T_O_PLAN_SHARE_DATA.DD4D5
+  }
+];
 
 class MyTDataUsage extends TwViewController {
   constructor() {
@@ -96,6 +142,7 @@ class MyTDataUsage extends TwViewController {
         tPlanBaseData.sharedData = tPlanSharedData;
       }
     }
+    // console.log('~~~~~~~~~~~~~~~~~~~~~~~~usageData', usageData);
     kinds.map((kind) => {
       if ( !FormatHelper.isEmpty(usageData[kind]) ) {
         usageData[kind].map((data) => {
@@ -120,7 +167,11 @@ class MyTDataUsage extends TwViewController {
     target.map((tOPlanBaseData) => {
       if ( !data ) {
         data = dataArray.find((_data) => {
-          return tOPlanBaseData === _data.skipId;
+          if (tOPlanBaseData.skipId === _data.skipId) {
+            _data.prodNm = tOPlanBaseData.prodNm;
+            return true;
+          }
+          return false;
         });
       }
     });

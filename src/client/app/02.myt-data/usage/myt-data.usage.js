@@ -19,13 +19,13 @@ Tw.MyTDataUsage.prototype = {
   _bindEvent: function () {
 
     this.$container.on('click', '#head-tdata-share .info-view-ic', $.proxy(this.showGuidePopup, this,
-      Tw.MSG_MYT.TDATA_SHARE.M01_TITLE, Tw.MSG_MYT.TDATA_SHARE.M01_CONTENTS));
+      Tw.INFO.MYT.TDATA_SHARE.DC_01_01_TITLE, Tw.INFO.MYT.TDATA_SHARE.DC_01_01_CONTENTS));
 
     this.$container.on('click', '#head-ting .info-view-ic', $.proxy(this.showGuidePopup, this,
-      Tw.MSG_MYT.TDATA_SHARE.M01_TITLE, Tw.MSG_MYT.TDATA_SHARE.M01_CONTENTS));
+      Tw.INFO.MYT.USAGE_TING.DC_01_01_TITLE, Tw.INFO.MYT.USAGE_TING.DC_01_01_CONTENTS));
 
     this.$container.on('click', '#head-discount .info-view-ic', $.proxy(this.showGuidePopup, this,
-      Tw.MSG_MYT.DISCOUNT.M01_TITLE, Tw.MSG_MYT.DISCOUNT.M01_CONTENTS));
+      Tw.INFO.MYT.DISCOUNT.DC_01_01_TITLE, Tw.INFO.MYT.DISCOUNT.DC_01_01_CONTENTS));
 
     // 24시간 데이터 50% 할인 사용량 - 실시간 사용 요금 바로가기 버튼 - 실시간 사용 요금으로 이동
     this.$container.on('click', '#cont-discount .bt-slice button', $.proxy(function(){
@@ -39,6 +39,12 @@ Tw.MyTDataUsage.prototype = {
 
     // 내폰끼리 결합 상세 조회
     this.$container.on('click', '#list-band-data-share .datatogether-li .bt-bg-blue1', $.proxy(this._requestBandDetail, this));
+
+
+    // 내폰끼리 결합 상세 조회
+    this.$container.on('click', '.fe-btn-share', $.proxy(function() {
+      this._historyService.goLoad('/myt/data/usage/total-sharing-data');
+    }, this));
 
   },
 
@@ -73,7 +79,7 @@ Tw.MyTDataUsage.prototype = {
       return ;
     }
 
-    //skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
+    skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
 
     this._apiService.requestArray(reqList)
       .done($.proxy(function () {
@@ -108,7 +114,7 @@ Tw.MyTDataUsage.prototype = {
             default : break;
           }
         }
-        //skt_landing.action.loading.off({ ta: '.container' });
+        skt_landing.action.loading.off({ ta: '.container' });
 
       }, this))
       .fail($.proxy(this._requestFail, this));
@@ -116,8 +122,8 @@ Tw.MyTDataUsage.prototype = {
   },
 
   _requestFail: function (resp) {
-    //skt_landing.action.loading.off({ ta: '.container' });
     this._showErrorAlert(resp.code, resp.msg);
+    skt_landing.action.loading.off({ ta: '.container' });
   },
 
 
@@ -133,13 +139,13 @@ Tw.MyTDataUsage.prototype = {
     var fmtData = {data:'', unit:''};
 
     // 사용 중인 요금상품 + 기본제공량
-    if(parseInt(data.opmdBasic) !== '-1'){
+    if(data.opmdBasic !== '-1'){
       fmtData = Tw.FormatHelper.convDataFormat(data.opmdBasic, Tw.DATA_UNIT.KB);
       $('#head-tdata-share .tit span').text(fmtData.data + fmtData.unit);
     }
 
     // 총데이터 사용량
-    fmtData = Tw.FormatHelper.convDataFormat(data.totUsed, Tw.DATA_UNIT.KB);
+    fmtData = Tw.FormatHelper.convDataFormat(data.totShar, Tw.DATA_UNIT.KB);
     $('#head-tdata-share .num em').text(fmtData.data);
     $('#head-tdata-share .num span').text(fmtData.unit);
 
@@ -270,11 +276,14 @@ Tw.MyTDataUsage.prototype = {
     var $btnContainer = $(event.target).parent();
     var svcNum = $btnContainer.attr('data-child-svcnum');
 
+    skt_landing.action.loading.on({ ta: '.container', co: 'grey', size: true });
+
     this._apiService.request(Tw.API_CMD.BFF_05_0009, {cSvcMgmtNum : svcNum})
       .done($.proxy(function (resp) {
 
         if( !resp || resp.code !== Tw.API_CODE.CODE_00 || !resp.result){
           this._showErrorAlert(resp.code, resp.msg);
+          skt_landing.action.loading.off({ ta: '.container' });
           return ;
         }
 
@@ -282,6 +291,7 @@ Tw.MyTDataUsage.prototype = {
         var html = tmpl( resp.result );
 
         $btnContainer.html(html);
+        skt_landing.action.loading.off({ ta: '.container' });
       }, this))
       .fail($.proxy(this._requestFail, this));
 
@@ -298,16 +308,10 @@ Tw.MyTDataUsage.prototype = {
     Handlebars.registerHelper('byteUnit', function (amt){
       return Tw.FormatHelper.convDataFormat(amt, Tw.DATA_UNIT.KB).unit;
     });
-    Handlebars.registerHelper('dateFormat', function (strDate){
-      return Tw.DateHelper.getShortDateNoDot(strDate);
-    });
-    Handlebars.registerHelper('dashPhoneNum', function (phoneNum){
-      return Tw.FormatHelper.getDashedPhoneNumber(phoneNum);
-    });
-    Handlebars.registerHelper('numComma', function (amt){
-      return Tw.FormatHelper.addComma(amt+'');
-    });
-
+    Handlebars.registerHelper('dateFormat', Tw.DateHelper.getShortDateNoDot);
+    Handlebars.registerHelper('dashPhoneNum', Tw.FormatHelper.getFormattedPhoneNumber);
+    Handlebars.registerHelper('numComma', Tw.FormatHelper.addComma);
+    Handlebars.registerHelper('usimFormat', this.convUnimFormat);
   },
 
   /**
@@ -365,7 +369,18 @@ Tw.MyTDataUsage.prototype = {
       hours: diffDuration.hours(),
       minutes: diffDuration.minutes()
     }
-  }
+  },
 
+  /**
+   * usim format
+   * @param v(string)
+   * @returns 'xxxx-xxxx-xxxx-xx'(string) format
+   */
+  convUnimFormat : function (v) {
+    if( !v || v.replace(/-/g).trim().length < 14 ) return v || '';
+    var ret = v.replace(/-/g).trim();
+    ret = ret.substr(0, 4) + '-' + ret.substr(4, 4) + '-' + ret.substr(8, 4) + '-' + ret.substr(12, 2);
+    return ret;
+  }
 
 };

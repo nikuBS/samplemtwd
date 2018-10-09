@@ -38,7 +38,7 @@ Tw.MyTBillReissueComplete.prototype = {
 
   _onHomeClicked: function () {
     // back 했을 경우 현재 페이지로 넘어오지 않아야 함으로 location.replace를 호출한다.
-    window.location.replace('/home');
+    window.location.replace('/main/home');
   },
 
   _onCloseClicked: function (/*event*/) {
