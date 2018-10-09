@@ -10,7 +10,7 @@ export const URL = {
 
   // MyT
   '/myt/fare/payment/account': { login: true, id: 'MF_01_01', title: '계좌이체 납부' },
-  '/myt/fare/payment/card': { login: true, id: 'MF_01_02', title: '체크/신용카 납부' },
+  '/myt/fare/payment/card': { login: true, id: 'MF_01_02', title: '체크/신용카드 납부' },
   '/myt/fare/payment/point': { login: true, id: 'MF_01_03', title: 'OK캐쉬백/T포인트 납부' },
   '/myt/fare/payment/sms': { login: true, id: 'MF_01_04', title: '입금전용계좌 신청' },
   '/myt/fare/payment/option': { login: true, id: 'MF_05_01', title: '납부방법' },
