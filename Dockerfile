@@ -1,7 +1,7 @@
 # Node.js app Docker file
-
+ARG DOCKER_REGISTRY
 # Linux dependencies
-FROM mtwd.icp.skt.com:8500/infra/nodejs8-centos:0.1
+FROM ${DOCKER_REGISTRY}/infra/nodejs8-centos:0.1
 #FROM node:carbon
 
 WORKDIR /tworld

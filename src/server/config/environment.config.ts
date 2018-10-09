@@ -27,7 +27,7 @@ const environment = {
     DOMAIN: 'http://icp-dev.tworld.co.kr',
     TMAP: 'https://api2.sktelecom.com/tmap/js?version=1&format=javascript&appKey=ecfeceac-3660-4618-bc3b-37a11f952441'
   },
-  qa: {
+  staging: {
     BFF_SERVER: 'http://bff-spring.mtw-stg-bff.svc.cluster.local',
     CDN: '',
     REDIS: {
