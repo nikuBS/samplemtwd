@@ -127,3 +127,7 @@ export const MYT_FARE_BILL_REISSUE_TYPE = {
 export const MYT_INFO_DISCOUNT_MONTH = {
   TITLE: '월별 상세 할인 내역'
 };
+
+export enum PRODUCT_TYPE {
+  FEE_INFO_ETC = '상세참조'
+}

@@ -296,3 +296,8 @@ Tw.HOTBILL_UNPAID_TITLE = '미납요금';
 Tw.SETTINGS_MENU = {
   LATEST: '최신'
 };
+
+Tw.PRODUCT_ADDITIONS_TERMINATE = {
+  CONFIRM_POPUP: '해지 시 유의사항을 모두 확인 하였으며, 선택하신 상품을 해지 하시겠습니까?',
+  CONFIRM_BUTTON: '해지하기'
+};

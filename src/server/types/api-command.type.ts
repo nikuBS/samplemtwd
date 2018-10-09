@@ -459,6 +459,10 @@ export const API_CMD = {
     path: '/core-product/v1/mobiles/fee-plans/args-0/tplan-benefits',
     method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true
   },
+  BFF_10_0017: {
+    path: '/core-product/v1/mobiles/additions/args-0/preinfos',
+    method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true
+  },
   BFF_10_0024: { path: '/core-product/v1/submain/banners', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_10_0025: { path: '/core-product/v1/submain/my-filters', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_10_0026: { path: '/core-product/v1/submain/grpprods', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
