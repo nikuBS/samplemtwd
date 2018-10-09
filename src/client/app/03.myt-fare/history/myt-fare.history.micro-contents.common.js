@@ -22,7 +22,7 @@ Tw.MyTFareHistoryMicroContents.prototype = {
     this._bindEvent();
 
     switch (this.current) {
-      case 'micro-payment':
+      case 'micro':
       case 'contents':
         this._initMicroPaymentContentsHistory(data);
         break;

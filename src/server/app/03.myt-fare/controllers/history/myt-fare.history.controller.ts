@@ -58,7 +58,7 @@ class MyTFareMicroHistory extends TwViewController {
             req.path.split('/').splice(-1)[0] ?
                 req.path.split('/').splice(-2)[0] : req.path.split('/').splice(-3)[0]);
         break;
-      case 'micro-payment':
+      case 'micro':
         this.renderMicroHistory(req, res, next, svcInfo);
         break;
       case 'contents':
