@@ -231,10 +231,12 @@ Tw.API_CMD = {
   BFF_07_0063: { path: '/core-bill/v1/auto-payments', method: Tw.API_METHOD.DELETE },
   BFF_07_0065: { path: '/core-bill/v1/autopay/pay-cycl-chg', method: Tw.API_METHOD.PUT },
   BFF_07_0068: { path: '/core-bill/v1/autopay/card-info/args-0', method: Tw.API_METHOD.GET },
+  BFF_07_0071: { path: '/core-bill/v1/microPrepay/microPrepay-hist-requests', method: Tw.API_METHOD.GET },
   BFF_07_0073: { path: '/core-bill/v1/microPrepay/microPrepay-requests', method: Tw.API_METHOD.GET },
   BFF_07_0074: { path: '/core-bill/v1/microPrepay/microPrepay-process', method: Tw.API_METHOD.POST },
   BFF_07_0076: { path: '/core-bill/v1/microPrepay/microPrepay-auto-req', method: Tw.API_METHOD.POST },
   BFF_07_0077: { path: '/core-bill/v1/microPrepay/microPrepay-auto-delete', method: Tw.API_METHOD.POST },
+  BFF_07_0078: { path: '/core-bill/v1/useContentsPrepay/useContentsPrepay-hist-requests', method: Tw.API_METHOD.GET },
   BFF_07_0079: { path: '/core-bill/v1/useContentsPrepay/useContents-autoPrepay-hist', method: Tw.API_METHOD.GET },
   BFF_07_0081: { path: '/core-bill/v1/useContentsPrepay/useContentsPrepay-requests', method: Tw.API_METHOD.GET },
   BFF_07_0082: { path: '/core-bill/v1/useContentsPrepay/useContentsPrepay-process', method: Tw.API_METHOD.POST },
@@ -290,6 +292,8 @@ Tw.API_CMD = {
   // PRODUCT
   BFF_10_0007: { path: '/core-product/v1/mobiles/fee-plans/args-0/joins/prechecks', method: Tw.API_METHOD.GET },
   BFF_10_0015: { path: '/core-product/v1/mobiles/fee-plans/args-0/tplan-benefits', method: Tw.API_METHOD.GET },
+  BFF_10_0022: { path: '/core-product/v1/mobiles/additions-sets/args-0', method: Tw.API_METHOD.DELETE },
+  BFF_10_0031: { path: '/core-product/v1/submain/products', method: Tw.API_METHOD.GET },
 
   // TEST
   GET: { path: '/posts', method: Tw.API_METHOD.GET },

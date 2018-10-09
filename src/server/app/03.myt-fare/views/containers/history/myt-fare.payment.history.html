@@ -1,0 +1,102 @@
+<%#
+* FileName: myt-fare.payment.history.html
+* Author: Lee Sanghyoung (silion@sk.com)
+* Date: 2018.09.17
+%>
+
+<% include ../../components/start.component.html %>
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#gnb">메뉴 바로가기</a></li>
+            <li><a href="#contents">본문 바로가기</a></li>
+            <li><a href="#footer">푸터 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+
+    <div class="wrap">
+        <%- include('../../../../../common/views/components/header.component.html', { title: '납부내역', svcInfo: svcInfo, line: true}); %>
+
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+
+                <!-- .cont-box -->
+                <div class="cont-box nogaps-hoz">
+                    <div class="plan-history-wrap">
+                        <div class="plan-title type2">
+                            <div class="tit-note">휴대폰 요금 <span class="tx-bold vbl"><em id="fe-refund-count-total"></em>건</span>이 과납 되었습니다.</div>
+                            <div class="bt-alone"><button class="bt-bg-blue1">환불 받기</button></div>
+                        </div>
+                        <div class="plan-data-wrap">
+                            <span class="plan-result">환불 받을 총 금액<br /><span class="tx-bold vbl"><em id="fe-refund-total"></em> 원</span> 입니다.</span>
+                        </div>
+                    </div>
+                </div>
+                <!--// .cont-box -->
+
+                <div class="data-select-wrap">
+                    <span class="inline">
+                        <button class="bt-dropdown big" title="납부내역" aria-haspopup="true" id="fe-type-trigger"><%=currentString%><span class="ico"></span></button>
+                    </span>
+                    <span class="count">총 <em id="fe-payment-count-total"></em> 건</span>
+                </div>
+
+
+                <div id="list-wrapper">
+
+                </div>
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+                <!-- .cont-box -->
+                <div class="cont-box nogaps">
+                    <div class="all-menu-setting">
+                        <ul class="setting-list">
+                            <li><a id="fe-go-refund-quit">자동납부 통합 인출 해지<span class="ico"></span></a></li>
+                            <li><a id="fe-go-refund-list">환불 처리 내역<span class="ico"></span></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <!--// .cont-box -->
+
+            </div>
+        </div>
+    </div>
+    <% include ../../components/javascript.component.html %>
+    <script>
+      $(document).ready(function () {
+        new Tw.MyTFarePaymentHistory($(document), '<%- JSON.stringify(data) %>');
+      });
+    </script>
+    <script id="list-template-wrapper" type="text/x-handlebars-template">
+        <!-- .cont-box -->
+        <div class="cont-box nogaps noborder">
+            <div class="list-comp-history">
+                <ul class="comp-box">
+                {{> list}}
+                </ul>
+            </div>
+        </div>
+        <!--// .cont-box -->
+        {{#if initialMoreData}}
+        <div class="bt-more">
+            <button>더보기<span>(<em>{{restCount}}</em>)</span></button>
+        </div>
+        {{/if}}
+    </script>
+    <script id="list-default" type="text/x-handlebars-template">
+        {{#each listElement}}
+        <li class="list-box"></li>
+        {{/each}}
+    </script>
+    <script id="list-empty" type="text/x-handlebars-template">
+        <div class="no-data">
+            <span>내역이 없습니다.</span>
+        </div>
+    </script>
+</body>
+<% include ../../components/end.component.html %>

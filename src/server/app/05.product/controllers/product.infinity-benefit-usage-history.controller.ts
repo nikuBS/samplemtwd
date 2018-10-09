@@ -11,7 +11,7 @@ import { API_CMD, API_CODE } from '../../../types/api-command.type';
 import { PRODUCT_INFINITY_BENEFIT } from '../../../types/string.type';
 import DateHelper from '../../../utils/date.helper';
 
-class ProductBenefitUsageHistory extends TwViewController {
+class ProductInfinityBenefitUsageHistory extends TwViewController {
   constructor() {
     super();
   }
@@ -73,4 +73,4 @@ class ProductBenefitUsageHistory extends TwViewController {
   }
 }
 
-export default ProductBenefitUsageHistory;
+export default ProductInfinityBenefitUsageHistory;
