@@ -22,13 +22,28 @@ Tw.MyTFarePaymentPrepayMain.prototype = {
   _initVariables: function () {
     this._maxAmount = this.$container.find('.fe-max-amount').attr('id');
     this._name = this.$container.find('.fe-name').text();
+
+    this._monthAmountList = [];
+    this._dayAmountList = [];
+    this._onceAmountList = [];
+
+    this.$setPasswordBtn = this.$container.find('.fe-set-password');
   },
   _bindEvent: function () {
+    this.$container.on('click', '.fe-history', $.proxy(this._prepayHistory, this));
+    this.$container.on('click', '.fe-change-limit', $.proxy(this._changeLimit, this));
     this.$container.on('click', '.fe-prepay', $.proxy(this._prepay, this));
     this.$container.on('click', '.fe-auto-prepay', $.proxy(this._autoPrepay, this));
     this.$container.on('click', '.fe-auto-prepay-change', $.proxy(this._autoPrepayInfo, this));
     this.$container.on('click', '.fe-auto-pay-info', $.proxy(this._openAutoPayInfo, this));
     this.$container.on('change', '.fe-set-use', $.proxy(this._changeUseStatus, this));
+    this.$container.on('click', '.fe-set-password', $.proxy(this._setPassword, this));
+  },
+  _prepayHistory: function () {
+    this._historyService.goLoad('/myt/fare/history/' + this.$title);
+  },
+  _changeLimit: function () {
+    new Tw.MyTFarePaymentPrepayChangeLimit(this.$container, this.$title);
   },
   _prepay: function () {
     this._popupService.open({
@@ -48,34 +63,9 @@ Tw.MyTFarePaymentPrepayMain.prototype = {
     this._popupService.openAlert(Tw.AUTO_PAY_INFO['CONTENTS_' + this.$title.toUpperCase()], Tw.AUTO_PAY_INFO.TITLE, Tw.BUTTON_LABEL.CONFIRM);
   },
   _changeUseStatus: function (event) {
-    var $target = $(event.target);
-    var id = $target.attr('id');
-    var tx = $target.find('.fe-tx:visible').text();
-
-    this._apiService.request(Tw.API_CMD.BFF_05_0083, { rtnUseYn: id })
-      .done($.proxy(this._changeSuccess, this, tx))
-      .fail($.proxy(this._changeFail, this));
+    new Tw.MyTFarePaymentMicroSetUse(this.$container, $(event.target));
   },
-  _changeSuccess: function (tx, res) {
-    if (res.code === Tw.API_CODE.CODE_00) {
-      var message = this._getToastMessage(tx);
-      this._commonHelper.toast(message);
-    } else {
-      this._changeFail(res);
-    }
-  },
-  _changeFail: function (err) {
-    this._popupService.openAlert(err.msg, err.code);
-  },
-  _getToastMessage: function (tx) {
-    var message = Tw.ALERT_MSG_MYT_FARE.MICRO;
-
-    if (tx === Tw.ALERT_MSG_MYT_FARE.USABLE) {
-      message += ' ' + Tw.ALERT_MSG_MYT_FARE.MSG_ALLOWED;
-    } else {
-      message += ' ' + Tw.ALERT_MSG_MYT_FARE.MSG_PROHIBITED;
-    }
-
-    return message;
+  _setPassword: function () {
+    new Tw.MyTFarePaymentMicroSetPassword(this.$container, this.$setPasswordBtn);
   }
 };
