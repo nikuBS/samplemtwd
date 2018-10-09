@@ -1,7 +1,7 @@
 /**
- * FileName: myt-fare.payment.micro.auto.change.controller.ts
+ * FileName: myt-fare.payment.contents.auto.controller.ts
  * Author: Jayoon Kong (jayoon.kong@sk.com)
- * Date: 2018.10.05
+ * Date: 2018.10.08
  */
 import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -9,7 +9,7 @@ import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
 import { Observable } from 'rxjs/Observable';
 
-class MyTFarePaymentMicroAutoChange extends TwViewController {
+class MyTFarePaymentContentsAuto extends TwViewController {
   constructor() {
     super();
   }
@@ -17,7 +17,7 @@ class MyTFarePaymentMicroAutoChange extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     this.getAutoPrepayInfo().subscribe((resp) => {
       if (resp.code === API_CODE.CODE_00) {
-        res.render('payment/myt-fare.payment.micro.auto.change.html', {
+        res.render('payment/myt-fare.payment.contents.auto.html', {
           autoPrepayInfo: this.parseData(resp.result),
           svcInfo: svcInfo
         });
@@ -32,7 +32,7 @@ class MyTFarePaymentMicroAutoChange extends TwViewController {
   }
 
   private getAutoPrepayInfo(): Observable<any> {
-    return this.apiService.request(API_CMD.BFF_07_0086, {});
+    return this.apiService.request(API_CMD.BFF_07_0085, {});
   }
 
   private parseData(result: any): any {
@@ -44,4 +44,4 @@ class MyTFarePaymentMicroAutoChange extends TwViewController {
   }
 }
 
-export default MyTFarePaymentMicroAutoChange;
+export default MyTFarePaymentContentsAuto;

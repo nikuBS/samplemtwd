@@ -8,9 +8,9 @@ import { Request, Response, NextFunction } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import DateHelper from '../../../../utils/date.helper';
 import FormatHelper from '../../../../utils/format.helper';
-import {PAYMENT_OPTION, SVC_ATTR} from '../../../../types/bff.old.type';
 import {Observable} from 'rxjs/Observable';
 import StringHelper from '../../../../utils/string.helper';
+import {MYT_FARE_PAYMENT_TYPE, SVC_ATTR_NAME} from '../../../../types/bff.type';
 
 class MyTFarePaymentOption extends TwViewController {
   constructor() {
@@ -52,17 +52,17 @@ class MyTFarePaymentOption extends TwViewController {
   }
 
   private getSvcInfo(svcInfo: any): any {
-    svcInfo.svcName = SVC_ATTR[svcInfo.svcAttrCd];
+    svcInfo.svcName = SVC_ATTR_NAME[svcInfo.svcAttrCd];
     svcInfo.phoneNum = StringHelper.phoneStringToDash(svcInfo.svcNum);
 
     return svcInfo;
   }
 
   private parseData(data: any): any {
-    if (data.payMthdCd === PAYMENT_OPTION.BANK) {
+    if (data.payMthdCd === MYT_FARE_PAYMENT_TYPE.BANK) {
       data.fstDrwSchdDate = DateHelper.getShortDateNoDot(data.fstDrwSchdDt);
       data.isAuto = true;
-    } else if (data.payMthdCd === PAYMENT_OPTION.CARD) {
+    } else if (data.payMthdCd === MYT_FARE_PAYMENT_TYPE.CARD) {
       data.cardYm = FormatHelper.makeCardYymm(data.cardEffYm);
       data.fstDrwSchdDate = DateHelper.getShortDateNoDot(data.fstDrwSchdDt);
       data.isAuto = true;
