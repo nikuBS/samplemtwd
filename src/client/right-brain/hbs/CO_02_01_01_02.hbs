@@ -1,5 +1,5 @@
 <div class="popup tw-popup">
-    <div class="popup-page nobg layer" style="height:20.5rem;"><!-- .no-btn 하단에 버튼이 없을 경우 -->
+    <div class="popup-page nobg layer"><!-- .no-btn 하단에 버튼이 없을 경우 -->
         <!-- #header -->
         <div class="header-wrap">
             <div class="page-header">
@@ -18,93 +18,25 @@
                     <div class="box-certifi-card">
                         <p class="certifi-ti-big">간편 로그인으로는 이용하실 수 없는 서비스 입니다.</p>
                         <p class="certifi-card-ti pt8">서비스를 이용하시려면 아래 인증방법 중 하나를 선택하여 본인확인을 해주세요.</p>
-                        <ul class="certifi-card-list mt28 three {{data.cntClass}}"><!-- li 행별 최대 갯수 : 1개 .one, 2개 .two, 3개 .three -->
-                            {{#if data.skSms}}
-                                <li>
-                                    <button id="fe-bt-sk">
-                                        <span class="ico-certifi-card type1" aria-hidden="true"></span>
-                                        <span class="certifi-card-tx"><span class="tx">SK텔레콤<br />SMS 인증</span></span>
-                                    </button>
-                                </li>
-                            {{/if}}
-                            {{#if data.otherSms}}
-                                <li>
-                                    <button id="fe-bt-kt">
-                                        <span class="ico-certifi-card type2" aria-hidden="true"></span>
-                                        <span class="certifi-card-tx"><span class="tx">KT 인증</span></span>
-                                    </button>
-                                </li>
-                                <li>
-                                    <button id="fe-bt-lg">
-                                        <span class="ico-certifi-card type3" aria-hidden="true"></span>
-                                        <span class="certifi-card-tx"><span class="tx">LG U+ 인증</span></span>
-                                    </button>
-                                </li>
-                            {{/if}}
-                            {{#if data.save}}
-                                <li>
-                                    <button id="fe-bt-save">
-                                        <span class="ico-certifi-card type4" aria-hidden="true"></span>
-                                        <span class="certifi-card-tx"><span class="tx">알뜰폰 SMS<br />인증</span></span>
-                                    </button>
-                                </li>
-                            {{/if}}
-                            {{#if data.ipin}}
-                                <li>
-                                    <button id="fe-bt-ipin">
-                                        <span class="ico-certifi-card type5" aria-hidden="true"></span>
-                                        <span class="certifi-card-tx"><span class="tx">아이핀 인증</span></span>
-                                    </button>
-                                </li>
-                            {{/if}}
-                            {{#if data.email}}
-                                <li>
-                                    <button id="fe-bt-email">
-                                        <span class="ico-certifi-card type6" aria-hidden="true"></span>
-                                        <span class="certifi-card-tx"><span class="tx">이메일 인증</span></span>
-                                    </button>
-                                </li>
-                            {{/if}}
-                            {{#if data.bio}}
-                                <li>
-                                    <button id="fe-bt-bio">
-                                        <span class="ico-certifi-card type7" aria-hidden="true"></span>
-                                        <span class="certifi-card-tx"><span class="tx">지문 인증</span></span>
-                                    </button>
-                                </li>
-                            {{/if}}
-                            {{#if data.password}}
-                                <li>
-                                    <button id="fe-bt-password">
-                                        <span class="ico-certifi-card type8" aria-hidden="true"></span>
-                                        <span class="certifi-card-tx"><span class="tx">비밀번호 인증</span></span>
-                                    </button>
-                                </li>
-                            {{/if}}
-                            {{#if data.publicCert}}
-                                <li>
-                                    <button id="fe-bt-public">
-                                        <span class="ico-certifi-card type9" aria-hidden="true"></span>
-                                        <span class="certifi-card-tx"><span class="tx">공인인증서<br />인증</span></span>
-                                    </button>
-                                </li>
-                            {{/if}}
-                            {{#if data.smsPassword}}
-                                <li>
-                                    <button id="fe-bt-smspw">
-                                        <span class="ico-certifi-card type10" aria-hidden="true"></span>
-                                        <span class="certifi-card-tx"><span class="tx">비밀번호+휴대폰<br />SMS 인증</span></span>
-                                    </button>
-                                </li>
-                            {{/if}}
-                            {{#if data.skMotp}}
-                                <li>
-                                    <button id="fe-bt-motp">
-                                        <span class="ico-certifi-card type11" aria-hidden="true"></span>
-                                        <span class="certifi-card-tx"><span class="tx">휴대폰<br />SMS 인증</span></span>
-                                    </button>
-                                </li>
-                            {{/if}}
+                        <ul class="certifi-card-list mt28 three"><!-- li 행별 최대 갯수 : 1개 .one, 2개 .two, 3개 .three -->
+                            <li>
+                                <button>
+                                    <span class="ico-certifi-card type1" aria-hidden="true"></span>
+                                    <span class="certifi-card-tx"><span class="tx">SK텔레콤<br />SMS 인증</span></span>
+                                </button>
+                            </li>
+                            <li>
+                                <button>
+                                    <span class="ico-certifi-card type9" aria-hidden="true"></span>
+                                    <span class="certifi-card-tx"><span class="tx">공인인증서<br />인증</span></span>
+                                </button>
+                            </li>
+                            <li>
+                                <button>
+                                    <span class="ico-certifi-card type5" aria-hidden="true"></span>
+                                    <span class="certifi-card-tx"><span class="tx">아이핀 인증</span></span>
+                                </button>
+                            </li>
                         </ul>
                     </div>
                 </div>

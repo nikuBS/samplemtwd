@@ -1533,7 +1533,7 @@
     height: 1.5625rem;
     background-image: url(/img/ico/ico-group.png);
     background-repeat: no-repeat;
-    background-position: 0 -17.1875rem;
+    background-position: -1.5625rem -67.1875rem;
     background-size: 3.125rem;
     vertical-align: top; }
 
@@ -1970,14 +1970,15 @@
         vertical-align: top; }
       .list-comp-lineinfo li .lineinfo-data .ico {
         display: inline-block;
-        -webkit-transform: translateY(-0.25rem);
-                transform: translateY(-0.25rem);
-        width: 1.5625rem;
-        height: 1.5625rem;
+        -webkit-transform: translateY(0.125rem);
+                transform: translateY(0.125rem);
+        margin-left: 0.25rem;
+        width: 0.4375rem;
+        height: 0.8125rem;
         vertical-align: top;
         background-image: url(/img/ico/ico-group.png);
         background-repeat: no-repeat;
-        background-position: 0 -17.1875rem;
+        background-position: -2.125rem -67.5625rem;
         background-size: 3.125rem; }
   .list-comp-lineinfo.type2 li .lineinfo-user .info-title {
     font-size: 0.8125rem;
@@ -2040,8 +2041,7 @@
     padding-top: 1.375rem;
     padding-bottom: 1.375rem; }
 
-/* 최민규 */
-/* 원지예 */
+/* 최민규 ~ 2018.10.05 */
 .data-number-wrap {
   display: table;
   width: 100%; }
@@ -2311,6 +2311,7 @@
   font-size: 0.8125rem;
   color: #666; }
 
+/* 원지예 ~ 2018.10.08 */
 /* 김예리 */
 .inp-tx-wrap {
   padding-bottom: 5.625rem; }
@@ -2753,11 +2754,11 @@
   position: relative; }
   .history-list ul li .tx-date {
     position: absolute;
-    top: 1.875rem;
+    top: 1.5625rem;
     left: 1rem;
     font-size: 0.875rem; }
   .history-list ul li .li-elem {
-    padding: 1.5rem 1rem 1.5rem 5rem;
+    padding: 1.25rem 1rem 1.25rem 5rem;
     display: table;
     width: 100%;
     box-sizing: border-box;
@@ -2805,6 +2806,36 @@
         font-family: "TgothicMedium", Roboto, sans-serif;
         font-size: 0.625rem;
         vertical-align: -0.0625rem; }
+    .history-list ul li .li-elem .text-l {
+      vertical-align: top;
+      display: table-cell;
+      text-align: right;
+      font-weight: 700;
+      font-size: 1.125rem; }
+    .history-list ul li .li-elem.item-one {
+      display: block;
+      width: 100%; }
+      .history-list ul li .li-elem.item-one .title-box {
+        display: block; }
+        .history-list ul li .li-elem.item-one .title-box .tit, .history-list ul li .li-elem.item-one .title-box .sub-tit {
+          width: 100%;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis; }
+  .history-list ul li .basic-list {
+    margin-top: -0.3125rem;
+    padding-bottom: 1.25rem;
+    padding-right: 1rem; }
+    .history-list ul li .basic-list ul li {
+      border-top: none;
+      padding-top: 0.5rem; }
+      .history-list ul li .basic-list ul li .title {
+        color: #666;
+        font-size: 0.8125rem; }
+      .history-list ul li .basic-list ul li .tx-cont {
+        font-size: 0.8125rem; }
+      .history-list ul li .basic-list ul li:first-of-type {
+        padding-top: 0; }
   .history-list ul li button, .history-list ul li a {
     display: block;
     width: 100%;
@@ -2824,7 +2855,7 @@
       content: '';
       position: absolute;
       right: 1rem;
-      top: 1.9375rem;
+      top: 1.75rem;
       width: 0.5rem;
       height: 0.75rem;
       background: url(/img/ico/ico-group2.png) no-repeat -0.5625rem -3.5625rem;
@@ -3058,6 +3089,10 @@
   position: relative; }
   .myinfo-wrap .myinfo-cont {
     padding-right: 4.375rem; }
+    .myinfo-wrap .myinfo-cont .title-m {
+      font-size: 1.5rem;
+      font-weight: 400;
+      line-height: 1.875rem; }
     .myinfo-wrap .myinfo-cont .title-l {
       font-size: 2rem;
       font-weight: 700;
@@ -3246,6 +3281,40 @@
     top: 1.5625rem; }
   .list-charge > ul > li:first-of-type .inner {
     border-top: none; }
+
+.engineer-list {
+  border-top: 1px solid #e1e1e1; }
+  .engineer-list ul li {
+    padding-top: 1.125rem;
+    display: table;
+    width: 100%; }
+    .engineer-list ul li .img-area {
+      display: table-cell;
+      padding-right: 1.25rem;
+      vertical-align: middle;
+      width: 3.5rem;
+      height: 3.5rem;
+      text-align: center;
+      overflow: hidden; }
+      .engineer-list ul li .img-area img {
+        width: auto;
+        height: 100%; }
+    .engineer-list ul li .basic-list {
+      display: table-cell;
+      vertical-align: middle; }
+      .engineer-list ul li .basic-list ul li {
+        padding-top: 0.375rem;
+        border-top: none; }
+        .engineer-list ul li .basic-list ul li .title {
+          width: 35%;
+          color: #666;
+          font-size: 0.75rem; }
+        .engineer-list ul li .basic-list ul li .tx-cont {
+          width: 65%;
+          font-size: 0.8125rem;
+          text-align: left; }
+        .engineer-list ul li .basic-list ul li:first-of-type {
+          padding-top: 0; }
 
 /* 김연주 */
 .data-result {
@@ -4103,7 +4172,104 @@
   font-size: 0.75rem;
   color: #666; }
 
-/* 전동엽 */
+.nocharge-list li {
+  padding: 1.3125rem 0 1.0625rem;
+  border-top: 1px solid #e1e1e1; }
+  .nocharge-list li:first-child {
+    border-top: 0; }
+  .nocharge-list li dl {
+    display: table;
+    width: 100%; }
+    .nocharge-list li dl dt {
+      display: table-cell;
+      width: 65%; }
+      .nocharge-list li dl dt .tit {
+        font-size: 1.125rem;
+        font-weight: 400; }
+      .nocharge-list li dl dt .sub-info {
+        margin-top: 0.1875rem;
+        font-size: 0.8125rem;
+        color: #666;
+        font-size: 0; }
+        .nocharge-list li dl dt .sub-info span {
+          font-size: 0.8125rem; }
+          .nocharge-list li dl dt .sub-info span:not(:first-child) {
+            position: relative;
+            font-size: 0.8125rem;
+            padding-left: 1.25rem; }
+            .nocharge-list li dl dt .sub-info span:not(:first-child):after {
+              position: absolute;
+              left: 0.625rem;
+              top: 50%;
+              width: 0.0625rem;
+              height: 0.5625rem;
+              -webkit-transform: translateY(-50%);
+                      transform: translateY(-50%);
+              background: #e1e1e1;
+              content: ''; }
+    .nocharge-list li dl dd {
+      display: table-cell;
+      width: 35%;
+      font-family: "TgothicMedium", Roboto, sans-serif;
+      text-align: right;
+      font-size: 0.625rem;
+      color: #e22f26; }
+      .nocharge-list li dl dd .str {
+        margin-right: 0.25rem;
+        font-family: "TgothicBlack", Roboto, sans-serif;
+        font-size: 1.125rem;
+        vertical-align: baseline; }
+
+.myinfo-wrap .info-detail .price-wrap .tx-extra {
+  display: inline-block;
+  margin-top: -0.1875rem;
+  font-size: 0.75rem;
+  color: #666; }
+
+.add-product-list li {
+  border-top: 1px solid #e1e1e1; }
+  .add-product-list li:first-child {
+    border-top: 0; }
+  .add-product-list li button {
+    position: relative;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    display: block;
+    width: 100%;
+    padding: 1.3125rem 1rem 1rem 0;
+    text-align: left;
+    font-size: 0; }
+    .add-product-list li button:after {
+      position: absolute;
+      right: 0;
+      top: 50%;
+      width: 6px;
+      height: 10px;
+      -webkit-transform: translateY(-50%);
+              transform: translateY(-50%);
+      content: '';
+      background: url(/img/ico/ico-group.png) no-repeat -2.125rem -66.0625rem;
+      background-size: 3.125rem; }
+    .add-product-list li button .tit {
+      display: inline-block;
+      width: 50%;
+      font-size: 1.125rem; }
+    .add-product-list li button .txt {
+      display: inline-block;
+      width: 50%;
+      font-size: 1.125rem;
+      text-align: right;
+      font-weight: 700; }
+
+.myinfo-wrap .info-detail .tb-type ul.no-bbdr {
+  border-bottom: 0; }
+
+.list-comp-lineinfo li .lineinfo-user .info-sub2 {
+  display: block;
+  margin-top: 0.375rem;
+  font-size: 0.8125rem;
+  color: #666; }
+
 .refill-coupon-box .coupon-list .coupon-paper {
   display: table;
   table-layout: fixed;
@@ -5056,6 +5222,8 @@
       .shadow-box .bt-slice li button, .shadow-box .bt-slice li a {
         border-radius: 0;
         font-size: 1rem; }
+  .shadow-box.empty {
+    min-height: 18.75rem; }
 
 .cont-card-ti {
   position: relative;
@@ -5435,7 +5603,7 @@
       float: left;
       color: #212121; }
 
-/* 김세정 */
+/* 전동엽 ~ 2018.10.05 */
 .box-data-family-banner {
   background: #f44333;
   border-radius: 0.3125rem;
@@ -6329,7 +6497,7 @@
     background-size: 9.375rem;
     background-position: -4.6875rem -23.4375rem; }
 
-/* 박근수 */
+/* 김세정 ~ 2018.10.05 */
 .dc-use {
   position: relative;
   margin: 0 0 2.1875rem 0;
@@ -7001,7 +7169,7 @@
     font-size: 0.875rem;
     color: #3b98e6; }
 
-/* 유준형 */
+/* 박근수 ~ 2018.10.05 */
 .info-view-ic {
   display: inline-block;
   width: 1.5625rem;
@@ -7560,6 +7728,7 @@
       float: right;
       font-size: 0.9375rem; }
 
+/* 유준형 ~ 2018.10.05 */
 /* 김태균 */
 /* dc_01_02,dc_01_03,dc_01_04 */
 .graphlist-wrap .graphbox-li {
@@ -7805,27 +7974,44 @@
         background: url(/img/ico/ico-group.png) no-repeat -1.9375rem -22.5rem;
         background-size: 3.125rem; }
       .representcharge-list > li .representcharge-info.type01:before {
-        background-position: -0.5625rem -0.5625rem; }
+        background: url(/img/product/bg_products02.png) no-repeat -0.5625rem -0.5625rem;
+        background-size: 3.125rem; }
       .representcharge-list > li .representcharge-info.type02:before {
-        background-position: -0.5625rem -3.6875rem; }
+        background: url(/img/product/bg_products02.png) no-repeat -0.5625rem -3.6875rem;
+        background-size: 3.125rem; }
       .representcharge-list > li .representcharge-info.type03:before {
-        background-position: -0.5625rem -6.8125rem; }
+        background: url(/img/product/bg_products02.png) no-repeat -0.5625rem -6.8125rem;
+        background-size: 3.125rem; }
       .representcharge-list > li .representcharge-info.type04:before {
-        background-position: -0.5625rem -9.9375rem; }
+        background: url(/img/product/bg_products02.png) no-repeat -0.5625rem -9.9375rem;
+        background-size: 3.125rem; }
       .representcharge-list > li .representcharge-info .title {
         color: #000;
         font-size: 0.9375rem;
         line-height: 1; }
+        .representcharge-list > li .representcharge-info .title .lte {
+          width: 2.1875rem;
+          height: 1rem;
+          margin-left: 0.3125rem;
+          vertical-align: middle; }
       .representcharge-list > li .representcharge-info .text {
         margin-top: 0.3125rem;
         color: #666;
         font-size: 0.8125rem;
         line-height: 1.25rem; }
+      .representcharge-list > li .representcharge-info .img-box {
+        position: absolute;
+        top: 1.5rem;
+        left: 1rem;
+        width: 2rem;
+        height: 2rem; }
+        .representcharge-list > li .representcharge-info .img-box img {
+          width: 100%;
+          height: 100%; }
     .representcharge-list > li .representcharge-product {
       display: none;
       padding-left: 3.875rem;
-      border-top: 1px solid #e1e1e1;
-      background: #f0eeeb; }
+      border-top: 1px solid #e1e1e1; }
       .representcharge-list > li .representcharge-product > li {
         border-top: 1px solid #c5c3c1; }
         .representcharge-list > li .representcharge-product > li:first-child {
@@ -7898,8 +8084,8 @@
     width: 2.1875rem;
     height: 1rem;
     margin-left: 0.3125rem;
-    background-position: -0.4375rem -0.4375rem;
-    background-size: 3.0625rem; }
+    background-position: 0 0;
+    background-size: 2.1875rem; }
 
 /* 모바일 요금제 > Submain [sprint8/MP.html]  :::  내 요금제와 비슷한 요금제 */
 .similarmyplan-wrap {
@@ -8037,6 +8223,15 @@
       height: 2rem;
       background: url(/img/product/bg_products02.png) no-repeat -0.5625rem -0.5625rem;
       background-size: 3.125rem; }
+    .recommendedrate-list > li .img-box {
+      position: absolute;
+      top: 1.5rem;
+      left: 1rem;
+      width: 2rem;
+      height: 2rem; }
+      .recommendedrate-list > li .img-box img {
+        width: 2rem;
+        height: 2rem; }
     .recommendedrate-list > li .product-infolink {
       display: block;
       width: 100%;
@@ -8434,7 +8629,241 @@
     font-size: 0.75rem;
     font-weight: 700; }
 
-/* 임지선 */
+/* 상품상세 컬러값 */
+.bg-blue .header-wrap {
+  background: #3583e3; }
+
+.bg-blue .productdetails-bg {
+  background: #3583e3; }
+  .bg-blue .productdetails-bg.t-logo {
+    background: #3583e3 url(/img/product/bg_tlogo.png) no-repeat 100% 3.5rem !important;
+    background-size: 9.6875rem 13.4375rem !important; }
+
+.bg-blue h1 {
+  font-size: 0;
+  line-heighT: 0;
+  text-indent: -999px; }
+
+.bg-blue .prev-step {
+  background: url(/img/ico/bg_prev.png) no-repeat 0 0 !important;
+  background-size: 1.1875rem 1rem !important; }
+
+.bg-blue .bt-dropdown {
+  color: #fff !important;
+  background: none !important; }
+  .bg-blue .bt-dropdown:after {
+    background: url(/img/ico/bg_header_dropdown2.png) no-repeat 100% 0.125rem !important;
+    background-size: 0.4375rem 0.25rem !important; }
+
+.bg-purple .header-wrap {
+  background: #4e67b5; }
+
+.bg-purple .productdetails-bg {
+  background: #4e67b5; }
+  .bg-purple .productdetails-bg.t-logo {
+    background: #4e67b5 url(/img/product/bg_tlogo.png) no-repeat 100% 3.5rem !important;
+    background-size: 9.6875rem 13.4375rem !important; }
+
+.bg-purple h1 {
+  font-size: 0;
+  line-heighT: 0;
+  text-indent: -999px; }
+
+.bg-purple .prev-step {
+  background: url(/img/ico/bg_prev.png) no-repeat 0 0 !important;
+  background-size: 1.1875rem 1rem !important; }
+
+.bg-purple .bt-dropdown {
+  color: #fff !important;
+  background: none !important; }
+  .bg-purple .bt-dropdown:after {
+    background: url(/img/ico/bg_header_dropdown2.png) no-repeat 100% 0.125rem !important;
+    background-size: 0.4375rem 0.25rem !important; }
+
+.bg-purple .bt-white1 {
+  color: #4e67b5 !important; }
+
+/* 상품상세 */
+.productdetails-wrap {
+  height: 15.5rem; }
+  .productdetails-wrap .productdetails-title .sub {
+    display: block;
+    padding: 0.5625rem 0 0 0.0625rem;
+    color: #fff;
+    font-size: 0.8125rem;
+    line-height: 1; }
+  .productdetails-wrap .productdetails-title .title {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    padding: 0.375rem 0 0 0.0625rem;
+    color: #fff;
+    font-size: 2rem;
+    font-weight: 700;
+    text-overflow: ellipsis;
+    line-height: 1.2; }
+  .productdetails-wrap .productdetails-taglist {
+    margin-top: 0.375rem; }
+    .productdetails-wrap .productdetails-taglist .tag-text {
+      position: relative;
+      display: inline-block;
+      margin-left: 0.625rem;
+      color: #fff; }
+      .productdetails-wrap .productdetails-taglist .tag-text:first-child {
+        margin-left: 0; }
+      .productdetails-wrap .productdetails-taglist .tag-text:after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -0.1875rem;
+        height: 0.0625rem;
+        background-color: #fff; }
+  .productdetails-wrap .productdetails-text {
+    margin-top: 1.6875rem; }
+    .productdetails-wrap .productdetails-text li {
+      margin-top: 0.5625rem;
+      padding: 0.125rem 0 0.125rem 1.875rem;
+      color: #fff;
+      font-size: 0.875rem;
+      line-height: 1; }
+      .productdetails-wrap .productdetails-text li:first-child {
+        margin-top: 0; }
+      .productdetails-wrap .productdetails-text li.data {
+        background: url(/img/product/bg_productdetails01.png) no-repeat 0 0.0625rem;
+        background-size: 0.875rem 1rem; }
+      .productdetails-wrap .productdetails-text li.service {
+        background: url(/img/product/bg_productdetails02.png) no-repeat 0 0.125rem;
+        background-size: 1rem 0.875rem; }
+      .productdetails-wrap .productdetails-text li.member {
+        background: url(/img/product/bg_productdetails03.png) no-repeat 0 0.1875rem;
+        background-size: 0.9375rem 0.75rem; }
+  .productdetails-wrap .productdetails-text02 {
+    margin-top: 1.6875rem;
+    color: #fff;
+    font-size: 0.875rem;
+    line-height: 1.25rem; }
+  .productdetails-wrap .productdetails-text03 {
+    margin-top: 0.9375rem;
+    color: #b8c2e1;
+    font-size: 0.75rem; }
+
+.productdetails-ledgercase {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  padding-bottom: 1rem; }
+  .productdetails-ledgercase .price-text {
+    color: #fff;
+    font-size: 0.8125rem; }
+    .productdetails-ledgercase .price-text .price-type {
+      color: #fff;
+      font-size: 1.375rem;
+      font-weight: 700;
+      font-family: "TgothicMedium", Roboto, sans-serif; }
+    .productdetails-ledgercase .price-text .unit {
+      display: inline-block;
+      margin-left: 0.3125rem;
+      color: #fff;
+      font-size: 0.6875rem;
+      font-weight: 700;
+      vertical-align: 0.0625rem; }
+  .productdetails-ledgercase .btn {
+    width: 7.5rem;
+    margin-top: 0.125rem; }
+  .productdetails-ledgercase .limit {
+    margin-top: 1.125rem;
+    color: #fff;
+    font-size: 1.125rem;
+    font-weight: 700;
+    letter-spacing: -1px; }
+
+.productdetails-utill {
+  padding: 1rem 0 1.875rem;
+  border-top: 1px solid #5d9ce9; }
+  .productdetails-utill li {
+    color: #fff;
+    font-size: 0.8125rem; }
+    .productdetails-utill li .str {
+      display: inline-block;
+      margin-left: 0.3125rem;
+      font-weight: 700; }
+
+.joinconsulting-wrap {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  padding: 0.75rem 1rem;
+  background: #fff; }
+  .joinconsulting-wrap .text {
+    position: relative;
+    padding: 0.25rem 0 0 2.0625rem;
+    color: #3b98e6;
+    font-size: 0.875rem; }
+    .joinconsulting-wrap .text:after {
+      content: "";
+      position: absolute;
+      top: 0.3125rem;
+      left: 0;
+      width: 1.25rem;
+      height: 1.125rem;
+      background: url(/img/product/bg_joinconsulting.png) no-repeat 0 0;
+      background-size: 1.25rem 1.125rem; }
+  .joinconsulting-wrap .btn {
+    width: 3.125rem; }
+
+/* 공통 버튼 흰색 라운드 박스 */
+.bt-white1 {
+  display: inline-block;
+  width: 100%;
+  height: 2.5rem;
+  border-radius: 1.25rem;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  background: #fff;
+  color: #3583e3;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  line-height: 2.5rem; }
+  .bt-white1.selected {
+    background: #f44333; }
+  .bt-white1:disabled {
+    color: #fff;
+    background: #d1d1d1; }
+
+.bt-white2 {
+  display: inline-block;
+  width: 100%;
+  height: 2.5rem;
+  border: 1px solid #fff;
+  border-radius: 1.25rem;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  background: none;
+  color: #fff;
+  font-size: 0.8125rem;
+  line-height: 2.5rem; }
+  .bt-white2.selected {
+    background: #f44333; }
+  .bt-white2:disabled {
+    color: #fff;
+    background: #d1d1d1; }
+
+.recommendedratetaglist-wrap .tag-text {
+  display: inline-block;
+  margin-left: 0.3125rem;
+  color: #666;
+  font-size: 0.75rem; }
+  .recommendedratetaglist-wrap .tag-text:first-child {
+    margin-left: 0; }
+
 .badge.badge-fam-members2 {
   background-position: 0 -13.6875rem;
   background-size: 4.6875rem;
@@ -8919,5 +9348,136 @@
     font-size: 0.625rem;
     font-family: "TgothicMedium", Roboto, sans-serif; }
 
+/* 임지선 ~ 2018.10.05 */
 /* 김재성 */
+/* widget */
+.widget-box .horizontal-slide {
+  width: 100%;
+  overflow-x: auto; }
+  .widget-box .horizontal-slide .horizontal-list {
+    overflow: hidden; }
+    .widget-box .horizontal-slide .horizontal-list > li {
+      float: left; }
+
+/* MV_01_02 : 다른 부가상품 더보기 */
+.add-prod {
+  margin-top: 1.25rem; }
+  .add-prod > li {
+    margin-right: 0.625rem; }
+    .add-prod > li > div > button, .add-prod > li > div > a {
+      display: block;
+      text-align: left;
+      font-size: 11px;
+      color: #7b7b7b; }
+    .add-prod > li:last-child {
+      margin-right: 0; }
+  .add-prod .ico {
+    display: inline-block;
+    display: block;
+    width: 4.5rem;
+    height: 4.5rem;
+    background: url(/img/product/bg_products.png) no-repeat 14px 14px;
+    background-size: 6.25rem; }
+    .add-prod .ico.type1 {
+      background-position: -0.875rem -0.875rem; }
+    .add-prod .ico.type2 {
+      background-position: -0.875rem -7.0625rem; }
+    .add-prod .ico.type3 {
+      background-position: -0.875rem -13.3125rem; }
+    .add-prod .ico.type4 {
+      background-position: -0.875rem -19.5625rem; }
+    .add-prod .ico.type5 {
+      background-position: -0.875rem -25.8125rem; }
+    .add-prod .ico.type6 {
+      background-position: -0.875rem -25.8125rem; }
+    .add-prod .ico.type7 {
+      background-position: -0.875rem -25.8125rem; }
+    .add-prod .ico.type8 {
+      background-position: -0.875rem -25.8125rem; }
+
+/* MV_02_02 : 함께하면 더욱 유용한 상품 */
+.useful-goods {
+  margin-top: 1.25rem; }
+  .useful-goods li {
+    width: 14.5rem;
+    padding-right: 0.4375rem; }
+    .useful-goods li button {
+      width: 100%;
+      color: #fff;
+      height: 8.125rem;
+      border-radius: 0.125rem;
+      position: relative;
+      text-align: left; }
+      .useful-goods li button.bg1 {
+        background: #9979fe; }
+      .useful-goods li button.bg2 {
+        background: #76d275; }
+      .useful-goods li button .located {
+        position: absolute;
+        display: block;
+        width: 100%; }
+        .useful-goods li button .located.top {
+          top: 0.9375rem; }
+        .useful-goods li button .located.bottom {
+          bottom: 0.9375rem; }
+        .useful-goods li button .located .txt-tit {
+          display: block;
+          font-weight: 700;
+          font-size: 0.9375rem;
+          padding: 0 0.9375rem; }
+        .useful-goods li button .located .txt-type {
+          display: block;
+          font-size: 0.6875rem;
+          padding: 0 0.9375rem;
+          opacity: .6; }
+        .useful-goods li button .located .txt-detail {
+          position: absolute;
+          left: 0;
+          bottom: 0.75rem;
+          display: block;
+          display: -webkit-box;
+          font-size: 0.75rem;
+          padding: 0 0.9375rem;
+          line-height: 1rem;
+          max-height: 3rem;
+          -webkit-line-clamp: 3;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+          text-overflow: ellipsis; }
+      .useful-goods li button .ico {
+        position: absolute;
+        right: 0.9375rem;
+        top: 0.9375rem;
+        display: block;
+        width: 1.5rem;
+        height: 1.5rem;
+        background: url(/img/dummy/ico-tbd-48.png) no-repeat 0 0;
+        background-size: 1.5rem 1.5rem; }
+    .useful-goods li:last-child {
+      padding-right: 0rem; }
+
+/* MV_02_02 : 함께하면 더욱 스마트한 상품 */
+.smart-app {
+  margin-top: 1.25rem; }
+  .smart-app > li {
+    margin-right: 2.8125rem; }
+    .smart-app > li:last-child {
+      margin-right: 0; }
+  .smart-app .ico {
+    display: inline-block;
+    display: block;
+    width: 3.125rem;
+    height: 3.125rem;
+    background: url(/img/dummy/ico-app-100.png) no-repeat 0 0;
+    background-size: 3.125rem auto; }
+    .smart-app .ico.type1 {
+      background-position: 0 0; }
+    .smart-app .ico.type2 {
+      background-position: 0 -3.125rem; }
+    .smart-app .ico.type3 {
+      background-position: 0 -6.25rem; }
+    .smart-app .ico.type4 {
+      background-position: 0 -9.375rem; }
+
+/* 김정훈 */
 /* 최은현 */
