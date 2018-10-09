@@ -291,6 +291,7 @@ Tw.API_CMD = {
   BFF_10_0007: { path: '/core-product/v1/mobiles/fee-plans/args-0/joins/prechecks', method: Tw.API_METHOD.GET },
   BFF_10_0015: { path: '/core-product/v1/mobiles/fee-plans/args-0/tplan-benefits', method: Tw.API_METHOD.GET },
   BFF_10_0022: { path: '/core-product/v1/mobiles/additions-sets/args-0', method: Tw.API_METHOD.DELETE },
+  BFF_10_0031: { path: '/core-product/v1/submain/products', method: Tw.API_METHOD.GET },
 
   // TEST
   GET: { path: '/posts', method: Tw.API_METHOD.GET },
