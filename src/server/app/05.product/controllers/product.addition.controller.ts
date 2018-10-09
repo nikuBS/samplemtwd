@@ -44,7 +44,7 @@ export default class ProductAddition extends TwViewController {
     }
 
     return resp.result.addProductJoinsInfo;
-  };
+  }
 
   private getPromotionBanners = () => {
     // return this.apiService.request(API_CMD.BFF_10_0024, { idxCtgCd: this.ADDITIONAL_CODE }).map(resp => {});
@@ -54,7 +54,7 @@ export default class ProductAddition extends TwViewController {
     }
 
     return resp.result;
-  };
+  }
 
   private getMyFilters = () => {
     // return this.apiService.request(API_CMD.BFF_10_0025, { idxCtgCd: this.ADDITIONAL_CODE }).map(resp => {});
@@ -65,7 +65,7 @@ export default class ProductAddition extends TwViewController {
     }
 
     return resp.result;
-  };
+  }
 
   private getBestAdditions = () => {
     // return this.apiService.request(API_CMD.BFF_10_0027, { idxCtgCd: this.ADDITIONAL_CODE }).map(resp => {});
@@ -80,11 +80,11 @@ export default class ProductAddition extends TwViewController {
       prodList: resp.result.prodList.map(addition => {
         return {
           ...addition,
-          basFeeInfo: FormatHelper.getFeeContent(addition.basFeeInfo)
+          basFeeInfo: FormatHelper.getFeeContents(addition.basFeeInfo)
         };
       })
     };
-  };
+  }
 
   private getAdditionBanners = () => {
     // return this.apiService.request(API_CMD.BFF_10_0028, { idxCtgCd: this.ADDITIONAL_CODE }).map(resp => {});
@@ -95,7 +95,7 @@ export default class ProductAddition extends TwViewController {
     }
 
     return resp.result.bnnrList;
-  };
+  }
 
   private getRecommendedAdditions = () => {
     // return this.apiService.request(API_CMD.BFF_10_0028, { idxCtgCd: this.ADDITIONAL_CODE }).map(resp => {});
@@ -110,11 +110,11 @@ export default class ProductAddition extends TwViewController {
       prodList: resp.result.prodList.map(addition => {
         return {
           ...addition,
-          basFeeInfo: FormatHelper.getFeeContent(addition.basFeeInfo)
+          basFeeInfo: FormatHelper.getFeeContents(addition.basFeeInfo)
         };
       })
     };
-  };
+  }
 
   private getRecommendedTags = () => {
     // return this.apiService.request(API_CMD.BFF_10_0029, { idxCtgCd: this.ADDITIONAL_CODE }).map(resp => {});
@@ -126,5 +126,5 @@ export default class ProductAddition extends TwViewController {
     }
 
     return resp.result;
-  };
+  }
 }
