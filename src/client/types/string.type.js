@@ -6,6 +6,11 @@ Tw.DATA_UNIT = {
   PB: 'PB'
 };
 
+Tw.CURRENCY_UNIT = {
+  WON: '원',
+  TEN_THOUSAND: '만원'
+};
+
 Tw.BUTTON_LABEL = {
   CONFIRM: '확인',
   CANCEL: '취소',
@@ -172,6 +177,15 @@ Tw.MYT_FARE_BILL_SET = {
   }
 };
 
+Tw.MYT_FARE_PAYMENT_PREPAY_PASSWORD_NAME = {
+  PASSWORD: '비밀번호',
+  CONFIRM_PASSWORD: '비밀번호 확인',
+  CHANGE_PASSWORD: '변경할 비밀번호',
+  CONFIRM_CHANGE_PASSWORD: '변경할 비밀번호 확인',
+  BTN_NEW: '설정하기',
+  BTN_CHANGE: '변경하기'
+};
+
 Tw.ALERT_MSG_COMMON = {
   SERVER_ERROR: '통신 오류입니다. 잠시 후 다시 시도해 주세요.'
 };
@@ -190,6 +204,11 @@ Tw.ALERT_MSG_MYT_FARE = {
   COMPLETE_CHANGE: '변경이 완료되었습니다.',
   COMPLETE_CANCEL: '해지가 완료되었습니다.',
   COMPLETE_CHANGE_DATE: '요금납부일 변경이 완료되었습니다.',
+  COMPLETE_CHANGE_LIMIT: '한도변경이 완료되었습니다.',
+  COMPLETE_CHANGE_PASSWORD: '결제 비밀번호 변경이 완료되었습니다.',
+  NOT_ALLOWED_CHANGE_LIMIT: '한도 변경이 불가능합니다',
+  NOT_ALLOWED_INFO_MESSAGE: '연체/미납 중인 고객님은 납부 후' + '<br/>' + '한도변경이 가능합니다.',
+  GO_PAYMENT: '납부하러 가기',
   ADD_SVC: {
     BIL0030: '휴대폰 결제 이용동의 후 사용 가능합니다.',
     BIL0033: '휴대폰 결제 차단 고객은 사용이 제한된 메뉴입니다.',
@@ -261,6 +280,7 @@ Tw.INFO = {
 Tw.URL_PATH = {
   OKCASHBAG: 'https://member.okcashbag.com/mb/ocb/searchPass/searchPass/' + '' +
   'MOCB/687474703A2F2F6d2e6f6b636173686261672e636f6d2F696e6465782e6d6f63623F6c6f67696e3D59',
+  SET_PASSWORD: 'http://www.tworld.co.kr/normal.do?serviceId=S_PROD2001&viewId=V_PROD2001&prod_id=NA00003909',
   BROADBAND: 'http://www.skbroadband.com',
   COP_SERVICE: 'http://b2b.tworld.co.kr/cs/counsel/certServiceInfo.bc',
   CONTETNS_YOUTUBE_HELP_URL: 'https://support.google.com/youtube/contact/commerce_contact?hl=ko&cfsi=subs_red_2',

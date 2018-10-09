@@ -26,7 +26,7 @@ class MyTFarePaymentMicro extends TwViewController {
         res.render('payment/myt-fare.payment.micro.html', {
           result: this.parseData(microRemain.result),
           usedYn: this.getHistoryInfo(microHistory),
-          passwordText: this.getPasswordText(passwordStatus),
+          passwordInfo: this.getPasswordInfo(passwordStatus),
           svcInfo: svcInfo,
           currentMonth: this.getCurrentMonth()
         });
@@ -87,16 +87,14 @@ class MyTFarePaymentMicro extends TwViewController {
     return this.apiService.request(API_CMD.BFF_05_0085, {});
   }
 
-  private getPasswordText(passwordResult: any): string {
-    let text = MYT_FARE_MICRO_NAME.NC;
-    if (passwordResult.code === API_CODE.CODE_00) {
-      if (passwordResult.result.cpinStCd === 'NC') {
-        text = MYT_FARE_MICRO_NAME.NC;
-      } else {
-        text = MYT_FARE_MICRO_NAME.AC;
-      }
+  private getPasswordInfo(passwordStatus: any): any {
+    if (passwordStatus.code === API_CODE.CODE_00) {
+      const passwordResult = passwordStatus.result;
+      passwordStatus.text = MYT_FARE_MICRO_NAME[passwordResult.cpinStCd];
+    } else {
+      passwordStatus.text = '';
     }
-    return text;
+    return passwordStatus;
   }
 
   private parseData(result: any): any {

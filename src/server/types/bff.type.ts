@@ -111,7 +111,9 @@ export enum MYT_FARE_PAYMENT_NAME {
 
 export enum MYT_FARE_MICRO_NAME {
   NC = '신청',
-  AC = '변경'
+  AC = '변경',
+  LC = '잠김',
+  IC = '초기화'
 }
 
 export enum MYT_FARE_BILL_CO_TYPE {
