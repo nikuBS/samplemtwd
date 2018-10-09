@@ -9,6 +9,7 @@ import ProductInfinityBenefitUsageHistory from './controllers/product.infinity-b
 import ProductCurrentSetting from './controllers/product.current-setting.controller';
 import Product from './controllers/product.controller';
 import ProductAddition from './controllers/product.addition.controller';
+import ProductPlans from './controllers/product.plans.controller';
 
 class ProductRouter extends TwRouter {
   constructor() {
@@ -16,6 +17,7 @@ class ProductRouter extends TwRouter {
 
     this.controllers.push({ url: '/', controller: new Product() });
     this.controllers.push({ url: '/addition', controller: new ProductAddition() });
+    this.controllers.push({ url: '/plans', controller: new ProductPlans() });
     this.controllers.push({ url: '/detail/:prodId', controller: new ProductDetail() });
     this.controllers.push({ url: '/detail/contents/:prodId', controller: new ProductDetailContents() });
     this.controllers.push({ url: '/join/:prodId', controller: new ProductJoin() });
