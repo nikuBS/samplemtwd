@@ -17,7 +17,7 @@ const environment = {
     BFF_SERVER: 'http://bff-spring',
     CDN: '',
     REDIS: {
-      host: 'dev-backing-redis-node-ibm-redis-ha-dev-master-svc',
+      host: 'dev-backing-redis-node-ibm-redis-ha-dev-master-svc.mtw-dev.svc.cluster.local',
       port: 6379,
       db: 15
     },
@@ -31,7 +31,7 @@ const environment = {
     BFF_SERVER: 'http://bff-spring',
     CDN: '',
     REDIS: {
-      host: 'stg-backing-redis-node-ibm-redis-ha-dev-master-svc',
+      host: 'stg-backing-redis-node-ibm-redis-ha-dev-master-svc.mtw-stg.svc.cluster.local',
       port: 6379,
       db: 15
     },
