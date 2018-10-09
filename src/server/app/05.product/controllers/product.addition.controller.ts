@@ -8,7 +8,7 @@ import TwViewController from '../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
 import { API_CMD, API_CODE } from '../../../types/api-command.type';
 import {
-  PRODUCT_MY_ADDITIONAL,
+  PRODUCT_MY_ADDITIONS,
   PRODUCT_PROMOTION_BANNERS,
   PRODUCT_MY_FILTERS,
   PRODUCT_BEST_ADDITIONS,
@@ -37,7 +37,7 @@ export default class ProductAddition extends TwViewController {
   private getMyAdditions = () => {
     // this.apiService.request(API_CMD.BFF_05_0166, {}).map(resp => {});
 
-    const resp = PRODUCT_MY_ADDITIONAL;
+    const resp = PRODUCT_MY_ADDITIONS;
 
     if (resp.code !== API_CODE.CODE_00) {
       return null;

@@ -54,7 +54,10 @@ export const URL = {
   '/myt/data/recharge/history': { login: true, id: 'DC_07', title: '최근 충전/선물 내역' },
 
   // Product
+  '/product': { login: false, id: 'MP', title: '모바일 요금제' },
+  '/product/addition': { login: false, id: 'MV', title: '부가서비스' },
   '/product/plans': { login: false, id: 'MP_02', title: '모바일 요금제' },
+  '/product/additions': { login: false, id: 'MV_01', title: '부가서비스' },
   '/product/detail': { login: true, id: 'MP_02_02', title: '상품 상세 정보' },
   '/product/detail/contents': { login: true, id: 'MP_02_02_06', title: '상품 상세 정보 보기' },
   '/product/additions-terminate': { login: true, id: 'MV_01_02_03', title: '부가상품 해지' }
