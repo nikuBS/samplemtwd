@@ -62,13 +62,6 @@ export const SVC_CDGROUP = {
   WIRE: ['S1', 'S2', 'S3']
 };
 
-export enum MYT_FARE_PAYMENT_TYPE {
-  BANK = '01',
-  CARD = '02',
-  GIRO = '03',
-  VIRTUAL = '04'
-}
-
 export const UNIT = {
   '110': '원',
   '140': 'KB',
@@ -92,6 +85,13 @@ export const VOICE_UNIT = {
   MIN: '분',
   SEC: '초'
 };
+
+export enum MYT_FARE_PAYMENT_TYPE {
+  BANK = '01',
+  CARD = '02',
+  GIRO = '03',
+  VIRTUAL = '04'
+}
 
 export enum MYT_FARE_PAYMENT_TITLE {
   ACCOUNT = '계좌이체',
@@ -123,6 +123,11 @@ export enum MYT_FARE_PREPAY_NAME {
   R = '신규',
   F = '해지',
   C = '변경'
+}
+
+export enum MYT_FARE_PREPAY_AUTO_CHARGE_CODE {
+  USE = 'U',
+  UNUSE = 'D'
 }
 
 export enum HOME_SMART_CARD {

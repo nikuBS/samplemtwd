@@ -45,7 +45,7 @@ Tw.MyTFarePaymentPrepayMain.prototype = {
     this._historyService.goLoad('/myt/fare/payment/' + this.$title + '/auto/info');
   },
   _openAutoPayInfo: function () {
-    this._popupService.openAlert(Tw.AUTO_PAY_INFO.CONTENTS, Tw.AUTO_PAY_INFO.TITLE, Tw.BUTTON_LABEL.CONFIRM);
+    this._popupService.openAlert(Tw.AUTO_PAY_INFO['CONTENTS_' + this.$title.toUpperCase()], Tw.AUTO_PAY_INFO.TITLE, Tw.BUTTON_LABEL.CONFIRM);
   },
   _changeUseStatus: function (event) {
     var $target = $(event.target);
@@ -68,13 +68,7 @@ Tw.MyTFarePaymentPrepayMain.prototype = {
     this._popupService.openAlert(err.msg, err.code);
   },
   _getToastMessage: function (tx) {
-    var message = '';
-
-    if (this.$title === 'micro') {
-      message += Tw.ALERT_MSG_MYT_FARE.MICRO;
-    } else {
-      message += Tw.ALERT_MSG_MYT_FARE.CONTENTS;
-    }
+    var message = Tw.ALERT_MSG_MYT_FARE.MICRO;
 
     if (tx === Tw.ALERT_MSG_MYT_FARE.USABLE) {
       message += ' ' + Tw.ALERT_MSG_MYT_FARE.MSG_ALLOWED;
