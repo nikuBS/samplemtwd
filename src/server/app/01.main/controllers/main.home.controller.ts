@@ -21,6 +21,7 @@ import {
   MYT_FARE_BILL_CO_TYPE
 } from '../../../types/bff.type';
 import DateHelper from '../../../utils/date.helper';
+import { REDIS_APP_VERSION } from '../../../types/common.type';
 
 class MainHome extends TwViewController {
   constructor() {
@@ -44,36 +45,42 @@ class MainHome extends TwViewController {
         smartCard = this.getSmartCardOrder(svcInfo.svcMgmtNum);
         Observable.combineLatest(
           this.getUsageData(),
-          this.getMembershipData()
-        ).subscribe(([usageData, membershipData]) => {
+          this.getMembershipData(),
+          this.getNotice()
+        ).subscribe(([usageData, membershipData, notice]) => {
           homeData.usageData = usageData;
           homeData.membershipData = membershipData;
-          res.render('main.home.html', { svcInfo, svcType, homeData, smartCard });
+          console.log(notice);
+          res.render('main.home.html', { svcInfo, svcType, homeData, smartCard, notice });
         });
       } else if ( svcType.svcCategory === LINE_NAME.INTERNET_PHONE_IPTV ) {
         Observable.combineLatest(
           this.getBillData(),
-          this.getJoinInfo()
-        ).subscribe(([billData, joinInfo]) => {
+          this.getJoinInfo(),
+          this.getNotice()
+        ).subscribe(([billData, joinInfo, notice]) => {
           homeData.billData = billData;
           homeData.joinInfo = joinInfo;
-          console.log(homeData);
-          res.render('main.home.html', { svcInfo, svcType, homeData, smartCard });
+          res.render('main.home.html', { svcInfo, svcType, homeData, smartCard, notice });
         });
       } else {
         if ( svcInfo.svcAttrCd === SVC_ATTR_E.PPS ) {
           Observable.combineLatest(
             this.getUsageData(),
-            this.getPPSInfo()
-          ).subscribe(([usageData, ppsInfo]) => {
+            this.getPPSInfo(),
+            this.getNotice()
+          ).subscribe(([usageData, ppsInfo, notice]) => {
             homeData.usageData = usageData;
             homeData.ppsInfo = ppsInfo;
-            res.render('main.home.html', { svcInfo, svcType, homeData, smartCard });
+            res.render('main.home.html', { svcInfo, svcType, homeData, smartCard, notice });
           });
         } else {
-          this.getUsageData().subscribe((resp) => {
-            homeData.usageData = resp;
-            res.render('main.home.html', { svcInfo, svcType, homeData, smartCard });
+          Observable.combineLatest(
+            this.getUsageData(),
+            this.getNotice()
+          ).subscribe(([usageData, notice]) => {
+            homeData.usageData = usageData;
+            res.render('main.home.html', { svcInfo, svcType, homeData, smartCard, notice });
           });
         }
       }
@@ -110,6 +117,17 @@ class MainHome extends TwViewController {
     }
 
     return svcType;
+  }
+
+  private getNotice(): Observable<any> {
+    return this.redisService.getData(REDIS_APP_VERSION)
+      .map((result) => {
+        console.log('result', result);
+        if ( !FormatHelper.isEmpty((result)) ) {
+          return result.notice;
+        }
+        return null;
+      });
   }
 
   private getMembershipData(): Observable<any> {
