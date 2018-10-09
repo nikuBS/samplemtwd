@@ -64,7 +64,11 @@ Tw.MyTFarePaymentOption.prototype = {
     }, $.proxy(this._selectDatePopupCallback, this));
   },
   _selectDatePopupCallback: function ($layer) {
+    $layer.on('click', '.fe-common-back', $.proxy(this._goBack, this));
     $layer.on('click', '.date', $.proxy(this._setSelectedDate, this));
+  },
+  _goBack: function () {
+    this._historyService.goBack();
   },
   _setSelectedDate: function (event) {
     var $selectedValue = $(event.currentTarget);
