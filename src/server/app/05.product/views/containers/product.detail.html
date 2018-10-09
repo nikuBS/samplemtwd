@@ -4,45 +4,867 @@
 * Date: 2018.09.11
 %>
 
+<%
+console.log(prodRedisInfo.summary);
+%>
+
 <% include ../components/start.component.html %>
-<body>
-<!-- TBD -->
-<div class="wrap">
-  <div id="contents" class="container-wrap">
-    <div class="container" data-prod_id="<%= basicInfo.prodId %>" data-current_prod_id="<%= svcInfo.prodId %>">
-      <ul class="fe-btn_list">
-        <% for(var i in basicInfo.linkBtnList) { %>
-        <li>
-          <button type="button" style="border:1px solid #000" data-typcd="<%= basicInfo.linkBtnList[i].btnTypCd %>">
-            <%= basicInfo.linkBtnList[i].btnNm %>
-          </button>
-        </li>
-        <% } %>
-        <li>
-          <button type="button" style="border:1px solid #000" data-typcd="setting">
-            설정
-          </button>
-        </li>
-        <li>
-          <button type="button" style="border:1px solid #000" data-typcd="SC">
-            가입
-          </button>
-        </li>
-      </ul>
-      <ul style="display: none" class="fe-btn_setting_list">
-        <li data-typcd="SE" data-url="">설정1</li>
-        <li data-typcd="SE" data-url="">설정2</li>
-        <li data-typcd="SE" data-url="">설정3</li>
-      </ul>
-    </div>
+<body class="bg-blue">
+  <!-- #skip_navigation -->
+  <div id="skipNav" class="skip_navi">
+    <ul>
+      <li><a href="#gnb">메뉴 바로가기</a></li>
+      <li><a href="#contents">본문 바로가기</a></li>
+      <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
   </div>
-</div>
-<!-- // -->
+  <!--// #skip_navigation -->
+  <!-- #header -->
+  <%- include('../../../common/views/components/header.component.html', { title: '상품상세', svcInfo, option: { line: true } }); %>
+  <!--// #header -->
+  <!-- #contents -->
+  <div class="wrap">
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+      <h2 class="blind">내용</h2>
+      <div class="container">
+
+        <!-- 상품타이틀 -->
+        <div class="cont-box nogaps-hoz productdetails-bg t-logo"><!-- t-logo 클래스로  티 로고 들어갑니다. -->
+          <div class="productdetails-wrap">
+            <h3 class="productdetails-title">
+              <span class="sub"><%= prodRedisInfo.summary.prodSmryDesc %></span>
+              <div class="title"><%= prodRedisInfo.summary.prodNm %></div>
+            </h3>
+            <% if (basicInfo.prodFilterFlagList) { %>
+            <div class="productdetails-taglist">
+              <% for (var i in basicInfo.prodFilterFlagList) { %>
+              <a href="/product/plans?searchFltIds=<%= basicInfo.prodFilterFlagList[i].filterFlagId %>" class="tag-text">#<%= basicInfo.prodFilterFlagList[i].filterFlagNm %></a>
+              <% } %>
+            </div>
+            <% } %>
+            <ul class="productdetails-text">
+              <li class="data">1234</li>
+              <li class="service">여행 · 영화 · 스마트워치 단말교체지원</li>
+              <li class="member">VIP 멤버십, 분실파손 보험</li>
+            </ul>
+          </div>
+          <div class="productdetails-ledgercase">
+            <p class="price-text">
+              월정액(부가세포함)<br>
+              <strong class="price-type"><%= prodRedisInfo.summary.basFeeInfo %></strong>
+              <span class="unit">원</span>
+            </p>
+            <div class="btn">
+              <button type="button" class="bt-white1">가입</button>
+            </div>
+
+            <!-- 해당 상품을 이용중인 회선으로 로그인 시 해지 기능만 있는 경우
+            <p class="price-text">
+                월정액(부가세포함)<br>
+                <strong class="price-type">100,000</strong>
+                <span class="unit">원</span>
+            </p>
+            <div class="btn">
+                <button type="button" class="bt-white2">해지</button>
+            </div> -->
+
+            <!-- 가입가능 상품인 경우일대   가입x/ 가입상담예약 O 일경우
+            <p class="price-text">
+                월정액(부가세포함)<br>
+                <strong class="price-type">100,000</strong>
+                <span class="unit">원</span>
+            </p>
+             -->
+
+            <!--  서류제출/조회 노출 케이스  제출 전/제출 후 미비로 재 업로드 필요 시
+            <p class="price-text">
+                월정액(부가세포함)<br>
+                <strong class="price-type">100,000</strong>
+                <span class="unit">원</span>
+            </p>
+             -->
+
+            <!-- 가입제한/불가 상품인 경우
+            <p class="price-text">
+                월정액(부가세포함)<br>
+                <strong class="price-type">100,000</strong>
+                <span class="unit">원</span>
+            </p>
+            <div class="limit">
+                가입제한 상품
+            </div>
+             -->
+          </div>
+          <% if ( prodRedisInfo.summary.basOfrDataQtyCtt || prodRedisInfo.summary.basOfrVcallTmsCtt || prodRedisInfo.summary.basOfrCharCntCtt ) { %>
+          <ul class="productdetails-utill">
+            <% if ( prodRedisInfo.summary.basOfrDataQtyCtt ) { %>
+            <li>- 데이터 <strong class="str"><%= prodRedisInfo.summary.basOfrDataQtyCtt %></strong></li>
+            <% } %>
+            <% if ( prodRedisInfo.summary.basOfrVcallTmsCtt ) { %>
+            <li>- 음성 <strong class="str"><%= prodRedisInfo.summary.basOfrVcallTmsCtt %></strong></li>
+            <% } %>
+            <% if ( prodRedisInfo.summary.basOfrCharCntCtt ) { %>
+            <li>- 문자 <strong class="str"><%= prodRedisInfo.summary.basOfrCharCntCtt %></strong></li>
+            <% } %>
+          </ul>
+          <% } %>
+          <!-- <ul class="productdetails-utill">
+              <li>- 데이터 <strong class="str">기본제공금액 조절사용</strong></li>
+              <li>- 문자 <strong class="str">기본제공</strong></li>
+          </ul>
+          <ul class="productdetails-utill">
+              <li>- 데이터 <strong class="str">기본제공금액 조절사용</strong></li>
+          </ul> -->
+        </div>
+        <!-- //상품타이틀 -->
+
+        <hr class="cont-sp type1" aria-hidden="true"/>
+
+        <!-- 가입상담  -->
+        <div class="joinconsulting-wrap">
+          <p class="text">가입상담을 받아보시겠어요?</p>
+          <div class="btn">
+            <div class="bt-alone"><button class="bt-line-blue1">예약</button></div>
+          </div>
+        </div>
+        <!-- //가입상담  -->
+
+        <hr class="cont-sp type1" aria-hidden="true"/>
+
+        <!-- dummy -->
+        <div><img src="/img/dummy/dmy-mp-02-02.png" alt="" style="width:100%;" /></div>
+        <!-- // dummy -->
+
+        <hr class="cont-sp type1" aria-hidden="true"/>
+
+        <% if ( prodRedisInfo.contents && prodRedisInfo.contents.length > 0 ) { %>
+        <!-- 팝업 띄우는 링크 -->
+        <div class="cont-box nogaps noborder">
+          <ul class="link-long-list">
+            <% for (var i in prodRedisInfo.contents) { %>
+            <li>
+              <div class="link-long">
+                <button>
+                  <%= prodRedisInfo.contents[i].briefTitNm %>
+                  <span class="tx-sub">
+                    <span class="ico"><span class="blind">보기</span></span>
+                  </span>
+                </button>
+              </div>
+            </li>
+            <% } %>
+          </ul>
+        </div>
+        <!-- //팝업 띄우는 링크 -->
+        <% } %>
+
+        <hr class="cont-sp type1" aria-hidden="true"/>
+
+        <!-- 상품 -->
+        <div class="cont-box nogaps-hoz widget">
+          <div class="widget-box toggle01">
+            <ul class="representcharge-list">
+              <!-- 상품(좌) 이미지로 들어갈경우 -->
+              <li>
+                <button role="button" aria-pressed="false" class="representcharge-info">
+                  <h4 class="title">T플랜 <i class="product-badge badge-lte">LTE</i><img class="lte" src="/img/product/bg_products_badge.png" alt="LTE"></h4>
+                  <div class="img-box"><img class="lte" src="/img/dummy/img_sample01.png" alt="명칭"></div>
+                  <p class="text">음성, 데이터 무제한은 기본!<br />통신/단말/안심 영역의 프리미엄 혜택까지</p>
+                </button>
+                <ul class="representcharge-product">
+                  <li>
+                    <button type="button" class="product-infolink">
+                      <div class="products-titleinfo">
+                        <h5 class="title">스몰</h5>
+                        <p class="info">월<span class="money">33,000</span>원</p>
+                      </div>
+                      <dl class="products-additionalinfo">
+                        <dt>데이터</dt>
+                        <dd class="point">1.2GB</dd>
+                        <dt>음성</dt>
+                        <dd>집전화, 이동전화 무제한</dd>
+                        <dt>문자</dt>
+                        <dd>기본제공</dd>
+                      </dl>
+                    </button>
+                  </li>
+                  <li>
+                    <button type="button" class="product-infolink">
+                      <div class="products-titleinfo">
+                        <h5 class="title">미디엄</h5>
+                        <p class="info">월<span class="money">33,000</span>원</p>
+                      </div>
+                      <dl class="products-additionalinfo">
+                        <dt>데이터</dt>
+                        <dd class="point">1.2GB</dd>
+                        <dt>음성</dt>
+                        <dd>집전화, 이동전화 무제한</dd>
+                        <dt>문자</dt>
+                        <dd>기본제공</dd>
+                      </dl>
+                    </button>
+                  </li>
+                  <li>
+                    <button type="button" class="product-infolink">
+                      <div class="products-titleinfo">
+                        <h5 class="title">라지</h5>
+                        <p class="info">월<span class="money">33,000</span>원</p>
+                      </div>
+                      <dl class="products-additionalinfo">
+                        <dt>데이터</dt>
+                        <dd class="point">1.2GB</dd>
+                        <dt>음성</dt>
+                        <dd>집전화, 이동전화 무제한</dd>
+                        <dt>문자</dt>
+                        <dd>기본제공</dd>
+                      </dl>
+                    </button>
+                  </li>
+                  <li>
+                    <button type="button" class="product-infolink">
+                      <div class="products-titleinfo">
+                        <h5 class="title">패밀리</h5>
+                        <p class="info">월<span class="money">33,000</span>원</p>
+                      </div>
+                      <dl class="products-additionalinfo">
+                        <dt>데이터</dt>
+                        <dd class="point">1.2GB</dd>
+                        <dt>음성</dt>
+                        <dd>집전화, 이동전화 무제한</dd>
+                        <dt>문자</dt>
+                        <dd>기본제공</dd>
+                      </dl>
+                    </button>
+                  </li>
+                  <li>
+                    <button type="button" class="product-infolink">
+                      <div class="products-titleinfo">
+                        <h5 class="title">Data 인피니티</h5>
+                        <p class="info">월<span class="money">33,000</span>원</p>
+                      </div>
+                      <dl class="products-additionalinfo">
+                        <dt>데이터</dt>
+                        <dd class="point">1.2GB</dd>
+                        <dt>음성</dt>
+                        <dd>집전화, 이동전화 무제한</dd>
+                        <dt>문자</dt>
+                        <dd>기본제공</dd>
+                      </dl>
+                    </button>
+                  </li>
+                </ul>
+              </li>
+              <!-- //상품(좌) 이미지로 들어갈경우 -->
+              <!-- 하단은 동그란 아이콘이 백그라운드로 들어갈경우 -->
+              <li>
+                <button role="button" aria-pressed="false" class="representcharge-info type01">
+                  <h4 class="title">T플랜 <i class="product-badge badge-lte">LTE</i><img class="lte" src="/img/product/bg_products_badge.png" alt="LTE"></h4>
+                  <!-- <div class="img-box"><img class="lte" src="/img/dummy/img_sample01.png" alt="명칭"></div> -->
+                  <p class="text">음성, 데이터 무제한은 기본!<br />통신/단말/안심 영역의 프리미엄 혜택까지</p>
+                </button>
+                <ul class="representcharge-product">
+                  <li>
+                    <button type="button" class="product-infolink">
+                      <div class="products-titleinfo">
+                        <h5 class="title">스몰</h5>
+                        <p class="info">월<span class="money">33,000</span>원</p>
+                      </div>
+                      <dl class="products-additionalinfo">
+                        <dt>데이터</dt>
+                        <dd class="point">1.2GB</dd>
+                        <dt>음성</dt>
+                        <dd>집전화, 이동전화 무제한</dd>
+                        <dt>문자</dt>
+                        <dd>기본제공</dd>
+                      </dl>
+                    </button>
+                  </li>
+                  <li>
+                    <button type="button" class="product-infolink">
+                      <div class="products-titleinfo">
+                        <h5 class="title">미디엄</h5>
+                        <p class="info">월<span class="money">33,000</span>원</p>
+                      </div>
+                      <dl class="products-additionalinfo">
+                        <dt>데이터</dt>
+                        <dd class="point">1.2GB</dd>
+                        <dt>음성</dt>
+                        <dd>집전화, 이동전화 무제한</dd>
+                        <dt>문자</dt>
+                        <dd>기본제공</dd>
+                      </dl>
+                    </button>
+                  </li>
+                  <li>
+                    <button type="button" class="product-infolink">
+                      <div class="products-titleinfo">
+                        <h5 class="title">라지</h5>
+                        <p class="info">월<span class="money">33,000</span>원</p>
+                      </div>
+                      <dl class="products-additionalinfo">
+                        <dt>데이터</dt>
+                        <dd class="point">1.2GB</dd>
+                        <dt>음성</dt>
+                        <dd>집전화, 이동전화 무제한</dd>
+                        <dt>문자</dt>
+                        <dd>기본제공</dd>
+                      </dl>
+                    </button>
+                  </li>
+                  <li>
+                    <button type="button" class="product-infolink">
+                      <div class="products-titleinfo">
+                        <h5 class="title">패밀리</h5>
+                        <p class="info">월<span class="money">33,000</span>원</p>
+                      </div>
+                      <dl class="products-additionalinfo">
+                        <dt>데이터</dt>
+                        <dd class="point">1.2GB</dd>
+                        <dt>음성</dt>
+                        <dd>집전화, 이동전화 무제한</dd>
+                        <dt>문자</dt>
+                        <dd>기본제공</dd>
+                      </dl>
+                    </button>
+                  </li>
+                  <li>
+                    <button type="button" class="product-infolink">
+                      <div class="products-titleinfo">
+                        <h5 class="title">Data 인피니티</h5>
+                        <p class="info">월<span class="money">33,000</span>원</p>
+                      </div>
+                      <dl class="products-additionalinfo">
+                        <dt>데이터</dt>
+                        <dd class="point">1.2GB</dd>
+                        <dt>음성</dt>
+                        <dd>집전화, 이동전화 무제한</dd>
+                        <dt>문자</dt>
+                        <dd>기본제공</dd>
+                      </dl>
+                    </button>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <button role="button" aria-pressed="false" class="representcharge-info type02">
+                  <h4 class="title">T시그니처 <i class="product-badge badge-lte">LTE</i></h4>
+                  <p class="text">음성, 데이터 무제한은 기본!<br />통신/단말/안심 영역의 프리미엄 혜택까지</p>
+                </button>
+                <ul class="representcharge-product">
+                  <li>
+                    <button type="button" class="product-infolink">
+                      <div class="products-titleinfo">
+                        <h5 class="title">스몰</h5>
+                        <p class="info">월<span class="money">33,000</span>원</p>
+                      </div>
+                      <dl class="products-additionalinfo">
+                        <dt>데이터</dt>
+                        <dd><span class="point">1.2GB</span></dd>
+                        <dt>음성</dt>
+                        <dd>집전화, 이동전화 무제한</dd>
+                        <dt>문자</dt>
+                        <dd>기본제공</dd>
+                      </dl>
+                    </button>
+                  </li>
+                  <li>
+                    <button type="button" class="product-infolink">
+                      <div class="products-titleinfo">
+                        <h5 class="title">미디엄</h5>
+                        <p class="info">월<span class="money">33,000</span>원</p>
+                      </div>
+                      <dl class="products-additionalinfo">
+                        <dt>데이터</dt>
+                        <dd><span class="point">1.2GB</span></dd>
+                        <dt>음성</dt>
+                        <dd>집전화, 이동전화 무제한</dd>
+                        <dt>문자</dt>
+                        <dd>기본제공</dd>
+                      </dl>
+                    </button>
+                  </li>
+                  <li>
+                    <button type="button" class="product-infolink">
+                      <div class="products-titleinfo">
+                        <h5 class="title">라지</h5>
+                        <p class="info">월<span class="money">33,000</span>원</p>
+                      </div>
+                      <dl class="products-additionalinfo">
+                        <dt>데이터</dt>
+                        <dd><span class="point">1.2GB</span></dd>
+                        <dt>음성</dt>
+                        <dd>집전화, 이동전화 무제한</dd>
+                        <dt>문자</dt>
+                        <dd>기본제공</dd>
+                      </dl>
+                    </button>
+                  </li>
+                  <li>
+                    <button type="button" class="product-infolink">
+                      <div class="products-titleinfo">
+                        <h5 class="title">패밀리</h5>
+                        <p class="info">월<span class="money">33,000</span>원</p>
+                      </div>
+                      <dl class="products-additionalinfo">
+                        <dt>데이터</dt>
+                        <dd><span class="point">1.2GB</span></dd>
+                        <dt>음성</dt>
+                        <dd>집전화, 이동전화 무제한</dd>
+                        <dt>문자</dt>
+                        <dd>기본제공</dd>
+                      </dl>
+                    </button>
+                  </li>
+                  <li>
+                    <button type="button" class="product-infolink">
+                      <div class="products-titleinfo">
+                        <h5 class="title">Data 인피니티</h5>
+                        <p class="info">월<span class="money">33,000</span>원</p>
+                      </div>
+                      <dl class="products-additionalinfo">
+                        <dt>데이터</dt>
+                        <dd><span class="point">1.2GB</span>
+                          <p class="tip-text">*테더링 30GB, 함께쓰기 등 40GB 별도제공</p>
+                        </dd>
+                        <dt>음성</dt>
+                        <dd>집전화, 이동전화 무제한</dd>
+                        <dt>문자</dt>
+                        <dd>기본제공</dd>
+                      </dl>
+                    </button>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <button role="button" aria-pressed="false" class="representcharge-info type03">
+                  <h4 class="title">T시그니처 <i class="product-badge badge-lte">LTE</i></h4>
+                  <p class="text">음성, 데이터 무제한은 기본!<br />통신/단말/안심 영역의 프리미엄 혜택까지</p>
+                </button>
+                <ul class="representcharge-product">
+                  <li>
+                    <button type="button" class="product-infolink">
+                      <div class="products-titleinfo">
+                        <h5 class="title">스몰</h5>
+                        <p class="info">월<span class="money">33,000</span>원</p>
+                      </div>
+                      <dl class="products-additionalinfo">
+                        <dt>데이터</dt>
+                        <dd><span class="point">1.2GB</span></dd>
+                        <dt>음성</dt>
+                        <dd>집전화, 이동전화 무제한</dd>
+                        <dt>문자</dt>
+                        <dd>기본제공</dd>
+                      </dl>
+                    </button>
+                  </li>
+                  <li>
+                    <button type="button" class="product-infolink">
+                      <div class="products-titleinfo">
+                        <h5 class="title">미디엄</h5>
+                        <p class="info">월<span class="money">33,000</span>원</p>
+                      </div>
+                      <dl class="products-additionalinfo">
+                        <dt>데이터</dt>
+                        <dd><span class="point">1.2GB</span></dd>
+                        <dt>음성</dt>
+                        <dd>집전화, 이동전화 무제한</dd>
+                        <dt>문자</dt>
+                        <dd>기본제공</dd>
+                      </dl>
+                    </button>
+                  </li>
+                  <li>
+                    <button type="button" class="product-infolink">
+                      <div class="products-titleinfo">
+                        <h5 class="title">라지</h5>
+                        <p class="info">월<span class="money">33,000</span>원</p>
+                      </div>
+                      <dl class="products-additionalinfo">
+                        <dt>데이터</dt>
+                        <dd><span class="point">1.2GB</span></dd>
+                        <dt>음성</dt>
+                        <dd>집전화, 이동전화 무제한</dd>
+                        <dt>문자</dt>
+                        <dd>기본제공</dd>
+                      </dl>
+                    </button>
+                  </li>
+                  <li>
+                    <button type="button" class="product-infolink">
+                      <div class="products-titleinfo">
+                        <h5 class="title">패밀리</h5>
+                        <p class="info">월<span class="money">33,000</span>원</p>
+                      </div>
+                      <dl class="products-additionalinfo">
+                        <dt>데이터</dt>
+                        <dd><span class="point">1.2GB</span></dd>
+                        <dt>음성</dt>
+                        <dd>집전화, 이동전화 무제한</dd>
+                        <dt>문자</dt>
+                        <dd>기본제공</dd>
+                      </dl>
+                    </button>
+                  </li>
+                  <li>
+                    <button type="button" class="product-infolink">
+                      <div class="products-titleinfo">
+                        <h5 class="title">Data 인피니티</h5>
+                        <p class="info">월<span class="money">33,000</span>원</p>
+                      </div>
+                      <dl class="products-additionalinfo">
+                        <dt>데이터</dt>
+                        <dd><span class="point">1.2GB</span>
+                          <p class="tip-text">*테더링 30GB, 함께쓰기 등 40GB 별도제공</p>
+                        </dd>
+                        <dt>음성</dt>
+                        <dd>집전화, 이동전화 무제한</dd>
+                        <dt>문자</dt>
+                        <dd>기본제공</dd>
+                      </dl>
+                    </button>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <button role="button" aria-pressed="false" class="representcharge-info type04">
+                  <h4 class="title">T시그니처 <i class="product-badge badge-lte">LTE</i></h4>
+                  <p class="text">음성, 데이터 무제한은 기본!<br />통신/단말/안심 영역의 프리미엄 혜택까지</p>
+                </button>
+                <ul class="representcharge-product">
+                  <li>
+                    <button type="button" class="product-infolink">
+                      <div class="products-titleinfo">
+                        <h5 class="title">스몰</h5>
+                        <p class="info">월<span class="money">33,000</span>원</p>
+                      </div>
+                      <dl class="products-additionalinfo">
+                        <dt>데이터</dt>
+                        <dd><span class="point">1.2GB</span></dd>
+                        <dt>음성</dt>
+                        <dd>집전화, 이동전화 무제한</dd>
+                        <dt>문자</dt>
+                        <dd>기본제공</dd>
+                      </dl>
+                    </button>
+                  </li>
+                  <li>
+                    <button type="button" class="product-infolink">
+                      <div class="products-titleinfo">
+                        <h5 class="title">미디엄</h5>
+                        <p class="info">월<span class="money">33,000</span>원</p>
+                      </div>
+                      <dl class="products-additionalinfo">
+                        <dt>데이터</dt>
+                        <dd><span class="point">1.2GB</span></dd>
+                        <dt>음성</dt>
+                        <dd>집전화, 이동전화 무제한</dd>
+                        <dt>문자</dt>
+                        <dd>기본제공</dd>
+                      </dl>
+                    </button>
+                  </li>
+                  <li>
+                    <button type="button" class="product-infolink">
+                      <div class="products-titleinfo">
+                        <h5 class="title">라지</h5>
+                        <p class="info">월<span class="money">33,000</span>원</p>
+                      </div>
+                      <dl class="products-additionalinfo">
+                        <dt>데이터</dt>
+                        <dd><span class="point">1.2GB</span></dd>
+                        <dt>음성</dt>
+                        <dd>집전화, 이동전화 무제한</dd>
+                        <dt>문자</dt>
+                        <dd>기본제공</dd>
+                      </dl>
+                    </button>
+                  </li>
+                  <li>
+                    <button type="button" class="product-infolink">
+                      <div class="products-titleinfo">
+                        <h5 class="title">패밀리</h5>
+                        <p class="info">월<span class="money">33,000</span>원</p>
+                      </div>
+                      <dl class="products-additionalinfo">
+                        <dt>데이터</dt>
+                        <dd><span class="point">1.2GB</span></dd>
+                        <dt>음성</dt>
+                        <dd>집전화, 이동전화 무제한</dd>
+                        <dt>문자</dt>
+                        <dd>기본제공</dd>
+                      </dl>
+                    </button>
+                  </li>
+                  <li>
+                    <button type="button" class="product-infolink">
+                      <div class="products-titleinfo">
+                        <h5 class="title">Data 인피니티</h5>
+                        <p class="info">월<span class="money">33,000</span>원</p>
+                      </div>
+                      <dl class="products-additionalinfo">
+                        <dt>데이터</dt>
+                        <dd><span class="point">1.2GB</span>
+                          <p class="tip-text">*테더링 30GB, 함께쓰기 등 40GB 별도제공</p>
+                        </dd>
+                        <dt>음성</dt>
+                        <dd>집전화, 이동전화 무제한</dd>
+                        <dt>문자</dt>
+                        <dd>기본제공</dd>
+                      </dl>
+                    </button>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <!-- //상품 -->
+
+        <hr class="cont-sp type1" aria-hidden="true"/>
+
+        <!-- 유사한 요금제 찾기-->
+        <div class="cont-box">
+          <div class="recommendedrate-wrap">
+            <h3 class="title">유사한 요금제 찾기</h3>
+            <div class="more"><button class="link">더보기</button></div>
+          </div>
+          <div class="recommendedratetaglist-wrap">
+            <span class="tag-text">#LTE폰</span>
+            <span class="tag-text">#8GB</span>
+              <span class="tag-text">#일반</span>
+          </div>
+          <ul class="recommendedrate-list">
+            <!-- 왼쪽 상품 이미지가 이미지로 들어갈경우 -->
+            <li class="type01">
+              <button type="button" class="product-infolink">
+                <div class="img-box"><img class="lte" src="/img/dummy/img_sample01.png" alt="명칭"></div>
+                <div class="products-titleinfo">
+                  <h5 class="title">스몰</h5>
+                  <p class="info">월<span class="money">33,000</span>원</p>
+                </div>
+                <div class="taglist-wrap">
+                  <span class="tag-text">#LTE폰</span>
+                  <span class="tag-text">#8GB</span>
+                    <span class="tag-text">#일반</span>
+                </div>
+                <dl class="products-additionalinfo">
+                  <dt>데이터</dt>
+                  <dd><span class="point">1.2GB</span></dd>
+                  <dt>음성</dt>
+                  <dd>집전화, 이동전화 무제한</dd>
+                  <dt>문자</dt>
+                  <dd>기본제공</dd>
+                </dl>
+              </button>
+            </li>
+            <!-- 왼쪽 상품 이미지가 bg로 들어갈경우(아래전체 type[n]으로 처리) -->
+            <li class="type01">
+              <button type="button" class="product-infolink">
+                <div class="products-titleinfo">
+                  <h5 class="title">스몰</h5>
+                  <p class="info">월<span class="money">33,000</span>원</p>
+                </div>
+                <div class="taglist-wrap">
+                  <span class="tag-text">#LTE폰</span>
+                  <span class="tag-text">#8GB</span>
+                    <span class="tag-text">#일반</span>
+                </div>
+                <dl class="products-additionalinfo">
+                  <dt>데이터</dt>
+                  <dd><span class="point">1.2GB</span></dd>
+                  <dt>음성</dt>
+                  <dd>집전화, 이동전화 무제한</dd>
+                  <dt>문자</dt>
+                  <dd>기본제공</dd>
+                </dl>
+              </button>
+            </li>
+            <li class="type02">
+              <button type="button" class="product-infolink">
+                <div class="products-titleinfo">
+                  <h5 class="title">미디엄</h5>
+                  <p class="info">월<span class="money">33,000</span>원</p>
+                </div>
+                <div class="taglist-wrap">
+                  <span class="tag-text">#LTE폰</span>
+                  <span class="tag-text">#8GB</span>
+                    <span class="tag-text">#일반</span>
+                </div>
+                <dl class="products-additionalinfo">
+                  <dt>데이터</dt>
+                  <dd><span class="point">1.2GB</span></dd>
+                  <dt>음성</dt>
+                  <dd>집전화, 이동전화 무제한</dd>
+                  <dt>문자</dt>
+                  <dd>기본제공</dd>
+                </dl>
+              </button>
+            </li>
+            <li class="type03">
+              <button type="button" class="product-infolink">
+                <div class="products-titleinfo">
+                  <h5 class="title">라지</h5>
+                  <p class="info">월<span class="money">33,000</span>원</p>
+                </div>
+                <div class="taglist-wrap">
+                  <span class="tag-text">#LTE폰</span>
+                  <span class="tag-text">#8GB</span>
+                    <span class="tag-text">#일반</span>
+                </div>
+                <dl class="products-additionalinfo">
+                  <dt>데이터</dt>
+                  <dd><span class="point">1.2GB</span></dd>
+                  <dt>음성</dt>
+                  <dd>집전화, 이동전화 무제한</dd>
+                  <dt>문자</dt>
+                  <dd>기본제공</dd>
+                </dl>
+              </button>
+            </li>
+            <li class="type04">
+              <button type="button" class="product-infolink">
+                <div class="products-titleinfo">
+                  <h5 class="title">패밀리</h5>
+                  <p class="info">월<span class="money">33,000</span>원</p>
+                </div>
+                <div class="taglist-wrap">
+                  <span class="tag-text">#LTE폰</span>
+                  <span class="tag-text">#8GB</span>
+                    <span class="tag-text">#일반</span>
+                </div>
+                <dl class="products-additionalinfo">
+                  <dt>데이터</dt>
+                  <dd><span class="point">1.2GB</span></dd>
+                  <dt>음성</dt>
+                  <dd>집전화, 이동전화 무제한</dd>
+                  <dt>문자</dt>
+                  <dd>기본제공</dd>
+                </dl>
+              </button>
+            </li>
+            <li class="type05">
+              <button type="button" class="product-infolink">
+                <div class="products-titleinfo">
+                  <h5 class="title">Data 인피니티</h5>
+                  <p class="info">월<span class="money">33,000</span>원</p>
+                </div>
+                <div class="taglist-wrap">
+                                      <span class="tag-text">#LTE폰</span>
+                                        <span class="tag-text">#8GB</span>
+                                      <span class="tag-text">#일반</span>
+                </div>
+                <dl class="products-additionalinfo">
+                  <dt>데이터</dt>
+                  <dd><span class="point">1.2GB</span>
+                    <p class="tip-text">*테더링 30GB, 함께쓰기 등 40GB 별도제공</p>
+                  </dd>
+                  <dt>음성</dt>
+                  <dd>집전화, 이동전화 무제한</dd>
+                  <dt>문자</dt>
+                  <dd>기본제공</dd>
+                </dl>
+              </button>
+            </li>
+          </ul>
+        </div>
+        <!-- //유사한 요금제 찾기 -->
+
+        <% if ( recommends.recommendProdList && recommends.recommendProdList.length > 0 ) { %>
+        <hr class="cont-sp type1" aria-hidden="true"/>
+
+        <!-- 함께하면 더욱 유용한 상품 -->
+        <div class="cont-box">
+          <h3>함께하면 더욱 유용한 상품</h3>
+          <!-- .widget -->
+          <div class="widget">
+            <div class="widget-box horizontal">
+              <div class="horizontal-slide">
+                <ul class="horizontal-list useful-goods">
+                  <% for ( var i in recommends.recommendAppList ) { %>
+                  <li>
+                    <div>
+                      <a href="/product/detail/<%= recommends.recommendAppList[i].prodId %>#contents<%= i %>" class="bg1"> <!-- 보라색 -->
+                        <span class="located top">
+                          <span class="txt-tit"><%= recommends.recommendAppList[i].prodNm %></span>
+                        <span class="txt-type">부가상품</span>
+                        </span>
+                        <span class="located bottom">
+                          <span class="txt-detail"><%= recommends.recommendAppList[i].prodSmryDesc %></span>
+                        </span>
+                        <span class="ico"></span>
+                      </a>
+                    </div>
+                  </li>
+                  <% } %>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <!-- .widget -->
+        </div>
+        <!-- //함께하면 더욱 유용한 상품 -->
+        <% } %>
+
+        <% if ( recommends.recommendAppList && recommends.recommendAppList.length > 0 ) { %>
+        <hr class="cont-sp type1" aria-hidden="true"/>
+
+        <!-- 함께하면 더욱 스마트한 앱서비스 -->
+        <div class="cont-box">
+          <h3>함께하면 더욱 스마트한 앱서비스</h3>
+          <!-- .widget -->
+          <div class="widget">
+            <div class="widget-box horizontal">
+              <div class="horizontal-slide">
+                <ul class="horizontal-list smart-app">
+                  <% for ( var i in recommends.recommendAppList ) { %>
+                  <li>
+                    <div>
+                      <a href="/product/detail/<%= recommends.recommendAppList[i].prodId %>">
+                        <img class="ico" src="<%= recommends.recommendAppList[i].appImg %>">
+                        <span><%= recommends.recommendAppList[i].prodNm %></span>
+                      </a>
+                    </div>
+                  </li>
+                  <% } %>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <!-- .widget -->
+        </div>
+        <!-- // 함께하면 더욱 스마트한 앱서비스 -->
+        <% } %>
+
+        <% if ( relateTags && relateTags.length > 0 ) { %>
+        <hr class="cont-sp type1" aria-hidden="true"/>
+        <!-- cont-box -->
+        <div class="cont-box gaps-style02">
+          <h3 class="suggest-tag-title">추천태그</h3>
+          <ul class="suggest-tag-list openlist-wrap">
+            <% for (var i in relateTags) { %>
+            <li><a href="/product/plans?searchTag=<%= relateTags[i].tagId %>" class="link">#<%= relateTags[i].tagNm %></a></li>
+            <% } %>
+          </ul>
+        </div>
+        <% } %>
+        <!--//cont-box -->
+        <hr class="cont-sp type1" aria-hidden="true"/>
+        <ul class="bt-slice share">
+          <li class="bt-white3">
+            <button>공유하기</button>
+          </li>
+        </ul>
+
+      </div>
+    </div>
+    <!--// #contents -->
+  </div>
+</body>
 <% include ../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
     new Tw.ProductDetail($('.container'));
   });
 </script>
-</body>
 <% include ../components/end.component.html %>

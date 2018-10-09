@@ -77,11 +77,13 @@ class ProductSetting extends TwViewController {
         break;
       case 'MP_02_02_03_07':
         break;
-      case 'MP_02_02_03_11':
-        break;
       case 'MP_02_02_03_08':
         break;
+      case 'MP_02_02_03_09':
+        break;
       case 'MP_02_02_03_10':
+        break;
+      case 'MP_02_02_03_11':
         break;
       case 'MP_02_02_03_12':
         break;
@@ -134,7 +136,7 @@ class ProductSetting extends TwViewController {
       });
     }
 
-    this.redisService.getData(this._prodId + 'SSLT')
+    this.redisService.getData(this._prodId + 'SL')
       .subscribe((ApiInfo) => {
         this.apiService.request(API_CMD[ApiInfo.apiCode], {}, {}, this._prodId)
           .subscribe((settingInfo) => {

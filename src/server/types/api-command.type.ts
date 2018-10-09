@@ -440,9 +440,7 @@ export const API_CMD = {
 
   // PRODUCT
   BFF_10_0001: { path: '/core-product/v1/ledger/args-0', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
-  BFF_10_0002: { path: '/core-product/v1/ledger/args-0/summaries', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0003: { path: '/core-product/v1/ledger/args-0/tags', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
-  BFF_10_0004: { path: '/core-product/v1/ledger/args-0/contents', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0005: { path: '/core-product/v1/ledger/args-0/series', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0006: { path: '/core-product/v1/ledger/args-0/recommends', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0007: { path: '/core-product/v1/mobiles/fee-plans/args-0/joins/prechecks', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
