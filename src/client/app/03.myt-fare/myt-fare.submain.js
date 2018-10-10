@@ -424,53 +424,17 @@ Tw.MyTFareSubMain.prototype = {
 
   // 납부방법 이동
   _onClickedPayMthd: function (/*event*/) {
-    // TODO: 화면완료되면 추가예정
+    this._historyService.goLoad('/myt/fare/payment/option');
   },
 
   // 소액결제 이동
   _onClickedMicroBill: function (/*event*/) {
-    var code = this.data.microPay.code, title = '';
-    switch(code) {
-      case Tw.API_ADD_SVC_ERROR.BIL0030:
-        title = Tw.ALERT_MSG_MYT_FARE.ADD_SVC.BIL0030;
-        break;
-      case Tw.API_ADD_SVC_ERROR.BIL0033:
-        title = Tw.ALERT_MSG_MYT_FARE.ADD_SVC.BIL0033;
-        break;
-      case Tw.API_ADD_SVC_ERROR.BIL0034:
-        title = Tw.ALERT_MSG_MYT_FARE.ADD_SVC.BIL0033;
-        break;
-    }
-    if (_.isEmpty(title)) {
-      // TODO: layer popup 완료 후 변경 필요
-      this._popupService.openAlert('', title, Tw.BUTTON_LABEL.CLOSE);
-    }
-    else {
-      this._historyService.goLoad('/myt/fare/payment/micro');
-    }
+    this._openAdditionalService('M');
   },
 
   // 콘텐츠이용료 이동
   _onClickedContentBill: function (/*event*/) {
-    var code = this.data.contentPay.code, title = '';
-    switch(code) {
-      case Tw.API_ADD_SVC_ERROR.BIL0030:
-        title = Tw.ALERT_MSG_MYT_FARE.ADD_SVC.BIL0030;
-        break;
-      case Tw.API_ADD_SVC_ERROR.BIL0033:
-        title = Tw.ALERT_MSG_MYT_FARE.ADD_SVC.BIL0033;
-        break;
-      case Tw.API_ADD_SVC_ERROR.BIL0034:
-        title = Tw.ALERT_MSG_MYT_FARE.ADD_SVC.BIL0033;
-        break;
-    }
-    if (_.isEmpty(title)) {
-      // TODO: layer popup 완료 후 변경 필요
-      this._popupService.openAlert('', title, Tw.BUTTON_LABEL.CLOSE);
-    }
-    else {
-      // TODO: 화면완료되면 추가예정 MF_07
-    }
+    this._openAdditionalService('C');
   },
 
   // 최근납부내역 이동
@@ -564,5 +528,71 @@ Tw.MyTFareSubMain.prototype = {
       }
     });
     return select;
+  },
+
+  _openAdditionalService: function (type) {
+    var code, url;
+    if ( type === 'M' ) {
+      code = this.data.microPay.code;
+      url = '/myt/fare/payment/micro';
+    }
+    else {
+      code = this.data.contentPay.code;
+      url = '/myt/fare/payment/contents';
+    }
+    var title = '', content = '', more = '';
+    switch ( code ) {
+      case Tw.API_ADD_SVC_ERROR.BIL0030:
+        title = Tw.ALERT_MSG_MYT_FARE.ADD_SVC.BIL0030;
+        content = Tw.ALERT_MSG_MYT_FARE.ADD_SVC.BIL0030_C;
+        more = Tw.ALERT_MSG_MYT_FARE.ADD_SVC.MORE;
+        break;
+      case Tw.API_ADD_SVC_ERROR.BIL0033:
+        title = Tw.ALERT_MSG_MYT_FARE.ADD_SVC.BIL0033;
+        content = Tw.ALERT_MSG_MYT_FARE.ADD_SVC.BIL0033_C;
+        break;
+      case Tw.API_ADD_SVC_ERROR.BIL0034:
+        title = Tw.ALERT_MSG_MYT_FARE.ADD_SVC.BIL0034;
+        content = Tw.ALERT_MSG_MYT_FARE.ADD_SVC.BIL0034_C;
+        break;
+    }
+    if ( !_.isEmpty(title) ) {
+      var option = {
+        ico: 'type2',
+        title: title,
+        contents: content,
+        bt: [{
+          style_class: 'bt-blue1',
+          txt: Tw.BUTTON_LABEL.CLOSE
+        }]
+      };
+      if ( !_.isEmpty(more) ) {
+        _.extend(option, {
+          ico: 'type1',
+          link_list: [{
+            link: 'link-customer',
+            txt: more
+          }]
+        });
+      }
+      this._popupService.open(option, $.proxy(this._openedLayerPopup, this), null, 'GR_02');
+    }
+    else {
+      this._historyService.goLoad(url);
+    }
+  },
+
+  _openedLayerPopup: function ($container) {
+    var $moreBtn = $container.find('.link-list button');
+    var $closeBtn = $container.find('.bt-blue1 button');
+    if ( $moreBtn.length > 0 ) {
+      // TODO: 요금제 부가서비스 > 휴대폰결제 이용동의 상품 상세 페이지로 이동(TBD)
+      $moreBtn.on('click', $.proxy(function () {
+
+      }, this));
+    }
+    $closeBtn.on('click', $.proxy(function () {
+      this._popupService.close();
+    }, this));
   }
 };

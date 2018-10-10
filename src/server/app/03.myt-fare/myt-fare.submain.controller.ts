@@ -12,7 +12,7 @@ import FormatHelper from '../../utils/format.helper';
 import DateHelper from '../../utils/date.helper';
 import { API_CMD, API_CODE, API_ADD_SVC_ERROR } from '../../types/api-command.type';
 
-class MytFareSubmainController extends TwViewController {
+class MyTFareSubmainController extends TwViewController {
   constructor() {
     super();
   }
@@ -308,4 +308,4 @@ class MytFareSubmainController extends TwViewController {
   }
 }
 
-export default MytFareSubmainController;
+export default MyTFareSubmainController;
