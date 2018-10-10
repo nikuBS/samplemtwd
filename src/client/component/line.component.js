@@ -21,6 +21,7 @@ Tw.LineComponent = function () {
   this._lineList = null;
   this._urlAuth = null;
   this._changeLine = false;
+  this._callback = null;
   this._bindEvent();
   Tw.Logger.info('[Line] init complete', this._urlAuth);
 };
@@ -59,7 +60,7 @@ Tw.LineComponent.prototype = {
       this._lineList = this._parseLineList(resp.result);
       this._openListPopup(this._lineList);
     } else {
-      Tw.Error(resp.code, resp.msg).page();
+      Tw.Error(resp.code, resp.msg).pop();
     }
   },
   _openListPopup: function (lineData) {
@@ -137,7 +138,8 @@ Tw.LineComponent.prototype = {
     this.changeLine(svcMgmtNum, mdn);
 
   },
-  changeLine: function (svcMgmtNum, mdn) {
+  changeLine: function (svcMgmtNum, mdn, callback) {
+    this._callback = callback;
     this._apiService.request(Tw.NODE_CMD.CHANGE_SESSION, { svcMgmtNum: svcMgmtNum })
       .done($.proxy(this._successChangeLine, this, svcMgmtNum, mdn));
   },
@@ -179,6 +181,9 @@ Tw.LineComponent.prototype = {
   _completeLogin: function () {
     this._changeLine = true;
     Tw.CommonHelper.setLocalStorage(Tw.LSTORE_KEY.LINE_REFRESH, 'Y');
+    if ( !Tw.FormatHelper.isEmpty(this._callback) ) {
+      this._callback();
+    }
     this._closePopup();
   },
   _completeCustomerLogin: function () {

@@ -350,3 +350,10 @@ Tw.PRODUCT_ADDITIONS_TERMINATE = {
   CONFIRM_POPUP: '해지 시 유의사항을 모두 확인 하였으며, 선택하신 상품을 해지 하시겠습니까?',
   CONFIRM_BUTTON: '해지하기'
 };
+
+Tw.NTV_FIDO_REGISTER_TXT = {
+  FINGER_ON: '등록된 지문이 있습니다.',
+  FINGER_OFF: '등록된 지문이 없습니다.',
+  FACE_ON: '등록된 Face ID가 있습니다.',
+  FACE_OFF: '등록된 Face ID가 없습니다.'
+};

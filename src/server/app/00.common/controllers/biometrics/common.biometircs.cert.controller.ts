@@ -12,6 +12,6 @@ export default class CommonBiometricsCert extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     const target = FIDO_TYPE[req.query.target];
-    res.render('biometrics/biometrics.cert.html', { svcInfo, target });
+    res.render('biometrics/common.biometrics.cert.html', { svcInfo, target });
   }
 }

@@ -16,9 +16,16 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div class="wrap">
+<div id="commonBiometricsMenu" class="wrap">
     <!-- #header -->
-    <%- include('../../../../../common/views/components/header.component.html', { title: '생체인증 설정', svcInfo: svcInfo }); %>
+    <div id="header" class="header-wrap">
+        <div class="header">
+            <div class="header-ti align-l">
+                <h1>생체인증 설정</h1>
+            </div>
+            <button class="prev-step"><span class="blind">이전으로</span></button>
+        </div>
+    </div>
     <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap">
@@ -32,31 +39,50 @@
                 <div class="cont-box nogaps">
                     <ul class="on-off-list in-link">
                         <li><!-- 비활성화 class .disabled 추가 -->
-                            <button><!-- 비활성화 attr disabled 추가 -->
-                                <%= target %> 등록/재등록<br/>
-                                <span class="sub-tx">등록된 지문이 있습니다.</span>
+                            <% if (target === 'finger') { %>
+                            <button id="fe-bt-register-finger"><!-- 비활성화 attr disabled 추가 -->
+                                지문 등록/재등록<br/>
+                                <span id="fe-txt-finger" class="sub-tx"></span>
                                 <span class="ico"></span>
                             </button>
-                        </li>
-                        <li>
-                            <button>
-                                <%= target %> 인증 해지
+                            <% } else { %>
+                            <button id="fe-bt-register-face"><!-- 비활성화 attr disabled 추가 -->
+                                Face ID 등록/재등록<br/>
+                                <span id="fe-txt-face" class="sub-tx"></span>
                                 <span class="ico"></span>
                             </button>
+                            <% } %>
                         </li>
-                        <li><!-- 비활성화 class .disabled 추가 -->
+                        <li class="fe-cancel">
+                            <% if (target === 'finger') { %>
+                            <button id="fe-bt-cancel-finger">
+                                지문인증 해지
+                                <span class="ico"></span>
+                            </button>
+                            <% } else { %>
+                            <button id="fe-bt-cancel-face">
+                                Face ID 해지
+                                <span class="ico"></span>
+                            </button>
+                            <% } %>
+                        </li>
+                        <li class="fe-setting"><!-- 비활성화 class .disabled 추가 -->
                             생체인증 사용 설정
                             <span class="widget">
-                                    <span class="widget-box switch">
-                                        <span class="btn-switch type1 on"><!-- 비활성화 class .disabled 추가 -->
-                                            <span class="switch-style" role="checkbox" aria-checked="true"><!-- 비활성화 aria-disabled="true" 추가 -->
-                                                <span class="off-tx">꺼짐</span>
-                                                <input type="checkbox" title="이번 달 차단" checked="checked" /><!-- 비활성화 attr disabled 추가 -->
-                                                <span class="on-tx">켜짐</span>
-                                            </span>
+                                <span class="widget-box switch">
+                                    <span class="btn-switch type1 on fe-switch"><!-- 비활성화 class .disabled 추가 -->
+                                        <span class="switch-style fe-checkbox" role="checkbox" aria-checked="true"><!-- 비활성화 aria-disabled="true" 추가 -->
+                                            <span class="off-tx">꺼짐</span>
+                                            <% if (target === 'finger') { %>
+                                            <input id="fe-input-set-finger" type="checkbox" title="이번 달 차단" checked="checked" /><!-- 비활성화 attr disabled 추가 -->
+                                            <% } else { %>
+                                            <input id="fe-input-set-face" type="checkbox" title="이번 달 차단" checked="checked" /><!-- 비활성화 attr disabled 추가 -->
+                                            <% } %>
+                                            <span class="on-tx">켜짐</span>
                                         </span>
                                     </span>
                                 </span>
+                            </span>
                         </li>
                     </ul>
                 </div>
@@ -69,6 +95,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
+    new Tw.CommonBiometricsMenu($('#commonBiometricsMenu'), '<%= target %>');
   });
 </script>
 <% include ../../components/end.component.html %>

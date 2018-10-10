@@ -11,6 +11,7 @@ Tw.MainHome = function (rootEl, smartCard) {
   this._popupService = Tw.Popup;
   this._nativeSrevice = Tw.Native;
   this._historyService = new Tw.HistoryService();
+  this._lineRegisterLayer = new Tw.LineRegisterComponent();
 
   this._smartCardOrder = JSON.parse(smartCard);
 
@@ -20,6 +21,7 @@ Tw.MainHome = function (rootEl, smartCard) {
 
   this._cachedElement();
   this._bindEvent();
+  this._openLineResisterPopup();
 
   this._initScroll();
 };
@@ -34,10 +36,12 @@ Tw.MainHome.prototype = {
     GFT0013: 'GFT0013'    // 기
   },
 
-
   _cachedElement: function () {
     this.$elBarcode = this.$container.find('#fe-membership-barcode');
-    this.$elBarcode.JsBarcode(this.$elBarcode.data('cardnum'));
+    var cardNum = this.$elBarcode.data('cardnum');
+    if ( !Tw.FormatHelper.isEmpty(cardNum) ) {
+      this.$elBarcode.JsBarcode(cardNum);
+    }
 
     this._cachedSmartCard();
     this._cachedSmartCardTemplate();
@@ -45,6 +49,13 @@ Tw.MainHome.prototype = {
   _bindEvent: function () {
     this.$elBarcode.on('click', $.proxy(this._onClickBarcode, this));
 
+  },
+  _openLineResisterPopup: function () {
+    var layerType = this.$container.data('layertype');
+    console.log('layerType : ', layerType);
+    if ( !Tw.FormatHelper.isEmpty(layerType) ) {
+      this._lineRegisterLayer.openRegisterLinePopup(layerType);
+    }
   },
   _onClickBarcode: function () {
   },

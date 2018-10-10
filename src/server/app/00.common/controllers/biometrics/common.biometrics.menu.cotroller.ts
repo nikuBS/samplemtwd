@@ -11,7 +11,8 @@ import { FIDO_TYPE } from '../../../../types/common.type';
 export default class CommonBiometricsMenu extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    const target = FIDO_TYPE[req.query.target];
-    res.render('biometrics/biometrics.menu.html', { svcInfo, target });
+    const target = req.query.target;
+
+    res.render('biometrics/common.biometrics.menu.html', { svcInfo, target });
   }
 }

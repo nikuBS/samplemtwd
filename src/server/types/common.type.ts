@@ -12,8 +12,8 @@ export const COOKIE_KEY = {
 };
 
 export enum FIDO_TYPE {
-  FINGER = '지문',
-  FACE = 'Face ID'
+  FINGER = 'finger',
+  FACE = 'face'
 }
 
 export const REDIS_URL_META = 'NodeUrlMeta:';
