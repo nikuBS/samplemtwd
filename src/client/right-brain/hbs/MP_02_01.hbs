@@ -1,0 +1,95 @@
+<div class="popup-page nobg tw-popup fixed-btn">
+    <!-- .fixed-btn 하단에 고정된 버튼이 있는 경우 -->
+    <!-- #header -->
+    <div class="header-wrap">
+        <div class="page-header">
+            <div class="header-ti">
+                <h1>조건선택</h1>
+            </div>
+        </div>
+    </div>
+    <!--// #header -->
+    <!-- .container-wrap -->
+    <div class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+
+            <div class="ti-caption-gray bdt">
+                <h3 class="tit">필터를 선택해주세요</h3>
+                <div class="num">
+                    <button class="resetbtn">초기화</button>
+                </div>
+            </div>
+
+            <!-- .cont-box -->
+            <div class="cont-box">
+                <div class="phonefilter-wrap">
+                    <div class="widget">
+                        <div class="widget-box radio">
+                            <div class="filtertype-wrap">
+                                <ul class="select-list division-five" role="radiogroup">
+                                    {{#each data.deviceFilters}}
+                                    <li class="radiobox" role="radio">
+                                        <input type="radio" name="radio_device" value="" title="{{name}}" {{#if checked}}checked="checked"{{/if}} data-filter-id="{{id}}"/><!-- 체크상태일 경우 checked="checked" -->
+                                        <p class="radio-txt">
+                                            <i class="ico type-{{icon}}"></i><span class="text">{{name}}</span>
+                                        </p>
+                                    </li>
+                                    {{/each}}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {{#each data.filters}}
+                <h3 class="filterlist-title">{{prodFltNm}}</h3>
+                <div class="productfilter-type">
+                    <!-- .widget -->
+                    <div class="widget">
+                        <div class="widget-box radio">
+                            <div class="productfilter">
+                                <ul class="select-list" role="radiogroup">
+                                    {{#each subFilters}}
+                                    <li class="radiobox" role="radio">
+                                        <input type="radio" name="radio_{{../prodFltId}}" title="{{prodFltNm}}" {{#if checked}}checked="checked"{{/if}} data-filter-id="{{prodFltId}}"/><!-- 체크상태일 경우 checked="checked" -->
+                                        <span class="radio-txt">
+                                            {{prodFltNm}}
+                                        </span>
+                                    </li>
+                                    {{/each}}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!--// .widget -->
+                </div>
+                {{/each}}
+            </div>
+            <!--// .cont-box -->
+
+            <hr class="cont-sp type1" aria-hidden="true" />
+            <!-- 추천태그 -->
+            <div class="cont-box gaps-style02">
+                <h3 class="suggest-tag-title">추천태그</h3>
+                <ul class="suggest-tag-list openlist-wrap" role="radiogroup">
+                    {{#each data.tags}}
+                    <li><button type="button" class="link">{{prodTagNm}}</button></li>
+                    {{/each}}
+                </ul>
+            </div>
+            <!--//추천태그 -->
+
+            <ul class="bt-slice full">
+                <li class="bt-red1">
+                    <button>적용하기</button>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+    <!--// .container-wrap -->
+    <!-- .popup-closeBtn -->
+    <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button>
+    <!--// .popup-closeBtn -->
+</div>

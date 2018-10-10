@@ -1,0 +1,82 @@
+{
+  "code": "00",
+  "msg": "success",
+  "result": {
+    "filters": [
+      {
+        "prodFltId": "F01120",
+        "prodFltNm": "기기",
+        "subFilters": [
+          {
+            "prodFltId": "T00002",
+            "prodFltNm": "LTE"
+          },
+          {
+            "prodFltId": "T00003",
+            "prodFltNm": "3G"
+          },
+          {
+            "prodFltId": "T00004",
+            "prodFltNm": "일반폰"
+          }
+        ]
+      },
+      {
+        "prodFltId": "T00002",
+        "prodFltNm": "데이터",
+        "subFilters": [
+          {
+            "prodFltId": "T00005",
+            "prodFltNm": "~2GB"
+          },
+          {
+            "prodFltId": "T00006",
+            "prodFltNm": "2~5GB"
+          },
+          {
+            "prodFltId": "T00007",
+            "prodFltNm": "5~8GB"
+          }
+        ]
+      },
+      {
+        "prodFltId": "T00003",
+        "prodFltNm": "이용요금",
+        "subFilters": [
+          {
+            "prodFltId": "T00002",
+            "prodFltNm": "~3만원대"
+          },
+          {
+            "prodFltId": "T000021",
+            "prodFltNm": "4~5만원대"
+          },
+          {
+            "prodFltId": "T000022",
+            "prodFltNm": "6만원대~"
+          }
+        ]
+      },
+      {
+        "prodFltId": "T00004",
+        "prodFltNm": "대상",
+        "subFilters": [
+          {
+            "prodFltId": "T000023",
+            "prodFltNm": "일반"
+          },
+          {
+            "prodFltId": "T000024",
+            "prodFltNm": "청소년/어린이"
+          },
+          {
+            "prodFltId": "T000025",
+            "prodFltNm": "실버"
+          }
+        ]
+      }
+    ],
+
+    "tags": [{ "tagId" : "TAG01", "prodTagNm": "#태그1" }, { "tagId" : "TAG02", "prodTagNm": "#태그2" }]
+  }
+}
