@@ -136,6 +136,12 @@ Tw.NON_PAYMENT = {
   }
 };
 
+Tw.MYT_DATA_TOTAL_SHARING_DATA = {
+  USED_DATA_PREFIX: '총 ',
+  USED_DATA_SUFFIX: ' 사용',
+  JOIN_T_FAMILY_SHARING: 'T가족모아 가입하기'
+};
+
 Tw.MYT_FARE_BILL_GUIDE = {
   DATE_FORMAT: {
     YYYYMM_TYPE: 'YYYY년 MM월'
@@ -204,7 +210,10 @@ Tw.ALERT_MSG_HOME = {
 
 Tw.ALERT_MSG_MYT_DATA = {
   UNSUBSCRIBE_MONTHLY_GIFT: '선택하신 자동 선물 내역을 삭제하시겠습니까?',
-  RECHARGE_CANCLE: '충전 취소는 고객센터 [국번 없이 1599-0011(유료) / 휴대폰 114]를 통해 당일에 한해 가능합니다.'
+  RECHARGE_CANCLE: '충전 취소는 고객센터 [국번 없이 1599-0011(유료) / 휴대폰 114]를 통해 당일에 한해 가능합니다.',
+  JOIN_ONLY_CUSTOMER_CENTER_T: '대리점 방문 또는 고객센터를' + '<br />' + '통해 신청 가능합니다.',
+  JOIN_ONLY_CUSTOMER_CENTER_C: '고객센터를 통하여 신청하시면' + '<br />' + '그룹 구성을 동의 할 수 있는 SMS를 ' + '<br />' + '가족 구성원에게 보내드립니다.',
+  CALL_CUSTOMER_CENTER: '고객센터 전화하기'
 };
 
 Tw.ALERT_MSG_MYT_FARE = {
