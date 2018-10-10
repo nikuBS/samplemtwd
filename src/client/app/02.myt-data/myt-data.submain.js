@@ -165,7 +165,7 @@ Tw.MyTDataSubMain.prototype = {
   },
 
   _onImmChargeDetail: function () {
-    new Tw.ImmediatelyChageLayer(this.$container);
+    new Tw.ImmediatelyRechargeLayer(this.$container);
   },
 
   _onTPresentDetail: function () {
@@ -248,7 +248,7 @@ Tw.MyTDataSubMain.prototype = {
   }
 };
 
-Tw.ImmediatelyChageLayer = function ($element) {
+Tw.ImmediatelyRechargeLayer = function ($element) {
   this.$container = $element;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -258,7 +258,7 @@ Tw.ImmediatelyChageLayer = function ($element) {
   this._initialize();
 };
 
-Tw.ImmediatelyChageLayer.prototype = {
+Tw.ImmediatelyRechargeLayer.prototype = {
 
   _initialize: function () {
     this._immediatelyChargeRequest();
