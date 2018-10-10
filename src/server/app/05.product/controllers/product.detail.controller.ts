@@ -19,6 +19,11 @@ const productApiCmd = {
   'recommands': API_CMD.BFF_10_0006
 };
 
+const ctgCdAction = {
+  F01100: 'plans',
+  F01200: 'additions'
+};
+
 class ProductDetail extends TwViewController {
   constructor() {
     super();
@@ -52,7 +57,7 @@ class ProductDetail extends TwViewController {
    * @param basicInfo
    * @private
    */
-  private _parseBasicInfo (basicInfo): any {
+  private _convertBasicInfo (basicInfo): any {
     const joinBtnList: any = [],
       settingBtnList: any = [],
       termBtnList: any = [];
@@ -80,14 +85,36 @@ class ProductDetail extends TwViewController {
     });
   }
 
-  private _parseRedisInfo (prodRedisInfo, smryVslYn): any {
+  /**
+   * @param prodRedisInfo
+   * @param smryVslYn
+   * @private
+   */
+  private _convertRedisInfo (prodRedisInfo, smryVslYn): any {
     if (FormatHelper.isEmpty(prodRedisInfo)) {
       return {};
     }
 
     return Object.assign(prodRedisInfo, {
-      summary: Object.assign(prodRedisInfo.summary, this._parseSummaryInfo(smryVslYn, prodRedisInfo.summary))
+      summary: Object.assign(prodRedisInfo.summary, this._parseSummaryInfo(smryVslYn, prodRedisInfo.summary)),
+      summaryCase: this._getSummaryCase(prodRedisInfo.summary)
     });
+  }
+
+  /**
+   * @param summaryInfo
+   * @private
+   */
+  private _getSummaryCase(summaryInfo): any {
+    if (!FormatHelper.isEmpty(summaryInfo.ledDtlHtmlCtt)) {
+      return '3';
+    }
+
+    if (!FormatHelper.isEmpty(summaryInfo.sktProdBenfCtt)) {
+      return '2';
+    }
+
+    return '1';
   }
 
   /**
@@ -101,23 +128,10 @@ class ProductDetail extends TwViewController {
     }
 
     return {
-      basOfrDataQtyCtt: this._parseBasOfrDataQtyCtt(summaryInfo.basOfrDataQtyCtt),
       basOfrVcallTmsCtt: this._parseBasOfrVcallTmsCtt(summaryInfo.basOfrVcallTmsCtt),
       basOfrCharCntCtt: this._parseBasOfrCharCntCtt(summaryInfo.basOfrCharCntCtt),
       basFeeInfo: this._parsingSummaryBasFeeInfo(summaryInfo.basFeeInfo)
     };
-  }
-
-  /**
-   * @param basOfrDataQtyCtt
-   * @private
-   */
-  private _parseBasOfrDataQtyCtt (basOfrDataQtyCtt): any {
-    if (isNaN(parseInt(basOfrDataQtyCtt, 10))) {
-      return basOfrDataQtyCtt;
-    }
-
-    return FormatHelper.convDataFormat(basOfrDataQtyCtt, DATA_UNIT.GB);
   }
 
   /**
@@ -150,10 +164,55 @@ class ProductDetail extends TwViewController {
    */
   private _parsingSummaryBasFeeInfo (basFeeInfo): any {
     if (isNaN(parseInt(basFeeInfo, 10))) {
-      return basFeeInfo;
+      return {
+        basFee: basFeeInfo,
+        unit: ''
+      };
     }
 
-    return FormatHelper.addComma(basFeeInfo);
+    return {
+      basFee: FormatHelper.addComma(basFeeInfo),
+      unit: UNIT['110']
+    };
+  }
+
+  /**
+   * @param seriesInfo
+   * @private
+   */
+  private _convertSeriesInfo (seriesInfo): any {
+    return Object.assign(seriesInfo, {
+      seriesProdList: seriesInfo.seriesProdList.map((item) => {
+        const isBasFeeInfo = isNaN(parseInt(item.basFeeInfo, 10));
+        return Object.assign(item, {
+          basFeeInfo: isBasFeeInfo ? item.basFeeInfo : FormatHelper.addComma(item.basFeeInfo),
+          isNumberBasFeeInfo: !isBasFeeInfo
+        });
+      })
+    });
+  }
+
+  /**
+   * @param ctgCd
+   * @private
+   */
+  private _getIndexListActionName (ctgCd): any {
+    return 'plans';
+    // return ctgCdAction[ctgCd];
+  }
+
+  /**
+   * @param filtersList
+   * @private
+   */
+  private _getFilterIds (filtersList): any {
+    if (FormatHelper.isEmpty(filtersList)) {
+      return [];
+    }
+
+    return filtersList.map((item) => {
+      return item.filterFlagId;
+    });
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, layerType: string) {
@@ -193,13 +252,20 @@ class ProductDetail extends TwViewController {
         });
       }
 
+      if (FormatHelper.isEmpty(prodRedisInfo)) {
+        return this.error.render(res, { svcInfo: svcInfo });
+      }
+
       res.render('product.detail.html', {
-        basicInfo: this._parseBasicInfo(basicInfo.result),
-        prodRedisInfo: this._parseRedisInfo(prodRedisInfo, basicInfo.smryVslYn),
+        prodId: this._prodId,
+        basicInfo: this._convertBasicInfo(basicInfo.result),
+        prodRedisInfo: this._convertRedisInfo(prodRedisInfo, basicInfo.smryVslYn),
         relateTags: relateTagsInfo.result,
-        series: seriesInfo.result,
+        series: this._convertSeriesInfo(seriesInfo.result),
         recommends: recommendsInfo.result,
-        svcInfo: svcInfo
+        svcInfo: svcInfo,
+        indexListActionName: this._getIndexListActionName(basicInfo.result.ctgCd),
+        filterIds: this._getFilterIds(basicInfo.prodFilterFlagList).join(',')
       });
     });
   }
