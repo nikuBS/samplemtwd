@@ -6,6 +6,7 @@ export const URL = {
   '/common/settings/certificates': { login: false, id: 'ST_01_06', title: '공인인증센터' },
   '/common/settings/notifications': { login: true, id: 'ST_01_05', title: 'T알림 설정' },
   '/common/settings/terms': { login: false, id: 'GU_02', title: '이용약관' },
+  '/common/settings/location': { login: true, id: 'ST_01_04', title: '위치정보 이용 동의 설정' },
 
   // MyT
   '/myt/fare': { login: true, id: 'MF1', title: '나의 요금' },

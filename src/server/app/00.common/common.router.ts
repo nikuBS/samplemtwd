@@ -11,6 +11,7 @@ import CommonSettingsPrivacy from './controllers/settings/common.settings.privac
 import CommonSettingsBusinessInfo from './controllers/settings/common.settings.business-info.controller';
 import CommonSettingsCertificates from './controllers/settings/common.settings.certificates.controller';
 import CommonSettingsTerms from './controllers/settings/common.settings.terms.controller';
+import CommonSettingsLocation from './controllers/settings/common.settings.location.controller';
 import CommonError from './controllers/common.error.controller';
 import CommonBiometricsTerms from './controllers/biometrics/common.biometrics.terms.controller';
 import CommonBiometricsCert from './controllers/biometrics/common.biometircs.cert.controller';
@@ -26,6 +27,7 @@ export default class CommonRouter extends TwRouter {
     this.controllers.push({ url: '/settings/business-info', controller: new CommonSettingsBusinessInfo() });
     this.controllers.push({ url: '/settings/certificates', controller: new CommonSettingsCertificates() });
     this.controllers.push({ url: '/settings/terms', controller: new CommonSettingsTerms() });
+    this.controllers.push({ url: '/settings/location', controller: new CommonSettingsLocation() });
 
     this.controllers.push({ url: '/biometrics/menu', controller: new CommonBiometricsMenu() });
     this.controllers.push({ url: '/biometrics/terms', controller: new CommonBiometricsTerms() });
