@@ -25,7 +25,7 @@
     <!-- #contents -->
     <div id="contents" class="container-wrap">
         <h2 class="blind">내용</h2>
-        <div class="container">
+        <div class="container" data-id="submain-container">
             <!-- .cont-box -->
             <div class="cont-box">
                 <div class="myinfo-wrap">
@@ -116,11 +116,11 @@
                         <div class="link-long">
                             <button data-id="contract-plan">무약정 플랜
                                 <span class="tx-sub">
-                                        <span class="normal">
-                                            <%= data.myContractPlan.point %>P / <%= data.myContractPlan.count %>건
-                                        </span>
-                                        <span class="ico"></span>
+                                    <span class="normal">
+                                        <%= data.myContractPlan.point %>P / <%= data.myContractPlan.count %>건
                                     </span>
+                                    <span class="ico"></span>
+                                </span>
                             </button>
                         </div>
                     </li>
@@ -129,60 +129,30 @@
             </div>
             <!--// .cont-box -->
 
+            <% if (data.myPausedState && data.myPausedState.svcStSd) { %>
+                <%- include('../components/submain/myt-join.submain.pause-state.html', data) %>
+            <% } %>
+
+            <% if (data.otherLines.length > 0) { %>
             <hr class="cont-sp type1" aria-hidden="true"/>
-
             <!-- .cont-box -->
-            <div class="cont-box nogaps">
-                <ul class="link-long-list">
-                    <li>
-                        <div class="link-long">
-                            <button data-id="pause_c">일시 정지/해제<span class="ico"></span></button>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-            <!--// .cont-box -->
-
-            <hr class="cont-sp type1" aria-hidden="true"/>
-
-            <!-- .cont-box -->
-            <div class="cont-box nogaps">
+            <div class="cont-box nogaps" data-id="other-lines">
                 <p class="list-comp-title">나의 다른 회선 정보</p>
                 <ul class="list-comp-lineinfo">
-                    <li>
-                        <button>
-                            <div class="lineinfo-user d-table">
-                                <div class="ico2"><i></i></div>
-                                <div class="cont"><span class="ico"></span>
-                                    <span class="info-title">갤럭시 노트9</span>
-                                    <span class="info-sub">010-46**-10**</span>
-                                </div>
-                            </div>
-                            <div class="lineinfo-data">
-                                <span class="ico"></span>
-                            </div>
-                        </button>
-                    </li>
-                    <li>
-                        <button>
-                            <div class="lineinfo-user d-table">
-                                <div class="ico2"><i></i></div>
-                                <div class="cont"><span class="ico"></span>
-                                    <span class="info-title">우리집 인터넷</span>
-                                    <span class="info-sub">301호 ************</span>
-                                </div>
-                            </div>
-                            <div class="lineinfo-data">
-                                <span class="ico"></span>
-                            </div>
-                        </button>
-                    </li>
+                    <% var length = (data.otherLines.length > 20 ? 20 : data.otherLines.length); %>
+                    <% for (var i=0; i < length; i++) { %>
+                    <%- include('../components/submain/myt-join.submain.other-line.html', { data: data.otherLines[i] }); %>
+                    <% } %>
                 </ul>
+                <% if (length === 20) { %>
+                <!-- 다른 회선이 총 20개 이상인 경우 -->
                 <div class="bt-more">
                     <button>더보기</button>
                 </div>
+                <% } %>
             </div>
-            <!--// .cont-box -->
+            <!-- .cont-box -->
+            <% } %>
 
             <div class="cont-box nogaps noborder">
                 <ul class="link-long-list nobg">
@@ -227,5 +197,11 @@
 <script>
     // client 작업 중
     var data = '<%- JSON.stringify(data) %>';
+    $(document).ready(function () {
+      new Tw.MyTJoinSubMain({
+        $element: $('[data-id=submain-container]'),
+        data: JSON.parse(data)
+      });
+    });
 </script>
 <% include ../components/end.component.html %>

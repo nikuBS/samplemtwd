@@ -233,7 +233,16 @@ Tw.MYT_TPL = {
       '<span class="info-sub">{{svcNum}}</span></div></div><div class="lineinfo-data">' +
       '<span class="info-title">{{amt}} 원</span><span class="ico"></span></div>' +
       '</button></li>'
-  }
+  },
+  JOIN_SUBMAIN: {
+    MORE_LINE_TEMP: '<li data-svc-mgmt-num="{{svcMgmtNum}}"' +
+      'data-name="{{nickNm}}" data-num="{{svcNum}}"><button>' +
+      '<div class="lineinfo-user d-table"><div class="ico2"><i></i></div>' +
+      '<div class="cont"><span class="info-title">{{nickNm}}' +
+      '</span><span class="info-sub">{{svcNum}}</span></div>' +
+      '</div><div class="lineinfo-data"><span class="ico"></span></div></button></li>'
+  },
+  MORE_BTN: '<div class="bt-more"><button>더보기</button></div>'
 };
 
 Tw.MYT_DATA_CHARGE_TYPE_LIST = [
