@@ -84,11 +84,11 @@ export default class MyTDataRechargeCoupon extends TwViewController {
     this.getCouponUsageOptions().subscribe(
       (resp) => {
         if (resp.code === API_CODE.CODE_00) {
-          this.apiService.request(API_CMD.BFF_10_0002, {}, {}, svcInfo.prodId).subscribe(
+          this.redisService.getData('ProductLedger:' + svcInfo.prodId).subscribe(
             (productInfo) => {
-              if (productInfo.code === API_CODE.CODE_00) {
+              if (!FormatHelper.isEmpty(productInfo)) {
                 const purifiedOptions =
-                  this.purifyCouponOptions(resp.result.option, productInfo.result, svcInfo.prodId);
+                  this.purifyCouponOptions(resp.result.option, productInfo.summary, svcInfo.prodId);
                 res.render('recharge/myt-data.recharge.coupon-use.html', {
                   no: no,
                   name: name,
@@ -97,7 +97,10 @@ export default class MyTDataRechargeCoupon extends TwViewController {
                   options: purifiedOptions
                 });
               } else {
-                error(productInfo.code, productInfo.msg);
+                this.error.render(res, {
+                  svcInfo: svcInfo,
+                  title: '리필 쿠폰 사용'
+                });
               }
             },
             (err) => {
