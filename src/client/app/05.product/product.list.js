@@ -39,13 +39,13 @@ Tw.ProductList.prototype = {
     this._listTmpl = Handlebars.compile($('#fe-templ-' + this.TYPE).html());
   },
 
-  bindEvent: function() {
+  bindEvent: function () {
     this.$container.on('click', '.bt-more > button', $.proxy(this._handleLoadMore, this));
     this.$container.on('click', '.fe-select-order', $.proxy(this._openOrderPopup, this));
     this.$container.on('click', '.fe-select-filter', $.proxy(this._handleClickChangeFilters, this));
   },
 
-  cachedElement: function() {
+  cachedElement: function () {
     this.$moreBtn = this.$container.find('.bt-more > button');
     this.$list = this.$container.find('ul.recommendedrate-list');
   },
@@ -55,7 +55,7 @@ Tw.ProductList.prototype = {
     // this._apiService.request(Tw.API_CMD.BFF_10_0031, params).done($.proxy(this._handleSuccessLoadingData, this));
   },
 
-  _handleSuccessLoadingData: function(resp) {
+  _handleSuccessLoadingData: function (resp) {
     if (resp.code !== Tw.API_CODE.CODE_00) {
       // server error
       return;
@@ -88,7 +88,7 @@ Tw.ProductList.prototype = {
     this.$list.append(this._listTmpl({ items: items }));
   },
 
-  _openOrderPopup: function() {
+  _openOrderPopup: function () {
     var list = Tw.PRODUCT_PLANS_ORDER.slice();
     list[this.ORDER[this._params.searchOrder || this.DEFAULT_ORDER]].option = 'checked';
 
@@ -103,11 +103,11 @@ Tw.ProductList.prototype = {
     );
   },
 
-  _handleOpenOrderPopup: function($layer) {
+  _handleOpenOrderPopup: function ($layer) {
     $layer.on('click', 'ul.chk-link-list > li', $.proxy(this._handleSelectOrder, this));
   },
 
-  _handleSelectOrder: function(e) {
+  _handleSelectOrder: function (e) {
     var $target = $(e.currentTarget);
     var $list = $target.parent();
     var orderType = this._getOrderType($list.find('li').index($target));
@@ -126,9 +126,8 @@ Tw.ProductList.prototype = {
     this._popupService.close();
   },
 
-  _getOrderType: function(idx) {
-    var keys = Object.keys(this.ORDER),
-      i = 0;
+  _getOrderType: function (idx) {
+    var keys = Object.keys(this.ORDER), i = 0;
 
     for (; i < keys.length; i++) {
       if (this.ORDER[keys[i]] === idx) {
@@ -137,7 +136,7 @@ Tw.ProductList.prototype = {
     }
   },
 
-  _handleClickChangeFilters: function() {
+  _handleClickChangeFilters: function () {
     if (!this._filters) {
       // this._apiService.request(Tw.API_CMD.BFF_10_0032, { idxCtgCd: this.PLAN_CODE }).done($.proxy(this._openSelectFiltersPopup, this));
       $.ajax('http://localhost:3000/mock/product.plans.filters.json').done($.proxy(this._handleLoadFilters, this));
@@ -146,7 +145,7 @@ Tw.ProductList.prototype = {
     }
   },
 
-  _handleLoadFilters: function(resp) {
+  _handleLoadFilters: function (resp) {
     if (resp.code !== Tw.API_CODE.CODE_00) {
       // server error
       return;
@@ -156,8 +155,8 @@ Tw.ProductList.prototype = {
     this._openSelectFiltersPopup();
   },
 
-  _openSelectFiltersPopup: function() {
-    var deviceFilters = _.map(Tw.PRODUCT_LIST_DEVICE_FILTERS, $.proxy(function(filter) {
+  _openSelectFiltersPopup: function () {
+    var deviceFilters = _.map(Tw.PRODUCT_LIST_DEVICE_FILTERS, $.proxy(function (filter) {
       var currentFilter = this._params.searchFltIds;
       if (currentFilter && currentFilter.indexOf(filter.id) >= 0) {
         return {
@@ -172,16 +171,16 @@ Tw.ProductList.prototype = {
     }, this));
 
     var filters = _.chain(this._filters.filters)
-      .filter(function(filter) {
+      .filter(function (filter) {
         return filter.prodFltId !== 'F01120';
       })
-      .map($.proxy(function(filter) {
+      .map($.proxy(function (filter) {
         return {
           prodFltId: filter.prodFltId,
           prodFltNm: filter.prodFltNm,
           subFilters: _.map(
             filter.subFilters,
-            $.proxy(function(sFilter) {
+            $.proxy(function (sFilter) {
               var currentFilter = this._params.searchFltIds;
               if (currentFilter && currentFilter.indexOf(sFilter.prodFltId) >= 0) {
                 return {
@@ -210,7 +209,7 @@ Tw.ProductList.prototype = {
     );
   },
 
-  _handleOpenSelectFilterPopup: function($layer) {
+  _handleOpenSelectFilterPopup: function ($layer) {
     $layer.on('click', '.bt-red1', $.proxy(this._handleSelectFilters, this, $layer));
     $layer.on('click', '.resetbtn', $.proxy(this._handleResetFilters, this, $layer));
     $layer.on('click', '.link', $.proxy(this._openSelectTagPopup, this));
@@ -232,13 +231,13 @@ Tw.ProductList.prototype = {
   },
 
   _handleSelectFilters: function ($layer) {
-    var searchFltIds = _.map($layer.find('input[checked="checked"]'), function(input) {
+    var searchFltIds = _.map($layer.find('input[checked="checked"]'), function (input) {
       return input.getAttribute('data-filter-id');
     }).join(',');
 
-    this._popupService.close();
     
     if (this._params.searchFltIds === searchFltIds) {
+      this._popupService.close();
       return;
     }
 
