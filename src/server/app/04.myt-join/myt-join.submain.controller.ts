@@ -77,6 +77,10 @@ class MyTJoinSubmainController extends TwViewController {
         data.myInstallement = myinsp; // 약정,할부 정보
         data.myPausedState = myps; // 일시정지
 
+        // 개통일자
+        if (data.myHistory && data.myHistory.length > 0) {
+          data.hsDate = DateHelper.getShortDateNoDot(data.myHistory[0].chgDt);
+        }
         // 약정할부 노출여부
         if ( data.myInstallement && data.myInstallement.disProdNm ) {
           data.isInstallement = true;
@@ -87,9 +91,10 @@ class MyTJoinSubmainController extends TwViewController {
           data.myContractPlan.count = data.myContractPlan.datas.length;
           data.isContractPlan = true;
         }
-        // AC: 사용중
-        if ( myps.svcStCd === 'AC' ) {
-          data.isPause = true;
+        // AC: 일시정지가 아닌 상태, SP: 일시정지 중인 상태
+        if ( data.myPausedState.svcStCd === 'SP' ) {
+          data.myPausedState.sDate = DateHelper.getShortDateNoDot(data.myPausedState.fromDt);
+          data.myPausedState.eDate = DateHelper.getShortDateNoDot(data.myPausedState.toDt);
         }
         res.render('myt-join.submain.html', { data });
       } else {

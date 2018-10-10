@@ -4,6 +4,10 @@ export const HEAD_TITLE = {
   DOCUMENT: '구비서류'
 };
 
+export const MYT_FARE_SUBMAIN_TITLE = {
+  MAIN: '나의 요금'
+};
+
 export const MYT_JOIN_SUBMAIN_TITLE = {
   MAIN: '나의 가입 정보'
 };
