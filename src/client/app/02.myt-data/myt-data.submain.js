@@ -229,18 +229,16 @@ Tw.MyTDataSubMain.prototype = {
   // 다른 회선 팝업에서 변경하기 눌렀을 경우
   _onChangeLineConfirmed: function () {
     // 회선변경 API 호출
-    this._lineService.changeLine(this.changeLineMgmtNum);
-    // TODO: TOAST 기능을 사용하려면 아래 부분 사용
-    // this._apiService.request(Tw.NODE_CMD.CHANGE_SESSION, {
-    //   svcMgmtNum: this.changeLineMgmtNum
-    // }).done($.proxy(this._onChangeSessionSuccess, this));
+    this._lineService.changeLine(this.changeLineMgmtNum, null, $.proxy(this._onChangeSessionSuccess, this));
   },
 
   // 회선 변경 후 처리
   _onChangeSessionSuccess: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._popupService.close();
-      this._popupService.toast(Tw.REMNANT_OTHER_LINE.TOAST);
+      if ( Tw.BrowserHelper.isApp() ) {
+        this._popupService.toast(Tw.REMNANT_OTHER_LINE.TOAST);
+      }
       setTimeout($.proxy(function () {
         this._historyService.reload();
       }, this), 300);

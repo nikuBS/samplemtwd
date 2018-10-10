@@ -8,6 +8,8 @@ export const URL = {
   '/common/settings/terms': { login: false, id: 'GU_02', title: '이용약관' },
 
   // MyT
+  '/myt/fare': { login: true, id: 'MF1', title: '나의 요금' },
+  '/myt/fare/nonpayment': { login: true, id: 'MF_02', title: '미납요금' },
   '/myt/fare/payment/account': { login: true, id: 'MF_01_01', title: '계좌이체 납부' },
   '/myt/fare/payment/card': { login: true, id: 'MF_01_02', title: '체크/신용카드 납부' },
   '/myt/fare/payment/point': { login: true, id: 'MF_01_03', title: 'OK캐쉬백/T포인트 납부' },
