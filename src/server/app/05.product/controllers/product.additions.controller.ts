@@ -20,9 +20,12 @@ export default class ProductAdditions extends TwViewController {
       additions: this.getAddtions()
     };
 
-    console.log(JSON.stringify(additionData));
+    const params = {
+      searchFltIds: req.query.filters,
+      searchTag: req.query.tag
+    };
 
-    res.render('product.additions.html', { svcInfo, additionData });
+    res.render('product.additions.html', { svcInfo, additionData, params });
   }
 
   private getMyAdditions = () => {
@@ -35,7 +38,7 @@ export default class ProductAdditions extends TwViewController {
     }
 
     return resp.result.addProductJoinsInfo;
-  }
+  };
 
   private getAddtions = () => {
     // this.apiService.request(API_CMD.BFF_10_0031, { idxCtgCd: this.ADDITION_CODE }).map(resp => {});
@@ -54,5 +57,5 @@ export default class ProductAdditions extends TwViewController {
         };
       })
     };
-  }
+  };
 }

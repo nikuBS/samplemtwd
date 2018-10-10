@@ -1,0 +1,29 @@
+<%#
+* FileName: product.additions.component.html
+* Author: Jiyoung Jo (jiyoungjo@sk.com)
+* Date: 2018.10.10
+%>
+
+<script id="fe-templ-additions" type="text/x-handlebars-template">
+    {{#each items}}
+        <li class="type01">
+            <a href="/product/detail/{{prodId}}" class="product-infolink">
+                <div class="img-box"><img class="lte" src="{{prodIconImgUrl}}" alt="명칭"></div>
+                <div class="products-titleinfo">
+                    <h5 class="title">{{prodNm}}</h5>
+                    {{#if isMonthly}}
+                        <p class="info">월<span class="money">{{basFeeInfo}}</span>원</p>
+                    {{else}} 
+                        <p class="info"><span class="money">{{basFeeInfo}}</span></p>
+                    {{/if}}
+                </div>
+                <div class="taglist-wrap">
+                    {{#each filters}}
+                        <span class="tag-text">#{{prodFltNm}}</span>
+                    {{/each}}
+                </div>
+                <p class="products-detailinfo">{{prodSmryDesc}}</p>
+              </a>
+        </li>
+    {{/each}}
+</script>

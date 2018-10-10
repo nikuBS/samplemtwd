@@ -88,9 +88,14 @@
                           </li>
                       <% } %>
                   </ul>
+                  <% const leftCount = additionData.additions.productCount - additions.length; %>
+                  <% if (leftCount > 0) { %>
                   <div class="bt-more gap-style">
-                      <button>더보기</button>
+                      <button data-last-addition="<%= additions[additions.length - 1].prodId %>" data-left-count="<%= leftCount %>">
+                        더보기(<%= leftCount %>)
+                      </button>
                   </div>
+                  <% } %>
               </div>
               <!-- //이런 요금제는 어떠세요? -->
               <hr class="cont-sp type1" aria-hidden="true"/>
@@ -182,6 +187,8 @@
 <% include ../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
+    new Tw.ProductAdditions($('.wrap'), <%- JSON.stringify(params) %>);
   });
 </script>
+<% include ../components/product.additions.component.html %>
 <% include ../components/end.component.html %>
