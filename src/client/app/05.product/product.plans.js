@@ -73,9 +73,12 @@ Tw.ProductPlans.prototype = {
     this._leftCount = this._leftCount - items.length; 
 
     if (this._leftCount > 0) {
+      if (this.$moreBtn.hasClass('none')) {
+        this.$moreBtn.removeClass('none');
+      }
       this.$moreBtn.text(this.$moreBtn.text().replace(/\((.+?)\)/, '(' + this._leftCount + ')'));
     } else {
-      this.$moreBtn.css('display', 'none');
+      this.$moreBtn.addClass('none');
     }
     
     $list.append(this._plansTmpl({ items: items }));
