@@ -185,8 +185,8 @@ export const MYT_JOIN_CONTRACT_TERMINAL = { // 약정할인 및 단말분할상�
     AGREE_NM: 'T 약정 할부지원'
   },
   JOIN_TYPE_D: {
-    TITNM: '가입 / 약정 위약금2(NEW)',
-    AGREE_NM: '약정 위약금2(NEW)'
+    TITNM: '가입 / 약정 위약금2',
+    AGREE_NM: '약정 위약금2'
   },
   JOIN_NOTYPE: {
     TITNM: '가입 / 정보없음',

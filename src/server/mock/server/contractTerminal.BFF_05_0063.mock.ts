@@ -82,8 +82,30 @@ const contractTerminal_BFF_05_0063 = {
       'sucesAgreeList':
         [
           {
+            'bfEqpDcClCd': '1',
+            'bfEqpDcClNm': 'T약정 할부지원',
+            'agrmtDcAmt': '17500',
+            'agrmtMthCnt': '24',
+            'remMthCnt': '1',
+            'sucesPenAmt': '470',
+            'sucesAgrmtStaDt': '20161021',
+            'sucesAgrmtEndDt': '20161109',
+            'sucesRemDayCnt' : '10'
+          },
+          {
             'bfEqpDcClCd': '3',
             'bfEqpDcClNm': '약정위약금2',
+            'agrmtDcAmt': '17500',
+            'agrmtMthCnt': '24',
+            'remMthCnt': '1',
+            'sucesPenAmt': '470',
+            'sucesAgrmtStaDt': '20161021',
+            'sucesAgrmtEndDt': '20161109',
+            'sucesRemDayCnt' : '10'
+          },
+          {
+            'bfEqpDcClCd': '7',
+            'bfEqpDcClNm': 'T지원금약정',
             'agrmtDcAmt': '17500',
             'agrmtMthCnt': '24',
             'remMthCnt': '1',
