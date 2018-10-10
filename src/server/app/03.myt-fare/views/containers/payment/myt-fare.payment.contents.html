@@ -5,7 +5,7 @@
 %>
 
 <% include ../../components/start.component.html %>
-<body class="bg-white">
+<body>
     <!-- #skip_navigation -->
     <div id="skipNav" class="skip_navi">
         <ul>
@@ -15,10 +15,10 @@
         </ul>
     </div>
     <!--// #skip_navigation -->
-    <div id="myt-fare-payment-contents" class="wrap step">
+    <div id="myt-fare-payment-contents" class="wrap">
         <!-- #header -->
         <%- include('../../../../../common/views/components/header.component.html',
-        { title: '콘텐츠이용료', svcInfo: svcInfo, option:{ line: true} }); %>
+        { title: '콘텐츠이용료', svcInfo: svcInfo, option:{ line: true } }); %>
         <!--// #header -->
         <!-- #contents -->
         <div id="contents" class="container-wrap">
@@ -77,12 +77,11 @@
                     </ul>
                 </div>
                 <!--// .cont-box -->
-
                 <hr class="cont-sp type1" aria-hidden="true"/>
-
             </div>
         </div>
         <!--// #contents -->
+        <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
     </div>
 </body>
 <% include ../../components/javascript.component.html %>

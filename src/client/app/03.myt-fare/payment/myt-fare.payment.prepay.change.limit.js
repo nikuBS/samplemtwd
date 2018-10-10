@@ -92,14 +92,10 @@ Tw.MyTFarePaymentPrepayChangeLimit.prototype = {
       .text(this._getLittleAmount(result.onceLimit) + Tw.CURRENCY_UNIT.TEN_THOUSAND);
   },
   _setLimitEvent: function ($layer) {
-    $layer.on('click', '.fe-common-back', $.proxy(this._goBack, this));
     $layer.on('click', '.fe-month', $.proxy(this._selectAmount, this, this._monthAmountList));
     $layer.on('click', '.fe-day', $.proxy(this._selectAmount, this, this._dayAmountList));
     $layer.on('click', '.fe-once', $.proxy(this._selectAmount, this, this._onceAmountList));
     $layer.on('click', '.fe-change', $.proxy(this._change, this, $layer));
-  },
-  _goBack: function () {
-    this._historyService.goBack();
   },
   _getLittleAmount: function (amount) {
     return amount / 10000;

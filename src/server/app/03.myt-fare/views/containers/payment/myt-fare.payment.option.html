@@ -5,7 +5,7 @@
 %>
 
 <% include ../../components/start.component.html %>
-<body class="bg-white">
+<body>
     <!-- #skip_navigation -->
     <div id="skipNav" class="skip_navi">
         <ul>
@@ -15,10 +15,10 @@
         </ul>
     </div>
     <!--// #skip_navigation -->
-    <div id="myt-fare-payment-option" class="wrap step">
+    <div id="myt-fare-payment-option" class="wrap">
         <!-- #header -->
         <%- include('../../../../../common/views/components/header.component.html',
-        { title: '납부방법', svcInfo: svcInfo, option:{ line: true} }); %>
+        { title: '납부방법', svcInfo: svcInfo, option:{ line: true } }); %>
         <!--// #header -->
         <!-- #contents -->
         <div id="contents" class="container-wrap">
@@ -179,6 +179,7 @@
             </div>
         </div>
         <!--// #contents -->
+        <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
     </div>
 </body>
 <% include ../../components/javascript.component.html %>
