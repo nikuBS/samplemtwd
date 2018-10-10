@@ -3213,75 +3213,6 @@
       font-size: 0.8125rem;
       font-weight: 700; }
 
-.list-charge > ul > li {
-  position: relative;
-  padding: 0 0 0 3.875rem; }
-  .list-charge > ul > li .inner {
-    padding: 1.5625rem 1rem 1.25rem 0;
-    border-top: 1px solid #e1e1e1; }
-    .list-charge > ul > li .inner .top-cont {
-      display: table;
-      width: 100%; }
-      .list-charge > ul > li .inner .top-cont .tit-area {
-        display: table-cell;
-        vertical-align: top; }
-        .list-charge > ul > li .inner .top-cont .tit-area .title {
-          display: block;
-          font-size: 1.125rem;
-          line-height: 1; }
-        .list-charge > ul > li .inner .top-cont .tit-area .tag {
-          display: block;
-          padding-top: 0.4375rem;
-          font-size: 0.75rem;
-          color: #666;
-          line-height: 1; }
-          .list-charge > ul > li .inner .top-cont .tit-area .tag .elem {
-            display: inline-block;
-            padding-left: 0.3125rem; }
-            .list-charge > ul > li .inner .top-cont .tit-area .tag .elem:first-of-type {
-              padding-left: 0; }
-      .list-charge > ul > li .inner .top-cont .price-area {
-        display: table-cell;
-        vertical-align: top;
-        text-align: right;
-        color: #e22f26; }
-        .list-charge > ul > li .inner .top-cont .price-area .normal {
-          font-size: 0.625rem;
-          font-family: "TgothicMedium", Roboto, sans-serif;
-          vertical-align: text-bottom; }
-        .list-charge > ul > li .inner .top-cont .price-area .price {
-          font-size: 1.125rem;
-          font-family: "TgothicBlack", Roboto, sans-serif; }
-    .list-charge > ul > li .inner .basic-list {
-      padding-top: 1.125rem; }
-      .list-charge > ul > li .inner .basic-list ul li {
-        padding-top: 0.3125rem; }
-        .list-charge > ul > li .inner .basic-list ul li .title {
-          width: 3.125rem;
-          color: #666;
-          font-size: 0.75rem; }
-        .list-charge > ul > li .inner .basic-list ul li .tx-cont {
-          text-align: left;
-          font-size: 0.8125rem; }
-  .list-charge > ul > li .ico-type1 {
-    width: 2rem;
-    height: 2rem;
-    background: url(/img/ico/ico-group-100.png) no-repeat -0.5625rem -103.6875rem;
-    background-size: 6.25rem auto;
-    position: absolute;
-    left: 1rem;
-    top: 1.5625rem; }
-  .list-charge > ul > li .ico-type2 {
-    width: 2rem;
-    height: 2rem;
-    background: url(/img/ico/ico-group-100.png) no-repeat -3.6875rem -103.6875rem;
-    background-size: 6.25rem auto;
-    position: absolute;
-    left: 1rem;
-    top: 1.5625rem; }
-  .list-charge > ul > li:first-of-type .inner {
-    border-top: none; }
-
 .engineer-list {
   border-top: 1px solid #e1e1e1; }
   .engineer-list ul li {
@@ -3315,6 +3246,12 @@
           text-align: left; }
         .engineer-list ul li .basic-list ul li:first-of-type {
           padding-top: 0; }
+
+.bt-h-type1 .bt-slice li {
+  height: 1.75rem;
+  line-height: 1.75rem; }
+  .bt-h-type1 .bt-slice li button {
+    line-height: 1.75rem; }
 
 /* 김연주 */
 .data-result {
@@ -8264,7 +8201,8 @@
             margin: 0 0.25rem;
             font-size: 1.125rem;
             font-weight: 700;
-            vertical-align: -0.125rem; }
+            vertical-align: -0.125rem;
+            font-family: "TgothicMedium", Roboto, sans-serif; }
       .recommendedrate-list > li .product-infolink .taglist-wrap .tag-text {
         display: inline-block;
         margin-left: 0.3125rem;
@@ -8709,17 +8647,20 @@
       position: relative;
       display: inline-block;
       margin-left: 0.625rem;
-      color: #fff; }
+      color: #fff;
+      /*
+            &:after{
+                content:"";
+                position:absolute;
+                left:0;
+                right:0;
+                bottom:rem(-3px);
+                height:rem(1px);
+                background-color:$white1;
+            }
+            */ }
       .productdetails-wrap .productdetails-taglist .tag-text:first-child {
         margin-left: 0; }
-      .productdetails-wrap .productdetails-taglist .tag-text:after {
-        content: "";
-        position: absolute;
-        left: 0;
-        right: 0;
-        bottom: -0.1875rem;
-        height: 0.0625rem;
-        background-color: #fff; }
   .productdetails-wrap .productdetails-text {
     margin-top: 1.6875rem; }
     .productdetails-wrap .productdetails-text li {
