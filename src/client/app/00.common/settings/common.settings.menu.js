@@ -28,12 +28,24 @@ Tw.CommonSettingsMenu.prototype = {
   },
   _init: function () {
     Tw.DeviceInfo.getDeviceInfo().done($.proxy(this._onDeviceVersion, this));
+
+    // Set FIDO type
+    this._nativeService.send(Tw.NTV_CMD.FIDO_TYPE, {}, $.proxy(function (resp) {
+      if (resp.resultCode === Tw.NTV_CODE.CODE_00) {
+        // TODO: joon fingerpint
+      } else if (resp.resultCode === Tw.NTV_CODE.CODE_01) {
+        // TODO: joon face
+      } else {
+        this.$container.find('#fe-bio').addClass('none');
+      }
+    }, this));
   },
   _bindEvents: function () {
     this.$container.on('click', '#fe-go-certificates', $.proxy(this._onCertificates, this));
     this.$container.on('click', '#fe-btn-update', $.proxy(this._onUpdate, this));
   },
   _onDeviceVersion: function (res) {
+    // TODO: joon version object will change
     this._currentVersion = res.appVersion;
     this.$versionText.text(this._currentVersion);
 
