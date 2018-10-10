@@ -88,10 +88,11 @@
                             </li>
                         <% } %>
                     </ul>
-                    <% if (plans.productCount > products.length) { %>
+                    <% const leftCount = plans.productCount - products.length; %>
+                    <% if (leftCount > 0) { %>
                     <div class="bt-more gap-style">
-                        <button data-last-plan="<%= products[products.length - 1].prodId %>">
-                            더보기(<%= plans.productCount - products.length %>)
+                        <button data-last-plan="<%= products[products.length - 1].prodId %>" data-left-count="<%= leftCount %>">
+                            더보기(<%= leftCount %>)
                         </button>
                     </div>
                     <% } %>

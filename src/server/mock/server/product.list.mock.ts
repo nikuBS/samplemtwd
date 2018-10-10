@@ -2,7 +2,7 @@ const PRODUCT_PLANS = {
   code: '00',
   msg: 'success',
   result: {
-    productCount: 8,
+    productCount: 28,
     hasNext: false,
     products: [
       {
@@ -88,4 +88,86 @@ const PRODUCT_PLANS = {
   }
 };
 
-export { PRODUCT_PLANS };
+const PRODUCT_ADDITIONS = {
+  code: '00',
+  msg: 'success',
+  result: {
+    productCount: 20,
+    hasNext: false,
+    products: [
+      {
+        prodId: 'NA00005696', //상품ID
+        prodNm: '척척할인', //상품명
+        prodSmryDesc: '매월 제휴사 상품 일정금액 이상 소비시 통신비 할인', //상품요약설명
+        prodIconImgUrl: '/img/dummy/img_sample01.png', //상품 아이콘 이미지 FULL URL
+        basFeeInfo: '43175', //이용요금(월정액)
+        prodFltList: [
+          //상품필터목록
+          {
+            prodFltId: 'F01121', //상품필터ID
+            prodFltNm: 'LTE' //상품필터명
+          }
+        ]
+      },
+      {
+        prodId: 'NA00005696', //상품ID
+        prodNm: '척척할인', //상품명
+        prodSmryDesc: '매월 제휴사 상품 일정금액 이상 소비시 통신비 할인', //상품요약설명
+        prodIconImgUrl: '/img/dummy/img_sample01.png', //상품 아이콘 이미지 FULL URL
+        basFeeInfo: '상세참조', //이용요금(월정액)
+        prodFltList: [
+          //상품필터목록
+          {
+            prodFltId: 'F01121', //상품필터ID
+            prodFltNm: 'LTE' //상품필터명
+          }
+        ]
+      },
+      {
+        prodId: 'NA00005696', //상품ID
+        prodNm: '척척할인', //상품명
+        prodSmryDesc: '매월 제휴사 상품 일정금액 이상 소비시 통신비 할인', //상품요약설명
+        prodIconImgUrl: '/img/dummy/img_sample01.png', //상품 아이콘 이미지 FULL URL
+        basFeeInfo: '43175', //이용요금(월정액)
+        prodFltList: [
+          //상품필터목록
+          {
+            prodFltId: 'F01121', //상품필터ID
+            prodFltNm: 'LTE' //상품필터명
+          }
+        ]
+      },
+      {
+        prodId: 'NA00005696', //상품ID
+        prodNm: '척척할인', //상품명
+        prodSmryDesc: '매월 제휴사 상품 일정금액 이상 소비시 통신비 할인', //상품요약설명
+        prodIconImgUrl: '/img/dummy/img_sample01.png', //상품 아이콘 이미지 FULL URL
+        basFeeInfo: '43175', //이용요금(월정액)
+        prodFltList: [
+          //상품필터목록
+          {
+            prodFltId: 'F01121', //상품필터ID
+            prodFltNm: 'LTE' //상품필터명
+          }
+        ]
+      },
+      {
+        prodId: 'NA00005696', //상품ID
+        prodNm: '척척할인', //상품명
+        prodSmryDesc: '매월 제휴사 상품 일정금액 이상 소비시 통신비 할인', //상품요약설명
+        prodIconImgUrl: '/img/dummy/img_sample01.png', //상품 아이콘 이미지 FULL URL
+        basFeeInfo: '43175', //이용요금(월정액)
+        prodFltList: [
+          //상품필터목록
+          {
+            prodFltId: 'F01121', //상품필터ID
+            prodFltNm: 'LTE' //상품필터명
+          }
+        ]
+      }
+    ],
+    searchOption: { searchOrder: 'recommand', searchCount: 20 }
+  }
+};
+
+export { PRODUCT_PLANS, PRODUCT_ADDITIONS };
