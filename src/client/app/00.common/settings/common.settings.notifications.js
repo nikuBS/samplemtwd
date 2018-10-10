@@ -65,6 +65,20 @@ Tw.CommonSettingsNotifications.prototype = {
     } else {
       this.$recommendSpan.removeClass('none');
     }
+
+    // check and show layer popup for terms
+    if (e.target.checked) { // When switch changes to on from off
+      if (id.includes('service')) {
+        if (!this._termsAgreed.twdAdRcvAgreeYn || !this._termsAgreed.twdInfoRcvAgreeYn) {
+          this.$container.find('#fe-service-terms').trigger('click'); // show terms layer popup
+        }
+      } else if (id.includes('recommend')) {
+        if (!this._termsAgreed.twdAdRcvAgreeYn || !this._termsAgreed.twdInfoRcvAgreeYn ||
+            !this._termsAgreed.twdLocUseAgreeYn) {
+          this.$container.find('#fe-recommend-terms').trigger('click');
+        }
+      }
+    }
   },
   _onFailChangingNoti: function (id, err) {
     var $switch = $('#' + id).closest('.btn-switch');
