@@ -25,6 +25,7 @@ Tw.MyTFarePaymentPrepayChangeLimit.prototype = {
     this._monthAmountList = [];
     this._dayAmountList = [];
     this._onceAmountList = [];
+    this.$isClicked = false;
   },
   _getLimit: function () {
     var apiName = this._getLimitApiName();
@@ -57,14 +58,21 @@ Tw.MyTFarePaymentPrepayChangeLimit.prototype = {
         txt: Tw.ALERT_MSG_MYT_FARE.GO_PAYMENT
       }],
       'type1',
-      $.proxy(this._openLimitFail, this)
+      $.proxy(this._openLimitFail, this),
+      $.proxy(this._goSubmain, this)
     );
   },
   _openLimitFail: function ($layer) {
-    $layer.on('click', '.fe-payment', $.proxy(this._goSubmain, this));
+    $layer.on('click', '.fe-payment', $.proxy(this._setLinkClickEvent, this));
+  },
+  _setLinkClickEvent: function () {
+    this.$isClicked = true;
+    this._popupService.close();
   },
   _goSubmain: function () {
-    this._historyService.goLoad('/myt/fare/payment/submain');
+    if (this.$isClicked) {
+      this._historyService.goLoad('/myt/fare');
+    }
   },
   _changeLimit: function (result) {
     this._popupService.open({
