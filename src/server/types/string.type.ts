@@ -130,7 +130,7 @@ export const MYT_INFO_DISCOUNT_MONTH = {
 
 export enum PRODUCT_TYPE {
   FEE_INFO_ETC = '상세참조'
-};
+}
 
 export const MYT_FARE_PAYMENT_HISTORY_TYPE = {
   all: '전체',
@@ -152,3 +152,66 @@ export const MYT_FARE_HISTORY_MICRO_TYPE = {
   PACK: '묶음결제',
   AUTO: '자동결제'
 };
+
+
+export const MYT_JOIN_CONTRACT_TERMINAL = { // 약정할인 및 단말분할상환정보
+  FEE_TYPE_A: {
+    TIT_NM: '요금약정할인24 (730일)'
+  },
+  FEE_TYPE_B: {
+    TIT_NM: '테블릿 약정할인 12'
+  },
+  FEE_TYPE_C: {
+    TIT_NM: '테블릿 약정'
+  },
+  FEE_TYPE_D: {
+    TIT_NM: 'wibro 약정'
+  },
+  FEE_TYPE_E: {
+    TIT_NM: '선택 약정 할인 제도'
+  },
+  FEE_NOTYPE: {
+    TIT_NM: '정보 없음'
+  },
+  JOIN_TYPE_A: {
+    TITNM: '가입 / T 기본약정',
+    AGREE_NM: 'T 기본약정'
+  },
+  JOIN_TYPE_B: {
+    TITNM: '가입 / T 지원금약정',
+    AGREE_NM: 'T 지원금약정'
+  },
+  JOIN_TYPE_C: {
+    TITNM: '가입 / T 약정 할부지원',
+    AGREE_NM: 'T 약정 할부지원'
+  },
+  JOIN_TYPE_D: {
+    TITNM: '가입 / 약정 위약금2(NEW)',
+    AGREE_NM: '약정 위약금2(NEW)'
+  },
+  JOIN_NOTYPE: {
+    TITNM: '가입 / 정보없음',
+    AGREE_NM: '정보없음'
+  },
+  SUC_TYPE_A: {
+    TITNM: '승계 / ',
+    AGREE_NM: ''
+  },
+  SUC_TYPE_B: {
+    TITNM: '승계 / ',
+    AGREE_NM: ''
+  },
+  SUC_TYPE_C: {
+    TITNM: '승계 / ',
+    AGREE_NM: ''
+  },
+  SUC_TYPE_D: {
+    TITNM: '승계 / ',
+    AGREE_NM: ''
+  },
+  SUC_NOTYPE: {
+    TITNM: '승계 / 정보없음',
+    AGREE_NM: '정보없음'
+  }
+};
+
