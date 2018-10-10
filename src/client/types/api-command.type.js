@@ -63,6 +63,10 @@ Tw.API_CMD = {
   BFF_03_0016: { path: '/core-auth/v1/service-passwords', method: Tw.API_METHOD.PUT },
   BFF_03_0019: { path: '/core-auth/v1/users/args-0/otp', method: Tw.API_METHOD.POST },
   BFF_03_0020: { path: '/core-auth/v1/passwords-check', method: Tw.API_METHOD.GET },
+  BFF_03_0021: { path: '/core-auth/v1/tworld-term-agreements', method: Tw.API_METHOD.GET },
+  BFF_03_0022: { path: '/core-auth/v1/tworld-term-agreements', method: Tw.API_METHOD.PUT },
+  BFF_03_0023: { path: '/core-auth/v1/t-noti-term-agreements', method: Tw.API_METHOD.GET },
+  BFF_03_0024: { path: '/core-auth/v1/t-noti-term-agreements', method: Tw.API_METHOD.PUT },
 
   // MYT
   BFF_05_0001: { path: '/my-t/balances', method: Tw.API_METHOD.GET },
