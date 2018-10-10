@@ -9,6 +9,10 @@ Tw.ProductPlans = function(rootEl, params) {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._params = params;
+  this._history = new Tw.HistoryService(rootEl);
+  this._history.init('hash');
+
+  console.log(params);
 
   this.cachedElement();
   this.bindEvent();
@@ -25,7 +29,6 @@ Tw.ProductPlans.prototype = {
 
   PLAN_CODE: 'F01100',
   init: function() {
-    this._orderType = this.DEFAULT_ORDER;
     this._lastPlanId = this.$moreBtn.data('last-plan');
     this._leftCount = this.$moreBtn.data('left-count');
     this._plansTmpl = Handlebars.compile($('#fe-templ-plans').html());
@@ -48,7 +51,6 @@ Tw.ProductPlans.prototype = {
     if (this._lastPlanId) {
       params.searchLastProdId = this._lastPlanId;
     }
-    params.searchOrder = this._orderType;
 
     $.ajax('http://localhost:3000/mock/product.list.json').done($.proxy(this._handleSuccessLoadingData, this));
     // this._apiService.request(Tw.API_CMD.BFF_10_0031, params).done($.proxy(this._handleSuccessLoadingData, this));
@@ -87,7 +89,7 @@ Tw.ProductPlans.prototype = {
 
   _openOrderPopup: function() {
     var list = Tw.PRODUCT_PLANS_ORDER.slice();
-    list[this.ORDER[this._orderType]].option = 'checked';
+    list[this.ORDER[this._params.searchOrder || this.DEFAULT_ORDER]].option = 'checked';
 
     this._popupService.open(
       {
@@ -109,11 +111,11 @@ Tw.ProductPlans.prototype = {
     var $list = $target.parent();
     var orderType = this._getOrderType($list.find('li').index($target));
 
-    if (this._orderType === orderType) {
+    if (this._params.searchType === orderType) {
       return;
     }
 
-    this._orderType = orderType;
+    this._params.searchType = orderType;
     this.$container.find('.fe-select-order').text($target.find('span').text());
     delete this._lastPlanId;
     this.$list.empty();
@@ -193,6 +195,8 @@ Tw.ProductPlans.prototype = {
       }, this))
       .value();
 
+      console.log(this._filters.tags);
+
     this._popupService.open(
       {
         hbs: 'MP_02_01',
@@ -209,6 +213,7 @@ Tw.ProductPlans.prototype = {
   _handleOpenSelectFilterPopup: function($layer) {
     $layer.on('click', '.bt-red1', $.proxy(this._handleSelectFilters, this, $layer));
     $layer.on('click', '.resetbtn', $.proxy(this._handleResetFilters, this, $layer));
+    $layer.on('click', '.link', $.proxy(this._handleSelectTag, this));
   },
 
   _handleResetFilters: function ($layer) {
@@ -226,16 +231,24 @@ Tw.ProductPlans.prototype = {
       return input.getAttribute('data-filter-id');
     }).join(',');
 
+    this._popupService.close();
+    
     if (this._params.searchFltIds === searchFltIds) {
       return;
     }
 
-    this._params.searchFltIds = searchFltIds;
-    this._orderType = this.DEFAULT_ORDER;
-    delete this._lastPlanId;
-    this.$list.empty();
+    this._history.goLoad('/product/plans' + searchFltIds ? '?filters=' + searchFltIds : '');
+  },
 
-    this._handleLoadMore();
+  _handleSelectTag: function (e) {
+    var selectedTag = e.currentTarget.getAttribute('data-tag-id');
+
     this._popupService.close();
+    
+    if (this._params.selectedTag === selectedTag) {
+      return;
+    }
+
+    this._history.goLoad('/product/plans?tag=' + selectedTag);
   }
-};
+}
