@@ -9182,6 +9182,19 @@
   .recommendedratetaglist-wrap .tag-text:first-child {
     margin-left: 0; }
 
+.site-informationuse-title {
+  color: #000;
+  font-size: 0.875rem;
+  line-height: 1.3125rem; }
+
+.site-informationuse-list {
+  margin-top: 0.625rem; }
+  .site-informationuse-list .amount {
+    border-top: 1px solid #e1e1e1; }
+    .site-informationuse-list .amount .link {
+      display: block;
+      width: 100%; }
+
 .badge.badge-fam-members2 {
   background-position: 0 -13.6875rem;
   background-size: 4.6875rem;
@@ -9685,7 +9698,7 @@
     .add-prod > li > div > button, .add-prod > li > div > a {
       display: block;
       text-align: left;
-      font-size: 11px;
+      font-size: 0.75rem;
       color: #7b7b7b; }
     .add-prod > li:last-child {
       margin-right: 0; }
@@ -9798,6 +9811,81 @@
       background-position: 0 -9.375rem; }
 
 /* CS_09_01 : STEP */
+.required-doc .acco-style .acco-list {
+  padding: 0 1rem; }
+  .required-doc .acco-style .acco-list .acco-title button {
+    padding: 1.5625rem 0;
+    border-bottom: 1px solid #e1e1e1; }
+    .required-doc .acco-style .acco-list .acco-title button:after {
+      content: "상세보기";
+      position: absolute;
+      top: 50%;
+      right: 0;
+      margin: -0.78125rem 0 0 0;
+      width: 0.8125rem;
+      height: 0.375rem;
+      background: url(/img/ico/ico-group.png) no-repeat -1.9375rem -22.5rem;
+      background-size: 3.125rem;
+      overflow: hidden;
+      color: transparent; }
+  .required-doc .acco-style .acco-list .acco-title .step {
+    display: block;
+    margin-bottom: 0.3125rem;
+    font-size: 0.75rem;
+    font-family: "TgothicBlack", Roboto, sans-serif;
+    letter-spacing: -0.02em;
+    color: #e22f26; }
+  .required-doc .acco-style .acco-list .acco-title .question {
+    font-size: 0.875rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    display: block; }
+  .required-doc .acco-style .acco-list .acco-title .result-txt {
+    font-size: 0.875rem;
+    letter-spacing: -0.02em;
+    display: none; }
+  .required-doc .acco-style .acco-list .acco-content {
+    padding: 1.875rem 0;
+    border-bottom: 1px solid #e1e1e1; }
+  .required-doc .acco-style .acco-list.on .acco-title button:after {
+    background-position: -0.375rem -22.5rem; }
+  .required-doc .acco-style .acco-list.on .acco-title .question {
+    display: block; }
+  .required-doc .acco-style .acco-list.on .acco-title .result-txt {
+    display: none; }
+  .required-doc .acco-style .acco-list.on .acco-content {
+    display: block; }
+  .required-doc .acco-style .acco-list.off {
+    background: #f9f9f9; }
+    .required-doc .acco-style .acco-list.off .acco-title {
+      opacity: .38; }
+      .required-doc .acco-style .acco-list.off .acco-title .question {
+        font-weight: 400; }
+  .required-doc .acco-style .acco-list.end .question {
+    display: none; }
+  .required-doc .acco-style .acco-list.end .result-txt {
+    display: block; }
+
+/* CS_09_01 */
+.customer-guide {
+  position: relative;
+  padding-right: 5rem;
+  min-height: 3.75rem;
+  font-size: 0.9375rem; }
+  .customer-guide .txt strong {
+    font-weight: 700; }
+  .customer-guide .ico {
+    position: absolute;
+    right: 0.625rem;
+    top: 50%;
+    -webkit-transform: translate(0, -50%);
+            transform: translate(0, -50%);
+    display: block;
+    width: 4rem;
+    height: 3.75rem;
+    background: url(/img/customer/bg_book.png) no-repeat 0 0;
+    background-size: 100% 100%; }
+
 /* 김정훈 */
 .operation-guide-box .slick-prev {
   display: none !important; }
