@@ -84,7 +84,7 @@ const PRODUCT_PLANS = {
         ]
       }
     ],
-    searchOption: { searchFltIds: ['F01121'], searchOrder: 'recommand', searchCount: 20 }
+    searchOption: { searchFltIds: [{ prodFltId: 'F01121', prodFltNm: 'LTE' }], searchOrder: 'recommand', searchCount: 20 }
   }
 };
 

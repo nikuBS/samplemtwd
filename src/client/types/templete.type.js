@@ -251,3 +251,27 @@ Tw.PRODUCT_PLANS_ORDER = [
   {'value':'낮은 가격순'}
 ];
 
+Tw.PRODUCT_LIST_DEVICE_FILTERS = [
+  {
+    id: 'F01121',
+    name: 'LTE',
+    icon: 'lte',
+  }, {
+    id: 'F01122',
+    name: '3G',
+    icon: '3g',
+  }, {
+    id: 'F01123',
+    name: '일반폰',
+    icon: 'feature',
+  }, {
+    id: 'F01124',
+    name: '태블릿/<br>2nd Device',
+    icon: 'device',
+  }, {
+    id: 'F01125',
+    name: '선불폰',
+    icon: 'prepayment',
+  }
+]
+
