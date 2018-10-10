@@ -235,7 +235,6 @@ class ProductDetail extends TwViewController {
       basicInfo, relateTagsInfo, seriesInfo, recommendsInfo, prodRedisInfo
     ]) => {
       const apiError = this.error.apiError([ basicInfo, relateTagsInfo, seriesInfo, recommendsInfo ]);
-      console.log(basicInfo.result.prodFilterFlagList);
 
       if (!FormatHelper.isEmpty(apiError)) {
         return this.error.render(res, {
