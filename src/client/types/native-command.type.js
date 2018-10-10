@@ -32,7 +32,8 @@ Tw.NTV_CMD = {
 };
 
 Tw.NTV_CODE = {
-  CODE_00: 0,    // success
+  CODE_00: 0,    // success (FIDO_TYPE: fingerprint)
+  CODE_01: 1,    // (FIDO_TUYPE: face)
   CODE_ERROR: -1
 };
 
