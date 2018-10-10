@@ -6,6 +6,8 @@
 
 Tw.MyTFarePayment = function (rootEl) {
   this.$container = rootEl;
+  this.$uri = null;
+
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService(rootEl);
@@ -28,39 +30,30 @@ Tw.MyTFarePayment.prototype = {
       layer:true,
       title:Tw.POPUP_TITLE.SELECT_PAYMENT_OPTION,
       data:Tw.POPUP_TPL.FARE_PAYMENT_LAYER_DATA
-    }, $.proxy(this._bindEvent, this, isTarget));
+    },
+      $.proxy(this._bindEvent, this, isTarget),
+      $.proxy(this._goLoad, this));
   },
   _bindEvent: function (isTarget, $layer) {
     if (isTarget) {
       $layer.find('.fe-auto').parents('div.cont-box').show();
-      $layer.on('click', '.fe-auto', $.proxy(this._goAuto, this));
+      $layer.on('click', '.fe-auto', $.proxy(this._setEvent, this, 'auto'));
     } else {
       $layer.find('.fe-auto').parents('div.cont-box').hide();
     }
-    $layer.on('click', '.fe-account', $.proxy(this._goAccount, this));
-    $layer.on('click', '.fe-card', $.proxy(this._goCard, this));
-    $layer.on('click', '.fe-point', $.proxy(this._goPoint, this));
-    $layer.on('click', '.fe-sms', $.proxy(this._goSms, this));
+    $layer.on('click', '.fe-account', $.proxy(this._setEvent, this, 'account'));
+    $layer.on('click', '.fe-card', $.proxy(this._setEvent, this, 'card'));
+    $layer.on('click', '.fe-point', $.proxy(this._setEvent, this, 'point'));
+    $layer.on('click', '.fe-sms', $.proxy(this._setEvent, this, 'sms'));
   },
-  _goAuto: function () {
+  _setEvent: function (uri) {
+    this.$uri = uri;
     this._popupService.close();
-    this._historyService.goLoad('/myt/fare/payment/auto');
   },
-  _goAccount: function () {
-    this._popupService.close();
-    this._historyService.goLoad('/myt/fare/payment/account');
-  },
-  _goCard: function () {
-    this._popupService.close();
-    this._historyService.goLoad('/myt/fare/payment/card');
-  },
-  _goPoint: function () {
-    this._popupService.close();
-    this._historyService.goLoad('/myt/fare/payment/point');
-  },
-  _goSms: function () {
-    this._popupService.close();
-    this._historyService.goLoad('/myt/fare/payment/sms');
+  _goLoad: function () {
+    if (this.$uri !== null) {
+      this._historyService.goLoad('/myt/fare/payment/' + this.$uri);
+    }
   },
   _success: function (res) {
     var isTarget = false;
