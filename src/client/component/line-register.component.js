@@ -34,7 +34,7 @@ Tw.LineRegisterComponent.prototype = {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._openRegisterLine(this._parseLineInfo(resp.result), type);
     } else {
-      Tw.Error(resp.code, resp.msg).page();
+      Tw.Error(resp.code, resp.msg).pop();
     }
   },
   _failGetLineInfo: function (error) {
@@ -155,7 +155,7 @@ Tw.LineRegisterComponent.prototype = {
       this._popupService.close();
     } else {
       this._popupService.close();
-      Tw.Error(resp.code, resp.msg).page();
+      Tw.Error(resp.code, resp.msg).pop();
     }
   },
   _failRegisterLineList: function (error) {
