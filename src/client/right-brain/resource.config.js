@@ -1,3 +1,3 @@
 var resource = {
-  version: '38'    // svn commit version
+  version: '42'    // svn commit version
 };
