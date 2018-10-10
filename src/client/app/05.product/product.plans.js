@@ -195,8 +195,6 @@ Tw.ProductPlans.prototype = {
       }, this))
       .value();
 
-      console.log(this._filters.tags);
-
     this._popupService.open(
       {
         hbs: 'MP_02_01',
@@ -213,7 +211,7 @@ Tw.ProductPlans.prototype = {
   _handleOpenSelectFilterPopup: function($layer) {
     $layer.on('click', '.bt-red1', $.proxy(this._handleSelectFilters, this, $layer));
     $layer.on('click', '.resetbtn', $.proxy(this._handleResetFilters, this, $layer));
-    $layer.on('click', '.link', $.proxy(this._handleSelectTag, this));
+    $layer.on('click', '.link', $.proxy(this._openSelectTagPopup, this));
   },
 
   _handleResetFilters: function ($layer) {
@@ -224,6 +222,11 @@ Tw.ProductPlans.prototype = {
       selectedFilters[i].className = selectedFilters[i].className.replace('checked', '');
       selectedFilters[i].children[0].setAttribute('checked', false);
     }
+  },
+
+  _openSelectTagPopup: function (e) {
+    var ALERT = Tw.ALERT_MSG_PRODUCT.ALERT_3_A16;
+    this._popupService.openConfirm(ALERT.MSG, ALERT.TITLE, $.proxy(this._handleSelectTag, this, e.currentTarget));
   },
 
   _handleSelectFilters: function ($layer) {
@@ -240,8 +243,8 @@ Tw.ProductPlans.prototype = {
     this._history.goLoad('/product/plans' + searchFltIds ? '?filters=' + searchFltIds : '');
   },
 
-  _handleSelectTag: function (e) {
-    var selectedTag = e.currentTarget.getAttribute('data-tag-id');
+  _handleSelectTag: function (target) {
+    var selectedTag = target.getAttribute('data-tag-id');
 
     this._popupService.close();
     
