@@ -452,9 +452,9 @@
         top: 50%;
         right: 0;
         margin: -0.78125rem 0 0 0;
-        width: 1.5625rem;
-        height: 1.5625rem;
-        background: url(/img/ico/ico-group.png) no-repeat 0 -20.3125rem;
+        width: 0.9375rem;
+        height: 0.375rem;
+        background: url(/img/ico/ico-group.png) no-repeat -1.9375rem -22.5rem;
         background-size: 3.125rem;
         overflow: hidden;
         color: transparent; }
@@ -752,6 +752,31 @@ li.checkbox.type01 {
     font-size: 0.8125rem;
     line-height: 1.25rem;
     color: #000; }
+
+.radiobox.type05 {
+  position: relative;
+  display: inline-block;
+  width: 3.5rem;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  text-align: center;
+  font-size: 0.6875rem;
+  letter-spacing: -0.04em; }
+  .radiobox.type05:before {
+    content: '';
+    display: block;
+    width: 3.5rem;
+    height: 3.5rem;
+    margin-bottom: 0.625rem;
+    background: #ebf5fe;
+    border: 1px solid #ebf5fe;
+    border-radius: 50%; }
+  .radiobox.type05.checked {
+    font-weight: 700;
+    color: #3b98e6; }
+  .radiobox.type05.checked:before {
+    background-color: #fff;
+    border-color: #3b98e6; }
 
 .radiobox.alignment {
   display: block; }
