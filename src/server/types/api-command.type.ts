@@ -202,9 +202,18 @@ export const API_CMD = {
   BFF_05_0146: { path: '/core-bill/v1/bill-address', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0147: { path: '/core-bill/v1/bill-address-change', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
   BFF_05_0149: { path: '/core-modification/v1/phone-pause-states', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0153: { path: '/core-modification/v1/wire-products-changes', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0155: { path: '/my-t/myinfo/discount-infos', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0156: { path: '/core-modification/v1/wire-troubles', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0157: { path: '/core-modification/v1/wire-troubles-detail', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0158: { path: '/core-modification/v1/wire/penalty-info', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0159: { path: '/core-modification/v1//wireInfo/listGiftProvide', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0161: { path: '/core-product/v1/services/wireless/additions/cnt', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0162: { path: '/core-modification/v1/myinfo/chg-wire-addr-info', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0164: { path: '/core-modification/v1/wire-phone/chang-status', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0166: { path: '/core-product/v1/submain/additions/joininfos', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_05_0167: { path: '/core-modification/v1/wire-registration-detail', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_05_0168: { path: '', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
 
   // RECHARGE
   BFF_06_0001: { path: '/core-recharge/v1/refill-coupons', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
