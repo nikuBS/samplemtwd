@@ -257,21 +257,34 @@
                     <dl class="real-remaining">
                         <dt>요금안내서<a href="/myt/fare/bill/guide" class="ico"></a></dt>
                         <dd>
-                            <p class="remaining-group"><em class="tx-bold"><%= homeData.billData.invMonth %> 청구요금</em><i class="badge badge-all-service ml6">서비스 전체</i></p>
-                            <div class="remaining-amount"><span class="num ff-tg-black">82,500</span><span class="unit">원</span></div>
-                            <div class="remaining-period">사용기간<span class="tx-period">2018.07.01~2018.07.31</span></div>
+                            <p class="remaining-group">
+                                <% if (homeData.billData.type1) { %>
+                                <em class="tx-bold"><%= homeData.billData.invMonth %>월 청구요금</em>
+                                <i class="badge badge-all-service ml6">서비스 전체</i>
+                                <% } else if (homeData.billData.type2) { %>
+                                <em class="tx-bold"><%= homeData.billData.invMonth %>월 청구요금</em>
+                                <% } else if (homeData.billData.type3) { %>
+                                <em class="tx-bold"><%= homeData.billData.invMonth %>월 사용요금</em>
+                                <% } %>
+                            </p>
+                            <div class="remaining-amount"><span class="num ff-tg-black"><%= homeData.billData.chargeAmtTot %></span><span class="unit">원</span></div>
+                            <div class="remaining-period">사용기간<span class="tx-period"><%= homeData.billData.invStartDt %>~<%= homeData.billData.invEndDt %></span></div>
                         </dd>
                     </dl>
                     <div class="fee-info-box pb0">
                         <div class="fee-card-info1">
+                            <% if (homeData.billData.type1 || homeData.billData.type2) { %>
                             <dl>
                                 <dt>사용요금</dt>
-                                <dd class="ff-tg-black">94,560<span class="ff-tg-light"> 원</span></dd>
+                                <dd class="ff-tg-black"><%= homeData.billData.usedAmtTot %><span class="ff-tg-light"> 원</span></dd>
                             </dl>
                             <dl>
                                 <dt>할인요금</dt>
-                                <dd class="ff-tg-black red-tx">-12,060<span class="ff-tg-light"> 원</span></dd>
+                                <dd class="ff-tg-black red-tx"><%= homeData.billData.deduckTot %><span class="ff-tg-light"> 원</span></dd>
                             </dl>
+                            <% } else if (homeData.billData.type3) { %>
+                            <p class="tx">고객님은 현재 통합 청구 이용 중이며<br>할인 금액을 제외한 사용요금으로 조회됩니다</p>
+                            <% } %>
                         </div>
                     </div>
                     <% } else { %>

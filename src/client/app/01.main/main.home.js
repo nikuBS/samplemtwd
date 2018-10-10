@@ -78,14 +78,37 @@ Tw.MainHome.prototype = {
     ]).done($.proxy(this._successBillData, this, element))
       .fail($.proxy(this._failBillData, this));
   },
-  _successBillData: function (element, resp1, resp2) {
-    console.log('bill', resp1, resp2);
+  _successBillData: function (element, charge, used) {
+    var result = {
+      showBill: false
+    };
+    if ( charge.code === Tw.API_CODE.CODE_00 && used.code === Tw.API_CODE.CODE_00 &&
+      charge.result.colClCd !== Tw.MYT_FARE_BILL_CO_TYPE.BROADBAND ) {
+      result = this._parseBillData({ charge: charge.result, used: used.result });
+    }
     var $billTemp = $('#fe-smart-bill');
     var tplBillCard = Handlebars.compile($billTemp.html());
-    element.html(tplBillCard({}));
+    element.html(tplBillCard(result));
   },
   _failBillData: function () {
 
+  },
+  _parseBillData: function (billData) {
+    var repSvc = billData.charge.repSvcYn === 'Y';
+    var totSvc = billData.charge.paidAmtMonthSvcCnt > 1;
+    return {
+      showBill: true,
+      chargeAmtTot: Tw.FormatHelper.addComma(billData.charge.useAmtTot),
+      usedAmtTot: Tw.FormatHelper.addComma(billData.used.useAmtTot),
+      deduckTot: Tw.FormatHelper.addComma(billData.charge.deduckTotInvAmt),
+      invEndDt: Tw.DateHelper.getShortDateNoDot(billData.charge.invDt),
+      invStartDt: Tw.DateHelper.getShortFirstDateNoNot(billData.charge.invDt),
+      invMonth: Tw.DateHelper.getCurrentMonth(billData.charge.invDt),
+      type1: totSvc && repSvc,
+      type2: !totSvc,
+      type3: totSvc && !repSvc
+
+    };
   },
   _getContentData: function (element) {
     this._apiService.request(Tw.API_CMD.BFF_05_0064, {})

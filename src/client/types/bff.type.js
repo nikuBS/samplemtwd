@@ -44,3 +44,8 @@ Tw.HOME_SMART_CARD_E = {
   ADDITIONAL: 'H16'
 };
 
+Tw.MYT_FARE_BILL_CO_TYPE = {
+  TWORLD: 'T',
+  BROADBAND: 'B'
+};
+

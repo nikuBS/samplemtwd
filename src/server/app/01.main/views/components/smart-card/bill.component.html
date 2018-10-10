@@ -4,91 +4,53 @@
 * Date: 2018.10.06
 %>
 <script id="fe-smart-bill" type="text/x-handlebars-template">
+    {{#if showBill}}
     <!-- .cont-box -->
     <div class="cont-box bgnone noborder nogaps-hoz">
         <div class="shadow-box mt30">
             <div class="cont-card-ti"><!-- 링크가 있을 경우 구조 -->
-                <button>
+                <a href="/myt/fare/bill/guide">
                     <span class="card-ti-txt">요금안내서</span>
                     <span class="ico"></span>
-                </button>
+                </a>
             </div>
             <div class="fee-info-box">
                 <div class="fee-card-info0 pt6">
-                    <p class="tit"><em class="tx-bold">8월 청구요금</em><i class="badge badge-all-service ml6">서비스 전체</i></p>
-                    <p class="fee-tx ff-tg-black pt2">82,500<span class="ff-tg-light"> 원</span></p>
-                    <p class="date pt6">사용기간  2018.07.01~2018.07.31</p>
+                    <p class="tit">
+                        {{#if type1}}
+                        <em class="tx-bold">{{invMonth}}월 청구요금</em>
+                        <i class="badge badge-all-service ml6">서비스 전체</i>
+                        {{else if type2}}
+                        <em class="tx-bold">{{invMonth}}월 청구요금</em>
+                        {{else if type3}}
+                        <em class="tx-bold">{{invMonth}}월 사용요금</em>
+                        {{/if}}
+                    </p>
+                    <p class="fee-tx ff-tg-black pt2">{{chargeAmtTot}}<span class="ff-tg-light"> 원</span></p>
+                    <p class="date pt6">사용기간  {{invStartDt}}~{{invEndDt}}</p>
                 </div>
                 <div class="fee-card-info1 mt24">
+                    {{#if type1}}
                     <dl>
                         <dt>사용요금</dt>
-                        <dd class="ff-tg-black">94,560<span class="ff-tg-light"> 원</span></dd>
+                        <dd class="ff-tg-black">{{usedAmtTot}}<span class="ff-tg-light"> 원</span></dd>
                     </dl>
                     <dl>
                         <dt>할인요금</dt>
-                        <dd class="ff-tg-black red-tx">-12,060<span class="ff-tg-light"> 원</span></dd>
+                        <dd class="ff-tg-black red-tx">{{deduckTot}}<span class="ff-tg-light"> 원</span></dd>
                     </dl>
-                </div>
-            </div>
-            <ul class="bt-slice">
-                <li class="bt-white1">
-                    <button>요금납부</button>
-                </li>
-            </ul>
-        </div>
-    </div>
-    <!--// .cont-box -->
-    <!-- .cont-box -->
-    <div class="cont-box bgnone noborder nogaps-hoz">
-        <div class="shadow-box mt30">
-            <div class="cont-card-ti"><!-- 링크가 있을 경우 구조 -->
-                <button>
-                    <span class="card-ti-txt">요금안내서</span>
-                    <span class="ico"></span>
-                </button>
-            </div>
-            <div class="fee-info-box">
-                <div class="fee-card-info0 pt6">
-                    <p class="tit"><em class="tx-bold">8월 청구요금</em></p>
-                    <p class="fee-tx ff-tg-black pt2">82,500<span class="ff-tg-light"> 원</span></p>
-                    <p class="date pt6">사용기간  2018.07.01~2018.07.31</p>
-                </div>
-                <div class="fee-card-info1 mt24">
+                    {{else if type2}}
                     <dl>
                         <dt>사용요금</dt>
-                        <dd class="ff-tg-black">94,560<span class="ff-tg-light"> 원</span></dd>
+                        <dd class="ff-tg-black">{{usedAmtTot}}<span class="ff-tg-light"> 원</span></dd>
                     </dl>
                     <dl>
                         <dt>할인요금</dt>
-                        <dd class="ff-tg-black red-tx">-12,060<span class="ff-tg-light"> 원</span></dd>
+                        <dd class="ff-tg-black red-tx">{{deduckTot}}<span class="ff-tg-light"> 원</span></dd>
                     </dl>
-                </div>
-            </div>
-            <ul class="bt-slice">
-                <li class="bt-white1">
-                    <button>요금납부</button>
-                </li>
-            </ul>
-        </div>
-    </div>
-    <!--// .cont-box -->
-    <!-- .cont-box -->
-    <div class="cont-box bgnone noborder nogaps-hoz">
-        <div class="shadow-box mt30">
-            <div class="cont-card-ti"><!-- 링크가 있을 경우 구조 -->
-                <button>
-                    <span class="card-ti-txt">요금안내서</span>
-                    <span class="ico"></span>
-                </button>
-            </div>
-            <div class="fee-info-box">
-                <div class="fee-card-info0 pt6">
-                    <p class="tit"><em class="tx-bold">8월 사용요금</em></p>
-                    <p class="fee-tx ff-tg-black pt2">82,500<span class="ff-tg-light"> 원</span></p>
-                    <p class="date pt6">사용기간  2018.07.01~2018.07.31</p>
-                </div>
-                <div class="fee-card-info1 mt24">
+                    {{else if type3}}
                     <p class="con-txt3 pt20 pb18">고객님은 현재 통합 청구 이용 중이며<br/>할인 금액을 제외한 사용요금으로 조회됩니다</p>
+                    {{/if}}
                 </div>
             </div>
             <ul class="bt-slice">
@@ -99,6 +61,7 @@
         </div>
     </div>
     <!--// .cont-box -->
+    {{else}}
     <!-- .cont-box -->
     <div class="cont-box bgnone noborder nogaps-hoz">
         <div class="shadow-box mt30">
@@ -117,4 +80,5 @@
         </div>
     </div>
     <!--// .cont-box -->
+    {{/if}}
 </script>
