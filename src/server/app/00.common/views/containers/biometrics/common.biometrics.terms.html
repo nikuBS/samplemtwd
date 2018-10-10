@@ -16,95 +16,109 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div class="wrap step">
-    <!-- #header -->
-    <%- include('../../../../../common/views/components/header.component.html', { title: target + ' 등록/재등록', svcInfo: svcInfo, { step: true } }); %>
-    <!--// #header -->
-    <!-- #contents -->
-    <div id="contents" class="container-wrap">
-        <h2 class="blind">내용</h2>
-        <div class="container">
-            <div class="cont-box">
-                <!-- .widget -->
-                <div class="widget">
-                    <div class="widget-box step">
-                        <h3 class="step-ti"><em>STEP 01</em>약관동의</h3>
-                        <ul class="step-list">
-                            <li class="on">1<span class="blind">약관동의</span></li>
-                            <li>2<span class="blind">본인확인</span></li>
-                            <li>3<span class="blind">지문등록</span></li>
-                        </ul>
-                    </div>
+<div class="wrap">
+    <!-- .popup hbs -->
+    <div class="popup-page tw-popup nobg fixed-bottom h60"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+        <!-- #header -->
+        <div class="header-wrap">
+            <div class="page-header">
+                <div class="header-ti">
+                    <h1>지문 등록/재등록</h1>
                 </div>
-                <!-- //.widget -->
             </div>
-            <!--// .cont-box -->
-            <hr class="cont-sp type1" aria-hidden="true"/>
-            <!-- .cont-box -->
-            <div class="cont-box nogaps">
-                <!-- .list-comp-input -->
-                <div class="list-comp-input-agree">
+        </div>
+        <!--// #header -->
+        <!-- .container-wrap -->
+        <div class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+                <div class="cont-box">
+                    <!-- .widget -->
                     <div class="widget">
-                        <div class="widget-box check">
-                            <ul class="select-list" role="group">
-                                <li>
-                                    <div class="checkbox type01 all" role="checkbox" aria-checked="false"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-                                        <input type="checkbox" name="checkbox" value="" title="값1" aria-labelledby="aria-comp-checkbox1" /><!-- 체크상태일 경우 checked="checked" -->
-                                        <div class="comp-list-layout" id="aria-comp-checkbox1" aria-hidden="true">
-                                            <p class="layout-text">
-                                                <span class="mtext">TBD, TBD, TBD, TBD, TBD, TBD, TBD에 모두 동의합니다.</span>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                        <input type="checkbox" name="checkbox" value="" title="값2" aria-labelledby="aria-comp-checkbox2" /><!-- 체크상태일 경우 checked="false" -->
-                                        <div class="comp-list-layout" id="aria-comp-checkbox2" aria-hidden="true">
-                                            <p class="layout-text">
-                                                <span class="mtext">TBD(필수)</span>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-                                        <input type="checkbox" name="checkbox" value="" title="값3" aria-labelledby="aria-comp-checkbox3" /><!-- 체크상태일 경우 checked="checked" -->
-                                        <div class="comp-list-layout" id="aria-comp-checkbox3" aria-hidden="true">
-                                            <p class="layout-text">
-                                                <span class="mtext">TBD(필수)</span>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-                                        <input type="checkbox" name="checkbox" value="" title="값4" aria-labelledby="aria-comp-checkbox4" /><!-- 체크상태일 경우 checked="checked" -->
-                                        <div class="comp-list-layout" id="aria-comp-checkbox4" aria-hidden="true">
-                                            <p class="layout-text">
-                                                <span class="mtext">TBD(필수)</span>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </li>
+                        <div class="widget-box step">
+                            <h3 class="step-ti"><em>STEP 01</em>약관동의</h3>
+                            <ul class="step-list">
+                                <li class="on">1<span class="blind">약관동의</span></li>
+                                <li>2<span class="blind">본인확인</span></li>
+                                <li>3<span class="blind">지문등록</span></li>
                             </ul>
                         </div>
                     </div>
+                    <!-- //.widget -->
                 </div>
-                <!--// .list-comp-input -->
-            </div>
-            <!--// .cont-box -->
-            <div class="bt-slice full">
-                <li class="bt-red1">
-                    <button disabled>다음</button>
-                </li>
+                <!--// .cont-box -->
+                <hr class="cont-sp type1" aria-hidden="true"/>
+                <!-- .cont-box -->
+                <div class="cont-box nogaps">
+                    <!-- .list-comp-input -->
+                    <div class="list-comp-input-agree">
+                        <div class="widget">
+                            <div class="widget-box check">
+                                <ul class="select-list" role="group">
+                                    <li>
+                                        <div class="checkbox type01 all" role="checkbox" aria-checked="false"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                                            <input type="checkbox" name="checkbox" value="" title="값1" aria-labelledby="aria-comp-checkbox1" /><!-- 체크상태일 경우 checked="checked" -->
+                                            <div class="comp-list-layout" id="aria-comp-checkbox1" aria-hidden="true">
+                                                <p class="layout-text">
+                                                    <span class="mtext">TBD, TBD, TBD, TBD, TBD, TBD, TBD에 모두 동의합니다.</span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+                                            <input type="checkbox" name="checkbox" value="" title="값2" aria-labelledby="aria-comp-checkbox2" /><!-- 체크상태일 경우 checked="false" -->
+                                            <div class="comp-list-layout" id="aria-comp-checkbox2" aria-hidden="true">
+                                                <p class="layout-text">
+                                                    <span class="mtext">TBD(필수)</span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                                            <input type="checkbox" name="checkbox" value="" title="값3" aria-labelledby="aria-comp-checkbox3" /><!-- 체크상태일 경우 checked="checked" -->
+                                            <div class="comp-list-layout" id="aria-comp-checkbox3" aria-hidden="true">
+                                                <p class="layout-text">
+                                                    <span class="mtext">TBD(필수)</span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                                            <input type="checkbox" name="checkbox" value="" title="값4" aria-labelledby="aria-comp-checkbox4" /><!-- 체크상태일 경우 checked="checked" -->
+                                            <div class="comp-list-layout" id="aria-comp-checkbox4" aria-hidden="true">
+                                                <p class="layout-text">
+                                                    <span class="mtext">TBD(필수)</span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!--// .list-comp-input -->
+                </div>
+                <!--// .cont-box -->
+                <div class="bt-fixed-area">
+                    <ul class="bt-slice full">
+                        <li class="bt-red1">
+                            <button disabled>다음</button>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
+        <!-- // .container-wrap -->
+        <!-- .popup-closeBtn -->
+        <button class="prev-step fe-common-back">취소</button>
+        <!--// .popup-closeBtn -->
     </div>
-    <!--// #contents -->
+    <!-- // .popup hbs -->
 </div>
 </body>
-
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
