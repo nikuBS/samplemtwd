@@ -174,6 +174,21 @@ Tw.POPUP_TPL = {
       ]
     }
   ],
+  FARE_PAYMENT_LIMIT: [
+    {
+      'list': [
+        {'option': 'limit', 'attr': 'id="500000"', value: '50만원'},
+        {'option': 'limit', 'attr': 'id="300000"', value: '30만원'},
+        {'option': 'limit', 'attr': 'id="200000"', value: '20만원'},
+        {'option': 'limit', 'attr': 'id="150000"', value: '15만원'},
+        {'option': 'limit', 'attr': 'id="120000"', value: '12만원'},
+        {'option': 'limit', 'attr': 'id="60000"', value: '6만원'},
+        {'option': 'limit', 'attr': 'id="50000"', value: '5만원'},
+        {'option': 'limit', 'attr': 'id="30000"', value: '3만원'},
+        {'option': 'limit', 'attr': 'id="10000"', value: '1만원'}
+      ]
+    }
+  ],
   PAYMENT_HISTORY_TYPE: [
     {
       list: [

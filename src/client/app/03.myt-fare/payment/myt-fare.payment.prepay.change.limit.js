@@ -7,6 +7,7 @@
 Tw.MyTFarePaymentPrepayChangeLimit = function (rootEl, title) {
   this.$container = rootEl;
   this.$title = title;
+  this.$isClicked = false;
 
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -18,14 +19,7 @@ Tw.MyTFarePaymentPrepayChangeLimit = function (rootEl, title) {
 
 Tw.MyTFarePaymentPrepayChangeLimit.prototype = {
   _init: function () {
-    this._initVariables();
     this._getLimit();
-  },
-  _initVariables: function () {
-    this._monthAmountList = [];
-    this._dayAmountList = [];
-    this._onceAmountList = [];
-    this.$isClicked = false;
   },
   _getLimit: function () {
     var apiName = this._getLimitApiName();
@@ -92,15 +86,15 @@ Tw.MyTFarePaymentPrepayChangeLimit.prototype = {
       .text(this._getLittleAmount(result.onceLimit) + Tw.CURRENCY_UNIT.TEN_THOUSAND);
   },
   _setLimitEvent: function ($layer) {
-    $layer.on('click', '.fe-month', $.proxy(this._selectAmount, this, this._monthAmountList));
-    $layer.on('click', '.fe-day', $.proxy(this._selectAmount, this, this._dayAmountList));
-    $layer.on('click', '.fe-once', $.proxy(this._selectAmount, this, this._onceAmountList));
+    $layer.on('click', '.fe-month', $.proxy(this._selectAmount, this));
+    $layer.on('click', '.fe-day', $.proxy(this._selectAmount, this));
+    $layer.on('click', '.fe-once', $.proxy(this._selectAmount, this));
     $layer.on('click', '.fe-change', $.proxy(this._change, this, $layer));
   },
   _getLittleAmount: function (amount) {
     return amount / 10000;
   },
-  _selectAmount: function ($list, event) {
+  _selectAmount: function (event) {
     var $target = $(event.currentTarget);
     var $amount = $target.attr('id');
 
@@ -108,11 +102,20 @@ Tw.MyTFarePaymentPrepayChangeLimit.prototype = {
       hbs: 'actionsheet_select_a_type',
       layer: true,
       title: Tw.POPUP_TITLE.SELECT_AMOUNT,
-      data: this._getAmountList($list, $amount)
-    }, $.proxy(this._selectPopupCallback, this, $target));
+      data: Tw.POPUP_TPL.FARE_PAYMENT_LIMIT
+    }, $.proxy(this._selectPopupCallback, this, $target, $amount));
   },
-  _selectPopupCallback: function ($target, $layer) {
+  _selectPopupCallback: function ($target, $amount, $layer) {
+    this._setLayerData($layer, $amount);
     $layer.on('click', '.amount', $.proxy(this._setSelectedValue, this, $target));
+  },
+  _setLayerData: function ($layer, $amount) {
+    $layer.find('.limit').each(function () {
+      var $this = $(this);
+      if ($this.attr('id') > $amount) {
+        $this.hide();
+      }
+    });
   },
   _setSelectedValue: function ($target, event) {
     var $selectedValue = $(event.currentTarget);
@@ -120,26 +123,6 @@ Tw.MyTFarePaymentPrepayChangeLimit.prototype = {
     $target.text($selectedValue.text());
 
     this._popupService.close();
-  },
-  _getAmountList: function ($amountList, $amount) {
-    if (Tw.FormatHelper.isEmpty($amountList)) {
-      var listObj = {
-        'list': []
-      };
-      var firstAmt = 10000;
-      var strdAmt = $amount / firstAmt;
-
-      for (var i = strdAmt; i >= 1; i--) {
-        var obj = {
-          'option': 'amount',
-          'attr': 'id="' + i * firstAmt + '"',
-          'value': i + Tw.CURRENCY_UNIT.TEN_THOUSAND
-        };
-        listObj.list.push(obj);
-      }
-      $amountList.push(listObj);
-    }
-    return $amountList;
   },
   _change: function ($layer) {
     var apiName = this._changeLimitApiName();
