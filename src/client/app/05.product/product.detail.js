@@ -6,6 +6,7 @@
 
 Tw.ProductDetail = function(rootEl) {
   this.$container = rootEl;
+  this._template = Handlebars.compile($('#tpl_recommended_rate_item').html());
   this._historyService = new Tw.HistoryService();
   this._popupService = new Tw.PopupService();
   this._apiService = Tw.Api;
@@ -17,22 +18,24 @@ Tw.ProductDetail = function(rootEl) {
 Tw.ProductDetail.prototype = {
 
   _init: function() {
-    this.prodId = this.$container.data('prod_id');
-    this.settingButtonList = [];
-
-    this.$btnSettingList.each(function(index, item) {
-      this.settingButtonList.push({ value: $(item).text(), attr: 'data-url="' + index + '"' });
-    }.bind(this));
-    this.$btnSettingList.parent().remove();
+    this._prodId = this.$container.data('prod_id');
+    this._ctgCd = this.$container.data('ctg_cd');
+    this._filterIds = this.$container.data('filter_ids');
+    this._listAction = this.$container.data('list_action');
+    this._loadRecommendedrateList();
   },
 
   _cachedElement: function() {
     this.$btnList = this.$container.find('.fe-btn_list');
-    this.$btnSettingList = this.$container.find('.fe-btn_setting_list');
+    this.$btnJoin = this.$container.find('.fe-btn_join');
+    this.$recommendRateList = this.$container.find('.fe-recommended_rate_list');
+    this.$btnRecommendRateListMore = this.$container.find('.fe-btn_recommended_rate_list_more');
   },
 
   _bindEvent: function() {
     this.$btnList.on('click', 'button', $.proxy(this._goBtnLink, this));
+    this.$btnJoin.on('click', $.proxy(this._goJoin, this));
+    this.$btnRecommendRateListMore.on('click', $.proxy(this._goRecommendRateMoreList, this));
   },
 
   _getJoinTermCd: function(typcd) {
@@ -67,8 +70,23 @@ Tw.ProductDetail.prototype = {
 
     this._apiService.request(Tw.API_CMD.BFF_10_0007, {
       joinTermCd: joinTermCd
-    }, null, this.prodId)
+    }, null, this._prodId)
       .done($.proxy(this._procAdvanceCheck, this, btnLink));
+  },
+
+  _goJoin: function() {
+    this._apiService.request(Tw.API_CMD.BFF_10_0007, {
+      joinTermCd: '01'
+    }, null, this._prodId)
+      .done($.proxy(this._goJoinResult, this));
+  },
+
+  _goJoinResult: function(resp) {
+    if (resp.code !== Tw.API_CODE.CODE_00) {
+      return Tw.Error(resp.code, resp.msg).pop();
+    }
+
+    this._historyService.goLoad('/product/join/' + this._prodId);
   },
 
   _openSettingPop: function() {
@@ -77,7 +95,7 @@ Tw.ProductDetail.prototype = {
       layer: true,
       title: Tw.POPUP_TITLE.SELECT,
       data: [{
-        'list': this.settingButtonList
+        'list': []
       }]
     }, $.proxy(this._bindPopupEvent, this), null, 'setting_pop');
   },
@@ -96,6 +114,43 @@ Tw.ProductDetail.prototype = {
     }
 
     this._historyService.goLoad(btnLink);
+  },
+
+  _loadRecommendedrateList: function() {
+    this._ctgCd = 'F01100'; // @todo dummy data remove
+
+    this._apiService.request(Tw.API_CMD.BFF_10_0031, {
+      idxCtgCd: this._ctgCd,
+      searchFltIds: this._filterIds,
+      searchCount: 5
+    }).done($.proxy(this._appendRecommendList, this));
+  },
+
+  _appendRecommendList: function(resp) {
+    if (resp.code !== Tw.API_CODE.CODE_00 || resp.result.productCount < 1) {
+      return;
+    }
+
+    if (resp.result.productCount > 5) {
+      this.$btnRecommendRateListMore.show();
+    }
+
+    this.$recommendRateList.find('.recommendedrate-list')
+      .html(this._template({
+        list: resp.result.products.map(function(item) {
+          var isBasFeeAmt = isNaN(parseInt(item.basFeeAmt, 10));
+          return Object.assign(item, {
+            basFeeAmt: isBasFeeAmt ? item.basFeeAmt : Tw.FormatHelper.addComma(item.basFeeAmt),
+            isNumberBasFee: !isBasFeeAmt
+          });
+        })
+      }));
+
+    this.$recommendRateList.show();
+  },
+
+  _goRecommendRateMoreList: function() {
+    this._historyService.goLoad('/product/' + this._listAction + '?idxCtgCd=' + this._ctgCd + '&searchLastProdId=' + this._prodId);
   }
 
 };
