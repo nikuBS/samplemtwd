@@ -229,3 +229,10 @@ Tw.MYT_DATA_CHARGE_TYPE_LIST = [
   {'value':'팅 요금 선물'},
   {'value':'데이터 음성 리필'}
 ];
+
+Tw.PRODUCT_PLANS_ORDER = [
+  {'value':'추천순'},
+  {'value':'높은 가격순'},
+  {'value':'낮은 가격순'}
+];
+

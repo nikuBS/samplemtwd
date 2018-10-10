@@ -34,7 +34,8 @@ Tw.POPUP_TITLE = {
   SELECT_PAYMENT_TYPE: '납부 유형',
   // SELECT_CARD_TYPE: '일시불',
   NOT_FAMILY: '리필쿠폰 선물 가능한 가족이 아닙니다.',
-  SELECT_CHARGE_TYPE: '충전/선물 유형'
+  SELECT_CHARGE_TYPE: '충전/선물 유형',
+  SELECT_ORDER: '정렬 기준을 선택해주세요'
 };
 
 Tw.POPUP_CONTENTS = {

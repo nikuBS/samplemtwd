@@ -22,7 +22,7 @@
         <!--// #header -->
         <!-- #contents -->
         <div id="contents" class="container-wrap">
-            <h2 class="blind">내용</h2>
+            <h2 class="blind">금용</h2>
             <div class="container">
                 <!-- 사용중인 상품 -->
                 <% if (svcInfo) { %>
@@ -42,7 +42,7 @@
                 <!--//사용중인 상품 -->
 
                 <div class="ti-caption-gray">
-                    <button class="bt-select" title="정렬 선택" aria-haspopup="true">추천순</button>
+                    <button class="bt-select fe-select-order" title="정렬 선택" aria-haspopup="true">추천순</button>
                     <div class="num">
                         <button class="bt-select" title="조건 선택" aria-haspopup="true">
                             <% const filters = plans.searchOption.searchFltIds; %>
@@ -88,14 +88,13 @@
                             </li>
                         <% } %>
                     </ul>
+
                     <% const leftCount = plans.productCount - products.length; %>
-                    <% if (leftCount > 0) { %>
-                    <div class="bt-more gap-style">
+                    <div class="bt-more gap-style <%= leftCount ? '' : 'none' %>"">
                         <button data-last-plan="<%= products[products.length - 1].prodId %>" data-left-count="<%= leftCount %>">
                             더보기(<%= leftCount %>)
                         </button>
                     </div>
-                    <% } %>
                 </div>
                 <!-- //이런 요금제는 어떠세요? -->
 
