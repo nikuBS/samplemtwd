@@ -48,6 +48,7 @@ Tw.MainHome.prototype = {
   },
   _bindEvent: function () {
     this.$elBarcode.on('click', $.proxy(this._onClickBarcode, this));
+    this.$container.on('click', '.fe-bt-go-recharge', $.proxy(this._onClickBtRecharge, this));
 
   },
   _openLineResisterPopup: function () {
@@ -255,8 +256,9 @@ Tw.MainHome.prototype = {
   _failRrchargeData: function () {
 
   },
-  _onClickBtRecharge: function () {
-    // TODO: 충전하기 레이어
+  _onClickBtRecharge: function ($event) {
+    $event.stopPropagation();
+    new Tw.ImmediatelyRechargeLayer(this.$container);
   },
 
   _elementScrolled: function (element) {

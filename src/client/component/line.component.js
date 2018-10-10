@@ -39,20 +39,21 @@ Tw.LineComponent.prototype = {
 
     this.$btLine.on('click', $.proxy(this.onClickLine, this, selectedMgmt, urlAuth));
   },
-  onClickLine: function (selectedMgmt, urlAuth) {
+  onClickLine: function (selectedMgmt, urlAuth, $event) {
+    $event.stopPropagation();
     this._selectedMgmt = selectedMgmt;
     this._urlAuth = urlAuth;
     this._getLineList();
   },
   _getLineList: function () {
-    if ( Tw.FormatHelper.isEmpty(this._lineList) ) {
+    // if ( Tw.FormatHelper.isEmpty(this._lineList) ) {
       this._apiService.request(Tw.NODE_CMD.GET_ALL_SVC, {})
         .done($.proxy(this._successGetLineList, this));
       // $.ajax('/mock/auth.line.json')
       //   .done($.proxy(this._successGetLineList, this));
-    } else {
-      this._openListPopup(this._lineList);
-    }
+    // } else {
+    //   this._openListPopup(this._lineList);
+    // }
 
   },
   _successGetLineList: function (resp) {
