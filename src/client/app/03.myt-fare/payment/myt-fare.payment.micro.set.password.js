@@ -12,7 +12,6 @@ Tw.MyTFarePaymentMicroSetPassword = function (rootEl, $target) {
   this._commonHelper = Tw.CommonHelper;
   this._validation = Tw.ValidationHelper;
 
-  this._historyService = new Tw.HistoryService(rootEl);
   this._init($target);
 };
 
@@ -92,13 +91,9 @@ Tw.MyTFarePaymentMicroSetPassword.prototype = {
     this.$setBtn.text(btnName);
   },
   _bindEvent: function () {
-    this.$layer.on('click', '.fe-common-back', $.proxy(this._goBack, this));
     this.$layer.on('keyup', '.required-input-field', $.proxy(this._checkIsAbled, this));
     this.$layer.on('click', '.cancel', $.proxy(this._checkIsAbled, this));
     this.$layer.on('click', '.fe-set', $.proxy(this._setPassword, this));
-  },
-  _goBack: function () {
-    this._historyService.goBack();
   },
   _checkIsAbled: function () {
     var isValid = false;

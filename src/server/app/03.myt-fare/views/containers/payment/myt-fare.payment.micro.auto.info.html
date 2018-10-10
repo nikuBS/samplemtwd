@@ -5,7 +5,7 @@
 %>
 
 <% include ../../components/start.component.html %>
-<body class="bg-white">
+<body>
     <!-- #skip_navigation -->
     <div id="skipNav" class="skip_navi">
         <ul>
@@ -15,135 +15,106 @@
         </ul>
     </div>
     <!--// #skip_navigation -->
-    <div id="myt-fare-payment-micro-auto-info" class="wrap step">
-        <!-- #header -->
-        <%- include('../../../../../common/views/components/header.component.html',
-        { title: '변경 및 해지', svcInfo: svcInfo, option:{ back: 'step' } }); %>
-        <!--// #header -->
-        <!-- #contents -->
-        <div id="contents" class="container-wrap">
-            <h2 class="blind">내용</h2>
-            <div class="container">
-
-                <!-- .cont-box -->
-                <div class="cont-box">
-                    <div class="cont-tit-wrap">
-                        <span class="tit-small">자동 선결제</span>
-                        <span class="tit-big"><%= autoCardInfo.cardCdNm %> <em><%= autoCardInfo.cardNum %></em></span>
+    <div id="myt-fare-payment-micro-auto-info" class="wrap">
+        <div class="popup-page tw-popup">
+            <!-- #header -->
+            <div class="header-wrap">
+                <div class="page-header">
+                    <div class="header-ti">
+                        <h1>변경 및 해지</h1>
                     </div>
-                    <div class="basic-list bg-type mt14">
-                        <ul>
-                            <li>
-                                <span class="title">선결제 금액</span>
-                                <span class="tx-cont"><%= autoCardInfo.autoChargeAmount %> 원</span>
+                </div>
+            </div>
+            <!--// #header -->
+            <!-- #contents -->
+            <div class="container-wrap">
+                <h2 class="blind">내용</h2>
+                <div class="container">
+                    <!-- .cont-box -->
+                    <div class="cont-box">
+                        <div class="cont-tit-wrap">
+                            <span class="tit-small">자동 선결제</span>
+                            <span class="tit-big"><%= autoCardInfo.cardCdNm %> <em><%= autoCardInfo.cardNum %></em></span>
+                        </div>
+                        <div class="basic-list bg-type mt14">
+                            <ul>
+                                <li>
+                                    <span class="title">선결제 금액</span>
+                                    <span class="tx-cont"><%= autoCardInfo.autoChargeAmount %> 원</span>
+                                </li>
+                                <li>
+                                    <span class="title">기준 금액</span>
+                                    <span class="tx-cont"><%= autoCardInfo.autoChargeStandardAmount %> 원</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <ul class="bt-slice item-two mt20">
+                            <li class="bt-blue1">
+                                <button class="fe-auto-change">변경</button>
                             </li>
-                            <li>
-                                <span class="title">기준 금액</span>
-                                <span class="tx-cont"><%= autoCardInfo.autoChargeStandardAmount %> 원</span>
+                            <li class="bt-blue1">
+                                <button class="fe-auto-cancel">해지</button>
                             </li>
                         </ul>
                     </div>
-                    <ul class="bt-slice item-two mt20">
-                        <li class="bt-blue1">
-                            <button class="fe-auto-change">변경</button>
-                        </li>
-                        <li class="bt-blue1">
-                            <button class="fe-auto-cancel">해지</button>
-                        </li>
-                    </ul>
-                </div>
-                <!--// .cont-box -->
+                    <!--// .cont-box -->
 
-                <hr class="cont-sp type1" aria-hidden="true"/>
+                    <hr class="cont-sp type1" aria-hidden="true"/>
 
-                <!-- .cont-box -->
-                <div class="cont-box noborder">
-                    <ul class="state-list fe-history-list" data-cnt="<%= autoPrepay.totalCnt %>">
-                        <% if (autoPrepay) { %>
-                        <% for (var i = 0; i < autoPrepay.length; i++) { %>
-                        <li>
-                            <div class="cont-tit-wrap">
-                                <span class="tit-md fe-type"><%= autoPrepay[i].name %></span>
-                            </div>
-                            <div class="basic-list mt24">
-                                <ul>
-                                    <li>
-                                        <span class="title color-gray">일시</span>
-                                        <span class="tx-cont fe-date"><%= autoPrepay[i].date %></span>
-                                    </li>
-                                    <% if (autoPrepay[i].autoChrgReqClCd !== 'F') { %>
-                                    <li class="fe-detail">
-                                        <span class="title color-gray">카드정보</span>
-                                        <span class="tx-cont fe-card-info"><%= autoPrepay[i].cardNm %><br /><%= autoPrepay[i].cardNm %></span>
-                                    </li>
-                                    <li class="fe-detail">
-                                        <span class="title color-gray">선결제 금액</span>
-                                        <span class="tx-cont"><%= autoPrepay[i].autoChrgAmount %>원</span>
-                                    </li>
-                                    <li class="fe-detail">
-                                        <span class="title color-gray">기준금액</span>
-                                        <span class="tx-cont"><%= autoPrepay[i].autoChrgStrdAmount %>원</span>
-                                    </li>
-                                    <% } %>
-                                </ul>
-                            </div>
-                        </li>
-                        <% } %>
-                        <% } %>
-                        <li>
-                            <div class="cont-tit-wrap">
-                                <span class="tit-md">해지</span>
-                            </div>
-                            <div class="basic-list mt24">
-                                <ul>
-                                    <li>
-                                        <span class="title color-gray">일시</span>
-                                        <span class="tx-cont"> 2018.12.11 17:23:42</span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="cont-tit-wrap">
-                                <span class="tit-md">신규</span>
-                            </div>
-                            <div class="basic-list mt24">
-                                <ul>
-                                    <li>
-                                        <span class="title color-gray">일시</span>
-                                        <span class="tx-cont"> 2018.12.11 17:23:42</span>
-                                    </li>
-                                    <li>
-                                        <span class="title color-gray">카드정보</span>
-                                        <span class="tx-cont">신한카드<br />436420********</span>
-                                    </li>
-                                    <li>
-                                        <span class="title color-gray">선결제 금액</span>
-                                        <span class="tx-cont">40,000원</span>
-                                    </li>
-                                    <li>
-                                        <span class="title color-gray">기준금액</span>
-                                        <span class="tx-cont">30,000원</span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-                <!--// .cont-box -->
-                <% if (autoPrepay.length > 20) { %>
-                <div class="cont-box bgnone nogaps">
-                    <div class="bt-more fe-more-btn">
-                        <button>더보기 <span class="fe-more-length">(<%= autoPrepay.length - 20 %>)</span></button>
+                    <!-- .cont-box -->
+                    <div class="cont-box noborder">
+                        <ul class="state-list fe-history-list" data-cnt="<%= autoPrepay.totalCnt %>">
+                            <% if (autoPrepay) { %>
+                            <% for (var i = 0; i < autoPrepay.length; i++) { %>
+                            <li>
+                                <div class="cont-tit-wrap">
+                                    <span class="tit-md fe-type"><%= autoPrepay[i].name %></span>
+                                </div>
+                                <div class="basic-list mt24">
+                                    <ul>
+                                        <li>
+                                            <span class="title color-gray">일시</span>
+                                            <span class="tx-cont fe-date"><%= autoPrepay[i].date %></span>
+                                        </li>
+                                        <% if (autoPrepay[i].autoChrgReqClCd !== 'F') { %>
+                                        <li class="fe-detail">
+                                            <span class="title color-gray">카드정보</span>
+                                            <span class="tx-cont fe-card-info"><%= autoPrepay[i].cardNm %><br /><%= autoPrepay[i].cardNm %></span>
+                                        </li>
+                                        <li class="fe-detail">
+                                            <span class="title color-gray">선결제 금액</span>
+                                            <span class="tx-cont"><%= autoPrepay[i].autoChrgAmount %>원</span>
+                                        </li>
+                                        <li class="fe-detail">
+                                            <span class="title color-gray">기준금액</span>
+                                            <span class="tx-cont"><%= autoPrepay[i].autoChrgStrdAmount %>원</span>
+                                        </li>
+                                        <% } %>
+                                    </ul>
+                                </div>
+                            </li>
+                            <% } %>
+                            <% } %>
+                        </ul>
+                    </div>
+                    <!--// .cont-box -->
+                    <% if (autoPrepay.length > 20) { %>
+                    <div class="cont-box bgnone nogaps">
+                        <div class="bt-more fe-more-btn">
+                            <button>더보기 <span class="fe-more-length">(<%= autoPrepay.length - 20 %>)</span></button>
+                        </div>
+                    </div>
+                    <% } %>
+                    <div class="bt-top"><!-- 2018-09-21 수정 -->
+                        <button>top으로 이동</button>
                     </div>
                 </div>
-                <% } %>
-                <div class="bt-top"><!-- 2018-09-21 수정 -->
-                    <button>top으로 이동</button>
-                </div>
             </div>
+            <!--// #contents -->
+            <!-- .popup-closeBtn -->
+            <button class="prev-step fe-common-back">취소</button>
+            <!--// .popup-closeBtn -->
         </div>
-        <!--// #contents -->
     </div>
 </body>
 <% include ../../components/javascript.component.html %>

@@ -39,14 +39,10 @@ Tw.MyTFarePaymentPrepayPay.prototype = {
     this.$cardPw = this.$container.find('.fe-card-pw');
   },
   _bindEvent: function () {
-    this.$container.on('click', '.fe-common-back', $.proxy(this._goBack, this));
     this.$container.on('keyup', '.required-input-field', $.proxy(this._checkIsAbled, this));
     this.$container.on('click', '.cancel', $.proxy(this._checkIsAbled, this));
     this.$container.on('click', '.fe-select-card-type', $.proxy(this._selectCardType, this));
     this.$container.on('click', '.fe-check-pay', $.proxy(this._checkPay, this));
-  },
-  _goBack: function () {
-    this._historyService.goBack();
   },
   _checkIsAbled: function () {
     if (this.$prepayAmount.val() !== '' && this.$cardNumber.val() !== '' &&

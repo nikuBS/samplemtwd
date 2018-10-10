@@ -47,14 +47,10 @@ Tw.MyTFarePaymentPoint.prototype = {
     }, $.proxy(this._setPoint, this));
   },
   _setPoint: function ($layer) {
-    $layer.on('click', '.fe-common-back', $.proxy(this._goBack, this));
     $layer.on('keyup', '.fe-point-card-number', $.proxy(this._checkIsLayerAbled, this, $layer));
     $layer.on('change', '.fe-cashbag-agree', $.proxy(this._checkIsLayerAbled, this, $layer));
     $layer.on('click', '.cancel', $.proxy(this._checkIsLayerAbled, this, $layer));
     $layer.on('click', '.fe-get', $.proxy(this._getPoint, this, $layer));
-  },
-  _goBack: function () {
-    this._historyService.goBack();
   },
   _checkIsLayerAbled: function ($layer) {
     if ($layer.find('.fe-point-card-number').val() !== '' &&
