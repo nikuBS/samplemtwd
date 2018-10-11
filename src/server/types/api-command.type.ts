@@ -216,6 +216,7 @@ export const API_CMD = {
   BFF_05_0166: { path: '/core-product/v1/submain/additions/joininfos', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0167: { path: '/core-modification/v1/wire-registration-detail', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0168: { path: '', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_05_0175: { path: '/core-bill/v1/no-contract-plan-points', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
 
   // RECHARGE
   BFF_06_0001: { path: '/core-recharge/v1/refill-coupons', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
@@ -567,6 +568,11 @@ export const API_ADD_SVC_ERROR = {
   BIL0031: 'BIL0031', // 미성년자는 이용할 수 없습니다
   BIL0033: 'BIL0033', // 휴대폰 결제 차단 고객은 사용이 제한된 메뉴입니다
   BIL0034: 'BIL0034', // 소액결제 부가서비스 미가입자는 이용할 수 없습니다
+};
+
+export const API_T_FAMILY_ERROR = {
+  BLN0010: 'BLN0010', // T가족모아 가입 가능한 요금제이나 미가입
+  BLN0011: 'BLN0011'  // 	T가족모아 가입 불가능한 요금제
 };
 
 
