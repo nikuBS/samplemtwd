@@ -23,6 +23,30 @@ Tw.MyTJoinInfoDiscount.prototype = {
     this._cachedElement();
     this._bindEvent();
 
+    // var title = '타이틀11';
+    // var contents = '<div class="testCon" >컨텐츠11</div>';
+    // var linlList = [{ style_class: 'testCon', txt: '링크리스트' }];
+    // var btName = '확인';
+    // var noticeList = [{ tit: 'noticeList tit', con: 'noticeList con' }];
+    // var list = [
+    //   {
+    //     attr: 'class="hbs-menu-list"',
+    //     text: '001_텍스트'
+    //   },
+    //   {
+    //     attr: 'class="hbs-menu-list"',
+    //     text: '002_텍스트'
+    //   }
+    // ];
+
+    // this._popupService.openTypeA(title, contents);
+    // this._popupService.openOneBtTypeB(title, contents, linlList);
+
+    // this._popupService.openAlert(contents, title, btName);
+    // this._popupService.openConfirm(contents, title, btName);
+
+
+
   },
   _cachedElement: function () {
     // this.$entryTpl = $('#fe-entryTpl');
@@ -31,9 +55,25 @@ Tw.MyTJoinInfoDiscount.prototype = {
   },
   _bindEvent: function () {
     this.$container.on('click', '[data-target="monBtn"]', $.proxy(this._monthBtnEvt, this));
+    this.$container.on('click', '[data-target="detailList"]', $.proxy(this._detailListEvt, this)); // 월별상세할인내역
 
   },
   //--------------------------------------------------------------------------[EVENT]
+  _detailListEvt: function(e) {
+    var $target = $(e.currentTarget);
+    Tw.Logger.info('[svcAgrmtDcId]', $target.attr('data-value'));
+
+    var dataValObj = JSON.parse( $target.attr('data-value') );
+
+    Tw.Logger.info('[dataValObj]', dataValObj);
+
+    var param = $.param(dataValObj);
+
+    Tw.Logger.info('[dataValObj > param]', param );
+
+    this._goLoad('/myt/join/info/discount/month?' + param);
+
+  },
   _monthBtnEvt: function (e) {
     // Tw.Logger.info('[버튼 클릭]', e);
     var $target = $(e.currentTarget);

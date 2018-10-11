@@ -152,11 +152,11 @@ class MytJoinInfoDiscount extends TwViewController {
     // -------------------------------------------------------------[1. 요금약정할인 정보]
     /*
     * 상품코드 분류(priceList.prodId)
-    * 요금약정할인24 (730) : NA00003677 | fee_type_A
-    * 테블릿 약정할인 12 (뉴태블릿약정) : NA00003681 | fee_type_B
+    * 요금약정할인24 (730) : NA00003677 | fee_type_A | 상세할인 내역보기
+    * 테블릿 약정할인 12 (뉴태블릿약정) : NA00003681 | fee_type_B | 상세할인 내역보기
     * 태블릿약정(구태블릿약정) : tablet 객체로 구분 | fee_type_C
     * 와이브로약정할인 : wibro 객체로 구분 | fee_type_D
-    * 선택약정할인제도 : NA00004430 | fee_type_E
+    * 선택약정할인제도 : NA00004430 | fee_type_E | 상세할인 내역보기
     * 해당분류에 포함되지않는 경우 | fee_noType
     */
 
@@ -168,18 +168,34 @@ class MytJoinInfoDiscount extends TwViewController {
           case 'NA00003677':
             priceList[i].typeStr = 'fee_type_A';
             priceList[i].titNm = MYT_JOIN_CONTRACT_TERMINAL.FEE_TYPE_A.TIT_NM;
+            priceList[i].svcAgrmtDcObj = {
+              svcAgrmtDcId : priceList[i].svcAgrmtDcId || '',
+              svcAgrmtDcCd : priceList[i].svcAgrmtDcCd || ''
+            };
             break;
           case 'NA00003681':
             priceList[i].typeStr = 'fee_type_B';
             priceList[i].titNm = MYT_JOIN_CONTRACT_TERMINAL.FEE_TYPE_B.TIT_NM;
+            priceList[i].svcAgrmtDcObj = {
+              svcAgrmtDcId : priceList[i].svcAgrmtDcId || '',
+              svcAgrmtDcCd : priceList[i].svcAgrmtDcCd || ''
+            };
             break;
           case 'NA00004430':
             priceList[i].typeStr = 'fee_type_E';
             priceList[i].titNm = MYT_JOIN_CONTRACT_TERMINAL.FEE_TYPE_E.TIT_NM;
+            priceList[i].svcAgrmtDcObj = {
+              svcAgrmtDcId : priceList[i].svcAgrmtDcId || '',
+              svcAgrmtDcCd : priceList[i].svcAgrmtDcCd || ''
+            };
             break;
           default:
             priceList[i].typeStr = 'fee_noType';
             priceList[i].titNm = priceList[i].disProdNm; // 할인 상품명
+            priceList[i].svcAgrmtDcObj = {
+              svcAgrmtDcId : priceList[i].svcAgrmtDcId || '',
+              svcAgrmtDcCd : priceList[i].svcAgrmtDcCd || ''
+            };
         }
 
         priceList[i].salePay = FormatHelper.addComma(priceList[i].agrmtDcAmt);
@@ -194,6 +210,10 @@ class MytJoinInfoDiscount extends TwViewController {
     if ( _.size(tablet) > 0 ) {
       tablet.titNm = MYT_JOIN_CONTRACT_TERMINAL.FEE_TYPE_C.TIT_NM; // 태블릿약정(구태블릿약정)
       tablet.typeStr = 'fee_type_C';
+      tablet.svcAgrmtDcObj = {
+        svcAgrmtDcId : tablet.svcAgrmtDcId || '',
+        svcAgrmtDcCd : tablet.svcAgrmtDcCd || ''
+      };
       tablet.salePay = FormatHelper.addComma(tablet.agrmtDcAmt);
       tablet.agrmtDayCntNum = FormatHelper.addComma(tablet.agrmtDayCnt);
       tablet.aGrmtPenAmtNum = FormatHelper.addComma(tablet.aGrmtPenAmt);
@@ -209,6 +229,10 @@ class MytJoinInfoDiscount extends TwViewController {
     if ( _.size(wibro) > 0 ) {
       wibro.titNm = MYT_JOIN_CONTRACT_TERMINAL.FEE_TYPE_D.TIT_NM; // 와이브로 약정
       wibro.typeStr = 'fee_type_D';
+      wibro.svcAgrmtDcObj = {
+        svcAgrmtDcId : wibro.svcAgrmtDcId || '',
+        svcAgrmtDcCd : wibro.svcAgrmtDcCd || ''
+      };
       wibro.salePay = FormatHelper.addComma(wibro.agrmtDcAmt);
       thisMain._proDateUseDt(
         wibro,
