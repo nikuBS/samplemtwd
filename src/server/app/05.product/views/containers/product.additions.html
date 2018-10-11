@@ -32,19 +32,19 @@
                           <h3 class="title">사용중인 상품</h3>
                           <p class="text">band 데이터 퍼펙트S</p>
                       </a> -->
-                     <button type="button" class="submain-myfeeproducts">
+                    <a href="/myt/join/product-service#additions" class="submain-myfeeproducts">
                          <h3 class="title">사용중인 상품</h3>
                          <p class="text"><span class="tx-bold"><%= additionData.myAdditions.recentlyJoinsProdNm %></span> 외 <%= additionData.myAdditions.addProdCnt %>건</p>
-                     </button>
+                    </a>
                  </div>
               </div>
               <% } %>
               <!--//사용중인 상품 -->
 
               <div class="ti-caption-gray">
-                  <button class="bt-select" title="정렬 선택" aria-haspopup="true">추천순</button>
+                  <button class="bt-select fe-select-order" title="정렬 선택" aria-haspopup="true">추천순</button>
                   <div class="num">
-                      <button class="bt-select" title="조건 선택" aria-haspopup="true">
+                      <button class="bt-select fe-select-filter" title="조건 선택" aria-haspopup="true">
                           <% const filters = additionData.additions.searchOption.searchFltIds %>
                           <% if (filters) { %>
                               <% for (let i = 0; i < Math.min(2, filters.length); i++) { %>
@@ -91,7 +91,7 @@
                   <% const leftCount = additionData.additions.productCount - additions.length; %>
                   <% if (leftCount > 0) { %>
                   <div class="bt-more gap-style">
-                      <button data-last-addition="<%= additions[additions.length - 1].prodId %>" data-left-count="<%= leftCount %>">
+                      <button data-last-product="<%= additions[additions.length - 1].prodId %>" data-left-count="<%= leftCount %>">
                         더보기(<%= leftCount %>)
                       </button>
                   </div>
@@ -187,7 +187,7 @@
 <% include ../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.ProductAdditions($('.wrap'), <%- JSON.stringify(params) %>);
+    new Tw.ProductList($('.wrap'), <%- JSON.stringify(params) %>, { code: 'F01200', type: 'additions' });
   });
 </script>
 <% include ../components/product.additions.component.html %>

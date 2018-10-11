@@ -91,7 +91,7 @@
 
                     <% const leftCount = plans.productCount - products.length; %>
                     <div class="bt-more gap-style">
-                        <button class="<%= leftCount ? '' : 'none' %>" data-last-plan="<%= products[products.length - 1].prodId %>" data-left-count="<%= leftCount %>">
+                        <button class="<%= leftCount ? '' : 'none' %>" data-last-product="<%= products[products.length - 1].prodId %>" data-left-count="<%= leftCount %>">
                             더보기(<%= leftCount %>)
                         </button>
                     </div>
@@ -150,7 +150,7 @@
 <% include ../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-      new Tw.ProductPlans($('.wrap'), <%- JSON.stringify(params) %>);
+      new Tw.ProductList($('.wrap'), <%- JSON.stringify(params) %>, { code: 'F01100', type: 'plans' });
   });
 </script>
 <% include ../components/product.plans.component.html %>

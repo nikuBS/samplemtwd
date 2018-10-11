@@ -2,7 +2,7 @@
   "code": "00",
   "msg": "success",
   "result": {
-    "productCount": 8,
+    "productCount": 20,
     "hasNext": false,
     "products": [
       {
