@@ -14,7 +14,8 @@ const environment = {
     TMAP: 'https://api2.sktelecom.com/tmap/js?version=1&format=javascript&appKey=ecfeceac-3660-4618-bc3b-37a11f952441'
   },
   development: {
-    BFF_SERVER: 'http://bff-spring',
+    // BFF_SERVER: 'http://bff-spring',
+    BFF_SERVER: 'http://211.188.180.73:31309',
     CDN: '',
     REDIS: {
       host: 'dev-backing-redis-node-ibm-redis-ha-dev-master-svc',
