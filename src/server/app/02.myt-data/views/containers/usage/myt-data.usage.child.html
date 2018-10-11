@@ -16,7 +16,7 @@
 <div id="myt-data-usage" class="wrap">
     <div class="popup-page nobg"><!-- .no-btn 하단에 버튼이 없을 경우 -->
         <!-- #header -->
-        <%- include('../../../../../common/views/components/header.component.html', { title: '자녀 실시간 잔여량', svcInfo: svcInfo, option: { back: 'popup' } }); %>
+        <%- include('../../../../../common/views/components/header.component.html', { title: '자녀분의 현재 남은 제공량', svcInfo: svcInfo, option: { back: 'popup' }}); %>
         <!--// #header -->
         <!-- .container-wrap -->
         <div class="container-wrap">
@@ -39,7 +39,7 @@
                 <% } %>
 
                 <% if (usageData.voice && usageData.voice.length > 0) { %>
-                <%- include('../../components/usage/myt-data.usage.graphbox.html', { type: 'voice', typeStr: '음성/영상', items: usageData.voice }); %>
+                <%- include('../../components/usage/myt-data.usage.graphbox.html', { type: 'voice', typeStr: '음성∙영상통화', items: usageData.voice }); %>
                 <% } %>
 
                 <% if (usageData.sms && usageData.sms.length > 0) { %>
