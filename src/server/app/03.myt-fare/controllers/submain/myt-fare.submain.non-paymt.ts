@@ -40,26 +40,26 @@ class MyTFarePaymentOver extends TwViewController {
       if ( possibleDay ) {
         data.possibleDay = possibleDay;
         data.suspStaDt = DateHelper.getShortKoreanMonth(possibleDay.suspStaDt);
-      } else {
+      } /*else {
         // FIXME:납부가능일 관련 테스트계정확인 후 mock data 삭제
         data.possibleDay = pd1.result;
         data.suspStaDt = DateHelper.getShortKoreanMonth(pd1.result.suspStaDt);
-      }
+      }*/
       if ( claimDate ) {
         data.claimDate = claimDate;
-      } else {
+      } /*else {
         // FIXME:납부가능일 관련 테스트계정확인 후 mock data 삭제
         data.claimDate = cm2.result;
         data.claimDate2 = cm1.result;
         data.claimDate3 = cm3.result;
-      }
+      }*/
 
       if ( suspension ) {
         data.suspension = suspension;
-      } else {
+      } /*else {
         // FIXME:납부 이용정지해제 관련 테스트계정확인 후 mock data 삭제
         data.suspension = sp1.result;
-      }
+      }*/
       res.render('submain/myt-fare.submain.non-paymt.html', { data });
     });
   }

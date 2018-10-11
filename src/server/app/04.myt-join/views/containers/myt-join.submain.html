@@ -71,64 +71,7 @@
                 </ul>
             </div>
             <!--// .cont-box -->
-
-            <hr class="cont-sp type1" aria-hidden="true"/>
-
-            <!-- .cont-box -->
-            <div class="cont-box nogaps">
-                <ul class="link-long-list">
-                    <li>
-                        <div class="link-long">
-                            <button>나의 부가 상품
-                                <span class="tx-sub">
-                                        <span class="normal">유료 2개 / 무료 15개</span>
-                                        <span class="ico"></span>
-                                    </span>
-                            </button>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="link-long">
-                            <button>결합상품
-                                <span class="tx-sub">
-                                        <span class="normal">2개</span>
-                                        <span class="ico"></span>
-                                    </span>
-                            </button>
-                        </div>
-                    </li>
-                    <% if (data.isContractPlan) { %>
-                    <li>
-                        <div class="link-long">
-                            <button data-id="contract-plan">약정·할부 정보
-                                <span class="tx-sub">
-                                        <span class="normal">
-                                            <%= data.myInstallement.disProdNm %> / <%= data.myInstallement.disMthCnt %>개월
-                                        </span>
-                                        <span class="ico"></span>
-                                    </span>
-                            </button>
-                        </div>
-                    </li>
-                    <% } %>
-                    <% if (data.isContractPlan) { %>
-                    <li>
-                        <div class="link-long">
-                            <button data-id="contract-plan">무약정 플랜
-                                <span class="tx-sub">
-                                    <span class="normal">
-                                        <%= data.myContractPlan.point %>P / <%= data.myContractPlan.count %>건
-                                    </span>
-                                    <span class="ico"></span>
-                                </span>
-                            </button>
-                        </div>
-                    </li>
-                    <% } %>
-                </ul>
-            </div>
-            <!--// .cont-box -->
-
+            <%- include('../components/submain/myt-join.submain.prod-info.html', data) %>
             <% if (data.myPausedState && data.myPausedState.svcStSd) { %>
                 <%- include('../components/submain/myt-join.submain.pause-state.html', data) %>
             <% } %>
