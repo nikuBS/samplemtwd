@@ -371,3 +371,13 @@ Tw.NTV_FIDO_REGISTER_TXT = {
   FACE_ON: '등록된 Face ID가 있습니다.',
   FACE_OFF: '등록된 Face ID가 없습니다.'
 };
+
+Tw.JOIN_INFO_NO_AGREEMENT = {
+  CHANGE_TYPE : {
+    '1' : '사용',
+    '2' : '적립',
+    '3' : '소멸'
+  },
+  NO_USE : '포인트 사용 내역이 없습니다.',
+  NO_DATA : '검색된 포인트 사용 내역이 없습니다.'
+};

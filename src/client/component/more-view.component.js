@@ -41,6 +41,9 @@ Tw.MoreViewComponent.prototype = {
       if ( format.isEmpty(_data.btnMore) ) {
         _data.btnMore = $('.wrap').find('.bt-more');
       }
+      if (_data.btnMore.find('button').children('span').length === 0) {
+        _data.btnMore.find('button').append('<span></span>');
+      }
       return true;
     }
   },
@@ -50,7 +53,7 @@ Tw.MoreViewComponent.prototype = {
     if ( !this._hasMoreEvent() ) {
       return;
     }
-    this._data.btnMore.click($.proxy(this.onMoreView,this));
+    this._data.btnMore.off().on('click', $.proxy(this.onMoreView,this));
   },
 
   // 더보기
@@ -58,7 +61,7 @@ Tw.MoreViewComponent.prototype = {
     if( !this._hasMoreEvent() ){
       return;
     }
-    var moreData = this.pop();
+    var moreData = this.shift();
     var _data = this._data;
 
     if ( moreData.list.length > 0 ) {
@@ -73,7 +76,7 @@ Tw.MoreViewComponent.prototype = {
   },
 
   // _MORE_CNT 만큼의 리스트 와 다음 리스트의 잔여 카운트를 리턴한다.
-  pop : function () {
+  shift : function () {
     if ( !this._moreList || !this._moreList.length ) {
       return {
         list : [],

@@ -433,7 +433,6 @@ Tw.MyTFareBillSetChange.prototype = {
 
 
   _onSucessBFF_05_0027 : function (resp) {
-    Tw.Logger.info('<< res', resp);
     if ( resp.code !== Tw.API_CODE.CODE_00 ) {
       this._onFail(resp);
       return;

@@ -8,16 +8,12 @@ import {Request, Response, NextFunction} from 'express';
 
 class MyTJoinJoinInfoNoAgreement extends TwViewController {
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    res.render('info/myt-join.info.no-agreement.html', this.getData(svcInfo, {}));
+  constructor() {
+    super();
   }
 
-  private getData(svcInfo: any, data: any): any {
-
-    return {
-      svcInfo,
-      data : data
-    };
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+    res.render('info/myt-join.info.no-agreement.html', {svcInfo});
   }
 }
 

@@ -1,0 +1,88 @@
+{
+  "code": "00",
+  "msg": "success",
+  "result": {
+    "fromDate": "20180501 ",
+    "toDate": "20180510 ",
+    "totAccumPt": "78000",
+    "totUsedPt": "0",
+    "totExtnPt": "78000",
+    "usablePt": "7520",
+    "extnSchdDt": "20180523",
+    "extnSchdPt": "1000",
+    "datas": [
+      {
+        "opDt": "20180512",
+        "opTm": "0910",
+        "chgTyp": "적립",
+        "dtlCtt": "관리조정",
+        "chgPt": "+9,000점",
+        "opOrgNm": "",
+        "opIdNm": ""
+      },
+      {
+        "opDt": "20180513",
+        "opTm": "0910",
+        "chgTyp": "소멸",
+        "dtlCtt": "2018.04 유효기간 만료",
+        "chgPt": "-9,000점",
+        "opOrgNm": "",
+        "opIdNm": ""
+      },
+      {
+        "opDt": "20180513",
+        "opTm": "0915",
+        "chgTyp": "사용",
+        "dtlCtt": "2018.04 사용분 완납",
+        "chgPt": "-9,000점",
+        "opOrgNm": "",
+        "opIdNm": ""
+      },
+      {
+        "opDt": "20170513",
+        "opTm": "0915",
+        "chgTyp": "사용",
+        "dtlCtt": "2018.04 사용분 완납",
+        "chgPt": "-9,000점",
+        "opOrgNm": "",
+        "opIdNm": ""
+      },
+      {
+        "opDt": "20170513",
+        "opTm": "0915",
+        "chgTyp": "사용",
+        "dtlCtt": "2018.04 사용분 완납",
+        "chgPt": "-9,000점",
+        "opOrgNm": "",
+        "opIdNm": ""
+      },
+      {
+        "opDt": "20170512",
+        "opTm": "0915",
+        "chgTyp": "사용",
+        "dtlCtt": "2018.04 사용분 완납",
+        "chgPt": "-9,000점",
+        "opOrgNm": "",
+        "opIdNm": ""
+      },
+      {
+        "opDt": "20170511",
+        "opTm": "0915",
+        "chgTyp": "사용",
+        "dtlCtt": "2018.04 사용분 완납",
+        "chgPt": "-9,000점",
+        "opOrgNm": "",
+        "opIdNm": ""
+      },
+      {
+        "opDt": "20160511",
+        "opTm": "0915",
+        "chgTyp": "사용",
+        "dtlCtt": "2018.04 사용분 완납",
+        "chgPt": "-9,000점",
+        "opOrgNm": "",
+        "opIdNm": ""
+      }
+    ]
+  }
+}
