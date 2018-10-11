@@ -4,34 +4,39 @@
  * Date: 2018.10.09
  */
 
-Tw.ProductPlans = function(rootEl, params) {
+Tw.ProductList = function(rootEl, params, pageInfo) {
   this.$container = rootEl;
+  this._params = params;
+
+  this.CODE = pageInfo.code;
+  this.TYPE = pageInfo.type;
+
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
-  this._params = params;
   this._history = new Tw.HistoryService(rootEl);
   this._history.init('hash');
-
-  console.log(params);
 
   this.cachedElement();
   this.bindEvent();
   this.init();
 };
 
-Tw.ProductPlans.prototype = {
+Tw.ProductList.prototype = {
   DEFAULT_ORDER: 'recommand',
   ORDER: {
     recommand: 0,
     lowprice: 1,
     highprice: 2
   },
+  DEFAULT_PARAMS: {
+    idxCtgCd: this.CODE,
+  },
 
-  PLAN_CODE: 'F01100',
   init: function() {
-    this._lastPlanId = this.$moreBtn.data('last-plan');
+    this._params.idxCtgCd = this.CODE;
+    this._params.searchLastProdId = this.$moreBtn.data('last-product');
     this._leftCount = this.$moreBtn.data('left-count');
-    this._plansTmpl = Handlebars.compile($('#fe-templ-plans').html());
+    this._listTmpl = Handlebars.compile($('#fe-templ-' + this.TYPE).html());
   },
 
   bindEvent: function() {
@@ -44,15 +49,9 @@ Tw.ProductPlans.prototype = {
     this.$moreBtn = this.$container.find('.bt-more > button');
     this.$list = this.$container.find('ul.recommendedrate-list');
   },
-
+ 
   _handleLoadMore: function() {
-    var params = Object.assign(this._params, {});
-    params.idxCtgCd = this.PLAN_CODE;
-    if (this._lastPlanId) {
-      params.searchLastProdId = this._lastPlanId;
-    }
-
-    $.ajax('http://localhost:3000/mock/product.list.json').done($.proxy(this._handleSuccessLoadingData, this));
+    $.ajax('http://localhost:3000/mock/product.' + this.TYPE + '.json').done($.proxy(this._handleSuccessLoadingData, this));
     // this._apiService.request(Tw.API_CMD.BFF_10_0031, params).done($.proxy(this._handleSuccessLoadingData, this));
   },
 
@@ -62,18 +61,20 @@ Tw.ProductPlans.prototype = {
       return;
     }
 
-    var $list = this.$container.find('ul.recommendedrate-list');
     var items = _.map(resp.result.products, function(item) {
-      if (/^[0-9]+$/.test(item.basFeeAmt)) {
+      if (item.basFeeAmt && /^[0-9]+$/.test(item.basFeeAmt)) {
         item.basFeeAmt = Tw.FormatHelper.addComma(item.basFeeAmt);
+        item.isMonthly = true;
+      } else if (item.basFeeInfo && /^[0-9]+$/.test(item.basFeeInfo)) {
+        item.basFeeInfo = Tw.FormatHelper.addComma(item.basFeeInfo);
         item.isMonthly = true;
       }
 
       return item;
     });
 
-    this._lastPlanId = items[items.length - 1].prodId;
-    this._leftCount = this._leftCount - items.length;
+    this._params.searchLastProdId = items[items.length - 1].prodId;
+    this._leftCount = (this._leftCount || resp.result.productCount) - items.length;
 
     if (this._leftCount > 0) {
       if (this.$moreBtn.hasClass('none')) {
@@ -84,7 +85,7 @@ Tw.ProductPlans.prototype = {
       this.$moreBtn.addClass('none');
     }
 
-    $list.append(this._plansTmpl({ items: items }));
+    this.$list.append(this._listTmpl({ items: items }));
   },
 
   _openOrderPopup: function() {
@@ -116,8 +117,9 @@ Tw.ProductPlans.prototype = {
     }
 
     this._params.searchType = orderType;
+    delete this._params.searchLastProdId;
+    delete this._leftCount;
     this.$container.find('.fe-select-order').text($target.find('span').text());
-    delete this._lastPlanId;
     this.$list.empty();
     
     this._handleLoadMore();
@@ -240,7 +242,26 @@ Tw.ProductPlans.prototype = {
       return;
     }
 
-    this._history.goLoad('/product/plans' + searchFltIds ? '?filters=' + searchFltIds : '');
+    _params = this.CLEAR_PARAMS;
+    this.$list.empty();
+
+    $.ajax('http://localhost:3000/mock/product.' + this.TYPE + '.json').done($.proxy(this._handleLoadDataWithNewFilters, this));
+    // this._apiService.request(Tw.API_CMD.BFF_10_0031, params).done($.proxy(this._handleSuccessLoadingData, this));
+  },
+
+  _handleLoadDataWithNewFilters: function (resp) {
+    if (resp.code !== Tw.API_CODE.CODE_00) {
+      // server error
+      return;
+    }
+
+    if (resp.result.productCount === 0) {
+      var ALERT = Tw.ALERT_MSG_PRODUCT.ALERT_3_A18;
+      this._popupService.openAlert(ALERT.MSG, ALERT.TITLE);
+    } else {
+      this._popupService.close();
+      this._handleSuccessLoadingData(resp);
+    }
   },
 
   _handleSelectTag: function (target) {
@@ -252,6 +273,6 @@ Tw.ProductPlans.prototype = {
       return;
     }
 
-    this._history.goLoad('/product/plans?tag=' + selectedTag);
+    this._history.goLoad('/product/' + this.TYPE + '?tag=' + selectedTag);
   }
 }

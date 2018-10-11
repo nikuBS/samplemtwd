@@ -259,8 +259,8 @@ Tw.ALERT_MSG_MYT_JOIN = {
 };
 
 Tw.ALERT_MSG_PRODUCT = {
-  ALERT_3_A16: { TITLE: '알림', MSG: '확인을 누르시면 선택된 필터가 해제되고 선택한 태그의 결과페이지로 이동합니다' }
-
+  ALERT_3_A16: { TITLE: '알림', MSG: '확인을 누르시면 선택된 필터가 해제되고 선택한 태그의 결과페이지로 이동합니다' },
+  ALERT_3_A18: { TITLE: '알림', MSG: '검색 결과가 없습니다' }
 };
 
 Tw.ALERT_MSG_BENEFIT = {
