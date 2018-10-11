@@ -35,25 +35,145 @@ Tw.MyTJoinSubMain.prototype = {
   },
 
   _rendered: function () {
-    if ( this.data.otherLines.length > 0 ) {
-      this.$otherLines = this.$container.find('[data-id=other-lines] li');
-      if ( this.data.otherLines.length > 20 ) {
-        this.$otherLinesMoreBtn = this.$otherLines.find('.bt-more button');
-        this.$moreTempleate = Handlebars.compile(Tw.MYT_TPL.JOIN_SUBMAIN.MORE_LINE_TEMP);
+    this.$myPlan = this.$container.find('[data-id=my-plan]');
+    this.$ptPwd = this.$container.find('[data-id=change-pwd]');
+
+    if ( this.data.isAddProduct ) {
+      // 부가상품 버튼
+      this.$addProd = this.$container.find('[data-id=add-prod]');
+      // 결합상품 버튼
+      this.$comProd = this.$container.find('[data-id=com-prod]');
+    }
+    // 무선
+    if ( this.data.type === 0 ) {
+      if ( this.data.isInstallement ) {
+        this.$installement = this.$container.find('[data-id=installement]');
+      }
+      if ( this.data.isContractPlan ) {
+        this.$contractPlan = this.$container.find('[data-id=contract-plan]');
+      }
+      if (this.data.myPausedState && this.data.myPausedState.svcStSd) {
+        this.$pauseC = this.$container.find('[data-id=pause_c]');
+      }
+    }
+    // 유선
+    else if ( this.data.type === 2 ) {
+      this.$wireInq = this.$container.find('[data-id=wire-inq]');
+      this.$bTargetInq = this.$container.find('[data-id=B-target-inq]');
+      this.$addrChg = this.$container.find('[data-id=addr-chg]');
+      this.$prodChg = this.$container.find('[data-id=prod-chg]');
+      this.$instChg = this.$container.find('[data-id=inst-chg]');
+      this.$transferFee = this.$container.find('[data-id=transfer-fee]');
+      this.$svcCancel = this.$container.find('[data-id=svc-cancel]');
+      this.$wirePause = this.$container.find('[data-id=wire-pause]');
+      this.$untillInfo = this.$container.find('[data-id=until-info]');
+      this.$workNotify = this.$container.find('[data-id=work-notify]');
+    }
+
+    if ( this.data.type !== 1 ) {
+      if ( this.data.otherLines.length > 0 ) {
+        this.$otherLines = this.$container.find('[data-id=other-lines] li');
+        if ( this.data.otherLines.length > 20 ) {
+          this.$otherLinesMoreBtn = this.$otherLines.find('.bt-more button');
+          this.$moreTempleate = Handlebars.compile(Tw.MYT_TPL.JOIN_SUBMAIN.MORE_LINE_TEMP);
+        }
       }
     }
   },
 
   _bindEvent: function () {
-    if ( this.data.otherLines.length > 0 ) {
-      this.$otherLines.on('click', $.proxy(this._onClickedOtherLine, this));
-      if ( this.data.otherLines.length > 20 ) {
-        this.$otherLinesMoreBtn.on('click', $.proxy(this._onOtherLinesMore, this));
+    this.$myPlan.on('click', $.proxy(this._onMovedMyPlan, this));
+    this.$ptPwd.on('click', $.proxy(this._onMovedChangePwd, this));
+
+    if ( this.data.isAddProduct ) {
+      // 부가상품 버튼
+      this.$addProd.on('click', $.proxy(this._onMovedAddProduct, this));
+      // 결합상품 버튼
+      this.$comProd.on('click', $.proxy(this._onMovedComProduct, this));
+    }
+    // 무선
+    if ( this.data.type === 0 ) {
+      if ( this.data.isInstallement ) {
+        this.$installement.on('click', $.proxy(this._onMovedInstallement, this));
+      }
+      if ( this.data.isContractPlan ) {
+        this.$contractPlan.on('click', $.proxy(this._onMovedContractPlan, this));
+      }
+      if (this.data.myPausedState && this.data.myPausedState.svcStSd) {
+        this.$pauseC.on('click', $.proxy(this._onMovedMobilePause, this));
+      }
+    }
+    // 유선
+    else if ( this.data.type === 2 ) {
+      this.$wireInq.on('click', $.proxy(this._onMovedWireInquire, this));
+      this.$bTargetInq.on('click', $.proxy(this._onMovedBInquire, this));
+      this.$addrChg.on('click', $.proxy(this._onMovedWireOtherSvc, this));
+      this.$prodChg.on('click', $.proxy(this._onMovedWireOtherSvc, this));
+      this.$instChg.on('click', $.proxy(this._onMovedWireOtherSvc, this));
+      this.$transferFee .on('click', $.proxy(this._onMovedWireOtherSvc, this));
+      this.$svcCancel.on('click', $.proxy(this._onMovedWireOtherSvc, this));
+      this.$wirePause.on('click', $.proxy(this._onMovedWireOtherSvc, this));
+      this.$untillInfo.on('click', $.proxy(this._onMovedWireOtherSvc, this));
+      this.$workNotify.on('click', $.proxy(this._onMovedWireOtherSvc, this));
+    }
+
+    if ( this.data.type !== 1 ) {
+      if ( this.data.otherLines.length > 0 ) {
+        this.$otherLines.on('click', $.proxy(this._onClickedOtherLine, this));
+        if ( this.data.otherLines.length > 20 ) {
+          this.$otherLinesMoreBtn.on('click', $.proxy(this._onOtherLinesMore, this));
+        }
       }
     }
   },
+
   _initialize: function () {
     this.loadingView(false);
+  },
+  // 나의요금제
+  _onMovedMyPlan: function() {
+    this._historyService.goLoad('/myt/join/product/fee-plan');
+  },
+  // 고객보호비밀번호 변경
+  _onMovedChangePwd: function() {
+    this._historyService.goLoad('/myt/join/protect/change');
+  },
+  // 부가 상품
+  _onMovedAddProduct: function() {
+    this._historyService.goLoad('/myt/join/product/additions');
+  },
+  // 결합 상품
+  _onMovedComProduct: function() {
+    this._historyService.goLoad('/myt/join/product/combinations');
+  },
+  // 약정 할인
+  _onMovedInstallement: function() {
+    this._historyService.goLoad('/myt/join/info/discount');
+  },
+  // 무약정플랜
+  _onMovedContractPlan: function() {
+    this._historyService.goLoad('/myt/join/info/no-agreement');
+  },
+  // 모바일 일시정지/해제
+  _onMovedMobilePause: function() {
+    // TODO: 우선 TBD로 alert 처리, SP9 진행 예정
+    // this._historyService.goLoad('/myt/join/suspend');
+    this._popupService.openAlert('TBD');
+  },
+  // 인터넷/IPTV/집전화 신청 내역 및 조회
+  _onMovedWireInquire: function() {
+    // TODO: 우선 TBD로 alert 처리, SP9 진행 예정
+    this._popupService.openAlert('TBD');
+  },
+  // B끼리 무료통화 대상자 조회
+  _onMovedBInquire: function() {
+    // TODO: 우선 TBD로 alert 처리, SP9 진행 예정
+    this._popupService.openAlert('TBD');
+  },
+  // 유선기타서비스
+  _onMovedWireOtherSvc: function() {
+    // TODO: 우선 TBD로 alert 처리, SP9 진행 예정
+    this._popupService.openAlert('TBD');
   },
 
   // 다른회선조회
