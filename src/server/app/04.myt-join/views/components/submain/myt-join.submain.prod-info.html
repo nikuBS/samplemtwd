@@ -13,7 +13,7 @@
         <% if (data.isAddProduct) { %>
         <li>
             <div class="link-long">
-                <button>나의 부가 상품
+                <button data-id="add-prod">나의 부가 상품
                     <span class="tx-sub">
                         <span class="normal">
                             유료 <%= data.myAddProduct.addProdPayCnt %>개 /
@@ -26,7 +26,7 @@
         </li>
         <li>
             <div class="link-long">
-                <button>결합상품
+                <button data-id="com-prod">결합상품
                     <span class="tx-sub">
                         <span class="normal">
                             <%= data.myAddProduct.comProdCnt %>개
@@ -37,33 +37,50 @@
             </div>
         </li>
         <% } %>
-        <% if (data.isInstallement) { %>
-        <li>
-            <div class="link-long">
-                <button data-id="contract-plan">약정·할부 정보
-                    <span class="tx-sub">
-                        <span class="normal">
-                            <%= data.myInstallement.disProdNm %> / <%= data.myInstallement.disMthCnt %>개월
+        <% if (data.type === 0) { %>
+            <% if (data.isInstallement) { %>
+            <li>
+                <div class="link-long">
+                    <button data-id="installement">약정·할부 정보
+                        <span class="tx-sub">
+                            <span class="normal">
+                                <%= data.myInstallement.disProdNm %> / <%= data.myInstallement.disMthCnt %>개월
+                            </span>
+                            <span class="ico"></span>
                         </span>
-                        <span class="ico"></span>
-                    </span>
-                </button>
-            </div>
-        </li>
-        <% } %>
-        <% if (data.isContractPlan) { %>
-        <li>
-            <div class="link-long">
-                <button data-id="contract-plan">무약정 플랜
-                    <span class="tx-sub">
-                        <span class="normal">
-                            <%= data.myContractPlan.point %>P / <%= data.myContractPlan.count %>건
+                    </button>
+                </div>
+            </li>
+            <% } %>
+            <% if (data.isContractPlan) { %>
+            <li>
+                <div class="link-long">
+                    <button data-id="contract-plan">무약정 플랜
+                        <span class="tx-sub">
+                            <span class="normal">
+                                <%= data.myContractPlan.point %>P / <%= data.myContractPlan.count %>건
+                            </span>
+                            <span class="ico"></span>
                         </span>
-                        <span class="ico"></span>
-                    </span>
-                </button>
-            </div>
-        </li>
+                    </button>
+                </div>
+            </li>
+            <% } %>
+        <% } else if (data.type === 2) { %>
+            <li>
+                <div class="link-long">
+                    <button data-id="wire-inq">
+                        인터넷/집전화/IPTV 신청내역 및 조회<span class="ico"></span>
+                    </button>
+                </div>
+            </li>
+            <li>
+                <div class="link-long">
+                    <button data-id="B-target-inq">
+                        B끼리 무료통화 대상자 조회<span class="ico"></span>
+                    </button>
+                </div>
+            </li>
         <% } %>
     </ul>
 </div>

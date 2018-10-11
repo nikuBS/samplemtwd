@@ -66,35 +66,41 @@
                 </div>
                 <ul class="bt-slice mt36">
                     <li class="bt-white2">
-                        <button>나의 요금제</button>
+                        <button data-id="my-plan">나의 요금제</button>
                     </li>
                 </ul>
             </div>
             <!--// .cont-box -->
             <%- include('../components/submain/myt-join.submain.prod-info.html', data) %>
-            <% if (data.myPausedState && data.myPausedState.svcStSd) { %>
-                <%- include('../components/submain/myt-join.submain.pause-state.html', data) %>
+            <% if (data.type === 0) { %>
+                <% if (data.myPausedState && data.myPausedState.svcStSd) { %>
+                    <%- include('../components/submain/myt-join.submain.pause-state.html', data) %>
+                <% } %>
+            <% } else if (data.type === 2) { %>
+                <%- include('../components/submain/myt-join.submain.wire-more-info.html', data) %>
             <% } %>
 
-            <% if (data.otherLines.length > 0) { %>
-            <hr class="cont-sp type1" aria-hidden="true"/>
-            <!-- .cont-box -->
-            <div class="cont-box nogaps" data-id="other-lines">
-                <p class="list-comp-title">나의 다른 회선 정보</p>
-                <ul class="list-comp-lineinfo">
-                    <% var length = (data.otherLines.length > 20 ? 20 : data.otherLines.length); %>
-                    <% for (var i=0; i < length; i++) { %>
-                    <%- include('../components/submain/myt-join.submain.other-line.html', { data: data.otherLines[i] }); %>
+            <% if (data.type !== 1) { %>
+                <% if (data.otherLines.length > 0) { %>
+                <hr class="cont-sp type1" aria-hidden="true"/>
+                <!-- .cont-box -->
+                <div class="cont-box nogaps" data-id="other-lines">
+                    <p class="list-comp-title">나의 다른 회선 정보</p>
+                    <ul class="list-comp-lineinfo">
+                        <% var length = (data.otherLines.length > 20 ? 20 : data.otherLines.length); %>
+                        <% for (var i=0; i < length; i++) { %>
+                        <%- include('../components/submain/myt-join.submain.other-line.html', { data: data.otherLines[i] }); %>
+                        <% } %>
+                    </ul>
+                    <% if (length === 20) { %>
+                    <!-- 다른 회선이 총 20개 이상인 경우 -->
+                    <div class="bt-more">
+                        <button>더보기</button>
+                    </div>
                     <% } %>
-                </ul>
-                <% if (length === 20) { %>
-                <!-- 다른 회선이 총 20개 이상인 경우 -->
-                <div class="bt-more">
-                    <button>더보기</button>
                 </div>
+                <!-- .cont-box -->
                 <% } %>
-            </div>
-            <!-- .cont-box -->
             <% } %>
 
             <div class="cont-box nogaps noborder">
