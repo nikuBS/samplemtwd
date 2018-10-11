@@ -15,6 +15,7 @@ import FormatHelper from '../../../../utils/format.helper';
 import { MYT_FARE_BILL_GUIDE } from '../../../../types/string.type';
 import { MYT_JOIN_CONTRACT_TERMINAL } from '../../../../types/string.type';
 import * as _ from 'underscore';
+import contractTerminal_BFF_05_0063 from '../../../../mock/server/contractTerminal.BFF_05_0063.mock';
 
 class MytJoinInfoDiscount extends TwViewController {
   constructor() {
@@ -47,7 +48,8 @@ class MytJoinInfoDiscount extends TwViewController {
 
     // this._typeInit();
 
-    const p1 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0063, {}), 'p1');
+    // const p1 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0063, {}), 'p1');
+    const p1 = this._getPromiseApiMock( contractTerminal_BFF_05_0063, 'p1' );
 
     Promise.all([p1]).then(function(resArr) {
 
