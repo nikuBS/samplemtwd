@@ -44,6 +44,15 @@ const MYT_JOIN_ADDITONS = {
         prodLinkYn: 'Y',
         payFreeYn: 'Y',
         btnList: []
+      },
+      {
+        prodId: 'NA00004707',
+        prodNm: 'T로밍 함께쓰기 10GB',
+        basFeeTxt: '무료',
+        scrbDt: '20130225',
+        prodLinkYn: 'Y',
+        payFreeYn: 'Y',
+        btnList: []
       }
     ]
   }
