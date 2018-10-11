@@ -76,7 +76,7 @@ Tw.LineMarketingComponent.prototype = {
       this._complete = true;
       this._popupService.close();
     } else {
-      Tw.Error(resp.code, resp.msg).page();
+      Tw.Error(resp.code, resp.msg).pop();
     }
   },
   _enableBtns: function () {
