@@ -48,7 +48,11 @@ Tw.MyTFareHotBill.prototype = {
   },
 
   _sendBillRequest: function (child) {
-    skt_landing.action.loading.on({ ta: '.loading' });
+    skt_landing.action.loading.on({
+      ta: child ? '.container' : '.fe-loading-bill',
+      co: 'white',
+      size: child ? true : false
+    });
     this._requestCount = 0;
     var params = { count: this._requestCount++ };
     if ( child ) {
@@ -84,9 +88,12 @@ Tw.MyTFareHotBill.prototype = {
             this.$unpaidAmount.text(group[Tw.HOTBILL_UNPAID_TITLE].total);
             delete group[Tw.HOTBILL_UNPAID_TITLE];
           }
+          skt_landing.action.loading.off({ ta: child ? '.container' : '.fe-loading-bill' });
           this._renderBillGroup(group, false, this.$container);
         }
       } else {
+
+        skt_landing.action.loading.off({ ta: child ? '.container' : '.fe-loading-bill' });
         this._openChildbBill(child, resp);
       }
     } else {
@@ -97,7 +104,7 @@ Tw.MyTFareHotBill.prototype = {
       }
       this._onErrorReceivedBillData(resp);
     }
-    skt_landing.action.loading.off({ ta: '.loading' });
+    // skt_landing.action.loading.off({ ta: '.loading' });
   },
 
   _renderBillGroup: function (group, child, wrapper) {
@@ -113,6 +120,7 @@ Tw.MyTFareHotBill.prototype = {
   },
 
   _onErrorReceivedBillData: function (resp) {
+    skt_landing.action.loading.off({ ta: '.container' });
     Tw.Error(resp.code, resp.msg).pop();
   },
 
@@ -192,18 +200,9 @@ Tw.MyTFareHotBill.prototype = {
 
   _requestSwitchLine: function (target) {
     var lineComponent = new Tw.LineComponent();
-    lineComponent.changeLine(target.svcMgmtNum);
-
-  },
-
-  _onChangeSessionSuccess: function (resp) {
-    if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      this._popupService.close();
-      this._popupService.toast(Tw.REMNANT_OTHER_LINE.TOAST);
-      setTimeout($.proxy(function () {
-        this._historyService.reload();
-      }, this), 300);
-    }
+    this._popupService.close();
+    skt_landing.action.loading.on({ ta: '.container' });
+    lineComponent.changeLine(target.svcMgmtNum, null, $.proxy(this._historyService.reload, this));
   }
 };
 

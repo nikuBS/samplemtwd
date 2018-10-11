@@ -27,7 +27,9 @@
         <div class="container loading">
             <div class="ti-caption-gray"><!-- 2018-09-19 클래스명 변경 -->
                 <h3 class="tit"><%= svcInfo.prodNm %></h3>
-                <button class="detail-view"><span class="blind">자세히보기</span></button>
+                <a class="detail-view" href="/product/detail/<%= svcInfo.prodId %>" >
+                    <span class="blind">자세히보기</span>
+                </a>
             </div>
             <!-- .cont-box -->
             <% if(billAvailable){ %>
@@ -50,11 +52,12 @@
             <!--// .cont-box -->
 
             <hr class="cont-sp type1" aria-hidden="true"/>
-
             <!-- .cont-box -->
             <div class="cont-box nogaps-hoz">
                 <div class="statement-cont">
                     <div class="statement-detail type2" data-role="fe-bill-menu">
+                        <div class="cont-loading-area fe-loading-bill">
+                        </div>
                         <!-- .widget -->
                         <!--// .widget -->
                     </div>
