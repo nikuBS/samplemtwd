@@ -29,13 +29,19 @@
                 <div class="add-prd-top-wrap">
                     <span class="select">
                         <button class="on">전체</button>
-                        <button>유료만 보기</button>
+                        <button >유료만 보기</button>
                     </span>
                     <span class="counts">총 <em><%= additions.length %></em>개</span>
                 </div>
 
                 <div class="cont-box nogaps">
                     <div class="add-prd-wrap">
+                        <% if (additions.length === 0) { %>
+                        <div class="contents-empty">
+                            <span class="ico type1"></span>
+                            <p class="desc">현재 사용중인 부가상품이 없습니다.</p>
+                        </div>
+                        <% } else { %>
                         <ul class="list-comp-lineinfo">
                             <% additions.map(addition => { %>
                             <li class="add-con" data-fee="<%= addition.basFeeTxt %>">
@@ -67,6 +73,7 @@
                             </li>
                             <% }); %>
                         </ul>
+                        <% } %>
                     </div>
                 </div>
 
