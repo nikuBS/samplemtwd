@@ -43,19 +43,11 @@
     <% } %>
     <li>
         <span class="title">고객보호 비밀번호</span>
-        <span class="tx-cont">
-            <% if (data.svcInfo.pwdStCd) { %>
-            사용중
+        <!-- 최초설정이 안된상태에서는 해당 화면을 볼수 없으므로 변경만 사용 -->
+        <span class="tx-cont">사용중
             <button class="bt-link-tx underline" data-id="change-pwd">
-            <% if (data.isPwdSt) { %>
-                비밀번호 설정
-            <% } else { %>
                 비밀번호 변경
-            <% } %>
             </button>
-            <% } else { %>
-            미사용
-            <% } %>
         </span>
     </li>
 <% } %>
