@@ -51,11 +51,11 @@ class NativeRouter {
 
   private sendRequest(cmd: any, req: Request, res: Response, next: NextFunction) {
     const params = cmd.method === API_METHOD.GET ? req.query : req.body;
-    const headers = {
-      cookie: req.headers.cookie,
-      'user-agent': req.headers['user-agent']
-    };
-
+    // const headers = {
+    //   cookie: req.headers.cookie,
+    //   'user-agent': req.headers['user-agent']
+    // };
+    const headers = req.headers;
     this.apiService.request(cmd, params, headers)
       .subscribe((data) => {
         return res.json(data);
