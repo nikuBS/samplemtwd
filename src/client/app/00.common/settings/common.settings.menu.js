@@ -30,15 +30,17 @@ Tw.CommonSettingsMenu.prototype = {
     Tw.DeviceInfo.getDeviceInfo().done($.proxy(this._onDeviceVersion, this));
 
     // Set FIDO type
-    this._nativeService.send(Tw.NTV_CMD.FIDO_TYPE, {}, $.proxy(function (resp) {
-      if (resp.resultCode === Tw.NTV_CODE.CODE_00) {
-        // TODO: joon fingerpint
-      } else if (resp.resultCode === Tw.NTV_CODE.CODE_01) {
-        // TODO: joon face
-      } else {
-        this.$container.find('#fe-bio').addClass('none');
-      }
-    }, this));
+    if (Tw.BrowserHelper.isApp()) {
+      this._nativeService.send(Tw.NTV_CMD.FIDO_TYPE, {}, $.proxy(function (resp) {
+        if (resp.resultCode === Tw.NTV_CODE.CODE_00) {
+          this.$container.find('#fe-bio-link').attr('href', '/common/biometrics/menu?target=finger');
+        } else if (resp.resultCode === Tw.NTV_CODE.CODE_01) {
+          this.$container.find('#fe-bio-link').attr('href', '/common/biometrics/menu?target=face');
+        } else {
+          this.$container.find('#fe-bio').addClass('none');
+        }
+      }, this));
+    }
   },
   _bindEvents: function () {
     this.$container.on('click', '#fe-go-certificates', $.proxy(this._onCertificates, this));
