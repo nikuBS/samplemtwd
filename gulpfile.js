@@ -104,7 +104,7 @@ gulp.task('js-vendor', function () {
     'node_modules/handlebars/dist/handlebars.min.js',
     'node_modules/slick-carousel/slick/slick.min.js',
     'node_modules/moment/min/moment.min.js',
-    'node_modules/jsbarcode/dist/jsBarcode.all.min.js'])
+    'node_modules/jsbarcode/dist/JsBarcode.all.min.js'])
     .on('error', function (err) {
       gutil.log(gutil.colors.red('[Error]'), err.toString());
     })
