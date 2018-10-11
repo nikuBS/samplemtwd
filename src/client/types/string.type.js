@@ -40,7 +40,8 @@ Tw.POPUP_TITLE = {
 
 Tw.POPUP_CONTENTS = {
   MORE_DETAIL: '더 알아보기',
-  REFILL_COUPON_FAMILY: 'SKT 결합상품으로 묶으시면 리필쿠폰 선물이 가능합니다.'
+  REFILL_COUPON_FAMILY: 'SKT 결합상품으로 묶으시면 리필쿠폰 선물이 가능합니다.',
+  CERTIFICATE_SUCCESS: '스마트폰 인증서 내보내기: 성공'
 };
 
 Tw.CHART_TYPE = {
