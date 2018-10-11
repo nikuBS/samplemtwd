@@ -55,6 +55,9 @@ Tw.HistoryService.prototype = {
   goHash: function (hash) {
     window.location.hash = hash;
   },
+  getHash: function () {
+    return window.location.hash;
+  },
   // private
   push: function () {
     this.history.pushState(this.historyObj, this.historyName, this.pathname);
@@ -131,6 +134,14 @@ Tw.HistoryService.prototype = {
   },
   isDone: function () {
     return Tw.UIService.getLocalStorage(this.storageName) === 'done';
+  },
+  isReload: function () {
+    if (window.performance) {
+      if (performance.navigation.type === 1) {
+        return true;
+      }
+    }
+    return false;
   },
   checkIsCompleted: function () {
     if ( this.isReturendMain() && this.isCompleted() ) {

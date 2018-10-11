@@ -1,4 +1,5 @@
 export const URL = {
+  '/home/postcode': { login: false, id: '00', title: '우편번호' },
   // Common
   '/common/settings/menu': { login: false, id: 'ST_01_01', title: '설정' },
   '/common/settings/business-info': { login: false, id: 'ST_01_08', title: '사업자 정보' },

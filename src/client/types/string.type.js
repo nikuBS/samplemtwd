@@ -202,6 +202,13 @@ Tw.MYT_FARE_PAYMENT_PREPAY_PASSWORD_NAME = {
   BTN_CHANGE: '변경하기'
 };
 
+Tw.MYT_FARE_PAYMENT_NAME = {
+  ACCOUNT: '계좌이체',
+  CARD: '체크/신용카드',
+  OK_CASHBAG: 'OK캐쉬백',
+  T_POINT: 'T포인트'
+};
+
 Tw.ALERT_MSG_COMMON = {
   SERVER_ERROR: '통신 오류입니다. 잠시 후 다시 시도해 주세요.'
 };

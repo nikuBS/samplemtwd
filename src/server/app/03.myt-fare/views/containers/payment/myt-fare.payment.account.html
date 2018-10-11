@@ -50,20 +50,20 @@
                             </div>
                             <div class="info-form-box">
                                 <p class="form-label">계좌정보</p>
-                                <% if (autoInfo.isAuto) { %>
+                                <% if (autoInfo && autoInfo.isAuto) { %>
                                 <div class="check-account-radio">
                                     <div class="widget">
                                         <div class="widget-box radio">
-                                            <ul class="select-list" role="radiogroup">
+                                            <ul class="select-list fe-auto-info fe-account-info" role="radiogroup">
                                                 <li class="radiobox" role="radio" aria-checked="false"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
                                                     <input type="radio" name="radio1" value="" title="값1" checked="checked"><!-- 체크상태일 경우 checked="checked" -->
                                                     <span class="check-title">자동납부계좌와 동일</span>
                                                     <span class="account-info">
-                                                        <span class="account-bank"><%= autoInfo.bankName %></span>
-                                                        <span class="account-number"><%= autoInfo.bankCardNum %></span>
+                                                        <span class="account-bank fe-auto-account-bank" data-code="<%= autoInfo.bankCode %>"><%= autoInfo.bankName %></span>
+                                                        <span class="account-number fe-auto-account-number"><%= autoInfo.bankNum %></span>
                                                     </span>
                                                 </li>
-                                                <li class="radiobox" role="radio" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+                                                <li class="radiobox fe-account-input" role="radio" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
                                                     <input type="radio" name="radio1" value="" title="값2"><!-- 체크상태일 경우 checked="false" -->
                                                     <span class="check-title">직접입력</span>
                                                     <span class="account-info self">
@@ -71,7 +71,7 @@
                                                         <span class="inputbox mt6">
                                                             <span class="input">
                                                                 <input type="number" inputmode="numeric" min="0" pattern="[0-9]*" placeholder="계좌번호(숫자만 입력)"
-                                                                       title="input" value="" aria-labelledby="aria-exp-label1" class="fe-account-number">
+                                                                       title="input" value="" aria-labelledby="aria-exp-label1" class="fe-account-number required-input-field">
                                                                 <button class="cancel"><span class="blind">삭제</span></button>
                                                             </span>
                                                         </span>
@@ -82,7 +82,7 @@
                                     </div>
                                 </div>
                                 <% } else { %>
-                                <div class="check-account-radio">
+                                <div class="check-account-radio fe-account-input checked">
                                     <button class="bt-dropdown big select-bank fe-select-bank" title="은행 이름" aria-haspopup="true">은행선택<span class="ico"></span></button>
                                     <span class="inputbox mt6">
                                         <span class="input">
@@ -113,20 +113,20 @@
                                     </div>
                                 </div><button class="info-view-ic fe-refund-info">정보보기</button>
                             </div>
-                            <div class="check-account-radio mt28" style="display:none;">
-                                <% if (autoInfo.isAuto) { %>
+                            <div class="check-account-radio fe-refund-box mt28" style="display:none;">
+                                <% if (autoInfo && autoInfo.isAuto) { %>
                                 <div class="widget">
                                     <div class="widget-box radio">
-                                        <ul class="select-list" role="radiogroup">
+                                        <ul class="select-list fe-auto-info fe-refund-account-info" role="radiogroup">
                                             <li class="radiobox" role="radio" aria-checked="false"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
                                                 <input type="radio" name="radio2" value="" title="값1" checked="checked"><!-- 체크상태일 경우 checked="checked" -->
                                                 <span class="check-title">자동납부계좌와 동일</span>
                                                 <span class="account-info">
-                                                    <span class="account-bank"><%= autoInfo.bankName %></span>
-                                                    <span class="account-number"><%= autoInfo.bankCardNum %></span>
+                                                    <span class="account-bank fe-auto-refund-bank" data-code="<%= autoInfo.bankCode %>"><%= autoInfo.bankName %></span>
+                                                    <span class="account-number fe-auto-refund-number"><%= autoInfo.bankNum %></span>
                                                 </span>
                                             </li>
-                                            <li class="radiobox" role="radio" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+                                            <li class="radiobox fe-refund-input" role="radio" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
                                                 <input type="radio" name="radio2" value="" title="값2"><!-- 체크상태일 경우 checked="false" -->
                                                 <span class="check-title">직접입력</span>
                                                 <span class="account-info self">
@@ -134,7 +134,7 @@
                                                     <span class="inputbox mt6">
                                                         <span class="input">
                                                             <input type="number" inputmode="numeric" min="0" pattern="[0-9]*" placeholder="계좌번호(숫자만 입력)"
-                                                                   title="input" value="" aria-labelledby="aria-exp-label1" class="fe-refund-account-number">
+                                                                   title="input" value="" aria-labelledby="aria-exp-label1" class="fe-refund-account-number required-input-field">
                                                             <button class="cancel"><span class="blind">삭제</span></button>
                                                         </span>
                                                     </span>
@@ -144,14 +144,16 @@
                                     </div>
                                 </div>
                                 <% } else { %>
-                                <button class="bt-dropdown big select-bank fe-select-refund-bank" title="은행 이름" aria-haspopup="true">은행선택<span class="ico"></span></button>
-                                <span class="inputbox mt6">
-                                    <span class="input">
-                                        <input type="number" inputmode="numeric" min="0" pattern="[0-9]*" placeholder="계좌번호(숫자만 입력)"
-                                               title="input" value="" aria-labelledby="aria-exp-label1" class="fe-refund-account-number required-input-field">
-                                        <button class="cancel"><span class="blind">삭제</span></button>
+                                <div class="fe-refund-input checked">
+                                    <button class="bt-dropdown big select-bank fe-select-refund-bank" title="은행 이름" aria-haspopup="true">은행선택<span class="ico"></span></button>
+                                    <span class="inputbox mt6">
+                                        <span class="input">
+                                            <input type="number" inputmode="numeric" min="0" pattern="[0-9]*" placeholder="계좌번호(숫자만 입력)"
+                                                   title="input" value="" aria-labelledby="aria-exp-label1" class="fe-refund-account-number required-input-field">
+                                            <button class="cancel"><span class="blind">삭제</span></button>
+                                        </span>
                                     </span>
-                                </span>
+                                </div>
                                 <% } %>
                             </div>
                         </div>
@@ -170,12 +172,6 @@
             <!-- .popup-closeBtn -->
             <button class="prev-step fe-common-back">취소</button>
             <!--// .popup-closeBtn -->
-        </div>
-        <div id="select-line" style="display:none;">
-            <% include ../../components/payment/myt-fare.payment.select.line.component.html %>
-        </div>
-        <div id="check" style="display:none;">
-            <% include ../../components/payment/myt-fare.payment.check.component.html %>
         </div>
         <div id="complete" style="display:none;">
             <% include ../../components/payment/myt-fare.payment.complete.component.html %>
