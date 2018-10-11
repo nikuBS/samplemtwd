@@ -1,0 +1,89 @@
+<!-- .popup hbs -->
+<div class="popup-page nobg tw-popup fixed-btn"><!-- .fixed-btn 하단에 고정된 버튼이 있는 경우 -->
+    <!-- #header -->
+    <div class="header-wrap">
+        <div class="page-header">
+            <div class="header-ti">
+                <h1>납부내역 확인</h1>
+            </div>
+        </div>
+    </div>
+    <!--// #header -->
+    <!-- .container-wrap -->
+    <div class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <!-- .cont-box -->
+            <div class="cont-box">
+                <div class="check-payment">
+                    <strong class="tit">납부를 <br />완료 하시겠습니까?</strong>
+                    <p class="sub-tit fe-check-title">{{title}}</p>
+                    <p class="num"><span class="str fe-payment-amount"></span>{{unit}}</p>
+                    <p class="credit"><span class="ctit fe-payment-option-name"></span><span class="cnum fe-payment-option-number"></span></p>
+                </div>
+                <dl class="refund-pament-account mt36">
+                    <dt>환불계좌</dt>
+                    <dd class="fe-payment-refund"></dd>
+                </dl>
+            </div>
+            <!--// .cont-box -->
+
+            <div class="ti-caption-gray"><!-- 2018-09-19 클래스명 변경 -->
+                <h3 class="tit">청구회선</h3>
+            </div>
+
+            <!-- .cont-box -->
+            <div class="cont-box nogaps">
+                <div class="detail-account-line">
+                    <ul class="fe-selected-line">
+                        <li>
+                            <dl>
+                                <dt>IPTV_samrt STB 104동 ********<span class="date">2018.5</span></dt>
+                                <dd><span>56,470</span>원</dd>
+                            </dl>
+                        </li>
+                        <li>
+                            <dl>
+                                <dt>휴대폰 010-87**-41**<span class="date">2018.5</span></dt>
+                                <dd><span>56,470</span>원</dd>
+                            </dl>
+                        </li>
+                        <li>
+                            <dl>
+                                <dt>IPTV_samrt STB 104동 ********<span class="date">2018.5</span></dt>
+                                <dd><span>56,470</span>원</dd>
+                            </dl>
+                        </li>
+                        <li>
+                            <dl>
+                                <dt>휴대폰 010-87**-41**<span class="date">2018.5</span></dt>
+                                <dd><span>56,470</span>원</dd>
+                            </dl>
+                        </li>
+                        <li>
+                            <dl>
+                                <dt>휴대폰 010-87**-41**<span class="date">2018.5</span></dt>
+                                <dd><span>56,470</span>원</dd>
+                            </dl>
+                        </li>
+                    </ul>
+                </div>
+                <div class="bt-more">
+                    <button>더보기</button>
+                </div>
+            </div>
+            <!--// .cont-box -->
+
+            <ul class="bt-slice full">
+                <li class="bt-red1">
+                    <button class="fe-pay">납부 완료</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!--// .container-wrap -->
+    <!-- .popup-closeBtn -->
+    <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button>
+    <!--// .popup-closeBtn -->
+</div>
+<!--// .popup hbs -->
