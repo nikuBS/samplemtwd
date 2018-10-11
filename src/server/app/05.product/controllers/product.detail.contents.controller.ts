@@ -38,13 +38,19 @@ class ProductDetailContents extends TwViewController {
         });
       }
 
+      if (['F1000', 'E1000'].indexOf(basicInfo.result.prodStCd) === -1) {
+        return this.error.render(res, {
+          svcInfo: svcInfo,
+          title: '상품 전체보기'
+        });
+      }
+
       if (FormatHelper.isEmpty(prodRedisInfo)) {
         return this.error.render(res, { svcInfo: svcInfo });
       }
 
       res.render('product.detail.contents.html', {
         svcInfo: svcInfo,
-        basicInfo: basicInfo,
         contentsInfo: prodRedisInfo.contents
       });
     });
