@@ -134,7 +134,7 @@ Tw.MainHome.prototype = {
         showContents: true,
         invEndDt: Tw.DateHelper.getShortDateNoDot(contents.toDt),
         invStartDt: Tw.DateHelper.getShortDateNoDot(contents.fromDt),
-        invMonth: Tw.DateHelper.getShortKoreanMonth(contents.fromdate),
+        invMonth: Tw.DateHelper.getCurrentMonth(contents.fromDt),
         usedAmtTot: Tw.FormatHelper.addComma(contents.invDtTotalAmtCharge),
         detailList: _.map(contents.useConAmtDetailList, $.proxy(function (detail, index) {
           return {
@@ -151,23 +151,50 @@ Tw.MainHome.prototype = {
     };
   },
   _getMicroPayData: function (element) {
+    // $.ajax('/mock/home.micro-pay.json')
     this._apiService.request(Tw.API_CMD.BFF_05_0079, {})
       .done($.proxy(this._successMicroPayData, this, element))
       .fail($.proxy(this._failMicroPayData, this));
   },
   _successMicroPayData: function (element, resp) {
     console.log('micro', resp);
+    var result = {
+      showMicro: false
+    };
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      var $microTemp = $('#fe-smart-micro-pay');
-      var tplMicroCard = Handlebars.compile($microTemp.html());
-      element.html(tplMicroCard(this._parseMicroData(resp.result)));
+      result = this._parseMicroData(resp.result);
+    } else {
+
     }
+    var $microTemp = $('#fe-smart-micro-pay');
+    var tplMicroCard = Handlebars.compile($microTemp.html());
+    element.html(tplMicroCard(result));
   },
   _failMicroPayData: function () {
 
   },
-  _parseMicroData: function () {
-    return {};
+  _parseMicroData: function (microData) {
+    if(microData.histories.length > 0) {
+      return {
+        showMicro: true,
+        invEndDt: Tw.DateHelper.getShortDateNoDot(microData.toDt),
+        invStartDt: Tw.DateHelper.getShortDateNoDot(microData.fromDt),
+        invMonth: Tw.DateHelper.getCurrentMonth(microData.fromDt),
+        usedAmtTot: Tw.FormatHelper.addComma(microData.totalSumPrice),
+        detailList: _.map(microData.histories, $.proxy(function (detail, index) {
+          return {
+            showDetail: index < 3,
+            charge: Tw.FormatHelper.addComma(detail.sumPrice),
+            name: detail.serviceNm,
+            payTime: Tw.DateHelper.getFullDateAndTime(detail.useDt),
+            payMethod: Tw.MYT_FARE_HISTORY_MICRO_METHOD[detail.payMethod]
+          };
+        }, this))
+      };
+    }
+    return {
+      showMicro: false
+    };
   },
   _getGiftData: function (element, index) {
     // skt_landing.action.loading.on({ ta: '.fe-smart-' + index, co: 'grey', size: true });
@@ -238,7 +265,7 @@ Tw.MainHome.prototype = {
   _getRechargeData: function (element) {
     this._apiService.request(Tw.API_CMD.BFF_06_0001, {})
       .done($.proxy(this._successRechargeData, this, element))
-      .fail($.proxy(this._failRrchargeData, this));
+      .fail($.proxy(this._failRechargeData, this));
 
   },
   _successRechargeData: function (element, resp) {
@@ -253,7 +280,7 @@ Tw.MainHome.prototype = {
     }
 
   },
-  _failRrchargeData: function () {
+  _failRechargeData: function () {
 
   },
   _onClickBtRecharge: function ($event) {

@@ -132,6 +132,12 @@ export enum MYT_FARE_PREPAY_AUTO_CHARGE_CODE {
   UNUSE = 'D'
 }
 
+export enum MYT_FARE_HISTORY_MICRO_TYPE_NAME {
+  '01' = '일반결제',
+  '02' = '묶음결제',
+  '03' = '자동결제'
+}
+
 export enum HOME_SMART_CARD {
   H01 = '자녀 사용량 조회',
   H02 = '요금 안내서',

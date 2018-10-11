@@ -49,3 +49,9 @@ Tw.MYT_FARE_BILL_CO_TYPE = {
   BROADBAND: 'B'
 };
 
+
+Tw.MYT_FARE_HISTORY_MICRO_METHOD = {
+  '01': '일반결제',
+  '02': '묶음결제',
+  '03': '자동결제'
+};
