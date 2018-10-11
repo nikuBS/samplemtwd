@@ -18,19 +18,17 @@ class MyTJoinProductAdditions extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, layerType: string) {
     if (svcInfo.svcAttrCd.includes('M')) {
-      // this.apiService.request(API_CMD.BFF_05_0137, {}).subscribe(resp => {
-      //   if (resp.code !== API_CODE.CODE_00) {
-      //     return this.error.render(res, {
-      //       svcInfo: svcInfo,
-      //       title: '나의 부가상품'
-      //     });
-      //   }
+      this.apiService.request(API_CMD.BFF_05_0137, {}).subscribe(resp => {
+        if (resp.code !== API_CODE.CODE_00) {
+          return this.error.render(res, {
+            svcInfo: svcInfo,
+            title: '나의 부가상품'
+          });
+        }
 
-      const resp = MYT_JOIN_ADDITONS;
-      const additions = this.convertMobileAdditions(resp.result.addProdList);
-
-      res.render('product/myt-join.product.additions.mobile.html', { svcInfo, additions });
-      // });
+        const additions = this.convertMobileAdditions(resp.result.addProdList);
+        res.render('product/myt-join.product.additions.mobile.html', { svcInfo, additions });
+      });
     } else {
       this.apiService.request(API_CMD.BFF_05_0129, {}).subscribe(resp => {
         if (resp.code !== API_CODE.CODE_00) {
@@ -53,7 +51,7 @@ class MyTJoinProductAdditions extends TwViewController {
         scrbDt: DateHelper.getShortDateNoDot(addition.scrbDt)
       };
     });
-  };
+  }
 }
 
 export default MyTJoinProductAdditions;
