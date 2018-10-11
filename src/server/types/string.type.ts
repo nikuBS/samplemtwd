@@ -153,7 +153,6 @@ export const MYT_FARE_HISTORY_MICRO_TYPE = {
   AUTO: '자동결제'
 };
 
-
 export const MYT_JOIN_CONTRACT_TERMINAL = { // 약정할인 및 단말분할상환정보
   FEE_TYPE_A: {
     TIT_NM: '요금약정할인24 (730일)'
