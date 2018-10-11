@@ -81,6 +81,10 @@ class MyTJoinSubmainController extends TwViewController {
         if (data.myHistory && data.myHistory.length > 0) {
           data.hsDate = DateHelper.getShortDateNoDot(data.myHistory[0].chgDt);
         }
+        // 부가, 결합상품 노출여부
+        if (data.myAddProduct && Object.keys(data.myAddProduct).length > 0) {
+          data.isAddProduct = true;
+        }
         // 약정할부 노출여부
         if ( data.myInstallement && data.myInstallement.disProdNm ) {
           data.isInstallement = true;
