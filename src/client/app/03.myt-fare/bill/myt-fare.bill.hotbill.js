@@ -192,18 +192,9 @@ Tw.MyTFareHotBill.prototype = {
 
   _requestSwitchLine: function (target) {
     var lineComponent = new Tw.LineComponent();
-    lineComponent.changeLine(target.svcMgmtNum);
-
-  },
-
-  _onChangeSessionSuccess: function (resp) {
-    if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      this._popupService.close();
-      this._popupService.toast(Tw.REMNANT_OTHER_LINE.TOAST);
-      setTimeout($.proxy(function () {
-        this._historyService.reload();
-      }, this), 300);
-    }
+    this._popupService.close();
+    skt_landing.action.loading.on({ ta: '.container' });
+    lineComponent.changeLine(target.svcMgmtNum, null, $.proxy(this._historyService.reload, this));
   }
 };
 
