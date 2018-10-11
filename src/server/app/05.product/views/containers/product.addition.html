@@ -32,10 +32,10 @@
                             <h3 class="title">사용중인 상품</h3>
                             <p class="text">band 데이터 퍼펙트S</p>
                         </a> -->
-                       <button type="button" class="submain-myfeeproducts">
+                       <a href="/myt/join/product-service#additions" class="submain-myfeeproducts">
                            <h3 class="title">사용중인 상품</h3>
                            <p class="text"><span class="tx-bold"><%= productData.myAdditions.recentlyJoinsProdNm %></span> 외 <%= productData.myAdditions.addProdCnt %>건</p>
-                       </button>
+                       </a>
                    </div>
                 </div>
                 <!--//사용중인 상품 -->
@@ -72,42 +72,42 @@
                 <!-- //스와이프 -->
 
                 <!--상품 퀵메뉴-->
-                <ul class="product-quickmenu"><!-- TODO: 필터 적용된 리스트 이동 필요 -->
+                <ul class="product-quickmenu">
                     <li>
-                        <button class="link">
+                        <a class="link" href="/product/additions?filters=F01231">
                             <i class="ico type-data"></i>
                             <p class="title">데이터</p>
-                        </button>
+                        </a>
                     </li>
                     <li>
-                        <button class="link">
+                        <a class="link" href="/product/additions?filters=F01232">
                             <i class="ico type-benefits"></i>
                             <p class="title">혜택/편의</p>
-                        </button>
+                        </a>
                     </li>
                     <li>
-                        <button class="link">
+                        <a class="link" href="/product/additions?filters=F01233">
                             <i class="ico type-insurance"></i>
                             <p class="title">안심/보험</p>
-                        </button>
+                        </a>
                     </li>
                     <li>
-                        <button class="link">
+                        <a class="link" href="/product/additions?filters=F01234">
                             <i class="ico type-message"></i>
                             <p class="title">통화/메시지</p>
-                        </button>
+                        </a>
                     </li>
                     <li>
-                        <button class="link">
+                        <a class="link" href="/product/additions?filters=F01235">
                             <i class="ico type-contents"></i>
                             <p class="title">컨텐츠 이용</p>
-                        </button>
+                        </a>
                     </li>
                     <li>
-                        <button class="link">
+                        <a class="link" href="/product/additions?filters=F01236">
                             <i class="ico type-payment"></i>
                             <p class="title">인증/결제</p>
-                        </button>
+                        </a>
                     </li>
                 </ul>
                 <!--//상품 퀵메뉴-->
@@ -118,7 +118,7 @@
                 <div class="cont-box">
                     <div class="plan-title">
                          <h3 class="tit"><%= productData.bestAdditions.expsTitNm %></h3>
-                         <div class="bt-alone mt4"><button type="button" class="bt-bg-blue1">전체 부가상품</button></div> <!-- TODO: 전체 부가상품 리스트 이동 필요 -->
+                         <div class="bt-alone mt4"><a href="/product/additions" class="bt-bg-blue1">전체 부가상품</a></div>
                     </div>
 
                     <ul class="recommendedrate-list">
@@ -188,7 +188,7 @@
                         <% for (let i = 0; i < recommendLen; i++) { %>
                             <% const addition = recommendedAdditions[i]; %>
                             <li class="type01">
-                                <a type="button" class="product-infolink" href="/product/detail/<%= addition.prodId %>">
+                                <a class="product-infolink" href="/product/detail/<%= addition.prodId %>">
                                     <div class="products-titleinfo">
                                         <h5 class="title"><%= addition.prodNm %></h5>
                                         <p class="info">
@@ -216,15 +216,17 @@
 
                 <!-- 추천태그 -->
                 <div class="cont-box nogaps-btm widget">
-                    <h3 class="suggest-tag-title">#추천태그</h3>
+                    <h3 class="suggest-tag-title">#<%= productData.recommendedTags.expsTitNm %></h3>
                     <div class="widget-box toggle02">
-                        <ul class="suggest-tag-list">
+                        <div class="suggest-tag-list">
+                            <ul>
                             <% const recommendedTags = productData.recommendedTags.tagList %>
                             <% for (let i = 0; i < recommendedTags.length; i++) { %>
                                 <!-- <li><a href="#" class="link">#여행 갈 때 좋은 요금제</a></li> -->
-                                <li><button type="button" class="link">#<%= recommendedTags[i].tagNm %></button></li> <!-- TODO: 해당 태그 걸린 리스트 페이지로 이동 필요 -->
+                                <li><a href="/product/additions?tag=<%= recommendedTags[i].tagId %>" class="link">#<%= recommendedTags[i].tagNm %></a></li>
                             <% } %>
-                        </ul>
+                            </ul>
+                        </div>
                         <div class="suggest-tag-morewrap">
                             <button role="button" aria-pressed="false" class="suggest-tag-more">
                                 <span class="more">더보기</span>
@@ -238,9 +240,9 @@
                 <div class="cont-box nogaps-ver">
                     <h3 class="moreitems-title">다른상품 더보기</h3>
                     <div class="moreitems-wrap">
-                        <ul class="moreitems-list">
+                        <ul class="moreitems-list"> <!-- TODO: 링크 이동 추가 필요 -->
                             <li>
-                                <button class="link link-type01">모바일<br>부가상품</button>
+                                <a class="link link-type01" href="/product" >모바일<br>요금제</button>
                                 <!-- <a href="#" class="link link-type01">모바일<br>부가상품</a> -->
                             </li>
                             <li>
@@ -278,7 +280,7 @@
 
                 <!-- 하단 link영역 -->
                 <div class="cont-box nogaps noborder">
-                    <ul class="link-long-list nobg">
+                    <ul class="link-long-list nobg"> <!-- TODO: 링크 이동 추가 필요 -->
                         <li>
                             <div class="link-long">
                                 <button>
