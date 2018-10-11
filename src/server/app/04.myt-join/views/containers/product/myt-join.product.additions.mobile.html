@@ -1,0 +1,95 @@
+<%#
+* FileName: myt-join.product.additions.html
+* Author: Jiyoung Jo (jiyoungjo@sk.com)
+* Date: 2018.10.11
+* ID: MS_06
+%>
+
+<% include ../../components/start.component.html %>
+
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#gnb">메뉴 바로가기</a></li>
+            <li><a href="#contents">본문 바로가기</a></li>
+            <li><a href="#footer">푸터 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- #header -->
+        <%- include('../../../common/views/components/header.component.html', { title: '나의 부가상품', svcInfo, option: { line: true } }); %>
+        <!--// #header -->
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+
+                <div class="add-prd-top-wrap">
+                    <span class="select">
+                        <button class="on fe-all-btn">전체</button>
+                        <button class="fe-pay-btn">유료만 보기</button>
+                    </span>
+                    <span class="counts">총 <em><%= additions.length %></em>개</span>
+                </div>
+
+                <div class="cont-box nogaps">
+                    <div class="add-prd-wrap">
+                        <% if (additions.length === 0) { %>
+                        <div class="contents-empty">
+                            <span class="ico type1"></span>
+                            <p class="desc">현재 사용중인 부가상품이 없습니다.</p>
+                        </div>
+                        <% } else { %>
+                        <ul class="list-comp-lineinfo">
+                            <% additions.map(addition => { %>
+                            <li class="add-con" data-isFree ="<%= addition.basFeeTxt === "무료" %>">
+                                <!-- 리스트 하단에 추가 컨텐츠 있을 경우 li에 class="add-con" 추가 -->
+                                <button>
+                                    <div class="lineinfo-user">
+                                        <span class="info-title">
+                                            <%= addition.prodNm %></span>
+                                        <span class="info-sub"><span>가입</span><span><%= addition.scrbDt %></span></span>
+
+                                    </div>
+                                    <div class="lineinfo-data">
+                                        <% if (/^[0-9,]+$/.test(addition.basFeeTxt)) { %>
+                                        <span class="info-title num"><%= addition.basFeeTxt %><span class="unit ml4">원</span></span>
+                                        <% } else { %>
+                                            <span class="info-title num"><%= addition.basFeeTxt %></span>
+                                        <% } %>
+                                        <span class="ico"></span>
+                                    </div>
+                                </button>
+                                <% if (addition.btnList.length > 0) { %>
+                                    <span class="bt-wrap">
+                                        <% addition.btnList.map(btn => { %>
+                                            <a class="bt-tx-blue" href="<%= btn.btnLinkUrl %>"><%= btn.btnNm %></a>
+                                            <!-- <a class="bt-tx-blue" href="<%= btn.btnLinkUrl %>"><%= btn.btnNm %></a> -->
+                                        <% }); %>
+                                    </span>
+                                <% } %>
+                            </li>
+                            <% }); %>
+                        </ul>
+                        <% } %>
+                    </div>
+                </div>
+
+                <hr class="cont-sp type1" aria-hidden="true" />
+                <!-- TBD -->
+                <img src="/img/dummy/DC_02_TBD2.jpg" alt="이용안내 노출 영역" style="width:100%;vertical-align: top;">
+
+            </div>
+        </div>
+        <!--// #contents -->
+    </div>
+</body>
+<% include ../../components/javascript.component.html %>
+<script>
+    $(document).ready(function () {
+        new Tw.MyTJoinProductAdditions($('.wrap'));
+    });
+</script>
+<% include ../../components/end.component.html %>

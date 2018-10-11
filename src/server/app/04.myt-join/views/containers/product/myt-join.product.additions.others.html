@@ -1,0 +1,32 @@
+<%#
+* FileName: myt-join.product.additions.others.html
+* Author: Jiyoung Jo (jiyoungjo@sk.com)
+* Date: 2018.10.11
+%>
+
+<% include ../components/start.component.html %>
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#gnb">메뉴 바로가기</a></li>
+            <li><a href="#contents">본문 바로가기</a></li>
+            <li><a href="#footer">푸터 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- #header -->
+        <%- include('../../../common/views/components/header.component.html', { title: '나의 부가상품', svcInfo, option: { line: true } }); %>
+        <!--// #header -->
+        <!-- #contents -->
+        <div>인터넷/집전화/IPTV 부가상품</div>
+        <!--// #contents -->
+    </div>
+</body>
+<% include ../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+  });
+</script>
+<% include ../components/end.component.html %>
