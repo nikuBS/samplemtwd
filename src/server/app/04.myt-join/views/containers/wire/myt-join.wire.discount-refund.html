@@ -1,0 +1,26 @@
+<%#
+* FileName: myt-join.wire.discount-refund.html
+* Author: Lee Gyu-gwang (skt.P134910@partner.sk.com)
+* Date: 2018.10.08
+%>
+
+<% include ../components/start.component.html %>
+<p>
+    할인 반환금 조회
+
+
+    'reqDate': '20180927',
+    'penaltyInfo': [
+    { 'penStrdNm': '홈결합세트_인터넷 할인반환금',  // 할인반환금명
+    'brchAmt': '406'                        // 할인반환 금액
+    }
+    ],
+    'chargeInfo':
+    { 'hbAmt': '35350',  // 당월 사용 요금(할인 반환금 포함)
+    'colAmt': '0',     // 미납 요금
+    'totAmt': '35350'  // 총 납부금액(당월사용요금+미납요금)
+    }
+
+</p>
+<% include ../components/javascript.component.html %>
+<% include ../components/end.component.html %>

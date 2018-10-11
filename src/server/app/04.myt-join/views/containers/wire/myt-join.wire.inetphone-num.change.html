@@ -1,0 +1,31 @@
+<%#
+* FileName: myt-join.wire.inetphone-num.change.html
+* Author: Lee Gyu-gwang (skt.P134910@partner.sk.com)
+* Date: 2018.10.08
+%>
+
+<% include ../components/start.component.html %>
+<p>
+    인터넷 전화 번호이동 신청현황
+
+    ******** ajax **********
+    phoneNum 필수
+
+    const resp1 = {
+    'code': '00',
+    'msg': 'success',
+    'result': {
+    'npSvcNumView': '', // 인터넷 전화 번호이동 신청 전화번호,
+    'wnpOperStCd': '', // 진행현황 코드 (*이하 코드표 참조),
+    'wnpOperStNm': '', // 진행현황 명
+    }
+    };
+    // wnpOperStCd
+    // 10:처리중(번호이동 처리중)
+    // 00:완료(번호이동 성공)
+    // 90:실패(번호이동 실패/취소)
+    // 20:반송(번호이동 처리중취소/반송)
+
+</p>
+<% include ../components/javascript.component.html %>
+<% include ../components/end.component.html %>
