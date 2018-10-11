@@ -137,6 +137,7 @@ Tw.LineRegisterComponent.prototype = {
   },
   _enableBtns: function () {
     var selectedLength = this.$childChecks.filter(':checked').length;
+    console.log('selected', selectedLength);
     if ( selectedLength === 0 ) {
       this.$btnRegister.attr('disabled', true);
     } else {
@@ -154,7 +155,7 @@ Tw.LineRegisterComponent.prototype = {
       this._marketingSvc = resp.result.offerSvcMgmtNum;
       this._popupService.close();
     } else {
-      this._popupService.close();
+      // this._popupService.close();
       Tw.Error(resp.code, resp.msg).pop();
     }
   },
@@ -188,14 +189,10 @@ Tw.LineRegisterComponent.prototype = {
       this._apiService.request(Tw.API_CMD.BFF_03_0014, {}, {}, this._marketingSvc)
         .done($.proxy(this._successGetMarketingOffer, this, $target.data('showname'), $target.data('svcnum')))
         .fail($.proxy(this._failGetMargetingOffer, this));
-
     }
   },
   _successGetMarketingOffer: function (showName, svcNum, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      this.agr201Yn = resp.result.agr201Yn;
-      this.agr203Yn = resp.result.agr203Yn;
-
       if ( resp.result.agr201Yn !== 'Y' && resp.result.agr203Yn !== 'Y' ) {
         setTimeout($.proxy(function () {
           this.lineMarketingLayer.openMarketingOffer(this._marketingSvc,
@@ -205,7 +202,7 @@ Tw.LineRegisterComponent.prototype = {
         this._historyService.goBack();
       }
     } else {
-      this.openAlert(resp.code + ' ' + resp.msg);
+      Tw.Error(resp.code, resp.msg).pop();
     }
   },
   _failGetMargetingOffer: function () {

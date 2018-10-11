@@ -54,11 +54,9 @@ Tw.MainHome.prototype = {
   _openLineResisterPopup: function () {
     var layerType = this.$container.data('layertype');
     console.log('layerType : ', layerType);
-    if ( !Tw.FormatHelper.isEmpty(layerType) ) {
+    // if ( !Tw.FormatHelper.isEmpty(layerType) ) {
       this._lineRegisterLayer.openRegisterLinePopup(layerType);
-    }
-  },
-  _onClickBarcode: function () {
+    // }
   },
   _cachedSmartCard: function () {
     for ( var i = 0; i < 16; i++ ) {
