@@ -48,6 +48,7 @@ export const URL = {
   '/myt/data': { login: true, id: 'DC', title: '데이터/통화 관리' },
   '/myt/data/usage': { login: true, id: 'DC_01_01', title: '실시간 데이터 잔여량' },
   '/myt/data/usage/child': { login: true, id: 'DC_08_01', title: '자녀 실시간 잔여량' },
+  '/myt/data/usage/total-sharing-data': { login: true, id: 'DC_01_01_01', title: '통합공유 데이터' },
   '/myt/data/family': { login: true, id: 'DC_02', title: 'T가족모아 데이터' },
   '/myt/data/gift': { login: true, id: 'DC_03_01', title: 'T끼리 데이터 선물하기' },
   '/myt/data/ting': { login: true, id: 'DC_04_03', title: '팅요금제 충전 선물' },
