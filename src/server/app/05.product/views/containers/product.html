@@ -228,14 +228,16 @@
                         <%= productData.recommendedTags.expsTitNm %>
                     </h3>
                     <div class="widget-box toggle02">
-                        <ul class="suggest-tag-list">
+                        <div class="suggest-tag-list">
+                            <ul>
                             <% const recommendedTags = productData.recommendedTags.tagList %>
                             <% for (let i = 0; i < recommendedTags.length; i++) { %>
                             <!-- <li><a href="#" class="link">#여행 갈 때 좋은 요금제</a></li> -->
                             <li><a class="link" href="/product/plans?tag=<%= recommendedTags[i].tagId %>">#
                                     <%= recommendedTags[i].tagNm %></a></li>
                             <% } %>
-                        </ul>
+                            </ul>
+                        </div>
                         <div class="suggest-tag-morewrap">
                             <button role="button" aria-pressed="false" class="suggest-tag-more">
                                 <span class="more">더보기</span>
