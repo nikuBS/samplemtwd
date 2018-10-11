@@ -31,6 +31,10 @@ Tw.MyTDataSubMain.prototype = {
     if ( this.data.present ) {
       this.$presentBtn = this.$container.find('[data-id=present]');
     }
+    // T가족모아 배너
+    if (this.data.family) {
+      this.$familymoaBanner = this.$container.find('[data-id=family-moa]');
+    }
     // TODO: 선불쿠폰 API 기능 완료 후 작업(TBD)
     // this.$prepayContainer = this.$container.find('[data-id=prepay-container]');
     if ( this.data.refill ) {
@@ -62,6 +66,10 @@ Tw.MyTDataSubMain.prototype = {
     }
     if ( this.data.present ) {
       this.$presentBtn.on('click', $.proxy(this._onTPresentDetail, this));
+    }
+    // T가족모아 배너
+    if (this.data.family) {
+      this.$familymoaBanner.on('click', $.proxy(this._onFamilyMoaDetail, this));
     }
     if ( this.data.refill ) {
       this.$refillBtn.on('click', $.proxy(this._onRefillDetail, this));
@@ -170,6 +178,16 @@ Tw.MyTDataSubMain.prototype = {
 
   _onTPresentDetail: function () {
     this._historyService.goLoad('/myt/data/gift');
+  },
+
+  // T가족모아
+  _onFamilyMoaDetail: function () {
+    if(this.data.family.possible) {
+      // TODO: 미가입 관련 상태 업데이트 후 처리
+      // this._historyService.goLoad('');
+    } else {
+      this._historyService.goLoad('/myt/data/family');
+    }
   },
 
   // 데이터 혜텍

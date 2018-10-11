@@ -8,10 +8,11 @@
 import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../common/controllers/tw.view.controller';
 import { Observable } from 'rxjs/Observable';
-import { API_CMD, API_CODE } from '../../types/api-command.type';
+import { API_CMD, API_CODE, API_T_FAMILY_ERROR } from '../../types/api-command.type';
 import FormatHelper from '../../utils/format.helper';
 import DateHelper from '../../utils/date.helper';
-import { MYT_T_DATA_GIFT_TYPE, DATA_UNIT, CURRENCY_UNIT } from '../../types/string.type';
+import { CURRENCY_UNIT, DATA_UNIT, MYT_T_DATA_GIFT_TYPE } from '../../types/string.type';
+import { BFF_06_0044_familyInfo } from '../../mock/server/myt.data.family.mock';
 
 class MytDataSubmainController extends TwViewController {
   constructor() {
@@ -28,7 +29,7 @@ class MytDataSubmainController extends TwViewController {
       otherLines: this.convertOtherLines(svcInfo, allSvc)
     };
     Observable.combineLatest(
-      // this._getChildrenLines(),
+      this._getFamilyMoaData(),
       // this._getRemnantData(),
       this._getDataPresent(),
       this._getRefillCoupon(),
@@ -39,8 +40,9 @@ class MytDataSubmainController extends TwViewController {
       this._getEtcChargeBreakdown(),
       this._getRefillPresentBreakdown(),
       this._getRefillUsedBreakdown(),
-      this._getUsagePatternSevice()
-    ).subscribe(([/*remnant,*/ present, refill, dcBkd, dpBkd, tpBkd, etcBkd, refpBkd, refuBkd, pattern]) => {
+      this._getUsagePatternSevice(),
+      this._getFamilyMoa1()
+    ).subscribe(([family, /*remnant,*/ present, refill, dcBkd, dpBkd, tpBkd, etcBkd, refpBkd, refuBkd, pattern, familyMock]) => {
       if ( child && child.length > 0 ) {
         data.otherLines = Object.assign(this.convertChildLines(child), data.otherLines);
       }
@@ -62,6 +64,20 @@ class MytDataSubmainController extends TwViewController {
         // 리필쿠폰
         data.refill = refill;
       }
+
+      // T가족모아 데이터
+      if ( family && Object.keys(family).length > 0 ) {
+        data.family = this.convertFamilyData(family);
+        const remained = parseInt(data.family.remained, 10);
+        data.family.remained = FormatHelper.convDataFormat(remained, DATA_UNIT.GB).data;
+        data.family.limitation = parseInt(data.family.limitation, 10);
+      } /*else {
+        // TODO: 우선 MOCK 데이터 사용
+        data.family = this.convertFamilyData(familyMock.result);
+        const remained = parseInt(data.family.remained, 10);
+        data.family.remained = FormatHelper.convDataFormat(remained, DATA_UNIT.GB).data;
+        data.family.limitation = parseInt(data.family.limitation, 10);
+      }*/
 
       // 최근 충전 및 선물 내역
       const breakdownList: any = [];
@@ -96,7 +112,7 @@ class MytDataSubmainController extends TwViewController {
         tpBkd.map((item) => {
           item['class'] = (item.opTypCd === '1' ? 'send' : 'receive');
           item['u_title'] = item.opTypNm;
-          item['u_sub'] =  item.custNm + ' | ' + item.svcNum;
+          item['u_sub'] = item.custNm + ' | ' + item.svcNum;
           item['d_title'] = item.amt;
           item['d_sub'] = DateHelper.getShortDate(item.opDt);
           item['unit'] = CURRENCY_UNIT.WON;
@@ -180,6 +196,22 @@ class MytDataSubmainController extends TwViewController {
     return list;
   }
 
+  convertFamilyData(items): any {
+    let info: any = {
+      'total': items.total,
+      'used': items.used,
+      'remained': items.remained,
+      'adultYn': items.adultYn,
+    };
+    const list = items.mbrList;
+    list.filter((item) => {
+      if ( item.repYn === 'Y' ) {
+        info = Object.assign(info, item);
+      }
+    });
+    return info;
+  }
+
   sortBreakdownItems(items): any {
     const returnVal: any = [];
     let group: any = [];
@@ -201,11 +233,18 @@ class MytDataSubmainController extends TwViewController {
     return returnVal.reverse();
   }
 
-  // 자녀회선목록 조회
-  _getChildrenLines(): Observable<any> {
-    return this.apiService.request(API_CMD.BFF_05_0024, {}).map((resp) => {
+  // T가족모아데이터 정보
+  _getFamilyMoaData(): Observable<any> {
+    return this.apiService.request(API_CMD.BFF_06_0044, {}).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
         return resp.result;
+      } else if ( resp.code === API_T_FAMILY_ERROR.BLN0010 ) {
+        // TODO: 배포 된 이후 처리
+        // T가족모아 가입 가능한 요금제이나 미가입으로 가입유도 화면 노출
+        /*return {
+          possible: true
+        };*/
+        return null;
       } else {
         // error
         return null;
@@ -347,6 +386,14 @@ class MytDataSubmainController extends TwViewController {
         // error
         return null;
       }
+    });
+  }
+
+  // T가족모아 MOCK - 데이터 mig 작업 이후 제거
+  _getFamilyMoa1(): Observable<any> {
+    return Observable.create((obs) => {
+      obs.next(BFF_06_0044_familyInfo);
+      obs.complete();
     });
   }
 }
