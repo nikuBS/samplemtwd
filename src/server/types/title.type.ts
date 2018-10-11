@@ -4,6 +4,10 @@ export const HEAD_TITLE = {
   DOCUMENT: '구비서류'
 };
 
+export const MYT_DATA_SUBMAIN_TITLE = {
+  MAIN: '데이터/통화 관리'
+};
+
 export const MYT_FARE_SUBMAIN_TITLE = {
   MAIN: '나의 요금'
 };

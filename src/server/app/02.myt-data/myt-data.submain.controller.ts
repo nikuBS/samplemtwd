@@ -13,6 +13,7 @@ import FormatHelper from '../../utils/format.helper';
 import DateHelper from '../../utils/date.helper';
 import { CURRENCY_UNIT, DATA_UNIT, MYT_T_DATA_GIFT_TYPE } from '../../types/string.type';
 import { BFF_06_0044_familyInfo } from '../../mock/server/myt.data.family.mock';
+import { MYT_DATA_SUBMAIN_TITLE } from '../../types/title.type';
 
 class MytDataSubmainController extends TwViewController {
   constructor() {
@@ -43,6 +44,16 @@ class MytDataSubmainController extends TwViewController {
       this._getUsagePatternSevice(),
       this._getFamilyMoa1()
     ).subscribe(([family, /*remnant,*/ present, refill, dcBkd, dpBkd, tpBkd, etcBkd, refpBkd, refuBkd, pattern, familyMock]) => {
+      if ( !svcInfo.svcMgmtNum && present.info ) {
+        // 비정상 진입 또는 API 호출 오류
+        res.render('error.server-error.html', {
+          title: MYT_DATA_SUBMAIN_TITLE.MAIN,
+          code: present.info.code,
+          msg: present.info.msg,
+          svcInfo: svcInfo
+        });
+        return false;
+      }
       if ( child && child.length > 0 ) {
         data.otherLines = Object.assign(this.convertChildLines(child), data.otherLines);
       }
@@ -71,13 +82,14 @@ class MytDataSubmainController extends TwViewController {
         const remained = parseInt(data.family.remained, 10);
         data.family.remained = FormatHelper.convDataFormat(remained, DATA_UNIT.GB).data;
         data.family.limitation = parseInt(data.family.limitation, 10);
-      } /*else {
-        // TODO: 우선 MOCK 데이터 사용
-        data.family = this.convertFamilyData(familyMock.result);
-        const remained = parseInt(data.family.remained, 10);
-        data.family.remained = FormatHelper.convDataFormat(remained, DATA_UNIT.GB).data;
-        data.family.limitation = parseInt(data.family.limitation, 10);
-      }*/
+      }
+      /*else {
+             // TODO: 우선 MOCK 데이터 사용
+             data.family = this.convertFamilyData(familyMock.result);
+             const remained = parseInt(data.family.remained, 10);
+             data.family.remained = FormatHelper.convDataFormat(remained, DATA_UNIT.GB).data;
+             data.family.limitation = parseInt(data.family.limitation, 10);
+           }*/
 
       // 최근 충전 및 선물 내역
       const breakdownList: any = [];
@@ -286,7 +298,9 @@ class MytDataSubmainController extends TwViewController {
         return resp.result;
       } else {
         // error
-        return null;
+        return {
+          info: resp
+        };
       }
     });
   }
