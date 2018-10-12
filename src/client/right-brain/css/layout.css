@@ -597,6 +597,10 @@ body.bg-gray {
       float: left;
       margin-left: 0.125rem;
       font-size: 0.8125rem; }
+    .cont-box .sub-top-box0 .bt-dropdown.wd-auto-r {
+      width: auto;
+      float: right;
+      font-size: 0.8125rem; }
     .cont-box .sub-top-box0 .total-num-tx {
       float: right;
       margin-right: 1rem;
@@ -1121,6 +1125,8 @@ body.bg-gray {
       padding-left: 0; }
       .box-suggest .suggest-info .suggest-list.nodot li:before {
         display: none; }
+    .box-suggest .suggest-info .suggest-list.type2 li {
+      font-size: 0.8125rem; }
   .box-suggest .suggest-info .suggest-numbering li {
     position: relative;
     padding-left: 0.875rem;
