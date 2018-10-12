@@ -58,46 +58,22 @@
               <span class="unit"><%= prodRedisInfo.summary.basFeeInfo.unit %></span>
             </p>
             <% } %>
-            <div class="btn">
-              <button type="button" class="bt-white1 fe-btn_join">가입</button>
-            </div>
-
-            <!-- 해당 상품을 이용중인 회선으로 로그인 시 해지 기능만 있는 경우
-            <p class="price-text">
-                월정액(부가세포함)<br>
-                <strong class="price-type">100,000</strong>
-                <span class="unit">원</span>
-            </p>
-            <div class="btn">
-                <button type="button" class="bt-white2">해지</button>
-            </div> -->
-
-            <!-- 가입가능 상품인 경우일대   가입x/ 가입상담예약 O 일경우
-            <p class="price-text">
-                월정액(부가세포함)<br>
-                <strong class="price-type">100,000</strong>
-                <span class="unit">원</span>
-            </p>
-             -->
-
-            <!--  서류제출/조회 노출 케이스  제출 전/제출 후 미비로 재 업로드 필요 시
-            <p class="price-text">
-                월정액(부가세포함)<br>
-                <strong class="price-type">100,000</strong>
-                <span class="unit">원</span>
-            </p>
-             -->
-
-            <!-- 가입제한/불가 상품인 경우
-            <p class="price-text">
-                월정액(부가세포함)<br>
-                <strong class="price-type">100,000</strong>
-                <span class="unit">원</span>
-            </p>
+            <% if ( basicInfo.prodStCd !== 'E1000' ) { %>
             <div class="limit">
-                가입제한 상품
+              가입제한 상품
             </div>
-             -->
+            <% } else { %>
+              <% if ( true || basicInfo.prodScrbYn === 'Y' && svcInfo.prodId !== prodId ) { %>
+              <div class="btn">
+                <button type="button" class="bt-white1 fe-btn_join">가입</button>
+              </div>
+              <% } %>
+              <% if ( basicInfo.prodTermYn === 'Y' ) { %>
+              <div class="btn">
+                <button type="button" class="bt-white2 fe-btn_terminate">해지</button>
+              </div>
+              <% } %>
+            <% } %>
           </div>
           <% if ( (prodRedisInfo.summaryCase === '1' || prodRedisInfo.summaryCase === '2')
           && (prodRedisInfo.summary.basOfrDataQtyCtt || prodRedisInfo.summary.basOfrVcallTmsCtt || prodRedisInfo.summary.basOfrCharCntCtt) ) { %>
@@ -113,13 +89,6 @@
             <% } %>
           </ul>
           <% } %>
-          <!-- <ul class="productdetails-utill">
-              <li>- 데이터 <strong class="str">기본제공금액 조절사용</strong></li>
-              <li>- 문자 <strong class="str">기본제공</strong></li>
-          </ul>
-          <ul class="productdetails-utill">
-              <li>- 데이터 <strong class="str">기본제공금액 조절사용</strong></li>
-          </ul> -->
         </div>
         <!-- //상품타이틀 -->
 
@@ -138,21 +107,28 @@
 
         <hr class="cont-sp type1" aria-hidden="true"/>
 
-        <!-- dummy -->
-        <div><img src="/img/dummy/dmy-mp-02-02.png" alt="" style="width:100%;" /></div>
+        <!-- // @todo CBT 시연을 위한 dummy 통 이미지 -->
+        <div class="product-visualization"><img src="/img/dummy/dmy-mp-02-02.png" alt="" style="width:100%;" /></div>
         <!-- // dummy -->
+
+        <% if ( prodRedisInfo.contents.LA ) { %>
+        <div class="product-visualization"><%- prodRedisInfo.contents.LA %></div>
+        <% } %>
+        <% if ( prodRedisInfo.contents.REP ) { %>
+        <div class="product-visualization"><%- prodRedisInfo.contents.REP %></div>
+        <% } %>
 
         <hr class="cont-sp type1" aria-hidden="true"/>
 
-        <% if ( prodRedisInfo.contents && prodRedisInfo.contents.length > 0 ) { %>
+        <% if ( prodRedisInfo.contents.LE && prodRedisInfo.contents.LE.length > 0 ) { %>
         <!-- 팝업 띄우는 링크 -->
         <div class="cont-box nogaps noborder">
           <ul class="link-long-list">
-            <% for (var i in prodRedisInfo.contents) { %>
+            <% for (var i in prodRedisInfo.contents.LE) { %>
             <li>
               <div class="link-long">
                 <a href="/product/detail/contents/<%= prodId %>#contents<%= i %>">
-                  <%= prodRedisInfo.contents[i].briefTitNm %>
+                  <%= prodRedisInfo.contents.LE[i].briefTitNm %>
                   <span class="tx-sub">
                     <span class="ico"><span class="blind">보기</span></span>
                   </span>
@@ -172,7 +148,7 @@
         <div class="cont-box nogaps-hoz">
           <div class="widget-box">
             <ul class="representcharge-list">
-              <li>
+              <li class="on">
                 <button role="button" aria-pressed="false" class="representcharge-info">
                   <h4 class="title"><%= series.prodGrpNm %></h4>
                   <div class="img-box"><% if ( series.prodImg ) { %><img class="lte" src="<%= series.prodImg %>" alt="<%= series.prodGrpnm %>"><% } %></div>
@@ -251,7 +227,7 @@
                       <a href="/product/detail/<%= recommends.recommendProdList[i].prodId %>" class="bg1"> <!-- 보라색 -->
                         <span class="located top">
                           <span class="txt-tit"><%= recommends.recommendProdList[i].prodNm %></span>
-                        <span class="txt-type">부가상품</span>
+                        <!-- @todo TBD --><span class="txt-type">부가상품</span><!-- // -->
                         </span>
                         <span class="located bottom">
                           <span class="txt-detail"><%= recommends.recommendProdList[i].prodSmryDesc %></span>
