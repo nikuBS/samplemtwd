@@ -5,6 +5,7 @@ const BFF_06_0044_familyInfo = {
     total: '2048',
     used: '400',
     remained: '1648',
+    adultYn: 'Y',
     mbrList: [{
       svcNum: '01094**04**',
       svcMgmtNum: '7226057315',

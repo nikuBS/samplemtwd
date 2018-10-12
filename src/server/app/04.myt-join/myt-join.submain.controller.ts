@@ -90,9 +90,9 @@ class MyTJoinSubmainController extends TwViewController {
           data.isInstallement = true;
         }
         // 무약정플랜 노출여부
-        if ( data.myContractPlan && data.myContractPlan.usablePt ) {
-          data.myContractPlan.point = FormatHelper.addComma(data.myContractPlan.usablePt);
-          data.myContractPlan.count = data.myContractPlan.datas.length;
+        if ( data.myContractPlan && data.myContractPlan.muPointYn === 'Y' ) {
+          data.myContractPlan.point = FormatHelper.addComma(data.myContractPlan.muPoint);
+          data.myContractPlan.count = data.myContractPlan.muPointCnt;
           data.isContractPlan = true;
         }
         // AC: 일시정지가 아닌 상태, SP: 일시정지 중인 상태
@@ -259,21 +259,7 @@ class MyTJoinSubmainController extends TwViewController {
 
   // 무약정플랜
   _getContractPlanPoint() {
-    // 1년 기준
-    const curDate = new Date();
-    const beforeDate = new Date();
-    beforeDate.setTime(curDate.getTime() - (365 * 24 * 60 * 60 * 1000));
-    const sDate = DateHelper.getCurrentShortDate(beforeDate);
-    const eDate = DateHelper.getCurrentShortDate(curDate);
-    const params = {
-      startYear: sDate.slice(0, 4),
-      startMonth: sDate.slice(4, 6),
-      startDay: sDate.slice(6, 8),
-      endYear: eDate.slice(0, 4),
-      endMonth: eDate.slice(4, 6),
-      endDay: eDate.slice(6, 8)
-    };
-    return this.apiService.request(API_CMD.BFF_05_0060, params).map((resp) => {
+    return this.apiService.request(API_CMD.BFF_05_0175, {}).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
         return resp.result;
       } else {
