@@ -54,22 +54,23 @@ Tw.MyTFarePaymentCommon.prototype = {
     var $target = $(target).clone();
     $target.removeClass('none');
 
-    var isChecked = $target.hasClass('checked');
-    var isOrigin = $target.hasClass('fe-origin');
-
-    if (isChecked && isOrigin) {
-      $target.removeClass('checked');
-      $target.removeClass('fe-origin');
-      $target.attr('aria-checked', 'false');
-      $target.find('input').removeAttr('checked');
-    }
+    var $id = $target.attr('id');
+    var isChecked = false;
 
     for (var i in this._selectedLine) {
-      if (this._selectedLine[i] === $target.attr('id')) {
-        $target.addClass('checked');
-        $target.attr('aria-checked', 'true');
-        $target.find('input').attr('checked', 'checked');
+      if (this._selectedLine[i] === $id) {
+        isChecked = true;
       }
+    }
+
+    if (isChecked) {
+      $target.addClass('checked');
+      $target.attr('aria-checked', 'true');
+      $target.find('input').attr('checked', 'checked');
+    } else {
+      $target.removeClass('checked');
+      $target.attr('aria-checked', 'false');
+      $target.find('input').removeAttr('checked');
     }
     $target.on('change', $.proxy(this._onCheck, this));
     $target.appendTo(this.$layer.find('.fe-line-list'));
