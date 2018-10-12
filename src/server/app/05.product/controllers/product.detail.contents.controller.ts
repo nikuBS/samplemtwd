@@ -15,6 +15,23 @@ class ProductDetailContents extends TwViewController {
     super();
   }
 
+  private _convertContentInfo(contentsInfo): any {
+    const contentsResultList: any = [];
+
+    contentsInfo.forEach((item) => {
+      if (item.ledStylCd !== 'LE') {
+        return true;
+      }
+
+      contentsResultList.push({
+        briefTitNm: item.briefTitNm,
+        ledDtlHtmlCtt: item.ledDtlHtmlCtt
+      });
+    });
+
+    return contentsResultList;
+  }
+
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, layerType: string) {
     const prodId = req.params.prodId;
 
@@ -51,7 +68,7 @@ class ProductDetailContents extends TwViewController {
 
       res.render('product.detail.contents.html', {
         svcInfo: svcInfo,
-        contentsInfo: prodRedisInfo.contents
+        contentsInfo: this._convertContentInfo(prodRedisInfo.contents)
       });
     });
   }

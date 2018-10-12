@@ -218,3 +218,8 @@ export enum PROD_SCRB_E {
   REGISTER = 'A',
   TERMINATE = 'I'
 }
+
+export enum PROD_CTG_CD_CODE {
+  F01100 = 'plans',
+  F01200 = 'additions'
+}
