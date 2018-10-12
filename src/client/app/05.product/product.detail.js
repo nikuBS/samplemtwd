@@ -20,8 +20,8 @@ Tw.ProductDetail.prototype = {
   _init: function() {
     this._prodId = this.$container.data('prod_id');
     this._ctgCd = this.$container.data('ctg_cd');
+    this._ctgKey = this.$container.data('ctg_key');
     this._filterIds = this.$container.data('filter_ids');
-    this._listAction = this.$container.data('list_action');
     this._loadRecommendedrateList();
   },
 
@@ -89,6 +89,9 @@ Tw.ProductDetail.prototype = {
     if (resp.code !== Tw.API_CODE.CODE_00) {
       return Tw.Error(resp.code, resp.msg).pop();
     }
+
+    console.log(resp);
+    return;
 
     this._historyService.goLoad('/product/' + (joinTermCd === '01' ? 'join' : 'terminate') + '/' + this._prodId);
   },
@@ -168,7 +171,7 @@ Tw.ProductDetail.prototype = {
   },
 
   _goRecommendRateMoreList: function() {
-    this._historyService.goLoad('/product/' + this._listAction + '?filters=' + this._filterIds);
+    this._historyService.goLoad('/product/' + this._ctgKey + '?filters=' + this._filterIds);
   }
 
 };

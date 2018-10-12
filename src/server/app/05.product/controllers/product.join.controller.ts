@@ -209,7 +209,6 @@ class ProductJoin extends TwViewController {
             this.apiService.request(API_CMD.BFF_10_0008, {}, {}, this._prodId),
             this.apiService.request(API_CMD.BFF_10_0009, {})
           ).subscribe(([joinTermInfo, overPayReqInfo]) => {
-            console.log(overPayReqInfo);
             if (joinTermInfo.code !== API_CODE.CODE_00) {
               return this.error.render(res, {
                 code: joinTermInfo.code,

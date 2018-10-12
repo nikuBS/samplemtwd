@@ -469,6 +469,10 @@ export const API_CMD = {
     path: '/core-product/v1/mobiles/fee-plans/joins/over-chargings',
     method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true
   },
+  BFF_10_0013: {
+    path: '/core-product/v1/mobiles/fee-plans/args-0/tplan-sets',
+    method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true
+  },
   BFF_10_0015: {
     path: '/core-product/v1/mobiles/fee-plans/args-0/tplan-benefits',
     method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true

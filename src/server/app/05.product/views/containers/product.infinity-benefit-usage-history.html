@@ -16,7 +16,7 @@
 <!--// #skip_navigation -->
 <div class="wrap">
   <div class="popup-page nobg tw-popup no-btn">
-    <%- include('../../../common/views/components/header.component.html', { title: '혜택이용내역', svcInfo, option: { line: false } }); %>
+    <%- include('../../../common/views/components/header.component.html', { title: '혜택 이용내역', svcInfo, option: { line: false } }); %>
     <!-- .container-wrap -->
     <div class="container-wrap">
       <h2 class="blind">내용</h2>
@@ -46,7 +46,7 @@
             <ul>
               <% for (var i in benefitList) { %>
               <% if ( listCase === 'A' ) { %>
-              <li style="<%= %>">
+              <li>
                 <p class="date"><%= benefitList[i].issueDtKey %></p>
                 <% for ( var j in benefitList[i].list ) { %>
                 <dl class="<%= benefitList[i].list[j].multipleClass %>">
@@ -69,19 +69,26 @@
                 <% } %>
               </li>
               <% } else { %>
+              <li>
+                <p class="date"><%= benefitList[i].benfStaDtKey %></p>
+                <% for ( var j in benefitList[i].list ) { %>
+                <dl class="<%= benefitList[i].list[j].multipleClass %>">
+                  <dt><%= benefitList[i].list[j].prodLabel %></dt>
+                  <dd><%= benefitList[i].list[j].prodNm %></dd>
+                  <dt>지원시작일</dt>
+                  <dd><%= benefitList[i].list[j].benfStaDt %></dd>
+                  <% if ( benefitList[i].list[j].benfEndDt ) { %>
+                  <dt>지원종료일</dt>
+                  <dd><%= benefitList[i].list[j].benfEndDt %></dd>
+                  <% } %>
+                </dl>
+                <% } %>
+              </li>
               <% } %>
               <% } %>
             </ul>
           </div>
         </div>
-        <!--// .cont-box -->
-          <% if ( benefitList.length > 20 ) { %>
-          <div class="bt-more">
-            <button class="fe-btn_more">더보기</button>
-          </div>
-          <% } %>
-        </div>
-        <!--// .cont-box -->
 
         <div class="bt-top">
           <button class="fe-btn_go_top"><span class="blind">최상단으로 가기</span></button>

@@ -1,4 +1,6 @@
-<div class="container fe-join_confirm" style="display: none" data-svc_prod_grp_id="<%= joinTermInfo.preinfo.svcProdGrpId %>">
+<div class="container fe-join_confirm" style="display: none"
+ data-svc_prod_grp_id="<%= joinTermInfo.preinfo.svcProdGrpId %>"
+ data-prod_nm="<%= joinTermInfo.preinfo.toProdInfo.prodNm %>">
   <!-- .cont-box -->
   <div class="cont-box">
     <div class="user-info">
@@ -34,7 +36,7 @@
         <span class="tit-tx"><span class="blind">변경 요금제명</span><%= joinTermInfo.preinfo.toProdInfo.prodNm %></span>
         <span class="sub-disc03">
           <% if ( joinTermInfo.preinfo.toProdInfo.isNumberToBasFeeInfo ) { %>
-          <span class="tx-bold vbl">월 <%= joinTermInfo.preinfo.toProdInfo.basFeeInfo %>원</span> 부가세포함
+          <span class="tx-bold vbl fe-prod_money">월 <%= joinTermInfo.preinfo.toProdInfo.basFeeInfo %>원</span> 부가세포함
           <% } else { %>
           <span class="tx-bold vbl"><%= joinTermInfo.preinfo.toProdInfo.basFeeInfo %></span>
           <% } %>
@@ -253,7 +255,6 @@
                 </div>
               </li>
               <% } %>
-              <% console.log(joinTermInfo.stipulationInfo); %>
               <% if ( joinTermInfo.stipulationInfo.stipulation.scrbStplAgreeYn === 'Y' ) { %>
               <li>
                 <div class="checkbox type01 fe-checkbox_style" role="checkbox" aria-checked="false">
@@ -335,3 +336,4 @@
     </li>
   </ul>
 </div>
+<%- include('../components/product.plans.overpay.component.html'); %>

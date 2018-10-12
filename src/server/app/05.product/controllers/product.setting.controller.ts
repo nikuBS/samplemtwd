@@ -8,7 +8,9 @@ import TwViewController from '../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
 import FormatHelper from '../../../utils/format.helper';
 import { PRODUCT_SETTING } from '../../../mock/server/product.display-ids.mock';
-import { API_CMD } from '../../../types/api-command.type';
+import { API_CMD, API_CODE } from '../../../types/api-command.type';
+import { PROD_CTG_CD_CODE } from '../../../types/bff.type';
+import { Observable } from 'rxjs/Observable';
 
 class ProductSetting extends TwViewController {
   constructor() {
@@ -17,11 +19,16 @@ class ProductSetting extends TwViewController {
 
   private _prodId;
   private _displayId;
+  private _displayGroup;
   private _redirectProdId;
   private _redirectProdIdList = {
     NA00004198: ['NA00004048', 'NA00004049'],
     NA00004188: ['NA00004046'],
     NA00004196: ['NA00004047']
+  };
+
+  private _planProdList = {
+    NA00005959: 'BFF_10_0013'
   };
 
   /**
@@ -114,8 +121,27 @@ class ProductSetting extends TwViewController {
     return settingInfo;
   }
 
+  /**
+   * @param ctgCd
+   * @private
+   */
+  private _getDisplayGroup(ctgCd): any {
+    return PROD_CTG_CD_CODE[ctgCd];
+  }
+
+  /**
+   * @private
+   */
+  private _getApiCode(): Observable<any> {
+    if (!FormatHelper.isEmpty(this._planProdList[this._prodId])) {
+      return Observable.of({ apiCode: this._planProdList[this._prodId] });
+    }
+
+    return this.redisService.getData(this._prodId + 'SL');
+  }
+
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, layerType: string) {
-    this._prodId = svcInfo.prodId;
+    this._prodId = req.params.prodId || '';
 
     if (FormatHelper.isEmpty(this._prodId)) {
       return this.error.render(res, {
@@ -128,22 +154,45 @@ class ProductSetting extends TwViewController {
       return res.redirect('/product/' + this._redirectProdId);
     }
 
-    this._displayId = this._getDisplayId();
-    if (FormatHelper.isEmpty(this._displayId)) {
-      return this.error.render(res, {
-        title: '상품 설정',
-        svcInfo: svcInfo
-      });
-    }
+    this.apiService.request(API_CMD.BFF_10_0001, {}, {}, this._prodId)
+      .subscribe((basicInfo) => {
+        this._displayId = this._getDisplayId();
+        this._displayGroup = this._getDisplayGroup(basicInfo.result.ctgCd);
 
-    this.redisService.getData(this._prodId + 'SL')
-      .subscribe((ApiInfo) => {
-        this.apiService.request(API_CMD[ApiInfo.apiCode], {}, {}, this._prodId)
-          .subscribe((settingInfo) => {
-            res.render('product.setting.html', {
-              svcInfo: svcInfo,
-              displayId: this._displayId,
-              respInfo: this._parseSettingInfo(settingInfo)
+        if (FormatHelper.isEmpty(this._displayId)) {
+          return this.error.render(res, {
+            title: '상품 설정',
+            svcInfo: svcInfo
+          });
+        }
+
+        this._getApiCode().subscribe((ApiInfo) => {
+          if (FormatHelper.isEmpty(ApiInfo)) {
+            this.logger.info(this, '[EMPTY API INFO] API CODE IS EMPTY');
+            return this.error.render(res, {
+              title: '상품 설정',
+              svcInfo: svcInfo
+            });
+          }
+
+          this.apiService.request(API_CMD[ApiInfo.apiCode], {}, {}, this._prodId)
+            .subscribe((settingInfo) => {
+              if (settingInfo.code !== API_CODE.CODE_00) {
+                return this.error.render(res, {
+                  code: settingInfo.code,
+                  msg: settingInfo.msg,
+                  title: '상품 설정',
+                  svcInfo: svcInfo
+                });
+              }
+
+              res.render('product.setting.html', {
+                svcInfo: svcInfo,
+                prodId: this._prodId,
+                displayId: this._displayId,
+                displayGroup: this._displayGroup,
+                settingInfo: this._parseSettingInfo(settingInfo.result)
+              });
             });
           });
       });

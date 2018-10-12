@@ -8,6 +8,7 @@ Tw.ProductJoin = function(rootEl) {
   this.$container = rootEl;
   this._historyService = new Tw.HistoryService();
   this._popupService = new Tw.PopupService();
+  this._apiService = Tw.Api;
   this._template = Handlebars.compile($('#fe-templ-plans-overpay').html());
   this._cachedElement();
   this._bindEvent();
@@ -50,6 +51,7 @@ Tw.ProductJoin.prototype = {
     this.$overpayGuide = this.$container.find('.fe-overpay_guide');
     this.$overpayWrap = this.$container.find('.fe-overpay_wrap');
     this.$overpayResult = this.$container.find('.fe-overpay_result');
+    this.$prodMoney = this.$container.find('.fe-prod_money');
 
     this.$btnJoinSetupOk = this.$container.find('.fe-btn_setup_ok');
     this.$btnBackToSetup = this.$container.find('.fe-btn_back_to_setup');
@@ -236,17 +238,49 @@ Tw.ProductJoin.prototype = {
           asgnNumList: this._data.asgnNumList,
           optProdId: this._data.tplanProdId,
           svcProdGrpId: this.$joinConfirmLayer.data('svc_prod_grp_id')
-        }, {}, this._prodId).done($.proxy(this._procJoinPlanRes, this));
+        }, {}, this._prodId).done($.proxy(this._procJoinRes, this));
+
+        this._successData = {
+          prodCtgNm: Tw.PRODUCT_CTG_NM.PLANS,
+          mytPage: 'fee-plan'
+        };
+        break;
+      case 'additions':
+        this._apiService.request(this.$joinConfirmLayer.data('join_bff'), {
+        }, {}, this._prodId).done($.proxy(this._procJoinRes, this));
+
+        this._successData = {
+          prodCtgNm: Tw.PRODUCT_CTG_NM.ADDITIONS,
+          mytPage: 'additions'
+        };
         break;
     }
   },
 
-  _procJoinPlanRes: function(resp) {
+  _procJoinRes: function(resp) {
     if (resp.code !== Tw.API_CODE.CODE_00) {
       return Tw.Error(resp.code, resp.msg).page();
     }
 
-    //
+    var isProdMoney = this.$prodMoney.length > 0;
+
+    this._popupService.open({
+      hbs: 'DC_05_01_end_01_product',
+      data: Object.assign(this._successData, {
+        prodId: this._prodId,
+        prodNm: this.$joinConfirmLayer.data('prod_nm'),
+        isBasFeeInfo: isProdMoney,
+        basFeeInfo: isProdMoney ? this.$prodMoney.text() : ''
+      })
+    }, $.proxy(this._bindJoinResPopup, this), null, 'join_success');
+  },
+
+  _bindJoinResPopup: function($popupContainer) {
+    $popupContainer.on('click', '.fe-btn_join_success_close', $.proxy(this._goProductDetail, this));
+  },
+
+  _goProductDetail: function() {
+    this._historyService.goLoad('/product/detail/' + this._prodId);
   }
 
 };

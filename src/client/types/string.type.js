@@ -311,6 +311,11 @@ Tw.MYT_FARE_HISTORY_MICRO_BLOCK_TOAST = {
   REVOCATION: '해제 신청이 완료되었습니다.'
 };
 
+Tw.PRODUCT_CTG_NM = {
+  PLANS: '요금제',
+  ADDITIONS: '부가서비스'
+};
+
 Tw.INFO = {
   MYT : {
     TDATA_SHARE: {
