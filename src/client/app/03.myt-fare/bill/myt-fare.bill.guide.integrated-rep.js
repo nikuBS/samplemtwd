@@ -11,6 +11,7 @@ Tw.MyTFareBillGuideIntegratedRep = function (rootEl, resData) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
+  this._hashService = Tw.Hash;
 
   this._history = new Tw.HistoryService(this.$container);
   this._history.init('hash');
@@ -19,6 +20,8 @@ Tw.MyTFareBillGuideIntegratedRep = function (rootEl, resData) {
 
   this.paramDate = '';
   this.paramLine = '';
+
+  this._hashService.initHashNav($.proxy(this._onHashChange, this));
 };
 
 Tw.MyTFareBillGuideIntegratedRep.prototype = {
@@ -45,6 +48,21 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
     }
 
   },
+  _onHashChange: function (hash) {
+    Tw.Logger.info('[hash]', hash);
+
+    if ( !hash.raw ) { return; }
+
+    switch ( hash.raw ) {
+      case 'conditionChange_P' :
+        Tw.Logger.info('[hash > conditionChange_P]', hash);
+        this.$conditionChangeBtn.trigger('click');
+        break;
+      default :
+
+    }
+
+  },
   _hbRegisterHelper: function () {
     Handlebars.registerHelper('index_of', function (context, ndx) {
       return context[ndx];
@@ -65,6 +83,7 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
     this.$lineSelectArea = $('[data-target="lineSelectArea"]');
 
     this.$searchNmSvcType = $('[data-target="searchNmSvcType"]');
+    this.$conditionChangeBtn = $('[data-target="conditionChangeBtn"]');
 
   },
   _bindEvent: function () {

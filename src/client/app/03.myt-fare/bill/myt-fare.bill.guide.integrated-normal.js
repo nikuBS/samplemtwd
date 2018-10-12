@@ -10,6 +10,7 @@ Tw.MyTFareBillGuideIntegratedNormal = function (rootEl, resData) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
+  this._hashService = Tw.Hash;
 
   this._history = new Tw.HistoryService(this.$container);
   this._history.init('hash');
@@ -31,6 +32,23 @@ Tw.MyTFareBillGuideIntegratedNormal.prototype = {
     }
     this._getUseBillsInfo();
 
+    this._hashService.initHashNav($.proxy(this._onHashChange, this));
+
+  },
+  _onHashChange: function (hash) {
+    Tw.Logger.info('[hash]', hash);
+
+    if ( !hash.raw ) { return; }
+
+    switch ( hash.raw ) {
+      case 'conditionChange_P' :
+        Tw.Logger.info('[hash > conditionChange_P]', hash);
+        this.$conditionChangeBtn.trigger('click');
+        break;
+      default :
+
+    }
+
   },
   _hbRegisterHelper: function () {
     Handlebars.registerHelper('index_of', function (context, ndx) {
@@ -43,6 +61,7 @@ Tw.MyTFareBillGuideIntegratedNormal.prototype = {
 
     this.$hbDetailListArea = $('[data-target="hbDetailListArea"]');
     this.$hbChildListArea = $('[data-target="hbChildListArea"]');
+    this.$conditionChangeBtn = $('[data-target="conditionChangeBtn"]');
 
   },
   _bindEvent: function () {
