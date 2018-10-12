@@ -27,12 +27,12 @@ Tw.MyTFareSubMain.prototype = {
   loadingView: function (value) {
     if ( value ) {
       skt_landing.action.loading.on({
-        ta: '.wrap', co: 'grey', size: true
+        ta: '[data-id="wrapper"]', co: 'grey', size: true
       });
     }
     else {
       skt_landing.action.loading.off({
-        ta: '.wrap'
+        ta: '[data-id="wrapper"]'
       });
     }
   },
