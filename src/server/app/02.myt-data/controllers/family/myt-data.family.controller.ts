@@ -28,7 +28,7 @@ class MyTDataFamily extends TwViewController {
       case 'complete':
         res.render('family/myt-data.family.complete.html', {
           ...responseData,
-          monthly: !!req.query.montly
+          query: req.query
         });
         break;
       case 'setting':

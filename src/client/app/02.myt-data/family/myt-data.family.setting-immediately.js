@@ -32,7 +32,7 @@ Tw.MyTDataFamilySettingImmediately.prototype = {
     this.$submitBtn.on('click', $.proxy(this._confirmSubmit, this));
   },
 
-  _addShareData: function (e) {
+_addShareData: function (e) {
     var value = $(e.target).data('value');
 
     if (value === 'all') {
@@ -70,10 +70,10 @@ Tw.MyTDataFamilySettingImmediately.prototype = {
     var auto = this.$container.find('ul.select-list input').attr('checked') === 'checked', value = this.$amountInput.val();
     if (auto) {
       this._goToComplete('?monthly=true');
-      // this._apiService.request(Tw.API_CMD.BFF_06_0048, { dataQty: value }).done($.proxy(this._goToComplete, this, '?monthly=true'));
+      this._apiService.request(Tw.API_CMD.BFF_06_0048, { dataQty: value }).done($.proxy(this._goToComplete, this, '?monthly=true'));
     } else {
       this._goToComplete();
-      // this._apiService.request(Tw.API_CMD.BFF_06_0046, { dataQty: this.$amountInput.val() }).done($.proxy(this._goToComplete, this));
+      this._apiService.request(Tw.API_CMD.BFF_06_0046, { dataQty: this.$amountInput.val() }).done($.proxy(this._goToComplete, this));
     }
   },
 

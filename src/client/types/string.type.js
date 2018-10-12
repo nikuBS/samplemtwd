@@ -430,3 +430,15 @@ Tw.MYT_DATA_FAMILY_CONFIRM_SHARE = {
   CONTENTS: '공유된 데이터는 취소하실 수 없습니다.',
   BTN_NAME: '공유하기'
 }
+
+Tw.MYT_DATA_FAMILY_CONFIRM_SHARE_MONTHLY = {
+  TITLE: '매월 자동으로 데이터를 공유 하시겠습니까?',
+  CONTENTS: '다음달부터 자동 공유되며, 이번 달 안으로 변경이 가능합니다.',
+  BTN_NAME: '변경하기'
+}
+
+Tw.MYT_DATA_FAMILY_DELETE_SHARE_MONTHLY = {
+  TITLE: '자동공유를 그만 하시겠습니까?',
+  CONTENTS: '다음달부터 자동 공유가 해지되며, 이번 달 안으로 변경이 가능합니다.',
+  BTN_NAME: '그만하기'
+}

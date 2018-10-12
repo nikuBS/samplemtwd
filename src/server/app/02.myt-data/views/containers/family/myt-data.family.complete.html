@@ -19,12 +19,27 @@
     <!-- #contents -->
     <div id="contents" class="container-wrap">
         <div class="container">
+            <% if (query.date) { %>
             <h1 class="complete-title">
                 <img src="/img/dummy/dmy-complete.jpg" alt="">
-                <span><strong>데이터 공유</strong> 완료</span>
+                <span><strong>매월 자동 공유</strong> 설정 완료</span>
             </h1>
-            <% if (monthly) { %><p class="complete-tx0">매월 자동으로 공유됩니다.</p><% } %>
-            <a href="/myt/data" class="complete-closeBtn fe-replace-history"><span class="blind">페이지 닫기</span></a>
+            <% const date = query.date.split(','); %>
+            <% const month = date[1], year = month == 1 ? Number(date[0]) + 1 : date[0] %>
+            <p class="complete-tx0"><%=  year %>년 <%= month %>월부터 적용</p>
+            <% } else if (query.delete) { %>
+                <h1 class="complete-title">
+                    <img src="/img/dummy/dmy-complete.jpg" alt="">
+                    <span><strong>매월 자동 공유</strong> 해지 완료</span>
+                </h1>
+            <% } else { %>
+                <h1 class="complete-title">
+                    <img src="/img/dummy/dmy-complete.jpg" alt="">
+                    <span><strong>데이터 공유</strong> 완료</span>
+                </h1>
+                <% if (query.monthly) { %><p class="complete-tx0">매월 자동으로 공유됩니다.</p><% } %>
+            <% } %>
+            <a href="/myt/data/family" class="complete-closeBtn fe-replace-history"><span class="blind">페이지 닫기</span></a>
         </div>
     </div>
     <!--// #contents -->
