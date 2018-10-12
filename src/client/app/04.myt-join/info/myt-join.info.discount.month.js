@@ -29,7 +29,7 @@ Tw.MyTJoinInfoDiscountMonth.prototype = {
       return;
     }
     Tw.Api.request(Tw.API_CMD.BFF_05_0076, {
-      svcAgrmtCdId: this._options.svcAgrmtCdId,
+      svcAgrmtCdId: this._options.svcAgrmtDcId,
       svcAgrmtDcCd: this._options.svcAgrmtDcCd
     })
       .done($.proxy(this._onReqDoneDiscountMonth, this))
