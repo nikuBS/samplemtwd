@@ -60,8 +60,10 @@ Tw.MyTDataUsageTotalSharingData.prototype = {
   },
 
   _reqTFamilySharing: function () {
-    this._apiService.request(Tw.API_CMD.BFF_06_0044)
-      .done($.proxy(this._onDoneTFamilySharing, this))
+    this._apiService.requestArray([
+      { command: Tw.API_CMD.BFF_01_0005 },
+      { command: Tw.API_CMD.BFF_06_0044 }
+    ]).done($.proxy(this._onDoneTFamilySharing, this))
       .fail($.proxy(this._onFailReq, this));
 
     // this._onDoneTFamilySharing({
@@ -187,12 +189,16 @@ Tw.MyTDataUsageTotalSharingData.prototype = {
     // });
   },
 
-  _onDoneTFamilySharing: function (resp) {
-    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+  _onDoneTFamilySharing: function (svcInfoResp, tFamilySharingResp) {
+    if (
+      svcInfoResp.code === Tw.API_CODE.CODE_00 &&
+      tFamilySharingResp.code === Tw.API_CODE.CODE_00
+    ) {
+      var data = this._getSharedData(svcInfoResp.result.svcMgmtNum, tFamilySharingResp.result.mbrList);
       this._$tfamilySharing.show();
-      this._setDataTxt(this._$tfamilySharing, Tw.FormatHelper.convDataFormat(resp.result.used, Tw.DATA_UNIT.MB));
+      this._setDataTxt(this._$tfamilySharing, Tw.FormatHelper.convDataFormat(data, Tw.DATA_UNIT.GB));
     } else {
-      this._tFamilySharingErrCode = resp.code;
+      this._tFamilySharingErrCode = tFamilySharingResp.code;
       if ( this._tFamilySharingErrCode === this._ERROR_CODE.T_FAMILY_SHARE_NOT_JOINED ) { // T가족모아 가입 가능한 요금제이나 미가입
         this._$tfamilySharing.show();
         this._$tfamilySharing.find('.data-txt').text(Tw.MYT_DATA_TOTAL_SHARING_DATA.JOIN_T_FAMILY_SHARING);
@@ -270,5 +276,16 @@ Tw.MyTDataUsageTotalSharingData.prototype = {
     } else {
       this._historyService.goLoad('/product/detail/' + this._DATA_SHARING_PROD_ID); // LTE 데이터 함께쓰기 상품원장 상세 페이지로 이동
     }
+  },
+
+  _getSharedData: function (svcMgmtNum, list) {
+    if ( !_.size(list) ) {
+      return;
+    }
+    return _.reduce(_.where(list, {
+      svcMgmtNum: svcMgmtNum
+    }), function (memo, data) {
+      return memo + parseInt(data.shared, 10);
+    }, 0);
   }
 };
