@@ -15,7 +15,6 @@ Tw.MyTFarePaymentAccount = function (rootEl) {
   this._validation = Tw.ValidationHelper;
   this._historyService = new Tw.HistoryService(rootEl);
 
-  this._historyService.init('hash');
   this._init();
 };
 
@@ -23,15 +22,23 @@ Tw.MyTFarePaymentAccount.prototype = {
   _init: function () {
     this._initVariables();
     this._bindEvent();
+    this._checkIsAuto();
+    this._checkIsPopup();
   },
   _initVariables: function () {
     this.$selectBank = this.$container.find('.fe-select-bank');
     this.$refundBank = this.$container.find('.fe-select-refund-bank');
     this.$accountNumber = this.$container.find('.fe-account-number');
     this.$refundNumber = this.$container.find('.fe-refund-account-number');
-    this.$refundBox = this.$container.find('.check-account-radio');
+    this.$refundBox = this.$container.find('.fe-refund-box');
+    this.$accountInputBox = this.$container.find('.fe-account-input');
+    this.$refundInputBox = this.$container.find('.fe-refund-input');
+    this.$payBtn = this.$container.find('.fe-check-pay');
+
+    this._isPaySuccess = false;
   },
   _bindEvent: function () {
+    this.$container.on('change', '.fe-auto-info', $.proxy(this._checkIsAbled, this));
     this.$container.on('change', '.refund-account-check-btn', $.proxy(this._showAndHideAccount, this));
     this.$container.on('keyup', '.required-input-field', $.proxy(this._checkIsAbled, this));
     this.$container.on('click', '.cancel', $.proxy(this._checkIsAbled, this));
@@ -39,6 +46,19 @@ Tw.MyTFarePaymentAccount.prototype = {
     this.$container.on('click', '.select-bank', $.proxy(this._selectBank, this));
     this.$container.on('click', '.fe-check-pay', $.proxy(this._checkPay, this));
     this.$container.on('click', '.fe-pay', $.proxy(this._pay, this));
+  },
+  _checkIsAuto: function () {
+    if (this.$container.find('.fe-auto-info').is(':visible')) {
+      this.$payBtn.removeAttr('disabled');
+    }
+  },
+  _checkIsPopup: function () {
+    var isCheck = this._historyService.getHash().match('check');
+
+    if (isCheck && this._historyService.isReload()) {
+      this._historyService.replace();
+      this._checkPay();
+    }
   },
   _showAndHideAccount: function (event) {
     var $target = $(event.currentTarget);
@@ -55,31 +75,94 @@ Tw.MyTFarePaymentAccount.prototype = {
     this._bankList.init(event, $.proxy(this._checkIsAbled, this));
   },
   _checkIsAbled: function () {
-    if (this.$selectBank.attr('id') !== undefined && this.$refundBank.attr('id') !== undefined &&
-    this.$accountNumber.val() !== '' && this.$refundNumber.val() !== '') {
-      this.$container.find('.fe-check-pay').removeAttr('disabled');
+    if (this._checkIsAbledWithInputVisibility()) {
+      this.$payBtn.removeAttr('disabled');
     } else {
-      this.$container.find('.fe-check-pay').attr('disabled', 'disabled');
+      this.$payBtn.attr('disabled', 'disabled');
     }
+  },
+  _checkIsAbledWithInputVisibility: function () {
+    var isAbled = true;
+
+    if (this.$accountInputBox.hasClass('checked')) {
+      if (this.$selectBank.attr('id') === undefined || this.$accountNumber.val() === '') {
+        isAbled = false;
+      }
+    }
+
+    if (this.$refundInputBox.hasClass('checked')) {
+      if (this.$refundBank.attr('id') === undefined || this.$refundNumber.val() === '') {
+        isAbled = false;
+      }
+    }
+    return isAbled;
   },
   _checkPay: function () {
     if (this._isValid()) {
-      this._historyService.goHash('#check');
-      this._setData();
+      this._popupService.open({
+          'hbs': 'MF_01_01_01',
+          'title': Tw.MYT_FARE_PAYMENT_NAME.ACCOUNT,
+          'unit': Tw.CURRENCY_UNIT.WON
+        },
+        $.proxy(this._openCheckPay, this),
+        $.proxy(this._afterPaySuccess, this),
+        'check'
+      );
+    }
+  },
+  _openCheckPay: function ($layer) {
+    var data = this._getData();
+
+    $layer.find('.fe-payment-option-name').attr('id', data.bankCd).text(data.bankNm);
+    $layer.find('.fe-payment-option-number').text(data.accountNum);
+    $layer.find('.fe-payment-amount').text(Tw.FormatHelper.addComma(this._paymentCommon.getAmount().toString()));
+    $layer.find('.fe-payment-refund').attr('id', data.refundCd)
+      .text(data.refundNm + ' ' + data.refundNum);
+
+    $layer.on('click', '.fe-pay', $.proxy(this._pay, this));
+  },
+  _getData: function () {
+    var isAccountAuto = this.$accountInputBox.hasClass('checked');
+    var isRefundAuto = this.$refundInputBox.hasClass('checked');
+
+    var data = {};
+    if (isAccountAuto) {
+      data.bankCd = this.$selectBank.attr('id');
+      data.bankNm = this.$selectBank.text();
+      data.accountNum = this.$accountNumber.val();
+    } else {
+      data.bankCd = this.$container.find('.fe-auto-account-bank').attr('data-code');
+      data.bankNm = this.$container.find('.fe-auto-account-bank').text();
+      data.accountNum = this.$container.find('.fe-auto-account-number').text();
+    }
+
+    if (isRefundAuto) {
+      data.refundCd = this.$refundBank.attr('id');
+      data.refundNm = this.$refundBank.text();
+      data.refundNum = this.$refundNumber.val();
+    } else {
+      data.refundCd = this.$container.find('.fe-auto-refund-bank').attr('data-code');
+      data.refundNm = this.$container.find('.fe-auto-refund-bank').text();
+      data.refundNum = this.$container.find('.fe-auto-refund-number').text();
+    }
+    return data;
+  },
+  _afterPaySuccess: function () {
+    if (this._isPaySuccess) {
+
     }
   },
   _isValid: function () {
-    return (this._validation.checkIsSelected(this.$selectBank, Tw.MSG_PAYMENT.REALTIME_A02) &&
-      this._validation.checkEmpty(this.$accountNumber.val(), Tw.MSG_PAYMENT.AUTO_A03) &&
-      this._validation.checkIsSelected(this.$refundBank, Tw.MSG_PAYMENT.REALTIME_A02) &&
-      this._validation.checkEmpty(this.$refundNumber.val(), Tw.MSG_PAYMENT.AUTO_A03));
-  },
-  _setData: function () {
-    this.$container.find('.fe-payment-option-name').attr('id', this.$selectBank.attr('id')).text(this.$selectBank.text());
-    this.$container.find('.fe-payment-option-number').text(this.$accountNumber.val());
-    this.$container.find('.fe-payment-amount').text(Tw.FormatHelper.addComma(this._paymentCommon.getAmount().toString()));
-    this.$container.find('.fe-payment-refund').attr('id', this.$refundBank.attr('id'))
-      .text(this.$refundBank.text() + ' ' + this.$refundNumber.val());
+    var isValid = true;
+    if (this.$accountInputBox.hasClass('checked')) {
+      isValid = this._validation.checkIsSelected(this.$selectBank, Tw.MSG_PAYMENT.REALTIME_A02) &&
+        this._validation.checkEmpty(this.$accountNumber.val(), Tw.MSG_PAYMENT.AUTO_A03);
+    }
+    if (this.$refundInputBox.hasClass('checked')) {
+      isValid = this._validation.checkIsSelected(this.$refundBank, Tw.MSG_PAYMENT.REALTIME_A02) &&
+        this._validation.checkEmpty(this.$refundNumber.val(), Tw.MSG_PAYMENT.AUTO_A03);
+    }
+    return isValid;
   },
   _pay: function () {
     var reqData = this._makeRequestData();
@@ -100,13 +183,13 @@ Tw.MyTFarePaymentAccount.prototype = {
   },
   _paySuccess: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
-      this._historyService.setHistory();
-      this._historyService.goHash('#complete');
+      this._isPaySuccess = true;
+      this._popupService.close();
     } else {
-      this._payFail(res.error);
+      this._payFail(res);
     }
   },
-  _payFail: function (err) {
-    this._popupService.openAlert(err.message, err.code);
+  _payFail: function (res) {
+    Tw.Error(res.code, res.msg).pop();
   }
 };
