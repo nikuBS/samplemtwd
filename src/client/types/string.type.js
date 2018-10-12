@@ -35,7 +35,8 @@ Tw.POPUP_TITLE = {
   // SELECT_CARD_TYPE: '일시불',
   NOT_FAMILY: '리필쿠폰 선물 가능한 가족이 아닙니다.',
   SELECT_CHARGE_TYPE: '충전/선물 유형',
-  SELECT_ORDER: '정렬 기준을 선택해주세요'
+  SELECT_ORDER: '정렬 기준을 선택해주세요',
+  CONFIRM_SHARE: '데이터를 공유 하시겠습니까?'
 };
 
 Tw.POPUP_CONTENTS = {
@@ -224,8 +225,14 @@ Tw.ALERT_MSG_MYT_DATA = {
   RECHARGE_CANCLE: '충전 취소는 고객센터 [국번 없이 1599-0011(유료) / 휴대폰 114]를 통해 당일에 한해 가능합니다.',
   JOIN_ONLY_CUSTOMER_CENTER_T: '대리점 방문 또는 고객센터를' + '<br />' + '통해 신청 가능합니다.',
   JOIN_ONLY_CUSTOMER_CENTER_C: '고객센터를 통하여 신청하시면' + '<br />' + '그룹 구성을 동의 할 수 있는 SMS를 ' + '<br />' + '가족 구성원에게 보내드립니다.',
-  CALL_CUSTOMER_CENTER: '고객센터 전화하기'
+  CALL_CUSTOMER_CENTER: '고객센터 전화하기',
+  CONFIRM_SHARE: '공유된 데이터는 취소하실 수 없습니다.'
 };
+
+Tw.VALIDATE_MSG_MYT_DATA = { 
+  V16: '공유 가능 데이터를 초과했습니다.',
+  V17: '가족에게 공유할 데이터를 입력해주세요.'
+}
 
 Tw.ALERT_MSG_MYT_FARE = {
   COMPLETE_NEW: '신청이 완료되었습니다.',
@@ -413,3 +420,13 @@ Tw.JOIN_INFO_NO_AGREEMENT = {
   NO_USE : '포인트 사용 내역이 없습니다.',
   NO_DATA : '검색된 포인트 사용 내역이 없습니다.'
 };
+
+Tw.MYT_DATA_FAMILY_TOAST = {
+  SUCCESS_CHANGE: '변경되었습니다.'
+}
+
+Tw.MYT_DATA_FAMILY_CONFIRM_SHARE = {
+  TITLE: '데이터를 공유 하시겠습니까?',
+  CONTENTS: '공유된 데이터는 취소하실 수 없습니다.',
+  BTN_NAME: '공유하기'
+}

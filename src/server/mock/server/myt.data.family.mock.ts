@@ -39,7 +39,8 @@ const BFF_06_0045_ImmediatelyInfo = {
   code: '00',
   msg: 'success',
   result: {
-    dataQty: '30',
+    tFmlyShrblQty: '30',
+    totShrblQty: '40',
     reqCnt: '1',
     nextReqYn: 'Y'
   }

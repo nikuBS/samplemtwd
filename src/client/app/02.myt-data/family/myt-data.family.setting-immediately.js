@@ -17,21 +17,67 @@ Tw.MyTDataFamilySettingImmediately = function (rootEl) {
 
 Tw.MyTDataFamilySettingImmediately.prototype = {
   _init: function () {
+    this._shareAmount = this.$amountInput.data('share-amount');
   },
 
   _cachedElement: function () {
-    this.$wrap_immediately_qty = this.$container.find('.fe-immediately_qty');
-    this.$input_immediately_qty = this.$container.find('.fe-input_immediately_qty');
+    this.$amountInput = this.$container.find('span.input input');
+    this.$submitBtn = this.$container.find('.bt-red1 button');
   },
 
   _bindEvent: function () {
-    this.$wrap_immediately_qty.on('click', 'button', $.proxy(this._setAmountData, this));
+    this.$container.on('click', '.bt-bg-blue1', $.proxy(this._addShareData, this));
+    this.$container.on('focusout', 'span.input input', $.proxy(this._validateShareAmount, this))
+    this.$amountInput.on('keyup', $.proxy(this._handleChangeAmount, this));
+    this.$submitBtn.on('click', $.proxy(this._confirmSubmit, this));
   },
 
-  _setAmountData: function (e) {
-    var $elQty = $(e.currentTarget);
-    var dataQty = $elQty.data('value');
+  _addShareData: function (e) {
+    var value = $(e.target).data('value');
 
-    this.$input_immediately_qty.val(dataQty);
+    if (value === 'all') {
+      this.$amountInput.val(this._shareAmount);
+    } else {
+      this.$amountInput.val(Number(this.$amountInput.val()) + value);
+    }
+    this.$submitBtn.attr('disabled', false);
+  }, 
+
+  _validateShareAmount: function () {
+    if (!this.$amountInput.val()) {
+      // TODO: 알림영역 표시 Tw.VALIDATE_MSG_MYT_DATA.V17
+    } else if (Number(this.$amountInput.val()) > this._shareAmount) {
+      // TODO: 알림영역 표시 Tw.VALIDATE_MSG_MYT_DATA.V16
+    }    
+  },
+
+  _handleChangeAmount: function (e) {
+    var value = e.currentTarget.value;
+
+    if (!value || value == 0) { 
+      this.$submitBtn.attr('disabled', true);
+    } else {
+      this.$submitBtn.attr('disabled', false);
+    }
+  },
+
+  _confirmSubmit: function () {
+    var POPUP = Tw.MYT_DATA_FAMILY_CONFIRM_SHARE;
+    this._popupService.openModalTypeA(POPUP.TITLE, POPUP.CONTENTS, POPUP.BTN_NAME, null, $.proxy(this._handleSubmit, this));
+  },
+
+  _handleSubmit: function () {
+    var auto = this.$container.find('ul.select-list input').attr('checked') === 'checked', value = this.$amountInput.val();
+    if (auto) {
+      this._goToComplete('?monthly=true');
+      // this._apiService.request(Tw.API_CMD.BFF_06_0048, { dataQty: value }).done($.proxy(this._goToComplete, this, '?monthly=true'));
+    } else {
+      this._goToComplete();
+      // this._apiService.request(Tw.API_CMD.BFF_06_0046, { dataQty: this.$amountInput.val() }).done($.proxy(this._goToComplete, this));
+    }
+  },
+
+  _goToComplete: function (query) {
+    this._historyService.replaceURL('/myt/data/family/complete' + (query || ''));
   }
 };
