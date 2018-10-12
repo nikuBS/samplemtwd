@@ -206,7 +206,9 @@ Tw.MYT_FARE_PAYMENT_NAME = {
   ACCOUNT: '계좌이체',
   CARD: '체크/신용카드',
   OK_CASHBAG: 'OK캐쉬백',
-  T_POINT: 'T포인트'
+  T_POINT: 'T포인트',
+  PAYMENT: '납부',
+  GO_PAYMENT_HISTORY: '납부내역 보기'
 };
 
 Tw.ALERT_MSG_COMMON = {
