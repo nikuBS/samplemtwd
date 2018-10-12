@@ -36,13 +36,13 @@ export const MYT_DATA_USAGE = {
     DD3DO: '라지',
     DD3DG: '미디엄',
     DD3D8: '스몰',
-    DD4D1: '라지',
+    DD4D1: '라지'
   },
   T_O_PLAN_SHARE_DATA: {
     DD3CX: '인피니티',
     DD3CV: '패밀리',
     DD3CU: '라지',
-    DD4D5: '라지',
+    DD4D5: '라지'
   }
 };
 
@@ -93,7 +93,8 @@ export enum MYT_DATA_CHARGE_TYPE_NAMES {
   TING_CHARGE = '팅 쿠키즈 안심요금',
   TING_GIFT = '팅 요금 선물',
   REFILL_USAGE = '리필 쿠폰 사용',
-  REFILL_GIFT = '리필 쿠폰 선물'
+  REFILL_GIFT = '리필 쿠폰 선물',
+  ALL = '전체'
 }
 
 export enum MYT_DATA_CHARGE_TYPES {
@@ -111,17 +112,17 @@ export enum PRODUCT_INFINITY_BENEFIT {
 }
 
 export const MYT_FARE_BILL_REISSUE_TYPE = {
-  'P' : 'T world',
-  'H' : 'Bill Letter',
-  'B' : '문자',
-  '2' : '이메일',
-  'I' : 'Bill Letter+이메일',
-  'A' : '문자+이메일',
-  '1' : '우편',
-  'Q' : 'Bill Letter+문자',
+  P: 'T world',
+  H: 'Bill Letter',
+  B: '문자',
+  '2': '이메일',
+  I: 'Bill Letter+이메일',
+  A: '문자+이메일',
+  '1': '우편',
+  Q: 'Bill Letter+문자',
   // 유선
-  'J' : 'Bill Letter',
-  'K' : 'Bill Letter+이메일'
+  J: 'Bill Letter',
+  K: 'Bill Letter+이메일'
 };
 
 export const MYT_INFO_DISCOUNT_MONTH = {
@@ -153,7 +154,8 @@ export const MYT_FARE_HISTORY_MICRO_TYPE = {
   AUTO: '자동결제'
 };
 
-export const MYT_JOIN_CONTRACT_TERMINAL = { // 약정할인 및 단말분할상환정보
+export const MYT_JOIN_CONTRACT_TERMINAL = {
+  // 약정할인 및 단말분할상환정보
   FEE_TYPE_A: {
     TIT_NM: '요금약정할인24 (730일)'
   },
@@ -213,4 +215,3 @@ export const MYT_JOIN_CONTRACT_TERMINAL = { // 약정할인 및 단말분할상�
     AGREE_NM: '정보없음'
   }
 };
-
