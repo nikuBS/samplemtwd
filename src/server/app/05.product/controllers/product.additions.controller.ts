@@ -50,7 +50,7 @@ export default class ProductAdditions extends TwViewController {
         };
       }
 
-      return resp.result.addProductJoinsInfo;
+      return resp.result;
     });
   }
 
