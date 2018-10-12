@@ -8,9 +8,9 @@ Tw.ProductInfinityBenefitUsageHistory = function(rootEl) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = new Tw.PopupService();
+  this._historyService = new Tw.HistoryService();
   this._cachedElement();
   this._bindEvent();
-  this._initTemplate();
 };
 
 Tw.ProductInfinityBenefitUsageHistory.prototype = {
@@ -27,15 +27,11 @@ Tw.ProductInfinityBenefitUsageHistory.prototype = {
   _listTotal: 0,
   _page: 1,
 
-  _initTemplate: function() {
-    _.forEach(_.keys(this._prodIdList), function(prodId) {
-      this._template[prodId] = Handlebars.compile($('#tpl_benefit_list_' + prodId).html());
-    });
-  },
-
   _cachedElement: function() {
     this.$btnCategory = this.$container.find('.fe-btn_category');
     this.$btnMore = this.$container.find('.fe-btn_more');
+    this.$btnGoTop = this.$container.find('.fe-btn_go_top');
+
     this.$listBenefit = this.$container.find('.fe-list_benefit');
     this.$benefitTitle = this.$container.find('.fe-benefit_title');
     this.$benefitDescription = this.$container.find('.fe-benefit_description');
@@ -44,6 +40,7 @@ Tw.ProductInfinityBenefitUsageHistory.prototype = {
   _bindEvent: function() {
     this.$btnCategory.on('click', $.proxy(this._openCategoryPopup, this));
     this.$btnMore.on('click', $.proxy(this._showMore, this));
+    this.$btnGoTop.on('click', $.proxy(this._goTop, this));
   },
 
   _showMore: function() {
@@ -82,14 +79,7 @@ Tw.ProductInfinityBenefitUsageHistory.prototype = {
   },
 
   _selectBenefitProdId: function(e) {
-    this._prodId = $(e.currentTarget).data('prod_id');
-
-    if (Tw.FormatHelper.isEmpty(this._prodId)) {
-      return Tw.Error().page();
-    }
-
-    this._apiService.request(Tw.API_CMD.BFF_10_0015, { tDiyGrCd: this._prodId }, null, 'NA00005959')
-      .done($.proxy(this._applyBenefitUsageList, this));
+    this._historyService.goLoad('/product/infinity-benefit-usage-history?prod_id=' + $(e.currentTarget).data('prod_id'));
   },
 
   _getList: function(result) {
@@ -146,6 +136,10 @@ Tw.ProductInfinityBenefitUsageHistory.prototype = {
     this.$listBenefit.html(this._template[this._prodId]({
       list: this._getList(resp.result)
     }));
+  },
+
+  _goTop: function() {
+    $(window).scrollTop(0);
   }
 
 };

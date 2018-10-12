@@ -116,10 +116,23 @@ class ProductDetail extends TwViewController {
    */
   private _parseSummaryInfo (summaryInfo): any {
     return {
+      basOfrDataQtyCtt: this._praseBasOfrDataQtyCtt(summaryInfo.basOfrDataQtyCtt),
       basOfrVcallTmsCtt: this._parseBasOfrVcallTmsCtt(summaryInfo.basOfrVcallTmsCtt),
       basOfrCharCntCtt: this._parseBasOfrCharCntCtt(summaryInfo.basOfrCharCntCtt),
       basFeeInfo: this._parsingSummaryBasFeeInfo(summaryInfo.basFeeInfo)
     };
+  }
+
+  /**
+   * @param basOfrDataQtyCtt
+   * @private
+   */
+  private _praseBasOfrDataQtyCtt (basOfrDataQtyCtt): any {
+    if (basOfrDataQtyCtt === '-') {
+      return '';
+    }
+
+    return basOfrDataQtyCtt;
   }
 
   /**
@@ -161,7 +174,7 @@ class ProductDetail extends TwViewController {
       return basOfrVcallTmsCtt;
     }
 
-    return FormatHelper.addComma(basOfrVcallTmsCtt) + VOICE_UNIT.MIN;
+    return FormatHelper.addComma(basOfrVcallTmsCtt);
   }
 
   /**
@@ -173,7 +186,7 @@ class ProductDetail extends TwViewController {
       return basOfrCharCntCtt;
     }
 
-    return FormatHelper.addComma(basOfrCharCntCtt) + UNIT['310'];
+    return FormatHelper.addComma(basOfrCharCntCtt);
   }
 
   /**
@@ -228,7 +241,7 @@ class ProductDetail extends TwViewController {
     }
 
     return filtersList.map((item) => {
-      return item.filterFlagId;
+      return item.prodFltId;
     });
   }
 

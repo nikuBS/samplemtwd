@@ -39,7 +39,7 @@
             <% if (basicInfo.prodFilterFlagList) { %>
             <div class="productdetails-taglist">
               <% for (var i in basicInfo.prodFilterFlagList) { %>
-              <a href="/product/<%= indexListActionName %>?filters=<%= basicInfo.prodFilterFlagList[i].filterFlagId %>" class="tag-text">#<%= basicInfo.prodFilterFlagList[i].filterFlagNm %></a>
+              <a href="/product/<%= indexListActionName %>?filters=<%= basicInfo.prodFilterFlagList[i].prodFltId %>" class="tag-text">#<%= basicInfo.prodFilterFlagList[i].prodFltNm %></a>
               <% } %>
             </div>
             <% } %>
@@ -202,7 +202,7 @@
             </div>
             <div class="recommendedratetaglist-wrap">
               <% for (var i in basicInfo.prodFilterFlagList) { %>
-              <a href="/product/<%= indexListActionName %>?filters=<%= basicInfo.prodFilterFlagList[i].filterFlagId %>" class="tag-text">#<%= basicInfo.prodFilterFlagList[i].filterFlagNm %></a>
+              <a href="/product/<%= indexListActionName %>?filters=<%= basicInfo.prodFilterFlagList[i].prodFltId %>" class="tag-text">#<%= basicInfo.prodFilterFlagList[i].prodFltNm %></a>
               <% } %>
             </div>
             <ul class="recommendedrate-list"></ul>
@@ -224,7 +224,7 @@
                   <% for ( var i in recommends.recommendProdList ) { %>
                   <li>
                     <div>
-                      <a href="/product/detail/<%= recommends.recommendProdList[i].prodId %>" class="bg1"> <!-- 보라색 -->
+                      <button class="bg1 fe-btn_recommend_prod" data-prod_id="<%= recommends.recommendProdList[i].prodId %>"> <!-- 보라색 -->
                         <span class="located top">
                           <span class="txt-tit"><%= recommends.recommendProdList[i].prodNm %></span>
                         <!-- @todo TBD --><span class="txt-type">부가상품</span><!-- // -->
@@ -233,7 +233,7 @@
                           <span class="txt-detail"><%= recommends.recommendProdList[i].prodSmryDesc %></span>
                         </span>
                         <span class="ico"></span>
-                      </a>
+                      </button>
                     </div>
                   </li>
                   <% } %>
@@ -260,10 +260,10 @@
                   <% for ( var i in recommends.recommendAppList ) { %>
                   <li>
                     <div>
-                      <a href="/product/detail/<%= recommends.recommendAppList[i].prodId %>">
+                      <button class="fe-btn_recommend_prod" data-prod_id="<%= recommends.recommendAppList[i].prodId %>">
                         <img class="ico" src="<%= recommends.recommendAppList[i].appImg %>">
                         <span><%= recommends.recommendAppList[i].prodNm %></span>
-                      </a>
+                      </button>
                     </div>
                   </li>
                   <% } %>
@@ -304,7 +304,7 @@
   </div>
 </body>
 <% include ../components/javascript.component.html %>
-<% include ../components/detail/recommended-rate.html %>
+<% include ../components/detail/product.detail.recommended-rate.html %>
 <script>
   $(document).ready(function () {
     new Tw.ProductDetail($('.wrap'));

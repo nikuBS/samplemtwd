@@ -453,7 +453,7 @@ export const API_CMD = {
   BFF_09_0005: { path: '/core-membership/v1/event/win-detail/args-0', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
 
   // PRODUCT
-  BFF_10_0001: { path: '/core-product/v1/ledger/args-0', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_10_0001: { path: '/core-product/v1/ledger/args-0', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_10_0002: { path: '/core-product/v1/ledger/args-0/summaries', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0003: { path: '/core-product/v1/ledger/args-0/tags', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0004: { path: '/core-product/v1/ledger/args-0/contents', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
@@ -462,7 +462,7 @@ export const API_CMD = {
   BFF_10_0007: { path: '/core-product/v1/mobiles/fee-plans/args-0/joins/prechecks', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0008: { path: '/v1/products/fee-plans/args-0/join-term-infos', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_10_0009: {
-    path: '/core-product/v1/mobiles/fee-plans/joins/over-chargings-req',
+    path: '/core-product/v1/mobiles/fee-plans/joins/request-over-chargings',
     method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true
   },
   BFF_10_0010: {

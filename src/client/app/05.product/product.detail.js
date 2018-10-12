@@ -31,6 +31,7 @@ Tw.ProductDetail.prototype = {
     this.$btnTerminate = this.$container.find('.fe-btn_terminate');
     this.$recommendRateList = this.$container.find('.fe-recommended_rate_list');
     this.$btnRecommendRateListMore = this.$container.find('.fe-btn_recommended_rate_list_more');
+    this.$btnRecommendProd = this.$container.find('.fe-btn_recommend_prod');
   },
 
   _bindEvent: function() {
@@ -38,6 +39,7 @@ Tw.ProductDetail.prototype = {
     this.$btnJoin.on('click', $.proxy(this._goJoinTerminate, this, '01'));
     this.$btnTerminate.on('click', $.proxy(this._goJoinTerminate, this, '03'));
     this.$btnRecommendRateListMore.on('click', $.proxy(this._goRecommendRateMoreList, this));
+    this.$btnRecommendProd.on('click', $.proxy(this._goRecommendProd, this));
   },
 
   _getJoinTermCd: function(typcd) {
@@ -116,6 +118,15 @@ Tw.ProductDetail.prototype = {
     }
 
     this._historyService.goLoad(btnLink);
+  },
+
+  _goRecommendProd: function(e) {
+    var prodId = $(e.currentTarget).data('prod_id');
+    if (Tw.FormatHelper.isEmpty(prodId)) {
+      return;
+    }
+
+    this._historyService.goLoad('/product/detail/' + prodId);
   },
 
   _loadRecommendedrateList: function() {
